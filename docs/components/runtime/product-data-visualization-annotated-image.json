@@ -1,0 +1,419 @@
+{
+  "slug": "product-data-visualization-annotated-image",
+  "title": "Annotated Image",
+  "storybookTitle": "LDS Product/Data/Visualization/Annotated Image",
+  "layer": "Product",
+  "family": "Visualization",
+  "primaryOwner": "AnnotatedImage",
+  "ownerComponents": [
+    "AnnotatedImage"
+  ],
+  "supportingComponents": [],
+  "purpose": "검출 영역·측정 지점·번호 표식을 이미지 위에 표시하고 같은 정보를 텍스트로 제공할 때 적합합니다. 사용자가 직접 영역을 그리거나 편집해야 하면 Annotated Image 대신 전용 annotation editor를 사용하세요.",
+  "useWhen": [
+    "검출 영역·측정 지점·번호 표식을 이미지 위에 표시하고 같은 정보를 텍스트로 제공할 때 적합합니다. 사용자가 직접 영역을 그리거나 편집해야 하면 Annotated Image 대신 전용 annotation editor를 사용하세요.",
+    "annotation은 비대화형 시각 데이터입니다. overlay 자체에는 클릭 handler나 별도 focus stop을 만들지 않습니다. 사용자가 hotspot을 눌러 이동하거나 실행해야 한다면 이 컴포넌트를 확장하지 말고, 명시적인 link/button 이름과 동일한 순서의 중복 텍스트 link를 가진 별도 interactive-map 계약을 설계합니다.",
+    "alt는 이미지 전체의 목적과 맥락을 짧게 설명합니다. 모든 region/point에는 의미 있는 label을 제공하고, 전체 annotation은 번호가 일치하는 ordered text summary로도 노출합니다. 이미지는 aria-details로 그 긴 설명을 참조합니다.",
+    "좌표는 frame 전체가 아니라 objectFit으로 계산된 실제 image content box를 기준으로 합니다. 지원 모드는 contain, cover, fill, none, scale-down입니다."
+  ],
+  "avoidWhen": [
+    "overlay 표시 제어는 기존 ToggleIcon의 on-dark variant를 사용합니다. 지속적으로 읽어야 하는 annotation 이름이나 값은 Tooltip에만 넣지 않습니다. Tooltip은 focus/hover 힌트이고 focus 가능한 내용을 소유하지 않기 때문입니다.",
+    "영역 label은 detection 도구 관행대로 region tone 색으로 채운 tag를 box 상단 테두리 바깥에 이어 붙여, 색 공유로 소속을 드러내면서 annotation 대상을 가리지 않습니다. box가 frame 상단에 붙어 위 공간이 없으면 box 안쪽 상단으로 폴백해 잘리지 않게 하고, 상단 자리가 다른 region과 겹치면 box 하단 바깥으로 플립해 어느 box의 label인지 오독되지 않게 합니다. tag 텍스트는 tone 채움 위에서 대비가 보장된 색(status tone은 static black, neutral은 inverse label)을….",
+    "canonical tone은 signal, positive, cautionary, negative, neutral입니다. warning과 danger는 기존 consumer 호환 alias일 뿐 새 사용에서는 선택하지 않습니다. 색만으로 의미를 전달하지 않고 번호·label·요약을 항상 함께 제공합니다.",
+    "이미지가 없으면 원본 비율을 억지로 유지하지 않는 compact empty frame을, load 실패에는 alert, loading/empty에는 status를 사용합니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "AnnotatedImage의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Caption",
+      "rule": "caption 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Error Message",
+      "rule": "errorMessage 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Summary Label",
+      "rule": "summaryLabel 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Label Display",
+      "rule": "Visible annotation labels collapse to numbered markers below 420px in auto. @default \"auto\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "src",
+      "type": "string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "alt",
+      "type": "string",
+      "required": true,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "caption",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "regions",
+      "type": "ImageAnnotationRegion[]",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "points",
+      "type": "ImageAnnotationPoint[]",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "annotationsVisible",
+      "type": "boolean",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "defaultAnnotationsVisible",
+      "type": "boolean",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "onAnnotationsVisibleChange",
+      "type": "(visible: boolean) = void",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "loadingMessage",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "emptyMessage",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "errorMessage",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "summaryLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "aspectRatio",
+      "type": "string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "objectFit",
+      "type": "'contain' | 'cover' | 'fill' | 'none' | 'scale-down'",
+      "required": false,
+      "description": "CSS image fitting modes supported by the normalized overlay calculation. @default \"contain\"",
+      "owner": "AnnotatedImageProps"
+    },
+    {
+      "name": "labelDisplay",
+      "type": "'auto' | 'always' | 'index'",
+      "required": false,
+      "description": "Visible annotation labels collapse to numbered markers below 420px in auto. @default \"auto\"",
+      "owner": "AnnotatedImageProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "annotationsVisible",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: boolean"
+    },
+    {
+      "state": "defaultAnnotationsVisible",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: boolean"
+    },
+    {
+      "state": "onAnnotationsVisibleChange",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: (visible: boolean) = void"
+    },
+    {
+      "state": "loadingMessage",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: React.ReactNode"
+    },
+    {
+      "state": "emptyMessage",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: React.ReactNode"
+    },
+    {
+      "state": "errorMessage",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: React.ReactNode"
+    },
+    {
+      "state": "변형·상태 · 이미지 불러오기 실패",
+      "rule": "variants-states 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    },
+    {
+      "state": "변형·상태 · 이미지와 프레임 비율 맞춤",
+      "rule": "variants-states 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    },
+    {
+      "state": "상호작용 · 키보드 제어와 텍스트 요약",
+      "rule": "interaction 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    },
+    {
+      "state": "반응형 · 좁은 폭의 조밀한 번호 표식",
+      "rule": "responsive 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    }
+  ],
+  "behavior": [
+    "annotation은 비대화형 시각 데이터입니다. overlay 자체에는 클릭 handler나 별도 focus stop을 만들지 않습니다. 사용자가 hotspot을 눌러 이동하거나 실행해야 한다면 이 컴포넌트를 확장하지 말고, 명시적인 link/button 이름과 동일한 순서의 중복 텍스트 link를 가진 별도 interactive-map 계약을 설계합니다.",
+    "overlay 표시 제어는 기존 ToggleIcon의 on-dark variant를 사용합니다. 지속적으로 읽어야 하는 annotation 이름이나 값은 Tooltip에만 넣지 않습니다. Tooltip은 focus/hover 힌트이고 focus 가능한 내용을 소유하지 않기 때문입니다.",
+    "canonical tone은 signal, positive, cautionary, negative, neutral입니다. warning과 danger는 기존 consumer 호환 alias일 뿐 새 사용에서는 선택하지 않습니다. 색만으로 의미를 전달하지 않고 번호·label·요약을 항상 함께 제공합니다.",
+    "media framing과 대체 텍스트는 LDS Image, overlay 제어는 ToggleIcon, 지속 정보와 임시 힌트의 구분은 Tooltip/Popover, tone·spacing·radius는 LDS semantic token 관행과 맞췄습니다.",
+    "- anatomy는 figure → media frame → overlay 표시 ToggleIcon → 시각 overlay → 직접 자식인 figcaption과 순서가 같은 텍스트 요약입니다. - annotation은 비대화형 시각 데이터입니다. overlay 자체에는 클릭 handler나 별도 focus stop을 만들지 않습니다. 사용자가 hotspot을 눌러 이동하거나 실행해야 한다면 이 컴포넌트를 확장하지 말고, 명시적인 link/button 이름과 동일한 순서의 중복 텍스트 link를 가진 별도 interactive-map 계약을 설계합니다. - alt는…."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "labelDisplay=\"auto\"는 420px 이하 media container에서 긴 overlay label을 번호 marker로 축약합니다. always는 label을 계속 보이고, index는 항상 번호 marker만 보입니다. 어떤 모드에서도 ordered text summary는 보존됩니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "- anatomy는 figure → media frame → overlay 표시 ToggleIcon → 시각 overlay → 직접 자식인 figcaption과 순서가 같은 텍스트 요약입니다. - annotation은 비대화형 시각 데이터입니다. overlay 자체에는 클릭 handler나 별도 focus stop을 만들지 않습니다. 사용자가 hotspot을 눌러 이동하거나 실행해야 한다면 이 컴포넌트를 확장하지 말고, 명시적인 link/button 이름과 동일한 순서의 중복 텍스트 link를 가진 별도 interactive-map 계약을 설계합니다. - alt는…"
+    },
+    {
+      "subject": "--border-thick",
+      "rule": "2px"
+    },
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    }
+  ],
+  "responsive": [
+    "영역 label은 detection 도구 관행대로 region tone 색으로 채운 tag를 box 상단 테두리 바깥에 이어 붙여, 색 공유로 소속을 드러내면서 annotation 대상을 가리지 않습니다. box가 frame 상단에 붙어 위 공간이 없으면 box 안쪽 상단으로 폴백해 잘리지 않게 하고, 상단 자리가 다른 region과 겹치면 box 하단 바깥으로 플립해 어느 box의 label인지 오독되지 않게 합니다. tag 텍스트는 tone 채움 위에서 대비가 보장된 색(status tone은 static black, neutral은 inverse label)을….",
+    "이미지가 없으면 원본 비율을 억지로 유지하지 않는 compact empty frame을, load 실패에는 alert, loading/empty에는 status를 사용합니다.",
+    "MDN: Add a hit map on top of an image: 시각 순서와 텍스트 순서를 맞추고 responsive 좌표 보존을 우선했습니다.",
+    "- anatomy는 figure → media frame → overlay 표시 ToggleIcon → 시각 overlay → 직접 자식인 figcaption과 순서가 같은 텍스트 요약입니다. - annotation은 비대화형 시각 데이터입니다. overlay 자체에는 클릭 handler나 별도 focus stop을 만들지 않습니다. 사용자가 hotspot을 눌러 이동하거나 실행해야 한다면 이 컴포넌트를 확장하지 말고, 명시적인 link/button 이름과 동일한 순서의 중복 텍스트 link를 가진 별도 interactive-map 계약을 설계합니다. - alt는…."
+  ],
+  "contentGuidance": [
+    "anatomy는 figure → media frame → overlay 표시 ToggleIcon → 시각 overlay → 직접 자식인 figcaption과 순서가 같은 텍스트 요약입니다.",
+    "annotation은 비대화형 시각 데이터입니다. overlay 자체에는 클릭 handler나 별도 focus stop을 만들지 않습니다. 사용자가 hotspot을 눌러 이동하거나 실행해야 한다면 이 컴포넌트를 확장하지 말고, 명시적인 link/button 이름과 동일한 순서의 중복 텍스트 link를 가진 별도 interactive-map 계약을 설계합니다.",
+    "alt는 이미지 전체의 목적과 맥락을 짧게 설명합니다. 모든 region/point에는 의미 있는 label을 제공하고, 전체 annotation은 번호가 일치하는 ordered text summary로도 노출합니다. 이미지는 aria-details로 그 긴 설명을 참조합니다.",
+    "overlay 표시 제어는 기존 ToggleIcon의 on-dark variant를 사용합니다. 지속적으로 읽어야 하는 annotation 이름이나 값은 Tooltip에만 넣지 않습니다. Tooltip은 focus/hover 힌트이고 focus 가능한 내용을 소유하지 않기 때문입니다."
+  ],
+  "accessibility": [
+    "annotation은 비대화형 시각 데이터입니다. overlay 자체에는 클릭 handler나 별도 focus stop을 만들지 않습니다. 사용자가 hotspot을 눌러 이동하거나 실행해야 한다면 이 컴포넌트를 확장하지 말고, 명시적인 link/button 이름과 동일한 순서의 중복 텍스트 link를 가진 별도 interactive-map 계약을 설계합니다.",
+    "alt는 이미지 전체의 목적과 맥락을 짧게 설명합니다. 모든 region/point에는 의미 있는 label을 제공하고, 전체 annotation은 번호가 일치하는 ordered text summary로도 노출합니다. 이미지는 aria-details로 그 긴 설명을 참조합니다.",
+    "overlay 표시 제어는 기존 ToggleIcon의 on-dark variant를 사용합니다. 지속적으로 읽어야 하는 annotation 이름이나 값은 Tooltip에만 넣지 않습니다. Tooltip은 focus/hover 힌트이고 focus 가능한 내용을 소유하지 않기 때문입니다.",
+    "WAI-ARIA APG Tooltip Pattern: 지속 annotation 내용을 tooltip에만 숨기지 않고 overlay와 ordered summary로 제공합니다.",
+    "- anatomy는 figure → media frame → overlay 표시 ToggleIcon → 시각 overlay → 직접 자식인 figcaption과 순서가 같은 텍스트 요약입니다. - annotation은 비대화형 시각 데이터입니다. overlay 자체에는 클릭 handler나 별도 focus stop을 만들지 않습니다. 사용자가 hotspot을 눌러 이동하거나 실행해야 한다면 이 컴포넌트를 확장하지 말고, 명시적인 link/button 이름과 동일한 순서의 중복 텍스트 link를 가진 별도 interactive-map 계약을 설계합니다. - alt는…."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "annotation은 비대화형 시각 데이터입니다. overlay 자체에는 클릭 handler나 별도 focus stop을 만들지 않습니다. 사용자가 hotspot을 눌러 이동하거나 실행해야 한다면 이 컴포넌트를 확장하지 말고, 명시적인 link/button 이름과 동일한 순서의 중복 텍스트 link를 가진 별도 interactive-map 계약을 설계합니다."
+    ],
+    [
+      "Don't",
+      "overlay 표시 제어는 기존 ToggleIcon의 on-dark variant를 사용합니다. 지속적으로 읽어야 하는 annotation 이름이나 값은 Tooltip에만 넣지 않습니다. Tooltip은 focus/hover 힌트이고 focus 가능한 내용을 소유하지 않기 때문입니다."
+    ],
+    [
+      "Do",
+      "alt는 이미지 전체의 목적과 맥락을 짧게 설명합니다. 모든 region/point에는 의미 있는 label을 제공하고, 전체 annotation은 번호가 일치하는 ordered text summary로도 노출합니다. 이미지는 aria-details로 그 긴 설명을 참조합니다."
+    ],
+    [
+      "Don't",
+      "영역 label은 detection 도구 관행대로 region tone 색으로 채운 tag를 box 상단 테두리 바깥에 이어 붙여, 색 공유로 소속을 드러내면서 annotation 대상을 가리지 않습니다. box가 frame 상단에 붙어 위 공간이 없으면 box 안쪽 상단으로 폴백해 잘리지 않게 하고, 상단 자리가 다른 region과 겹치면 box 하단 바깥으로 플립해 어느 box의 label인지 오독되지 않게 합니다. tag 텍스트는 tone 채움 위에서 대비가 보장된 색(status tone은 static black, neutral은 inverse label)을…."
+    ]
+  ],
+  "exceptions": [
+    "Image나 Thumbnail을 대체하지 않습니다. annotation 좌표와 그 텍스트 등가물이 함께 필요한 경우에만 사용합니다.",
+    "- media framing과 대체 텍스트는 LDS Image, overlay 제어는 ToggleIcon, 지속 정보와 임시 힌트의 구분은 Tooltip/Popover, tone·spacing·radius는 LDS semantic token 관행과 맞췄습니다. - Image나 Thumbnail을 대체하지 않습니다. annotation 좌표와 그 텍스트 등가물이 함께 필요한 경우에만 사용합니다.",
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 AnnotatedImage의 범용 API에 넣지 않습니다."
+  ],
+  "related": [
+    {
+      "component": "BarChart",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Calendar",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "ChartFrame",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Carousel",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DataGrid",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DataToolbar",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DataExportAction",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DescriptionList",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<AnnotatedImage\n  src={frameUrl}\n  alt=\"건설 현장을 순찰하는 로봇의 카메라 프레임\"\n  regions={detections}\n  points={measurements}\n/>"
+    }
+  ],
+  "tokens": [
+    "--border-thick",
+    "--caption1-line",
+    "--caption1-size",
+    "--caption2-size",
+    "--color-semantic-inverse-background",
+    "--color-semantic-inverse-label",
+    "--color-semantic-inverse-label-neutral-soft",
+    "--color-semantic-label-neutral",
+    "--color-semantic-line-normal-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-static-black",
+    "--color-semantic-status-cautionary",
+    "--color-semantic-status-negative",
+    "--color-semantic-status-positive",
+    "--font-sans",
+    "--fw-bold",
+    "--radius-lg",
+    "--radius-xs",
+    "--shadow-md",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-5",
+    "--space-6"
+  ],
+  "apiLinks": [
+    "components/data/AnnotatedImage.jsx",
+    "components/data/AnnotatedImage.d.ts",
+    "components/data/AnnotatedImage.prompt.md",
+    "stories/DataAnnotatedImage.stories.jsx"
+  ],
+  "migration": [
+    "canonical tone은 signal, positive, cautionary, negative, neutral입니다. warning과 danger는 기존 consumer 호환 alias일 뿐 새 사용에서는 선택하지 않습니다. 색만으로 의미를 전달하지 않고 번호·label·요약을 항상 함께 제공합니다.",
+    "- anatomy는 figure → media frame → overlay 표시 ToggleIcon → 시각 overlay → 직접 자식인 figcaption과 순서가 같은 텍스트 요약입니다. - annotation은 비대화형 시각 데이터입니다. overlay 자체에는 클릭 handler나 별도 focus stop을 만들지 않습니다. 사용자가 hotspot을 눌러 이동하거나 실행해야 한다면 이 컴포넌트를 확장하지 말고, 명시적인 link/button 이름과 동일한 순서의 중복 텍스트 link를 가진 별도 interactive-map 계약을 설계합니다. - alt는….",
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/DataAnnotatedImage.stories.jsx",
+    "entryStoryId": "lds-product-data-visualization-annotated-image--detection-annotations",
+    "publicStories": [
+      {
+        "id": "lds-product-data-visualization-annotated-image--detection-annotations",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-data-visualization-annotated-image--image-error",
+        "name": "변형·상태 · 이미지 불러오기 실패",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-data-visualization-annotated-image--mismatched-aspect-ratio",
+        "name": "변형·상태 · 이미지와 프레임 비율 맞춤",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-data-visualization-annotated-image--keyboard-toggle-and-text-alternative",
+        "name": "상호작용 · 키보드 제어와 텍스트 요약",
+        "role": "interaction"
+      },
+      {
+        "id": "lds-product-data-visualization-annotated-image--narrow-dense-annotations",
+        "name": "반응형 · 좁은 폭의 조밀한 번호 표식",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-data-visualization-annotated-image--no-image",
+        "name": "시나리오 · 이미지 없음",
+        "role": "scenario"
+      },
+      {
+        "id": "lds-product-data-visualization-annotated-image--annotations-hidden",
+        "name": "시나리오 · 주석 숨김",
+        "role": "scenario"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [
+    {
+      "label": "AnnotatedImage prompt contract",
+      "path": "components/data/AnnotatedImage.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/DataAnnotatedImage.stories.jsx"
+    },
+    {
+      "label": "W3C WAI Images Tutorial",
+      "url": "https://www.w3.org/WAI/tutorials/images/"
+    },
+    {
+      "label": "W3C WAI Image Maps Tutorial",
+      "url": "https://www.w3.org/WAI/tutorials/images/imagemap/"
+    },
+    {
+      "label": "WAI-ARIA APG Tooltip Pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/"
+    },
+    {
+      "label": "MDN: Add a hit map on top of an image",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/How_to/Add_a_hit_map_on_top_of_an_image"
+    }
+  ]
+}

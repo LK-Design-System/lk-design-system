@@ -70,6 +70,8 @@
     "stories/CommunicationMessage.stories.jsx": "LDS Product/Communication/Message",
     "stories/CommunicationMessageComposer.stories.jsx": "LDS Product/Communication/Message Composer",
     "stories/CommunicationMessageFeed.stories.jsx": "LDS Product/Communication/Message Feed",
+    "stories/ComponentOverview.stories.jsx": "LDS Core/Components/Overview",
+    "stories/ComponentProgressBoard.stories.jsx": "LDS Core/Components/Progress Board",
     "stories/Content.stories.jsx": "LDS Core/Components/Content/Text Primitives",
     "stories/ContentBadgesAnnotations.stories.jsx": "LDS Core/Components/Content/Content Badge",
     "stories/ContentBubble.stories.jsx": "LDS Product/Content/Bubble",

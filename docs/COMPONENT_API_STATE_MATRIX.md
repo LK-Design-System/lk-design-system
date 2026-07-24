@@ -17,6 +17,11 @@
 
 컴포넌트는 “예쁘게 보이는 예시”만으로 완료되지 않습니다. 제품 팀이 안전하게 재사용하려면 API, 상태, 접근성, 토큰, 금지 조합을 한 표로 볼 수 있어야 합니다.
 
+전체 public entry의 source·type·prompt 추적과 Storybook 페이지별 Anatomy, 선택 기준, 정량 규칙,
+Do/Don't, 접근성, token/API 문서는 [`components/README.md`](components/README.md)와
+`npm run check:components`가 소유합니다. 이 문서는 family 공통 API grammar와 중요 상태
+matrix를 유지하고, 개별 페이지의 생성 가이드를 중복 작성하지 않습니다.
+
 ## Required component contract
 
 | 항목 | 내용 |

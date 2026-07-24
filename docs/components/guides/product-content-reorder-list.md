@@ -1,0 +1,177 @@
+# Reorder List
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Content |
+| Owner | `ReorderList` |
+| Storybook | `LDS Product/Content/Reorder List` |
+| Source | `../component-content.json#product-content-reorder-list` |
+
+대시보드 패널이나 표시 항목처럼 동등한 목록의 순서를 직접 바꿀 때 적합합니다. 단계형 절차나 부모·자식 구조에는 ReorderList 대신 Steps 또는 Tree를 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- 대시보드 패널이나 표시 항목처럼 동등한 목록의 순서를 직접 바꿀 때 적합합니다. 단계형 절차나 부모·자식 구조에는 ReorderList 대신 Steps 또는 Tree를 사용하세요.
+- 작업 단계·웨이포인트 저작처럼 번호가 의미인 시퀀스는 StepList를 사용합니다.
+- Reorder List가 소유하는 Content 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다.
+- 제품별 구현 대신 공개 ReorderList API와 semantic token으로 일관성을 유지해야 할 때 사용합니다.
+
+### 사용하지 않음
+
+- onReorder가 없으면 조작 가능한 no-op 상태를 만들지 않고 행 drag, keyboard 이동, 이동 버튼을 읽기 전용으로 전환합니다. trailing control은 독립적으로 계속 사용할 수 있습니다.
+- 끝단에서 포커스를 잃지 않습니다. 항목을 맨 위·맨 아래로 옮기면 방금 누른 이동 버튼이 더 이상 쓸 수 없게 되는데, 이때 native disabled로 바꾸면 포커스가 로 떨어져 키보드 사용자가 위치를 잃습니다. 대신 aria-disabled를 써서 버튼은 포커스를 유지한 채 이동만 거부합니다(APG focusable disabled control 관례). 시각 처리(흐린 배경·not-allowed 커서)는 동일합니다.
+- - items {id,label,detail,trailing,disabled}[] - onReorder(nextIds, meta): 드래그, 버튼, Alt+↑/↓ 이동 후 호출 - onReorder가 없으면 조작 가능한 no-op 상태를 만들지 않고 행 drag, keyboard 이동, 이동 버튼을 읽기 전용으로 전환합니다. trailing control은 독립적으로 계속 사용할 수 있습니다. - density comfortable|compact · showIndex(순번 열) · showMoveButtons(위/아래 버튼) · disabled(전체 잠금) · em….
+- - 끝단에서 포커스를 잃지 않습니다. 항목을 맨 위·맨 아래로 옮기면 방금 누른 이동 버튼이 더 이상 쓸 수 없게 되는데, 이때 native disabled로 바꾸면 포커스가 로 떨어져 키보드 사용자가 위치를 잃습니다. 대신 aria-disabled를 써서 버튼은 포커스를 유지한 채 이동만 거부합니다(APG focusable disabled control 관례). 시각 처리(흐린 배경·not-allowed 커서)는 동일합니다. - 이동 수단은 세 가지가 모두 있어야 합니다: 드래그, 문맥명이 붙은 위/아래 버튼("{항목} 위로 이동"), 그리고 행에서 Alt+↑/↓….
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| Root | ReorderList의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다. |
+| Empty Label | 항목이 없을 때 표시할 문구. |
+| Get Item Label | label이 ReactNode일 때 접근성 라벨을 별도로 지정합니다. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `items` | `ReorderItem[]` | No | 공개 타입 계약에 정의된 속성입니다. |
+| `onReorder` | `(nextIds: string[], meta: ReorderMeta) = void` | No | 새 id 순서와 이동 메타 정보를 전달합니다. 생략하면 목록은 읽기 전용이며 drag/keyboard/button 이동이 비활성화됩니다. |
+| `density` | `'comfortable' \| 'compact'` | No | 행 밀도. @default "comfortable" |
+| `showIndex` | `boolean` | No | 순번 열을 표시합니다. @default false |
+| `showMoveButtons` | `boolean` | No | 위/아래 이동 버튼을 표시합니다. @default true |
+| `disabled` | `boolean` | No | 전체 정렬 조작을 비활성화합니다. @default false |
+| `emptyLabel` | `React.ReactNode` | No | 항목이 없을 때 표시할 문구. |
+| `getItemLabel` | `(item: ReorderItem, index: number) = string` | No | label이 ReactNode일 때 접근성 라벨을 별도로 지정합니다. |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| disabled | 전체 정렬 조작을 비활성화합니다. @default false 타입 계약: boolean |
+| emptyLabel | 항목이 없을 때 표시할 문구. 타입 계약: React.ReactNode |
+| 변형·상태 · 항목 없음 | variants-states 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다. |
+| 반응형 · 조밀한 밀도와 순번 | responsive 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다. |
+
+## Behavior and interaction
+
+- onReorder가 없으면 조작 가능한 no-op 상태를 만들지 않고 행 drag, keyboard 이동, 이동 버튼을 읽기 전용으로 전환합니다. trailing control은 독립적으로 계속 사용할 수 있습니다.
+- density comfortable|compact · showIndex(순번 열) · showMoveButtons(위/아래 버튼) · disabled(전체 잠금) · emptyLabel(빈 목록 문구) · getItemLabel(item, index)(label이 ReactNode일 때 접근성 라벨).
+- Compare against common reorderable-list expectations before changing it: drag reorder, button fallback, keyboard reorder, disabled rows, empty state, live movement announcement, stable item ids, and clear drop indicator.
+- 끝단에서 포커스를 잃지 않습니다. 항목을 맨 위·맨 아래로 옮기면 방금 누른 이동 버튼이 더 이상 쓸 수 없게 되는데, 이때 native disabled로 바꾸면 포커스가 로 떨어져 키보드 사용자가 위치를 잃습니다. 대신 aria-disabled를 써서 버튼은 포커스를 유지한 채 이동만 거부합니다(APG focusable disabled control 관례). 시각 처리(흐린 배경·not-allowed 커서)는 동일합니다.
+- ReorderList — 대시보드 위젯, 규칙, 큐처럼 같은 레벨의 항목 순서를 바꾸는 범용 sortable list primitive입니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | 끝단에서 포커스를 잃지 않습니다. 항목을 맨 위·맨 아래로 옮기면 방금 누른 이동 버튼이 더 이상 쓸 수 없게 되는데, 이때 native disabled로 바꾸면 포커스가 로 떨어져 키보드 사용자가 위치를 잃습니다. 대신 aria-disabled를 써서 버튼은 포커스를 유지한 채 이동만 거부합니다(APG focusable disabled control 관례). 시각 처리(흐린 배경·not-allowed 커서)는 동일합니다. |
+| 명시 규칙 2 | 이동 수단은 세 가지가 모두 있어야 합니다: 드래그, 문맥명이 붙은 위/아래 버튼("{항목} 위로 이동"), 그리고 행에서 Alt+↑/↓(WCAG 2.5.7 — 드래그 대체 수단). |
+| 명시 규칙 3 | - 끝단에서 포커스를 잃지 않습니다. 항목을 맨 위·맨 아래로 옮기면 방금 누른 이동 버튼이 더 이상 쓸 수 없게 되는데, 이때 native disabled로 바꾸면 포커스가 로 떨어져 키보드 사용자가 위치를 잃습니다. 대신 aria-disabled를 써서 버튼은 포커스를 유지한 채 이동만 거부합니다(APG focusable disabled control 관례). 시각 처리(흐린 배경·not-allowed 커서)는 동일합니다. - 이동 수단은 세 가지가 모두 있어야 합니다: 드래그, 문맥명이 붙은 위/아래 버튼("{항목} 위로 이동"), 그리고 행에서 Alt+↑/↓… |
+| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
+| --color-semantic-fill-alternative | light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12) |
+
+## Responsive
+
+- density comfortable|compact · showIndex(순번 열) · showMoveButtons(위/아래 버튼) · disabled(전체 잠금) · emptyLabel(빈 목록 문구) · getItemLabel(item, index)(label이 ReactNode일 때 접근성 라벨).
+- - items {id,label,detail,trailing,disabled}[] - onReorder(nextIds, meta): 드래그, 버튼, Alt+↑/↓ 이동 후 호출 - onReorder가 없으면 조작 가능한 no-op 상태를 만들지 않고 행 drag, keyboard 이동, 이동 버튼을 읽기 전용으로 전환합니다. trailing control은 독립적으로 계속 사용할 수 있습니다. - density comfortable|compact · showIndex(순번 열) · showMoveButtons(위/아래 버튼) · disabled(전체 잠금) · em….
+- 320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.
+- 고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다.
+
+## Content and writing
+
+- items {id,label,detail,trailing,disabled}[].
+- density comfortable|compact · showIndex(순번 열) · showMoveButtons(위/아래 버튼) · disabled(전체 잠금) · emptyLabel(빈 목록 문구) · getItemLabel(item, index)(label이 ReactNode일 때 접근성 라벨).
+- role prop은 ul 기본 시맨틱을 대체할 때만 쓰고, 목록 의미를 잃는 값(예: presentation)은 주지 마세요. 목록 이름은 aria-label로 지정합니다(기본 "정렬 가능한 목록").
+- - items {id,label,detail,trailing,disabled}[] - onReorder(nextIds, meta): 드래그, 버튼, Alt+↑/↓ 이동 후 호출 - onReorder가 없으면 조작 가능한 no-op 상태를 만들지 않고 행 drag, keyboard 이동, 이동 버튼을 읽기 전용으로 전환합니다. trailing control은 독립적으로 계속 사용할 수 있습니다. - density comfortable|compact · showIndex(순번 열) · showMoveButtons(위/아래 버튼) · disabled(전체 잠금) · em….
+
+## Accessibility
+
+- onReorder가 없으면 조작 가능한 no-op 상태를 만들지 않고 행 drag, keyboard 이동, 이동 버튼을 읽기 전용으로 전환합니다. trailing control은 독립적으로 계속 사용할 수 있습니다.
+- density comfortable|compact · showIndex(순번 열) · showMoveButtons(위/아래 버튼) · disabled(전체 잠금) · emptyLabel(빈 목록 문구) · getItemLabel(item, index)(label이 ReactNode일 때 접근성 라벨).
+- Compare against common reorderable-list expectations before changing it: drag reorder, button fallback, keyboard reorder, disabled rows, empty state, live movement announcement, stable item ids, and clear drop indicator.
+- 끝단에서 포커스를 잃지 않습니다. 항목을 맨 위·맨 아래로 옮기면 방금 누른 이동 버튼이 더 이상 쓸 수 없게 되는데, 이때 native disabled로 바꾸면 포커스가 로 떨어져 키보드 사용자가 위치를 잃습니다. 대신 aria-disabled를 써서 버튼은 포커스를 유지한 채 이동만 거부합니다(APG focusable disabled control 관례). 시각 처리(흐린 배경·not-allowed 커서)는 동일합니다.
+- 이동 수단은 세 가지가 모두 있어야 합니다: 드래그, 문맥명이 붙은 위/아래 버튼("{항목} 위로 이동"), 그리고 행에서 Alt+↑/↓(WCAG 2.5.7 — 드래그 대체 수단).
+
+## Do / Don't
+
+| Kind | Guidance |
+| --- | --- |
+| Do | 작업 단계·웨이포인트 저작처럼 번호가 의미인 시퀀스는 StepList를 사용합니다. |
+| Don't | onReorder가 없으면 조작 가능한 no-op 상태를 만들지 않고 행 drag, keyboard 이동, 이동 버튼을 읽기 전용으로 전환합니다. trailing control은 독립적으로 계속 사용할 수 있습니다. |
+| Do | Reorder List가 소유하는 Content 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다. |
+| Don't | 끝단에서 포커스를 잃지 않습니다. 항목을 맨 위·맨 아래로 옮기면 방금 누른 이동 버튼이 더 이상 쓸 수 없게 되는데, 이때 native disabled로 바꾸면 포커스가 로 떨어져 키보드 사용자가 위치를 잃습니다. 대신 aria-disabled를 써서 버튼은 포커스를 유지한 채 이동만 거부합니다(APG focusable disabled control 관례). 시각 처리(흐린 배경·not-allowed 커서)는 동일합니다. |
+
+## Exceptions
+
+- 제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 ReorderList의 범용 API에 넣지 않습니다.
+- 접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `ContentEditor` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `ExpandableText` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `LogViewer` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `ReactionBar` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `SourceDisclosure` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `StatList` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<ReorderList items={panels} onReorder={setOrder} />
+<ReorderList items={panels} showIndex density="compact" showMoveButtons={false} onReorder={setOrder} />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-fill-alternative`
+- `--color-semantic-fill-normal`
+- `--color-semantic-focus-indicator`
+- `--color-semantic-label-assistive`
+- `--color-semantic-label-disable`
+- `--color-semantic-label-neutral`
+- `--color-semantic-label-normal`
+- `--color-semantic-line-normal-normal`
+- `--color-semantic-primary-normal`
+- `--color-semantic-primary-surface-normal`
+- `--dur-fast`
+- `--ease-out`
+- `--font-sans`
+- `--fw-medium`
+- `--fw-semibold`
+- `--label1-line`
+- `--label1-size`
+- `--label2-line`
+- `--label2-size`
+- `--radius-md`
+- `--radius-sm`
+
+### Source contracts
+
+- `components/content/ReorderList.jsx`
+- `components/content/ReorderList.d.ts`
+- `components/content/ReorderList.prompt.md`
+- `stories/ContentReorderList.stories.jsx`
+
+## Migration
+
+- onReorder가 없으면 조작 가능한 no-op 상태를 만들지 않고 행 drag, keyboard 이동, 이동 버튼을 읽기 전용으로 전환합니다. trailing control은 독립적으로 계속 사용할 수 있습니다.
+- - items {id,label,detail,trailing,disabled}[] - onReorder(nextIds, meta): 드래그, 버튼, Alt+↑/↓ 이동 후 호출 - onReorder가 없으면 조작 가능한 no-op 상태를 만들지 않고 행 drag, keyboard 이동, 이동 버튼을 읽기 전용으로 전환합니다. trailing control은 독립적으로 계속 사용할 수 있습니다. - density comfortable|compact · showIndex(순번 열) · showMoveButtons(위/아래 버튼) · disabled(전체 잠금) · em….
+- 현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.
+- 대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다.
+
+## Sources
+
+- ReorderList prompt contract: `components/content/ReorderList.prompt.md`
+- Storybook implementation evidence: `stories/ContentReorderList.stories.jsx`

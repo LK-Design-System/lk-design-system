@@ -5,10 +5,10 @@
 | Type | Current register |
 | Status | Current |
 | Owner | Frontend platform · Design system owner |
-| Last reviewed | 2026-07-20 |
+| Last reviewed | 2026-07-24 |
 | Update | `npm run report:inventory` · `npm run check:inventory` |
 
-Storybook의 579개 스토리 역할·공개 여부·소유 컴포넌트와 190개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
+Storybook의 528개 스토리 역할·공개 여부·소유 컴포넌트와 166개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
 
 이 레포는 패키지 중심의 LK ROBOTICS 핵심 디자인 시스템입니다.
 
@@ -32,6 +32,7 @@ Storybook의 579개 스토리 역할·공개 여부·소유 컴포넌트와 190�
 - `styles.css`: 토큰 import용 최상위 CSS 진입점
 - `src/`: aggregate root와 Core·Theme·Product·Robotics의 생성된 패키지 진입 파일
 - `docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json`: public export와 internal module의 owner layer/provenance authority
+- `docs/components/`: 179개 entry, 148개 의사결정 가이드, Progress Board, LLM bundle과 machine-readable component registry
 - `scripts/`: 패키지 유지보수 스크립트
 - `.storybook/`: Storybook 런타임 설정
 - `stories/`: 인터랙티브 컴포넌트 문서와 시각 예시
@@ -47,12 +48,12 @@ WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`
 
 - 현재 React component entry export: 179개
 - 공개 named export: 182개
-- Storybook 전체 story: 524개
-- Storybook public story: 373개
-- Storybook hidden story: 150개
+- Storybook 전체 story: 528개
+- Storybook public story: 377개
+- Storybook hidden story: 151개
 - 숨김 visual parity story: 79개
-- visual inventory React story: 524개
-- 접근성 guard 검사 대상 implementation story: 524개
+- visual inventory React story: 528개
+- 접근성 guard 검사 대상 implementation story: 528개
 
 ## 생성 영역
 

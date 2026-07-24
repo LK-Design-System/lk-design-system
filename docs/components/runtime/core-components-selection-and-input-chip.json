@@ -1,0 +1,390 @@
+{
+  "slug": "core-components-selection-and-input-chip",
+  "title": "Chip",
+  "storybookTitle": "LDS Core/Components/Selection and Input/Chip",
+  "layer": "Core",
+  "family": "Selection and Input",
+  "primaryOwner": "Chip",
+  "ownerComponents": [
+    "Chip"
+  ],
+  "supportingComponents": [
+    "FilterChip",
+    "MultiSelectChip"
+  ],
+  "purpose": "공간을 적게 쓰면서 선택·필터·다중 선택 상태를 반복해서 바꿀 때 적합합니다. 중요한 실행에는 Button을, 조작할 수 없는 상태 표기에는 Badge나 Tag를 사용하세요.",
+  "useWhen": [
+    "공간을 적게 쓰면서 선택·필터·다중 선택 상태를 반복해서 바꿀 때 적합합니다. 중요한 실행에는 Button을, 조작할 수 없는 상태 표기에는 Badge나 Tag를 사용하세요.",
+    "Use selected (or its active alias) for a pinned or selected state, and pressed to state the aria-pressed value explicitly when it differs from the visual selection.",
+    "Selected text uses the current theme's normal label foreground. The tinted surface, accent border, and pressed/selected semantics carry selection, so selection does not depend on blue text alone.",
+    "Use disabled for an unavailable action chip."
+  ],
+  "avoidWhen": [
+    "An onClick chip is a real . The element default is now onClick ? \"button\" : \"span\", so a clickable chip is reachable by Tab and activated by Enter/Space instead of being a roleless that only responds to a mouse. An explicit as still wins; as=\"a\" + href keeps link semantics. If a consumer forces a non-button element wh….",
+    "Toggle chips expose aria-pressed. When a chip is interactive and a toggle state was supplied (selected, active, or pressed), the button carries aria-pressed, so selection is announced instead of being carried by the tinted surface alone.",
+    "A non-interactive selected chip cannot own aria-pressed — a with no role must not claim a pressed state. It appends the visually hidden selectedLabel (선택됨) instead, so the selected state still reaches assistive tech without changing the rendered visual.",
+    "- An onClick chip is a real . The element default is now onClick ? \"button\" : \"span\", so a clickable chip is reachable by Tab and activated by Enter/Space instead of being a roleless that only responds to a mouse. An explicit as still wins; as=\"a\" + href keeps link semantics. If a consumer forces a non-button element…."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "Chip의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Selected Label",
+      "rule": "Visually hidden text appended to a non-interactive selected chip so the selected state is not carried by colour alone. Pass null to opt out."
+    },
+    {
+      "part": "Children",
+      "rule": "children 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "as",
+      "type": "React.ElementType",
+      "required": false,
+      "description": "Render element. Use \"a\" for linked chips.",
+      "owner": "ChipProps"
+    },
+    {
+      "name": "size",
+      "type": "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xsmall\" | \"small\" | \"medium\" | \"large\"",
+      "required": false,
+      "description": "chip size mapped from xsmall/small/medium/large. @default \"md\"",
+      "owner": "ChipProps"
+    },
+    {
+      "name": "variant",
+      "type": "\"default\" | \"solid\" | \"outlined\"",
+      "required": false,
+      "description": "chip visual variant mapped through LK theme tokens. @default \"default\"",
+      "owner": "ChipProps"
+    },
+    {
+      "name": "selected",
+      "type": "boolean",
+      "required": false,
+      "description": "Selected or pinned chip state. @default false",
+      "owner": "ChipProps"
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "required": false,
+      "description": "Active alias. @default false",
+      "owner": "ChipProps"
+    },
+    {
+      "name": "pressed",
+      "type": "boolean",
+      "required": false,
+      "description": "Explicit toggle state. Overrides selected/active when deciding the aria-pressed value of an interactive chip.",
+      "owner": "ChipProps"
+    },
+    {
+      "name": "selectedLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Visually hidden text appended to a non-interactive selected chip so the selected state is not carried by colour alone. Pass null to opt out.",
+      "owner": "ChipProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Disable pointer activation and show unavailable styling. @default false",
+      "owner": "ChipProps"
+    },
+    {
+      "name": "disable",
+      "type": "boolean",
+      "required": false,
+      "description": "Disable alias. @default false",
+      "owner": "ChipProps"
+    },
+    {
+      "name": "leading",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional leading icon content.",
+      "owner": "ChipProps"
+    },
+    {
+      "name": "thumbnail",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional thumbnail content. Takes precedence over leading.",
+      "owner": "ChipProps"
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "ChipProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "ChipProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "variant",
+      "rule": "chip visual variant mapped through LK theme tokens. @default \"default\" 타입 계약: \"default\" | \"solid\" | \"outlined\""
+    },
+    {
+      "state": "selected",
+      "rule": "Selected or pinned chip state. @default false 타입 계약: boolean"
+    },
+    {
+      "state": "active",
+      "rule": "Active alias. @default false 타입 계약: boolean"
+    },
+    {
+      "state": "pressed",
+      "rule": "Explicit toggle state. Overrides selected/active when deciding the aria-pressed value of an interactive chip. 타입 계약: boolean"
+    },
+    {
+      "state": "selectedLabel",
+      "rule": "Visually hidden text appended to a non-interactive selected chip so the selected state is not carried by colour alone. Pass null to opt out. 타입 계약: React.ReactNode"
+    },
+    {
+      "state": "disabled",
+      "rule": "Disable pointer activation and show unavailable styling. @default false 타입 계약: boolean"
+    },
+    {
+      "state": "변형·상태 · 다크 테마 선택",
+      "rule": "variants-states 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    }
+  ],
+  "behavior": [
+    "Use selected (or its active alias) for a pinned or selected state, and pressed to state the aria-pressed value explicitly when it differs from the visual selection.",
+    "selectedLabel is the visually hidden text appended to a non-interactive selected chip (default 선택됨); pass null to opt out.",
+    "Selected text uses the current theme's normal label foreground. The tinted surface, accent border, and pressed/selected semantics carry selection, so selection does not depend on blue text alone.",
+    "Keep filtering and multi-select state in selection components when the chip is acting as an input control rather than a simple action/tag.",
+    "Chip is for interactive/selectable keywords. Use Tag for uppercase display eyebrow pills and ContentBadge for non-interactive informational content labels."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Reference basis: WAI-ARIA APG Button pattern — toggle buttons, WCAG 2.2 1.4.1 Use of Colour, WCAG 2.2 4.1.2 Name, Role, Value."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "WCAG 2.2 contrast minimum sets a 4.5:1 threshold for normal-size text."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "- An onClick chip is a real . The element default is now onClick ? \"button\" : \"span\", so a clickable chip is reachable by Tab and activated by Enter/Space instead of being a roleless that only responds to a mouse. An explicit as still wins; as=\"a\" + href keeps link semantics. If a consumer forces a non-button element…"
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "- WCAG 2.2 contrast minimum sets a 4.5:1 threshold for normal-size text. - Carbon Button usage keeps hierarchy in the component treatment and states perceivable. LDS applies that conclusion to compact selected controls without copying Carbon styling. - The filled surface, border, check/pressed semantics, and weight pr…"
+    },
+    {
+      "subject": "--color-semantic-label-disable",
+      "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
+    }
+  ],
+  "responsive": [
+    "Use leading for icon content and thumbnail for compact media content.",
+    "Carbon Button usage keeps hierarchy in the component treatment and states perceivable. LDS applies that conclusion to compact selected controls without copying Carbon styling.",
+    "Chip is the WDS Action/Chip primitive for compact labels, links, and selected tags. LDS keeps the action role while mapping hover and selected visuals through LK theme tokens.",
+    "- size: xs, sm, md, lg; these map to the WDS xsmall/small/medium/large axis. - variant: default, solid, outlined. - Use selected (or its active alias) for a pinned or selected state, and pressed to state the aria-pressed value explicitly when it differs from the visual selection. - selectedLabel is the visually hidden…."
+  ],
+  "contentGuidance": [
+    "selectedLabel is the visually hidden text appended to a non-interactive selected chip (default 선택됨); pass null to opt out.",
+    "Selected text uses the current theme's normal label foreground. The tinted surface, accent border, and pressed/selected semantics carry selection, so selection does not depend on blue text alone.",
+    "Chip is for interactive/selectable keywords. Use Tag for uppercase display eyebrow pills and ContentBadge for non-interactive informational content labels.",
+    "A non-interactive selected chip cannot own aria-pressed — a with no role must not claim a pressed state. It appends the visually hidden selectedLabel (선택됨) instead, so the selected state still reaches assistive tech without changing the rendered visual."
+  ],
+  "accessibility": [
+    "Use selected (or its active alias) for a pinned or selected state, and pressed to state the aria-pressed value explicitly when it differs from the visual selection.",
+    "An onClick chip is a real . The element default is now onClick ? \"button\" : \"span\", so a clickable chip is reachable by Tab and activated by Enter/Space instead of being a roleless that only responds to a mouse. An explicit as still wins; as=\"a\" + href keeps link semantics. If a consumer forces a non-button element wh….",
+    "Toggle chips expose aria-pressed. When a chip is interactive and a toggle state was supplied (selected, active, or pressed), the button carries aria-pressed, so selection is announced instead of being carried by the tinted surface alone.",
+    "A non-interactive selected chip cannot own aria-pressed — a with no role must not claim a pressed state. It appends the visually hidden selectedLabel (선택됨) instead, so the selected state still reaches assistive tech without changing the rendered visual.",
+    "Reference basis: WAI-ARIA APG Button pattern — toggle buttons, WCAG 2.2 1.4.1 Use of Colour, WCAG 2.2 4.1.2 Name, Role, Value."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "Use selected (or its active alias) for a pinned or selected state, and pressed to state the aria-pressed value explicitly when it differs from the visual selection."
+    ],
+    [
+      "Don't",
+      "An onClick chip is a real . The element default is now onClick ? \"button\" : \"span\", so a clickable chip is reachable by Tab and activated by Enter/Space instead of being a roleless that only responds to a mouse. An explicit as still wins; as=\"a\" + href keeps link semantics. If a consumer forces a non-button element wh…."
+    ],
+    [
+      "Do",
+      "Selected text uses the current theme's normal label foreground. The tinted surface, accent border, and pressed/selected semantics carry selection, so selection does not depend on blue text alone."
+    ],
+    [
+      "Don't",
+      "Toggle chips expose aria-pressed. When a chip is interactive and a toggle state was supplied (selected, active, or pressed), the button carries aria-pressed, so selection is announced instead of being carried by the tinted surface alone."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Chip의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "FilterChip",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "MultiSelectChip",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Avatar",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "AvatarGroup",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Badge",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Notification",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "PushBadge",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Tag",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Chip>Autonomy</Chip>\n<Chip selected>EO/IR</Chip>\n<Chip size=\"xs\">XS</Chip>\n<Chip variant=\"solid\">Solid</Chip>\n<Chip variant=\"outlined\">Outlined</Chip>\n<Chip leading={<Icon name=\"filter\" size={14} />}>Filtered</Chip>\n<Chip as=\"a\" href=\"product.html?p=LKR-CP\">LKR-CP</Chip>"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-disable",
+    "--component-chip-bg",
+    "--component-chip-bg-hover",
+    "--component-chip-bg-selected",
+    "--component-chip-border",
+    "--component-chip-border-active",
+    "--component-chip-fg",
+    "--component-chip-fg-active",
+    "--component-chip-font-size-lg",
+    "--component-chip-font-size-md",
+    "--component-chip-font-size-sm",
+    "--component-chip-font-size-xs",
+    "--component-chip-font-weight",
+    "--component-chip-gap-lg",
+    "--component-chip-gap-md",
+    "--component-chip-gap-sm",
+    "--component-chip-gap-xs",
+    "--component-chip-height-lg",
+    "--component-chip-height-md",
+    "--component-chip-height-sm",
+    "--component-chip-height-xs",
+    "--component-chip-letter-spacing-lg",
+    "--component-chip-letter-spacing-md",
+    "--component-chip-letter-spacing-sm",
+    "--component-chip-letter-spacing-xs",
+    "--component-chip-media-size-lg",
+    "--component-chip-media-size-md",
+    "--component-chip-media-size-sm",
+    "--component-chip-media-size-xs",
+    "--component-chip-padding-x-lg",
+    "--component-chip-padding-x-md",
+    "--component-chip-padding-x-sm",
+    "--component-chip-padding-x-xs",
+    "--component-chip-radius-lg",
+    "--component-chip-radius-md",
+    "--component-chip-radius-sm",
+    "--component-chip-radius-xs",
+    "--component-chip-solid-bg",
+    "--component-chip-solid-border",
+    "--component-chip-solid-fg",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--radius-sm"
+  ],
+  "apiLinks": [
+    "components/feedback/Chip.jsx",
+    "components/feedback/Chip.d.ts",
+    "components/feedback/Chip.prompt.md",
+    "stories/SelectionChips.stories.jsx"
+  ],
+  "migration": [
+    "Use selected (or its active alias) for a pinned or selected state, and pressed to state the aria-pressed value explicitly when it differs from the visual selection.",
+    "- size: xs, sm, md, lg; these map to the WDS xsmall/small/medium/large axis. - variant: default, solid, outlined. - Use selected (or its active alias) for a pinned or selected state, and pressed to state the aria-pressed value explicitly when it differs from the visual selection. - selectedLabel is the visually hidden….",
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/SelectionChips.stories.jsx",
+    "entryStoryId": "lds-core-components-selection-and-input-chip--chip-selection",
+    "publicStories": [
+      {
+        "id": "lds-core-components-selection-and-input-chip--chip-selection",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-selection-and-input-chip--dark-theme-selection",
+        "name": "변형·상태 · 다크 테마 선택",
+        "role": "variants-states"
+      }
+    ],
+    "hiddenEvidence": 4
+  },
+  "sources": [
+    {
+      "label": "Chip prompt contract",
+      "path": "components/feedback/Chip.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/SelectionChips.stories.jsx"
+    },
+    {
+      "label": "WAI-ARIA APG Button pattern — toggle buttons",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/"
+    },
+    {
+      "label": "WCAG 2.2 1.4.1 Use of Colour",
+      "url": "https://www.w3.org/TR/WCAG22/#use-of-color"
+    },
+    {
+      "label": "WCAG 2.2 4.1.2 Name, Role, Value",
+      "url": "https://www.w3.org/TR/WCAG22/#name-role-value"
+    },
+    {
+      "label": "WCAG 2.2 contrast minimum",
+      "url": "https://www.w3.org/TR/WCAG22/#contrast-minimum"
+    },
+    {
+      "label": "Carbon Button usage",
+      "url": "https://carbondesignsystem.com/components/button/usage/"
+    },
+    {
+      "label": "SEED Chip benchmark",
+      "url": "https://seed-design.io/components/chip"
+    }
+  ]
+}

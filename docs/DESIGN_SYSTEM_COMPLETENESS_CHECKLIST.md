@@ -50,8 +50,9 @@ finding은 닫혔다. 다만 여섯 pinned product는 LDS를 아직 소비하지
 | 거버넌스·문서 체계 | 완료 | [`README.md`](README.md), [`OPERATING_MODEL.md`](OPERATING_MODEL.md), `check:docs` | 정책 변경 시 metadata와 index 동시 갱신 |
 | WDS parity | 완료(수락 snapshot 기준) | `references/wds/COVERAGE_COMPLETION_GATE.json`, `check:wds-alignment`, `check:wds-local-fig` | upstream WDS 변경 시 `.fig` 재수락·재감사 |
 | Foundation 지침 완성도 | 완료 | [`foundations/README.md`](foundations/README.md), [`FOUNDATION_GUIDANCE_REVIEW.json`](references/quality/FOUNDATION_GUIDANCE_REVIEW.json), `check:foundations`, `check:a11y` | canonical source 변경 시 문서·Storybook·LLM bundle 동시 재생성 |
-| 컴포넌트·API·상태 계약 | 완료 | 178 source entry / 181 named export, [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | 신규 변경마다 drift/state evidence 유지 |
-| Storybook·접근성·시각 회귀 | 완료 | 163 pages / 518 stories / 368 public / 150 hidden / 78 visual-parity, 518 Axe / violation 0 | story·baseline 변경 시 Windows canonical gate 재실행 |
+| 컴포넌트 지침 완성도 | 완료 | 179 entry / 182 export / 148 decision guide, [`components/README.md`](components/README.md), [`COMPONENT_GUIDANCE_REVIEW.json`](references/quality/COMPONENT_GUIDANCE_REVIEW.json), `check:components` | prompt·type·story·token 변경 시 registry·Markdown·LLM bundle 동시 재생성 |
+| 컴포넌트·API·상태 계약 | 완료 | 179 source entry / 182 named export, [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | 신규 변경마다 drift/state evidence 유지 |
+| Storybook·접근성·시각 회귀 | 완료 | 166 pages / 528 stories / 377 public / 151 hidden / 79 visual-parity | story·baseline 변경 시 Windows canonical gate 재실행 |
 | 패키지·소비자 계약 | 완료(RC) | Core/Theme/Product/compat workspace artifact, external Robotics RC, Windows/Linux package consumer matrix | stable publish·지원 정책 변경 시 재판정 |
 | 사람 중심 디자인 품질 | 완료 | high 14·medium 20·low 7 해결, medium 3·low 3 근거 수락, tracked 0 | 새 finding 발생 시 remediation 원장 갱신 |
 | 제품 workflow coverage | 완료(계약 범위) | 16/16 `verified`; WF-15·WF-16 boundary/evidence 종결 | 실제 제품 adoption은 제품 owner별 별도 검증 |
@@ -61,7 +62,7 @@ finding은 닫혔다. 다만 여섯 pinned product는 LDS를 아직 소비하지
 위 수치는 [`REPOSITORY_INVENTORY.md`](REPOSITORY_INVENTORY.md),
 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`,
 `references/product-frontends/COVERAGE_AUDIT.json`의 현재 값과 일치해야 한다.
-접근성 원장은 518개 implementation story, 284개 play function, Axe violation 0과
+접근성 원장은 528개 implementation story, 292개 play function, Axe violation 0과
 39개 ratcheted undersized-target signature를 기록한다. 이 39개는 신규 회귀가 아니라
 명시적 기준선이며 신규 signature는 gate가 차단한다. package readiness와 제품 채택은
 같은 판정으로 합치지 않는다.
@@ -97,6 +98,7 @@ finding은 닫혔다. 다만 여섯 pinned product는 LDS를 아직 소비하지
 | C-04 | component prompt | 분류, sibling, 외부 근거, 제품 boundary, 접근성, 의도적 차이가 prompt 계약에 기록된다. | `check:prompt-contracts` | 완료 |
 | C-05 | 중복·책임 경계 | 기존 component 확장·composition을 먼저 검토하고 동일 public 책임이 중복되지 않는다. | `check:story-subjects`, `check:avatar-duplicates`, product disposition audit | 완료 |
 | C-06 | 시각 문법 | sibling 대비 control/icon size, spacing, typography, radius, divider, state treatment의 차이가 근거를 가진다. | component prompt, parity story, `DESIGN_CONVENTION_REVIEW.json` | 완료: medium/low finding까지 수정 또는 근거 수락 |
+| C-07 | 컴포넌트 지침 완성도 | 모든 public entry가 source·type·prompt에 연결되고, 모든 비-Foundation 컴포넌트 페이지에 목적·선택·Anatomy·properties·states·behavior·정량·responsive·content·접근성·Do/Don't·예외·related·examples·token/API·migration이 있다. | [`components/component-content.json`](components/component-content.json), [`references/quality/COMPONENT_GUIDANCE_REVIEW.json`](references/quality/COMPONENT_GUIDANCE_REVIEW.json), `check:components` | 완료 |
 
 ## D. Interaction·accessibility·반응형·시각 품질
 

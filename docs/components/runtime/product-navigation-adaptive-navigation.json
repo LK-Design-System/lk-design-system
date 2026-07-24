@@ -1,0 +1,304 @@
+{
+  "slug": "product-navigation-adaptive-navigation",
+  "title": "Adaptive Navigation",
+  "storybookTitle": "LDS Product/Navigation/Adaptive Navigation",
+  "layer": "Product",
+  "family": "Navigation",
+  "primaryOwner": "NavRail",
+  "ownerComponents": [
+    "BottomNav",
+    "NavRail"
+  ],
+  "supportingComponents": [
+    "Icon"
+  ],
+  "purpose": "데스크톱 레일과 모바일 하단에서 같은 35개 최상위 목적지를 유지할 때 적합합니다. 깊은 계층에는 Side Nav를, 페이지 안 섹션 이동에는 Anchor를 사용하세요.",
+  "useWhen": [
+    "데스크톱 레일과 모바일 하단에서 같은 35개 최상위 목적지를 유지할 때 적합합니다. 깊은 계층에는 Side Nav를, 페이지 안 섹션 이동에는 Anchor를 사용하세요.",
+    "BottomNav와 동일한 icon+caption, primary ink, aria-current=\"page\"를 사용하고 control 면적만 세로 68×60과 가로 균등 분할로 달라집니다. 이 차이는 orientation과 pointer target 배치에 따른 기능 차이입니다.",
+    "SideNav의 섹션 heading, 계층 indent, badge, disclosure, panel shadow는 쓰지 않습니다. 평면 목적지 3–5개만 보여주기 때문입니다.",
+    "Fluent Nav usage — 주 목적지는 실제 link로 제공하고 짧고 스캔 가능한 이름을 사용하며 좁은 화면에서는 다른 표면으로 전환합니다."
+  ],
+  "avoidWhen": [
+    "items — { value, label, ariaLabel?, icon, href?, disabled? }. href가 있으면 native anchor, 없으면 기존 선택 button입니다. value / defaultValue / onChange. 활성은 시안 워시 + 시그널 잉크. 모바일에는 BottomNav를 쓰세요.",
+    "Classification: LK Product Extension. 동등한 중요도의 평면형 주요 목적지 3–5개에 사용하고, 같은 목적지 집합의 모바일 표현은 BottomNav로 전환합니다. 계층형 SideNav와 동시에 주 탐색으로 사용하지 않습니다.",
+    "- items — { value, label, ariaLabel?, icon, href?, disabled? }. href가 있으면 native anchor, 없으면 기존 선택 button입니다. value / defaultValue / onChange. 활성은 시안 워시 + 시그널 잉크. 모바일에는 BottomNav를 쓰세요. - renderLink — router 통합 시 renderLink={(item, { href, ...props }) = }로 native anchor만 치환합니다. - 긴 label은 68px 레일 안에서 한 줄 ellipsis로 줄이고….",
+    "Adaptive Navigation가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "NavRail의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Render Link",
+      "rule": "href 항목을 router link로 치환하는 렌더 훅. 기본은 native anchor입니다."
+    },
+    {
+      "part": "Render Link",
+      "rule": "href 항목을 router link로 치환하는 렌더 훅. 기본은 native anchor입니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "items",
+      "type": "BottomNavItem[]",
+      "required": true,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "BottomNavProps"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "BottomNavProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "BottomNavProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) = void",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "BottomNavProps"
+    },
+    {
+      "name": "renderLink",
+      "type": "(item: BottomNavItem, props: React.AnchorHTMLAttributes) = React.ReactElement",
+      "required": false,
+      "description": "href 항목을 router link로 치환하는 렌더 훅. 기본은 native anchor입니다.",
+      "owner": "BottomNavProps"
+    },
+    {
+      "name": "items",
+      "type": "NavRailItem[]",
+      "required": true,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "NavRailProps"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "NavRailProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "NavRailProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) = void",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "NavRailProps"
+    },
+    {
+      "name": "renderLink",
+      "type": "(item: NavRailItem, props: React.AnchorHTMLAttributes) = React.ReactElement",
+      "required": false,
+      "description": "href 항목을 router link로 치환하는 렌더 훅. 기본은 native anchor입니다.",
+      "owner": "NavRailProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "반응형 · 데스크톱 레일과 모바일 하단 탐색",
+      "rule": "responsive 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    }
+  ],
+  "behavior": [
+    "items — { value, label, ariaLabel?, icon, href?, disabled? }. href가 있으면 native anchor, 없으면 기존 선택 button입니다. value / defaultValue / onChange. 활성은 시안 워시 + 시그널 잉크. 모바일에는 BottomNav를 쓰세요.",
+    "BottomNav와 동일한 icon+caption, primary ink, aria-current=\"page\"를 사용하고 control 면적만 세로 68×60과 가로 균등 분할로 달라집니다. 이 차이는 orientation과 pointer target 배치에 따른 기능 차이입니다.",
+    "- items — { value, label, ariaLabel?, icon, href?, disabled? }. href가 있으면 native anchor, 없으면 기존 선택 button입니다. value / defaultValue / onChange. 활성은 시안 워시 + 시그널 잉크. 모바일에는 BottomNav를 쓰세요. - renderLink — router 통합 시 renderLink={(item, { href, ...props }) = }로 native anchor만 치환합니다. - 긴 label은 68px 레일 안에서 한 줄 ellipsis로 줄이고….",
+    "- BottomNav와 동일한 icon+caption, primary ink, aria-current=\"page\"를 사용하고 control 면적만 세로 68×60과 가로 균등 분할로 달라집니다. 이 차이는 orientation과 pointer target 배치에 따른 기능 차이입니다. - SideNav의 섹션 heading, 계층 indent, badge, disclosure, panel shadow는 쓰지 않습니다. 평면 목적지 3–5개만 보여주기 때문입니다. - anchor와 button의 padding, radius, fill, color, disabled o….",
+    "NavRail의 controlled/uncontrolled 경계와 callback 순서는 공개 타입 계약을 따릅니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "긴 label은 68px 레일 안에서 한 줄 ellipsis로 줄이고 title/ariaLabel로 전체 이름을 유지합니다. 아이콘은 장식으로 처리합니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "BottomNav와 동일한 icon+caption, primary ink, aria-current=\"page\"를 사용하고 control 면적만 세로 68×60과 가로 균등 분할로 달라집니다. 이 차이는 orientation과 pointer target 배치에 따른 기능 차이입니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "SideNav의 섹션 heading, 계층 indent, badge, disclosure, panel shadow는 쓰지 않습니다. 평면 목적지 3–5개만 보여주기 때문입니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "Classification: LK Product Extension. 동등한 중요도의 평면형 주요 목적지 3–5개에 사용하고, 같은 목적지 집합의 모바일 표현은 BottomNav로 전환합니다. 계층형 SideNav와 동시에 주 탐색으로 사용하지 않습니다."
+    },
+    {
+      "subject": "--caption2-size",
+      "rule": "11px"
+    }
+  ],
+  "responsive": [
+    "items — { value, label, ariaLabel?, icon, href?, disabled? }. href가 있으면 native anchor, 없으면 기존 선택 button입니다. value / defaultValue / onChange. 활성은 시안 워시 + 시그널 잉크. 모바일에는 BottomNav를 쓰세요.",
+    "Fluent Nav usage — 주 목적지는 실제 link로 제공하고 짧고 스캔 가능한 이름을 사용하며 좁은 화면에서는 다른 표면으로 전환합니다.",
+    "NavRail — 세로 아이콘+라벨 내비게이션 레일(데스크톱 사이드 내비).",
+    "Classification: LK Product Extension. 동등한 중요도의 평면형 주요 목적지 3–5개에 사용하고, 같은 목적지 집합의 모바일 표현은 BottomNav로 전환합니다. 계층형 SideNav와 동시에 주 탐색으로 사용하지 않습니다."
+  ],
+  "contentGuidance": [
+    "items — { value, label, ariaLabel?, icon, href?, disabled? }. href가 있으면 native anchor, 없으면 기존 선택 button입니다. value / defaultValue / onChange. 활성은 시안 워시 + 시그널 잉크. 모바일에는 BottomNav를 쓰세요.",
+    "긴 label은 68px 레일 안에서 한 줄 ellipsis로 줄이고 title/ariaLabel로 전체 이름을 유지합니다. 아이콘은 장식으로 처리합니다.",
+    "Fluent Nav usage — 주 목적지는 실제 link로 제공하고 짧고 스캔 가능한 이름을 사용하며 좁은 화면에서는 다른 표면으로 전환합니다.",
+    "WAI-ARIA landmark regions — landmark와 aria-current=\"page\"를 유지합니다. nav의 기본 aria-label은 '주 탐색'이며 소비자가 전달한 aria-label이 우선합니다."
+  ],
+  "accessibility": [
+    "BottomNav와 동일한 icon+caption, primary ink, aria-current=\"page\"를 사용하고 control 면적만 세로 68×60과 가로 균등 분할로 달라집니다. 이 차이는 orientation과 pointer target 배치에 따른 기능 차이입니다.",
+    "WAI-ARIA landmark regions — landmark와 aria-current=\"page\"를 유지합니다. nav의 기본 aria-label은 '주 탐색'이며 소비자가 전달한 aria-label이 우선합니다.",
+    "- BottomNav와 동일한 icon+caption, primary ink, aria-current=\"page\"를 사용하고 control 면적만 세로 68×60과 가로 균등 분할로 달라집니다. 이 차이는 orientation과 pointer target 배치에 따른 기능 차이입니다. - SideNav의 섹션 heading, 계층 indent, badge, disclosure, panel shadow는 쓰지 않습니다. 평면 목적지 3–5개만 보여주기 때문입니다. - anchor와 button의 padding, radius, fill, color, disabled o….",
+    "- Fluent Nav usage — 주 목적지는 실제 link로 제공하고 짧고 스캔 가능한 이름을 사용하며 좁은 화면에서는 다른 표면으로 전환합니다. - Carbon UI shell usage — shell 탐색과 global utility를 분리합니다. NavRail은 제품 내부의 평면 주 탐색만 담당합니다. - WAI-ARIA landmark regions — landmark와 aria-current=\"page\"를 유지합니다. nav의 기본 aria-label은 '주 탐색'이며 소비자가 전달한 aria-label이 우선합니다.",
+    "native semantic을 우선하며 사용자에게 보이는 이름과 접근 가능한 이름이 같은 목적을 설명하게 합니다."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "BottomNav와 동일한 icon+caption, primary ink, aria-current=\"page\"를 사용하고 control 면적만 세로 68×60과 가로 균등 분할로 달라집니다. 이 차이는 orientation과 pointer target 배치에 따른 기능 차이입니다."
+    ],
+    [
+      "Don't",
+      "items — { value, label, ariaLabel?, icon, href?, disabled? }. href가 있으면 native anchor, 없으면 기존 선택 button입니다. value / defaultValue / onChange. 활성은 시안 워시 + 시그널 잉크. 모바일에는 BottomNav를 쓰세요."
+    ],
+    [
+      "Do",
+      "SideNav의 섹션 heading, 계층 indent, badge, disclosure, panel shadow는 쓰지 않습니다. 평면 목적지 3–5개만 보여주기 때문입니다."
+    ],
+    [
+      "Don't",
+      "Classification: LK Product Extension. 동등한 중요도의 평면형 주요 목적지 3–5개에 사용하고, 같은 목적지 집합의 모바일 표현은 BottomNav로 전환합니다. 계층형 SideNav와 동시에 주 탐색으로 사용하지 않습니다."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 NavRail의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "BottomNav",
+      "relationship": "같은 페이지가 소유하는 공개 primitive 또는 조합 요소입니다."
+    },
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Anchor",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Breadcrumb",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Footer",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "SideNav",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Steps",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Toolbar",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<NavRail defaultValue=\"docs\" onChange={setTab} items={[\n  { value: 'docs', label: '문서', href: '/docs', icon: <Icon name=\"document\" size={22} /> },\n  { value: 'components', label: '컴포넌트', href: '/components', icon: <Icon name=\"layers\" size={22} /> },\n  { value: 'alerts', label: '알림', href: '/alerts', icon: <Icon name=\"bell\" size={22} /> },\n]} />"
+    }
+  ],
+  "tokens": [
+    "--caption2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-surface-normal",
+    "--color-semantic-primary-surface-strong",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-medium",
+    "--radius-lg",
+    "--radius-xl"
+  ],
+  "apiLinks": [
+    "components/navigation/BottomNav.jsx",
+    "components/navigation/BottomNav.d.ts",
+    "components/navigation/BottomNav.prompt.md",
+    "components/navigation/NavRail.jsx",
+    "components/navigation/NavRail.d.ts",
+    "components/navigation/NavRail.prompt.md",
+    "stories/NavigationAdaptive.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/NavigationAdaptive.stories.jsx",
+    "entryStoryId": "lds-product-navigation-adaptive-navigation--native-destinations",
+    "publicStories": [
+      {
+        "id": "lds-product-navigation-adaptive-navigation--native-destinations",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-navigation-adaptive-navigation--compact-navigation",
+        "name": "반응형 · 데스크톱 레일과 모바일 하단 탐색",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 3
+  },
+  "sources": [
+    {
+      "label": "NavRail prompt contract",
+      "path": "components/navigation/NavRail.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/NavigationAdaptive.stories.jsx"
+    },
+    {
+      "label": "Fluent Nav usage",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/nav/usage"
+    },
+    {
+      "label": "Carbon UI shell usage",
+      "url": "https://carbondesignsystem.com/components/UI-shell-header/usage/"
+    },
+    {
+      "label": "WAI-ARIA landmark regions",
+      "url": "https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/"
+    }
+  ]
+}

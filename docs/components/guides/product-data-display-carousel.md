@@ -1,0 +1,178 @@
+# Carousel
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Display |
+| Owner | `Carousel` |
+| Storybook | `LDS Product/Data/Display/Carousel` |
+| Source | `../component-content.json#product-data-display-carousel` |
+
+제품 이미지나 작업 장면처럼 같은 맥락의 미디어를 차례로 살펴볼 때 적합합니다. 모든 항목을 동시에 비교해야 하거나 각 항목에 복잡한 조작이 필요하면 Carousel 대신 Grid 또는 List를 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- 제품 이미지나 작업 장면처럼 같은 맥락의 미디어를 차례로 살펴볼 때 적합합니다. 모든 항목을 동시에 비교해야 하거나 각 항목에 복잡한 조작이 필요하면 Carousel 대신 Grid 또는 List를 사용하세요.
+- 구조 — 루트는 role="region" + aria-roledescription="carousel"이고 label(기본 캐러셀)이 접근 이름입니다. 페이지 랜드마크로 올리고 싶지 않으면 role="group"을 직접 넘겨 덮어씁니다. 각 슬라이드는 role="group" + aria-roledescription="slide"이고 이름은 N / 전체, slideLabels를 주면 이름, N / 전체가 됩니다.
+- 화면 밖 슬라이드 — 현재 슬라이드가 아닌 슬라이드는 inert와 aria-hidden을 함께 받습니다. overflow로 가려졌을 뿐인 링크·버튼이 Tab 순서와 접근성 트리에 남지 않게 하려는 것으로, Dimmer가 가려진 영역을 처리하는 방식과 같습니다. 현재 슬라이드는 data-carousel-slide="current", 나머지는 "offscreen"입니다.
+- 컨트롤 겹침 영역 — 컨트롤은 뷰포트 위에 겹쳐 그려지므로 슬라이드 콘텐츠와 안전 영역을 나눠야 합니다. 하단: 일시정지(좌하단)와 도트(하단 중앙)를 위해 슬라이드 하단 약 56px을 비우세요. 측면: 이전·다음 화살표는 세로 중앙 좌우에 놓여 텍스트·CTA를 가립니다 — 그래서 화살표는 미디어(이미지) 슬라이드용이고, 텍스트·CTA가 있는 프로모션/배너 슬라이드는 showArrows={false}로 도트만 쓰거나(권장) 콘텐츠가 좌우 약 52px 안전 여백을 확보해야 합니다. 배너형 슬라이드의 CTA는 sm이 아닌 기본(40px) 크기를 권장합니다.
+
+### 사용하지 않음
+
+- previousLabel / nextLabel / playLabel / pauseLabel — 컨트롤의 접근 이름 override. 기본값은 모두 한국어이며 아이콘은 aria-hidden입니다. 점 인디케이터는 현재 위치를 aria-current="true"로 노출해 폭·색 변화에만 의존하지 않습니다.
+- 도트 대비 — 도트는 흰 채움에 스크림 링(1px)을 둘러 어두운 미디어뿐 아니라 밝은 프로모션 슬라이드 위에서도 3:1 비텍스트 대비를 스스로 확보합니다(WCAG 1.4.11). 전환 컨트롤의 가시성이 슬라이드 배경에 의존하지 않습니다.
+- 알림 — 상시 마운트된 시각적 숨김 라이브 리전이 현재 슬라이드 위치를 전달합니다. 자체 회전 중에는 aria-live="off"(사용자가 요청하지 않은 변화를 읽지 않음), 멈춘 뒤 사용자가 넘길 때는 polite입니다.
+- 모션 — 트랙 이동과 점 확장은 인라인 transition이므로 prefers-reduced-motion: reduce에서 transition:none!important로 무력화합니다(!important가 없으면 규칙이 인라인 스타일에 밀려 무시됩니다).
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| Root | Carousel의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다. |
+| Label | 캐러셀 영역의 접근 이름. @default "캐러셀" |
+| Slide Labels | 슬라이드별 이름. 위치 표기 N / 전체 앞에 붙습니다. |
+| Previous Label | 이전 버튼의 접근 이름. @default "이전 슬라이드" |
+| Next Label | 다음 버튼의 접근 이름. @default "다음 슬라이드" |
+| Play Label | 정지 상태 회전 컨트롤의 접근 이름. @default "자동 재생 시작" |
+| Pause Label | 재생 상태 회전 컨트롤의 접근 이름. @default "자동 재생 일시정지" |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `slides` | `React.ReactNode[]` | Yes | 슬라이드 — 임의의 노드(이미지, 카드). |
+| `label` | `string` | No | 캐러셀 영역의 접근 이름. @default "캐러셀" |
+| `slideLabels` | `string[]` | No | 슬라이드별 이름. 위치 표기 N / 전체 앞에 붙습니다. |
+| `showDots` | `boolean` | No | 점 인디케이터. @default true |
+| `showArrows` | `boolean` | No | 이전/다음 화살표. @default true |
+| `autoPlay` | `boolean` | No | 자동 회전. 일시정지 컨트롤이 함께 렌더됩니다. @default false |
+| `interval` | `number` | No | 자동 회전 간격(ms). @default 5000 |
+| `previousLabel` | `string` | No | 이전 버튼의 접근 이름. @default "이전 슬라이드" |
+| `nextLabel` | `string` | No | 다음 버튼의 접근 이름. @default "다음 슬라이드" |
+| `playLabel` | `string` | No | 정지 상태 회전 컨트롤의 접근 이름. @default "자동 재생 시작" |
+| `pauseLabel` | `string` | No | 재생 상태 회전 컨트롤의 접근 이름. @default "자동 재생 일시정지" |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| 변형·상태 · 컨트롤 구성 | variants-states 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다. |
+| 반응형 · 320px | responsive 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다. |
+
+## Behavior and interaction
+
+- slides — 노드 배열. showDots / showArrows — 토글. 양 끝에서 순환합니다.
+- 화면 밖 슬라이드 — 현재 슬라이드가 아닌 슬라이드는 inert와 aria-hidden을 함께 받습니다. overflow로 가려졌을 뿐인 링크·버튼이 Tab 순서와 접근성 트리에 남지 않게 하려는 것으로, Dimmer가 가려진 영역을 처리하는 방식과 같습니다. 현재 슬라이드는 data-carousel-slide="current", 나머지는 "offscreen"입니다.
+- - slides — 노드 배열. showDots / showArrows — 토글. 양 끝에서 순환합니다. - 구조 — 루트는 role="region" + aria-roledescription="carousel"이고 label(기본 캐러셀)이 접근 이름입니다. 페이지 랜드마크로 올리고 싶지 않으면 role="group"을 직접 넘겨 덮어씁니다. 각 슬라이드는 role="group" + aria-roledescription="slide"이고 이름은 N / 전체, slideLabels를 주면 이름, N / 전체가 됩니다. - 화면 밖 슬라이드 — 현재 슬라이드가 아닌 슬….
+- Carousel의 controlled/uncontrolled 경계와 callback 순서는 공개 타입 계약을 따릅니다.
+- 상태 변화 중에도 accessible name, focus 위치와 레이아웃 기준점을 예고 없이 잃지 않습니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | autoPlay / interval — 자동 회전은 opt-in입니다. 켜면 일시정지 컨트롤이 첫 번째 포커스 대상으로 렌더되고(WCAG 2.2.2), 포인터가 올라가거나 내부로 포커스가 들어오면 회전이 멈추며, 이전·다음·점을 누르면 회전이 완전히 멈춥니다(APG). 회전을 멈추는 수단 없이 움직이는 콘텐츠를 5초 넘게 두지 마세요. CTA가 있는 프로모션 배너는 읽고 누를 시간이 필요하므로 interval을 5초 미만으로 줄이지 마세요. |
+| 명시 규칙 2 | 도트 대비 — 도트는 흰 채움에 스크림 링(1px)을 둘러 어두운 미디어뿐 아니라 밝은 프로모션 슬라이드 위에서도 3:1 비텍스트 대비를 스스로 확보합니다(WCAG 1.4.11). 전환 컨트롤의 가시성이 슬라이드 배경에 의존하지 않습니다. |
+| 명시 규칙 3 | 컨트롤 겹침 영역 — 컨트롤은 뷰포트 위에 겹쳐 그려지므로 슬라이드 콘텐츠와 안전 영역을 나눠야 합니다. 하단: 일시정지(좌하단)와 도트(하단 중앙)를 위해 슬라이드 하단 약 56px을 비우세요. 측면: 이전·다음 화살표는 세로 중앙 좌우에 놓여 텍스트·CTA를 가립니다 — 그래서 화살표는 미디어(이미지) 슬라이드용이고, 텍스트·CTA가 있는 프로모션/배너 슬라이드는 showArrows={false}로 도트만 쓰거나(권장) 콘텐츠가 좌우 약 52px 안전 여백을 확보해야 합니다. 배너형 슬라이드의 CTA는 sm이 아닌 기본(40px) 크기를 권장합니다. |
+| 명시 규칙 4 | - slides — 노드 배열. showDots / showArrows — 토글. 양 끝에서 순환합니다. - 구조 — 루트는 role="region" + aria-roledescription="carousel"이고 label(기본 캐러셀)이 접근 이름입니다. 페이지 랜드마크로 올리고 싶지 않으면 role="group"을 직접 넘겨 덮어씁니다. 각 슬라이드는 role="group" + aria-roledescription="slide"이고 이름은 N / 전체, slideLabels를 주면 이름, N / 전체가 됩니다. - 화면 밖 슬라이드 — 현재 슬라이드가 아닌 슬… |
+| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
+
+## Responsive
+
+- 화면 밖 슬라이드 — 현재 슬라이드가 아닌 슬라이드는 inert와 aria-hidden을 함께 받습니다. overflow로 가려졌을 뿐인 링크·버튼이 Tab 순서와 접근성 트리에 남지 않게 하려는 것으로, Dimmer가 가려진 영역을 처리하는 방식과 같습니다. 현재 슬라이드는 data-carousel-slide="current", 나머지는 "offscreen"입니다.
+- - slides — 노드 배열. showDots / showArrows — 토글. 양 끝에서 순환합니다. - 구조 — 루트는 role="region" + aria-roledescription="carousel"이고 label(기본 캐러셀)이 접근 이름입니다. 페이지 랜드마크로 올리고 싶지 않으면 role="group"을 직접 넘겨 덮어씁니다. 각 슬라이드는 role="group" + aria-roledescription="slide"이고 이름은 N / 전체, slideLabels를 주면 이름, N / 전체가 됩니다. - 화면 밖 슬라이드 — 현재 슬라이드가 아닌 슬….
+- 320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.
+- 고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다.
+
+## Content and writing
+
+- 구조 — 루트는 role="region" + aria-roledescription="carousel"이고 label(기본 캐러셀)이 접근 이름입니다. 페이지 랜드마크로 올리고 싶지 않으면 role="group"을 직접 넘겨 덮어씁니다. 각 슬라이드는 role="group" + aria-roledescription="slide"이고 이름은 N / 전체, slideLabels를 주면 이름, N / 전체가 됩니다.
+- previousLabel / nextLabel / playLabel / pauseLabel — 컨트롤의 접근 이름 override. 기본값은 모두 한국어이며 아이콘은 aria-hidden입니다. 점 인디케이터는 현재 위치를 aria-current="true"로 노출해 폭·색 변화에만 의존하지 않습니다.
+- 도트 대비 — 도트는 흰 채움에 스크림 링(1px)을 둘러 어두운 미디어뿐 아니라 밝은 프로모션 슬라이드 위에서도 3:1 비텍스트 대비를 스스로 확보합니다(WCAG 1.4.11). 전환 컨트롤의 가시성이 슬라이드 배경에 의존하지 않습니다.
+- 컨트롤 겹침 영역 — 컨트롤은 뷰포트 위에 겹쳐 그려지므로 슬라이드 콘텐츠와 안전 영역을 나눠야 합니다. 하단: 일시정지(좌하단)와 도트(하단 중앙)를 위해 슬라이드 하단 약 56px을 비우세요. 측면: 이전·다음 화살표는 세로 중앙 좌우에 놓여 텍스트·CTA를 가립니다 — 그래서 화살표는 미디어(이미지) 슬라이드용이고, 텍스트·CTA가 있는 프로모션/배너 슬라이드는 showArrows={false}로 도트만 쓰거나(권장) 콘텐츠가 좌우 약 52px 안전 여백을 확보해야 합니다. 배너형 슬라이드의 CTA는 sm이 아닌 기본(40px) 크기를 권장합니다.
+
+## Accessibility
+
+- 구조 — 루트는 role="region" + aria-roledescription="carousel"이고 label(기본 캐러셀)이 접근 이름입니다. 페이지 랜드마크로 올리고 싶지 않으면 role="group"을 직접 넘겨 덮어씁니다. 각 슬라이드는 role="group" + aria-roledescription="slide"이고 이름은 N / 전체, slideLabels를 주면 이름, N / 전체가 됩니다.
+- 화면 밖 슬라이드 — 현재 슬라이드가 아닌 슬라이드는 inert와 aria-hidden을 함께 받습니다. overflow로 가려졌을 뿐인 링크·버튼이 Tab 순서와 접근성 트리에 남지 않게 하려는 것으로, Dimmer가 가려진 영역을 처리하는 방식과 같습니다. 현재 슬라이드는 data-carousel-slide="current", 나머지는 "offscreen"입니다.
+- previousLabel / nextLabel / playLabel / pauseLabel — 컨트롤의 접근 이름 override. 기본값은 모두 한국어이며 아이콘은 aria-hidden입니다. 점 인디케이터는 현재 위치를 aria-current="true"로 노출해 폭·색 변화에만 의존하지 않습니다.
+- autoPlay / interval — 자동 회전은 opt-in입니다. 켜면 일시정지 컨트롤이 첫 번째 포커스 대상으로 렌더되고(WCAG 2.2.2), 포인터가 올라가거나 내부로 포커스가 들어오면 회전이 멈추며, 이전·다음·점을 누르면 회전이 완전히 멈춥니다(APG). 회전을 멈추는 수단 없이 움직이는 콘텐츠를 5초 넘게 두지 마세요. CTA가 있는 프로모션 배너는 읽고 누를 시간이 필요하므로 interval을 5초 미만으로 줄이지 마세요.
+- 도트 대비 — 도트는 흰 채움에 스크림 링(1px)을 둘러 어두운 미디어뿐 아니라 밝은 프로모션 슬라이드 위에서도 3:1 비텍스트 대비를 스스로 확보합니다(WCAG 1.4.11). 전환 컨트롤의 가시성이 슬라이드 배경에 의존하지 않습니다.
+
+## Do / Don't
+
+| Kind | Guidance |
+| --- | --- |
+| Do | 구조 — 루트는 role="region" + aria-roledescription="carousel"이고 label(기본 캐러셀)이 접근 이름입니다. 페이지 랜드마크로 올리고 싶지 않으면 role="group"을 직접 넘겨 덮어씁니다. 각 슬라이드는 role="group" + aria-roledescription="slide"이고 이름은 N / 전체, slideLabels를 주면 이름, N / 전체가 됩니다. |
+| Don't | previousLabel / nextLabel / playLabel / pauseLabel — 컨트롤의 접근 이름 override. 기본값은 모두 한국어이며 아이콘은 aria-hidden입니다. 점 인디케이터는 현재 위치를 aria-current="true"로 노출해 폭·색 변화에만 의존하지 않습니다. |
+| Do | 화면 밖 슬라이드 — 현재 슬라이드가 아닌 슬라이드는 inert와 aria-hidden을 함께 받습니다. overflow로 가려졌을 뿐인 링크·버튼이 Tab 순서와 접근성 트리에 남지 않게 하려는 것으로, Dimmer가 가려진 영역을 처리하는 방식과 같습니다. 현재 슬라이드는 data-carousel-slide="current", 나머지는 "offscreen"입니다. |
+| Don't | 도트 대비 — 도트는 흰 채움에 스크림 링(1px)을 둘러 어두운 미디어뿐 아니라 밝은 프로모션 슬라이드 위에서도 3:1 비텍스트 대비를 스스로 확보합니다(WCAG 1.4.11). 전환 컨트롤의 가시성이 슬라이드 배경에 의존하지 않습니다. |
+
+## Exceptions
+
+- 제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Carousel의 범용 API에 넣지 않습니다.
+- 접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Button` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `ContentBadge` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Thumbnail` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `AnnotatedImage` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `BarChart` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Calendar` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `ChartFrame` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `DataGrid` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Carousel
+  label="설비 점검 사진"
+  slideLabels={['입고 검사', '주행 시험', '출고 검사']}
+  slides={[
+    <img src="a.jpg" alt="입고 검사" style={{ width: '100%' }} />,
+    <img src="b.jpg" alt="주행 시험" style={{ width: '100%' }} />,
+    <img src="c.jpg" alt="출고 검사" style={{ width: '100%' }} />,
+  ]}
+/>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-inverse-label-alternative-soft`
+- `--color-semantic-static-white`
+- `--dur-base`
+- `--dur-slow`
+- `--ease-out`
+- `--radius-2xl`
+- `--radius-pill`
+- `--scrim-dark`
+- `--space-2`
+- `--space-3`
+
+### Source contracts
+
+- `components/data/Carousel.jsx`
+- `components/data/Carousel.d.ts`
+- `components/data/Carousel.prompt.md`
+- `stories/ContentCarousel.stories.jsx`
+
+## Migration
+
+- 현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.
+- 대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다.
+
+## Sources
+
+- Carousel prompt contract: `components/data/Carousel.prompt.md`
+- Storybook implementation evidence: `stories/ContentCarousel.stories.jsx`

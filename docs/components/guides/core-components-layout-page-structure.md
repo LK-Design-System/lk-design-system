@@ -1,0 +1,159 @@
+# Page Structure
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Core / Layout |
+| Owner | `Container` |
+| Storybook | `LDS Core/Components/Layout/Page Structure` |
+| Source | `../component-content.json#core-components-layout-page-structure` |
+
+헤더, 본문, 보조 영역처럼 화면 전체의 큰 구획과 너비 규칙을 설계할 때 적합합니다. 바깥 골격은 header(banner) · main · footer(contentinfo) 랜드마크로 선언하고, main은 페이지당 하나만 두며, 반복되는 헤더를 건너뛰는 skip link를 문서의 첫 포커스 대상으로 놓으세요. 반복 항목 배치는 Grid나 Columns를, 한 방향의 내부 간격은 Stack을 사용하고 컴포넌트 내부의 작은 정렬까지 페이지 구조로 해결하지 마세요.
+
+## 사용 판단
+
+### 사용
+
+- 헤더, 본문, 보조 영역처럼 화면 전체의 큰 구획과 너비 규칙을 설계할 때 적합합니다. 바깥 골격은 header(banner) · main · footer(contentinfo) 랜드마크로 선언하고, main은 페이지당 하나만 두며, 반복되는 헤더를 건너뛰는 skip link를 문서의 첫 포커스 대상으로 놓으세요. 반복 항목 배치는 Grid나 Columns를, 한 방향의 내부 간격은 Stack을 사용하고 컴포넌트 내부의 작은 정렬까지 페이지 구조로 해결하지 마세요.
+- Page Structure가 소유하는 Layout 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다.
+- 제품별 구현 대신 공개 Container API와 semantic token으로 일관성을 유지해야 할 때 사용합니다.
+
+### 사용하지 않음
+
+- Page Structure가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.
+- 동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다.
+- 표현이 비슷하다는 이유만으로 상태 의미가 다른 sibling 컴포넌트를 서로 대체하지 않습니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| Root | Container의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다. |
+| Children | children 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다. |
+| Children | children 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다. |
+| Children | children 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `size` | `'default' \| 'read' \| 'wide'` | No | 폭 단계: - default — 반응형 컬럼(lg까지 ≤1100, xl에서 1440) - read — 좁은 리딩 밴드(1100) - wide — 풀블리드 레일(1500) |
+| `children` | `React.ReactNode` | No | 공개 타입 계약에 정의된 속성입니다. |
+| `surface` | `'subtle' \| 'band' \| 'raised' \| 'inverse'` | No | 밴드의 배경 서피스. 생략하면 투명. |
+| `py` | `number \| string` | No | 반응형 세로 패딩 재정의(숫자 = px). 기본값 --gap-section. |
+| `container` | `boolean` | No | 자식을 중앙 정렬 반응형 컨테이너로 감싸기. @default true |
+| `innerStyle` | `React.CSSProperties` | No | 내부 컨테이너 요소의 스타일. |
+| `children` | `React.ReactNode` | No | 공개 타입 계약에 정의된 속성입니다. |
+| `template` | `string` | No | 브레이크포인트 위에서 적용되는 grid-template-columns. @default "1fr 1fr" |
+| `at` | `'md' \| 'lg'` | No | 두 패널이 나뉘는 브레이크포인트; 그 아래에서는 쌓임. @default "md" |
+| `gap` | `number \| string` | No | 패널 사이 갭(숫자 = px). 기본값 --gap-lg(24). |
+| `children` | `React.ReactNode` | No | 공개 타입 계약에 정의된 속성입니다. |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| Default | 별도 상태 머신을 만들지 않으며 전달된 콘텐츠와 semantic token으로 기본 표현을 구성합니다. |
+
+## Behavior and interaction
+
+- Container의 controlled/uncontrolled 경계와 callback 순서는 공개 타입 계약을 따릅니다.
+- 상태 변화 중에도 accessible name, focus 위치와 레이아웃 기준점을 예고 없이 잃지 않습니다.
+- 제품 데이터와 side effect는 callback으로 위임하고 Container는 표시·입력 상태만 소유합니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | size — default 1280 · read 1080 · wide 1500. 거터 포함. |
+| 명시 규칙 2 | - size — default 1280 · read 1080 · wide 1500. 거터 포함. |
+| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
+| --color-semantic-background-normal-alternative | light: #F7F7F8; dark: #0F0F10 |
+| --color-semantic-inverse-background | light: #1B1C1E; dark: #FFFFFF |
+
+## Responsive
+
+- 320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.
+- 고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다.
+
+## Content and writing
+
+- 사용자에게 보이는 Page Structure 문자열은 제품 번역 계층에서 제공하고 행동 또는 상태를 구체적으로 설명합니다.
+- 아이콘이나 색상만으로 의미를 대신하지 않고 필요한 label, title 또는 status text를 함께 제공합니다.
+
+## Accessibility
+
+- native semantic을 우선하며 사용자에게 보이는 이름과 접근 가능한 이름이 같은 목적을 설명하게 합니다.
+- 키보드 focus 순서, focus-visible 표시와 상태 ARIA가 시각 상태와 동시에 갱신되는지 공개 스토리에서 검증합니다.
+- 색상, 모양 또는 아이콘 하나만으로 상태를 구분하지 않고 이름·텍스트·semantic state를 함께 제공합니다.
+
+## Do / Don't
+
+| Kind | Guidance |
+| --- | --- |
+| Do | Page Structure가 소유하는 Layout 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다. |
+| Don't | Page Structure가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다. |
+| Do | 제품별 구현 대신 공개 Container API와 semantic token으로 일관성을 유지해야 할 때 사용합니다. |
+| Don't | 동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다. |
+
+## Exceptions
+
+- 제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Container의 범용 API에 넣지 않습니다.
+- 접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Section` | 같은 페이지가 소유하는 공개 primitive 또는 조합 요소입니다. |
+| `Split` | 같은 페이지가 소유하는 공개 primitive 또는 조합 요소입니다. |
+| `AspectRatio` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Center` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Cluster` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Col` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Columns` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Divider` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Container>…</Container>          {/* 1280 */}
+<Container size="read">…</Container>   {/* 1080 텍스트 밴드 */}
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-background-normal-alternative`
+- `--color-semantic-inverse-background`
+- `--color-semantic-inverse-label`
+- `--container-read`
+- `--container-wide`
+- `--grid-margin`
+
+### Source contracts
+
+- `components/layout/Container.jsx`
+- `components/layout/Container.d.ts`
+- `components/layout/Container.prompt.md`
+- `components/layout/Section.jsx`
+- `components/layout/Section.d.ts`
+- `components/layout/Section.prompt.md`
+- `components/layout/Split.jsx`
+- `components/layout/Split.d.ts`
+- `components/layout/Split.prompt.md`
+- `stories/Layout.stories.jsx`
+
+## Migration
+
+- 현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.
+- 대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다.
+
+## Sources
+
+- Container prompt contract: `components/layout/Container.prompt.md`
+- Storybook implementation evidence: `stories/Layout.stories.jsx`

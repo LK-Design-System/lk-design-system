@@ -1,0 +1,156 @@
+# Anchor
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Navigation |
+| Owner | `Anchor` |
+| Storybook | `LDS Product/Navigation/Anchor` |
+| Source | `../component-content.json#product-navigation-anchor` |
+
+문서·설정처럼 한 페이지에 여러 제목이 있고 사용자가 구간을 오갈 때 적합합니다. 제품의 다른 화면으로 이동하는 전역 탐색에는 Anchor 대신 Side Nav나 Top Bar를 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- 문서·설정처럼 한 페이지에 여러 제목이 있고 사용자가 구간을 오갈 때 적합합니다. 제품의 다른 화면으로 이동하는 전역 탐색에는 Anchor 대신 Side Nav나 Top Bar를 사용하세요.
+- 접근성 — level은 시각 들여쓰기뿐 아니라 DOM 중첩 리스트(ul li ul)로도 표현되어 보조기술이 계층을 읽습니다. 활성 항목에는 aria-current="location"이 붙고, nav의 기본 aria-label은 '목차'입니다(전달한 aria-label이 우선).
+- Anchor가 소유하는 Navigation 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다.
+- 제품별 구현 대신 공개 Anchor API와 semantic token으로 일관성을 유지해야 할 때 사용합니다.
+
+### 사용하지 않음
+
+- 의도적 한계 — 스크롤스파이 없음 — 비제어 모드는 클릭한 항목만 기억할 뿐 스크롤 위치를 감지하지 않습니다. 뷰포트와 활성 항목의 동기화(IntersectionObserver 등)는 소비자의 책임이며, 감지 결과를 제어 prop active로 내려주고 onChange로 클릭을 반영하세요.
+- Classification: LK Product Extension. 한 페이지 안의 섹션 이동에만 사용하며, 라우트 경로를 나타내는 Breadcrumb나 사이트·제품 주 탐색을 대신하지 않습니다.
+- - items — { href, label, level }. active / onChange — 제어/비제어. 활성 항목은 시그널 잉크 + 좌측 룰을 띱니다. - 접근성 — level은 시각 들여쓰기뿐 아니라 DOM 중첩 리스트(ul li ul)로도 표현되어 보조기술이 계층을 읽습니다. 활성 항목에는 aria-current="location"이 붙고, nav의 기본 aria-label은 '목차'입니다(전달한 aria-label이 우선). - 의도적 한계 — 스크롤스파이 없음 — 비제어 모드는 클릭한 항목만 기억할 뿐 스크롤 위치를 감지하지 않습니다. 뷰포트와 활성….
+- Anchor가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| Root | Anchor의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `items` | `AnchorItem[]` | Yes | 공개 타입 계약에 정의된 속성입니다. |
+| `active` | `string` | No | 제어되는 활성 href. |
+| `onChange` | `(href: string) = void` | No | 공개 타입 계약에 정의된 속성입니다. |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| active | 제어되는 활성 href. 타입 계약: string |
+
+## Behavior and interaction
+
+- items — { href, label, level }. active / onChange — 제어/비제어. 활성 항목은 시그널 잉크 + 좌측 룰을 띱니다.
+- 의도적 한계 — 스크롤스파이 없음 — 비제어 모드는 클릭한 항목만 기억할 뿐 스크롤 위치를 감지하지 않습니다. 뷰포트와 활성 항목의 동기화(IntersectionObserver 등)는 소비자의 책임이며, 감지 결과를 제어 prop active로 내려주고 onChange로 클릭을 반영하세요.
+- - items — { href, label, level }. active / onChange — 제어/비제어. 활성 항목은 시그널 잉크 + 좌측 룰을 띱니다. - 접근성 — level은 시각 들여쓰기뿐 아니라 DOM 중첩 리스트(ul li ul)로도 표현되어 보조기술이 계층을 읽습니다. 활성 항목에는 aria-current="location"이 붙고, nav의 기본 aria-label은 '목차'입니다(전달한 aria-label이 우선). - 의도적 한계 — 스크롤스파이 없음 — 비제어 모드는 클릭한 항목만 기억할 뿐 스크롤 위치를 감지하지 않습니다. 뷰포트와 활성….
+- Anchor의 controlled/uncontrolled 경계와 callback 순서는 공개 타입 계약을 따릅니다.
+- 상태 변화 중에도 accessible name, focus 위치와 레이아웃 기준점을 예고 없이 잃지 않습니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
+| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
+| --color-semantic-line-solid-normal | light: #E1E2E4; dark: #37383C |
+| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+
+## Responsive
+
+- 320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.
+- 고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다.
+
+## Content and writing
+
+- items — { href, label, level }. active / onChange — 제어/비제어. 활성 항목은 시그널 잉크 + 좌측 룰을 띱니다.
+- 접근성 — level은 시각 들여쓰기뿐 아니라 DOM 중첩 리스트(ul li ul)로도 표현되어 보조기술이 계층을 읽습니다. 활성 항목에는 aria-current="location"이 붙고, nav의 기본 aria-label은 '목차'입니다(전달한 aria-label이 우선).
+- - items — { href, label, level }. active / onChange — 제어/비제어. 활성 항목은 시그널 잉크 + 좌측 룰을 띱니다. - 접근성 — level은 시각 들여쓰기뿐 아니라 DOM 중첩 리스트(ul li ul)로도 표현되어 보조기술이 계층을 읽습니다. 활성 항목에는 aria-current="location"이 붙고, nav의 기본 aria-label은 '목차'입니다(전달한 aria-label이 우선). - 의도적 한계 — 스크롤스파이 없음 — 비제어 모드는 클릭한 항목만 기억할 뿐 스크롤 위치를 감지하지 않습니다. 뷰포트와 활성….
+- 사용자에게 보이는 Anchor 문자열은 제품 번역 계층에서 제공하고 행동 또는 상태를 구체적으로 설명합니다.
+
+## Accessibility
+
+- 접근성 — level은 시각 들여쓰기뿐 아니라 DOM 중첩 리스트(ul li ul)로도 표현되어 보조기술이 계층을 읽습니다. 활성 항목에는 aria-current="location"이 붙고, nav의 기본 aria-label은 '목차'입니다(전달한 aria-label이 우선).
+- - items — { href, label, level }. active / onChange — 제어/비제어. 활성 항목은 시그널 잉크 + 좌측 룰을 띱니다. - 접근성 — level은 시각 들여쓰기뿐 아니라 DOM 중첩 리스트(ul li ul)로도 표현되어 보조기술이 계층을 읽습니다. 활성 항목에는 aria-current="location"이 붙고, nav의 기본 aria-label은 '목차'입니다(전달한 aria-label이 우선). - 의도적 한계 — 스크롤스파이 없음 — 비제어 모드는 클릭한 항목만 기억할 뿐 스크롤 위치를 감지하지 않습니다. 뷰포트와 활성….
+- native semantic을 우선하며 사용자에게 보이는 이름과 접근 가능한 이름이 같은 목적을 설명하게 합니다.
+- 키보드 focus 순서, focus-visible 표시와 상태 ARIA가 시각 상태와 동시에 갱신되는지 공개 스토리에서 검증합니다.
+- 색상, 모양 또는 아이콘 하나만으로 상태를 구분하지 않고 이름·텍스트·semantic state를 함께 제공합니다.
+
+## Do / Don't
+
+| Kind | Guidance |
+| --- | --- |
+| Do | 접근성 — level은 시각 들여쓰기뿐 아니라 DOM 중첩 리스트(ul li ul)로도 표현되어 보조기술이 계층을 읽습니다. 활성 항목에는 aria-current="location"이 붙고, nav의 기본 aria-label은 '목차'입니다(전달한 aria-label이 우선). |
+| Don't | 의도적 한계 — 스크롤스파이 없음 — 비제어 모드는 클릭한 항목만 기억할 뿐 스크롤 위치를 감지하지 않습니다. 뷰포트와 활성 항목의 동기화(IntersectionObserver 등)는 소비자의 책임이며, 감지 결과를 제어 prop active로 내려주고 onChange로 클릭을 반영하세요. |
+| Do | Anchor가 소유하는 Navigation 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다. |
+| Don't | Classification: LK Product Extension. 한 페이지 안의 섹션 이동에만 사용하며, 라우트 경로를 나타내는 Breadcrumb나 사이트·제품 주 탐색을 대신하지 않습니다. |
+
+## Exceptions
+
+- 제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Anchor의 범용 API에 넣지 않습니다.
+- 접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `BottomNav` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Breadcrumb` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Footer` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `NavRail` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `SideNav` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Steps` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Toolbar` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `TopBar` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Anchor items={[
+  { href: '#overview', label: '개요' },
+  { href: '#spec', label: '사양', level: 1 },
+  { href: '#contact', label: '문의' },
+]} onChange={scrollTo} />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-label-alternative`
+- `--color-semantic-label-normal`
+- `--color-semantic-line-solid-normal`
+- `--color-semantic-primary-normal`
+- `--dur-fast`
+- `--ease-out`
+- `--font-sans`
+- `--fw-bold`
+- `--fw-medium`
+- `--label1-size`
+- `--label2-size`
+
+### Source contracts
+
+- `components/navigation/Anchor.jsx`
+- `components/navigation/Anchor.d.ts`
+- `components/navigation/Anchor.prompt.md`
+- `stories/NavigationAnchor.stories.jsx`
+
+## Migration
+
+- 현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.
+- 대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다.
+
+## Sources
+
+- Anchor prompt contract: `components/navigation/Anchor.prompt.md`
+- Storybook implementation evidence: `stories/NavigationAnchor.stories.jsx`

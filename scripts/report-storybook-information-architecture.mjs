@@ -98,6 +98,8 @@ const LAYER_CONTRACTS = {
 };
 
 const PAGE_OWNER_OVERRIDES = {
+  'LDS Core/Components/Overview': ['Components:Overview'],
+  'LDS Core/Components/Progress Board': ['Components:Progress Board'],
   'LDS Core/Components/Layout/Mobile System Bars': ['MobileSystemBars'],
   'LDS Core/Components/Layout/Page Structure': ['Container', 'Section', 'Split'],
   'LDS Core/Components/Layout/Grid and Columns': ['Grid', 'Columns', 'Col'],

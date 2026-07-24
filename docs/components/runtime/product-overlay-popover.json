@@ -1,0 +1,261 @@
+{
+  "slug": "product-overlay-popover",
+  "title": "Popover",
+  "storybookTitle": "LDS Product/Overlay/Popover",
+  "layer": "Product",
+  "family": "Overlay",
+  "primaryOwner": "Popover",
+  "ownerComponents": [
+    "Popover"
+  ],
+  "supportingComponents": [
+    "Button"
+  ],
+  "purpose": "클릭한 trigger 주변에서 설명·미니 폼·피커처럼 자유로운 콘텐츠를 잠시 다룰 때 적합합니다. 명령 목록이나 작업을 막는 복잡한 흐름에는 Popover 대신 Dropdown Menu 또는 Modal을 사용하세요.",
+  "useWhen": [
+    "클릭한 trigger 주변에서 설명·미니 폼·피커처럼 자유로운 콘텐츠를 잠시 다룰 때 적합합니다. 명령 목록이나 작업을 막는 복잡한 흐름에는 Popover 대신 Dropdown Menu 또는 Modal을 사용하세요.",
+    "open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는 trigger로 초점을 복원하지만 비모달 Popover 자체는 focus trap을 만들지 않아 Tab이 trigger 다음의 패널 입력으로 이동합니다.",
+    "- trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup=\"dialog\"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요. - open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는….",
+    "Popover가 소유하는 Overlay 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다."
+  ],
+  "avoidWhen": [
+    "WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다.",
+    "- Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다. - WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다.",
+    "Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다.",
+    "Popover가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "Popover의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Trigger",
+      "rule": "패널을 토글하는 요소."
+    },
+    {
+      "part": "Children",
+      "rule": "children 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Aria Label",
+      "rule": "비모달 dialog 표면의 접근 가능한 이름. @default \"팝오버\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "trigger",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "패널을 토글하는 요소.",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "패널 콘텐츠.",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "align",
+      "type": "'left' | 'right'",
+      "required": false,
+      "description": "앵커 방향. @default \"left\"",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "width",
+      "type": "number",
+      "required": false,
+      "description": "패널 너비(px). @default 260",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "open",
+      "type": "boolean",
+      "required": false,
+      "description": "제어된 열림 상태.",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "defaultOpen",
+      "type": "boolean",
+      "required": false,
+      "description": "비제어 초기 열림 상태. @default false",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "onOpenChange",
+      "type": "(open: boolean) = void",
+      "required": false,
+      "description": "열림 상태 변경 알림.",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "required": false,
+      "description": "비모달 dialog 표면의 접근 가능한 이름. @default \"팝오버\"",
+      "owner": "PopoverProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "open",
+      "rule": "제어된 열림 상태. 타입 계약: boolean"
+    },
+    {
+      "state": "defaultOpen",
+      "rule": "비제어 초기 열림 상태. @default false 타입 계약: boolean"
+    },
+    {
+      "state": "onOpenChange",
+      "rule": "열림 상태 변경 알림. 타입 계약: (open: boolean) = void"
+    },
+    {
+      "state": "상호작용 · 초점·Escape·화면 경계",
+      "rule": "interaction 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    }
+  ],
+  "behavior": [
+    "trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup=\"dialog\"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요.",
+    "open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는 trigger로 초점을 복원하지만 비모달 Popover 자체는 focus trap을 만들지 않아 Tab이 trigger 다음의 패널 입력으로 이동합니다.",
+    "Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다.",
+    "- trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup=\"dialog\"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요. - open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는….",
+    "- Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다. - WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Popover와 HoverCard는 anchoredPanelStyle의 elevated surface, 1px line, WDS Popover r12, shadow-md, 16px padding을 공유합니다. Dropdown Menu의 WDS r16·8×20px menu shell과는 역할과 원본 컴포넌트가 달라 radius/padding을 억지로 합치지 않습니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "- Popover와 HoverCard는 anchoredPanelStyle의 elevated surface, 1px line, WDS Popover r12, shadow-md, 16px padding을 공유합니다. Dropdown Menu의 WDS r16·8×20px menu shell과는 역할과 원본 컴포넌트가 달라 radius/padding을 억지로 합치지 않습니다. - WDS component style parity는 Popover r12와 Dropdown Menu r16을 각각 원본 component-set 값으로 확인합니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "- Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다. - WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다."
+    }
+  ],
+  "responsive": [
+    "trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup=\"dialog\"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요.",
+    "패널은 선호 정렬을 유지하되 viewport 경계에서 반대쪽으로 flip하고 좌우를 clamp하며, 가용 높이를 넘는 본문만 세로 스크롤합니다.",
+    "Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다.",
+    "- trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup=\"dialog\"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요. - open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는…."
+  ],
+  "contentGuidance": [
+    "WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다.",
+    "ariaLabel — 트리거에 보이는 텍스트가 없을 때 팝오버 콘텐츠의 접근성 이름을 지정합니다.",
+    "- Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다. - WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다.",
+    "- ariaLabel — 트리거에 보이는 텍스트가 없을 때 팝오버 콘텐츠의 접근성 이름을 지정합니다."
+  ],
+  "accessibility": [
+    "trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup=\"dialog\"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요.",
+    "open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는 trigger로 초점을 복원하지만 비모달 Popover 자체는 focus trap을 만들지 않아 Tab이 trigger 다음의 패널 입력으로 이동합니다.",
+    "Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다.",
+    "WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다.",
+    "ariaLabel — 트리거에 보이는 텍스트가 없을 때 팝오버 콘텐츠의 접근성 이름을 지정합니다."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는 trigger로 초점을 복원하지만 비모달 Popover 자체는 focus trap을 만들지 않아 Tab이 trigger 다음의 패널 입력으로 이동합니다."
+    ],
+    [
+      "Don't",
+      "WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다."
+    ],
+    [
+      "Do",
+      "- trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup=\"dialog\"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요. - open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는…."
+    ],
+    [
+      "Don't",
+      "- Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다. - WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Popover의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "HoverCard",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Menubar",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Popover trigger={<Button variant=\"ghost\">옵션</Button>} width={280}>\n  <FormField label=\"반경\"><Slider defaultValue={30} /></FormField>\n</Popover>"
+    }
+  ],
+  "tokens": [
+    "No component-specific CSS custom property; Foundation semantic tokens apply."
+  ],
+  "apiLinks": [
+    "components/overlay/Popover.jsx",
+    "components/overlay/Popover.d.ts",
+    "components/overlay/Popover.prompt.md",
+    "stories/OverlayPopover.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/OverlayPopover.stories.jsx",
+    "entryStoryId": "lds-product-overlay-popover--popover-overview",
+    "publicStories": [
+      {
+        "id": "lds-product-overlay-popover--popover-overview",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-overlay-popover--popover-interaction-contract",
+        "name": "상호작용 · 초점·Escape·화면 경계",
+        "role": "interaction"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [
+    {
+      "label": "Popover prompt contract",
+      "path": "components/overlay/Popover.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/OverlayPopover.stories.jsx"
+    },
+    {
+      "label": "Fluent 2 Popover",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/popover/usage"
+    },
+    {
+      "label": "WAI-ARIA APG Dialog Pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+    }
+  ]
+}

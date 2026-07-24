@@ -1,0 +1,374 @@
+{
+  "slug": "core-components-selection-and-input-switch",
+  "title": "Switch",
+  "storybookTitle": "LDS Core/Components/Selection and Input/Switch",
+  "layer": "Core",
+  "family": "Selection and Input",
+  "primaryOwner": "Switch",
+  "ownerComponents": [
+    "Switch"
+  ],
+  "supportingComponents": [],
+  "purpose": "변경 즉시 시스템 상태나 설정이 적용되는 on/off 제어에 적합합니다. 제출 시 한꺼번에 적용되는 동의·선택에는 Checkbox를, 실행 명령에는 Button을 사용하세요.",
+  "useWhen": [
+    "변경 즉시 시스템 상태나 설정이 적용되는 on/off 제어에 적합합니다. 제출 시 한꺼번에 적용되는 동의·선택에는 Checkbox를, 실행 명령에는 Button을 사용하세요.",
+    "Switch가 소유하는 Selection and Input 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다.",
+    "제품별 구현 대신 공개 Switch API와 semantic token으로 일관성을 유지해야 할 때 사용합니다."
+  ],
+  "avoidWhen": [
+    "시각적으로 숨긴 네이티브 를 이 감싸는 구조를 씁니다(Material/Fluent/Ant와 동일한 선택). 대신 이 방식을 고른 이유는 폼 전송(name/value)과 브라우저 폼 복원이 필요하고, role=\"switch\"가 input[type=checkbox]에 허용된 역할이라 aria-checked 의미를 그대로 유지할 수 있기 때문입니다. 트랙과 노브는 aria-hidden 장식 요소입니다.",
+    "- 시각적으로 숨긴 네이티브 를 이 감싸는 구조를 씁니다(Material/Fluent/Ant와 동일한 선택). 대신 이 방식을 고른 이유는 폼 전송(name/value)과 브라우저 폼 복원이 필요하고, role=\"switch\"가 input[type=checkbox]에 허용된 역할이라 aria-checked 의미를 그대로 유지할 수 있기 때문입니다. 트랙과 노브는 aria-hidden 장식 요소입니다. - 접근 이름은 감싸는 의 내용에서 나옵니다. label에 JSX 노드를 넘겨도 이름이 \"switch\"로 떨어지지 않습니다. 이름을 직접 지정할 때만 aria-labe….",
+    "Switch가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.",
+    "동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "Switch의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Label",
+      "rule": "선택적 끝 라벨."
+    },
+    {
+      "part": "Interaction",
+      "rule": "interaction 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Label Style",
+      "rule": "labelStyle 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "checked",
+      "type": "boolean",
+      "required": false,
+      "description": "제어되는 on/off 상태.",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "defaultChecked",
+      "type": "boolean",
+      "required": false,
+      "description": "비제어 초기 상태. @default false",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(next: boolean) = void",
+      "required": false,
+      "description": "토글 시 다음 불리언과 함께 호출.",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "선택적 끝 라벨.",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"md\" | \"small\" | \"medium\"",
+      "required": false,
+      "description": "트랙 크기. @default \"md\"",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "state",
+      "type": "\"unchecked\" | \"checked\" | \"off\" | \"on\"",
+      "required": false,
+      "description": "fixed visual state for evidence matrices.",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "platform",
+      "type": "\"normal\" | \"ios\" | \"android\"",
+      "required": false,
+      "description": "platform visual variant. @default \"normal\"",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "interaction",
+      "type": "\"normal\" | \"inactive\" | \"hovered\" | \"focused\"",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "required": false,
+      "description": "active visual state alias.",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "focus",
+      "type": "boolean",
+      "required": false,
+      "description": "focus visual state alias.",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "비활성(흐림, 상호작용 불가). @default false",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "disable",
+      "type": "boolean",
+      "required": false,
+      "description": "disabled alias.",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "readOnly",
+      "type": "boolean",
+      "required": false,
+      "description": "Focusable inspection state that prevents value changes.",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "네이티브 폼 컨트롤 이름 — 켜진 상태로 폼과 함께 전송됩니다.",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "켜졌을 때 전송되는 값. @default \"on\"",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "labelStyle",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "SwitchProps"
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "SwitchProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "checked",
+      "rule": "제어되는 on/off 상태. 타입 계약: boolean"
+    },
+    {
+      "state": "defaultChecked",
+      "rule": "비제어 초기 상태. @default false 타입 계약: boolean"
+    },
+    {
+      "state": "state",
+      "rule": "fixed visual state for evidence matrices. 타입 계약: \"unchecked\" | \"checked\" | \"off\" | \"on\""
+    },
+    {
+      "state": "interaction",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: \"normal\" | \"inactive\" | \"hovered\" | \"focused\""
+    },
+    {
+      "state": "active",
+      "rule": "active visual state alias. 타입 계약: boolean"
+    },
+    {
+      "state": "disabled",
+      "rule": "비활성(흐림, 상호작용 불가). @default false 타입 계약: boolean"
+    },
+    {
+      "state": "readOnly",
+      "rule": "Focusable inspection state that prevents value changes. 타입 계약: boolean"
+    }
+  ],
+  "behavior": [
+    "Switch exposes role=\"switch\" with aria-checked; Space and Enter toggle immediately. The control-to-label gap is 8px.",
+    "readOnly remains focusable and communicates aria-readonly, but it suppresses pointer/keyboard changes and editable hover affordance. disabled is removed from the tab order.",
+    "시각적으로 숨긴 네이티브 를 이 감싸는 구조를 씁니다(Material/Fluent/Ant와 동일한 선택). 대신 이 방식을 고른 이유는 폼 전송(name/value)과 브라우저 폼 복원이 필요하고, role=\"switch\"가 input[type=checkbox]에 허용된 역할이라 aria-checked 의미를 그대로 유지할 수 있기 때문입니다. 트랙과 노브는 aria-hidden 장식 요소입니다.",
+    "Space는 네이티브 checkbox 활성화에 맡기고, Enter만 onKeyDown에서 preventDefault() 후 직접 토글합니다(Switch 계약 유지 + 폼 제출 방지). 소비자 onKeyDown이 먼저 실행되고, preventDefault()를 호출하면 내부 처리를 건너뜁니다.",
+    "트랙 지오메트리(md 52×32 · sm 40×24), 노브 이동(색이 아닌 위치로도 상태 전달), disabled tabIndex=-1은 변경되지 않았습니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Switch exposes role=\"switch\" with aria-checked; Space and Enter toggle immediately. The control-to-label gap is 8px."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "트랙 지오메트리(md 52×32 · sm 40×24), 노브 이동(색이 아닌 위치로도 상태 전달), disabled tabIndex=-1은 변경되지 않았습니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "size — md(52×32) · sm(40×24). label은 오른쪽에 위치. disabled는 토큰 색(회색 트랙·노브)으로 표시."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "- Switch exposes role=\"switch\" with aria-checked; Space and Enter toggle immediately. The control-to-label gap is 8px. - readOnly remains focusable and communicates aria-readonly, but it suppresses pointer/keyboard changes and editable hover affordance. disabled is removed from the tab order. - Reference basis: WAI-AR…"
+    },
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    }
+  ],
+  "responsive": [
+    "320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.",
+    "고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다."
+  ],
+  "contentGuidance": [
+    "Switch exposes role=\"switch\" with aria-checked; Space and Enter toggle immediately. The control-to-label gap is 8px.",
+    "시각적으로 숨긴 네이티브 를 이 감싸는 구조를 씁니다(Material/Fluent/Ant와 동일한 선택). 대신 이 방식을 고른 이유는 폼 전송(name/value)과 브라우저 폼 복원이 필요하고, role=\"switch\"가 input[type=checkbox]에 허용된 역할이라 aria-checked 의미를 그대로 유지할 수 있기 때문입니다. 트랙과 노브는 aria-hidden 장식 요소입니다.",
+    "접근 이름은 감싸는 의 내용에서 나옵니다. label에 JSX 노드를 넘겨도 이름이 \"switch\"로 떨어지지 않습니다. 이름을 직접 지정할 때만 aria-label을 쓰세요.",
+    "size — md(52×32) · sm(40×24). label은 오른쪽에 위치. disabled는 토큰 색(회색 트랙·노브)으로 표시."
+  ],
+  "accessibility": [
+    "Switch exposes role=\"switch\" with aria-checked; Space and Enter toggle immediately. The control-to-label gap is 8px.",
+    "readOnly remains focusable and communicates aria-readonly, but it suppresses pointer/keyboard changes and editable hover affordance. disabled is removed from the tab order.",
+    "Reference basis: WAI-ARIA Switch pattern.",
+    "시각적으로 숨긴 네이티브 를 이 감싸는 구조를 씁니다(Material/Fluent/Ant와 동일한 선택). 대신 이 방식을 고른 이유는 폼 전송(name/value)과 브라우저 폼 복원이 필요하고, role=\"switch\"가 input[type=checkbox]에 허용된 역할이라 aria-checked 의미를 그대로 유지할 수 있기 때문입니다. 트랙과 노브는 aria-hidden 장식 요소입니다.",
+    "접근 이름은 감싸는 의 내용에서 나옵니다. label에 JSX 노드를 넘겨도 이름이 \"switch\"로 떨어지지 않습니다. 이름을 직접 지정할 때만 aria-label을 쓰세요."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "Switch가 소유하는 Selection and Input 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다."
+    ],
+    [
+      "Don't",
+      "시각적으로 숨긴 네이티브 를 이 감싸는 구조를 씁니다(Material/Fluent/Ant와 동일한 선택). 대신 이 방식을 고른 이유는 폼 전송(name/value)과 브라우저 폼 복원이 필요하고, role=\"switch\"가 input[type=checkbox]에 허용된 역할이라 aria-checked 의미를 그대로 유지할 수 있기 때문입니다. 트랙과 노브는 aria-hidden 장식 요소입니다."
+    ],
+    [
+      "Do",
+      "제품별 구현 대신 공개 Switch API와 semantic token으로 일관성을 유지해야 할 때 사용합니다."
+    ],
+    [
+      "Don't",
+      "- 시각적으로 숨긴 네이티브 를 이 감싸는 구조를 씁니다(Material/Fluent/Ant와 동일한 선택). 대신 이 방식을 고른 이유는 폼 전송(name/value)과 브라우저 폼 복원이 필요하고, role=\"switch\"가 input[type=checkbox]에 허용된 역할이라 aria-checked 의미를 그대로 유지할 수 있기 때문입니다. 트랙과 노브는 aria-hidden 장식 요소입니다. - 접근 이름은 감싸는 의 내용에서 나옵니다. label에 JSX 노드를 넘겨도 이름이 \"switch\"로 떨어지지 않습니다. 이름을 직접 지정할 때만 aria-labe…."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Switch의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "Checkbox",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "CheckboxGroup",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "FilterChip",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "MultiSelectChip",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Radio",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "RadioGroup",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "RangeSlider",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "SegmentedControl",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Switch defaultChecked label=\"변경 알림\" />\n<Switch size=\"sm\" checked={on} onChange={setOn} />\n<Switch name=\"night-mode\" value=\"on\" label=\"야간 모드\" />\n<Switch disabled label=\"준비 중\" />"
+    }
+  ],
+  "tokens": [
+    "--body2-size",
+    "--color-semantic-fill-normal",
+    "--color-semantic-fill-strong",
+    "--color-semantic-focus-ring",
+    "--color-semantic-interaction-inactive",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-static-white",
+    "--component-input-gap",
+    "--dur-base",
+    "--dur-fast",
+    "--ease-in-out",
+    "--ease-out",
+    "--font-sans",
+    "--radius-pill",
+    "--shadow-control",
+    "--shadow-sm"
+  ],
+  "apiLinks": [
+    "components/selection/Switch.jsx",
+    "components/selection/Switch.d.ts",
+    "components/selection/Switch.prompt.md",
+    "stories/SelectionSwitch.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/SelectionSwitch.stories.jsx",
+    "entryStoryId": "lds-core-components-selection-and-input-switch--switch-control",
+    "publicStories": [
+      {
+        "id": "lds-core-components-selection-and-input-switch--switch-control",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 4
+  },
+  "sources": [
+    {
+      "label": "Switch prompt contract",
+      "path": "components/selection/Switch.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/SelectionSwitch.stories.jsx"
+    },
+    {
+      "label": "WAI-ARIA Switch pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/switch/"
+    },
+    {
+      "label": "SEED Switch benchmark",
+      "url": "https://seed-design.io/components/switch"
+    }
+  ]
+}

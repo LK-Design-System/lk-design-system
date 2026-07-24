@@ -16,16 +16,16 @@
 
 | 축 | seed-design | LDS | 판정 |
 | --- | --- | --- | --- |
-| 컴포넌트 폭 | styled 84 + headless 패키지 38 | 178 (+robotics 별도 저장소) | 대등 |
-| 접근성 자동 강제 | CI에 axe 게이트 없음(유닛 테스트 83개) | axe 518스토리 + 타깃 크기 래칫 + play 284개 | LDS 우위 |
-| 계약 문서 | 컴포넌트 문서 49 + 패키지별 AGENTS.md | prompt.md 178개(외부 근거 인용) + API 3자 동기화 강제 | LDS 우위 |
+| 컴포넌트 폭 | styled 84 + headless 패키지 38 | public entry 179개·named export 182개 (+robotics 별도 저장소) | 대등 |
+| 접근성 자동 강제 | CI에 axe 게이트 없음(유닛 테스트 83개) | axe 528스토리 + 타깃 크기 래칫 + play 292개 | LDS 우위 |
+| 계약 문서 | 컴포넌트 문서 49 + 패키지별 AGENTS.md | prompt/type/source 179개 + 16섹션 결정 가이드 148개 + API 3자 동기화 강제 | LDS 우위 |
 | Foundation 지침 | 15개 탐색 구조와 주제별 editorial guide, 제품 사례 중심 | 15개 모두 공통 10개 판단 섹션 + JSON Schema + 생성 Markdown/Storybook + token/API trace | LDS 우위(coverage·추적성), seed 우위(브랜드 사례) |
 | 토큰 파이프라인 | Figma→rootage YAML(IR)→qvism recipe→CSS·Swift·Kotlin 자동 생성 | 손으로 관리하는 CSS + 검증 스크립트 | seed 압승 |
 | 아키텍처 계층 | headless(행동)/recipe(외형)/styled(조립) 3층 분리 | 모놀리식(행동+인라인 스타일 결합), 내부 공유 엔진은 존재 | seed 우위 |
-| 비주얼 회귀 | Chromatic, 전 스토리, PR마다 | 자체 스크립트 36장면 (스토리 518개 중) | seed 우위 |
+| 비주얼 회귀 | Chromatic, 전 스토리, PR마다 | 자체 스크립트 36장면 (스토리 528개 중) | seed 우위 |
 | 릴리스 공학 | changesets, codemod, migration-index, CLI(레지스트리 설치), continuous release | rc 수동 관리, 마이그레이션은 CHANGELOG 문구 | seed 압승 |
 | 플랫폼 | Web + Lynx 런타임 + iOS/Android 토큰 출력 | Web | seed 압승 |
-| AI 소비 표면 | llms.txt/llms-full, 자체 MCP 서버 2종, skills, 패키지별 AGENTS.md | component prompt 계약 + 15개 Foundation `llms.txt` bundle + 755행 token reference | LDS 우위(계약 추적), seed 우위(MCP 배포) |
+| AI 소비 표면 | llms.txt/llms-full, 자체 MCP 서버 2종, skills, 패키지별 AGENTS.md | component prompt 계약 + 179-entry registry·component `llms.txt` + 15개 Foundation `llms.txt` bundle + 755행 token reference | LDS 우위(계약 추적), seed 우위(MCP 배포) |
 | 실전 검증 | 당근 앱 대규모 사용자에 탑재 | 소비자 없음 (pre-release) | seed 압승 |
 
 seed가 앞선 축은 인프라·다중 플랫폼·제품화 축이다. 컴포넌트와 Foundation 단위 품질·계약
@@ -57,7 +57,7 @@ HoverCard의 Escape 재오픈을 엔진 한 곳에서 고쳐 Tooltip·Popover가
 
 ### 2단계 — 스트랭글러 방식 행동/외형 분리 (상시, 트리거: 파일을 여는 김에)
 
-기존 178개 컴포넌트의 일괄 재작성은 하지 않는다. 픽셀 감시가 518스토리 중 36장면인 상태의
+기존 179개 public component entry의 일괄 재작성은 하지 않는다. 픽셀 감시가 528스토리 중 36장면인 상태의
 전면 전환은 검증 불가능한 회귀를 만들고, 2026-07 3라운드 정비로 확보한 검증 가치를 태운다.
 
 - 다른 이유로 컴포넌트를 수정할 때만 행동(훅)과 외형(스타일 모듈)을 분리한다.
@@ -77,9 +77,9 @@ rootage(토큰 IR)·qvism(zero-runtime recipe) 상당물은 **두 번째 스킨 
 
 - **비주얼 회귀 전 스토리 확대** — 36장면 감시는 이번 정비에서 감시 밖 마크업 변경("픽셀
   동일" 주장)을 측정 없이 신뢰하게 만든 원인이었다. 2026-07-24 스코핑 실측:
-  현행 36장면 = 2.2MB(평균 58KB/장), 전 스토리(518장) 확장 시 베이스라인 약 30~50MB가
+  현행 36장면 = 2.2MB(평균 58KB/장), 전 스토리(528장) 확장 시 베이스라인 약 30~50MB가
   저장소에 추가되고 갱신마다 히스토리가 그만큼 자란다(pack 131MB 기준 유의미 — Git LFS 또는
-  아티팩트 저장 검토). 캡처 시간은 스토리당 ~2초 × 518 ≈ 17분, a11y 하네스의 `A11Y_SHARD`
+  아티팩트 저장 검토). 캡처 시간은 스토리당 ~2초 × 528 ≈ 18분, a11y 하네스의 `A11Y_SHARD`
   선례로 4분할 시 ~5분. 간헐 흔들림(툴팁 0.005% 사례)이 표면적 13배로 늘므로 재캡처-재대조
   재시도가 필수다. 대안 Chromatic은 저장소 부담 0·리뷰 UI 제공이지만 무료 5천 스냅샷/월로는
   월 ~10회 push가 한계라 유료 단계 진입이 전제고, 내부 DS 화면의 외부 업로드 정책 판단이
@@ -89,8 +89,11 @@ rootage(토큰 IR)·qvism(zero-runtime recipe) 상당물은 **두 번째 스킨 
 - **changesets 기반 릴리스 + codemod** — 외부 publish를 여는 시점에 도입. BrandLogo 장식
   기본값 전환, ButtonGroup 기본 라벨 제거 같은 소비자 가시 변경은 codemod 대상이다.
 - **AI 소비 표면** — 15개 Foundation의 canonical JSON에서 Markdown·`llms.txt`·755행 token
-  reference를 생성하고 `check:foundations`로 drift를 차단했다. docs MCP 같은 네트워크 배포는
-  실제 외부 소비자가 생길 때 seed의 docs-mcp 패턴을 참고한다.
+  reference를 생성하고 `check:foundations`로 drift를 차단했다. Component도 179개 public
+  entry의 source·type·prompt·token·Storybook evidence를 canonical registry로 묶고 148개
+  Markdown·lazy Storybook guide·component `llms.txt`를 생성해 `check:components`로 drift를
+  차단한다. docs MCP 같은 네트워크 배포는 실제 외부 소비자가 생길 때 seed의 docs-mcp
+  패턴을 참고한다.
 
 ### 병행 채택 2 — 수평 패턴 가이드 (문서 장르의 공백)
 
@@ -112,14 +115,31 @@ seed의 [Loading 패턴 문서](https://seed-design.io/patterns/loading)가 보�
 - 흉내 낼 수 없는 것도 기록해 둔다: seed의 시나리오는 실사용 데이터에서 나온 것이다. LDS
   패턴 문서의 시나리오는 소비 제품이 생기기 전까지는 설계 가설이며, 그렇게 표기한다.
 
-같은 격차의 컴포넌트판도 있다. seed의 컴포넌트 문서([Menu Sheet](https://seed-design.io/components/menu-sheet)
-등)는 **디자이너 독자를 위한 시각 가이드**다: 부위 이름을 붙인 anatomy 다이어그램, Do/Don't
-시각 반례, 정량 구성 규칙("그룹은 아이템 3개 이상부터, 최대 3그룹, 한 그룹 최소 2개, 스크롤
-금지"), Figma 속성 패널과의 연결. LDS의 prompt.md는 같은 컴포넌트에 대해 행동·접근성 계약이
-더 깊지만 독자가 엔지니어·AI뿐이다. 디자이너가 소비자로 붙는 시점에 컴포넌트 디자인
-가이드라인 장르(anatomy·Do/Don't·정량 규칙)를 추가한다. 정량 규칙은 디자인 리뷰에서 반복
-지적된 것을 응고시키는 방식으로 축적하며, 리뷰 이력이 없는 동안 임의로 숫자를 지어내지
-않는다.
+### 병행 채택 3 — 컴포넌트 결정 가이드 (완료, 2026-07-24)
+
+seed의 컴포넌트 문서([Action Button](https://seed-design.io/components/action-button),
+[Field](https://seed-design.io/components/field),
+[Bottom Sheet](https://seed-design.io/components/bottom-sheet),
+[Progress Board](https://seed-design.io/components/progress-board))가 가진 디자이너용 장르를
+LDS API와 근거 체계에 맞춰 채택했다. 결과는 다음과 같다.
+
+- public component entry 179개·named export 182개를 source·type·prompt·token·Storybook
+  evidence와 함께 machine-readable registry로 전수 추적한다.
+- 기존 non-Foundation Storybook 페이지 148개에는 purpose/selection, anatomy, properties,
+  states, behavior, quantitative rules, responsive, content, accessibility, Do/Don't,
+  exceptions, related, examples, token/API, migration, machine reference의 16섹션 가이드를
+  첫 `개요` 스토리 앞에 lazy payload로 삽입한다.
+- `LDS Core/Components/Overview`는 검색·레이어 필터가 있는 전체 카탈로그를, `Progress Board`는
+  Web·Figma·iOS·Android의 **확인된 근거만** 보여 준다. 외부 플랫폼 구현이 없으면 임의로
+  완료 상태를 만들지 않는다.
+- 정량 규칙은 기존 타입·토큰·prompt·스토리·검사에서 추출하고, 증거가 없으면 숫자를 만들지
+  않는다. SEED의 브랜드 이미지·당근 제품 시나리오·우리 API와 맞지 않는 수치 규칙은 복사하지
+  않았다.
+- 대표 상세 가이드는 SEED 장문 editorial category와 비교한 visual verdict 92/100을 통과했고,
+  1440px·390px 모두 page-level horizontal overflow가 없다.
+
+따라서 이전의 “prompt.md는 깊지만 디자이너가 직접 소비할 페이지가 없다”는 공백은 현재
+닫혔다. 남은 차이는 문서 구조가 아니라 실제 제품 사례와 다중 플랫폼 구현의 부재다.
 
 ### seed 문서 재사용 정책
 

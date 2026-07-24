@@ -1,0 +1,157 @@
+# Social Login
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Action |
+| Owner | `SocialButton` |
+| Storybook | `LDS Product/Action/Social Login` |
+| Source | `../component-content.json#product-action-social-login` |
+
+외부 계정으로 가입·로그인하는 인증 진입점을 제공할 때 적합합니다. 일반적인 제품 작업이나 자체 계정 입력에는 브랜드 버튼 대신 Button 또는 전용 로그인 폼을 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- 외부 계정으로 가입·로그인하는 인증 진입점을 제공할 때 적합합니다. 일반적인 제품 작업이나 자체 계정 입력에는 브랜드 버튼 대신 Button 또는 전용 로그인 폼을 사용하세요.
+- 페이스북 브랜드 필은 흰 텍스트 AA(4.5:1)를 위해 공식 1877F2를 1465D8로 어둡게 조정한 의도적 이탈입니다. tone="brand"의 원색 필과 킷 섀도는 다크 테마 자동 대응 대상이 아니며, 테마 대응이 필요하면 기본 tone="outline"을 쓰세요.
+- "…로 계속하기" 소셜 로그인 버튼. 소셜 로그인 킷의 6개 심볼(Continue with Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로 통합. 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법(52px 높이 · radius-md · 16px 볼드 · 토큰 모션)을 따르고, 기본 tone="outline"은 DS 네이티브(서피스+헤어라인+풀컬러 마크, 다크 테마 자동 대응), tone="brand"는 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2)을 재현합….
+- - 이름은 가시 텍스트 하나가 담당합니다. 마크는 BrandLogo를 장식(decorative)으로 렌더하므로 "Google로 계속하기"가 한 번만 낭독됩니다. BrandLogo도 기본이 장식이라 이 지점에서 이름이 중복될 여지가 없습니다. - iconOnly는 원형 48px 마크 버튼이며 이 경우에만 aria-label(+title)로 같은 문구를 실어 이름 없는 버튼이 되지 않게 합니다. - as로 a 등 비버튼 요소를 렌더할 때 disabled는 native disabled가 없으므로 aria-disabled="true" + 활성화 차단(preventDefau….
+
+### 사용하지 않음
+
+- Social Login가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.
+- 동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다.
+- 표현이 비슷하다는 이유만으로 상태 의미가 다른 sibling 컴포넌트를 서로 대체하지 않습니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| Root | SocialButton의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다. |
+| Icon Only | 원형 아이콘 버튼(48px 서클, 라벨은 aria-label로) — 아이콘 행 패턴용. @default false |
+| Children | 라벨 재정의(기본 "Google로 계속하기" 등 KR 카피). |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `provider` | `'google' \| 'apple' \| 'facebook'` | No | 플랫폼. @default "google" |
+| `tone` | `'outline' \| 'brand'` | No | 'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2). @default "outline" |
+| `iconOnly` | `boolean` | No | 원형 아이콘 버튼(48px 서클, 라벨은 aria-label로) — 아이콘 행 패턴용. @default false |
+| `align` | `'center' \| 'left'` | No | 아이콘·라벨 정렬 — 킷의 Centre / Left Aligned 두 변형. @default "center" |
+| `full` | `boolean` | No | 컨테이너 전체 폭. @default false |
+| `children` | `React.ReactNode` | No | 라벨 재정의(기본 "Google로 계속하기" 등 KR 카피). |
+| `disabled` | `boolean` | No | 비활성(흐림, 상호작용 불가). @default false |
+| `as` | `React.ElementType` | No | 렌더 요소(링크는 "a"). @default "button" |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| tone | 'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2). @default "outline" 타입 계약: 'outline' \| 'brand' |
+| disabled | 비활성(흐림, 상호작용 불가). @default false 타입 계약: boolean |
+
+## Behavior and interaction
+
+- SocialButton의 controlled/uncontrolled 경계와 callback 순서는 공개 타입 계약을 따릅니다.
+- 상태 변화 중에도 accessible name, focus 위치와 레이아웃 기준점을 예고 없이 잃지 않습니다.
+- 제품 데이터와 side effect는 callback으로 위임하고 SocialButton는 표시·입력 상태만 소유합니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | iconOnly는 원형 48px 마크 버튼이며 이 경우에만 aria-label(+title)로 같은 문구를 실어 이름 없는 버튼이 되지 않게 합니다. |
+| 명시 규칙 2 | 페이스북 브랜드 필은 흰 텍스트 AA(4.5:1)를 위해 공식 1877F2를 1465D8로 어둡게 조정한 의도적 이탈입니다. tone="brand"의 원색 필과 킷 섀도는 다크 테마 자동 대응 대상이 아니며, 테마 대응이 필요하면 기본 tone="outline"을 쓰세요. |
+| 명시 규칙 3 | "…로 계속하기" 소셜 로그인 버튼. 소셜 로그인 킷의 6개 심볼(Continue with Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로 통합. 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법(52px 높이 · radius-md · 16px 볼드 · 토큰 모션)을 따르고, 기본 tone="outline"은 DS 네이티브(서피스+헤어라인+풀컬러 마크, 다크 테마 자동 대응), tone="brand"는 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2)을 재현합… |
+| 명시 규칙 4 | - 이름은 가시 텍스트 하나가 담당합니다. 마크는 BrandLogo를 장식(decorative)으로 렌더하므로 "Google로 계속하기"가 한 번만 낭독됩니다. BrandLogo도 기본이 장식이라 이 지점에서 이름이 중복될 여지가 없습니다. - iconOnly는 원형 48px 마크 버튼이며 이 경우에만 aria-label(+title)로 같은 문구를 실어 이름 없는 버튼이 되지 않게 합니다. - as로 a 등 비버튼 요소를 렌더할 때 disabled는 native disabled가 없으므로 aria-disabled="true" + 활성화 차단(preventDefau… |
+| --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
+
+## Responsive
+
+- "…로 계속하기" 소셜 로그인 버튼. 소셜 로그인 킷의 6개 심볼(Continue with Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로 통합. 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법(52px 높이 · radius-md · 16px 볼드 · 토큰 모션)을 따르고, 기본 tone="outline"은 DS 네이티브(서피스+헤어라인+풀컬러 마크, 다크 테마 자동 대응), tone="brand"는 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2)을 재현합….
+- 320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.
+- 고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다.
+
+## Content and writing
+
+- 이름은 가시 텍스트 하나가 담당합니다. 마크는 BrandLogo를 장식(decorative)으로 렌더하므로 "Google로 계속하기"가 한 번만 낭독됩니다. BrandLogo도 기본이 장식이라 이 지점에서 이름이 중복될 여지가 없습니다.
+- iconOnly는 원형 48px 마크 버튼이며 이 경우에만 aria-label(+title)로 같은 문구를 실어 이름 없는 버튼이 되지 않게 합니다.
+- 페이스북 브랜드 필은 흰 텍스트 AA(4.5:1)를 위해 공식 1877F2를 1465D8로 어둡게 조정한 의도적 이탈입니다. tone="brand"의 원색 필과 킷 섀도는 다크 테마 자동 대응 대상이 아니며, 테마 대응이 필요하면 기본 tone="outline"을 쓰세요.
+- - 이름은 가시 텍스트 하나가 담당합니다. 마크는 BrandLogo를 장식(decorative)으로 렌더하므로 "Google로 계속하기"가 한 번만 낭독됩니다. BrandLogo도 기본이 장식이라 이 지점에서 이름이 중복될 여지가 없습니다. - iconOnly는 원형 48px 마크 버튼이며 이 경우에만 aria-label(+title)로 같은 문구를 실어 이름 없는 버튼이 되지 않게 합니다. - as로 a 등 비버튼 요소를 렌더할 때 disabled는 native disabled가 없으므로 aria-disabled="true" + 활성화 차단(preventDefau….
+
+## Accessibility
+
+- iconOnly는 원형 48px 마크 버튼이며 이 경우에만 aria-label(+title)로 같은 문구를 실어 이름 없는 버튼이 되지 않게 합니다.
+- as로 a 등 비버튼 요소를 렌더할 때 disabled는 native disabled가 없으므로 aria-disabled="true" + 활성화 차단(preventDefault)으로 전달됩니다. 흐리기만 하고 조작 가능한 "비활성"을 만들지 않습니다. as="button"일 때는 그대로 native disabled입니다.
+- - 이름은 가시 텍스트 하나가 담당합니다. 마크는 BrandLogo를 장식(decorative)으로 렌더하므로 "Google로 계속하기"가 한 번만 낭독됩니다. BrandLogo도 기본이 장식이라 이 지점에서 이름이 중복될 여지가 없습니다. - iconOnly는 원형 48px 마크 버튼이며 이 경우에만 aria-label(+title)로 같은 문구를 실어 이름 없는 버튼이 되지 않게 합니다. - as로 a 등 비버튼 요소를 렌더할 때 disabled는 native disabled가 없으므로 aria-disabled="true" + 활성화 차단(preventDefau….
+- native semantic을 우선하며 사용자에게 보이는 이름과 접근 가능한 이름이 같은 목적을 설명하게 합니다.
+- 키보드 focus 순서, focus-visible 표시와 상태 ARIA가 시각 상태와 동시에 갱신되는지 공개 스토리에서 검증합니다.
+
+## Do / Don't
+
+| Kind | Guidance |
+| --- | --- |
+| Do | 페이스북 브랜드 필은 흰 텍스트 AA(4.5:1)를 위해 공식 1877F2를 1465D8로 어둡게 조정한 의도적 이탈입니다. tone="brand"의 원색 필과 킷 섀도는 다크 테마 자동 대응 대상이 아니며, 테마 대응이 필요하면 기본 tone="outline"을 쓰세요. |
+| Don't | Social Login가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다. |
+| Do | "…로 계속하기" 소셜 로그인 버튼. 소셜 로그인 킷의 6개 심볼(Continue with Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로 통합. 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법(52px 높이 · radius-md · 16px 볼드 · 토큰 모션)을 따르고, 기본 tone="outline"은 DS 네이티브(서피스+헤어라인+풀컬러 마크, 다크 테마 자동 대응), tone="brand"는 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2)을 재현합…. |
+| Don't | 동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다. |
+
+## Exceptions
+
+- iconOnly는 원형 48px 마크 버튼이며 이 경우에만 aria-label(+title)로 같은 문구를 실어 이름 없는 버튼이 되지 않게 합니다.
+- - 이름은 가시 텍스트 하나가 담당합니다. 마크는 BrandLogo를 장식(decorative)으로 렌더하므로 "Google로 계속하기"가 한 번만 낭독됩니다. BrandLogo도 기본이 장식이라 이 지점에서 이름이 중복될 여지가 없습니다. - iconOnly는 원형 48px 마크 버튼이며 이 경우에만 aria-label(+title)로 같은 문구를 실어 이름 없는 버튼이 되지 않게 합니다. - as로 a 등 비버튼 요소를 렌더할 때 disabled는 native disabled가 없으므로 aria-disabled="true" + 활성화 차단(preventDefau….
+- 제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 SocialButton의 범용 API에 넣지 않습니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `ButtonGroup` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `CopyButton` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Link` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `SpeedDial` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `SplitButton` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<SocialButton provider="google" full />
+<SocialButton provider="apple" full />
+<SocialButton provider="facebook" tone="brand" full />
+<SocialButton provider="google" align="left">Continue with Google</SocialButton>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--body1-size`
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-label-normal`
+- `--color-semantic-line-solid-normal`
+- `--component-button-transition`
+- `--font-sans`
+- `--fw-bold`
+- `--radius-md`
+
+### Source contracts
+
+- `components/buttons/SocialButton.jsx`
+- `components/buttons/SocialButton.d.ts`
+- `components/buttons/SocialButton.prompt.md`
+- `stories/SocialButtons.stories.jsx`
+
+## Migration
+
+- 현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.
+- 대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다.
+
+## Sources
+
+- SocialButton prompt contract: `components/buttons/SocialButton.prompt.md`
+- Storybook implementation evidence: `stories/SocialButtons.stories.jsx`

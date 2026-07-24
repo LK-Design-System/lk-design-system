@@ -1,0 +1,341 @@
+{
+  "slug": "core-components-selection-and-input-textarea",
+  "title": "Textarea",
+  "storybookTitle": "LDS Core/Components/Selection and Input/Textarea",
+  "layer": "Core",
+  "family": "Selection and Input",
+  "primaryOwner": "Textarea",
+  "ownerComponents": [
+    "Textarea"
+  ],
+  "supportingComponents": [],
+  "purpose": "검토 메모·설명처럼 줄바꿈과 충분한 작성 공간이 필요한 값에 적합합니다. 이름·검색어처럼 한 줄 값에는 Textarea 대신 Input을 사용하세요.",
+  "useWhen": [
+    "검토 메모·설명처럼 줄바꿈과 충분한 작성 공간이 필요한 값에 적합합니다. 이름·검색어처럼 한 줄 값에는 Textarea 대신 Input을 사용하세요.",
+    "Textarea가 소유하는 Selection and Input 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다.",
+    "제품별 구현 대신 공개 Textarea API와 semantic token으로 일관성을 유지해야 할 때 사용합니다."
+  ],
+  "avoidWhen": [
+    "Textarea가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.",
+    "동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다.",
+    "표현이 비슷하다는 이유만으로 상태 의미가 다른 sibling 컴포넌트를 서로 대체하지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "Textarea의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Label",
+      "rule": "박스 위에 렌더되는 필드 라벨."
+    },
+    {
+      "part": "Helper",
+      "rule": "박스 아래 보조 설명."
+    },
+    {
+      "part": "Error",
+      "rule": "박스 아래 오류 설명."
+    },
+    {
+      "part": "Interaction",
+      "rule": "interaction 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 위에 렌더되는 필드 라벨.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "helper",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 아래 보조 설명.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "error",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 아래 오류 설명.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "required": false,
+      "description": "라벨에 레드 별표 추가. @default false",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "invalid",
+      "type": "boolean",
+      "required": false,
+      "description": "검증 오류용 레드 링. @default false",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "status",
+      "type": "\"normal\" | \"positive\" | \"negative\"",
+      "required": false,
+      "description": "상태 링과 메시지 톤. @default \"normal\"",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"md\" | \"lg\" | \"small\" | \"medium\" | \"large\"",
+      "required": false,
+      "description": "최소 높이 프리셋. @default \"md\"",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "interaction",
+      "type": "\"normal\" | \"inactive\" | \"hovered\" | \"focused\" | \"active\" | \"active-focused\"",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "required": false,
+      "description": "active visual state alias.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "focus",
+      "type": "boolean",
+      "required": false,
+      "description": "focus visual state alias.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "disable",
+      "type": "boolean",
+      "required": false,
+      "description": "disabled alias.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "resize",
+      "type": "\"normal\" | \"fixed\" | \"limit\"",
+      "required": false,
+      "description": "resize axis.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "rows",
+      "type": "number",
+      "required": false,
+      "description": "처음 보이는 줄 수. @default 5",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "래퍼 스타일.",
+      "owner": "TextareaProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "error",
+      "rule": "박스 아래 오류 설명. 타입 계약: React.ReactNode"
+    },
+    {
+      "state": "invalid",
+      "rule": "검증 오류용 레드 링. @default false 타입 계약: boolean"
+    },
+    {
+      "state": "status",
+      "rule": "상태 링과 메시지 톤. @default \"normal\" 타입 계약: \"normal\" | \"positive\" | \"negative\""
+    },
+    {
+      "state": "interaction",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: \"normal\" | \"inactive\" | \"hovered\" | \"focused\" | \"active\" | \"active-focused\""
+    },
+    {
+      "state": "active",
+      "rule": "active visual state alias. 타입 계약: boolean"
+    }
+  ],
+  "behavior": [
+    "Textarea shares Input's label, required mark, helper/error typography, described-by merge, read-only fill, border, focus ring, and positive/negative status icon. Only multiline height and resize behavior differ.",
+    "- Textarea shares Input's label, required mark, helper/error typography, described-by merge, read-only fill, border, focus ring, and positive/negative status icon. Only multiline height and resize behavior differ. - Reference basis: GOV.UK Textarea and Carbon Text area.",
+    "Textarea의 controlled/uncontrolled 경계와 callback 순서는 공개 타입 계약을 따릅니다.",
+    "상태 변화 중에도 accessible name, focus 위치와 레이아웃 기준점을 예고 없이 잃지 않습니다.",
+    "제품 데이터와 side effect는 callback으로 위임하고 Textarea는 표시·입력 상태만 소유합니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "--color-semantic-label-assistive",
+      "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
+    },
+    {
+      "subject": "--color-semantic-label-disable",
+      "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
+    },
+    {
+      "subject": "--component-input-font-size",
+      "rule": "var(--body1-size)"
+    },
+    {
+      "subject": "--component-input-letter-spacing",
+      "rule": "var(--body1-spacing)"
+    }
+  ],
+  "responsive": [
+    "Textarea shares Input's label, required mark, helper/error typography, described-by merge, read-only fill, border, focus ring, and positive/negative status icon. Only multiline height and resize behavior differ.",
+    "- Textarea shares Input's label, required mark, helper/error typography, described-by merge, read-only fill, border, focus ring, and positive/negative status icon. Only multiline height and resize behavior differ. - Reference basis: GOV.UK Textarea and Carbon Text area.",
+    "320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.",
+    "고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다."
+  ],
+  "contentGuidance": [
+    "Textarea shares Input's label, required mark, helper/error typography, described-by merge, read-only fill, border, focus ring, and positive/negative status icon. Only multiline height and resize behavior differ.",
+    "Reference basis: GOV.UK Textarea and Carbon Text area.",
+    "Textarea — Input의 박스·포커스 헤일로와 맞춘 여러 줄 필드; 세로 리사이즈 가능.",
+    "- Textarea shares Input's label, required mark, helper/error typography, described-by merge, read-only fill, border, focus ring, and positive/negative status icon. Only multiline height and resize behavior differ. - Reference basis: GOV.UK Textarea and Carbon Text area."
+  ],
+  "accessibility": [
+    "Textarea shares Input's label, required mark, helper/error typography, described-by merge, read-only fill, border, focus ring, and positive/negative status icon. Only multiline height and resize behavior differ.",
+    "- Textarea shares Input's label, required mark, helper/error typography, described-by merge, read-only fill, border, focus ring, and positive/negative status icon. Only multiline height and resize behavior differ. - Reference basis: GOV.UK Textarea and Carbon Text area.",
+    "native semantic을 우선하며 사용자에게 보이는 이름과 접근 가능한 이름이 같은 목적을 설명하게 합니다.",
+    "키보드 focus 순서, focus-visible 표시와 상태 ARIA가 시각 상태와 동시에 갱신되는지 공개 스토리에서 검증합니다.",
+    "색상, 모양 또는 아이콘 하나만으로 상태를 구분하지 않고 이름·텍스트·semantic state를 함께 제공합니다."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "Textarea가 소유하는 Selection and Input 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다."
+    ],
+    [
+      "Don't",
+      "Textarea가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다."
+    ],
+    [
+      "Do",
+      "제품별 구현 대신 공개 Textarea API와 semantic token으로 일관성을 유지해야 할 때 사용합니다."
+    ],
+    [
+      "Don't",
+      "동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Textarea의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "AutoComplete",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Combobox",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "FormField",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Input",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "SearchField",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Select",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "TagInput",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Textarea label=\"문의 내용\" required rows={5} placeholder=\"문의하실 내용을 입력해 주세요.\" />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-assistive",
+    "--color-semantic-label-disable",
+    "--component-input-border-width",
+    "--component-input-focus-shadow",
+    "--component-input-font-size",
+    "--component-input-letter-spacing",
+    "--component-input-line-height",
+    "--component-input-radius",
+    "--component-input-stack-gap",
+    "--component-input-text-color",
+    "--dur-base",
+    "--ease-out",
+    "--font-sans",
+    "--space-10",
+    "--space-3"
+  ],
+  "apiLinks": [
+    "components/forms/Textarea.jsx",
+    "components/forms/Textarea.d.ts",
+    "components/forms/Textarea.prompt.md",
+    "stories/FormTextarea.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormTextarea.stories.jsx",
+    "entryStoryId": "lds-core-components-selection-and-input-textarea--textarea-overview",
+    "publicStories": [
+      {
+        "id": "lds-core-components-selection-and-input-textarea--textarea-overview",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-selection-and-input-textarea--character-counter",
+        "name": "사용법 · 문자 수 제한",
+        "role": "usage"
+      }
+    ],
+    "hiddenEvidence": 3
+  },
+  "sources": [
+    {
+      "label": "Textarea prompt contract",
+      "path": "components/forms/Textarea.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/FormTextarea.stories.jsx"
+    },
+    {
+      "label": "GOV.UK Textarea",
+      "url": "https://design-system.service.gov.uk/components/textarea/"
+    },
+    {
+      "label": "Carbon Text area",
+      "url": "https://carbondesignsystem.com/components/text-area/usage/"
+    },
+    {
+      "label": "SEED Textarea benchmark",
+      "url": "https://seed-design.io/components/text-input"
+    }
+  ]
+}

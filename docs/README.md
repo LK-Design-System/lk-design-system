@@ -17,6 +17,7 @@
 4. 접근성: [`ACCESSIBILITY_CONTRACTS.md`](ACCESSIBILITY_CONTRACTS.md)
 5. 현재 저장소 상태와 최신 handoff: [`HANDOFF.md`](HANDOFF.md)
 6. Foundation 원리·선택 기준·토큰 참조: [`foundations/README.md`](foundations/README.md)
+7. 컴포넌트 선택·Anatomy·상태·접근성·API 참조: [`components/README.md`](components/README.md)
 
 ## Stable policies and contracts
 
@@ -27,6 +28,7 @@
 | [`PACKAGE_MIGRATION_GUIDE.md`](PACKAGE_MIGRATION_GUIDE.md) | Wave 2 consumer import, CSS, artifact-pin, and rollback guidance |
 | [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md) | token source of truth와 변경 정책 |
 | [`foundations/README.md`](foundations/README.md) | 15개 Foundation의 canonical guide, machine-readable content와 LLM bundle |
+| [`components/README.md`](components/README.md) | 179개 public entry와 148개 컴포넌트 의사결정 가이드, Progress Board, machine-readable registry와 LLM bundle |
 | [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | public API grammar와 컴포넌트별 상태 증거 |
 | [`API_OPENNESS_POLICY.md`](API_OPENNESS_POLICY.md) | 공개 API를 언제·어떤 형태로 여는지의 계약(구조는 열되 조합은 닫음) |
 | [`ACCESSIBILITY_CONTRACTS.md`](ACCESSIBILITY_CONTRACTS.md) | semantic, keyboard, focus, screen-reader 계약 |

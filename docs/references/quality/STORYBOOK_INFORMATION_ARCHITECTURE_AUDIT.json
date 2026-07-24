@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "05f286c44180ae110bddc3cbe4862e52113380f356d700b1d9a3a84e57d075ed",
+    "storybookIndexSha256": "2aea6faf3bb087c9f08ff523624fd2f65c51a145d0fa0ebb35267286451a050d",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -58,23 +58,23 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 164,
-    "stories": 524,
-    "publicStories": 373,
+    "pages": 166,
+    "stories": 528,
+    "publicStories": 377,
     "hiddenStories": 151,
-    "componentDescriptions": 160,
-    "pagesWithVisibleCanvasIntroduction": 164,
-    "pagesWithDecisionGuidance": 153,
-    "describedPublicStories": 373,
-    "reviewedPages": 164,
-    "reviewedStories": 524,
+    "componentDescriptions": 162,
+    "pagesWithVisibleCanvasIntroduction": 166,
+    "pagesWithDecisionGuidance": 155,
+    "describedPublicStories": 377,
+    "reviewedPages": 166,
+    "reviewedStories": 528,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 25,
-      "overview": 148,
-      "usage": 25,
-      "variants-states": 71,
+      "overview": 150,
+      "usage": 26,
+      "variants-states": 72,
       "interaction": 44,
       "responsive": 44,
       "scenario": 16,
@@ -82,18 +82,18 @@
       "internal-contract": 72
     },
     "dispositions": {
-      "keep": 164,
+      "keep": 166,
       "merge": 0,
       "split": 0,
       "hide": 0
     },
     "layers": {
       "Core": {
-        "pages": 53,
-        "stories": 172,
-        "public": 96,
+        "pages": 55,
+        "stories": 176,
+        "public": 100,
         "hidden": 76,
-        "guideReadyPages": 53
+        "guideReadyPages": 55
       },
       "Foundation": {
         "pages": 16,
@@ -1138,23 +1138,24 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/ContentDisclosure.stories.jsx",
-      "sourceSha256": "46a20e481b2ba4a306203d9c73d37d878fa4d6db34f4545e40a129d3dce55158",
+      "sourceSha256": "4ed31a5a333e76c689fffb399af510453b3bd9b9c4a516891a6b96ab0cd1648e",
       "primaryOwner": "Accordion",
       "ownerComponents": [
         "Accordion",
         "Collapsible"
       ],
       "supportingComponents": [
-        "Code"
+        "Code",
+        "Icon"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-content-disclosure--disclosure",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -1165,7 +1166,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "46a20e481b2ba4a306203d9c73d37d878fa4d6db34f4545e40a129d3dce55158",
+      "reviewedSourceSha256": "4ed31a5a333e76c689fffb399af510453b3bd9b9c4a516891a6b96ab0cd1648e",
       "stories": [
         {
           "id": "lds-core-components-content-disclosure--disclosure",
@@ -1192,6 +1193,30 @@
             "Code"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-content-disclosure--leading-and-description",
+          "name": "변형·상태 · 아이콘과 설명",
+          "exportName": "LeadingAndDescription",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Accordion"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ]
         }
       ],
       "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
@@ -3647,6 +3672,143 @@
         }
       ],
       "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+    },
+    {
+      "title": "LDS Core/Components/Overview",
+      "layer": "Core",
+      "family": "Components",
+      "importPath": "./stories/ComponentOverview.stories.jsx",
+      "sourceSha256": "ec80adcc3027983f1a3c4b8414fe57af5080836661a6bdbe94620ed92afef5f7",
+      "primaryOwner": "Components:Overview",
+      "ownerComponents": [
+        "Components:Overview"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-components-overview--component-catalog",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "medium",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "ec80adcc3027983f1a3c4b8414fe57af5080836661a6bdbe94620ed92afef5f7",
+      "stories": [
+        {
+          "id": "lds-core-components-overview--component-catalog",
+          "name": "개요",
+          "exportName": "ComponentCatalog",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Components:Overview"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed from source and fresh static Canvas at 1440px and 390px; targeted play/Axe and the complete four-shard accessibility run passed with no violations or console errors."
+        },
+        {
+          "id": "lds-core-components-overview--detailed-guide",
+          "name": "사용법 · 상세 가이드 구조",
+          "exportName": "DetailedGuide",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Components:Overview"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed from source and fresh static Canvas at 1440px and 390px; targeted play/Axe and the complete four-shard accessibility run passed with no violations or console errors."
+        }
+      ],
+      "reviewNote": "Fresh static build reviewed at 1440px and 390px after contrast and portal isolation: catalog search/filter, guide hierarchy, focusable overflow, and live-story handoff remain visible. Portal isolation preserves existing story heading contracts; all four accessibility shards passed."
+    },
+    {
+      "title": "LDS Core/Components/Progress Board",
+      "layer": "Core",
+      "family": "Components",
+      "importPath": "./stories/ComponentProgressBoard.stories.jsx",
+      "sourceSha256": "1de7421fa1694f87215d6c01497af32334126bdc0778ab0e8d6ba8527ced6b6a",
+      "primaryOwner": "Components:Progress Board",
+      "ownerComponents": [
+        "Components:Progress Board"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-components-progress-board--platform-status",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "medium",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "1de7421fa1694f87215d6c01497af32334126bdc0778ab0e8d6ba8527ced6b6a",
+      "stories": [
+        {
+          "id": "lds-core-components-progress-board--platform-status",
+          "name": "개요",
+          "exportName": "PlatformStatus",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Components:Progress Board"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed from source and fresh static Canvas at 1440px and 390px; targeted play/Axe and the complete four-shard accessibility run passed with no violations or console errors."
+        }
+      ],
+      "reviewNote": "Fresh static build reviewed at 1440px and 390px after contrast and narrow-overflow fixes: platform evidence, focusable independent table overflow, and external-platform non-claims remain correct. The 320px play assertion and all four accessibility shards passed."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Card Selection",
@@ -15773,7 +15935,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormFileUploadQueue.stories.jsx",
-      "sourceSha256": "52aacd82218f06cf7a10c37286dbdd9277ec70a98e6f78c125974816f7de980d",
+      "sourceSha256": "218d3d77dc43760a5020257e33c31702f8834abea6206b04c8460e172f6ea28b",
       "primaryOwner": "FileUploadQueue",
       "ownerComponents": [
         "FileUploadQueue"
@@ -15800,7 +15962,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "52aacd82218f06cf7a10c37286dbdd9277ec70a98e6f78c125974816f7de980d",
+      "reviewedSourceSha256": "218d3d77dc43760a5020257e33c31702f8834abea6206b04c8460e172f6ea28b",
       "stories": [
         {
           "id": "lds-product-selection-and-input-file-upload-queue--upload-and-conversion",

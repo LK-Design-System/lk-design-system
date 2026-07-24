@@ -1,0 +1,310 @@
+{
+  "slug": "product-data-visualization-donut-chart",
+  "title": "Donut Chart",
+  "storybookTitle": "LDS Product/Data/Visualization/Donut Chart",
+  "layer": "Product",
+  "family": "Visualization",
+  "primaryOwner": "DonutChart",
+  "ownerComponents": [
+    "DonutChart"
+  ],
+  "supportingComponents": [],
+  "purpose": "합계가 의미 있는 소수 범주의 구성 비율과 중심 요약값을 보여 줄 때 적합합니다. 정확한 값 비교나 범주가 많을 때는 Donut Chart 대신 Bar Chart 또는 Table을 사용하세요.",
+  "useWhen": [
+    "합계가 의미 있는 소수 범주의 구성 비율과 중심 요약값을 보여 줄 때 적합합니다. 정확한 값 비교나 범주가 많을 때는 Donut Chart 대신 Bar Chart 또는 Table을 사용하세요.",
+    "빈 배열과 0합계는 구분합니다. 빈 배열은 emptyLabel, 0합계는 실제 세그먼트 이름·0 값이 포함된 요약을 제공합니다.",
+    "PatternFly dashboard guidelines는 proportional utilization에 bar/donut을 사용하고 card title과 선택적 action을 별도 anatomy로 둡니다. 해당 chrome은 MetricCard/Card 조합에 남깁니다.",
+    "DonutChart — 비음수 세그먼트의 전체 대비 비율과 실제 합계를 보여주는 링 차트. Classification: LDS Product Data Extension."
+  ],
+  "avoidWhen": [
+    "host Card가 surface와 action을 소유합니다. DonutChart에 별도 card chrome이나 nested surface를 추가하지 않습니다.",
+    "Carbon accessibility for developers의 의미 있는 텍스트 대안 원칙에 따라 색·호 길이만으로 값을 전달하지 않습니다.",
+    "- Legend의 swatch+label+value 위계를 유지하되 Donut 내부 범례는 차트의 자동 텍스트 요약과 중복 발표되지 않도록 decorative 처리합니다. - LineChart와 같은 named image/description 계약을 채택하고, 원형 차트의 big number와 비율 범례만 고유 anatomy로 유지합니다. - host Card가 surface와 action을 소유합니다. DonutChart에 별도 card chrome이나 nested surface를 추가하지 않습니다. - 기존 palette, ring thickness, cente….",
+    "- Carbon chart anatomy는 circular chart의 title, label, tooltip, legend, graph frame, big number를 구분하며 작은 slice의 정보가 사라질 때 데이터 대안이 필요하다고 설명합니다. LDS는 모든 세그먼트를 결정적 텍스트 요약에 포함합니다. - Carbon accessibility for developers의 의미 있는 텍스트 대안 원칙에 따라 색·호 길이만으로 값을 전달하지 않습니다. - PatternFly dashboard guidelines는 proportional utilization에…."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "DonutChart의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Center Label",
+      "rule": "가운데 텍스트 재정의."
+    },
+    {
+      "part": "Legend",
+      "rule": "측면 범례. @default true"
+    },
+    {
+      "part": "Description",
+      "rule": "차트가 무엇을 구성하는지 설명하는 스크린 리더용 문장."
+    },
+    {
+      "part": "Empty Label",
+      "rule": "세그먼트 배열이 비었을 때 가운데에 보이는 문구이자 텍스트 요약. @default \"데이터가 없습니다\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "segments",
+      "type": "DonutSegment[]",
+      "required": true,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "DonutChartProps"
+    },
+    {
+      "name": "size",
+      "type": "number",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "DonutChartProps"
+    },
+    {
+      "name": "thickness",
+      "type": "number",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "DonutChartProps"
+    },
+    {
+      "name": "showTotal",
+      "type": "boolean",
+      "required": false,
+      "description": "가운데에 합계 표시. @default true",
+      "owner": "DonutChartProps"
+    },
+    {
+      "name": "centerLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "가운데 텍스트 재정의.",
+      "owner": "DonutChartProps"
+    },
+    {
+      "name": "legend",
+      "type": "boolean",
+      "required": false,
+      "description": "측면 범례. @default true",
+      "owner": "DonutChartProps"
+    },
+    {
+      "name": "description",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "차트가 무엇을 구성하는지 설명하는 스크린 리더용 문장.",
+      "owner": "DonutChartProps"
+    },
+    {
+      "name": "summary",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "자동 생성되는 합계·세그먼트·비율 요약을 재정의합니다.",
+      "owner": "DonutChartProps"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "세그먼트 배열이 비었을 때 가운데에 보이는 문구이자 텍스트 요약. @default \"데이터가 없습니다\"",
+      "owner": "DonutChartProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "emptyLabel",
+      "rule": "세그먼트 배열이 비었을 때 가운데에 보이는 문구이자 텍스트 요약. @default \"데이터가 없습니다\" 타입 계약: React.ReactNode"
+    },
+    {
+      "state": "반응형 · 좁은 폭과 긴 범례",
+      "rule": "responsive 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    }
+  ],
+  "behavior": [
+    "size / thickness / showTotal / centerLabel / legend — 링, big number, 보이는 범례 축입니다. 긴 label과 범례는 좁은 폭에서 감싸집니다.",
+    "description / summary / emptyLabel — root role=\"img\"의 설명, 자동 합계·수치·비율 요약 override, 빈 배열의 가운데 문구입니다.",
+    "빈 배열과 0합계는 구분합니다. 빈 배열은 emptyLabel, 0합계는 실제 세그먼트 이름·0 값이 포함된 요약을 제공합니다.",
+    "기존 palette, ring thickness, centered total을 유지하고 zero-sum의 거짓 1과 narrow overflow만 제거했습니다.",
+    "PatternFly dashboard guidelines는 proportional utilization에 bar/donut을 사용하고 card title과 선택적 action을 별도 anatomy로 둡니다. 해당 chrome은 MetricCard/Card 조합에 남깁니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "segments — { id?, value, label, accessibleLabel?, color? }[]. 음수와 비수치 값은 원형 비율에서 0으로 취급합니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "합계가 0이면 1을 대체 합계로 만들지 않습니다. 색 세그먼트는 그리지 않고 가운데 0, 범례 0%, 텍스트 합계 0을 유지합니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "빈 배열과 0합계는 구분합니다. 빈 배열은 emptyLabel, 0합계는 실제 세그먼트 이름·0 값이 포함된 요약을 제공합니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "기존 palette, ring thickness, centered total을 유지하고 zero-sum의 거짓 1과 narrow overflow만 제거했습니다."
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    }
+  ],
+  "responsive": [
+    "size / thickness / showTotal / centerLabel / legend — 링, big number, 보이는 범례 축입니다. 긴 label과 범례는 좁은 폭에서 감싸집니다.",
+    "기존 palette, ring thickness, centered total을 유지하고 zero-sum의 거짓 1과 narrow overflow만 제거했습니다.",
+    "- segments — { id?, value, label, accessibleLabel?, color? }[]. 음수와 비수치 값은 원형 비율에서 0으로 취급합니다. - size / thickness / showTotal / centerLabel / legend — 링, big number, 보이는 범례 축입니다. 긴 label과 범례는 좁은 폭에서 감싸집니다. - description / summary / emptyLabel — root role=\"img\"의 설명, 자동 합계·수치·비율 요약 override, 빈 배열의 가운데 문구입니다. - 합계가 0이면 1을….",
+    "- Legend의 swatch+label+value 위계를 유지하되 Donut 내부 범례는 차트의 자동 텍스트 요약과 중복 발표되지 않도록 decorative 처리합니다. - LineChart와 같은 named image/description 계약을 채택하고, 원형 차트의 big number와 비율 범례만 고유 anatomy로 유지합니다. - host Card가 surface와 action을 소유합니다. DonutChart에 별도 card chrome이나 nested surface를 추가하지 않습니다. - 기존 palette, ring thickness, cente…."
+  ],
+  "contentGuidance": [
+    "segments — { id?, value, label, accessibleLabel?, color? }[]. 음수와 비수치 값은 원형 비율에서 0으로 취급합니다.",
+    "size / thickness / showTotal / centerLabel / legend — 링, big number, 보이는 범례 축입니다. 긴 label과 범례는 좁은 폭에서 감싸집니다.",
+    "description / summary / emptyLabel — root role=\"img\"의 설명, 자동 합계·수치·비율 요약 override, 빈 배열의 가운데 문구입니다.",
+    "합계가 0이면 1을 대체 합계로 만들지 않습니다. 색 세그먼트는 그리지 않고 가운데 0, 범례 0%, 텍스트 합계 0을 유지합니다."
+  ],
+  "accessibility": [
+    "segments — { id?, value, label, accessibleLabel?, color? }[]. 음수와 비수치 값은 원형 비율에서 0으로 취급합니다.",
+    "description / summary / emptyLabel — root role=\"img\"의 설명, 자동 합계·수치·비율 요약 override, 빈 배열의 가운데 문구입니다.",
+    "Carbon accessibility for developers의 의미 있는 텍스트 대안 원칙에 따라 색·호 길이만으로 값을 전달하지 않습니다.",
+    "- segments — { id?, value, label, accessibleLabel?, color? }[]. 음수와 비수치 값은 원형 비율에서 0으로 취급합니다. - size / thickness / showTotal / centerLabel / legend — 링, big number, 보이는 범례 축입니다. 긴 label과 범례는 좁은 폭에서 감싸집니다. - description / summary / emptyLabel — root role=\"img\"의 설명, 자동 합계·수치·비율 요약 override, 빈 배열의 가운데 문구입니다. - 합계가 0이면 1을….",
+    "- Carbon chart anatomy는 circular chart의 title, label, tooltip, legend, graph frame, big number를 구분하며 작은 slice의 정보가 사라질 때 데이터 대안이 필요하다고 설명합니다. LDS는 모든 세그먼트를 결정적 텍스트 요약에 포함합니다. - Carbon accessibility for developers의 의미 있는 텍스트 대안 원칙에 따라 색·호 길이만으로 값을 전달하지 않습니다. - PatternFly dashboard guidelines는 proportional utilization에…."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "빈 배열과 0합계는 구분합니다. 빈 배열은 emptyLabel, 0합계는 실제 세그먼트 이름·0 값이 포함된 요약을 제공합니다."
+    ],
+    [
+      "Don't",
+      "host Card가 surface와 action을 소유합니다. DonutChart에 별도 card chrome이나 nested surface를 추가하지 않습니다."
+    ],
+    [
+      "Do",
+      "PatternFly dashboard guidelines는 proportional utilization에 bar/donut을 사용하고 card title과 선택적 action을 별도 anatomy로 둡니다. 해당 chrome은 MetricCard/Card 조합에 남깁니다."
+    ],
+    [
+      "Don't",
+      "Carbon accessibility for developers의 의미 있는 텍스트 대안 원칙에 따라 색·호 길이만으로 값을 전달하지 않습니다."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 DonutChart의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "AnnotatedImage",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "BarChart",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Calendar",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "ChartFrame",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Carousel",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DataGrid",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DataToolbar",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DataExportAction",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<DonutChart\n  aria-label=\"운영 상태 비율\"\n  description=\"정상, 검토, 중지 장비의 구성을 보여줍니다.\"\n  segments={[\n    { id: 'healthy', value: 12, label: '정상' },\n    { id: 'review', value: 7, label: '검토' },\n    { id: 'stopped', value: 5, label: '중지' },\n  ]}\n/>"
+    }
+  ],
+  "tokens": [
+    "--caption1-size",
+    "--color-semantic-data-viz-series-1",
+    "--color-semantic-data-viz-series-2",
+    "--color-semantic-data-viz-series-3",
+    "--color-semantic-data-viz-series-4",
+    "--color-semantic-data-viz-series-5",
+    "--color-semantic-data-viz-series-6",
+    "--color-semantic-fill-strong",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--font-sans",
+    "--fw-extra",
+    "--fw-medium",
+    "--label2-line",
+    "--label2-size"
+  ],
+  "apiLinks": [
+    "components/data/DonutChart.jsx",
+    "components/data/DonutChart.d.ts",
+    "components/data/DonutChart.prompt.md",
+    "stories/DataDonutChart.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/DataDonutChart.stories.jsx",
+    "entryStoryId": "lds-product-data-visualization-donut-chart--composition-ratio",
+    "publicStories": [
+      {
+        "id": "lds-product-data-visualization-donut-chart--composition-ratio",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-data-visualization-donut-chart--narrow-long-legend",
+        "name": "반응형 · 좁은 폭과 긴 범례",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-data-visualization-donut-chart--zero-sum",
+        "name": "시나리오 · 합계가 0인 데이터",
+        "role": "scenario"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [
+    {
+      "label": "DonutChart prompt contract",
+      "path": "components/data/DonutChart.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/DataDonutChart.stories.jsx"
+    },
+    {
+      "label": "Carbon chart anatomy",
+      "url": "https://v10.carbondesignsystem.com/data-visualization/chart-anatomy/"
+    },
+    {
+      "label": "Carbon accessibility for developers",
+      "url": "https://carbondesignsystem.com/guidelines/accessibility/developers/"
+    },
+    {
+      "label": "PatternFly dashboard guidelines",
+      "url": "https://www.patternfly.org/patterns/dashboard/design-guidelines/"
+    }
+  ]
+}

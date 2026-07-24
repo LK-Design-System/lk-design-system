@@ -1,0 +1,294 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lk-robotics.dev/schemas/component-content.schema.json",
+  "title": "LK Design System component content registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "sourceFingerprint",
+    "completionCriteria",
+    "benchmark",
+    "platformStatusDefinitions",
+    "summary",
+    "entries",
+    "guides"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "sourceFingerprint": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "completionCriteria": {
+      "type": "array",
+      "minItems": 15,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 3 }
+    },
+    "benchmark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "url", "adopted", "excluded"],
+      "properties": {
+        "name": { "type": "string", "minLength": 3 },
+        "url": { "type": "string", "format": "uri" },
+        "adopted": { "$ref": "#/$defs/stringList" },
+        "excluded": { "$ref": "#/$defs/stringList" }
+      }
+    },
+    "platformStatusDefinitions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mapped", "implemented", "not-tracked"],
+      "properties": {
+        "mapped": { "type": "string" },
+        "implemented": { "type": "string" },
+        "not-tracked": { "type": "string" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["componentEntries", "publicExports", "guides", "entriesWithoutOwnedPage", "seedBenchmarkedGuides"],
+      "properties": {
+        "componentEntries": { "type": "integer", "minimum": 1 },
+        "publicExports": { "type": "integer", "minimum": 1 },
+        "guides": { "type": "integer", "minimum": 1 },
+        "entriesWithoutOwnedPage": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "seedBenchmarkedGuides": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/entry" }
+    },
+    "guides": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/guide" }
+    }
+  },
+  "$defs": {
+    "stringList": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 3 }
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label"],
+      "properties": {
+        "label": { "type": "string", "minLength": 2 },
+        "url": { "type": "string", "format": "uri" },
+        "path": { "type": "string", "minLength": 3 }
+      },
+      "oneOf": [
+        {
+          "properties": { "url": { "type": "string", "format": "uri" } },
+          "required": ["url"]
+        },
+        {
+          "properties": { "path": { "type": "string", "minLength": 3 } },
+          "required": ["path"]
+        }
+      ]
+    },
+    "property": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "required", "description", "owner"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "type": { "type": "string", "minLength": 1 },
+        "required": { "type": "boolean" },
+        "description": { "type": "string", "minLength": 3 },
+        "owner": { "type": "string", "minLength": 3 }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "title", "exports", "source", "typeContract", "prompt", "group",
+        "ownerLayer", "provenance", "wdsFamily", "storyEvidence",
+        "classificationSiblings", "storybookPages", "props", "tokens",
+        "externalReferences", "promptSha256"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9가-힣-]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "exports": { "$ref": "#/$defs/stringList" },
+        "source": { "type": "string", "pattern": "^components/.+\\.jsx$" },
+        "typeContract": { "type": "string", "pattern": "^components/.+\\.d\\.ts$" },
+        "prompt": { "type": "string", "pattern": "^components/.+\\.prompt\\.md$" },
+        "group": { "type": "string", "minLength": 3 },
+        "ownerLayer": { "type": "string", "minLength": 3 },
+        "provenance": { "type": "string", "minLength": 3 },
+        "wdsFamily": { "type": ["string", "null"] },
+        "storyEvidence": { "type": "array", "items": { "type": "string" } },
+        "classificationSiblings": { "type": "array", "items": { "type": "string" } },
+        "storybookPages": { "type": "array", "items": { "type": "string" } },
+        "props": { "type": "array", "items": { "$ref": "#/$defs/property" } },
+        "tokens": { "type": "array", "items": { "type": "string" } },
+        "externalReferences": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } },
+        "promptSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "guide": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slug", "title", "storybookTitle", "layer", "family", "primaryOwner",
+        "ownerComponents", "supportingComponents", "purpose", "useWhen",
+        "avoidWhen", "anatomy", "properties", "states", "behavior",
+        "quantitativeRules", "responsive", "contentGuidance", "accessibility",
+        "doDont", "exceptions", "related", "examples", "tokens", "apiLinks",
+        "migration", "platformStatus", "storybook", "sources"
+      ],
+      "properties": {
+        "slug": { "type": "string", "pattern": "^[a-z0-9가-힣-]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "storybookTitle": { "type": "string", "minLength": 5 },
+        "layer": { "enum": ["Core", "Product", "Theme"] },
+        "family": { "type": "string", "minLength": 2 },
+        "primaryOwner": { "type": "string", "minLength": 1 },
+        "ownerComponents": { "$ref": "#/$defs/stringList" },
+        "supportingComponents": { "type": "array", "items": { "type": "string" } },
+        "purpose": { "type": "string", "minLength": 30 },
+        "useWhen": { "$ref": "#/$defs/stringList" },
+        "avoidWhen": { "$ref": "#/$defs/stringList" },
+        "anatomy": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["part", "rule"],
+            "properties": {
+              "part": { "type": "string", "minLength": 1 },
+              "rule": { "type": "string", "minLength": 8 }
+            }
+          }
+        },
+        "properties": { "type": "array", "items": { "$ref": "#/$defs/property" } },
+        "states": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["state", "rule"],
+            "properties": {
+              "state": { "type": "string", "minLength": 1 },
+              "rule": { "type": "string", "minLength": 8 }
+            }
+          }
+        },
+        "behavior": { "$ref": "#/$defs/stringList" },
+        "quantitativeRules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["subject", "rule"],
+            "properties": {
+              "subject": { "type": "string", "minLength": 1 },
+              "rule": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "responsive": { "$ref": "#/$defs/stringList" },
+        "contentGuidance": { "$ref": "#/$defs/stringList" },
+        "accessibility": { "$ref": "#/$defs/stringList" },
+        "doDont": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "prefixItems": [
+              { "enum": ["Do", "Don't"] },
+              { "type": "string", "minLength": 8 }
+            ],
+            "items": false
+          }
+        },
+        "exceptions": { "$ref": "#/$defs/stringList" },
+        "related": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["component", "relationship"],
+            "properties": {
+              "component": { "type": "string", "minLength": 1 },
+              "relationship": { "type": "string", "minLength": 8 }
+            }
+          }
+        },
+        "examples": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "code"],
+            "properties": {
+              "label": { "type": "string", "minLength": 2 },
+              "code": { "type": "string", "minLength": 8 }
+            }
+          }
+        },
+        "tokens": { "$ref": "#/$defs/stringList" },
+        "apiLinks": { "$ref": "#/$defs/stringList" },
+        "migration": { "$ref": "#/$defs/stringList" },
+        "platformStatus": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["figma", "react", "ios", "android"],
+          "properties": {
+            "figma": { "enum": ["mapped", "not-tracked"] },
+            "react": { "const": "implemented" },
+            "ios": { "const": "not-tracked" },
+            "android": { "const": "not-tracked" }
+          }
+        },
+        "storybook": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["importPath", "entryStoryId", "publicStories", "hiddenEvidence"],
+          "properties": {
+            "importPath": { "type": "string" },
+            "entryStoryId": { "type": ["string", "null"] },
+            "publicStories": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "name", "role"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "name": { "type": "string" },
+                  "role": { "type": "string" }
+                }
+              }
+            },
+            "hiddenEvidence": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/sourceRef" }
+        }
+      }
+    }
+  }
+}

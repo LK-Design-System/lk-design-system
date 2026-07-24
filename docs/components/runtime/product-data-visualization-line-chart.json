@@ -1,0 +1,389 @@
+{
+  "slug": "product-data-visualization-line-chart",
+  "title": "Line Chart",
+  "storybookTitle": "LDS Product/Data/Visualization/Line Chart",
+  "layer": "Product",
+  "family": "Visualization",
+  "primaryOwner": "LineChart",
+  "ownerComponents": [
+    "LineChart"
+  ],
+  "supportingComponents": [],
+  "purpose": "학습 곡선·텔레메트리·성과 지표처럼 순서가 있는 값의 추세와 여러 series를 비교할 때 적합합니다. 이산 범주의 크기나 전체 구성 비율에는 Line Chart 대신 Bar Chart 또는 Donut Chart를 사용하세요.",
+  "useWhen": [
+    "학습 곡선·텔레메트리·성과 지표처럼 순서가 있는 값의 추세와 여러 series를 비교할 때 적합합니다. 이산 범주의 크기나 전체 구성 비율에는 Line Chart 대신 Bar Chart 또는 Donut Chart를 사용하세요.",
+    "description / summary — 차트 맥락 설명과 자동 텍스트 요약 override입니다. 기본 요약은 각 시리즈의 유효 point 수, 시작, 최저, 최고, 마지막 값을 입력 순서대로 제공합니다. 복합 범례 이름은 accessibleLabel로 요약 이름을 고정합니다.",
+    "Legend를 재사용합니다. 범례용 선 swatch는 shape=\"line\"과 dashed로 표현하고, point marker는 데이터 밀도가 낮거나 샘플 강조가 필요할 때만 켭니다.",
+    "BarChart, DonutChart, Sparkline과 같은 named image, 맥락 설명, 결정적 텍스트 요약, 보이는 empty-state 계약을 사용합니다."
+  ],
+  "avoidWhen": [
+    "제품 데이터 차트는 yDomain/yTicks와 locale-aware formatY를 명시합니다. LDS의 자동 tick은 구조 preview용 균등 분할 fallback이며 분석 화면의 nice-tick 정책을 추론하지 않습니다.",
+    "referenceLines는 자동 요약에도 포함됩니다. y domain 안에 그려진 기준선만 대상이며 기준선 N개. 뒤에 각 선의 이름·값과 그 선을 넘긴 시리즈 이름(없으면 초과한 시리즈 없음)이 이어집니다. 임계선은 role=\"img\" SVG 안 텍스트로만 존재하면 보조기술에 전혀 닿지 않으므로, 임계 이탈 판단을 시각 표시에만 맡기지 않습니다. summary를 직접 넘기면 기준선 문장도 그 값으로 대체되므로 필요한 내용을 직접 포함시키세요.",
+    "다중 시리즈를 색상만으로 구분하지 않습니다(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 dashed(선 패턴)나 showPoints(마커)를 함께 켜서 색 외 단서를 남기세요.",
+    "데이터가 없으면 축과 보이는 emptyLabel을 유지하며 같은 문구를 텍스트 요약으로 제공합니다. loading/error/zoom/tooltip/crosshair가 필요한 분석용 차트는 별도 composed product pattern으로 둡니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "LineChart의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "X Label",
+      "rule": "xLabel 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Y Label",
+      "rule": "yLabel 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Show Legend",
+      "rule": "범례 표시. @default true"
+    },
+    {
+      "part": "Empty Label",
+      "rule": "emptyLabel 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Description",
+      "rule": "차트가 무엇의 추이를 보여주는지 설명하는 스크린 리더용 문장."
+    }
+  ],
+  "properties": [
+    {
+      "name": "series",
+      "type": "LineChartSeries[]",
+      "required": false,
+      "description": "시리즈 배열. 각 시리즈는 {id?, name, color, dashed, points:[{x,y}]}.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "width",
+      "type": "number",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "height",
+      "type": "number",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "xLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "yLabel",
+      "type": "string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "xTicks",
+      "type": "number | number[]",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "yTicks",
+      "type": "number",
+      "required": false,
+      "description": "y축 분할 수. @default 4",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "xDomain",
+      "type": "[number, number]",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "yDomain",
+      "type": "[number, number]",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "includeZero",
+      "type": "boolean",
+      "required": false,
+      "description": "y domain에 0을 포함합니다. @default true",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "showGrid",
+      "type": "boolean",
+      "required": false,
+      "description": "grid line 표시. @default true",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "showLegend",
+      "type": "boolean",
+      "required": false,
+      "description": "범례 표시. @default true",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "showPoints",
+      "type": "boolean",
+      "required": false,
+      "description": "point marker 표시. @default false",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "referenceLines",
+      "type": "LineChartReferenceLine[]",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "formatX",
+      "type": "(v: number) = React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "formatY",
+      "type": "(v: number) = React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "description",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "차트가 무엇의 추이를 보여주는지 설명하는 스크린 리더용 문장.",
+      "owner": "LineChartProps"
+    },
+    {
+      "name": "summary",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "자동 생성되는 요약을 재정의합니다. 자동 요약은 시리즈별 시작·최저·최고·마지막 값에 이어 그려진 referenceLines의 이름·값과 그 선을 넘긴 시리즈를 덧붙입니다.",
+      "owner": "LineChartProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "emptyLabel",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: React.ReactNode"
+    },
+    {
+      "state": "변형·상태 · 데이터 없음",
+      "rule": "variants-states 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    }
+  ],
+  "behavior": [
+    "Compare against common line chart expectations before changing it: bounded domains, axis ticks and labels, grid option, multiple series, legend handoff, reference lines, empty state, responsive SVG, and predictable formatting hooks.",
+    "- series {id?,name,accessibleLabel?,color,dashed,points:[{x,y}]}[] · width/height · xTicks/yTicks · xDomain/yDomain · includeZero · showGrid/showLegend/showPoints · referenceLines {y,label,color?,dashed?}[] · emptyLabel · formatX/formatY. - 제품 데이터 차트는 yDomain/yTicks와 locale-aware formatY를 명시합니다. LDS의 자동 tick은 구조 previ….",
+    "LineChart의 controlled/uncontrolled 경계와 callback 순서는 공개 타입 계약을 따릅니다.",
+    "상태 변화 중에도 accessible name, focus 위치와 레이아웃 기준점을 예고 없이 잃지 않습니다.",
+    "제품 데이터와 side effect는 callback으로 위임하고 LineChart는 표시·입력 상태만 소유합니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "다중 시리즈를 색상만으로 구분하지 않습니다(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 dashed(선 패턴)나 showPoints(마커)를 함께 켜서 색 외 단서를 남기세요."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "- series {id?,name,accessibleLabel?,color,dashed,points:[{x,y}]}[] · width/height · xTicks/yTicks · xDomain/yDomain · includeZero · showGrid/showLegend/showPoints · referenceLines {y,label,color?,dashed?}[] · emptyLabel · formatX/formatY. - 제품 데이터 차트는 yDomain/yTicks와 locale-aware formatY를 명시합니다. LDS의 자동 tick은 구조 previ…"
+    },
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    }
+  ],
+  "responsive": [
+    "series {id?,name,accessibleLabel?,color,dashed,points:[{x,y}]}[] · width/height · xTicks/yTicks · xDomain/yDomain · includeZero · showGrid/showLegend/showPoints · referenceLines {y,label,color?,dashed?}[] · emptyLabel · formatX/formatY.",
+    "Compare against common line chart expectations before changing it: bounded domains, axis ticks and labels, grid option, multiple series, legend handoff, reference lines, empty state, responsive SVG, and predictable formatting hooks.",
+    "기본은 responsive SVG입니다. width/height는 viewBox 기준 크기이며, 실제 렌더는 부모 너비 안에서 줄어듭니다.",
+    "- series {id?,name,accessibleLabel?,color,dashed,points:[{x,y}]}[] · width/height · xTicks/yTicks · xDomain/yDomain · includeZero · showGrid/showLegend/showPoints · referenceLines {y,label,color?,dashed?}[] · emptyLabel · formatX/formatY. - 제품 데이터 차트는 yDomain/yTicks와 locale-aware formatY를 명시합니다. LDS의 자동 tick은 구조 previ…."
+  ],
+  "contentGuidance": [
+    "series {id?,name,accessibleLabel?,color,dashed,points:[{x,y}]}[] · width/height · xTicks/yTicks · xDomain/yDomain · includeZero · showGrid/showLegend/showPoints · referenceLines {y,label,color?,dashed?}[] · emptyLabel · formatX/formatY.",
+    "description / summary — 차트 맥락 설명과 자동 텍스트 요약 override입니다. 기본 요약은 각 시리즈의 유효 point 수, 시작, 최저, 최고, 마지막 값을 입력 순서대로 제공합니다. 복합 범례 이름은 accessibleLabel로 요약 이름을 고정합니다.",
+    "referenceLines는 자동 요약에도 포함됩니다. y domain 안에 그려진 기준선만 대상이며 기준선 N개. 뒤에 각 선의 이름·값과 그 선을 넘긴 시리즈 이름(없으면 초과한 시리즈 없음)이 이어집니다. 임계선은 role=\"img\" SVG 안 텍스트로만 존재하면 보조기술에 전혀 닿지 않으므로, 임계 이탈 판단을 시각 표시에만 맡기지 않습니다. summary를 직접 넘기면 기준선 문장도 그 값으로 대체되므로 필요한 내용을 직접 포함시키세요.",
+    "다중 시리즈를 색상만으로 구분하지 않습니다(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 dashed(선 패턴)나 showPoints(마커)를 함께 켜서 색 외 단서를 남기세요."
+  ],
+  "accessibility": [
+    "series {id?,name,accessibleLabel?,color,dashed,points:[{x,y}]}[] · width/height · xTicks/yTicks · xDomain/yDomain · includeZero · showGrid/showLegend/showPoints · referenceLines {y,label,color?,dashed?}[] · emptyLabel · formatX/formatY.",
+    "description / summary — 차트 맥락 설명과 자동 텍스트 요약 override입니다. 기본 요약은 각 시리즈의 유효 point 수, 시작, 최저, 최고, 마지막 값을 입력 순서대로 제공합니다. 복합 범례 이름은 accessibleLabel로 요약 이름을 고정합니다.",
+    "referenceLines는 자동 요약에도 포함됩니다. y domain 안에 그려진 기준선만 대상이며 기준선 N개. 뒤에 각 선의 이름·값과 그 선을 넘긴 시리즈 이름(없으면 초과한 시리즈 없음)이 이어집니다. 임계선은 role=\"img\" SVG 안 텍스트로만 존재하면 보조기술에 전혀 닿지 않으므로, 임계 이탈 판단을 시각 표시에만 맡기지 않습니다. summary를 직접 넘기면 기준선 문장도 그 값으로 대체되므로 필요한 내용을 직접 포함시키세요.",
+    "다중 시리즈를 색상만으로 구분하지 않습니다(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 dashed(선 패턴)나 showPoints(마커)를 함께 켜서 색 외 단서를 남기세요.",
+    "Carbon accessibility for developers의 meaningful description/data alternative 원칙에 따라 선 모양과 색만 발표하지 않고 시작·범위·마지막 값을 텍스트로 제공합니다."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "description / summary — 차트 맥락 설명과 자동 텍스트 요약 override입니다. 기본 요약은 각 시리즈의 유효 point 수, 시작, 최저, 최고, 마지막 값을 입력 순서대로 제공합니다. 복합 범례 이름은 accessibleLabel로 요약 이름을 고정합니다."
+    ],
+    [
+      "Don't",
+      "제품 데이터 차트는 yDomain/yTicks와 locale-aware formatY를 명시합니다. LDS의 자동 tick은 구조 preview용 균등 분할 fallback이며 분석 화면의 nice-tick 정책을 추론하지 않습니다."
+    ],
+    [
+      "Do",
+      "Legend를 재사용합니다. 범례용 선 swatch는 shape=\"line\"과 dashed로 표현하고, point marker는 데이터 밀도가 낮거나 샘플 강조가 필요할 때만 켭니다."
+    ],
+    [
+      "Don't",
+      "referenceLines는 자동 요약에도 포함됩니다. y domain 안에 그려진 기준선만 대상이며 기준선 N개. 뒤에 각 선의 이름·값과 그 선을 넘긴 시리즈 이름(없으면 초과한 시리즈 없음)이 이어집니다. 임계선은 role=\"img\" SVG 안 텍스트로만 존재하면 보조기술에 전혀 닿지 않으므로, 임계 이탈 판단을 시각 표시에만 맡기지 않습니다. summary를 직접 넘기면 기준선 문장도 그 값으로 대체되므로 필요한 내용을 직접 포함시키세요."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 LineChart의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "AnnotatedImage",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "BarChart",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Calendar",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "ChartFrame",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Carousel",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DataGrid",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DataToolbar",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DataExportAction",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<LineChart\n  yLabel=\"mAP\"\n  xLabel=\"epoch\"\n  series={[\n    { name: 'train', points: pts1 },\n    { name: 'val', dashed: true, points: pts2 },\n  ]}\n/>"
+    }
+  ],
+  "tokens": [
+    "--caption1-line",
+    "--caption1-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-data-viz-series-1",
+    "--color-semantic-data-viz-series-2",
+    "--color-semantic-data-viz-series-3",
+    "--color-semantic-data-viz-series-4",
+    "--color-semantic-data-viz-series-5",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-assistive",
+    "--color-semantic-line-normal-alternative",
+    "--color-semantic-line-normal-normal",
+    "--font-sans",
+    "--fw-medium",
+    "--fw-semibold",
+    "--space-3"
+  ],
+  "apiLinks": [
+    "components/data/LineChart.jsx",
+    "components/data/LineChart.d.ts",
+    "components/data/LineChart.prompt.md",
+    "stories/DataLineChart.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/DataLineChart.stories.jsx",
+    "entryStoryId": "lds-product-data-visualization-line-chart--line-charts",
+    "publicStories": [
+      {
+        "id": "lds-product-data-visualization-line-chart--line-charts",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-data-visualization-line-chart--empty",
+        "name": "변형·상태 · 데이터 없음",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-data-visualization-line-chart--fixed-domain-and-points",
+        "name": "시나리오 · 데이터 점과 고정 범위",
+        "role": "scenario"
+      },
+      {
+        "id": "lds-product-data-visualization-line-chart--telemetry-reference",
+        "name": "시나리오 · 원격 측정 기준선",
+        "role": "scenario"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [
+    {
+      "label": "LineChart prompt contract",
+      "path": "components/data/LineChart.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/DataLineChart.stories.jsx"
+    },
+    {
+      "label": "Carbon chart anatomy",
+      "url": "https://v10.carbondesignsystem.com/data-visualization/chart-anatomy/"
+    },
+    {
+      "label": "Carbon accessibility for developers",
+      "url": "https://carbondesignsystem.com/guidelines/accessibility/developers/"
+    },
+    {
+      "label": "PatternFly dashboard guidelines",
+      "url": "https://www.patternfly.org/patterns/dashboard/design-guidelines/"
+    }
+  ]
+}

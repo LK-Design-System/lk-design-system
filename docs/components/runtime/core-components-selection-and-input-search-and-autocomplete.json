@@ -1,0 +1,463 @@
+{
+  "slug": "core-components-selection-and-input-search-and-autocomplete",
+  "title": "Search and Autocomplete",
+  "storybookTitle": "LDS Core/Components/Selection and Input/Search and Autocomplete",
+  "layer": "Core",
+  "family": "Selection and Input",
+  "primaryOwner": "SearchField",
+  "ownerComponents": [
+    "AutoComplete",
+    "Combobox",
+    "SearchField",
+    "TagInput"
+  ],
+  "supportingComponents": [],
+  "purpose": "자유 검색어를 전송할 때는 SearchField, 입력 중 단일 후보를 제안할 때는 AutoComplete, 정해진 후보 여러 개를 고를 때는 Combobox를 사용하세요. 간단한 고정 목록은 Select가 더 적합합니다.",
+  "useWhen": [
+    "자유 검색어를 전송할 때는 SearchField, 입력 중 단일 후보를 제안할 때는 AutoComplete, 정해진 후보 여러 개를 고를 때는 Combobox를 사용하세요. 간단한 고정 목록은 Select가 더 적합합니다.",
+    "지우기 후 포커스 복귀 — 지우기 버튼은 값이 비면 언마운트되므로, 활성화 시 포커스를 입력으로 되돌립니다. 그렇지 않으면 포커스가 로 떨어져 키보드 사용자가 필드를 잃습니다(Carbon Search 관례).",
+    "- Keep a visible label whenever the surrounding context does not already name the search. Enter submits the current query; Escape clears it. The clear action is 32px, has a contextual name such as 로봇 검색 지우기, and is disabled with the field. - readOnly preserves focus and text selection but removes the clear action and….",
+    "Search and Autocomplete가 소유하는 Selection and Input 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다."
+  ],
+  "avoidWhen": [
+    "Search and Autocomplete가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.",
+    "동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다.",
+    "표현이 비슷하다는 이유만으로 상태 의미가 다른 sibling 컴포넌트를 서로 대체하지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "SearchField의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Label",
+      "rule": "label 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Helper",
+      "rule": "helper 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Error",
+      "rule": "error 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Empty Label",
+      "rule": "emptyLabel 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Result Count Label",
+      "rule": "일치 항목 수의 polite 안내 문구."
+    },
+    {
+      "part": "Label",
+      "rule": "label 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Helper",
+      "rule": "helper 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "options",
+      "type": "AutoCompleteOption[]",
+      "required": true,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) = void",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "onSelect",
+      "type": "(value: string) = void",
+      "required": false,
+      "description": "선택된 옵션의 값과 함께 호출.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "helper",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "error",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "invalid",
+      "type": "boolean",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "status",
+      "type": "'normal' | 'positive' | 'negative'",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "readOnly",
+      "type": "boolean",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "autoHighlight",
+      "type": "boolean",
+      "required": false,
+      "description": "입력할 때 첫 후보를 자동으로 활성 옵션으로 지정할지 여부. 기본값 false는 APG list-autocomplete의 수동 선택(manual selection)으로, 사용자가 방향키로 이동하기 전에는 aria-activedescendant가 비어 있고 Enter가 제안을 확정하지 않습니다. true면 이전(적극적) 동작으로 되돌립니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "resultCountLabel",
+      "type": "(count: number) = string",
+      "required": false,
+      "description": "일치 항목 수의 polite 안내 문구.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'small' | 'medium'",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "제어와 팝업을 감싸는 기존 컨테이너 스타일.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "fieldStyle",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "label/helper/error를 포함한 전체 필드 스타일.",
+      "owner": "AutoCompleteProps"
+    },
+    {
+      "name": "options",
+      "type": "ComboboxOption[]",
+      "required": true,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "ComboboxProps"
+    },
+    {
+      "name": "value",
+      "type": "string[]",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "ComboboxProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string[]",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "ComboboxProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string[]) = void",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "ComboboxProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "error",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: React.ReactNode"
+    },
+    {
+      "state": "invalid",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: boolean"
+    },
+    {
+      "state": "status",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: 'normal' | 'positive' | 'negative'"
+    },
+    {
+      "state": "disabled",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: boolean"
+    },
+    {
+      "state": "readOnly",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: boolean"
+    },
+    {
+      "state": "emptyLabel",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: React.ReactNode"
+    }
+  ],
+  "behavior": [
+    "Keep a visible label whenever the surrounding context does not already name the search. Enter submits the current query; Escape clears it. The clear action is 32px, has a contextual name such as 로봇 검색 지우기, and is disabled with the field.",
+    "readOnly preserves focus and text selection but removes the clear action and editable hover affordance.",
+    "지우기 후 포커스 복귀 — 지우기 버튼은 값이 비면 언마운트되므로, 활성화 시 포커스를 입력으로 되돌립니다. 그렇지 않으면 포커스가 로 떨어져 키보드 사용자가 필드를 잃습니다(Carbon Search 관례).",
+    "네이티브 지우기 어포던스 제거 — type=\"search\"는 WebKit에서 자체 ✕ 글리프를 그려 커스텀 지우기 버튼과 두 개가 됩니다. 눈에 보이지만 이름이 없는 쪽이 하나 더 생기므로 ::-webkit-search-cancel-button 계열을 리셋합니다.",
+    "Reference basis: Carbon Search, GOV.UK Text input, WCAG 2.2 3.2.1 On Focus."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Keep a visible label whenever the surrounding context does not already name the search. Enter submits the current query; Escape clears it. The clear action is 32px, has a contextual name such as 로봇 검색 지우기, and is disabled with the field."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "Reference basis: Carbon Search, GOV.UK Text input, WCAG 2.2 3.2.1 On Focus."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "- Keep a visible label whenever the surrounding context does not already name the search. Enter submits the current query; Escape clears it. The clear action is 32px, has a contextual name such as 로봇 검색 지우기, and is disabled with the field. - readOnly preserves focus and text selection but removes the clear action and…"
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    }
+  ],
+  "responsive": [
+    "320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.",
+    "고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다."
+  ],
+  "contentGuidance": [
+    "Keep a visible label whenever the surrounding context does not already name the search. Enter submits the current query; Escape clears it. The clear action is 32px, has a contextual name such as 로봇 검색 지우기, and is disabled with the field.",
+    "readOnly preserves focus and text selection but removes the clear action and editable hover affordance.",
+    "네이티브 지우기 어포던스 제거 — type=\"search\"는 WebKit에서 자체 ✕ 글리프를 그려 커스텀 지우기 버튼과 두 개가 됩니다. 눈에 보이지만 이름이 없는 쪽이 하나 더 생기므로 ::-webkit-search-cancel-button 계열을 리셋합니다.",
+    "Reference basis: Carbon Search, GOV.UK Text input, WCAG 2.2 3.2.1 On Focus."
+  ],
+  "accessibility": [
+    "Keep a visible label whenever the surrounding context does not already name the search. Enter submits the current query; Escape clears it. The clear action is 32px, has a contextual name such as 로봇 검색 지우기, and is disabled with the field.",
+    "readOnly preserves focus and text selection but removes the clear action and editable hover affordance.",
+    "지우기 후 포커스 복귀 — 지우기 버튼은 값이 비면 언마운트되므로, 활성화 시 포커스를 입력으로 되돌립니다. 그렇지 않으면 포커스가 로 떨어져 키보드 사용자가 필드를 잃습니다(Carbon Search 관례).",
+    "Reference basis: Carbon Search, GOV.UK Text input, WCAG 2.2 3.2.1 On Focus.",
+    "value / defaultValue / onChange — 제어/비제어. onSearch — Enter. size sm · md. 시그널 잉크 포커스 링."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "지우기 후 포커스 복귀 — 지우기 버튼은 값이 비면 언마운트되므로, 활성화 시 포커스를 입력으로 되돌립니다. 그렇지 않으면 포커스가 로 떨어져 키보드 사용자가 필드를 잃습니다(Carbon Search 관례)."
+    ],
+    [
+      "Don't",
+      "Search and Autocomplete가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다."
+    ],
+    [
+      "Do",
+      "- Keep a visible label whenever the surrounding context does not already name the search. Enter submits the current query; Escape clears it. The clear action is 32px, has a contextual name such as 로봇 검색 지우기, and is disabled with the field. - readOnly preserves focus and text selection but removes the clear action and…."
+    ],
+    [
+      "Don't",
+      "동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 SearchField의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "AutoComplete",
+      "relationship": "같은 페이지가 소유하는 공개 primitive 또는 조합 요소입니다."
+    },
+    {
+      "component": "Combobox",
+      "relationship": "같은 페이지가 소유하는 공개 primitive 또는 조합 요소입니다."
+    },
+    {
+      "component": "TagInput",
+      "relationship": "같은 페이지가 소유하는 공개 primitive 또는 조합 요소입니다."
+    },
+    {
+      "component": "FormField",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Input",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Select",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Textarea",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<SearchField placeholder=\"제품·산업 검색\" onSearch={run} />\n<SearchField value={q} onChange={setQ} size=\"sm\" />"
+    }
+  ],
+  "tokens": [
+    "--caption1-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-normal",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-primary-surface-strong",
+    "--color-semantic-static-white",
+    "--component-button-transition",
+    "--component-input-border-width",
+    "--component-input-focus-shadow",
+    "--component-input-font-size",
+    "--component-input-gap",
+    "--component-input-height",
+    "--component-input-icon-color",
+    "--component-input-letter-spacing",
+    "--component-input-line-height",
+    "--component-input-padding-x",
+    "--component-input-radius",
+    "--component-input-text-color",
+    "--control-h-sm",
+    "--dur-base",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-semibold",
+    "--label1-size",
+    "--label2-size",
+    "--radius-5",
+    "--radius-input",
+    "--radius-lg",
+    "--radius-md",
+    "--radius-pill",
+    "--radius-xl",
+    "--shadow-md",
+    "--space-1",
+    "--space-2",
+    "--space-4"
+  ],
+  "apiLinks": [
+    "components/forms/AutoComplete.jsx",
+    "components/forms/AutoComplete.d.ts",
+    "components/forms/AutoComplete.prompt.md",
+    "components/forms/Combobox.jsx",
+    "components/forms/Combobox.d.ts",
+    "components/forms/Combobox.prompt.md",
+    "components/forms/SearchField.jsx",
+    "components/forms/SearchField.d.ts",
+    "components/forms/SearchField.prompt.md",
+    "components/forms/TagInput.jsx",
+    "components/forms/TagInput.d.ts",
+    "components/forms/TagInput.prompt.md",
+    "stories/FormSearchAutocomplete.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormSearchAutocomplete.stories.jsx",
+    "entryStoryId": "lds-core-components-selection-and-input-search-and-autocomplete--search-and-autocomplete",
+    "publicStories": [
+      {
+        "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-and-autocomplete",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 6
+  },
+  "sources": [
+    {
+      "label": "SearchField prompt contract",
+      "path": "components/forms/SearchField.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/FormSearchAutocomplete.stories.jsx"
+    },
+    {
+      "label": "Carbon Search",
+      "url": "https://carbondesignsystem.com/components/search/usage/"
+    },
+    {
+      "label": "GOV.UK Text input",
+      "url": "https://design-system.service.gov.uk/components/text-input/"
+    },
+    {
+      "label": "WCAG 2.2 3.2.1 On Focus",
+      "url": "https://www.w3.org/TR/WCAG22/#on-focus"
+    }
+  ]
+}

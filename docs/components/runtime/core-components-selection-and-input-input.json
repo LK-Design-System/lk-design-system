@@ -1,0 +1,436 @@
+{
+  "slug": "core-components-selection-and-input-input",
+  "title": "Input",
+  "storybookTitle": "LDS Core/Components/Selection and Input/Input",
+  "layer": "Core",
+  "family": "Selection and Input",
+  "primaryOwner": "Input",
+  "ownerComponents": [
+    "Input"
+  ],
+  "supportingComponents": [
+    "Icon"
+  ],
+  "purpose": "이름·검색어·코드처럼 한 줄로 끝나는 텍스트를 입력할 때 적합합니다. 긴 문장은 Textarea를, 민감한 비밀번호는 Password Input을, 단위가 결합된 값은 Input Group을 사용하세요.",
+  "useWhen": [
+    "이름·검색어·코드처럼 한 줄로 끝나는 텍스트를 입력할 때 적합합니다. 긴 문장은 Textarea를, 민감한 비밀번호는 Password Input을, 단위가 결합된 값은 Input Group을 사용하세요.",
+    "Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced.",
+    "Label, text, icon, fill, and disabled colors resolve semantic roles at the rendered field scope. This keeps nested dark-theme fields from inheriting light values computed by root-level component aliases; disabled labels and values use the shared 0.52-alpha disabled role.",
+    "readOnly remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal."
+  ],
+  "avoidWhen": [
+    "Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale.",
+    "Keep essential instructions in the visible label or helper text. Placeholder text is supplementary and must not replace the label.",
+    "- Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale. - Keep essential instructions in the visib….",
+    "Input가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "Input의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Label",
+      "rule": "박스 위에 렌더되는 필드 라벨."
+    },
+    {
+      "part": "Helper",
+      "rule": "박스 아래 보조 설명."
+    },
+    {
+      "part": "Error",
+      "rule": "박스 아래 오류 설명. invalid와 같은 시각 상태를 적용."
+    },
+    {
+      "part": "Icon Left",
+      "rule": "박스 안 텍스트 왼쪽에 표시되는 인라인 SVG."
+    },
+    {
+      "part": "Icon Right",
+      "rule": "박스 안 텍스트 오른쪽에 표시되는 인라인 SVG."
+    },
+    {
+      "part": "Leading Icon",
+      "rule": "leading icon alias."
+    },
+    {
+      "part": "Trailing Icon",
+      "rule": "trailing icon alias."
+    }
+  ],
+  "properties": [
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 위에 렌더되는 필드 라벨.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "helper",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 아래 보조 설명.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "error",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 아래 오류 설명. invalid와 같은 시각 상태를 적용.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "iconLeft",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 안 텍스트 왼쪽에 표시되는 인라인 SVG.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "iconRight",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 안 텍스트 오른쪽에 표시되는 인라인 SVG.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "leadingIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "leading icon alias.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "trailingIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "trailing icon alias.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "actionRight",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "우측 끝에 표시되는 액션 슬롯.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "trailingButton",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "trailing action alias.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "invalid",
+      "type": "boolean",
+      "required": false,
+      "description": "검증 오류용 레드 링. @default false",
+      "owner": "InputProps"
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "required": false,
+      "description": "라벨에 레드 별표 추가. @default false",
+      "owner": "InputProps"
+    },
+    {
+      "name": "status",
+      "type": "\"normal\" | \"positive\" | \"negative\"",
+      "required": false,
+      "description": "상태 링과 메시지 톤. @default \"normal\"",
+      "owner": "InputProps"
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"md\" | \"lg\" | \"small\" | \"medium\" | \"large\"",
+      "required": false,
+      "description": "입력 높이 프리셋. @default \"md\"",
+      "owner": "InputProps"
+    },
+    {
+      "name": "height",
+      "type": "number | string",
+      "required": false,
+      "description": "프리셋 대신 사용할 명시적 높이.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "interaction",
+      "type": "\"normal\" | \"inactive\" | \"hovered\" | \"focused\" | \"active\" | \"active-focused\"",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "required": false,
+      "description": "active visual state alias.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "focus",
+      "type": "boolean",
+      "required": false,
+      "description": "focus visual state alias.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "disable",
+      "type": "boolean",
+      "required": false,
+      "description": "disabled alias.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "resize",
+      "type": "\"normal\" | \"fixed\" | \"limit\"",
+      "required": false,
+      "description": "textinput resize evidence axis; accepted for API parity.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "platform",
+      "type": "\"ios\" | \"android\" | \"web\"",
+      "required": false,
+      "description": "platform evidence axis; accepted for API parity.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "variant",
+      "type": "\"textfield\" | \"textarea\"",
+      "required": false,
+      "description": "field variant evidence axis; accepted for API parity.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "래퍼 스타일(예: 그리드 셀용 minWidth).",
+      "owner": "InputProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "error",
+      "rule": "박스 아래 오류 설명. invalid와 같은 시각 상태를 적용. 타입 계약: React.ReactNode"
+    },
+    {
+      "state": "invalid",
+      "rule": "검증 오류용 레드 링. @default false 타입 계약: boolean"
+    },
+    {
+      "state": "status",
+      "rule": "상태 링과 메시지 톤. @default \"normal\" 타입 계약: \"normal\" | \"positive\" | \"negative\""
+    },
+    {
+      "state": "interaction",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: \"normal\" | \"inactive\" | \"hovered\" | \"focused\" | \"active\" | \"active-focused\""
+    },
+    {
+      "state": "active",
+      "rule": "active visual state alias. 타입 계약: boolean"
+    },
+    {
+      "state": "variant",
+      "rule": "field variant evidence axis; accepted for API parity. 타입 계약: \"textfield\" | \"textarea\""
+    }
+  ],
+  "behavior": [
+    "readOnly remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal.",
+    "Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale.",
+    "- Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced. - Label, text, icon, fill, and disabled colors resolve semantic roles at the re….",
+    "- Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale. - Keep essential instructions in the visib….",
+    "Input — 한 줄 텍스트 필드: 화이트 박스, 헤어라인 링, 그래파이트 포커스 헤일로. label, 선택적 iconLeft/iconRight, required, invalid를 전달하세요."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Label, text, icon, fill, and disabled colors resolve semantic roles at the rendered field scope. This keeps nested dark-theme fields from inheriting light values computed by root-level component aliases; disabled labels and values use the shared 0.52-alpha disabled role."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "- Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced. - Label, text, icon, fill, and disabled colors resolve semantic roles at the re…"
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "- Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale. - Keep essential instructions in the visib…"
+    },
+    {
+      "subject": "--color-semantic-label-alternative",
+      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+    }
+  ],
+  "responsive": [
+    "Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale.",
+    "- Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale. - Keep essential instructions in the visib….",
+    "320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.",
+    "고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다."
+  ],
+  "contentGuidance": [
+    "Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced.",
+    "Label, text, icon, fill, and disabled colors resolve semantic roles at the rendered field scope. This keeps nested dark-theme fields from inheriting light values computed by root-level component aliases; disabled labels and values use the shared 0.52-alpha disabled role.",
+    "readOnly remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal.",
+    "Reference basis: GOV.UK Text input for visible labels, hints and error association; Carbon Text input for label/helper/error/read-only anatomy."
+  ],
+  "accessibility": [
+    "Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced.",
+    "readOnly remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal.",
+    "- Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced. - Label, text, icon, fill, and disabled colors resolve semantic roles at the re….",
+    "native semantic을 우선하며 사용자에게 보이는 이름과 접근 가능한 이름이 같은 목적을 설명하게 합니다.",
+    "키보드 focus 순서, focus-visible 표시와 상태 ARIA가 시각 상태와 동시에 갱신되는지 공개 스토리에서 검증합니다."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced."
+    ],
+    [
+      "Don't",
+      "Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale."
+    ],
+    [
+      "Do",
+      "Label, text, icon, fill, and disabled colors resolve semantic roles at the rendered field scope. This keeps nested dark-theme fields from inheriting light values computed by root-level component aliases; disabled labels and values use the shared 0.52-alpha disabled role."
+    ],
+    [
+      "Don't",
+      "Keep essential instructions in the visible label or helper text. Placeholder text is supplementary and must not replace the label."
+    ]
+  ],
+  "exceptions": [
+    "WDS Core examples retain the source sentence form (…해 주세요.) for placeholder parity. This intentionally differs from Fluent's no-period placeholder copy rule; Product/Robotics may use a short domain hint only when the visible label remains sufficient.",
+    "- Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale. - Keep essential instructions in the visib….",
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Input의 범용 API에 넣지 않습니다."
+  ],
+  "related": [
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "AutoComplete",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Combobox",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "FormField",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "SearchField",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Select",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "TagInput",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Textarea",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Input label=\"이메일\" required iconLeft={mailIcon} placeholder=\"you@company.com\" />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-assistive",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-normal",
+    "--component-input-border-width",
+    "--component-input-focus-shadow",
+    "--component-input-font-size",
+    "--component-input-gap",
+    "--component-input-height",
+    "--component-input-letter-spacing",
+    "--component-input-line-height",
+    "--component-input-padding-x",
+    "--component-input-radius",
+    "--component-input-stack-gap",
+    "--control-h-lg",
+    "--control-h-sm",
+    "--dur-base",
+    "--ease-out",
+    "--font-sans"
+  ],
+  "apiLinks": [
+    "components/forms/Input.jsx",
+    "components/forms/Input.d.ts",
+    "components/forms/Input.prompt.md",
+    "stories/FormInput.stories.jsx"
+  ],
+  "migration": [
+    "Label, text, icon, fill, and disabled colors resolve semantic roles at the rendered field scope. This keeps nested dark-theme fields from inheriting light values computed by root-level component aliases; disabled labels and values use the shared 0.52-alpha disabled role.",
+    "- Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced. - Label, text, icon, fill, and disabled colors resolve semantic roles at the re….",
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormInput.stories.jsx",
+    "entryStoryId": "lds-core-components-selection-and-input-input--input-overview",
+    "publicStories": [
+      {
+        "id": "lds-core-components-selection-and-input-input--input-overview",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-selection-and-input-input--timer-and-actions",
+        "name": "사용법 · 남은 시간과 우측 동작",
+        "role": "usage"
+      }
+    ],
+    "hiddenEvidence": 3
+  },
+  "sources": [
+    {
+      "label": "Input prompt contract",
+      "path": "components/forms/Input.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/FormInput.stories.jsx"
+    },
+    {
+      "label": "GOV.UK Text input",
+      "url": "https://design-system.service.gov.uk/components/text-input/"
+    },
+    {
+      "label": "Carbon Text input",
+      "url": "https://carbondesignsystem.com/components/text-input/usage/"
+    },
+    {
+      "label": "Fluent 2 Field",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
+    },
+    {
+      "label": "SEED Input benchmark",
+      "url": "https://seed-design.io/components/text-input"
+    }
+  ]
+}

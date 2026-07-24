@@ -1,0 +1,335 @@
+{
+  "slug": "product-data-display-resource-state",
+  "title": "Resource State",
+  "storybookTitle": "LDS Product/Data/Display/Resource State",
+  "layer": "Product",
+  "family": "Display",
+  "primaryOwner": "ResourceState",
+  "ownerComponents": [
+    "ResourceState"
+  ],
+  "supportingComponents": [
+    "Button",
+    "StatusBadge"
+  ],
+  "purpose": "로딩·오류·지연 중에도 마지막 정상 데이터를 유지하며 현재 신뢰도를 알려야 할 때 적합합니다. 단일 필드 검증이나 짧은 작업 결과에는 Resource State 대신 Form 메시지 또는 Toast를 사용하세요.",
+  "useWhen": [
+    "로딩·오류·지연 중에도 마지막 정상 데이터를 유지하며 현재 신뢰도를 알려야 할 때 적합합니다. 단일 필드 검증이나 짧은 작업 결과에는 Resource State 대신 Form 메시지 또는 Toast를 사용하세요.",
+    "loading: 콘텐츠를 Skeleton으로 대체하고 aria-busy와 polite 상태 알림을 제공합니다.",
+    "circle-block은 접근 차단·사용 불가에만 사용합니다. 오프라인은 Viewer와 같은 signal 글리프를 사용하고, 복구 문구는 원인 뒤에 -해 주세요. 형태의 다음 행동을 제공합니다.",
+    "messageVariant=\"embedded\"는 부모 surface의 가장자리와 결합하는 Banner를 사용합니다. standalone은 독립 콘텐츠 흐름용입니다."
+  ],
+  "avoidWhen": [
+    "refreshing: 이미 표시한 콘텐츠가 있으면 그대로 유지하며 상태 메시지를 먼저 표시합니다. 콘텐츠가 없으면 loading처럼 동작합니다.",
+    "stale, offline, error: 마지막 정상 콘텐츠가 있으면 상태 메시지 → 기존 콘텐츠 → 마지막 업데이트 시각 순서를 유지합니다. 콘텐츠가 없으면 EmptyState로 차단 상태를 표현합니다.",
+    "조건식 결과가 false, null, undefined인 children은 마지막 정상 콘텐츠로 간주하지 않습니다.",
+    "empty, restricted: 자식 대신 EmptyState를 표시합니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "ResourceState의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Title",
+      "rule": "상태의 기본 제목을 대체합니다."
+    },
+    {
+      "part": "Description",
+      "rule": "상태의 기본 설명을 대체합니다."
+    },
+    {
+      "part": "Action",
+      "rule": "재시도, 필터 초기화, 권한 요청처럼 제품이 실행을 소유하는 액션입니다."
+    },
+    {
+      "part": "Last Updated Label",
+      "rule": "마지막 업데이트 접두 레이블. @default \"마지막 업데이트\""
+    },
+    {
+      "part": "Loading Content",
+      "rule": "기본 Skeleton 구성을 대체하는 로딩 콘텐츠입니다."
+    },
+    {
+      "part": "Children",
+      "rule": "ready 상태의 콘텐츠 또는 refreshing/error/stale/offline에서 유지할 마지막 정상 콘텐츠입니다. 콘텐츠를 유지하면 오류·오프라인도 polite 상태로 알립니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "state",
+      "type": "ResourceStateValue",
+      "required": false,
+      "description": "표시할 리소스 상태. @default \"ready\"",
+      "owner": "ResourceStateProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "상태의 기본 제목을 대체합니다.",
+      "owner": "ResourceStateProps"
+    },
+    {
+      "name": "description",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "상태의 기본 설명을 대체합니다.",
+      "owner": "ResourceStateProps"
+    },
+    {
+      "name": "action",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "재시도, 필터 초기화, 권한 요청처럼 제품이 실행을 소유하는 액션입니다.",
+      "owner": "ResourceStateProps"
+    },
+    {
+      "name": "lastUpdated",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "마지막으로 정상 데이터를 확인한 시각이나 설명입니다.",
+      "owner": "ResourceStateProps"
+    },
+    {
+      "name": "lastUpdatedLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "마지막 업데이트 접두 레이블. @default \"마지막 업데이트\"",
+      "owner": "ResourceStateProps"
+    },
+    {
+      "name": "loadingContent",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "기본 Skeleton 구성을 대체하는 로딩 콘텐츠입니다.",
+      "owner": "ResourceStateProps"
+    },
+    {
+      "name": "messageVariant",
+      "type": "'standalone' | 'embedded'",
+      "required": false,
+      "description": "부모 표면과 결합되는 상태 메시지 모양. @default \"embedded\"",
+      "owner": "ResourceStateProps"
+    },
+    {
+      "name": "headingLevel",
+      "type": "number",
+      "required": false,
+      "description": "차단 상태 제목의 heading 단계. 감싸는 표면의 제목보다 한 단계 아래를 전달합니다. @default 3",
+      "owner": "ResourceStateProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "ready 상태의 콘텐츠 또는 refreshing/error/stale/offline에서 유지할 마지막 정상 콘텐츠입니다. 콘텐츠를 유지하면 오류·오프라인도 polite 상태로 알립니다.",
+      "owner": "ResourceStateProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "state",
+      "rule": "표시할 리소스 상태. @default \"ready\" 타입 계약: ResourceStateValue"
+    },
+    {
+      "state": "loadingContent",
+      "rule": "기본 Skeleton 구성을 대체하는 로딩 콘텐츠입니다. 타입 계약: React.ReactNode"
+    },
+    {
+      "state": "messageVariant",
+      "rule": "부모 표면과 결합되는 상태 메시지 모양. @default \"embedded\" 타입 계약: 'standalone' | 'embedded'"
+    },
+    {
+      "state": "반응형 · 좁은 폭의 로딩과 차단 상태",
+      "rule": "responsive 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    }
+  ],
+  "behavior": [
+    "loading: 콘텐츠를 Skeleton으로 대체하고 aria-busy와 polite 상태 알림을 제공합니다.",
+    "refreshing: 이미 표시한 콘텐츠가 있으면 그대로 유지하며 상태 메시지를 먼저 표시합니다. 콘텐츠가 없으면 loading처럼 동작합니다.",
+    "stale, offline, error: 마지막 정상 콘텐츠가 있으면 상태 메시지 → 기존 콘텐츠 → 마지막 업데이트 시각 순서를 유지합니다. 콘텐츠가 없으면 EmptyState로 차단 상태를 표현합니다.",
+    "polite 대역의 공지는 상시 마운트된 숨김 status region이 담당합니다. 상태 분기 요소는 메시지와 함께 삽입되므로 role=\"status\"로는 신뢰성 있게 낭독되지 않고, role=\"alert\"만 삽입 시 낭독이 명세로 보장됩니다. 그래서 assertive 차단 상태(콘텐츠 없는 error·offline)는 분기 요소가 alert로 직접 공지하고 숨김 region은 침묵하며(이중 낭독 방지), 그 외 모든 비-ready 상태는 숨김 region이 제목·설명을 공지합니다. 콘텐츠를 보존하는 대역의 Banner는 대역 안에서 텍스트만 바뀌는 동안 자체 l….",
+    "live-region 긴급도는 상태 이름만이 아니라 콘텐츠 가용성으로 결정합니다. 마지막 정상 콘텐츠를 유지하는 error·offline은 작업을 중단하지 않으므로 status/polite이고, 콘텐츠가 없어 EmptyState로 차단되는 error·offline만 alert/assertive입니다. loading·empty·restricted 같은 예상 가능한 차단 상태와 모든 비차단 상태는 status/polite를 사용합니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "차단 상태(EmptyState) 제목의 heading 레벨은 headingLevel(기본 3)로 지정합니다. 감싸는 표면이 자신의 제목 레벨에 맞춰 내려주면 문서 위계(WCAG 1.3.1)가 유지됩니다. ChartFrame은 자기 제목 레벨 +1을 전달합니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "- ready: 자식 콘텐츠를 그대로 표시합니다. - loading: 콘텐츠를 Skeleton으로 대체하고 aria-busy와 polite 상태 알림을 제공합니다. - refreshing: 이미 표시한 콘텐츠가 있으면 그대로 유지하며 상태 메시지를 먼저 표시합니다. 콘텐츠가 없으면 loading처럼 동작합니다. - stale, offline, error: 마지막 정상 콘텐츠가 있으면 상태 메시지 → 기존 콘텐츠 → 마지막 업데이트 시각 순서를 유지합니다. 콘텐츠가 없으면 EmptyState로 차단 상태를 표현합니다. - 조건식 결과가 false, null, unde…"
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "구현 전에 내부의 Banner(embedded/standalone seam), EmptyState(중앙 정렬 차단 상태), Skeleton(점진 로딩)을 비교했습니다. 외부 기준은 WCAG 2.2 Status Messages, WAI-ARIA Alert pattern, Carbon contextual empty state, Fluent MessageBar, PatternFly Skeleton, PatternFly stale data warning입니다."
+    },
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    }
+  ],
+  "responsive": [
+    "320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.",
+    "고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다."
+  ],
+  "contentGuidance": [
+    "refreshing: 이미 표시한 콘텐츠가 있으면 그대로 유지하며 상태 메시지를 먼저 표시합니다. 콘텐츠가 없으면 loading처럼 동작합니다.",
+    "stale, offline, error: 마지막 정상 콘텐츠가 있으면 상태 메시지 → 기존 콘텐츠 → 마지막 업데이트 시각 순서를 유지합니다. 콘텐츠가 없으면 EmptyState로 차단 상태를 표현합니다.",
+    "polite 대역의 공지는 상시 마운트된 숨김 status region이 담당합니다. 상태 분기 요소는 메시지와 함께 삽입되므로 role=\"status\"로는 신뢰성 있게 낭독되지 않고, role=\"alert\"만 삽입 시 낭독이 명세로 보장됩니다. 그래서 assertive 차단 상태(콘텐츠 없는 error·offline)는 분기 요소가 alert로 직접 공지하고 숨김 region은 침묵하며(이중 낭독 방지), 그 외 모든 비-ready 상태는 숨김 region이 제목·설명을 공지합니다. 콘텐츠를 보존하는 대역의 Banner는 대역 안에서 텍스트만 바뀌는 동안 자체 l….",
+    "live-region 긴급도는 상태 이름만이 아니라 콘텐츠 가용성으로 결정합니다. 마지막 정상 콘텐츠를 유지하는 error·offline은 작업을 중단하지 않으므로 status/polite이고, 콘텐츠가 없어 EmptyState로 차단되는 error·offline만 alert/assertive입니다. loading·empty·restricted 같은 예상 가능한 차단 상태와 모든 비차단 상태는 status/polite를 사용합니다."
+  ],
+  "accessibility": [
+    "loading: 콘텐츠를 Skeleton으로 대체하고 aria-busy와 polite 상태 알림을 제공합니다.",
+    "polite 대역의 공지는 상시 마운트된 숨김 status region이 담당합니다. 상태 분기 요소는 메시지와 함께 삽입되므로 role=\"status\"로는 신뢰성 있게 낭독되지 않고, role=\"alert\"만 삽입 시 낭독이 명세로 보장됩니다. 그래서 assertive 차단 상태(콘텐츠 없는 error·offline)는 분기 요소가 alert로 직접 공지하고 숨김 region은 침묵하며(이중 낭독 방지), 그 외 모든 비-ready 상태는 숨김 region이 제목·설명을 공지합니다. 콘텐츠를 보존하는 대역의 Banner는 대역 안에서 텍스트만 바뀌는 동안 자체 l….",
+    "차단 상태(EmptyState) 제목의 heading 레벨은 headingLevel(기본 3)로 지정합니다. 감싸는 표면이 자신의 제목 레벨에 맞춰 내려주면 문서 위계(WCAG 1.3.1)가 유지됩니다. ChartFrame은 자기 제목 레벨 +1을 전달합니다.",
+    "네트워크 요청, retry 실행, 캐시 및 freshness 계산, 권한 판정은 제품 코드가 소유합니다. 이 컴포넌트는 controlled 시각·접근성 계약만 소유합니다.",
+    "- ready: 자식 콘텐츠를 그대로 표시합니다. - loading: 콘텐츠를 Skeleton으로 대체하고 aria-busy와 polite 상태 알림을 제공합니다. - refreshing: 이미 표시한 콘텐츠가 있으면 그대로 유지하며 상태 메시지를 먼저 표시합니다. 콘텐츠가 없으면 loading처럼 동작합니다. - stale, offline, error: 마지막 정상 콘텐츠가 있으면 상태 메시지 → 기존 콘텐츠 → 마지막 업데이트 시각 순서를 유지합니다. 콘텐츠가 없으면 EmptyState로 차단 상태를 표현합니다. - 조건식 결과가 false, null, unde…."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "loading: 콘텐츠를 Skeleton으로 대체하고 aria-busy와 polite 상태 알림을 제공합니다."
+    ],
+    [
+      "Don't",
+      "refreshing: 이미 표시한 콘텐츠가 있으면 그대로 유지하며 상태 메시지를 먼저 표시합니다. 콘텐츠가 없으면 loading처럼 동작합니다."
+    ],
+    [
+      "Do",
+      "circle-block은 접근 차단·사용 불가에만 사용합니다. 오프라인은 Viewer와 같은 signal 글리프를 사용하고, 복구 문구는 원인 뒤에 -해 주세요. 형태의 다음 행동을 제공합니다."
+    ],
+    [
+      "Don't",
+      "stale, offline, error: 마지막 정상 콘텐츠가 있으면 상태 메시지 → 기존 콘텐츠 → 마지막 업데이트 시각 순서를 유지합니다. 콘텐츠가 없으면 EmptyState로 차단 상태를 표현합니다."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 ResourceState의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "StatusBadge",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "AnnotatedImage",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "BarChart",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Calendar",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "ChartFrame",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Carousel",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DataGrid",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<ResourceState\n  state=\"stale\"\n  lastUpdated=\"오늘 14:32\"\n  action={<Button size=\"sm\">새로고침</Button>}\n>\n  <MetricSummary />\n</ResourceState>"
+    }
+  ],
+  "tokens": [
+    "--caption1-line",
+    "--caption1-size",
+    "--color-semantic-label-alternative",
+    "--color-semantic-line-normal-normal",
+    "--font-sans",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--space-6"
+  ],
+  "apiLinks": [
+    "components/data/ResourceState.jsx",
+    "components/data/ResourceState.d.ts",
+    "components/data/ResourceState.prompt.md",
+    "stories/DataResourceState.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/DataResourceState.stories.jsx",
+    "entryStoryId": "lds-product-data-display-resource-state--preserved-data-states",
+    "publicStories": [
+      {
+        "id": "lds-product-data-display-resource-state--preserved-data-states",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-data-display-resource-state--narrow-blocking-states",
+        "name": "반응형 · 좁은 폭의 로딩과 차단 상태",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [
+    {
+      "label": "ResourceState prompt contract",
+      "path": "components/data/ResourceState.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/DataResourceState.stories.jsx"
+    },
+    {
+      "label": "WCAG 2.2 Status Messages",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html"
+    },
+    {
+      "label": "WAI-ARIA Alert pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/alert/"
+    },
+    {
+      "label": "Carbon contextual empty state",
+      "url": "https://carbondesignsystem.com/patterns/empty-states-pattern/"
+    },
+    {
+      "label": "Fluent MessageBar",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/messagebar/usage"
+    },
+    {
+      "label": "PatternFly Skeleton",
+      "url": "https://www.patternfly.org/components/skeleton/design-guidelines/"
+    },
+    {
+      "label": "PatternFly stale data warning",
+      "url": "https://www.patternfly.org/component-groups/status-and-state-indicators/stale-data-warning/"
+    }
+  ]
+}

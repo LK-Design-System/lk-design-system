@@ -1,0 +1,323 @@
+{
+  "slug": "product-navigation-menubar",
+  "title": "Menubar",
+  "storybookTitle": "LDS Product/Navigation/Menubar",
+  "layer": "Product",
+  "family": "Navigation",
+  "primaryOwner": "Menubar",
+  "ownerComponents": [
+    "Menubar"
+  ],
+  "supportingComponents": [],
+  "purpose": "파일·보기·도움말처럼 여러 command group을 항상 보이는 상단 메뉴로 제공할 때 적합합니다. 한 trigger에만 관련된 짧은 명령이나 화면 이동에는 Menubar 대신 Dropdown Menu 또는 Top Bar를 사용하세요.",
+  "useWhen": [
+    "파일·보기·도움말처럼 여러 command group을 항상 보이는 상단 메뉴로 제공할 때 적합합니다. 한 trigger에만 관련된 짧은 명령이나 화면 이동에는 Menubar 대신 Dropdown Menu 또는 Top Bar를 사용하세요.",
+    "Use for command groups. Menu items support normal, radio, checkbox, disabled, danger, divider, description, and shortcut states.",
+    "submenuMode — 서브메뉴 표현 방식(flyout 기본, drill). flyout은 서브 패널이 부모 드롭다운 옆으로 겹겹이 뜨고(부모 scroll/overflow에 잘리지 않도록 로 portal, 겹침 없이 배치, hover 120ms), drill은 같은 드롭다운이 하위 목록으로 전환되며 상단에 뒤로 컨트롤(aria-label=\"뒤로 …\")이 붙어 폭이 고정됩니다(꼬리물기 없음). 뒤로 컨트롤은 role=\"menuitem\"으로 menu content model을 지키고 다른 항목처럼 Arrow Up/Down roving 탐색에 포함되며, drill 진입….",
+    "키보드 계약: top-level은 Left/Right와 Home/End로 이동하고 Enter/Space/Arrow Down은 첫 submenu 항목, Arrow Up은 마지막 항목으로 엽니다. submenu는 Up/Down·Home/End·문자 탐색을 지원하며 Left/Right는 이웃 메뉴로 전환합니다. Escape는 닫고 원래 top-level item으로 돌아갑니다."
+  ],
+  "avoidWhen": [
+    "menuActionArea는 menu별 또는 Menubar 공통 onCancel·onApply 중 제공된 실제 callback만 Cancel/Apply 버튼으로 만듭니다. callback이나 custom action이 없으면 무동작 Apply를 만들지 않습니다. 기본 cancelLabel은 취소, applyLabel은 적용이며 menu별로 덮어쓸 수 있습니다. action region은 긴 menu 목록의 scroll 밖에 고정됩니다.",
+    "- Use for command groups. Menu items support normal, radio, checkbox, disabled, danger, divider, description, and shortcut states. - WDS axes: variant, menuActionArea, and scroll via maxHeight. - 중첩 서브메뉴 — 드롭다운 항목에 items(재귀)를 주면 그 항목은 서브메뉴 트리거가 됩니다(오른쪽 chevron·aria-haspopup=\"menu\"). Arrow Right로 진입, Arrow Left로 복귀하고 하….",
+    "Menubar가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.",
+    "동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "Menubar의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Menu Action Area",
+      "rule": "Show generated action controls for menus with apply/cancel callbacks. @default false"
+    },
+    {
+      "part": "Apply Label",
+      "rule": "applyLabel 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Cancel Label",
+      "rule": "cancelLabel 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Aria Label",
+      "rule": "menubar의 접근 가능한 이름. @default \"명령 메뉴\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "menus",
+      "type": "MenubarMenu[]",
+      "required": true,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "MenubarProps"
+    },
+    {
+      "name": "variant",
+      "type": "\"normal\" | \"radio\" | \"checkbox\"",
+      "required": false,
+      "description": "menu variant axis. @default \"normal\"",
+      "owner": "MenubarProps"
+    },
+    {
+      "name": "submenuMode",
+      "type": "\"flyout\" | \"drill\"",
+      "required": false,
+      "description": "중첩 서브메뉴 표현 방식. flyout은 부모 옆으로 겹겹이 뜨고(데스크톱 표준), drill은 같은 패널이 하위 목록으로 전환되며 상단에 뒤로 컨트롤을 둡니다(폭 고정·터치 친화). @default \"flyout\"",
+      "owner": "MenubarProps"
+    },
+    {
+      "name": "menuActionArea",
+      "type": "boolean",
+      "required": false,
+      "description": "Show generated action controls for menus with apply/cancel callbacks. @default false",
+      "owner": "MenubarProps"
+    },
+    {
+      "name": "onApply",
+      "type": "(menu: MenubarMenu, index: number) = void",
+      "required": false,
+      "description": "Fallback apply callback for menus without a per-menu callback.",
+      "owner": "MenubarProps"
+    },
+    {
+      "name": "onCancel",
+      "type": "(menu: MenubarMenu, index: number) = void",
+      "required": false,
+      "description": "Fallback cancel callback for menus without a per-menu callback.",
+      "owner": "MenubarProps"
+    },
+    {
+      "name": "applyLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "MenubarProps"
+    },
+    {
+      "name": "cancelLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "MenubarProps"
+    },
+    {
+      "name": "maxHeight",
+      "type": "number | string",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "MenubarProps"
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "required": false,
+      "description": "menubar의 접근 가능한 이름. @default \"명령 메뉴\"",
+      "owner": "MenubarProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "variant",
+      "rule": "menu variant axis. @default \"normal\" 타입 계약: \"normal\" | \"radio\" | \"checkbox\""
+    },
+    {
+      "state": "상호작용 · 드릴인 서브메뉴",
+      "rule": "interaction 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    },
+    {
+      "state": "상호작용 · 중첩 서브메뉴",
+      "rule": "interaction 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    },
+    {
+      "state": "상호작용 · 키보드 탐색",
+      "rule": "interaction 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    }
+  ],
+  "behavior": [
+    "WDS axes: variant, menuActionArea, and scroll via maxHeight.",
+    "중첩 서브메뉴 — 드롭다운 항목에 items(재귀)를 주면 그 항목은 서브메뉴 트리거가 됩니다(오른쪽 chevron·aria-haspopup=\"menu\"). Arrow Right로 진입, Arrow Left로 복귀하고 하위 명령을 고르면 전체 메뉴가 닫힙니다. Menubar 고유의 34px compact 항목 시각은 유지합니다.",
+    "submenuMode — 서브메뉴 표현 방식(flyout 기본, drill). flyout은 서브 패널이 부모 드롭다운 옆으로 겹겹이 뜨고(부모 scroll/overflow에 잘리지 않도록 로 portal, 겹침 없이 배치, hover 120ms), drill은 같은 드롭다운이 하위 목록으로 전환되며 상단에 뒤로 컨트롤(aria-label=\"뒤로 …\")이 붙어 폭이 고정됩니다(꼬리물기 없음). 뒤로 컨트롤은 role=\"menuitem\"으로 menu content model을 지키고 다른 항목처럼 Arrow Up/Down roving 탐색에 포함되며, drill 진입….",
+    "포인터 hover transfer: 메뉴가 하나라도 열려 있는 동안 이웃 top-level 항목에 포인터가 들어오면 해당 메뉴가 바로 열립니다(native menubar·Fluent 관례). 닫힌 상태의 단순 hover는 메뉴를 열지 않습니다.",
+    "키보드 계약: top-level은 Left/Right와 Home/End로 이동하고 Enter/Space/Arrow Down은 첫 submenu 항목, Arrow Up은 마지막 항목으로 엽니다. submenu는 Up/Down·Home/End·문자 탐색을 지원하며 Left/Right는 이웃 메뉴로 전환합니다. Escape는 닫고 원래 top-level item으로 돌아갑니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "중첩 서브메뉴 — 드롭다운 항목에 items(재귀)를 주면 그 항목은 서브메뉴 트리거가 됩니다(오른쪽 chevron·aria-haspopup=\"menu\"). Arrow Right로 진입, Arrow Left로 복귀하고 하위 명령을 고르면 전체 메뉴가 닫힙니다. Menubar 고유의 34px compact 항목 시각은 유지합니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "submenuMode — 서브메뉴 표현 방식(flyout 기본, drill). flyout은 서브 패널이 부모 드롭다운 옆으로 겹겹이 뜨고(부모 scroll/overflow에 잘리지 않도록 로 portal, 겹침 없이 배치, hover 120ms), drill은 같은 드롭다운이 하위 목록으로 전환되며 상단에 뒤로 컨트롤(aria-label=\"뒤로 …\")이 붙어 폭이 고정됩니다(꼬리물기 없음). 뒤로 컨트롤은 role=\"menuitem\"으로 menu content model을 지키고 다른 항목처럼 Arrow Up/Down roving 탐색에 포함되며, drill 진입…"
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "빈 menu와 모두 비활성인 menu에서도 trigger가 Escape를 받아 닫힘·focus 복원을 수행합니다. submenu는 아래 공간이 부족하면 위로 flip하고 viewport 16px 안으로 shift·size되어 320px 폭에서 가로 스크롤을 만들지 않습니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "radio·checkbox의 14px border, 6px radio dot, checkbox check glyph와 disabled color는 DropdownMenu와 동일합니다."
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    }
+  ],
+  "responsive": [
+    "WDS axes: variant, menuActionArea, and scroll via maxHeight.",
+    "중첩 서브메뉴 — 드롭다운 항목에 items(재귀)를 주면 그 항목은 서브메뉴 트리거가 됩니다(오른쪽 chevron·aria-haspopup=\"menu\"). Arrow Right로 진입, Arrow Left로 복귀하고 하위 명령을 고르면 전체 메뉴가 닫힙니다. Menubar 고유의 34px compact 항목 시각은 유지합니다.",
+    "submenuMode — 서브메뉴 표현 방식(flyout 기본, drill). flyout은 서브 패널이 부모 드롭다운 옆으로 겹겹이 뜨고(부모 scroll/overflow에 잘리지 않도록 로 portal, 겹침 없이 배치, hover 120ms), drill은 같은 드롭다운이 하위 목록으로 전환되며 상단에 뒤로 컨트롤(aria-label=\"뒤로 …\")이 붙어 폭이 고정됩니다(꼬리물기 없음). 뒤로 컨트롤은 role=\"menuitem\"으로 menu content model을 지키고 다른 항목처럼 Arrow Up/Down roving 탐색에 포함되며, drill 진입….",
+    "빈 menu와 모두 비활성인 menu에서도 trigger가 Escape를 받아 닫힘·focus 복원을 수행합니다. submenu는 아래 공간이 부족하면 위로 flip하고 viewport 16px 안으로 shift·size되어 320px 폭에서 가로 스크롤을 만들지 않습니다."
+  ],
+  "contentGuidance": [
+    "Use for command groups. Menu items support normal, radio, checkbox, disabled, danger, divider, description, and shortcut states.",
+    "submenuMode — 서브메뉴 표현 방식(flyout 기본, drill). flyout은 서브 패널이 부모 드롭다운 옆으로 겹겹이 뜨고(부모 scroll/overflow에 잘리지 않도록 로 portal, 겹침 없이 배치, hover 120ms), drill은 같은 드롭다운이 하위 목록으로 전환되며 상단에 뒤로 컨트롤(aria-label=\"뒤로 …\")이 붙어 폭이 고정됩니다(꼬리물기 없음). 뒤로 컨트롤은 role=\"menuitem\"으로 menu content model을 지키고 다른 항목처럼 Arrow Up/Down roving 탐색에 포함되며, drill 진입….",
+    "pointer hover는 키보드 focus를 빼앗지 않습니다. submenu의 aria-labelledby는 top-level item을 참조하고, 선택 항목 아래의 menuActionArea는 menu role 밖의 별도 action region으로 렌더됩니다. action region은 마지막 menu item에서 Tab으로 접근하고 Escape로 원래 top-level item에 복원합니다.",
+    "menuActionArea는 menu별 또는 Menubar 공통 onCancel·onApply 중 제공된 실제 callback만 Cancel/Apply 버튼으로 만듭니다. callback이나 custom action이 없으면 무동작 Apply를 만들지 않습니다. 기본 cancelLabel은 취소, applyLabel은 적용이며 menu별로 덮어쓸 수 있습니다. action region은 긴 menu 목록의 scroll 밖에 고정됩니다."
+  ],
+  "accessibility": [
+    "중첩 서브메뉴 — 드롭다운 항목에 items(재귀)를 주면 그 항목은 서브메뉴 트리거가 됩니다(오른쪽 chevron·aria-haspopup=\"menu\"). Arrow Right로 진입, Arrow Left로 복귀하고 하위 명령을 고르면 전체 메뉴가 닫힙니다. Menubar 고유의 34px compact 항목 시각은 유지합니다.",
+    "submenuMode — 서브메뉴 표현 방식(flyout 기본, drill). flyout은 서브 패널이 부모 드롭다운 옆으로 겹겹이 뜨고(부모 scroll/overflow에 잘리지 않도록 로 portal, 겹침 없이 배치, hover 120ms), drill은 같은 드롭다운이 하위 목록으로 전환되며 상단에 뒤로 컨트롤(aria-label=\"뒤로 …\")이 붙어 폭이 고정됩니다(꼬리물기 없음). 뒤로 컨트롤은 role=\"menuitem\"으로 menu content model을 지키고 다른 항목처럼 Arrow Up/Down roving 탐색에 포함되며, drill 진입….",
+    "연속된 menuitemradio 세트는 role=\"group\"으로 묶어 ARIA menu content model을 지킵니다(시각 변화 없음).",
+    "키보드 계약: top-level은 Left/Right와 Home/End로 이동하고 Enter/Space/Arrow Down은 첫 submenu 항목, Arrow Up은 마지막 항목으로 엽니다. submenu는 Up/Down·Home/End·문자 탐색을 지원하며 Left/Right는 이웃 메뉴로 전환합니다. Escape는 닫고 원래 top-level item으로 돌아갑니다.",
+    "pointer hover는 키보드 focus를 빼앗지 않습니다. submenu의 aria-labelledby는 top-level item을 참조하고, 선택 항목 아래의 menuActionArea는 menu role 밖의 별도 action region으로 렌더됩니다. action region은 마지막 menu item에서 Tab으로 접근하고 Escape로 원래 top-level item에 복원합니다."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "Use for command groups. Menu items support normal, radio, checkbox, disabled, danger, divider, description, and shortcut states."
+    ],
+    [
+      "Don't",
+      "menuActionArea는 menu별 또는 Menubar 공통 onCancel·onApply 중 제공된 실제 callback만 Cancel/Apply 버튼으로 만듭니다. callback이나 custom action이 없으면 무동작 Apply를 만들지 않습니다. 기본 cancelLabel은 취소, applyLabel은 적용이며 menu별로 덮어쓸 수 있습니다. action region은 긴 menu 목록의 scroll 밖에 고정됩니다."
+    ],
+    [
+      "Do",
+      "submenuMode — 서브메뉴 표현 방식(flyout 기본, drill). flyout은 서브 패널이 부모 드롭다운 옆으로 겹겹이 뜨고(부모 scroll/overflow에 잘리지 않도록 로 portal, 겹침 없이 배치, hover 120ms), drill은 같은 드롭다운이 하위 목록으로 전환되며 상단에 뒤로 컨트롤(aria-label=\"뒤로 …\")이 붙어 폭이 고정됩니다(꼬리물기 없음). 뒤로 컨트롤은 role=\"menuitem\"으로 menu content model을 지키고 다른 항목처럼 Arrow Up/Down roving 탐색에 포함되며, drill 진입…."
+    ],
+    [
+      "Don't",
+      "- Use for command groups. Menu items support normal, radio, checkbox, disabled, danger, divider, description, and shortcut states. - WDS axes: variant, menuActionArea, and scroll via maxHeight. - 중첩 서브메뉴 — 드롭다운 항목에 items(재귀)를 주면 그 항목은 서브메뉴 트리거가 됩니다(오른쪽 chevron·aria-haspopup=\"menu\"). Arrow Right로 진입, Arrow Left로 복귀하고 하…."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Menubar의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "HoverCard",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Popover",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Menubar menus={[{ label: 'File', items: [{ label: 'New' }, { label: 'Open', shortcut: '⌘O' }] }]} />"
+    }
+  ],
+  "tokens": [
+    "--caption1-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-normal",
+    "--color-semantic-inverse-label",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-assistive",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-status-negative-text",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-medium",
+    "--fw-semibold",
+    "--label1-size",
+    "--label2-size",
+    "--radius-5",
+    "--radius-lg",
+    "--radius-md",
+    "--radius-sm",
+    "--shadow-md",
+    "--space-2",
+    "--space-8"
+  ],
+  "apiLinks": [
+    "components/navigation/Menubar.jsx",
+    "components/navigation/Menubar.d.ts",
+    "components/navigation/Menubar.prompt.md",
+    "stories/NavigationMenubar.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/NavigationMenubar.stories.jsx",
+    "entryStoryId": "lds-product-navigation-menubar--menubar-patterns",
+    "publicStories": [
+      {
+        "id": "lds-product-navigation-menubar--menubar-patterns",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-navigation-menubar--drill-submenus",
+        "name": "상호작용 · 드릴인 서브메뉴",
+        "role": "interaction"
+      },
+      {
+        "id": "lds-product-navigation-menubar--nested-submenus",
+        "name": "상호작용 · 중첩 서브메뉴",
+        "role": "interaction"
+      },
+      {
+        "id": "lds-product-navigation-menubar--menubar-keyboard-contract",
+        "name": "상호작용 · 키보드 탐색",
+        "role": "interaction"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [
+    {
+      "label": "Menubar prompt contract",
+      "path": "components/navigation/Menubar.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/NavigationMenubar.stories.jsx"
+    },
+    {
+      "label": "WAI-ARIA Menu and Menubar Pattern",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/menubar/"
+    },
+    {
+      "label": "Fluent 2 Menu",
+      "url": "https://fluent2.microsoft.design/components/web/react/core/menu/usage"
+    },
+    {
+      "label": "Floating UI flip",
+      "url": "https://floating-ui.com/docs/flip"
+    },
+    {
+      "label": "shift",
+      "url": "https://floating-ui.com/docs/shift"
+    },
+    {
+      "label": "size",
+      "url": "https://floating-ui.com/docs/size"
+    }
+  ]
+}

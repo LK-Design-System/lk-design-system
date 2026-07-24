@@ -1,0 +1,277 @@
+{
+  "slug": "core-components-status-notification",
+  "title": "Notification",
+  "storybookTitle": "LDS Core/Components/Status/Notification",
+  "layer": "Core",
+  "family": "Status",
+  "primaryOwner": "Notification",
+  "ownerComponents": [
+    "Notification"
+  ],
+  "supportingComponents": [
+    "Icon"
+  ],
+  "purpose": "사용자가 나중에 다시 확인할 수 있도록 제목, 설명, 발생 시각, 읽음 상태를 보존해야 하는 알림 센터나 활동 목록에 적합합니다. 잠시 보여주고 사라지는 결과에는 Toast를, 페이지 전체에 즉시 알려야 하는 현재 상태에는 Banner를 사용하세요.",
+  "useWhen": [
+    "사용자가 나중에 다시 확인할 수 있도록 제목, 설명, 발생 시각, 읽음 상태를 보존해야 하는 알림 센터나 활동 목록에 적합합니다. 잠시 보여주고 사라지는 결과에는 Toast를, 페이지 전체에 즉시 알려야 하는 현재 상태에는 Banner를 사용하세요.",
+    "tone — positive · cautionary · negative · signal · offline. 리딩 아이콘 chip을 공통 statusToneStyle 문법(tone surface 배경 + tone text 전경)으로 칠합니다. 이벤트의 의미가 severity를 가질 때만 사용하고, 생략하면 중립 chip입니다.",
+    "- icon / title / description / time — 콘텐츠. 시간은 제목 행 오른쪽에 배치하고, 상대 시각(\"2분 전\")을 쓸 때는 dateTime으로 ISO 절대 시각을 함께 전달합니다. - tone — positive · cautionary · negative · signal · offline. 리딩 아이콘 chip을 공통 statusToneStyle 문법(tone surface 배경 + tone text 전경)으로 칠합니다. 이벤트의 의미가 severity를 가질 때만 사용하고, 생략하면 중립 chip입니다. - 리딩 아이콘은 36px 둥근 사….",
+    "Notification가 소유하는 Status 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다."
+  ],
+  "avoidWhen": [
+    "unread — 낮은 primary surface와 primary 점 하나로만 표현합니다. 오류색을 사용하지 않습니다.",
+    "- icon / title / description / time — 콘텐츠. 시간은 제목 행 오른쪽에 배치하고, 상대 시각(\"2분 전\")을 쓸 때는 dateTime으로 ISO 절대 시각을 함께 전달합니다. - tone — positive · cautionary · negative · signal · offline. 리딩 아이콘 chip을 공통 statusToneStyle 문법(tone surface 배경 + tone text 전경)으로 칠합니다. 이벤트의 의미가 severity를 가질 때만 사용하고, 생략하면 중립 chip입니다. - 리딩 아이콘은 36px 둥근 사….",
+    "Notification가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.",
+    "동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "Notification의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Icon",
+      "rule": "icon 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Title",
+      "rule": "title 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Description",
+      "rule": "description 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "icon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "NotificationProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "NotificationProps"
+    },
+    {
+      "name": "description",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "NotificationProps"
+    },
+    {
+      "name": "time",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "NotificationProps"
+    },
+    {
+      "name": "dateTime",
+      "type": "string",
+      "required": false,
+      "description": "으로 전달되는 기계 판독용 절대 시각(ISO 8601).",
+      "owner": "NotificationProps"
+    },
+    {
+      "name": "tone",
+      "type": "'positive' | 'cautionary' | 'negative' | 'signal' | 'offline'",
+      "required": false,
+      "description": "리딩 아이콘 chip에 적용할 status tone. 생략하면 중립 chip입니다.",
+      "owner": "NotificationProps"
+    },
+    {
+      "name": "unread",
+      "type": "boolean",
+      "required": false,
+      "description": "안읽음 primary 워시 + primary 점. @default false",
+      "owner": "NotificationProps"
+    },
+    {
+      "name": "onClick",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "제공하면 행을 키보드 접근 가능한 native button으로 렌더링합니다.",
+      "owner": "NotificationProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "tone",
+      "rule": "리딩 아이콘 chip에 적용할 status tone. 생략하면 중립 chip입니다. 타입 계약: 'positive' | 'cautionary' | 'negative' | 'signal' | 'offline'"
+    }
+  ],
+  "behavior": [
+    "onClick — 키보드 접근 가능한 native button 행으로 전환합니다.",
+    "알림 센터에서는 외부 ul만 테두리를 소유하고, 첫·마지막 li에 해당 모서리 radius를 적용해 행의 highlight/focus surface가 잘리지 않게 합니다. 행 사이는 1px divider로 구분한 뒤 ScrollArea 안에 쌓으세요.",
+    "- icon / title / description / time — 콘텐츠. 시간은 제목 행 오른쪽에 배치하고, 상대 시각(\"2분 전\")을 쓸 때는 dateTime으로 ISO 절대 시각을 함께 전달합니다. - tone — positive · cautionary · negative · signal · offline. 리딩 아이콘 chip을 공통 statusToneStyle 문법(tone surface 배경 + tone text 전경)으로 칠합니다. 이벤트의 의미가 severity를 가질 때만 사용하고, 생략하면 중립 chip입니다. - 리딩 아이콘은 36px 둥근 사….",
+    "Notification의 controlled/uncontrolled 경계와 callback 순서는 공개 타입 계약을 따릅니다.",
+    "상태 변화 중에도 accessible name, focus 위치와 레이아웃 기준점을 예고 없이 잃지 않습니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "icon / title / description / time — 콘텐츠. 시간은 제목 행 오른쪽에 배치하고, 상대 시각(\"2분 전\")을 쓸 때는 dateTime으로 ISO 절대 시각을 함께 전달합니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "리딩 아이콘은 36px 둥근 사각(radius-md) 타일입니다 — ListCell 등에서 쓰는 서명된 LK icon-tile 브랜드 패턴과 같은 문법이며, 원형 등 새 chip 모양을 만들지 않습니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "알림 센터에서는 외부 ul만 테두리를 소유하고, 첫·마지막 li에 해당 모서리 radius를 적용해 행의 highlight/focus surface가 잘리지 않게 합니다. 행 사이는 1px divider로 구분한 뒤 ScrollArea 안에 쌓으세요."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "- icon / title / description / time — 콘텐츠. 시간은 제목 행 오른쪽에 배치하고, 상대 시각(\"2분 전\")을 쓸 때는 dateTime으로 ISO 절대 시각을 함께 전달합니다. - tone — positive · cautionary · negative · signal · offline. 리딩 아이콘 chip을 공통 statusToneStyle 문법(tone surface 배경 + tone text 전경)으로 칠합니다. 이벤트의 의미가 severity를 가질 때만 사용하고, 생략하면 중립 chip입니다. - 리딩 아이콘은 36px 둥근 사…"
+    },
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    }
+  ],
+  "responsive": [
+    "320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.",
+    "고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다."
+  ],
+  "contentGuidance": [
+    "icon / title / description / time — 콘텐츠. 시간은 제목 행 오른쪽에 배치하고, 상대 시각(\"2분 전\")을 쓸 때는 dateTime으로 ISO 절대 시각을 함께 전달합니다.",
+    "tone — positive · cautionary · negative · signal · offline. 리딩 아이콘 chip을 공통 statusToneStyle 문법(tone surface 배경 + tone text 전경)으로 칠합니다. 이벤트의 의미가 severity를 가질 때만 사용하고, 생략하면 중립 chip입니다.",
+    "Notification — 알림 행(아이콘 · 제목 · 설명 · 시간 · 안읽음).",
+    "- icon / title / description / time — 콘텐츠. 시간은 제목 행 오른쪽에 배치하고, 상대 시각(\"2분 전\")을 쓸 때는 dateTime으로 ISO 절대 시각을 함께 전달합니다. - tone — positive · cautionary · negative · signal · offline. 리딩 아이콘 chip을 공통 statusToneStyle 문법(tone surface 배경 + tone text 전경)으로 칠합니다. 이벤트의 의미가 severity를 가질 때만 사용하고, 생략하면 중립 chip입니다. - 리딩 아이콘은 36px 둥근 사…."
+  ],
+  "accessibility": [
+    "onClick — 키보드 접근 가능한 native button 행으로 전환합니다.",
+    "알림 센터에서는 외부 ul만 테두리를 소유하고, 첫·마지막 li에 해당 모서리 radius를 적용해 행의 highlight/focus surface가 잘리지 않게 합니다. 행 사이는 1px divider로 구분한 뒤 ScrollArea 안에 쌓으세요.",
+    "- icon / title / description / time — 콘텐츠. 시간은 제목 행 오른쪽에 배치하고, 상대 시각(\"2분 전\")을 쓸 때는 dateTime으로 ISO 절대 시각을 함께 전달합니다. - tone — positive · cautionary · negative · signal · offline. 리딩 아이콘 chip을 공통 statusToneStyle 문법(tone surface 배경 + tone text 전경)으로 칠합니다. 이벤트의 의미가 severity를 가질 때만 사용하고, 생략하면 중립 chip입니다. - 리딩 아이콘은 36px 둥근 사….",
+    "native semantic을 우선하며 사용자에게 보이는 이름과 접근 가능한 이름이 같은 목적을 설명하게 합니다.",
+    "키보드 focus 순서, focus-visible 표시와 상태 ARIA가 시각 상태와 동시에 갱신되는지 공개 스토리에서 검증합니다."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "tone — positive · cautionary · negative · signal · offline. 리딩 아이콘 chip을 공통 statusToneStyle 문법(tone surface 배경 + tone text 전경)으로 칠합니다. 이벤트의 의미가 severity를 가질 때만 사용하고, 생략하면 중립 chip입니다."
+    ],
+    [
+      "Don't",
+      "unread — 낮은 primary surface와 primary 점 하나로만 표현합니다. 오류색을 사용하지 않습니다."
+    ],
+    [
+      "Do",
+      "- icon / title / description / time — 콘텐츠. 시간은 제목 행 오른쪽에 배치하고, 상대 시각(\"2분 전\")을 쓸 때는 dateTime으로 ISO 절대 시각을 함께 전달합니다. - tone — positive · cautionary · negative · signal · offline. 리딩 아이콘 chip을 공통 statusToneStyle 문법(tone surface 배경 + tone text 전경)으로 칠합니다. 이벤트의 의미가 severity를 가질 때만 사용하고, 생략하면 중립 chip입니다. - 리딩 아이콘은 36px 둥근 사…."
+    ],
+    [
+      "Don't",
+      "- icon / title / description / time — 콘텐츠. 시간은 제목 행 오른쪽에 배치하고, 상대 시각(\"2분 전\")을 쓸 때는 dateTime으로 ISO 절대 시각을 함께 전달합니다. - tone — positive · cautionary · negative · signal · offline. 리딩 아이콘 chip을 공통 statusToneStyle 문법(tone surface 배경 + tone text 전경)으로 칠합니다. 이벤트의 의미가 severity를 가질 때만 사용하고, 생략하면 중립 chip입니다. - 리딩 아이콘은 36px 둥근 사…."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Notification의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Avatar",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "AvatarGroup",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Badge",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Chip",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "PushBadge",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Tag",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Notification icon={<Icon name=\"bell\" />} title=\"펌웨어 업데이트 완료\" description=\"LKR-SSAI v2.4\" time=\"10분 전\" unread />"
+    }
+  ],
+  "tokens": [
+    "--caption1-line",
+    "--caption1-size",
+    "--caption1-spacing",
+    "--color-semantic-fill-alternative",
+    "--color-semantic-fill-normal",
+    "--color-semantic-focus-indicator",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-primary-surface-strong",
+    "--component-notification-unread-surface",
+    "--font-sans",
+    "--fw-bold",
+    "--label1-line",
+    "--label1-size",
+    "--label1-spacing",
+    "--label2-line",
+    "--label2-size",
+    "--label2-spacing",
+    "--radius-md",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4"
+  ],
+  "apiLinks": [
+    "components/feedback/Notification.jsx",
+    "components/feedback/Notification.d.ts",
+    "components/feedback/Notification.prompt.md",
+    "stories/FeedbackNotifications.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FeedbackNotifications.stories.jsx",
+    "entryStoryId": "lds-core-components-status-notification--notification-patterns",
+    "publicStories": [
+      {
+        "id": "lds-core-components-status-notification--notification-patterns",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [
+    {
+      "label": "Notification prompt contract",
+      "path": "components/feedback/Notification.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/FeedbackNotifications.stories.jsx"
+    }
+  ]
+}

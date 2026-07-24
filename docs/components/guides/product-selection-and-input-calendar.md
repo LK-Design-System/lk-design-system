@@ -1,0 +1,169 @@
+# Calendar
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Selection and Input |
+| Owner | `Calendar` |
+| Storybook | `LDS Product/Selection and Input/Calendar` |
+| Source | `../component-content.json#product-selection-and-input-calendar` |
+
+예약 가능일이나 로그 기준일처럼 주변 날짜를 함께 보며 고를 때 적합합니다. 폼 안에서 단일 날짜만 간결하게 입력하면 Calendar 대신 Date Picker를 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- 예약 가능일이나 로그 기준일처럼 주변 날짜를 함께 보며 고를 때 적합합니다. 폼 안에서 단일 날짜만 간결하게 입력하면 Calendar 대신 Date Picker를 사용하세요.
+- 날짜 grid는 하나의 roving Tab stop을 사용합니다. Arrow 키는 일/주 단위, Home/End는 주의 시작/끝, PageUp/PageDown은 월 단위, Shift+PageUp/Shift+PageDown은 연 단위로 이동합니다. 비활성 날짜도 포커스로 지나갈 수는 있으나(이유를 인지할 수 있도록) 선택만 차단되어 WAI-ARIA date 패턴을 따릅니다.
+- 표시 중인 달은 사용자 탐색이 소유합니다. 선택 값이 있어도 이전/다음 달 버튼·PageUp/PageDown·월 경계를 넘는 Arrow 이동이 선택된 달로 되돌려지지 않습니다. 값이 실제로 바뀔 때(제어 컴포넌트의 새 value 포함)만 표시 달과 roving 초점이 선택 날짜로 따라갑니다.
+- - value / defaultValue / onChange(date) — 제어/비제어(Date 또는 ISO 문자열 허용). autoFocus는 DatePicker dialog가 열릴 때 선택 날짜 또는 오늘로 focus를 옮깁니다. - isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. isDateDisabled는 임의 조건(콜백)을, minDate/maxDate는 경계를 담당하며 함께 쓸 수 있습니다. 비활성 날짜는 흐리게·취소선으로 표시되고 aria-disabled가 붙으며,….
+
+### 사용하지 않음
+
+- Calendar가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.
+- 동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다.
+- 표현이 비슷하다는 이유만으로 상태 의미가 다른 sibling 컴포넌트를 서로 대체하지 않습니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| Root | Calendar의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `value` | `Date \| string` | No | 제어되는 선택 날짜(Date 또는 ISO 문자열). |
+| `defaultValue` | `Date \| string` | No | 비제어 초기 날짜. |
+| `onChange` | `(date: Date) = void` | No | 공개 타입 계약에 정의된 속성입니다. |
+| `isDateDisabled` | `(date: Date) = boolean` | No | 개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). 포커스 이동은 허용되고 선택만 차단됩니다. |
+| `minDate` | `Date \| string` | No | 이 날짜 이전(당일 제외)은 모두 선택 불가. Date 또는 ISO 문자열. |
+| `maxDate` | `Date \| string` | No | 이 날짜 이후(당일 제외)는 모두 선택 불가. Date 또는 ISO 문자열. |
+| `autoFocus` | `boolean` | No | Focus the selected/today day when embedded in an opened picker dialog. |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| isDateDisabled | 개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). 포커스 이동은 허용되고 선택만 차단됩니다. 타입 계약: (date: Date) = boolean |
+| 변형·상태 · 예약 불가일 | variants-states 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다. |
+
+## Behavior and interaction
+
+- value / defaultValue / onChange(date) — 제어/비제어(Date 또는 ISO 문자열 허용). autoFocus는 DatePicker dialog가 열릴 때 선택 날짜 또는 오늘로 focus를 옮깁니다.
+- isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. isDateDisabled는 임의 조건(콜백)을, minDate/maxDate는 경계를 담당하며 함께 쓸 수 있습니다. 비활성 날짜는 흐리게·취소선으로 표시되고 aria-disabled가 붙으며, 예약 가능일 흐름에서 특정 날짜를 막는 용도입니다.
+- 날짜 grid는 하나의 roving Tab stop을 사용합니다. Arrow 키는 일/주 단위, Home/End는 주의 시작/끝, PageUp/PageDown은 월 단위, Shift+PageUp/Shift+PageDown은 연 단위로 이동합니다. 비활성 날짜도 포커스로 지나갈 수는 있으나(이유를 인지할 수 있도록) 선택만 차단되어 WAI-ARIA date 패턴을 따릅니다.
+- 표시 중인 달은 사용자 탐색이 소유합니다. 선택 값이 있어도 이전/다음 달 버튼·PageUp/PageDown·월 경계를 넘는 Arrow 이동이 선택된 달로 되돌려지지 않습니다. 값이 실제로 바뀔 때(제어 컴포넌트의 새 value 포함)만 표시 달과 roving 초점이 선택 날짜로 따라갑니다.
+- 이전/다음 달 버튼은 초점을 그대로 유지해 여러 달을 연속으로 넘길 수 있습니다. 다만 grid 안에서 키보드로 탐색 중이었다면 초점이 새 달의 날짜 셀로 따라갑니다. 월 표시는 aria-live="polite"로 읽힙니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
+| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| --color-semantic-accent-foreground-blue | light: #336CA1; dark: #639ACE |
+| --color-semantic-accent-foreground-red | light: #D63D3D; dark: #F16F6F |
+
+## Responsive
+
+- 320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.
+- 고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다.
+
+## Content and writing
+
+- gridcell에는 aria-selected가, 초점을 받는 날짜 button의 accessible name에는 , 선택됨이 함께 실려 선택 상태가 어느 경로로도 누락되지 않습니다.
+- - value / defaultValue / onChange(date) — 제어/비제어(Date 또는 ISO 문자열 허용). autoFocus는 DatePicker dialog가 열릴 때 선택 날짜 또는 오늘로 focus를 옮깁니다. - isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. isDateDisabled는 임의 조건(콜백)을, minDate/maxDate는 경계를 담당하며 함께 쓸 수 있습니다. 비활성 날짜는 흐리게·취소선으로 표시되고 aria-disabled가 붙으며,….
+- 사용자에게 보이는 Calendar 문자열은 제품 번역 계층에서 제공하고 행동 또는 상태를 구체적으로 설명합니다.
+- 아이콘이나 색상만으로 의미를 대신하지 않고 필요한 label, title 또는 status text를 함께 제공합니다.
+
+## Accessibility
+
+- value / defaultValue / onChange(date) — 제어/비제어(Date 또는 ISO 문자열 허용). autoFocus는 DatePicker dialog가 열릴 때 선택 날짜 또는 오늘로 focus를 옮깁니다.
+- isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. isDateDisabled는 임의 조건(콜백)을, minDate/maxDate는 경계를 담당하며 함께 쓸 수 있습니다. 비활성 날짜는 흐리게·취소선으로 표시되고 aria-disabled가 붙으며, 예약 가능일 흐름에서 특정 날짜를 막는 용도입니다.
+- 날짜 grid는 하나의 roving Tab stop을 사용합니다. Arrow 키는 일/주 단위, Home/End는 주의 시작/끝, PageUp/PageDown은 월 단위, Shift+PageUp/Shift+PageDown은 연 단위로 이동합니다. 비활성 날짜도 포커스로 지나갈 수는 있으나(이유를 인지할 수 있도록) 선택만 차단되어 WAI-ARIA date 패턴을 따릅니다.
+- 표시 중인 달은 사용자 탐색이 소유합니다. 선택 값이 있어도 이전/다음 달 버튼·PageUp/PageDown·월 경계를 넘는 Arrow 이동이 선택된 달로 되돌려지지 않습니다. 값이 실제로 바뀔 때(제어 컴포넌트의 새 value 포함)만 표시 달과 roving 초점이 선택 날짜로 따라갑니다.
+- 이전/다음 달 버튼은 초점을 그대로 유지해 여러 달을 연속으로 넘길 수 있습니다. 다만 grid 안에서 키보드로 탐색 중이었다면 초점이 새 달의 날짜 셀로 따라갑니다. 월 표시는 aria-live="polite"로 읽힙니다.
+
+## Do / Don't
+
+| Kind | Guidance |
+| --- | --- |
+| Do | 날짜 grid는 하나의 roving Tab stop을 사용합니다. Arrow 키는 일/주 단위, Home/End는 주의 시작/끝, PageUp/PageDown은 월 단위, Shift+PageUp/Shift+PageDown은 연 단위로 이동합니다. 비활성 날짜도 포커스로 지나갈 수는 있으나(이유를 인지할 수 있도록) 선택만 차단되어 WAI-ARIA date 패턴을 따릅니다. |
+| Don't | Calendar가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다. |
+| Do | 표시 중인 달은 사용자 탐색이 소유합니다. 선택 값이 있어도 이전/다음 달 버튼·PageUp/PageDown·월 경계를 넘는 Arrow 이동이 선택된 달로 되돌려지지 않습니다. 값이 실제로 바뀔 때(제어 컴포넌트의 새 value 포함)만 표시 달과 roving 초점이 선택 날짜로 따라갑니다. |
+| Don't | 동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다. |
+
+## Exceptions
+
+- 이전/다음 달 버튼은 초점을 그대로 유지해 여러 달을 연속으로 넘길 수 있습니다. 다만 grid 안에서 키보드로 탐색 중이었다면 초점이 새 달의 날짜 셀로 따라갑니다. 월 표시는 aria-live="polite"로 읽힙니다.
+- - value / defaultValue / onChange(date) — 제어/비제어(Date 또는 ISO 문자열 허용). autoFocus는 DatePicker dialog가 열릴 때 선택 날짜 또는 오늘로 focus를 옮깁니다. - isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. isDateDisabled는 임의 조건(콜백)을, minDate/maxDate는 경계를 담당하며 함께 쓸 수 있습니다. 비활성 날짜는 흐리게·취소선으로 표시되고 aria-disabled가 붙으며,….
+- 제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Calendar의 범용 API에 넣지 않습니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `AnnotatedImage` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `BarChart` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `ChartFrame` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Carousel` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `DataGrid` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `DataToolbar` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `DataExportAction` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `DescriptionList` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Calendar defaultValue="2026-07-03" onChange={setDate} />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--body1-size`
+- `--caption1-size`
+- `--color-semantic-accent-foreground-blue`
+- `--color-semantic-accent-foreground-red`
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-fill-normal`
+- `--color-semantic-label-disable`
+- `--color-semantic-label-neutral`
+- `--color-semantic-label-normal`
+- `--color-semantic-line-solid-normal`
+- `--color-semantic-primary-normal`
+- `--color-semantic-static-white`
+- `--component-input-focus-shadow`
+- `--dur-fast`
+- `--ease-out`
+- `--font-sans`
+- `--fw-bold`
+- `--fw-medium`
+- `--fw-semibold`
+- `--label1-size`
+- `--radius-md`
+- `--radius-xl`
+
+### Source contracts
+
+- `components/data/Calendar.jsx`
+- `components/data/Calendar.d.ts`
+- `components/data/Calendar.prompt.md`
+- `stories/DataCalendar.stories.jsx`
+
+## Migration
+
+- 현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.
+- 대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다.
+
+## Sources
+
+- Calendar prompt contract: `components/data/Calendar.prompt.md`
+- Storybook implementation evidence: `stories/DataCalendar.stories.jsx`
+- [WAI-ARIA Date Picker Dialog example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/)

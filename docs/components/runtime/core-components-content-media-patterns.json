@@ -1,0 +1,433 @@
+{
+  "slug": "core-components-content-media-patterns",
+  "title": "Media Patterns",
+  "storybookTitle": "LDS Core/Components/Content/Media Patterns",
+  "layer": "Core",
+  "family": "Content",
+  "primaryOwner": "ContentBadge",
+  "ownerComponents": [
+    "ContentBadge",
+    "Thumbnail"
+  ],
+  "supportingComponents": [],
+  "purpose": "카드, 갤러리, 미리보기에서 원본 크기가 다른 미디어를 일정한 비율로 정렬할 때 적합합니다. 인물 정체성은 Avatar를, 장식용 배경은 일반 이미지나 CSS 배경을 사용하고 중요한 상태를 오버레이에만 의존하지 마세요.",
+  "useWhen": [
+    "카드, 갤러리, 미리보기에서 원본 크기가 다른 미디어를 일정한 비율로 정렬할 때 적합합니다. 인물 정체성은 Avatar를, 장식용 배경은 일반 이미지나 CSS 배경을 사용하고 중요한 상태를 오버레이에만 의존하지 마세요.",
+    "Legacy LDS aliases still work: variant=\"soft\" maps to WDS default, variant=\"outline\" maps to outlined, and tone can still be used for status-flavoured labels.",
+    "- WDS axes: variant solid · default · outlined, size xsmall · small · medium, color neutral · accent, icon via icon, leading, or trailing. - Legacy LDS aliases still work: variant=\"soft\" maps to WDS default, variant=\"outline\" maps to outlined, and tone can still be used for status-flavoured labels. - Count/dot badges….",
+    "Media Patterns가 소유하는 Content 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다."
+  ],
+  "avoidWhen": [
+    "원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive 13BE4C ≈ 2.5:1, -cautionary EB9C33 ≈ 2.3:1, -negative EE5656 ≈ 3.2:1. accent(3878B3 ≈ 4.7:1)만 통과합니다.",
+    "accentBackgroundColor / accentContentColor 로 직접 색을 넣을 때는 대비를 직접 검증하세요. 컴포넌트가 보정하지 않습니다.",
+    "- variant=\"solid\" 은 채움 위에 반전 텍스트(--color-semantic-background-normal-normal)를 올립니다. 따라서 채움색 자체가 AA 4.5:1 을 넘어야 합니다. - 원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive 13BE4C ≈ 2.5:1, -cautionary EB9C33 ≈ 2.3:1, -negative EE5656 ≈ 3.2:1. accent(3878B3 ≈ 4.7:1)만 통과합니다. - 그래서 solid 의 상태 톤 채움은 AA -text 토큰(--col….",
+    "Media Patterns가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "ContentBadge의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Icon",
+      "rule": "Icon slot alias for the leading icon by default."
+    },
+    {
+      "part": "Icon Position",
+      "rule": "Places icon before or after text. @default \"start\""
+    },
+    {
+      "part": "Accent Content Color",
+      "rule": "Custom accent text/icon color for customize = accentContentColor."
+    },
+    {
+      "part": "Children",
+      "rule": "children 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Placeholder Icon",
+      "rule": "플레이스홀더 아이콘 이름. @default \"image\""
+    },
+    {
+      "part": "Children",
+      "rule": "children 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "tone",
+      "type": "| \"signal\" | \"accent\" | \"navy\" | \"neutral\" | \"positive\" | \"cautionary\" | \"warning\" | \"negative\"",
+      "required": false,
+      "description": "Legacy LDS tone. Prefer color=\"neutral\" | \"accent\" for parity.",
+      "owner": "ContentBadgeProps"
+    },
+    {
+      "name": "color",
+      "type": "\"neutral\" | \"accent\"",
+      "required": false,
+      "description": "color axis. @default \"neutral\"",
+      "owner": "ContentBadgeProps"
+    },
+    {
+      "name": "variant",
+      "type": "\"solid\" | \"default\" | \"outlined\" | \"soft\" | \"outline\"",
+      "required": false,
+      "description": "visual variant. soft and outline are legacy aliases. @default \"default\"",
+      "owner": "ContentBadgeProps"
+    },
+    {
+      "name": "size",
+      "type": "\"xsmall\" | \"xs\" | \"small\" | \"sm\" | \"medium\" | \"md\" | \"lg\"",
+      "required": false,
+      "description": "size axis. sm, md, and lg are legacy aliases. @default \"small\"",
+      "owner": "ContentBadgeProps"
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Icon slot alias for the leading icon by default.",
+      "owner": "ContentBadgeProps"
+    },
+    {
+      "name": "iconPosition",
+      "type": "\"start\" | \"end\"",
+      "required": false,
+      "description": "Places icon before or after text. @default \"start\"",
+      "owner": "ContentBadgeProps"
+    },
+    {
+      "name": "leading",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Explicit leading slot.",
+      "owner": "ContentBadgeProps"
+    },
+    {
+      "name": "trailing",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Explicit trailing slot.",
+      "owner": "ContentBadgeProps"
+    },
+    {
+      "name": "accentBackgroundColor",
+      "type": "string",
+      "required": false,
+      "description": "Custom accent background for customize = accentBackgroundColor.",
+      "owner": "ContentBadgeProps"
+    },
+    {
+      "name": "accentContentColor",
+      "type": "string",
+      "required": false,
+      "description": "Custom accent text/icon color for customize = accentContentColor.",
+      "owner": "ContentBadgeProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "ContentBadgeProps"
+    },
+    {
+      "name": "src",
+      "type": "string",
+      "required": false,
+      "description": "이미지 URL. 생략하면 중립 플레이스홀더로 채움.",
+      "owner": "ThumbnailProps"
+    },
+    {
+      "name": "alt",
+      "type": "string",
+      "required": false,
+      "description": "이미지의 대체 텍스트.",
+      "owner": "ThumbnailProps"
+    },
+    {
+      "name": "ratio",
+      "type": "ThumbnailRatio | number | string",
+      "required": false,
+      "description": "ratio preset or CSS/number aspect ratio. @default \"1/1\"",
+      "owner": "ThumbnailProps"
+    },
+    {
+      "name": "radius",
+      "type": "boolean | number | string",
+      "required": false,
+      "description": "둥근 모서리: true = --radius-md, false = 사각, 또는 숫자/CSS 길이. @default true",
+      "owner": "ThumbnailProps"
+    },
+    {
+      "name": "border",
+      "type": "boolean | string",
+      "required": false,
+      "description": "border toggle (WDS bakes a 1px hairline into every thumbnail). @default true",
+      "owner": "ThumbnailProps"
+    },
+    {
+      "name": "fit",
+      "type": "\"cover\" | \"contain\"",
+      "required": false,
+      "description": "이미지의 object-fit. @default \"cover\"",
+      "owner": "ThumbnailProps"
+    },
+    {
+      "name": "overlay",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "오버레이 노드(배지, 재생 글리프, 재생시간).",
+      "owner": "ThumbnailProps"
+    },
+    {
+      "name": "overlayAlign",
+      "type": "\"top-left\" | \"top-right\" | \"bottom-left\" | \"bottom-right\" | \"center\"",
+      "required": false,
+      "description": "오버레이 위치. @default \"top-left\"",
+      "owner": "ThumbnailProps"
+    },
+    {
+      "name": "overlayScrim",
+      "type": "boolean | \"auto\"",
+      "required": false,
+      "description": "오버레이 뒤에 대비 보장을 위한 그라디언트 스크림을 깝니다. \"auto\" 는 실제 이미지(src)가 있을 때만 적용하고, 플레이스홀더 타일에는 넣지 않습니다.",
+      "owner": "ThumbnailProps"
+    },
+    {
+      "name": "placeholder",
+      "type": "boolean",
+      "required": false,
+      "description": "src가 없을 때 플레이스홀더 아이콘을 표시. @default true",
+      "owner": "ThumbnailProps"
+    },
+    {
+      "name": "placeholderIcon",
+      "type": "string",
+      "required": false,
+      "description": "플레이스홀더 아이콘 이름. @default \"image\"",
+      "owner": "ThumbnailProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "ThumbnailProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "tone",
+      "rule": "Legacy LDS tone. Prefer color=\"neutral\" | \"accent\" for parity. 타입 계약: | \"signal\" | \"accent\" | \"navy\" | \"neutral\" | \"positive\" | \"cautionary\" | \"warning\" | \"negative\""
+    },
+    {
+      "state": "variant",
+      "rule": "visual variant. soft and outline are legacy aliases. @default \"default\" 타입 계약: \"solid\" | \"default\" | \"outlined\" | \"soft\" | \"outline\""
+    }
+  ],
+  "behavior": [
+    "ContentBadge는 비상호작용 정보 라벨 전용입니다. 클릭·선택되는 키워드에는 Chip, 대문자 이브로우 필에는 Tag를 쓰세요.",
+    "원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive 13BE4C ≈ 2.5:1, -cautionary EB9C33 ≈ 2.3:1, -negative EE5656 ≈ 3.2:1. accent(3878B3 ≈ 4.7:1)만 통과합니다.",
+    "그래서 solid 의 상태 톤 채움은 AA -text 토큰(--color-semantic-status-positive-text 등)을 씁니다. 라이트에서는 진한 잉크(5.5–7.5:1), 다크에서는 밝은 톤 + 어두운 반전 텍스트로 뒤집혀 두 테마 모두 통과합니다.",
+    "상태를 색으로만 전달하지 마세요(WCAG 1.4.1). 라벨 텍스트나 아이콘으로 의미를 함께 주세요.",
+    "ContentBadge — WDS Content Badge. 특정 콘텐츠의 상태나 속성을 짧게 강조하는 작은 라벨입니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "variant=\"solid\" 은 채움 위에 반전 텍스트(--color-semantic-background-normal-normal)를 올립니다. 따라서 채움색 자체가 AA 4.5:1 을 넘어야 합니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive 13BE4C ≈ 2.5:1, -cautionary EB9C33 ≈ 2.3:1, -negative EE5656 ≈ 3.2:1. accent(3878B3 ≈ 4.7:1)만 통과합니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "그래서 solid 의 상태 톤 채움은 AA -text 토큰(--color-semantic-status-positive-text 등)을 씁니다. 라이트에서는 진한 잉크(5.5–7.5:1), 다크에서는 밝은 톤 + 어두운 반전 텍스트로 뒤집혀 두 테마 모두 통과합니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "상태를 색으로만 전달하지 마세요(WCAG 1.4.1). 라벨 텍스트나 아이콘으로 의미를 함께 주세요."
+    },
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    }
+  ],
+  "responsive": [
+    "320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.",
+    "고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다."
+  ],
+  "contentGuidance": [
+    "Legacy LDS aliases still work: variant=\"soft\" maps to WDS default, variant=\"outline\" maps to outlined, and tone can still be used for status-flavoured labels.",
+    "Count/dot badges belong to Badge; live status with dot/text belongs to StatusBadge.",
+    "ContentBadge는 비상호작용 정보 라벨 전용입니다. 클릭·선택되는 키워드에는 Chip, 대문자 이브로우 필에는 Tag를 쓰세요.",
+    "variant=\"solid\" 은 채움 위에 반전 텍스트(--color-semantic-background-normal-normal)를 올립니다. 따라서 채움색 자체가 AA 4.5:1 을 넘어야 합니다."
+  ],
+  "accessibility": [
+    "상태를 색으로만 전달하지 마세요(WCAG 1.4.1). 라벨 텍스트나 아이콘으로 의미를 함께 주세요.",
+    "색 대비 규칙 (WCAG 1.4.3 AA).",
+    "- variant=\"solid\" 은 채움 위에 반전 텍스트(--color-semantic-background-normal-normal)를 올립니다. 따라서 채움색 자체가 AA 4.5:1 을 넘어야 합니다. - 원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive 13BE4C ≈ 2.5:1, -cautionary EB9C33 ≈ 2.3:1, -negative EE5656 ≈ 3.2:1. accent(3878B3 ≈ 4.7:1)만 통과합니다. - 그래서 solid 의 상태 톤 채움은 AA -text 토큰(--col….",
+    "native semantic을 우선하며 사용자에게 보이는 이름과 접근 가능한 이름이 같은 목적을 설명하게 합니다.",
+    "키보드 focus 순서, focus-visible 표시와 상태 ARIA가 시각 상태와 동시에 갱신되는지 공개 스토리에서 검증합니다."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "Legacy LDS aliases still work: variant=\"soft\" maps to WDS default, variant=\"outline\" maps to outlined, and tone can still be used for status-flavoured labels."
+    ],
+    [
+      "Don't",
+      "원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive 13BE4C ≈ 2.5:1, -cautionary EB9C33 ≈ 2.3:1, -negative EE5656 ≈ 3.2:1. accent(3878B3 ≈ 4.7:1)만 통과합니다."
+    ],
+    [
+      "Do",
+      "- WDS axes: variant solid · default · outlined, size xsmall · small · medium, color neutral · accent, icon via icon, leading, or trailing. - Legacy LDS aliases still work: variant=\"soft\" maps to WDS default, variant=\"outline\" maps to outlined, and tone can still be used for status-flavoured labels. - Count/dot badges…."
+    ],
+    [
+      "Don't",
+      "accentBackgroundColor / accentContentColor 로 직접 색을 넣을 때는 대비를 직접 검증하세요. 컴포넌트가 보정하지 않습니다."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 ContentBadge의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "Thumbnail",
+      "relationship": "같은 페이지가 소유하는 공개 primitive 또는 조합 요소입니다."
+    },
+    {
+      "component": "Accordion",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Blockquote",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Code",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Collapsible",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Kbd",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "ListCell",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Overline",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<ContentBadge variant=\"solid\" color=\"accent\">Android</ContentBadge>\n<ContentBadge variant=\"outlined\" color=\"neutral\" leading={<Icon name=\"webinar\" />}>Web</ContentBadge>\n<ContentBadge color=\"accent\" accentBackgroundColor=\"#E4F6FB\" accentContentColor=\"#007A9A\">텍스트</ContentBadge>"
+    }
+  ],
+  "tokens": [
+    "--caption1-line",
+    "--caption1-size",
+    "--caption2-line",
+    "--caption2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-background-normal-normal",
+    "--color-semantic-fill-normal",
+    "--color-semantic-fill-strong",
+    "--color-semantic-inverse-background",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-assistive",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-normal-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-status-cautionary",
+    "--color-semantic-status-cautionary-text",
+    "--color-semantic-status-negative",
+    "--color-semantic-status-negative-text",
+    "--color-semantic-status-positive",
+    "--color-semantic-status-positive-text",
+    "--font-sans",
+    "--fw-medium",
+    "--label2-line",
+    "--label2-size",
+    "--material-control-dimmer",
+    "--radius-8",
+    "--radius-md",
+    "--radius-sm",
+    "--ratio-1-1",
+    "--ratio-1-2",
+    "--ratio-10-16",
+    "--ratio-16-10",
+    "--ratio-16-9",
+    "--ratio-2-1",
+    "--ratio-2-3",
+    "--ratio-21-9",
+    "--ratio-3-2",
+    "--ratio-3-4",
+    "--ratio-4-3",
+    "--ratio-4-5",
+    "--ratio-5-4",
+    "--ratio-9-16",
+    "--ratio-9-21",
+    "--ratio-golden",
+    "--ratio-golden-vertical"
+  ],
+  "apiLinks": [
+    "components/content/ContentBadge.jsx",
+    "components/content/ContentBadge.d.ts",
+    "components/content/ContentBadge.prompt.md",
+    "components/content/Thumbnail.jsx",
+    "components/content/Thumbnail.d.ts",
+    "components/content/Thumbnail.prompt.md",
+    "stories/ContentMedia.stories.jsx"
+  ],
+  "migration": [
+    "Legacy LDS aliases still work: variant=\"soft\" maps to WDS default, variant=\"outline\" maps to outlined, and tone can still be used for status-flavoured labels.",
+    "- WDS axes: variant solid · default · outlined, size xsmall · small · medium, color neutral · accent, icon via icon, leading, or trailing. - Legacy LDS aliases still work: variant=\"soft\" maps to WDS default, variant=\"outline\" maps to outlined, and tone can still be used for status-flavoured labels. - Count/dot badges….",
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ContentMedia.stories.jsx",
+    "entryStoryId": "lds-core-components-content-media--media-thumbnails",
+    "publicStories": [
+      {
+        "id": "lds-core-components-content-media--media-thumbnails",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-content-media--media-alt-text",
+        "name": "사용법 · 정보 전달 이미지와 장식 이미지",
+        "role": "usage"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [
+    {
+      "label": "ContentBadge prompt contract",
+      "path": "components/content/ContentBadge.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/ContentMedia.stories.jsx"
+    }
+  ]
+}

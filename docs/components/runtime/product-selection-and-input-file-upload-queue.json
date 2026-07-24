@@ -1,0 +1,350 @@
+{
+  "slug": "product-selection-and-input-file-upload-queue",
+  "title": "File Upload Queue",
+  "storybookTitle": "LDS Product/Selection and Input/File Upload Queue",
+  "layer": "Product",
+  "family": "Selection and Input",
+  "primaryOwner": "FileUploadQueue",
+  "ownerComponents": [
+    "FileUploadQueue"
+  ],
+  "supportingComponents": [
+    "FileUpload",
+    "Icon"
+  ],
+  "purpose": "여러 파일이 업로드·변환·검증을 거치고 일부 항목만 다시 시도하거나 취소해야 할 때 적합합니다. 파일 하나를 고르는 진입점만 필요하면 File Upload를 사용하세요.",
+  "useWhen": [
+    "여러 파일이 업로드·변환·검증을 거치고 일부 항목만 다시 시도하거나 취소해야 할 때 적합합니다. 파일 하나를 고르는 진입점만 필요하면 File Upload를 사용하세요.",
+    "파일 선택 dropzone에는 FileUpload을 사용합니다.",
+    "layout — 항목을 어떻게 보여줄지만 고릅니다. 상태 어휘·진행률·재시도/취소/제거 의미와 접근 이름은 두 값이 동일합니다.",
+    "StatusBadge, ProgressBar, Button, 공통 상태 토큰의 크기·색·상태·focus 계약을 재사용합니다. queue 전용 badge, progress, action 문법을 만들지 않습니다."
+  ],
+  "avoidWhen": [
+    "uploading과 processing을 구분해 전송 완료를 최종 완료처럼 표시하지 않습니다.",
+    "grid — 사진·영상 첨부용 스트립. 정사각 썸네일을 한 줄로 깔고 넘치면 wrap합니다. 미디어는 파일명보다 그림으로 식별되므로 행 목록이 아니라 타일이고, 파일명·상태 텍스트를 화면에 쌓지 않습니다(대신 타일마다 시각적으로 숨긴 이름, 상태 텍스트를 둬 보조기기에는 그대로 전달합니다).",
+    "크롬 없음 — 미디어 첨부는 폼 안에 인라인으로 놓이는 입력이라 패널 테두리·배경·제목 바를 렌더하지 않습니다. title은 영역의 접근 이름으로만 남고, 집계 상태를 알리는 polite 라이브 리전은 그대로 유지됩니다. (문서 큐인 list는 계속 테두리 있는 상태 패널입니다.).",
+    "항목은 자기를 식별하는 것으로 그려집니다 — thumbnailSrc가 있으면 정사각 미디어 타일(사진 자체가 라벨이므로 이름·상태 텍스트 없음, 이미지는 장식 alt=\"\"), 없으면 가로 파일 칩(문서는 이름으로 식별되므로 아이콘 + 파일명 + sizeLabel을 눈에 보이게). 그래서 사진과 문서를 한 스트립에 섞어도 각자 맞는 형태로 섭니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "FileUploadQueue의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Title",
+      "rule": "title 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Empty Label",
+      "rule": "emptyLabel 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    },
+    {
+      "part": "Trigger",
+      "rule": "layout=\"grid\"에서 스트립 맨 앞에 놓을 선택 트리거(카메라 타일 등). 첨부가 아니라 컨트롤이므로 목록 항목으로 세지 않습니다. 선택 동작 자체는 FileUpload가 소유하며, 이 슬롯은 배치만 제공합니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "items",
+      "type": "FileUploadQueueItem[]",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "FileUploadQueueProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "FileUploadQueueProps"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "FileUploadQueueProps"
+    },
+    {
+      "name": "layout",
+      "type": "'list' | 'grid'",
+      "required": false,
+      "description": "항목 표현 방식. list는 문서·리포트용 행 목록(아이콘·이름·상태·크기), grid는 사진·영상 첨부용 썸네일 타일(이미지 위에 진행률 오버레이). 상태 어휘·진행률·재시도/취소/제거 의미와 접근 이름은 둘이 동일합니다.",
+      "owner": "FileUploadQueueProps"
+    },
+    {
+      "name": "trigger",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "layout=\"grid\"에서 스트립 맨 앞에 놓을 선택 트리거(카메라 타일 등). 첨부가 아니라 컨트롤이므로 목록 항목으로 세지 않습니다. 선택 동작 자체는 FileUpload가 소유하며, 이 슬롯은 배치만 제공합니다.",
+      "owner": "FileUploadQueueProps"
+    },
+    {
+      "name": "onRetry",
+      "type": "(item: FileUploadQueueItem) = void",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "FileUploadQueueProps"
+    },
+    {
+      "name": "onCancel",
+      "type": "(item: FileUploadQueueItem) = void",
+      "required": false,
+      "description": "업로드·처리 중인 행의 명시적 취소 요청.",
+      "owner": "FileUploadQueueProps"
+    },
+    {
+      "name": "onRemove",
+      "type": "(item: FileUploadQueueItem) = void",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "FileUploadQueueProps"
+    },
+    {
+      "name": "onOpen",
+      "type": "(item: FileUploadQueueItem) = void",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "FileUploadQueueProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "emptyLabel",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: React.ReactNode"
+    },
+    {
+      "state": "onOpen",
+      "rule": "공개 타입 계약에 정의된 속성입니다. 타입 계약: (item: FileUploadQueueItem) = void"
+    },
+    {
+      "state": "변형·상태 · 대기 · 업로드와 빈 상태",
+      "rule": "variants-states 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    },
+    {
+      "state": "변형·상태 · 미디어 첨부(썸네일)",
+      "rule": "variants-states 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    },
+    {
+      "state": "반응형 · 좁은 폭의 진행과 동작",
+      "rule": "responsive 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    }
+  ],
+  "behavior": [
+    "파일 선택 dropzone에는 FileUpload을 사용합니다.",
+    "layout — 항목을 어떻게 보여줄지만 고릅니다. 상태 어휘·진행률·재시도/취소/제거 의미와 접근 이름은 두 값이 동일합니다.",
+    "list(기본) — 문서·리포트용. 파일은 개별 카드가 아니라 하나의 queue 안에서 divider 행으로 표시하고, 아이콘 · 이름 · 상태 · 크기를 읽는 순서로 둡니다.",
+    "grid — 사진·영상 첨부용 스트립. 정사각 썸네일을 한 줄로 깔고 넘치면 wrap합니다. 미디어는 파일명보다 그림으로 식별되므로 행 목록이 아니라 타일이고, 파일명·상태 텍스트를 화면에 쌓지 않습니다(대신 타일마다 시각적으로 숨긴 이름, 상태 텍스트를 둬 보조기기에는 그대로 전달합니다).",
+    "크롬 없음 — 미디어 첨부는 폼 안에 인라인으로 놓이는 입력이라 패널 테두리·배경·제목 바를 렌더하지 않습니다. title은 영역의 접근 이름으로만 남고, 집계 상태를 알리는 polite 라이브 리전은 그대로 유지됩니다. (문서 큐인 list는 계속 테두리 있는 상태 패널입니다.)."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "개별 상태 badge는 파일명 바로 옆의 정보 영역에 두고, 오른쪽 trailing은 action만 소유합니다. busy 행은 6px progress track과 tabular percentage를 같은 줄에 배치합니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "retry/cancel/remove/open은 파일 행에 속하는 32px small actions이며 전역 submit CTA로 사용하지 않습니다. 진행 중 cancel과 완료 후 목록 remove는 서로 다른 callback입니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "- 파일 선택 dropzone에는 FileUpload을 사용합니다. - uploading과 processing을 구분해 전송 완료를 최종 완료처럼 표시하지 않습니다. - layout — 항목을 어떻게 보여줄지만 고릅니다. 상태 어휘·진행률·재시도/취소/제거 의미와 접근 이름은 두 값이 동일합니다. - list(기본) — 문서·리포트용. 파일은 개별 카드가 아니라 하나의 queue 안에서 divider 행으로 표시하고, 아이콘 · 이름 · 상태 · 크기를 읽는 순서로 둡니다. - grid — 사진·영상 첨부용 스트립. 정사각 썸네일을 한 줄로 깔고 넘치면 wrap합니…"
+    },
+    {
+      "subject": "--body1-line",
+      "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+    },
+    {
+      "subject": "--body1-size",
+      "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+    }
+  ],
+  "responsive": [
+    "grid — 사진·영상 첨부용 스트립. 정사각 썸네일을 한 줄로 깔고 넘치면 wrap합니다. 미디어는 파일명보다 그림으로 식별되므로 행 목록이 아니라 타일이고, 파일명·상태 텍스트를 화면에 쌓지 않습니다(대신 타일마다 시각적으로 숨긴 이름, 상태 텍스트를 둬 보조기기에는 그대로 전달합니다).",
+    "컨트롤은 타일 위에 — 진행률은 이미지 위 스크림 오버레이, 실패는 스크림 위 다시 시도, 제거/취소는 타일 모서리에 걸친 흰 원형 버튼입니다. 그래서 grid에서는 컨테이너에 overflow: hidden을 걸지 않습니다.",
+    "onOpen은 grid에서 렌더하지 않습니다 — 좁은 타일에 별도 열기 어포던스를 넣으면 중첩 인터랙티브가 됩니다. 원본 보기는 Lightbox로 조립하세요.",
+    "AttachmentInput을 신설하지 않음 — 선택·드롭존은 FileUpload, 진행·재시도·취소·제거는 이 컴포넌트가 이미 소유합니다. 새 wrapper는 두 계약을 통째로 중복시킵니다."
+  ],
+  "contentGuidance": [
+    "layout — 항목을 어떻게 보여줄지만 고릅니다. 상태 어휘·진행률·재시도/취소/제거 의미와 접근 이름은 두 값이 동일합니다.",
+    "list(기본) — 문서·리포트용. 파일은 개별 카드가 아니라 하나의 queue 안에서 divider 행으로 표시하고, 아이콘 · 이름 · 상태 · 크기를 읽는 순서로 둡니다.",
+    "grid — 사진·영상 첨부용 스트립. 정사각 썸네일을 한 줄로 깔고 넘치면 wrap합니다. 미디어는 파일명보다 그림으로 식별되므로 행 목록이 아니라 타일이고, 파일명·상태 텍스트를 화면에 쌓지 않습니다(대신 타일마다 시각적으로 숨긴 이름, 상태 텍스트를 둬 보조기기에는 그대로 전달합니다).",
+    "크롬 없음 — 미디어 첨부는 폼 안에 인라인으로 놓이는 입력이라 패널 테두리·배경·제목 바를 렌더하지 않습니다. title은 영역의 접근 이름으로만 남고, 집계 상태를 알리는 polite 라이브 리전은 그대로 유지됩니다. (문서 큐인 list는 계속 테두리 있는 상태 패널입니다.)."
+  ],
+  "accessibility": [
+    "trigger — 스트립 맨 앞에 선택 타일(카메라+개수)을 놓는 슬롯입니다. 첨부가 아니라 컨트롤이므로 목록 항목으로 세지 않으며(role=\"presentation\" 셀), 선택 동작 자체는 FileUpload가 소유합니다.",
+    "반복 action은 파일명을 accessible name에 포함하고, queue 집계 상태 변화는 시각적으로 숨긴 하나의 polite live region으로 알립니다. 초기 행 badge와 진행률 tick은 반복해서 announce하지 않습니다.",
+    "StatusBadge, ProgressBar, Button, 공통 상태 토큰의 크기·색·상태·focus 계약을 재사용합니다. queue 전용 badge, progress, action 문법을 만들지 않습니다.",
+    "Carbon File uploader accessibility는 remove action에 파일명을 프로그래밍 방식으로 연결할 것을 요구합니다.",
+    "- 파일 선택 dropzone에는 FileUpload을 사용합니다. - uploading과 processing을 구분해 전송 완료를 최종 완료처럼 표시하지 않습니다. - layout — 항목을 어떻게 보여줄지만 고릅니다. 상태 어휘·진행률·재시도/취소/제거 의미와 접근 이름은 두 값이 동일합니다. - list(기본) — 문서·리포트용. 파일은 개별 카드가 아니라 하나의 queue 안에서 divider 행으로 표시하고, 아이콘 · 이름 · 상태 · 크기를 읽는 순서로 둡니다. - grid — 사진·영상 첨부용 스트립. 정사각 썸네일을 한 줄로 깔고 넘치면 wrap합니…."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "파일 선택 dropzone에는 FileUpload을 사용합니다."
+    ],
+    [
+      "Don't",
+      "uploading과 processing을 구분해 전송 완료를 최종 완료처럼 표시하지 않습니다."
+    ],
+    [
+      "Do",
+      "layout — 항목을 어떻게 보여줄지만 고릅니다. 상태 어휘·진행률·재시도/취소/제거 의미와 접근 이름은 두 값이 동일합니다."
+    ],
+    [
+      "Don't",
+      "grid — 사진·영상 첨부용 스트립. 정사각 썸네일을 한 줄로 깔고 넘치면 wrap합니다. 미디어는 파일명보다 그림으로 식별되므로 행 목록이 아니라 타일이고, 파일명·상태 텍스트를 화면에 쌓지 않습니다(대신 타일마다 시각적으로 숨긴 이름, 상태 텍스트를 둬 보조기기에는 그대로 전달합니다)."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 FileUploadQueue의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "FileUpload",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "ColorSwatch",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DatePicker",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DateRangeField",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "IconPicker",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "NumberField",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "PinInput",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<FileUploadQueue\n  items={uploads}\n  onRetry={retryUpload}\n  onCancel={cancelUpload}\n  onRemove={removeUpload}\n  onOpen={openDocument}\n/>"
+    }
+  ],
+  "tokens": [
+    "--body1-line",
+    "--body1-size",
+    "--caption1-line",
+    "--caption1-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-normal",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-label-strong",
+    "--color-semantic-line-normal-alternative",
+    "--color-semantic-line-normal-normal",
+    "--color-semantic-static-white",
+    "--color-semantic-status-negative-text",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-semibold",
+    "--label1-line",
+    "--label1-size",
+    "--radius-lg",
+    "--radius-md",
+    "--scrim-dark",
+    "--shadow-md",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-6",
+    "--space-8"
+  ],
+  "apiLinks": [
+    "components/forms/FileUploadQueue.jsx",
+    "components/forms/FileUploadQueue.d.ts",
+    "components/forms/FileUploadQueue.prompt.md",
+    "stories/FormFileUploadQueue.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormFileUploadQueue.stories.jsx",
+    "entryStoryId": "lds-product-selection-and-input-file-upload-queue--upload-and-conversion",
+    "publicStories": [
+      {
+        "id": "lds-product-selection-and-input-file-upload-queue--upload-and-conversion",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-selection-and-input-file-upload-queue--queue-states",
+        "name": "변형·상태 · 대기 · 업로드와 빈 상태",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-selection-and-input-file-upload-queue--media-attachments",
+        "name": "변형·상태 · 미디어 첨부(썸네일)",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-selection-and-input-file-upload-queue--narrow-queue",
+        "name": "반응형 · 좁은 폭의 진행과 동작",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [
+    {
+      "label": "FileUploadQueue prompt contract",
+      "path": "components/forms/FileUploadQueue.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/FormFileUploadQueue.stories.jsx"
+    },
+    {
+      "label": "Carbon File uploader usage",
+      "url": "https://carbondesignsystem.com/components/file-uploader/usage/"
+    },
+    {
+      "label": "Carbon File uploader style",
+      "url": "https://carbondesignsystem.com/components/file-uploader/style/"
+    },
+    {
+      "label": "Apple HIG Icons",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/icons"
+    },
+    {
+      "label": "Carbon File uploader accessibility",
+      "url": "https://carbondesignsystem.com/components/file-uploader/accessibility/"
+    },
+    {
+      "label": "USWDS File input",
+      "url": "https://designsystem.digital.gov/components/file-input/"
+    },
+    {
+      "label": "seed-design Attachment Input",
+      "url": "https://seed-design.io/components/attachment-input"
+    }
+  ]
+}

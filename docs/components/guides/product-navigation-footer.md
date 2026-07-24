@@ -1,0 +1,177 @@
+# Footer
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Navigation |
+| Owner | `Footer` |
+| Storybook | `LDS Product/Navigation/Footer` |
+| Source | `../component-content.json#product-navigation-footer` |
+
+랜딩·콘텐츠의 법적 링크나 대시보드의 작은 제품 정보를 일관되게 제공할 때 적합합니다. 핵심 작업이나 현재 위치 탐색에는 Footer 대신 본문 CTA나 Navigation을 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- 랜딩·콘텐츠의 법적 링크나 대시보드의 작은 제품 정보를 일관되게 제공할 때 적합합니다. 핵심 작업이나 현재 위치 탐색에는 Footer 대신 본문 CTA나 Navigation을 사용하세요.
+- 서피스는 --color-semantic-inverse-background(라이트에서 0E1329, 다크에선 페이지에서 떠 보이는 raised 네이비), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다.
+- - contact / locations — { label, value }[]. 라벨은 흰색 62%·700, 값은 45%. EN 페이지는 { label: 'Tel', value: '02-3159-2865' }처럼 번역해 전달. - copyright — 기본 Copyright ⓒ 2024 - 2026 LK ROBOTICS Inc. All rights reserved. - backToTop — 푸터와 함께 렌더하는 플로팅 버튼(스크롤 600px 후 표시, 부드러운 상단 이동). - (확장, 실사이트엔 없음) brand · columns — 마케팅 푸터가 커질 때만. co….
+- Footer가 소유하는 Navigation 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다.
+
+### 사용하지 않음
+
+- Classification: LK Product Extension. 전체형 Footer는 랜딩·콘텐츠 사이트에서 TopBar와 조합하고, compact는 대시보드의 보조 메타데이터에만 사용합니다. 어느 변형도 주 탐색을 대신하지 않습니다.
+- Footer가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.
+- 동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다.
+- 표현이 비슷하다는 이유만으로 상태 의미가 다른 sibling 컴포넌트를 서로 대체하지 않습니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| Root | Footer의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다. |
+| Contact | 연락 행 — 기본값: 실제 LK 대표전화 · 사업자등록번호. |
+| Locations | 거점 행 — 기본값: 실제 본사(대전) · R&D 센터(서울) · 공장(고양). |
+| Columns | (확장) 링크 컬럼 — 실사이트 푸터에는 없음. |
+| Links | (확장) 정책 링크 — 저작권 줄 옆 / compact 우측. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `contact` | `FooterEntry[]` | No | 연락 행 — 기본값: 실제 LK 대표전화 · 사업자등록번호. |
+| `locations` | `FooterEntry[]` | No | 거점 행 — 기본값: 실제 본사(대전) · R&D 센터(서울) · 공장(고양). |
+| `copyright` | `React.ReactNode` | No | 저작권 줄. @default "Copyright ⓒ 2024 - 2026 LK ROBOTICS Inc. All rights reserved." |
+| `brand` | `React.ReactNode` | No | (확장) 브랜드 노드 — 실사이트 푸터에는 없음. |
+| `columns` | `FooterColumn[]` | No | (확장) 링크 컬럼 — 실사이트 푸터에는 없음. |
+| `links` | `FooterLink[]` | No | (확장) 정책 링크 — 저작권 줄 옆 / compact 우측. |
+| `compact` | `boolean` | No | 한 줄 앱 푸터 — 헤어라인 탑 + 뮤트 텍스트, 대시보드 바닥용. @default false |
+| `backToTop` | `boolean` | No | 실사이트 푸터에 포함된 '맨 위로' 플로팅 버튼(스크롤 600px 후 표시). @default false |
+| `maxWidth` | `number` | No | 콘텐츠 컬럼 최대 폭(px). 실사이트 값. @default 1280 |
+| `style` | `React.CSSProperties` | No | 공개 타입 계약에 정의된 속성입니다. |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| Default | 별도 상태 머신을 만들지 않으며 전달된 콘텐츠와 semantic token으로 기본 표현을 구성합니다. |
+
+## Behavior and interaction
+
+- Footer의 controlled/uncontrolled 경계와 callback 순서는 공개 타입 계약을 따릅니다.
+- 상태 변화 중에도 accessible name, focus 위치와 레이아웃 기준점을 예고 없이 잃지 않습니다.
+- 제품 데이터와 side effect는 callback으로 위임하고 Footer는 표시·입력 상태만 소유합니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | contact / locations — { label, value }[]. 라벨은 흰색 62%·700, 값은 45%. EN 페이지는 { label: 'Tel', value: '02-3159-2865' }처럼 번역해 전달. |
+| 명시 규칙 2 | copyright — 기본 Copyright ⓒ 2024 - 2026 LK ROBOTICS Inc. All rights reserved. |
+| 명시 규칙 3 | backToTop — 푸터와 함께 렌더하는 플로팅 버튼(스크롤 600px 후 표시, 부드러운 상단 이동). |
+| 명시 규칙 4 | 서피스는 --color-semantic-inverse-background(라이트에서 0E1329, 다크에선 페이지에서 떠 보이는 raised 네이비), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다. |
+| --body2-size | 15px |
+
+## Responsive
+
+- (확장, 실사이트엔 없음) brand · columns — 마케팅 푸터가 커질 때만. compact는 페이지 서피스 위 한 줄 변형.
+- Footer — 사이트 푸터. 네이비 밴드 + 정보 블록(대표전화·사업자등록번호 → 본사·R&D·공장 주소 → 저작권)을 일관된 토큰으로 렌더합니다. compact는 대시보드 바닥용 한 줄 버전.
+- Classification: LK Product Extension. 전체형 Footer는 랜딩·콘텐츠 사이트에서 TopBar와 조합하고, compact는 대시보드의 보조 메타데이터에만 사용합니다. 어느 변형도 주 탐색을 대신하지 않습니다.
+- - contact / locations — { label, value }[]. 라벨은 흰색 62%·700, 값은 45%. EN 페이지는 { label: 'Tel', value: '02-3159-2865' }처럼 번역해 전달. - copyright — 기본 Copyright ⓒ 2024 - 2026 LK ROBOTICS Inc. All rights reserved. - backToTop — 푸터와 함께 렌더하는 플로팅 버튼(스크롤 600px 후 표시, 부드러운 상단 이동). - (확장, 실사이트엔 없음) brand · columns — 마케팅 푸터가 커질 때만. co….
+
+## Content and writing
+
+- contact / locations — { label, value }[]. 라벨은 흰색 62%·700, 값은 45%. EN 페이지는 { label: 'Tel', value: '02-3159-2865' }처럼 번역해 전달.
+- copyright — 기본 Copyright ⓒ 2024 - 2026 LK ROBOTICS Inc. All rights reserved.
+- 서피스는 --color-semantic-inverse-background(라이트에서 0E1329, 다크에선 페이지에서 떠 보이는 raised 네이비), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다.
+- 타입 스케일 정합: 저작권·법적 링크 12.5px → --caption1-size(12px), 컬럼 링크 13.5px → --label2-size(13px)로 스냅했습니다. 파인 프린트는 한 단계 아래로, 컬럼 링크는 15px 헤딩(body2)과의 위계를 유지합니다.
+
+## Accessibility
+
+- 접근성 — 컬럼 제목은 role="heading" + aria-level=3으로 헤딩 시맨틱을 갖고, 링크 그룹(컬럼·정책 링크)은 ul/li로 렌더됩니다. href가 없는 링크 항목은 href="" 폴백 없이 일반 텍스트로 렌더됩니다.
+- - contact / locations — { label, value }[]. 라벨은 흰색 62%·700, 값은 45%. EN 페이지는 { label: 'Tel', value: '02-3159-2865' }처럼 번역해 전달. - copyright — 기본 Copyright ⓒ 2024 - 2026 LK ROBOTICS Inc. All rights reserved. - backToTop — 푸터와 함께 렌더하는 플로팅 버튼(스크롤 600px 후 표시, 부드러운 상단 이동). - (확장, 실사이트엔 없음) brand · columns — 마케팅 푸터가 커질 때만. co….
+- native semantic을 우선하며 사용자에게 보이는 이름과 접근 가능한 이름이 같은 목적을 설명하게 합니다.
+- 키보드 focus 순서, focus-visible 표시와 상태 ARIA가 시각 상태와 동시에 갱신되는지 공개 스토리에서 검증합니다.
+- 색상, 모양 또는 아이콘 하나만으로 상태를 구분하지 않고 이름·텍스트·semantic state를 함께 제공합니다.
+
+## Do / Don't
+
+| Kind | Guidance |
+| --- | --- |
+| Do | 서피스는 --color-semantic-inverse-background(라이트에서 0E1329, 다크에선 페이지에서 떠 보이는 raised 네이비), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다. |
+| Don't | Classification: LK Product Extension. 전체형 Footer는 랜딩·콘텐츠 사이트에서 TopBar와 조합하고, compact는 대시보드의 보조 메타데이터에만 사용합니다. 어느 변형도 주 탐색을 대신하지 않습니다. |
+| Do | - contact / locations — { label, value }[]. 라벨은 흰색 62%·700, 값은 45%. EN 페이지는 { label: 'Tel', value: '02-3159-2865' }처럼 번역해 전달. - copyright — 기본 Copyright ⓒ 2024 - 2026 LK ROBOTICS Inc. All rights reserved. - backToTop — 푸터와 함께 렌더하는 플로팅 버튼(스크롤 600px 후 표시, 부드러운 상단 이동). - (확장, 실사이트엔 없음) brand · columns — 마케팅 푸터가 커질 때만. co…. |
+| Don't | Footer가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다. |
+
+## Exceptions
+
+- 제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Footer의 범용 API에 넣지 않습니다.
+- 접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Anchor` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `BottomNav` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Breadcrumb` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `NavRail` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `SideNav` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Steps` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `Toolbar` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `TopBar` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Footer />                                {/* 기본 푸터 */}
+<Footer backToTop />                      {/* '맨 위로' 플로팅 버튼 포함 */}
+
+<Footer compact copyright="© 2026 LK ROBOTICS Inc. · Design System" links={[{ label: '고객지원', href: '#' }]} />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--body2-size`
+- `--caption1-size`
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-brand-ink`
+- `--color-semantic-inverse-background`
+- `--color-semantic-inverse-label`
+- `--color-semantic-inverse-label-alternative-soft`
+- `--color-semantic-inverse-label-neutral-soft`
+- `--color-semantic-inverse-label-strong-soft`
+- `--color-semantic-inverse-line-normal`
+- `--color-semantic-label-alternative`
+- `--color-semantic-label-normal`
+- `--color-semantic-line-normal-normal`
+- `--color-semantic-line-solid-normal`
+- `--ease-out`
+- `--font-sans`
+- `--fw-medium`
+- `--label2-size`
+- `--radius-pill`
+- `--shadow-md`
+
+### Source contracts
+
+- `components/navigation/Footer.jsx`
+- `components/navigation/Footer.d.ts`
+- `components/navigation/Footer.prompt.md`
+- `stories/NavigationFooter.stories.jsx`
+
+## Migration
+
+- 현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.
+- 대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다.
+
+## Sources
+
+- Footer prompt contract: `components/navigation/Footer.prompt.md`
+- Storybook implementation evidence: `stories/NavigationFooter.stories.jsx`
+- [SEED Footer benchmark](https://seed-design.io/components/footer)

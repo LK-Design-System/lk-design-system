@@ -1,0 +1,358 @@
+{
+  "slug": "product-content-feed-card",
+  "title": "Feed Card",
+  "storybookTitle": "LDS Product/Content/Feed Card",
+  "layer": "Product",
+  "family": "Content",
+  "primaryOwner": "FeedCard",
+  "ownerComponents": [
+    "FeedCard"
+  ],
+  "supportingComponents": [],
+  "purpose": "작성자 헤더·본문·좋아요/댓글/공유가 반복되는 소셜 피드에 적합합니다. 발행일·출처를 쓰는 기사·보도 카드나, 카드 전체가 하나의 링크인 목록 카드에는 이 컴포넌트를 사용하지 마세요 — 게시물은 링크가 아니라 여러 컨트롤을 담는 영역입니다.",
+  "useWhen": [
+    "작성자 헤더·본문·좋아요/댓글/공유가 반복되는 소셜 피드에 적합합니다. 발행일·출처를 쓰는 기사·보도 카드나, 카드 전체가 하나의 링크인 목록 카드에는 이 컴포넌트를 사용하지 마세요 — 게시물은 링크가 아니라 여러 컨트롤을 담는 영역입니다.",
+    "작성자 헤더는 ListCell을 재사용 — leading 아바타(Avatar) + title 이름 + description(출처·시간) + trailing(팔로우 Button·오버플로 DropdownMenu). 새 헤더 컴포넌트를 만들지 않습니다. headingLevel을 주면 이름이 heading이 되어 피드 문서 아웃라인을 만들고, author.href면 이름이 프로필 링크가 되며, author.badge(인증 체크·\"1촌\" 등)는 이름 뒤에 인라인으로 붙습니다.",
+    "타임스탬프는 — 보조 줄은 meta(출처)와 시간으로 구성됩니다. time(상대 라벨 \"6시간 전\")과 datetime(ISO 값)을 주면 으로 렌더되어, 보이는 라벨은 상대적이어도 보조기기·크롤러는 정확한 시각을 읽습니다. meta와 time을 함께 주면 출처 · 시간으로 합쳐지고, meta 하나에 전체 문자열을 넣던 기존 사용법도 그대로 동작합니다.",
+    "헤더·본문·인게이지먼트를 각각 ListCell·ExpandableText·ReactionBar로 조립해 각 조각을 다른 표면에서도 재사용하고, 한 곳에서 조판·접근성을 소유하게 했습니다."
+  ],
+  "avoidWhen": [
+    "Feed Card가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.",
+    "동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다.",
+    "표현이 비슷하다는 이유만으로 상태 의미가 다른 sibling 컴포넌트를 서로 대체하지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "FeedCard의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Follow Label",
+      "rule": "팔로우 버튼 라벨. @default following ? \"팔로잉\" : \"팔로우\""
+    },
+    {
+      "part": "Menu Label",
+      "rule": "오버플로 트리거 접근 라벨. 본문 펼치기(\"더 보기\")와 겹치지 않게 기본값을 구분합니다. @default \"게시물 옵션\""
+    },
+    {
+      "part": "Like",
+      "rule": "좋아요 토글(선택) — ReactionBar로 전달됩니다."
+    },
+    {
+      "part": "Comment",
+      "rule": "댓글 액션(선택)."
+    },
+    {
+      "part": "Share",
+      "rule": "공유 액션(선택)."
+    },
+    {
+      "part": "Children",
+      "rule": "children 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "author",
+      "type": "FeedAuthor",
+      "required": false,
+      "description": "작성자 identity(아바타·이름·링크).",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "meta",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "헤더 보조 줄의 출처 부분(예: \"원티드 뉴스\"). time과 함께 주면 출처 · 시간으로 합쳐집니다.",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "time",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "상대 시간 라벨(예: \"6시간 전\"). 주면 으로 렌더되어 보조 줄에 합쳐집니다.",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "datetime",
+      "type": "string",
+      "required": false,
+      "description": "time의 기계판독 값(ISO 8601, 예: \"2026-07-24T09:00:00Z\"). 에 들어갑니다.",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "following",
+      "type": "boolean",
+      "required": false,
+      "description": "팔로우 상태. 지정하거나 onFollowToggle을 주면 팔로우 버튼이 나타납니다.",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "onFollowToggle",
+      "type": "(event: React.MouseEvent) = void",
+      "required": false,
+      "description": "팔로우 버튼 클릭 핸들러.",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "followLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "팔로우 버튼 라벨. @default following ? \"팔로잉\" : \"팔로우\"",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "menuItems",
+      "type": "DropdownMenuItem[]",
+      "required": false,
+      "description": "⋮ 오버플로 메뉴 항목. 있을 때만 메뉴가 나타납니다.",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "menuLabel",
+      "type": "string",
+      "required": false,
+      "description": "오버플로 트리거 접근 라벨. 본문 펼치기(\"더 보기\")와 겹치지 않게 기본값을 구분합니다. @default \"게시물 옵션\"",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "cover",
+      "type": "string",
+      "required": false,
+      "description": "커버 이미지 URL(선택). 16:9로 지연 로드됩니다.",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "coverAlt",
+      "type": "string",
+      "required": false,
+      "description": "커버 대체 텍스트. @default \"\"",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "clamp",
+      "type": "number | false",
+      "required": false,
+      "description": "본문 클램프 줄 수. false면 클램프 없이 전체를 렌더합니다. @default 3",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "like",
+      "type": "ReactionLike",
+      "required": false,
+      "description": "좋아요 토글(선택) — ReactionBar로 전달됩니다.",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "comment",
+      "type": "ReactionAction",
+      "required": false,
+      "description": "댓글 액션(선택).",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "share",
+      "type": "ReactionAction",
+      "required": false,
+      "description": "공유 액션(선택).",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "headingLevel",
+      "type": "1 | 2 | 3 | 4 | 5 | 6",
+      "required": false,
+      "description": "작성자 이름의 heading 레벨. 주면 이름이 heading이 되어 피드 아웃라인을 만듭니다.",
+      "owner": "FeedCardProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "게시물 본문.",
+      "owner": "FeedCardProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "변형·상태 · 커버 없음 · 접기 해제 · 팔로잉",
+      "rule": "variants-states 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    },
+    {
+      "state": "반응형 · 320px",
+      "rule": "responsive 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    }
+  ],
+  "behavior": [
+    "타임스탬프는 — 보조 줄은 meta(출처)와 시간으로 구성됩니다. time(상대 라벨 \"6시간 전\")과 datetime(ISO 값)을 주면 으로 렌더되어, 보이는 라벨은 상대적이어도 보조기기·크롤러는 정확한 시각을 읽습니다. meta와 time을 함께 주면 출처 · 시간으로 합쳐지고, meta 하나에 전체 문자열을 넣던 기존 사용법도 그대로 동작합니다.",
+    "제품이 소유: 게시물 데이터, 팔로우·좋아요 상태와 낙관적 업데이트, 권한(비로그인 유도), 정렬·페이지네이션, route. FeedCard는 게시물 해부와 영역 접근성만 소유합니다.",
+    "여러 장 배치 — 기본은 일반 리스트(/ 또는 이름 붙인 )나 Grid로 나열합니다. role=\"feed\"(WAI-ARIA APG)는 각 article의 aria-posinset·aria-setsize와 화살표 포커스 관리·지연 로딩 계약을 요구하므로, 무한 스크롤 피드에서 그 계약을 직접 구현할 때만 쓰세요. FeedCard는 article 하나만 제공하고 그 계약은 제품이 소유합니다. 로딩·정렬·페이지네이션도 제품이 소유합니다.",
+    "FeedCard — 소셜 피드 게시물 카드: 작성자 헤더(아바타 · 이름 · 출처·시간 · 팔로우 · ⋮) · 본문(더 보기로 접힘) · 커버(선택) · 인게이지먼트 바(좋아요·댓글·공유).",
+    "- 카드 = 링크가 아니다 — NewsCard·ListingCard는 카드 전체가 하나의 a지만, 피드 게시물은 작성자 링크·팔로우·오버플로·좋아요·댓글·공유·더 보기까지 여러 컨트롤을 담습니다. 그래서 FeedCard는 article 영역이며 각 컨트롤이 독립 포커스 스톱입니다. 카드 전체를 링크로 만들면 중첩 인터랙티브가 되어 잘못됩니다. - article 이름 — article은 aria-label(기본 {author.name}님의 게시물)로 이름을 가져 랜드마크 이동에서 어떤 게시물인지 구분됩니다. 필요하면 aria-label로 덮어씁니다. - 작성자 헤더는…."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "작성자 헤더는 ListCell을 재사용 — leading 아바타(Avatar) + title 이름 + description(출처·시간) + trailing(팔로우 Button·오버플로 DropdownMenu). 새 헤더 컴포넌트를 만들지 않습니다. headingLevel을 주면 이름이 heading이 되어 피드 문서 아웃라인을 만들고, author.href면 이름이 프로필 링크가 되며, author.badge(인증 체크·\"1촌\" 등)는 이름 뒤에 인라인으로 붙습니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "타임스탬프는 — 보조 줄은 meta(출처)와 시간으로 구성됩니다. time(상대 라벨 \"6시간 전\")과 datetime(ISO 값)을 주면 으로 렌더되어, 보이는 라벨은 상대적이어도 보조기기·크롤러는 정확한 시각을 읽습니다. meta와 time을 함께 주면 출처 · 시간으로 합쳐지고, meta 하나에 전체 문자열을 넣던 기존 사용법도 그대로 동작합니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "커버(cover / coverAlt) — cover 이미지는 16:9로 loading=\"lazy\"·decoding=\"async\" 지연 로드되고 로드 전 레이아웃을 예약합니다(NewsCard 선례). coverAlt가 비면 장식으로 처리됩니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "- 카드 = 링크가 아니다 — NewsCard·ListingCard는 카드 전체가 하나의 a지만, 피드 게시물은 작성자 링크·팔로우·오버플로·좋아요·댓글·공유·더 보기까지 여러 컨트롤을 담습니다. 그래서 FeedCard는 article 영역이며 각 컨트롤이 독립 포커스 스톱입니다. 카드 전체를 링크로 만들면 중첩 인터랙티브가 되어 잘못됩니다. - article 이름 — article은 aria-label(기본 {author.name}님의 게시물)로 이름을 가져 랜드마크 이동에서 어떤 게시물인지 구분됩니다. 필요하면 aria-label로 덮어씁니다. - 작성자 헤더는…"
+    },
+    {
+      "subject": "--body1-line",
+      "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+    }
+  ],
+  "responsive": [
+    "320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.",
+    "고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다."
+  ],
+  "contentGuidance": [
+    "article 이름 — article은 aria-label(기본 {author.name}님의 게시물)로 이름을 가져 랜드마크 이동에서 어떤 게시물인지 구분됩니다. 필요하면 aria-label로 덮어씁니다.",
+    "작성자 헤더는 ListCell을 재사용 — leading 아바타(Avatar) + title 이름 + description(출처·시간) + trailing(팔로우 Button·오버플로 DropdownMenu). 새 헤더 컴포넌트를 만들지 않습니다. headingLevel을 주면 이름이 heading이 되어 피드 문서 아웃라인을 만들고, author.href면 이름이 프로필 링크가 되며, author.badge(인증 체크·\"1촌\" 등)는 이름 뒤에 인라인으로 붙습니다.",
+    "타임스탬프는 — 보조 줄은 meta(출처)와 시간으로 구성됩니다. time(상대 라벨 \"6시간 전\")과 datetime(ISO 값)을 주면 으로 렌더되어, 보이는 라벨은 상대적이어도 보조기기·크롤러는 정확한 시각을 읽습니다. meta와 time을 함께 주면 출처 · 시간으로 합쳐지고, meta 하나에 전체 문자열을 넣던 기존 사용법도 그대로 동작합니다.",
+    "본문은 ExpandableText — clamp 줄로 접히고 \"더 보기\"로 펼칩니다(clamp={false}면 전체 렌더). 전체 텍스트는 항상 DOM에 있어 스크린리더가 전문을 읽습니다."
+  ],
+  "accessibility": [
+    "article 이름 — article은 aria-label(기본 {author.name}님의 게시물)로 이름을 가져 랜드마크 이동에서 어떤 게시물인지 구분됩니다. 필요하면 aria-label로 덮어씁니다.",
+    "제품이 소유: 게시물 데이터, 팔로우·좋아요 상태와 낙관적 업데이트, 권한(비로그인 유도), 정렬·페이지네이션, route. FeedCard는 게시물 해부와 영역 접근성만 소유합니다.",
+    "헤더·본문·인게이지먼트를 각각 ListCell·ExpandableText·ReactionBar로 조립해 각 조각을 다른 표면에서도 재사용하고, 한 곳에서 조판·접근성을 소유하게 했습니다.",
+    "여러 장 배치 — 기본은 일반 리스트(/ 또는 이름 붙인 )나 Grid로 나열합니다. role=\"feed\"(WAI-ARIA APG)는 각 article의 aria-posinset·aria-setsize와 화살표 포커스 관리·지연 로딩 계약을 요구하므로, 무한 스크롤 피드에서 그 계약을 직접 구현할 때만 쓰세요. FeedCard는 article 하나만 제공하고 그 계약은 제품이 소유합니다. 로딩·정렬·페이지네이션도 제품이 소유합니다.",
+    "- 카드 = 링크가 아니다 — NewsCard·ListingCard는 카드 전체가 하나의 a지만, 피드 게시물은 작성자 링크·팔로우·오버플로·좋아요·댓글·공유·더 보기까지 여러 컨트롤을 담습니다. 그래서 FeedCard는 article 영역이며 각 컨트롤이 독립 포커스 스톱입니다. 카드 전체를 링크로 만들면 중첩 인터랙티브가 되어 잘못됩니다. - article 이름 — article은 aria-label(기본 {author.name}님의 게시물)로 이름을 가져 랜드마크 이동에서 어떤 게시물인지 구분됩니다. 필요하면 aria-label로 덮어씁니다. - 작성자 헤더는…."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "작성자 헤더는 ListCell을 재사용 — leading 아바타(Avatar) + title 이름 + description(출처·시간) + trailing(팔로우 Button·오버플로 DropdownMenu). 새 헤더 컴포넌트를 만들지 않습니다. headingLevel을 주면 이름이 heading이 되어 피드 문서 아웃라인을 만들고, author.href면 이름이 프로필 링크가 되며, author.badge(인증 체크·\"1촌\" 등)는 이름 뒤에 인라인으로 붙습니다."
+    ],
+    [
+      "Don't",
+      "Feed Card가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다."
+    ],
+    [
+      "Do",
+      "타임스탬프는 — 보조 줄은 meta(출처)와 시간으로 구성됩니다. time(상대 라벨 \"6시간 전\")과 datetime(ISO 값)을 주면 으로 렌더되어, 보이는 라벨은 상대적이어도 보조기기·크롤러는 정확한 시각을 읽습니다. meta와 time을 함께 주면 출처 · 시간으로 합쳐지고, meta 하나에 전체 문자열을 넣던 기존 사용법도 그대로 동작합니다."
+    ],
+    [
+      "Don't",
+      "동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 FeedCard의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "ChecklistItem",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "FeatureCard",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "ListingCard",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "MetricCard",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "NewsCard",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "ProductCard",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "SpecRow",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Stat",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<FeedCard\n  author={{ name: '글로벌 리더십과 HR', variant: 'company', href: '/teams/hr' }}\n  meta=\"원티드 뉴스 · 6시간 전\"\n  following={false}\n  onFollowToggle={toggleFollow}\n  menuItems={[{ label: '신고', danger: true, onClick: report }]}\n  like={{ count: 12, active: liked, onToggle: setLiked }}\n  comment={{ count: 3, onClick: openComments }}\n  share={{ onClick: openShare }}\n>\n  {postBody}\n</FeedCard>"
+    }
+  ],
+  "tokens": [
+    "--body1-line",
+    "--body1-size",
+    "--body2-size",
+    "--color-semantic-background-normal-alternative",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-normal",
+    "--color-semantic-label-strong",
+    "--component-card-bg",
+    "--component-card-border",
+    "--component-card-radius",
+    "--fw-bold",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4"
+  ],
+  "apiLinks": [
+    "components/cards/FeedCard.jsx",
+    "components/cards/FeedCard.d.ts",
+    "components/cards/FeedCard.prompt.md",
+    "stories/CardFeed.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/CardFeed.stories.jsx",
+    "entryStoryId": "lds-product-content-feed-card--overview",
+    "publicStories": [
+      {
+        "id": "lds-product-content-feed-card--overview",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-content-feed-card--variants",
+        "name": "변형·상태 · 커버 없음 · 접기 해제 · 팔로잉",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-content-feed-card--narrow-feed",
+        "name": "반응형 · 320px",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [
+    {
+      "label": "FeedCard prompt contract",
+      "path": "components/cards/FeedCard.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/CardFeed.stories.jsx"
+    }
+  ]
+}

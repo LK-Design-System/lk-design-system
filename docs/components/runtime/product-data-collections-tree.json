@@ -1,0 +1,293 @@
+{
+  "slug": "product-data-collections-tree",
+  "title": "Tree",
+  "storybookTitle": "LDS Product/Data/Collections/Tree",
+  "layer": "Product",
+  "family": "Collections",
+  "primaryOwner": "Tree",
+  "ownerComponents": [
+    "Tree"
+  ],
+  "supportingComponents": [
+    "Button",
+    "StatusBadge"
+  ],
+  "purpose": "문서·파일·레이어처럼 부모와 자식 관계가 중요한 구조를 탐색하고 선택할 때 적합합니다. 계층이 없는 짧은 옵션이나 여러 값을 동시에 고를 때는 Tree 대신 List 또는 Checkbox Group을 사용하세요.",
+  "useWhen": [
+    "문서·파일·레이어처럼 부모와 자식 관계가 중요한 구조를 탐색하고 선택할 때 적합합니다. 계층이 없는 짧은 옵션이나 여러 값을 동시에 고를 때는 Tree 대신 List 또는 Checkbox Group을 사용하세요.",
+    "The root uses role=\"tree\" and ariaLabel; every visible node uses a single roving tabIndex with role=\"treeitem\".",
+    "Up/Down move through visible nodes, Home/End jump to the boundary, Right opens or enters a branch, Left closes or moves to the parent, and Enter/Space activates the focused node.",
+    "Roving keyboard focus and single selection are independent. Use selectedId for controlled selection, defaultSelectedId for uncontrolled selection, and onSelectedIdChange(id) to observe activation."
+  ],
+  "avoidWhen": [
+    "Explicit IDs keep a node's internal focus and expansion identity stable across reordering. Nodes without an id use their tree path internally, still participate in roving keyboard navigation, and call onSelect(node), but they do not update ID-based selection.",
+    "- The root uses role=\"tree\" and ariaLabel; every visible node uses a single roving tabIndex with role=\"treeitem\". - Up/Down move through visible nodes, Home/End jump to the boundary, Right opens or enters a branch, Left closes or moves to the parent, and Enter/Space activates the focused node. - Roving keyboard focus….",
+    "Tree가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.",
+    "동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "Root",
+      "rule": "Tree의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다."
+    },
+    {
+      "part": "Aria Label",
+      "rule": "Accessible name for the tree widget. @default \"Hierarchy\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "nodes",
+      "type": "TreeNodeData[]",
+      "required": true,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "defaultExpanded",
+      "type": "Array",
+      "required": false,
+      "description": "Node IDs, or primitive labels for legacy nodes without an ID, expanded initially.",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "selectedId",
+      "type": "string | number | null",
+      "required": false,
+      "description": "Controlled ID of the single selected node. IDs are normalized to strings.",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "defaultSelectedId",
+      "type": "string | number | null",
+      "required": false,
+      "description": "Initial ID of the single selected node when uncontrolled. IDs are normalized to strings.",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "onSelectedIdChange",
+      "type": "(selectedId: string) = void",
+      "required": false,
+      "description": "Called with the normalized ID when a node with an ID is activated.",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "openOnHover",
+      "type": "boolean",
+      "required": false,
+      "description": "Opens branch children while the branch is hovered or keyboard-focused.",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "required": false,
+      "description": "Accessible name for the tree widget. @default \"Hierarchy\"",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "onSelect",
+      "type": "(node: TreeNodeData) = void",
+      "required": false,
+      "description": "공개 타입 계약에 정의된 속성입니다.",
+      "owner": "TreeProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "defaultExpanded",
+      "rule": "Node IDs, or primitive labels for legacy nodes without an ID, expanded initially. 타입 계약: Array"
+    },
+    {
+      "state": "selectedId",
+      "rule": "Controlled ID of the single selected node. IDs are normalized to strings. 타입 계약: string | number | null"
+    },
+    {
+      "state": "defaultSelectedId",
+      "rule": "Initial ID of the single selected node when uncontrolled. IDs are normalized to strings. 타입 계약: string | number | null"
+    },
+    {
+      "state": "onSelectedIdChange",
+      "rule": "Called with the normalized ID when a node with an ID is activated. 타입 계약: (selectedId: string) = void"
+    },
+    {
+      "state": "openOnHover",
+      "rule": "Opens branch children while the branch is hovered or keyboard-focused. 타입 계약: boolean"
+    },
+    {
+      "state": "상호작용 · 선택과 초점 이동",
+      "rule": "interaction 공개 스토리에서 렌더링 및 상호작용 증거를 유지합니다."
+    }
+  ],
+  "behavior": [
+    "The root uses role=\"tree\" and ariaLabel; every visible node uses a single roving tabIndex with role=\"treeitem\".",
+    "Up/Down move through visible nodes, Home/End jump to the boundary, Right opens or enters a branch, Left closes or moves to the parent, and Enter/Space activates the focused node.",
+    "Roving keyboard focus and single selection are independent. Use selectedId for controlled selection, defaultSelectedId for uncontrolled selection, and onSelectedIdChange(id) to observe activation.",
+    "A ref exposes focusItem(id, { reveal: true }) for caller-directed synchronization; reveal expands collapsed ancestors before focusing the row.",
+    "Give every node addressed by selection or focusItem an explicit, stable, globally unique id. IDs are normalized to strings; label is presentation only and is never used as public identity."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "--color-semantic-background-normal-alternative",
+      "rule": "light: #F7F7F8; dark: #0F0F10"
+    },
+    {
+      "subject": "--color-semantic-focus-indicator",
+      "rule": "light: #2F6FB0; dark: #7FB0DE"
+    },
+    {
+      "subject": "--color-semantic-label-alternative",
+      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+    },
+    {
+      "subject": "--color-semantic-label-normal",
+      "rule": "light: #171718; dark: #F7F7F7"
+    }
+  ],
+  "responsive": [
+    "320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.",
+    "고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다."
+  ],
+  "contentGuidance": [
+    "The root uses role=\"tree\" and ariaLabel; every visible node uses a single roving tabIndex with role=\"treeitem\".",
+    "Give every node addressed by selection or focusItem an explicit, stable, globally unique id. IDs are normalized to strings; label is presentation only and is never used as public identity.",
+    "nodes — { id, label, icon, children }. defaultExpanded — 열린 키. openOnHover — hover/focus 시 임시 확장. onSelect(node).",
+    "- The root uses role=\"tree\" and ariaLabel; every visible node uses a single roving tabIndex with role=\"treeitem\". - Up/Down move through visible nodes, Home/End jump to the boundary, Right opens or enters a branch, Left closes or moves to the parent, and Enter/Space activates the focused node. - Roving keyboard focus…."
+  ],
+  "accessibility": [
+    "The root uses role=\"tree\" and ariaLabel; every visible node uses a single roving tabIndex with role=\"treeitem\".",
+    "Up/Down move through visible nodes, Home/End jump to the boundary, Right opens or enters a branch, Left closes or moves to the parent, and Enter/Space activates the focused node.",
+    "Roving keyboard focus and single selection are independent. Use selectedId for controlled selection, defaultSelectedId for uncontrolled selection, and onSelectedIdChange(id) to observe activation.",
+    "A ref exposes focusItem(id, { reveal: true }) for caller-directed synchronization; reveal expands collapsed ancestors before focusing the row.",
+    "Give every node addressed by selection or focusItem an explicit, stable, globally unique id. IDs are normalized to strings; label is presentation only and is never used as public identity."
+  ],
+  "doDont": [
+    [
+      "Do",
+      "The root uses role=\"tree\" and ariaLabel; every visible node uses a single roving tabIndex with role=\"treeitem\"."
+    ],
+    [
+      "Don't",
+      "Explicit IDs keep a node's internal focus and expansion identity stable across reordering. Nodes without an id use their tree path internally, still participate in roving keyboard navigation, and call onSelect(node), but they do not update ID-based selection."
+    ],
+    [
+      "Do",
+      "Up/Down move through visible nodes, Home/End jump to the boundary, Right opens or enters a branch, Left closes or moves to the parent, and Enter/Space activates the focused node."
+    ],
+    [
+      "Don't",
+      "- The root uses role=\"tree\" and ariaLabel; every visible node uses a single roving tabIndex with role=\"treeitem\". - Up/Down move through visible nodes, Home/End jump to the boundary, Right opens or enters a branch, Left closes or moves to the parent, and Enter/Space activates the focused node. - Roving keyboard focus…."
+    ]
+  ],
+  "exceptions": [
+    "제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Tree의 범용 API에 넣지 않습니다.",
+    "접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다."
+  ],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "StatusBadge",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "AnnotatedImage",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "BarChart",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Calendar",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "ChartFrame",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "Carousel",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    },
+    {
+      "component": "DataGrid",
+      "relationship": "대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다."
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Tree defaultExpanded={['workspace']} defaultSelectedId=\"workspace\" onSelect={pick} nodes={[\n  { id: 'workspace', label: '문서', children: [{ label: '개요' }, { label: '컴포넌트' }] },\n]} />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-background-normal-alternative",
+    "--color-semantic-focus-indicator",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-normal",
+    "--color-semantic-label-strong",
+    "--color-semantic-primary-normal",
+    "--color-semantic-primary-surface-strong",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-medium",
+    "--fw-semibold",
+    "--label1-size",
+    "--radius-md"
+  ],
+  "apiLinks": [
+    "components/data/Tree.jsx",
+    "components/data/Tree.d.ts",
+    "components/data/Tree.prompt.md",
+    "stories/DataTree.stories.jsx"
+  ],
+  "migration": [
+    "현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.",
+    "대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다."
+  ],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/DataTree.stories.jsx",
+    "entryStoryId": "lds-product-data-collections-tree--tree-interaction-states",
+    "publicStories": [
+      {
+        "id": "lds-product-data-collections-tree--tree-interaction-states",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-data-collections-tree--tree-selection-contract",
+        "name": "상호작용 · 선택과 초점 이동",
+        "role": "interaction"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [
+    {
+      "label": "Tree prompt contract",
+      "path": "components/data/Tree.prompt.md"
+    },
+    {
+      "label": "Storybook implementation evidence",
+      "path": "stories/DataTree.stories.jsx"
+    },
+    {
+      "label": "WAI-ARIA APG Tree View",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/treeview/"
+    },
+    {
+      "label": "APG Navigation Treeview caution",
+      "url": "https://www.w3.org/WAI/ARIA/apg/patterns/treeview/examples/treeview-navigation/"
+    }
+  ]
+}

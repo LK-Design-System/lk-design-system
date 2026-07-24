@@ -1,0 +1,145 @@
+# Link
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Action |
+| Owner | `Link` |
+| Storybook | `LDS Product/Action/Link` |
+| Source | `../component-content.json#product-action-link` |
+
+현재 콘텐츠와 관련된 내부 목적지나 외부 문서를 앵커 탐색으로 연결할 때 적합합니다. 저장·삭제처럼 현재 상태를 변경하거나 로딩 상태가 필요한 작업에는 Link 대신 Button 또는 Text Button을 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- 현재 콘텐츠와 관련된 내부 목적지나 외부 문서를 앵커 탐색으로 연결할 때 적합합니다. 저장·삭제처럼 현재 상태를 변경하거나 로딩 상태가 필요한 작업에는 Link 대신 Button 또는 Text Button을 사용하세요.
+- Link가 소유하는 Action 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다.
+- 제품별 구현 대신 공개 Link API와 semantic token으로 일관성을 유지해야 할 때 사용합니다.
+
+### 사용하지 않음
+
+- href가 없으면 링크 역할도 포인터 커서도 주지 않습니다. 클릭 가능해 보이는 빈 앵커를 만들지 마세요.
+- - tone signal · neutral · inherit. underline none · hover · always. external — 새 탭 + 외부 링크 화살표 + 안전한 rel. - externalLabel — external일 때 접근 이름에 붙는 시각적 숨김 문구(기본 새 창에서 열림). 화살표 글리프는 aria-hidden이라 그것만으로는 새 창 이동이 보조기술에 전달되지 않습니다(WCAG G201 / H33). 문구를 바꿀 때만 지정하세요. - href가 없으면 링크 역할도 포인터 커서도 주지 않습니다. 클릭 가능해 보이는 빈 앵커를 만들지 마세요….
+- Link가 소유하지 않는 라우팅, 권한, 데이터 요청, 제품 임계값을 컴포넌트 내부에 넣지 않습니다.
+- 동일한 목적을 더 단순한 native 요소나 기존 LDS primitive로 해결할 수 있으면 새 조합을 만들지 않습니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| Root | Link의 semantic role, layout containment와 전달받은 DOM 속성을 소유합니다. |
+| External Label | external일 때 접근 이름에 덧붙는 시각적 숨김 문구. @default "새 창에서 열림" |
+| Children | children 속성으로 제공되는 공개 슬롯 또는 표시 영역입니다. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `tone` | `'signal' \| 'neutral' \| 'inherit'` | No | 잉크. @default "signal" |
+| `underline` | `'none' \| 'hover' \| 'always'` | No | 밑줄 동작. @default "hover" |
+| `external` | `boolean` | No | 새 탭 + 외부 링크 화살표 + 안전한 rel + 접근 이름에 붙는 새 창 안내. @default false |
+| `externalLabel` | `string` | No | external일 때 접근 이름에 덧붙는 시각적 숨김 문구. @default "새 창에서 열림" |
+| `children` | `React.ReactNode` | No | 공개 타입 계약에 정의된 속성입니다. |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| tone | 잉크. @default "signal" 타입 계약: 'signal' \| 'neutral' \| 'inherit' |
+
+## Behavior and interaction
+
+- externalLabel — external일 때 접근 이름에 붙는 시각적 숨김 문구(기본 새 창에서 열림). 화살표 글리프는 aria-hidden이라 그것만으로는 새 창 이동이 보조기술에 전달되지 않습니다(WCAG G201 / H33). 문구를 바꿀 때만 지정하세요.
+- Link는 밑줄 제어가 있는 앵커/내비게이션 전용입니다. 사이즈·로딩 상태가 필요한 버튼형 액션(독립형 텍스트 CTA)에는 TextButton을 쓰세요.
+- - tone signal · neutral · inherit. underline none · hover · always. external — 새 탭 + 외부 링크 화살표 + 안전한 rel. - externalLabel — external일 때 접근 이름에 붙는 시각적 숨김 문구(기본 새 창에서 열림). 화살표 글리프는 aria-hidden이라 그것만으로는 새 창 이동이 보조기술에 전달되지 않습니다(WCAG G201 / H33). 문구를 바꿀 때만 지정하세요. - href가 없으면 링크 역할도 포인터 커서도 주지 않습니다. 클릭 가능해 보이는 빈 앵커를 만들지 마세요….
+- Link의 controlled/uncontrolled 경계와 callback 순서는 공개 타입 계약을 따릅니다.
+- 상태 변화 중에도 accessible name, focus 위치와 레이아웃 기준점을 예고 없이 잃지 않습니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
+| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+| --fw-semibold | 600 |
+
+## Responsive
+
+- 320px 좁은 폭과 200% 텍스트 확대에서 페이지 가로 overflow 없이 의미 순서를 유지합니다.
+- 고정 폭보다 부모 containment와 wrapping을 우선하고, 제품이 필요할 때 명시적으로 compact 표현을 선택합니다.
+
+## Content and writing
+
+- externalLabel — external일 때 접근 이름에 붙는 시각적 숨김 문구(기본 새 창에서 열림). 화살표 글리프는 aria-hidden이라 그것만으로는 새 창 이동이 보조기술에 전달되지 않습니다(WCAG G201 / H33). 문구를 바꿀 때만 지정하세요.
+- Link는 밑줄 제어가 있는 앵커/내비게이션 전용입니다. 사이즈·로딩 상태가 필요한 버튼형 액션(독립형 텍스트 CTA)에는 TextButton을 쓰세요.
+- - tone signal · neutral · inherit. underline none · hover · always. external — 새 탭 + 외부 링크 화살표 + 안전한 rel. - externalLabel — external일 때 접근 이름에 붙는 시각적 숨김 문구(기본 새 창에서 열림). 화살표 글리프는 aria-hidden이라 그것만으로는 새 창 이동이 보조기술에 전달되지 않습니다(WCAG G201 / H33). 문구를 바꿀 때만 지정하세요. - href가 없으면 링크 역할도 포인터 커서도 주지 않습니다. 클릭 가능해 보이는 빈 앵커를 만들지 마세요….
+- 사용자에게 보이는 Link 문자열은 제품 번역 계층에서 제공하고 행동 또는 상태를 구체적으로 설명합니다.
+
+## Accessibility
+
+- externalLabel — external일 때 접근 이름에 붙는 시각적 숨김 문구(기본 새 창에서 열림). 화살표 글리프는 aria-hidden이라 그것만으로는 새 창 이동이 보조기술에 전달되지 않습니다(WCAG G201 / H33). 문구를 바꿀 때만 지정하세요.
+- - tone signal · neutral · inherit. underline none · hover · always. external — 새 탭 + 외부 링크 화살표 + 안전한 rel. - externalLabel — external일 때 접근 이름에 붙는 시각적 숨김 문구(기본 새 창에서 열림). 화살표 글리프는 aria-hidden이라 그것만으로는 새 창 이동이 보조기술에 전달되지 않습니다(WCAG G201 / H33). 문구를 바꿀 때만 지정하세요. - href가 없으면 링크 역할도 포인터 커서도 주지 않습니다. 클릭 가능해 보이는 빈 앵커를 만들지 마세요….
+- native semantic을 우선하며 사용자에게 보이는 이름과 접근 가능한 이름이 같은 목적을 설명하게 합니다.
+- 키보드 focus 순서, focus-visible 표시와 상태 ARIA가 시각 상태와 동시에 갱신되는지 공개 스토리에서 검증합니다.
+- 색상, 모양 또는 아이콘 하나만으로 상태를 구분하지 않고 이름·텍스트·semantic state를 함께 제공합니다.
+
+## Do / Don't
+
+| Kind | Guidance |
+| --- | --- |
+| Do | Link가 소유하는 Action 의미와 상태를 여러 제품 화면에서 동일하게 재사용할 때 사용합니다. |
+| Don't | href가 없으면 링크 역할도 포인터 커서도 주지 않습니다. 클릭 가능해 보이는 빈 앵커를 만들지 마세요. |
+| Do | 제품별 구현 대신 공개 Link API와 semantic token으로 일관성을 유지해야 할 때 사용합니다. |
+| Don't | - tone signal · neutral · inherit. underline none · hover · always. external — 새 탭 + 외부 링크 화살표 + 안전한 rel. - externalLabel — external일 때 접근 이름에 붙는 시각적 숨김 문구(기본 새 창에서 열림). 화살표 글리프는 aria-hidden이라 그것만으로는 새 창 이동이 보조기술에 전달되지 않습니다(WCAG G201 / H33). 문구를 바꿀 때만 지정하세요. - href가 없으면 링크 역할도 포인터 커서도 주지 않습니다. 클릭 가능해 보이는 빈 앵커를 만들지 마세요…. |
+
+## Exceptions
+
+- 제품 정책을 포함해야 하는 예외는 wrapper 또는 제품 저장소에서 조합하고 Link의 범용 API에 넣지 않습니다.
+- 접근성 또는 안전 계약을 약화하는 예외는 허용하지 않으며 필요한 차이는 prompt와 Storybook 증거에 기록합니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `ButtonGroup` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `CopyButton` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `SpeedDial` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `SplitButton` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+| `SocialButton` | 대표 시나리오에서 함께 조합되며 각 컴포넌트의 상태 소유권을 유지합니다. |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Link href="/products">제품 보기</Link>
+<Link href="https://example.com" external>외부 문서</Link>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-label-neutral`
+- `--color-semantic-primary-normal`
+- `--font-sans`
+- `--fw-semibold`
+
+### Source contracts
+
+- `components/buttons/Link.jsx`
+- `components/buttons/Link.d.ts`
+- `components/buttons/Link.prompt.md`
+- `stories/ActionLink.stories.jsx`
+
+## Migration
+
+- 현재 prompt와 타입 계약에 기록되지 않은 legacy alias는 새 코드에서 도입하지 않습니다.
+- 대체 컴포넌트가 생기면 기존 API의 제거 버전, 대응 prop과 자동·수동 전환 절차를 이 페이지에 기록합니다.
+
+## Sources
+
+- Link prompt contract: `components/buttons/Link.prompt.md`
+- Storybook implementation evidence: `stories/ActionLink.stories.jsx`

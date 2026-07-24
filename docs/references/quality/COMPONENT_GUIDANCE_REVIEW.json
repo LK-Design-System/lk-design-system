@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": 1,
+  "reviewedAt": "2026-07-24",
+  "status": "pass",
+  "scope": "LDS public component entries and non-Foundation Storybook decision pages",
+  "benchmark": {
+    "name": "SEED Components",
+    "url": "https://seed-design.io/components",
+    "representativePages": [
+      "https://seed-design.io/components/action-button",
+      "https://seed-design.io/components/field",
+      "https://seed-design.io/components/bottom-sheet",
+      "https://seed-design.io/components/progress-board"
+    ]
+  },
+  "coverage": {
+    "componentEntries": 179,
+    "namedPublicExports": 182,
+    "decisionGuides": 148,
+    "referenceOnlyEntries": 8,
+    "seedBenchmarkTraces": 30,
+    "requiredSections": 16,
+    "generatedMarkdownGuides": 148,
+    "lazyStorybookGuidePayloads": 148,
+    "storybookSystemPages": [
+      "LDS Core/Components/Overview",
+      "LDS Core/Components/Progress Board"
+    ]
+  },
+  "requiredSections": [
+    "purpose-and-selection",
+    "anatomy",
+    "properties",
+    "states",
+    "behavior",
+    "quantitative-rules",
+    "responsive",
+    "content-writing",
+    "accessibility",
+    "do-dont",
+    "exceptions",
+    "related-components",
+    "examples",
+    "tokens-api",
+    "migration",
+    "machine-readable-reference"
+  ],
+  "visualReview": {
+    "score": 92,
+    "threshold": 90,
+    "verdict": "pass",
+    "categoryMatch": true,
+    "reference": "SEED long-form editorial design-system guidance",
+    "desktop": {
+      "viewportWidth": 1440,
+      "clientWidth": 1440,
+      "scrollWidth": 1440,
+      "majorSections": 7,
+      "focusableTables": 5,
+      "scrollHeight": 6629
+    },
+    "mobile": {
+      "viewportWidth": 390,
+      "clientWidth": 390,
+      "scrollWidth": 390,
+      "majorSections": 7,
+      "scrollHeight": 11621
+    },
+    "reasoning": "The LDS component guide matches the long-form design-system documentation category and adds explicit platform, API, accessibility, token and executable Storybook evidence. Portal isolation keeps legacy play-function heading contracts stable while the 1440px and 390px layouts retain hierarchy and paired Do/Don’t guidance without page-level horizontal overflow."
+  },
+  "sourceOfTruth": [
+    "docs/components/component-content.json",
+    "docs/components/component-content.schema.json",
+    "components/**/*.prompt.md",
+    "components/**/*.d.ts",
+    "components/**/*.jsx",
+    "docs/references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json",
+    "tokens/source.json"
+  ],
+  "verification": [
+    "npm run check:components",
+    "npm run build:storybook",
+    "npm run check:storybook-ia",
+    "npm run check:inventory",
+    "npm run check:docs",
+    "npm run check:types",
+    "A11Y_SHARD=1/4..4/4 npm run check:a11y (528 stories total)"
+  ],
+  "knownDifferences": [
+    "Existing prompt contracts intentionally retain some English API terminology, so prose language is not yet uniform on every guide.",
+    "LDS uses live component, type and token evidence instead of copying SEED branded screenshots or product examples.",
+    "iOS and Android status remains not-tracked because this repository does not own those implementations."
+  ]
+}

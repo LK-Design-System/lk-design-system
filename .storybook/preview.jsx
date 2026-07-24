@@ -1,4 +1,7 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
+import componentGuideIndex from '../docs/components/component-guide-index.json';
+import { ComponentGuideForStory } from '../stories/ComponentGuide.shared.jsx';
 import { StoryGuide } from '../stories/StoryGuide.shared.jsx';
 
 if (typeof document !== 'undefined' && !document.querySelector('link[data-lk-ds-styles]')) {
@@ -20,6 +23,7 @@ const canvasShell = {
 
 const darkBackgroundNames = new Set(['dark', 'navy', 'inverse']);
 const darkBackgroundValues = new Set(['#101828', '#0e1329', '#0a0e1a', '#151a2b']);
+const componentGuideByTitle = new Map(componentGuideIndex.map((guide) => [guide.storybookTitle, guide.slug]));
 
 function normalizeBackground(value) {
   if (value == null) return '';
@@ -50,30 +54,67 @@ function getBackgroundValue(context) {
   return typeof backgrounds === 'object' ? backgrounds?.value : backgrounds;
 }
 
+function ComponentGuidePortal({ slug, theme }) {
+  const [host] = React.useState(() => {
+    const element = document.createElement('div');
+    element.dataset.componentGuidePortal = slug;
+    return element;
+  });
+
+  React.useLayoutEffect(() => {
+    const storybookRoot = document.getElementById('storybook-root');
+    if (storybookRoot?.parentNode) storybookRoot.parentNode.insertBefore(host, storybookRoot);
+    else document.body.appendChild(host);
+    return () => host.remove();
+  }, [host]);
+
+  return createPortal(
+    <div data-theme={theme} className={`theme-${theme}`} style={{ ...canvasShell, minHeight: 0 }}>
+      <ComponentGuideForStory slug={slug} />
+    </div>,
+    host,
+  );
+}
+
 export const decorators = [
   (Story, context) => {
     const theme = isDarkBackground(getBackgroundValue(context)) ? 'dark' : 'light';
     const guide = context.parameters?.storyGuide;
-    const showGuide = guide?.storyId === context.id;
+    const showGuide = guide?.storyId === context.id && guide?.hideCanvasHeader !== true;
+    const componentGuideSlug = context.name === '개요' ? componentGuideByTitle.get(context.title) : null;
+    const portalComponentGuide = componentGuideSlug && context.viewMode !== 'docs';
 
     return (
-      <div data-theme={theme} className={`theme-${theme}`} style={canvasShell}>
-        {showGuide ? (
-          <div data-story-guide-layout style={{ display: 'grid', gap: 'var(--space-6)', minWidth: 0 }}>
-            <StoryGuide
-              eyebrow={guide.eyebrow}
-              title={guide.title}
-              description={guide.description}
-              maxWidth={guide.maxWidth}
-            />
-            <div style={{ minWidth: 0 }}>
-              <Story />
+      <>
+        {portalComponentGuide ? <ComponentGuidePortal slug={componentGuideSlug} theme={theme} /> : null}
+        <div data-theme={theme} className={`theme-${theme}`} style={canvasShell}>
+          {componentGuideSlug && context.viewMode === 'docs' ? (
+            <div data-component-guide-layout style={{ display: 'grid', gap: 'var(--space-8)', minWidth: 0 }}>
+              <ComponentGuideForStory slug={componentGuideSlug} />
+              <section aria-label={`${context.title.split('/').at(-1)} live example`} style={{ display: 'grid', gap: 'var(--space-4)', minWidth: 0 }}>
+                <p className="lk-overline lk-overline--signal" style={{ margin: 0 }}>Live example</p>
+                <div style={{ minWidth: 0 }}>
+                  <Story />
+                </div>
+              </section>
             </div>
-          </div>
-        ) : (
-          <Story />
-        )}
-      </div>
+          ) : showGuide ? (
+            <div data-story-guide-layout style={{ display: 'grid', gap: 'var(--space-6)', minWidth: 0 }}>
+              <StoryGuide
+                eyebrow={guide.eyebrow}
+                title={guide.title}
+                description={guide.description}
+                maxWidth={guide.maxWidth}
+              />
+              <div style={{ minWidth: 0 }}>
+                <Story />
+              </div>
+            </div>
+          ) : (
+            <Story />
+          )}
+        </div>
+      </>
     );
   },
 ];
@@ -117,7 +158,7 @@ export const parameters = {
           'Writing',
           'Aspect Ratio',
         ],
-        'LDS Core/Components': ['Layout', 'Action', 'Selection and Input', 'Content', 'Navigation', 'Status', 'Overlay'],
+        'LDS Core/Components': ['Overview', 'Progress Board', 'Layout', 'Action', 'Selection and Input', 'Content', 'Navigation', 'Status', 'Overlay'],
         'LDS Theme': ['Brand', 'Controls', 'Status'],
         'LDS Product': ['Action', 'Content', 'Data', 'Status', 'Feedback', 'Layout', 'Navigation', 'Overlay', 'Selection and Input'],
         'LDS Product/Data': ['Display', 'Visualization', 'Collections', 'Operations'],
