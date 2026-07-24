@@ -74,4 +74,91 @@ export const NewsCards = {
   },
 };
 
+/* 정보 전달용 예시에 실제 이미지가 필요해 인라인 SVG data URI를 씁니다
+   (외부 자산 의존 없이 커버 처리를 보여주기 위함). */
+const coverSrc = `data:image/svg+xml;utf8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+    <rect width="320" height="180" fill="#1f6feb"/>
+    <circle cx="232" cy="52" r="34" fill="#4c8dff"/>
+    <rect x="24" y="118" width="180" height="14" rx="7" fill="#ffffff" opacity="0.9"/>
+    <rect x="24" y="142" width="120" height="12" rx="6" fill="#ffffff" opacity="0.6"/>
+  </svg>
+`)}`;
+
+export const CoverImage = {
+  name: '사용법 · 커버 이미지',
+  parameters: storyDescription(
+    '커버 사진이 있는 소식을 목록에 배치하는 상황입니다. 사진이 장식일 때(헤드라인이 내용을 대신함)와 사진 자체가 정보를 담을 때(imageAlt로 접근 이름에 합성)를 구분하고, 목록에서 이미지가 지연 로드되는지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--space-4)', maxWidth: 820 }}>
+      <NewsCard
+        image={coverSrc}
+        category="현장"
+        title="대덕 물류센터 자동화 라인 가동"
+        excerpt="여덟 대의 AMR이 피킹부터 적재까지 담당하는 무인 라인을 공개했습니다."
+        source="보도자료"
+        date="2026.07.14"
+        dateTime="2026-07-14"
+        cta="자세히"
+        href="/news/line"
+      />
+      <NewsCard
+        image={coverSrc}
+        imageAlt="검사 로봇이 컨베이어 라인을 점검하는 모습"
+        category="R&D"
+        title="비전 검사 정확도 리포트"
+        excerpt="현장 데이터로 재학습한 결함 탐지 모델의 검증 결과를 정리했습니다."
+        source="기술 블로그"
+        date="2026.07.02"
+        dateTime="2026-07-02"
+        href="/news/vision"
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const cards = Array.from(canvasElement.querySelectorAll('a'));
+    if (cards.length !== 2) throw new Error('각 NewsCard는 하나의 링크로 렌더되어야 합니다.');
+
+    const [decorative, informative] = cards;
+    const decorativeImg = decorative.querySelector('img');
+    const informativeImg = informative.querySelector('img');
+    if (!decorativeImg || !informativeImg) {
+      throw new Error('image를 주면 커버 이미지가 렌더되어야 합니다.');
+    }
+
+    for (const img of [decorativeImg, informativeImg]) {
+      if (img.getAttribute('loading') !== 'lazy' || img.getAttribute('decoding') !== 'async') {
+        throw new Error('커버 이미지는 목록 비용을 낮추도록 loading="lazy"·decoding="async"로 렌더되어야 합니다.');
+      }
+    }
+
+    // 장식 커버: alt는 비어 있고, 링크 이름은 헤드라인뿐이다.
+    if (decorativeImg.getAttribute('alt') !== '') {
+      throw new Error('imageAlt를 주지 않은 커버는 장식(alt="")이어야 합니다.');
+    }
+    const decorativeHeading = decorative.querySelector('h3');
+    if (decorative.getAttribute('aria-label') !== decorativeHeading.textContent.trim()) {
+      throw new Error('장식 커버 카드의 접근 이름은 헤드라인이어야 합니다.');
+    }
+
+    // 정보성 커버: imageAlt가 링크 접근 이름에 합성되어 낭독된다.
+    const informativeHeading = informative.querySelector('h3');
+    const expected = `${informativeHeading.textContent.trim()}. 검사 로봇이 컨베이어 라인을 점검하는 모습`;
+    if (informative.getAttribute('aria-label') !== expected) {
+      throw new Error('정보성 imageAlt는 링크 접근 이름에 "헤드라인. imageAlt"로 합성되어야 합니다.');
+    }
+    if (informativeImg.getAttribute('alt') !== '검사 로봇이 컨베이어 라인을 점검하는 모습') {
+      throw new Error('정보성 커버의 img는 imageAlt를 그대로 갖습니다.');
+    }
+
+    // 카드 = 링크: 중첩 인터랙티브 금지.
+    for (const card of cards) {
+      if (card.querySelector('a, button, input, select, textarea, [tabindex]')) {
+        throw new Error('카드 전체가 링크이므로 안에 또 다른 포커스 가능한 요소를 두면 안 됩니다.');
+      }
+    }
+  },
+};
+
 export const NewsCardCard = { ...NewsCardCardStory, name: 'NewsCard card parity', tags: ['!dev', 'visual-parity'] };

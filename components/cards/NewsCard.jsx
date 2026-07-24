@@ -31,7 +31,13 @@ export function NewsCard({ image, imageAlt = '', category, title, excerpt, sourc
   const [focusVisible, setFocusVisible] = React.useState(false);
   const hover = pointerHover || focusVisible;
   const HeadingTag = headingLevel === false || headingLevel == null ? 'div' : `h${headingLevel}`;
-  const resolvedLabel = ariaLabel ?? (typeof title === 'string' ? title : undefined);
+  // The link's aria-label wins over descendant content, so a non-empty imageAlt
+  // (an informative cover) would otherwise never be announced. Fold it into the
+  // name after the headline; a decorative cover (imageAlt="") leaves the name as
+  // the headline alone.
+  const titleName = typeof title === 'string' ? title : null;
+  const altName = typeof imageAlt === 'string' && imageAlt.trim() ? imageAlt.trim() : null;
+  const resolvedLabel = ariaLabel ?? (titleName ? (altName ? `${titleName}. ${altName}` : titleName) : undefined);
   const ArrowR = (
     <Icon name="arrow-right" size={15} aria-hidden="true" />
   );
@@ -53,9 +59,13 @@ export function NewsCard({ image, imageAlt = '', category, title, excerpt, sourc
       }}
       {...rest}
     >
+      {/* The wrapper reserves the 16:9 box before the image loads (no layout
+          shift) and its background shows through if the image fails, so a broken
+          cover degrades to a neutral panel instead of a broken-image glyph.
+          loading/decoding keep long card lists cheap. */}
       {image && (
         <div style={{ aspectRatio: '16 / 9', overflow: 'hidden', background: 'var(--color-semantic-background-normal-alternative)' }}>
-          <img src={image} alt={imageAlt} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: hover ? 'scale(1.03)' : 'scale(1)', transition: 'transform 520ms var(--ease-out)' }} />
+          <img src={image} alt={imageAlt} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', transform: hover ? 'scale(1.03)' : 'scale(1)', transition: 'transform 520ms var(--ease-out)' }} />
         </div>
       )}
       <div style={{ padding: '18px 20px 20px', display: 'flex', flexDirection: 'column', gap: 9, flex: 1 }}>
