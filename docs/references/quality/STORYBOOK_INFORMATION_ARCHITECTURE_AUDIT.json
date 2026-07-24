@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "df5c2c7a0012badea71175dba9ed1f36d3ea2f5554fbc453d6038c29a9b314f7",
+    "storybookIndexSha256": "9b8416e9bca82f4925e1ae2c7ede97494adf24a98f30577bb4dd5c16d4d6ec46",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -58,42 +58,42 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 149,
-    "stories": 481,
-    "publicStories": 336,
-    "hiddenStories": 145,
-    "componentDescriptions": 145,
-    "pagesWithVisibleCanvasIntroduction": 149,
-    "pagesWithDecisionGuidance": 145,
-    "describedPublicStories": 336,
-    "reviewedPages": 149,
-    "reviewedStories": 481,
+    "pages": 150,
+    "stories": 484,
+    "publicStories": 338,
+    "hiddenStories": 146,
+    "componentDescriptions": 146,
+    "pagesWithVisibleCanvasIntroduction": 150,
+    "pagesWithDecisionGuidance": 146,
+    "describedPublicStories": 338,
+    "reviewedPages": 150,
+    "reviewedStories": 484,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
-      "overview": 142,
+      "overview": 143,
       "usage": 24,
       "variants-states": 63,
       "interaction": 44,
-      "responsive": 37,
+      "responsive": 38,
       "scenario": 16,
-      "visual-parity": 73,
+      "visual-parity": 74,
       "internal-contract": 72
     },
     "dispositions": {
-      "keep": 149,
+      "keep": 150,
       "merge": 0,
       "split": 0,
       "hide": 0
     },
     "layers": {
       "Core": {
-        "pages": 52,
-        "stories": 169,
-        "public": 94,
-        "hidden": 75,
-        "guideReadyPages": 52
+        "pages": 53,
+        "stories": 172,
+        "public": 96,
+        "hidden": 76,
+        "guideReadyPages": 53
       },
       "Foundation": {
         "pages": 7,
@@ -1415,6 +1415,108 @@
         }
       ],
       "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+    },
+    {
+      "title": "LDS Core/Components/Content/Prose",
+      "layer": "Core",
+      "family": "Content",
+      "importPath": "./stories/ContentProse.stories.jsx",
+      "sourceSha256": "f6541d14ec2672e38aa5e2888efc17caf9de2bae5f3a17348268e82d93804ddf",
+      "primaryOwner": "Prose",
+      "ownerComponents": [
+        "Prose"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-components-content-prose--prose-example",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 2,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "medium",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "f6541d14ec2672e38aa5e2888efc17caf9de2bae5f3a17348268e82d93804ddf",
+      "stories": [
+        {
+          "id": "lds-core-components-content-prose--prose-example",
+          "name": "개요",
+          "exportName": "ProseExample",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Prose"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 owner review: 신규 Prose 컴포넌트(마크다운 렌더 결과의 문서 타이포그래피 표면) 페이지 추가 — 개요·반응형·parity 스토리와 조판/접근성 계약을 소유자가 확인."
+        },
+        {
+          "id": "lds-core-components-content-prose--narrow-reflow",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowReflow",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Prose"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 owner review: 신규 Prose 컴포넌트(마크다운 렌더 결과의 문서 타이포그래피 표면) 페이지 추가 — 개요·반응형·parity 스토리와 조판/접근성 계약을 소유자가 확인."
+        },
+        {
+          "id": "lds-core-components-content-prose--prose-card",
+          "name": "Prose card parity",
+          "exportName": "ProseCard",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Prose"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 owner review: 신규 Prose 컴포넌트(마크다운 렌더 결과의 문서 타이포그래피 표면) 페이지 추가 — 개요·반응형·parity 스토리와 조판/접근성 계약을 소유자가 확인."
+        }
+      ],
+      "reviewNote": "2026-07-24 owner review: 신규 Prose 컴포넌트 페이지(마크다운 렌더 결과의 문서 타이포그래피) — 개요·반응형·parity와 조판/접근성 계약 확인."
     },
     {
       "title": "LDS Core/Components/Content/Step List",
@@ -8170,7 +8272,7 @@
       "layer": "Product",
       "family": "Content",
       "importPath": "./stories/CardsExtended.stories.jsx",
-      "sourceSha256": "53b1302142e3e997d50bfca86d7e6f40cf72935b0922136246c29041a20b47f7",
+      "sourceSha256": "d3e528e440bb851cd9312a82946cf45b48aff43676516e922e41d4bb883ee009",
       "primaryOwner": "ProductCard",
       "ownerComponents": [
         "ProductCard"
@@ -8194,7 +8296,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "53b1302142e3e997d50bfca86d7e6f40cf72935b0922136246c29041a20b47f7",
+      "reviewedSourceSha256": "d3e528e440bb851cd9312a82946cf45b48aff43676516e922e41d4bb883ee009",
       "stories": [
         {
           "id": "lds-product-content-product-card--product-cards",
@@ -8242,7 +8344,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+      "reviewNote": "2026-07-24 owner review: 신규 Prose 컴포넌트(마크다운 렌더 결과의 문서 타이포그래피 표면) 페이지 추가 — 개요·반응형·parity 스토리와 조판/접근성 계약을 소유자가 확인."
     },
     {
       "title": "LDS Product/Content/Reorder List",

@@ -315,7 +315,7 @@ export const SourceInventory = {
         <Metric label="원본 지침" value={guidelineItems.length} caption="guidelines/*.html" />
         <Metric label="원본 요소 카드" value={componentItems.length} caption="components/**/*.card.html" />
         <Metric label="템플릿 카드" value={templateItems.length} caption="templates-cards/*.html" />
-        <Metric label="현재 컴포넌트" value="173" caption="React component entries" />
+        <Metric label="현재 컴포넌트" value="174" caption="React component entries" />
       </section>
 
       <Section
