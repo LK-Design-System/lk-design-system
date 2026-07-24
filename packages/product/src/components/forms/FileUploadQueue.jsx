@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@lk-robotics/lds-core/components/buttons/Button';
+import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
 import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
 import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
@@ -23,11 +24,28 @@ function queueSummary(items) {
   return groups.filter((group) => group.count > 0);
 }
 
-/** Per-file upload and conversion queue. File selection remains in FileUpload. */
+/**
+ * Per-file display of upload/conversion items. Selection always stays in
+ * FileUpload — this component never opens a picker.
+ *
+ * The name comes from the processing queue, but `layout` covers two surfaces
+ * that differ in WHERE they sit, not just how they look:
+ *   - `list` — a bordered status panel for documents, watched on its own.
+ *   - `grid` — a chromeless media strip that is part of a form field.
+ * The status vocabulary, progress, retry/cancel/remove semantics and accessible
+ * names are identical in both.
+ *
+ * `trigger` (grid only) is a PLACEMENT slot, not selection logic: the picker
+ * control the product passes must still be wired to FileUpload. It exists
+ * because the trigger and the thumbnails have to wrap as one row, which is
+ * impossible if the trigger lives outside this component.
+ */
 export function FileUploadQueue({
   items = [],
   title = '파일 처리',
   emptyLabel = '처리할 파일이 없습니다.',
+  layout = 'list',
+  trigger,
   onRetry,
   onCancel,
   onRemove,
@@ -36,6 +54,7 @@ export function FileUploadQueue({
   style,
   ...rest
 }) {
+  const isGrid = layout === 'grid';
   const summary = queueSummary(items);
   const summaryLabel = summary.length > 0
     ? summary.map((group) => `${group.label} ${group.count}개`).join(', ')
@@ -49,24 +68,30 @@ export function FileUploadQueue({
         width: '100%',
         minWidth: 0,
         boxSizing: 'border-box',
-        overflow: 'hidden',
         containerType: 'inline-size',
-        border: '1px solid var(--color-semantic-line-normal-normal)',
-        borderRadius: 'var(--radius-lg)',
-        background: 'var(--color-semantic-background-elevated-normal)',
         color: 'var(--color-semantic-label-normal)',
         fontFamily: 'var(--font-sans)',
+        // The media strip is an input that sits inline in a form, so it carries
+        // no panel chrome. The document queue stays a bordered status panel, and
+        // it keeps `overflow: hidden` — which the strip must not have, or the
+        // corner controls that straddle each tile would be clipped.
+        ...(isGrid ? null : {
+          overflow: 'hidden',
+          border: '1px solid var(--color-semantic-line-normal-normal)',
+          borderRadius: 'var(--radius-lg)',
+          background: 'var(--color-semantic-background-elevated-normal)',
+        }),
         ...style,
       }}
       {...rest}
     >
       <style>
         {`@container (max-width: 520px) {
-          .lk-file-upload-queue__item {
+          .lk-file-upload-queue__item--list {
             grid-template-columns: 36px minmax(0, 1fr) !important;
             padding: var(--space-3) !important;
           }
-          .lk-file-upload-queue__actions {
+          .lk-file-upload-queue__item--list .lk-file-upload-queue__actions {
             grid-column: 2;
             justify-self: end !important;
             justify-content: flex-end !important;
@@ -75,6 +100,18 @@ export function FileUploadQueue({
         }`}
       </style>
 
+      {isGrid ? (
+        // Frameless strip: the section keeps its accessible name and the single
+        // polite live region, but shows no visible title bar.
+        <VisuallyHidden
+          className="lk-file-upload-queue__live-summary"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {summaryLabel}
+        </VisuallyHidden>
+      ) : (
       <header style={{ padding: 'var(--space-4)', borderBottom: '1px solid var(--color-semantic-line-normal-normal)' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '36px minmax(0, 1fr)', gap: 'var(--space-3)', alignItems: 'center' }}>
           <Icon name="document" size={22} color="var(--color-semantic-label-neutral)" aria-hidden="true" />
@@ -96,13 +133,23 @@ export function FileUploadQueue({
           </div>
         </div>
       </header>
+      )}
 
-      {items.length === 0 ? (
+      {items.length === 0 && !(isGrid && trigger != null) ? (
         <div role="status" style={{ padding: 'var(--space-6) var(--space-4)', color: 'var(--color-semantic-label-neutral)', textAlign: 'center', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}>
           {emptyLabel}
         </div>
       ) : (
-        <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+        <ul
+          style={isGrid
+            ? { margin: 0, padding: 'var(--space-2)', listStyle: 'none', display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }
+            : { margin: 0, padding: 0, listStyle: 'none' }}
+        >
+          {/* The picker leads the strip. It is a control, not an attachment, so
+              it is presentational here and the real selection stays in FileUpload. */}
+          {isGrid && trigger != null && (
+            <li role="presentation" style={{ width: 88, flexShrink: 0 }}>{trigger}</li>
+          )}
           {items.map((item, index) => {
             const meta = STATUS_META[item.status] || STATUS_META.queued;
             const busy = item.status === 'uploading' || item.status === 'processing';
@@ -115,10 +162,86 @@ export function FileUploadQueue({
               || (busy && onCancel)
               || canRemove;
 
+            // Both layouts offer the same actions with the same accessible
+            // names; only their placement differs.
+            const actionsNode = hasActions ? (
+              <div className="lk-file-upload-queue__actions" style={{ alignSelf: 'center', display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-end', justifySelf: 'end', gap: 'var(--space-1)', flexWrap: 'wrap' }}>
+                {item.status === 'failed' && onRetry && <Button variant="ghost" size="sm" aria-label={`${item.name} 다시 시도`} onClick={() => onRetry(item)}>다시 시도</Button>}
+                {item.status === 'succeeded' && onOpen && <Button variant="ghost" size="sm" aria-label={`${item.name} 열기`} onClick={() => onOpen(item)}>열기</Button>}
+                {busy && onCancel && <Button variant="ghost" size="sm" aria-label={`${item.name} 처리 취소`} onClick={() => onCancel(item)}>취소</Button>}
+                {canRemove && <Button variant="flat" size="sm" aria-label={`${item.name} ${item.status === 'succeeded' ? '목록에서 제거' : '제거'}`} onClick={() => onRemove(item)}>제거</Button>}
+              </div>
+            ) : null;
+
+            if (isGrid) {
+              // A media tile is identified by its picture, so the filename and
+              // status stay out of the visual strip and are carried for screen
+              // readers instead. Controls sit ON the tile: the corner control
+              // cancels while busy and removes otherwise, and a failed tile
+              // offers retry over an error scrim.
+              const cornerAction = busy && onCancel
+                ? { label: `${item.name} 처리 취소`, onClick: () => onCancel(item) }
+                : canRemove
+                  ? { label: `${item.name} ${item.status === 'succeeded' ? '목록에서 제거' : '제거'}`, onClick: () => onRemove(item) }
+                  : null;
+
+              return (
+                <li
+                  key={item.id}
+                  className="lk-file-upload-queue__item lk-file-upload-queue__item--grid"
+                  style={{ position: 'relative', width: 88, minWidth: 0 }}
+                >
+                  <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', borderRadius: 'var(--radius-md)', overflow: 'hidden', background: 'var(--color-semantic-fill-normal)', display: 'grid', placeItems: 'center', color: 'var(--color-semantic-label-neutral)' }}>
+                    {item.thumbnailSrc
+                      ? <img src={item.thumbnailSrc} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      : <Icon name="document" size={24} aria-hidden="true" />}
+                    {busy && (
+                      <div style={{ position: 'absolute', inset: 0, display: 'grid', alignContent: 'center', gap: 'var(--space-1)', padding: 'var(--space-3)', background: 'var(--scrim-dark)' }}>
+                        <ProgressBar
+                          aria-label={`${item.name} ${meta.label}`}
+                          value={item.progress}
+                          indeterminate={item.progress == null}
+                          size="sm"
+                          tone="signal"
+                          style={{ width: '100%' }}
+                        />
+                      </div>
+                    )}
+                    {item.status === 'failed' && (
+                      <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', background: 'var(--scrim-dark)' }}>
+                        {onRetry && (
+                          <IconButton variant="on-dark" round size="sm" label={`${item.name} 다시 시도`} onClick={() => onRetry(item)}>
+                            <Icon name="refresh" size={16} aria-hidden="true" />
+                          </IconButton>
+                        )}
+                      </div>
+                    )}
+                    {item.primary && (
+                      <span style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 'var(--space-1)', background: 'var(--scrim-dark)', color: 'var(--color-semantic-static-white)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)', textAlign: 'center' }}>
+                        {item.primaryLabel ?? '대표'}
+                      </span>
+                    )}
+                  </div>
+                  {/* The remove/cancel control straddles the corner so it never
+                      covers the picture it belongs to. */}
+                  {cornerAction && (
+                    <span style={{ position: 'absolute', top: 'calc(-1 * var(--space-2))', right: 'calc(-1 * var(--space-2))' }}>
+                      <IconButton variant="ghost" round size="sm" label={cornerAction.label} onClick={cornerAction.onClick} style={{ boxShadow: 'var(--shadow-md)' }}>
+                        <Icon name="close" size={14} aria-hidden="true" />
+                      </IconButton>
+                    </span>
+                  )}
+                  <VisuallyHidden>
+                    {`${item.name}, ${item.label ?? meta.label}${item.message != null ? `, ${item.message}` : ''}`}
+                  </VisuallyHidden>
+                </li>
+              );
+            }
+
             return (
               <li
                 key={item.id}
-                className="lk-file-upload-queue__item"
+                className="lk-file-upload-queue__item lk-file-upload-queue__item--list"
                 style={{
                   display: 'grid',
                   gridTemplateColumns: '36px minmax(0, 1fr) auto',
@@ -164,14 +287,7 @@ export function FileUploadQueue({
                     </div>
                   )}
                 </div>
-                {hasActions && (
-                  <div className="lk-file-upload-queue__actions" style={{ alignSelf: 'center', display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-end', justifySelf: 'end', gap: 'var(--space-1)', flexWrap: 'wrap' }}>
-                    {item.status === 'failed' && onRetry && <Button variant="ghost" size="sm" aria-label={`${item.name} 다시 시도`} onClick={() => onRetry(item)}>다시 시도</Button>}
-                    {item.status === 'succeeded' && onOpen && <Button variant="ghost" size="sm" aria-label={`${item.name} 열기`} onClick={() => onOpen(item)}>열기</Button>}
-                    {busy && onCancel && <Button variant="ghost" size="sm" aria-label={`${item.name} 처리 취소`} onClick={() => onCancel(item)}>취소</Button>}
-                    {canRemove && <Button variant="flat" size="sm" aria-label={`${item.name} ${item.status === 'succeeded' ? '목록에서 제거' : '제거'}`} onClick={() => onRemove(item)}>제거</Button>}
-                  </div>
-                )}
+                {actionsNode}
               </li>
             );
           })}

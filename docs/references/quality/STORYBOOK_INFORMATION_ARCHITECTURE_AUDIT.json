@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "98dcd095ee9626da8fe2727ebb3f8766ccd25a68cc156a7b95c10d6b78ed1ad1",
+    "storybookIndexSha256": "02ec0ed2da9b8b9793b0f6fd554893e42ac2d6fb3b83a0aa4c1a05966d083edd",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -59,22 +59,22 @@
   },
   "summary": {
     "pages": 155,
-    "stories": 508,
-    "publicStories": 357,
+    "stories": 509,
+    "publicStories": 358,
     "hiddenStories": 151,
     "componentDescriptions": 151,
     "pagesWithVisibleCanvasIntroduction": 155,
     "pagesWithDecisionGuidance": 151,
-    "describedPublicStories": 357,
+    "describedPublicStories": 358,
     "reviewedPages": 155,
-    "reviewedStories": 508,
+    "reviewedStories": 509,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
       "overview": 148,
       "usage": 25,
-      "variants-states": 70,
+      "variants-states": 71,
       "interaction": 44,
       "responsive": 44,
       "scenario": 16,
@@ -104,8 +104,8 @@
       },
       "Product": {
         "pages": 92,
-        "stories": 319,
-        "public": 247,
+        "stories": 320,
+        "public": 248,
         "hidden": 72,
         "guideReadyPages": 92
       },
@@ -12131,7 +12131,7 @@
       "layer": "Product",
       "family": "Layout",
       "importPath": "./stories/LayoutPageHeader.stories.jsx",
-      "sourceSha256": "4c8db3495fc054fcc7aa6b735f38f0af5b24ef0643746553bbea7469da823ebe",
+      "sourceSha256": "7960bdd1d61439ab19c4ddf1fe1a7ebb3cb7a34fc9834f387cc3fab1b95d9ce9",
       "primaryOwner": "PageHeader",
       "ownerComponents": [
         "PageHeader"
@@ -12164,7 +12164,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "4c8db3495fc054fcc7aa6b735f38f0af5b24ef0643746553bbea7469da823ebe",
+      "reviewedSourceSha256": "7960bdd1d61439ab19c4ddf1fe1a7ebb3cb7a34fc9834f387cc3fab1b95d9ce9",
       "stories": [
         {
           "id": "lds-product-layout-page-header--page-header-pattern",
@@ -12196,7 +12196,7 @@
         },
         {
           "id": "lds-product-layout-page-header--profile-masthead",
-          "name": "변형·상태 · 프로필 마스트헤드",
+          "name": "변형·상태 · 레코드 헤더(프로필)",
           "exportName": "ProfileMasthead",
           "visibility": "public",
           "tags": [
@@ -15128,22 +15128,23 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormFileUploadQueue.stories.jsx",
-      "sourceSha256": "d4b0a9c635d6f304df5a947304ae00a019141b3b6fcd9aeac59af5675277e299",
+      "sourceSha256": "52aacd82218f06cf7a10c37286dbdd9277ec70a98e6f78c125974816f7de980d",
       "primaryOwner": "FileUploadQueue",
       "ownerComponents": [
         "FileUploadQueue"
       ],
       "supportingComponents": [
-        "FileUpload"
+        "FileUpload",
+        "Icon"
       ],
       "visibility": {
-        "public": 3,
+        "public": 4,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-selection-and-input-file-upload-queue--upload-and-conversion",
-        "describedPublicStories": 3,
+        "describedPublicStories": 4,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -15154,7 +15155,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "d4b0a9c635d6f304df5a947304ae00a019141b3b6fcd9aeac59af5675277e299",
+      "reviewedSourceSha256": "52aacd82218f06cf7a10c37286dbdd9277ec70a98e6f78c125974816f7de980d",
       "stories": [
         {
           "id": "lds-product-selection-and-input-file-upload-queue--upload-and-conversion",
@@ -15202,6 +15203,30 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-selection-and-input-file-upload-queue--media-attachments",
+          "name": "변형·상태 · 미디어 첨부(썸네일)",
+          "exportName": "MediaAttachments",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "FileUploadQueue"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ]
         },
         {
           "id": "lds-product-selection-and-input-file-upload-queue--narrow-queue",

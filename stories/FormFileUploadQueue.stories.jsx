@@ -1,6 +1,6 @@
 import React from 'react';
 import { userEvent } from 'storybook/test';
-import { FileUpload, FileUploadQueue } from '../src/index.js';
+import { FileUpload, FileUploadQueue, Icon } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -237,6 +237,88 @@ export const NarrowQueue = {
     const actionGroups = Array.from(queue.querySelectorAll('.lk-file-upload-queue__actions'));
     if (actionGroups.length !== narrowItems.length || actionGroups.some((group) => getComputedStyle(group).gridColumnStart !== '2')) {
       throw new Error('Narrow queue actions must wrap below row content in the second grid column.');
+    }
+  },
+};
+
+const photo = (hue) => `data:image/svg+xml;utf8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+    <rect width="120" height="120" fill="${hue}"/>
+    <circle cx="86" cy="34" r="22" fill="#ffffff" opacity="0.55"/>
+    <path d="M0 96 L40 60 L74 94 L96 76 L120 100 L120 120 L0 120 Z" fill="#ffffff" opacity="0.35"/>
+  </svg>
+`)}`;
+
+export const MediaAttachments = {
+  name: '변형·상태 · 미디어 첨부(썸네일)',
+  parameters: storyDescription(
+    '사진·영상을 첨부해 대표 이미지를 고르는 상황입니다. 미디어는 파일명보다 그림으로 식별되므로 행 목록 대신 썸네일 타일로 깔고, 진행률이 이미지 위 오버레이에 얹히는지, 상태 어휘와 액션 접근 이름은 목록형과 동일한지 확인하세요.',
+  ),
+  render: () => (
+    <FileUploadQueue
+      layout="grid"
+      title="사진 첨부"
+      trigger={(
+        <button
+          type="button"
+          aria-label="사진 추가, 10장 중 3장 선택됨"
+          style={{
+            width: '100%', aspectRatio: '1 / 1', display: 'grid', placeItems: 'center', gap: 'var(--space-1)',
+            border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)',
+            background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-label-neutral)',
+            font: 'inherit', cursor: 'pointer',
+          }}
+        >
+          <Icon name="camera" size={22} aria-hidden="true" />
+          <span aria-hidden="true" style={{ fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)' }}>3/10</span>
+        </button>
+      )}
+      items={[
+        { id: 'a', name: '현장_01.jpg', status: 'succeeded', thumbnailSrc: photo('#2b8a3e'), primary: true, sizeLabel: '1.2MB' },
+        { id: 'b', name: '현장_02.jpg', status: 'uploading', progress: 62, thumbnailSrc: photo('#1f6feb') },
+        { id: 'c', name: '현장_03.jpg', status: 'failed', thumbnailSrc: photo('#d9480f'), message: '업로드에 실패했습니다.' },
+        { id: 'd', name: '점검표.pdf', status: 'queued' },
+      ]}
+      onRetry={() => {}}
+      onCancel={() => {}}
+      onRemove={() => {}}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const tiles = canvasElement.querySelectorAll('.lk-file-upload-queue__item--grid');
+    if (tiles.length !== 4) throw new Error('grid 레이아웃은 항목마다 썸네일 타일을 렌더해야 합니다.');
+    // 스트립은 카드 크롬 없이 인라인으로 놓이고, 트리거가 맨 앞에 온다.
+    const strip = canvasElement.querySelector('.lk-file-upload-queue');
+    if (getComputedStyle(strip).borderTopWidth !== '0px' || strip.querySelector('header')) {
+      throw new Error('미디어 스트립은 패널 테두리와 보이는 헤더 없이 렌더되어야 합니다.');
+    }
+    if (!strip.querySelector('.lk-file-upload-queue__live-summary')) {
+      throw new Error('크롬을 없애도 polite 라이브 리전은 유지되어야 합니다.');
+    }
+    const triggerCell = strip.querySelector('li[role="presentation"]');
+    if (!triggerCell || !triggerCell.querySelector('button')) {
+      throw new Error('trigger는 스트립 맨 앞 셀에 렌더되어야 합니다.');
+    }
+    if (triggerCell !== strip.querySelector('ul').firstElementChild) {
+      throw new Error('trigger 셀이 첨부 타일보다 앞에 와야 합니다.');
+    }
+    // 이름이 항목을 설명하므로 썸네일 이미지는 장식이어야 한다.
+    const images = canvasElement.querySelectorAll('.lk-file-upload-queue__item--grid img');
+    if (images.length !== 3) throw new Error('thumbnailSrc가 있는 항목만 이미지를 렌더해야 합니다.');
+    for (const img of images) {
+      if (img.getAttribute('alt') !== '') throw new Error('썸네일 이미지는 장식(alt="")이어야 합니다.');
+      if (img.getAttribute('loading') !== 'lazy') throw new Error('썸네일은 지연 로드되어야 합니다.');
+    }
+    // 진행 중 타일의 진행률은 파일명이 붙은 접근 이름을 가진다.
+    const progress = canvasElement.querySelector('[role="progressbar"]');
+    if (!progress || !/현장_02\.jpg/.test(progress.getAttribute('aria-label') || '')) {
+      throw new Error('진행률에는 파일명이 포함된 접근 이름이 있어야 합니다.');
+    }
+    // 대표 배지와 액션 접근 이름은 목록형과 동일한 계약을 따른다.
+    if (!/대표/.test(canvasElement.textContent)) throw new Error('primary 항목에는 대표 배지가 붙어야 합니다.');
+    const labels = [...canvasElement.querySelectorAll('button')].map((b) => b.getAttribute('aria-label') || '');
+    if (!labels.some((l) => /현장_03\.jpg 다시 시도/.test(l))) {
+      throw new Error('실패 항목의 다시 시도 액션은 파일명을 접근 이름에 포함해야 합니다.');
     }
   },
 };
