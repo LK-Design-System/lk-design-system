@@ -23,9 +23,9 @@ dirty count, push 여부는 해당 시점의 historical snapshot이며 현재 �
   `@lk-robotics/lds-robotics-ui@0.1.0-rc.2`가 소유한다. 이 저장소는 Storybook integration
   consumer와 conformance contract만 유지하며 Robotics source의 원본이 아니다.
 - 현재 LDS 구현 표면은 174 source entry / 177 named export다. Storybook 감사 기준선은
-  150 pages / 484 stories(338 public, 146 hidden)이며 모든 page/story review가 최신이다.
+  150 pages / 487 stories(341 public, 146 hidden)이며 모든 page/story review가 최신이다.
 - WDS 분류·parity와 component contract는 현재 source와 일치한다. 중첩 interactive parity는
-  0 drift이며, 접근성 기준선은 484 Axe story / 264 play function / violation 0이다.
+  0 drift이며, 접근성 기준선은 487 Axe story / current play contract / violation 0이다.
 - 제품 workflow 원장은 16/16 `verified`다. WF-15 공간 의미는 외부 Robotics의
   `HazardMarker`/`SpatialRegion`과 product-owned authoring 경계를 구분했고, WF-16의
   계층형 narrow navigation은 제품 소유 focus-managed Drawer composition으로 닫았다.

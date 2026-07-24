@@ -50,7 +50,7 @@ finding은 닫혔다. 다만 여섯 pinned product는 LDS를 아직 소비하지
 | 거버넌스·문서 체계 | 완료 | [`README.md`](README.md), [`OPERATING_MODEL.md`](OPERATING_MODEL.md), `check:docs` | 정책 변경 시 metadata와 index 동시 갱신 |
 | WDS·foundation parity | 완료(수락 snapshot 기준) | `references/wds/COVERAGE_COMPLETION_GATE.json`, `check:wds-alignment`, `check:wds-local-fig` | upstream WDS 변경 시 `.fig` 재수락·재감사 |
 | 컴포넌트·API·상태 계약 | 완료 | 174 source entry / 177 named export, [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | 신규 변경마다 drift/state evidence 유지 |
-| Storybook·접근성·시각 회귀 | 완료 | 150 pages / 484 stories / 338 public / 146 hidden / 74 visual-parity, 484 Axe / 264 play / violation 0 | story·baseline 변경 시 Windows canonical gate 재실행 |
+| Storybook·접근성·시각 회귀 | 완료 | 150 pages / 487 stories / 341 public / 146 hidden / 74 visual-parity, 487 Axe / violation 0 | story·baseline 변경 시 Windows canonical gate 재실행 |
 | 패키지·소비자 계약 | 완료(RC) | Core/Theme/Product/compat workspace artifact, external Robotics RC, Windows/Linux package consumer matrix | stable publish·지원 정책 변경 시 재판정 |
 | 사람 중심 디자인 품질 | 완료 | high 14·medium 20·low 7 해결, medium 3·low 3 근거 수락, tracked 0 | 새 finding 발생 시 remediation 원장 갱신 |
 | 제품 workflow coverage | 완료(계약 범위) | 16/16 `verified`; WF-15·WF-16 boundary/evidence 종결 | 실제 제품 adoption은 제품 owner별 별도 검증 |
