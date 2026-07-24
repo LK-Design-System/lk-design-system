@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "bfd9549fc8d6c405cf5e6b72d602c85ca94fcb67759ac7bb3e52908211eae16f",
+    "storybookIndexSha256": "df5c2c7a0012badea71175dba9ed1f36d3ea2f5554fbc453d6038c29a9b314f7",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -59,21 +59,21 @@
   },
   "summary": {
     "pages": 149,
-    "stories": 480,
-    "publicStories": 335,
+    "stories": 481,
+    "publicStories": 336,
     "hiddenStories": 145,
     "componentDescriptions": 145,
     "pagesWithVisibleCanvasIntroduction": 149,
     "pagesWithDecisionGuidance": 145,
-    "describedPublicStories": 335,
+    "describedPublicStories": 336,
     "reviewedPages": 149,
-    "reviewedStories": 480,
+    "reviewedStories": 481,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
       "overview": 142,
-      "usage": 23,
+      "usage": 24,
       "variants-states": 63,
       "interaction": 44,
       "responsive": 37,
@@ -104,8 +104,8 @@
       },
       "Product": {
         "pages": 87,
-        "stories": 294,
-        "public": 227,
+        "stories": 295,
+        "public": 228,
         "hidden": 67,
         "guideReadyPages": 87
       },
@@ -7990,20 +7990,20 @@
       "layer": "Product",
       "family": "Content",
       "importPath": "./stories/CardNews.stories.jsx",
-      "sourceSha256": "4f84fc3b95c39215d10c48c61beeab25c156d06cb81c8ec59737691b74d9dab4",
+      "sourceSha256": "1f9b1e4ab6d1d65eca8ac10c39a15cde5b4711b8c8ba030fd61ac06ba11839a8",
       "primaryOwner": "NewsCard",
       "ownerComponents": [
         "NewsCard"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-content-news-card--news-cards",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -8014,7 +8014,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "4f84fc3b95c39215d10c48c61beeab25c156d06cb81c8ec59737691b74d9dab4",
+      "reviewedSourceSha256": "1f9b1e4ab6d1d65eca8ac10c39a15cde5b4711b8c8ba030fd61ac06ba11839a8",
       "stories": [
         {
           "id": "lds-product-content-news-card--news-cards",
@@ -8040,6 +8040,29 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
+          "id": "lds-product-content-news-card--cover-image",
+          "name": "사용법 · 커버 이미지",
+          "exportName": "CoverImage",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "NewsCard"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 owner review: NewsCard 커버 이미지 케이스 정비(사용법 스토리 추가) — 장식/정보성 커버 구분, imageAlt의 링크 이름 합성, lazy 로드 계약을 소유자가 확인."
+        },
+        {
           "id": "lds-product-content-news-card--news-card-card",
           "name": "NewsCard card parity",
           "exportName": "NewsCardCard",
@@ -8062,7 +8085,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+      "reviewNote": "2026-07-24 owner review: NewsCard 커버 이미지 케이스 정비(사용법 스토리 추가) — 장식/정보성 커버 구분, imageAlt의 링크 이름 합성, lazy 로드 계약을 소유자가 확인."
     },
     {
       "title": "LDS Product/Content/Platform Logos",
@@ -8716,7 +8739,7 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataGrid.stories.jsx",
-      "sourceSha256": "d7aa03d66a91b68936004bf7907b6628dc54a33c7ec3c948821f259c3cf91364",
+      "sourceSha256": "f7eb7be77ce0b5dfc984cc3de1cc8f864f43c02161f56febabe5a1f63bfe2578",
       "primaryOwner": "DataGrid",
       "ownerComponents": [
         "DataGrid"
@@ -8744,8 +8767,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-18T23:31:17.902Z",
-      "reviewedSourceSha256": "d7aa03d66a91b68936004bf7907b6628dc54a33c7ec3c948821f259c3cf91364",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "f7eb7be77ce0b5dfc984cc3de1cc8f864f43c02161f56febabe5a1f63bfe2578",
       "stories": [
         {
           "id": "lds-product-data-collections-data-grid--selectable-list",
@@ -8876,7 +8899,7 @@
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "2026-07-19 human re-review confirmed fresh Storybook names/order, source roles, focused play contracts, and current normal/narrow examples for the Product and Robotics status pages."
+      "reviewNote": "2026-07-24 owner review: NewsCard 커버 이미지 케이스 정비(사용법 스토리 추가) — 장식/정보성 커버 구분, imageAlt의 링크 이름 합성, lazy 로드 계약을 소유자가 확인."
     },
     {
       "title": "LDS Product/Data/Collections/File Browser",
@@ -9567,7 +9590,7 @@
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataToolbar.stories.jsx",
-      "sourceSha256": "4a21e1bfefada2c55674c217efc2fd44b2d0bbcca4e5fd1d4af5bbfd59436572",
+      "sourceSha256": "1dfd35c9b24dfb396c343b5c943d4d25cc7eebc55609d0f8a6137314150f85e4",
       "primaryOwner": "DataToolbar",
       "ownerComponents": [
         "DataToolbar"
@@ -9596,8 +9619,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "4a21e1bfefada2c55674c217efc2fd44b2d0bbcca4e5fd1d4af5bbfd59436572",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "1dfd35c9b24dfb396c343b5c943d4d25cc7eebc55609d0f8a6137314150f85e4",
       "stories": [
         {
           "id": "lds-product-data-operations-data-toolbar--toolbar-with-grid",
@@ -9629,7 +9652,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-24 owner review: NewsCard 커버 이미지 케이스 정비(사용법 스토리 추가) — 장식/정보성 커버 구분, imageAlt의 링크 이름 합성, lazy 로드 계약을 소유자가 확인."
     },
     {
       "title": "LDS Product/Data/Operations/Export Action",
@@ -15076,7 +15099,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormSearchableMultiSelect.stories.jsx",
-      "sourceSha256": "2c73af4e28ee4286ce906b137377cf75742c59b803287bf510d2e8c978f1c081",
+      "sourceSha256": "f8778f7a40acf0a689f1f596431c4a04b48c15b6e4bbc2ff07b71ec7a59f332e",
       "primaryOwner": "SearchableMultiSelect",
       "ownerComponents": [
         "SearchableMultiSelect"
@@ -15099,8 +15122,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "2c73af4e28ee4286ce906b137377cf75742c59b803287bf510d2e8c978f1c081",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "f8778f7a40acf0a689f1f596431c4a04b48c15b6e4bbc2ff07b71ec7a59f332e",
       "stories": [
         {
           "id": "lds-product-selection-and-input-searchable-multi-select--relation-selection",
@@ -15240,7 +15263,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-24 owner review: NewsCard 커버 이미지 케이스 정비(사용법 스토리 추가) — 장식/정보성 커버 구분, imageAlt의 링크 이름 합성, lazy 로드 계약을 소유자가 확인."
     },
     {
       "title": "LDS Product/Selection and Input/Secret Field",
