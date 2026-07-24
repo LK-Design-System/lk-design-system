@@ -22,6 +22,9 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], headingLeve
     const isOpen = open.has(i);
     const triggerId = `${rawId}-${i}-trigger`;
     const panelId = `${rawId}-${i}-panel`;
+    const titleId = `${rawId}-${i}-title`;
+    const descriptionId = `${rawId}-${i}-description`;
+    const hasDescription = it.description != null && it.description !== "";
     return /* @__PURE__ */ jsxs("div", { style: { borderBottom: "1px solid var(--color-semantic-line-solid-normal)" }, children: [
       /* @__PURE__ */ jsx(HeadingTag, { ...headingProps, children: /* @__PURE__ */ jsxs(
         "button",
@@ -30,12 +33,13 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], headingLeve
           id: triggerId,
           "aria-expanded": isOpen,
           "aria-controls": panelId,
+          "aria-labelledby": titleId,
+          "aria-describedby": hasDescription ? descriptionId : void 0,
           onClick: () => toggle(i),
           style: {
             width: "100%",
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
             gap: 16,
             padding: "18px 4px",
             border: "none",
@@ -50,7 +54,24 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], headingLeve
             transition: "color var(--dur-fast) var(--ease-out)"
           },
           children: [
-            /* @__PURE__ */ jsx("span", { style: { wordBreak: "keep-all" }, children: it.title }),
+            it.leading != null && /* @__PURE__ */ jsx("span", { style: { flexShrink: 0, display: "inline-flex", alignItems: "center" }, children: it.leading }),
+            /* @__PURE__ */ jsxs("span", { style: { flex: 1, minWidth: 0, display: "grid", gap: "var(--space-1)" }, children: [
+              /* @__PURE__ */ jsx("span", { id: titleId, style: { wordBreak: "keep-all" }, children: it.title }),
+              hasDescription && /* @__PURE__ */ jsx(
+                "span",
+                {
+                  id: descriptionId,
+                  style: {
+                    fontSize: "var(--caption1-size)",
+                    lineHeight: "var(--caption1-line)",
+                    fontWeight: "var(--fw-regular)",
+                    color: "var(--color-semantic-label-neutral)",
+                    wordBreak: "keep-all"
+                  },
+                  children: it.description
+                }
+              )
+            ] }),
             /* @__PURE__ */ jsx(Icon, { name: "chevron-down-small", size: 20, "aria-hidden": "true", style: { flexShrink: 0, transform: isOpen ? "rotate(180deg)" : "none", transition: "transform var(--dur-base) var(--ease-out)" } })
           ]
         }
@@ -63,4 +84,4 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], headingLeve
 export {
   Accordion
 };
-//# sourceMappingURL=chunk-JWE42WUG.js.map
+//# sourceMappingURL=chunk-DEAFNC5C.js.map
