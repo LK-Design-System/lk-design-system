@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface ExpandableTextProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface ExpandableTextProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'onToggle'> {
   /** 표시할 텍스트/노드. 전체가 항상 DOM에 있고 클램프는 시각적 컷입니다. */
   children?: React.ReactNode;
   /** 접힘 상태에서 보여줄 줄 수. @default 3 */

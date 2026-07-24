@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { DropdownMenuItem } from '@lk-robotics/lds-core/components/overlay/DropdownMenu';
 import { ReactionLike, ReactionAction } from '../content/ReactionBar';
 
 export interface FeedAuthor {
@@ -30,7 +31,7 @@ export interface FeedCardProps extends Omit<React.HTMLAttributes<HTMLElement>, '
   /** 팔로우 버튼 라벨. @default following ? "팔로잉" : "팔로우" */
   followLabel?: React.ReactNode;
   /** ⋮ 오버플로 메뉴 항목. 있을 때만 메뉴가 나타납니다. */
-  menuItems?: React.ComponentProps<typeof import('../overlay/DropdownMenu').DropdownMenu>['items'];
+  menuItems?: DropdownMenuItem[];
   /** 오버플로 트리거 접근 라벨. 본문 펼치기("더 보기")와 겹치지 않게 기본값을 구분합니다. @default "게시물 옵션" */
   menuLabel?: string;
   /** 커버 이미지 URL(선택). 16:9로 지연 로드됩니다. */
