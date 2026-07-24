@@ -11,6 +11,10 @@ on:
         description: Build on Windows and upload the canonical generated artifacts.
         type: boolean
         default: false
+      export_visual_baseline:
+        description: Capture and upload the canonical Windows visual baselines.
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -34,8 +38,8 @@ jobs:
         run: node packages/conformance/src/cli.mjs verify-fixtures
 
   export-canonical-dist:
-    name: Export canonical Windows generated artifacts
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.export_dist == true }}
+    name: Export canonical Windows artifacts
+    if: ${{ github.event_name == 'workflow_dispatch' && (inputs.export_dist == true || inputs.export_visual_baseline == true) }}
     runs-on: windows-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}
@@ -53,9 +57,11 @@ jobs:
         run: npm ci
 
       - name: Build generated artifacts on the canonical platform
+        if: ${{ inputs.export_dist == true }}
         run: npm run build
 
       - name: Upload canonical generated artifacts
+        if: ${{ inputs.export_dist == true }}
         uses: actions/upload-artifact@v4
         with:
           name: canonical-windows-generated
@@ -78,6 +84,18 @@ jobs:
             packages/compat/tokens
             packages/compat/assets
             packages/compat/styles.css
+          if-no-files-found: error
+
+      - name: Capture visual baselines on the canonical platform
+        if: ${{ inputs.export_visual_baseline == true }}
+        run: npm run update:visual-baseline
+
+      - name: Upload canonical visual baselines
+        if: ${{ inputs.export_visual_baseline == true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: canonical-windows-visual-baselines
+          path: visual-baselines/smoke
           if-no-files-found: error
 
   design-system:
