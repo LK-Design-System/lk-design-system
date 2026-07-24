@@ -100,6 +100,7 @@ const LAYER_CONTRACTS = {
 const PAGE_OWNER_OVERRIDES = {
   'LDS Core/Components/Overview': ['Components:Overview'],
   'LDS Core/Components/Progress Board': ['Components:Progress Board'],
+  'LDS Core/Patterns/Loading': ['Patterns:Loading'],
   'LDS Core/Components/Layout/Mobile System Bars': ['MobileSystemBars'],
   'LDS Core/Components/Layout/Page Structure': ['Container', 'Section', 'Split'],
   'LDS Core/Components/Layout/Grid and Columns': ['Grid', 'Columns', 'Col'],
@@ -187,6 +188,7 @@ function disallowedLatinStoryTokens(name) {
 function layerForTitle(title) {
   if (title.startsWith('LDS Core/Foundation/')) return 'Foundation';
   if (title.startsWith('LDS Core/Components/')) return 'Core';
+  if (title.startsWith('LDS Core/Patterns/')) return 'Core';
   if (title.startsWith('LDS Product/')) return 'Product';
   if (title.startsWith('LDS Robotics/')) return 'Robotics';
   if (title.startsWith('LDS Theme/')) return 'Theme';

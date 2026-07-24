@@ -85,7 +85,7 @@
     "npm run check:inventory",
     "npm run check:docs",
     "npm run check:types",
-    "A11Y_SHARD=1/4..4/4 npm run check:a11y (528 stories total)"
+    "A11Y_SHARD=1/4..4/4 npm run check:a11y (532 stories total)"
   ],
   "knownDifferences": [
     "Existing prompt contracts intentionally retain some English API terminology, so prose language is not yet uniform on every guide.",

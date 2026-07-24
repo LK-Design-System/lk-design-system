@@ -5,7 +5,7 @@
 | Type | Stable contract and current audit summary |
 | Status | Current |
 | Owner | Storybook information-architecture owner |
-| Last reviewed | 2026-07-22 |
+| Last reviewed | 2026-07-24 |
 | Machine-readable source | `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json` |
 
 ## Operations Dashboard pattern group
@@ -16,26 +16,26 @@
 
 ## 현재 기준선
 
-2026-07-24 현재 소스에서 재생성한 정적 빌드 기준으로 166개 페이지와 528개 스토리가 있다. census 판정은 모두 `keep`다.
+2026-07-24 현재 소스에서 재생성한 정적 빌드 기준으로 167개 페이지와 532개 스토리가 있다. census 판정은 모두 `keep`다.
 
-- 공개 스토리: 377개
+- 공개 스토리: 381개
 - 숨김 스토리: 151개
 - 숨김 visual parity: 79개
 - 숨김 internal contract: 72개
-- 검토 완료 페이지 166/166개, 스토리 528/528개, stale source hash 0개다. 2026-07-23~24 navigation·core·product 접근성 일괄 작업분(신규 스토리 43개, 소스가 바뀐 95개 페이지)은 2026-07-24 owner 검토로 완료했다 — 소유자가 로컬 Storybook에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선순위)을 따라 직접 확인했고, 근거는 감사 원장 reviewNote에 있다. 검토 과정에서 공개 표시명 규약 위반 5건(일반 영문 solid·trigger/hover·announce 노출, 역할 접두어 불일치 2건)을 정정했다. 2026-07-24 Product/Content에 리스팅/이벤트 카드용 `Listing Card` 페이지(공개 3 · 숨김 visual-parity 1 스토리)를 신설하고 같은 role·visibility·description 계약으로 owner 검토했다. 이어 소셜 피드용 `Feed Card`와 그 조각인 `Expandable Text`·`Reaction Bar` 3개 페이지(각 공개 3 · 숨김 visual-parity 1 스토리)를 신설하고 같은 계약으로 owner 검토했다. 프로필 마스트헤드용으로 `Page Header`에 avatar 슬롯을 더하고 라벨-값 메타 행 `Stat List` 페이지(공개 3 · 숨김 visual-parity 1 스토리)를 신설했으며, 미디어 첨부용 `FileUploadQueue` grid 레이아웃을 통합했다. Foundation 15종에는 공통 10개 섹션, source schema, 생성 문서와 LLM reference, desktop·390px Canvas 검토를 적용했다. Writing 대표 화면은 SEED Writing과 비교한 visual verdict에서 92/100을 기록했고, 15종 모두 같은 renderer와 구조화 source를 사용한다.
+- 검토 완료 페이지 167/167개, 스토리 532/532개, stale source hash 0개다. 2026-07-23~24 navigation·core·product 접근성 일괄 작업분(신규 스토리 43개, 소스가 바뀐 95개 페이지)은 2026-07-24 owner 검토로 완료했다 — 소유자가 로컬 Storybook에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선순위)을 따라 직접 확인했고, 근거는 감사 원장 reviewNote에 있다. 검토 과정에서 공개 표시명 규약 위반 5건(일반 영문 solid·trigger/hover·announce 노출, 역할 접두어 불일치 2건)을 정정했다. 2026-07-24 Product/Content에 리스팅/이벤트 카드용 `Listing Card` 페이지(공개 3 · 숨김 visual-parity 1 스토리)를 신설하고 같은 role·visibility·description 계약으로 owner 검토했다. 이어 소셜 피드용 `Feed Card`와 그 조각인 `Expandable Text`·`Reaction Bar` 3개 페이지(각 공개 3 · 숨김 visual-parity 1 스토리)를 신설하고 같은 계약으로 owner 검토했다. 프로필 마스트헤드용으로 `Page Header`에 avatar 슬롯을 더하고 라벨-값 메타 행 `Stat List` 페이지(공개 3 · 숨김 visual-parity 1 스토리)를 신설했으며, 미디어 첨부용 `FileUploadQueue` grid 레이아웃을 통합했다. Foundation 15종에는 공통 10개 섹션, source schema, 생성 문서와 LLM reference, desktop·390px Canvas 검토를 적용했다. Writing 대표 화면은 SEED Writing과 비교한 visual verdict에서 92/100을 기록했고, 15종 모두 같은 renderer와 구조화 source를 사용한다. `LDS Core/Patterns/Loading`은 SEED Loading을 비교 기준으로 범용 상황·범위·단일 주 신호·수명주기와 320px 선택 계약을 공개 4개 스토리로 검증한다.
 - Component 문서 시스템은 public component entry 179개와 named export 182개를 전수 추적하고, 기존 non-Foundation 페이지 148개에 16섹션 의사결정 가이드를 lazy payload로 삽입한다. `Overview`와 `Progress Board` 2개 시스템 페이지를 추가했고, 대표 상세 가이드는 SEED의 장문 editorial category와 비교한 visual verdict 92/100을 통과했다. 두 시스템 페이지와 상세 가이드는 1440px·390px에서 page-level overflow 없이 검토했다.
 
-2026-07-22 검토에서는 Communication·Tree·Select와 Dashboard Shell·Grid·Page Header·Side Nav·Top Bar 변경분을 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·접힘·320px·다크·reduced-motion 렌더와 대조했다. 이후 추가된 페이지를 포함한 현재 166개 페이지와 528개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
+2026-07-22 검토에서는 Communication·Tree·Select와 Dashboard Shell·Grid·Page Header·Side Nav·Top Bar 변경분을 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·접힘·320px·다크·reduced-motion 렌더와 대조했다. 이후 추가된 페이지를 포함한 현재 167개 페이지와 532개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
 
-- 컴포넌트 설명이 있는 페이지: 162개
-- Canvas에서 안내 서문을 직접 보여 주는 페이지: 166개
-- 사용/비사용 판단 기준이 확인되는 페이지: 155개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
-- 목적 설명이 있는 공개 스토리: 377개
+- 컴포넌트 설명이 있는 페이지: 163개
+- Canvas에서 안내 서문을 직접 보여 주는 페이지: 167개
+- 사용/비사용 판단 기준이 확인되는 페이지: 156개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
+- 목적 설명이 있는 공개 스토리: 381개
 - Foundation 진입 가이드: 16/16페이지, 공개 스토리 설명: 26/26개
-- Core 진입 가이드: 55/55페이지, 공개 스토리 설명: 100/100개
+- Core 진입 가이드: 56/56페이지, 공개 스토리 설명: 104/104개
 - Product 진입 가이드: 92/92페이지, 공개 스토리 설명: 248/248개
 - Theme 진입 가이드: 3/3페이지, 공개 스토리 설명: 3/3개
-- 공개 스토리 표시명 계약: 377/377개(`개요` 또는 역할 접두어)
+- 공개 스토리 표시명 계약: 381/381개(`개요` 또는 역할 접두어)
 - 이름을 바꾼 페이지의 기존 story id 보존: 4/4페이지
 
 모든 페이지는 첫 공개 스토리 `개요`의 Canvas에서 `오버라인 → 제목 → 사용 기준 또는 Foundation 제약`을 읽고, 역할 접두어로 정렬된 공개 스토리의 Docs 설명에서 상황과 확인 지점을 이어서 볼 수 있다.
@@ -49,7 +49,7 @@
 - 1개 병합 기각·keep 정정: `History Toolbar`
 - 공개 내부 계약 10개를 `!dev`로 전환하고 Communication·VirtualKeypad의 실제 컴포넌트 회귀 표면을 정리해 현재 visual parity는 73개다.
 
-최종 구조에서는 분리된 각 페이지와 후속 확장 페이지가 독립 소유자를 가지므로 현재 census 판정은 `keep` 166개, `split` 0개, `merge` 0개, `hide` 0개다. 검토 완료 수와 stale source hash는 감사 원장의 현재 summary를 기준으로 하며, `check:storybook-ia`가 이 상태를 회귀 방지한다.
+최종 구조에서는 분리된 각 페이지와 후속 확장 페이지가 독립 소유자를 가지므로 현재 census 판정은 `keep` 167개, `split` 0개, `merge` 0개, `hide` 0개다. 검토 완료 수와 stale source hash는 감사 원장의 현재 summary를 기준으로 하며, `check:storybook-ia`가 이 상태를 회귀 방지한다.
 
 정정 근거는 다음과 같다.
 

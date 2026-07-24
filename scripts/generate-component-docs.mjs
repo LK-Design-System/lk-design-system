@@ -721,12 +721,13 @@ for (const entry of entries) {
   entry.promptSha256 = createHash('sha256').update(await read(entry.prompt)).digest('hex');
 }
 
-const componentDocumentationPages = new Set([
+const nonComponentDecisionPages = new Set([
   'LDS Core/Components/Overview',
   'LDS Core/Components/Progress Board',
+  'LDS Core/Patterns/Loading',
 ]);
 const nonFoundationPages = audit.pages.filter(
-  (page) => page.layer !== 'Foundation' && !componentDocumentationPages.has(page.title),
+  (page) => page.layer !== 'Foundation' && !nonComponentDecisionPages.has(page.title),
 );
 const tokenMap = tokenValueMap(tokenSource);
 const guides = nonFoundationPages.map((page) => guideFromPage(page, exportToEntry, sourceDetails, tokenMap));

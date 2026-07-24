@@ -170,6 +170,7 @@
     "stories/LayoutPrimaryDetail.stories.jsx": "LDS Product/Layout/Primary Detail",
     "stories/LayoutScrollAccess.stories.jsx": "LDS Core/Components/Layout/Scroll and Accessibility",
     "stories/LayoutStack.stories.jsx": "LDS Core/Components/Layout/Stack and Alignment",
+    "stories/LoadingPattern.stories.jsx": "LDS Core/Patterns/Loading",
     "stories/Navigation.stories.jsx": "LDS Product/Navigation/Top Bar",
     "stories/NavigationAdaptive.stories.jsx": "LDS Product/Navigation/Adaptive Navigation",
     "stories/NavigationAnchor.stories.jsx": "LDS Product/Navigation/Anchor",

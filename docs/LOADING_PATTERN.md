@@ -6,6 +6,7 @@
 | Status | Current |
 | Owner | Design system owner |
 | Last reviewed | 2026-07-24 |
+| External benchmark | [SEED Loading](https://seed-design.io/docs/guidelines/loading) |
 
 로딩을 표현하는 컴포넌트는 여섯 개다. 이 문서는 컴포넌트 각각의 계약(각 `.prompt.md`)이 아니라
 **그 사이의 선택** — 어떤 상황에서 무엇을, 예상 시간에 따라 어떻게 고르고, 시작→진행→완료→실패
@@ -24,6 +25,33 @@
 **Skeleton과 Spinner 사이의 선택**: 로드될 콘텐츠의 구조를 미리 알면 Skeleton, 모르면(또는
 공간이 좁으면) Spinner. 같은 화면에서 두 방식을 섞으면 로딩의 심각도가 두 가지로 읽힌다.
 
+## 범위와 위치 계약
+
+로딩 표시는 **무엇이 기다리는가**와 같은 범위에 둔다. 표시가 놓인 위치보다 넓은 영역을
+막거나, 더 좁은 영역만 갱신하는 것처럼 오해하게 만들지 않는다.
+
+| Loading scope | 표시 위치 | 기본 선택 | 금지 |
+| --- | --- | --- | --- |
+| 단일 control | Button·입력 control 내부 | control의 `loading` 상태 | 페이지 Spinner·Dimmer를 함께 표시 |
+| 특정 region | 카드·표·차트·뷰어 내부 | `ResourceState`, Skeleton 또는 중앙 Spinner | 관련 없는 sibling까지 차단 |
+| 기존 콘텐츠가 있는 region | 해당 region 위 | 콘텐츠 유지 + refreshing, 정말 막아야 할 때만 `Dimmer` | 콘텐츠를 지우고 새 Skeleton으로 교체 |
+| page·route | 유지되는 shell 안의 바뀌는 content region | Skeleton, region Spinner, 측정 가능한 route progress | navigation·shell까지 무조건 전체 차단 |
+| 장기 작업 | 작업이 시작된 위치 + 지속 상태 표면 | 확정 progress, 남은 단계, 취소·background 처리 | 화면을 떠나면 진행 상태를 잃는 일회성 Spinner |
+
+### 한 범위에는 하나의 주 로딩 신호
+
+같은 loading scope에는 **dominant indicator를 하나만** 둔다. Skeleton 위 Spinner,
+`Button loading`과 page Dimmer, indeterminate ring과 indeterminate bar를 같은 작업에
+겹치지 않는다. 별개의 region이 독립적으로 로드되는 대시보드는 region마다 하나씩 가질 수
+있지만, page 전체에 다시 하나를 더 얹지 않는다.
+
+Overlay 여부는 콘텐츠 존재와 실제 상호작용 가능 여부로 결정한다.
+
+- 첫 진입처럼 뒤에 유효한 콘텐츠가 없으면 Skeleton 또는 Spinner만 두고 빈 overlay를 만들지 않는다.
+- 기존 콘텐츠를 보존하면서 읽기만 허용할 수 있으면 `refreshing`으로 표시하고 차단하지 않는다.
+- 데이터 정합성 때문에 상호작용을 막아야 할 때만 해당 region에 `Dimmer`를 두고
+  `inert`·`aria-busy`까지 함께 소유한다.
+
 ## 시간 기준
 
 임계값은 [Nielsen의 응답 시간 한계](https://www.nngroup.com/articles/response-times-3-important-limits/)
@@ -40,8 +68,28 @@
 - **1분 이상**: 진행률 + 취소 수단 + 가능하면 백그라운드 처리 후 완료 통지(`Toast`).
   `DataExportAction`이 이 계약의 선례다(진행 중 상태·취소·완료 통지).
 
+시간 구간은 indicator 선택을 위한 기본값이지 네트워크 timeout 정책이 아니다. 특정 제품
+사례의 “5초에 안내, 10초에 실패” 같은 숫자를 공통 규칙으로 복사하지 않는다. 실패 시점은
+API·재시도·안전 정책을 소유한 제품이 정하고, LDS는 느려진 작업에 설명을 추가하고 측정 가능한
+진행으로 승격하는 표현 계약만 소유한다.
+
+## 범용 상황 매트릭스
+
+로보틱스 사례를 보기 전에 제품 종류와 무관한 여섯 상황으로 loading scope를 정한다.
+
+| 상황 | 유지할 것 | 권장 신호 | 완료·실패 전환 |
+| --- | --- | --- | --- |
+| 첫 진입 | 준비된 shell과 navigation | 구조를 알면 Skeleton, 모르면 region Spinner | 콘텐츠 또는 blocking error로 대체 |
+| page·route 전환 | 이전 shell·이동 맥락 | 바뀌는 content region의 Skeleton·Spinner, 측정 가능하면 progress | 새 route focus와 제목을 갱신 |
+| 추가 데이터 로드 | 이미 읽고 있는 목록·스크롤 위치 | 목록 끝의 작은 Spinner 또는 placeholder row | 도착분만 추가하고 실패는 inline retry |
+| 데이터 재요청 | 마지막 정상 데이터 | `ResourceState refreshing`, 필요 시 region Dimmer | freshness 갱신 또는 보존 데이터 + error |
+| 저장·제출 | 입력값·활성 control의 focus | 실행 control 자체의 `loading` | 성공 통지 또는 field/summary 오류 |
+| 상태·미디어 전환 | 안정적으로 표시 가능한 이전 상태 | 바뀌는 subregion의 Spinner·Skeleton | 새 상태로 원자적 교체하거나 이전 상태 유지 |
+
 ## 상황별 선택 (로보틱스 운영 도메인 — 설계 가설)
 
+- **route 전환**(시설·로봇 상세 이동): app shell과 navigation은 유지하고 본문 region만 로드한다.
+  이동 대상의 구조를 알면 Skeleton, 모르면 region Spinner를 쓰며 전체 app을 Dimmer로 막지 않는다.
 - **대시보드 첫 진입**(위젯별 텔레메트리 로드): 위젯마다 `ResourceState state="loading"` —
   Skeleton을 자체 렌더하고 `aria-busy`와 polite 공지를 소유한다. 페이지 전체 Spinner로
   개별 위젯의 실패를 가리지 않는다.
@@ -77,5 +125,5 @@
 `Skeleton.prompt.md`, `ProgressBar.prompt.md`, `CircularProgress.prompt.md`,
 `components/overlay/Dimmer.prompt.md`, `components/data/ResourceState.prompt.md`,
 `components/data/RefreshControl.prompt.md`가 소유한다. Storybook에서 실물은
-`LDS Product/Status/Progress`, `LDS Core/Components/Overlay/Dimmer`,
-`LDS Product/Data/Operations` 그룹에서 확인한다.
+`LDS Core/Patterns/Loading`, `LDS Product/Status/Progress`,
+`LDS Core/Components/Overlay/Dimmer`, `LDS Product/Data/Operations` 그룹에서 확인한다.

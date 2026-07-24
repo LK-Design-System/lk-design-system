@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "2aea6faf3bb087c9f08ff523624fd2f65c51a145d0fa0ebb35267286451a050d",
+    "storybookIndexSha256": "457f5a84859a00edc1986fd3ec8eb6313a1f993f06294012e1315373f4f43e30",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -58,42 +58,42 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 166,
-    "stories": 528,
-    "publicStories": 377,
+    "pages": 167,
+    "stories": 532,
+    "publicStories": 381,
     "hiddenStories": 151,
-    "componentDescriptions": 162,
-    "pagesWithVisibleCanvasIntroduction": 166,
-    "pagesWithDecisionGuidance": 155,
-    "describedPublicStories": 377,
-    "reviewedPages": 166,
-    "reviewedStories": 528,
+    "componentDescriptions": 163,
+    "pagesWithVisibleCanvasIntroduction": 167,
+    "pagesWithDecisionGuidance": 156,
+    "describedPublicStories": 381,
+    "reviewedPages": 167,
+    "reviewedStories": 532,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 25,
-      "overview": 150,
-      "usage": 26,
+      "overview": 151,
+      "usage": 27,
       "variants-states": 72,
-      "interaction": 44,
-      "responsive": 44,
+      "interaction": 45,
+      "responsive": 45,
       "scenario": 16,
       "visual-parity": 79,
       "internal-contract": 72
     },
     "dispositions": {
-      "keep": 166,
+      "keep": 167,
       "merge": 0,
       "split": 0,
       "hide": 0
     },
     "layers": {
       "Core": {
-        "pages": 55,
-        "stories": 176,
-        "public": 100,
+        "pages": 56,
+        "stories": 180,
+        "public": 104,
         "hidden": 76,
-        "guideReadyPages": 55
+        "guideReadyPages": 56
       },
       "Foundation": {
         "pages": 16,
@@ -7304,6 +7304,157 @@
         }
       ],
       "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+    },
+    {
+      "title": "LDS Core/Patterns/Loading",
+      "layer": "Core",
+      "family": "Patterns",
+      "importPath": "./stories/LoadingPattern.stories.jsx",
+      "sourceSha256": "5ea755053ca115dcfedb751ce7d9022ce7b478d54ac80dc5f6f78cffd86c06f1",
+      "primaryOwner": "Patterns:Loading",
+      "ownerComponents": [
+        "Patterns:Loading"
+      ],
+      "supportingComponents": [
+        "Button",
+        "Dimmer",
+        "ProgressBar",
+        "ResourceState",
+        "Skeleton",
+        "Spinner"
+      ],
+      "visibility": {
+        "public": 4,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-patterns-loading--loading-decision-guide",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 4,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "low",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "5ea755053ca115dcfedb751ce7d9022ce7b478d54ac80dc5f6f78cffd86c06f1",
+      "stories": [
+        {
+          "id": "lds-core-patterns-loading--loading-decision-guide",
+          "name": "개요",
+          "exportName": "LoadingDecisionGuide",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Patterns:Loading"
+          ],
+          "supportingComponents": [
+            "ProgressBar",
+            "Skeleton",
+            "Spinner"
+          ],
+          "reviewNote": "2026-07-24 source, canvas guidance, play contract, responsive visual, and targeted Axe review complete."
+        },
+        {
+          "id": "lds-core-patterns-loading--scope-and-situation-usage",
+          "name": "사용법 · 범용 상황과 범위",
+          "exportName": "ScopeAndSituationUsage",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Patterns:Loading"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Dimmer",
+            "ProgressBar",
+            "ResourceState",
+            "Spinner"
+          ],
+          "reviewNote": "2026-07-24 source, canvas guidance, play contract, responsive visual, and targeted Axe review complete."
+        },
+        {
+          "id": "lds-core-patterns-loading--lifecycle",
+          "name": "상호작용 · 시작에서 실패까지",
+          "exportName": "Lifecycle",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Patterns:Loading"
+          ],
+          "supportingComponents": [
+            "Button",
+            "ProgressBar",
+            "Spinner"
+          ],
+          "reviewNote": "2026-07-24 source, canvas guidance, play contract, responsive visual, and targeted Axe review complete."
+        },
+        {
+          "id": "lds-core-patterns-loading--narrow-decision",
+          "name": "반응형 · 320px 선택과 범위",
+          "exportName": "NarrowDecision",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Patterns:Loading"
+          ],
+          "supportingComponents": [
+            "ProgressBar",
+            "Skeleton",
+            "Spinner"
+          ],
+          "reviewNote": "2026-07-24 source, canvas guidance, play contract, responsive visual, and targeted Axe review complete."
+        }
+      ],
+      "reviewNote": "2026-07-24 Loading pattern review: SEED benchmark comparison, 1440px and 390px visual verdict 94/100, four completed play functions, and targeted Axe validation confirmed the scope, one-dominant-indicator, lifecycle, and 320px contracts."
     },
     {
       "title": "LDS Product/Action/Bookmark",

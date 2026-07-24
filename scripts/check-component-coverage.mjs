@@ -52,11 +52,12 @@ assert(
   'Every named public export must appear exactly in the compiled component registry.',
 );
 
-const generatedSystemPages = new Set([
+const nonComponentDecisionPages = new Set([
   'LDS Core/Components/Overview',
   'LDS Core/Components/Progress Board',
+  'LDS Core/Patterns/Loading',
 ]);
-const expectedPages = audit.pages.filter((page) => page.layer !== 'Foundation' && !generatedSystemPages.has(page.title));
+const expectedPages = audit.pages.filter((page) => page.layer !== 'Foundation' && !nonComponentDecisionPages.has(page.title));
 const guideTitles = new Set();
 const guideSlugs = new Set();
 for (const guide of content.guides) {
