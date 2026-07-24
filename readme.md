@@ -87,6 +87,9 @@ compatibility facade로 유지합니다.
   (`0.1.0-rc.1`)
 - external Robotics: `@lk-robotics/lds-robotics-ui@0.1.0-rc.2`,
   `LK-Design-System/lk-design-system-robotics`
+- private workspace bootstrap: the exact Robotics RC tarball is retained under
+  `vendor/` so clean CI installs do not depend on the retired pre-move package URL;
+  source ownership remains in the external Robotics repository
 - 배포 정책: publishable package는 restricted GitHub Packages를 사용하며 root workspace만
   private입니다. 실제 제품 adoption과 stable promotion은 release evidence와 별도로 승인합니다.
 - 런타임 peer dependency: `react`; 선택 peer dependency: `react-dom`

@@ -122,7 +122,7 @@
     "@storybook/addon-a11y": "10.4.6",
     "@storybook/addon-docs": "10.4.6",
     "@storybook/react-vite": "10.4.6",
-    "@lk-robotics/lds-robotics-ui": "0.1.0-rc.2",
+    "@lk-robotics/lds-robotics-ui": "file:vendor/lk-robotics-lds-robotics-ui-0.1.0-rc.2.tgz",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/react18": "npm:@types/react@^18.3.27",

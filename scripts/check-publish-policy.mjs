@@ -1,7 +1,12 @@
 import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 
 const root = process.cwd();
+const vendoredRoboticsRelease = {
+  path: 'vendor/lk-robotics-lds-robotics-ui-0.1.0-rc.2.tgz',
+  sha256: 'ad69eec796b0dba5b001dc3d4d554aea17017d2a5e0f702f5f28c0585f423ff2',
+};
 const workspacePackages = [
   { id: 'core', name: '@lk-robotics/lds-core', dependencies: [], resources: ['tokens', 'assets'] },
   { id: 'theme', name: '@lk-robotics/lds-theme', dependencies: ['@lk-robotics/lds-core'], resources: ['tokens', 'assets'] },
@@ -105,7 +110,14 @@ const deprecations = await read('docs/DEPRECATIONS.md');
 assert(rootPackage.private === true, 'The workspace orchestrator must remain private.');
 assert(roboticsExternalSurface.package?.name === '@lk-robotics/lds-robotics-ui', 'External Robotics surface must name the published Robotics package.');
 assert(typeof roboticsExternalSurface.package?.version === 'string' && roboticsExternalSurface.package.version.length > 0, 'External Robotics surface must pin a package version.');
-assert(rootPackage.devDependencies?.[roboticsExternalSurface.package.name] === roboticsExternalSurface.package.version, 'Workspace root must pin the approved external Robotics release for build-time type resolution.');
+assert(
+  rootPackage.devDependencies?.[roboticsExternalSurface.package.name] === `file:${vendoredRoboticsRelease.path}`,
+  'Workspace root must resolve the approved external Robotics release from the reproducible vendored tarball.',
+);
+assert(
+  createHash('sha256').update(await readFile(path.join(root, vendoredRoboticsRelease.path))).digest('hex') === vendoredRoboticsRelease.sha256,
+  'Vendored external Robotics release checksum drift.',
+);
 assert(!rootPackage.dependencies || Object.keys(rootPackage.dependencies).length === 0, 'Workspace runtime dependencies must remain empty.');
 assertPeerDependencies(rootPackage, 'workspace root');
 assert(changelog.includes(`## ${rootPackage.version} -`), `CHANGELOG.md must include the current workspace version ${rootPackage.version}.`);
