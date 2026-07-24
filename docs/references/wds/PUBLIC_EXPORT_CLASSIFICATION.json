@@ -112,7 +112,9 @@
       "provenance": "product-extension",
       "storyEvidence": [
         "stories/CardChecklistItem.stories.jsx",
+        "stories/CardFeed.stories.jsx",
         "stories/CardInfo.stories.jsx",
+        "stories/CardListing.stories.jsx",
         "stories/CardNews.stories.jsx",
         "stories/CardSpecs.stories.jsx",
         "stories/CardsExtended.stories.jsx",
@@ -121,6 +123,8 @@
       "exports": [
         "ChecklistItem",
         "FeatureCard",
+        "FeedCard",
+        "ListingCard",
         "MetricCard",
         "NewsCard",
         "ProductCard",
@@ -183,13 +187,17 @@
       "provenance": "product-extension",
       "storyEvidence": [
         "stories/ContentEditor.stories.jsx",
+        "stories/ContentExpandableText.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
+        "stories/ContentReactionBar.stories.jsx",
         "stories/ContentReorderList.stories.jsx",
         "stories/ContentSourceDisclosure.stories.jsx"
       ],
       "exports": [
         "ContentEditor",
+        "ExpandableText",
         "LogViewer",
+        "ReactionBar",
         "ReorderList",
         "SourceDisclosure"
       ]

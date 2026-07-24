@@ -16,13 +16,13 @@
 
 ## 현재 기준선
 
-2026-07-22 현재 소스에서 재생성한 정적 빌드 기준으로 150개 페이지와 487개 스토리가 있다. census 판정은 모두 `keep`다.
+2026-07-24 현재 소스에서 재생성한 정적 빌드 기준으로 154개 페이지와 503개 스토리가 있다. census 판정은 모두 `keep`다.
 
-- 공개 스토리: 341개
-- 숨김 스토리: 146개
-- 숨김 visual parity: 74개
+- 공개 스토리: 353개
+- 숨김 스토리: 150개
+- 숨김 visual parity: 78개
 - 숨김 internal contract: 72개
-- 검토 완료 페이지 150/150개, 스토리 487/487개. 2026-07-23~24 navigation·core·product 접근성 일괄 작업분(신규 스토리 43개, 소스가 바뀐 95개 페이지)은 2026-07-24 owner 검토로 완료했다 — 소유자가 로컬 Storybook에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선순위)을 따라 직접 확인했고, 근거는 감사 원장 reviewNote에 있다. 검토 과정에서 공개 표시명 규약 위반 5건(일반 영문 solid·trigger/hover·announce 노출, 역할 접두어 불일치 2건)을 정정했다.
+- 검토 완료 페이지 154/154개, 스토리 503/503개. 2026-07-23~24 navigation·core·product 접근성 일괄 작업분(신규 스토리 43개, 소스가 바뀐 95개 페이지)은 2026-07-24 owner 검토로 완료했다 — 소유자가 로컬 Storybook에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선순위)을 따라 직접 확인했고, 근거는 감사 원장 reviewNote에 있다. 검토 과정에서 공개 표시명 규약 위반 5건(일반 영문 solid·trigger/hover·announce 노출, 역할 접두어 불일치 2건)을 정정했다. 2026-07-24 Product/Content에 리스팅/이벤트 카드용 `Listing Card` 페이지(공개 3 · 숨김 visual-parity 1 스토리)를 신설하고 같은 role·visibility·description 계약으로 owner 검토했다. 이어 소셜 피드용 `Feed Card`와 그 조각인 `Expandable Text`·`Reaction Bar` 3개 페이지(각 공개 3 · 숨김 visual-parity 1 스토리)를 신설하고 같은 계약으로 owner 검토했다.
 
 2026-07-22 검토에서는 Communication·Tree·Select와 Dashboard Shell·Grid·Page Header·Side Nav·Top Bar 변경분을 source AST, 신선한 정적 빌드, 공개 이름·순서, play/Axe 및 정상·접힘·320px·다크·reduced-motion 렌더와 대조했다. 현재 149개 페이지와 481개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
 

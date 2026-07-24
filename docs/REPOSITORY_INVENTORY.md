@@ -15,9 +15,9 @@ Storybook의 579개 스토리 역할·공개 여부·소유 컴포넌트와 190�
 ## 패키지 범위
 
 - 패키지명: `@lk-robotics/design-system-core`
-- React 컴포넌트 소스 파일: 174개
-- 공개 named export: 177개
-- 루트 aggregate export: Core 83개 · Theme 2개 · Product 92개 = 177개
+- React 컴포넌트 소스 파일: 178개
+- 공개 named export: 181개
+- 루트 aggregate export: Core 83개 · Theme 2개 · Product 96개 = 181개
 - Robotics compatibility entry: `./robotics`가 별도 `@lk-robotics/lds-robotics-ui`의 34개 export를 재노출하며, 위 aggregate 수치에는 포함하지 않음
 - 컴포넌트 소스 디렉터리 18개: `brand`, `buttons`, `cards`, `communication`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `internal`, `layout`, `navigation`, `overlay`, `robotics`, `selection`, `status`, `viz`
 - 런타임 peer dependency: `react`
@@ -45,14 +45,14 @@ Storybook의 579개 스토리 역할·공개 여부·소유 컴포넌트와 190�
 
 WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`)과 Storybook의 LDS 컴포넌트/패턴 표면입니다. Storybook은 LDS 컴포넌트와 패턴 표면으로 제한하고, visual parity story는 `!dev`와 `visual-parity` 태그로 숨깁니다.
 
-- 현재 React component entry export: 174개
-- 공개 named export: 177개
-- Storybook 전체 story: 487개
-- Storybook public story: 341개
-- Storybook hidden story: 145개
-- 숨김 visual parity story: 74개
-- visual inventory React story: 487개
-- 접근성 guard 검사 대상 implementation story: 487개
+- 현재 React component entry export: 175개
+- 공개 named export: 181개
+- Storybook 전체 story: 503개
+- Storybook public story: 353개
+- Storybook hidden story: 149개
+- 숨김 visual parity story: 78개
+- visual inventory React story: 503개
+- 접근성 guard 검사 대상 implementation story: 503개
 
 ## 생성 영역
 
