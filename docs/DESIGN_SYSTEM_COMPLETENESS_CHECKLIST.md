@@ -48,9 +48,10 @@ finding은 닫혔다. 다만 여섯 pinned product는 LDS를 아직 소비하지
 | 축 | 현재 판정 | 직접 근거 | 남은 조건 |
 | --- | --- | --- | --- |
 | 거버넌스·문서 체계 | 완료 | [`README.md`](README.md), [`OPERATING_MODEL.md`](OPERATING_MODEL.md), `check:docs` | 정책 변경 시 metadata와 index 동시 갱신 |
-| WDS·foundation parity | 완료(수락 snapshot 기준) | `references/wds/COVERAGE_COMPLETION_GATE.json`, `check:wds-alignment`, `check:wds-local-fig` | upstream WDS 변경 시 `.fig` 재수락·재감사 |
-| 컴포넌트·API·상태 계약 | 완료 | 174 source entry / 177 named export, [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | 신규 변경마다 drift/state evidence 유지 |
-| Storybook·접근성·시각 회귀 | 완료 | 150 pages / 487 stories / 341 public / 146 hidden / 74 visual-parity, 487 Axe / violation 0 | story·baseline 변경 시 Windows canonical gate 재실행 |
+| WDS parity | 완료(수락 snapshot 기준) | `references/wds/COVERAGE_COMPLETION_GATE.json`, `check:wds-alignment`, `check:wds-local-fig` | upstream WDS 변경 시 `.fig` 재수락·재감사 |
+| Foundation 지침 완성도 | 완료 | [`foundations/README.md`](foundations/README.md), [`FOUNDATION_GUIDANCE_REVIEW.json`](references/quality/FOUNDATION_GUIDANCE_REVIEW.json), `check:foundations`, `check:a11y` | canonical source 변경 시 문서·Storybook·LLM bundle 동시 재생성 |
+| 컴포넌트·API·상태 계약 | 완료 | 178 source entry / 181 named export, [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | 신규 변경마다 drift/state evidence 유지 |
+| Storybook·접근성·시각 회귀 | 완료 | 163 pages / 518 stories / 368 public / 150 hidden / 78 visual-parity, 518 Axe / violation 0 | story·baseline 변경 시 Windows canonical gate 재실행 |
 | 패키지·소비자 계약 | 완료(RC) | Core/Theme/Product/compat workspace artifact, external Robotics RC, Windows/Linux package consumer matrix | stable publish·지원 정책 변경 시 재판정 |
 | 사람 중심 디자인 품질 | 완료 | high 14·medium 20·low 7 해결, medium 3·low 3 근거 수락, tracked 0 | 새 finding 발생 시 remediation 원장 갱신 |
 | 제품 workflow coverage | 완료(계약 범위) | 16/16 `verified`; WF-15·WF-16 boundary/evidence 종결 | 실제 제품 adoption은 제품 owner별 별도 검증 |
@@ -60,8 +61,8 @@ finding은 닫혔다. 다만 여섯 pinned product는 LDS를 아직 소비하지
 위 수치는 [`REPOSITORY_INVENTORY.md`](REPOSITORY_INVENTORY.md),
 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`,
 `references/product-frontends/COVERAGE_AUDIT.json`의 현재 값과 일치해야 한다.
-접근성 원장은 484개 implementation story, 264개 play function, Axe violation 0과
-46개 ratcheted undersized-target signature를 기록한다. 이 46개는 신규 회귀가 아니라
+접근성 원장은 518개 implementation story, 284개 play function, Axe violation 0과
+39개 ratcheted undersized-target signature를 기록한다. 이 39개는 신규 회귀가 아니라
 명시적 기준선이며 신규 signature는 gate가 차단한다. package readiness와 제품 채택은
 같은 판정으로 합치지 않는다.
 
@@ -82,8 +83,9 @@ finding은 닫혔다. 다만 여섯 pinned product는 LDS를 아직 소비하지
 | B-01 | token 단일 계보 | token source, CSS, component token 참조가 일치하고 신규 literal·dead lineage 회귀가 차단된다. | `tokens/source.json`, `check:tokens`, `check:token-hygiene`, `check:dimension-literals` | 완료 |
 | B-02 | light/dark 의미 계층 | foreground, surface, border, state token이 theme scope를 따르고 필수 대비 계약을 통과한다. | `check:colors`, `check:visual-token-drift` | 완료 |
 | B-03 | foundation 실측 parity | color, typography, spacing, grid, radius, shadow 등 WDS foundation mapping에 drift가 없다. | `check:foundation-parity`, `references/wds/FOUNDATION_AUDIT.json` | 완료 |
-| B-04 | component WDS 근거 | coverage, component family, variant, node queue가 수락된 `.fig` snapshot에 대해 닫혀 있다. | `references/wds/COVERAGE_COMPLETION_GATE.json`, `check:wds-local-fig`, `check:wds-alignment` | 완료 |
-| B-05 | snapshot freshness | upstream WDS 변경 여부를 확인하고 바뀌었으면 `.fig` 추출과 영향 row 재감사를 수행한다. | `COVERAGE_COMPLETION_GATE.json.snapshotAcceptance` | 완료(2026-07-07 snapshot 기준) |
+| B-04 | Foundation 지침 완성도 | 15개 영역마다 목적·semantic model·선택·정량·Do/Don't·예외·접근성·국제화·LDS 예시·token/API와 machine reference가 있다. 값 parity와 별도로 판정한다. | [`foundations/foundation-content.json`](foundations/foundation-content.json), [`references/quality/FOUNDATION_GUIDANCE_REVIEW.json`](references/quality/FOUNDATION_GUIDANCE_REVIEW.json), `check:foundations`, `check:a11y` | 완료 |
+| B-05 | component WDS 근거 | coverage, component family, variant, node queue가 수락된 `.fig` snapshot에 대해 닫혀 있다. | `references/wds/COVERAGE_COMPLETION_GATE.json`, `check:wds-local-fig`, `check:wds-alignment` | 완료 |
+| B-06 | snapshot freshness | upstream WDS 변경 여부를 확인하고 바뀌었으면 `.fig` 추출과 영향 row 재감사를 수행한다. | `COVERAGE_COMPLETION_GATE.json.snapshotAcceptance` | 완료(2026-07-07 snapshot 기준) |
 
 ## C. 컴포넌트·API·상태 계약
 

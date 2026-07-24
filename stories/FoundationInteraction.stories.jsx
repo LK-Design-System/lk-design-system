@@ -1,5 +1,8 @@
+import { foundationGuideStory } from './FoundationGuide.shared.jsx';
+
 const meta = {
-  title: 'LDS Core/Foundation/Interaction',
+  id: 'lds-core-foundation-interaction',
+  title: 'LDS Core/Foundation/State',
   parameters: {
     storyGuide: {
       storyId: 'lds-core-foundation-interaction--interaction-tokens',
@@ -397,3 +400,5 @@ export const InteractionTokens = {
     }
   },
 };
+
+export const Guidance = { ...foundationGuideStory('state', '참조 · 전체 지침'), name: '참조 · 전체 지침' };

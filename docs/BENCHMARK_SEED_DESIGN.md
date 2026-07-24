@@ -16,20 +16,22 @@
 
 | 축 | seed-design | LDS | 판정 |
 | --- | --- | --- | --- |
-| 컴포넌트 폭 | styled 84 + headless 패키지 38 | 173 (+robotics 별도 저장소) | 대등 |
-| 접근성 자동 강제 | CI에 axe 게이트 없음(유닛 테스트 83개) | axe 480스토리 + 타깃 크기 래칫 + play 261개 | LDS 우위 |
-| 계약 문서 | 컴포넌트 문서 49 + 패키지별 AGENTS.md | prompt.md 173개(외부 근거 인용) + API 3자 동기화 강제 | LDS 우위 |
+| 컴포넌트 폭 | styled 84 + headless 패키지 38 | 178 (+robotics 별도 저장소) | 대등 |
+| 접근성 자동 강제 | CI에 axe 게이트 없음(유닛 테스트 83개) | axe 518스토리 + 타깃 크기 래칫 + play 284개 | LDS 우위 |
+| 계약 문서 | 컴포넌트 문서 49 + 패키지별 AGENTS.md | prompt.md 178개(외부 근거 인용) + API 3자 동기화 강제 | LDS 우위 |
+| Foundation 지침 | 15개 탐색 구조와 주제별 editorial guide, 제품 사례 중심 | 15개 모두 공통 10개 판단 섹션 + JSON Schema + 생성 Markdown/Storybook + token/API trace | LDS 우위(coverage·추적성), seed 우위(브랜드 사례) |
 | 토큰 파이프라인 | Figma→rootage YAML(IR)→qvism recipe→CSS·Swift·Kotlin 자동 생성 | 손으로 관리하는 CSS + 검증 스크립트 | seed 압승 |
 | 아키텍처 계층 | headless(행동)/recipe(외형)/styled(조립) 3층 분리 | 모놀리식(행동+인라인 스타일 결합), 내부 공유 엔진은 존재 | seed 우위 |
-| 비주얼 회귀 | Chromatic, 전 스토리, PR마다 | 자체 스크립트 36장면 (스토리 480개 중) | seed 우위 |
+| 비주얼 회귀 | Chromatic, 전 스토리, PR마다 | 자체 스크립트 36장면 (스토리 518개 중) | seed 우위 |
 | 릴리스 공학 | changesets, codemod, migration-index, CLI(레지스트리 설치), continuous release | rc 수동 관리, 마이그레이션은 CHANGELOG 문구 | seed 압승 |
 | 플랫폼 | Web + Lynx 런타임 + iOS/Android 토큰 출력 | Web | seed 압승 |
-| AI 소비 표면 | llms.txt/llms-full, 자체 MCP 서버 2종, skills, 패키지별 AGENTS.md | prompt.md 계약(깊이는 우위), 배포 표면 없음 | 상호 보완 |
+| AI 소비 표면 | llms.txt/llms-full, 자체 MCP 서버 2종, skills, 패키지별 AGENTS.md | component prompt 계약 + 15개 Foundation `llms.txt` bundle + 755행 token reference | LDS 우위(계약 추적), seed 우위(MCP 배포) |
 | 실전 검증 | 당근 앱 대규모 사용자에 탑재 | 소비자 없음 (pre-release) | seed 압승 |
 
-seed가 앞선 축은 전부 인프라·제품화 축이다. 컴포넌트 단위 품질·계약 강제는 LDS가 뒤지지
-않으며, 특히 접근성 자동 강제는 seed에 없는 체계다. 격차의 본질은 "계약을 두들기는 소비자의
-존재"이고, 이는 코드 정비가 아니라 소비 제품 확보로만 좁혀진다.
+seed가 앞선 축은 인프라·다중 플랫폼·제품화 축이다. 컴포넌트와 Foundation 단위 품질·계약
+강제는 LDS가 뒤지지 않으며, 특히 접근성 자동 강제와 Foundation source→문서→Storybook→LLM
+추적은 seed보다 엄격하다. 반대로 seed의 브랜드 사례는 실사용 제품에서 검증됐고 LDS 예시는
+아직 운영 도메인 설계 가설이므로, 이 차이는 코드 정비가 아니라 소비 제품 확보로만 좁혀진다.
 
 ## 채택 결정
 
@@ -55,7 +57,7 @@ HoverCard의 Escape 재오픈을 엔진 한 곳에서 고쳐 Tooltip·Popover가
 
 ### 2단계 — 스트랭글러 방식 행동/외형 분리 (상시, 트리거: 파일을 여는 김에)
 
-기존 173개 컴포넌트의 일괄 재작성은 하지 않는다. 픽셀 감시가 480스토리 중 36장면인 상태의
+기존 178개 컴포넌트의 일괄 재작성은 하지 않는다. 픽셀 감시가 518스토리 중 36장면인 상태의
 전면 전환은 검증 불가능한 회귀를 만들고, 2026-07 3라운드 정비로 확보한 검증 가치를 태운다.
 
 - 다른 이유로 컴포넌트를 수정할 때만 행동(훅)과 외형(스타일 모듈)을 분리한다.
@@ -75,9 +77,9 @@ rootage(토큰 IR)·qvism(zero-runtime recipe) 상당물은 **두 번째 스킨 
 
 - **비주얼 회귀 전 스토리 확대** — 36장면 감시는 이번 정비에서 감시 밖 마크업 변경("픽셀
   동일" 주장)을 측정 없이 신뢰하게 만든 원인이었다. 2026-07-24 스코핑 실측:
-  현행 36장면 = 2.2MB(평균 58KB/장), 전 스토리(480장) 확장 시 베이스라인 약 30~50MB가
+  현행 36장면 = 2.2MB(평균 58KB/장), 전 스토리(518장) 확장 시 베이스라인 약 30~50MB가
   저장소에 추가되고 갱신마다 히스토리가 그만큼 자란다(pack 131MB 기준 유의미 — Git LFS 또는
-  아티팩트 저장 검토). 캡처 시간은 스토리당 ~2초 × 480 ≈ 16분, a11y 하네스의 `A11Y_SHARD`
+  아티팩트 저장 검토). 캡처 시간은 스토리당 ~2초 × 518 ≈ 17분, a11y 하네스의 `A11Y_SHARD`
   선례로 4분할 시 ~5분. 간헐 흔들림(툴팁 0.005% 사례)이 표면적 13배로 늘므로 재캡처-재대조
   재시도가 필수다. 대안 Chromatic은 저장소 부담 0·리뷰 UI 제공이지만 무료 5천 스냅샷/월로는
   월 ~10회 push가 한계라 유료 단계 진입이 전제고, 내부 DS 화면의 외부 업로드 정책 판단이
@@ -86,8 +88,9 @@ rootage(토큰 IR)·qvism(zero-runtime recipe) 상당물은 **두 번째 스킨 
   함께 착수한다.
 - **changesets 기반 릴리스 + codemod** — 외부 publish를 여는 시점에 도입. BrandLogo 장식
   기본값 전환, ButtonGroup 기본 라벨 제거 같은 소비자 가시 변경은 codemod 대상이다.
-- **AI 소비 표면** — prompt.md 계약을 llms.txt 형태로 노출하는 것은 저비용이며, seed의
-  docs-mcp 패턴을 참고한다.
+- **AI 소비 표면** — 15개 Foundation의 canonical JSON에서 Markdown·`llms.txt`·755행 token
+  reference를 생성하고 `check:foundations`로 drift를 차단했다. docs MCP 같은 네트워크 배포는
+  실제 외부 소비자가 생길 때 seed의 docs-mcp 패턴을 참고한다.
 
 ### 병행 채택 2 — 수평 패턴 가이드 (문서 장르의 공백)
 

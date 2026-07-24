@@ -435,7 +435,9 @@ async function buildAudit(previous) {
         role,
         renderedComponents: [...usage.used].sort(),
         hasStoryDescription:
-          /description\s*:\s*\{\s*story\s*:/s.test(usage.text) || /\bstoryDescription\s*\(/.test(usage.text),
+          /description\s*:\s*\{\s*story\s*:/s.test(usage.text) ||
+          /\bstoryDescription\s*\(/.test(usage.text) ||
+          /\bfoundationGuideStory\s*\(/.test(usage.text),
         hasCanvasGuidance: hasCanvasGuidance(usage.text) || story.id === storyGuideId,
         recommendedVisibility: role === 'visual-parity' || role === 'internal-contract' ? 'hidden' : 'public',
         reviewStatus: 'pending',

@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "91d13f4b607b6faf9f112b775b738cd78cd8dedf387a2bf5e463343b7c0eae45",
+    "storybookIndexSha256": "05f286c44180ae110bddc3cbe4862e52113380f356d700b1d9a3a84e57d075ed",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -58,23 +58,23 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 155,
-    "stories": 510,
-    "publicStories": 359,
+    "pages": 164,
+    "stories": 524,
+    "publicStories": 373,
     "hiddenStories": 151,
-    "componentDescriptions": 151,
-    "pagesWithVisibleCanvasIntroduction": 155,
-    "pagesWithDecisionGuidance": 151,
-    "describedPublicStories": 359,
-    "reviewedPages": 155,
-    "reviewedStories": 510,
+    "componentDescriptions": 160,
+    "pagesWithVisibleCanvasIntroduction": 164,
+    "pagesWithDecisionGuidance": 153,
+    "describedPublicStories": 373,
+    "reviewedPages": 164,
+    "reviewedStories": 524,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
-      "foundation-reference": 10,
+      "foundation-reference": 25,
       "overview": 148,
       "usage": 25,
-      "variants-states": 72,
+      "variants-states": 71,
       "interaction": 44,
       "responsive": 44,
       "scenario": 16,
@@ -82,7 +82,7 @@
       "internal-contract": 72
     },
     "dispositions": {
-      "keep": 155,
+      "keep": 164,
       "merge": 0,
       "split": 0,
       "hide": 0
@@ -90,17 +90,17 @@
     "layers": {
       "Core": {
         "pages": 53,
-        "stories": 173,
-        "public": 97,
+        "stories": 172,
+        "public": 96,
         "hidden": 76,
         "guideReadyPages": 53
       },
       "Foundation": {
-        "pages": 7,
-        "stories": 12,
-        "public": 11,
+        "pages": 16,
+        "stories": 27,
+        "public": 26,
         "hidden": 1,
-        "guideReadyPages": 7
+        "guideReadyPages": 16
       },
       "Product": {
         "pages": 92,
@@ -1138,24 +1138,23 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/ContentDisclosure.stories.jsx",
-      "sourceSha256": "4ed31a5a333e76c689fffb399af510453b3bd9b9c4a516891a6b96ab0cd1648e",
+      "sourceSha256": "46a20e481b2ba4a306203d9c73d37d878fa4d6db34f4545e40a129d3dce55158",
       "primaryOwner": "Accordion",
       "ownerComponents": [
         "Accordion",
         "Collapsible"
       ],
       "supportingComponents": [
-        "Code",
-        "Icon"
+        "Code"
       ],
       "visibility": {
-        "public": 2,
+        "public": 1,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-content-disclosure--disclosure",
-        "describedPublicStories": 2,
+        "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -1166,7 +1165,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "4ed31a5a333e76c689fffb399af510453b3bd9b9c4a516891a6b96ab0cd1648e",
+      "reviewedSourceSha256": "46a20e481b2ba4a306203d9c73d37d878fa4d6db34f4545e40a129d3dce55158",
       "stories": [
         {
           "id": "lds-core-components-content-disclosure--disclosure",
@@ -1193,30 +1192,6 @@
             "Code"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
-        },
-        {
-          "id": "lds-core-components-content-disclosure--leading-and-description",
-          "name": "변형·상태 · 아이콘과 설명",
-          "exportName": "LeadingAndDescription",
-          "visibility": "public",
-          "tags": [
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "variants-states",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Accordion"
-          ],
-          "supportingComponents": [
-            "Icon"
-          ]
         }
       ],
       "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
@@ -6067,31 +6042,31 @@
       "layer": "Foundation",
       "family": "Foundation",
       "importPath": "./stories/Foundations.stories.jsx",
-      "sourceSha256": "75885d528b544a3e9e708e3b20d64171e12d844ec4d3e125387d87f378e44e66",
+      "sourceSha256": "e147c5f9324af5b1ad7b1684d306311ee53d1dea0bf38011bebd69d06a4b68af",
       "primaryOwner": "Foundation:Color",
       "ownerComponents": [
         "Foundation:Color"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-foundation-color--color",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
       "missingGuidance": [],
       "guidePriority": "low",
       "disposition": "keep",
-      "dispositionReason": "Human layer review confirmed a distinct Foundation subject; keep this page and lead with principle before reference detail.",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "75885d528b544a3e9e708e3b20d64171e12d844ec4d3e125387d87f378e44e66",
+      "reviewedSourceSha256": "e147c5f9324af5b1ad7b1684d306311ee53d1dea0bf38011bebd69d06a4b68af",
       "stories": [
         {
           "id": "lds-core-foundation-color--color",
@@ -6113,7 +6088,7 @@
             "Foundation:Color"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         },
         {
           "id": "lds-core-foundation-color--color-system",
@@ -6135,20 +6110,42 @@
             "Foundation:Color"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
+        },
+        {
+          "id": "lds-core-foundation-color--guidance",
+          "name": "참조 · 전체 지침",
+          "exportName": "Guidance",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:Color"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         }
       ],
-      "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+      "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
     },
     {
-      "title": "LDS Core/Foundation/Effects",
+      "title": "LDS Core/Foundation/Design Token",
       "layer": "Foundation",
       "family": "Foundation",
-      "importPath": "./stories/FoundationDecorate.stories.jsx",
-      "sourceSha256": "e89350c18e236346021b80169968b1af4ab727b473cdd4870c84cc00d7269658",
-      "primaryOwner": "Foundation:Effects",
+      "importPath": "./stories/FoundationDesignToken.stories.jsx",
+      "sourceSha256": "038c06105e9f904912ec3507043aac4fd09657d8beb083721c1f4fc3e8286531",
+      "primaryOwner": "Foundation:Design Token",
       "ownerComponents": [
-        "Foundation:Effects"
+        "Foundation:Design Token"
       ],
       "supportingComponents": [],
       "visibility": {
@@ -6157,7 +6154,64 @@
       },
       "descriptionEvidence": {
         "componentDescription": true,
-        "storyGuideId": null,
+        "storyGuideId": "lds-core-foundation-design-token--overview",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "low",
+      "disposition": "keep",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "038c06105e9f904912ec3507043aac4fd09657d8beb083721c1f4fc3e8286531",
+      "stories": [
+        {
+          "id": "lds-core-foundation-design-token--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:Design Token"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+        }
+      ],
+      "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+    },
+    {
+      "title": "LDS Core/Foundation/Elevation",
+      "layer": "Foundation",
+      "family": "Foundation",
+      "importPath": "./stories/FoundationElevation.stories.jsx",
+      "sourceSha256": "d278757fce14f459fb59e03db8665e0236cf1ae5a75664729347e66ac63c27de",
+      "primaryOwner": "Foundation:Elevation",
+      "ownerComponents": [
+        "Foundation:Elevation"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-foundation-elevation--overview",
         "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": false
@@ -6165,11 +6219,68 @@
       "missingGuidance": [],
       "guidePriority": "low",
       "disposition": "keep",
-      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "e89350c18e236346021b80169968b1af4ab727b473cdd4870c84cc00d7269658",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "d278757fce14f459fb59e03db8665e0236cf1ae5a75664729347e66ac63c27de",
+      "stories": [
+        {
+          "id": "lds-core-foundation-elevation--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:Elevation"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+        }
+      ],
+      "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+    },
+    {
+      "title": "LDS Core/Foundation/Gradient",
+      "layer": "Foundation",
+      "family": "Foundation",
+      "importPath": "./stories/FoundationDecorate.stories.jsx",
+      "sourceSha256": "857a6d488e9e0d9314d36dc5b2e01fff083560dc4aca2771d7b1f683c484176c",
+      "primaryOwner": "Foundation:Gradient",
+      "ownerComponents": [
+        "Foundation:Gradient"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-foundation-effects--gradient-tokens",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [],
+      "guidePriority": "low",
+      "disposition": "keep",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "857a6d488e9e0d9314d36dc5b2e01fff083560dc4aca2771d7b1f683c484176c",
       "stories": [
         {
           "id": "lds-core-foundation-effects--gradient-tokens",
@@ -6188,20 +6299,42 @@
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
-            "Foundation:Effects"
+            "Foundation:Gradient"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
+        },
+        {
+          "id": "lds-core-foundation-effects--guidance",
+          "name": "참조 · 전체 지침",
+          "exportName": "Guidance",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:Gradient"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         }
       ],
-      "reviewNote": "Split from the former \"LDS Core/Foundation/Effects and Interaction\" page; reviewed against the Foundation layer contract (principle to token-map to examples). Delegated review, 2026-07-12."
+      "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
     },
     {
       "title": "LDS Core/Foundation/Iconography",
       "layer": "Foundation",
       "family": "Foundation",
       "importPath": "./stories/Iconography.stories.jsx",
-      "sourceSha256": "66e036a4fd05a1dbbd801e2a5023875ea6ceb21504cf5879578944634963c340",
+      "sourceSha256": "f33cb06bf412765d3b322362a9dcbbb2cb486bde52d73f93962a299b10097cb1",
       "primaryOwner": "Foundation:Iconography",
       "ownerComponents": [
         "Foundation:Iconography"
@@ -6210,24 +6343,24 @@
         "Icon"
       ],
       "visibility": {
-        "public": 3,
+        "public": 4,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-foundation-iconography--icon-sizing-and-color",
-        "describedPublicStories": 3,
+        "describedPublicStories": 4,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
       "missingGuidance": [],
       "guidePriority": "low",
       "disposition": "keep",
-      "dispositionReason": "Human layer review confirmed a distinct Foundation subject; keep this page and lead with principle before reference detail.",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "66e036a4fd05a1dbbd801e2a5023875ea6ceb21504cf5879578944634963c340",
+      "reviewedSourceSha256": "f33cb06bf412765d3b322362a9dcbbb2cb486bde52d73f93962a299b10097cb1",
       "stories": [
         {
           "id": "lds-core-foundation-iconography--icon-sizing-and-color",
@@ -6251,7 +6384,7 @@
           "supportingComponents": [
             "Icon"
           ],
-          "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         },
         {
           "id": "lds-core-foundation-iconography--icon-registry",
@@ -6275,7 +6408,29 @@
           "supportingComponents": [
             "Icon"
           ],
-          "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
+        },
+        {
+          "id": "lds-core-foundation-iconography--guidance",
+          "name": "참조 · 전체 지침",
+          "exportName": "Guidance",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:Iconography"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         },
         {
           "id": "lds-core-foundation-iconography--color-brand-icons",
@@ -6299,7 +6454,7 @@
           "supportingComponents": [
             "Icon"
           ],
-          "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         },
         {
           "id": "lds-core-foundation-iconography--icon-card",
@@ -6323,20 +6478,20 @@
           "supportingComponents": [
             "Icon"
           ],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         }
       ],
-      "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+      "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
     },
     {
-      "title": "LDS Core/Foundation/Interaction",
+      "title": "LDS Core/Foundation/Inclusive Design",
       "layer": "Foundation",
       "family": "Foundation",
-      "importPath": "./stories/FoundationInteraction.stories.jsx",
-      "sourceSha256": "0d4db768e4c9e3196df5ec72d7dc2c4ffad114222e191781b5a3dce84fc07242",
-      "primaryOwner": "Foundation:Interaction",
+      "importPath": "./stories/FoundationInclusiveDesign.stories.jsx",
+      "sourceSha256": "594083f60871f04d3af9c69f510ce6eb45ea7f2e831b149ca48ba00aa3d78f76",
+      "primaryOwner": "Foundation:Inclusive Design",
       "ownerComponents": [
-        "Foundation:Interaction"
+        "Foundation:Inclusive Design"
       ],
       "supportingComponents": [],
       "visibility": {
@@ -6345,24 +6500,24 @@
       },
       "descriptionEvidence": {
         "componentDescription": true,
-        "storyGuideId": "lds-core-foundation-interaction--interaction-tokens",
+        "storyGuideId": "lds-core-foundation-inclusive-design--overview",
         "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
+        "decisionGuidance": false
       },
       "missingGuidance": [],
       "guidePriority": "low",
       "disposition": "keep",
-      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "0d4db768e4c9e3196df5ec72d7dc2c4ffad114222e191781b5a3dce84fc07242",
+      "reviewedSourceSha256": "594083f60871f04d3af9c69f510ce6eb45ea7f2e831b149ca48ba00aa3d78f76",
       "stories": [
         {
-          "id": "lds-core-foundation-interaction--interaction-tokens",
+          "id": "lds-core-foundation-inclusive-design--overview",
           "name": "개요",
-          "exportName": "InteractionTokens",
+          "exportName": "Overview",
           "visibility": "public",
           "tags": [
             "dev",
@@ -6377,20 +6532,248 @@
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
-            "Foundation:Interaction"
+            "Foundation:Inclusive Design"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
         }
       ],
-      "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+      "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+    },
+    {
+      "title": "LDS Core/Foundation/International Design",
+      "layer": "Foundation",
+      "family": "Foundation",
+      "importPath": "./stories/FoundationInternationalDesign.stories.jsx",
+      "sourceSha256": "ba446bdf9e7e956182dd373ab4e18831ed3c08b62f33f5be193588125060b67b",
+      "primaryOwner": "Foundation:International Design",
+      "ownerComponents": [
+        "Foundation:International Design"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-foundation-international-design--overview",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [],
+      "guidePriority": "low",
+      "disposition": "keep",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "ba446bdf9e7e956182dd373ab4e18831ed3c08b62f33f5be193588125060b67b",
+      "stories": [
+        {
+          "id": "lds-core-foundation-international-design--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:International Design"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+        }
+      ],
+      "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+    },
+    {
+      "title": "LDS Core/Foundation/Layout",
+      "layer": "Foundation",
+      "family": "Foundation",
+      "importPath": "./stories/FoundationLayout.stories.jsx",
+      "sourceSha256": "81720e993cb911d24f94376101d1ea3e0a5797b82b863ab01ee59eb2ea2aa6e6",
+      "primaryOwner": "Foundation:Layout",
+      "ownerComponents": [
+        "Foundation:Layout"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-foundation-layout--overview",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [],
+      "guidePriority": "low",
+      "disposition": "keep",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "81720e993cb911d24f94376101d1ea3e0a5797b82b863ab01ee59eb2ea2aa6e6",
+      "stories": [
+        {
+          "id": "lds-core-foundation-layout--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:Layout"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+        }
+      ],
+      "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+    },
+    {
+      "title": "LDS Core/Foundation/Motion",
+      "layer": "Foundation",
+      "family": "Foundation",
+      "importPath": "./stories/FoundationMotion.stories.jsx",
+      "sourceSha256": "4071e88011c04516af623fb163606f2e07d30f07d9de282aaa388c621b7babce",
+      "primaryOwner": "Foundation:Motion",
+      "ownerComponents": [
+        "Foundation:Motion"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-foundation-motion--overview",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "low",
+      "disposition": "keep",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "4071e88011c04516af623fb163606f2e07d30f07d9de282aaa388c621b7babce",
+      "stories": [
+        {
+          "id": "lds-core-foundation-motion--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:Motion"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+        }
+      ],
+      "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+    },
+    {
+      "title": "LDS Core/Foundation/Radius",
+      "layer": "Foundation",
+      "family": "Foundation",
+      "importPath": "./stories/FoundationRadius.stories.jsx",
+      "sourceSha256": "0b7167dde59b07c45e407ed7bac12ef2e983812e82a3d428dbcea5430757d505",
+      "primaryOwner": "Foundation:Radius",
+      "ownerComponents": [
+        "Foundation:Radius"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-foundation-radius--overview",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [],
+      "guidePriority": "low",
+      "disposition": "keep",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "0b7167dde59b07c45e407ed7bac12ef2e983812e82a3d428dbcea5430757d505",
+      "stories": [
+        {
+          "id": "lds-core-foundation-radius--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:Radius"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+        }
+      ],
+      "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
     },
     {
       "title": "LDS Core/Foundation/Spacing",
       "layer": "Foundation",
       "family": "Foundation",
       "importPath": "./stories/FoundationSpacing.stories.jsx",
-      "sourceSha256": "d1389a56ce4af1337c02d384bf3690d80fe37256cd38dece9a3197c13ec8a80b",
+      "sourceSha256": "2157fe078993fdb29c0815c60354c231bc264f029d0dc13bc3898d28c11024d5",
       "primaryOwner": "Foundation:Spacing",
       "ownerComponents": [
         "Foundation:Spacing"
@@ -6399,24 +6782,24 @@
         "Button"
       ],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-foundation-spacing--spacing-scale",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 2,
         "decisionGuidance": false
       },
       "missingGuidance": [],
       "guidePriority": "low",
       "disposition": "keep",
-      "dispositionReason": "Human layer review confirmed a distinct Foundation subject; keep this page and lead with principle before reference detail.",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "d1389a56ce4af1337c02d384bf3690d80fe37256cd38dece9a3197c13ec8a80b",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "2157fe078993fdb29c0815c60354c231bc264f029d0dc13bc3898d28c11024d5",
       "stories": [
         {
           "id": "lds-core-foundation-spacing--spacing-scale",
@@ -6438,7 +6821,7 @@
             "Foundation:Spacing"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         },
         {
           "id": "lds-core-foundation-spacing--mobile-safe-area-spacing",
@@ -6462,41 +6845,142 @@
           "supportingComponents": [
             "Button"
           ],
-          "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
+        },
+        {
+          "id": "lds-core-foundation-spacing--guidance",
+          "name": "참조 · 전체 지침",
+          "exportName": "Guidance",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:Spacing"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after completing the Foundation audience-entry guide and all public story descriptions; ownership, visibility, and keep disposition remain valid."
+      "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
+    },
+    {
+      "title": "LDS Core/Foundation/State",
+      "layer": "Foundation",
+      "family": "Foundation",
+      "importPath": "./stories/FoundationInteraction.stories.jsx",
+      "sourceSha256": "9fea296333a81bcb081cac4ea0ac8d2fd97cc2c34319405c841515c33d0c172f",
+      "primaryOwner": "Foundation:State",
+      "ownerComponents": [
+        "Foundation:State"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-foundation-interaction--interaction-tokens",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "low",
+      "disposition": "keep",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "9fea296333a81bcb081cac4ea0ac8d2fd97cc2c34319405c841515c33d0c172f",
+      "stories": [
+        {
+          "id": "lds-core-foundation-interaction--interaction-tokens",
+          "name": "개요",
+          "exportName": "InteractionTokens",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:State"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
+        },
+        {
+          "id": "lds-core-foundation-interaction--guidance",
+          "name": "참조 · 전체 지침",
+          "exportName": "Guidance",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:State"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
+        }
+      ],
+      "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
     },
     {
       "title": "LDS Core/Foundation/Typography",
       "layer": "Foundation",
       "family": "Foundation",
       "importPath": "./stories/FoundationsTypography.stories.jsx",
-      "sourceSha256": "2edd9e1557474955558faab5686471adc539c7ac52efc754b974014ee6adf7fe",
+      "sourceSha256": "77d8da16cd1ba80b6f976e462b05a3d92314832350058d546063bd5787ab1a0a",
       "primaryOwner": "Foundation:Typography",
       "ownerComponents": [
         "Foundation:Typography"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-foundation-typography--typography",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": false
       },
       "missingGuidance": [],
       "guidePriority": "low",
       "disposition": "keep",
-      "dispositionReason": "Human layer review confirmed a distinct Foundation subject; keep this page and lead with principle before reference detail.",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "2edd9e1557474955558faab5686471adc539c7ac52efc754b974014ee6adf7fe",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "77d8da16cd1ba80b6f976e462b05a3d92314832350058d546063bd5787ab1a0a",
       "stories": [
         {
           "id": "lds-core-foundation-typography--typography",
@@ -6518,10 +7002,146 @@
             "Foundation:Typography"
           ],
           "supportingComponents": [],
-          "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
+        },
+        {
+          "id": "lds-core-foundation-typography--guidance",
+          "name": "참조 · 전체 지침",
+          "exportName": "Guidance",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:Typography"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after completing the Foundation audience-entry guide and all public story descriptions; ownership, visibility, and keep disposition remain valid."
+      "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
+    },
+    {
+      "title": "LDS Core/Foundation/Voice and Tone",
+      "layer": "Foundation",
+      "family": "Foundation",
+      "importPath": "./stories/FoundationVoiceAndTone.stories.jsx",
+      "sourceSha256": "27c91a51069dfdf23f92fbde2612746afbe3524f16ba1f2646f2968f945d94fd",
+      "primaryOwner": "Foundation:Voice and Tone",
+      "ownerComponents": [
+        "Foundation:Voice and Tone"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-foundation-voice-and-tone--overview",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [],
+      "guidePriority": "low",
+      "disposition": "keep",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "27c91a51069dfdf23f92fbde2612746afbe3524f16ba1f2646f2968f945d94fd",
+      "stories": [
+        {
+          "id": "lds-core-foundation-voice-and-tone--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:Voice and Tone"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+        }
+      ],
+      "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+    },
+    {
+      "title": "LDS Core/Foundation/Writing",
+      "layer": "Foundation",
+      "family": "Foundation",
+      "importPath": "./stories/FoundationWriting.stories.jsx",
+      "sourceSha256": "37267d8bbd73f366e01d540c0e069ef384d40112211aad8fc89632177f07ed3e",
+      "primaryOwner": "Foundation:Writing",
+      "ownerComponents": [
+        "Foundation:Writing"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-foundation-writing--overview",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [],
+      "guidePriority": "low",
+      "disposition": "keep",
+      "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "37267d8bbd73f366e01d540c0e069ef384d40112211aad8fc89632177f07ed3e",
+      "stories": [
+        {
+          "id": "lds-core-foundation-writing--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "foundation-reference",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Foundation:Writing"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
+        }
+      ],
+      "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
     },
     {
       "title": "LDS Product/Action/Bookmark",
@@ -15153,7 +15773,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormFileUploadQueue.stories.jsx",
-      "sourceSha256": "218d3d77dc43760a5020257e33c31702f8834abea6206b04c8460e172f6ea28b",
+      "sourceSha256": "52aacd82218f06cf7a10c37286dbdd9277ec70a98e6f78c125974816f7de980d",
       "primaryOwner": "FileUploadQueue",
       "ownerComponents": [
         "FileUploadQueue"
@@ -15180,7 +15800,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "218d3d77dc43760a5020257e33c31702f8834abea6206b04c8460e172f6ea28b",
+      "reviewedSourceSha256": "52aacd82218f06cf7a10c37286dbdd9277ec70a98e6f78c125974816f7de980d",
       "stories": [
         {
           "id": "lds-product-selection-and-input-file-upload-queue--upload-and-conversion",

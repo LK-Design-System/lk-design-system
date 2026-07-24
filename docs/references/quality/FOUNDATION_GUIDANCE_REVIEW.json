@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-07-24",
+  "status": "passed",
+  "scope": {
+    "requiredFoundationGuides": 15,
+    "reviewedFoundationGuides": 15,
+    "sharedRenderer": "stories/FoundationGuide.shared.jsx",
+    "canonicalContent": "docs/foundations/foundation-content.json"
+  },
+  "benchmark": {
+    "name": "SEED Foundations",
+    "indexUrl": "https://seed-design.io/foundations",
+    "representativeUrl": "https://seed-design.io/foundations/writing",
+    "reusePolicy": "Structure and decision-guide quality were benchmarked; SEED text, product examples, and branded artwork were not copied."
+  },
+  "visualVerdict": {
+    "representativeFoundation": "Writing",
+    "score": 92,
+    "threshold": 90,
+    "verdict": "pass",
+    "categoryMatch": true,
+    "desktopViewport": "1280x900",
+    "narrowViewport": "390x844",
+    "narrowPageOverflow": false,
+    "reasoning": "The shared LDS renderer presents a mature editorial guide with compact navigation, numbered hierarchy, directly paired Do/Don't examples, and stronger governance traceability than the benchmark."
+  },
+  "machineEvidence": {
+    "structuredGuides": "15/15",
+    "publicStorybookPages": "15/15",
+    "storybookAudit": "163 pages / 518 stories / 0 stale reviews",
+    "accessibility": "518 Axe-guarded stories / 0 violations / 0 console errors",
+    "tokenReferenceRows": 755,
+    "runtimeTokenDeclarations": 750,
+    "unmanagedRuntimeTokenDeclarations": 0
+  },
+  "remainingDifferences": [
+    "SEED uses branded product artwork and production examples; LDS deliberately uses robotics operations examples and live Storybook surfaces.",
+    "Some wide reference tables scroll within a keyboard-focusable region on narrow screens instead of collapsing their semantic columns."
+  ]
+}

@@ -18,9 +18,11 @@
  *   --check  exit 1 if any value-diffable field drifts (for CI).
  */
 import { readFileSync, writeFileSync } from 'node:fs';
-import { inflateRawSync, zstdDecompressSync } from 'node:zlib';
+import { execFileSync } from 'node:child_process';
+import * as zlib from 'node:zlib';
 import { compileSchema, decodeBinarySchema } from 'kiwi-schema';
 
+const { inflateRawSync } = zlib;
 const FIG = 'docs/references/wds/Wanted Design System (Community).fig';
 const REPORT = 'docs/references/wds/FOUNDATION_PARITY_REPORT.md';
 const CHECK = process.argv.includes('--check');
@@ -31,7 +33,21 @@ const rU32 = (b, o) => b.readUInt32LE(o);
 function findEOCD(b) { const s = 0x06054b50, m = Math.max(0, b.length - 0xffff - 22); for (let o = b.length - 22; o >= m; o--) if (rU32(b, o) === s) return o; throw new Error('no EOCD'); }
 function zipEntries(b) { const e = findEOCD(b); const c = rU16(b, e + 10); let o = rU32(b, e + 16); const m = new Map(); for (let i = 0; i < c; i++) { const fnl = rU16(b, o + 28), el = rU16(b, o + 30), cl = rU16(b, o + 32), method = rU16(b, o + 10), cs = rU32(b, o + 20), lho = rU32(b, o + 42); m.set(b.subarray(o + 46, o + 46 + fnl).toString('utf8'), { method, compressedSize: cs, localHeaderOffset: lho }); o += 46 + fnl + el + cl; } return m; }
 function zipRead(b, e, fn) { const x = e.get(fn), o = x.localHeaderOffset, lfnl = rU16(b, o + 26), lel = rU16(b, o + 28), d = o + 30 + lfnl + lel, comp = b.subarray(d, d + x.compressedSize); if (x.method === 0) return Buffer.from(comp); if (x.method === 8) return inflateRawSync(comp); throw new Error('bad zip method'); }
-function figKiwi(b) { let o = 12; const ch = []; while (o + 4 < b.length) { const s = rU32(b, o); o += 4; ch.push(b.subarray(o, o + s)); o += s; } const schema = decodeBinarySchema(inflateRawSync(ch[0])); const dc = ch[1]; const data = dc[0] === 0x28 && dc[1] === 0xb5 ? zstdDecompressSync(dc) : inflateRawSync(dc); return compileSchema(schema).decodeMessage(data); }
+function decompressZstd(buffer) {
+  if (typeof zlib.zstdDecompressSync === 'function') return zlib.zstdDecompressSync(buffer);
+  try {
+    return execFileSync('zstd', ['--decompress', '--stdout', '--quiet'], {
+      input: buffer,
+      maxBuffer: 512 * 1024 * 1024,
+    });
+  } catch (error) {
+    throw new Error(
+      'This Node runtime has no native Zstandard support and the zstd CLI fallback failed. Use Node 22.15+/23.8+ or install zstd.',
+      { cause: error },
+    );
+  }
+}
+function figKiwi(b) { let o = 12; const ch = []; while (o + 4 < b.length) { const s = rU32(b, o); o += 4; ch.push(b.subarray(o, o + s)); o += s; } const schema = decodeBinarySchema(inflateRawSync(ch[0])); const dc = ch[1]; const data = dc[0] === 0x28 && dc[1] === 0xb5 ? decompressZstd(dc) : inflateRawSync(dc); return compileSchema(schema).decodeMessage(data); }
 const gid = (g) => (g ? `${g.sessionID}:${g.localID}` : undefined);
 
 const buf = readFileSync(FIG);

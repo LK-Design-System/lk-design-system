@@ -1,5 +1,6 @@
 import { Button } from '../src/index.js';
 import { SpacingScale as SpacingScaleStory } from './Foundations.shared.jsx';
+import { foundationGuideStory } from './FoundationGuide.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -263,3 +264,5 @@ export const MobileSafeAreaSpacing = {
     </main>
   ),
 };
+
+export const Guidance = { ...foundationGuideStory('spacing', '참조 · 전체 지침'), name: '참조 · 전체 지침' };

@@ -1,6 +1,16 @@
+import { foundationGuideStory } from './FoundationGuide.shared.jsx';
+
 const meta = {
-  title: 'LDS Core/Foundation/Effects',
+  id: 'lds-core-foundation-effects',
+  title: 'LDS Core/Foundation/Gradient',
   parameters: {
+    storyGuide: {
+      storyId: 'lds-core-foundation-effects--gradient-tokens',
+      eyebrow: 'Foundation / Gradient',
+      title: 'Gradient는 제한된 전환·fade·브랜드 강조에만 사용합니다',
+      description:
+        '승인된 유형·방향·stop token을 재사용하고 상태 의미나 텍스트 대비를 gradient에 의존하지 않습니다.',
+    },
     docs: {
       description: {
         component:
@@ -143,3 +153,5 @@ export const GradientTokens = {
     </main>
   ),
 };
+
+export const Guidance = { ...foundationGuideStory('gradient', '참조 · 전체 지침'), name: '참조 · 전체 지침' };

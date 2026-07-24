@@ -1,4 +1,5 @@
 import { Color as ColorStory, ColorSystem as ColorSystemStory } from './Foundations.shared.jsx';
+import { foundationGuideStory } from './FoundationGuide.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -41,3 +42,5 @@ export const ColorSystem = {
     ),
   },
 };
+
+export const Guidance = { ...foundationGuideStory('color', '참조 · 전체 지침'), name: '참조 · 전체 지침' };

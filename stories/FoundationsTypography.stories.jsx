@@ -1,4 +1,5 @@
 import { Typography as TypographyStory } from './Foundations.shared.jsx';
+import { foundationGuideStory } from './FoundationGuide.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -31,3 +32,5 @@ export const Typography = {
     ),
   },
 };
+
+export const Guidance = { ...foundationGuideStory('typography', '참조 · 전체 지침'), name: '참조 · 전체 지침' };

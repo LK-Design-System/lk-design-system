@@ -1,5 +1,6 @@
 import React from 'react';
 import { ICON_NAMES, Icon } from '../src/index.js';
+import { foundationGuideStory } from './FoundationGuide.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const LDS_EXTENSION_NAMES = [
@@ -290,3 +291,5 @@ export const IconCard = {
     </div>
   ),
 };
+
+export const Guidance = { ...foundationGuideStory('iconography', '참조 · 전체 지침'), name: '참조 · 전체 지침' };
