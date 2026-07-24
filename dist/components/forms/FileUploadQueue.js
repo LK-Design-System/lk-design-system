@@ -1,7 +1,7 @@
 "use client";
 import {
   FileUploadQueue
-} from "../../chunk-GHDMFQ6L.js";
+} from "../../chunk-3CWG6JN4.js";
 import "../../chunk-UG3G5A5F.js";
 import "../../chunk-2PA4HK2B.js";
 import "../../chunk-LSN3BTKD.js";

@@ -263,7 +263,8 @@ export const MediaAttachments = {
           type="button"
           aria-label="사진 추가, 10장 중 3장 선택됨"
           style={{
-            width: '100%', aspectRatio: '1 / 1', display: 'grid', placeItems: 'center', gap: 'var(--space-1)',
+            width: '100%', aspectRatio: '1 / 1',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-1)',
             border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)',
             background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-label-neutral)',
             font: 'inherit', cursor: 'pointer',
@@ -277,7 +278,7 @@ export const MediaAttachments = {
         { id: 'a', name: '현장_01.jpg', status: 'succeeded', thumbnailSrc: photo('#2b8a3e'), primary: true, sizeLabel: '1.2MB' },
         { id: 'b', name: '현장_02.jpg', status: 'uploading', progress: 62, thumbnailSrc: photo('#1f6feb') },
         { id: 'c', name: '현장_03.jpg', status: 'failed', thumbnailSrc: photo('#d9480f'), message: '업로드에 실패했습니다.' },
-        { id: 'd', name: '점검표.pdf', status: 'queued' },
+        { id: 'd', name: '법인사업자등록증.pdf', status: 'succeeded', sizeLabel: '20.5KB' },
       ]}
       onRetry={() => {}}
       onCancel={() => {}}
@@ -313,6 +314,16 @@ export const MediaAttachments = {
     const progress = canvasElement.querySelector('[role="progressbar"]');
     if (!progress || !/현장_02\.jpg/.test(progress.getAttribute('aria-label') || '')) {
       throw new Error('진행률에는 파일명이 포함된 접근 이름이 있어야 합니다.');
+    }
+    // 첨부는 자기를 식별하는 것으로 그려진다: 사진은 정사각 타일, 문서는 이름·용량 칩.
+    const mediaTiles = canvasElement.querySelectorAll('.lk-file-upload-queue__item--media');
+    const fileChips = canvasElement.querySelectorAll('.lk-file-upload-queue__item--file');
+    if (mediaTiles.length !== 3 || fileChips.length !== 1) {
+      throw new Error('썸네일이 있는 항목은 미디어 타일로, 없는 항목은 파일 칩으로 렌더되어야 합니다.');
+    }
+    const chipText = fileChips[0].textContent;
+    if (!/법인사업자등록증\.pdf/.test(chipText) || !/20\.5KB/.test(chipText)) {
+      throw new Error('파일 칩은 이름과 용량을 눈에 보이게 표시해야 합니다(이름으로 식별되므로).');
     }
     // 대표 배지와 액션 접근 이름은 목록형과 동일한 계약을 따른다.
     if (!/대표/.test(canvasElement.textContent)) throw new Error('primary 항목에는 대표 배지가 붙어야 합니다.');

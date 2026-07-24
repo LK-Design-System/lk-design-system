@@ -185,16 +185,67 @@ export function FileUploadQueue({
                   ? { label: `${item.name} ${item.status === 'succeeded' ? '목록에서 제거' : '제거'}`, onClick: () => onRemove(item) }
                   : null;
 
+              // An attachment is shown by whatever identifies it: a photo is its
+              // own label, so it becomes a bare square; a document is known by
+              // its name, so it becomes a chip carrying name and size.
+              const isMedia = item.thumbnailSrc != null;
+
+              if (!isMedia) {
+                return (
+                  <li
+                    key={item.id}
+                    className="lk-file-upload-queue__item lk-file-upload-queue__item--grid lk-file-upload-queue__item--file"
+                    style={{ position: 'relative', minWidth: 0, maxWidth: 260 }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', height: 88, boxSizing: 'border-box', padding: 'var(--space-3)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)', minWidth: 0 }}>
+                      <span aria-hidden="true" style={{ flexShrink: 0, width: 48, height: 48, borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-fill-normal)', color: 'var(--color-semantic-label-neutral)', display: 'grid', placeItems: 'center' }}>
+                        <Icon name="document" size={22} aria-hidden="true" />
+                      </span>
+                      <div style={{ minWidth: 0, display: 'grid', gap: 'var(--space-1)' }}>
+                        <strong style={{ minWidth: 0, color: 'var(--color-semantic-label-normal)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', wordBreak: 'break-all' }}>
+                          {item.name}
+                        </strong>
+                        {busy ? (
+                          <ProgressBar
+                            aria-label={`${item.name} ${meta.label}`}
+                            value={item.progress}
+                            indeterminate={item.progress == null}
+                            size="sm"
+                            tone="signal"
+                          />
+                        ) : (item.message != null || item.sizeLabel != null) && (
+                          <span style={{ color: item.status === 'failed' ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>
+                            {item.message ?? item.sizeLabel}
+                          </span>
+                        )}
+                      </div>
+                      {item.status === 'failed' && onRetry && (
+                        <IconButton variant="ghost" round size="sm" label={`${item.name} 다시 시도`} onClick={() => onRetry(item)} style={{ flexShrink: 0 }}>
+                          <Icon name="refresh" size={16} aria-hidden="true" />
+                        </IconButton>
+                      )}
+                    </div>
+                    {cornerAction && (
+                      <span style={{ position: 'absolute', top: 'calc(-1 * var(--space-2))', right: 'calc(-1 * var(--space-2))' }}>
+                        <IconButton variant="ghost" round size="sm" label={cornerAction.label} onClick={cornerAction.onClick} style={{ boxShadow: 'var(--shadow-md)' }}>
+                          <Icon name="close" size={14} aria-hidden="true" />
+                        </IconButton>
+                      </span>
+                    )}
+                    {/* Name and size are visible on a chip; only the status word is not. */}
+                    <VisuallyHidden>{item.label ?? meta.label}</VisuallyHidden>
+                  </li>
+                );
+              }
+
               return (
                 <li
                   key={item.id}
-                  className="lk-file-upload-queue__item lk-file-upload-queue__item--grid"
+                  className="lk-file-upload-queue__item lk-file-upload-queue__item--grid lk-file-upload-queue__item--media"
                   style={{ position: 'relative', width: 88, minWidth: 0 }}
                 >
                   <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', borderRadius: 'var(--radius-md)', overflow: 'hidden', background: 'var(--color-semantic-fill-normal)', display: 'grid', placeItems: 'center', color: 'var(--color-semantic-label-neutral)' }}>
-                    {item.thumbnailSrc
-                      ? <img src={item.thumbnailSrc} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      : <Icon name="document" size={24} aria-hidden="true" />}
+                    <img src={item.thumbnailSrc} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     {busy && (
                       <div style={{ position: 'absolute', inset: 0, display: 'grid', alignContent: 'center', gap: 'var(--space-1)', padding: 'var(--space-3)', background: 'var(--scrim-dark)' }}>
                         <ProgressBar

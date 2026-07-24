@@ -141,14 +141,46 @@ function FileUploadQueue({
                 ] }) : null;
                 if (isGrid) {
                   const cornerAction = busy && onCancel ? { label: `${item.name} \uCC98\uB9AC \uCDE8\uC18C`, onClick: () => onCancel(item) } : canRemove ? { label: `${item.name} ${item.status === "succeeded" ? "\uBAA9\uB85D\uC5D0\uC11C \uC81C\uAC70" : "\uC81C\uAC70"}`, onClick: () => onRemove(item) } : null;
+                  const isMedia = item.thumbnailSrc != null;
+                  if (!isMedia) {
+                    return /* @__PURE__ */ jsxs(
+                      "li",
+                      {
+                        className: "lk-file-upload-queue__item lk-file-upload-queue__item--grid lk-file-upload-queue__item--file",
+                        style: { position: "relative", minWidth: 0, maxWidth: 260 },
+                        children: [
+                          /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-3)", height: 88, boxSizing: "border-box", padding: "var(--space-3)", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)", minWidth: 0 }, children: [
+                            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { flexShrink: 0, width: 48, height: 48, borderRadius: "var(--radius-md)", background: "var(--color-semantic-fill-normal)", color: "var(--color-semantic-label-neutral)", display: "grid", placeItems: "center" }, children: /* @__PURE__ */ jsx(Icon, { name: "document", size: 22, "aria-hidden": "true" }) }),
+                            /* @__PURE__ */ jsxs("div", { style: { minWidth: 0, display: "grid", gap: "var(--space-1)" }, children: [
+                              /* @__PURE__ */ jsx("strong", { style: { minWidth: 0, color: "var(--color-semantic-label-normal)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 2, overflow: "hidden", wordBreak: "break-all" }, children: item.name }),
+                              busy ? /* @__PURE__ */ jsx(
+                                ProgressBar,
+                                {
+                                  "aria-label": `${item.name} ${meta.label}`,
+                                  value: item.progress,
+                                  indeterminate: item.progress == null,
+                                  size: "sm",
+                                  tone: "signal"
+                                }
+                              ) : (item.message != null || item.sizeLabel != null) && /* @__PURE__ */ jsx("span", { style: { color: item.status === "failed" ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: item.message ?? item.sizeLabel })
+                            ] }),
+                            item.status === "failed" && onRetry && /* @__PURE__ */ jsx(IconButton, { variant: "ghost", round: true, size: "sm", label: `${item.name} \uB2E4\uC2DC \uC2DC\uB3C4`, onClick: () => onRetry(item), style: { flexShrink: 0 }, children: /* @__PURE__ */ jsx(Icon, { name: "refresh", size: 16, "aria-hidden": "true" }) })
+                          ] }),
+                          cornerAction && /* @__PURE__ */ jsx("span", { style: { position: "absolute", top: "calc(-1 * var(--space-2))", right: "calc(-1 * var(--space-2))" }, children: /* @__PURE__ */ jsx(IconButton, { variant: "ghost", round: true, size: "sm", label: cornerAction.label, onClick: cornerAction.onClick, style: { boxShadow: "var(--shadow-md)" }, children: /* @__PURE__ */ jsx(Icon, { name: "close", size: 14, "aria-hidden": "true" }) }) }),
+                          /* @__PURE__ */ jsx(VisuallyHidden, { children: item.label ?? meta.label })
+                        ]
+                      },
+                      item.id
+                    );
+                  }
                   return /* @__PURE__ */ jsxs(
                     "li",
                     {
-                      className: "lk-file-upload-queue__item lk-file-upload-queue__item--grid",
+                      className: "lk-file-upload-queue__item lk-file-upload-queue__item--grid lk-file-upload-queue__item--media",
                       style: { position: "relative", width: 88, minWidth: 0 },
                       children: [
                         /* @__PURE__ */ jsxs("div", { style: { position: "relative", width: "100%", aspectRatio: "1 / 1", borderRadius: "var(--radius-md)", overflow: "hidden", background: "var(--color-semantic-fill-normal)", display: "grid", placeItems: "center", color: "var(--color-semantic-label-neutral)" }, children: [
-                          item.thumbnailSrc ? /* @__PURE__ */ jsx("img", { src: item.thumbnailSrc, alt: "", loading: "lazy", decoding: "async", style: { width: "100%", height: "100%", objectFit: "cover" } }) : /* @__PURE__ */ jsx(Icon, { name: "document", size: 24, "aria-hidden": "true" }),
+                          /* @__PURE__ */ jsx("img", { src: item.thumbnailSrc, alt: "", loading: "lazy", decoding: "async", style: { width: "100%", height: "100%", objectFit: "cover" } }),
                           busy && /* @__PURE__ */ jsx("div", { style: { position: "absolute", inset: 0, display: "grid", alignContent: "center", gap: "var(--space-1)", padding: "var(--space-3)", background: "var(--scrim-dark)" }, children: /* @__PURE__ */ jsx(
                             ProgressBar,
                             {
@@ -230,4 +262,4 @@ function FileUploadQueue({
 export {
   FileUploadQueue
 };
-//# sourceMappingURL=chunk-GHDMFQ6L.js.map
+//# sourceMappingURL=chunk-3CWG6JN4.js.map

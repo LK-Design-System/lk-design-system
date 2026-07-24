@@ -1,1 +1,5 @@
-/* core package style entry; populated during Wave 1 CSS split. */
+@import "./tokens/spacing.css";
+@import "./tokens/grid.css";
+@import "./tokens/components.css";
+@import "./tokens/base.css";
+@import "./tokens/focus.css";
