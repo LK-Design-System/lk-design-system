@@ -10,13 +10,19 @@ export interface FeedAuthor {
   variant?: 'person' | 'company' | 'academy' | 'education';
   /** 있으면 이름이 프로필 링크가 됩니다. */
   href?: string;
+  /** 이름 옆 인증/역할 배지(예: 인증 체크 아이콘, "1촌"). 이름 뒤에 인라인 렌더됩니다. */
+  badge?: React.ReactNode;
 }
 
 export interface FeedCardProps extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
   /** 작성자 identity(아바타·이름·링크). */
   author?: FeedAuthor;
-  /** 헤더 보조 줄 — 출처·시간 등(예: "원티드 뉴스 · 6시간 전"). */
+  /** 헤더 보조 줄의 출처 부분(예: "원티드 뉴스"). `time`과 함께 주면 `출처 · 시간`으로 합쳐집니다. */
   meta?: React.ReactNode;
+  /** 상대 시간 라벨(예: "6시간 전"). 주면 `<time>`으로 렌더되어 보조 줄에 합쳐집니다. */
+  time?: React.ReactNode;
+  /** `time`의 기계판독 값(ISO 8601, 예: "2026-07-24T09:00:00Z"). `<time datetime>`에 들어갑니다. */
+  datetime?: string;
   /** 팔로우 상태. 지정하거나 `onFollowToggle`을 주면 팔로우 버튼이 나타납니다. */
   following?: boolean;
   /** 팔로우 버튼 클릭 핸들러. */
