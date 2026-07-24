@@ -1046,7 +1046,7 @@ function validateCurrentPackageCi(packageJson, ciSource) {
   assert(windowsJob.includes('run: npm run check:ci'), 'Windows CI must run the current source and Storybook checks.');
   assert(
     windowsJob.includes('run: npm run check:pack:ci'),
-    'Windows CI must preserve the verified four-package workspace set.',
+    'Windows CI must preserve the verified workspace package set and its locked external Robotics dependency.',
   );
   assert(
     windowsJob.includes('run: npm run check:workspace-consumer:windows'),

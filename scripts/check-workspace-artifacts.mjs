@@ -18,6 +18,12 @@ const workspaces = [
   { id: 'theme', name: '@lk-robotics/lds-theme', implementation: true },
   { id: 'product', name: '@lk-robotics/lds-product', implementation: true },
   { id: 'compat', name: '@lk-robotics/design-system-core', implementation: false },
+  {
+    id: 'robotics',
+    name: '@lk-robotics/lds-robotics-ui',
+    implementation: true,
+    external: true,
+  },
 ];
 
 function invariant(condition, message) {
@@ -170,7 +176,9 @@ function firstDeepComponent(files) {
 }
 
 async function packWorkspace(workspace, destination) {
-  const workspaceDirectory = path.join(repositoryRoot, 'packages', workspace.id);
+  const workspaceDirectory = workspace.external
+    ? path.join(repositoryRoot, 'node_modules', ...workspace.name.split('/'))
+    : path.join(repositoryRoot, 'packages', workspace.id);
   const manifest = await readJson(path.join(workspaceDirectory, 'package.json'));
   invariant(manifest.name === workspace.name, `${workspace.id}: expected package name ${workspace.name}, received ${manifest.name}.`);
 
@@ -296,6 +304,7 @@ async function main() {
           file: `tarballs/${path.basename(item.tarball)}`,
           size: bytes.byteLength,
           sha256: createHash('sha256').update(bytes).digest('hex'),
+          source: item.external ? 'locked-external-package' : 'workspace',
         });
       }
       const manifest = {
@@ -314,7 +323,7 @@ async function main() {
       console.log(`Preserved verified LDS workspace package set: ${path.relative(repositoryRoot, runDirectory).replaceAll('\\', '/')}`);
     }
     completed = true;
-    console.log('LDS workspace tarballs verified: Core/Theme/Product ESM+types, compat ESM+CJS, and isolated consumer smoke with the external Robotics package passed.');
+    console.log('LDS package set verified: Core/Theme/Product ESM+types, compat ESM+CJS, the locked external Robotics tarball, and isolated consumer smoke passed.');
   } finally {
     if (!persistent || !completed) {
       const relative = path.relative(artifactRoot, runDirectory);

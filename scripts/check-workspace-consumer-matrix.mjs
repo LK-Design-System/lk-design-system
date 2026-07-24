@@ -19,6 +19,7 @@ const expectedPackages = [
   { id: 'theme', name: '@lk-robotics/lds-theme' },
   { id: 'product', name: '@lk-robotics/lds-product' },
   { id: 'compat', name: '@lk-robotics/design-system-core' },
+  { id: 'robotics', name: '@lk-robotics/lds-robotics-ui', external: true },
 ];
 const compatName = '@lk-robotics/design-system-core';
 const versions = [
@@ -101,7 +102,7 @@ async function loadPackageSet(value) {
   invariant(manifest.kind === 'lds-workspace-package-set', 'Package-set kind is invalid.');
   invariant(typeof manifest.sourceCommit === 'string' && /^[a-f0-9]{40}$/.test(manifest.sourceCommit), 'Package-set sourceCommit must be a full Git commit.');
   invariant(manifest.sourceCommit === gitText(['rev-parse', 'HEAD']), 'Package-set sourceCommit does not match the current checkout.');
-  invariant(Array.isArray(manifest.packages) && manifest.packages.length === expectedPackages.length, 'Package set must contain exactly four packages.');
+  invariant(Array.isArray(manifest.packages) && manifest.packages.length === expectedPackages.length, 'Package set must contain the four workspace packages and the locked external Robotics package.');
 
   const expectedByName = new Map(expectedPackages.map((item) => [item.name, item]));
   const tarballs = [];
@@ -109,6 +110,10 @@ async function loadPackageSet(value) {
     const expected = expectedByName.get(item.name);
     invariant(expected, `Unexpected package in package set: ${item.name}`);
     invariant(item.id === expected.id, `${item.name} package id must be ${expected.id}.`);
+    invariant(
+      item.source === (expected.external ? 'locked-external-package' : 'workspace'),
+      `${item.name} package source classification is invalid.`,
+    );
     invariant(typeof item.version === 'string' && item.version, `${item.name} version is missing.`);
     invariant(typeof item.file === 'string' && /^tarballs\/[^/\\]+\.tgz$/.test(item.file), `${item.name} tarball path is unsafe.`);
     invariant(Number.isSafeInteger(item.size) && item.size > 0, `${item.name} tarball size is invalid.`);
@@ -122,15 +127,22 @@ async function loadPackageSet(value) {
     expectedByName.delete(item.name);
   }
   invariant(expectedByName.size === 0, `Package set is missing: ${[...expectedByName.keys()].join(', ')}`);
-  invariant(new Set(tarballs.map((item) => item.version)).size === 1, 'All workspace package tarballs must belong to the same release version.');
-  for (const expected of expectedPackages) {
+  const workspaceTarballs = tarballs.filter((item) => item.id !== 'robotics');
+  invariant(new Set(workspaceTarballs.map((item) => item.version)).size === 1, 'All workspace package tarballs must belong to the same release version.');
+  for (const expected of expectedPackages.filter((item) => !item.external)) {
     const workspaceManifest = JSON.parse(await readFile(path.join(repositoryRoot, 'packages', expected.id, 'package.json'), 'utf8'));
     const packaged = tarballs.find((item) => item.id === expected.id);
     invariant(workspaceManifest.name === packaged.name && workspaceManifest.version === packaged.version, `${expected.name} package-set identity does not match the current checkout.`);
   }
+  const compatManifest = JSON.parse(await readFile(path.join(repositoryRoot, 'packages', 'compat', 'package.json'), 'utf8'));
+  const robotics = tarballs.find((item) => item.id === 'robotics');
+  invariant(
+    robotics.version === compatManifest.dependencies?.[robotics.name],
+    'The locked external Robotics tarball must match the compatibility package dependency.',
+  );
   const diskTarballs = (await readdir(path.join(packageSetDirectory, 'tarballs'))).sort();
   const declaredTarballs = tarballs.map((item) => path.basename(item.tarball)).sort();
-  invariant(JSON.stringify(diskTarballs) === JSON.stringify(declaredTarballs), 'tarballs/ must contain exactly the four files declared by package-set.json.');
+  invariant(JSON.stringify(diskTarballs) === JSON.stringify(declaredTarballs), 'tarballs/ must contain exactly the files declared by package-set.json.');
   return { directory: packageSetDirectory, manifest, tarballs };
 }
 
@@ -337,7 +349,7 @@ createRoot(document.getElementById('root')).render(<App />);
   const roboticsManifest = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', '@lk-robotics', 'lds-robotics-ui', 'package.json'), 'utf8'));
   invariant(
     roboticsManifest.name === '@lk-robotics/lds-robotics-ui' && roboticsManifest.version === compatManifest.dependencies?.['@lk-robotics/lds-robotics-ui'],
-    'Registry-installed Robotics dependency does not match the compat package contract.',
+    'Packaged Robotics dependency does not match the compat package contract.',
   );
   invariant(consumerRequire('react/package.json').version === version.react, `${version.id} React version drift.`);
   invariant(consumerRequire('react-dom/package.json').version === version.reactDom, `${version.id} React DOM version drift.`);
