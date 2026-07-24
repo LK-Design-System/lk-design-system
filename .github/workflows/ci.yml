@@ -197,14 +197,16 @@ jobs:
           test "$(node --version)" = 'v22.17.1'
           test "$(npm --version)" = '10.9.2'
 
-      - name: Install dependencies
-        run: npm ci
-
       - name: Download verified Windows package set
         uses: actions/download-artifact@v5
         with:
           name: workspace-package-set-windows
           path: visual-artifacts/workspace-package-set
+
+      - name: Install isolated consumer verifier toolchain
+        run: |
+          npm ci --prefix scripts/fixtures/workspace-consumer-toolchain --ignore-scripts --no-audit --no-fund
+          ln -s "$PWD/scripts/fixtures/workspace-consumer-toolchain/node_modules" node_modules
 
       - name: Consume the same workspace package set on Linux
         run: npm run check:workspace-consumer:linux

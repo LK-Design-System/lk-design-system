@@ -1061,9 +1061,20 @@ function validateCurrentPackageCi(packageJson, ciSource) {
   assert(linuxJob.includes('NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}'), 'Linux package checks must authenticate to GitHub Packages.');
   assert(linuxJob.includes('node-version: 22.17.1'), 'Linux package checks must pin Node 22.17.1.');
   assert(linuxJob.includes("test \"$(npm --version)\" = '10.9.2'"), 'Linux package checks must verify npm 10.9.2.');
-  assert(linuxJob.includes('run: npm ci'), 'Linux package checks must use npm ci.');
   assert(linuxJob.includes('uses: actions/download-artifact@v5'), 'Linux CI must download the Windows package set.');
   assert(linuxJob.includes('name: workspace-package-set-windows'), 'Linux CI must consume the uploaded Windows package set.');
+  assert(
+    linuxJob.indexOf('uses: actions/download-artifact@v5') < linuxJob.indexOf('npm ci --prefix scripts/fixtures/workspace-consumer-toolchain'),
+    'Linux CI must download the verified package set before preparing its isolated verifier toolchain.',
+  );
+  assert(
+    linuxJob.includes('npm ci --prefix scripts/fixtures/workspace-consumer-toolchain --ignore-scripts --no-audit --no-fund'),
+    'Linux CI must install only the lockfile-pinned public consumer-verifier toolchain.',
+  );
+  assert(
+    linuxJob.includes('ln -s "$PWD/scripts/fixtures/workspace-consumer-toolchain/node_modules" node_modules'),
+    'Linux CI must expose only the isolated verifier toolchain to the repository script.',
+  );
   assert(
     linuxJob.includes('run: npm run check:workspace-consumer:linux'),
     'Linux CI must consume the exact verified Windows package set.',
