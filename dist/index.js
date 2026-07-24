@@ -437,7 +437,7 @@ import {
 } from "./chunk-5ZRDFPIW.js";
 import {
   NewsCard
-} from "./chunk-JUD7HC4M.js";
+} from "./chunk-RUWZ2CUR.js";
 import {
   ButtonGroup
 } from "./chunk-FX523UEY.js";

@@ -5,7 +5,10 @@ export interface NewsCardProps extends Omit<React.AnchorHTMLAttributes<HTMLAncho
   image?: string;
   /**
    * 커버 이미지 대체 텍스트. 기본값은 빈 문자열 — 헤드라인이 이미 의미를
-   * 전달하므로 커버는 장식으로 둡니다. 사진 자체가 정보를 담을 때만 지정하세요.
+   * 전달하므로 커버는 장식으로 둡니다. 사진 자체가 정보를 담을 때만 지정하며,
+   * 이때 링크의 접근 이름은 `헤드라인. imageAlt`로 합성됩니다(카드 = 링크라
+   * 이미지 alt만으로는 낭독되지 않기 때문). 커버는 `loading="lazy"`로 지연
+   * 로드되고 16:9 박스가 로드 전 레이아웃을 예약합니다.
    * @default ""
    */
   imageAlt?: string;

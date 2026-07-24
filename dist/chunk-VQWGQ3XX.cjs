@@ -19,7 +19,9 @@ function NewsCard({ image, imageAlt = "", category, title, excerpt, source, date
   const [focusVisible, setFocusVisible] = _react2.default.useState(false);
   const hover = pointerHover || focusVisible;
   const HeadingTag = headingLevel === false || headingLevel == null ? "div" : `h${headingLevel}`;
-  const resolvedLabel = _nullishCoalesce(ariaLabel, () => ( (typeof title === "string" ? title : void 0)));
+  const titleName = typeof title === "string" ? title : null;
+  const altName = typeof imageAlt === "string" && imageAlt.trim() ? imageAlt.trim() : null;
+  const resolvedLabel = _nullishCoalesce(ariaLabel, () => ( (titleName ? altName ? `${titleName}. ${altName}` : titleName : void 0)));
   const ArrowR = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "arrow-right", size: 15, "aria-hidden": "true" });
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "a",
@@ -51,7 +53,7 @@ function NewsCard({ image, imageAlt = "", category, title, excerpt, source, date
       },
       ...rest,
       children: [
-        image && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { aspectRatio: "16 / 9", overflow: "hidden", background: "var(--color-semantic-background-normal-alternative)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "img", { src: image, alt: imageAlt, style: { width: "100%", height: "100%", objectFit: "cover", transform: hover ? "scale(1.03)" : "scale(1)", transition: "transform 520ms var(--ease-out)" } }) }),
+        image && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { aspectRatio: "16 / 9", overflow: "hidden", background: "var(--color-semantic-background-normal-alternative)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "img", { src: image, alt: imageAlt, loading: "lazy", decoding: "async", style: { width: "100%", height: "100%", objectFit: "cover", transform: hover ? "scale(1.03)" : "scale(1)", transition: "transform 520ms var(--ease-out)" } }) }),
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9, flex: 1 }, children: [
           category && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--color-semantic-label-alternative)" }, children: category }),
           title && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, HeadingTag, { style: { margin: 0, fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, lineHeight: 1.36, color: "var(--color-semantic-label-strong)", wordBreak: "keep-all" }, children: title }),
@@ -74,4 +76,4 @@ function NewsCard({ image, imageAlt = "", category, title, excerpt, source, date
 
 
 exports.NewsCard = NewsCard;
-//# sourceMappingURL=chunk-U5ZU7DOA.cjs.map
+//# sourceMappingURL=chunk-VQWGQ3XX.cjs.map

@@ -19,7 +19,9 @@ function NewsCard({ image, imageAlt = "", category, title, excerpt, source, date
   const [focusVisible, setFocusVisible] = React.useState(false);
   const hover = pointerHover || focusVisible;
   const HeadingTag = headingLevel === false || headingLevel == null ? "div" : `h${headingLevel}`;
-  const resolvedLabel = ariaLabel ?? (typeof title === "string" ? title : void 0);
+  const titleName = typeof title === "string" ? title : null;
+  const altName = typeof imageAlt === "string" && imageAlt.trim() ? imageAlt.trim() : null;
+  const resolvedLabel = ariaLabel ?? (titleName ? altName ? `${titleName}. ${altName}` : titleName : void 0);
   const ArrowR = /* @__PURE__ */ jsx(Icon, { name: "arrow-right", size: 15, "aria-hidden": "true" });
   return /* @__PURE__ */ jsxs(
     "a",
@@ -51,7 +53,7 @@ function NewsCard({ image, imageAlt = "", category, title, excerpt, source, date
       },
       ...rest,
       children: [
-        image && /* @__PURE__ */ jsx("div", { style: { aspectRatio: "16 / 9", overflow: "hidden", background: "var(--color-semantic-background-normal-alternative)" }, children: /* @__PURE__ */ jsx("img", { src: image, alt: imageAlt, style: { width: "100%", height: "100%", objectFit: "cover", transform: hover ? "scale(1.03)" : "scale(1)", transition: "transform 520ms var(--ease-out)" } }) }),
+        image && /* @__PURE__ */ jsx("div", { style: { aspectRatio: "16 / 9", overflow: "hidden", background: "var(--color-semantic-background-normal-alternative)" }, children: /* @__PURE__ */ jsx("img", { src: image, alt: imageAlt, loading: "lazy", decoding: "async", style: { width: "100%", height: "100%", objectFit: "cover", transform: hover ? "scale(1.03)" : "scale(1)", transition: "transform 520ms var(--ease-out)" } }) }),
         /* @__PURE__ */ jsxs("div", { style: { padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9, flex: 1 }, children: [
           category && /* @__PURE__ */ jsx("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--color-semantic-label-alternative)" }, children: category }),
           title && /* @__PURE__ */ jsx(HeadingTag, { style: { margin: 0, fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, lineHeight: 1.36, color: "var(--color-semantic-label-strong)", wordBreak: "keep-all" }, children: title }),
@@ -74,4 +76,4 @@ function NewsCard({ image, imageAlt = "", category, title, excerpt, source, date
 export {
   NewsCard
 };
-//# sourceMappingURL=chunk-JUD7HC4M.js.map
+//# sourceMappingURL=chunk-RUWZ2CUR.js.map

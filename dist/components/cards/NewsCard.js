@@ -1,7 +1,7 @@
 "use client";
 import {
   NewsCard
-} from "../../chunk-JUD7HC4M.js";
+} from "../../chunk-RUWZ2CUR.js";
 import "../../chunk-JNVDI5OO.js";
 export {
   NewsCard
