@@ -55,6 +55,7 @@
 | [`NAVIGATION_ATOMIZATION_PLAN.md`](NAVIGATION_ATOMIZATION_PLAN.md) | Proposed plan — Navigation 선·상태 어휘의 단일 소스화와 Encoding 문서화 |
 | [`NAVIGATION_PAGE_DECOMPOSITION_PLAN.md`](NAVIGATION_PAGE_DECOMPOSITION_PLAN.md) | Proposed plan — Navigation 스토리 페이지 재분해(Route 메가페이지 해체·Viewer 합성 페이지 신설) |
 | [`PROSE_SURFACE_PROPOSAL.md`](PROSE_SURFACE_PROPOSAL.md) | Proposed plan — 마크다운 렌더 결과의 타이포그래피 표면(Prose): 엔진은 제품, 조판·접근성 계약은 DS |
+| [`LISTING_CARD_PROPOSAL.md`](LISTING_CARD_PROPOSAL.md) | Proposed plan(보류) — 모집·이벤트 리스팅 카드: NewsCard와 의미가 다른 별개 컴포넌트이나 제품 근거 확인 전까지 착수 보류 |
 | [`NAVIGATION_EXPRESSION_CONVENTIONS.md`](NAVIGATION_EXPRESSION_CONVENTIONS.md) | Convention — Navigation 표현/상태/라벨 규약과 DS↔제품 경계(semantic mirror·선택 리스트는 제품 몫) |
 | [`QUALITY_AUDIT_PLAN.md`](QUALITY_AUDIT_PLAN.md) | Executed baseline with residual follow-up findings |
 | [`EDITOR_LAYOUT_AUDIT.md`](EDITOR_LAYOUT_AUDIT.md) | Completed focused audit; stable decisions are in the reference matrix |

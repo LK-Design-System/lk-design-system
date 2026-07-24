@@ -130,12 +130,13 @@ export const ControlVariants = {
 export const NarrowCarousel = {
   name: '반응형 · 320px',
   parameters: storyDescription(
-    '320px 폭에서 캐러셀이 컨테이너를 넘치지 않고 컨트롤이 조작 가능한지 확인하는 상황입니다. 슬라이드가 폭에 맞춰 접히고 도트·화살표 타깃이 좁은 폭에서도 유지되는지 확인하세요.',
+    '320px 폭에서 텍스트·CTA 슬라이드를 배치하는 상황입니다. 측면 화살표는 슬라이드 카피를 가리므로 텍스트 슬라이드는 도트만 사용하고(showArrows={false}), 좁은 폭에서 제목·본문·CTA가 접혀 읽히며 가로 overflow가 없는지 확인하세요.',
   ),
   render: () => (
     <main data-testid="carousel-narrow" style={{ width: 320, maxWidth: '100%' }}>
       <Carousel
         label="좁은 폭 배너"
+        showArrows={false}
         slideLabels={['1', '2', '3']}
         slides={[
           <PromoSlide key="a" title="좁은 폭 프로모션" body="320px에서도 제목과 CTA가 접혀 읽힙니다." cta="보기" />,
@@ -149,6 +150,19 @@ export const NarrowCarousel = {
     const wrapper = canvasElement.querySelector('[data-testid="carousel-narrow"]');
     if (!wrapper || wrapper.scrollWidth > wrapper.clientWidth + 1) {
       throw new Error('Carousel은 320px 컨테이너에서 가로 스크롤을 만들지 않아야 합니다.');
+    }
+    // 텍스트 슬라이드는 측면 화살표를 두지 않아 CTA가 가려지지 않는다.
+    if (canvasElement.querySelector('button[aria-label="이전 슬라이드"]')) {
+      throw new Error('텍스트·CTA 슬라이드는 측면 화살표가 콘텐츠를 가리므로 도트만 사용해야 합니다.');
+    }
+    const cta = [...canvasElement.querySelectorAll('[data-carousel-slide="current"] button')].pop();
+    const rect = (el) => el.getBoundingClientRect();
+    if (cta) {
+      const c = rect(cta);
+      const overlapping = [...canvasElement.querySelectorAll('button[aria-label="다음 슬라이드"], button[aria-label="이전 슬라이드"]')]
+        .map(rect)
+        .some((a) => !(a.right < c.left || c.right < a.left || a.bottom < c.top || c.bottom < a.top));
+      if (overlapping) throw new Error('전환 컨트롤이 슬라이드 CTA를 덮으면 안 됩니다.');
     }
   },
 };
