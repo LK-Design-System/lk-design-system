@@ -1,18 +1,18 @@
-"use client";
-import {
-  tdStyle,
-  thStyle
-} from "./chunk-22ESLNNA.js";
-import {
-  IconButton
-} from "./chunk-5B7KHE4A.js";
-import {
-  Icon
-} from "./chunk-JNVDI5OO.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+
+var _chunkM7I6XONVcjs = require('./chunk-M7I6XONV.cjs');
+
+
+var _chunkITIFTVTBcjs = require('./chunk-ITIFTVTB.cjs');
+
+
+var _chunkX5XHQEI5cjs = require('./chunk-X5XHQEI5.cjs');
 
 // components/data/DataGrid.jsx
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 function compareValues(a, b, dir) {
   if (a == null && b == null) return 0;
   if (a == null) return 1;
@@ -34,14 +34,14 @@ function normalizeSortModel(model = []) {
   const seen = /* @__PURE__ */ new Set();
   const normalized = [];
   for (const entry of Array.isArray(model) ? model : []) {
-    if (entry?.key == null || seen.has(entry.key)) continue;
+    if (_optionalChain([entry, 'optionalAccess', _2 => _2.key]) == null || seen.has(entry.key)) continue;
     seen.add(entry.key);
     normalized.push({ key: entry.key, dir: entry.dir === "desc" ? "desc" : "asc" });
   }
   return normalized;
 }
 function legacySortModel(sort) {
-  return sort?.key == null ? [] : normalizeSortModel([sort]);
+  return _optionalChain([sort, 'optionalAccess', _3 => _3.key]) == null ? [] : normalizeSortModel([sort]);
 }
 function columnLabelText(column) {
   if (column.accessibleLabel) return column.accessibleLabel;
@@ -58,7 +58,7 @@ function orderColumns(columns, columnOrder) {
   const byKey = new Map(columns.map((column) => [column.key, column]));
   const seen = /* @__PURE__ */ new Set();
   const ordered = [];
-  for (const key of columnOrder ?? []) {
+  for (const key of _nullishCoalesce(columnOrder, () => ( []))) {
     if (seen.has(key) || !byKey.has(key)) continue;
     seen.add(key);
     ordered.push(byKey.get(key));
@@ -87,13 +87,13 @@ function decorateVisibleColumns(columns, logicalIndexByKey, utilityWidth) {
   const decorations = /* @__PURE__ */ new Map();
   const startWidths = utilityWidth ? [utilityWidth] : [];
   for (const column of columns.filter(isPinnedStart)) {
-    const resolvedWidth = column.width ?? column.minWidth ?? 160;
+    const resolvedWidth = _nullishCoalesce(_nullishCoalesce(column.width, () => ( column.minWidth)), () => ( 160));
     decorations.set(column.key, { pinSide: "start", pinOffset: sumCssSizes(startWidths), resolvedWidth });
     startWidths.push(resolvedWidth);
   }
   const endWidths = [];
   for (const column of [...columns].reverse().filter(isPinnedEnd)) {
-    const resolvedWidth = column.width ?? column.minWidth ?? 160;
+    const resolvedWidth = _nullishCoalesce(_nullishCoalesce(column.width, () => ( column.minWidth)), () => ( 160));
     decorations.set(column.key, { pinSide: "end", pinOffset: sumCssSizes(endWidths), resolvedWidth });
     endWidths.push(resolvedWidth);
   }
@@ -125,11 +125,11 @@ function checkboxStyle(checked, indeterminate = false, disabled = false) {
   };
 }
 function SelectionCheckbox({ checked, indeterminate = false, disabled = false, ...rest }) {
-  const inputRef = React.useRef(null);
-  React.useLayoutEffect(() => {
+  const inputRef = _react2.default.useRef(null);
+  _react2.default.useLayoutEffect(() => {
     if (inputRef.current) inputRef.current.indeterminate = indeterminate;
   }, [indeterminate]);
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "input",
     {
       ...rest,
@@ -145,10 +145,10 @@ function explicitSelection(selectedIds = []) {
   return { mode: "explicit", selectedIds: [...new Set(selectedIds)] };
 }
 function normalizeSelectionModel(model) {
-  if (model?.mode === "allMatching") {
-    return { mode: "allMatching", excludedIds: [...new Set(model.excludedIds ?? [])] };
+  if (_optionalChain([model, 'optionalAccess', _4 => _4.mode]) === "allMatching") {
+    return { mode: "allMatching", excludedIds: [...new Set(_nullishCoalesce(model.excludedIds, () => ( [])))] };
   }
-  return explicitSelection(model?.selectedIds);
+  return explicitSelection(_optionalChain([model, 'optionalAccess', _5 => _5.selectedIds]));
 }
 function excludeIneligibleRows(model, ineligibleIds) {
   const normalized = normalizeSelectionModel(model);
@@ -199,7 +199,7 @@ var ROW_INTERACTIVE_SELECTOR = [
   '[contenteditable]:not([contenteditable="false"])'
 ].join(", ");
 function isInteractiveRowTarget(target) {
-  return Boolean(target?.closest?.(ROW_INTERACTIVE_SELECTOR));
+  return Boolean(_optionalChain([target, 'optionalAccess', _6 => _6.closest, 'optionalCall', _7 => _7(ROW_INTERACTIVE_SELECTOR)]));
 }
 function utilityCellStyle({ offset, header = false, stickyHeader = false, stickyHeaderOffset = 0, background }) {
   return {
@@ -215,8 +215,8 @@ function columnPositionStyle(column, { header = false, stickyHeader = false, sti
   const verticallySticky = header && stickyHeader;
   const style = {
     boxSizing: "border-box",
-    width: column.width ?? (pinned ? column.resolvedWidth : void 0),
-    minWidth: column.minWidth ?? (pinned ? column.resolvedWidth : void 0)
+    width: _nullishCoalesce(column.width, () => ( (pinned ? column.resolvedWidth : void 0))),
+    minWidth: _nullishCoalesce(column.minWidth, () => ( (pinned ? column.resolvedWidth : void 0)))
   };
   if (pinned || verticallySticky) style.position = "sticky";
   if (column.pinSide === "start") style.insetInlineStart = column.pinOffset;
@@ -276,20 +276,20 @@ function DataGrid({
   style,
   ...rest
 }) {
-  const instanceId = React.useId().replace(/:/g, "");
+  const instanceId = _react2.default.useId().replace(/:/g, "");
   const usesControlledSortModel = controlledSortModel !== void 0;
   const usesLegacyControlledSort = !usesControlledSortModel && controlledSort !== void 0;
   const sortControlled = usesControlledSortModel || usesLegacyControlledSort;
-  const [internalSortModel, setInternalSortModel] = React.useState(() => normalizeSortModel(defaultSortModel ?? legacySortModel(defaultSort)));
+  const [internalSortModel, setInternalSortModel] = _react2.default.useState(() => normalizeSortModel(_nullishCoalesce(defaultSortModel, () => ( legacySortModel(defaultSort)))));
   const sortModel = usesControlledSortModel ? normalizeSortModel(controlledSortModel) : usesLegacyControlledSort ? legacySortModel(controlledSort) : internalSortModel;
   const primarySort = sortModel[0];
   const usesSelectionModel = controlledSelectionModel !== void 0;
   const usesLegacyControlledSelection = !usesSelectionModel && selectedRows !== void 0;
   const selectionControlled = usesSelectionModel || usesLegacyControlledSelection;
-  const [internalSelectionModel, setInternalSelectionModel] = React.useState(() => normalizeSelectionModel(defaultSelectionModel ?? explicitSelection(defaultSelectedRows)));
+  const [internalSelectionModel, setInternalSelectionModel] = _react2.default.useState(() => normalizeSelectionModel(_nullishCoalesce(defaultSelectionModel, () => ( explicitSelection(defaultSelectedRows)))));
   const selection = usesSelectionModel ? normalizeSelectionModel(controlledSelectionModel) : usesLegacyControlledSelection ? explicitSelection(selectedRows) : internalSelectionModel;
   const expansionControlled = expandedRowIds !== void 0;
-  const [internalExpandedRowIds, setInternalExpandedRowIds] = React.useState(() => [...new Set(defaultExpandedRowIds)]);
+  const [internalExpandedRowIds, setInternalExpandedRowIds] = _react2.default.useState(() => [...new Set(defaultExpandedRowIds)]);
   const resolvedExpandedRowIds = expansionControlled ? [...new Set(expandedRowIds)] : internalExpandedRowIds;
   const expandedIdSet = new Set(resolvedExpandedRowIds);
   const expandable = typeof renderExpandedRow === "function";
@@ -327,9 +327,9 @@ function DataGrid({
   const applySortModel = (nextModel) => {
     const normalized = normalizeSortModel(nextModel);
     if (!sortControlled) setInternalSortModel(normalized);
-    onSortModelChange?.(normalized);
+    _optionalChain([onSortModelChange, 'optionalCall', _8 => _8(normalized)]);
     if (!usesControlledSortModel) {
-      onSortChange?.(normalized[0] ?? { key: null, dir: "asc" });
+      _optionalChain([onSortChange, 'optionalCall', _9 => _9(_nullishCoalesce(normalized[0], () => ( { key: null, dir: "asc" })))]);
     }
   };
   const toggleSort = (column) => {
@@ -349,18 +349,18 @@ function DataGrid({
     }
     applySortModel(next);
   };
-  const resolvedTotalCount = Math.max(0, totalCount ?? rows.length);
+  const resolvedTotalCount = Math.max(0, _nullishCoalesce(totalCount, () => ( rows.length)));
   const applySelection = (nextModel) => {
     const normalized = excludeIneligibleRows(nextModel, ineligibleVisibleIdSet);
     if (!selectionControlled) setInternalSelectionModel(normalized);
-    onSelectionModelChange?.(normalized);
+    _optionalChain([onSelectionModelChange, 'optionalCall', _10 => _10(normalized)]);
     if (!usesSelectionModel && normalized.mode === "explicit") {
-      onSelectionChange?.(normalized.selectedIds);
+      _optionalChain([onSelectionChange, 'optionalCall', _11 => _11(normalized.selectedIds)]);
     }
   };
   const clearSelection = () => {
     applySelection(explicitSelection());
-    onClearSelection?.();
+    _optionalChain([onClearSelection, 'optionalCall', _12 => _12()]);
   };
   const toggleRow = (id, canSelect) => {
     if (!canSelect) return;
@@ -409,7 +409,7 @@ function DataGrid({
   const applyExpandedRowIds = (nextIds) => {
     const normalized = [...new Set(nextIds)];
     if (!expansionControlled) setInternalExpandedRowIds(normalized);
-    onExpandedRowIdsChange?.(normalized);
+    _optionalChain([onExpandedRowIdsChange, 'optionalCall', _13 => _13(normalized)]);
   };
   const toggleExpandedRow = (id) => {
     const nextIds = new Set(resolvedExpandedRowIds);
@@ -432,30 +432,30 @@ function DataGrid({
   const selectionColumnIndex = selectable ? expandable ? 2 : 1 : null;
   const expansionOffset = 0;
   const selectionOffset = expandable ? 44 : 0;
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       "aria-busy": loading || void 0,
       style: { overflowX: "auto", ...variant === "embedded" ? null : { border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)" }, ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ jsx("span", { role: "status", "aria-live": "polite", "aria-atomic": "true", style: visuallyHiddenStyle, children: selectedCount > 0 ? `${selectedCount}\uAC1C \uC120\uD0DD\uB428` : "" }),
-        /* @__PURE__ */ jsx("span", { role: "status", "aria-live": "polite", "aria-atomic": "true", style: visuallyHiddenStyle, children: loading ? loadingLabel : error == null && sorted.length === 0 ? emptyLabel : "" }),
-        /* @__PURE__ */ jsxs(
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { role: "status", "aria-live": "polite", "aria-atomic": "true", style: visuallyHiddenStyle, children: selectedCount > 0 ? `${selectedCount}\uAC1C \uC120\uD0DD\uB428` : "" }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { role: "status", "aria-live": "polite", "aria-atomic": "true", style: visuallyHiddenStyle, children: loading ? loadingLabel : error == null && sorted.length === 0 ? emptyLabel : "" }),
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "table",
           {
             "aria-label": tableLabel,
             "aria-colcount": logicalColumnCount || void 0,
             style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" },
             children: [
-              /* @__PURE__ */ jsxs("thead", { children: [
-                selecting && /* @__PURE__ */ jsxs("tr", { style: { height: 0 }, children: [
-                  expandable && /* @__PURE__ */ jsx("th", { scope: "col", "aria-colindex": expansionColumnIndex, style: visuallyHiddenStyle, children: "\uC138\uBD80 \uC815\uBCF4" }),
-                  selectable && /* @__PURE__ */ jsx("th", { scope: "col", "aria-colindex": selectionColumnIndex, style: visuallyHiddenStyle, children: "\uC120\uD0DD" }),
-                  visibleColumns.map((column) => /* @__PURE__ */ jsx("th", { scope: "col", "aria-colindex": column.logicalIndex, style: visuallyHiddenStyle, children: columnLabelText(column) }, column.key))
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "thead", { children: [
+                selecting && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "tr", { style: { height: 0 }, children: [
+                  expandable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "th", { scope: "col", "aria-colindex": expansionColumnIndex, style: visuallyHiddenStyle, children: "\uC138\uBD80 \uC815\uBCF4" }),
+                  selectable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "th", { scope: "col", "aria-colindex": selectionColumnIndex, style: visuallyHiddenStyle, children: "\uC120\uD0DD" }),
+                  visibleColumns.map((column) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "th", { scope: "col", "aria-colindex": column.logicalIndex, style: visuallyHiddenStyle, children: columnLabelText(column) }, column.key))
                 ] }),
-                selecting ? /* @__PURE__ */ jsxs("tr", { style: { height: headerH }, children: [
-                  expandable && /* @__PURE__ */ jsx(
+                selecting ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "tr", { style: { height: headerH }, children: [
+                  expandable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "td",
                     {
                       "aria-colindex": expansionColumnIndex,
@@ -467,7 +467,7 @@ function DataGrid({
                       }
                     }
                   ),
-                  selectable && /* @__PURE__ */ jsx(
+                  selectable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "td",
                     {
                       "aria-colindex": selectionColumnIndex,
@@ -478,10 +478,10 @@ function DataGrid({
                         borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
                         ...utilityCellStyle({ offset: selectionOffset, header: true, stickyHeader, stickyHeaderOffset, background: bandBackground })
                       },
-                      children: /* @__PURE__ */ jsx(SelectionCheckbox, { checked: scopeChecked, indeterminate: scopeIndeterminate, disabled: selectAllDisabled, onChange: toggleAll, "aria-label": selectAllLabel })
+                      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, SelectionCheckbox, { checked: scopeChecked, indeterminate: scopeIndeterminate, disabled: selectAllDisabled, onChange: toggleAll, "aria-label": selectAllLabel })
                     }
                   ),
-                  /* @__PURE__ */ jsx(
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "td",
                     {
                       colSpan: Math.max(1, visibleColumns.length),
@@ -493,20 +493,20 @@ function DataGrid({
                         top: stickyHeader ? stickyHeaderOffset : void 0,
                         zIndex: stickyHeader ? 3 : void 0
                       },
-                      children: /* @__PURE__ */ jsxs("div", { role: "group", "aria-label": `${selectionEntityLabel} \uC77C\uAD04 \uC791\uC5C5`, style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minHeight: headerH, padding: size === "sm" ? "0 8px 0 12px" : "0 8px 0 16px" }, children: [
-                        /* @__PURE__ */ jsxs("span", { "data-grid-selection-count": true, style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
+                      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { role: "group", "aria-label": `${selectionEntityLabel} \uC77C\uAD04 \uC791\uC5C5`, style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minHeight: headerH, padding: size === "sm" ? "0 8px 0 12px" : "0 8px 0 16px" }, children: [
+                        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { "data-grid-selection-count": true, style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: [
                           selectedCount,
                           "\uAC1C \uC120\uD0DD\uB428"
                         ] }),
-                        /* @__PURE__ */ jsxs("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: [
+                        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: [
                           renderedBulkActions,
-                          /* @__PURE__ */ jsx(IconButton, { variant: "plain", size: "small", round: false, label: `${selectionEntityLabel} \uC120\uD0DD \uBAA8\uB450 \uD574\uC81C`, title: `${selectionEntityLabel} \uC120\uD0DD \uBAA8\uB450 \uD574\uC81C`, onClick: clearSelection, children: /* @__PURE__ */ jsx(Icon, { name: "close", size: 15, "aria-hidden": "true" }) })
+                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkITIFTVTBcjs.IconButton, { variant: "plain", size: "small", round: false, label: `${selectionEntityLabel} \uC120\uD0DD \uBAA8\uB450 \uD574\uC81C`, title: `${selectionEntityLabel} \uC120\uD0DD \uBAA8\uB450 \uD574\uC81C`, onClick: clearSelection, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "close", size: 15, "aria-hidden": "true" }) })
                         ] })
                       ] })
                     }
                   )
-                ] }) : /* @__PURE__ */ jsxs("tr", { style: { height: headerH }, children: [
-                  expandable && /* @__PURE__ */ jsx(
+                ] }) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "tr", { style: { height: headerH }, children: [
+                  expandable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "th",
                     {
                       scope: "col",
@@ -517,10 +517,10 @@ function DataGrid({
                         borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
                         ...utilityCellStyle({ offset: expansionOffset, header: true, stickyHeader, stickyHeaderOffset, background: headerBackground })
                       },
-                      children: /* @__PURE__ */ jsx("span", { style: visuallyHiddenStyle, children: "\uC138\uBD80 \uC815\uBCF4" })
+                      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: visuallyHiddenStyle, children: "\uC138\uBD80 \uC815\uBCF4" })
                     }
                   ),
-                  selectable && /* @__PURE__ */ jsx(
+                  selectable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "th",
                     {
                       scope: "col",
@@ -532,52 +532,52 @@ function DataGrid({
                         borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
                         ...utilityCellStyle({ offset: selectionOffset, header: true, stickyHeader, stickyHeaderOffset, background: headerBackground })
                       },
-                      children: /* @__PURE__ */ jsx(SelectionCheckbox, { checked: scopeChecked, indeterminate: scopeIndeterminate, disabled: selectAllDisabled, onChange: toggleAll, "aria-label": selectAllLabel })
+                      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, SelectionCheckbox, { checked: scopeChecked, indeterminate: scopeIndeterminate, disabled: selectAllDisabled, onChange: toggleAll, "aria-label": selectAllLabel })
                     }
                   ),
                   visibleColumns.map((column) => {
                     const sortIndex = sortModel.findIndex((entry) => entry.key === column.key);
                     const sortEntry = sortIndex >= 0 ? sortModel[sortIndex] : null;
                     const label = columnLabelText(column);
-                    const directionLabel = sortEntry?.dir === "desc" ? "\uB0B4\uB9BC\uCC28\uC21C" : "\uC624\uB984\uCC28\uC21C";
+                    const directionLabel = _optionalChain([sortEntry, 'optionalAccess', _14 => _14.dir]) === "desc" ? "\uB0B4\uB9BC\uCC28\uC21C" : "\uC624\uB984\uCC28\uC21C";
                     const sortButtonLabel = sortEntry ? sortModel.length > 1 ? `${label}, ${sortIndex + 1}\uC21C\uC704 ${directionLabel} \uC815\uB82C, \uC815\uB82C \uBCC0\uACBD` : `${label}, ${directionLabel} \uC815\uB82C, \uC815\uB82C \uBCC0\uACBD` : `${label}, \uC815\uB82C`;
-                    return /* @__PURE__ */ jsx(
+                    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                       "th",
                       {
                         scope: "col",
                         "aria-colindex": column.logicalIndex,
-                        "aria-sort": column.sortable && primarySort?.key === column.key ? primarySort.dir === "desc" ? "descending" : "ascending" : void 0,
+                        "aria-sort": column.sortable && _optionalChain([primarySort, 'optionalAccess', _15 => _15.key]) === column.key ? primarySort.dir === "desc" ? "descending" : "ascending" : void 0,
                         "data-column-key": column.key,
                         "data-pinned": column.pinSide || void 0,
                         style: {
-                          ...thStyle(pad),
+                          ..._chunkM7I6XONVcjs.thStyle.call(void 0, pad),
                           textAlign: column.align || "left",
                           userSelect: "none",
                           ...columnPositionStyle(column, { header: true, stickyHeader, stickyHeaderOffset })
                         },
-                        children: column.sortable ? /* @__PURE__ */ jsxs(
+                        children: column.sortable ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                           "button",
                           {
                             type: "button",
                             "aria-label": sortButtonLabel,
                             onClick: () => toggleSort(column),
-                            style: { display: "inline-flex", alignItems: "center", gap: 5, padding: 0, border: 0, background: "transparent", cursor: "pointer", font: "inherit", letterSpacing: "inherit", textTransform: "inherit", color: "inherit" },
+                            style: { display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 5, minWidth: 24, minHeight: 24, padding: 0, border: 0, background: "transparent", cursor: "pointer", font: "inherit", letterSpacing: "inherit", textTransform: "inherit", color: "inherit" },
                             children: [
                               column.label,
-                              /* @__PURE__ */ jsx(Icon, { name: sortEntry?.dir === "desc" ? "chevron-down-small" : "chevron-up-small", size: 12, "aria-hidden": "true", style: { opacity: sortEntry ? 1 : 0.3 } }),
-                              sortEntry && sortModel.length > 1 && /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { fontSize: 10, fontVariantNumeric: "tabular-nums" }, children: sortIndex + 1 })
+                              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: _optionalChain([sortEntry, 'optionalAccess', _16 => _16.dir]) === "desc" ? "chevron-down-small" : "chevron-up-small", size: 12, "aria-hidden": "true", style: { opacity: sortEntry ? 1 : 0.3 } }),
+                              sortEntry && sortModel.length > 1 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { fontSize: 10, fontVariantNumeric: "tabular-nums" }, children: sortIndex + 1 })
                             ]
                           }
-                        ) : /* @__PURE__ */ jsx("span", { style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: column.label })
+                        ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: column.label })
                       },
                       column.key
                     );
                   })
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs("tbody", { children: [
-                (loading || error != null || sorted.length === 0) && /* @__PURE__ */ jsx("tr", { children: /* @__PURE__ */ jsx("td", { colSpan, style: { padding: "var(--space-8) var(--space-4)", textAlign: "center", borderBottom: 0 }, children: /* @__PURE__ */ jsxs("div", { role: error != null ? "alert" : void 0, style: { display: "inline-grid", justifyItems: "center", gap: "var(--space-2)", color: error != null ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-alternative)", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: [
-                  /* @__PURE__ */ jsx("span", { children: loading ? loadingLabel : error ?? emptyLabel }),
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "tbody", { children: [
+                (loading || error != null || sorted.length === 0) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tr", { children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "td", { colSpan, style: { padding: "var(--space-8) var(--space-4)", textAlign: "center", borderBottom: 0 }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { role: error != null ? "alert" : void 0, style: { display: "inline-grid", justifyItems: "center", gap: "var(--space-2)", color: error != null ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-alternative)", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: [
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: loading ? loadingLabel : _nullishCoalesce(error, () => ( emptyLabel)) }),
                   stateActions
                 ] }) }) }),
                 !loading && error == null && sorted.map(({ row, id, sourceIndex, canSelect }) => {
@@ -591,8 +591,8 @@ function DataGrid({
                     if (isInteractiveRowTarget(event.target)) return;
                     onRowActivate(row, id, event);
                   };
-                  return /* @__PURE__ */ jsxs(React.Fragment, { children: [
-                    /* @__PURE__ */ jsxs(
+                  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
+                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                       "tr",
                       {
                         "aria-selected": selectable ? selected : void 0,
@@ -607,7 +607,7 @@ function DataGrid({
                         } : void 0,
                         style: { background: selected ? "var(--color-semantic-primary-surface-normal)" : "transparent", cursor: onRowActivate ? "pointer" : void 0 },
                         children: [
-                          expandable && /* @__PURE__ */ jsx(
+                          expandable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                             "td",
                             {
                               "aria-colindex": expansionColumnIndex,
@@ -618,8 +618,8 @@ function DataGrid({
                                 borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
                                 ...utilityCellStyle({ offset: expansionOffset, background: selected ? "var(--color-semantic-primary-surface-normal)" : headerBackground })
                               },
-                              children: rowExpandable && /* @__PURE__ */ jsx(
-                                IconButton,
+                              children: rowExpandable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                                _chunkITIFTVTBcjs.IconButton,
                                 {
                                   variant: "plain",
                                   size: "small",
@@ -628,12 +628,12 @@ function DataGrid({
                                   "aria-expanded": expanded,
                                   "aria-controls": detailId,
                                   onClick: () => toggleExpandedRow(id),
-                                  children: /* @__PURE__ */ jsx(Icon, { name: expanded ? "chevron-up-small" : "chevron-down-small", size: 16, "aria-hidden": "true" })
+                                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: expanded ? "chevron-up-small" : "chevron-down-small", size: 16, "aria-hidden": "true" })
                                 }
                               )
                             }
                           ),
-                          selectable && /* @__PURE__ */ jsx(
+                          selectable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                             "td",
                             {
                               "aria-colindex": selectionColumnIndex,
@@ -643,7 +643,7 @@ function DataGrid({
                                 borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
                                 ...utilityCellStyle({ offset: selectionOffset, background: selected ? "var(--color-semantic-primary-surface-normal)" : headerBackground })
                               },
-                              children: /* @__PURE__ */ jsx(
+                              children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                                 SelectionCheckbox,
                                 {
                                   checked: selected,
@@ -655,9 +655,9 @@ function DataGrid({
                             }
                           ),
                           visibleColumns.map((column) => {
-                            const cellEditing = editingCell?.rowId === id && editingCell?.columnKey === column.key && typeof column.editor === "function";
+                            const cellEditing = _optionalChain([editingCell, 'optionalAccess', _17 => _17.rowId]) === id && _optionalChain([editingCell, 'optionalAccess', _18 => _18.columnKey]) === column.key && typeof column.editor === "function";
                             const content = cellEditing ? column.editor(row, id) : typeof column.render === "function" ? column.render(row, id) : row[column.key];
-                            return /* @__PURE__ */ jsx(
+                            return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                               "td",
                               {
                                 "aria-colindex": column.logicalIndex,
@@ -665,7 +665,7 @@ function DataGrid({
                                 "data-editing": cellEditing || void 0,
                                 "data-pinned": column.pinSide || void 0,
                                 style: {
-                                  ...tdStyle(pad),
+                                  ..._chunkM7I6XONVcjs.tdStyle.call(void 0, pad),
                                   textAlign: column.align || "left",
                                   ...columnPositionStyle(column, { selected })
                                 },
@@ -677,7 +677,7 @@ function DataGrid({
                         ]
                       }
                     ),
-                    expanded && /* @__PURE__ */ jsx("tr", { "data-expanded-row-for": String(id), children: /* @__PURE__ */ jsx("td", { colSpan, style: { padding: 0, borderBottom: "1px solid var(--color-semantic-line-solid-normal)", background: "var(--color-semantic-background-elevated-normal)" }, children: /* @__PURE__ */ jsx("div", { id: detailId, role: "region", "aria-label": `${rowLabel} \uC138\uBD80 \uC815\uBCF4`, style: { padding: size === "sm" ? "var(--space-3) var(--space-4)" : "var(--space-4)" }, children: renderExpandedRow(row, id) }) }) })
+                    expanded && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tr", { "data-expanded-row-for": String(id), children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "td", { colSpan, style: { padding: 0, borderBottom: "1px solid var(--color-semantic-line-solid-normal)", background: "var(--color-semantic-background-elevated-normal)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { id: detailId, role: "region", "aria-label": `${rowLabel} \uC138\uBD80 \uC815\uBCF4`, style: { padding: size === "sm" ? "var(--space-3) var(--space-4)" : "var(--space-4)" }, children: renderExpandedRow(row, id) }) }) })
                   ] }, id);
                 })
               ] })
@@ -689,7 +689,7 @@ function DataGrid({
   );
 }
 
-export {
-  DataGrid
-};
-//# sourceMappingURL=chunk-4W67NQXR.js.map
+
+
+exports.DataGrid = DataGrid;
+//# sourceMappingURL=chunk-Y6CGPH55.cjs.map
