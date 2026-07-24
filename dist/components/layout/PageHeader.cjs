@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkLUGGKP4Ccjs = require('../../chunk-LUGGKP4C.cjs');
+var _chunkW4MFTDVBcjs = require('../../chunk-W4MFTDVB.cjs');
 
 
-exports.PageHeader = _chunkLUGGKP4Ccjs.PageHeader;
+exports.PageHeader = _chunkW4MFTDVBcjs.PageHeader;
 //# sourceMappingURL=PageHeader.cjs.map

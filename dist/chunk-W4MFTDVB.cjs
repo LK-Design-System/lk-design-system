@@ -6,6 +6,7 @@ var _jsxruntime = require('react/jsx-runtime');
 function PageHeader({
   eyebrow,
   breadcrumb,
+  avatar,
   title,
   description,
   status,
@@ -54,6 +55,7 @@ function PageHeader({
               minWidth: 0
             },
             children: [
+              avatar != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-page-header-avatar": true, style: { flexShrink: 0, display: "flex" }, children: avatar }),
               /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-page-header-content": true, style: { display: "grid", gap: compact ? 4 : 6, flex: "1 1 18rem", minWidth: 0 }, children: [
                 /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
                   /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Heading, { style: { margin: 0, minWidth: 0, color: "var(--color-semantic-label-strong)", fontSize: titleSize, lineHeight: titleLine, fontWeight: "var(--fw-extra)", letterSpacing: titleSpacing, wordBreak: "keep-all", overflowWrap: "anywhere" }, children: title }),
@@ -74,4 +76,4 @@ function PageHeader({
 
 
 exports.PageHeader = PageHeader;
-//# sourceMappingURL=chunk-LUGGKP4C.cjs.map
+//# sourceMappingURL=chunk-W4MFTDVB.cjs.map

@@ -47,6 +47,7 @@ export { ReactionBar } from '../components/content/ReactionBar';
 export { ReorderList } from '../components/content/ReorderList';
 export { SourceDisclosure } from '../components/content/SourceDisclosure';
 export { SourceTag } from '../components/content/SourceTag';
+export { StatList } from '../components/content/StatList';
 export { StatusBadge } from '../components/content/StatusBadge';
 export { StepList } from '../components/content/StepList';
 export { Thumbnail } from '../components/content/Thumbnail';

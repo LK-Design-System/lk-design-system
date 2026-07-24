@@ -28,6 +28,7 @@ export { LogViewer } from '../components/content/LogViewer';
 export { ReactionBar } from '../components/content/ReactionBar';
 export { ReorderList } from '../components/content/ReorderList';
 export { SourceDisclosure } from '../components/content/SourceDisclosure';
+export { StatList } from '../components/content/StatList';
 export { AnnotatedImage } from '../components/data/AnnotatedImage';
 export { BarChart } from '../components/data/BarChart';
 export { Calendar } from '../components/data/Calendar';

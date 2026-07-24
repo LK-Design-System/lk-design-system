@@ -6,6 +6,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
 function PageHeader({
   eyebrow,
   breadcrumb,
+  avatar,
   title,
   description,
   status,
@@ -54,6 +55,7 @@ function PageHeader({
               minWidth: 0
             },
             children: [
+              avatar != null && /* @__PURE__ */ jsx("div", { "data-page-header-avatar": true, style: { flexShrink: 0, display: "flex" }, children: avatar }),
               /* @__PURE__ */ jsxs("div", { "data-page-header-content": true, style: { display: "grid", gap: compact ? 4 : 6, flex: "1 1 18rem", minWidth: 0 }, children: [
                 /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
                   /* @__PURE__ */ jsx(Heading, { style: { margin: 0, minWidth: 0, color: "var(--color-semantic-label-strong)", fontSize: titleSize, lineHeight: titleLine, fontWeight: "var(--fw-extra)", letterSpacing: titleSpacing, wordBreak: "keep-all", overflowWrap: "anywhere" }, children: title }),
@@ -74,4 +76,4 @@ function PageHeader({
 export {
   PageHeader
 };
-//# sourceMappingURL=chunk-HOFAIVV6.js.map
+//# sourceMappingURL=chunk-TVYG4SBW.js.map
