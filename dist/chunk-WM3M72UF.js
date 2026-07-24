@@ -1,13 +1,13 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
+"use client";
 
 // components/cards/ProductCard.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
 function isFocusVisible(node) {
   if (!node || typeof node.matches !== "function") return true;
   try {
     return node.matches(":focus-visible");
-  } catch (e) {
+  } catch {
     return true;
   }
 }
@@ -31,12 +31,12 @@ function ProductCard({
   "aria-label": ariaLabel,
   ...rest
 }) {
-  const [pointerHover, setPointerHover] = _react2.default.useState(false);
-  const [focusVisible, setFocusVisible] = _react2.default.useState(false);
+  const [pointerHover, setPointerHover] = React.useState(false);
+  const [focusVisible, setFocusVisible] = React.useState(false);
   const hover = pointerHover || focusVisible;
   const HeadingTag = headingLevel === false || headingLevel == null ? "div" : `h${headingLevel}`;
-  const resolvedLabel = _nullishCoalesce(ariaLabel, () => ( (typeof id === "string" ? id : void 0)));
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  const resolvedLabel = ariaLabel ?? (typeof id === "string" ? id : void 0);
+  return /* @__PURE__ */ jsxs(
     "a",
     {
       href,
@@ -68,7 +68,7 @@ function ProductCard({
       },
       ...rest,
       children: [
-        image && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        image && /* @__PURE__ */ jsxs(
           "div",
           {
             "aria-hidden": "true",
@@ -83,11 +83,13 @@ function ProductCard({
               maskImage: PC_FADE
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ jsx(
                 "img",
                 {
                   src: image,
                   alt: "",
+                  loading: "lazy",
+                  decoding: "async",
                   style: {
                     width: "100%",
                     height: "100%",
@@ -100,17 +102,17 @@ function ProductCard({
                   }
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { position: "absolute", inset: 0, background: PC_GRADE } })
+              /* @__PURE__ */ jsx("div", { style: { position: "absolute", inset: 0, background: PC_GRADE } })
             ]
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { position: "relative", padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9 }, children: [
-          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
-            category && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--color-semantic-inverse-primary)" }, children: category }),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, HeadingTag, { style: { margin: 0, fontSize: "var(--fs-h5)", lineHeight: "var(--lh-h5)", fontWeight: "var(--fw-extra)", letterSpacing: "var(--ls-h5)", color: "var(--color-semantic-inverse-label)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: id })
+        /* @__PURE__ */ jsxs("div", { style: { position: "relative", padding: "18px 20px 20px", display: "flex", flexDirection: "column", gap: 9 }, children: [
+          /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 3 }, children: [
+            category && /* @__PURE__ */ jsx("span", { style: { fontSize: "var(--fs-caption)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--color-semantic-inverse-primary)" }, children: category }),
+            /* @__PURE__ */ jsx(HeadingTag, { style: { margin: 0, fontSize: "var(--fs-h5)", lineHeight: "var(--lh-h5)", fontWeight: "var(--fw-extra)", letterSpacing: "var(--ls-h5)", color: "var(--color-semantic-inverse-label)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: id })
           ] }),
-          description && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { style: { margin: 0, fontSize: "var(--label1-size)", lineHeight: "var(--label1-reading-line)", color: "var(--color-semantic-inverse-label)", wordBreak: "keep-all", display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 2, overflow: "hidden" }, children: description }),
-          cta && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: {
+          description && /* @__PURE__ */ jsx("p", { style: { margin: 0, fontSize: "var(--label1-size)", lineHeight: "var(--label1-reading-line)", color: "var(--color-semantic-inverse-label)", wordBreak: "keep-all", display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 2, overflow: "hidden" }, children: description }),
+          cta && /* @__PURE__ */ jsx("span", { style: {
             alignSelf: "flex-end",
             marginTop: 4,
             whiteSpace: "nowrap",
@@ -128,7 +130,7 @@ function ProductCard({
   );
 }
 
-
-
-exports.ProductCard = ProductCard;
-//# sourceMappingURL=chunk-IXAOUJWX.cjs.map
+export {
+  ProductCard
+};
+//# sourceMappingURL=chunk-WM3M72UF.js.map
