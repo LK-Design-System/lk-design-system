@@ -1,5 +1,9 @@
-import { FeedCard } from '../src/index.js';
+import { FeedCard, Icon } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
+
+// A decorative verified mark for the author badge slot; the article is already
+// named by its author, so the mark is aria-hidden here.
+const verifiedBadge = <Icon name="verified-check-fill" size={16} aria-hidden="true" style={{ color: 'var(--color-semantic-primary-normal)' }} />;
 
 const meta = {
   title: 'LDS Product/Content/Feed Card',
@@ -37,10 +41,12 @@ export const Overview = {
     '뉴스 팀 게시물과 커버가 있는 개인 게시물을 같은 피드에서 훑는 상황입니다. 각 게시물이 하나의 링크가 아니라 작성자·팔로우·오버플로·좋아요·댓글·공유를 독립 컨트롤로 담는 article 영역인지, 본문이 "더 보기"로 접히는지 확인하세요.',
   ),
   render: () => (
-    <div role="feed" style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 520 }}>
+    <div style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 520 }}>
       <FeedCard
-        author={{ name: '글로벌 리더십과 HR', variant: 'company', href: '/teams/hr' }}
-        meta="원티드 뉴스 · 6시간 전"
+        author={{ name: '글로벌 리더십과 HR', variant: 'company', href: '/teams/hr', badge: verifiedBadge }}
+        meta="원티드 뉴스"
+        time="6시간 전"
+        datetime="2026-07-24T03:00:00Z"
         following={false}
         onFollowToggle={() => {}}
         menuItems={[
@@ -85,6 +91,9 @@ export const Overview = {
     // 첫 게시물 본문은 접혀 있고 펼치기 토글을 가진다.
     const expandToggle = posts[0].querySelector('button[aria-expanded]');
     if (!expandToggle) throw new Error('긴 본문 게시물에는 더 보기 토글이 있어야 합니다.');
+    // time/datetime을 주면 헤더 시간이 기계판독 <time datetime>으로 렌더된다.
+    const timeEl = posts[0].querySelector('time[datetime]');
+    if (!timeEl) throw new Error('time/datetime을 주면 헤더 시간이 <time datetime>으로 렌더되어야 합니다.');
   },
 };
 
@@ -94,7 +103,7 @@ export const Variants = {
     '커버 없는 짧은 게시물, 본문을 접지 않는 게시물(clamp=false), 이미 팔로우한 상태를 배치하는 상황입니다.',
   ),
   render: () => (
-    <div role="feed" style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 520 }}>
+    <div style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 520 }}>
       <FeedCard
         author={{ name: '원티드', variant: 'company' }}
         meta="공지 · 2시간 전"

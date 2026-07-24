@@ -28,6 +28,8 @@ import { ReactionBar } from '../content/ReactionBar.jsx';
 export function FeedCard({
   author = {},
   meta,
+  time,
+  datetime,
   following,
   onFollowToggle,
   followLabel,
@@ -45,7 +47,7 @@ export function FeedCard({
   'aria-label': ariaLabel,
   ...rest
 }) {
-  const { name, src, variant = 'person', href } = author;
+  const { name, src, variant = 'person', href, badge } = author;
   const showFollow = onFollowToggle !== undefined || following !== undefined;
   const showMenu = Array.isArray(menuItems) && menuItems.length > 0;
   const hasReactions = !!(like || comment || share);
@@ -59,15 +61,21 @@ export function FeedCard({
     ? <a href={href} style={{ color: 'inherit', textDecoration: 'none' }}>{name}</a>
     : name;
   const nameNode = (
-    <HeadingTag style={{ margin: 0, fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)' }}>
+    <HeadingTag style={{ margin: 0, fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)' }}>
       {nameInner}
+      {badge}
     </HeadingTag>
   );
+  // The secondary line pairs the source with a machine-readable timestamp:
+  // `<time datetime>` lets assistive tech and crawlers read the exact time even
+  // though the visible label is relative ("6시간 전").
+  const timeNode = time != null ? <time dateTime={datetime}>{time}</time> : null;
+  const descriptionNode = meta != null && timeNode ? <>{meta} · {timeNode}</> : (timeNode ?? meta);
 
   let trailing;
   if (showFollow || showMenu) {
     trailing = (
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginLeft: 'var(--space-2)' }}>
         {showFollow && (
           <Button variant={following ? 'ghost' : 'secondary'} size="sm" onClick={onFollowToggle}>
             {resolvedFollowLabel}
@@ -78,7 +86,7 @@ export function FeedCard({
             align="right"
             items={menuItems}
             trigger={
-              <IconButton variant="ghost" round size="sm" label={menuLabel}>
+              <IconButton variant="plain" round size="sm" label={menuLabel} style={{ color: 'var(--color-semantic-label-alternative)' }}>
                 <Icon name="more-vertical" size={20} aria-hidden="true" />
               </IconButton>
             }
@@ -103,8 +111,9 @@ export function FeedCard({
       <div style={{ padding: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
         <ListCell
           leading={<Avatar src={src} name={name} variant={variant} size="medium" />}
+          leadingStyle={{ marginRight: 'var(--space-1)' }}
           title={nameNode}
-          description={meta}
+          description={descriptionNode}
           trailing={trailing}
           paddingX={0}
           verticalPadding="none"

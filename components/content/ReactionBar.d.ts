@@ -33,6 +33,12 @@ export interface ReactionBarProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'sm' | 'md';
   /** 정렬. `start`는 왼쪽 정렬, `between`은 양끝 배분. @default "start" */
   align?: 'start' | 'between';
+  /**
+   * 눈에 보이는 수의 표기 방식. 기본은 한국식 축약(1240 → "1.2천", 12800 → "1.2만").
+   * 접근 이름에는 축약 없이 정확한 수가 들어갑니다. `(n) => String(n)`로 끄거나
+   * K/M 포맷터로 바꿀 수 있습니다.
+   */
+  formatCount?: (count: number) => React.ReactNode;
   /** 추가 액션(북마크 등)을 뒤에 덧붙입니다. */
   children?: React.ReactNode;
 }

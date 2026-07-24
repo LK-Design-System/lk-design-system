@@ -82,6 +82,15 @@ export const NarrowReaction = {
     if (!wrap || wrap.scrollWidth > wrap.clientWidth + 1) {
       throw new Error('ReactionBar는 320px 컨테이너에서 가로 스크롤을 만들지 않아야 합니다.');
     }
+    // 큰 수는 한국식으로 축약되어 보인다(1240 → 1.2천).
+    if (!wrap.textContent.includes('1.2천')) {
+      throw new Error('큰 수는 눈에 보이는 곳에서 축약되어야 합니다(1240 → 1.2천).');
+    }
+    // 접근 이름에는 정확한 수가 유지된다.
+    const like = wrap.querySelector('button[aria-pressed]');
+    if (!/1240/.test(like.getAttribute('aria-label') || '')) {
+      throw new Error('접근 이름에는 축약 없이 정확한 수(1240)가 유지되어야 합니다.');
+    }
   },
 };
 
