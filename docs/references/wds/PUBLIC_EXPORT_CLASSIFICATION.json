@@ -140,6 +140,7 @@
         "stories/ContentDisclosure.stories.jsx",
         "stories/ContentListsMedia.stories.jsx",
         "stories/ContentMedia.stories.jsx",
+        "stories/ContentProse.stories.jsx",
         "stories/ContentStepList.stories.jsx",
         "stories/ContentTimeline.stories.jsx",
         "stories/StatusStatusBadge.stories.jsx"
@@ -153,6 +154,7 @@
         "Kbd",
         "ListCell",
         "Overline",
+        "Prose",
         "SourceTag",
         "StatusBadge",
         "StepList",

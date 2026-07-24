@@ -16,6 +16,7 @@ export { Divider } from './components/content/Divider.jsx';
 export { Kbd } from './components/content/Kbd.jsx';
 export { ListCell } from './components/content/ListCell.jsx';
 export { Overline } from './components/content/Overline.jsx';
+export { Prose } from './components/content/Prose.jsx';
 export { SourceTag } from './components/content/SourceTag.jsx';
 export { StatusBadge } from './components/content/StatusBadge.jsx';
 export { StepList } from './components/content/StepList.jsx';

@@ -39,6 +39,7 @@ export { Kbd } from '../components/content/Kbd';
 export { ListCell } from '../components/content/ListCell';
 export { LogViewer } from '../components/content/LogViewer';
 export { Overline } from '../components/content/Overline';
+export { Prose } from '../components/content/Prose';
 export { ReorderList } from '../components/content/ReorderList';
 export { SourceDisclosure } from '../components/content/SourceDisclosure';
 export { SourceTag } from '../components/content/SourceTag';

@@ -39,6 +39,7 @@ export { Kbd } from '../components/content/Kbd.jsx';
 export { ListCell } from '../components/content/ListCell.jsx';
 export { LogViewer } from '../components/content/LogViewer.jsx';
 export { Overline } from '../components/content/Overline.jsx';
+export { Prose } from '../components/content/Prose.jsx';
 export { ReorderList } from '../components/content/ReorderList.jsx';
 export { SourceDisclosure } from '../components/content/SourceDisclosure.jsx';
 export { SourceTag } from '../components/content/SourceTag.jsx';
