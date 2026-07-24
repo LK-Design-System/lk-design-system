@@ -32,6 +32,9 @@ export function Accordion({ items = [], multiple = false, defaultOpen = [], head
         const isOpen = open.has(i);
         const triggerId = `${rawId}-${i}-trigger`;
         const panelId = `${rawId}-${i}-panel`;
+        const titleId = `${rawId}-${i}-title`;
+        const descriptionId = `${rawId}-${i}-description`;
+        const hasDescription = it.description != null && it.description !== '';
         return (
           <div key={i} style={{ borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
             <HeadingTag {...headingProps}>
@@ -40,16 +43,39 @@ export function Accordion({ items = [], multiple = false, defaultOpen = [], head
                 id={triggerId}
                 aria-expanded={isOpen}
                 aria-controls={panelId}
+                /* The name is pinned to the title, so a decorative `leading`
+                   glyph and the supporting `description` can live inside the
+                   trigger (keeping the whole row clickable) without being
+                   absorbed into the button's accessible name. */
+                aria-labelledby={titleId}
+                aria-describedby={hasDescription ? descriptionId : undefined}
                 onClick={() => toggle(i)}
                 style={{
-                  width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
+                  width: '100%', display: 'flex', alignItems: 'center', gap: 16,
                   padding: '18px 4px', border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left',
                   fontFamily: 'var(--font-sans)', fontSize: 'var(--headline2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0,
                   color: isOpen ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-normal)',
                   transition: 'color var(--dur-fast) var(--ease-out)',
                 }}
               >
-                <span style={{ wordBreak: 'keep-all' }}>{it.title}</span>
+                {it.leading != null && (
+                  <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center' }}>{it.leading}</span>
+                )}
+                <span style={{ flex: 1, minWidth: 0, display: 'grid', gap: 'var(--space-1)' }}>
+                  <span id={titleId} style={{ wordBreak: 'keep-all' }}>{it.title}</span>
+                  {hasDescription && (
+                    <span
+                      id={descriptionId}
+                      style={{
+                        fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)',
+                        fontWeight: 'var(--fw-regular)', color: 'var(--color-semantic-label-neutral)',
+                        wordBreak: 'keep-all',
+                      }}
+                    >
+                      {it.description}
+                    </span>
+                  )}
+                </span>
                 <Icon name="chevron-down-small" size={20} aria-hidden="true" style={{ flexShrink: 0, transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-base) var(--ease-out)' }} />
               </button>
             </HeadingTag>

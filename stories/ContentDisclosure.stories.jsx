@@ -3,6 +3,7 @@ import {
   Accordion,
   Code,
   Collapsible,
+  Icon,
 } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -81,5 +82,54 @@ export const Disclosure = {
       throw new Error('접은 뒤 패널은 inert가 되어 탭 포커스·스크린리더에서 빠져야 합니다.');
     }
     await userEvent.click(collapsibleTrigger);
+  },
+};
+
+export const LeadingAndDescription = {
+  name: '변형·상태 · 아이콘과 설명',
+  parameters: storyDescription(
+    '항목마다 선행 아이콘과 제목 아래 한 줄 설명을 붙이는 상황입니다. 아이콘과 설명이 트리거 안에 있어 행 전체가 계속 눌리면서도, 버튼의 접근 이름은 제목에만 고정되고 설명은 이름이 아니라 설명으로 연결되는지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ maxWidth: 720 }}>
+      <Accordion
+        items={[
+          {
+            leading: <Icon name="person" size={22} aria-hidden="true" />,
+            title: '담당자 배정',
+            description: '요청을 받을 사람을 고릅니다.',
+            content: '팀과 근무 시간을 기준으로 자동 배정하거나 직접 지정할 수 있습니다.',
+          },
+          {
+            leading: <Icon name="document" size={22} aria-hidden="true" />,
+            title: '문서 보관 기간',
+            description: '보관 후 자동 삭제까지의 기간입니다.',
+            content: '기본 90일이며 정책에 따라 조직 단위로 늘릴 수 있습니다.',
+          },
+        ]}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const trigger = canvasElement.querySelector('button[aria-expanded]');
+    if (!trigger) throw new Error('트리거를 찾지 못했습니다.');
+
+    // 접근 이름은 제목에만 고정된다 — 장식 아이콘도 설명도 이름에 섞이지 않는다.
+    const labelledBy = trigger.getAttribute('aria-labelledby');
+    const titleEl = labelledBy && doc.getElementById(labelledBy);
+    if (!titleEl || titleEl.textContent.trim() !== '담당자 배정') {
+      throw new Error('트리거 접근 이름은 title에만 고정되어야 합니다(아이콘·설명 제외).');
+    }
+    // 설명은 이름이 아니라 aria-describedby로 연결된다.
+    const describedBy = trigger.getAttribute('aria-describedby');
+    const descEl = describedBy && doc.getElementById(describedBy);
+    if (!descEl || descEl.textContent.trim() !== '요청을 받을 사람을 고릅니다.') {
+      throw new Error('설명은 aria-describedby로 연결되어야 합니다.');
+    }
+    // 설명은 트리거 안에 있어 행 전체가 눌린다.
+    if (!trigger.contains(descEl)) {
+      throw new Error('설명은 트리거 안에 있어야 행 전체가 눌립니다.');
+    }
   },
 };

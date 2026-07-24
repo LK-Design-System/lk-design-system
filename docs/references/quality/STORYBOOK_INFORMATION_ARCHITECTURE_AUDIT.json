@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "02ec0ed2da9b8b9793b0f6fd554893e42ac2d6fb3b83a0aa4c1a05966d083edd",
+    "storybookIndexSha256": "91d13f4b607b6faf9f112b775b738cd78cd8dedf387a2bf5e463343b7c0eae45",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -59,22 +59,22 @@
   },
   "summary": {
     "pages": 155,
-    "stories": 509,
-    "publicStories": 358,
+    "stories": 510,
+    "publicStories": 359,
     "hiddenStories": 151,
     "componentDescriptions": 151,
     "pagesWithVisibleCanvasIntroduction": 155,
     "pagesWithDecisionGuidance": 151,
-    "describedPublicStories": 358,
+    "describedPublicStories": 359,
     "reviewedPages": 155,
-    "reviewedStories": 509,
+    "reviewedStories": 510,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
       "overview": 148,
       "usage": 25,
-      "variants-states": 71,
+      "variants-states": 72,
       "interaction": 44,
       "responsive": 44,
       "scenario": 16,
@@ -90,8 +90,8 @@
     "layers": {
       "Core": {
         "pages": 53,
-        "stories": 172,
-        "public": 96,
+        "stories": 173,
+        "public": 97,
         "hidden": 76,
         "guideReadyPages": 53
       },
@@ -1138,23 +1138,24 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/ContentDisclosure.stories.jsx",
-      "sourceSha256": "46a20e481b2ba4a306203d9c73d37d878fa4d6db34f4545e40a129d3dce55158",
+      "sourceSha256": "4ed31a5a333e76c689fffb399af510453b3bd9b9c4a516891a6b96ab0cd1648e",
       "primaryOwner": "Accordion",
       "ownerComponents": [
         "Accordion",
         "Collapsible"
       ],
       "supportingComponents": [
-        "Code"
+        "Code",
+        "Icon"
       ],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-content-disclosure--disclosure",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -1165,7 +1166,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "46a20e481b2ba4a306203d9c73d37d878fa4d6db34f4545e40a129d3dce55158",
+      "reviewedSourceSha256": "4ed31a5a333e76c689fffb399af510453b3bd9b9c4a516891a6b96ab0cd1648e",
       "stories": [
         {
           "id": "lds-core-components-content-disclosure--disclosure",
@@ -1192,6 +1193,30 @@
             "Code"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-content-disclosure--leading-and-description",
+          "name": "변형·상태 · 아이콘과 설명",
+          "exportName": "LeadingAndDescription",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Accordion"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ]
         }
       ],
       "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
@@ -15128,7 +15153,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormFileUploadQueue.stories.jsx",
-      "sourceSha256": "f371308a7f95604f19254531cc41d947c6e2e8508a3ee66a362d450f3587dfb9",
+      "sourceSha256": "218d3d77dc43760a5020257e33c31702f8834abea6206b04c8460e172f6ea28b",
       "primaryOwner": "FileUploadQueue",
       "ownerComponents": [
         "FileUploadQueue"
@@ -15155,7 +15180,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "f371308a7f95604f19254531cc41d947c6e2e8508a3ee66a362d450f3587dfb9",
+      "reviewedSourceSha256": "218d3d77dc43760a5020257e33c31702f8834abea6206b04c8460e172f6ea28b",
       "stories": [
         {
           "id": "lds-product-selection-and-input-file-upload-queue--upload-and-conversion",
