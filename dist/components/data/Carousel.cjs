@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkATA5OOBBcjs = require('../../chunk-ATA5OOBB.cjs');
+var _chunk4Q4HSBBJcjs = require('../../chunk-4Q4HSBBJ.cjs');
 require('../../chunk-X5XHQEI5.cjs');
 
 
-exports.Carousel = _chunkATA5OOBBcjs.Carousel;
+exports.Carousel = _chunk4Q4HSBBJcjs.Carousel;
 //# sourceMappingURL=Carousel.cjs.map

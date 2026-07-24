@@ -1,14 +1,14 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-var _chunkX5XHQEI5cjs = require('./chunk-X5XHQEI5.cjs');
+"use client";
+import {
+  Icon
+} from "./chunk-JNVDI5OO.js";
 
 // components/data/Carousel.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
 var hiddenStyle = { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap", border: 0 };
 function useStyleRule(id, css) {
-  _react2.default.useEffect(() => {
+  React.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById(id)) return;
     const el = document.createElement("style");
     el.id = id;
@@ -45,24 +45,24 @@ function Carousel({
     "@media (prefers-reduced-motion: reduce){[data-lds-carousel-track],[data-lds-carousel-dot]{transition:none!important}}"
   );
   const n = slides.length;
-  const [i, setI] = _react2.default.useState(0);
-  const [playing, setPlaying] = _react2.default.useState(autoPlay);
-  const [held, setHeld] = _react2.default.useState(false);
+  const [i, setI] = React.useState(0);
+  const [playing, setPlaying] = React.useState(autoPlay);
+  const [held, setHeld] = React.useState(false);
   const rotating = playing && !held && n > 1;
-  _react2.default.useEffect(() => {
+  React.useEffect(() => {
     setPlaying(autoPlay);
   }, [autoPlay]);
-  _react2.default.useEffect(() => {
+  React.useEffect(() => {
     setI((previous) => n > 0 ? Math.min(previous, n - 1) : 0);
   }, [n]);
-  _react2.default.useEffect(() => {
+  React.useEffect(() => {
     if (!rotating) return void 0;
     const period = Number(interval) > 0 ? Number(interval) : 5e3;
     const timer = setInterval(() => setI((previous) => (previous + 1) % n), period);
     return () => clearInterval(timer);
   }, [rotating, interval, n]);
   const slideName = (index) => {
-    const own = _optionalChain([slideLabels, 'optionalAccess', _2 => _2[index]]);
+    const own = slideLabels?.[index];
     const position = `${index + 1} / ${n}`;
     return own ? `${own}, ${position}` : position;
   };
@@ -70,33 +70,33 @@ function Carousel({
     setPlaying(false);
     setI((index % n + n) % n);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ jsxs(
     "div",
     {
       role: "region",
       "aria-roledescription": "carousel",
       "aria-label": label,
       onMouseEnter: (event) => {
-        _optionalChain([onMouseEnter, 'optionalCall', _3 => _3(event)]);
+        onMouseEnter?.(event);
         setHeld(true);
       },
       onMouseLeave: (event) => {
-        _optionalChain([onMouseLeave, 'optionalCall', _4 => _4(event)]);
+        onMouseLeave?.(event);
         setHeld(false);
       },
       onFocus: (event) => {
-        _optionalChain([onFocus, 'optionalCall', _5 => _5(event)]);
+        onFocus?.(event);
         setHeld(true);
       },
       onBlur: (event) => {
-        _optionalChain([onBlur, 'optionalCall', _6 => _6(event)]);
+        onBlur?.(event);
         if (!event.currentTarget.contains(event.relatedTarget)) setHeld(false);
       },
       style: { position: "relative", overflow: "hidden", borderRadius: "var(--radius-2xl)", ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-carousel-live": true, "aria-live": rotating ? "off" : "polite", "aria-atomic": "true", style: hiddenStyle, children: n > 0 ? slideName(i) : "" }),
-        autoPlay && n > 1 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ jsx("span", { "data-carousel-live": true, "aria-live": rotating ? "off" : "polite", "aria-atomic": "true", style: hiddenStyle, children: n > 0 ? slideName(i) : "" }),
+        autoPlay && n > 1 && /* @__PURE__ */ jsx(
           "button",
           {
             type: "button",
@@ -104,12 +104,12 @@ function Carousel({
             "aria-label": playing ? pauseLabel : playLabel,
             onClick: () => setPlaying((previous) => !previous),
             style: rotationBtnStyle,
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: playing ? "pause" : "play", size: 16, "aria-hidden": "true" })
+            children: /* @__PURE__ */ jsx(Icon, { name: playing ? "pause" : "play", size: 16, "aria-hidden": "true" })
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-lds-carousel-track": true, style: { display: "flex", transform: `translateX(-${i * 100}%)`, transition: "transform var(--dur-slow) var(--ease-out)" }, children: slides.map((slide, idx) => {
+        /* @__PURE__ */ jsx("div", { "data-lds-carousel-track": true, style: { display: "flex", transform: `translateX(-${i * 100}%)`, transition: "transform var(--dur-slow) var(--ease-out)" }, children: slides.map((slide, idx) => {
           const current = idx === i;
-          return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          return /* @__PURE__ */ jsx(
             "div",
             {
               role: "group",
@@ -124,11 +124,11 @@ function Carousel({
             idx
           );
         }) }),
-        showArrows && n > 1 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "button", { type: "button", "aria-label": previousLabel, onClick: () => goTo(i - 1), style: navBtnStyle("left"), children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "chevron-left", size: 20, "aria-hidden": "true" }) }),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "button", { type: "button", "aria-label": nextLabel, onClick: () => goTo(i + 1), style: navBtnStyle("right"), children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "chevron-right", size: 20, "aria-hidden": "true" }) })
+        showArrows && n > 1 && /* @__PURE__ */ jsxs(React.Fragment, { children: [
+          /* @__PURE__ */ jsx("button", { type: "button", "aria-label": previousLabel, onClick: () => goTo(i - 1), style: navBtnStyle("left"), children: /* @__PURE__ */ jsx(Icon, { name: "chevron-left", size: 20, "aria-hidden": "true" }) }),
+          /* @__PURE__ */ jsx("button", { type: "button", "aria-label": nextLabel, onClick: () => goTo(i + 1), style: navBtnStyle("right"), children: /* @__PURE__ */ jsx(Icon, { name: "chevron-right", size: 20, "aria-hidden": "true" }) })
         ] }),
-        showDots && n > 1 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { position: "absolute", bottom: "var(--space-2)", left: 0, right: 0, display: "flex", justifyContent: "center", zIndex: 2 }, children: slides.map((_, idx) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        showDots && n > 1 && /* @__PURE__ */ jsx("div", { style: { position: "absolute", bottom: "var(--space-2)", left: 0, right: 0, display: "flex", justifyContent: "center", zIndex: 2 }, children: slides.map((_, idx) => /* @__PURE__ */ jsx(
           "button",
           {
             type: "button",
@@ -136,11 +136,11 @@ function Carousel({
             "aria-current": idx === i ? "true" : void 0,
             onClick: () => goTo(idx),
             style: dotBtnStyle,
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: /* @__PURE__ */ jsx(
               "span",
               {
                 "data-lds-carousel-dot": true,
-                style: { width: idx === i ? 22 : 8, height: 8, borderRadius: "var(--radius-pill)", background: idx === i ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-inverse-label-alternative-soft)", transition: "width var(--dur-base) var(--ease-out)" }
+                style: { width: idx === i ? 22 : 8, height: 8, borderRadius: "var(--radius-pill)", background: idx === i ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-inverse-label-alternative-soft)", boxShadow: "0 0 0 1px var(--scrim-dark)", transition: "width var(--dur-base) var(--ease-out)" }
               }
             )
           },
@@ -151,7 +151,7 @@ function Carousel({
   );
 }
 
-
-
-exports.Carousel = Carousel;
-//# sourceMappingURL=chunk-ATA5OOBB.cjs.map
+export {
+  Carousel
+};
+//# sourceMappingURL=chunk-FOMQ7F5I.js.map

@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "9b8416e9bca82f4925e1ae2c7ede97494adf24a98f30577bb4dd5c16d4d6ec46",
+    "storybookIndexSha256": "e2e65e636e6fbe5135ebcd8fffc848de6bc9ccd4e78af7b0cb2e2fdef697d204",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -59,24 +59,24 @@
   },
   "summary": {
     "pages": 150,
-    "stories": 484,
-    "publicStories": 338,
+    "stories": 487,
+    "publicStories": 341,
     "hiddenStories": 146,
     "componentDescriptions": 146,
     "pagesWithVisibleCanvasIntroduction": 150,
     "pagesWithDecisionGuidance": 146,
-    "describedPublicStories": 338,
+    "describedPublicStories": 341,
     "reviewedPages": 150,
-    "reviewedStories": 484,
+    "reviewedStories": 487,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
       "overview": 143,
-      "usage": 24,
-      "variants-states": 63,
+      "usage": 25,
+      "variants-states": 64,
       "interaction": 44,
-      "responsive": 38,
+      "responsive": 39,
       "scenario": 16,
       "visual-parity": 74,
       "internal-contract": 72
@@ -104,8 +104,8 @@
       },
       "Product": {
         "pages": 87,
-        "stories": 295,
-        "public": 228,
+        "stories": 298,
+        "public": 231,
         "hidden": 67,
         "guideReadyPages": 87
       },
@@ -4124,7 +4124,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormInput.stories.jsx",
-      "sourceSha256": "3c4de39ead21f055a90572aafd4a1269c2599a249fc6a4f7e79db1e228747b67",
+      "sourceSha256": "803ffbc317bb0b6e0ba580c4898c21d5916f639cdaf7d8d7ce29b52ad1c60ed1",
       "primaryOwner": "Input",
       "ownerComponents": [
         "Input"
@@ -4149,8 +4149,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "3c4de39ead21f055a90572aafd4a1269c2599a249fc6a4f7e79db1e228747b67",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "803ffbc317bb0b6e0ba580c4898c21d5916f639cdaf7d8d7ce29b52ad1c60ed1",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-input--input-overview",
@@ -4266,7 +4266,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 post-split source and Core layer review: keep."
+      "reviewNote": "2026-07-24 owner review: Carousel 사용법 스토리 3종(자동 회전 프로모션 배너·컨트롤 구성·320px)과 도트 대비 링·하단 안전 여백 계약 — 배치 관행 점검 반영."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Radio",
@@ -9299,7 +9299,7 @@
       "layer": "Product",
       "family": "Display",
       "importPath": "./stories/ContentCarousel.stories.jsx",
-      "sourceSha256": "d9079bb763fd04032b51d64a2c2d7845b845ccae8709d83ae115c3b2194d0261",
+      "sourceSha256": "4cbcb77a986f83fd2f58d5aca1cf2549eec2ff3069720a5f50ca66799595b622",
       "primaryOwner": "Carousel",
       "ownerComponents": [
         "Carousel"
@@ -9310,13 +9310,13 @@
         "Thumbnail"
       ],
       "visibility": {
-        "public": 1,
+        "public": 4,
         "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-display-carousel--carousel-slides",
-        "describedPublicStories": 1,
+        "describedPublicStories": 4,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -9327,7 +9327,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "d9079bb763fd04032b51d64a2c2d7845b845ccae8709d83ae115c3b2194d0261",
+      "reviewedSourceSha256": "4cbcb77a986f83fd2f58d5aca1cf2549eec2ff3069720a5f50ca66799595b622",
       "stories": [
         {
           "id": "lds-product-data-display-carousel--carousel-slides",
@@ -9353,6 +9353,80 @@
             "Thumbnail"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-data-display-carousel--promotional-banner",
+          "name": "사용법 · 자동 회전 프로모션 배너",
+          "exportName": "PromotionalBanner",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Carousel"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-07-24 owner review: Carousel 사용법 스토리 3종(자동 회전 프로모션 배너·컨트롤 구성·320px) 추가와 도트 대비 링·슬라이드 하단 안전 여백 계약 — 배치 관행 점검(CTA 크기·전환 컨트롤 겹침·도트 대비) 반영."
+        },
+        {
+          "id": "lds-product-data-display-carousel--control-variants",
+          "name": "변형·상태 · 컨트롤 구성",
+          "exportName": "ControlVariants",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Carousel"
+          ],
+          "supportingComponents": [
+            "Thumbnail"
+          ],
+          "reviewNote": "2026-07-24 owner review: Carousel 사용법 스토리 3종(자동 회전 프로모션 배너·컨트롤 구성·320px) 추가와 도트 대비 링·슬라이드 하단 안전 여백 계약 — 배치 관행 점검(CTA 크기·전환 컨트롤 겹침·도트 대비) 반영."
+        },
+        {
+          "id": "lds-product-data-display-carousel--narrow-carousel",
+          "name": "반응형 · 320px",
+          "exportName": "NarrowCarousel",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Carousel"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-07-24 owner review: Carousel 사용법 스토리 3종(자동 회전 프로모션 배너·컨트롤 구성·320px) 추가와 도트 대비 링·슬라이드 하단 안전 여백 계약 — 배치 관행 점검(CTA 크기·전환 컨트롤 겹침·도트 대비) 반영."
         },
         {
           "id": "lds-product-data-display-carousel--carousel-auto-rotation-contract",
@@ -9404,7 +9478,7 @@
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
         }
       ],
-      "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+      "reviewNote": "2026-07-24 owner review: Carousel 사용법 스토리 3종(자동 회전 프로모션 배너·컨트롤 구성·320px) 추가와 도트 대비 링·슬라이드 하단 안전 여백 계약 — 배치 관행 점검(CTA 크기·전환 컨트롤 겹침·도트 대비) 반영."
     },
     {
       "title": "LDS Product/Data/Display/Description List",

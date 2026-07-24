@@ -163,9 +163,12 @@ export function Carousel({
               onClick={() => goTo(idx)}
               style={dotBtnStyle}
             >
+              {/* The scrim ring keeps the white dots visible on light slides
+                  (promo banners) as well as dark media — controls must not rely
+                  on the slide behind them for their 3:1 contrast (WCAG 1.4.11). */}
               <span
                 data-lds-carousel-dot
-                style={{ width: idx === i ? 22 : 8, height: 8, borderRadius: 'var(--radius-pill)', background: idx === i ? 'var(--color-semantic-background-elevated-normal)' : 'var(--color-semantic-inverse-label-alternative-soft)', transition: 'width var(--dur-base) var(--ease-out)' }}
+                style={{ width: idx === i ? 22 : 8, height: 8, borderRadius: 'var(--radius-pill)', background: idx === i ? 'var(--color-semantic-background-elevated-normal)' : 'var(--color-semantic-inverse-label-alternative-soft)', boxShadow: '0 0 0 1px var(--scrim-dark)', transition: 'width var(--dur-base) var(--ease-out)' }}
               />
             </button>
           ))}

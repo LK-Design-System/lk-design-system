@@ -48,6 +48,111 @@ export const CarouselSlides = {
   ),
 };
 
+function PromoSlide({ eyebrow, title, body, period, cta }) {
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gap: 'var(--space-2)',
+        alignContent: 'center',
+        minHeight: 240,
+        /* 하단 56px은 컨트롤 스트립(좌하단 일시정지, 중앙 도트)의 안전 여백 —
+           슬라이드 콘텐츠가 전환 컨트롤과 겹치지 않는다. */
+        padding: 'var(--space-6) var(--space-6) 56px',
+        background: 'linear-gradient(120deg, var(--color-semantic-primary-surface-strong), var(--color-semantic-primary-surface-normal))',
+        color: 'var(--color-semantic-label-strong)',
+      }}
+    >
+      {eyebrow && <span className="lk-overline lk-overline--signal" style={{ margin: 0 }}>{eyebrow}</span>}
+      <strong style={{ fontSize: 'var(--title2-size)', lineHeight: 'var(--title2-line)', fontWeight: 'var(--fw-extra)', letterSpacing: 'var(--title2-spacing)' }}>{title}</strong>
+      <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)' }}>{body}</p>
+      {period && <span style={{ fontSize: 'var(--caption1-size)', color: 'var(--color-semantic-label-alternative)' }}>{period}</span>}
+      {cta && <span style={{ marginTop: 'var(--space-2)' }}><Button variant="primary">{cta}</Button></span>}
+    </div>
+  );
+}
+
+export const PromotionalBanner = {
+  name: '사용법 · 자동 회전 프로모션 배너',
+  parameters: storyDescription(
+    '여러 캠페인을 한 자리에서 번갈아 노출하는 상황입니다. 자동 회전이 켜져 있어도 일시정지 컨트롤과 hover·focus 정지로 언제든 멈출 수 있고(WCAG 2.2.2), 각 배너의 제목·기간·행동 유도가 순서대로 읽히는지 확인하세요. 프로모션 배너는 화살표 없이 도트만으로 위치를 표시하는 구성이 흔합니다.',
+  ),
+  render: () => (
+    <main style={{ maxWidth: 760 }}>
+      <Carousel
+        label="채용 프로모션 배너"
+        autoPlay
+        interval={6000}
+        showArrows={false}
+        slideLabels={['글로벌 인재 채용', '이력서 코칭', '기업 서비스']}
+        slides={[
+          <PromoSlide key="global" eyebrow="EVENT" title="글로벌 인재 채용 프로모션" body="외국어 능통자 채용 시 수수료 50% 할인" period="2026.06.08 ~ 2026.07.31 · 온라인" cta="자세히 보기" />,
+          <PromoSlide key="resume" eyebrow="COACHING" title="합격률 2배 이력서 코칭" body="지원 포지션에 맞춰 이력서를 다듬어 드립니다." period="상시 · 온라인" cta="시작하기" />,
+          <PromoSlide key="biz" eyebrow="B2B" title="기업 서비스 도입 상담" body="채용 파이프라인을 한 곳에서 운영하세요." period="문의 접수 중" cta="상담 신청" />,
+        ]}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const region = canvasElement.querySelector('[aria-roledescription="carousel"]');
+    if (!region) throw new Error('프로모션 배너도 APG carousel region으로 노출되어야 합니다.');
+    const pause = canvasElement.querySelector('button[aria-label="자동 재생 일시정지"]');
+    if (!pause) throw new Error('자동 회전 배너는 일시정지 컨트롤을 제공해야 합니다(WCAG 2.2.2).');
+    if (canvasElement.querySelector('button[aria-label="이전 슬라이드"]')) {
+      throw new Error('showArrows={false}이면 화살표 컨트롤이 없어야 합니다.');
+    }
+    // 자동 회전을 멈춰 스토리를 안정된 상태로 남긴다.
+    await userEvent.click(pause);
+    await waitFor(() => {
+      if (!canvasElement.querySelector('button[aria-label="자동 재생 시작"]')) {
+        throw new Error('일시정지 후에는 재생 컨트롤로 전환되어야 합니다.');
+      }
+    });
+    pause.blur();
+  },
+};
+
+export const ControlVariants = {
+  name: '변형·상태 · 컨트롤 구성',
+  parameters: storyDescription(
+    '도트와 화살표 컨트롤의 유무를 비교하는 상황입니다. 도트만 두는 배너형, 화살표만 두는 미디어형, 둘 다 두는 기본형에서 현재 위치와 이동 수단이 각각 분명하게 읽히는지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 560 }}>
+      <Carousel label="도트만" showArrows={false} slideLabels={['1', '2', '3']}
+        slides={[<Thumbnail key="a" ratio="16/9" radius={false} />, <Thumbnail key="b" ratio="16/9" radius={false} />, <Thumbnail key="c" ratio="16/9" radius={false} />]} />
+      <Carousel label="화살표만" showDots={false} slideLabels={['1', '2', '3']}
+        slides={[<Thumbnail key="a" ratio="16/9" radius={false} />, <Thumbnail key="b" ratio="16/9" radius={false} />, <Thumbnail key="c" ratio="16/9" radius={false} />]} />
+    </main>
+  ),
+};
+
+export const NarrowCarousel = {
+  name: '반응형 · 320px',
+  parameters: storyDescription(
+    '320px 폭에서 캐러셀이 컨테이너를 넘치지 않고 컨트롤이 조작 가능한지 확인하는 상황입니다. 슬라이드가 폭에 맞춰 접히고 도트·화살표 타깃이 좁은 폭에서도 유지되는지 확인하세요.',
+  ),
+  render: () => (
+    <main data-testid="carousel-narrow" style={{ width: 320, maxWidth: '100%' }}>
+      <Carousel
+        label="좁은 폭 배너"
+        slideLabels={['1', '2', '3']}
+        slides={[
+          <PromoSlide key="a" title="좁은 폭 프로모션" body="320px에서도 제목과 CTA가 접혀 읽힙니다." cta="보기" />,
+          <PromoSlide key="b" title="두 번째 배너" body="화면 밖 슬라이드는 Tab에서 빠집니다." cta="보기" />,
+          <PromoSlide key="c" title="세 번째 배너" body="도트로 현재 위치를 표시합니다." cta="보기" />,
+        ]}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const wrapper = canvasElement.querySelector('[data-testid="carousel-narrow"]');
+    if (!wrapper || wrapper.scrollWidth > wrapper.clientWidth + 1) {
+      throw new Error('Carousel은 320px 컨테이너에서 가로 스크롤을 만들지 않아야 합니다.');
+    }
+  },
+};
+
 function slideNodes(canvasElement) {
   return [...canvasElement.querySelectorAll('[data-carousel-slide]')];
 }
