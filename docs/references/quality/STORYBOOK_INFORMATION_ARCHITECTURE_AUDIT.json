@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "eb886baa5612b3a56f985087bbb3e38c348931d6b11bfd967ccc66d6ed2e16dc",
+    "storybookIndexSha256": "98dcd095ee9626da8fe2727ebb3f8766ccd25a68cc156a7b95c10d6b78ed1ad1",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -58,31 +58,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 154,
-    "stories": 503,
-    "publicStories": 353,
-    "hiddenStories": 150,
-    "componentDescriptions": 150,
-    "pagesWithVisibleCanvasIntroduction": 154,
-    "pagesWithDecisionGuidance": 150,
-    "describedPublicStories": 353,
-    "reviewedPages": 154,
-    "reviewedStories": 503,
+    "pages": 155,
+    "stories": 508,
+    "publicStories": 357,
+    "hiddenStories": 151,
+    "componentDescriptions": 151,
+    "pagesWithVisibleCanvasIntroduction": 155,
+    "pagesWithDecisionGuidance": 151,
+    "describedPublicStories": 357,
+    "reviewedPages": 155,
+    "reviewedStories": 508,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 10,
-      "overview": 147,
+      "overview": 148,
       "usage": 25,
-      "variants-states": 68,
+      "variants-states": 70,
       "interaction": 44,
-      "responsive": 43,
+      "responsive": 44,
       "scenario": 16,
-      "visual-parity": 78,
+      "visual-parity": 79,
       "internal-contract": 72
     },
     "dispositions": {
-      "keep": 154,
+      "keep": 155,
       "merge": 0,
       "split": 0,
       "hide": 0
@@ -103,11 +103,11 @@
         "guideReadyPages": 7
       },
       "Product": {
-        "pages": 91,
-        "stories": 314,
-        "public": 243,
-        "hidden": 71,
-        "guideReadyPages": 91
+        "pages": 92,
+        "stories": 319,
+        "public": 247,
+        "hidden": 72,
+        "guideReadyPages": 92
       },
       "Theme": {
         "pages": 3,
@@ -9225,6 +9225,125 @@
       "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
     },
     {
+      "title": "LDS Product/Content/Stat List",
+      "layer": "Product",
+      "family": "Content",
+      "importPath": "./stories/ContentStatList.stories.jsx",
+      "sourceSha256": "0e7d2e949f89928da727f3ebeb27b1ea7af00627da444bb0d1df1cd7c1c32e69",
+      "primaryOwner": "StatList",
+      "ownerComponents": [
+        "StatList"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 3,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-content-stat-list--overview",
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "0e7d2e949f89928da727f3ebeb27b1ea7af00627da444bb0d1df1cd7c1c32e69",
+      "stories": [
+        {
+          "id": "lds-product-content-stat-list--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "StatList"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-content-stat-list--variants",
+          "name": "변형·상태 · 크기와 링크 없음",
+          "exportName": "Variants",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "StatList"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-content-stat-list--narrow-stat-list",
+          "name": "반응형 · 320px",
+          "exportName": "NarrowStatList",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "StatList"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-content-stat-list--stat-list-card",
+          "name": "StatList card parity",
+          "exportName": "StatListCard",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "StatList"
+          ],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
       "title": "LDS Product/Content/Writing Editor",
       "layer": "Product",
       "family": "Content",
@@ -12012,25 +12131,29 @@
       "layer": "Product",
       "family": "Layout",
       "importPath": "./stories/LayoutPageHeader.stories.jsx",
-      "sourceSha256": "4ed496fe4e67bbfa99a295ecdbdeefbd8f5311b5507ab5bb206bf3068405e63c",
+      "sourceSha256": "4c8db3495fc054fcc7aa6b735f38f0af5b24ef0643746553bbea7469da823ebe",
       "primaryOwner": "PageHeader",
       "ownerComponents": [
         "PageHeader"
       ],
       "supportingComponents": [
+        "Avatar",
         "Breadcrumb",
         "Button",
+        "Icon",
+        "IconButton",
         "SegmentedControl",
+        "StatList",
         "StatusBadge"
       ],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-layout-page-header--page-header-pattern",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -12041,7 +12164,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "4ed496fe4e67bbfa99a295ecdbdeefbd8f5311b5507ab5bb206bf3068405e63c",
+      "reviewedSourceSha256": "4c8db3495fc054fcc7aa6b735f38f0af5b24ef0643746553bbea7469da823ebe",
       "stories": [
         {
           "id": "lds-product-layout-page-header--page-header-pattern",
@@ -12070,6 +12193,34 @@
             "StatusBadge"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-layout-page-header--profile-masthead",
+          "name": "변형·상태 · 프로필 마스트헤드",
+          "exportName": "ProfileMasthead",
+          "visibility": "public",
+          "tags": [
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "PageHeader"
+          ],
+          "supportingComponents": [
+            "Avatar",
+            "Button",
+            "Icon",
+            "IconButton",
+            "StatList"
+          ]
         },
         {
           "id": "lds-product-layout-page-header--narrow-long-title-and-actions",

@@ -47,6 +47,7 @@ export { ReactionBar } from '../components/content/ReactionBar.jsx';
 export { ReorderList } from '../components/content/ReorderList.jsx';
 export { SourceDisclosure } from '../components/content/SourceDisclosure.jsx';
 export { SourceTag } from '../components/content/SourceTag.jsx';
+export { StatList } from '../components/content/StatList.jsx';
 export { StatusBadge } from '../components/content/StatusBadge.jsx';
 export { StepList } from '../components/content/StepList.jsx';
 export { Thumbnail } from '../components/content/Thumbnail.jsx';

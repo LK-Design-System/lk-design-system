@@ -5,6 +5,12 @@ export interface PageHeaderProps extends Omit<React.HTMLAttributes<HTMLElement>,
   eyebrow?: React.ReactNode;
   /** Breadcrumb 등 제목 위 경로 슬롯. */
   breadcrumb?: React.ReactNode;
+  /**
+   * 제목 앞 정체성 이미지 슬롯(`Avatar`·`Thumbnail` 등). 프로필·계정·레코드
+   * 마스트헤드에서 이름 왼쪽에 놓입니다. 슬롯이므로 레이아웃이 아바타 구현에
+   * 의존하지 않습니다.
+   */
+  avatar?: React.ReactNode;
   /** 페이지 제목. */
   title: React.ReactNode;
   /** 제목 아래 설명. */

@@ -1,8 +1,12 @@
 import {
+  Avatar,
   Breadcrumb,
   Button,
+  Icon,
+  IconButton,
   PageHeader,
   SegmentedControl,
+  StatList,
   StatusBadge,
 } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
@@ -127,6 +131,56 @@ export const NarrowLongTitleAndActions = {
     }
     if (actionsRect.right > headerRect.right + 1 || titleRect.right > headerRect.right + 1) {
       throw new Error('Narrow PageHeader content and actions must stay inside the container.');
+    }
+  },
+};
+
+export const ProfileMasthead = {
+  name: '변형·상태 · 프로필 마스트헤드',
+  parameters: storyDescription(
+    '프로필·계정 페이지의 정체성 헤더를 별도 컴포넌트 없이 조립하는 상황입니다. 아바타 슬롯이 이름 왼쪽에 붙고, 이름이 페이지 제목(h1)이 되며, 인증 배지는 제목 옆에, 스탯 행은 메타 슬롯에 놓이는지 확인하세요.',
+  ),
+  render: () => (
+    <PageHeader
+      avatar={<Avatar name="장진혁" size="xlarge" />}
+      title="장진혁"
+      status={<Icon name="verified-check-fill" size={20} aria-hidden="true" style={{ color: 'var(--color-semantic-primary-normal)' }} />}
+      description="Physical AI Engineer · 신입 · 개발"
+      meta={(
+        <StatList
+          items={[
+            { label: '팔로워', value: 128, href: '#followers' },
+            { label: '팔로잉', value: 64, href: '#following' },
+            { label: '포인트', value: '3,000P' },
+          ]}
+        />
+      )}
+      actions={(
+        <>
+          <Button variant="secondary">설정</Button>
+          <IconButton variant="plain" round label="프로필 공유">
+            <Icon name="share" size={20} aria-hidden="true" />
+          </IconButton>
+        </>
+      )}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    // 스토리 가이드에도 h1이 있으므로 헤더 안으로 범위를 좁혀 확인한다.
+    const avatarSlot = canvasElement.querySelector('[data-page-header-avatar]');
+    if (!avatarSlot) throw new Error('avatar 슬롯이 제목 앞에 렌더되어야 합니다.');
+    const header = avatarSlot.closest('header');
+    const heading = header?.querySelector('h1');
+    if (!heading || heading.textContent.trim() !== '장진혁') {
+      throw new Error('프로필에서는 이름이 페이지 제목(h1)이어야 합니다.');
+    }
+    // 아바타는 제목보다 앞선 읽기 순서를 가진다.
+    if (!(avatarSlot.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+      throw new Error('avatar 슬롯은 제목보다 앞에 와야 합니다.');
+    }
+    const statLink = header.querySelector('ul[role="list"] a[href]');
+    if (!statLink || statLink.getAttribute('aria-label') !== '팔로워 128') {
+      throw new Error('메타 슬롯의 스탯은 라벨+값 접근 이름을 가진 링크여야 합니다.');
     }
   },
 };

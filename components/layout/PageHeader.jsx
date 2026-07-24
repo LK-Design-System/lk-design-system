@@ -9,6 +9,7 @@ import React from 'react';
 export function PageHeader({
   eyebrow,
   breadcrumb,
+  avatar,
   title,
   description,
   status,
@@ -62,6 +63,15 @@ export function PageHeader({
           minWidth: 0,
         }}
       >
+        {/* Identity image (avatar/thumbnail) leading the title, the way an
+            account or record masthead reads: Polaris `Page` carries a thumbnail
+            and Lightning's record-home header an icon. It is a slot, so the
+            layout does not depend on the avatar implementation. */}
+        {avatar != null && (
+          <div data-page-header-avatar style={{ flexShrink: 0, display: 'flex' }}>
+            {avatar}
+          </div>
+        )}
         {/* The flex-basis is the point where actions stop sharing the title row
             and drop below the content: the row wraps once basis + actions no
             longer fit. 18rem keeps actions title-aligned on ordinary content

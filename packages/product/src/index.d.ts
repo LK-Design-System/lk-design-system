@@ -27,6 +27,7 @@ export { LogViewer } from './components/content/LogViewer.jsx';
 export { ReactionBar } from './components/content/ReactionBar.jsx';
 export { ReorderList } from './components/content/ReorderList.jsx';
 export { SourceDisclosure } from './components/content/SourceDisclosure.jsx';
+export { StatList } from './components/content/StatList.jsx';
 export { AnnotatedImage } from './components/data/AnnotatedImage.jsx';
 export { BarChart } from './components/data/BarChart.jsx';
 export { Calendar } from './components/data/Calendar.jsx';

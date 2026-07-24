@@ -191,7 +191,8 @@
         "stories/ContentLogViewer.stories.jsx",
         "stories/ContentReactionBar.stories.jsx",
         "stories/ContentReorderList.stories.jsx",
-        "stories/ContentSourceDisclosure.stories.jsx"
+        "stories/ContentSourceDisclosure.stories.jsx",
+        "stories/ContentStatList.stories.jsx"
       ],
       "exports": [
         "ContentEditor",
@@ -199,7 +200,8 @@
         "LogViewer",
         "ReactionBar",
         "ReorderList",
-        "SourceDisclosure"
+        "SourceDisclosure",
+        "StatList"
       ]
     },
     {

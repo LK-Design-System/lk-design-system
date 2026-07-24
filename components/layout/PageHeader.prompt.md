@@ -10,7 +10,8 @@
 />
 ```
 
-- **title**은 필수입니다. **breadcrumb**, **eyebrow**, **description**, **status**, **meta**, **actions**는 슬롯입니다.
+- **title**은 필수입니다. **breadcrumb**, **eyebrow**, **avatar**, **description**, **status**, **meta**, **actions**는 슬롯입니다.
+- **avatar** — 제목 앞 정체성 이미지 슬롯입니다. 프로필·계정·멤버·레코드 마스트헤드에서 `Avatar`(또는 `Thumbnail`)를 넣으면 이름 왼쪽에 놓이고, 좁은 폭에서도 제목 블록과 함께 정렬됩니다. 슬롯이라 레이아웃이 아바타 구현에 의존하지 않습니다. 정체성 헤더는 별도 컴포넌트를 만들지 말고 **이 슬롯으로 조립**하세요 — 이름=`title`, 인증 배지=`status`, 한 줄 소개=`description`, 팔로워 등 스탯=`meta`(`StatList`), 설정·공유=`actions`.
 - 앱 화면마다 hero를 새로 만들지 말고 반복되는 앱 헤더에는 `PageHeader`를 쓰세요. 기본 `headingLevel={1}`로 한 화면에 하나만 배치합니다. 문서·비교 도구처럼 상위 제목이 이미 있는 합성 표면에서만 `headingLevel={2..6}`으로 주변 heading 구조에 연결합니다.
 - eyebrow·meta는 화면 이해에 필요한 텍스트이므로 `label-neutral` 색과 `label2` 타이포 토큰을 사용합니다. AA 미달인 `label-assistive`·`label-disable`을 필수 텍스트에 쓰지 않습니다.
 - **actions** 슬롯에는 버튼·가로형 `SegmentedControl`처럼 헤더 한 줄 높이에 맞는 컨트롤만 배치합니다. 세로형 `FloorSelector` 같은 tall 컨트롤은 헤더가 아니라 맵·뷰어 옆 오버레이에 둡니다.

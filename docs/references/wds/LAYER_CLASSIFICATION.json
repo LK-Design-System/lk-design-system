@@ -84,6 +84,7 @@
     "stories/ContentReactionBar.stories.jsx": "LDS Product/Content/Reaction Bar",
     "stories/ContentReorderList.stories.jsx": "LDS Product/Content/Reorder List",
     "stories/ContentSourceDisclosure.stories.jsx": "LDS Product/Content/Source Disclosure",
+    "stories/ContentStatList.stories.jsx": "LDS Product/Content/Stat List",
     "stories/ContentStepList.stories.jsx": "LDS Core/Components/Content/Step List",
     "stories/ContentTimeline.stories.jsx": "LDS Core/Components/Content/Timeline",
     "stories/ContentTooltip.stories.jsx": "LDS Core/Components/Content/Tooltip",
