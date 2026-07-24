@@ -9,5 +9,7 @@
 ```
 
 - **icon / title / description / action** — 모두 선택적 노드. 아이콘은 부드러운 시안 타일에 놓입니다.
+- **tone** — 기본 `signal`. 오류·주의 차단 상태는 `negative`/`cautionary`를 전달해 아이콘의
+  의미와 타일 surface/foreground를 맞춥니다.
 - **title은 실제 heading으로 렌더됩니다.** 스타일된 `div`가 아니라 `h2`–`h6`이므로 스크린 리더 사용자가 heading 탐색으로 빈 상태에 바로 도달할 수 있습니다(Carbon · Polaris · Atlassian의 empty state와 같은 규약).
 - **headingLevel** — 기본 `2`. 주변 문서 개요에 맞춰 `2`–`6`으로 지정하세요(범위를 벗어나면 클램프됩니다). 카드나 패널 안처럼 이미 `h2`가 있는 영역에서는 `headingLevel={3}`처럼 한 단계 낮춰 heading 순서가 건너뛰지 않게 합니다.

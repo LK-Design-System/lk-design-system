@@ -42,7 +42,15 @@ export function StatusBadge({ children, tone = 'positive', pulse = false, style,
       }}
       {...rest}
     >
-      <span style={{ position: 'relative', width: 6, height: 6, borderRadius: '50%', background: c, flexShrink: 0 }}>
+      <span style={{
+        position: 'relative',
+        width: 6,
+        height: 6,
+        borderRadius: '50%',
+        background: c,
+        flexShrink: 0,
+        boxShadow: tone === 'critical' ? `0 0 0 2px var(--component-status-badge-surface), 0 0 0 3px ${c}` : 'none',
+      }}>
         {(pulse || tone === 'critical') && (
           <span data-lds-status-pulse="" style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: c, animation: 'lk-status-pulse 1.7s var(--ease-out) infinite' }} />
         )}

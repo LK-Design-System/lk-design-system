@@ -41,8 +41,8 @@ export const BadgeTagPatterns = {
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 760 }}>
       <section style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center', flexWrap: 'wrap' }}>
         <Badge>12</Badge>
-        <Badge tone="amber">점검</Badge>
-        <Badge data-testid="badge-dot-labelled" tone="red" dot>장애</Badge>
+        <Badge tone="cautionary">점검</Badge>
+        <Badge data-testid="badge-dot-labelled" tone="negative" dot>장애</Badge>
         <Badge data-testid="badge-count-clamped" tone="navy">128</Badge>
         <Tag>ROBOTICS</Tag>
         <Tag tone="amber" solid>주의</Tag>

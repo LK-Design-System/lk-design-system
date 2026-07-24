@@ -10,7 +10,7 @@
     "rationale": "Keep generic design-system responsibilities small and give Robotics UI an independent domain owner boundary."
   },
   "extraction": {
-    "repository": "LK-ROBOTICS/lk-design-system-robotics",
+    "repository": "LK-Design-System/lk-design-system-robotics",
     "package": "@lk-robotics/lds-robotics-ui",
     "version": "0.1.0-rc.1",
     "tag": "next",
@@ -18,7 +18,7 @@
     "publishedIntegrity": "sha512-GCLXO/0ob9AO7nbeni02JgJ5Iuo7KMYOSBjOeoT0spgg2VSCcwFAZzwxXxrohspjy07ipW9x8rp5c12HCWuVeA=="
   },
   "sourceRemoval": {
-    "repository": "LK-ROBOTICS/lk-design-system",
+    "repository": "LK-Design-System/lk-design-system",
     "commit": "095290fad4da1c019f8dcda611faf3406a5581df",
     "removed": "74 Robotics implementation and declaration files, including the former workspace package source and root component implementations.",
     "legacyConsumer": "The LDS Storybook remains an integration consumer and imports Robotics only from @lk-robotics/lds-robotics-ui."

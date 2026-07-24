@@ -5,62 +5,81 @@
 | Type | Current-state pointer |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-19 |
+| Last reviewed | 2026-07-24 |
 | Branch | `main` |
-| Wave 0 source baseline | `wave0-baseline-2026-07-19-r2` → `679859b` |
-| Wave 0 attestation | `wave0-attested-2026-07-19` → `f8dd678` |
-| Remote | `origin` · `LK-ROBOTICS/lk-design-system` |
+| Canonical runtime | Node `22.17.1` · npm `10.9.2` |
+| Remote | `origin` · `LK-Design-System/lk-design-system` |
 
-이 문서는 현재 상태와 최신 상세 handoff를 연결하는 짧은 포인터다. 날짜별 handoff의 HEAD, dirty count, push 여부는 해당 시점의 historical snapshot이며 현재 상태로 해석하지 않는다.
+이 문서는 현재 상태와 상세 원장을 연결하는 짧은 포인터다. 날짜별 handoff의 HEAD,
+dirty count, push 여부는 해당 시점의 historical snapshot이며 현재 상태로 해석하지 않는다.
+현재 revision과 원격 parity는 Git으로 직접 확인한다.
 
 ## Current state
 
-- `main == origin/main == f8dd678f32c92798b05d7f97d84449dec916d3a4`이며, 이 commit은 Wave 0 evidence attestation이다. 다음 computer에서 `git fetch --prune --tags origin` 뒤 이 상태를 재현할 수 있다.
-- source baseline `wave0-baseline-2026-07-19-r2` (`679859b`)와 attestation tag `wave0-attested-2026-07-19` (`f8dd678`)은 remote에 push됐다. 이전 `wave0-baseline-2026-07-19` tag도 보존했다.
-- Wave 0은 aggregate tarball의 실제 React 18/19 consumer, SSR, tree-shaking, Windows/Linux consumption, Storybook visual/accessibility를 포함해 통과했다. full check는 579 Axe story, 259 play function, visual 65/65을 기록한다.
-- Wave 1의 package source/workspace 파일은 아직 만들지 않았다. 다음 변경은 historical Wave 0 evidence verifier를 current-source regeneration과 분리한 뒤 `packages/core`, `packages/theme`, `packages/product`, `packages/robotics-ui`, `packages/compat`를 만드는 작업이다.
-- LDS3D는 별도 형제 저장소로 유지한다. 현재 docs의 `link:` dependency는 local-only integration이며, `lds-robotics-ui`와 LDS3D 사이 runtime dependency를 추가하지 않는다.
-- 신규 컴포넌트·재설계·icon/asset/map symbol의 canonical 검토 절차는 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)다.
-- 문서 탐색과 source-of-truth 순서는 [`README.md`](README.md)를 따른다.
-- 정확한 다음 단계와 이식 명령은 [2026-07-19 Wave 0/Wave 1 handoff](handoff/2026-07-19-wave0-attestation-and-wave1-package-split-handoff.md)를 따른다.
+- Core/Theme/Product는 각각 `@lk-robotics/lds-core`, `@lk-robotics/lds-theme`,
+  `@lk-robotics/lds-product` workspace package이며, 기존
+  `@lk-robotics/design-system-core`는 migration support window 동안 compatibility facade다.
+- Robotics UI 구현은 별도 `LK-Design-System/lk-design-system-robotics` 저장소의
+  `@lk-robotics/lds-robotics-ui@0.1.0-rc.2`가 소유한다. 이 저장소는 Storybook integration
+  consumer와 conformance contract만 유지하며 Robotics source의 원본이 아니다.
+- 현재 LDS 구현 표면은 174 source entry / 177 named export다. Storybook 감사 기준선은
+  150 pages / 484 stories(338 public, 146 hidden)이며 모든 page/story review가 최신이다.
+- WDS 분류·parity와 component contract는 현재 source와 일치한다. 중첩 interactive parity는
+  0 drift이며, 접근성 기준선은 484 Axe story / 264 play function / violation 0이다.
+- 제품 workflow 원장은 16/16 `verified`다. WF-15 공간 의미는 외부 Robotics의
+  `HazardMarker`/`SpatialRegion`과 product-owned authoring 경계를 구분했고, WF-16의
+  계층형 narrow navigation은 제품 소유 focus-managed Drawer composition으로 닫았다.
+- 디자인 convention 원장의 47개 confirmed finding은 모두 종결됐다. high 14건,
+  medium 20건, low 7건은 수정했고 medium 3건·low 3건은 근거를 남겨 수락했다.
+- 여섯 pinned product source는 현재 LDS import가 0이므로 “migration 완료”가 아니라
+  `not-adopted`다. 공용 package의 release readiness와 제품별 adoption은 별도 판정한다.
+- 생성 `dist`의 canonical platform은 Windows다. Linux 작업 후 `check:generated`가
+  sourcemap 차이를 보고하면 CI의 `workflow_dispatch(export_dist=true)` 산출물을 사용한다.
+- LDS3D는 독립 형제 저장소로 유지하며, renderer package는 LDS에 의존하지 않는다.
 
-현재 revision은 Git을 직접 확인한다. 날짜별 handoff의 commit과 이 문서의 baseline은 변경 전후를 설명하는 기준점이며 현재 branch tip을 뜻하지 않는다.
+## Current evidence
 
-## Latest focused handoffs
+- 문서 인덱스와 source-of-truth 순서: [`README.md`](README.md)
+- 신규·재설계 canonical 절차: [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)
+- 완성도 판정: [`DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md`](DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md)
+- package/repository 경계: [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md)
+- 제품 workflow: [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md),
+  `references/product-frontends/COVERAGE_AUDIT.json`
+- 디자인 품질: `references/quality/DESIGN_CONVENTION_REVIEW.json`
+- Storybook IA: `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`
+- 외부 Robotics 표면: `references/package-split/ROBOTICS_EXTERNAL_SURFACE.json`
+- package release·소비자: `references/package-split/releases/`,
+  `references/package-split/WAVE2_PRODUCT_RESCAN.json`
 
-1. [Wave 0 attestation and Wave 1 package split handoff](handoff/2026-07-19-wave0-attestation-and-wave1-package-split-handoff.md)
-   - 다른 computer에서 시작할 exact Git state, Wave 0 evidence, LDS3D boundary와 Wave 1 실행 순서
-2. [Documentation system review and reorganization](handoff/2026-07-12-documentation-system-review.md)
-   - 공식 문서 인덱스, metadata/status, canonical component review workflow, product coverage와 drift guard 정리
-3. [Domain expansion completion and visual review](handoff/2026-07-12-domain-expansion-completion-and-visual-review.md)
-   - Robotics Navigation N1–N6, Communication C1–C4, VirtualKeypad K1 구현·표적 검증 snapshot
-4. [Family stabilization verification](handoff/2026-07-12-family-stabilization-verification.md)
-   - component family consistency, Storybook, accessibility verification snapshot
-5. [Storybook IA execution and guidance](handoff/2026-07-12-storybook-ia-execution-and-guidance.md)
-   - page ownership, naming, review ledger 운영 방법
-6. [Quality audit and design review](handoff/2026-07-11-quality-audit-and-design-review.md)
-   - quality guard와 D-track finding의 historical evidence
-7. [Storybook taxonomy cleanup](handoff/2026-07-11-storybook-taxonomy-cleanup.md)
-   - taxonomy 실행 전 계획 snapshot; 결과 판단에는 현재 IA audit를 사용
-
-## Current verification commands
+## Verification commands
 
 ```powershell
+npm run build
 npm run build:storybook
 npm run check:storybook-ia
 npm run check:inventory
-npm run check:contracts
-npm run check:docs
-npm run check:product-frontends
-npm run check:package-migration
-npm run check
-npm run check:package-migration:wave0
+npm run check:ci
+npm run check:audit
+npm run check:pack:ci
+npm run check:workspace-consumer:windows
 ```
 
-`npm run check`는 로컬 통합 상태의 전체 회귀 gate다. 현재 `check:package-migration:wave0`는 Wave 0 source baseline과 attestation tag를 재현하는 historical check다. Wave 1 source 변경 전, 이 historical evidence 검증을 current package regeneration과 분리해야 한다.
+Linux에서는 같은 Windows package set을 `npm run check:workspace-consumer:linux`로
+소비한다. push 뒤 GitHub Actions의 Windows design-system job과 Linux consumer job이
+모두 green인지 확인하고, `git fetch --prune origin` 뒤 ahead/behind 0/0을 확인한다.
 
-## Current next work
+## Remaining release work
 
-1. Wave 0 historical attestation verifier를 source-baseline/tag 기준으로 고정해 Wave 1 변경이 과거 evidence를 무효화하지 않게 한다.
-2. 한 저장소 안에 `core`, `theme`, `product`, `robotics-ui`, `compat` workspace package를 만든다.
-3. package source/CSS/assets/facade와 package-level artifact·boundary·consumer gates를 구현한 뒤에만 Wave 2 consumer migration을 시작한다.
+1. 현재 변경을 Windows canonical generated artifact와 동기화한다.
+2. Node 22.17.1/npm 10.9.2에서 local gates를 통과시킨다.
+3. `main`에 push한 동일 revision의 Windows/Linux CI와 원격 parity를 확인한다.
+4. compatibility facade 종료는 Wave 5 조건(실제 consumer adoption, 지원 기간,
+   breaking release note)을 충족할 때만 별도 수행한다.
+
+## Historical handoffs
+
+- [Wave 0 attestation and Wave 1 package split handoff](handoff/2026-07-19-wave0-attestation-and-wave1-package-split-handoff.md)
+- [Documentation system review and reorganization](handoff/2026-07-12-documentation-system-review.md)
+- [Domain expansion completion and visual review](handoff/2026-07-12-domain-expansion-completion-and-visual-review.md)
+- [Family stabilization verification](handoff/2026-07-12-family-stabilization-verification.md)
+- [Storybook IA execution and guidance](handoff/2026-07-12-storybook-ia-execution-and-guidance.md)

@@ -22,6 +22,9 @@ Reference: [SAP Fiori data table usage](https://www.sap.com/design-system/fiori-
 
 - **columns** — `{ key, label, align, width, render }`. **rows** — 데이터 객체. **size** `sm · md`. **hover** — 행 워시. 상태 점·링크·액션에는 `render`를 쓰세요.
 - 한 컬럼에는 가능한 하나의 데이터 속성만 담으세요. 값, 상태, 수집 시각, 액션은 각각 독립 컬럼으로 분리하고, 비교/정렬해야 하는 표 셀 안에 값+시간처럼 서로 다른 데이터를 묶지 마세요.
+- 결측 값은 공백이나 `0`으로 위장하지 말고 `render`에서 보이는 `—`와 스크린리더용
+  `값 없음`을 함께 제공합니다. 로딩·오류는 셀 placeholder가 아니라 표의 resource state로
+  분리합니다.
 
 ## 표 시맨틱 계약 (WCAG 1.3.1)
 

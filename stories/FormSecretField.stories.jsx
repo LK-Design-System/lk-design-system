@@ -79,7 +79,7 @@ export const ValidationAndNarrowWidth = {
   ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', width: 260, maxWidth: '100%' }}>
-      <SecretField label="Primary API key" value="lk_primary_8f21d0c9_long_value" error="이 key는 만료되었습니다." />
+      <SecretField label="Primary API 키" value="lk_primary_8f21d0c9_long_value" error="이 키는 만료되었습니다. 새 키를 발급해 주세요." />
       <SecretField
         label={<span>Backup API key <small style={{ color: 'var(--color-semantic-label-neutral)', fontWeight: 'var(--fw-medium)' }}>보조</small></span>}
         actionContext="Backup API key"
@@ -103,7 +103,7 @@ export const ValidationAndNarrowWidth = {
     if (inputs.length !== 3 || inputs[0].getAttribute('aria-invalid') !== 'true') {
       throw new Error('The read-only inputs and invalid state must reach the native controls.');
     }
-    if (!canvasElement.querySelector('button[aria-label="Primary API key 보기"]') || !canvasElement.querySelector('button[aria-label="Backup API key 복사"]') || !canvasElement.querySelector('button[aria-label="긴급 key 복사"]')) {
+    if (!canvasElement.querySelector('button[aria-label="Primary API 키 보기"]') || !canvasElement.querySelector('button[aria-label="Backup API key 복사"]') || !canvasElement.querySelector('button[aria-label="긴급 key 복사"]')) {
       throw new Error('Each secret action must include its simple label or explicit ReactNode action context in the accessible name.');
     }
   },

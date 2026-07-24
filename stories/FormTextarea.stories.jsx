@@ -72,7 +72,7 @@ export const TextareaStateMatrix = {
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 980 }}>
       <section style={fieldGrid}>
         <Textarea label="Textarea" helper="긴 문장 입력 상태입니다." defaultValue="청춘이 느끼는 등기한 하여도 가슴이 설레는 말이다." rows={3} />
-        <Textarea label="Textarea 오류" error="메시지를 확인해 주세요." defaultValue="청춘이 느끼는 등기한 하여도 가슴이 설레는 말이다." rows={3} />
+        <Textarea label="Textarea 오류" error="입력 길이를 초과했습니다. 내용을 줄여 주세요." defaultValue="청춘이 느끼는 등기한 하여도 가슴이 설레는 말이다." rows={3} />
       </section>
     </main>
   ),

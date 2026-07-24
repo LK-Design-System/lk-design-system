@@ -5,8 +5,8 @@
 | Type | Current audit checklist and readiness register |
 | Status | Current |
 | Owner | Design system owner · Frontend platform · Component owners |
-| Last reviewed | 2026-07-14 |
-| Reviewed revision | current `main` · full-check implementation checkpoint `3829374` |
+| Last reviewed | 2026-07-24 |
+| Reviewed revision | current `main`; final release evidence is the same-revision GitHub Actions CI |
 | Refresh | release 후보, public contract 변경, product source pin 변경 시 |
 | Source | 현재 코드, verifier, current register, machine-readable audit JSON |
 
@@ -39,32 +39,31 @@
 workflow가 모두 `verified`이고, `separate-audit` 항목이 완료되거나 제품 소유로 명시적으로
 제외돼야 한다. `릴리스 반영 완료`는 다시 별도로 Git clean 상태와 원격 parity까지 요구한다.
 
-## 2026-07-14 현재 판정
+## 2026-07-24 현재 판정
 
-**종합: 부분 완료. 코어 디자인 시스템은 운영 가능한 상태지만, 제품 전체 적용과 사람 중심
-디자인 검토, 원격 반영은 아직 완결되지 않았다.**
+**종합: 코어 release-candidate 안정화 완료. 제품 workflow 계약과 사람 중심 디자인
+finding은 닫혔다. 다만 여섯 pinned product는 LDS를 아직 소비하지 않으므로 실제 제품 채택
+완료와 compatibility facade 종료는 별도 후속 단계다.**
 
 | 축 | 현재 판정 | 직접 근거 | 남은 조건 |
 | --- | --- | --- | --- |
 | 거버넌스·문서 체계 | 완료 | [`README.md`](README.md), [`OPERATING_MODEL.md`](OPERATING_MODEL.md), `check:docs` | 정책 변경 시 metadata와 index 동시 갱신 |
-| WDS·foundation parity | 완료(수락 snapshot 기준) | `references/wds/COVERAGE_COMPLETION_GATE.json`의 `claimStatus: ready` | upstream WDS 변경 시 `.fig` 재수락·재감사 |
-| 컴포넌트·API·상태 계약 | 완료 | 202 implementation/type/export, 208 named export, [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | 신규 변경마다 drift/state evidence 유지 |
-| Storybook·접근성·시각 회귀 | 완료 | 177 pages / 534 stories / 408 public / 126 hidden / 89 visual-parity, 534 Axe / 215 play / 37 visual smoke 전체 gate 통과 | story·baseline 변경 시 전체 gate 재실행 |
-| 패키지·소비자 계약 | 완료 | React 18/19 type consumer, tarball ESM/CJS/subpath/SSR, package artifact gate | publish 방식 변경 시 정책 재판정 |
-| 사람 중심 디자인 품질 | 부분 | D-track high 14건 해결, medium 23건·low 10건 추적 | medium/low를 수정·수락·기각 중 하나로 닫기 |
-| 제품 workflow coverage | 부분 | 15개 중 14개 `verified`, WF-15 `wireframed` | WF-15 semantic renderer gap과 제품 연결 증거 해결 |
-| Robotics editor 계열 | 완료(별도 audit 범위) | 5개 component를 workflow coverage와 격리하고 [`EDITOR_LAYOUT_AUDIT.md`](EDITOR_LAYOUT_AUDIT.md)에서 독립 editor-reference 검토 완료 | editor contract 또는 coverage source 변경 시 별도 재감사 |
-| Git·원격 릴리스 반영 | 완료 | full-check change set `3829374`와 이 parity 기록을 `main`에 반영하고 `origin/main` 0/0 확인 | 다음 변경에서도 push 후 fetch·parity 재확인 |
+| WDS·foundation parity | 완료(수락 snapshot 기준) | `references/wds/COVERAGE_COMPLETION_GATE.json`, `check:wds-alignment`, `check:wds-local-fig` | upstream WDS 변경 시 `.fig` 재수락·재감사 |
+| 컴포넌트·API·상태 계약 | 완료 | 174 source entry / 177 named export, [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | 신규 변경마다 drift/state evidence 유지 |
+| Storybook·접근성·시각 회귀 | 완료 | 150 pages / 484 stories / 338 public / 146 hidden / 74 visual-parity, 484 Axe / 264 play / violation 0 | story·baseline 변경 시 Windows canonical gate 재실행 |
+| 패키지·소비자 계약 | 완료(RC) | Core/Theme/Product/compat workspace artifact, external Robotics RC, Windows/Linux package consumer matrix | stable publish·지원 정책 변경 시 재판정 |
+| 사람 중심 디자인 품질 | 완료 | high 14·medium 20·low 7 해결, medium 3·low 3 근거 수락, tracked 0 | 새 finding 발생 시 remediation 원장 갱신 |
+| 제품 workflow coverage | 완료(계약 범위) | 16/16 `verified`; WF-15·WF-16 boundary/evidence 종결 | 실제 제품 adoption은 제품 owner별 별도 검증 |
+| Robotics editor 계열 | 완료(별도 audit 범위) | 외부 Robotics surface와 [`EDITOR_LAYOUT_AUDIT.md`](EDITOR_LAYOUT_AUDIT.md) | 외부 package contract 변경 시 재감사 |
+| Git·원격 릴리스 반영 | 완료 조건부 | same-revision Windows/Linux CI와 `origin/main` parity | 각 변경 push 뒤 CI·0/0을 다시 확인 |
 
 위 수치는 [`REPOSITORY_INVENTORY.md`](REPOSITORY_INVENTORY.md),
 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`,
 `references/product-frontends/COVERAGE_AUDIT.json`의 현재 값과 일치해야 한다.
-
-2026-07-14 현재 534-story change set에서 `npm run check`가 통과했다. 전체 접근성 gate는
-534개 implementation story, 215개 완료 play function, 534개 Axe 실행에서 violation·missing name·
-implicit button type·console error 0을 확인했고, 37개 visual smoke와 실제 tarball의 ESM/CJS·compiled
-subpath·SSR·client boundary도 통과했다. Communication 19 stories / 17 play와 Robotics Navigation
-36 stories / 34 play의 표적 Axe도 각각 별도로 통과했다.
+접근성 원장은 484개 implementation story, 264개 play function, Axe violation 0과
+46개 ratcheted undersized-target signature를 기록한다. 이 46개는 신규 회귀가 아니라
+명시적 기준선이며 신규 signature는 gate가 차단한다. package readiness와 제품 채택은
+같은 판정으로 합치지 않는다.
 
 ## A. 범위·거버넌스·source of truth
 
@@ -95,7 +94,7 @@ subpath·SSR·client boundary도 통과했다. Communication 19 stories / 17 pla
 | C-03 | 상태 완결성 | 적용 가능한 default, hover, focus, active, selected, disabled, loading, empty, error, stale, invalid 상태가 타입·코드·story에 연결된다. | `check:contracts`, `check:story-coverage` | 완료 |
 | C-04 | component prompt | 분류, sibling, 외부 근거, 제품 boundary, 접근성, 의도적 차이가 prompt 계약에 기록된다. | `check:prompt-contracts` | 완료 |
 | C-05 | 중복·책임 경계 | 기존 component 확장·composition을 먼저 검토하고 동일 public 책임이 중복되지 않는다. | `check:story-subjects`, `check:avatar-duplicates`, product disposition audit | 완료 |
-| C-06 | 시각 문법 | sibling 대비 control/icon size, spacing, typography, radius, divider, state treatment의 차이가 근거를 가진다. | component prompt, parity story, 수동 side-by-side 검토 | 부분: D-07 잔여 finding 추적 중 |
+| C-06 | 시각 문법 | sibling 대비 control/icon size, spacing, typography, radius, divider, state treatment의 차이가 근거를 가진다. | component prompt, parity story, `DESIGN_CONVENTION_REVIEW.json` | 완료: medium/low finding까지 수정 또는 근거 수락 |
 
 ## D. Interaction·accessibility·반응형·시각 품질
 
@@ -107,7 +106,7 @@ subpath·SSR·client boundary도 통과했다. Communication 19 stories / 17 pla
 | D-04 | target·motion | interactive target과 SVG hit area가 계약을 만족하고 reduced motion을 존중한다. | target-size baseline, `check:motion-hygiene`, `check:a11y` | 완료 |
 | D-05 | normal·narrow | 대표 실제 콘텐츠를 정상 폭과 320~400px에서 확인하고 overflow, wrapping, order, scroll ownership을 검토한다. | responsive story, visual smoke, component handoff | 완료(현재 변경 표면 기준) |
 | D-06 | light·dark·compound state | light/dark, 긴 label, mixed status, progress, error, disabled, 복수 action에서 hierarchy를 수동 확인한다. | parity/compound story, `check:colors`, visual regression | 완료(현재 변경 표면 기준) |
-| D-07 | 디자인 convention debt | 확정 finding을 해결·수락·기각으로 닫고 근거와 owner를 남긴다. | `references/quality/DESIGN_CONVENTION_REVIEW.json` | 부분: medium 23, low 10 추적 중 |
+| D-07 | 디자인 convention debt | 확정 finding을 해결·수락·기각으로 닫고 근거와 owner를 남긴다. | `references/quality/DESIGN_CONVENTION_REVIEW.json` | 완료: resolved 41, accepted 6, tracked 0 |
 
 ## E. Storybook·문서·감사 증거
 
@@ -126,7 +125,7 @@ subpath·SSR·client boundary도 통과했다. Communication 19 stories / 17 pla
 | F-01 | 패키지 build | ESM/CJS/type 산출물과 styles가 재현 가능하게 생성된다. | `npm run build`, `check:generated` | 완료 |
 | F-02 | React 소비자 | React 18/19 strict type consumer가 통과하고 public declaration에 누락이 없다. | `check:type-consumer`, `check:types` | 완료 |
 | F-03 | 실제 artifact | tarball install, ESM/CJS import, compiled subpath, SSR, tree-shaking 경계가 검증된다. | `check:consumer`, `check:pack` | 완료 |
-| F-04 | 배포 정책 | 현재 `private: true`와 내부 Git 소비 정책이 문서·manifest·guard에서 일치한다. | `check:publish-policy`, [`REPOSITORY_INVENTORY.md`](REPOSITORY_INVENTORY.md) | 완료 |
+| F-04 | 배포 정책 | private workspace와 restricted GitHub Packages 정책이 문서·manifest·guard에서 일치한다. | `check:publish-policy`, release-set evidence | 완료 |
 | F-05 | release communication | deprecated/breaking 변경에는 changelog, migration, version 영향과 검증 결과가 있다. | release checklist, `DEPRECATIONS.md` | 해당 변경 발생 시 필수 |
 
 ## G. 제품 workflow·도메인 채택
@@ -134,8 +133,8 @@ subpath·SSR·client boundary도 통과했다. Communication 19 stories / 17 pla
 | ID | 점검 항목 | 완료 기준 | 증거·명령 | 현재 |
 | --- | --- | --- | --- | --- |
 | G-01 | 제품 source pin | DeviceOps, VisionOps, LK Web Viz, Context Hub, Control, MLOps의 revision과 핵심 source가 고정된다. | `references/product-frontends/COVERAGE_AUDIT.json`, `check:product-frontends` | 완료 |
-| G-02 | canonical workflow | 발견된 workflow마다 진입점, 판단 정보, action, edge state, 완료 조건, 제품 seam이 기록된다. | [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md) | 부분: 14/15 verified |
-| G-03 | WF-15 지도 authoring | `forbidden` line과 stair/stair-slope 의미를 위장하지 않고 LDS renderer 책임 여부를 독립 도메인·LDS 근거로 판정하고 제품 source로 coverage를 확인한다. | WF-15 section, Robotics audit | 부분: wireframed |
+| G-02 | canonical workflow | 발견된 workflow마다 진입점, 판단 정보, action, edge state, 완료 조건, 제품 seam이 기록된다. | [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md) | 완료: 16/16 verified |
+| G-03 | WF-15 지도 authoring | `forbidden` line과 stair/stair-slope 의미를 위장하지 않고 LDS renderer 책임 여부를 독립 도메인·LDS 근거로 판정하고 제품 source로 coverage를 확인한다. | WF-15 section, external Robotics audit | 완료: hazard/region surface와 product-owned line authoring 경계 확정 |
 | G-04 | component disposition | keep/redesign/split/remove 결정이 제품 coverage와 분리된 LDS/WDS·외부 근거·design-owner 결정에 연결되고, product audit은 workflow mapping만 제공한다. | product audit JSON, component prompt/decision record | 부분: 기존 product coverage guard가 lifecycle 결정을 함께 강제해 R-04 분리 필요 |
 | G-05 | Robotics editor 격리 | `CanvasEditorShell`, `CanvasEditorCommandBar`, `LayerPanel`, `SelectionInspector`, `ViewportStatusBar`를 product workflow coverage와 분리해 LDS·공식 editor reference로 판정한다. | [`EDITOR_LAYOUT_AUDIT.md`](EDITOR_LAYOUT_AUDIT.md), [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md), product coverage `separate-audit` | 완료: 별도 audit 유지 |
 | G-06 | 채택 판정 | 대상 workflow가 `verified`이고 제품 소유 seam, source revision, 실제 화면 검토가 최신이다. | `check:product-frontends`, 제품별 adoption review | workflow별 조건부 |
@@ -144,20 +143,19 @@ subpath·SSR·client boundary도 통과했다. Communication 19 stories / 17 pla
 
 | ID | 점검 항목 | 완료 기준 | 증거·명령 | 현재 |
 | --- | --- | --- | --- | --- |
-| H-01 | 전체 repository gate | 같은 revision에서 build, contract, Storybook, a11y, visual regression, package artifact가 모두 통과한다. | `npm run check` | 완료: 2026-07-14 현재 staged change set 전체 gate 통과 |
+| H-01 | 전체 repository gate | 같은 revision에서 build, contract, Storybook, a11y, visual regression, package artifact가 모두 통과한다. | `npm run check:ci`, `check:audit`, `check:pack:ci` | 완료 조건: current `main` GitHub Actions Windows/Linux CI green |
 | H-02 | release audit | 외부 배포 또는 release 후보면 runtime audit을 포함한 release gate가 통과한다. | `npm run check:ops-release` | 해당 없음: 현재 private Git 소비 |
-| H-03 | 변경 범위 clean | 의도한 파일만 남고 generated drift와 타인 소유 변경을 포함하지 않는다. | `git status --short`, `git diff --check` | 완료: 의도한 change set 커밋, generated drift 0, final clean 상태 확인 |
-| H-04 | main·remote parity | 승인된 변경이 `main`에 통합되고 `origin/main`과 ahead/behind가 0/0이다. | `git fetch --prune`, `git status --short --branch` | 완료: `main...origin/main` 0/0 확인 |
+| H-03 | 변경 범위 clean | 의도한 파일만 남고 generated drift와 타인 소유 변경을 포함하지 않는다. | `git status --short`, `git diff --check` | 완료 조건: `.omc/` 외 tracked drift 0 |
+| H-04 | main·remote parity | 승인된 변경이 `main`에 통합되고 `origin/main`과 ahead/behind가 0/0이다. | `git fetch --prune`, `git rev-list --left-right --count origin/main...main` | 완료 조건: push 뒤 0/0 |
 | H-05 | current handoff | 현재 판정, 검증 명령, 남은 finding, 다음 owner가 current handoff에서 이 문서로 연결된다. | [`HANDOFF.md`](HANDOFF.md) | 완료 |
 
 ## 남은 검토 원장
 
 | ID | 우선순위 | 남은 검토 | 완료 증거 | 영향 |
 | --- | --- | --- | --- | --- |
-| R-01 | P1 · 제품 workflow | WF-15의 `forbidden` line과 stair/stair-slope semantic renderer를 LDS가 소유할지 제품 renderer에 남길지 결정한다. | 독립 map-symbol/domain audit, public contract 또는 명시적 product boundary, LK Web Viz coverage 확인, WF-15 `verified` 또는 승인된 scope-out | 지도 authoring workflow 완결을 차단; 코어 일반 사용은 차단하지 않음 |
-| R-02 | P2 · 채택 추적 | LK Control Full Daedeok의 observed Trajectory mapping은 pinned `InteractiveMap` source로 닫혔다. 나머지 Navigation renderer의 component-level mapping을 직접 연결한다. | 남은 renderer별 pinned Control source row와 component disposition의 양방향 trace, `check:product-frontends` 통과 | Trajectory는 supported by composition; planned Route는 pinned workflow에서 not applicable; 나머지는 unverified 유지 |
-| R-03 | P2/P3 · 디자인 품질 | D-track medium 23건과 low 10건을 수정, 근거 있는 수락, 또는 기각으로 닫는다. | finding별 remediation·owner·검증 evidence | 코어 release blocker는 아니지만 디자인 품질 완결을 차단 |
-| R-04 | P1 · gate ownership | `check:product-frontends`의 `componentDisposition` 삭제·export 강제를 coverage 검사에서 분리하고, 독립 design decision/승인 기록을 참조하게 한다. | 50개 disposition 영향 검토, 별도 승인, checker·schema·문서 migration | repository-wide gate 변경이므로 이번 컴포넌트 재설계 범위에는 포함하지 않음 |
+| R-01 | P2 · 제품 채택 | 여섯 pinned product source의 LDS 사용량이 모두 0이므로 package migration 완료를 주장하지 않는다. | 제품별 versioned artifact 도입, production build와 workflow smoke | 코어 RC를 차단하지 않으며 제품 owner가 채택 시점에 수행 |
+| R-02 | P2 · compatibility 종료 | legacy facade는 실제 소비자 migration과 지원 기간이 끝날 때까지 유지한다. | Wave 5 consumer 0-use scan, support-window 충족, breaking release note | 의도적으로 열어 둔 migration lifecycle |
+| R-03 | P2 · gate ownership | product coverage JSON의 `componentDisposition`은 현재 coverage trace를 제공하지만 lifecycle 승인 source는 component contract/design-owner 기록이다. | 장기적으로 schema와 checker 책임을 물리 분리 | 현재 문서가 authority 경계를 명시하며 core RC blocker는 아님 |
 
 ## 점검 실행 순서
 

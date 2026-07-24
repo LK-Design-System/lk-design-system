@@ -3,9 +3,9 @@
 | Field | Value |
 | --- | --- |
 | Type | Product workflow coverage contract and audit summary |
-| Status | Current · WF-16 dashboard shell/navigation composition implemented |
+| Status | Current · all 16 shared-responsibility workflow traces verified |
 | Owner | Product design/engineering · Design system owner |
-| Last reviewed | 2026-07-21 |
+| Last reviewed | 2026-07-24 |
 | Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
 
 ## 필수 LK 제품 자산 교차 검토
@@ -17,8 +17,8 @@
 | 제품 자산 | 기준 소스 | 현재 증거 상태 |
 | --- | --- | --- |
 | LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `a984def117c05acd213f494cbb8a42e990595505` · `frontend` | WF-15 navigation과 WF-16 flat header-first dashboard composition 확인 · `DashboardScreen.tsx`의 live connection truth를 WF-02에 반영 |
-| LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend` | WF-16 fixed header + wide/temporary SideNav + supervision composition 확인 · narrow drawer focus handoff gap 추적 중 |
-| LK Context Hub | `LK-ROBOTICS/lk_context_hub` · `de124084b7e50049350a46f92c4ea4476269c58c` · `src` | WF-16 full-height SideNav + offset main + card/collection composition 확인 · narrow navigation gap 추적 중 |
+| LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend` | WF-16 fixed header + wide/temporary SideNav + supervision composition 확인 · hierarchical narrow navigation은 제품 소유 Drawer composition으로 경계 확정 |
+| LK Context Hub | `LK-ROBOTICS/lk_context_hub` · `de124084b7e50049350a46f92c4ea4476269c58c` · `src` | WF-16 full-height SideNav + offset main + card/collection composition 확인 · LDS narrow anatomy는 flat BottomNav로 한정 |
 
 각 컴포넌트 리뷰에는 아래 내용을 남긴다.
 
@@ -42,9 +42,9 @@
 | 단계 | 수 | 의미 |
 | --- | ---: | --- |
 | discovered | 0 | source만 확보하고 독립 wireframe을 만들지 않은 항목이다. |
-| wireframed | 1 | 독립 low-fi와 source mapping은 닫혔지만 LDS renderer gap 때문에 구현 단계로 승격하지 않은 항목이다. |
-| implemented | 1 | 컴포넌트와 state story는 있으나 전체 trace가 닫히지 않은 항목이다. |
-| verified | 14 | source requirement, 독립 wireframe, 작은 LDS 책임, state story, 검증 근거가 연결됐다. |
+| wireframed | 0 | 독립 low-fi만 닫히고 shared responsibility가 미확정인 항목은 없다. |
+| implemented | 0 | 컴포넌트와 state story만 있고 전체 trace가 열려 있는 항목은 없다. |
+| verified | 16 | source requirement, 독립 wireframe, 작은 LDS 책임, state story, 검증 근거가 연결됐다. |
 
 여기서 `verified`는 디자인 시스템의 shared responsibility와 product-owned seam이 추적 가능하다는 뜻이다. 여섯 제품이 이 패키지를 실제로 통합했거나 production workflow가 end-to-end 검증됐다는 뜻은 아니다.
 
@@ -153,8 +153,8 @@
 | WF-12 | External publish | validation-only와 실제 외부 write, publish evidence를 구분하는가? | wireframed |
 | WF-13 | Schedule automation | recurrence·timezone·conflict와 개별 run 상태를 구분하는가? | wireframed |
 | WF-14 | Approval transition | review completion, approval, external release를 서로 다른 truth로 다루는가? | wireframed |
-| WF-15 | Map navigation and facility authoring | point·line·region·facility와 층 identity가 일반 관례와 실제 LK workflow에서 구분되는가? | wireframed |
-| WF-16 | Dashboard shell and navigation composition | 제품 identity·utility·현재 위치·우선 콘텐츠가 wide/narrow shell에서 중복 없이 유지되는가? | implemented |
+| WF-15 | Map navigation and facility authoring | point·line·region·facility와 층 identity가 일반 관례와 실제 LK workflow에서 구분되는가? | verified |
+| WF-16 | Dashboard shell and navigation composition | 제품 identity·utility·현재 위치·우선 콘텐츠가 wide/narrow shell에서 중복 없이 유지되는가? | verified |
 
 ## 독립 설계 원칙
 
@@ -683,7 +683,7 @@ participant role·provider/stream transport·route·retrieval·RAG·persistence�
 
 ### WF-15 Map navigation and facility authoring
 
-현재 단계는 `wireframed`다. `LK-ROBOTICS/lk_web_viz`의 authoring source와 `TaskRunScreen`·`Map2DViewer` runtime source를 함께 pin해 point·line·region·landmark·층별 task target, observed path와 robot pose의 분리를 다시 읽었다. 이 작업은 **LK Robotics Extension**이며 WDS Core parity로 주장하지 않는다.
+현재 단계는 `verified`다. `LK-ROBOTICS/lk_web_viz`의 authoring source와 `TaskRunScreen`·`Map2DViewer` runtime source를 함께 pin해 point·line·region·landmark·층별 task target, observed path와 robot pose의 분리를 다시 읽었다. 구현·스토리 증거는 외부 `@lk-robotics/lds-robotics-ui` revision `0ae058d`에 있다. 이 작업은 **LK Robotics Extension**이며 WDS Core parity로 주장하지 않는다.
 
 필수 세 자산의 이번 Robotics Navigation 교차 판정은 다음과 같다. `supported` 계열 판정은 실제 component-level source mapping이 닫힌 경우에만 사용한다.
 
@@ -728,7 +728,7 @@ participant role·provider/stream transport·route·retrieval·RAG·persistence�
 
 Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTransition의 compound state를 1280px에서, 각 narrow story를 320–360px에서 확인했다. Route의 current-segment label과 progress text 충돌은 분리했고, 모든 narrow surface에서 수평 overflow가 없음을 확인했다. invalid/stale route·trajectory는 `!`/`~` glyph가 남고, point-like interactive geometry는 24×24 CSS square를 포함하는 hit core를 갖는다.
 
-독립 wireframe과 mapping은 닫혔지만 제품 `forbidden` line과 stair/stair-slope semantic renderer가 아직 gap이므로 `implemented`나 `verified`로 승격하지 않는다. 새 public component나 semantic kind 추가는 독립 Robotics domain·map-symbol reference audit, 제품 coverage 확인과 scope 승인을 거친다.
+독립 wireframe과 mapping은 닫혔다. 외부 Robotics 패키지의 `HazardMarker`가 stairs/ramp/dropoff/obstacle을, `SpatialRegion`이 slope terrain을 소유한다. 제품의 `forbidden` line은 navigation lane이 아니라 제품 authoring renderer의 편집 geometry이므로 새 LDS semantic primitive로 승격하지 않는다. 이 명시적 경계와 normal/narrow interaction evidence로 `verified`를 닫는다.
 
 ## 현재 신규 컴포넌트 disposition
 
@@ -831,10 +831,12 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 | WF-12 | `ValidationSummary`, `ConfirmDialog`, `ProgressBar`, `SourceDisclosure`, `ActionArea`의 external-impact/result 조합 | target validation, credential use, upload, outcome schema, external release truth |
 | WF-13 | `DatePicker`, `TimePicker`, `CheckboxGroup`, `ValidationSummary`, `SearchableMultiSelect`, `Button`/`ActionArea` 조합 | recurrence schema, eligibility, conflict calculation, task lookup, persistence, occurrence execution |
 | WF-14 | `DataGrid`, `SourceDisclosure`, `ValidationSummary`, `DescriptionList`, `Textarea`, `ActionArea` 조합으로 eligibility/approval/release를 구분 | metric verdict policy, authorization, persistence, external release evidence |
+| WF-15 | 외부 Robotics 패키지의 point/lane/route/trajectory/region/facility/hazard renderer와 named semantic mirror 계약 | projection, floor topology, editor commands, persistence, robot pose, product-only forbidden-line geometry |
+| WF-16 | `DashboardShell`, `SideNav`, `TopBar`, `BottomNav`의 landmark, wide/narrow slot, collapse, focus/Escape 계약 | destination hierarchy, route, permission, query, hierarchical narrow Drawer composition |
 
-WF-15는 독립 wireframe, navigation component review, normal/narrow visual review까지 완료했지만 제품 `forbidden` line과 stair/stair-slope renderer gap이 남아 위 verified closure matrix에 포함하지 않는다. 기존 `LaneOverlay`나 generic behavior region으로 의미를 덮지 않으며, 후속 Robotics audit에서 LDS 책임 여부를 먼저 결정한다.
+WF-15는 외부 Robotics 패키지 revision `0ae058d`의 navigation/hazard/terrain renderer와 normal/narrow stories로 닫혔다. `forbidden` authoring line은 제품 geometry로 남겨 `LaneOverlay`로 위장하지 않는다.
 
-WF-16은 세 필수 제품의 pinned shell/navigation source, 독립 anatomy, 기존 LDS component/state story의 mapping까지 연결한 `implemented` 단계다. `SideNav`의 docked/floating 시각, stable 36px boundary collapse, controlled/uncontrolled state, collapsed parent expansion, reduced motion, keyboard overlay open/close/Escape/focus restore, `DashboardShell` normal/narrow reflow, TopBar overflow, 한 개의 `main`·`h1`·banner landmark를 함께 검증하기 전에는 `verified`로 승격하지 않는다. 제품 route, dashboard query, KPI 수식, telemetry와 action policy를 LDS story로 복제하는 것은 이 closure에 포함하지 않는다.
+WF-16은 세 필수 제품의 pinned shell/navigation source와 독립 anatomy를 연결하고, `SideNav`의 docked/floating, controlled collapse, reduced motion, keyboard overlay open/close/Escape/focus restore, `DashboardShell` normal/narrow reflow, TopBar overflow, landmark 계약을 기존 interaction stories로 검증했다. LDS v1 narrow anatomy는 네 개 이하 flat destination의 `BottomNav`이며, hierarchical temporary Drawer는 제품 composition으로 남긴다.
 
 검증 범위는 2026-07-14 기준 다음과 같다.
 

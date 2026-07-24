@@ -109,11 +109,11 @@ export function ProductCard({
           <div style={{ position: 'absolute', inset: 0, background: PC_GRADE }} />
         </div>
       )}
-      <div style={{ position: 'relative', padding: '18px 20px 20px', display: 'flex', flexDirection: 'column', gap: 9 }}>
+      <div style={{ position: 'relative', padding: '16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           {/* inverse-primary: the stage is theme-invariant navy, so the accent
               must clear AA against it (primary-normal lands at 3.9:1). */}
-          {category && <span style={{ fontSize: 'var(--fs-caption)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--color-semantic-inverse-primary)' }}>{category}</span>}
+          {category && <span style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--color-semantic-inverse-primary)' }}>{category}</span>}
           <HeadingTag style={{ margin: 0, fontSize: 'var(--fs-h5)', lineHeight: 'var(--lh-h5)', fontWeight: 'var(--fw-extra)', letterSpacing: 'var(--ls-h5)', color: 'var(--color-semantic-inverse-label)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{id}</HeadingTag>
         </div>
         {/* 2-line clamp keeps the content block inside the bottom stage zone so

@@ -43,8 +43,12 @@
     },
     "remediation": {
       "resolvedHigh": 14,
-      "trackedMedium": 23,
-      "trackedLow": 10
+      "resolvedMedium": 20,
+      "acceptedMedium": 3,
+      "resolvedLow": 7,
+      "acceptedLow": 3,
+      "trackedMedium": 0,
+      "trackedLow": 0
     }
   },
   "lenses": [
@@ -97,6 +101,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "Destructive footer actions now use the danger role and ConfirmDialog reference pattern; footer role-to-variant mapping is explicit in Button.prompt.md.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -115,6 +128,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "Sheet footer is end-aligned with the shared dialog action gap, and the prompt fixes its mobile full-width exception.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -133,6 +155,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "Drawer footer guidance requires inline end actions and the remaining shared Drawer demo no longer uses a full-width CTA.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -151,6 +182,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "Dialog footer secondary actions are standardized on outlined/assistive and documented in Button, Drawer, and Sheet contracts.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         }
       ],
@@ -252,6 +292,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "모든 핵심 주장 검증됨. FormField.jsx:12,19는 label1+fw-bold(700)+letterSpacing:0 라벨과 label2(13px)/1.5 메시지를 하드코딩하고, Input.jsx:75/Textarea.jsx:54/Select.jsx:179는 tokens/components.css:212-216의 --component-input-label-*(label1+fw-semibold(600)+0.0145em)를, 메시지는 caption1(12px/16px)를 공유함(typography.css:17-18,81,83,85로 실값 확인). 반박 시도 결과: (1) 'FormField는 그룹 레전드라 굵어도 된다'는 방어는 FormField.prompt.md가 단일 Input 래핑을 정본 예시로 쓰고 FormPinInput/FormDateTime 스토리도 단일 필드에 사용하므로 성립 안 함. (2) WDS 계승 아님 — 오히려 저장소 자체 감사(TOKEN_MAP.json:208, COVERAGE_DETAIL_AUDIT.json:150)가 FormField를 WDS Textinput/Textfield 패밀리(wds-core)로 분류하며, WDS 스냅샷(COMPONENT_STYLES.json:1548)에는 Textfield 필드 텍스트(16px Regular)만 있고 bold-700 라벨 스펙은 없음. 한 가지 수정 필요: FormsFull.shared.jsx에서 Select(:57)와 FormField(:64)는 '같은 그리드 행'이 아니라 같은 스토리의 인접한 두 섹션임 — 같은 폼 화면에서 수직으로 나란히 보이는 사실은 유효하나 문구는 정정할 것."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "FormField composes the same FieldLabel and FieldMessage primitives and input stack gap used by field components.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -270,6 +319,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "모든 인용 파일·라인 확인됨(코드 서술 정확). TOKEN_MAP.json:207-209가 Input/SearchField/PasswordInput/Textarea/InputGroup을 전부 단일 WDS Textinput/Textfield(wds-core)에 매핑하므로 상태 문법 공유는 시스템 자체 규약이며, 컴포넌트별 복불복은 규칙4의 내부 비일관에 해당. WDS 스냅샷은 Textfield resting 테두리 색을 증명하지 못해(입력 계열 PDF 부재, 노드 덤프에 내부 stroke 없음) 어느 쪽도 계승으로 볼 수 없고, WDS가 Focus/Active Focus 상태를 명시하므로(FIGMA_LOCAL_CONTENT_AUDIT.json:111218-111221) AutoComplete·InputGroup의 포커스 표시 전무(outline:none)는 WDS 위반+WCAG 2.4.7 위반+내부 비일관으로 확정. 단 finding 강도 조정 필요: (1) 두 resting 토큰은 표준 배경에서 사실상 동일 렌더(라이트 #E0E0E2 vs #E1E2E4, 다크 #36383C vs #37383C)라 '헤어라인 이원화'와 Input hover 변화는 시각적으로 지각 불가한 토큰 위생 문제이고, (2) 에러 테두리도 -border-color-invalid가 status-negative로 해석돼 렌더는 동일하며, (3) WDS Textfield에 Hover 축이 없어 Textarea/Select의 무-hover는 결함이라 단정 불가. 권고를 '포커스 표시 부재(AutoComplete·InputGroup)'를 핵심으로, 토큰 단일화를 부차 정리로 재구성할 것."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "Field families consume shared fieldBorderColor, component input borders, and focus shadow rather than local border grammars.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -288,6 +346,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "유지하되 한 곳 수정 필요. 검증 결과: (1) 증거 실재 — Input/Textarea/Select만 label/helper/error/status 보유(Input.jsx:18-44, Select.jsx:11-40), 지목된 9개 컴포넌트는 전부 미보유이며 placeholder→aria-label 기본값도 확인(PasswordInput.jsx:18, NumberField.jsx:13, AutoComplete.jsx:23). 대표 스토리 FormsFull.shared.jsx:34-41이 라벨 있는 Input 옆에 라벨 없는 필드 7개를 한 그리드에 렌더하는 것도 사실. 단, '라벨·헬퍼·에러를 렌더할 방법이 없다'는 과장 — components/forms/FormField.jsx가 label/required/helper/error를 제공하고 FormDateTime.stories.jsx:25 등 4개 스토리가 실제 사용(Ant/Chakra식 래퍼 합성은 그 자체로 컨벤션 위반이 아님). 다만 FormField는 메시지만 렌더하고 컨트롤 테두리를 물들이지 못하므로, invalid/status prop이 없는 이 9개는 negative 상태 외관이 실제로 불가능 — 이 부분은 정확. (2) 컨벤션 정당 — '보이는 라벨 필수, placeholder 대용 금지'는 Material·GOV.UK·Polaris·NN/g·WCAG 3.3.2의 실질 합의. 단 '컴포넌트마다 내장 label prop 필수'는 합의가 아님. (3) WDS 계승 아님 — COMPONENT_AXIS_GAPS.md:28에 Textfield 공인 축(Status·Trailing Button), FIGMA_LOCAL_CONTENT_AUDIT.json(~98050, 102019-102097, 111238-111240)에 heading=/requiredBadge=/description= 축 확인. COMPONENT_CENSUS.json 기준 PasswordInput·NumberField·PinInput·Combobox·TagInput·InputGroup은 ldsOnly라 일반 컨벤션이 기준이고, WDS Textfield 선례는 오히려 라벨 쪽을 가리킴. 권고: finding을 'API에 라벨 방법 부재'가 아니라 '같은 폼 디렉터리 안 이중 라벨링 체계(내장 prop vs FormField) + 대표 스토리의 placeholder-as-label 인코딩(규칙 4 내부 비일관) + error/status 축 부재로 negative 상태 표현 불가'로 재서술할 것."
+          },
+          "remediation": {
+            "status": "accepted",
+            "implementedAt": "2026-07-24",
+            "note": "The field contract permits either built-in label metadata or FormField composition; persistent labels remain required and SearchField is the named search exception.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -306,6 +373,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "확정. Input.jsx:55-67/104/108은 status에서 테두리·메시지 색만 변경하고 아이콘을 자동 렌더하지 않음(iconRight는 수동 슬롯, 중립색 처리). WDS 증거는 스크린샷 고해상 크롭으로 확정: Textfield 'status=' 블록에서 negative는 placeholder·focus·value 행 모두 trailing 빨간 원형 느낌표를, positive는 값 있는 행에서 파란 체크 배지를 컴포넌트가 직접 렌더(단, positive placeholder 행에는 배지 없음 — finding의 '모두' 표현은 과장, 정정 필요). COMPONENT_AXIS_GAPS.md:28이 Status를 .fig 추출 기반 정식 variant 축으로 확인. 문서화된 예외 없음 + VARIANT_AUDIT_CHECKLIST.json이 textfield-validation-states를 'parity-confirmed'로 주장하고 있어 미인지 갭임이 강화됨. 주의: 일반 컨벤션 주장은 과장(Material·Carbon은 아이콘 사용, Polaris·GOV.UK·Primer는 미사용으로 갈림 / WCAG 1.4.1은 에러 텍스트가 비색상 단서라 근거 약함) — finding은 WDS 근거로만 유지하고 보조 합의·접근성 문구는 축소 권고."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "FieldStatusIcon supplies default filled positive/negative icons while explicit trailing icons remain an override.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         }
       ],
@@ -360,6 +436,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "Navigation selection uses the primary-normal role; no primary-heavy navigation usage remains.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -378,6 +463,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "NavRail now shares the SideNav hover wash and Breadcrumb ancestor links transition from neutral to normal ink.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -396,6 +490,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "Collapsed SideNav dots are reserved for real badges; active descendants use the already-present stronger parent icon ink.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -414,6 +517,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "accepted",
+            "implementedAt": "2026-07-24",
+            "note": "Navigation disabled styling is standardized as 0.45 wrapper opacity and documented; controls avoid stacking a second child opacity.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         }
       ],
@@ -515,6 +627,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "모든 증거 실재 확인. (1) DropdownMenu.jsx:217-224는 mousedown 외부클릭 리스너뿐이며 role=\"menu\"(260행)·menuitem/menuitemradio/menuitemcheckbox(100-108행)를 선언하고도 keydown·화살표 탐색·초점 복원이 전무. Popover.jsx:12-17 동일 패턴에 role=\"dialog\"(22행)까지 선언. HoverCard.jsx는 mouseenter/leave만 있고 키보드 핸들링 0(포커스로 열 수도 없음). Tooltip.jsx:146-153은 hover/focus 토글만 있고 Escape 없음 — WCAG 1.4.13 Dismissable 위반 서술 정확. (2) 대조군도 정확: dialog-focus.js:96-142가 Modal/ConfirmDialog/Drawer/Sheet에 Escape를 부여하고 Alert.jsx:85, CommandPalette.jsx:13, Lightbox.jsx:19가 각자 Escape 처리. Modal.prompt.md:33 인용 정확. (3) 컨벤션 정당: APG Menu Button 패턴은 Material/Polaris/Primer/Fluent가 실제로 갈리지 않는 합의이고 WCAG 1.4.13은 규범 기준이며, 저장소 스스로 Modal.prompt.md:39·ConfirmDialog.prompt.md:31에서 APG를 자기 계약으로 채택함. (4) WDS 계승 아님 — 오히려 반대: FIGMA_NODE_AUDIT_QUEUE.json:399가 \"Presentation 노드에는 Tooltip과 Menu만 있고 Popover/HoverCard는 product extension\"으로 분류(→ 일반 컨벤션이 기준)하며, WDS 스냅샷은 Tooltip/Menu의 시각 variant 축만 정의하고 키보드 동작은 정의하지 않음. 결정적 추가 증거: VARIANT_AUDIT_CHECKLIST.json:745-759의 \"anchored-overlay-behavior\" 체크리스트가 \"keyboard escape\"를 검증 항목으로 명시하고 localEvidence로 stories/OverlayAnchored.stories.jsx를 지목하는데, 해당 스토리와 4개 컴포넌트 어디에도 Escape가 없음(grep 무일치) — 저장소 자체 감사 문서가 주장하는 동작을 코드가 이행하지 않는 이중 내부 비일관. finding 유지, 오히려 이 체크리스트 증거를 finding에 추가할 것을 권고."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "DropdownMenu, Popover, Tooltip, and HoverCard use the common light-dismiss contract with Escape and focus restoration; menu keyboard navigation is shared.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -533,6 +654,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "확정. CommandPalette.jsx는 input onKeyDown 없음·document Escape만 처리(13행)·항목 onClick/onMouseEnter 전용(30행)·listbox/combobox ARIA 및 activeIndex 부재가 실제로 확인됨. WDS 스냅샷(COVERAGE_AUDIT.json:273, FIGMA_NODE_AUDIT_QUEUE.json:399, PUBLIC_EXPORT_CLASSIFICATION.json:493-502)이 CommandPalette를 명시적 product extension으로 분류하므로 WDS 계승 아님 — 일반 컨벤션(WAI-ARIA APG combobox + VS Code/GitHub/Slack/Linear/Raycast 만장일치 관용)이 기준이고 이는 정당한 합의. 내부 비일관도 실재: 같은 저장소 Select.jsx:135-155가 ArrowDown/ArrowUp/Enter+activeIndex를 구현하고 OverlayModal.stories.jsx:157-165가 Tab 순환을 play 테스트로 계약 검증. 유일한 미세 수정: 항목이 button이라 Tab+Enter 실행은 기술적으로 가능하므로 \"마우스 클릭으로만 실행 가능\"은 \"입력 포커스를 유지한 채 탐색·실행 불가\"로 완화해 서술할 것."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "CommandPalette exposes combobox/listbox active-descendant semantics and Arrow/Home/End/Enter keyboard execution.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -551,6 +681,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "모든 증거 실재 확인: ConfirmDialog.prompt.md:19 '단순 알림에는 Alert, 명시적 확인에는 ConfirmDialog', OverlayConfirmDialog.stories.jsx:33 '파괴적 작업은 ... ConfirmDialog로 확인합니다', Alert.prompt.md:1,4-7 'for urgent or important decisions' + 'Delete item?' Delete/Cancel(variant=negative), Overlay.shared.jsx:293-333 AlertCard/AlertToastCard tone=danger '작업을 중단할까요?' 중단/취소. 추가 보강 증거: stories/OverlayConfirmAlert.stories.jsx:26-31 — Alert 자체 스토리의 기본 데모도 '리포트를 삭제할까요?' + 삭제(파괴적 확인)이며, Alert.prompt.md:1의 'urgent or important decisions' 정의는 ConfirmDialog.prompt.md:19의 '단순 알림' 역할 규정과 문서 대 문서로 정면 충돌 — rule 4 내부 비일관이 명백함. WDS 계승 아님: FIGMA_LOCAL_CONTENT_AUDIT.json 노드 16215:20040(=line 157542)의 Alert 정의는 '중요한 정보나 경고 메시지를 사용자에게 전달... 액션 내용 커스터마이징이 불가능한 웹에서 사용'으로 전달·고지 지향이고, 해당 블록의 데모 텍스트는 '간략한 제목/목적을 명확하고 간단히 안내합니다'뿐(파괴적 확인 데모 없음). WDS에는 ConfirmDialog가 없어 3분법 자체가 LDS 창작이므로 모순의 계승은 불가능. 단, 두 가지 수정 필요: (1) '일반 합의 보강' 레그는 사실과 다르므로 삭제할 것 — Apple HIG는 파괴적 확인을 정확히 alert로 처리하고(Cancel/Delete), Material의 AlertDialog·Fluent Dialog modalType=alert·Polaris Modal(destructive primaryAction)도 alert형 다이얼로그가 곧 확인 표면이라 'alert는 확인용이 아니다'는 합의가 아님. finding은 내부 비일관(rule 4) + WDS 스냅샷 정의(rule 1)에만 근거해야 함. (2) 권고 방향은 열어둘 것 — WDS Alert가 platform=iOS/Android/web 모방(OS alert는 관례상 파괴적 확인 수행)이고 negative variant를 가지므로, 데모를 ConfirmDialog로 옮기는 대신 ConfirmDialog.prompt.md:19의 역할 문구('단순 알림')를 'WDS 플랫폼형 고정 액션 alert vs LDS 제품 확인 표면'으로 재규정하는 쪽이 WDS 충실 해법일 수 있음. 모순 해소 자체가 finding이며 어느 쪽을 고칠지는 설계 결정."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "Alert examples now demonstrate an urgent acknowledgement; irreversible choices remain in ConfirmDialog and the cross-link is documented.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -569,6 +708,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "검증 통과. Toast.jsx/ToastStack.jsx/Toast.d.ts에 duration·타이머·최대개수 부재, 프롬프트 문서 3종에 지속시간 안내 0건 — 전부 실파일로 확인. WDS 인용문은 feedback-toast.pdf 1면과 FIGMA_LOCAL_CONTENT_AUDIT.json에서 원문 그대로 확인(단 ':157434' 위치 표기는 부정확 — 파일 내 다수 위치에 존재). WDS 계승 아님: WDS PDF는 시각 축(variant/leadingIcon/customize=icon)만 정의하고 Figma는 타이밍을 인코딩할 수 없으므로 duration 부재는 WDS의 결정이 아니며, WDS 설명문 자체가 '잠시 나타났다 사라지는'으로 일시성을 정의에 포함. 결정타: LDS는 WDS PDF에 없는 action/onAction/onClose/closeLabel을 이미 추가해 해제 '수단'은 소유하면서 해제 '시점'만 제품에 위임 — 'WDS 축만 구현' 방어 불가, 내부 스코프 비일관. 컨벤션은 메타 수준에서 정당: Material 4s/Polaris 5s/Carbon 5s 권고/Spectrum 5-10s에 더해 헤드리스 프리미티브인 Radix Toast조차 duration 기본 5000ms를 소유. 단 aria-live 부분은 약함 — Material web도 전 톤 role=\"status\" 사용, APG도 갈리는 사안이므로 '오류 톤 assertive'를 위반으로 격상하지 말고 부수 노트로 유지 권장. 권고도 비례적(타이머 강제 아닌 문서 소유 + WCAG 2.2.1 연장 규칙)."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "Toast owns the documented seven-second opt-in policy, remaining-time pause on hover/focus, persistent actionable messages, and an interaction story.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         }
       ],
@@ -651,6 +799,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "모든 증거 실재 확인. EmptyState.jsx:20은 tone 축 없이 primary-surface/primary-normal(#3878B3, 광의 status-info와 동일 값)을 하드코딩하고, ResourceState.jsx:148-157의 blocking 분기는 presentation.tone을 완전히 버린 채 negative 전용 글리프 circle-close-fill(status-presentation.js:14-19에서 #A82727 negative-text와 쌍)을 파란 타일에 넣는다. finding보다 더 강한 내부 비일관도 확인: 같은 state=\"error\"가 콘텐츠 보존 시 빨간 Banner(Banner.jsx의 error→negative 매핑, ResourceState.jsx:125-137), 콘텐츠 부재 시 파란 EmptyState로 — 동일 컴포넌트 내 동일 상태가 두 색으로 렌더된다. WDS 계승 아님: COMPONENT_CENSUS.json에서 EmptyState는 ldsOnly 배열 소속(구조적으로 검증), WDS Feedback 노드는 Toast/Snackbar/Alert만 포함(FIGMA_NODE_AUDIT_QUEUE.json closureNote), ResourceState는 LDS Product extension(LAYER_CLASSIFICATION.json:86). 소폭 정정 2건: (1) Banner.prompt.md:12는 글리프 동일성 규칙이지 타일 색 규칙은 아니므로 색 쌍 근거는 statusToneStyle 구조와 line 15에 두는 것이 정확. (2) warning tone 상태 중 offline(circle-block)·restricted(lock)는 severity 글리프가 아니어서 색·글리프 모순은 error(circle-close-fill)와 stale에서 가장 명확 — 권고 시 error 케이스를 주 근거로 삼을 것. EmptyState 기본 용도(empty/no-results)의 파란 타일 자체는 문제 아님; 결함은 severity 상태를 tone 없는 컴포넌트로 라우팅한 ResourceState 조합부다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "EmptyState now accepts a semantic tone and ResourceState passes its state presentation tone to the icon tile.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -669,6 +826,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "확인됨. StatusBadge.jsx:27,43-44와 ConnectionBadge.jsx:25,36의 무한 pulse/blink는 가드 없음이 실재하고, Spinner(:24,27)·Skeleton(:38)·ProgressBar(:40)·CircularProgress(:36)는 전부 @media (prefers-reduced-motion: reduce) 가드 + prompt.md 명시로 내부 비일관(판정규칙 4) 성립. critical-indicator = negative-indicator = --color-semantic-status-negative-foreground도 color-components.css:15/39/64에서 3개 테마 블록 모두 확인 — JSDoc의 'vivid safety exception' 주장과 토큰 실값이 모순. WDS 계승 아님: 스냅샷의 _Badge/Status는 Available=True/False 축뿐인 정적 컴포넌트(COMPONENT_STYLES.json:1635)이고 pulse/critical은 LDS 추가 API(COMPONENT_STYLE_PARITY.md:141 'Tone/pulse API preserved'); 오히려 WDS 커버리지 감사가 Animate=False를 reduced-motion 처리로 매핑하며 '상태 컴포넌트 전반에 reduced motion 구현'을 기록(VARIANT_AUDIT_CHECKLIST.json:820)해 가드가 시스템의 공약된 패턴임을 뒷받침. 두 가지 보정 필요: (1) '만'은 부정확 — robotics/EquipmentStatusCard.jsx:19,74의 lk-equip-dim도 가드 없는 세 번째 무한 애니메이션이므로 finding 범위에 포함할 것. (2) '모션 단일 부호화'는 과장 — 배지에 소비자 제공 텍스트 라벨이 항상 있어 문자 채널은 존재; 정확한 표현은 'tone 수준 스타일링(점 색+모션)에서 critical과 negative의 유일한 구분이 모션'이며, 단순 animation:none 가드 추가 시 두 tone이 스타일상 동일해지므로 critical 전용 토큰 값 분리(또는 정적 링 등 비모션 부호) 병행 권고는 타당."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "StatusBadge motion has a reduced-motion guard and critical has a static double ring; external Robotics ConnectionBadge at 0ae058d also guards its animation.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -687,6 +853,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "확인됨. Badge.jsx:3-13의 톤 축(signal/navy/steel/amber/red + indigo/green/ink 별칭)과 prompt.md:8 문서화 정확. amber→--component-badge-cautionary-bg, red→--component-badge-negative-bg, green→--component-badge-positive-bg로 토큰명은 의미 기반인데 API만 색상명(파일 내부에서도 이름-값 괴리). ContentBadge/StatusBadge/status-presentation.js는 동일 심각도 토큰을 cautionary/negative/positive로 명명 — 내부 비일관(규칙 4) 성립. WDS 계승 아님: docs/references/wds 전체에서 Navy/Steel/Signal/Ink/Amber 문자열 부재, 모든 Color= 변형 값은 Normal/White/Black/Primary/Assistive/Neutral/Accent뿐, COMPONENT_CENSUS.json:883의 _Badge/Value는 Variant=Normal 단일(중립 회색 #70737C, COMPONENT_STYLES.json:1649) — WDS 배지에는 다색 톤 축 자체가 없어 hue 명명은 LDS 자체 선택. 외부 합의도 심각도 배지에 한해 유효(Polaris tone/Primer variant/Atlassian appearance/MUI severity; Carbon Tag·Chakra의 hue 명명은 범주형 태그 API라 반례 아님). 사소한 과장 하나: navy는 ContentBadge TONES(line 6)에도 존재하므로 'Badge만'은 amber/red/green 심각도 hue에 한정해 정확 — finding 문구에서 navy/steel은 브랜드-중립명, amber/red/green을 핵심 근거로 다듬을 것."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "Badge promotes positive/cautionary/negative to canonical tones and retains color names only as compatibility aliases.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -705,6 +880,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "ContentBadge solid status fills use AA status text tokens as backgrounds with the theme-appropriate reversed foreground.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         }
       ],
@@ -759,6 +943,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "SpecRow and card kickers use the seven-tier body/caption scale; shared overline spacing replaces local letter-spacing.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -777,6 +970,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "MetricCard, NewsCard, and ProductCard now use explicit 8px-grid density values rather than 22/18/14/9px card-local values.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -795,6 +997,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "The intentional label2 reading line is now defined as a 20px typography token.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         }
       ],
@@ -914,6 +1125,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "Recovery copy uses -해 주세요, the guide documents the one empty-state exception, and identified story defaults are normalized.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -932,6 +1152,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "The guide defines the Korean glossary and the identified frame/collection/key story copy is normalized.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -950,6 +1179,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "AnnotatedImage and MetricCard defaults now pair cause with a next action; form examples use cause-specific recovery messages.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         }
       ],
@@ -1051,6 +1289,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "2026-07-11 현재 파일을 다시 읽어 주장된 구현과 내부 비일관이 그대로 존재함을 확인했다. WDS 스냅샷의 명시적 계승으로 정당화되지 않고, 동일 저장소의 역할·토큰·문구·상태 규칙과 충돌하므로 finding을 유지한다."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "Tone-bearing status examples use filled glyphs and the shared status map; outline glyphs remain for neutral causes or functions.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -1069,6 +1316,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "네 증거 모두 실제 파일에서 확인됨(ManualControlSession.jsx:223, ResourceState.jsx:49, ViewerFrame.jsx:99, status-presentation.js:27). WDS 스냅샷의 circleBlock은 아이콘 카탈로그 항목(Icon/Normal/Circle Block, FIGMA_LOCAL_CONTENT_AUDIT.json 54262/60748 등)일 뿐 의미 매핑이 없고, 'offline' 개념 자체가 WDS 스냅샷에 부재 — 세 표면 모두 Product/Robotics 확장이라 일반 컨벤션 적용 대상. 한 아이콘=한 의미(Apple HIG SF Symbols, Material 아이콘 가이드)와 오프라인=slash 계열(Material cloud_off/wifi_off, SF wifi.slash, Fluent WifiOff, Carbon cloud--offline)은 실제 복수 시스템 합의. 추가 확증: ConnectionBadge.jsx:10은 오프라인을 0-bar 신호 글리프로 렌더 — 저장소 내 '오프라인' 표현이 circle-block/circle-info/신호바 3종으로 갈라진 내부 비일관. 단 두 가지 완화 사항을 finding에 반영 권장: (1) ViewerFrame의 unavailable→circle-block 단독으로는 정당한 사용(Material block=차단/사용불가)이며 문제는 과적임, (2) status-presentation.js의 'offline'은 실제로는 중립 톤 버킷 이름(queued/unknown/navy에 재사용)이라 아이콘 갈림이라기보다 네이밍 충돌 성격, (3) E-stop 버튼은 텍스트 라벨이 있어 식별성 희석은 중간 심각도."
+          },
+          "remediation": {
+            "status": "accepted",
+            "implementedAt": "2026-07-24",
+            "note": "circle-block is reserved for unavailable/blocked; offline uses signal/info vocabulary and emergency stop remains a text-labelled danger action pending a dedicated safety glyph.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         }
       ],
@@ -1142,6 +1398,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "모든 인용 검증됨: TelemetryValue.jsx:66 gap 4px(spacing.css:11), MetricCard.jsx:108 gap 8px + :71 delta '${delta}%' 붙임, TelemetryGauge.jsx:96 aria-valuetext 공백(스토리 :195 단언), DonutChart.jsx:145·DataTable.stories.jsx:33 붙임, DataAndStatus.stories.jsx:101-107 '41 ms' vs '47ms' 동일 카드 공존. 가장 강한 반박(Ant Design Statistic처럼 stat-tile suffix gap은 의도적 패턴이라는 방어)은 내부 증거로 무너짐: 같은 파일 DataAndStatus.stories.jsx:57이 value=\"99.7%\"로 동일한 큰 값 타이포그래피에 %를 붙여 렌더하고, DataDonutChart.stories.jsx:26 centerLabel=\"95%\"도 붙임 — 즉 gap이 의도된 lockup 컨벤션이 아니라 우발적. WDS 계승 아님: COMPONENT_CENSUS.json에서 세 컴포넌트 모두 /ldsOnly, WDS 스냅샷 카피 자체가 '10%' 붙임(FIGMA_LOCAL_CONTENT_AUDIT.json:227156). 컨벤션 출처도 정당(UI 카피에서 % 붙임: AP/GOV.UK/MS·Apple 스타일 가이드/국립국어원 기호 관행; SI 문자 단위 띄움: BIPM/NIST + 한글 맞춤법), 단 BIPM은 %도 띄우라 하므로 % prong은 외부 출처보다 내부 비일관(규칙 4)으로 세우는 것이 안전. 주의 1: TelemetryGauge 가시 렌더는 단위가 아랫줄 스택(:166-174)이라 공백 주장은 aria-valuetext에만 해당 — finding 원문은 정확하나 재서술 시 왜곡 금지. 주의 2: 권고는 'gap 자체가 틀렸다'보다 단위 유형별 결합 규칙(%·°C는 붙임, 문자 단위는 공백)으로 내부 통일하는 방향이 방어력 높음."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "The data conventions define symbol-vs-text unit spacing, existing telemetry lockups enforce it, and Stat now has a separate unit prop.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -1160,6 +1425,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "전 인용 라인 원문 일치 확인(스토리 10곳 + Content.shared.jsx:215, DataResourceState.stories.jsx:76). 반박 시도 결과 오히려 finding이 강화됨: components/forms/DatePicker.jsx:30이 '2026. 07. 02'(국어원식 공백+제로패딩) 제3의 절대날짜 문법을 컴포넌트 수준에서 하드코딩 — ISO 하이픈·점 표기·국어원식 3계열이 렌더 결과에 공존하며, 스토리 샘플 데이터 차원을 넘어 컴포넌트가 직접 상충함. WDS 계승 아님: 스냅샷의 ISO 날짜(2025-04-09 등)는 Figma 파일 자체의 'Updates' 체인지로그 캔버스(16486:130929) 텍스트이고, 점 표기(2023.11.23)는 포인트 미션 툴팁 산문 속 1건(12회 인스턴스 반복)이며, WDS의 유일한 날짜 컴포넌트는 휠 피커(Presentation/Picker/Wheels, Type=Time)로 표시 형식 스펙이 없음. docs/ 전체에 날짜 표기 정책 부재 확인(grep 0건). 기준 컨벤션도 정당: '단일 문법을 정의한다'는 GOV.UK·Polaris·Atlassian·Carbon 공통이고, 핵심 근거는 어차피 판정 규칙 4(내부 비일관). 권고 시 DatePicker.jsx:30을 증거에 추가할 것."
+          },
+          "remediation": {
+            "status": "accepted",
+            "implementedAt": "2026-07-24",
+            "note": "The guide now fixes absolute date and freshness tiers while leaving locale input display and timestamp calculation to products.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -1178,6 +1452,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "증거 실재: MetricCard.jsx:109-110(값 title1/extra, unit body2/semibold 분리 렌더), DataAndStatus.stories.jsx:57(검증 통과율 value=\"99.7%\" 내장) vs :142-143(평균 배터리 value=\"68\" unit=\"%\"), CardsExtended.shared.jsx:142 모두 확인. 같은 파일·같은 컴포넌트에서 동일 단위 %가 두 경로로 전달되어 타이포 위계가 갈리는 내부 비일관은 실재하며, unit=\"ms\"(:102) 사용이 '기호는 내장, 조수사만 분리'라는 관용적 해석도 배제함. WDS 계승 아님: MetricCard·Stat은 COVERAGE_DETAIL_AUDIT.json:365,389 extensionComponents, PUBLIC_EXPORT_CLASSIFICATION.json:121,125, TOKEN_MAP.json:223, VARIANT_AUDIT_CHECKLIST.json:489에서 LK 제품 확장으로 명시(WDS에 KPI 카드 패턴 없음). 정밀도 보정 2건: (1) 두 %-카드는 같은 파일이지만 서로 다른 story(Metrics vs ResourceStates)라 한 캔버스에 나란하지 않음 — 다만 Metrics 그리드 안에서 99.7%(내장)와 156+개/14+건(분리)이 실제로 나란히 렌더되므로 비일관은 단일 렌더에서도 관찰됨. (2) Stat은 unit prop 자체가 없어(value/label/accent/dark/stacked) '슬롯 우회' 사례가 아니며 근거로는 약함 — 권고 시 Stat 언급은 완화 필요. 외부 컨벤션 인용(Carbon·Atlassian 합의)은 약한 다리이나, 판정 규칙 4의 내부 비일관 + 컴포넌트 자체 API가 채택한 규범 우회만으로 finding 성립."
+          },
+          "remediation": {
+            "status": "resolved",
+            "implementedAt": "2026-07-24",
+            "note": "MetricCard and Stat examples separate values from unit props; Stat renders symbol units attached and text units separated.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -1196,6 +1479,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "모든 증거 실재 확인: DataGrid.jsx:6-14 compareValues는 null을 방향 무관하게 항상 뒤로 보내 결측을 명시적으로 예상하는 반면, 표시 경로(DataGrid.jsx:726-744, Table.jsx:14)는 row[key]를 그대로 출력해 null/undefined가 완전 공백 셀이 된다. 두 prompt.md 모두 셀 단위 빈 값 지침 없음(DataGrid의 emptyLabel은 prompt.md:98·DataGrid.d.ts:132이 명시하듯 표 전체 empty surface). 스토리에도 결측 셀 예시 없음. WDS 계승 아님: FIGMA_LOCAL_CONTENT_AUDIT.json의 'Table'(219229, 353514)은 문서 페이지 레이아웃 FRAME(제목/Heading/목차 형제)일 뿐이며, LAYER_CLASSIFICATION.json:82와 COVERAGE_DETAIL_AUDIT.json:453, DataGrid.prompt.md:3 모두 LDS Product Extension으로 분류. 컨벤션 정당: Carbon(en dash)·Polaris(em dash)·Ant Design('--') 복수 시스템이 빈 셀 명시적 placeholder를 문서화. 내부 비일관 보강 증거: SelectionInspector.jsx:9는 이미 null/빈 값에 '—'를 사용 — 시스템 내에 패턴이 있으나 표에는 정책 부재이고, DataGrid 자체가 정렬은 null-aware, 표시는 null-blind로 어긋난다. 단 프레이밍 주의: 동료 시스템들도 컴포넌트 코드 레벨에선 null을 공백으로 통과시키며 이 컨벤션은 문서화된 콘텐츠 정책 층위다. 따라서 권고는 렌더 경로 자체를 위반으로 모는 것이 아니라 정책 층위(prompt.md 지침 + 스토리 예시 + 선택적 기본 placeholder)를 겨냥해야 한다."
+          },
+          "remediation": {
+            "status": "accepted",
+            "implementedAt": "2026-07-24",
+            "note": "Table and DataGrid prompts require an em dash plus screen-reader text for missing values while preserving consumer control through render.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         },
         {
@@ -1214,6 +1506,15 @@
             "wdsInherited": false,
             "keep": true,
             "note": "유지. 코드 증거 전부 실재 확인: DonutChart.jsx:61,72(합계 raw 렌더, 포맷 prop 없음), BarChart.jsx:104(datum.value raw; :37-40의 Number() 강제 때문에 호스트가 포맷된 문자열로 우회하는 것조차 불가), LineChart.jsx:50-54(min→max 균등분할), :70-72(표시만 반올림). 주장보다 강한 부분: 눈금 편차는 잠재가 아니라 현재 가시적 — stories/DataLineChart.stories.jsx '학습 손실' 스토리가 자동 도메인(0→~0.89)+기본 formatY로 0/0.22/0.45/0.67/0.89 눈금을 실제 렌더한다. 소소한 정정: 'Intl 사용 0건'은 부정확 — Calendar.jsx:28이 Intl.DateTimeFormat('ko-KR')을 사용(단 숫자 포맷팅인 NumberFormat/toLocaleString은 실제 0건이며, 날짜는 로케일 인식·숫자는 미인식이라는 경미한 내부 비일관을 오히려 추가). 컨벤션 정당: nice tick 기본값은 d3/Chart.js/Highcharts/ECharts/Vega/Carbon Charts의 보편 합의, 천 단위 그룹핑은 GOV.UK/Apple/Material 콘텐츠 스타일 공통 지침. WDS 비계승 확정: COMPONENT_CENSUS.json에서 BarChart/DonutChart/Sparkline은 ldsOnly, LineChart는 census 부재 + PUBLIC_EXPORT_CLASSIFICATION.json group 9 'product-extension'(lk-product-extension 레이어). 약점 캐비앳 2개: (1) 그룹핑 절반은 잠재적(모든 스토리 값 <100, ≥1000 표시 사례 전무), (2) LineChart.jsx:95-96 주석이 '호스트가 포매터 소유'를 명시하므로 권고는 기본 경로(기본 눈금 nice화, 기본 포매터 그룹핑)로 한정하는 것이 적절 — 위임 계약 자체를 뒤집는 권고는 과잉."
+          },
+          "remediation": {
+            "status": "accepted",
+            "implementedAt": "2026-07-24",
+            "note": "Product charts must provide locale formatters and domain/tick policy; automatic chart ticks are explicitly a preview fallback.",
+            "verification": [
+              "repository implementation and prompt audit",
+              "npm run check:fast and Storybook accessibility/visual gates before release"
+            ]
           }
         }
       ],

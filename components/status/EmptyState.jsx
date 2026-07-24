@@ -1,4 +1,5 @@
 import React from 'react';
+import { statusToneStyle } from './status-presentation.js';
 
 /**
  * LK ROBOTICS — EmptyState
@@ -9,8 +10,9 @@ import React from 'react';
  * so screen-reader users can reach the empty state through heading navigation.
  * `headingLevel` places it in the surrounding document outline.
  */
-export function EmptyState({ icon, title, description, action, headingLevel = 2, style, ...rest }) {
+export function EmptyState({ icon, title, description, action, tone = 'signal', headingLevel = 2, style, ...rest }) {
   const Heading = `h${Math.min(6, Math.max(2, headingLevel))}`;
+  const palette = statusToneStyle(tone);
   return (
     <div
       style={{
@@ -22,7 +24,7 @@ export function EmptyState({ icon, title, description, action, headingLevel = 2,
       {icon != null && (
         <div style={{
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 56, height: 56,
-          borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-primary-surface-normal)', color: 'var(--color-semantic-primary-normal)', marginBottom: 12,
+          borderRadius: 'var(--radius-xl)', background: palette.surface, color: palette.foreground, marginBottom: 12,
         }}>{icon}</div>
       )}
       {title != null && (

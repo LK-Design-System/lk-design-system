@@ -30,6 +30,10 @@ Classification: **LK Product Extension**. WDS Navigation의 Category, Tab, Page 
 - **collapsed / defaultCollapsed / onCollapsedChange** — 제품이 접힘 상태를 소유하면 `collapsed`와 `onCollapsedChange`를 함께 사용하고, 비제어 초기값만 필요하면 `defaultCollapsed`를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌며, 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.
 - **header / headerCollapsed / footer** — 브랜드는 `Lockup` 사용(inline 20px / mark 22px 권장). 푸터는 `height` 지정 시 바닥 고정.
 - 활성은 시안 워시 + 시그널 잉크. 고정 아이콘 레일은 `NavRail`, 모바일 하단은 `BottomNav`.
+- 접힌 레일의 점은 실제 `badge`만 뜻합니다. 활성 자손은 부모 아이콘의 강한 잉크로만 표시해
+  동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.
+- 내비게이션 disabled 표면은 wrapper opacity `0.45`를 공통 문법으로 사용합니다. 개별 자식의
+  색 토큰을 다시 바꿔 이중으로 흐리게 만들지 않습니다.
 - 타입 스케일 정합: 섹션 헤딩 10.5px → `--caption2-size`(11px, 스케일 하한; 대문자 letterSpacing 1px 유지), 자식 항목 13.5px → `--label2-size`(13px)로 스냅했습니다. 14px 부모 항목보다 1px 아래 위계는 그대로 유지됩니다.
 
 ### 내부 시각 차이 점검

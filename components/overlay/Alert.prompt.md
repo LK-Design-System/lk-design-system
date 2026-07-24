@@ -1,8 +1,8 @@
 **Alert** - WDS modal feedback alert for urgent or important decisions.
 
 ```jsx
-<Alert open platform="web" title="Delete item?" primaryLabel="Delete" secondaryLabel="Cancel" variant="negative">
-  This action cannot be undone.
+<Alert open platform="web" title="세션이 만료되었습니다" primaryLabel="다시 로그인" secondaryLabel="나중에" variant="negative">
+  작업을 계속하려면 다시 로그인해 주세요.
 </Alert>
 ```
 

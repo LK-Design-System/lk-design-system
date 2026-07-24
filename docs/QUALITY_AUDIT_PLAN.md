@@ -3,9 +3,9 @@
 | Field | Value |
 | --- | --- |
 | Type | Executed audit plan and follow-up register |
-| Status | Baseline completed · residual findings remain |
+| Status | Baseline completed · all confirmed D-track findings resolved or accepted |
 | Owner | Design system owner · Component owners |
-| Last reviewed | 2026-07-12 |
+| Last reviewed | 2026-07-24 |
 | Evidence | `references/quality/` baselines and audit JSON |
 
 이 문서의 M0–M6 및 D-track 실행 기록은 2026-07-11~12 baseline의 historical evidence다. 현재 신규 컴포넌트 검토 절차는 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md), 현재 수치와 gate 상태는 각 verifier와 [`HANDOFF.md`](HANDOFF.md)를 우선한다.
@@ -21,7 +21,7 @@
 - Button 단독 번들은 약 2.05MB에서 11,379바이트로 감소했고, 개별 SVG는 50KB 상한을 적용한다.
 - 37개 대표 스토리의 normal/dark/narrow 픽셀 기준선을 유지한다.
 
-상세 구현 증거는 `references/quality/QUALITY_GAP_AUDIT.json`의 `source.implementation`, D 트랙 해결 상태는 `references/quality/DESIGN_CONVENTION_REVIEW.json`의 finding별 `remediation`에 기록했다. medium 23건과 low 10건은 삭제하지 않고 후속 개선 원장으로 유지한다.
+상세 구현 증거는 `references/quality/QUALITY_GAP_AUDIT.json`의 `source.implementation`, D 트랙 해결 상태는 `references/quality/DESIGN_CONVENTION_REVIEW.json`의 finding별 `remediation`에 기록했다. 2026-07-24 기준 confirmed 47건은 resolved 41건·근거 수락 6건으로 모두 종결됐고 tracked finding은 0건이다.
 
 ### 추가 하드닝 상태 — 2026-07-12
 

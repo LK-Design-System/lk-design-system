@@ -175,7 +175,7 @@ export const ImageError = {
   ),
   args: {
     src: 'data:image/png;base64,AAAA',
-    alt: '불러오지 못한 감지 frame',
-    errorMessage: '감지 frame을 불러오지 못했습니다.',
+    alt: '불러오지 못한 감지 프레임',
+    errorMessage: '감지 프레임을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.',
   },
 };

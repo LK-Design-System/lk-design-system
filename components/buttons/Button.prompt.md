@@ -42,6 +42,11 @@ LK theme tokens.
 - **arrow** is deprecated and remains as a no-op compatibility prop.
 - Use `IconButton` for icon-only one-shot actions and `ToggleIcon` for
   icon-only persistent state actions.
+- Footer action mapping is fixed: execute/save/apply uses the primary action;
+  cancel/back uses `variant="outlined" color="assistive"`; destructive
+  confirmation uses `variant="danger"` and a `ConfirmDialog`. Footer actions
+  stay secondary-to-primary in DOM order and destructive actions are separated
+  from an unrelated primary cluster.
 
 ## Contrast evidence
 

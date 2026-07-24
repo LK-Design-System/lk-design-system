@@ -143,7 +143,7 @@ export const FeatureSpecAndStats = {
         </div>
         <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
           <Stat value="24" label="컴포넌트" accent="signal" />
-          <Stat value="99.7%" label="검증 완료율" stacked />
+          <Stat value="99.7" unit="%" label="검증 완료율" stacked />
         </div>
       </section>
     </main>

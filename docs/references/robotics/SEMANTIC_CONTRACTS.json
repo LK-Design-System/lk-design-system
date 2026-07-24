@@ -218,7 +218,7 @@
     { "id": "WF-03", "stage": "verified", "products": ["deviceops", "visionops", "control"], "axes": ["operability", "command", "urgency"] },
     { "id": "WF-09", "stage": "verified", "products": ["control"], "axes": ["transport", "freshness", "authority", "operability", "command", "urgency"] },
     { "id": "WF-10", "stage": "verified", "products": ["context-hub"], "axes": ["evidence", "review", "operability"] },
-    { "id": "WF-15", "stage": "wireframed", "products": ["web-viz", "control"], "axes": ["freshness", "health", "operability"] }
+    { "id": "WF-15", "stage": "verified", "products": ["web-viz", "control"], "axes": ["freshness", "health", "operability"] }
   ],
   "research": [
     {

@@ -51,7 +51,7 @@ export const SelectStateContract = {
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)', maxWidth: 820 }}>
       <Select label="정상" defaultValue="value" options={[{ value: 'value', label: '값' }, { value: 'text', label: '텍스트' }]} />
-      <Select label="오류" status="negative" error="메시지를 확인해 주세요." options={[{ value: 'value', label: '값' }]} />
+      <Select label="오류" status="negative" error="사용할 수 없는 값입니다. 다른 항목을 선택해 주세요." options={[{ value: 'value', label: '값' }]} />
       <Select label="Disabled" disabled options={[{ value: 'value', label: '값' }]} />
       <Select label="Read only" readOnly defaultValue="value" options={[{ value: 'value', label: '고정 값' }, { value: 'other', label: '변경 불가' }]} />
     </main>

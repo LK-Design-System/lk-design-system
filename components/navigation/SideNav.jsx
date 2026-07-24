@@ -217,7 +217,8 @@ export function SideNav({
                     {o.icon != null && <span aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex' }}>{o.icon}</span>}
                     {!col && labelSpan(childActive, o.label)}
                     {!col && <Chevron open={isOpen} />}
-                    {col && childActive && dot}
+                    {/* Active descendant state already uses stronger icon ink.
+                        Reserve the collapsed dot exclusively for a real badge. */}
                   </button>
                 </RailItemTooltip>
                 {!col && isOpen && (

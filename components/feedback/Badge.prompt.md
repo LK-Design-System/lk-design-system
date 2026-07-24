@@ -2,12 +2,13 @@
 
 ```jsx
 <Badge tone="signal">3</Badge>
-<Badge tone="red" dot>장애</Badge>
-<Badge tone="red" dot aria-label="장애" />
+<Badge tone="negative" dot>장애</Badge>
+<Badge tone="negative" dot aria-label="장애" />
 <Badge tone="signal" max={99}>128</Badge>
 ```
 
-- **tone** — `signal` · `navy` · `steel` · `amber` · `red`.
+- **tone** — 의미 기반 `signal · positive · cautionary · negative`가 표준입니다.
+  `navy · steel`은 장식 hue이고, `amber · red`는 기존 소비자를 위한 별칭입니다.
 - **dot** — 점만으로 의미를 전달하지 않습니다([WCAG 1.4.1 Use of Color](https://www.w3.org/TR/WCAG22/#use-of-color)).
   - `children`이 있으면 점 + 텍스트가 함께 보입니다(`<Badge tone="red" dot>장애</Badge>` → 점과 "장애"가 같이 읽힘).
   - `children`이 없는 단독 점은 기본적으로 장식이며 `aria-hidden="true"`가 됩니다. 옆에 이미 같은 의미의 텍스트가 있을 때만 쓰세요.

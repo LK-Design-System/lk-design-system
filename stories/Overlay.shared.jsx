@@ -163,7 +163,7 @@ export const SheetOpen = {
     <Sheet
       open
       title="모바일 액션"
-      footer={<Button size="sm" full>선택</Button>}
+      footer={<Button size="sm">선택</Button>}
     >
       바텀 시트는 작은 화면에서 선택지나 보조 액션을 담습니다.
     </Sheet>
@@ -297,10 +297,10 @@ export const AlertCard = {
     const [open, setOpen] = React.useState(false);
     return (
       <div>
-        <Button variant="dark" onClick={() => setOpen(true)}>작업 중단 확인 열기</Button>
-        <Alert open={open} title="작업을 중단할까요?" tone="danger" confirmLabel="중단" cancelLabel="취소"
+        <Button variant="dark" onClick={() => setOpen(true)}>세션 만료 알림 열기</Button>
+        <Alert open={open} title="세션이 만료되었습니다" tone="danger" confirmLabel="다시 로그인" cancelLabel="나중에"
           onConfirm={() => setOpen(false)} onCancel={() => setOpen(false)} onClose={() => setOpen(false)}>
-          현재 처리 중인 항목 3개가 즉시 중단됩니다. 중단 후에는 대시보드에서 재개할 수 있습니다.
+          작업을 계속하려면 다시 로그인해 주세요.
         </Alert>
       </div>
     );
@@ -320,10 +320,10 @@ export const AlertToastCard = {
             <Toast tone="info" onClose={() => {}}>대시보드로 이동했습니다.</Toast>
           </div>
           <div>
-            <Button variant="dark" onClick={() => setOpen(true)}>작업 중단 확인 열기</Button>
-            <Alert open={open} title="작업을 중단할까요?" tone="danger" confirmLabel="중단" cancelLabel="취소"
+            <Button variant="dark" onClick={() => setOpen(true)}>세션 만료 알림 열기</Button>
+            <Alert open={open} title="세션이 만료되었습니다" tone="danger" confirmLabel="다시 로그인" cancelLabel="나중에"
               onConfirm={() => setOpen(false)} onCancel={() => setOpen(false)} onClose={() => setOpen(false)}>
-              현재 처리 중인 항목 3개가 즉시 중단됩니다. 중단 후에는 대시보드에서 재개할 수 있습니다.
+              작업을 계속하려면 다시 로그인해 주세요.
             </Alert>
           </div>
         </div>

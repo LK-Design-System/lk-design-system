@@ -5,7 +5,7 @@
 | Type | Documentation index |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-18 |
+| Last reviewed | 2026-07-24 |
 
 이 문서는 `docs/`의 공식 탐색 진입점이다. 문서가 충돌하면 아래 source-of-truth 순서와 각 문서의 `Type`·`Status`를 기준으로 판단한다.
 
@@ -50,7 +50,7 @@
 
 | Document | Status |
 | --- | --- |
-| [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | In progress — Wave 2 RC and LDS3D docs migration verified; Wave 3 is no-go until independent release and product-adoption gates pass |
+| [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | Wave 1 artifacts and Wave 4 Robotics extraction complete; product adoption and Wave 5 compatibility retirement remain open |
 | [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md) | Completed implementation plan; 결과 handoff로 연결 |
 | [`NAVIGATION_ATOMIZATION_PLAN.md`](NAVIGATION_ATOMIZATION_PLAN.md) | Proposed plan — Navigation 선·상태 어휘의 단일 소스화와 Encoding 문서화 |
 | [`NAVIGATION_PAGE_DECOMPOSITION_PLAN.md`](NAVIGATION_PAGE_DECOMPOSITION_PLAN.md) | Proposed plan — Navigation 스토리 페이지 재분해(Route 메가페이지 해체·Viewer 합성 페이지 신설) |

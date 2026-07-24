@@ -88,7 +88,7 @@ export const InputStateMatrix = {
         <Input label="기본" placeholder="텍스트를 입력해 주세요." helper="메시지와 도움말을 표시합니다." />
         <Input label="포커스 예시" defaultValue="값" iconLeft={<Icon name="search" size={17} />} helper="왼쪽 아이콘 슬롯" />
         <Input label="정상" defaultValue="검증 완료" status="positive" helper="사용 가능한 값입니다." />
-        <Input label="오류" placeholder="텍스트를 입력해 주세요." error="메시지를 확인해 주세요." required />
+        <Input label="오류" placeholder="텍스트를 입력해 주세요." error="사용할 수 없는 값입니다. 형식을 확인해 주세요." required />
       </section>
       <section style={fieldGrid}>
         <Input label="Small" size="sm" placeholder="small" />
@@ -129,7 +129,7 @@ export const InputInteractionMatrix = {
       <section style={fieldGrid}>
         <Input label="required" placeholder="필수 입력" required />
         <Input label="positive" defaultValue="검증 완료" status="positive" helper="사용 가능한 값입니다." />
-        <Input label="negative" placeholder="오류 값" status="negative" error="메시지를 확인해 주세요." />
+        <Input label="negative" placeholder="오류 값" status="negative" error="사용할 수 없는 값입니다. 형식을 확인해 주세요." />
         <Input label="readonly" defaultValue="읽기 전용 값" readOnly helper="읽기 전용 상태입니다." />
       </section>
     </main>

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "auditedAt": "2026-07-21",
+  "auditedAt": "2026-07-24",
   "purpose": "Track source-backed product workflows through discovery, independent wireframing, LDS implementation, and interaction verification without treating current screens or component files as coverage proof.",
   "evidenceHierarchy": [
     "product goals and invariants",
@@ -17,9 +17,9 @@
   },
   "summary": {
     "discovered": 0,
-    "wireframed": 1,
-    "implemented": 1,
-    "verified": 14
+    "wireframed": 0,
+    "implemented": 0,
+    "verified": 16
   },
   "componentDispositionSummary": {
     "keep": 13,
@@ -1863,7 +1863,7 @@
           "blobSha": "46da3c8cf57db99247c894496301ab35a46f1e47"
         }
       ],
-      "stage": "wireframed",
+      "stage": "verified",
       "wireframeEvidence": [
         "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-15-map-navigation-and-facility-authoring"
       ],
@@ -1873,7 +1873,8 @@
         "components/robotics/RouteOverlay.jsx",
         "components/robotics/TrajectoryOverlay.jsx",
         "components/robotics/SpatialRegion.jsx",
-        "components/robotics/FacilityTransition.jsx"
+        "components/robotics/FacilityTransition.jsx",
+        "components/robotics/HazardMarker.jsx"
       ],
       "storyEvidence": [
         "stories/RoboticsNavigationWaypoint.stories.jsx",
@@ -1881,13 +1882,16 @@
         "stories/RoboticsNavigationRoute.stories.jsx",
         "stories/RoboticsNavigationTrajectory.stories.jsx",
         "stories/RoboticsNavigationRegions.stories.jsx",
-        "stories/RoboticsNavigationFacilities.stories.jsx"
+        "stories/RoboticsNavigationFacilities.stories.jsx",
+        "stories/RoboticsNavigationHazardMarker.stories.jsx"
       ],
       "verificationEvidence": [
         "scripts/check-api-drift.mjs",
         "scripts/check-product-frontend-coverage.mjs",
-        "scripts/check-storybook-accessibility.mjs"
-      ]
+        "scripts/check-storybook-accessibility.mjs",
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification"
+      ],
+      "closureDecision": "The shared map grammar is verified by the external @lk-robotics/lds-robotics-ui package at revision 0ae058d: HazardMarker owns stairs/ramp/dropoff/obstacle hazards and SpatialRegion owns slope terrain. A product-authored forbidden line is not a navigation lane and remains product renderer/editor geometry rather than a new LDS semantic primitive."
     },
     {
       "id": "WF-16",
@@ -2012,7 +2016,7 @@
           "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
         }
       ],
-      "stage": "implemented",
+      "stage": "verified",
       "wireframeEvidence": [
         "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-16-dashboard-shell-and-navigation-composition"
       ],
@@ -2040,8 +2044,10 @@
       ],
       "verificationEvidence": [
         "scripts/check-product-frontend-coverage.mjs",
-        "scripts/check-storybook-accessibility.mjs"
-      ]
+        "scripts/check-storybook-accessibility.mjs",
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification"
+      ],
+      "closureDecision": "LDS v1 uses BottomNav only for four or fewer flat narrow destinations. Hierarchical narrow navigation is a product-owned temporary Drawer composition, not DashboardShell anatomy. Existing DashboardShell and SideNav stories verify landmarks, narrow reflow, controlled collapse, reduced motion, Escape, and focus restoration."
     }
   ]
 }

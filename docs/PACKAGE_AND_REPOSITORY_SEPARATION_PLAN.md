@@ -3,17 +3,17 @@
 | Field | Value |
 | --- | --- |
 | Type | Architecture and migration plan |
-| Status | In progress — Wave 2 RC and LDS3D docs migration verified; the six pinned product sources are not LDS consumers. The original Wave 3 decision remains no-go, but the design-system owner explicitly approved the repository extraction as a role-boundary exception; see `docs/references/package-split/WAVE3_USER_APPROVED_EXTRACTION.json`. |
+| Status | Wave 1 complete; Wave 2 package/LDS3D evidence complete but product adoption not started; Wave 4 owner-exception extraction complete; Wave 5 compatibility retirement open. |
 | Owner | Design system owner · Frontend platform · Robotics domain owner |
-| Last reviewed | 2026-07-19 |
+| Last reviewed | 2026-07-24 |
 | Wave 0 source baseline | `wave0-baseline-2026-07-19-r2` → `679859bc8b5126bcff7146eaedd871bbe9e62891` |
 | Wave 0 attestation | `wave0-attested-2026-07-19` → `f8dd678f32c92798b05d7f97d84449dec916d3a4` |
 
-이 계획은 현재 단일 패키지인 `@lk-robotics/design-system-core`를 소비 경계에
-맞는 패키지로 나누고, 검증 결과에 따라 Robotics UI를 별도 저장소로 추출하는
-순서와 완료 조건을 정의한다. 패키지 분리는 확정 목표이고, Robotics 저장소
-분리는 package boundary와 독립 운영 능력을 먼저 증명한 뒤 실행하는 조건부
-목표다. 기존 `lk-design-system-3d`는 계속 독립 형제 저장소로 유지한다.
+이 계획은 과거 단일 패키지였던 `@lk-robotics/design-system-core`를 소비 경계에
+맞는 package로 나눈 과정과 Robotics UI 저장소 추출의 결정·증거를 정의한다.
+현재 Core/Theme/Product/compat package 분리와 Robotics 추출은 완료됐고, 실제 제품
+adoption과 compatibility facade 종료만 열려 있다. 기존 `lk-design-system-3d`는 계속
+독립 형제 저장소로 유지한다.
 
 이 문서는 실행 순서를 소유한다. 계층 의존 정책은
 [`OPERATING_MODEL.md`](OPERATING_MODEL.md), 컴포넌트 재분류와 제품 검토는
@@ -348,19 +348,22 @@ regeneration과 분리해 과거 baseline을 보존한다.
 ### Wave 1 — 한 저장소 안에서 package 분리
 
 목적은 저장소를 나누지 않고 실제 artifact와 dependency boundary를 증명하는 것이다.
+Core/Theme/Product/compat workspace 분리는 완료됐고 Robotics workspace는 이후 승인된
+Wave 4 추출로 외부 저장소로 이동했다. 현재 manifest 버전은 네 workspace가
+`0.1.0-rc.1`, 외부 Robotics가 `0.1.0-rc.2`다.
 
 작업:
 
-- [ ] `packages/core`, `packages/theme`, `packages/product`, `packages/robotics-ui`,
-      `packages/compat` workspace를 만든다.
-- [ ] source와 declaration 생성기를 package owner 기준으로 바꾼다.
-- [ ] 현재 layer graph를 package dependency와 boundary check로 승격한다.
-- [ ] package별 CSS, asset와 side-effect entry를 만든다.
-- [ ] compatibility facade가 기존 export와 CSS cascade를 보존하게 한다.
+- [x] `packages/core`, `packages/theme`, `packages/product`, `packages/compat` workspace를
+      만들고 Robotics workspace는 Wave 4에서 외부 저장소로 추출했다.
+- [x] source와 declaration 생성기를 package owner 기준으로 바꿨다.
+- [x] 현재 layer graph를 package dependency와 boundary check로 승격했다.
+- [x] package별 CSS, asset와 side-effect entry를 만들었다.
+- [x] compatibility facade가 기존 export와 CSS cascade를 보존하게 했다.
 - [ ] package별 changelog, changeset, API report와 tarball test를 추가한다.
-- [ ] `check-publish-policy`, `check-package-artifact`, `check-consumer-smoke`,
-      `check-type-surface`, `check-layer-boundaries`를 workspace package 기준으로 바꾼다.
-- [ ] Storybook은 한 app에서 모든 package를 versioned public export로 소비한다.
+- [x] publish policy, package artifact, consumer, type surface와 layer boundary gate를
+      workspace package 기준으로 바꿨다.
+- [x] Storybook integration app은 workspace package와 외부 Robotics public export를 소비한다.
 
 완료 gate:
 
@@ -384,20 +387,26 @@ regeneration과 분리해 과거 baseline을 보존한다.
 
 작업:
 
-- [ ] immutable tarball 또는 승인된 registry version으로 canary release한다.
-- [ ] 같은 source commit에서 package별 immutable RC를 dependency 순서로 만들고
-      release-set ID와 artifact checksum을 기록한다.
+- [x] GitHub Packages에 immutable `0.1.0-rc.0` release set을 배포하고 integrity를 기록했다.
+- [x] package별 immutable RC와 release-set ID·integrity·shasum을
+      `references/package-split/releases/WAVE2_RC_0.1.0-rc.0.json`에 기록했다.
 - [ ] DeviceOps, VisionOps, Context Hub, MLOps에서 Core/Theme/Product를 먼저 검증한다.
 - [ ] Web Viz와 Control에서 Robotics UI를 검증한다.
-- [ ] LDS3D `apps/docs`의 sibling `link:`를 versioned LDS artifact로 교체해 별도
-      checkout에서도 build·interaction·visual test를 수행한다.
+- [x] LDS3D `apps/docs`의 sibling `link:`를 versioned LDS artifact로 교체하고
+      cross-repository conformance와 external-surface evidence를 기록했다.
 - [ ] legacy root와 `components/*` import를 새 package public export로 이전한다.
-- [ ] package minimum/current version matrix와 product pin을 machine-readable하게
-      기록한다.
-- [ ] UI candidate × stable LDS3D, stable UI × LDS3D candidate, minimum UI × LDS3D
-      candidate, 양쪽 candidate 조합을 artifact CI로 검증한다.
+- [x] package release set, external surface와 product pin을 machine-readable evidence로
+      기록했다.
+- [x] LDS3D artifact compatibility matrix와 headless/runtime boundary를
+      cross-repository conformance gate로 검증한다.
 - [ ] React/React DOM과 Three/R3F의 중복 runtime이 없는지 install tree와 bundle로
       확인한다.
+
+현재 제한:
+
+- `WAVE2_PRODUCT_RESCAN.json`의 여섯 pinned product는 모두 `ldsUsageTotal: 0`이다.
+  따라서 DeviceOps/VisionOps/Context Hub/MLOps/Web Viz/Control migration checkbox는
+  미완료로 남기며, “legacy import 0”을 adoption 성공으로 해석하지 않는다.
 
 완료 gate:
 
@@ -429,6 +438,12 @@ Go 조건:
 - [ ] Web Viz와 Control이 같은 Robotics UI release를 소비할 수 있다.
 - [ ] 이슈, CODEOWNERS, release duty와 보안 대응 owner가 실제로 배정돼 있다.
 
+Decision record:
+
+- [x] ordinary gate는 `WAVE3_GO_NO_GO.json`에서 no-go로 종결했다.
+- [x] 이후 design-system owner가 role-boundary exception을 명시적으로 승인했고,
+      `WAVE3_USER_APPROVED_EXTRACTION.json`에 원래 no-go를 덮어쓰지 않는 예외로 기록했다.
+
 No-go 신호:
 
 - Core와 Robotics UI의 selector/token/source를 동시에 수정해야만 배포할 수 있다.
@@ -442,15 +457,15 @@ The original Wave 3 gate was no-go. The design-system owner subsequently approve
 
 작업:
 
-- [ ] `packages/robotics-ui`의 관련 history를 보존해 새 저장소 `main`으로 추출한다.
-- [ ] package, docs, Storybook, changeset, CI, CODEOWNERS와 release workflow를 함께 옮긴다.
-- [ ] `lds-core`와 필요한 `lds-product`를 versioned dependency로 선언한다.
-- [ ] LDS, LDS3D 또는 제품 source를 상대 경로로 참조하지 못하게 boundary gate를 둔다.
-- [ ] Robotics Storybook은 실제 package를 소비하고 LDS visual grammar를 side-by-side
-      검증한다.
-- [ ] 첫 Robotics artifact를 배포하고 Web Viz, Control, LDS3D docs consumer smoke를
-      통과시킨 뒤에만 원 저장소 source 제거를 수행한다.
-- [ ] 원 저장소 문서와 compatibility facade가 새 repository/version을 가리키게 한다.
+- [x] Robotics source를 새 저장소 `LK-Design-System/lk-design-system-robotics`의 `main`으로 추출했다.
+- [x] package, docs, Storybook, CI, ownership와 release surface를 외부 저장소로 옮겼다.
+- [x] `lds-core`와 필요한 `lds-product`를 versioned dependency로 선언했다.
+- [x] LDS, LDS3D 또는 제품 source를 상대 경로로 참조하지 못하게 conformance boundary gate를 뒀다.
+- [x] Robotics Storybook과 LDS integration Storybook이 실제 package public surface를
+      소비하고 대표 story를 conformance gate로 검증한다.
+- [x] Robotics RC artifact와 LDS/LDS3D integration consumer를 검증한 뒤 원 저장소
+      source를 `095290f`에서 제거했다. Web Viz/Control은 현재 비소비자라 adoption 증거에서 제외한다.
+- [x] 원 저장소 문서·external surface·compatibility path가 새 repository/version을 가리킨다.
 
 완료 gate:
 
@@ -636,15 +651,12 @@ command output, consumer pin 또는 rendered evidence를 확인해야 한다. �
 
 ## 10. 바로 다음 작업
 
-Wave 0 gate는 닫혔고 immutable source/attestation tag와 evidence는 remote에 있다. Wave
-1을 시작하기 전에 [2026-07-19 handoff](handoff/2026-07-19-wave0-attestation-and-wave1-package-split-handoff.md)를
-따라 historical evidence semantics를 먼저 고정한다.
-
-1. Wave 0 verifier가 current source가 아니라 source/attestation tag와 tracked evidence를
-   검증하도록 전환한다. 과거 tag를 이동·삭제하지 않는다.
-2. npm workspace에 `packages/core`, `packages/theme`, `packages/product`,
-   `packages/robotics-ui`, `packages/compat`를 dependency 순서로 만든다.
-3. owner-classified source/declaration, CSS/assets, legacy facade와 package-level
-   boundary/tarball/type/consumer tests를 구현한다.
-4. Wave 1 gate가 실제 package artifact로 닫힌 뒤에만 Wave 2 versioned consumer migration을
-   시작한다. LDS3D `link:` 교체와 Robotics repository go/no-go는 그 이후의 작업이다.
+1. 여섯 pinned product가 실제 LDS를 채택할 때 제품 owner가 versioned package install,
+   production build와 workflow smoke를 각각 기록한다. 현재 0-use 상태를 migration 완료로
+   승격하지 않는다.
+2. package별 release communication을 stable promotion 전에 보강하고, changelog·API diff·
+   migration note가 release set과 연결되게 한다.
+3. external Robotics와 LDS3D surface pin이 바뀌면 conformance contract와 대표 Storybook
+   evidence를 같은 변경에서 갱신한다.
+4. Wave 5는 실제 consumer의 legacy import 0, 최소 support window와 breaking release
+   승인이 모두 충족된 뒤에만 시작한다.

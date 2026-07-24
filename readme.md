@@ -81,12 +81,17 @@ compatibility facade로 유지합니다.
 
 패키지 메타데이터:
 
-- 패키지명: `@lk-robotics/design-system-core`
-- 배포 정책: 현재 `private: true`로 유지하며 내부 Git 소비를 기본으로 합니다. npm publish 전환 시 GitHub Packages 정책과 함께 명시적으로 변경합니다.
-- 런타임 peer dependency: `react`
-- 선택 peer dependency: `react-dom`
-- Aggregate 호환 진입점: `dist/index.js`, `dist/index.cjs`, `dist/index.d.ts`
-- Layer 진입점: `dist/{core,theme,product,robotics}.{js,cjs,d.ts}`
+- workspace root: `@lk-robotics/lds-workspace@0.1.0-rc.1` (`private: true`)
+- current packages: `@lk-robotics/lds-core`, `@lk-robotics/lds-theme`,
+  `@lk-robotics/lds-product`, `@lk-robotics/design-system-core` compatibility facade
+  (`0.1.0-rc.1`)
+- external Robotics: `@lk-robotics/lds-robotics-ui@0.1.0-rc.2`,
+  `LK-Design-System/lk-design-system-robotics`
+- 배포 정책: publishable package는 restricted GitHub Packages를 사용하며 root workspace만
+  private입니다. 실제 제품 adoption과 stable promotion은 release evidence와 별도로 승인합니다.
+- 런타임 peer dependency: `react`; 선택 peer dependency: `react-dom`
+- legacy aggregate 진입점은 compatibility window 동안 유지하지만 신규 코드는 owner package
+  public export를 사용합니다.
 
 ## 레포 구조
 

@@ -10,6 +10,7 @@ import { Icon } from '../icon/Icon.jsx';
  * (consumer-provided aria-label wins).
  */
 export function Breadcrumb({ items = [], style, ...rest }) {
+  const [hoveredIndex, setHoveredIndex] = React.useState(null);
   return (
     <nav aria-label="현재 위치" style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', ...style }} {...rest}>
       <ol style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, listStyle: 'none', margin: 0, padding: 0 }}>
@@ -20,7 +21,20 @@ export function Breadcrumb({ items = [], style, ...rest }) {
               {last || !it.href ? (
                 <span aria-current={last ? 'page' : undefined} style={{ color: last ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-neutral)', fontWeight: last ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0 }}>{it.label}</span>
               ) : (
-                <a href={it.href} style={{ color: 'var(--color-semantic-label-neutral)', fontWeight: 'var(--fw-medium)', letterSpacing: 0, textDecoration: 'none' }}>{it.label}</a>
+                <a
+                  href={it.href}
+                  onMouseEnter={() => setHoveredIndex(i)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  style={{
+                    color: hoveredIndex === i ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-neutral)',
+                    fontWeight: 'var(--fw-medium)',
+                    letterSpacing: 0,
+                    textDecoration: 'none',
+                    transition: 'color var(--dur-fast) var(--ease-out)',
+                  }}
+                >
+                  {it.label}
+                </a>
               )}
               {!last && (
                 <Icon name="chevron-right-small" size={14} color="var(--color-semantic-label-assistive)" aria-hidden="true" />

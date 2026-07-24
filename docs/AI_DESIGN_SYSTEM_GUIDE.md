@@ -14,6 +14,25 @@ AI 도구에게 LK ROBOTICS UI 설계나 구현을 맡길 때 가장 먼저 제�
 - Complete Korean descriptive messages ending in `-습니다`, `-세요`, or `-해 주세요` use a final period. Noun labels, titles, status fragments, and loading labels omit it.
 - WDS Core field placeholders follow the local WDS sentence pattern (`입력해 주세요.`, `선택해 주세요.`). Essential instructions still belong in labels or helper text, following [Fluent 2 Field accessibility guidance](https://fluent2.microsoft.design/components/web/react/core/field/usage).
 - Product and Robotics surfaces may use a concise domain hint only when a persistent visible label already explains the field. Do not mix `입력하세요` and `입력해 주세요` within one component family.
+- 사용자 요청·복구 지시는 `-해 주세요.`로 통일합니다. 빈 상태에서 부담 없는 탐색을 권하는
+  `-해 보세요.`만 예외이며, 오류는 `원인 1문장 + 다음 행동 1문장` 순서로 씁니다.
+- 일반 UI 카피는 `프레임`, `컬렉션`, `키`로 표기합니다. 로마자는 API·컴포넌트명·코드
+  식별자처럼 원문 보존이 필요한 고유명사에만 사용합니다.
+
+## Data display conventions
+
+- 표시용 절대 날짜는 `YYYY-MM-DD`, 시각을 포함하면 `YYYY-MM-DD HH:mm`을 사용합니다.
+  날짜 입력·편집 control은 locale format을 표시할 수 있지만 저장값과 접근 가능한 설명에는
+  ISO 형식을 유지합니다.
+- freshness는 1시간 미만 `N분 전`, 같은 날 `오늘 HH:mm`, 그보다 오래되면
+  `YYYY-MM-DD HH:mm`으로 단계화합니다. 제품이 계산해 문자열로 전달하며 LDS가 timestamp에서
+  freshness를 추론하지 않습니다.
+- `% · ‰ · °`는 값에 붙이고 문자·SI 단위는 한 칸 띄웁니다. 단위는 컴포넌트의 `unit`
+  prop으로 분리하고 value 문자열에 포함하지 않습니다.
+- 결측 표 셀은 `—`로 표시하고 보조기술에는 `값 없음`을 제공합니다. 결측, 빈 문자열, 숫자
+  `0`, loading, error를 같은 상태로 취급하지 않습니다.
+- 차트의 제품 사용처는 locale formatter와 domain/tick 정책을 명시합니다. 컴포넌트의 자동
+  눈금은 Storybook과 단순 preview용 fallback입니다.
 
 ## 기준 소스
 

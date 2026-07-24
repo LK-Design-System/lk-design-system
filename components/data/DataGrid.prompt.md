@@ -104,6 +104,8 @@ DataGrid가 소유하는 것:
 ## 상태와 대용량 데이터
 
 - `loading`, `error`, `emptyLabel`, `stateActions`는 현재 page surface 상태입니다. 이전 데이터 보존·refreshing·stale 계약은 상위 resource state가 담당합니다.
+- 결측 셀은 column `render`에서 보이는 `—`와 스크린리더용 `값 없음`을 함께 제공하세요.
+  빈 문자열, 결측, 숫자 `0`은 서로 다른 데이터이므로 같은 표시로 합치지 않습니다.
 - DataGrid는 virtualization/render-window API를 의도적으로 제공하지 않습니다. Native table에서 일부 row만 DOM에 두려면 전체 row count, absolute row index, focus 복원, 동적 row height, expansion과 pinned cell 동기화까지 함께 해결해야 합니다. 이 기능은 검증된 virtualizer를 가진 specialized product data surface가 소유합니다.
 - `Pagination`은 DOM을 작게 유지하는 기본 전략입니다. Carbon 권장처럼 표 바로 아래, padding 없이 붙이고 row density와 가까운 높이를 선택합니다.
 

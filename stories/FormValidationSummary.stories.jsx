@@ -140,7 +140,7 @@ const mixedIssues = [
   {
     id: 'upload',
     label: 'Evidence 업로드',
-    message: '업로드할 collection을 선택하세요.',
+    message: '업로드할 컬렉션을 선택해 주세요.',
     severity: 'error',
   },
 ];
@@ -302,8 +302,8 @@ export const NarrowLongCopy = {
     issues: [
       {
         id: 'collection-permission',
-        label: '로봇 운영 데이터 collection 접근 권한',
-        message: '선택한 collection에 업로드 권한이 없습니다. 쓰기 권한이 있는 collection을 선택하세요.',
+        label: '로봇 운영 데이터 컬렉션 접근 권한',
+        message: '선택한 컬렉션에 업로드 권한이 없습니다. 쓰기 권한이 있는 컬렉션을 선택해 주세요.',
         severity: 'error',
       },
       {
@@ -341,7 +341,7 @@ export const FieldLinksAndKeyboardFocus = {
       {
         id: 'upload-link',
         label: 'Evidence 업로드',
-        message: '업로드할 collection을 선택하세요.',
+        message: '업로드할 컬렉션을 선택해 주세요.',
         severity: 'error',
         href: '#evidence-collection-field',
       },

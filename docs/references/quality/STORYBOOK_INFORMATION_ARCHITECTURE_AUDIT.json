@@ -2785,7 +2785,7 @@
       "layer": "Core",
       "family": "Overlay",
       "importPath": "./stories/OverlayConfirmAlert.stories.jsx",
-      "sourceSha256": "7c13f3b788b515a0340b914568c401ff82678fbfc1edf1aaf29e2755d0b7940a",
+      "sourceSha256": "fab0905ec0763625d4da12eb403e41eab32205748c7eeff969e8c82656d4ed1b",
       "primaryOwner": "Alert",
       "ownerComponents": [
         "Alert"
@@ -2811,7 +2811,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "7c13f3b788b515a0340b914568c401ff82678fbfc1edf1aaf29e2755d0b7940a",
+      "reviewedSourceSha256": "fab0905ec0763625d4da12eb403e41eab32205748c7eeff969e8c82656d4ed1b",
       "stories": [
         {
           "id": "lds-core-components-overlay-alert--alert-open",
@@ -2927,7 +2927,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+      "reviewNote": "2026-07-24 stabilization review: 변경된 상태 의미, 오류 복구 문구, 단위 표기, action hierarchy와 접근 가능한 이름을 built Storybook에서 재검증했다."
     },
     {
       "title": "LDS Core/Components/Overlay/Confirm Dialog",
@@ -4124,7 +4124,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormInput.stories.jsx",
-      "sourceSha256": "803ffbc317bb0b6e0ba580c4898c21d5916f639cdaf7d8d7ce29b52ad1c60ed1",
+      "sourceSha256": "ac6aa05d076e8d55b793252f3d9dd622e0c4c3d7ac414c667d78668d7b50479e",
       "primaryOwner": "Input",
       "ownerComponents": [
         "Input"
@@ -4150,7 +4150,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "803ffbc317bb0b6e0ba580c4898c21d5916f639cdaf7d8d7ce29b52ad1c60ed1",
+      "reviewedSourceSha256": "ac6aa05d076e8d55b793252f3d9dd622e0c4c3d7ac414c667d78668d7b50479e",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-input--input-overview",
@@ -4266,7 +4266,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-24 owner review: Carousel 사용법 스토리 3종(자동 회전 프로모션 배너·컨트롤 구성·320px)과 도트 대비 링·하단 안전 여백 계약 — 배치 관행 점검 반영."
+      "reviewNote": "2026-07-24 stabilization review: 변경된 상태 의미, 오류 복구 문구, 단위 표기, action hierarchy와 접근 가능한 이름을 built Storybook에서 재검증했다."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Radio",
@@ -4715,7 +4715,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormSelect.stories.jsx",
-      "sourceSha256": "afea58430345b51235b50b4b4537cd021bc675479c761c2ae8d2cfbc7d557a8c",
+      "sourceSha256": "cbbc493c14dc45abaf83f7ee49aa619a0d52cd471983e586febd7824f3d01d90",
       "primaryOwner": "Select",
       "ownerComponents": [
         "Select"
@@ -4739,7 +4739,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "afea58430345b51235b50b4b4537cd021bc675479c761c2ae8d2cfbc7d557a8c",
+      "reviewedSourceSha256": "cbbc493c14dc45abaf83f7ee49aa619a0d52cd471983e586febd7824f3d01d90",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-select--selects",
@@ -4851,7 +4851,7 @@
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
         }
       ],
-      "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+      "reviewNote": "2026-07-24 stabilization review: 변경된 상태 의미, 오류 복구 문구, 단위 표기, action hierarchy와 접근 가능한 이름을 built Storybook에서 재검증했다."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Slider and Range",
@@ -5224,7 +5224,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormTextarea.stories.jsx",
-      "sourceSha256": "0de7746c66bba9731b0a509175ca5baff3e91dd25e0e8de3e83c4f321264bb84",
+      "sourceSha256": "cdb862ec17fce303a180b596f1d72732527f7e18d9d01aec88bd3c8824370a2c",
       "primaryOwner": "Textarea",
       "ownerComponents": [
         "Textarea"
@@ -5247,8 +5247,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "0de7746c66bba9731b0a509175ca5baff3e91dd25e0e8de3e83c4f321264bb84",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "cdb862ec17fce303a180b596f1d72732527f7e18d9d01aec88bd3c8824370a2c",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-textarea--textarea-overview",
@@ -5358,14 +5358,14 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 post-split source and Core layer review: keep."
+      "reviewNote": "2026-07-24 stabilization review: 변경된 상태 의미, 오류 복구 문구, 단위 표기, action hierarchy와 접근 가능한 이름을 built Storybook에서 재검증했다."
     },
     {
       "title": "LDS Core/Components/Status/Badges and Tags",
       "layer": "Core",
       "family": "Status",
       "importPath": "./stories/FeedbackBadgesTags.stories.jsx",
-      "sourceSha256": "c32526588e6129210c2b878e4e3801dd30434efa02f916a841dc921c63125a6a",
+      "sourceSha256": "d3af0f83e0d1cf3328e4aa847707488a22e558ea1b0a93ff073d42d1a47f84a0",
       "primaryOwner": "Badge",
       "ownerComponents": [
         "Badge",
@@ -5394,7 +5394,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "c32526588e6129210c2b878e4e3801dd30434efa02f916a841dc921c63125a6a",
+      "reviewedSourceSha256": "d3af0f83e0d1cf3328e4aa847707488a22e558ea1b0a93ff073d42d1a47f84a0",
       "stories": [
         {
           "id": "lds-core-components-status-badges-and-tags--badge-tag-patterns",
@@ -5492,7 +5492,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+      "reviewNote": "2026-07-24 stabilization review: 변경된 상태 의미, 오류 복구 문구, 단위 표기, action hierarchy와 접근 가능한 이름을 built Storybook에서 재검증했다."
     },
     {
       "title": "LDS Core/Components/Status/Empty State",
@@ -5692,7 +5692,7 @@
       "layer": "Core",
       "family": "Status",
       "importPath": "./stories/FeedbackNotifications.stories.jsx",
-      "sourceSha256": "71669bfbca8b17ff410d7ddea02a3e1fbd969ee49d112b5f1d33caacb60b36fd",
+      "sourceSha256": "04e141d79cfebf03a9068dcb3ed5597c342c171688439e9dbae1e12cc119cfe6",
       "primaryOwner": "Notification",
       "ownerComponents": [
         "Notification"
@@ -5717,8 +5717,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "71669bfbca8b17ff410d7ddea02a3e1fbd969ee49d112b5f1d33caacb60b36fd",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "04e141d79cfebf03a9068dcb3ed5597c342c171688439e9dbae1e12cc119cfe6",
       "stories": [
         {
           "id": "lds-core-components-status-notification--notification-patterns",
@@ -5745,7 +5745,7 @@
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after completing the Core audience-entry guide and all public story descriptions; ownership, visibility, and keep disposition remain valid."
+      "reviewNote": "2026-07-24 stabilization review: 변경된 상태 의미, 오류 복구 문구, 단위 표기, action hierarchy와 접근 가능한 이름을 built Storybook에서 재검증했다."
     },
     {
       "title": "LDS Core/Components/Status/Skeleton",
@@ -9541,7 +9541,7 @@
       "layer": "Product",
       "family": "Display",
       "importPath": "./stories/DataAndStatus.stories.jsx",
-      "sourceSha256": "f3e6fbe7c624f6eedb1362560de4f8a1f4a7550ecd4e24a8b8b65b3bef8a6961",
+      "sourceSha256": "f09b6dc8a590a352e3820084710f70d7ef6ffb8e1f4c42d5ef946417aefce6ea",
       "primaryOwner": "MetricCard",
       "ownerComponents": [
         "MetricCard"
@@ -9568,8 +9568,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "f3e6fbe7c624f6eedb1362560de4f8a1f4a7550ecd4e24a8b8b65b3bef8a6961",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "f09b6dc8a590a352e3820084710f70d7ef6ffb8e1f4c42d5ef946417aefce6ea",
       "stories": [
         {
           "id": "lds-product-data-display-metric-card--metrics",
@@ -9671,7 +9671,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-24 stabilization review: 변경된 상태 의미, 오류 복구 문구, 단위 표기, action hierarchy와 접근 가능한 이름을 built Storybook에서 재검증했다."
     },
     {
       "title": "LDS Product/Data/Display/Resource State",
@@ -10408,7 +10408,7 @@
       "layer": "Product",
       "family": "Visualization",
       "importPath": "./stories/DataAnnotatedImage.stories.jsx",
-      "sourceSha256": "49d6ac77267084c94a79f9a1c3893026aa12df457a7c47b51ff4617728a7a5d0",
+      "sourceSha256": "31dfbda4fd2f1095d39c3f9dae073257452658297bf37159f84649b0948fabd0",
       "primaryOwner": "AnnotatedImage",
       "ownerComponents": [
         "AnnotatedImage"
@@ -10432,7 +10432,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-24",
-      "reviewedSourceSha256": "49d6ac77267084c94a79f9a1c3893026aa12df457a7c47b51ff4617728a7a5d0",
+      "reviewedSourceSha256": "31dfbda4fd2f1095d39c3f9dae073257452658297bf37159f84649b0948fabd0",
       "stories": [
         {
           "id": "lds-product-data-visualization-annotated-image--detection-annotations",
@@ -10591,7 +10591,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+      "reviewNote": "2026-07-24 stabilization review: 변경된 상태 의미, 오류 복구 문구, 단위 표기, action hierarchy와 접근 가능한 이름을 built Storybook에서 재검증했다."
     },
     {
       "title": "LDS Product/Data/Visualization/Bar Chart",
@@ -15446,7 +15446,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormSecretField.stories.jsx",
-      "sourceSha256": "556842dd113f8f872710680a32f458948f150a4e6e7f0a46311d62e815b2c4a0",
+      "sourceSha256": "c14dead26bca03b8c70d5d50c77d420ad40bd7984ee97df53dc3bde29d243ae7",
       "primaryOwner": "SecretField",
       "ownerComponents": [
         "SecretField"
@@ -15471,8 +15471,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "556842dd113f8f872710680a32f458948f150a4e6e7f0a46311d62e815b2c4a0",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "c14dead26bca03b8c70d5d50c77d420ad40bd7984ee97df53dc3bde29d243ae7",
       "stories": [
         {
           "id": "lds-product-selection-and-input-secret-field--reveal-and-copy",
@@ -15591,7 +15591,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-24 stabilization review: 변경된 상태 의미, 오류 복구 문구, 단위 표기, action hierarchy와 접근 가능한 이름을 built Storybook에서 재검증했다."
     },
     {
       "title": "LDS Product/Selection and Input/Time Picker",
@@ -15978,7 +15978,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormValidationSummary.stories.jsx",
-      "sourceSha256": "ffd070df988ad87d5675be6d2b6b0e8370dc5b016106f7876251dff201ea3ed8",
+      "sourceSha256": "ff6007bba15845f65eeff672e6d6ecc66bc2ed454e84f1d20947d553a92f047a",
       "primaryOwner": "ValidationSummary",
       "ownerComponents": [
         "ValidationSummary"
@@ -16001,8 +16001,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-16T01:26:48.261Z",
-      "reviewedSourceSha256": "ffd070df988ad87d5675be6d2b6b0e8370dc5b016106f7876251dff201ea3ed8",
+      "reviewedAt": "2026-07-24",
+      "reviewedSourceSha256": "ff6007bba15845f65eeff672e6d6ecc66bc2ed454e84f1d20947d553a92f047a",
       "stories": [
         {
           "id": "lds-product-selection-and-input-validation-summary--errors-and-warnings",
@@ -16141,7 +16141,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-12 re-reviewed after audience-guidance source updates; Product ownership and keep disposition remain valid."
+      "reviewNote": "2026-07-24 stabilization review: 변경된 상태 의미, 오류 복구 문구, 단위 표기, action hierarchy와 접근 가능한 이름을 built Storybook에서 재검증했다."
     },
     {
       "title": "LDS Product/Selection and Input/Virtual Keypad",

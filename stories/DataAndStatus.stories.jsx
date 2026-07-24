@@ -65,7 +65,8 @@ export const Metrics = {
       />
       <MetricCard
         label="검증 통과율"
-        value="99.7%"
+        value="99.7"
+        unit="%"
         delta={1.8}
         period="최근 24시간"
         baseline="지난 24시간"

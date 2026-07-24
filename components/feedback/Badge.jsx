@@ -6,7 +6,10 @@ const PALETTES = {
   steel: { bg: 'var(--component-badge-steel-bg)', fg: 'var(--component-badge-steel-fg)', dot: 'var(--color-semantic-accent-foreground-blue)' },
   amber: { bg: 'var(--component-badge-cautionary-bg)', fg: 'var(--component-badge-cautionary-fg)', dot: 'var(--color-semantic-status-cautionary-foreground)' },
   red: { bg: 'var(--component-badge-negative-bg)', fg: 'var(--component-badge-negative-fg)', dot: 'var(--color-semantic-status-negative-foreground)' },
-  // aliases
+  positive: { bg: 'var(--component-badge-positive-bg)', fg: 'var(--component-badge-positive-fg)', dot: 'var(--color-semantic-status-positive-foreground)' },
+  cautionary: { bg: 'var(--component-badge-cautionary-bg)', fg: 'var(--component-badge-cautionary-fg)', dot: 'var(--color-semantic-status-cautionary-foreground)' },
+  negative: { bg: 'var(--component-badge-negative-bg)', fg: 'var(--component-badge-negative-fg)', dot: 'var(--color-semantic-status-negative-foreground)' },
+  // Backward-compatible color-name aliases.
   indigo: { bg: 'var(--component-badge-navy-bg)', fg: 'var(--component-badge-navy-fg)', dot: 'var(--color-semantic-secondary-normal)' },
   green: { bg: 'var(--component-badge-positive-bg)', fg: 'var(--component-badge-positive-fg)', dot: 'var(--color-semantic-status-positive-foreground)' },
   ink: { bg: 'var(--component-badge-navy-bg)', fg: 'var(--component-badge-navy-fg)', dot: 'var(--color-semantic-secondary-normal)' },

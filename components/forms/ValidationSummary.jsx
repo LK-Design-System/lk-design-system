@@ -232,7 +232,6 @@ export const ValidationSummary = React.forwardRef(function ValidationSummary({
                       alignSelf: 'start',
                       justifyContent: 'flex-start',
                       maxWidth: '100%',
-                      minHeight: 0,
                       ...(group.key === 'error' ? { color: group.foreground } : {}),
                       lineHeight: 'var(--label1-line)',
                       textAlign: 'left',

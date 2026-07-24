@@ -47,7 +47,7 @@ export const NotificationPatterns = {
         <li style={{ overflow: 'hidden', borderBottom: '1px solid var(--color-semantic-line-normal-normal)' }}>
           <Notification
             tone="positive"
-            icon={<Icon name="circle-check" />}
+            icon={<Icon name="circle-check-fill" />}
             title="검토 완료"
             description="컴포넌트 변경 요약이 생성되었습니다."
             time="18분 전"

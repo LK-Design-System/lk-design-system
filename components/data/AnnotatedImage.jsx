@@ -117,7 +117,7 @@ export function AnnotatedImage({
   onAnnotationsVisibleChange,
   loadingMessage = '이미지를 불러오는 중입니다.',
   emptyMessage = '표시할 이미지가 없습니다.',
-  errorMessage = '이미지를 불러오지 못했습니다.',
+  errorMessage = '이미지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.',
   summaryLabel = '이미지 주석 요약',
   aspectRatio = '16 / 9',
   objectFit = 'contain',

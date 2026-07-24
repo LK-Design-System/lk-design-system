@@ -34,12 +34,12 @@ const alertVariantColor = {
   assistive: 'var(--color-semantic-label-neutral)',
 };
 
-function AlertPreview({ platform, heading = true, variant = 'negative', title = '리포트를 삭제할까요?', body = '이 작업은 되돌릴 수 없습니다.' }) {
+function AlertPreview({ platform, heading = true, variant = 'negative', title = '세션이 만료되었습니다', body = '작업을 계속하려면 다시 로그인해 주세요.' }) {
   const ios = platform === 'ios';
   const android = platform === 'android';
   const width = ios ? 210 : android ? 230 : 250;
   const accent = alertVariantColor[variant] || alertVariantColor.normal;
-  const primaryLabel = variant === 'negative' ? '삭제' : variant === 'assistive' ? '알겠어요' : '확인';
+  const primaryLabel = variant === 'negative' ? '다시 로그인' : variant === 'assistive' ? '알겠어요' : '확인';
 
   return (
     <section style={{ display: 'grid', gap: 12 }}>
@@ -74,7 +74,7 @@ function AlertPreview({ platform, heading = true, variant = 'negative', title = 
           </p>
           <div style={{ display: 'flex', justifyContent: ios ? 'center' : 'flex-end', gap: 8, marginTop: 18 }}>
             <button type="button" style={{ height: ios ? 34 : 30, padding: '0 12px', border: 'none', borderRadius: ios ? 'var(--radius-pill)' : 'var(--radius-md)', background: ios ? 'var(--color-semantic-fill-normal)' : 'transparent', color: 'var(--color-semantic-label-normal)', fontSize: 12, fontWeight: 'var(--fw-bold)' }}>
-              취소
+              나중에
             </button>
             <button type="button" style={{ height: ios ? 34 : 30, padding: '0 12px', border: 'none', borderRadius: ios ? 'var(--radius-pill)' : 'var(--radius-md)', background: ios ? accent : 'transparent', color: ios ? 'var(--color-semantic-inverse-label)' : accent, fontSize: 12, fontWeight: 'var(--fw-bold)' }}>
               {primaryLabel}

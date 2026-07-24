@@ -77,7 +77,7 @@ export function MetricCard({
   const rawId = React.useId();
   const labelId = `${rawId}-label`;
   const hasError = error !== undefined && error !== null && error !== false;
-  const errorContent = error === true ? '지표를 불러오지 못했습니다.' : error;
+  const errorContent = error === true ? '지표를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.' : error;
   const state = loading ? 'loading' : hasError ? 'error' : empty ? 'empty' : stale ? 'stale' : 'ready';
   const showFooter = !loading && (stale || lastUpdated != null || action != null);
 
@@ -146,20 +146,20 @@ export function MetricCard({
         background: 'var(--component-card-bg)',
         border: 'var(--component-card-border)',
         borderRadius: 'var(--component-card-radius)',
-        padding: '22px 24px',
+        padding: '24px',
         boxShadow: 'var(--shadow-xs)',
         fontFamily: 'var(--font-sans)',
         ...style,
       }}
       {...rest}
     >
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, minWidth: 0, marginBottom: 14 }}>
-        {label != null && <span id={labelId} style={{ minWidth: 0, fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: '1.4px', textTransform: 'uppercase', overflowWrap: 'anywhere', color: 'var(--color-semantic-label-alternative)' }}>{label}</span>}
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, minWidth: 0, marginBottom: 16 }}>
+        {label != null && <span id={labelId} style={{ minWidth: 0, fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', overflowWrap: 'anywhere', color: 'var(--color-semantic-label-alternative)' }}>{label}</span>}
         {icon && <span style={{ color: 'var(--color-semantic-primary-normal)', display: 'inline-flex' }}>{icon}</span>}
       </div>
       {body}
       {showFooter && (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', minWidth: 0, flexWrap: 'wrap', marginTop: 14, paddingTop: 12, borderTop: '1px solid var(--color-semantic-line-normal-alternative)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', minWidth: 0, flexWrap: 'wrap', marginTop: 16, paddingTop: 16, borderTop: '1px solid var(--color-semantic-line-normal-alternative)' }}>
           {(stale || lastUpdated != null) && (
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', minWidth: 0, flexWrap: 'wrap' }}>
               {stale && <StatusBadge tone="cautionary">{staleLabel}</StatusBadge>}

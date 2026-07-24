@@ -2,7 +2,7 @@
 
 ## Source of truth
 
-- Status: Draft — WF-16 is implemented but its complete narrow-navigation and interaction evidence is not yet verified.
+- Status: Current — all 16 workflow responsibility traces are verified.
 - Last refreshed: 2026-07-21
 - Primary product surfaces: LK operations dashboards, product application shells, data-heavy monitoring and investigation surfaces, and the shared component layers that support them.
 - Evidence reviewed: `readme.md`, `docs/OPERATING_MODEL.md`, `docs/PRODUCT_FRONTEND_COVERAGE.md`, `docs/AI_DESIGN_SYSTEM_GUIDE.md`, `docs/COMPONENT_API_STATE_MATRIX.md`, `docs/STORYBOOK_INFORMATION_ARCHITECTURE.md`, `components/layout/DashboardShell.*`, `components/layout/DashboardGrid.*`, and their Storybook stories.
@@ -139,7 +139,7 @@
 
 ## Open questions
 
-- [ ] Decide whether hierarchical narrow navigation is a focus-managed temporary drawer or whether v1 supports `BottomNav` only for four or fewer flat destinations; owner: product design + component owner; impact: WF-16 verification and mobile continuity.
+- [x] LDS v1 supports `BottomNav` for four or fewer flat destinations. Hierarchical narrow navigation is a product-owned focus-managed temporary `Drawer` composition, not `DashboardShell` anatomy. This closes WF-16 without forcing one product hierarchy into the shared shell.
 - [ ] Keep account actions out of primary `BottomNav` unless product evidence proves they are a top-level destination; owner: product design; impact: mobile identity and utility ownership.
 - [ ] Validate whether any product should default to an all-dark operations shell; owner: product design; impact: theme defaults and visual-regression coverage.
 - [ ] Validate the inferred supervisor, operator, and responder personas with product owners; owner: product design; impact: priority and measurable success criteria.
