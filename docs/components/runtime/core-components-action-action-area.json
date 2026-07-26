@@ -1,0 +1,231 @@
+{
+  "slug": "core-components-action-action-area",
+  "title": "Action Area",
+  "storybookTitle": "LDS Core/Components/Action/Action Area",
+  "layer": "Core",
+  "family": "Action",
+  "primaryOwner": "ActionArea",
+  "ownerComponents": [
+    "ActionArea"
+  ],
+  "supportingComponents": [
+    "Button",
+    "Checkbox",
+    "Chip",
+    "Icon"
+  ],
+  "purpose": "검토가 끝난 뒤 화면이나 패널 하단에서 취소와 주요 완료 행동을 한 단위로 유지할 때 적합합니다. 본문 안의 단일 즉시 행동에는 Action Area를 사용하지 말고 Button이나 Text Button을 배치하세요.",
+  "useWhen": [
+    "Use align=\"end\" to right-align persistent commit actions without rebuilding an action footer."
+  ],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "align",
+      "rule": "Action alignment inside the shared action row. @default \"start\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "summary",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ActionAreaProps"
+    },
+    {
+      "name": "caption",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ActionAreaProps"
+    },
+    {
+      "name": "sticky",
+      "type": "boolean",
+      "required": false,
+      "description": "Keep the action area attached to the viewport bottom. @default false",
+      "owner": "ActionAreaProps"
+    },
+    {
+      "name": "safeArea",
+      "type": "boolean",
+      "required": false,
+      "description": "Include mobile bottom safe-area padding. @default false",
+      "owner": "ActionAreaProps"
+    },
+    {
+      "name": "divider",
+      "type": "boolean",
+      "required": false,
+      "description": "Draw the top divider. @default true",
+      "owner": "ActionAreaProps"
+    },
+    {
+      "name": "compact",
+      "type": "boolean",
+      "required": false,
+      "description": "Use denser vertical padding. @default false",
+      "owner": "ActionAreaProps"
+    },
+    {
+      "name": "align",
+      "type": "'start' | 'end' | 'center' | 'between'",
+      "required": false,
+      "description": "Action alignment inside the shared action row. @default \"start\"",
+      "owner": "ActionAreaProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ActionAreaProps"
+    }
+  ],
+  "states": [],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Operations patterns keep persistent actions in a bottom ActionArea at md/40px. Execute/apply/save uses primary, recheck/reconnect/export uses neutral outlined, and destructive confirmation uses danger."
+    },
+    {
+      "subject": "--color-semantic-label-alternative",
+      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+    },
+    {
+      "subject": "--color-semantic-label-normal",
+      "rule": "light: #171718; dark: #F7F7F7"
+    },
+    {
+      "subject": "--component-action-area-z-index",
+      "rule": "20"
+    },
+    {
+      "subject": "--label2-line",
+      "rule": "18px"
+    }
+  ],
+  "responsive": [
+    "Use for bottom action regions, confirmation footers, and mobile-safe primary actions.",
+    "Use sticky only when the action must remain attached to the viewport bottom.",
+    "In a horizontal pair, place the dismissive or secondary action first and the primary action last. ActionArea preserves DOM order when wrapping and does not infer button priority."
+  ],
+  "contentGuidance": [
+    "Keep the button itself inside Button, TextButton, or IconButton; ActionArea owns placement, spacing, divider, caption, and safe-area padding."
+  ],
+  "accessibility": [
+    "요소 계약 — 기본은 평범한 div입니다. 이름 없는 은 landmark로도 노출되지 않아 보조기술에 아무 의미를 전달하지 못하므로, 의미 없는 요소를 기본값으로 두지 않습니다. aria-label(또는 aria-labelledby)로 영역 이름을 주면 으로 렌더되어 이름 있는 region landmark가 됩니다. 화면에 bottom action 영역이 하나뿐이라면 굳이 landmark로 만들 필요가 없습니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Checkbox",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Chip",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Fab",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "IconButton",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "TextButton",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ToggleIcon",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<ActionArea caption=\"Changes are saved after confirmation.\" safeArea>\n  <Button full>Confirm</Button>\n</ActionArea>"
+    },
+    {
+      "label": "추가 조합 2",
+      "code": "<ActionArea aria-label=\"주문 확정 액션\">…</ActionArea>  // <section> = named region\n<ActionArea>…</ActionArea>                              // <div>"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-normal",
+    "--component-action-area-bg",
+    "--component-action-area-border",
+    "--component-action-area-gap",
+    "--component-action-area-padding-x",
+    "--component-action-area-padding-y",
+    "--component-action-area-shadow-sticky",
+    "--component-action-area-z-index",
+    "--label2-line",
+    "--label2-size",
+    "--label2-spacing",
+    "--mobile-bottom-action-padding-bottom",
+    "--space-1",
+    "--space-2",
+    "--space-3"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ActionArea.stories.jsx",
+    "entryStoryId": "lds-core-components-action-action-area--bottom-action-area",
+    "publicStories": [
+      {
+        "id": "lds-core-components-action-action-area--bottom-action-area",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-action-action-area--action-area-states",
+        "name": "변형·상태 · 밀도와 고정 배치",
+        "role": "variants-states"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

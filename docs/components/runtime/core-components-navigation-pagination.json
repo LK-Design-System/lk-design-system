@@ -1,0 +1,280 @@
+{
+  "slug": "core-components-navigation-pagination",
+  "title": "Pagination",
+  "storybookTitle": "LDS Core/Components/Navigation/Pagination",
+  "layer": "Core",
+  "family": "Navigation",
+  "primaryOwner": "Pagination",
+  "ownerComponents": [
+    "Pagination"
+  ],
+  "supportingComponents": [
+    "PageIndicator"
+  ],
+  "purpose": "검색 결과나 표처럼 전체 개수와 현재 페이지를 알고 앞·뒤 또는 특정 페이지로 이동해야 할 때 적합합니다. 소량의 연속 콘텐츠에서 위치만 알려주려면 Page Indicator를, 더 불러오기 방식의 피드에는 별도 로딩 패턴을 사용하세요.",
+  "useWhen": [
+    "Use PageIndicator for dot or counter-only page position."
+  ],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "variant",
+      "rule": "navigation variant. compact ignores siblingCount and omits the first/last page jump (no leading 1 / trailing count shortcuts or ellipses); minimize shows only the current page. @default \"extended\""
+    },
+    {
+      "part": "navigationLabel",
+      "rule": "nav landmark accessible name. @default \"pagination\""
+    },
+    {
+      "part": "previousPageLabel",
+      "rule": "Previous-page command accessible name. @default \"previous page\""
+    },
+    {
+      "part": "nextPageLabel",
+      "rule": "Next-page command accessible name. @default \"next page\""
+    },
+    {
+      "part": "pageSizeLabel",
+      "rule": "Page-size select accessible name. @default \"items per page\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "page",
+      "type": "number",
+      "required": false,
+      "description": "Current page, 1-based. @default 1",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "count",
+      "type": "number",
+      "required": false,
+      "description": "Total pages. @default 1",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(page: number) = void",
+      "required": false,
+      "description": "",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "siblingCount",
+      "type": "number",
+      "required": false,
+      "description": "Number of sibling pages around the current page. Only applies to variant=\"extended\"; the compact variant ignores it and always shows a fixed window of up to two pages on each side of the current page.",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "variant",
+      "type": "\"extended\" | \"compact\" | \"minimize\"",
+      "required": false,
+      "description": "navigation variant. compact ignores siblingCount and omits the first/last page jump (no leading 1 / trailing count shortcuts or ellipses); minimize shows only the current page. @default \"extended\"",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "leadingContent",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "trailingContent",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "pageSize",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "pageSizeOptions",
+      "type": "number[]",
+      "required": false,
+      "description": "",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "onPageSizeChange",
+      "type": "(pageSize: number) = void",
+      "required": false,
+      "description": "",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "showPageJump",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "pageJumpLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "showCounter",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "navigationLabel",
+      "type": "string",
+      "required": false,
+      "description": "nav landmark accessible name. @default \"pagination\"",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "previousPageLabel",
+      "type": "string",
+      "required": false,
+      "description": "Previous-page command accessible name. @default \"previous page\"",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "nextPageLabel",
+      "type": "string",
+      "required": false,
+      "description": "Next-page command accessible name. @default \"next page\"",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "pageSizeLabel",
+      "type": "string",
+      "required": false,
+      "description": "Page-size select accessible name. @default \"items per page\"",
+      "owner": "PaginationProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "variant",
+      "rule": "navigation variant. compact ignores siblingCount and omits the first/last page jump (no leading 1 / trailing count shortcuts or ellipses); minimize shows only the current page. @default \"extended\""
+    }
+  ],
+  "behavior": [
+    "The page-jump input is controlled by the current page: previous/next commands and external page changes immediately synchronize its displayed value."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-label-alternative",
+      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+    },
+    {
+      "subject": "--color-semantic-label-assistive",
+      "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
+    }
+  ],
+  "responsive": [
+    "Use variant=\"extended\" for data tables, compact for narrow surfaces, and minimize when only the current page is needed.",
+    "Localize the landmark and compact icon/select commands with navigationLabel, previousPageLabel, nextPageLabel, and pageSizeLabel; pageJumpLabel labels the visible jump field."
+  ],
+  "contentGuidance": [],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "PageIndicator",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Category",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Tabs",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Pagination page={page} count={12} onChange={setPage} />\n<Pagination variant=\"compact\" page={5} count={23} />\n<Pagination pageSize={10} showPageJump showCounter page={1} count={10} />"
+    }
+  ],
+  "tokens": [
+    "--body2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-assistive",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-solid-normal",
+    "--font-sans",
+    "--fw-regular",
+    "--fw-semibold",
+    "--label2-size",
+    "--radius-8",
+    "--radius-md",
+    "--space-1-5"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/NavigationCompact.stories.jsx",
+    "entryStoryId": "lds-core-components-navigation-pagination--synchronized-page-jump",
+    "publicStories": [
+      {
+        "id": "lds-core-components-navigation-pagination--synchronized-page-jump",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-navigation-pagination--pagination-patterns",
+        "name": "변형·상태 · 이동 방식과 제어 영역",
+        "role": "variants-states"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

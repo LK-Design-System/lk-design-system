@@ -1,0 +1,417 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "Wanted Design System Community",
+    "figmaFileKey": "4e0301GrjO6P8fOQpLUrrG",
+    "createdAt": "2026-07-07",
+    "purpose": "Queue the exact Figma node-level reads required before LDS can claim complete WDS coverage parity."
+  },
+  "externalAccess": {
+    "method": "Figma MCP metadata, screenshot, and design-context reads",
+    "lastAttemptedAt": "2026-07-08",
+    "currentStatus": "local-fig-snapshot-accepted-as-authoritative",
+    "blockedTool": "mcp__codex_apps__figma._get_metadata",
+    "notes": "On 2026-07-08 the checked-in \"Wanted Design System (Community).fig\" export (decoded to FIGMA_LOCAL_CONTENT_AUDIT.json) was accepted as the authoritative WDS source snapshot. All queue rows were closed by verifying closure criteria against the decoded local content and LDS sources. Live Figma MCP reads remain blocked by the Starter plan call limit; live re-verification is optional future work and would only matter if the community file changes upstream.",
+    "attemptedLiveFigmaFileKey": "9ztwRZsoXNAuTP7TYSFO1e",
+    "attemptedLiveFigmaNodeId": "16222:137705",
+    "localFigExtraction": {
+      "status": "succeeded",
+      "command": "npm run extract:wds-fig-content",
+      "evidence": "docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json",
+      "exportedAt": "2026-07-07T06:12:53.434Z",
+      "nodeChangeCount": 101534,
+      "targetSummaries": 35,
+      "componentSectionSummaries": 57,
+      "pageSectionIndexes": 26
+    },
+    "snapshotAcceptedAt": "2026-07-08"
+  },
+  "statusLegend": {
+    "source-node-known": "The WDS source node is known and ready for metadata or design-context extraction.",
+    "confirmed-covered": "The source node has been checked directly (live read or accepted local .fig snapshot content) and corresponding LDS coverage exists.",
+    "theme-override-review": "The WDS source role is intentionally replaced by LK theme assets, but structural usage still needs review.",
+    "local-evidence-pending-figma": "LDS evidence exists, but exact WDS child nodes, variants, or examples are not yet verified."
+  },
+  "queue": [
+    {
+      "id": "theme-icon-inventory",
+      "wdsSource": "1 Theme / 1 Icon",
+      "figmaNodeId": "16215:13694",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/Iconography.stories.jsx",
+        "assets/icons",
+        "assets/icons/manifest.json",
+        "components/icon/Icon.jsx"
+      ],
+      "closureCriteria": [
+        "Compare the imported WDS icon folder and assets/icons/manifest.json against the Figma source node inventory.",
+        "Verify icon size, stroke/fill treatment, disabled/secondary coloring, and grid alignment.",
+        "Classify any missing WDS glyph as direct gap, LK rename, or intentionally excluded icon."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): all 339 WDS icon SVGs are imported with 1:1 variant-name mapping (kebab-case renames; navigationX -> nav-*). logoGoogle is intentionally served through BrandLogo; 18 lds-legacy robotics glyphs are LK product extensions."
+    },
+    {
+      "id": "theme-logo-structure",
+      "wdsSource": "1 Theme / 2 Logo",
+      "figmaNodeId": "16215:13483",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/Brand.stories.jsx",
+        "stories/BrandPlatform.stories.jsx",
+        "components/brand/BrandLogo.jsx",
+        "components/brand/Lockup.jsx",
+        "assets/brand"
+      ],
+      "closureCriteria": [
+        "Verify WDS logo sizing, clear-space, lockup, and contrast guidance.",
+        "Record which WDS logo rules are retained structurally and which are replaced by LK ROBOTICS brand rules.",
+        "Ensure LK brand stories do not imply visual parity with the WDS logo asset."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): WDS Color/Variant/symbol roles map to Lockup tone (ink/white/brand) and variant (inline/stacked/mark). Language and Partnership sections are intentionally excluded for the single-language LK brand; stories do not claim Wanted visual parity. Follow-up: document an explicit clear-space rule in Brand stories."
+    },
+    {
+      "id": "element-basic-foundations",
+      "wdsSource": "2 Element / 1 Basic",
+      "figmaNodeId": "16215:17304",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/Foundations.stories.jsx",
+        "stories/FoundationBasic.stories.jsx",
+        "stories/FoundationsTypography.stories.jsx",
+        "docs/TOKEN_GOVERNANCE.md",
+        "components/layout/AspectRatio.jsx",
+        "tokens/color-semantic.css",
+        "tokens/typography.css",
+        "tokens/spacing.css",
+        "tokens/effects.css",
+        "tokens/source.json",
+        "docs/references/wds/TOKEN_MAP.json",
+        "docs/references/wds/source-pdfs/1basic.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "closureCriteria": [
+        "Extract exact WDS Basic child sections and map color, typography, line, fill, opacity, and radius examples one by one.",
+        "Confirm LK color overrides only change values, not semantic role names or hierarchy.",
+        "Identify any Basic subsection that is not represented in FOUNDATION_AUDIT.json."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): the WDS Basic node contains only the Ratio section; all 17 Aspect Ratio presets plus the 4-value vertical Ratio resource map 1:1 to --ratio-* tokens and FoundationBasic#RatioTokens. Color/typography Basic-adjacent content lives on Foundation guideline pages tracked by their own FOUNDATION_AUDIT rows."
+    },
+    {
+      "id": "element-spacing-system",
+      "wdsSource": "2 Element / 2 Spacing",
+      "figmaNodeId": "16215:17271",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/FoundationSpacing.stories.jsx",
+        "stories/LayoutGrid.stories.jsx",
+        "tokens/spacing.css",
+        "tokens/grid.css",
+        "tokens/source.json",
+        "docs/references/wds/source-pdfs/2spacing.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "closureCriteria": [
+        "Extract all WDS spacing subsections beyond the confirmed mobile status and bottom example.",
+        "Verify base scale, component padding, section gap, responsive gutter, and safe-area behavior.",
+        "Ensure every WDS spacing primitive has either an LDS token or an explicit LK override note."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): the WDS Spacing node is Safe Area only (Status/Bottom x Platform). iOS minima (44/34) and web env() insets are tokenized and demonstrated in FoundationSpacing; Android fixed constants (36/14) are intentionally not tokenized for the web runtime."
+    },
+    {
+      "id": "element-spacing-status-bottom",
+      "wdsSource": "2 Element / 2 Spacing / Status and Bottom",
+      "figmaNodeId": "16285:163253",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/FoundationSpacing.stories.jsx",
+        "tokens/spacing.css",
+        "tokens/source.json",
+        "docs/references/wds/source-pdfs/2spacing.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "closureCriteria": [
+        "Keep mobile status bar, home indicator, bottom bar, and bottom action safe-area spacing represented in LDS.",
+        "Recheck this row only if WDS updates the source node or LDS spacing tokens change."
+      ],
+      "nextFigmaReads": []
+    },
+    {
+      "id": "element-decorate-effects",
+      "wdsSource": "2 Element / 3 Decorate",
+      "figmaNodeId": "16215:17090",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/FoundationDecorate.stories.jsx",
+        "stories/FoundationInteraction.stories.jsx",
+        "stories/Foundations.stories.jsx",
+        "tokens/effects.css",
+        "docs/references/wds/VISUAL_TOKEN_EXCEPTIONS.json",
+        "docs/references/wds/source-pdfs/3decorate.pdf",
+        "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
+      ],
+      "closureCriteria": [
+        "Extract WDS radius, shadow, divider, blur, overlay, and decorative treatment examples.",
+        "Map each effect to tokens/effects.css or an explicit visual-token exception.",
+        "Verify no component-specific decorative value silently overrides WDS Decorate guidance."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): WDS Decorate contains exactly Gradient (Solid/Multiple/Mask x 4 directions) and Interaction (4 states + layer variants), all mapped to --decorate-* and --interaction-* tokens with the FoundationDecorate (Effects) and FoundationInteraction stories. The Interaction Size axis is a Figma resource-swatch property with no token counterpart needed."
+    },
+    {
+      "id": "component-layout-section",
+      "wdsSource": "3 Component / 1 Layout",
+      "figmaNodeId": "16215:43042",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/LayoutEssentials.stories.jsx",
+        "stories/Layout.stories.jsx",
+        "stories/LayoutGrid.stories.jsx",
+        "stories/LayoutStack.stories.jsx",
+        "stories/LayoutScrollAccess.stories.jsx",
+        "components/layout/MobileSystemBars.jsx",
+        "components/content/Divider.jsx",
+        "docs/references/wds/source-pdfs/1layout.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+        "components/layout"
+      ],
+      "closureCriteria": [
+        "Local PDF confirms Essential system bars and Divider variants; verify exact dimensions and source variants when Figma reads resume.",
+        "Extract remaining WDS layout child sections and examples.",
+        "Verify page shell, stack, alignment, grid, scroll, and accessibility behavior against LDS stories.",
+        "Keep PageHeader classified as product extension unless WDS has a matching component contract."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): Layout contains only Essential (system bars) and Divider, mapped to MobileSystemBars and Divider with LayoutEssentials#MobileSystemBarsByPlatform and LayoutDivider#DividerVariants evidence. LK overrides recorded: thick divider 8px (WDS 12px), iOS bar metrics used for both platforms. The Resource section is Figma doc tooling (excluded); PageHeader stays a product extension."
+    },
+    {
+      "id": "component-action-seven-children",
+      "wdsSource": "3 Component / 2 Action",
+      "figmaNodeId": "16215:35516",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/ActionArea.stories.jsx",
+        "stories/Button.stories.jsx",
+        "stories/ActionButtonGroup.stories.jsx",
+        "stories/ActionSplitButton.stories.jsx",
+        "stories/ActionFab.stories.jsx",
+        "stories/SocialButtons.stories.jsx",
+        "components/buttons/ActionArea.jsx",
+        "components/buttons/ToggleIcon.jsx",
+        "docs/references/wds/source-pdfs/2action.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+        "components/buttons"
+      ],
+      "closureCriteria": [
+        "Local PDF confirms Action Area, Button, Text Button, Icon Button, Chip, and Toggle Icon.",
+        "Extract any remaining WDS Action child sections.",
+        "Map each child to ActionArea, Button, TextButton, IconButton, Chip, ToggleIcon, ButtonGroup, SplitButton, Fab, SocialButton, or an explicit extension boundary.",
+        "Verify variant, size, icon slot, loading, disabled, focus, and dark-surface states."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): all six Action children map to ActionArea, Button, TextButton, IconButton, Chip, ToggleIcon with exact size parity (Button 48/40/32, TextButton 32/28, IconButton 40/32/28, Chip 40/36/32/24) and the Disable->disabled, Active->pressed/selected rule applied. Recorded LK deviations: no chromeless IconButton \"normal\"; TextButton icons via composition. Follow-ups: focus-visible styling evidence and ActionArea sticky/compact/divider-false story demos."
+    },
+    {
+      "id": "component-selection-input-section",
+      "wdsSource": "3 Component / 3 Selection and Input",
+      "figmaNodeId": "16215:30100",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/FormInput.stories.jsx",
+        "stories/FormTextarea.stories.jsx",
+        "stories/FormPasswordInput.stories.jsx",
+        "stories/FormInputGroup.stories.jsx",
+        "stories/FormAdvancedInputs.stories.jsx",
+        "stories/FormSelect.stories.jsx",
+        "stories/FormCheckbox.stories.jsx",
+        "stories/FormRadio.stories.jsx",
+        "stories/FormSearchAutocomplete.stories.jsx",
+        "stories/FormRangeControls.stories.jsx",
+        "stories/SelectionChips.stories.jsx",
+        "stories/SelectionSegmentedControl.stories.jsx",
+        "stories/SelectionToggleButton.stories.jsx",
+        "stories/SelectionStatus.stories.jsx",
+        "stories/SelectionSwitch.stories.jsx",
+        "docs/references/wds/source-screenshots/3selectionandinput.png",
+        "docs/references/wds/COMPONENT_SOURCE_SCREENSHOTS.json",
+        "components/forms/Checkbox.jsx",
+        "components/selection/ChoiceCard.jsx",
+        "components/forms",
+        "components/selection"
+      ],
+      "closureCriteria": [
+        "Use the source screenshot and local state matrices as section-level evidence for Textinput, Select, Control, Segmented Control, Check Mark, Switch, and Framed Style, but do not close parity until exact Figma child nodes are read.",
+        "Extract WDS input, textarea, select, checkbox, radio, check mark, switch, segmented control, framed style, chip, and card-selection child nodes.",
+        "Verify Textinput field status, size, height, icon slot, right-button slot, autocomplete, active/focus/disabled, helper/required/description, and resource examples.",
+        "Verify Select render mode, active/open, focus, status, disabled, heading, required, description, overflow, leading icon, preview, and resource examples.",
+        "Verify Control size, checked/unchecked/indeterminate, tight, label on/off, disabled, customization, interaction, and resource examples across Checkbox, Radio, Check Mark, and Switch.",
+        "Verify Segmented Control solid/outlined variants, small/medium/large sizes, icon variants, inactive/active/focus/active-focus compositions, and resource examples.",
+        "Verify Framed Style selected, disabled, normal/negative status, interaction normal/hovered/focused, radius, padding, shadow, and composed resource examples.",
+        "Classify DateTime, ColorSwatch, PinInput, and FileUpload as product extensions unless WDS source contains matching nodes."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): Textinput, Select, Control, Segmented Control, and Framed Style map to LDS props/stories axis-by-axis. Timer/Character Counter variants remain slot compositions; Android platform values are API-parity-only. DateTime/ColorSwatch/PinInput/FileUpload are confirmed absent from WDS sections, so their product-extension classification stands."
+    },
+    {
+      "id": "component-content-section",
+      "wdsSource": "3 Component / 4 Content",
+      "figmaNodeId": "16215:25192",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/Card.stories.jsx",
+        "stories/Content.stories.jsx",
+        "stories/ContentListsMedia.stories.jsx",
+        "stories/ContentMedia.stories.jsx",
+        "stories/ContentDisclosure.stories.jsx",
+        "stories/ContentBadgesAnnotations.stories.jsx",
+        "stories/Feedback.stories.jsx",
+        "assets/source/avatar/resource",
+        "docs/references/wds/source-pdfs/avatar-name.pdf",
+        "docs/references/wds/source-pdfs/content-card.pdf",
+        "docs/references/wds/source-pdfs/content-icon.pdf",
+        "docs/references/wds/source-pdfs/content-badge.pdf",
+        "docs/references/wds/source-pdfs/content-thumbnail.pdf",
+        "docs/references/wds/source-pdfs/content-list-cell.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+        "components/cards",
+        "components/content",
+        "components/feedback"
+      ],
+      "closureCriteria": [
+        "Extract WDS card, list cell, text, media, badge/tag, avatar, thumbnail, and disclosure examples.",
+        "Verify the user-provided Avatar PDF matrix for person/company/academy variants, size, placeholder, interaction, pushBadge, customize, and Avatar Group trailingContent against exact Figma child-node properties.",
+        "Verify the user-provided Avatar Resource placeholder and deactivate assets against exact Figma child-node properties.",
+        "Verify the user-provided Content Card PDF for thumbnailOverlay, caption, toggleIcon, extraCaption, topContent, bottomContent, skeleton, List Card leading/trailing content, width, and thumbnailAspectRatio.",
+        "Verify the user-provided Content Badge PDF for variant, icon, size, color, and accent customization axes.",
+        "Verify the user-provided Thumbnail PDF for all ratio presets plus radius and border toggles.",
+        "Verify the user-provided List Cell PDF for verticalPadding, verticalAlign, fillWidth, textEllipsis, divider, chevron, selected, disabled, interaction, leadingContent, and trailingContent axes.",
+        "Verify card/list density, thumbnail placement, action slots, title/subtitle/meta structure, and selected states.",
+        "Keep FeatureCard, NewsCard, SpecRow, ProductCard, statistics cards, and writing editor classified as LK Product Extension unless WDS has an equivalent source contract."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): Icon, Content Badge, Thumbnail (17 ratio presets exact), Avatar (sizes 24-56 exact), and List Cell (141 variants, px-exact padding) map axis-complete; Card covers platform/save/skeleton/top-bottom-content. Avatar \"Official/원티드\" badge variants are Wanted-brand assets intentionally excluded and LK-brand-replaced. Follow-ups: Card toggleIcon and third caption tier, thumbnailOverlay-inside-Card story."
+    },
+    {
+      "id": "component-loading-section",
+      "wdsSource": "3 Component / 5 Loading",
+      "figmaNodeId": "16215:24867",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/StatusSkeleton.stories.jsx",
+        "stories/StatusSpinner.stories.jsx",
+        "stories/ProductProgress.stories.jsx",
+        "stories/ProductMeter.stories.jsx",
+        "components/status/Skeleton.jsx",
+        "components/status/Spinner.jsx",
+        "components/status/ProgressBar.jsx",
+        "components/status/CircularProgress.jsx",
+        "docs/references/wds/source-pdfs/loading.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json"
+      ],
+      "closureCriteria": [
+        "Local PDF confirms Wanted loading, Circular loading, Skeleton Text length, Skeleton align, Rectangle customization, and Circle customization axes.",
+        "Extract WDS skeleton, spinner/loading, circular, and progress examples.",
+        "Verify size, determinate/indeterminate, label, empty/loading pairing, and reduced-motion behavior.",
+        "Map Meter to WDS only if the source includes the same semantic role; otherwise keep as product extension."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): Wanted/Circular loading, Skeleton Text Align x Color x Length, and rect/circle customize map to Skeleton/Spinner props with StatusSkeleton/StatusSpinner/StatusProgress evidence. The Animate=False static frame maps to prefers-reduced-motion handling; Meter remains a documented product extension."
+    },
+    {
+      "id": "component-navigation-section",
+      "wdsSource": "3 Component / 6 Navigation",
+      "figmaNodeId": "16215:20255",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/NavigationCompact.stories.jsx",
+        "stories/NavigationTabs.stories.jsx",
+        "docs/references/wds/source-pdfs/navigation-category.pdf",
+        "docs/references/wds/source-pdfs/navigation-tab.pdf",
+        "docs/references/wds/source-pdfs/navigation-page-indicator.pdf",
+        "docs/references/wds/source-pdfs/navigation-pagination.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+        "components/navigation/Category.jsx",
+        "components/navigation/PageIndicator.jsx",
+        "components/navigation/Tabs.jsx",
+        "components/navigation/Pagination.jsx"
+      ],
+      "closureCriteria": [
+        "Local PDFs confirm Category variant/size/padding/verticalPadding/scroll, Tab resize/size/padding/trailingIconButton/scroll, Page Indicator counter/size/alternative, and Pagination extended/compact/minimize plus slot controls.",
+        "The local snapshot proves the WDS Navigation node contains only Category, Tab, Page Indicator, and Pagination; top bar/footer/side navigation/stepper have no WDS source and are LK product extensions.",
+        "Verify hover-collapse behavior, mobile variants, route/selected states, badges, counters, and disabled/focus states.",
+        "Ensure LDS side navigation behavior follows WDS interaction guidance instead of an invented explicit close pattern."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): the WDS Navigation node contains exactly Category, Tab, Page Indicator, and Pagination, all mapped to LDS props with NavigationTabs/NavigationCompact evidence. TopBar, Footer, SideNav, Steps and related LDS components have no WDS counterpart and are recorded as product extensions; SideNav keeps hover-peek behavior without an invented explicit close pattern."
+    },
+    {
+      "id": "component-feedback-section",
+      "wdsSource": "3 Component / 7 Feedback",
+      "figmaNodeId": "16215:19283",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/FeedbackNotifications.stories.jsx",
+        "stories/OverlayConfirmDialog.stories.jsx",
+        "stories/OverlayConfirmAlert.stories.jsx",
+        "stories/OverlayModal.stories.jsx",
+        "stories/OverlayToast.stories.jsx",
+        "stories/StatusEmpty.stories.jsx",
+        "stories/StatusFeedback.stories.jsx",
+        "docs/references/wds/source-pdfs/feedback-toast.pdf",
+        "docs/references/wds/source-pdfs/feedback-snackbar.pdf",
+        "docs/references/wds/source-pdfs/feedback-alert.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+        "components/feedback",
+        "components/overlay",
+        "components/overlay/Snackbar.jsx",
+        "components/status",
+        "stories/OverlaySnackbar.stories.jsx"
+      ],
+      "closureCriteria": [
+        "Local PDFs confirm Toast severity/icon axes, Snackbar heading/description/icon/close/action axes, and Alert iOS/Android/web platform treatments.",
+        "Extract WDS alert, toast, snackbar, modal, confirm, empty, banner, callout, and notification examples.",
+        "Verify icon size alignment, severity color, title/body/action structure, close action, and timeout/persistent behavior.",
+        "Keep Snackbar represented as a separate LDS component/story unless WDS node-level reads prove it should collapse into Toast."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): Toast severity/leadingIcon/customize, Snackbar heading/description/icon/closeButton/action, and Alert platform x variant x heading map to LDS props with OverlayToast/OverlayConfirmAlert evidence. WDS keeps Snackbar as its own node, matching the separate LDS Snackbar. Alert platform treatments are proven at component level; the platform gallery story is a static visual reference."
+    },
+    {
+      "id": "component-presentation-section",
+      "wdsSource": "3 Component / 8 Presentation",
+      "figmaNodeId": "16215:17599",
+      "status": "confirmed-covered",
+      "localEvidence": [
+        "stories/OverlayPopover.stories.jsx",
+        "stories/OverlayHoverCard.stories.jsx",
+        "stories/OverlayDropdownMenu.stories.jsx",
+        "stories/OverlayDimmer.stories.jsx",
+        "stories/NavigationMenubar.stories.jsx",
+        "stories/ContentTooltip.stories.jsx",
+        "stories/ContentBubble.stories.jsx",
+        "stories/ActionBookmark.stories.jsx",
+        "scripts/check-tooltip-alignment.mjs",
+        "docs/references/wds/source-pdfs/presentation-tooltip.pdf",
+        "docs/references/wds/source-pdfs/presentation-menu.pdf",
+        "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+        "components/content/Tooltip.jsx",
+        "components/overlay/DropdownMenu.jsx",
+        "components/navigation/Menubar.jsx",
+        "components/overlay/Popover.jsx",
+        "components/overlay/HoverCard.jsx"
+      ],
+      "closureCriteria": [
+        "Local PDFs confirm Tooltip size/position/arrow alignment/shortcut axes and Menu normal/radio/checkbox/action-area/scroll/item-state axes.",
+        "Extract the three WDS Presentation child sections and exact component names.",
+        "Verify tooltip, menu, overlay, dimmer, anchored placement, keyboard/focus, and dismissal behavior.",
+        "Keep Lightbox and CommandPalette classified as product extensions unless WDS contains equivalent source nodes."
+      ],
+      "nextFigmaReads": [],
+      "closureNote": "Closed against the accepted local .fig snapshot (acceptance decision 2026-07-08): Tooltip Size x Position x Align + shortcut and Menu Variant x Padding x Active x Caption x Disable + actionArea/scroll map to Tooltip/DropdownMenu props with story coverage; check-tooltip-alignment.mjs enforces arrow alignment. The Presentation node contains only Tooltip and Menu, confirming Lightbox/CommandPalette/Popover/HoverCard as product extensions."
+    }
+  ]
+}

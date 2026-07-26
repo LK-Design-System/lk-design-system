@@ -1,0 +1,169 @@
+{
+  "slug": "core-components-status-spinner",
+  "title": "Spinner",
+  "storybookTitle": "LDS Core/Components/Status/Spinner",
+  "layer": "Core",
+  "family": "Status",
+  "primaryOwner": "Spinner",
+  "ownerComponents": [
+    "Spinner"
+  ],
+  "supportingComponents": [],
+  "purpose": "버튼·오버레이의 순간적 로딩에 적합합니다. 레이아웃 자리를 잡아야 하면 Skeleton을, 진행률을 보여 줄 수 있으면 Progress를 대신 쓰세요.",
+  "useWhen": [
+    "Use ProgressBar or CircularProgress when a value or completion percentage is known.",
+    "Motion respects prefers-reduced-motion. circular ring과 brand wave 모두 inline style로 animation이 붙으므로 reduced-motion 규칙은 animation:none!important로 선언되어 사용자 설정이 항상 이깁니다.",
+    "Spinner - loading indicator for unknown-duration work."
+  ],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "Optional visible status label."
+    }
+  ],
+  "properties": [
+    {
+      "name": "size",
+      "type": "number",
+      "required": false,
+      "description": "circular: diameter in px (@default 28). brand: wordmark cap height in px (@default 18).",
+      "owner": "SpinnerProps"
+    },
+    {
+      "name": "thickness",
+      "type": "number",
+      "required": false,
+      "description": "Ring thickness in px (circular only). Defaults to roughly size / 10.",
+      "owner": "SpinnerProps"
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "required": false,
+      "description": "Active arc color (circular only). @default signal ink",
+      "owner": "SpinnerProps"
+    },
+    {
+      "name": "variant",
+      "type": "\"circular\" | \"brand\"",
+      "required": false,
+      "description": "loading variant. brand rides the LK ROBOTICS wordmark on a wave. @default \"circular\"",
+      "owner": "SpinnerProps"
+    },
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional visible status label.",
+      "owner": "SpinnerProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "variant",
+      "rule": "loading variant. brand rides the LK ROBOTICS wordmark on a wave. @default \"circular\""
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "--color-semantic-fill-strong",
+      "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
+    },
+    {
+      "subject": "--color-semantic-label-normal",
+      "rule": "light: #171718; dark: #F7F7F7"
+    },
+    {
+      "subject": "--color-semantic-primary-normal",
+      "rule": "light: #3878B3; dark: #5390C9"
+    },
+    {
+      "subject": "--label1-size",
+      "rule": "{\"fontSize\":\"14px\",\"lineHeight\":\"20px\",\"letterSpacing\":\"0.0145em\"}"
+    }
+  ],
+  "responsive": [
+    "size: circular = ring diameter; brand = wordmark cap height."
+  ],
+  "contentGuidance": [
+    "label adds visible status text and lets assistive tech announce the loading state."
+  ],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Banner",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Callout",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "EmptyState",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Skeleton",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Spinner />\n<Spinner variant=\"brand\" size={22} />\n<Spinner size={18} label=\"불러오는 중\" />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-fill-strong",
+    "--color-semantic-label-normal",
+    "--color-semantic-primary-normal",
+    "--font-sans",
+    "--label1-size",
+    "--space-2-5"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/StatusSpinner.stories.jsx",
+    "entryStoryId": "lds-core-components-status-spinner--spinner-overview",
+    "publicStories": [
+      {
+        "id": "lds-core-components-status-spinner--spinner-overview",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

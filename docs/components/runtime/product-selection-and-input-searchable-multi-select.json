@@ -1,0 +1,379 @@
+{
+  "slug": "product-selection-and-input-searchable-multi-select",
+  "title": "Searchable Multi Select",
+  "storybookTitle": "LDS Product/Selection and Input/Searchable Multi Select",
+  "layer": "Product",
+  "family": "Selection and Input",
+  "primaryOwner": "SearchableMultiSelect",
+  "ownerComponents": [
+    "SearchableMultiSelect"
+  ],
+  "supportingComponents": [],
+  "purpose": "저장소·사용자처럼 항목이 많고 검색 후 복수 값을 chip으로 남겨야 할 때 적합합니다. 선택지가 적거나 하나만 고르면 Checkbox Group 또는 Select를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "Visible accessible name for the combobox."
+    },
+    {
+      "part": "helper",
+      "rule": "Supporting text linked to the combobox. Hidden when error is present."
+    }
+  ],
+  "properties": [
+    {
+      "name": "options",
+      "type": "SearchableMultiSelectOption[]",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "value",
+      "type": "Value[]",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "Value[]",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: Value[]) = void",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "searchValue",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "defaultSearchValue",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "onSearchChange",
+      "type": "(value: string) = void",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "filterOption",
+      "type": "(option: SearchableMultiSelectOption, search: string) = boolean",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Visible accessible name for the combobox.",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "helper",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Supporting text linked to the combobox. Hidden when error is present.",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "error",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "loadingLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "maxSelections",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "maxSelectionLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "SearchableMultiSelectProps"
+    },
+    {
+      "name": "readOnly",
+      "type": "boolean",
+      "required": false,
+      "description": "Keep the values focusable and readable while preventing search and selection changes.",
+      "owner": "SearchableMultiSelectProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "readOnly",
+      "rule": "Keep the values focusable and readable while preventing search and selection changes."
+    }
+  ],
+  "behavior": [
+    "async 검색은 searchValue와 onSearchChange로 앱이 제어합니다. 자유 입력 값 생성, select-all, 원격 요청 정책, 가상화는 이 컴포넌트의 범위가 아닙니다.",
+    "Select/Combobox: overlay surface, solid border, shadow-md, radius와 padding을 맞춥니다.",
+    "Chip/IconButton: 선택 값과 제거 action의 크기·radius·아이콘 처리를 재사용합니다.",
+    "Carbon Dropdown accessibility의 typing/Arrow/Enter/Escape 계약과 Space가 검색 text 입력으로 남아야 한다는 기준을 반영했습니다.",
+    "SearchableMultiSelect는 많은 관계 항목을 검색하고 여러 개 선택하는 LK Product Extension입니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Option 제목은 --body2-size(15px)와 --fw-medium(500)을 사용해 검색 입력보다 한 단계 낮추고, 설명은 caption 단계로 내립니다. 제목은 행의 왼쪽, 보조 설명은 오른쪽에 한 줄로 정렬하며, 좁은 폭이나 긴 문자열에서는 두 영역을 각각 말줄임해 행 높이와 스캔 축을 유지합니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "loading/empty는 option으로 위장하지 않습니다. combobox가 제어하는 빈 listbox는 유지하고, 보이는 안내는 그 옆의 표현 전용 notice로 분리합니다. 낭독은 컨트롤 루트의 상시 마운트된 숨김 status region이 담당합니다 — popup 안 notice는 메시지와 함께 삽입되어 live region으로는 신뢰성 있게 낭독되지 않기 때문입니다. 최대 선택 안내도 같은 region이 공지합니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "선택 항목은 field 안의 LDS Chip과 option의 check 상태에 함께 남습니다. 선택 뒤에도 popup을 유지하며, disabled option과 최대 수로 잠긴 option은 active descendant와 pointer selection에서 제외합니다."
+    },
+    {
+      "subject": "--body2-line",
+      "rule": "22px"
+    },
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    }
+  ],
+  "responsive": [
+    "Apple Lists and tables의 행 기반 스캔, 간결한 항목 문구, 좁은 폭에서 식별 가능한 말줄임 지침을 따라 제목·설명을 한 행의 양 끝에 두고 각각 독립적으로 overflow를 제한합니다."
+  ],
+  "contentGuidance": [
+    "label, helper, error, required는 Input/FormField와 같은 정보 계층을 사용합니다. error는 invalid styling과 한 개의 연결된 메시지를 제공하지만 검색이나 수정 자체를 막지 않습니다.",
+    "자유 입력 태그에는 TagInput을 사용합니다. 기존 Combobox는 검색이 필요 없는 소규모 다중 선택의 호환 API이며, 검색·비동기 데이터·설명·disabled option이 필요하면 SearchableMultiSelect를 사용합니다.",
+    "ListCell: leading title과 trailing metadata의 한 행 정보 계층을 참고하되, option 내부에는 별도 action이나 장식 요소를 추가하지 않습니다.",
+    "의도적인 차이는 editable 검색 input, multi-selection 유지, option 설명, async status뿐입니다. 별도 edge line, inset border, shadow, 색상 언어는 추가하지 않습니다."
+  ],
+  "accessibility": [
+    "DOM focus는 검색 input에 남고 방향키/Enter/Escape로 option을 탐색·선택합니다. Backspace는 검색어가 비었을 때 마지막 chip을 제거합니다. option은 Tab stop을 만들지 않으며 aria-activedescendant로 탐색합니다.",
+    "선택 chip의 명시적인 제거 버튼은 키보드 사용자를 위해 별도 Tab stop을 유지합니다. 제거 후에는 검색 input으로 focus가 돌아갑니다. 따라서 input을 \"유일한 Tab stop\"으로 설명하지 않습니다.",
+    "readOnly는 focus와 값 읽기를 유지하면서 검색·선택·chip 제거를 막고 popup을 열지 않습니다. disabled는 input과 action을 Tab 순서에서 제거합니다.",
+    "Input/FormField: label, helper/error, required mark, border, focus ring, disabled surface token을 재사용합니다.",
+    "WAI-ARIA Combobox pattern을 따라 DOM focus를 input에 유지하고 aria-expanded, aria-controls, aria-activedescendant, Escape/Enter/Arrow 계약을 연결합니다. Home/End는 input의 표준 텍스트 편집 동작을 보존합니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "ColorSwatch",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DatePicker",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DateRangeField",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FileUpload",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FileUploadQueue",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "IconPicker",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "NumberField",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "PinInput",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<SearchableMultiSelect\n  label=\"연결 저장소\"\n  helper=\"최대 3개까지 연결할 수 있습니다.\"\n  options={repositories}\n  value={selectedRepositoryIds}\n  onChange={setSelectedRepositoryIds}\n  loading={query.loading}\n/>"
+    }
+  ],
+  "tokens": [
+    "--body2-line",
+    "--body2-size",
+    "--caption1-line",
+    "--caption1-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-alternative",
+    "--color-semantic-fill-normal",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-normal-neutral",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-static-white",
+    "--color-semantic-status-negative-text",
+    "--component-input-bg",
+    "--component-input-border-color",
+    "--component-input-border-color-focus",
+    "--component-input-border-color-invalid",
+    "--component-input-border-width",
+    "--component-input-focus-shadow",
+    "--component-input-font-size",
+    "--component-input-height",
+    "--component-input-label-color",
+    "--component-input-label-font-size",
+    "--component-input-label-font-weight",
+    "--component-input-label-line-height",
+    "--component-input-line-height",
+    "--component-input-padding-x",
+    "--component-input-radius",
+    "--component-input-stack-gap",
+    "--component-input-text-color",
+    "--font-sans",
+    "--fw-medium",
+    "--label1-size",
+    "--radius-5",
+    "--radius-lg",
+    "--radius-md",
+    "--shadow-md",
+    "--space-0",
+    "--space-0-5",
+    "--space-1",
+    "--space-1-5",
+    "--space-2",
+    "--space-3",
+    "--space-4"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormSearchableMultiSelect.stories.jsx",
+    "entryStoryId": "lds-product-selection-and-input-searchable-multi-select--relation-selection",
+    "publicStories": [
+      {
+        "id": "lds-product-selection-and-input-searchable-multi-select--relation-selection",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-selection-and-input-searchable-multi-select--opened-selection",
+        "name": "사용법 · 선택 유지와 열린 항목 목록",
+        "role": "usage"
+      },
+      {
+        "id": "lds-product-selection-and-input-searchable-multi-select--resource-states",
+        "name": "변형·상태 · 불러오기 · 오류 · 빈 결과와 최대 선택",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-selection-and-input-searchable-multi-select--disabled-option-navigation",
+        "name": "변형·상태 · 비활성 항목 건너뛰기",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-selection-and-input-searchable-multi-select--keyboard-selection-contract",
+        "name": "상호작용 · 키보드 선택과 제거",
+        "role": "interaction"
+      },
+      {
+        "id": "lds-product-selection-and-input-searchable-multi-select--option-row-alignment",
+        "name": "반응형 · 옵션 제목과 설명 정렬",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-selection-and-input-searchable-multi-select--mobile-width",
+        "name": "반응형 · 좁은 폭과 읽기 전용",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

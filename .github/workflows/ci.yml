@@ -1,0 +1,219 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      export_dist:
+        description: Build on Windows and upload the canonical generated artifacts.
+        type: boolean
+        default: false
+      export_visual_baseline:
+        description: Capture and upload the canonical Windows visual baselines.
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  conformance-linux:
+    name: Conformance fixtures (Linux)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 22.17.1
+
+      - name: Verify portable Robotics and LDS3D style diagnostics
+        run: node packages/conformance/src/cli.mjs verify-fixtures
+
+  export-canonical-dist:
+    name: Export canonical Windows artifacts
+    if: ${{ github.event_name == 'workflow_dispatch' && (inputs.export_dist == true || inputs.export_visual_baseline == true) }}
+    runs-on: windows-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 22.17.1
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser for visual capture
+        if: ${{ inputs.export_visual_baseline == true }}
+        run: npm exec -- playwright install chromium
+
+      - name: Build generated artifacts on the canonical platform
+        run: npm run build
+
+      - name: Upload canonical generated artifacts
+        if: ${{ inputs.export_dist == true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: canonical-windows-generated
+          path: |
+            dist
+            src
+            packages/core/src
+            packages/core/tokens
+            packages/core/assets
+            packages/core/styles.css
+            packages/theme/src
+            packages/theme/tokens
+            packages/theme/assets
+            packages/theme/styles.css
+            packages/product/src
+            packages/product/tokens
+            packages/product/assets
+            packages/product/styles.css
+            packages/compat/src
+            packages/compat/tokens
+            packages/compat/assets
+            packages/compat/styles.css
+          if-no-files-found: error
+
+      - name: Capture visual baselines on the canonical platform
+        if: ${{ inputs.export_visual_baseline == true }}
+        run: npm run update:visual-baseline
+
+      - name: Upload canonical visual baselines
+        if: ${{ inputs.export_visual_baseline == true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: canonical-windows-visual-baselines
+          path: visual-baselines/smoke
+          if-no-files-found: error
+
+  design-system:
+    name: Design system checks
+    # Generated artifacts (src/index ordering via Intl, dist, visual-smoke
+    # baselines) are produced on Windows, so run checks on Windows to keep them
+    # reproducible. Matches the Storybook Pages deploy workflow.
+    runs-on: windows-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.0
+        with:
+          # Migration provenance and clean-main baselines verify commit/tag ancestry.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 22.17.1
+          cache: npm
+
+      - name: Verify canonical runtime
+        run: |
+          if ((node --version) -ne 'v22.17.1') {
+            throw 'Expected Node 22.17.1.'
+          }
+          if ((npm --version) -ne '10.9.2') {
+            throw 'Expected npm 10.9.2.'
+          }
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        # The color-contrast and visual-smoke checks launch Chromium explicitly.
+        run: npm exec -- playwright install chromium
+
+      - name: Build, typecheck, and Storybook
+        # check:ci == check minus check:storybook-ia. The IA audit gate requires
+        # per-page human review, which can't run in automated CI; it stays a
+        # local/manual curation step (npm run check:storybook-ia). Immutable
+        # Wave 0 evidence is verified separately inside check:fast.
+        run: npm run check:ci
+
+      - name: Runtime dependency audit
+        run: npm run check:audit
+
+      - name: Build verified workspace package set
+        # The canonical npm 10 runner did not forward CLI arguments after `--`,
+        # so CI uses fully specified package scripts for artifact handoff.
+        run: npm run check:pack:ci
+
+      - name: Consume workspace package set on Windows
+        run: npm run check:workspace-consumer:windows
+
+      - name: Upload workspace package set
+        uses: actions/upload-artifact@v4
+        with:
+          name: workspace-package-set-windows
+          if-no-files-found: error
+          path: |
+            visual-artifacts/workspace-package-set/package-set.json
+            visual-artifacts/workspace-package-set/tarballs/*.tgz
+
+      - name: Upload Windows workspace consumer report
+        uses: actions/upload-artifact@v4
+        with:
+          name: workspace-consumer-windows-report
+          if-no-files-found: error
+          path: visual-artifacts/workspace-consumer-matrix/windows.json
+
+  workspace-consumer-linux:
+    name: Linux workspace package consumers
+    needs: design-system
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 22.17.1
+          cache: npm
+
+      - name: Verify matrix runtime
+        run: |
+          test "$(node --version)" = 'v22.17.1'
+          test "$(npm --version)" = '10.9.2'
+
+      - name: Download verified Windows package set
+        uses: actions/download-artifact@v5
+        with:
+          name: workspace-package-set-windows
+          path: visual-artifacts/workspace-package-set
+
+      - name: Install isolated consumer verifier toolchain
+        run: |
+          npm ci --prefix scripts/fixtures/workspace-consumer-toolchain --ignore-scripts --no-audit --no-fund
+          ln -s "$PWD/scripts/fixtures/workspace-consumer-toolchain/node_modules" node_modules
+
+      - name: Consume the same workspace package set on Linux
+        run: npm run check:workspace-consumer:linux
+
+      - name: Upload Linux workspace consumer report
+        uses: actions/upload-artifact@v4
+        with:
+          name: workspace-consumer-linux-report
+          if-no-files-found: error
+          path: visual-artifacts/workspace-consumer-matrix/linux.json

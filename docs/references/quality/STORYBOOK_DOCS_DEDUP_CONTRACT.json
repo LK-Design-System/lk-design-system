@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "expected": {
+    "stories": 541,
+    "docs": 169,
+    "publicStories": 386,
+    "hiddenStories": 155,
+    "storyIdsSha256": "6bb9bd6364de6d91e4318dda0a06b7d411254045ad9bf4b45043795216a2f80f",
+    "visibilitySha256": "e43c3f42f8cec54443e89157e80b5dfc81b726d38460da83ed3d6613abf9476d"
+  },
+  "allowedGuideOmissions": [],
+  "canonicalDocs": [
+    {
+      "sourceId": "lds-theme-status-brand-spinner--docs",
+      "targetId": "lds-core-components-status-spinner--docs"
+    },
+    {
+      "sourceId": "lds-product-layout-dashboard-shell--docs",
+      "targetId": "lds-product-navigation-dashboard-navigation--docs"
+    }
+  ],
+  "representativeCanvas": [
+    {
+      "mode": "controlled",
+      "storyId": "lds-product-communication-message-composer--message-composer-overview",
+      "arg": "value",
+      "control": "value",
+      "updatedValue": "Storybook controlled arg update",
+      "rendered": {
+        "selector": "[data-composer-input]",
+        "property": "value"
+      },
+      "play": true
+    },
+    {
+      "mode": "uncontrolled",
+      "storyId": "lds-product-content-source-disclosure--collapsible-citation",
+      "arg": "title",
+      "control": "title",
+      "updatedValue": "Runtime sources · 출처",
+      "rendered": {
+        "selector": "button.lk-source-disclosure__toggle",
+        "includes": true
+      },
+      "play": true
+    }
+  ]
+}

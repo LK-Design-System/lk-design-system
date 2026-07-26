@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lk-robotics.github.io/schemas/lds-wave3-go-no-go.schema.json",
+  "title": "LDS Wave 3 robotics repository separation decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "kind", "evaluatedAt", "decision", "source", "criteria", "signOff", "nextReview"],
+  "properties": {
+    "$schema": { "const": "./WAVE3_GO_NO_GO.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "kind": { "const": "lds-wave3-robotics-repository-decision" },
+    "evaluatedAt": { "type": "string", "format": "date-time" },
+    "decision": { "const": "no-go-keep-robotics-ui-in-lk-design-system" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["plan", "releaseEvidence", "lds3dEvidence"],
+      "properties": {
+        "plan": { "const": "docs/PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md#wave-3--robotics-" },
+        "releaseEvidence": { "const": "docs/references/package-split/releases/WAVE2_RC_0.1.0-rc.0.json" },
+        "lds3dEvidence": { "const": "docs/references/package-split/consumers/lds3d-docs-wave2-rc.json" }
+      }
+    },
+    "criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status", "evidence"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["met", "not-met", "partially-met"] },
+          "evidence": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "signOff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authority", "source"],
+      "properties": {
+        "authority": { "const": "design-system-owner" },
+        "source": { "type": "string", "minLength": 1 }
+      }
+    },
+    "nextReview": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+  }
+}

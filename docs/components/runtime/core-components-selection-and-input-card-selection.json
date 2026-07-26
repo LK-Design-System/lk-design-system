@@ -1,0 +1,284 @@
+{
+  "slug": "core-components-selection-and-input-card-selection",
+  "title": "Card Selection",
+  "storybookTitle": "LDS Core/Components/Selection and Input/Card Selection",
+  "layer": "Core",
+  "family": "Selection and Input",
+  "primaryOwner": "ChoiceCard",
+  "ownerComponents": [
+    "ChoiceCard"
+  ],
+  "supportingComponents": [
+    "Icon"
+  ],
+  "purpose": "제목, 설명, 아이콘을 함께 읽어야 올바른 결정을 할 수 있는 플랜·구성 선택에 적합합니다. 짧은 라벨만으로 비교할 수 있다면 이 카드 대신 Radio나 Checkbox가 더 간결합니다.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "inputValue",
+      "rule": "Native form value associated with this option."
+    }
+  ],
+  "properties": [
+    {
+      "name": "selected",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "multiple",
+      "type": "boolean",
+      "required": false,
+      "description": "Uses native checkbox semantics instead of radio semantics.",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "onSelect",
+      "type": "(next: boolean) = void",
+      "required": false,
+      "description": "Called with true for a radio choice, or the next checked state for a checkbox choice.",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "Shared native radio-group name. Required for related single-select cards.",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "inputValue",
+      "type": "string",
+      "required": false,
+      "description": "Native form value associated with this option.",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "inputProps",
+      "type": "Omit, 'type' | 'checked' | 'disabled' | 'name' | 'value'",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "description",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "presentation",
+      "type": "'choice' | 'frame'",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "status",
+      "type": "'normal' | 'negative'",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "interaction",
+      "type": "'normal' | 'hovered' | 'focused'",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "radius",
+      "type": "'sm' | 'md' | 'lg' | 'xl'",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "padding",
+      "type": "'sm' | 'md' | 'lg' | 'xl'",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "shadow",
+      "type": "'none' | 'xs' | 'sm' | 'md' | 'lg'",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "showIndicator",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ChoiceCardProps"
+    }
+  ],
+  "states": [],
+  "behavior": [
+    "Selection semantics and reference basis."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "이름과 설명 분리 — 내부 input은 더 이상 aria-label={title}로 감싼 을 덮어쓰지 않습니다. title 요소가 aria-labelledby로 이름을 제공하고, description은 aria-describedby 힌트로 연결됩니다(GOV.UK hint 관례). 이전에는 aria-label={title}이 전체 텍스트를 덮어써 description이 이름에도 설명에도 도달하지 못했고, title이 문자열이 아니면 이름 자체가 사라졌습니다. 지금은 요소 id를 참조하므로 title이 ReactNode여도 동작합니다."
+    },
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-fill-normal",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    }
+  ],
+  "responsive": [
+    "The single-select indicator is a radio dot; the multi-select indicator is a check mark. Titles, descriptions, and indicators must remain readable at narrow widths."
+  ],
+  "contentGuidance": [
+    "선택된 카드가 비활성화되어도 checked 상태는 사라지지 않습니다. native Radio와 같은 규칙으로 primary border/fill/icon/text를 제거하고, 중립 frame과 비활성 전경·중심 점 또는 check만 남겨 현재 값과 사용 불가 상태를 동시에 전달합니다.",
+    "title/description/icon은 표준 레이아웃; 완전히 커스텀하려면 그 대신 children을 전달. multiple이면 인디케이터가 체크박스 사각형으로 바뀜(기본은 원형 라디오). 옵션 그리드/설정 선택에.",
+    "inputValue — 내부 input의 value. inputProps — 내부 input에 전달할 표준 속성(type·checked·name·value 등 예약 속성 제외).",
+    "형제 비교: Radio는 disabled+checked에서 중립 표면과 비활성 중심 점을 유지하고, Checkbox도 primary 대신 중립 checked 채움을 사용합니다. ChoiceCard는 이 규칙을 카드 border, 아이콘, 제목/설명, trailing indicator 전체에 일관되게 확장합니다."
+  ],
+  "accessibility": [
+    "Interactive single-select cards contain native radios and share name; clicking an already selected card does not clear the group. multiple cards contain native checkboxes and toggle independently. Static cards without a handler do not enter the tab order or claim selection roles.",
+    "Native choice cards do not invent an Enter shortcut: Space changes the focused radio/checkbox and radio groups use the browser's native arrow-key behavior. A consumer that intentionally supplies a non-native custom selection role owns its separate Enter/Space contract.",
+    "Reference basis: WAI-ARIA Radio Group pattern, GOV.UK Checkboxes, and Carbon Tile accessibility.",
+    "ChoiceCard — 선택형 프레임 옵션 타일. 선택 시 애저 링 + 틴트로 강조되는 라디오(단일) 또는 체크박스(multiple, 다중) 선택 카드. 포인터 클릭과 native radio/checkbox의 Space 입력으로 선택합니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Card",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<ChoiceCard title=\"기본 플랜\" description=\"표준 설정으로 시작\" icon={<Icon name=\"document\" />}\n  selected={plan === 'basic'} onSelect={() => setPlan('basic')} />\n<ChoiceCard multiple title=\"검토 포함\" selected={opts.review} onSelect={(v) => setOpt('review', v)} />"
+    }
+  ],
+  "tokens": [
+    "--body2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-normal",
+    "--color-semantic-focus-ring",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-label-strong",
+    "--color-semantic-line-normal-neutral",
+    "--color-semantic-line-normal-normal",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-primary-surface-normal",
+    "--color-semantic-primary-surface-strong",
+    "--color-semantic-static-white",
+    "--color-semantic-status-negative",
+    "--dur-fast",
+    "--ease-out",
+    "--fw-bold",
+    "--label2-size",
+    "--radius-frame-lg",
+    "--radius-frame-md",
+    "--radius-frame-sm",
+    "--radius-frame-xl",
+    "--radius-sm",
+    "--radius-xl",
+    "--shadow-lg",
+    "--shadow-md",
+    "--shadow-sm",
+    "--shadow-xs",
+    "--space-1",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--space-6"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/SelectionStatus.stories.jsx",
+    "entryStoryId": "lds-core-components-selection-and-input-card-selection--choice-cards",
+    "publicStories": [
+      {
+        "id": "lds-core-components-selection-and-input-card-selection--choice-cards",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 4
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

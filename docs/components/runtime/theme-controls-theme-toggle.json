@@ -1,0 +1,174 @@
+{
+  "slug": "theme-controls-theme-toggle",
+  "title": "Theme Toggle",
+  "storybookTitle": "LDS Theme/Controls/Theme Toggle",
+  "layer": "Theme",
+  "family": "Controls",
+  "primaryOwner": "ThemeToggle",
+  "ownerComponents": [
+    "ThemeToggle"
+  ],
+  "supportingComponents": [],
+  "purpose": "사용자에게 명시적인 appearance 선택권을 제공하는 설정 표면에 적합합니다. 단순 장식 전환이나 일시적인 상태 표시에는 사용하지 않으며, 테마 변경 뒤에도 레이블·포커스·선택 상태가 분명해야 합니다.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "showLabels",
+      "rule": "각 아이콘 옆에 텍스트 라벨 표시. @default true"
+    }
+  ],
+  "properties": [
+    {
+      "name": "target",
+      "type": "HTMLElement | string | null",
+      "required": false,
+      "description": "[data-theme]를 설정할 요소(또는 CSS 셀렉터). null = 변경만 보고하고 DOM은 건드리지 않음. @default document.documentElement",
+      "owner": "ThemeToggleProps"
+    },
+    {
+      "name": "storageKey",
+      "type": "string",
+      "required": false,
+      "description": "선택을 저장하는 데 쓰는 localStorage 키. @default \"lk-theme\"",
+      "owner": "ThemeToggleProps"
+    },
+    {
+      "name": "options",
+      "type": "ThemeMode[]",
+      "required": false,
+      "description": "제공할 모드(순서대로). @default [\"light\",\"dark\",\"auto\"]",
+      "owner": "ThemeToggleProps"
+    },
+    {
+      "name": "value",
+      "type": "ThemeMode",
+      "required": false,
+      "description": "제어되는 값.",
+      "owner": "ThemeToggleProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "ThemeMode",
+      "required": false,
+      "description": "비제어 시 초기 값(저장된 선택이 있으면 우선). @default \"light\"",
+      "owner": "ThemeToggleProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(theme: ThemeMode) = void",
+      "required": false,
+      "description": "선택된 모드와 함께 호출.",
+      "owner": "ThemeToggleProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "",
+      "owner": "ThemeToggleProps"
+    },
+    {
+      "name": "showLabels",
+      "type": "boolean",
+      "required": false,
+      "description": "각 아이콘 옆에 텍스트 라벨 표시. @default true",
+      "owner": "ThemeToggleProps"
+    },
+    {
+      "name": "persist",
+      "type": "boolean",
+      "required": false,
+      "description": "선택을 localStorage에 저장(그리고 마운트 시 복원). @default true",
+      "owner": "ThemeToggleProps"
+    }
+  ],
+  "states": [],
+  "behavior": [
+    "테마를 구동하는 세그먼트형 Light / Dark / Auto 스위치. 대상 요소(기본 )에 [data-theme]를 설정하고 선택을 localStorage에 저장해, 어떤 페이지든 그 자리에서 테마를 바꿀 수 있습니다; auto는 OS를 따릅니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-fill-normal",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    },
+    {
+      "subject": "--color-semantic-label-alternative",
+      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+    },
+    {
+      "subject": "--color-semantic-line-normal-normal",
+      "rule": "light: rgba(112, 115, 124, 0.22); dark: rgba(112, 115, 124, 0.32)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "// 페이지 전체를 구동하고 선택을 기억:\n<ThemeToggle defaultValue=\"light\" />\n\n// 한 영역만 테마링, 제어형:\n<ThemeToggle target=\"#preview\" value={mode} onChange={setMode} showLabels={false} size=\"sm\" />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-normal",
+    "--color-semantic-label-alternative",
+    "--color-semantic-line-normal-normal",
+    "--color-semantic-primary-normal",
+    "--component-button-transition",
+    "--font-sans",
+    "--fw-bold",
+    "--radius-pill",
+    "--shadow-xs",
+    "--space-1"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/SelectionThemeToggle.stories.jsx",
+    "entryStoryId": "lds-theme-controls-theme-toggle--theme-toggle-pattern",
+    "publicStories": [
+      {
+        "id": "lds-theme-controls-theme-toggle--theme-toggle-pattern",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "omitted-no-evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

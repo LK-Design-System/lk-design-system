@@ -1,0 +1,216 @@
+{
+  "$schema": "../WAVE0_CONSUMER_MATRIX.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-wave0-consumer-matrix",
+  "capturedAt": "2026-07-19T00:55:26.368Z",
+  "repository": "LK-ROBOTICS/lk-design-system",
+  "sourceCommit": "679859bc8b5126bcff7146eaedd871bbe9e62891",
+  "sourceTag": "wave0-baseline-2026-07-19-r2",
+  "status": "passed",
+  "inputs": {
+    "fullCheck": {
+      "path": "docs/references/package-split/baselines/WAVE0_FULL_CHECK.json",
+      "sha256": "b8fb984d5c835165e62fccb61ce771c9a632240d5daec0661a73cff6bc582e6c"
+    },
+    "packageArtifact": {
+      "path": "docs/references/package-split/baselines/WAVE0_AGGREGATE_ARTIFACT.json",
+      "sha256": "2a2081a1e412078ab02052bc6897469848a16e6e7f3f3d6f4bbfe188464c222e",
+      "package": "@lk-robotics/design-system-core",
+      "version": "0.1.0",
+      "sizeBytes": 8298810,
+      "tarballSha256": "05793cf99682a4d36e27d40aba1173666ba84702a8e7187542a7fbc1b876a8b4"
+    }
+  },
+  "thresholds": {
+    "maxTarballBytes": 8388608,
+    "maxSelectedButtonBytes": 153600
+  },
+  "platformRuns": [
+    {
+      "schemaVersion": 1,
+      "kind": "lds-wave0-consumer-platform-run",
+      "capturedAt": "2026-07-19T00:52:58.474Z",
+      "sourceCommit": "679859bc8b5126bcff7146eaedd871bbe9e62891",
+      "sourceTag": "wave0-baseline-2026-07-19-r2",
+      "platform": "windows",
+      "arch": "x64",
+      "node": "22.17.1",
+      "npm": "10.9.2",
+      "command": "npm run capture:consumer:matrix",
+      "status": "passed",
+      "tarball": {
+        "package": "@lk-robotics/design-system-core",
+        "version": "0.1.0",
+        "sizeBytes": 8298810,
+        "sha256": "05793cf99682a4d36e27d40aba1173666ba84702a8e7187542a7fbc1b876a8b4"
+      },
+      "checks": {
+        "tarballInstall": "passed",
+        "ssr": "passed",
+        "treeShaking": "passed",
+        "consumerBundle": "passed",
+        "browser": "passed"
+      },
+      "consumers": [
+        {
+          "id": "React 18",
+          "reactVersion": "18.3.1",
+          "reactDomVersion": "18.3.1",
+          "status": "passed",
+          "cjs": "passed",
+          "ssr": "passed",
+          "viteBuild": "passed",
+          "browser": "passed",
+          "resolution": {
+            "react": "node_modules/react/index.js",
+            "reactDom": "node_modules/react-dom/index.js",
+            "package": "node_modules/@lk-robotics/design-system-core/dist/index.cjs"
+          },
+          "bundles": {
+            "selectedButtonBytes": 12167,
+            "selectedInputCount": 4,
+            "namespaceBytes": 1264524,
+            "namespaceInputCount": 224,
+            "consumerJavaScriptBytes": 689252
+          }
+        },
+        {
+          "id": "React 19",
+          "reactVersion": "19.2.3",
+          "reactDomVersion": "19.2.3",
+          "status": "passed",
+          "cjs": "passed",
+          "ssr": "passed",
+          "viteBuild": "passed",
+          "browser": "passed",
+          "resolution": {
+            "react": "node_modules/react/index.js",
+            "reactDom": "node_modules/react-dom/index.js",
+            "package": "node_modules/@lk-robotics/design-system-core/dist/index.cjs"
+          },
+          "bundles": {
+            "selectedButtonBytes": 12167,
+            "selectedInputCount": 4,
+            "namespaceBytes": 1264524,
+            "namespaceInputCount": 224,
+            "consumerJavaScriptBytes": 739018
+          }
+        }
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "kind": "lds-wave0-consumer-platform-run",
+      "capturedAt": "2026-07-19T00:55:05.213Z",
+      "sourceCommit": "679859bc8b5126bcff7146eaedd871bbe9e62891",
+      "sourceTag": "wave0-baseline-2026-07-19-r2",
+      "platform": "linux",
+      "arch": "x64",
+      "node": "22.17.1",
+      "npm": "10.9.2",
+      "command": "npm run capture:consumer:matrix",
+      "status": "passed",
+      "tarball": {
+        "package": "@lk-robotics/design-system-core",
+        "version": "0.1.0",
+        "sizeBytes": 8298810,
+        "sha256": "05793cf99682a4d36e27d40aba1173666ba84702a8e7187542a7fbc1b876a8b4"
+      },
+      "checks": {
+        "tarballInstall": "passed",
+        "ssr": "passed",
+        "treeShaking": "passed",
+        "consumerBundle": "passed",
+        "browser": "not-run"
+      },
+      "consumers": [
+        {
+          "id": "React 18",
+          "reactVersion": "18.3.1",
+          "reactDomVersion": "18.3.1",
+          "status": "passed",
+          "cjs": "passed",
+          "ssr": "passed",
+          "viteBuild": "passed",
+          "browser": "not-run",
+          "resolution": {
+            "react": "node_modules/react/index.js",
+            "reactDom": "node_modules/react-dom/index.js",
+            "package": "node_modules/@lk-robotics/design-system-core/dist/index.cjs"
+          },
+          "bundles": {
+            "selectedButtonBytes": 12167,
+            "selectedInputCount": 4,
+            "namespaceBytes": 1264524,
+            "namespaceInputCount": 224,
+            "consumerJavaScriptBytes": 689252
+          }
+        },
+        {
+          "id": "React 19",
+          "reactVersion": "19.2.3",
+          "reactDomVersion": "19.2.3",
+          "status": "passed",
+          "cjs": "passed",
+          "ssr": "passed",
+          "viteBuild": "passed",
+          "browser": "not-run",
+          "resolution": {
+            "react": "node_modules/react/index.js",
+            "reactDom": "node_modules/react-dom/index.js",
+            "package": "node_modules/@lk-robotics/design-system-core/dist/index.cjs"
+          },
+          "bundles": {
+            "selectedButtonBytes": 12167,
+            "selectedInputCount": 4,
+            "namespaceBytes": 1264524,
+            "namespaceInputCount": 224,
+            "consumerJavaScriptBytes": 739018
+          }
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "id": "React 18",
+      "status": "passed",
+      "evidence": "isolated React tarball consumer platform runs"
+    },
+    {
+      "id": "React 19",
+      "status": "passed",
+      "evidence": "isolated React tarball consumer platform runs"
+    },
+    {
+      "id": "SSR",
+      "status": "passed",
+      "evidence": "isolated React tarball consumer platform runs"
+    },
+    {
+      "id": "tree-shaking",
+      "status": "passed",
+      "evidence": "isolated React tarball consumer platform runs"
+    },
+    {
+      "id": "Windows",
+      "status": "passed",
+      "evidence": "isolated React tarball consumer platform runs"
+    },
+    {
+      "id": "Linux",
+      "status": "passed",
+      "evidence": "isolated React tarball consumer platform runs"
+    },
+    {
+      "id": "Storybook visual",
+      "status": "passed",
+      "evidence": "canonical Windows npm run check"
+    },
+    {
+      "id": "tarball and consumer bundle size",
+      "status": "passed",
+      "evidence": "canonical tarball plus isolated Vite consumer bundle measurements"
+    }
+  ]
+}

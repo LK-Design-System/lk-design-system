@@ -1,0 +1,280 @@
+{
+  "slug": "product-content-product-card",
+  "title": "Product Card",
+  "storybookTitle": "LDS Product/Content/Product Card",
+  "layer": "Product",
+  "family": "Content",
+  "primaryOwner": "ProductCard",
+  "ownerComponents": [
+    "ProductCard"
+  ],
+  "supportingComponents": [],
+  "purpose": "제품 ID·핵심 설명을 한 단위로 묶어 카탈로그형 선택을 지원할 때 적합합니다. 제품군 자체가 선택 기준인 혼합 목록에서만 선택적으로 카테고리를 보완하고, 상세 제원 비교나 상태 모니터링에는 ProductCard 대신 Spec Row가 있는 상세 패널이나 상태 전용 패턴을 사용하세요.",
+  "useWhen": [
+    "Carbon Tile은 관련 정보를 짧고 소화 가능한 단위로 묶고, 카드별 정보 위계는 실제 사용 사례에 맞춰 결정하도록 안내합니다. LDS는 고정 비율 제품 카드에서 중복 분류보다 제품 코드와 핵심 설명을 우선합니다."
+  ],
+  "avoidWhen": [
+    "해상도 정책 — 원본의 권장 비율은 3:2지만 4:3·16:9·세로 이미지도 허용합니다. 최대 480px 폭 카드의 2x DPR을 기준으로 기본 후보는 최소 960×640px를 권장하고, 더 넓은 배치에는 imageSrcSet과 소비자 레이아웃에 맞는 imageSizes를 함께 제공합니다. 작은 원본을 강제로 확대해 선명도를 보정하지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "description",
+      "rule": "짧은 설명 줄."
+    }
+  ],
+  "properties": [
+    {
+      "name": "id",
+      "type": "string",
+      "required": false,
+      "description": "제목(heading)으로 표시되는 제품 코드(예: \"LKR-CP\"). 링크의 접근 가능한 이름도 이 값입니다. 주의 — 이 prop은 DOM id 속성으로 전달되지 않습니다. 카드를 DOM에서 지목해야 하면 data- 속성을 쓰거나 카드를 감싸는 래퍼에 id를 주세요.",
+      "owner": "ProductCardProps"
+    },
+    {
+      "name": "category",
+      "type": "string",
+      "required": false,
+      "description": "선택형 카테고리 이브로우(예: \"Patrol & Cleaning Robot\"). 기본 카드에서는 생략하고, 서로 다른 제품군이 한 목록에 섞여 분류가 선택에 영향을 줄 때만 보완 정보로 사용합니다.",
+      "owner": "ProductCardProps"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "짧은 설명 줄.",
+      "owner": "ProductCardProps"
+    },
+    {
+      "name": "image",
+      "type": "string",
+      "required": false,
+      "description": "제품 사진 URL — 선택한 비율의 카드 전체를 채우고 하단 가독성 스크림 아래에 놓입니다.",
+      "owner": "ProductCardProps"
+    },
+    {
+      "name": "ratio",
+      "type": "number | string",
+      "required": false,
+      "description": "카드 자체의 가로/세로 비율. LDS ratio preset(\"3/2\", \"1/1\", \"4/5\" 등), 숫자 또는 CSS aspect-ratio 문자열을 받습니다. @default \"3/2\"",
+      "owner": "ProductCardProps"
+    },
+    {
+      "name": "imageFit",
+      "type": "'cover' | 'contain'",
+      "required": false,
+      "description": "사진 배치 방식. cover는 프레임을 채우고 초점 밖을 자르며, contain은 컷아웃·기술 이미지의 전체 형상을 24px 안전 여백 안에 보존합니다.",
+      "owner": "ProductCardProps"
+    },
+    {
+      "name": "imagePosition",
+      "type": "string",
+      "required": false,
+      "description": "사진 초점(object-position). cover crop에서 피사체 위치를 튜닝합니다. @default \"50% 30%\"",
+      "owner": "ProductCardProps"
+    },
+    {
+      "name": "imageSrcSet",
+      "type": "string",
+      "required": false,
+      "description": "반응형 이미지 후보. 으로 전달됩니다.",
+      "owner": "ProductCardProps"
+    },
+    {
+      "name": "imageSizes",
+      "type": "string",
+      "required": false,
+      "description": "imageSrcSet 후보의 예상 표시 폭. 로 전달됩니다.",
+      "owner": "ProductCardProps"
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "required": false,
+      "description": "링크 대상. @default \"\"",
+      "owner": "ProductCardProps"
+    },
+    {
+      "name": "cta",
+      "type": "string",
+      "required": false,
+      "description": "우하단 소형 라벨(12.5px). 기본은 없음 — 균질한 제품 그리드에선 카드=링크 관례가 어포던스이고, 행동 유도는 섹션 헤더로 승격. 개별 유도가 필요한 맥락에서만 지정.",
+      "owner": "ProductCardProps"
+    },
+    {
+      "name": "headingLevel",
+      "type": "1 | 2 | 3 | 4 | 5 | 6 | false",
+      "required": false,
+      "description": "제품 코드(id)의 heading 레벨. 카탈로그가 놓인 문서 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 false로 끕니다. @default 3",
+      "owner": "ProductCardProps"
+    }
+  ],
+  "states": [],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "제품 코드는 실제 heading — id는 headingLevel(기본 3)로 렌더됩니다. 카탈로그가 놓인 문서 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false}로 heading 의미를 끕니다. 레벨은 건너뛰지 않습니다(WCAG 1.3.1)."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "이미지 톤 — 사진 위 네이비 그레이드는 상단 6%에서 하단 18%까지만 적용해 서로 다른 제품 사진의 색조를 LDS 무대로 가볍게 묶되 원본 대비를 과도하게 죽이지 않습니다. 이미지 밝기 보정은 1.03입니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "가독성 스크림 — 스크림은 카드 전체 높이에 비례해 늘어나지 않고 하단에 고정됩니다. 짧은 가로형에서는 카드 높이의 84%, 그보다 큰 정사각·세로형에서는 space-32 + space-28(240px)까지만 사용합니다. 램프는 상단 투명, 28% 지점 12%, 58% 지점 72%, 하단은 scrim-dark 토큰의 원래 강도입니다. 제목은 inverse 100%, 설명·선택형 카테고리·기본 CTA는 inverse-label-strong-soft 92%입니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "패딩 — 콘텐츠는 모든 폭에서 space-6(24px), 제목·설명 사이는 space-2(8px), 선택형 카테고리·제목 사이는 space-1(4px)을 사용합니다. 고정 패딩을 한곳에서 소유해 카드별 임의 오프셋을 허용하지 않습니다."
+    },
+    {
+      "subject": "--border-hairline-dark",
+      "rule": "1px solid rgba(255, 255, 255, 0.08) · 1px solid rgba(255, 255, 255, 0.12)"
+    }
+  ],
+  "responsive": [
+    "카드 비율 정책 — ratio는 사진 원본이 아니라 카드가 놓이는 레이아웃이 결정합니다. 기본 가로형은 \"3/2\", 밀도 높은 타일은 \"1/1\", 세로형 컬렉션은 \"4/5\"를 사용하고 필요하면 다른 LDS ratio preset·숫자·CSS aspect-ratio를 전달합니다. 한 그리드 안에서는 같은 비율을 유지하고, 비율 변화는 섹션이나 반응형 레이아웃 단위로 적용합니다.",
+    "제품 코드는 한 줄 유지(nowrap) + ellipsis — 긴 ID도 카드 모서리에서 잘리지 않고 말줄임됩니다.",
+    "설명은 2줄 clamp — 긴 설명이 위로 자라 이미지의 피사체 영역을 침범하지 않도록 콘텐츠 블록을 하단 스크림 영역 안에 고정합니다. 줄 높이는 label1-reading-line(22px) 토큰을 씁니다."
+  ],
+  "contentGuidance": [
+    "id는 제품 코드이지 DOM id가 아닙니다 — 이 카드의 공개 API에서 id는 제목으로 소비되며 DOM id 속성으로 전달되지 않습니다. DOM에서 카드를 지목해야 하면 data- 속성이나 감싸는 래퍼의 id를 쓰세요.",
+    "제품 코드가 기본 첫 정보입니다. category는 기본적으로 생략하고, 서로 다른 제품군이 같은 그리드에 섞여 분류가 선택에 실제로 영향을 줄 때만 짧은 이브로우로 보완합니다. 섹션 제목이 이미 제품군을 정하거나 설명이 같은 분류를 반복하면 사용하지 않습니다.",
+    "타입 스케일 정합: CTA 라벨 12.5px → --label2-size(13px)로 스냅했습니다(+0.5px, 인터랙티브 CTA라 위로 스냅). 설명(label1)과 함께 토큰 스케일 위에 있습니다.",
+    "LDS NewsCard의 카테고리는 기사 분류가 발행 콘텐츠 탐색의 독립 축이라 제목 위 키커로 유지합니다. 반면 ProductCard는 제품 코드와 사진이 이미 주 식별자이고 설명이 제품 유형을 포함하므로, 같은 분류를 반복하는 이브로우를 기본 위계에서 제거합니다."
+  ],
+  "accessibility": [
+    "카드 = 링크 — 카드 전체가 하나의 a이므로 안에 버튼·링크 같은 포커스 가능한 요소를 넣지 마세요(중첩 인터랙티브 금지). 링크의 접근 가능한 이름은 제품 코드이며, 이브로우·설명·CTA가 이름에 섞여 문단처럼 길어지지 않습니다. 다른 이름이 필요하면 aria-label로 덮어쓰세요.",
+    "포커스 어포던스 — 키보드 포커스에서도 호버와 같은 이미지 줌 + 섀도 심화를 재현합니다(포인터 전용 어포던스 금지). 포커스 링 자체는 토큰 레이어(tokens/focus.css)의 전역 :focus-visible 규칙이 그립니다.",
+    "사진은 장식 — 제품 사진은 카드 전체를 채우는 배경 요소라 항상 alt=\"\"이고 aria-hidden 영역 안에 있습니다(제품 코드가 카드의 접근 이름). NewsCard와 달리 정보성 imageAlt를 두지 않습니다. 사진은 loading=\"lazy\"·decoding=\"async\"로 지연 로드되며, ratio가 선택한 aspect-ratio가 로드 전 레이아웃을 예약(CLS 방지)하고 로드 실패 시 네이비 fallback이 비쳐 degrade됩니다.",
+    "원본 이미지 배치 — 일반 현장 사진은 imageFit=\"cover\"로 선택한 카드 프레임을 채우고 imagePosition으로 초점을 보정합니다. 제품 컷아웃·설계 렌더처럼 외곽 전체가 정보인 이미지만 imageFit=\"contain\"을 사용하며, 컴포넌트가 space-6(24px) 안전 여백을 제공합니다. 원본을 늘이지 않습니다.",
+    "ProductCard — 시그니처 이미지형 제품 타일: 레이아웃이 선택한 가로·정사각·세로 카드 전체를 제품 사진이 채우고, 하단 가독성 스크림 위에 제품 코드·설명을 오버레이합니다. 기본 CTA 없음(그리드에선 카드=링크 관례가 어포던스 — 행동 유도는 섹션 헤더의 TextButton으로 승격). 호버는 이미지 줌 + 섀도 심화만, 카드는 제자리. 사진마다 imagePosition으로 초점 튜닝합니다."
+  ],
+  "exceptions": [
+    "LDS ListingCard는 상태·일정처럼 비교에 필요한 메타데이터를 구조화된 행으로 둡니다. 제품군이 실제 비교 기준이 되는 혼합 목록에서는 ProductCard.category를 같은 원칙의 보조 메타데이터로 예외적으로 사용합니다."
+  ],
+  "related": [
+    {
+      "component": "ChecklistItem",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FeatureCard",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FeedCard",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ListingCard",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "MetricCard",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "NewsCard",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SpecRow",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Stat",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<ProductCard id=\"Core Kit\"\n  description=\"토큰, 컴포넌트, 문서 예제를 하나의 패키지로 제공합니다.\"\n  href=\"#\" />\n\n<ProductCard id=\"Docs Kit\" category=\"Documentation\"\n  description=\"가이드와 예제를 함께 제공하는 문서 카드입니다.\"\n  cta=\"자세히 보기\" href=\"#\" />\n\n<ProductCard id=\"LKR-Cutaway\" image=\"/products/cutaway.webp\"\n  ratio=\"4/5\"\n  imageFit=\"contain\" imagePosition=\"50% 42%\"\n  imageSrcSet=\"/products/cutaway-640.webp 640w, /products/cutaway-1280.webp 1280w\"\n  imageSizes=\"(min-width: 768px) 33vw, 100vw\"\n  description=\"제품 전체 형상을 잘림 없이 보여주는 기술 이미지입니다.\" />"
+    }
+  ],
+  "tokens": [
+    "--border-hairline-dark",
+    "--caption1-line",
+    "--caption1-size",
+    "--color-semantic-brand-stage-from",
+    "--color-semantic-brand-stage-to",
+    "--color-semantic-inverse-label",
+    "--color-semantic-inverse-label-strong-soft",
+    "--dur-base",
+    "--dur-fast",
+    "--ease-out",
+    "--fs-h5",
+    "--fw-bold",
+    "--fw-extra",
+    "--label1-reading-line",
+    "--label1-size",
+    "--label2-size",
+    "--lh-h5",
+    "--ls-h5",
+    "--ls-overline",
+    "--radius-2xl",
+    "--ratio-1-1",
+    "--ratio-16-9",
+    "--ratio-2-3",
+    "--ratio-3-2",
+    "--ratio-3-4",
+    "--ratio-4-3",
+    "--ratio-4-5",
+    "--scrim-dark",
+    "--shadow-sm",
+    "--shadow-xl",
+    "--space-1",
+    "--space-2",
+    "--space-28",
+    "--space-32",
+    "--space-6"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/CardsExtended.stories.jsx",
+    "entryStoryId": "lds-product-content-product-card--product-cards",
+    "publicStories": [
+      {
+        "id": "lds-product-content-product-card--product-cards",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-content-product-card--card-ratio-policy",
+        "name": "변형·상태 · 가로·정사각·세로 비율",
+        "role": "variants-states"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

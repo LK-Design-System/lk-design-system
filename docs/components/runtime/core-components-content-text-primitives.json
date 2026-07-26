@@ -1,0 +1,257 @@
+{
+  "slug": "core-components-content-text-primitives",
+  "title": "Text Primitives",
+  "storybookTitle": "LDS Core/Components/Content/Text Primitives",
+  "layer": "Core",
+  "family": "Content",
+  "primaryOwner": "Blockquote",
+  "ownerComponents": [
+    "Blockquote",
+    "Code",
+    "Kbd",
+    "SourceTag"
+  ],
+  "supportingComponents": [
+    "Overline"
+  ],
+  "purpose": "문서에서 일반 문장과 다른 의미를 가진 인용문, 출처, 코드, 키보드 입력을 정확히 표기할 때 적합합니다. 제목과 본문 위계는 Typography를 사용하고, 긴 코드 편집이나 실행 환경을 이 콘텐츠 요소로 대신하지 마세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "children",
+      "rule": "출처 이름(링크되는 텍스트)."
+    },
+    {
+      "part": "label",
+      "rule": "구분자 앞의 모노 키커. @default \"SOURCE\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "attribution",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "사람이 읽는 출처 표기 줄. figcaption 으로 blockquote 바깥에 렌더링됩니다.",
+      "owner": "BlockquoteProps"
+    },
+    {
+      "name": "cite",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "attribution 의 레거시 별칭. HTML cite 속성(URL)과 이름이 겹치므로 새 코드에서는 attribution 을 쓰세요.",
+      "owner": "BlockquoteProps"
+    },
+    {
+      "name": "citeUrl",
+      "type": "string",
+      "required": false,
+      "description": "HTML cite 속성에 들어가는 출처 문서 URL.",
+      "owner": "BlockquoteProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "BlockquoteProps"
+    },
+    {
+      "name": "block",
+      "type": "boolean",
+      "required": false,
+      "description": "여러 줄 네이비 블록으로 렌더. @default false",
+      "owner": "CodeProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CodeProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "KbdProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "출처 이름(링크되는 텍스트).",
+      "owner": "SourceTagProps"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "구분자 앞의 모노 키커. @default \"SOURCE\"",
+      "owner": "SourceTagProps"
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "required": false,
+      "description": "설정하면 외부 링크로 렌더(새 탭으로 열리고 ↗ 표시).",
+      "owner": "SourceTagProps"
+    },
+    {
+      "name": "tone",
+      "type": "'default' | 'onDark'",
+      "required": false,
+      "description": "'default'(라이트 서피스) 또는 'onDark'(네이비 서피스). @default \"default\"",
+      "owner": "SourceTagProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "tone",
+      "rule": "'default'(라이트 서피스) 또는 'onDark'(네이비 서피스). @default \"default\""
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "타입 스케일 정합: 출처 13.5px → --label2-size(13px)로 스냅했습니다(−0.5px, 인용문 대비 뮤트 위계 유지). 인용문(headline2)과 함께 전 사이트가 토큰 스케일 위에 있습니다."
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption2-size",
+      "rule": "11px"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-fill-normal",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "이름 충돌 주의 — HTML 의 cite 속성은 사람이 읽는 이름이 아니라 출처 문서의 URL 입니다. 이 컴포넌트의 텍스트 출처는 attribution, URL 은 citeUrl 로 분리했습니다. 기존 코드 호환을 위해 cite prop 은 attribution 의 별칭으로 계속 동작하지만, 새 코드에서는 쓰지 마세요.",
+    "마크업 구조와 prop 이름."
+  ],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Code",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "Kbd",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "SourceTag",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "Overline",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Accordion",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Collapsible",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ContentBadge",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ListCell",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Blockquote attribution=\"문서 가이드\">문서 화면에서는 상태, 조치, 결과가 같은 위계 안에서 읽혀야 합니다.</Blockquote>\n<Blockquote attribution=\"LDS 접근성 가이드\" citeUrl=\"https://example.com/a11y\">…</Blockquote>"
+    }
+  ],
+  "tokens": [
+    "--caption1-size",
+    "--caption2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-normal",
+    "--color-semantic-fill-strong",
+    "--color-semantic-inverse-background",
+    "--color-semantic-inverse-fill-normal",
+    "--color-semantic-inverse-fill-strong",
+    "--color-semantic-inverse-label",
+    "--color-semantic-inverse-label-strong-soft",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-normal-normal",
+    "--color-semantic-primary-normal",
+    "--component-tag-height",
+    "--dur-fast",
+    "--ease-out",
+    "--font-mono",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-semibold",
+    "--headline2-size",
+    "--label2-size",
+    "--radius-lg",
+    "--radius-pill",
+    "--radius-sm",
+    "--space-3"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/Content.stories.jsx",
+    "entryStoryId": "lds-core-components-content-text--text-content",
+    "publicStories": [
+      {
+        "id": "lds-core-components-content-text--text-content",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "slug": "core-components-status-skeleton",
+  "title": "Skeleton",
+  "storybookTitle": "LDS Core/Components/Status/Skeleton",
+  "layer": "Core",
+  "family": "Status",
+  "primaryOwner": "Skeleton",
+  "ownerComponents": [
+    "Skeleton"
+  ],
+  "supportingComponents": [],
+  "purpose": "레이아웃 이동 없이 로딩을 표현해야 할 때 적합합니다. 완료 시점을 알 수 없는 짧은 대기에는 Spinner를, 진행률을 알 수 있으면 Progress를 대신 쓰세요.",
+  "useWhen": [
+    "Motion respects prefers-reduced-motion. shimmer는 inline style로 적용되므로 reduced-motion 규칙은 animation:none!important로 선언되어 사용자 설정이 항상 이깁니다."
+  ],
+  "avoidWhen": [],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "variant",
+      "type": "\"rect\" | \"text\" | \"circle\"",
+      "required": false,
+      "description": "Shape. text renders one or more line bars; rect and circle render a single block. @default \"rect\"",
+      "owner": "SkeletonProps"
+    },
+    {
+      "name": "width",
+      "type": "number | string",
+      "required": false,
+      "description": "Width in px, CSS length, or percent. @default \"100%\"",
+      "owner": "SkeletonProps"
+    },
+    {
+      "name": "length",
+      "type": "\"25%\" | \"50%\" | \"75%\" | \"100%\" | number | string",
+      "required": false,
+      "description": "text skeleton length axis. Overrides width when provided.",
+      "owner": "SkeletonProps"
+    },
+    {
+      "name": "height",
+      "type": "number | string",
+      "required": false,
+      "description": "Height in px or CSS length. Text defaults to 14px, rect to 16px, circle to width.",
+      "owner": "SkeletonProps"
+    },
+    {
+      "name": "radius",
+      "type": "number | string",
+      "required": false,
+      "description": "",
+      "owner": "SkeletonProps"
+    },
+    {
+      "name": "lines",
+      "type": "number",
+      "required": false,
+      "description": "Text-line count. The last line is shortened when more than one line is rendered. @default 1",
+      "owner": "SkeletonProps"
+    },
+    {
+      "name": "align",
+      "type": "\"leading\" | \"center\" | \"trailing\"",
+      "required": false,
+      "description": "Horizontal alignment for text lines. @default \"leading\"",
+      "owner": "SkeletonProps"
+    },
+    {
+      "name": "tone",
+      "type": "\"normal\" | \"light\" | \"white\"",
+      "required": false,
+      "description": "Visual tone for normal or inverse/dark surfaces. @default \"normal\"",
+      "owner": "SkeletonProps"
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "required": false,
+      "description": "customize color axis. Use white for inverse-surface skeletons.",
+      "owner": "SkeletonProps"
+    },
+    {
+      "name": "animate",
+      "type": "boolean",
+      "required": false,
+      "description": "animate axis. @default true",
+      "owner": "SkeletonProps"
+    },
+    {
+      "name": "opacity",
+      "type": "number | string",
+      "required": false,
+      "description": "customize opacity axis.",
+      "owner": "SkeletonProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "variant",
+      "rule": "Shape. text renders one or more line bars; rect and circle render a single block. @default \"rect\""
+    },
+    {
+      "state": "tone",
+      "rule": "Visual tone for normal or inverse/dark surfaces. @default \"normal\""
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "--color-semantic-fill-normal",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    },
+    {
+      "subject": "--color-semantic-fill-strong",
+      "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
+    },
+    {
+      "subject": "--color-semantic-inverse-fill-normal",
+      "rule": "light: rgba(255, 255, 255, 0.12); dark: rgba(255, 255, 255, 0.12)"
+    },
+    {
+      "subject": "--color-semantic-inverse-line-strong",
+      "rule": "light: rgba(255, 255, 255, 0.22); dark: rgba(255, 255, 255, 0.22)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "variant: rect, text, or circle."
+  ],
+  "accessibility": [
+    "aria-busy 컨테이너 규약 — Skeleton 자체는 항상 aria-hidden=\"true\"라서 보조기술에 뼈대가 콘텐츠로 읽히지 않습니다. 로딩 상태는 Skeleton이 아니라 대기 중인 영역을 감싸는 컨테이너가 알립니다. 컨테이너에 aria-busy=\"true\"를 주고, 대기를 소리로 알려야 하면 role=\"status\" aria-live=\"polite\"와 짧은 텍스트 레이블(예: visually-hidden \"데이터를 불러오는 중입니다\")을 함께 두세요."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Banner",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Callout",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "EmptyState",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Spinner",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Skeleton variant=\"circle\" width={44} />\n<Skeleton variant=\"text\" lines={3} width=\"75%\" />\n<Skeleton variant=\"rect\" width={280} height={160} />\n<Skeleton variant=\"rect\" width={80} height={80} color=\"#E8EDF5\" opacity={0.8} />"
+    },
+    {
+      "label": "추가 조합 2",
+      "code": "<div aria-busy=\"true\" role=\"status\" aria-live=\"polite\">\n  <VisuallyHidden>데이터를 불러오는 중입니다</VisuallyHidden>\n  <Skeleton variant=\"text\" lines={3} />\n</div>"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-fill-normal",
+    "--color-semantic-fill-strong",
+    "--color-semantic-inverse-fill-normal",
+    "--color-semantic-inverse-line-strong"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/StatusSkeleton.stories.jsx",
+    "entryStoryId": "lds-core-components-status-skeleton--skeleton-overview",
+    "publicStories": [
+      {
+        "id": "lds-core-components-status-skeleton--skeleton-overview",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "omitted-no-evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

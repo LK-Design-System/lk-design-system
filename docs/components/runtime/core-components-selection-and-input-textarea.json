@@ -1,0 +1,275 @@
+{
+  "slug": "core-components-selection-and-input-textarea",
+  "title": "Textarea",
+  "storybookTitle": "LDS Core/Components/Selection and Input/Textarea",
+  "layer": "Core",
+  "family": "Selection and Input",
+  "primaryOwner": "Textarea",
+  "ownerComponents": [
+    "Textarea"
+  ],
+  "supportingComponents": [],
+  "purpose": "검토 메모·설명처럼 줄바꿈과 충분한 작성 공간이 필요한 값에 적합합니다. 이름·검색어처럼 한 줄 값에는 Textarea 대신 Input을 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "박스 위에 렌더되는 필드 라벨."
+    },
+    {
+      "part": "helper",
+      "rule": "박스 아래 보조 설명."
+    },
+    {
+      "part": "error",
+      "rule": "박스 아래 오류 설명."
+    }
+  ],
+  "properties": [
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 위에 렌더되는 필드 라벨.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "helper",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 아래 보조 설명.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "error",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 아래 오류 설명.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "required": false,
+      "description": "라벨에 레드 별표 추가. @default false",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "invalid",
+      "type": "boolean",
+      "required": false,
+      "description": "검증 오류용 레드 링. @default false",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "status",
+      "type": "\"normal\" | \"positive\" | \"negative\"",
+      "required": false,
+      "description": "상태 링과 메시지 톤. @default \"normal\"",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"md\" | \"lg\" | \"small\" | \"medium\" | \"large\"",
+      "required": false,
+      "description": "최소 높이 프리셋. @default \"md\"",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "interaction",
+      "type": "\"normal\" | \"inactive\" | \"hovered\" | \"focused\" | \"active\" | \"active-focused\"",
+      "required": false,
+      "description": "",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "required": false,
+      "description": "active visual state alias.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "focus",
+      "type": "boolean",
+      "required": false,
+      "description": "focus visual state alias.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "disable",
+      "type": "boolean",
+      "required": false,
+      "description": "disabled alias.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "resize",
+      "type": "\"normal\" | \"fixed\" | \"limit\"",
+      "required": false,
+      "description": "resize axis.",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "rows",
+      "type": "number",
+      "required": false,
+      "description": "처음 보이는 줄 수. @default 5",
+      "owner": "TextareaProps"
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "래퍼 스타일.",
+      "owner": "TextareaProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "error",
+      "rule": "박스 아래 오류 설명."
+    },
+    {
+      "state": "invalid",
+      "rule": "검증 오류용 레드 링. @default false"
+    },
+    {
+      "state": "status",
+      "rule": "상태 링과 메시지 톤. @default \"normal\""
+    },
+    {
+      "state": "active",
+      "rule": "active visual state alias."
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "--color-semantic-label-assistive",
+      "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
+    },
+    {
+      "subject": "--color-semantic-label-disable",
+      "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
+    },
+    {
+      "subject": "--component-input-font-size",
+      "rule": "var(--body1-size)"
+    },
+    {
+      "subject": "--component-input-letter-spacing",
+      "rule": "var(--body1-spacing)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "Reference basis: GOV.UK Textarea and Carbon Text area.",
+    "Textarea — Input의 박스·포커스 헤일로와 맞춘 여러 줄 필드; 세로 리사이즈 가능."
+  ],
+  "accessibility": [
+    "Textarea shares Input's label, required mark, helper/error typography, described-by merge, read-only fill, border, focus ring, and positive/negative status icon. Only multiline height and resize behavior differ."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "AutoComplete",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Combobox",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FormField",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Input",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SearchField",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Select",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "TagInput",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Textarea label=\"문의 내용\" required rows={5} placeholder=\"문의하실 내용을 입력해 주세요.\" />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-assistive",
+    "--color-semantic-label-disable",
+    "--component-input-border-width",
+    "--component-input-focus-shadow",
+    "--component-input-font-size",
+    "--component-input-letter-spacing",
+    "--component-input-line-height",
+    "--component-input-radius",
+    "--component-input-stack-gap",
+    "--component-input-text-color",
+    "--dur-base",
+    "--ease-out",
+    "--font-sans",
+    "--space-10",
+    "--space-3"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormTextarea.stories.jsx",
+    "entryStoryId": "lds-core-components-selection-and-input-textarea--textarea-overview",
+    "publicStories": [
+      {
+        "id": "lds-core-components-selection-and-input-textarea--textarea-overview",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-selection-and-input-textarea--character-counter",
+        "name": "사용법 · 문자 수 제한",
+        "role": "usage"
+      }
+    ],
+    "hiddenEvidence": 3
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

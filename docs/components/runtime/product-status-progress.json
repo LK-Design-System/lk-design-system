@@ -1,0 +1,252 @@
+{
+  "slug": "product-status-progress",
+  "title": "Progress",
+  "storybookTitle": "LDS Product/Status/Progress",
+  "layer": "Product",
+  "family": "Status",
+  "primaryOwner": "CircularProgress",
+  "ownerComponents": [
+    "CircularProgress",
+    "ProgressBar"
+  ],
+  "supportingComponents": [],
+  "purpose": "업로드·분석·생성처럼 시작과 완료가 있는 작업의 진행률이나 대기 상태를 전달할 때 적합합니다. 작업이 아닌 현재 측정값을 알려진 범위 안에서 비교하려면 Progress 대신 Meter를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "Optional visible label."
+    }
+  ],
+  "properties": [
+    {
+      "name": "value",
+      "type": "number",
+      "required": false,
+      "description": "Current value for determinate progress. @default 0",
+      "owner": "CircularProgressProps"
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "required": false,
+      "description": "Maximum value for determinate progress. @default 100",
+      "owner": "CircularProgressProps"
+    },
+    {
+      "name": "size",
+      "type": "number",
+      "required": false,
+      "description": "Diameter in px. @default 48",
+      "owner": "CircularProgressProps"
+    },
+    {
+      "name": "thickness",
+      "type": "number",
+      "required": false,
+      "description": "Ring thickness in px. @default 5",
+      "owner": "CircularProgressProps"
+    },
+    {
+      "name": "tone",
+      "type": "'signal' | 'positive' | 'cautionary' | 'negative'",
+      "required": false,
+      "description": "Arc tone. @default \"signal\"",
+      "owner": "CircularProgressProps"
+    },
+    {
+      "name": "indeterminate",
+      "type": "boolean",
+      "required": false,
+      "description": "Shows an unknown-duration rotating arc. @default false",
+      "owner": "CircularProgressProps"
+    },
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Accessible label for the progress indicator.",
+      "owner": "CircularProgressProps"
+    },
+    {
+      "name": "showValue",
+      "type": "boolean",
+      "required": false,
+      "description": "Shows the computed percentage in the center for determinate progress. @default false",
+      "owner": "CircularProgressProps"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "required": false,
+      "description": "Current value. @default 0",
+      "owner": "ProgressBarProps"
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "required": false,
+      "description": "Maximum value. @default 100",
+      "owner": "ProgressBarProps"
+    },
+    {
+      "name": "indeterminate",
+      "type": "boolean",
+      "required": false,
+      "description": "Shows an unknown-duration moving segment instead of a fixed percentage. @default false",
+      "owner": "ProgressBarProps"
+    },
+    {
+      "name": "tone",
+      "type": "'signal' | 'positive' | 'cautionary' | 'negative'",
+      "required": false,
+      "description": "Fill tone. @default \"signal\"",
+      "owner": "ProgressBarProps"
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "required": false,
+      "description": "Custom fill color (CSS color value or token, e.g. \"var(--color-semantic-status-positive)\"). Overrides tone when set.",
+      "owner": "ProgressBarProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg'",
+      "required": false,
+      "description": "Track height. @default \"md\"",
+      "owner": "ProgressBarProps"
+    },
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional visible label.",
+      "owner": "ProgressBarProps"
+    },
+    {
+      "name": "showValue",
+      "type": "boolean",
+      "required": false,
+      "description": "Shows the computed percentage beside the label. @default false",
+      "owner": "ProgressBarProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "tone",
+      "rule": "Arc tone. @default \"signal\""
+    },
+    {
+      "state": "tone",
+      "rule": "Fill tone. @default \"signal\""
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Motion respects prefers-reduced-motion. The rotating ring gets its animation from an inline style, so the injected @media (prefers-reduced-motion: reduce) rule declares animation:none!important — dropping !important silently disables the guard (WCAG 2.3.3). Same mechanism as Skeleton/Spinner."
+    },
+    {
+      "subject": "--color-semantic-fill-strong",
+      "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    },
+    {
+      "subject": "--color-semantic-label-normal",
+      "rule": "light: #171718; dark: #F7F7F7"
+    },
+    {
+      "subject": "--color-semantic-primary-normal",
+      "rule": "light: #3878B3; dark: #5390C9"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [
+    "indeterminate renders an unknown-duration rotating arc and omits aria-valuenow.",
+    "label / showValue provide accessible and visible progress context.",
+    "Indeterminate aria-valuetext는 ProgressBar와 같은 한국어 문구 진행 중입니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "ProgressBar",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "Meter",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<CircularProgress value={72} label=\"Report progress\" showValue />\n<CircularProgress indeterminate label=\"Processing\" />\n<CircularProgress value={4} max={5} tone=\"positive\" size={40} />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-fill-strong",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-status-cautionary",
+    "--color-semantic-status-negative",
+    "--color-semantic-status-positive",
+    "--dur-base",
+    "--ease-in-out",
+    "--ease-out",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-semibold",
+    "--label2-size",
+    "--radius-pill"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ProductProgress.stories.jsx",
+    "entryStoryId": "lds-product-status-progress--progress-indicators",
+    "publicStories": [
+      {
+        "id": "lds-product-status-progress--progress-indicators",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 3
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

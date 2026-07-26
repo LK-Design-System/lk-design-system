@@ -1,0 +1,239 @@
+{
+  "slug": "product-data-visualization-sparkline",
+  "title": "Sparkline",
+  "storybookTitle": "LDS Product/Data/Visualization/Sparkline",
+  "layer": "Product",
+  "family": "Visualization",
+  "primaryOwner": "Sparkline",
+  "ownerComponents": [
+    "Sparkline"
+  ],
+  "supportingComponents": [],
+  "purpose": "카드나 표 셀 안에서 짧은 시계열의 상승·하락·변동만 보조적으로 보여 줄 때 적합합니다. 축·기준선·정확한 값 비교가 중요하면 Sparkline 대신 전체 Line Chart를 사용하세요.",
+  "useWhen": [
+    "Sparkline — 현재 KPI 옆에서 짧은 수치 추세를 보여주는 축 없는 인라인 차트. Classification: LDS Product Data Extension."
+  ],
+  "avoidWhen": [
+    "MetricCard의 tabular current value를 대체하지 않습니다. Sparkline은 과거 흐름만 보조하며 현재 값·기간·baseline은 MetricCard가 소유합니다."
+  ],
+  "anatomy": [
+    {
+      "part": "description",
+      "rule": "추세의 맥락을 설명하는 스크린 리더용 문장."
+    },
+    {
+      "part": "emptyLabel",
+      "rule": "데이터가 비었을 때 보이는 문구이자 텍스트 요약. @default \"데이터가 없습니다\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "data",
+      "type": "number[]",
+      "required": true,
+      "description": "데이터 포인트.",
+      "owner": "SparklineProps"
+    },
+    {
+      "name": "width",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "SparklineProps"
+    },
+    {
+      "name": "height",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "SparklineProps"
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "SparklineProps"
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "required": false,
+      "description": "선 아래 부드러운 영역 채움. @default true",
+      "owner": "SparklineProps"
+    },
+    {
+      "name": "strokeWidth",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "SparklineProps"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "추세의 맥락을 설명하는 스크린 리더용 문장.",
+      "owner": "SparklineProps"
+    },
+    {
+      "name": "summary",
+      "type": "string",
+      "required": false,
+      "description": "자동 생성되는 시작·최저·최고·마지막 값 요약을 재정의합니다.",
+      "owner": "SparklineProps"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "string",
+      "required": false,
+      "description": "데이터가 비었을 때 보이는 문구이자 텍스트 요약. @default \"데이터가 없습니다\"",
+      "owner": "SparklineProps"
+    },
+    {
+      "name": "formatValue",
+      "type": "(value: number) = string",
+      "required": false,
+      "description": "텍스트 요약에서 수치를 포맷합니다.",
+      "owner": "SparklineProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "emptyLabel",
+      "rule": "데이터가 비었을 때 보이는 문구이자 텍스트 요약. @default \"데이터가 없습니다\""
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "기존 primary stroke, soft fill, 2px inset을 유지하고 좁은 부모에서 비례 축소되도록 max-width만 보강했습니다."
+    },
+    {
+      "subject": "--color-semantic-label-alternative",
+      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+    },
+    {
+      "subject": "--color-semantic-primary-normal",
+      "rule": "light: #3878B3; dark: #5390C9"
+    },
+    {
+      "subject": "--fw-medium",
+      "rule": "500"
+    }
+  ],
+  "responsive": [
+    "data / width / height / color / fill / strokeWidth — compact trend의 수치와 시각 축입니다. finite 값만 그립니다.",
+    "LineChart의 responsive SVG, named image, 패턴을 따르되 axis/legend/reference line 없이 inline 추세에만 집중합니다."
+  ],
+  "contentGuidance": [
+    "description / summary / emptyLabel / formatValue — SVG의 설명, 자동 개수·시작·최저·최고·마지막 요약 override, 보이는 빈 문구, 요약 수치 formatter입니다.",
+    "빈 배열은 빈 SVG가 아니라 emptyLabel 텍스트를 렌더하고 같은 정보를 에 제공합니다.",
+    "PatternFly dashboard guidelines는 trend card가 current value와 prior values over a period를 함께 보여주고 sparkline을 흔히 사용한다고 설명합니다. current value·period·action은 MetricCard에, trend rendering만 Sparkline에 둡니다."
+  ],
+  "accessibility": [
+    "제품 맥락이 있는 aria-label을 제공하세요. 생략 시 fallback 이름은 추세 차트입니다.",
+    "Carbon chart anatomy의 descriptive title/label 원칙을 축 없는 sparkline에도 적용해 accessible name과 수치 요약을 요구합니다.",
+    "Carbon accessibility for developers의 meaningful description/data alternative 원칙에 따라 선 모양만 발표하지 않고 시작·범위·마지막 값을 텍스트로 제공합니다.",
+    "필수 범위는 accessible identity, deterministic trend summary, visible empty state, responsive inline rendering입니다. tooltip, hover point, axis, selection, forecasting은 LineChart 또는 제품 chart engine에 남깁니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "AnnotatedImage",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "BarChart",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Calendar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ChartFrame",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Carousel",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DataGrid",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DataToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DataExportAction",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Sparkline\n  aria-label=\"최근 7일 처리량 추세\"\n  description=\"일별 처리량입니다.\"\n  data={[3, 5, 4, 8, 6, 9, 12]}\n/>"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-alternative",
+    "--color-semantic-primary-normal",
+    "--fw-medium"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/DataSparkline.stories.jsx",
+    "entryStoryId": "lds-product-data-visualization-sparkline--trend-line",
+    "publicStories": [
+      {
+        "id": "lds-product-data-visualization-sparkline--trend-line",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-data-visualization-sparkline--empty-dataset",
+        "name": "변형·상태 · 빈 추세 데이터",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-data-visualization-sparkline--narrow-parent",
+        "name": "반응형 · 좁은 카드",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

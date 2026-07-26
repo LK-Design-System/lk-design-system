@@ -1,0 +1,184 @@
+{
+  "slug": "core-components-status-status-indicator",
+  "title": "Status Indicator",
+  "storybookTitle": "LDS Core/Components/Status/Status Indicator",
+  "layer": "Core",
+  "family": "Status",
+  "primaryOwner": "StatusIndicator",
+  "ownerComponents": [
+    "StatusIndicator"
+  ],
+  "supportingComponents": [],
+  "purpose": "온라인·재연결·데이터 지연·오프라인처럼 계속 관찰되는 신호를 표시할 때 사용합니다. 진행·마감·게시처럼 정적인 결과에는 사용하지 않고 상태 배지를 선택합니다. 점만으로 의미를 전달하거나 단순 장식으로 pulse를 켜지 마세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "tone",
+      "type": "StatusTone",
+      "required": false,
+      "description": "실시간 가용성·연결·freshness를 나타내는 점 톤. @default \"positive\"",
+      "owner": "StatusIndicatorProps"
+    },
+    {
+      "name": "pulse",
+      "type": "boolean",
+      "required": false,
+      "description": "실제로 변화 중인 연결·동기화 상태에만 사용하는 부드러운 펄스. @default false",
+      "owner": "StatusIndicatorProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "StatusIndicatorProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "tone",
+      "rule": "실시간 가용성·연결·freshness를 나타내는 점 톤. @default \"positive\""
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "anatomy는 6px semantic dot + neutral 12px label입니다. 배경 상자를 만들지 않아 상태 라벨과 시각적으로 섞이지 않습니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "WCAG 2.2 Use of Color는 색만으로 정보를 전달하지 않도록 요구합니다. 따라서 label 없는 dot API는 제공하지 않습니다."
+    },
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    }
+  ],
+  "responsive": [
+    "Spectrum Status light는 semantic dot과 회색 label을 함께 사용하고, label을 필수로 두며 긴 텍스트는 wrap하도록 합니다. LDS도 색을 보조 단서로만 사용합니다."
+  ],
+  "contentGuidance": [
+    "현재 결과나 수명주기 상태를 채움 라벨로 표시할 때는 StatusBadge를 사용합니다. StatusIndicator는 연결·가용성·freshness처럼 계속 관찰되는 신호에만 사용합니다.",
+    "pulse는 연결 중·재연결 중처럼 실제 변화 중인 신호에만 명시합니다. prefers-reduced-motion에서는 멈추고 라벨만으로 의미가 유지됩니다. critical은 정적 이중 링을 보조 단서로 제공하지만 자동 pulse하지 않습니다.",
+    "StatusIndicator는 실시간 가용성·연결·freshness를 컬러 점과 명시적 라벨로 보여주는 조용한 Core 신호입니다.",
+    "실제 connection state machine, freshness 임계값, polling과 announcement는 제품이 소유합니다. LK Web Viz, LK Control Full Daedeok, LK Context Hub는 이 primitive를 조합할 수 있지만 이번 분리는 제품 route나 transport 계약을 바꾸지 않으므로 세 자산 검토는 모두 not applicable입니다."
+  ],
+  "accessibility": [
+    "dot은 aria-hidden이며 visible label이 접근 가능한 상태 이름을 제공합니다. 컴포넌트는 자동 live region을 만들지 않습니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Accordion",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Blockquote",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Code",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Collapsible",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ContentBadge",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Kbd",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ListCell",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Overline",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<StatusIndicator tone=\"positive\">온라인</StatusIndicator>\n<StatusIndicator tone=\"cautionary\" pulse>재연결 중</StatusIndicator>\n<StatusIndicator tone=\"offline\">오프라인</StatusIndicator>"
+    }
+  ],
+  "tokens": [
+    "--caption1-line",
+    "--caption1-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-label-neutral",
+    "--component-status-badge-cautionary-indicator",
+    "--component-status-badge-negative-indicator",
+    "--component-status-badge-offline-indicator",
+    "--component-status-badge-positive-indicator",
+    "--component-status-badge-signal-indicator",
+    "--ease-out",
+    "--font-sans",
+    "--fw-semibold",
+    "--space-1",
+    "--space-1-5"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/StatusIndicator.stories.jsx",
+    "entryStoryId": "lds-core-components-status-status-indicator--status-indicator-overview",
+    "publicStories": [
+      {
+        "id": "lds-core-components-status-status-indicator--status-indicator-overview",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-status-status-indicator--dark-theme",
+        "name": "변형·상태 · 다크 테마",
+        "role": "variants-states"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "omitted-no-evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

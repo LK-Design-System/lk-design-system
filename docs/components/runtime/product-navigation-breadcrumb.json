@@ -1,0 +1,151 @@
+{
+  "slug": "product-navigation-breadcrumb",
+  "title": "Breadcrumb",
+  "storybookTitle": "LDS Product/Navigation/Breadcrumb",
+  "layer": "Product",
+  "family": "Navigation",
+  "primaryOwner": "Breadcrumb",
+  "ownerComponents": [
+    "Breadcrumb"
+  ],
+  "supportingComponents": [],
+  "purpose": "세 단계 이상 중첩된 콘텐츠·관리 화면에서 상위 경로로 돌아갈 때 적합합니다. 순차 작업의 진행 상태에는 Breadcrumb 대신 Steps나 Wizard를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "Classification: LK Product Extension. 현재 페이지의 상위 경로를 보여주는 로컬 웨이파인딩이며, TopBar·SideNav·NavRail·BottomNav 같은 주 탐색을 대신하지 않습니다."
+  ],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "items",
+      "type": "BreadcrumbItem[]",
+      "required": true,
+      "description": "경로 항목, 상위 → 현재(마지막은 굵고 링크 없음).",
+      "owner": "BreadcrumbProps"
+    }
+  ],
+  "states": [],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "타입 스케일 정합: 내비 텍스트 13.5px → --label2-size(13px)로 스냅했습니다. 경로 트레일은 웨이파인딩 메타라 한 단계 아래로 정렬합니다."
+    },
+    {
+      "subject": "--color-semantic-label-assistive",
+      "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    },
+    {
+      "subject": "--color-semantic-label-normal",
+      "rule": "light: #171718; dark: #F7F7F7"
+    },
+    {
+      "subject": "--fw-bold",
+      "rule": "700"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [
+    "items — { label, href }[]; 마지막 항목은 현재 페이지로 렌더됩니다(링크 없음, aria-current=\"page\").",
+    "접근성 — APG 패턴대로 nav ol li 구조로 렌더되고, 셰브론 구분자는 장식(aria-hidden)입니다. nav의 기본 aria-label은 '현재 위치'이며 aria-label을 넘기면 덮어씁니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Anchor",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "BottomNav",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Footer",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "LanguageSwitcher",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "NavRail",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SideNav",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Steps",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Toolbar",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Breadcrumb items={[\n  { label: '홈', href: '/' },\n  { label: '제품', href: '/products' },\n  { label: 'LKR-T1' },\n]} />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-assistive",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-medium",
+    "--label2-size"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/NavigationBreadcrumb.stories.jsx",
+    "entryStoryId": "lds-product-navigation-breadcrumb--breadcrumb-routes",
+    "publicStories": [
+      {
+        "id": "lds-product-navigation-breadcrumb--breadcrumb-routes",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "omitted-no-evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

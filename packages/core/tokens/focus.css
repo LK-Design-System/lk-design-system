@@ -1,0 +1,22 @@
+/* ==========================================================================
+   LK ROBOTICS — Keyboard focus ring
+   --------------------------------------------------------------------------
+   A single, token-driven :focus-visible ring for every interactive element.
+   Shows ONLY on keyboard navigation (:focus-visible excludes mouse clicks).
+   `!important` guarantees the ring even where a component sets inline
+   `outline: none`, so no per-component edits are needed to close the
+   focus-indicator a11y gap. Theme-aware.
+
+   The outline uses the semantic focus-indicator role. The softer focus-ring
+   role remains reserved for input box-shadows.
+   ========================================================================== */
+:where(
+  a[href], button, input, select, textarea, summary,
+  [tabindex]:not([tabindex="-1"]),
+  [role="button"], [role="link"], [role="tab"], [role="checkbox"],
+  [role="radio"], [role="switch"], [role="menuitem"], [role="menuitemcheckbox"],
+  [role="menuitemradio"], [role="option"], [role="slider"]
+):focus-visible {
+  outline: 2px solid var(--color-semantic-focus-indicator) !important;
+  outline-offset: 2px !important;
+}

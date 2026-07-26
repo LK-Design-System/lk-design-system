@@ -1,0 +1,293 @@
+{
+  "slug": "product-layout-dock-panel",
+  "title": "Dock Panel",
+  "storybookTitle": "LDS Product/Layout/Dock Panel",
+  "layer": "Product",
+  "family": "Layout",
+  "primaryOwner": "DockPanel",
+  "ownerComponents": [
+    "DockPanel"
+  ],
+  "supportingComponents": [
+    "ActionArea",
+    "Button",
+    "DescriptionList"
+  ],
+  "purpose": "맵·에디터처럼 지속되는 작업 캔버스 가장자리에 속성이나 레이어 도구를 접어 두고 쓸 때 적합합니다. 일반 페이지의 임시 보조 작업이나 모바일 선택에는 DockPanel 대신 Drawer 또는 Sheet를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "bodyPadding",
+      "rule": "본문 padding. @default \"var(--space-4)\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "side",
+      "type": "'left' | 'right'",
+      "required": false,
+      "description": "",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "open",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "defaultOpen",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "onOpenChange",
+      "type": "(open: boolean) = void",
+      "required": false,
+      "description": "",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "width",
+      "type": "React.CSSProperties['width']",
+      "required": false,
+      "description": "패널 너비. 숫자는 px로 처리합니다. @default 300",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "minWidth",
+      "type": "number",
+      "required": false,
+      "description": "리사이즈 가능한 패널의 최소 너비(px). @default 240",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "maxWidth",
+      "type": "number",
+      "required": false,
+      "description": "리사이즈 가능한 패널의 최대 너비(px). @default 520",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "resizeStep",
+      "type": "number",
+      "required": false,
+      "description": "키보드 리사이즈 증감 단위(px). Shift와 함께 누르면 4배로 이동합니다. @default 16",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "resizable",
+      "type": "boolean",
+      "required": false,
+      "description": "패널 경계에 접근 가능한 resize separator를 표시합니다. 숫자 width일 때 동작합니다. @default false",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "onWidthChange",
+      "type": "(width: number) = void",
+      "required": false,
+      "description": "",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "closeOnEscape",
+      "type": "boolean",
+      "required": false,
+      "description": "열린 패널 내부에서 Escape를 누르면 패널을 접고 handle로 focus를 복귀합니다. @default true",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "bodyPadding",
+      "type": "React.CSSProperties['padding']",
+      "required": false,
+      "description": "본문 padding. @default \"var(--space-4)\"",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "bodyStyle",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "footer",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "DockPanelProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "DockPanelProps"
+    }
+  ],
+  "states": [],
+  "behavior": [
+    "DockPanel — 캔버스 위에서 돌출 핸들로 접고 펼치는 사이드 도킹 패널. 맵, 에디터, 로봇 뷰어 위의 속성/레이어/상태 패널에 씁니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    },
+    {
+      "subject": "--color-semantic-label-strong",
+      "rule": "light: #000000; dark: #FFFFFF"
+    },
+    {
+      "subject": "--color-semantic-line-normal-normal",
+      "rule": "light: rgba(112, 115, 124, 0.22); dark: rgba(112, 115, 124, 0.32)"
+    }
+  ],
+  "responsive": [
+    "side left|right · open/defaultOpen/onOpenChange · title · width · resizable/minWidth/maxWidth/resizeStep/onWidthChange · closeOnEscape · bodyPadding/bodyStyle · footer · children."
+  ],
+  "contentGuidance": [],
+  "accessibility": [
+    "Compare against common docked panel expectations before changing it: controlled/uncontrolled open state, persistent collapse handle, side-aware layout, optional resizable separator, keyboard resize, focus return, hidden collapsed content, and clear distinction from modal/drawer overlays.",
+    "새 Drawer/Modal이 아니라 캔버스 내부에 붙는 layout pattern입니다. 페이지 전체 탐색, route transition, focus trap이 필요한 오버레이에는 쓰지 않습니다.",
+    "접힌 상태에서도 handle은 남고, 패널 region은 aria-controls 대상 id를 유지합니다. 접힌 패널은 hidden/inert로 focus tree에서 빠집니다.",
+    "에디터형 패널은 resizable을 켜고 숫자 width를 사용합니다. resize separator는 role=\"separator\"와 aria-valuenow를 가지며 드래그, ArrowLeft/ArrowRight, Home/End를 지원합니다.",
+    "열린 패널 내부 또는 resize separator에서 Escape를 누르면 패널을 접고 handle로 focus를 복귀합니다(separator는 의 형제라 패널 keydown이 닿지 않으므로 같은 핸들러를 직접 붙입니다). 패널 안에 열려 있던 오버레이가 Escape를 먼저 처리해 defaultPrevented가 되면 패널은 접지 않습니다. closeOnEscape로 이 동작 전체를 끌 수 있습니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "ActionArea",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DescriptionList",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DashboardGrid",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DashboardShell",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "PageHeader",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "PrimaryDetail",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<DockPanel side=\"right\" title=\"속성\" defaultOpen>\n  <PropertyField ... />\n</DockPanel>"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-strong",
+    "--color-semantic-line-normal-normal",
+    "--color-semantic-primary-normal",
+    "--dur-fast",
+    "--dur-normal",
+    "--ease-out",
+    "--font-sans",
+    "--fw-bold",
+    "--label1-line",
+    "--label1-size",
+    "--radius-sm",
+    "--shadow-md",
+    "--shadow-sm",
+    "--space-2",
+    "--space-3",
+    "--space-4"
+  ],
+  "apiLinks": [],
+  "migration": [
+    "아이콘은 Icon registry의 chevron을 사용하고, 선/배경은 semantic token을 따릅니다. raw SVG나 legacy border alias를 새 source of truth로 쓰지 않습니다."
+  ],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/LayoutDockPanel.stories.jsx",
+    "entryStoryId": "lds-product-layout-dock-panel--dock-panels",
+    "publicStories": [
+      {
+        "id": "lds-product-layout-dock-panel--dock-panels",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-layout-dock-panel--controlled",
+        "name": "상호작용 · 외부 제어 상태",
+        "role": "interaction"
+      },
+      {
+        "id": "lds-product-layout-dock-panel--resizable",
+        "name": "시나리오 · 너비 조절",
+        "role": "scenario"
+      },
+      {
+        "id": "lds-product-layout-dock-panel--left-side",
+        "name": "시나리오 · 왼쪽 배치",
+        "role": "scenario"
+      },
+      {
+        "id": "lds-product-layout-dock-panel--collapsed",
+        "name": "시나리오 · 접힌 상태",
+        "role": "scenario"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "evidence"
+  }
+}

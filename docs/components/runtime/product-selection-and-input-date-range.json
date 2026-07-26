@@ -1,0 +1,287 @@
+{
+  "slug": "product-selection-and-input-date-range",
+  "title": "Date Range",
+  "storybookTitle": "LDS Product/Selection and Input/Date Range",
+  "layer": "Product",
+  "family": "Selection and Input",
+  "primaryOwner": "DateRangeField",
+  "ownerComponents": [
+    "DateRangeField"
+  ],
+  "supportingComponents": [
+    "FilterChip"
+  ],
+  "purpose": "조회·예약 기간처럼 두 날짜의 순서 검증과 자주 쓰는 preset이 필요할 때 적합합니다. 날짜 하나만 받는 폼에는 Date Range 대신 Date Picker를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "Carbon의 단일 calendar에서 연속 범위를 칠하는 표시는 현재 LDS Calendar에 없는 별도 상호작용 축이므로 이번 Product 조합에는 추가하지 않았습니다. 대신 두 날짜의 의미와 오류를 명시적으로 보장합니다."
+  ],
+  "anatomy": [
+    {
+      "part": "startAccessibleLabel",
+      "rule": "startLabel이 복합 노드일 때 trigger와 placeholder에 사용할 평문 이름. @default \"시작일\""
+    },
+    {
+      "part": "endAccessibleLabel",
+      "rule": "endLabel이 복합 노드일 때 trigger와 placeholder에 사용할 평문 이름. @default \"종료일\""
+    },
+    {
+      "part": "groupLabel",
+      "rule": "range group accessible name. @default \"기간 선택\""
+    },
+    {
+      "part": "showFieldLabels",
+      "rule": "각 field의 보이는 label. 툴바에서는 false로 줄일 수 있으며 accessible name은 유지됩니다. @default true"
+    },
+    {
+      "part": "errorMessage",
+      "rule": "Product validation message. Order errors use a specific default; other invalid states use a neutral range prompt."
+    }
+  ],
+  "properties": [
+    {
+      "name": "value",
+      "type": "DateRangeValue | null",
+      "required": false,
+      "description": "제어 기간 값.",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "DateRangeValue",
+      "required": false,
+      "description": "비제어 초기 기간 값.",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: DateRangeValue) = void",
+      "required": false,
+      "description": "시작일 또는 종료일이 바뀔 때 전체 기간과 함께 호출됩니다.",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "startLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "endLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "startAccessibleLabel",
+      "type": "string",
+      "required": false,
+      "description": "startLabel이 복합 노드일 때 trigger와 placeholder에 사용할 평문 이름. @default \"시작일\"",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "endAccessibleLabel",
+      "type": "string",
+      "required": false,
+      "description": "endLabel이 복합 노드일 때 trigger와 placeholder에 사용할 평문 이름. @default \"종료일\"",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "groupLabel",
+      "type": "string",
+      "required": false,
+      "description": "range group accessible name. @default \"기간 선택\"",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "showFieldLabels",
+      "type": "boolean",
+      "required": false,
+      "description": "각 field의 보이는 label. 툴바에서는 false로 줄일 수 있으며 accessible name은 유지됩니다. @default true",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "presets",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "오늘/최근 7일처럼 제품이 날짜 계산을 소유하는 preset control 슬롯.",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "invalid",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "errorMessage",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Product validation message. Order errors use a specific default; other invalid states use a neutral range prompt.",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "내부 DatePicker 크기. @default \"sm\"",
+      "owner": "DateRangeFieldProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "DateRangeFieldProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "errorMessage",
+      "rule": "Product validation message. Order errors use a specific default; other invalid states use a neutral range prompt."
+    }
+  ],
+  "behavior": [
+    "value/defaultValue/onChange로 controlled 또는 uncontrolled 기간을 구성합니다.",
+    "시작일이 정해지면 종료일 달력에 minDate로 전달되어 잘못된 순서를 사전에 차단합니다. 순서 오류 자체는 preset이나 controlled 값처럼 외부에서 들어올 수 있으므로 사후 검증도 그대로 유지합니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "오류는 두 DatePicker trigger에 invalid와 aria-describedby로 직접 연결됩니다. role=\"group\"은 ARIA 1.2에서 aria-invalid를 지원하지 않으므로 group에는 오류 메시지 설명(aria-describedby)만 남기고, 필드 단위 오류 표시는 각 trigger가 담당합니다. 시각 상태는 data-date-range-invalid로도 노출됩니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "presets는 오늘, 최근 7일, 이번 달 등의 control 슬롯입니다. 이 컴포넌트는 preset 선택에 따른 날짜 계산을 추측하지 않습니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "320px에서는 두 필드가 한 열로 재배치되며 DatePicker full 계약으로 부모 폭을 넘지 않습니다."
+    },
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [
+    "시작일과 종료일은 각각 명확한 label을 가집니다. showFieldLabels={false}인 조밀한 툴바에서도 trigger의 accessible name은 유지됩니다.",
+    "startLabel/endLabel에 복합 React node를 쓰면 startAccessibleLabel/endAccessibleLabel로 trigger와 placeholder의 평문 이름을 제공합니다. 이를 생략해도 [object Object]로 직렬화하지 않고 각각 시작일/종료일로 안전하게 대체합니다.",
+    "종료일이 시작일보다 빠르면 기간을 invalid로 표시하고 구체적인 role=\"alert\" 순서 오류를 제공합니다. 제품이 invalid만 전달한 외부 검증에는 “기간 값을 확인해 주세요”라는 중립 문구를 쓰며, 서버 정책이나 timezone 오류는 errorMessage로 명시합니다. 외부 invalid를 종료일 순서 오류로 오인하지 않습니다.",
+    "내부 DatePicker, Calendar, FormField, FilterChip의 입력 높이·focus ring·popup 동작을 재사용했습니다. label과 DatePicker surface color는 active light/dark scope의 semantic token을 직접 해석해 :root에서 고정된 component alias 때문에 값이 사라지지 않게 합니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "FilterChip",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ColorSwatch",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DatePicker",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FileUpload",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FileUploadQueue",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "IconPicker",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "NumberField",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "PinInput",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<DateRangeField\n  value={{ start, end }}\n  onChange={setRange}\n  presets={<FilterChip onClick={selectLast7Days}>최근 7일</FilterChip>}\n/>"
+    }
+  ],
+  "tokens": [
+    "--caption1-line",
+    "--caption1-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-label-normal",
+    "--color-semantic-status-negative-text",
+    "--component-input-label-font-size",
+    "--component-input-label-font-weight",
+    "--component-input-label-line-height",
+    "--font-sans",
+    "--space-1",
+    "--space-2"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormDateRange.stories.jsx",
+    "entryStoryId": "lds-product-selection-and-input-date-range--range-and-product-presets",
+    "publicStories": [
+      {
+        "id": "lds-product-selection-and-input-date-range--range-and-product-presets",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-selection-and-input-date-range--rich-labels-and-disabled",
+        "name": "변형·상태 · 복합 라벨과 비활성 범위",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-selection-and-input-date-range--narrow-invalid-range",
+        "name": "반응형 · 좁은 폭과 잘못된 순서",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

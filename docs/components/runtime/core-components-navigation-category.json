@@ -1,0 +1,223 @@
+{
+  "slug": "core-components-navigation-category",
+  "title": "Category",
+  "storybookTitle": "LDS Core/Components/Navigation/Category",
+  "layer": "Core",
+  "family": "Navigation",
+  "primaryOwner": "Category",
+  "ownerComponents": [
+    "Category"
+  ],
+  "supportingComponents": [],
+  "purpose": "서로 배타적인 상위 분류를 한 줄에서 오가며 현재 선택을 계속 보여줘야 할 때 적합합니다. 단계 이동에는 Tabs를, 많은 옵션이나 폼 값 선택에는 Select를 사용하고, 단순 필터가 여러 개 동시에 적용되는 경우에는 Chip이나 별도 필터 패턴을 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "ariaLabel",
+      "rule": "Accessible name of the radiogroup container. @default \"카테고리\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "items",
+      "type": "CategoryItem[]",
+      "required": true,
+      "description": "",
+      "owner": "CategoryProps"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "CategoryProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "CategoryProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string, item: Exclude) = void",
+      "required": false,
+      "description": "",
+      "owner": "CategoryProps"
+    },
+    {
+      "name": "variant",
+      "type": "\"normal\" | \"alternative\"",
+      "required": false,
+      "description": "variant axis. @default \"normal\"",
+      "owner": "CategoryProps"
+    },
+    {
+      "name": "size",
+      "type": "\"small\" | \"sm\" | \"medium\" | \"md\" | \"large\" | \"lg\" | \"xlarge\" | \"xl\"",
+      "required": false,
+      "description": "size axis: small 24, medium 32, large 36, xlarge 40. @default \"medium\"",
+      "owner": "CategoryProps"
+    },
+    {
+      "name": "padding",
+      "type": "boolean",
+      "required": false,
+      "description": "horizontal padding axis. @default false",
+      "owner": "CategoryProps"
+    },
+    {
+      "name": "verticalPadding",
+      "type": "boolean",
+      "required": false,
+      "description": "verticalPadding axis. @default false",
+      "owner": "CategoryProps"
+    },
+    {
+      "name": "scroll",
+      "type": "\"auto\" | boolean",
+      "required": false,
+      "description": "scroll axis. @default \"auto\"",
+      "owner": "CategoryProps"
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "required": false,
+      "description": "Accessible name of the radiogroup container. @default \"카테고리\"",
+      "owner": "CategoryProps"
+    },
+    {
+      "name": "itemStyle",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "",
+      "owner": "CategoryProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "variant",
+      "rule": "variant axis. @default \"normal\""
+    }
+  ],
+  "behavior": [
+    "Use for horizontal topic/category navigation. Use Tabs for section switching with an underline."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "타입 스케일 정합: small/sm 칩 12.5px → --label2-size(13px)로 스냅했습니다. md(14)/lg(15)와 함께 13/14/15의 깔끔한 사이즈 프로그레션을 이룹니다."
+    },
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-inverse-label",
+      "rule": "light: #FFFFFF; dark: #171719"
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [
+    "단일 선택 라디오그룹 시맨틱: 컨테이너는 role=\"radiogroup\"(ariaLabel, 기본값 카테고리), 칩은 role=\"radio\" + aria-checked입니다. 선택된 칩(없으면 첫 활성 칩)만 Tab 스톱이 되고, Arrow Left/Right·Up/Down은 포커스 이동과 동시에 선택하며(APG 라디오 동작), Home/End는 첫·마지막 활성 칩으로 이동합니다. 비활성 칩은 건너뜁니다.",
+    "item.active는 비제어 모드의 초기 선택 시드로만 사용됩니다. 렌더 시점에 선택을 강제하지 않으므로 두 칩이 동시에 aria-checked가 되는 일이 없습니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "PageIndicator",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Pagination",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Tabs",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Category items={['All', 'Open', 'Done']} defaultValue=\"All\" />\n<Category variant=\"alternative\" size=\"large\" padding verticalPadding items={items} />"
+    }
+  ],
+  "tokens": [
+    "--body2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-inverse-label",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-primary-surface-strong",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-medium",
+    "--label1-size",
+    "--label2-size",
+    "--space-1-5",
+    "--space-2-5"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/NavigationCategory.stories.jsx",
+    "entryStoryId": "lds-core-components-navigation-category--category-patterns",
+    "publicStories": [
+      {
+        "id": "lds-core-components-navigation-category--category-patterns",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-navigation-category--radio-group-semantics",
+        "name": "사용법 · 라디오그룹 시맨틱과 초기 선택",
+        "role": "usage"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

@@ -1,0 +1,356 @@
+{
+  "slug": "core-components-content-card",
+  "title": "Card",
+  "storybookTitle": "LDS Core/Components/Content/Card",
+  "layer": "Core",
+  "family": "Content",
+  "primaryOwner": "Card",
+  "ownerComponents": [
+    "Card"
+  ],
+  "supportingComponents": [
+    "Button",
+    "ContentBadge",
+    "Icon",
+    "ListCell",
+    "Thumbnail",
+    "ToggleIcon"
+  ],
+  "purpose": "제목, 설명, 미디어, 메타 정보와 제한된 행동이 함께 이동해야 하는 콘텐츠 단위에 적합합니다. 단순한 행 목록은 List Cell을, 화면 전체의 큰 구획은 Section이나 Container를 사용하고, 모든 영역을 습관적으로 카드 안에 중첩하지 마세요.",
+  "useWhen": [
+    "Plain children-only Card usage is still supported for generic LDS surfaces."
+  ],
+  "avoidWhen": [],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "elevation",
+      "type": "\"none\" | \"sm\" | \"md\" | \"lg\"",
+      "required": false,
+      "description": "기본 그림자 깊이. @default \"md\"",
+      "owner": "CardProps"
+    },
+    {
+      "name": "interactive",
+      "type": "boolean",
+      "required": false,
+      "description": "카드 전체가 하나의 행동일 때. 호버 리프트 + 그림자 심화에 더해 role=\"button\", tabIndex=0, Enter/Space 활성화, :focus-visible 링을 부여합니다. 내부에 별도의 버튼·링크를 넣지 마세요.",
+      "owner": "CardProps"
+    },
+    {
+      "name": "dark",
+      "type": "boolean",
+      "required": false,
+      "description": "다크 섹션용 네이비 서피스. @default false",
+      "owner": "CardProps"
+    },
+    {
+      "name": "headingLevel",
+      "type": "1 | 2 | 3 | 4 | 5 | 6 | false",
+      "required": false,
+      "description": "구조화 모드 title 의 heading 레벨. false 면 heading 의미 없이 div 로 렌더링합니다(제목이 이미 바깥에 있을 때).",
+      "owner": "CardProps"
+    },
+    {
+      "name": "padding",
+      "type": "number | string",
+      "required": false,
+      "description": "기본 32px 패딩을 재정의.",
+      "owner": "CardProps"
+    },
+    {
+      "name": "platform",
+      "type": "\"desktop\" | \"mobile\"",
+      "required": false,
+      "description": "platform axis. @default \"desktop\"",
+      "owner": "CardProps"
+    },
+    {
+      "name": "skeleton",
+      "type": "boolean",
+      "required": false,
+      "description": "skeleton axis. @default false",
+      "owner": "CardProps"
+    },
+    {
+      "name": "save",
+      "type": "boolean",
+      "required": false,
+      "description": "save action axis. @default false",
+      "owner": "CardProps"
+    },
+    {
+      "name": "saved",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "onSave",
+      "type": "(e: React.MouseEvent) = void",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "toggleIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "thumbnail",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "topContent",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "leadingContent",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "trailingContent",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "description",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "caption",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "subCaption",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "metaCaption",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "bottomContent",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "footer",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CardProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "interactive",
+      "rule": "카드 전체가 하나의 행동일 때. 호버 리프트 + 그림자 심화에 더해 role=\"button\", tabIndex=0, Enter/Space 활성화, :focus-visible 링을 부여합니다. 내부에 별도의 버튼·링크를 넣지 마세요."
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "headingLevel — 구조화 모드의 title 은 기본적으로 로 렌더링됩니다(WCAG 1.3.1). 카드가 놓이는 문서의 제목 계층에 맞춰 1–6 을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false} 로 heading 의미를 끄세요. 레벨은 건너뛰지 않습니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "SaveButton(save)과 toggleIcon 은 포커스 가능한 요소이므로 규칙 1과 함께 쓰지 마세요."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "Card — 모든 것이 올라가는 중립 서피스: 화이트(또는 dark 네이비), 헤어라인 보더, 부드러운 네이비 그림자, 16px 반경. interactive는 호버 시 떠오릅니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "1. 전체 카드가 하나의 행동일 때 → interactive + onClick. 카드 루트가 role=\"button\" · tabIndex=0 이 되고 Enter/Space 로 활성화되며 :focus-visible 링이 붙습니다(WCAG 2.1.1). 이때 카드 안에는 버튼·링크·스위치 같은 포커스 가능한 요소를 넣지 마세요. 버튼 안의 버튼(nested interactive)은 유효하지 않은 마크업이고, 스크린리더가 카드 이름으로 내부 텍스트를 전부 읽어 이름이 문단처럼 길어집니다. 2."
+    },
+    {
+      "subject": "--body1-size",
+      "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ContentBadge",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ListCell",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Thumbnail",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ToggleIcon",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ChoiceCard",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Card elevation=\"md\" interactive onClick={openDetail}>…</Card>\n<Card dark padding={22}>…</Card>"
+    },
+    {
+      "label": "추가 조합 2",
+      "code": "<Card platform=\"mobile\" save title=\"Title\" description=\"Description\" />\n<Card platform=\"desktop\" skeleton headingLevel={2} />"
+    }
+  ],
+  "tokens": [
+    "--body1-size",
+    "--body2-size",
+    "--caption1-size",
+    "--caption2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-focus-indicator",
+    "--color-semantic-inverse-label-neutral-soft",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-strong",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-primary-surface-strong",
+    "--component-card-bg",
+    "--component-card-bg-dark",
+    "--component-card-border",
+    "--component-card-border-dark",
+    "--component-card-fg",
+    "--component-card-fg-dark",
+    "--component-card-hover-transform",
+    "--component-card-padding",
+    "--component-card-radius",
+    "--component-card-shadow-lg",
+    "--component-card-shadow-md",
+    "--component-card-shadow-none",
+    "--component-card-shadow-sm",
+    "--component-card-transition",
+    "--fw-medium",
+    "--fw-semibold",
+    "--label2-line",
+    "--label2-size",
+    "--radius-md"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/Card.stories.jsx",
+    "entryStoryId": "lds-core-components-content-card--playground",
+    "publicStories": [
+      {
+        "id": "lds-core-components-content-card--playground",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-content-card--card-affordances",
+        "name": "사용법 · 보조 동작과 미디어 정보",
+        "role": "usage"
+      },
+      {
+        "id": "lds-core-components-content-card--content-card-patterns",
+        "name": "사용법 · 콘텐츠형과 목록형",
+        "role": "usage"
+      },
+      {
+        "id": "lds-core-components-content-card--elevation",
+        "name": "사용법 · 표면 고도",
+        "role": "usage"
+      },
+      {
+        "id": "lds-core-components-content-card--interactive-and-dark",
+        "name": "변형·상태 · 상호작용과 어두운 표면",
+        "role": "variants-states"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

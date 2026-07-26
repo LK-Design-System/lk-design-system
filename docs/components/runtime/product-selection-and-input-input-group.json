@@ -1,0 +1,255 @@
+{
+  "slug": "product-selection-and-input-input-group",
+  "title": "Input Group",
+  "storybookTitle": "LDS Product/Selection and Input/Input Group",
+  "layer": "Product",
+  "family": "Selection and Input",
+  "primaryOwner": "InputGroup",
+  "ownerComponents": [
+    "InputGroup"
+  ],
+  "supportingComponents": [],
+  "purpose": "통화, 단위, 프로토콜처럼 사용자가 바꾸지 않는 문맥이 값 해석에 필수적일 때 적합합니다. 단순한 안내 텍스트는 이 컴포넌트 대신 Input 설명으로 제공하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "prefix",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "suffix",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) = void",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "helper",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "error",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "invalid",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "status",
+      "type": "'normal' | 'positive' | 'negative'",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'small' | 'medium'",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "readOnly",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "inputProps",
+      "type": "React.InputHTMLAttributes",
+      "required": false,
+      "description": "",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "fieldStyle",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "Styles for the label/control/message stack.",
+      "owner": "InputGroupProps"
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "Styles for the grouped control shell.",
+      "owner": "InputGroupProps"
+    }
+  ],
+  "states": [],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Prefix and suffix are fixed context, not part of the editable value. The whole group shares one label, border, focus ring, helper/error relationship, and 32px/48px field scale."
+    },
+    {
+      "subject": "--color-semantic-fill-normal",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    },
+    {
+      "subject": "--color-semantic-label-alternative",
+      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+    },
+    {
+      "subject": "--color-semantic-label-disable",
+      "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
+    },
+    {
+      "subject": "--component-input-font-size",
+      "rule": "var(--body1-size)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "Reference basis: GOV.UK Text input prefixes and suffixes and Carbon Text input.",
+    "필드·상태 prop: status(normal/positive/negative) · invalid(오류 강조 토글) · fieldStyle(label·helper·error를 포함한 전체 필드 컨테이너 스타일)."
+  ],
+  "accessibility": [
+    "애드온은 값 해석에 필수인 문맥이므로 input의 aria-describedby에 연결합니다. 단위·프로토콜(ms, %, https://)이 form 모드 SR 사용자에게도 들리게 하려는 것이며, 소비자가 label/hint에 단위를 중복 기재할 필요가 없습니다.",
+    "애드온 노드는 자기 접근성 의미를 스스로 소유합니다. 컴포넌트가 노드 애드온을 일괄 aria-hidden 처리하지 않으므로 순수 장식 아이콘은 소비자가 직접 aria-hidden을 겁니다(레포의 Icon은 이름을 주지 않으면 스스로 숨깁니다).",
+    "readOnly remains focusable and selectable. Consumer and generated description ids are merged on the input.",
+    "prefix / suffix — 애드온 노드. value / defaultValue / onChange — 텍스트. inputProps — 네이티브 input 패스스루. inputProps.onChange/onFocus/onBlur는 폐기되지 않고 컴포넌트 내부 처리보다 먼저 호출됩니다(값 커밋은 그대로 이어집니다). inputProps['aria-describedby']는 생성된 설명 id와 병합됩니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "PasswordInput",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<InputGroup prefix=\"ID\" suffix=\"개\" placeholder=\"12\" />\n<InputGroup suffix=\"%\" defaultValue=\"72\" />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-fill-normal",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-disable",
+    "--component-input-border-color",
+    "--component-input-border-width",
+    "--component-input-focus-shadow",
+    "--component-input-font-size",
+    "--component-input-height",
+    "--component-input-letter-spacing",
+    "--component-input-line-height",
+    "--component-input-padding-x",
+    "--component-input-radius",
+    "--component-input-text-color",
+    "--control-h-sm",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-semibold",
+    "--space-2"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormInputGroup.stories.jsx",
+    "entryStoryId": "lds-product-selection-and-input-input-group--input-group-overview",
+    "publicStories": [
+      {
+        "id": "lds-product-selection-and-input-input-group--input-group-overview",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 3
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "omitted-no-evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "slug": "core-components-layout-mobile-system-bars",
+  "title": "Mobile System Bars",
+  "storybookTitle": "LDS Core/Components/Layout/Mobile System Bars",
+  "layer": "Core",
+  "family": "Layout",
+  "primaryOwner": "MobileSystemBars",
+  "ownerComponents": [
+    "MobileSystemBars"
+  ],
+  "supportingComponents": [
+    "Stack",
+    "Tag"
+  ],
+  "purpose": "iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포함한 전체 프레임을 검토할 때 적합합니다. 실제 웹 콘텐츠의 일반 여백은 Container나 Stack을 사용하고, 데스크톱 화면에 모바일 시스템 바를 장식처럼 추가하지 마세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "Do not use this component as production OS chrome."
+  ],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "platform",
+      "type": "'ios' | 'android'",
+      "required": false,
+      "description": "Platform chrome style. @default \"ios\"",
+      "owner": "MobileSystemBarsProps"
+    },
+    {
+      "name": "showStatus",
+      "type": "boolean",
+      "required": false,
+      "description": "Show the status bar row. @default true",
+      "owner": "MobileSystemBarsProps"
+    },
+    {
+      "name": "showHome",
+      "type": "boolean",
+      "required": false,
+      "description": "Show the home indicator row. @default true",
+      "owner": "MobileSystemBarsProps"
+    },
+    {
+      "name": "time",
+      "type": "string",
+      "required": false,
+      "description": "Status bar time label. @default \"9:41\"",
+      "owner": "MobileSystemBarsProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "showStatus",
+      "rule": "Show the status bar row. @default true"
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--fw-bold",
+      "rule": "700"
+    },
+    {
+      "subject": "--mobile-home-indicator-height",
+      "rule": "34px"
+    },
+    {
+      "subject": "--mobile-status-bar-min-height",
+      "rule": "44px"
+    }
+  ],
+  "responsive": [
+    "Use only in design-system examples, prototypes, and mock mobile frames.",
+    "Keep safe-area spacing separate through --mobile-safe-area-top and --mobile-safe-area-bottom."
+  ],
+  "contentGuidance": [],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Stack",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Tag",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "AspectRatio",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Center",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Cluster",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Col",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Columns",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Container",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<MobileSystemBars platform=\"ios\" />\n<MobileSystemBars platform=\"android\" showHome={false} />"
+    }
+  ],
+  "tokens": [
+    "--caption1-size",
+    "--component-system-bars-fg",
+    "--component-system-bars-home-height",
+    "--component-system-bars-home-width",
+    "--component-system-bars-muted-fg",
+    "--fw-bold",
+    "--mobile-home-indicator-height",
+    "--mobile-status-bar-min-height",
+    "--radius-pill",
+    "--radius-xs",
+    "--space-4"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/LayoutEssentials.stories.jsx",
+    "entryStoryId": "lds-core-components-layout-essential--mobile-system-bars-by-platform",
+    "publicStories": [
+      {
+        "id": "lds-core-components-layout-essential--mobile-system-bars-by-platform",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "omitted-no-evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

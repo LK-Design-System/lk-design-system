@@ -1,0 +1,9 @@
+{
+  "name": "@lk-robotics/lds-3d-three",
+  "version": "0.1.0-alpha.1",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  }
+}

@@ -1,0 +1,333 @@
+{
+  "slug": "core-components-overlay-confirm-dialog",
+  "title": "Confirm Dialog",
+  "storybookTitle": "LDS Core/Components/Overlay/Confirm Dialog",
+  "layer": "Core",
+  "family": "Overlay",
+  "primaryOwner": "ConfirmDialog",
+  "ownerComponents": [
+    "ConfirmDialog"
+  ],
+  "supportingComponents": [
+    "Button",
+    "Modal"
+  ],
+  "purpose": "삭제·초기화·권한 해제처럼 결과가 크고 사용자의 명시적 동의가 필요한 단일 결정에 적합합니다. 설명·입력·여러 단계가 필요한 작업에는 Modal을, 위험도가 낮고 되돌릴 수 있는 동작에는 즉시 실행 후 Toast로 결과를 알리는 방식을 고려하세요.",
+  "useWhen": [
+    "조건이 충족되기 전에는 confirmDisabled, 요청 중에는 confirmLoading을 사용해 중복 실행을 막습니다."
+  ],
+  "avoidWhen": [
+    "ConfirmDialog는 route 전환, 비동기 실패 정책, 파괴적 작업 권한을 소유하지 않습니다. 제품은 controlled open 상태와 실제 실행 정책을 연결합니다."
+  ],
+  "anatomy": [
+    {
+      "part": "title",
+      "rule": "다이얼로그 제목."
+    },
+    {
+      "part": "confirmLabel",
+      "rule": "확인 버튼 라벨. @default \"확인\""
+    },
+    {
+      "part": "cancelLabel",
+      "rule": "취소 버튼 라벨. @default \"취소\""
+    },
+    {
+      "part": "confirmLoadingLabel",
+      "rule": "pending 상태의 접근 가능한 라벨. @default \"처리 중\""
+    },
+    {
+      "part": "ariaLabel",
+      "rule": "title이 없을 때 사용할 접근 가능한 이름. @default \"확인 다이얼로그\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "open",
+      "type": "boolean",
+      "required": false,
+      "description": "열림 상태. @default false",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "다이얼로그 제목.",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "본문.",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "tone",
+      "type": "'default' | 'danger' | 'warning'",
+      "required": false,
+      "description": "확인 액션 톤. @default \"default\"",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "headingLevel",
+      "type": "2 | 3 | 4 | 5 | 6",
+      "required": false,
+      "description": "제목 heading level. @default 2",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "confirmLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "확인 버튼 라벨. @default \"확인\"",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "cancelLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "취소 버튼 라벨. @default \"취소\"",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "confirmDisabled",
+      "type": "boolean",
+      "required": false,
+      "description": "선행 조건이 충족되지 않았을 때 확인 액션을 비활성화합니다. @default false",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "confirmLoading",
+      "type": "boolean",
+      "required": false,
+      "description": "확인 요청 중 pending 상태를 표시하고 중복 실행을 막습니다. @default false",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "confirmLoadingLabel",
+      "type": "string",
+      "required": false,
+      "description": "pending 상태의 접근 가능한 라벨. @default \"처리 중\"",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "onConfirm",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "확인 클릭 콜백.",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "onCancel",
+      "type": "() = void",
+      "required": false,
+      "description": "취소 클릭 또는 scrim/Escape dismiss 콜백.",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "onClose",
+      "type": "() = void",
+      "required": false,
+      "description": "onCancel이 없을 때 쓰는 닫기 콜백.",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "closeOnScrim",
+      "type": "boolean",
+      "required": false,
+      "description": "scrim 클릭으로 닫기. @default true",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "initialFocusRef",
+      "type": "React.RefObject",
+      "required": false,
+      "description": "열릴 때 우선 초점을 받을 ConfirmDialog 내부 요소. 기본값은 취소 액션입니다.",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "returnFocusRef",
+      "type": "React.RefObject",
+      "required": false,
+      "description": "닫힌 뒤 자동으로 캡처한 trigger 대신 초점을 돌려보낼 요소.",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "restoreFocus",
+      "type": "boolean",
+      "required": false,
+      "description": "닫힌 뒤 trigger 또는 returnFocusRef로 초점을 복원합니다. @default true",
+      "owner": "ConfirmDialogProps"
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "required": false,
+      "description": "title이 없을 때 사용할 접근 가능한 이름. @default \"확인 다이얼로그\"",
+      "owner": "ConfirmDialogProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "open",
+      "rule": "열림 상태. @default false"
+    },
+    {
+      "state": "tone",
+      "rule": "확인 액션 톤. @default \"default\""
+    },
+    {
+      "state": "confirmDisabled",
+      "rule": "선행 조건이 충족되지 않았을 때 확인 액션을 비활성화합니다. @default false"
+    },
+    {
+      "state": "confirmLoading",
+      "rule": "확인 요청 중 pending 상태를 표시하고 중복 실행을 막습니다. @default false"
+    },
+    {
+      "state": "confirmLoadingLabel",
+      "rule": "pending 상태의 접근 가능한 라벨. @default \"처리 중\""
+    }
+  ],
+  "behavior": [
+    "ConfirmDialog — 삭제, reset, 배포, 원격 제어처럼 되돌리기 어렵거나 안전 영향이 있는 액션을 확인하는 전용 다이얼로그."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "하단 CTA는 ActionArea align=\"end\"와 기본 Button medium 높이(40px)를 따르며, 버튼 사이는 spacing token 8px을 유지합니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "가장 가까운 sibling은 Modal, Drawer, Sheet, Alert입니다. 중앙 배치, 최대 너비, 제목·설명, ActionArea 구조와 시각 token은 그대로 두고 focus/Escape 계층만 동일한 modal 계약으로 정렬했습니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "Fluent 2 Dialog: 확인 surface의 분명한 제목·본문·동작 구조를 유지하고, 불가피한 중첩에서는 최상위 surface만 상호작용하도록 했습니다."
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "파괴적 액션은 tone=\"danger\"와 구체적인 confirmLabel을 사용합니다.",
+    "tone=\"danger\"는 확인 버튼에 파괴적 스타일을 적용합니다. 위험의 내용과 결과는 별도 상태 뱃지 대신 구체적인 제목·본문·동작 라벨로 설명합니다."
+  ],
+  "accessibility": [
+    "Modal, Drawer, Sheet와 같은 공통 overlay focus controller를 사용합니다. 열리면 기본적으로 취소 액션으로 초점을 이동하고, 필요하면 initialFocusRef로 다른 내부 요소를 지정할 수 있습니다.",
+    "Tab/Shift+Tab, 외부 focus containment, Escape는 현재 stack의 최상위 overlay만 소유합니다. ConfirmDialog가 다른 modal surface 위에서 닫히면 그 surface 내부의 호출 지점으로 돌아가며, base surface까지 닫힐 때 페이지 trigger로 복원합니다.",
+    "닫힌 뒤 별도 위치로 이동해야 하면 returnFocusRef, 의도적으로 복원하지 않을 때만 restoreFocus={false}를 사용합니다.",
+    "열려 있는 동안 배경 페이지 스크롤이 잠깁니다. 공용 useDialogFocus 엔진이 중첩 깊이를 세어 마지막 overlay가 닫힐 때만 해제하며, 스크롤바 제거로 인한 layout shift는 body padding으로 보정합니다.",
+    "WAI-ARIA APG Modal Dialog Pattern: 내부 초기 초점, Tab/Shift+Tab 순환, Escape dismiss, 호출 지점 복귀, role=\"dialog\"/aria-modal/접근 가능한 이름을 계약으로 채택했습니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Modal",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Alert",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Dimmer",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DropdownMenu",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Snackbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Toast",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ToastStack",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<ConfirmDialog\n  open={open}\n  tone=\"danger\"\n  title=\"경로를 초기화할까요?\"\n  confirmLabel=\"초기화\"\n  cancelLabel=\"취소\"\n  confirmDisabled={!ready}\n  confirmLoading={submitting}\n  onConfirm={resetRoute}\n  onCancel={() => setOpen(false)}\n>\n  저장되지 않은 waypoint 변경 사항이 사라집니다.\n</ConfirmDialog>"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--component-confirm-dialog-max-width",
+    "--component-dialog-radius",
+    "--component-dialog-scrim",
+    "--component-dialog-scrim-blur",
+    "--font-sans",
+    "--fw-extra",
+    "--heading3-line",
+    "--heading3-size",
+    "--label1-line",
+    "--label1-size",
+    "--shadow-xl",
+    "--space-2",
+    "--space-4",
+    "--space-6"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/OverlayConfirmDialog.stories.jsx",
+    "entryStoryId": "lds-core-components-overlay-confirm-dialog--confirmation-states",
+    "publicStories": [
+      {
+        "id": "lds-core-components-overlay-confirm-dialog--confirmation-states",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

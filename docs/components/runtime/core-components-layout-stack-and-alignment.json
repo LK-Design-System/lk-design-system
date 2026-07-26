@@ -1,0 +1,203 @@
+{
+  "slug": "core-components-layout-stack-and-alignment",
+  "title": "Stack and Alignment",
+  "storybookTitle": "LDS Core/Components/Layout/Stack and Alignment",
+  "layer": "Core",
+  "family": "Layout",
+  "primaryOwner": "Stack",
+  "ownerComponents": [
+    "Cluster",
+    "Spacer",
+    "Stack"
+  ],
+  "supportingComponents": [],
+  "purpose": "세로 콘텐츠 묶음, 줄바꿈 가능한 가로 태그 묶음, 양끝 정렬처럼 단순한 흐름을 구성할 때 적합합니다. 여러 열의 반응형 배치는 Grid나 Columns를, 페이지 전체 구획은 Page Structure를 사용하고 의미 없는 래퍼를 늘리지 마세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "gap",
+      "type": "number | string",
+      "required": false,
+      "description": "갭. @default 10",
+      "owner": "ClusterProps"
+    },
+    {
+      "name": "align",
+      "type": "React.CSSProperties['alignItems']",
+      "required": false,
+      "description": "",
+      "owner": "ClusterProps"
+    },
+    {
+      "name": "justify",
+      "type": "React.CSSProperties['justifyContent']",
+      "required": false,
+      "description": "",
+      "owner": "ClusterProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ClusterProps"
+    },
+    {
+      "name": "size",
+      "type": "number | string",
+      "required": false,
+      "description": "고정 크기(px/CSS). 생략하면 유연한 스페이서(flex:1).",
+      "owner": "SpacerProps"
+    },
+    {
+      "name": "axis",
+      "type": "'vertical' | 'horizontal'",
+      "required": false,
+      "description": "고정 크기의 축. @default \"vertical\"",
+      "owner": "SpacerProps"
+    },
+    {
+      "name": "direction",
+      "type": "'row' | 'column'",
+      "required": false,
+      "description": "",
+      "owner": "StackProps"
+    },
+    {
+      "name": "gap",
+      "type": "number | string",
+      "required": false,
+      "description": "갭(px 또는 CSS 길이). @default 16",
+      "owner": "StackProps"
+    },
+    {
+      "name": "align",
+      "type": "React.CSSProperties['alignItems']",
+      "required": false,
+      "description": "",
+      "owner": "StackProps"
+    },
+    {
+      "name": "justify",
+      "type": "React.CSSProperties['justifyContent']",
+      "required": false,
+      "description": "",
+      "owner": "StackProps"
+    },
+    {
+      "name": "wrap",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "StackProps"
+    },
+    {
+      "name": "as",
+      "type": "React.ElementType",
+      "required": false,
+      "description": "",
+      "owner": "StackProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "StackProps"
+    }
+  ],
+  "states": [],
+  "behavior": [],
+  "quantitativeRules": [],
+  "responsive": [
+    "direction row · column. gap — px/CSS. align / justify / wrap — 플렉스 컨트롤. as — 요소. 줄바꿈되는 칩 행에는 Cluster를 쓰세요."
+  ],
+  "contentGuidance": [],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Cluster",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "Spacer",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "AspectRatio",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Center",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Col",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Columns",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Container",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Divider",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Stack gap={12}>…</Stack>\n<Stack direction=\"row\" gap={8} align=\"center\" justify=\"space-between\">…</Stack>"
+    }
+  ],
+  "tokens": [],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/LayoutStack.stories.jsx",
+    "entryStoryId": "lds-core-components-layout-stack-and-alignment--stack-and-alignment",
+    "publicStories": [
+      {
+        "id": "lds-core-components-layout-stack-and-alignment--stack-and-alignment",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 2
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "omitted-no-evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "omitted-no-evidence",
+    "responsive": "evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "omitted-no-evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

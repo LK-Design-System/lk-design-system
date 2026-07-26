@@ -1,0 +1,35 @@
+<link rel="icon" type="image/svg+xml" href="./assets/brand/lk-favicon.svg" />
+<script>
+  /*
+   * Documentation-only Foundations still need a hidden CSF story so Autodocs can build their
+   * page. Old bookmarks can therefore address that internal Canvas directly even though the
+   * sidebar no longer exposes it. Canonicalize the known legacy route before the manager boots
+   * so readers land on the decision guide instead of an empty-looking validation specimen.
+   */
+  (() => {
+    const canonicalDocsRoutes = {
+      '/story/lds-core-foundation-design-token--overview':
+        '/docs/lds-core-foundation-design-token--docs',
+    };
+    const url = new URL(window.location.href);
+    const currentPath = url.searchParams.get('path');
+    const canonicalPath = canonicalDocsRoutes[currentPath];
+
+    if (canonicalPath) {
+      url.searchParams.set('path', canonicalPath);
+      window.location.replace(url);
+    }
+  })();
+</script>
+<script type="module">
+  /*
+   * Storybook 10.4's common preset currently overwrites project feature values while composing
+   * the manager HTML. Module scripts run after that generated classic config block and before the
+   * manager runtime, so this keeps the supported feature flag effective until that preset is gone.
+   */
+  window.FEATURES = {
+    ...window.FEATURES,
+    sidebarOnboardingChecklist: false,
+    menuOnboardingChecklist: false,
+  };
+</script>

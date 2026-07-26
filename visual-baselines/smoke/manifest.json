@@ -1,0 +1,447 @@
+{
+  "schemaVersion": 1,
+  "count": 36,
+  "maxDiffRatio": 0.01,
+  "captures": [
+    {
+      "name": "foundation-color-brand-icons",
+      "id": "lds-core-foundation-iconography--color-brand-icons",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 620
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 18641,
+      "sha256": "55d6ca13bbb09402d1a63c390c46a2903a683dfb3f664a9f5b3d73cd5cf0dae1"
+    },
+    {
+      "name": "react-card-interactive-dark",
+      "id": "lds-core-components-content-card--interactive-and-dark",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 520
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 32043,
+      "sha256": "44b16b9941f41921ce040958362662ccdf4c9d9879bc82df73c2af474d8303b5"
+    },
+    {
+      "name": "react-card-content-patterns-dark",
+      "id": "lds-core-components-content-card--content-card-patterns",
+      "query": {
+        "globals": "backgrounds.value:Dark"
+      },
+      "viewport": {
+        "width": 1180,
+        "height": 860
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 112514,
+      "sha256": "f757d546f8e2599f61a57eb696191133246abe7f8a08f5982d8677b353cbb609"
+    },
+    {
+      "name": "wds-content-card-patterns",
+      "id": "lds-core-components-content-card--content-card-patterns",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 860
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 99574,
+      "sha256": "8b51d27b01d0d341e71c71b4dd36986ab052ce78abb5223c7f80b168c8feb4e5"
+    },
+    {
+      "name": "action-button-matrix",
+      "id": "lds-core-components-action-button--action-matrix",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 860
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 32555,
+      "sha256": "e01149cffc0a98efb0e3c49abd5a6b41dcdf52b546475692c5306ff0586a36b3"
+    },
+    {
+      "name": "react-product-content-cards",
+      "id": "lds-product-content-product-card--product-cards",
+      "query": {},
+      "viewport": {
+        "width": 1120,
+        "height": 760
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 353477,
+      "sha256": "85a49164da5c24de581be683b2844f44642460f546d7019f4b7be9d77b8a074a"
+    },
+    {
+      "name": "react-topbar",
+      "id": "lds-product-navigation-top-bar--top-bar-default",
+      "query": {},
+      "viewport": {
+        "width": 1120,
+        "height": 520
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 52172,
+      "sha256": "06e0a89bde34d9e7367aa71275fe5656383dcb9da03a1ce56e4ec361ec8c61bd"
+    },
+    {
+      "name": "react-topbar-dark",
+      "id": "lds-product-navigation-top-bar--top-bar-default",
+      "query": {
+        "globals": "backgrounds.value:Dark"
+      },
+      "viewport": {
+        "width": 1120,
+        "height": 520
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 53339,
+      "sha256": "aeea6a247291f076ede6859e70d0c030e65ca84cf123ecbc8fdfe6aa282b72a5"
+    },
+    {
+      "name": "react-forms",
+      "id": "lds-core-components-selection-and-input-input--input-overview",
+      "query": {},
+      "viewport": {
+        "width": 1120,
+        "height": 760
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 29209,
+      "sha256": "5fd0db30e2150a5704894ad581d596c2b66e6a729af848052957c8736370b07a"
+    },
+    {
+      "name": "react-forms-narrow",
+      "id": "lds-core-components-selection-and-input-input--input-overview",
+      "query": {},
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 26465,
+      "sha256": "b9137bcc703943b74c7a6c0184a713cb5f13bd92b0a4d525c67b51b841295090"
+    },
+    {
+      "name": "wds-selection-groups",
+      "id": "lds-core-components-selection-and-input-checkbox--checkboxes",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 760
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 32156,
+      "sha256": "4a24f591856fa70d170c926363a3a7d1e77d152453ab861760094083b4c318cb"
+    },
+    {
+      "name": "wds-selection-groups-narrow",
+      "id": "lds-core-components-selection-and-input-checkbox--checkboxes",
+      "query": {},
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 29798,
+      "sha256": "e7efeb3292849827c03aacf3902766dd9940ad770c8d44f46b7bf2c71fba3497"
+    },
+    {
+      "name": "wds-action-area-states",
+      "id": "lds-core-components-action-action-area--action-area-states",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 79223,
+      "sha256": "ead285b011a2226ca4abd7e895e65e6596f9b8959efb567d0bf43836f245d022"
+    },
+    {
+      "name": "wds-action-area-states-narrow",
+      "id": "lds-core-components-action-action-area--action-area-states",
+      "query": {},
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 65343,
+      "sha256": "63ea6fa8077ca44a347cbfd9969359315f975ce184796836a756e205eecb48ff"
+    },
+    {
+      "name": "wds-textinput-interactions",
+      "id": "lds-core-components-selection-and-input-input--input-interaction-matrix",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 920
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 44741,
+      "sha256": "39eba9ca09a951cbd7d1733213617c74758ad08407a196f7699a2d8b9b7ecc5e"
+    },
+    {
+      "name": "wds-control-states",
+      "id": "lds-core-components-selection-and-input-checkbox--checkbox-state-contract",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 920
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 13010,
+      "sha256": "1261492c6d44c2ce7ff35210061675fbd5de4c1938b42559fa371be4e1e8f8b2"
+    },
+    {
+      "name": "wds-segmented-control-matrix",
+      "id": "lds-core-components-selection-and-input-segmented-control--segmented-control-states",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 760
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 10718,
+      "sha256": "80f6175ec4030d6a97b5649d19ffe9026115951947e7a927b447480d66c6080a"
+    },
+    {
+      "name": "wds-menu-patterns",
+      "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-patterns",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 860
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 63331,
+      "sha256": "79c15e0a0ebcf548c6088f51b0687761351f02dbbab8dd5da0c0cb2289126dbe"
+    },
+    {
+      "name": "wds-menu-patterns-dark",
+      "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-patterns",
+      "query": {
+        "globals": "backgrounds.value:Dark"
+      },
+      "viewport": {
+        "width": 1180,
+        "height": 860
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 68542,
+      "sha256": "dcd0153b468570a28b0ac6d226aab97ec2d9f3e5acfad20ec64e0db25b330419"
+    },
+    {
+      "name": "wds-tooltip-patterns",
+      "id": "lds-core-components-content-tooltip--tooltip-patterns",
+      "query": {},
+      "viewport": {
+        "width": 1180,
+        "height": 960
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 82590,
+      "sha256": "5135f2229fa37452c90c23fb6354ac31b2ea0bc55b22244cf78d0d7f9dbed7e7"
+    },
+    {
+      "name": "wds-loading-states",
+      "id": "lds-core-components-status-skeleton--skeleton-overview",
+      "query": {},
+      "viewport": {
+        "width": 1120,
+        "height": 860
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 60526,
+      "sha256": "8f0fd98815abd0fdfeb7f50a7b7f0c3cbd49c05ca1cf6d7d0aa89dc857cb24bb"
+    },
+    {
+      "name": "wds-alert-platform-variants",
+      "id": "lds-core-components-overlay-alert--alert-platform-preview",
+      "query": {},
+      "viewport": {
+        "width": 1120,
+        "height": 700
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 44189,
+      "sha256": "0485e7797492281af5896829046314f753d11bb27ecfa818bd6af4c086daa203"
+    },
+    {
+      "name": "wds-alert-platform-variants-dark",
+      "id": "lds-core-components-overlay-alert--alert-platform-preview",
+      "query": {
+        "globals": "backgrounds.value:Dark"
+      },
+      "viewport": {
+        "width": 1120,
+        "height": 700
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 56809,
+      "sha256": "9d4983e312771d63652da582c7bd013bc3f199cbe32a435498f5b8c380c312e8"
+    },
+    {
+      "name": "react-overlay-alert",
+      "id": "lds-product-overlay-popover--popover-overview",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 720
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 30863,
+      "sha256": "042751a12a6b16ccbdc6ac7a2c2aadce9a02a8a945050a2e0cd7b357e6f2a097"
+    },
+    {
+      "name": "product-validation-summary",
+      "id": "lds-product-selection-and-input-validation-summary--errors-and-warnings",
+      "query": {},
+      "viewport": {
+        "width": 860,
+        "height": 520
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 48358,
+      "sha256": "c30ff0f8d0e9b980d108cca70155f272e20aec1e2998cd4790dfabdf7b1ba1d1"
+    },
+    {
+      "name": "product-file-upload-queue",
+      "id": "lds-product-selection-and-input-file-upload-queue--upload-and-conversion",
+      "query": {},
+      "viewport": {
+        "width": 800,
+        "height": 720
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 49273,
+      "sha256": "a8bad6c19be926b364f587092479b16c9da5cf02aefde06ef290f9c9faba1e05"
+    },
+    {
+      "name": "communication-message-family-dark",
+      "id": "lds-product-communication-message--message-family-visual-parity",
+      "query": {},
+      "viewport": {
+        "width": 860,
+        "height": 520
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 48327,
+      "sha256": "5c9bd160289430dc2baf32de55206c132dddcafbed8f547c6ac1077e647aa311"
+    },
+    {
+      "name": "communication-message-overview-light",
+      "id": "lds-product-communication-message--message-overview",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 820
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 83522,
+      "sha256": "04fd6c40acdc02e405ea7b134dc38835f5089e35c21dfe8b404060f3dfe8e948"
+    },
+    {
+      "name": "product-sidenav-docked-expanded",
+      "id": "lds-product-navigation-side-nav--docked-surface",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 620
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 22828,
+      "sha256": "1e6a38ab32ed802f7cace43cbceb16898312ef08062dc5920a07d3752fc5f654"
+    },
+    {
+      "name": "product-sidenav-docked-collapsed",
+      "id": "lds-product-navigation-side-nav--docked-collapsed",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 620
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 12374,
+      "sha256": "58bd26b3bd605ad26a2a2600ed51b25f0facb5053aaff12646da74035e23e165"
+    },
+    {
+      "name": "product-sidenav-docked-reduced-motion",
+      "id": "lds-product-navigation-side-nav--docked-collapsed",
+      "query": {},
+      "viewport": {
+        "width": 900,
+        "height": 620
+      },
+      "reducedMotion": "reduce",
+      "bytes": 12374,
+      "sha256": "58bd26b3bd605ad26a2a2600ed51b25f0facb5053aaff12646da74035e23e165"
+    },
+    {
+      "name": "product-dashboard-shell-normal",
+      "id": "lds-product-layout-dashboard-shell--normal-width",
+      "query": {},
+      "viewport": {
+        "width": 1280,
+        "height": 820
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 110915,
+      "sha256": "8dc16c2cb7acd08d5225ab25d6b46b31beaa636a79de691b8e87fe0829f1ae44"
+    },
+    {
+      "name": "product-dashboard-shell-dark",
+      "id": "lds-product-layout-dashboard-shell--dark-surface",
+      "query": {},
+      "viewport": {
+        "width": 1280,
+        "height": 820
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 76930,
+      "sha256": "6c6edaa0bb0b8c7f131ee0eaea1232dc7cbcd685b113ae5fed006bfb5624dca9"
+    },
+    {
+      "name": "product-navigation-dashboard-fixed",
+      "id": "lds-product-navigation-dashboard-navigation--overview",
+      "query": {},
+      "viewport": {
+        "width": 1280,
+        "height": 820
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 55917,
+      "sha256": "df048b1054b980cf9e7aa94f1fa239aae19f2b8da370babbb2f877d7adf852be"
+    },
+    {
+      "name": "product-navigation-dashboard-overlay-rail",
+      "id": "lds-product-navigation-dashboard-navigation--overlay-peek-rail",
+      "query": {},
+      "viewport": {
+        "width": 1280,
+        "height": 820
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 18423,
+      "sha256": "22ad2eaf9a8bf4164528b811748410b9541380cc6de86c1a5c9c30589706e7fd"
+    },
+    {
+      "name": "product-navigation-dashboard-topbar-toggle",
+      "id": "lds-product-navigation-dashboard-navigation--top-bar-toggle",
+      "query": {},
+      "viewport": {
+        "width": 1280,
+        "height": 820
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 19306,
+      "sha256": "b784ad6f646190f67c7c7643ea390ed27dc18bf1d67fd9be6d0ca9a86e9d2c86"
+    }
+  ]
+}

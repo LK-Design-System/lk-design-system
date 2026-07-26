@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": 1,
+  "reviewedAt": "2026-07-25",
+  "status": "pass",
+  "scope": "LDS public component entries and non-Foundation Storybook decision pages",
+  "coverage": {
+    "componentEntries": 179,
+    "namedPublicExports": 182,
+    "decisionGuides": 148,
+    "referenceOnlyEntries": 8,
+    "requiredSections": 15,
+    "generatedMarkdownGuides": 148,
+    "lazyStorybookGuidePayloads": 148,
+    "documentationSurfaces": [
+      "docs/components/COMPONENT_REFERENCE.md",
+      "docs/components/PROGRESS_BOARD.md"
+    ]
+  },
+  "requiredSections": [
+    "purpose-and-selection",
+    "anatomy",
+    "properties",
+    "states",
+    "behavior",
+    "quantitative-rules",
+    "responsive",
+    "content-writing",
+    "accessibility",
+    "exceptions",
+    "related-components",
+    "examples",
+    "tokens-api",
+    "migration",
+    "machine-readable-reference"
+  ],
+  "visualReview": {
+    "score": 92,
+    "threshold": 90,
+    "verdict": "pass",
+    "categoryMatch": true,
+    "reference": "Long-form editorial design-system guidance",
+    "desktop": {
+      "viewportWidth": 1440,
+      "clientWidth": 1440,
+      "scrollWidth": 1440,
+      "majorSections": 4,
+      "focusableTables": 2,
+      "scrollHeight": 4196
+    },
+    "mobile": {
+      "viewportWidth": 390,
+      "clientWidth": 390,
+      "scrollWidth": 390,
+      "majorSections": 4,
+      "focusableTables": 2,
+      "scrollHeight": 6635
+    },
+    "reasoning": "The 15-section guide is generated to docs/components/guides/*.md and llms.txt, which is the long-form surface this score refers to. Storybook's Docs tab is not that surface and no longer pretends to be: it carries the four sections a reader needs while looking at the component — 사용 판단, Properties (states included), Accessibility, Tokens — and points at the generated guide for the rest. Reprinting the whole guide made a component viewer print 3,400px per page of which 63% also appeared on other pages; Button went 12,976px to 4,196px. Measured at 1440px and 390px with no page-level horizontal overflow, one title, one heading ramp and one block rhythm shared with Storybook's own blocks."
+  },
+  "sourceOfTruth": [
+    "docs/components/component-content.json",
+    "docs/components/component-content.schema.json",
+    "components/**/*.prompt.md",
+    "components/**/*.d.ts",
+    "components/**/*.jsx",
+    "docs/references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json",
+    "tokens/source.json"
+  ],
+  "verification": [
+    "npm run check:components",
+    "npm run build:storybook",
+    "npm run check:storybook-ia",
+    "npm run check:inventory",
+    "npm run check:docs",
+    "npm run check:types",
+    "A11Y_SHARD=1/4..4/4 npm run check:a11y (532 stories total)"
+  ],
+  "knownDifferences": [
+    "Existing prompt contracts intentionally retain some English API terminology, so prose language is not yet uniform on every guide.",
+    "LDS uses live component, type and token evidence instead of copying branded screenshots or product examples.",
+    "iOS and Android status remains not-tracked because this repository does not own those implementations."
+  ]
+}

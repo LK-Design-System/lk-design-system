@@ -1,0 +1,165 @@
+{
+  "slug": "product-action-bookmark",
+  "title": "Bookmark",
+  "storybookTitle": "LDS Product/Action/Bookmark",
+  "layer": "Product",
+  "family": "Action",
+  "primaryOwner": "Bookmark",
+  "ownerComponents": [
+    "Bookmark"
+  ],
+  "supportingComponents": [],
+  "purpose": "카드·목록·문서의 trailing action에서 한 항목을 저장하거나 저장 해제할 때 적합합니다. 일회성 실행이나 여러 항목의 폼 선택에는 Bookmark 대신 Button 또는 Checkbox를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "저장 대상의 이름. 접근 이름이 \"{label} 북마크\"가 됩니다(미지정 시 북마크)."
+    }
+  ],
+  "properties": [
+    {
+      "name": "active",
+      "type": "boolean",
+      "required": false,
+      "description": "제어되는 저장 상태.",
+      "owner": "BookmarkProps"
+    },
+    {
+      "name": "defaultActive",
+      "type": "boolean",
+      "required": false,
+      "description": "비제어 초기 상태. @default false",
+      "owner": "BookmarkProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(next: boolean) = void",
+      "required": false,
+      "description": "",
+      "owner": "BookmarkProps"
+    },
+    {
+      "name": "size",
+      "type": "number",
+      "required": false,
+      "description": "글리프 크기(px). @default 24",
+      "owner": "BookmarkProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "비활성(흐림, 상호작용 불가). @default false",
+      "owner": "BookmarkProps"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "저장 대상의 이름. 접근 이름이 \"{label} 북마크\"가 됩니다(미지정 시 북마크).",
+      "owner": "BookmarkProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "active",
+      "rule": "제어되는 저장 상태."
+    },
+    {
+      "state": "defaultActive",
+      "rule": "비제어 초기 상태. @default false"
+    },
+    {
+      "state": "disabled",
+      "rule": "비활성(흐림, 상호작용 불가). @default false"
+    }
+  ],
+  "behavior": [
+    "active / defaultActive / onChange(next) — 제어/비제어. size — 글리프 px. disabled — 비활성."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "눌림 축소(scale 0.86)는 React 상태이며 포인터와 Enter/Space에 동일하게 적용됩니다(현재 값은 data-pressed). DOM style을 직접 만지지 않으므로 포커스를 잃거나 키보드에서 피드백이 빠지지 않습니다."
+    },
+    {
+      "subject": "--color-semantic-label-assistive",
+      "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
+    },
+    {
+      "subject": "--color-semantic-primary-normal",
+      "rule": "light: #3878B3; dark: #5390C9"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "기본 이름은 한국어입니다. 영어 소문자 \"bookmark\"처럼 대상을 특정하지 못하는 범용 라벨은 쓰지 않습니다."
+  ],
+  "accessibility": [
+    "label — 저장 대상의 이름. 접근 이름은 \"{label} 북마크\"가 되고, 지정하지 않으면 북마크입니다. 목록에서 여러 개를 쓸 때는 항목마다 지정해 같은 이름이 반복되지 않게 하세요. aria-label을 직접 주면 그 값이 우선합니다.",
+    "APG toggle button입니다. 이름은 상태에 따라 바뀌지 않고(저장↔저장 해제로 스왑하지 않음), 저장 여부는 aria-pressed만 전달합니다. 아이콘은 aria-hidden이라 채움은 시각 신호로만 쓰입니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Bubble",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Bookmark label=\"야간 순찰 경로\" defaultActive />\n<Bookmark label=\"점검 보고서\" active={saved} onChange={setSaved} size={20} />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-assistive",
+    "--color-semantic-primary-normal",
+    "--dur-fast",
+    "--ease-out"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ActionBookmark.stories.jsx",
+    "entryStoryId": "lds-product-action-bookmark--bookmark-states",
+    "publicStories": [
+      {
+        "id": "lds-product-action-bookmark--bookmark-states",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "slug": "product-operations-dashboard-dashboard-shell",
+  "title": "Dashboard Shell",
+  "storybookTitle": "LDS Product/Operations Dashboard/Dashboard Shell",
+  "layer": "Product",
+  "family": "Operations Dashboard",
+  "primaryOwner": "DashboardShell",
+  "ownerComponents": [
+    "DashboardShell"
+  ],
+  "supportingComponents": [
+    "BarChart",
+    "BottomNav",
+    "Button",
+    "ChartFrame",
+    "Container",
+    "Icon",
+    "IconButton",
+    "Lockup",
+    "MetricCard",
+    "PageHeader",
+    "RefreshControl",
+    "SideNav",
+    "TopBar",
+    "UserMenu"
+  ],
+  "purpose": "side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓은·좁은 화면 탐색 전환을 검증합니다.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [],
+  "properties": [],
+  "states": [],
+  "behavior": [],
+  "quantitativeRules": [],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [],
+  "examples": [],
+  "tokens": [],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/LayoutDashboardShell.stories.jsx",
+    "entryStoryId": "lds-product-layout-dashboard-shell--normal-width",
+    "publicStories": [
+      {
+        "id": "lds-product-layout-dashboard-shell--normal-width",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-layout-dashboard-shell--dark-surface",
+        "name": "변형·상태 · 다크 표면",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-layout-dashboard-shell--header-first",
+        "name": "변형·상태 · 헤더 우선",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-layout-dashboard-shell--narrow-320",
+        "name": "반응형 · 320px 하단 탐색",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-layout-dashboard-shell--auto-navigation-fallback",
+        "name": "반응형 · 좁은 화면의 대체 탐색",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": {
+    "slug": "product-navigation-dashboard-navigation",
+    "title": "Dashboard Navigation",
+    "storybookDocsId": "lds-product-navigation-dashboard-navigation--docs"
+  },
+  "guideDeltaFields": [
+    "purpose"
+  ],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "canonical-reference",
+    "avoidWhen": "canonical-reference",
+    "anatomy": "canonical-reference",
+    "properties": "canonical-reference",
+    "states": "canonical-reference",
+    "behavior": "canonical-reference",
+    "quantitativeRules": "canonical-reference",
+    "responsive": "canonical-reference",
+    "contentGuidance": "canonical-reference",
+    "accessibility": "canonical-reference",
+    "exceptions": "canonical-reference",
+    "related": "canonical-reference",
+    "examples": "canonical-reference",
+    "tokens": "canonical-reference",
+    "apiLinks": "canonical-reference",
+    "migration": "canonical-reference"
+  }
+}

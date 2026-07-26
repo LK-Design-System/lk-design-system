@@ -1,0 +1,31 @@
+{
+  "$schema": "../WAVE0_FULL_CHECK.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-wave0-full-check",
+  "capturedAt": "2026-07-19T00:52:19.168Z",
+  "repository": "LK-ROBOTICS/lk-design-system",
+  "sourceCommit": "679859bc8b5126bcff7146eaedd871bbe9e62891",
+  "sourceTag": "wave0-baseline-2026-07-19-r2",
+  "status": "passed",
+  "canonicalEnvironment": {
+    "platform": "win32",
+    "arch": "x64",
+    "node": "22.17.1",
+    "npm": "10.9.2",
+    "packageManager": "npm@10.9.2"
+  },
+  "commands": [
+    {
+      "command": "npm run check",
+      "status": "passed",
+      "startedAt": "2026-07-19T00:42:24.480Z",
+      "outputSha256": "79852def4045bd01e3ab8e5099594a17a8b493465fe792d6105817d2bdc1afa7"
+    }
+  ],
+  "coverage": {
+    "storybookVisual": "passed",
+    "accessibility": "passed",
+    "consumerSmoke": "passed",
+    "packageArtifact": "passed"
+  }
+}

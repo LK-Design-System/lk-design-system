@@ -1,0 +1,146 @@
+{
+  "slug": "theme-brand-lk-robotics-logo",
+  "title": "LK ROBOTICS Logo",
+  "storybookTitle": "LDS Theme/Brand/LK ROBOTICS Logo",
+  "layer": "Theme",
+  "family": "Brand",
+  "primaryOwner": "Lockup",
+  "ownerComponents": [
+    "Lockup"
+  ],
+  "supportingComponents": [],
+  "purpose": "제품 식별이 필요한 시작점과 브랜드 표면에 정해진 lockup과 여백으로 사용하는 데 적합합니다. 기능 아이콘이나 장식처럼 반복 사용하지 않으며, 비율·색상·자간을 임의로 바꾸거나 다른 문구와 재조합하지 않습니다.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "title",
+      "rule": "접근성 이름. @default \"LK ROBOTICS\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "variant",
+      "type": "'mark' | 'stacked' | 'inline'",
+      "required": false,
+      "description": "'mark'(심볼만) · 'stacked'(기본) · 'inline'(가로). @default \"inline\"",
+      "owner": "LockupProps"
+    },
+    {
+      "name": "tone",
+      "type": "'ink' | 'white' | 'brand' | 'current'",
+      "required": false,
+      "description": "채움 프리셋 — 'ink' 네이비 · 'white' · 'brand' 시그널 잉크 · 'current'(currentColor). @default \"ink\"",
+      "owner": "LockupProps"
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "required": false,
+      "description": "명시적 채움, tone을 재정의.",
+      "owner": "LockupProps"
+    },
+    {
+      "name": "height",
+      "type": "number",
+      "required": false,
+      "description": "렌더 픽셀 높이. @default 32 mark / 64 stacked / 28 inline",
+      "owner": "LockupProps"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": false,
+      "description": "접근성 이름. @default \"LK ROBOTICS\"",
+      "owner": "LockupProps"
+    },
+    {
+      "name": "decorative",
+      "type": "boolean",
+      "required": false,
+      "description": "이미지가 아니라 장식으로 표시(aria-hidden). @default false",
+      "owner": "LockupProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "variant",
+      "rule": "'mark'(심볼만) · 'stacked'(기본) · 'inline'(가로). @default \"inline\""
+    },
+    {
+      "state": "tone",
+      "rule": "채움 프리셋 — 'ink' 네이비 · 'white' · 'brand' 시그널 잉크 · 'current'(currentColor). @default \"ink\""
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "--color-semantic-label-normal",
+      "rule": "light: #171718; dark: #F7F7F7"
+    },
+    {
+      "subject": "--color-semantic-primary-normal",
+      "rule": "light: #3878B3; dark: #5390C9"
+    }
+  ],
+  "responsive": [
+    "LK ROBOTICS 로고. 에셋 파일 없이 자체 완결형 SVG입니다. variant는 mark/stacked/inline, tone은 ink/white/brand/current, 크기는 height로 지정합니다. 구성(마크·워드마크 비율)은 원본 트레이스 에셋(assets/brand/lk-logo-.svg)과 동일하게 고정 — 워드마크를 임의로 확대/재배치하지 마세요."
+  ],
+  "contentGuidance": [],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Lockup variant=\"inline\" tone=\"ink\" height={28} />\n<Lockup variant=\"mark\" tone=\"white\" height={40} />\n<Lockup variant=\"stacked\" height={72} />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-static-white"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/Brand.stories.jsx",
+    "entryStoryId": "lds-theme-brand-lk-robotics-logo--lk-robotics-logo",
+    "publicStories": [
+      {
+        "id": "lds-theme-brand-lk-robotics-logo--lk-robotics-logo",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "omitted-no-evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

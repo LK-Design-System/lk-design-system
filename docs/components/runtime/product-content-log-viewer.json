@@ -1,0 +1,323 @@
+{
+  "slug": "product-content-log-viewer",
+  "title": "Log Viewer",
+  "storybookTitle": "LDS Product/Content/Log Viewer",
+  "layer": "Product",
+  "family": "Content",
+  "primaryOwner": "LogViewer",
+  "ownerComponents": [
+    "LogViewer"
+  ],
+  "supportingComponents": [],
+  "purpose": "실시간 또는 최근 운영 로그를 시간·레벨·출처와 함께 추적할 때 적합합니다. 장기 분석이나 열별 정렬·집계가 필요한 데이터에는 LogViewer 대신 Data Grid 또는 내보내기 도구를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "Keep it as a presentational stream viewer. Do not open ROS/websocket connections, own log retention policy, or implement command execution here; feed lines and handlers from the product shell."
+  ],
+  "anatomy": [
+    {
+      "part": "streamStatus",
+      "rule": "Optional transport/freshness state shown above the stream."
+    },
+    {
+      "part": "aria-label",
+      "rule": "로그 뷰포트(role=\"log\")의 accessible name. @default \"로그 스트림\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "lines",
+      "type": "LogLine[]",
+      "required": false,
+      "description": "",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "filter",
+      "type": "boolean",
+      "required": false,
+      "description": "Show level filter chips. @default true",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "search",
+      "type": "boolean",
+      "required": false,
+      "description": "Show the search field. @default true",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "tools",
+      "type": "boolean",
+      "required": false,
+      "description": "Show tail pause, latest, and clear tools. @default true",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "copyable",
+      "type": "boolean",
+      "required": false,
+      "description": "Show per-line copy buttons. @default true",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "autoScroll",
+      "type": "boolean",
+      "required": false,
+      "description": "Keep the newest line in view as lines append. @default true",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "height",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "density",
+      "type": "'compact' | 'comfortable'",
+      "required": false,
+      "description": "",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "wrap",
+      "type": "boolean",
+      "required": false,
+      "description": "Wrap log messages. Virtualization is disabled while wrapping is enabled. @default false",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "virtualized",
+      "type": "boolean",
+      "required": false,
+      "description": "Render only visible rows for large fixed-height log streams. @default true",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "overscan",
+      "type": "number",
+      "required": false,
+      "description": "Extra rows to render above and below the viewport while virtualized. @default 8",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "initialQuery",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "streamStatus",
+      "type": "'connecting' | 'online' | 'reconnecting' | 'weak' | 'stale' | 'error' | 'offline'",
+      "required": false,
+      "description": "Optional transport/freshness state shown above the stream.",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "lastUpdatedAt",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "droppedCount",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "announceNewLines",
+      "type": "boolean",
+      "required": false,
+      "description": "tail을 따라가는 동안 도착한 새 로그를 polite status region으로 요약 공지합니다. 일시정지했거나 위로 스크롤해 둔 상태에서는 공지하지 않고 +N 배지로만 알립니다. 디버그 콘솔처럼 공지가 방해되는 맥락에서만 끄세요.",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "required": false,
+      "description": "로그 뷰포트(role=\"log\")의 accessible name. @default \"로그 스트림\"",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "onExport",
+      "type": "(visibleLines: LogLine[]) = void",
+      "required": false,
+      "description": "",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "onClear",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "LogViewerProps"
+    },
+    {
+      "name": "onCopyLine",
+      "type": "(line: LogLine, text: string) = void",
+      "required": false,
+      "description": "",
+      "owner": "LogViewerProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "streamStatus",
+      "rule": "Optional transport/freshness state shown above the stream."
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "뷰포트는 읽을 수 있어야 합니다. 스크롤 영역은 이름 있는 role=\"log\" 영역이며 tabIndex=0이라 Tab으로 진입해 화살표·PageUp/PageDown·Home/End로 로그를 읽을 수 있습니다(WCAG 2.1.1). copyable={false}여도 포커스 가능한 대상이 사라지지 않습니다. 이름은 aria-label로 바꿉니다(기본 \"로그 스트림\")."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "정지 시 조용, 팔로우 중일 때만 알림 — 터미널류 관행입니다. 뷰포트 자체는 live region이 아닙니다(aria-live=\"off\"): 가상화가 스크롤마다 행을 삽입·제거하므로 뷰포트를 live로 두면 화면에 들어온 모든 로그가 낭독됩니다. 대신 상시 마운트된 별도 polite status region이 tail을 따라가는 동안 도착한 새 로그만 요약 공지합니다(1줄이면 그 줄, 여러 줄이면 \"새 로그 N줄, 마지막 …\"). 일시정지했거나 위로 스크롤해 두면 공지하지 않고, 밀린 양은 \"최신 로그로 이동\" 버튼의 이름과 +N 배지로 전달합니다."
+    },
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption2-line",
+      "rule": "14px"
+    }
+  ],
+  "responsive": [
+    "lines {time,level,source,text}[] (level debug·info·warn·error) · filter/search/tools/copyable · autoScroll · height · density compact|comfortable · wrap · virtualized/overscan · initialQuery · onClear/onCopyLine.",
+    "Compare against common log viewer expectations before changing it: level filters, search, tail pause/resume, latest jump, clear visible logs, per-line copy, empty/search-empty states, fixed-height scrolling, and large-list rendering."
+  ],
+  "contentGuidance": [
+    "라인 복사 성공·실패도 같은 status region에 텍스트로 공지합니다(아이콘 교체만으로 끝내지 않습니다).",
+    "스트림 상태 변화(streamStatus)도 같은 상시 region이 \"스트림 상태: {라벨}\"로 공지합니다. 보이는 메타 행은 표현 전용입니다 — 행이 상태와 함께 삽입되는 첫 전환을 live region으로는 놓치기 때문입니다."
+  ],
+  "accessibility": [
+    "레벨은 색상 단독이 아니라 DEBUG/INFO/WARN/ERROR 텍스트로도 구분되고, 필터 칩은 aria-pressed, 도구 그룹과 검색 입력은 각각 이름을 가집니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "ContentEditor",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ExpandableText",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ReactionBar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "RecordHeader",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ReorderList",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SourceDisclosure",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "StatList",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<LogViewer lines={[{ time: '10:42', level: 'error', source: 'nav', text: '...' }]} />\n<LogViewer lines={lines} aria-label=\"주행 로그\" announceNewLines={false} />"
+    }
+  ],
+  "tokens": [
+    "--caption1-line",
+    "--caption1-size",
+    "--caption2-line",
+    "--caption2-size",
+    "--color-semantic-accent-background-light-blue",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-inverse-background",
+    "--color-semantic-inverse-fill-strong",
+    "--color-semantic-inverse-label",
+    "--color-semantic-inverse-label-neutral-soft",
+    "--color-semantic-inverse-line-normal",
+    "--color-semantic-label-assistive",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-normal-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-primary-surface-normal",
+    "--color-semantic-static-white",
+    "--color-semantic-status-cautionary",
+    "--color-semantic-status-negative",
+    "--color-semantic-status-positive",
+    "--font-mono",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-semibold",
+    "--label2-size",
+    "--radius-md",
+    "--radius-pill",
+    "--radius-sm",
+    "--space-1-5",
+    "--space-2",
+    "--space-2-5",
+    "--space-3"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ContentLogViewer.stories.jsx",
+    "entryStoryId": "lds-product-content-log-viewer--log-viewers",
+    "publicStories": [
+      {
+        "id": "lds-product-content-log-viewer--log-viewers",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

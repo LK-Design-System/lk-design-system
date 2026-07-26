@@ -1,0 +1,106 @@
+/* ==========================================================================
+   LK ROBOTICS — Typography tokens
+   --------------------------------------------------------------------------
+   One workhorse face (Pretendard JP) carries everything: ExtraBold/Bold for
+   headings, Regular for body. Headings use TIGHT negative tracking for a
+   crisp, engineered look; body runs loose line-height (~1.7) for calm
+   bilingual readability. Overlines are 13px UPPERCASE, +letter-spaced.
+
+   Korean copy always sets `word-break: keep-all` + `text-wrap: balance/pretty`
+   so lines break between words, never mid-word (see base.css helpers).
+   ========================================================================== */
+
+:root {
+  /* ---- Weights --------------------------------------------------------- */
+  --fw-regular:  400; /* @kind font */
+  --fw-medium:   500; /* @kind font */
+  --fw-semibold: 600; /* @kind font */
+  --fw-bold:     700; /* @kind font */
+  --fw-extra:    800; /* @kind font */
+
+  /* ---- Font sizes (px) ------------------------------------------------- */
+  --fs-display:  60px;  /* hero headline (clamps down on small screens) */
+  --fs-h1:       48px;  /* page masthead                                */
+  --fs-h2:       36px;  /* section title                                */
+  --fs-h3:       32px;  /* sub-section                                  */
+  --fs-h4:       24px;  /* card title                                   */
+  --fs-h5:       21px;  /* small heading                                */
+  --fs-lead:     19px;  /* large body / intro                           */
+  --fs-body:     17px;  /* default body                                 */
+  --fs-caption:  13px;  /* overline / tag / meta                        */
+  --fs-tiny:     12px;  /* fine print                                   */
+
+  /* ---- Line heights ---------------------------------------------------- */
+  --lh-display:  1.1;   /* @kind other */
+  --lh-h1:       1.12;  /* @kind other */
+  --lh-h2:       1.25;  /* @kind other */
+  --lh-h3:       1.3;   /* @kind other */
+  --lh-h4:       1.33;  /* @kind other */
+  --lh-h5:       1.45;  /* @kind other */
+  --lh-lead:     1.7;   /* @kind other */
+  --lh-body:     1.7;   /* @kind other */
+  --lh-caption:  1.2;   /* @kind other */
+
+  /* ---- Letter spacing (tracking) --------------------------------------- */
+  --ls-display:  -1.8px;
+  --ls-h1:       -1.6px;
+  --ls-h2:       -1.2px;
+  --ls-h3:       -1px;
+  --ls-h4:       -0.6px;
+  --ls-h5:       -0.4px;
+  --ls-lead:     -0.2px;
+  --ls-body:     -0.2px;
+  --ls-small:    -0.1px;
+  --ls-caption:  1.6px;  /* UPPERCASE overline / eyebrow */
+  --ls-overline: 1.8px;  /* eyebrow / overline tracking (refined 700-weight) */
+
+  /* ---- 7-tier type scale (Display/Title/Heading/Headline/Body/Label/
+     Caption) provided alongside the LK fs/lh/ls token families so
+     consumers can use this vocabulary directly. ---------------------- */
+  --display1-size: 56px;  --display1-line: 72px;  --display1-spacing: -0.0319em;
+  --display2-size: 40px;  --display2-line: 52px;  --display2-spacing: -0.0282em;
+  --display3-size: 36px;  --display3-line: 48px;  --display3-spacing: -0.027em;
+
+  --title1-size: 32px;    --title1-line: 44px;    --title1-spacing: -0.0253em;
+  --title2-size: 28px;    --title2-line: 38px;    --title2-spacing: -0.0236em;
+  --title3-size: 24px;    --title3-line: 32px;    --title3-spacing: -0.023em;
+
+  --heading1-size: 22px;  --heading1-line: 30px;  --heading1-spacing: -0.0194em;
+  --heading2-size: 20px;  --heading2-line: 28px;  --heading2-spacing: -0.012em;
+
+  --headline1-size: 18px; --headline1-line: 26px; --headline1-spacing: -0.0002em;
+  --headline2-size: 17px; --headline2-line: 24px; --headline2-spacing: 0em;
+
+  --body1-size: 16px;     --body1-line: 24px;     --body1-spacing: 0.0057em;
+  --body1-reading-line: 26px;
+  --body2-size: 15px;     --body2-line: 22px;     --body2-spacing: 0.0096em;
+  --body2-reading-line: 24px;
+
+  --label1-size: 14px;    --label1-line: 20px;    --label1-spacing: 0.0145em;
+  --label1-reading-line: 22px;
+  --label2-size: 13px;    --label2-line: 18px;    --label2-spacing: 0.0194em;
+  --label2-reading-line: 20px;
+
+  --caption1-size: 12px;  --caption1-line: 16px;  --caption1-spacing: 0.0252em;
+  --caption2-size: 11px;  --caption2-line: 14px;  --caption2-spacing: 0.0311em;
+}
+
+/* Type-scale utility classes — apply a complete type style in one shot. Headings
+   Bold/SemiBold with negative tracking; body Medium with slight positive
+   tracking for Hangul legibility. */
+.type-display1 { font-family: var(--font-sans); font-weight: 700; font-size: var(--display1-size); line-height: var(--display1-line); letter-spacing: var(--display1-spacing); }
+.type-display2 { font-family: var(--font-sans); font-weight: 700; font-size: var(--display2-size); line-height: var(--display2-line); letter-spacing: var(--display2-spacing); }
+.type-display3 { font-family: var(--font-sans); font-weight: 700; font-size: var(--display3-size); line-height: var(--display3-line); letter-spacing: var(--display3-spacing); }
+.type-title1 { font-family: var(--font-sans); font-weight: 700; font-size: var(--title1-size); line-height: var(--title1-line); letter-spacing: var(--title1-spacing); }
+.type-title2 { font-family: var(--font-sans); font-weight: 700; font-size: var(--title2-size); line-height: var(--title2-line); letter-spacing: var(--title2-spacing); }
+.type-title3 { font-family: var(--font-sans); font-weight: 700; font-size: var(--title3-size); line-height: var(--title3-line); letter-spacing: var(--title3-spacing); }
+.type-heading1 { font-family: var(--font-sans); font-weight: 600; font-size: var(--heading1-size); line-height: var(--heading1-line); letter-spacing: var(--heading1-spacing); }
+.type-heading2 { font-family: var(--font-sans); font-weight: 600; font-size: var(--heading2-size); line-height: var(--heading2-line); letter-spacing: var(--heading2-spacing); }
+.type-headline1 { font-family: var(--font-sans); font-weight: 600; font-size: var(--headline1-size); line-height: var(--headline1-line); letter-spacing: var(--headline1-spacing); }
+.type-headline2 { font-family: var(--font-sans); font-weight: 600; font-size: var(--headline2-size); line-height: var(--headline2-line); letter-spacing: var(--headline2-spacing); }
+.type-body1 { font-family: var(--font-sans); font-weight: 500; font-size: var(--body1-size); line-height: var(--body1-line); letter-spacing: var(--body1-spacing); }
+.type-body2 { font-family: var(--font-sans); font-weight: 500; font-size: var(--body2-size); line-height: var(--body2-line); letter-spacing: var(--body2-spacing); }
+.type-label1 { font-family: var(--font-sans); font-weight: 500; font-size: var(--label1-size); line-height: var(--label1-line); letter-spacing: var(--label1-spacing); }
+.type-label2 { font-family: var(--font-sans); font-weight: 500; font-size: var(--label2-size); line-height: var(--label2-line); letter-spacing: var(--label2-spacing); }
+.type-caption1 { font-family: var(--font-sans); font-weight: 500; font-size: var(--caption1-size); line-height: var(--caption1-line); letter-spacing: var(--caption1-spacing); }
+.type-caption2 { font-family: var(--font-sans); font-weight: 500; font-size: var(--caption2-size); line-height: var(--caption2-line); letter-spacing: var(--caption2-spacing); }

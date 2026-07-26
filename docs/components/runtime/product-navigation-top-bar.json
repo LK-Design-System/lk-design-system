@@ -1,0 +1,360 @@
+{
+  "slug": "product-navigation-top-bar",
+  "title": "Top Bar",
+  "storybookTitle": "LDS Product/Navigation/Top Bar",
+  "layer": "Product",
+  "family": "Navigation",
+  "primaryOwner": "TopBar",
+  "ownerComponents": [
+    "TopBar"
+  ],
+  "supportingComponents": [
+    "Avatar",
+    "BottomNav",
+    "Button",
+    "DashboardShell",
+    "Icon",
+    "IconButton",
+    "Lockup",
+    "SideNav",
+    "TopBarNavItem"
+  ],
+  "purpose": "기본형은 제품 셸 최상단의 전폭 헤더입니다. 랜딩에서는 가운데 탐색과 플로팅 표면을 명시적으로 선택하고, 깊은 제품 계층에는 Top Bar 목적지를 반복하지 말고 Side Nav를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "Classification: LK Product Extension. 랜딩·콘텐츠 사이트에서는 전역 탐색으로 전체형 Footer와 조합합니다. SideNav와 함께 쓸 때는 검색·알림·제품 전환 같은 전역 utility만 두고, 로고와 제품 내부 경로를 양쪽에 중복하지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "children",
+      "rule": "내비 영역 — 링크 / 탭 / 버튼."
+    },
+    {
+      "part": "actions",
+      "rule": "오른쪽 정렬 액션(버튼, 아이콘 버튼, 아바타)."
+    },
+    {
+      "part": "navigationLabel",
+      "rule": "children으로 만든 navigation landmark의 접근 가능한 이름. @default \"주 탐색\""
+    },
+    {
+      "part": "navAlign",
+      "rule": "내비 정렬. @default \"start\""
+    },
+    {
+      "part": "menuTriggerLabel",
+      "rule": "href와 menuItems를 함께 쓸 때 생성되는 disclosure button의 접근 가능한 이름."
+    }
+  ],
+  "properties": [
+    {
+      "name": "brand",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "왼쪽 브랜드 슬롯(예: ).",
+      "owner": "TopBarProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "내비 영역 — 링크 / 탭 / 버튼.",
+      "owner": "TopBarProps"
+    },
+    {
+      "name": "actions",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "오른쪽 정렬 액션(버튼, 아이콘 버튼, 아바타).",
+      "owner": "TopBarProps"
+    },
+    {
+      "name": "navigationLabel",
+      "type": "string",
+      "required": false,
+      "description": "children으로 만든 navigation landmark의 접근 가능한 이름. @default \"주 탐색\"",
+      "owner": "TopBarProps"
+    },
+    {
+      "name": "navAlign",
+      "type": "'start' | 'center'",
+      "required": false,
+      "description": "내비 정렬. @default \"start\"",
+      "owner": "TopBarProps"
+    },
+    {
+      "name": "sticky",
+      "type": "boolean",
+      "required": false,
+      "description": "프로스티드 블러로 상단 고정. @default false",
+      "owner": "TopBarProps"
+    },
+    {
+      "name": "bordered",
+      "type": "boolean",
+      "required": false,
+      "description": "하단 헤어라인 룰 표시. @default true",
+      "owner": "TopBarProps"
+    },
+    {
+      "name": "dark",
+      "type": "boolean",
+      "required": false,
+      "description": "네이비 마스트헤드 변형. @default false",
+      "owner": "TopBarProps"
+    },
+    {
+      "name": "height",
+      "type": "number",
+      "required": false,
+      "description": "바 높이(px). @default 64",
+      "owner": "TopBarProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "내비 라벨.",
+      "owner": "TopBarNavItemProps"
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "required": false,
+      "description": "활성 상태.",
+      "owner": "TopBarNavItemProps"
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "required": false,
+      "description": "링크 목적지. menuItems와 함께 제공해도 링크는 이동 의미를 유지하고 별도 disclosure button이 메뉴를 엽니다.",
+      "owner": "TopBarNavItemProps"
+    },
+    {
+      "name": "menuItems",
+      "type": "TopBarNavItemMenuItem[]",
+      "required": false,
+      "description": "hover/focus/disclosure로 표시되는 native link/button 드롭다운 항목.",
+      "owner": "TopBarNavItemProps"
+    },
+    {
+      "name": "menuTriggerLabel",
+      "type": "string",
+      "required": false,
+      "description": "href와 menuItems를 함께 쓸 때 생성되는 disclosure button의 접근 가능한 이름.",
+      "owner": "TopBarNavItemProps"
+    },
+    {
+      "name": "menuTheme",
+      "type": "'light' | 'dark'",
+      "required": false,
+      "description": "드롭다운 메뉴의 명시 테마. @default \"light\"",
+      "owner": "TopBarNavItemProps"
+    },
+    {
+      "name": "onClick",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "",
+      "owner": "TopBarNavItemProps"
+    }
+  ],
+  "states": [],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "내비는 기본적으로 TopBarNavItem을 사용하면 active underline/dropdown 처리를 유지한다. active underline은 헤더 하단 구분선에 붙이지 않고 좌우 텍스트 padding을 제외한 글자 폭으로, 글자 바로 아래에 표시한다. 활성 목적지가 바뀔 때만 왼쪽을 기준으로 --dur-base(200ms) 동안 펼쳐지며, hover는 글자색만 바꾸고 현재 active underline을 이동시키거나 숨기지 않는다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "TopBar 드롭다운은 navigation disclosure 의미를 유지하되 범용 DropdownMenu와 같은 시각 밀도와 적응형 폭을 사용합니다. 콘텐츠에 따라 176–320px 사이에서 늘어나며 viewport 양쪽 16px 여백을 침범하지 않습니다. padding 8px·항목 간격 4px·패널 radius 12px, 항목 14/20px·최소 높이 40px·padding 10px 16px·radius 10px과 폭 경계는 공통 --component-menu- 토큰을 --component-topbar-menu-가 alias합니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "드롭다운은 disclosure 클릭·hover·focus로 열리고 브라우저 top layer에서 trigger를 기준으로 위·아래를 선택한 뒤 viewport 안으로 정렬합니다. 링크와 분리된 disclosure chevron은 최소 28px 클릭 폭을 유지하면서 라벨과 시각적으로 4px 간격을 두고, 열리면 180° 회전합니다. active underline과 chevron transition은 prefers-reduced-motion: reduce에서 즉시 전환합니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "타입 스케일 정합: 주 내비 링크 14.5px → --body2-size(15px)로 스냅했습니다. 주 내비는 위로 스냅해 14px 드롭다운 항목보다 위 위계를 유지합니다."
+    },
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    }
+  ],
+  "responsive": [
+    "좁은 폭에서는 브랜드와 전역 액션을 제거하지 않고 가운데 내비가 먼저 가로 스크롤합니다. 액션이 매우 많으면 액션 슬롯 자체도 가로 스크롤되어 각 컨트롤에 계속 접근할 수 있습니다.",
+    "의도적 한계 — 모바일용 접힘 내비·햄버거 트리거를 제공하지 않습니다. 좁은 화면 전환은 제품 셸이 별도로 책임지며, 현재 TopBar를 완성된 모바일 랜딩 헤더로 간주하지 않습니다.",
+    "Carbon UI shell header의 제품→전역 읽기 순서, 우측 utility, 클릭으로 여는 submenu, 좁은 폭에서 셸이 탐색 전환을 소유하는 원칙을 따릅니다. LDS TopBar는 메뉴가 잘리지 않도록 배치만 책임지고, hamburger/SideNav 전환은 DashboardShell에 남깁니다."
+  ],
+  "contentGuidance": [
+    "navigationLabel은 children으로 렌더되는 navigation landmark의 이름입니다. 기본은 주 탐색이며, 비교 fixture처럼 같은 문서에 TopBar가 여러 개 있으면 각각 고유한 이름을 제공합니다.",
+    "WAI Landmarks Pattern에 따라 TopBar만 제품 셸의 banner를 소유합니다. Storybook 설명 chrome이나 DashboardShell이 별도 banner로 감싸지 않습니다."
+  ],
+  "accessibility": [
+    "href와 menuItems를 함께 주면 주 레이블은 목적지를 유지하는 실제 링크이고, 바로 옆의 별도 disclosure button이 드롭다운을 엽니다. 복합 children에는 menuTriggerLabel을 명시합니다. 드롭다운은 application menu가 아니라 native 안의 링크/버튼이므로 role=\"menu\"를 쓰지 않고 자연스러운 Tab 순서를 유지합니다.",
+    "disclosure에서 ArrowDown/ArrowUp은 첫/마지막 항목을 열어 포커스하고, 열린 목록 안에서는 ArrowDown/ArrowUp이 순환하며 Home/End가 처음/끝으로 이동합니다. Escape는 닫은 뒤 disclosure로 포커스를 돌려줍니다. Enter/Space와 Tab은 native button/link 의미를 그대로 사용합니다.",
+    "TopBarNavItem에 전달한 onMouseEnter, onMouseLeave, onFocus, onBlur, onKeyDown, onClick은 내부 동작보다 먼저 호출해 합성합니다. 소비자가 이벤트에서 preventDefault()를 호출하면 해당 내부 토글·포커스·hover 처리를 건너뛰므로 ...rest가 기본 상호작용을 덮어쓰지 않습니다.",
+    "Carbon UI shell header style의 전체 행 링크, 명확한 hover/focus 피드백, 조밀한 헤더 하위 탐색 원칙을 공통 menu density에 적용합니다. LDS는 14/20px 글줄과 포커스 링을 수용하도록 항목 높이를 40px로 정규화합니다.",
+    "WAI Disclosure Navigation Example처럼 사이트/제품 탐색은 native link와 disclosure button, 자연스러운 Tab 이동을 유지합니다. 링크 목적지와 하위 탐색을 한 control에 겹치지 않습니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Avatar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "BottomNav",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DashboardShell",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "IconButton",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Lockup",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SideNav",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<TopBar navAlign=\"center\" brand={<Lockup variant=\"inline\" height={22} />} actions={<Button size=\"sm\">새 항목</Button>}>\n  <TopBarNavItem\n    active\n    href=\"/docs\"\n    menuItems={[{ label: '문서 개요', href: '/docs' }, { label: '컴포넌트', href: '/docs/components' }]}\n    menuTriggerLabel=\"문서 하위 메뉴\"\n  >\n    문서\n  </TopBarNavItem>\n  <TopBarNavItem>토큰</TopBarNavItem>\n  <TopBarNavItem>가이드</TopBarNavItem>\n</TopBar>\n<TopBar dark sticky brand={<Lockup variant=\"inline\" tone=\"white\" height={22} />} />"
+    }
+  ],
+  "tokens": [
+    "--body2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-brand-canvas-from",
+    "--color-semantic-brand-canvas-to",
+    "--color-semantic-fill-alternative",
+    "--color-semantic-fill-normal",
+    "--color-semantic-inverse-fill-normal",
+    "--color-semantic-inverse-label",
+    "--color-semantic-inverse-label-neutral-soft",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-normal",
+    "--color-semantic-label-strong",
+    "--color-semantic-line-normal-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-static-white",
+    "--component-topbar-menu-gap",
+    "--component-topbar-menu-item-hover-bg",
+    "--component-topbar-menu-item-min-height",
+    "--component-topbar-menu-item-padding-x",
+    "--component-topbar-menu-item-padding-y",
+    "--component-topbar-menu-item-radius",
+    "--component-topbar-menu-item-selected-bg",
+    "--component-topbar-menu-max-width",
+    "--component-topbar-menu-min-width",
+    "--component-topbar-menu-padding",
+    "--component-topbar-menu-radius",
+    "--dur-base",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--label1-line",
+    "--label1-size",
+    "--radius-10",
+    "--radius-14",
+    "--shadow-md",
+    "--space-0-5",
+    "--space-1",
+    "--space-10",
+    "--space-2",
+    "--space-2-5",
+    "--space-3",
+    "--space-8"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/Navigation.stories.jsx",
+    "entryStoryId": "lds-product-navigation-top-bar--top-bar-default",
+    "publicStories": [
+      {
+        "id": "lds-product-navigation-top-bar--top-bar-default",
+        "name": "개요 · 제품 셸",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-navigation-top-bar--disclosure-navigation-contract",
+        "name": "상호작용 · 링크와 하위 탐색",
+        "role": "interaction"
+      },
+      {
+        "id": "lds-product-navigation-top-bar--active-destination-transition",
+        "name": "상호작용 · 활성 목적지 전환",
+        "role": "interaction"
+      },
+      {
+        "id": "lds-product-navigation-top-bar--narrow-width",
+        "name": "반응형 · 320px 단독 사용",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-navigation-top-bar--dashboard-shell-composition",
+        "name": "반응형 · DashboardShell 전환",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-navigation-top-bar--utility-only",
+        "name": "시나리오 · 대시보드 전역 도구",
+        "role": "scenario"
+      },
+      {
+        "id": "lds-product-navigation-top-bar--landing-header",
+        "name": "시나리오 · 랜딩 브랜드 헤더",
+        "role": "scenario"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

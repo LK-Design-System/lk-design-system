@@ -1,0 +1,363 @@
+{
+  "slug": "core-components-selection-and-input-input",
+  "title": "Input",
+  "storybookTitle": "LDS Core/Components/Selection and Input/Input",
+  "layer": "Core",
+  "family": "Selection and Input",
+  "primaryOwner": "Input",
+  "ownerComponents": [
+    "Input"
+  ],
+  "supportingComponents": [
+    "Icon"
+  ],
+  "purpose": "이름·검색어·코드처럼 한 줄로 끝나는 텍스트를 입력할 때 적합합니다. 긴 문장은 Textarea를, 민감한 비밀번호는 Password Input을, 단위가 결합된 값은 Input Group을 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "박스 위에 렌더되는 필드 라벨."
+    },
+    {
+      "part": "helper",
+      "rule": "박스 아래 보조 설명."
+    },
+    {
+      "part": "error",
+      "rule": "박스 아래 오류 설명. invalid와 같은 시각 상태를 적용."
+    },
+    {
+      "part": "iconLeft",
+      "rule": "박스 안 텍스트 왼쪽에 표시되는 인라인 SVG."
+    },
+    {
+      "part": "iconRight",
+      "rule": "박스 안 텍스트 오른쪽에 표시되는 인라인 SVG."
+    },
+    {
+      "part": "leadingIcon",
+      "rule": "leading icon alias."
+    },
+    {
+      "part": "trailingIcon",
+      "rule": "trailing icon alias."
+    }
+  ],
+  "properties": [
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 위에 렌더되는 필드 라벨.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "helper",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 아래 보조 설명.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "error",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 아래 오류 설명. invalid와 같은 시각 상태를 적용.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "iconLeft",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 안 텍스트 왼쪽에 표시되는 인라인 SVG.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "iconRight",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "박스 안 텍스트 오른쪽에 표시되는 인라인 SVG.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "leadingIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "leading icon alias.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "trailingIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "trailing icon alias.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "actionRight",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "우측 끝에 표시되는 액션 슬롯.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "trailingButton",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "trailing action alias.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "invalid",
+      "type": "boolean",
+      "required": false,
+      "description": "검증 오류용 레드 링. @default false",
+      "owner": "InputProps"
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "required": false,
+      "description": "라벨에 레드 별표 추가. @default false",
+      "owner": "InputProps"
+    },
+    {
+      "name": "status",
+      "type": "\"normal\" | \"positive\" | \"negative\"",
+      "required": false,
+      "description": "상태 링과 메시지 톤. @default \"normal\"",
+      "owner": "InputProps"
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"md\" | \"lg\" | \"small\" | \"medium\" | \"large\"",
+      "required": false,
+      "description": "입력 높이 프리셋. @default \"md\"",
+      "owner": "InputProps"
+    },
+    {
+      "name": "height",
+      "type": "number | string",
+      "required": false,
+      "description": "프리셋 대신 사용할 명시적 높이.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "interaction",
+      "type": "\"normal\" | \"inactive\" | \"hovered\" | \"focused\" | \"active\" | \"active-focused\"",
+      "required": false,
+      "description": "",
+      "owner": "InputProps"
+    },
+    {
+      "name": "active",
+      "type": "boolean",
+      "required": false,
+      "description": "active visual state alias.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "focus",
+      "type": "boolean",
+      "required": false,
+      "description": "focus visual state alias.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "disable",
+      "type": "boolean",
+      "required": false,
+      "description": "disabled alias.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "resize",
+      "type": "\"normal\" | \"fixed\" | \"limit\"",
+      "required": false,
+      "description": "textinput resize evidence axis; accepted for API parity.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "platform",
+      "type": "\"ios\" | \"android\" | \"web\"",
+      "required": false,
+      "description": "platform evidence axis; accepted for API parity.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "variant",
+      "type": "\"textfield\" | \"textarea\"",
+      "required": false,
+      "description": "field variant evidence axis; accepted for API parity.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "래퍼 스타일(예: 그리드 셀용 minWidth).",
+      "owner": "InputProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "error",
+      "rule": "박스 아래 오류 설명. invalid와 같은 시각 상태를 적용."
+    },
+    {
+      "state": "invalid",
+      "rule": "검증 오류용 레드 링. @default false"
+    },
+    {
+      "state": "status",
+      "rule": "상태 링과 메시지 톤. @default \"normal\""
+    },
+    {
+      "state": "active",
+      "rule": "active visual state alias."
+    },
+    {
+      "state": "variant",
+      "rule": "field variant evidence axis; accepted for API parity."
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Label, text, icon, fill, and disabled colors resolve semantic roles at the rendered field scope. This keeps nested dark-theme fields from inheriting light values computed by root-level component aliases; disabled labels and values use the shared 0.52-alpha disabled role."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale."
+    },
+    {
+      "subject": "--color-semantic-label-alternative",
+      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+    },
+    {
+      "subject": "--color-semantic-label-assistive",
+      "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "Reference basis: GOV.UK Text input for visible labels, hints and error association; Carbon Text input for label/helper/error/read-only anatomy.",
+    "Keep essential instructions in the visible label or helper text. Placeholder text is supplementary and must not replace the label.",
+    "Input — 한 줄 텍스트 필드: 화이트 박스, 헤어라인 링, 그래파이트 포커스 헤일로. label, 선택적 iconLeft/iconRight, required, invalid를 전달하세요."
+  ],
+  "accessibility": [
+    "Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced.",
+    "readOnly remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "AutoComplete",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Combobox",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FormField",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SearchField",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Select",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "TagInput",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Textarea",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Input label=\"이메일\" required iconLeft={mailIcon} placeholder=\"you@company.com\" />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-assistive",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-normal",
+    "--component-input-border-width",
+    "--component-input-focus-shadow",
+    "--component-input-font-size",
+    "--component-input-gap",
+    "--component-input-height",
+    "--component-input-letter-spacing",
+    "--component-input-line-height",
+    "--component-input-padding-x",
+    "--component-input-radius",
+    "--component-input-stack-gap",
+    "--control-h-lg",
+    "--control-h-sm",
+    "--dur-base",
+    "--ease-out",
+    "--font-sans"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormInput.stories.jsx",
+    "entryStoryId": "lds-core-components-selection-and-input-input--input-overview",
+    "publicStories": [
+      {
+        "id": "lds-core-components-selection-and-input-input--input-overview",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-selection-and-input-input--timer-and-actions",
+        "name": "사용법 · 남은 시간과 우측 동작",
+        "role": "usage"
+      }
+    ],
+    "hiddenEvidence": 3
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

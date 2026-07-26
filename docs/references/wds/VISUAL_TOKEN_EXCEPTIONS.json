@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "allowedComponentFiles": {
+    "components/brand/BrandLogo.jsx": "Embedded third-party brand logo artwork must preserve provider colors.",
+    "components/buttons/SocialButton.jsx": "Social login provider colors and provider kit shadows are explicit brand requirements.",
+    "components/icon/Icon.jsx": "Imported WDS color brand icons preserve provider logo colors; monochrome icons still use currentColor."
+  },
+  "allowedStoryFiles": {
+    "stories/Content.shared.jsx": "The mini map preview is an encoded SVG media fixture. CSS variables do not resolve inside the encoded image payload, so its internal art colors are fixed sample asset data rather than component styling.",
+    "stories/ContentMedia.stories.jsx": "The floor plan is an encoded SVG data URI used as real image content for the alt-text example. CSS variables do not resolve inside the encoded image payload, so its art colors are fixed sample asset data rather than component styling.",
+    "stories/CardNews.stories.jsx": "The cover is an encoded SVG data URI used as real image content for the cover-image example. CSS variables do not resolve inside the encoded image payload, so its art colors are fixed sample asset data rather than component styling.",
+    "stories/CardListing.stories.jsx": "The cover is an encoded SVG data URI used as real image content for the listing cover-image example. CSS variables do not resolve inside the encoded image payload, so its art colors are fixed sample asset data rather than component styling.",
+    "stories/CardFeed.stories.jsx": "The cover is an encoded SVG data URI used as real image content for the feed post cover-image example. CSS variables do not resolve inside the encoded image payload, so its art colors are fixed sample asset data rather than component styling.",
+    "stories/FormFileUploadQueue.stories.jsx": "The photo thumbnails are encoded SVG data URIs used as real image content for the media attachment example. CSS variables do not resolve inside the encoded image payload, so its art colors are fixed sample asset data rather than component styling.",
+    "stories/Foundations.shared.jsx": "The vivid-status warning table documents the raw value and measured white-background contrast of each status token so designers can see why the vivid hues fail AA. The values are documentation content, not styling, and the Color story play asserts every one of them against the resolved token.",
+    "stories/FoundationInteraction.stories.jsx": "The deprecation table documents the raw declared value of each retired --interaction-* token so consumers can recognize what they are replacing. The values are documentation content, not styling, and the InteractionTokens story play asserts every one of them against the resolved token.",
+    "stories/CommunicationMessage.stories.jsx": "The rgba(0, 0, 0, 0) literals are play-function assertions on getComputedStyle().backgroundColor — the browser serialization of a transparent background — not component styling.",
+    "stories/CommunicationMessageComposer.stories.jsx": "The rgba(0, 0, 0, 0) literals are play-function assertions on getComputedStyle().backgroundColor — the browser serialization of a transparent background — not component styling.",
+    "stories/CommunicationMessageFeed.stories.jsx": "The rgba(0, 0, 0, 0) literals are play-function assertions on getComputedStyle().backgroundColor — the browser serialization of a transparent background — not component styling.",
+    "stories/ContentProse.stories.jsx": "The rgba(0, 0, 0, 0) literals are play-function assertions on getComputedStyle().backgroundColor that prove the scoped Prose stylesheet applied a non-transparent code tint — not component styling."
+  },
+  "rule": "Reusable component implementation files and Storybook examples must not introduce hardcoded hex/rgb/rgba visual values outside these exceptions. Use semantic, component, inverse, material, status, or effect tokens instead."
+}

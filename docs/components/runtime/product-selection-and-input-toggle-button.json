@@ -1,0 +1,252 @@
+{
+  "slug": "product-selection-and-input-toggle-button",
+  "title": "Toggle Button",
+  "storybookTitle": "LDS Product/Selection and Input/Toggle Button",
+  "layer": "Product",
+  "family": "Selection and Input",
+  "primaryOwner": "ToggleButton",
+  "ownerComponents": [
+    "ToggleButton"
+  ],
+  "supportingComponents": [
+    "Icon"
+  ],
+  "purpose": "레이어 표시·미리보기처럼 즉시 실행 후 pressed 상태가 계속 남는 독립 기능에 적합합니다. 여러 보기 중 하나를 고르는 전환에는 Toggle Button 대신 Segmented Control을 사용하세요.",
+  "useWhen": [
+    "여러 보기 중 하나를 고르는 전환에는 SegmentedControl, 여러 독립 토글을 묶을 때는 ButtonGroup multiple, 슬라이드 on/off에는 Switch를 사용합니다."
+  ],
+  "avoidWhen": [
+    "hover/pressed는 calm tone만 사용합니다. persistent pressed 상태와 순간 pointer pressed 상태를 동일하게 취급하지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "icon",
+      "rule": "선택적 리딩 아이콘 노드."
+    },
+    {
+      "part": "children",
+      "rule": "아이콘 전용 정사각 토글은 구체적인 aria-label을 제공해야 합니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "pressed",
+      "type": "boolean",
+      "required": false,
+      "description": "제어되는 눌림 상태.",
+      "owner": "ToggleButtonProps"
+    },
+    {
+      "name": "defaultPressed",
+      "type": "boolean",
+      "required": false,
+      "description": "비제어 초기 상태. @default false",
+      "owner": "ToggleButtonProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(next: boolean) = void",
+      "required": false,
+      "description": "",
+      "owner": "ToggleButtonProps"
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "선택적 리딩 아이콘 노드.",
+      "owner": "ToggleButtonProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg' | 'small' | 'medium' | 'large'",
+      "required": false,
+      "description": "Button family height scale: 32 / 40 / 48. @default \"md\"",
+      "owner": "ToggleButtonProps"
+    },
+    {
+      "name": "disable",
+      "type": "boolean",
+      "required": false,
+      "description": "Disabled alias retained for compatibility.",
+      "owner": "ToggleButtonProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "아이콘 전용 정사각 토글은 구체적인 aria-label을 제공해야 합니다.",
+      "owner": "ToggleButtonProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "pressed",
+      "rule": "제어되는 눌림 상태."
+    },
+    {
+      "state": "defaultPressed",
+      "rule": "비제어 초기 상태. @default false"
+    }
+  ],
+  "behavior": [
+    "pressed / defaultPressed / onChange(next)는 제어/비제어 상태입니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "size는 Button family와 같은 sm/md/lg = 32/40/48px입니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "Fluent 2 Button은 toggle button을 toolbar 같은 독립 상태 액션에 사용하고 설정 패널에서는 Switch를 사용하도록 구분합니다."
+    },
+    {
+      "subject": "--border-thin",
+      "rule": "1px"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-fill-alternative",
+      "rule": "light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [
+    "native disabled와 focus 가능한 aria-disabled를 구분하며 두 경우 모두 activation을 막고 같은 unavailable 스타일을 적용합니다.",
+    "아이콘 전용 사용은 구체적인 aria-label을 반드시 제공합니다.",
+    "WAI-ARIA Button Pattern의 고정 label + aria-pressed 계약을 따릅니다.",
+    "ToggleButton은 독립 기능의 켬·끔 상태를 버튼 자체에 유지하는 LK Product Extension입니다. 선택 상태는 surface와 aria-pressed로 함께 전달합니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ColorSwatch",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DatePicker",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DateRangeField",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FileUpload",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FileUploadQueue",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "IconPicker",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "NumberField",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<ToggleButton icon={<Icon name=\"eye\" size={18} />} onChange={setPreview}>\n  미리보기\n</ToggleButton>\n<ToggleButton defaultPressed icon={<Icon name=\"star\" size={18} />} aria-label=\"즐겨찾기\" />"
+    }
+  ],
+  "tokens": [
+    "--border-thin",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-alternative",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-normal-neutral",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-primary-surface-strong",
+    "--component-button-disabled-bg",
+    "--component-button-font-size-lg",
+    "--component-button-font-size-md",
+    "--component-button-font-size-sm",
+    "--component-button-font-weight",
+    "--component-button-gap-lg",
+    "--component-button-gap-md",
+    "--component-button-gap-sm",
+    "--component-button-height-lg",
+    "--component-button-height-md",
+    "--component-button-height-sm",
+    "--component-button-letter-spacing-lg",
+    "--component-button-letter-spacing-md",
+    "--component-button-letter-spacing-sm",
+    "--component-button-line-height-lg",
+    "--component-button-line-height-md",
+    "--component-button-line-height-sm",
+    "--component-button-padding-lg",
+    "--component-button-padding-md",
+    "--component-button-padding-sm",
+    "--component-button-radius-lg",
+    "--component-button-radius-md",
+    "--component-button-radius-sm",
+    "--component-button-transition",
+    "--font-sans"
+  ],
+  "apiLinks": [],
+  "migration": [
+    "disable — disabled의 호환 별칭입니다."
+  ],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/SelectionToggleButton.stories.jsx",
+    "entryStoryId": "lds-product-selection-and-input-toggle-button--toggle-button-overview",
+    "publicStories": [
+      {
+        "id": "lds-product-selection-and-input-toggle-button--toggle-button-overview",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-selection-and-input-toggle-button--interaction-and-size-contract",
+        "name": "상호작용 · 크기와 지속 상태",
+        "role": "interaction"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "evidence"
+  }
+}

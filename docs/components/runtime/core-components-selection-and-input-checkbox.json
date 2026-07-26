@@ -1,0 +1,367 @@
+{
+  "slug": "core-components-selection-and-input-checkbox",
+  "title": "Checkbox",
+  "storybookTitle": "LDS Core/Components/Selection and Input/Checkbox",
+  "layer": "Core",
+  "family": "Selection and Input",
+  "primaryOwner": "Checkbox",
+  "ownerComponents": [
+    "Checkbox"
+  ],
+  "supportingComponents": [
+    "CheckboxGroup"
+  ],
+  "purpose": "여러 항목을 각각 켜거나 끌 수 있고 선택 조합이 허용될 때 적합합니다. 반드시 하나만 골라야 하거나 즉시 적용되는 단일 설정에는 Checkbox 대신 Radio 또는 Switch를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "Optional label rendered next to the control."
+    },
+    {
+      "part": "interaction",
+      "rule": "Forces visual interaction state for documentation matrices."
+    }
+  ],
+  "properties": [
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional label rendered next to the control.",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "checked",
+      "type": "boolean",
+      "required": false,
+      "description": "Controlled checked state.",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "defaultChecked",
+      "type": "boolean",
+      "required": false,
+      "description": "Initial checked state for uncontrolled usage.",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "indeterminate",
+      "type": "boolean",
+      "required": false,
+      "description": "Mixed checkbox state. Applies to the default box variant. @default false",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(checked: boolean) = void",
+      "required": false,
+      "description": "Called with the next checked state.",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "Native form control name — submitted with the form when checked.",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Native form control value submitted when checked. @default \"on\"",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "variant",
+      "type": "\"box\" | \"mark\"",
+      "required": false,
+      "description": "Visual style. mark renders the source-style check mark treatment. @default \"box\"",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "status",
+      "type": "\"normal\" | \"negative\"",
+      "required": false,
+      "description": "Semantic status tone for the mark variant. @default \"normal\"",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "state",
+      "type": "\"unchecked\" | \"checked\" | \"indeterminate\"",
+      "required": false,
+      "description": "fixed visual state for evidence matrices.",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "bold",
+      "type": "boolean",
+      "required": false,
+      "description": "custom typography emphasis alias.",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"md\" | \"small\" | \"medium\"",
+      "required": false,
+      "description": "Control size. @default \"md\"",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "tight",
+      "type": "boolean",
+      "required": false,
+      "description": "Reduces spacing between control and label. @default false",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "interaction",
+      "type": "\"normal\" | \"inactive\" | \"hovered\" | \"focused\"",
+      "required": false,
+      "description": "Forces visual interaction state for documentation matrices.",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Blocks pointer and keyboard interaction. @default false",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "disable",
+      "type": "boolean",
+      "required": false,
+      "description": "disabled alias.",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "labelStyle",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "onKeyDown",
+      "type": "(event: React.KeyboardEvent) = void",
+      "required": false,
+      "description": "Forwarded to the native input; runs before the built-in Space toggle.",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "onFocus",
+      "type": "(event: React.FocusEvent) = void",
+      "required": false,
+      "description": "",
+      "owner": "CheckboxProps"
+    },
+    {
+      "name": "onBlur",
+      "type": "(event: React.FocusEvent) = void",
+      "required": false,
+      "description": "",
+      "owner": "CheckboxProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "checked",
+      "rule": "Controlled checked state."
+    },
+    {
+      "state": "defaultChecked",
+      "rule": "Initial checked state for uncontrolled usage."
+    },
+    {
+      "state": "onChange",
+      "rule": "Called with the next checked state."
+    },
+    {
+      "state": "variant",
+      "rule": "Visual style. mark renders the source-style check mark treatment. @default \"box\""
+    },
+    {
+      "state": "status",
+      "rule": "Semantic status tone for the mark variant. @default \"normal\""
+    },
+    {
+      "state": "state",
+      "rule": "fixed visual state for evidence matrices."
+    },
+    {
+      "state": "interaction",
+      "rule": "Forces visual interaction state for documentation matrices."
+    },
+    {
+      "state": "disabled",
+      "rule": "Blocks pointer and keyboard interaction. @default false"
+    }
+  ],
+  "behavior": [
+    "Checkbox — 켜지면 LK 시그널 잉크 + 화이트 체크로 채워지는 라운드 사각형. 제어(checked) 또는 비제어(defaultChecked); onChange는 다음 불리언을 받습니다.",
+    "Selection contract."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Checkbox, Radio, and Switch use the same 8px control-to-label gap. Checkbox remains independently toggleable and uses mixed only for a true aggregate indeterminate state."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "타깃 크기: 시각 박스는 md 18px · sm 16px 그대로 두고, 그 위에 놓인 투명한 네이티브 input만 24×24px로 확장해 WCAG 2.5.8 (Target Size, Minimum)을 만족시킵니다. 픽셀 출력은 변하지 않습니다."
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-brand-ink",
+      "rule": "light: #0E1329; dark: #E7EAF2"
+    },
+    {
+      "subject": "--color-semantic-fill-normal",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [
+    "Reference basis: WAI-ARIA Checkbox pattern and GOV.UK Checkboxes.",
+    "Radio와 동일하게 시각적으로 숨긴 네이티브 를 이 감싸는 구조입니다. 사각형은 aria-hidden 장식 인디케이터일 뿐입니다. 따라서 name/value 폼 전송, 브라우저 폼 복원, :checked, 네이티브 키보드 계약이 그대로 동작합니다.",
+    "접근 이름은 감싸는 의 내용에서 나옵니다. label에 JSX 노드를 넘겨도(예: CheckboxGroup의 제목 + 설명 조합) 이름이 \"checkbox\"로 떨어지지 않습니다. 이름을 직접 지정할 때만 aria-label을 쓰세요.",
+    "토글은 Space만 수행합니다(APG). Enter는 토글하지 않습니다 — 네이티브 input 동작을 그대로 따릅니다.",
+    "소비자가 넘긴 onKeyDown/onFocus/onBlur는 내부 핸들러보다 먼저 실행되며 토글을 죽이지 않습니다. 의도적으로 막으려면 핸들러에서 preventDefault()를 호출하세요. {...rest}는 내부 속성보다 앞서 펼쳐집니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "CheckboxGroup",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FilterChip",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "MultiSelectChip",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Radio",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "RadioGroup",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "RangeSlider",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SegmentedControl",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Slider",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Checkbox checked={agreed} onChange={setAgreed} label=\"개인정보 수집·이용에 동의합니다.\" />\n<Checkbox name=\"channels\" value=\"email\" defaultChecked label=\"이메일 알림\" />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-brand-ink",
+    "--color-semantic-fill-normal",
+    "--color-semantic-fill-strong",
+    "--color-semantic-focus-ring",
+    "--color-semantic-interaction-inactive",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-neutral",
+    "--color-semantic-line-normal-neutral",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-static-white",
+    "--color-semantic-status-negative",
+    "--component-input-gap",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-bold",
+    "--label1-size",
+    "--radius-5",
+    "--radius-pill"
+  ],
+  "apiLinks": [],
+  "migration": [
+    "호환을 위해 input에 role=\"checkbox\"·aria-checked·aria-disabled를 명시적으로 유지합니다. 값이 네이티브 상태와 항상 일치하므로 axe의 조건부 검사(aria-conditional-checkbox-attr)를 통과합니다."
+  ],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormCheckbox.stories.jsx",
+    "entryStoryId": "lds-core-components-selection-and-input-checkbox--checkboxes",
+    "publicStories": [
+      {
+        "id": "lds-core-components-selection-and-input-checkbox--checkboxes",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 4
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "evidence"
+  }
+}

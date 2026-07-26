@@ -1,0 +1,215 @@
+{
+  "slug": "core-components-layout-grid-and-columns",
+  "title": "Grid and Columns",
+  "storybookTitle": "LDS Core/Components/Layout/Grid and Columns",
+  "layer": "Core",
+  "family": "Layout",
+  "primaryOwner": "Grid",
+  "ownerComponents": [
+    "Col",
+    "Columns",
+    "Grid"
+  ],
+  "supportingComponents": [],
+  "purpose": "주요·보조 영역의 비율이나 반복 카드의 최소 너비가 여러 화면 구간에서 유지되어야 할 때 적합합니다. 단순한 한 방향 간격에는 Grid를 사용하지 말고 Stack 또는 Cluster를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "span",
+      "type": "number",
+      "required": false,
+      "description": "기본(모바일) 폭에서 차지할 컬럼 수(1–12). @default 12",
+      "owner": "ColProps"
+    },
+    {
+      "name": "sm",
+      "type": "number",
+      "required": false,
+      "description": "sm 브레이크포인트(≥768)부터 차지할 컬럼 수.",
+      "owner": "ColProps"
+    },
+    {
+      "name": "md",
+      "type": "number",
+      "required": false,
+      "description": "md 브레이크포인트(≥992)부터 차지할 컬럼 수.",
+      "owner": "ColProps"
+    },
+    {
+      "name": "lg",
+      "type": "number",
+      "required": false,
+      "description": "lg 브레이크포인트(≥1200)부터 차지할 컬럼 수.",
+      "owner": "ColProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ColProps"
+    },
+    {
+      "name": "columns",
+      "type": "number",
+      "required": false,
+      "description": "나눌 그리드 트랙 수. @default 12",
+      "owner": "ColumnsProps"
+    },
+    {
+      "name": "gap",
+      "type": "number | string",
+      "required": false,
+      "description": "컬럼 & 행 갭 단축(숫자 = px). 기본값 --grid-gutter(20).",
+      "owner": "ColumnsProps"
+    },
+    {
+      "name": "columnGap",
+      "type": "number | string",
+      "required": false,
+      "description": "컬럼 사이 가로 갭.",
+      "owner": "ColumnsProps"
+    },
+    {
+      "name": "rowGap",
+      "type": "number | string",
+      "required": false,
+      "description": "줄바꿈된 행 사이 세로 갭.",
+      "owner": "ColumnsProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ColumnsProps"
+    },
+    {
+      "name": "columns",
+      "type": "number",
+      "required": false,
+      "description": "고정 컬럼 수.",
+      "owner": "GridProps"
+    },
+    {
+      "name": "minItemWidth",
+      "type": "number | string",
+      "required": false,
+      "description": "반응형: auto-fill용 최소 트랙 폭(px 또는 CSS).",
+      "owner": "GridProps"
+    },
+    {
+      "name": "gap",
+      "type": "number | string",
+      "required": false,
+      "description": "갭. @default 20",
+      "owner": "GridProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "GridProps"
+    }
+  ],
+  "states": [],
+  "behavior": [],
+  "quantitativeRules": [],
+  "responsive": [
+    "columns — 고정 개수. minItemWidth — 반응형 auto-fill 트랙. gap — px/CSS."
+  ],
+  "contentGuidance": [],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Col",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "Columns",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "AspectRatio",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Center",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Cluster",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Container",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Divider",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "MobileSystemBars",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Grid columns={3} gap={20}>…</Grid>\n<Grid minItemWidth={240}>…</Grid>   {/* 반응형 auto-fill */}"
+    }
+  ],
+  "tokens": [],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/LayoutGrid.stories.jsx",
+    "entryStoryId": "lds-core-components-layout-grid-and-columns--grid-and-columns",
+    "publicStories": [
+      {
+        "id": "lds-core-components-layout-grid-and-columns--grid-and-columns",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-layout-grid-and-columns--grid-guidelines",
+        "name": "사용법 · 화면 구간별 열 구성",
+        "role": "usage"
+      }
+    ],
+    "hiddenEvidence": 2
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "omitted-no-evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "omitted-no-evidence",
+    "responsive": "evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "omitted-no-evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

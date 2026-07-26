@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lk-robotics.dev/schemas/component-content.schema.json",
+  "title": "LK Design System component content registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "sourceFingerprint",
+    "completionCriteria",
+    "platformStatusDefinitions",
+    "summary",
+    "entries",
+    "guides"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "sourceFingerprint": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "completionCriteria": {
+      "type": "array",
+      "minItems": 15,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 3 }
+    },
+    "platformStatusDefinitions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mapped", "implemented", "not-tracked"],
+      "properties": {
+        "mapped": { "type": "string" },
+        "implemented": { "type": "string" },
+        "not-tracked": { "type": "string" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["componentEntries", "publicExports", "guides", "entriesWithoutOwnedPage"],
+      "properties": {
+        "componentEntries": { "type": "integer", "minimum": 1 },
+        "publicExports": { "type": "integer", "minimum": 1 },
+        "guides": { "type": "integer", "minimum": 1 },
+        "entriesWithoutOwnedPage": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/entry" }
+    },
+    "guides": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/guide" }
+    }
+  },
+  "$defs": {
+    "stringList": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 3 }
+    },
+    "evidenceStringList": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 3 }
+    },
+    "sectionStatusValue": {
+      "enum": ["evidence", "omitted-by-author", "omitted-no-evidence", "canonical-reference"]
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label"],
+      "properties": {
+        "label": { "type": "string", "minLength": 2 },
+        "url": { "type": "string", "format": "uri" },
+        "path": { "type": "string", "minLength": 3 }
+      },
+      "oneOf": [
+        {
+          "properties": { "url": { "type": "string", "format": "uri" } },
+          "required": ["url"]
+        },
+        {
+          "properties": { "path": { "type": "string", "minLength": 3 } },
+          "required": ["path"]
+        }
+      ]
+    },
+    "property": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "required", "description", "owner"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "type": { "type": "string", "minLength": 1 },
+        "required": { "type": "boolean" },
+        "description": { "type": "string" },
+        "owner": { "type": "string", "minLength": 3 }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "title", "exports", "source", "typeContract", "prompt", "group",
+        "ownerLayer", "provenance", "wdsFamily", "storyEvidence",
+        "classificationSiblings", "storybookPages", "props", "tokens",
+        "externalReferences", "promptSha256"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9가-힣-]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "exports": { "$ref": "#/$defs/stringList" },
+        "source": { "type": "string", "pattern": "^components/.+\\.jsx$" },
+        "typeContract": { "type": "string", "pattern": "^components/.+\\.d\\.ts$" },
+        "prompt": { "type": "string", "pattern": "^components/.+\\.prompt\\.md$" },
+        "group": { "type": "string", "minLength": 3 },
+        "ownerLayer": { "type": "string", "minLength": 3 },
+        "provenance": { "type": "string", "minLength": 3 },
+        "wdsFamily": { "type": ["string", "null"] },
+        "storyEvidence": { "type": "array", "items": { "type": "string" } },
+        "classificationSiblings": { "type": "array", "items": { "type": "string" } },
+        "storybookPages": { "type": "array", "items": { "type": "string" } },
+        "props": { "type": "array", "items": { "$ref": "#/$defs/property" } },
+        "tokens": { "type": "array", "items": { "type": "string" } },
+        "externalReferences": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } },
+        "promptSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "guide": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slug", "title", "storybookTitle", "layer", "family", "primaryOwner",
+        "ownerComponents", "supportingComponents", "purpose", "useWhen",
+        "avoidWhen", "anatomy", "properties", "states", "behavior",
+        "quantitativeRules", "responsive", "contentGuidance", "accessibility",
+        "exceptions", "related", "examples", "tokens", "apiLinks",
+        "migration", "canonicalGuide", "guideDeltaFields", "sectionStatus",
+        "platformStatus", "storybook", "sources"
+      ],
+      "properties": {
+        "slug": { "type": "string", "pattern": "^[a-z0-9가-힣-]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "storybookTitle": { "type": "string", "minLength": 5 },
+        "layer": { "enum": ["Core", "Product", "Theme"] },
+        "family": { "type": "string", "minLength": 2 },
+        "primaryOwner": { "type": "string", "minLength": 1 },
+        "ownerComponents": { "$ref": "#/$defs/stringList" },
+        "supportingComponents": { "type": "array", "items": { "type": "string" } },
+        "purpose": { "type": "string" },
+        "useWhen": { "$ref": "#/$defs/evidenceStringList" },
+        "avoidWhen": { "$ref": "#/$defs/evidenceStringList" },
+        "anatomy": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["part", "rule"],
+            "properties": {
+              "part": { "type": "string", "minLength": 1 },
+              "rule": { "type": "string", "minLength": 8 }
+            }
+          }
+        },
+        "properties": { "type": "array", "items": { "$ref": "#/$defs/property" } },
+        "states": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["state", "rule"],
+            "properties": {
+              "state": { "type": "string", "minLength": 1 },
+              "rule": { "type": "string", "minLength": 8 }
+            }
+          }
+        },
+        "behavior": { "$ref": "#/$defs/evidenceStringList" },
+        "quantitativeRules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["subject", "rule"],
+            "properties": {
+              "subject": { "type": "string", "minLength": 1 },
+              "rule": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "responsive": { "$ref": "#/$defs/evidenceStringList" },
+        "contentGuidance": { "$ref": "#/$defs/evidenceStringList" },
+        "accessibility": { "$ref": "#/$defs/evidenceStringList" },
+        "exceptions": { "$ref": "#/$defs/evidenceStringList" },
+        "related": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["component", "relationship"],
+            "properties": {
+              "component": { "type": "string", "minLength": 1 },
+              "relationship": { "type": "string", "minLength": 8 }
+            }
+          }
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "code"],
+            "properties": {
+              "label": { "type": "string", "minLength": 2 },
+              "code": { "type": "string", "minLength": 8 }
+            }
+          }
+        },
+        "tokens": { "$ref": "#/$defs/evidenceStringList" },
+        "apiLinks": { "$ref": "#/$defs/evidenceStringList" },
+        "migration": { "$ref": "#/$defs/evidenceStringList" },
+        "canonicalGuide": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["slug", "title", "storybookDocsId"],
+              "properties": {
+                "slug": { "type": "string", "minLength": 1 },
+                "title": { "type": "string", "minLength": 1 },
+                "storybookDocsId": {
+                  "type": "string",
+                  "pattern": "^lds-[a-z0-9-]+--docs$"
+                }
+              }
+            }
+          ]
+        },
+        "guideDeltaFields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "purpose", "useWhen", "avoidWhen", "anatomy", "properties",
+              "states", "behavior", "quantitativeRules", "responsive",
+              "contentGuidance", "accessibility", "exceptions", "related",
+              "examples", "tokens", "apiLinks", "migration"
+            ]
+          }
+        },
+        "sectionStatus": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "purpose", "useWhen", "avoidWhen", "anatomy", "properties",
+            "states", "behavior", "quantitativeRules", "responsive",
+            "contentGuidance", "accessibility", "exceptions", "related",
+            "examples", "tokens", "apiLinks", "migration"
+          ],
+          "properties": {
+            "purpose": { "$ref": "#/$defs/sectionStatusValue" },
+            "useWhen": { "$ref": "#/$defs/sectionStatusValue" },
+            "avoidWhen": { "$ref": "#/$defs/sectionStatusValue" },
+            "anatomy": { "$ref": "#/$defs/sectionStatusValue" },
+            "properties": { "$ref": "#/$defs/sectionStatusValue" },
+            "states": { "$ref": "#/$defs/sectionStatusValue" },
+            "behavior": { "$ref": "#/$defs/sectionStatusValue" },
+            "quantitativeRules": { "$ref": "#/$defs/sectionStatusValue" },
+            "responsive": { "$ref": "#/$defs/sectionStatusValue" },
+            "contentGuidance": { "$ref": "#/$defs/sectionStatusValue" },
+            "accessibility": { "$ref": "#/$defs/sectionStatusValue" },
+            "exceptions": { "$ref": "#/$defs/sectionStatusValue" },
+            "related": { "$ref": "#/$defs/sectionStatusValue" },
+            "examples": { "$ref": "#/$defs/sectionStatusValue" },
+            "tokens": { "$ref": "#/$defs/sectionStatusValue" },
+            "apiLinks": { "$ref": "#/$defs/sectionStatusValue" },
+            "migration": { "$ref": "#/$defs/sectionStatusValue" }
+          }
+        },
+        "platformStatus": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["figma", "react", "ios", "android"],
+          "properties": {
+            "figma": { "enum": ["mapped", "not-tracked"] },
+            "react": { "const": "implemented" },
+            "ios": { "const": "not-tracked" },
+            "android": { "const": "not-tracked" }
+          }
+        },
+        "storybook": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["importPath", "entryStoryId", "publicStories", "hiddenEvidence"],
+          "properties": {
+            "importPath": { "type": "string" },
+            "entryStoryId": { "type": ["string", "null"] },
+            "publicStories": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "name", "role"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "name": { "type": "string" },
+                  "role": { "type": "string" }
+                }
+              }
+            },
+            "hiddenEvidence": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/sourceRef" }
+        }
+      }
+    }
+  }
+}

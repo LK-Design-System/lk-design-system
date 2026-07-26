@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "description": "Known hand-rolled behavior-engine bypasses. New components must use useMenuKeyboard/useSubmenuBranch, anchored-overlay, dialog-focus, and field-shared; only newly introduced bypasses fail check:engine-reuse.",
+  "findings": {
+    "menuRovingWithoutEngine": {},
+    "focusTrapWithoutEngine": {},
+    "outsideDismissWithoutEngine": {
+      "components/buttons/SpeedDial.jsx": 1,
+      "components/forms/AutoComplete.jsx": 1,
+      "components/forms/Combobox.jsx": 1,
+      "components/forms/DatePicker.jsx": 1,
+      "components/forms/Select.jsx": 1,
+      "components/navigation/SideNav.jsx": 1,
+      "components/navigation/TopBar.jsx": 1
+    },
+    "conditionalAriaLiveMount": {
+      "components/data/ResourceState.jsx": 2,
+      "components/data/SavedViewControl.jsx": 1,
+      "components/forms/ValidationSummary.jsx": 1,
+      "components/overlay/ToastStack.jsx": 2
+    },
+    "fieldMetadataWithoutEngine": {
+      "components/forms/FileUpload.jsx": 1,
+      "components/forms/PropertyField.jsx": 1,
+      "components/forms/SearchableMultiSelect.jsx": 1
+    }
+  }
+}

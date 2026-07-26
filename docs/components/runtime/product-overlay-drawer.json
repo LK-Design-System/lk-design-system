@@ -1,0 +1,266 @@
+{
+  "slug": "product-overlay-drawer",
+  "title": "Drawer",
+  "storybookTitle": "LDS Product/Overlay/Drawer",
+  "layer": "Product",
+  "family": "Overlay",
+  "primaryOwner": "Drawer",
+  "ownerComponents": [
+    "Drawer"
+  ],
+  "supportingComponents": [
+    "Button",
+    "Sheet"
+  ],
+  "purpose": "넓은 화면에서 필터·속성·상세처럼 주 콘텐츠를 보조하는 작업을 옆 패널에 유지할 때 적합합니다. 작은 화면의 짧은 선택에는 Drawer 대신 Sheet를, 집중이 필요한 확인에는 Dialog를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "scrim 클릭 닫기는 closeOnScrim으로 제어하지만, 유일한 dismiss 수단으로 사용하지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "ariaLabel",
+      "rule": "title이 없을 때 사용할 접근 가능한 이름. @default \"서랍 패널\""
+    },
+    {
+      "part": "closeLabel",
+      "rule": "닫기 버튼의 접근 가능한 이름. @default \"닫기\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "open",
+      "type": "boolean",
+      "required": false,
+      "description": "열림 상태. @default false",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "side",
+      "type": "'left' | 'right'",
+      "required": false,
+      "description": "슬라이드인 방향. @default \"right\"",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "width",
+      "type": "number",
+      "required": false,
+      "description": "패널 너비(px). @default 380",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "footer",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "onClose",
+      "type": "() = void",
+      "required": false,
+      "description": "Escape, scrim, 닫기 액션이 호출하는 controlled dismiss callback.",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "closeOnScrim",
+      "type": "boolean",
+      "required": false,
+      "description": "scrim 클릭으로 닫기. @default true",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "initialFocusRef",
+      "type": "React.RefObject",
+      "required": false,
+      "description": "열릴 때 우선 초점을 받을 Drawer 내부 요소.",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "returnFocusRef",
+      "type": "React.RefObject",
+      "required": false,
+      "description": "닫힌 뒤 자동으로 캡처한 trigger 대신 초점을 돌려보낼 요소.",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "restoreFocus",
+      "type": "boolean",
+      "required": false,
+      "description": "닫힌 뒤 trigger 또는 returnFocusRef로 초점을 복원합니다. @default true",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "required": false,
+      "description": "title이 없을 때 사용할 접근 가능한 이름. @default \"서랍 패널\"",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "closeLabel",
+      "type": "string",
+      "required": false,
+      "description": "닫기 버튼의 접근 가능한 이름. @default \"닫기\"",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "",
+      "owner": "DrawerProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "open",
+      "rule": "열림 상태. @default false"
+    }
+  ],
+  "behavior": [
+    "overlay Drawer를 여러 개 겹치지 않습니다. Drawer 위에 확인 Modal이 불가피할 때는 Modal만 활성화되고, 닫힌 뒤 Drawer 내부 trigger로 돌아갑니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Modal과 달리 좌/우 edge에 붙고, side, 380px 기본 폭, 92vw 상한, slide transition을 유지합니다. 이 차이는 본문 맥락과 나란히 연결되는 보조 작업이라는 기능으로 정당화됩니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "시각 delta inventory: headline/body typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. header/body는 space-5 space-6, footer는 space-4 space-6, action gap은 space-2로 Modal과 맞춥니다. radius와 선택/활성 marker는 추가하지 않고 side 방향만 기존 public axis로 유지합니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. 여러 overlay Drawer 동시 노출은 제외했습니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다."
+    },
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    }
+  ],
+  "responsive": [
+    "필터 query 직렬화, 변경 유실 경고 조건, route 상태와 반응형으로 inline surface로 전환하는 정책은 제품 레이어가 소유합니다."
+  ],
+  "contentGuidance": [
+    "제품 맥락에 맞는 닫기 명령은 closeLabel로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다."
+  ],
+  "accessibility": [
+    "Modal, Sheet, ConfirmDialog를 sibling으로 확인했습니다. focus/keyboard 계약은 ConfirmDialog와 공유하되 표면은 기존 Drawer 그대로입니다.",
+    "제목이 있으면 aria-labelledby, 없으면 ariaLabel을 사용합니다.",
+    "initialFocusRef → 첫 tabbable 요소 → dialog 표면 순으로 초기 초점을 선택합니다.",
+    "최상위 Drawer만 Tab/Shift+Tab 순환, 외부 focus containment, Escape dismiss를 소유합니다.",
+    "닫히면 trigger로 복원하며 returnFocusRef로 논리적 다음 지점을 지정할 수 있습니다. restoreFocus 기본값은 true입니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Sheet",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "CommandPalette",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Lightbox",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "const firstFilterRef = useRef(null);\n\n<Drawer\n  open={open}\n  side=\"right\"\n  title=\"필터\"\n  initialFocusRef={firstFilterRef}\n  onClose={close}\n  footer={<Button variant=\"signal\">적용</Button>}\n>\n  <input ref={firstFilterRef} aria-label=\"현장 검색\" />\n</Drawer>"
+    }
+  ],
+  "tokens": [
+    "--body2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-solid-normal",
+    "--component-dialog-scrim",
+    "--component-dialog-scrim-blur",
+    "--dur-base",
+    "--dur-slow",
+    "--ease-out",
+    "--font-sans",
+    "--fw-extra",
+    "--headline1-size",
+    "--shadow-xl",
+    "--space-2",
+    "--space-4",
+    "--space-5",
+    "--space-6"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/OverlayDrawer.stories.jsx",
+    "entryStoryId": "lds-product-overlay-drawer--drawer-open",
+    "publicStories": [
+      {
+        "id": "lds-product-overlay-drawer--drawer-open",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-overlay-drawer--drawer-sheet-focus-contract",
+        "name": "상호작용 · 초점 순환과 복원",
+        "role": "interaction"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

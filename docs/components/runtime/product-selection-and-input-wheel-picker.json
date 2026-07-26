@@ -1,0 +1,283 @@
+{
+  "slug": "product-selection-and-input-wheel-picker",
+  "title": "Wheel Picker",
+  "storybookTitle": "LDS Product/Selection and Input/Wheel Picker",
+  "layer": "Product",
+  "family": "Selection and Input",
+  "primaryOwner": "WheelPicker",
+  "ownerComponents": [
+    "WheelPicker"
+  ],
+  "supportingComponents": [],
+  "purpose": "층·시·분처럼 순서가 있고 선택지가 짧은 값을 모바일에서 조절할 때 적합합니다. 긴 목록이나 키보드 중심 데스크톱 폼에는 Wheel Picker 대신 Select를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "Listbox accessible name. @default \"휠 선택\""
+    },
+    {
+      "part": "emptyLabel",
+      "rule": "option이 없을 때 중앙에 표시할 문구. @default \"선택 항목 없음\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "options",
+      "type": "Array",
+      "required": false,
+      "description": "문자열/숫자 또는 {value, label} 배열.",
+      "owner": "WheelPickerProps"
+    },
+    {
+      "name": "value",
+      "type": "string | number",
+      "required": false,
+      "description": "",
+      "owner": "WheelPickerProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string | number",
+      "required": false,
+      "description": "",
+      "owner": "WheelPickerProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string | number, option: WheelPickerOption) = void",
+      "required": false,
+      "description": "",
+      "owner": "WheelPickerProps"
+    },
+    {
+      "name": "itemHeight",
+      "type": "number",
+      "required": false,
+      "description": "각 행 높이(px). @default 36",
+      "owner": "WheelPickerProps"
+    },
+    {
+      "name": "visible",
+      "type": "number",
+      "required": false,
+      "description": "보이는 행 수(홀수 권장). @default 5",
+      "owner": "WheelPickerProps"
+    },
+    {
+      "name": "width",
+      "type": "React.CSSProperties['width']",
+      "required": false,
+      "description": "컴포넌트 너비. @default 128",
+      "owner": "WheelPickerProps"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Listbox accessible name. @default \"휠 선택\"",
+      "owner": "WheelPickerProps"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "option이 없을 때 중앙에 표시할 문구. @default \"선택 항목 없음\"",
+      "owner": "WheelPickerProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "WheelPickerProps"
+    },
+    {
+      "name": "disable",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "WheelPickerProps"
+    },
+    {
+      "name": "readOnly",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "WheelPickerProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "visible",
+      "rule": "보이는 행 수(홀수 권장). @default 5"
+    },
+    {
+      "state": "emptyLabel",
+      "rule": "option이 없을 때 중앙에 표시할 문구. @default \"선택 항목 없음\""
+    }
+  ],
+  "behavior": [
+    "스크롤 값은 드럼이 멈춘 뒤에 커밋합니다. 관성 스크롤 중간 값을 프레임마다 커밋하면 선택 동기화가 scrollTop을 되돌려 사용자 스크롤과 충돌하므로, 스크롤이 잦아든 다음 스냅된 행 하나만 onChange로 올립니다.",
+    "WheelPicker는 한 번에 하나의 값을 고르는 scroll-snap listbox입니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "WCAG 2.2 Contrast Minimum"
+    },
+    {
+      "subject": "--body1-line",
+      "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+    },
+    {
+      "subject": "--body1-size",
+      "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-fill-normal",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    }
+  ],
+  "responsive": [
+    "options는 primitive 또는 { value, label, disabled } 항목을 받습니다. value / defaultValue / onChange, itemHeight, 홀수로 보정되는 visible, width, label, emptyLabel, disabled, readOnly를 지원합니다."
+  ],
+  "contentGuidance": [
+    "외곽 카드, inset pane, 중앙 띠, fade mask를 추가하지 않습니다. 깊이는 선택 행과 주변 행의 type scale·weight·3D transform으로만 표현하며 모든 활성 option 텍스트는 대비를 유지합니다."
+  ],
+  "accessibility": [
+    "listbox, aria-activedescendant, aria-selected를 사용하며 ArrowUp/ArrowDown, PageUp/PageDown, Home/End로 값을 이동합니다. 문자 입력은 type-ahead로 option label 앞부분을 매칭하고(같은 문자를 반복하면 다음 매칭으로 순환) 짧은 시간이 지나면 검색어가 초기화됩니다. disabled option은 건너뜁니다.",
+    "readOnly는 focus와 읽기를 허용하지만 값 변경을 막습니다. disabled는 상호작용과 Tab 진입을 막습니다.",
+    "Apple Focus and selection."
+  ],
+  "exceptions": [
+    "긴 목록 검색이 필요한 경우 Select, Combobox, TreePicker를 사용합니다."
+  ],
+  "related": [
+    {
+      "component": "ColorSwatch",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DatePicker",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DateRangeField",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FileUpload",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FileUploadQueue",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "IconPicker",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "NumberField",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "PinInput",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<WheelPicker options={['B1', '1F', '2F', '3F']} defaultValue=\"1F\" onChange={setFloor} />"
+    }
+  ],
+  "tokens": [
+    "--body1-line",
+    "--body1-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-normal",
+    "--color-semantic-focus-ring",
+    "--color-semantic-label-assistive",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-strong",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-medium",
+    "--fw-semibold",
+    "--headline1-line",
+    "--headline1-size",
+    "--label1-line",
+    "--label1-size",
+    "--label2-line",
+    "--label2-size",
+    "--radius-md",
+    "--space-3"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/SelectionWheelPicker.stories.jsx",
+    "entryStoryId": "lds-product-selection-and-input-wheel-picker--wheel-pickers",
+    "publicStories": [
+      {
+        "id": "lds-product-selection-and-input-wheel-picker--wheel-pickers",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-selection-and-input-wheel-picker--time-picker",
+        "name": "사용법 · 시간 선택",
+        "role": "usage"
+      },
+      {
+        "id": "lds-product-selection-and-input-wheel-picker--disabled-options",
+        "name": "변형·상태 · 비활성 옵션",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-selection-and-input-wheel-picker--empty",
+        "name": "변형·상태 · 항목 없음",
+        "role": "variants-states"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

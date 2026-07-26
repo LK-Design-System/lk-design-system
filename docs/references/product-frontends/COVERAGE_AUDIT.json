@@ -1,0 +1,2319 @@
+{
+  "schemaVersion": 2,
+  "auditedAt": "2026-07-27",
+  "purpose": "Track source-backed product workflows through discovery, independent wireframing, LDS implementation, and interaction verification without treating current screens or component files as coverage proof.",
+  "evidenceHierarchy": [
+    "product goals and invariants",
+    "domain and state-transition contracts",
+    "observed user actions in current source",
+    "UX audits and wireframe handoffs as problem signals",
+    "current product layouts and LDS components as non-authoritative candidates"
+  ],
+  "stageDefinitions": {
+    "discovered": "The user goal, decisions, states, failures, recovery, and pinned source blobs are recorded.",
+    "wireframed": "An independent low-fidelity workflow structure has been reviewed against every consumer source.",
+    "implemented": "Minimal LDS components or composition contracts implement the reviewed wireframe without copying an application screen.",
+    "verified": "Source requirements, wireframe, implementation stories, and interaction verification are traceably connected."
+  },
+  "summary": {
+    "discovered": 0,
+    "wireframed": 0,
+    "implemented": 0,
+    "verified": 16
+  },
+  "componentDispositionSummary": {
+    "keep": 15,
+    "redesign": 6,
+    "split": 8,
+    "remove": 22,
+    "separate-audit": 5
+  },
+  "componentDisposition": [
+    {
+      "name": "RecordHeader",
+      "path": "components/content/RecordHeader.jsx",
+      "decision": "split",
+      "workflowIds": [],
+      "reason": "Separates person, robot, order, and other record identity anatomy from PageHeader so page context and record identity keep distinct visual, naming, detail, action, and responsive contracts.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "The pinned dashboard exposes selected-robot and connection state but no reusable header combining a record visual, name, details, and record actions.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "not applicable",
+          "reason": "The pinned shell and robot dashboard compose navigation and supervision surfaces without a general record-identity header anatomy.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/layout/MainLayout/index.jsx",
+              "blobSha": "2436725e49f6364fdb99f2047907f300ca367865"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "not applicable",
+          "reason": "The pinned shell and home route expose account or product identity and destination cards but no record-detail visual, name, details, and actions composition.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/layout/AuthShell.tsx",
+              "blobSha": "b525cdd54dfbf73eeec9d8867cd23a3d07c1630b"
+            },
+            {
+              "path": "src/app/page.tsx",
+              "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "StatusIndicator",
+      "path": "components/content/StatusIndicator.jsx",
+      "decision": "split",
+      "workflowIds": [],
+      "reason": "Separates live availability, connection, and freshness dot signals from StatusBadge lifecycle/result labels so static statuses no longer carry decorative signal lights or motion.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "The pinned dashboard proves that live connection truth exists, but this generic visual split does not change Web Viz transport state, polling, route, or workflow ownership.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "not applicable",
+          "reason": "The pinned supervision UI contains equipment and connection state, but the StatusBadge/StatusIndicator visual boundary does not change its telemetry truth, diagnosis, or recovery workflow.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "not applicable",
+          "reason": "The pinned home route contains destination metadata but no shared live availability indicator workflow; the generic Core split introduces no product route or state contract.",
+          "sourceEvidence": [
+            {
+              "path": "src/app/page.tsx",
+              "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ScrollArea",
+      "path": "components/layout/ScrollArea.jsx",
+      "decision": "redesign",
+      "workflowIds": [],
+      "reason": "Replaces the hard-coded 7px WebKit scrollbar with a native auto default, standardized compact opt-in, stable gutter, forced-colors fallback, and conditional keyboard-focus contract without exposing a public hidden treatment.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "supported by composition",
+          "reason": "The pinned frontend mixes global 6px WebKit scrollbar styling and a hidden utility. LDS can replace the visual contract while Web Viz retains each screen's overflow boundary, map behavior, and data state.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/index.css",
+              "blobSha": "f8d004ed0fdb625fd72b068a6396bfbca5417859"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "supported by composition",
+          "reason": "The pinned frontend uses react-perfect-scrollbar with 5px rails and thumbs. LDS supplies the native scroll-surface contract while the product owns migration timing, shell placement, and supervision state.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/assets/scss/style.scss",
+              "blobSha": "d676ba495386f45ca7b8bbf309df92409327e5c1"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "supported by composition",
+          "reason": "The pinned frontend uses raw overflow utilities and already reserves a stable gutter in one editor. LDS can unify native presentation and keyboard reachability while markdown, table, editor, and chat overflow boundaries remain product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "src/app/globals.css",
+              "blobSha": "5f82644ed126d4d8c484d49b86c73835cec680fc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Carousel",
+      "path": "components/data/Carousel.jsx",
+      "decision": "redesign",
+      "workflowIds": [],
+      "reason": "Composes the Core PageIndicator media presentation for shared dot geometry, target size, item labels, current-state semantics, and reduced motion while Carousel retains viewport, slide state, controls, scrim placement, and auto-rotation policy.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "The pinned dashboard exposes robot selection, connection status, destination cards, and map entry but no ordered media or slide-picker workflow.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "not applicable",
+          "reason": "The pinned main layout composes a fixed header, responsive SideNav, breadcrumbs, route outlet, and footer without sequential media or page-indicator behavior.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/layout/MainLayout/index.jsx",
+              "blobSha": "2436725e49f6364fdb99f2047907f300ca367865"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "not applicable",
+          "reason": "The pinned home route presents destination cards and project chips without an ordered media sequence or slide picker.",
+          "sourceEvidence": [
+            {
+              "path": "src/app/page.tsx",
+              "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LanguageSwitcher",
+      "path": "components/navigation/LanguageSwitcher.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-16"
+      ],
+      "reason": "A bounded controlled TopBar utility that owns native-name locale selection and menu accessibility while translation, routing, persistence, formatting, and document language remain product-owned.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "The pinned dashboard has product identity and header utilities but no locale state, translation route, or language-selection action.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "not applicable",
+          "reason": "The pinned fixed header and responsive SideNav expose no locale control or language-specific route evidence.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/layout/MainLayout/index.jsx",
+              "blobSha": "2436725e49f6364fdb99f2047907f300ca367865"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "not applicable",
+          "reason": "The pinned product-identity shell exposes no locale control or translation-readiness state.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/layout/Sidebar.tsx",
+              "blobSha": "6f8be361287aada76ff3b2e4f6ca4022706b3b87"
+            },
+            {
+              "path": "src/components/layout/AuthShell.tsx",
+              "blobSha": "b525cdd54dfbf73eeec9d8867cd23a3d07c1630b"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenu",
+      "path": "components/overlay/DropdownMenu.jsx",
+      "decision": "keep",
+      "workflowIds": [],
+      "reason": "A bounded trigger-owned command or selection menu. LDS owns shared density, adaptive 176–320px content width, keyboard navigation, viewport placement, and item state while products retain explicit fixed-width layout exceptions plus the action, mutation, confirmation, and persistence workflows.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "The pinned dashboard uses connected-robot controls and navigation but exposes no trigger-bound command menu in the reviewed surface.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "not applicable",
+          "reason": "The reviewed MenuItem instances are form Select options, which belong to Select rather than command DropdownMenu.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/user/index.jsx",
+              "blobSha": "8912b51c6eb612bd2beb2ed0206ee78ae6f03f2d"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "supported by composition",
+          "reason": "The Confluence source table exposes a three-item row action menu with rename, exclusion, and danger delete actions; normal DropdownMenu plus a danger item covers the reusable interaction while the product owns mutations and confirmation.",
+          "sourceEvidence": [
+            {
+              "path": "src/app/confluence/page.tsx",
+              "blobSha": "5d40f347f4b391510ac8ce4a60d65c18a27214cc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SpeedDial",
+      "path": "components/buttons/SpeedDial.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-03"
+      ],
+      "reason": "A bounded action-category component that does not own a product workflow or page layout."
+    },
+    {
+      "name": "LogViewer",
+      "path": "components/content/LogViewer.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-02",
+        "WF-08"
+      ],
+      "reason": "Owns log filtering, follow, and scroll behavior while the product retains transport and diagnosis."
+    },
+    {
+      "name": "ReorderList",
+      "path": "components/content/ReorderList.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-05"
+      ],
+      "reason": "Owns only ordering of peer items and does not encode a procedure schema."
+    },
+    {
+      "name": "Legend",
+      "path": "components/data/Legend.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-02",
+        "WF-08"
+      ],
+      "reason": "Connects visual encodings to labels without owning the product renderer."
+    },
+    {
+      "name": "LineChart",
+      "path": "components/data/LineChart.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-02",
+        "WF-08"
+      ],
+      "reason": "A bounded presentational chart whose data meaning remains application-owned."
+    },
+    {
+      "name": "PropertyField",
+      "path": "components/forms/PropertyField.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-04"
+      ],
+      "reason": "Can stay bounded to one field's current, draft, validation, and apply grammar."
+    },
+    {
+      "name": "DockPanel",
+      "path": "components/layout/DockPanel.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-01",
+        "WF-08"
+      ],
+      "reason": "Owns dock, collapse, and resize layout behavior without imposing a product screen."
+    },
+    {
+      "name": "DirectionalPad",
+      "path": "components/robotics/DirectionalPad.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-09"
+      ],
+      "reason": "A discrete momentary control input that remains separate from authority and transport."
+    },
+    {
+      "name": "IconPicker",
+      "path": "components/selection/IconPicker.jsx",
+      "decision": "keep",
+      "workflowIds": [],
+      "reason": "A standard single-value selection category independent of the audited product workflows."
+    },
+    {
+      "name": "WheelPicker",
+      "path": "components/selection/WheelPicker.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-13"
+      ],
+      "reason": "A generic product picker that does not claim WDS date or time parity."
+    },
+    {
+      "name": "FileUploadQueue",
+      "path": "components/forms/FileUploadQueue.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-06"
+      ],
+      "reason": "Owns per-file upload, processing, result, retry, and removal rather than the full operation workflow."
+    },
+    {
+      "name": "SearchableMultiSelect",
+      "path": "components/forms/SearchableMultiSelect.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-04",
+        "WF-05"
+      ],
+      "reason": "A standard asynchronous searchable multi-selection input."
+    },
+    {
+      "name": "SecretField",
+      "path": "components/forms/SecretField.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-11"
+      ],
+      "reason": "Stays narrow to masked, reveal, and copy states without credential CRUD or publishing."
+    },
+    {
+      "name": "EditorPanel",
+      "path": "components/layout/EditorPanel.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-04"
+      ],
+      "reason": "Fixes DockPanel, form, ActionArea, and dirty-close confirmation into a workflow shell without an independent interaction primitive."
+    },
+    {
+      "name": "MetricComparison",
+      "path": "components/mlops/MetricComparison.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-07",
+        "WF-08",
+        "WF-14"
+      ],
+      "reason": "A thin table wrapper that also derives product verdict policy; DataGrid or a product-owned table composition is sufficient."
+    },
+    {
+      "name": "BatchOperationSummary",
+      "path": "components/operations/BatchOperationSummary.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-06"
+      ],
+      "reason": "Fixes count, progress, failure rows, and retry actions into a product result block that existing status and action primitives can compose."
+    },
+    {
+      "name": "SafetyConfirmDialog",
+      "path": "components/operations/SafetyConfirmDialog.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-03",
+        "WF-12"
+      ],
+      "reason": "A convenience wrapper around ConfirmDialog and Input; impact, blocker, and typed-phrase policy belongs to product composition."
+    },
+    {
+      "name": "TerminalFrame",
+      "path": "components/operations/TerminalFrame.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-02",
+        "WF-06"
+      ],
+      "reason": "Only DeviceOps has an interactive terminal consumer; without its renderer and transport this is session-header and overlay composition."
+    },
+    {
+      "name": "FileBrowser",
+      "path": "components/data/FileBrowser.jsx",
+      "decision": "redesign",
+      "workflowIds": [
+        "WF-01",
+        "WF-08"
+      ],
+      "reason": "Must be reduced to standard navigation and selection contracts instead of a compound product surface."
+    },
+    {
+      "name": "TreeSelectionPanel",
+      "path": "components/data/TreeSelectionPanel.jsx",
+      "decision": "redesign",
+      "workflowIds": [
+        "WF-01",
+        "WF-10"
+      ],
+      "reason": "Must justify a persistent hierarchy-selection contract without duplicating Tree, checkbox, and search primitives.",
+      "replacementPaths": [
+        "components/data/TreePicker.jsx",
+        "stories/DataTreePicker.stories.jsx"
+      ]
+    },
+    {
+      "name": "ExecutionStatus",
+      "path": "components/mlops/ExecutionStatus.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-06",
+        "WF-12"
+      ],
+      "reason": "Repackages product activity, outcome, freshness, and recovery into StatusBadge, ProgressBar, Timeline, and Callout layout."
+    },
+    {
+      "name": "ReviewDecision",
+      "path": "components/mlops/ReviewDecision.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-07"
+      ],
+      "reason": "Owns draft choice, required reason, persistence state, and submit policy that the product should compose from ChoiceCard, Textarea, and ActionArea."
+    },
+    {
+      "name": "TransitionGate",
+      "path": "components/mlops/TransitionGate.jsx",
+      "decision": "split",
+      "replacementPaths": [
+        "components/data/DataGrid.jsx",
+        "components/content/SourceDisclosure.jsx",
+        "components/forms/ValidationSummary.jsx",
+        "components/data/DescriptionList.jsx",
+        "components/forms/Textarea.jsx",
+        "components/buttons/ActionArea.jsx",
+        "components/content/StatusBadge.jsx"
+      ],
+      "workflowIds": [
+        "WF-14"
+      ],
+      "reason": "Gate evidence, state facts, notes, and actions are separate primitives; transition policy and persistence stay product-owned."
+    },
+    {
+      "name": "CommandAction",
+      "path": "components/operations/CommandAction.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-03"
+      ],
+      "reason": "A domain-specific wrapper around Button, ActionArea, and support text; eligibility and request errors are product state."
+    },
+    {
+      "name": "CommandLifecycle",
+      "path": "components/operations/CommandLifecycle.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-03"
+      ],
+      "reason": "Repackages a product-owned phase schema into Timeline and status rows without adding an independent interaction contract."
+    },
+    {
+      "name": "ConnectionStatus",
+      "path": "components/operations/ConnectionStatus.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-02",
+        "WF-09"
+      ],
+      "reason": "Fixes ConnectionBadge, product-provided fact rows, and reconnect action into a status block; freshness, health, and recovery remain product policy."
+    },
+    {
+      "name": "EvidenceViewer",
+      "path": "components/operations/EvidenceViewer.jsx",
+      "decision": "redesign",
+      "workflowIds": [
+        "WF-08"
+      ],
+      "reason": "Must narrow to image evidence rendering while provenance and availability chrome remain separate.",
+      "replacementPaths": [
+        "components/data/AnnotatedImage.jsx",
+        "stories/DataAnnotatedImage.stories.jsx"
+      ]
+    },
+    {
+      "name": "ManualControlGuard",
+      "path": "components/operations/ManualControlGuard.jsx",
+      "decision": "redesign",
+      "workflowIds": [
+        "WF-09"
+      ],
+      "reason": "Must separate UI arming from control authority and contract safe release on blur, unmount, and link loss.",
+      "replacementPaths": [
+        "components/robotics/ManualControlSession.jsx",
+        "stories/RoboticsManualControlSession.stories.jsx"
+      ]
+    },
+    {
+      "name": "TimeRuleEditor",
+      "path": "components/operations/TimeRuleEditor.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-13"
+      ],
+      "reason": "Only one workflow currently consumes the once and weekly schema; compose shared form controls until an independent repeated contract is proven."
+    },
+    {
+      "name": "DocumentSurface",
+      "path": "components/content/DocumentSurface.jsx",
+      "decision": "split",
+      "replacementPaths": [
+        "components/content/SourceDisclosure.jsx",
+        "components/status/Callout.jsx",
+        "components/selection/ChoiceCard.jsx",
+        "components/forms/Textarea.jsx",
+        "components/buttons/ActionArea.jsx"
+      ],
+      "workflowIds": [
+        "WF-07",
+        "WF-08"
+      ],
+      "reason": "Provenance and availability chrome, renderer slot, and patch decision are separate responsibilities."
+    },
+    {
+      "name": "ScopedConversation",
+      "path": "components/content/ScopedConversation.jsx",
+      "decision": "split",
+      "replacementPaths": [
+        "components/content/SourceDisclosure.jsx",
+        "components/data/TreePicker.jsx",
+        "components/overlay/ConfirmDialog.jsx",
+        "components/forms/Textarea.jsx",
+        "components/buttons/ActionArea.jsx",
+        "components/buttons/Button.jsx",
+        "components/status/Callout.jsx"
+      ],
+      "workflowIds": [
+        "WF-10"
+      ],
+      "reason": "Source, scope, and reset use shared primitives while message rendering, draft, submit, streaming, and persistence stay product-owned."
+    },
+    {
+      "name": "RunAction",
+      "path": "components/mlops/RunAction.jsx",
+      "decision": "split",
+      "replacementPaths": [
+        "components/forms/ValidationSummary.jsx",
+        "components/data/DescriptionList.jsx",
+        "components/overlay/ConfirmDialog.jsx",
+        "components/buttons/Button.jsx",
+        "components/buttons/ActionArea.jsx"
+      ],
+      "workflowIds": [
+        "WF-06",
+        "WF-12"
+      ],
+      "reason": "Preflight evidence, admission or actual-run intent, and external-impact confirmation are distinct decisions."
+    },
+    {
+      "name": "SchemaConfigEditor",
+      "path": "components/operations/SchemaConfigEditor.jsx",
+      "decision": "split",
+      "replacementPaths": [
+        "components/forms/PropertyField.jsx",
+        "components/data/DescriptionList.jsx",
+        "components/forms/ValidationSummary.jsx",
+        "components/layout/DockPanel.jsx",
+        "components/buttons/ActionArea.jsx"
+      ],
+      "workflowIds": [
+        "WF-04"
+      ],
+      "reason": "The design system should supply change summary, dirty guard, and persistent actions instead of owning schema rendering."
+    },
+    {
+      "name": "StepComposer",
+      "path": "components/operations/StepComposer.jsx",
+      "decision": "split",
+      "replacementPaths": [
+        "components/content/ReorderList.jsx",
+        "components/forms/ValidationSummary.jsx",
+        "components/data/DescriptionList.jsx"
+      ],
+      "workflowIds": [
+        "WF-05"
+      ],
+      "reason": "Ordering, validation summary, target summary, and the product-owned step editor are separate layers."
+    },
+    {
+      "name": "ArtifactBrowser",
+      "path": "components/mlops/ArtifactBrowser.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-01",
+        "WF-08"
+      ],
+      "reason": "Fixes an artifact table and detail-page structure that should be application composition."
+    },
+    {
+      "name": "DatasetExplorer",
+      "path": "components/mlops/DatasetExplorer.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-01",
+        "WF-08"
+      ],
+      "reason": "Combines source rail, search, collection view, bulk actions, and pagination into a page-shaped component."
+    },
+    {
+      "name": "LineageExplorer",
+      "path": "components/mlops/LineageExplorer.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-08"
+      ],
+      "reason": "Makes product graph meaning and layout a public design-system responsibility."
+    },
+    {
+      "name": "AlertCollection",
+      "path": "components/operations/AlertCollection.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-01",
+        "WF-02"
+      ],
+      "reason": "Encodes an alert inbox page instead of reusable collection and stable live-insertion behavior."
+    },
+    {
+      "name": "ServiceControlRow",
+      "path": "components/operations/ServiceControlRow.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-03"
+      ],
+      "reason": "Hard-codes service statuses, actions, and confirmation into one domain-specific row."
+    },
+    {
+      "name": "TopologyInspector",
+      "path": "components/operations/TopologyInspector.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-02",
+        "WF-08"
+      ],
+      "reason": "Fixes node, edge, layout, selection, and inspector responsibilities that belong to product renderers."
+    },
+    {
+      "name": "ConversationMessages",
+      "path": "components/content/ConversationMessages.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-10"
+      ],
+      "reason": "Freezes a Context Hub message-array renderer as a public component although semantic list, error, retry, and source primitives are sufficient."
+    },
+    {
+      "name": "ConversationComposer",
+      "path": "components/forms/ConversationComposer.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-10"
+      ],
+      "reason": "A form, Textarea, and Button composition with product-specific draft and submit policy but no independent interaction contract."
+    },
+    {
+      "name": "ApprovalTransition",
+      "path": "components/mlops/ApprovalTransition.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-14"
+      ],
+      "reason": "Encodes one MLOps transition and derives submission eligibility from product-policy evidence inside the design system."
+    },
+    {
+      "name": "PreflightSummary",
+      "path": "components/operations/PreflightSummary.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-03",
+        "WF-06",
+        "WF-12"
+      ],
+      "reason": "Fixes outcome, check evidence, recovery, and recheck into a product workflow block that ValidationSummary, DescriptionList, and ActionArea can compose."
+    },
+    {
+      "name": "ChangeSummary",
+      "path": "components/operations/ChangeSummary.jsx",
+      "decision": "remove",
+      "workflowIds": [
+        "WF-04"
+      ],
+      "reason": "Fixes current, proposed, validation, and impact fields into a read-only product schema that DescriptionList, DataGrid, and ValidationSummary can compose."
+    },
+    {
+      "name": "CanvasEditorShell",
+      "path": "components/editor/CanvasEditorShell.jsx",
+      "decision": "separate-audit",
+      "workflowIds": [],
+      "reason": "Requires a separate audit against LDS siblings and official editor/accessibility references; pinned product sources may confirm workflow coverage only and do not decide anatomy, API, or style."
+    },
+    {
+      "name": "CanvasEditorCommandBar",
+      "path": "components/editor/CanvasEditorCommandBar.jsx",
+      "decision": "separate-audit",
+      "workflowIds": [],
+      "reason": "Requires a separate audit against LDS siblings and official editor/accessibility references; pinned product sources may confirm workflow coverage only and do not decide anatomy, API, or style."
+    },
+    {
+      "name": "LayerPanel",
+      "path": "components/editor/LayerPanel.jsx",
+      "decision": "separate-audit",
+      "workflowIds": [],
+      "reason": "Requires a separate audit against LDS siblings and official editor/accessibility references; pinned product sources may confirm workflow coverage only and do not decide anatomy, API, or style."
+    },
+    {
+      "name": "SelectionInspector",
+      "path": "components/editor/SelectionInspector.jsx",
+      "decision": "separate-audit",
+      "workflowIds": [],
+      "reason": "Requires a separate audit against LDS siblings and official editor/accessibility references; pinned product sources may confirm workflow coverage only and do not decide anatomy, API, or style."
+    },
+    {
+      "name": "ViewportStatusBar",
+      "path": "components/editor/ViewportStatusBar.jsx",
+      "decision": "separate-audit",
+      "workflowIds": [],
+      "reason": "Requires a separate audit against LDS siblings and official editor/accessibility references; pinned product sources may confirm workflow coverage only and do not decide anatomy, API, or style."
+    }
+  ],
+  "repositories": [
+    {
+      "id": "deviceops",
+      "repository": "LK-ROBOTICS/lk_deviceops",
+      "commit": "41c319eb0ad863f67d73facc64f7dd2a13ab9585",
+      "frontendRoot": "frontend",
+      "framework": "Vite 8, React 19"
+    },
+    {
+      "id": "visionops",
+      "repository": "LK-ROBOTICS/lk_visionops",
+      "commit": "308da0c0624024ba2497cf05cda2841e4411b522",
+      "frontendRoot": "frontend",
+      "framework": "Next.js 16, React 19"
+    },
+    {
+      "id": "web-viz",
+      "repository": "LK-ROBOTICS/lk_web_viz",
+      "commit": "a984def117c05acd213f494cbb8a42e990595505",
+      "frontendRoot": "frontend",
+      "framework": "Vite 6, React 19, react-konva"
+    },
+    {
+      "id": "context-hub",
+      "repository": "LK-ROBOTICS/lk_context_hub",
+      "commit": "de124084b7e50049350a46f92c4ea4476269c58c",
+      "frontendRoot": "src",
+      "framework": "Next.js 16, React 19"
+    },
+    {
+      "id": "control",
+      "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+      "commit": "93802fc2aa5d29f930380ae58d51dcb68322b5e7",
+      "frontendRoot": "frontend",
+      "framework": "Vite 6, React 18, MUI 6"
+    },
+    {
+      "id": "mlops",
+      "repository": "LK-ROBOTICS/lk_mlops",
+      "commit": "0e9f3b03fccd60ab0575b55c18035cc9f9e91521",
+      "frontendRoot": "frontend",
+      "framework": "Vite 8, React 19"
+    }
+  ],
+  "workflows": [
+    {
+      "id": "WF-01",
+      "name": "Attention to context",
+      "userGoal": "Find the item that needs attention, open enough context to decide, and return without losing the investigation position.",
+      "trigger": "The user enters an overview, queue, fleet, catalog, or project surface.",
+      "consumers": [
+        "deviceops",
+        "visionops",
+        "context-hub",
+        "control",
+        "mlops"
+      ],
+      "states": [
+        "loading",
+        "overview",
+        "filtered",
+        "selected",
+        "detail",
+        "return-context",
+        "empty",
+        "error"
+      ],
+      "decisions": [
+        "Which item needs attention first?",
+        "Is the current filter and freshness sufficient to trust the ranking?",
+        "Can the user return to the same query, page, selection, and scroll context?"
+      ],
+      "failureRecovery": [
+        "Distinguish no results from failed loading.",
+        "Keep query, filters, page, selection, and return context across detail navigation.",
+        "Do not reorder the user's reading position when live items arrive without an explicit reveal action."
+      ],
+      "dsBoundary": "LDS may own collection state, stable selection, attention markers, and return-context contracts; product ranking, queries, and routing remain application-owned.",
+      "designQuestion": "Should this remain a composition of collection primitives rather than a named domain explorer component?",
+      "sourceEvidence": [
+        {
+          "repo": "deviceops",
+          "path": "frontend/src/pages/DashboardPage.tsx",
+          "blobSha": "fd1676a5f40fb7e20545c1bd36dd9e497ccde67f"
+        },
+        {
+          "repo": "visionops",
+          "path": "frontend/src/components/modules/ModulesPage.tsx",
+          "blobSha": "cf7edfd481336499c64361a169ac79bb8998085e"
+        },
+        {
+          "repo": "context-hub",
+          "path": "src/app/projects/page.tsx",
+          "blobSha": "e1539973aebffb3566983f27e8845ed8384dba59"
+        },
+        {
+          "repo": "control",
+          "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+          "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+        },
+        {
+          "repo": "mlops",
+          "path": "frontend/src/pages/ProjectDetailPage.tsx",
+          "blobSha": "81da9b9654729f25f99713c8d8477ab52ced4914"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-01-attention-to-context"
+      ],
+      "implementationEvidence": [
+        "components/data/DataGrid.jsx",
+        "components/data/DataToolbar.jsx",
+        "components/data/FileBrowser.jsx",
+        "components/data/TreePicker.jsx"
+      ],
+      "storyEvidence": [
+        "stories/DataGrid.stories.jsx",
+        "stories/DataToolbar.stories.jsx",
+        "stories/DataFileBrowser.stories.jsx",
+        "stories/DataTreePicker.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-02",
+      "name": "Live truth investigation",
+      "userGoal": "Separate current truth from stale cache and narrow a degraded entity to the evidence that explains it.",
+      "trigger": "An entity appears offline, stale, degraded, anomalous, or inconsistent.",
+      "consumers": [
+        "deviceops",
+        "visionops",
+        "web-viz",
+        "control"
+      ],
+      "assetReviews": [
+        {
+          "repo": "control",
+          "classification": "supported by composition",
+          "reason": "Pinned supervision source confirms the need to summarize equipment identity, a primary condition, and supporting motion or connection facts. EquipmentStatusCard is independently designed from LDS Card/StatusBadge siblings and official status/summary-list references; Control retains telemetry truth, health diagnosis, recovery, and equipment-specific state machines, and its current ledger row, dimensions, and local prop names are not design authority.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "web-viz",
+          "classification": "supported by composition",
+          "reason": "Pinned DashboardScreen renders the selected robot, independently refreshed ROS Bridge, control-server, and MQTT connection truth, last-updated time, and explicit connect/disconnect recovery. LDS status, freshness, labeled-fact, resource-state, and action primitives support the presentation by composition; Web Viz retains polling, endpoint configuration, robot selection, health interpretation, reconnect execution, and authoritative resynchronization.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "not applicable",
+          "reason": "Pinned assistant source owns project/evidence scope and conversation and has no physical-equipment identity, condition, or telemetry surface.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/chat/PortalChatPanel.tsx",
+              "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
+            }
+          ]
+        }
+      ],
+      "states": [
+        "connecting",
+        "live",
+        "weak",
+        "stale",
+        "offline",
+        "degraded",
+        "error",
+        "recovered"
+      ],
+      "decisions": [
+        "Is the displayed value current enough to act on?",
+        "Which evidence layer is the likely source: connection, input, processing, decision, service, facility, or event?",
+        "Is a write action safe while truth is uncertain?"
+      ],
+      "failureRecovery": [
+        "Project stale cached payloads as stale or offline instead of healthy.",
+        "Show the last trustworthy observation and its age.",
+        "Resynchronize after reconnection before re-enabling risky actions."
+      ],
+      "dsBoundary": "LDS may own freshness semantics, degraded presentation, evidence hierarchy, action gating, and an independently researched equipment identity/status/labeled-facts card; telemetry transport, domain diagnosis, recovery, and equipment-specific state machines remain product-owned. Product frontend anatomy, dimensions, styling, and local component APIs are coverage evidence only.",
+      "designQuestion": "How should shared truth, equipment identity/status, and evidence priority work without imposing one dashboard or copied product-row layout?",
+      "sourceEvidence": [
+        {
+          "repo": "deviceops",
+          "path": "frontend/src/pages/BoardDetailPage.tsx",
+          "blobSha": "f1b8a8061c7c7771f7c395d1ab81e96bca848adf"
+        },
+        {
+          "repo": "visionops",
+          "path": "frontend/src/components/modules/ModuleDetailPage.tsx",
+          "blobSha": "8d21f7126b3f3d45fceaba1c386617fa653a3c73"
+        },
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/screens/DashboardScreen.tsx",
+          "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+        },
+        {
+          "repo": "control",
+          "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+          "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-02-live-truth-investigation"
+      ],
+      "implementationEvidence": [
+        "components/robotics/ConnectionBadge.jsx",
+        "components/robotics/EquipmentStatusCard.jsx",
+        "components/content/StatusBadge.jsx",
+        "components/data/DescriptionList.jsx",
+        "components/content/LogViewer.jsx",
+        "components/data/LineChart.jsx",
+        "components/data/Legend.jsx",
+        "components/buttons/Button.jsx",
+        "components/buttons/ActionArea.jsx",
+        "components/status/Callout.jsx"
+      ],
+      "storyEvidence": [
+        "stories/RoboticsConnectionBadge.stories.jsx",
+        "stories/RoboticsEquipment.stories.jsx",
+        "stories/DataDescriptionList.stories.jsx",
+        "stories/ContentLogViewer.stories.jsx",
+        "stories/DataLineChart.stories.jsx",
+        "stories/DataLegend.stories.jsx",
+        "stories/Button.stories.jsx",
+        "stories/ActionArea.stories.jsx",
+        "stories/StatusFeedback.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-03",
+      "name": "Guarded remote action",
+      "userGoal": "Understand whether a remote action is allowed, what it will affect, and whether the intended domain change actually happened.",
+      "trigger": "The user requests a service, pipeline, board, robot, or task-changing command.",
+      "consumers": [
+        "deviceops",
+        "visionops",
+        "control"
+      ],
+      "states": [
+        "ineligible",
+        "ready",
+        "confirming",
+        "sent",
+        "accepted",
+        "acknowledged",
+        "applied",
+        "confirmed",
+        "failed",
+        "timed-out",
+        "superseded"
+      ],
+      "decisions": [
+        "Why is the action enabled or blocked?",
+        "Is the impact reversible and does it affect an external system?",
+        "Did transport accept the command, did the target apply it, and was the resulting state independently confirmed?"
+      ],
+      "failureRecovery": [
+        "Keep failure, timeout, and late acknowledgement distinct.",
+        "Provide a safe retry only when idempotency and current truth allow it.",
+        "Retain command identity, actor, target, and result evidence."
+      ],
+      "dsBoundary": "LDS may own eligibility explanation, impact confirmation, lifecycle presentation, and retry affordance; authorization, command payload, idempotency, and confirmation watcher remain product-owned.",
+      "designQuestion": "Which lifecycle surfaces must be separate components, and which belong only in product composition?",
+      "sourceEvidence": [
+        {
+          "repo": "deviceops",
+          "path": "frontend/src/components/services/ServiceRow.tsx",
+          "blobSha": "ec4d2cd3c693d633c65334740de9c62be88fd099"
+        },
+        {
+          "repo": "deviceops",
+          "path": "docs/working/issues/2026-04-09-reboot-confirmation-plan.md",
+          "blobSha": "4347a094af3f42f2bc94f91ebd201ba37d07eaeb"
+        },
+        {
+          "repo": "visionops",
+          "path": "docs/issues/2026-04-11-command-lifecycle-tracking.md",
+          "blobSha": "7276fe8a2f188781f64b9cd8daf31ec66a7c5ab8"
+        },
+        {
+          "repo": "control",
+          "path": "frontend/src/views/dashboard/RobotDashboard/components/TaskCommandModal/index.jsx",
+          "blobSha": "55d79e36d4b8797d3eabd1e35ae64422a9fc38a0"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-03-guarded-remote-action"
+      ],
+      "implementationEvidence": [
+        "components/forms/ValidationSummary.jsx",
+        "components/data/DescriptionList.jsx",
+        "components/overlay/ConfirmDialog.jsx",
+        "components/content/Timeline.jsx",
+        "components/buttons/Button.jsx",
+        "components/buttons/ActionArea.jsx"
+      ],
+      "storyEvidence": [
+        "stories/FormValidationSummary.stories.jsx",
+        "stories/DataDescriptionList.stories.jsx",
+        "stories/OverlayConfirmDialog.stories.jsx",
+        "stories/ContentTimeline.stories.jsx",
+        "stories/Button.stories.jsx",
+        "stories/ActionArea.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-04",
+      "name": "Staged change and apply",
+      "userGoal": "Compare current and proposed values, resolve validation and impact, then know when the change is saved, applied, restarted, and verified.",
+      "trigger": "The user creates or edits configuration, relationships, profiles, or execution parameters.",
+      "consumers": [
+        "deviceops",
+        "visionops",
+        "context-hub",
+        "mlops"
+      ],
+      "states": [
+        "pristine",
+        "dirty",
+        "invalid",
+        "valid",
+        "saving",
+        "saved",
+        "apply-pending",
+        "restart-required",
+        "verified",
+        "rejected"
+      ],
+      "decisions": [
+        "What changed from the current truth?",
+        "Which changes are live, restart-required, high-risk, or externally propagated?",
+        "Can the user safely leave, reset, save, apply, or restart?"
+      ],
+      "failureRecovery": [
+        "Keep field validation and server rejection at their owning scope.",
+        "Do not present saved as applied or verified.",
+        "Preserve the draft after a recoverable server error."
+      ],
+      "dsBoundary": "LDS may own dirty-state disclosure, change summary, validation hierarchy, impact labels, and sticky actions; schema, mutation, business validation, and restart policy remain product-owned.",
+      "designQuestion": "Can a small change-summary and guarded-action set replace screen-sized schema and editor components?",
+      "sourceEvidence": [
+        {
+          "repo": "deviceops",
+          "path": "frontend/src/pages/ProfilesPage.tsx",
+          "blobSha": "15b5950a20bd37384797eec04b4a6f0af8b4839d"
+        },
+        {
+          "repo": "visionops",
+          "path": "frontend/src/components/modules/ConfigEditor.tsx",
+          "blobSha": "826ee64b3c626ec1661c82fd5fd113ab3a3f325d"
+        },
+        {
+          "repo": "context-hub",
+          "path": "src/components/scopes/ScopeManager.tsx",
+          "blobSha": "082684c6443346ca6f6a91cd011fe7a5bf0b5a3e"
+        },
+        {
+          "repo": "mlops",
+          "path": "frontend/src/pages/ProjectDetailPage.tsx",
+          "blobSha": "81da9b9654729f25f99713c8d8477ab52ced4914"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-04-staged-change-and-apply"
+      ],
+      "implementationEvidence": [
+        "components/forms/PropertyField.jsx",
+        "components/data/DescriptionList.jsx",
+        "components/forms/ValidationSummary.jsx",
+        "components/layout/DockPanel.jsx",
+        "components/buttons/ActionArea.jsx",
+        "components/overlay/ConfirmDialog.jsx"
+      ],
+      "storyEvidence": [
+        "stories/FormPropertyField.stories.jsx",
+        "stories/DataDescriptionList.stories.jsx",
+        "stories/FormValidationSummary.stories.jsx",
+        "stories/LayoutDockPanel.stories.jsx",
+        "stories/ActionArea.stories.jsx",
+        "stories/OverlayConfirmDialog.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-05",
+      "name": "Procedure authoring",
+      "userGoal": "Turn an operational intent into an ordered, targeted, validated procedure that can be saved or explicitly submitted.",
+      "trigger": "The user creates a task template or robot command sequence.",
+      "consumers": [
+        "control"
+      ],
+      "states": [
+        "draft",
+        "invalid",
+        "valid",
+        "previewed",
+        "saved-template",
+        "submitted",
+        "active",
+        "completed",
+        "failed"
+      ],
+      "decisions": [
+        "What outcome, robot, map, floor, landmark, or coordinate is the procedure targeting?",
+        "Is the order valid and what will each step do?",
+        "Should this remain a draft, be saved as a template, or be submitted now?"
+      ],
+      "failureRecovery": [
+        "Keep step-level validation attached to the step.",
+        "Distinguish saved template, submitted task, and active robot task.",
+        "Return from map picking without losing the editing position."
+      ],
+      "dsBoundary": "LDS may own ordered-item editing, step validation, and preview; command schema, map targeting, task payload, scheduling, and execution remain product-owned.",
+      "designQuestion": "Which parts are reusable editing primitives, and which must remain a Control workflow instead of a StepComposer component?",
+      "sourceEvidence": [
+        {
+          "repo": "control",
+          "path": "frontend/src/views/dashboard/RobotDashboard/components/TaskCommandModal/index.jsx",
+          "blobSha": "55d79e36d4b8797d3eabd1e35ae64422a9fc38a0"
+        },
+        {
+          "repo": "control",
+          "path": "frontend/src/views/task-management/index.jsx",
+          "blobSha": "929f25340a4845248fb80c355841193cac41a51d"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-05-procedure-authoring"
+      ],
+      "implementationEvidence": [
+        "components/content/ReorderList.jsx",
+        "components/forms/ValidationSummary.jsx",
+        "components/data/DescriptionList.jsx",
+        "components/layout/DockPanel.jsx",
+        "components/buttons/ActionArea.jsx"
+      ],
+      "storyEvidence": [
+        "stories/ContentReorderList.stories.jsx",
+        "stories/FormValidationSummary.stories.jsx",
+        "stories/DataDescriptionList.stories.jsx",
+        "stories/LayoutDockPanel.stories.jsx",
+        "stories/ActionArea.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-06",
+      "name": "Long-running operation",
+      "userGoal": "Validate a costly operation, distinguish queueing from rejection, monitor honest result semantics, and decide how to recover.",
+      "trigger": "The user requests training, evaluation, export, materialization, upload, conversion, or synchronization.",
+      "consumers": [
+        "context-hub",
+        "mlops"
+      ],
+      "states": [
+        "preflight-idle",
+        "preflight-running",
+        "blocked",
+        "warning",
+        "ready",
+        "queued",
+        "running",
+        "success",
+        "partial",
+        "failed",
+        "canceled",
+        "stale"
+      ],
+      "decisions": [
+        "Did preflight validate only, or will the next action create an external effect?",
+        "Is the operation queued, rejected, or actively running?",
+        "What result scope was achieved and which artifacts or items failed?"
+      ],
+      "failureRecovery": [
+        "Keep partial success and item-level failure visible.",
+        "Explain retryability, cancellation, stale runtime, and required input changes.",
+        "Do not equate process success with external publish completion."
+      ],
+      "dsBoundary": "LDS may own preflight evidence, queued/running/result semantics, partial-result disclosure, and retry/cancel affordance; runners, uploads, conversions, slots, and side effects remain product-owned.",
+      "designQuestion": "How should one operation contract scale from a file queue to a long-running ML job without flattening their differences?",
+      "sourceEvidence": [
+        {
+          "repo": "context-hub",
+          "path": "src/components/docs/FileDropZone.tsx",
+          "blobSha": "91d2752b33ad9a5a19db274d2e01254ab18dae17"
+        },
+        {
+          "repo": "mlops",
+          "path": "docs/job-runner-contract-spec.md",
+          "blobSha": "9a323fbc9692cb735c3e96cb832731b851b1b1d5"
+        },
+        {
+          "repo": "mlops",
+          "path": "frontend/src/pages/JobDetailPage.tsx",
+          "blobSha": "aca1939554f03e2d43f54bf5c39eef636520b167"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-06-long-running-operation"
+      ],
+      "implementationEvidence": [
+        "components/forms/FileUploadQueue.jsx",
+        "components/status/ProgressBar.jsx",
+        "components/content/StatusBadge.jsx",
+        "components/buttons/Button.jsx",
+        "components/buttons/ActionArea.jsx"
+      ],
+      "storyEvidence": [
+        "stories/FormFileUploadQueue.stories.jsx",
+        "stories/ProductProgress.stories.jsx",
+        "stories/ProductMeter.stories.jsx",
+        "stories/ContentBadgesAnnotations.stories.jsx",
+        "stories/Button.stories.jsx",
+        "stories/ActionArea.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-07",
+      "name": "Human review decision",
+      "userGoal": "Inspect evidence and persist an accountable accept, reject, or skip decision without treating review as an automated job.",
+      "trigger": "A candidate, anomaly, or patch requires human judgment.",
+      "consumers": [
+        "context-hub",
+        "mlops"
+      ],
+      "states": [
+        "pending",
+        "inspecting",
+        "decision-required",
+        "submitting",
+        "accepted",
+        "rejected",
+        "skipped",
+        "completed"
+      ],
+      "decisions": [
+        "Is the evidence sufficient to decide?",
+        "Is a reason or note required?",
+        "Was the decision persisted before moving to the next candidate?"
+      ],
+      "failureRecovery": [
+        "Do not advance the queue until the decision is persisted.",
+        "Keep actor, timestamp, reason, and previous decision visible.",
+        "Keep incomplete or conflicting evidence visible instead of forcing a terminal review state."
+      ],
+      "dsBoundary": "LDS may own decision controls, required-reason states, progress, and actor evidence; decision policy, authorization, persistence, approval, and release truth remain product-owned.",
+      "designQuestion": "Which small review controls are shared while evidence layout and approval transition remain separate?",
+      "sourceEvidence": [
+        {
+          "repo": "context-hub",
+          "path": "src/components/reports/StructuredReportWithPatches.tsx",
+          "blobSha": "ea7c94db6c48d6c8d226c2783e53d78bf187d6be"
+        },
+        {
+          "repo": "mlops",
+          "path": "frontend/src/pages/ReviewPage.tsx",
+          "blobSha": "90a22148a173393e05e5d87e02ea53db024a1796"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-07-human-review-decision"
+      ],
+      "implementationEvidence": [
+        "components/content/SourceDisclosure.jsx",
+        "components/data/AnnotatedImage.jsx",
+        "components/data/DataGrid.jsx",
+        "components/selection/ChoiceCard.jsx",
+        "components/forms/Textarea.jsx",
+        "components/buttons/ActionArea.jsx"
+      ],
+      "storyEvidence": [
+        "stories/ContentSourceDisclosure.stories.jsx",
+        "stories/DataAnnotatedImage.stories.jsx",
+        "stories/DataGrid.stories.jsx",
+        "stories/FormSelect.stories.jsx",
+        "stories/FormCheckbox.stories.jsx",
+        "stories/FormRadio.stories.jsx",
+        "stories/FormInput.stories.jsx",
+        "stories/FormTextarea.stories.jsx",
+        "stories/FormPasswordInput.stories.jsx",
+        "stories/FormInputGroup.stories.jsx",
+        "stories/ActionArea.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-08",
+      "name": "Evidence and provenance investigation",
+      "userGoal": "Trace a claim or anomaly to source evidence, relationships, freshness, and gaps before deciding.",
+      "trigger": "The user opens logs, media, thermal evidence, pipeline relations, reports, dataset previews, artifacts, or citations.",
+      "consumers": [
+        "deviceops",
+        "visionops",
+        "context-hub",
+        "mlops"
+      ],
+      "states": [
+        "loading",
+        "available",
+        "partial",
+        "stale",
+        "missing",
+        "unavailable",
+        "error",
+        "fallback"
+      ],
+      "decisions": [
+        "What claim is this evidence supporting?",
+        "Where did it come from, when was it produced, and what is its authority?",
+        "What related evidence or missing gap changes the decision?"
+      ],
+      "failureRecovery": [
+        "Keep readable fallback or source representation when rendering fails.",
+        "Distinguish missing, unavailable, stale, and not-applicable evidence.",
+        "Preserve provenance and links when moving between graph, media, document, and artifact detail."
+      ],
+      "dsBoundary": "LDS may own evidence chrome, provenance metadata, fallback states, relationships, and accessible summaries; Markdown, graph layout, media decoding, overlays, logs, and artifact access remain product-owned.",
+      "designQuestion": "Which evidence wrappers are truly shared, and which current viewers should be product renderers with LDS chrome?",
+      "sourceEvidence": [
+        {
+          "repo": "deviceops",
+          "path": "frontend/src/pages/LogViewerPage.tsx",
+          "blobSha": "12500b0ecd24f5f6315510d3e225d018eccd2a68"
+        },
+        {
+          "repo": "visionops",
+          "path": "frontend/src/components/modules/ThermalEvidencePanel.tsx",
+          "blobSha": "055edc6fe3231a949776382101eeba9e46877f18"
+        },
+        {
+          "repo": "visionops",
+          "path": "frontend/src/components/modules/ModulePipelineGraph.tsx",
+          "blobSha": "744c47acb9c9b343ea06c25677d641d614815c70"
+        },
+        {
+          "repo": "context-hub",
+          "path": "src/components/reports/StructuredReportWithPatches.tsx",
+          "blobSha": "ea7c94db6c48d6c8d226c2783e53d78bf187d6be"
+        },
+        {
+          "repo": "mlops",
+          "path": "frontend/src/pages/JobDetailPage.tsx",
+          "blobSha": "aca1939554f03e2d43f54bf5c39eef636520b167"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-08-evidence-and-provenance-investigation"
+      ],
+      "implementationEvidence": [
+        "components/content/SourceDisclosure.jsx",
+        "components/data/AnnotatedImage.jsx",
+        "components/content/LogViewer.jsx",
+        "components/data/FileBrowser.jsx",
+        "components/data/LineChart.jsx",
+        "components/data/Legend.jsx"
+      ],
+      "storyEvidence": [
+        "stories/ContentSourceDisclosure.stories.jsx",
+        "stories/DataAnnotatedImage.stories.jsx",
+        "stories/ContentLogViewer.stories.jsx",
+        "stories/DataFileBrowser.stories.jsx",
+        "stories/DataLineChart.stories.jsx",
+        "stories/DataLegend.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-09",
+      "name": "Manual control safety session",
+      "userGoal": "Acquire temporary control authority, move only while intent is continuously present, and stop safely on release or loss of truth.",
+      "trigger": "The user opens direct robot, camera, gimbal, or jog control.",
+      "consumers": [
+        "control"
+      ],
+      "states": [
+        "no-target",
+        "disconnected",
+        "available",
+        "armed",
+        "focused",
+        "controlling",
+        "released",
+        "link-lost",
+        "emergency-stopped"
+      ],
+      "decisions": [
+        "Is this the intended target and is live connection truth sufficient?",
+        "Does the user currently hold control authority and continuous intent?",
+        "What immediately stops motion on pointer, keyboard, focus, or connection loss?"
+      ],
+      "failureRecovery": [
+        "Send a safe stop on release, blur, unmount, and connection loss.",
+        "Keep emergency stop immediate and outside delayed confirmation.",
+        "Require deliberate re-arm after a safety release when policy requires it."
+      ],
+      "dsBoundary": "LDS Robotics may own focus, arm, hold/release, safety-release, speed-limit disclosure, and immediate e-stop affordance; command cadence, zero-velocity transport, robot protocol, and authority policy remain product-owned.",
+      "designQuestion": "What is the smallest safety wrapper that works with keyboard, joystick, D-pad, and PTZ controls?",
+      "sourceEvidence": [
+        {
+          "repo": "control",
+          "path": "frontend/src/views/manual-control/index.jsx",
+          "blobSha": "1429c7b72de1ba51ce78f964ecfcb548b963998f"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-09-manual-control-safety-session"
+      ],
+      "implementationEvidence": [
+        "components/robotics/ManualControlSession.jsx",
+        "components/robotics/ConnectionBadge.jsx",
+        "components/robotics/Joystick.jsx",
+        "components/robotics/DirectionalPad.jsx"
+      ],
+      "storyEvidence": [
+        "stories/RoboticsManualControlSession.stories.jsx",
+        "stories/RoboticsConnectionBadge.stories.jsx",
+        "stories/RoboticsJoystick.stories.jsx",
+        "stories/RoboticsDirectionalPad.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "stories/RoboticsManualControlSession.stories.jsx",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-10",
+      "name": "Scoped knowledge assistance",
+      "userGoal": "Ask within a known evidence scope, understand provider availability, and verify the sources used in the answer.",
+      "trigger": "The user starts or resumes an evidence-backed assistant conversation.",
+      "consumers": [
+        "context-hub"
+      ],
+      "assetReviews": [
+        {
+          "repo": "context-hub",
+          "classification": "supported by composition",
+          "reason": "Pinned chat sources confirm the need for user/assistant turns, rich responses, loading/error handling, source links, and provider/project scope. LDS message, feed, composer, source, tree, and confirmation primitives cover those component types by composition; the product's current bubble geometry, color, citation disclosure, local prop names, transport, retrieval/RAG, persistence, participant-role truth, session policy, and citation truth are not LDS design authority.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/chat/PortalChatPanel.tsx",
+              "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
+            },
+            {
+              "path": "docs/chat.md",
+              "blobSha": "183d5ff54b546c9973e12370b1b2c9c027d09def"
+            }
+          ]
+        },
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "Pinned map editor and task authoring sources own map and floor geometry plus task targets, with no evidence-backed conversation or citation entry point.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/MapEditScreen.tsx",
+              "blobSha": "37af0080e8dbd2fd40e13dedacb9c3fffb2f2b41"
+            },
+            {
+              "path": "frontend/src/screens/TaskCreateScreen.tsx",
+              "blobSha": "bec39e30b14a54764acd8b324713c72063d63471"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "not applicable",
+          "reason": "Pinned dashboard and task-command sources own supervision, task command, and manual-control workflows, with no scoped-knowledge conversation or citation UI.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/TaskCommandModal/index.jsx",
+              "blobSha": "55d79e36d4b8797d3eabd1e35ae64422a9fc38a0"
+            }
+          ]
+        }
+      ],
+      "states": [
+        "provider-checking",
+        "unavailable",
+        "ready",
+        "loading",
+        "answered",
+        "error"
+      ],
+      "decisions": [
+        "Which provider and project scope are actually active?",
+        "Does changing scope invalidate the current session?",
+        "Which sources support the response and are they sufficient?"
+      ],
+      "failureRecovery": [
+        "Disable input when the provider is unavailable and explain why.",
+        "Explain whether the scoped conversation remains available after provider or scope changes; the product owns that session policy.",
+        "Keep failed input recoverable without inventing source truth; exact retry transport remains product-owned."
+      ],
+      "dsBoundary": "LDS may own independently researched document/bubble message anatomy, optional placement, controlled delivery/response lifecycle presentation, a named chrome-free log with history/follow behavior, a neutral elevated composer shell, generic attachment/source/action slots, active-scope disclosure, reset confirmation, and accessible streaming states. Participant-role truth, routes, provider transport, retrieval/RAG, scope resolution, persistence, session policy, and source truth remain product-owned. Pinned product UI is coverage evidence only and does not select LDS anatomy, geometry, color, tokens, props, or public component lifecycle.",
+      "designQuestion": "Which general assistant conversation primitives are justified by LDS siblings, official AI-chat design-system references, and accessibility standards, and do the pinned products require those component types without defining their design?",
+      "sourceEvidence": [
+        {
+          "repo": "context-hub",
+          "path": "src/components/chat/PortalChatPanel.tsx",
+          "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
+        },
+        {
+          "repo": "context-hub",
+          "path": "docs/chat.md",
+          "blobSha": "183d5ff54b546c9973e12370b1b2c9c027d09def"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-10-scoped-knowledge-assistance"
+      ],
+      "implementationEvidence": [
+        "components/communication/ConversationMessage.jsx",
+        "components/communication/MessageFeed.jsx",
+        "components/communication/MessageComposer.jsx",
+        "components/content/SourceDisclosure.jsx",
+        "components/data/TreePicker.jsx",
+        "components/overlay/ConfirmDialog.jsx",
+        "components/forms/Textarea.jsx",
+        "components/buttons/ActionArea.jsx",
+        "components/buttons/Button.jsx",
+        "components/status/Callout.jsx"
+      ],
+      "storyEvidence": [
+        "stories/CommunicationMessage.stories.jsx",
+        "stories/CommunicationMessageFeed.stories.jsx",
+        "stories/CommunicationMessageComposer.stories.jsx",
+        "stories/ContentSourceDisclosure.stories.jsx",
+        "stories/DataTreePicker.stories.jsx",
+        "stories/OverlayConfirmDialog.stories.jsx",
+        "stories/FormInput.stories.jsx",
+        "stories/FormTextarea.stories.jsx",
+        "stories/FormPasswordInput.stories.jsx",
+        "stories/FormInputGroup.stories.jsx",
+        "stories/ActionArea.stories.jsx",
+        "stories/Button.stories.jsx",
+        "stories/StatusFeedback.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-11",
+      "name": "Sensitive credential handling",
+      "userGoal": "Use or update a secret with minimal disclosure and a clear audit boundary.",
+      "trigger": "The user reveals, copies, creates, updates, or selects a credential.",
+      "consumers": [
+        "context-hub",
+        "mlops"
+      ],
+      "states": [
+        "masked",
+        "re-auth-required",
+        "revealed",
+        "copied",
+        "expired",
+        "updating",
+        "saved",
+        "invalid",
+        "revoked"
+      ],
+      "decisions": [
+        "Does the user need to reveal the secret, or can the product use a reference?",
+        "Is re-authentication or elevated permission required?",
+        "How will reveal, copy, update, and revoke be audited?"
+      ],
+      "failureRecovery": [
+        "Auto-hide revealed values and avoid exposing them in logs or generic props.",
+        "Keep the prior masked state when reveal or update fails.",
+        "Prefer passing a credential reference to downstream workflows instead of the raw value."
+      ],
+      "dsBoundary": "LDS may own masked/reveal/copy states and re-auth composition points; encryption, credential policy, permission checks, audit logging, and downstream use remain product-owned.",
+      "designQuestion": "Can secret display remain a narrow field/action contract without absorbing credential CRUD or external publish?",
+      "sourceEvidence": [
+        {
+          "repo": "context-hub",
+          "path": "src/components/credentials/CredentialTable.tsx",
+          "blobSha": "a83d688dbe7b617023d5c187e0069a32e456e29a"
+        },
+        {
+          "repo": "mlops",
+          "path": "docs/mlops-prd-v0.2.md",
+          "blobSha": "aada9e10ffd77385b96c8f4112699c7e6dc18003"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-11-sensitive-credential-handling"
+      ],
+      "implementationEvidence": [
+        "components/forms/SecretField.jsx",
+        "components/overlay/ConfirmDialog.jsx",
+        "components/status/Callout.jsx"
+      ],
+      "storyEvidence": [
+        "stories/FormSecretField.stories.jsx",
+        "stories/OverlayConfirmDialog.stories.jsx",
+        "stories/StatusFeedback.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-12",
+      "name": "External publish",
+      "userGoal": "Validate an external target, make one explicit external-write decision, and prove what was actually published.",
+      "trigger": "The user prepares a dataset, model, artifact, or release publish to an external system.",
+      "consumers": [
+        "mlops"
+      ],
+      "states": [
+        "preflight",
+        "blocked",
+        "warning",
+        "publish-ready",
+        "publishing",
+        "published",
+        "partial",
+        "publish-failed"
+      ],
+      "decisions": [
+        "What target, path, privacy, and external write will occur?",
+        "Is this still validation-only or the actual publish?",
+        "What external evidence proves the publish and release scope?"
+      ],
+      "failureRecovery": [
+        "Keep validation-only and actual external write visually and semantically distinct.",
+        "Show partial or failed publish without presenting the release as complete.",
+        "Retain target, actor, attempt, and external evidence for retry decisions."
+      ],
+      "dsBoundary": "LDS may own external-impact disclosure, preflight evidence, explicit publish confirmation, and publish result presentation; target validation, credentials, upload, and external release truth remain product-owned.",
+      "designQuestion": "Which confirmation and outcome pieces are reusable without making an MLOps publish screen component?",
+      "sourceEvidence": [
+        {
+          "repo": "mlops",
+          "path": "docs/mlops-prd-v0.2.md",
+          "blobSha": "aada9e10ffd77385b96c8f4112699c7e6dc18003"
+        },
+        {
+          "repo": "mlops",
+          "path": "docs/release-approval-policy.md",
+          "blobSha": "cc8f9f31c64d57d77c87a115e32acd7736155346"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-12-external-publish"
+      ],
+      "implementationEvidence": [
+        "components/forms/ValidationSummary.jsx",
+        "components/overlay/ConfirmDialog.jsx",
+        "components/status/ProgressBar.jsx",
+        "components/content/SourceDisclosure.jsx",
+        "components/buttons/ActionArea.jsx"
+      ],
+      "storyEvidence": [
+        "stories/FormValidationSummary.stories.jsx",
+        "stories/OverlayConfirmDialog.stories.jsx",
+        "stories/ProductProgress.stories.jsx",
+        "stories/ProductMeter.stories.jsx",
+        "stories/ContentSourceDisclosure.stories.jsx",
+        "stories/ActionArea.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-13",
+      "name": "Schedule automation",
+      "userGoal": "Bind an existing operation to a time rule, detect conflicts, and understand its future and current execution state.",
+      "trigger": "The user schedules an operation or edits an existing schedule.",
+      "consumers": [
+        "control"
+      ],
+      "states": [
+        "draft",
+        "invalid",
+        "conflicted",
+        "scheduled",
+        "active",
+        "paused",
+        "running",
+        "completed",
+        "failed",
+        "expired"
+      ],
+      "decisions": [
+        "Which existing task, target, time zone, recurrence, and priority are being scheduled?",
+        "Does the rule conflict with another operation or an unavailable target?",
+        "Should an existing schedule be paused, resumed, changed, or deleted?"
+      ],
+      "failureRecovery": [
+        "Keep conflict details attached to the affected rule or target.",
+        "Distinguish schedule state from the state of an individual run.",
+        "Explain missed, failed, or expired occurrences without silently moving the next run."
+      ],
+      "dsBoundary": "LDS may own recurrence input, time-zone disclosure, conflict presentation, and schedule status actions; task lookup, conflict calculation, persistence, and run execution remain product-owned.",
+      "designQuestion": "Which recurrence controls are generic while the schedule page and task semantics remain application-owned?",
+      "sourceEvidence": [
+        {
+          "repo": "control",
+          "path": "frontend/src/views/schedule/components/ScheduleForm.jsx",
+          "blobSha": "cafc52a906cb6ed8168daa3c6c85d136cdecd05a"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-13-schedule-automation"
+      ],
+      "implementationEvidence": [
+        "components/forms/DatePicker.jsx",
+        "components/forms/TimePicker.jsx",
+        "components/forms/CheckboxGroup.jsx",
+        "components/forms/ValidationSummary.jsx",
+        "components/forms/SearchableMultiSelect.jsx",
+        "components/buttons/Button.jsx",
+        "components/buttons/ActionArea.jsx"
+      ],
+      "storyEvidence": [
+        "stories/FormDateTime.stories.jsx",
+        "stories/FormSelect.stories.jsx",
+        "stories/FormCheckbox.stories.jsx",
+        "stories/FormRadio.stories.jsx",
+        "stories/FormValidationSummary.stories.jsx",
+        "stories/FormSearchableMultiSelect.stories.jsx",
+        "stories/Button.stories.jsx",
+        "stories/ActionArea.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-14",
+      "name": "Approval transition",
+      "userGoal": "Evaluate transition evidence, record the approving actor and note, and keep approval distinct from external release.",
+      "trigger": "A version or release candidate requests a governed state transition.",
+      "consumers": [
+        "mlops"
+      ],
+      "states": [
+        "not-eligible",
+        "evidence-pending",
+        "eligible",
+        "note-required",
+        "submitting",
+        "approved",
+        "transition-rejected",
+        "released"
+      ],
+      "decisions": [
+        "Which transition is allowed by policy and what evidence is still missing?",
+        "What note and actor record are required?",
+        "Does the transition approve readiness or prove actual external release?"
+      ],
+      "failureRecovery": [
+        "Keep server rejection and missing gate evidence visible after submission.",
+        "Do not optimistically display the target state before persistence.",
+        "Keep approved and released separate until external evidence exists."
+      ],
+      "dsBoundary": "LDS may own evidence-gate presentation, required note, pending transition, actor history, and state distinction; transition policy, authorization, persistence, and release evidence remain product-owned.",
+      "designQuestion": "Can approval use a narrow evidence-and-transition contract instead of sharing the review queue component?",
+      "sourceEvidence": [
+        {
+          "repo": "mlops",
+          "path": "docs/mlops-prd-v0.2.md",
+          "blobSha": "aada9e10ffd77385b96c8f4112699c7e6dc18003"
+        },
+        {
+          "repo": "mlops",
+          "path": "docs/release-approval-policy.md",
+          "blobSha": "cc8f9f31c64d57d77c87a115e32acd7736155346"
+        },
+        {
+          "repo": "mlops",
+          "path": "frontend/src/pages/ProjectDetailPage.tsx",
+          "blobSha": "81da9b9654729f25f99713c8d8477ab52ced4914"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-14-approval-transition"
+      ],
+      "implementationEvidence": [
+        "components/data/DataGrid.jsx",
+        "components/content/SourceDisclosure.jsx",
+        "components/forms/ValidationSummary.jsx",
+        "components/data/DescriptionList.jsx",
+        "components/forms/Textarea.jsx",
+        "components/buttons/ActionArea.jsx",
+        "components/buttons/Button.jsx",
+        "components/content/StatusBadge.jsx"
+      ],
+      "storyEvidence": [
+        "stories/DataGrid.stories.jsx",
+        "stories/ContentSourceDisclosure.stories.jsx",
+        "stories/FormValidationSummary.stories.jsx",
+        "stories/DataDescriptionList.stories.jsx",
+        "stories/FormInput.stories.jsx",
+        "stories/FormTextarea.stories.jsx",
+        "stories/FormPasswordInput.stories.jsx",
+        "stories/FormInputGroup.stories.jsx",
+        "stories/ActionArea.stories.jsx",
+        "stories/Button.stories.jsx",
+        "stories/ContentBadgesAnnotations.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs"
+      ]
+    },
+    {
+      "id": "WF-15",
+      "name": "Map navigation and facility authoring",
+      "userGoal": "Inspect and edit map points, lines, regions, landmarks, and floor-specific task targets while preserving the semantic difference between elevator entry, elevator interior, door, waypoint, route, and region geometry.",
+      "trigger": "The user opens a map editor or a floor-aware task authoring surface in LK Web Viz.",
+      "consumers": [
+        "web-viz"
+      ],
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "supported by composition",
+          "reason": "Pinned authoring sources map to point, line, region, facility-transition, and named-mirror contracts. Runtime sources separately prove an observed trajectory line plus robot pose, so the path-tangent Trajectory progress head is supported by composition without replacing pose. Planned Route remains a gap because no segment geometry plus segmentId/fraction feed was found; projection, floor topology, editing, persistence, reset, and recovery remain product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/MapEditScreen.tsx",
+              "blobSha": "37af0080e8dbd2fd40e13dedacb9c3fffb2f2b41"
+            },
+            {
+              "path": "frontend/src/components/editor/ZoneEditor.tsx",
+              "blobSha": "7c80fcb4fb50d8e98438fa0225a43f1c390f292e"
+            },
+            {
+              "path": "frontend/src/screens/TaskCreateScreen.tsx",
+              "blobSha": "bec39e30b14a54764acd8b324713c72063d63471"
+            },
+            {
+              "path": "frontend/src/App.tsx",
+              "blobSha": "04a15617f1fc3fb0f6ca0c52a19cffed767f934c"
+            },
+            {
+              "path": "frontend/src/screens/TaskRunScreen.tsx",
+              "blobSha": "387061f8047ea707822001695bd4d9cc78f29994"
+            },
+            {
+              "path": "frontend/src/components/Map2DViewer.tsx",
+              "blobSha": "46da3c8cf57db99247c894496301ab35a46f1e47"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "supported by composition",
+          "reason": "Pinned live-monitoring sources separate accumulated path history from the current robot pose and heading, so the Trajectory progress head is supported by composition and must not replace the product-owned pose marker. Planned Route is not applicable in this pinned workflow because no route-segment feed exists; mapping for the remaining Navigation renderers is still unverified.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/routes/MainRoutes.jsx",
+              "blobSha": "b5d1d3ddf5be834f8a3dd214b87f155c144c90bc"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/LiveMonitoring/index.jsx",
+              "blobSha": "6ffb5708603fe75138ce01a2d6639e7a7d4c73f0"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap/index.jsx",
+              "blobSha": "b395ef598b4262db536e7fd57b0b3bf472a2eacc"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "not applicable",
+          "reason": "Pinned frontend evidence owns project and evidence scope, document intake, assistance, and credential workflows; it has no map, floor, robot-navigation, or geometry-authoring entry point.",
+          "sourceEvidence": [
+            {
+              "path": "src/app/projects/page.tsx",
+              "blobSha": "e1539973aebffb3566983f27e8845ed8384dba59"
+            },
+            {
+              "path": "src/components/scopes/ScopeManager.tsx",
+              "blobSha": "082684c6443346ca6f6a91cd011fe7a5bf0b5a3e"
+            },
+            {
+              "path": "src/components/chat/PortalChatPanel.tsx",
+              "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
+            }
+          ]
+        }
+      ],
+      "states": [
+        "loading",
+        "map-ready",
+        "tool-active",
+        "selected",
+        "editing",
+        "invalid",
+        "saving",
+        "saved",
+        "load-error",
+        "unsaved"
+      ],
+      "decisions": [
+        "Which map feature or facility endpoint is being inspected or edited?",
+        "Is the feature a point, line, region, landmark, or cross-floor facility relationship?",
+        "Which floor and map identity own the selected target?",
+        "Can the user distinguish the feature and its state at the current zoom without relying on color alone?",
+        "Does current route or trajectory progress read as an elapsed-path boundary while robot pose, bearing, and footprint remain separate layers?"
+      ],
+      "failureRecovery": [
+        "Keep unsaved edits and the selected feature visible when save fails.",
+        "Distinguish missing map data from a loading or transport failure.",
+        "Do not collapse elevator entry, elevator interior, door, stair, and generic waypoint into one ambiguous marker.",
+        "Preserve a named list or inspector path when dense map geometry is not reliable for keyboard traversal."
+      ],
+      "dsBoundary": "LDS may own renderer-neutral point, line, route, trajectory, region, facility-transition, selection, state, path-tangent progress-head, and accessible-mirror contracts; robot pose/bearing/footprint, map persistence, editor commands, floor topology, task schema, facility control, and transport remain product-owned.",
+      "designQuestion": "Do the navigation components and map symbols provide a coherent, conventional, zoom-stable visual grammar that LK Web Viz can compose without redrawing the same semantics?",
+      "sourceEvidence": [
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/screens/MapEditScreen.tsx",
+          "blobSha": "37af0080e8dbd2fd40e13dedacb9c3fffb2f2b41"
+        },
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/components/editor/ZoneEditor.tsx",
+          "blobSha": "7c80fcb4fb50d8e98438fa0225a43f1c390f292e"
+        },
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/screens/TaskCreateScreen.tsx",
+          "blobSha": "bec39e30b14a54764acd8b324713c72063d63471"
+        },
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/screens/TaskRunScreen.tsx",
+          "blobSha": "387061f8047ea707822001695bd4d9cc78f29994"
+        },
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/components/Map2DViewer.tsx",
+          "blobSha": "46da3c8cf57db99247c894496301ab35a46f1e47"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-15-map-navigation-and-facility-authoring"
+      ],
+      "implementationEvidence": [
+        "components/robotics/WaypointMarker.jsx",
+        "components/robotics/LaneOverlay.jsx",
+        "components/robotics/RouteOverlay.jsx",
+        "components/robotics/TrajectoryOverlay.jsx",
+        "components/robotics/SpatialRegion.jsx",
+        "components/robotics/FacilityTransition.jsx",
+        "components/robotics/HazardMarker.jsx"
+      ],
+      "storyEvidence": [
+        "stories/RoboticsNavigationWaypoint.stories.jsx",
+        "stories/RoboticsNavigationLane.stories.jsx",
+        "stories/RoboticsNavigationRoute.stories.jsx",
+        "stories/RoboticsNavigationTrajectory.stories.jsx",
+        "stories/RoboticsNavigationRegions.stories.jsx",
+        "stories/RoboticsNavigationFacilities.stories.jsx",
+        "stories/RoboticsNavigationHazardMarker.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "scripts/check-api-drift.mjs",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs",
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification"
+      ],
+      "closureDecision": "The shared map grammar is verified by the external @lk-robotics/lds-robotics-ui package at revision 0ae058d: HazardMarker owns stairs/ramp/dropoff/obstacle hazards and SpatialRegion owns slope terrain. A product-authored forbidden line is not a navigation lane and remains product renderer/editor geometry rather than a new LDS semantic primitive."
+    },
+    {
+      "id": "WF-16",
+      "name": "Dashboard shell and navigation composition",
+      "userGoal": "Move between top-level destinations while keeping product identity, global utilities, current location, and the highest-priority content clear across wide and narrow product workspaces.",
+      "trigger": "The user enters or navigates within a dashboard-like LK product workspace.",
+      "consumers": [
+        "web-viz",
+        "control",
+        "context-hub"
+      ],
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "supported by composition",
+          "reason": "Pinned DashboardScreen uses a real product logo, header utilities, a current-robot card, three connection-status surfaces, and a card launcher. TopBar, Card, status/freshness, and action primitives cover this flat header-first composition. SideNav, KPI/MetricCard, DataGrid, and chart composition are not applicable to this source because it exposes neither hierarchical side navigation nor KPI, table, or chart decisions; routes, robot switching, connection execution, status refresh, and map launch remain product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "supported by composition",
+          "reason": "Pinned MainLayout and Sidebar establish a fixed header plus permanent/persistent/temporary left navigation, while RobotDashboard composes live monitoring, robot collection, equipment status, charts, and table-like collections. DashboardShell, SideNav, TopBar, ResourceState, ChartFrame, and DataGrid can support the reusable shell and data surfaces by composition. A fully verified narrow drawer handoff remains a gap until overlay focus, Escape, and focus restoration are tested; map/video renderers, telemetry truth, facility state machines, commands, queries, routes, and authorization remain product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/layout/MainLayout/index.jsx",
+              "blobSha": "2436725e49f6364fdb99f2047907f300ca367865"
+            },
+            {
+              "path": "frontend/src/layout/MainLayout/Sidebar/index.jsx",
+              "blobSha": "749805a966552f957a61359c1b892a44f06af0a4"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "supported by composition",
+          "reason": "Pinned Sidebar and AuthShell establish a full-height 256px product-identity navigation beside an offset main region; the home source composes destination cards and a project collection. DashboardShell, docked SideNav, DashboardGrid, Card, and collection primitives support this side-first workspace by composition. The pinned source has no adaptive narrow navigation, so collapse/drawer behavior remains a product-integration gap; project ranking, attention truth, routes, permissions, chat placement, queries, and data-source policy remain product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/layout/Sidebar.tsx",
+              "blobSha": "6f8be361287aada76ff3b2e4f6ca4022706b3b87"
+            },
+            {
+              "path": "src/components/layout/AuthShell.tsx",
+              "blobSha": "b525cdd54dfbf73eeec9d8867cd23a3d07c1630b"
+            },
+            {
+              "path": "src/app/page.tsx",
+              "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+            }
+          ]
+        }
+      ],
+      "states": [
+        "wide-docked",
+        "wide-collapsed",
+        "narrow-overlay",
+        "active-destination",
+        "loading",
+        "empty",
+        "error",
+        "stale",
+        "restricted"
+      ],
+      "decisions": [
+        "Which single shell region owns product identity, and which utilities remain globally available without duplicating brand or product paths?",
+        "Is the destination hierarchy flat enough for a header/card launcher or does it require a docked SideNav with at most two navigation levels?",
+        "What is the highest-priority status, attention item, or task at this moment, independent of whether the product has KPI metrics?",
+        "How does narrow navigation open, close, restore focus, and return the user to unchanged main-content context?"
+      ],
+      "failureRecovery": [
+        "Keep the main-content destination and reading context stable when wide navigation collapses or becomes a narrow overlay.",
+        "Do not duplicate product identity or primary destinations between TopBar and SideNav.",
+        "Restore focus to a persistent navigation control when Escape or outside interaction closes an overlay.",
+        "Represent loading, empty, error, stale, and restricted data inside the owning content surface instead of turning the shell into a workflow state machine."
+      ],
+      "dsBoundary": "LDS may own shell landmarks and skip navigation, wide/narrow navigation slot handoff, docked versus floating SideNav presentation, explicit collapse and overlay focus behavior, brand/utility composition rules, responsive grid containment, and reusable status/chart/table surfaces. Products own brand copy and assets, destination hierarchy, routes, permissions, queries, KPI formulas and thresholds, telemetry and freshness truth, map/video renderers, commands, side effects, and complete dashboard screens. The three pinned products provide no shared requirement for a KPI row, so MetricCard remains an optional composition rather than DashboardShell anatomy.",
+      "designQuestion": "Can Web Viz, Control, and Context Hub compose coherent dashboard-like workspaces without copying one product screen, forcing SideNav on a flat launcher, or making KPI cards mandatory?",
+      "sourceEvidence": [
+        {
+          "repo": "web-viz",
+          "path": "frontend/src/screens/DashboardScreen.tsx",
+          "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+        },
+        {
+          "repo": "control",
+          "path": "frontend/src/layout/MainLayout/index.jsx",
+          "blobSha": "2436725e49f6364fdb99f2047907f300ca367865"
+        },
+        {
+          "repo": "control",
+          "path": "frontend/src/layout/MainLayout/Sidebar/index.jsx",
+          "blobSha": "749805a966552f957a61359c1b892a44f06af0a4"
+        },
+        {
+          "repo": "control",
+          "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+          "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+        },
+        {
+          "repo": "context-hub",
+          "path": "src/components/layout/Sidebar.tsx",
+          "blobSha": "6f8be361287aada76ff3b2e4f6ca4022706b3b87"
+        },
+        {
+          "repo": "context-hub",
+          "path": "src/components/layout/AuthShell.tsx",
+          "blobSha": "b525cdd54dfbf73eeec9d8867cd23a3d07c1630b"
+        },
+        {
+          "repo": "context-hub",
+          "path": "src/app/page.tsx",
+          "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-16-dashboard-shell-and-navigation-composition"
+      ],
+      "implementationEvidence": [
+        "components/layout/DashboardShell.jsx",
+        "components/layout/DashboardGrid.jsx",
+        "components/navigation/TopBar.jsx",
+        "components/navigation/SideNav.jsx",
+        "components/layout/PageHeader.jsx",
+        "components/cards/MetricCard.jsx",
+        "components/data/ChartFrame.jsx",
+        "components/data/DataGrid.jsx",
+        "components/data/ResourceState.jsx"
+      ],
+      "storyEvidence": [
+        "stories/LayoutDashboardShell.stories.jsx",
+        "stories/LayoutDashboardGrid.stories.jsx",
+        "stories/Navigation.stories.jsx",
+        "stories/NavigationSideNav.stories.jsx",
+        "stories/LayoutPageHeader.stories.jsx",
+        "stories/DataAndStatus.stories.jsx",
+        "stories/DataChartFrame.stories.jsx",
+        "stories/DataGrid.stories.jsx",
+        "stories/DataResourceState.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs",
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification"
+      ],
+      "closureDecision": "LDS v1 uses BottomNav only for four or fewer flat narrow destinations. Hierarchical narrow navigation is a product-owned temporary Drawer composition, not DashboardShell anatomy. Existing DashboardShell and SideNav stories verify landmarks, narrow reflow, controlled collapse, reduced motion, Escape, and focus restoration."
+    }
+  ]
+}

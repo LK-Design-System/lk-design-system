@@ -1,0 +1,91 @@
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
+
+// components/content/StepList.jsx
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
+function Mini({ children, onClick, disabled, label }) {
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    "button",
+    {
+      type: "button",
+      onClick,
+      disabled,
+      title: label,
+      "aria-label": label,
+      style: {
+        width: 28,
+        height: 28,
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        border: "1px solid var(--color-semantic-line-normal-normal)",
+        borderRadius: "var(--radius-sm)",
+        background: "var(--color-semantic-background-elevated-normal)",
+        color: "var(--color-semantic-label-neutral)",
+        cursor: disabled ? "not-allowed" : "pointer",
+        opacity: disabled ? 0.45 : 1,
+        fontFamily: "inherit",
+        fontSize: "var(--label2-size)"
+      },
+      children
+    }
+  );
+}
+function readStep(step) {
+  return {
+    label: _nullishCoalesce(step.label, () => ( step.title)),
+    detail: _nullishCoalesce(step.detail, () => ( step.description))
+  };
+}
+function stepName(label, index) {
+  return typeof label === "string" && label.trim() ? label : `${index + 1}\uB2E8\uACC4`;
+}
+function StepList({ steps = [], onChange, editable = true, onAdd, addLabel = "\uB2E8\uACC4 \uCD94\uAC00", label, style, ...rest }) {
+  const move = (i, d) => {
+    const j = i + d;
+    if (j < 0 || j >= steps.length) return;
+    const s = [...steps];
+    const tmp = s[i];
+    s[i] = s[j];
+    s[j] = tmp;
+    onChange && onChange(s);
+  };
+  const remove = (i) => {
+    onChange && onChange(steps.filter((_, k) => k !== i));
+  };
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ol", { "aria-label": label, style: { listStyle: "none", margin: 0, padding: 0 }, children: steps.map((st, i) => {
+      const { label: stepLabel, detail } = readStep(st);
+      const name = stepName(stepLabel, i);
+      return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { style: { display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)", marginBottom: 8 }, children: [
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { width: 24, height: 24, borderRadius: "50%", flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", background: "var(--color-semantic-primary-surface-normal)", color: "var(--color-semantic-primary-normal)", fontSize: "var(--caption1-size)", fontWeight: 800, fontVariantNumeric: "tabular-nums" }, children: i + 1 }),
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { flex: 1, minWidth: 0 }, children: [
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { fontSize: "var(--label1-size)", fontWeight: 700, color: "var(--color-semantic-label-strong)" }, children: stepLabel }),
+          detail != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { fontSize: "var(--caption1-size)", color: "var(--color-semantic-label-alternative)", marginTop: "var(--space-0-5)" }, children: detail })
+        ] }),
+        editable && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "inline-flex", gap: "var(--space-0-5)", flexShrink: 0 }, children: [
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Mini, { onClick: () => move(i, -1), disabled: i === 0, label: `${name} \uC704\uB85C \uC774\uB3D9`, children: "\u2191" }),
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Mini, { onClick: () => move(i, 1), disabled: i === steps.length - 1, label: `${name} \uC544\uB798\uB85C \uC774\uB3D9`, children: "\u2193" }),
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Mini, { onClick: () => remove(i), label: `${name} \uC0AD\uC81C`, children: "\u2715" })
+        ] })
+      ] }, st.id != null ? st.id : i);
+    }) }),
+    editable && onAdd && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+      "button",
+      {
+        type: "button",
+        onClick: onAdd,
+        style: { width: "100%", padding: "var(--space-2-5)", border: "1px dashed var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-md)", background: "transparent", color: "var(--color-semantic-label-alternative)", cursor: "pointer", fontSize: "var(--label2-size)", fontWeight: 700, fontFamily: "var(--font-sans)" },
+        children: [
+          "+ ",
+          addLabel
+        ]
+      }
+    )
+  ] });
+}
+
+
+
+exports.StepList = StepList;
+//# sourceMappingURL=chunk-LUMMENGE.cjs.map

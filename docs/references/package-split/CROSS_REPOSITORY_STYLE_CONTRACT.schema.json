@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lk-robotics.github.io/schemas/lds-cross-repository-style-contract.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schemaVersion", "kind", "lds", "profiles"],
+  "properties": {
+    "$schema": { "const": "./CROSS_REPOSITORY_STYLE_CONTRACT.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "kind": { "const": "lds-cross-repository-style-contract" },
+    "lds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "tokenSources", "ownedTokenPrefixes", "packages"],
+      "properties": {
+        "repository": { "type": "string", "minLength": 1 },
+        "tokenSources": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "ownedTokenPrefixes": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^--[a-z0-9-]+$" } },
+        "packages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "version", "workspace"],
+            "properties": {
+              "name": { "type": "string", "pattern": "^@lk-robotics/" },
+              "version": { "type": "string", "minLength": 1 },
+              "workspace": { "type": "string", "pattern": "^packages/" }
+            }
+          }
+        }
+      }
+    },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["robotics-ui", "lds3d-ui"],
+      "properties": {
+        "robotics-ui": {
+          "allOf": [
+            { "$ref": "#/$defs/profile" },
+            {
+              "type": "object",
+              "required": ["package", "focusOverride"],
+              "properties": { "package": true, "focusOverride": true }
+            }
+          ]
+        },
+        "lds3d-ui": {
+          "allOf": [
+            { "$ref": "#/$defs/profile" },
+            {
+              "type": "object",
+              "required": ["workspacePackage", "compositionManifest", "lockfile", "rawColorScanRoots", "headlessPackages"],
+              "properties": {
+                "workspacePackage": true,
+                "compositionManifest": true,
+                "lockfile": true,
+                "rawColorScanRoots": true,
+                "headlessPackages": true
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "packageIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "externalSurface", "configFile", "packageDependencies", "scanRoots", "requiredStyleImports", "storybookPreview", "localTokenDefinitions", "runtimeCustomProperties", "rawColorPolicy", "representativeStories"],
+      "oneOf": [
+        { "required": ["package"], "properties": { "package": true } },
+        { "required": ["workspacePackage", "compositionManifest", "lockfile"], "properties": { "workspacePackage": true, "compositionManifest": true, "lockfile": true } }
+      ],
+      "properties": {
+        "repository": { "type": "string", "minLength": 1 },
+        "package": { "$ref": "#/$defs/packageIdentity" },
+        "workspacePackage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["manifest", "name", "version"],
+          "properties": {
+            "manifest": { "type": "string", "minLength": 1 },
+            "name": { "type": "string", "minLength": 1 },
+            "version": { "type": "string", "minLength": 1 }
+          }
+        },
+        "compositionManifest": { "type": "string", "minLength": 1 },
+        "lockfile": { "type": "string", "minLength": 1 },
+        "externalSurface": { "type": "string", "minLength": 1 },
+        "configFile": { "type": "string", "minLength": 1 },
+        "packageDependencies": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "section", "version"],
+            "properties": {
+              "manifest": { "type": "string", "minLength": 1 },
+              "name": { "type": "string", "minLength": 1 },
+              "section": { "enum": ["dependencies", "devDependencies", "peerDependencies"] },
+              "version": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "scanRoots": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "rawColorScanRoots": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "requiredStyleImports": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "storybookPreview": { "type": "string", "minLength": 1 },
+        "localTokenDefinitions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["file", "compatibilityMirror", "allowedReferencePrefixes", "names"],
+          "properties": {
+            "file": { "type": ["string", "null"], "minLength": 1 },
+            "compatibilityMirror": { "type": ["string", "null"], "minLength": 1 },
+            "allowedReferencePrefixes": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^--[a-z0-9-]+$" } },
+            "names": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^--[a-z0-9-]+$" } }
+          }
+        },
+        "runtimeCustomProperties": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "definitionFile"],
+            "properties": {
+              "name": { "type": "string", "pattern": "^--[a-z0-9-]+$" },
+              "definitionFile": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "rawColorPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["forbiddenFormats", "allowedZones"],
+          "properties": {
+            "forbiddenFormats": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["hex", "rgb", "hsl", "named-white-black"] } },
+            "allowedZones": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["file", "signature", "expectedOccurrences", "owner", "reason", "reviewDate"],
+                "properties": {
+                  "file": { "type": "string", "minLength": 1 },
+                  "signature": { "type": "string", "minLength": 1 },
+                  "expectedOccurrences": { "type": "integer", "minimum": 1 },
+                  "owner": { "type": "string", "minLength": 1 },
+                  "reason": { "type": "string", "minLength": 1 },
+                  "reviewDate": { "type": "string", "format": "date" }
+                }
+              }
+            }
+          }
+        },
+        "focusOverride": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["file", "declaration", "provingStoryId", "evidenceSelector"],
+          "properties": {
+            "file": { "type": "string", "minLength": 1 },
+            "declaration": { "type": "string", "minLength": 1 },
+            "provingStoryId": { "type": "string", "pattern": "^[a-z0-9-]+--[a-z0-9-]+$" },
+            "evidenceSelector": { "type": "string", "minLength": 1 }
+          }
+        },
+        "headlessPackages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["manifest", "sourceRoots"],
+            "properties": {
+              "manifest": { "type": "string", "minLength": 1 },
+              "sourceRoots": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+            }
+          }
+        },
+        "representativeStories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source", "export", "id", "viewport"],
+            "properties": {
+              "source": { "type": "string", "minLength": 1 },
+              "export": { "type": "string", "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$" },
+              "id": { "type": "string", "pattern": "^[a-z0-9-]+--[a-z0-9-]+$" },
+              "viewport": { "type": "string", "pattern": "^[0-9]+x[0-9]+$" },
+              "requiresComposition": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

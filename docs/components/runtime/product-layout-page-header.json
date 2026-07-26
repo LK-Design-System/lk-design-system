@@ -1,0 +1,263 @@
+{
+  "slug": "product-layout-page-header",
+  "title": "Page Header",
+  "storybookTitle": "LDS Product/Layout/Page Header",
+  "layer": "Product",
+  "family": "Layout",
+  "primaryOwner": "PageHeader",
+  "ownerComponents": [
+    "PageHeader"
+  ],
+  "supportingComponents": [
+    "Breadcrumb",
+    "Button",
+    "SegmentedControl",
+    "StatusBadge"
+  ],
+  "purpose": "제품 화면의 breadcrumb, 제목, 설명, 상태, 메타데이터, 주요 액션을 일관된 상단 영역으로 묶을 때 적합합니다. 카드나 작은 섹션 제목에는 PageHeader 대신 해당 영역의 heading과 필요한 액션만 사용하세요.",
+  "useWhen": [
+    "제목은 사용자가 수행하는 업무 또는 화면을 가리킵니다(예: “사용자 관리”). 사람·로봇·주문처럼 대상 자체를 식별하는 visual·이름·인증 배지·스탯·대상 액션 묶음은 RecordHeader를 사용합니다."
+  ],
+  "avoidWhen": [
+    "WAI Landmarks Pattern의 고수준 구조 원칙에 따라 PageHeader는 main 안의 로컬 이며, TopBar의 전역 banner나 Storybook 설명 chrome을 대체하지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "description",
+      "rule": "제목 아래 설명."
+    },
+    {
+      "part": "actions",
+      "rule": "오른쪽 액션 영역."
+    },
+    {
+      "part": "align",
+      "rule": "액션 영역과 본문 수직 정렬. @default \"start\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "eyebrow",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "제목 위 보조 라벨.",
+      "owner": "PageHeaderProps"
+    },
+    {
+      "name": "breadcrumb",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Breadcrumb 또는 제목 위 경로 슬롯.",
+      "owner": "PageHeaderProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "페이지 제목.",
+      "owner": "PageHeaderProps"
+    },
+    {
+      "name": "description",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "제목 아래 설명.",
+      "owner": "PageHeaderProps"
+    },
+    {
+      "name": "status",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "제목 옆 상태 badge/chip 슬롯.",
+      "owner": "PageHeaderProps"
+    },
+    {
+      "name": "meta",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "설명 아래 metadata 슬롯.",
+      "owner": "PageHeaderProps"
+    },
+    {
+      "name": "actions",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "오른쪽 액션 영역.",
+      "owner": "PageHeaderProps"
+    },
+    {
+      "name": "align",
+      "type": "'start' | 'center'",
+      "required": false,
+      "description": "액션 영역과 본문 수직 정렬. @default \"start\"",
+      "owner": "PageHeaderProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "제목 크기. @default \"md\"",
+      "owner": "PageHeaderProps"
+    },
+    {
+      "name": "headingLevel",
+      "type": "1 | 2 | 3 | 4 | 5 | 6",
+      "required": false,
+      "description": "제목의 문서 heading 단계. @default 1",
+      "owner": "PageHeaderProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "status",
+      "rule": "제목 옆 상태 badge/chip 슬롯."
+    }
+  ],
+  "behavior": [
+    "PageHeader — 페이지 상단에서 breadcrumb, 화면 제목, 설명, 상태, 메타데이터와 주요 액션을 정렬하는 계약입니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "앱 화면마다 hero를 새로 만들지 말고 반복되는 앱 헤더에는 PageHeader를 쓰세요. 기본 headingLevel={1}로 한 화면에 하나만 배치합니다. 문서·비교 도구처럼 상위 제목이 이미 있는 합성 표면에서만 headingLevel={2..6}으로 주변 heading 구조에 연결합니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "WCAG 2.2 Reflow에 맞춰 320 CSS px 상당의 좁은 폭에서 페이지 chrome이 양방향 스크롤을 요구하지 않도록 본문과 actions를 재배치합니다."
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    },
+    {
+      "subject": "--color-semantic-label-normal",
+      "rule": "light: #171718; dark: #F7F7F7"
+    },
+    {
+      "subject": "--color-semantic-label-strong",
+      "rule": "light: #000000; dark: #FFFFFF"
+    }
+  ],
+  "responsive": [
+    "actions 슬롯에는 버튼·가로형 SegmentedControl처럼 헤더 한 줄 높이에 맞는 컨트롤만 배치합니다. 세로형 FloorSelector 같은 tall 컨트롤은 헤더가 아니라 맵·뷰어 옆 오버레이에 둡니다.",
+    "breadcrumb·eyebrow는 제목 위의 전용 풀폭 컨텍스트 행입니다. 넓은 컨테이너에서 actions는 컨텍스트 행이 아니라 제목 행에 정렬되어 좌측 스택 옆에 뜬 공백을 만들지 않습니다. 좁은 컨테이너에서는 DOM과 읽기 순서를 바꾸지 않은 채 actions가 다음 행으로 내려가고 내부 버튼도 wrap합니다. 긴 제목·설명은 단어를 자르지 않는 것을 우선하되 끊을 수 없는 문자열은 컨테이너 밖으로 넘치지 않게 줄바꿈합니다."
+  ],
+  "contentGuidance": [
+    "title은 필수입니다. breadcrumb, eyebrow, description, status, meta, actions는 슬롯입니다.",
+    "대상의 큰 visual, 프로필 통계, 인증 표식과 대상별 액션을 이 헤더에 넣지 않습니다. 페이지 맥락과 레코드 정체성이 모두 필요하면 PageHeader를 먼저 두고 본문에 RecordHeader를 배치하되 제목과 액션을 반복하지 않습니다.",
+    "eyebrow·meta는 화면 이해에 필요한 텍스트이므로 label-neutral 색과 label2 타이포 토큰을 사용합니다. AA 미달인 label-assistive·label-disable을 필수 텍스트에 쓰지 않습니다.",
+    "Primer PageHeader는 page title·description·status·navigation·actions를 중심으로 하고 leading visual은 작은 보조 요소로 제한합니다."
+  ],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Breadcrumb",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SegmentedControl",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "StatusBadge",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DashboardGrid",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DashboardShell",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DockPanel",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "PrimaryDetail",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<PageHeader\n  breadcrumb={<Breadcrumb items={[{ label: '관리' }, { label: '사용자' }]} />}\n  title=\"사용자 관리\"\n  status={<StatusBadge tone=\"signal\">검토 중</StatusBadge>}\n  description=\"계정 상태와 최근 변경 이력을 확인합니다.\"\n  actions={<Button>사용자 추가</Button>}\n/>"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-label-strong",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-extra",
+    "--heading1-line",
+    "--heading1-size",
+    "--heading1-spacing",
+    "--heading2-line",
+    "--heading2-size",
+    "--heading2-spacing",
+    "--label1-reading-line",
+    "--label1-size",
+    "--label1-spacing",
+    "--label2-line",
+    "--label2-size",
+    "--label2-spacing",
+    "--space-2",
+    "--space-3",
+    "--space-4"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/LayoutPageHeader.stories.jsx",
+    "entryStoryId": "lds-product-layout-page-header--page-header-pattern",
+    "publicStories": [
+      {
+        "id": "lds-product-layout-page-header--page-header-pattern",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-layout-page-header--narrow-long-title-and-actions",
+        "name": "반응형 · 긴 제목과 복수 액션",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

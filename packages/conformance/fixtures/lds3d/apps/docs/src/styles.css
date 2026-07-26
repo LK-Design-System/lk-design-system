@@ -1,0 +1,5 @@
+.fixture-shell {
+  padding: var(--space-4);
+  color: var(--color-semantic-label-normal);
+  background: var(--color-semantic-background-normal-normal);
+}

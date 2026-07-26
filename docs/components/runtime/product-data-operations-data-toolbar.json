@@ -1,0 +1,261 @@
+{
+  "slug": "product-data-operations-data-toolbar",
+  "title": "Data Toolbar",
+  "storybookTitle": "LDS Product/Data/Operations/Data Toolbar",
+  "layer": "Product",
+  "family": "Operations",
+  "primaryOwner": "DataToolbar",
+  "ownerComponents": [
+    "DataToolbar"
+  ],
+  "supportingComponents": [
+    "Button",
+    "DataGrid",
+    "FilterChip",
+    "Icon",
+    "TextButton"
+  ],
+  "purpose": "표나 그리드 바로 위에서 검색·필터·결과 수·페이지 수준 action을 함께 제공할 때 적합합니다. 선택된 행에만 적용되는 bulk action이나 전역 앱 명령에는 Data Toolbar 대신 선택 band 또는 Command Bar를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "Classification: LK Product Extension. 선택 상태와 bulk action은 DataGrid가 소유하며 DataToolbar API에 중복하지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "title",
+      "rule": "테이블/그리드 제목."
+    },
+    {
+      "part": "description",
+      "rule": "제목 아래 설명."
+    },
+    {
+      "part": "actions",
+      "rule": "우측 일반 액션 슬롯."
+    }
+  ],
+  "properties": [
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "테이블/그리드 제목.",
+      "owner": "DataToolbarProps"
+    },
+    {
+      "name": "description",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "제목 아래 설명.",
+      "owner": "DataToolbarProps"
+    },
+    {
+      "name": "count",
+      "type": "number",
+      "required": false,
+      "description": "전체 결과 수.",
+      "owner": "DataToolbarProps"
+    },
+    {
+      "name": "searchValue",
+      "type": "string",
+      "required": false,
+      "description": "제어 검색어.",
+      "owner": "DataToolbarProps"
+    },
+    {
+      "name": "defaultSearchValue",
+      "type": "string",
+      "required": false,
+      "description": "비제어 검색어 초기값. @default \"\"",
+      "owner": "DataToolbarProps"
+    },
+    {
+      "name": "onSearchChange",
+      "type": "(value: string) = void",
+      "required": false,
+      "description": "검색어 변경 콜백.",
+      "owner": "DataToolbarProps"
+    },
+    {
+      "name": "searchPlaceholder",
+      "type": "string",
+      "required": false,
+      "description": "검색 input placeholder와 accessible name. @default \"검색\"",
+      "owner": "DataToolbarProps"
+    },
+    {
+      "name": "filters",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "필터 chip/menu 슬롯.",
+      "owner": "DataToolbarProps"
+    },
+    {
+      "name": "actions",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "우측 일반 액션 슬롯.",
+      "owner": "DataToolbarProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "밀도. @default \"md\"",
+      "owner": "DataToolbarProps"
+    },
+    {
+      "name": "variant",
+      "type": "'standalone' | 'embedded'",
+      "required": false,
+      "description": "외곽선 소유. \"embedded\"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default \"standalone\"",
+      "owner": "DataToolbarProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "variant",
+      "rule": "외곽선 소유. \"embedded\"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default \"standalone\""
+    }
+  ],
+  "behavior": [
+    "검색은 제어/비제어 모두 가능합니다. searchValue와 onSearchChange를 주면 제어됩니다.",
+    "Pagination은 DataToolbar 안에 넣지 않습니다. DataGrid 바로 아래에 별도 Pagination을 붙이고 page/pageSize/query를 제품이 제어합니다.",
+    "Carbon Data table usage는 기본 table toolbar를 검색·필터·설정·export 같은 global action에, 선택 후 batch action bar를 선택 항목 작업에 사용합니다. LDS도 이 소유권 분리를 따릅니다.",
+    "Carbon Pagination usage는 table pagination을 표 아래에 stack되는 별도 component로 정의합니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "--body1-line",
+      "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+    },
+    {
+      "subject": "--body1-size",
+      "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+    },
+    {
+      "subject": "--body2-line",
+      "rule": "22px"
+    },
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    }
+  ],
+  "responsive": [
+    "filters는 query를 좁히는 chip/menu 슬롯, actions는 열 표시·순서 설정 trigger, 내보내기 같은 전체 표 action 슬롯입니다. 설정 UI와 저장 상태는 제품이 소유하고 visibleColumnKeys/columnOrder로 DataGrid에 전달합니다.",
+    "selectedCount와 bulkActions는 DataToolbar props가 아닙니다. 선택 수, 선택 해제, bulk action은 DataGrid의 같은 높이 selection band에 둡니다."
+  ],
+  "contentGuidance": [
+    "DataToolbar — DataGrid/Table 위에서 제목, 결과 수, 검색, 필터, page-level action을 정렬하는 표면."
+  ],
+  "accessibility": [
+    "WAI-ARIA APG Table pattern에 따라 DataToolbar가 표의 native semantics나 keyboard model을 대신하지 않습니다. 검색과 action은 각 native control의 정상 Tab 순서를 유지합니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DataGrid",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FilterChip",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "TextButton",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "AnnotatedImage",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "BarChart",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Calendar",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<DataToolbar\n  title=\"사용자 목록\"\n  description=\"조직에 등록된 계정\"\n  count={24}\n  searchValue={query}\n  onSearchChange={setQuery}\n  searchPlaceholder=\"사용자 검색\"\n  filters={<FilterChip active>온라인</FilterChip>}\n  actions={<Button size=\"sm\">내보내기</Button>}\n/>"
+    }
+  ],
+  "tokens": [
+    "--body1-line",
+    "--body1-size",
+    "--body2-line",
+    "--body2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-strong",
+    "--color-semantic-line-solid-normal",
+    "--component-button-height-md",
+    "--component-button-height-sm",
+    "--font-sans",
+    "--fw-medium",
+    "--fw-semibold",
+    "--label2-line",
+    "--label2-size",
+    "--radius-md",
+    "--space-1",
+    "--space-1-5",
+    "--space-2",
+    "--space-3"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/DataToolbar.stories.jsx",
+    "entryStoryId": "lds-product-data-operations-data-toolbar--toolbar-with-grid",
+    "publicStories": [
+      {
+        "id": "lds-product-data-operations-data-toolbar--toolbar-with-grid",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

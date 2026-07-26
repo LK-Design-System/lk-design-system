@@ -1,0 +1,281 @@
+{
+  "slug": "core-components-selection-and-input-stepper",
+  "title": "Stepper",
+  "storybookTitle": "LDS Core/Components/Selection and Input/Stepper",
+  "layer": "Core",
+  "family": "Selection and Input",
+  "primaryOwner": "Stepper",
+  "ownerComponents": [
+    "Stepper"
+  ],
+  "supportingComponents": [],
+  "purpose": "수량이나 반복 횟수처럼 범위가 짧고 증감 단위가 분명할 때 적합합니다. 임의 숫자를 빠르게 입력해야 하면 Number Field를, 넓은 연속 범위를 탐색하면 Slider를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "조절 대상의 이름(예: 도입 대수). role=\"group\"과 내부 spinbutton의 접근 가능한 이름이 되고, +/− 버튼 이름(도입 대수 증가)의 접두어가 됩니다. 생략하면 aria-label, 그다음 수량이 사용됩니다."
+    },
+    {
+      "part": "decrementLabel",
+      "rule": "감소 버튼 이름 재정의. @default ${label} 감소"
+    },
+    {
+      "part": "incrementLabel",
+      "rule": "증가 버튼 이름 재정의. @default ${label} 증가"
+    }
+  ],
+  "properties": [
+    {
+      "name": "value",
+      "type": "number",
+      "required": false,
+      "description": "제어되는 값.",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "number",
+      "required": false,
+      "description": "비제어 초기 값. @default 0",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "min",
+      "type": "number",
+      "required": false,
+      "description": "하한(클램프). 유한할 때만 aria-valuemin / Home 키가 활성화됩니다.",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "required": false,
+      "description": "상한(클램프). 유한할 때만 aria-valuemax / End 키가 활성화됩니다.",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "step",
+      "type": "number",
+      "required": false,
+      "description": "누를 때마다 증가폭. @default 1",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "largeStep",
+      "type": "number",
+      "required": false,
+      "description": "PageUp/PageDown 증가폭. @default step 10",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: number) = void",
+      "required": false,
+      "description": "",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "높이. @default \"md\"",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "조절 대상의 이름(예: 도입 대수). role=\"group\"과 내부 spinbutton의 접근 가능한 이름이 되고, +/− 버튼 이름(도입 대수 증가)의 접두어가 됩니다. 생략하면 aria-label, 그다음 수량이 사용됩니다.",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "decrementLabel",
+      "type": "string",
+      "required": false,
+      "description": "감소 버튼 이름 재정의. @default ${label} 감소",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "incrementLabel",
+      "type": "string",
+      "required": false,
+      "description": "증가 버튼 이름 재정의. @default ${label} 증가",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "valueText",
+      "type": "(value: number) = string",
+      "required": false,
+      "description": "숫자 대신 읽힐 텍스트를 만듭니다(aria-valuetext). 예: (v) = ${v}대",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "repeatDelay",
+      "type": "number",
+      "required": false,
+      "description": "길게 누를 때 자동 반복이 시작되기까지의 지연(ms). @default 400",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "repeatInterval",
+      "type": "number",
+      "required": false,
+      "description": "자동 반복 간격(ms). @default 80",
+      "owner": "StepperProps"
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "",
+      "owner": "StepperProps"
+    }
+  ],
+  "states": [],
+  "behavior": [
+    "size sm|md. 값은 tabular-nums로 렌더돼 떨리지 않습니다. 자유 숫자 입력에는 Input type=\"number\"를 쓰세요.",
+    "Stepper — 소량 수량용 숫자 +/− 컨트롤(도입 대수, 수량). 쿨 그레이 아이콘 버튼이 tabular 값을 양옆에서 감싸고, [min, max]로 클램프하며 끝에 도달하면 해당 버튼을 사용 불가로 표시합니다(포커스는 유지).",
+    "두 가지 표준 선택지를 비교했습니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "value / defaultValue / onChange — 제어/비제어. min / max / step은 범위와 증가폭을 정합니다. largeStep은 PageUp/PageDown 폭(기본 step 10)."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "값은 role=\"spinbutton\" + tabIndex=0 + aria-valuenow / aria-valuemin / aria-valuemax / aria-valuetext를 소유합니다. min/max가 무한대일 때는 해당 aria-value를 노출하지 않습니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "길게 누르기 자동 반복: 포인터를 누르고 있으면 repeatDelay(400ms) 후 repeatInterval(80ms)마다 반복됩니다. 타이머는 pointerup/pointerleave/pointercancel/blur/언마운트/disabled 전환에서 모두 정리됩니다. 포인터 경로는 pointerdown에서 1회 증감하고 뒤따르는 click을 삼켜 이중 증감을 막습니다(키보드 Enter/Space 활성화는 click 경로를 그대로 사용)."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "WCAG 2.2 2.4.3 Focus Order — 경계에서 포커스를 잃지 않아야 하는 근거."
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "decrementLabel / incrementLabel — +/− 버튼 이름을 직접 지정합니다(기본은 label 기반).",
+    "Carbon Number input accessibility — 대안으로 검토한 native number input 접근법과 버튼 이름 요구사항.",
+    "| | APG role=\"spinbutton\" | Carbon NumberInput(input type=\"number\") | |---|---|---| | 자유 텍스트 입력 | 불가(의도한 제약) | 가능 | | 시각 결과 | 기존 tabular 그대로 | 캐럿·네이티브 스핀 화살표 리셋 필요 | | Home/End/PageUp/PageDown | 직접 정의 | 브라우저 미지원 |.",
+    "spinbutton을 선택한 이유: 이 컴포넌트는 문서상 \"자유 숫자 입력은 Input type='number'를 쓰라\"고 이미 역할을 분리하고 있어, 편집 가능한 텍스트 필드 의미를 갖는 native number input은 계약과 어긋납니다. 또한 값 표시의 시각 출력(폭, tabular 정렬, 캐럿 없음)을 그대로 유지할 수 있습니다."
+  ],
+  "accessibility": [
+    "label — 조절 대상의 이름. 접근성의 기준점이므로 항상 지정하세요(생략 시 수량).",
+    "valueText — 숫자만으로 의미가 부족할 때 aria-valuetext를 제공합니다.",
+    "래퍼는 role=\"group\"이며 label(또는 aria-label / aria-labelledby)로 이름을 갖습니다.",
+    "키보드(spinbutton 포커스 시): ArrowUp/ArrowDown = ±step, PageUp/PageDown = ±largeStep, Home = min, End = max.",
+    "+/− 버튼은 하드코딩된 영문 decrease/increase 대신 맥락 있는 한국어 이름(도입 대수 증가)을 가집니다. 아이콘은 aria-hidden입니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Checkbox",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "CheckboxGroup",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FilterChip",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "MultiSelectChip",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Radio",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "RadioGroup",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "RangeSlider",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SegmentedControl",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Stepper label=\"도입 대수\" defaultValue={1} min={0} max={9} onChange={setQty} />\n<Stepper label=\"수량\" value={qty} min={0} onChange={setQty} size=\"sm\" />\n<Stepper label=\"로봇\" defaultValue={2} min={0} max={9} valueText={(v) => `${v}대`} />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-normal",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-solid-normal",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-bold",
+    "--radius-md",
+    "--radius-sm"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/SelectionStepper.stories.jsx",
+    "entryStoryId": "lds-core-components-selection-and-input-stepper--stepper-control",
+    "publicStories": [
+      {
+        "id": "lds-core-components-selection-and-input-stepper--stepper-control",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 2
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

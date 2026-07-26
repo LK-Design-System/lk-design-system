@@ -1,0 +1,228 @@
+import React from 'react';
+import { SegmentedControl } from '../selection/SegmentedControl.jsx';
+
+/* Development-only guard: a grouping control with no accessible name is a
+   silent failure at runtime — assistive tech announces an anonymous group and
+   nothing explains what the toggles have in common. Bundlers replace
+   `process.env.NODE_ENV` at build time, so this branch disappears from
+   production builds; the try/catch keeps it inert where `process` is absent. */
+function isDevelopmentBuild() {
+  try {
+    return process.env.NODE_ENV !== 'production';
+  } catch {
+    return false;
+  }
+}
+
+function useMissingNameWarning(shouldWarn, message) {
+  React.useEffect(() => {
+    if (!shouldWarn || !isDevelopmentBuild()) return;
+    console.warn(message);
+  }, [shouldWarn, message]);
+}
+
+const SIZE_STYLES = {
+  sm: {
+    height: 'var(--component-button-height-sm)',
+    padding: 'var(--component-button-padding-sm)',
+    fontSize: 'var(--component-button-font-size-sm)',
+    lineHeight: 'var(--component-button-line-height-sm)',
+    letterSpacing: 'var(--component-button-letter-spacing-sm)',
+    radius: 'var(--component-button-radius-sm)',
+  },
+  md: {
+    height: 'var(--component-button-height-md)',
+    padding: 'var(--component-button-padding-md)',
+    fontSize: 'var(--component-button-font-size-md)',
+    lineHeight: 'var(--component-button-line-height-md)',
+    letterSpacing: 'var(--component-button-letter-spacing-md)',
+    radius: 'var(--component-button-radius-md)',
+  },
+  lg: {
+    height: 'var(--component-button-height-lg)',
+    padding: 'var(--component-button-padding-lg)',
+    fontSize: 'var(--component-button-font-size-lg)',
+    lineHeight: 'var(--component-button-line-height-lg)',
+    letterSpacing: 'var(--component-button-letter-spacing-lg)',
+    radius: 'var(--component-button-radius-lg)',
+  },
+};
+
+function normalizeSize(size) {
+  return { small: 'sm', medium: 'md', large: 'lg' }[size] || size;
+}
+
+function MultiToggleSegment({ option, active, first, last, sizeStyle, disabled, onPick }) {
+  const [hover, setHover] = React.useState(false);
+  const [pressed, setPressed] = React.useState(false);
+  const blocked = disabled || option.disabled || option.disable;
+  const restingBackground = active
+    ? 'var(--color-semantic-primary-surface-strong)'
+    : 'var(--color-semantic-background-elevated-normal)';
+  const interactiveBackground = pressed
+    ? `color-mix(in srgb, ${restingBackground} 88%, var(--color-semantic-label-normal))`
+    : hover && !active
+      ? 'var(--color-semantic-fill-alternative)'
+      : restingBackground;
+
+  return (
+    <button
+      type="button"
+      aria-pressed={active}
+      data-selected={active ? 'true' : 'false'}
+      data-disabled={blocked ? 'true' : 'false'}
+      disabled={blocked}
+      onClick={() => onPick(option.value)}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => { setHover(false); setPressed(false); }}
+      onMouseDown={() => { if (!blocked) setPressed(true); }}
+      onMouseUp={() => setPressed(false)}
+      onKeyDown={(event) => {
+        if (!blocked && (event.key === 'Enter' || event.key === ' ')) setPressed(true);
+      }}
+      onKeyUp={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') setPressed(false);
+      }}
+      onBlur={() => setPressed(false)}
+      style={{
+        height: '100%',
+        minHeight: 0,
+        boxSizing: 'border-box',
+        padding: sizeStyle.padding,
+        cursor: blocked ? 'not-allowed' : 'pointer',
+        fontFamily: 'var(--font-sans)',
+        fontSize: sizeStyle.fontSize,
+        lineHeight: sizeStyle.lineHeight,
+        fontWeight: active ? 'var(--fw-semibold)' : 'var(--fw-medium)',
+        letterSpacing: sizeStyle.letterSpacing,
+        color: blocked
+          ? 'var(--color-semantic-label-disable)'
+          : active
+            ? 'var(--color-semantic-label-normal)'
+            : 'var(--color-semantic-label-neutral)',
+        background: blocked
+          ? active
+            ? 'var(--color-semantic-fill-strong)'
+            : 'var(--component-button-disabled-bg)'
+          : interactiveBackground,
+        border: `var(--border-thin) solid ${
+          blocked
+            ? 'var(--color-semantic-line-normal-neutral)'
+            : active
+              ? 'var(--color-semantic-primary-normal)'
+              : 'var(--color-semantic-line-solid-normal)'
+        }`,
+        marginLeft: first ? 0 : -1,
+        zIndex: active ? 1 : 0,
+        borderTopLeftRadius: first ? sizeStyle.radius : 0,
+        borderBottomLeftRadius: first ? sizeStyle.radius : 0,
+        borderTopRightRadius: last ? sizeStyle.radius : 0,
+        borderBottomRightRadius: last ? sizeStyle.radius : 0,
+        transition: 'var(--component-button-transition)',
+        whiteSpace: 'nowrap',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 'var(--component-button-gap-sm)',
+      }}
+    >
+      {option.icon}
+      {option.label}
+    </button>
+  );
+}
+
+/**
+ * Single selection converges on SegmentedControl. `multiple` remains a connected
+ * group of independent toggle buttons with aria-pressed semantics.
+ */
+export function ButtonGroup({
+  options = [],
+  value,
+  defaultValue,
+  onChange,
+  size = 'md',
+  multiple = false,
+  disabled = false,
+  disable = false,
+  style,
+  className,
+  // No generic fallback name: a silent "보기 또는 모드 선택" on every unlabelled
+  // group is a meaningless name, so the contract is an explicit label plus a
+  // development warning when it is missing.
+  'aria-label': ariaLabel,
+  ...rest
+}) {
+  const norm = options.map((option) => (
+    typeof option === 'string'
+      ? { value: option, label: option }
+      : { ...option, disabled: Boolean(option.disabled || option.disable) }
+  ));
+  const normalizedSize = normalizeSize(size);
+  const disabledState = disabled || disable;
+  const isControlled = value !== undefined;
+  // Only the `multiple` branch owns selection state; single selection delegates
+  // it to SegmentedControl, so nothing is initialised for that path.
+  const [internal, setInternal] = React.useState(
+    () => (multiple ? (defaultValue != null ? defaultValue : []) : undefined),
+  );
+  const currentValue = isControlled ? value : internal;
+
+  useMissingNameWarning(
+    ariaLabel == null && rest['aria-labelledby'] == null,
+    '[LDS] ButtonGroup: 그룹의 목적을 설명하는 aria-label(또는 aria-labelledby)이 필요합니다. 이름이 없으면 보조 기술에 목적을 알 수 없는 그룹으로 노출됩니다.',
+  );
+
+  if (!multiple) {
+    return (
+      <SegmentedControl
+        options={norm}
+        value={Array.isArray(value) ? value[0] : value}
+        defaultValue={Array.isArray(defaultValue) ? defaultValue[0] : defaultValue}
+        onChange={onChange}
+        variant="outlined"
+        size={normalizedSize}
+        disabled={disabledState}
+        aria-label={ariaLabel}
+        className={className}
+        style={style}
+        {...rest}
+      />
+    );
+  }
+
+  const selectedValues = Array.isArray(currentValue) ? currentValue : [];
+  const pick = (nextValue) => {
+    if (disabledState) return;
+    const next = selectedValues.includes(nextValue)
+      ? selectedValues.filter((item) => item !== nextValue)
+      : [...selectedValues, nextValue];
+    if (!isControlled) setInternal(next);
+    onChange?.(next);
+  };
+  const sizeStyle = SIZE_STYLES[normalizedSize] || SIZE_STYLES.md;
+
+  return (
+    <div
+      {...rest}
+      role="group"
+      aria-label={ariaLabel}
+      aria-disabled={disabledState || undefined}
+      className={['lk-button-group', className].filter(Boolean).join(' ')}
+      style={{ display: 'inline-flex', alignItems: 'stretch', height: sizeStyle.height, boxSizing: 'border-box', ...style }}
+    >
+      {norm.map((option, index) => (
+        <MultiToggleSegment
+          key={option.value}
+          option={option}
+          active={selectedValues.includes(option.value)}
+          first={index === 0}
+          last={index === norm.length - 1}
+          sizeStyle={sizeStyle}
+          disabled={disabledState}
+          onPick={pick}
+        />
+      ))}
+    </div>
+  );
+}

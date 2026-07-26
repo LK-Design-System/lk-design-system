@@ -1,0 +1,291 @@
+{
+  "slug": "product-layout-primary-detail",
+  "title": "Primary Detail",
+  "storybookTitle": "LDS Product/Layout/Primary Detail",
+  "layer": "Product",
+  "family": "Layout",
+  "primaryOwner": "PrimaryDetail",
+  "ownerComponents": [
+    "PrimaryDetail"
+  ],
+  "supportingComponents": [
+    "Button",
+    "DescriptionList",
+    "StatusBadge",
+    "TextButton"
+  ],
+  "purpose": "목록·표에서 선택한 항목의 상세를 넓은 화면에서는 병렬 영역, 좁은 화면에서는 focus-managed overlay로 보여 줄 때 적합합니다. 독립적인 탐색 목적지나 긴 편집 흐름에는 PrimaryDetail 대신 전용 상세 페이지를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "자동 media query와 route persistence는 의도적으로 넣지 않았습니다. shell의 breakpoint와 제품 router가 이미 가진 source of truth를 중복하지 않기 위해 mode를 controlled로 둡니다."
+  ],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "primary",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "detail",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "detailOpen",
+      "type": "boolean",
+      "required": false,
+      "description": "상세 표시 여부. @default false",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "mode",
+      "type": "'inline' | 'overlay'",
+      "required": false,
+      "description": "데스크톱 병렬 region 또는 좁은 폭 modal Drawer. @default \"inline\"",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "primaryLabel",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "detailLabel",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "detailTitle",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "detailWidth",
+      "type": "number",
+      "required": false,
+      "description": "inline track 및 Drawer 너비. @default 360",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "detailFooter",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "onDetailClose",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "closeLabel",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "initialFocusRef",
+      "type": "React.RefObject",
+      "required": false,
+      "description": "overlay가 열릴 때 우선 초점을 받을 상세 내부 요소.",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "returnFocusRef",
+      "type": "React.RefObject",
+      "required": false,
+      "description": "inline close 및 overlay dismiss 뒤 초점을 돌려보낼 선택 trigger.",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "restoreFocus",
+      "type": "boolean",
+      "required": false,
+      "description": "overlay focus 복원. @default true",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "primaryStyle",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "detailStyle",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "",
+      "owner": "PrimaryDetailProps"
+    },
+    {
+      "name": "detailBodyStyle",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "",
+      "owner": "PrimaryDetailProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "detailOpen",
+      "rule": "상세 표시 여부. @default false"
+    }
+  ],
+  "behavior": [
+    "detailOpen, 선택된 항목, URL/history, breakpoint 판정은 controlled 제품 state입니다. 레이아웃이 임의로 선택이나 route를 바꾸지 않습니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "내부 Split, Drawer, DockPanel, DescriptionList를 비교했습니다. DockPanel은 캔버스 위 도구 패널이므로 데이터 목록 상세에는 재사용하지 않고, 일반 상세는 Drawer와 divider만 사용합니다. PatternFly Primary-detail은 선택 후 같은 맥락에서 상세를 유지하고 작은 화면에서 overlay로 전환하는 흐름을, Fluent Drawer는 현재 맥락의 보조 상세와 focus 관리를, WAI-ARIA Dialog pattern은 modal keyboard 계약을 제공합니다."
+    },
+    {
+      "subject": "--body1-line",
+      "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+    },
+    {
+      "subject": "--body1-size",
+      "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    }
+  ],
+  "responsive": [
+    "제품은 normal/narrow breakpoint에서 같은 상세 콘텐츠를 두 presentation에 전달해야 합니다."
+  ],
+  "contentGuidance": [
+    "mode=\"inline\": 이름 있는 primary section 옆에 상세 region을 둡니다. 별도 카드 테두리를 중첩하지 않고 한 개의 세로 divider로 관계를 표현합니다.",
+    "closeLabel은 inline close와 overlay Drawer close에 동일하게 전달되어 presentation 전환 뒤에도 명령 이름이 바뀌지 않습니다.",
+    "detailFooter는 inline과 overlay(Drawer) 모두에서 우측 정렬 action 행입니다. 패널의 핵심 action은 여기에 강조 variant로 두고, \"전체 보기\" 같은 이동은 본문에서 TextButton/link로 낮춥니다."
+  ],
+  "accessibility": [
+    "mode=\"overlay\": 기존 Drawer를 사용해 modal focus trap, Escape, scrim dismiss, trigger focus 복원을 보장합니다.",
+    "inline 닫기 역시 returnFocusRef가 가리키는 선택 trigger로 초점을 돌립니다.",
+    "Primary 목록의 현재 항목은 aria-current와 옅은 선택 배경으로 표시하고 focus outline과 구분합니다. 왼쪽 selection bar는 현재 페이지를 나타내는 navigation indicator로 오해될 수 있으므로 list-detail 선택에는 기본으로 사용하지 않습니다.",
+    "목록·표·트리 같은 primary 콘텐츠와 선택 항목 상세를 연결하는 LK Product Extension입니다. 선택 state와 route는 제품이 소유하고, 컴포넌트는 데스크톱 inline region과 좁은 폭 focus-managed Drawer의 일관된 표현만 소유합니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DescriptionList",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "StatusBadge",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "TextButton",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DashboardGrid",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DashboardShell",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DockPanel",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "PageHeader",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<PrimaryDetail\n  primary={<DataGrid onRowActivate={selectRow} />}\n  detailOpen={selectedId != null}\n  detailTitle=\"로봇 상세\"\n  detail={<RobotDetails id={selectedId} />}\n  mode={isNarrow ? 'overlay' : 'inline'}\n  returnFocusRef={selectedRowRef}\n  onDetailClose={clearSelection}\n/>"
+    }
+  ],
+  "tokens": [
+    "--body1-line",
+    "--body1-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-strong",
+    "--color-semantic-line-normal-normal",
+    "--font-sans",
+    "--fw-bold",
+    "--radius-md",
+    "--space-2",
+    "--space-3",
+    "--space-4"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/LayoutPrimaryDetail.stories.jsx",
+    "entryStoryId": "lds-product-layout-primary-detail--inline-detail",
+    "publicStories": [
+      {
+        "id": "lds-product-layout-primary-detail--inline-detail",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-layout-primary-detail--narrow-overlay-detail",
+        "name": "반응형 · 좁은 폭의 겹침형 상세 영역",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "omitted-no-evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

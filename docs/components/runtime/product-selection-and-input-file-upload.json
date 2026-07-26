@@ -1,0 +1,243 @@
+{
+  "slug": "product-selection-and-input-file-upload",
+  "title": "File Upload",
+  "storybookTitle": "LDS Product/Selection and Input/File Upload",
+  "layer": "Product",
+  "family": "Selection and Input",
+  "primaryOwner": "FileUpload",
+  "ownerComponents": [
+    "FileUpload"
+  ],
+  "supportingComponents": [],
+  "purpose": "사용자가 로컬 파일 하나 이상을 선택해 업로드 흐름을 시작할 때 적합합니다. 선택 이후의 progress·retry·부분 실패를 관리해야 하면 File Upload Queue와 조합하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "inputAriaLabel",
+      "rule": "Actual file input의 접근 가능한 이름을 별도로 지정합니다."
+    },
+    {
+      "part": "inputAriaDescribedBy",
+      "rule": "Helper/error element IDs applied to the actual file input."
+    }
+  ],
+  "properties": [
+    {
+      "name": "onFiles",
+      "type": "(files: File[]) = void",
+      "required": false,
+      "description": "선택된 File[]을 받음.",
+      "owner": "FileUploadProps"
+    },
+    {
+      "name": "onRejectedFiles",
+      "type": "(files: File[]) = void",
+      "required": false,
+      "description": "accept 또는 단일 선택 제한으로 제외된 파일.",
+      "owner": "FileUploadProps"
+    },
+    {
+      "name": "accept",
+      "type": "string",
+      "required": false,
+      "description": "네이티브 picker와 drag/drop에 함께 적용되는 파일 형식 규칙.",
+      "owner": "FileUploadProps"
+    },
+    {
+      "name": "multiple",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "FileUploadProps"
+    },
+    {
+      "name": "capture",
+      "type": "boolean | 'user' | 'environment'",
+      "required": false,
+      "description": "",
+      "owner": "FileUploadProps"
+    },
+    {
+      "name": "inputAriaLabel",
+      "type": "string",
+      "required": false,
+      "description": "Actual file input의 접근 가능한 이름을 별도로 지정합니다.",
+      "owner": "FileUploadProps"
+    },
+    {
+      "name": "inputAriaDescribedBy",
+      "type": "string",
+      "required": false,
+      "description": "Helper/error element IDs applied to the actual file input.",
+      "owner": "FileUploadProps"
+    },
+    {
+      "name": "inputAriaInvalid",
+      "type": "React.AriaAttributes['aria-invalid']",
+      "required": false,
+      "description": "",
+      "owner": "FileUploadProps"
+    },
+    {
+      "name": "hint",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "안내 문구.",
+      "owner": "FileUploadProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "FileUploadProps"
+    }
+  ],
+  "states": [],
+  "behavior": [
+    "onFiles(File[]) 로 허용된 선택을 받고, onRejectedFiles(File[]) 로 accept 또는 단일 선택 제한에서 제외된 파일을 받습니다.",
+    "선택 이후 upload/processing/retry 상태는 FileUploadQueue가 소유합니다. parser, storage, virus scan, retry policy는 제품 계층 책임입니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--color-semantic-fill-normal",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    },
+    {
+      "subject": "--color-semantic-fill-strong",
+      "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
+    }
+  ],
+  "responsive": [
+    "picker와 drag/drop handler는 consumer wrapper handler와 합성합니다. 같은 파일을 다시 고를 수 있도록 처리 후 picker value를 초기화합니다."
+  ],
+  "contentGuidance": [
+    "accept / multiple / capture 는 picker와 drag/drop에 적용됩니다. 이 컴포넌트는 즉시 업로드 흐름을 위한 event-based picker이며 native form submission용 name/required 필드를 소유하지 않습니다.",
+    "control name은 선택 후에도 바뀌지 않습니다. 선택 파일명은 별도 status로 알리며 helper/error는 inputAriaDescribedBy / inputAriaInvalid 로 실제 input에 연결합니다.",
+    "같은 polite status가 거부된 파일도 함께 읽습니다({파일명}, 허용되지 않는 파일이라 제외됨). accept 불일치와 단일 선택 초과는 callback으로만 흘리지 않고 보조 기술에도 전달합니다(USWDS File input 요구). 사용자에게 보이는 오류 문구와 복구 안내는 제품이 소유합니다."
+  ],
+  "accessibility": [
+    "native 은 접근성 트리와 Tab 순서에 남습니다. 연결된 label이 picker를 열고 focus는 LDS input ring으로 표시합니다.",
+    "Carbon File uploader accessibility.",
+    "FileUpload은 native file input을 유지하면서 클릭·키보드·drag/drop을 제공하는 파일 선택 target입니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "ColorSwatch",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DatePicker",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DateRangeField",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FileUploadQueue",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "IconPicker",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "NumberField",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "PinInput",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "PropertyField",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<FileUpload multiple accept=\".pdf,image/*\" onFiles={setFiles} hint=\"파일을 놓거나 선택하세요\" />"
+    }
+  ],
+  "tokens": [
+    "--caption1-line",
+    "--caption1-size",
+    "--color-semantic-fill-normal",
+    "--color-semantic-fill-strong",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-primary-surface-normal",
+    "--component-input-bg",
+    "--component-input-border-color-focus",
+    "--component-input-focus-shadow",
+    "--component-input-radius",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-medium",
+    "--fw-semibold",
+    "--label1-line",
+    "--label1-size",
+    "--radius-md",
+    "--space-3",
+    "--space-4",
+    "--space-6"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormFileUpload.stories.jsx",
+    "entryStoryId": "lds-product-selection-and-input-file-upload--keyboard-file-selection",
+    "publicStories": [
+      {
+        "id": "lds-product-selection-and-input-file-upload--keyboard-file-selection",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

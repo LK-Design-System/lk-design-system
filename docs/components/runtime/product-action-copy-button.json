@@ -1,0 +1,188 @@
+{
+  "slug": "product-action-copy-button",
+  "title": "Copy Button",
+  "storybookTitle": "LDS Product/Action/Copy Button",
+  "layer": "Product",
+  "family": "Action",
+  "primaryOwner": "CopyButton",
+  "ownerComponents": [
+    "CopyButton"
+  ],
+  "supportingComponents": [],
+  "purpose": "ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드에 복사할 때 적합합니다. 화면 상태를 바꾸는 작업이나 파일 전체를 전달할 때는 Copy Button 대신 Button 또는 Export Action을 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "children",
+      "rule": "대기 라벨. @default \"복사\""
+    },
+    {
+      "part": "copiedLabel",
+      "rule": "복사 성공 라벨. 라이브 리전으로도 같은 문구가 알림됩니다. @default \"복사됨\""
+    },
+    {
+      "part": "errorLabel",
+      "rule": "복사 실패 라벨(권한 거부·비보안 컨텍스트·Clipboard API 미지원). 실패는 성공으로 표시하지 않으며, 라이브 리전으로도 같은 문구가 알림됩니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "value",
+      "type": "string",
+      "required": true,
+      "description": "클립보드에 복사되는 텍스트.",
+      "owner": "CopyButtonProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "대기 라벨. @default \"복사\"",
+      "owner": "CopyButtonProps"
+    },
+    {
+      "name": "copiedLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "복사 성공 라벨. 라이브 리전으로도 같은 문구가 알림됩니다. @default \"복사됨\"",
+      "owner": "CopyButtonProps"
+    },
+    {
+      "name": "errorLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "복사 실패 라벨(권한 거부·비보안 컨텍스트·Clipboard API 미지원). 실패는 성공으로 표시하지 않으며, 라이브 리전으로도 같은 문구가 알림됩니다.",
+      "owner": "CopyButtonProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "",
+      "owner": "CopyButtonProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "errorLabel",
+      "rule": "복사 실패 라벨(권한 거부·비보안 컨텍스트·Clipboard API 미지원). 실패는 성공으로 표시하지 않으며, 라이브 리전으로도 같은 문구가 알림됩니다."
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "36/44px 높이는 Button 높이 스케일(32/40/48) 이전의 지오메트리로, 시각 변화를 막기 위해 그대로 유지합니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "CopyButton — value를 클립보드에 복사하고 결과(성공 또는 실패)를 약 1.4초 동안 같은 자리에서 알립니다."
+    },
+    {
+      "subject": "--color-semantic-label-normal",
+      "rule": "light: #171718; dark: #F7F7F7"
+    },
+    {
+      "subject": "--color-semantic-primary-normal",
+      "rule": "light: #3878B3; dark: #5390C9"
+    },
+    {
+      "subject": "--color-semantic-primary-surface-strong",
+      "rule": "light: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent); dark: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "value — 복사할 텍스트. children — 대기 라벨(기본 복사). size sm · md.",
+    "copiedLabel — 성공 라벨(기본 복사됨). errorLabel — 실패 라벨(기본 복사 실패).",
+    "클립보드 쓰기가 실패하면 실패로 표시합니다. 권한 거부, 비보안 컨텍스트(navigator.clipboard 미지원), writeText reject는 모두 실패이며 errorLabel + 경고 아이콘 + negative 서피스로 바뀝니다. 실패를 삼키고 copiedLabel을 보여 주지 않습니다.",
+    "상태 리셋 타이머는 언마운트와 재클릭 때 정리되므로 연타해도 피드백이 조기에 사라지거나 언마운트 후 setState가 발생하지 않습니다. 현재 상태는 data-copy-status(idle · copied · error)로 노출됩니다."
+  ],
+  "accessibility": [
+    "버튼 안에 상시 마운트된 시각적 숨김 role=\"status\" aria-live=\"polite\" 영역이 있고, 성공/실패 문구를 그 영역에 씁니다. 결과와 함께 새로 마운트되는 라이브 리전은 대부분의 스크린 리더가 읽지 않으므로 라벨 스왑만으로 통지를 대신하지 않습니다(ToastStack과 같은 방식). 같은 문구를 연속으로 알릴 때는 영역을 비웠다가 다시 채워 변경을 관찰 가능하게 만듭니다.",
+    "아이콘은 aria-hidden이고 이름은 항상 버튼 텍스트가 담당합니다. 소비자 onClick은 복사 동작을 덮어쓰지 않고 함께 호출됩니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "ButtonGroup",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Link",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SpeedDial",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SplitButton",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SocialButton",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<CopyButton value=\"LKR-T1-2026-0001\">시리얼 복사</CopyButton>\n<CopyButton value={token} copiedLabel=\"토큰 복사됨\" errorLabel=\"토큰을 복사하지 못했습니다\" />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-primary-surface-strong",
+    "--color-semantic-status-negative-surface",
+    "--color-semantic-status-negative-text",
+    "--fw-bold",
+    "--label1-size",
+    "--radius-md",
+    "--space-2"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ActionCopyButton.stories.jsx",
+    "entryStoryId": "lds-product-action-copy-button--copy-buttons",
+    "publicStories": [
+      {
+        "id": "lds-product-action-copy-button--copy-buttons",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

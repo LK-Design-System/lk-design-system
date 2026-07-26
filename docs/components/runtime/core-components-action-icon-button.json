@@ -1,0 +1,215 @@
+{
+  "slug": "core-components-action-icon-button",
+  "title": "Icon Button",
+  "storybookTitle": "LDS Core/Components/Action/Icon Button",
+  "layer": "Core",
+  "family": "Action",
+  "primaryOwner": "IconButton",
+  "ownerComponents": [
+    "IconButton"
+  ],
+  "supportingComponents": [
+    "Icon"
+  ],
+  "purpose": "툴바의 검색·설정·닫기처럼 의미가 익숙하고 짧은 레이블을 시각적으로 숨겨야 하는 행동에 적합합니다. 의미가 모호하거나 중요한 결정에는 텍스트가 보이는 Button을, 켬·끔 상태를 유지하는 행동에는 Toggle Icon을 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "Use ToggleIcon instead when the icon-only control has persistent on/off state.",
+    "hover/pressed는 tone만 변경하고 lift·scale·shadow를 추가하지 않습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "Required accessible label for the icon-only control."
+    },
+    {
+      "part": "children",
+      "rule": "Icon glyph or inline SVG content."
+    }
+  ],
+  "properties": [
+    {
+      "name": "variant",
+      "type": "\"soft\" | \"solid\" | \"signal\" | \"ghost\" | \"plain\" | \"on-dark\"",
+      "required": false,
+      "description": "Visual action variant mapped through LK theme tokens. @default \"soft\"",
+      "owner": "IconButtonProps"
+    },
+    {
+      "name": "size",
+      "type": "number | \"custom\" | \"small\" | \"sm\" | \"medium\" | \"md\"",
+      "required": false,
+      "description": "Square control size in px or size key. @default \"medium\"",
+      "owner": "IconButtonProps"
+    },
+    {
+      "name": "alternative",
+      "type": "boolean",
+      "required": false,
+      "description": "alternative inverse treatment. @default false",
+      "owner": "IconButtonProps"
+    },
+    {
+      "name": "round",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "IconButtonProps"
+    },
+    {
+      "name": "disable",
+      "type": "boolean",
+      "required": false,
+      "description": "Disable alias. @default false",
+      "owner": "IconButtonProps"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Required accessible label for the icon-only control.",
+      "owner": "IconButtonProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Icon glyph or inline SVG content.",
+      "owner": "IconButtonProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "variant",
+      "rule": "Visual action variant mapped through LK theme tokens. @default \"soft\""
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "size: pixel size or size key, default medium (40)."
+    },
+    {
+      "subject": "--border-thin",
+      "rule": "1px"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-brand-ink",
+      "rule": "light: #0E1329; dark: #E7EAF2"
+    },
+    {
+      "subject": "--color-semantic-fill-normal",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [
+    "Always provide label; it is the accessible name for the icon-only control. 누락하면 development 빌드에서 console 경고가 출력됩니다(production 번들에서는 제거됨). 이름을 외부 노드에서 참조해야 하면 aria-labelledby를 대신 쓰세요.",
+    "Native disabled removes the command from focus. aria-disabled=\"true\" keeps it programmatically discoverable while applying unavailable styling and blocking activation; composite widgets decide whether it stays in their Arrow-key navigation model."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ActionArea",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Fab",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "TextButton",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ToggleIcon",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<IconButton variant=\"soft\" label=\"Previous\">{chevronLeft}</IconButton>\n<IconButton variant=\"signal\" label=\"Back to top\">{arrowUp}</IconButton>\n<IconButton variant=\"soft\" round={false} label=\"Open settings\">{gear}</IconButton>\n<IconButton variant=\"on-dark\" label=\"Next\">{chevronRight}</IconButton>"
+    }
+  ],
+  "tokens": [
+    "--border-thin",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-brand-ink",
+    "--color-semantic-fill-normal",
+    "--color-semantic-inverse-label",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-normal-neutral",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-secondary-normal",
+    "--color-semantic-secondary-surface",
+    "--color-semantic-static-white",
+    "--component-button-transition",
+    "--radius-md",
+    "--radius-pill",
+    "--viewer-foreground"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ActionIconButton.stories.jsx",
+    "entryStoryId": "lds-core-components-action-icon-button--icon-button-variants",
+    "publicStories": [
+      {
+        "id": "lds-core-components-action-icon-button--icon-button-variants",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-action-icon-button--interaction-and-disabled-contract",
+        "name": "상호작용 · 아이콘 행동",
+        "role": "interaction"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "slug": "theme-status-brand-spinner",
+  "title": "Brand Spinner",
+  "storybookTitle": "LDS Theme/Status/Brand Spinner",
+  "layer": "Theme",
+  "family": "Status",
+  "primaryOwner": "Spinner",
+  "ownerComponents": [
+    "Theme:Brand Spinner"
+  ],
+  "supportingComponents": [
+    "Spinner"
+  ],
+  "purpose": "브랜드 진입점이나 제품 전환처럼 출처를 함께 강조하는 짧은 대기에만 적합합니다.",
+  "useWhen": [],
+  "avoidWhen": [
+    "일반 데이터 갱신, 반복되는 화면 내부 로딩, 장시간 대기에는 사용하지 않습니다."
+  ],
+  "anatomy": [],
+  "properties": [],
+  "states": [],
+  "behavior": [],
+  "quantitativeRules": [],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [],
+  "examples": [],
+  "tokens": [],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ThemeBrandSpinner.stories.jsx",
+    "entryStoryId": "lds-theme-status-brand-spinner--brand-loading",
+    "publicStories": [
+      {
+        "id": "lds-theme-status-brand-spinner--brand-loading",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": {
+    "slug": "core-components-status-spinner",
+    "title": "Spinner",
+    "storybookDocsId": "lds-core-components-status-spinner--docs"
+  },
+  "guideDeltaFields": [
+    "purpose",
+    "avoidWhen"
+  ],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "canonical-reference",
+    "avoidWhen": "evidence",
+    "anatomy": "canonical-reference",
+    "properties": "canonical-reference",
+    "states": "canonical-reference",
+    "behavior": "canonical-reference",
+    "quantitativeRules": "canonical-reference",
+    "responsive": "canonical-reference",
+    "contentGuidance": "canonical-reference",
+    "accessibility": "canonical-reference",
+    "exceptions": "canonical-reference",
+    "related": "canonical-reference",
+    "examples": "canonical-reference",
+    "tokens": "canonical-reference",
+    "apiLinks": "canonical-reference",
+    "migration": "canonical-reference"
+  }
+}

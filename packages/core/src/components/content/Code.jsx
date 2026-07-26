@@ -1,0 +1,23 @@
+import React from 'react';
+
+const MONO = 'var(--font-mono, ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace)';
+
+/**
+ * LK ROBOTICS — Code
+ * Monospace code. Inline by default (tinted chip); `block` renders a navy
+ * `<pre>` for multi-line snippets.
+ */
+export function Code({ children, block = false, style, ...rest }) {
+  if (block) {
+    return (
+      <pre style={{ margin: 0, padding: '14px 16px', background: 'var(--color-semantic-inverse-background)', color: 'var(--color-semantic-inverse-label)', borderRadius: 'var(--radius-lg)', overflowX: 'auto', fontFamily: MONO, fontSize: 'var(--label2-size)', lineHeight: 1.6, ...style }} {...rest}>
+        <code>{children}</code>
+      </pre>
+    );
+  }
+  return (
+    <code style={{ padding: '2px 6px', background: 'var(--color-semantic-fill-strong)', color: 'var(--color-semantic-label-normal)', borderRadius: 'var(--radius-sm)', fontFamily: MONO, fontSize: '0.9em', ...style }} {...rest}>
+      {children}
+    </code>
+  );
+}

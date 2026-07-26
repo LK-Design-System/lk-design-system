@@ -1,0 +1,292 @@
+{
+  "slug": "core-components-selection-and-input-slider-and-range",
+  "title": "Slider and Range",
+  "storybookTitle": "LDS Core/Components/Selection and Input/Slider and Range",
+  "layer": "Core",
+  "family": "Selection and Input",
+  "primaryOwner": "Slider",
+  "ownerComponents": [
+    "RangeSlider",
+    "Slider"
+  ],
+  "supportingComponents": [],
+  "purpose": "볼륨·비율·임계값처럼 값의 상대적 위치와 범위를 함께 이해해야 할 때 적합합니다. 정확한 숫자 입력에는 Number Field를, 작은 정수 단계에는 Stepper를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "범위 전체의 이름(예: 가격 범위). role=\"group\"의 이름이 되고 각 노브 이름의 접두어(가격 범위 최솟값)가 됩니다."
+    },
+    {
+      "part": "minLabel",
+      "rule": "하단 노브의 이름. @default \"최솟값\""
+    },
+    {
+      "part": "maxLabel",
+      "rule": "상단 노브의 이름. @default \"최댓값\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "value",
+      "type": "[number, number]",
+      "required": false,
+      "description": "[low, high] 튜플.",
+      "owner": "RangeSliderProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "[number, number]",
+      "required": false,
+      "description": "",
+      "owner": "RangeSliderProps"
+    },
+    {
+      "name": "min",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "RangeSliderProps"
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "RangeSliderProps"
+    },
+    {
+      "name": "step",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "RangeSliderProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: [number, number]) = void",
+      "required": false,
+      "description": "",
+      "owner": "RangeSliderProps"
+    },
+    {
+      "name": "showValue",
+      "type": "boolean",
+      "required": false,
+      "description": "low/high 값 표시. @default false",
+      "owner": "RangeSliderProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "두 노브를 모두 잠급니다. 형제 Slider와 같은 API. @default false",
+      "owner": "RangeSliderProps"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "범위 전체의 이름(예: 가격 범위). role=\"group\"의 이름이 되고 각 노브 이름의 접두어(가격 범위 최솟값)가 됩니다.",
+      "owner": "RangeSliderProps"
+    },
+    {
+      "name": "minLabel",
+      "type": "string",
+      "required": false,
+      "description": "하단 노브의 이름. @default \"최솟값\"",
+      "owner": "RangeSliderProps"
+    },
+    {
+      "name": "maxLabel",
+      "type": "string",
+      "required": false,
+      "description": "상단 노브의 이름. @default \"최댓값\"",
+      "owner": "RangeSliderProps"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "SliderProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "SliderProps"
+    },
+    {
+      "name": "min",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "SliderProps"
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "SliderProps"
+    },
+    {
+      "name": "step",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "SliderProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: number) = void",
+      "required": false,
+      "description": "",
+      "owner": "SliderProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "SliderProps"
+    },
+    {
+      "name": "showValue",
+      "type": "boolean",
+      "required": false,
+      "description": "끝의 숫자 표시. @default false",
+      "owner": "SliderProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "disabled",
+      "rule": "두 노브를 모두 잠급니다. 형제 Slider와 같은 API. @default false"
+    }
+  ],
+  "behavior": [
+    "value / defaultValue / onChange — 제어/비제어. min / max / step — 범위. showValue — 끝의 값 표시."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-fill-strong",
+      "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
+    },
+    {
+      "subject": "--color-semantic-interaction-inactive",
+      "rule": "light: #989BA2; dark: #5A5C63"
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "RangeSlider",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "Checkbox",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "CheckboxGroup",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FilterChip",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "MultiSelectChip",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Radio",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "RadioGroup",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SegmentedControl",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Slider defaultValue={40} showValue onChange={setV} />\n<Slider value={v} min={0} max={10} step={1} onChange={setV} />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-strong",
+    "--color-semantic-interaction-inactive",
+    "--color-semantic-label-neutral",
+    "--color-semantic-primary-normal",
+    "--font-sans",
+    "--fw-bold",
+    "--label1-size",
+    "--label2-size",
+    "--radius-pill",
+    "--shadow-control",
+    "--space-3-5"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormRangeControls.stories.jsx",
+    "entryStoryId": "lds-core-components-selection-and-input-slider-and-range--range-controls",
+    "publicStories": [
+      {
+        "id": "lds-core-components-selection-and-input-slider-and-range--range-controls",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 3
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

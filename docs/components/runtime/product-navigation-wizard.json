@@ -1,0 +1,213 @@
+{
+  "slug": "product-navigation-wizard",
+  "title": "Wizard",
+  "storybookTitle": "LDS Product/Navigation/Wizard",
+  "layer": "Product",
+  "family": "Navigation",
+  "primaryOwner": "Wizard",
+  "ownerComponents": [
+    "Wizard"
+  ],
+  "supportingComponents": [],
+  "purpose": "입력과 검토가 순서대로 이어지고 이전·다음 동작을 패턴이 소유할 때 적합합니다. 현재 단계만 읽히면 충분한 화면에는 Wizard 대신 Steps를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "footer — null: 내장 이전/다음 컨트롤 숨김 · 노드: 기본 컨트롤 대신 그 노드를 렌더 · 미지정: 내장 이전/다음 컨트롤.",
+    "Classification: LK Product Extension. 순서가 있는 다단계 워크플로를 제어하며, 사이트나 제품의 주 탐색으로 사용하지 않습니다. 경로 표시에는 Breadcrumb, 진행 표시만 필요할 때는 Steps를 사용합니다."
+  ],
+  "anatomy": [
+    {
+      "part": "completeLabel",
+      "rule": "완료 버튼 라벨(onComplete 제공 시). @default '완료'"
+    },
+    {
+      "part": "children",
+      "rule": "노드, 또는 렌더 함수 (current) = ReactNode. 콘텐츠 영역은 aria-live=\"polite\"로 감싸져 단계 전환이 스크린 리더에 알림됩니다."
+    },
+    {
+      "part": "footer",
+      "rule": "푸터 제어 — null: 내장 이전/다음 컨트롤 숨김 · 노드: 기본 컨트롤 대신 해당 노드를 렌더 · undefined(기본): 내장 이전/다음 컨트롤."
+    }
+  ],
+  "properties": [
+    {
+      "name": "steps",
+      "type": "WizardStep[]",
+      "required": true,
+      "description": "",
+      "owner": "WizardProps"
+    },
+    {
+      "name": "current",
+      "type": "number",
+      "required": false,
+      "description": "제어되는 단계 인덱스.",
+      "owner": "WizardProps"
+    },
+    {
+      "name": "defaultCurrent",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "WizardProps"
+    },
+    {
+      "name": "onStepChange",
+      "type": "(index: number) = void",
+      "required": false,
+      "description": "",
+      "owner": "WizardProps"
+    },
+    {
+      "name": "onComplete",
+      "type": "() = void",
+      "required": false,
+      "description": "마지막 단계에서 완료 액션. 제공하면 마지막 단계의 다음 버튼이 completeLabel을 단 primary 완료 버튼이 되어 클릭 시 호출됩니다. 제공하지 않으면 기존처럼 마지막 단계에서 다음 버튼이 비활성화됩니다.",
+      "owner": "WizardProps"
+    },
+    {
+      "name": "completeLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "완료 버튼 라벨(onComplete 제공 시). @default '완료'",
+      "owner": "WizardProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode | ((current: number) = React.ReactNode)",
+      "required": false,
+      "description": "노드, 또는 렌더 함수 (current) = ReactNode. 콘텐츠 영역은 aria-live=\"polite\"로 감싸져 단계 전환이 스크린 리더에 알림됩니다.",
+      "owner": "WizardProps"
+    },
+    {
+      "name": "footer",
+      "type": "React.ReactNode | null",
+      "required": false,
+      "description": "푸터 제어 — null: 내장 이전/다음 컨트롤 숨김 · 노드: 기본 컨트롤 대신 해당 노드를 렌더 · undefined(기본): 내장 이전/다음 컨트롤.",
+      "owner": "WizardProps"
+    }
+  ],
+  "states": [],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-label-normal",
+      "rule": "light: #171718; dark: #F7F7F7"
+    },
+    {
+      "subject": "--color-semantic-line-solid-normal",
+      "rule": "light: #E1E2E4; dark: #37383C"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "steps — 라벨. current / defaultCurrent / onStepChange — 제어/비제어. children — 노드 또는 (current) = node. 인디케이터만 필요하면 Steps를 쓰세요.",
+    "onComplete / completeLabel — onComplete를 주면 마지막 단계의 다음 버튼이 primary 완료 버튼(completeLabel, 기본 '완료')이 되어 클릭 시 호출됩니다. 없으면 기존처럼 마지막 단계에서 다음이 비활성화됩니다(하위 호환)."
+  ],
+  "accessibility": [
+    "접근성 — 인디케이터는 Steps 컴포넌트를 재사용해 / 구조, aria-current=\"step\", 숨김 상태 텍스트를 그대로 제공합니다. 단계 콘텐츠 영역은 가벼운 aria-live=\"polite\" 래퍼로 감싸 단계 전환 시 새 콘텐츠가 스크린 리더에 알림됩니다(별도 role/label 없이 라이브 영역만 사용)."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Anchor",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "BottomNav",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Breadcrumb",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Footer",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "LanguageSwitcher",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "NavRail",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SideNav",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Steps",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Wizard steps={['문의 정보', '현장 정보', '확인']} onStepChange={setStep}>\n  {(step) => <StepForm index={step} />}\n</Wizard>"
+    }
+  ],
+  "tokens": [
+    "--body2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-static-white",
+    "--font-sans",
+    "--fw-bold",
+    "--radius-md",
+    "--space-8"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/NavigationWizard.stories.jsx",
+    "entryStoryId": "lds-product-navigation-wizard--multi-step-flow",
+    "publicStories": [
+      {
+        "id": "lds-product-navigation-wizard--multi-step-flow",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

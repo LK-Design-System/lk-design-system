@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "source": {
+    "name": "Wanted Design System Community",
+    "figmaFileKey": "4e0301GrjO6P8fOQpLUrrG",
+    "createdAt": "2026-07-07",
+    "purpose": "State whether LDS can truthfully claim complete WDS coverage parity."
+  },
+  "claimStatus": "ready",
+  "claimPolicy": "Full WDS coverage is claimed against the accepted authoritative source snapshot: the checked-in \"Wanted Design System (Community).fig\" export decoded to FIGMA_LOCAL_CONTENT_AUDIT.json. Every coverage, foundation, variant, and Figma node queue row was verified against that snapshot and LDS sources. Live Figma re-verification is optional and only required if the upstream community file changes.",
+  "currentCounts": {
+    "coverageRows": 13,
+    "foundationRows": 13,
+    "figmaNodeQueueRows": 14,
+    "confirmedFigmaNodeRows": 14,
+    "pendingFigmaNodeRows": 0,
+    "requiredExternalFigmaReads": 0,
+    "componentFamilyRows": 12,
+    "variantChecks": 49,
+    "publicExportsClassified": 217,
+    "localFigContentTargets": 35,
+    "localFigComponentSections": 57,
+    "localFigPages": 26
+  },
+  "localEvidenceGates": [
+    {
+      "id": "section-coverage-matrix",
+      "status": "met",
+      "evidence": "docs/references/wds/COVERAGE_AUDIT.json",
+      "criteria": "All known WDS top-level Theme, Element, and Component sections are represented with LDS coverage references."
+    },
+    {
+      "id": "foundation-token-map",
+      "status": "met",
+      "evidence": "docs/references/wds/FOUNDATION_AUDIT.json",
+      "criteria": "WDS theme and element foundations are mapped to LDS tokens, stories, files, or LK theme overrides."
+    },
+    {
+      "id": "foundation-source-pdfs",
+      "status": "met",
+      "evidence": "docs/references/wds/FOUNDATION_SOURCE_PDFS.json",
+      "criteria": "Local PDF exports from Figma are preserved and mapped to LDS token/story evidence for Basic, Spacing, and Decorate foundations."
+    },
+    {
+      "id": "component-source-pdfs",
+      "status": "met",
+      "evidence": "docs/references/wds/COMPONENT_SOURCE_PDFS.json",
+      "criteria": "Local PDF exports from Figma are preserved and mapped to LDS component/story evidence for Layout and Action sections."
+    },
+    {
+      "id": "component-family-evidence",
+      "status": "met",
+      "evidence": "docs/references/wds/COVERAGE_DETAIL_AUDIT.json",
+      "criteria": "Every TOKEN_MAP component family has implementation and Storybook evidence."
+    },
+    {
+      "id": "public-export-classification",
+      "status": "met",
+      "evidence": "docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json",
+      "criteria": "Every public LDS export is classified as WDS core, theme override, product extension, or robotics extension."
+    },
+    {
+      "id": "figma-local-content-audit",
+      "status": "met",
+      "evidence": "docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json",
+      "criteria": "The checked-in WDS .fig export is decoded into source node summaries for Foundation, Theme, Element, Component, Resource, Guidelines, and Updates with text, section labels, variant-like symbol names, dimensions, visual samples, and page section indexes."
+    },
+    {
+      "id": "variant-checklist",
+      "status": "met",
+      "evidence": "docs/references/wds/VARIANT_AUDIT_CHECKLIST.json",
+      "criteria": "Variant, state, slot, and behavior checks exist with Storybook evidence and are verified against the accepted local .fig snapshot."
+    },
+    {
+      "id": "figma-node-queue",
+      "status": "met",
+      "evidence": "docs/references/wds/FIGMA_NODE_AUDIT_QUEUE.json",
+      "criteria": "Every coverage row has a concrete Figma source node with local evidence, and every queue row is closed against the accepted local .fig snapshot."
+    }
+  ],
+  "completionCriteria": [
+    "No coverage row remains `partial`, `needs-detail-audit`, or `not-covered`.",
+    "No foundation row remains `pending-figma-parity`.",
+    "No variant family remains `pending-figma-parity`.",
+    "Every Figma node audit queue row is `confirmed-covered` against the accepted source snapshot or an explicitly approved theme override review.",
+    "Storybook static build and WDS alignment scripts pass after the final parity update."
+  ],
+  "lastVerifiedCommands": [
+    "npm run extract:wds-fig-content",
+    "npm run check:wds-local-fig",
+    "node scripts/check-wds-alignment.mjs",
+    "node scripts/check-token-source.mjs",
+    "node scripts/check-visual-token-drift.mjs",
+    "npm run check:visual",
+    "pnpm exec storybook build",
+    "npm run build:storybook",
+    "npm run check:tooltip-alignment",
+    "npm run check:storybook-public",
+    "npm run check:a11y"
+  ],
+  "snapshotAcceptance": {
+    "decidedAt": "2026-07-08",
+    "decision": "The checked-in local .fig export (exported 2026-07-07, decoded to FIGMA_LOCAL_CONTENT_AUDIT.json) is the authoritative WDS source snapshot for parity claims.",
+    "rationale": "Live Figma MCP reads are blocked by the Starter plan call limit, and the decoded snapshot contains node-level text, section labels, variant axes, dimensions, and visual samples sufficient to verify every closure criterion. WDS Community is a static community export, so snapshot-based closure is acceptable.",
+    "residualRisk": "The snapshot cannot attest that the live Figma community file is unchanged upstream. If the upstream file is updated, re-export and re-run extract:wds-fig-content, then re-audit affected rows."
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "description": "Known contract drift between this repository’s editor/viz/robotics prompt.md contracts and their implementations in the Robotics repository. The guard rejects only newly introduced drift; shrink this file by fixing entries, refresh it with check:robotics-contract-drift -- --update-baseline.",
+  "findings": {}
+}

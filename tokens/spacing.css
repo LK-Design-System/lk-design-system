@@ -1,0 +1,112 @@
+/* ==========================================================================
+ LK ROBOTICS — Spacing, radii, sizing, layout
+ --------------------------------------------------------------------------
+ 8-pt soft grid. Sections breathe (generous vertical rhythm). A 1280px
+ page container with 24–32px gutters; inner reading bands narrow to ~1080px.
+ ========================================================================== */
+
+:root {
+  /* ---- Spacing scale --------------------------------------------------- */
+  --space-0: 0px;
+  --space-1: 4px;
+  /* Half steps. Layout spacing uses the whole steps below; these exist only for spacing
+     *inside* a control — the gap between a badge dot and its label, a chip's icon and text —
+     where a full 4px step reads as a gap between two things rather than one thing's padding.
+     Named on the same rule as the whole steps: --space-N is N x 4px. */
+  --space-0-5: 2px;
+  --space-1-5: 6px;
+  --space-2-5: 10px;
+  --space-3-5: 14px;
+  --space-4-5: 18px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-28: 112px; /* light section vertical padding */
+  --space-32: 128px; /* hero / dark-band vertical padding */
+
+  /* ---- Basic / Ratio ---------------------------------------------- */
+  --ratio-1-1: 1 / 1;
+  --ratio-1-2: 1 / 2;
+  --ratio-5-4: 5 / 4;
+  --ratio-4-3: 4 / 3;
+  --ratio-3-2: 3 / 2;
+  --ratio-16-10: 16 / 10;
+  --ratio-golden: 1.618 / 1;
+  --ratio-16-9: 16 / 9;
+  --ratio-2-1: 2 / 1;
+  --ratio-21-9: 21 / 9;
+  --ratio-4-5: 4 / 5;
+  --ratio-3-4: 3 / 4;
+  --ratio-2-3: 2 / 3;
+  --ratio-10-16: 10 / 16;
+  --ratio-golden-vertical: 1 / 1.618;
+  --ratio-9-16: 9 / 16;
+  --ratio-9-21: 9 / 21;
+
+  /* ---- Radii ------------------------------------------- */
+  --radius-sm: 6px; /* checkbox, tags, small chips */
+  --radius-md: 12px; /* buttons, tabs, controls (base radius = 12) */
+  --radius-input: 12px; /* text inputs, selects (kit-exact) */
+  --radius-lg: 12px; /* menus, popovers */
+  --radius-xl: 16px; /* feature cards, panels (card) */
+  --radius-2xl: 18px; /* product / location cards */
+  --radius-3xl: 24px; /* large cards / sheets */
+  --radius-4xl: 32px; /* containers / modals */
+  --radius-pill: 999px; /* tags, avatars, dots, nav pills */
+
+  /* Radius aliases (pt values) */
+  --radius-4: 4px; /* WDS _Badge/Status and _Badge/Value parity */
+  --radius-5: 5px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-10: 10px;
+  --radius-12: 12px;
+  --radius-14: 14px;
+  --radius-16: 16px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-32: 32px;
+  --radius-full: 9999px;
+
+  /* Frame/Radius aliases: Small 12, Medium 14, Large 16, Xlarge 20 */
+  --radius-frame-sm: var(--radius-12);
+  --radius-frame-md: var(--radius-14);
+  --radius-frame-lg: var(--radius-16);
+  --radius-frame-xl: var(--radius-20);
+
+  /* ---- Layout (grid — container 1440 / content 1100, 20px margin) --- */
+  --container: 1440px; /* page container max-width */
+  --container-read: 1100px; /* inner reading band */
+  --container-wide: 1500px; /* full-bleed carousels / rails */
+  --gutter: 20px; /* page margin / gutter */
+  --gutter-lg: 32px; /* wide margin (xlarge) */
+  --header-h: 76px; /* sticky GNB height */
+
+  /* ---- Mobile safe-area spacing (Spacing / Status + Bottom) ------- */
+  --mobile-safe-area-top: env(safe-area-inset-top, 0px);
+  --mobile-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --mobile-status-bar-min-height: 44px;
+  --mobile-home-indicator-height: 34px;
+  --mobile-bottom-bar-min-height: 64px;
+  --mobile-bottom-action-padding-y: var(--space-4);
+  --mobile-bottom-action-padding-bottom: calc(
+    var(--space-4) + var(--mobile-safe-area-bottom)
+  );
+
+  /* ---- Control sizing -------------------------------------------------- */
+  --control-h-sm: 32px; /* small controls (kit-exact) */
+  --control-h-md: 48px; /* inputs, selects (kit-exact) */
+  --control-h-lg: 52px; /* primary buttons */
+
+  /* ---- Border widths --------------------------------------------- */
+  --border-thin: 1px;
+  --border-medium: 1.5px;
+  --border-thick: 2px;
+}

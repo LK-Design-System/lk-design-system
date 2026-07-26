@@ -1,0 +1,271 @@
+{
+  "slug": "core-components-overlay-snackbar",
+  "title": "Snackbar",
+  "storybookTitle": "LDS Core/Components/Overlay/Snackbar",
+  "layer": "Core",
+  "family": "Overlay",
+  "primaryOwner": "Snackbar",
+  "ownerComponents": [
+    "Snackbar"
+  ],
+  "supportingComponents": [],
+  "purpose": "사용자 동작 직후 잠시 나타나 결과를 설명하고 보기·다시 시도 같은 하나의 후속 행동을 제공할 때 적합합니다. 여러 알림을 화면 가장자리에 쌓으려면 Toast를, 계속 남아야 하는 상태나 절차 안내에는 Banner나 Callout을 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "tone",
+      "rule": "severity 축(Toast와 같은 이름·정규화). negative는 role=\"alert\" + aria-live=\"assertive\"로 announce합니다. Legacy info/success/warning/error 별칭 지원."
+    },
+    {
+      "part": "icon",
+      "rule": "기본 glyph를 대체합니다. 생략하면 tone에 맞는 registry glyph를 씁니다."
+    },
+    {
+      "part": "leadingIcon",
+      "rule": "icon axis. @default false"
+    },
+    {
+      "part": "closeLabel",
+      "rule": "닫기 버튼의 접근성 레이블. @default \"닫기\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "heading",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SnackbarProps"
+    },
+    {
+      "name": "description",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SnackbarProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SnackbarProps"
+    },
+    {
+      "name": "action",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SnackbarProps"
+    },
+    {
+      "name": "onAction",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "SnackbarProps"
+    },
+    {
+      "name": "tone",
+      "type": "| \"normal\" | \"positive\" | \"cautionary\" | \"negative\" | \"info\" | \"success\" | \"warning\" | \"error\"",
+      "required": false,
+      "description": "severity 축(Toast와 같은 이름·정규화). negative는 role=\"alert\" + aria-live=\"assertive\"로 announce합니다. Legacy info/success/warning/error 별칭 지원.",
+      "owner": "SnackbarProps"
+    },
+    {
+      "name": "variant",
+      "type": "\"normal\" | \"positive\" | \"cautionary\" | \"negative\"",
+      "required": false,
+      "description": "Alias for the tone axis.",
+      "owner": "SnackbarProps"
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "기본 glyph를 대체합니다. 생략하면 tone에 맞는 registry glyph를 씁니다.",
+      "owner": "SnackbarProps"
+    },
+    {
+      "name": "leadingIcon",
+      "type": "boolean",
+      "required": false,
+      "description": "icon axis. @default false",
+      "owner": "SnackbarProps"
+    },
+    {
+      "name": "closeButton",
+      "type": "boolean",
+      "required": false,
+      "description": "닫기 버튼 노출 축. 닫기 버튼은 onClose가 있을 때만 렌더링되며(핸들러 없는 죽은 컨트롤 방지), 이 값을 false로 두면 onClose가 있어도 감춥니다. @default true",
+      "owner": "SnackbarProps"
+    },
+    {
+      "name": "onClose",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "SnackbarProps"
+    },
+    {
+      "name": "closeLabel",
+      "type": "string",
+      "required": false,
+      "description": "닫기 버튼의 접근성 레이블. @default \"닫기\"",
+      "owner": "SnackbarProps"
+    },
+    {
+      "name": "width",
+      "type": "number | string",
+      "required": false,
+      "description": "snackbar width. @default 384",
+      "owner": "SnackbarProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "tone",
+      "rule": "severity 축(Toast와 같은 이름·정규화). negative는 role=\"alert\" + aria-live=\"assertive\"로 announce합니다. Legacy info/success/warning/error 별칭 지원."
+    },
+    {
+      "state": "variant",
+      "rule": "Alias for the tone axis."
+    }
+  ],
+  "behavior": [
+    "closeButton은 onClose가 있을 때만 닫기 버튼을 렌더링합니다. 핸들러 없이 닫기 아이콘만 두면 눌러도 아무 일도 없는 죽은 컨트롤이 되므로, 축은 \"노출 여부\"만 결정하고 실제 존재 조건은 onClose 입니다. closeButton={false}로 명시적으로 감출 수 있습니다.",
+    "화면 배치: Snackbar 자체는 표면만 담당합니다. 띄울 때는 ToastStack으로 감싸 배치하세요(bottom-center 권장). 별도의 Snackbar 전용 배치 프리미티브를 만들지 않습니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "타이포 단계: heading은 body2, description은 label2, 한 줄 메시지는 Toast의 한 줄과 같은 body2 단계를 씁니다(size·line·spacing 토큰 3짝)."
+    },
+    {
+      "subject": "--body2-line",
+      "rule": "22px"
+    },
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    },
+    {
+      "subject": "--body2-spacing",
+      "rule": "0.0096em"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "Use for short feedback with an optional action. Use Toast for transient status-only messages.",
+    "action도 같은 규칙을 따르세요: action 문구를 주면 반드시 onAction(또는 자체 onClick을 가진 노드)을 함께 제공합니다."
+  ],
+  "accessibility": [
+    "tone / variant (severity 축) — normal · positive · cautionary · negative(별칭 info/success/warning/error). Toast와 이름·정규화·announce 규칙이 같습니다: negative만 role=\"alert\" + aria-live=\"assertive\", 나머지는 role=\"status\" + aria-live=\"polite\". 재시도 같은 오류 복구 메시지가 정중하게 흘러가 묻히지 않도록 하는 것이 이 축의 목적입니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Alert",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ConfirmDialog",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Dimmer",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DropdownMenu",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Modal",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Toast",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ToastStack",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Snackbar heading=\"Saved\" action=\"Undo\" onAction={undo} />\n<Snackbar leadingIcon description=\"Changes were saved.\" onClose={dismiss} />\n<Snackbar tone=\"negative\" leadingIcon description=\"네트워크 연결이 불안정합니다.\" action=\"다시 시도\" onAction={retry} />"
+    }
+  ],
+  "tokens": [
+    "--body2-line",
+    "--body2-size",
+    "--body2-spacing",
+    "--color-semantic-inverse-label",
+    "--color-semantic-inverse-label-strong-soft",
+    "--color-semantic-status-cautionary",
+    "--color-semantic-status-negative",
+    "--color-semantic-status-positive",
+    "--component-transient-feedback-bg",
+    "--component-transient-feedback-blur",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-semibold",
+    "--label2-line",
+    "--label2-size",
+    "--label2-spacing",
+    "--radius-lg",
+    "--shadow-lg",
+    "--space-1"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/OverlaySnackbar.stories.jsx",
+    "entryStoryId": "lds-core-components-overlay-snackbar--snackbar-patterns",
+    "publicStories": [
+      {
+        "id": "lds-core-components-overlay-snackbar--snackbar-patterns",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-overlay-snackbar--snackbar-severity-and-actions",
+        "name": "상호작용 · 심각도 낭독과 동작 도달",
+        "role": "interaction"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

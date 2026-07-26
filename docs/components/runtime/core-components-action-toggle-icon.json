@@ -1,0 +1,219 @@
+{
+  "slug": "core-components-action-toggle-icon",
+  "title": "Toggle Icon",
+  "storybookTitle": "LDS Core/Components/Action/Toggle Icon",
+  "layer": "Core",
+  "family": "Action",
+  "primaryOwner": "ToggleIcon",
+  "ownerComponents": [
+    "ToggleIcon"
+  ],
+  "supportingComponents": [
+    "Icon"
+  ],
+  "purpose": "미리보기 표시, 즐겨찾기, 고정처럼 같은 제어를 다시 눌러 상태를 해제하는 이진 선택에 적합합니다. 즉시 실행 후 끝나는 행동은 Icon Button을, 텍스트 레이블이 필요한 설정은 Switch나 Toggle Button을 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "For one-shot icon actions, use IconButton instead."
+  ],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "Accessible label for the icon-only control."
+    }
+  ],
+  "properties": [
+    {
+      "name": "pressed",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "ToggleIconProps"
+    },
+    {
+      "name": "defaultPressed",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "ToggleIconProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(next: boolean) = void",
+      "required": false,
+      "description": "",
+      "owner": "ToggleIconProps"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible label for the icon-only control.",
+      "owner": "ToggleIconProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "",
+      "owner": "ToggleIconProps"
+    },
+    {
+      "name": "variant",
+      "type": "'default' | 'plain' | 'on-dark'",
+      "required": false,
+      "description": "Visual treatment for standalone, grouped-surface, or dark-viewer use. @default \"default\"",
+      "owner": "ToggleIconProps"
+    },
+    {
+      "name": "disable",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "ToggleIconProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ToggleIconProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "variant",
+      "rule": "Visual treatment for standalone, grouped-surface, or dark-viewer use. @default \"default\""
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "--border-thin",
+      "rule": "1px"
+    },
+    {
+      "subject": "--color-semantic-fill-alternative",
+      "rule": "light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12)"
+    },
+    {
+      "subject": "--color-semantic-fill-normal",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    },
+    {
+      "subject": "--color-semantic-label-disable",
+      "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "Always provide label; the visible content is icon-only.",
+    "Use ToggleIcon for icon-only state actions and ToggleButton when the control has visible text."
+  ],
+  "accessibility": [
+    "variant=\"plain\"은 grouped light toolbar, variant=\"on-dark\"는 dark viewport 위 조합에 사용합니다. pressed semantics와 disabled/focus 계약은 variant와 무관하게 같습니다.",
+    "Native disabled removes the control from focus. aria-disabled=\"true\" keeps it discoverable while applying the same unavailable styling and blocking activation; use that distinction only when a composite widget deliberately keeps unavailable choices in Arrow-key navigation.",
+    "hover/pressed는 tone만 변경하고 aria-pressed의 persistent state와 구분합니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ActionArea",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Fab",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "IconButton",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "TextButton",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<ToggleIcon label=\"Show route\" defaultPressed>\n  <Icon name=\"eye\" size={18} />\n</ToggleIcon>"
+    }
+  ],
+  "tokens": [
+    "--border-thin",
+    "--color-semantic-fill-alternative",
+    "--color-semantic-fill-normal",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-normal-neutral",
+    "--color-semantic-static-white",
+    "--component-button-transition",
+    "--component-toggle-icon-bg",
+    "--component-toggle-icon-bg-active",
+    "--component-toggle-icon-border",
+    "--component-toggle-icon-fg",
+    "--component-toggle-icon-fg-active",
+    "--component-toggle-icon-radius",
+    "--component-toggle-icon-size-md",
+    "--component-toggle-icon-size-sm",
+    "--viewer-foreground"
+  ],
+  "apiLinks": [],
+  "migration": [
+    "disable — disabled의 호환 별칭입니다."
+  ],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ActionToggleIcon.stories.jsx",
+    "entryStoryId": "lds-core-components-action-toggle-icon--toggle-states",
+    "publicStories": [
+      {
+        "id": "lds-core-components-action-toggle-icon--toggle-states",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-action-toggle-icon--interaction-contract",
+        "name": "상호작용 · 지속 상태",
+        "role": "interaction"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "evidence"
+  }
+}

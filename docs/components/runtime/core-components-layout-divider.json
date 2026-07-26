@@ -1,0 +1,196 @@
+{
+  "slug": "core-components-layout-divider",
+  "title": "Divider",
+  "storybookTitle": "LDS Core/Components/Layout/Divider",
+  "layer": "Core",
+  "family": "Layout",
+  "primaryOwner": "Divider",
+  "ownerComponents": [
+    "Divider"
+  ],
+  "supportingComponents": [],
+  "purpose": "같은 표면에서 의미가 다른 섹션이나 인라인 그룹을 보조할 때 사용합니다. 주제가 바뀌면 separator를, 이미 구조가 잡힌 곳의 리듬에는 decorative를 사용합니다. 여백으로 충분하면 선을 사용하지 말고, 독립 표면이 필요하면 Card나 Section을 사용하세요.",
+  "useWhen": [
+    "Use variant=\"normal\" for hairline separation and variant=\"thick\" for stronger section breaks."
+  ],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "Optional centered label for an \"or\" style divider."
+    }
+  ],
+  "properties": [
+    {
+      "name": "vertical",
+      "type": "boolean",
+      "required": false,
+      "description": "Render as a vertical separator. @default false",
+      "owner": "DividerProps"
+    },
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional centered label for an \"or\" style divider.",
+      "owner": "DividerProps"
+    },
+    {
+      "name": "inset",
+      "type": "number",
+      "required": false,
+      "description": "Horizontal inset in pixels. @default 0",
+      "owner": "DividerProps"
+    },
+    {
+      "name": "variant",
+      "type": "\"normal\" | \"thick\"",
+      "required": false,
+      "description": "divider visual weight. @default \"normal\"",
+      "owner": "DividerProps"
+    },
+    {
+      "name": "decorative",
+      "type": "boolean",
+      "required": false,
+      "description": "순전히 시각적인 선일 때 true. role=\"none\" + aria-hidden 이 붙어 접근성 트리에서 빠집니다. 기본값 false 는 의미 있는 구분선으로 role=\"separator\"(가로형은 네이티브 )로 노출됩니다.",
+      "owner": "DividerProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "variant",
+      "rule": "divider visual weight. @default \"normal\""
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "--color-semantic-label-alternative",
+      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+    },
+    {
+      "subject": "--fw-semibold",
+      "rule": "600"
+    },
+    {
+      "subject": "--label2-size",
+      "rule": "13px"
+    },
+    {
+      "subject": "--space-3-5",
+      "rule": "14px"
+    }
+  ],
+  "responsive": [
+    "Use vertical only inside horizontal groups where the parent controls height."
+  ],
+  "contentGuidance": [
+    "Use label for \"or\" style separators between equivalent actions."
+  ],
+  "accessibility": [
+    "목록의 행 구분선은 대부분 장식입니다. 리스트 시맨틱(ul/li)이 이미 경계를 알려주므로, 행마다 role=\"separator\" 를 노출하면 스크린리더가 \"구분자\"를 항목 수만큼 반복해서 읽습니다. ListCell 의 divider prop 은 이 이유로 이미 aria-hidden 인 장식선입니다.",
+    "가로형 기본 Divider 는 네이티브 이므로 role=\"separator\" 를 다시 선언하지 않습니다(중복 role). 세로형은 이라 role=\"separator\" + aria-orientation=\"vertical\" 을 명시합니다.",
+    "label 이 있는 구분선은 separator 의 자식이 presentational 이라 라벨 텍스트가 이름으로 읽히지 않습니다. 문자열 label 은 aria-label 로 함께 노출합니다.",
+    "| | 기본 (decorative 없음) | decorative | | --- | --- | --- | | 노출 | role=\"separator\" (가로형은 네이티브 의 암시적 role) | role=\"none\" + aria-hidden | | 의미 | \"여기서 콘텐츠 주제가 바뀝니다\" | 없음 — 순수 시각 리듬 | | 쓰는 곳 | 문서 섹션 경계, 메뉴의 그룹 경계, 서로 다른 성격의 액션 묶음 사이 | 카드 내부 장식선, 이미 ul/li·heading 으로 구조가 잡힌 목록의 행 사이, 반복 리듬용 얇은 선 |."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "AspectRatio",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Center",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Cluster",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Col",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Columns",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Container",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Grid",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "MobileSystemBars",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Divider />\n<Divider variant=\"thick\" />\n<Divider decorative />\n<span>A</span><Divider vertical /><span>B</span>"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-alternative",
+    "--component-divider-color-normal",
+    "--component-divider-color-thick",
+    "--component-divider-thickness-normal",
+    "--component-divider-thickness-thick",
+    "--font-sans",
+    "--fw-semibold",
+    "--label2-size",
+    "--space-3-5"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/LayoutDivider.stories.jsx",
+    "entryStoryId": "lds-core-components-layout-divider--divider-variants",
+    "publicStories": [
+      {
+        "id": "lds-core-components-layout-divider--divider-variants",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-layout-divider--divider-semantics",
+        "name": "사용법 · 의미 있는 구분선과 장식 선",
+        "role": "usage"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

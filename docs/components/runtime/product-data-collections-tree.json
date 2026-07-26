@@ -1,0 +1,244 @@
+{
+  "slug": "product-data-collections-tree",
+  "title": "Tree",
+  "storybookTitle": "LDS Product/Data/Collections/Tree",
+  "layer": "Product",
+  "family": "Collections",
+  "primaryOwner": "Tree",
+  "ownerComponents": [
+    "Tree"
+  ],
+  "supportingComponents": [
+    "Button",
+    "StatusBadge"
+  ],
+  "purpose": "문서·파일·레이어처럼 부모와 자식 관계가 중요한 구조를 탐색하고 선택할 때 적합합니다. 계층이 없는 짧은 옵션이나 여러 값을 동시에 고를 때는 Tree 대신 List 또는 Checkbox Group을 사용하세요.",
+  "useWhen": [
+    "This component is for application-style hierarchy navigation. For ordinary site navigation, prefer disclosure sections as cautioned by the APG navigation-tree example."
+  ],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "ariaLabel",
+      "rule": "Accessible name for the tree widget. @default \"Hierarchy\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "nodes",
+      "type": "TreeNodeData[]",
+      "required": true,
+      "description": "",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "defaultExpanded",
+      "type": "Array",
+      "required": false,
+      "description": "Node IDs, or primitive labels for legacy nodes without an ID, expanded initially.",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "selectedId",
+      "type": "string | number | null",
+      "required": false,
+      "description": "Controlled ID of the single selected node. IDs are normalized to strings.",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "defaultSelectedId",
+      "type": "string | number | null",
+      "required": false,
+      "description": "Initial ID of the single selected node when uncontrolled. IDs are normalized to strings.",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "onSelectedIdChange",
+      "type": "(selectedId: string) = void",
+      "required": false,
+      "description": "Called with the normalized ID when a node with an ID is activated.",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "openOnHover",
+      "type": "boolean",
+      "required": false,
+      "description": "Opens branch children while the branch is hovered or keyboard-focused.",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "required": false,
+      "description": "Accessible name for the tree widget. @default \"Hierarchy\"",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "onSelect",
+      "type": "(node: TreeNodeData) = void",
+      "required": false,
+      "description": "",
+      "owner": "TreeProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "defaultExpanded",
+      "rule": "Node IDs, or primitive labels for legacy nodes without an ID, expanded initially."
+    },
+    {
+      "state": "selectedId",
+      "rule": "Controlled ID of the single selected node. IDs are normalized to strings."
+    },
+    {
+      "state": "defaultSelectedId",
+      "rule": "Initial ID of the single selected node when uncontrolled. IDs are normalized to strings."
+    },
+    {
+      "state": "onSelectedIdChange",
+      "rule": "Called with the normalized ID when a node with an ID is activated."
+    },
+    {
+      "state": "openOnHover",
+      "rule": "Opens branch children while the branch is hovered or keyboard-focused."
+    }
+  ],
+  "behavior": [
+    "Keyboard and semantics."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "--color-semantic-background-normal-alternative",
+      "rule": "light: #F7F7F8; dark: #0F0F10"
+    },
+    {
+      "subject": "--color-semantic-focus-indicator",
+      "rule": "light: #2F6FB0; dark: #7FB0DE"
+    },
+    {
+      "subject": "--color-semantic-label-alternative",
+      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+    },
+    {
+      "subject": "--color-semantic-label-normal",
+      "rule": "light: #171718; dark: #F7F7F7"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "nodes — { id, label, icon, children }. defaultExpanded — 열린 키. openOnHover — hover/focus 시 임시 확장. onSelect(node)."
+  ],
+  "accessibility": [
+    "The root uses role=\"tree\" and ariaLabel; every visible node uses a single roving tabIndex with role=\"treeitem\".",
+    "Up/Down move through visible nodes, Home/End jump to the boundary, Right opens or enters a branch, Left closes or moves to the parent, and Enter/Space activates the focused node.",
+    "Roving keyboard focus and single selection are independent. Use selectedId for controlled selection, defaultSelectedId for uncontrolled selection, and onSelectedIdChange(id) to observe activation.",
+    "A ref exposes focusItem(id, { reveal: true }) for caller-directed synchronization; reveal expands collapsed ancestors before focusing the row.",
+    "Give every node addressed by selection or focusItem an explicit, stable, globally unique id. IDs are normalized to strings; label is presentation only and is never used as public identity."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "StatusBadge",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "AnnotatedImage",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "BarChart",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Calendar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ChartFrame",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Carousel",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DataGrid",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Tree defaultExpanded={['workspace']} defaultSelectedId=\"workspace\" onSelect={pick} nodes={[\n  { id: 'workspace', label: '문서', children: [{ label: '개요' }, { label: '컴포넌트' }] },\n]} />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-background-normal-alternative",
+    "--color-semantic-focus-indicator",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-normal",
+    "--color-semantic-label-strong",
+    "--color-semantic-primary-normal",
+    "--color-semantic-primary-surface-strong",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-medium",
+    "--fw-semibold",
+    "--label1-size",
+    "--radius-md",
+    "--space-0-5",
+    "--space-2-5"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/DataTree.stories.jsx",
+    "entryStoryId": "lds-product-data-collections-tree--tree-interaction-states",
+    "publicStories": [
+      {
+        "id": "lds-product-data-collections-tree--tree-interaction-states",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-data-collections-tree--tree-selection-contract",
+        "name": "상호작용 · 선택과 초점 이동",
+        "role": "interaction"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

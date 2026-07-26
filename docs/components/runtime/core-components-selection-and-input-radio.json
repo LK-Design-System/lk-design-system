@@ -1,0 +1,294 @@
+{
+  "slug": "core-components-selection-and-input-radio",
+  "title": "Radio",
+  "storybookTitle": "LDS Core/Components/Selection and Input/Radio",
+  "layer": "Core",
+  "family": "Selection and Input",
+  "primaryOwner": "Radio",
+  "ownerComponents": [
+    "Radio"
+  ],
+  "supportingComponents": [
+    "RadioGroup"
+  ],
+  "purpose": "비교해야 할 선택지가 적고 반드시 하나만 고르는 폼에 적합합니다. 여러 항목을 함께 선택하거나 옵션이 많아 공간을 줄여야 할 때는 Radio 대신 Checkbox 또는 Select를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "컨트롤 옆 라벨."
+    }
+  ],
+  "properties": [
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "컨트롤 옆 라벨.",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "checked",
+      "type": "boolean",
+      "required": false,
+      "description": "이 옵션의 선택 여부.",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "defaultChecked",
+      "type": "boolean",
+      "required": false,
+      "description": "Initial checked state for uncontrolled usage.",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "라디오 세트가 공유하는 그룹 이름.",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "이 옵션의 값.",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(e: React.ChangeEvent) = void",
+      "required": false,
+      "description": "네이티브 change 핸들러.",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"md\" | \"small\" | \"medium\"",
+      "required": false,
+      "description": "컨트롤 크기. @default \"md\"",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "state",
+      "type": "\"unchecked\" | \"checked\"",
+      "required": false,
+      "description": "fixed visual state for evidence matrices.",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "bold",
+      "type": "boolean",
+      "required": false,
+      "description": "custom typography emphasis alias.",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "tight",
+      "type": "boolean",
+      "required": false,
+      "description": "라벨 간격을 좁힘. @default false",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "interaction",
+      "type": "\"normal\" | \"inactive\" | \"hovered\" | \"focused\"",
+      "required": false,
+      "description": "",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "흐림 + 상호작용 차단. @default false",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "disable",
+      "type": "boolean",
+      "required": false,
+      "description": "disabled alias.",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "labelStyle",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "style",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "RadioProps"
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "RadioProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "checked",
+      "rule": "이 옵션의 선택 여부."
+    },
+    {
+      "state": "defaultChecked",
+      "rule": "Initial checked state for uncontrolled usage."
+    },
+    {
+      "state": "state",
+      "rule": "fixed visual state for evidence matrices."
+    },
+    {
+      "state": "disabled",
+      "rule": "흐림 + 상호작용 차단. @default false"
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Related radios share name; uncontrolled radios synchronize their custom indicator with the browser's native group state. The label gap is 8px and the default selected dot is 12px."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "Radio — 1.5px 헤어라인 원(20px, sm 16px). 선택되면 원이 시그널 잉크로 채워지고 화이트 중앙 점이 나타납니다. 그룹은 같은 name을 공유하세요."
+    },
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-brand-ink",
+      "rule": "light: #0E1329; dark: #E7EAF2"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "Disabled and checked are independent states: a disabled checked radio keeps its neutral center dot so the current value remains visible, while primary fill/border is removed and label, ring, and dot use disabled-neutral roles."
+  ],
+  "accessibility": [
+    "Arrow-key behavior and single-selection semantics come from the native radio input. Do not replace it with independent custom tab stops.",
+    "Reference basis: WAI-ARIA Radio Group pattern and GOV.UK Radios."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "RadioGroup",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Checkbox",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "CheckboxGroup",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FilterChip",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "MultiSelectChip",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "RangeSlider",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SegmentedControl",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Slider",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Radio name=\"type\" value=\"product\" checked={t==='product'} onChange={()=>setT('product')} label=\"제품 문의\" />"
+    }
+  ],
+  "tokens": [
+    "--body2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-brand-ink",
+    "--color-semantic-fill-normal",
+    "--color-semantic-focus-ring",
+    "--color-semantic-label-disable",
+    "--color-semantic-line-normal-neutral",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-static-white",
+    "--component-input-gap",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-bold",
+    "--radius-pill"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/FormRadio.stories.jsx",
+    "entryStoryId": "lds-core-components-selection-and-input-radio--radios",
+    "publicStories": [
+      {
+        "id": "lds-core-components-selection-and-input-radio--radios",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 3
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

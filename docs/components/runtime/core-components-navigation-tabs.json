@@ -1,0 +1,206 @@
+{
+  "slug": "core-components-navigation-tabs",
+  "title": "Tabs",
+  "storybookTitle": "LDS Core/Components/Navigation/Tabs",
+  "layer": "Core",
+  "family": "Navigation",
+  "primaryOwner": "Tabs",
+  "ownerComponents": [
+    "Tabs"
+  ],
+  "supportingComponents": [],
+  "purpose": "페이지를 떠나지 않고 관련 콘텐츠 패널을 하나씩 전환하며 선택 상태를 유지해야 할 때 적합합니다. 서로 다른 목적지로 이동하는 전역 내비게이션에는 링크나 메뉴를, 순서가 있는 업무 절차에는 Stepper를 사용하세요.",
+  "useWhen": [
+    "Use for section or route switching. Use Category for chip-like topic navigation."
+  ],
+  "avoidWhen": [
+    "item.active는 비제어 모드에서 초기 선택을 시드할 때만 사용됩니다(defaultValue가 없을 때). 렌더 시점에 선택 상태를 강제하지 않으므로 두 탭이 동시에 선택되는 일이 없습니다."
+  ],
+  "anatomy": [
+    {
+      "part": "trailingIconButton",
+      "rule": "trailingIconButton axis. @default false"
+    }
+  ],
+  "properties": [
+    {
+      "name": "items",
+      "type": "TabItem[]",
+      "required": true,
+      "description": "",
+      "owner": "TabsProps"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "TabsProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "TabsProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string, item: Exclude) = void",
+      "required": false,
+      "description": "",
+      "owner": "TabsProps"
+    },
+    {
+      "name": "full",
+      "type": "boolean",
+      "required": false,
+      "description": "Legacy fill prop. Prefer resize=\"fill\". @default false",
+      "owner": "TabsProps"
+    },
+    {
+      "name": "resize",
+      "type": "\"hug\" | \"fill\"",
+      "required": false,
+      "description": "resize axis. @default \"hug\"",
+      "owner": "TabsProps"
+    },
+    {
+      "name": "size",
+      "type": "\"small\" | \"sm\" | \"medium\" | \"md\" | \"large\" | \"lg\"",
+      "required": false,
+      "description": "size axis. @default \"medium\"",
+      "owner": "TabsProps"
+    },
+    {
+      "name": "padding",
+      "type": "boolean",
+      "required": false,
+      "description": "padding axis. @default false",
+      "owner": "TabsProps"
+    },
+    {
+      "name": "trailingIconButton",
+      "type": "boolean | React.ReactNode",
+      "required": false,
+      "description": "trailingIconButton axis. @default false",
+      "owner": "TabsProps"
+    },
+    {
+      "name": "scroll",
+      "type": "\"auto\" | boolean",
+      "required": false,
+      "description": "scroll axis. @default \"auto\"",
+      "owner": "TabsProps"
+    }
+  ],
+  "states": [],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "탭↔패널 연결: 각 탭은 useId() 기반 id를 자동으로 가지며, item.tabId로 재정의할 수 있습니다. item.panelId를 넘기면 탭에 aria-controls로 연결됩니다. 소비 측은 패널을 role=\"tabpanel\", id={panelId}, aria-labelledby={탭 id}, tabIndex={0}으로 표시하세요."
+    },
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    },
+    {
+      "subject": "--color-semantic-focus-indicator",
+      "rule": "light: #2F6FB0; dark: #7FB0DE"
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    },
+    {
+      "subject": "--color-semantic-label-normal",
+      "rule": "light: #171718; dark: #F7F7F7"
+    }
+  ],
+  "responsive": [
+    "When used as CanvasEditorShell.responsiveNavigation, tabs switch only the narrow-screen region (canvas, layers, panel). Workspace modes that change tools and document behavior remain in subheader."
+  ],
+  "contentGuidance": [],
+  "accessibility": [
+    "The selected tab is the single Tab stop. Left/Right, Home, and End move focus and activate the next enabled tab, following the WAI-ARIA Tabs pattern. 선택 탭이 비활성화되면 첫 번째 활성 탭이 Tab 스톱이 됩니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Category",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "PageIndicator",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Pagination",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Tabs items={[{ value: 'all', label: 'All' }, { value: 'open', label: 'Open' }]} defaultValue=\"all\" />\n<Tabs resize=\"fill\" size=\"large\" padding trailingIconButton items={items} />"
+    }
+  ],
+  "tokens": [
+    "--body2-size",
+    "--color-semantic-focus-indicator",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-line-solid-normal",
+    "--color-semantic-primary-normal",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-semibold",
+    "--headline2-size",
+    "--radius-sm",
+    "--space-2"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/NavigationTabs.stories.jsx",
+    "entryStoryId": "lds-core-components-navigation-tabs--tab-patterns",
+    "publicStories": [
+      {
+        "id": "lds-core-components-navigation-tabs--tab-patterns",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

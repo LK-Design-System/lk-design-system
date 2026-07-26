@@ -1,0 +1,339 @@
+{
+  "slug": "core-components-overlay-alert",
+  "title": "Alert",
+  "storybookTitle": "LDS Core/Components/Overlay/Alert",
+  "layer": "Core",
+  "family": "Overlay",
+  "primaryOwner": "Alert",
+  "ownerComponents": [
+    "Alert"
+  ],
+  "supportingComponents": [
+    "Button"
+  ],
+  "purpose": "진행을 멈추고 경고나 간단한 선택에 응답해야만 다음 단계로 갈 수 있을 때 적합합니다. 긴 설명이나 입력이 필요한 작업에는 Modal을, 흐름을 막지 않는 완료·오류 알림에는 Toast나 Snackbar를 사용하세요.",
+  "useWhen": [
+    "Use platform=\"ios\", android, or web to match the target surface.",
+    "variant(색상 축)에 따라 role을 바꾸지 않습니다. 같은 컴포넌트가 색에 따라 다르게 announce되면 보조기기 사용자의 예측 가능성이 깨지기 때문입니다."
+  ],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "tone",
+      "rule": "Backward-compatible severity alias."
+    },
+    {
+      "part": "confirmLabel",
+      "rule": "primary 액션 레이블. @default \"확인\""
+    },
+    {
+      "part": "ariaLabel",
+      "rule": "보이는 title이 없을 때 사용할 접근 가능한 이름. @default \"알림\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "open",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "heading",
+      "type": "boolean",
+      "required": false,
+      "description": "heading axis. @default true",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "description",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "platform",
+      "type": "\"ios\" | \"android\" | \"web\"",
+      "required": false,
+      "description": "platform axis. @default \"web\"",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "tone",
+      "type": "| \"default\" | \"danger\" | \"negative\" | \"normal\" | \"assistive\" | \"info\" | \"error\"",
+      "required": false,
+      "description": "Backward-compatible severity alias.",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "variant",
+      "type": "\"normal\" | \"assistive\" | \"negative\"",
+      "required": false,
+      "description": "variant axis. @default \"normal\"",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "confirmLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "primary 액션 레이블. @default \"확인\"",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "cancelLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "primaryLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "secondaryLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "onConfirm",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "onCancel",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "onClose",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "actions",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "closeOnScrim",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "initialFocusRef",
+      "type": "React.RefObject",
+      "required": false,
+      "description": "열릴 때 우선 초점을 받을 Alert 내부 요소. 기본값은 secondary 또는 primary 액션입니다.",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "returnFocusRef",
+      "type": "React.RefObject",
+      "required": false,
+      "description": "닫힌 뒤 자동으로 캡처한 trigger 대신 초점을 돌려보낼 요소.",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "restoreFocus",
+      "type": "boolean",
+      "required": false,
+      "description": "닫힌 뒤 trigger 또는 returnFocusRef로 초점을 복원합니다. @default true",
+      "owner": "AlertProps"
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "required": false,
+      "description": "보이는 title이 없을 때 사용할 접근 가능한 이름. @default \"알림\"",
+      "owner": "AlertProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "tone",
+      "rule": "Backward-compatible severity alias."
+    },
+    {
+      "state": "variant",
+      "rule": "variant axis. @default \"normal\""
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "--body2-size",
+      "rule": "15px"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-fill-normal",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    },
+    {
+      "subject": "--color-semantic-inverse-label",
+      "rule": "light: #FFFFFF; dark: #171719"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "기본 액션 레이블은 한국어입니다: primary 기본값 \"확인\"(primaryLabel/confirmLabel로 재정의), secondary는 지정할 때만 렌더링합니다."
+  ],
+  "accessibility": [
+    "Modal·ConfirmDialog와 같은 공용 modal focus 계약을 사용합니다. 열릴 때 secondary 액션을 우선하고(없으면 primary), Tab/Shift+Tab은 Alert 안에서 순환하며 Escape와 닫힘 후 trigger focus 복원을 지원합니다. initialFocusRef·returnFocusRef로 제품 흐름이 초점을 재정의할 수 있습니다.",
+    "Alert는 언제나 흐름을 멈추고 응답(confirm, 또는 confirm + cancel)을 받는 표면입니다. 이는 APG Alert Dialog 패턴 그 자체이므로 variant와 무관하게 무조건 role=\"alertdialog\"를 씁니다.",
+    "alertdialog는 초점이 들어올 때 aria-labelledby(제목)와 aria-describedby(본문)를 함께 읽도록 보장합니다. 그래서 본문(description/children)은 항상 aria-describedby로 연결됩니다.",
+    "응답이 필요 없는 비차단 메시지는 Alert가 아니라 Toast·Snackbar·Banner를 쓰세요. 응답이 필요한 일반 콘텐츠 작업은 Modal(role=\"dialog\"), 되돌릴 수 없는 확인은 ConfirmDialog입니다.",
+    "WAI-ARIA Modal Dialog Pattern — 파괴적 결정에서는 덜 파괴적인 액션을 초기 초점으로 고려하고, modal 내부 Tab 순환과 Escape·trigger 복원을 요구합니다. Alert의 기본 secondary 우선 정책에 반영했습니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ConfirmDialog",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Dimmer",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DropdownMenu",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Modal",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Snackbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Toast",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ToastStack",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Alert open platform=\"web\" title=\"세션이 만료되었습니다\" primaryLabel=\"다시 로그인\" secondaryLabel=\"나중에\" variant=\"negative\">\n  작업을 계속하려면 다시 로그인해 주세요.\n</Alert>"
+    }
+  ],
+  "tokens": [
+    "--body2-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-normal",
+    "--color-semantic-inverse-label",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-status-negative-text",
+    "--component-dialog-scrim",
+    "--component-dialog-scrim-blur",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-extra",
+    "--fw-semibold",
+    "--heading2-size",
+    "--headline1-size",
+    "--radius-md",
+    "--radius-pill",
+    "--shadow-xl"
+  ],
+  "apiLinks": [],
+  "migration": [
+    "tone=\"danger\" remains as a backward-compatible alias for variant=\"negative\"."
+  ],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/OverlayConfirmAlert.stories.jsx",
+    "entryStoryId": "lds-core-components-overlay-alert--alert-open",
+    "publicStories": [
+      {
+        "id": "lds-core-components-overlay-alert--alert-open",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-overlay-alert--alert-platform-preview",
+        "name": "변형·상태 · 플랫폼별 형태",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-core-components-overlay-alert--alert-keyboard-contract",
+        "name": "상호작용 · 키보드 탐색과 초점 복원",
+        "role": "interaction"
+      }
+    ],
+    "hiddenEvidence": 2
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "evidence"
+  }
+}

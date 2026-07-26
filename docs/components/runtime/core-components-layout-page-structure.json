@@ -1,0 +1,216 @@
+{
+  "slug": "core-components-layout-page-structure",
+  "title": "Page Structure",
+  "storybookTitle": "LDS Core/Components/Layout/Page Structure",
+  "layer": "Core",
+  "family": "Layout",
+  "primaryOwner": "Container",
+  "ownerComponents": [
+    "Container",
+    "Section",
+    "Split"
+  ],
+  "supportingComponents": [],
+  "purpose": "헤더·본문·보조 영역처럼 화면 전체의 구조와 너비 관계를 정할 때 사용합니다. 바깥 골격은 header·main·footer 랜드마크로 선언하고 main은 하나만 둡니다. 반복 헤더에는 첫 포커스 대상인 skip link를 두고, 반복 항목은 Grid·Columns, 한 방향 간격은 Stack을 사용하세요. 작은 내부 정렬에는 이 페이지 구조를 사용하지 말고 각 컴포넌트에서 해결하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "size",
+      "type": "'default' | 'read' | 'wide'",
+      "required": false,
+      "description": "폭 단계: - default — 반응형 컬럼(lg까지 ≤1100, xl에서 1440) - read — 좁은 리딩 밴드(1100) - wide — 풀블리드 레일(1500)",
+      "owner": "ContainerProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ContainerProps"
+    },
+    {
+      "name": "surface",
+      "type": "'subtle' | 'band' | 'raised' | 'inverse'",
+      "required": false,
+      "description": "밴드의 배경 서피스. 생략하면 투명.",
+      "owner": "SectionProps"
+    },
+    {
+      "name": "py",
+      "type": "number | string",
+      "required": false,
+      "description": "반응형 세로 패딩 재정의(숫자 = px). 기본값 --gap-section.",
+      "owner": "SectionProps"
+    },
+    {
+      "name": "container",
+      "type": "boolean",
+      "required": false,
+      "description": "자식을 중앙 정렬 반응형 컨테이너로 감싸기. @default true",
+      "owner": "SectionProps"
+    },
+    {
+      "name": "innerStyle",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "내부 컨테이너 요소의 스타일.",
+      "owner": "SectionProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SectionProps"
+    },
+    {
+      "name": "template",
+      "type": "string",
+      "required": false,
+      "description": "브레이크포인트 위에서 적용되는 grid-template-columns. @default \"1fr 1fr\"",
+      "owner": "SplitProps"
+    },
+    {
+      "name": "at",
+      "type": "'md' | 'lg'",
+      "required": false,
+      "description": "두 패널이 나뉘는 브레이크포인트; 그 아래에서는 쌓임. @default \"md\"",
+      "owner": "SplitProps"
+    },
+    {
+      "name": "gap",
+      "type": "number | string",
+      "required": false,
+      "description": "패널 사이 갭(숫자 = px). 기본값 --gap-lg(24).",
+      "owner": "SplitProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SplitProps"
+    }
+  ],
+  "states": [],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "size — default 1280 · read 1080 · wide 1500. 거터 포함."
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-background-normal-alternative",
+      "rule": "light: #F7F7F8; dark: #0F0F10"
+    },
+    {
+      "subject": "--color-semantic-inverse-background",
+      "rule": "light: #1B1C1E; dark: #FFFFFF"
+    },
+    {
+      "subject": "--color-semantic-inverse-label",
+      "rule": "light: #FFFFFF; dark: #171719"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Section",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "Split",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "AspectRatio",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Center",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Cluster",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Col",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Columns",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Divider",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Container>…</Container>          {/* 1280 */}\n<Container size=\"read\">…</Container>   {/* 1080 텍스트 밴드 */}"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-background-normal-alternative",
+    "--color-semantic-inverse-background",
+    "--color-semantic-inverse-label",
+    "--container-read",
+    "--container-wide",
+    "--grid-margin"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/Layout.stories.jsx",
+    "entryStoryId": "lds-core-components-layout-page-structure--page-structure",
+    "publicStories": [
+      {
+        "id": "lds-core-components-layout-page-structure--page-structure",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 2
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "omitted-no-evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

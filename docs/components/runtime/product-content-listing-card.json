@@ -1,0 +1,240 @@
+{
+  "slug": "product-content-listing-card",
+  "title": "Listing Card",
+  "storybookTitle": "LDS Product/Content/Listing Card",
+  "layer": "Product",
+  "family": "Content",
+  "primaryOwner": "ListingCard",
+  "ownerComponents": [
+    "ListingCard"
+  ],
+  "supportingComponents": [],
+  "purpose": "정기 점검·교육·캠페인·리소스처럼 커버·기간·상태가 반복되는 항목을 그리드로 훑을 때 적합합니다. 발행일·출처를 쓰는 기사·보도 카드가 필요하면 그 카드를, 즉시 수행할 단일 액션에는 카드 대신 명시적 액션 영역을 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "title",
+      "rule": "항목 제목(2줄 clamp, 실제 heading)."
+    }
+  ],
+  "properties": [
+    {
+      "name": "image",
+      "type": "string",
+      "required": false,
+      "description": "커버 이미지 URL(선택).",
+      "owner": "ListingCardProps"
+    },
+    {
+      "name": "imageAlt",
+      "type": "string",
+      "required": false,
+      "description": "커버 대체 텍스트. 기본은 빈 문자열(장식) — 제목이 이미 의미를 전달합니다. 사진이 정보를 담으면 지정하며, 그 값은 링크 접근 이름에 제목. imageAlt로 합성됩니다. 커버는 loading=\"lazy\"로 지연 로드되고 16:9 박스가 레이아웃을 예약합니다.",
+      "owner": "ListingCardProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "항목 제목(2줄 clamp, 실제 heading).",
+      "owner": "ListingCardProps"
+    },
+    {
+      "name": "meta",
+      "type": "ListingMetaRow[]",
+      "required": false,
+      "description": "아이콘 붙은 메타 행들 — 기간·장소·분류 등 보조 정보.",
+      "owner": "ListingCardProps"
+    },
+    {
+      "name": "status",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "수명주기 상태. 문자열이면 ContentBadge로 렌더되고 링크 접근 이름 끝에 합성되어 낭독됩니다(진행중·신청 마감처럼 열림/닫힘이 클릭 결정을 바꾸므로). 직접 만든 배지 노드를 넘기면 그대로 렌더하되 접근 이름 합성은 하지 않습니다.",
+      "owner": "ListingCardProps"
+    },
+    {
+      "name": "statusTone",
+      "type": "'signal' | 'accent' | 'navy' | 'neutral' | 'positive' | 'cautionary' | 'warning' | 'negative'",
+      "required": false,
+      "description": "문자열 status의 배지 톤. @default \"neutral\"",
+      "owner": "ListingCardProps"
+    },
+    {
+      "name": "headingLevel",
+      "type": "1 | 2 | 3 | 4 | 5 | 6 | false",
+      "required": false,
+      "description": "제목의 heading 레벨. 목록이 놓인 문서 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 false로 끕니다. @default 3",
+      "owner": "ListingCardProps"
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "required": false,
+      "description": "항목 링크. @default \"\"",
+      "owner": "ListingCardProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "status",
+      "rule": "수명주기 상태. 문자열이면 ContentBadge로 렌더되고 링크 접근 이름 끝에 합성되어 낭독됩니다(진행중·신청 마감처럼 열림/닫힘이 클릭 결정을 바꾸므로). 직접 만든 배지 노드를 넘기면 그대로 렌더하되 접근 이름 합성은 하지 않습니다."
+    },
+    {
+      "state": "statusTone",
+      "rule": "문자열 status의 배지 톤. @default \"neutral\""
+    }
+  ],
+  "behavior": [
+    "NewsCard가 아니다 — NewsCard는 기사·보도 카드로 date는 발행일, source는 바이라인입니다. 리스팅의 날짜는 운영·교육 기간, 배지는 수명주기 상태입니다. 시각적으로 닮았다고 항목 상태·기간을 NewsCard에 넣으면 한 컴포넌트가 두 의미를 갖게 되므로, 의미가 다른 별개 컴포넌트입니다.",
+    "여러 장은 Grid/DashboardGrid로 배치합니다. 필터·정렬·페이지네이션·상태 계산은 제품이 소유합니다.",
+    "상태를 신설 배지로 만들지 않고 ContentBadge를 재사용해 사이트 전반의 배지 언어를 유지합니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "image / imageAlt — 커버는 기본 장식(alt=\"\")이며 제목이 이름을 소유합니다. 정보성 사진은 imageAlt를 주면 링크 접근 이름에 제목. imageAlt로 합성됩니다. 커버는 loading=\"lazy\"·decoding=\"async\"로 지연 로드되고 16:9 래퍼가 로드 전 레이아웃을 예약(CLS 방지), 로드 실패 시 중립 패널로 degrade됩니다(NewsCard 선례)."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "headingLevel — 제목은 실제 heading(기본 h3)으로 렌더되고 목록 문서 계층에 맞춥니다(WCAG 1.3.1). 레벨은 건너뛰지 않습니다."
+    },
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--color-semantic-background-normal-alternative",
+      "rule": "light: #F7F7F8; dark: #0F0F10"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "status / statusTone — 수명주기 상태입니다. 문자열이면 ContentBadge로 렌더하고 링크 접근 이름 끝에 합성해 낭독합니다 — 진행중·신청 마감처럼 열림/닫힘이 클릭 결정을 바꾸므로 링크 이름만 듣는 사용자도 상태를 알아야 하기 때문입니다. 직접 만든 배지 노드를 넘기면 그대로 렌더하되 이름 합성은 하지 않습니다.",
+    "메타를 자유 슬롯이 아니라 {icon,label} 행으로 구조화한 것은 아이콘 정렬·말줄임·대비를 컴포넌트가 소유해 목록마다 재발명하지 않게 하기 위함입니다.",
+    "상태를 접근 이름에 합성하는 것은 NewsCard(발행일을 이름에 넣지 않음)와 의도적으로 다릅니다 — 항목 상태는 발행일과 달리 클릭 결정을 바꾸는 정보이기 때문입니다.",
+    "ListingCard — 사용자가 훑어보고 들어가는 목록·카탈로그 항목 카드: 커버 · 제목 · 아이콘 메타 행(기간·장소·분류) · 수명주기 상태 배지(진행중·신청 마감). 정기 점검·교육·캠페인·리소스 목록에."
+  ],
+  "accessibility": [
+    "meta — { icon, label } 배열의 아이콘 메타 행(기간·장소·분류). 아이콘은 aria-hidden 장식이고 텍스트가 의미를 전달하며 한 줄로 말줄임됩니다.",
+    "카드 = 링크 — 카드 전체가 하나의 a이므로 안에 버튼·링크 같은 포커스 가능한 요소를 두지 마세요(중첩 인터랙티브 금지). 링크의 접근 이름은 제목(+정보성 커버 alt +상태)이며 메타 행은 보조 시각 정보입니다. 다른 이름이 필요하면 aria-label로 덮어씁니다.",
+    "포커스 — 키보드 포커스에서도 호버와 같은 리프트/줌 어포던스를 재현합니다(포커스 링은 tokens/focus.css 전역 규칙)."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "ChecklistItem",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FeatureCard",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FeedCard",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "MetricCard",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "NewsCard",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ProductCard",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SpecRow",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Stat",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<ListingCard\n  image=\"/covers/maintenance.webp\"\n  title=\"정기 점검 운영 캠페인\"\n  meta={[\n    { icon: 'calendar', label: '2026.06.08 ~ 2026.07.31 · 온라인' },\n    { icon: 'tag', label: '운영, 유지보수, 설비' },\n  ]}\n  status=\"진행중\" statusTone=\"positive\"\n  href=\"/events/maintenance\"\n/>"
+    }
+  ],
+  "tokens": [
+    "--caption1-line",
+    "--caption1-size",
+    "--color-semantic-background-normal-alternative",
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-strong",
+    "--component-card-bg",
+    "--component-card-border",
+    "--component-card-radius",
+    "--dur-base",
+    "--ease-out",
+    "--fw-extra",
+    "--headline1-size",
+    "--shadow-md",
+    "--shadow-xs",
+    "--space-1",
+    "--space-2",
+    "--space-4"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/CardListing.stories.jsx",
+    "entryStoryId": "lds-product-content-listing-card--listing-cards",
+    "publicStories": [
+      {
+        "id": "lds-product-content-listing-card--listing-cards",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-content-listing-card--no-cover",
+        "name": "변형·상태 · 커버 없는 항목",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-content-listing-card--narrow-listing",
+        "name": "반응형 · 320px",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

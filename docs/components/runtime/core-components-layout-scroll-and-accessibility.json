@@ -1,0 +1,233 @@
+{
+  "slug": "core-components-layout-scroll-and-accessibility",
+  "title": "Scroll and Accessibility",
+  "storybookTitle": "LDS Core/Components/Layout/Scroll and Accessibility",
+  "layer": "Core",
+  "family": "Layout",
+  "primaryOwner": "ScrollArea",
+  "ownerComponents": [
+    "AspectRatio",
+    "Center",
+    "ScrollArea",
+    "VisuallyHidden"
+  ],
+  "supportingComponents": [
+    "Stack"
+  ],
+  "purpose": "기본 스크롤바는 OS·브라우저 설정을 존중합니다. 공간이 좁은 메뉴와 패널만 compact를 선택하고, 스크롤바가 나타나도 내용 폭이 흔들리지 않도록 기본 gutter를 확보합니다. 실제로 넘치는 영역은 키보드로 도달할 수 있어야 합니다.",
+  "useWhen": [
+    "강제 색상 모드에서는 사용자 에이전트의 스크롤바 색상과 폭으로 돌아갑니다."
+  ],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "스크롤 영역의 접근 가능한 이름(aria-label). 실제로 스크롤되는 영역은 키보드 포커스를 받으므로 이름이 반드시 필요합니다."
+    },
+    {
+      "part": "labelledBy",
+      "rule": "label 대신 화면의 기존 제목을 참조할 때 쓰는 aria-labelledby id."
+    }
+  ],
+  "properties": [
+    {
+      "name": "ratio",
+      "type": "number | string",
+      "required": false,
+      "description": "Width / height ratio. Accepts a number or CSS aspect-ratio string. @default 16 / 9",
+      "owner": "AspectRatioProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "AspectRatioProps"
+    },
+    {
+      "name": "minHeight",
+      "type": "number | string",
+      "required": false,
+      "description": "세로 공간 확보.",
+      "owner": "CenterProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "CenterProps"
+    },
+    {
+      "name": "maxHeight",
+      "type": "number | string",
+      "required": false,
+      "description": "최대 높이(px 또는 CSS). @default 280",
+      "owner": "ScrollAreaProps"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "스크롤 영역의 접근 가능한 이름(aria-label). 실제로 스크롤되는 영역은 키보드 포커스를 받으므로 이름이 반드시 필요합니다.",
+      "owner": "ScrollAreaProps"
+    },
+    {
+      "name": "labelledBy",
+      "type": "string",
+      "required": false,
+      "description": "label 대신 화면의 기존 제목을 참조할 때 쓰는 aria-labelledby id.",
+      "owner": "ScrollAreaProps"
+    },
+    {
+      "name": "focusable",
+      "type": "boolean | 'auto'",
+      "required": false,
+      "description": "키보드 포커스 가능 여부. \"auto\"는 내용이 실제로 넘칠 때만 tabIndex=0 + role=\"region\"을 부여합니다(W3C scrollable-region-focusable).",
+      "owner": "ScrollAreaProps"
+    },
+    {
+      "name": "scrollbar",
+      "type": "'auto' | 'compact'",
+      "required": false,
+      "description": "스크롤바 표현. \"auto\"는 OS/브라우저 설정을 보존하고, \"compact\"는 공간이 제한된 메뉴·패널에서만 표준 thin 스크롤바를 사용합니다.",
+      "owner": "ScrollAreaProps"
+    },
+    {
+      "name": "gutter",
+      "type": "'stable' | 'auto'",
+      "required": false,
+      "description": "스크롤바가 나타날 자리를 미리 확보할지 여부.",
+      "owner": "ScrollAreaProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ScrollAreaProps"
+    },
+    {
+      "name": "as",
+      "type": "React.ElementType",
+      "required": false,
+      "description": "렌더할 요소. @default \"span\"",
+      "owner": "VisuallyHiddenProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "VisuallyHiddenProps"
+    }
+  ],
+  "states": [],
+  "behavior": [
+    "gutter — \"stable\"(기본) · \"auto\". 기본값은 스크롤바 출현에 따른 내용 폭 변화를 줄입니다.",
+    "Deque scrollable-region-focusable — 스크롤 컨테이너의 키보드 도달성 검사.",
+    "ScrollArea — 브라우저의 네이티브 스크롤 동작에 LDS의 공간·포커스 정책을 더하는 컨테이너.",
+    "키보드 접근 규칙 (WCAG 2.1.1)."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "실제로 넘치는 영역은 tabIndex=0과 접근 가능한 이름을 가진 region으로 노출되어 ↑ ↓ PageUp PageDown Home End로 조작할 수 있습니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "CSS Scrollbars Styling Module Level 1 — 네이티브 스크롤바의 표준화된 색상·폭 속성과 사용자 설정 존중."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "CSS Color Adjustment Level 1 — 강제 색상 모드의 사용자 색상 우선."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "WCAG 2.2 SC 2.1.1 Keyboard — 포인터 없이도 기능을 사용할 수 있어야 함."
+    }
+  ],
+  "responsive": [
+    "maxHeight — 상한(px/CSS). 알림 목록, 긴 메뉴, 스펙 표를 감싸세요.",
+    "scrollbar — \"auto\"(기본) · \"compact\". 기본값은 OS·브라우저·사용자 설정을 바꾸지 않습니다. compact는 메뉴처럼 공간이 제한된 표면에서만 표준 scrollbar-width: thin을 선택합니다."
+  ],
+  "contentGuidance": [
+    "label / labelledBy — 스크롤 영역의 접근 가능한 이름. 내용이 넘칠 수 있는 영역에는 반드시 하나를 주세요."
+  ],
+  "accessibility": [
+    "focusable — \"auto\"(기본) · true · false.",
+    "스크롤바를 DOM 요소로 다시 만들지 않습니다. 휠, 트랙패드, 터치, 키보드, 고대비 모드 등 브라우저의 네이티브 동작을 유지합니다.",
+    "넘치지 않는 컨테이너까지 탭 순서에 넣지 않도록 ResizeObserver로 오버플로를 측정합니다. 측정 없이 고정하려면 focusable을 명시하세요.",
+    "이름이 없으면 role=\"region\"을 붙이지 않고 개발 모드에서 경고합니다."
+  ],
+  "exceptions": [
+    "스크롤바를 숨기는 옵션은 공용 API로 제공하지 않습니다. 숨김은 대체 위치 단서와 이동 수단이 있는 특수 패턴에서만 코드 예외로 관리합니다."
+  ],
+  "related": [
+    {
+      "component": "AspectRatio",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "Center",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "VisuallyHidden",
+      "relationship": "같은 페이지가 소유"
+    },
+    {
+      "component": "Stack",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<ScrollArea maxHeight={320} label=\"운영 로그\">{longList}</ScrollArea>\n<ScrollArea maxHeight={240} label=\"장비 메뉴\" scrollbar=\"compact\">{menu}</ScrollArea>\n<ScrollArea maxHeight={320} labelledBy=\"log-heading\" gutter=\"auto\">{longList}</ScrollArea>"
+    }
+  ],
+  "tokens": [],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/LayoutScrollAccess.stories.jsx",
+    "entryStoryId": "lds-core-components-layout-scroll-and-accessibility--scroll-and-access",
+    "publicStories": [
+      {
+        "id": "lds-core-components-layout-scroll-and-accessibility--scroll-and-access",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 2
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "omitted-no-evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lk-robotics.github.io/schemas/lds-wave0-consumer-matrix.schema.json",
+  "title": "LDS Wave 0 isolated tarball consumer matrix",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "kind",
+    "capturedAt",
+    "repository",
+    "sourceCommit",
+    "sourceTag",
+    "status",
+    "inputs",
+    "thresholds",
+    "platformRuns",
+    "results"
+  ],
+  "properties": {
+    "$schema": { "const": "../WAVE0_CONSUMER_MATRIX.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "kind": { "const": "lds-wave0-consumer-matrix" },
+    "capturedAt": { "type": "string", "format": "date-time" },
+    "repository": { "const": "LK-ROBOTICS/lk-design-system" },
+    "sourceCommit": { "$ref": "#/$defs/commit" },
+    "sourceTag": { "type": "string", "minLength": 1 },
+    "status": { "const": "passed" },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fullCheck", "packageArtifact"],
+      "properties": {
+        "fullCheck": { "$ref": "#/$defs/evidenceReference" },
+        "packageArtifact": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256", "package", "version", "sizeBytes", "tarballSha256"],
+          "properties": {
+            "path": { "const": "docs/references/package-split/baselines/WAVE0_AGGREGATE_ARTIFACT.json" },
+            "sha256": { "$ref": "#/$defs/sha256" },
+            "package": { "const": "@lk-robotics/design-system-core" },
+            "version": { "type": "string", "minLength": 1 },
+            "sizeBytes": { "type": "integer", "minimum": 1, "maximum": 8388608 },
+            "tarballSha256": { "$ref": "#/$defs/sha256" }
+          }
+        }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxTarballBytes", "maxSelectedButtonBytes"],
+      "properties": {
+        "maxTarballBytes": { "const": 8388608 },
+        "maxSelectedButtonBytes": { "const": 153600 }
+      }
+    },
+    "platformRuns": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "$ref": "#/$defs/platformRun" }
+    },
+    "results": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status", "evidence"],
+        "properties": {
+          "id": {
+            "enum": ["React 18", "React 19", "SSR", "tree-shaking", "Windows", "Linux", "Storybook visual", "tarball and consumer bundle size"]
+          },
+          "status": { "const": "passed" },
+          "evidence": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "evidenceReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "const": "docs/references/package-split/baselines/WAVE0_FULL_CHECK.json" },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "tarball": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package", "version", "sizeBytes", "sha256"],
+      "properties": {
+        "package": { "const": "@lk-robotics/design-system-core" },
+        "version": { "type": "string", "minLength": 1 },
+        "sizeBytes": { "type": "integer", "minimum": 1, "maximum": 8388608 },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "platformRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "kind", "capturedAt", "sourceCommit", "sourceTag", "platform", "arch", "node", "npm", "command", "status", "tarball", "checks", "consumers"],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "kind": { "const": "lds-wave0-consumer-platform-run" },
+        "capturedAt": { "type": "string", "format": "date-time" },
+        "sourceCommit": { "$ref": "#/$defs/commit" },
+        "sourceTag": { "type": "string", "minLength": 1 },
+        "platform": { "enum": ["windows", "linux"] },
+        "arch": { "const": "x64" },
+        "node": { "const": "22.17.1" },
+        "npm": { "const": "10.9.2" },
+        "command": { "const": "npm run capture:consumer:matrix" },
+        "status": { "const": "passed" },
+        "tarball": { "$ref": "#/$defs/tarball" },
+        "checks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["tarballInstall", "ssr", "treeShaking", "consumerBundle", "browser"],
+          "properties": {
+            "tarballInstall": { "const": "passed" },
+            "ssr": { "const": "passed" },
+            "treeShaking": { "const": "passed" },
+            "consumerBundle": { "const": "passed" },
+            "browser": { "enum": ["passed", "not-run"] }
+          }
+        },
+        "consumers": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "$ref": "#/$defs/consumer" }
+        }
+      }
+    },
+    "consumer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "reactVersion", "reactDomVersion", "status", "cjs", "ssr", "viteBuild", "browser", "resolution", "bundles"],
+      "properties": {
+        "id": { "enum": ["React 18", "React 19"] },
+        "reactVersion": { "enum": ["18.3.1", "19.2.3"] },
+        "reactDomVersion": { "enum": ["18.3.1", "19.2.3"] },
+        "status": { "const": "passed" },
+        "cjs": { "const": "passed" },
+        "ssr": { "const": "passed" },
+        "viteBuild": { "const": "passed" },
+        "browser": { "enum": ["passed", "not-run"] },
+        "resolution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["react", "reactDom", "package"],
+          "properties": {
+            "react": { "type": "string", "pattern": "^node_modules/" },
+            "reactDom": { "type": "string", "pattern": "^node_modules/" },
+            "package": { "type": "string", "pattern": "^node_modules/" }
+          }
+        },
+        "bundles": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["selectedButtonBytes", "selectedInputCount", "namespaceBytes", "namespaceInputCount", "consumerJavaScriptBytes"],
+          "properties": {
+            "selectedButtonBytes": { "type": "integer", "minimum": 1, "maximum": 153600 },
+            "selectedInputCount": { "type": "integer", "minimum": 1 },
+            "namespaceBytes": { "type": "integer", "minimum": 1 },
+            "namespaceInputCount": { "type": "integer", "minimum": 1 },
+            "consumerJavaScriptBytes": { "type": "integer", "minimum": 1 }
+          }
+        }
+      }
+    }
+  }
+}

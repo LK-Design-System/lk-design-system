@@ -1,0 +1,45 @@
+# Local dependency and build output
+node_modules/
+build/
+packages/*/dist/
+.next/
+.nuxt/
+.vite/
+coverage/
+storybook-static/
+!packages/conformance/fixtures/robotics/storybook-static/
+!packages/conformance/fixtures/robotics/storybook-static/index.json
+!packages/conformance/fixtures/lds3d/storybook-static/
+!packages/conformance/fixtures/lds3d/storybook-static/index.json
+visual-artifacts/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+.idea/
+.vscode/
+.claude/
+
+# Temporary work files
+*.tmp
+*.temp
+*.bak
+~$*
+
+# local scratch (ad-hoc reference clones, experiments)
+tmp/
