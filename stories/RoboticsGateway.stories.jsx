@@ -29,11 +29,11 @@ function RoboticsGateway() {
 }
 
 const meta = {
-  title: 'LDS Core/Start Here',
+  title: 'LDS Core/Robotics',
   tags: ['autodocs'],
   parameters: {
     storyGuide: {
-      storyId: 'lds-core-start-here--robotics',
+      storyId: 'lds-core-robotics--overview',
       eyebrow: 'LDS Core',
       title: 'LDS Robotics 바로가기',
       description: '로봇 도메인 UI는 독립 Storybook에서 탐색합니다.',
