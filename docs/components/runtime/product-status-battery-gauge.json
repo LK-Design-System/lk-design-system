@@ -1,0 +1,166 @@
+{
+  "slug": "product-status-battery-gauge",
+  "title": "Battery Gauge",
+  "storybookTitle": "LDS Product/Status/Battery Gauge",
+  "layer": "Product",
+  "family": "Status",
+  "primaryOwner": "BatteryGauge",
+  "ownerComponents": [
+    "BatteryGauge"
+  ],
+  "supportingComponents": [],
+  "purpose": "배터리를 사용하는 장비의 잔량을 한눈에 판단할 때 적합합니다. 색은 잔량 구간을 보조하지만 % 숫자를 항상 함께 보여 주며, 시간에 따른 전력 추이에는 차트를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "showLabel",
+      "rule": "% 라벨 표시. @default true"
+    }
+  ],
+  "properties": [
+    {
+      "name": "value",
+      "type": "number",
+      "required": false,
+      "description": "배터리 잔량(0–100). @default 0",
+      "owner": "BatteryGaugeProps"
+    },
+    {
+      "name": "tone",
+      "type": "'neutral' | 'signal' | 'positive' | 'cautionary' | 'negative'",
+      "required": false,
+      "description": "제품이 결정한 의미 상태. 생략하면 호환성을 위해 기존 20/50 잔량 임계값을 적용합니다.",
+      "owner": "BatteryGaugeProps"
+    },
+    {
+      "name": "showLabel",
+      "type": "boolean",
+      "required": false,
+      "description": "% 라벨 표시. @default true",
+      "owner": "BatteryGaugeProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "",
+      "owner": "BatteryGaugeProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "tone",
+      "rule": "제품이 결정한 의미 상태. 생략하면 호환성을 위해 기존 20/50 잔량 임계값을 적용합니다."
+    }
+  ],
+  "behavior": [
+    "BatteryGauge — 배터리 잔량 표시(셸 + 레벨색 fill + %). 로봇/설비 상태 행에서 ConnectionBadge와 함께 씁니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "value 0–100 · tone neutral · signal · positive · cautionary · negative · showLabel · size sm · md."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "제품의 도메인 규칙이 있다면 tone으로 의미 상태를 명시합니다. 생략하면 이전 API와의 호환을 위해 잔량 기준(≤20% negative · ≤50% cautionary · else positive)을 적용합니다."
+    },
+    {
+      "subject": "--color-semantic-label-alternative",
+      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    },
+    {
+      "subject": "--color-semantic-primary-normal",
+      "rule": "light: #3878B3; dark: #5390C9"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "ConnectionBadge",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "EquipmentStatusCard",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "TelemetryGauge",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "TelemetryValue",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<BatteryGauge value={86} />\n<BatteryGauge value={12} size=\"sm\" />\n<BatteryGauge value={47} showLabel={false} />\n<BatteryGauge value={47} tone=\"cautionary\" />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-alternative",
+    "--color-semantic-label-neutral",
+    "--color-semantic-primary-normal",
+    "--color-semantic-status-cautionary",
+    "--color-semantic-status-cautionary-text",
+    "--color-semantic-status-info-text",
+    "--color-semantic-status-negative",
+    "--color-semantic-status-negative-text",
+    "--color-semantic-status-positive",
+    "--color-semantic-status-positive-text",
+    "--font-sans",
+    "--fw-bold"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/RoboticsBatteryGauge.stories.jsx",
+    "entryStoryId": "lds-product-status-battery-gauge--battery-levels",
+    "publicStories": [
+      {
+        "id": "lds-product-status-battery-gauge--battery-levels",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "omitted-no-evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

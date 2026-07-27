@@ -2,12 +2,10 @@ import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import ts from 'typescript';
 
-// The editor, viz, and robotics component groups keep their prompt.md contracts
-// in THIS repository while their implementations, type surfaces, and stories
-// live in the external Robotics repository. Every other group is guarded by
-// check-api-drift's in-repo three-way sync (JSX / .d.ts / .prompt.md); this
-// check extends the same discipline across the repository seam so a contract
-// and its implementation cannot drift apart silently.
+// Robotics-owned components keep their prompt.md contracts in THIS repository
+// while implementations, type surfaces, and stories live in the external
+// Robotics repository. Product-owned compatibility facades are intentionally
+// skipped because check-api-drift guards their canonical in-repo sources.
 //
 // Like the other ratchets, a baseline records the currently-known findings and
 // only NEW drift fails the check. Refresh with --update-baseline.
@@ -17,13 +15,16 @@ const roboticsRootArg = process.argv.find((arg) => arg.startsWith('--root='))?.s
 const roboticsRoot = path.resolve(root, roboticsRootArg || '../lk-design-system-robotics');
 const updateBaseline = process.argv.includes('--update-baseline');
 const baselinePath = path.join(root, 'docs/references/robotics/CONTRACT_DRIFT_BASELINE.json');
-// Full groups are entirely implemented in the Robotics repository, so every
-// prompt must have an implementation and vice versa. Sparse groups share their
-// name with main-repo components (navigation holds SideNav here but FloorSelector
-// there), so only the components present in BOTH repositories are checked.
-const FULL_GROUPS = ['editor', 'viz', 'robotics'];
-const SPARSE_GROUPS = ['navigation'];
-const CONTRACT_GROUPS = [...FULL_GROUPS, ...SPARSE_GROUPS];
+const CONTRACT_GROUPS = ['editor', 'viz', 'robotics', 'navigation'];
+const classification = JSON.parse(readFileSync(
+  path.join(root, 'docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json'),
+  'utf8',
+));
+const roboticsOwnedComponents = new Set(
+  (classification.groups ?? [])
+    .filter((group) => group.ownerLayer === 'robotics')
+    .flatMap((group) => group.exports ?? []),
+);
 
 // DOM/React attributes that legitimately appear in prompt code fences without
 // being a component's own contracted prop.
@@ -87,32 +88,71 @@ function listFiles(dir, suffix) {
 }
 
 // Own props of the component's Props interface: directly declared members plus
-// same-file interface parents. External parents (React.HTMLAttributes and
-// friends) are inherited platform surface, not contract surface.
-function ownPropsFromDts(source, rel) {
-  const file = ts.createSourceFile(rel, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+// local relative interface parents. Platform parents from React remain outside
+// the component contract.
+function ownPropsFromDts(source, rel, implementationDir) {
   const interfaces = new Map();
-  for (const node of file.statements) {
-    if (!ts.isInterfaceDeclaration(node)) continue;
-    interfaces.set(node.name.text, {
-      props: node.members
-        .filter(ts.isPropertySignature)
-        .map((member) => member.name?.text)
-        .filter(Boolean),
-      parents: (node.heritageClauses || [])
-        .flatMap((clause) => clause.types)
-        .map((type) => (ts.isIdentifier(type.expression) ? type.expression.text : null))
-        .filter(Boolean),
-    });
+  const rootInterfaces = new Set();
+  const visited = new Set();
+  const rootPath = path.resolve(implementationDir, rel);
+
+  function visit(moduleSource, modulePath) {
+    const absolutePath = path.resolve(implementationDir, modulePath);
+    if (visited.has(absolutePath)) return;
+    visited.add(absolutePath);
+    const file = ts.createSourceFile(modulePath, moduleSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    for (const node of file.statements) {
+      if (ts.isInterfaceDeclaration(node)) {
+        if (absolutePath === rootPath) rootInterfaces.add(node.name.text);
+        interfaces.set(node.name.text, {
+          props: node.members
+            .filter(ts.isPropertySignature)
+            .map((member) => member.name?.text)
+            .filter(Boolean),
+          parents: (node.heritageClauses || [])
+            .flatMap((clause) => clause.types)
+            .map((type) => (ts.isIdentifier(type.expression) ? type.expression.text : null))
+            .filter(Boolean),
+        });
+      }
+      if (!ts.isImportDeclaration(node) || !ts.isStringLiteral(node.moduleSpecifier)) continue;
+      const specifier = node.moduleSpecifier.text;
+      if (!specifier.startsWith('.')) continue;
+      const importedPath = path.resolve(
+        path.dirname(absolutePath),
+        specifier.endsWith('.d.ts') ? specifier : `${specifier}.d.ts`,
+      );
+      if (existsSync(importedPath)) {
+        visit(readFileSync(importedPath, 'utf8'), path.relative(implementationDir, importedPath));
+      }
+    }
   }
+  visit(source, rel);
+
   const collect = (name, seen = new Set()) => {
     if (seen.has(name) || !interfaces.has(name)) return [];
     seen.add(name);
     const { props, parents } = interfaces.get(name);
     return [...props, ...parents.flatMap((parent) => collect(parent, seen))];
   };
-  const propsInterfaces = [...interfaces.keys()].filter((name) => name.endsWith('Props'));
-  return [...new Set(propsInterfaces.flatMap((name) => collect(name)))];
+  const collectRoot = (name, seen = new Set()) => {
+    if (seen.has(name) || !rootInterfaces.has(name) || !interfaces.has(name)) return [];
+    seen.add(name);
+    const { props, parents } = interfaces.get(name);
+    return [...props, ...parents.flatMap((parent) => collectRoot(parent, seen))];
+  };
+  const componentName = path.basename(rel, '.d.ts');
+  const componentProps = `${componentName}Props`;
+  const propsInterfaces = interfaces.has(componentProps)
+    ? [componentProps]
+    : [...interfaces.keys()].filter((name) => name.endsWith('Props'));
+  const rootPropsInterfaces = rootInterfaces.has(componentProps)
+    ? [componentProps]
+    : [...rootInterfaces].filter((name) => name.endsWith('Props'));
+  return {
+    declared: [...new Set(rootPropsInterfaces.flatMap((name) => collectRoot(name)))],
+    inherited: [...new Set(propsInterfaces.flatMap((name) => collect(name)))],
+  };
 }
 
 function wordsMentioned(text, names) {
@@ -126,18 +166,16 @@ function record(component, kind, value) {
 }
 
 for (const group of CONTRACT_GROUPS) {
-  const sparse = SPARSE_GROUPS.includes(group);
   const contractDir = path.join(root, 'components', group);
   const implementationDir = path.join(roboticsRoot, 'src', 'components', group);
   const prompts = new Set(listFiles(contractDir, '.prompt.md').map((name) => name.replace('.prompt.md', '')));
   const implementations = new Set(listFiles(implementationDir, '.jsx').map((name) => name.replace('.jsx', '')));
 
   for (const component of prompts) {
+    if (!roboticsOwnedComponents.has(component)) continue;
     const key = `${group}/${component}`;
     if (!implementations.has(component)) {
-      // In a sparse group a prompt without a robotics impl is a main-repo
-      // component, not drift.
-      if (!sparse) record(key, 'missingImplementation', true);
+      record(key, 'missingImplementation', true);
       continue;
     }
     const dtsPath = path.join(implementationDir, `${component}.d.ts`);
@@ -146,18 +184,20 @@ for (const group of CONTRACT_GROUPS) {
       continue;
     }
     const prompt = readFileSync(path.join(contractDir, `${component}.prompt.md`), 'utf8');
-    const props = ownPropsFromDts(readFileSync(dtsPath, 'utf8'), `${component}.d.ts`);
-    const undocumented = wordsMentioned(prompt, props).sort();
+    const props = ownPropsFromDts(
+      readFileSync(dtsPath, 'utf8'),
+      `${component}.d.ts`,
+      implementationDir,
+    );
+    const undocumented = wordsMentioned(prompt, props.declared).sort();
     if (undocumented.length > 0) record(key, 'undocumentedProps', undocumented);
-    const phantom = phantomPropsFromPrompt(prompt, component, props);
+    const phantom = phantomPropsFromPrompt(prompt, component, props.inherited);
     if (phantom.length > 0) record(key, 'phantomProps', phantom);
   }
 
-  // A robotics impl with no main-repo prompt is missing its contract — but only
-  // in full groups, where the whole group is robotics-owned.
-  if (!sparse) {
-    for (const component of implementations) {
-      if (!prompts.has(component)) record(`${group}/${component}`, 'missingPrompt', true);
+  for (const component of implementations) {
+    if (roboticsOwnedComponents.has(component) && !prompts.has(component)) {
+      record(`${group}/${component}`, 'missingPrompt', true);
     }
   }
 }

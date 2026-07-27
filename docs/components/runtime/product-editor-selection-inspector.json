@@ -1,0 +1,262 @@
+{
+  "slug": "product-editor-selection-inspector",
+  "title": "Selection Inspector",
+  "storybookTitle": "LDS Product/Editor/Selection Inspector",
+  "layer": "Product",
+  "family": "Editor",
+  "primaryOwner": "SelectionInspector",
+  "ownerComponents": [
+    "SelectionInspector"
+  ],
+  "supportingComponents": [
+    "Button",
+    "ConfirmDialog"
+  ],
+  "purpose": "운영자가 캔버스에서 고른 객체의 상태·속성·객체 범위 작업을 확인할 때 적합합니다. 전역 설정이나 선택과 무관한 폼에는 Selection Inspector 대신 일반 Form 또는 Settings 패널을 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "Use selectionCount for multi-selection and field.mixed for properties that do not share one value. Mixed values render as —; do not invent a representative value.",
+    "TaskCreateScreen has no selected-object inspection decision, so SelectionInspector is not applicable to that workflow. Keep the task form and step list product-owned instead of forcing any canvas workflow into this component."
+  ],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "item",
+      "type": "SelectionInspectorItem | null",
+      "required": false,
+      "description": "",
+      "owner": "SelectionInspectorProps"
+    },
+    {
+      "name": "selectionCount",
+      "type": "number",
+      "required": false,
+      "description": "다중 선택 개수. 2 이상이면 공통 속성 inspector 제목으로 표시합니다.",
+      "owner": "SelectionInspectorProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SelectionInspectorProps"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SelectionInspectorProps"
+    },
+    {
+      "name": "sections",
+      "type": "SelectionInspectorSection[]",
+      "required": false,
+      "description": "",
+      "owner": "SelectionInspectorProps"
+    },
+    {
+      "name": "actions",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SelectionInspectorProps"
+    },
+    {
+      "name": "onClearSelection",
+      "type": "React.MouseEventHandler",
+      "required": false,
+      "description": "",
+      "owner": "SelectionInspectorProps"
+    },
+    {
+      "name": "clearSelectionLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SelectionInspectorProps"
+    },
+    {
+      "name": "clearSelectionAriaLabel",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "SelectionInspectorProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "SelectionInspectorProps"
+    }
+  ],
+  "states": [],
+  "behavior": [
+    "Keep selection identity and status fixed at the top, make property groups independently collapsible, and keep object-scoped actions in the sticky actions area.",
+    "Figma right properties panel and selection guidance support a selection-bound right panel and one shared canvas/tree selection model.",
+    "The resulting LDS contract covers no selection, one selection, multi/mixed selection, status, read-only/locked content supplied by consumers, and object actions. Domain-specific property schemas remain Product/Robotics composition.",
+    "SelectionInspector - Selection-bound identity and properties region.",
+    "Use it for a selected canvas or scene object such as a waypoint, route segment, zone, map annotation, crop volume, or bounding box. Keep it separate from layer/display selection."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "숫자 0, boolean false, 빈 문자열은 누락으로 취급하지 않습니다. boolean은 문자열로, 빈 문자열은 —로 표시하며 valueNode에도 같은 원칙을 적용합니다."
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    },
+    {
+      "subject": "--color-semantic-label-strong",
+      "rule": "light: #000000; dark: #FFFFFF"
+    },
+    {
+      "subject": "--color-semantic-line-normal-alternative",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "With no item and no selectionCount, the inspector shows emptyLabel (default 선택한 객체가 없습니다.) as a status region. Keep it a short instruction about selecting on the canvas, not a workflow message.",
+    "SelectionInspector is a named region rather than a second nested complementary landmark. CanvasEditorShell/DockPanel owns the docked or overlay panel landmark and resize/collapse behavior.",
+    "Field and object status use the canonical signal / positive / cautionary / negative vocabulary. warning and danger are compatibility aliases, not names for new usage.",
+    "Unity Inspector supports a contextual property surface that follows the selected object."
+  ],
+  "accessibility": [
+    "Keep reversible commit actions at the trailing edge. A destructive object action uses the danger button grammar, is separated from the primary commit action with flexible space, and opens ConfirmDialog before execution. Do not disguise deletion as a neutral assistive action beside Apply.",
+    "Standard field value is a string/number/boolean and unit is a string. Surrounding whitespace is removed; %, ‰, and plane-angle ° attach, while SI·compound units and °C/°F keep one literal space in both visible and accessible DOM text.",
+    "For editable or composed properties, use the explicit valueNode escape or section children. valueNode bypasses automatic unit formatting, so the consumer owns its complete visible and accessible text. The inspector itself does not invent a second form-control language.",
+    "Use onClearSelection when the workflow supports clearing the current canvas selection. Keep the clear action in the inspector header.",
+    "In pinned lkwebviz coverage, SelectionInspector can satisfy only the selected-object part of the right properties/settings region. Active tab/tool state, PGM settings and product forms remain separate product-owned composition; the source does not define this component's anatomy or style."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ConfirmDialog",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "CanvasEditorCommandBar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "CanvasEditorShell",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "EditorToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "HistoryToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "LayerPanel",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewportStatusBar",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<SelectionInspector\n  item={{ label: 'Zone A-03', kind: 'Polygon', status: 'verified', statusTone: 'online' }}\n  sections={[{ title: 'Geometry', fields: [{ label: 'Area', value: 24.8, unit: 'm2' }] }]}\n  onClearSelection={clearSelection}\n/>"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-strong",
+    "--color-semantic-line-normal-alternative",
+    "--color-semantic-line-normal-normal",
+    "--color-semantic-status-cautionary-text",
+    "--color-semantic-status-negative-text",
+    "--control-h-md",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-medium",
+    "--fw-semibold",
+    "--headline2-line",
+    "--headline2-size",
+    "--label2-line",
+    "--label2-size",
+    "--space-2",
+    "--space-3",
+    "--space-4"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/EditorSelectionInspector.stories.jsx",
+    "entryStoryId": "lds-product-editor-selection-inspector--selected-object",
+    "publicStories": [
+      {
+        "id": "lds-product-editor-selection-inspector--selected-object",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-editor-selection-inspector--mixed-selection",
+        "name": "사용법 · 다중 선택 공통 속성",
+        "role": "usage"
+      },
+      {
+        "id": "lds-product-editor-selection-inspector--empty-selection",
+        "name": "변형·상태 · 선택 객체 없음",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-editor-selection-inspector--unit-formatting-at-320",
+        "name": "반응형 · 320px 단위 결합",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-editor-selection-inspector--action-footer",
+        "name": "시나리오 · 선택 객체 작업",
+        "role": "usage"
+      }
+    ],
+    "hiddenEvidence": 2
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "omitted-no-evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

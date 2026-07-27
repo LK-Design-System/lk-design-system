@@ -2092,7 +2092,8 @@
         "Is the feature a point, line, region, landmark, or cross-floor facility relationship?",
         "Which floor and map identity own the selected target?",
         "Can the user distinguish the feature and its state at the current zoom without relying on color alone?",
-        "Does current route or trajectory progress read as an elapsed-path boundary while robot pose, bearing, and footprint remain separate layers?"
+        "Does current route or trajectory progress read as an elapsed-path boundary while robot pose, bearing, and footprint remain separate layers?",
+        "When overlays compete for label space, does danger outrank focus, focus outrank selection, and current progress outrank background context without losing accessible identity?"
       ],
       "failureRecovery": [
         "Keep unsaved edits and the selected feature visible when save fails.",
@@ -2100,7 +2101,7 @@
         "Do not collapse elevator entry, elevator interior, door, stair, and generic waypoint into one ambiguous marker.",
         "Preserve a named list or inspector path when dense map geometry is not reliable for keyboard traversal."
       ],
-      "dsBoundary": "LDS may own renderer-neutral point, line, route, trajectory, region, facility-transition, selection, state, path-tangent progress-head, and accessible-mirror contracts; robot pose/bearing/footprint, map persistence, editor commands, floor topology, task schema, facility control, and transport remain product-owned.",
+      "dsBoundary": "LDS may own renderer-neutral point, line, route, trajectory, region, facility-transition, selection, state, path-tangent progress-head, multi-overlay label collision/density presentation, and accessible-mirror contracts; feature truth, density-mode selection for each product view, robot pose/bearing/footprint data, map persistence, editor commands, floor topology, task schema, facility control, and transport remain product-owned.",
       "designQuestion": "Do the navigation components and map symbols provide a coherent, conventional, zoom-stable visual grammar that LK Web Viz can compose without redrawing the same semantics?",
       "sourceEvidence": [
         {
@@ -2140,6 +2141,7 @@
         "components/robotics/TrajectoryOverlay.jsx",
         "components/robotics/SpatialRegion.jsx",
         "components/robotics/FacilityTransition.jsx",
+        "components/robotics/NavigationAnnotationLayer.jsx",
         "components/robotics/HazardMarker.jsx"
       ],
       "storyEvidence": [
@@ -2149,6 +2151,7 @@
         "stories/RoboticsNavigationTrajectory.stories.jsx",
         "stories/RoboticsNavigationRegions.stories.jsx",
         "stories/RoboticsNavigationFacilities.stories.jsx",
+        "stories/RoboticsNavigationAnnotations.stories.jsx",
         "stories/RoboticsNavigationHazardMarker.stories.jsx"
       ],
       "verificationEvidence": [

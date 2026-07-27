@@ -111,6 +111,13 @@
 | [Legend](guides/product-data-visualization-legend.md) | Product / Visualization | `Legend` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Line Chart](guides/product-data-visualization-line-chart.md) | Product / Visualization | `LineChart` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Sparkline](guides/product-data-visualization-sparkline.md) | Product / Visualization | `Sparkline` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
+| [Canvas Shell](guides/product-editor-canvas-shell.md) | Product / Editor | `CanvasEditorShell` | mapped | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
+| [Command Bar](guides/product-editor-command-bar.md) | Product / Editor | `CanvasEditorCommandBar` | mapped | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
+| [Editor Toolbar](guides/product-editor-editor-toolbar.md) | Product / Editor | `EditorToolbar` | mapped | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
+| [History Toolbar](guides/product-editor-history-toolbar.md) | Product / Editor | `HistoryToolbar` | mapped | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
+| [Layer Panel](guides/product-editor-layer-panel.md) | Product / Editor | `LayerPanel` | mapped | implemented | not-tracked | not-tracked | 6 public / 0 hidden |
+| [Selection Inspector](guides/product-editor-selection-inspector.md) | Product / Editor | `SelectionInspector` | mapped | implemented | not-tracked | not-tracked | 5 public / 2 hidden |
+| [Viewport Status Bar](guides/product-editor-viewport-status-bar.md) | Product / Editor | `ViewportStatusBar` | mapped | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Rating](guides/product-feedback-rating.md) | Product / Feedback | `Rating` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Dock Panel](guides/product-layout-dock-panel.md) | Product / Layout | `DockPanel` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 1 hidden |
 | [Page Header](guides/product-layout-page-header.md) | Product / Layout | `PageHeader` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
@@ -155,8 +162,19 @@
 | [Validation Summary](guides/product-selection-and-input-validation-summary.md) | Product / Selection and Input | `ValidationSummary` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Virtual Keypad](guides/product-selection-and-input-virtual-keypad.md) | Product / Selection and Input | `VirtualKeypad` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 1 hidden |
 | [Wheel Picker](guides/product-selection-and-input-wheel-picker.md) | Product / Selection and Input | `WheelPicker` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
+| [Battery Gauge](guides/product-status-battery-gauge.md) | Product / Status | `BatteryGauge` | mapped | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
+| [Connection Badge](guides/product-status-connection-badge.md) | Product / Status | `ConnectionBadge` | mapped | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
+| [Equipment State](guides/product-status-equipment-state.md) | Product / Status | `EquipmentStatusCard` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Meter](guides/product-status-meter.md) | Product / Status | `Meter` | mapped | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Progress](guides/product-status-progress.md) | Product / Status | `CircularProgress`, `ProgressBar` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
+| [Telemetry Gauge](guides/product-status-telemetry-gauge.md) | Product / Status | `TelemetryGauge` | mapped | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
+| [Telemetry Value](guides/product-status-telemetry-value.md) | Product / Status | `TelemetryValue` | mapped | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
+| [2D Map](guides/product-viewer-2-d-map.md) | Product / Viewer | `Map2DCanvas` | mapped | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
+| [3D Scene](guides/product-viewer-3-d-scene.md) | Product / Viewer | `Scene3DFrame` | mapped | implemented | not-tracked | not-tracked | 3 public / 2 hidden |
+| [Floor Selector](guides/product-viewer-floor-selector.md) | Product / Viewer | `FloorSelector` | mapped | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
+| [Toolbar](guides/product-viewer-toolbar.md) | Product / Viewer | `ViewerToolbar` | mapped | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
+| [Video Stream](guides/product-viewer-video-stream.md) | Product / Viewer | `VideoStreamTile` | mapped | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
+| [Viewer Frame](guides/product-viewer-viewer-frame.md) | Product / Viewer | `ViewerFrame` | mapped | implemented | not-tracked | not-tracked | 5 public / 0 hidden |
 | [LK ROBOTICS Logo](guides/theme-brand-lk-robotics-logo.md) | Theme / Brand | `Lockup` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Theme Toggle](guides/theme-controls-theme-toggle.md) | Theme / Controls | `ThemeToggle` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Brand Spinner](guides/theme-status-brand-spinner.md) | Theme / Status | `Theme:Brand Spinner` | mapped | implemented | not-tracked | not-tracked | 1 public / 0 hidden |

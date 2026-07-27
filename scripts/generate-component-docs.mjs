@@ -771,7 +771,7 @@ const [entrySource, classification, audit, tokenSource] = await Promise.all([
   readJson('tokens/source.json'),
 ]);
 const entries = componentEntries(entrySource, classification);
-assert(entries.length === 182, `Expected 182 public component entries, received ${entries.length}.`);
+assert(entries.length === 200, `Expected 200 public component entries, received ${entries.length}.`);
 
 const allExports = new Set(entries.flatMap((entry) => entry.exports));
 const sourceDetails = new Map();
@@ -835,7 +835,7 @@ const nonFoundationPages = audit.pages.filter(
 );
 const tokenMap = tokenValueMap(tokenSource);
 const guides = nonFoundationPages.map((page) => guideFromPage(page, exportToEntry, sourceDetails, tokenMap));
-assert(guides.length === 152, `Expected 152 non-Foundation component pages, received ${guides.length}.`);
+assert(guides.length === 170, `Expected 170 non-Foundation component pages, received ${guides.length}.`);
 finalizeCanonicalGuides(guides);
 
 const coveredExports = new Set(guides.flatMap((guide) => guide.ownerComponents));
@@ -891,7 +891,7 @@ const compiled = {
  * names, links, file paths, or comparison prose of the private research sources.
  */
 const privateProvenancePattern =
-  /(?:Wanted Design System|원티드|\bWDS\b|docs[\\/]+references[\\/]+(?:wds|quality)|\.fig\b)/i;
+  /(?:Wanted Design System|원티드|\bWDS\b|docs[\\/]+references[\\/]+|\.fig\b)/i;
 
 function publicRuntimeText(value) {
   const text = String(value ?? '');

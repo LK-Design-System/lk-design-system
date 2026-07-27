@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDialogFocus } from './dialog-focus.js';
+import { useDialogFocus } from '@lk-robotics/lds-core/components/overlay/dialog-focus';
 
 /**
  * LDS Product Extension — Sheet

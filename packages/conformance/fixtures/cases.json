@@ -40,6 +40,24 @@
     ]
   },
   {
+    "name": "inherited-runtime-redefinition",
+    "expectedCodes": ["INHERITED_RUNTIME_REDEFINITION"],
+    "mutations": [
+      { "file": "src/components/Widget.jsx", "append": "\nexport const InvalidInheritedDefinition = () => <div style={{ '--product-viewer-surface': 'var(--color-semantic-primary-normal)' }} />;\n" }
+    ]
+  },
+  {
+    "name": "consumer-policy-drift",
+    "expectedCodes": ["POLICY_CONTRACT_DRIFT"],
+    "mutations": [
+      {
+        "file": "src/components/Widget.jsx",
+        "replace": "policy-evidence: one prioritized solid badge",
+        "with": "policy-evidence: stacked badges"
+      }
+    ]
+  },
+  {
     "name": "defined-but-undeclared-upstream-token",
     "expectedCodes": ["UPSTREAM_TOKEN_MANIFEST_DRIFT"],
     "mutations": [

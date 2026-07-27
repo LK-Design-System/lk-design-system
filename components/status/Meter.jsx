@@ -1,4 +1,5 @@
 import React from 'react';
+import { normalizeBoundedValue } from '../internal/bounded-value.js';
 
 const THRESHOLD_FILL = {
   negative: 'var(--color-semantic-status-negative)',
@@ -52,16 +53,17 @@ export function Meter({
 }) {
   const rawId = React.useId();
   const labelId = `${rawId}-label`;
-  const safeMax = Number(max) || 0;
-  const pct = Math.max(0, Math.min(100, (value / max) * 100));
-  const clampedValue = Math.max(0, Math.min(safeMax, Number(value) || 0));
+  const range = normalizeBoundedValue({ value, max });
+  const safeMax = range.max;
+  const pct = range.percent;
+  const clampedValue = range.value;
   const band = thresholds
     ? (pct <= thresholds.low ? 'negative' : pct <= thresholds.high ? 'cautionary' : 'positive')
     : null;
   const bandLabel = band ? { ...DEFAULT_THRESHOLD_LABELS, ...thresholdLabels }[band] : null;
   const fill = band ? THRESHOLD_FILL[band] : 'var(--color-semantic-primary-normal)';
   const height = size === 'sm' ? 6 : 10;
-  const valueText = `${value}/${max}`;
+  const valueText = `${clampedValue}/${safeMax}`;
   const hasVisibleLabel = label != null;
   /* The caption row also carries the threshold word, so it stays mounted while
      a band is active even when the caller hides the numeric readout. */

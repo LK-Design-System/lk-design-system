@@ -35,7 +35,7 @@ const packages = [
     layer: 'product',
     name: '@lk-robotics/lds-product',
     dependencies: ['@lk-robotics/lds-core'],
-    resources: ['styles.css', 'assets'],
+    resources: ['styles.css', 'tokens', 'assets'],
   },
   {
     id: 'robotics-ui',
@@ -152,6 +152,25 @@ function validateImplementationExports(manifest, packageInfo) {
 
   if (stringsIn(manifest.exports).some((target) => target.endsWith('.cjs')) || manifest.main?.endsWith('.cjs')) {
     fail(`${packageInfo.name}: implementation package contains a CommonJS target.`);
+  }
+}
+
+async function validateStorybookSurface(manifest) {
+  const target = manifest.exports?.['./storybook'];
+  if (!target || typeof target !== 'object') {
+    fail('@lk-robotics/lds-product: exports is missing the shared ./storybook Docs surface.');
+    return;
+  }
+  if (target.types !== './storybook/index.d.ts' || target.import !== './storybook/index.js') {
+    fail('@lk-robotics/lds-product: ./storybook must expose its canonical types and import entry.');
+  }
+  if (!manifest.files?.includes('storybook')) {
+    fail('@lk-robotics/lds-product: files is missing storybook.');
+  }
+  for (const filename of ['index.js', 'index.d.ts']) {
+    if (!(await exists(path.join(root, 'packages', 'product', 'storybook', filename)))) {
+      fail(`@lk-robotics/lds-product: shared Storybook Docs surface is missing storybook/${filename}.`);
+    }
   }
 }
 
@@ -285,13 +304,30 @@ async function validateFacade(ownershipRows) {
   for (const stem of declarationFiles) if (!jsFiles.has(stem)) fail(`${path.relative(root, stem)} is missing its .js facade pair.`);
 }
 
+const classification = await readJson(
+  path.join(root, 'docs', 'references', 'wds', 'PUBLIC_EXPORT_CLASSIFICATION.json'),
+  'PUBLIC_EXPORT_CLASSIFICATION.json',
+);
+const classifiedOwnerByExport = new Map(
+  (classification?.groups ?? []).flatMap((group) =>
+    (group.exports ?? []).map((name) => [name, group.ownerLayer])),
+);
+
 const manifests = new Map();
 const ownershipRows = [];
 
 for (const packageInfo of packages) {
   if (packageInfo.external) {
     const publicRows = await readExternalPublicEntry(roboticsExternalSurfacePath, `${packageInfo.name} external surface`);
-    for (const row of publicRows) ownershipRows.push({ ...row, owner: packageInfo.layer, packageName: packageInfo.name });
+    for (const row of publicRows) {
+      const names = row.names.filter((name) => {
+        const classifiedOwner = classifiedOwnerByExport.get(name);
+        return classifiedOwner == null || classifiedOwner === packageInfo.layer;
+      });
+      if (names.length > 0) {
+        ownershipRows.push({ ...row, names, owner: packageInfo.layer, packageName: packageInfo.name });
+      }
+    }
     continue;
   }
   const packageRoot = path.join(root, 'packages', packageInfo.id);
@@ -316,6 +352,7 @@ for (const packageInfo of packages) {
 
   if (packageInfo.id === 'compat') validateCompatExports(manifest);
   else validateImplementationExports(manifest, packageInfo);
+  if (packageInfo.id === 'product') await validateStorybookSurface(manifest);
 
   for (const resource of packageInfo.resources) {
     const exportKey = `./${resource === 'styles.css' ? resource : `${resource}/*`}`;
@@ -331,10 +368,6 @@ for (const packageInfo of packages) {
   }
 }
 
-const classification = await readJson(
-  path.join(root, 'docs', 'references', 'wds', 'PUBLIC_EXPORT_CLASSIFICATION.json'),
-  'PUBLIC_EXPORT_CLASSIFICATION.json',
-);
 if (classification) {
   const expectedOwners = new Map();
   for (const group of classification.groups ?? []) {

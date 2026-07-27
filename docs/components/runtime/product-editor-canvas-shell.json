@@ -1,0 +1,409 @@
+{
+  "slug": "product-editor-canvas-shell",
+  "title": "Canvas Shell",
+  "storybookTitle": "LDS Product/Editor/Canvas Shell",
+  "layer": "Product",
+  "family": "Editor",
+  "primaryOwner": "CanvasEditorShell",
+  "ownerComponents": [
+    "CanvasEditorShell"
+  ],
+  "supportingComponents": [],
+  "purpose": "계층·도구·뷰포트·속성 패널이 함께 작동하는 공간 편집 화면을 구성할 때 적합합니다. 단일 캔버스나 읽기 전용 뷰어에는 전체 셸 대신 필요한 Viewer 또는 개별 패널만 사용하세요.",
+  "useWhen": [
+    "headerStart is the leading header region. Use it for back navigation or a real structural-panel toggle, not decorative home/layer icons.",
+    "CanvasEditorShell - Shared frame for canvas-based editors."
+  ],
+  "avoidWhen": [
+    "layers is only for a real layer/display tree. Do not put task steps or selected-object details there.",
+    "status is optional and passive. Do not move undo/redo or save into it."
+  ],
+  "anatomy": [
+    {
+      "part": "title",
+      "rule": "문서/워크스페이스 제목."
+    },
+    {
+      "part": "description",
+      "rule": "제목 아래의 짧은 상태 또는 문서 메타데이터."
+    },
+    {
+      "part": "headerStart",
+      "rule": "제목 앞의 뒤로가기 또는 프레임 구조 제어."
+    },
+    {
+      "part": "toolbar",
+      "rule": "헤더 오른쪽의 문서 단위 명령."
+    },
+    {
+      "part": "subheader",
+      "rule": "헤더 아래에서 전체 편집 모드를 바꾸는 탭/필터."
+    },
+    {
+      "part": "responsiveNavigation",
+      "rule": "좁은 화면에서 canvas/layers/panel 사이를 전환하는 전용 탐색. 편집 모드용 subheader와 구분합니다."
+    },
+    {
+      "part": "children",
+      "rule": "중앙 캔버스 또는 워크플로우 본문."
+    }
+  ],
+  "properties": [
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "문서/워크스페이스 제목.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "description",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "제목 아래의 짧은 상태 또는 문서 메타데이터.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "headerStart",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "제목 앞의 뒤로가기 또는 프레임 구조 제어.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "toolbar",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "헤더 오른쪽의 문서 단위 명령.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "subheader",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "헤더 아래에서 전체 편집 모드를 바꾸는 탭/필터.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "responsiveNavigation",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "좁은 화면에서 canvas/layers/panel 사이를 전환하는 전용 탐색. 편집 모드용 subheader와 구분합니다.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "tools",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "좌측 편집 도구 레일.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "layers",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "실제 레이어/디스플레이 구조가 있을 때만 쓰는 좌측 패널.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "중앙 캔버스 또는 워크플로우 본문.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "panel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "우측 속성/설정 패널.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "panelMode",
+      "type": "'docked' | 'drawer'",
+      "required": false,
+      "description": "drawer는 중앙 영역 위에 겹치며 열고 닫을 때 전환됩니다. @default 'docked'",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "panelOpen",
+      "type": "boolean",
+      "required": false,
+      "description": "우측 패널 표시 여부. 생략하면 내부 상태를 사용합니다.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "defaultPanelOpen",
+      "type": "boolean",
+      "required": false,
+      "description": "비제어 우측 패널 초기 표시 여부. @default true",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "onPanelOpenChange",
+      "type": "(open: boolean, reason: 'toggle' | 'escape') = void",
+      "required": false,
+      "description": "패널 handle 또는 Escape로 표시 상태가 바뀔 때 호출됩니다.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "layersOpen",
+      "type": "boolean",
+      "required": false,
+      "description": "좌측 레이어 패널 표시 여부. 생략하면 내부 상태를 사용합니다.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "defaultLayersOpen",
+      "type": "boolean",
+      "required": false,
+      "description": "비제어 레이어 패널 초기 표시 여부. @default true",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "onLayersOpenChange",
+      "type": "(open: boolean, reason: 'toggle' | 'escape') = void",
+      "required": false,
+      "description": "레이어 패널 handle 또는 Escape로 표시 상태가 바뀔 때 호출됩니다.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "status",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "선택적인 하단 수동 상태 표시줄.",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "panelWidth",
+      "type": "number",
+      "required": false,
+      "description": "우측 패널 폭(px). @default 280",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "panelMinWidth",
+      "type": "number",
+      "required": false,
+      "description": "우측 패널 최소 폭(px). @default 240",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "panelMaxWidth",
+      "type": "number",
+      "required": false,
+      "description": "우측 패널 최대 폭(px). @default 420",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "onPanelWidthChange",
+      "type": "(width: number) = void",
+      "required": false,
+      "description": "",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "layerPanelWidth",
+      "type": "number",
+      "required": false,
+      "description": "좌측 레이어 패널 폭(px). @default 236",
+      "owner": "CanvasEditorShellProps"
+    },
+    {
+      "name": "layerPanelMinWidth",
+      "type": "number",
+      "required": false,
+      "description": "좌측 레이어 패널 최소 폭(px). @default 200",
+      "owner": "CanvasEditorShellProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "panelOpen",
+      "rule": "우측 패널 표시 여부. 생략하면 내부 상태를 사용합니다."
+    },
+    {
+      "state": "defaultPanelOpen",
+      "rule": "비제어 우측 패널 초기 표시 여부. @default true"
+    },
+    {
+      "state": "onPanelOpenChange",
+      "rule": "패널 handle 또는 Escape로 표시 상태가 바뀔 때 호출됩니다."
+    },
+    {
+      "state": "layersOpen",
+      "rule": "좌측 레이어 패널 표시 여부. 생략하면 내부 상태를 사용합니다."
+    },
+    {
+      "state": "defaultLayersOpen",
+      "rule": "비제어 레이어 패널 초기 표시 여부. @default true"
+    },
+    {
+      "state": "onLayersOpenChange",
+      "rule": "레이어 패널 handle 또는 Escape로 표시 상태가 바뀔 때 호출됩니다."
+    },
+    {
+      "state": "status",
+      "rule": "선택적인 하단 수동 상태 표시줄."
+    },
+    {
+      "state": "mobileActiveRegion",
+      "rule": "좁은 화면에서 한 번에 표시할 주 작업 영역. drawer 패널은 기존 overlay 동작을 유지합니다. @default 'canvas'"
+    }
+  ],
+  "behavior": [
+    "Keep selected-object Apply, Delete, or clear-selection actions with the owning inspector. Keep document save in the header.",
+    "Arbitrary docking graphs, saved workspace layouts, detached windows, and domain workflows are intentionally excluded from this DS shell.",
+    "MapEditScreen: header commands + objects/pgm tabs + left tool rail + map canvas + persistent right properties/settings panel.",
+    "PcdMap3DPanel: optional split panel inside the map editor's viewport region, not an independent point-cloud workspace.",
+    "The shell owns stable regions only: document header, optional mode tabs, edit-tool rail, optional structural panel, dominant viewport, optional properties panel, and optional passive status. Product workflows own the content and decide which regions exist."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Panel widths are px numbers: panelWidth (default 280, clamped to panelMinWidth 240 / panelMaxWidth 420) and layerPanelWidth (default 236, clamped to layerPanelMinWidth 200 / layerPanelMaxWidth 360)."
+    },
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-background-normal-alternative",
+      "rule": "light: #F7F7F8; dark: #0F0F10"
+    }
+  ],
+  "responsive": [
+    "responsiveNavigation owns narrow-screen region switching only. Do not reuse subheader for canvas/layers/properties navigation.",
+    "tools owns mutually exclusive edit modes. Viewport-local zoom/orbit controls stay inside the viewport.",
+    "children is the dominant center viewport — the canvas or workflow body itself. The shell renders it as a landmark section named by canvasLabel; it never scrolls the shell, so the canvas owns its own overflow.",
+    "좁은 화면에서는 mobileActiveRegion=\"canvas\" | \"layers\" | \"panel\"로 주 영역 하나만 노출합니다. 제품은 responsiveNavigation에 LDS Tabs/SegmentedControl을 조합합니다. 기본값은 캔버스입니다."
+  ],
+  "contentGuidance": [
+    "Region landmarks are named by toolsLabel (편집 도구), layersLabel (레이어), canvasLabel (편집 캔버스), panelLabel (속성 패널), and statusLabel (편집 상태). The defaults are sensible for generic editors; override them when the product domain has better names (e.g. 지도 캔버스), not to inject workflow instructions.",
+    "Storybook state names may describe the state being reviewed. Do not render review labels, storyboard step names, or audit annotations inside the product frame."
+  ],
+  "accessibility": [
+    "Desktop layer and property panels compose the existing DockPanel: they can collapse/restore and, by default, resize by pointer or keyboard. layersOpen/panelOpen may be controlled; the corresponding defaultOpen props provide uncontrolled defaults.",
+    "Use a docked panel for repeated property editing. Use panelMode=\"drawer\" only for lightweight contextual inspection over the viewport. Escape closes a focused panel and returns focus to its restore handle.",
+    "WAI-ARIA Window Splitter informs keyboard-resizable panel boundaries; Tabs informs narrow-screen region navigation."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "CanvasEditorCommandBar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "EditorToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "HistoryToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "LayerPanel",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SelectionInspector",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewportStatusBar",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<CanvasEditorShell\n  title=\"floor_1.pgm\"\n  description=\"3 zones · 2 lines · 4 landmarks\"\n  headerStart={<BackButton />}\n  toolbar={\n    <CanvasEditorCommandBar canUndo={canUndo} canRedo={canRedo} onUndo={undo} onRedo={redo}>\n      <Button size=\"sm\" disabled={!dirty}>오브젝트 저장</Button>\n    </CanvasEditorCommandBar>\n  }\n  subheader={<Tabs items={modes} value={mode} onChange={setMode} size=\"small\" />}\n  responsiveNavigation={<Tabs items={regions} value={region} onChange={setRegion} size=\"small\" />}\n  tools={<EditorToolbar items={tools} value={tool} onChange={setTool} />}\n  layers={<LayerPanel layers={layers} activeLayerId={layerId} />}\n  panel={<ObjectProperties selection={selection} />}\n  defaultLayersOpen\n  defaultPanelOpen\n  resizablePanels\n>\n  <Map2DCanvas>...</Map2DCanvas>\n</CanvasEditorShell>"
+    }
+  ],
+  "tokens": [
+    "--caption1-line",
+    "--caption1-size",
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-background-normal-alternative",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
+    "--color-semantic-label-strong",
+    "--color-semantic-line-normal-normal",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-medium",
+    "--headline2-line",
+    "--headline2-size",
+    "--radius-lg",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/EditorShell.stories.jsx",
+    "entryStoryId": "lds-product-editor-canvas-shell--basic",
+    "publicStories": [
+      {
+        "id": "lds-product-editor-canvas-shell--basic",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-editor-canvas-shell--mobile-active-region",
+        "name": "반응형 · 좁은 화면 · 영역 전환",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-editor-canvas-shell--workspace-regions",
+        "name": "시나리오 · 통합 편집 작업공간",
+        "role": "scenario"
+      },
+      {
+        "id": "lds-product-editor-canvas-shell--context-drawer",
+        "name": "시나리오 · 화면 위 속성 패널",
+        "role": "scenario"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

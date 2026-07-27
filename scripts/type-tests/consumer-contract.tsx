@@ -9,6 +9,7 @@ import {
   MessageComposer,
   SourceDisclosure,
   VirtualKeypad,
+  EquipmentStatusCard,
 } from '@lk-robotics/design-system-core/product';
 import {
   WaypointMarker,
@@ -17,12 +18,11 @@ import {
   TrajectoryOverlay,
   SpatialRegion,
   FacilityTransition,
-  EquipmentStatusCard,
 } from '@lk-robotics/design-system-core/robotics';
 import { Button as CoreDeepButton } from '@lk-robotics/lds-core/components/buttons/Button';
 import { ThemeToggle as ThemeDeepToggle } from '@lk-robotics/lds-theme/components/selection/ThemeToggle';
 import { Table as ProductDeepTable } from '@lk-robotics/lds-product/components/data/Table';
-import { ViewerFrame as RoboticsDeepViewerFrame } from '@lk-robotics/lds-robotics-ui/components/viz/ViewerFrame';
+import { ViewerFrame as ProductDeepViewerFrame } from '@lk-robotics/lds-product/components/viz/ViewerFrame';
 
 // @ts-expect-error Robotics exports must not leak into the Core entrypoint.
 import { RobotStatusCard as InvalidCoreRobotStatusCard } from '@lk-robotics/design-system-core/core';
@@ -37,7 +37,7 @@ export const deepImportContract: React.ReactElement = (
     <CoreDeepButton>Core deep import</CoreDeepButton>
     <ThemeDeepToggle target={null} persist={false} />
     <ProductDeepTable columns={[]} rows={[]} />
-    <RoboticsDeepViewerFrame label="Deep viewer" />
+    <ProductDeepViewerFrame label="Deep viewer" />
   </>
 );
 export const themeContract: React.ReactElement = <ThemeToggle target={null} persist={false} />;

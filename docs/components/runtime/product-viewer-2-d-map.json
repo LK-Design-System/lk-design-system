@@ -1,0 +1,369 @@
+{
+  "slug": "product-viewer-2-d-map",
+  "title": "2D Map",
+  "storybookTitle": "LDS Product/Viewer/2D Map",
+  "layer": "Product",
+  "family": "Viewer",
+  "primaryOwner": "Map2DCanvas",
+  "ownerComponents": [
+    "Map2DCanvas"
+  ],
+  "supportingComponents": [],
+  "purpose": "운영자가 점유 격자·경로·로봇 위치를 한 평면에서 팬과 줌으로 살펴볼 때 적합합니다. 공간 관계가 필요 없는 수치 모니터링이나 3차원 장면에는 Telemetry 또는 3D Scene을 사용하세요.",
+  "useWhen": [
+    "appearance=\"light\"가 기본이지만 appearance=\"dark\"도 동일한 공개 계약입니다. 지도 renderer와 overlay는 --viewer- 역할 토큰을 사용해 두 appearance에서 같은 정보·조작 구조를 유지합니다."
+  ],
+  "avoidWhen": [
+    "panEnabled={false}에서는 drag와 touch-action: none을 모두 제거해 페이지 터치 스크롤 및 앱의 선택/드로잉 동작과 충돌하지 않습니다.",
+    "button, link, input, slider 등 interactive descendant에서 시작한 pointer/wheel 입력도 pan·zoom으로 재처리하지 않습니다.",
+    "onWheel은 pointer-focal zoom에 필요한 non-passive native WheelEvent callback입니다. React SyntheticEvent 전용 API를 가정하지 않습니다.",
+    "Mapbox Standard style reference와 runtime configuration guide: 하나의 지도 스타일이 day/night에 대응하는 lighting preset을 런타임에 바꿀 수 있으므로, LDS도 지도를 light 전용으로 고정하지 않고 light/dark appearance를 같은 계약으로 제공합니다."
+  ],
+  "anatomy": [
+    {
+      "part": "children",
+      "rule": "함께 변환되는 콘텐츠(맵 이미지 · SVG 오버레이 · canvas/konva 스테이지 등)."
+    },
+    {
+      "part": "controls",
+      "rule": "줌 컨트롤 + 배율 표시. @default true"
+    },
+    {
+      "part": "contentOrigin",
+      "rule": "children 좌표의 기준점. 일반 이미지/SVG/canvas는 top-left를 사용하고, 세계 좌표 (0,0)을 뷰포트 중심에 두는 renderer만 center를 명시합니다."
+    },
+    {
+      "part": "toolbar",
+      "rule": "Optional custom viewport-local toolbar. When supplied it replaces the built-in controls."
+    },
+    {
+      "part": "label",
+      "rule": "접근성 라벨. @default \"2D 맵 캔버스\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "children",
+      "type": "React.ReactNode | ((context: { viewport: Map2DViewport; setViewport: ( viewport: Map2DViewport | ((viewport: Map2DViewport) = Map2DViewport) ) = void; }) = React.ReactNode)",
+      "required": false,
+      "description": "함께 변환되는 콘텐츠(맵 이미지 · SVG 오버레이 · canvas/konva 스테이지 등).",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "minZoom",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "maxZoom",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "grid",
+      "type": "boolean",
+      "required": false,
+      "description": "격자 배경. @default true",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "controls",
+      "type": "boolean",
+      "required": false,
+      "description": "줌 컨트롤 + 배율 표시. @default true",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "panEnabled",
+      "type": "boolean",
+      "required": false,
+      "description": "드래그 팬 사용 여부. false이면 터치 스크롤을 차단하지 않습니다. @default true",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "wheelZoom",
+      "type": "boolean",
+      "required": false,
+      "description": "포인터 위치를 기준으로 한 wheel/trackpad zoom. @default true",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "keyboard",
+      "type": "boolean",
+      "required": false,
+      "description": "뷰포트 자체에 포커스했을 때의 키보드 줌/팬 단축키. @default true",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "contentOrigin",
+      "type": "'top-left' | 'center'",
+      "required": false,
+      "description": "children 좌표의 기준점. 일반 이미지/SVG/canvas는 top-left를 사용하고, 세계 좌표 (0,0)을 뷰포트 중심에 두는 renderer만 center를 명시합니다.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "viewport",
+      "type": "Map2DViewport",
+      "required": false,
+      "description": "제어형 뷰포트 상태.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "defaultViewport",
+      "type": "Map2DViewport",
+      "required": false,
+      "description": "비제어 초기 뷰포트이자 \"보기 초기화\"의 복귀값.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "onViewportChange",
+      "type": "(viewport: Map2DViewport) = void",
+      "required": false,
+      "description": "뷰포트 변경 콜백.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "onFit",
+      "type": "() = void",
+      "required": false,
+      "description": "Optional fit-to-content command. The application owns bounds calculation.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "toolbar",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional custom viewport-local toolbar. When supplied it replaces the built-in controls.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "onWheel",
+      "type": "(event: WheelEvent) = void",
+      "required": false,
+      "description": "Native non-passive wheel event fired before built-in pointer-focal zoom handling.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "overlay",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "뷰포트 위의 passive overlay 슬롯. 포인터 입력은 받지 않습니다.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "status",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "좌하단 상태 표시. 기본은 zoom %.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "source",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "좌상단 source identity.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "badges",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "source 옆 passive badge.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "hud",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "소수의 필수 viewport readout.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "state",
+      "type": "ViewerState",
+      "required": false,
+      "description": "Legacy combined Viewer state. Prefer the orthogonal axes in new product code.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "availability",
+      "type": "ViewerAvailability",
+      "required": false,
+      "description": "",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "connection",
+      "type": "ViewerConnection",
+      "required": false,
+      "description": "",
+      "owner": "Map2DCanvasProps"
+    },
+    {
+      "name": "freshness",
+      "type": "ViewerFreshness",
+      "required": false,
+      "description": "",
+      "owner": "Map2DCanvasProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "status",
+      "rule": "좌하단 상태 표시. 기본은 zoom %."
+    },
+    {
+      "state": "state",
+      "rule": "Legacy combined Viewer state. Prefer the orthogonal axes in new product code."
+    },
+    {
+      "state": "variant",
+      "rule": "Perimeter ownership. \"embedded\" drops the canvas's own border and radius so a parent surface owns one continuous outline. @default \"standalone\""
+    }
+  ],
+  "behavior": [
+    "NVIDIA Omniverse viewport navigation: pointer 중심 navigation과 viewport-local camera controls를 기준으로 삼았습니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "기본 contentOrigin=\"top-left\"는 일반 이미지, SVG, canvas의 (0, 0)을 viewport 좌상단에 놓습니다. 세계 좌표 원점을 화면 중심에 두어야 하는 renderer만 contentOrigin=\"center\"를 명시하고 자체 콘텐츠 offset을 제공합니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "줌 배율은 minZoom(기본 0.25)–maxZoom(기본 8) 사이로 clamp되며 휠·키보드·컨트롤 모든 입력 경로에 동일하게 적용됩니다. 픽셀 지도가 깨지는 배율이나 의미 없는 축소를 막을 때만 범위를 좁히고, 두 값이 곧 컨트롤의 disabled 경계가 됩니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "키보드 shortcut은 viewport 자체에 포커스했을 때만 동작합니다: +/- 줌, 0 초기화, 방향키 팬, Shift+방향키 큰 폭 팬. Toolbar, input, slider 등 자식 컨트롤의 방향키는 가로채지 않습니다. keyboard={false}는 이 shortcut과 viewport의 tab stop을 함께 제거하므로, 앱이 자체 키보드 pan/zoom 대안을 제공할 때만 끕니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "label(기본 2D 맵 캔버스)은 region의 접근 가능한 이름입니다. 한 화면에 viewport가 여럿이면 소스가 드러나는 이름(1층 점유 지도)으로 반드시 구분합니다."
+    }
+  ],
+  "responsive": [
+    "children은 pan/zoom transform을 함께 타는 공간 콘텐츠(맵 이미지 · SVG 오버레이 · canvas/konva 스테이지)입니다. 정적 노드 외에 { viewport, setViewport }를 받는 render function도 지원하므로, renderer가 현재 배율에 반응하거나 자체 fit 로직에서 viewport를 갱신할 때 제어형 상태를 중복 소유하지 않아도 됩니다.",
+    "defaultViewport는 초기값인 동시에 보기 초기화가 복귀할 값입니다. viewport + onViewportChange로 제어형 사용도 지원합니다.",
+    "onFit을 제공하면 built-in toolbar에 전체 보기 command가 추가됩니다. bounds 계산은 앱/renderer가 소유하고 callback에서 제어형 viewport를 갱신합니다. toolbar를 제공하면 built-in toolbar를 명시적으로 대체합니다.",
+    "overlay는 passive visual slot이며 포인터 입력을 받지 않습니다. 별도 조작은 viewport-local toolbar 또는 앱 소유 UI로 구성합니다."
+  ],
+  "contentGuidance": [
+    "공통 ViewerFrame을 합성하므로 availability/connection/freshness/playback 축과 호환 state, source/HUD, blocking-vs-edge 상태 배치를 그대로 사용합니다. source 옆의 passive badges, 소수의 필수 readout만 담는 hud, 상태 문구·글리프·복구 액션 오버라이드(stateLabel, stateDescription, stateIcon, stateAction)는 모두 ViewerFrame 계약을 그대로 통과시키는 prop입니다."
+  ],
+  "accessibility": [
+    "variant=\"embedded\"는 이 캔버스를 다른 표면(Card, 패널 등) 안에 중첩할 때 자체 border·radius를 생략해 부모가 최외곽선을 소유하게 합니다. pan/zoom·toolbar·상태·접근성 역할은 그대로 유지됩니다. 기본값 standalone은 자체 외곽선을 그립니다.",
+    "ViewerToolbar, Icon, LDS spacing/focus/toggle tokens를 재사용하며 독자적인 map-control visual language를 만들지 않습니다.",
+    "Unity Scene View navigation: viewport navigation을 scene-local pan/orbit/zoom/focus 동작으로 제한하고, 콘텐츠 편집 명령과 분리했습니다.",
+    "WCAG 2.2 — Dragging Movements: drag만이 유일한 조작이 되지 않도록 버튼과 키보드 pan/zoom 대안을 유지했습니다.",
+    "WAI-ARIA Toolbar pattern: viewport 안의 방향키 toolbar가 canvas 방향키 shortcut과 충돌하지 않도록 이벤트 범위를 분리했습니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "FloorSelector",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Scene3DFrame",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "VideoStreamTile",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "VIEWER_BLOCKING_STATES",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "VIEWER_STATES",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewerFrame",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewerToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewerToolbarButton",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<Map2DCanvas\n  style={{ height: 360 }}\n  defaultViewport={{ x: 24, y: 24, z: 1 }}\n  panEnabled={tool === 'pan'}\n  wheelZoom\n  status=\"x 12.4 · y -3.8 · 125%\"\n>\n  <img src=\"/maps/floor1.png\" alt=\"1층 점유 지도\" style={{ display: 'block' }} />\n</Map2DCanvas>"
+    }
+  ],
+  "tokens": [
+    "--map-grid-line",
+    "--viewer-border",
+    "--viewer-surface",
+    "--viewer-surface-elevated"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ViewerMap.stories.jsx",
+    "entryStoryId": "lds-product-viewer-2d-map--map-canvas-overview",
+    "publicStories": [
+      {
+        "id": "lds-product-viewer-2d-map--map-canvas-overview",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-viewer-2d-map--origin-and-navigation-states",
+        "name": "변형·상태 · 중앙 원점 · 탐색 비활성",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-viewer-2d-map--keyboard-and-pointer-contract",
+        "name": "상호작용 · 키보드·포인터 줌",
+        "role": "interaction"
+      },
+      {
+        "id": "lds-product-viewer-2d-map--narrow-width",
+        "name": "반응형 · 320px 좁은 폭",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

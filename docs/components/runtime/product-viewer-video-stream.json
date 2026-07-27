@@ -1,0 +1,321 @@
+{
+  "slug": "product-viewer-video-stream",
+  "title": "Video Stream",
+  "storybookTitle": "LDS Product/Viewer/Video Stream",
+  "layer": "Product",
+  "family": "Viewer",
+  "primaryOwner": "VideoStreamTile",
+  "ownerComponents": [
+    "VideoStreamTile"
+  ],
+  "supportingComponents": [
+    "Button",
+    "Icon",
+    "ViewerToolbar",
+    "ViewerToolbarButton"
+  ],
+  "purpose": "운영자가 카메라 영상을 보면서 연결 상태와 뷰포트 도구를 즉시 판단해야 할 때 적합합니다. 정지 이미지나 공간 경로를 탐색하는 화면에는 Video Stream 대신 Image 또는 2D Map을 사용하세요.",
+  "useWhen": [
+    "Use the local toolbar for mute, captions, snapshot, and fullscreen. Recording archives, timelines, playback-session controls, and retry policy are intentionally omitted from this DS component.",
+    "The HTML media element specification influenced the separation of paused, ended/unavailable, and error semantics from connection transport.",
+    "VideoStreamTile is the video-source preset for ViewerFrame."
+  ],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "children",
+      "rule": "Actual video, WebRTC, iframe, or image renderer output."
+    },
+    {
+      "part": "label",
+      "rule": "Visible camera or media-source identity."
+    },
+    {
+      "part": "ariaLabel",
+      "rule": "Accessible region name. Derived from a string label when omitted."
+    },
+    {
+      "part": "toolbar",
+      "rule": "Viewport-local mute, captions, snapshot, or fullscreen controls."
+    }
+  ],
+  "properties": [
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Actual video, WebRTC, iframe, or image renderer output.",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "label",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Visible camera or media-source identity.",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "required": false,
+      "description": "Accessible region name. Derived from a string label when omitted.",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "status",
+      "type": "ViewerState",
+      "required": false,
+      "description": "Normalized stream state. Prefer state in new code. @default \"idle\"",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "state",
+      "type": "ViewerState",
+      "required": false,
+      "description": "Normalized stream state. Takes precedence over the compatibility status prop.",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "availability",
+      "type": "ViewerAvailability",
+      "required": false,
+      "description": "",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "connection",
+      "type": "ViewerConnection",
+      "required": false,
+      "description": "",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "freshness",
+      "type": "ViewerFreshness",
+      "required": false,
+      "description": "",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "playback",
+      "type": "ViewerPlayback",
+      "required": false,
+      "description": "",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "aspectRatio",
+      "type": "string",
+      "required": false,
+      "description": "CSS aspect-ratio value. @default \"16 / 9\"",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "badges",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "hud",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Compact passive diagnostics; keep the default HUD to essential values.",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "toolbar",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Viewport-local mute, captions, snapshot, or fullscreen controls.",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "overlay",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Non-interactive video overlay.",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "metadata",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Passive stream metadata such as resolution, FPS, or freshness.",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "stateLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "stateDescription",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "stateIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "stateAction",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "variant",
+      "type": "'standalone' | 'embedded'",
+      "required": false,
+      "description": "Perimeter ownership. \"embedded\" drops the tile's own border and radius so a parent surface owns one continuous outline. @default \"standalone\"",
+      "owner": "VideoStreamTileProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "status",
+      "rule": "Normalized stream state. Prefer state in new code. @default \"idle\""
+    },
+    {
+      "state": "state",
+      "rule": "Normalized stream state. Takes precedence over the compatibility status prop."
+    },
+    {
+      "state": "variant",
+      "rule": "Perimeter ownership. \"embedded\" drops the tile's own border and radius so a parent surface owns one continuous outline. @default \"standalone\""
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "aspectRatio (default 16 / 9) is a CSS aspect-ratio value that sizes the tile from its width. Match it to the real stream ratio (4 / 3, 1 / 1) instead of letterboxing inside the child renderer; give the tile an explicit height only when the owning grid requires it."
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "The chrome slots follow the shared ViewerFrame contract: badges is passive identity context beside label, hud carries a few essential stream readouts, and overlay is a non-interactive layer above the video (crosshair, privacy mask) — controls belong in toolbar only.",
+    "degraded, stale, frozen, and user-requested paused are distinct non-blocking states. They preserve the last frame with an edge message.",
+    "Pass a , WebRTC renderer, iframe, or image as children. The DS owns the named frame, source identity, local toolbar/HUD slots, aspect ratio, and normalized stream-state presentation. The application owns transport, autoplay policy, playback, recording, reconnection, and media permissions.",
+    "These expectations are adapted to LDS component roles and icons rather than copying another product's visual styling. The common state and placement contract is documented in ViewerFrame.prompt.md."
+  ],
+  "accessibility": [
+    "The region's accessible name comes from ariaLabel when supplied; otherwise a string label derives \"{label} 영상 스트림\" and a missing/non-string label falls back to 영상 스트림. Set ariaLabel explicitly whenever label is a non-string node or several tiles would otherwise share one name.",
+    "live uses both icon and text. Loading/connecting states include visible text and aria-busy; they do not rely on a spinner alone.",
+    "no-source, unavailable, disconnected, no-signal, and error are blocking. Child media controls and local toolbar controls become inert and aria-hidden, while source identity remains visible.",
+    "A retry/resume control may be supplied through stateAction; the application owns transport and recovery, and the frame restores focus to that action when a focused viewport control becomes blocked.",
+    "variant=\"embedded\"는 이 타일을 다른 표면 안에 중첩할 때 자체 border·radius를 생략해 부모가 최외곽선을 소유하게 합니다. source·HUD·toolbar·상태·접근성 역할은 그대로 유지됩니다. 기본값 standalone은 자체 외곽선을 그립니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewerToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewerToolbarButton",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FloorSelector",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Map2DCanvas",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Scene3DFrame",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "VIEWER_BLOCKING_STATES",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<VideoStreamTile\n  label=\"AMR-07 · FRONT\"\n  state=\"live\"\n  metadata=\"1080p · 30 FPS\"\n  toolbar={videoControls}\n>\n  <video aria-label=\"AMR-07 전면 카메라 영상\" />\n</VideoStreamTile>"
+    }
+  ],
+  "tokens": [],
+  "apiLinks": [],
+  "migration": [
+    "The default state is idle, never an unverified live claim. state is the normalized-state prop for new code; status is a compatibility alias that state always wins over — do not supply both in new work.",
+    "New integrations should report independent availability, connection, freshness, and playback axes. Supplying any of those axes takes precedence over the legacy combined state/status adapter, so a stale connected stream is not misreported as disconnected or unavailable."
+  ],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ViewerVideo.stories.jsx",
+    "entryStoryId": "lds-product-viewer-video-stream--video-stream-overview",
+    "publicStories": [
+      {
+        "id": "lds-product-viewer-video-stream--video-stream-overview",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-viewer-video-stream--recovery-action",
+        "name": "변형·상태 · 신호 없음 · 다시 연결",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-viewer-video-stream--dark-theme",
+        "name": "변형·상태 · 어두운 배경",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-viewer-video-stream--narrow-width",
+        "name": "반응형 · 좁은 폭",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 2
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "omitted-no-evidence",
+    "apiLinks": "evidence",
+    "migration": "evidence"
+  }
+}

@@ -22,8 +22,24 @@ const lds3dSurfaceSchemaPath = 'docs/references/package-split/LDS3D_EXTERNAL_SUR
 const fixtureContractPath = 'packages/conformance/fixtures/contract.json';
 const fixtureSurfacePath = 'packages/conformance/fixtures/lds/external-surface.json';
 const fixtureLds3dSurfacePath = 'packages/conformance/fixtures/lds/lds3d-external-surface.json';
+const roboticsPolicyPath = 'docs/references/package-split/ROBOTICS_NAVIGATION_STATE_BADGE_CONTRACT.json';
+const roboticsPolicySchemaPath = 'docs/references/package-split/ROBOTICS_POLICY_CONTRACT.schema.json';
+const fixtureRoboticsPolicyPath = 'packages/conformance/fixtures/lds/robotics-policy.json';
 
-const [contract, contractSchema, surface, surfaceSchema, lds3dSurface, lds3dSurfaceSchema, fixtureContract, fixtureSurface, fixtureLds3dSurface] = await Promise.all([
+const [
+  contract,
+  contractSchema,
+  surface,
+  surfaceSchema,
+  lds3dSurface,
+  lds3dSurfaceSchema,
+  fixtureContract,
+  fixtureSurface,
+  fixtureLds3dSurface,
+  roboticsPolicy,
+  roboticsPolicySchema,
+  fixtureRoboticsPolicy,
+] = await Promise.all([
   load(contractPath),
   load(contractSchemaPath),
   load(surfacePath),
@@ -33,6 +49,9 @@ const [contract, contractSchema, surface, surfaceSchema, lds3dSurface, lds3dSurf
   load(fixtureContractPath),
   load(fixtureSurfacePath),
   load(fixtureLds3dSurfacePath),
+  load(roboticsPolicyPath),
+  load(roboticsPolicySchemaPath),
+  load(fixtureRoboticsPolicyPath),
 ]);
 
 const ajv = new Ajv2020({ allErrors: true, strict: true });
@@ -45,6 +64,8 @@ for (const [label, schema, value] of [
   ['fixture style contract', contractSchema, fixtureContract],
   ['fixture Robotics external surface', surfaceSchema, fixtureSurface],
   ['fixture LDS3D external surface', lds3dSurfaceSchema, fixtureLds3dSurface],
+  ['Robotics navigation state-badge policy', roboticsPolicySchema, roboticsPolicy],
+  ['fixture Robotics policy', roboticsPolicySchema, fixtureRoboticsPolicy],
 ]) {
   const validate = ajv.compile(schema);
   if (!validate(value)) {
@@ -63,6 +84,11 @@ function assertSameStrings(label, left, right) {
 function checkRoboticsProfile(styleContract, externalSurface, label) {
   const profile = styleContract.profiles['robotics-ui'];
   assertSameStrings(`${label} local token definitions`, profile.localTokenDefinitions.names, externalSurface.localTokenDefinitions);
+  assertSameStrings(
+    `${label} inherited runtime custom properties`,
+    profile.inheritedRuntimeCustomProperties.map((entry) => entry.name),
+    externalSurface.inheritedRuntimeCustomProperties,
+  );
 }
 
 function checkLds3dProfile(styleContract, externalSurface, label) {
@@ -111,6 +137,17 @@ checkRoboticsProfile(fixtureContract, fixtureSurface, 'Fixture Robotics');
 checkLds3dProfile(fixtureContract, fixtureLds3dSurface, 'Fixture LDS3D');
 checkProfileDependencyPins(contract, 'Production contract');
 checkProfileDependencyPins(fixtureContract, 'Fixture contract');
+
+if (contract.profiles['robotics-ui'].policyContracts.length !== 1
+  || contract.profiles['robotics-ui'].policyContracts[0] !== roboticsPolicyPath
+  || roboticsPolicy.profile !== 'robotics-ui') {
+  throw new Error('Production Robotics profile must consume the authoritative navigation state-badge policy.');
+}
+if (fixtureContract.profiles['robotics-ui'].policyContracts.length !== 1
+  || fixtureContract.profiles['robotics-ui'].policyContracts[0] !== 'robotics-policy.json'
+  || fixtureRoboticsPolicy.profile !== 'robotics-ui') {
+  throw new Error('Fixture Robotics profile must consume its policy fixture.');
+}
 
 for (const packageContract of contract.lds.packages) {
   const packageJson = await load(`${packageContract.workspace}/package.json`);

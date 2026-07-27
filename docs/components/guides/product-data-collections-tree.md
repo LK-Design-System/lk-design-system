@@ -27,7 +27,9 @@
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
 | `nodes` | `TreeNodeData[]` | Yes |  |
+| `expandedIds` | `Array` | No | Controlled IDs of expanded branches. |
 | `defaultExpanded` | `Array` | No | Node IDs, or primitive labels for legacy nodes without an ID, expanded initially. |
+| `onExpandedIdsChange` | `(expandedIds: string[]) = void` | No | Called with normalized IDs/legacy primitive labels after expansion changes. |
 | `selectedId` | `string \| number \| null` | No | Controlled ID of the single selected node. IDs are normalized to strings. |
 | `defaultSelectedId` | `string \| number \| null` | No | Initial ID of the single selected node when uncontrolled. IDs are normalized to strings. |
 | `onSelectedIdChange` | `(selectedId: string) = void` | No | Called with the normalized ID when a node with an ID is activated. |
@@ -39,7 +41,9 @@
 
 | State | Contract |
 | --- | --- |
+| expandedIds | Controlled IDs of expanded branches. |
 | defaultExpanded | Node IDs, or primitive labels for legacy nodes without an ID, expanded initially. |
+| onExpandedIdsChange | Called with normalized IDs/legacy primitive labels after expansion changes. |
 | selectedId | Controlled ID of the single selected node. IDs are normalized to strings. |
 | defaultSelectedId | Initial ID of the single selected node when uncontrolled. IDs are normalized to strings. |
 | onSelectedIdChange | Called with the normalized ID when a node with an ID is activated. |
@@ -53,10 +57,10 @@
 
 | Subject | Rule |
 | --- | --- |
+| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| --caption2-size | 11px |
 | --color-semantic-background-normal-alternative | light: #F7F7F8; dark: #0F0F10 |
 | --color-semantic-focus-indicator | light: #2F6FB0; dark: #7FB0DE |
-| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
-| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
 
 ## Content and writing
 
@@ -97,9 +101,12 @@
 
 ### Tokens
 
+- `--caption1-size`
+- `--caption2-size`
 - `--color-semantic-background-normal-alternative`
 - `--color-semantic-focus-indicator`
 - `--color-semantic-label-alternative`
+- `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
 - `--color-semantic-label-strong`
 - `--color-semantic-primary-normal`

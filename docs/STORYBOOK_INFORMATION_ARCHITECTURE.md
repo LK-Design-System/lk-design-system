@@ -41,7 +41,7 @@
 - 공개 스토리 표시명 계약은 감사 원장의 권고 변경과 함께 추적한다.
 - 이름을 바꾼 페이지의 기존 story id 보존: 4/4페이지
 
-모든 페이지는 첫 공개 스토리 `개요`의 Canvas에서 `오버라인 → 제목 → 사용 기준 또는 Foundation 제약`을 읽고, 역할 접두어로 정렬된 나머지 공개 스토리를 사이드바에서 하나씩 열어 상황과 확인 지점을 본다. Docs 탭은 스토리나 Controls를 다시 인쇄하지 않는다. 사이드바와 Canvas가 specimen·interaction을 소유하고, Docs는 제목·설명·결정 가이드만 소유한다.
+모든 페이지는 첫 공개 스토리 `개요`의 Canvas에서 `오버라인 → 제목 → 사용 기준 또는 Foundation 제약`을 읽고, 역할 접두어로 정렬된 나머지 공개 스토리를 사이드바에서 하나씩 열어 상황과 확인 지점을 본다. Docs 탭은 스토리나 Controls를 다시 인쇄하지 않는다. 사이드바와 Canvas가 specimen·interaction을 소유하고, Docs는 제목·설명·결정 가이드만 소유한다. Canvas 헤더의 설명 강도와 상세 근거를 Docs로 분리하는 기준은 [`STORYBOOK_MASTHEAD_COPY_CONTRACT.md`](STORYBOOK_MASTHEAD_COPY_CONTRACT.md)를 따른다.
 
 ## 전수 감사 판정
 

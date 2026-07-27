@@ -1,5 +1,9 @@
 import React from 'react';
 import {
+  LdsStorybookDocsStyles,
+  LdsStorybookGuideLayout,
+} from '@lk-robotics/lds-product/storybook';
+import {
   Description,
   DocsContext,
   Subtitle,
@@ -40,79 +44,6 @@ const canvasShell = (viewMode) => ({
   color: 'var(--color-semantic-label-normal)',
   fontFamily: 'var(--font-sans)',
 });
-
-/** The typography and colour a guide needs when it is embedded outside the canvas shell. */
-const guideShell = {
-  marginTop: 'var(--space-8)',
-  minWidth: 0,
-  fontFamily: 'var(--font-sans)',
-  color: 'var(--color-semantic-label-normal)',
-};
-
-/*
- * A Docs page is one document, and a reader judges it as one: one typeface, one type ramp, one
- * rhythm. The Docs tab no longer embeds stories or Controls, so every element here belongs to
- * that document and uses the system's type and spacing scales.
- */
-const DOCS_SURFACE = `
-  .sbdocs-content * { font-family: var(--font-sans); }
-  .sbdocs-content :is(code,pre,kbd,samp) {
-    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
-  }
-
-  /* One heading ramp, whoever emitted the heading. */
-  .sbdocs-content :is(h1,h2,h3,h4,h5,h6) {
-    color: var(--color-semantic-label-strong);
-    font-weight: 700;
-    border: 0;
-    padding: 0;
-    text-transform: none;
-    letter-spacing: normal;
-  }
-  .sbdocs-content h1 {
-    font-size: var(--title1-size); line-height: var(--title1-line); letter-spacing: var(--title1-spacing);
-    margin: 0 0 var(--space-4);
-  }
-  .sbdocs-content h2 {
-    font-size: var(--title3-size); line-height: var(--title3-line); letter-spacing: var(--title3-spacing);
-    margin: var(--space-12) 0 var(--space-5);
-  }
-  .sbdocs-content h3 {
-    font-size: var(--headline2-size); line-height: var(--headline2-line);
-    margin: var(--space-8) 0 var(--space-3);
-  }
-
-  /* Storybook's own prose sits a step below the body text the guide uses; one size for both. */
-  .sbdocs-content > p,
-  .sbdocs-content .sb-anchor > p {
-    font-size: var(--body1-size);
-    line-height: var(--body1-reading-line, var(--body1-line));
-    color: var(--color-semantic-label-normal);
-    margin: 0 0 var(--space-6);
-  }
-
-  /* Block rhythm on the spacing scale. Storybook's defaults are 25px and 56px, neither of which
-     is a step, so the page alternated between its rhythm and the guide's 32/64. Both classes are
-     on the container so this outweighs the emotion class Storybook puts on the block itself. */
-  .sbdocs.sbdocs-content > * { margin-block: 0 var(--space-8); }
-  .sbdocs.sbdocs-content > *:last-child { margin-block-end: 0; }
-`;
-
-/*
- * Jumping to a section instantly loses the reader's place: nothing shows which way the page
- * moved or how far. The Motion foundation declares the durations and easing for exactly this,
- * and its reduced-motion rule says continuous movement is removed rather than shortened.
- */
-const DOCS_MOTION = `
-  @media (prefers-reduced-motion: no-preference) {
-    html:has(.sbdocs) { scroll-behavior: smooth; }
-  }
-  .sbdocs-toc--custom a {
-    transition:
-      color var(--duration-fast) var(--ease-standard),
-      opacity var(--duration-fast) var(--ease-standard);
-  }
-`;
 
 const darkBackgroundNames = new Set(['dark', 'navy', 'inverse']);
 const darkBackgroundValues = new Set(['#101828', '#0e1329', '#0a0e1a', '#151a2b']);
@@ -187,26 +118,26 @@ function GuideDocsPage() {
       <Description />
       {/* Component and Foundation guides are the same kind of content, so they land in the
           same place: the Docs tab, one heading level below the page title. */}
-      <style>{DOCS_SURFACE}{DOCS_MOTION}</style>
+      <LdsStorybookDocsStyles />
       {componentSlug ? (
-        <div data-theme="light" className="theme-light" data-component-guide-layout style={guideShell}>
+        <LdsStorybookGuideLayout data-component-guide-layout>
           <ComponentGuideForStory slug={componentSlug} embedded />
-        </div>
+        </LdsStorybookGuideLayout>
       ) : null}
       {relatedPatterns.length ? (
-        <div data-theme="light" className="theme-light" data-related-pattern-layout style={guideShell}>
+        <LdsStorybookGuideLayout data-related-pattern-layout>
           <RelatedPatternLinks patterns={relatedPatterns} />
-        </div>
+        </LdsStorybookGuideLayout>
       ) : null}
       {foundationSlug ? (
-        <div data-theme="light" className="theme-light" data-foundation-guide-layout style={guideShell}>
+        <LdsStorybookGuideLayout data-foundation-guide-layout>
           <FoundationGuide slug={foundationSlug} sectionLevel={2} />
-        </div>
+        </LdsStorybookGuideLayout>
       ) : null}
       {patternGuide ? (
-        <div data-theme="light" className="theme-light" data-pattern-guide-layout style={guideShell}>
+        <LdsStorybookGuideLayout data-pattern-guide-layout>
           <PatternGuide pattern={patternGuide} sectionLevel={2} />
-        </div>
+        </LdsStorybookGuideLayout>
       ) : null}
     </>
   );
@@ -299,7 +230,21 @@ export const parameters = {
         ],
         'LDS Core/Components': ['Layout', 'Action', 'Selection and Input', 'Content', 'Navigation', 'Status', 'Overlay'],
         'LDS Theme': ['Brand', 'Controls', 'Status'],
-        'LDS Product': ['Action', 'Content', 'Data', 'Status', 'Feedback', 'Layout', 'Navigation', 'Overlay', 'Selection and Input'],
+        'LDS Product': [
+          'Action',
+          'Content',
+          'Data',
+          'Status',
+          'Feedback',
+          'Layout',
+          'Navigation',
+          'Overlay',
+          'Selection and Input',
+          'Communication',
+          'Editor',
+          'Operations Dashboard',
+          'Viewer',
+        ],
         'LDS Product/Data': ['Display', 'Visualization', 'Collections', 'Operations'],
       };
 

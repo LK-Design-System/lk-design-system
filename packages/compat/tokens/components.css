@@ -264,6 +264,14 @@
   --component-viewer-light-foreground: color-mix(in srgb, var(--color-semantic-static-black) 90%, transparent);
   --component-viewer-light-muted: color-mix(in srgb, var(--color-semantic-static-black) 68%, transparent);
   --component-viewer-light-border: color-mix(in srgb, var(--color-semantic-static-black) 16%, transparent);
+  --component-viewer-map-free: color-mix(in srgb, var(--color-semantic-static-black) 78%, var(--color-semantic-primary-normal));
+  --component-viewer-map-occupied: color-mix(in srgb, var(--color-semantic-static-white) 88%, transparent);
+  --component-viewer-map-unknown: color-mix(in srgb, var(--color-semantic-static-black) 88%, var(--color-semantic-primary-normal));
+  --component-viewer-map-boundary: color-mix(in srgb, var(--color-semantic-static-white) 32%, transparent);
+  --component-viewer-light-map-free: var(--color-semantic-static-white);
+  --component-viewer-light-map-occupied: color-mix(in srgb, var(--color-semantic-static-black) 79%, transparent);
+  --component-viewer-light-map-unknown: color-mix(in srgb, var(--color-semantic-static-black) 4%, var(--color-semantic-static-white));
+  --component-viewer-light-map-boundary: color-mix(in srgb, var(--color-semantic-static-black) 28%, transparent);
 
   /* ---- Card ------------------------------------------------------------ */
   --component-card-bg: var(--color-semantic-background-elevated-normal);
@@ -281,6 +289,148 @@
   --component-card-hover-transform: translateY(-4px);
   --component-card-transition: var(--transition-base);
 }
+
+/* Product-only component rules; projected to @lk-robotics/lds-product. */
+@keyframes lk-conn-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-lds-connection-motion] { animation: none !important; }
+}
+
+@container (max-width: 240px) {
+  [data-viewer-blocking-state] {
+    padding: 8px !important;
+  }
+
+  [data-viewer-blocking-body],
+  [data-viewer-blocking-live] {
+    gap: 4px !important;
+  }
+
+  [data-viewer-blocking-icon] {
+    display: none !important;
+  }
+
+  [data-viewer-blocking-description] {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  [data-viewer-blocking-action] {
+    margin-top: 0 !important;
+  }
+}
+
+.lk-canvas-editor-shell__responsive-navigation {
+  display: none;
+}
+
+.lk-canvas-editor-shell .lk-canvas-editor-shell__layers > [data-side] > div > button,
+.lk-canvas-editor-shell .lk-canvas-editor-shell__panel > [data-side] > div > button {
+  top: 72px !important;
+}
+
+.lk-editor-toolbar__button {
+  position: relative;
+  z-index: 1;
+}
+
+/* ToggleIcon paints inline colours; selection keeps a readable foreground. */
+.lk-editor-toolbar__button[aria-pressed="true"]:not([aria-disabled="true"]) {
+  background: var(--color-semantic-primary-surface-normal) !important;
+  color: var(--color-semantic-label-normal) !important;
+}
+
+@container (max-width: 260px) {
+  .lk-layer-panel__row-description,
+  .lk-layer-panel__row-meta {
+    display: none !important;
+  }
+}
+
+@container (max-width: 760px) {
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__responsive-navigation {
+    display: block;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__header-description {
+    display: none !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: minmax(260px, 1fr) !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="canvas"][data-mobile-has-tools="true"] {
+    grid-template-columns: auto minmax(0, 1fr) !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__tools,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__canvas {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="canvas"][data-mobile-has-tools="true"] .lk-canvas-editor-shell__canvas {
+    grid-column: 2 !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__layers,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--docked {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__layers > [data-side],
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--docked > [data-side],
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__layers > [data-side] > div,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--docked > [data-side] > div,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__layers aside,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--docked aside {
+    width: 100% !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__layers > [data-side] > div > button,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--docked > [data-side] > div > button,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__layers [role="separator"],
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--docked [role="separator"] {
+    display: none !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="canvas"] .lk-canvas-editor-shell__layers,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="canvas"] .lk-canvas-editor-shell__panel--docked,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="layers"] .lk-canvas-editor-shell__tools,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="layers"] .lk-canvas-editor-shell__canvas,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="layers"] .lk-canvas-editor-shell__panel--docked,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="panel"] .lk-canvas-editor-shell__tools,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="panel"] .lk-canvas-editor-shell__canvas,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="panel"] .lk-canvas-editor-shell__layers {
+    display: none !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--drawer {
+    width: min(var(--canvas-editor-panel-width), calc(100% - 40px)) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lk-canvas-editor-shell [data-side] > div {
+    transition: none !important;
+  }
+}
+/* End product-only component rules. */
 
 /* Component aliases declared at :root otherwise keep their light computed
    value when inherited into a nested dark scope. Re-declare theme-adaptive

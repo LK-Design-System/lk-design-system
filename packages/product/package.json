@@ -8,7 +8,9 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
+    "storybook",
     "styles.css",
+    "tokens",
     "assets",
     "THIRD_PARTY_NOTICES.md"
   ],
@@ -36,7 +38,12 @@
       "types": "./dist/components/*.d.ts",
       "import": "./dist/components/*.js"
     },
+    "./storybook": {
+      "types": "./storybook/index.d.ts",
+      "import": "./storybook/index.js"
+    },
     "./styles.css": "./styles.css",
+    "./tokens/*": "./tokens/*",
     "./assets/*": "./assets/*"
   }
 }

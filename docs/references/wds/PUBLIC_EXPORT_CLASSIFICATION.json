@@ -638,16 +638,20 @@
         "stories/RoboticsNavigationFacilities.stories.jsx",
         "stories/RoboticsNavigationHazardMarker.stories.jsx",
         "stories/RoboticsNavigationLane.stories.jsx",
+        "stories/RoboticsNavigationRobotPose.stories.jsx",
         "stories/RoboticsNavigationRegions.stories.jsx",
         "stories/RoboticsNavigationRoute.stories.jsx",
         "stories/RoboticsNavigationTrajectory.stories.jsx",
-        "stories/RoboticsNavigationWaypoint.stories.jsx"
+        "stories/RoboticsNavigationWaypoint.stories.jsx",
+        "stories/RoboticsViewerOccupancyMap.stories.jsx"
       ],
       "exports": [
         "FacilityTransition",
         "HazardMarker",
         "LaneOverlay",
         "NavigationAnnotationLayer",
+        "OccupancyMapLayer",
+        "RobotPoseMarker",
         "RouteOverlay",
         "SpatialRegion",
         "TrajectoryOverlay",
@@ -655,66 +659,101 @@
       ]
     },
     {
-      "name": "Robotics and viewer extension",
-      "ownerLayer": "robotics",
-      "provenance": "robotics-extension",
-      "wdsFamily": "Robotics extension",
+      "name": "Editor product patterns",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
+      "wdsFamily": "Application editor patterns",
       "storyEvidence": [
         "stories/EditorCommandBar.stories.jsx",
+        "stories/EditorHistoryToolbar.stories.jsx",
         "stories/EditorLayerPanel.stories.jsx",
         "stories/EditorSelectionInspector.stories.jsx",
         "stories/EditorShell.stories.jsx",
         "stories/EditorToolbar.stories.jsx",
-        "stories/EditorViewportStatusBar.stories.jsx",
-        "stories/RoboticsAssetsIcons.stories.jsx",
-        "stories/RoboticsManualControlSession.stories.jsx",
-        "stories/RoboticsAndViz.stories.jsx",
-        "stories/RoboticsBatteryGauge.stories.jsx",
-        "stories/RoboticsConnectionBadge.stories.jsx",
-        "stories/RoboticsDirectionalPad.stories.jsx",
-        "stories/RoboticsEquipment.stories.jsx",
-        "stories/RoboticsJoystick.stories.jsx",
-        "stories/RoboticsTopicTree.stories.jsx",
+        "stories/EditorViewportStatusBar.stories.jsx"
+      ],
+      "exports": [
+        "CanvasEditorCommandBar",
+        "CanvasEditorShell",
+        "EditorToolbar",
+        "HistoryToolbar",
+        "LayerPanel",
+        "SelectionInspector",
+        "ViewportStatusBar"
+      ]
+    },
+    {
+      "name": "Viewer product patterns",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
+      "wdsFamily": "Application viewer patterns",
+      "storyEvidence": [
         "stories/Viewer3D.stories.jsx",
         "stories/ViewerFloorSelector.stories.jsx",
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
-        "stories/RoboticsTelemetryGauge.stories.jsx",
-        "stories/RoboticsTelemetryValue.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],
       "exports": [
-        "BatteryGauge",
-        "CanvasEditorCommandBar",
-        "CanvasEditorShell",
-        "ConnectionBadge",
-        "DirectionalPad",
-        "EditorToolbar",
-        "EquipmentStatusCard",
         "FloorSelector",
-        "HistoryToolbar",
-        "Joystick",
-        "LayerPanel",
-        "ManualControlSession",
         "Map2DCanvas",
-        "RobotStatusCard",
         "Scene3DFrame",
-        "SelectionInspector",
-        "TelemetryGauge",
-        "TelemetryValue",
-        "TopicTree",
         "VideoStreamTile",
         "VIEWER_BLOCKING_STATES",
         "VIEWER_STATES",
         "ViewerFrame",
         "ViewerToolbar",
-        "ViewerToolbarButton",
-        "ViewportStatusBar"
+        "ViewerToolbarButton"
+      ]
+    },
+    {
+      "name": "Telemetry and equipment product patterns",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
+      "wdsFamily": "Application status and telemetry patterns",
+      "storyEvidence": [
+        "stories/RoboticsBatteryGauge.stories.jsx",
+        "stories/RoboticsConnectionBadge.stories.jsx",
+        "stories/RoboticsEquipment.stories.jsx",
+        "stories/RoboticsTelemetryGauge.stories.jsx",
+        "stories/RoboticsTelemetryValue.stories.jsx"
+      ],
+      "exports": [
+        "BatteryGauge",
+        "ConnectionBadge",
+        "EquipmentStatusCard",
+        "TelemetryGauge",
+        "TelemetryValue"
+      ]
+    },
+    {
+      "name": "Robotics control and domain extension",
+      "ownerLayer": "robotics",
+      "provenance": "robotics-extension",
+      "wdsFamily": "Robotics extension",
+      "storyEvidence": [
+        "stories/RoboticsAssetsIcons.stories.jsx",
+        "stories/RoboticsManualControlSession.stories.jsx",
+        "stories/RoboticsAndViz.stories.jsx",
+        "stories/RoboticsDirectionalPad.stories.jsx",
+        "stories/RoboticsJoystick.stories.jsx",
+        "stories/RoboticsTopicTree.stories.jsx"
+      ],
+      "exports": [
+        "DirectionalPad",
+        "Joystick",
+        "ManualControlSession",
+        "RobotStatusCard",
+        "TopicTree"
       ]
     }
   ],
   "internalModules": [
+    {
+      "path": "components/internal/bounded-value.js",
+      "ownerLayer": "core"
+    },
     {
       "path": "components/brand/lk-logo-paths.js",
       "ownerLayer": "core"
@@ -729,19 +768,27 @@
     },
     {
       "path": "components/internal/telemetryStatusLabel.js",
-      "ownerLayer": "robotics"
+      "ownerLayer": "product"
     },
     {
       "path": "components/internal/unit-format.js",
-      "ownerLayer": "robotics"
+      "ownerLayer": "core"
     },
     {
       "path": "components/internal/useMenuKeyboard.js",
       "ownerLayer": "core"
     },
     {
+      "path": "components/internal/usePanZoomViewport.js",
+      "ownerLayer": "product"
+    },
+    {
       "path": "components/internal/useRovingToolbar.js",
-      "ownerLayer": "robotics"
+      "ownerLayer": "product"
+    },
+    {
+      "path": "components/internal/viewer-state.js",
+      "ownerLayer": "product"
     },
     {
       "path": "components/internal/useSubmenuBranch.jsx",

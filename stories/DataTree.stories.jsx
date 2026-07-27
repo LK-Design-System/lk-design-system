@@ -49,7 +49,16 @@ const hierarchyNodes = [
           { id: 'forms', label: '폼' },
         ],
       },
-      { id: 'tokens', label: '토큰', icon: <TreeStatusDot tone="disabled" /> },
+      {
+        id: 'tokens',
+        label: '토큰',
+        description: '동기화가 끝날 때까지 선택할 수 없습니다.',
+        meta: '읽기 전용',
+        end: <StatusBadge tone="neutral">잠김</StatusBadge>,
+        icon: <TreeStatusDot tone="disabled" />,
+        disabled: true,
+        ariaLabel: '토큰, 읽기 전용, 사용할 수 없음',
+      },
     ],
   },
 ];

@@ -1,5 +1,12 @@
 # ManualControlSession
 
+## LDS reuse boundary
+
+- Use Core `Card` for the session surface, radius, border, elevation, and padding reset. `ManualControlSession` owns the named control region, safety lifecycle, focus gating, header/body/footer layout, and release behavior.
+- `controlToolbar` is an optional LDS-composed toolbar slot rendered above the active control surface; keep robot-specific speed or mode controls in that slot instead of adding another local toolbar primitive.
+- Do not duplicate generic card surface tokens in this component. A keyboard-mode session may add only the focus outline required by its control-region contract.
+- [WAI-ARIA Landmark Regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/) supports exposing the composed Card as a named `region` through `aria-labelledby`.
+
 **분류:** `LK Robotics Extension`. 수동 제어의 UI 경계와 상태 표현을 소유하지만, 안전 등급 장치·명령 전송·충돌 방지·watchdog를 구현하거나 보증하지 않습니다.
 
 ```jsx

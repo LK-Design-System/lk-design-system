@@ -261,38 +261,16 @@
       ]
     },
     "roboticsReview": {
-      "currentDecision": "All current robotics-layer modules remain Robotics Extension and target robotics-ui. LDS-owned DOM chrome is not LDS3D-owned.",
+      "currentDecision": "Reusable editor, viewer, telemetry, connection, battery, and equipment patterns are Product-owned. Robotics UI retains robot-control and spatial-domain semantics and re-exports moved paths during the compatibility window.",
       "disposition": "move-to-robotics-ui",
       "repositoryDisposition": "keep-in-current-repository-through-wave-3",
       "categories": {
-        "editor-chrome": [
-          "components/editor/CanvasEditorCommandBar.jsx",
-          "components/editor/CanvasEditorShell.jsx",
-          "components/editor/EditorToolbar.jsx",
-          "components/editor/HistoryToolbar.jsx",
-          "components/editor/LayerPanel.jsx",
-          "components/editor/SelectionInspector.jsx",
-          "components/editor/ViewportStatusBar.jsx"
-        ],
-        "viewer-chrome": [
-          "components/navigation/FloorSelector.jsx",
-          "components/viz/Map2DCanvas.jsx",
-          "components/viz/Scene3DFrame.jsx",
-          "components/viz/VideoStreamTile.jsx",
-          "components/viz/ViewerFrame.jsx",
-          "components/viz/ViewerToolbar.jsx"
-        ],
         "robot-operation-ui": [
-          "components/robotics/BatteryGauge.jsx",
-          "components/robotics/ConnectionBadge.jsx",
           "components/robotics/DirectionalPad.jsx",
-          "components/robotics/EquipmentStatusCard.jsx",
           "components/robotics/Joystick.jsx",
           "components/robotics/ManualControlSession.jsx",
           "components/robotics/RobotStatusCard.jsx",
-          "components/robotics/TopicTree.jsx",
-          "components/viz/TelemetryGauge.jsx",
-          "components/viz/TelemetryValue.jsx"
+          "components/robotics/TopicTree.jsx"
         ],
         "spatial-2d-ui": [
           "components/robotics/FacilityTransition.jsx",
@@ -305,10 +283,9 @@
           "components/robotics/WaypointMarker.jsx"
         ]
       },
-      "pendingProductCandidates": {
-        "decisionStatus": "pending-owner-review-and-pinned-cross-domain-evidence",
-        "targetPackageRemains": "robotics-ui",
-        "candidateTargetPackage": "product",
+      "productMigrations": {
+        "decisionStatus": "completed-with-robotics-compatibility-facades",
+        "targetPackage": "product",
         "publicModules": [
           "components/editor/CanvasEditorCommandBar.jsx",
           "components/editor/CanvasEditorShell.jsx",
@@ -318,8 +295,13 @@
           "components/editor/SelectionInspector.jsx",
           "components/editor/ViewportStatusBar.jsx",
           "components/navigation/FloorSelector.jsx",
+          "components/robotics/BatteryGauge.jsx",
+          "components/robotics/ConnectionBadge.jsx",
+          "components/robotics/EquipmentStatusCard.jsx",
           "components/viz/Map2DCanvas.jsx",
           "components/viz/Scene3DFrame.jsx",
+          "components/viz/TelemetryGauge.jsx",
+          "components/viz/TelemetryValue.jsx",
           "components/viz/VideoStreamTile.jsx",
           "components/viz/ViewerFrame.jsx",
           "components/viz/ViewerToolbar.jsx"
@@ -327,11 +309,27 @@
         "internalModules": [
           {
             "path": "components/internal/useRovingToolbar.js",
-            "candidateTargetPackage": "product"
+            "targetPackage": "product"
           },
           {
             "path": "components/internal/unit-format.js",
-            "candidateTargetPackage": "core"
+            "targetPackage": "core"
+          },
+          {
+            "path": "components/internal/bounded-value.js",
+            "targetPackage": "core"
+          },
+          {
+            "path": "components/internal/telemetryStatusLabel.js",
+            "targetPackage": "product"
+          },
+          {
+            "path": "components/internal/usePanZoomViewport.js",
+            "targetPackage": "product"
+          },
+          {
+            "path": "components/internal/viewer-state.js",
+            "targetPackage": "product"
           }
         ]
       }
@@ -396,7 +394,7 @@
         { "path": "component.notification", "packageId": "core" },
         { "path": "modes", "packageId": "theme" }
       ],
-      "knownProjectionDebt": "239 runtime custom-property names are not represented by a source.json css field; all 12 --component-viewer-* names are in this set. Wave 1 must split files without pretending source.json is already package-complete."
+      "knownProjectionDebt": "239 runtime custom-property names are not represented by a source.json css field; the shared --component-viewer-* names are Product-projected from the compatibility token source."
     },
     "legacyFacade": {
       "path": "styles.css",
@@ -457,7 +455,7 @@
         "propertyOverrides": [
           {
             "prefix": "--component-viewer-",
-            "packageId": "robotics-ui",
+            "packageId": "product",
             "declarationCount": 12
           }
         ],

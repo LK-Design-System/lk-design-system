@@ -1,6 +1,6 @@
 **Scene3DFrame** is the renderer-independent 3D preset for `ViewerFrame`.
 
-Use it for point clouds, digital twins, Three.js, or React Three Fiber output. The DS owns the viewport frame, scene identity, compact HUD, viewport-local controls, passive renderer metadata, and normalized state placement. The application owns rendering, camera math, picking, and loading/retry logic.
+Use it for point clouds, digital twins, WebGL scenes, or React Three Fiber output. The DS owns the viewport frame, scene identity, compact HUD, viewport-local controls, passive renderer metadata, and normalized state placement. The application owns rendering, camera math, picking, and loading/retry logic.
 
 ```jsx
 <Scene3DFrame
@@ -15,7 +15,12 @@ Use it for point clouds, digital twins, Three.js, or React Three Fiber output. T
 </Scene3DFrame>
 ```
 
-- `children` is the renderer output itself (a Three.js/R3F `Canvas`, point-cloud viewer). The frame never touches the render loop; it only removes the content from focus and accessibility trees while a blocking state is active.
+- `children` is the renderer output itself (a WebGL/R3F canvas or point-cloud viewer). The frame never touches the render loop; it only removes the content from focus and accessibility trees while a blocking state is active.
+- Prefer the orthogonal axes for new integrations: `availability` describes
+  whether content exists, `connection` describes transport health,
+  `freshness` describes data age, and `playback` describes media progression.
+  The legacy combined `state` remains a compatibility adapter and is ignored
+  when any explicit axis is supplied.
 - Use `ready` for a usable static scene and `live` only when the source is actually advancing.
 - The chrome slots follow the shared `ViewerFrame` contract: `badges` is passive identity context beside `title`, `hud` is a few essential readouts (point count, FPS budget), and `overlay` is a non-interactive render layer above the content — none of them accept controls, which belong in `toolbar`.
 - `stateLabel`, `stateDescription`, `stateIcon`, and `stateAction` override the normalized state's default copy, glyph, and recovery action per `ViewerFrame`'s rules; they refine wording for the product domain without changing blocking or live-region behavior.

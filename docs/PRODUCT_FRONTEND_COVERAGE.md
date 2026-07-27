@@ -790,6 +790,13 @@ participant role·provider/stream transport·route·retrieval·RAG·persistence�
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/routes/MainRoutes.jsx` · `frontend/src/views/dashboard/RobotDashboard/components/LiveMonitoring/index.jsx` · `frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap/index.jsx` | supported by composition | observed path history와 current robot+heading이 분리되어 Trajectory progress head 조합이 닫혔다. pinned workflow에는 planned Route feed가 없어 Route는 not applicable이며 나머지 Navigation renderer mapping은 계속 unverified다. |
 | LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/app/projects/page.tsx` · `src/components/scopes/ScopeManager.tsx` · `src/components/chat/PortalChatPanel.tsx` | not applicable | 현재 고정 frontend는 project/evidence scope, document intake, assistance, credential workflow를 소유하며 map·floor·robot navigation 진입점이나 geometry authoring 책임이 없다. |
 
+라벨 조정은 같은 제품 판정을 바꾸지 않는다. Web Viz의 authoring/runtime 지도와
+Control의 live monitoring 지도는 `NavigationAnnotationLayer`의 명시적
+`overview`/`standard`/`detail` 밀도, 8px screen-space obstacle buffer, 우선순위
+숨김을 조합할 수 있다. 제품은 화면 목적에 맞는 밀도 단계, feature selection,
+alarm/focus truth, map chrome과 semantic mirror를 소유하고 LDS는 라벨 배치만
+소유한다. Context Hub에는 지도 진입점이 없으므로 계속 `not applicable`이다.
+
 독립 low-fi의 읽기·키보드 순서는 다음과 같다.
 
 ```text
@@ -819,11 +826,12 @@ participant role·provider/stream transport·route·retrieval·RAG·persistence�
 | stair와 stair-slope region | gap | 현재 public `SpatialRegion` kind가 이 terrain 의미를 소유하지 않는다. generic behavior region으로 위장하지 않고 후속 semantic-kind 검토 대상으로 남긴다. |
 | elevator entry/interior, door, dock | supported by composition | `FacilityTransition` endpoint/state와 `SpatialRegion`의 lift lobby/cabin grammar를 조합한다. 현재 제품의 동일 Material elevator glyph를 복제하지 않고 entry/interior를 관계·label·region으로 구분한다. |
 | selection, focus, unavailable, invalid, stale | supported by composition | map symbol의 shape/pattern/glyph와 named list/`SelectionInspector` text를 함께 사용한다. circular pointer target은 24×24 CSS square를 포함하도록 최소 약 34px 지름을 확보한다. |
+| multi-overlay label density and collision | supported by composition | `NavigationAnnotationLayer`가 danger > focus > selection > current context 우선순위, 종류별 후보 위치, 8px obstacle buffer, 24px fine nudge, `overview`/`standard`/`detail` 밀도를 제공한다. 제품은 feature truth와 density 선택을 소유하고 숨겨진 시각 라벨의 identity는 named list/accessible name에 남긴다. |
 | edit handles, commands, save/unsaved/error, persistence | not applicable | LDS renderer 상태가 아니라 `ZoneEditor`와 화면 state machine이 소유한다. 실패 시 draft와 선택을 유지하고 save/retry evidence를 같은 product workflow에 남긴다. |
 
 근거가 된 외부 category reference는 Open-RMF의 waypoint/lane/facility event 분리, Nav2 Route Server의 sparse route graph와 dense path 분리, MapLibre의 line/symbol layer 및 placement 분리, WCAG 2.2의 target-size 요구다. 구체 링크와 각 결론은 여섯 Navigation component의 `.prompt.md`에 기록했다.
 
-Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTransition의 compound state를 1280px에서, 각 narrow story를 320–360px에서 확인했다. Route의 current-segment label과 progress text 충돌은 분리했고, 모든 narrow surface에서 수평 overflow가 없음을 확인했다. invalid/stale route·trajectory는 `!`/`~` glyph가 남고, point-like interactive geometry는 24×24 CSS square를 포함하는 hit core를 갖는다.
+Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTransition의 compound state를 1280px에서, 각 narrow story를 320–360px에서 확인했다. Route의 current-segment label과 progress text 충돌을 분리하고 Route 개요를 `overview` 밀도로 통합했다. Light/Dark에서 현재 구간·42% 진행·active trajectory를 유지하고 완료 구간 라벨만 숨겼으며, annotation density/priority stories는 긴 한국어 라벨, danger+focus+selection, 8px collision buffer, 24px fine-nudge 상한을 검증한다. 320px annotation surface는 `scrollWidth === clientWidth`이고 접근성 스캔은 violation 0을 유지했다. invalid/stale route·trajectory는 `!`/`~` glyph가 남고, point-like interactive geometry는 24×24 CSS square를 포함하는 hit core를 갖는다.
 
 독립 wireframe과 mapping은 닫혔다. 외부 Robotics 패키지의 `HazardMarker`가 stairs/ramp/dropoff/obstacle을, `SpatialRegion`이 slope terrain을 소유한다. 제품의 `forbidden` line은 navigation lane이 아니라 제품 authoring renderer의 편집 geometry이므로 새 LDS semantic primitive로 승격하지 않는다. 이 명시적 경계와 normal/narrow interaction evidence로 `verified`를 닫는다.
 

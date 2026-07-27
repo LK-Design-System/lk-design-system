@@ -29,7 +29,16 @@ async function copyAssetDirectories(packageName, directories) {
 const baseCss = await readFile(path.join(tokensRoot, 'base.css'), 'utf8');
 const focusCss = await readFile(path.join(tokensRoot, 'focus.css'), 'utf8');
 const componentsCss = await readFile(path.join(tokensRoot, 'components.css'), 'utf8');
-const coreComponentsCss = componentsCss.replace(/^\s*--component-viewer-[^;]+;\r?$/gm, '');
+const coreComponentsCss = componentsCss
+  .replace(/^\s*--component-viewer-[^;]+;\r?$/gm, '')
+  .replace(/\/\* Product-only component rules;[\s\S]*?\/\* End product-only component rules\. \*\//, '');
+const productViewerTokens = componentsCss
+  .split(/\r?\n/)
+  .filter((line) => line.includes('--component-viewer-'))
+  .join('\n');
+const productComponentRules = componentsCss.match(
+  /\/\* Product-only component rules;[\s\S]*?\/\* End product-only component rules\. \*\//,
+)?.[0] ?? '';
 const coreFocusCss = `${focusCss.split('/* Map geometry owns')[0].trimEnd()}\n`;
 
 await copyFiles('core', ['spacing.css', 'grid.css']);
@@ -101,7 +110,19 @@ await writeFile(path.join(root, 'packages', 'theme', 'styles.css'), [
 ].join('\n'));
 
 await recreateDirectory(path.join(root, 'packages', 'product', 'tokens'));
-await writeFile(path.join(root, 'packages', 'product', 'styles.css'), '/* Product currently has no dedicated CSS projection. */\n');
+await writeFile(path.join(root, 'packages', 'product', 'tokens', 'components.css'), [
+  '/* Product viewer tokens projected from tokens/components.css. */',
+  ':root {',
+  productViewerTokens,
+  '}',
+  '',
+  productComponentRules,
+  '',
+].join('\n'));
+await writeFile(path.join(root, 'packages', 'product', 'styles.css'), [
+  '@import "./tokens/components.css";',
+  '',
+].join('\n'));
 
 await recreateDirectory(path.join(root, 'packages', 'compat', 'tokens'));
 await recreateDirectory(path.join(root, 'packages', 'compat', 'assets'));

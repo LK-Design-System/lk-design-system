@@ -43,6 +43,17 @@ function initialExpandedKeys(nodes, defaultExpanded) {
   return keys;
 }
 
+function expandedValuesForKeys(nodes, expandedKeys, parentPath = [], values = []) {
+  for (const [index, node] of nodes.entries()) {
+    const path = [...parentPath, index];
+    const key = internalNodeKey(node, path);
+    const value = legacyExpansionValue(node);
+    if (value != null && expandedKeys.has(key)) values.push(value);
+    expandedValuesForKeys(node.children ?? [], expandedKeys, path, values);
+  }
+  return values;
+}
+
 function assertUniqueNodeIds(nodes, seen = new Set()) {
   for (const node of nodes) {
     const id = nodeId(node);
@@ -93,12 +104,14 @@ function TreeNode({
   const id = nodeId(node);
   const has = Boolean(node.children?.length);
   const open = has && (expandedSet.has(key) || previewSet.has(key));
+  const disabled = Boolean(node.disabled);
   const [hovered, setHovered] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
   const selected = id != null && selectedKey === id;
   const activate = () => {
     setFocusKey(key);
-    if (has) toggle(key);
+    if (disabled) return;
+    if (has) toggle(key, node);
     if (id != null) select(id);
     onSelect?.(node);
   };
@@ -115,7 +128,7 @@ function TreeNode({
     if (event.key === 'ArrowRight') {
       if (has && !open) {
         event.preventDefault();
-        toggle(key);
+        if (!disabled) toggle(key, node);
         return;
       }
       if (has && open) target = items[currentIndex + 1];
@@ -123,7 +136,7 @@ function TreeNode({
     if (event.key === 'ArrowLeft') {
       if (has && open) {
         event.preventDefault();
-        toggle(key);
+        if (!disabled) toggle(key, node);
         return;
       }
       if (parentFocusKey != null) target = items.find((item) => item.dataset.treeKey === parentFocusKey);
@@ -144,6 +157,8 @@ function TreeNode({
       role="treeitem"
       aria-expanded={has ? open : undefined}
       aria-selected={selected}
+      aria-disabled={disabled || undefined}
+      aria-label={node.ariaLabel}
       aria-level={level + 1}
       tabIndex={focusKey === key ? 0 : -1}
       data-tree-key={key}
@@ -183,11 +198,12 @@ function TreeNode({
           gap: 8,
           minHeight: 36,
           padding: '8px 10px',
-          paddingLeft: 'var(--space-2-5)' + level * 20,
+          paddingLeft: `calc(var(--space-2-5) + ${level * 20}px)`,
           boxSizing: 'border-box',
           border: selected ? '1px solid var(--color-semantic-primary-normal)' : '1px solid transparent',
           background: selected ? 'var(--color-semantic-primary-surface-strong)' : hovered ? 'var(--color-semantic-background-normal-alternative)' : 'transparent',
-          cursor: 'pointer',
+          cursor: disabled ? 'not-allowed' : 'pointer',
+          opacity: disabled ? 0.55 : 1,
           borderRadius: 'var(--radius-md)',
           textAlign: 'left',
           fontFamily: 'var(--font-sans)',
@@ -202,7 +218,31 @@ function TreeNode({
           ? <Icon name="chevron-right-small" size={14} color="var(--color-semantic-label-alternative)" aria-hidden="true" style={{ transform: open ? 'rotate(90deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)', flexShrink: 0 }} />
           : <span aria-hidden="true" style={{ width: 14, flexShrink: 0 }} />}
         {node.icon}
-        <span>{node.label}</span>
+        <span style={{ display: 'grid', gap: 2, minWidth: 0, flex: 1 }}>
+          <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {node.label}
+          </span>
+          {node.description != null && (
+            <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption2-size)', lineHeight: 1.35, fontWeight: 'var(--fw-medium)', overflowWrap: 'anywhere' }}>
+              {node.description}
+            </span>
+          )}
+        </span>
+        {node.meta != null && (
+          <span style={{ marginLeft: 'auto', flex: '0 1 auto', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-medium)' }}>
+            {node.meta}
+          </span>
+        )}
+        {node.end != null && (
+          <span
+            data-tree-row-end=""
+            onClick={(event) => event.stopPropagation()}
+            onPointerDown={(event) => event.stopPropagation()}
+            style={{ display: 'inline-flex', alignItems: 'center', flex: '0 0 auto' }}
+          >
+            {node.end}
+          </span>
+        )}
       </div>
       {has && open && (
         <div role="group">
@@ -239,23 +279,30 @@ function TreeNode({
  */
 export const Tree = React.forwardRef(function Tree({
   nodes = [],
+  expandedIds,
   defaultExpanded = [],
+  onExpandedIdsChange,
   selectedId,
   defaultSelectedId,
   onSelectedIdChange,
   onSelect,
   openOnHover = false,
-  ariaLabel = 'Hierarchy',
+  ariaLabel,
+  'aria-label': htmlAriaLabel,
   style,
   ...rest
 }, forwardedRef) {
   assertUniqueNodeIds(nodes);
-  const [expanded, setExpanded] = React.useState(() => new Set(initialExpandedKeys(nodes, defaultExpanded)));
+  const [internalExpanded, setInternalExpanded] = React.useState(() => new Set(initialExpandedKeys(nodes, defaultExpanded)));
   const [preview, setPreview] = React.useState(() => new Set());
   const [focusKey, setFocusKey] = React.useState(() => nodes.length ? internalNodeKey(nodes[0], [0]) : '');
   const [internalSelectedKey, setInternalSelectedKey] = React.useState(() => defaultSelectedId == null ? null : String(defaultSelectedId));
   const [pendingFocusKey, setPendingFocusKey] = React.useState(null);
   const treeRef = React.useRef(null);
+  const isExpansionControlled = expandedIds !== undefined;
+  const expandedSet = isExpansionControlled
+    ? new Set(initialExpandedKeys(nodes, expandedIds))
+    : internalExpanded;
   const isSelectionControlled = selectedId !== undefined;
   const selectedKey = isSelectionControlled
     ? (selectedId == null ? null : String(selectedId))
@@ -264,12 +311,16 @@ export const Tree = React.forwardRef(function Tree({
     if (!isSelectionControlled) setInternalSelectedKey(key);
     onSelectedIdChange?.(key);
   }, [isSelectionControlled, onSelectedIdChange]);
-  const toggle = (key) => setExpanded((previous) => {
-    const next = new Set(previous);
+  const commitExpanded = (next) => {
+    if (!isExpansionControlled) setInternalExpanded(next);
+    onExpandedIdsChange?.(expandedValuesForKeys(nodes, next));
+  };
+  const toggle = (key) => {
+    const next = new Set(expandedSet);
     if (next.has(key)) next.delete(key);
     else next.add(key);
-    return next;
-  });
+    commitExpanded(next);
+  };
   const setPreviewKey = (key, active) => setPreview((previous) => {
     const next = new Set(previous);
     if (active) next.add(key);
@@ -283,7 +334,7 @@ export const Tree = React.forwardRef(function Tree({
     if (!items.some((item) => item.dataset.treeKey === focusKey)) {
       setFocusKey(items[0]?.dataset.treeKey ?? '');
     }
-  }, [expanded, focusKey, nodes]);
+  }, [expandedSet, focusKey, nodes]);
 
   React.useEffect(() => {
     if (pendingFocusKey == null) return;
@@ -291,7 +342,7 @@ export const Tree = React.forwardRef(function Tree({
     const item = visibleItems(treeRef.current)
       .find((candidate) => candidate.dataset.treeKey === pendingFocusKey);
     focusTreeItem(item, setFocusKey);
-  }, [expanded, nodes, pendingFocusKey]);
+  }, [expandedSet, nodes, pendingFocusKey]);
 
   React.useImperativeHandle(forwardedRef, () => ({
     focusItem(id, { reveal = false } = {}) {
@@ -300,7 +351,7 @@ export const Tree = React.forwardRef(function Tree({
       const path = findNodePath(nodes, targetId);
       if (!path) return;
       if (reveal) {
-        setExpanded((previous) => new Set([...previous, ...path.ancestors]));
+        commitExpanded(new Set([...expandedSet, ...path.ancestors]));
         setPendingFocusKey(path.focusKey);
         return;
       }
@@ -308,13 +359,13 @@ export const Tree = React.forwardRef(function Tree({
         .find((candidate) => candidate.dataset.treeKey === path.focusKey);
       focusTreeItem(visibleItem, setFocusKey);
     },
-  }), [nodes]);
+  }), [expandedSet, nodes]);
 
   return (
     <div
       ref={treeRef}
       role="tree"
-      aria-label={ariaLabel}
+      aria-label={ariaLabel ?? htmlAriaLabel ?? (rest['aria-labelledby'] == null ? 'Hierarchy' : undefined)}
       style={{ display: 'grid', gap: 'var(--space-0-5)', fontFamily: 'var(--font-sans)', ...style }}
       {...rest}
     >
@@ -325,7 +376,7 @@ export const Tree = React.forwardRef(function Tree({
           path={[index]}
           level={0}
           parentFocusKey={null}
-          expandedSet={expanded}
+          expandedSet={expandedSet}
           previewSet={preview}
           setPreviewKey={setPreviewKey}
           toggle={toggle}

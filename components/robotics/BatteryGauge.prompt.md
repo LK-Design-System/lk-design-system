@@ -4,6 +4,8 @@
 <BatteryGauge value={86} />
 <BatteryGauge value={12} size="sm" />
 <BatteryGauge value={47} showLabel={false} />
+<BatteryGauge value={47} tone="cautionary" />
 ```
 
-- **value** `0–100` · **showLabel** · **size** `sm · md`. 색은 잔량을 따릅니다: ≤20% red · ≤50% amber · else green.
+- **value** `0–100` · **tone** `neutral · signal · positive · cautionary · negative` · **showLabel** · **size** `sm · md`.
+- 제품의 도메인 규칙이 있다면 `tone`으로 의미 상태를 명시합니다. 생략하면 이전 API와의 호환을 위해 잔량 기준(≤20% negative · ≤50% cautionary · else positive)을 적용합니다.

@@ -1,0 +1,299 @@
+{
+  "slug": "product-editor-command-bar",
+  "title": "Command Bar",
+  "storybookTitle": "LDS Product/Editor/Command Bar",
+  "layer": "Product",
+  "family": "Editor",
+  "primaryOwner": "CanvasEditorCommandBar",
+  "ownerComponents": [
+    "CanvasEditorCommandBar"
+  ],
+  "supportingComponents": [
+    "Button"
+  ],
+  "purpose": "운영자가 저장·내보내기·실행 취소처럼 편집 문서 전체의 수명주기를 다룰 때 적합합니다. 줌·카메라·레이어처럼 현재 뷰포트에만 영향을 주는 동작에는 Viewer Toolbar 또는 해당 로컬 도구를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "Selection-specific actions belong in SelectionInspector; destructive application workflows do not belong in this design-system primitive."
+  ],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "전체 document command group 접근성 라벨."
+    },
+    {
+      "part": "documentLabel",
+      "rule": "documentActions가 있을 때 렌더링되는 문서 명령 툴바 라벨."
+    },
+    {
+      "part": "documentActions",
+      "rule": "저장, 내보내기처럼 문서 수명주기에 속하는 명령."
+    },
+    {
+      "part": "historyLabel",
+      "rule": "히스토리 툴바 접근성 라벨."
+    },
+    {
+      "part": "children",
+      "rule": "저장 버튼처럼 별도 컴포넌트가 필요한 문서 작업 슬롯."
+    },
+    {
+      "part": "extraLabel",
+      "rule": "추가 명령 슬롯 접근성 라벨."
+    }
+  ],
+  "properties": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "전체 document command group 접근성 라벨.",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "documentLabel",
+      "type": "string",
+      "required": false,
+      "description": "documentActions가 있을 때 렌더링되는 문서 명령 툴바 라벨.",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "documentActions",
+      "type": "CanvasEditorCommandBarAction[]",
+      "required": false,
+      "description": "저장, 내보내기처럼 문서 수명주기에 속하는 명령.",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "viewLabel",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "viewActions",
+      "type": "CanvasEditorCommandBarAction[]",
+      "required": false,
+      "description": "",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "Document/history icon control density. sm=32px, md=40px. @default \"sm\"",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "showHistory",
+      "type": "boolean",
+      "required": false,
+      "description": "히스토리 툴바 표시 여부. @default true",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "historyLabel",
+      "type": "string",
+      "required": false,
+      "description": "히스토리 툴바 접근성 라벨.",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "canUndo",
+      "type": "boolean",
+      "required": false,
+      "description": "실행 취소 가능 여부. 실제 handler가 없으면 비활성입니다. @default false",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "canRedo",
+      "type": "boolean",
+      "required": false,
+      "description": "다시 실행 가능 여부. 실제 handler가 없으면 비활성입니다. @default false",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "onUndo",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "onRedo",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "undoKeyShortcuts",
+      "type": "string",
+      "required": false,
+      "description": "Set only when the owning editor implements this undo shortcut globally.",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "redoKeyShortcuts",
+      "type": "string",
+      "required": false,
+      "description": "Set only when the owning editor implements this redo shortcut globally.",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "onReset",
+      "type": "() = void",
+      "required": false,
+      "description": "함수가 있으면 변경사항 초기화 버튼 표시.",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "저장 버튼처럼 별도 컴포넌트가 필요한 문서 작업 슬롯.",
+      "owner": "CanvasEditorCommandBarProps"
+    },
+    {
+      "name": "extraLabel",
+      "type": "string",
+      "required": false,
+      "description": "추가 명령 슬롯 접근성 라벨.",
+      "owner": "CanvasEditorCommandBarProps"
+    }
+  ],
+  "states": [],
+  "behavior": [
+    "CanvasEditorCommandBar - Stable document-level command group for CanvasEditorShell."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "size=\"sm\" uses the 32px LDS IconButton; size=\"md\" uses 40px."
+    },
+    {
+      "subject": "--space-1",
+      "rule": "4px"
+    },
+    {
+      "subject": "--space-2",
+      "rule": "8px"
+    }
+  ],
+  "responsive": [
+    "viewActions/viewLabel are deprecated compatibility props. They still render to avoid a breaking release, but new and migrated consumers place those actions beside the viewport.",
+    "Figma: Navigating UI3 separates stable interface regions from contextual canvas and selection controls. LDS adapts that hierarchy by keeping document/history work in the shell header and view manipulation near the viewport.",
+    "Apple HIG: Toolbars informed the leading history/document grouping and keeping viewport actions in their own contextual region.",
+    "Use it in the shell toolbar slot for history and document-lifecycle commands. Zoom, fit, camera, orbit, and other view controls stay in a viewport-local toolbar."
+  ],
+  "contentGuidance": [],
+  "accessibility": [
+    "children is the escape hatch for document work that needs a real component instead of an icon action — a labelled save Button, a status chip. It renders as the trailing group; commands that fit the icon-action shape belong in documentActions.",
+    "Each group carries its own accessible name: historyLabel (default 편집 이력) for the history toolbar, documentLabel (default 문서 명령) for the document-action toolbar, and extraLabel (default 문서 작업) for the children group. Override them per product domain; screen-reader users navigate between groups by these names.",
+    "Named action groups use toolbar semantics and Arrow/Home/End roving focus. Add ariaKeyShortcuts to document actions, or undoKeyShortcuts/redoKeyShortcuts to history, only when the product implements those shortcuts.",
+    "Every built-in action group shares the same private focus engine as the editor and viewer toolbars so dynamic disabled/removed actions cannot create multiple Tab stops or lose the remembered command.",
+    "WAI-ARIA APG: Toolbar Pattern defines a named toolbar, horizontal orientation, and Arrow/Home/End navigation. The built-in action groups follow that keyboard model."
+  ],
+  "exceptions": [
+    "The history group is the built-in HistoryToolbar and renders by default; set showHistory={false} only when the owning editor has no undo model at all. Supplying onReset adds a reset-changes command to that group — reserve it for editors where discarding all pending changes is a real, recoverable operation.",
+    "A history command is enabled only when both its can state and handler permit it. A document action without a handler is ignored unless it is explicitly supplied as a disabled state."
+  ],
+  "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "CanvasEditorShell",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "EditorToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "HistoryToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "LayerPanel",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SelectionInspector",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewportStatusBar",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<CanvasEditorCommandBar\n  canUndo={undoStack.length > 0}\n  canRedo={redoStack.length > 0}\n  onUndo={undo}\n  onRedo={redo}\n  documentActions={[\n    { value: 'export', label: '내보내기', icon: 'export', onClick: exportDocument },\n  ]}\n>\n  <Button size=\"sm\" onClick={saveDocument}>저장</Button>\n</CanvasEditorCommandBar>"
+    }
+  ],
+  "tokens": [
+    "--space-1",
+    "--space-2"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/EditorCommandBar.stories.jsx",
+    "entryStoryId": "lds-product-editor-command-bar--document-commands",
+    "publicStories": [
+      {
+        "id": "lds-product-editor-command-bar--document-commands",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-editor-command-bar--handler-gating",
+        "name": "변형·상태 · 작업 가능 여부",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-editor-command-bar--medium-density",
+        "name": "반응형 · 40px 문서 제어",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-editor-command-bar--narrow-command-targets",
+        "name": "반응형 · 좁은 폭 · 긴 문서 작업",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "evidence",
+    "exceptions": "evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

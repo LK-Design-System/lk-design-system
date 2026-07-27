@@ -39,7 +39,7 @@
 
 ## Visual-delta inventory
 
-- **Card**: Card와 같은 elevated semantic surface, line border, `--component-card-radius`, no-shadow 토큰을 사용합니다. nested dark theme에서도 surface/foreground가 함께 전환되도록 background·foreground·line은 Card alias의 theme-adaptive 원천 semantic token에 직접 연결합니다. 상태 요약의 반복 밀도를 위해 기본 Card의 `space-8` 대신 `space-5` padding을 쓰지만 별도 radius·shadow·hover 언어는 만들지 않습니다.
+- **Card**: Card와 같은 elevated semantic surface, `--component-card-radius`, no-shadow 토큰을 사용합니다. 반복되는 장비 요약을 빠르게 구분하도록 외곽선은 theme-adaptive `line-solid-_strong`을 사용하고 내부 divider는 기본 line을 유지합니다. 상태 요약의 반복 밀도를 위해 기본 Card의 `space-8` 대신 `space-4` padding과 `space-3` section gap을 쓰지만 별도 radius·shadow·hover 언어는 만들지 않습니다.
 - **RobotStatusCard**: 로봇 선택, thumbnail, battery, live connection cluster가 목적입니다. EquipmentStatusCard는 선택 불가능한 주변 장비 요약이므로 그 구조를 복제하지 않습니다. 기존의 제품 유래 38px icon tile, 오른쪽 ledger 라벨, ring/chip 배열을 제거했습니다.
 - **StatusBadge**: 대표 상태의 soft semantic surface+읽을 수 있는 라벨을 그대로 재사용합니다. 카드가 자체 상태 점, 링, 색상 텍스트, pulse/dim 모션을 만들지 않습니다. 실시간 freshness 신호가 별도로 필요할 때만 `StatusIndicator`를 조합합니다.
 - **ConnectionBadge**: 연결이 실제 보조 사실일 때 `details[].value`로 조합합니다. 카드가 `connection` prop이나 연결 상태 machine을 재정의하지 않습니다.

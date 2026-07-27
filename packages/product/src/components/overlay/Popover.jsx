@@ -6,7 +6,7 @@ import {
   useControllableOpen,
   useFloatingPosition,
   useLightDismiss,
-} from './anchored-overlay.js';
+} from '@lk-robotics/lds-core/components/overlay/anchored-overlay';
 
 /**
  * LK ROBOTICS — Popover

@@ -1,0 +1,29 @@
+{
+  "$schema": "./ROBOTICS_POLICY_CONTRACT.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-consumer-policy-contract",
+  "id": "fixture-single-solid-badge",
+  "profile": "robotics-ui",
+  "authority": "fixture",
+  "owner": "Fixture owner",
+  "decision": {
+    "maxVisibleBadges": 1,
+    "visualStyle": "solid",
+    "placement": "attached-top-right",
+    "accessibleStateRetention": "all-raw-states",
+    "renderers": {
+      "Widget": {
+        "bodyChannel": "availability",
+        "badgePriority": ["invalid", "stale"]
+      }
+    }
+  },
+  "evidence": [
+    {
+      "root": "consumer",
+      "file": "src/components/Widget.jsx",
+      "contains": ["policy-evidence: one prioritized solid badge"],
+      "excludes": ["policy-evidence: stacked badges"]
+    }
+  ]
+}

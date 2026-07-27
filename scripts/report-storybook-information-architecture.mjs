@@ -129,7 +129,6 @@ const PAGE_OWNER_OVERRIDES = {
   'LDS Product/Data/Visualization/Telemetry': ['TelemetryGauge', 'TelemetryValue'],
   'LDS Product/Navigation/Adaptive Navigation': ['NavRail', 'BottomNav'],
   'LDS Robotics/Assets/Icons': ['Icon'],
-  'LDS Robotics/Foundation/Codes': ['Robotics Foundation:Codes'],
   'LDS Robotics/Foundation/Facility Glyph': ['Robotics Foundation:Facility Glyph'],
   'LDS Robotics/Foundation/Hazard Glyph': ['Robotics Foundation:Hazard Glyph'],
   'LDS Robotics/Foundation/Marker Pin': ['Robotics Foundation:Marker Pin'],
@@ -151,7 +150,6 @@ const PAGE_OWNER_OVERRIDES = {
 // that component the page owner. Keep this narrower than PAGE_OWNER_OVERRIDES:
 // most component pages still use meta.component as their primary runtime owner.
 const TOPIC_PRIMARY_OWNER_OVERRIDES = new Set([
-  'LDS Robotics/Foundation/Codes',
   'LDS Robotics/Foundation/Facility Glyph',
   'LDS Robotics/Foundation/Hazard Glyph',
   'LDS Robotics/Foundation/Marker Pin',

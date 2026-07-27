@@ -8,4 +8,9 @@
 ]} />
 ```
 
+## LDS reuse boundary
+
+- Compose the hierarchy with Core `Tree`, subscriptions with Core `Switch`, and ROS message types with Core `Code`.
+- `TopicTree` owns only ROS node-to-tree mapping and subscription callbacks; it must not recreate generic code-chip, tree-row, or toggle styling.
+
 - **nodes** — `{ name, type, hz, subscribable, subscribed, children }`. 헤더 클릭으로 펼치고, 토글로 구독을 켜고 끕니다.

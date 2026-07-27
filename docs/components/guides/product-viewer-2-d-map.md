@@ -1,0 +1,159 @@
+# 2D Map
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Viewer |
+| Owner | `Map2DCanvas` |
+| Storybook | `LDS Product/Viewer/2D Map` |
+| Source | `../component-content.json#product-viewer-2-d-map` |
+
+운영자가 점유 격자·경로·로봇 위치를 한 평면에서 팬과 줌으로 살펴볼 때 적합합니다. 공간 관계가 필요 없는 수치 모니터링이나 3차원 장면에는 Telemetry 또는 3D Scene을 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- appearance="light"가 기본이지만 appearance="dark"도 동일한 공개 계약입니다. 지도 renderer와 overlay는 --viewer- 역할 토큰을 사용해 두 appearance에서 같은 정보·조작 구조를 유지합니다.
+
+### 사용하지 않음
+
+- panEnabled={false}에서는 drag와 touch-action: none을 모두 제거해 페이지 터치 스크롤 및 앱의 선택/드로잉 동작과 충돌하지 않습니다.
+- button, link, input, slider 등 interactive descendant에서 시작한 pointer/wheel 입력도 pan·zoom으로 재처리하지 않습니다.
+- onWheel은 pointer-focal zoom에 필요한 non-passive native WheelEvent callback입니다. React SyntheticEvent 전용 API를 가정하지 않습니다.
+- Mapbox Standard style reference와 runtime configuration guide: 하나의 지도 스타일이 day/night에 대응하는 lighting preset을 런타임에 바꿀 수 있으므로, LDS도 지도를 light 전용으로 고정하지 않고 light/dark appearance를 같은 계약으로 제공합니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| children | 함께 변환되는 콘텐츠(맵 이미지 · SVG 오버레이 · canvas/konva 스테이지 등). |
+| controls | 줌 컨트롤 + 배율 표시. @default true |
+| contentOrigin | children 좌표의 기준점. 일반 이미지/SVG/canvas는 top-left를 사용하고, 세계 좌표 (0,0)을 뷰포트 중심에 두는 renderer만 center를 명시합니다. |
+| toolbar | Optional custom viewport-local toolbar. When supplied it replaces the built-in controls. |
+| label | 접근성 라벨. @default "2D 맵 캔버스" |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode \| ((context: { viewport: Map2DViewport; setViewport: ( viewport: Map2DViewport \| ((viewport: Map2DViewport) = Map2DViewport) ) = void; }) = React.ReactNode)` | No | 함께 변환되는 콘텐츠(맵 이미지 · SVG 오버레이 · canvas/konva 스테이지 등). |
+| `minZoom` | `number` | No |  |
+| `maxZoom` | `number` | No |  |
+| `grid` | `boolean` | No | 격자 배경. @default true |
+| `controls` | `boolean` | No | 줌 컨트롤 + 배율 표시. @default true |
+| `panEnabled` | `boolean` | No | 드래그 팬 사용 여부. false이면 터치 스크롤을 차단하지 않습니다. @default true |
+| `wheelZoom` | `boolean` | No | 포인터 위치를 기준으로 한 wheel/trackpad zoom. @default true |
+| `keyboard` | `boolean` | No | 뷰포트 자체에 포커스했을 때의 키보드 줌/팬 단축키. @default true |
+| `contentOrigin` | `'top-left' \| 'center'` | No | children 좌표의 기준점. 일반 이미지/SVG/canvas는 top-left를 사용하고, 세계 좌표 (0,0)을 뷰포트 중심에 두는 renderer만 center를 명시합니다. |
+| `viewport` | `Map2DViewport` | No | 제어형 뷰포트 상태. |
+| `defaultViewport` | `Map2DViewport` | No | 비제어 초기 뷰포트이자 "보기 초기화"의 복귀값. |
+| `onViewportChange` | `(viewport: Map2DViewport) = void` | No | 뷰포트 변경 콜백. |
+| `onFit` | `() = void` | No | Optional fit-to-content command. The application owns bounds calculation. |
+| `toolbar` | `React.ReactNode` | No | Optional custom viewport-local toolbar. When supplied it replaces the built-in controls. |
+| `onWheel` | `(event: WheelEvent) = void` | No | Native non-passive wheel event fired before built-in pointer-focal zoom handling. |
+| `overlay` | `React.ReactNode` | No | 뷰포트 위의 passive overlay 슬롯. 포인터 입력은 받지 않습니다. |
+| `status` | `React.ReactNode` | No | 좌하단 상태 표시. 기본은 zoom %. |
+| `source` | `React.ReactNode` | No | 좌상단 source identity. |
+| `badges` | `React.ReactNode` | No | source 옆 passive badge. |
+| `hud` | `React.ReactNode` | No | 소수의 필수 viewport readout. |
+| `state` | `ViewerState` | No | Legacy combined Viewer state. Prefer the orthogonal axes in new product code. |
+| `availability` | `ViewerAvailability` | No |  |
+| `connection` | `ViewerConnection` | No |  |
+| `freshness` | `ViewerFreshness` | No |  |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| status | 좌하단 상태 표시. 기본은 zoom %. |
+| state | Legacy combined Viewer state. Prefer the orthogonal axes in new product code. |
+| variant | Perimeter ownership. "embedded" drops the canvas's own border and radius so a parent surface owns one continuous outline. @default "standalone" |
+
+## Behavior and interaction
+
+- NVIDIA Omniverse viewport navigation: pointer 중심 navigation과 viewport-local camera controls를 기준으로 삼았습니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | 기본 contentOrigin="top-left"는 일반 이미지, SVG, canvas의 (0, 0)을 viewport 좌상단에 놓습니다. 세계 좌표 원점을 화면 중심에 두어야 하는 renderer만 contentOrigin="center"를 명시하고 자체 콘텐츠 offset을 제공합니다. |
+| 명시 규칙 2 | 줌 배율은 minZoom(기본 0.25)–maxZoom(기본 8) 사이로 clamp되며 휠·키보드·컨트롤 모든 입력 경로에 동일하게 적용됩니다. 픽셀 지도가 깨지는 배율이나 의미 없는 축소를 막을 때만 범위를 좁히고, 두 값이 곧 컨트롤의 disabled 경계가 됩니다. |
+| 명시 규칙 3 | 키보드 shortcut은 viewport 자체에 포커스했을 때만 동작합니다: +/- 줌, 0 초기화, 방향키 팬, Shift+방향키 큰 폭 팬. Toolbar, input, slider 등 자식 컨트롤의 방향키는 가로채지 않습니다. keyboard={false}는 이 shortcut과 viewport의 tab stop을 함께 제거하므로, 앱이 자체 키보드 pan/zoom 대안을 제공할 때만 끕니다. |
+| 명시 규칙 4 | label(기본 2D 맵 캔버스)은 region의 접근 가능한 이름입니다. 한 화면에 viewport가 여럿이면 소스가 드러나는 이름(1층 점유 지도)으로 반드시 구분합니다. |
+
+## Responsive
+
+- children은 pan/zoom transform을 함께 타는 공간 콘텐츠(맵 이미지 · SVG 오버레이 · canvas/konva 스테이지)입니다. 정적 노드 외에 { viewport, setViewport }를 받는 render function도 지원하므로, renderer가 현재 배율에 반응하거나 자체 fit 로직에서 viewport를 갱신할 때 제어형 상태를 중복 소유하지 않아도 됩니다.
+- defaultViewport는 초기값인 동시에 보기 초기화가 복귀할 값입니다. viewport + onViewportChange로 제어형 사용도 지원합니다.
+- onFit을 제공하면 built-in toolbar에 전체 보기 command가 추가됩니다. bounds 계산은 앱/renderer가 소유하고 callback에서 제어형 viewport를 갱신합니다. toolbar를 제공하면 built-in toolbar를 명시적으로 대체합니다.
+- overlay는 passive visual slot이며 포인터 입력을 받지 않습니다. 별도 조작은 viewport-local toolbar 또는 앱 소유 UI로 구성합니다.
+
+## Content and writing
+
+- 공통 ViewerFrame을 합성하므로 availability/connection/freshness/playback 축과 호환 state, source/HUD, blocking-vs-edge 상태 배치를 그대로 사용합니다. source 옆의 passive badges, 소수의 필수 readout만 담는 hud, 상태 문구·글리프·복구 액션 오버라이드(stateLabel, stateDescription, stateIcon, stateAction)는 모두 ViewerFrame 계약을 그대로 통과시키는 prop입니다.
+
+## Accessibility
+
+- variant="embedded"는 이 캔버스를 다른 표면(Card, 패널 등) 안에 중첩할 때 자체 border·radius를 생략해 부모가 최외곽선을 소유하게 합니다. pan/zoom·toolbar·상태·접근성 역할은 그대로 유지됩니다. 기본값 standalone은 자체 외곽선을 그립니다.
+- ViewerToolbar, Icon, LDS spacing/focus/toggle tokens를 재사용하며 독자적인 map-control visual language를 만들지 않습니다.
+- Unity Scene View navigation: viewport navigation을 scene-local pan/orbit/zoom/focus 동작으로 제한하고, 콘텐츠 편집 명령과 분리했습니다.
+- WCAG 2.2 — Dragging Movements: drag만이 유일한 조작이 되지 않도록 버튼과 키보드 pan/zoom 대안을 유지했습니다.
+- WAI-ARIA Toolbar pattern: viewport 안의 방향키 toolbar가 canvas 방향키 shortcut과 충돌하지 않도록 이벤트 범위를 분리했습니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `FloorSelector` | 대표 시나리오에서 조합 |
+| `Scene3DFrame` | 대표 시나리오에서 조합 |
+| `VideoStreamTile` | 대표 시나리오에서 조합 |
+| `VIEWER_BLOCKING_STATES` | 대표 시나리오에서 조합 |
+| `VIEWER_STATES` | 대표 시나리오에서 조합 |
+| `ViewerFrame` | 대표 시나리오에서 조합 |
+| `ViewerToolbar` | 대표 시나리오에서 조합 |
+| `ViewerToolbarButton` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Map2DCanvas
+  style={{ height: 360 }}
+  defaultViewport={{ x: 24, y: 24, z: 1 }}
+  panEnabled={tool === 'pan'}
+  wheelZoom
+  status="x 12.4 · y -3.8 · 125%"
+>
+  <img src="/maps/floor1.png" alt="1층 점유 지도" style={{ display: 'block' }} />
+</Map2DCanvas>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--map-grid-line`
+- `--viewer-border`
+- `--viewer-surface`
+- `--viewer-surface-elevated`
+
+### Source contracts
+
+- `components/viz/Map2DCanvas.jsx`
+- `components/viz/Map2DCanvas.d.ts`
+- `components/viz/Map2DCanvas.prompt.md`
+- `stories/ViewerMap.stories.jsx`
+
+## Sources
+
+- Map2DCanvas prompt contract: `components/viz/Map2DCanvas.prompt.md`
+- Storybook implementation evidence: `stories/ViewerMap.stories.jsx`
+- [Unity Scene View navigation](https://docs.unity3d.com/Manual/SceneViewNavigation.html)
+- [NVIDIA Omniverse viewport navigation](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/navigation.html)
+- [Mapbox Standard style reference](https://docs.mapbox.com/map-styles/reference/standard/)
+- [runtime configuration guide](https://docs.mapbox.com/map-styles/guides/standard-styles/)
+- [WCAG 2.2 — Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html)
+- [WAI-ARIA Toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)

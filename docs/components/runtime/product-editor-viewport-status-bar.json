@@ -1,0 +1,223 @@
+{
+  "slug": "product-editor-viewport-status-bar",
+  "title": "Viewport Status Bar",
+  "storybookTitle": "LDS Product/Editor/Viewport Status Bar",
+  "layer": "Product",
+  "family": "Editor",
+  "primaryOwner": "ViewportStatusBar",
+  "ownerComponents": [
+    "ViewportStatusBar"
+  ],
+  "supportingComponents": [],
+  "purpose": "운영자가 캔버스를 조작하는 동안 좌표·줌·선택 수·렌더링 상태를 지속해서 확인해야 할 때 적합합니다. 즉시 대응해야 하는 오류나 전역 시스템 상태에는 Status Bar 대신 Alert 또는 상태 배너를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "items are persistent passive readouts. They are deliberately not a live region, so cursor, camera, and FPS updates do not continuously interrupt screen-reader users."
+  ],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "Persistent readout group accessible name. @default \"뷰포트 상태\""
+    },
+    {
+      "part": "messageToneLabel",
+      "rule": "Visible semantic text paired with messageTone."
+    }
+  ],
+  "properties": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Persistent readout group accessible name. @default \"뷰포트 상태\"",
+      "owner": "ViewportStatusBarProps"
+    },
+    {
+      "name": "items",
+      "type": "ViewportStatusItem[]",
+      "required": false,
+      "description": "Persistent, non-live viewport readouts.",
+      "owner": "ViewportStatusBarProps"
+    },
+    {
+      "name": "message",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Optional transient viewport-local message, announced politely.",
+      "owner": "ViewportStatusBarProps"
+    },
+    {
+      "name": "messageTone",
+      "type": "'default' | 'signal' | 'positive' | 'cautionary' | 'negative' | 'warning' | 'danger'",
+      "required": false,
+      "description": "Semantic tone for the transient message. @default \"default\"",
+      "owner": "ViewportStatusBarProps"
+    },
+    {
+      "name": "messageToneLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Visible semantic text paired with messageTone.",
+      "owner": "ViewportStatusBarProps"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ViewportStatusBarProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "items",
+      "rule": "Persistent, non-live viewport readouts."
+    },
+    {
+      "state": "messageTone",
+      "rule": "Semantic tone for the transient message. @default \"default\""
+    },
+    {
+      "state": "messageToneLabel",
+      "rule": "Visible semantic text paired with messageTone."
+    }
+  ],
+  "behavior": [],
+  "quantitativeRules": [
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    },
+    {
+      "subject": "--color-semantic-label-strong",
+      "rule": "light: #000000; dark: #FFFFFF"
+    }
+  ],
+  "responsive": [
+    "message is for a short viewport-local outcome or hint and uses a polite, atomic status live region. Persistent connection or document state belongs in the owning shell/header instead.",
+    "messageTone (default default) keeps a plain-text message unless the outcome is genuinely semantic; any non-default tone wraps the message in a status badge with a visible tone word (messageToneLabel, or the standard 활성/정상/주의/위험 default), so tone is never color-only. Do not use a toned message for routine confirmations.",
+    "Keep this bar passive. History, save, reset, viewport controls, and destructive actions belong in their respective command surfaces. children remains only as a deprecated passive-status compatibility slot.",
+    "Blender Manual: Status Bar places contextual shortcuts, messages, and scene statistics in a compact bottom region. LDS separates a transient message from persistent telemetry while keeping both local to the viewport."
+  ],
+  "contentGuidance": [
+    "Use mono for coordinates, camera values, and frequently changing numeric telemetry. Toned values always include a visible semantic label; customize it with toneLabel/messageToneLabel."
+  ],
+  "accessibility": [
+    "The bar never wraps. It uses spacing instead of independent divider nodes, preventing orphaned separators when space contracts.",
+    "Item value is string | number and unit is a string; surrounding whitespace is normalized. Value/unit DOM text follows TelemetryValue: %, ‰, and plane-angle ° attach to the number, while SI·compound units and °C/°F keep one literal space."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "CanvasEditorCommandBar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "CanvasEditorShell",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "EditorToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "HistoryToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "LayerPanel",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SelectionInspector",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<ViewportStatusBar\n  message=\"선택 영역을 계산했습니다.\"\n  items={[\n    { label: '모드', value: '선택', priority: 'high' },\n    { label: '선택', value: 2, priority: 'high' },\n    { label: '커서', value: 'x 12.4 / y -3.8', mono: true },\n    { label: 'FPS', value: 60, priority: 'low' },\n  ]}\n/>"
+    }
+  ],
+  "tokens": [
+    "--caption1-line",
+    "--caption1-size",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-strong",
+    "--font-mono",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-medium",
+    "--fw-semibold",
+    "--space-1",
+    "--space-2",
+    "--space-4"
+  ],
+  "apiLinks": [],
+  "migration": [
+    "New code uses the system status vocabulary signal / positive / cautionary / negative. warning and danger remain compatibility aliases only, so Editor/Viewer status surfaces do not invent a second tone language."
+  ],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/EditorViewportStatusBar.stories.jsx",
+    "entryStoryId": "lds-product-editor-viewport-status-bar--readouts",
+    "publicStories": [
+      {
+        "id": "lds-product-editor-viewport-status-bar--readouts",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-editor-viewport-status-bar--status-tones",
+        "name": "변형·상태 · 의미별 색상",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-editor-viewport-status-bar--priority-compression",
+        "name": "반응형 · 좁은 폭 · 정보 우선순위",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-editor-viewport-status-bar--transient-message",
+        "name": "시나리오 · 일시적 작업 결과",
+        "role": "scenario"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "omitted-no-evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "evidence"
+  }
+}

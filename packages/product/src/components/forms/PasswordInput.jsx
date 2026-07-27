@@ -7,7 +7,7 @@ import {
   fieldBackground,
   fieldBorderColor,
   useFieldMetadata,
-} from './field-shared.js';
+} from '@lk-robotics/lds-core/components/forms/field-shared';
 
 const VISUALLY_HIDDEN_STYLE = {
   position: 'absolute',

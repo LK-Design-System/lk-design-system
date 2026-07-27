@@ -9,6 +9,7 @@
   },
   "upstreamTokenDependencies": ["--color-semantic-primary-normal"],
   "localTokenDefinitions": ["--component-viewer-surface"],
+  "inheritedRuntimeCustomProperties": ["--product-viewer-surface"],
   "entries": [
     { "source": "components/Widget", "exports": ["Widget"] }
   ]

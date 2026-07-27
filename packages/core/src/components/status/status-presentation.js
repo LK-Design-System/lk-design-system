@@ -35,7 +35,10 @@ const STATUS_TONE_ALIASES = {
   info: 'signal',
   success: 'positive',
   warning: 'cautionary',
+  danger: 'negative',
+  critical: 'negative',
   error: 'negative',
+  neutral: 'offline',
   normal: 'offline',
   online: 'positive',
 };

@@ -405,6 +405,7 @@ async function validateModuleOwnership(audit, packageById) {
 
   const roboticsRows = publicRowsByLayer.get('robotics') || [];
   const roboticsSources = new Set(roboticsRows.map((row) => row.source));
+  const productSources = new Set((publicRowsByLayer.get('product') || []).map((row) => row.source));
   const categoryEntries = Object.values(audit.ownership.roboticsReview?.categories || {}).flat();
   assert(
     new Set(categoryEntries).size === categoryEntries.length,
@@ -415,18 +416,22 @@ async function validateModuleOwnership(audit, packageById) {
     audit.ownership.roboticsReview?.disposition === 'move-to-robotics-ui',
     'Current Robotics disposition must remain move-to-robotics-ui.',
   );
+  const productMigrations = audit.ownership.roboticsReview?.productMigrations;
   assert(
-    audit.ownership.roboticsReview?.pendingProductCandidates?.targetPackageRemains ===
-      'robotics-ui',
-    'Pending Product candidates must remain assigned to robotics-ui.',
+    productMigrations?.decisionStatus === 'completed-with-robotics-compatibility-facades',
+    'Product migrations must record their completed compatibility-facade decision.',
   );
-  for (const candidate of
-    audit.ownership.roboticsReview?.pendingProductCandidates?.publicModules || []) {
-    assert(roboticsSources.has(candidate), `${candidate}: Product candidate is not Robotics-owned.`);
+  assert(productMigrations?.targetPackage === 'product', 'Product migrations must target Product.');
+  for (const candidate of productMigrations?.publicModules || []) {
+    assert(productSources.has(candidate), `${candidate}: migrated module is not Product-owned.`);
   }
-  for (const candidate of
-    audit.ownership.roboticsReview?.pendingProductCandidates?.internalModules || []) {
+  for (const candidate of productMigrations?.internalModules || []) {
     assert(internalPaths.has(candidate.path), `${candidate.path}: unknown internal candidate.`);
+    const row = (classification.internalModules || []).find((module) => module.path === candidate.path);
+    assert(
+      currentLayerToPackage[row?.ownerLayer] === candidate.targetPackage,
+      `${candidate.path}: expected ${candidate.targetPackage} internal ownership.`,
+    );
   }
 
   return {

@@ -1,0 +1,241 @@
+{
+  "slug": "product-editor-editor-toolbar",
+  "title": "Editor Toolbar",
+  "storybookTitle": "LDS Product/Editor/Editor Toolbar",
+  "layer": "Product",
+  "family": "Editor",
+  "primaryOwner": "EditorToolbar",
+  "ownerComponents": [
+    "EditorToolbar"
+  ],
+  "supportingComponents": [],
+  "purpose": "선택·영역·확대·이동처럼 서로 배타적인 편집 모드를 전환할 때 적합합니다. 저장이나 삭제 같은 즉시 실행 명령에는 Editor Toolbar 대신 Command Bar 또는 Button을 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [
+    "CanvasEditorShell.tools owns the rail surface, divider, and padding. EditorToolbar must not add a second card, border, or shadow."
+  ],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "toolbar 접근성 라벨. @default \"편집 도구\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "items",
+      "type": "readonly EditorTool[]",
+      "required": true,
+      "description": "툴 목록 — { value, icon, label }.",
+      "owner": "EditorToolbarProps"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "제어되는 선택 툴.",
+      "owner": "EditorToolbarProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "required": false,
+      "description": "비제어 초기 툴(기본 첫 항목).",
+      "owner": "EditorToolbarProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) = void",
+      "required": false,
+      "description": "",
+      "owner": "EditorToolbarProps"
+    },
+    {
+      "name": "orientation",
+      "type": "'vertical' | 'horizontal'",
+      "required": false,
+      "description": "",
+      "owner": "EditorToolbarProps"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "toolbar 접근성 라벨. @default \"편집 도구\"",
+      "owner": "EditorToolbarProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "전체 툴바 비활성화.",
+      "owner": "EditorToolbarProps"
+    },
+    {
+      "name": "disabledReason",
+      "type": "string",
+      "required": false,
+      "description": "전체 비활성 사유. item의 disabledReason이 우선합니다.",
+      "owner": "EditorToolbarProps"
+    },
+    {
+      "name": "tooltipPosition",
+      "type": "'top' | 'bottom' | 'left' | 'right'",
+      "required": false,
+      "description": "툴팁 위치. 기본값은 세로 right, 가로 bottom.",
+      "owner": "EditorToolbarProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "items",
+      "rule": "툴 목록 — { value, icon, label }."
+    },
+    {
+      "state": "disabled",
+      "rule": "전체 툴바 비활성화."
+    },
+    {
+      "state": "disabledReason",
+      "rule": "전체 비활성 사유. item의 disabledReason이 우선합니다."
+    }
+  ],
+  "behavior": [
+    "Activating the already selected mode re-emits that value through onChange; it never toggles a required editor mode off.",
+    "Adobe Spectrum Action Group reinforced keeping one density, size, selection model, and complete interaction-state grammar across related tool groups.",
+    "Figma: Navigating UI3 reinforced keeping high-frequency editing controls stable while panels remain secondary and collapsible.",
+    "EditorToolbar — single-select, high-frequency canvas tool group for LK Robotics editors."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "Each control composes the shared ToggleIcon foundation: 16px glyph, LDS small icon-control dimension (--component-toggle-icon-size-sm, currently 32px), shared radius/hover/focus/disabled treatment, and a quiet primary tint for the selected mode."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "Adjacent controls use the same --space-1 gap as ViewerToolbar, HistoryToolbar, and command groups. Compactness comes from the shared 32px control, not an Editor-only 2px rhythm."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "WCAG 2.2: Target Size (Minimum) established the minimum pointer-target floor. The 32px LDS small control exceeds that floor while matching the existing IconButton family."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "The implementation follows those interaction expectations while using LDS tokens and the existing 32px small control convention. It intentionally omits product-specific command routing, shortcut conflict resolution, and persistent tool preferences."
+    },
+    {
+      "subject": "--color-semantic-inverse-label-alternative-soft",
+      "rule": "light: rgba(255, 255, 255, 0.50); dark: rgba(255, 255, 255, 0.50)"
+    }
+  ],
+  "responsive": [
+    "Classification: LK Robotics Extension. Use it for mutually exclusive editing modes such as select, route, region, marker, erase, or pan. Document commands belong in CanvasEditorCommandBar; viewport navigation and zoom controls belong in ViewerToolbar inside the viewport."
+  ],
+  "contentGuidance": [
+    "items accept { value, icon, label, shortcut, ariaKeyShortcuts, disabled, disabledReason }; selection is controlled with value or uncontrolled with defaultValue.",
+    "Apple HIG: Toolbars reinforced stable logical grouping and consistent placement while keeping contextual tools distinct from navigation and document commands."
+  ],
+  "accessibility": [
+    "The toolbar exposes one roving Tab stop. Orientation-appropriate Arrow keys move focus across its items, Home/End move to the boundaries, and native button activation changes an enabled tool.",
+    "ariaKeyShortcuts is emitted when supplied. A string shortcut is also used as the ARIA shortcut value by default; visual-only React nodes are not.",
+    "EditorToolbar and ViewerToolbar share the private roving-focus engine, but not a public API: Editor items are mutually exclusive modes, while Viewer items remain independent commands or toggles.",
+    "An individually disabled tool remains reachable with Arrow navigation so its aria-disabled state and reason can be discovered, but it cannot activate. A globally disabled toolbar leaves no item in the Tab sequence and exposes a string disabledReason on the toolbar itself.",
+    "WAI-ARIA APG: Toolbar Pattern established one Tab stop, orientation-aware Arrow navigation, Home/End support, and named controls."
+  ],
+  "exceptions": [
+    "Tooltips open away from the rail by default: right for the vertical orientation, bottom for the horizontal one. Set tooltipPosition only when that default would collide with adjacent chrome (e.g. a right-docked rail should flip to left); it applies to every item, including disabled-reason tooltips."
+  ],
+  "related": [
+    {
+      "component": "CanvasEditorCommandBar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "CanvasEditorShell",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "HistoryToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "LayerPanel",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SelectionInspector",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewportStatusBar",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<EditorToolbar\n  value={tool}\n  onChange={setTool}\n  items={[\n    { value: 'select', icon: <Icon name=\"crosshair\" size={16} />, label: 'Select', shortcut: 'V' },\n    { value: 'route', icon: <Icon name=\"route\" size={16} />, label: 'Route', shortcut: 'R' },\n    { value: 'region', icon: <Icon name=\"zone\" size={16} />, label: 'Region', disabled: locked },\n  ]}\n/>"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-inverse-label-alternative-soft",
+    "--fw-medium",
+    "--space-1"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/EditorToolbar.stories.jsx",
+    "entryStoryId": "lds-product-editor-editor-toolbar--vertical",
+    "publicStories": [
+      {
+        "id": "lds-product-editor-editor-toolbar--vertical",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-editor-editor-toolbar--item-disabled",
+        "name": "변형·상태 · 개별 비활성 · 동적 순서",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-editor-editor-toolbar--disabled",
+        "name": "변형·상태 · 전체 비활성",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-editor-editor-toolbar--horizontal",
+        "name": "시나리오 · 가로 도구 막대",
+        "role": "scenario"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

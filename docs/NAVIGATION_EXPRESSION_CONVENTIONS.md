@@ -5,9 +5,9 @@
 | Type | Convention and boundary spec |
 | Status | Active |
 | Owner | Design system owner · Robotics domain engineering |
-| Date | 2026-07-17 |
+| Date | 2026-07-27 |
 
-이 문서는 `LDS Robotics/Navigation` 렌더러(WaypointMarker·LaneOverlay·RouteOverlay·TrajectoryOverlay·SpatialRegion·FacilityTransition·HazardMarker·NavigationAnnotationLayer)와 그 스토리가 **무엇을 어떻게 표현하는지**, 그리고 **무엇이 디자인 시스템 소관이고 무엇이 제품 소관인지**를 정의하는 단일 규약이다. 그동안 "semantic mirror" 병렬 컨트롤, 선택 리스트, activation readout, 복합 상태 겹침 같은 표현이 **규약 없이 스토리·컴포넌트마다 즉석에서 등장**해 일관성이 깨지고 인스턴스마다 수동으로 쫓아야 했다. 앞으로 새 표현은 **이 문서(또는 Foundation 원자 페이지)에 먼저 정의하고 참조**한다.
+이 문서는 `LDS Robotics/Navigation` 렌더러(WaypointMarker·LaneOverlay·RouteOverlay·TrajectoryOverlay·SpatialRegion·FacilityTransition·HazardMarker·NavigationAnnotationLayer)와 그 스토리가 **무엇을 어떻게 표현하는지**, 그리고 **무엇이 디자인 시스템 소관이고 무엇이 제품 소관인지**를 정의하는 단일 규약이다. 그동안 "semantic mirror" 병렬 컨트롤, 선택 리스트, activation readout, 복합 상태 겹침 같은 표현이 **규약 없이 스토리·컴포넌트마다 즉석에서 등장**해 일관성이 깨지고 인스턴스마다 수동으로 쫓아야 했다. 앞으로 새 표현은 **이 문서(또는 Foundation 원자 페이지)에 먼저 정의하고 참조**한다. 외부 Robotics 저장소가 따라야 할 검증 가능한 부분은 [`ROBOTICS_NAVIGATION_STATE_BADGE_CONTRACT.json`](references/package-split/ROBOTICS_NAVIGATION_STATE_BADGE_CONTRACT.json)에 별도 고정한다.
 
 ## 1. 디자인 시스템 ↔ 제품 경계
 
@@ -25,10 +25,19 @@
 
 ## 2. 상태 표현 규약
 
-- **단일 상태**: `NAV_STATE_BADGE` 원형 칩 뒤에 `NavigationStateGlyph`(11종). 배지 원 기하는 Navigation Encoding Tokens, 글리프 세트는 State Badge 페이지가 소유한다.
-- **복합 상태**(예: availability=unknown **이면서** invalid): 두 상태 배지를 각각 `translate(-8 -8)`·`translate(-8 8)`로 **offset 스택**해 surface 칩 위에 겹쳐 표기한다. 이 겹침이 "복합 상태"의 **정의된 표현**이며, 임의로 다른 배치를 만들지 않는다.
-- **selected(solid fill) 위 표식**: 다이아몬드가 accent로 채워지면 그 위에 직접 그리는 글리프·슬래시는 `--color-semantic-static-white`로 knockout해 대비를 유지한다(칩이 있는 복합 글리프는 foreground 유지).
+- **공통 상태 어휘**: `NavigationStateGlyph` 11종이 상태의 비색상 도형 어휘를 소유한다. 메인 LDS Core의 텍스트형 `StatusBadge`를 SVG 지도 마커 안에 복제하지 않고, 도형·색상·접근성 정책만 공유한다.
+- **점 마커의 단일 배지 슬롯**: Waypoint·FacilityTransition처럼 본체가 가용성·정체성을 이미 표현하는 작은 점 마커는 우측 상단에 **최대 한 개의 우선순위 solid 배지**만 부착한다. 여러 배지를 쌓거나 둘레에 나열하지 않는다.
+- **우선순위**: Waypoint는 `invalid > stale`, FacilityTransition은 `invalid > stale > unknown` 순서로 시각 슬롯 하나를 결정한다. 보이지 않은 하위 우선순위 상태를 삭제하지 않고 접근성 이름과 상세 데이터에는 모든 원시 상태를 유지한다.
+- **시각 형식**: 배지는 의미에 맞는 semantic status tone을 solid fill로 사용하고, 본체와 분리되는 surface색 separator stroke와 상태 글리프를 갖는다. 정확한 반지름·오프셋·글리프 크기는 Robotics가 소유하되, 한 슬롯·solid·우선순위·접근성 규칙은 메인 LDS 정책을 바꾸지 않고 따라야 한다.
+- **선·영역은 별도 채널**: Lane·Route·Trajectory 같은 선과 SpatialRegion 같은 면은 작은 점 마커가 아니므로 배지 슬롯을 공통 적용하지 않는다. stroke·dash·fill·외곽선과 명시적 라벨/상세 상태를 사용한다.
+- **selected(solid fill) 위 표식**: 마커 본체가 accent로 채워지면 그 위에 직접 그리는 글리프·슬래시는 `--color-semantic-static-white`로 knockout해 대비를 유지한다. 부착 배지는 자체 solid fill과 separator stroke를 유지한다.
 - **색 단독 금지**: availability·상태는 색뿐 아니라 형태(글리프·dash 패턴)와 접근성 이름으로도 전달한다.
+
+### 2.1 외부 근거와 LDS 적용
+
+- [Fluent 2 Badge](https://fluent2.microsoft.design/components/web/react/core/badge/usage)는 배지를 대상 컴포넌트 위나 가까이에 두어 관계를 즉시 알 수 있게 하고, 아이콘 전용 배지의 정보는 연결된 컴포넌트의 접근성 이름에도 포함하도록 안내한다. LDS는 이를 지도 마커 우측 상단 부착과 전체 원시 상태의 접근성 이름 보존으로 적용한다.
+- [WCAG 2.2 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color)는 색을 상태 구분의 유일한 수단으로 쓰지 않도록 요구한다. LDS는 semantic tone과 함께 상태 글리프 및 접근성 이름을 유지한다.
+- 외부 규약은 배지의 관계·접근성 원칙을 뒷받침하지만 `invalid > stale > unknown` 같은 로봇 내비게이션 우선순위를 정의하지 않는다. 그 우선순위는 운영 위험과 데이터 품질 의미에 따른 LDS 도메인 결정이다.
 
 ### 2.5 상호작용 상태 계층 (포커스 · 선택 · 호버)
 
@@ -49,7 +58,7 @@
 
 ## 4. 표현 어휘의 단일 소스
 
-Navigation 표현의 값·기하·글리프는 `LDS Robotics/Foundation`의 원자 페이지가 소유한다: Navigation Encoding Tokens·State Badge·Marker Pin·Facility Glyph·Hazard Glyph·Vector Glyph·Codes(그리고 교차영역 Unit Format·Viewer Tokens). **새 표현은 먼저 여기(또는 이 규약)에 정의하고 스토리·컴포넌트가 참조**한다. 스토리가 값·표현을 즉석에서 발명하지 않는다.
+Navigation 표현의 값·기하·글리프는 `LDS Robotics/Foundation`의 원자 페이지가 소유한다: Navigation Encoding Tokens·State Badge·Marker Pin·Facility Glyph·Hazard Glyph·Vector Glyph(그리고 교차영역 Unit Format·Viewer Tokens). **새 표현은 먼저 여기(또는 이 규약)에 정의하고 스토리·컴포넌트가 참조**한다. 직렬화·data attribute 전용 내부 코드는 Storybook 원자가 아니라 문서와 자동 검사에서 관리하며, 스토리가 값·표현을 즉석에서 발명하지 않는다.
 
 ## 5. 이 규약이 정리한 위반 (이력)
 
@@ -70,7 +79,7 @@ Navigation 표현의 값·기하·글리프는 `LDS Robotics/Foundation`의 원�
 
 **두 가지 처리 결정**
 - **깔끔한 드리프트(둘 이상이 같은 의미로 comparable 기하에 쓰는 값) → `_navigationVocabulary`로 단일 토큰 승격**하고 Foundation 페이지가 그 상수를 그대로 렌더한다(`NAV_PROGRESS_HEAD` 선례). 예: path casing 폭, base/강조 stroke 두께.
-- **렌더러마다 축·의미가 다른 규칙(복합 상태 오프셋 스택, 포커스 링 기하 등) → 단일 상수로 강제하지 않고**, 규칙 자체를 Foundation 프레임(State Badge·Marker Pin)에 문서화하고 렌더러별 축(웨이포인트 ±8 대각 / 레인 18 접선·32 법선 / 시설 16 수평 / 영역 ±18 수직)을 예시로 병기. `_navigationVocabulary`의 SCOPE RULE(같은 의미·comparable 기하만) 준수.
+- **공통 정책과 렌더러 기하를 분리**한다. 점 마커는 §2의 단일 solid 배지 슬롯과 우선순위를 공통으로 따르고, 정확한 오프셋·크기는 각 마커 기하가 소유한다. 포커스 링처럼 geometry가 다른 규칙은 단일 수치로 강제하지 않고 Foundation 프레임에 비교 문서화한다. `_navigationVocabulary`의 SCOPE RULE(같은 의미·comparable 기하만) 준수.
 - **담을 페이지가 없는 계열은 신규 Foundation 페이지 신설**: `Navigation Label Coordination`(라벨 충돌 조정 13규칙), `Navigation Map Stage`(패널 chrome·grid·축척·범례).
 
 **진행(커밋)**

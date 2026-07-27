@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { useDialogFocus } from './dialog-focus.js';
+import { useDialogFocus } from '@lk-robotics/lds-core/components/overlay/dialog-focus';
 
 const SR_ONLY_STYLE = {
   position: 'absolute',

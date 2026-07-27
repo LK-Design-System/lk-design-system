@@ -1,6 +1,6 @@
-**ViewerFrame** is the shared LK Robotics viewport contract for map, 3D, and video surfaces.
+**ViewerFrame** is the shared LDS Product viewport contract for map, 3D, and video surfaces.
 
-It provides a theme-stable viewport surface, a named `region`, source/HUD/local-toolbar slots, passive metadata, and one normalized state model. Renderer, media transport, reconnection, recording, and product-specific diagnostics remain application responsibilities.
+It provides a theme-stable viewport surface, a named `region`, source/HUD/local-toolbar slots, passive metadata, and orthogonal availability, connection, freshness, and playback axes. Renderer, media transport, reconnection, recording, and product-specific diagnostics remain application responsibilities.
 
 Every Viewer preset uses the same `appearance="dark" | "light"` axis. `Scene3DFrame` and video default to dark while `Map2DCanvas` defaults to light, but these are contextual defaults rather than category restrictions. Both values are literal and theme-stable: they change only the scoped frame roles, never the state or interaction contract. Renderer children and custom HUD content must consume `--viewer-surface`, `--viewer-surface-elevated`, `--viewer-foreground`, `--viewer-muted`, and `--viewer-border` instead of hard-coding one palette.
 
@@ -8,7 +8,9 @@ Every Viewer preset uses the same `appearance="dark" | "light"` axis. `Scene3DFr
 <ViewerFrame
   label="AMR-07 front camera"
   source="AMR-07 · FRONT"
-  state="stale"
+  availability="ready"
+  connection="connected"
+  freshness="stale"
   status="마지막 수신 8초 전"
   toolbar={cameraControls}
 >
@@ -18,6 +20,7 @@ Every Viewer preset uses the same `appearance="dark" | "light"` axis. `Scene3DFr
 
 ## State and placement contract
 
+- New product code uses `availability`, `connection`, `freshness`, and `playback`. The combined `state` prop remains a compatibility adapter and is ignored when any explicit axis is supplied.
 - `idle`, `no-source`, `loading`, `connecting`, `unavailable`, `disconnected`, `no-signal`, and `error` mean the content is unusable. They use a central blocking state and make renderer children and local toolbar controls `inert`/`aria-hidden`.
 - `degraded`, `stale`, `frozen`, and `paused` retain the last usable content and use an edge status strip instead of covering it.
 - Blocking presentation keeps the visible source identity. If a state transition blocks the currently focused renderer/control, focus moves to the first recovery action or to the blocking-state group instead of being discarded; after recovery it returns to that exact originating control when the control still exists.
@@ -40,7 +43,7 @@ Every Viewer preset uses the same `appearance="dark" | "light"` axis. `Scene3DFr
 
 ## Design basis
 
-Classification: **LK Robotics Extension**. Sibling contracts checked: `Map2DCanvas`, `Scene3DFrame`, `VideoStreamTile`, `ViewerToolbar`, `IconButton`, `Spinner`, `StatusBadge`, `CanvasEditorShell`, and `ViewportStatusBar`.
+Classification: **LDS Product application pattern**. Sibling contracts checked: `Map2DCanvas`, `Scene3DFrame`, `VideoStreamTile`, `ViewerToolbar`, `IconButton`, `Spinner`, `StatusBadge`, `CanvasEditorShell`, and `ViewportStatusBar`.
 
 - [NVIDIA Omniverse viewport controls](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/controls.html) and [viewport navigation](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/navigation.html) influenced the scene-first hierarchy and the small set of viewport-local controls.
 - [Unity default Scene view overlays](https://docs.unity3d.com/Manual/default-overlays-reference.html) influenced edge-attached orientation, navigation, and overlay placement rather than card-within-card chrome.

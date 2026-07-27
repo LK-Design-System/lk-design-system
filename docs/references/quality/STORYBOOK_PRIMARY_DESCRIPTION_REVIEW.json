@@ -235,6 +235,25 @@
       ]
     },
     {
+      "pageTitle": "LDS Core/Components/Content/Overline",
+      "importPath": "./stories/ContentOverline.stories.jsx",
+      "storyId": "lds-core-components-content-overline--eyebrow-overview",
+      "exportName": "EyebrowOverview",
+      "descriptionHash": "9337ee231af8b2de0d6f1ed36260059e7c6f0fd57e9c7fbf2f90a7c5b95839b7",
+      "sentences": [
+        {
+          "hash": "d2ba790626da359db363d58b0b1b019f531b61c5428bd101c47a7206729b3aa4",
+          "text": "같은 제목 앞자리라도 상위 화면 맥락과 짧은 범주 라벨은 서로 다른 타이포그래피 역할입니다.",
+          "decision": "unreviewed"
+        },
+        {
+          "hash": "2368c67ebd1841e568b542952cdec1659e7e991ef2c85a26f9bdb148d1139dfa",
+          "text": "문장형 맥락은 원래 대소문자와 제목 위계를 유지하고, 범주 키커만 짧은 대문자 Overline으로 보이는지 비교하세요.",
+          "decision": "unreviewed"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Core/Components/Content/Prose",
       "importPath": "./stories/ContentProse.stories.jsx",
       "storyId": "lds-core-components-content-prose--prose-example",
@@ -410,17 +429,17 @@
       "importPath": "./stories/LayoutScrollAccess.stories.jsx",
       "storyId": "lds-core-components-layout-scroll-and-accessibility--scroll-and-access",
       "exportName": "ScrollAndAccess",
-      "descriptionHash": "b2c526fe91613f2668c070bfb1008042d0ace59d0d4ebcaacb7cd9261c706f25",
+      "descriptionHash": "d8f7b3e3d1fae0d7ea0345d9965e85a22e1117a9733120af1432005bfc31e5f3",
       "sentences": [
         {
-          "hash": "2ec8aa34035233024cf9070f6a78e1bb36fba9bb74034f7634b5fcb0d4e7805e",
-          "text": "16:9 미디어 영역, 높이가 제한된 운영 로그, 시각적으로 숨긴 버튼 이름을 한 화면에서 검토하는 상황입니다.",
-          "decision": "retained-in-canvas"
+          "hash": "a64398465fc02b8fd02e8925c917cc0da00d2902ea8975de4f9397dd599535a0",
+          "text": "기본 OS 스크롤바, 좁은 영역용 compact, 가로 스크롤과 비스크롤 상태를 비교합니다.",
+          "decision": "unreviewed"
         },
         {
-          "hash": "9e6d3a03021045e5b052f49c4856bd89fd4f0df096fadecf5ba4b395c5e76526",
-          "text": "내용이 넘치는 스크롤 영역은 Tab으로 도달해 ↑↓·PageUp/PageDown으로 조작되고 이름을 가진 region으로 읽히는지, 넘치지 않는 영역은 탭 순서에 끼어들지 않는지, 숨긴 텍스트가 보조 기술에는 정확히 노출되는지 확인하세요.",
-          "decision": "retained-in-canvas"
+          "hash": "9b92d07f590f6df6ee8f28b506c6c4c07c358ca5c24c990fc27a265f08c8632e",
+          "text": "넘치는 영역만 Tab으로 도달하고 이름을 가진 region으로 읽히는지 확인하세요.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -467,17 +486,22 @@
       "importPath": "./stories/NavigationPageIndicator.stories.jsx",
       "storyId": "lds-core-components-navigation-page-indicator--counter-and-dots",
       "exportName": "CounterAndDots",
-      "descriptionHash": "c14075229e6e1741a4cca2158d5f93ad1073764c6c418445f4f45445803af11c",
+      "descriptionHash": "3b1274f4e9efe86d90c2a3d176c7bb2f665fdeaad039a2822b1db2f308b9ad76",
       "sentences": [
         {
-          "hash": "647adaac62a5f8278f9705dfa0fc9338956326b3a26adfec17e59ee213c06694",
-          "text": "숫자 카운터와 도트 표시를 크기·배경 조합별로 비교합니다.",
-          "decision": "retained-in-canvas"
+          "hash": "c7ce5c0f88fc8ef5d9be3e0cfa6e322a7b82f98037fafb353335b1ea8c925904",
+          "text": "카운터와 도트의 기본 축을 비교합니다.",
+          "decision": "unreviewed"
         },
         {
-          "hash": "ad4e737145fb2e9b4d86f5e7c2e9d31df7a8d52c5cb96072757f891fae4b93f7",
-          "text": "현재 페이지와 전체 개수가 이해되는지, alternative 표현이 어두운 표면에서도 충분히 구분되는지 확인하세요.",
-          "decision": "retained-in-canvas"
+          "hash": "51bc14b567e003a434dece2a506f62d671bb448413854b3a52cce1ca0f055389",
+          "text": "standalone의 기본·alternative는 같은 medium 지오메트리를 유지하고 색 대비만 바뀝니다.",
+          "decision": "unreviewed"
+        },
+        {
+          "hash": "4f4a11e330214c589d1809f62e93ad713a6af3ab38406052de7ecf1b7e776e0f",
+          "text": "media는 Carousel scrim 위에서만 쓰는 명시적 표현으로 8px 도트와 22×8px 활성 pill, 32×44px 선택 영역을 사용합니다.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -586,17 +610,17 @@
       "importPath": "./stories/OverlayDropdownMenu.stories.jsx",
       "storyId": "lds-core-components-overlay-dropdown-menu--dropdown-menu-patterns",
       "exportName": "DropdownMenuPatterns",
-      "descriptionHash": "d6cf9df447171a5d5ded14cf1e44e934216add39acc76c9912503385be1172bf",
+      "descriptionHash": "8744e14410953afbf4d8be02a293beff59bf8e855e0ace9c15b551b2ba35a730",
       "sentences": [
         {
-          "hash": "08404d86115d99ed103a7589d7e2fd54f49bab7376ceaf2e4d3bbc144cb48404",
-          "text": "기본 명령과 normal·radio·checkbox 변형, 긴 목록의 action area를 비교하는 상황입니다.",
-          "decision": "retained-in-canvas"
+          "hash": "651dfbbde6de6965dddbde956a083de7b7d34511d71c5d69aea438df6ada0c66",
+          "text": "기본 명령과 normal·radio·checkbox 변형을 비교하는 상황입니다.",
+          "decision": "unreviewed"
         },
         {
-          "hash": "0e05073d4d9be6fbcc530ec0ff08382a4c475e1e4fe192bae4177ebdb18e9a3d",
-          "text": "active·checked·disabled·danger 의미가 구분되고 스크롤 안에서도 항목과 action 영역이 안정적인지 확인하세요.",
-          "decision": "retained-in-canvas"
+          "hash": "5c114a2889445ca9105346e292e65ebd8b419ff2ff9bdd3e1660565065cfeb8c",
+          "text": "active·checked·disabled·danger 의미가 구분되고 긴 목록의 스크롤에서도 항목 밀도가 안정적인지 확인하세요.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -1004,17 +1028,36 @@
       "importPath": "./stories/StatusStatusBadge.stories.jsx",
       "storyId": "lds-core-components-status-status-badge--status-tones",
       "exportName": "StatusTones",
-      "descriptionHash": "3777fc349e114214fd16bef4570109b2724b36226a2a286e82002e79dd7f8901",
+      "descriptionHash": "8cea04e5445d0e1ebf64bfbe8ce1ddc64c23f41bc048a7e0857761073d9d7246",
       "sentences": [
         {
-          "hash": "928c1ed12b6d99dbff2764a5a245d66d8de1fbb7bc2a4b55d86b27e8a07aa489",
-          "text": "가동중·점검중·오류·오프라인·검토 상태를 의미별 tone으로 비교합니다.",
-          "decision": "retained-in-canvas"
+          "hash": "d14222a5ce26d63f3945e3457ab911b226700c1d5a0b23df50cc35153a3b8025",
+          "text": "진행중·마감 임박·처리 실패·종료·검토 상태를 의미별 tone으로 비교합니다.",
+          "decision": "unreviewed"
         },
         {
-          "hash": "304ac607117738e1ffde33b2db58994b1357dfa27539994eaf6c838dd88cc604",
-          "text": "점 색상과 텍스트가 함께 상태를 전달하고 서로 다른 배경에서도 라벨 대비와 간격이 일관적인지 확인하세요.",
-          "decision": "retained-in-canvas"
+          "hash": "bb12df1ca015b8135acc61eab8d9f5d16f9d52c3bd01c769d9bd42442fb1243b",
+          "text": "배경과 텍스트가 같은 의미 계열을 사용하되 라벨만 읽어도 상태가 구분되고 서로 다른 배경에서도 대비와 간격이 일관적인지 확인하세요.",
+          "decision": "unreviewed"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Core/Components/Status/Status Indicator",
+      "importPath": "./stories/StatusIndicator.stories.jsx",
+      "storyId": "lds-core-components-status-status-indicator--status-indicator-overview",
+      "exportName": "StatusIndicatorOverview",
+      "descriptionHash": "895bac43922ec7e63013bc6d55daef344190fd5840fa595aa121bbf5f146bea3",
+      "sentences": [
+        {
+          "hash": "d7be955e4bf261eedca4d430e9427f0823caafc6c25e64d1555630ded6b59b7a",
+          "text": "steady online, 실제 변화 중인 재연결 pulse, 데이터 지연과 오프라인을 비교합니다.",
+          "decision": "unreviewed"
+        },
+        {
+          "hash": "7d2f87334fe6803d8d86e72f1b46dd73e80740b598ba89c18ce2d54ca76aaa9e",
+          "text": "모든 신호가 visible label을 유지하고 pulse가 의미적으로 필요한 한 상태에만 제한되는지 확인하세요.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -1042,12 +1085,12 @@
       "importPath": "./stories/Foundations.stories.jsx",
       "storyId": "lds-core-foundation-color--color",
       "exportName": "Color",
-      "descriptionHash": "ff08e8081ccafbecde31f9ec44e952bb8b79bafb42b12eeea2450e618496f36e",
+      "descriptionHash": "7dac0ac7db459e8b28ca2d409b6ab8b8f3fc4aead7e2005caa1a6e8bda7f9114",
       "sentences": [
         {
-          "hash": "370c09cab1001d0bed8645164b63a3e7e7f1b381238f3765d41395c1ea6875f5",
-          "text": "LDS semantic color token을 역할별로 살펴보는 기준 화면입니다.",
-          "decision": "retained-in-canvas"
+          "hash": "0d4afff2284b0493de1cca7c0b6f7f61d41d7a860624c174fb72354cf1b08ef4",
+          "text": "LDS semantic color token의 대표 역할과 사용 원칙을 살펴보는 시작 화면입니다.",
+          "decision": "unreviewed"
         },
         {
           "hash": "c177825ef1b933f6c690d955f683510c6708d51f8caf37c8532a35f9ec9a3c95",
@@ -1055,9 +1098,9 @@
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "6de39313914d959728b504ad36a5dfcd1e72aa8b93cfe87b7b694baaf4f90be9",
-          "text": "하단의 선명한 상태색 경고를 함께 읽고, 텍스트와 텍스트 배경에는 신호색 대신 *-text 역할을 쓰세요.",
-          "decision": "retained-in-canvas"
+          "hash": "c34798fa24d45e52973dc29774aa276411a339fc16877b450e4effcd876d7ada",
+          "text": "하단의 상태색 사용 가이드에 따라 텍스트와 텍스트 배경에는 신호색 대신 *-text 역할을 쓰세요.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -1218,7 +1261,7 @@
       "importPath": "./stories/FoundationInteraction.stories.jsx",
       "storyId": "lds-core-foundation-interaction--interaction-tokens",
       "exportName": "InteractionTokens",
-      "descriptionHash": "9fb6c10f2c10e007988d668b63768cafdcd43c84cbc7a95edd34c1ffe8efcdc4",
+      "descriptionHash": "1a2bf0cbb25ee193c36f41aeefc9e39f222ac76cc0ddc7187f46e8f6124c6f6f",
       "sentences": [
         {
           "hash": "bcefcd32d919ab83c3cdd01978aad6f1103a2942a4dcc898708cb9114c0a1ba2",
@@ -1226,14 +1269,9 @@
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "6fd22ca93faa725bd44d5ffc0d00328083824fd2f4530b170990f18a46050a9c",
-          "text": "새 컴포넌트를 만들 때는 상태 이름을 그대로 재사용하고, 표현은 세 계열 중 하나를 골라 쓰세요.",
-          "decision": "retained-in-canvas"
-        },
-        {
-          "hash": "2943ab4db5fecfc9f88fe01d5c84a9c171d01260be98b2d42e4ce5c710b646b8",
-          "text": "새 계열을 만들려면 이 페이지에 근거와 함께 추가해야 합니다.",
-          "decision": "retained-in-canvas"
+          "hash": "e9d4ff637e3f298f92c1758fd4d30b9e1ceae672c4515de164f97263c78db160",
+          "text": "상태 이름은 일관되게 재사용하고 표면의 성격에 맞는 표현 계열을 선택하세요.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -1261,17 +1299,12 @@
       "importPath": "./stories/LoadingPattern.stories.jsx",
       "storyId": "lds-core-patterns-loading--loading-decision-guide",
       "exportName": "LoadingDecisionGuide",
-      "descriptionHash": "5244124976ce2a0614af86df22d9241369139a16c582257b663fe1b8b2bb8536",
+      "descriptionHash": "f7b5ae7e46a4d331de1df4e40f88ab180efee6bdcabd1db4178e24ed1b80d0c8",
       "sentences": [
         {
-          "hash": "9607c1b433c9ab06e8705c4652ac1b05136585295e4bed44471fd100f9f50591",
-          "text": "1초 미만의 무표시부터 1분 이상의 취소 가능한 확정 진행까지 선택 기준을 직접 바꿔보는 개요입니다.",
-          "decision": "retained-in-canvas"
-        },
-        {
-          "hash": "1ae0d949694d279926bcfd4438bc86be125c3b788b18fefc5809e7331468e2fb",
-          "text": "한 loading scope 안에 주 인디케이터가 하나만 남는지 확인하세요.",
-          "decision": "retained-in-canvas"
+          "hash": "f7b5ae7e46a4d331de1df4e40f88ab180efee6bdcabd1db4178e24ed1b80d0c8",
+          "text": "모든 LDS 제품에 적용하는 Loading Pattern의 범위, 핵심 규칙, 신호 선택 기준과 조합 컴포넌트를 한 화면에서 확인합니다.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -1656,7 +1689,7 @@
       "importPath": "./stories/CardsExtended.stories.jsx",
       "storyId": "lds-product-content-product-card--product-cards",
       "exportName": "ProductCards",
-      "descriptionHash": "4ddb7ffc7ccddd80c5a44728af09da268f38da6480fdd44510468f9170718f53",
+      "descriptionHash": "4407ac4f933da29daedb5acd1fe83f61ab28a8e20afec7b7d1aef0f4340334dd",
       "sentences": [
         {
           "hash": "4b50120e9759db2291f0ee2c10305af268cf24cf4069a92b3b2c682ea50107fd",
@@ -1664,9 +1697,9 @@
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "adbc3e29ec7c0a36dbc10870958c49569b0d3a21ddc5cce6883ab26f139c453a",
-          "text": "ID와 카테고리가 먼저 읽히고 설명 길이가 달라도 카드 간 위계와 정렬이 유지되는지 확인하세요.",
-          "decision": "retained-in-canvas"
+          "hash": "338810665e13fa92e5483e675a2a9b95ae846df1399983d6c293bbc07f9b7308",
+          "text": "기본 카드에서는 제품 ID가 먼저 읽히고, 설명 길이가 달라도 카드 간 위계와 정렬이 유지되는지 확인하세요.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -1686,6 +1719,25 @@
           "hash": "dc3a507fc9bbd9261c798a73a8586c5e5f3c896230b9ca3c57740ef507b6e639",
           "text": "좋아요가 `aria-pressed`를 소유하고 각 수가 컨트롤 접근 이름(예: \"좋아요 12개\")에 합성되는지 확인하세요.",
           "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Content/Record Header",
+      "importPath": "./stories/ContentRecordHeader.stories.jsx",
+      "storyId": "lds-product-content-record-header--record-header-overview",
+      "exportName": "RecordHeaderOverview",
+      "descriptionHash": "612fc1b2cbbeb5fee68d399eb9bbda3814c70d079c5ee7c0c3c4962a6eb946a3",
+      "sentences": [
+        {
+          "hash": "c15d84a900e1213009fae2a3ac1f8edce711755422780c2543b028978143e9a1",
+          "text": "프로필을 하나의 레코드 정체성 헤더로 조립합니다.",
+          "decision": "unreviewed"
+        },
+        {
+          "hash": "a24ad35f84020375ea01848c3b3fbd2a50869a041848dc3edf507532259b5bbf",
+          "text": "아바타와 이름, 인증 상태, 소개, 라벨 붙은 스탯, 대상 액션의 순서와 정렬을 확인하세요.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -1865,7 +1917,7 @@
       "importPath": "./stories/ContentCarousel.stories.jsx",
       "storyId": "lds-product-data-display-carousel--carousel-slides",
       "exportName": "CarouselSlides",
-      "descriptionHash": "2c532b8fc9463c11d190f485274f93d4ffbc26fd216dfde2c413058a2979b8a2",
+      "descriptionHash": "22925446537706f77b449ca0020a03ab2a73bc584d549bcff6662786752f181b",
       "sentences": [
         {
           "hash": "9adad66bf76ec51b9f34fce8853589693e2ba9eddf41348f0b33eb9b24c97e8b",
@@ -1873,9 +1925,9 @@
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "78ea922d4f7b373bec410721f668411c0edd4a911477c3f53158f5219523b8d2",
-          "text": "슬라이드 순서와 현재 위치가 이해되고 각 미디어의 상태가 이미지와 함께 읽히는지 확인하세요.",
-          "decision": "retained-in-canvas"
+          "hash": "56d5ececfcb375d03d5db1fe2d9f17a7ceadba019e870be5de455f71b460c3f9",
+          "text": "Carousel이 PageIndicator의 media presentation을 재사용해 8px 도트·22×8px 활성 pill·32×44px 선택 영역을 제공하는지 확인하세요.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -2184,6 +2236,139 @@
       ]
     },
     {
+      "pageTitle": "LDS Product/Editor/Canvas Shell",
+      "importPath": "./stories/EditorShell.stories.jsx",
+      "storyId": "lds-product-editor-canvas-shell--basic",
+      "exportName": "Basic",
+      "descriptionHash": "88345f342b70dd384fffa522f5141557625f185ed89d415f58459be1acf6d3f2",
+      "sentences": [
+        {
+          "hash": "2a098cc0cc3a23df0df26ad52bafdafd8c97f47f26bfce304ad4be75ac4de1b3",
+          "text": "문서 명령·도구·레이어·뷰포트·속성 패널이 배치된 기본 편집 셸입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "6e8508eda25736fd67dcf242a71c680c19d7e3e36d8e950fb2c66b9b93190e8e",
+          "text": "운영자의 시선과 키보드 이동이 문서 수준 명령에서 작업 영역과 선택 정보 순으로 이어지는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Editor/Command Bar",
+      "importPath": "./stories/EditorCommandBar.stories.jsx",
+      "storyId": "lds-product-editor-command-bar--document-commands",
+      "exportName": "DocumentCommands",
+      "descriptionHash": "264f500fcbe30512b3f2b3490ebd80da6708459c30e222a958099670149e86a0",
+      "sentences": [
+        {
+          "hash": "222d64b020e21f792c76c18f7eae5b6a8b575daae9dc29792aa4f182be048312",
+          "text": "편집 문서의 실행 취소·다시 실행·저장·내보내기를 한 막대에서 사용하는 기본 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "9c4070d829d12741e4f446efaff1dd72d99457c2b8ac9ddea1e7ee073fff8412",
+          "text": "명령 그룹과 현재 가능한 작업이 아이콘과 접근 가능한 이름으로 구분되는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Editor/Editor Toolbar",
+      "importPath": "./stories/EditorToolbar.stories.jsx",
+      "storyId": "lds-product-editor-editor-toolbar--vertical",
+      "exportName": "Vertical",
+      "descriptionHash": "f853e1e95b126094c71f13451a6fd4f468cad6628b080502642a8ff9accf5ef2",
+      "sentences": [
+        {
+          "hash": "ab7b2caf92f0c2119134dcc2b548a05d9acf73496200fd31084d5c757d4274b2",
+          "text": "캔버스 왼쪽에 세로 방향의 단일 선택 편집 도구를 배치한 기본 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "d9829ca2739ca116769d435796454ceeac7dbeab9c7d629598891c321eed3dd9",
+          "text": "선택 모드와 roving Tab stop이 일치하고 Home·End 키가 시각적 순서대로 이동하는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Editor/History Toolbar",
+      "importPath": "./stories/EditorHistoryToolbar.stories.jsx",
+      "storyId": "lds-product-editor-history-toolbar--available-history",
+      "exportName": "AvailableHistory",
+      "descriptionHash": "cdf7d9a4cbae07d56e048f3824f75cafaccf656945414639f20b8a206948c35e",
+      "sentences": [
+        {
+          "hash": "0b56101e479bb3c4a8648c5346a9dd25935fd4e0e4fc90f192a9f2faf0e6a5ec",
+          "text": "실행 취소와 다시 실행 이력이 모두 있고 문서 초기화도 가능한 편집 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "f29b0517fb7f38c044637605571e576cfad0e332aad0939fab04e52cf67b45d3",
+          "text": "이력 이동과 되돌릴 수 없는 초기화가 별도 명령 그룹으로 구분되는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Editor/Layer Panel",
+      "importPath": "./stories/EditorLayerPanel.stories.jsx",
+      "storyId": "lds-product-editor-layer-panel--interactive",
+      "exportName": "Interactive",
+      "descriptionHash": "3bcd658c25adeea739b792325a6b6aec0d8b43198f8113253ef6c0f4d1262bff",
+      "sentences": [
+        {
+          "hash": "3d21e8a4563c9fe8feb5205c1e230ac25865717f723e91c43d23fe2114cf0e5e",
+          "text": "여러 하위 레이어가 펼쳐진 편집 장면에서 활성 레이어를 바꾸는 기본 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "117773f861be5b5b1c8fbff55efe51ec87a215ee8cafb39af9bf2a4ac596f7f3",
+          "text": "부모·자식 깊이와 선택·표시·잠금 제어가 한 행 안에서 혼동 없이 읽히는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Editor/Selection Inspector",
+      "importPath": "./stories/EditorSelectionInspector.stories.jsx",
+      "storyId": "lds-product-editor-selection-inspector--selected-object",
+      "exportName": "SelectedObject",
+      "descriptionHash": "52bcff17576b9617732ee2c5b8b5c75bfc2c3111cdb346cd97f55594687b6652",
+      "sentences": [
+        {
+          "hash": "f7423fa1ad81820f11694c3f3cfbe97a50c70119d13b30cac9ec1f60366eecf8",
+          "text": "캔버스에서 하나의 객체를 선택해 식별 정보와 속성 그룹을 확인하는 기본 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "30134c776af0e456b461ec0e79c5d36c09572ae32a4b62a45275ce5551dea725",
+          "text": "객체 이름·종류·상태가 속성보다 먼저 읽히고 선택 해제 동작이 명확한지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Editor/Viewport Status Bar",
+      "importPath": "./stories/EditorViewportStatusBar.stories.jsx",
+      "storyId": "lds-product-editor-viewport-status-bar--readouts",
+      "exportName": "Readouts",
+      "descriptionHash": "42b35ab800309542e355bdbaaa91a3b2fd66d3818c5c5d1b97419ce84f380e8e",
+      "sentences": [
+        {
+          "hash": "e277f7e5340754f1a1cf1e781bef98943837e5b75b3cd52857eebe1e01b639fa",
+          "text": "좌표·줌·선택 수·렌더링 상태를 캔버스 아래에서 계속 참고하는 기본 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "e6ad28bad12ef80262d6b43c2e945ddcab8bf8571fc155e68f80e026a493adac",
+          "text": "항목 라벨과 값이 빠르게 훑히고 수동 정보가 작업 영역보다 시각적으로 앞서지 않는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Product/Feedback/Rating",
       "importPath": "./stories/FeedbackRating.stories.jsx",
       "storyId": "lds-product-feedback-rating--rating-patterns",
@@ -2360,6 +2545,25 @@
       ]
     },
     {
+      "pageTitle": "LDS Product/Navigation/Language Switcher",
+      "importPath": "./stories/NavigationLanguageSwitcher.stories.jsx",
+      "storyId": "lds-product-navigation-language-switcher--overview",
+      "exportName": "Overview",
+      "descriptionHash": "0b2098e9b4d03082a8dd38b9257ae08ad007595e52196d0e4127504e47717bdf",
+      "sentences": [
+        {
+          "hash": "b83e3ee968042494689b6606c79a7997475b8c90bf6aea27f95cdce9565c221e",
+          "text": "36px 지구본 trigger와 native-name 단일 선택 menu를 확인합니다.",
+          "decision": "unreviewed"
+        },
+        {
+          "hash": "b8f0b5d5f392f7627e0d675a55fdc109e604d81a5e46c031ccd91a565ff69242",
+          "text": "현재 언어는 체크로 표시하고, 선택 뒤 앱 소유 locale state가 갱신되며 focus가 trigger로 돌아와야 합니다.",
+          "decision": "unreviewed"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Product/Navigation/Menubar",
       "importPath": "./stories/NavigationMenubar.stories.jsx",
       "storyId": "lds-product-navigation-menubar--menubar-patterns",
@@ -2383,7 +2587,7 @@
       "importPath": "./stories/NavigationSideNav.stories.jsx",
       "storyId": "lds-product-navigation-side-nav--link-destinations",
       "exportName": "LinkDestinations",
-      "descriptionHash": "e3445479de80934426f7a5f4733077f0eaa3d58fd378f20a1cd9b6947734b22d",
+      "descriptionHash": "f8388301328007c909cbfc0feccdc3dff3f437a3e11268911dd53db8a7d90310",
       "sentences": [
         {
           "hash": "b84d8543d689cc222b8c0d20c9837bd165ccbfcbbf40cafb547d434837e34b89",
@@ -2391,9 +2595,9 @@
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "319e6502fb05a0278bbe8bc674d265c8f284483599e88eacdbaac33e3df100e6",
-          "text": "각 항목의 의미와 키보드 도달 가능성이 DOM 역할과 일치하는지 확인하세요.",
-          "decision": "retained-in-canvas"
+          "hash": "3b3e31ebe69233fb46d20e2d5c4cc915d238644d59febc4bd316534309065dfb",
+          "text": "지속 선택 배경은 현재 목적지만 소유하고, 펼쳐진 부모와 hover는 선택 상태보다 약하게 읽혀야 합니다.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -2948,7 +3152,7 @@
       "importPath": "./stories/FormValidationSummary.stories.jsx",
       "storyId": "lds-product-selection-and-input-validation-summary--errors-and-warnings",
       "exportName": "ErrorsAndWarnings",
-      "descriptionHash": "ccd827f949e10aef4d0625fb733d8c7a2d4eca8e77d5d029bc88cb742f6cc774",
+      "descriptionHash": "632413832df5643980bf3982d5242285c5be545b67a46694a5dcd3c32f7d5b3f",
       "sentences": [
         {
           "hash": "61168763f37c64bf59bdced865991fe2910394968dd6c032c1343888fdb11b47",
@@ -2956,9 +3160,9 @@
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "2666abe90d3bb0ba1f1e327f49f39db4d80371ae374bb5c004cb296f7f39b8c0",
-          "text": "focusable summary, live announcement, 항목 이동이 severity 위계와 일치하는지 확인하세요.",
-          "decision": "retained-in-canvas"
+          "hash": "144002858c5453d63d203b87f79b7d7df3eac772eb5354f18739df4cf30f216a",
+          "text": "focusable summary, 동일 inline message, 실제 field 복귀가 severity 위계와 일치하는지 확인하세요.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -3001,6 +3205,63 @@
       ]
     },
     {
+      "pageTitle": "LDS Product/Status/Battery Gauge",
+      "importPath": "./stories/RoboticsBatteryGauge.stories.jsx",
+      "storyId": "lds-product-status-battery-gauge--battery-levels",
+      "exportName": "BatteryLevels",
+      "descriptionHash": "92e2b86e1240c23fae895e6755af29268ae5f0b2ea02f9f8a8f7908561ec3c9f",
+      "sentences": [
+        {
+          "hash": "4f8ad6820d6527face664440c6e29ed90525b424a2888f42f5714da892054353",
+          "text": "정상·주의·위험 구간과 sm 크기, 라벨 숨김을 봅니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "f58d65cb610dc19a822ecf0b2944245a371336fc39c1ef4397b8bd9c11cc60e6",
+          "text": "저잔량이 색과 숫자로 동시에 읽히는지, 작은 크기에서도 값이 판독되는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Status/Connection Badge",
+      "importPath": "./stories/RoboticsConnectionBadge.stories.jsx",
+      "storyId": "lds-product-status-connection-badge--connection-badges",
+      "exportName": "ConnectionBadges",
+      "descriptionHash": "e4d08434eed3397cff967ae6a5f1191cffc7fd116027d6f8d4a45ba6c830bbea",
+      "sentences": [
+        {
+          "hash": "81784bafe23a95e77a81bac92967dd89fea3da8ac2b9204b7dca83cceeffd013",
+          "text": "unknown부터 failed까지 7개 transport 상태를 나란히 봅니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "9d86809f7712ce728f080c0e76567299f1defb8c34d028febb2b02d2303490f6",
+          "text": "connected가 freshness나 command readiness를 암시하지 않는지, 320px에서도 막대와 라벨이 함께 유지되는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Status/Equipment State",
+      "importPath": "./stories/RoboticsEquipment.stories.jsx",
+      "storyId": "lds-product-status-equipment-state--equipment-state",
+      "exportName": "EquipmentState",
+      "descriptionHash": "82032ac04788f0a61ae79935b02e90db9ce25c8d8d89cb98c917758aec3d74a4",
+      "sentences": [
+        {
+          "hash": "ee996ca5a69a0b6cd3cf975f2d64d7d493035770ad61413b0aa30f79a612031a",
+          "text": "엘리베이터와 게이트웨이를 같은 범용 anatomy로 표현합니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "f99b5ac27b3cd554e4cc790e2a9d76d119ae0891f0f564dfb1092b6b3488fd02",
+          "text": "제목→보이는 상태 라벨→key/value facts→meta/action 순서와 ConnectionBadge 조합을 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Product/Status/Meter",
       "importPath": "./stories/ProductMeter.stories.jsx",
       "storyId": "lds-product-status-meter--bounded-measurements",
@@ -3034,6 +3295,158 @@
         {
           "hash": "fc9a4daf248a78d17af9f3a28000f129642487726f494013852b6d25a65b5ea0",
           "text": "값 유무, sm·md·lg 크기와 positive·cautionary·negative tone이 작업 상태를 일관되게 전달하는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Status/Telemetry Gauge",
+      "importPath": "./stories/RoboticsTelemetryGauge.stories.jsx",
+      "storyId": "lds-product-status-telemetry-gauge--telemetry-overview",
+      "exportName": "TelemetryOverview",
+      "descriptionHash": "63a03bbe07499d17b545614ef25c0d3ff03c08ee9248e91cd8a5a6c894dd246f",
+      "sentences": [
+        {
+          "hash": "7f754f2ede8aafa5ed60067f2d3903e31e740075f77fde9a666555734efc44d6",
+          "text": "배터리·속도·신호·부하의 현재 수준을 한 운영 화면에서 비교하는 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "240c4d787e686d4a3c3dd8b13e25b03449a531b467bbc5cc6b08f7d1b35b283e",
+          "text": "네 meter 모두 범위와 현재 값, 사람이 읽을 수 있는 값·상태 텍스트를 함께 노출하는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Status/Telemetry Value",
+      "importPath": "./stories/RoboticsTelemetryValue.stories.jsx",
+      "storyId": "lds-product-status-telemetry-value--compact-readouts",
+      "exportName": "CompactReadouts",
+      "descriptionHash": "c5df435c8f1b52d2cdc953fd9444013370b5638ae0f69d58e8ce86a2ff907a86",
+      "sentences": [
+        {
+          "hash": "8ea1a67f2b74ead295412f55b496ffe2f7d3cb4103d081229c89bf13f9dc8243",
+          "text": "배터리·RSSI·속도·LiDAR 값을 반응형 readout 격자로 비교하는 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "81ea2449915c2d08ef022e9dd4fbc4d659de5b85a22ce1ddf4a910fe900e7bd1",
+          "text": "320px에서도 고정 폭 표처럼 넘치지 않고 값·단위·상태·도움말·시각이 의미 단위로 줄바꿈되는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Viewer/2D Map",
+      "importPath": "./stories/ViewerMap.stories.jsx",
+      "storyId": "lds-product-viewer-2d-map--map-canvas-overview",
+      "exportName": "MapCanvasOverview",
+      "descriptionHash": "80a886d4e5e425c85c3dd8b39b16b7ffc3ecc4331d2a6ad54ace79eebb4e334c",
+      "sentences": [
+        {
+          "hash": "e0333d5ef585685c7283ff385b3dd10425edaaf839c76d5b6926caf06051e6b3",
+          "text": "같은 경로와 로봇 위치를 밝은 지도와 어두운 지도에서 나란히 비교합니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "eb705afe72a0dc11f4366fa73e449df5263fb473ce7c9c5b77cee21d2e3f0c00",
+          "text": "appearance가 달라도 경로·현재 위치·프레임 도구의 정보 우선순위와 대비가 동등한지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Viewer/3D Scene",
+      "importPath": "./stories/Viewer3D.stories.jsx",
+      "storyId": "lds-product-viewer-3d-scene--scene-3-d-overview",
+      "exportName": "Scene3DOverview",
+      "descriptionHash": "02f17c55142f061599ff62f003a450b90042b439f4b883cd58a4c734d12692ae",
+      "sentences": [
+        {
+          "hash": "a8ce58612b11e0af4f53d95ba1e87b1ccd7b42bc492a55b19b6d88ad5b6f4b06",
+          "text": "AMR 포인트 클라우드와 최소 카메라 도구를 함께 보는 기본 3D 장면입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "9a6de8f741dc6f41c7f0a534d9d19edff3cb507aad8b0d62cc21564acef5d8b2",
+          "text": "장면이 주 시각 영역으로 남고 상태·도구·HUD가 공간 데이터를 가리지 않는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Viewer/Floor Selector",
+      "importPath": "./stories/ViewerFloorSelector.stories.jsx",
+      "storyId": "lds-product-viewer-floor-selector--floor-selection",
+      "exportName": "FloorSelection",
+      "descriptionHash": "d75c9369d2cc17148c74663aa605c2f95ed7c1299c5c86a605a4b63769ff044a",
+      "sentences": [
+        {
+          "hash": "0da96cf3013996d20319c8322536346132c51cfc03febe4c0189eb112df7736f",
+          "text": "지상 3층부터 지하 1층까지 있는 건물 지도에서 현재 층을 전환합니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "22106aedb22092e7303c2f69003d7b1108db6d5348ba55564ce103c1bb6b53fc",
+          "text": "활성 층이 색 외에도 선택 상태로 전달되고 층 순서가 공간적 기대와 맞는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Viewer/Toolbar",
+      "importPath": "./stories/ViewerToolbar.stories.jsx",
+      "storyId": "lds-product-viewer-toolbar--viewer-toolbar-overview",
+      "exportName": "ViewerToolbarOverview",
+      "descriptionHash": "8251cbdbf5ba7331f0b641569ae0cb122e253f6e462fa11c294c432d3b62d075",
+      "sentences": [
+        {
+          "hash": "938dfb02bb9169f4e718716fb004f5b2afd1915c52db1a9775bf4fdeeb0355d2",
+          "text": "지도 위에서 확대·축소·초기화·로봇 표시와 레이어 설정을 사용하는 기본 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "09d1bf899d8059a9add41f639f275f16ce6bef5984f98c5be0d745f0878c8166",
+          "text": "즉시 명령과 지속 토글이 구분되고 팝오버 설정이 현재 장면과 같은 문맥으로 읽히는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Viewer/Video Stream",
+      "importPath": "./stories/ViewerVideo.stories.jsx",
+      "storyId": "lds-product-viewer-video-stream--video-stream-overview",
+      "exportName": "VideoStreamOverview",
+      "descriptionHash": "4c1ddd110389813f55222835a9b0e8ee18cc6c4da90d140549f2c5810c1e409d",
+      "sentences": [
+        {
+          "hash": "175cd5aac9832439542517ee520d6cb52d2320e83f1aeea86d6ff1ee8f1b58fd",
+          "text": "주 영상과 RGB·IR·EO 보조 피드를 live·loading·disconnected 상태로 함께 보는 운영 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "d51fb98901c06f6cf6a245f08966105ceff3e0353695ba3cbfc2be9a7821cfdd",
+          "text": "각 소스의 정체와 가용 상태가 영상보다 먼저 판단되고 여러 타일의 위계가 분명한지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Viewer/Viewer Frame",
+      "importPath": "./stories/ViewerFrame.stories.jsx",
+      "storyId": "lds-product-viewer-shared-viewer-frame--state-placement",
+      "exportName": "StatePlacement",
+      "descriptionHash": "a7f6a1a0a5e579977cbb0aa2bf61e1cf4cd0c2359c0831335fd2ad0476240ab9",
+      "sentences": [
+        {
+          "hash": "ad5c1ac05e0ae369ba91976595d1e339f5a6036817c60c89769a9d360b9f4a59",
+          "text": "ready·stale·loading 상태를 나란히 두어 상태 배치 원칙을 비교합니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "fa0bc73583424aaf60d4c31f4faa3f616e7c10fa53ac5cbe6e7e2d6161669bfe",
+          "text": "로딩은 중앙에서 콘텐츠를 차단하고 stale은 장면을 유지한 채 가장자리에서 알려 운영 맥락이 보존되는지 확인하세요.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -3111,6 +3524,150 @@
       "importPath": "./stories/NavigationDashboard.stories.jsx",
       "hash": "d60d13bcc226f7f6fe472b5cfc65ee68ce136ccacf3b482cec1b72d83b138c42",
       "text": "목적지가 얕은 대시보드는 접기 컨트롤 없이 안정된 244px 탐색 폭을 유지해 장시간 모니터링 세션의 예측 가능성을 지킵니다.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Components/Layout/Scroll and Accessibility",
+      "importPath": "./stories/LayoutScrollAccess.stories.jsx",
+      "hash": "2ec8aa34035233024cf9070f6a78e1bb36fba9bb74034f7634b5fcb0d4e7805e",
+      "text": "16:9 미디어 영역, 높이가 제한된 운영 로그, 시각적으로 숨긴 버튼 이름을 한 화면에서 검토하는 상황입니다.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Components/Layout/Scroll and Accessibility",
+      "importPath": "./stories/LayoutScrollAccess.stories.jsx",
+      "hash": "9e6d3a03021045e5b052f49c4856bd89fd4f0df096fadecf5ba4b395c5e76526",
+      "text": "내용이 넘치는 스크롤 영역은 Tab으로 도달해 ↑↓·PageUp/PageDown으로 조작되고 이름을 가진 region으로 읽히는지, 넘치지 않는 영역은 탭 순서에 끼어들지 않는지, 숨긴 텍스트가 보조 기술에는 정확히 노출되는지 확인하세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Components/Navigation/Page Indicator",
+      "importPath": "./stories/NavigationPageIndicator.stories.jsx",
+      "hash": "647adaac62a5f8278f9705dfa0fc9338956326b3a26adfec17e59ee213c06694",
+      "text": "숫자 카운터와 도트 표시를 크기·배경 조합별로 비교합니다.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Components/Navigation/Page Indicator",
+      "importPath": "./stories/NavigationPageIndicator.stories.jsx",
+      "hash": "ad4e737145fb2e9b4d86f5e7c2e9d31df7a8d52c5cb96072757f891fae4b93f7",
+      "text": "현재 페이지와 전체 개수가 이해되는지, alternative 표현이 어두운 표면에서도 충분히 구분되는지 확인하세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Components/Overlay/Dropdown Menu",
+      "importPath": "./stories/OverlayDropdownMenu.stories.jsx",
+      "hash": "08404d86115d99ed103a7589d7e2fd54f49bab7376ceaf2e4d3bbc144cb48404",
+      "text": "기본 명령과 normal·radio·checkbox 변형, 긴 목록의 action area를 비교하는 상황입니다.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Components/Overlay/Dropdown Menu",
+      "importPath": "./stories/OverlayDropdownMenu.stories.jsx",
+      "hash": "0e05073d4d9be6fbcc530ec0ff08382a4c475e1e4fe192bae4177ebdb18e9a3d",
+      "text": "active·checked·disabled·danger 의미가 구분되고 스크롤 안에서도 항목과 action 영역이 안정적인지 확인하세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Components/Status/Status Badge",
+      "importPath": "./stories/StatusStatusBadge.stories.jsx",
+      "hash": "928c1ed12b6d99dbff2764a5a245d66d8de1fbb7bc2a4b55d86b27e8a07aa489",
+      "text": "가동중·점검중·오류·오프라인·검토 상태를 의미별 tone으로 비교합니다.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Components/Status/Status Badge",
+      "importPath": "./stories/StatusStatusBadge.stories.jsx",
+      "hash": "304ac607117738e1ffde33b2db58994b1357dfa27539994eaf6c838dd88cc604",
+      "text": "점 색상과 텍스트가 함께 상태를 전달하고 서로 다른 배경에서도 라벨 대비와 간격이 일관적인지 확인하세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Foundation/Color",
+      "importPath": "./stories/Foundations.stories.jsx",
+      "hash": "370c09cab1001d0bed8645164b63a3e7e7f1b381238f3765d41395c1ea6875f5",
+      "text": "LDS semantic color token을 역할별로 살펴보는 기준 화면입니다.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Foundation/Color",
+      "importPath": "./stories/Foundations.stories.jsx",
+      "hash": "6de39313914d959728b504ad36a5dfcd1e72aa8b93cfe87b7b694baaf4f90be9",
+      "text": "하단의 선명한 상태색 경고를 함께 읽고, 텍스트와 텍스트 배경에는 신호색 대신 *-text 역할을 쓰세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Foundation/State",
+      "importPath": "./stories/FoundationInteraction.stories.jsx",
+      "hash": "6fd22ca93faa725bd44d5ffc0d00328083824fd2f4530b170990f18a46050a9c",
+      "text": "새 컴포넌트를 만들 때는 상태 이름을 그대로 재사용하고, 표현은 세 계열 중 하나를 골라 쓰세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Foundation/State",
+      "importPath": "./stories/FoundationInteraction.stories.jsx",
+      "hash": "2943ab4db5fecfc9f88fe01d5c84a9c171d01260be98b2d42e4ce5c710b646b8",
+      "text": "새 계열을 만들려면 이 페이지에 근거와 함께 추가해야 합니다.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Patterns/Loading",
+      "importPath": "./stories/LoadingPattern.stories.jsx",
+      "hash": "9607c1b433c9ab06e8705c4652ac1b05136585295e4bed44471fd100f9f50591",
+      "text": "1초 미만의 무표시부터 1분 이상의 취소 가능한 확정 진행까지 선택 기준을 직접 바꿔보는 개요입니다.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Core/Patterns/Loading",
+      "importPath": "./stories/LoadingPattern.stories.jsx",
+      "hash": "1ae0d949694d279926bcfd4438bc86be125c3b788b18fefc5809e7331468e2fb",
+      "text": "한 loading scope 안에 주 인디케이터가 하나만 남는지 확인하세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Product/Content/Product Card",
+      "importPath": "./stories/CardsExtended.stories.jsx",
+      "hash": "adbc3e29ec7c0a36dbc10870958c49569b0d3a21ddc5cce6883ab26f139c453a",
+      "text": "ID와 카테고리가 먼저 읽히고 설명 길이가 달라도 카드 간 위계와 정렬이 유지되는지 확인하세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Product/Data/Display/Carousel",
+      "importPath": "./stories/ContentCarousel.stories.jsx",
+      "hash": "78ea922d4f7b373bec410721f668411c0edd4a911477c3f53158f5219523b8d2",
+      "text": "슬라이드 순서와 현재 위치가 이해되고 각 미디어의 상태가 이미지와 함께 읽히는지 확인하세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Product/Navigation/Side Nav",
+      "importPath": "./stories/NavigationSideNav.stories.jsx",
+      "hash": "319e6502fb05a0278bbe8bc674d265c8f284483599e88eacdbaac33e3df100e6",
+      "text": "각 항목의 의미와 키보드 도달 가능성이 DOM 역할과 일치하는지 확인하세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Product/Selection and Input/Validation Summary",
+      "importPath": "./stories/FormValidationSummary.stories.jsx",
+      "hash": "2666abe90d3bb0ba1f1e327f49f39db4d80371ae374bb5c004cb296f7f39b8c0",
+      "text": "focusable summary, live announcement, 항목 이동이 severity 위계와 일치하는지 확인하세요.",
       "previousDecision": "retained-in-canvas"
     }
   ]

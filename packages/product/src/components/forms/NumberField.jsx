@@ -5,7 +5,7 @@ import {
   fieldBackground,
   fieldBorderColor,
   useFieldMetadata,
-} from './field-shared.js';
+} from '@lk-robotics/lds-core/components/forms/field-shared';
 
 /**
  * LK ROBOTICS — NumberField

@@ -13,6 +13,13 @@ Pass a `<video>`, WebRTC renderer, iframe, or image as `children`. The DS owns t
 </VideoStreamTile>
 ```
 
+## Orthogonal state axes
+
+New integrations should report independent `availability`, `connection`,
+`freshness`, and `playback` axes. Supplying any of those axes takes precedence
+over the legacy combined `state`/`status` adapter, so a stale connected stream
+is not misreported as disconnected or unavailable.
+
 - The default state is `idle`, never an unverified `live` claim. `state` is the normalized-state prop for new code; `status` is a compatibility alias that `state` always wins over — do not supply both in new work.
 - The region's accessible name comes from `ariaLabel` when supplied; otherwise a string `label` derives `"{label} 영상 스트림"` and a missing/non-string label falls back to `영상 스트림`. Set `ariaLabel` explicitly whenever `label` is a non-string node or several tiles would otherwise share one name.
 - `aspectRatio` (default `16 / 9`) is a CSS `aspect-ratio` value that sizes the tile from its width. Match it to the real stream ratio (`4 / 3`, `1 / 1`) instead of letterboxing inside the child renderer; give the tile an explicit height only when the owning grid requires it.

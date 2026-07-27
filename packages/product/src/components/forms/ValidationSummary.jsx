@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextButton } from '@lk-robotics/lds-core/components/buttons/TextButton';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { embeddedBandStyle, statusToneStyle } from '../status/status-presentation.js';
+import { embeddedBandStyle, statusToneStyle } from '@lk-robotics/lds-core/components/status/status-presentation';
 
 const SEVERITY_META = {
   error: {

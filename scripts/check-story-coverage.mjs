@@ -1,5 +1,6 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import ts from 'typescript';
 
 const root = process.cwd();
 const baselinePath = path.join(root, 'docs', 'references', 'quality', 'STORY_COVERAGE_BASELINE.json');
@@ -34,6 +35,39 @@ const internalModulePaths = new Set(
   (classification.internalModules ?? []).map((module) => path.normalize(path.join(root, module.path))),
 );
 
+function componentPropNames(declarationSource, componentName) {
+  const file = ts.createSourceFile(
+    `${componentName}.d.ts`,
+    declarationSource,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TS,
+  );
+  const interfaces = new Map();
+  for (const node of file.statements) {
+    if (!ts.isInterfaceDeclaration(node)) continue;
+    interfaces.set(node.name.text, {
+      props: node.members
+        .filter(ts.isPropertySignature)
+        .map((member) => member.name?.text)
+        .filter(Boolean),
+      parents: (node.heritageClauses ?? [])
+        .flatMap((clause) => clause.types)
+        .map((type) => ts.isIdentifier(type.expression) ? type.expression.text : null)
+        .filter(Boolean),
+    });
+  }
+  const target = `${componentName}Props`;
+  if (!interfaces.has(target)) return null;
+  const collect = (name, seen = new Set()) => {
+    if (seen.has(name) || !interfaces.has(name)) return [];
+    seen.add(name);
+    const row = interfaces.get(name);
+    return [...row.props, ...row.parents.flatMap((parent) => collect(parent, seen))];
+  };
+  return new Set(collect(target));
+}
+
 for (const jsxPath of (await collect(path.join(root, 'components'), '.jsx'))
   .filter((file) => !internalModulePaths.has(path.normalize(file)))) {
   const rel = path.relative(root, jsxPath).replaceAll('\\', '/');
@@ -41,10 +75,14 @@ for (const jsxPath of (await collect(path.join(root, 'components'), '.jsx'))
   const declarationSource = await readFile(jsxPath.replace(/\.jsx$/, '.d.ts'), 'utf8').catch(() => source);
   const exports = [...source.matchAll(/^export\s+(?:function|const)\s+([A-Za-z_$][\w$]*)/gm)].map((match) => match[1]);
   for (const name of exports) {
+    const propNames = componentPropNames(declarationSource, name);
+    const declaresProp = (fallbackPattern, predicate) => propNames
+      ? [...propNames].some(predicate)
+      : fallbackPattern.test(declarationSource);
     const stateEvidence = (prop) => new RegExp(`<${name}\\b[\\s\\S]{0,500}\\b${prop}\\b`).test(storyCorpus);
-    if (/\bdisabled\??\s*:/.test(declarationSource) && !stateEvidence('disabled')) findings.disabledStateGaps.push(`${rel}#${name}`);
-    if (/\bloading\w*\??\s*:/.test(declarationSource) && !stateEvidence('loading')) findings.loadingStateGaps.push(`${rel}#${name}`);
-    if (/\bempty(?:Label|Message)?\??\s*:/.test(declarationSource) && !stateEvidence('empty(?:Label|Message)?')) findings.emptyStateGaps.push(`${rel}#${name}`);
+    if (declaresProp(/\bdisabled\??\s*:/, (prop) => prop === 'disabled') && !stateEvidence('disabled')) findings.disabledStateGaps.push(`${rel}#${name}`);
+    if (declaresProp(/\bloading\w*\??\s*:/, (prop) => prop.startsWith('loading')) && !stateEvidence('loading')) findings.loadingStateGaps.push(`${rel}#${name}`);
+    if (declaresProp(/\bempty(?:Label|Message)?\??\s*:/, (prop) => /^(?:empty|emptyLabel|emptyMessage)$/.test(prop)) && !stateEvidence('empty(?:Label|Message)?')) findings.emptyStateGaps.push(`${rel}#${name}`);
     if (!new RegExp(`<${name}\\b`).test(parityCorpus)) findings.visualParityGaps.push(`${rel}#${name}`);
   }
 }

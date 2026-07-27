@@ -1,8 +1,8 @@
 import React from 'react';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
 import { Spinner } from '@lk-robotics/lds-core/components/status/Spinner';
-import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
-import { useFloatingPosition } from '../overlay/anchored-overlay.js';
+import { useMenuKeyboard } from '@lk-robotics/lds-core/components/internal/useMenuKeyboard';
+import { useFloatingPosition } from '@lk-robotics/lds-core/components/overlay/anchored-overlay';
 
 const SIZE_STYLES = {
   sm: {

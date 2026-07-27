@@ -11609,7 +11609,9 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
 | `nodes` | `TreeNodeData[]` | Yes |  |
+| `expandedIds` | `Array` | No | Controlled IDs of expanded branches. |
 | `defaultExpanded` | `Array` | No | Node IDs, or primitive labels for legacy nodes without an ID, expanded initially. |
+| `onExpandedIdsChange` | `(expandedIds: string[]) = void` | No | Called with normalized IDs/legacy primitive labels after expansion changes. |
 | `selectedId` | `string \| number \| null` | No | Controlled ID of the single selected node. IDs are normalized to strings. |
 | `defaultSelectedId` | `string \| number \| null` | No | Initial ID of the single selected node when uncontrolled. IDs are normalized to strings. |
 | `onSelectedIdChange` | `(selectedId: string) = void` | No | Called with the normalized ID when a node with an ID is activated. |
@@ -11621,7 +11623,9 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 | State | Contract |
 | --- | --- |
+| expandedIds | Controlled IDs of expanded branches. |
 | defaultExpanded | Node IDs, or primitive labels for legacy nodes without an ID, expanded initially. |
+| onExpandedIdsChange | Called with normalized IDs/legacy primitive labels after expansion changes. |
 | selectedId | Controlled ID of the single selected node. IDs are normalized to strings. |
 | defaultSelectedId | Initial ID of the single selected node when uncontrolled. IDs are normalized to strings. |
 | onSelectedIdChange | Called with the normalized ID when a node with an ID is activated. |
@@ -11635,10 +11639,10 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 | Subject | Rule |
 | --- | --- |
+| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| --caption2-size | 11px |
 | --color-semantic-background-normal-alternative | light: #F7F7F8; dark: #0F0F10 |
 | --color-semantic-focus-indicator | light: #2F6FB0; dark: #7FB0DE |
-| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
-| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
 
 ## Content and writing
 
@@ -11679,9 +11683,12 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 ### Tokens
 
+- `--caption1-size`
+- `--caption2-size`
 - `--color-semantic-background-normal-alternative`
 - `--color-semantic-focus-indicator`
 - `--color-semantic-label-alternative`
+- `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
 - `--color-semantic-label-strong`
 - `--color-semantic-primary-normal`
@@ -14138,6 +14145,1036 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - [PatternFly dashboard guidelines](https://www.patternfly.org/patterns/dashboard/design-guidelines/)
 - [Carbon chart anatomy](https://v10.carbondesignsystem.com/data-visualization/chart-anatomy/)
 - [Carbon accessibility for developers](https://carbondesignsystem.com/guidelines/accessibility/developers/)
+
+
+---
+
+# Canvas Shell
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Editor |
+| Owner | `CanvasEditorShell` |
+| Storybook | `LDS Product/Editor/Canvas Shell` |
+| Source | `../component-content.json#product-editor-canvas-shell` |
+
+계층·도구·뷰포트·속성 패널이 함께 작동하는 공간 편집 화면을 구성할 때 적합합니다. 단일 캔버스나 읽기 전용 뷰어에는 전체 셸 대신 필요한 Viewer 또는 개별 패널만 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- headerStart is the leading header region. Use it for back navigation or a real structural-panel toggle, not decorative home/layer icons.
+- CanvasEditorShell - Shared frame for canvas-based editors.
+
+### 사용하지 않음
+
+- layers is only for a real layer/display tree. Do not put task steps or selected-object details there.
+- status is optional and passive. Do not move undo/redo or save into it.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| title | 문서/워크스페이스 제목. |
+| description | 제목 아래의 짧은 상태 또는 문서 메타데이터. |
+| headerStart | 제목 앞의 뒤로가기 또는 프레임 구조 제어. |
+| toolbar | 헤더 오른쪽의 문서 단위 명령. |
+| subheader | 헤더 아래에서 전체 편집 모드를 바꾸는 탭/필터. |
+| responsiveNavigation | 좁은 화면에서 canvas/layers/panel 사이를 전환하는 전용 탐색. 편집 모드용 subheader와 구분합니다. |
+| children | 중앙 캔버스 또는 워크플로우 본문. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `title` | `React.ReactNode` | No | 문서/워크스페이스 제목. |
+| `description` | `React.ReactNode` | No | 제목 아래의 짧은 상태 또는 문서 메타데이터. |
+| `headerStart` | `React.ReactNode` | No | 제목 앞의 뒤로가기 또는 프레임 구조 제어. |
+| `toolbar` | `React.ReactNode` | No | 헤더 오른쪽의 문서 단위 명령. |
+| `subheader` | `React.ReactNode` | No | 헤더 아래에서 전체 편집 모드를 바꾸는 탭/필터. |
+| `responsiveNavigation` | `React.ReactNode` | No | 좁은 화면에서 canvas/layers/panel 사이를 전환하는 전용 탐색. 편집 모드용 subheader와 구분합니다. |
+| `tools` | `React.ReactNode` | No | 좌측 편집 도구 레일. |
+| `layers` | `React.ReactNode` | No | 실제 레이어/디스플레이 구조가 있을 때만 쓰는 좌측 패널. |
+| `children` | `React.ReactNode` | No | 중앙 캔버스 또는 워크플로우 본문. |
+| `panel` | `React.ReactNode` | No | 우측 속성/설정 패널. |
+| `panelMode` | `'docked' \| 'drawer'` | No | drawer는 중앙 영역 위에 겹치며 열고 닫을 때 전환됩니다. @default 'docked' |
+| `panelOpen` | `boolean` | No | 우측 패널 표시 여부. 생략하면 내부 상태를 사용합니다. |
+| `defaultPanelOpen` | `boolean` | No | 비제어 우측 패널 초기 표시 여부. @default true |
+| `onPanelOpenChange` | `(open: boolean, reason: 'toggle' \| 'escape') = void` | No | 패널 handle 또는 Escape로 표시 상태가 바뀔 때 호출됩니다. |
+| `layersOpen` | `boolean` | No | 좌측 레이어 패널 표시 여부. 생략하면 내부 상태를 사용합니다. |
+| `defaultLayersOpen` | `boolean` | No | 비제어 레이어 패널 초기 표시 여부. @default true |
+| `onLayersOpenChange` | `(open: boolean, reason: 'toggle' \| 'escape') = void` | No | 레이어 패널 handle 또는 Escape로 표시 상태가 바뀔 때 호출됩니다. |
+| `status` | `React.ReactNode` | No | 선택적인 하단 수동 상태 표시줄. |
+| `panelWidth` | `number` | No | 우측 패널 폭(px). @default 280 |
+| `panelMinWidth` | `number` | No | 우측 패널 최소 폭(px). @default 240 |
+| `panelMaxWidth` | `number` | No | 우측 패널 최대 폭(px). @default 420 |
+| `onPanelWidthChange` | `(width: number) = void` | No |  |
+| `layerPanelWidth` | `number` | No | 좌측 레이어 패널 폭(px). @default 236 |
+| `layerPanelMinWidth` | `number` | No | 좌측 레이어 패널 최소 폭(px). @default 200 |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| panelOpen | 우측 패널 표시 여부. 생략하면 내부 상태를 사용합니다. |
+| defaultPanelOpen | 비제어 우측 패널 초기 표시 여부. @default true |
+| onPanelOpenChange | 패널 handle 또는 Escape로 표시 상태가 바뀔 때 호출됩니다. |
+| layersOpen | 좌측 레이어 패널 표시 여부. 생략하면 내부 상태를 사용합니다. |
+| defaultLayersOpen | 비제어 레이어 패널 초기 표시 여부. @default true |
+| onLayersOpenChange | 레이어 패널 handle 또는 Escape로 표시 상태가 바뀔 때 호출됩니다. |
+| status | 선택적인 하단 수동 상태 표시줄. |
+| mobileActiveRegion | 좁은 화면에서 한 번에 표시할 주 작업 영역. drawer 패널은 기존 overlay 동작을 유지합니다. @default 'canvas' |
+
+## Behavior and interaction
+
+- Keep selected-object Apply, Delete, or clear-selection actions with the owning inspector. Keep document save in the header.
+- Arbitrary docking graphs, saved workspace layouts, detached windows, and domain workflows are intentionally excluded from this DS shell.
+- MapEditScreen: header commands + objects/pgm tabs + left tool rail + map canvas + persistent right properties/settings panel.
+- PcdMap3DPanel: optional split panel inside the map editor's viewport region, not an independent point-cloud workspace.
+- The shell owns stable regions only: document header, optional mode tabs, edit-tool rail, optional structural panel, dominant viewport, optional properties panel, and optional passive status. Product workflows own the content and decide which regions exist.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | Panel widths are px numbers: panelWidth (default 280, clamped to panelMinWidth 240 / panelMaxWidth 420) and layerPanelWidth (default 236, clamped to layerPanelMinWidth 200 / layerPanelMaxWidth 360). |
+| --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
+| --color-semantic-background-normal-alternative | light: #F7F7F8; dark: #0F0F10 |
+
+## Responsive
+
+- responsiveNavigation owns narrow-screen region switching only. Do not reuse subheader for canvas/layers/properties navigation.
+- tools owns mutually exclusive edit modes. Viewport-local zoom/orbit controls stay inside the viewport.
+- children is the dominant center viewport — the canvas or workflow body itself. The shell renders it as a landmark section named by canvasLabel; it never scrolls the shell, so the canvas owns its own overflow.
+- 좁은 화면에서는 mobileActiveRegion="canvas" | "layers" | "panel"로 주 영역 하나만 노출합니다. 제품은 responsiveNavigation에 LDS Tabs/SegmentedControl을 조합합니다. 기본값은 캔버스입니다.
+
+## Content and writing
+
+- Region landmarks are named by toolsLabel (편집 도구), layersLabel (레이어), canvasLabel (편집 캔버스), panelLabel (속성 패널), and statusLabel (편집 상태). The defaults are sensible for generic editors; override them when the product domain has better names (e.g. 지도 캔버스), not to inject workflow instructions.
+- Storybook state names may describe the state being reviewed. Do not render review labels, storyboard step names, or audit annotations inside the product frame.
+
+## Accessibility
+
+- Desktop layer and property panels compose the existing DockPanel: they can collapse/restore and, by default, resize by pointer or keyboard. layersOpen/panelOpen may be controlled; the corresponding defaultOpen props provide uncontrolled defaults.
+- Use a docked panel for repeated property editing. Use panelMode="drawer" only for lightweight contextual inspection over the viewport. Escape closes a focused panel and returns focus to its restore handle.
+- WAI-ARIA Window Splitter informs keyboard-resizable panel boundaries; Tabs informs narrow-screen region navigation.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `CanvasEditorCommandBar` | 대표 시나리오에서 조합 |
+| `EditorToolbar` | 대표 시나리오에서 조합 |
+| `HistoryToolbar` | 대표 시나리오에서 조합 |
+| `LayerPanel` | 대표 시나리오에서 조합 |
+| `SelectionInspector` | 대표 시나리오에서 조합 |
+| `ViewportStatusBar` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<CanvasEditorShell
+  title="floor_1.pgm"
+  description="3 zones · 2 lines · 4 landmarks"
+  headerStart={<BackButton />}
+  toolbar={
+    <CanvasEditorCommandBar canUndo={canUndo} canRedo={canRedo} onUndo={undo} onRedo={redo}>
+      <Button size="sm" disabled={!dirty}>오브젝트 저장</Button>
+    </CanvasEditorCommandBar>
+  }
+  subheader={<Tabs items={modes} value={mode} onChange={setMode} size="small" />}
+  responsiveNavigation={<Tabs items={regions} value={region} onChange={setRegion} size="small" />}
+  tools={<EditorToolbar items={tools} value={tool} onChange={setTool} />}
+  layers={<LayerPanel layers={layers} activeLayerId={layerId} />}
+  panel={<ObjectProperties selection={selection} />}
+  defaultLayersOpen
+  defaultPanelOpen
+  resizablePanels
+>
+  <Map2DCanvas>...</Map2DCanvas>
+</CanvasEditorShell>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--caption1-line`
+- `--caption1-size`
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-background-normal-alternative`
+- `--color-semantic-label-neutral`
+- `--color-semantic-label-normal`
+- `--color-semantic-label-strong`
+- `--color-semantic-line-normal-normal`
+- `--font-sans`
+- `--fw-bold`
+- `--fw-medium`
+- `--headline2-line`
+- `--headline2-size`
+- `--radius-lg`
+- `--space-1`
+- `--space-2`
+- `--space-3`
+- `--space-4`
+
+### Source contracts
+
+- `components/editor/CanvasEditorShell.jsx`
+- `components/editor/CanvasEditorShell.d.ts`
+- `components/editor/CanvasEditorShell.prompt.md`
+- `stories/EditorShell.stories.jsx`
+
+## Sources
+
+- CanvasEditorShell prompt contract: `components/editor/CanvasEditorShell.prompt.md`
+- Storybook implementation evidence: `stories/EditorShell.stories.jsx`
+- [Figma UI3 navigation](https://help.figma.com/hc/en-us/articles/23954856027159-Navigating-UI3)
+- [Figma Layers panel](https://help.figma.com/hc/en-us/articles/360039831974-View-layers-and-assets-in-the-Layers-Panel)
+- [Unity interface](https://docs.unity3d.com/kr/530/Manual/LearningtheInterface.html)
+- [Blender regions](https://docs.blender.org/manual/en/4.0/interface/window_system/regions.html)
+- [WAI-ARIA Window Splitter](https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/)
+- [Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)
+
+
+---
+
+# Command Bar
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Editor |
+| Owner | `CanvasEditorCommandBar` |
+| Storybook | `LDS Product/Editor/Command Bar` |
+| Source | `../component-content.json#product-editor-command-bar` |
+
+운영자가 저장·내보내기·실행 취소처럼 편집 문서 전체의 수명주기를 다룰 때 적합합니다. 줌·카메라·레이어처럼 현재 뷰포트에만 영향을 주는 동작에는 Viewer Toolbar 또는 해당 로컬 도구를 사용하세요.
+
+## 사용 판단
+
+### 사용하지 않음
+
+- Selection-specific actions belong in SelectionInspector; destructive application workflows do not belong in this design-system primitive.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| label | 전체 document command group 접근성 라벨. |
+| documentLabel | documentActions가 있을 때 렌더링되는 문서 명령 툴바 라벨. |
+| documentActions | 저장, 내보내기처럼 문서 수명주기에 속하는 명령. |
+| historyLabel | 히스토리 툴바 접근성 라벨. |
+| children | 저장 버튼처럼 별도 컴포넌트가 필요한 문서 작업 슬롯. |
+| extraLabel | 추가 명령 슬롯 접근성 라벨. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `label` | `string` | No | 전체 document command group 접근성 라벨. |
+| `documentLabel` | `string` | No | documentActions가 있을 때 렌더링되는 문서 명령 툴바 라벨. |
+| `documentActions` | `CanvasEditorCommandBarAction[]` | No | 저장, 내보내기처럼 문서 수명주기에 속하는 명령. |
+| `viewLabel` | `string` | No |  |
+| `viewActions` | `CanvasEditorCommandBarAction[]` | No |  |
+| `size` | `'sm' \| 'md'` | No | Document/history icon control density. sm=32px, md=40px. @default "sm" |
+| `showHistory` | `boolean` | No | 히스토리 툴바 표시 여부. @default true |
+| `historyLabel` | `string` | No | 히스토리 툴바 접근성 라벨. |
+| `canUndo` | `boolean` | No | 실행 취소 가능 여부. 실제 handler가 없으면 비활성입니다. @default false |
+| `canRedo` | `boolean` | No | 다시 실행 가능 여부. 실제 handler가 없으면 비활성입니다. @default false |
+| `onUndo` | `() = void` | No |  |
+| `onRedo` | `() = void` | No |  |
+| `undoKeyShortcuts` | `string` | No | Set only when the owning editor implements this undo shortcut globally. |
+| `redoKeyShortcuts` | `string` | No | Set only when the owning editor implements this redo shortcut globally. |
+| `onReset` | `() = void` | No | 함수가 있으면 변경사항 초기화 버튼 표시. |
+| `children` | `React.ReactNode` | No | 저장 버튼처럼 별도 컴포넌트가 필요한 문서 작업 슬롯. |
+| `extraLabel` | `string` | No | 추가 명령 슬롯 접근성 라벨. |
+
+## Behavior and interaction
+
+- CanvasEditorCommandBar - Stable document-level command group for CanvasEditorShell.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | size="sm" uses the 32px LDS IconButton; size="md" uses 40px. |
+| --space-1 | 4px |
+| --space-2 | 8px |
+
+## Responsive
+
+- viewActions/viewLabel are deprecated compatibility props. They still render to avoid a breaking release, but new and migrated consumers place those actions beside the viewport.
+- Figma: Navigating UI3 separates stable interface regions from contextual canvas and selection controls. LDS adapts that hierarchy by keeping document/history work in the shell header and view manipulation near the viewport.
+- Apple HIG: Toolbars informed the leading history/document grouping and keeping viewport actions in their own contextual region.
+- Use it in the shell toolbar slot for history and document-lifecycle commands. Zoom, fit, camera, orbit, and other view controls stay in a viewport-local toolbar.
+
+## Accessibility
+
+- children is the escape hatch for document work that needs a real component instead of an icon action — a labelled save Button, a status chip. It renders as the trailing group; commands that fit the icon-action shape belong in documentActions.
+- Each group carries its own accessible name: historyLabel (default 편집 이력) for the history toolbar, documentLabel (default 문서 명령) for the document-action toolbar, and extraLabel (default 문서 작업) for the children group. Override them per product domain; screen-reader users navigate between groups by these names.
+- Named action groups use toolbar semantics and Arrow/Home/End roving focus. Add ariaKeyShortcuts to document actions, or undoKeyShortcuts/redoKeyShortcuts to history, only when the product implements those shortcuts.
+- Every built-in action group shares the same private focus engine as the editor and viewer toolbars so dynamic disabled/removed actions cannot create multiple Tab stops or lose the remembered command.
+- WAI-ARIA APG: Toolbar Pattern defines a named toolbar, horizontal orientation, and Arrow/Home/End navigation. The built-in action groups follow that keyboard model.
+
+## Exceptions
+
+- The history group is the built-in HistoryToolbar and renders by default; set showHistory={false} only when the owning editor has no undo model at all. Supplying onReset adds a reset-changes command to that group — reserve it for editors where discarding all pending changes is a real, recoverable operation.
+- A history command is enabled only when both its can state and handler permit it. A document action without a handler is ignored unless it is explicitly supplied as a disabled state.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
+| `CanvasEditorShell` | 대표 시나리오에서 조합 |
+| `EditorToolbar` | 대표 시나리오에서 조합 |
+| `HistoryToolbar` | 대표 시나리오에서 조합 |
+| `LayerPanel` | 대표 시나리오에서 조합 |
+| `SelectionInspector` | 대표 시나리오에서 조합 |
+| `ViewportStatusBar` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<CanvasEditorCommandBar
+  canUndo={undoStack.length > 0}
+  canRedo={redoStack.length > 0}
+  onUndo={undo}
+  onRedo={redo}
+  documentActions={[
+    { value: 'export', label: '내보내기', icon: 'export', onClick: exportDocument },
+  ]}
+>
+  <Button size="sm" onClick={saveDocument}>저장</Button>
+</CanvasEditorCommandBar>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--space-1`
+- `--space-2`
+
+### Source contracts
+
+- `components/editor/CanvasEditorCommandBar.jsx`
+- `components/editor/CanvasEditorCommandBar.d.ts`
+- `components/editor/CanvasEditorCommandBar.prompt.md`
+- `stories/EditorCommandBar.stories.jsx`
+
+## Sources
+
+- CanvasEditorCommandBar prompt contract: `components/editor/CanvasEditorCommandBar.prompt.md`
+- Storybook implementation evidence: `stories/EditorCommandBar.stories.jsx`
+- [Figma: Navigating UI3](https://help.figma.com/hc/en-us/articles/23954856027159-Navigating-UI3)
+- [WAI-ARIA APG: Toolbar Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)
+- [Apple HIG: Toolbars](https://developer.apple.com/design/human-interface-guidelines/toolbars)
+- [Adobe Spectrum Action Group](https://spectrum.adobe.com/page/action-group/)
+
+
+---
+
+# Editor Toolbar
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Editor |
+| Owner | `EditorToolbar` |
+| Storybook | `LDS Product/Editor/Editor Toolbar` |
+| Source | `../component-content.json#product-editor-editor-toolbar` |
+
+선택·영역·확대·이동처럼 서로 배타적인 편집 모드를 전환할 때 적합합니다. 저장이나 삭제 같은 즉시 실행 명령에는 Editor Toolbar 대신 Command Bar 또는 Button을 사용하세요.
+
+## 사용 판단
+
+### 사용하지 않음
+
+- CanvasEditorShell.tools owns the rail surface, divider, and padding. EditorToolbar must not add a second card, border, or shadow.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| label | toolbar 접근성 라벨. @default "편집 도구" |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `items` | `readonly EditorTool[]` | Yes | 툴 목록 — { value, icon, label }. |
+| `value` | `string` | No | 제어되는 선택 툴. |
+| `defaultValue` | `string` | No | 비제어 초기 툴(기본 첫 항목). |
+| `onChange` | `(value: string) = void` | No |  |
+| `orientation` | `'vertical' \| 'horizontal'` | No |  |
+| `label` | `string` | No | toolbar 접근성 라벨. @default "편집 도구" |
+| `disabled` | `boolean` | No | 전체 툴바 비활성화. |
+| `disabledReason` | `string` | No | 전체 비활성 사유. item의 disabledReason이 우선합니다. |
+| `tooltipPosition` | `'top' \| 'bottom' \| 'left' \| 'right'` | No | 툴팁 위치. 기본값은 세로 right, 가로 bottom. |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| items | 툴 목록 — { value, icon, label }. |
+| disabled | 전체 툴바 비활성화. |
+| disabledReason | 전체 비활성 사유. item의 disabledReason이 우선합니다. |
+
+## Behavior and interaction
+
+- Activating the already selected mode re-emits that value through onChange; it never toggles a required editor mode off.
+- Adobe Spectrum Action Group reinforced keeping one density, size, selection model, and complete interaction-state grammar across related tool groups.
+- Figma: Navigating UI3 reinforced keeping high-frequency editing controls stable while panels remain secondary and collapsible.
+- EditorToolbar — single-select, high-frequency canvas tool group for LK Robotics editors.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | Each control composes the shared ToggleIcon foundation: 16px glyph, LDS small icon-control dimension (--component-toggle-icon-size-sm, currently 32px), shared radius/hover/focus/disabled treatment, and a quiet primary tint for the selected mode. |
+| 명시 규칙 2 | Adjacent controls use the same --space-1 gap as ViewerToolbar, HistoryToolbar, and command groups. Compactness comes from the shared 32px control, not an Editor-only 2px rhythm. |
+| 명시 규칙 3 | WCAG 2.2: Target Size (Minimum) established the minimum pointer-target floor. The 32px LDS small control exceeds that floor while matching the existing IconButton family. |
+| 명시 규칙 4 | The implementation follows those interaction expectations while using LDS tokens and the existing 32px small control convention. It intentionally omits product-specific command routing, shortcut conflict resolution, and persistent tool preferences. |
+| --color-semantic-inverse-label-alternative-soft | light: rgba(255, 255, 255, 0.50); dark: rgba(255, 255, 255, 0.50) |
+
+## Responsive
+
+- Classification: LK Robotics Extension. Use it for mutually exclusive editing modes such as select, route, region, marker, erase, or pan. Document commands belong in CanvasEditorCommandBar; viewport navigation and zoom controls belong in ViewerToolbar inside the viewport.
+
+## Content and writing
+
+- items accept { value, icon, label, shortcut, ariaKeyShortcuts, disabled, disabledReason }; selection is controlled with value or uncontrolled with defaultValue.
+- Apple HIG: Toolbars reinforced stable logical grouping and consistent placement while keeping contextual tools distinct from navigation and document commands.
+
+## Accessibility
+
+- The toolbar exposes one roving Tab stop. Orientation-appropriate Arrow keys move focus across its items, Home/End move to the boundaries, and native button activation changes an enabled tool.
+- ariaKeyShortcuts is emitted when supplied. A string shortcut is also used as the ARIA shortcut value by default; visual-only React nodes are not.
+- EditorToolbar and ViewerToolbar share the private roving-focus engine, but not a public API: Editor items are mutually exclusive modes, while Viewer items remain independent commands or toggles.
+- An individually disabled tool remains reachable with Arrow navigation so its aria-disabled state and reason can be discovered, but it cannot activate. A globally disabled toolbar leaves no item in the Tab sequence and exposes a string disabledReason on the toolbar itself.
+- WAI-ARIA APG: Toolbar Pattern established one Tab stop, orientation-aware Arrow navigation, Home/End support, and named controls.
+
+## Exceptions
+
+- Tooltips open away from the rail by default: right for the vertical orientation, bottom for the horizontal one. Set tooltipPosition only when that default would collide with adjacent chrome (e.g. a right-docked rail should flip to left); it applies to every item, including disabled-reason tooltips.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `CanvasEditorCommandBar` | 대표 시나리오에서 조합 |
+| `CanvasEditorShell` | 대표 시나리오에서 조합 |
+| `HistoryToolbar` | 대표 시나리오에서 조합 |
+| `LayerPanel` | 대표 시나리오에서 조합 |
+| `SelectionInspector` | 대표 시나리오에서 조합 |
+| `ViewportStatusBar` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<EditorToolbar
+  value={tool}
+  onChange={setTool}
+  items={[
+    { value: 'select', icon: <Icon name="crosshair" size={16} />, label: 'Select', shortcut: 'V' },
+    { value: 'route', icon: <Icon name="route" size={16} />, label: 'Route', shortcut: 'R' },
+    { value: 'region', icon: <Icon name="zone" size={16} />, label: 'Region', disabled: locked },
+  ]}
+/>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-inverse-label-alternative-soft`
+- `--fw-medium`
+- `--space-1`
+
+### Source contracts
+
+- `components/editor/EditorToolbar.jsx`
+- `components/editor/EditorToolbar.d.ts`
+- `components/editor/EditorToolbar.prompt.md`
+- `stories/EditorToolbar.stories.jsx`
+
+## Sources
+
+- EditorToolbar prompt contract: `components/editor/EditorToolbar.prompt.md`
+- Storybook implementation evidence: `stories/EditorToolbar.stories.jsx`
+- [WAI-ARIA APG: Toolbar Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)
+- [Adobe Spectrum Action Group](https://spectrum.adobe.com/page/action-group/)
+- [Apple HIG: Toolbars](https://developer.apple.com/design/human-interface-guidelines/toolbars)
+- [Figma: Navigating UI3](https://help.figma.com/hc/en-us/articles/23954856027159-Navigating-UI3)
+- [WCAG 2.2: Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)
+
+
+---
+
+# History Toolbar
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Editor |
+| Owner | `HistoryToolbar` |
+| Storybook | `LDS Product/Editor/History Toolbar` |
+| Source | `../component-content.json#product-editor-history-toolbar` |
+
+운영자가 편집 이력을 되돌리거나 다시 적용하고 문서를 초기화해야 할 때 적합합니다. 일반 탐색 기록이나 서버 버전 목록에는 History Toolbar 대신 별도 History 패턴을 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- HistoryToolbar - Undo, redo, and optional document-reset controls for editors.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| label | Toolbar accessible name. @default "편집 이력" |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `label` | `string` | No | Toolbar accessible name. @default "편집 이력" |
+| `canUndo` | `boolean` | No | 실행 취소 가능 여부. 실제 handler가 없으면 항상 비활성입니다. @default false |
+| `canRedo` | `boolean` | No | 다시 실행 가능 여부. 실제 handler가 없으면 항상 비활성입니다. @default false |
+| `onUndo` | `() = void` | No |  |
+| `onRedo` | `() = void` | No |  |
+| `undoKeyShortcuts` | `string` | No | Set only when the owning editor implements this undo shortcut globally. |
+| `redoKeyShortcuts` | `string` | No | Set only when the owning editor implements this redo shortcut globally. |
+| `onReset` | `() = void` | No | 함수가 있으면 별도 그룹의 변경사항 초기화 버튼을 표시합니다. |
+| `size` | `'sm' \| 'md'` | No | Shared LDS editor control density. sm=32px, md=40px. @default "sm" |
+
+## Behavior and interaction
+
+- canUndo/canRedo express history state, while a real handler guarantees operability. A missing handler always disables the corresponding command.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | size="sm" uses the 32px LDS IconButton; size="md" uses 40px. |
+| --space-1 | 4px |
+
+## Responsive
+
+- This component owns edit history only. View reset belongs in a viewport-local viewer toolbar.
+
+## Content and writing
+
+- Figma: Navigating UI3 supports keeping global edit history in the stable editor chrome while contextual view and selection controls remain local.
+
+## Accessibility
+
+- Arrow keys, Home, and End move the single roving tab stop. Set undoKeyShortcuts/redoKeyShortcuts only when the owning editor really implements those shortcuts globally; the values are then exposed through aria-keyshortcuts.
+- Dynamic availability, focus memory, and Arrow/Home/End behavior use the same private roving-focus engine as EditorToolbar, ViewerToolbar, and CanvasEditorCommandBar; do not reimplement index-based focus state in individual toolbars.
+- Consumer onKeyDown and onFocusCapture handlers are composed before the internal roving behavior. Calling preventDefault() intentionally cancels the internal key/focus update without replacing the handler itself.
+- label (default 편집 이력) is the toolbar's accessible name; screen-reader users identify the group by it, so override it only with a name that still means edit history. The individual command names (실행 취소, 다시 실행, 변경사항 초기화) are fixed.
+- WAI-ARIA APG: Toolbar Pattern supplies the named-toolbar and roving-focus keyboard contract.
+
+## Exceptions
+
+- Reset is rendered only when onReset is a function and is separated from reversible undo/redo commands.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `CanvasEditorCommandBar` | 대표 시나리오에서 조합 |
+| `CanvasEditorShell` | 대표 시나리오에서 조합 |
+| `EditorToolbar` | 대표 시나리오에서 조합 |
+| `LayerPanel` | 대표 시나리오에서 조합 |
+| `SelectionInspector` | 대표 시나리오에서 조합 |
+| `ViewportStatusBar` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<HistoryToolbar
+  canUndo={undoStack.length > 0}
+  canRedo={redoStack.length > 0}
+  onUndo={undo}
+  onRedo={redo}
+  onReset={resetDocumentChanges}
+  size="sm"
+/>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--font-sans`
+- `--space-1`
+
+### Source contracts
+
+- `components/editor/HistoryToolbar.jsx`
+- `components/editor/HistoryToolbar.d.ts`
+- `components/editor/HistoryToolbar.prompt.md`
+- `stories/EditorHistoryToolbar.stories.jsx`
+
+## Sources
+
+- HistoryToolbar prompt contract: `components/editor/HistoryToolbar.prompt.md`
+- Storybook implementation evidence: `stories/EditorHistoryToolbar.stories.jsx`
+- [WAI-ARIA APG: Toolbar Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)
+- [Adobe Spectrum Action Group](https://spectrum.adobe.com/page/action-group/)
+- [Figma: Navigating UI3](https://help.figma.com/hc/en-us/articles/23954856027159-Navigating-UI3)
+
+
+---
+
+# Layer Panel
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Editor |
+| Owner | `LayerPanel` |
+| Storybook | `LDS Product/Editor/Layer Panel` |
+| Source | `../component-content.json#product-editor-layer-panel` |
+
+운영자가 중첩된 지도·경로·로봇 레이어를 탐색하며 선택과 가용성을 제어할 때 적합합니다. 계층이 없는 단순 옵션이나 일회성 필터에는 Layer Panel 대신 List 또는 Checkbox Group을 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- LayerPanel — reusable scene/layer hierarchy for LK Robotics editor shells.
+
+### 사용하지 않음
+
+- Visibility and lock follow the same controlled/uncontrolled pattern: visibleLayerIds/defaultVisibleLayerIds and lockedLayerIds/defaultLockedLayerIds.
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `layers` | `LayerPanelLayer[]` | No |  |
+| `activeLayerId` | `string` | No |  |
+| `defaultActiveLayerId` | `string` | No |  |
+| `onActiveLayerChange` | `(id: string) = void` | No |  |
+| `visibleLayerIds` | `string[]` | No |  |
+| `defaultVisibleLayerIds` | `string[]` | No |  |
+| `onVisibleLayerIdsChange` | `(ids: string[], changedId: string, visible: boolean) = void` | No |  |
+| `lockedLayerIds` | `string[]` | No |  |
+| `defaultLockedLayerIds` | `string[]` | No |  |
+| `onLockedLayerIdsChange` | `(ids: string[], changedId: string, locked: boolean) = void` | No |  |
+| `expandedLayerIds` | `string[]` | No |  |
+| `defaultExpandedLayerIds` | `string[]` | No |  |
+| `onExpandedLayerIdsChange` | `(ids: string[], changedId: string, expanded: boolean) = void` | No |  |
+| `title` | `React.ReactNode` | No |  |
+| `label` | `string` | No |  |
+| `emptyLabel` | `React.ReactNode` | No |  |
+| `disabled` | `boolean` | No |  |
+
+## Behavior and interaction
+
+- Figma: View layers and assets in the Layers panel established the left-side hierarchical layer model, shared canvas/layer selection, visibility/lock actions, and collapsible groups.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | The trailing row-meta slot carries exactly one of two meanings: a child/item count (number) or a short permission/status word (e.g. 참조, 편집 가능). Do not put arbitrary copy, timestamps, or actions there — the slot narrows away under 260px container width. |
+| 명시 규칙 2 | WCAG 2.2: Dragging Movements supports keeping all required actions available without drag-only interaction; reorder behavior is intentionally omitted from this DS primitive. |
+| 명시 규칙 3 | Visual delta decision: LayerPanel stays denser than SelectionInspector because hierarchy rows need scan efficiency, while the inspector needs a stronger selected-object identity block and form sections. |
+| --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+
+## Responsive
+
+- New data uses neutral / signal / positive / cautionary / negative; warning and danger remain compatibility aliases. This keeps layer markers, inspector status, viewport status, and viewer status on one semantic vocabulary.
+
+## Content and writing
+
+- An empty layers array renders emptyLabel (default 레이어가 없습니다.) as a polite status region instead of the tree. Use it for genuinely empty documents, not for loading states.
+- disabled freezes the entire panel: rows stay listed for context but selection, visibility, lock, and expansion changes are all rejected. Prefer per-layer disabled when only part of the hierarchy is off-limits.
+- tone is a decorative semantic-color marker unless paired with visible toneLabel or status text. Never communicate status by color alone.
+- The panel owns hierarchy interaction, not drag reordering, arbitrary docking, layout persistence, context menus, or product-specific asset loading. Those remain product responsibilities.
+
+## Accessibility
+
+- activeLayerId is the shared editor selection identifier for a layer/display node. It is not a selected waypoint, crop box, annotation, or other canvas object. Selection may also run uncontrolled via defaultActiveLayerId; with neither prop the first focusable layer starts active.
+- title (default 레이어) is the visible panel heading, rendered with the total node count; label (default 레이어 목록) is the tree's accessible name. Keep both meaning the same hierarchy.
+- Tree rows use a roving Tab stop. Up/Down move through visible nodes, Home/End move to the boundaries, Right expands or enters a group, Left collapses or returns to the parent, and printable-character typeahead moves focus by label. Enter/Space selects the focused node.
+- Focus and selection remain visually distinct: arrow navigation moves focus; Enter/Space or pointer activation changes selection. An externally changed activeLayerId restores the corresponding visible row as the roving Tab stop.
+- Visibility and lock are named IconButton actions. From a focused row, F2 enters its two-action mode, Left/Right moves between actions, and Escape returns to the row. Do not assign single-letter V/L shortcuts at the component layer; those collide with editor tools and text entry.
+
+## Exceptions
+
+- Expansion is controlled with expandedLayerIds or uncontrolled with defaultExpandedLayerIds. With neither prop, groups are expanded unless their layer data sets expanded: false.
+- Classification: LK Robotics Extension. Use it only when a workflow has a real hierarchy whose nodes own display, visibility, lock, count, or status state. Selected-object properties belong in SelectionInspector; workflow steps do not belong here.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `CanvasEditorCommandBar` | 대표 시나리오에서 조합 |
+| `CanvasEditorShell` | 대표 시나리오에서 조합 |
+| `EditorToolbar` | 대표 시나리오에서 조합 |
+| `HistoryToolbar` | 대표 시나리오에서 조합 |
+| `SelectionInspector` | 대표 시나리오에서 조합 |
+| `ViewportStatusBar` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<LayerPanel
+  layers={[
+    { id: 'map', label: 'Occupancy map', tone: 'neutral', locked: true },
+    {
+      id: 'routes',
+      label: 'Routes',
+      tone: 'positive',
+      toneLabel: 'Ready',
+      children: [{ id: 'route-04', label: 'Route 04' }],
+    },
+  ]}
+  activeLayerId={layerId}
+  expandedLayerIds={expandedIds}
+  onActiveLayerChange={setLayerId}
+  onExpandedLayerIdsChange={setExpandedIds}
+/>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--caption1-line`
+- `--caption1-size`
+- `--color-semantic-fill-normal`
+- `--color-semantic-focus-indicator`
+- `--color-semantic-label-disable`
+- `--color-semantic-label-neutral`
+- `--color-semantic-label-strong`
+- `--color-semantic-primary-normal`
+- `--color-semantic-status-cautionary`
+- `--color-semantic-status-negative`
+- `--color-semantic-status-positive`
+- `--component-toggle-icon-size-sm`
+- `--control-h-md`
+- `--font-sans`
+- `--fw-bold`
+- `--fw-medium`
+- `--fw-semibold`
+- `--label1-line`
+- `--label1-size`
+- `--label2-line`
+- `--label2-size`
+- `--radius-sm`
+- `--space-0`
+- `--space-1`
+- `--space-2`
+- `--space-3`
+- `--space-4`
+
+### Source contracts
+
+- `components/editor/LayerPanel.jsx`
+- `components/editor/LayerPanel.d.ts`
+- `components/editor/LayerPanel.prompt.md`
+- `stories/EditorLayerPanel.stories.jsx`
+
+## Sources
+
+- LayerPanel prompt contract: `components/editor/LayerPanel.prompt.md`
+- Storybook implementation evidence: `stories/EditorLayerPanel.stories.jsx`
+- [Figma: View layers and assets in the Layers panel](https://help.figma.com/hc/en-us/articles/360039831974-View-layers-and-assets-in-the-Layers-Panel)
+- [WAI-ARIA APG: Tree View Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/treeview/)
+- [WCAG 2.2: Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html)
+
+
+---
+
+# Selection Inspector
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Editor |
+| Owner | `SelectionInspector` |
+| Storybook | `LDS Product/Editor/Selection Inspector` |
+| Source | `../component-content.json#product-editor-selection-inspector` |
+
+운영자가 캔버스에서 고른 객체의 상태·속성·객체 범위 작업을 확인할 때 적합합니다. 전역 설정이나 선택과 무관한 폼에는 Selection Inspector 대신 일반 Form 또는 Settings 패널을 사용하세요.
+
+## 사용 판단
+
+### 사용하지 않음
+
+- Use selectionCount for multi-selection and field.mixed for properties that do not share one value. Mixed values render as —; do not invent a representative value.
+- TaskCreateScreen has no selected-object inspection decision, so SelectionInspector is not applicable to that workflow. Keep the task form and step list product-owned instead of forcing any canvas workflow into this component.
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `item` | `SelectionInspectorItem \| null` | No |  |
+| `selectionCount` | `number` | No | 다중 선택 개수. 2 이상이면 공통 속성 inspector 제목으로 표시합니다. |
+| `title` | `React.ReactNode` | No |  |
+| `emptyLabel` | `React.ReactNode` | No |  |
+| `sections` | `SelectionInspectorSection[]` | No |  |
+| `actions` | `React.ReactNode` | No |  |
+| `onClearSelection` | `React.MouseEventHandler` | No |  |
+| `clearSelectionLabel` | `React.ReactNode` | No |  |
+| `clearSelectionAriaLabel` | `string` | No |  |
+| `children` | `React.ReactNode` | No |  |
+
+## Behavior and interaction
+
+- Keep selection identity and status fixed at the top, make property groups independently collapsible, and keep object-scoped actions in the sticky actions area.
+- Figma right properties panel and selection guidance support a selection-bound right panel and one shared canvas/tree selection model.
+- The resulting LDS contract covers no selection, one selection, multi/mixed selection, status, read-only/locked content supplied by consumers, and object actions. Domain-specific property schemas remain Product/Robotics composition.
+- SelectionInspector - Selection-bound identity and properties region.
+- Use it for a selected canvas or scene object such as a waypoint, route segment, zone, map annotation, crop volume, or bounding box. Keep it separate from layer/display selection.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | 숫자 0, boolean false, 빈 문자열은 누락으로 취급하지 않습니다. boolean은 문자열로, 빈 문자열은 —로 표시하며 valueNode에도 같은 원칙을 적용합니다. |
+| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
+| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
+| --color-semantic-label-strong | light: #000000; dark: #FFFFFF |
+| --color-semantic-line-normal-alternative | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
+
+## Content and writing
+
+- With no item and no selectionCount, the inspector shows emptyLabel (default 선택한 객체가 없습니다.) as a status region. Keep it a short instruction about selecting on the canvas, not a workflow message.
+- SelectionInspector is a named region rather than a second nested complementary landmark. CanvasEditorShell/DockPanel owns the docked or overlay panel landmark and resize/collapse behavior.
+- Field and object status use the canonical signal / positive / cautionary / negative vocabulary. warning and danger are compatibility aliases, not names for new usage.
+- Unity Inspector supports a contextual property surface that follows the selected object.
+
+## Accessibility
+
+- Keep reversible commit actions at the trailing edge. A destructive object action uses the danger button grammar, is separated from the primary commit action with flexible space, and opens ConfirmDialog before execution. Do not disguise deletion as a neutral assistive action beside Apply.
+- Standard field value is a string/number/boolean and unit is a string. Surrounding whitespace is removed; %, ‰, and plane-angle ° attach, while SI·compound units and °C/°F keep one literal space in both visible and accessible DOM text.
+- For editable or composed properties, use the explicit valueNode escape or section children. valueNode bypasses automatic unit formatting, so the consumer owns its complete visible and accessible text. The inspector itself does not invent a second form-control language.
+- Use onClearSelection when the workflow supports clearing the current canvas selection. Keep the clear action in the inspector header.
+- In pinned lkwebviz coverage, SelectionInspector can satisfy only the selected-object part of the right properties/settings region. Active tab/tool state, PGM settings and product forms remain separate product-owned composition; the source does not define this component's anatomy or style.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
+| `ConfirmDialog` | 대표 시나리오에서 조합 |
+| `CanvasEditorCommandBar` | 대표 시나리오에서 조합 |
+| `CanvasEditorShell` | 대표 시나리오에서 조합 |
+| `EditorToolbar` | 대표 시나리오에서 조합 |
+| `HistoryToolbar` | 대표 시나리오에서 조합 |
+| `LayerPanel` | 대표 시나리오에서 조합 |
+| `ViewportStatusBar` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<SelectionInspector
+  item={{ label: 'Zone A-03', kind: 'Polygon', status: 'verified', statusTone: 'online' }}
+  sections={[{ title: 'Geometry', fields: [{ label: 'Area', value: 24.8, unit: 'm2' }] }]}
+  onClearSelection={clearSelection}
+/>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-label-neutral`
+- `--color-semantic-label-strong`
+- `--color-semantic-line-normal-alternative`
+- `--color-semantic-line-normal-normal`
+- `--color-semantic-status-cautionary-text`
+- `--color-semantic-status-negative-text`
+- `--control-h-md`
+- `--font-sans`
+- `--fw-bold`
+- `--fw-medium`
+- `--fw-semibold`
+- `--headline2-line`
+- `--headline2-size`
+- `--label2-line`
+- `--label2-size`
+- `--space-2`
+- `--space-3`
+- `--space-4`
+
+### Source contracts
+
+- `components/editor/SelectionInspector.jsx`
+- `components/editor/SelectionInspector.d.ts`
+- `components/editor/SelectionInspector.prompt.md`
+- `stories/EditorSelectionInspector.stories.jsx`
+
+## Sources
+
+- SelectionInspector prompt contract: `components/editor/SelectionInspector.prompt.md`
+- Storybook implementation evidence: `stories/EditorSelectionInspector.stories.jsx`
+- [Figma right properties panel](https://help.figma.com/hc/en-us/articles/360039832014-Design-prototype-and-inspect-right-sidebar-)
+- [selection guidance](https://help.figma.com/hc/en-us/articles/360040449873-Select-layers-and-objects)
+- [Unity Inspector](https://docs.unity3d.com/es/current/Manual/UsingTheInspector.html)
+- [Adobe Spectrum Action Bar](https://spectrum.adobe.com/page/action-bar/)
+- [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
+
+
+---
+
+# Viewport Status Bar
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Editor |
+| Owner | `ViewportStatusBar` |
+| Storybook | `LDS Product/Editor/Viewport Status Bar` |
+| Source | `../component-content.json#product-editor-viewport-status-bar` |
+
+운영자가 캔버스를 조작하는 동안 좌표·줌·선택 수·렌더링 상태를 지속해서 확인해야 할 때 적합합니다. 즉시 대응해야 하는 오류나 전역 시스템 상태에는 Status Bar 대신 Alert 또는 상태 배너를 사용하세요.
+
+## 사용 판단
+
+### 사용하지 않음
+
+- items are persistent passive readouts. They are deliberately not a live region, so cursor, camera, and FPS updates do not continuously interrupt screen-reader users.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| label | Persistent readout group accessible name. @default "뷰포트 상태" |
+| messageToneLabel | Visible semantic text paired with messageTone. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `label` | `string` | No | Persistent readout group accessible name. @default "뷰포트 상태" |
+| `items` | `ViewportStatusItem[]` | No | Persistent, non-live viewport readouts. |
+| `message` | `React.ReactNode` | No | Optional transient viewport-local message, announced politely. |
+| `messageTone` | `'default' \| 'signal' \| 'positive' \| 'cautionary' \| 'negative' \| 'warning' \| 'danger'` | No | Semantic tone for the transient message. @default "default" |
+| `messageToneLabel` | `React.ReactNode` | No | Visible semantic text paired with messageTone. |
+| `children` | `React.ReactNode` | No |  |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| items | Persistent, non-live viewport readouts. |
+| messageTone | Semantic tone for the transient message. @default "default" |
+| messageToneLabel | Visible semantic text paired with messageTone. |
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
+| --color-semantic-label-strong | light: #000000; dark: #FFFFFF |
+
+## Responsive
+
+- message is for a short viewport-local outcome or hint and uses a polite, atomic status live region. Persistent connection or document state belongs in the owning shell/header instead.
+- messageTone (default default) keeps a plain-text message unless the outcome is genuinely semantic; any non-default tone wraps the message in a status badge with a visible tone word (messageToneLabel, or the standard 활성/정상/주의/위험 default), so tone is never color-only. Do not use a toned message for routine confirmations.
+- Keep this bar passive. History, save, reset, viewport controls, and destructive actions belong in their respective command surfaces. children remains only as a deprecated passive-status compatibility slot.
+- Blender Manual: Status Bar places contextual shortcuts, messages, and scene statistics in a compact bottom region. LDS separates a transient message from persistent telemetry while keeping both local to the viewport.
+
+## Content and writing
+
+- Use mono for coordinates, camera values, and frequently changing numeric telemetry. Toned values always include a visible semantic label; customize it with toneLabel/messageToneLabel.
+
+## Accessibility
+
+- The bar never wraps. It uses spacing instead of independent divider nodes, preventing orphaned separators when space contracts.
+- Item value is string | number and unit is a string; surrounding whitespace is normalized. Value/unit DOM text follows TelemetryValue: %, ‰, and plane-angle ° attach to the number, while SI·compound units and °C/°F keep one literal space.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `CanvasEditorCommandBar` | 대표 시나리오에서 조합 |
+| `CanvasEditorShell` | 대표 시나리오에서 조합 |
+| `EditorToolbar` | 대표 시나리오에서 조합 |
+| `HistoryToolbar` | 대표 시나리오에서 조합 |
+| `LayerPanel` | 대표 시나리오에서 조합 |
+| `SelectionInspector` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<ViewportStatusBar
+  message="선택 영역을 계산했습니다."
+  items={[
+    { label: '모드', value: '선택', priority: 'high' },
+    { label: '선택', value: 2, priority: 'high' },
+    { label: '커서', value: 'x 12.4 / y -3.8', mono: true },
+    { label: 'FPS', value: 60, priority: 'low' },
+  ]}
+/>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--caption1-line`
+- `--caption1-size`
+- `--color-semantic-label-neutral`
+- `--color-semantic-label-strong`
+- `--font-mono`
+- `--font-sans`
+- `--fw-bold`
+- `--fw-medium`
+- `--fw-semibold`
+- `--space-1`
+- `--space-2`
+- `--space-4`
+
+### Source contracts
+
+- `components/editor/ViewportStatusBar.jsx`
+- `components/editor/ViewportStatusBar.d.ts`
+- `components/editor/ViewportStatusBar.prompt.md`
+- `stories/EditorViewportStatusBar.stories.jsx`
+
+## Migration
+
+- New code uses the system status vocabulary signal / positive / cautionary / negative. warning and danger remain compatibility aliases only, so Editor/Viewer status surfaces do not invent a second tone language.
+
+## Sources
+
+- ViewportStatusBar prompt contract: `components/editor/ViewportStatusBar.prompt.md`
+- Storybook implementation evidence: `stories/EditorViewportStatusBar.stories.jsx`
+- [Blender Manual: Status Bar](https://docs.blender.org/manual/fi/5.0/interface/window_system/status_bar.html)
+- [Unity Manual: Learning the Interface](https://docs.unity3d.com/kr/530/Manual/LearningtheInterface.html)
 
 
 ---
@@ -19966,6 +21003,419 @@ const [value, setValue] = useState('0.');
 
 ---
 
+# Battery Gauge
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Status |
+| Owner | `BatteryGauge` |
+| Storybook | `LDS Product/Status/Battery Gauge` |
+| Source | `../component-content.json#product-status-battery-gauge` |
+
+배터리를 사용하는 장비의 잔량을 한눈에 판단할 때 적합합니다. 색은 잔량 구간을 보조하지만 % 숫자를 항상 함께 보여 주며, 시간에 따른 전력 추이에는 차트를 사용하세요.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| showLabel | % 라벨 표시. @default true |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `value` | `number` | No | 배터리 잔량(0–100). @default 0 |
+| `tone` | `'neutral' \| 'signal' \| 'positive' \| 'cautionary' \| 'negative'` | No | 제품이 결정한 의미 상태. 생략하면 호환성을 위해 기존 20/50 잔량 임계값을 적용합니다. |
+| `showLabel` | `boolean` | No | % 라벨 표시. @default true |
+| `size` | `'sm' \| 'md'` | No |  |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| tone | 제품이 결정한 의미 상태. 생략하면 호환성을 위해 기존 20/50 잔량 임계값을 적용합니다. |
+
+## Behavior and interaction
+
+- BatteryGauge — 배터리 잔량 표시(셸 + 레벨색 fill + %). 로봇/설비 상태 행에서 ConnectionBadge와 함께 씁니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | value 0–100 · tone neutral · signal · positive · cautionary · negative · showLabel · size sm · md. |
+| 명시 규칙 2 | 제품의 도메인 규칙이 있다면 tone으로 의미 상태를 명시합니다. 생략하면 이전 API와의 호환을 위해 잔량 기준(≤20% negative · ≤50% cautionary · else positive)을 적용합니다. |
+| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
+| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
+| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `ConnectionBadge` | 대표 시나리오에서 조합 |
+| `EquipmentStatusCard` | 대표 시나리오에서 조합 |
+| `TelemetryGauge` | 대표 시나리오에서 조합 |
+| `TelemetryValue` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<BatteryGauge value={86} />
+<BatteryGauge value={12} size="sm" />
+<BatteryGauge value={47} showLabel={false} />
+<BatteryGauge value={47} tone="cautionary" />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-label-alternative`
+- `--color-semantic-label-neutral`
+- `--color-semantic-primary-normal`
+- `--color-semantic-status-cautionary`
+- `--color-semantic-status-cautionary-text`
+- `--color-semantic-status-info-text`
+- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-text`
+- `--color-semantic-status-positive`
+- `--color-semantic-status-positive-text`
+- `--font-sans`
+- `--fw-bold`
+
+### Source contracts
+
+- `components/robotics/BatteryGauge.jsx`
+- `components/robotics/BatteryGauge.d.ts`
+- `components/robotics/BatteryGauge.prompt.md`
+- `stories/RoboticsBatteryGauge.stories.jsx`
+
+## Sources
+
+- BatteryGauge prompt contract: `components/robotics/BatteryGauge.prompt.md`
+- Storybook implementation evidence: `stories/RoboticsBatteryGauge.stories.jsx`
+
+
+---
+
+# Connection Badge
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Status |
+| Owner | `ConnectionBadge` |
+| Storybook | `LDS Product/Status/Connection Badge` |
+| Source | `../component-content.json#product-status-connection-badge` |
+
+MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품질을 표시할 때 적합합니다. 연결 상태가 데이터 freshness, 장비 health, 동작 가능 여부까지 대신하지 않도록 각각 별도 상태로 조합하세요.
+
+## 사용 판단
+
+### 사용
+
+- fill/foreground: 기존 semantic primary/status/disabled token만 사용하며 token 값을 바꾸지 않는다.
+- badge 자체는 반복 announcement를 만들지 않는다. 제품은 연결 전환이 action을 차단하거나 즉시 개입을 요구할 때 별도 Banner 또는 alert 정책을 사용한다.
+- 기계 원장은 docs/references/product-frontends/COVERAGEAUDIT.json의 기존 source pin과 WF-02/WF-09 row를 사용한다.
+- Representative verification.
+
+### 사용하지 않음
+
+- connected: transport 연결이 성립했다. 최신 데이터, 정상 장비, 명령 가능 상태를 뜻하지 않는다.
+- radius/border/surface: 별도 card, border, shadow를 추가하지 않는다.
+- 유지한 차이는 transport 품질을 한눈에 구분하는 bar geometry뿐이며 새로운 시각 언어는 도입하지 않았다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| label | 라벨 재정의(기본은 상태별 한국어). |
+| showLabel | 라벨 표시. @default true |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `connectionState` | `ConnectionState` | No | Transport 연결 상태. freshness, health, operability, authority를 추론하지 않습니다. |
+| `status` | `LegacyConnectionStatus` | No | Legacy compatibility axis. 새 코드는 connectionState를 사용하세요. stale은 freshness가 아니라 기존 시각 호환으로만 유지됩니다. |
+| `label` | `React.ReactNode` | No | 라벨 재정의(기본은 상태별 한국어). |
+| `showLabel` | `boolean` | No | 라벨 표시. @default true |
+| `size` | `'sm' \| 'md'` | No |  |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| connectionState | Transport 연결 상태. freshness, health, operability, authority를 추론하지 않습니다. |
+| status | Legacy compatibility axis. 새 코드는 connectionState를 사용하세요. stale은 freshness가 아니라 기존 시각 호환으로만 유지됩니다. |
+
+## Behavior and interaction
+
+- unknown: transport 상태를 아직 판정할 수 없다.
+- connecting: 초기 연결을 시도하는 전이 상태다.
+- reconnecting: 끊긴 연결을 복구하는 전이 상태다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | control/glyph size: 기존 sm 11px·md 14px bar geometry를 유지한다. |
+| 명시 규칙 2 | spacing/typography: 기존 7px gap, 12/13px label, semibold를 유지한다. |
+| 명시 규칙 3 | state marker: 일반 상태 점을 쓰는 StatusBadge와 달리 transport 품질을 구분하는 3단 signal bar를 유지한다. |
+| 명시 규칙 4 | ROS 2 Managed nodes: 안정 상태와 transition state를 분리하고 외부 supervisor가 전이를 소유한다. LDS는 transport 상태를 표시하되 제품 state machine을 실행하지 않는다. |
+| --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
+
+## Content and writing
+
+- Open-RMF RobotState: robot mode, battery, location과 message sequence를 독립 필드로 제공한다. 연결만으로 telemetry freshness나 robot health를 추론하지 않는다.
+- Kubernetes Pod Conditions: Unknown, transition time, reason, message를 condition evidence로 분리한다. connected를 복합 ready로 승격하지 않고 freshness/reason을 별도 evidence로 둔다.
+- LK Context Hub — not applicable. revision de124084b7e50049350a46f92c4ea4476269c58c, src/components/chat/PortalChatPanel.tsx의 provider availability는 MQTT/rosbridge transport truth가 아니므로 ConnectionBadge로 표현하지 않는다.
+- 보이는 라벨이 기본이며 bar 수나 색만으로 상태를 전달하지 않는다.
+
+## Accessibility
+
+- focus/disabled: 비대화형 상태 표시이므로 자체 focus 또는 disabled 축을 추가하지 않는다.
+- showLabel={false}이면 기본 문자열 라벨이 role="img"의 accessible name으로 남는다. 비문자 custom label을 숨기면 aria-label을 제공한다.
+- Accessibility and exclusions.
+- LDS Robotics/Status/Connection Badge의 개요 story를 960px normal viewport와 360px viewport의 내부 320px pattern에서 확인한다. 7개 canonical state, wrapping, overflow, hidden-label accessible name을 검토하고 StatusBadge sibling과 typography·semantic token 위계를 비교한다. legacy parity story는 status 호환 표면을 계속 검증한다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `BatteryGauge` | 대표 시나리오에서 조합 |
+| `EquipmentStatusCard` | 대표 시나리오에서 조합 |
+| `TelemetryGauge` | 대표 시나리오에서 조합 |
+| `TelemetryValue` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<ConnectionBadge connectionState="connected" />
+<ConnectionBadge connectionState="connecting" size="sm" />
+<ConnectionBadge connectionState="degraded" label="패킷 손실 감지" />
+<ConnectionBadge connectionState="disconnected" />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-fill-strong`
+- `--color-semantic-label-disable`
+- `--color-semantic-label-neutral`
+- `--color-semantic-primary-normal`
+- `--color-semantic-status-cautionary`
+- `--color-semantic-status-negative`
+- `--color-semantic-status-positive`
+- `--ease-in-out`
+- `--font-sans`
+- `--fw-semibold`
+
+### Source contracts
+
+- `components/robotics/ConnectionBadge.jsx`
+- `components/robotics/ConnectionBadge.d.ts`
+- `components/robotics/ConnectionBadge.prompt.md`
+- `stories/RoboticsConnectionBadge.stories.jsx`
+
+## Migration
+
+- 기존 status="online|ready|weak|stale|error|offline" API는 호환을 위해 유지하지만 새 제품 코드는 connectionState를 사용한다. connectionState가 함께 전달되면 새 계약이 우선한다.
+
+## Sources
+
+- ConnectionBadge prompt contract: `components/robotics/ConnectionBadge.prompt.md`
+- Storybook implementation evidence: `stories/RoboticsConnectionBadge.stories.jsx`
+- [ROS 2 Managed nodes](https://design.ros2.org/articles/node_lifecycle.html)
+- [Open-RMF RobotState](https://docs.ros.org/en/humble/p/rmf_fleet_msgs/msg/RobotState.html)
+- [Kubernetes Pod Conditions](https://kubernetes.io/docs/concepts/workloads/pods/pod-condition/)
+- [W3C ARIA19](https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA19)
+
+
+---
+
+# Equipment State
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Status |
+| Owner | `EquipmentStatusCard` |
+| Storybook | `LDS Product/Status/Equipment State` |
+| Source | `../component-content.json#product-status-equipment-state` |
+
+제품 운영에 필요한 장비의 identity와 대표 상태를 먼저 읽고 이동·위치·연결 같은 보조 사실을 비교할 때 사용합니다. 실시간 telemetry 스트림이나 지도 위 마커에는 더 구체적인 표현을 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- LK Control Full Daedeok (93802fc2aa5d29f930380ae58d51dcb68322b5e7): supported by composition. 문·엘리베이터·리프트·게이트웨이 등 장비 identity/status/facts를 이 카드와 ConnectionBadge 조합으로 표현할 수 있습니다. 장비 transport, command, permission, direction/connection state machine, 화면 layout은 Control 소유입니다.
+
+### 사용하지 않음
+
+- ConnectionBadge: 연결이 실제 보조 사실일 때 details[].value로 조합합니다. 카드가 connection prop이나 연결 상태 machine을 재정의하지 않습니다.
+- LK Web Viz (a984def117c05acd213f494cbb8a42e990595505): not applicable. pinned frontend의 map/editor/viewer workflow는 독립 equipment summary card를 요구하지 않으며 geometry나 editor state를 이 카드에 흡수하지 않습니다.
+- EquipmentStatusCard는 장비의 정체성 → 대표 상태 → 라벨이 있는 보조 사실 → 메타데이터/동작을 한 번에 읽게 하는 LK Robotics Extension입니다. 특정 제품의 설비 행이나 대시보드를 재현하지 않으며, 제품이 가진 장비 종류와 상태 범위만 LDS coverage 요구로 사용합니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| icon | Optional decorative equipment icon. The visible title carries identity. |
+| title | Equipment identity. |
+| description | Optional supporting description of the equipment or its location. |
+| actions | Optional equipment-level actions; supply LDS action primitives. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `icon` | `React.ReactNode` | No | Optional decorative equipment icon. The visible title carries identity. |
+| `title` | `React.ReactNode` | Yes | Equipment identity. |
+| `description` | `React.ReactNode` | No | Optional supporting description of the equipment or its location. |
+| `status` | `React.ReactNode` | Yes | Visible primary condition label; color is supplementary only. |
+| `statusTone` | `'positive' \| 'cautionary' \| 'negative' \| 'signal' \| 'neutral'` | No | Semantic tone for the primary condition indicator. @default "neutral" |
+| `details` | `readonly EquipmentStatusCardDetail[]` | No | Labeled supporting facts presented as a semantic description list. |
+| `meta` | `React.ReactNode` | No | Optional freshness, ownership, or other low-emphasis metadata. |
+| `actions` | `React.ReactNode` | No | Optional equipment-level actions; supply LDS action primitives. |
+| `headingLevel` | `2 \| 3 \| 4 \| 5 \| 6` | No | Heading level used for the equipment identity. @default 3 |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| status | Visible primary condition label; color is supplementary only. |
+| statusTone | Semantic tone for the primary condition indicator. @default "neutral" |
+| details | Labeled supporting facts presented as a semantic description list. |
+
+## Behavior and interaction
+
+- meta는 갱신 시각이나 소유 정보처럼 낮은 강조도의 정보를, actions는 장비 전체에 적용되는 LDS 동작을 받습니다. 전송·권한·확인 정책은 제품이 소유합니다.
+- 제거한 public concepts: ringLabel, ringCaption, tone, direction, connection, chips. 제품 유래 ledger anatomy와 카드 내부 상태 machine을 유지할 독립 근거가 없기 때문입니다.
+- 제품 저장소는 어떤 장비와 상태 종류를 커버해야 하는지를 확인하는 자료일 뿐, 이 컴포넌트의 anatomy·geometry·API·시각 스타일 근거가 아닙니다. pinned revision은 docs/references/product-frontends/COVERAGEAUDIT.json에서 관리합니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | title과 status는 필수입니다. headingLevel은 주변 문서 계층에 맞춰 2–6 중 선택하며 기본값은 3입니다. |
+| 명시 규칙 2 | Card: Card와 같은 elevated semantic surface, --component-card-radius, no-shadow 토큰을 사용합니다. 반복되는 장비 요약을 빠르게 구분하도록 외곽선은 theme-adaptive line-solid-strong을 사용하고 내부 divider는 기본 line을 유지합니다. 상태 요약의 반복 밀도를 위해 기본 Card의 space-8 대신 space-4 padding과 space-3 section gap을 쓰지만 별도 radius·shadow·hover 언어는 만들지 않습니다. |
+| 명시 규칙 3 | RobotStatusCard: 로봇 선택, thumbnail, battery, live connection cluster가 목적입니다. EquipmentStatusCard는 선택 불가능한 주변 장비 요약이므로 그 구조를 복제하지 않습니다. 기존의 제품 유래 38px icon tile, 오른쪽 ledger 라벨, ring/chip 배열을 제거했습니다. |
+| 명시 규칙 4 | 아이콘 크기는 소비자가 기존 Icon size 축으로 정합니다. 컴포넌트는 임의의 38px/14px geometry를 강제하지 않고, identity가 제목에서 이미 전달되므로 leading icon subtree는 decorative로 숨깁니다. |
+| --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
+
+## Responsive
+
+- Adobe Spectrum Status light: 상태 light는 항상 라벨을 포함해야 하고 색만으로 상태를 전달하면 안 됩니다. 라벨 텍스트 색을 상태 점 색과 맞추지 않으며, 긴 라벨은 가용 폭에서 wrap되어야 한다는 결론을 StatusBadge 조합과 visible status contract에 반영했습니다.
+- 대표 Storybook 검토 대상은 Equipment State / 개요와 hidden EquipmentStatusCard card parity입니다. normal width의 elevator/gateway, 좁은 폭의 long identity/status, dark theme의 connection composition을 확인하고 제목→상태→facts→footer의 순서, wrap, overflow, divider, card-within-card 부재를 비교합니다.
+
+## Content and writing
+
+- statusTone은 positive | cautionary | negative | signal | neutral입니다. 톤은 상태를 보강할 뿐이며, StatusBadge의 보이는 라벨이 항상 주 정보를 전달합니다.
+- details는 { label, value } 배열이며 semantic 로 렌더링됩니다. 값에는 문자열뿐 아니라 ConnectionBadge, 아이콘+방향 텍스트 같은 LDS 조합을 넣을 수 있습니다.
+- StatusBadge: 대표 상태의 soft semantic surface+읽을 수 있는 라벨을 그대로 재사용합니다. 카드가 자체 상태 점, 링, 색상 텍스트, pulse/dim 모션을 만들지 않습니다. 실시간 freshness 신호가 별도로 필요할 때만 StatusIndicator를 조합합니다.
+- 제목은 body1/bold, 설명과 값은 label1, detail label/meta는 caption1을 사용합니다. divider는 details와 footer의 역할 그룹만 구분하고 각 fact를 카드처럼 둘러싸지 않습니다.
+
+## Accessibility
+
+- DOM과 keyboard reading order는 identity group → status → details → meta → actions입니다. 좁은 폭에서는 상태와 footer가 다음 줄로 감싸지지만 순서는 바뀌지 않습니다.
+- 카드 자체는 semantic 인 비상호작용 표면입니다. 선택, hover lift, disabled state, focus ring을 만들지 않으며, 실제 버튼/링크의 상호작용 상태는 actions에 전달한 primitive가 소유합니다.
+- 외부 레퍼런스는 category anatomy와 접근성 근거이며 스타일을 복사하지 않습니다. LDS sibling과 semantic token이 최종 시각 언어를 결정합니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
+| `ConnectionBadge` | 대표 시나리오에서 조합 |
+| `Icon` | 대표 시나리오에서 조합 |
+| `BatteryGauge` | 대표 시나리오에서 조합 |
+| `TelemetryGauge` | 대표 시나리오에서 조합 |
+| `TelemetryValue` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<EquipmentStatusCard
+  icon={<Icon name="home" size={20} />}
+  title="화물 엘리베이터 2호기"
+  description="물류동 동측"
+  status="운행 중"
+  statusTone="positive"
+  details={[
+    { label: '이동', value: <><Icon name="arrow-up" size={16} aria-hidden="true" /> 상승 중</> },
+    { label: '층', value: '3층' },
+  ]}
+  meta="30초 전에 갱신"
+/>
+
+<EquipmentStatusCard
+  icon={<Icon name="signal" size={20} />}
+  title="옥상 게이트웨이"
+  status="주의 필요"
+  statusTone="cautionary"
+  details={[
+    { label: '연결', value: <ConnectionBadge status="reconnecting" size="sm" /> },
+    { label: '구역', value: '옥상 서측' },
+  ]}
+/>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--body1-line`
+- `--body1-size`
+- `--border-thin`
+- `--caption1-line`
+- `--caption1-size`
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-label-alternative`
+- `--color-semantic-label-neutral`
+- `--color-semantic-label-normal`
+- `--color-semantic-label-strong`
+- `--color-semantic-line-normal-normal`
+- `--color-semantic-line-solid-_strong`
+- `--component-card-radius`
+- `--component-card-shadow-none`
+- `--font-sans`
+- `--fw-bold`
+- `--fw-semibold`
+- `--label1-line`
+- `--label1-size`
+- `--space-1`
+- `--space-2`
+- `--space-3`
+- `--space-4`
+
+### Source contracts
+
+- `components/robotics/EquipmentStatusCard.jsx`
+- `components/robotics/EquipmentStatusCard.d.ts`
+- `components/robotics/EquipmentStatusCard.prompt.md`
+- `stories/RoboticsEquipment.stories.jsx`
+
+## Sources
+
+- EquipmentStatusCard prompt contract: `components/robotics/EquipmentStatusCard.prompt.md`
+- Storybook implementation evidence: `stories/RoboticsEquipment.stories.jsx`
+- [Adobe Spectrum Status light](https://spectrum.adobe.com/page/status-light/)
+- [GOV.UK Summary list](https://design-system.service.gov.uk/components/summary-list/)
+
+
+---
+
 # Meter
 
 | Field | Value |
@@ -20181,6 +21631,1180 @@ const [value, setValue] = useState('0.');
 
 - CircularProgress prompt contract: `components/status/CircularProgress.prompt.md`
 - Storybook implementation evidence: `stories/ProductProgress.stories.jsx`
+
+
+---
+
+# Telemetry Gauge
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Status |
+| Owner | `TelemetryGauge` |
+| Storybook | `LDS Product/Status/Telemetry Gauge` |
+| Source | `../component-content.json#product-status-telemetry-gauge` |
+
+운영자가 배터리·속도·온도처럼 최소·최대 범위가 있는 측정값의 수준과 severity를 빠르게 판단할 때 적합합니다. 범위보다 정확한 값·수집 시각·freshness가 중요하다면 Telemetry Gauge 대신 Telemetry Value를 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- Meter와 마찬가지로 알려진 범위의 현재량만 표현합니다. 로딩·완료 진행은 ProgressBar, 제품별 임계값 schema와 알람 정책은 애플리케이션 책임으로 남깁니다.
+- HTML meter element: 의미 있는 유한 범위의 scalar 값에만 meter를 사용하고 값은 범위 안으로 제한합니다.
+
+### 사용하지 않음
+
+- TelemetryGauge — 알려진 최소·최대 범위 안의 텔레메트리 값을 표시하는 270° radial meter입니다. LK Robotics Extension으로 분류하며, 작업 진행률이나 로딩에는 사용하지 않습니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| label | 보이는 라벨. 없으면 aria-label을 제공하세요. |
+| statusLabel | tone과 함께 보이는 상태 문구. 미지정 시 tone의 기본 한국어 문구를 사용합니다. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `value` | `number` | No |  |
+| `min` | `number` | No |  |
+| `max` | `number` | No |  |
+| `unit` | `string` | No | 중앙 값 lockup의 문자열 단위. 주변 공백을 제거한 뒤 공용 결합 규칙을 적용합니다. |
+| `label` | `React.ReactNode` | No | 보이는 라벨. 없으면 aria-label을 제공하세요. |
+| `size` | `number` | No | 지름(px). @default 120 |
+| `thickness` | `number` | No | 링 두께(px). @default 10 |
+| `thresholds` | `TelemetryThresholds` | No | Compatibility threshold inference. New product code should resolve domain severity and pass tone; when used, direction is mandatory. |
+| `tone` | `TelemetryTone` | No | 제품이 판정한 현재 severity. thresholds보다 우선합니다. |
+| `statusLabel` | `React.ReactNode` | No | tone과 함께 보이는 상태 문구. 미지정 시 tone의 기본 한국어 문구를 사용합니다. |
+| `precision` | `number` | No | 표시 소수 자릿수. 생략하면 원래 수치의 의미 있는 자릿수를 보존합니다. |
+| `formatter` | `(value: number, context: TelemetryGaugeFormatContext) = string \| number` | No | 중앙 값 사용자 포맷. valueText는 별도로 제공할 수 있습니다. |
+| `valueText` | `string` | No | 보조기술이 읽을 사람 친화적 값 텍스트. |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| tone | 제품이 판정한 현재 severity. thresholds보다 우선합니다. |
+| statusLabel | tone과 함께 보이는 상태 문구. 미지정 시 tone의 기본 한국어 문구를 사용합니다. |
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | value / min / max / unit은 meter 범위와 값을 정의합니다. unit은 문자열이며 앞뒤 공백을 제거합니다. 기본 표시는 String(value)를 사용해 1.4를 1로 반올림하지 않습니다. |
+| 명시 규칙 2 | size(지름 px, 기본 120)와 thickness(링 두께 px, 기본 10)는 밀도 조정용 크기 축입니다. 중앙 값·단위 typography는 size에 비례해 함께 조정되므로 대시보드 격자에 맞춰 지름만 바꾸면 됩니다. 두께는 arc의 비텍스트 대비 면적을 좌우하므로 지름을 크게 키울 때 외에는 기본값을 유지합니다. |
+| 명시 규칙 3 | WCAG 2.2 Use of Color: severity 색을 단독 정보로 사용하지 않고 보이는 상태 텍스트를 병기합니다. |
+| 명시 규칙 4 | Microsoft Style Guide: percent와 NIST Guide to the SI, 7.2를 함께 적용해 UI 비율 기호와 SI·복합 단위의 결합 규칙을 명시했습니다. |
+| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+
+## Content and writing
+
+- meter arc는 light/dark surface 모두에서 비텍스트 그래픽 대비를 확보하는 semantic status text role을 사용하고, 상태 의미는 별도 text badge로도 제공합니다.
+- 제품 도메인이 severity를 판정해 tone과 구체적인 statusLabel을 전달하는 방식을 우선합니다. 상태는 색과 함께 텍스트 badge로 항상 표시됩니다.
+- Adobe Spectrum Meter: 보이는 label과 value label을 기본 anatomy로 유지합니다. 시각 스타일은 복제하지 않고 LDS typography·spacing·status token에 맞췄습니다.
+
+## Accessibility
+
+- 중앙의 보이는 lockup과 기본 aria-valuetext는 같은 결합 함수를 사용합니다. %, ‰, 평면각 °는 값에 붙이고 SI·복합 단위와 °C·°F는 한 칸 띄웁니다.
+- precision은 소비자가 명시적으로 고정 소수 자릿수를 원할 때만 사용합니다. formatter는 string/number를 반환하며 주변 공백을 정규화한 결과가 화면과 기본 aria-valuetext에 함께 반영됩니다. 도메인 문구가 더 필요할 때 valueText로 명시합니다.
+- 보이는 label이 meter의 accessible name이 됩니다. 라벨이 없으면 aria-label을 제공해야 합니다.
+- meter는 읽기 전용이므로 키보드 상호작용과 live announcement가 없습니다. 측정값을 매 갱신마다 aria-live로 읽지 않습니다.
+- WAI-ARIA APG Meter Pattern: role="meter", name, aria-valuemin/max/now, 필요 시 aria-valuetext를 제공하고 진행률과 구분했습니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `BatteryGauge` | 대표 시나리오에서 조합 |
+| `ConnectionBadge` | 대표 시나리오에서 조합 |
+| `EquipmentStatusCard` | 대표 시나리오에서 조합 |
+| `TelemetryValue` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<TelemetryGauge value={1.4} max={2} unit="m/s" label="속도" tone="signal" />
+<TelemetryGauge value={18} unit="%" label="배터리" tone="negative" statusLabel="충전 필요" />
+<TelemetryGauge value={0.8467} max={1} label="신뢰도" precision={2} valueText="신뢰도 84.67%" />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--caption1-size`
+- `--color-semantic-fill-strong`
+- `--color-semantic-label-neutral`
+- `--color-semantic-label-strong`
+- `--color-semantic-status-cautionary-text`
+- `--color-semantic-status-info-text`
+- `--color-semantic-status-negative-text`
+- `--color-semantic-status-positive-text`
+- `--dur-base`
+- `--dur-slow`
+- `--ease-out`
+- `--font-sans`
+- `--fw-bold`
+- `--fw-extra`
+- `--fw-semibold`
+- `--space-2`
+
+### Source contracts
+
+- `components/viz/TelemetryGauge.jsx`
+- `components/viz/TelemetryGauge.d.ts`
+- `components/viz/TelemetryGauge.prompt.md`
+- `stories/RoboticsTelemetryGauge.stories.jsx`
+
+## Migration
+
+- thresholds는 기존 사용처 호환용입니다. 새 사용처에서는 direction: "higher-is-better" | "lower-is-better"를 반드시 명시하며, 가능하면 제품에서 threshold를 계산하고 tone을 전달하세요.
+
+## Sources
+
+- TelemetryGauge prompt contract: `components/viz/TelemetryGauge.prompt.md`
+- Storybook implementation evidence: `stories/RoboticsTelemetryGauge.stories.jsx`
+- [WAI-ARIA APG Meter Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/)
+- [HTML meter element](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meter)
+- [Adobe Spectrum Meter](https://spectrum.adobe.com/page/meter/)
+- [WCAG 2.2 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)
+- [Microsoft Style Guide: percent](https://learn.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/p/percent-percentage)
+- [NIST Guide to the SI, 7.2](https://www.nist.gov/pml/special-publication-811/nist-guide-si-chapter-7-rules-and-style-conventions-expressing-values)
+
+
+---
+
+# Telemetry Value
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Status |
+| Owner | `TelemetryValue` |
+| Storybook | `LDS Product/Status/Telemetry Value` |
+| Source | `../component-content.json#product-status-telemetry-value` |
+
+운영자가 센서의 정확한 값·단위·상태·freshness·수집 시각을 좁은 공간에서 확인해야 할 때 적합합니다. 최소·최대 범위 안의 상대적 수준을 빠르게 판단해야 한다면 Telemetry Value 대신 Telemetry Gauge를 사용하세요.
+
+## 사용 판단
+
+### 사용하지 않음
+
+- 값과 단위는 항상 고대비 중립 전경색으로 표시합니다. tone은 숫자 색을 바꾸지 않고 보이는 StatusBadge를 추가하므로 의미가 색에만 의존하지 않습니다.
+- threshold 계산, 단위 변환, locale/precision 정책, 알람 이력은 애플리케이션 책임이며 TelemetryValue가 추론하지 않습니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| statusLabel | tone과 함께 보이는 상태 문구. 미지정 시 tone의 기본 한국어 문구를 사용합니다. |
+| staleLabel | stale 상태 badge 라벨. @default "지연" |
+| helper | timestamp와 함께 표시할 보조 문구. |
+| align | 정렬. @default "start" |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `label` | `React.ReactNode` | No | 수치 라벨. |
+| `value` | `string \| number` | Yes | 표시할 scalar 값. 주변 공백은 정규화합니다. |
+| `unit` | `string` | No | 문자열 단위. %/‰/평면각 °는 붙고, SI·복합 단위는 한 칸 띄웁니다. |
+| `tone` | `'neutral' \| 'signal' \| 'positive' \| 'cautionary' \| 'negative'` | No | 값의 의미 상태. 값 자체의 전경색은 바꾸지 않습니다. @default "neutral" |
+| `statusLabel` | `React.ReactNode` | No | tone과 함께 보이는 상태 문구. 미지정 시 tone의 기본 한국어 문구를 사용합니다. |
+| `timestamp` | `React.ReactNode` | No | 갱신 시각. helper가 있어도 함께 표시됩니다. |
+| `stale` | `boolean` | No | stale 상태. @default false |
+| `staleLabel` | `React.ReactNode` | No | stale 상태 badge 라벨. @default "지연" |
+| `showStaleBadge` | `boolean` | No | stale badge 표시 여부. 외부에 동등한 텍스트 상태가 있을 때만 끄세요. @default true |
+| `helper` | `React.ReactNode` | No | timestamp와 함께 표시할 보조 문구. |
+| `align` | `'start' \| 'end'` | No | 정렬. @default "start" |
+| `size` | `'sm' \| 'md'` | No | 밀도. @default "md" |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| tone | 값의 의미 상태. 값 자체의 전경색은 바꾸지 않습니다. @default "neutral" |
+| statusLabel | tone과 함께 보이는 상태 문구. 미지정 시 tone의 기본 한국어 문구를 사용합니다. |
+| stale | stale 상태. @default false |
+| staleLabel | stale 상태 badge 라벨. @default "지연" |
+| showStaleBadge | stale badge 표시 여부. 외부에 동등한 텍스트 상태가 있을 때만 끄세요. @default true |
+
+## Behavior and interaction
+
+- 수치 갱신 자체는 live region으로 알리지 않습니다. 연결 끊김·임계값 진입 같은 의미 있는 전환은 상위 상태 컴포넌트가 알립니다.
+- 확인한 형제: TelemetryGauge, StatusBadge, ConnectionBadge, MetricCard, Table 및 docs/ROBOTICSPATTERNS.md.
+- 원형 범위 표시는 TelemetryGauge, 연결 상태는 ConnectionBadge, 표의 정렬·열 책임은 Table에 둡니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | 작은 폭에서 값·단위·badge·metadata가 줄바꿈되며, 컴포넌트 자체가 고정 최소 너비를 만들지 않습니다. |
+| 명시 규칙 2 | 타입 스케일 정합: metadata 행 11.5px → --caption2-size(11px)로 스냅했습니다. 12px label(caption1)보다 한 단계 아래를 유지해 위계를 지킵니다. 값 숫자는 sm 18px → --headline1-size(18px), md 21px → --heading2-size(20px, −1px 의도된 변경)로 스냅했으며 fw-extra 굵기가 프로미넌스를 유지합니다. |
+| 명시 규칙 3 | WCAG 2.2 Use of Color: 상태색에는 항상 보이는 텍스트 단서를 함께 제공합니다. |
+| 명시 규칙 4 | WCAG 2.2 Contrast Minimum: 작은 label·unit·timestamp는 faint assistive token 대신 AA 대비를 목표로 하는 neutral text token을 사용합니다. |
+| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+
+## Responsive
+
+- NIST Guide to the SI, 7.2: SI·복합 단위와 °C는 값과 공백으로 분리하고 평면각 °만 붙입니다. LDS는 compact UI에서도 이 구분을 유지하며 %와 ‰는 제품 표기 관례 예외로 붙입니다.
+- TelemetryValue — 값, 단위, 의미 상태, freshness, timestamp를 함께 읽는 compact telemetry readout입니다. LK Robotics Extension이며 표 셀, viewport HUD 주변, 좁은 진단 패널에 사용합니다.
+
+## Content and writing
+
+- value는 string | number, unit은 문자열 계약입니다. 두 값의 앞뒤 공백을 제거한 뒤 %, ‰, 평면각 °는 값에 붙이고, °C, °F, ms, Hz, m/s, N·m, dBm 같은 SI·복합 단위는 한 칸 띄웁니다. 표시 DOM과 보조기술이 읽는 텍스트는 같은 literal separator를 공유합니다.
+- statusLabel을 생략하면 signal / positive / cautionary / negative의 기본 한국어 상태 문구를 사용합니다. 제품에서는 가능한 한 신호 약함, 상한 초과처럼 도메인에 맞는 문구를 전달하세요.
+- stale은 현재값처럼 오해하지 않도록 값을 약화하고 기본 지연 badge를 표시합니다. staleLabel은 그 badge 문구만 교체하므로 수신 지연처럼 freshness를 설명하는 표현만 허용됩니다 — 의미 상태 문구는 tone/statusLabel 축에 남습니다. 별도 상태 컬럼이 동등한 텍스트를 제공할 때만 showStaleBadge={false}를 사용합니다.
+- helper는 timestamp를 대체하지 않습니다. 둘 다 있으면 함께 표시합니다.
+
+## Accessibility
+
+- 임의 ReactNode를 수치나 단위 자리에 넣지 않습니다. 그래픽·복합 콘텐츠가 필요하면 readout 바깥에서 조합하고 그 노드가 자체 접근성 텍스트를 소유하게 하세요.
+- align(기본 start)은 readout 전체의 정렬 축입니다. 표의 숫자 컬럼이나 카드 우측 정렬처럼 소유 레이아웃이 끝 정렬을 요구할 때 end를 사용하며, 줄바꿈 순서와 접근성 텍스트는 바뀌지 않습니다.
+- WAI-ARIA APG Meter Pattern: 읽기 전용 meter의 키보드 상호작용은 없으며, scalar range semantics는 TelemetryGauge에만 둡니다. 범위가 없는 임의 readout에 meter 역할을 부여하지 않습니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `BatteryGauge` | 대표 시나리오에서 조합 |
+| `ConnectionBadge` | 대표 시나리오에서 조합 |
+| `EquipmentStatusCard` | 대표 시나리오에서 조합 |
+| `TelemetryGauge` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<TelemetryValue
+  label="RSSI"
+  value="-71"
+  unit="dBm"
+  tone="cautionary"
+  statusLabel="신호 약함"
+  helper="마지막 패킷 4초 전"
+  timestamp="10:42:18 KST"
+/>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--caption1-size`
+- `--caption2-size`
+- `--color-semantic-label-neutral`
+- `--color-semantic-label-normal`
+- `--color-semantic-label-strong`
+- `--font-sans`
+- `--fw-bold`
+- `--fw-extra`
+- `--heading2-size`
+- `--headline1-size`
+- `--space-1`
+- `--space-2`
+
+### Source contracts
+
+- `components/viz/TelemetryValue.jsx`
+- `components/viz/TelemetryValue.d.ts`
+- `components/viz/TelemetryValue.prompt.md`
+- `stories/RoboticsTelemetryValue.stories.jsx`
+
+## Sources
+
+- TelemetryValue prompt contract: `components/viz/TelemetryValue.prompt.md`
+- Storybook implementation evidence: `stories/RoboticsTelemetryValue.stories.jsx`
+- [WCAG 2.2 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)
+- [WCAG 2.2 Contrast Minimum](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+- [WAI-ARIA APG Meter Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/)
+- [Microsoft Style Guide: percent](https://learn.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/p/percent-percentage)
+- [NIST Guide to the SI, 7.2](https://www.nist.gov/pml/special-publication-811/nist-guide-si-chapter-7-rules-and-style-conventions-expressing-values)
+
+
+---
+
+# 2D Map
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Viewer |
+| Owner | `Map2DCanvas` |
+| Storybook | `LDS Product/Viewer/2D Map` |
+| Source | `../component-content.json#product-viewer-2-d-map` |
+
+운영자가 점유 격자·경로·로봇 위치를 한 평면에서 팬과 줌으로 살펴볼 때 적합합니다. 공간 관계가 필요 없는 수치 모니터링이나 3차원 장면에는 Telemetry 또는 3D Scene을 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- appearance="light"가 기본이지만 appearance="dark"도 동일한 공개 계약입니다. 지도 renderer와 overlay는 --viewer- 역할 토큰을 사용해 두 appearance에서 같은 정보·조작 구조를 유지합니다.
+
+### 사용하지 않음
+
+- panEnabled={false}에서는 drag와 touch-action: none을 모두 제거해 페이지 터치 스크롤 및 앱의 선택/드로잉 동작과 충돌하지 않습니다.
+- button, link, input, slider 등 interactive descendant에서 시작한 pointer/wheel 입력도 pan·zoom으로 재처리하지 않습니다.
+- onWheel은 pointer-focal zoom에 필요한 non-passive native WheelEvent callback입니다. React SyntheticEvent 전용 API를 가정하지 않습니다.
+- Mapbox Standard style reference와 runtime configuration guide: 하나의 지도 스타일이 day/night에 대응하는 lighting preset을 런타임에 바꿀 수 있으므로, LDS도 지도를 light 전용으로 고정하지 않고 light/dark appearance를 같은 계약으로 제공합니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| children | 함께 변환되는 콘텐츠(맵 이미지 · SVG 오버레이 · canvas/konva 스테이지 등). |
+| controls | 줌 컨트롤 + 배율 표시. @default true |
+| contentOrigin | children 좌표의 기준점. 일반 이미지/SVG/canvas는 top-left를 사용하고, 세계 좌표 (0,0)을 뷰포트 중심에 두는 renderer만 center를 명시합니다. |
+| toolbar | Optional custom viewport-local toolbar. When supplied it replaces the built-in controls. |
+| label | 접근성 라벨. @default "2D 맵 캔버스" |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode \| ((context: { viewport: Map2DViewport; setViewport: ( viewport: Map2DViewport \| ((viewport: Map2DViewport) = Map2DViewport) ) = void; }) = React.ReactNode)` | No | 함께 변환되는 콘텐츠(맵 이미지 · SVG 오버레이 · canvas/konva 스테이지 등). |
+| `minZoom` | `number` | No |  |
+| `maxZoom` | `number` | No |  |
+| `grid` | `boolean` | No | 격자 배경. @default true |
+| `controls` | `boolean` | No | 줌 컨트롤 + 배율 표시. @default true |
+| `panEnabled` | `boolean` | No | 드래그 팬 사용 여부. false이면 터치 스크롤을 차단하지 않습니다. @default true |
+| `wheelZoom` | `boolean` | No | 포인터 위치를 기준으로 한 wheel/trackpad zoom. @default true |
+| `keyboard` | `boolean` | No | 뷰포트 자체에 포커스했을 때의 키보드 줌/팬 단축키. @default true |
+| `contentOrigin` | `'top-left' \| 'center'` | No | children 좌표의 기준점. 일반 이미지/SVG/canvas는 top-left를 사용하고, 세계 좌표 (0,0)을 뷰포트 중심에 두는 renderer만 center를 명시합니다. |
+| `viewport` | `Map2DViewport` | No | 제어형 뷰포트 상태. |
+| `defaultViewport` | `Map2DViewport` | No | 비제어 초기 뷰포트이자 "보기 초기화"의 복귀값. |
+| `onViewportChange` | `(viewport: Map2DViewport) = void` | No | 뷰포트 변경 콜백. |
+| `onFit` | `() = void` | No | Optional fit-to-content command. The application owns bounds calculation. |
+| `toolbar` | `React.ReactNode` | No | Optional custom viewport-local toolbar. When supplied it replaces the built-in controls. |
+| `onWheel` | `(event: WheelEvent) = void` | No | Native non-passive wheel event fired before built-in pointer-focal zoom handling. |
+| `overlay` | `React.ReactNode` | No | 뷰포트 위의 passive overlay 슬롯. 포인터 입력은 받지 않습니다. |
+| `status` | `React.ReactNode` | No | 좌하단 상태 표시. 기본은 zoom %. |
+| `source` | `React.ReactNode` | No | 좌상단 source identity. |
+| `badges` | `React.ReactNode` | No | source 옆 passive badge. |
+| `hud` | `React.ReactNode` | No | 소수의 필수 viewport readout. |
+| `state` | `ViewerState` | No | Legacy combined Viewer state. Prefer the orthogonal axes in new product code. |
+| `availability` | `ViewerAvailability` | No |  |
+| `connection` | `ViewerConnection` | No |  |
+| `freshness` | `ViewerFreshness` | No |  |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| status | 좌하단 상태 표시. 기본은 zoom %. |
+| state | Legacy combined Viewer state. Prefer the orthogonal axes in new product code. |
+| variant | Perimeter ownership. "embedded" drops the canvas's own border and radius so a parent surface owns one continuous outline. @default "standalone" |
+
+## Behavior and interaction
+
+- NVIDIA Omniverse viewport navigation: pointer 중심 navigation과 viewport-local camera controls를 기준으로 삼았습니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | 기본 contentOrigin="top-left"는 일반 이미지, SVG, canvas의 (0, 0)을 viewport 좌상단에 놓습니다. 세계 좌표 원점을 화면 중심에 두어야 하는 renderer만 contentOrigin="center"를 명시하고 자체 콘텐츠 offset을 제공합니다. |
+| 명시 규칙 2 | 줌 배율은 minZoom(기본 0.25)–maxZoom(기본 8) 사이로 clamp되며 휠·키보드·컨트롤 모든 입력 경로에 동일하게 적용됩니다. 픽셀 지도가 깨지는 배율이나 의미 없는 축소를 막을 때만 범위를 좁히고, 두 값이 곧 컨트롤의 disabled 경계가 됩니다. |
+| 명시 규칙 3 | 키보드 shortcut은 viewport 자체에 포커스했을 때만 동작합니다: +/- 줌, 0 초기화, 방향키 팬, Shift+방향키 큰 폭 팬. Toolbar, input, slider 등 자식 컨트롤의 방향키는 가로채지 않습니다. keyboard={false}는 이 shortcut과 viewport의 tab stop을 함께 제거하므로, 앱이 자체 키보드 pan/zoom 대안을 제공할 때만 끕니다. |
+| 명시 규칙 4 | label(기본 2D 맵 캔버스)은 region의 접근 가능한 이름입니다. 한 화면에 viewport가 여럿이면 소스가 드러나는 이름(1층 점유 지도)으로 반드시 구분합니다. |
+
+## Responsive
+
+- children은 pan/zoom transform을 함께 타는 공간 콘텐츠(맵 이미지 · SVG 오버레이 · canvas/konva 스테이지)입니다. 정적 노드 외에 { viewport, setViewport }를 받는 render function도 지원하므로, renderer가 현재 배율에 반응하거나 자체 fit 로직에서 viewport를 갱신할 때 제어형 상태를 중복 소유하지 않아도 됩니다.
+- defaultViewport는 초기값인 동시에 보기 초기화가 복귀할 값입니다. viewport + onViewportChange로 제어형 사용도 지원합니다.
+- onFit을 제공하면 built-in toolbar에 전체 보기 command가 추가됩니다. bounds 계산은 앱/renderer가 소유하고 callback에서 제어형 viewport를 갱신합니다. toolbar를 제공하면 built-in toolbar를 명시적으로 대체합니다.
+- overlay는 passive visual slot이며 포인터 입력을 받지 않습니다. 별도 조작은 viewport-local toolbar 또는 앱 소유 UI로 구성합니다.
+
+## Content and writing
+
+- 공통 ViewerFrame을 합성하므로 availability/connection/freshness/playback 축과 호환 state, source/HUD, blocking-vs-edge 상태 배치를 그대로 사용합니다. source 옆의 passive badges, 소수의 필수 readout만 담는 hud, 상태 문구·글리프·복구 액션 오버라이드(stateLabel, stateDescription, stateIcon, stateAction)는 모두 ViewerFrame 계약을 그대로 통과시키는 prop입니다.
+
+## Accessibility
+
+- variant="embedded"는 이 캔버스를 다른 표면(Card, 패널 등) 안에 중첩할 때 자체 border·radius를 생략해 부모가 최외곽선을 소유하게 합니다. pan/zoom·toolbar·상태·접근성 역할은 그대로 유지됩니다. 기본값 standalone은 자체 외곽선을 그립니다.
+- ViewerToolbar, Icon, LDS spacing/focus/toggle tokens를 재사용하며 독자적인 map-control visual language를 만들지 않습니다.
+- Unity Scene View navigation: viewport navigation을 scene-local pan/orbit/zoom/focus 동작으로 제한하고, 콘텐츠 편집 명령과 분리했습니다.
+- WCAG 2.2 — Dragging Movements: drag만이 유일한 조작이 되지 않도록 버튼과 키보드 pan/zoom 대안을 유지했습니다.
+- WAI-ARIA Toolbar pattern: viewport 안의 방향키 toolbar가 canvas 방향키 shortcut과 충돌하지 않도록 이벤트 범위를 분리했습니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `FloorSelector` | 대표 시나리오에서 조합 |
+| `Scene3DFrame` | 대표 시나리오에서 조합 |
+| `VideoStreamTile` | 대표 시나리오에서 조합 |
+| `VIEWER_BLOCKING_STATES` | 대표 시나리오에서 조합 |
+| `VIEWER_STATES` | 대표 시나리오에서 조합 |
+| `ViewerFrame` | 대표 시나리오에서 조합 |
+| `ViewerToolbar` | 대표 시나리오에서 조합 |
+| `ViewerToolbarButton` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Map2DCanvas
+  style={{ height: 360 }}
+  defaultViewport={{ x: 24, y: 24, z: 1 }}
+  panEnabled={tool === 'pan'}
+  wheelZoom
+  status="x 12.4 · y -3.8 · 125%"
+>
+  <img src="/maps/floor1.png" alt="1층 점유 지도" style={{ display: 'block' }} />
+</Map2DCanvas>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--map-grid-line`
+- `--viewer-border`
+- `--viewer-surface`
+- `--viewer-surface-elevated`
+
+### Source contracts
+
+- `components/viz/Map2DCanvas.jsx`
+- `components/viz/Map2DCanvas.d.ts`
+- `components/viz/Map2DCanvas.prompt.md`
+- `stories/ViewerMap.stories.jsx`
+
+## Sources
+
+- Map2DCanvas prompt contract: `components/viz/Map2DCanvas.prompt.md`
+- Storybook implementation evidence: `stories/ViewerMap.stories.jsx`
+- [Unity Scene View navigation](https://docs.unity3d.com/Manual/SceneViewNavigation.html)
+- [NVIDIA Omniverse viewport navigation](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/navigation.html)
+- [Mapbox Standard style reference](https://docs.mapbox.com/map-styles/reference/standard/)
+- [runtime configuration guide](https://docs.mapbox.com/map-styles/guides/standard-styles/)
+- [WCAG 2.2 — Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html)
+- [WAI-ARIA Toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)
+
+
+---
+
+# 3D Scene
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Viewer |
+| Owner | `Scene3DFrame` |
+| Storybook | `LDS Product/Viewer/3D Scene` |
+| Source | `../component-content.json#product-viewer-3-d-scene` |
+
+운영자가 포인트 클라우드·설비 자세·입체 장애물처럼 깊이 정보가 필요한 장면을 검사할 때 적합합니다. 평면 경로 확인이나 영상 감시에는 3D Scene 대신 2D Map 또는 Video Stream을 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- Scene3DFrame is the renderer-independent 3D preset for ViewerFrame.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| children | WebGL, R3F, point-cloud, or other renderer output. |
+| title | Visible scene or source identity. |
+| toolbar | Viewport-local camera, fit, zoom, and display controls. |
+| label | Accessible region name. @default "3D 뷰포트" |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | No | WebGL, R3F, point-cloud, or other renderer output. |
+| `title` | `React.ReactNode` | No | Visible scene or source identity. |
+| `badges` | `React.ReactNode` | No | Passive badges adjacent to the scene identity. |
+| `hud` | `React.ReactNode` | No | Compact passive diagnostics; keep the default HUD to essential values. |
+| `toolbar` | `React.ReactNode` | No | Viewport-local camera, fit, zoom, and display controls. |
+| `overlay` | `React.ReactNode` | No | Non-interactive renderer overlay. |
+| `status` | `React.ReactNode` | No | Passive renderer metadata such as FPS or point count. |
+| `state` | `ViewerState` | No | Legacy combined Viewer state. Prefer the orthogonal axes in new product code. |
+| `availability` | `ViewerAvailability` | No |  |
+| `connection` | `ViewerConnection` | No |  |
+| `freshness` | `ViewerFreshness` | No |  |
+| `playback` | `ViewerPlayback` | No |  |
+| `stateLabel` | `React.ReactNode` | No |  |
+| `stateDescription` | `React.ReactNode` | No |  |
+| `stateIcon` | `React.ReactNode` | No |  |
+| `stateAction` | `React.ReactNode` | No |  |
+| `loading` | `boolean` | No |  |
+| `empty` | `React.ReactNode` | No |  |
+| `appearance` | `'dark' \| 'light'` | No | Theme-stable viewport presentation. @default "dark" |
+| `label` | `string` | No | Accessible region name. @default "3D 뷰포트" |
+| `variant` | `'standalone' \| 'embedded'` | No | Perimeter ownership. "embedded" drops the viewport's own border and radius so a parent surface (CanvasEditorShell, Card) owns one continuous outline. @default "standalone" |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| status | Passive renderer metadata such as FPS or point count. |
+| state | Legacy combined Viewer state. Prefer the orthogonal axes in new product code. |
+| variant | Perimeter ownership. "embedded" drops the viewport's own border and radius so a parent surface (CanvasEditorShell, Card) owns one continuous outline. @default "standalone" |
+
+## Behavior and interaction
+
+- Scene hierarchy, selection inspector, transform gizmos, robot commands, and renderer-specific debug panels are intentionally excluded.
+
+## Responsive
+
+- Use it for point clouds, digital twins, WebGL scenes, or React Three Fiber output. The DS owns the viewport frame, scene identity, compact HUD, viewport-local controls, passive renderer metadata, and normalized state placement. The application owns rendering, camera math, picking, and loading/retry logic.
+- Classification and evidence are documented in ViewerFrame.prompt.md. The structure follows the official NVIDIA Omniverse viewport controls and Unity Scene view navigation, while Unity Scene view draw modes support the conclusion that viewing mode and diagnostic readability—not a permanently dark palette—define the…
+
+## Content and writing
+
+- The chrome slots follow the shared ViewerFrame contract: badges is passive identity context beside title, hud is a few essential readouts (point count, FPS budget), and overlay is a non-interactive render layer above the content — none of them accept controls, which belong in toolbar.
+- stateLabel, stateDescription, stateIcon, and stateAction override the normalized state's default copy, glyph, and recovery action per ViewerFrame's rules; they refine wording for the product domain without changing blocking or live-region behavior.
+- appearance="dark" is the contextual default, not a restriction. Use appearance="light" when the surrounding product or renderer needs a light inspection surface; custom scene/HUD content must use the scoped --viewer- roles so both variants remain legible.
+- loading and empty remain compatibility aliases; new work should use state and state-copy props.
+
+## Accessibility
+
+- children is the renderer output itself (a WebGL/R3F canvas or point-cloud viewer). The frame never touches the render loop; it only removes the content from focus and accessibility trees while a blocking state is active.
+- degraded, stale, and frozen keep the last scene visible with an edge status. Loading, unavailable, disconnected, and error states block and remove renderer/tool controls from the focus and accessibility trees.
+- Keep orbit, pan, zoom, focus, home, orientation, and display controls in the local toolbar slot. Keep document/history commands in CanvasEditorShell.
+- CanvasEditorShell 캔버스 슬롯처럼 다른 표면 안에 뷰포트를 중첩할 때는 variant="embedded"로 두어 셸이 최외곽 테두리를 소유하게 합니다. 자체 border·radius만 생략하고 scene identity·HUD·toolbar·상태·접근성 역할은 그대로 유지합니다.
+
+## Exceptions
+
+- Use ready for a usable static scene and live only when the source is actually advancing.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Icon` | 대표 시나리오에서 조합 |
+| `ViewerToolbar` | 대표 시나리오에서 조합 |
+| `ViewerToolbarButton` | 대표 시나리오에서 조합 |
+| `FloorSelector` | 대표 시나리오에서 조합 |
+| `Map2DCanvas` | 대표 시나리오에서 조합 |
+| `VideoStreamTile` | 대표 시나리오에서 조합 |
+| `VIEWER_BLOCKING_STATES` | 대표 시나리오에서 조합 |
+| `VIEWER_STATES` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Scene3DFrame
+  label="AMR-07 3D scene"
+  title="POINT CLOUD"
+  state="stale"
+  status="1.2M pts · 38 FPS"
+  toolbar={cameraControls}
+  style={{ height: 320 }}
+>
+  <Canvas>...</Canvas>
+</Scene3DFrame>
+```
+
+## Tokens and API
+
+### Source contracts
+
+- `components/viz/Scene3DFrame.jsx`
+- `components/viz/Scene3DFrame.d.ts`
+- `components/viz/Scene3DFrame.prompt.md`
+- `stories/Viewer3D.stories.jsx`
+
+## Migration
+
+- Prefer the orthogonal axes for new integrations: availability describes whether content exists, connection describes transport health, freshness describes data age, and playback describes media progression. The legacy combined state remains a compatibility adapter and is ignored when any explicit axis is supplied.
+
+## Sources
+
+- Scene3DFrame prompt contract: `components/viz/Scene3DFrame.prompt.md`
+- Storybook implementation evidence: `stories/Viewer3D.stories.jsx`
+- [NVIDIA Omniverse viewport controls](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/controls.html)
+- [Unity Scene view navigation](https://docs.unity3d.com/Manual/SceneViewNavigation.html)
+- [Unity Scene view draw modes](https://docs.unity3d.com/Manual/GIVis.html)
+
+
+---
+
+# Floor Selector
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Viewer |
+| Owner | `FloorSelector` |
+| Storybook | `LDS Product/Viewer/Floor Selector` |
+| Source | `../component-content.json#product-viewer-floor-selector` |
+
+운영자가 다층 건물 지도에서 한 층을 반복해서 전환해야 할 때 적합합니다. 선택지가 많거나 층 외의 복잡한 필터에는 Floor Selector 대신 Select 또는 Tree를 사용하세요.
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `floors` | `Floor[]` | Yes | 층 목록 — 문자열 또는 { value, label }(위→아래 순서대로). |
+| `value` | `string` | No | 제어되는 현재 층. |
+| `defaultValue` | `string` | No | 비제어 초기 층(기본 첫 항목). |
+| `onChange` | `(value: string) = void` | No |  |
+
+## Behavior and interaction
+
+- FloorSelector — 빌딩 층/레벨 선택기. 단일 선택 리스트로 활성 층은 시그널 잉크로 채워집니다(맵·플로어 뷰의 우측 컨트롤).
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
+| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
+| --color-semantic-line-normal-normal | light: rgba(112, 115, 124, 0.22); dark: rgba(112, 115, 124, 0.32) |
+| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+
+## Accessibility
+
+- floors 문자열 또는 { value, label }(위→아래 순서) · 제어(value)/비제어(defaultValue). ARIA radio group(단일 선택): 단일 tab stop(roving tabindex), 화살표로 이동+선택, Home/End. 각 층은 role="radio"·aria-checked.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Map2DCanvas` | 대표 시나리오에서 조합 |
+| `Scene3DFrame` | 대표 시나리오에서 조합 |
+| `VideoStreamTile` | 대표 시나리오에서 조합 |
+| `VIEWER_BLOCKING_STATES` | 대표 시나리오에서 조합 |
+| `VIEWER_STATES` | 대표 시나리오에서 조합 |
+| `ViewerFrame` | 대표 시나리오에서 조합 |
+| `ViewerToolbar` | 대표 시나리오에서 조합 |
+| `ViewerToolbarButton` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<FloorSelector value={floor} onChange={setFloor}
+  floors={[{ value: 'B1', label: 'B1' }, { value: '1F', label: '1F' }, { value: '2F', label: '2F' }]} />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-label-neutral`
+- `--color-semantic-line-normal-normal`
+- `--color-semantic-primary-normal`
+- `--color-semantic-static-white`
+- `--dur-fast`
+- `--ease-out`
+- `--font-sans`
+- `--label1-size`
+- `--radius-md`
+- `--radius-sm`
+- `--shadow-sm`
+
+### Source contracts
+
+- `components/navigation/FloorSelector.jsx`
+- `components/navigation/FloorSelector.d.ts`
+- `components/navigation/FloorSelector.prompt.md`
+- `stories/ViewerFloorSelector.stories.jsx`
+
+## Sources
+
+- FloorSelector prompt contract: `components/navigation/FloorSelector.prompt.md`
+- Storybook implementation evidence: `stories/ViewerFloorSelector.stories.jsx`
+
+
+---
+
+# Toolbar
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Viewer |
+| Owner | `ViewerToolbar` |
+| Storybook | `LDS Product/Viewer/Toolbar` |
+| Source | `../component-content.json#product-viewer-toolbar` |
+
+운영자가 지도·3D·영상에서 확대·맞춤·레이어 토글 같은 로컬 도구를 사용할 때 적합합니다. 저장·내보내기처럼 문서 전체에 영향을 주는 명령에는 Viewer Toolbar 대신 Command Bar를 사용하세요.
+
+## 사용 판단
+
+### 사용하지 않음
+
+- Adobe Spectrum Action Group: 관련된 action/toggle이 같은 size·density·interaction state를 공유하고, 공간이 제한되어도 control 자체를 임의 축소하지 않는 근거입니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| label | 아이콘 전용 컨트롤의 필수 접근성 라벨 + tooltip. |
+| children | 16px 아이콘 glyph. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `orientation` | `'vertical' \| 'horizontal'` | No |  |
+| `appearance` | `'minimal' \| 'on-dark' \| 'surface'` | No | minimal: transparent group with individually surfaced controls. on-dark: transparent group with inverse controls for scene/video surfaces. surface: compact grouped surface for dense light UI. |
+| `label` | `string` | No | toolbar 접근성 라벨. @default "뷰어 컨트롤" |
+| `children` | `React.ReactNode` | No |  |
+| `kind` | `'command' \| 'toggle'` | No | 일회성 command와 유지되는 toggle을 구분합니다. @default "command" |
+| `pressed` | `boolean` | No | 제어형 toggle 상태. kind="toggle"에서만 사용합니다. |
+| `defaultPressed` | `boolean` | No | 비제어 toggle 초기 상태. @default false |
+| `onPressedChange` | `(pressed: boolean) = void` | No | toggle 상태 변경 콜백. |
+| `active` | `boolean` | No | 이전 active 사용은 호환을 위해 toggle로 해석됩니다. |
+| `label` | `string` | Yes | 아이콘 전용 컨트롤의 필수 접근성 라벨 + tooltip. |
+| `children` | `React.ReactNode` | No | 16px 아이콘 glyph. |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| pressed | 제어형 toggle 상태. kind="toggle"에서만 사용합니다. |
+| defaultPressed | 비제어 toggle 초기 상태. @default false |
+| onPressedChange | toggle 상태 변경 콜백. |
+| active | 이전 active 사용은 호환을 위해 toggle로 해석됩니다. |
+
+## Behavior and interaction
+
+- WAI-ARIA Toolbar pattern: 단일 Tab stop, orientation-aware 방향키, Home/End, disabled navigation 계약의 기준입니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | Toolbar의 children은 ViewerToolbarButton 컨트롤 목록입니다. roving focus는 enabled 버튼만 등록하므로, 임의 컴포넌트를 끼워 넣으면 키보드 시퀀스에서 제외됩니다 — 다른 형태의 컨트롤이 필요하면 toolbar 밖에서 조합합니다. 버튼 쪽 children은 16px 아이콘 glyph 슬롯입니다. |
+| 명시 규칙 2 | ViewerToolbarButton은 icon-only control이므로 label이 필수이며 icon은 16px, control은 LDS small icon-control과 같은 32px입니다. |
+| 명시 규칙 3 | Sibling IconButton과 ToggleIcon의 32px size, radius, semantic foreground/background, disabled, transition, focus token 계약을 재사용합니다. Toolbar 고유 버튼 크기나 focus ring을 만들지 않습니다. |
+| 명시 규칙 4 | WCAG 2.2 Target Size (Minimum): 좁은 viewport에서도 32px target을 축소하지 않고 outer chrome과 label을 먼저 줄입니다. |
+| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
+
+## Responsive
+
+- Toolbar root는 grid/flex의 stretch 가능한 slot에 놓여도 control 묶음의 intrinsic width를 유지합니다. 화면 폭을 채우는 command bar가 필요하면 별도 toolbar/navigation 컴포넌트를 사용합니다.
+- CanvasEditorShell에서도 zoom, fit, camera, display control은 viewport 안에 둡니다. 문서 저장/history command는 shell header 소유입니다.
+- Unity default Scene View overlays: viewport-local navigation/orientation control만 scene edge에 두고 편집 panel과 분리했습니다.
+- NVIDIA Omniverse viewport controls: camera/view/display control을 viewport context에 귀속하고 진단 UI와 구분했습니다.
+
+## Accessibility
+
+- 일회성 zoom/reset/fit은 기본 kind="command"이며 aria-pressed를 노출하지 않습니다. 유지되는 visibility/mode만 kind="toggle" + pressed/defaultPressed를 사용하고, 꺼짐도 aria-pressed="false"로 명시합니다.
+- Toolbar는 EditorToolbar와 같은 private roving-focus engine을 사용하지만 enabled ViewerToolbarButton만 대상으로 삼습니다. 내부 Popover·field·nested toolbar의 버튼을 섞지 않습니다. role="presentation"/role="none" 래퍼는 소유권을 바꾸지 않지만, nested toolbar처럼 자체 semantic role을 가진 composite는 자기 roving sequence를 소유합니다.
+- Focus 중인 Viewer command가 동적으로 unavailable 상태가 되면 다음 enabled command로 focus를 복구합니다. Native disabled와 aria-disabled="true" command/toggle은 모두 실행을 차단합니다.
+- Tab 진입점은 하나이며 horizontal은 좌우, vertical은 상하 방향키로 이동합니다. disabled item은 건너뛰고 Home/End를 지원합니다. 자식이 추가·제거되어도 마지막 focus item을 유지합니다.
+- 포함: viewport-local icon command/toggle, horizontal/vertical layout, roving focus, light/dark/minimal placement.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Icon` | 대표 시나리오에서 조합 |
+| `Popover` | 대표 시나리오에서 조합 |
+| `Switch` | 대표 시나리오에서 조합 |
+| `ViewerToolbarButton` | 대표 시나리오에서 조합 |
+| `FloorSelector` | 대표 시나리오에서 조합 |
+| `Map2DCanvas` | 대표 시나리오에서 조합 |
+| `Scene3DFrame` | 대표 시나리오에서 조합 |
+| `VideoStreamTile` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<ViewerToolbar orientation="horizontal" appearance="on-dark" label="3D 보기">
+  <ViewerToolbarButton label="확대" onClick={zoomIn}>
+    <Icon name="plus" size={16} />
+  </ViewerToolbarButton>
+  <ViewerToolbarButton label="레이어 표시" kind="toggle" pressed={layersVisible} onPressedChange={setLayersVisible}>
+    <Icon name="filter" size={16} />
+  </ViewerToolbarButton>
+</ViewerToolbar>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-line-normal-normal`
+- `--radius-md`
+- `--shadow-sm`
+- `--space-1`
+- `--viewer-border`
+- `--viewer-surface-elevated`
+
+### Source contracts
+
+- `components/viz/ViewerToolbar.jsx`
+- `components/viz/ViewerToolbar.d.ts`
+- `components/viz/ViewerToolbar.prompt.md`
+- `stories/ViewerToolbar.stories.jsx`
+
+## Migration
+
+- active는 이전 호환 alias일 뿐입니다. 새 코드는 명시적인 kind="toggle" pressed={...}를 사용합니다.
+
+## Sources
+
+- ViewerToolbar prompt contract: `components/viz/ViewerToolbar.prompt.md`
+- Storybook implementation evidence: `stories/ViewerToolbar.stories.jsx`
+- [WAI-ARIA Toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)
+- [Adobe Spectrum Action Group](https://spectrum.adobe.com/page/action-group/)
+- [Apple HIG Toolbars](https://developer.apple.com/design/human-interface-guidelines/toolbars)
+- [Unity default Scene View overlays](https://docs.unity3d.com/Manual/default-overlays-reference.html)
+- [NVIDIA Omniverse viewport controls](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/controls.html)
+- [WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
+
+
+---
+
+# Video Stream
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Viewer |
+| Owner | `VideoStreamTile` |
+| Storybook | `LDS Product/Viewer/Video Stream` |
+| Source | `../component-content.json#product-viewer-video-stream` |
+
+운영자가 카메라 영상을 보면서 연결 상태와 뷰포트 도구를 즉시 판단해야 할 때 적합합니다. 정지 이미지나 공간 경로를 탐색하는 화면에는 Video Stream 대신 Image 또는 2D Map을 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- Use the local toolbar for mute, captions, snapshot, and fullscreen. Recording archives, timelines, playback-session controls, and retry policy are intentionally omitted from this DS component.
+- The HTML media element specification influenced the separation of paused, ended/unavailable, and error semantics from connection transport.
+- VideoStreamTile is the video-source preset for ViewerFrame.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| children | Actual video, WebRTC, iframe, or image renderer output. |
+| label | Visible camera or media-source identity. |
+| ariaLabel | Accessible region name. Derived from a string label when omitted. |
+| toolbar | Viewport-local mute, captions, snapshot, or fullscreen controls. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | No | Actual video, WebRTC, iframe, or image renderer output. |
+| `label` | `React.ReactNode` | No | Visible camera or media-source identity. |
+| `ariaLabel` | `string` | No | Accessible region name. Derived from a string label when omitted. |
+| `status` | `ViewerState` | No | Normalized stream state. Prefer state in new code. @default "idle" |
+| `state` | `ViewerState` | No | Normalized stream state. Takes precedence over the compatibility status prop. |
+| `availability` | `ViewerAvailability` | No |  |
+| `connection` | `ViewerConnection` | No |  |
+| `freshness` | `ViewerFreshness` | No |  |
+| `playback` | `ViewerPlayback` | No |  |
+| `aspectRatio` | `string` | No | CSS aspect-ratio value. @default "16 / 9" |
+| `badges` | `React.ReactNode` | No |  |
+| `hud` | `React.ReactNode` | No | Compact passive diagnostics; keep the default HUD to essential values. |
+| `toolbar` | `React.ReactNode` | No | Viewport-local mute, captions, snapshot, or fullscreen controls. |
+| `overlay` | `React.ReactNode` | No | Non-interactive video overlay. |
+| `metadata` | `React.ReactNode` | No | Passive stream metadata such as resolution, FPS, or freshness. |
+| `stateLabel` | `React.ReactNode` | No |  |
+| `stateDescription` | `React.ReactNode` | No |  |
+| `stateIcon` | `React.ReactNode` | No |  |
+| `stateAction` | `React.ReactNode` | No |  |
+| `variant` | `'standalone' \| 'embedded'` | No | Perimeter ownership. "embedded" drops the tile's own border and radius so a parent surface owns one continuous outline. @default "standalone" |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| status | Normalized stream state. Prefer state in new code. @default "idle" |
+| state | Normalized stream state. Takes precedence over the compatibility status prop. |
+| variant | Perimeter ownership. "embedded" drops the tile's own border and radius so a parent surface owns one continuous outline. @default "standalone" |
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | aspectRatio (default 16 / 9) is a CSS aspect-ratio value that sizes the tile from its width. Match it to the real stream ratio (4 / 3, 1 / 1) instead of letterboxing inside the child renderer; give the tile an explicit height only when the owning grid requires it. |
+
+## Content and writing
+
+- The chrome slots follow the shared ViewerFrame contract: badges is passive identity context beside label, hud carries a few essential stream readouts, and overlay is a non-interactive layer above the video (crosshair, privacy mask) — controls belong in toolbar only.
+- degraded, stale, frozen, and user-requested paused are distinct non-blocking states. They preserve the last frame with an edge message.
+- Pass a , WebRTC renderer, iframe, or image as children. The DS owns the named frame, source identity, local toolbar/HUD slots, aspect ratio, and normalized stream-state presentation. The application owns transport, autoplay policy, playback, recording, reconnection, and media permissions.
+- These expectations are adapted to LDS component roles and icons rather than copying another product's visual styling. The common state and placement contract is documented in ViewerFrame.prompt.md.
+
+## Accessibility
+
+- The region's accessible name comes from ariaLabel when supplied; otherwise a string label derives "{label} 영상 스트림" and a missing/non-string label falls back to 영상 스트림. Set ariaLabel explicitly whenever label is a non-string node or several tiles would otherwise share one name.
+- live uses both icon and text. Loading/connecting states include visible text and aria-busy; they do not rely on a spinner alone.
+- no-source, unavailable, disconnected, no-signal, and error are blocking. Child media controls and local toolbar controls become inert and aria-hidden, while source identity remains visible.
+- A retry/resume control may be supplied through stateAction; the application owns transport and recovery, and the frame restores focus to that action when a focused viewport control becomes blocked.
+- variant="embedded"는 이 타일을 다른 표면 안에 중첩할 때 자체 border·radius를 생략해 부모가 최외곽선을 소유하게 합니다. source·HUD·toolbar·상태·접근성 역할은 그대로 유지됩니다. 기본값 standalone은 자체 외곽선을 그립니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
+| `Icon` | 대표 시나리오에서 조합 |
+| `ViewerToolbar` | 대표 시나리오에서 조합 |
+| `ViewerToolbarButton` | 대표 시나리오에서 조합 |
+| `FloorSelector` | 대표 시나리오에서 조합 |
+| `Map2DCanvas` | 대표 시나리오에서 조합 |
+| `Scene3DFrame` | 대표 시나리오에서 조합 |
+| `VIEWER_BLOCKING_STATES` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<VideoStreamTile
+  label="AMR-07 · FRONT"
+  state="live"
+  metadata="1080p · 30 FPS"
+  toolbar={videoControls}
+>
+  <video aria-label="AMR-07 전면 카메라 영상" />
+</VideoStreamTile>
+```
+
+## Tokens and API
+
+### Source contracts
+
+- `components/viz/VideoStreamTile.jsx`
+- `components/viz/VideoStreamTile.d.ts`
+- `components/viz/VideoStreamTile.prompt.md`
+- `stories/ViewerVideo.stories.jsx`
+
+## Migration
+
+- The default state is idle, never an unverified live claim. state is the normalized-state prop for new code; status is a compatibility alias that state always wins over — do not supply both in new work.
+- New integrations should report independent availability, connection, freshness, and playback axes. Supplying any of those axes takes precedence over the legacy combined state/status adapter, so a stale connected stream is not misreported as disconnected or unavailable.
+
+## Sources
+
+- VideoStreamTile prompt contract: `components/viz/VideoStreamTile.prompt.md`
+- Storybook implementation evidence: `stories/ViewerVideo.stories.jsx`
+- [HTML media element specification](https://html.spec.whatwg.org/multipage/media.html)
+- [WebRTC Statistics](https://www.w3.org/TR/webrtc-stats/)
+- [WCAG live captions](https://www.w3.org/WAI/WCAG22/Understanding/captions-live.html)
+- [Pause, Stop, Hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html)
+
+
+---
+
+# Viewer Frame
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Viewer |
+| Owner | `ViewerFrame` |
+| Storybook | `LDS Product/Viewer/Viewer Frame` |
+| Source | `../component-content.json#product-viewer-viewer-frame` |
+
+지도·3D·영상 뷰어가 로딩·신호 없음·오류·지연 상태를 일관된 읽기 순서로 보여줘야 할 때 적합합니다. 정적인 이미지나 상태 전환이 없는 단순 컨테이너에는 Viewer Frame 대신 기본 Surface를 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- Use toolbarPlacement="top-right" for 3D/video camera controls and bottom-right when a map's scale/status occupies the opposite edge.
+- ViewerFrame is the shared LDS Product viewport contract for map, 3D, and video surfaces.
+
+### 사용하지 않음
+
+- degraded, stale, frozen, and paused retain the last usable content and use an edge status strip instead of covering it.
+- Live-region urgency follows whether a transition removes usable content. disconnected, no-signal, and error are blocking losses and use alert/assertive. Expected setup states such as no-source, loading, and connecting use status/polite.
+- variant="embedded"는 이 프레임을 다른 LDS 표면(CanvasEditorShell의 캔버스 슬롯, Card 등) 안에 중첩할 때 자체 border·radius를 생략해 부모가 하나의 연속된 외곽선을 소유하게 합니다. 상태 모델·HUD·toolbar·region role은 그대로 유지되며, 부모 표면 안에서 style로 border/radius를 임의로 덮어쓰는 대신 이 variant를 사용합니다. 기본값 standalone은 단독 뷰포트로 자체 외곽선을 그립니다.
+- Every Viewer preset uses the same appearance="dark" | "light" axis. Scene3DFrame and video default to dark while Map2DCanvas defaults to light, but these are contextual defaults rather than category restrictions.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| children | Renderer or media content. Rendering and transport remain application-owned. |
+| label | Accessible name for the region. |
+| toolbar | Viewport-local controls such as zoom, fit, mute, or fullscreen. |
+| toolbarPlacement | Edge used for the viewport-local toolbar. @default "top-right" |
+| stateLabel | Optional user-facing override for the normalized state label. |
+| stateDescription | Optional user-facing override for the normalized state description. Pass null to omit. |
+| stateIcon | Optional state icon override. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `children` | `React.ReactNode` | No | Renderer or media content. Rendering and transport remain application-owned. |
+| `label` | `string` | Yes | Accessible name for the region. |
+| `source` | `React.ReactNode` | No | Visible source or viewport identity in the top-left chrome. |
+| `badges` | `React.ReactNode` | No | Passive badges adjacent to the source identity. |
+| `hud` | `React.ReactNode` | No | Compact, passive diagnostics. Keep the default HUD to essential values only. |
+| `toolbar` | `React.ReactNode` | No | Viewport-local controls such as zoom, fit, mute, or fullscreen. |
+| `toolbarPlacement` | `'top-right' \| 'bottom-right'` | No | Edge used for the viewport-local toolbar. @default "top-right" |
+| `overlay` | `React.ReactNode` | No | Non-interactive render overlay placed above the content. |
+| `status` | `React.ReactNode` | No | Passive metadata such as frame rate, resolution, scale, or freshness. |
+| `state` | `ViewerState` | No | Legacy combined presentation state. Prefer the orthogonal state axes for new product code. @default "ready" |
+| `availability` | `ViewerAvailability` | No | Source/content availability. Explicit axes take precedence over state. @default "ready" |
+| `connection` | `ViewerConnection` | No | Transport connection truth. @default "connected" |
+| `freshness` | `ViewerFreshness` | No | Freshness of the last rendered content. @default "current" |
+| `playback` | `ViewerPlayback` | No | Playback/live presentation mode. @default "playing" |
+| `stateLabel` | `React.ReactNode` | No | Optional user-facing override for the normalized state label. |
+| `stateDescription` | `React.ReactNode` | No | Optional user-facing override for the normalized state description. Pass null to omit. |
+| `stateIcon` | `React.ReactNode` | No | Optional state icon override. |
+| `stateAction` | `React.ReactNode` | No | Optional recovery or resume action. The application owns its behavior. |
+| `appearance` | `'dark' \| 'light'` | No | Theme-stable viewport presentation shared by map, 3D, and video presets. @default "dark" |
+| `variant` | `'standalone' \| 'embedded'` | No | Perimeter ownership. "embedded" drops the frame's own border and radius so a parent surface (CanvasEditorShell, Card) owns one continuous outline; viewport chrome, state, and a11y roles are unchanged. @default "standalone" |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| status | Passive metadata such as frame rate, resolution, scale, or freshness. |
+| state | Legacy combined presentation state. Prefer the orthogonal state axes for new product code. @default "ready" |
+| stateLabel | Optional user-facing override for the normalized state label. |
+| stateDescription | Optional user-facing override for the normalized state description. Pass null to omit. |
+| stateIcon | Optional state icon override. |
+| stateAction | Optional recovery or resume action. The application owns its behavior. |
+| variant | Perimeter ownership. "embedded" drops the frame's own border and radius so a parent surface (CanvasEditorShell, Card) owns one continuous outline; viewport chrome, state, and a11y roles are unchanged. @default "standalone" |
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | Very narrow blocking tiles keep source + state label + recovery action in normal grid flow. Below 240px, the icon and secondary description collapse visually (the description remains available to assistive technology) so 16:9 tiles do not overlap. |
+| 명시 규칙 2 | WCAG 2.2 Status Messages requires state changes to be programmatically exposed without moving focus, while the WAI-ARIA Alert pattern reserves interruption for important, time-sensitive changes. ViewerFrame therefore derives urgency from blocking loss, not merely from a negative color or connection label. |
+| 명시 규칙 3 | WCAG 2.2 Dragging Movements requires non-drag alternatives for operations such as pan, zoom, and fit. |
+| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| --caption2-size | 11px |
+
+## Responsive
+
+- The hud slot is compact, passive diagnostics rendered in the top chrome next to the source identity. Default HUD content should be limited to a few values needed to interpret the viewport. Detailed renderer diagnostics belong in an optional product surface.
+- Toolbar actions must affect only this viewport. Document commands, scene hierarchy, properties, robot control, and emergency actions do not belong in the frame.
+- NVIDIA Omniverse viewport controls and viewport navigation influenced the scene-first hierarchy and the small set of viewport-local controls.
+- Unity Scene view draw modes expose multiple lighting/debug presentations and customizable diagnostic colors rather than prescribing one permanent viewport palette. LDS therefore treats dark as the 3D default, not as a 3D-only capability.
+
+## Content and writing
+
+- ready leaves chrome quiet. live adds a text-and-icon state badge; it never relies on color or motion alone.
+- Tone을 직접 전달하는 positive/cautionary/negative 상태 글리프는 공용 상태 문법과 같은 fill 변형을 사용합니다. clock, pause, signal, circle-block처럼 상태의 원인이나 기능을 설명하는 글리프는 outline을 유지합니다.
+- 오류·신호 없음·사용 불가 기본 문구는 원인만 알리는 막다른 문장이 아니라 다음 확인 행동까지 안내합니다. 제품이 더 구체적인 복구 경로를 알면 stateDescription과 stateAction으로 대체합니다.
+- Every normalized state ships a default label and glyph. stateLabel overrides only the user-facing wording (e.g. a product term for stale) and stateIcon only the glyph; neither changes the state's blocking behavior, live-region urgency, or tone. Do not use them to make a blocking state look healthy.
+
+## Accessibility
+
+- idle, no-source, loading, connecting, unavailable, disconnected, no-signal, and error mean the content is unusable. They use a central blocking state and make renderer children and local toolbar controls inert/aria-hidden.
+- Blocking presentation keeps the visible source identity. If a state transition blocks the currently focused renderer/control, focus moves to the first recovery action or to the blocking-state group instead of being discarded; after recovery it returns to that exact originating control when the control still exists.
+- Appearance parity is checked with equivalent map and 3D stories. A light or dark variant must keep the same slots, state behavior, focus behavior, and control availability.
+- WAI-ARIA Toolbar keeps keyboard behavior in the composed toolbar instead of making the viewport frame a second toolbar implementation.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
+| `Icon` | 대표 시나리오에서 조합 |
+| `ViewerToolbar` | 대표 시나리오에서 조합 |
+| `ViewerToolbarButton` | 대표 시나리오에서 조합 |
+| `FloorSelector` | 대표 시나리오에서 조합 |
+| `Map2DCanvas` | 대표 시나리오에서 조합 |
+| `Scene3DFrame` | 대표 시나리오에서 조합 |
+| `VideoStreamTile` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<ViewerFrame
+  label="AMR-07 front camera"
+  source="AMR-07 · FRONT"
+  availability="ready"
+  connection="connected"
+  freshness="stale"
+  status="마지막 수신 8초 전"
+  toolbar={cameraControls}
+>
+  <video aria-label="AMR-07 전면 카메라 영상" />
+</ViewerFrame>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--caption1-size`
+- `--caption2-size`
+- `--color-semantic-primary-normal`
+- `--color-semantic-status-cautionary`
+- `--color-semantic-status-cautionary-foreground`
+- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
+- `--color-semantic-status-positive`
+- `--color-semantic-status-positive-foreground`
+- `--component-viewer-border`
+- `--component-viewer-foreground`
+- `--component-viewer-light-border`
+- `--component-viewer-light-foreground`
+- `--component-viewer-light-muted`
+- `--component-viewer-light-surface`
+- `--component-viewer-light-surface-elevated`
+- `--component-viewer-muted`
+- `--component-viewer-surface`
+- `--component-viewer-surface-elevated`
+- `--font-sans`
+- `--fw-bold`
+- `--fw-semibold`
+- `--label1-size`
+- `--radius-lg`
+- `--radius-pill`
+- `--radius-sm`
+- `--viewer-border`
+- `--viewer-foreground`
+- `--viewer-muted`
+- `--viewer-surface`
+- `--viewer-surface-elevated`
+
+### Source contracts
+
+- `components/viz/ViewerFrame.jsx`
+- `components/viz/ViewerFrame.d.ts`
+- `components/viz/ViewerFrame.prompt.md`
+- `stories/ViewerFrame.stories.jsx`
+
+## Migration
+
+- New product code uses availability, connection, freshness, and playback. The combined state prop remains a compatibility adapter and is ignored when any explicit axis is supplied.
+- The badges slot is passive and must use an on-dark-compatible badge in dark appearance. Do not repeat the normalized Viewer state with a second connection badge.
+
+## Sources
+
+- ViewerFrame prompt contract: `components/viz/ViewerFrame.prompt.md`
+- Storybook implementation evidence: `stories/ViewerFrame.stories.jsx`
+- [NVIDIA Omniverse viewport controls](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/controls.html)
+- [viewport navigation](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/navigation.html)
+- [Unity default Scene view overlays](https://docs.unity3d.com/Manual/default-overlays-reference.html)
+- [Unity Scene view draw modes](https://docs.unity3d.com/Manual/GIVis.html)
+- [Mapbox Standard style](https://docs.mapbox.com/map-styles/reference/standard/)
+- [runtime style configuration](https://docs.mapbox.com/map-styles/guides/standard-styles/)
+- [WAI-ARIA Toolbar](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)
+- [WCAG 2.2 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html)
 
 
 ---

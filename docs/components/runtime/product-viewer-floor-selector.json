@@ -1,0 +1,170 @@
+{
+  "slug": "product-viewer-floor-selector",
+  "title": "Floor Selector",
+  "storybookTitle": "LDS Product/Viewer/Floor Selector",
+  "layer": "Product",
+  "family": "Viewer",
+  "primaryOwner": "FloorSelector",
+  "ownerComponents": [
+    "FloorSelector"
+  ],
+  "supportingComponents": [],
+  "purpose": "운영자가 다층 건물 지도에서 한 층을 반복해서 전환해야 할 때 적합합니다. 선택지가 많거나 층 외의 복잡한 필터에는 Floor Selector 대신 Select 또는 Tree를 사용하세요.",
+  "useWhen": [],
+  "avoidWhen": [],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "floors",
+      "type": "Floor[]",
+      "required": true,
+      "description": "층 목록 — 문자열 또는 { value, label }(위→아래 순서대로).",
+      "owner": "FloorSelectorProps"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "제어되는 현재 층.",
+      "owner": "FloorSelectorProps"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "required": false,
+      "description": "비제어 초기 층(기본 첫 항목).",
+      "owner": "FloorSelectorProps"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) = void",
+      "required": false,
+      "description": "",
+      "owner": "FloorSelectorProps"
+    }
+  ],
+  "states": [],
+  "behavior": [
+    "FloorSelector — 빌딩 층/레벨 선택기. 단일 선택 리스트로 활성 층은 시그널 잉크로 채워집니다(맵·플로어 뷰의 우측 컨트롤)."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "--color-semantic-background-elevated-normal",
+      "rule": "light: #FFFFFF; dark: #212225"
+    },
+    {
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+    },
+    {
+      "subject": "--color-semantic-line-normal-normal",
+      "rule": "light: rgba(112, 115, 124, 0.22); dark: rgba(112, 115, 124, 0.32)"
+    },
+    {
+      "subject": "--color-semantic-primary-normal",
+      "rule": "light: #3878B3; dark: #5390C9"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [],
+  "accessibility": [
+    "floors 문자열 또는 { value, label }(위→아래 순서) · 제어(value)/비제어(defaultValue). ARIA radio group(단일 선택): 단일 tab stop(roving tabindex), 화살표로 이동+선택, Home/End. 각 층은 role=\"radio\"·aria-checked."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "Map2DCanvas",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Scene3DFrame",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "VideoStreamTile",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "VIEWER_BLOCKING_STATES",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "VIEWER_STATES",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewerFrame",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewerToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewerToolbarButton",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<FloorSelector value={floor} onChange={setFloor}\n  floors={[{ value: 'B1', label: 'B1' }, { value: '1F', label: '1F' }, { value: '2F', label: '2F' }]} />"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-background-elevated-normal",
+    "--color-semantic-label-neutral",
+    "--color-semantic-line-normal-normal",
+    "--color-semantic-primary-normal",
+    "--color-semantic-static-white",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--label1-size",
+    "--radius-md",
+    "--radius-sm",
+    "--shadow-sm"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ViewerFloorSelector.stories.jsx",
+    "entryStoryId": "lds-product-viewer-floor-selector--floor-selection",
+    "publicStories": [
+      {
+        "id": "lds-product-viewer-floor-selector--floor-selection",
+        "name": "개요",
+        "role": "overview"
+      }
+    ],
+    "hiddenEvidence": 2
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "omitted-no-evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "omitted-no-evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

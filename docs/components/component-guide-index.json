@@ -412,6 +412,34 @@
     "slug": "product-data-visualization-sparkline"
   },
   {
+    "storybookTitle": "LDS Product/Editor/Canvas Shell",
+    "slug": "product-editor-canvas-shell"
+  },
+  {
+    "storybookTitle": "LDS Product/Editor/Command Bar",
+    "slug": "product-editor-command-bar"
+  },
+  {
+    "storybookTitle": "LDS Product/Editor/Editor Toolbar",
+    "slug": "product-editor-editor-toolbar"
+  },
+  {
+    "storybookTitle": "LDS Product/Editor/History Toolbar",
+    "slug": "product-editor-history-toolbar"
+  },
+  {
+    "storybookTitle": "LDS Product/Editor/Layer Panel",
+    "slug": "product-editor-layer-panel"
+  },
+  {
+    "storybookTitle": "LDS Product/Editor/Selection Inspector",
+    "slug": "product-editor-selection-inspector"
+  },
+  {
+    "storybookTitle": "LDS Product/Editor/Viewport Status Bar",
+    "slug": "product-editor-viewport-status-bar"
+  },
+  {
     "storybookTitle": "LDS Product/Feedback/Rating",
     "slug": "product-feedback-rating"
   },
@@ -588,12 +616,56 @@
     "slug": "product-selection-and-input-wheel-picker"
   },
   {
+    "storybookTitle": "LDS Product/Status/Battery Gauge",
+    "slug": "product-status-battery-gauge"
+  },
+  {
+    "storybookTitle": "LDS Product/Status/Connection Badge",
+    "slug": "product-status-connection-badge"
+  },
+  {
+    "storybookTitle": "LDS Product/Status/Equipment State",
+    "slug": "product-status-equipment-state"
+  },
+  {
     "storybookTitle": "LDS Product/Status/Meter",
     "slug": "product-status-meter"
   },
   {
     "storybookTitle": "LDS Product/Status/Progress",
     "slug": "product-status-progress"
+  },
+  {
+    "storybookTitle": "LDS Product/Status/Telemetry Gauge",
+    "slug": "product-status-telemetry-gauge"
+  },
+  {
+    "storybookTitle": "LDS Product/Status/Telemetry Value",
+    "slug": "product-status-telemetry-value"
+  },
+  {
+    "storybookTitle": "LDS Product/Viewer/2D Map",
+    "slug": "product-viewer-2-d-map"
+  },
+  {
+    "storybookTitle": "LDS Product/Viewer/3D Scene",
+    "slug": "product-viewer-3-d-scene"
+  },
+  {
+    "storybookTitle": "LDS Product/Viewer/Floor Selector",
+    "slug": "product-viewer-floor-selector"
+  },
+  {
+    "storybookTitle": "LDS Product/Viewer/Toolbar",
+    "slug": "product-viewer-toolbar"
+  },
+  {
+    "storybookTitle": "LDS Product/Viewer/Video Stream",
+    "slug": "product-viewer-video-stream"
+  },
+  {
+    "storybookTitle": "LDS Product/Viewer/Viewer Frame",
+    "slug": "product-viewer-viewer-frame"
   },
   {
     "storybookTitle": "LDS Theme/Brand/LK ROBOTICS Logo",

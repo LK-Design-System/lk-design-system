@@ -4,6 +4,7 @@ import { cp, mkdtemp, readFile, readdir, rm, stat, writeFile } from 'node:fs/pro
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { auditStorybookMastheadCopy } from './storybook-masthead-copy.mjs';
 
 const cliDirectory = path.dirname(fileURLToPath(import.meta.url));
 const packageDirectory = path.resolve(cliDirectory, '..');
@@ -127,9 +128,11 @@ function validateContractShape(contract, profileName) {
     && contract?.kind === 'lds-cross-repository-style-contract'
     && Array.isArray(contract?.lds?.packages)
     && contract.lds.packages.length > 0
+    && typeof contract?.lds?.storybookMastheadCopy === 'string'
     && typeof profile?.repository === 'string'
     && typeof profile?.externalSurface === 'string'
     && typeof profile?.configFile === 'string'
+    && Array.isArray(profile?.policyContracts)
     && Array.isArray(profile?.packageDependencies)
     && profile.packageDependencies.length > 0
     && Array.isArray(profile?.scanRoots)
@@ -139,6 +142,7 @@ function validateContractShape(contract, profileName) {
     && typeof profile?.storybookPreview === 'string'
     && Array.isArray(profile?.localTokenDefinitions?.names)
     && Array.isArray(profile?.runtimeCustomProperties)
+    && Array.isArray(profile?.inheritedRuntimeCustomProperties)
     && Array.isArray(profile?.rawColorPolicy?.forbiddenFormats)
     && Array.isArray(profile?.rawColorPolicy?.allowedZones)
     && validStories;
@@ -169,10 +173,40 @@ function validateSurfaceShape(surface) {
     || !surface?.package?.name
     || !Array.isArray(surface?.upstreamTokenDependencies)
     || !Array.isArray(surface?.localTokenDefinitions)
+    || !Array.isArray(surface?.inheritedRuntimeCustomProperties)
     || !Array.isArray(surface?.entries)) {
     throw new Error('Robotics external surface does not match the supported v2 shape.');
   }
   return surface;
+}
+
+function validatePolicyContractShape(policy, profileName) {
+  const validEvidence = Array.isArray(policy?.evidence)
+    && policy.evidence.length > 0
+    && policy.evidence.every((entry) =>
+      ['lds', 'consumer'].includes(entry?.root)
+      && typeof entry?.file === 'string'
+      && Array.isArray(entry?.contains)
+      && entry.contains.length > 0
+      && entry.contains.every((value) => typeof value === 'string' && value.length > 0)
+      && (entry.excludes == null
+        || (Array.isArray(entry.excludes)
+          && entry.excludes.every((value) => typeof value === 'string' && value.length > 0))));
+  const validDecision = policy?.decision?.maxVisibleBadges === 1
+    && policy?.decision?.visualStyle === 'solid'
+    && policy?.decision?.placement === 'attached-top-right'
+    && policy?.decision?.accessibleStateRetention === 'all-raw-states'
+    && policy?.decision?.renderers
+    && Object.keys(policy.decision.renderers).length > 0;
+  if (policy?.schemaVersion !== 1
+    || policy?.kind !== 'lds-consumer-policy-contract'
+    || policy?.profile !== profileName
+    || typeof policy?.authority !== 'string'
+    || !validDecision
+    || !validEvidence) {
+    throw new Error(`Policy contract does not match the supported v1 shape for ${profileName}.`);
+  }
+  return policy;
 }
 
 function validateLds3dSurfaceShape(surface) {
@@ -226,6 +260,50 @@ async function runRoboticsCheck(options) {
     const config = await readJson(configPath);
     if (config.profile !== options.profile || config.contractVersion !== contract.schemaVersion || config.repository !== profile.repository) {
       diagnostics.push(diagnostic('CONFIG_INVALID', profile.configFile, 'Profile, repository, or contract version does not match the LDS contract.'));
+    }
+  }
+
+  for (const policyContractFile of profile.policyContracts) {
+    const policyPath = path.join(ldsRoot, policyContractFile);
+    if (!await exists(policyPath)) {
+      diagnostics.push(diagnostic('POLICY_CONTRACT_DRIFT', policyContractFile, 'LDS policy contract is missing.'));
+      continue;
+    }
+    let policy;
+    try {
+      policy = validatePolicyContractShape(await readJson(policyPath), options.profile);
+    } catch (error) {
+      diagnostics.push(diagnostic('POLICY_CONTRACT_DRIFT', policyContractFile, error.message));
+      continue;
+    }
+    for (const evidence of policy.evidence) {
+      const evidenceRoot = evidence.root === 'lds' ? ldsRoot : root;
+      const evidencePath = path.join(evidenceRoot, evidence.file);
+      if (!await exists(evidencePath)) {
+        diagnostics.push(diagnostic('POLICY_CONTRACT_DRIFT', evidence.file, `${policy.id} evidence file is missing.`));
+        continue;
+      }
+      const evidenceSource = await readFile(evidencePath, 'utf8');
+      for (const requiredText of evidence.contains) {
+        if (!evidenceSource.includes(requiredText)) {
+          diagnostics.push(diagnostic(
+            'POLICY_CONTRACT_DRIFT',
+            evidence.file,
+            `${policy.id} is missing required evidence: ${requiredText}`,
+          ));
+        }
+      }
+      for (const forbiddenText of evidence.excludes || []) {
+        const index = evidenceSource.indexOf(forbiddenText);
+        if (index !== -1) {
+          diagnostics.push(diagnostic(
+            'POLICY_CONTRACT_DRIFT',
+            evidence.file,
+            `${policy.id} contains superseded policy text: ${forbiddenText}`,
+            lineAt(evidenceSource, index),
+          ));
+        }
+      }
     }
   }
 
@@ -293,8 +371,17 @@ async function runRoboticsCheck(options) {
     references.push(...referencesIn(source, relativeFile));
   }
 
+  const mastheadCopy = await auditStorybookMastheadCopy({
+    root,
+    contractPath: path.join(ldsRoot, contract.lds.storybookMastheadCopy),
+  });
+  diagnostics.push(...mastheadCopy.findings.map((finding) =>
+    diagnostic(finding.code, finding.file, finding.message, finding.line)
+  ));
+
   const localNames = new Set(profile.localTokenDefinitions.names);
   const runtimeByName = new Map(profile.runtimeCustomProperties.map((entry) => [entry.name, entry]));
+  const inheritedRuntimeByName = new Map(profile.inheritedRuntimeCustomProperties.map((entry) => [entry.name, entry]));
   const definitionMap = new Map();
   for (const definition of definitions) {
     if (!definitionMap.has(definition.name)) definitionMap.set(definition.name, []);
@@ -310,6 +397,15 @@ async function runRoboticsCheck(options) {
       if (definition.file !== runtime.definitionFile) {
         diagnostics.push(diagnostic('RUNTIME_PROPERTY_LOCATION', definition.file, `${definition.name} must be defined only in ${runtime.definitionFile}.`, definition.line));
       }
+      continue;
+    }
+    if (inheritedRuntimeByName.has(definition.name)) {
+      diagnostics.push(diagnostic(
+        'INHERITED_RUNTIME_REDEFINITION',
+        definition.file,
+        `${definition.name} is provided by ${inheritedRuntimeByName.get(definition.name).package} and cannot be redefined in Robotics.`,
+        definition.line,
+      ));
       continue;
     }
     if (contract.lds.ownedTokenPrefixes.some((prefix) => definition.name.startsWith(prefix))) {
@@ -343,6 +439,38 @@ async function runRoboticsCheck(options) {
     }
   }
 
+  const declaredDependencyNames = new Set(profile.packageDependencies.map((entry) => entry.name));
+  for (const [name, inherited] of inheritedRuntimeByName) {
+    if (!declaredDependencyNames.has(inherited.package)) {
+      diagnostics.push(diagnostic(
+        'INHERITED_RUNTIME_SOURCE',
+        inherited.definitionFile,
+        `${name} names ${inherited.package}, but that package is not a declared Robotics dependency.`,
+      ));
+      continue;
+    }
+    const inheritedDefinitionPath = path.join(ldsRoot, inherited.definitionFile);
+    if (!await exists(inheritedDefinitionPath)) {
+      diagnostics.push(diagnostic(
+        'INHERITED_RUNTIME_SOURCE',
+        inherited.definitionFile,
+        `${name} provider source is missing.`,
+      ));
+      continue;
+    }
+    const inheritedDefinitions = definitionsIn(
+      await readFile(inheritedDefinitionPath, 'utf8'),
+      slash(path.relative(ldsRoot, inheritedDefinitionPath)),
+    ).filter((entry) => entry.name === name);
+    if (inheritedDefinitions.length !== 1) {
+      diagnostics.push(diagnostic(
+        'INHERITED_RUNTIME_SOURCE',
+        inherited.definitionFile,
+        `${name} must have exactly one definition in its declared provider source.`,
+      ));
+    }
+  }
+
   const mirrorPath = path.join(ldsRoot, profile.localTokenDefinitions.compatibilityMirror);
   if (!await exists(mirrorPath)) {
     diagnostics.push(diagnostic('TOKEN_MIRROR_DRIFT', profile.localTokenDefinitions.compatibilityMirror, 'LDS compatibility token mirror is missing.'));
@@ -357,7 +485,12 @@ async function runRoboticsCheck(options) {
     }
   }
 
-  const knownProperties = new Set([...ldsDefinitions.keys(), ...localNames, ...runtimeByName.keys()]);
+  const knownProperties = new Set([
+    ...ldsDefinitions.keys(),
+    ...localNames,
+    ...runtimeByName.keys(),
+    ...inheritedRuntimeByName.keys(),
+  ]);
   for (const reference of references) {
     if (!knownProperties.has(reference.name)) {
       diagnostics.push(diagnostic('UNDEFINED_CUSTOM_PROPERTY', reference.file, `${reference.name} is neither provided by LDS nor declared locally.`, reference.line));
@@ -405,6 +538,9 @@ async function runRoboticsCheck(options) {
   }
   if (JSON.stringify([...surface.localTokenDefinitions].sort()) !== JSON.stringify([...localNames].sort())) {
     diagnostics.push(diagnostic('PUBLIC_SURFACE_MISMATCH', slash(path.relative(ldsRoot, surfacePath)), 'External-surface local token list does not match the style contract.'));
+  }
+  if (JSON.stringify([...surface.inheritedRuntimeCustomProperties].sort()) !== JSON.stringify([...inheritedRuntimeByName.keys()].sort())) {
+    diagnostics.push(diagnostic('PUBLIC_SURFACE_MISMATCH', slash(path.relative(ldsRoot, surfacePath)), 'External-surface inherited runtime property list does not match the style contract.'));
   }
   for (const name of surface.upstreamTokenDependencies) {
     if (!ldsDefinitions.has(name)) diagnostics.push(diagnostic('UNDEFINED_CUSTOM_PROPERTY', slash(path.relative(ldsRoot, surfacePath)), `External-surface upstream token ${name} is not defined by LDS.`));

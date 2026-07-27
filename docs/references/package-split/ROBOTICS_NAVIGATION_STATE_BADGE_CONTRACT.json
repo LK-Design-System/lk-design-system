@@ -1,0 +1,76 @@
+{
+  "$schema": "./ROBOTICS_POLICY_CONTRACT.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-consumer-policy-contract",
+  "id": "robotics-navigation-marker-state-badge",
+  "profile": "robotics-ui",
+  "authority": "docs/NAVIGATION_EXPRESSION_CONVENTIONS.md",
+  "owner": "LDS design system owner · Robotics domain engineering",
+  "decision": {
+    "maxVisibleBadges": 1,
+    "visualStyle": "solid",
+    "placement": "attached-top-right",
+    "accessibleStateRetention": "all-raw-states",
+    "renderers": {
+      "WaypointMarker": {
+        "bodyChannel": "availability",
+        "badgePriority": ["invalid", "stale"]
+      },
+      "FacilityTransition": {
+        "bodyChannel": "availability",
+        "badgePriority": ["invalid", "stale", "unknown"]
+      }
+    }
+  },
+  "evidence": [
+    {
+      "root": "lds",
+      "file": "docs/NAVIGATION_EXPRESSION_CONVENTIONS.md",
+      "contains": [
+        "최대 한 개의 우선순위 solid 배지",
+        "Waypoint는 `invalid > stale`, FacilityTransition은 `invalid > stale > unknown`",
+        "접근성 이름과 상세 데이터에는 모든 원시 상태를 유지"
+      ],
+      "excludes": ["offset 스택"]
+    },
+    {
+      "root": "consumer",
+      "file": "docs/NAVIGATION_EXPRESSION_CONVENTIONS.md",
+      "contains": [
+        "at most one prioritized solid badge",
+        "Waypoint uses `invalid > stale`; FacilityTransition",
+        "preserves every raw state.",
+        "main LDS Navigation expression convention"
+      ],
+      "excludes": ["offset stack"]
+    },
+    {
+      "root": "consumer",
+      "file": "src/components/robotics/WaypointMarker.jsx",
+      "contains": [
+        "const statusBadgeKind = invalid",
+        "data-waypoint-status-badge-style=\"solid\"",
+        "without growing a badge stack"
+      ]
+    },
+    {
+      "root": "consumer",
+      "file": "src/components/robotics/FacilityTransition.jsx",
+      "contains": [
+        "const stateBadge = invalid",
+        "transition.availability === 'unknown'",
+        "data-transition-status-badge-style=\"solid\"",
+        "one attached solid status badge"
+      ]
+    },
+    {
+      "root": "consumer",
+      "file": "stories/RoboticsFoundationStateBadge.stories.jsx",
+      "contains": [
+        "querySelectorAll('[data-waypoint-status-badge]').length !== 1",
+        "Facility marker must resolve invalid > stale > unknown into one solid badge.",
+        "compound waypoint accessible name is missing"
+      ]
+    }
+  ]
+}

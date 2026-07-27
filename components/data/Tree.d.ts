@@ -5,13 +5,24 @@ export interface TreeNodeData {
   id?: string | number;
   label: React.ReactNode;
   icon?: React.ReactNode;
+  description?: React.ReactNode;
+  meta?: React.ReactNode;
+  /** Optional row-end control or status. Keep nested controls out of the Tab sequence. */
+  end?: React.ReactNode;
+  disabled?: boolean;
+  /** Custom accessible row name when visible content is not sufficient. */
+  ariaLabel?: string;
   children?: TreeNodeData[];
 }
 
 export interface TreeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> {
   nodes: TreeNodeData[];
+  /** Controlled IDs of expanded branches. */
+  expandedIds?: Array<string | number>;
   /** Node IDs, or primitive labels for legacy nodes without an ID, expanded initially. */
   defaultExpanded?: Array<string | number>;
+  /** Called with normalized IDs/legacy primitive labels after expansion changes. */
+  onExpandedIdsChange?: (expandedIds: string[]) => void;
   /** Controlled ID of the single selected node. IDs are normalized to strings. */
   selectedId?: string | number | null;
   /** Initial ID of the single selected node when uncontrolled. IDs are normalized to strings. */

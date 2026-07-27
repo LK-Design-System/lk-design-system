@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "e6b4a5a1e8449c14ef9ca39ced5a3fe7955b6d7ab8a7e6ee07b4abd99db37295",
+    "storybookIndexSha256": "3563cd94c665a34564653b003db53bfcdfd16b2e724a239a345735c09e374ebd",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -61,31 +61,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 169,
-    "stories": 541,
-    "publicStories": 386,
-    "hiddenStories": 155,
-    "componentDescriptions": 165,
-    "pagesWithVisibleCanvasIntroduction": 165,
-    "pagesWithDecisionGuidance": 157,
-    "describedPublicStories": 385,
-    "reviewedPages": 168,
-    "reviewedStories": 532,
-    "staleReviewedPages": 52,
+    "pages": 187,
+    "stories": 617,
+    "publicStories": 447,
+    "hiddenStories": 170,
+    "componentDescriptions": 183,
+    "pagesWithVisibleCanvasIntroduction": 183,
+    "pagesWithDecisionGuidance": 175,
+    "describedPublicStories": 446,
+    "reviewedPages": 186,
+    "reviewedStories": 608,
+    "staleReviewedPages": 55,
     "recommendedVisibilityChanges": 1,
     "roles": {
       "foundation-reference": 19,
-      "overview": 153,
-      "usage": 28,
-      "variants-states": 77,
-      "interaction": 47,
-      "responsive": 49,
-      "scenario": 16,
-      "visual-parity": 80,
-      "internal-contract": 72
+      "overview": 171,
+      "usage": 30,
+      "variants-states": 95,
+      "interaction": 52,
+      "responsive": 62,
+      "scenario": 21,
+      "visual-parity": 88,
+      "internal-contract": 79
     },
     "dispositions": {
-      "keep": 169,
+      "keep": 187,
       "merge": 0,
       "split": 0,
       "hide": 0
@@ -106,11 +106,11 @@
         "guideReadyPages": 12
       },
       "Product": {
-        "pages": 94,
-        "stories": 330,
-        "public": 257,
-        "hidden": 73,
-        "guideReadyPages": 94
+        "pages": 112,
+        "stories": 406,
+        "public": 318,
+        "hidden": 88,
+        "guideReadyPages": 112
       },
       "Theme": {
         "pages": 3,
@@ -2707,7 +2707,7 @@
       "layer": "Core",
       "family": "Navigation",
       "importPath": "./stories/NavigationCategory.stories.jsx",
-      "sourceSha256": "9ad25327c2f1c0cd9b14ae9ca805790911ece166084cbd41f3d98bec5ca3bf38",
+      "sourceSha256": "42a8bc2efffaf420de26e9755bf41db14f8d225a367c67b174397b0d5e4cfb9c",
       "primaryOwner": "Category",
       "ownerComponents": [
         "Category"
@@ -8250,7 +8250,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "329949304e87fb2b9279179c5a61e284f8bb0d119b9c544cf53f802c4f33f048",
+      "sourceSha256": "8f82ebab4da30f6ca7818359a0cb44da507e65ba138b4d41c18aadcad3c342ee",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
@@ -11255,7 +11255,7 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataTree.stories.jsx",
-      "sourceSha256": "807ef7eb741c3ed1722bf8725cc6925d95461b9273aa3a49641a64332fcdd38a",
+      "sourceSha256": "8594c5e03d2d67b9471e5ed247d882bda09632faad36877398a32c9b7e147b06",
       "primaryOwner": "Tree",
       "ownerComponents": [
         "Tree"
@@ -13350,6 +13350,1027 @@
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
+      "title": "LDS Product/Editor/Canvas Shell",
+      "layer": "Product",
+      "family": "Editor",
+      "importPath": "./stories/EditorShell.stories.jsx",
+      "sourceSha256": "89c46764e7d7294fbe325f59162c45a5c6f9405ac4b6328990ba8f03a6768ad4",
+      "primaryOwner": "CanvasEditorShell",
+      "ownerComponents": [
+        "CanvasEditorShell"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 4,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-editor-canvas-shell--basic",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "89c46764e7d7294fbe325f59162c45a5c6f9405ac4b6328990ba8f03a6768ad4",
+      "stories": [
+        {
+          "id": "lds-product-editor-canvas-shell--basic",
+          "name": "개요",
+          "exportName": "Basic",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "CanvasEditorShell"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-canvas-shell--mobile-active-region",
+          "name": "반응형 · 좁은 화면 · 영역 전환",
+          "exportName": "MobileActiveRegion",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "CanvasEditorShell"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-canvas-shell--workspace-regions",
+          "name": "시나리오 · 통합 편집 작업공간",
+          "exportName": "WorkspaceRegions",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "CanvasEditorShell"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-canvas-shell--context-drawer",
+          "name": "시나리오 · 화면 위 속성 패널",
+          "exportName": "ContextDrawer",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "CanvasEditorShell"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-canvas-shell--canvas-editor-shell-editor-toolbar-history-toolbar-card",
+          "name": "CanvasEditorShell · EditorToolbar · HistoryToolbar card parity",
+          "exportName": "CanvasEditorShellEditorToolbarHistoryToolbarCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "CanvasEditorShell"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Editor/Command Bar",
+      "layer": "Product",
+      "family": "Editor",
+      "importPath": "./stories/EditorCommandBar.stories.jsx",
+      "sourceSha256": "3f8bfec4d2f65ab81cfea46f09ed497f65bc9d01d7f8c028f47e318fba8bb886",
+      "primaryOwner": "CanvasEditorCommandBar",
+      "ownerComponents": [
+        "CanvasEditorCommandBar"
+      ],
+      "supportingComponents": [
+        "Button"
+      ],
+      "visibility": {
+        "public": 4,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-editor-command-bar--document-commands",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "3f8bfec4d2f65ab81cfea46f09ed497f65bc9d01d7f8c028f47e318fba8bb886",
+      "stories": [
+        {
+          "id": "lds-product-editor-command-bar--document-commands",
+          "name": "개요",
+          "exportName": "DocumentCommands",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "CanvasEditorCommandBar"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-command-bar--handler-gating",
+          "name": "변형·상태 · 작업 가능 여부",
+          "exportName": "HandlerGating",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "CanvasEditorCommandBar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-command-bar--medium-density",
+          "name": "반응형 · 40px 문서 제어",
+          "exportName": "MediumDensity",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "CanvasEditorCommandBar"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-command-bar--narrow-command-targets",
+          "name": "반응형 · 좁은 폭 · 긴 문서 작업",
+          "exportName": "NarrowCommandTargets",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "CanvasEditorCommandBar"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Editor/Editor Toolbar",
+      "layer": "Product",
+      "family": "Editor",
+      "importPath": "./stories/EditorToolbar.stories.jsx",
+      "sourceSha256": "825f8797a47221bf2ef89d755e16c81b2925275deaa75adff201b4d0b962f6d6",
+      "primaryOwner": "EditorToolbar",
+      "ownerComponents": [
+        "EditorToolbar"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 4,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-editor-editor-toolbar--vertical",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "825f8797a47221bf2ef89d755e16c81b2925275deaa75adff201b4d0b962f6d6",
+      "stories": [
+        {
+          "id": "lds-product-editor-editor-toolbar--vertical",
+          "name": "개요",
+          "exportName": "Vertical",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "EditorToolbar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-editor-toolbar--item-disabled",
+          "name": "변형·상태 · 개별 비활성 · 동적 순서",
+          "exportName": "ItemDisabled",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "EditorToolbar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-editor-toolbar--disabled",
+          "name": "변형·상태 · 전체 비활성",
+          "exportName": "Disabled",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "EditorToolbar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-editor-toolbar--horizontal",
+          "name": "시나리오 · 가로 도구 막대",
+          "exportName": "Horizontal",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "EditorToolbar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Editor/History Toolbar",
+      "layer": "Product",
+      "family": "Editor",
+      "importPath": "./stories/EditorHistoryToolbar.stories.jsx",
+      "sourceSha256": "86cad64e960dea00050faf1b73f6d3dbbdbf7a22b878779b7c652d3d78aa096b",
+      "primaryOwner": "HistoryToolbar",
+      "ownerComponents": [
+        "HistoryToolbar"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 3,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-editor-history-toolbar--available-history",
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "86cad64e960dea00050faf1b73f6d3dbbdbf7a22b878779b7c652d3d78aa096b",
+      "stories": [
+        {
+          "id": "lds-product-editor-history-toolbar--available-history",
+          "name": "개요",
+          "exportName": "AvailableHistory",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "HistoryToolbar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-history-toolbar--missing-handlers",
+          "name": "변형·상태 · 동작 없음 · 비활성",
+          "exportName": "MissingHandlers",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "HistoryToolbar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-history-toolbar--medium-density",
+          "name": "반응형 · 40px 제어",
+          "exportName": "MediumDensity",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "HistoryToolbar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Editor/Layer Panel",
+      "layer": "Product",
+      "family": "Editor",
+      "importPath": "./stories/EditorLayerPanel.stories.jsx",
+      "sourceSha256": "2e3021aa30512296a60baeaef444180d4f0ea129cb4d5d15e13978df02f4b680",
+      "primaryOwner": "LayerPanel",
+      "ownerComponents": [
+        "LayerPanel"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 6,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-editor-layer-panel--interactive",
+        "describedPublicStories": 6,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "2e3021aa30512296a60baeaef444180d4f0ea129cb4d5d15e13978df02f4b680",
+      "stories": [
+        {
+          "id": "lds-product-editor-layer-panel--interactive",
+          "name": "개요",
+          "exportName": "Interactive",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "LayerPanel"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-layer-panel--visible-status-labels",
+          "name": "변형·상태 · 색상과 상태 문자",
+          "exportName": "VisibleStatusLabels",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "LayerPanel"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-layer-panel--disabled",
+          "name": "변형·상태 · 전체 비활성",
+          "exportName": "Disabled",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "LayerPanel"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-layer-panel--empty",
+          "name": "변형·상태 · 항목 없음",
+          "exportName": "Empty",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "LayerPanel"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-layer-panel--controlled-expansion",
+          "name": "상호작용 · 계층 접기와 펼치기",
+          "exportName": "ControlledExpansion",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "LayerPanel"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-layer-panel--mixed-availability",
+          "name": "상호작용 · 첫 행 비활성 · 포커스 이동",
+          "exportName": "MixedAvailability",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "LayerPanel"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Editor/Selection Inspector",
+      "layer": "Product",
+      "family": "Editor",
+      "importPath": "./stories/EditorSelectionInspector.stories.jsx",
+      "sourceSha256": "f7f9ce1cdf631bd85c0a0a3df97e210ebfbb595a452ef85b9cfd687bc010801f",
+      "primaryOwner": "SelectionInspector",
+      "ownerComponents": [
+        "SelectionInspector"
+      ],
+      "supportingComponents": [
+        "Button",
+        "ConfirmDialog"
+      ],
+      "visibility": {
+        "public": 5,
+        "hidden": 2
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-editor-selection-inspector--selected-object",
+        "describedPublicStories": 5,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "f7f9ce1cdf631bd85c0a0a3df97e210ebfbb595a452ef85b9cfd687bc010801f",
+      "stories": [
+        {
+          "id": "lds-product-editor-selection-inspector--selected-object",
+          "name": "개요",
+          "exportName": "SelectedObject",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SelectionInspector"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-selection-inspector--mixed-selection",
+          "name": "사용법 · 다중 선택 공통 속성",
+          "exportName": "MixedSelection",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SelectionInspector"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-selection-inspector--empty-selection",
+          "name": "변형·상태 · 선택 객체 없음",
+          "exportName": "EmptySelection",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SelectionInspector"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-selection-inspector--unit-formatting-at-320",
+          "name": "반응형 · 320px 단위 결합",
+          "exportName": "UnitFormattingAt320",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SelectionInspector"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-selection-inspector--action-footer",
+          "name": "시나리오 · 선택 객체 작업",
+          "exportName": "ActionFooter",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SelectionInspector"
+          ],
+          "supportingComponents": [
+            "Button",
+            "ConfirmDialog"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-selection-inspector--primitive-values",
+          "name": "0·false·빈 값 보존",
+          "exportName": "PrimitiveValues",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SelectionInspector"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-selection-inspector--section-heading-structure-contract",
+          "name": "섹션 제목 heading 구조 계약",
+          "exportName": "SectionHeadingStructureContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SelectionInspector"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Editor/Viewport Status Bar",
+      "layer": "Product",
+      "family": "Editor",
+      "importPath": "./stories/EditorViewportStatusBar.stories.jsx",
+      "sourceSha256": "674b326c8781001a3bc36307a04e9fc6d4ca114d346c1a641eac1cb234199371",
+      "primaryOwner": "ViewportStatusBar",
+      "ownerComponents": [
+        "ViewportStatusBar"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 4,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-editor-viewport-status-bar--readouts",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "674b326c8781001a3bc36307a04e9fc6d4ca114d346c1a641eac1cb234199371",
+      "stories": [
+        {
+          "id": "lds-product-editor-viewport-status-bar--readouts",
+          "name": "개요",
+          "exportName": "Readouts",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewportStatusBar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-viewport-status-bar--status-tones",
+          "name": "변형·상태 · 의미별 색상",
+          "exportName": "StatusTones",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewportStatusBar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-viewport-status-bar--priority-compression",
+          "name": "반응형 · 좁은 폭 · 정보 우선순위",
+          "exportName": "PriorityCompression",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewportStatusBar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-editor-viewport-status-bar--transient-message",
+          "name": "시나리오 · 일시적 작업 결과",
+          "exportName": "TransientMessage",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewportStatusBar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
     },
     {
       "title": "LDS Product/Feedback/Rating",
@@ -19019,6 +20040,259 @@
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
     },
     {
+      "title": "LDS Product/Status/Battery Gauge",
+      "layer": "Product",
+      "family": "Status",
+      "importPath": "./stories/RoboticsBatteryGauge.stories.jsx",
+      "sourceSha256": "bf8f9347e90fdaebb6cb950eec7c5ef4c2b954e3d3018a3d573a5a1227ac9ba8",
+      "primaryOwner": "BatteryGauge",
+      "ownerComponents": [
+        "BatteryGauge"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-status-battery-gauge--battery-levels",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "bf8f9347e90fdaebb6cb950eec7c5ef4c2b954e3d3018a3d573a5a1227ac9ba8",
+      "stories": [
+        {
+          "id": "lds-product-status-battery-gauge--battery-levels",
+          "name": "개요",
+          "exportName": "BatteryLevels",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "BatteryGauge"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Status/Connection Badge",
+      "layer": "Product",
+      "family": "Status",
+      "importPath": "./stories/RoboticsConnectionBadge.stories.jsx",
+      "sourceSha256": "ce9d4847c0730c61d1f459ba264a2400914bd670c180f782cd3e61c6108f36a3",
+      "primaryOwner": "ConnectionBadge",
+      "ownerComponents": [
+        "ConnectionBadge"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-status-connection-badge--connection-badges",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "ce9d4847c0730c61d1f459ba264a2400914bd670c180f782cd3e61c6108f36a3",
+      "stories": [
+        {
+          "id": "lds-product-status-connection-badge--connection-badges",
+          "name": "개요",
+          "exportName": "ConnectionBadges",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConnectionBadge"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-status-connection-badge--connection-badge-card",
+          "name": "ConnectionBadge card parity",
+          "exportName": "ConnectionBadgeCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConnectionBadge"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Status/Equipment State",
+      "layer": "Product",
+      "family": "Status",
+      "importPath": "./stories/RoboticsEquipment.stories.jsx",
+      "sourceSha256": "afd0747fe0d2c2bcc3ba12fcf6af6acab72d2e383b8296ab8f29908f4e926a26",
+      "primaryOwner": "EquipmentStatusCard",
+      "ownerComponents": [
+        "EquipmentStatusCard"
+      ],
+      "supportingComponents": [
+        "Button",
+        "ConnectionBadge",
+        "Icon"
+      ],
+      "visibility": {
+        "public": 2,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-status-equipment-state--equipment-state",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "f7f0a7eaabbe3550d302dd929afaccfa1264680045a2ab4b3885e465d2c77c82",
+      "stories": [
+        {
+          "id": "lds-product-status-equipment-state--equipment-state",
+          "name": "개요",
+          "exportName": "EquipmentState",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "EquipmentStatusCard"
+          ],
+          "supportingComponents": [
+            "Button",
+            "ConnectionBadge",
+            "Icon"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-status-equipment-state--responsive-hierarchy",
+          "name": "반응형 · 다크 · 긴 콘텐츠",
+          "exportName": "ResponsiveHierarchy",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "EquipmentStatusCard"
+          ],
+          "supportingComponents": [
+            "Button",
+            "ConnectionBadge",
+            "Icon"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-status-equipment-state--equipment-status-card-card",
+          "name": "EquipmentStatusCard card parity",
+          "exportName": "EquipmentStatusCardCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "EquipmentStatusCard"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
       "title": "LDS Product/Status/Meter",
       "layer": "Product",
       "family": "Status",
@@ -19226,6 +20500,1226 @@
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
+      "title": "LDS Product/Status/Telemetry Gauge",
+      "layer": "Product",
+      "family": "Status",
+      "importPath": "./stories/RoboticsTelemetryGauge.stories.jsx",
+      "sourceSha256": "1f75162149473db6c544d931f779be428a5d29967aa7a3871efde35457591282",
+      "primaryOwner": "TelemetryGauge",
+      "ownerComponents": [
+        "TelemetryGauge"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 4,
+        "hidden": 2
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-status-telemetry-gauge--telemetry-overview",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "1f75162149473db6c544d931f779be428a5d29967aa7a3871efde35457591282",
+      "stories": [
+        {
+          "id": "lds-product-status-telemetry-gauge--telemetry-overview",
+          "name": "개요",
+          "exportName": "TelemetryOverview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TelemetryGauge"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-status-telemetry-gauge--severity-states",
+          "name": "변형·상태 · 심각도 색상",
+          "exportName": "SeverityStates",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TelemetryGauge"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-status-telemetry-gauge--unit-formatting-at-320",
+          "name": "반응형 · 320px 단위 결합",
+          "exportName": "UnitFormattingAt320",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TelemetryGauge"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-status-telemetry-gauge--formatting-and-value-text",
+          "name": "시나리오 · 표시 형식과 읽을 수 있는 값",
+          "exportName": "FormattingAndValueText",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TelemetryGauge"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-status-telemetry-gauge--threshold-directions",
+          "name": "임계 방향 호환",
+          "exportName": "ThresholdDirections",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TelemetryGauge"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-status-telemetry-gauge--telemetry-gauge-card",
+          "name": "TelemetryGauge card parity",
+          "exportName": "TelemetryGaugeCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TelemetryGauge"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Status/Telemetry Value",
+      "layer": "Product",
+      "family": "Status",
+      "importPath": "./stories/RoboticsTelemetryValue.stories.jsx",
+      "sourceSha256": "b44fadc3efa9e5cef50b38dafc2318f471b47107c4486e6b2efe898c3b17a7d4",
+      "primaryOwner": "TelemetryValue",
+      "ownerComponents": [
+        "TelemetryValue"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 3,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-status-telemetry-value--compact-readouts",
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "b44fadc3efa9e5cef50b38dafc2318f471b47107c4486e6b2efe898c3b17a7d4",
+      "stories": [
+        {
+          "id": "lds-product-status-telemetry-value--compact-readouts",
+          "name": "개요",
+          "exportName": "CompactReadouts",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TelemetryValue"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-status-telemetry-value--stale-and-metadata",
+          "name": "변형·상태 · 지연 값과 부가 정보",
+          "exportName": "StaleAndMetadata",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TelemetryValue"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-status-telemetry-value--unit-formatting-at-320",
+          "name": "반응형 · 320px 단위 결합",
+          "exportName": "UnitFormattingAt320",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TelemetryValue"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Viewer/2D Map",
+      "layer": "Product",
+      "family": "Viewer",
+      "importPath": "./stories/ViewerMap.stories.jsx",
+      "sourceSha256": "592c404e0940375975e80141fcf93b3fdb4264d62973b80e9e45cf29292f1c29",
+      "primaryOwner": "Map2DCanvas",
+      "ownerComponents": [
+        "Map2DCanvas"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 4,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-viewer-2d-map--map-canvas-overview",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "592c404e0940375975e80141fcf93b3fdb4264d62973b80e9e45cf29292f1c29",
+      "stories": [
+        {
+          "id": "lds-product-viewer-2d-map--map-canvas-overview",
+          "name": "개요",
+          "exportName": "MapCanvasOverview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Map2DCanvas"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-2d-map--origin-and-navigation-states",
+          "name": "변형·상태 · 중앙 원점 · 탐색 비활성",
+          "exportName": "OriginAndNavigationStates",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Map2DCanvas"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-2d-map--keyboard-and-pointer-contract",
+          "name": "상호작용 · 키보드·포인터 줌",
+          "exportName": "KeyboardAndPointerContract",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Map2DCanvas"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-2d-map--narrow-width",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "NarrowWidth",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Map2DCanvas"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-2d-map--map-2-d-canvas-card",
+          "name": "Map2DCanvas card parity",
+          "exportName": "Map2DCanvasCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Map2DCanvas"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Viewer/3D Scene",
+      "layer": "Product",
+      "family": "Viewer",
+      "importPath": "./stories/Viewer3D.stories.jsx",
+      "sourceSha256": "66ad9dd71a0d22d0eddeb08187abeefee838bd97fc8d6900ad912098735dc635",
+      "primaryOwner": "Scene3DFrame",
+      "ownerComponents": [
+        "Scene3DFrame"
+      ],
+      "supportingComponents": [
+        "Icon",
+        "ViewerToolbar",
+        "ViewerToolbarButton"
+      ],
+      "visibility": {
+        "public": 3,
+        "hidden": 2
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-viewer-3d-scene--scene-3-d-overview",
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "66ad9dd71a0d22d0eddeb08187abeefee838bd97fc8d6900ad912098735dc635",
+      "stories": [
+        {
+          "id": "lds-product-viewer-3d-scene--scene-3-d-overview",
+          "name": "개요",
+          "exportName": "Scene3DOverview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Scene3DFrame"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-3d-scene--appearance-variants",
+          "name": "변형·상태 · 밝은·어두운 외형",
+          "exportName": "AppearanceVariants",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Scene3DFrame"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-3d-scene--narrow-width",
+          "name": "반응형 · 좁은 3D 화면",
+          "exportName": "NarrowWidth",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Scene3DFrame"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-3d-scene--common-state-contract",
+          "name": "3D 상태 계약",
+          "exportName": "CommonStateContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Scene3DFrame"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-3d-scene--scene-3-d-frame-card",
+          "name": "Scene3DFrame card parity",
+          "exportName": "Scene3DFrameCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Scene3DFrame"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Viewer/Floor Selector",
+      "layer": "Product",
+      "family": "Viewer",
+      "importPath": "./stories/ViewerFloorSelector.stories.jsx",
+      "sourceSha256": "f4f7c2cf3fb261d5600f1044cf09cda0d390121001038e3ae41e2673a1f831a4",
+      "primaryOwner": "FloorSelector",
+      "ownerComponents": [
+        "FloorSelector"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 2
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-viewer-floor-selector--floor-selection",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "f4f7c2cf3fb261d5600f1044cf09cda0d390121001038e3ae41e2673a1f831a4",
+      "stories": [
+        {
+          "id": "lds-product-viewer-floor-selector--floor-selection",
+          "name": "개요",
+          "exportName": "FloorSelection",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "FloorSelector"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-floor-selector--radio-group-keyboard-contract",
+          "name": "상호작용 · 라디오 그룹 키보드 계약",
+          "exportName": "RadioGroupKeyboardContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "FloorSelector"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-floor-selector--string-floors",
+          "name": "문자열 층 목록",
+          "exportName": "StringFloors",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "FloorSelector"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Viewer/Toolbar",
+      "layer": "Product",
+      "family": "Viewer",
+      "importPath": "./stories/ViewerToolbar.stories.jsx",
+      "sourceSha256": "cb5ee8e1aa00e5b68e7148dfa0dec080f97986889fcc620dca1ba15b431f7c29",
+      "primaryOwner": "ViewerToolbar",
+      "ownerComponents": [
+        "ViewerToolbar"
+      ],
+      "supportingComponents": [
+        "Icon",
+        "Popover",
+        "Switch",
+        "ViewerToolbarButton"
+      ],
+      "visibility": {
+        "public": 3,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-viewer-toolbar--viewer-toolbar-overview",
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "cb5ee8e1aa00e5b68e7148dfa0dec080f97986889fcc620dca1ba15b431f7c29",
+      "stories": [
+        {
+          "id": "lds-product-viewer-toolbar--viewer-toolbar-overview",
+          "name": "개요",
+          "exportName": "ViewerToolbarOverview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewerToolbar"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "Popover",
+            "Switch",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-toolbar--appearance-and-disabled-states",
+          "name": "변형·상태 · 최소·표면·어두운 배경·비활성",
+          "exportName": "AppearanceAndDisabledStates",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewerToolbar"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-toolbar--roving-focus-and-toggle-contract",
+          "name": "상호작용 · 키보드 탐색과 토글",
+          "exportName": "RovingFocusAndToggleContract",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewerToolbar"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-toolbar--viewer-toolbar-card",
+          "name": "ViewerToolbar card parity",
+          "exportName": "ViewerToolbarCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewerToolbar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Viewer/Video Stream",
+      "layer": "Product",
+      "family": "Viewer",
+      "importPath": "./stories/ViewerVideo.stories.jsx",
+      "sourceSha256": "473dcadda31aa33b0f54dd1a417fb46e7a45af4a662b3b0bf65523e44e17e471",
+      "primaryOwner": "VideoStreamTile",
+      "ownerComponents": [
+        "VideoStreamTile"
+      ],
+      "supportingComponents": [
+        "Button",
+        "Icon",
+        "ViewerToolbar",
+        "ViewerToolbarButton"
+      ],
+      "visibility": {
+        "public": 4,
+        "hidden": 2
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-viewer-video-stream--video-stream-overview",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "473dcadda31aa33b0f54dd1a417fb46e7a45af4a662b3b0bf65523e44e17e471",
+      "stories": [
+        {
+          "id": "lds-product-viewer-video-stream--video-stream-overview",
+          "name": "개요",
+          "exportName": "VideoStreamOverview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VideoStreamTile"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-video-stream--recovery-action",
+          "name": "변형·상태 · 신호 없음 · 다시 연결",
+          "exportName": "RecoveryAction",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VideoStreamTile"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-video-stream--dark-theme",
+          "name": "변형·상태 · 어두운 배경",
+          "exportName": "DarkTheme",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VideoStreamTile"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-video-stream--narrow-width",
+          "name": "반응형 · 좁은 폭",
+          "exportName": "NarrowWidth",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VideoStreamTile"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-video-stream--common-state-contract",
+          "name": "영상 상태 계약",
+          "exportName": "CommonStateContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VideoStreamTile"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-video-stream--video-stream-tile-card",
+          "name": "VideoStreamTile card parity",
+          "exportName": "VideoStreamTileCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VideoStreamTile"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+    },
+    {
+      "title": "LDS Product/Viewer/Viewer Frame",
+      "layer": "Product",
+      "family": "Viewer",
+      "importPath": "./stories/ViewerFrame.stories.jsx",
+      "sourceSha256": "596f461081b85eb4de61b873d4c1e3ba65e279ce994ad567512b0a9d111768b2",
+      "primaryOwner": "ViewerFrame",
+      "ownerComponents": [
+        "ViewerFrame"
+      ],
+      "supportingComponents": [
+        "Button",
+        "Icon",
+        "ViewerToolbar",
+        "ViewerToolbarButton"
+      ],
+      "visibility": {
+        "public": 5,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-viewer-shared-viewer-frame--state-placement",
+        "describedPublicStories": 5,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-27",
+      "reviewedSourceSha256": "596f461081b85eb4de61b873d4c1e3ba65e279ce994ad567512b0a9d111768b2",
+      "stories": [
+        {
+          "id": "lds-product-viewer-shared-viewer-frame--state-placement",
+          "name": "개요",
+          "exportName": "StatePlacement",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewerFrame"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-shared-viewer-frame--light-map-frame",
+          "name": "변형·상태 · 밝은 지도 외형",
+          "exportName": "LightMapFrame",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewerFrame"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-shared-viewer-frame--live-and-blocking-states",
+          "name": "변형·상태 · 실시간·연결 손실·표시 오류",
+          "exportName": "LiveAndBlockingStates",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewerFrame"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-shared-viewer-frame--blocking-focus-transition",
+          "name": "상호작용 · 차단 전환 · 포커스 복구",
+          "exportName": "BlockingFocusTransition",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewerFrame"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-shared-viewer-frame--narrow-blocking-state",
+          "name": "반응형 · 좁은 폭 · 차단 정보와 복구",
+          "exportName": "NarrowBlockingState",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ViewerFrame"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        }
+      ],
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
     },
     {
       "title": "LDS Theme/Brand/LK ROBOTICS Logo",

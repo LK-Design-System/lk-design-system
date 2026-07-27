@@ -1,5 +1,5 @@
 import React from 'react';
-import { LK_D, ROBO_D, ROBO_INLINE, LK_LOGO_VIEWBOX as VIEWBOX } from './lk-logo-paths.js';
+import { LK_D, ROBO_D, ROBO_INLINE, LK_LOGO_VIEWBOX as VIEWBOX } from '@lk-robotics/lds-core/components/brand/lk-logo-paths';
 
 /**
  * LK ROBOTICS — Lockup

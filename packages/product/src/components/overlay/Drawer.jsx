@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { useDialogFocus } from './dialog-focus.js';
+import { useDialogFocus } from '@lk-robotics/lds-core/components/overlay/dialog-focus';
 
 /**
  * LDS Product Extension — Drawer

@@ -415,6 +415,10 @@ async function main() {
   ownershipFailures.push(...publicEntryFailures);
   for (const entry of externalRoboticsExports) {
     for (const name of entry.exports) {
+      const classifications = classifiedExports.get(name) || [];
+      if (classifications.length === 1 && classifications[0].ownerLayer !== 'robotics') {
+        continue;
+      }
       publicExports.push({
         name,
         source: entry.source,

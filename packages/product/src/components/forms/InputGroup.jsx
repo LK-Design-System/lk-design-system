@@ -6,7 +6,7 @@ import {
   fieldBorderColor,
   mergeIds,
   useFieldMetadata,
-} from './field-shared.js';
+} from '@lk-robotics/lds-core/components/forms/field-shared';
 
 /** Text input flanked by non-editable prefix or suffix addons. */
 export function InputGroup({

@@ -1,0 +1,315 @@
+{
+  "slug": "product-editor-layer-panel",
+  "title": "Layer Panel",
+  "storybookTitle": "LDS Product/Editor/Layer Panel",
+  "layer": "Product",
+  "family": "Editor",
+  "primaryOwner": "LayerPanel",
+  "ownerComponents": [
+    "LayerPanel"
+  ],
+  "supportingComponents": [],
+  "purpose": "운영자가 중첩된 지도·경로·로봇 레이어를 탐색하며 선택과 가용성을 제어할 때 적합합니다. 계층이 없는 단순 옵션이나 일회성 필터에는 Layer Panel 대신 List 또는 Checkbox Group을 사용하세요.",
+  "useWhen": [
+    "LayerPanel — reusable scene/layer hierarchy for LK Robotics editor shells."
+  ],
+  "avoidWhen": [
+    "Visibility and lock follow the same controlled/uncontrolled pattern: visibleLayerIds/defaultVisibleLayerIds and lockedLayerIds/defaultLockedLayerIds."
+  ],
+  "anatomy": [],
+  "properties": [
+    {
+      "name": "layers",
+      "type": "LayerPanelLayer[]",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "activeLayerId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "defaultActiveLayerId",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "onActiveLayerChange",
+      "type": "(id: string) = void",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "visibleLayerIds",
+      "type": "string[]",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "defaultVisibleLayerIds",
+      "type": "string[]",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "onVisibleLayerIdsChange",
+      "type": "(ids: string[], changedId: string, visible: boolean) = void",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "lockedLayerIds",
+      "type": "string[]",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "defaultLockedLayerIds",
+      "type": "string[]",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "onLockedLayerIdsChange",
+      "type": "(ids: string[], changedId: string, locked: boolean) = void",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "expandedLayerIds",
+      "type": "string[]",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "defaultExpandedLayerIds",
+      "type": "string[]",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "onExpandedLayerIdsChange",
+      "type": "(ids: string[], changedId: string, expanded: boolean) = void",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "title",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "LayerPanelProps"
+    }
+  ],
+  "states": [],
+  "behavior": [
+    "Figma: View layers and assets in the Layers panel established the left-side hierarchical layer model, shared canvas/layer selection, visibility/lock actions, and collapsible groups."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "The trailing row-meta slot carries exactly one of two meanings: a child/item count (number) or a short permission/status word (e.g. 참조, 편집 가능). Do not put arbitrary copy, timestamps, or actions there — the slot narrows away under 260px container width."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "WCAG 2.2: Dragging Movements supports keeping all required actions available without drag-only interaction; reorder behavior is intentionally omitted from this DS primitive."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "Visual delta decision: LayerPanel stays denser than SelectionInspector because hierarchy rows need scan efficiency, while the inspector needs a stronger selected-object identity block and form sections."
+    },
+    {
+      "subject": "--caption1-line",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    }
+  ],
+  "responsive": [
+    "New data uses neutral / signal / positive / cautionary / negative; warning and danger remain compatibility aliases. This keeps layer markers, inspector status, viewport status, and viewer status on one semantic vocabulary."
+  ],
+  "contentGuidance": [
+    "An empty layers array renders emptyLabel (default 레이어가 없습니다.) as a polite status region instead of the tree. Use it for genuinely empty documents, not for loading states.",
+    "disabled freezes the entire panel: rows stay listed for context but selection, visibility, lock, and expansion changes are all rejected. Prefer per-layer disabled when only part of the hierarchy is off-limits.",
+    "tone is a decorative semantic-color marker unless paired with visible toneLabel or status text. Never communicate status by color alone.",
+    "The panel owns hierarchy interaction, not drag reordering, arbitrary docking, layout persistence, context menus, or product-specific asset loading. Those remain product responsibilities."
+  ],
+  "accessibility": [
+    "activeLayerId is the shared editor selection identifier for a layer/display node. It is not a selected waypoint, crop box, annotation, or other canvas object. Selection may also run uncontrolled via defaultActiveLayerId; with neither prop the first focusable layer starts active.",
+    "title (default 레이어) is the visible panel heading, rendered with the total node count; label (default 레이어 목록) is the tree's accessible name. Keep both meaning the same hierarchy.",
+    "Tree rows use a roving Tab stop. Up/Down move through visible nodes, Home/End move to the boundaries, Right expands or enters a group, Left collapses or returns to the parent, and printable-character typeahead moves focus by label. Enter/Space selects the focused node.",
+    "Focus and selection remain visually distinct: arrow navigation moves focus; Enter/Space or pointer activation changes selection. An externally changed activeLayerId restores the corresponding visible row as the roving Tab stop.",
+    "Visibility and lock are named IconButton actions. From a focused row, F2 enters its two-action mode, Left/Right moves between actions, and Escape returns to the row. Do not assign single-letter V/L shortcuts at the component layer; those collide with editor tools and text entry."
+  ],
+  "exceptions": [
+    "Expansion is controlled with expandedLayerIds or uncontrolled with defaultExpandedLayerIds. With neither prop, groups are expanded unless their layer data sets expanded: false.",
+    "Classification: LK Robotics Extension. Use it only when a workflow has a real hierarchy whose nodes own display, visibility, lock, count, or status state. Selected-object properties belong in SelectionInspector; workflow steps do not belong here."
+  ],
+  "related": [
+    {
+      "component": "CanvasEditorCommandBar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "CanvasEditorShell",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "EditorToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "HistoryToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SelectionInspector",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewportStatusBar",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<LayerPanel\n  layers={[\n    { id: 'map', label: 'Occupancy map', tone: 'neutral', locked: true },\n    {\n      id: 'routes',\n      label: 'Routes',\n      tone: 'positive',\n      toneLabel: 'Ready',\n      children: [{ id: 'route-04', label: 'Route 04' }],\n    },\n  ]}\n  activeLayerId={layerId}\n  expandedLayerIds={expandedIds}\n  onActiveLayerChange={setLayerId}\n  onExpandedLayerIdsChange={setExpandedIds}\n/>"
+    }
+  ],
+  "tokens": [
+    "--caption1-line",
+    "--caption1-size",
+    "--color-semantic-fill-normal",
+    "--color-semantic-focus-indicator",
+    "--color-semantic-label-disable",
+    "--color-semantic-label-neutral",
+    "--color-semantic-label-strong",
+    "--color-semantic-primary-normal",
+    "--color-semantic-status-cautionary",
+    "--color-semantic-status-negative",
+    "--color-semantic-status-positive",
+    "--component-toggle-icon-size-sm",
+    "--control-h-md",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-medium",
+    "--fw-semibold",
+    "--label1-line",
+    "--label1-size",
+    "--label2-line",
+    "--label2-size",
+    "--radius-sm",
+    "--space-0",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/EditorLayerPanel.stories.jsx",
+    "entryStoryId": "lds-product-editor-layer-panel--interactive",
+    "publicStories": [
+      {
+        "id": "lds-product-editor-layer-panel--interactive",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-editor-layer-panel--visible-status-labels",
+        "name": "변형·상태 · 색상과 상태 문자",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-editor-layer-panel--disabled",
+        "name": "변형·상태 · 전체 비활성",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-editor-layer-panel--empty",
+        "name": "변형·상태 · 항목 없음",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-editor-layer-panel--controlled-expansion",
+        "name": "상호작용 · 계층 접기와 펼치기",
+        "role": "interaction"
+      },
+      {
+        "id": "lds-product-editor-layer-panel--mixed-availability",
+        "name": "상호작용 · 첫 행 비활성 · 포커스 이동",
+        "role": "interaction"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "omitted-no-evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

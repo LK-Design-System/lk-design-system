@@ -1,0 +1,206 @@
+{
+  "slug": "product-editor-history-toolbar",
+  "title": "History Toolbar",
+  "storybookTitle": "LDS Product/Editor/History Toolbar",
+  "layer": "Product",
+  "family": "Editor",
+  "primaryOwner": "HistoryToolbar",
+  "ownerComponents": [
+    "HistoryToolbar"
+  ],
+  "supportingComponents": [],
+  "purpose": "운영자가 편집 이력을 되돌리거나 다시 적용하고 문서를 초기화해야 할 때 적합합니다. 일반 탐색 기록이나 서버 버전 목록에는 History Toolbar 대신 별도 History 패턴을 사용하세요.",
+  "useWhen": [
+    "HistoryToolbar - Undo, redo, and optional document-reset controls for editors."
+  ],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "Toolbar accessible name. @default \"편집 이력\""
+    }
+  ],
+  "properties": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Toolbar accessible name. @default \"편집 이력\"",
+      "owner": "HistoryToolbarProps"
+    },
+    {
+      "name": "canUndo",
+      "type": "boolean",
+      "required": false,
+      "description": "실행 취소 가능 여부. 실제 handler가 없으면 항상 비활성입니다. @default false",
+      "owner": "HistoryToolbarProps"
+    },
+    {
+      "name": "canRedo",
+      "type": "boolean",
+      "required": false,
+      "description": "다시 실행 가능 여부. 실제 handler가 없으면 항상 비활성입니다. @default false",
+      "owner": "HistoryToolbarProps"
+    },
+    {
+      "name": "onUndo",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "HistoryToolbarProps"
+    },
+    {
+      "name": "onRedo",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "HistoryToolbarProps"
+    },
+    {
+      "name": "undoKeyShortcuts",
+      "type": "string",
+      "required": false,
+      "description": "Set only when the owning editor implements this undo shortcut globally.",
+      "owner": "HistoryToolbarProps"
+    },
+    {
+      "name": "redoKeyShortcuts",
+      "type": "string",
+      "required": false,
+      "description": "Set only when the owning editor implements this redo shortcut globally.",
+      "owner": "HistoryToolbarProps"
+    },
+    {
+      "name": "onReset",
+      "type": "() = void",
+      "required": false,
+      "description": "함수가 있으면 별도 그룹의 변경사항 초기화 버튼을 표시합니다.",
+      "owner": "HistoryToolbarProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "Shared LDS editor control density. sm=32px, md=40px. @default \"sm\"",
+      "owner": "HistoryToolbarProps"
+    }
+  ],
+  "states": [],
+  "behavior": [
+    "canUndo/canRedo express history state, while a real handler guarantees operability. A missing handler always disables the corresponding command."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "size=\"sm\" uses the 32px LDS IconButton; size=\"md\" uses 40px."
+    },
+    {
+      "subject": "--space-1",
+      "rule": "4px"
+    }
+  ],
+  "responsive": [
+    "This component owns edit history only. View reset belongs in a viewport-local viewer toolbar."
+  ],
+  "contentGuidance": [
+    "Figma: Navigating UI3 supports keeping global edit history in the stable editor chrome while contextual view and selection controls remain local."
+  ],
+  "accessibility": [
+    "Arrow keys, Home, and End move the single roving tab stop. Set undoKeyShortcuts/redoKeyShortcuts only when the owning editor really implements those shortcuts globally; the values are then exposed through aria-keyshortcuts.",
+    "Dynamic availability, focus memory, and Arrow/Home/End behavior use the same private roving-focus engine as EditorToolbar, ViewerToolbar, and CanvasEditorCommandBar; do not reimplement index-based focus state in individual toolbars.",
+    "Consumer onKeyDown and onFocusCapture handlers are composed before the internal roving behavior. Calling preventDefault() intentionally cancels the internal key/focus update without replacing the handler itself.",
+    "label (default 편집 이력) is the toolbar's accessible name; screen-reader users identify the group by it, so override it only with a name that still means edit history. The individual command names (실행 취소, 다시 실행, 변경사항 초기화) are fixed.",
+    "WAI-ARIA APG: Toolbar Pattern supplies the named-toolbar and roving-focus keyboard contract."
+  ],
+  "exceptions": [
+    "Reset is rendered only when onReset is a function and is separated from reversible undo/redo commands."
+  ],
+  "related": [
+    {
+      "component": "CanvasEditorCommandBar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "CanvasEditorShell",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "EditorToolbar",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "LayerPanel",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SelectionInspector",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ViewportStatusBar",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<HistoryToolbar\n  canUndo={undoStack.length > 0}\n  canRedo={redoStack.length > 0}\n  onUndo={undo}\n  onRedo={redo}\n  onReset={resetDocumentChanges}\n  size=\"sm\"\n/>"
+    }
+  ],
+  "tokens": [
+    "--font-sans",
+    "--space-1"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "mapped",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/EditorHistoryToolbar.stories.jsx",
+    "entryStoryId": "lds-product-editor-history-toolbar--available-history",
+    "publicStories": [
+      {
+        "id": "lds-product-editor-history-toolbar--available-history",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-editor-history-toolbar--missing-handlers",
+        "name": "변형·상태 · 동작 없음 · 비활성",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-editor-history-toolbar--medium-density",
+        "name": "반응형 · 40px 제어",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

@@ -7,6 +7,15 @@ const roboticsExternalSurface = JSON.parse(await readFile(
   path.join(root, 'docs', 'references', 'package-split', 'ROBOTICS_EXTERNAL_SURFACE.json'),
   'utf8',
 ));
+const classification = JSON.parse(await readFile(
+  path.join(root, 'docs', 'references', 'wds', 'PUBLIC_EXPORT_CLASSIFICATION.json'),
+  'utf8',
+));
+const productOwnedExports = new Set(
+  (classification.groups ?? [])
+    .filter((group) => group.ownerLayer === 'product')
+    .flatMap((group) => group.exports ?? []),
+);
 const implementationPackages = [
   { id: 'core', layerEntry: 'core', name: '@lk-robotics/lds-core' },
   { id: 'theme', layerEntry: 'theme', name: '@lk-robotics/lds-theme' },
@@ -90,6 +99,9 @@ function readExternalSurface(surface, label) {
     if (typeof entry?.source !== 'string' || !Array.isArray(entry.exports) || entry.exports.length === 0) {
       throw new Error(`${label} has an invalid entry.`);
     }
+    // The Robotics package preserves moved Product paths as compatibility
+    // facades. They are not a second implementation surface.
+    if (entry.exports.every((name) => productOwnedExports.has(name))) continue;
     if (exportsByComponent.has(entry.source)) throw new Error(`${label} duplicates ${entry.source}.`);
     exportsByComponent.set(entry.source, entry.exports.join(', '));
   }

@@ -30,7 +30,7 @@ Navigation 계열(WaypointMarker · FacilityTransition · HazardMarker · LaneOv
 | 핀 기하 | `PIN_PATH` + 그림자(translate 0 0.8, opacity .16) + focus ring(scale 1.34/w 2.5) + selection ring(scale 1.16/w 2) | FacilityTransition.jsx:200, HazardMarker.jsx:57 — **통째 복제** |
 | hit target | 투명 원 + `data-screen-target-size="24"` | 7개 렌더러 |
 | 라벨 halo | `stroke=surface` + `paintOrder="stroke"` + width 4/3/2.5/1.5 | 7개 렌더러 |
-| 상태 배지 원 | r 7 · stroke 1.5 · tone 외곽선 | FacilityTransition, SpatialRegion, WaypointMarker |
+| 상태 배지 원 | 기본 r 7 · semantic solid fill · surface separator stroke 1.5; compact Waypoint는 전용 r 6 | FacilityTransition, SpatialRegion, WaypointMarker |
 
 ### 발견된 drift (원자 부재의 실증)
 
@@ -87,7 +87,7 @@ export const NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
 `stories/RoboticsNavigationEncoding.stories.jsx` · 제목 `LDS Robotics/Navigation/Encoding` — Facility Glyph 카탈로그의 선(線)·상태 버전. 손그림 견본이 아니라 **프로덕션 fragment를 그대로 렌더**해서 문서=회귀가 되게 한다.
 
 - [ ] ① dash 축 카탈로그: 같은 lane/region을 available/unavailable/unknown/invalid/stale로 나란히.
-- [ ] ② 상태 배지 슬롯: unknown·invalid·stale 동시 표기 규칙.
+- [x] ② 상태 배지 슬롯: 점 마커는 `invalid > stale > unknown` 중 렌더러가 지원하는 최우선 상태 하나만 solid 배지로 표시하고, 전체 원시 상태는 접근성 이름에 유지.
 - [ ] ③ 핀 패밀리: waypoint 원점 · facility accent 핀 · hazard severity 핀 비교(형상 공유, 색·글리프 구분).
 - [ ] ④ 라벨 halo 계층: primary/secondary/caption.
 - [ ] ⑤ hit target: play에서 `getBoundingClientRect()`로 24px 계약 측정.
@@ -123,6 +123,8 @@ export const NAV_STATE_BADGE = { radius: 7, strokeWidth: 1.5 };
 
 ## 실행 결과 (2026-07-17)
 
+> 2026-07-27 정책 갱신: 이 절의 당시 다중 badge/ring 기록보다 [`NAVIGATION_EXPRESSION_CONVENTIONS.md`](NAVIGATION_EXPRESSION_CONVENTIONS.md) §2와 기계 계약이 우선한다. 현재 점 마커는 단일 우선순위 solid 배지 슬롯을 사용하며 정확한 오프셋·크기만 Robotics 기하가 소유한다.
+
 세 커밋으로 완료. 공개 API 무변(entry diff 없음).
 
 | Phase | 커밋 | 내용 |
@@ -155,6 +157,8 @@ Phase 3 실제 구조: 원본의 모든 스토리가 route·trajectory를 함께
 | `d33d06c` | `LDS Robotics/Foundation/*` 계층 확립(Core 미러, sidebar 맨 앞). 기존 원자 3개 재배치 + `Encoding`→`Line & State Vocabulary` 오칭 교정(실제로 `_navigationVocabulary` 문서화, `_navigationEncoding` 아님) + 새 원자 페이지 3개(Vector Glyph·Codes·Viewer Tokens, live-from-source + play-test). 원자 페이지 3→6. atom-glyph baseline은 컴포넌트 스토리 기반이라 재배치·신설에 **제로 diff**. |
 | `36c3723` | Vector Glyph를 진짜 공유되는 방향 셰브론(lane·route·trajectory)만으로 좁힘. lane endpoint 화살표는 소비자가 LaneOverlay 하나뿐이라 공용 원자에서 로컬로 환원(over-promotion 취소). |
 | `<pending>` | `Line & State Vocabulary`의 grab-bag을 분해해 공유 마커 몸통 `NAV_PIN`은 **Marker Pin**으로, 잔여 encoding 토큰은 **Navigation Encoding Tokens**로 정리했다. 후속 redesign에서 Route/Trajectory 공용 `NAV_PROGRESS_HEAD` geometry도 이 페이지가 실제 상수에서 렌더한다. |
+
+> 2026-07-27 후속 정리: 위 `Codes` 페이지는 실제 시각 원자가 아니라 내부 직렬화 레지스트리를 칩으로 전시한 것으로 판정해 공개 Storybook에서 제거했다. 역할의 실제 시각 증거는 Waypoint·범례의 벡터 글리프가 소유하고, 코드값 회귀는 Robotics의 `scripts/check-navigation-encoding.mjs`가 담당한다.
 
 ### P2b — Navigation 밖 원자 감사·해소 (완료)
 

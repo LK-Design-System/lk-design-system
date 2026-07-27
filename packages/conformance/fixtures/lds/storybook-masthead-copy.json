@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "kind": "lds-storybook-masthead-copy-contract",
+  "scope": "parameters.storyGuide",
+  "canvasField": "description",
+  "docsDetailField": "docsDescription",
+  "recommendation": {
+    "sentences": 2,
+    "minimumCharacters": 100,
+    "maximumCharacters": 180
+  },
+  "limits": {
+    "maximumCharacters": 240,
+    "maximumSentences": 4,
+    "maximumMeanCharacters": 150,
+    "maximumMedianCharacters": 140,
+    "maximumP90Characters": 180
+  }
+}

@@ -1,4 +1,4 @@
-**Map2DCanvas** — LK Robotics Extension. 점유 격자, 평면도, 경로처럼 2D 공간 콘텐츠를 담는 renderer-independent 팬/줌 viewport shell입니다. 실제 이미지·SVG·canvas·konva 렌더링은 앱이 소유합니다.
+**Map2DCanvas** — LDS Product application pattern. 점유 격자, 평면도, 경로처럼 2D 공간 콘텐츠를 담는 renderer-independent 팬/줌 viewport shell입니다. 실제 이미지·SVG·canvas·konva 렌더링은 앱이 소유합니다.
 
 ```jsx
 <Map2DCanvas
@@ -25,7 +25,7 @@
 - `onFit`을 제공하면 built-in toolbar에 **전체 보기** command가 추가됩니다. bounds 계산은 앱/renderer가 소유하고 callback에서 제어형 viewport를 갱신합니다. `toolbar`를 제공하면 built-in toolbar를 명시적으로 대체합니다.
 - `onWheel`은 pointer-focal zoom에 필요한 non-passive native `WheelEvent` callback입니다. React SyntheticEvent 전용 API를 가정하지 않습니다.
 - `overlay`는 passive visual slot이며 포인터 입력을 받지 않습니다. 별도 조작은 viewport-local toolbar 또는 앱 소유 UI로 구성합니다.
-- 공통 `ViewerFrame`을 합성하므로 `state`, source/HUD, blocking-vs-edge 상태 배치를 그대로 사용합니다. `source` 옆의 passive `badges`, 소수의 필수 readout만 담는 `hud`, 상태 문구·글리프·복구 액션 오버라이드(`stateLabel`, `stateDescription`, `stateIcon`, `stateAction`)는 모두 `ViewerFrame` 계약을 그대로 통과시키는 prop입니다. 지도 전용 loading/error chrome을 별도로 만들지 않습니다.
+- 공통 `ViewerFrame`을 합성하므로 availability/connection/freshness/playback 축과 호환 `state`, source/HUD, blocking-vs-edge 상태 배치를 그대로 사용합니다. `source` 옆의 passive `badges`, 소수의 필수 readout만 담는 `hud`, 상태 문구·글리프·복구 액션 오버라이드(`stateLabel`, `stateDescription`, `stateIcon`, `stateAction`)는 모두 `ViewerFrame` 계약을 그대로 통과시키는 prop입니다. 지도 전용 loading/error chrome을 별도로 만들지 않습니다.
 - `label`(기본 `2D 맵 캔버스`)은 region의 접근 가능한 이름입니다. 한 화면에 viewport가 여럿이면 소스가 드러나는 이름(`1층 점유 지도`)으로 반드시 구분합니다.
 - `appearance="light"`가 기본이지만 `appearance="dark"`도 동일한 공개 계약입니다. 지도 renderer와 overlay는 `--viewer-*` 역할 토큰을 사용해 두 appearance에서 같은 정보·조작 구조를 유지합니다.
 - `variant="embedded"`는 이 캔버스를 다른 표면(Card, 패널 등) 안에 중첩할 때 자체 border·radius를 생략해 부모가 최외곽선을 소유하게 합니다. pan/zoom·toolbar·상태·접근성 역할은 그대로 유지됩니다. 기본값 `standalone`은 자체 외곽선을 그립니다.

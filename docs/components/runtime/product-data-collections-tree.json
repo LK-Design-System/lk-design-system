@@ -32,10 +32,24 @@
       "owner": "TreeProps"
     },
     {
+      "name": "expandedIds",
+      "type": "Array",
+      "required": false,
+      "description": "Controlled IDs of expanded branches.",
+      "owner": "TreeProps"
+    },
+    {
       "name": "defaultExpanded",
       "type": "Array",
       "required": false,
       "description": "Node IDs, or primitive labels for legacy nodes without an ID, expanded initially.",
+      "owner": "TreeProps"
+    },
+    {
+      "name": "onExpandedIdsChange",
+      "type": "(expandedIds: string[]) = void",
+      "required": false,
+      "description": "Called with normalized IDs/legacy primitive labels after expansion changes.",
       "owner": "TreeProps"
     },
     {
@@ -83,8 +97,16 @@
   ],
   "states": [
     {
+      "state": "expandedIds",
+      "rule": "Controlled IDs of expanded branches."
+    },
+    {
       "state": "defaultExpanded",
       "rule": "Node IDs, or primitive labels for legacy nodes without an ID, expanded initially."
+    },
+    {
+      "state": "onExpandedIdsChange",
+      "rule": "Called with normalized IDs/legacy primitive labels after expansion changes."
     },
     {
       "state": "selectedId",
@@ -108,20 +130,20 @@
   ],
   "quantitativeRules": [
     {
+      "subject": "--caption1-size",
+      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+    },
+    {
+      "subject": "--caption2-size",
+      "rule": "11px"
+    },
+    {
       "subject": "--color-semantic-background-normal-alternative",
       "rule": "light: #F7F7F8; dark: #0F0F10"
     },
     {
       "subject": "--color-semantic-focus-indicator",
       "rule": "light: #2F6FB0; dark: #7FB0DE"
-    },
-    {
-      "subject": "--color-semantic-label-alternative",
-      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
-    },
-    {
-      "subject": "--color-semantic-label-normal",
-      "rule": "light: #171718; dark: #F7F7F7"
     }
   ],
   "responsive": [],
@@ -177,9 +199,12 @@
     }
   ],
   "tokens": [
+    "--caption1-size",
+    "--caption2-size",
     "--color-semantic-background-normal-alternative",
     "--color-semantic-focus-indicator",
     "--color-semantic-label-alternative",
+    "--color-semantic-label-neutral",
     "--color-semantic-label-normal",
     "--color-semantic-label-strong",
     "--color-semantic-primary-normal",
