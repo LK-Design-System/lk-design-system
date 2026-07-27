@@ -8,7 +8,8 @@ const designSystems = [
     name: 'LDS Core',
     status: 'Available',
     scope: '공통 토큰, 컴포넌트, 패턴',
-    href: '?path=/docs/lds-core-foundation-design-token--docs',
+    href: 'https://lk-design-system.github.io/',
+    external: true,
     linkLabel: 'LDS Core 열기',
   },
   {
