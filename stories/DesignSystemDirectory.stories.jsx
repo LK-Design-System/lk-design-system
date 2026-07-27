@@ -21,7 +21,10 @@ const designSystems = [
   },
   {
     name: 'LDS 3D',
-    status: 'Planned',
+    status: 'Available',
+    href: 'https://lk-design-system.github.io/lk-design-system-3d/',
+    linkLabel: 'LDS 3D 열기',
+    external: true,
     scope: '3D 도메인 UI',
   },
 ];
@@ -109,15 +112,15 @@ export const Overview = {
   play: async ({ canvasElement }) => {
     const core = canvasElement.querySelector('[data-design-system-row="LDS Core"] a');
     const robotics = canvasElement.querySelector('[data-design-system-row="LDS Robotics"] a');
-    const threeD = canvasElement.querySelector('[data-design-system-row="LDS 3D"]');
+    const threeD = canvasElement.querySelector('[data-design-system-row="LDS 3D"] a');
     if (core?.getAttribute('href') !== designSystems[0].href) {
       throw new Error('The LDS directory must link to the Core Storybook content.');
     }
     if (robotics?.getAttribute('href') !== designSystems[1].href || robotics.getAttribute('target') !== '_blank') {
       throw new Error('The LDS directory must link directly to the public Robotics Storybook.');
     }
-    if (threeD?.querySelector('a') || !threeD?.textContent?.includes('Planned')) {
-      throw new Error('Planned design systems must stay visible without a dead link.');
+    if (threeD?.getAttribute('href') !== designSystems[2].href || threeD.getAttribute('target') !== '_blank') {
+      throw new Error('The LDS directory must link directly to the public 3D Storybook.');
     }
   },
 };
