@@ -163,13 +163,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LK-Design-System/lk-design-system.git"
+    "url": "git+https://github.com/LK-Design-System/lk-design-system.github.io.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/LK-Design-System/lk-design-system/issues"
+    "url": "https://github.com/LK-Design-System/lk-design-system.github.io/issues"
   },
-  "homepage": "https://github.com/LK-Design-System/lk-design-system#readme"
+  "homepage": "https://lk-design-system.github.io/"
 }
