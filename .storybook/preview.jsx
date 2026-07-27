@@ -277,8 +277,8 @@ export const parameters = {
       const titleA = a.title.trim().split(/\s*\/\s*/);
       const titleB = b.title.trim().split(/\s*\/\s*/);
       const groupOrder = {
-        '': ['LDS Core', 'LDS Theme', 'LDS Product'],
-        'LDS Core': ['Robotics', 'Foundation', 'Components', 'Patterns'],
+        '': ['LDS', 'LDS Core', 'LDS Theme', 'LDS Product'],
+        'LDS Core': ['Foundation', 'Components', 'Patterns'],
         'LDS Core/Foundation': [
           'Design Token',
           'Color',
