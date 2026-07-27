@@ -39,8 +39,11 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Build workspace packages
-        run: npm run build:workspaces
+      - name: Generate workspace package sources
+        run: npm run generate:workspace-sources
+
+      - name: Build Storybook workspace dependencies
+        run: node scripts/build-workspace-packages.mjs --implementation-only
 
       - name: Build Storybook
         run: npm run build:storybook
