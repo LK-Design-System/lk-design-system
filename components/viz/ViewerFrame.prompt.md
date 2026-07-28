@@ -43,7 +43,7 @@ Every Viewer preset uses the same `appearance="dark" | "light"` axis. `Scene3DFr
 
 ## Design basis
 
-Classification: **LDS Product application pattern**. Sibling contracts checked: `Map2DCanvas`, `Scene3DFrame`, `VideoStreamTile`, `ViewerToolbar`, `IconButton`, `Spinner`, `StatusBadge`, `CanvasEditorShell`, and `ViewportStatusBar`.
+Classification: **LDS Product application pattern**. Sibling contracts checked: `Map2DCanvas`, `Scene3DFrame`, `VideoStreamTile`, `ViewerToolbar`, `IconButton`, `Spinner`, `StatusIndicator`, `StatusBadge`, `CanvasEditorShell`, and `ViewportStatusBar`.
 
 - [NVIDIA Omniverse viewport controls](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/controls.html) and [viewport navigation](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/navigation.html) influenced the scene-first hierarchy and the small set of viewport-local controls.
 - [Unity default Scene view overlays](https://docs.unity3d.com/Manual/default-overlays-reference.html) influenced edge-attached orientation, navigation, and overlay placement rather than card-within-card chrome.

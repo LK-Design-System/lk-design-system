@@ -2,6 +2,7 @@ import React from 'react';
 import { ActionArea } from '@lk-robotics/lds-core/components/buttons/ActionArea';
 import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
 import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
+import { StatusIndicator } from '@lk-robotics/lds-core/components/content/StatusIndicator';
 import { Tag } from '@lk-robotics/lds-core/components/feedback/Tag';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
 import {
@@ -16,7 +17,6 @@ function displayScalarValue(value, mixed) {
   const normalizedValue = normalizeValueText(value);
   return normalizedValue === '' ? '—' : normalizedValue;
 }
-
 function displayValueNode(value, mixed) {
   if (mixed || value == null || value === '') return '—';
   if (typeof value === 'boolean') return String(value);
@@ -202,7 +202,11 @@ export function SelectionInspector({
             </h3>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', minWidth: 0, flexWrap: 'wrap' }}>
               {item.kind != null && <Tag tone="neutral">{item.kind}</Tag>}
-              {item.status != null && <StatusBadge tone={item.statusTone || 'signal'}>{item.status}</StatusBadge>}
+              {item.status != null && (
+                item.statusPresentation === 'indicator'
+                  ? <StatusIndicator tone={item.statusTone || 'signal'}>{item.status}</StatusIndicator>
+                  : <StatusBadge tone={item.statusTone || 'signal'}>{item.status}</StatusBadge>
+              )}
             </div>
           </div>
         )}

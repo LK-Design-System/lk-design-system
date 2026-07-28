@@ -88,7 +88,7 @@ export const PageStructure = {
       </header>
 
       <main id={MAIN_ID} tabIndex={-1}>
-        <Section surface="band" py="var(--space-10)">
+        <Section surface="band" py="var(--space-10)" container={false}>
           <Container>
             <Stack gap="var(--space-6)">
               <Split template="1.2fr 0.8fr" gap="var(--space-6)">
@@ -153,6 +153,7 @@ export const PageStructure = {
         throw new Error('건너뛰기 링크는 포커스되면 화면에 나타나야 합니다(WCAG 2.4.7).');
       }
     });
+    skip.blur();
   },
 };
 

@@ -5,6 +5,8 @@ export interface SelectionInspectorItem {
   kind?: React.ReactNode;
   status?: React.ReactNode;
   statusTone?: 'positive' | 'online' | 'cautionary' | 'warning' | 'negative' | 'offline' | 'signal' | 'critical';
+  /** Availability, connection, or freshness uses the Core StatusIndicator; lifecycle/results use StatusBadge. @default "badge" */
+  statusPresentation?: 'badge' | 'indicator';
 }
 
 export interface SelectionInspectorField {

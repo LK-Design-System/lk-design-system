@@ -10,14 +10,17 @@
   "upstreamTokenDependencies": [
     "--body1-line",
     "--body1-size",
+    "--body2-line",
     "--body2-size",
     "--border-thin",
     "--caption1-line",
     "--caption1-size",
     "--caption2-size",
+    "--color-semantic-accent-foreground-orange",
     "--color-semantic-background-elevated-normal",
     "--color-semantic-background-normal-alternative",
     "--color-semantic-background-normal-normal",
+    "--color-semantic-data-viz-series-5",
     "--color-semantic-fill-normal",
     "--color-semantic-focus-indicator",
     "--color-semantic-focus-ring",
@@ -54,6 +57,7 @@
     "--radius-lg",
     "--radius-md",
     "--radius-sm",
+    "--radius-4",
     "--shadow-control",
     "--shadow-sm",
     "--space-1",
@@ -97,6 +101,14 @@
     { "source": "components/robotics/ManualControlSession", "exports": ["ManualControlSession"] },
     { "source": "components/robotics/NavigationAnnotationLayer", "exports": ["NavigationAnnotationLayer"] },
     {
+      "source": "components/robotics/NavigationMapGraph",
+      "exports": [
+        "NavigationGraphError",
+        "assertNavigationMapGraph",
+        "validateNavigationMapGraph"
+      ]
+    },
+    {
       "source": "components/robotics/NavigationCoordinateBoundary",
       "exports": [
         "NavigationCoordinateBoundary",
@@ -109,6 +121,7 @@
       "exports": [
         "NAVIGATION_GEOMETRY_SPACE",
         "adaptWorldLaneToLane",
+        "adaptWorldRobotPoseToPose",
         "adaptWorldRouteToRoute",
         "adaptWorldTrajectoryToTrajectory",
         "projectNavigationWorldPoints"

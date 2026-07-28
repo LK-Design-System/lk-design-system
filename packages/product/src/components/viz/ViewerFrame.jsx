@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusIndicator } from '@lk-robotics/lds-core/components/content/StatusIndicator';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
 import { Spinner } from '@lk-robotics/lds-core/components/status/Spinner';
 import {
@@ -432,29 +433,18 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
                     </span>
                   )}
                   {presentation.corner && (
-                    <span
+                    <StatusIndicator
                       role="status"
                       aria-live="polite"
                       aria-atomic="true"
+                      tone={presentation.tone}
                       style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: 4,
                         flex: '0 0 auto',
-                        height: 22,
-                        padding: '0 7px',
-                        boxSizing: 'border-box',
-                        border: '1px solid var(--viewer-border)',
-                        borderRadius: 'var(--radius-pill)',
-                        background: 'var(--viewer-surface-elevated)',
                         color: 'var(--viewer-foreground)',
-                        fontSize: 'var(--caption2-size)',
-                        fontWeight: 'var(--fw-semibold)',
                       }}
                     >
-                      <StateMark presentation={presentation} icon={stateIcon} />
                       {labelContent}
-                    </span>
+                    </StatusIndicator>
                   )}
                   {badges}
                 </div>

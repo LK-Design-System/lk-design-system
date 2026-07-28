@@ -12,6 +12,7 @@ Use it for a selected canvas or scene object such as a waypoint, route segment, 
 
 - `item` is not a layer. Layer/display state belongs to `LayerPanel.activeLayerId`.
 - Keep selection identity and status fixed at the top, make property groups independently collapsible, and keep object-scoped actions in the sticky `actions` area.
+- `statusPresentation="indicator"` is for live availability, connection, or freshness and renders the Core `StatusIndicator`. Keep the default `"badge"` for lifecycle and result labels.
 - Keep reversible commit actions at the trailing edge. A destructive object action uses the danger button grammar, is separated from the primary commit action with flexible space, and opens `ConfirmDialog` before execution. Do not disguise deletion as a neutral assistive action beside Apply.
 - Use `selectionCount` for multi-selection and `field.mixed` for properties that do not share one value. Mixed values render as `—`; do not invent a representative value.
 - Standard field `value` is a string/number/boolean and `unit` is a string. Surrounding whitespace is removed; `%`, `‰`, and plane-angle `°` attach, while SI·compound units and `°C`/`°F` keep one literal space in both visible and accessible DOM text.
