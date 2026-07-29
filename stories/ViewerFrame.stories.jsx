@@ -50,13 +50,37 @@ function Preview({ appearance = 'dark' }) {
 function LocalToolbar({ appearance }) {
   const [zoom, setZoom] = React.useState(100);
   return (
-    <ViewerToolbar orientation="horizontal" appearance={appearance === 'dark' ? 'on-dark' : 'surface'} label="보기 도구">
-      {/* Stepper convention: the readout sits between − and + (like Miro or
-          Excalidraw) so the cause-effect loop between the buttons and the
-          value stays adjacent; reset trails the cluster. */}
+    <ViewerToolbar orientation="horizontal" appearance={appearance === 'dark' ? 'on-dark' : 'minimal'} label="보기 도구">
       <ViewerToolbarButton label="축소" onClick={() => setZoom((value) => Math.max(50, value - 10))}><Icon name="minus" size={16} /></ViewerToolbarButton>
-      <output aria-live="polite" style={{ color: 'var(--viewer-muted)', fontSize: 'var(--caption2-size)', fontVariantNumeric: 'tabular-nums' }}>{zoom}%</output>
+      <output
+        aria-live="polite"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minWidth: 40,
+          minHeight: 28,
+          padding: '0 4px',
+          boxSizing: 'border-box',
+          color: 'var(--viewer-foreground)',
+          fontSize: 'var(--caption1-size)',
+          lineHeight: 1,
+          fontWeight: 'var(--fw-semibold)',
+          fontVariantNumeric: 'tabular-nums',
+        }}
+      >
+        {zoom}%
+      </output>
       <ViewerToolbarButton label="확대" onClick={() => setZoom((value) => Math.min(200, value + 10))}><Icon name="plus" size={16} /></ViewerToolbarButton>
+      <span
+        aria-hidden="true"
+        style={{
+          width: 1,
+          height: 20,
+          margin: '0 2px',
+          background: 'var(--viewer-border)',
+        }}
+      />
       <ViewerToolbarButton label="보기 초기화" onClick={() => setZoom(100)}><Icon name="reset" size={16} /></ViewerToolbarButton>
     </ViewerToolbar>
   );
@@ -68,7 +92,7 @@ function BlockingFocusFixture() {
   return (
     <ViewerFrame
       label="포커스 전환 검증 뷰포트"
-      source="AMR-07"
+      source="장면 소스 A"
       state={state}
       stateAction={<Button data-testid="viewer-retry" size="sm" onClick={() => setState('ready')}>다시 시도</Button>}
       toolbar={(
@@ -88,6 +112,136 @@ function BlockingFocusFixture() {
   );
 }
 
+function SlotLegend({ items }) {
+  return (
+    <ul style={{ display: 'grid', gap: 'var(--space-1)', margin: 0, padding: 0, listStyle: 'none' }}>
+      {items.map(({ corner, role }) => (
+        <li
+          key={corner}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '72px 1fr',
+            gap: 'var(--space-2)',
+            fontSize: 'var(--caption1-size)',
+            lineHeight: 'var(--caption1-line)',
+          }}
+        >
+          <span style={{ color: 'var(--color-semantic-label-alternative)', fontVariantNumeric: 'tabular-nums' }}>{corner}</span>
+          <span style={{ color: 'var(--color-semantic-label-neutral)' }}>{role}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function PlacementCase({ title, note, legend, children }) {
+  return (
+    <section style={{ display: 'grid', gap: 'var(--space-2)', minWidth: 0 }}>
+      <h3 style={{ margin: 0, fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', color: 'var(--color-semantic-label-strong)' }}>{title}</h3>
+      <p style={{ margin: 0, fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: 'var(--color-semantic-label-alternative)' }}>{note}</p>
+      {children}
+      <SlotLegend items={legend} />
+    </section>
+  );
+}
+
+export const ControlPlacementContract = {
+  name: '배치 규약 · 네 모서리',
+  parameters: storyDescription(
+    '뷰포트를 조작하는 컨트롤은 우하단에 두고 상단은 읽기 전용 정보에 남깁니다. 지도·3D는 줌과 초기화를, 영상은 재생 도구를 같은 자리에서 받습니다. 상단 우측이 비어야 라이브 같은 상시 상태가 화면 끝에 붙을 수 있습니다.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 'var(--space-5)', width: '100%', maxWidth: 1000 }}>
+      <PlacementCase
+        title="지도 · 3D — 뷰 조작"
+        note="줌·초기화는 뷰포트를 바꾸는 조작이므로 우하단입니다. 좌하단 판독값과 같은 줄에서 읽힙니다."
+        legend={[
+          { corner: '좌상단', role: '소스 정체성' },
+          { corner: '좌하단', role: '줌 · FPS 판독값' },
+          { corner: '우하단', role: '줌 · 초기화' },
+        ]}
+      >
+        <ViewerFrame
+          label="지도 뷰포트"
+          source="지도 소스 A"
+          availability="ready"
+          connection="connected"
+          status="100%"
+          toolbar={<LocalToolbar appearance="dark" />}
+          toolbarPlacement="bottom-right"
+          style={{ height: 220 }}
+        >
+          <Preview />
+        </ViewerFrame>
+      </PlacementCase>
+
+      <PlacementCase
+        title="영상 — 재생 도구"
+        note="재생 도구도 같은 우하단을 씁니다. 덕분에 우상단이 비고 라이브 표시가 화면 끝에 붙습니다."
+        legend={[
+          { corner: '좌상단', role: '소스 정체성' },
+          { corner: '우상단', role: '라이브 (상시 상태)' },
+          { corner: '우하단', role: '재생 도구' },
+        ]}
+      >
+        <ViewerFrame
+          label="영상 뷰포트"
+          source="영상 소스 B"
+          state="live"
+          toolbar={<LocalToolbar appearance="dark" />}
+          toolbarPlacement="bottom-right"
+          style={{ height: 220 }}
+        >
+          <Preview />
+        </ViewerFrame>
+      </PlacementCase>
+
+      <PlacementCase
+        title="상단은 읽는 자리"
+        note="지연·최신성 같은 수동 상태는 조작과 섞이지 않습니다. 컨트롤이 없어도 배치는 그대로입니다."
+        legend={[
+          { corner: '좌상단', role: '소스 정체성' },
+          { corner: '좌하단', role: '갱신 시각' },
+          { corner: '가장자리', role: '지연 상태' },
+        ]}
+      >
+        <ViewerFrame
+          label="지연된 뷰포트"
+          source="지도 소스 C"
+          freshness="stale"
+          status="8초 전"
+          style={{ height: 220 }}
+        >
+          <Preview />
+        </ViewerFrame>
+      </PlacementCase>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const frames = Array.from(canvasElement.querySelectorAll('[data-lds-viewer-frame]'));
+    if (frames.length !== 3) throw new Error('The placement contract needs all three cases.');
+
+    const withToolbar = frames.filter((frame) => frame.querySelector('[data-viewer-toolbar]'));
+    if (withToolbar.length !== 2) throw new Error('Map and video cases must both own a toolbar.');
+    for (const frame of withToolbar) {
+      const topbar = frame.querySelector('[data-viewer-topbar]');
+      if (topbar?.querySelector('[data-viewer-toolbar]')) {
+        throw new Error('Viewport controls must not sit in the top bar.');
+      }
+    }
+
+    const live = frames.find((frame) => frame.dataset.viewerState === 'live');
+    const liveness = live?.querySelector('[data-viewer-liveness]');
+    if (!liveness) throw new Error('A live viewport must expose the top-right liveness slot.');
+    const topbar = live.querySelector('[data-viewer-topbar]');
+    const identity = topbar?.querySelector('[data-viewer-identity]');
+    if (!identity) throw new Error('Identity must stay in the top bar.');
+    if (liveness.getBoundingClientRect().left <= identity.getBoundingClientRect().right) {
+      throw new Error('Liveness must sit opposite the source identity, not beside it.');
+    }
+  },
+};
+
 export const StatePlacement = {
   name: '개요',
   parameters: storyDescription(
@@ -95,13 +249,13 @@ export const StatePlacement = {
   ),
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)', width: '100%', maxWidth: 960 }}>
-      <ViewerFrame label="준비된 뷰포트" source="AMR-07" availability="ready" connection="connected" status="38 FPS" toolbar={<LocalToolbar appearance="dark" />} style={{ height: 240 }}>
+      <ViewerFrame label="준비된 뷰포트" source="장면 소스 A" availability="ready" connection="connected" status="38 FPS" toolbar={<LocalToolbar appearance="dark" />} style={{ height: 240 }}>
         <Preview />
       </ViewerFrame>
-      <ViewerFrame label="지연된 뷰포트" source="AMR-07" freshness="stale" status="마지막 수신 8초 전" toolbar={<LocalToolbar appearance="dark" />} style={{ height: 240 }}>
+      <ViewerFrame label="지연된 뷰포트" source="지도 소스 B" freshness="stale" status="8초 전" toolbar={<LocalToolbar appearance="dark" />} style={{ height: 240 }}>
         <Preview />
       </ViewerFrame>
-      <ViewerFrame label="불러오는 뷰포트" source="AMR-07" availability="loading" toolbar={<LocalToolbar appearance="dark" />} style={{ height: 240 }}>
+      <ViewerFrame label="불러오는 뷰포트" source="영상 소스 C" availability="loading" toolbar={<LocalToolbar appearance="dark" />} style={{ height: 240 }}>
         <Preview />
       </ViewerFrame>
     </main>
@@ -122,10 +276,64 @@ export const StatePlacement = {
     if (!stale.querySelector('[data-viewer-edge-state] [role="status"][aria-live="polite"]') || stale.querySelector('[role="alert"]')) {
       throw new Error('Retained-content Viewer states must remain polite and noninterrupting.');
     }
+    const edgeState = stale.querySelector('[data-viewer-edge-state]');
+    if (
+      edgeState
+      && (
+        edgeState.getBoundingClientRect().width >= stale.getBoundingClientRect().width * 0.75
+        || edgeState.getBoundingClientRect().height > 25
+      )
+    ) {
+      throw new Error('Retained-content status must use compact content-width edge chrome instead of a full-width notification bar.');
+    }
+    const edgeStateIcon = edgeState?.querySelector('[data-viewer-state-icon]');
+    const edgeStateLabel = edgeState?.querySelector('[role="status"] > span > span:not([data-viewer-edge-description])');
+    if (
+      (edgeStateIcon && edgeStateIcon.getBoundingClientRect().height > 17)
+      || (edgeStateLabel && parseFloat(getComputedStyle(edgeStateLabel).fontSize) > 11.5)
+    ) {
+      throw new Error('Retained-content status must match passive HUD density with a 16px mark and caption2 label.');
+    }
     for (const frame of frames.filter((candidate) => candidate.querySelector('[data-viewer-topbar]'))) {
       const topbar = frame.querySelector('[data-viewer-topbar]');
-      if (topbar.style.background !== 'var(--viewer-surface-elevated)') {
-        throw new Error('Viewer topbar metadata and controls require an opaque contrast surface.');
+      const identity = frame.querySelector('[data-viewer-identity]');
+      const controlShelf = frame.querySelector('[data-viewer-control-shelf]');
+      const source = frame.querySelector('[data-viewer-source]');
+      if (getComputedStyle(topbar).flexWrap !== 'nowrap' || getComputedStyle(source).whiteSpace !== 'nowrap') {
+        throw new Error('Viewer source and controls must stay on one topbar row; long source names truncate instead of wrapping.');
+      }
+      if (source && parseFloat(getComputedStyle(source).fontSize) > 12.5) {
+        throw new Error('Viewer source identity must keep the compact caption typography hierarchy.');
+      }
+      if (identity && controlShelf && Math.abs(identity.getBoundingClientRect().top - controlShelf.getBoundingClientRect().top) > 1) {
+        throw new Error('Viewer identity and controls must remain aligned on the same topbar row.');
+      }
+      if (
+        identity
+        && controlShelf
+        && (
+          identity.getBoundingClientRect().height > 31
+          || controlShelf.getBoundingClientRect().height < 30
+          || controlShelf.getBoundingClientRect().height > 36
+        )
+      ) {
+        throw new Error('Viewer identity and inset controls must keep compact chrome without enforcing identical box heights.');
+      }
+      if (identity?.style.background !== 'var(--viewer-surface-elevated)') {
+        throw new Error('Viewer source identity requires its own opaque contrast surface.');
+      }
+      const ownedControlSurface = controlShelf?.querySelector('[data-viewer-toolbar-appearance="surface"], [data-viewer-toolbar-appearance="on-dark"]');
+      if (
+        ownedControlSurface
+        && (
+          getComputedStyle(ownedControlSurface).backgroundColor === 'rgba(0, 0, 0, 0)'
+          || getComputedStyle(ownedControlSurface).borderStyle === 'none'
+        )
+      ) {
+        throw new Error('A self-contained ViewerToolbar must expose its own grouped contrast surface.');
+      }
+      if (!ownedControlSurface && controlShelf?.style.background !== 'var(--viewer-surface-elevated)') {
+        throw new Error('Viewer controls require a distinct grouped surface.');
       }
     }
   },
@@ -138,7 +346,7 @@ export const LiveAndBlockingStates = {
   ),
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))', gap: 'var(--space-4)', width: '100%', maxWidth: 960 }}>
-      <ViewerFrame label="라이브 카메라 뷰포트" source="AMR-07 · 전면 카메라" state="live" status="30 FPS" style={{ height: 220 }}>
+      <ViewerFrame label="라이브 영상 뷰포트" source="실시간 소스 A" state="live" status="30 FPS" style={{ height: 220 }}>
         <Preview />
       </ViewerFrame>
       <ViewerFrame
@@ -152,7 +360,7 @@ export const LiveAndBlockingStates = {
       </ViewerFrame>
       <ViewerFrame
         label="오류가 발생한 뷰포트"
-        source="AMR-11 · 후면 카메라"
+        source="원격 소스 B"
         state="error"
         stateAction={<Button size="sm" onClick={() => {}}>다시 시도</Button>}
         style={{ height: 220 }}
@@ -161,7 +369,7 @@ export const LiveAndBlockingStates = {
       </ViewerFrame>
       <ViewerFrame
         label="연결이 끊긴 뷰포트"
-        source="AMR-03 · 전면 카메라"
+        source="입력 소스 C"
         state="disconnected"
         stateAction={<Button size="sm" onClick={() => {}}>연결 확인</Button>}
         style={{ height: 220 }}
@@ -170,7 +378,7 @@ export const LiveAndBlockingStates = {
       </ViewerFrame>
       <ViewerFrame
         label="신호가 없는 뷰포트"
-        source="AMR-05 · 열화상 카메라"
+        source="렌더러 소스 D"
         state="no-signal"
         stateAction={<Button size="sm" onClick={() => {}}>다시 연결</Button>}
         style={{ height: 220 }}
@@ -222,7 +430,7 @@ export const NarrowBlockingState = {
     <div style={{ width: 232, maxWidth: '100%' }}>
       <ViewerFrame
         label="좁은 오류 뷰포트"
-        source="AMR-11 · 매우 긴 후면 카메라 소스 이름"
+        source="매우 긴 원격 시각화 소스 이름"
         state="error"
         stateDescription="카메라 콘텐츠를 불러오지 못했습니다. 연결을 확인한 뒤 다시 시도해 주세요."
         stateAction={<Button size="sm" onClick={() => {}}>다시 시도</Button>}

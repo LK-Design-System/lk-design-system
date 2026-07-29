@@ -246,6 +246,15 @@ export const parameters = {
           'Viewer',
         ],
         'LDS Product/Data': ['Display', 'Visualization', 'Collections', 'Operations'],
+        'LDS Product/Viewer': [
+          'Viewer Frame',
+          'Toolbar',
+          '2D Map',
+          '3D Viewport Frame',
+          'Video Stream',
+          'Floor Selector',
+          'Elevator Fleet Overview',
+        ],
       };
 
       if (a.title === b.title) {

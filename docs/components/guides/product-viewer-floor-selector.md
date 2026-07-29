@@ -27,10 +27,10 @@
 
 | Subject | Rule |
 | --- | --- |
-| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
+| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 | --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
-| --color-semantic-line-normal-normal | light: rgba(112, 115, 124, 0.22); dark: rgba(112, 115, 124, 0.32) |
 | --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+| --fw-medium | 500 |
 
 ## Accessibility
 
@@ -40,6 +40,7 @@
 
 | Component | Relationship |
 | --- | --- |
+| `ElevatorFleetOverview` | 대표 시나리오에서 조합 |
 | `Map2DCanvas` | 대표 시나리오에서 조합 |
 | `Scene3DFrame` | 대표 시나리오에서 조합 |
 | `VideoStreamTile` | 대표 시나리오에서 조합 |
@@ -47,7 +48,6 @@
 | `VIEWER_STATES` | 대표 시나리오에서 조합 |
 | `ViewerFrame` | 대표 시나리오에서 조합 |
 | `ViewerToolbar` | 대표 시나리오에서 조합 |
-| `ViewerToolbarButton` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -62,18 +62,18 @@
 
 ### Tokens
 
-- `--color-semantic-background-elevated-normal`
+- `--color-semantic-fill-normal`
 - `--color-semantic-label-neutral`
-- `--color-semantic-line-normal-normal`
 - `--color-semantic-primary-normal`
 - `--color-semantic-static-white`
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`
+- `--fw-medium`
+- `--fw-semibold`
 - `--label1-size`
-- `--radius-md`
-- `--radius-sm`
-- `--shadow-sm`
+- `--radius-10`
+- `--radius-8`
 
 ### Source contracts
 

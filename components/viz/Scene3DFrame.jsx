@@ -2,7 +2,7 @@ import React from 'react';
 import { ViewerFrame } from './ViewerFrame.jsx';
 
 /**
- * LK Robotics — Scene3DFrame
+ * LDS Product — Scene3DFrame
  * Renderer-independent 3D viewport preset built on ViewerFrame. Applications
  * provide Three.js, R3F, point-cloud, or digital-twin content as children.
  */
@@ -53,6 +53,7 @@ export function Scene3DFrame({
       badges={badges}
       hud={hud}
       toolbar={toolbar}
+      toolbarPlacement="bottom-right"
       overlay={overlay}
       status={status}
       state={resolvedState}

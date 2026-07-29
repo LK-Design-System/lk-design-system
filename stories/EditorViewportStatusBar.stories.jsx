@@ -62,6 +62,22 @@ export const Readouts = {
       <ViewportStatusBar items={baseItems} />
     </StatusFrame>
   ),
+  play: async ({ canvasElement }) => {
+    const bar = canvasElement.querySelector('[aria-label="뷰포트 상태"]');
+    const items = [...(bar?.children ?? [])];
+    if (!bar || items.length !== baseItems.length) throw new Error('ViewportStatusBar readout fixture is incomplete.');
+
+    for (const item of items) {
+      const label = item.firstElementChild;
+      const value = item.querySelector('[data-viewport-status-value]');
+      if (!label || !value) throw new Error('ViewportStatusBar item must render a label and value.');
+      const labelCenter = label.getBoundingClientRect().top + (label.getBoundingClientRect().height / 2);
+      const valueCenter = value.getBoundingClientRect().top + (value.getBoundingClientRect().height / 2);
+      if (Math.abs(labelCenter - valueCenter) > 0.5) {
+        throw new Error(`ViewportStatusBar label/value vertical centers differ by ${Math.abs(labelCenter - valueCenter)}px.`);
+      }
+    }
+  },
 };
 
 export const PriorityCompression = {
@@ -100,7 +116,7 @@ export const PriorityCompression = {
 export const StatusTones = {
   name: '변형·상태 · 의미별 색상',
   parameters: storyDescription(
-    '정상·주의·위험 상태가 한 상태 바에 함께 나타나는 상황입니다. 색상과 프레임 저하·데이터 지연 텍스트가 함께 전달되어 각 tone의 운영 의미가 구분되는지 확인하세요.',
+    '정상·주의·위험 상태가 한 상태 바에 함께 나타나는 상황입니다. 측정값은 일반 readout으로 유지되고 활성·정상·프레임 저하·데이터 지연 판정만 별도 상태 배지로 구분되는지 확인하세요.',
   ),
   render: () => (
     <StatusFrame>
@@ -114,21 +130,41 @@ export const StatusTones = {
       />
     </StatusFrame>
   ),
+  play: async ({ canvasElement }) => {
+    const values = [...canvasElement.querySelectorAll('[data-viewport-status-value]')].map((node) => node.textContent);
+    const tones = [...canvasElement.querySelectorAll('[data-viewport-status-tone]')].map((node) => node.textContent);
+    if (values.join('|') !== ['1', '켜짐', '18', '만료'].join('|')) {
+      throw new Error(`ViewportStatusBar data readouts changed: ${values.join(' | ')}`);
+    }
+    if (tones.join('|') !== ['활성', '정상', '프레임 저하', '데이터 지연'].join('|')) {
+      throw new Error(`ViewportStatusBar status labels changed: ${tones.join(' | ')}`);
+    }
+    if (canvasElement.querySelector('[data-viewport-status-tone] [data-viewport-status-value]')) {
+      throw new Error('ViewportStatusBar data values and status badges must render separately.');
+    }
+  },
 };
 
 export const TransientMessage = {
   name: '시나리오 · 일시적 작업 결과',
   parameters: storyDescription(
-    '선택 영역 계산 완료처럼 현재 뷰포트 작업의 짧은 결과를 알리는 상황입니다. 일시 메시지가 지속 readout과 구분되며 보조 기술에는 완료 의미와 함께 한 번만 전달되는지 확인하세요.',
+    '선택 영역 계산 완료처럼 현재 뷰포트 작업의 짧은 결과를 알리는 상황입니다. 문장 자체가 완료를 전달하므로 중복 상태 배지 없이 일반 텍스트로 표시되고, 보조 기술에는 한 번만 전달되는지 확인하세요.',
   ),
   render: () => (
     <StatusFrame>
       <ViewportStatusBar
         message="선택 영역을 계산했습니다."
-        messageTone="positive"
-        messageToneLabel="완료"
         items={baseItems}
       />
     </StatusFrame>
   ),
+  play: async ({ canvasElement }) => {
+    const message = canvasElement.querySelector('[data-viewport-status-message]');
+    if (message?.textContent !== '선택 영역을 계산했습니다.') {
+      throw new Error('ViewportStatusBar transient message must remain a plain completion sentence.');
+    }
+    if (canvasElement.querySelector('[data-viewport-message-tone]')) {
+      throw new Error('Routine completion messages must not repeat their meaning in a status badge.');
+    }
+  },
 };

@@ -40,11 +40,20 @@ export interface ViewerFrameProps extends React.HTMLAttributes<HTMLDivElement> {
   source?: React.ReactNode;
   /** Passive badges adjacent to the source identity. */
   badges?: React.ReactNode;
+  /**
+   * 상단 우측 생존성 슬롯. 정체성(어느 소스인가)과 다른 축이므로 source 옆이 아니라
+   * 반대쪽 끝에 자리를 갖는다. `state="live"` 같은 corner 상태도 이 자리에 렌더된다.
+   * toolbar 슬롯과 달리 `toolbarVisibility`의 자동 숨김을 받지 않아 상시 표시된다.
+   */
+  liveness?: React.ReactNode;
   /** Compact, passive diagnostics. Keep the default HUD to essential values only. */
   hud?: React.ReactNode;
   /** Viewport-local controls such as zoom, fit, mute, or fullscreen. */
   toolbar?: React.ReactNode;
-  /** Edge used for the viewport-local toolbar. @default "top-right" */
+  /**
+   * 뷰포트 조작 컨트롤이 놓이는 모서리. 배치 규약상 우하단이 기본이며, 상단은
+   * 정체성(`source`)과 상시 상태(`liveness`)에 남긴다. @default "bottom-right"
+   */
   toolbarPlacement?: 'top-right' | 'bottom-right';
   /** Non-interactive render overlay placed above the content. */
   overlay?: React.ReactNode;
@@ -72,6 +81,10 @@ export interface ViewerFrameProps extends React.HTMLAttributes<HTMLDivElement> {
   appearance?: 'dark' | 'light';
   /** Perimeter ownership. "embedded" drops the frame's own border and radius so a parent surface (CanvasEditorShell, Card) owns one continuous outline; viewport chrome, state, and a11y roles are unchanged. @default "standalone" */
   variant?: 'standalone' | 'embedded';
+  /** Chrome treatment. "overlay" uses compact translucent edge surfaces over visual media. @default "surface" */
+  chromeVariant?: 'surface' | 'overlay';
+  /** Toolbar reveal behavior. "interaction" shows controls while the frame is hovered, pressed, or contains focus. @default "always" */
+  toolbarVisibility?: 'always' | 'interaction';
 }
 
 /** Shared named viewport frame for map, 3D, and video renderer presets. */

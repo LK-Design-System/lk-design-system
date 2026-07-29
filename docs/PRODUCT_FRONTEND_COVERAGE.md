@@ -845,7 +845,7 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 | redesign | 6 | 개념은 필요하지만 현재 API가 상태 축을 합치거나 화면 구조를 과도하게 소유한다. |
 | split | 6 | 현재 compound component를 제거하고 더 작은 책임으로 다시 도출한다. |
 | remove | 22 | LDS public component로 둘 근거가 없으며 기존 primitives/product renderer 조합으로 돌린다. |
-| separate-audit | 5 | 다섯 제품 workflow와 무관한 Robotics editor 계열로 별도 LDS·공식 editor-reference 감사를 요구한다. |
+| separate-audit | 6 | 제품 workflow coverage만으로 anatomy를 결정할 수 없는 editor·viewer 계열로 별도 LDS sibling·공식 category-reference 감사를 요구한다. |
 
 ### Keep
 
@@ -913,9 +913,30 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 | `SafetyConfirmDialog` | `ConfirmDialog`에 영향 목록과 typed phrase를 붙인 convenience wrapper다. 위험 작업 정책과 typed input은 제품 composition으로 남긴다. |
 | `TimeRuleEditor` | 현재 확인된 소비자가 하나뿐이고 once/weekly schema를 public API로 고정한다. 공통 form controls 조합으로 되돌리고 반복 소비자 확인 전에는 승격하지 않는다. |
 
-### Separate Robotics editor audit
+### Separate editor and viewer audit
 
-`CanvasEditorShell`, `CanvasEditorCommandBar`, `LayerPanel`, `SelectionInspector`, `ViewportStatusBar`는 LDS sibling과 공식 editor·accessibility reference를 기준으로 별도 감사하고, `lk_web_viz`는 workflow coverage만 확인한다. 다섯 제품 workflow coverage 근거로 구현을 정당화하지 않는다. 이 격리는 유지 판정이 아니다.
+`CanvasEditorShell`, `CanvasEditorCommandBar`, `LayerPanel`, `SelectionInspector`, `ViewportStatusBar`는 LDS sibling과 공식 editor·accessibility reference를 기준으로 별도 감사하고, `lk_web_viz`는 workflow coverage만 확인한다. `ViewerFrame`도 같은 원칙으로 map·3D·video sibling과 공식 viewer·map·accessibility reference를 기준으로 별도 감사한다. 제품 source는 renderer truth와 LDS/product seam만 확인하며 현재 화면의 anatomy나 style을 복제하는 근거가 아니다.
+
+ViewerFrame 교차 판정은 LK Web Viz revision `a984def117c05acd213f494cbb8a42e990595505`의 `Map2DViewer.tsx`·`MapPreview.tsx`·`PcdMap3DPanel.tsx`, LK Control Full Daedeok revision `93802fc2aa5d29f930380ae58d51dcb68322b5e7`의 `InteractiveMap3D/index.jsx`·`manual-control/index.jsx`, LK Context Hub revision `de124084b7e50049350a46f92c4ea4476269c58c`의 project/chat entry를 pin했다. Web Viz와 Control은 renderer-owned pan/zoom·source/transport·robot authority를 제품에 남기는 `supported by composition`, Context Hub는 viewport-local navigation contract가 없어 `not applicable`이다. ViewerFrame은 소스 식별, 로컬 명령 배치, 차단/가용자리 상태 표현만 소유한다.
+
+## Elevator fleet overview coverage
+
+`ElevatorFleetOverview`는 여러 건물의 엘리베이터 위치를 건물별 병렬 승강로로
+비교하는 `LK Product Extension`이다. 외부 공식 category reference의
+position/direction/status anatomy를 LDS `ScrollArea`, card surface,
+설비별 live availability의 `StatusIndicator`, 건물·fleet attention 집계의
+`StatusBadge`와 조합하며, 제품 화면이나 원격 제어 workflow를 복제하지 않는다.
+
+| 제품 자산 | 고정 revision과 source | 판정 | LDS / 제품 seam |
+| --- | --- | --- | --- |
+| LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | not applicable | pinned dashboard에는 selected robot과 connection truth는 있지만 다중 건물 elevator fleet가 없다. 향후 조합 시 polling, stale 판정, grouping과 detail navigation은 Web Viz가 소유한다. |
+| LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` (`b0fd86a6b4c735aca390cd6dd179f766fa071f08`) | supported by composition | equipment identity, condition, direction-like facts와 freshness 필요를 확인했다. LDS는 독립적으로 설계한 위치 projection을 제공하고 Control은 telemetry truth, alert policy, permission, route와 command를 소유한다. |
+| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/chat/PortalChatPanel.tsx` (`b3a8a2eb0d33ff46be46c30413994de874d456d8`) | not applicable | pinned project/chat workflow에는 물리 설비 fleet monitoring 진입점이 없다. |
+
+대표 Storybook 검토는 `통합 현황`의 정상·점검·고장·연결 끊김 compound state,
+`좁은 화면`의 390px horizontal overflow, `다크 테마`, `빈 현황`, 읽기 전용
+contract를 대상으로 한다. 실제 building membership, floor calibration, telemetry,
+alert threshold, filtering, drawer, route와 원격 명령은 제품 소유다.
 
 ## Workflow implementation verification
 

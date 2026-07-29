@@ -13,11 +13,14 @@
     "ViewerToolbar",
     "ViewerToolbarButton"
   ],
-  "purpose": "운영자가 포인트 클라우드·설비 자세·입체 장애물처럼 깊이 정보가 필요한 장면을 검사할 때 적합합니다. 평면 경로 확인이나 영상 감시에는 3D Scene 대신 2D Map 또는 Video Stream을 사용하세요.",
+  "purpose": "애플리케이션이나 LDS3D가 제공하는 WebGL 장면에 공통 상태·HUD·카메라 도구를 배치할 때 적합합니다. Scene3DFrame은 실제 3D 렌더링·좌표계·피킹을 구현하지 않습니다.",
   "useWhen": [
+    "Scene identity stays at the top-left, the camera toolbar at the top-right, and passive renderer status at the bottom-left. ViewerFrame owns the toolbar shelf, so light appearances use a minimal inner ViewerToolbar rather than nesting another surface.",
     "Scene3DFrame is the renderer-independent 3D preset for ViewerFrame."
   ],
-  "avoidWhen": [],
+  "avoidWhen": [
+    "Product Storybook은 실제 point cloud나 WebGL 장면을 모사하지 않고 renderer slot과 frame chrome만 보여줍니다. 실제 3D geometry, depth, picking, camera semantics와 renderer lifecycle은 LDS3D 또는 애플리케이션이 소유합니다."
+  ],
   "anatomy": [
     {
       "part": "children",
@@ -204,6 +207,7 @@
   ],
   "quantitativeRules": [],
   "responsive": [
+    "title is the primary scene identity and inherits the shared ViewerFrame compact source hierarchy (caption1/semibold) inside the top chrome.",
     "Use it for point clouds, digital twins, WebGL scenes, or React Three Fiber output. The DS owns the viewport frame, scene identity, compact HUD, viewport-local controls, passive renderer metadata, and normalized state placement. The application owns rendering, camera math, picking, and loading/retry logic.",
     "Classification and evidence are documented in ViewerFrame.prompt.md. The structure follows the official NVIDIA Omniverse viewport controls and Unity Scene view navigation, while Unity Scene view draw modes support the conclusion that viewing mode and diagnostic readability—not a permanently dark palette—define the…"
   ],
@@ -236,6 +240,10 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
+      "component": "ElevatorFleetOverview",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "FloorSelector",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -250,16 +258,12 @@
     {
       "component": "VIEWER_BLOCKING_STATES",
       "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "VIEWER_STATES",
-      "relationship": "대표 시나리오에서 조합"
     }
   ],
   "examples": [
     {
       "label": "기본 조합",
-      "code": "<Scene3DFrame\n  label=\"AMR-07 3D scene\"\n  title=\"POINT CLOUD\"\n  state=\"stale\"\n  status=\"1.2M pts · 38 FPS\"\n  toolbar={cameraControls}\n  style={{ height: 320 }}\n>\n  <Canvas>...</Canvas>\n</Scene3DFrame>"
+      "code": "<Scene3DFrame\n  label=\"장면 A 3D 뷰포트\"\n  title=\"장면 A\"\n  state=\"stale\"\n  status=\"원근 · 좌표계 world · 60 FPS\"\n  toolbar={cameraControls}\n  style={{ height: 320 }}\n>\n  <Canvas>...</Canvas>\n</Scene3DFrame>"
     }
   ],
   "tokens": [],
@@ -301,7 +305,7 @@
   "sectionStatus": {
     "purpose": "evidence",
     "useWhen": "evidence",
-    "avoidWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
     "anatomy": "evidence",
     "properties": "evidence",
     "states": "evidence",

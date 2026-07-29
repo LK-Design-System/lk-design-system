@@ -8,14 +8,14 @@ const ViewerToolbarAppearanceContext = React.createContext('minimal');
 const TOOLBAR_APPEARANCES = {
   surface: {
     gap: 2,
-    padding: 4,
+    padding: 2,
     background: 'var(--viewer-surface-elevated, var(--color-semantic-background-elevated-normal))',
     border: '1px solid var(--viewer-border, var(--color-semantic-line-normal-normal))',
     borderRadius: 'var(--radius-md)',
     boxShadow: 'var(--shadow-sm)',
   },
   minimal: {
-    gap: 'var(--space-1)',
+    gap: 2,
     padding: 0,
     background: 'transparent',
     border: 'none',
@@ -23,17 +23,18 @@ const TOOLBAR_APPEARANCES = {
     boxShadow: 'none',
   },
   'on-dark': {
-    gap: 'var(--space-1)',
-    padding: 0,
-    background: 'transparent',
-    border: 'none',
-    borderRadius: 0,
-    boxShadow: 'none',
+    gap: 2,
+    padding: 2,
+    background: 'color-mix(in srgb, var(--viewer-surface-elevated, #101b26) 94%, transparent)',
+    border: '1px solid color-mix(in srgb, var(--color-semantic-static-white) 20%, transparent)',
+    borderRadius: 'var(--radius-md)',
+    boxShadow: '0 2px 8px color-mix(in srgb, var(--color-semantic-static-black) 24%, transparent)',
+    backdropFilter: 'blur(8px)',
   },
 };
 
 /**
- * LK ROBOTICS — ViewerToolbar
+ * LDS Product — ViewerToolbar
  * Viewport-local command/toggle group with one roving Tab stop.
  */
 export function ViewerToolbar({
@@ -54,6 +55,7 @@ export function ViewerToolbar({
         label={label}
         orientation={orientation}
         itemSelector="[data-lk-viewer-toolbar-item]"
+        data-viewer-toolbar-appearance={resolvedAppearance}
         stopNavigationPropagation
         onKeyDown={onKeyDown}
         onFocusCapture={onFocusCapture}
@@ -62,6 +64,9 @@ export function ViewerToolbar({
           maxWidth: '100%',
           boxSizing: 'border-box',
           ...TOOLBAR_APPEARANCES[resolvedAppearance],
+          ...(resolvedAppearance === 'on-dark'
+            ? { '--viewer-foreground': 'var(--color-semantic-static-white)' }
+            : null),
           ...style,
         }}
       >
@@ -90,7 +95,6 @@ export function ViewerToolbarButton({
   onMouseLeave,
   ...buttonProps
 }) {
-  const appearance = React.useContext(ViewerToolbarAppearanceContext);
   const inferredToggle = pressed !== undefined || active !== undefined;
   const resolvedKind = kind ?? (inferredToggle ? 'toggle' : 'command');
   const commonProps = {
@@ -99,7 +103,7 @@ export function ViewerToolbarButton({
     disabled,
     label,
     title: label,
-    size: 'sm',
+    size: 28,
     tabIndex: tabIndex ?? 0,
     'data-lk-viewer-toolbar-item': '',
     'data-lk-toolbar-key': buttonProps['data-lk-toolbar-key'] ?? label,
@@ -107,7 +111,7 @@ export function ViewerToolbarButton({
     onClick,
     onMouseEnter,
     onMouseLeave,
-    style: { flex: '0 0 auto', padding: 0, ...style },
+    style: { flex: '0 0 auto', width: 28, height: 28, padding: 0, ...style },
   };
   const icon = (
     <span aria-hidden="true" style={{ width: 16, height: 16, display: 'inline-grid', placeItems: 'center', flex: '0 0 auto' }}>
@@ -120,7 +124,7 @@ export function ViewerToolbarButton({
     return (
       <ToggleIcon
         {...commonProps}
-        variant={appearance === 'surface' ? 'plain' : appearance === 'on-dark' ? 'on-dark' : 'default'}
+        variant="plain"
         pressed={controlledPressed}
         defaultPressed={defaultPressed}
         onChange={onPressedChange}
@@ -134,7 +138,7 @@ export function ViewerToolbarButton({
     <IconButton
       {...commonProps}
       round={false}
-      variant={appearance === 'surface' ? 'plain' : appearance === 'on-dark' ? 'on-dark' : 'ghost'}
+      variant="plain"
     >
       {icon}
     </IconButton>

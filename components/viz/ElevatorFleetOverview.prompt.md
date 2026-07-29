@@ -1,0 +1,175 @@
+# ElevatorFleetOverview
+
+`ElevatorFleetOverview`는 여러 건물에 속한 엘리베이터의 현재 층과 운행 상태를
+건물별 세로 열로 묶어 좌우로 비교하는 `LK Product Extension`입니다. system summary와
+모든 elevator position column을 하나의 재사용 가능한 읽기 전용 surface로 제공하며,
+애플리케이션 화면·지도·필터·상세 drawer를 소유하지 않습니다.
+
+## Problem and ownership
+
+- 반복 문제: 운영자가 여러 건물의 엘리베이터 위치를 전환 없이 한 화면에서 비교해야 합니다.
+- owner layer: `product`
+- provenance: `product-extension`
+- 기존 `FloorSelector`는 사용자가 보고 싶은 층을 선택하는 단일 선택 control입니다.
+  `ElevatorFleetOverview`는 실제 설비 위치를 읽기 전용으로 투영하므로 확장하지 않습니다.
+- `EquipmentStatusCard`는 단일 설비의 identity/status/facts 요약입니다. 이 컴포넌트는
+  여러 설비의 세로 위치 관계를 동일 좌표계에서 비교해야 하므로 별도 visualization이 필요합니다.
+
+## Anatomy and reading order
+
+1. fleet surface의 accessible name과 확인 필요 수
+2. 건물 identity와 필요한 경우에만 표시되는 attention status
+3. 엘리베이터 identity, visible status label과 현재 층 요약
+4. 위에서 아래 순서의 전체 층 목록과 현재 위치 row
+5. 방향과 비정상 설비의 freshness
+
+DOM과 화면의 읽기 순서는 위 순서를 유지합니다. 각 위치 열의 층 목록은 `role="img"`로
+현재 층·방향·상태를 요약하고, 같은 정보는 열 안의 visible text로 다시 제공합니다.
+각 열의 header와 층 row, landing-door symbol은 모두 읽기 전용이며 별도 tab stop을
+만들지 않습니다.
+
+## Visual-delta inventory
+
+- 각 엘리베이터를 identity/status card와 current-floor/shaft card의 한 쌍으로 만들고,
+  하나의 관제 surface 안에서 건물 group별로 이어 배치합니다.
+- 각 elevator column은 144px 고정 폭을 사용해 한 화면의 비교 밀도를 높이고,
+  `ScrollArea`의 native horizontal overflow와 keyboard-focus contract를 재사용합니다.
+- 같은 건물의 elevator column은 촘촘하게 묶고 건물 group 사이는 더 넓게 띄워
+  가로 탐색 중 소속 경계를 유지합니다.
+- 층 눈금의 범위는 건물 단위입니다. 같은 건물의 elevator column은 동일한 층 좌표를
+  공유하지만, 건물 사이에서 같은 이름의 층을 같은 높이에 맞추지 않습니다. 건물마다
+  층 구성과 개수가 다르고 서로 다른 건물의 동명 층은 물리적으로 대응하지 않으므로,
+  강제로 정렬하면 없는 관계를 시사하게 됩니다. 모든 column은 위쪽 기준으로 정렬하고
+  건물별 층 수에 따라 아래 끝이 달라집니다.
+- 계속 관찰되는 엘리베이터 가용성은 `StatusIndicator`의 semantic dot + visible
+  label로 각 설비 헤더 우상단에 고정합니다. 건물·fleet 단위의 조치 필요 집계만
+  `StatusBadge`로 표시하며 색상만으로 상태를 전달하지 않습니다.
+- 층마다 동일한 landing-door symbol을 반복하고 현재 층 row는 좌우 외곽선 없이
+  상태별 soft background와 text로 강조합니다. 현재 층의 landing-door 아이콘만
+  solid fill을 사용하며 `normal`은 primary, `maintenance`와 `fault`는 각각
+  cautionary·negative 상태색을 적용합니다. 나머지 층의 door는 outlined로 유지합니다.
+  방향은 층을 먼저 읽도록 현재 층 오른쪽에
+  LDS `Icon`의 small chevron을 배치하고, 실제 상승·하강 중일 때만 2px 범위의 느린
+  이동과 동일한 primary 색상을 적용합니다. 상승·하강에 서로 다른 상태 색을 부여하지
+  않으며, 정지는 secondary 위계의 `label-alternative` 대시로 낮춥니다.
+  `prefers-reduced-motion`에서는 정적으로 유지합니다. 별도 SVG, 입체 cabin, 장식성
+  케이블·문 애니메이션은 추가하지 않습니다.
+- offline column은 전체 surface를 흐리게 처리하되 마지막으로 알려진 층을
+  `마지막`으로 명시하고 `연결 끊김` label을 유지합니다.
+- 건물이 `groundFloor`를 알려주면 그 바로 아래 층 row에 지면선을 긋고 그 아래 층
+  전체에 낮은 톤을 적용합니다. 지면선은 일반 층 구분선(`line-normal-normal`)보다
+  한 단계만 강한 `label-assistive`를 쓰며, 층 눈금의 리듬을 깨지 않는 선에서
+  지상·지하 경계만 알립니다. 지하 톤은 `background-normal-alternative`입니다.
+- 지하 여부는 층 이름에서 추측하지 않습니다. `B` 접두사 같은 표기 규칙은 제품과
+  로케일마다 다르므로, `groundFloor`가 없거나 `floors`에 없는 값이면 지면 표시를
+  하지 않습니다. 없는 기준을 지어내지 않습니다.
+- 지면선은 건물마다 층 구성이 달라 서로 다른 높이에 그어집니다. 이는 건물 간 층을
+  정렬하지 않는다는 위 결정의 결과이며, 각 건물의 지면을 그 건물 좌표 안에서
+  표기한 것입니다.
+
+## External category evidence
+
+- [Vantage GALileo Lobby Monitoring](https://www.vantageelevation.com/galileo/):
+  엘리베이터 group에서 car position, direction, door state, service mode와 call을 함께
+  보여 줍니다. 이 컴포넌트는 개요에 필요한 position/direction/status만 남기고 call
+  입력과 service control은 제품 영역으로 제외합니다.
+- [Nidec MCE Multiple System Display](https://moen.nidec.com/elevators/Motion-Control-Engineering/Products/Monitoring-Solutions/MSD-Multiple-System-Display):
+  여러 hoistway를 동시에 표시하고 position, direction, door, operating status를
+  구분합니다. 건물 패널 내부의 병렬 shaft와 visible status label에 반영했습니다.
+- [Elevator Systems EMIS-100](https://www.elevatorsystems.com/emis-100-elevator-monitor-and-information-system):
+  system summary와 shaft view, detailed car information을 분리합니다. 본 컴포넌트는
+  summary/shaft view만 소유하고 상세 정보와 원격 명령은 외부 composition으로 남깁니다.
+- [Vantage NEXUS Position Indicator](https://www.vantageelevation.com/wp-content/uploads/2026/01/NEXUS-Rev.-1.2-1-1.pdf):
+  floor position, direction, door zone과 층 중심으로부터의 상대 위치를 구분합니다.
+  첫 계약은 discrete floor만 지원하며 between-floor distance와 door-zone calibration은
+  telemetry 제품 계약이 확인되기 전까지 의도적으로 제외합니다.
+- [WCAG 2.2 Use of Color](https://www.w3.org/TR/WCAG22/#use-of-color):
+  상태를 색상만으로 전달하지 않도록 marker의 shape/border와 status text를 함께 제공합니다.
+
+외부 자료는 category anatomy와 정보 우선순위의 근거이며 외부 제품 styling을 복제하지
+않습니다. 최종 시각 언어는 LDS token과 sibling component를 따릅니다.
+
+## Public contract
+
+- `buildings`: 건물 identity, 위에서 아래 순서의 `floors`, elevator array를 받습니다.
+- `label`: fleet section의 accessible name입니다.
+- `headingLevel`: 건물 heading을 `2 | 3 | 4 | 5 | 6` 중 페이지 구조에 맞게 선택하며,
+  기본값은 `3`입니다.
+- `emptyMessage`: 건물이 하나도 없을 때 fleet 단위로 표시할 메시지입니다. 건물별 빈
+  상태는 각 building의 `emptyMessage`를 사용합니다.
+- elevator의 `currentFloor`가 건물 `floors`에 없으면 marker를 억지로 배치하지 않고
+  해당 열의 현재 층 text만 유지합니다.
+- `direction`: `up | down | idle`; 현재 층 옆의 단일 glyph는 보조 시각 신호이며
+  `directionLabel`이 접근 가능한 텍스트를 제공합니다. label을 생략하면 direction에서
+  `상승 중 | 하강 중 | 정지`를 도출합니다. offline에서는 stale 방향을 요약하지 않고
+  마지막 확인 층만 전달합니다.
+- `status`: `normal | maintenance | fault | offline | unknown`. `statusLabel`을
+  주 상태 cue로 사용합니다.
+- `updatedLabel`은 점검·고장·연결 끊김 등 비정상 상태에서만 이름 줄 우측의 보조
+  정보로 표시합니다.
+- elevator column은 선택·활성화되지 않습니다. detail drawer, route, command가 필요한
+  제품은 컴포넌트 외부의 명시적인 탐색 또는 action을 구성해야 합니다.
+- 빈 fleet와 건물별 empty state를 분리합니다.
+
+```jsx
+<ElevatorFleetOverview
+  buildings={[
+    {
+      id: 'research',
+      name: '연구동',
+      floors: ['3F', '2F', '1F', 'B1'],
+      elevators: [
+        {
+          id: 'research-1',
+          name: 'E/V 1',
+          currentFloor: '2F',
+          direction: 'up',
+          directionLabel: '상승 중',
+          status: 'normal',
+          statusLabel: '정상',
+        },
+      ],
+    },
+  ]}
+/>
+```
+
+## Product workflow coverage
+
+기준 revision은 `docs/references/product-frontends/COVERAGE_AUDIT.json`의 기존 pin을
+사용합니다.
+
+- **LK Web Viz** (`a984def117c05acd213f494cbb8a42e990595505`): `not applicable`
+  for the pinned source; elevator-fleet use remains unverified.
+  pinned dashboard에는 로봇·연결 live truth는 있지만 다중 건물 엘리베이터 fleet가
+  없습니다. Web Viz가 사용한다면 polling, stale 판정, building grouping과 detail
+  navigation은 제품이 소유합니다.
+- **LK Control Full Daedeok** (`93802fc2aa5d29f930380ae58d51dcb68322b5e7`):
+  `supported by composition` for equipment overview anatomy only. pinned supervision
+  source는 설비 identity/status/freshness의 필요를 확인하지만 다중 건물 elevator
+  telemetry는 확인하지 못했습니다. LDS는 projection을 제공하고 Control은 truth,
+  alert policy, permissions와 command를 소유합니다.
+- **LK Context Hub** (`de124084b7e50049350a46f92c4ea4476269c58c`):
+  `not applicable`. pinned project/chat workflow에는 물리 설비 fleet monitoring
+  진입점이 없습니다.
+
+## Asset and symbol suitability
+
+- inventory: floor rule, shaft boundary, rectangular car marker, LDS direction chevron.
+- provenance: 외부 elevator monitoring 공식 자료에서 반복되는 category convention이며
+  LDS token으로 재작성했습니다.
+- accessibility: marker는 decorative summary이고 visible semantic row가 동일 정보를
+  제공합니다. current-floor text는 테마별 AA text 토큰으로 대비를 유지하며,
+  solid door icon은 보조 cue입니다. fault/offline은 색상 외에도 visible label과
+  shaft의 solid/dashed border로 구분합니다.
+- no new image, SVG, brand asset, map symbol, or third-party licensed asset is introduced.
+
+## Intentional exclusions
+
+- 실제 미터 단위 높이, 층간 interpolation, speed, door-zone calibration
+- call 등록, destination dispatch, remote start/stop, lockout, alarm acknowledgement
+- filtering, sorting, campus map, route navigation, detail drawer
+- polling, WebSocket, stale threshold와 failure recovery policy
+
+이 항목들은 제품 데이터·권한·transport 정책을 필요로 하므로 LDS public contract에
+포함하지 않습니다.

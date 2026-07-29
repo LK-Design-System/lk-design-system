@@ -12,9 +12,15 @@
 
 ## 사용 판단
 
+### 사용
+
+- ViewerToolbar — LDS Product application pattern. 지도·3D·영상 viewport에 귀속되는 zoom, fit, camera, layer visibility 조작을 모으는 작은 icon toolbar입니다. 실제 공간 의미와 renderer 명령은 LDS Robotics, LDS3D 또는 애플리케이션이 제공하고 이 컴포넌트는 공통 DOM toolbar 계약만 소유합니다.
+
 ### 사용하지 않음
 
+- Horizontal zoom anatomy follows decrement → current value → increment → fit/reset. Display configuration begins after a visual separator. A layers/settings popover owns each visibility state in one place; do not repeat the same overlay as both an outer quick toggle and an inner switch.
 - Adobe Spectrum Action Group: 관련된 action/toggle이 같은 size·density·interaction state를 공유하고, 공간이 제한되어도 control 자체를 임의 축소하지 않는 근거입니다.
+- WCAG 2.2 Target Size (Minimum): Viewer의 28px target은 24px 최소 기준을 넘기며, 더 좁은 viewport에서도 이 크기 아래로 축소하지 않습니다.
 
 ## Anatomy
 
@@ -50,6 +56,7 @@
 
 ## Behavior and interaction
 
+- Sibling IconButton과 ToggleIcon의 radius, semantic foreground/background, disabled, transition, focus token 계약을 재사용하되, Viewer 전용 밀도에서 control box만 28px로 고정합니다. 별도 focus ring은 만들지 않습니다.
 - WAI-ARIA Toolbar pattern: 단일 Tab stop, orientation-aware 방향키, Home/End, disabled navigation 계약의 기준입니다.
 
 ## 정량 규칙
@@ -57,17 +64,17 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | Toolbar의 children은 ViewerToolbarButton 컨트롤 목록입니다. roving focus는 enabled 버튼만 등록하므로, 임의 컴포넌트를 끼워 넣으면 키보드 시퀀스에서 제외됩니다 — 다른 형태의 컨트롤이 필요하면 toolbar 밖에서 조합합니다. 버튼 쪽 children은 16px 아이콘 glyph 슬롯입니다. |
-| 명시 규칙 2 | ViewerToolbarButton은 icon-only control이므로 label이 필수이며 icon은 16px, control은 LDS small icon-control과 같은 32px입니다. |
-| 명시 규칙 3 | Sibling IconButton과 ToggleIcon의 32px size, radius, semantic foreground/background, disabled, transition, focus token 계약을 재사용합니다. Toolbar 고유 버튼 크기나 focus ring을 만들지 않습니다. |
-| 명시 규칙 4 | WCAG 2.2 Target Size (Minimum): 좁은 viewport에서도 32px target을 축소하지 않고 outer chrome과 label을 먼저 줄입니다. |
+| 명시 규칙 2 | ViewerToolbarButton은 icon-only control이므로 label이 필수이며 icon은 16px, control은 조밀한 데스크톱 viewport chrome에 맞춘 28px입니다. |
+| 명시 규칙 3 | appearance="minimal"만 outer chrome 없이 2px 간격의 flat control을 배치합니다. surface와 on-dark는 2px outer inset과 2px control gap을 가진 grouped surface를 소유합니다. 세 appearance 모두 기본 command/toggle 버튼은 transparent이며 hover·focus·pressed 또는 선택된 toggle에서만 개별 면이 나타납니다. |
+| 명시 규칙 4 | ViewerFrame 안에서 surface와 on-dark ViewerToolbar는 자체 grouped surface를 유지하고, 프레임의 data-viewer-control-shelf는 투명한 배치 래퍼로 동작합니다. minimal이나 사용자 정의 toolbar에는 프레임 shelf가 같은 2px inset의 배경·테두리를 제공하므로 chrome이 중첩되거나 페이지마다 여백이 달라지지 않습니다. |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
 
 ## Responsive
 
+- on-dark는 툴바 루트에서 --viewer-foreground를 static white로 제공합니다. 이 값은 Popover 같은 presentation wrapper를 사이에 둔 버튼에도 상속되며, 비선택 command가 어두운 장면 위에서 기본 label 색상으로 떨어져 사라지지 않게 합니다. Disabled 버튼은 각 control의 disabled foreground를 계속 우선합니다.
 - Toolbar root는 grid/flex의 stretch 가능한 slot에 놓여도 control 묶음의 intrinsic width를 유지합니다. 화면 폭을 채우는 command bar가 필요하면 별도 toolbar/navigation 컴포넌트를 사용합니다.
 - CanvasEditorShell에서도 zoom, fit, camera, display control은 viewport 안에 둡니다. 문서 저장/history command는 shell header 소유입니다.
 - Unity default Scene View overlays: viewport-local navigation/orientation control만 scene edge에 두고 편집 panel과 분리했습니다.
-- NVIDIA Omniverse viewport controls: camera/view/display control을 viewport context에 귀속하고 진단 UI와 구분했습니다.
 
 ## Accessibility
 
@@ -85,10 +92,10 @@
 | `Popover` | 대표 시나리오에서 조합 |
 | `Switch` | 대표 시나리오에서 조합 |
 | `ViewerToolbarButton` | 대표 시나리오에서 조합 |
+| `ElevatorFleetOverview` | 대표 시나리오에서 조합 |
 | `FloorSelector` | 대표 시나리오에서 조합 |
 | `Map2DCanvas` | 대표 시나리오에서 조합 |
 | `Scene3DFrame` | 대표 시나리오에서 조합 |
-| `VideoStreamTile` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -96,13 +103,33 @@
 
 ```jsx
 <ViewerToolbar orientation="horizontal" appearance="on-dark" label="3D 보기">
+  <ViewerToolbarButton label="축소" onClick={zoomOut}>
+    <Icon name="minus" size={16} />
+  </ViewerToolbarButton>
+  <output>{zoom}%</output>
   <ViewerToolbarButton label="확대" onClick={zoomIn}>
     <Icon name="plus" size={16} />
   </ViewerToolbarButton>
-  <ViewerToolbarButton label="레이어 표시" kind="toggle" pressed={layersVisible} onPressedChange={setLayersVisible}>
-    <Icon name="filter" size={16} />
+  <ViewerToolbarButton label="전체 보기" onClick={fitView}>
+    <Icon name="full" size={16} />
+  </ViewerToolbarButton>
+  <ViewerToolbarButton label="레이어 설정" onClick={openLayerSettings}>
+    <Icon name="layers" size={16} />
   </ViewerToolbarButton>
 </ViewerToolbar>
+```
+
+### 추가 조합 2
+
+```jsx
+<ViewerToolbarButton
+  label="격자 표시"
+  kind="toggle"
+  pressed={gridVisible}
+  onPressedChange={setGridVisible}
+>
+  <Icon name="layers" size={16} />
+</ViewerToolbarButton>
 ```
 
 ## Tokens and API
@@ -111,9 +138,10 @@
 
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-line-normal-normal`
+- `--color-semantic-static-black`
+- `--color-semantic-static-white`
 - `--radius-md`
 - `--shadow-sm`
-- `--space-1`
 - `--viewer-border`
 - `--viewer-surface-elevated`
 

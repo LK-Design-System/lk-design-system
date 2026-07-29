@@ -9,15 +9,16 @@
     "Map2DCanvas"
   ],
   "supportingComponents": [],
-  "purpose": "운영자가 점유 격자·경로·로봇 위치를 한 평면에서 팬과 줌으로 살펴볼 때 적합합니다. 공간 관계가 필요 없는 수치 모니터링이나 3차원 장면에는 Telemetry 또는 3D Scene을 사용하세요.",
+  "purpose": "운영자가 점유 격자·평면도·공간 오버레이를 한 평면에서 팬과 줌으로 살펴볼 때 적합합니다. 로봇의 경로·궤적·현재 위치는 Map2DCanvas가 직접 그리지 않고 LDS Robotics Navigation 레이어를 조합하세요.",
   "useWhen": [
-    "appearance=\"light\"가 기본이지만 appearance=\"dark\"도 동일한 공개 계약입니다. 지도 renderer와 overlay는 --viewer- 역할 토큰을 사용해 두 appearance에서 같은 정보·조작 구조를 유지합니다."
+    "appearance=\"light\"가 기본이지만 appearance=\"dark\"도 동일한 공개 계약입니다. 지도 renderer와 overlay는 --viewer- 역할 토큰을 사용해 두 appearance에서 같은 정보·조작 구조를 유지합니다.",
+    "ROS navmsgs/OccupancyGrid: 2D 점유 지도는 셀별 점유 확률과 unknown 값을 제공하는 구조 데이터이므로, Product 예시는 도메인 경로 없이 중립적인 지도 표면으로만 표현합니다."
   ],
   "avoidWhen": [
     "panEnabled={false}에서는 drag와 touch-action: none을 모두 제거해 페이지 터치 스크롤 및 앱의 선택/드로잉 동작과 충돌하지 않습니다.",
     "button, link, input, slider 등 interactive descendant에서 시작한 pointer/wheel 입력도 pan·zoom으로 재처리하지 않습니다.",
     "onWheel은 pointer-focal zoom에 필요한 non-passive native WheelEvent callback입니다. React SyntheticEvent 전용 API를 가정하지 않습니다.",
-    "Mapbox Standard style reference와 runtime configuration guide: 하나의 지도 스타일이 day/night에 대응하는 lighting preset을 런타임에 바꿀 수 있으므로, LDS도 지도를 light 전용으로 고정하지 않고 light/dark appearance를 같은 계약으로 제공합니다."
+    "LDS Product 예시는 구조 지도처럼 중립적인 콘텐츠로 viewport 계약만 보여줍니다. Route·Trajectory·Waypoint·RobotPose의 의미와 시각 문법은 @lk-robotics/lds-robotics-ui가 소유하며, Product Storybook에서 임시 선·점·방향 마커로 재현하지 않습니다. 이 경계는 LDS Robotics revision 180f031541850444d302bcf6a94b96db563133cd의 Navigation Path System 계약과 대조했습니다."
   ],
   "anatomy": [
     {
@@ -231,7 +232,7 @@
   "quantitativeRules": [
     {
       "subject": "명시 규칙 1",
-      "rule": "기본 contentOrigin=\"top-left\"는 일반 이미지, SVG, canvas의 (0, 0)을 viewport 좌상단에 놓습니다. 세계 좌표 원점을 화면 중심에 두어야 하는 renderer만 contentOrigin=\"center\"를 명시하고 자체 콘텐츠 offset을 제공합니다."
+      "rule": "기본 contentOrigin=\"top-left\"는 일반 이미지, SVG, canvas의 (0, 0)을 viewport 좌상단에 놓습니다. contentOrigin=\"center\"는 세계 좌표 원점을 화면 중심에 두는 renderer를 위한 저수준 호환 계약이지만 현재 고정 LDS Robotics·LDS3D source에는 직접 소비가 없으므로 공개 사용 변형으로 권장하지 않습니다. LDS Robotics Navigation은 NavigationCoordinateBoundary와 명시적인 svgOrigin을 사용합니다."
     },
     {
       "subject": "명시 규칙 2",
@@ -262,8 +263,14 @@
     "WCAG 2.2 — Dragging Movements: drag만이 유일한 조작이 되지 않도록 버튼과 키보드 pan/zoom 대안을 유지했습니다.",
     "WAI-ARIA Toolbar pattern: viewport 안의 방향키 toolbar가 canvas 방향키 shortcut과 충돌하지 않도록 이벤트 범위를 분리했습니다."
   ],
-  "exceptions": [],
+  "exceptions": [
+    "Built-in 지도 도구도 공통 Viewer edge grammar를 따릅니다. source는 좌상단, 세로 줌·fit·reset 도구는 우상단, 현재 배율 또는 제품 상태는 좌하단에 두며 지도만의 별도 하단 toolbar chrome을 만들지 않습니다."
+  ],
   "related": [
+    {
+      "component": "ElevatorFleetOverview",
+      "relationship": "대표 시나리오에서 조합"
+    },
     {
       "component": "FloorSelector",
       "relationship": "대표 시나리오에서 조합"
@@ -291,16 +298,12 @@
     {
       "component": "ViewerToolbar",
       "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "ViewerToolbarButton",
-      "relationship": "대표 시나리오에서 조합"
     }
   ],
   "examples": [
     {
       "label": "기본 조합",
-      "code": "<Map2DCanvas\n  style={{ height: 360 }}\n  defaultViewport={{ x: 24, y: 24, z: 1 }}\n  panEnabled={tool === 'pan'}\n  wheelZoom\n  status=\"x 12.4 · y -3.8 · 125%\"\n>\n  <img src=\"/maps/floor1.png\" alt=\"1층 점유 지도\" style={{ display: 'block' }} />\n</Map2DCanvas>"
+      "code": "<Map2DCanvas\n  style={{ height: 360 }}\n  source=\"1층 지도\"\n  defaultViewport={{ x: 24, y: 24, z: 1 }}\n  panEnabled={tool === 'pan'}\n  wheelZoom\n  status=\"x 12.4 · y -3.8 · 125%\"\n>\n  <img src=\"/maps/floor1.png\" alt=\"1층 점유 지도\" style={{ display: 'block' }} />\n</Map2DCanvas>"
     }
   ],
   "tokens": [
@@ -359,7 +362,7 @@
     "responsive": "evidence",
     "contentGuidance": "evidence",
     "accessibility": "evidence",
-    "exceptions": "omitted-no-evidence",
+    "exceptions": "evidence",
     "related": "evidence",
     "examples": "evidence",
     "tokens": "evidence",

@@ -109,6 +109,7 @@ export { WheelPicker } from '../components/selection/WheelPicker.jsx';
 export { CircularProgress } from '../components/status/CircularProgress.jsx';
 export { Meter } from '../components/status/Meter.jsx';
 export { ProgressBar } from '../components/status/ProgressBar.jsx';
+export { ElevatorFleetOverview } from '../components/viz/ElevatorFleetOverview.jsx';
 export { Map2DCanvas } from '../components/viz/Map2DCanvas.jsx';
 export { Scene3DFrame } from '../components/viz/Scene3DFrame.jsx';
 export { TelemetryGauge } from '../components/viz/TelemetryGauge.jsx';

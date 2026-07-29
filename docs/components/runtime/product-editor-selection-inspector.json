@@ -95,9 +95,9 @@
   "behavior": [
     "Keep selection identity and status fixed at the top, make property groups independently collapsible, and keep object-scoped actions in the sticky actions area.",
     "Figma right properties panel and selection guidance support a selection-bound right panel and one shared canvas/tree selection model.",
+    "Adobe Spectrum Action Bar keeps contextual actions grouped while preserving a safe zone between selection identity and actions; LDS uses the same separation principle inside the inspector footer.",
     "The resulting LDS contract covers no selection, one selection, multi/mixed selection, status, read-only/locked content supplied by consumers, and object actions. Domain-specific property schemas remain Product/Robotics composition.",
-    "SelectionInspector - Selection-bound identity and properties region.",
-    "Use it for a selected canvas or scene object such as a waypoint, route segment, zone, map annotation, crop volume, or bounding box. Keep it separate from layer/display selection."
+    "SelectionInspector - Selection-bound identity and properties region."
   ],
   "quantitativeRules": [
     {
@@ -123,10 +123,10 @@
   ],
   "responsive": [],
   "contentGuidance": [
+    "statusPresentation=\"indicator\" is for live availability, connection, or freshness and renders the Core StatusIndicator. Keep the default \"badge\" for lifecycle and result labels.",
     "With no item and no selectionCount, the inspector shows emptyLabel (default 선택한 객체가 없습니다.) as a status region. Keep it a short instruction about selecting on the canvas, not a workflow message.",
     "SelectionInspector is a named region rather than a second nested complementary landmark. CanvasEditorShell/DockPanel owns the docked or overlay panel landmark and resize/collapse behavior.",
-    "Field and object status use the canonical signal / positive / cautionary / negative vocabulary. warning and danger are compatibility aliases, not names for new usage.",
-    "Unity Inspector supports a contextual property surface that follows the selected object."
+    "Field and object status use the canonical signal / positive / cautionary / negative vocabulary. warning and danger are compatibility aliases, not names for new usage."
   ],
   "accessibility": [
     "Keep reversible commit actions at the trailing edge. A destructive object action uses the danger button grammar, is separated from the primary commit action with flexible space, and opens ConfirmDialog before execution. Do not disguise deletion as a neutral assistive action beside Apply.",

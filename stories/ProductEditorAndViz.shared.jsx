@@ -126,8 +126,10 @@ function FeedPlaceholder({ children }) {
         background: 'repeating-linear-gradient(135deg, var(--component-viewer-surface) 0 10px, var(--component-viewer-surface-elevated) 10px 20px)',
       }}
     >
+      {/* 플레이스홀더 문구는 한글이라 mono·양수 자간·uppercase를 쓰지 않는다.
+          mono는 자릿수 정렬이 필요한 수치 판독(아래 좌표 표시)에만 남긴다. */}
       {children != null && (
-        <span style={{ fontFamily: monoFont, fontSize: 11, fontWeight: 'var(--fw-semibold)', letterSpacing: '1.2px', textTransform: 'uppercase', color: 'var(--component-viewer-muted)' }}>
+        <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 'var(--fw-semibold)', color: 'var(--component-viewer-muted)' }}>
           {children}
         </span>
       )}
@@ -144,18 +146,18 @@ export const VideoStreamTileCard = {
         마지막 프레임 유지 — degraded · stale · paused
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 28 }}>
-        <VideoStreamTile label="RGB" state="degraded"><FeedPlaceholder>LAST FRAME</FeedPlaceholder></VideoStreamTile>
-        <VideoStreamTile label="IR" state="stale"><FeedPlaceholder>LAST FRAME</FeedPlaceholder></VideoStreamTile>
-        <VideoStreamTile label="EO-1" state="paused"><FeedPlaceholder>LAST FRAME</FeedPlaceholder></VideoStreamTile>
+        <VideoStreamTile label="보조 영상 A" state="degraded"><FeedPlaceholder>마지막 프레임</FeedPlaceholder></VideoStreamTile>
+        <VideoStreamTile label="보조 영상 B" state="stale"><FeedPlaceholder>마지막 프레임</FeedPlaceholder></VideoStreamTile>
+        <VideoStreamTile label="보조 영상 C" state="paused"><FeedPlaceholder>마지막 프레임</FeedPlaceholder></VideoStreamTile>
       </div>
 
       <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 12px' }}>
         사용 가능/차단 상태 — live · loading · disconnected
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 28 }}>
-        <VideoStreamTile label="RGB" state="live"><FeedPlaceholder>RTSP · 1280×720</FeedPlaceholder></VideoStreamTile>
-        <VideoStreamTile label="IR" state="loading"><FeedPlaceholder /></VideoStreamTile>
-        <VideoStreamTile label="EO-1" state="disconnected"><FeedPlaceholder /></VideoStreamTile>
+        <VideoStreamTile label="보조 영상 A" state="live"><FeedPlaceholder>영상 렌더러 영역</FeedPlaceholder></VideoStreamTile>
+        <VideoStreamTile label="보조 영상 B" state="loading"><FeedPlaceholder /></VideoStreamTile>
+        <VideoStreamTile label="보조 영상 C" state="disconnected"><FeedPlaceholder /></VideoStreamTile>
       </div>
 
       <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 12px' }}>
@@ -163,10 +165,10 @@ export const VideoStreamTileCard = {
       </div>
       <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', flexWrap: 'wrap' }}>
         <div style={{ flex: 1, minWidth: 200, maxWidth: 300 }}>
-          <VideoStreamTile label="THERMAL" state="live" aspectRatio="4 / 3"><FeedPlaceholder>4∶3</FeedPlaceholder></VideoStreamTile>
+          <VideoStreamTile label="표준 영상" state="live" aspectRatio="4 / 3"><FeedPlaceholder>4∶3</FeedPlaceholder></VideoStreamTile>
         </div>
         <div style={{ flex: '1 1 420px', minWidth: 200 }}>
-          <VideoStreamTile label="PANO" state="live" aspectRatio="21 / 9"><FeedPlaceholder>21∶9 · WIDE</FeedPlaceholder></VideoStreamTile>
+          <VideoStreamTile label="와이드 영상" state="live" aspectRatio="21 / 9"><FeedPlaceholder>21∶9 · WIDE</FeedPlaceholder></VideoStreamTile>
         </div>
       </div>
     </div>
@@ -306,41 +308,11 @@ export const CanvasEditorShellEditorToolbarHistoryToolbarCard = {
   },
 };
 
-function createParityRandom() {
-  let seed = 0x4f14ff >>> 0;
-  return () => {
-    seed = (seed * 1664525 + 1013904223) >>> 0;
-    return seed / 0x100000000;
-  };
-}
-
-const parityRandom = createParityRandom();
-const parityCloudPoints = Array.from({ length: 130 }, () => {
-  const x = parityRandom() * 100;
-  const y = parityRandom() * 100;
-  return {
-    x,
-    y,
-    r: parityRandom() * 1.6 + 0.5,
-    opacity: parityRandom() * 0.6 + 0.25,
-  };
-});
-
-function ParityCloudPlaceholder() {
+function ParityRendererPlaceholder() {
   return (
-    <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 90% at 50% 20%, var(--color-semantic-primary-surface-strong), transparent 60%)' }}>
-      <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-        {parityCloudPoints.map((point, index) => (
-          <circle
-            key={`${point.x}-${point.y}-${index}`}
-            cx={point.x}
-            cy={point.y}
-            r={point.r}
-            fill={index % 5 === 0 ? 'var(--color-semantic-primary-normal)' : 'var(--viewer-foreground)'}
-            opacity={point.opacity}
-          />
-        ))}
-      </svg>
+    <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', background: 'var(--viewer-surface)', color: 'var(--viewer-muted)' }}>
+      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, opacity: 0.3, backgroundImage: 'linear-gradient(var(--viewer-border) 1px, transparent 1px), linear-gradient(90deg, var(--viewer-border) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <strong style={{ position: 'relative', color: 'var(--viewer-foreground)', fontSize: 'var(--body2-size)' }}>3D 렌더러 영역</strong>
     </div>
   );
 }
@@ -351,30 +323,27 @@ export const Scene3DFrameCard = {
   render: () => (
     <div data-visual-crop-root style={{ width: 480, height: 360, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box' }}>
       <Scene3DFrame
-        title="POINT CLOUD"
-        state="live"
+        title="장면 A"
+        state="ready"
         badges={<ConnectionBadge status="online" size="sm" />}
-        status="1.2M points · 38 FPS"
+        status="원근 · 60 FPS"
         style={{ height: 300 }}
       >
-        <ParityCloudPlaceholder />
+        <ParityRendererPlaceholder />
       </Scene3DFrame>
     </div>
   ),
 };
 
 function ParityMapPlaceholder() {
-  const points = [[80, 210], [200, 110], [340, 70]];
   return (
     <svg width="440" height="280" viewBox="0 0 440 280" style={{ display: 'block' }}>
-      <rect x="30" y="26" width="380" height="228" fill="none" stroke="var(--color-semantic-label-normal)" strokeWidth="3" opacity="0.85" />
-      <path d="M30 150 H150 M150 26 V150 M250 150 V254 M250 200 H410" fill="none" stroke="var(--color-semantic-label-normal)" strokeWidth="3" opacity="0.6" />
-      <polyline points="80,210 80,110 200,110 200,70 340,70" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="2.5" strokeDasharray="6 6" opacity="0.9" />
-      {points.map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="4" fill="var(--color-semantic-primary-normal)" />)}
-      <g transform="translate(80,210)">
-        <circle r="9" fill="var(--color-semantic-primary-normal)" />
-        <path d="M0 -9 L5 3 L0 0 L-5 3 Z" fill="var(--color-semantic-static-white)" transform="rotate(30)" />
-      </g>
+      <rect x="30" y="26" width="380" height="228" rx="4" fill="var(--viewer-surface)" stroke="var(--viewer-border)" strokeWidth="2" />
+      <rect x="52" y="48" width="124" height="78" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+      <rect x="198" y="48" width="190" height="78" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+      <rect x="52" y="152" width="148" height="80" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+      <rect x="224" y="152" width="164" height="80" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+      <path d="M176 87 H198 M200 192 H224 M116 126 V152 M306 126 V152" fill="none" stroke="var(--viewer-foreground)" strokeWidth="5" opacity="0.32" />
     </svg>
   );
 }
@@ -392,11 +361,11 @@ export const Map2DCanvasCard = {
 function ViewerToolbarMapPlaceholder({ layers }) {
   return (
     <svg width="320" height="200" viewBox="0 0 320 200" style={{ display: 'block' }}>
-      {layers.map && <rect x="20" y="18" width="280" height="164" fill="none" stroke="var(--component-viewer-muted)" strokeWidth="2.5" />}
-      {layers.map && <path d="M20 110 H120 M120 18 V110 M190 110 V182 M190 140 H300" fill="none" stroke="var(--component-viewer-subtle)" strokeWidth="2.5" />}
-      {layers.path && <polyline points="60,150 60,80 150,80 150,50 250,50" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="2.5" strokeDasharray="6 6" />}
-      {layers.robots && <circle cx="60" cy="150" r="6" fill="var(--color-semantic-primary-normal)" />}
-      {layers.robots && <circle cx="250" cy="50" r="6" fill="var(--color-semantic-primary-normal)" />}
+      {layers.base && <rect x="20" y="18" width="280" height="164" rx="4" fill="none" stroke="var(--component-viewer-muted)" strokeWidth="2.5" />}
+      {layers.base && <path d="M20 110 H120 M120 18 V110 M190 110 V182 M190 140 H300" fill="none" stroke="var(--component-viewer-subtle)" strokeWidth="2.5" />}
+      {layers.overlay && <rect x="50" y="46" width="96" height="42" rx="4" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-muted)" />}
+      {layers.overlay && <rect x="180" y="120" width="90" height="38" rx="4" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-muted)" />}
+      {layers.guides && <path d="M38 100 H282 M160 34 V166" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="1.5" strokeDasharray="5 5" />}
     </svg>
   );
 }
@@ -406,8 +375,8 @@ export const ViewerToolbarCard = {
   tags: ['!dev', 'visual-parity'],
   render: () => {
     const zoom = 100;
-    const layers = { map: true, path: true, robots: true };
-    const anyOff = !layers.map || !layers.path || !layers.robots;
+    const layers = { base: true, overlay: true, guides: true };
+    const anyOff = !layers.base || !layers.overlay || !layers.guides;
     return (
       <div data-visual-crop-root style={{ width: 700, height: 460, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--color-semantic-label-normal)' }}>
         <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 12px' }}>
@@ -433,9 +402,9 @@ export const ViewerToolbarCard = {
                 레이어
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <Switch size="sm" label="맵" checked={layers.map} onChange={() => {}} />
-                <Switch size="sm" label="경로" checked={layers.path} onChange={() => {}} />
-                <Switch size="sm" label="로봇" checked={layers.robots} onChange={() => {}} />
+                <Switch size="sm" label="기본 표면" checked={layers.base} onChange={() => {}} />
+                <Switch size="sm" label="보조 오버레이" checked={layers.overlay} onChange={() => {}} />
+                <Switch size="sm" label="가이드" checked={layers.guides} onChange={() => {}} />
               </div>
             </Popover>
           </ViewerToolbar>

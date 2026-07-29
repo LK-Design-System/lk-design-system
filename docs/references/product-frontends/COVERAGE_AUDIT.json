@@ -22,13 +22,57 @@
     "verified": 16
   },
   "componentDispositionSummary": {
-    "keep": 15,
+    "keep": 16,
     "redesign": 6,
     "split": 8,
     "remove": 22,
-    "separate-audit": 5
+    "separate-audit": 6
   },
   "componentDisposition": [
+    {
+      "name": "ElevatorFleetOverview",
+      "path": "components/viz/ElevatorFleetOverview.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-02"
+      ],
+      "reason": "Provides a reusable, read-only projection for comparing current elevator positions across buildings without owning telemetry transport, building grouping policy, alert thresholds, detail navigation, or remote commands. It is independently designed from LDS viewer, scroll, card, and status siblings plus official elevator monitoring references.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "The pinned dashboard exposes selected-robot and connection truth but no multi-building elevator fleet. Future use may compose this projection, while Web Viz retains polling, stale interpretation, grouping, and navigation.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "supported by composition",
+          "reason": "Pinned supervision source confirms equipment identity, condition, direction-like facts, and freshness needs. ElevatorFleetOverview adds an independently researched position projection; Control retains telemetry truth, alert policy, permissions, selection routing, and commands.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "not applicable",
+          "reason": "The pinned project and assistant workflow has no physical-equipment fleet monitoring entry point.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/chat/PortalChatPanel.tsx",
+              "blobSha": "b3a8a2eb0d33ff46c30413994de874d456d8"
+            }
+          ]
+        }
+      ]
+    },
     {
       "name": "RecordHeader",
       "path": "components/content/RecordHeader.jsx",
@@ -809,6 +853,68 @@
       "decision": "separate-audit",
       "workflowIds": [],
       "reason": "Requires a separate audit against LDS siblings and official editor/accessibility references; pinned product sources may confirm workflow coverage only and do not decide anatomy, API, or style."
+    },
+    {
+      "name": "ViewerFrame",
+      "path": "components/viz/ViewerFrame.jsx",
+      "decision": "separate-audit",
+      "workflowIds": [],
+      "reason": "A reusable Product viewport frame is justified across map, 3D, and video, but its renderer-first anatomy, control placement, state urgency, and responsive behavior require LDS sibling plus official viewer/accessibility references rather than copying one product screen.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "supported by composition",
+          "reason": "Pinned map and 3D sources confirm renderer-owned pan/zoom, source data, loading, and error truth; ViewerFrame can supply shared identity, local-command placement, and blocking/retained-content presentation without owning the authoring screen.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/components/Map2DViewer.tsx",
+              "blobSha": "46da3c8cf57db99247c894496301ab35a46f1e47"
+            },
+            {
+              "path": "frontend/src/components/map/MapPreview.tsx",
+              "blobSha": "e0c72999e37dc4afed62ab4a4644da4dbe21a8cf"
+            },
+            {
+              "path": "frontend/src/components/editor/PcdMap3DPanel.tsx",
+              "blobSha": "365656b086bad4ad9fa4adb02d72774dab93830e"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "supported by composition",
+          "reason": "Pinned 3D monitoring and manual-control surfaces can use a shared viewport frame while PTZ commands, robot authority, transport, multi-stream layout, and recovery policy remain product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap3D/index.jsx",
+              "blobSha": "e52ce9468a8dd4074adae4c3404c79d75718fb2f"
+            },
+            {
+              "path": "frontend/src/views/manual-control/index.jsx",
+              "blobSha": "1429c7b72de1ba51ce78f964ecfcb548b963998f"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "not applicable",
+          "reason": "The pinned frontend owns project, evidence, and chat workflows and exposes no map, 3D, or video viewport-local navigation contract.",
+          "sourceEvidence": [
+            {
+              "path": "src/app/page.tsx",
+              "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+            },
+            {
+              "path": "src/app/projects/page.tsx",
+              "blobSha": "e1539973aebffb3566983f27e8845ed8384dba59"
+            },
+            {
+              "path": "src/components/chat/PortalChatPanel.tsx",
+              "blobSha": "b3a8a2eb0d33ff46c30413994de874d456d8"
+            }
+          ]
+        }
+      ]
     }
   ],
   "repositories": [

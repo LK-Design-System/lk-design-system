@@ -34,38 +34,44 @@ function StatusValue({ item }) {
     <span
       data-viewport-status-value=""
       data-unit-attachment={normalizedUnit === '' ? 'none' : attachedUnit ? 'attached' : 'spaced'}
-      style={{ display: 'inline-block', minWidth: 0, maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', ...numericStyle(item.mono) }}
+      style={{ display: 'inline-flex', alignItems: 'center', minWidth: 0, maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', ...numericStyle(item.mono) }}
     >
       <span>{renderedValue}</span>
       {normalizedUnit !== '' && <span>{unitSeparator}{normalizedUnit}</span>}
     </span>
   );
 
-  if (item.tone != null && item.tone !== 'default') {
-    const tone = normalizeStatusTone(item.tone);
-    return (
-      <StatusBadge tone={tone} style={{ minWidth: 0, maxWidth: '100%', overflow: 'hidden', flexShrink: 1 }}>
-        {lockup}
-        <span style={{ whiteSpace: 'nowrap' }}>· {item.toneLabel ?? STATUS_LABEL[tone]}</span>
-      </StatusBadge>
-    );
-  }
+  const tone = item.tone != null && item.tone !== 'default'
+    ? normalizeStatusTone(item.tone)
+    : null;
 
   return (
-    <strong
-      style={{
-        display: 'inline-block',
-        minWidth: 0,
-        maxWidth: '100%',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        color: 'var(--color-semantic-label-strong)',
-        fontWeight: 'var(--fw-bold)',
-      }}
-    >
-      {lockup}
-    </strong>
+    <>
+      <strong
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          minWidth: 0,
+          maxWidth: '100%',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          color: 'var(--color-semantic-label-strong)',
+          fontWeight: 'var(--fw-bold)',
+        }}
+      >
+        {lockup}
+      </strong>
+      {tone && (
+        <StatusBadge
+          data-viewport-status-tone=""
+          tone={tone}
+          style={{ minWidth: 0, maxWidth: '100%', overflow: 'hidden', flexShrink: 1 }}
+        >
+          {item.toneLabel ?? STATUS_LABEL[tone]}
+        </StatusBadge>
+      )}
+    </>
   );
 }
 
@@ -78,7 +84,7 @@ function PersistentItem({ item }) {
       title={item.title}
       style={{
         display: 'inline-flex',
-        alignItems: 'baseline',
+        alignItems: 'center',
         gap: 'var(--space-1)',
         flex: `0 ${shrink} auto`,
         minWidth: priority === 'high' ? 'max-content' : 0,
@@ -148,17 +154,22 @@ export function ViewportStatusBar({
           role="status"
           aria-live="polite"
           aria-atomic="true"
-          style={{ display: 'inline-flex', alignItems: 'center', minWidth: 0, maxWidth: 'min(46%, 420px)', overflow: 'hidden', flex: '0 1 auto' }}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', minWidth: 0, maxWidth: 'min(46%, 420px)', overflow: 'hidden', flex: '0 1 auto' }}
         >
-          {resolvedMessageTone ? (
-            <StatusBadge tone={resolvedMessageTone} style={{ minWidth: 0, maxWidth: '100%', overflow: 'hidden' }}>
-              <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{message}</span>
-              <span style={{ whiteSpace: 'nowrap' }}>· {messageToneLabel ?? STATUS_LABEL[resolvedMessageTone]}</span>
+          <span
+            data-viewport-status-message=""
+            style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--color-semantic-label-strong)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-semibold)' }}
+          >
+            {message}
+          </span>
+          {resolvedMessageTone && (
+            <StatusBadge
+              data-viewport-message-tone=""
+              tone={resolvedMessageTone}
+              style={{ minWidth: 0, maxWidth: '100%', overflow: 'hidden', flexShrink: 0 }}
+            >
+              {messageToneLabel ?? STATUS_LABEL[resolvedMessageTone]}
             </StatusBadge>
-          ) : (
-            <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--color-semantic-label-strong)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-semibold)' }}>
-              {message}
-            </span>
           )}
         </span>
       )}

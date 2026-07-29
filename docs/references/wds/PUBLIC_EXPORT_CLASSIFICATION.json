@@ -689,6 +689,7 @@
       "wdsFamily": "Application viewer patterns",
       "storyEvidence": [
         "stories/Viewer3D.stories.jsx",
+        "stories/ViewerElevatorFleet.stories.jsx",
         "stories/ViewerFloorSelector.stories.jsx",
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
@@ -696,6 +697,7 @@
         "stories/ViewerVideo.stories.jsx"
       ],
       "exports": [
+        "ElevatorFleetOverview",
         "FloorSelector",
         "Map2DCanvas",
         "Scene3DFrame",

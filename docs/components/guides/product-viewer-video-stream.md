@@ -14,9 +14,14 @@
 
 ### 사용
 
-- Use the local toolbar for mute, captions, snapshot, and fullscreen. Recording archives, timelines, playback-session controls, and retry policy are intentionally omitted from this DS component.
 - The HTML media element specification influenced the separation of paused, ended/unavailable, and error semantics from connection transport.
+- Microsoft MediaTransportControls confirms that volume belongs with the media transport controls; it is not evidence for a detached settings popover.
+- WCAG live captions and Pause, Stop, Hide influenced the optional captions/pause toolbar contract without embedding a product player workflow.
 - VideoStreamTile is the video-source preset for ViewerFrame.
+
+### 사용하지 않음
+
+- 현재 고정된 LDS Robotics와 LDS3D source에는 VideoStreamTile 직접 소비가 없습니다. 실제 제품 소비 근거를 확인하기 전에는 transport·protocol·robot camera 의미를 이 preset에 추가하지 않으며, 단순한 영상 상태와 chrome만 필요하면 ViewerFrame 직접 조합도 함께 검토합니다.
 
 ## Anatomy
 
@@ -26,6 +31,7 @@
 | label | Visible camera or media-source identity. |
 | ariaLabel | Accessible region name. Derived from a string label when omitted. |
 | toolbar | Viewport-local mute, captions, snapshot, or fullscreen controls. |
+| toolbarVisibility | Local media controls are revealed by hover, press, or focus by default. |
 
 ## Properties
 
@@ -51,6 +57,8 @@
 | `stateIcon` | `React.ReactNode` | No |  |
 | `stateAction` | `React.ReactNode` | No |  |
 | `variant` | `'standalone' \| 'embedded'` | No | Perimeter ownership. "embedded" drops the tile's own border and radius so a parent surface owns one continuous outline. @default "standalone" |
+| `chromeVariant` | `'surface' \| 'overlay'` | No | Video chrome treatment. @default "overlay" |
+| `toolbarVisibility` | `'always' \| 'interaction'` | No | Local media controls are revealed by hover, press, or focus by default. |
 
 ## States
 
@@ -59,19 +67,33 @@
 | status | Normalized stream state. Prefer state in new code. @default "idle" |
 | state | Normalized stream state. Takes precedence over the compatibility status prop. |
 | variant | Perimeter ownership. "embedded" drops the tile's own border and radius so a parent surface owns one continuous outline. @default "standalone" |
+| chromeVariant | Video chrome treatment. @default "overlay" |
+
+## Behavior and interaction
+
+- Video.js VolumePanel likewise groups MuteToggle and VolumeControl, expands the control through hover/focus interaction, and returns focus to the mute control when Escape closes the rail. LDS adapts that interaction to ViewerToolbar.
+- Genetec Security Center tile customization allows video controls, timeline, and tile toolbar to auto-hide and reappear on hover. LDS uses the same information-hierarchy conclusion while preserving keyboard focus reveal.
 
 ## 정량 규칙
 
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | aspectRatio (default 16 / 9) is a CSS aspect-ratio value that sizes the tile from its width. Match it to the real stream ratio (4 / 3, 1 / 1) instead of letterboxing inside the child renderer; give the tile an explicit height only when the owning grid requires it. |
+| 명시 규칙 2 | Use the local toolbar for volume, captions, snapshot, and fullscreen. Volume is a compact media-control group: the mute button and horizontal LDS Slider share the overlay toolbar surface, and the rail expands on hover or focus without adding a detached label or value bubble. |
+| 명시 규칙 3 | Healthy live tiles omit passive resolution/FPS chrome by default. Put quality selection in settings or a product-owned detail surface; pass metadata only when the value is necessary to interpret the current state. |
+| 명시 규칙 4 | Video.js Volume Slider keeps the continuous 0–100 range in the player controls and exposes its numeric value through the range contract. LDS uses a short horizontal rail with a small thumb and omits a detached value bubble from the compact viewer toolbar. |
+
+## Responsive
+
+- Video keeps the shared edge grammar—source identity at the top-left and local media commands at the top-right—but adapts it to media viewing with compact translucent overlay surfaces.
+- Shaka Player UI defines mutevolume as a combined mute button and volume slider container. LDS follows that compact anatomy rather than presenting volume as a settings card.
 
 ## Content and writing
 
 - The chrome slots follow the shared ViewerFrame contract: badges is passive identity context beside label, hud carries a few essential stream readouts, and overlay is a non-interactive layer above the video (crosshair, privacy mask) — controls belong in toolbar only.
-- degraded, stale, frozen, and user-requested paused are distinct non-blocking states. They preserve the last frame with an edge message.
+- degraded, stale, frozen, and user-requested paused are distinct non-blocking states. They preserve the last frame with an edge message and use the shared state-specific retained-frame emphasis instead of one blanket dim treatment.
+- AXIS Camera Station Pro treats camera names and recording/event indicators as optional live-view context and manages resolution/frame rate through stream profiles rather than permanent tile badges. LDS therefore keeps normal video chrome limited to identity and live truth.
 - Pass a , WebRTC renderer, iframe, or image as children. The DS owns the named frame, source identity, local toolbar/HUD slots, aspect ratio, and normalized stream-state presentation. The application owns transport, autoplay policy, playback, recording, reconnection, and media permissions.
-- These expectations are adapted to LDS component roles and icons rather than copying another product's visual styling. The common state and placement contract is documented in ViewerFrame.prompt.md.
 
 ## Accessibility
 
@@ -79,7 +101,7 @@
 - live uses both icon and text. Loading/connecting states include visible text and aria-busy; they do not rely on a spinner alone.
 - no-source, unavailable, disconnected, no-signal, and error are blocking. Child media controls and local toolbar controls become inert and aria-hidden, while source identity remains visible.
 - A retry/resume control may be supplied through stateAction; the application owns transport and recovery, and the frame restores focus to that action when a focused viewport control becomes blocked.
-- variant="embedded"는 이 타일을 다른 표면 안에 중첩할 때 자체 border·radius를 생략해 부모가 최외곽선을 소유하게 합니다. source·HUD·toolbar·상태·접근성 역할은 그대로 유지됩니다. 기본값 standalone은 자체 외곽선을 그립니다.
+- Video defaults to chromeVariant="overlay" and toolbarVisibility="interaction". Source identity plus the normalized live state remain visible; the local toolbar is visually hidden until the frame is hovered, pressed, or contains keyboard focus.
 
 ## Related components
 
@@ -89,10 +111,10 @@
 | `Icon` | 대표 시나리오에서 조합 |
 | `ViewerToolbar` | 대표 시나리오에서 조합 |
 | `ViewerToolbarButton` | 대표 시나리오에서 조합 |
+| `ElevatorFleetOverview` | 대표 시나리오에서 조합 |
 | `FloorSelector` | 대표 시나리오에서 조합 |
 | `Map2DCanvas` | 대표 시나리오에서 조합 |
 | `Scene3DFrame` | 대표 시나리오에서 조합 |
-| `VIEWER_BLOCKING_STATES` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -100,12 +122,11 @@
 
 ```jsx
 <VideoStreamTile
-  label="AMR-07 · FRONT"
+  label="주 영상"
   state="live"
-  metadata="1080p · 30 FPS"
   toolbar={videoControls}
 >
-  <video aria-label="AMR-07 전면 카메라 영상" />
+  <video aria-label="주 영상 스트림" />
 </VideoStreamTile>
 ```
 
@@ -128,6 +149,10 @@
 - VideoStreamTile prompt contract: `components/viz/VideoStreamTile.prompt.md`
 - Storybook implementation evidence: `stories/ViewerVideo.stories.jsx`
 - [HTML media element specification](https://html.spec.whatwg.org/multipage/media.html)
-- [WebRTC Statistics](https://www.w3.org/TR/webrtc-stats/)
-- [WCAG live captions](https://www.w3.org/WAI/WCAG22/Understanding/captions-live.html)
-- [Pause, Stop, Hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html)
+- [Shaka Player UI](https://shaka-project.github.io/shaka-player/docs/api/tutorial-ui-customization.html)
+- [Video.js VolumePanel](https://docs.videojs.com/volumepanel)
+- [Video.js Volume Slider](https://videojs.org/docs/framework/html/reference/volume-slider)
+- [Microsoft MediaTransportControls](https://learn.microsoft.com/en-us/windows/apps/develop/ui/controls/custom-transport-controls)
+- [Genetec Security Center tile customization](https://techdocs.genetec.com/r/en-US/Security-Center-User-Guide-5.13/Customizing-how-tiles-are-displayed-in-Security-Center)
+- [AXIS Camera Station Pro](https://help.axis.com/en-us/axis-camera-station-pro)
+- [Verkada Camera Shortcuts](https://help.verkada.com/verkada-cameras/configuration/view-and-edit-camera-settings/camera-shortcuts)

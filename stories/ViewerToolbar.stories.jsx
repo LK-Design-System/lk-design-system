@@ -31,12 +31,12 @@ function ToolbarIcon({ name }) {
 
 function MiniMapPreview({ layers, zoom }) {
   return (
-    <svg width="360" height="220" viewBox="0 0 360 220" style={{ display: 'block', width: 'min(360px, calc(100vw - 48px))', height: 'auto', transform: `scale(${zoom / 100})`, transformOrigin: 'center', transition: 'transform var(--dur-fast) var(--ease-out)' }} role="img" aria-label="툴바가 놓인 지도 예시">
-      {layers.map && <rect x="28" y="24" width="304" height="172" fill="none" stroke="var(--component-viewer-muted)" strokeWidth="2.5" />}
-      {layers.map && <path d="M28 118 H132 M132 24 V118 M214 118 V196 M214 150 H332" fill="none" stroke="var(--component-viewer-subtle)" strokeWidth="2.5" />}
-      {layers.path && <polyline points="64,162 64,86 164,86 164,58 286,58" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="2.5" strokeDasharray="6 6" />}
-      {layers.robots && <circle cx="64" cy="162" r="6" fill="var(--color-semantic-primary-normal)" />}
-      {layers.robots && <circle cx="286" cy="58" r="6" fill="var(--color-semantic-primary-normal)" />}
+    <svg width="360" height="220" viewBox="0 0 360 220" style={{ display: 'block', width: 'min(360px, calc(100vw - 48px))', height: 'auto', transform: `scale(${zoom / 100})`, transformOrigin: 'center', transition: 'transform var(--dur-fast) var(--ease-out)' }} role="img" aria-label="툴바가 놓인 중립 뷰포트 예시">
+      {layers.base && <rect x="28" y="24" width="304" height="172" rx="4" fill="none" stroke="var(--component-viewer-muted)" strokeWidth="2.5" />}
+      {layers.base && <path d="M28 118 H132 M132 24 V118 M214 118 V196 M214 150 H332" fill="none" stroke="var(--component-viewer-subtle)" strokeWidth="2.5" />}
+      {layers.overlay && <rect x="58" y="52" width="108" height="48" rx="4" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-muted)" />}
+      {layers.overlay && <rect x="198" y="126" width="104" height="44" rx="4" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-muted)" />}
+      {layers.guides && <path d="M46 110 H314 M180 38 V182" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="1.5" strokeDasharray="5 5" />}
     </svg>
   );
 }
@@ -62,8 +62,8 @@ function SelfManagedToolbarControl({ onAction }) {
 }
 
 function ToolbarInteractionFixture() {
-  const [pathVisible, setPathVisible] = React.useState(false);
-  const [pathAvailable, setPathAvailable] = React.useState(true);
+  const [overlayVisible, setOverlayVisible] = React.useState(false);
+  const [overlayAvailable, setOverlayAvailable] = React.useState(true);
   const [zoomAvailable, setZoomAvailable] = React.useState(true);
   const [extraVisible, setExtraVisible] = React.useState(false);
   const [ownershipProbeVisible, setOwnershipProbeVisible] = React.useState(false);
@@ -74,8 +74,8 @@ function ToolbarInteractionFixture() {
       <ViewerToolbar orientation="horizontal" appearance="surface" label="키보드 검증 툴바">
         <ViewerToolbarButton label="확대" disabled={!zoomAvailable} onClick={() => setLastAction('확대')}><ToolbarIcon name="plus" /></ViewerToolbarButton>
         <ViewerToolbarButton label="축소 사용할 수 없음" aria-disabled="true" onClick={() => setLastAction('축소')}><ToolbarIcon name="minus" /></ViewerToolbarButton>
-        <ViewerToolbarButton label="경로 표시" kind="toggle" pressed={pathVisible} aria-disabled={!pathAvailable || undefined} onPressedChange={setPathVisible}>
-          <ToolbarIcon name="route" />
+        <ViewerToolbarButton label="보조 오버레이 표시" kind="toggle" pressed={overlayVisible} aria-disabled={!overlayAvailable || undefined} onPressedChange={setOverlayVisible}>
+          <ToolbarIcon name="layers" />
         </ViewerToolbarButton>
         <ViewerToolbarButton data-testid="add-control" label="나침반 조작 추가" onClick={() => setExtraVisible(true)}>
           <ToolbarIcon name="plus" />
@@ -88,7 +88,7 @@ function ToolbarInteractionFixture() {
         )}
       </ViewerToolbar>
       <button data-testid="disable-zoom" type="button" hidden onClick={() => setZoomAvailable(false)}>확대 비활성</button>
-      <button data-testid="disable-path" type="button" hidden onClick={() => setPathAvailable(false)}>경로 제어 비활성</button>
+      <button data-testid="disable-overlay" type="button" hidden onClick={() => setOverlayAvailable(false)}>오버레이 제어 비활성</button>
       <button data-testid="mount-toolbar-ownership-probe" type="button" hidden onClick={() => setOwnershipProbeVisible(true)}>소유권 검증 마운트</button>
       <button data-testid="unmount-toolbar-ownership-probe" type="button" hidden onClick={() => setOwnershipProbeVisible(false)}>소유권 검증 해제</button>
       <ViewerToolbar data-testid="vertical-toolbar" orientation="vertical" appearance="surface" label="세로 키보드 검증 툴바">
@@ -111,7 +111,7 @@ function ToolbarInteractionFixture() {
         </ViewerToolbar>
       )}
       <output data-testid="toggle-state" style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>
-        경로 표시: {pathVisible ? '켜짐' : '꺼짐'} · 마지막 동작: {lastAction}
+        보조 오버레이 표시: {overlayVisible ? '켜짐' : '꺼짐'} · 마지막 동작: {lastAction}
       </output>
     </main>
   );
@@ -124,11 +124,11 @@ function waitForRender() {
 export const ViewerToolbarOverview = {
   name: '개요',
   parameters: storyDescription(
-    '지도 위에서 확대·축소·초기화·로봇 표시와 레이어 설정을 사용하는 기본 상황입니다. 즉시 명령과 지속 토글이 구분되고 팝오버 설정이 현재 장면과 같은 문맥으로 읽히는지 확인하세요.',
+    '중립적인 viewport 위에서 축소·현재 배율·확대·전체 보기 탐색 그룹과 레이어 설정 그룹을 사용하는 기본 상황입니다. 탐색 명령과 표시 설정이 분리되고 동일한 레이어 상태가 두 곳에 중복되지 않는지 확인하세요.',
   ),
   render: () => {
     const [zoom, setZoom] = React.useState(100);
-    const [layers, setLayers] = React.useState({ map: true, path: true, robots: true });
+    const [layers, setLayers] = React.useState({ base: true, overlay: true, guides: true });
 
     return (
       <main style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 760 }}>
@@ -136,35 +136,107 @@ export const ViewerToolbarOverview = {
           <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
             <MiniMapPreview layers={layers} zoom={zoom} />
           </div>
-          <ViewerToolbar orientation="horizontal" appearance="on-dark" label="지도 보기" style={{ position: 'absolute', top: 'var(--space-3)', right: 'var(--space-3)' }}>
-            <ViewerToolbarButton label="확대" onClick={() => setZoom((value) => Math.min(160, value + 10))}><ToolbarIcon name="plus" /></ViewerToolbarButton>
+          <ViewerToolbar orientation="horizontal" appearance="on-dark" label="뷰포트 보기" style={{ position: 'absolute', top: 'var(--space-3)', right: 'var(--space-3)' }}>
             <ViewerToolbarButton label="축소" onClick={() => setZoom((value) => Math.max(60, value - 10))}><ToolbarIcon name="minus" /></ViewerToolbarButton>
-            <ViewerToolbarButton label="보기 초기화" onClick={() => setZoom(100)}><ToolbarIcon name="home" /></ViewerToolbarButton>
-            <ViewerToolbarButton
-              label="로봇 표시"
-              kind="toggle"
-              pressed={layers.robots}
-              onPressedChange={(pressed) => setLayers((value) => ({ ...value, robots: pressed }))}
+            <output
+              data-testid="viewer-zoom-readout"
+              aria-live="polite"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: 40,
+                minHeight: 28,
+                padding: '0 4px',
+                boxSizing: 'border-box',
+                color: 'var(--viewer-foreground)',
+                fontSize: 'var(--caption1-size)',
+                lineHeight: 1,
+                fontWeight: 'var(--fw-semibold)',
+                fontVariantNumeric: 'tabular-nums',
+              }}
             >
-              <ToolbarIcon name="location" />
-            </ViewerToolbarButton>
-            <Popover align="right" width={168} trigger={<ViewerToolbarButton label="레이어 설정"><ToolbarIcon name="filter" /></ViewerToolbarButton>}>
+              {zoom}%
+            </output>
+            <ViewerToolbarButton label="확대" onClick={() => setZoom((value) => Math.min(160, value + 10))}><ToolbarIcon name="plus" /></ViewerToolbarButton>
+            <ViewerToolbarButton label="전체 보기" onClick={() => setZoom(100)}><ToolbarIcon name="full" /></ViewerToolbarButton>
+            <span
+              aria-hidden="true"
+              style={{
+                width: 1,
+                height: 20,
+                margin: '0 2px',
+                background: 'var(--viewer-border, color-mix(in srgb, var(--color-semantic-static-white) 22%, transparent))',
+              }}
+            />
+            <Popover align="right" width={168} trigger={<ViewerToolbarButton label="레이어 설정"><ToolbarIcon name="layers" /></ViewerToolbarButton>}>
               <strong style={{ display: 'block', fontSize: 'var(--caption1-size)', color: 'var(--color-semantic-label-strong)', margin: '0 0 var(--space-2)' }}>
                 레이어 표시
               </strong>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-                <Switch size="sm" label="지도" checked={layers.map} onChange={() => setLayers((value) => ({ ...value, map: !value.map }))} />
-                <Switch size="sm" label="경로" checked={layers.path} onChange={() => setLayers((value) => ({ ...value, path: !value.path }))} />
-                <Switch size="sm" label="로봇" checked={layers.robots} onChange={() => setLayers((value) => ({ ...value, robots: !value.robots }))} />
+                <Switch size="sm" label="기본 표면" checked={layers.base} onChange={() => setLayers((value) => ({ ...value, base: !value.base }))} />
+                <Switch size="sm" label="보조 오버레이" checked={layers.overlay} onChange={() => setLayers((value) => ({ ...value, overlay: !value.overlay }))} />
+                <Switch size="sm" label="가이드" checked={layers.guides} onChange={() => setLayers((value) => ({ ...value, guides: !value.guides }))} />
               </div>
             </Popover>
           </ViewerToolbar>
-          <span style={{ position: 'absolute', left: 'var(--space-3)', bottom: 'var(--space-3)', minHeight: 24, display: 'inline-flex', alignItems: 'center', padding: '0 var(--space-2)', borderRadius: 'var(--radius-sm)', color: 'var(--component-viewer-foreground)', background: 'var(--component-viewer-surface-elevated)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)', fontVariantNumeric: 'tabular-nums' }}>
-            {zoom}%
-          </span>
         </section>
       </main>
     );
+  },
+  play: async ({ canvasElement }) => {
+    const toolbar = canvasElement.querySelector('[role="toolbar"][aria-label="뷰포트 보기"]');
+    const commands = toolbar?.querySelectorAll('[data-lk-viewer-toolbar-item]:not([disabled]):not([aria-disabled="true"])');
+    if (!toolbar || !commands?.length) {
+      throw new Error('On-dark viewer commands must be rendered for contrast verification.');
+    }
+    for (const command of commands) {
+      const color = getComputedStyle(command).color;
+      if (color !== 'rgb(255, 255, 255)') {
+        throw new Error(`${command.getAttribute('aria-label')}: on-dark viewer icons must inherit the static-white foreground.`);
+      }
+      if (command.getBoundingClientRect().height > 29) {
+        throw new Error(`${command.getAttribute('aria-label')}: dense viewport commands must keep the 28px control height.`);
+      }
+    }
+    const labels = [...commands].map((command) => command.getAttribute('aria-label'));
+    if (labels.join('|') !== '축소|확대|전체 보기|레이어 설정') {
+      throw new Error(`Viewer navigation and display settings must have one clear order; received ${labels.join('|')}.`);
+    }
+    if (toolbar.querySelector('[aria-pressed]')) {
+      throw new Error('The overview must not duplicate a layer switch as an outer toolbar toggle.');
+    }
+    const zoomReadout = canvasElement.querySelector('[data-testid="viewer-zoom-readout"]');
+    const zoomOut = toolbar.querySelector('[aria-label="축소"]');
+    const zoomIn = toolbar.querySelector('[aria-label="확대"]');
+    const fit = toolbar.querySelector('[aria-label="전체 보기"]');
+    if (!zoomReadout || !zoomOut || !zoomIn || !fit) {
+      throw new Error('Zoom controls must keep the current value between decrement and increment, followed by fit.');
+    }
+    zoomOut.click();
+    await waitForRender();
+    if (zoomReadout.textContent.trim() !== '90%') {
+      throw new Error('Zoom decrement must update the adjacent readout.');
+    }
+    zoomIn.click();
+    await waitForRender();
+    fit.click();
+    await waitForRender();
+    if (zoomReadout.textContent.trim() !== '100%') {
+      throw new Error('Fit must restore the overview zoom.');
+    }
+    const layerSettings = toolbar.querySelector('[aria-label="레이어 설정"]');
+    layerSettings.click();
+    await waitForRender();
+    const layerSwitches = canvasElement.querySelectorAll('[role="switch"]');
+    if (layerSwitches.length !== 3 || ![...layerSwitches].some((control) => control.closest('label')?.textContent?.includes('보조 오버레이'))) {
+      throw new Error('Layer settings must own the base, overlay, and guide visibility controls in one popover.');
+    }
+    layerSettings.click();
+    await waitForRender();
+    if (canvasElement.querySelector('[role="dialog"]')) {
+      throw new Error('The layer settings verification must leave the overview in its default closed state.');
+    }
   },
 };
 
@@ -195,12 +267,28 @@ export const AppearanceAndDisabledStates = {
         <ViewerToolbar orientation="vertical" appearance="on-dark" label="어두운 장면 보기">
           <ViewerToolbarButton label="확대" onClick={() => setLastAction('On dark 확대')}><ToolbarIcon name="plus" /></ViewerToolbarButton>
           <ViewerToolbarButton label="축소" onClick={() => setLastAction('On dark 축소')}><ToolbarIcon name="minus" /></ViewerToolbarButton>
-          <ViewerToolbarButton label="경로 표시" kind="toggle" defaultPressed><ToolbarIcon name="route" /></ViewerToolbarButton>
+          <ViewerToolbarButton label="보조 오버레이 표시" kind="toggle" defaultPressed><ToolbarIcon name="layers" /></ViewerToolbarButton>
         </ViewerToolbar>
       </section>
       <output aria-live="polite" style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)' }}>마지막 동작: {lastAction}</output>
     </main>
     );
+  },
+  play: async ({ canvasElement }) => {
+    const onDark = canvasElement.querySelector('[data-viewer-toolbar-appearance="on-dark"]');
+    if (!onDark) throw new Error('The on-dark ViewerToolbar example is missing.');
+    const style = getComputedStyle(onDark);
+    if (
+      style.backgroundColor === 'rgba(0, 0, 0, 0)'
+      || style.borderStyle === 'none'
+      || parseFloat(style.paddingInlineStart) < 1.5
+      || parseFloat(style.paddingBlockStart) < 1.5
+    ) {
+      throw new Error('On-dark ViewerToolbar must keep a visible rail with compact outer inset.');
+    }
+    if (onDark.getBoundingClientRect().width <= 32 || onDark.getBoundingClientRect().height <= 92) {
+      throw new Error('The vertical on-dark rail must visibly group its three 28px controls.');
+    }
   },
 };
 
@@ -223,15 +311,15 @@ export const RovingFocusAndToggleContract = {
 
     enabledItems[0].focus();
     enabledItems[0].dispatchEvent(new view.KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
-    const pathToggle = toolbar.querySelector('button[aria-label="경로 표시"]');
-    if (canvasElement.ownerDocument.activeElement !== pathToggle) {
+    const overlayToggle = toolbar.querySelector('button[aria-label="보조 오버레이 표시"]');
+    if (canvasElement.ownerDocument.activeElement !== overlayToggle) {
       throw new Error('Roving focus did not skip the disabled toolbar item.');
     }
 
     enabledItems[0].focus();
     canvasElement.querySelector('[data-testid="disable-zoom"]')?.click();
     await waitForRender();
-    if (canvasElement.ownerDocument.activeElement !== pathToggle || enabledItems[0].tabIndex !== -1) {
+    if (canvasElement.ownerDocument.activeElement !== overlayToggle || enabledItems[0].tabIndex !== -1) {
       throw new Error('Focus was not restored after a parent-controlled ViewerToolbar item became native-disabled.');
     }
 
@@ -241,17 +329,17 @@ export const RovingFocusAndToggleContract = {
       throw new Error('An aria-disabled ViewerToolbar command must not activate.');
     }
 
-    pathToggle.click();
+    overlayToggle.click();
     await waitForRender();
-    if (pathToggle.getAttribute('aria-pressed') !== 'true') {
+    if (overlayToggle.getAttribute('aria-pressed') !== 'true') {
       throw new Error('Toggle did not expose its pressed state.');
     }
 
-    pathToggle.focus();
+    overlayToggle.focus();
     toolbar.querySelector('[data-testid="mount-self-managed-control"]')?.click();
     await waitForRender();
     const selfManagedControl = toolbar.querySelector('[data-testid="self-managed-control"]');
-    if (!selfManagedControl || selfManagedControl.tabIndex !== -1 || canvasElement.ownerDocument.activeElement !== pathToggle) {
+    if (!selfManagedControl || selfManagedControl.tabIndex !== -1 || canvasElement.ownerDocument.activeElement !== overlayToggle) {
       throw new Error('A self-managed child update broke the remembered ViewerToolbar Tab stop.');
     }
     if (toolbar.querySelectorAll('[data-lk-viewer-toolbar-item][tabindex="0"]').length !== 1) {
@@ -266,21 +354,21 @@ export const RovingFocusAndToggleContract = {
       throw new Error('Focus was not restored after a self-managed ViewerToolbar item became native-disabled.');
     }
 
-    pathToggle.focus();
+    overlayToggle.focus();
     toolbar.querySelector('[data-testid="add-control"]')?.click();
     await waitForRender();
     items = Array.from(toolbar.querySelectorAll('[data-lk-viewer-toolbar-item]'));
-    if (canvasElement.ownerDocument.activeElement !== pathToggle || pathToggle.tabIndex !== 0) {
+    if (canvasElement.ownerDocument.activeElement !== overlayToggle || overlayToggle.tabIndex !== 0) {
       throw new Error('A child update reset the remembered roving focus item.');
     }
     if (items.filter((item) => !item.disabled && item.getAttribute('aria-disabled') !== 'true' && item.tabIndex === 0).length !== 1) {
       throw new Error('A child update created multiple toolbar Tab stops.');
     }
 
-    canvasElement.querySelector('[data-testid="disable-path"]')?.click();
+    canvasElement.querySelector('[data-testid="disable-overlay"]')?.click();
     await waitForRender();
     const addControl = toolbar.querySelector('[data-testid="add-control"]');
-    if (canvasElement.ownerDocument.activeElement !== addControl || pathToggle.tabIndex !== -1) {
+    if (canvasElement.ownerDocument.activeElement !== addControl || overlayToggle.tabIndex !== -1) {
       throw new Error('Focus was not restored when the active ViewerToolbar item became unavailable.');
     }
 

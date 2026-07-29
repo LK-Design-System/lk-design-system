@@ -8,13 +8,18 @@
 | Storybook | `LDS Product/Viewer/3D Scene` |
 | Source | `../component-content.json#product-viewer-3-d-scene` |
 
-운영자가 포인트 클라우드·설비 자세·입체 장애물처럼 깊이 정보가 필요한 장면을 검사할 때 적합합니다. 평면 경로 확인이나 영상 감시에는 3D Scene 대신 2D Map 또는 Video Stream을 사용하세요.
+애플리케이션이나 LDS3D가 제공하는 WebGL 장면에 공통 상태·HUD·카메라 도구를 배치할 때 적합합니다. Scene3DFrame은 실제 3D 렌더링·좌표계·피킹을 구현하지 않습니다.
 
 ## 사용 판단
 
 ### 사용
 
+- Scene identity stays at the top-left, the camera toolbar at the top-right, and passive renderer status at the bottom-left. ViewerFrame owns the toolbar shelf, so light appearances use a minimal inner ViewerToolbar rather than nesting another surface.
 - Scene3DFrame is the renderer-independent 3D preset for ViewerFrame.
+
+### 사용하지 않음
+
+- Product Storybook은 실제 point cloud나 WebGL 장면을 모사하지 않고 renderer slot과 frame chrome만 보여줍니다. 실제 3D geometry, depth, picking, camera semantics와 renderer lifecycle은 LDS3D 또는 애플리케이션이 소유합니다.
 
 ## Anatomy
 
@@ -65,6 +70,7 @@
 
 ## Responsive
 
+- title is the primary scene identity and inherits the shared ViewerFrame compact source hierarchy (caption1/semibold) inside the top chrome.
 - Use it for point clouds, digital twins, WebGL scenes, or React Three Fiber output. The DS owns the viewport frame, scene identity, compact HUD, viewport-local controls, passive renderer metadata, and normalized state placement. The application owns rendering, camera math, picking, and loading/retry logic.
 - Classification and evidence are documented in ViewerFrame.prompt.md. The structure follows the official NVIDIA Omniverse viewport controls and Unity Scene view navigation, while Unity Scene view draw modes support the conclusion that viewing mode and diagnostic readability—not a permanently dark palette—define the…
 
@@ -93,11 +99,11 @@
 | `Icon` | 대표 시나리오에서 조합 |
 | `ViewerToolbar` | 대표 시나리오에서 조합 |
 | `ViewerToolbarButton` | 대표 시나리오에서 조합 |
+| `ElevatorFleetOverview` | 대표 시나리오에서 조합 |
 | `FloorSelector` | 대표 시나리오에서 조합 |
 | `Map2DCanvas` | 대표 시나리오에서 조합 |
 | `VideoStreamTile` | 대표 시나리오에서 조합 |
 | `VIEWER_BLOCKING_STATES` | 대표 시나리오에서 조합 |
-| `VIEWER_STATES` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -105,10 +111,10 @@
 
 ```jsx
 <Scene3DFrame
-  label="AMR-07 3D scene"
-  title="POINT CLOUD"
+  label="장면 A 3D 뷰포트"
+  title="장면 A"
   state="stale"
-  status="1.2M pts · 38 FPS"
+  status="원근 · 좌표계 world · 60 FPS"
   toolbar={cameraControls}
   style={{ height: 320 }}
 >

@@ -60,6 +60,7 @@ const STATE_PRESENTATION = {
     tone: 'cautionary',
     blocking: false,
     edge: true,
+    contentOpacity: 0.9,
   },
   stale: {
     label: '데이터 지연',
@@ -68,6 +69,7 @@ const STATE_PRESENTATION = {
     tone: 'cautionary',
     blocking: false,
     edge: true,
+    contentOpacity: 0.76,
   },
   frozen: {
     label: '화면 멈춤',
@@ -76,6 +78,7 @@ const STATE_PRESENTATION = {
     tone: 'cautionary',
     blocking: false,
     edge: true,
+    contentOpacity: 0.76,
   },
   paused: {
     label: '일시정지',
@@ -84,6 +87,7 @@ const STATE_PRESENTATION = {
     tone: 'neutral',
     blocking: false,
     edge: true,
+    contentOpacity: 1,
   },
   unavailable: {
     label: '사용할 수 없음',
@@ -95,7 +99,7 @@ const STATE_PRESENTATION = {
   disconnected: {
     label: '연결 끊김',
     description: '소스 연결을 확인해 주세요.',
-    icon: 'signal',
+    icon: 'circle-close',
     tone: 'negative',
     blocking: true,
   },
@@ -125,37 +129,43 @@ const TONE_COLOR = {
   neutral: 'var(--viewer-muted)',
 };
 
-function StateMark({ presentation, icon }) {
+function StateMark({ presentation, icon, size = 22 }) {
   if (presentation.busy && icon == null) {
     return (
-      <Spinner
-        size={20}
-        thickness={2}
-        color="var(--color-semantic-primary-normal)"
-        role="presentation"
-        aria-hidden="true"
-      />
+      <span data-viewer-state-icon="spinner" aria-hidden="true" style={{ display: 'inline-flex' }}>
+        <Spinner
+          size={size}
+          thickness={2}
+          color="var(--color-semantic-primary-normal)"
+          role="presentation"
+          aria-hidden="true"
+        />
+      </span>
     );
   }
 
   return (
     <span
+      data-viewer-state-icon={icon == null ? presentation.icon : 'custom'}
       aria-hidden="true"
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
         flex: '0 0 auto',
+        width: size,
+        height: size,
+        overflow: 'hidden',
         color: TONE_COLOR[presentation.tone] ?? TONE_COLOR.neutral,
       }}
     >
-      {icon ?? <Icon name={presentation.icon ?? 'circle-info'} size={16} />}
+      {icon ?? <Icon name={presentation.icon ?? 'circle-info'} size={size} />}
     </span>
   );
 }
 
 /**
- * LK Robotics — ViewerFrame
+ * LDS Product — ViewerFrame
  * Shared viewport chrome for map, 3D, and video renderers. The frame owns the
  * named region, source/HUD/tool slots, and normalized state presentation while
  * the application continues to own rendering, transport, and recovery logic.
@@ -165,7 +175,9 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
   label,
   source,
   badges,
+  liveness,
   hud,
+  scope,
   toolbar,
   overlay,
   status,
@@ -180,18 +192,35 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
   stateAction,
   appearance = 'dark',
   variant = 'standalone',
-  toolbarPlacement = 'top-right',
+  chromeVariant = 'surface',
+  toolbarVisibility = 'always',
+  // 배치 규약: 뷰포트 조작은 우하단, 상단은 정체성과 상시 상태에 남긴다.
+  toolbarPlacement = 'bottom-right',
   style,
   tabIndex,
   onFocusCapture,
+  onBlurCapture,
+  onPointerEnter,
+  onPointerLeave,
+  onPointerDown,
   ...rest
 }, forwardedRef) {
   const rootRef = React.useRef(null);
   const blockingLayerRef = React.useRef(null);
+  const toolbarShelfRef = React.useRef(null);
+  const topbarRef = React.useRef(null);
   const lastFocusWithinRef = React.useRef(null);
   const focusInsideBlockingLayerRef = React.useRef(false);
   const returnFocusRef = React.useRef(null);
   const wasBlockingRef = React.useRef(false);
+  const [pointerWithin, setPointerWithin] = React.useState(false);
+  const [focusWithin, setFocusWithin] = React.useState(false);
+  const [topToolbarOwnsChrome, setTopToolbarOwnsChrome] = React.useState(false);
+  // The scope rail hangs directly under the top chrome, and that chrome's height
+  // is content-dependent (identity chip alone vs identity + HUD rows). A fixed
+  // offset would either collide with a tall HUD or float below a bare source
+  // chip, so the rail measures what it must clear.
+  const [topbarHeight, setTopbarHeight] = React.useState(0);
   const resolvedState = resolveViewerState({
     state,
     availability,
@@ -209,8 +238,39 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
     : stateDescription;
   const topToolbar = toolbarPlacement === 'top-right' ? toolbar : null;
   const bottomToolbar = toolbarPlacement === 'bottom-right' ? toolbar : null;
+  // 우상단 생존성 영역이 렌더되는지. 이 영역이 자동 여백으로 오른쪽을 잡으므로
+  // 툴바가 같은 여백을 또 잡으면 둘 사이가 벌어진다(툴바가 숨겨져 있어도).
+  const hasLiveness = liveness != null || Boolean(presentation.corner);
+  const overlayChrome = chromeVariant === 'overlay';
+  const interactionToolbar = toolbarVisibility === 'interaction';
+  const toolbarVisible = !interactionToolbar || pointerWithin || focusWithin;
 
   React.useImperativeHandle(forwardedRef, () => rootRef.current, []);
+
+  React.useLayoutEffect(() => {
+    const ownsChrome = Boolean(toolbarShelfRef.current?.querySelector(
+      '[data-viewer-toolbar-appearance="surface"], [data-viewer-toolbar-appearance="on-dark"]',
+    ));
+    setTopToolbarOwnsChrome((current) => current === ownsChrome ? current : ownsChrome);
+    // 배치와 무관하게 감지한다. top/bottom 중 하나만 렌더되므로 같은 ref를 쓴다.
+  }, [toolbar, toolbarPlacement]);
+
+  React.useLayoutEffect(() => {
+    const node = topbarRef.current;
+    if (scope == null || node == null) {
+      setTopbarHeight(0);
+      return undefined;
+    }
+    const view = node.ownerDocument.defaultView;
+    const update = () => {
+      const next = node.getBoundingClientRect().height;
+      setTopbarHeight((current) => (Math.abs(current - next) > 0.5 ? next : current));
+    };
+    update();
+    const observer = view?.ResizeObserver ? new view.ResizeObserver(update) : null;
+    observer?.observe(node);
+    return () => observer?.disconnect();
+  }, [scope, source, badges, liveness, hud, presentation.corner]);
 
   React.useLayoutEffect(() => {
     if (typeof document === 'undefined') return;
@@ -264,9 +324,9 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
 
   const stateSummary = (
     <React.Fragment>
-      <StateMark presentation={presentation} icon={stateIcon} />
+      <StateMark presentation={presentation} icon={stateIcon} size={16} />
       <span style={{ display: 'grid', gap: 2, minWidth: 0 }}>
-        <span style={{ fontSize: 'var(--caption1-size)', lineHeight: 1.35, fontWeight: 'var(--fw-bold)', color: 'var(--viewer-foreground)' }}>
+        <span style={{ fontSize: 'var(--caption2-size)', lineHeight: 1.35, fontWeight: 'var(--fw-bold)', color: 'var(--viewer-foreground)' }}>
           {labelContent}
         </span>
         {descriptionContent != null && (
@@ -302,11 +362,31 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
       onFocusCapture={(event) => {
         lastFocusWithinRef.current = event.target;
         focusInsideBlockingLayerRef.current = Boolean(event.target.closest?.('[data-viewer-blocking-state]'));
+        setFocusWithin(true);
         onFocusCapture?.(event);
+      }}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setFocusWithin(false);
+        onBlurCapture?.(event);
+      }}
+      onPointerEnter={(event) => {
+        setPointerWithin(true);
+        onPointerEnter?.(event);
+      }}
+      onPointerLeave={(event) => {
+        setPointerWithin(false);
+        onPointerLeave?.(event);
+      }}
+      onPointerDown={(event) => {
+        setPointerWithin(true);
+        onPointerDown?.(event);
       }}
       data-lds-viewer-frame=""
       data-viewer-appearance={appearance}
       data-viewer-variant={variant}
+      data-viewer-chrome={chromeVariant}
+      data-viewer-toolbar-visibility={toolbarVisibility}
+      data-viewer-toolbar-visible={toolbarVisible ? 'true' : 'false'}
       data-viewer-state={resolvedState}
       data-viewer-availability={availability}
       data-viewer-connection={connection}
@@ -370,7 +450,13 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
         data-viewer-blocked-region=""
         inert={blocking ? true : undefined}
         aria-hidden={blocking || undefined}
-        style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden' }}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 0,
+          overflow: 'hidden',
+          opacity: !blocking && overlayChrome ? presentation.contentOpacity ?? 1 : 1,
+        }}
       >
         {children}
         {overlay != null && (
@@ -380,28 +466,47 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
         )}
       </div>
 
-      {(source != null || badges != null || hud != null || topToolbar != null || presentation.corner) && (
-        <React.Fragment>
-          <div
-            data-viewer-topbar=""
-            inert={blocking ? true : undefined}
-            aria-hidden={blocking || undefined}
-            style={{
-              position: 'absolute',
-              zIndex: 2,
-              inset: '0 0 auto',
-              display: 'grid',
-              gridTemplateColumns: 'minmax(0, 1fr) auto',
-              alignItems: 'start',
-              gap: 8,
-              padding: 12,
-              borderBottom: '1px solid var(--viewer-border)',
-              background: 'var(--viewer-surface-elevated)',
-              pointerEvents: 'none',
-            }}
-          >
-            <div style={{ display: 'grid', gap: 7, minWidth: 0, justifyItems: 'start' }}>
-              {(source != null || badges != null || presentation.corner) && (
+      {(source != null || badges != null || liveness != null || hud != null || topToolbar != null || presentation.corner) && (
+        <div
+          ref={topbarRef}
+          data-viewer-topbar=""
+          inert={blocking ? true : undefined}
+          aria-hidden={blocking || undefined}
+          style={{
+            position: 'absolute',
+            zIndex: 2,
+            inset: '0 0 auto',
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'space-between',
+            flexWrap: 'nowrap',
+            columnGap: 4,
+            padding: 12,
+            pointerEvents: 'none',
+          }}
+        >
+          {(source != null || badges != null || hud != null) && (
+            <div
+              data-viewer-identity=""
+              style={{
+                display: 'grid',
+                flex: '0 1 auto',
+                minWidth: 0,
+                width: 'fit-content',
+                maxWidth: 'min(360px, 100%)',
+                overflow: 'hidden',
+                border: overlayChrome
+                  ? '1px solid color-mix(in srgb, var(--viewer-foreground) 18%, transparent)'
+                  : '1px solid var(--viewer-border)',
+                borderRadius: 'var(--radius-md)',
+                background: overlayChrome
+                  ? 'color-mix(in srgb, var(--viewer-surface) 82%, transparent)'
+                  : 'var(--viewer-surface-elevated)',
+                boxShadow: overlayChrome ? 'none' : 'var(--shadow-sm)',
+                backdropFilter: overlayChrome ? 'blur(8px)' : undefined,
+              }}
+            >
+              {(source != null || badges != null) && (
                 <div
                   style={{
                     display: 'flex',
@@ -409,10 +514,9 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
                     gap: 7,
                     minWidth: 0,
                     maxWidth: '100%',
-                    // The topbar grid is top-aligned so HUD rows can stack under
-                    // this row; without a matching min-height a lone source
-                    // title rides 8px above the 32px control cluster's center.
-                    minHeight: topToolbar != null ? 32 : undefined,
+                    minHeight: 28,
+                    padding: '3px 7px',
+                    boxSizing: 'border-box',
                   }}
                 >
                   {source != null && (
@@ -425,53 +529,142 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
                         whiteSpace: 'nowrap',
                         color: 'var(--viewer-foreground)',
                         fontSize: 'var(--caption1-size)',
-                        lineHeight: 1.35,
-                        fontWeight: 'var(--fw-bold)',
+                        lineHeight: 'var(--caption1-line)',
+                        fontWeight: 'var(--fw-semibold)',
                       }}
                     >
                       {source}
                     </span>
                   )}
-                  {presentation.corner && (
-                    <StatusIndicator
-                      role="status"
-                      aria-live="polite"
-                      aria-atomic="true"
-                      tone={presentation.tone}
-                      style={{
-                        flex: '0 0 auto',
-                        color: 'var(--viewer-foreground)',
-                      }}
-                    >
-                      {labelContent}
-                    </StatusIndicator>
-                  )}
                   {badges}
                 </div>
               )}
               {hud != null && (
-                <div data-viewer-hud="" style={{ minWidth: 0, maxWidth: '100%', color: 'var(--viewer-foreground)' }}>
+                <div
+                  data-viewer-hud=""
+                  style={{
+                    minWidth: 0,
+                    maxWidth: '100%',
+                    padding: (source != null || badges != null) ? '7px 10px 8px' : '8px 10px',
+                    borderTop: (source != null || badges != null) ? '1px solid var(--viewer-border)' : undefined,
+                    color: 'var(--viewer-foreground)',
+                  }}
+                >
                   {hud}
                 </div>
               )}
             </div>
-            {topToolbar != null && (
-              <div
-                data-viewer-toolbar=""
-                data-viewer-blocked-region=""
-                inert={blocking ? true : undefined}
-                aria-hidden={blocking || undefined}
-                style={{ pointerEvents: blocking ? 'none' : 'auto' }}
-              >
-                {topToolbar}
-              </div>
-            )}
-          </div>
-        </React.Fragment>
+          )}
+          {/* 생존성(라이브 등)은 정체성과 다른 축이라 source 옆이 아니라 우상단에
+              자리를 따로 갖는다. toolbar 슬롯은 자동 숨김(opacity)이 걸려 있어
+              상시 표시가 필요한 신호를 담을 수 없다. `liveness`가 없으면 아래
+              toolbar는 기존과 완전히 동일하게 렌더된다. */}
+          {hasLiveness && (
+            <div
+              data-viewer-liveness=""
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                flex: '0 0 auto',
+                marginLeft: 'auto',
+                minHeight: 28,
+                padding: '3px 7px',
+                boxSizing: 'border-box',
+                border: overlayChrome
+                  ? '1px solid color-mix(in srgb, var(--viewer-foreground) 18%, transparent)'
+                  : '1px solid var(--viewer-border)',
+                borderRadius: 'var(--radius-md)',
+                background: overlayChrome
+                  ? 'color-mix(in srgb, var(--viewer-surface) 82%, transparent)'
+                  : 'var(--viewer-surface-elevated)',
+                backdropFilter: overlayChrome ? 'blur(8px)' : undefined,
+              }}
+            >
+              {presentation.corner && (
+                <StatusIndicator
+                  role="status"
+                  aria-live="polite"
+                  aria-atomic="true"
+                  tone={presentation.tone}
+                  style={{ flex: '0 0 auto', color: 'var(--viewer-foreground)' }}
+                >
+                  {labelContent}
+                </StatusIndicator>
+              )}
+              {liveness}
+            </div>
+          )}
+          {topToolbar != null && (
+            <div
+              ref={toolbarShelfRef}
+              data-viewer-toolbar=""
+              data-viewer-control-shelf=""
+              data-viewer-blocked-region=""
+              inert={blocking ? true : undefined}
+              aria-hidden={blocking || undefined}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                flex: '0 0 auto',
+                // liveness가 이미 우측으로 밀어놨으면 여기서 또 밀지 않는다.
+                marginLeft: hasLiveness ? 0 : 'auto',
+                // 래퍼가 표면을 그릴 때만 안쪽 여백을 낸다. minimal 툴바는 패딩이 0이라
+                // 래퍼가 메우지 않으면 버튼이 테두리에 붙고, on-dark는 자체 패딩 2를
+                // 가지므로 래퍼는 0이어야 두 외형의 버튼 정렬선이 맞는다.
+                padding: topToolbarOwnsChrome ? 0 : 2,
+                border: topToolbarOwnsChrome
+                  ? 'none'
+                  : overlayChrome
+                    ? '1px solid color-mix(in srgb, var(--viewer-foreground) 18%, transparent)'
+                    : '1px solid var(--viewer-border)',
+                borderRadius: topToolbarOwnsChrome ? 0 : 'var(--radius-md)',
+                background: topToolbarOwnsChrome
+                  ? 'transparent'
+                  : overlayChrome
+                    ? 'color-mix(in srgb, var(--viewer-surface) 82%, transparent)'
+                    : 'var(--viewer-surface-elevated)',
+                boxShadow: 'none',
+                opacity: toolbarVisible ? 1 : 0,
+                pointerEvents: blocking || !toolbarVisible ? 'none' : 'auto',
+                backdropFilter: !topToolbarOwnsChrome && overlayChrome ? 'blur(8px)' : undefined,
+              }}
+            >
+              {topToolbar}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* 범위 전환(층·레벨·카메라)은 뷰 조작과 다른 축이라 우하단 툴바와 자리를
+          나눠 갖는다: 위는 "무엇을 보는가", 아래는 "어떻게 보는가". 상단 우측
+          셸프(`toolbarPlacement="top-right"`)는 헤더 안 in-flow 자리라 세로
+          스택을 넣으면 헤더가 그만큼 늘어나므로, 이 레일은 별도 오버레이다. */}
+      {scope != null && (
+        <div
+          data-viewer-scope=""
+          data-viewer-blocked-region=""
+          inert={blocking ? true : undefined}
+          aria-hidden={blocking || undefined}
+          style={{
+            position: 'absolute',
+            zIndex: 3,
+            right: 12,
+            top: topbarHeight || 12,
+            // 하단 툴바와 같은 우측 열을 쓰므로, 길어지면 지도 밖으로 나가지 않고
+            // 스크롤된다. 15층짜리 목록도 표면 안에 머문다.
+            maxHeight: `calc(100% - ${Math.round(topbarHeight || 12) + 12}px)`,
+            overflowY: 'auto',
+            overscrollBehavior: 'contain',
+            pointerEvents: blocking ? 'none' : 'auto',
+          }}
+        >
+          {scope}
+        </div>
       )}
 
       {bottomToolbar != null && (
         <div
+          ref={toolbarShelfRef}
           data-viewer-toolbar=""
           data-viewer-blocked-region=""
           inert={blocking ? true : undefined}
@@ -481,7 +674,30 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
             zIndex: 3,
             right: 12,
             bottom: presentation.edge ? 56 : 12,
-            pointerEvents: blocking ? 'none' : 'auto',
+            // The shelf is bottom-anchored and sized by its content, so a tall
+            // control stack (zoom cluster + floor selector) grows upward with
+            // nothing stopping it: on a fixed-aspect canvas the stack kept its
+            // height while the surface shrank and spilled out through the top
+            // edge. Clamp it to the surface and let it scroll instead.
+            maxHeight: `calc(100% - ${presentation.edge ? 68 : 24}px)`,
+            overflowY: 'auto',
+            overscrollBehavior: 'contain',
+            // block이면 인라인 자식 아래에 베이스라인 여유가 붙어 외형마다 하단
+            // 여백이 달라진다. 상단 셸프와 같이 flex로 두어 leading을 없앤다.
+            display: 'flex',
+            alignItems: 'center',
+            // 내부 툴바가 이미 자체 표면을 그리면 래퍼는 크롬을 내려놓는다.
+            // 그러지 않으면 같은 12px 라디우스가 겹쳐 카드 안 카드가 된다.
+            // 래퍼가 표면을 그릴 때만 안쪽 여백을 낸다(minimal 툴바는 패딩 0).
+            padding: topToolbarOwnsChrome ? 0 : 2,
+            border: topToolbarOwnsChrome ? 'none' : '1px solid var(--viewer-border)',
+            borderRadius: topToolbarOwnsChrome ? 0 : 'var(--radius-md)',
+            background: topToolbarOwnsChrome ? 'transparent' : 'var(--viewer-surface-elevated)',
+            boxShadow: 'none',
+            // toolbarVisibility는 배치와 무관한 계약이다. 이전에는 top-right에만
+            // 적용돼, 같은 값으로도 bottom-right에서는 컨트롤이 항상 보였다.
+            opacity: toolbarVisible ? 1 : 0,
+            pointerEvents: blocking || !toolbarVisible ? 'none' : 'auto',
           }}
         >
           {bottomToolbar}
@@ -504,7 +720,11 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
             padding: '4px 9px',
             border: '1px solid var(--viewer-border)',
             borderRadius: 'var(--radius-sm)',
-            background: 'var(--viewer-surface-elevated)',
+            background: overlayChrome
+              ? 'color-mix(in srgb, var(--viewer-surface) 82%, transparent)'
+              : 'var(--viewer-surface-elevated)',
+            boxShadow: overlayChrome ? 'none' : 'var(--shadow-sm)',
+            backdropFilter: overlayChrome ? 'blur(8px)' : undefined,
             color: 'var(--viewer-muted)',
             fontSize: 'var(--caption2-size)',
             lineHeight: 1.35,
@@ -523,45 +743,62 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
           style={{
             position: 'absolute',
             zIndex: 3,
-            inset: 'auto 0 0',
+            left: 12,
+            right: 'auto',
+            bottom: 12,
             display: 'flex',
             alignItems: 'center',
             flexWrap: 'nowrap',
-            gap: '7px 10px',
-            minHeight: 44,
-            padding: '8px 12px',
+            gap: 6,
+            width: 'max-content',
+            minHeight: 24,
+            maxWidth: 'calc(100% - 24px)',
+            padding: '2px 7px',
             boxSizing: 'border-box',
-            borderTop: '1px solid var(--viewer-border)',
-            background: 'var(--viewer-surface-elevated)',
+            border: overlayChrome
+              ? '1px solid color-mix(in srgb, var(--viewer-foreground) 18%, transparent)'
+              : '1px solid var(--viewer-border)',
+            borderRadius: 'var(--radius-sm)',
+            background: overlayChrome
+              ? 'color-mix(in srgb, var(--viewer-surface) 86%, transparent)'
+              : 'var(--viewer-surface-elevated)',
+            boxShadow: 'none',
+            backdropFilter: overlayChrome ? 'blur(8px)' : undefined,
             overflow: 'hidden',
           }}
         >
+          {/* 라이브 리전은 상태 전환만 감싼다. FPS·해상도 같은 판독값이 안에 들어가면
+              `aria-atomic`과 맞물려 값이 바뀔 때마다 칩 전체가 다시 낭독된다.
+              판독값은 시각적으로만 인접하고 낭독 대상에서는 빠진다. */}
           <div
             role="status"
             aria-live="polite"
             aria-atomic="true"
-            style={{ display: 'flex', alignItems: 'center', gap: 8, flex: '1 1 auto', minWidth: 0, overflow: 'hidden' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 5, flex: '0 1 auto', minWidth: 0, overflow: 'hidden' }}
           >
             {stateSummary}
           </div>
           {status != null && (
-            <span
-              data-viewer-edge-metadata=""
-              style={{
-                flex: '0 1 auto',
-                minWidth: 0,
-                maxWidth: '45%',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                color: 'var(--viewer-muted)',
-                fontSize: 'var(--caption2-size)',
-                fontWeight: 'var(--fw-semibold)',
-                fontVariantNumeric: 'tabular-nums',
-              }}
-            >
-              {status}
-            </span>
+              <React.Fragment>
+                <span aria-hidden="true" style={{ flex: '0 0 auto', color: 'var(--viewer-muted)', fontSize: 'var(--caption2-size)' }}>·</span>
+                <span
+                  data-viewer-edge-metadata=""
+                  style={{
+                    flex: '0 1 auto',
+                    minWidth: 0,
+                    maxWidth: 160,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    color: 'var(--viewer-muted)',
+                    fontSize: 'var(--caption2-size)',
+                    fontWeight: 'var(--fw-semibold)',
+                    fontVariantNumeric: 'tabular-nums',
+                  }}
+                >
+                  {status}
+                </span>
+              </React.Fragment>
           )}
           {stateAction != null && <div style={{ flex: '0 0 auto' }}>{stateAction}</div>}
         </div>
@@ -583,7 +820,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
             alignItems: 'stretch',
             padding: 12,
             boxSizing: 'border-box',
-            background: 'linear-gradient(180deg, var(--viewer-surface-elevated), var(--viewer-surface))',
+            background: 'var(--viewer-surface)',
             textAlign: 'center',
           }}
         >
@@ -592,15 +829,27 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
               data-viewer-blocking-source=""
               style={{
                 alignSelf: 'start',
-                justifySelf: 'stretch',
+                justifySelf: 'start',
+                width: 'fit-content',
+                maxWidth: 'min(360px, 100%)',
+                boxSizing: 'border-box',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
                 color: 'var(--viewer-foreground)',
                 fontSize: 'var(--caption1-size)',
-                lineHeight: 1.35,
-                fontWeight: 'var(--fw-bold)',
+                lineHeight: 'var(--caption1-line)',
+                fontWeight: 'var(--fw-semibold)',
                 textAlign: 'left',
+                padding: overlayChrome ? '5px 8px' : '7px 10px',
+                border: overlayChrome
+                  ? '1px solid color-mix(in srgb, var(--viewer-foreground) 18%, transparent)'
+                  : '1px solid var(--viewer-border)',
+                borderRadius: 'var(--radius-md)',
+                background: overlayChrome
+                  ? 'color-mix(in srgb, var(--viewer-surface) 82%, transparent)'
+                  : 'var(--viewer-surface-elevated)',
+                boxShadow: overlayChrome ? 'none' : 'var(--shadow-sm)',
               }}
             >
               {source}
@@ -625,7 +874,16 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
               aria-atomic="true"
               style={{ display: 'grid', justifyItems: 'center', gap: 10 }}
             >
-              <div data-viewer-blocking-icon="" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 24 }}>
+              <div
+                data-viewer-blocking-icon=""
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  minWidth: 24,
+                  minHeight: 24,
+                }}
+              >
                 <StateMark presentation={presentation} icon={stateIcon} />
               </div>
               <div style={{ display: 'grid', justifyItems: 'center', gap: 4 }}>

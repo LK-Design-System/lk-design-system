@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "5241a27c965fff45387f33cf8e47f3a15b9843535906965ee3f1b0c30b03f93b",
+  "sourceFingerprint": "c25d59c72193edad4a20bb1a8a5118b7a5a97b1f214df69d7375b78c2a321b9f",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -24,8 +24,8 @@
     "not-tracked": "This repository does not own or assert that platform implementation status."
   },
   "summary": {
-    "componentEntries": 200,
-    "publicExports": 206,
+    "componentEntries": 201,
+    "publicExports": 207,
     "guides": 170,
     "entriesWithoutOwnedPage": [
       "Stat",
@@ -35,7 +35,8 @@
       "RadioGroup",
       "Toolbar",
       "FilterChip",
-      "MultiSelectChip"
+      "MultiSelectChip",
+      "ElevatorFleetOverview"
     ]
   },
   "entries": [
@@ -13259,7 +13260,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
         }
       ],
-      "promptSha256": "d1249f46b74dc1ef5727bb540b9d8845d6e1a01df20a5800363f0bbb62742fb7"
+      "promptSha256": "a35da8c2a4f260bf735afc9240d6da818d506dd2b91f482c63030a2550c005e2"
     },
     {
       "id": "viewport-status-bar",
@@ -13368,7 +13369,7 @@
           "url": "https://docs.unity3d.com/kr/530/Manual/LearningtheInterface.html"
         }
       ],
-      "promptSha256": "ec160ab56af0bf6d27c215cb5f5e54f143572a8ae7dd9402e5253460a1eabe9e"
+      "promptSha256": "40b2987f2e1800601693f149ae6fc7b67f226713d4f14cbb664e65b72869b7a3"
     },
     {
       "id": "avatar",
@@ -22060,6 +22061,7 @@
       "wdsFamily": "Application viewer patterns",
       "storyEvidence": [
         "stories/Viewer3D.stories.jsx",
+        "stories/ViewerElevatorFleet.stories.jsx",
         "stories/ViewerFloorSelector.stories.jsx",
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
@@ -22067,6 +22069,7 @@
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
+        "ElevatorFleetOverview",
         "Map2DCanvas",
         "Scene3DFrame",
         "VideoStreamTile",
@@ -22115,13 +22118,13 @@
         }
       ],
       "tokens": [
-        "--color-semantic-background-elevated-normal",
-        "--color-semantic-line-normal-normal",
-        "--radius-md",
-        "--shadow-sm",
+        "--color-semantic-fill-normal",
+        "--radius-10",
         "--font-sans",
-        "--radius-sm",
+        "--radius-8",
         "--label1-size",
+        "--fw-semibold",
+        "--fw-medium",
         "--color-semantic-primary-normal",
         "--color-semantic-static-white",
         "--color-semantic-label-neutral",
@@ -28947,6 +28950,139 @@
       "promptSha256": "d98474674ca60297e40284d866e6e045082ffdcc73d6f96794eb51d56d75761d"
     },
     {
+      "id": "elevator-fleet-overview",
+      "title": "ElevatorFleetOverview",
+      "exports": [
+        "ElevatorFleetOverview"
+      ],
+      "source": "components/viz/ElevatorFleetOverview.jsx",
+      "typeContract": "components/viz/ElevatorFleetOverview.d.ts",
+      "prompt": "components/viz/ElevatorFleetOverview.prompt.md",
+      "group": "Viewer product patterns",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
+      "wdsFamily": "Application viewer patterns",
+      "storyEvidence": [
+        "stories/Viewer3D.stories.jsx",
+        "stories/ViewerElevatorFleet.stories.jsx",
+        "stories/ViewerFloorSelector.stories.jsx",
+        "stories/ViewerFrame.stories.jsx",
+        "stories/ViewerMap.stories.jsx",
+        "stories/ViewerToolbar.stories.jsx",
+        "stories/ViewerVideo.stories.jsx"
+      ],
+      "classificationSiblings": [
+        "FloorSelector",
+        "Map2DCanvas",
+        "Scene3DFrame",
+        "VideoStreamTile",
+        "VIEWER_BLOCKING_STATES",
+        "VIEWER_STATES",
+        "ViewerFrame",
+        "ViewerToolbar",
+        "ViewerToolbarButton"
+      ],
+      "storybookPages": [
+        "LDS Product/Viewer/2D Map",
+        "LDS Product/Viewer/3D Scene",
+        "LDS Product/Viewer/Floor Selector",
+        "LDS Product/Viewer/Toolbar",
+        "LDS Product/Viewer/Video Stream",
+        "LDS Product/Viewer/Viewer Frame"
+      ],
+      "props": [
+        {
+          "name": "buildings",
+          "type": "ElevatorFleetBuilding[]",
+          "required": false,
+          "description": "",
+          "owner": "ElevatorFleetOverviewProps"
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "ElevatorFleetOverviewProps"
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3 | 4 | 5 | 6",
+          "required": false,
+          "description": "",
+          "owner": "ElevatorFleetOverviewProps"
+        },
+        {
+          "name": "emptyMessage",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "ElevatorFleetOverviewProps"
+        }
+      ],
+      "tokens": [
+        "--color-semantic-primary-normal",
+        "--color-semantic-primary-surface-normal",
+        "--color-semantic-label-strong",
+        "--color-semantic-status-cautionary",
+        "--color-semantic-status-cautionary-surface",
+        "--color-semantic-status-cautionary-text",
+        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-surface",
+        "--color-semantic-status-negative-text",
+        "--color-semantic-label-alternative",
+        "--color-semantic-background-normal-alternative",
+        "--dur-slow",
+        "--ease-in-out",
+        "--color-semantic-static-white",
+        "--color-semantic-line-normal-normal",
+        "--space-1",
+        "--space-2",
+        "--caption1-size",
+        "--fw-bold",
+        "--fw-regular",
+        "--space-3",
+        "--component-card-radius",
+        "--color-semantic-background-elevated-normal",
+        "--caption2-size",
+        "--heading2-size",
+        "--heading2-line",
+        "--color-semantic-line-solid-_strong",
+        "--body1-size",
+        "--body1-line",
+        "--space-4",
+        "--label1-size",
+        "--space-5",
+        "--font-sans",
+        "--color-semantic-label-normal",
+        "--color-semantic-background-normal-normal",
+        "--space-6"
+      ],
+      "externalReferences": [
+        {
+          "label": "Vantage GALileo Lobby Monitoring",
+          "url": "https://www.vantageelevation.com/galileo/"
+        },
+        {
+          "label": "Nidec MCE Multiple System Display",
+          "url": "https://moen.nidec.com/elevators/Motion-Control-Engineering/Products/Monitoring-Solutions/MSD-Multiple-System-Display"
+        },
+        {
+          "label": "Elevator Systems EMIS-100",
+          "url": "https://www.elevatorsystems.com/emis-100-elevator-monitor-and-information-system"
+        },
+        {
+          "label": "Vantage NEXUS Position Indicator",
+          "url": "https://www.vantageelevation.com/wp-content/uploads/2026/01/NEXUS-Rev.-1.2-1-1.pdf"
+        },
+        {
+          "label": "WCAG 2.2 Use of Color",
+          "url": "https://www.w3.org/TR/WCAG22/#use-of-color"
+        }
+      ],
+      "promptSha256": "1432183732b4d2deb66ab320a5acbfa1e75ea0032257b89d6e113894792c7f63"
+    },
+    {
       "id": "map2-dcanvas",
       "title": "Map2DCanvas",
       "exports": [
@@ -28961,6 +29097,7 @@
       "wdsFamily": "Application viewer patterns",
       "storyEvidence": [
         "stories/Viewer3D.stories.jsx",
+        "stories/ViewerElevatorFleet.stories.jsx",
         "stories/ViewerFloorSelector.stories.jsx",
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
@@ -28968,6 +29105,7 @@
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
+        "ElevatorFleetOverview",
         "FloorSelector",
         "Scene3DFrame",
         "VideoStreamTile",
@@ -29235,6 +29373,14 @@
           "url": "https://docs.mapbox.com/map-styles/guides/standard-styles/"
         },
         {
+          "label": "MapLibre Style Specification — Layers",
+          "url": "https://maplibre.org/maplibre-style-spec/layers/"
+        },
+        {
+          "label": "ROS navmsgs/OccupancyGrid",
+          "url": "https://docs.ros.org/en/melodic/api/nav_msgs/html/msg/OccupancyGrid.html"
+        },
+        {
           "label": "WCAG 2.2 — Dragging Movements",
           "url": "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html"
         },
@@ -29243,7 +29389,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/"
         }
       ],
-      "promptSha256": "93321e52d53e27bb1de28ea2ee60c07e78f02415450347ffbae9f4c3e1b4b29b"
+      "promptSha256": "a8f27e9c39b61d3a2ca09593ca516df3e15a2e4f958d4057ff68df5a72469581"
     },
     {
       "id": "scene3-dframe",
@@ -29260,6 +29406,7 @@
       "wdsFamily": "Application viewer patterns",
       "storyEvidence": [
         "stories/Viewer3D.stories.jsx",
+        "stories/ViewerElevatorFleet.stories.jsx",
         "stories/ViewerFloorSelector.stories.jsx",
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
@@ -29267,6 +29414,7 @@
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
+        "ElevatorFleetOverview",
         "FloorSelector",
         "Map2DCanvas",
         "VideoStreamTile",
@@ -29448,7 +29596,7 @@
           "url": "https://docs.unity3d.com/Manual/GIVis.html"
         }
       ],
-      "promptSha256": "7993598645a961e1015e8afe4f87903e6196b1f0de76d59c157e4e36204f68e3"
+      "promptSha256": "4c1fbaa0e6f0c6deed1ac70ef170e09f40ec921e255a42d0f31b7775108b7f97"
     },
     {
       "id": "telemetry-gauge",
@@ -29794,6 +29942,7 @@
       "wdsFamily": "Application viewer patterns",
       "storyEvidence": [
         "stories/Viewer3D.stories.jsx",
+        "stories/ViewerElevatorFleet.stories.jsx",
         "stories/ViewerFloorSelector.stories.jsx",
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
@@ -29801,6 +29950,7 @@
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
+        "ElevatorFleetOverview",
         "FloorSelector",
         "Map2DCanvas",
         "Scene3DFrame",
@@ -29958,6 +30108,20 @@
           "required": false,
           "description": "Perimeter ownership. \"embedded\" drops the tile's own border and radius so a parent surface owns one continuous outline. @default \"standalone\"",
           "owner": "VideoStreamTileProps"
+        },
+        {
+          "name": "chromeVariant",
+          "type": "'surface' | 'overlay'",
+          "required": false,
+          "description": "Video chrome treatment. @default \"overlay\"",
+          "owner": "VideoStreamTileProps"
+        },
+        {
+          "name": "toolbarVisibility",
+          "type": "'always' | 'interaction'",
+          "required": false,
+          "description": "Local media controls are revealed by hover, press, or focus by default.",
+          "owner": "VideoStreamTileProps"
         }
       ],
       "tokens": [],
@@ -29965,6 +30129,38 @@
         {
           "label": "HTML media element specification",
           "url": "https://html.spec.whatwg.org/multipage/media.html"
+        },
+        {
+          "label": "Shaka Player UI",
+          "url": "https://shaka-project.github.io/shaka-player/docs/api/tutorial-ui-customization.html"
+        },
+        {
+          "label": "Video.js VolumePanel",
+          "url": "https://docs.videojs.com/volumepanel"
+        },
+        {
+          "label": "Video.js Volume Slider",
+          "url": "https://videojs.org/docs/framework/html/reference/volume-slider"
+        },
+        {
+          "label": "Microsoft MediaTransportControls",
+          "url": "https://learn.microsoft.com/en-us/windows/apps/develop/ui/controls/custom-transport-controls"
+        },
+        {
+          "label": "Genetec Security Center tile customization",
+          "url": "https://techdocs.genetec.com/r/en-US/Security-Center-User-Guide-5.13/Customizing-how-tiles-are-displayed-in-Security-Center"
+        },
+        {
+          "label": "AXIS Camera Station Pro",
+          "url": "https://help.axis.com/en-us/axis-camera-station-pro"
+        },
+        {
+          "label": "Verkada Camera Shortcuts",
+          "url": "https://help.verkada.com/verkada-cameras/configuration/view-and-edit-camera-settings/camera-shortcuts"
+        },
+        {
+          "label": "Foxglove Image panel",
+          "url": "https://docs.foxglove.dev/docs/visualization/panels/image"
         },
         {
           "label": "WebRTC Statistics",
@@ -29979,7 +30175,7 @@
           "url": "https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html"
         }
       ],
-      "promptSha256": "0a9cb687e1dd32b2c28ea918559dc67086845302b2f1cf707bd7895acd1e9987"
+      "promptSha256": "a2be6913f1775d837b1522279f708a6f7318a404bcf11c615d38c0de26424d1c"
     },
     {
       "id": "viewer-frame",
@@ -29998,6 +30194,7 @@
       "wdsFamily": "Application viewer patterns",
       "storyEvidence": [
         "stories/Viewer3D.stories.jsx",
+        "stories/ViewerElevatorFleet.stories.jsx",
         "stories/ViewerFloorSelector.stories.jsx",
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
@@ -30005,6 +30202,7 @@
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
+        "ElevatorFleetOverview",
         "FloorSelector",
         "Map2DCanvas",
         "Scene3DFrame",
@@ -30160,6 +30358,20 @@
           "required": false,
           "description": "Perimeter ownership. \"embedded\" drops the frame's own border and radius so a parent surface (CanvasEditorShell, Card) owns one continuous outline; viewport chrome, state, and a11y roles are unchanged. @default \"standalone\"",
           "owner": "ViewerFrameProps"
+        },
+        {
+          "name": "chromeVariant",
+          "type": "'surface' | 'overlay'",
+          "required": false,
+          "description": "Chrome treatment. \"overlay\" uses compact translucent edge surfaces over visual media. @default \"surface\"",
+          "owner": "ViewerFrameProps"
+        },
+        {
+          "name": "toolbarVisibility",
+          "type": "'always' | 'interaction'",
+          "required": false,
+          "description": "Toolbar reveal behavior. \"interaction\" shows controls while the frame is hovered, pressed, or contains focus. @default \"always\"",
+          "owner": "ViewerFrameProps"
         }
       ],
       "tokens": [
@@ -30168,7 +30380,7 @@
         "--color-semantic-status-cautionary",
         "--color-semantic-status-negative",
         "--viewer-muted",
-        "--caption1-size",
+        "--caption2-size",
         "--fw-bold",
         "--viewer-foreground",
         "--component-viewer-light-surface",
@@ -30188,9 +30400,11 @@
         "--radius-lg",
         "--viewer-surface",
         "--font-sans",
+        "--radius-md",
         "--viewer-surface-elevated",
-        "--radius-pill",
-        "--caption2-size",
+        "--shadow-sm",
+        "--caption1-size",
+        "--caption1-line",
         "--fw-semibold",
         "--radius-sm",
         "--label1-size"
@@ -30221,6 +30435,22 @@
           "url": "https://docs.mapbox.com/map-styles/guides/standard-styles/"
         },
         {
+          "label": "Mapbox NavigationControl",
+          "url": "https://docs.mapbox.com/mapbox-gl-js/api/markers/#navigationcontrol"
+        },
+        {
+          "label": "Google Maps controls",
+          "url": "https://developers.google.com/maps/documentation/javascript/controls"
+        },
+        {
+          "label": "Figma zoom and view options",
+          "url": "https://help.figma.com/hc/en-us/articles/360041065034-Adjust-your-zoom-and-view-options"
+        },
+        {
+          "label": "Autodesk model viewing toolbars",
+          "url": "https://help.autodesk.com/cloudhelp/ENU/Collab-Home/files/using-the-viewer/Design_Collab_Viewing_Toolbar.html"
+        },
+        {
           "label": "WAI-ARIA Toolbar",
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/"
         },
@@ -30237,7 +30467,7 @@
           "url": "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html"
         }
       ],
-      "promptSha256": "a966d4a1f371d205c3a3fa0dfe5e263da6fa32dee10a4cc667c7a3e5718311fc"
+      "promptSha256": "7967380e5c4096eb6676cfde6f51fdb1490d3dc767c25461620034ae10e73c42"
     },
     {
       "id": "viewer-toolbar",
@@ -30255,6 +30485,7 @@
       "wdsFamily": "Application viewer patterns",
       "storyEvidence": [
         "stories/Viewer3D.stories.jsx",
+        "stories/ViewerElevatorFleet.stories.jsx",
         "stories/ViewerFloorSelector.stories.jsx",
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
@@ -30262,6 +30493,7 @@
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
+        "ElevatorFleetOverview",
         "FloorSelector",
         "Map2DCanvas",
         "Scene3DFrame",
@@ -30364,7 +30596,8 @@
         "--color-semantic-line-normal-normal",
         "--radius-md",
         "--shadow-sm",
-        "--space-1"
+        "--color-semantic-static-white",
+        "--color-semantic-static-black"
       ],
       "externalReferences": [
         {
@@ -30392,7 +30625,7 @@
           "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
         }
       ],
-      "promptSha256": "0f37021f7e944d12ccaf9ee54e4c5fd13079d7ed61b5e760a1b3c5d79675f295"
+      "promptSha256": "d905c6860ef592f8371f2ae3d5f45f18a117c8a388211be5071c8da01c129879"
     }
   ],
   "guides": [
@@ -61486,9 +61719,9 @@
       "behavior": [
         "Keep selection identity and status fixed at the top, make property groups independently collapsible, and keep object-scoped actions in the sticky actions area.",
         "Figma right properties panel and selection guidance support a selection-bound right panel and one shared canvas/tree selection model.",
+        "Adobe Spectrum Action Bar keeps contextual actions grouped while preserving a safe zone between selection identity and actions; LDS uses the same separation principle inside the inspector footer.",
         "The resulting LDS contract covers no selection, one selection, multi/mixed selection, status, read-only/locked content supplied by consumers, and object actions. Domain-specific property schemas remain Product/Robotics composition.",
-        "SelectionInspector - Selection-bound identity and properties region.",
-        "Use it for a selected canvas or scene object such as a waypoint, route segment, zone, map annotation, crop volume, or bounding box. Keep it separate from layer/display selection."
+        "SelectionInspector - Selection-bound identity and properties region."
       ],
       "quantitativeRules": [
         {
@@ -61514,10 +61747,10 @@
       ],
       "responsive": [],
       "contentGuidance": [
+        "statusPresentation=\"indicator\" is for live availability, connection, or freshness and renders the Core StatusIndicator. Keep the default \"badge\" for lifecycle and result labels.",
         "With no item and no selectionCount, the inspector shows emptyLabel (default 선택한 객체가 없습니다.) as a status region. Keep it a short instruction about selecting on the canvas, not a workflow message.",
         "SelectionInspector is a named region rather than a second nested complementary landmark. CanvasEditorShell/DockPanel owns the docked or overlay panel landmark and resize/collapse behavior.",
-        "Field and object status use the canonical signal / positive / cautionary / negative vocabulary. warning and danger are compatibility aliases, not names for new usage.",
-        "Unity Inspector supports a contextual property surface that follows the selected object."
+        "Field and object status use the canonical signal / positive / cautionary / negative vocabulary. warning and danger are compatibility aliases, not names for new usage."
       ],
       "accessibility": [
         "Keep reversible commit actions at the trailing edge. A destructive object action uses the danger button grammar, is separated from the primary commit action with flexible space, and opens ConfirmDialog before execution. Do not disguise deletion as a neutral assistive action beside Apply.",
@@ -61790,12 +62023,13 @@
       ],
       "responsive": [
         "message is for a short viewport-local outcome or hint and uses a polite, atomic status live region. Persistent connection or document state belongs in the owning shell/header instead.",
-        "messageTone (default default) keeps a plain-text message unless the outcome is genuinely semantic; any non-default tone wraps the message in a status badge with a visible tone word (messageToneLabel, or the standard 활성/정상/주의/위험 default), so tone is never color-only. Do not use a toned message for routine confirmations.",
         "Keep this bar passive. History, save, reset, viewport controls, and destructive actions belong in their respective command surfaces. children remains only as a deprecated passive-status compatibility slot.",
-        "Blender Manual: Status Bar places contextual shortcuts, messages, and scene statistics in a compact bottom region. LDS separates a transient message from persistent telemetry while keeping both local to the viewport."
+        "Blender Manual: Status Bar places contextual shortcuts, messages, and scene statistics in a compact bottom region. LDS separates a transient message from persistent telemetry while keeping both local to the viewport.",
+        "Unity Manual: Learning the Interface establishes a dominant scene viewport with stable surrounding editor chrome. LDS therefore omits document actions from the status surface and keeps view-specific readouts subordinate to the viewport."
       ],
       "contentGuidance": [
-        "Use mono for coordinates, camera values, and frequently changing numeric telemetry. Toned values always include a visible semantic label; customize it with toneLabel/messageToneLabel."
+        "messageTone (default default) keeps the message as plain text and, only when the outcome is genuinely semantic, adds a separate status badge with a visible tone word (messageToneLabel, or the standard 활성/정상/주의/위험 default). Do not add a tone badge to routine confirmations whose sentence already communicates completion.",
+        "Use mono for coordinates, camera values, and frequently changing numeric telemetry. A toned item keeps its data value as a plain readout and renders the visible semantic state in a separate StatusBadge; customize that state text with toneLabel. messageToneLabel performs the same role for a transient message."
       ],
       "accessibility": [
         "The bar never wraps. It uses spacing instead of independent divider nodes, preventing orphaned separators when space contracts.",
@@ -75940,15 +76174,16 @@
         "Map2DCanvas"
       ],
       "supportingComponents": [],
-      "purpose": "운영자가 점유 격자·경로·로봇 위치를 한 평면에서 팬과 줌으로 살펴볼 때 적합합니다. 공간 관계가 필요 없는 수치 모니터링이나 3차원 장면에는 Telemetry 또는 3D Scene을 사용하세요.",
+      "purpose": "운영자가 점유 격자·평면도·공간 오버레이를 한 평면에서 팬과 줌으로 살펴볼 때 적합합니다. 로봇의 경로·궤적·현재 위치는 Map2DCanvas가 직접 그리지 않고 LDS Robotics Navigation 레이어를 조합하세요.",
       "useWhen": [
-        "appearance=\"light\"가 기본이지만 appearance=\"dark\"도 동일한 공개 계약입니다. 지도 renderer와 overlay는 --viewer- 역할 토큰을 사용해 두 appearance에서 같은 정보·조작 구조를 유지합니다."
+        "appearance=\"light\"가 기본이지만 appearance=\"dark\"도 동일한 공개 계약입니다. 지도 renderer와 overlay는 --viewer- 역할 토큰을 사용해 두 appearance에서 같은 정보·조작 구조를 유지합니다.",
+        "ROS navmsgs/OccupancyGrid: 2D 점유 지도는 셀별 점유 확률과 unknown 값을 제공하는 구조 데이터이므로, Product 예시는 도메인 경로 없이 중립적인 지도 표면으로만 표현합니다."
       ],
       "avoidWhen": [
         "panEnabled={false}에서는 drag와 touch-action: none을 모두 제거해 페이지 터치 스크롤 및 앱의 선택/드로잉 동작과 충돌하지 않습니다.",
         "button, link, input, slider 등 interactive descendant에서 시작한 pointer/wheel 입력도 pan·zoom으로 재처리하지 않습니다.",
         "onWheel은 pointer-focal zoom에 필요한 non-passive native WheelEvent callback입니다. React SyntheticEvent 전용 API를 가정하지 않습니다.",
-        "Mapbox Standard style reference와 runtime configuration guide: 하나의 지도 스타일이 day/night에 대응하는 lighting preset을 런타임에 바꿀 수 있으므로, LDS도 지도를 light 전용으로 고정하지 않고 light/dark appearance를 같은 계약으로 제공합니다."
+        "LDS Product 예시는 구조 지도처럼 중립적인 콘텐츠로 viewport 계약만 보여줍니다. Route·Trajectory·Waypoint·RobotPose의 의미와 시각 문법은 @lk-robotics/lds-robotics-ui가 소유하며, Product Storybook에서 임시 선·점·방향 마커로 재현하지 않습니다. 이 경계는 LDS Robotics revision 180f031541850444d302bcf6a94b96db563133cd의 Navigation Path System 계약과 대조했습니다."
       ],
       "anatomy": [
         {
@@ -76162,7 +76397,7 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "기본 contentOrigin=\"top-left\"는 일반 이미지, SVG, canvas의 (0, 0)을 viewport 좌상단에 놓습니다. 세계 좌표 원점을 화면 중심에 두어야 하는 renderer만 contentOrigin=\"center\"를 명시하고 자체 콘텐츠 offset을 제공합니다."
+          "rule": "기본 contentOrigin=\"top-left\"는 일반 이미지, SVG, canvas의 (0, 0)을 viewport 좌상단에 놓습니다. contentOrigin=\"center\"는 세계 좌표 원점을 화면 중심에 두는 renderer를 위한 저수준 호환 계약이지만 현재 고정 LDS Robotics·LDS3D source에는 직접 소비가 없으므로 공개 사용 변형으로 권장하지 않습니다. LDS Robotics Navigation은 NavigationCoordinateBoundary와 명시적인 svgOrigin을 사용합니다."
         },
         {
           "subject": "명시 규칙 2",
@@ -76193,8 +76428,14 @@
         "WCAG 2.2 — Dragging Movements: drag만이 유일한 조작이 되지 않도록 버튼과 키보드 pan/zoom 대안을 유지했습니다.",
         "WAI-ARIA Toolbar pattern: viewport 안의 방향키 toolbar가 canvas 방향키 shortcut과 충돌하지 않도록 이벤트 범위를 분리했습니다."
       ],
-      "exceptions": [],
+      "exceptions": [
+        "Built-in 지도 도구도 공통 Viewer edge grammar를 따릅니다. source는 좌상단, 세로 줌·fit·reset 도구는 우상단, 현재 배율 또는 제품 상태는 좌하단에 두며 지도만의 별도 하단 toolbar chrome을 만들지 않습니다."
+      ],
       "related": [
+        {
+          "component": "ElevatorFleetOverview",
+          "relationship": "대표 시나리오에서 조합"
+        },
         {
           "component": "FloorSelector",
           "relationship": "대표 시나리오에서 조합"
@@ -76222,16 +76463,12 @@
         {
           "component": "ViewerToolbar",
           "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "ViewerToolbarButton",
-          "relationship": "대표 시나리오에서 조합"
         }
       ],
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<Map2DCanvas\n  style={{ height: 360 }}\n  defaultViewport={{ x: 24, y: 24, z: 1 }}\n  panEnabled={tool === 'pan'}\n  wheelZoom\n  status=\"x 12.4 · y -3.8 · 125%\"\n>\n  <img src=\"/maps/floor1.png\" alt=\"1층 점유 지도\" style={{ display: 'block' }} />\n</Map2DCanvas>"
+          "code": "<Map2DCanvas\n  style={{ height: 360 }}\n  source=\"1층 지도\"\n  defaultViewport={{ x: 24, y: 24, z: 1 }}\n  panEnabled={tool === 'pan'}\n  wheelZoom\n  status=\"x 12.4 · y -3.8 · 125%\"\n>\n  <img src=\"/maps/floor1.png\" alt=\"1층 점유 지도\" style={{ display: 'block' }} />\n</Map2DCanvas>"
         }
       ],
       "tokens": [
@@ -76306,6 +76543,14 @@
           "url": "https://docs.mapbox.com/map-styles/guides/standard-styles/"
         },
         {
+          "label": "MapLibre Style Specification — Layers",
+          "url": "https://maplibre.org/maplibre-style-spec/layers/"
+        },
+        {
+          "label": "ROS navmsgs/OccupancyGrid",
+          "url": "https://docs.ros.org/en/melodic/api/nav_msgs/html/msg/OccupancyGrid.html"
+        },
+        {
           "label": "WCAG 2.2 — Dragging Movements",
           "url": "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html"
         },
@@ -76328,7 +76573,7 @@
         "responsive": "evidence",
         "contentGuidance": "evidence",
         "accessibility": "evidence",
-        "exceptions": "omitted-no-evidence",
+        "exceptions": "evidence",
         "related": "evidence",
         "examples": "evidence",
         "tokens": "evidence",
@@ -76351,11 +76596,14 @@
         "ViewerToolbar",
         "ViewerToolbarButton"
       ],
-      "purpose": "운영자가 포인트 클라우드·설비 자세·입체 장애물처럼 깊이 정보가 필요한 장면을 검사할 때 적합합니다. 평면 경로 확인이나 영상 감시에는 3D Scene 대신 2D Map 또는 Video Stream을 사용하세요.",
+      "purpose": "애플리케이션이나 LDS3D가 제공하는 WebGL 장면에 공통 상태·HUD·카메라 도구를 배치할 때 적합합니다. Scene3DFrame은 실제 3D 렌더링·좌표계·피킹을 구현하지 않습니다.",
       "useWhen": [
+        "Scene identity stays at the top-left, the camera toolbar at the top-right, and passive renderer status at the bottom-left. ViewerFrame owns the toolbar shelf, so light appearances use a minimal inner ViewerToolbar rather than nesting another surface.",
         "Scene3DFrame is the renderer-independent 3D preset for ViewerFrame."
       ],
-      "avoidWhen": [],
+      "avoidWhen": [
+        "Product Storybook은 실제 point cloud나 WebGL 장면을 모사하지 않고 renderer slot과 frame chrome만 보여줍니다. 실제 3D geometry, depth, picking, camera semantics와 renderer lifecycle은 LDS3D 또는 애플리케이션이 소유합니다."
+      ],
       "anatomy": [
         {
           "part": "children",
@@ -76542,6 +76790,7 @@
       ],
       "quantitativeRules": [],
       "responsive": [
+        "title is the primary scene identity and inherits the shared ViewerFrame compact source hierarchy (caption1/semibold) inside the top chrome.",
         "Use it for point clouds, digital twins, WebGL scenes, or React Three Fiber output. The DS owns the viewport frame, scene identity, compact HUD, viewport-local controls, passive renderer metadata, and normalized state placement. The application owns rendering, camera math, picking, and loading/retry logic.",
         "Classification and evidence are documented in ViewerFrame.prompt.md. The structure follows the official NVIDIA Omniverse viewport controls and Unity Scene view navigation, while Unity Scene view draw modes support the conclusion that viewing mode and diagnostic readability—not a permanently dark palette—define the…"
       ],
@@ -76574,6 +76823,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "ElevatorFleetOverview",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FloorSelector",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -76588,16 +76841,12 @@
         {
           "component": "VIEWER_BLOCKING_STATES",
           "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "VIEWER_STATES",
-          "relationship": "대표 시나리오에서 조합"
         }
       ],
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<Scene3DFrame\n  label=\"AMR-07 3D scene\"\n  title=\"POINT CLOUD\"\n  state=\"stale\"\n  status=\"1.2M pts · 38 FPS\"\n  toolbar={cameraControls}\n  style={{ height: 320 }}\n>\n  <Canvas>...</Canvas>\n</Scene3DFrame>"
+          "code": "<Scene3DFrame\n  label=\"장면 A 3D 뷰포트\"\n  title=\"장면 A\"\n  state=\"stale\"\n  status=\"원근 · 좌표계 world · 60 FPS\"\n  toolbar={cameraControls}\n  style={{ height: 320 }}\n>\n  <Canvas>...</Canvas>\n</Scene3DFrame>"
         }
       ],
       "tokens": [],
@@ -76665,7 +76914,7 @@
       "sectionStatus": {
         "purpose": "evidence",
         "useWhen": "evidence",
-        "avoidWhen": "omitted-no-evidence",
+        "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
         "states": "evidence",
@@ -76733,20 +76982,20 @@
       ],
       "quantitativeRules": [
         {
-          "subject": "--color-semantic-background-elevated-normal",
-          "rule": "light: #FFFFFF; dark: #212225"
+          "subject": "--color-semantic-fill-normal",
+          "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
         },
         {
           "subject": "--color-semantic-label-neutral",
           "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
         },
         {
-          "subject": "--color-semantic-line-normal-normal",
-          "rule": "light: rgba(112, 115, 124, 0.22); dark: rgba(112, 115, 124, 0.32)"
-        },
-        {
           "subject": "--color-semantic-primary-normal",
           "rule": "light: #3878B3; dark: #5390C9"
+        },
+        {
+          "subject": "--fw-medium",
+          "rule": "500"
         }
       ],
       "responsive": [],
@@ -76756,6 +77005,10 @@
       ],
       "exceptions": [],
       "related": [
+        {
+          "component": "ElevatorFleetOverview",
+          "relationship": "대표 시나리오에서 조합"
+        },
         {
           "component": "Map2DCanvas",
           "relationship": "대표 시나리오에서 조합"
@@ -76783,10 +77036,6 @@
         {
           "component": "ViewerToolbar",
           "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "ViewerToolbarButton",
-          "relationship": "대표 시나리오에서 조합"
         }
       ],
       "examples": [
@@ -76796,18 +77045,18 @@
         }
       ],
       "tokens": [
-        "--color-semantic-background-elevated-normal",
+        "--color-semantic-fill-normal",
         "--color-semantic-label-neutral",
-        "--color-semantic-line-normal-normal",
         "--color-semantic-primary-normal",
         "--color-semantic-static-white",
         "--dur-fast",
         "--ease-out",
         "--font-sans",
+        "--fw-medium",
+        "--fw-semibold",
         "--label1-size",
-        "--radius-md",
-        "--radius-sm",
-        "--shadow-sm"
+        "--radius-10",
+        "--radius-8"
       ],
       "apiLinks": [
         "components/navigation/FloorSelector.jsx",
@@ -76883,9 +77132,13 @@
         "ViewerToolbarButton"
       ],
       "purpose": "운영자가 지도·3D·영상에서 확대·맞춤·레이어 토글 같은 로컬 도구를 사용할 때 적합합니다. 저장·내보내기처럼 문서 전체에 영향을 주는 명령에는 Viewer Toolbar 대신 Command Bar를 사용하세요.",
-      "useWhen": [],
+      "useWhen": [
+        "ViewerToolbar — LDS Product application pattern. 지도·3D·영상 viewport에 귀속되는 zoom, fit, camera, layer visibility 조작을 모으는 작은 icon toolbar입니다. 실제 공간 의미와 renderer 명령은 LDS Robotics, LDS3D 또는 애플리케이션이 제공하고 이 컴포넌트는 공통 DOM toolbar 계약만 소유합니다."
+      ],
       "avoidWhen": [
-        "Adobe Spectrum Action Group: 관련된 action/toggle이 같은 size·density·interaction state를 공유하고, 공간이 제한되어도 control 자체를 임의 축소하지 않는 근거입니다."
+        "Horizontal zoom anatomy follows decrement → current value → increment → fit/reset. Display configuration begins after a visual separator. A layers/settings popover owns each visibility state in one place; do not repeat the same overlay as both an outer quick toggle and an inner switch.",
+        "Adobe Spectrum Action Group: 관련된 action/toggle이 같은 size·density·interaction state를 공유하고, 공간이 제한되어도 control 자체를 임의 축소하지 않는 근거입니다.",
+        "WCAG 2.2 Target Size (Minimum): Viewer의 28px target은 24px 최소 기준을 넘기며, 더 좁은 viewport에서도 이 크기 아래로 축소하지 않습니다."
       ],
       "anatomy": [
         {
@@ -76995,6 +77248,7 @@
         }
       ],
       "behavior": [
+        "Sibling IconButton과 ToggleIcon의 radius, semantic foreground/background, disabled, transition, focus token 계약을 재사용하되, Viewer 전용 밀도에서 control box만 28px로 고정합니다. 별도 focus ring은 만들지 않습니다.",
         "WAI-ARIA Toolbar pattern: 단일 Tab stop, orientation-aware 방향키, Home/End, disabled navigation 계약의 기준입니다."
       ],
       "quantitativeRules": [
@@ -77004,15 +77258,15 @@
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "ViewerToolbarButton은 icon-only control이므로 label이 필수이며 icon은 16px, control은 LDS small icon-control과 같은 32px입니다."
+          "rule": "ViewerToolbarButton은 icon-only control이므로 label이 필수이며 icon은 16px, control은 조밀한 데스크톱 viewport chrome에 맞춘 28px입니다."
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "Sibling IconButton과 ToggleIcon의 32px size, radius, semantic foreground/background, disabled, transition, focus token 계약을 재사용합니다. Toolbar 고유 버튼 크기나 focus ring을 만들지 않습니다."
+          "rule": "appearance=\"minimal\"만 outer chrome 없이 2px 간격의 flat control을 배치합니다. surface와 on-dark는 2px outer inset과 2px control gap을 가진 grouped surface를 소유합니다. 세 appearance 모두 기본 command/toggle 버튼은 transparent이며 hover·focus·pressed 또는 선택된 toggle에서만 개별 면이 나타납니다."
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "WCAG 2.2 Target Size (Minimum): 좁은 viewport에서도 32px target을 축소하지 않고 outer chrome과 label을 먼저 줄입니다."
+          "rule": "ViewerFrame 안에서 surface와 on-dark ViewerToolbar는 자체 grouped surface를 유지하고, 프레임의 data-viewer-control-shelf는 투명한 배치 래퍼로 동작합니다. minimal이나 사용자 정의 toolbar에는 프레임 shelf가 같은 2px inset의 배경·테두리를 제공하므로 chrome이 중첩되거나 페이지마다 여백이 달라지지 않습니다."
         },
         {
           "subject": "--color-semantic-background-elevated-normal",
@@ -77020,10 +77274,10 @@
         }
       ],
       "responsive": [
+        "on-dark는 툴바 루트에서 --viewer-foreground를 static white로 제공합니다. 이 값은 Popover 같은 presentation wrapper를 사이에 둔 버튼에도 상속되며, 비선택 command가 어두운 장면 위에서 기본 label 색상으로 떨어져 사라지지 않게 합니다. Disabled 버튼은 각 control의 disabled foreground를 계속 우선합니다.",
         "Toolbar root는 grid/flex의 stretch 가능한 slot에 놓여도 control 묶음의 intrinsic width를 유지합니다. 화면 폭을 채우는 command bar가 필요하면 별도 toolbar/navigation 컴포넌트를 사용합니다.",
         "CanvasEditorShell에서도 zoom, fit, camera, display control은 viewport 안에 둡니다. 문서 저장/history command는 shell header 소유입니다.",
-        "Unity default Scene View overlays: viewport-local navigation/orientation control만 scene edge에 두고 편집 panel과 분리했습니다.",
-        "NVIDIA Omniverse viewport controls: camera/view/display control을 viewport context에 귀속하고 진단 UI와 구분했습니다."
+        "Unity default Scene View overlays: viewport-local navigation/orientation control만 scene edge에 두고 편집 panel과 분리했습니다."
       ],
       "contentGuidance": [],
       "accessibility": [
@@ -77052,6 +77306,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "ElevatorFleetOverview",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FloorSelector",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -77062,24 +77320,25 @@
         {
           "component": "Scene3DFrame",
           "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "VideoStreamTile",
-          "relationship": "대표 시나리오에서 조합"
         }
       ],
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<ViewerToolbar orientation=\"horizontal\" appearance=\"on-dark\" label=\"3D 보기\">\n  <ViewerToolbarButton label=\"확대\" onClick={zoomIn}>\n    <Icon name=\"plus\" size={16} />\n  </ViewerToolbarButton>\n  <ViewerToolbarButton label=\"레이어 표시\" kind=\"toggle\" pressed={layersVisible} onPressedChange={setLayersVisible}>\n    <Icon name=\"filter\" size={16} />\n  </ViewerToolbarButton>\n</ViewerToolbar>"
+          "code": "<ViewerToolbar orientation=\"horizontal\" appearance=\"on-dark\" label=\"3D 보기\">\n  <ViewerToolbarButton label=\"축소\" onClick={zoomOut}>\n    <Icon name=\"minus\" size={16} />\n  </ViewerToolbarButton>\n  <output>{zoom}%</output>\n  <ViewerToolbarButton label=\"확대\" onClick={zoomIn}>\n    <Icon name=\"plus\" size={16} />\n  </ViewerToolbarButton>\n  <ViewerToolbarButton label=\"전체 보기\" onClick={fitView}>\n    <Icon name=\"full\" size={16} />\n  </ViewerToolbarButton>\n  <ViewerToolbarButton label=\"레이어 설정\" onClick={openLayerSettings}>\n    <Icon name=\"layers\" size={16} />\n  </ViewerToolbarButton>\n</ViewerToolbar>"
+        },
+        {
+          "label": "추가 조합 2",
+          "code": "<ViewerToolbarButton\n  label=\"격자 표시\"\n  kind=\"toggle\"\n  pressed={gridVisible}\n  onPressedChange={setGridVisible}\n>\n  <Icon name=\"layers\" size={16} />\n</ViewerToolbarButton>"
         }
       ],
       "tokens": [
         "--color-semantic-background-elevated-normal",
         "--color-semantic-line-normal-normal",
+        "--color-semantic-static-black",
+        "--color-semantic-static-white",
         "--radius-md",
         "--shadow-sm",
-        "--space-1",
         "--viewer-border",
         "--viewer-surface-elevated"
       ],
@@ -77158,7 +77417,7 @@
       "guideDeltaFields": [],
       "sectionStatus": {
         "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
+        "useWhen": "evidence",
         "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
@@ -77194,11 +77453,14 @@
       ],
       "purpose": "운영자가 카메라 영상을 보면서 연결 상태와 뷰포트 도구를 즉시 판단해야 할 때 적합합니다. 정지 이미지나 공간 경로를 탐색하는 화면에는 Video Stream 대신 Image 또는 2D Map을 사용하세요.",
       "useWhen": [
-        "Use the local toolbar for mute, captions, snapshot, and fullscreen. Recording archives, timelines, playback-session controls, and retry policy are intentionally omitted from this DS component.",
         "The HTML media element specification influenced the separation of paused, ended/unavailable, and error semantics from connection transport.",
+        "Microsoft MediaTransportControls confirms that volume belongs with the media transport controls; it is not evidence for a detached settings popover.",
+        "WCAG live captions and Pause, Stop, Hide influenced the optional captions/pause toolbar contract without embedding a product player workflow.",
         "VideoStreamTile is the video-source preset for ViewerFrame."
       ],
-      "avoidWhen": [],
+      "avoidWhen": [
+        "현재 고정된 LDS Robotics와 LDS3D source에는 VideoStreamTile 직접 소비가 없습니다. 실제 제품 소비 근거를 확인하기 전에는 transport·protocol·robot camera 의미를 이 preset에 추가하지 않으며, 단순한 영상 상태와 chrome만 필요하면 ViewerFrame 직접 조합도 함께 검토합니다."
+      ],
       "anatomy": [
         {
           "part": "children",
@@ -77215,6 +77477,10 @@
         {
           "part": "toolbar",
           "rule": "Viewport-local mute, captions, snapshot, or fullscreen controls."
+        },
+        {
+          "part": "toolbarVisibility",
+          "rule": "Local media controls are revealed by hover, press, or focus by default."
         }
       ],
       "properties": [
@@ -77357,6 +77623,20 @@
           "required": false,
           "description": "Perimeter ownership. \"embedded\" drops the tile's own border and radius so a parent surface owns one continuous outline. @default \"standalone\"",
           "owner": "VideoStreamTileProps"
+        },
+        {
+          "name": "chromeVariant",
+          "type": "'surface' | 'overlay'",
+          "required": false,
+          "description": "Video chrome treatment. @default \"overlay\"",
+          "owner": "VideoStreamTileProps"
+        },
+        {
+          "name": "toolbarVisibility",
+          "type": "'always' | 'interaction'",
+          "required": false,
+          "description": "Local media controls are revealed by hover, press, or focus by default.",
+          "owner": "VideoStreamTileProps"
         }
       ],
       "states": [
@@ -77371,28 +77651,50 @@
         {
           "state": "variant",
           "rule": "Perimeter ownership. \"embedded\" drops the tile's own border and radius so a parent surface owns one continuous outline. @default \"standalone\""
+        },
+        {
+          "state": "chromeVariant",
+          "rule": "Video chrome treatment. @default \"overlay\""
         }
       ],
-      "behavior": [],
+      "behavior": [
+        "Video.js VolumePanel likewise groups MuteToggle and VolumeControl, expands the control through hover/focus interaction, and returns focus to the mute control when Escape closes the rail. LDS adapts that interaction to ViewerToolbar.",
+        "Genetec Security Center tile customization allows video controls, timeline, and tile toolbar to auto-hide and reappear on hover. LDS uses the same information-hierarchy conclusion while preserving keyboard focus reveal."
+      ],
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
           "rule": "aspectRatio (default 16 / 9) is a CSS aspect-ratio value that sizes the tile from its width. Match it to the real stream ratio (4 / 3, 1 / 1) instead of letterboxing inside the child renderer; give the tile an explicit height only when the owning grid requires it."
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "Use the local toolbar for volume, captions, snapshot, and fullscreen. Volume is a compact media-control group: the mute button and horizontal LDS Slider share the overlay toolbar surface, and the rail expands on hover or focus without adding a detached label or value bubble."
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "Healthy live tiles omit passive resolution/FPS chrome by default. Put quality selection in settings or a product-owned detail surface; pass metadata only when the value is necessary to interpret the current state."
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "Video.js Volume Slider keeps the continuous 0–100 range in the player controls and exposes its numeric value through the range contract. LDS uses a short horizontal rail with a small thumb and omits a detached value bubble from the compact viewer toolbar."
         }
       ],
-      "responsive": [],
+      "responsive": [
+        "Video keeps the shared edge grammar—source identity at the top-left and local media commands at the top-right—but adapts it to media viewing with compact translucent overlay surfaces.",
+        "Shaka Player UI defines mutevolume as a combined mute button and volume slider container. LDS follows that compact anatomy rather than presenting volume as a settings card."
+      ],
       "contentGuidance": [
         "The chrome slots follow the shared ViewerFrame contract: badges is passive identity context beside label, hud carries a few essential stream readouts, and overlay is a non-interactive layer above the video (crosshair, privacy mask) — controls belong in toolbar only.",
-        "degraded, stale, frozen, and user-requested paused are distinct non-blocking states. They preserve the last frame with an edge message.",
-        "Pass a , WebRTC renderer, iframe, or image as children. The DS owns the named frame, source identity, local toolbar/HUD slots, aspect ratio, and normalized stream-state presentation. The application owns transport, autoplay policy, playback, recording, reconnection, and media permissions.",
-        "These expectations are adapted to LDS component roles and icons rather than copying another product's visual styling. The common state and placement contract is documented in ViewerFrame.prompt.md."
+        "degraded, stale, frozen, and user-requested paused are distinct non-blocking states. They preserve the last frame with an edge message and use the shared state-specific retained-frame emphasis instead of one blanket dim treatment.",
+        "AXIS Camera Station Pro treats camera names and recording/event indicators as optional live-view context and manages resolution/frame rate through stream profiles rather than permanent tile badges. LDS therefore keeps normal video chrome limited to identity and live truth.",
+        "Pass a , WebRTC renderer, iframe, or image as children. The DS owns the named frame, source identity, local toolbar/HUD slots, aspect ratio, and normalized stream-state presentation. The application owns transport, autoplay policy, playback, recording, reconnection, and media permissions."
       ],
       "accessibility": [
         "The region's accessible name comes from ariaLabel when supplied; otherwise a string label derives \"{label} 영상 스트림\" and a missing/non-string label falls back to 영상 스트림. Set ariaLabel explicitly whenever label is a non-string node or several tiles would otherwise share one name.",
         "live uses both icon and text. Loading/connecting states include visible text and aria-busy; they do not rely on a spinner alone.",
         "no-source, unavailable, disconnected, no-signal, and error are blocking. Child media controls and local toolbar controls become inert and aria-hidden, while source identity remains visible.",
         "A retry/resume control may be supplied through stateAction; the application owns transport and recovery, and the frame restores focus to that action when a focused viewport control becomes blocked.",
-        "variant=\"embedded\"는 이 타일을 다른 표면 안에 중첩할 때 자체 border·radius를 생략해 부모가 최외곽선을 소유하게 합니다. source·HUD·toolbar·상태·접근성 역할은 그대로 유지됩니다. 기본값 standalone은 자체 외곽선을 그립니다."
+        "Video defaults to chromeVariant=\"overlay\" and toolbarVisibility=\"interaction\". Source identity plus the normalized live state remain visible; the local toolbar is visually hidden until the frame is hovered, pressed, or contains keyboard focus."
       ],
       "exceptions": [],
       "related": [
@@ -77413,6 +77715,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "ElevatorFleetOverview",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FloorSelector",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -77423,16 +77729,12 @@
         {
           "component": "Scene3DFrame",
           "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "VIEWER_BLOCKING_STATES",
-          "relationship": "대표 시나리오에서 조합"
         }
       ],
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<VideoStreamTile\n  label=\"AMR-07 · FRONT\"\n  state=\"live\"\n  metadata=\"1080p · 30 FPS\"\n  toolbar={videoControls}\n>\n  <video aria-label=\"AMR-07 전면 카메라 영상\" />\n</VideoStreamTile>"
+          "code": "<VideoStreamTile\n  label=\"주 영상\"\n  state=\"live\"\n  toolbar={videoControls}\n>\n  <video aria-label=\"주 영상 스트림\" />\n</VideoStreamTile>"
         }
       ],
       "tokens": [],
@@ -77493,16 +77795,32 @@
           "url": "https://html.spec.whatwg.org/multipage/media.html"
         },
         {
-          "label": "WebRTC Statistics",
-          "url": "https://www.w3.org/TR/webrtc-stats/"
+          "label": "Shaka Player UI",
+          "url": "https://shaka-project.github.io/shaka-player/docs/api/tutorial-ui-customization.html"
         },
         {
-          "label": "WCAG live captions",
-          "url": "https://www.w3.org/WAI/WCAG22/Understanding/captions-live.html"
+          "label": "Video.js VolumePanel",
+          "url": "https://docs.videojs.com/volumepanel"
         },
         {
-          "label": "Pause, Stop, Hide",
-          "url": "https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html"
+          "label": "Video.js Volume Slider",
+          "url": "https://videojs.org/docs/framework/html/reference/volume-slider"
+        },
+        {
+          "label": "Microsoft MediaTransportControls",
+          "url": "https://learn.microsoft.com/en-us/windows/apps/develop/ui/controls/custom-transport-controls"
+        },
+        {
+          "label": "Genetec Security Center tile customization",
+          "url": "https://techdocs.genetec.com/r/en-US/Security-Center-User-Guide-5.13/Customizing-how-tiles-are-displayed-in-Security-Center"
+        },
+        {
+          "label": "AXIS Camera Station Pro",
+          "url": "https://help.axis.com/en-us/axis-camera-station-pro"
+        },
+        {
+          "label": "Verkada Camera Shortcuts",
+          "url": "https://help.verkada.com/verkada-cameras/configuration/view-and-edit-camera-settings/camera-shortcuts"
         }
       ],
       "canonicalGuide": null,
@@ -77510,13 +77828,13 @@
       "sectionStatus": {
         "purpose": "evidence",
         "useWhen": "evidence",
-        "avoidWhen": "omitted-no-evidence",
+        "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
         "states": "evidence",
-        "behavior": "omitted-no-evidence",
+        "behavior": "evidence",
         "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
+        "responsive": "evidence",
         "contentGuidance": "evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
@@ -77545,14 +77863,14 @@
       ],
       "purpose": "지도·3D·영상 뷰어가 로딩·신호 없음·오류·지연 상태를 일관된 읽기 순서로 보여줘야 할 때 적합합니다. 정적인 이미지나 상태 전환이 없는 단순 컨테이너에는 Viewer Frame 대신 기본 Surface를 사용하세요.",
       "useWhen": [
-        "Use toolbarPlacement=\"top-right\" for 3D/video camera controls and bottom-right when a map's scale/status occupies the opposite edge.",
+        "LK Control Full Daedeok — revision 93802fc2aa5d29f930380ae58d51dcb68322b5e7; frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap3D/index.jsx and frontend/src/views/manual-control/index.jsx. Supported by composition.",
         "ViewerFrame is the shared LDS Product viewport contract for map, 3D, and video surfaces."
       ],
       "avoidWhen": [
-        "degraded, stale, frozen, and paused retain the last usable content and use an edge status strip instead of covering it.",
         "Live-region urgency follows whether a transition removes usable content. disconnected, no-signal, and error are blocking losses and use alert/assertive. Expected setup states such as no-source, loading, and connecting use status/polite.",
+        "All Viewer presets place source identity at the top-left, viewport-local controls at the top-right, and passive status at the bottom-left. This shared edge grammar applies to 2D map, 3D, and video; products must not move a preset toolbar merely to distinguish its content type.",
         "variant=\"embedded\"는 이 프레임을 다른 LDS 표면(CanvasEditorShell의 캔버스 슬롯, Card 등) 안에 중첩할 때 자체 border·radius를 생략해 부모가 하나의 연속된 외곽선을 소유하게 합니다. 상태 모델·HUD·toolbar·region role은 그대로 유지되며, 부모 표면 안에서 style로 border/radius를 임의로 덮어쓰는 대신 이 variant를 사용합니다. 기본값 standalone은 단독 뷰포트로 자체 외곽선을 그립니다.",
-        "Every Viewer preset uses the same appearance=\"dark\" | \"light\" axis. Scene3DFrame and video default to dark while Map2DCanvas defaults to light, but these are contextual defaults rather than category restrictions."
+        "Mapbox NavigationControl groups related zoom and compass commands into one control instead of presenting equal floating buttons as unrelated actions. LDS keeps compact 28px commands inside one shared contrast shelf."
       ],
       "anatomy": [
         {
@@ -77724,6 +78042,20 @@
           "required": false,
           "description": "Perimeter ownership. \"embedded\" drops the frame's own border and radius so a parent surface (CanvasEditorShell, Card) owns one continuous outline; viewport chrome, state, and a11y roles are unchanged. @default \"standalone\"",
           "owner": "ViewerFrameProps"
+        },
+        {
+          "name": "chromeVariant",
+          "type": "'surface' | 'overlay'",
+          "required": false,
+          "description": "Chrome treatment. \"overlay\" uses compact translucent edge surfaces over visual media. @default \"surface\"",
+          "owner": "ViewerFrameProps"
+        },
+        {
+          "name": "toolbarVisibility",
+          "type": "'always' | 'interaction'",
+          "required": false,
+          "description": "Toolbar reveal behavior. \"interaction\" shows controls while the frame is hovered, pressed, or contains focus. @default \"always\"",
+          "owner": "ViewerFrameProps"
         }
       ],
       "states": [
@@ -77754,48 +78086,59 @@
         {
           "state": "variant",
           "rule": "Perimeter ownership. \"embedded\" drops the frame's own border and radius so a parent surface (CanvasEditorShell, Card) owns one continuous outline; viewport chrome, state, and a11y roles are unchanged. @default \"standalone\""
+        },
+        {
+          "state": "chromeVariant",
+          "rule": "Chrome treatment. \"overlay\" uses compact translucent edge surfaces over visual media. @default \"surface\""
         }
       ],
-      "behavior": [],
+      "behavior": [
+        "toolbarVisibility=\"always\" preserves persistent map/3D controls. toolbarVisibility=\"interaction\" visually reveals the toolbar while the frame is hovered, pressed, or contains focus.",
+        "Appearance parity is checked with equivalent map and 3D stories. A light or dark variant must keep the same slots, state behavior, focus behavior, and control availability.",
+        "WAI-ARIA Toolbar keeps keyboard behavior in the composed toolbar instead of making the viewport frame a second toolbar implementation.",
+        "WCAG 2.2 Status Messages requires state changes to be programmatically exposed without moving focus, while the WAI-ARIA Alert pattern reserves interruption for important, time-sensitive changes. ViewerFrame therefore derives urgency from blocking loss, not merely from a negative color or connection label.",
+        "WCAG 2.2 Dragging Movements requires non-drag alternatives for operations such as pan, zoom, and fit."
+      ],
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "Very narrow blocking tiles keep source + state label + recovery action in normal grid flow. Below 240px, the icon and secondary description collapse visually (the description remains available to assistive technology) so 16:9 tiles do not overlap."
+          "rule": "degraded, stale, frozen, and paused retain the last usable content and use a compact content-width edge status chip instead of covering it or presenting a full-width notification bar."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "WCAG 2.2 Status Messages requires state changes to be programmatically exposed without moving focus, while the WAI-ARIA Alert pattern reserves interruption for important, time-sensitive changes. ViewerFrame therefore derives urgency from blocking loss, not merely from a negative color or connection label."
+          "rule": "Blocking-state marks are bare 22px status glyphs or spinners. They do not use a circular border, elevated fill, or shadow that could make a passive state mark look like an action."
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "WCAG 2.2 Dragging Movements requires non-drag alternatives for operations such as pan, zoom, and fit."
+          "rule": "Overlay viewers apply state-specific retained-frame emphasis: degraded keeps 90% opacity, stale and frozen use 76%, and user-requested paused remains at 100%. The edge label—not a uniform dim layer—carries the primary state meaning."
         },
         {
-          "subject": "--caption1-size",
+          "subject": "명시 규칙 4",
+          "rule": "Very narrow blocking tiles keep source + state label + recovery action in normal grid flow. Below 240px, the icon and secondary description collapse visually (the description remains available to assistive technology) so 16:9 tiles do not overlap."
+        },
+        {
+          "subject": "--caption1-line",
           "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
-        },
-        {
-          "subject": "--caption2-size",
-          "rule": "11px"
         }
       ],
       "responsive": [
-        "The hud slot is compact, passive diagnostics rendered in the top chrome next to the source identity. Default HUD content should be limited to a few values needed to interpret the viewport. Detailed renderer diagnostics belong in an optional product surface.",
-        "Toolbar actions must affect only this viewport. Document commands, scene hierarchy, properties, robot control, and emergency actions do not belong in the frame.",
-        "NVIDIA Omniverse viewport controls and viewport navigation influenced the scene-first hierarchy and the small set of viewport-local controls.",
-        "Unity Scene view draw modes expose multiple lighting/debug presentations and customizable diagnostic colors rather than prescribing one permanent viewport palette. LDS therefore treats dark as the 3D default, not as a 3D-only capability."
+        "At 320px, a typical three-command toolbar remains on the same top edge as a truncated source identity. The two surfaces may wrap only when their minimum usable widths no longer fit; the toolbar never shrinks its 28px targets.",
+        "The usable frame is renderer-first. Source identity and local controls sit on separate inset edge surfaces rather than sharing a full-width header. This keeps the source readable without turning passive identity into command-bar chrome.",
+        "Source identity uses the LDS caption1/semibold hierarchy in both the regular identity surface and blocking-state header so it stays subordinate beside 28px viewport controls.",
+        "The hud slot is compact, passive diagnostics rendered as a second row of the source identity surface. A divider separates it from source identity; it never enters the local toolbar group. Default HUD content should be limited to a few values needed to interpret the viewport."
       ],
       "contentGuidance": [
         "ready leaves chrome quiet. live adds a text-and-icon state badge; it never relies on color or motion alone.",
-        "Tone을 직접 전달하는 positive/cautionary/negative 상태 글리프는 공용 상태 문법과 같은 fill 변형을 사용합니다. clock, pause, signal, circle-block처럼 상태의 원인이나 기능을 설명하는 글리프는 outline을 유지합니다.",
+        "Tone을 직접 전달하는 positive/cautionary/negative 상태 글리프는 공용 상태 문법과 같은 fill 변형을 사용합니다. clock, pause, signal, circle-close, circle-block처럼 상태의 원인이나 기능을 설명하는 글리프는 outline을 유지합니다.",
         "오류·신호 없음·사용 불가 기본 문구는 원인만 알리는 막다른 문장이 아니라 다음 확인 행동까지 안내합니다. 제품이 더 구체적인 복구 경로를 알면 stateDescription과 stateAction으로 대체합니다.",
         "Every normalized state ships a default label and glyph. stateLabel overrides only the user-facing wording (e.g. a product term for stale) and stateIcon only the glyph; neither changes the state's blocking behavior, live-region urgency, or tone. Do not use them to make a blocking state look healthy."
       ],
       "accessibility": [
         "idle, no-source, loading, connecting, unavailable, disconnected, no-signal, and error mean the content is unusable. They use a central blocking state and make renderer children and local toolbar controls inert/aria-hidden.",
         "Blocking presentation keeps the visible source identity. If a state transition blocks the currently focused renderer/control, focus moves to the first recovery action or to the blocking-state group instead of being discarded; after recovery it returns to that exact originating control when the control still exists.",
-        "Appearance parity is checked with equivalent map and 3D stories. A light or dark variant must keep the same slots, state behavior, focus behavior, and control availability.",
-        "WAI-ARIA Toolbar keeps keyboard behavior in the composed toolbar instead of making the viewport frame a second toolbar implementation."
+        "ViewerFrame owns the toolbar's shared contrast shelf while ViewerToolbar owns command/toggle semantics and roving focus. A zoom readout may sit between decrement and increment as passive output; fit/home remains a separate trailing command divided from the stepper.",
+        "Source identity and the top toolbar remain on one chrome row. The row never wraps; when horizontal space is constrained, the source label keeps a single line and truncates with an ellipsis while the local controls remain fully operable.",
+        "The control shelf is one shallow visual layer: it keeps a single border and elevated fill without shadow, while unselected toolbar buttons remain transparent. Hover, focus, pressed, and persistent toggle selection provide the only per-button surfaces."
       ],
       "exceptions": [],
       "related": [
@@ -77816,6 +78159,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "ElevatorFleetOverview",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FloorSelector",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -77826,19 +78173,16 @@
         {
           "component": "Scene3DFrame",
           "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "VideoStreamTile",
-          "relationship": "대표 시나리오에서 조합"
         }
       ],
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<ViewerFrame\n  label=\"AMR-07 front camera\"\n  source=\"AMR-07 · FRONT\"\n  availability=\"ready\"\n  connection=\"connected\"\n  freshness=\"stale\"\n  status=\"마지막 수신 8초 전\"\n  toolbar={cameraControls}\n>\n  <video aria-label=\"AMR-07 전면 카메라 영상\" />\n</ViewerFrame>"
+          "code": "<ViewerFrame\n  label=\"주 영상 뷰포트\"\n  source=\"영상 소스 A\"\n  availability=\"ready\"\n  connection=\"connected\"\n  freshness=\"stale\"\n  status=\"8초 전\"\n  toolbar={cameraControls}\n>\n  <video aria-label=\"영상 소스 A\" />\n</ViewerFrame>"
         }
       ],
       "tokens": [
+        "--caption1-line",
         "--caption1-size",
         "--caption2-size",
         "--color-semantic-primary-normal",
@@ -77863,8 +78207,9 @@
         "--fw-semibold",
         "--label1-size",
         "--radius-lg",
-        "--radius-pill",
+        "--radius-md",
         "--radius-sm",
+        "--shadow-sm",
         "--viewer-border",
         "--viewer-foreground",
         "--viewer-muted",
@@ -77953,12 +78298,12 @@
           "url": "https://docs.mapbox.com/map-styles/guides/standard-styles/"
         },
         {
-          "label": "WAI-ARIA Toolbar",
-          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/"
+          "label": "Mapbox NavigationControl",
+          "url": "https://docs.mapbox.com/mapbox-gl-js/api/markers/#navigationcontrol"
         },
         {
-          "label": "WCAG 2.2 Status Messages",
-          "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html"
+          "label": "Google Maps controls",
+          "url": "https://developers.google.com/maps/documentation/javascript/controls"
         }
       ],
       "canonicalGuide": null,
@@ -77970,7 +78315,7 @@
         "anatomy": "evidence",
         "properties": "evidence",
         "states": "evidence",
-        "behavior": "omitted-no-evidence",
+        "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
         "contentGuidance": "evidence",

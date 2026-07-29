@@ -49,20 +49,20 @@
   ],
   "quantitativeRules": [
     {
-      "subject": "--color-semantic-background-elevated-normal",
-      "rule": "light: #FFFFFF; dark: #212225"
+      "subject": "--color-semantic-fill-normal",
+      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
     },
     {
       "subject": "--color-semantic-label-neutral",
       "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
     },
     {
-      "subject": "--color-semantic-line-normal-normal",
-      "rule": "light: rgba(112, 115, 124, 0.22); dark: rgba(112, 115, 124, 0.32)"
-    },
-    {
       "subject": "--color-semantic-primary-normal",
       "rule": "light: #3878B3; dark: #5390C9"
+    },
+    {
+      "subject": "--fw-medium",
+      "rule": "500"
     }
   ],
   "responsive": [],
@@ -72,6 +72,10 @@
   ],
   "exceptions": [],
   "related": [
+    {
+      "component": "ElevatorFleetOverview",
+      "relationship": "대표 시나리오에서 조합"
+    },
     {
       "component": "Map2DCanvas",
       "relationship": "대표 시나리오에서 조합"
@@ -99,10 +103,6 @@
     {
       "component": "ViewerToolbar",
       "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "ViewerToolbarButton",
-      "relationship": "대표 시나리오에서 조합"
     }
   ],
   "examples": [
@@ -112,18 +112,18 @@
     }
   ],
   "tokens": [
-    "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-normal",
     "--color-semantic-label-neutral",
-    "--color-semantic-line-normal-normal",
     "--color-semantic-primary-normal",
     "--color-semantic-static-white",
     "--dur-fast",
     "--ease-out",
     "--font-sans",
+    "--fw-medium",
+    "--fw-semibold",
     "--label1-size",
-    "--radius-md",
-    "--radius-sm",
-    "--shadow-sm"
+    "--radius-10",
+    "--radius-8"
   ],
   "apiLinks": [],
   "migration": [],

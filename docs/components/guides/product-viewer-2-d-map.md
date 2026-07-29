@@ -8,20 +8,21 @@
 | Storybook | `LDS Product/Viewer/2D Map` |
 | Source | `../component-content.json#product-viewer-2-d-map` |
 
-운영자가 점유 격자·경로·로봇 위치를 한 평면에서 팬과 줌으로 살펴볼 때 적합합니다. 공간 관계가 필요 없는 수치 모니터링이나 3차원 장면에는 Telemetry 또는 3D Scene을 사용하세요.
+운영자가 점유 격자·평면도·공간 오버레이를 한 평면에서 팬과 줌으로 살펴볼 때 적합합니다. 로봇의 경로·궤적·현재 위치는 Map2DCanvas가 직접 그리지 않고 LDS Robotics Navigation 레이어를 조합하세요.
 
 ## 사용 판단
 
 ### 사용
 
 - appearance="light"가 기본이지만 appearance="dark"도 동일한 공개 계약입니다. 지도 renderer와 overlay는 --viewer- 역할 토큰을 사용해 두 appearance에서 같은 정보·조작 구조를 유지합니다.
+- ROS navmsgs/OccupancyGrid: 2D 점유 지도는 셀별 점유 확률과 unknown 값을 제공하는 구조 데이터이므로, Product 예시는 도메인 경로 없이 중립적인 지도 표면으로만 표현합니다.
 
 ### 사용하지 않음
 
 - panEnabled={false}에서는 drag와 touch-action: none을 모두 제거해 페이지 터치 스크롤 및 앱의 선택/드로잉 동작과 충돌하지 않습니다.
 - button, link, input, slider 등 interactive descendant에서 시작한 pointer/wheel 입력도 pan·zoom으로 재처리하지 않습니다.
 - onWheel은 pointer-focal zoom에 필요한 non-passive native WheelEvent callback입니다. React SyntheticEvent 전용 API를 가정하지 않습니다.
-- Mapbox Standard style reference와 runtime configuration guide: 하나의 지도 스타일이 day/night에 대응하는 lighting preset을 런타임에 바꿀 수 있으므로, LDS도 지도를 light 전용으로 고정하지 않고 light/dark appearance를 같은 계약으로 제공합니다.
+- LDS Product 예시는 구조 지도처럼 중립적인 콘텐츠로 viewport 계약만 보여줍니다. Route·Trajectory·Waypoint·RobotPose의 의미와 시각 문법은 @lk-robotics/lds-robotics-ui가 소유하며, Product Storybook에서 임시 선·점·방향 마커로 재현하지 않습니다. 이 경계는 LDS Robotics revision 180f031541850444d302bcf6a94b96db563133cd의 Navigation Path System 계약과 대조했습니다.
 
 ## Anatomy
 
@@ -78,7 +79,7 @@
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | 기본 contentOrigin="top-left"는 일반 이미지, SVG, canvas의 (0, 0)을 viewport 좌상단에 놓습니다. 세계 좌표 원점을 화면 중심에 두어야 하는 renderer만 contentOrigin="center"를 명시하고 자체 콘텐츠 offset을 제공합니다. |
+| 명시 규칙 1 | 기본 contentOrigin="top-left"는 일반 이미지, SVG, canvas의 (0, 0)을 viewport 좌상단에 놓습니다. contentOrigin="center"는 세계 좌표 원점을 화면 중심에 두는 renderer를 위한 저수준 호환 계약이지만 현재 고정 LDS Robotics·LDS3D source에는 직접 소비가 없으므로 공개 사용 변형으로 권장하지 않습니다. LDS Robotics Navigation은 NavigationCoordinateBoundary와 명시적인 svgOrigin을 사용합니다. |
 | 명시 규칙 2 | 줌 배율은 minZoom(기본 0.25)–maxZoom(기본 8) 사이로 clamp되며 휠·키보드·컨트롤 모든 입력 경로에 동일하게 적용됩니다. 픽셀 지도가 깨지는 배율이나 의미 없는 축소를 막을 때만 범위를 좁히고, 두 값이 곧 컨트롤의 disabled 경계가 됩니다. |
 | 명시 규칙 3 | 키보드 shortcut은 viewport 자체에 포커스했을 때만 동작합니다: +/- 줌, 0 초기화, 방향키 팬, Shift+방향키 큰 폭 팬. Toolbar, input, slider 등 자식 컨트롤의 방향키는 가로채지 않습니다. keyboard={false}는 이 shortcut과 viewport의 tab stop을 함께 제거하므로, 앱이 자체 키보드 pan/zoom 대안을 제공할 때만 끕니다. |
 | 명시 규칙 4 | label(기본 2D 맵 캔버스)은 region의 접근 가능한 이름입니다. 한 화면에 viewport가 여럿이면 소스가 드러나는 이름(1층 점유 지도)으로 반드시 구분합니다. |
@@ -102,10 +103,15 @@
 - WCAG 2.2 — Dragging Movements: drag만이 유일한 조작이 되지 않도록 버튼과 키보드 pan/zoom 대안을 유지했습니다.
 - WAI-ARIA Toolbar pattern: viewport 안의 방향키 toolbar가 canvas 방향키 shortcut과 충돌하지 않도록 이벤트 범위를 분리했습니다.
 
+## Exceptions
+
+- Built-in 지도 도구도 공통 Viewer edge grammar를 따릅니다. source는 좌상단, 세로 줌·fit·reset 도구는 우상단, 현재 배율 또는 제품 상태는 좌하단에 두며 지도만의 별도 하단 toolbar chrome을 만들지 않습니다.
+
 ## Related components
 
 | Component | Relationship |
 | --- | --- |
+| `ElevatorFleetOverview` | 대표 시나리오에서 조합 |
 | `FloorSelector` | 대표 시나리오에서 조합 |
 | `Scene3DFrame` | 대표 시나리오에서 조합 |
 | `VideoStreamTile` | 대표 시나리오에서 조합 |
@@ -113,7 +119,6 @@
 | `VIEWER_STATES` | 대표 시나리오에서 조합 |
 | `ViewerFrame` | 대표 시나리오에서 조합 |
 | `ViewerToolbar` | 대표 시나리오에서 조합 |
-| `ViewerToolbarButton` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -122,6 +127,7 @@
 ```jsx
 <Map2DCanvas
   style={{ height: 360 }}
+  source="1층 지도"
   defaultViewport={{ x: 24, y: 24, z: 1 }}
   panEnabled={tool === 'pan'}
   wheelZoom
@@ -155,5 +161,7 @@
 - [NVIDIA Omniverse viewport navigation](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/navigation.html)
 - [Mapbox Standard style reference](https://docs.mapbox.com/map-styles/reference/standard/)
 - [runtime configuration guide](https://docs.mapbox.com/map-styles/guides/standard-styles/)
+- [MapLibre Style Specification — Layers](https://maplibre.org/maplibre-style-spec/layers/)
+- [ROS navmsgs/OccupancyGrid](https://docs.ros.org/en/melodic/api/nav_msgs/html/msg/OccupancyGrid.html)
 - [WCAG 2.2 — Dragging Movements](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html)
 - [WAI-ARIA Toolbar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/)

@@ -4,16 +4,17 @@ import { Scene3DFrameCard as Scene3DFrameCardStory } from './ProductEditorAndViz
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Product/Viewer/3D Scene',
+  title: 'LDS Product/Viewer/3D Viewport Frame',
+  id: 'lds-product-viewer-3d-scene',
   tags: ['autodocs'],
   component: Scene3DFrame,
   parameters: {
     storyGuide: {
       storyId: 'lds-product-viewer-3d-scene--scene-3-d-overview',
-      eyebrow: 'Product / 3D Scene',
-      title: '3D 장면은 깊이와 자세가 중요한 공간 데이터를 우선해 보여줍니다',
+      eyebrow: 'Product / 3D Viewport Frame',
+      title: '3D 뷰포트 프레임은 렌더러 출력과 장면 상태·도구의 경계를 정리합니다',
       description:
-        '운영자가 포인트 클라우드·설비 자세·입체 장애물처럼 깊이 정보가 필요한 장면을 검사할 때 적합합니다. 평면 경로 확인이나 영상 감시에는 3D Scene 대신 2D Map 또는 Video Stream을 사용하세요.',
+        '애플리케이션이나 LDS3D가 제공하는 WebGL 장면에 공통 상태·HUD·카메라 도구를 배치할 때 적합합니다. Scene3DFrame은 실제 3D 렌더링·좌표계·피킹을 구현하지 않습니다.',
     },
     docs: {
       description: {
@@ -25,36 +26,44 @@ const meta = {
 
 export default meta;
 
-function PointCloudPreview({ layersVisible = true }) {
-  const points = Array.from({ length: 90 }, (_, index) => {
-    const x = (index * 37) % 100;
-    const y = (index * 61) % 100;
-    return { x, y, r: 0.7 + (index % 5) * 0.22, accent: index % 9 === 0 };
-  });
-
+function RendererSlotPreview({ overlayVisible = true }) {
   return (
-    <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 90% at 50% 20%, var(--color-semantic-primary-surface-strong), transparent 60%)' }}>
-      <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label="포인트 클라우드 예시">
-        {points.map((point, index) => (
-          <circle key={index} cx={point.x} cy={point.y} r={point.r} fill={point.accent ? 'var(--color-semantic-primary-normal)' : 'var(--viewer-foreground)'} opacity={layersVisible ? (point.accent ? 0.72 : 0.34) : (point.accent ? 0.5 : 0.04)} />
-        ))}
-      </svg>
+    <div
+      role="img"
+      aria-label="3D 렌더러 슬롯 예시"
+      data-renderer-slot=""
+      style={{
+        position: 'absolute',
+        inset: 0,
+        display: 'grid',
+        placeItems: 'center',
+        background: 'var(--viewer-surface)',
+        color: 'var(--viewer-muted)',
+      }}
+    >
+      {overlayVisible && (
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            opacity: 0.3,
+            backgroundImage:
+              'linear-gradient(var(--viewer-border) 1px, transparent 1px), linear-gradient(90deg, var(--viewer-border) 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
+        />
+      )}
+      <div style={{ position: 'relative', display: 'grid', gap: 6, justifyItems: 'center', textAlign: 'center' }}>
+        <strong style={{ color: 'var(--viewer-foreground)', fontSize: 'var(--body2-size)' }}>3D 렌더러 영역</strong>
+        <span style={{ fontSize: 'var(--caption1-size)' }}>WebGL 출력은 애플리케이션 또는 LDS3D가 제공합니다.</span>
+      </div>
     </div>
   );
 }
 
-function CompactHud() {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 6, color: 'var(--viewer-muted)', fontSize: 11, fontVariantNumeric: 'tabular-nums' }}>
-      <span>1.2M points</span>
-      <span aria-hidden="true">·</span>
-      <span>38 FPS</span>
-    </div>
-  );
-}
-
-function SceneDemo({ appearance = 'dark', state = 'live', stateLabel, stateDescription, height = 420, title = 'AMR-07 · POINT CLOUD', label }) {
-  const [layersVisible, setLayersVisible] = React.useState(true);
+function SceneDemo({ appearance = 'dark', state = 'ready', stateLabel, stateDescription, height = 420, title = '장면 A', label }) {
+  const [overlayVisible, setOverlayVisible] = React.useState(true);
   const [camera, setCamera] = React.useState('원근');
 
   return (
@@ -65,18 +74,17 @@ function SceneDemo({ appearance = 'dark', state = 'live', stateLabel, stateDescr
       state={state}
       stateLabel={stateLabel}
       stateDescription={stateDescription}
-      hud={<CompactHud />}
-      status={`${camera} · 좌표계 map`}
+      status={`${camera} · 좌표계 world · 60 FPS`}
       toolbar={(
-        <ViewerToolbar orientation="horizontal" appearance={appearance === 'dark' ? 'on-dark' : 'surface'} label="3D 카메라 도구">
+        <ViewerToolbar orientation="horizontal" appearance={appearance === 'dark' ? 'on-dark' : 'minimal'} label="3D 카메라 도구">
           <ViewerToolbarButton label="홈 뷰" onClick={() => setCamera('홈')}><Icon name="home" size={16} /></ViewerToolbarButton>
           <ViewerToolbarButton label="카메라 전환" onClick={() => setCamera((value) => value === '원근' ? '상단' : '원근')}><Icon name="camera" size={16} /></ViewerToolbarButton>
-          <ViewerToolbarButton label="레이어 표시" kind="toggle" pressed={layersVisible} onPressedChange={setLayersVisible}><Icon name="layers" size={16} /></ViewerToolbarButton>
+          <ViewerToolbarButton label="보조 오버레이 표시" kind="toggle" pressed={overlayVisible} onPressedChange={setOverlayVisible}><Icon name="layers" size={16} /></ViewerToolbarButton>
         </ViewerToolbar>
       )}
       style={{ height }}
     >
-      <PointCloudPreview layersVisible={layersVisible} />
+      <RendererSlotPreview overlayVisible={overlayVisible} />
     </Scene3DFrame>
   );
 }
@@ -84,13 +92,31 @@ function SceneDemo({ appearance = 'dark', state = 'live', stateLabel, stateDescr
 export const Scene3DOverview = {
   name: '개요',
   parameters: storyDescription(
-    'AMR 포인트 클라우드와 최소 카메라 도구를 함께 보는 기본 3D 장면입니다. 장면이 주 시각 영역으로 남고 상태·도구·HUD가 공간 데이터를 가리지 않는지 확인하세요.',
+    '중립적인 renderer 슬롯과 최소 카메라 도구를 함께 보는 기본 3D viewport frame입니다. 상단은 장면 이름과 로컬 도구만 한 줄로 유지하고, 수동 진단 정보는 하단 HUD에 둡니다. 실제 WebGL 장면과 공간 의미는 LDS3D 또는 애플리케이션이 소유합니다.',
   ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-4)', width: '100%', maxWidth: 840, minWidth: 0 }}>
       <SceneDemo />
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const frame = canvasElement.querySelector('[data-lds-viewer-frame]');
+    const identity = frame?.querySelector('[data-viewer-identity]');
+    const toolbar = frame?.querySelector('[data-viewer-toolbar]');
+    const status = frame?.querySelector('[data-viewer-status]');
+    if (!frame || !identity || !toolbar || !status) {
+      throw new Error('Scene3DFrame must expose source, camera controls, and renderer status through ViewerFrame.');
+    }
+    // 배치 규약: 정체성은 좌상단, 뷰포트 조작은 우하단. 상단은 읽는 자리로 비운다.
+    const identityRect = identity.getBoundingClientRect();
+    const toolbarRect = toolbar.getBoundingClientRect();
+    if (identityRect.left >= toolbarRect.left) {
+      throw new Error('Scene3DFrame must keep the source identity left of the camera controls.');
+    }
+    if (toolbarRect.top <= identityRect.bottom) {
+      throw new Error('Scene3DFrame must place camera controls at the bottom, not on the identity row.');
+    }
+  },
 };
 
 const STATE_CASES = [
@@ -146,17 +172,17 @@ export const CommonStateContract = {
 export const AppearanceVariants = {
   name: '변형·상태 · 밝은·어두운 외형',
   parameters: storyDescription(
-    '동일한 준비 완료 3D 장면을 dark와 light appearance에서 비교합니다. 포인트·도구·상태 문구의 대비와 정보 위계가 두 배경에서 동등한지 확인하세요.',
+    '동일한 renderer 슬롯을 dark와 light appearance에서 비교합니다. 도구·상태 문구·placeholder의 대비와 정보 위계가 두 배경에서 동등한지 확인하세요.',
   ),
   render: () => (
     <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(340px, 100%), 1fr))', gap: 'var(--space-4)', width: '100%', maxWidth: 960 }}>
       <section aria-labelledby="scene-dark-label" style={{ display: 'grid', gap: 'var(--space-2)' }}>
         <strong id="scene-dark-label" style={{ fontSize: 'var(--body2-size)' }}>Dark · 기본값</strong>
-        <SceneDemo appearance="dark" state="ready" height={320} label="Dark AMR-07 3D 뷰포트" />
+        <SceneDemo appearance="dark" state="ready" height={320} label="Dark 3D 뷰포트" />
       </section>
       <section aria-labelledby="scene-light-label" style={{ display: 'grid', gap: 'var(--space-2)' }}>
         <strong id="scene-light-label" style={{ fontSize: 'var(--body2-size)' }}>Light</strong>
-        <SceneDemo appearance="light" state="ready" height={320} label="Light AMR-07 3D 뷰포트" />
+        <SceneDemo appearance="light" state="ready" height={320} label="Light 3D 뷰포트" />
       </section>
     </main>
   ),
@@ -176,7 +202,7 @@ export const NarrowWidth = {
   ),
   render: () => (
     <div style={{ width: 320, maxWidth: '100%' }}>
-      <SceneDemo state="stale" height={300} title="AMR-07 · LONG POINT CLOUD SOURCE" />
+      <SceneDemo state="stale" height={300} title="매우 긴 공간 장면 소스 이름" />
     </div>
   ),
 };

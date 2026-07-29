@@ -276,9 +276,10 @@ function MenubarDrillDemo() {
 }
 
 export const DrillSubmenus = {
-  name: '상호작용 · 드릴인 서브메뉴',
+  name: '내부 계약 · 드릴인 서브메뉴',
+  tags: ['!dev'],
   parameters: storyDescription(
-    'Menubar 드롭다운에서 서브메뉴를 옆으로 펼치는 대신 같은 패널이 하위 목록으로 전환되는 drill 모드입니다. 폭이 고정되어 깊은 계층에서도 가로로 늘어나지 않고, 상단 뒤로 컨트롤·왼쪽 화살표로 상위에 복귀합니다.',
+    '터치 입력이나 좁은 화면에서 서브메뉴를 옆으로 펼치는 대신 같은 패널이 하위 목록으로 전환되는 내부 drill 계약입니다. 데스크톱 Menubar의 공개 예시는 오른쪽 flyout을 사용합니다.',
   ),
   render: () => <MenubarDrillDemo />,
   play: async ({ canvasElement }) => {

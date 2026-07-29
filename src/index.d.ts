@@ -194,6 +194,7 @@ export { Meter } from '../components/status/Meter';
 export { ProgressBar } from '../components/status/ProgressBar';
 export { Skeleton } from '../components/status/Skeleton';
 export { Spinner } from '../components/status/Spinner';
+export { ElevatorFleetOverview } from '../components/viz/ElevatorFleetOverview';
 export { Map2DCanvas } from '../components/viz/Map2DCanvas';
 export { Scene3DFrame } from '../components/viz/Scene3DFrame';
 export { TelemetryGauge } from '../components/viz/TelemetryGauge';

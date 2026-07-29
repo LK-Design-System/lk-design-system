@@ -8,7 +8,7 @@ import { usePanZoomViewport } from '../internal/usePanZoomViewport.js';
 const DEFAULT_VIEWPORT = { x: 0, y: 0, z: 1 };
 
 /**
- * LK ROBOTICS — Map2DCanvas
+ * LDS Product — Map2DCanvas
  *
  * Renderer-independent pan / zoom shell for 2D maps. Ordinary image, SVG, and
  * canvas content starts at the viewport's top-left by default. Renderers that
@@ -105,7 +105,7 @@ export function Map2DCanvas({
   const viewerToolbar = controls ? (
     <ViewerToolbar
       orientation="vertical"
-      appearance={appearance === 'dark' ? 'on-dark' : 'surface'}
+      appearance={appearance === 'dark' ? 'on-dark' : 'minimal'}
       label="지도 보기"
       data-lk-viewport-control=""
     >

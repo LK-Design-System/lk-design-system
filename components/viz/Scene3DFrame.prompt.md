@@ -4,10 +4,10 @@ Use it for point clouds, digital twins, WebGL scenes, or React Three Fiber outpu
 
 ```jsx
 <Scene3DFrame
-  label="AMR-07 3D scene"
-  title="POINT CLOUD"
+  label="장면 A 3D 뷰포트"
+  title="장면 A"
   state="stale"
-  status="1.2M pts · 38 FPS"
+  status="원근 · 좌표계 world · 60 FPS"
   toolbar={cameraControls}
   style={{ height: 320 }}
 >
@@ -16,6 +16,7 @@ Use it for point clouds, digital twins, WebGL scenes, or React Three Fiber outpu
 ```
 
 - `children` is the renderer output itself (a WebGL/R3F canvas or point-cloud viewer). The frame never touches the render loop; it only removes the content from focus and accessibility trees while a blocking state is active.
+- `title` is the primary scene identity and inherits the shared `ViewerFrame` compact source hierarchy (`caption1`/semibold) inside the top chrome.
 - Prefer the orthogonal axes for new integrations: `availability` describes
   whether content exists, `connection` describes transport health,
   `freshness` describes data age, and `playback` describes media progression.
@@ -27,8 +28,11 @@ Use it for point clouds, digital twins, WebGL scenes, or React Three Fiber outpu
 - `appearance="dark"` is the contextual default, not a restriction. Use `appearance="light"` when the surrounding product or renderer needs a light inspection surface; custom scene/HUD content must use the scoped `--viewer-*` roles so both variants remain legible.
 - `degraded`, `stale`, and `frozen` keep the last scene visible with an edge status. Loading, unavailable, disconnected, and error states block and remove renderer/tool controls from the focus and accessibility trees.
 - Keep orbit, pan, zoom, focus, home, orientation, and display controls in the local `toolbar` slot. Keep document/history commands in `CanvasEditorShell`.
+- Scene identity stays at the top-left, the camera toolbar at the top-right, and passive renderer status at the bottom-left. `ViewerFrame` owns the toolbar shelf, so light appearances use a minimal inner `ViewerToolbar` rather than nesting another surface.
 - Scene hierarchy, selection inspector, transform gizmos, robot commands, and renderer-specific debug panels are intentionally excluded.
 - `loading` and `empty` remain compatibility aliases; new work should use `state` and state-copy props.
 - `CanvasEditorShell` 캔버스 슬롯처럼 다른 표면 안에 뷰포트를 중첩할 때는 `variant="embedded"`로 두어 셸이 최외곽 테두리를 소유하게 합니다. 자체 border·radius만 생략하고 scene identity·HUD·toolbar·상태·접근성 역할은 그대로 유지합니다.
 
 Classification and evidence are documented in [`ViewerFrame.prompt.md`](./ViewerFrame.prompt.md). The structure follows the official [NVIDIA Omniverse viewport controls](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/controls.html) and [Unity Scene view navigation](https://docs.unity3d.com/Manual/SceneViewNavigation.html), while [Unity Scene view draw modes](https://docs.unity3d.com/Manual/GIVis.html) support the conclusion that viewing mode and diagnostic readability—not a permanently dark palette—define the reusable 3D contract. These patterns are adapted to LDS spacing, typography, icons, tokens, and toolbar behavior.
+
+Product Storybook은 실제 point cloud나 WebGL 장면을 모사하지 않고 renderer slot과 frame chrome만 보여줍니다. 실제 3D geometry, depth, picking, camera semantics와 renderer lifecycle은 LDS3D 또는 애플리케이션이 소유합니다.

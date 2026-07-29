@@ -44,7 +44,9 @@
 - **StatusBadge**: 대표 상태의 soft semantic surface+읽을 수 있는 라벨을 그대로 재사용합니다. 카드가 자체 상태 점, 링, 색상 텍스트, pulse/dim 모션을 만들지 않습니다. 실시간 freshness 신호가 별도로 필요할 때만 `StatusIndicator`를 조합합니다.
 - **ConnectionBadge**: 연결이 실제 보조 사실일 때 `details[].value`로 조합합니다. 카드가 `connection` prop이나 연결 상태 machine을 재정의하지 않습니다.
 - 아이콘 크기는 소비자가 기존 `Icon` size 축으로 정합니다. 컴포넌트는 임의의 38px/14px geometry를 강제하지 않고, identity가 제목에서 이미 전달되므로 leading icon subtree는 decorative로 숨깁니다.
-- 제목은 body1/bold, 설명과 값은 label1, detail label/meta는 caption1을 사용합니다. divider는 details와 footer의 역할 그룹만 구분하고 각 fact를 카드처럼 둘러싸지 않습니다.
+- 제목은 body1/bold, 설명과 **문자열** 값은 label1, detail label/meta는 caption1을 사용합니다. divider는 details와 footer의 역할 그룹만 구분하고 각 fact를 카드처럼 둘러싸지 않습니다.
+- `details[].value`에 `ConnectionBadge` 같은 LDS 조합을 넣으면 그 요소는 **자기 타입 스케일을 유지합니다**(ConnectionBadge는 `sm` 12px · `md` 13px). label1에 맞추려고 조합물의 크기를 덮어쓰지 않습니다. 배지를 카드마다 다른 크기로 만들면 같은 배지가 화면마다 달라지고, 그 대가가 한 행 안의 2px 차이보다 큽니다. 대신 라벨→값 정렬선과 baseline은 값 종류와 무관하게 유지합니다.
+- 그 결과 한 행에서 문자열 값(14px)과 조합 배지(12–13px)가 나란히 놓일 수 있습니다. 크기 차이가 읽기를 방해하는 화면이라면 두 값을 모두 문자열로 두거나 두 값 모두 같은 조합물로 맞추는 쪽이, 컴포넌트가 조합물 크기를 강제하는 것보다 낫습니다.
 
 ## External category evidence
 
