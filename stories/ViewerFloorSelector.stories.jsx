@@ -1,4 +1,5 @@
-import { FloorSelector } from '../src/index.js';
+import React from 'react';
+import { FloorSelector, Icon, Map2DCanvas, ViewerToolbar, ViewerToolbarButton } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const waitFor = async (predicate, message) => {
@@ -45,9 +46,59 @@ export const FloorSelection = {
   ),
   render: () => (
     <main style={{ maxWidth: 200 }}>
+      {/* 기본 sm(28px). 이 컨트롤의 자리는 뷰어 우측 레일이고 거기 툴바 버튼이
+          28px라, 단독으로 볼 때도 같은 크기로 확인한다. 터치 우선 화면은 md. */}
       <FloorSelector floors={floors} defaultValue="1F" />
     </main>
   ),
+};
+
+function ViewerSurfaceFixture() {
+  const [viewport, setViewport] = React.useState({ x: 0, y: 0, z: 1 });
+  const zoomBy = (factor) => setViewport((v) => ({
+    ...v,
+    z: Math.min(4, Math.max(0.25, Number((v.z * factor).toFixed(3)))),
+  }));
+
+  // 두 컨트롤은 축이 다르므로 슬롯도 나눈다. 층 전환은 "무엇을 보는가"라 상단
+  // 우측 `scope` 레일에, 줌·초기화는 "어떻게 보는가"라 우하단 `toolbar`에 둔다.
+  // 어느 쪽도 절대 위치를 직접 잡지 않아 오프셋 상수가 생기지 않는다.
+  const zoomControls = (
+    <ViewerToolbar orientation="vertical" appearance="on-dark" label="지도 보기">
+      <ViewerToolbarButton label="확대" onClick={() => zoomBy(1.2)}>
+        <Icon name="plus" size={16} aria-hidden="true" />
+      </ViewerToolbarButton>
+      <ViewerToolbarButton label="축소" onClick={() => zoomBy(0.8)}>
+        <Icon name="minus" size={16} aria-hidden="true" />
+      </ViewerToolbarButton>
+      <ViewerToolbarButton label="보기 초기화" onClick={() => setViewport({ x: 0, y: 0, z: 1 })}>
+        <Icon name="reset" size={16} aria-hidden="true" />
+      </ViewerToolbarButton>
+    </ViewerToolbar>
+  );
+
+  return (
+    <main style={{ maxWidth: 640 }}>
+      <Map2DCanvas
+        appearance="dark"
+        label="B동 3층 지도"
+        source="지도 소스 A"
+        viewport={viewport}
+        onViewportChange={setViewport}
+        scope={<FloorSelector floors={floors} defaultValue="1F" appearance="dark" size="sm" />}
+        toolbar={zoomControls}
+        style={{ width: '100%', aspectRatio: '16 / 10' }}
+      />
+    </main>
+  );
+}
+
+export const OnViewerSurface = {
+  name: '뷰어 표면 위',
+  parameters: storyDescription(
+    'Floor Selector가 실제로 놓이는 자리입니다. 층 전환은 "무엇을 보는가"라 상단 우측 scope 레일에, 줌·초기화는 "어떻게 보는가"라 우하단 toolbar에 들어가 같은 우측 정렬선을 공유합니다. 컨트롤 곡률이 뷰어 표면·툴바와 같은 계열인지, 다크 표면 위에서 비선택 층이 읽히는지, 두 슬롯이 하나의 우측 열로 읽히는지 확인하세요.',
+  ),
+  render: () => <ViewerSurfaceFixture />,
 };
 
 export const StringFloors = {
