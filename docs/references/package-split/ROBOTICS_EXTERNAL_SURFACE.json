@@ -54,9 +54,11 @@
     "--label1-size",
     "--label2-line",
     "--label2-size",
+    "--radius-full",
     "--radius-lg",
     "--radius-md",
     "--radius-sm",
+    "--radius-xl",
     "--radius-4",
     "--shadow-control",
     "--shadow-sm",
@@ -95,6 +97,21 @@
   "entries": [
     { "source": "components/robotics/DirectionalPad", "exports": ["DirectionalPad"] },
     { "source": "components/robotics/FacilityTransition", "exports": ["FacilityTransition"] },
+    { "source": "components/robotics/FleetHealthSummary", "exports": ["FleetHealthSummary"] },
+    { "source": "components/robotics/FleetRobotRow", "exports": ["FleetRobotRow"] },
+    {
+      "source": "components/robotics/FleetState",
+      "exports": [
+        "FLEET_ATTENTION_LEVELS",
+        "FLEET_AUTHORITY_STATES",
+        "FLEET_CAPABILITY_STATES",
+        "FLEET_CONTROL_STATES",
+        "FLEET_FRESHNESS_STATES",
+        "FLEET_MISSION_STATES",
+        "FLEET_OPERABILITY_STATES",
+        "FLEET_SAFETY_STATES"
+      ]
+    },
     { "source": "components/robotics/HazardMarker", "exports": ["HazardMarker"] },
     { "source": "components/robotics/Joystick", "exports": ["Joystick"] },
     { "source": "components/robotics/LaneOverlay", "exports": ["LaneOverlay"] },
