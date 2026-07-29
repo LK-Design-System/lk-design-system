@@ -1,15 +1,47 @@
 import React from 'react';
 
 /**
- * LK ROBOTICS — FloorSelector
+ * LDS Product — FloorSelector
  * A compact floor / level picker (building navigation). Single-select list of
  * floors; the active floor fills with the signal ink. Exposed as an ARIA radio
  * group — floor choice is conventionally single-select, so radio semantics
  * match the behaviour exactly: one tab stop, arrow keys rove focus + selection,
  * Home/End jump to the ends. (The previous role="listbox" declared a keyboard
  * model the component never implemented.)
+ *
+ * `appearance="dark"` is required when the picker sits on a Viewer surface. The
+ * default light fill and neutral label ink drop to ~1.3:1 over the viewer's dark
+ * canvas, so the dark appearance switches to the shared viewer surface/foreground
+ * tokens instead of tinting the light ones.
  */
-export function FloorSelector({ floors = [], value, defaultValue, onChange, style, ...rest }) {
+const APPEARANCE = {
+  light: {
+    // 채움만으로는 흰 배경에서 1.1:1이라 컨트롤 경계가 사라지고 라벨만 떠 보인다.
+    // 헤어라인이 세그먼트 컨트롤이라는 그룹 어피던스를 만든다.
+    panel: 'var(--color-semantic-fill-normal)',
+    panelBorder: 'var(--border-thin) solid var(--color-semantic-line-normal-normal)',
+    idle: 'var(--color-semantic-label-neutral)',
+  },
+  dark: {
+    panel: 'var(--component-viewer-surface-elevated)',
+    panelBorder: 'var(--border-thin) solid var(--component-viewer-border)',
+    idle: 'var(--component-viewer-muted)',
+  },
+};
+
+// `sm` is the default because this picker's home is a viewer control stack,
+// where it shares a column with ViewerToolbar's 28px buttons — at 44px it reads
+// as a different, heavier control bolted onto the same rail. `md` stays for the
+// standalone case: a 44px target for a pointer that has the whole panel to aim
+// at, meeting WCAG 2.5.5 (AAA). `sm` still clears 2.5.8 (AA, 24×24).
+const SIZE = {
+  md: { item: 44, gap: 2, pad: 4, font: 'var(--label1-size)' },
+  sm: { item: 28, gap: 2, pad: 3, font: 'var(--caption1-size)' },
+};
+
+export function FloorSelector({ floors = [], value, defaultValue, onChange, appearance = 'light', size = 'sm', style, ...rest }) {
+  const skin = APPEARANCE[appearance] ?? APPEARANCE.light;
+  const dim = SIZE[size] ?? SIZE.md;
   const controlled = value !== undefined;
   const norm = floors.map((f) => (typeof f === 'string' ? { value: f, label: f } : f));
   const [internal, setInternal] = React.useState(defaultValue != null ? defaultValue : (norm[0] && norm[0].value));
@@ -50,15 +82,15 @@ export function FloorSelector({ floors = [], value, defaultValue, onChange, styl
   };
 
   return (
-    <div role="radiogroup" aria-label="층 선택" onKeyDown={handleKeyDown} style={{ display: 'inline-flex', flexDirection: 'column', gap: 3, padding: 4,
-      background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-sm)', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
+    <div role="radiogroup" aria-label="층 선택" data-floor-selector-size={size} onKeyDown={handleKeyDown} style={{ display: 'inline-flex', flexDirection: 'column', gap: dim.gap, padding: dim.pad,
+      background: skin.panel, border: skin.panelBorder, borderRadius: 'var(--radius-md)', boxShadow: 'none', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       {norm.map((f, index) => {
         const on = f.value === cur;
         return (
           <button key={f.value} type="button" role="radio" aria-checked={on} data-value={f.value}
             tabIndex={index === tabStopIndex ? 0 : -1} onClick={() => pick(f.value)}
-            style={{ minWidth: 44, height: 40, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 0, borderRadius: 'var(--radius-sm)', cursor: 'pointer',
-              fontFamily: 'inherit', fontSize: 'var(--label1-size)', fontWeight: on ? 800 : 600, background: on ? 'var(--color-semantic-primary-normal)' : 'transparent', color: on ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-neutral)',
+            style={{ minWidth: dim.item, height: dim.item, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 0, borderRadius: 'var(--radius-8)', cursor: 'pointer',
+              fontFamily: 'inherit', fontSize: dim.font, fontWeight: on ? 'var(--fw-semibold)' : 'var(--fw-medium)', background: on ? 'var(--color-semantic-primary-normal)' : 'transparent', color: on ? 'var(--color-semantic-static-white)' : skin.idle,
               transition: 'background var(--dur-fast) var(--ease-out)' }}>
             {f.label}
           </button>
