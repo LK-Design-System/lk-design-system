@@ -38,6 +38,7 @@
     "--color-semantic-static-white",
     "--color-semantic-status-cautionary",
     "--color-semantic-status-cautionary-foreground",
+    "--color-semantic-status-negative",
     "--color-semantic-status-negative-foreground",
     "--color-semantic-status-positive",
     "--color-semantic-status-positive-foreground",
