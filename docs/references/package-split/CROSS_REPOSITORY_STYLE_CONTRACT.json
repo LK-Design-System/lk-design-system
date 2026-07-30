@@ -24,9 +24,9 @@
       "--display"
     ],
     "packages": [
-      { "name": "@lk-robotics/lds-core", "version": "0.1.0-rc.1", "workspace": "packages/core" },
-      { "name": "@lk-robotics/lds-theme", "version": "0.1.0-rc.1", "workspace": "packages/theme" },
-      { "name": "@lk-robotics/lds-product", "version": "0.1.0-rc.1", "workspace": "packages/product" }
+      { "name": "@lk-robotics/lds-core", "version": "0.1.0-rc.2", "workspace": "packages/core" },
+      { "name": "@lk-robotics/lds-theme", "version": "0.1.0-rc.2", "workspace": "packages/theme" },
+      { "name": "@lk-robotics/lds-product", "version": "0.1.0-rc.2", "workspace": "packages/product" }
     ]
   },
   "profiles": {
@@ -42,9 +42,9 @@
         "docs/references/package-split/ROBOTICS_NAVIGATION_STATE_BADGE_CONTRACT.json"
       ],
       "packageDependencies": [
-        { "name": "@lk-robotics/lds-core", "section": "dependencies", "version": "0.1.0-rc.1" },
-        { "name": "@lk-robotics/lds-product", "section": "dependencies", "version": "0.1.0-rc.1" },
-        { "name": "@lk-robotics/lds-theme", "section": "devDependencies", "version": "0.1.0-rc.1" }
+        { "name": "@lk-robotics/lds-core", "section": "dependencies", "version": "0.1.0-rc.2" },
+        { "name": "@lk-robotics/lds-product", "section": "dependencies", "version": "0.1.0-rc.2" },
+        { "name": "@lk-robotics/lds-theme", "section": "devDependencies", "version": "0.1.0-rc.2" }
       ],
       "scanRoots": ["src", "stories", "tokens", ".storybook", "styles.css"],
       "requiredStyleImports": [
@@ -115,9 +115,9 @@
       "configFile": ".lds-conformance.json",
       "policyContracts": [],
       "packageDependencies": [
-        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-core", "section": "dependencies", "version": "0.1.0-rc.1" },
-        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-theme", "section": "dependencies", "version": "0.1.0-rc.1" },
-        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-product", "section": "dependencies", "version": "0.1.0-rc.1" },
+        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-core", "section": "dependencies", "version": "0.1.0-rc.2" },
+        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-theme", "section": "dependencies", "version": "0.1.0-rc.2" },
+        { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-product", "section": "dependencies", "version": "0.1.0-rc.2" },
         { "manifest": "apps/docs/package.json", "name": "@lk-robotics/lds-robotics-ui", "section": "dependencies", "version": "0.1.0-rc.2" }
       ],
       "scanRoots": ["apps/docs/.storybook", "apps/docs/src", "packages"],
