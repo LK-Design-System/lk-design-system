@@ -10,7 +10,11 @@ const vendoredRoboticsRelease = {
 const workspacePackages = [
   { id: 'core', name: '@lk-robotics/lds-core', dependencies: [], resources: ['tokens', 'assets'] },
   { id: 'theme', name: '@lk-robotics/lds-theme', dependencies: ['@lk-robotics/lds-core'], resources: ['tokens', 'assets'] },
-  { id: 'product', name: '@lk-robotics/lds-product', dependencies: ['@lk-robotics/lds-core'], resources: ['assets'] },
+  // Product ships tokens because it owns a component tier of its own — the
+  // `--component-viewer-*` surfaces every viewer frame and its consumers read.
+  // That is not the semantic tier: Core and Theme still own `--color-`,
+  // `--space-`, `--radius-`, and `--font-`, and product only composes them.
+  { id: 'product', name: '@lk-robotics/lds-product', dependencies: ['@lk-robotics/lds-core'], resources: ['tokens', 'assets'] },
   {
     id: 'compat',
     name: '@lk-robotics/design-system-core',

@@ -63,6 +63,25 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.3 - 2026-07-30
+
+### Fixed
+
+- `Button`: `aria-busy` stays a boolean when `loading` is the string `'inline'`. The prop value was reaching the attribute directly, so an inline-loading button announced `aria-busy="inline"` — not a valid boolean, and assistive technology read it as absent.
+
+## 0.1.0-rc.2 - 2026-07-30
+
+### Added
+
+- `OverlayStatusChip`: the Status-family chip promoted from Robotics after the proposal review, for status that must stay legible over a viewport rather than on a panel surface.
+- `loading="inline"` on `Button`: a busy state that keeps the label in place instead of swapping it for a spinner.
+- `status-negative` in the Robotics upstream token manifest.
+
+### Changed
+
+- The severed-link indicator draws its slash from the shared icon source rather than a local path.
+- Viewer overlay surfaces resolve their opacity from one source (`_viewerOverlaySurface.js`, strong/soft), so `ViewerToolbar` and the Robotics kit consume levels instead of each redefining them.
+
 ## 0.1.0-rc.1 - 2026-07-22
 
 ### Added

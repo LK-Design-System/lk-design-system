@@ -34,6 +34,15 @@ jobs:
         with:
           node-version: 22.17.1
 
+      # Same install the lds-conformance composite action already performs for
+      # consumer repositories, for the same reason: the masthead audit parses
+      # TSX with the TypeScript compiler, so a bare `node cli.mjs` dies with
+      # ERR_MODULE_NOT_FOUND before running a single check. Installing only the
+      # conformance package's own dependencies keeps this job cheap — no
+      # workspace install, no lockfile, no registry credentials.
+      - name: Install pinned contract dependencies
+        run: npm install --omit=dev --no-audit --no-fund --prefix packages/conformance
+
       - name: Verify portable Robotics and LDS3D style diagnostics
         run: node packages/conformance/src/cli.mjs verify-fixtures
 
