@@ -1,5 +1,12 @@
 # Storybook Masthead Copy Contract
 
+| Field | Value |
+| --- | --- |
+| Type | Contract |
+| Status | Current |
+| Owner | Design system owner |
+| Last reviewed | 2026-07-30 |
+
 Storybook Canvas의 masthead는 빠르게 스캔하는 요약 표면이다. 컴포넌트·패턴의 상세
 명세, 내부 구현, 테스트 방법은 Docs 본문이 소유한다.
 
