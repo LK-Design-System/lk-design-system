@@ -673,7 +673,6 @@
       "name": "Editor product patterns",
       "ownerLayer": "product",
       "provenance": "product-extension",
-      "wdsFamily": "Application editor patterns",
       "storyEvidence": [
         "stories/EditorCommandBar.stories.jsx",
         "stories/EditorHistoryToolbar.stories.jsx",
@@ -697,7 +696,6 @@
       "name": "Viewer product patterns",
       "ownerLayer": "product",
       "provenance": "product-extension",
-      "wdsFamily": "Application viewer patterns",
       "storyEvidence": [
         "stories/Viewer3D.stories.jsx",
         "stories/ViewerElevatorFleet.stories.jsx",
@@ -724,7 +722,6 @@
       "name": "Telemetry and equipment product patterns",
       "ownerLayer": "product",
       "provenance": "product-extension",
-      "wdsFamily": "Application status and telemetry patterns",
       "storyEvidence": [
         "stories/RoboticsBatteryGauge.stories.jsx",
         "stories/RoboticsConnectionBadge.stories.jsx",

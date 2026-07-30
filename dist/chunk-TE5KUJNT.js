@@ -38,7 +38,7 @@ function OverlayStatusChip({
         gap: "var(--space-2)",
         maxWidth: "calc(100% - var(--space-6))",
         padding: "var(--space-1) var(--space-3)",
-        borderRadius: 999,
+        borderRadius: "var(--radius-full)",
         boxSizing: "border-box",
         background: "var(--color-semantic-background-elevated-normal)",
         border: "1px solid var(--color-semantic-line-normal-alternative)",
@@ -72,4 +72,4 @@ function OverlayStatusChip({
 export {
   OverlayStatusChip
 };
-//# sourceMappingURL=chunk-2NV3D56Y.js.map
+//# sourceMappingURL=chunk-TE5KUJNT.js.map

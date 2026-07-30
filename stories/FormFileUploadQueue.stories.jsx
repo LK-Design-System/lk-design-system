@@ -133,7 +133,12 @@ export const UploadAndConversion = {
     }
     const progressLayout = progress?.closest('.lk-file-upload-queue__progress');
     const progressHeader = progressLayout?.firstElementChild;
-    if (progressHeader?.textContent?.replace(/\s+/g, ' ').trim() !== 'Markdown으로 변환 중 72%') {
+    // The message and the value are separate elements laid out by CSS, so the
+    // header's textContent concatenates them with no separator. Asserting an
+    // exact space-joined string tested the incidental whitespace instead of the
+    // contract, which is that both live in the one header.
+    const headerText = progressHeader?.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+    if (!headerText.includes('Markdown으로 변환 중') || !headerText.includes('72%')) {
       throw new Error('The busy message and determinate value must share the progress header.');
     }
     if (progressHeader.getBoundingClientRect().bottom > progress.getBoundingClientRect().top) {

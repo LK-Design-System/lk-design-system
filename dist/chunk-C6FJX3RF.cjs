@@ -615,7 +615,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                           minWidth: 0,
                           maxWidth: "100%",
                           minHeight: 28,
-                          padding: "3px 7px",
+                          padding: "4px 8px",
                           boxSizing: "border-box"
                         },
                         children: [
@@ -667,7 +667,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                     flex: "0 0 auto",
                     marginLeft: "auto",
                     minHeight: 28,
-                    padding: "3px 7px",
+                    padding: "4px 8px",
                     boxSizing: "border-box",
                     border: overlayChrome ? "1px solid color-mix(in srgb, var(--viewer-foreground) 18%, transparent)" : "1px solid var(--viewer-border)",
                     borderRadius: "var(--radius-md)",
@@ -802,7 +802,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
               maxWidth: "calc(100% - 24px)",
               minHeight: 24,
               boxSizing: "border-box",
-              padding: "4px 9px",
+              padding: "4px 8px",
               border: "1px solid var(--viewer-border)",
               borderRadius: "var(--radius-sm)",
               background: overlayChrome ? "color-mix(in srgb, var(--viewer-surface) 82%, transparent)" : "var(--viewer-surface-elevated)",
@@ -835,7 +835,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
               width: "max-content",
               minHeight: 24,
               maxWidth: "calc(100% - 24px)",
-              padding: "2px 7px",
+              padding: "2px 8px",
               boxSizing: "border-box",
               border: overlayChrome ? "1px solid color-mix(in srgb, var(--viewer-foreground) 18%, transparent)" : "1px solid var(--viewer-border)",
               borderRadius: "var(--radius-sm)",
@@ -992,4 +992,4 @@ ViewerFrame.displayName = "ViewerFrame";
 
 
 exports.resolveViewerState = resolveViewerState; exports.VIEWER_BLOCKING_STATES = VIEWER_BLOCKING_STATES2; exports.VIEWER_STATES = VIEWER_STATES2; exports.ViewerFrame = ViewerFrame;
-//# sourceMappingURL=chunk-5R7SKLON.cjs.map
+//# sourceMappingURL=chunk-C6FJX3RF.cjs.map

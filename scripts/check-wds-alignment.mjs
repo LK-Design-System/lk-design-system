@@ -735,6 +735,11 @@ for (const [storyFile, exception] of Object.entries(storyLayerExceptions)) {
 
 for (const [storyFile, page] of iaPageByStory) {
   if (externalRoboticsStoryFiles.has(storyFile)) continue;
+  // The IA audit's own "Other" layer is the meta page: a cross-family entry
+  // point like the directory, which sits under the LDS/ root rather than any
+  // layer. It still names a primary owner (it renders with real components),
+  // so without this it looked like a layer page whose title resolved nowhere.
+  if (page.layer === 'Other') continue;
   const exportOwnerLayer = exportOwnerByName.get(page.primaryOwner);
   if (!exportOwnerLayer) continue;
   const title = actualStoryTitles.get(storyFile);

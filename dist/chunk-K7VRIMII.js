@@ -1,7 +1,7 @@
 "use client";
 import {
   ViewerFrame
-} from "./chunk-YYLPRCSV.js";
+} from "./chunk-T3EXWR5V.js";
 
 // components/viz/VideoStreamTile.jsx
 import React from "react";
@@ -74,4 +74,4 @@ function VideoStreamTile({
 export {
   VideoStreamTile
 };
-//# sourceMappingURL=chunk-YWJ25MTF.js.map
+//# sourceMappingURL=chunk-K7VRIMII.js.map

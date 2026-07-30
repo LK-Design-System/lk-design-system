@@ -107,7 +107,7 @@ function Footer({
     backToTop && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, BackToTopButton, {}),
     /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { maxWidth, margin: "0 auto", padding: "0 32px", boxSizing: "border-box" }, children: [
       (brand != null || columns.length > 0) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: "36px 48px", paddingTop: 20 }, children: [
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: "32px 48px", paddingTop: 20 }, children: [
           brand != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { flex: "1 1 240px", minWidth: 220 }, children: brand }),
           columns.map((col, ci) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "nav", { "aria-label": typeof col.heading === "string" ? col.heading : void 0, style: { display: "flex", flexDirection: "column", gap: linkColumnGap, minWidth: 108 }, children: [
             col.heading != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { role: "heading", "aria-level": 3, style: { fontSize: "var(--body2-size)", fontWeight: 800, letterSpacing: 0, lineHeight: 1.5, color: "var(--color-semantic-inverse-label)", marginBottom: "var(--space-0-5)", wordBreak: "keep-all" }, children: col.heading }),
@@ -131,4 +131,4 @@ function Footer({
 
 
 exports.Footer = Footer;
-//# sourceMappingURL=chunk-INCRSULX.cjs.map
+//# sourceMappingURL=chunk-QOL65NSX.cjs.map

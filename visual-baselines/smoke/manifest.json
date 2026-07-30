@@ -74,8 +74,8 @@
         "height": 760
       },
       "reducedMotion": "no-preference",
-      "bytes": 353477,
-      "sha256": "85a49164da5c24de581be683b2844f44642460f546d7019f4b7be9d77b8a074a"
+      "bytes": 288392,
+      "sha256": "df1bb2ed2d4b1fcb814839d6795013396ecc41a0b95a7c03f398d75f2d770929"
     },
     {
       "name": "react-topbar",
@@ -86,8 +86,8 @@
         "height": 520
       },
       "reducedMotion": "no-preference",
-      "bytes": 52172,
-      "sha256": "06e0a89bde34d9e7367aa71275fe5656383dcb9da03a1ce56e4ec361ec8c61bd"
+      "bytes": 40300,
+      "sha256": "d03b9025a56cc7f8c2f2bb79bb7cea82150bfc09c701c58f3c2b3d2cc57a948b"
     },
     {
       "name": "react-topbar-dark",
@@ -100,8 +100,8 @@
         "height": 520
       },
       "reducedMotion": "no-preference",
-      "bytes": 53339,
-      "sha256": "aeea6a247291f076ede6859e70d0c030e65ca84cf123ecbc8fdfe6aa282b72a5"
+      "bytes": 41649,
+      "sha256": "3c5ff698eee36c703d54352a6639149dfb83b65522156d15b5758fef510e76b9"
     },
     {
       "name": "react-forms",
@@ -172,8 +172,8 @@
         "height": 900
       },
       "reducedMotion": "no-preference",
-      "bytes": 65343,
-      "sha256": "63ea6fa8077ca44a347cbfd9969359315f975ce184796836a756e205eecb48ff"
+      "bytes": 65349,
+      "sha256": "f444a25c7697737a9a2e22c795d66523f33ced222c94361ca1f453f62cb27064"
     },
     {
       "name": "wds-textinput-interactions",
@@ -220,8 +220,8 @@
         "height": 860
       },
       "reducedMotion": "no-preference",
-      "bytes": 63331,
-      "sha256": "79c15e0a0ebcf548c6088f51b0687761351f02dbbab8dd5da0c0cb2289126dbe"
+      "bytes": 61535,
+      "sha256": "4b7fa5e48d50d36db28ed0d04b318a00e728f23ccf4d9c47665fa9c417d34031"
     },
     {
       "name": "wds-menu-patterns-dark",
@@ -234,8 +234,8 @@
         "height": 860
       },
       "reducedMotion": "no-preference",
-      "bytes": 68542,
-      "sha256": "dcd0153b468570a28b0ac6d226aab97ec2d9f3e5acfad20ec64e0db25b330419"
+      "bytes": 66664,
+      "sha256": "2add9ebc6fb8d61e90df42665e9742e83c4f796e700f75590f2aa570ec165f93"
     },
     {
       "name": "wds-tooltip-patterns",
@@ -246,8 +246,8 @@
         "height": 960
       },
       "reducedMotion": "no-preference",
-      "bytes": 82590,
-      "sha256": "5135f2229fa37452c90c23fb6354ac31b2ea0bc55b22244cf78d0d7f9dbed7e7"
+      "bytes": 83214,
+      "sha256": "7312690c11550cb87f54d51cf4ada5f4b2d82f8e76eea74a734537830d836d1b"
     },
     {
       "name": "wds-loading-states",
@@ -308,8 +308,8 @@
         "height": 520
       },
       "reducedMotion": "no-preference",
-      "bytes": 48358,
-      "sha256": "c30ff0f8d0e9b980d108cca70155f272e20aec1e2998cd4790dfabdf7b1ba1d1"
+      "bytes": 67254,
+      "sha256": "6ff3dda3ba0d18392f7c6d98c53c9fdda9df10e0d0741e06b0ae8d6a51156ca1"
     },
     {
       "name": "product-file-upload-queue",
@@ -320,8 +320,8 @@
         "height": 720
       },
       "reducedMotion": "no-preference",
-      "bytes": 49273,
-      "sha256": "a8bad6c19be926b364f587092479b16c9da5cf02aefde06ef290f9c9faba1e05"
+      "bytes": 50290,
+      "sha256": "0a8145399ec156806527d1d8efb779de1bf1b72a4021fc488f1afcfb48b7c756"
     },
     {
       "name": "communication-message-family-dark",
@@ -344,8 +344,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 83522,
-      "sha256": "04fd6c40acdc02e405ea7b134dc38835f5089e35c21dfe8b404060f3dfe8e948"
+      "bytes": 73924,
+      "sha256": "109bcf159a6ca3e964d5376ecf7802c73bd406eeb96720722108e33a456214a8"
     },
     {
       "name": "product-sidenav-docked-expanded",
@@ -356,8 +356,8 @@
         "height": 620
       },
       "reducedMotion": "no-preference",
-      "bytes": 22828,
-      "sha256": "1e6a38ab32ed802f7cace43cbceb16898312ef08062dc5920a07d3752fc5f654"
+      "bytes": 22620,
+      "sha256": "9043883406e27deeb60659756152605f6326d2b786604e0ca63e212b6212dfd1"
     },
     {
       "name": "product-sidenav-docked-collapsed",
@@ -392,8 +392,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 110915,
-      "sha256": "8dc16c2cb7acd08d5225ab25d6b46b31beaa636a79de691b8e87fe0829f1ae44"
+      "bytes": 111220,
+      "sha256": "12e3e380d4ecf42a93298d612a1e5e4a7794ac49df319d0fb1b9414e51e39fd9"
     },
     {
       "name": "product-dashboard-shell-dark",
@@ -404,8 +404,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 76930,
-      "sha256": "6c6edaa0bb0b8c7f131ee0eaea1232dc7cbcd685b113ae5fed006bfb5624dca9"
+      "bytes": 77355,
+      "sha256": "ad9e6393fcbf325b530d4cfadf9047ee05324d0d7f3b87cc0017ff0643199928"
     },
     {
       "name": "product-navigation-dashboard-fixed",
@@ -416,8 +416,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 55917,
-      "sha256": "df048b1054b980cf9e7aa94f1fa239aae19f2b8da370babbb2f877d7adf852be"
+      "bytes": 53232,
+      "sha256": "315b07dd64732f2419df1e1f54edfe362c2c7a8e626f646800becbf356f43d14"
     },
     {
       "name": "product-navigation-dashboard-overlay-rail",

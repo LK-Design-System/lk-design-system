@@ -37,8 +37,8 @@ function RendererSlotPreview({ overlayVisible = true }) {
         inset: 0,
         display: 'grid',
         placeItems: 'center',
-        background: 'var(--viewer-surface)',
-        color: 'var(--viewer-muted)',
+        background: 'var(--component-viewer-surface)',
+        color: 'var(--component-viewer-muted)',
       }}
     >
       {overlayVisible && (
@@ -49,13 +49,13 @@ function RendererSlotPreview({ overlayVisible = true }) {
             inset: 0,
             opacity: 0.3,
             backgroundImage:
-              'linear-gradient(var(--viewer-border) 1px, transparent 1px), linear-gradient(90deg, var(--viewer-border) 1px, transparent 1px)',
+              'linear-gradient(var(--component-viewer-border) 1px, transparent 1px), linear-gradient(90deg, var(--component-viewer-border) 1px, transparent 1px)',
             backgroundSize: '32px 32px',
           }}
         />
       )}
       <div style={{ position: 'relative', display: 'grid', gap: 6, justifyItems: 'center', textAlign: 'center' }}>
-        <strong style={{ color: 'var(--viewer-foreground)', fontSize: 'var(--body2-size)' }}>3D 렌더러 영역</strong>
+        <strong style={{ color: 'var(--component-viewer-foreground)', fontSize: 'var(--body2-size)' }}>3D 렌더러 영역</strong>
         <span style={{ fontSize: 'var(--caption1-size)' }}>WebGL 출력은 애플리케이션 또는 LDS3D가 제공합니다.</span>
       </div>
     </div>

@@ -106,7 +106,7 @@ export function Footer({
       <div style={{ maxWidth, margin: '0 auto', padding: '0 32px', boxSizing: 'border-box' }}>
         {(brand != null || columns.length > 0) && (
           <React.Fragment>
-            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: '36px 48px', paddingTop: 20 }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: '32px 48px', paddingTop: 20 }}>
               {brand != null && <div style={{ flex: '1 1 240px', minWidth: 220 }}>{brand}</div>}
               {columns.map((col, ci) => (
                 <nav key={ci} aria-label={typeof col.heading === 'string' ? col.heading : undefined} style={{ display: 'flex', flexDirection: 'column', gap: linkColumnGap, minWidth: 108 }}>

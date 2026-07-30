@@ -544,7 +544,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
                     minWidth: 0,
                     maxWidth: '100%',
                     minHeight: 28,
-                    padding: '3px 7px',
+                    padding: '4px 8px',
                     boxSizing: 'border-box',
                   }}
                 >
@@ -597,7 +597,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
                 flex: '0 0 auto',
                 marginLeft: 'auto',
                 minHeight: 28,
-                padding: '3px 7px',
+                padding: '4px 8px',
                 boxSizing: 'border-box',
                 border: overlayChrome
                   ? '1px solid color-mix(in srgb, var(--viewer-foreground) 18%, transparent)'
@@ -752,7 +752,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
             maxWidth: 'calc(100% - 24px)',
             minHeight: 24,
             boxSizing: 'border-box',
-            padding: '4px 9px',
+            padding: '4px 8px',
             border: '1px solid var(--viewer-border)',
             borderRadius: 'var(--radius-sm)',
             background: overlayChrome
@@ -788,7 +788,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
             width: 'max-content',
             minHeight: 24,
             maxWidth: 'calc(100% - 24px)',
-            padding: '2px 7px',
+            padding: '2px 8px',
             boxSizing: 'border-box',
             border: overlayChrome
               ? '1px solid color-mix(in srgb, var(--viewer-foreground) 18%, transparent)'

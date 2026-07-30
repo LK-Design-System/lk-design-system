@@ -6,6 +6,18 @@ const root = process.cwd();
 const baselinePath = path.join(root, 'docs', 'references', 'quality', 'DIMENSION_LITERAL_BASELINE.json');
 const updateBaseline = process.argv.includes('--update-baseline');
 const dimensionalProperties = /^(gap|rowGap|columnGap|padding|paddingTop|paddingRight|paddingBottom|paddingLeft|margin|marginTop|marginRight|marginBottom|marginLeft|width|height|minWidth|maxWidth|minHeight|maxHeight|top|right|bottom|left|inset|borderRadius)$/;
+// Spacing properties answer to the ramp the Spacing foundation publishes, not to
+// the 4px grid below. The foundation has since declared the half steps
+// (2·6·10·14·18) and tokenised them, so `gap: 6` is on the scale — this check was
+// the last place still asserting the old grid, and it reported correct code as
+// off-grid. Non-spacing dimensions (width, height, radius, offsets) keep the 4px
+// rule: no ramp declares them.
+const spacingProperties = /^(gap|rowGap|columnGap|padding|paddingTop|paddingRight|paddingBottom|paddingLeft|margin|marginTop|marginRight|marginBottom|marginLeft)$/;
+const spacingCss = await readFile(path.join(root, 'tokens', 'spacing.css'), 'utf8');
+const spacingScale = new Set(
+  [...spacingCss.matchAll(/--space-[\w-]+:\s*(-?[\d.]+)px/g)].map((match) => Math.abs(Number(match[1]))),
+);
+if (spacingScale.size === 0) throw new Error('No --space-* declarations found in tokens/spacing.css.');
 
 async function collect(dir, out = []) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
@@ -36,7 +48,10 @@ for (const absolute of await collect(path.join(root, 'components'))) {
       if (property && dimensionalProperties.test(property)) {
         for (const value of numericPxValues(node.initializer)) {
           const magnitude = Math.abs(value);
-          if (magnitude > 2 && magnitude % 4 !== 0) {
+          const onGrid = spacingProperties.test(property)
+            ? spacingScale.has(magnitude)
+            : magnitude % 4 === 0;
+          if (magnitude > 2 && !onGrid) {
             violations.push(`${rel}:${property}:${value}px`);
           }
         }

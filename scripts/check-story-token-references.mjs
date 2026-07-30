@@ -18,7 +18,11 @@ import process from 'node:process';
 const root = process.cwd();
 const SURFACE_DIRS = ['stories', '.storybook'];
 const SOURCE_EXTENSIONS = /\.(jsx?|tsx?|css)$/;
-const DECLARATION = /(--[a-zA-Z0-9_-]+)\s*:/g;
+// The optional quote is what makes the local-definition rule true for JSX. A surface
+// that mints its own property does it as a style-object key — `'--foo': `${x}%`` — and
+// without allowing that closing quote every such property read back in the same file
+// was reported as never defined.
+const DECLARATION = /(--[a-zA-Z0-9_-]+)['"`]?\s*:/g;
 // The trailing capture spots `var(--prefix-${expr})`, where the name is assembled at
 // runtime and cannot be resolved statically.
 const REFERENCE = /var\(\s*(--[a-zA-Z0-9_-]+)(.?)/g;

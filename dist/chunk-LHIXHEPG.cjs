@@ -3,7 +3,7 @@
 
 
 
-var _chunk5R7SKLONcjs = require('./chunk-5R7SKLON.cjs');
+var _chunkC6FJX3RFcjs = require('./chunk-C6FJX3RF.cjs');
 
 
 
@@ -236,14 +236,14 @@ function Map2DCanvas({
   onKeyDown,
   ...rootProps
 }) {
-  const interactionState = _chunk5R7SKLONcjs.resolveViewerState.call(void 0, {
+  const interactionState = _chunkC6FJX3RFcjs.resolveViewerState.call(void 0, {
     state,
     availability,
     connection,
     freshness,
     playback
   });
-  const interactionBlocked = _chunk5R7SKLONcjs.VIEWER_BLOCKING_STATES.includes(interactionState);
+  const interactionBlocked = _chunkC6FJX3RFcjs.VIEWER_BLOCKING_STATES.includes(interactionState);
   const {
     rootRef,
     renderedViewport,
@@ -293,7 +293,7 @@ function Map2DCanvas({
     }
   ) : void 0;
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-    _chunk5R7SKLONcjs.ViewerFrame,
+    _chunkC6FJX3RFcjs.ViewerFrame,
     {
       ...rootProps,
       ref: rootRef,
@@ -360,4 +360,4 @@ function Map2DCanvas({
 
 
 exports.Map2DCanvas = Map2DCanvas;
-//# sourceMappingURL=chunk-H4O2IBJ5.cjs.map
+//# sourceMappingURL=chunk-LHIXHEPG.cjs.map

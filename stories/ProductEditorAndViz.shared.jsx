@@ -310,9 +310,9 @@ export const CanvasEditorShellEditorToolbarHistoryToolbarCard = {
 
 function ParityRendererPlaceholder() {
   return (
-    <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', background: 'var(--viewer-surface)', color: 'var(--viewer-muted)' }}>
-      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, opacity: 0.3, backgroundImage: 'linear-gradient(var(--viewer-border) 1px, transparent 1px), linear-gradient(90deg, var(--viewer-border) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-      <strong style={{ position: 'relative', color: 'var(--viewer-foreground)', fontSize: 'var(--body2-size)' }}>3D 렌더러 영역</strong>
+    <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', background: 'var(--component-viewer-surface)', color: 'var(--component-viewer-muted)' }}>
+      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, opacity: 0.3, backgroundImage: 'linear-gradient(var(--component-viewer-border) 1px, transparent 1px), linear-gradient(90deg, var(--component-viewer-border) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <strong style={{ position: 'relative', color: 'var(--component-viewer-foreground)', fontSize: 'var(--body2-size)' }}>3D 렌더러 영역</strong>
     </div>
   );
 }
@@ -338,12 +338,12 @@ export const Scene3DFrameCard = {
 function ParityMapPlaceholder() {
   return (
     <svg width="440" height="280" viewBox="0 0 440 280" style={{ display: 'block' }}>
-      <rect x="30" y="26" width="380" height="228" rx="4" fill="var(--viewer-surface)" stroke="var(--viewer-border)" strokeWidth="2" />
-      <rect x="52" y="48" width="124" height="78" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
-      <rect x="198" y="48" width="190" height="78" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
-      <rect x="52" y="152" width="148" height="80" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
-      <rect x="224" y="152" width="164" height="80" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
-      <path d="M176 87 H198 M200 192 H224 M116 126 V152 M306 126 V152" fill="none" stroke="var(--viewer-foreground)" strokeWidth="5" opacity="0.32" />
+      <rect x="30" y="26" width="380" height="228" rx="4" fill="var(--component-viewer-surface)" stroke="var(--component-viewer-border)" strokeWidth="2" />
+      <rect x="52" y="48" width="124" height="78" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
+      <rect x="198" y="48" width="190" height="78" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
+      <rect x="52" y="152" width="148" height="80" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
+      <rect x="224" y="152" width="164" height="80" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
+      <path d="M176 87 H198 M200 192 H224 M116 126 V152 M306 126 V152" fill="none" stroke="var(--component-viewer-foreground)" strokeWidth="5" opacity="0.32" />
     </svg>
   );
 }

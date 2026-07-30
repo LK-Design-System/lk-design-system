@@ -149,7 +149,7 @@ export const ViewerToolbarOverview = {
                 minHeight: 28,
                 padding: '0 4px',
                 boxSizing: 'border-box',
-                color: 'var(--viewer-foreground)',
+                color: 'var(--component-viewer-foreground)',
                 fontSize: 'var(--caption1-size)',
                 lineHeight: 1,
                 fontWeight: 'var(--fw-semibold)',
@@ -166,7 +166,7 @@ export const ViewerToolbarOverview = {
                 width: 1,
                 height: 20,
                 margin: '0 2px',
-                background: 'var(--viewer-border, color-mix(in srgb, var(--color-semantic-static-white) 22%, transparent))',
+                background: 'var(--component-viewer-border, color-mix(in srgb, var(--color-semantic-static-white) 22%, transparent))',
               }}
             />
             <Popover align="right" width={168} trigger={<ViewerToolbarButton label="레이어 설정"><ToolbarIcon name="layers" /></ViewerToolbarButton>}>

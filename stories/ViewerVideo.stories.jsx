@@ -76,9 +76,9 @@ function useVideoVolumeStyles() {
 .lk-video-volume__rail{position:relative;display:flex;align-items:center;width:0;min-width:0;opacity:0;visibility:hidden;pointer-events:none;transition:width 160ms ease,opacity 120ms ease;padding-right:0}
 .lk-video-volume[data-expanded="true"] .lk-video-volume__rail{width:104px;opacity:1;visibility:visible;pointer-events:auto;padding-right:8px}
 .lk-video-volume__slider{width:92px;min-width:92px}
-input.lk-slider.lk-video-volume__range{width:92px!important;height:4px!important;min-width:0!important;background:linear-gradient(to right,var(--color-semantic-primary-normal) 0%,var(--color-semantic-primary-normal) var(--video-volume-percent),color-mix(in srgb,var(--viewer-foreground) 24%,transparent) var(--video-volume-percent),color-mix(in srgb,var(--viewer-foreground) 24%,transparent) 100%)!important}
-input.lk-slider.lk-video-volume__range::-webkit-slider-thumb{width:12px;height:12px;border:2px solid var(--viewer-surface-elevated);background:var(--viewer-foreground);box-shadow:none}
-input.lk-slider.lk-video-volume__range::-moz-range-thumb{width:10px;height:10px;border:2px solid var(--viewer-surface-elevated);background:var(--viewer-foreground);box-shadow:none}
+input.lk-slider.lk-video-volume__range{width:92px!important;height:4px!important;min-width:0!important;background:linear-gradient(to right,var(--color-semantic-primary-normal) 0%,var(--color-semantic-primary-normal) var(--video-volume-percent),color-mix(in srgb,var(--component-viewer-foreground) 24%,transparent) var(--video-volume-percent),color-mix(in srgb,var(--component-viewer-foreground) 24%,transparent) 100%)!important}
+input.lk-slider.lk-video-volume__range::-webkit-slider-thumb{width:12px;height:12px;border:2px solid var(--component-viewer-surface-elevated);background:var(--component-viewer-foreground);box-shadow:none}
+input.lk-slider.lk-video-volume__range::-moz-range-thumb{width:10px;height:10px;border:2px solid var(--component-viewer-surface-elevated);background:var(--component-viewer-foreground);box-shadow:none}
 @media (prefers-reduced-motion:reduce){.lk-video-volume,.lk-video-volume__rail{transition:none}}
 `;
     documentRef.head.appendChild(styleElement);
