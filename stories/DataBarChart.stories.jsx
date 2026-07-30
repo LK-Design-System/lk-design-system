@@ -2,6 +2,29 @@ import { BarChart } from '../src/index.js';
 import { assertAccessibleChart } from './DataCharts.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
+// 막대는 영 기준선에서 값에 비례해야 하고, 모두 같은 바닥선에 놓여야 한다.
+// 값 라벨이나 줄바꿈된 범주 라벨이 막대 자리를 먹으면 둘 다 깨진다 — 라벨
+// 공간이 100% 기준 안에 들어오면 가장 큰 막대만 눌려 단위당 높이가 어긋나고,
+// 열마다 트랙을 따로 재면 라벨이 긴 열의 막대가 기준선에서 들린다.
+function assertProportionalBars(canvasElement, label) {
+  const bars = Array.from(canvasElement.querySelectorAll('[data-bar-value]'));
+  if (!bars.length) {
+    throw new Error(`${label} must render a bar per category.`);
+  }
+
+  const scales = bars.map((bar) => bar.getBoundingClientRect().height / Number(bar.getAttribute('data-bar-value')));
+  const mean = scales.reduce((total, scale) => total + scale, 0) / scales.length;
+  const drift = Math.max(...scales.map((scale) => Math.abs(scale - mean))) / mean;
+  if (!(drift <= 0.05)) {
+    throw new Error(`${label} must keep bar heights proportional to values from a zero baseline (unit height drifted ${(drift * 100).toFixed(1)}%).`);
+  }
+
+  const baselines = new Set(bars.map((bar) => Math.round(bar.getBoundingClientRect().bottom)));
+  if (baselines.size !== 1) {
+    throw new Error(`${label} must sit every bar on one shared baseline (found ${baselines.size}).`);
+  }
+}
+
 const meta = {
   title: 'LDS Product/Data/Visualization/Bar Chart',
   tags: ['autodocs'],
@@ -49,6 +72,7 @@ export const BarComparison = {
   ),
   play: async ({ canvasElement }) => {
     assertAccessibleChart(canvasElement, '문서 상태별 항목 수');
+    assertProportionalBars(canvasElement, '문서 상태별 항목 수');
   },
 };
 
@@ -87,6 +111,8 @@ export const NarrowLongLabels = {
     if (!labels.length || Array.from(labels).some((label) => getComputedStyle(label).whiteSpace === 'nowrap')) {
       throw new Error('Long chart labels must wrap instead of forcing horizontal overflow.');
     }
+    // 줄바꿈된 라벨이 막대의 기준선이나 축척을 흔들지 않는지도 같이 본다.
+    assertProportionalBars(canvasElement, '장기 운영 단계별 건수');
   },
 };
 
