@@ -38,11 +38,11 @@ const designSystems = [
   },
   {
     name: 'LDS Slides',
-    status: 'In development',
+    status: 'Available',
     href: 'https://lk-design-system.github.io/lk-design-system-slides/',
     linkLabel: 'LDS Slides 열기',
     external: true,
-    scope: '발표 지오메트리 · 투사 스케일',
+    scope: '발표 지오메트리 · 투사 스케일 · 장표 레이아웃 · 덱 프리셋',
   },
 ];
 
