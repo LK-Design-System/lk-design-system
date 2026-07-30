@@ -35,7 +35,7 @@ export const ProductAndContentCards = {
 const productStageStyle = {
   display: 'flex',
   gap: 16,
-  padding: 26,
+  padding: 24,
   background:
     'radial-gradient(120% 82% at 100% 0%, var(--color-semantic-focus-ring), transparent 56%), linear-gradient(158deg, var(--color-semantic-brand-stage-from) 0%, var(--color-semantic-brand-stage-to) 100%)',
   border: '1px solid var(--color-semantic-inverse-line-normal)',

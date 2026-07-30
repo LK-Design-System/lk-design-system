@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
 
 
-var _chunkC5O7PJH3cjs = require('./chunk-C5O7PJH3.cjs');
+var _chunk5R7SKLONcjs = require('./chunk-5R7SKLON.cjs');
 
 // components/viz/VideoStreamTile.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -41,7 +41,7 @@ function VideoStreamTile({
   const resolvedState = usesExplicitAxes ? state : _nullishCoalesce(_nullishCoalesce(state, () => ( status)), () => ( "idle"));
   const resolvedAriaLabel = _nullishCoalesce(ariaLabel, () => ( (typeof label === "string" && label.trim() ? `${label} \uC601\uC0C1 \uC2A4\uD2B8\uB9BC` : "\uC601\uC0C1 \uC2A4\uD2B8\uB9BC")));
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-    _chunkC5O7PJH3cjs.ViewerFrame,
+    _chunk5R7SKLONcjs.ViewerFrame,
     {
       ...rest,
       label: resolvedAriaLabel,
@@ -74,4 +74,4 @@ function VideoStreamTile({
 
 
 exports.VideoStreamTile = VideoStreamTile;
-//# sourceMappingURL=chunk-LGOYGGU2.cjs.map
+//# sourceMappingURL=chunk-NNRJZODV.cjs.map

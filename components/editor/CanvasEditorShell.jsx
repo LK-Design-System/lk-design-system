@@ -182,7 +182,7 @@ export function CanvasEditorShell({
             </div>
           )}
           {(title != null || description != null) && (
-            <div style={{ display: 'grid', gap: 1, minWidth: 0, flex: 1 }}>
+            <div style={{ display: 'grid', gap: 2, minWidth: 0, flex: 1 }}>
               {title != null && (
                 <h2 style={{ minWidth: 0, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--headline2-size)', lineHeight: 'var(--headline2-line)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)', letterSpacing: 0 }}>
                   {title}

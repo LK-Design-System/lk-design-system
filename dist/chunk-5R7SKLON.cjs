@@ -611,7 +611,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                         style: {
                           display: "flex",
                           alignItems: "center",
-                          gap: 7,
+                          gap: 6,
                           minWidth: 0,
                           maxWidth: "100%",
                           minHeight: 28,
@@ -851,7 +851,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                   role: "status",
                   "aria-live": "polite",
                   "aria-atomic": "true",
-                  style: { display: "flex", alignItems: "center", gap: 5, flex: "0 1 auto", minWidth: 0, overflow: "hidden" },
+                  style: { display: "flex", alignItems: "center", gap: 4, flex: "0 1 auto", minWidth: 0, overflow: "hidden" },
                   children: stateSummary
                 }
               ),
@@ -992,4 +992,4 @@ ViewerFrame.displayName = "ViewerFrame";
 
 
 exports.resolveViewerState = resolveViewerState; exports.VIEWER_BLOCKING_STATES = VIEWER_BLOCKING_STATES2; exports.VIEWER_STATES = VIEWER_STATES2; exports.ViewerFrame = ViewerFrame;
-//# sourceMappingURL=chunk-C5O7PJH3.cjs.map
+//# sourceMappingURL=chunk-5R7SKLON.cjs.map

@@ -83,7 +83,7 @@ export function ConnectionBadge({
       data-status={usesCanonicalState ? resolvedState : legacyStatus}
       role={role ?? (!showLabel && (ariaLabel || stringLabel) ? 'img' : undefined)}
       aria-label={ariaLabel ?? (!showLabel ? stringLabel : undefined)}
-      style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-sans)',
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-sans)',
       fontSize: size === 'sm' ? 12 : 13, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-neutral)', ...style }} {...rest}>
       <span data-lds-connection-motion="" style={{ position: 'relative', display: 'inline-flex', alignItems: 'flex-end', gap: 2, height: h,
         animation: animated ? 'lk-conn-blink 1s var(--ease-in-out) infinite' : 'none' }}>

@@ -4,10 +4,10 @@ import {
 } from "./chunk-BXKBNLZ7.js";
 import {
   Map2DCanvas
-} from "./chunk-RH2ADA6A.js";
+} from "./chunk-OXYQQDO6.js";
 import {
   Scene3DFrame
-} from "./chunk-5LQMTPTZ.js";
+} from "./chunk-DGYC3YRL.js";
 import {
   TelemetryGauge
 } from "./chunk-3VJ4ICBS.js";
@@ -17,12 +17,12 @@ import {
 import "./chunk-L2RFFK3K.js";
 import {
   VideoStreamTile
-} from "./chunk-B7DIGCJM.js";
+} from "./chunk-YWJ25MTF.js";
 import {
   VIEWER_BLOCKING_STATES,
   VIEWER_STATES,
   ViewerFrame
-} from "./chunk-SOC4OIYH.js";
+} from "./chunk-YYLPRCSV.js";
 import {
   ViewerToolbar,
   ViewerToolbarButton
@@ -41,11 +41,11 @@ import {
 } from "./chunk-CFKHFBHL.js";
 import {
   BatteryGauge
-} from "./chunk-7YWKKNAR.js";
+} from "./chunk-WLFDMA5N.js";
 import "./chunk-BVUTMUVR.js";
 import {
   ConnectionBadge
-} from "./chunk-7R6PBY6V.js";
+} from "./chunk-IKZ73LF2.js";
 import {
   EquipmentStatusCard
 } from "./chunk-NU7JCN3B.js";
@@ -175,7 +175,7 @@ import {
 } from "./chunk-ITFJLO5N.js";
 import {
   CanvasEditorShell
-} from "./chunk-YFOCRASB.js";
+} from "./chunk-5YZJ22LY.js";
 import {
   DockPanel
 } from "./chunk-LKF2SH2Q.js";

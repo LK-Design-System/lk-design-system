@@ -1,18 +1,18 @@
-"use client";
-import {
-  DockPanel
-} from "./chunk-LKF2SH2Q.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+var _chunk23ETEWGRcjs = require('./chunk-23ETEWGR.cjs');
 
 // components/editor/CanvasEditorShell.jsx
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 function useControllableOpen(value, defaultValue, onChange) {
   const controlled = value !== void 0;
-  const [internal, setInternal] = React.useState(defaultValue);
+  const [internal, setInternal] = _react2.default.useState(defaultValue);
   const current = controlled ? value : internal;
-  const setCurrent = React.useCallback((next, reason = "toggle") => {
+  const setCurrent = _react2.default.useCallback((next, reason = "toggle") => {
     if (!controlled) setInternal(next);
-    onChange?.(next, reason);
+    _optionalChain([onChange, 'optionalCall', _ => _(next, reason)]);
   }, [controlled, onChange]);
   return [current, setCurrent];
 }
@@ -31,7 +31,7 @@ function CanvasEditorDockRegion({
   style,
   children
 }) {
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "div",
     {
       className,
@@ -39,8 +39,8 @@ function CanvasEditorDockRegion({
         if (event.key === "Escape") reasonRef.current = "escape";
       },
       style: { minWidth: 0, minHeight: 0, zIndex: 2, ...style },
-      children: /* @__PURE__ */ jsx(
-        DockPanel,
+      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        _chunk23ETEWGRcjs.DockPanel,
         {
           side,
           open,
@@ -114,8 +114,8 @@ function CanvasEditorShell({
     defaultLayersOpen,
     onLayersOpenChange
   );
-  const panelReasonRef = React.useRef("toggle");
-  const layersReasonRef = React.useRef("toggle");
+  const panelReasonRef = _react2.default.useRef("toggle");
+  const layersReasonRef = _react2.default.useRef("toggle");
   const hasHeader = title != null || description != null || headerStart != null || toolbar != null;
   const bodyClass = [
     "lk-canvas-editor-shell__body",
@@ -134,7 +134,7 @@ function CanvasEditorShell({
     layersReasonRef.current = "toggle";
     setLayersOpen(open, reason);
   };
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       className: rootClassName,
@@ -157,7 +157,7 @@ function CanvasEditorShell({
       },
       ...rest,
       children: [
-        hasHeader && /* @__PURE__ */ jsxs(
+        hasHeader && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "header",
           {
             className: "lk-canvas-editor-shell__header",
@@ -172,18 +172,18 @@ function CanvasEditorShell({
               flexShrink: 0
             },
             children: [
-              headerStart != null && /* @__PURE__ */ jsx("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", flexShrink: 0 }, children: headerStart }),
-              (title != null || description != null) && /* @__PURE__ */ jsxs("div", { style: { display: "grid", gap: 1, minWidth: 0, flex: 1 }, children: [
-                title != null && /* @__PURE__ */ jsx("h2", { style: { minWidth: 0, margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--headline2-size)", lineHeight: "var(--headline2-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", letterSpacing: 0 }, children: title }),
-                description != null && /* @__PURE__ */ jsx("div", { className: "lk-canvas-editor-shell__header-description", style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-medium)", color: "var(--color-semantic-label-neutral)", letterSpacing: 0 }, children: description })
+              headerStart != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", flexShrink: 0 }, children: headerStart }),
+              (title != null || description != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: 2, minWidth: 0, flex: 1 }, children: [
+                title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "h2", { style: { minWidth: 0, margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--headline2-size)", lineHeight: "var(--headline2-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", letterSpacing: 0 }, children: title }),
+                description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-canvas-editor-shell__header-description", style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-medium)", color: "var(--color-semantic-label-neutral)", letterSpacing: 0 }, children: description })
               ] }),
-              toolbar != null && /* @__PURE__ */ jsx("div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", marginLeft: title == null && description == null ? "auto" : 0, flexShrink: 0 }, children: toolbar })
+              toolbar != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", marginLeft: title == null && description == null ? "auto" : 0, flexShrink: 0 }, children: toolbar })
             ]
           }
         ),
-        subheader != null && /* @__PURE__ */ jsx("div", { className: "lk-canvas-editor-shell__subheader", style: { flexShrink: 0 }, children: subheader }),
-        responsiveNavigation != null && /* @__PURE__ */ jsx("div", { className: "lk-canvas-editor-shell__responsive-navigation", style: { flexShrink: 0 }, children: responsiveNavigation }),
-        /* @__PURE__ */ jsxs(
+        subheader != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-canvas-editor-shell__subheader", style: { flexShrink: 0 }, children: subheader }),
+        responsiveNavigation != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-canvas-editor-shell__responsive-navigation", style: { flexShrink: 0 }, children: responsiveNavigation }),
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             className: bodyClass,
@@ -200,7 +200,7 @@ function CanvasEditorShell({
               overflow: "hidden"
             },
             children: [
-              hasTools && /* @__PURE__ */ jsx(
+              hasTools && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "div",
                 {
                   role: "group",
@@ -210,7 +210,7 @@ function CanvasEditorShell({
                   children: tools
                 }
               ),
-              hasLayers && /* @__PURE__ */ jsx(
+              hasLayers && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 CanvasEditorDockRegion,
                 {
                   className: "lk-canvas-editor-shell__layers",
@@ -227,7 +227,7 @@ function CanvasEditorShell({
                   children: layers
                 }
               ),
-              /* @__PURE__ */ jsx(
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "section",
                 {
                   className: "lk-canvas-editor-shell__canvas",
@@ -236,7 +236,7 @@ function CanvasEditorShell({
                   children
                 }
               ),
-              hasPanel && !isPanelDrawer && /* @__PURE__ */ jsx(
+              hasPanel && !isPanelDrawer && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 CanvasEditorDockRegion,
                 {
                   className: "lk-canvas-editor-shell__panel lk-canvas-editor-shell__panel--docked",
@@ -253,7 +253,7 @@ function CanvasEditorShell({
                   children: panel
                 }
               ),
-              hasPanel && isPanelDrawer && /* @__PURE__ */ jsx(
+              hasPanel && isPanelDrawer && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 CanvasEditorDockRegion,
                 {
                   className: "lk-canvas-editor-shell__panel lk-canvas-editor-shell__panel--drawer",
@@ -274,7 +274,7 @@ function CanvasEditorShell({
             ]
           }
         ),
-        status != null && /* @__PURE__ */ jsx(
+        status != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "div",
           {
             role: "group",
@@ -289,7 +289,7 @@ function CanvasEditorShell({
   );
 }
 
-export {
-  CanvasEditorShell
-};
-//# sourceMappingURL=chunk-YFOCRASB.js.map
+
+
+exports.CanvasEditorShell = CanvasEditorShell;
+//# sourceMappingURL=chunk-JI24D3KC.cjs.map

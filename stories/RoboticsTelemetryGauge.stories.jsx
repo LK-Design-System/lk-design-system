@@ -176,7 +176,7 @@ export const TelemetryGaugeCard = {
       <div style={{ margin: '0 0 12px', color: 'var(--color-semantic-label-neutral)', fontSize: 11, lineHeight: 1.4, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase' }}>
         TelemetryGauge
       </div>
-      <div style={{ display: 'flex', gap: 26, alignItems: 'flex-end', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 24, alignItems: 'flex-end', flexWrap: 'wrap' }}>
         <TelemetryGauge value={82} unit="%" label="배터리" thresholds={{ low: 20, high: 50, direction: 'higher-is-better' }} />
         <TelemetryGauge value={14} unit="%" label="배터리" thresholds={{ low: 20, high: 50, direction: 'higher-is-better' }} />
         <TelemetryGauge value={1.4} max={2} unit="m/s" label="속도" tone="signal" statusLabel="주행 중" size={104} />

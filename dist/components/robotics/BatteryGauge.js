@@ -1,7 +1,7 @@
 "use client";
 import {
   BatteryGauge
-} from "../../chunk-7YWKKNAR.js";
+} from "../../chunk-WLFDMA5N.js";
 import "../../chunk-BVUTMUVR.js";
 export {
   BatteryGauge

@@ -540,7 +540,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 7,
+                    gap: 6,
                     minWidth: 0,
                     maxWidth: '100%',
                     minHeight: 28,
@@ -809,7 +809,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
             role="status"
             aria-live="polite"
             aria-atomic="true"
-            style={{ display: 'flex', alignItems: 'center', gap: 5, flex: '0 1 auto', minWidth: 0, overflow: 'hidden' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 4, flex: '0 1 auto', minWidth: 0, overflow: 'hidden' }}
           >
             {stateSummary}
           </div>

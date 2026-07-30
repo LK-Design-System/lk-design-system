@@ -35,7 +35,7 @@ export const ConnectionBadgeCard = {
   tags: ['!dev', 'visual-parity'],
   render: () => (
     <div data-visual-crop-root style={{ width: 700, height: 140, background: 'var(--color-semantic-background-normal-normal)', padding: 24, boxSizing: 'border-box', fontFamily: 'var(--font-sans)', color: 'var(--color-semantic-label-normal)' }}>
-      <div style={{ display: 'flex', gap: 22, alignItems: 'center', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap' }}>
         <ConnectionBadge status="online" />
         <ConnectionBadge status="reconnecting" />
         <ConnectionBadge status="weak" />
@@ -145,7 +145,7 @@ export const VideoStreamTileCard = {
       <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 12px' }}>
         마지막 프레임 유지 — degraded · stale · paused
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 28 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }}>
         <VideoStreamTile label="보조 영상 A" state="degraded"><FeedPlaceholder>마지막 프레임</FeedPlaceholder></VideoStreamTile>
         <VideoStreamTile label="보조 영상 B" state="stale"><FeedPlaceholder>마지막 프레임</FeedPlaceholder></VideoStreamTile>
         <VideoStreamTile label="보조 영상 C" state="paused"><FeedPlaceholder>마지막 프레임</FeedPlaceholder></VideoStreamTile>
@@ -154,7 +154,7 @@ export const VideoStreamTileCard = {
       <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 12px' }}>
         사용 가능/차단 상태 — live · loading · disconnected
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 28 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }}>
         <VideoStreamTile label="보조 영상 A" state="live"><FeedPlaceholder>영상 렌더러 영역</FeedPlaceholder></VideoStreamTile>
         <VideoStreamTile label="보조 영상 B" state="loading"><FeedPlaceholder /></VideoStreamTile>
         <VideoStreamTile label="보조 영상 C" state="disconnected"><FeedPlaceholder /></VideoStreamTile>
@@ -382,7 +382,7 @@ export const ViewerToolbarCard = {
         <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 12px' }}>
           레이어 버튼 → Popover 패널 (눌러보세요)
         </div>
-        <div style={{ position: 'relative', height: 240, marginBottom: 26 }}>
+        <div style={{ position: 'relative', height: 240, marginBottom: 24 }}>
           <div style={{ position: 'absolute', inset: 0, borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--component-viewer-surface)', border: '1px solid var(--component-viewer-border)' }}>
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <div style={{ transform: `scale(${zoom / 100})`, transition: 'transform .18s var(--ease-out, ease)' }}>
@@ -413,7 +413,7 @@ export const ViewerToolbarCard = {
         <div style={{ fontSize: 11, fontWeight: 'var(--fw-extra)', letterSpacing: 1.6, textTransform: 'uppercase', color: 'var(--color-semantic-label-neutral)', margin: '0 0 12px' }}>
           orientation — horizontal · vertical
         </div>
-        <div style={{ display: 'flex', gap: 26, alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
           <ViewerToolbar orientation="horizontal">
             <ViewerToolbarButton label="확대"><Icon name="plus" size={16} /></ViewerToolbarButton>
             <ViewerToolbarButton label="축소"><Icon name="minus" size={16} /></ViewerToolbarButton>

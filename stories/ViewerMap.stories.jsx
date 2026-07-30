@@ -95,7 +95,7 @@ function InteractiveMapFixture() {
         >
           {JSON.stringify(viewport)}
         </output>
-        <label style={{ position: 'absolute', left: 34, top: 220, display: 'grid', gap: 3, width: 120, color: 'var(--viewer-muted)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-semibold)' }}>
+        <label style={{ position: 'absolute', left: 34, top: 220, display: 'grid', gap: 4, width: 120, color: 'var(--viewer-muted)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-semibold)' }}>
           지도 투명도
           <input type="range" min="0" max="100" defaultValue="70" style={{ width: '100%' }} />
         </label>

@@ -46,7 +46,7 @@ function BatteryGauge({ value = 0, tone, showLabel = true, size = "md", style, .
       style: { display: "inline-flex", alignItems: "center", gap: 6, fontFamily: "var(--font-sans)", ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs("span", { "aria-hidden": "true", style: { position: "relative", width: w, height: h, border: "1.5px solid var(--color-semantic-label-alternative)", borderRadius: 3, padding: 1.5, boxSizing: "border-box" }, children: [
+        /* @__PURE__ */ jsxs("span", { "aria-hidden": "true", style: { position: "relative", width: w, height: h, border: "1.5px solid var(--color-semantic-label-alternative)", borderRadius: 3, padding: 2, boxSizing: "border-box" }, children: [
           /* @__PURE__ */ jsx("span", { style: { display: "block", height: "100%", width: `${b}%`, background: toneStyle.fill, borderRadius: 1 } }),
           /* @__PURE__ */ jsx("span", { style: { position: "absolute", right: -3, top: "50%", transform: "translateY(-50%)", width: 2, height: 5, background: "var(--color-semantic-label-alternative)", borderRadius: "0 1px 1px 0" } })
         ] }),
@@ -62,4 +62,4 @@ function BatteryGauge({ value = 0, tone, showLabel = true, size = "md", style, .
 export {
   BatteryGauge
 };
-//# sourceMappingURL=chunk-7YWKKNAR.js.map
+//# sourceMappingURL=chunk-WLFDMA5N.js.map

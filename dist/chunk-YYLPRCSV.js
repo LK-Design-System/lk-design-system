@@ -611,7 +611,7 @@ var ViewerFrame = React2.forwardRef(function ViewerFrame2({
                         style: {
                           display: "flex",
                           alignItems: "center",
-                          gap: 7,
+                          gap: 6,
                           minWidth: 0,
                           maxWidth: "100%",
                           minHeight: 28,
@@ -851,7 +851,7 @@ var ViewerFrame = React2.forwardRef(function ViewerFrame2({
                   role: "status",
                   "aria-live": "polite",
                   "aria-atomic": "true",
-                  style: { display: "flex", alignItems: "center", gap: 5, flex: "0 1 auto", minWidth: 0, overflow: "hidden" },
+                  style: { display: "flex", alignItems: "center", gap: 4, flex: "0 1 auto", minWidth: 0, overflow: "hidden" },
                   children: stateSummary
                 }
               ),
@@ -992,4 +992,4 @@ export {
   VIEWER_STATES2 as VIEWER_STATES,
   ViewerFrame
 };
-//# sourceMappingURL=chunk-SOC4OIYH.js.map
+//# sourceMappingURL=chunk-YYLPRCSV.js.map
