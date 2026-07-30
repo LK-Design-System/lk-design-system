@@ -14,6 +14,10 @@ This generated register is the release-facing inventory of public compatibility 
 | --- | --- | --- |
 | `arrow?: boolean;` | `components/buttons/Button.d.ts` | Kept as a no-op compatibility prop. |
 | `arrow?: boolean;` | `components/buttons/TextButton.d.ts` | Kept as a no-op compatibility prop. |
-| `actionLabel?: React.ReactNode;` | `components/forms/ValidationSummary.d.ts` | Kept only as a fallback when both message and label are absent. |
-| `actionLabel?: React.ReactNode;` | `components/forms/ValidationSummary.d.ts` | Kept only as a fallback when issue message and label are absent. |
+| `viewActions?: CanvasEditorCommandBarAction[];` | `components/editor/CanvasEditorCommandBar.d.ts` | Kept for source compatibility. Move these actions beside the viewport. |
+| `viewLabel?: string;` | `components/editor/CanvasEditorCommandBar.d.ts` | Viewport zoom/fit/camera controls belong in a viewport-local toolbar. |
+| `children?: React.ReactNode;` | `components/editor/ViewportStatusBar.d.ts` | Compatibility slot for passive trailing status only. Prefer items/message. |
 | `severityLabel?: React.ReactNode;` | `components/forms/ValidationSummary.d.ts` | Severity is presented once by the error or warning group heading. |
+| `empty?: React.ReactNode;` | `components/viz/Scene3DFrame.d.ts` | Use state="no-source" and stateLabel. |
+| `loading?: boolean;` | `components/viz/Scene3DFrame.d.ts` | Use state="loading". |
+| `active?: boolean;` | `components/viz/ViewerToolbar.d.ts` | `kind="toggle" pressed={...}`를 사용하세요. 이전 active 사용은 호환을 위해 toggle로 해석됩니다. |

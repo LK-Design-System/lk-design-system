@@ -393,7 +393,7 @@
     "The badges slot is passive and must use an on-dark-compatible badge in dark appearance. Do not repeat the normalized Viewer state with a second connection badge."
   ],
   "platformStatus": {
-    "figma": "mapped",
+    "figma": "not-tracked",
     "react": "implemented",
     "ios": "not-tracked",
     "android": "not-tracked"

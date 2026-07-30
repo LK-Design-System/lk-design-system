@@ -29,6 +29,9 @@ stays up while inert or busy.
 - **tone**: `neutral`(기본, 상태색 없음 — 휴지 상태는 결함이 아니다) ·
   `cautionary` · `negative`. 글리프·색은 `status-presentation.js`의
   STATUS_TONE_STYLE을 그대로 소비한다 — 제2의 톤 어휘를 만들지 않는다.
+- **icon**: 톤이 정하는 기본 글리프를 특정 Icon 이름으로 교체한다. 바꾸는 것은
+  글리프뿐이며 톤의 색과 의미는 그대로다 — 도메인 기호가 톤보다 빨리 읽히는
+  경우(예: 견인·충전)를 위한 것이지, 톤이 말하는 심각도를 바꾸는 손잡이가 아니다.
 - **외부 근거**: [WAI-ARIA `status` role](https://www.w3.org/TR/wai-aria-1.2/#status)
   — 비차단 상태 표면의 라이브 시맨틱; [Material 3 Snackbar](https://m3.material.io/components/snackbar/guidelines)
   — 콘텐츠 위 비차단 오버레이는 조작을 가로막지 않고 핵심 UI를 가리지 않아야

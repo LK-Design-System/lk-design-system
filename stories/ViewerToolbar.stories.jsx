@@ -32,10 +32,10 @@ function ToolbarIcon({ name }) {
 function MiniMapPreview({ layers, zoom }) {
   return (
     <svg width="360" height="220" viewBox="0 0 360 220" style={{ display: 'block', width: 'min(360px, calc(100vw - 48px))', height: 'auto', transform: `scale(${zoom / 100})`, transformOrigin: 'center', transition: 'transform var(--dur-fast) var(--ease-out)' }} role="img" aria-label="툴바가 놓인 중립 뷰포트 예시">
-      {layers.base && <rect x="28" y="24" width="304" height="172" rx="4" fill="none" stroke="var(--component-viewer-muted)" strokeWidth="2.5" />}
+      {layers.base && <rect x="28" y="24" width="304" height="172" rx="4" fill="none" stroke="var(--viewer-muted)" strokeWidth="2.5" />}
       {layers.base && <path d="M28 118 H132 M132 24 V118 M214 118 V196 M214 150 H332" fill="none" stroke="var(--component-viewer-subtle)" strokeWidth="2.5" />}
-      {layers.overlay && <rect x="58" y="52" width="108" height="48" rx="4" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-muted)" />}
-      {layers.overlay && <rect x="198" y="126" width="104" height="44" rx="4" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-muted)" />}
+      {layers.overlay && <rect x="58" y="52" width="108" height="48" rx="4" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-muted)" />}
+      {layers.overlay && <rect x="198" y="126" width="104" height="44" rx="4" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-muted)" />}
       {layers.guides && <path d="M46 110 H314 M180 38 V182" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="1.5" strokeDasharray="5 5" />}
     </svg>
   );
@@ -132,7 +132,7 @@ export const ViewerToolbarOverview = {
 
     return (
       <main style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 760 }}>
-        <section style={{ position: 'relative', height: 300, borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--component-viewer-surface)', border: '1px solid var(--component-viewer-border)' }}>
+        <section style={{ position: 'relative', height: 300, borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--viewer-surface)', border: '1px solid var(--viewer-border)' }}>
           <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
             <MiniMapPreview layers={layers} zoom={zoom} />
           </div>
@@ -149,7 +149,7 @@ export const ViewerToolbarOverview = {
                 minHeight: 28,
                 padding: '0 4px',
                 boxSizing: 'border-box',
-                color: 'var(--component-viewer-foreground)',
+                color: 'var(--viewer-foreground)',
                 fontSize: 'var(--caption1-size)',
                 lineHeight: 1,
                 fontWeight: 'var(--fw-semibold)',
@@ -166,7 +166,7 @@ export const ViewerToolbarOverview = {
                 width: 1,
                 height: 20,
                 margin: '0 2px',
-                background: 'var(--component-viewer-border, color-mix(in srgb, var(--color-semantic-static-white) 22%, transparent))',
+                background: 'var(--viewer-border, color-mix(in srgb, var(--color-semantic-static-white) 22%, transparent))',
               }}
             />
             <Popover align="right" width={168} trigger={<ViewerToolbarButton label="레이어 설정"><ToolbarIcon name="layers" /></ViewerToolbarButton>}>
@@ -263,7 +263,7 @@ export const AppearanceAndDisabledStates = {
           <ViewerToolbarButton label="레이어 표시" kind="toggle"><ToolbarIcon name="filter" /></ViewerToolbarButton>
         </ViewerToolbar>
       </section>
-      <section aria-label="On dark toolbar" style={{ minHeight: 80, display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-end', padding: 'var(--space-4)', borderRadius: 'var(--radius-lg)', background: 'var(--component-viewer-surface)' }}>
+      <section aria-label="On dark toolbar" style={{ minHeight: 80, display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-end', padding: 'var(--space-4)', borderRadius: 'var(--radius-lg)', background: 'var(--viewer-surface)' }}>
         <ViewerToolbar orientation="vertical" appearance="on-dark" label="어두운 장면 보기">
           <ViewerToolbarButton label="확대" onClick={() => setLastAction('On dark 확대')}><ToolbarIcon name="plus" /></ViewerToolbarButton>
           <ViewerToolbarButton label="축소" onClick={() => setLastAction('On dark 축소')}><ToolbarIcon name="minus" /></ViewerToolbarButton>

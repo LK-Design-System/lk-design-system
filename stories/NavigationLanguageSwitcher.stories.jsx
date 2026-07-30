@@ -101,7 +101,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'LanguageSwitcher는 기존 IconButton과 드롭다운 메뉴를 조합한 controlled 언어 선택 utility입니다. 지구본 trigger에는 번역된 접근 가능한 이름을 제공하고, 국기나 국가 코드를 쓰지 않으며 각 언어 이름에 lang을 부여합니다.',
+          'LanguageSwitcher는 기존 아이콘 버튼과 드롭다운 메뉴를 조합한 controlled 언어 선택 utility입니다. 지구본 trigger에는 번역된 접근 가능한 이름을 제공하고, 국기나 국가 코드를 쓰지 않으며 각 언어 이름에 lang을 부여합니다.',
       },
     },
   },

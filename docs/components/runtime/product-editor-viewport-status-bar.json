@@ -167,7 +167,7 @@
     "New code uses the system status vocabulary signal / positive / cautionary / negative. warning and danger remain compatibility aliases only, so Editor/Viewer status surfaces do not invent a second tone language."
   ],
   "platformStatus": {
-    "figma": "mapped",
+    "figma": "not-tracked",
     "react": "implemented",
     "ios": "not-tracked",
     "android": "not-tracked"

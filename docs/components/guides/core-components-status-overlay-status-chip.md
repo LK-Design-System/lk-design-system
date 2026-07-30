@@ -55,6 +55,7 @@
 ## Content and writing
 
 - sibling 경계: Banner·Callout은 in-flow 블록(삽입이 표면을 밀어냄), Notification은 화면 구석의 일시 알림, Tooltip은 호버 트리거, StatusBadge· StatusIndicator는 개체의 라벨/신호(표면 앵커 없음). 이 칩만이 "표면 위, 레이아웃 불참, 상시"를 만족한다.
+- icon: 톤이 정하는 기본 글리프를 특정 Icon 이름으로 교체한다. 바꾸는 것은 글리프뿐이며 톤의 색과 의미는 그대로다 — 도메인 기호가 톤보다 빨리 읽히는 경우(예: 견인·충전)를 위한 것이지, 톤이 말하는 심각도를 바꾸는 손잡이가 아니다.
 
 ## Accessibility
 
@@ -92,6 +93,7 @@
 - `--font-sans`
 - `--label1-line`
 - `--label1-size`
+- `--radius-full`
 - `--shadow-sm`
 - `--space-1`
 - `--space-2`

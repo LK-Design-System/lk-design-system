@@ -352,7 +352,7 @@
   "apiLinks": [],
   "migration": [],
   "platformStatus": {
-    "figma": "mapped",
+    "figma": "not-tracked",
     "react": "implemented",
     "ios": "not-tracked",
     "android": "not-tracked"

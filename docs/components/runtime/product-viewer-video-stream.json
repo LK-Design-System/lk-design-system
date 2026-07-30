@@ -327,7 +327,7 @@
     "New integrations should report independent availability, connection, freshness, and playback axes. Supplying any of those axes takes precedence over the legacy combined state/status adapter, so a stale connected stream is not misreported as disconnected or unavailable."
   ],
   "platformStatus": {
-    "figma": "mapped",
+    "figma": "not-tracked",
     "react": "implemented",
     "ios": "not-tracked",
     "android": "not-tracked"

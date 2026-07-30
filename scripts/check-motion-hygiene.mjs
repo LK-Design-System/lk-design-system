@@ -14,13 +14,25 @@ async function collect(dir, out = []) {
   return out.sort();
 }
 
+// Reduced-motion handling does not have to live in the component file. A
+// component may render a motion hook — `data-lds-connection-motion` — that the
+// runtime CSS switches off inside a `prefers-reduced-motion` block, which is
+// the cleaner arrangement when the keyframes are themselves declared there.
+// Reading only the .jsx reported those components as unprotected while the
+// escape hatch existed, so the runtime CSS is consulted too.
+const reducedMotionCss = await readFile(path.join(root, 'tokens', 'components.css'), 'utf8');
+const guardedHooks = new Set(
+  [...reducedMotionCss.matchAll(/@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{([\s\S]*?)\n\}/g)]
+    .flatMap(([, block]) => [...block.matchAll(/\[(data-[\w-]+)\]/g)].map((match) => match[1])),
+);
+
 const missingReducedMotion = [];
 for (const absolute of await collect(path.join(root, 'components'))) {
   const source = await readFile(absolute, 'utf8');
   if (!/@keyframes|\banimation\s*:/.test(source)) continue;
-  if (!/prefers-reduced-motion/.test(source)) {
-    missingReducedMotion.push(path.relative(root, absolute).replaceAll('\\', '/'));
-  }
+  if (/prefers-reduced-motion/.test(source)) continue;
+  if ([...guardedHooks].some((hook) => source.includes(hook))) continue;
+  missingReducedMotion.push(path.relative(root, absolute).replaceAll('\\', '/'));
 }
 
 if (update) {

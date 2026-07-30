@@ -214,7 +214,7 @@
     "thresholds는 기존 사용처 호환용입니다. 새 사용처에서는 direction: \"higher-is-better\" | \"lower-is-better\"를 반드시 명시하며, 가능하면 제품에서 threshold를 계산하고 tone을 전달하세요."
   ],
   "platformStatus": {
-    "figma": "mapped",
+    "figma": "not-tracked",
     "react": "implemented",
     "ios": "not-tracked",
     "android": "not-tracked"

@@ -830,12 +830,20 @@ for (const entry of entries) {
 const nonComponentDecisionPages = new Set([
   'LDS Core/Patterns/Loading',
 ]);
+// "Other" is the IA audit's own layer for a cross-family meta page — the
+// directory. It names a primary owner because it renders with real components,
+// so it used to produce a component guide that was that owner's guide with a
+// different title: both landed over the 60% duplicated-prose ceiling, each
+// citing the other. A meta page is not a component page and documents nothing
+// the owner's own guide does not.
 const nonFoundationPages = audit.pages.filter(
-  (page) => page.layer !== 'Foundation' && !nonComponentDecisionPages.has(page.title),
+  (page) => page.layer !== 'Foundation'
+    && page.layer !== 'Other'
+    && !nonComponentDecisionPages.has(page.title),
 );
 const tokenMap = tokenValueMap(tokenSource);
 const guides = nonFoundationPages.map((page) => guideFromPage(page, exportToEntry, sourceDetails, tokenMap));
-assert(guides.length === 173, `Expected 173 non-Foundation component pages, received ${guides.length}.`);
+assert(guides.length === 172, `Expected 172 non-Foundation component pages, received ${guides.length}.`);
 finalizeCanonicalGuides(guides);
 
 const coveredExports = new Set(guides.flatMap((guide) => guide.ownerComponents));

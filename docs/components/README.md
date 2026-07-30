@@ -13,7 +13,7 @@ LDS 컴포넌트 문서는 구현 예시 모음이 아니라 선택·상태·상
 
 - Public component entries: **202**
 - Named exports: **208**
-- Component and Theme/Product decision guides: **173**
+- Component and Theme/Product decision guides: **172**
 - Entries without an owned Storybook page: **8** — reference registry에서 source·type·prompt 계약을 계속 추적합니다.
 
 ## Completion contract

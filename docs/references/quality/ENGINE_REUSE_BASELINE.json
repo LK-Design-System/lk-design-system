@@ -16,8 +16,9 @@
     "conditionalAriaLiveMount": {
       "components/data/ResourceState.jsx": 2,
       "components/data/SavedViewControl.jsx": 1,
-      "components/forms/ValidationSummary.jsx": 1,
-      "components/overlay/ToastStack.jsx": 2
+      "components/editor/ViewportStatusBar.jsx": 1,
+      "components/overlay/ToastStack.jsx": 2,
+      "components/viz/ViewerFrame.jsx": 3
     },
     "fieldMetadataWithoutEngine": {
       "components/forms/FileUpload.jsx": 1,

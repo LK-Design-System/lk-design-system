@@ -272,7 +272,7 @@
     "Prefer the orthogonal axes for new integrations: availability describes whether content exists, connection describes transport health, freshness describes data age, and playback describes media progression. The legacy combined state remains a compatibility adapter and is ignored when any explicit axis is supplied."
   ],
   "platformStatus": {
-    "figma": "mapped",
+    "figma": "not-tracked",
     "react": "implemented",
     "ios": "not-tracked",
     "android": "not-tracked"

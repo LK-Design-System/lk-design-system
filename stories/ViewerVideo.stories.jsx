@@ -51,13 +51,13 @@ function FeedPlaceholder({ children, imageSrc, imageAlt }) {
         inset: 0,
         display: 'grid',
         placeItems: 'center',
-        background: 'repeating-linear-gradient(135deg, var(--component-viewer-surface) 0 10px, var(--component-viewer-surface-elevated) 10px 20px)',
+        background: 'repeating-linear-gradient(135deg, var(--viewer-surface) 0 10px, var(--viewer-surface-elevated) 10px 20px)',
       }}
     >
       {/* 한글 산문에는 mono와 양수 자간을 쓰지 않는다. 모노스페이스는 한글 글리프가
           없어 음절마다 등폭 어드밴스를 받아 자간이 벌어져 보이고, 1.2px 트래킹은
           대문자 라틴 오버라인용 장치다. 기술적인 인상은 크기·굵기·색으로 낸다. */}
-      <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 'var(--fw-bold)', color: 'var(--component-viewer-muted)' }}>{children}</span>
+      <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 'var(--fw-bold)', color: 'var(--viewer-muted)' }}>{children}</span>
     </div>
   );
 }
@@ -76,9 +76,9 @@ function useVideoVolumeStyles() {
 .lk-video-volume__rail{position:relative;display:flex;align-items:center;width:0;min-width:0;opacity:0;visibility:hidden;pointer-events:none;transition:width 160ms ease,opacity 120ms ease;padding-right:0}
 .lk-video-volume[data-expanded="true"] .lk-video-volume__rail{width:104px;opacity:1;visibility:visible;pointer-events:auto;padding-right:8px}
 .lk-video-volume__slider{width:92px;min-width:92px}
-input.lk-slider.lk-video-volume__range{width:92px!important;height:4px!important;min-width:0!important;background:linear-gradient(to right,var(--color-semantic-primary-normal) 0%,var(--color-semantic-primary-normal) var(--video-volume-percent),color-mix(in srgb,var(--component-viewer-foreground) 24%,transparent) var(--video-volume-percent),color-mix(in srgb,var(--component-viewer-foreground) 24%,transparent) 100%)!important}
-input.lk-slider.lk-video-volume__range::-webkit-slider-thumb{width:12px;height:12px;border:2px solid var(--component-viewer-surface-elevated);background:var(--component-viewer-foreground);box-shadow:none}
-input.lk-slider.lk-video-volume__range::-moz-range-thumb{width:10px;height:10px;border:2px solid var(--component-viewer-surface-elevated);background:var(--component-viewer-foreground);box-shadow:none}
+input.lk-slider.lk-video-volume__range{width:92px!important;height:4px!important;min-width:0!important;background:linear-gradient(to right,var(--color-semantic-primary-normal) 0%,var(--color-semantic-primary-normal) var(--video-volume-percent),color-mix(in srgb,var(--viewer-foreground) 24%,transparent) var(--video-volume-percent),color-mix(in srgb,var(--viewer-foreground) 24%,transparent) 100%)!important}
+input.lk-slider.lk-video-volume__range::-webkit-slider-thumb{width:12px;height:12px;border:2px solid var(--viewer-surface-elevated);background:var(--viewer-foreground);box-shadow:none}
+input.lk-slider.lk-video-volume__range::-moz-range-thumb{width:10px;height:10px;border:2px solid var(--viewer-surface-elevated);background:var(--viewer-foreground);box-shadow:none}
 @media (prefers-reduced-motion:reduce){.lk-video-volume,.lk-video-volume__rail{transition:none}}
 `;
     documentRef.head.appendChild(styleElement);

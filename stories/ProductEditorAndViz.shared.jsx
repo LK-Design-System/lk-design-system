@@ -123,13 +123,13 @@ function FeedPlaceholder({ children }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'repeating-linear-gradient(135deg, var(--component-viewer-surface) 0 10px, var(--component-viewer-surface-elevated) 10px 20px)',
+        background: 'repeating-linear-gradient(135deg, var(--viewer-surface) 0 10px, var(--viewer-surface-elevated) 10px 20px)',
       }}
     >
       {/* 플레이스홀더 문구는 한글이라 mono·양수 자간·uppercase를 쓰지 않는다.
           mono는 자릿수 정렬이 필요한 수치 판독(아래 좌표 표시)에만 남긴다. */}
       {children != null && (
-        <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 'var(--fw-semibold)', color: 'var(--component-viewer-muted)' }}>
+        <span style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 'var(--fw-semibold)', color: 'var(--viewer-muted)' }}>
           {children}
         </span>
       )}
@@ -310,9 +310,9 @@ export const CanvasEditorShellEditorToolbarHistoryToolbarCard = {
 
 function ParityRendererPlaceholder() {
   return (
-    <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', background: 'var(--component-viewer-surface)', color: 'var(--component-viewer-muted)' }}>
-      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, opacity: 0.3, backgroundImage: 'linear-gradient(var(--component-viewer-border) 1px, transparent 1px), linear-gradient(90deg, var(--component-viewer-border) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
-      <strong style={{ position: 'relative', color: 'var(--component-viewer-foreground)', fontSize: 'var(--body2-size)' }}>3D 렌더러 영역</strong>
+    <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', background: 'var(--viewer-surface)', color: 'var(--viewer-muted)' }}>
+      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, opacity: 0.3, backgroundImage: 'linear-gradient(var(--viewer-border) 1px, transparent 1px), linear-gradient(90deg, var(--viewer-border) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      <strong style={{ position: 'relative', color: 'var(--viewer-foreground)', fontSize: 'var(--body2-size)' }}>3D 렌더러 영역</strong>
     </div>
   );
 }
@@ -338,12 +338,12 @@ export const Scene3DFrameCard = {
 function ParityMapPlaceholder() {
   return (
     <svg width="440" height="280" viewBox="0 0 440 280" style={{ display: 'block' }}>
-      <rect x="30" y="26" width="380" height="228" rx="4" fill="var(--component-viewer-surface)" stroke="var(--component-viewer-border)" strokeWidth="2" />
-      <rect x="52" y="48" width="124" height="78" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
-      <rect x="198" y="48" width="190" height="78" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
-      <rect x="52" y="152" width="148" height="80" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
-      <rect x="224" y="152" width="164" height="80" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
-      <path d="M176 87 H198 M200 192 H224 M116 126 V152 M306 126 V152" fill="none" stroke="var(--component-viewer-foreground)" strokeWidth="5" opacity="0.32" />
+      <rect x="30" y="26" width="380" height="228" rx="4" fill="var(--viewer-surface)" stroke="var(--viewer-border)" strokeWidth="2" />
+      <rect x="52" y="48" width="124" height="78" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+      <rect x="198" y="48" width="190" height="78" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+      <rect x="52" y="152" width="148" height="80" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+      <rect x="224" y="152" width="164" height="80" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+      <path d="M176 87 H198 M200 192 H224 M116 126 V152 M306 126 V152" fill="none" stroke="var(--viewer-foreground)" strokeWidth="5" opacity="0.32" />
     </svg>
   );
 }
@@ -361,10 +361,10 @@ export const Map2DCanvasCard = {
 function ViewerToolbarMapPlaceholder({ layers }) {
   return (
     <svg width="320" height="200" viewBox="0 0 320 200" style={{ display: 'block' }}>
-      {layers.base && <rect x="20" y="18" width="280" height="164" rx="4" fill="none" stroke="var(--component-viewer-muted)" strokeWidth="2.5" />}
+      {layers.base && <rect x="20" y="18" width="280" height="164" rx="4" fill="none" stroke="var(--viewer-muted)" strokeWidth="2.5" />}
       {layers.base && <path d="M20 110 H120 M120 18 V110 M190 110 V182 M190 140 H300" fill="none" stroke="var(--component-viewer-subtle)" strokeWidth="2.5" />}
-      {layers.overlay && <rect x="50" y="46" width="96" height="42" rx="4" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-muted)" />}
-      {layers.overlay && <rect x="180" y="120" width="90" height="38" rx="4" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-muted)" />}
+      {layers.overlay && <rect x="50" y="46" width="96" height="42" rx="4" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-muted)" />}
+      {layers.overlay && <rect x="180" y="120" width="90" height="38" rx="4" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-muted)" />}
       {layers.guides && <path d="M38 100 H282 M160 34 V166" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="1.5" strokeDasharray="5 5" />}
     </svg>
   );
@@ -383,13 +383,13 @@ export const ViewerToolbarCard = {
           레이어 버튼 → Popover 패널 (눌러보세요)
         </div>
         <div style={{ position: 'relative', height: 240, marginBottom: 24 }}>
-          <div style={{ position: 'absolute', inset: 0, borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--component-viewer-surface)', border: '1px solid var(--component-viewer-border)' }}>
+          <div style={{ position: 'absolute', inset: 0, borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--viewer-surface)', border: '1px solid var(--viewer-border)' }}>
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <div style={{ transform: `scale(${zoom / 100})`, transition: 'transform .18s var(--ease-out, ease)' }}>
                 <ViewerToolbarMapPlaceholder layers={layers} />
               </div>
             </div>
-            <div style={{ position: 'absolute', left: 12, bottom: 12, fontFamily: monoFont, fontSize: 11, fontWeight: 'var(--fw-semibold)', letterSpacing: '0.4px', color: 'var(--component-viewer-foreground)', background: 'var(--component-viewer-surface-elevated)', borderRadius: 6, padding: '4px 9px' }}>
+            <div style={{ position: 'absolute', left: 12, bottom: 12, fontFamily: monoFont, fontSize: 11, fontWeight: 'var(--fw-semibold)', letterSpacing: '0.4px', color: 'var(--viewer-foreground)', background: 'var(--viewer-surface-elevated)', borderRadius: 6, padding: '4px 9px' }}>
               {zoom}%
             </div>
           </div>

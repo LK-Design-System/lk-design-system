@@ -44,9 +44,31 @@ const storyFiles = await collect('stories', (rel) => rel.endsWith('.jsx'));
 const failures = [];
 const exceptionHits = [];
 
+// A colour literal only drifts if it *styles* something. Two places name one
+// without styling anything: a comment recording the raw value a token replaced,
+// and a play assertion comparing getComputedStyle output, which can only be
+// written against the browser's own literal serialization. Scanning them made
+// the check demand tokens where no style exists, so both are removed first.
+function styledSource(source) {
+  return source
+    // Comments: a note recording the raw value a token replaced.
+    .replace(/\/\*[\s\S]*?\*\//g, ' ')
+    .replace(/(^|[^:])\/\/.*$/gm, '$1')
+    // Comparison operands: a play function checking getComputedStyle output can
+    // only be written against the browser's own serialization. A literal being
+    // compared against is an observation; styling never compares.
+    .replace(/[!=]==\s*(['"`])(?:rgba?\([^)]*\)|#[0-9A-Fa-f]{3,8})\1/g, '$1$1')
+    // Same reading, expressed as a membership test rather than a comparison —
+    // `['transparent', 'rgba(0, 0, 0, 0)'].includes(style.backgroundColor)`. A
+    // line that reads a resolved style is observing it, so drop the whole line.
+    .split('\n')
+    .filter((line) => !/getComputedStyle|(?:Style|Styles)\.\w+|\.backgroundColor\b/.test(line))
+    .join('\n');
+}
+
 async function checkFiles(files, allowed, label) {
   for (const file of files) {
-    const source = await read(file);
+    const source = styledSource(await read(file));
     const matches = source.match(visualValuePattern) || [];
     if (matches.length === 0) continue;
 

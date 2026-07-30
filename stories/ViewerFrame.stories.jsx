@@ -33,10 +33,10 @@ function Preview({ appearance = 'dark' }) {
         inset: 0,
         display: 'grid',
         placeItems: 'center',
-        color: 'var(--component-viewer-muted)',
+        color: 'var(--viewer-muted)',
         background: appearance === 'dark'
-          ? 'radial-gradient(circle at 50% 30%, var(--component-viewer-surface-elevated), var(--component-viewer-surface))'
-          : 'linear-gradient(var(--component-viewer-border) 1px, transparent 1px), linear-gradient(90deg, var(--component-viewer-border) 1px, transparent 1px)',
+          ? 'radial-gradient(circle at 50% 30%, var(--viewer-surface-elevated), var(--viewer-surface))'
+          : 'linear-gradient(var(--viewer-border) 1px, transparent 1px), linear-gradient(90deg, var(--viewer-border) 1px, transparent 1px)',
         backgroundSize: appearance === 'dark' ? undefined : '24px 24px',
         fontSize: 'var(--caption1-size)',
         fontWeight: 'var(--fw-semibold)',
@@ -62,7 +62,7 @@ function LocalToolbar({ appearance }) {
           minHeight: 28,
           padding: '0 4px',
           boxSizing: 'border-box',
-          color: 'var(--component-viewer-foreground)',
+          color: 'var(--viewer-foreground)',
           fontSize: 'var(--caption1-size)',
           lineHeight: 1,
           fontWeight: 'var(--fw-semibold)',
@@ -78,7 +78,7 @@ function LocalToolbar({ appearance }) {
           width: 1,
           height: 20,
           margin: '0 2px',
-          background: 'var(--component-viewer-border)',
+          background: 'var(--viewer-border)',
         }}
       />
       <ViewerToolbarButton label="보기 초기화" onClick={() => setZoom(100)}><Icon name="reset" size={16} /></ViewerToolbarButton>
@@ -319,7 +319,7 @@ export const StatePlacement = {
       ) {
         throw new Error('Viewer identity and inset controls must keep compact chrome without enforcing identical box heights.');
       }
-      if (identity?.style.background !== 'var(--component-viewer-surface-elevated)') {
+      if (identity?.style.background !== 'var(--viewer-surface-elevated)') {
         throw new Error('Viewer source identity requires its own opaque contrast surface.');
       }
       const ownedControlSurface = controlShelf?.querySelector('[data-viewer-toolbar-appearance="surface"], [data-viewer-toolbar-appearance="on-dark"]');
@@ -332,7 +332,7 @@ export const StatePlacement = {
       ) {
         throw new Error('A self-contained ViewerToolbar must expose its own grouped contrast surface.');
       }
-      if (!ownedControlSurface && controlShelf?.style.background !== 'var(--component-viewer-surface-elevated)') {
+      if (!ownedControlSurface && controlShelf?.style.background !== 'var(--viewer-surface-elevated)') {
         throw new Error('Viewer controls require a distinct grouped surface.');
       }
     }

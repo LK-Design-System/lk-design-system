@@ -229,7 +229,7 @@
     "active는 이전 호환 alias일 뿐입니다. 새 코드는 명시적인 kind=\"toggle\" pressed={...}를 사용합니다."
   ],
   "platformStatus": {
-    "figma": "mapped",
+    "figma": "not-tracked",
     "react": "implemented",
     "ios": "not-tracked",
     "android": "not-tracked"

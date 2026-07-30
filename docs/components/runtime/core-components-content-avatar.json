@@ -259,8 +259,8 @@
       },
       {
         "id": "lds-core-components-content-avatar--avatar-card",
-        "name": "Avatar Card",
-        "role": "visual-parity"
+        "name": "사용법 · 원본 리소스와 렌더 결과 대조",
+        "role": "usage"
       }
     ],
     "hiddenEvidence": 1

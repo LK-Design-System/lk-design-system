@@ -246,7 +246,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Spinner, Skeleton, Progress, Dimmer, ResourceState를 개별 부품이 아니라 로딩 범위와 작업 단계에 따라 선택하는 LDS Core 교차 컴포넌트 패턴입니다.',
+          '회전 표시, 골격 자리표시, 진행률 표시, 화면 가림, 리소스 상태 안내를 개별 부품이 아니라 로딩 범위와 작업 단계에 따라 선택하는 LDS Core 교차 컴포넌트 패턴입니다.',
       },
     },
   },

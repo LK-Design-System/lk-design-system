@@ -37,13 +37,13 @@ function MapSurfacePreview() {
       role="img"
       aria-label="중립 2D 지도 표면 예시"
     >
-      <rect x="30" y="26" width="380" height="228" rx="4" fill="var(--component-viewer-surface)" stroke="var(--component-viewer-border)" strokeWidth="2" />
-      <rect x="52" y="48" width="124" height="78" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
-      <rect x="198" y="48" width="190" height="78" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
-      <rect x="52" y="152" width="148" height="80" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
-      <rect x="224" y="152" width="164" height="80" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
-      <rect x="42" y="132" width="356" height="14" rx="3" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" opacity="0.72" />
-      <path d="M176 87 H198 M200 192 H224 M116 126 V152 M306 126 V152" fill="none" stroke="var(--component-viewer-foreground)" strokeWidth="5" opacity="0.32" />
+      <rect x="30" y="26" width="380" height="228" rx="4" fill="var(--viewer-surface)" stroke="var(--viewer-border)" strokeWidth="2" />
+      <rect x="52" y="48" width="124" height="78" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+      <rect x="198" y="48" width="190" height="78" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+      <rect x="52" y="152" width="148" height="80" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+      <rect x="224" y="152" width="164" height="80" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+      <rect x="42" y="132" width="356" height="14" rx="3" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" opacity="0.72" />
+      <path d="M176 87 H198 M200 192 H224 M116 126 V152 M306 126 V152" fill="none" stroke="var(--viewer-foreground)" strokeWidth="5" opacity="0.32" />
     </svg>
   );
 }
@@ -52,12 +52,12 @@ function WorldOriginPreview() {
   return (
     <div style={{ transform: 'translate(-180px, -120px)' }}>
       <svg width="360" height="240" viewBox="-180 -120 360 240" style={{ display: 'block' }} role="img" aria-label="중앙 원점 2D 표면 예시">
-        <rect x="-156" y="-96" width="312" height="192" rx="8" fill="var(--component-viewer-surface)" stroke="var(--component-viewer-border)" />
-        <rect x="-124" y="-66" width="98" height="52" rx="4" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
-        <rect x="26" y="14" width="98" height="52" rx="4" fill="var(--component-viewer-surface-elevated)" stroke="var(--component-viewer-border)" />
-        <path d="M-132 0 H132 M0 -76 V76" fill="none" stroke="var(--component-viewer-muted)" strokeWidth="1.5" strokeDasharray="4 5" />
-        <path d="M-10 0 H10 M0 -10 V10" stroke="var(--component-viewer-foreground)" strokeWidth="2" />
-        <circle cx="0" cy="0" r="4" fill="var(--component-viewer-foreground)" />
+        <rect x="-156" y="-96" width="312" height="192" rx="8" fill="var(--viewer-surface)" stroke="var(--viewer-border)" />
+        <rect x="-124" y="-66" width="98" height="52" rx="4" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+        <rect x="26" y="14" width="98" height="52" rx="4" fill="var(--viewer-surface-elevated)" stroke="var(--viewer-border)" />
+        <path d="M-132 0 H132 M0 -76 V76" fill="none" stroke="var(--viewer-muted)" strokeWidth="1.5" strokeDasharray="4 5" />
+        <path d="M-10 0 H10 M0 -10 V10" stroke="var(--viewer-foreground)" strokeWidth="2" />
+        <circle cx="0" cy="0" r="4" fill="var(--viewer-foreground)" />
       </svg>
     </div>
   );
@@ -86,16 +86,16 @@ function InteractiveMapFixture() {
             top: 34,
             padding: '4px 8px',
             borderRadius: 'var(--radius-sm)',
-            color: 'var(--component-viewer-foreground)',
-            background: 'var(--component-viewer-surface)',
-            border: '1px solid var(--component-viewer-border)',
+            color: 'var(--viewer-foreground)',
+            background: 'var(--viewer-surface)',
+            border: '1px solid var(--viewer-border)',
             fontFamily: 'var(--font-mono)',
             fontSize: 'var(--caption1-size)',
           }}
         >
           {JSON.stringify(viewport)}
         </output>
-        <label style={{ position: 'absolute', left: 34, top: 220, display: 'grid', gap: 4, width: 120, color: 'var(--component-viewer-muted)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-semibold)' }}>
+        <label style={{ position: 'absolute', left: 34, top: 220, display: 'grid', gap: 4, width: 120, color: 'var(--viewer-muted)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-semibold)' }}>
           지도 투명도
           <input type="range" min="0" max="100" defaultValue="70" style={{ width: '100%' }} />
         </label>

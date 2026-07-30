@@ -9,7 +9,7 @@ const docsRoot = path.join(root, 'docs', 'components');
 const dedupBaselinePath = 'docs/references/quality/STORYBOOK_GUIDE_DEDUP_BASELINE.json';
 const updateDedupBaseline = process.argv.includes('--update-dedup-baseline');
 const metricVersion = 2;
-const metricGuideDenominator = 170;
+const metricGuideDenominator = 172;
 const hardDedupCeilings = {
   meanDuplicatedSharePercent: 61,
   guidesOverSixtyPercent: 92,
@@ -364,7 +364,11 @@ assert(
 const nonComponentDecisionPages = new Set([
   'LDS Core/Patterns/Loading',
 ]);
-const expectedPages = audit.pages.filter((page) => page.layer !== 'Foundation' && !nonComponentDecisionPages.has(page.title));
+// Mirrors generate-component-docs.mjs: Foundation pages and the IA audit's
+// "Other" meta layer are not component pages, so no guide is expected for them.
+const expectedPages = audit.pages.filter((page) => page.layer !== 'Foundation'
+  && page.layer !== 'Other'
+  && !nonComponentDecisionPages.has(page.title));
 const guideTitles = new Set();
 const guideSlugs = new Set();
 for (const guide of content.guides) {

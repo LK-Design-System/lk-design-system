@@ -52,6 +52,18 @@ for (const file of runtimeCssFiles) {
   const css = await readFile(path.join(root, file), 'utf8');
   for (const match of css.matchAll(DECLARATION)) defined.add(match[1]);
 }
+
+// A component may also publish custom properties to its own subtree, which is
+// a real contract rather than a private detail: ViewerFrame mints `--viewer-*`
+// from the appearance it was given, and everything rendered inside it — story
+// content included — is meant to read those and follow light/dark for free.
+// Counting only runtime CSS reported such references as undefined, and the
+// tempting "fix" is to rewrite them to the underlying `--component-viewer-*`,
+// which silently pins the subtree to one appearance.
+for (const file of listSourceFiles(path.join(root, 'components'))) {
+  const source = await readFile(file, 'utf8');
+  for (const match of source.matchAll(DECLARATION)) defined.add(match[1]);
+}
 assert(defined.size > 0, 'No custom properties were parsed from the runtime CSS files; the definition source is wrong.');
 
 const surfaceFiles = SURFACE_DIRS.flatMap((dir) => listSourceFiles(path.join(root, dir)));
