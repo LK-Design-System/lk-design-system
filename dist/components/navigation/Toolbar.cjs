@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkBQS4EIGJcjs = require('../../chunk-BQS4EIGJ.cjs');
+var _chunk3VE2HGTTcjs = require('../../chunk-3VE2HGTT.cjs');
 
 
-exports.Toolbar = _chunkBQS4EIGJcjs.Toolbar;
+exports.Toolbar = _chunk3VE2HGTTcjs.Toolbar;
 //# sourceMappingURL=Toolbar.cjs.map
