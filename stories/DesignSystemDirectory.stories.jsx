@@ -28,6 +28,14 @@ const designSystems = [
     external: true,
     scope: '3D 도메인 UI',
   },
+  {
+    name: 'LDS Infographics',
+    status: 'In development',
+    href: 'https://lk-design-system.github.io/lk-design-system-infographics/',
+    linkLabel: 'LDS Infographics 열기',
+    external: true,
+    scope: '데이터 서사 · 주석 · 픽토그램',
+  },
 ];
 
 function DesignSystemDirectory() {
@@ -122,6 +130,10 @@ export const Overview = {
     }
     if (threeD?.getAttribute('href') !== designSystems[2].href || threeD.getAttribute('target') !== '_blank') {
       throw new Error('The LDS directory must link directly to the public 3D Storybook.');
+    }
+    const infographics = canvasElement.querySelector('[data-design-system-row="LDS Infographics"] a');
+    if (infographics?.getAttribute('href') !== designSystems[3].href || infographics.getAttribute('target') !== '_blank') {
+      throw new Error('The LDS directory must link directly to the public Infographics Storybook.');
     }
   },
 };
