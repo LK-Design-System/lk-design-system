@@ -15,6 +15,7 @@ function nodeText(node) {
 function joinIds(...ids) {
   return ids.filter(Boolean).join(" ") || void 0;
 }
+var LABEL_GAP = 8;
 function BarChart({
   data = [],
   height = 160,
@@ -43,6 +44,7 @@ function BarChart({
     return `${label}: ${values[index]}`;
   }).join(", ") : nodeText(emptyLabel) || "\uB370\uC774\uD130\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.";
   const resolvedSummary = _nullishCoalesce(summary, () => ( automaticSummary));
+  const valueReserve = showValue ? `calc(var(--caption1-line) + ${LABEL_GAP}px)` : 0;
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
@@ -51,10 +53,11 @@ function BarChart({
       "aria-describedby": joinIds(ariaDescribedBy, description != null && descriptionId, resolvedSummary != null && summaryId),
       "data-chart-type": "bar",
       style: {
-        display: "flex",
-        alignItems: "flex-end",
-        justifyContent: hasData ? "flex-start" : "center",
-        gap,
+        display: "grid",
+        gridTemplateColumns: hasData ? `repeat(${data.length}, minmax(0, 1fr))` : "minmax(0, 1fr)",
+        gridTemplateRows: hasData ? "minmax(0, 1fr) auto" : "minmax(0, 1fr)",
+        columnGap: gap,
+        rowGap: LABEL_GAP,
         height,
         minWidth: 0,
         fontFamily: "var(--font-sans)",
@@ -81,58 +84,62 @@ function BarChart({
         data.map((datum, index) => {
           const value = values[index];
           const barHeight = `${Math.max(0, value) / max * 100}%`;
-          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
-            "div",
-            {
-              style: {
-                flex: 1,
-                minWidth: 0,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 8,
-                height: "100%",
-                justifyContent: "flex-end"
-              },
-              children: [
-                showValue && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontSize: "var(--caption1-size)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: datum.value }),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                  "div",
-                  {
-                    "aria-hidden": "true",
-                    "data-bar-value": value,
-                    style: {
-                      width: "100%",
-                      maxWidth: 48,
-                      height: barHeight,
-                      minHeight: 2,
-                      background: datum.color || color,
-                      borderRadius: "var(--radius-md) var(--radius-md) 0 0",
-                      transition: "height var(--dur-slow) var(--ease-out)"
+          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
+            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              "div",
+              {
+                style: {
+                  gridColumn: index + 1,
+                  gridRow: 1,
+                  minWidth: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  gap: LABEL_GAP,
+                  paddingTop: valueReserve
+                },
+                children: [
+                  showValue && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { flexShrink: 0, fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: datum.value }),
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                    "div",
+                    {
+                      "aria-hidden": "true",
+                      "data-bar-value": value,
+                      style: {
+                        width: "100%",
+                        maxWidth: 48,
+                        height: barHeight,
+                        minHeight: 2,
+                        flexShrink: 0,
+                        background: datum.color || color,
+                        borderRadius: "var(--radius-md) var(--radius-md) 0 0",
+                        transition: "height var(--dur-slow) var(--ease-out)"
+                      }
                     }
-                  }
-                ),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                  "span",
-                  {
-                    "data-chart-label": true,
-                    style: {
-                      width: "100%",
-                      minWidth: 0,
-                      color: "var(--color-semantic-label-alternative)",
-                      fontSize: "var(--caption1-size)",
-                      lineHeight: "var(--caption1-line)",
-                      overflowWrap: "anywhere",
-                      textAlign: "center",
-                      whiteSpace: "normal"
-                    },
-                    children: datum.label
-                  }
-                )
-              ]
-            },
-            _nullishCoalesce(datum.id, () => ( index))
-          );
+                  )
+                ]
+              }
+            ),
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              "span",
+              {
+                "data-chart-label": true,
+                style: {
+                  gridColumn: index + 1,
+                  gridRow: 2,
+                  minWidth: 0,
+                  color: "var(--color-semantic-label-alternative)",
+                  fontSize: "var(--caption1-size)",
+                  lineHeight: "var(--caption1-line)",
+                  overflowWrap: "anywhere",
+                  textAlign: "center",
+                  whiteSpace: "normal"
+                },
+                children: datum.label
+              }
+            )
+          ] }, _nullishCoalesce(datum.id, () => ( index)));
         })
       ]
     }
@@ -142,4 +149,4 @@ function BarChart({
 
 
 exports.BarChart = BarChart;
-//# sourceMappingURL=chunk-VRT5E6AX.cjs.map
+//# sourceMappingURL=chunk-I5WJ7NYG.cjs.map

@@ -12,6 +12,8 @@ function joinIds(...ids) {
   return ids.filter(Boolean).join(' ') || undefined;
 }
 
+const LABEL_GAP = 8;
+
 /**
  * LDS Product Data — BarChart
  * Simple vertical bars from `data` ({ label, value, color? }). Signal-ink bars
@@ -47,6 +49,11 @@ export function BarChart({
     }).join(', ')
     : (nodeText(emptyLabel) || '데이터가 없습니다.');
   const resolvedSummary = summary ?? automaticSummary;
+  // Bars share one grid row so every column measures the same track from the
+  // same baseline, whatever height its wrapped label takes. The value label
+  // rides above its own bar and overflows into the track's reserved padding,
+  // which keeps it outside the 100% basis instead of compressing the tallest bar.
+  const valueReserve = showValue ? `calc(var(--caption1-line) + ${LABEL_GAP}px)` : 0;
 
   return (
     <div
@@ -55,10 +62,11 @@ export function BarChart({
       aria-describedby={joinIds(ariaDescribedBy, description != null && descriptionId, resolvedSummary != null && summaryId)}
       data-chart-type="bar"
       style={{
-        display: 'flex',
-        alignItems: 'flex-end',
-        justifyContent: hasData ? 'flex-start' : 'center',
-        gap,
+        display: 'grid',
+        gridTemplateColumns: hasData ? `repeat(${data.length}, minmax(0, 1fr))` : 'minmax(0, 1fr)',
+        gridTemplateRows: hasData ? 'minmax(0, 1fr) auto' : 'minmax(0, 1fr)',
+        columnGap: gap,
+        rowGap: LABEL_GAP,
         height,
         minWidth: 0,
         fontFamily: 'var(--font-sans)',
@@ -86,41 +94,45 @@ export function BarChart({
         const value = values[index];
         const barHeight = `${(Math.max(0, value) / max) * 100}%`;
         return (
-          <div
-            key={datum.id ?? index}
-            style={{
-              flex: 1,
-              minWidth: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 8,
-              height: '100%',
-              justifyContent: 'flex-end',
-            }}
-          >
-            {showValue && (
-              <span style={{ fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>
-                {datum.value}
-              </span>
-            )}
+          <React.Fragment key={datum.id ?? index}>
             <div
-              aria-hidden="true"
-              data-bar-value={value}
               style={{
-                width: '100%',
-                maxWidth: 48,
-                height: barHeight,
-                minHeight: 2,
-                background: datum.color || color,
-                borderRadius: 'var(--radius-md) var(--radius-md) 0 0',
-                transition: 'height var(--dur-slow) var(--ease-out)',
+                gridColumn: index + 1,
+                gridRow: 1,
+                minWidth: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                gap: LABEL_GAP,
+                paddingTop: valueReserve,
               }}
-            />
+            >
+              {showValue && (
+                <span style={{ flexShrink: 0, fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)', fontVariantNumeric: 'tabular-nums' }}>
+                  {datum.value}
+                </span>
+              )}
+              <div
+                aria-hidden="true"
+                data-bar-value={value}
+                style={{
+                  width: '100%',
+                  maxWidth: 48,
+                  height: barHeight,
+                  minHeight: 2,
+                  flexShrink: 0,
+                  background: datum.color || color,
+                  borderRadius: 'var(--radius-md) var(--radius-md) 0 0',
+                  transition: 'height var(--dur-slow) var(--ease-out)',
+                }}
+              />
+            </div>
             <span
               data-chart-label
               style={{
-                width: '100%',
+                gridColumn: index + 1,
+                gridRow: 2,
                 minWidth: 0,
                 color: 'var(--color-semantic-label-alternative)',
                 fontSize: 'var(--caption1-size)',
@@ -132,7 +144,7 @@ export function BarChart({
             >
               {datum.label}
             </span>
-          </div>
+          </React.Fragment>
         );
       })}
     </div>
