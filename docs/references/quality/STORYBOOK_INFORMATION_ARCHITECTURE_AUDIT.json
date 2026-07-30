@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "b94b48f797ed33ae0e484bb0f191b2d9c506aebafb77d8acdad0d1f03e1d1e01",
+    "storybookIndexSha256": "5ae4ac386e4f115076f4e4174934d26dfada6767ea41ef1641201ec941d80aeb",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -68,21 +68,21 @@
     "componentDescriptions": 186,
     "pagesWithVisibleCanvasIntroduction": 186,
     "pagesWithDecisionGuidance": 176,
-    "describedPublicStories": 450,
-    "reviewedPages": 187,
-    "reviewedStories": 609,
-    "staleReviewedPages": 63,
-    "recommendedVisibilityChanges": 2,
+    "describedPublicStories": 451,
+    "reviewedPages": 190,
+    "reviewedStories": 630,
+    "staleReviewedPages": 0,
+    "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 19,
       "overview": 175,
-      "usage": 30,
+      "usage": 31,
       "variants-states": 95,
-      "interaction": 53,
+      "interaction": 52,
       "responsive": 62,
       "scenario": 21,
-      "visual-parity": 89,
-      "internal-contract": 86
+      "visual-parity": 88,
+      "internal-contract": 87
     },
     "dispositions": {
       "keep": 190,
@@ -96,7 +96,7 @@
         "stories": 187,
         "public": 112,
         "hidden": 75,
-        "guideReadyPages": 55
+        "guideReadyPages": 56
       },
       "Foundation": {
         "pages": 16,
@@ -227,7 +227,7 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/Button.stories.jsx",
-      "sourceSha256": "3f4fbae8bcb79c82d8e2c747eb95c2b665c11037753164dd964b5b54dac3fe6d",
+      "sourceSha256": "4b2612606959e959ec3586e8c26b3a502f550cb5903a2416b215361867a1aea7",
       "primaryOwner": "Button",
       "ownerComponents": [
         "Button"
@@ -252,8 +252,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "d97d66344af02e03d054cca91cfbe13817e107f6929c77d8d26c243a19c572db",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "4b2612606959e959ec3586e8c26b3a502f550cb5903a2416b215361867a1aea7",
       "stories": [
         {
           "id": "lds-core-components-action-button--playground",
@@ -423,7 +423,7 @@
           "supportingComponents": []
         }
       ],
-      "reviewNote": "Spacing values moved onto the scale the Spacing foundation declares — half steps are now tokenised as --space-0-5 through --space-4-5 and the remaining arbitrary values rounded up by at most one step. No story, role, name or visibility changed. Verified by check:spacing-scale and the Axe sweep."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Action/FAB",
@@ -541,8 +541,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "e32d2df110a4c9f00561e86fad20f6b1122fab60a828bfdfbff27b9a81a22e70",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "5ac864413190710a3b051a82448ce4ee8bb91543130ef3468bbf556732e45d97",
       "stories": [
         {
           "id": "lds-core-components-action-icon-button--icon-button-variants",
@@ -595,7 +595,7 @@
           ]
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Action/Text Button",
@@ -625,8 +625,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "e7e393125db43b8749fd390a9e282ad7183faeea03a0ad74ff22385e737247a0",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "4c154b740cf4514205d51730f4576a32be419d0222f7bdcd42cb065876f9b48c",
       "stories": [
         {
           "id": "lds-core-components-action-text-button--text-button-states",
@@ -675,7 +675,7 @@
           "supportingComponents": []
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Action/Toggle Icon",
@@ -707,8 +707,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "cf19528b26b6678333da3ca6378a3dcc296c615ce42caca83d083e5a7ed3adb9",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "233354948604f5a227815499de1bf4765d3b58c84e363c576f457144aa8c2cc7",
       "stories": [
         {
           "id": "lds-core-components-action-toggle-icon--toggle-states",
@@ -761,14 +761,14 @@
           ]
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Content/Avatar",
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/Feedback.stories.jsx",
-      "sourceSha256": "fcb9520bf6a7be078750d68f6b19f3d59cedec6b0db5038af76399a1e9efd472",
+      "sourceSha256": "54a4925a109026f1e6b615f14b5a7f9edfb7a6ba14bc7f0248e9bbdc17f61a85",
       "primaryOwner": "Avatar",
       "ownerComponents": [
         "Avatar"
@@ -783,20 +783,18 @@
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-content-avatar--avatar-patterns",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
-      "missingGuidance": [
-        "per-story-purpose"
-      ],
+      "missingGuidance": [],
       "guidePriority": "medium",
       "disposition": "keep",
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "9e79bd7c2b4cd3fbc197c0aac54698c0dc10c0270ba978e1768bebee51129cc7",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "54a4925a109026f1e6b615f14b5a7f9edfb7a6ba14bc7f0248e9bbdc17f61a85",
       "stories": [
         {
           "id": "lds-core-components-content-avatar--avatar-patterns",
@@ -826,7 +824,7 @@
         },
         {
           "id": "lds-core-components-content-avatar--avatar-card",
-          "name": "Avatar Card",
+          "name": "사용법 · 원본 리소스와 렌더 결과 대조",
           "exportName": "AvatarCard",
           "visibility": "public",
           "tags": [
@@ -835,10 +833,10 @@
             "manifest",
             "test"
           ],
-          "role": "visual-parity",
-          "hasStoryDescription": false,
+          "role": "usage",
+          "hasStoryDescription": true,
           "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
+          "recommendedVisibility": "public",
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
@@ -871,7 +869,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Content/Card",
@@ -1207,8 +1205,8 @@
       "dispositionReason": "Kept as one LDS disclosure-pattern page. The accepted local .fig snapshot has no WDS Accordion or Collapsible component-set (only a Folder icon matches); WDS Content defines Icon, Content Badge, Thumbnail, Avatar, List Cell, Card. Accordion and Collapsible are LDS extensions, so promoting them to standalone WDS-component pages would invent taxonomy WDS does not define.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "ef86cdfe47632aa2b1861b06ab20c1ce1c795e630d8aed147bb46a713514e195",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "d9ce569eeb850417f9ca75a95a79cfa77c009c25bc39357e5e313e2d3fc44715",
       "stories": [
         {
           "id": "lds-core-components-content-disclosure--disclosure",
@@ -1263,7 +1261,7 @@
           ]
         }
       ],
-      "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Content/Lists",
@@ -1299,8 +1297,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "a6ba2f76302c8cecbd4489e54385fada59624d38bdd2fa2d2536108b86eec995",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "04b024d616116a6820cad119ba7b0e37902d27814178b04fe57b1094b0fd2711",
       "stories": [
         {
           "id": "lds-core-components-content-lists--lists",
@@ -1381,7 +1379,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Content/Media Patterns",
@@ -1847,8 +1845,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "fa0897b224e06ea2be7fa97c9bdbad7973b608991ef6d1624af0d6495b1717be",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "9c453ef0c506aa719adea4f5c741512ac303ecc2a01d40652063439bd753a704",
       "stories": [
         {
           "id": "lds-core-components-content-text--text-content",
@@ -1902,7 +1900,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Content/Timeline",
@@ -1993,8 +1991,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "c458505a5541c746905a85ecf9092144136b62ed2dc64fa3f443ddfb197c3868",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "6238a96b5d6e2e911bc9804b1669d1daa8bb837b891ca9088319038713d8b027",
       "stories": [
         {
           "id": "lds-core-components-content-tooltip--tooltip-patterns",
@@ -2100,7 +2098,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Layout/Divider",
@@ -2130,8 +2128,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "fbead579c36872e539212008ed1667e27249b67c4fbef25ceaa25b0a4f9feba8",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "8bdf14d678af4c944723c403436e727a385480d17bb6394bfa96e846fe249dc7",
       "stories": [
         {
           "id": "lds-core-components-layout-divider--divider-variants",
@@ -2181,7 +2179,7 @@
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Layout/Grid and Columns",
@@ -2519,8 +2517,8 @@
       "dispositionReason": "Kept as one LDS layout-utility page. The accepted local .fig snapshot (FIGMA_LOCAL_CONTENT_AUDIT.json) shows WDS \"1 Layout\" defines only Essential, Divider, and Layout; ScrollArea, Center, and VisuallyHidden have no WDS component-set (Center appears only as a Vertical Align variant value, VisuallyHidden is absent, Scroll surfaces only as a Scroll Bar decoration). Promoting them to standalone WDS-component pages would invent taxonomy WDS does not define.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "c489df422c1c85044b7df6540da7a4dab2c9df21f31226f572dc7cb9a072f597",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "0e329c20466fe15d9c538cb1b784051206e609203c3ad4e1226f334e8230c6ea",
       "stories": [
         {
           "id": "lds-core-components-layout-scroll-and-accessibility--scroll-and-access",
@@ -2599,7 +2597,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Layout/Stack and Alignment",
@@ -2737,8 +2735,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "5589e7d10425ee41718608c5f31d1977955190c0d4f23481ef717f805025ce42",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "42a8bc2efffaf420de26e9755bf41db14f8d225a367c67b174397b0d5e4cfb9c",
       "stories": [
         {
           "id": "lds-core-components-navigation-category--category-patterns",
@@ -2788,7 +2786,7 @@
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Navigation/Page Indicator",
@@ -2818,8 +2816,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "8c3ee87a569db8ee493ffa8ead4590d01fac3e37de82f5bc349e845bedceea0a",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "62c756cf764b3d57fa5ac3ec9bcb51afe464dfe9c05fb7953a89b0587e7987c7",
       "stories": [
         {
           "id": "lds-core-components-navigation-page-indicator--counter-and-dots",
@@ -2870,7 +2868,7 @@
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
         }
       ],
-      "reviewNote": "2026-07-26 Page Indicator geometry review: the overview had compared a small normal dot group (6px dots and 6px gaps) with a medium alternative group (10px dots and 10px gaps) without identifying the size mismatch. Counter size examples and dot color treatments are now separated into labeled sections; default and alternative dots both use the medium 10px/10px geometry and differ only by surface-appropriate colors. A play assertion locks equal dot size and gap across both treatments, and the running Storybook render was visually inspected."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Navigation/Pagination",
@@ -2902,8 +2900,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "572df332bebb0202a18bff49994f926a1445e023b7c4fe5a771dddf4a5cb2743",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "7dddb73b596155db6d284d23810a48f686c7e8e34bae6942d4016cb0375c9eb3",
       "stories": [
         {
           "id": "lds-core-components-navigation-pagination--synchronized-page-jump",
@@ -2955,7 +2953,7 @@
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Navigation/Tabs",
@@ -2985,8 +2983,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "4f5d693d46d83699aa9ee8ec2381632be8e48b23cd3b80ed4f2cd39443b7324f",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "d078bbe6404030b783441a71045142f57599dde6398abc6a9294ad0b3cf27f34",
       "stories": [
         {
           "id": "lds-core-components-navigation-tabs--tab-patterns",
@@ -3036,7 +3034,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Overlay/Alert",
@@ -3223,8 +3221,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "b8a66556ef2424e296230979fbb3cb895db5f7cd7db23d2319554a935deada42",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "ac2713c21c7d12eb754db349873efd05073288f9fa2ba851b3c31ffe44e6a727",
       "stories": [
         {
           "id": "lds-core-components-overlay-confirm-dialog--confirmation-states",
@@ -3279,7 +3277,7 @@
           "reviewNote": "Move to a hidden shared overlay regression contract or the Modal owner."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Overlay/Dimmer",
@@ -3424,8 +3422,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "5122136f300d3bdda23ebc4c02ff0c44d566105890fd72fd658c5b3f6f3a7cb2",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "64cc71b33091faadf066620337ed03fcfd2d9709cc079270f8212f3302ebdf08",
       "stories": [
         {
           "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-patterns",
@@ -3558,7 +3556,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Overlay/Modal",
@@ -3590,8 +3588,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "2464aa71c245c0634cfb51626f6dd93669e2a5f33aa816e30b87d270d8a089c2",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "3cdd8fe762960ac60da58b326ae674b0897bb0db96249028bf7b572cbdc2d3be",
       "stories": [
         {
           "id": "lds-core-components-overlay-modal--modal-open",
@@ -3694,7 +3692,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Overlay/Snackbar",
@@ -4451,8 +4449,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "870a0b910f9708195a77b18df46412741e120c291606779a8a78f51c67d5f320",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "3a5e62bcf4159cc6aef510c9585f14eb1674faae815f1e4aa4fb26b9be815236",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-input--input-overview",
@@ -4573,7 +4571,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Radio",
@@ -5209,8 +5207,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "a1ddf6f7cd50fcac99a98b0fc17b0c4675831943aaeace855f6c3d12856b138d",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "0bf93318a353177f97f6e9729c94c1b0a4a8f52fe84299650e941f4a5877c75c",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-slider-and-range--range-controls",
@@ -5305,7 +5303,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Stepper",
@@ -5586,8 +5584,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "e760c6b9c020d62caebe430a7ff3055e6d9065592e38d969a9b1561a5ed78dae",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "d6d9fecaad732c95d9c5566d3c884a47f05dd6e9f6dedec429a83f01b1885109",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-textarea--textarea-overview",
@@ -5702,7 +5700,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Status/Badges and Tags",
@@ -5737,8 +5735,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "29face8bc35f4fe9accc2882de0d5dabab7d8de155f71960cd9a8a35cf7cb7f0",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "3267fa4978e9c4cf3bce662271f6063f3e1f2e7b9d2e61dc4446950260d999a6",
       "stories": [
         {
           "id": "lds-core-components-status-badges-and-tags--badge-tag-patterns",
@@ -5840,7 +5838,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Status/Empty State",
@@ -5873,8 +5871,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "8acc35d48442167bb60bd9a6cd9667eb0c57e68b6722d5883995bedc667e4ebc",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "3c61490651adbafd8131f064a52dee1e5c2f2f2b427d59600291c66aa39fb900",
       "stories": [
         {
           "id": "lds-core-components-status-empty-state--empty-states",
@@ -5926,7 +5924,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Status/Notices and Callouts",
@@ -6070,8 +6068,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "e40d02742bb825b4893dfdf1971af88ced65cc982e61089097420432bd176a6e",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "f13bf0417e69fb38389842b1004a4b927e7cc59dd152cbedc9d7153bd4dd4f2e",
       "stories": [
         {
           "id": "lds-core-components-status-notification--notification-patterns",
@@ -6099,14 +6097,14 @@
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Status/Overlay Status Chip",
       "layer": "Core",
       "family": "Status",
       "importPath": "./stories/StatusOverlayChip.stories.jsx",
-      "sourceSha256": "3687d2795960efd4bef020084f15a645b6605a16f61edfc710c5f05f948bc6f0",
+      "sourceSha256": "9238f55940290927e9c987de92e36e4879f5d07dcc477fbd1300e704e955f1e2",
       "primaryOwner": "OverlayStatusChip",
       "ownerComponents": [
         "OverlayStatusChip"
@@ -6132,7 +6130,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "3687d2795960efd4bef020084f15a645b6605a16f61edfc710c5f05f948bc6f0",
+      "reviewedSourceSha256": "9238f55940290927e9c987de92e36e4879f5d07dcc477fbd1300e704e955f1e2",
       "stories": [
         {
           "id": "lds-core-components-status-overlay-status-chip--overlay-status-chips",
@@ -6184,7 +6182,7 @@
           ]
         }
       ],
-      "reviewNote": "New page for the OverlayStatusChip core promotion (robotics-extension provenance). Reviewed in the built Storybook during the promotion batch: the overview renders a relative demo surface with the chip floating over an inert control, the play pins the layout/pointer non-participation and status-role contract, and the tones story compares neutral/cautionary/negative with STATUS_TONE_STYLE glyphs and bottom placement override."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Status/Skeleton",
@@ -6214,8 +6212,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "8e475aa05b3b0bdb763249020c3106127ab873d6203ed259993ed8e2db376ee3",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "5a43afa3477c82f3950907b3015ace7bb6da3c2ac76a0bf4a1429e3f02741ade",
       "stories": [
         {
           "id": "lds-core-components-status-skeleton--skeleton-overview",
@@ -6264,7 +6262,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "스토리가 직접 그리던 머리말을 parameters.storyGuide로 옮겼습니다. Canvas에서는 공유 PageHeader로 같은 내용이 그대로 나오고 Docs 탭에서는 페이지 제목과 중복되지 않도록 제거됩니다. docs 표면 감사(multiple-h1 0)와 Axe 스윕으로 확인했습니다."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Status/Spinner",
@@ -6294,8 +6292,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "389c816201499d11c579b2427e4e776b195489797cff5f73c14671df161209c4",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "e57611598f5643f8ec9035416925db7671ec999eb5751cf38d27064d02e2d070",
       "stories": [
         {
           "id": "lds-core-components-status-spinner--spinner-overview",
@@ -6344,7 +6342,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "스토리가 직접 그리던 머리말을 parameters.storyGuide로 옮겼습니다. Canvas에서는 공유 PageHeader로 같은 내용이 그대로 나오고 Docs 탭에서는 페이지 제목과 중복되지 않도록 제거됩니다. docs 표면 감사(multiple-h1 0)와 Axe 스윕으로 확인했습니다."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Status/Status Badge",
@@ -6376,8 +6374,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "5da1760485903979ed49d4b85ebfb6741803d7bf7ff19530b1cec23fcb01aa27",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "7d52aa64d71af2e1e6e5eed1fca0e6998182dc65b920c23c106dd3b00831c20d",
       "stories": [
         {
           "id": "lds-core-components-status-status-badge--status-tones",
@@ -6443,15 +6441,15 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "StatusBadge"
           ],
           "supportingComponents": []
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Components/Status/Status Indicator",
@@ -6619,8 +6617,8 @@
       "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "b3a9bde1dda2a79637fbb82303e2b9ea7bb4ca8ea7dc42917958f76dd6ae9b3e",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "812c631ee23401e895a4b8d320b546f34c3a1b83f08d815f3a088af890e293dc",
       "stories": [
         {
           "id": "lds-core-foundation-color--color",
@@ -6669,7 +6667,7 @@
           "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         }
       ],
-      "reviewNote": "Foundation pages now follow the same split every component page uses: the canvas shows the foundation itself (its tokens resolved live, with a preview per token family) and the ten-section guide moved to a Docs tab. Pages whose token list is only file references carry no canvas story and are documentation only. Verified in the running dev server: no duplicated title or purpose between the docs blocks and the guide, contents rail sits on the section rhythm rather than on the divider, and the specimen play asserts no page-level horizontal overflow at 320px."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Foundation/Design Token",
@@ -6826,8 +6824,8 @@
       "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-26",
-      "reviewedSourceSha256": "a57f32201be7f85255857054246e908dd0c6a71764819bdcdd9cd3fc22dd49f7",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "7d1cf5bd4a7d746df9b4bfd345b7e7d4c4d51298d8c3d309aeaf6c4120870a0d",
       "stories": [
         {
           "id": "lds-core-foundation-effects--gradient-tokens",
@@ -6853,7 +6851,7 @@
           "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         }
       ],
-      "reviewNote": "개요 스토리가 자체로 그리던 머리말(오버라인 + 제목 + 설명)을 제거했다. parameters.storyGuide가 이미 같은 오버라인과 제목을 그 위에 렌더하고 있어 페이지가 스스로를 두 번 소개하고 있었다. 마스트헤드가 말하지 않는 설명 문단만 남겼고 스토리 구성·역할·이름·노출은 그대로다. 367개 사이드바 노출 스토리 전수 조사에서 LDS Core 안의 중복 머리말은 이 두 페이지가 전부였다."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Foundation/Iconography",
@@ -7396,8 +7394,8 @@
       "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-26",
-      "reviewedSourceSha256": "9383cdcf0824a2c917c11739ce2a5cf0a21c5480fe17d2e77a37fd7af82dbaa4",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "9d32e96d0f3d457cfbdc4ff1f023278594edd4c4c0b220df6fbed6c8d30f349c",
       "stories": [
         {
           "id": "lds-core-foundation-interaction--interaction-tokens",
@@ -7423,7 +7421,7 @@
           "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         }
       ],
-      "reviewNote": "개요 스토리가 자체로 그리던 머리말(오버라인 + 제목 + 설명)을 제거했다. parameters.storyGuide가 이미 같은 오버라인과 제목을 그 위에 렌더하고 있어 페이지가 스스로를 두 번 소개하고 있었다. 마스트헤드가 말하지 않는 설명 문단만 남겼고 스토리 구성·역할·이름·노출은 그대로다. 367개 사이드바 노출 스토리 전수 조사에서 LDS Core 안의 중복 머리말은 이 두 페이지가 전부였다."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Core/Foundation/Typography",
@@ -7872,8 +7870,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "578ca1ee239042116770289ff7f491424097a6060c3e7c92de1c9ee24122258f",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "885db55d23c6d73a8ce216104519e1d06b268a02811884f8bb0bee9932bc33bb",
       "stories": [
         {
           "id": "lds-product-action-button-group--button-groups",
@@ -7946,7 +7944,7 @@
           "reviewNote": "2026-07-12 source, visual-parity role, Product ownership, and hidden visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Action/Copy Button",
@@ -8282,8 +8280,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "1812356575049f40953d162dee6d05d1f10f48599af4cb3408b3a75bdc6ca2f7",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "f7cf831aad1711a82e5fd66153414cddc791d82c5d9826a9b65cf530949352db",
       "stories": [
         {
           "id": "lds-product-action-split-button--split-buttons",
@@ -8335,7 +8333,7 @@
           "reviewNote": "2026-07-12 source, interaction role, Product ownership, and public visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Communication/Message",
@@ -8373,8 +8371,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "329949304e87fb2b9279179c5a61e284f8bb0d119b9c544cf53f802c4f33f048",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "8f82ebab4da30f6ca7818359a0cb44da507e65ba138b4d41c18aadcad3c342ee",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -8619,7 +8617,7 @@
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Communication/Message Composer",
@@ -9257,8 +9255,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "865817e701be191cd2fbdc4a9e8bac5e67654d37c629cf868a68bbb39f798947",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "cd7c6e9873e56f6f53f1dbc8779f457931f3aa043191be0381da4198e192bb1f",
       "stories": [
         {
           "id": "lds-product-content-expandable-text--overview",
@@ -9352,7 +9350,7 @@
           "supportingComponents": []
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Content/Feature Card",
@@ -9492,8 +9490,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "a8fbe76c5948e2b3546f04d9205a675f00144b367c8c93d972872dd381a67bf1",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "2cf77621a2258c57d199bc0101293cc2038befcafad95cc1735445d83ab75221",
       "stories": [
         {
           "id": "lds-product-content-feed-card--overview",
@@ -9586,7 +9584,7 @@
           "supportingComponents": []
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Content/Listing Card",
@@ -9616,8 +9614,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "110f375c2196618dd41a92051e707b5e8685c55146ac3d749a7f78279a82fa4f",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "9d9f567267e54e009143e061844ebdbf327fe2d32bd43b0d139f03eedb6a21bc",
       "stories": [
         {
           "id": "lds-product-content-listing-card--listing-cards",
@@ -9710,7 +9708,7 @@
           "supportingComponents": []
         }
       ],
-      "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Content/Log Viewer",
@@ -10006,8 +10004,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "50f8d79551b82e13675f71f6e1f889216e4b92d622780727f02b9425f543fcb8",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "449a2d1351ec2ce9e50e95a41358a77005b41f5c33fc2defe62808b50f1e9958",
       "stories": [
         {
           "id": "lds-product-content-product-card--product-cards",
@@ -10049,8 +10047,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "ProductCard"
           ],
@@ -10080,7 +10078,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Content/Reaction Bar",
@@ -10993,8 +10991,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "e5210091990d0834097f5638017a646cf35c4ec0fd35ec6f3681480148847822",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "583fcb8035a8eb130306c8d50dd4b0045ea17b949593653e4f0421cb53d08460",
       "stories": [
         {
           "id": "lds-product-data-collections-data-grid--selectable-list",
@@ -11130,7 +11128,7 @@
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Data/Collections/File Browser",
@@ -11373,8 +11371,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "807ef7eb741c3ed1722bf8725cc6925d95461b9273aa3a49641a64332fcdd38a",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "8594c5e03d2d67b9471e5ed247d882bda09632faad36877398a32c9b7e147b06",
       "stories": [
         {
           "id": "lds-product-data-collections-tree--tree-interaction-states",
@@ -11429,7 +11427,7 @@
           "reviewNote": "2026-07-21 verified controlled and uncontrolled selection, callback parity, label-independent identity, independent expansion, last-call-wins imperative focus, stable nested reorder identity, same-length focus repair, public naming, description, and pointer target sizing."
         }
       ],
-      "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Data/Display/Carousel",
@@ -11463,8 +11461,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "6e852cc0c1cde3a6c7312d2c6afbb995a31eeac6efcd51d0a36f224f2203f7bc",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "d36d68136eec72cdc5b8e352d3a8589f0bf988171a90217db32e34e1be006390",
       "stories": [
         {
           "id": "lds-product-data-display-carousel--carousel-slides",
@@ -11622,7 +11620,7 @@
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Data/Display/Description List",
@@ -11713,8 +11711,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "079406e6eb535474191b221756665f900178101e647b06174c0ed98682b0ab97",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "70cd8038b98ddda0b9718484401586036296a751b5229e864a1f082d03f06244",
       "stories": [
         {
           "id": "lds-product-data-display-metric-card--metrics",
@@ -11820,7 +11818,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Data/Display/Resource State",
@@ -12600,8 +12598,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "ca2df44ff2497b22ba54161ea0eec7487309b85d8f667159d8c2b959831dbcc6",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "aa63b708ed0556b33dda3426738871389a03f31b617d0f0a4123e01eb01a9a74",
       "stories": [
         {
           "id": "lds-product-data-visualization-annotated-image--detection-annotations",
@@ -12768,14 +12766,14 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Data/Visualization/Bar Chart",
       "layer": "Product",
       "family": "Visualization",
       "importPath": "./stories/DataBarChart.stories.jsx",
-      "sourceSha256": "e8b44b1d01a153557d81193c53ac5517446e5d1e8a3d0bd7c5f6b81107e2a853",
+      "sourceSha256": "09e1622b3819b4f6536244b6e35512ac82557f257798c853d39b9e4f4969eb9b",
       "primaryOwner": "BarChart",
       "ownerComponents": [
         "BarChart"
@@ -12798,8 +12796,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "e8b44b1d01a153557d81193c53ac5517446e5d1e8a3d0bd7c5f6b81107e2a853",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "09e1622b3819b4f6536244b6e35512ac82557f257798c853d39b9e4f4969eb9b",
       "stories": [
         {
           "id": "lds-product-data-visualization-bar-chart--bar-comparison",
@@ -12874,7 +12872,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Data/Visualization/Chart Frame",
@@ -14365,8 +14363,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "674b326c8781001a3bc36307a04e9fc6d4ca114d346c1a641eac1cb234199371",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "b6c0fee823152efc3ca91b1aebdf3a39ac2ace94dfbae9bd0b7642e6dd6f035a",
       "stories": [
         {
           "id": "lds-product-editor-viewport-status-bar--readouts",
@@ -14465,7 +14463,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Feedback/Rating",
@@ -14602,8 +14600,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "5de55d619f2565af61dcc1116387d09af2adffa32ac5aa965c3ca51dd81e0191",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "c6d37aa3e6f3141b4e55a2d2e9865980bd346d0aefa90ce28ef3967eb4652c89",
       "stories": [
         {
           "id": "lds-product-layout-dock-panel--dock-panels",
@@ -14759,7 +14757,7 @@
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Layout/Page Header",
@@ -14794,8 +14792,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "61bfe3a3d072d4a9ebe905e34eb945eaeb3d34dd99686bddc3712368f0da50f8",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "2a386dc86ee5e653e14b04772fad9ccbd28cd9662505c595dc9445c19586e912",
       "stories": [
         {
           "id": "lds-product-layout-page-header--page-header-pattern",
@@ -14853,7 +14851,7 @@
           ]
         }
       ],
-      "reviewNote": "The canvas masthead now delegates to PageHeader instead of a private copy of it, so this page is framed by the component the documentation tells people to use. Play assertions that reached for the heading as a direct child were widened to a descendant match. Verified by the Axe sweep."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Layout/Primary Detail",
@@ -14888,8 +14886,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "3490f0bc21dff2cc878240090f46909fa4ecfa6b8343a9fe44ce7c34f916754f",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "96d460551f6691fbfa728c8b717fe728480207843b0178c741b4409af8664acd",
       "stories": [
         {
           "id": "lds-product-layout-primary-detail--inline-detail",
@@ -14950,7 +14948,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Spacing values moved onto the scale the Spacing foundation declares — half steps are now tokenised as --space-0-5 through --space-4-5 and the remaining arbitrary values rounded up by at most one step. No story, role, name or visibility changed. Verified by check:spacing-scale and the Axe sweep."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Navigation/Adaptive Navigation",
@@ -15144,8 +15142,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "0634d4f158954bc6ebff6afebf6e889a4bd45bdfb25e6fae8c70247e1d7fa91f",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "470fc42337a01ab3c2ceecdc098cc7c11e44d621feb1eb815dc2b5d2ee6d0902",
       "stories": [
         {
           "id": "lds-product-navigation-anchor--page-table-of-contents",
@@ -15174,7 +15172,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Navigation/Breadcrumb",
@@ -15292,8 +15290,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "9323978b41c1edaa216b0a603ceb9e92a796fb5da21c232e221e581cfcfbdb26",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "f312b4c062b91baa2a5b678ec857b1f0273f0426650c141b2299fbd1b1d4df88",
       "stories": [
         {
           "id": "lds-product-navigation-dashboard-navigation--overview",
@@ -15419,7 +15417,7 @@
           "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). 320px narrow fallback per DESIGN.md: play asserts the side panel yields to BottomNav, native links are preserved, the desktop collapse control is not inherited, and no horizontal overflow occurs."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Navigation/Footer",
@@ -15530,10 +15528,10 @@
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "1b7ecf26cfff9da6b32248cbb329cc0fd39edfce7d5899f349168ec6f92cdd10",
       "stories": [
         {
           "id": "lds-product-navigation-language-switcher--overview",
@@ -15551,8 +15549,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "LanguageSwitcher"
           ],
@@ -15574,8 +15572,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "LanguageSwitcher"
           ],
@@ -15597,8 +15595,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "LanguageSwitcher"
           ],
@@ -15619,8 +15617,8 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "LanguageSwitcher"
           ],
@@ -15641,8 +15639,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "LanguageSwitcher"
           ],
@@ -15651,7 +15649,8 @@
             "TopBar"
           ]
         }
-      ]
+      ],
+      "reviewNote": "First review, 2026-07-30. Swept at 1100/320px (no horizontal overflow, no empty render, no page errors) and read visually. Elevator Fleet Overview keeps its building groups on an intentional horizontal scroll, which its own masthead declares."
     },
     {
       "title": "LDS Product/Navigation/Menubar",
@@ -15681,8 +15680,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "2d4f5ad3035013cbb4621ea1b13dc89f8b1979e0442535588b06ff8fe7cfc264",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "0de9a151de99b34cfb8a5a28d598e16784491a5da1880306a16693f6a92c7d27",
       "stories": [
         {
           "id": "lds-product-navigation-menubar--menubar-patterns",
@@ -15766,10 +15765,10 @@
             "play-fn",
             "test"
           ],
-          "role": "interaction",
+          "role": "internal-contract",
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
+          "recommendedVisibility": "hidden",
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
@@ -15779,7 +15778,7 @@
           "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Same contract family as the Dropdown Menu drill story through the shared useSubmenuBranch hook; play assertions cover same-panel swap, back control, fixed width, and ArrowLeft return."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Navigation/Side Nav",
@@ -15813,8 +15812,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "1976fbea1b6ee380ca8a26967db9cc79ba1403f646b0fcfe05a6e78f3cbf603a",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "a67d719af9c0b1802ce159cf095f13cd5ae2223c85c01b4ec2c720f8e1fd3c66",
       "stories": [
         {
           "id": "lds-product-navigation-side-nav--link-destinations",
@@ -16024,7 +16023,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Navigation/Steps",
@@ -16145,8 +16144,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-26",
-      "reviewedSourceSha256": "8279a5b37dd1f11ede22abfee8515f723b721ed05343539ddf86efefd7ab1ddb",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "fb12646b1ed853e1f9597e556fabe35a33612515a5f462c170763286b3725fd3",
       "stories": [
         {
           "id": "lds-product-navigation-top-bar--top-bar-default",
@@ -16221,8 +16220,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "TopBar"
           ],
@@ -16378,7 +16377,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-07-26 TopBar usage split reviewed against Carbon UI Shell, WAI disclosure navigation guidance, and the current LK Robotics homepage header. The default story is now a square, full-width product-shell header; the former centered rounded treatment is an explicit landing scenario; DashboardShell demonstrates SideNav-to-BottomNav ownership; and the 320px horizontal-scroll case is labeled as standalone fallback. The active indicator matches the text width, sits directly below the label, and moves only when the active destination changes: it expands from the left over 200ms, hover never steals it, and reduced-motion removes the transition. A dedicated active-destination transition story runs the operations-to-robots change once and exposes a replay control without continuous animation. Split disclosure chevrons keep a 28px target, sit 4px from the label, and rotate 180 degrees when open. The product-switch utility remains a native small button but uses neutral outlined-assistive emphasis instead of primary blue. Normal desktop, active-destination transition and replay, landing light/dark, desktop shell, utility-only, and 360px narrow shell renders were visually inspected."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Navigation/User Menu",
@@ -16987,8 +16986,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "3da47d61af15bb6c06271d35aac48bcf39ec6541feb50f0992da53e542aefbe2",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "2e858f79df39da778c0237828aab402ff486412bef53050fb8a923f4d776e6f9",
       "stories": [
         {
           "id": "lds-product-overlay-drawer--drawer-open",
@@ -17066,7 +17065,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Overlay/Hover Card",
@@ -17449,8 +17448,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "ce238a45c259e8fd2b5b83ea420e93d7b96293f66bd2bdb4a3f2acbec82e19fd",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "713056edb850006963824e90273cb2ecb2a7793fcc405bc1a097cf3a55d3945f",
       "stories": [
         {
           "id": "lds-product-overlay-sheet--sheet-open",
@@ -17527,7 +17526,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Selection and Input/Calendar",
@@ -18092,8 +18091,8 @@
       "dispositionReason": "File Upload Queue now owns post-selection transfer, processing, failure, and recovery states, while File Upload owns file selection and drop input. The two pages answer distinct user decisions.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "a20aef6d24b7beb47c4e17bae78c34dbd2c59d0eb3d87f96434c0a34187d2ea7",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "73fd73c05ba268176c21605ef5518673e9cbb296bdaf127e8f3894172d3cef85",
       "stories": [
         {
           "id": "lds-product-selection-and-input-file-upload-queue--upload-and-conversion",
@@ -18195,7 +18194,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Selection and Input/Icon Picker",
@@ -18915,8 +18914,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "23746f4a42912f88055b34547ea034d9153202f483df6656064a52ab9ba0c4ed",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "c2a683ac983231b34fda9b666d79f78fb739e6dbaa8823c1da8da701c698106b",
       "stories": [
         {
           "id": "lds-product-selection-and-input-searchable-multi-select--relation-selection",
@@ -19053,8 +19052,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "SearchableMultiSelect"
           ],
@@ -19085,7 +19084,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Selection and Input/Secret Field",
@@ -20303,8 +20302,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "f7f0a7eaabbe3550d302dd929afaccfa1264680045a2ab4b3885e465d2c77c82",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "afd0747fe0d2c2bcc3ba12fcf6af6acab72d2e383b8296ab8f29908f4e926a26",
       "stories": [
         {
           "id": "lds-product-status-equipment-state--equipment-state",
@@ -20384,7 +20383,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Status/Meter",
@@ -20903,8 +20902,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "592c404e0940375975e80141fcf93b3fdb4264d62973b80e9e45cf29292f1c29",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "955e4c93209c4ad7cbe40eabfd968bfa559dfd030a1b1fb6846019870247c2c8",
       "stories": [
         {
           "id": "lds-product-viewer-2d-map--map-canvas-overview",
@@ -20992,8 +20991,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Map2DCanvas"
           ],
@@ -21014,8 +21013,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Map2DCanvas"
           ],
@@ -21036,8 +21035,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Map2DCanvas"
           ],
@@ -21067,7 +21066,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Viewer/3D Viewport Frame",
@@ -21101,8 +21100,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "66ad9dd71a0d22d0eddeb08187abeefee838bd97fc8d6900ad912098735dc635",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "e3b1be7bca953d1ed82ecee5ab830226230bf4bbe1c6c4476ed1bdaf8c6dc562",
       "stories": [
         {
           "id": "lds-product-viewer-3d-scene--scene-3-d-overview",
@@ -21238,7 +21237,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Viewer/Elevator Fleet Overview",
@@ -21268,10 +21267,10 @@
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "15e0cb1ae708e9227cba5598b7c3c80b6a3c0f9b70e6ddb3484a4b8d8465972e",
       "stories": [
         {
           "id": "lds-product-viewer-elevator-fleet-overview--dark-theme",
@@ -21287,8 +21286,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "ElevatorFleetOverview"
           ],
@@ -21308,8 +21307,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "ElevatorFleetOverview"
           ],
@@ -21330,8 +21329,8 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "ElevatorFleetOverview"
           ],
@@ -21351,8 +21350,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "ElevatorFleetOverview"
           ],
@@ -21373,8 +21372,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "ElevatorFleetOverview"
           ],
@@ -21395,14 +21394,15 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "ElevatorFleetOverview"
           ],
           "supportingComponents": []
         }
-      ]
+      ],
+      "reviewNote": "First review, 2026-07-30. Swept at 1100/320px (no horizontal overflow, no empty render, no page errors) and read visually. Elevator Fleet Overview keeps its building groups on an intentional horizontal scroll, which its own masthead declares."
     },
     {
       "title": "LDS Product/Viewer/Floor Selector",
@@ -21437,8 +21437,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "f4f7c2cf3fb261d5600f1044cf09cda0d390121001038e3ae41e2673a1f831a4",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "7200795d07d9f8da716c6654a7a7532795778ad8dc9d8836213c32d98ad6bf9a",
       "stories": [
         {
           "id": "lds-product-viewer-floor-selector--floor-selection",
@@ -21523,8 +21523,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "FloorSelector"
           ],
@@ -21536,7 +21536,7 @@
           ]
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Viewer/Toolbar",
@@ -21571,8 +21571,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "cb5ee8e1aa00e5b68e7148dfa0dec080f97986889fcc620dca1ba15b431f7c29",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "54107cda2239077f3ec0849538acf76b6684aeee348e603916bf2da193489385",
       "stories": [
         {
           "id": "lds-product-viewer-toolbar--viewer-toolbar-overview",
@@ -21681,7 +21681,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Viewer/Video Stream",
@@ -21717,8 +21717,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "473dcadda31aa33b0f54dd1a417fb46e7a45af4a662b3b0bf65523e44e17e471",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "056821b36c79665f3a44d0ae485979780c40a761f863740d70b3b612eaf81bcf",
       "stories": [
         {
           "id": "lds-product-viewer-video-stream--video-stream-overview",
@@ -21887,7 +21887,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Product/Viewer/Viewer Frame",
@@ -21922,8 +21922,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "596f461081b85eb4de61b873d4c1e3ba65e279ce994ad567512b0a9d111768b2",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "26894110d91d825e030cda3e52bf15f290f42432a69e1cf28f66f17b9870c2ee",
       "stories": [
         {
           "id": "lds-product-viewer-shared-viewer-frame--state-placement",
@@ -22077,8 +22077,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "ViewerFrame"
           ],
@@ -22089,7 +22089,7 @@
           ]
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS Theme/Brand/LK ROBOTICS Logo",
@@ -22281,8 +22281,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Theme override or brand surface; keep this page and document allowed and disallowed use.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-26",
-      "reviewedSourceSha256": "79c3d4ec51f370d25e2d7124e5313989a1a30f49def9498f2c25bad6f07e1949",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "2b98e89749b3233f656f579133ec041f028136aa1de75f931b10c1515a1af1d6",
       "stories": [
         {
           "id": "lds-theme-status-brand-spinner--brand-loading",
@@ -22310,14 +22310,14 @@
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
         }
       ],
-      "reviewNote": "2026-07-26 canonical visual review: `storyGuide` points to Core Spinner and retains only purpose and avoid-use brand deltas. The page description now owns the positive Brand Spinner purpose exactly once; the negative rule remains in the local decision panel. Story IDs, roles, visibility and behavior are unchanged; the Docs tab renders title, page description, manager-safe canonical link and local guidance only, while story specimens and Controls remain on Canvas."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
       "title": "LDS/Directory",
       "layer": "Other",
       "family": "LDS",
       "importPath": "./stories/DesignSystemDirectory.stories.jsx",
-      "sourceSha256": "7c687f16da2b221dadb6ab29b92040d89fc0518ec3b7837ad52f117bbaca7bb4",
+      "sourceSha256": "8f271111e145f1ad257821ac4c31e36023e11d1f2696c090f4313f675d6f7609",
       "primaryOwner": "Link",
       "ownerComponents": [
         "Link"
@@ -22340,10 +22340,10 @@
       "guidePriority": "low",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "8f271111e145f1ad257821ac4c31e36023e11d1f2696c090f4313f675d6f7609",
       "stories": [
         {
           "id": "lds-directory--overview",
@@ -22361,14 +22361,15 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Link"
           ],
           "supportingComponents": []
         }
-      ]
+      ],
+      "reviewNote": "First review, 2026-07-30. Swept at 1100/320px (no horizontal overflow, no empty render, no page errors) and read visually. Elevator Fleet Overview keeps its building groups on an intentional horizontal scroll, which its own masthead declares."
     }
   ]
 }

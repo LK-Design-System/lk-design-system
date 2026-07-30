@@ -35,6 +35,7 @@
 | [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) | Storybook page ownership, role, visibility, naming 계약 |
 | [`STORYBOOK_MASTHEAD_COPY_CONTRACT.md`](STORYBOOK_MASTHEAD_COPY_CONTRACT.md) | Storybook Canvas masthead 카피의 작성 규칙과 Docs 본문과의 소유 경계 |
 | [`ROBOTICS_PATTERNS.md`](ROBOTICS_PATTERNS.md) | LK Robotics/Product 도메인 컴포넌트 경계와 상태 의미 |
+| [`EDITORIAL_METHODOLOGY.md`](EDITORIAL_METHODOLOGY.md) | 데이터로 주장을 만드는 절차(질문→주장→형태→강조→검증)와 집행 등급 |
 | [`AI_DESIGN_SYSTEM_GUIDE.md`](AI_DESIGN_SYSTEM_GUIDE.md) | AI가 사용하는 token·composition·copy 규칙 |
 | [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md) | editor/viewer layout의 독립 설계 근거와 제품 coverage mapping |
 | [`LOADING_PATTERN.md`](LOADING_PATTERN.md) | 로딩 요소 6종 사이의 선택·시간 기준·단계별 피드백을 중재하는 수평 패턴 가이드 |

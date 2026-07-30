@@ -29,12 +29,20 @@ const designSystems = [
     scope: '3D 도메인 UI',
   },
   {
-    name: 'LDS Infographics',
+    name: 'LDS Editorial',
     status: 'In development',
-    href: 'https://lk-design-system.github.io/lk-design-system-infographics/',
-    linkLabel: 'LDS Infographics 열기',
+    href: 'https://lk-design-system.github.io/lk-design-system-editorial/',
+    linkLabel: 'LDS Editorial 열기',
     external: true,
-    scope: '데이터 서사 · 주석 · 픽토그램',
+    scope: '데이터 서사 · 주석 · 픽토그램 (매체 중립)',
+  },
+  {
+    name: 'LDS Slides',
+    status: 'In development',
+    href: 'https://lk-design-system.github.io/lk-design-system-slides/',
+    linkLabel: 'LDS Slides 열기',
+    external: true,
+    scope: '발표 지오메트리 · 투사 스케일',
   },
 ];
 
@@ -118,22 +126,22 @@ export const Overview = {
   name: 'Design System Directory',
   parameters: storyDescription('LDS Core, LDS Robotics, 그리고 이후 공개될 LDS 제품군으로 이동하는 공통 시작 화면입니다.'),
   render: () => <DesignSystemDirectory />,
+  // Asserted over the registry rather than row by row: a family added to
+  // `designSystems` is covered the moment it is registered, so the directory
+  // cannot grow a row that quietly points nowhere.
   play: async ({ canvasElement }) => {
-    const core = canvasElement.querySelector('[data-design-system-row="LDS Core"] a');
-    const robotics = canvasElement.querySelector('[data-design-system-row="LDS Robotics"] a');
-    const threeD = canvasElement.querySelector('[data-design-system-row="LDS 3D"] a');
-    if (core?.getAttribute('href') !== designSystems[0].href) {
-      throw new Error('The LDS directory must link to the Core Storybook content.');
+    const rows = canvasElement.querySelectorAll('[data-design-system-row]');
+    if (rows.length !== designSystems.length) {
+      throw new Error(`Every registered LDS family needs a row; expected ${designSystems.length}, rendered ${rows.length}.`);
     }
-    if (robotics?.getAttribute('href') !== designSystems[1].href || robotics.getAttribute('target') !== '_blank') {
-      throw new Error('The LDS directory must link directly to the public Robotics Storybook.');
-    }
-    if (threeD?.getAttribute('href') !== designSystems[2].href || threeD.getAttribute('target') !== '_blank') {
-      throw new Error('The LDS directory must link directly to the public 3D Storybook.');
-    }
-    const infographics = canvasElement.querySelector('[data-design-system-row="LDS Infographics"] a');
-    if (infographics?.getAttribute('href') !== designSystems[3].href || infographics.getAttribute('target') !== '_blank') {
-      throw new Error('The LDS directory must link directly to the public Infographics Storybook.');
+    for (const system of designSystems) {
+      const link = canvasElement.querySelector(`[data-design-system-row="${system.name}"] a`);
+      if (link?.getAttribute('href') !== system.href) {
+        throw new Error(`The LDS directory must link directly to the public ${system.name} Storybook.`);
+      }
+      if (system.external && link.getAttribute('target') !== '_blank') {
+        throw new Error(`${system.name} is published separately, so its link must open in a new tab.`);
+      }
     }
   },
 };

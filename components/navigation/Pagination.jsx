@@ -100,6 +100,14 @@ export function Pagination({
         display: "inline-flex",
         alignItems: "center",
         justifyContent: variant === "minimize" ? "center" : "space-between",
+        // maxWidth alone never held: a non-wrapping flex row ignores it and
+        // spills its children instead, so an extended Pagination (page-size
+        // select + page list + counter + jump field) ran 575px wide inside a
+        // 360px viewport and pushed the next-page control off screen entirely —
+        // a lost control, not a cosmetic clip. Wrapping is what makes the
+        // maxWidth mean something; wide layouts are unaffected because rows
+        // only break when they no longer fit.
+        flexWrap: "wrap",
         gap: 16,
         maxWidth: "100%",
         fontFamily: "var(--font-sans)",
@@ -128,6 +136,10 @@ export function Pagination({
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
+          // The page list is the widest child and has to wrap for the same
+          // reason the root does — twelve page numbers plus both arrows do not
+          // fit a phone width on one line.
+          flexWrap: "wrap",
           gap: variant === "compact" ? 8 : 16,
           minWidth: 0,
         }}

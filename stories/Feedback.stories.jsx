@@ -279,8 +279,16 @@ export const AvatarPatterns = {
   },
 };
 
+/* Built from the parity fixture but rendered as a public comparison, so it
+   needs a public story's name and description — it kept the fixture's English
+   "Avatar Card" label and no description while a frozen visual-parity role in
+   the IA audit hid it from both contracts. */
 export const AvatarCard = {
   ...AvatarCardStory,
+  name: '사용법 · 원본 리소스와 렌더 결과 대조',
+  parameters: storyDescription(
+    '원본 이미지 리소스와 Avatar가 실제로 렌더한 결과를 나란히 놓고 비교합니다. 잘림·비율·배경 처리가 원본의 의도를 유지하는지, 좁은 폭에서 카드가 한 열로 접혀도 대조 관계가 읽히는지 확인하세요.',
+  ),
   render: () => (
     <main style={{ maxWidth: 920 }}>
       <AvatarResourceComparison />

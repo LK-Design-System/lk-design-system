@@ -218,7 +218,14 @@ function TreeNode({
           ? <Icon name="chevron-right-small" size={14} color="var(--color-semantic-label-alternative)" aria-hidden="true" style={{ transform: open ? 'rotate(90deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)', flexShrink: 0 }} />
           : <span aria-hidden="true" style={{ width: 14, flexShrink: 0 }} />}
         {node.icon}
-        <span style={{ display: 'grid', gap: 2, minWidth: 0, flex: 1 }}>
+        {/* A floor, not just minWidth:0. This column is the only flexible one
+            in the row (meta shrinks reluctantly, `end` not at all), so it
+            absorbed the entire deficit: in a 209px panel with two trailing
+            badges it collapsed to 33px and broke a one-line hint into six
+            fragments of two syllables each. The row's identity text is the last
+            thing that may be sacrificed — the deficit belongs on `meta`, which
+            already carries an ellipsis for exactly that. */}
+        <span style={{ display: 'grid', gap: 2, minWidth: '10ch', flex: 1 }}>
           <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {node.label}
           </span>

@@ -41,7 +41,7 @@ import {
 } from "./chunk-YWLV36JR.js";
 import {
   Pagination
-} from "./chunk-YH4LH5JH.js";
+} from "./chunk-BF4DVTER.js";
 import {
   Tabs
 } from "./chunk-4K3V45JC.js";

@@ -20,9 +20,9 @@
 
 - 공개 스토리: 451개
 - 숨김 스토리: 179개
-- 숨김 visual parity: 89개
-- 숨김 internal contract: 86개
-- 검토 완료 페이지 187/190개, 스토리 609/630개다. 변경된 기존 페이지의 stale source hash와 신규 스토리 검토는 감사 원장에 그대로 남겨 두며, `check:storybook-ia`가 소유권·공개 여부·이름·설명과 함께 회귀를 막는다.
+- 숨김 visual parity: 88개
+- 숨김 internal contract: 87개
+- 검토 완료 페이지 190/190개, 스토리 630/630개다. 변경된 기존 페이지의 stale source hash와 신규 스토리 검토는 감사 원장에 그대로 남겨 두며, `check:storybook-ia`가 소유권·공개 여부·이름·설명과 함께 회귀를 막는다.
 - Component 문서 시스템은 public component entry 182개와 named export 185개를 전수 추적하고, evidence-only 결정 가이드를 `docs/components/guides/*.md`와 `llms.txt`로 생성한다. Storybook의 Docs 탭에는 사용 판단 · Properties · Accessibility · Tokens만 렌더링한다. 전체 카탈로그와 플랫폼 현황은 Storybook 운영 화면이 아니라 생성 문서 `COMPONENT_REFERENCE.md`와 `PROGRESS_BOARD.md`가 소유한다.
 - 2026-07-26 Docs와 Canvas의 책임을 분리했다. Docs는 Storybook 제목·설명과 Foundation·Component 또는 Pattern의 결정 가이드만 싣고, `<DocsStory>`·`<Primary>`·`<Stories>`·`<Controls>`를 렌더링하지 않는다. 스토리 specimen, args, controls와 play lifecycle은 각 Canvas 엔트리에만 남는다. `check:docs-surface`는 165/165 Docs 경로를, 문장 hash 원장은 161개 primary story 설명을 검증한다.
 - 시각 specimen이 없는 문서 전용 Foundation은 sidebar에서 Docs를 정식 진입점으로 사용한다. `Design Token`은 저장된 이전 Canvas URL도 Docs로 정규화하고, 첫 화면에서 `Primitive → Semantic → Component → Runtime projection` 계층과 상황별 선택 기준을 먼저 보여 준다. 숨김 CSF story는 Autodocs 생성과 검증만 담당하며 직접 iframe에서는 정식 Docs 링크를 제공한다. Storybook의 제품 온보딩 체크리스트는 LDS 탐색과 경쟁하므로 manager에서 비활성화한다. 이 결정은 Storybook의 [docs-only tag 계약](https://storybook.js.org/docs/writing-stories/tags#docs-only-stories)과 [onboarding feature 설정](https://storybook.js.org/docs/api/main-config/main-config-features)을 따른다.

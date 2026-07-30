@@ -7860,6 +7860,7 @@
       ],
       "tokens": [
         "--color-semantic-primary-normal",
+        "--caption1-line",
         "--font-sans",
         "--color-semantic-label-alternative",
         "--label2-size",
@@ -7869,8 +7870,7 @@
         "--color-semantic-label-neutral",
         "--radius-md",
         "--dur-slow",
-        "--ease-out",
-        "--caption1-line"
+        "--ease-out"
       ],
       "externalReferences": [
         {

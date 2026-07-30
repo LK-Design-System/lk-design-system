@@ -1,13 +1,13 @@
-"use client";
-import {
-  Icon
-} from "./chunk-JNVDI5OO.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+var _chunkX5XHQEI5cjs = require('./chunk-X5XHQEI5.cjs');
 
 // components/data/Tree.jsx
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 function visibleItems(tree) {
-  return Array.from(tree?.querySelectorAll('[role="treeitem"]') ?? []);
+  return Array.from(_nullishCoalesce(_optionalChain([tree, 'optionalAccess', _ => _.querySelectorAll, 'call', _2 => _2('[role="treeitem"]')]), () => ( [])));
 }
 function focusTreeItem(item, setFocusKey) {
   if (!item) return;
@@ -36,7 +36,7 @@ function initialExpandedKeys(nodes, defaultExpanded) {
       const focusKey = internalNodeKey(node, path);
       const legacyValue = legacyExpansionValue(node);
       if (legacyValue != null && requested.has(legacyValue)) keys.push(focusKey);
-      visit(node.children ?? [], path);
+      visit(_nullishCoalesce(node.children, () => ( [])), path);
     }
   };
   visit(nodes);
@@ -48,7 +48,7 @@ function expandedValuesForKeys(nodes, expandedKeys, parentPath = [], values = []
     const key = internalNodeKey(node, path);
     const value = legacyExpansionValue(node);
     if (value != null && expandedKeys.has(key)) values.push(value);
-    expandedValuesForKeys(node.children ?? [], expandedKeys, path, values);
+    expandedValuesForKeys(_nullishCoalesce(node.children, () => ( [])), expandedKeys, path, values);
   }
   return values;
 }
@@ -61,7 +61,7 @@ function assertUniqueNodeIds(nodes, seen = /* @__PURE__ */ new Set()) {
       }
       seen.add(id);
     }
-    assertUniqueNodeIds(node.children ?? [], seen);
+    assertUniqueNodeIds(_nullishCoalesce(node.children, () => ( [])), seen);
   }
 }
 function findNodePath(nodes, targetId, ancestors = [], parentPath = []) {
@@ -70,7 +70,7 @@ function findNodePath(nodes, targetId, ancestors = [], parentPath = []) {
     const focusKey = internalNodeKey(node, path);
     if (nodeId(node) === targetId) return { focusKey, ancestors };
     const childPath = findNodePath(
-      node.children ?? [],
+      _nullishCoalesce(node.children, () => ( [])),
       targetId,
       [...ancestors, focusKey],
       path
@@ -98,18 +98,18 @@ function TreeNode({
 }) {
   const key = internalNodeKey(node, path);
   const id = nodeId(node);
-  const has = Boolean(node.children?.length);
+  const has = Boolean(_optionalChain([node, 'access', _3 => _3.children, 'optionalAccess', _4 => _4.length]));
   const open = has && (expandedSet.has(key) || previewSet.has(key));
   const disabled = Boolean(node.disabled);
-  const [hovered, setHovered] = React.useState(false);
-  const [focused, setFocused] = React.useState(false);
+  const [hovered, setHovered] = _react2.default.useState(false);
+  const [focused, setFocused] = _react2.default.useState(false);
   const selected = id != null && selectedKey === id;
   const activate = () => {
     setFocusKey(key);
     if (disabled) return;
     if (has) toggle(key, node);
     if (id != null) select(id);
-    onSelect?.(node);
+    _optionalChain([onSelect, 'optionalCall', _5 => _5(node)]);
   };
   const onKeyDown = (event) => {
     event.stopPropagation();
@@ -147,7 +147,7 @@ function TreeNode({
       focusTreeItem(target, setFocusKey);
     }
   };
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       role: "treeitem",
@@ -158,8 +158,8 @@ function TreeNode({
       "aria-level": level + 1,
       tabIndex: focusKey === key ? 0 : -1,
       "data-tree-key": key,
-      "data-tree-id": id ?? void 0,
-      "data-parent-key": parentFocusKey ?? void 0,
+      "data-tree-id": _nullishCoalesce(id, () => ( void 0)),
+      "data-parent-key": _nullishCoalesce(parentFocusKey, () => ( void 0)),
       onClick: (event) => {
         event.stopPropagation();
         activate();
@@ -186,7 +186,7 @@ function TreeNode({
       },
       style: { outline: "none" },
       children: [
-        /* @__PURE__ */ jsxs(
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             style: {
@@ -212,14 +212,14 @@ function TreeNode({
               transition: "background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
             },
             children: [
-              has ? /* @__PURE__ */ jsx(Icon, { name: "chevron-right-small", size: 14, color: "var(--color-semantic-label-alternative)", "aria-hidden": "true", style: { transform: open ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)", flexShrink: 0 } }) : /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { width: 14, flexShrink: 0 } }),
+              has ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "chevron-right-small", size: 14, color: "var(--color-semantic-label-alternative)", "aria-hidden": "true", style: { transform: open ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)", flexShrink: 0 } }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { width: 14, flexShrink: 0 } }),
               node.icon,
-              /* @__PURE__ */ jsxs("span", { style: { display: "grid", gap: 2, minWidth: 0, flex: 1 }, children: [
-                /* @__PURE__ */ jsx("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: node.label }),
-                node.description != null && /* @__PURE__ */ jsx("span", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption2-size)", lineHeight: 1.35, fontWeight: "var(--fw-medium)", overflowWrap: "anywhere" }, children: node.description })
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: 2, minWidth: "10ch", flex: 1 }, children: [
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: node.label }),
+                node.description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption2-size)", lineHeight: 1.35, fontWeight: "var(--fw-medium)", overflowWrap: "anywhere" }, children: node.description })
               ] }),
-              node.meta != null && /* @__PURE__ */ jsx("span", { style: { marginLeft: "auto", flex: "0 1 auto", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", fontWeight: "var(--fw-medium)" }, children: node.meta }),
-              node.end != null && /* @__PURE__ */ jsx(
+              node.meta != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { marginLeft: "auto", flex: "0 1 auto", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", fontWeight: "var(--fw-medium)" }, children: node.meta }),
+              node.end != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "span",
                 {
                   "data-tree-row-end": "",
@@ -232,7 +232,7 @@ function TreeNode({
             ]
           }
         ),
-        has && open && /* @__PURE__ */ jsx("div", { role: "group", children: node.children.map((child, index) => /* @__PURE__ */ jsx(
+        has && open && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "group", children: node.children.map((child, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           TreeNode,
           {
             node: child,
@@ -257,7 +257,7 @@ function TreeNode({
     }
   );
 }
-var Tree = React.forwardRef(function Tree2({
+var Tree = _react2.default.forwardRef(function Tree2({
   nodes = [],
   expandedIds,
   defaultExpanded = [],
@@ -273,23 +273,23 @@ var Tree = React.forwardRef(function Tree2({
   ...rest
 }, forwardedRef) {
   assertUniqueNodeIds(nodes);
-  const [internalExpanded, setInternalExpanded] = React.useState(() => new Set(initialExpandedKeys(nodes, defaultExpanded)));
-  const [preview, setPreview] = React.useState(() => /* @__PURE__ */ new Set());
-  const [focusKey, setFocusKey] = React.useState(() => nodes.length ? internalNodeKey(nodes[0], [0]) : "");
-  const [internalSelectedKey, setInternalSelectedKey] = React.useState(() => defaultSelectedId == null ? null : String(defaultSelectedId));
-  const [pendingFocusKey, setPendingFocusKey] = React.useState(null);
-  const treeRef = React.useRef(null);
+  const [internalExpanded, setInternalExpanded] = _react2.default.useState(() => new Set(initialExpandedKeys(nodes, defaultExpanded)));
+  const [preview, setPreview] = _react2.default.useState(() => /* @__PURE__ */ new Set());
+  const [focusKey, setFocusKey] = _react2.default.useState(() => nodes.length ? internalNodeKey(nodes[0], [0]) : "");
+  const [internalSelectedKey, setInternalSelectedKey] = _react2.default.useState(() => defaultSelectedId == null ? null : String(defaultSelectedId));
+  const [pendingFocusKey, setPendingFocusKey] = _react2.default.useState(null);
+  const treeRef = _react2.default.useRef(null);
   const isExpansionControlled = expandedIds !== void 0;
   const expandedSet = isExpansionControlled ? new Set(initialExpandedKeys(nodes, expandedIds)) : internalExpanded;
   const isSelectionControlled = selectedId !== void 0;
   const selectedKey = isSelectionControlled ? selectedId == null ? null : String(selectedId) : internalSelectedKey;
-  const select = React.useCallback((key) => {
+  const select = _react2.default.useCallback((key) => {
     if (!isSelectionControlled) setInternalSelectedKey(key);
-    onSelectedIdChange?.(key);
+    _optionalChain([onSelectedIdChange, 'optionalCall', _6 => _6(key)]);
   }, [isSelectionControlled, onSelectedIdChange]);
   const commitExpanded = (next) => {
     if (!isExpansionControlled) setInternalExpanded(next);
-    onExpandedIdsChange?.(expandedValuesForKeys(nodes, next));
+    _optionalChain([onExpandedIdsChange, 'optionalCall', _7 => _7(expandedValuesForKeys(nodes, next))]);
   };
   const toggle = (key) => {
     const next = new Set(expandedSet);
@@ -303,20 +303,20 @@ var Tree = React.forwardRef(function Tree2({
     else next.delete(key);
     return next;
   });
-  React.useEffect(() => {
+  _react2.default.useEffect(() => {
     if (!nodes.length) return;
     const items = visibleItems(treeRef.current);
     if (!items.some((item) => item.dataset.treeKey === focusKey)) {
-      setFocusKey(items[0]?.dataset.treeKey ?? "");
+      setFocusKey(_nullishCoalesce(_optionalChain([items, 'access', _8 => _8[0], 'optionalAccess', _9 => _9.dataset, 'access', _10 => _10.treeKey]), () => ( "")));
     }
   }, [expandedSet, focusKey, nodes]);
-  React.useEffect(() => {
+  _react2.default.useEffect(() => {
     if (pendingFocusKey == null) return;
     setPendingFocusKey(null);
     const item = visibleItems(treeRef.current).find((candidate) => candidate.dataset.treeKey === pendingFocusKey);
     focusTreeItem(item, setFocusKey);
   }, [expandedSet, nodes, pendingFocusKey]);
-  React.useImperativeHandle(forwardedRef, () => ({
+  _react2.default.useImperativeHandle(forwardedRef, () => ({
     focusItem(id, { reveal = false } = {}) {
       setPendingFocusKey(null);
       const targetId = String(id);
@@ -331,15 +331,15 @@ var Tree = React.forwardRef(function Tree2({
       focusTreeItem(visibleItem, setFocusKey);
     }
   }), [expandedSet, nodes]);
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "div",
     {
       ref: treeRef,
       role: "tree",
-      "aria-label": ariaLabel ?? htmlAriaLabel ?? (rest["aria-labelledby"] == null ? "Hierarchy" : void 0),
+      "aria-label": _nullishCoalesce(_nullishCoalesce(ariaLabel, () => ( htmlAriaLabel)), () => ( (rest["aria-labelledby"] == null ? "Hierarchy" : void 0))),
       style: { display: "grid", gap: "var(--space-0-5)", fontFamily: "var(--font-sans)", ...style },
       ...rest,
-      children: nodes.map((node, index) => /* @__PURE__ */ jsx(
+      children: nodes.map((node, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
         TreeNode,
         {
           node,
@@ -364,7 +364,7 @@ var Tree = React.forwardRef(function Tree2({
   );
 });
 
-export {
-  Tree
-};
-//# sourceMappingURL=chunk-2T3NSTNJ.js.map
+
+
+exports.Tree = Tree;
+//# sourceMappingURL=chunk-AQCJWRDR.cjs.map
