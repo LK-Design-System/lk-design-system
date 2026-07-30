@@ -172,6 +172,10 @@ export function Button({
      may not become an unlabeled grey pill mid-request. Activation semantics
      (aria-busy, aria-disabled, click guard, focus retention) are identical
      in both modes; only the presentation differs. */
+  /* Every aria attribute below must consume loadingActive, never the raw
+     `loading` prop: the prop can be the string "inline", and a truthy string
+     leaks verbatim into the attribute — aria-busy="inline" is not a boolean
+     the accessibility tree accepts. */
   const loadingActive = Boolean(loading);
   const loadingInline = loading === 'inline';
   const nativeDisabled = disabled || disable;
@@ -237,8 +241,8 @@ export function Button({
       disabled={as === 'button' ? nativeDisabled : undefined}
       type={as === 'button' ? (type ?? 'button') : undefined}
       aria-label={loading === true ? loadingLabel : ariaLabel}
-      aria-busy={loading || ariaBusy || undefined}
-      aria-disabled={ariaBlocked || loading || (as !== 'button' && disabledState) || undefined}
+      aria-busy={loadingActive || ariaBusy || undefined}
+      aria-disabled={ariaBlocked || loadingActive || (as !== 'button' && disabledState) || undefined}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
       onMouseLeave={(e) => { setHover(false); setPressed(false); onMouseLeave && onMouseLeave(e); }}
       onMouseDown={(e) => { if (!blocked) setPressed(true); onMouseDown && onMouseDown(e); }}
