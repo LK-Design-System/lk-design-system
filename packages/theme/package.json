@@ -1,6 +1,6 @@
 {
   "name": "@lk-robotics/lds-theme",
-  "version": "0.1.0-rc.2",
+  "version": "0.1.0-rc.3",
   "description": "LK brand, color, typography, and theme layer.",
   "type": "module",
   "main": "./dist/index.js",
@@ -18,7 +18,7 @@
     "tokens/*.css"
   ],
   "dependencies": {
-    "@lk-robotics/lds-core": "0.1.0-rc.2"
+    "@lk-robotics/lds-core": "0.1.0-rc.3"
   },
   "peerDependencies": {
     "react": ">=18 <20",

@@ -1,6 +1,6 @@
 {
   "name": "@lk-robotics/lds-core",
-  "version": "0.1.0-rc.2",
+  "version": "0.1.0-rc.3",
   "description": "Generic foundation and DOM UI for the LK ROBOTICS design system.",
   "type": "module",
   "main": "./dist/index.js",
