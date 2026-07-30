@@ -4,8 +4,8 @@ import path from 'node:path';
 
 const root = process.cwd();
 const vendoredRoboticsRelease = {
-  path: 'vendor/lk-robotics-lds-robotics-ui-0.1.0-rc.2.tgz',
-  sha256: 'ad69eec796b0dba5b001dc3d4d554aea17017d2a5e0f702f5f28c0585f423ff2',
+  path: 'vendor/lk-robotics-lds-robotics-ui-0.1.0-rc.3.tgz',
+  sha256: '011dc06b058efea94a58dc904dcebcb05379c003c3de40dcd39d15095d251216',
 };
 const workspacePackages = [
   { id: 'core', name: '@lk-robotics/lds-core', dependencies: [], resources: ['tokens', 'assets'] },

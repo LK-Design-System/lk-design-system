@@ -4,7 +4,7 @@
   "kind": "lds-robotics-external-public-surface",
   "package": {
     "name": "@lk-robotics/lds-robotics-ui",
-    "version": "0.1.0-rc.2",
+    "version": "0.1.0-rc.3",
     "repository": "LK-Design-System/lk-design-system-robotics"
   },
   "upstreamTokenDependencies": [

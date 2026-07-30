@@ -14,7 +14,7 @@
       "required": ["name", "version", "repository"],
       "properties": {
         "name": { "const": "@lk-robotics/lds-robotics-ui" },
-        "version": { "const": "0.1.0-rc.2" },
+        "version": { "const": "0.1.0-rc.3" },
         "repository": { "const": "LK-Design-System/lk-design-system-robotics" }
       }
     },
