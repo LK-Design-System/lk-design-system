@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Plan |
-| Status | Proposed — Robotics 내부 구현이 근거로 존재, 코어 편입 심사 대기 |
+| Status | Adopted — 0.1.0-rc.2에서 코어 Status 가족으로 편입 완료, Robotics는 rc.3 핀에서 소비 중 |
 | Owner | Design system owner |
 | Last reviewed | 2026-07-30 |
 | Source | `lk-design-system-robotics/src/components/robotics/_OverlayStatusChip.jsx` · `lk-design-system-robotics/docs/OVERLAY_STATUS_CHIP.md` |
