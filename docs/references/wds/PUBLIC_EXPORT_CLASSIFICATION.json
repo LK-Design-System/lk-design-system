@@ -601,7 +601,7 @@
     {
       "name": "Surface-anchored status overlay",
       "ownerLayer": "core",
-      "provenance": "robotics-extension",
+      "provenance": "wds-adjacent",
       "storyEvidence": [
         "stories/StatusOverlayChip.stories.jsx"
       ],
@@ -759,6 +759,68 @@
         "ManualControlSession",
         "RobotStatusCard",
         "TopicTree"
+      ]
+    },
+    {
+      "name": "Robotics fleet overview",
+      "ownerLayer": "robotics",
+      "provenance": "robotics-extension",
+      "wdsFamily": "Robotics extension",
+      "storyEvidence": [
+        "stories/RoboticsFleetOverview.stories.jsx"
+      ],
+      "exports": [
+        "FleetHealthSummary",
+        "FleetRobotRow",
+        "FLEET_ATTENTION_LEVELS",
+        "FLEET_AUTHORITY_STATES",
+        "FLEET_CAPABILITY_STATES",
+        "FLEET_CONTROL_STATES",
+        "FLEET_FRESHNESS_STATES",
+        "FLEET_MISSION_STATES",
+        "FLEET_OPERABILITY_STATES",
+        "FLEET_SAFETY_STATES"
+      ]
+    },
+    {
+      "name": "Robotics navigation coordinate and adapter contracts",
+      "ownerLayer": "robotics",
+      "provenance": "robotics-extension",
+      "wdsFamily": "Robotics extension",
+      "storyEvidence": [
+        "stories/RoboticsNavigationPathSystem.stories.jsx",
+        "stories/RoboticsNavigationPathSystemRules.stories.jsx",
+        "stories/RoboticsViewerNavigationViewer.stories.jsx"
+      ],
+      "exports": [
+        "NavigationCoordinateBoundary",
+        "NavigationCoordinateError",
+        "NavigationGraphError",
+        "NAVIGATION_COORDINATE_CONVENTION",
+        "NAVIGATION_GEOMETRY_SPACE",
+        "adaptRosOccupancyGrid",
+        "adaptRosPathToTrajectory",
+        "adaptRosPoseWithCovarianceStamped",
+        "adaptWorldLaneToLane",
+        "adaptWorldRobotPoseToPose",
+        "adaptWorldRouteToRoute",
+        "adaptWorldTrajectoryToTrajectory",
+        "assertNavigationFrameCompatible",
+        "assertNavigationMapGraph",
+        "classifyNavigationFreshness",
+        "compareNavigationStamps",
+        "covariance2dEllipse",
+        "createNavigationFrameRef",
+        "createNavigationMapTransform",
+        "createNavigationViewportTransform",
+        "isNavigationGeometryCompatible",
+        "isNavigationSourceCompatible",
+        "navigationAgeMilliseconds",
+        "navigationStampToMilliseconds",
+        "normalizeNavigationStamp",
+        "projectNavigationWorldPoints",
+        "quaternionToPlanarYaw",
+        "validateNavigationMapGraph"
       ]
     }
   ],

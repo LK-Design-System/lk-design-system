@@ -5,8 +5,16 @@ const root = process.cwd();
 const errors = [];
 const notes = [];
 const sourceOnly = process.argv.includes('--source-only');
-const releaseVersion = '0.1.0-rc.1';
-const externalRoboticsVersion = '0.1.0-rc.2';
+// Read, never restated. Both versions used to be literals here, and both went
+// stale the moment a release advanced the manifests without also editing this
+// file — which is exactly the drift this check exists to catch, reported
+// against the wrong side. The workspace root versions its packages (publish
+// policy asserts they match), and the external surface names the Robotics
+// release, so those two files are the sources and this one only compares.
+const releaseVersion = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8')).version;
+// Set from the external surface the first time it is read; the dependency
+// check below compares consumer manifests against whatever it names.
+let externalRoboticsVersion;
 const roboticsExternalSurfacePath = path.join(
   root,
   'docs',
@@ -111,8 +119,13 @@ async function readPublicEntry(file, label) {
 async function readExternalPublicEntry(file, label) {
   const surface = await readJson(file, label);
   if (!surface) return [];
-  if (surface.package?.name !== '@lk-robotics/lds-robotics-ui' || surface.package?.version !== externalRoboticsVersion) {
-    fail(`${label}: expected @lk-robotics/lds-robotics-ui@${externalRoboticsVersion}.`);
+  if (surface.package?.name !== '@lk-robotics/lds-robotics-ui') {
+    fail(`${label}: expected the external surface to name @lk-robotics/lds-robotics-ui.`);
+    return [];
+  }
+  externalRoboticsVersion = surface.package?.version;
+  if (!externalRoboticsVersion) {
+    fail(`${label}: external surface must pin a Robotics release version.`);
     return [];
   }
   const rows = [];
