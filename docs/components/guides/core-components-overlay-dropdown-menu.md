@@ -22,7 +22,6 @@
 - React Aria Menu — 복합 menu의 방향키 이동, 명령/선택 item 역할, disabled item 제외를 따릅니다. WDS의 normal/radio/checkbox 시각 축은 변경하지 않습니다.
 - Floating UI flip, shift, size — preferred bottom을 우선하고 공간이 없으면 top으로 flip한 뒤 viewport 16px 안으로 shift하고, 남은 높이는 scrollable menu region의 max-height로 사용합니다.
 - Menubar의 persistent horizontal top-level chrome은 포함하지 않고 단일 trigger 관계만 유지합니다.
-- LK Control Full Daedeok — 93802fc2aa5d29f930380ae58d51dcb68322b5e7, frontend/src/views/user/index.jsx (8912b51c6eb612bd2beb2ed0206ee78ae6f03f2d): 확인된 MenuItem은 form Select option이므로 command DropdownMenu로 대체하지 않으며 not applicable입니다.
 
 ## Anatomy
 
@@ -90,7 +89,6 @@
 
 - menuActionArea는 서버 반영 비용이 크거나 여러 설정을 원자적으로 확정해야 하는 명시적인 staged workflow에서만 onCancel·onApply 중 제공된 실제 동작을 Cancel/Apply 버튼으로 만듭니다. 단순한 다중 선택이나 열기·복제·삭제처럼 선택 즉시 실행되는 메뉴에는 사용하지 않습니다. 기본 문구는 cancelLabel="취소", applyLabel="적용"이며 제품 문맥에 맞게 바꿀 수 있습니다. 콜백이나 custom action이 없으면 무동작 버튼을 만들지 않습니다.
 - Carbon Menu와 Menu Button — menu item 높이를 24/32/40/48px size 축으로 관리하고, 짧은 메뉴는 최소 160px에서 시작해 긴 label에 따라 최대 288px까지 확장합니다. LDS는 14/20px·40px을 desktop default로 두고 32/48px을 compact/comfortable density로 분리하며, 기존 LDS 리듬에 맞춰 적응형 폭을 176–320px로 조정합니다.
-- LK Context Hub — de124084b7e50049350a46f92c4ea4476269c58c, src/app/confluence/page.tsx (5d40f347f4b391510ac8ce4a60d65c18a27214cc): 표 행의 이름 변경·동기화 제외·삭제 메뉴는 normal DropdownMenu와 danger item 조합으로 supported by composition입니다. 실제 rename, exclude, delete 상태와 확인 절차는 제품이 소유합니다.
 
 ## Accessibility
 

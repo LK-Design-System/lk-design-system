@@ -69,8 +69,8 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 
 - Open-RMF RobotState: robot mode, battery, location과 message sequence를 독립 필드로 제공한다. 연결만으로 telemetry freshness나 robot health를 추론하지 않는다.
 - Kubernetes Pod Conditions: Unknown, transition time, reason, message를 condition evidence로 분리한다. connected를 복합 ready로 승격하지 않고 freshness/reason을 별도 evidence로 둔다.
-- LK Context Hub — not applicable. revision de124084b7e50049350a46f92c4ea4476269c58c, src/components/chat/PortalChatPanel.tsx의 provider availability는 MQTT/rosbridge transport truth가 아니므로 ConnectionBadge로 표현하지 않는다.
 - 보이는 라벨이 기본이며 bar 수나 색만으로 상태를 전달하지 않는다.
+- LK Robotics Extension. MQTT, rosbridge, WebSocket 같은 transport 연결 사실을 신호 막대와 짧은 라벨로 표시한다. 연결 상태만 소유하며 데이터 freshness, 장비 health, operability, command eligibility, control authority를 추론하지 않는다.
 
 ## Accessibility
 

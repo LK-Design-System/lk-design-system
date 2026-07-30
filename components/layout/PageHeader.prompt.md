@@ -29,4 +29,4 @@
 - [Shopify Page](https://shopify.dev/docs/api/app-home/web-components/layout-and-structure/page)와 [Atlassian Page Header](https://atlassian.design/components/page-header/)도 page heading, breadcrumb, page-wide actions를 화면 헤더의 핵심 책임으로 둡니다.
 - [PatternFly Page Header](https://www.patternfly.org/component-groups/content-containers/page-header/)는 title·subtitle·label·action의 로컬 콘텐츠 헤더입니다. [PatternFly Masthead](https://www.patternfly.org/components/masthead/design-guidelines/)는 logo·global navigation·utility를 가진 전역 셸이므로 레코드 정체성 이름으로 혼용하지 않습니다.
 - [WCAG 2.2 Reflow](https://www.w3.org/TR/WCAG22/#reflow)에 맞춰 320 CSS px 상당의 좁은 폭에서 페이지 chrome이 양방향 스크롤을 요구하지 않도록 본문과 actions를 재배치합니다.
-- [WAI Landmarks Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/)의 고수준 구조 원칙에 따라 PageHeader는 `main` 안의 로컬 `<header>`이며, TopBar의 전역 banner나 Storybook 설명 chrome을 대체하지 않습니다.
+- [WAI Landmarks Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/)의 고수준 구조 원칙에 따라 PageHeader는 `main` 안의 로컬 `<header>`이며, TopBar의 전역 banner나 문서 페이지의 설명 영역을 대체하지 않습니다.

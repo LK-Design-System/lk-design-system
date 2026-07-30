@@ -16,8 +16,7 @@
 
 - Vantage GALileo Lobby Monitoring: 엘리베이터 group에서 car position, direction, door state, service mode와 call을 함께 보여 줍니다. 이 컴포넌트는 개요에 필요한 position/direction/status만 남기고 call 입력과 service control은 제품 영역으로 제외합니다.
 - Vantage NEXUS Position Indicator: floor position, direction, door zone과 층 중심으로부터의 상대 위치를 구분합니다. 첫 계약은 discrete floor만 지원하며 between-floor distance와 door-zone calibration은 telemetry 제품 계약이 확인되기 전까지 의도적으로 제외합니다.
-- LK Web Viz (a984def117c05acd213f494cbb8a42e990595505): not applicable for the pinned source; elevator-fleet use remains unverified. pinned dashboard에는 로봇·연결 live truth는 있지만 다중 건물 엘리베이터 fleet가 없습니다. Web Viz가 사용한다면 polling, stale 판정, building grouping과 detail navigation은 제품이 소유합니다.
-- LK Control Full Daedeok (93802fc2aa5d29f930380ae58d51dcb68322b5e7): supported by composition for equipment overview anatomy only. pinned supervision source는 설비 identity/status/freshness의 필요를 확인하지만 다중 건물 elevator telemetry는 확인하지 못했습니다. LDS는 projection을 제공하고 Control은 truth, alert policy, permissions와 command를 소유합니다.
+- 기준 revision은 docs/references/product-frontends/COVERAGEAUDIT.json의 기존 pin을 사용합니다.
 
 ### 사용하지 않음
 

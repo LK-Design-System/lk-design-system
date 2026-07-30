@@ -19,7 +19,7 @@
     "제목은 사용자가 수행하는 업무 또는 화면을 가리킵니다(예: “사용자 관리”). 사람·로봇·주문처럼 대상 자체를 식별하는 visual·이름·인증 배지·스탯·대상 액션 묶음은 RecordHeader를 사용합니다."
   ],
   "avoidWhen": [
-    "WAI Landmarks Pattern의 고수준 구조 원칙에 따라 PageHeader는 main 안의 로컬 이며, TopBar의 전역 banner나 Storybook 설명 chrome을 대체하지 않습니다."
+    "WAI Landmarks Pattern의 고수준 구조 원칙에 따라 PageHeader는 main 안의 로컬 이며, TopBar의 전역 banner나 문서 페이지의 설명 영역을 대체하지 않습니다."
   ],
   "anatomy": [
     {

@@ -90,7 +90,14 @@ function extractPrompt(prompt) {
   const codeExamples = [...prompt.matchAll(/```(?:jsx|tsx)?\s*([\s\S]*?)```/g)]
     .map((match) => match[1].trim())
     .filter(Boolean);
-  const withoutCode = prompt.replace(/```[\s\S]*?```/g, '\n');
+  // The product workflow gate records which product revisions and files
+  // justified the component — provenance for maintainers, not guidance. The
+  // parser was section-blind, so those bullets joined the same pool as design
+  // rules and the widest net (useKeywords) fished them into the public "when to
+  // use" list, publishing repository paths and commit SHAs to readers.
+  const withoutCode = prompt
+    .replace(/```[\s\S]*?```/g, '\n')
+    .replace(/^##\s+Product workflow gate\s*$[\s\S]*?(?=^##\s|\z)/gim, '\n');
   const blocks = withoutCode
     .split(/\n\s*\n/)
     .map(compactText)
@@ -467,12 +474,17 @@ function guideFromPage(page, entriesByExport, sourceDetails, tokenMap) {
   // A block that is a markdown list collapses to "- a - b - c", which is the bullet pass's output
   // run together. Those items are already in the pool one by one, so the flattened copy only ever
   // reprints them under a second heading.
+  // A line carrying a commit SHA is provenance by construction — it records the
+  // product revision that justified a decision. Several prompts keep such
+  // citations outside the gate section, and the widest extraction net published
+  // them as public guidance complete with repository paths.
+  const isProvenance = (line) => /\b[0-9a-f]{40}\b/.test(line);
   const allPromptLines = unique([
     ...(canonicalSlug ? evidenceSentences(storyGuide.title) : []),
     ...(canonicalSlug ? evidenceSentences(storyGuide.description) : []),
     ...prompt.bullets,
     ...prompt.blocks.filter((block) => !/^-\s/.test(block)),
-  ]);
+  ].filter((line) => !isProvenance(line)));
   // Extraction runs most-specific first so a line lands in the section that actually describes it:
   // one naming `aria-*` is an accessibility rule, not a "when to use" rule. `useKeywords` is by far
   // the widest net, so it fishes last, from what the specific sections left behind.

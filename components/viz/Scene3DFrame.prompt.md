@@ -35,4 +35,4 @@ Use it for point clouds, digital twins, WebGL scenes, or React Three Fiber outpu
 
 Classification and evidence are documented in [`ViewerFrame.prompt.md`](./ViewerFrame.prompt.md). The structure follows the official [NVIDIA Omniverse viewport controls](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/controls.html) and [Unity Scene view navigation](https://docs.unity3d.com/Manual/SceneViewNavigation.html), while [Unity Scene view draw modes](https://docs.unity3d.com/Manual/GIVis.html) support the conclusion that viewing mode and diagnostic readability—not a permanently dark palette—define the reusable 3D contract. These patterns are adapted to LDS spacing, typography, icons, tokens, and toolbar behavior.
 
-Product Storybook은 실제 point cloud나 WebGL 장면을 모사하지 않고 renderer slot과 frame chrome만 보여줍니다. 실제 3D geometry, depth, picking, camera semantics와 renderer lifecycle은 LDS3D 또는 애플리케이션이 소유합니다.
+이 계층은 실제 point cloud나 WebGL 장면을 모사하지 않고 renderer slot과 frame chrome만 보여줍니다. 실제 3D geometry, depth, picking, camera semantics와 renderer lifecycle은 LDS3D 또는 애플리케이션이 소유합니다.

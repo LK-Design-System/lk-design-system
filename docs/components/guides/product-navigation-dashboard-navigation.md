@@ -56,8 +56,6 @@
 ## Behavior and interaction
 
 - Carbon UI shell usage — 지속적인 header, 선택적인 left panel, product→global 순서를 분리하고 좁은 폭에서는 header link를 left navigation으로 이동합니다. LDS 셸도 header와 제품 탐색을 별도 슬롯으로 유지합니다.
-- LK Web Viz a984def117c05acd213f494cbb8a42e990595505 — 고정 frontend의 dashboard는 로고 TopBar, 연결 상태, 로봇 카드와 메뉴 launcher를 사용합니다. header-first와 Card/Status 조합은 supported by composition이며 SideNav·KPI·표·차트는 이 화면에 not applicable입니다.
-- LK Control Full Daedeok 93802fc2aa5d29f930380ae58d51dcb68322b5e7 — 고정 header, docked/temporary drawer, monitoring·status·chart·table은 supported by composition입니다. mobile drawer coordination은 gap이며 지도·영상·telemetry truth·위험 action lifecycle은 제품이 소유합니다.
 - 의도적 제외: 라우터 인스턴스, 인증·권한 판정, drawer open state, URL 동기화, 데이터 새로고침, 사용자별 셸 저장은 제품이 소유합니다. DashboardShell은 슬롯 배치와 landmark, skip link, 반응형 전환만 소유합니다.
 
 ## 정량 규칙
@@ -81,7 +79,6 @@
 
 - header-first: TopBar가 실제 LK Lockup과 제품 이름을 소유하고 SideNav는 로컬 목적지만 제공합니다.
 - side-first: SideNav header가 Lockup과 제품 이름을 소유하고 TopBar는 workspace/project 맥락과 검색·알림·도움말 같은 전역 utility만 제공합니다.
-- LK Context Hub de124084b7e50049350a46f92c4ea4476269c58c — 실제 logo가 있는 고정 SideNav와 프로젝트/attention collection은 side-first와 DashboardGrid/DataGrid 조합으로 supported by composition입니다. narrow navigation은 gap이며 route·권한·query·저장은 제품이 소유합니다.
 
 ## Accessibility
 

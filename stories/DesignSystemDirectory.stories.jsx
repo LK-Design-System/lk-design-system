@@ -110,11 +110,11 @@ const meta = {
       storyId: 'lds-directory--overview',
       eyebrow: 'LDS',
       title: 'Design System Directory',
-      description: 'LDS 제품군별 Storybook과 문서로 이동합니다.',
+      description: 'LDS 제품군별 컴포넌트 카탈로그와 문서로 이동합니다.',
     },
     docs: {
       description: {
-        component: 'LDS 제품군의 공통 진입점입니다. 새 제품군은 독립 Storybook을 유지하면서 이 디렉터리에 추가합니다.',
+        component: 'LDS 제품군의 공통 진입점입니다. 각 제품군은 독립된 카탈로그를 유지하며, 이 표에서 한곳으로 모입니다.',
       },
     },
   },

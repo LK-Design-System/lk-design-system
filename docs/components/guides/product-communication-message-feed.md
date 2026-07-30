@@ -67,10 +67,10 @@
 ## Behavior and interaction
 
 - following=true일 때만 append/resize를 bottom으로 따릅니다. 사용자가 위로 스크롤하면 onFollowingChange(false, "user-scroll")를 요청하고 읽던 위치를 보존합니다.
-- LK Context Hub — supported by composition only. product가 retrieval 결과와 session을 제공하면 feed와 message를 조합할 수 있지만 product panel의 width, background, border와 scroll behavior를 설계 근거로 사용하지 않습니다.
 - dark: 별도 feed fill 없이 parent background에서 focus, message identity, system 칩과 text contrast를 확인합니다.
 - history/follow: prepend anchor, 성공·무결과·실패 뒤 announcement 억제 해제, following=false 위치 보존과 latest action의 focus/callback을 확인합니다.
 - MessageFeed는 chronological message children을 담는 접근 가능한 scroll log입니다. 장문 AI 응답이 페이지의 읽기 흐름처럼 이어지도록 별도 fill, border, radius와 shadow를 만들지 않는 LK Product Extension입니다.
+- | 확인한 sibling | 계승한 규칙 | MessageFeed 결정 | | --- | --- | --- | | ScrollArea | native overflow와 scrollbar | named log, history anchor와 follow state 때문에 전용 viewport를 소유 | | LogViewer | chronological log와 latest/tail 개념 | console fill, level filter, monospace row, search와 copy toolbar는 제외 | | Button / IconButton | named…
 
 ## 정량 규칙
 

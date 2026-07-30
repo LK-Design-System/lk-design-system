@@ -19,7 +19,7 @@
     "Scene3DFrame is the renderer-independent 3D preset for ViewerFrame."
   ],
   "avoidWhen": [
-    "Product Storybook은 실제 point cloud나 WebGL 장면을 모사하지 않고 renderer slot과 frame chrome만 보여줍니다. 실제 3D geometry, depth, picking, camera semantics와 renderer lifecycle은 LDS3D 또는 애플리케이션이 소유합니다."
+    "이 계층은 실제 point cloud나 WebGL 장면을 모사하지 않고 renderer slot과 frame chrome만 보여줍니다. 실제 3D geometry, depth, picking, camera semantics와 renderer lifecycle은 LDS3D 또는 애플리케이션이 소유합니다."
   ],
   "anatomy": [
     {

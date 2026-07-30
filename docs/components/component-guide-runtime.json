@@ -7627,8 +7627,7 @@
       ],
       "avoidWhen": [
         "Floating UI flip, shift, size — preferred bottom을 우선하고 공간이 없으면 top으로 flip한 뒤 viewport 16px 안으로 shift하고, 남은 높이는 scrollable menu region의 max-height로 사용합니다.",
-        "Menubar의 persistent horizontal top-level chrome은 포함하지 않고 단일 trigger 관계만 유지합니다.",
-        "LK Control Full Daedeok — 93802fc2aa5d29f930380ae58d51dcb68322b5e7, frontend/src/views/user/index.jsx (8912b51c6eb612bd2beb2ed0206ee78ae6f03f2d): 확인된 MenuItem은 form Select option이므로 command DropdownMenu로 대체하지 않으며 not applicable입니다."
+        "Menubar의 persistent horizontal top-level chrome은 포함하지 않고 단일 trigger 관계만 유지합니다."
       ],
       "anatomy": [
         {
@@ -7819,8 +7818,7 @@
       ],
       "contentGuidance": [
         "menuActionArea는 서버 반영 비용이 크거나 여러 설정을 원자적으로 확정해야 하는 명시적인 staged workflow에서만 onCancel·onApply 중 제공된 실제 동작을 Cancel/Apply 버튼으로 만듭니다. 단순한 다중 선택이나 열기·복제·삭제처럼 선택 즉시 실행되는 메뉴에는 사용하지 않습니다. 기본 문구는 cancelLabel=\"취소\", applyLabel=\"적용\"이며 제품 문맥에 맞게 바꿀 수 있습니다. 콜백이나 custom action이 없으면 무동작 버튼을 만들지 않습니다.",
-        "Carbon Menu와 Menu Button — menu item 높이를 24/32/40/48px size 축으로 관리하고, 짧은 메뉴는 최소 160px에서 시작해 긴 label에 따라 최대 288px까지 확장합니다. LDS는 14/20px·40px을 desktop default로 두고 32/48px을 compact/comfortable density로 분리하며, 기존 LDS 리듬에 맞춰 적응형 폭을 176–320px로 조정합니다.",
-        "LK Context Hub — de124084b7e50049350a46f92c4ea4476269c58c, src/app/confluence/page.tsx (5d40f347f4b391510ac8ce4a60d65c18a27214cc): 표 행의 이름 변경·동기화 제외·삭제 메뉴는 normal DropdownMenu와 danger item 조합으로 supported by composition입니다. 실제 rename, exclude, delete 상태와 확인 절차는 제품이 소유합니다."
+        "Carbon Menu와 Menu Button — menu item 높이를 24/32/40/48px size 축으로 관리하고, 짧은 메뉴는 최소 160px에서 시작해 긴 label에 따라 최대 288px까지 확장합니다. LDS는 14/20px·40px을 desktop default로 두고 32/48px을 compact/comfortable density로 분리하며, 기존 LDS 리듬에 맞춰 적응형 폭을 176–320px로 조정합니다."
       ],
       "accessibility": [
         "선택 상태 표시 — radio·checkbox의 checked는 glyph와 medium weight로만 표시하며, 배경 하이라이트는 hover/focus·열린 서브메뉴 trigger 전용입니다(여러 항목이 checked여도 포인터·focus 위치가 구분됩니다). variant=\"normal\"의 active(aria-current) 항목만 glyph가 없으므로 hover보다 옅은 --component-menu-item-selected-bg(fill-alternative) 상시 배경을 가집니다. Menubar와 같은 계약입니다.",
@@ -13597,7 +13595,7 @@
       ],
       "avoidWhen": [
         "제품 boundary: 어떤 상태를 언제 띄울지는 제품 소유. 칩은 표현만 소유하며 타이머·전이·큐잉을 내장하지 않는다.",
-        "의도적 제외: 어두운 영상 위 스크림 변형(viewerOverlaySurface.js의 soft 레벨)은 소비처가 생길 때까지 추가하지 않는다 — 제안 문서의 확장 지점. positive 톤도 동일(성공은 대개 표면이 스스로 보여준다)."
+        "의도적 제외: 어두운 영상 위 스크림 변형(공유 오버레이 표면 모듈의 soft 레벨)은 소비처가 생길 때까지 추가하지 않는다 — 제안 문서의 확장 지점. positive 톤도 동일(성공은 대개 표면이 스스로 보여준다)."
       ],
       "anatomy": [
         {
@@ -16164,7 +16162,7 @@
         "inlineSources는 sources 슬롯을 body 아래 별도 행이 아니라 action bar와 같은 footer 행에 배치합니다(ChatGPT식). 접힌 를 넣으면 resting 상태가 아이콘+출처 토글 한 줄이 되어 copy·재생성 아이콘 옆에 나란히 놓이고, 누르면 출처 목록이 SourceDisclosure의 앵커드 Popover(드롭다운)로 떠서 열려 본문 레이아웃을 밀지 않습니다.",
         "semantic DOM과 시각 reading order는 identity(author/timestamp) → body → response status → attachments → sources → delivery/static status → actions입니다. rich content는 document surface 안에서 자연스럽게 길어지고, compact 발화는 bubble로 묶입니다. inlineSources일 때 sources는 이 자리에서 빠져 마지막 footer 행에서 action group 뒤에 형제로 배치됩니다.",
         "채택한 것은 long-form assistant document, compact user prompt, answer action과 하단 composer의 상대적 위계입니다. exact color, typography, avatar artwork, logo, sidebar, app shell, shadow와 asset은 복사하지 않습니다.",
-        "LK Context Hub — supported by composition only. rich answer, citation, attachment와 action slot을 조합할 수 있지만 product source의 card, color, width, API 또는 화면 anatomy를 차용하지 않습니다."
+        "320px: 긴 한글·영문·URL·code와 source/attachment/action slot이 horizontal overflow 없이 wrapping 또는 자체 overflow를 갖는지 확인합니다."
       ],
       "contentGuidance": [
         "children은 본문, attachments, sources, actions는 각각 ReactNode 조합 slot입니다. messageActions는 복사·재생성·더보기 같은 하단 quick-action을 배열로 받아 컴포넌트가 icon-only 버튼 액션바로 렌더하며 actions slot과 공존합니다. error는 실패 응답 본문을 받아 무채색 경고 glyph를 앞에 붙입니다. Message가 source schema, 파일 처리, Markdown renderer 또는 action 정책을 소유하지 않습니다.",
@@ -16610,7 +16608,7 @@
         "submitMode=\"button-only\": Enter를 항상 줄바꿈으로 남기고 button만 제출합니다.",
         "Slack — Set your Enter key preference는 Enter를 보내기로 선택하면 Shift+Enter로 줄바꿈하고, Enter를 줄바꿈으로 선택하면 Mac의 Command+Enter 또는 Windows/Linux의 Ctrl+Enter로 보내는 공식 제품 관습을 설명합니다. 이를 enter와 modifier-enter 계약에 반영했고, 긴 형식 작성에는 더 명시적인 button-only도 제공합니다.",
         "채택한 것은 conversation column 하단의 단일 elevated shell, expanding draft와 명시적 send action입니다. exact purple, logo, provider tool, voice control, desktop/mobile frame와 shadow 값은 복사하지 않습니다.",
-        "LK Web Viz — not applicable. map command entry와 viewport selection은 AI conversation draft가 아니며 해당 editor/control이 소유합니다."
+        "320px: 긴 attachment와 multiline draft가 전체 입력 폭을 먼저 확보하고 하단 action band만 wrap하며 horizontal overflow를 만들지 않는지 확인합니다."
       ],
       "contentGuidance": [
         "reading order는 description/disabled reason → shell의 attachments → textarea → 하단 leading actions → trailing actions → primary send/stop → status/counter입니다.",
@@ -16937,10 +16935,10 @@
       ],
       "behavior": [
         "following=true일 때만 append/resize를 bottom으로 따릅니다. 사용자가 위로 스크롤하면 onFollowingChange(false, \"user-scroll\")를 요청하고 읽던 위치를 보존합니다.",
-        "LK Context Hub — supported by composition only. product가 retrieval 결과와 session을 제공하면 feed와 message를 조합할 수 있지만 product panel의 width, background, border와 scroll behavior를 설계 근거로 사용하지 않습니다.",
         "dark: 별도 feed fill 없이 parent background에서 focus, message identity, system 칩과 text contrast를 확인합니다.",
         "history/follow: prepend anchor, 성공·무결과·실패 뒤 announcement 억제 해제, following=false 위치 보존과 latest action의 focus/callback을 확인합니다.",
-        "MessageFeed는 chronological message children을 담는 접근 가능한 scroll log입니다. 장문 AI 응답이 페이지의 읽기 흐름처럼 이어지도록 별도 fill, border, radius와 shadow를 만들지 않는 LK Product Extension입니다."
+        "MessageFeed는 chronological message children을 담는 접근 가능한 scroll log입니다. 장문 AI 응답이 페이지의 읽기 흐름처럼 이어지도록 별도 fill, border, radius와 shadow를 만들지 않는 LK Product Extension입니다.",
+        "| 확인한 sibling | 계승한 규칙 | MessageFeed 결정 | | --- | --- | --- | | ScrollArea | native overflow와 scrollbar | named log, history anchor와 follow state 때문에 전용 viewport를 소유 | | LogViewer | chronological log와 latest/tail 개념 | console fill, level filter, monospace row, search와 copy toolbar는 제외 | | Button / IconButton | named…"
       ],
       "quantitativeRules": [
         {
@@ -29540,7 +29538,7 @@
         "제목은 사용자가 수행하는 업무 또는 화면을 가리킵니다(예: “사용자 관리”). 사람·로봇·주문처럼 대상 자체를 식별하는 visual·이름·인증 배지·스탯·대상 액션 묶음은 RecordHeader를 사용합니다."
       ],
       "avoidWhen": [
-        "WAI Landmarks Pattern의 고수준 구조 원칙에 따라 PageHeader는 main 안의 로컬 이며, TopBar의 전역 banner나 Storybook 설명 chrome을 대체하지 않습니다."
+        "WAI Landmarks Pattern의 고수준 구조 원칙에 따라 PageHeader는 main 안의 로컬 이며, TopBar의 전역 banner나 문서 페이지의 설명 영역을 대체하지 않습니다."
       ],
       "anatomy": [
         {
@@ -30798,8 +30796,6 @@
       "states": [],
       "behavior": [
         "Carbon UI shell usage — 지속적인 header, 선택적인 left panel, product→global 순서를 분리하고 좁은 폭에서는 header link를 left navigation으로 이동합니다. LDS 셸도 header와 제품 탐색을 별도 슬롯으로 유지합니다.",
-        "LK Web Viz a984def117c05acd213f494cbb8a42e990595505 — 고정 frontend의 dashboard는 로고 TopBar, 연결 상태, 로봇 카드와 메뉴 launcher를 사용합니다. header-first와 Card/Status 조합은 supported by composition이며 SideNav·KPI·표·차트는 이 화면에 not applicable입니다.",
-        "LK Control Full Daedeok 93802fc2aa5d29f930380ae58d51dcb68322b5e7 — 고정 header, docked/temporary drawer, monitoring·status·chart·table은 supported by composition입니다. mobile drawer coordination은 gap이며 지도·영상·telemetry truth·위험 action lifecycle은 제품이 소유합니다.",
         "의도적 제외: 라우터 인스턴스, 인증·권한 판정, drawer open state, URL 동기화, 데이터 새로고침, 사용자별 셸 저장은 제품이 소유합니다. DashboardShell은 슬롯 배치와 landmark, skip link, 반응형 전환만 소유합니다."
       ],
       "quantitativeRules": [
@@ -30832,8 +30828,7 @@
       ],
       "contentGuidance": [
         "header-first: TopBar가 실제 LK Lockup과 제품 이름을 소유하고 SideNav는 로컬 목적지만 제공합니다.",
-        "side-first: SideNav header가 Lockup과 제품 이름을 소유하고 TopBar는 workspace/project 맥락과 검색·알림·도움말 같은 전역 utility만 제공합니다.",
-        "LK Context Hub de124084b7e50049350a46f92c4ea4476269c58c — 실제 logo가 있는 고정 SideNav와 프로젝트/attention collection은 side-first와 DashboardGrid/DataGrid 조합으로 supported by composition입니다. narrow navigation은 gap이며 route·권한·query·저장은 제품이 소유합니다."
+        "side-first: SideNav header가 Lockup과 제품 이름을 소유하고 TopBar는 workspace/project 맥락과 검색·알림·도움말 같은 전역 utility만 제공합니다."
       ],
       "accessibility": [
         "의미·키보드 순서는 본문 건너뛰기 → header/banner → 넓은 주 탐색 → main → 좁은 주 탐색입니다. CSS로 숨겨진 탐색 슬롯은 접근성 트리에서도 제외됩니다.",
@@ -31329,7 +31324,7 @@
         "mobile 위치를 내부 breakpoint로 이동시키지 않습니다. 좁은 제품 셸은 동일 컴포넌트를 설정 Drawer/사용자 메뉴 인접 영역으로 옮기는 composition을 소유합니다.",
         "Federal Website Standards: Language selector — text와 icon 중 하나를 모든 표면의 절대 표준으로 확정하지 않고 맥락과 언어 수를 연구 대상으로 둡니다. LDS는 공개 콘텐츠 사이트가 아니라 아이콘 utility가 이미 모인 제품 TopBar이므로 compact globe trigger를 선택합니다.",
         "공개·콘텐츠 사이트에서 더 높은 discoverability가 필요하면 제품이 별도 text-labeled composition을 선택합니다. 이 compact component에 showLabel, 국기, locale code axis를 추가하지 않습니다.",
-        "LK Control Full Daedeok — 93802fc2aa5d29f930380ae58d51dcb68322b5e7, frontend/src/layout/MainLayout/index.jsx (2436725e49f6364fdb99f2047907f300ca367865): fixed header와 responsive SideNav는 확인되지만 locale control이 없습니다."
+        "따라서 제품 route, 번역 readiness, persistence와 mobile relocation은 검증되지 않은 product-owned integration seam으로 남깁니다. 이 컴포넌트는 그 정책을 추측하지 않는 bounded UI contract입니다."
       ],
       "contentGuidance": [
         "언어 이름은 각 언어의 자칭 표기(한국어, English, 日本語)를 사용하고 lang을 부여합니다. 국기와 국가 코드는 언어의 대체 표현으로 사용하지 않습니다.",
@@ -39231,11 +39226,9 @@
       "purpose": "긴 폼을 제출한 뒤 여러 오류를 우선순위대로 고치게 할 때 적합합니다. 각 요약 문장은 같은 inline error를 가진 실제 field로 연결되어야 하며, 차단 오류가 없는 주의·성공 결과에는 Callout 또는 Notification을 사용하세요.",
       "useWhen": [
         "공식 Error Summary가 icon을 요구하는 것은 아닙니다. LDS는 빠른 severity 식별을 위해 error summary와 warning 구역 heading에 공통 Icon registry와 statusToneStyle의 leading icon을 한 번씩 사용하는 Product extension을 허용합니다.",
-        "LK Context Hub — supported by composition. pinned source LK-ROBOTICS/lkcontexthub@de124084b7e50049350a46f92c4ea4476269c58c의 Scope Manager에서 staged scope 변경의 field-level validation과 함께 사용할 수 있습니다. scope schema, mutation과 business validation은 제품 소유입니다.",
         "PatternFly Form은 submit validation에서 form 상단 summary를 field-level error의 보조 수단으로 사용합니다."
       ],
       "avoidWhen": [
-        "LK Web Viz — not applicable. pinned source LK-ROBOTICS/lkwebviz@a984def117c05acd213f494cbb8a42e990595505의 현재 canvas/editor workflow에는 form-level validation summary 소비 근거가 없습니다. 지도·편집기 상태를 오류 요약으로 재분류하지 않습니다.",
         "WAI-ARIA Alert Pattern은 alert가 keyboard focus 자체를 이동시키지 않아야 한다고 설명합니다. 따라서 focus-led summary와 live count announcement를 기본적으로 중복하지 않습니다."
       ],
       "anatomy": [],
@@ -40319,8 +40312,8 @@
       "contentGuidance": [
         "Open-RMF RobotState: robot mode, battery, location과 message sequence를 독립 필드로 제공한다. 연결만으로 telemetry freshness나 robot health를 추론하지 않는다.",
         "Kubernetes Pod Conditions: Unknown, transition time, reason, message를 condition evidence로 분리한다. connected를 복합 ready로 승격하지 않고 freshness/reason을 별도 evidence로 둔다.",
-        "LK Context Hub — not applicable. revision de124084b7e50049350a46f92c4ea4476269c58c, src/components/chat/PortalChatPanel.tsx의 provider availability는 MQTT/rosbridge transport truth가 아니므로 ConnectionBadge로 표현하지 않는다.",
-        "보이는 라벨이 기본이며 bar 수나 색만으로 상태를 전달하지 않는다."
+        "보이는 라벨이 기본이며 bar 수나 색만으로 상태를 전달하지 않는다.",
+        "LK Robotics Extension. MQTT, rosbridge, WebSocket 같은 transport 연결 사실을 신호 막대와 짧은 라벨로 표시한다. 연결 상태만 소유하며 데이터 freshness, 장비 health, operability, command eligibility, control authority를 추론하지 않는다."
       ],
       "accessibility": [
         "focus/disabled: 비대화형 상태 표시이므로 자체 focus 또는 disabled 축을 추가하지 않는다.",
@@ -40427,13 +40420,10 @@
         "Icon"
       ],
       "purpose": "제품 운영에 필요한 장비의 identity와 대표 상태를 먼저 읽고 이동·위치·연결 같은 보조 사실을 비교할 때 사용합니다. 실시간 telemetry 스트림이나 지도 위 마커에는 더 구체적인 표현을 사용하세요.",
-      "useWhen": [
-        "LK Control Full Daedeok (93802fc2aa5d29f930380ae58d51dcb68322b5e7): supported by composition. 문·엘리베이터·리프트·게이트웨이 등 장비 identity/status/facts를 이 카드와 ConnectionBadge 조합으로 표현할 수 있습니다. 장비 transport, command, permission, direction/connection state machine, 화면 layout은 Control 소유입니다."
-      ],
+      "useWhen": [],
       "avoidWhen": [
         "ConnectionBadge: 연결이 실제 보조 사실일 때 details[].value로 조합합니다. 카드가 connection prop이나 연결 상태 machine을 재정의하지 않습니다.",
         "GOV.UK Summary list: key와 value가 있는 핵심 사실은 summary list로 표현하고, 단순 목록이나 표 데이터에는 남용하지 않습니다. 이를 details의 라벨→값 스캔 구조와 semantic markup에 반영했습니다.",
-        "LK Web Viz (a984def117c05acd213f494cbb8a42e990595505): not applicable. pinned frontend의 map/editor/viewer workflow는 독립 equipment summary card를 요구하지 않으며 geometry나 editor state를 이 카드에 흡수하지 않습니다.",
         "EquipmentStatusCard는 장비의 정체성 → 대표 상태 → 라벨이 있는 보조 사실 → 메타데이터/동작을 한 번에 읽게 하는 LK Robotics Extension입니다. 특정 제품의 설비 행이나 대시보드를 재현하지 않으며, 제품이 가진 장비 종류와 상태 범위만 LDS coverage 요구로 사용합니다."
       ],
       "anatomy": [
@@ -40663,7 +40653,7 @@
       "guideDeltaFields": [],
       "sectionStatus": {
         "purpose": "evidence",
-        "useWhen": "evidence",
+        "useWhen": "omitted-no-evidence",
         "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
@@ -41683,7 +41673,7 @@
         "panEnabled={false}에서는 drag와 touch-action: none을 모두 제거해 페이지 터치 스크롤 및 앱의 선택/드로잉 동작과 충돌하지 않습니다.",
         "button, link, input, slider 등 interactive descendant에서 시작한 pointer/wheel 입력도 pan·zoom으로 재처리하지 않습니다.",
         "onWheel은 pointer-focal zoom에 필요한 non-passive native WheelEvent callback입니다. React SyntheticEvent 전용 API를 가정하지 않습니다.",
-        "LDS Product 예시는 구조 지도처럼 중립적인 콘텐츠로 viewport 계약만 보여줍니다. Route·Trajectory·Waypoint·RobotPose의 의미와 시각 문법은 @lk-robotics/lds-robotics-ui가 소유하며, Product Storybook에서 임시 선·점·방향 마커로 재현하지 않습니다. 이 경계는 LDS Robotics revision 180f031541850444d302bcf6a94b96db563133cd의 Navigation Path System 계약과 대조했습니다."
+        "Mapbox Standard style reference와 runtime configuration guide: 하나의 지도 스타일이 day/night에 대응하는 lighting preset을 런타임에 바꿀 수 있으므로, LDS도 지도를 light 전용으로 고정하지 않고 light/dark appearance를 같은 계약으로 제공합니다."
       ],
       "anatomy": [
         {
@@ -42051,7 +42041,7 @@
         "Scene3DFrame is the renderer-independent 3D preset for ViewerFrame."
       ],
       "avoidWhen": [
-        "Product Storybook은 실제 point cloud나 WebGL 장면을 모사하지 않고 renderer slot과 frame chrome만 보여줍니다. 실제 3D geometry, depth, picking, camera semantics와 renderer lifecycle은 LDS3D 또는 애플리케이션이 소유합니다."
+        "이 계층은 실제 point cloud나 WebGL 장면을 모사하지 않고 renderer slot과 frame chrome만 보여줍니다. 실제 3D geometry, depth, picking, camera semantics와 renderer lifecycle은 LDS3D 또는 애플리케이션이 소유합니다."
       ],
       "anatomy": [
         {
@@ -42368,9 +42358,7 @@
       "purpose": "같은 건물의 엘리베이터는 하나의 층 눈금을 공유하고, 건물 그룹은 좌우로 이어 붙습니다. 건물마다 층 구성이 다르므로 건물 사이의 같은 층 이름을 같은 높이에 맞추지 않습니다.",
       "useWhen": [
         "Vantage GALileo Lobby Monitoring: 엘리베이터 group에서 car position, direction, door state, service mode와 call을 함께 보여 줍니다. 이 컴포넌트는 개요에 필요한 position/direction/status만 남기고 call 입력과 service control은 제품 영역으로 제외합니다.",
-        "Vantage NEXUS Position Indicator: floor position, direction, door zone과 층 중심으로부터의 상대 위치를 구분합니다. 첫 계약은 discrete floor만 지원하며 between-floor distance와 door-zone calibration은 telemetry 제품 계약이 확인되기 전까지 의도적으로 제외합니다.",
-        "LK Web Viz (a984def117c05acd213f494cbb8a42e990595505): not applicable for the pinned source; elevator-fleet use remains unverified. pinned dashboard에는 로봇·연결 live truth는 있지만 다중 건물 엘리베이터 fleet가 없습니다. Web Viz가 사용한다면 polling, stale 판정, building grouping과 detail navigation은 제품이 소유합니다.",
-        "LK Control Full Daedeok (93802fc2aa5d29f930380ae58d51dcb68322b5e7): supported by composition for equipment overview anatomy only. pinned supervision source는 설비 identity/status/freshness의 필요를 확인하지만 다중 건물 elevator telemetry는 확인하지 못했습니다. LDS는 projection을 제공하고 Control은 truth, alert policy, permissions와 command를 소유합니다."
+        "Vantage NEXUS Position Indicator: floor position, direction, door zone과 층 중심으로부터의 상대 위치를 구분합니다. 첫 계약은 discrete floor만 지원하며 between-floor distance와 door-zone calibration은 telemetry 제품 계약이 확인되기 전까지 의도적으로 제외합니다."
       ],
       "avoidWhen": [
         "기존 FloorSelector는 사용자가 보고 싶은 층을 선택하는 단일 선택 control입니다. ElevatorFleetOverview는 실제 설비 위치를 읽기 전용으로 투영하므로 확장하지 않습니다.",
@@ -43473,7 +43461,7 @@
         "Top chrome is compact and peer-aligned: source identity and the toolbar shelf target a 30px outer height around 28px viewport controls. Source identity uses caption1/semibold so it labels the viewport without competing with its controls or rendered content.",
         "WCAG 2.2 Status Messages requires state changes to be programmatically exposed without moving focus, while the WAI-ARIA Alert pattern reserves interruption for important, time-sensitive changes. ViewerFrame therefore derives urgency from blocking loss, not merely from a negative color or connection label.",
         "WCAG 2.2 Dragging Movements requires non-drag alternatives for operations such as pan, zoom, and fit.",
-        "LK Control Full Daedeok — revision 93802fc2aa5d29f930380ae58d51dcb68322b5e7; frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap3D/index.jsx and frontend/src/views/manual-control/index.jsx. Supported by composition."
+        "ViewerFrame is the shared LDS Product viewport contract for map, 3D, and video surfaces."
       ],
       "avoidWhen": [
         "Live-region urgency follows whether a transition removes usable content. disconnected, no-signal, and error are blocking losses and use alert/assertive. Expected setup states such as no-source, loading, and connecting use status/polite.",

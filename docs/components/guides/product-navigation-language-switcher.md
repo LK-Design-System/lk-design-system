@@ -71,7 +71,7 @@
 - mobile 위치를 내부 breakpoint로 이동시키지 않습니다. 좁은 제품 셸은 동일 컴포넌트를 설정 Drawer/사용자 메뉴 인접 영역으로 옮기는 composition을 소유합니다.
 - Federal Website Standards: Language selector — text와 icon 중 하나를 모든 표면의 절대 표준으로 확정하지 않고 맥락과 언어 수를 연구 대상으로 둡니다. LDS는 공개 콘텐츠 사이트가 아니라 아이콘 utility가 이미 모인 제품 TopBar이므로 compact globe trigger를 선택합니다.
 - 공개·콘텐츠 사이트에서 더 높은 discoverability가 필요하면 제품이 별도 text-labeled composition을 선택합니다. 이 compact component에 showLabel, 국기, locale code axis를 추가하지 않습니다.
-- LK Control Full Daedeok — 93802fc2aa5d29f930380ae58d51dcb68322b5e7, frontend/src/layout/MainLayout/index.jsx (2436725e49f6364fdb99f2047907f300ca367865): fixed header와 responsive SideNav는 확인되지만 locale control이 없습니다.
+- 따라서 제품 route, 번역 readiness, persistence와 mobile relocation은 검증되지 않은 product-owned integration seam으로 남깁니다. 이 컴포넌트는 그 정책을 추측하지 않는 bounded UI contract입니다.
 
 ## Content and writing
 

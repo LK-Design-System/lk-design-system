@@ -18,7 +18,7 @@
 
 ### 사용하지 않음
 
-- WAI Landmarks Pattern의 고수준 구조 원칙에 따라 PageHeader는 main 안의 로컬 이며, TopBar의 전역 banner나 Storybook 설명 chrome을 대체하지 않습니다.
+- WAI Landmarks Pattern의 고수준 구조 원칙에 따라 PageHeader는 main 안의 로컬 이며, TopBar의 전역 banner나 문서 페이지의 설명 영역을 대체하지 않습니다.
 
 ## Anatomy
 

@@ -19,7 +19,7 @@
     "Top chrome is compact and peer-aligned: source identity and the toolbar shelf target a 30px outer height around 28px viewport controls. Source identity uses caption1/semibold so it labels the viewport without competing with its controls or rendered content.",
     "WCAG 2.2 Status Messages requires state changes to be programmatically exposed without moving focus, while the WAI-ARIA Alert pattern reserves interruption for important, time-sensitive changes. ViewerFrame therefore derives urgency from blocking loss, not merely from a negative color or connection label.",
     "WCAG 2.2 Dragging Movements requires non-drag alternatives for operations such as pan, zoom, and fit.",
-    "LK Control Full Daedeok — revision 93802fc2aa5d29f930380ae58d51dcb68322b5e7; frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap3D/index.jsx and frontend/src/views/manual-control/index.jsx. Supported by composition."
+    "ViewerFrame is the shared LDS Product viewport contract for map, 3D, and video surfaces."
   ],
   "avoidWhen": [
     "Live-region urgency follows whether a transition removes usable content. disconnected, no-signal, and error are blocking losses and use alert/assertive. Expected setup states such as no-source, loading, and connecting use status/polite.",

@@ -15,12 +15,10 @@
 ### 사용
 
 - 공식 Error Summary가 icon을 요구하는 것은 아닙니다. LDS는 빠른 severity 식별을 위해 error summary와 warning 구역 heading에 공통 Icon registry와 statusToneStyle의 leading icon을 한 번씩 사용하는 Product extension을 허용합니다.
-- LK Context Hub — supported by composition. pinned source LK-ROBOTICS/lkcontexthub@de124084b7e50049350a46f92c4ea4476269c58c의 Scope Manager에서 staged scope 변경의 field-level validation과 함께 사용할 수 있습니다. scope schema, mutation과 business validation은 제품 소유입니다.
 - PatternFly Form은 submit validation에서 form 상단 summary를 field-level error의 보조 수단으로 사용합니다.
 
 ### 사용하지 않음
 
-- LK Web Viz — not applicable. pinned source LK-ROBOTICS/lkwebviz@a984def117c05acd213f494cbb8a42e990595505의 현재 canvas/editor workflow에는 form-level validation summary 소비 근거가 없습니다. 지도·편집기 상태를 오류 요약으로 재분류하지 않습니다.
 - WAI-ARIA Alert Pattern은 alert가 keyboard focus 자체를 이동시키지 않아야 한다고 설명합니다. 따라서 focus-led summary와 live count announcement를 기본적으로 중복하지 않습니다.
 - ValidationSummary는 제출을 막는 form-level 오류를 요약하고 원래 field 또는 field group으로 돌아가는 경로를 제공합니다. LDS Product extension이며 WDS component parity를 주장하지 않습니다. 차단 오류가 하나도 없으면 렌더하지 않으며, warning-only와 성공 확인은 Callout 또는 Notification이 소유합니다.
 
