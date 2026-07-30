@@ -37,6 +37,22 @@ runs:
       with:
         node-version: 22.17.1
 
+    # The CLI used to be dependency-free, so this action ran it straight out of the
+    # pinned checkout with nothing installed. storybook-masthead-copy.mjs now parses
+    # story files with the TypeScript compiler API, so a bare `node cli.mjs` dies
+    # with ERR_MODULE_NOT_FOUND for 'typescript' before running a single check - the
+    # consumer's CI then fails at this step and never reaches its own test suite.
+    # Installing only the conformance package's own dependencies keeps that cheap
+    # (no workspace install, no lockfile) while letting the CLI declare what it uses.
+    - name: Install pinned contract dependencies
+      shell: pwsh
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: |
+        $conformance = (Resolve-Path (Join-Path $env:ACTION_PATH "../../../packages/conformance")).Path
+        npm install --omit=dev --no-audit --no-fund --prefix $conformance
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
     - name: Resolve pinned contract paths
       id: paths
       shell: pwsh
