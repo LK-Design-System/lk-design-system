@@ -125,6 +125,12 @@ export const SizesAndStates = {
         <Button loading loadingLabel="저장 중">
           저장 중
         </Button>
+        {/* loading="inline": the label survives the wait and the variant
+            palette stays — the presentation for safety controls whose words
+            may not disappear mid-request. Blocking semantics match `loading`. */}
+        <Button variant="danger" loading="inline">
+          정지 요청 중
+        </Button>
         <Button variant="outlined" color="assistive">
           <Icon name="upload" size={18} />
           내보내기

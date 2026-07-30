@@ -34,6 +34,7 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | PageHeader, RecordHeader | 자체 키보드 상태는 만들지 않는다. DOM과 읽기 순서는 context/visual→제목·상태→설명·세부 정보→actions를 유지하고 CSS reflow로 바꾸지 않는다. heading 단계는 주변 문서 구조와 연결하며 icon-only action은 이름을 가져야 한다. |
 | Modal, Drawer, Sheet, Alert, ConfirmDialog | Escape 닫기, 내부 focus trap, 닫힌 뒤 trigger로 focus restore |
 | Toast, Notification, Banner, Callout | 자동 소멸 정보는 live region 정책을 명시, 중요한 알림은 수동 dismiss 제공 |
+| OverlayStatusChip | `role="status"` polite live region으로 표면 상태를 알리고, 설명 대상 컨트롤이 `inert`여도 읽히도록 호출부가 그 서브트리 밖에 배치한다. `pointer-events: none`으로 재활성화 입력을 가로채지 않으며, 상태는 색만이 아니라 톤 글리프와 필수 텍스트 라벨로 전달한다 |
 | DataGrid, Table, Tree, TopicTree | row/cell/treeitem focus 기준, 확장/축소 키, 선택 상태를 명시 |
 | SearchableMultiSelect, DataGrid, FileBrowser | stable item name/ID, listbox 또는 row activation, 선택 상태, bulk action 진입 순서, 빈/loading/error announcement를 명시 |
 | Button, ActionArea, ConfirmDialog | product-owned disabled reason과 blocker를 action보다 먼저 읽을 수 있고 pending 중 중복 실행이 차단되어야 함 |

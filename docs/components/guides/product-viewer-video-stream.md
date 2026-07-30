@@ -32,6 +32,7 @@
 | ariaLabel | Accessible region name. Derived from a string label when omitted. |
 | toolbar | Viewport-local mute, captions, snapshot, or fullscreen controls. |
 | toolbarVisibility | Local media controls are revealed by hover, press, or focus by default. |
+| toolbarPlacement | 뷰포트 컨트롤 위치. 영상은 플레이어 관례를 따라 하단이 기본이며, 상단 우측은 상시 표시되는 생존성 신호가 화면 끝에 붙도록 비워 둔다. @default "bottom-right" |
 
 ## Properties
 
@@ -48,6 +49,7 @@
 | `playback` | `ViewerPlayback` | No |  |
 | `aspectRatio` | `string` | No | CSS aspect-ratio value. @default "16 / 9" |
 | `badges` | `React.ReactNode` | No |  |
+| `liveness` | `React.ReactNode` | No | 상단 우측 생존성 슬롯. state="live"의 라이브 표시가 이 자리에 렌더된다. |
 | `hud` | `React.ReactNode` | No | Compact passive diagnostics; keep the default HUD to essential values. |
 | `toolbar` | `React.ReactNode` | No | Viewport-local mute, captions, snapshot, or fullscreen controls. |
 | `overlay` | `React.ReactNode` | No | Non-interactive video overlay. |
@@ -59,6 +61,7 @@
 | `variant` | `'standalone' \| 'embedded'` | No | Perimeter ownership. "embedded" drops the tile's own border and radius so a parent surface owns one continuous outline. @default "standalone" |
 | `chromeVariant` | `'surface' \| 'overlay'` | No | Video chrome treatment. @default "overlay" |
 | `toolbarVisibility` | `'always' \| 'interaction'` | No | Local media controls are revealed by hover, press, or focus by default. |
+| `toolbarPlacement` | `'top-right' \| 'bottom-right'` | No | 뷰포트 컨트롤 위치. 영상은 플레이어 관례를 따라 하단이 기본이며, 상단 우측은 상시 표시되는 생존성 신호가 화면 끝에 붙도록 비워 둔다. @default "bottom-right" |
 
 ## States
 
@@ -71,6 +74,7 @@
 
 ## Behavior and interaction
 
+- toolbarPlacement는 bottom-right가 기본이다. 재생 컨트롤은 플레이어 관례상 하단이고, 상단 우측을 비워야 상시 표시되는 라이브 표시가 화면 끝에 붙는다. 상단에 두면 자동 숨김 상태의 툴바가 자리를 차지해 라이브가 가장자리에서 밀린다.
 - Video.js VolumePanel likewise groups MuteToggle and VolumeControl, expands the control through hover/focus interaction, and returns focus to the mute control when Escape closes the rail. LDS adapts that interaction to ViewerToolbar.
 - Genetec Security Center tile customization allows video controls, timeline, and tile toolbar to auto-hide and reappear on hover. LDS uses the same information-hierarchy conclusion while preserving keyboard focus reveal.
 
@@ -109,12 +113,12 @@
 | --- | --- |
 | `Button` | 대표 시나리오에서 조합 |
 | `Icon` | 대표 시나리오에서 조합 |
+| `Slider` | 대표 시나리오에서 조합 |
 | `ViewerToolbar` | 대표 시나리오에서 조합 |
 | `ViewerToolbarButton` | 대표 시나리오에서 조합 |
 | `ElevatorFleetOverview` | 대표 시나리오에서 조합 |
 | `FloorSelector` | 대표 시나리오에서 조합 |
 | `Map2DCanvas` | 대표 시나리오에서 조합 |
-| `Scene3DFrame` | 대표 시나리오에서 조합 |
 
 ## Examples
 

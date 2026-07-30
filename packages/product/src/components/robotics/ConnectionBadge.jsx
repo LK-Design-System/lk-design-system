@@ -68,8 +68,15 @@ export function ConnectionBadge({
   const bw = size === 'sm' ? 3 : 4;
   // failed/error and disconnected/offline both show 0 bars and differ only by
   // colour — indistinguishable in icon-only mode or under CVD. A slash over the
-  // bars gives the error states a second, shape-based channel.
+  // bars gives the severed states a second, shape-based channel. Disconnected
+  // gets the slash in neutral ink, not negative: a powered-down robot is
+  // routine and a red alarm on every docked unit would cry wolf, but without
+  // any shape the state was pixel-identical to `unknown` and *quieter* than a
+  // healthy link — the abnormal state must never be the most invisible one.
   const isError = usesCanonicalState ? resolvedState === 'failed' : legacyStatus === 'error';
+  const isSevered = isError || (usesCanonicalState
+    ? resolvedState === 'disconnected'
+    : legacyStatus === 'offline');
   return (
     <span
       data-connection-state={resolvedState}
@@ -84,9 +91,10 @@ export function ConnectionBadge({
           <span key={i} style={{ width: bw, height: Math.round(h * ((i + 1) / 3)), borderRadius: 1,
             background: i < cfg.bars ? cfg.c : 'var(--color-semantic-fill-strong)' }} />
         ))}
-        {isError && (
+        {isSevered && (
           <span data-lds-connection-error-slash="" aria-hidden="true" style={{ position: 'absolute', left: -1, right: -1, top: '50%',
-            height: 2, borderRadius: 1, background: cfg.c, transform: 'rotate(-45deg)', transformOrigin: 'center' }} />
+            height: 2, borderRadius: 1, background: isError ? cfg.c : 'var(--color-semantic-label-alternative)',
+            transform: 'rotate(-45deg)', transformOrigin: 'center' }} />
         )}
       </span>
       {showLabel && <span>{displayLabel}</span>}

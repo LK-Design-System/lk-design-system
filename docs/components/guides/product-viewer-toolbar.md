@@ -138,7 +138,6 @@
 
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-line-normal-normal`
-- `--color-semantic-static-black`
 - `--color-semantic-static-white`
 - `--radius-md`
 - `--shadow-sm`

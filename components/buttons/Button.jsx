@@ -163,11 +163,22 @@ export function Button({
   /* Only an explicit `disabled`/`disable` removes the control from the tab
      order. `loading` keeps it focusable (Polaris / Carbon) so a keyboard user
      who just activated the button does not lose focus to <body>; activation is
-     blocked through aria-disabled + the click guard instead. */
+     blocked through aria-disabled + the click guard instead.
+
+     `loading="inline"` is the second loading presentation: the spinner sits
+     beside the label and the variant palette stays, instead of the default
+     swap-for-spinner on the disabled palette. It exists for controls whose
+     words must survive the wait — a safety stop that reads "정지 요청 중"
+     may not become an unlabeled grey pill mid-request. Activation semantics
+     (aria-busy, aria-disabled, click guard, focus retention) are identical
+     in both modes; only the presentation differs. */
+  const loadingActive = Boolean(loading);
+  const loadingInline = loading === 'inline';
   const nativeDisabled = disabled || disable;
-  const disabledState = nativeDisabled || loading;
+  const disabledState = nativeDisabled || loadingActive;
   const ariaBlocked = ariaDisabled === true || ariaDisabled === 'true';
   const blocked = disabledState || ariaBlocked;
+  const visuallyBlocked = nativeDisabled || ariaBlocked || (loadingActive && !loadingInline);
   const active = !blocked;
   const outlinedLike = wdsVariant.startsWith('outlined') || wdsVariant === 'ghost';
   const disabledBorder = outlinedLike
@@ -195,19 +206,20 @@ export function Button({
       : 'var(--component-button-font-weight)',
     letterSpacing: letterSpacings[normalizedSize] || letterSpacings.md,
     position: 'relative',
-    color: blocked ? disabledFg : p.fg,
-    background: blocked
+    color: visuallyBlocked ? disabledFg : p.fg,
+    background: visuallyBlocked
       ? disabledBg
       : pressed
         ? pressedTone(p.bgHover || p.bg)
-        : hover
+        : hover && !blocked
           ? `color-mix(in srgb, ${p.bgHover || p.bg} 96%, var(--color-semantic-label-normal))`
           : p.bg,
-    border: blocked ? disabledBorder : (active && hover && p.bdHover) ? p.bdHover : p.bd,
+    border: visuallyBlocked ? disabledBorder : (active && hover && p.bdHover) ? p.bdHover : p.bd,
     borderRadius: radii[normalizedSize] || radii.md,
     boxShadow: active && p.elevated ? 'var(--component-button-shadow-rest)' : 'none',
     transform: 'none',
-    cursor: blocked ? 'not-allowed' : 'pointer',
+    // Inline loading is temporal, not forbidden — the wait cursor, not the ban.
+    cursor: blocked ? (loadingInline && !visuallyBlocked ? 'progress' : 'not-allowed') : 'pointer',
     opacity: 1,
     transition: 'var(--component-button-transition)',
     whiteSpace: 'nowrap',
@@ -224,7 +236,7 @@ export function Button({
       style={composed}
       disabled={as === 'button' ? nativeDisabled : undefined}
       type={as === 'button' ? (type ?? 'button') : undefined}
-      aria-label={loading ? loadingLabel : ariaLabel}
+      aria-label={loading === true ? loadingLabel : ariaLabel}
       aria-busy={loading || ariaBusy || undefined}
       aria-disabled={ariaBlocked || loading || (as !== 'button' && disabledState) || undefined}
       onMouseEnter={(e) => { setHover(true); onMouseEnter && onMouseEnter(e); }}
@@ -248,7 +260,7 @@ export function Button({
         onClick && onClick(e);
       }}
     >
-      {loading && (
+      {loading === true && (
         <>
           <span aria-hidden="true" style={{ position: 'absolute', inset: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
             <Spinner size={16} color="currentColor" />
@@ -259,15 +271,20 @@ export function Button({
         </>
       )}
       <span
-        aria-hidden={loading || undefined}
+        aria-hidden={loading === true || undefined}
         style={{
           display: 'inline-flex',
           alignItems: 'center',
           justifyContent: 'center',
           gap: gaps[normalizedSize] || gaps.md,
-          visibility: loading ? 'hidden' : undefined,
+          visibility: loading === true ? 'hidden' : undefined,
         }}
       >
+        {loadingInline && (
+          <span aria-hidden="true" style={{ display: 'inline-flex' }}>
+            <Spinner size={14} color="currentColor" />
+          </span>
+        )}
         {content}
       </span>
     </Comp>

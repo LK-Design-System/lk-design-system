@@ -34,6 +34,7 @@ export function Map2DCanvas({
   source,
   badges,
   hud,
+  scope,
   state,
   availability,
   connection,
@@ -136,6 +137,7 @@ export function Map2DCanvas({
       source={source}
       badges={badges}
       hud={hud}
+      scope={scope}
       toolbar={toolbar !== undefined ? toolbar : viewerToolbar}
       toolbarPlacement="bottom-right"
       overlay={overlay}

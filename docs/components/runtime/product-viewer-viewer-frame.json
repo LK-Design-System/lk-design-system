@@ -16,14 +16,16 @@
   ],
   "purpose": "지도·3D·영상 뷰어가 로딩·신호 없음·오류·지연 상태를 일관된 읽기 순서로 보여줘야 할 때 적합합니다. 정적인 이미지나 상태 전환이 없는 단순 컨테이너에는 Viewer Frame 대신 기본 Surface를 사용하세요.",
   "useWhen": [
-    "LK Control Full Daedeok — revision 93802fc2aa5d29f930380ae58d51dcb68322b5e7; frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap3D/index.jsx and frontend/src/views/manual-control/index.jsx. Supported by composition.",
-    "ViewerFrame is the shared LDS Product viewport contract for map, 3D, and video surfaces."
+    "Top chrome is compact and peer-aligned: source identity and the toolbar shelf target a 30px outer height around 28px viewport controls. Source identity uses caption1/semibold so it labels the viewport without competing with its controls or rendered content.",
+    "WCAG 2.2 Status Messages requires state changes to be programmatically exposed without moving focus, while the WAI-ARIA Alert pattern reserves interruption for important, time-sensitive changes. ViewerFrame therefore derives urgency from blocking loss, not merely from a negative color or connection label.",
+    "WCAG 2.2 Dragging Movements requires non-drag alternatives for operations such as pan, zoom, and fit.",
+    "LK Control Full Daedeok — revision 93802fc2aa5d29f930380ae58d51dcb68322b5e7; frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap3D/index.jsx and frontend/src/views/manual-control/index.jsx. Supported by composition."
   ],
   "avoidWhen": [
     "Live-region urgency follows whether a transition removes usable content. disconnected, no-signal, and error are blocking losses and use alert/assertive. Expected setup states such as no-source, loading, and connecting use status/polite.",
+    "Toolbar actions must affect only this viewport. Document commands, scene hierarchy, properties, robot control, and emergency actions do not belong in the frame.",
     "All Viewer presets place source identity at the top-left, viewport-local controls at the top-right, and passive status at the bottom-left. This shared edge grammar applies to 2D map, 3D, and video; products must not move a preset toolbar merely to distinguish its content type.",
-    "variant=\"embedded\"는 이 프레임을 다른 LDS 표면(CanvasEditorShell의 캔버스 슬롯, Card 등) 안에 중첩할 때 자체 border·radius를 생략해 부모가 하나의 연속된 외곽선을 소유하게 합니다. 상태 모델·HUD·toolbar·region role은 그대로 유지되며, 부모 표면 안에서 style로 border/radius를 임의로 덮어쓰는 대신 이 variant를 사용합니다. 기본값 standalone은 단독 뷰포트로 자체 외곽선을 그립니다.",
-    "Mapbox NavigationControl groups related zoom and compass commands into one control instead of presenting equal floating buttons as unrelated actions. LDS keeps compact 28px commands inside one shared contrast shelf."
+    "variant=\"embedded\"는 이 프레임을 다른 LDS 표면(CanvasEditorShell의 캔버스 슬롯, Card 등) 안에 중첩할 때 자체 border·radius를 생략해 부모가 하나의 연속된 외곽선을 소유하게 합니다. 상태 모델·HUD·toolbar·region role은 그대로 유지되며, 부모 표면 안에서 style로 border/radius를 임의로 덮어쓰는 대신 이 variant를 사용합니다. 기본값 standalone은 단독 뷰포트로 자체 외곽선을 그립니다."
   ],
   "anatomy": [
     {
@@ -40,7 +42,7 @@
     },
     {
       "part": "toolbarPlacement",
-      "rule": "Edge used for the viewport-local toolbar. @default \"top-right\""
+      "rule": "뷰포트 조작 컨트롤이 놓이는 모서리. 배치 규약상 우하단이 기본이며, 상단은 정체성(source)과 상시 상태(liveness)에 남긴다. @default \"bottom-right\""
     },
     {
       "part": "stateLabel",
@@ -85,10 +87,24 @@
       "owner": "ViewerFrameProps"
     },
     {
+      "name": "liveness",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "상단 우측 생존성 슬롯. 정체성(어느 소스인가)과 다른 축이므로 source 옆이 아니라 반대쪽 끝에 자리를 갖는다. state=\"live\" 같은 corner 상태도 이 자리에 렌더된다. toolbar 슬롯과 달리 toolbarVisibility의 자동 숨김을 받지 않아 상시 표시된다.",
+      "owner": "ViewerFrameProps"
+    },
+    {
       "name": "hud",
       "type": "React.ReactNode",
       "required": false,
       "description": "Compact, passive diagnostics. Keep the default HUD to essential values only.",
+      "owner": "ViewerFrameProps"
+    },
+    {
+      "name": "scope",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "상단 우측 범위 전환 레일 — 층·레벨·카메라처럼 \"무엇을 보는가\"를 바꾸는 컨트롤. 뷰 조작(toolbar)은 우하단에 남고 이 레일은 상단 우측 오버레이로 뜬다. 상단 크롬 높이를 측정해 그 아래에 붙고, 길어지면 표면을 넘지 않고 스크롤된다. toolbarPlacement=\"top-right\"(헤더 안 in-flow 셸프)와는 다른 자리다.",
       "owner": "ViewerFrameProps"
     },
     {
@@ -102,7 +118,7 @@
       "name": "toolbarPlacement",
       "type": "'top-right' | 'bottom-right'",
       "required": false,
-      "description": "Edge used for the viewport-local toolbar. @default \"top-right\"",
+      "description": "뷰포트 조작 컨트롤이 놓이는 모서리. 배치 규약상 우하단이 기본이며, 상단은 정체성(source)과 상시 상태(liveness)에 남긴다. @default \"bottom-right\"",
       "owner": "ViewerFrameProps"
     },
     {
@@ -246,11 +262,11 @@
     }
   ],
   "behavior": [
-    "toolbarVisibility=\"always\" preserves persistent map/3D controls. toolbarVisibility=\"interaction\" visually reveals the toolbar while the frame is hovered, pressed, or contains focus.",
-    "Appearance parity is checked with equivalent map and 3D stories. A light or dark variant must keep the same slots, state behavior, focus behavior, and control availability.",
-    "WAI-ARIA Toolbar keeps keyboard behavior in the composed toolbar instead of making the viewport frame a second toolbar implementation.",
-    "WCAG 2.2 Status Messages requires state changes to be programmatically exposed without moving focus, while the WAI-ARIA Alert pattern reserves interruption for important, time-sensitive changes. ViewerFrame therefore derives urgency from blocking loss, not merely from a negative color or connection label.",
-    "WCAG 2.2 Dragging Movements requires non-drag alternatives for operations such as pan, zoom, and fit."
+    "toolbarVisibility는 배치와 무관하게 적용된다. top-right와 bottom-right가 같은 값에서 같게 동작한다.",
+    "뷰포트를 조작하는 컨트롤은 bottom-right를 쓴다. 상단을 비워 두면 상시 표시되는 상태가 화면 끝에 붙을 수 있고, 조작과 읽기가 같은 모서리를 다투지 않는다.",
+    "Google Maps JavaScript API — Controls: 뷰를 조작하는 컨트롤을 아래로 모은다. Street View와 회전은 \"appears by default near the bottom right of the map\", 축척은 \"always appear in the bottom right corner\"이며, 프레임 수준 동작인 전체화면만 \"near the top right\"에 둔다. 지도 유형은 좌상단이다.",
+    "The hud slot is compact, passive diagnostics rendered as a second row of the source identity surface. A divider separates it from source identity; it never enters the local toolbar group. Default HUD content should be limited to a few values needed to interpret the viewport.",
+    "toolbarVisibility=\"always\" preserves persistent map/3D controls. toolbarVisibility=\"interaction\" visually reveals the toolbar while the frame is hovered, pressed, or contains focus."
   ],
   "quantitativeRules": [
     {
@@ -276,15 +292,15 @@
   ],
   "responsive": [
     "At 320px, a typical three-command toolbar remains on the same top edge as a truncated source identity. The two surfaces may wrap only when their minimum usable widths no longer fit; the toolbar never shrinks its 28px targets.",
-    "The usable frame is renderer-first. Source identity and local controls sit on separate inset edge surfaces rather than sharing a full-width header. This keeps the source readable without turning passive identity into command-bar chrome.",
-    "Source identity uses the LDS caption1/semibold hierarchy in both the regular identity surface and blocking-state header so it stays subordinate beside 28px viewport controls.",
-    "The hud slot is compact, passive diagnostics rendered as a second row of the source identity surface. A divider separates it from source identity; it never enters the local toolbar group. Default HUD content should be limited to a few values needed to interpret the viewport."
+    "상시 상태가 모서리를 그대로 갖고 scope는 상단 크롬 아래로 걸린다. 레일은 상단 크롬 높이를 측정해 붙으므로 HUD가 늘어도 겹치지 않는다.",
+    "scope와 toolbar는 같은 우측 정렬선을 공유하되 자리를 다툰다. 레일은 하단 툴바가 차지한 높이를 빼고 남은 만큼만 쓰고, 층이 많아 넘치면 표면 밖으로 나가거나 툴바를 덮지 않고 스크롤한다.",
+    "The usable frame is renderer-first. Source identity and local controls sit on separate inset edge surfaces rather than sharing a full-width header. This keeps the source readable without turning passive identity into command-bar chrome."
   ],
   "contentGuidance": [
     "ready leaves chrome quiet. live adds a text-and-icon state badge; it never relies on color or motion alone.",
+    "생존성(live 같은 corner 상태와 liveness 슬롯)은 좌상단 정체성 칩 안이 아니라 상단 우측 끝에 자리를 갖는다. 정체성은 \"어느 소스인가\", 생존성은 \"지금 들어오는가\"로 축이 다르고, 둘을 한 칩에 합치면 소스 이름이 길어질수록 생존성이 밀린다. 자리를 갈라두면 타일이 여러 개 깔렸을 때 위치만으로 생존 여부를 훑을 수 있어 색에만 의존하지 않는다.",
     "Tone을 직접 전달하는 positive/cautionary/negative 상태 글리프는 공용 상태 문법과 같은 fill 변형을 사용합니다. clock, pause, signal, circle-close, circle-block처럼 상태의 원인이나 기능을 설명하는 글리프는 outline을 유지합니다.",
-    "오류·신호 없음·사용 불가 기본 문구는 원인만 알리는 막다른 문장이 아니라 다음 확인 행동까지 안내합니다. 제품이 더 구체적인 복구 경로를 알면 stateDescription과 stateAction으로 대체합니다.",
-    "Every normalized state ships a default label and glyph. stateLabel overrides only the user-facing wording (e.g. a product term for stale) and stateIcon only the glyph; neither changes the state's blocking behavior, live-region urgency, or tone. Do not use them to make a blocking state look healthy."
+    "오류·신호 없음·사용 불가 기본 문구는 원인만 알리는 막다른 문장이 아니라 다음 확인 행동까지 안내합니다. 제품이 더 구체적인 복구 경로를 알면 stateDescription과 stateAction으로 대체합니다."
   ],
   "accessibility": [
     "idle, no-source, loading, connecting, unavailable, disconnected, no-signal, and error mean the content is unusable. They use a central blocking state and make renderer children and local toolbar controls inert/aria-hidden.",
@@ -293,7 +309,9 @@
     "Source identity and the top toolbar remain on one chrome row. The row never wraps; when horizontal space is constrained, the source label keeps a single line and truncates with an ellipsis while the local controls remain fully operable.",
     "The control shelf is one shallow visual layer: it keeps a single border and elevated fill without shadow, while unselected toolbar buttons remain transparent. Hover, focus, pressed, and persistent toggle selection provide the only per-button surfaces."
   ],
-  "exceptions": [],
+  "exceptions": [
+    "top-right는 계약상 계속 지원한다. 상시 상태를 쓰지 않고 상단 배치가 이미 굳어진 화면은 그대로 두어도 된다. 다만 liveness와 같은 모서리에 두지는 않는다."
+  ],
   "related": [
     {
       "component": "Button",
@@ -408,6 +426,11 @@
         "id": "lds-product-viewer-shared-viewer-frame--narrow-blocking-state",
         "name": "반응형 · 좁은 폭 · 차단 정보와 복구",
         "role": "responsive"
+      },
+      {
+        "id": "lds-product-viewer-shared-viewer-frame--control-placement-contract",
+        "name": "배치 규약 · 네 모서리",
+        "role": "interaction"
       }
     ],
     "hiddenEvidence": 0
@@ -427,7 +450,7 @@
     "responsive": "evidence",
     "contentGuidance": "evidence",
     "accessibility": "evidence",
-    "exceptions": "omitted-no-evidence",
+    "exceptions": "evidence",
     "related": "evidence",
     "examples": "evidence",
     "tokens": "evidence",

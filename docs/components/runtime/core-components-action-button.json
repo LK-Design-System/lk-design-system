@@ -24,7 +24,7 @@
     },
     {
       "part": "loadingLabel",
-      "rule": "Screen-reader label announced with the loading spinner. @default \"불러오는 중\""
+      "rule": "Screen-reader label announced with the loading spinner (loading = true). @default \"불러오는 중\""
     }
   ],
   "properties": [
@@ -86,16 +86,16 @@
     },
     {
       "name": "loading",
-      "type": "boolean",
+      "type": "boolean | 'inline'",
       "required": false,
-      "description": "Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation.",
+      "description": "Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation. true swaps the label for a centered spinner on the muted palette. \"inline\" keeps the label visible with a leading spinner and preserves the variant palette — for controls whose words must survive the wait (e.g. a safety stop reading \"정지 요청 중\"). Blocking semantics are identical in both modes.",
       "owner": "ButtonProps"
     },
     {
       "name": "loadingLabel",
       "type": "string",
       "required": false,
-      "description": "Screen-reader label announced with the loading spinner. @default \"불러오는 중\"",
+      "description": "Screen-reader label announced with the loading spinner (loading = true). @default \"불러오는 중\"",
       "owner": "ButtonProps"
     },
     {
@@ -124,11 +124,11 @@
     },
     {
       "state": "loading",
-      "rule": "Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation."
+      "rule": "Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation. true swaps the label for a centered spinner on the muted palette. \"inline\" keeps the label visible with a leading spinner and preserves the variant palette — for controls whose words must survive the wait (e.g. a safety stop reading \"정지 요청 중\"). Blocking semantics are identical in both modes."
     },
     {
       "state": "loadingLabel",
-      "rule": "Screen-reader label announced with the loading spinner. @default \"불러오는 중\""
+      "rule": "Screen-reader label announced with the loading spinner (loading = true). @default \"불러오는 중\""
     }
   ],
   "behavior": [],
@@ -158,6 +158,7 @@
     "full: fills the container width."
   ],
   "contentGuidance": [
+    "loading=\"inline\": the second loading presentation — the spinner sits beside the label and the variant palette stays. 말이 사라지면 안 되는 컨트롤(예: \"정지 요청 중\"을 계속 말해야 하는 안전 정지)용. 차단 계약은 true와 동일하고 표현만 다릅니다.",
     "Ghost text also resolves from the rendered theme scope. Transparent fill and the hairline border carry its lower emphasis; text contrast is not reduced to create hierarchy."
   ],
   "accessibility": [

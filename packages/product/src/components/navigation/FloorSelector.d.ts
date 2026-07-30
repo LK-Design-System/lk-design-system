@@ -16,6 +16,14 @@ export interface FloorSelectorProps extends Omit<React.HTMLAttributes<HTMLDivEle
    * @default "light"
    */
   appearance?: 'light' | 'dark';
+  /**
+   * 밀도. 이 선택기의 제자리는 Viewer 컨트롤 레일이라 ViewerToolbar(28px 버튼)와
+   * 높이를 맞춘 `sm`이 기본이다. 패널 전체를 겨눌 수 있는 단독 배치에는 44px 타깃의
+   * `md`를 쓴다. `sm`도 WCAG 2.5.8(AA, 24×24)은 충족하며, 2.5.5(AAA, 44×44)가
+   * 필요한 화면에서는 `md`를 지정한다.
+   * @default "sm"
+   */
+  size?: 'md' | 'sm';
 }
 
 /** 층/레벨 선택기(빌딩 내비) — 단일 선택, 활성 층은 시그널 잉크. */

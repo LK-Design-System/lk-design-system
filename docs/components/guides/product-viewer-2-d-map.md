@@ -58,10 +58,10 @@
 | `source` | `React.ReactNode` | No | 좌상단 source identity. |
 | `badges` | `React.ReactNode` | No | source 옆 passive badge. |
 | `hud` | `React.ReactNode` | No | 소수의 필수 viewport readout. |
+| `scope` | `React.ReactNode` | No | 상단 우측 범위 전환 레일(층·레벨·카메라). 뷰 조작 toolbar는 우하단에 남는다. |
 | `state` | `ViewerState` | No | Legacy combined Viewer state. Prefer the orthogonal axes in new product code. |
 | `availability` | `ViewerAvailability` | No |  |
 | `connection` | `ViewerConnection` | No |  |
-| `freshness` | `ViewerFreshness` | No |  |
 
 ## States
 

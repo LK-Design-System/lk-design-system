@@ -5002,6 +5002,50 @@
         "reason": "Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked."
       },
       {
+        "css": "--component-viewer-light-map-boundary",
+        "files": [
+          "tokens/components.css"
+        ],
+        "values": [
+          "color-mix(in srgb, var(--color-semantic-static-black) 28%, transparent)"
+        ],
+        "classification": "runtime-projection",
+        "reason": "Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked."
+      },
+      {
+        "css": "--component-viewer-light-map-free",
+        "files": [
+          "tokens/components.css"
+        ],
+        "values": [
+          "var(--color-semantic-static-white)"
+        ],
+        "classification": "runtime-projection",
+        "reason": "Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked."
+      },
+      {
+        "css": "--component-viewer-light-map-occupied",
+        "files": [
+          "tokens/components.css"
+        ],
+        "values": [
+          "color-mix(in srgb, var(--color-semantic-static-black) 79%, transparent)"
+        ],
+        "classification": "runtime-projection",
+        "reason": "Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked."
+      },
+      {
+        "css": "--component-viewer-light-map-unknown",
+        "files": [
+          "tokens/components.css"
+        ],
+        "values": [
+          "color-mix(in srgb, var(--color-semantic-static-black) 4%, var(--color-semantic-static-white))"
+        ],
+        "classification": "runtime-projection",
+        "reason": "Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked."
+      },
+      {
         "css": "--component-viewer-light-muted",
         "files": [
           "tokens/components.css"
@@ -5030,6 +5074,50 @@
         ],
         "values": [
           "color-mix(in srgb, var(--color-semantic-static-black) 4%, var(--color-semantic-static-white))"
+        ],
+        "classification": "runtime-projection",
+        "reason": "Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked."
+      },
+      {
+        "css": "--component-viewer-map-boundary",
+        "files": [
+          "tokens/components.css"
+        ],
+        "values": [
+          "color-mix(in srgb, var(--color-semantic-static-white) 32%, transparent)"
+        ],
+        "classification": "runtime-projection",
+        "reason": "Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked."
+      },
+      {
+        "css": "--component-viewer-map-free",
+        "files": [
+          "tokens/components.css"
+        ],
+        "values": [
+          "color-mix(in srgb, var(--color-semantic-static-black) 78%, var(--color-semantic-primary-normal))"
+        ],
+        "classification": "runtime-projection",
+        "reason": "Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked."
+      },
+      {
+        "css": "--component-viewer-map-occupied",
+        "files": [
+          "tokens/components.css"
+        ],
+        "values": [
+          "color-mix(in srgb, var(--color-semantic-static-white) 88%, transparent)"
+        ],
+        "classification": "runtime-projection",
+        "reason": "Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked."
+      },
+      {
+        "css": "--component-viewer-map-unknown",
+        "files": [
+          "tokens/components.css"
+        ],
+        "values": [
+          "color-mix(in srgb, var(--color-semantic-static-black) 88%, var(--color-semantic-primary-normal))"
         ],
         "classification": "runtime-projection",
         "reason": "Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked."

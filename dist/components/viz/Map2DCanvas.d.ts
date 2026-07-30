@@ -66,6 +66,8 @@ export interface Map2DCanvasProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   badges?: React.ReactNode;
   /** 소수의 필수 viewport readout. */
   hud?: React.ReactNode;
+  /** 상단 우측 범위 전환 레일(층·레벨·카메라). 뷰 조작 `toolbar`는 우하단에 남는다. */
+  scope?: React.ReactNode;
   /** Legacy combined Viewer state. Prefer the orthogonal axes in new product code. */
   state?: ViewerState;
   availability?: ViewerAvailability;

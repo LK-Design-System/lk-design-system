@@ -599,6 +599,17 @@
       ]
     },
     {
+      "name": "Surface-anchored status overlay",
+      "ownerLayer": "core",
+      "provenance": "robotics-extension",
+      "storyEvidence": [
+        "stories/StatusOverlayChip.stories.jsx"
+      ],
+      "exports": [
+        "OverlayStatusChip"
+      ]
+    },
+    {
       "name": "WDS-derived product status indicators",
       "ownerLayer": "product",
       "provenance": "direct-wds",
@@ -851,6 +862,10 @@
     {
       "path": "components/status/status-presentation.js",
       "ownerLayer": "core"
+    },
+    {
+      "path": "components/viz/_viewerOverlaySurface.js",
+      "ownerLayer": "product"
     }
   ]
 }

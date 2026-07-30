@@ -11,6 +11,7 @@
   "supportingComponents": [
     "Button",
     "Icon",
+    "Slider",
     "ViewerToolbar",
     "ViewerToolbarButton"
   ],
@@ -44,6 +45,10 @@
     {
       "part": "toolbarVisibility",
       "rule": "Local media controls are revealed by hover, press, or focus by default."
+    },
+    {
+      "part": "toolbarPlacement",
+      "rule": "뷰포트 컨트롤 위치. 영상은 플레이어 관례를 따라 하단이 기본이며, 상단 우측은 상시 표시되는 생존성 신호가 화면 끝에 붙도록 비워 둔다. @default \"bottom-right\""
     }
   ],
   "properties": [
@@ -125,6 +130,13 @@
       "owner": "VideoStreamTileProps"
     },
     {
+      "name": "liveness",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "상단 우측 생존성 슬롯. state=\"live\"의 라이브 표시가 이 자리에 렌더된다.",
+      "owner": "VideoStreamTileProps"
+    },
+    {
       "name": "hud",
       "type": "React.ReactNode",
       "required": false,
@@ -200,6 +212,13 @@
       "required": false,
       "description": "Local media controls are revealed by hover, press, or focus by default.",
       "owner": "VideoStreamTileProps"
+    },
+    {
+      "name": "toolbarPlacement",
+      "type": "'top-right' | 'bottom-right'",
+      "required": false,
+      "description": "뷰포트 컨트롤 위치. 영상은 플레이어 관례를 따라 하단이 기본이며, 상단 우측은 상시 표시되는 생존성 신호가 화면 끝에 붙도록 비워 둔다. @default \"bottom-right\"",
+      "owner": "VideoStreamTileProps"
     }
   ],
   "states": [
@@ -221,6 +240,7 @@
     }
   ],
   "behavior": [
+    "toolbarPlacement는 bottom-right가 기본이다. 재생 컨트롤은 플레이어 관례상 하단이고, 상단 우측을 비워야 상시 표시되는 라이브 표시가 화면 끝에 붙는다. 상단에 두면 자동 숨김 상태의 툴바가 자리를 차지해 라이브가 가장자리에서 밀린다.",
     "Video.js VolumePanel likewise groups MuteToggle and VolumeControl, expands the control through hover/focus interaction, and returns focus to the mute control when Escape closes the rail. LDS adapts that interaction to ViewerToolbar.",
     "Genetec Security Center tile customization allows video controls, timeline, and tile toolbar to auto-hide and reappear on hover. LDS uses the same information-hierarchy conclusion while preserving keyboard focus reveal."
   ],
@@ -270,6 +290,10 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
+      "component": "Slider",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "ViewerToolbar",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -287,10 +311,6 @@
     },
     {
       "component": "Map2DCanvas",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "Scene3DFrame",
       "relationship": "대표 시나리오에서 조합"
     }
   ],
@@ -328,7 +348,7 @@
       },
       {
         "id": "lds-product-viewer-video-stream--dark-theme",
-        "name": "변형·상태 · 어두운 배경",
+        "name": "변형·상태 · 실사 프레임",
         "role": "variants-states"
       },
       {

@@ -1,8 +1,8 @@
 "use client";
 import {
   Scene3DFrame
-} from "../../chunk-AWO6WANL.js";
-import "../../chunk-XC7RDVAQ.js";
+} from "../../chunk-5LQMTPTZ.js";
+import "../../chunk-SOC4OIYH.js";
 import "../../chunk-VSYEB7PE.js";
 import "../../chunk-KRO3ULVK.js";
 import "../../chunk-Q34VOAMJ.js";

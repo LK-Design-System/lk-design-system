@@ -82,5 +82,6 @@ export { Switch } from '../components/selection/Switch';
 export { Banner } from '../components/status/Banner';
 export { Callout } from '../components/status/Callout';
 export { EmptyState } from '../components/status/EmptyState';
+export { OverlayStatusChip } from '../components/status/OverlayStatusChip';
 export { Skeleton } from '../components/status/Skeleton';
 export { Spinner } from '../components/status/Spinner';

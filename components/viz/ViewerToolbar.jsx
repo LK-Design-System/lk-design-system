@@ -2,6 +2,7 @@ import React from 'react';
 import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
 import { ToggleIcon } from '@lk-robotics/lds-core/components/buttons/ToggleIcon';
 import { Toolbar } from '../navigation/Toolbar.jsx';
+import { VIEWER_OVERLAY_SURFACE } from './_viewerOverlaySurface.js';
 
 const ViewerToolbarAppearanceContext = React.createContext('minimal');
 
@@ -22,14 +23,18 @@ const TOOLBAR_APPEARANCES = {
     borderRadius: 0,
     boxShadow: 'none',
   },
+  // The overlay-surface family module owns this recipe (strong level: the
+  // toolbar is chrome the operator reads and clicks, so legibility outranks
+  // seeing through it). The old inline copy carried a raw #101b26 fallback the
+  // family has since replaced with the static-black token.
   'on-dark': {
     gap: 2,
     padding: 2,
-    background: 'color-mix(in srgb, var(--viewer-surface-elevated, #101b26) 94%, transparent)',
-    border: '1px solid color-mix(in srgb, var(--color-semantic-static-white) 20%, transparent)',
+    background: VIEWER_OVERLAY_SURFACE.strong.surface,
+    border: VIEWER_OVERLAY_SURFACE.strong.border,
     borderRadius: 'var(--radius-md)',
-    boxShadow: '0 2px 8px color-mix(in srgb, var(--color-semantic-static-black) 24%, transparent)',
-    backdropFilter: 'blur(8px)',
+    boxShadow: VIEWER_OVERLAY_SURFACE.strong.shadow,
+    backdropFilter: VIEWER_OVERLAY_SURFACE.strong.blur,
   },
 };
 

@@ -104,6 +104,7 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 ### Tokens
 
 - `--color-semantic-fill-strong`
+- `--color-semantic-label-alternative`
 - `--color-semantic-label-disable`
 - `--color-semantic-label-neutral`
 - `--color-semantic-primary-normal`

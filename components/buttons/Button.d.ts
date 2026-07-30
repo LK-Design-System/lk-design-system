@@ -36,10 +36,16 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
    * Show the action loading state and prevent repeated activation. The control
    * stays focusable while loading (`aria-disabled` + `aria-busy` rather than
    * native `disabled`) so keyboard focus is not lost on activation.
+   *
+   * `true` swaps the label for a centered spinner on the muted palette.
+   * `"inline"` keeps the label visible with a leading spinner and preserves
+   * the variant palette — for controls whose words must survive the wait
+   * (e.g. a safety stop reading "정지 요청 중"). Blocking semantics are
+   * identical in both modes.
    * @default false
    */
-  loading?: boolean;
-  /** Screen-reader label announced with the loading spinner. @default "불러오는 중" */
+  loading?: boolean | 'inline';
+  /** Screen-reader label announced with the loading spinner (`loading` = `true`). @default "불러오는 중" */
   loadingLabel?: string;
   /** Render with another element or component, such as "a" for link CTAs. @default "button" */
   as?: React.ElementType;

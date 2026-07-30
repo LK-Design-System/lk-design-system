@@ -191,6 +191,7 @@ export { Callout } from '../components/status/Callout.jsx';
 export { CircularProgress } from '../components/status/CircularProgress.jsx';
 export { EmptyState } from '../components/status/EmptyState.jsx';
 export { Meter } from '../components/status/Meter.jsx';
+export { OverlayStatusChip } from '../components/status/OverlayStatusChip.jsx';
 export { ProgressBar } from '../components/status/ProgressBar.jsx';
 export { Skeleton } from '../components/status/Skeleton.jsx';
 export { Spinner } from '../components/status/Spinner.jsx';

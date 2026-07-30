@@ -23,7 +23,7 @@
 | Part | Contract |
 | --- | --- |
 | iconOnly | Render the icon-only square button treatment. Requires aria-label (or aria-labelledby); a development-only console warning fires when neither is supplied. |
-| loadingLabel | Screen-reader label announced with the loading spinner. @default "불러오는 중" |
+| loadingLabel | Screen-reader label announced with the loading spinner (loading = true). @default "불러오는 중" |
 
 ## Properties
 
@@ -37,8 +37,8 @@
 | `disabled` | `boolean` | No | Disable activation and mark the control unavailable. @default false |
 | `disable` | `boolean` | No | Disable alias. @default false |
 | `iconOnly` | `boolean` | No | Render the icon-only square button treatment. Requires aria-label (or aria-labelledby); a development-only console warning fires when neither is supplied. |
-| `loading` | `boolean` | No | Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation. |
-| `loadingLabel` | `string` | No | Screen-reader label announced with the loading spinner. @default "불러오는 중" |
+| `loading` | `boolean \| 'inline'` | No | Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation. true swaps the label for a centered spinner on the muted palette. "inline" keeps the label visible with a leading spinner and preserves the variant palette — for controls whose words must survive the wait (e.g. a safety stop reading "정지 요청 중"). Blocking semantics are identical in both modes. |
+| `loadingLabel` | `string` | No | Screen-reader label announced with the loading spinner (loading = true). @default "불러오는 중" |
 | `as` | `React.ElementType` | No | Render with another element or component, such as "a" for link CTAs. @default "button" |
 | `children` | `React.ReactNode` | No |  |
 
@@ -48,8 +48,8 @@
 | --- | --- |
 | variant | Visual action variant mapped through LK theme tokens. Also accepts "solid" and "outlined". @default "primary" |
 | disabled | Disable activation and mark the control unavailable. @default false |
-| loading | Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation. |
-| loadingLabel | Screen-reader label announced with the loading spinner. @default "불러오는 중" |
+| loading | Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation. true swaps the label for a centered spinner on the muted palette. "inline" keeps the label visible with a leading spinner and preserves the variant palette — for controls whose words must survive the wait (e.g. a safety stop reading "정지 요청 중"). Blocking semantics are identical in both modes. |
+| loadingLabel | Screen-reader label announced with the loading spinner (loading = true). @default "불러오는 중" |
 
 ## 정량 규칙
 
@@ -68,6 +68,7 @@
 
 ## Content and writing
 
+- loading="inline": the second loading presentation — the spinner sits beside the label and the variant palette stays. 말이 사라지면 안 되는 컨트롤(예: "정지 요청 중"을 계속 말해야 하는 안전 정지)용. 차단 계약은 true와 동일하고 표현만 다릅니다.
 - Ghost text also resolves from the rendered theme scope. Transparent fill and the hairline border carry its lower emphasis; text contrast is not reduced to create hierarchy.
 
 ## Accessibility

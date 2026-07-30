@@ -59,6 +59,7 @@
 | [Empty State](guides/core-components-status-empty-state.md) | Core / Status | `EmptyState` | mapped | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Notices and Callouts](guides/core-components-status-notices-and-callouts.md) | Core / Status | `Banner`, `Callout` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Notification](guides/core-components-status-notification.md) | Core / Status | `Notification` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
+| [Overlay Status Chip](guides/core-components-status-overlay-status-chip.md) | Core / Status | `OverlayStatusChip` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Skeleton](guides/core-components-status-skeleton.md) | Core / Status | `Skeleton` | mapped | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Spinner](guides/core-components-status-spinner.md) | Core / Status | `Spinner` | mapped | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Status Badge](guides/core-components-status-status-badge.md) | Core / Status | `StatusBadge` | mapped | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
@@ -128,7 +129,7 @@
 | [Dashboard Navigation](guides/product-navigation-dashboard-navigation.md) | Product / Navigation | `DashboardShell` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Footer](guides/product-navigation-footer.md) | Product / Navigation | `Footer` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Language Switcher](guides/product-navigation-language-switcher.md) | Product / Navigation | `LanguageSwitcher` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
-| [Menubar](guides/product-navigation-menubar.md) | Product / Navigation | `Menubar` | mapped | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
+| [Menubar](guides/product-navigation-menubar.md) | Product / Navigation | `Menubar` | mapped | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Side Nav](guides/product-navigation-side-nav.md) | Product / Navigation | `SideNav` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
 | [Steps](guides/product-navigation-steps.md) | Product / Navigation | `Steps` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Top Bar](guides/product-navigation-top-bar.md) | Product / Navigation | `TopBar` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
@@ -169,12 +170,14 @@
 | [Progress](guides/product-status-progress.md) | Product / Status | `CircularProgress`, `ProgressBar` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Telemetry Gauge](guides/product-status-telemetry-gauge.md) | Product / Status | `TelemetryGauge` | mapped | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
 | [Telemetry Value](guides/product-status-telemetry-value.md) | Product / Status | `TelemetryValue` | mapped | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
-| [2D Map](guides/product-viewer-2-d-map.md) | Product / Viewer | `Map2DCanvas` | mapped | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
-| [3D Scene](guides/product-viewer-3-d-scene.md) | Product / Viewer | `Scene3DFrame` | mapped | implemented | not-tracked | not-tracked | 3 public / 2 hidden |
-| [Floor Selector](guides/product-viewer-floor-selector.md) | Product / Viewer | `FloorSelector` | mapped | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
+| [2D Map](guides/product-viewer-2-d-map.md) | Product / Viewer | `Map2DCanvas` | mapped | implemented | not-tracked | not-tracked | 3 public / 4 hidden |
+| [3D Viewport Frame](guides/product-viewer-3-d-viewport-frame.md) | Product / Viewer | `Scene3DFrame` | mapped | implemented | not-tracked | not-tracked | 3 public / 2 hidden |
+| [Elevator Fleet Overview](guides/product-viewer-elevator-fleet-overview.md) | Product / Viewer | `ElevatorFleetOverview` | mapped | implemented | not-tracked | not-tracked | 1 public / 5 hidden |
+| [Floor Selector](guides/product-viewer-floor-selector.md) | Product / Viewer | `FloorSelector` | mapped | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
 | [Toolbar](guides/product-viewer-toolbar.md) | Product / Viewer | `ViewerToolbar` | mapped | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Video Stream](guides/product-viewer-video-stream.md) | Product / Viewer | `VideoStreamTile` | mapped | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
-| [Viewer Frame](guides/product-viewer-viewer-frame.md) | Product / Viewer | `ViewerFrame` | mapped | implemented | not-tracked | not-tracked | 5 public / 0 hidden |
+| [Viewer Frame](guides/product-viewer-viewer-frame.md) | Product / Viewer | `ViewerFrame` | mapped | implemented | not-tracked | not-tracked | 6 public / 0 hidden |
 | [LK ROBOTICS Logo](guides/theme-brand-lk-robotics-logo.md) | Theme / Brand | `Lockup` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Theme Toggle](guides/theme-controls-theme-toggle.md) | Theme / Controls | `ThemeToggle` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Brand Spinner](guides/theme-status-brand-spinner.md) | Theme / Status | `Theme:Brand Spinner` | mapped | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
+| [Directory](guides/lds-directory.md) | Other / LDS | `Link` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |

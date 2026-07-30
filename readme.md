@@ -161,7 +161,7 @@ npm run check:audit
 npm run check:ops-release
 ```
 
-패키지 진입 파일은 현재 179개의 React 컴포넌트 소스 파일(`components/**/*.jsx`) 기준으로 생성됩니다.
+패키지 진입 파일은 현재 202개의 React 컴포넌트 소스 파일(`components/**/*.jsx`) 기준으로 생성됩니다.
 
 ```powershell
 npm run generate:entry
@@ -178,7 +178,7 @@ npm run storybook
 npm run build:storybook
 ```
 
-현재 이 저장소의 public Storybook sidebar는 `LDS Core/Foundation`, `LDS Core/Components`, `LDS Theme`, `LDS Product` 아래의 컴포넌트와 패턴 표면 369개 story를 다룹니다. `LDS Robotics` Storybook은 `LK Design System Robotics` 저장소가 별도로 소유합니다.
+현재 이 저장소의 public Storybook sidebar는 `LDS Core/Foundation`, `LDS Core/Components`, `LDS Theme`, `LDS Product` 아래의 컴포넌트와 패턴 표면 451개 story를 다룹니다. `LDS Robotics` Storybook은 `LK Design System Robotics` 저장소가 별도로 소유합니다.
 WDS 원천 번호 체계(`1 Theme`, `3 Component / 2 Action` 등)는 public sidebar title이 아니라 `docs/references/wds/`의 근거 데이터에만 남깁니다.
 `LDS Product`와 별도 저장소의 `LDS Robotics`는 재사용 가능한 확장 컴포넌트/패턴만 다루며, 완성된 앱 화면, 템플릿, 워크플로우, 데모 페이지를 Storybook source of truth로 올리지 않습니다.
 보고/감사/보정표 UI와 운영 문서는 Storybook에 노출하지 않습니다. 원본 파일과 React 표면의 대응 데이터는 `stories/Audit.data.jsx`에 보관하고, 자동 검증 스크립트가 이 데이터를 읽습니다.
@@ -210,7 +210,7 @@ CI는 `npm ci`, 패키지 빌드, 토큰/타입 surface/contract/publish policy/
 
 ## 컴포넌트 범위
 
-이 패키지는 다음 그룹에 걸쳐 179개의 React 컴포넌트 소스 파일을 export합니다.
+이 패키지는 다음 그룹에 걸쳐 202개의 React 컴포넌트 소스 파일을 export합니다.
 
 - `brand`
 - `buttons`

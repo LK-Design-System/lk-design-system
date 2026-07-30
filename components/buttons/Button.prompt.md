@@ -20,6 +20,10 @@ LK theme tokens.
   `aria-busy`; use **loadingLabel** for the single screen-reader name
   (기본값 `불러오는 중`). The existing content keeps its width while visually
   hidden, so loading does not move adjacent controls.
+- **loading="inline"**: the second loading presentation — the spinner sits
+  beside the label and the variant palette stays. 말이 사라지면 안 되는
+  컨트롤(예: "정지 요청 중"을 계속 말해야 하는 안전 정지)용. 차단 계약은
+  `true`와 동일하고 표현만 다릅니다.
 - **loading은 native `disabled`를 사용하지 않습니다.** 대신 `aria-disabled="true"`
   와 `aria-busy="true"`를 두고 activation만 차단합니다. native `disabled`로 만들면
   방금 그 버튼을 누른 키보드 사용자의 focus가 즉시 `<body>`로 튕기기 때문이며,

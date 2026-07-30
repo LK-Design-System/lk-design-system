@@ -1,0 +1,114 @@
+# Overlay Status Chip
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Core / Status |
+| Owner | `OverlayStatusChip` |
+| Storybook | `LDS Core/Components/Status/Overlay Status Chip` |
+| Source | `../component-content.json#core-components-status-overlay-status-chip` |
+
+캔버스·뷰어·제어 영역이 떠 있는 채로 비활성이거나 배경 작업 중일 때 그 이유를 표면 위에 얹어 말할 때 적합합니다. 흐름 속 안내에는 Banner나 Callout을, 화면 단위의 일시 알림에는 Notification을 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- Surface-anchored, non-blocking status pill for an interaction surface that stays up while inert or busy.
+
+### 사용하지 않음
+
+- 제품 boundary: 어떤 상태를 언제 띄울지는 제품 소유. 칩은 표현만 소유하며 타이머·전이·큐잉을 내장하지 않는다.
+- 의도적 제외: 어두운 영상 위 스크림 변형(viewerOverlaySurface.js의 soft 레벨)은 소비처가 생길 때까지 추가하지 않는다 — 제안 문서의 확장 지점. positive 톤도 동일(성공은 대개 표면이 스스로 보여준다).
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| icon | 톤 기본 글리프를 교체하는 Icon 이름. |
+| children | 칩 라벨. 한 줄로 말줄임되며, 색만으로 상태를 전달하지 않는 필수 텍스트 채널입니다. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `tone` | `'neutral' \| 'cautionary' \| 'negative'` | No | 상태 톤. neutral은 휴지 상태용(상태색 없음 — hold-to-run 컨트롤의 대기처럼 정상인 기다림에 경보를 쓰지 않습니다). cautionary/negative는 실제로 격상되는 경우에만 쓰며, 글리프·색은 Status 가족의 공용 톤 어휘를 따릅니다. |
+| `icon` | `string` | No | 톤 기본 글리프를 교체하는 Icon 이름. |
+| `children` | `React.ReactNode` | No | 칩 라벨. 한 줄로 말줄임되며, 색만으로 상태를 전달하지 않는 필수 텍스트 채널입니다. |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| tone | 상태 톤. neutral은 휴지 상태용(상태색 없음 — hold-to-run 컨트롤의 대기처럼 정상인 기다림에 경보를 쓰지 않습니다). cautionary/negative는 실제로 격상되는 경우에만 쓰며, 글리프·색은 Status 가족의 공용 톤 어휘를 따릅니다. |
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | tone: neutral(기본, 상태색 없음 — 휴지 상태는 결함이 아니다) · cautionary · negative. 글리프·색은 status-presentation.js의 STATUSTONESTYLE을 그대로 소비한다 — 제2의 톤 어휘를 만들지 않는다. |
+| 명시 규칙 2 | 외부 근거: WAI-ARIA status role — 비차단 상태 표면의 라이브 시맨틱; Material 3 Snackbar — 콘텐츠 위 비차단 오버레이는 조작을 가로막지 않고 핵심 UI를 가리지 않아야 한다는 카테고리 기대치(단, Snackbar는 일시적·화면 기준이고 이 칩은 상시·표면 기준이라는 차이를 의도적으로 유지). 형태(반투명/유리 위 알약 HUD)는 관제· 플레이어 계열 오버레이 관례를 따르되 값은 LDS 토큰으로만 구성. |
+| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
+| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
+| --color-semantic-line-normal-alternative | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
+
+## Content and writing
+
+- sibling 경계: Banner·Callout은 in-flow 블록(삽입이 표면을 밀어냄), Notification은 화면 구석의 일시 알림, Tooltip은 호버 트리거, StatusBadge· StatusIndicator는 개체의 라벨/신호(표면 앵커 없음). 이 칩만이 "표면 위, 레이아웃 불참, 상시"를 만족한다.
+
+## Accessibility
+
+- 계약: position: absolute(기본 상단 중앙, style로 재배치) · pointer-events: none(칩은 컨트롤을 설명할 뿐, 재활성화 입력을 가로채면 안 된다) · role="status" · 호출부는 inert 서브트리 밖에 배치한다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<div style={{ position: 'relative' }}>
+  <OverlayStatusChip>연속 활성화 입력 대기</OverlayStatusChip>
+  <div inert>{/* the surface the chip describes */}</div>
+</div>
+
+<OverlayStatusChip tone="cautionary">제어 포커스 해제</OverlayStatusChip>
+<OverlayStatusChip tone="negative" style={{ top: 'auto', bottom: 'var(--space-4)' }}>
+  동기화 실패
+</OverlayStatusChip>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-label-neutral`
+- `--color-semantic-line-normal-alternative`
+- `--font-sans`
+- `--label1-line`
+- `--label1-size`
+- `--shadow-sm`
+- `--space-1`
+- `--space-2`
+- `--space-3`
+- `--space-4`
+- `--space-6`
+
+### Source contracts
+
+- `components/status/OverlayStatusChip.jsx`
+- `components/status/OverlayStatusChip.d.ts`
+- `components/status/OverlayStatusChip.prompt.md`
+- `stories/StatusOverlayChip.stories.jsx`
+
+## Sources
+
+- OverlayStatusChip prompt contract: `components/status/OverlayStatusChip.prompt.md`
+- Storybook implementation evidence: `stories/StatusOverlayChip.stories.jsx`
+- [WAI-ARIA status role](https://www.w3.org/TR/wai-aria-1.2/#status)
+- [Material 3 Snackbar](https://m3.material.io/components/snackbar/guidelines)

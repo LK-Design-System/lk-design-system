@@ -48,6 +48,13 @@ export interface ViewerFrameProps extends React.HTMLAttributes<HTMLDivElement> {
   liveness?: React.ReactNode;
   /** Compact, passive diagnostics. Keep the default HUD to essential values only. */
   hud?: React.ReactNode;
+  /**
+   * 상단 우측 범위 전환 레일 — 층·레벨·카메라처럼 "무엇을 보는가"를 바꾸는 컨트롤.
+   * 뷰 조작(`toolbar`)은 우하단에 남고 이 레일은 상단 우측 오버레이로 뜬다. 상단
+   * 크롬 높이를 측정해 그 아래에 붙고, 길어지면 표면을 넘지 않고 스크롤된다.
+   * `toolbarPlacement="top-right"`(헤더 안 in-flow 셸프)와는 다른 자리다.
+   */
+  scope?: React.ReactNode;
   /** Viewport-local controls such as zoom, fit, mute, or fullscreen. */
   toolbar?: React.ReactNode;
   /**

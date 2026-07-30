@@ -216,11 +216,13 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
   const [pointerWithin, setPointerWithin] = React.useState(false);
   const [focusWithin, setFocusWithin] = React.useState(false);
   const [topToolbarOwnsChrome, setTopToolbarOwnsChrome] = React.useState(false);
-  // The scope rail hangs directly under the top chrome, and that chrome's height
-  // is content-dependent (identity chip alone vs identity + HUD rows). A fixed
-  // offset would either collide with a tall HUD or float below a bare source
-  // chip, so the rail measures what it must clear.
-  const [topbarHeight, setTopbarHeight] = React.useState(0);
+  // scope 레일이 상단에서 비켜가야 할 거리. 우측 열을 쓰는 상단 요소(liveness,
+  // top-right 툴바)의 아래끝이며, 그런 요소가 없으면 0이라 레일은 다른 크롬과
+  // 같은 12px 인셋으로 상단에 붙는다. 높이가 콘텐츠에 따라 변하므로 측정한다.
+  const [scopeTopOffset, setScopeTopOffset] = React.useState(0);
+  // 같은 우측 열을 쓰는 하단 툴바가 차지한 높이. scope 레일이 표면 기준으로만
+  // 잘리면 화면이 짧아질 때 두 컨트롤이 같은 자리에서 겹친다.
+  const [bottomShelfHeight, setBottomShelfHeight] = React.useState(0);
   const resolvedState = resolveViewerState({
     state,
     availability,
@@ -258,19 +260,46 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
   React.useLayoutEffect(() => {
     const node = topbarRef.current;
     if (scope == null || node == null) {
-      setTopbarHeight(0);
+      setScopeTopOffset(0);
       return undefined;
     }
     const view = node.ownerDocument.defaultView;
     const update = () => {
-      const next = node.getBoundingClientRect().height;
-      setTopbarHeight((current) => (Math.abs(current - next) > 0.5 ? next : current));
+      // 비켜갈 대상은 topbar 전체가 아니라 **같은 우측 열에 실제로 놓인 것**뿐이다.
+      // 정체성 칩은 좌측이라 우측 레일을 가리지 않는데, topbar 높이를 그대로 쓰면
+      // 오른쪽이 비어 있어도 레일이 그만큼 내려가 어디에도 붙지 않은 채 뜬다.
+      const occupants = [
+        node.querySelector('[data-viewer-liveness]'),
+        node.querySelector('[data-viewer-toolbar]'),
+      ].filter(Boolean);
+      const top = node.getBoundingClientRect().top;
+      const next = occupants.length === 0
+        ? 0
+        : Math.max(...occupants.map((el) => el.getBoundingClientRect().bottom - top));
+      setScopeTopOffset((current) => (Math.abs(current - next) > 0.5 ? next : current));
     };
     update();
     const observer = view?.ResizeObserver ? new view.ResizeObserver(update) : null;
     observer?.observe(node);
     return () => observer?.disconnect();
-  }, [scope, source, badges, liveness, hud, presentation.corner]);
+  }, [scope, source, badges, liveness, hud, topToolbar, presentation.corner]);
+
+  React.useLayoutEffect(() => {
+    const node = toolbarShelfRef.current;
+    if (scope == null || bottomToolbar == null || node == null) {
+      setBottomShelfHeight(0);
+      return undefined;
+    }
+    const view = node.ownerDocument.defaultView;
+    const update = () => {
+      const next = node.getBoundingClientRect().height;
+      setBottomShelfHeight((current) => (Math.abs(current - next) > 0.5 ? next : current));
+    };
+    update();
+    const observer = view?.ResizeObserver ? new view.ResizeObserver(update) : null;
+    observer?.observe(node);
+    return () => observer?.disconnect();
+  }, [scope, bottomToolbar]);
 
   React.useLayoutEffect(() => {
     if (typeof document === 'undefined') return;
@@ -649,10 +678,16 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
             position: 'absolute',
             zIndex: 3,
             right: 12,
-            top: topbarHeight || 12,
-            // 하단 툴바와 같은 우측 열을 쓰므로, 길어지면 지도 밖으로 나가지 않고
-            // 스크롤된다. 15층짜리 목록도 표면 안에 머문다.
-            maxHeight: `calc(100% - ${Math.round(topbarHeight || 12) + 12}px)`,
+            // 비켜갈 요소가 있으면 그 아래로 8px 띄우고, 없으면 다른 크롬과 같은
+            // 12px 인셋으로 상단에 붙는다.
+            top: scopeTopOffset > 0 ? Math.round(scopeTopOffset) + 8 : 12,
+            // 하단 툴바와 같은 우측 열을 쓰므로 그 자리를 비워두고 남은 높이만
+            // 쓴다. 길어지면 지도 밖으로 나가거나 툴바를 덮지 않고 스크롤된다.
+            maxHeight: `calc(100% - ${
+              (scopeTopOffset > 0 ? Math.round(scopeTopOffset) + 8 : 12)
+              + 12
+              + (bottomShelfHeight > 0 ? Math.round(bottomShelfHeight) + 8 : 0)
+            }px)`,
             overflowY: 'auto',
             overscrollBehavior: 'contain',
             pointerEvents: blocking ? 'none' : 'auto',

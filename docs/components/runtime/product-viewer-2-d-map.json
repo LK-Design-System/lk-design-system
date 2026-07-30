@@ -184,6 +184,13 @@
       "owner": "Map2DCanvasProps"
     },
     {
+      "name": "scope",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "상단 우측 범위 전환 레일(층·레벨·카메라). 뷰 조작 toolbar는 우하단에 남는다.",
+      "owner": "Map2DCanvasProps"
+    },
+    {
       "name": "state",
       "type": "ViewerState",
       "required": false,
@@ -200,13 +207,6 @@
     {
       "name": "connection",
       "type": "ViewerConnection",
-      "required": false,
-      "description": "",
-      "owner": "Map2DCanvasProps"
-    },
-    {
-      "name": "freshness",
-      "type": "ViewerFreshness",
       "required": false,
       "description": "",
       "owner": "Map2DCanvasProps"
@@ -330,11 +330,6 @@
         "role": "overview"
       },
       {
-        "id": "lds-product-viewer-2d-map--origin-and-navigation-states",
-        "name": "변형·상태 · 중앙 원점 · 탐색 비활성",
-        "role": "variants-states"
-      },
-      {
         "id": "lds-product-viewer-2d-map--keyboard-and-pointer-contract",
         "name": "상호작용 · 키보드·포인터 줌",
         "role": "interaction"
@@ -345,7 +340,7 @@
         "role": "responsive"
       }
     ],
-    "hiddenEvidence": 1
+    "hiddenEvidence": 4
   },
   "sources": [],
   "canonicalGuide": null,

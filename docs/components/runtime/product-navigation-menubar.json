@@ -205,11 +205,6 @@
         "role": "overview"
       },
       {
-        "id": "lds-product-navigation-menubar--drill-submenus",
-        "name": "상호작용 · 드릴인 서브메뉴",
-        "role": "interaction"
-      },
-      {
         "id": "lds-product-navigation-menubar--nested-submenus",
         "name": "상호작용 · 중첩 서브메뉴",
         "role": "interaction"
@@ -220,7 +215,7 @@
         "role": "interaction"
       }
     ],
-    "hiddenEvidence": 0
+    "hiddenEvidence": 1
   },
   "sources": [],
   "canonicalGuide": null,

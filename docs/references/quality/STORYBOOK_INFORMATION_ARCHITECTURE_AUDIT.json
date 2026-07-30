@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "3563cd94c665a34564653b003db53bfcdfd16b2e724a239a345735c09e374ebd",
+    "storybookIndexSha256": "b94b48f797ed33ae0e484bb0f191b2d9c506aebafb77d8acdad0d1f03e1d1e01",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -61,42 +61,42 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 187,
-    "stories": 617,
-    "publicStories": 447,
-    "hiddenStories": 170,
-    "componentDescriptions": 183,
-    "pagesWithVisibleCanvasIntroduction": 183,
-    "pagesWithDecisionGuidance": 175,
-    "describedPublicStories": 446,
-    "reviewedPages": 186,
-    "reviewedStories": 608,
-    "staleReviewedPages": 55,
-    "recommendedVisibilityChanges": 1,
+    "pages": 190,
+    "stories": 630,
+    "publicStories": 451,
+    "hiddenStories": 179,
+    "componentDescriptions": 186,
+    "pagesWithVisibleCanvasIntroduction": 186,
+    "pagesWithDecisionGuidance": 176,
+    "describedPublicStories": 450,
+    "reviewedPages": 187,
+    "reviewedStories": 609,
+    "staleReviewedPages": 63,
+    "recommendedVisibilityChanges": 2,
     "roles": {
       "foundation-reference": 19,
-      "overview": 171,
+      "overview": 175,
       "usage": 30,
       "variants-states": 95,
-      "interaction": 52,
+      "interaction": 53,
       "responsive": 62,
       "scenario": 21,
-      "visual-parity": 88,
-      "internal-contract": 79
+      "visual-parity": 89,
+      "internal-contract": 86
     },
     "dispositions": {
-      "keep": 187,
+      "keep": 190,
       "merge": 0,
       "split": 0,
       "hide": 0
     },
     "layers": {
       "Core": {
-        "pages": 56,
-        "stories": 185,
-        "public": 110,
+        "pages": 57,
+        "stories": 187,
+        "public": 112,
         "hidden": 75,
-        "guideReadyPages": 54
+        "guideReadyPages": 55
       },
       "Foundation": {
         "pages": 16,
@@ -106,10 +106,10 @@
         "guideReadyPages": 12
       },
       "Product": {
-        "pages": 112,
-        "stories": 406,
-        "public": 318,
-        "hidden": 88,
+        "pages": 113,
+        "stories": 416,
+        "public": 319,
+        "hidden": 97,
         "guideReadyPages": 112
       },
       "Theme": {
@@ -118,6 +118,13 @@
         "public": 3,
         "hidden": 2,
         "guideReadyPages": 3
+      },
+      "Other": {
+        "pages": 1,
+        "stories": 1,
+        "public": 1,
+        "hidden": 0,
+        "guideReadyPages": 0
       }
     }
   },
@@ -6093,6 +6100,91 @@
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
+      "title": "LDS Core/Components/Status/Overlay Status Chip",
+      "layer": "Core",
+      "family": "Status",
+      "importPath": "./stories/StatusOverlayChip.stories.jsx",
+      "sourceSha256": "3687d2795960efd4bef020084f15a645b6605a16f61edfc710c5f05f948bc6f0",
+      "primaryOwner": "OverlayStatusChip",
+      "ownerComponents": [
+        "OverlayStatusChip"
+      ],
+      "supportingComponents": [
+        "Button"
+      ],
+      "visibility": {
+        "public": 2,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-components-status-overlay-status-chip--overlay-status-chips",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "medium",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-07-30",
+      "reviewedSourceSha256": "3687d2795960efd4bef020084f15a645b6605a16f61edfc710c5f05f948bc6f0",
+      "stories": [
+        {
+          "id": "lds-core-components-status-overlay-status-chip--overlay-status-chips",
+          "name": "개요",
+          "exportName": "OverlayStatusChips",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "OverlayStatusChip"
+          ],
+          "supportingComponents": [
+            "Button"
+          ]
+        },
+        {
+          "id": "lds-core-components-status-overlay-status-chip--tones",
+          "name": "변형·상태 · 톤",
+          "exportName": "Tones",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "OverlayStatusChip"
+          ],
+          "supportingComponents": [
+            "Button"
+          ]
+        }
+      ],
+      "reviewNote": "New page for the OverlayStatusChip core promotion (robotics-extension provenance). Reviewed in the built Storybook during the promotion batch: the overview renders a relative demo surface with the chip floating over an inert control, the play pins the layout/pointer non-participation and status-role contract, and the tones story compares neutral/cautionary/negative with STATUS_TONE_STYLE glyphs and bottom placement override."
     },
     {
       "title": "LDS Core/Components/Status/Skeleton",
@@ -14250,7 +14342,7 @@
       "layer": "Product",
       "family": "Editor",
       "importPath": "./stories/EditorViewportStatusBar.stories.jsx",
-      "sourceSha256": "674b326c8781001a3bc36307a04e9fc6d4ca114d346c1a641eac1cb234199371",
+      "sourceSha256": "b6c0fee823152efc3ca91b1aebdf3a39ac2ace94dfbae9bd0b7642e6dd6f035a",
       "primaryOwner": "ViewportStatusBar",
       "ownerComponents": [
         "ViewportStatusBar"
@@ -14285,6 +14377,7 @@
             "autodocs",
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
@@ -14308,6 +14401,7 @@
             "autodocs",
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "variants-states",
@@ -14355,6 +14449,7 @@
             "autodocs",
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "scenario",
@@ -15563,20 +15658,20 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationMenubar.stories.jsx",
-      "sourceSha256": "2d4f5ad3035013cbb4621ea1b13dc89f8b1979e0442535588b06ff8fe7cfc264",
+      "sourceSha256": "0de9a151de99b34cfb8a5a28d598e16784491a5da1880306a16693f6a92c7d27",
       "primaryOwner": "Menubar",
       "ownerComponents": [
         "Menubar"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 4,
-        "hidden": 0
+        "public": 3,
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-navigation-menubar--menubar-patterns",
-        "describedPublicStories": 4,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -15611,30 +15706,6 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
-        },
-        {
-          "id": "lds-product-navigation-menubar--drill-submenus",
-          "name": "상호작용 · 드릴인 서브메뉴",
-          "exportName": "DrillSubmenus",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "interaction",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Menubar"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Same contract family as the Dropdown Menu drill story through the shared useSubmenuBranch hook; play assertions cover same-panel swap, back control, fixed width, and ArrowLeft return."
         },
         {
           "id": "lds-product-navigation-menubar--nested-submenus",
@@ -15683,6 +15754,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-navigation-menubar--drill-submenus",
+          "name": "내부 계약 · 드릴인 서브메뉴",
+          "exportName": "DrillSubmenus",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Menubar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Same contract family as the Dropdown Menu drill story through the shared useSubmenuBranch hook; play assertions cover same-panel swap, back control, fixed width, and ArrowLeft return."
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
@@ -20786,20 +20880,20 @@
       "layer": "Product",
       "family": "Viewer",
       "importPath": "./stories/ViewerMap.stories.jsx",
-      "sourceSha256": "592c404e0940375975e80141fcf93b3fdb4264d62973b80e9e45cf29292f1c29",
+      "sourceSha256": "955e4c93209c4ad7cbe40eabfd968bfa559dfd030a1b1fb6846019870247c2c8",
       "primaryOwner": "Map2DCanvas",
       "ownerComponents": [
         "Map2DCanvas"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 4,
-        "hidden": 1
+        "public": 3,
+        "hidden": 4
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-viewer-2d-map--map-canvas-overview",
-        "describedPublicStories": 4,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -20827,29 +20921,6 @@
           "role": "overview",
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Map2DCanvas"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
-        },
-        {
-          "id": "lds-product-viewer-2d-map--origin-and-navigation-states",
-          "name": "변형·상태 · 중앙 원점 · 탐색 비활성",
-          "exportName": "OriginAndNavigationStates",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "test"
-          ],
-          "role": "variants-states",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
@@ -20892,6 +20963,7 @@
             "autodocs",
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "responsive",
@@ -20905,6 +20977,71 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-2d-map--center-origin-contract",
+          "name": "기술 계약 · 중앙 원점",
+          "exportName": "CenterOriginContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Map2DCanvas"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-viewer-2d-map--input-isolation-contract",
+          "name": "기술 계약 · 중첩 입력 격리",
+          "exportName": "InputIsolationContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Map2DCanvas"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-viewer-2d-map--disabled-navigation-contract",
+          "name": "기술 계약 · 탐색 비활성",
+          "exportName": "DisabledNavigationContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Map2DCanvas"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-product-viewer-2d-map--map-2-d-canvas-card",
@@ -20933,11 +21070,11 @@
       "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
     },
     {
-      "title": "LDS Product/Viewer/3D Scene",
+      "title": "LDS Product/Viewer/3D Viewport Frame",
       "layer": "Product",
       "family": "Viewer",
       "importPath": "./stories/Viewer3D.stories.jsx",
-      "sourceSha256": "66ad9dd71a0d22d0eddeb08187abeefee838bd97fc8d6900ad912098735dc635",
+      "sourceSha256": "e3b1be7bca953d1ed82ecee5ab830226230bf4bbe1c6c4476ed1bdaf8c6dc562",
       "primaryOwner": "Scene3DFrame",
       "ownerComponents": [
         "Scene3DFrame"
@@ -20976,6 +21113,7 @@
             "autodocs",
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
@@ -21103,24 +21241,193 @@
       "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
     },
     {
-      "title": "LDS Product/Viewer/Floor Selector",
+      "title": "LDS Product/Viewer/Elevator Fleet Overview",
       "layer": "Product",
       "family": "Viewer",
-      "importPath": "./stories/ViewerFloorSelector.stories.jsx",
-      "sourceSha256": "f4f7c2cf3fb261d5600f1044cf09cda0d390121001038e3ae41e2673a1f831a4",
-      "primaryOwner": "FloorSelector",
+      "importPath": "./stories/ViewerElevatorFleet.stories.jsx",
+      "sourceSha256": "15e0cb1ae708e9227cba5598b7c3c80b6a3c0f9b70e6ddb3484a4b8d8465972e",
+      "primaryOwner": "ElevatorFleetOverview",
       "ownerComponents": [
-        "FloorSelector"
+        "ElevatorFleetOverview"
       ],
       "supportingComponents": [],
       "visibility": {
         "public": 1,
+        "hidden": 5
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-viewer-elevator-fleet-overview--fleet-overview",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-product-viewer-elevator-fleet-overview--dark-theme",
+          "name": "다크 테마",
+          "exportName": "DarkTheme",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ElevatorFleetOverview"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-viewer-elevator-fleet-overview--empty-fleet",
+          "name": "빈 관제",
+          "exportName": "EmptyFleet",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ElevatorFleetOverview"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-viewer-elevator-fleet-overview--read-only-contract",
+          "name": "읽기 전용 계약",
+          "exportName": "ReadOnlyContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ElevatorFleetOverview"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-viewer-elevator-fleet-overview--narrow-viewport",
+          "name": "좁은 화면",
+          "exportName": "NarrowViewport",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ElevatorFleetOverview"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-viewer-elevator-fleet-overview--fleet-overview",
+          "name": "통합 관제",
+          "exportName": "FleetOverview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ElevatorFleetOverview"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-viewer-elevator-fleet-overview--elevator-fleet-overview-card",
+          "name": "ElevatorFleetOverview console parity",
+          "exportName": "ElevatorFleetOverviewCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ElevatorFleetOverview"
+          ],
+          "supportingComponents": []
+        }
+      ]
+    },
+    {
+      "title": "LDS Product/Viewer/Floor Selector",
+      "layer": "Product",
+      "family": "Viewer",
+      "importPath": "./stories/ViewerFloorSelector.stories.jsx",
+      "sourceSha256": "7200795d07d9f8da716c6654a7a7532795778ad8dc9d8836213c32d98ad6bf9a",
+      "primaryOwner": "FloorSelector",
+      "ownerComponents": [
+        "FloorSelector"
+      ],
+      "supportingComponents": [
+        "Icon",
+        "Map2DCanvas",
+        "ViewerToolbar",
+        "ViewerToolbarButton"
+      ],
+      "visibility": {
+        "public": 2,
         "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-viewer-floor-selector--floor-selection",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -21200,6 +21507,33 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-floor-selector--on-viewer-surface",
+          "name": "뷰어 표면 위",
+          "exportName": "OnViewerSurface",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FloorSelector"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "Map2DCanvas",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ]
         }
       ],
       "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
@@ -21209,7 +21543,7 @@
       "layer": "Product",
       "family": "Viewer",
       "importPath": "./stories/ViewerToolbar.stories.jsx",
-      "sourceSha256": "cb5ee8e1aa00e5b68e7148dfa0dec080f97986889fcc620dca1ba15b431f7c29",
+      "sourceSha256": "54107cda2239077f3ec0849538acf76b6684aeee348e603916bf2da193489385",
       "primaryOwner": "ViewerToolbar",
       "ownerComponents": [
         "ViewerToolbar"
@@ -21249,6 +21583,7 @@
             "autodocs",
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
@@ -21277,6 +21612,7 @@
             "autodocs",
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "variants-states",
@@ -21352,7 +21688,7 @@
       "layer": "Product",
       "family": "Viewer",
       "importPath": "./stories/ViewerVideo.stories.jsx",
-      "sourceSha256": "473dcadda31aa33b0f54dd1a417fb46e7a45af4a662b3b0bf65523e44e17e471",
+      "sourceSha256": "056821b36c79665f3a44d0ae485979780c40a761f863740d70b3b612eaf81bcf",
       "primaryOwner": "VideoStreamTile",
       "ownerComponents": [
         "VideoStreamTile"
@@ -21360,6 +21696,7 @@
       "supportingComponents": [
         "Button",
         "Icon",
+        "Slider",
         "ViewerToolbar",
         "ViewerToolbarButton"
       ],
@@ -21392,6 +21729,7 @@
             "autodocs",
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
@@ -21405,6 +21743,7 @@
           ],
           "supportingComponents": [
             "Icon",
+            "Slider",
             "ViewerToolbar",
             "ViewerToolbarButton"
           ],
@@ -21434,6 +21773,7 @@
           "supportingComponents": [
             "Button",
             "Icon",
+            "Slider",
             "ViewerToolbar",
             "ViewerToolbarButton"
           ],
@@ -21441,7 +21781,7 @@
         },
         {
           "id": "lds-product-viewer-video-stream--dark-theme",
-          "name": "변형·상태 · 어두운 배경",
+          "name": "변형·상태 · 실사 프레임",
           "exportName": "DarkTheme",
           "visibility": "public",
           "tags": [
@@ -21461,6 +21801,7 @@
           ],
           "supportingComponents": [
             "Icon",
+            "Slider",
             "ViewerToolbar",
             "ViewerToolbarButton"
           ],
@@ -21488,6 +21829,7 @@
           ],
           "supportingComponents": [
             "Icon",
+            "Slider",
             "ViewerToolbar",
             "ViewerToolbarButton"
           ],
@@ -21515,6 +21857,7 @@
           ],
           "supportingComponents": [
             "Icon",
+            "Slider",
             "ViewerToolbar",
             "ViewerToolbarButton"
           ],
@@ -21551,7 +21894,7 @@
       "layer": "Product",
       "family": "Viewer",
       "importPath": "./stories/ViewerFrame.stories.jsx",
-      "sourceSha256": "596f461081b85eb4de61b873d4c1e3ba65e279ce994ad567512b0a9d111768b2",
+      "sourceSha256": "26894110d91d825e030cda3e52bf15f290f42432a69e1cf28f66f17b9870c2ee",
       "primaryOwner": "ViewerFrame",
       "ownerComponents": [
         "ViewerFrame"
@@ -21563,13 +21906,13 @@
         "ViewerToolbarButton"
       ],
       "visibility": {
-        "public": 5,
+        "public": 6,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-viewer-shared-viewer-frame--state-placement",
-        "describedPublicStories": 5,
+        "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -21717,6 +22060,33 @@
             "Button"
           ],
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-viewer-shared-viewer-frame--control-placement-contract",
+          "name": "배치 규약 · 네 모서리",
+          "exportName": "ControlPlacementContract",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ViewerFrame"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ViewerToolbar",
+            "ViewerToolbarButton"
+          ]
         }
       ],
       "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
@@ -21941,6 +22311,64 @@
         }
       ],
       "reviewNote": "2026-07-26 canonical visual review: `storyGuide` points to Core Spinner and retains only purpose and avoid-use brand deltas. The page description now owns the positive Brand Spinner purpose exactly once; the negative rule remains in the local decision panel. Story IDs, roles, visibility and behavior are unchanged; the Docs tab renders title, page description, manager-safe canonical link and local guidance only, while story specimens and Controls remain on Canvas."
+    },
+    {
+      "title": "LDS/Directory",
+      "layer": "Other",
+      "family": "LDS",
+      "importPath": "./stories/DesignSystemDirectory.stories.jsx",
+      "sourceSha256": "7c687f16da2b221dadb6ab29b92040d89fc0518ec3b7837ad52f117bbaca7bb4",
+      "primaryOwner": "Link",
+      "ownerComponents": [
+        "Link"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-directory--overview",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "low",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-directory--overview",
+          "name": "Design System Directory",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Link"
+          ],
+          "supportingComponents": []
+        }
+      ]
     }
   ]
 }

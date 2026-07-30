@@ -144,6 +144,7 @@
   ],
   "tokens": [
     "--color-semantic-fill-strong",
+    "--color-semantic-label-alternative",
     "--color-semantic-label-disable",
     "--color-semantic-label-neutral",
     "--color-semantic-primary-normal",
