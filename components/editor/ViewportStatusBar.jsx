@@ -1,5 +1,6 @@
 import React from 'react';
 import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
+import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
 import { normalizeStatusTone } from '../status/status-presentation.js';
 import {
   getUnitSeparator,
@@ -149,11 +150,28 @@ export function ViewportStatusBar({
         ...style,
       }}
     >
+      {/* Mounted for the bar's whole lifetime with only its text replaced. A
+          status node inserted into the DOM together with its message is not a
+          mutation of an existing live region, so the first message would never
+          be announced. VisuallyHidden is absolutely positioned, so the region
+          costs no layout while the bar has nothing to say — the visible chip
+          below stays conditional and is left out of the announcement. */}
+      <VisuallyHidden
+        as="span"
+        data-viewport-status-live=""
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {message != null
+          ? [message, resolvedMessageTone ? (messageToneLabel ?? STATUS_LABEL[resolvedMessageTone]) : null]
+            .filter(Boolean).join(', ')
+          : ''}
+      </VisuallyHidden>
+
       {message != null && (
         <span
-          role="status"
-          aria-live="polite"
-          aria-atomic="true"
+          aria-hidden="true"
           style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', minWidth: 0, maxWidth: 'min(46%, 420px)', overflow: 'hidden', flex: '0 1 auto' }}
         >
           <span

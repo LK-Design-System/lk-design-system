@@ -16,7 +16,6 @@
     "conditionalAriaLiveMount": {
       "components/data/ResourceState.jsx": 2,
       "components/data/SavedViewControl.jsx": 1,
-      "components/editor/ViewportStatusBar.jsx": 1,
       "components/overlay/ToastStack.jsx": 2,
       "components/viz/ViewerFrame.jsx": 3
     },
