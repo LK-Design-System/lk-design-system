@@ -26396,6 +26396,7 @@
         "--color-semantic-status-negative",
         "--font-sans",
         "--fw-semibold",
+        "--viewer-foreground",
         "--color-semantic-label-neutral",
         "--ease-in-out",
         "--color-semantic-fill-strong",
@@ -75034,7 +75035,8 @@
         "--color-semantic-status-positive",
         "--ease-in-out",
         "--font-sans",
-        "--fw-semibold"
+        "--fw-semibold",
+        "--viewer-foreground"
       ],
       "apiLinks": [
         "components/robotics/ConnectionBadge.jsx",

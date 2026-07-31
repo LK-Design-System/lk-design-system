@@ -114,6 +114,7 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 - `--ease-in-out`
 - `--font-sans`
 - `--fw-semibold`
+- `--viewer-foreground`
 
 ### Source contracts
 

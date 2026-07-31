@@ -40357,7 +40357,8 @@
         "--color-semantic-status-positive",
         "--ease-in-out",
         "--font-sans",
-        "--fw-semibold"
+        "--fw-semibold",
+        "--viewer-foreground"
       ],
       "apiLinks": [],
       "migration": [
