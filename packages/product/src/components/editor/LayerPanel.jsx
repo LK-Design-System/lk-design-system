@@ -230,7 +230,10 @@ function LayerRow({
             event.stopPropagation();
             onToggleExpanded(layer.id, !expanded);
           }}
-          style={{ width: 20, height: 20, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0, border: 0, borderRadius: 'var(--radius-sm)', background: 'transparent', color: layerDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', cursor: layerDisabled ? 'not-allowed' : 'pointer' }}
+          // 24x24 is the target-size minimum, but the row's indent slot is 20,
+          // so the box grows and the negative margin gives back what it took:
+          // the hit area clears the minimum while the row measures as before.
+          style={{ width: 24, height: 24, margin: -2, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0, border: 0, borderRadius: 'var(--radius-sm)', background: 'transparent', color: layerDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', cursor: layerDisabled ? 'not-allowed' : 'pointer' }}
         >
           <Icon name={expanded ? 'chevron-down-small' : 'chevron-right-small'} size={14} aria-hidden="true" />
         </button>

@@ -66,9 +66,14 @@ function ConnectionBadge({
         alignItems: "center",
         gap: 6,
         fontFamily: "var(--font-sans)",
+        // A viewer publishes `--viewer-foreground` to its subtree, and this badge
+        // is placed in viewer chrome as often as on a page. Reading the page label
+        // colour unconditionally painted near-black text on the dark viewer
+        // surface — 1.26:1, effectively invisible. The fallback keeps the page
+        // colour everywhere the property is not published.
         fontSize: size === "sm" ? 12 : 13,
         fontWeight: "var(--fw-semibold)",
-        color: "var(--color-semantic-label-neutral)",
+        color: "var(--viewer-foreground, var(--color-semantic-label-neutral))",
         ...style
       },
       ...rest,
@@ -108,4 +113,4 @@ function ConnectionBadge({
 export {
   ConnectionBadge
 };
-//# sourceMappingURL=chunk-IKZ73LF2.js.map
+//# sourceMappingURL=chunk-WWC3S2JC.js.map

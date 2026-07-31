@@ -2418,7 +2418,7 @@
         "$type": "color",
         "css": "--color-semantic-status-positive-text",
         "modes": {
-          "light": "#087A32",
+          "light": "#07702E",
           "dark": "#5EE087"
         },
         "origin": "lds-extension",

@@ -71,8 +71,33 @@ function useProseStyles() {
  */
 export function Prose({ children, measure = '68ch', style, className, ...rest }) {
   useProseStyles();
+  const root = React.useRef(null);
+
+  // Code blocks scroll sideways because this component says so, so reaching
+  // that scroll is this component's problem too: a `pre` that overflows and
+  // takes no focus is content a keyboard user cannot pan to. Applied only when
+  // the block actually overflows, so the tab order does not collect stops that
+  // scroll nowhere, and re-measured on resize because narrow widths are exactly
+  // where it starts to matter.
+  React.useEffect(() => {
+    const element = root.current;
+    if (!element || typeof ResizeObserver === 'undefined') return undefined;
+    const update = () => {
+      for (const block of element.querySelectorAll('pre')) {
+        const scrolls = block.scrollWidth > block.clientWidth + 1;
+        if (scrolls) block.setAttribute('tabindex', '0');
+        else if (block.getAttribute('tabindex') === '0') block.removeAttribute('tabindex');
+      }
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [children]);
+
   return (
     <div
+      ref={root}
       className={className ? `lk-prose ${className}` : 'lk-prose'}
       style={{ maxWidth: measure, minWidth: 0, ...style }}
       {...rest}

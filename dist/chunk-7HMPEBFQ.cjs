@@ -1,8 +1,8 @@
-"use client";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }"use client";
 
 // components/content/Prose.jsx
-import React from "react";
-import { jsx } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 var MONO = 'var(--font-mono, ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace)';
 var PROSE_CSS = `
 .lk-prose{color:var(--color-semantic-label-neutral);font-family:var(--font-sans);line-height:var(--label1-reading-line);letter-spacing:var(--label1-spacing);word-break:keep-all;overflow-wrap:anywhere;}
@@ -34,7 +34,7 @@ var PROSE_CSS = `
 .lk-prose ul.contains-task-list,.lk-prose li.task-list-item{list-style:none;}
 .lk-prose li.task-list-item{padding-inline-start:0;}
 `;
-var useSafeLayoutEffect = typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
+var useSafeLayoutEffect = typeof window === "undefined" ? _react2.default.useEffect : _react2.default.useLayoutEffect;
 function useProseStyles() {
   useSafeLayoutEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-prose-css")) return;
@@ -46,9 +46,26 @@ function useProseStyles() {
 }
 function Prose({ children, measure = "68ch", style, className, ...rest }) {
   useProseStyles();
-  return /* @__PURE__ */ jsx(
+  const root = _react2.default.useRef(null);
+  _react2.default.useEffect(() => {
+    const element = root.current;
+    if (!element || typeof ResizeObserver === "undefined") return void 0;
+    const update = () => {
+      for (const block of element.querySelectorAll("pre")) {
+        const scrolls = block.scrollWidth > block.clientWidth + 1;
+        if (scrolls) block.setAttribute("tabindex", "0");
+        else if (block.getAttribute("tabindex") === "0") block.removeAttribute("tabindex");
+      }
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [children]);
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "div",
     {
+      ref: root,
       className: className ? `lk-prose ${className}` : "lk-prose",
       style: { maxWidth: measure, minWidth: 0, ...style },
       ...rest,
@@ -57,7 +74,7 @@ function Prose({ children, measure = "68ch", style, className, ...rest }) {
   );
 }
 
-export {
-  Prose
-};
-//# sourceMappingURL=chunk-OJ5H6HWC.js.map
+
+
+exports.Prose = Prose;
+//# sourceMappingURL=chunk-7HMPEBFQ.cjs.map

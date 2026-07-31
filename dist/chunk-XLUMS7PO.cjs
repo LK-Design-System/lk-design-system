@@ -241,7 +241,7 @@ function LayerRow({
                 event.stopPropagation();
                 onToggleExpanded(layer.id, !expanded);
               },
-              style: { width: 20, height: 20, display: "inline-flex", alignItems: "center", justifyContent: "center", padding: 0, border: 0, borderRadius: "var(--radius-sm)", background: "transparent", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", cursor: layerDisabled ? "not-allowed" : "pointer" },
+              style: { width: 24, height: 24, margin: -2, display: "inline-flex", alignItems: "center", justifyContent: "center", padding: 0, border: 0, borderRadius: "var(--radius-sm)", background: "transparent", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", cursor: layerDisabled ? "not-allowed" : "pointer" },
               children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: expanded ? "chevron-down-small" : "chevron-right-small", size: 14, "aria-hidden": "true" })
             }
           ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { width: 20, height: 20 } }),
@@ -489,4 +489,4 @@ function LayerPanel({
 
 
 exports.LayerPanel = LayerPanel;
-//# sourceMappingURL=chunk-IELFCRBC.cjs.map
+//# sourceMappingURL=chunk-XLUMS7PO.cjs.map

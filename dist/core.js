@@ -155,7 +155,7 @@ import {
 } from "./chunk-EMVCBRVV.js";
 import {
   Prose
-} from "./chunk-OJ5H6HWC.js";
+} from "./chunk-W7EMCBMY.js";
 import {
   Accordion
 } from "./chunk-DEAFNC5C.js";

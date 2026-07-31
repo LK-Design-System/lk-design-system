@@ -245,6 +245,12 @@ function WheelPicker({
             padding: `${pad * rowHeight}px 0`,
             height: "100%",
             overflowY: locked ? "hidden" : "auto",
+            // The wheel only ever scrolls vertically, but leaving the other axis
+            // at its default made the browser compute it to `auto` — the spec
+            // promotes a visible axis when its partner is clipped — and the rows
+            // are a few pixels wider than the track. That turned a locked wheel
+            // into a horizontally scrollable region with no way to reach it.
+            overflowX: "hidden",
             scrollSnapType: locked ? "none" : "y mandatory",
             WebkitOverflowScrolling: "touch",
             scrollbarWidth: "none",
@@ -339,4 +345,4 @@ function WheelPicker({
 export {
   WheelPicker
 };
-//# sourceMappingURL=chunk-CFKHFBHL.js.map
+//# sourceMappingURL=chunk-BWVLCWFI.js.map
