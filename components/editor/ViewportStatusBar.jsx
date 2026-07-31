@@ -82,6 +82,7 @@ function PersistentItem({ item }) {
 
   return (
     <span
+      data-viewport-status-item=""
       title={item.title}
       style={{
         display: 'inline-flex',

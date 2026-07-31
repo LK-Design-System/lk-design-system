@@ -64,7 +64,9 @@ export const Readouts = {
   ),
   play: async ({ canvasElement }) => {
     const bar = canvasElement.querySelector('[aria-label="뷰포트 상태"]');
-    const items = [...(bar?.children ?? [])];
+    // Select the readouts rather than every child: the bar also carries its
+    // always-mounted live region, which is not a readout.
+    const items = [...(bar?.querySelectorAll('[data-viewport-status-item]') ?? [])];
     if (!bar || items.length !== baseItems.length) throw new Error('ViewportStatusBar readout fixture is incomplete.');
 
     for (const item of items) {
