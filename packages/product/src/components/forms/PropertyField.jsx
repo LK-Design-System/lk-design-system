@@ -1,4 +1,5 @@
 import React from 'react';
+import { mergeIds, useFieldMetadata } from '@lk-robotics/lds-core/components/forms/field-shared';
 import { Button } from '@lk-robotics/lds-core/components/buttons/Button';
 import { Switch } from '@lk-robotics/lds-core/components/selection/Switch';
 
@@ -39,8 +40,12 @@ export function PropertyField({
   style,
   ...rest
 }) {
-  const fieldId = React.useId();
-  const inputId = `property-${fieldId}`;
+  // Id derivation and description merging come from the field engine. The rest
+  // of that engine does not apply here: this row has no helper/error channel to
+  // stack, its description is assembled from three product-specific sources
+  // (hint, unit, dirty), and its label switches to a <span> for the toggle,
+  // which FieldLabel/FieldStack do not model.
+  const { fieldId: inputId } = useFieldMetadata({ prefix: 'property' });
   const labelId = `${inputId}-label`;
   const hintId = hint != null ? `${inputId}-hint` : undefined;
   const unitId = type !== 'toggle' && unit != null ? `${inputId}-unit` : undefined;
@@ -61,7 +66,7 @@ export function PropertyField({
   const controlReadOnly = readOnly;
   const isToggle = type === 'toggle';
   /* 이름은 label 하나로 고정하고, dirty는 이름이 아니라 설명으로 노출한다(APG). */
-  const descriptionIds = [hintId, unitId, dirty ? dirtyId : null].filter(Boolean).join(' ') || undefined;
+  const descriptionIds = mergeIds(hintId, unitId, dirty ? dirtyId : null);
 
   const apply = () => {
     if (canApply) onApply(draft);

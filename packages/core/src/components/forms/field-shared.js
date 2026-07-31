@@ -31,9 +31,12 @@ export function FieldLabel({ htmlFor, id, label, required = false, disabled = fa
       id,
       htmlFor,
       style: {
+        // The enabled colour goes through the component-token seam, as the rest
+        // of this label's type already does. Disabled stays semantic: the token
+        // family has no disabled variant.
         color: disabled
           ? 'var(--color-semantic-label-disable)'
-          : 'var(--color-semantic-label-normal)',
+          : 'var(--component-input-label-color)',
         fontSize: 'var(--component-input-label-font-size)',
         lineHeight: 'var(--component-input-label-line-height)',
         letterSpacing: 'var(--component-input-label-letter-spacing)',

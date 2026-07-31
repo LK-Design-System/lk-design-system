@@ -2,6 +2,7 @@ import React from 'react';
 import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
 import { Chip } from '@lk-robotics/lds-core/components/feedback/Chip';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { FieldLabel, FieldMessage, useFieldMetadata } from '@lk-robotics/lds-core/components/forms/field-shared';
 
 function optionText(option) {
   if (typeof option.label === 'string' || typeof option.label === 'number') return String(option.label);
@@ -58,8 +59,16 @@ export function SearchableMultiSelect({
   const [open, setOpen] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
   const listboxId = React.useId();
-  const inputId = React.useId();
-  const messageId = React.useId();
+  // Label association and the description channel come from the field engine,
+  // as in Select/Combobox. The stack markup stays local: this root also owns
+  // the popup positioning context, `aria-busy`, and the focus-out handler that
+  // FieldStack has no place for.
+  const {
+    fieldId: inputId,
+    message,
+    messageId,
+    describedBy,
+  } = useFieldMetadata({ prefix: 'searchable-multi-select', label, helper, error });
   const inputRef = React.useRef(null);
   const selected = controlled ? value : internalValue;
   const search = searchControlled ? searchValue : internalSearch;
@@ -80,7 +89,6 @@ export function SearchableMultiSelect({
   const activeOption = popupOpen && hasOptionList && filteredOptions[activeIndex] && !filteredOptions[activeIndex].effectiveDisabled
     ? filteredOptions[activeIndex]
     : undefined;
-  const message = error ?? helper;
 
   React.useEffect(() => {
     setActiveIndex((index) => filteredOptions[index] && !filteredOptions[index].effectiveDisabled ? index : firstEnabledIndex(filteredOptions));
@@ -136,11 +144,7 @@ export function SearchableMultiSelect({
       <span role="status" aria-live="polite" aria-atomic="true" style={{ position: 'absolute', width: 1, height: 1, margin: -1, padding: 0, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap', border: 0 }}>
         {popupOpen ? (loading ? loadingLabel : !hasOptionList ? emptyLabel : maxReached ? resolvedMaxLabel : '') : ''}
       </span>
-      {label != null && (
-        <label htmlFor={inputId} style={{ color: 'var(--component-input-label-color)', fontSize: 'var(--component-input-label-font-size)', lineHeight: 'var(--component-input-label-line-height)', fontWeight: 'var(--component-input-label-font-weight)' }}>
-          {label}{required && <span style={{ color: 'var(--color-semantic-status-negative-text)' }}> *</span>}
-        </label>
-      )}
+      <FieldLabel htmlFor={inputId} label={label} required={required} disabled={disabled} />
 
       <div style={{ position: 'relative', minWidth: 0 }}>
         <div
@@ -195,7 +199,7 @@ export function SearchableMultiSelect({
           aria-autocomplete="list"
           aria-activedescendant={activeOption ? optionDomId(listboxId, activeOption) : undefined}
           aria-invalid={error != null || undefined}
-          aria-describedby={message != null ? messageId : undefined}
+          aria-describedby={describedBy}
           aria-required={required || undefined}
           aria-readonly={readOnly || undefined}
           aria-busy={loading || undefined}
@@ -247,7 +251,7 @@ export function SearchableMultiSelect({
         )}
       </div>
 
-      {message != null && <span id={messageId} role={error != null ? 'alert' : undefined} style={{ color: error != null ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>{message}</span>}
+      <FieldMessage id={messageId} message={message} error={error} />
     </div>
   );
 }

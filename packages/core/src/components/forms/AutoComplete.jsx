@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLightDismiss } from '../overlay/anchored-overlay.js';
 import {
   FieldStack,
   FieldStatusIcon,
@@ -124,14 +125,15 @@ export function AutoComplete({
     optionRefs.current[activeIndex]?.scrollIntoView?.({ block: 'nearest' });
   }, [activeIndex, popupOpen]);
 
-  React.useEffect(() => {
-    if (!popupOpen) return undefined;
-    const closeOnOutsidePointer = (event) => {
-      if (rootRef.current && !rootRef.current.contains(event.target)) setOpen(false);
-    };
-    document.addEventListener('mousedown', closeOnOutsidePointer);
-    return () => document.removeEventListener('mousedown', closeOnOutsidePointer);
-  }, [popupOpen]);
+  // See DatePicker: the shared engine owns outside dismissal, stack-aware
+  // Escape, and the focus latch that stops a pointer-dismissed trigger from
+  // reopening itself.
+  useLightDismiss({
+    open: popupOpen,
+    rootRef,
+    getTrigger: () => inputRef.current,
+    onDismiss: () => setOpen(false),
+  });
 
   const commitText = (next) => {
     if (!controlled) setInternalValue(next);

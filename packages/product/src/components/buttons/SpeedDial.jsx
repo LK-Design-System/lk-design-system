@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLightDismiss } from '@lk-robotics/lds-core/components/overlay/anchored-overlay';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
 
 /**
@@ -38,14 +39,14 @@ export function SpeedDial({ icon, actions = [], open, defaultOpen = false, onOpe
     else setTimeout(run, 0);
   };
 
-  React.useEffect(() => {
-    if (!isOpen) return undefined;
-    const onDocumentPointer = (event) => {
-      if (rootRef.current && !rootRef.current.contains(event.target)) setOpen(false);
-    };
-    document.addEventListener('mousedown', onDocumentPointer);
-    return () => document.removeEventListener('mousedown', onDocumentPointer);
-  }, [isOpen]);
+  // See TopBar: the shared engine owns outside dismissal, stack-aware Escape,
+  // and the focus latch.
+  useLightDismiss({
+    open: isOpen,
+    rootRef,
+    getTrigger: () => triggerRef.current,
+    onDismiss: () => setOpen(false),
+  });
 
   const handleKeyDown = (event) => {
     onKeyDown?.(event);

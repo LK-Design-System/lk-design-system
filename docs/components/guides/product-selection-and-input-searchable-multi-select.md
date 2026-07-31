@@ -119,7 +119,6 @@
 
 - `--body2-line`
 - `--body2-size`
-- `--caption1-line`
 - `--caption1-size`
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-fill-alternative`
@@ -131,7 +130,6 @@
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-normal`
 - `--color-semantic-static-white`
-- `--color-semantic-status-negative-text`
 - `--component-input-bg`
 - `--component-input-border-color`
 - `--component-input-border-color-focus`
@@ -140,10 +138,6 @@
 - `--component-input-focus-shadow`
 - `--component-input-font-size`
 - `--component-input-height`
-- `--component-input-label-color`
-- `--component-input-label-font-size`
-- `--component-input-label-font-weight`
-- `--component-input-label-line-height`
 - `--component-input-line-height`
 - `--component-input-padding-x`
 - `--component-input-radius`

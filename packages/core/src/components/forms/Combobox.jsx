@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
+import { useLightDismiss } from '../overlay/anchored-overlay.js';
 import {
   FieldStack,
   FieldStatusIcon,
@@ -78,16 +79,21 @@ export function Combobox({
   const borderColor = fieldBorderColor({ disabled, readOnly, invalid: isInvalid, status, focused: open, hovered });
 
   React.useEffect(() => {
-    if (!open) return undefined;
+    if (!open) return;
     setActiveIndex((index) => normalized[index] && !normalized[index].disabled
       ? index
       : moveEnabled(normalized, -1, 1));
-    const closeOnOutsidePointer = (event) => {
-      if (rootRef.current && !rootRef.current.contains(event.target)) setOpen(false);
-    };
-    document.addEventListener('mousedown', closeOnOutsidePointer);
-    return () => document.removeEventListener('mousedown', closeOnOutsidePointer);
   }, [normalized, open]);
+
+  // See DatePicker: the shared engine owns outside dismissal, stack-aware
+  // Escape, and the focus latch. Seeding the active option is a separate
+  // concern and stays in its own effect above.
+  useLightDismiss({
+    open,
+    rootRef,
+    getTrigger: () => triggerRef.current,
+    onDismiss: () => setOpen(false),
+  });
 
   React.useEffect(() => {
     if (!open || activeIndex < 0) return;

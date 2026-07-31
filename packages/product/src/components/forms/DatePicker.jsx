@@ -1,6 +1,7 @@
 import React from 'react';
 import { Calendar } from '../data/Calendar.jsx';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { useLightDismiss } from '@lk-robotics/lds-core/components/overlay/anchored-overlay';
 
 /**
  * LK ROBOTICS — DatePicker
@@ -18,12 +19,16 @@ export function DatePicker({ value, defaultValue, onChange, isDateDisabled, minD
   const buttonRef = React.useRef(null);
   const popupId = React.useId();
   const expanded = open && !disabled;
-  React.useEffect(() => {
-    if (!open) return undefined;
-    const onDoc = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
-    document.addEventListener('mousedown', onDoc);
-    return () => document.removeEventListener('mousedown', onDoc);
-  }, [open]);
+  // Outside dismissal comes from the shared engine, which also makes Escape
+  // close the innermost open surface and keeps a pointer-dismissed trigger from
+  // reopening on the focus that same press gives it. The Escape branch below
+  // calls preventDefault, and the engine stands down for a handled event.
+  useLightDismiss({
+    open,
+    rootRef: ref,
+    getTrigger: () => buttonRef.current,
+    onDismiss: () => setOpen(false),
+  });
   React.useEffect(() => {
     if (disabled && open) setOpen(false);
   }, [disabled, open]);

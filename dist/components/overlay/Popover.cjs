@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkSNV224Q3cjs = require('../../chunk-SNV224Q3.cjs');
+var _chunkBO2XZA5Lcjs = require('../../chunk-BO2XZA5L.cjs');
 require('../../chunk-KYDCOGHR.cjs');
-require('../../chunk-JRW2QDVC.cjs');
+require('../../chunk-T7L6VXSA.cjs');
 
 
-exports.Popover = _chunkSNV224Q3cjs.Popover;
+exports.Popover = _chunkBO2XZA5Lcjs.Popover;
 //# sourceMappingURL=Popover.cjs.map

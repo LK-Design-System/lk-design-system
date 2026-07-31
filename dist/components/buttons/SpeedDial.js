@@ -1,7 +1,8 @@
 "use client";
 import {
   SpeedDial
-} from "../../chunk-H5PIDMTA.js";
+} from "../../chunk-QPCERHVY.js";
+import "../../chunk-PCHCMWOA.js";
 import "../../chunk-JNVDI5OO.js";
 export {
   SpeedDial

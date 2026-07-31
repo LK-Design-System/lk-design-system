@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLightDismiss } from '@lk-robotics/lds-core/components/overlay/anchored-overlay';
 
 const TopBarToneContext = React.createContext('light');
 const TOP_BAR_STYLES = `
@@ -257,19 +258,16 @@ export function TopBarNavItem({
   };
 
   React.useEffect(() => () => clearPointerLeave(), []);
-  React.useEffect(() => {
-    if (!open) return undefined;
-    const ownerDocument = wrapperRef.current?.ownerDocument;
-    if (!ownerDocument) return undefined;
-
-    const handleOutsidePointer = (event) => {
-      if (wrapperRef.current?.contains(event.target) || menuRef.current?.contains(event.target)) return;
-      dismissMenu();
-    };
-
-    ownerDocument.addEventListener('pointerdown', handleOutsidePointer, true);
-    return () => ownerDocument.removeEventListener('pointerdown', handleOutsidePointer, true);
-  }, [open]);
+  // The shared engine owns outside dismissal, and with it Escape that closes
+  // the innermost open surface and a focus latch that keeps a pointer-dismissed
+  // trigger from reopening. The menu renders inside the wrapper, so the root
+  // covers what the second containment check used to.
+  useLightDismiss({
+    open,
+    rootRef: wrapperRef,
+    getTrigger: () => wrapperRef.current?.ownerDocument.getElementById(triggerId),
+    onDismiss: dismissMenu,
+  });
 
   const handleMenuKeyboard = (event) => {
     onKeyDown?.(event);
