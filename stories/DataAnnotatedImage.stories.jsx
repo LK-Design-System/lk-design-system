@@ -92,8 +92,15 @@ async function openAnnotationSummary(canvasElement) {
   const after = await settled();
   const panel = disclosure.querySelector('[role="region"]');
   const panelBounds = panel?.getBoundingClientRect();
-  const moved = Math.abs(before.x - after.x) > 1
-    || Math.abs(before.y - after.y) > 1
+  // "In place" is a claim about the trigger and its own disclosure, so it is
+  // measured between them. Viewport coordinates also move when the page moves —
+  // the figure's image finishing its load shifts everything below it, and that
+  // was being read as the disclosure pushing its trigger around.
+  const afterDisclosure = disclosure.getBoundingClientRect();
+  const offsetBefore = { x: before.x - disclosureBounds.x, y: before.y - disclosureBounds.y };
+  const offsetAfter = { x: after.x - afterDisclosure.x, y: after.y - afterDisclosure.y };
+  const moved = Math.abs(offsetBefore.x - offsetAfter.x) > 1
+    || Math.abs(offsetBefore.y - offsetAfter.y) > 1
     || Math.abs(before.width - after.width) > 1;
   const panelEndAligned = panelBounds
     && panelBounds.width <= disclosureBounds.width + 1
