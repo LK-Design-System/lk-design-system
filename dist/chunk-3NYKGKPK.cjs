@@ -14,7 +14,17 @@ var _chunkMBKOVB2Kcjs = require('./chunk-MBKOVB2K.cjs');
 
 // components/editor/ViewportStatusBar.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+
+// packages/core/dist/chunk-QD42XNRW.js
+
 var _jsxruntime = require('react/jsx-runtime');
+function VisuallyHidden({ children, as = "span", ...rest }) {
+  const Comp = as;
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Comp, { style: { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap", border: 0 }, ...rest, children });
+}
+
+// components/editor/ViewportStatusBar.jsx
+
 var STATUS_LABEL = {
   negative: "\uC704\uD5D8",
   cautionary: "\uC8FC\uC758",
@@ -142,12 +152,21 @@ function ViewportStatusBar({
         ...style
       },
       children: [
-        message != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
-          "span",
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          VisuallyHidden,
           {
+            as: "span",
+            "data-viewport-status-live": "",
             role: "status",
             "aria-live": "polite",
             "aria-atomic": "true",
+            children: message != null ? [message, resolvedMessageTone ? _nullishCoalesce(messageToneLabel, () => ( STATUS_LABEL[resolvedMessageTone])) : null].filter(Boolean).join(", ") : ""
+          }
+        ),
+        message != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          "span",
+          {
+            "aria-hidden": "true",
             style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0, maxWidth: "min(46%, 420px)", overflow: "hidden", flex: "0 1 auto" },
             children: [
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
@@ -180,4 +199,4 @@ function ViewportStatusBar({
 
 
 exports.ViewportStatusBar = ViewportStatusBar;
-//# sourceMappingURL=chunk-R5GPMTQZ.cjs.map
+//# sourceMappingURL=chunk-3NYKGKPK.cjs.map
