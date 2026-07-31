@@ -125,7 +125,10 @@ export const PreservedDataStates = {
       if (!resource || resource.dataset.preservesContent !== 'true' || !resource.querySelector('[data-testid="preserved-resource-content"]')) {
         throw new Error('Stale and error states must preserve the last successful resource content.');
       }
-      const message = resource.querySelector('[role="status"], [role="alert"]');
+      // The visible banner, located by its own hook: the announcement moved to
+      // the component's persistent region, and a role selector would now find
+      // that instead and check the reading order of something invisible.
+      const message = resource.querySelector('[data-resource-state-message]');
       const content = resource.querySelector('[data-testid="preserved-resource-content"]');
       const freshness = resource.querySelector('[data-resource-state-freshness]');
       if (!message || !content || !freshness || !(message.compareDocumentPosition(content) & Node.DOCUMENT_POSITION_FOLLOWING) || !(content.compareDocumentPosition(freshness) & Node.DOCUMENT_POSITION_FOLLOWING)) {

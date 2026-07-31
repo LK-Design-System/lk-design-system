@@ -13,9 +13,7 @@
       "components/navigation/SideNav.jsx": 1,
       "components/navigation/TopBar.jsx": 1
     },
-    "conditionalAriaLiveMount": {
-      "components/data/ResourceState.jsx": 1
-    },
+    "conditionalAriaLiveMount": {},
     "fieldMetadataWithoutEngine": {
       "components/forms/FileUpload.jsx": 1,
       "components/forms/PropertyField.jsx": 1,
