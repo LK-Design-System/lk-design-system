@@ -108,8 +108,12 @@ export function ResourceState({
     || (!hasContent && !isLoading && resolvedState !== 'ready');
   const preservesContent = hasContent && PRESERVED_DATA_STATES.has(resolvedState);
   const assertive = isBlocking && ASSERTIVE_BLOCKING_STATES.has(resolvedState);
-  const statusRole = assertive ? 'alert' : 'status';
-  const statusLive = statusRole === 'alert' ? 'assertive' : 'polite';
+  // The preserved-content banner is never an alert: it renders only for the
+  // preserved-data states, which are disjoint from the blocking ones, so
+  // `assertive` is false whenever it is on screen. It was therefore a second
+  // polite region carrying the same words as the persistent one above — the
+  // region this component's own comment says owns polite-band announcements.
+  // It keeps the message visible and leaves the announcing to that region.
 
   return (
     <section
@@ -140,8 +144,9 @@ export function ResourceState({
       </VisuallyHidden>
       {preservesContent && (
         <Banner
-          role={statusRole}
-          aria-live={statusLive}
+          data-resource-state-message=""
+          role={undefined}
+          aria-live={undefined}
           tone={presentation.tone}
           variant={messageVariant}
           title={resolvedTitle}
