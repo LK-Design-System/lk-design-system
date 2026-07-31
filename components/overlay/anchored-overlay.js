@@ -49,9 +49,10 @@ export function useLightDismiss({
   getTrigger,
   onDismiss,
   outsidePress = true,
+  shouldDismiss,
 }) {
   const optionsRef = React.useRef(null);
-  optionsRef.current = { getTrigger, onDismiss, outsidePress };
+  optionsRef.current = { getTrigger, onDismiss, outsidePress, shouldDismiss };
   const focusLatchRef = React.useRef(null);
 
   const releaseFocusLatch = React.useCallback(() => {
@@ -90,12 +91,20 @@ export function useLightDismiss({
     const entry = {};
     lightDismissStack.push(entry);
 
+    // `shouldDismiss` lets a surface veto a dismissal it does not own. The stack
+    // above already covers nested surfaces that use this engine; the veto covers
+    // the ones it cannot see, such as a menu a consumer nested inside the root
+    // (SideNav's rail). Returning anything but `false` lets the dismissal run.
+    const vetoed = (reason, event) => optionsRef.current.shouldDismiss?.(reason, event) === false;
+
     const onPointerDown = (event) => {
       if (!optionsRef.current.outsidePress || rootRef.current?.contains(event.target)) return;
+      if (vetoed('outside-press', event)) return;
       optionsRef.current.onDismiss?.('outside-press');
     };
     const onKeyDown = (event) => {
       if (lightDismissStack.at(-1) !== entry || event.defaultPrevented || event.key !== 'Escape') return;
+      if (vetoed('escape', event)) return;
       event.preventDefault();
       const anchor = rootRef.current;
       const trigger = optionsRef.current.getTrigger?.();

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
+import { useLightDismiss } from '../overlay/anchored-overlay.js';
 import {
   FieldLabel,
   FieldMessage,
@@ -114,12 +115,19 @@ export function Select({
     ...triggerProps
   } = rest;
   const describedBy = mergeIds(ariaDescribedBy, messageId);
-  React.useEffect(() => {
-    if (!open || locked) return undefined;
-    const onDoc = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
-    document.addEventListener('mousedown', onDoc);
-    return () => document.removeEventListener('mousedown', onDoc);
-  }, [locked, open]);
+  // The shared engine owns outside dismissal for every anchored surface, so
+  // this one stops keeping its own document listener. What it gains beyond the
+  // listener is the part that is easy to forget: Escape closes the innermost
+  // open surface rather than every listening one, and a trigger dismissed by a
+  // pointer does not reopen from the focus that same press gives it. Select's
+  // own Escape branch calls preventDefault, and the engine stands down for a
+  // handled event, so the two do not both act.
+  useLightDismiss({
+    open: open && !locked,
+    rootRef: ref,
+    getTrigger: () => triggerRef.current,
+    onDismiss: () => setOpen(false),
+  });
   const curr = norm.find((x) => x.value === sel);
   const selectedIndex = norm.findIndex((x) => x.value === sel);
   const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size === 'large' ? 'lg' : size;

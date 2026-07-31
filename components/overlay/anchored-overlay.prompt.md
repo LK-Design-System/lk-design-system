@@ -27,6 +27,10 @@ const position = useFloatingPosition({ open, anchorRef: rootRef, panelRef, place
   되살아납니다. 래치는 초점이 진짜로 앵커를 떠나거나 표면이 의도적으로 다시 열릴 때까지 앵커
   내부 focus 이벤트를 캡처 단계에서 삼켜 콘텐츠가 닫힌 채 유지되게 합니다. 포인터 재진입과 이후
   Tab 복귀는 평소대로 다시 엽니다.
+- **`shouldDismiss` 거부권**(선택): `(reason, event) => boolean`. `false`를 돌려주면 그 dismiss는
+  실행되지 않고 Escape의 `preventDefault`도 건너뜁니다. 공유 스택은 이 엔진을 쓰는 중첩 표면만
+  알기 때문에, 소비자가 루트 안에 직접 끼워 넣은 표면(SideNav 레일 안의 `[role="menu"]`)이
+  그 입력을 소유해야 할 때 씁니다. `false`가 아닌 값은 모두 통과입니다.
 
 ## useFloatingPosition이 소유하는 것
 

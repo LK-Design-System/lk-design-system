@@ -1,4 +1,5 @@
 import React from 'react';
+import { useFieldMetadata } from './field-shared.js';
 import { Icon } from '../icon/Icon.jsx';
 
 function matchesAccept(file, accept) {
@@ -37,7 +38,11 @@ export function FileUpload({
   onDrop,
   ...rest
 }) {
-  const inputId = React.useId();
+  // The field engine owns id derivation and normalises the caller-supplied
+  // description ids. Its label/message stack does not apply: the visible
+  // <label> here is the drop target itself, and the description channel is
+  // wholly external — this component has no helper/error props of its own.
+  const { fieldId: inputId, describedBy } = useFieldMetadata({ prefix: 'file-upload', describedBy: inputAriaDescribedBy });
   const [drag, setDrag] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
   const [names, setNames] = React.useState([]);
@@ -120,7 +125,7 @@ export function FileUpload({
         capture={capture}
         disabled={disabled}
         aria-label={inputAriaLabel}
-        aria-describedby={inputAriaDescribedBy}
+        aria-describedby={describedBy}
         aria-invalid={inputAriaInvalid}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}

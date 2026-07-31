@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tooltip } from '../content/Tooltip.jsx';
 import { Icon } from '../icon/Icon.jsx';
+import { useLightDismiss } from '../overlay/anchored-overlay.js';
 
 const Chevron = ({ open }) => (
   <Icon name="chevron-down-small" size={14} aria-hidden="true" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }} />
@@ -91,20 +92,18 @@ export function SideNav({
     }, expand ? 160 : 480);
   };
   React.useEffect(() => () => clearTimeout(peekT.current), []);
-  React.useEffect(() => {
-    if (!overlay || col) return undefined;
-    const down = (e) => { if (hasPopover()) return; if (navRef.current && !navRef.current.contains(e.target)) setCol(true); };
-    const key = (e) => {
-      if (e.key !== 'Escape' || hasPopover()) return;
-      e.preventDefault();
-      collapseAndRestoreFocus();
-    };
-    document.addEventListener('mousedown', down);
-    document.addEventListener('keydown', key);
-    return () => { document.removeEventListener('mousedown', down); document.removeEventListener('keydown', key); };
-    // The handlers only read refs plus the latest collapse state, so the
-    // subscription only needs to follow the overlay/collapsed lifecycle.
-  }, [overlay, col]);
+  // An expanded overlay rail is a light-dismiss surface, so the shared engine
+  // owns the outside press and the stack-aware Escape. Two things stay local:
+  // a menu a consumer nested in the rail is invisible to the engine's stack, so
+  // `shouldDismiss` vetoes while one is open; and the rail restores focus to a
+  // rail item chosen *after* the collapse, which `getTrigger` resolves too early
+  // to express.
+  useLightDismiss({
+    open: overlay && !col,
+    rootRef: navRef,
+    shouldDismiss: () => !hasPopover(),
+    onDismiss: (reason) => { if (reason === 'escape') collapseAndRestoreFocus(); else setCol(true); },
+  });
 
   const [open, setOpen] = React.useState(() => {
     const o = {};

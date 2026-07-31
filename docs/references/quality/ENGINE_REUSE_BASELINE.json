@@ -4,20 +4,8 @@
   "findings": {
     "menuRovingWithoutEngine": {},
     "focusTrapWithoutEngine": {},
-    "outsideDismissWithoutEngine": {
-      "components/buttons/SpeedDial.jsx": 1,
-      "components/forms/AutoComplete.jsx": 1,
-      "components/forms/Combobox.jsx": 1,
-      "components/forms/DatePicker.jsx": 1,
-      "components/forms/Select.jsx": 1,
-      "components/navigation/SideNav.jsx": 1,
-      "components/navigation/TopBar.jsx": 1
-    },
+    "outsideDismissWithoutEngine": {},
     "conditionalAriaLiveMount": {},
-    "fieldMetadataWithoutEngine": {
-      "components/forms/FileUpload.jsx": 1,
-      "components/forms/PropertyField.jsx": 1,
-      "components/forms/SearchableMultiSelect.jsx": 1
-    }
+    "fieldMetadataWithoutEngine": {}
   }
 }
