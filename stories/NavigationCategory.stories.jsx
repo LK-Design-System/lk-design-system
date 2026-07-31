@@ -116,7 +116,7 @@ export const RadioGroupSemantics = {
       throw new Error('End must select the last enabled chip, skipping disabled chips.');
     }
     // item.active initializes the uncontrolled selection only.
-    const initialGroup = canvasElement.querySelector('[role="radiogroup"][aria-label="초기 선택"]');
+    const initialGroup = canvasElement.querySelector('[role="radiogroup"][aria-label="초기 선택 시드"]');
     const initiallyChecked = initialGroup?.querySelector('[role="radio"][aria-checked="true"]');
     if (initiallyChecked?.textContent !== '로봇' || checkedCount(initialGroup) !== 1) {
       throw new Error('item.active must initialize exactly one checked chip.');

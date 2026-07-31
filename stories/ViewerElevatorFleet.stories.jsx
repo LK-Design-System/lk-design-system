@@ -324,8 +324,18 @@ export const ReadOnlyContract = {
       throw new Error('Direction text must be derived when directionLabel is omitted.');
     }
 
-    const fleetStyles = canvasElement.ownerDocument.getElementById('lk-elevator-fleet-css');
-    if (!fleetStyles?.textContent.includes('prefers-reduced-motion:reduce')) {
+    // The stylesheet is appended by an effect, so reading it synchronously
+    // asserted against whichever moment the runner happened to reach first.
+    const guarded = async () => {
+      const deadline = Date.now() + 2000;
+      while (Date.now() < deadline) {
+        const sheet = canvasElement.ownerDocument.getElementById('lk-elevator-fleet-css');
+        if (sheet?.textContent.includes('prefers-reduced-motion:reduce')) return true;
+        await new Promise((resolve) => { setTimeout(resolve, 25); });
+      }
+      return false;
+    };
+    if (!await guarded()) {
       throw new Error('Direction motion needs a reduced-motion guard.');
     }
   },
