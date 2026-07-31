@@ -273,7 +273,7 @@ export const StatePlacement = {
     if (!stale?.querySelector('[data-viewer-edge-state]') || stale.querySelector('[data-viewer-blocking-state]')) {
       throw new Error('Stale must preserve content and use the edge state.');
     }
-    if (!stale.querySelector('[data-viewer-edge-state] [role="status"][aria-live="polite"]') || stale.querySelector('[role="alert"]')) {
+    if (!stale.querySelector('[data-viewer-state-live][role="status"][aria-live="polite"]') || stale.querySelector('[role="alert"]')) {
       throw new Error('Retained-content Viewer states must remain polite and noninterrupting.');
     }
     const edgeState = stale.querySelector('[data-viewer-edge-state]');
@@ -287,7 +287,7 @@ export const StatePlacement = {
       throw new Error('Retained-content status must use compact content-width edge chrome instead of a full-width notification bar.');
     }
     const edgeStateIcon = edgeState?.querySelector('[data-viewer-state-icon]');
-    const edgeStateLabel = edgeState?.querySelector('[role="status"] > span > span:not([data-viewer-edge-description])');
+    const edgeStateLabel = edgeState?.querySelector('[data-viewer-edge-label]');
     if (
       (edgeStateIcon && edgeStateIcon.getBoundingClientRect().height > 17)
       || (edgeStateLabel && parseFloat(getComputedStyle(edgeStateLabel).fontSize) > 11.5)
@@ -399,7 +399,7 @@ export const LiveAndBlockingStates = {
     const noSignal = canvasElement.querySelector('[data-viewer-state="no-signal"]');
     if (!live || !noSource || !error || !disconnected || !noSignal) throw new Error('The representative Viewer states are incomplete.');
 
-    const liveCorner = live.querySelector('[data-viewer-topbar] [role="status"]');
+    const liveCorner = live.querySelector('[data-viewer-state-live][role="status"]');
     if (live.hasAttribute('data-viewer-blocking') || !liveCorner?.textContent?.includes('라이브')) {
       throw new Error('Live must preserve renderer content and use the compact corner status.');
     }
@@ -407,17 +407,17 @@ export const LiveAndBlockingStates = {
       throw new Error('Live content must remain interactive.');
     }
 
-    const neutralStatus = noSource.querySelector('[data-viewer-blocking-live][role="status"]');
+    const neutralStatus = noSource.querySelector('[data-viewer-state-live][role="status"]');
     if (!noSource.hasAttribute('data-viewer-blocking') || !neutralStatus?.textContent?.includes('소스 없음') || noSource.querySelector('[role="alert"]')) {
       throw new Error('No-source must use a neutral polite blocking state.');
     }
 
-    const errorAlert = error.querySelector('[data-viewer-blocking-live][role="alert"]');
+    const errorAlert = error.querySelector('[data-viewer-state-live][role="alert"]');
     if (!error.hasAttribute('data-viewer-blocking') || !errorAlert?.textContent?.includes('표시 오류')) {
       throw new Error('Error must use the negative assertive blocking state.');
     }
     for (const frame of [disconnected, noSignal]) {
-      const alert = frame.querySelector('[data-viewer-blocking-live][role="alert"][aria-live="assertive"]');
+      const alert = frame.querySelector('[data-viewer-state-live][role="alert"][aria-live="assertive"]');
       if (!frame.hasAttribute('data-viewer-blocking') || !alert) {
         throw new Error('Disconnected and no-signal must use assertive blocking alerts.');
       }

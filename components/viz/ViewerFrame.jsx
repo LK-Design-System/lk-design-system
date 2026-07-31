@@ -2,6 +2,7 @@ import React from 'react';
 import { StatusIndicator } from '@lk-robotics/lds-core/components/content/StatusIndicator';
 import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
 import { Spinner } from '@lk-robotics/lds-core/components/status/Spinner';
+import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
 import {
   resolveViewerState,
   VIEWER_BLOCKING_STATES as INTERNAL_VIEWER_BLOCKING_STATES,
@@ -355,7 +356,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
     <React.Fragment>
       <StateMark presentation={presentation} icon={stateIcon} size={16} />
       <span style={{ display: 'grid', gap: 2, minWidth: 0 }}>
-        <span style={{ fontSize: 'var(--caption2-size)', lineHeight: 1.35, fontWeight: 'var(--fw-bold)', color: 'var(--viewer-foreground)' }}>
+        <span data-viewer-edge-label="" style={{ fontSize: 'var(--caption2-size)', lineHeight: 1.35, fontWeight: 'var(--fw-bold)', color: 'var(--viewer-foreground)' }}>
           {labelContent}
         </span>
         {descriptionContent != null && (
@@ -474,6 +475,27 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
         ...style,
       }}
     >
+      {/* The frame's one announcement channel, mounted for its whole lifetime
+          with only its text replaced. The visible state chips are conditional —
+          a corner badge, an edge chip, a blocking panel, each appearing with the
+          state it describes — and a live region inserted together with its
+          message is not a mutation of an existing region, so the announcement
+          that mattered most (the state just entered) was the one dropped. Those
+          chips keep their looks and their hooks and step out of the
+          accessibility tree; politeness still follows the state, so retained
+          content stays polite and severe blocking states interrupt.
+          VisuallyHidden is absolutely positioned, so this costs no layout. */}
+      <VisuallyHidden
+        as="div"
+        data-viewer-state-live=""
+        role={blockingStatusRole}
+        aria-live={blockingStatusRole === 'alert' ? 'assertive' : 'polite'}
+        aria-atomic="true"
+      >
+        {[labelContent, descriptionContent]
+          .filter((part) => typeof part === 'string' && part !== '')
+          .join(', ')}
+      </VisuallyHidden>
       <div
         data-viewer-content=""
         data-viewer-blocked-region=""
@@ -611,9 +633,8 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
             >
               {presentation.corner && (
                 <StatusIndicator
-                  role="status"
-                  aria-live="polite"
-                  aria-atomic="true"
+                  data-viewer-corner-status=""
+                  aria-hidden="true"
                   tone={presentation.tone}
                   style={{ flex: '0 0 auto', color: 'var(--viewer-foreground)' }}
                 >
@@ -806,9 +827,8 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
               `aria-atomic`과 맞물려 값이 바뀔 때마다 칩 전체가 다시 낭독된다.
               판독값은 시각적으로만 인접하고 낭독 대상에서는 빠진다. */}
           <div
-            role="status"
-            aria-live="polite"
-            aria-atomic="true"
+            data-viewer-edge-summary=""
+            aria-hidden="true"
             style={{ display: 'flex', alignItems: 'center', gap: 4, flex: '0 1 auto', minWidth: 0, overflow: 'hidden' }}
           >
             {stateSummary}
@@ -904,9 +924,7 @@ export const ViewerFrame = React.forwardRef(function ViewerFrame({
           >
             <div
               data-viewer-blocking-live=""
-              role={blockingStatusRole}
-              aria-live={blockingStatusRole === 'alert' ? 'assertive' : 'polite'}
-              aria-atomic="true"
+              aria-hidden="true"
               style={{ display: 'grid', justifyItems: 'center', gap: 10 }}
             >
               <div
