@@ -1,6 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
 
 
+var _chunkSO26HRBScjs = require('./chunk-SO26HRBS.cjs');
+
+
 var _chunkGW3BLGYBcjs = require('./chunk-GW3BLGYB.cjs');
 
 
@@ -14,17 +17,7 @@ var _chunkMBKOVB2Kcjs = require('./chunk-MBKOVB2K.cjs');
 
 // components/editor/ViewportStatusBar.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-
-// packages/core/dist/chunk-QD42XNRW.js
-
 var _jsxruntime = require('react/jsx-runtime');
-function VisuallyHidden({ children, as = "span", ...rest }) {
-  const Comp = as;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Comp, { style: { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap", border: 0 }, ...rest, children });
-}
-
-// components/editor/ViewportStatusBar.jsx
-
 var STATUS_LABEL = {
   negative: "\uC704\uD5D8",
   cautionary: "\uC8FC\uC758",
@@ -95,6 +88,7 @@ function PersistentItem({ item }) {
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "span",
     {
+      "data-viewport-status-item": "",
       title: item.title,
       style: {
         display: "inline-flex",
@@ -153,7 +147,7 @@ function ViewportStatusBar({
       },
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          VisuallyHidden,
+          _chunkSO26HRBScjs.VisuallyHidden,
           {
             as: "span",
             "data-viewport-status-live": "",
@@ -199,4 +193,4 @@ function ViewportStatusBar({
 
 
 exports.ViewportStatusBar = ViewportStatusBar;
-//# sourceMappingURL=chunk-3NYKGKPK.cjs.map
+//# sourceMappingURL=chunk-PRK6K44B.cjs.map

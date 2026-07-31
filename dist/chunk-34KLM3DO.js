@@ -1,22 +1,22 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-
-
-var _chunkC6FJX3RFcjs = require('./chunk-C6FJX3RF.cjs');
-
-
-
-var _chunkUABFULF2cjs = require('./chunk-UABFULF2.cjs');
-
-
-var _chunk63NPKSTXcjs = require('./chunk-63NPKSTX.cjs');
+"use client";
+import {
+  VIEWER_BLOCKING_STATES,
+  ViewerFrame,
+  resolveViewerState
+} from "./chunk-ZPZ6WWVJ.js";
+import {
+  ViewerToolbar,
+  ViewerToolbarButton
+} from "./chunk-7SJDUQ26.js";
+import {
+  Icon
+} from "./chunk-KRO3ULVK.js";
 
 // components/viz/Map2DCanvas.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+import React2 from "react";
 
 // components/internal/usePanZoomViewport.js
-
+import React from "react";
 var DEFAULT_VIEWPORT = { x: 0, y: 0, z: 1 };
 function finiteOr(value, fallback) {
   return Number.isFinite(value) ? value : fallback;
@@ -53,21 +53,21 @@ function usePanZoomViewport({
   onKeyDown
 }) {
   const controlled = viewport !== void 0;
-  const [internalViewport, setInternalViewport] = _react2.default.useState(defaultViewport);
+  const [internalViewport, setInternalViewport] = React.useState(defaultViewport);
   const renderedViewport = {
     ...DEFAULT_VIEWPORT,
     ...controlled ? viewport : internalViewport
   };
-  const viewportRef = _react2.default.useRef(renderedViewport);
-  const rootRef = _react2.default.useRef(null);
-  const dragRef = _react2.default.useRef(null);
-  const wheelHandlerRef = _react2.default.useRef(null);
+  const viewportRef = React.useRef(renderedViewport);
+  const rootRef = React.useRef(null);
+  const dragRef = React.useRef(null);
+  const wheelHandlerRef = React.useRef(null);
   viewportRef.current = renderedViewport;
   const clampZoom = (zoom) => Math.max(minZoom, Math.min(maxZoom, zoom));
   const normalizeViewport = (next) => ({
-    x: finiteOr(_optionalChain([next, 'optionalAccess', _ => _.x]), 0),
-    y: finiteOr(_optionalChain([next, 'optionalAccess', _2 => _2.y]), 0),
-    z: clampZoom(finiteOr(_optionalChain([next, 'optionalAccess', _3 => _3.z]), 1))
+    x: finiteOr(next?.x, 0),
+    y: finiteOr(next?.y, 0),
+    z: clampZoom(finiteOr(next?.z, 1))
   });
   const commitViewport = (nextOrUpdater) => {
     const current = viewportRef.current;
@@ -75,7 +75,7 @@ function usePanZoomViewport({
     const normalized = normalizeViewport(next);
     viewportRef.current = normalized;
     if (!controlled) setInternalViewport(normalized);
-    _optionalChain([onViewportChange, 'optionalCall', _4 => _4(normalized)]);
+    onViewportChange?.(normalized);
   };
   const getOriginOffset = () => {
     const root = rootRef.current;
@@ -88,10 +88,10 @@ function usePanZoomViewport({
     if (nextZoom === current.z) return;
     const origin = getOriginOffset();
     const root = rootRef.current;
-    const focal = _nullishCoalesce(focalPoint, () => ( {
-      x: (_nullishCoalesce(_optionalChain([root, 'optionalAccess', _5 => _5.clientWidth]), () => ( 0))) / 2 - origin.x,
-      y: (_nullishCoalesce(_optionalChain([root, 'optionalAccess', _6 => _6.clientHeight]), () => ( 0))) / 2 - origin.y
-    }));
+    const focal = focalPoint ?? {
+      x: (root?.clientWidth ?? 0) / 2 - origin.x,
+      y: (root?.clientHeight ?? 0) / 2 - origin.y
+    };
     const ratio = nextZoom / current.z;
     commitViewport({
       x: focal.x - (focal.x - current.x) * ratio,
@@ -102,7 +102,7 @@ function usePanZoomViewport({
   const resetViewport = () => commitViewport(defaultViewport);
   const handlePointerDown = (event) => {
     if (interactionBlocked) return;
-    _optionalChain([onPointerDown, 'optionalCall', _7 => _7(event)]);
+    onPointerDown?.(event);
     if (event.defaultPrevented) return;
     if (!panEnabled || event.button !== 0 || isInteractiveDescendant(event.target)) return;
     const current = viewportRef.current;
@@ -112,11 +112,11 @@ function usePanZoomViewport({
       viewportX: current.x,
       viewportY: current.y
     };
-    _optionalChain([event, 'access', _8 => _8.currentTarget, 'access', _9 => _9.setPointerCapture, 'optionalCall', _10 => _10(event.pointerId)]);
+    event.currentTarget.setPointerCapture?.(event.pointerId);
   };
   const handlePointerMove = (event) => {
     if (interactionBlocked) return;
-    _optionalChain([onPointerMove, 'optionalCall', _11 => _11(event)]);
+    onPointerMove?.(event);
     if (event.defaultPrevented) return;
     const drag = dragRef.current;
     if (!drag) return;
@@ -129,11 +129,11 @@ function usePanZoomViewport({
   const endPointerInteraction = (event, consumerHandler) => {
     dragRef.current = null;
     if (interactionBlocked) return;
-    _optionalChain([consumerHandler, 'optionalCall', _12 => _12(event)]);
+    consumerHandler?.(event);
   };
   const handleWheel = (event) => {
     if (interactionBlocked) return;
-    _optionalChain([onWheel, 'optionalCall', _13 => _13(event)]);
+    onWheel?.(event);
     if (event.defaultPrevented || !wheelZoom || event.deltaY === 0 || isInteractiveDescendant(event.target)) return;
     event.preventDefault();
     const rect = event.currentTarget.getBoundingClientRect();
@@ -146,16 +146,16 @@ function usePanZoomViewport({
     zoomAt(Math.exp(boundedDelta), focalPoint);
   };
   wheelHandlerRef.current = handleWheel;
-  _react2.default.useEffect(() => {
+  React.useEffect(() => {
     const root = rootRef.current;
     if (!root) return void 0;
-    const listener = (event) => _optionalChain([wheelHandlerRef, 'access', _14 => _14.current, 'optionalCall', _15 => _15(event)]);
+    const listener = (event) => wheelHandlerRef.current?.(event);
     root.addEventListener("wheel", listener, { passive: false });
     return () => root.removeEventListener("wheel", listener);
   }, []);
   const handleKeyDown = (event) => {
     if (interactionBlocked) return;
-    _optionalChain([onKeyDown, 'optionalCall', _16 => _16(event)]);
+    onKeyDown?.(event);
     if (event.defaultPrevented || !keyboard || event.target !== event.currentTarget) return;
     const step = event.shiftKey ? 48 : 18;
     if (event.key === "+" || event.key === "=") {
@@ -191,7 +191,7 @@ function usePanZoomViewport({
 }
 
 // components/viz/Map2DCanvas.jsx
-var _jsxruntime = require('react/jsx-runtime');
+import { jsx, jsxs } from "react/jsx-runtime";
 var DEFAULT_VIEWPORT2 = { x: 0, y: 0, z: 1 };
 function Map2DCanvas({
   children,
@@ -236,14 +236,14 @@ function Map2DCanvas({
   onKeyDown,
   ...rootProps
 }) {
-  const interactionState = _chunkC6FJX3RFcjs.resolveViewerState.call(void 0, {
+  const interactionState = resolveViewerState({
     state,
     availability,
     connection,
     freshness,
     playback
   });
-  const interactionBlocked = _chunkC6FJX3RFcjs.VIEWER_BLOCKING_STATES.includes(interactionState);
+  const interactionBlocked = VIEWER_BLOCKING_STATES.includes(interactionState);
   const {
     rootRef,
     renderedViewport,
@@ -277,23 +277,23 @@ function Map2DCanvas({
   const renderedChildren = typeof children === "function" ? children({ viewport: t, setViewport: commitViewport }) : children;
   const centeredContent = contentOrigin === "center";
   const gridPosition = centeredContent ? `calc(50% + ${t.x}px) calc(50% + ${t.y}px)` : `${t.x}px ${t.y}px`;
-  const viewerToolbar = controls ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
-    _chunkUABFULF2cjs.ViewerToolbar,
+  const viewerToolbar = controls ? /* @__PURE__ */ jsxs(
+    ViewerToolbar,
     {
       orientation: "vertical",
       appearance: appearance === "dark" ? "on-dark" : "minimal",
       label: "\uC9C0\uB3C4 \uBCF4\uAE30",
       "data-lk-viewport-control": "",
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkUABFULF2cjs.ViewerToolbarButton, { label: "\uD655\uB300", onClick: () => zoomAt(1.2), children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: "plus", size: 16, "aria-hidden": "true" }) }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkUABFULF2cjs.ViewerToolbarButton, { label: "\uCD95\uC18C", onClick: () => zoomAt(0.8), children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: "minus", size: 16, "aria-hidden": "true" }) }),
-        onFit != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkUABFULF2cjs.ViewerToolbarButton, { label: "\uC804\uCCB4 \uBCF4\uAE30", onClick: onFit, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: "full", size: 16, "aria-hidden": "true" }) }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkUABFULF2cjs.ViewerToolbarButton, { label: "\uBCF4\uAE30 \uCD08\uAE30\uD654", onClick: resetViewport, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: "reset", size: 16, "aria-hidden": "true" }) })
+        /* @__PURE__ */ jsx(ViewerToolbarButton, { label: "\uD655\uB300", onClick: () => zoomAt(1.2), children: /* @__PURE__ */ jsx(Icon, { name: "plus", size: 16, "aria-hidden": "true" }) }),
+        /* @__PURE__ */ jsx(ViewerToolbarButton, { label: "\uCD95\uC18C", onClick: () => zoomAt(0.8), children: /* @__PURE__ */ jsx(Icon, { name: "minus", size: 16, "aria-hidden": "true" }) }),
+        onFit != null && /* @__PURE__ */ jsx(ViewerToolbarButton, { label: "\uC804\uCCB4 \uBCF4\uAE30", onClick: onFit, children: /* @__PURE__ */ jsx(Icon, { name: "full", size: 16, "aria-hidden": "true" }) }),
+        /* @__PURE__ */ jsx(ViewerToolbarButton, { label: "\uBCF4\uAE30 \uCD08\uAE30\uD654", onClick: resetViewport, children: /* @__PURE__ */ jsx(Icon, { name: "reset", size: 16, "aria-hidden": "true" }) })
       ]
     }
   ) : void 0;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-    _chunkC6FJX3RFcjs.ViewerFrame,
+  return /* @__PURE__ */ jsx(
+    ViewerFrame,
     {
       ...rootProps,
       ref: rootRef,
@@ -307,7 +307,7 @@ function Map2DCanvas({
       toolbar: toolbar !== void 0 ? toolbar : viewerToolbar,
       toolbarPlacement: "bottom-right",
       overlay,
-      status: _nullishCoalesce(status, () => ( (controls ? `${Math.round(t.z * 100)}%` : void 0))),
+      status: status ?? (controls ? `${Math.round(t.z * 100)}%` : void 0),
       state,
       availability,
       connection,
@@ -339,7 +339,7 @@ function Map2DCanvas({
         backgroundPosition: grid ? gridPosition : void 0,
         ...style
       },
-      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      children: /* @__PURE__ */ jsx(
         "div",
         {
           "data-lk-map-content": "",
@@ -357,7 +357,7 @@ function Map2DCanvas({
   );
 }
 
-
-
-exports.Map2DCanvas = Map2DCanvas;
-//# sourceMappingURL=chunk-IB5CKFH7.cjs.map
+export {
+  Map2DCanvas
+};
+//# sourceMappingURL=chunk-34KLM3DO.js.map

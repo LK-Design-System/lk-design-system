@@ -1,13 +1,16 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-var _chunkDKANR6BIcjs = require('./chunk-DKANR6BI.cjs');
-
-
-var _chunk63NPKSTXcjs = require('./chunk-63NPKSTX.cjs');
+"use client";
+import {
+  StatusIndicator
+} from "./chunk-VSYEB7PE.js";
+import {
+  Icon
+} from "./chunk-KRO3ULVK.js";
+import {
+  VisuallyHidden
+} from "./chunk-LW4BPLAH.js";
 
 // components/viz/ViewerFrame.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+import React2 from "react";
 
 // packages/core/dist/chunk-FCOPBODO.js
 var LK_D = "M1938 3103 l2 -703 248 0 247 0 101 -123 c56 -67 125 -150 154 -184 l52 -63 -596 0 -596 0 0 890 0 890 193 -2 192 -3 3 -702z M3470 3795 c0 -3 -155 -212 -346 -466 -190 -253 -347 -466 -350 -473 -3 -7 152 -195 345 -420 193 -224 351 -409 351 -412 0 -2 -112 -4 -248 -4 l-248 0 -347 410 c-191 225 -347 414 -347 420 0 6 170 222 377 480 l378 470 217 0 c120 0 218 -2 218 -5z";
@@ -28,14 +31,14 @@ function joinLetters(parts, groups) {
 }
 
 // packages/core/dist/chunk-HRBOQUCC.js
-
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
 var LK_LETTERS = joinLetters(splitSubpaths(LK_D), LK_LETTER_GROUPS);
 var ROBO_LETTERS = joinLetters(splitSubpaths(ROBO_D), ROBO_LETTER_GROUPS);
 var BRAND_LETTER_COUNT = LK_LETTERS.length + ROBO_LETTERS.length;
 var brandDelay = (order) => (BRAND_LETTER_COUNT > 1 ? order / (BRAND_LETTER_COUNT - 1) * 0.55 : 0).toFixed(3);
 function useKeyframes(id, css) {
-  _react2.default.useEffect(() => {
+  React.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById(id)) return;
     const el = document.createElement("style");
     el.id = id;
@@ -46,23 +49,23 @@ function useKeyframes(id, css) {
 function Spinner({ size, thickness, color = "var(--color-semantic-primary-normal)", label, variant = "circular", style, ...rest }) {
   useKeyframes("lk-spin-kf", "@keyframes lk-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){[data-lds-spinner-ring]{animation:none!important}}");
   useKeyframes("lk-brand-wave-kf", "@keyframes lk-brand-wave-lk{0%,55%,100%{transform:translateY(0)}27%{transform:translateY(300px)}}@keyframes lk-brand-wave-robo{0%,55%,100%{transform:translateY(0)}27%{transform:translateY(77px)}}@media (prefers-reduced-motion: reduce){[data-wave]{animation:none!important}}");
-  const resolvedSize = _nullishCoalesce(size, () => ( (variant === "brand" ? 22 : 28)));
+  const resolvedSize = size ?? (variant === "brand" ? 22 : 28);
   if (variant === "brand") {
-    const mark = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "svg", { viewBox: LK_LOGO_VIEWBOX.inline, height: resolvedSize, "aria-hidden": "true", style: { display: "block", overflow: "visible" }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { transform: "translate(0,504) scale(0.1,-0.1)", fill: "var(--color-semantic-label-normal)", children: [
-      LK_LETTERS.map((d, i) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { "data-wave": true, d, fillRule: "evenodd", style: { animation: `lk-brand-wave-lk 1.15s ease-in-out ${brandDelay(i)}s infinite` } }, `lk${i}`)),
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { transform: ROBO_INLINE, children: ROBO_LETTERS.map((d, i) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { "data-wave": true, d, fillRule: "evenodd", style: { animation: `lk-brand-wave-robo 1.15s ease-in-out ${brandDelay(LK_LETTERS.length + i)}s infinite` } }, `ro${i}`)) })
+    const mark = /* @__PURE__ */ jsx("svg", { viewBox: LK_LOGO_VIEWBOX.inline, height: resolvedSize, "aria-hidden": "true", style: { display: "block", overflow: "visible" }, children: /* @__PURE__ */ jsxs("g", { transform: "translate(0,504) scale(0.1,-0.1)", fill: "var(--color-semantic-label-normal)", children: [
+      LK_LETTERS.map((d, i) => /* @__PURE__ */ jsx("path", { "data-wave": true, d, fillRule: "evenodd", style: { animation: `lk-brand-wave-lk 1.15s ease-in-out ${brandDelay(i)}s infinite` } }, `lk${i}`)),
+      /* @__PURE__ */ jsx("g", { transform: ROBO_INLINE, children: ROBO_LETTERS.map((d, i) => /* @__PURE__ */ jsx("path", { "data-wave": true, d, fillRule: "evenodd", style: { animation: `lk-brand-wave-robo 1.15s ease-in-out ${brandDelay(LK_LETTERS.length + i)}s infinite` } }, `ro${i}`)) })
     ] }) });
     const ariaLabel = typeof label === "string" && label ? label : "\uBD88\uB7EC\uC624\uB294 \uC911";
     if (label == null) {
-      return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { role: "status", "aria-label": ariaLabel, "aria-live": "polite", style: { display: "inline-flex", ...style }, ...rest, children: mark });
+      return /* @__PURE__ */ jsx("span", { role: "status", "aria-label": ariaLabel, "aria-live": "polite", style: { display: "inline-flex", ...style }, ...rest, children: mark });
     }
-    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { role: "status", "aria-live": "polite", style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2-5)", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", color: "inherit", ...style }, ...rest, children: [
+    return /* @__PURE__ */ jsxs("span", { role: "status", "aria-live": "polite", style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2-5)", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", color: "inherit", ...style }, ...rest, children: [
       mark,
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: label })
+      /* @__PURE__ */ jsx("span", { children: label })
     ] });
   }
   const t = thickness || Math.max(2, Math.round(resolvedSize / 10));
-  const ring = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  const ring = /* @__PURE__ */ jsx(
     "span",
     {
       "data-lds-spinner-ring": true,
@@ -79,11 +82,11 @@ function Spinner({ size, thickness, color = "var(--color-semantic-primary-normal
     }
   );
   if (label == null) {
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { role: "status", "aria-label": "\uBD88\uB7EC\uC624\uB294 \uC911", "aria-live": "polite", style: { display: "inline-flex", ...style }, ...rest, children: ring });
+    return /* @__PURE__ */ jsx("span", { role: "status", "aria-label": "\uBD88\uB7EC\uC624\uB294 \uC911", "aria-live": "polite", style: { display: "inline-flex", ...style }, ...rest, children: ring });
   }
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { role: "status", "aria-live": "polite", style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2-5)", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", color: "inherit", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs("span", { role: "status", "aria-live": "polite", style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2-5)", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", color: "inherit", ...style }, ...rest, children: [
     ring,
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: label })
+    /* @__PURE__ */ jsx("span", { children: label })
   ] });
 }
 
@@ -124,10 +127,10 @@ function resolveViewerState({
 } = {}) {
   const usesAxes = availability != null || connection != null || freshness != null || playback != null;
   if (!usesAxes) return VIEWER_STATE_SET.has(state) ? state : "ready";
-  const resolvedAvailability = _nullishCoalesce(availability, () => ( "ready"));
-  const resolvedConnection = _nullishCoalesce(connection, () => ( "connected"));
-  const resolvedFreshness = _nullishCoalesce(freshness, () => ( "current"));
-  const resolvedPlayback = _nullishCoalesce(playback, () => ( "playing"));
+  const resolvedAvailability = availability ?? "ready";
+  const resolvedConnection = connection ?? "connected";
+  const resolvedFreshness = freshness ?? "current";
+  const resolvedPlayback = playback ?? "playing";
   if (resolvedAvailability !== "ready") {
     return ["idle", "no-source", "loading", "unavailable", "error"].includes(resolvedAvailability) ? resolvedAvailability : "ready";
   }
@@ -144,7 +147,7 @@ function resolveViewerState({
 }
 
 // components/viz/ViewerFrame.jsx
-
+import { jsx as jsx2, jsxs as jsxs2 } from "react/jsx-runtime";
 var VIEWER_BLOCKING_STATES2 = VIEWER_BLOCKING_STATES;
 var VIEWER_STATES2 = VIEWER_STATES;
 var STATE_PRESENTATION = {
@@ -264,7 +267,7 @@ var TONE_COLOR = {
 };
 function StateMark({ presentation, icon, size = 22 }) {
   if (presentation.busy && icon == null) {
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-viewer-state-icon": "spinner", "aria-hidden": "true", style: { display: "inline-flex" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    return /* @__PURE__ */ jsx2("span", { "data-viewer-state-icon": "spinner", "aria-hidden": "true", style: { display: "inline-flex" }, children: /* @__PURE__ */ jsx2(
       Spinner,
       {
         size,
@@ -275,7 +278,7 @@ function StateMark({ presentation, icon, size = 22 }) {
       }
     ) });
   }
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ jsx2(
     "span",
     {
       "data-viewer-state-icon": icon == null ? presentation.icon : "custom",
@@ -288,13 +291,13 @@ function StateMark({ presentation, icon, size = 22 }) {
         width: size,
         height: size,
         overflow: "hidden",
-        color: _nullishCoalesce(TONE_COLOR[presentation.tone], () => ( TONE_COLOR.neutral))
+        color: TONE_COLOR[presentation.tone] ?? TONE_COLOR.neutral
       },
-      children: _nullishCoalesce(icon, () => ( /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: _nullishCoalesce(presentation.icon, () => ( "circle-info")), size })))
+      children: icon ?? /* @__PURE__ */ jsx2(Icon, { name: presentation.icon ?? "circle-info", size })
     }
   );
 }
-var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
+var ViewerFrame = React2.forwardRef(function ViewerFrame2({
   children,
   label,
   source,
@@ -329,19 +332,19 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
   onPointerDown,
   ...rest
 }, forwardedRef) {
-  const rootRef = _react2.default.useRef(null);
-  const blockingLayerRef = _react2.default.useRef(null);
-  const toolbarShelfRef = _react2.default.useRef(null);
-  const topbarRef = _react2.default.useRef(null);
-  const lastFocusWithinRef = _react2.default.useRef(null);
-  const focusInsideBlockingLayerRef = _react2.default.useRef(false);
-  const returnFocusRef = _react2.default.useRef(null);
-  const wasBlockingRef = _react2.default.useRef(false);
-  const [pointerWithin, setPointerWithin] = _react2.default.useState(false);
-  const [focusWithin, setFocusWithin] = _react2.default.useState(false);
-  const [topToolbarOwnsChrome, setTopToolbarOwnsChrome] = _react2.default.useState(false);
-  const [scopeTopOffset, setScopeTopOffset] = _react2.default.useState(0);
-  const [bottomShelfHeight, setBottomShelfHeight] = _react2.default.useState(0);
+  const rootRef = React2.useRef(null);
+  const blockingLayerRef = React2.useRef(null);
+  const toolbarShelfRef = React2.useRef(null);
+  const topbarRef = React2.useRef(null);
+  const lastFocusWithinRef = React2.useRef(null);
+  const focusInsideBlockingLayerRef = React2.useRef(false);
+  const returnFocusRef = React2.useRef(null);
+  const wasBlockingRef = React2.useRef(false);
+  const [pointerWithin, setPointerWithin] = React2.useState(false);
+  const [focusWithin, setFocusWithin] = React2.useState(false);
+  const [topToolbarOwnsChrome, setTopToolbarOwnsChrome] = React2.useState(false);
+  const [scopeTopOffset, setScopeTopOffset] = React2.useState(0);
+  const [bottomShelfHeight, setBottomShelfHeight] = React2.useState(0);
   const resolvedState = resolveViewerState({
     state,
     availability,
@@ -353,7 +356,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
   const blocking = presentation.blocking;
   const busy = Boolean(presentation.busy);
   const blockingStatusRole = ASSERTIVE_BLOCKING_STATES.has(resolvedState) ? "alert" : "status";
-  const labelContent = _nullishCoalesce(stateLabel, () => ( presentation.label));
+  const labelContent = stateLabel ?? presentation.label;
   const descriptionContent = stateDescription === void 0 ? presentation.description : stateDescription;
   const topToolbar = toolbarPlacement === "top-right" ? toolbar : null;
   const bottomToolbar = toolbarPlacement === "bottom-right" ? toolbar : null;
@@ -361,14 +364,14 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
   const overlayChrome = chromeVariant === "overlay";
   const interactionToolbar = toolbarVisibility === "interaction";
   const toolbarVisible = !interactionToolbar || pointerWithin || focusWithin;
-  _react2.default.useImperativeHandle(forwardedRef, () => rootRef.current, []);
-  _react2.default.useLayoutEffect(() => {
-    const ownsChrome = Boolean(_optionalChain([toolbarShelfRef, 'access', _ => _.current, 'optionalAccess', _2 => _2.querySelector, 'call', _3 => _3(
+  React2.useImperativeHandle(forwardedRef, () => rootRef.current, []);
+  React2.useLayoutEffect(() => {
+    const ownsChrome = Boolean(toolbarShelfRef.current?.querySelector(
       '[data-viewer-toolbar-appearance="surface"], [data-viewer-toolbar-appearance="on-dark"]'
-    )]));
+    ));
     setTopToolbarOwnsChrome((current) => current === ownsChrome ? current : ownsChrome);
   }, [toolbar, toolbarPlacement]);
-  _react2.default.useLayoutEffect(() => {
+  React2.useLayoutEffect(() => {
     const node = topbarRef.current;
     if (scope == null || node == null) {
       setScopeTopOffset(0);
@@ -385,11 +388,11 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
       setScopeTopOffset((current) => Math.abs(current - next) > 0.5 ? next : current);
     };
     update();
-    const observer = _optionalChain([view, 'optionalAccess', _4 => _4.ResizeObserver]) ? new view.ResizeObserver(update) : null;
-    _optionalChain([observer, 'optionalAccess', _5 => _5.observe, 'call', _6 => _6(node)]);
-    return () => _optionalChain([observer, 'optionalAccess', _7 => _7.disconnect, 'call', _8 => _8()]);
+    const observer = view?.ResizeObserver ? new view.ResizeObserver(update) : null;
+    observer?.observe(node);
+    return () => observer?.disconnect();
   }, [scope, source, badges, liveness, hud, topToolbar, presentation.corner]);
-  _react2.default.useLayoutEffect(() => {
+  React2.useLayoutEffect(() => {
     const node = toolbarShelfRef.current;
     if (scope == null || bottomToolbar == null || node == null) {
       setBottomShelfHeight(0);
@@ -401,11 +404,11 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
       setBottomShelfHeight((current) => Math.abs(current - next) > 0.5 ? next : current);
     };
     update();
-    const observer = _optionalChain([view, 'optionalAccess', _9 => _9.ResizeObserver]) ? new view.ResizeObserver(update) : null;
-    _optionalChain([observer, 'optionalAccess', _10 => _10.observe, 'call', _11 => _11(node)]);
-    return () => _optionalChain([observer, 'optionalAccess', _12 => _12.disconnect, 'call', _13 => _13()]);
+    const observer = view?.ResizeObserver ? new view.ResizeObserver(update) : null;
+    observer?.observe(node);
+    return () => observer?.disconnect();
   }, [scope, bottomToolbar]);
-  _react2.default.useLayoutEffect(() => {
+  React2.useLayoutEffect(() => {
     if (typeof document === "undefined") return;
     const wasBlocking = wasBlockingRef.current;
     wasBlockingRef.current = blocking;
@@ -413,18 +416,18 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
       const focusNeedsRestore = document.activeElement === document.body || document.activeElement === document.documentElement;
       if (wasBlocking && focusInsideBlockingLayerRef.current && focusNeedsRestore) {
         const exactTarget = returnFocusRef.current;
-        const exactTargetAvailable = exactTarget instanceof HTMLElement && _optionalChain([rootRef, 'access', _14 => _14.current, 'optionalAccess', _15 => _15.contains, 'call', _16 => _16(exactTarget)]) && !exactTarget.matches('[disabled], [aria-disabled="true"]') && !exactTarget.closest("[inert]");
-        const restoredTarget = exactTargetAvailable ? exactTarget : _nullishCoalesce(_optionalChain([rootRef, 'access', _17 => _17.current, 'optionalAccess', _18 => _18.querySelector, 'call', _19 => _19(
+        const exactTargetAvailable = exactTarget instanceof HTMLElement && rootRef.current?.contains(exactTarget) && !exactTarget.matches('[disabled], [aria-disabled="true"]') && !exactTarget.closest("[inert]");
+        const restoredTarget = exactTargetAvailable ? exactTarget : rootRef.current?.querySelector(
           '[data-viewer-toolbar] [data-lk-viewer-toolbar-item]:not([disabled]):not([aria-disabled="true"])'
-        )]), () => ( rootRef.current));
-        _optionalChain([restoredTarget, 'optionalAccess', _20 => _20.focus, 'optionalCall', _21 => _21({ preventScroll: true })]);
+        ) ?? rootRef.current;
+        restoredTarget?.focus?.({ preventScroll: true });
       }
       focusInsideBlockingLayerRef.current = false;
       returnFocusRef.current = null;
       return;
     }
     const focused = document.activeElement;
-    const blockedRegions = _nullishCoalesce(_optionalChain([rootRef, 'access', _22 => _22.current, 'optionalAccess', _23 => _23.querySelectorAll, 'call', _24 => _24("[data-viewer-blocked-region]")]), () => ( []));
+    const blockedRegions = rootRef.current?.querySelectorAll("[data-viewer-blocked-region]") ?? [];
     const blockedFocusTarget = Array.from(blockedRegions).reduce((target, region) => {
       if (target) return target;
       if (focused instanceof HTMLElement && region.contains(focused)) return focused;
@@ -436,21 +439,21 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
     const focusWasBlocked = blockedFocusTarget != null;
     if (!focusWasBlocked) return;
     returnFocusRef.current = blockedFocusTarget;
-    const focusTarget = _nullishCoalesce(_optionalChain([blockingLayerRef, 'access', _25 => _25.current, 'optionalAccess', _26 => _26.querySelector, 'call', _27 => _27([
+    const focusTarget = blockingLayerRef.current?.querySelector([
       "button:not([disabled])",
       "a[href]",
       "input:not([disabled])",
       "select:not([disabled])",
       "textarea:not([disabled])",
       '[tabindex]:not([tabindex="-1"])'
-    ].join(","))]), () => ( blockingLayerRef.current));
-    _optionalChain([focusTarget, 'optionalAccess', _28 => _28.focus, 'optionalCall', _29 => _29({ preventScroll: true })]);
+    ].join(",")) ?? blockingLayerRef.current;
+    focusTarget?.focus?.({ preventScroll: true });
   }, [blocking, resolvedState]);
-  const stateSummary = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, StateMark, { presentation, icon: stateIcon, size: 16 }),
-    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: 2, minWidth: 0 }, children: [
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontSize: "var(--caption2-size)", lineHeight: 1.35, fontWeight: "var(--fw-bold)", color: "var(--viewer-foreground)" }, children: labelContent }),
-      descriptionContent != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  const stateSummary = /* @__PURE__ */ jsxs2(React2.Fragment, { children: [
+    /* @__PURE__ */ jsx2(StateMark, { presentation, icon: stateIcon, size: 16 }),
+    /* @__PURE__ */ jsxs2("span", { style: { display: "grid", gap: 2, minWidth: 0 }, children: [
+      /* @__PURE__ */ jsx2("span", { "data-viewer-edge-label": "", style: { fontSize: "var(--caption2-size)", lineHeight: 1.35, fontWeight: "var(--fw-bold)", color: "var(--viewer-foreground)" }, children: labelContent }),
+      descriptionContent != null && /* @__PURE__ */ jsx2(
         "span",
         {
           "data-viewer-edge-description": "",
@@ -470,7 +473,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
       )
     ] })
   ] });
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ jsxs2(
     "div",
     {
       ...rest,
@@ -478,28 +481,28 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
       role: "region",
       "aria-label": label,
       "aria-busy": busy || void 0,
-      tabIndex: _nullishCoalesce(tabIndex, () => ( -1)),
+      tabIndex: tabIndex ?? -1,
       onFocusCapture: (event) => {
         lastFocusWithinRef.current = event.target;
-        focusInsideBlockingLayerRef.current = Boolean(_optionalChain([event, 'access', _30 => _30.target, 'access', _31 => _31.closest, 'optionalCall', _32 => _32("[data-viewer-blocking-state]")]));
+        focusInsideBlockingLayerRef.current = Boolean(event.target.closest?.("[data-viewer-blocking-state]"));
         setFocusWithin(true);
-        _optionalChain([onFocusCapture, 'optionalCall', _33 => _33(event)]);
+        onFocusCapture?.(event);
       },
       onBlurCapture: (event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) setFocusWithin(false);
-        _optionalChain([onBlurCapture, 'optionalCall', _34 => _34(event)]);
+        onBlurCapture?.(event);
       },
       onPointerEnter: (event) => {
         setPointerWithin(true);
-        _optionalChain([onPointerEnter, 'optionalCall', _35 => _35(event)]);
+        onPointerEnter?.(event);
       },
       onPointerLeave: (event) => {
         setPointerWithin(false);
-        _optionalChain([onPointerLeave, 'optionalCall', _36 => _36(event)]);
+        onPointerLeave?.(event);
       },
       onPointerDown: (event) => {
         setPointerWithin(true);
-        _optionalChain([onPointerDown, 'optionalCall', _37 => _37(event)]);
+        onPointerDown?.(event);
       },
       "data-lds-viewer-frame": "",
       "data-viewer-appearance": appearance,
@@ -547,7 +550,18 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
         ...style
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ jsx2(
+          VisuallyHidden,
+          {
+            as: "div",
+            "data-viewer-state-live": "",
+            role: blockingStatusRole,
+            "aria-live": blockingStatusRole === "alert" ? "assertive" : "polite",
+            "aria-atomic": "true",
+            children: [labelContent, descriptionContent].filter((part) => typeof part === "string" && part !== "").join(", ")
+          }
+        ),
+        /* @__PURE__ */ jsxs2(
           "div",
           {
             "data-viewer-content": "",
@@ -559,15 +573,15 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
               inset: 0,
               zIndex: 0,
               overflow: "hidden",
-              opacity: !blocking && overlayChrome ? _nullishCoalesce(presentation.contentOpacity, () => ( 1)) : 1
+              opacity: !blocking && overlayChrome ? presentation.contentOpacity ?? 1 : 1
             },
             children: [
               children,
-              overlay != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "aria-hidden": "true", style: { position: "absolute", inset: 0, pointerEvents: "none" }, children: overlay })
+              overlay != null && /* @__PURE__ */ jsx2("div", { "aria-hidden": "true", style: { position: "absolute", inset: 0, pointerEvents: "none" }, children: overlay })
             ]
           }
         ),
-        (source != null || badges != null || liveness != null || hud != null || topToolbar != null || presentation.corner) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        (source != null || badges != null || liveness != null || hud != null || topToolbar != null || presentation.corner) && /* @__PURE__ */ jsxs2(
           "div",
           {
             ref: topbarRef,
@@ -587,7 +601,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
               pointerEvents: "none"
             },
             children: [
-              (source != null || badges != null || hud != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              (source != null || badges != null || hud != null) && /* @__PURE__ */ jsxs2(
                 "div",
                 {
                   "data-viewer-identity": "",
@@ -605,7 +619,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                     backdropFilter: overlayChrome ? "blur(8px)" : void 0
                   },
                   children: [
-                    (source != null || badges != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                    (source != null || badges != null) && /* @__PURE__ */ jsxs2(
                       "div",
                       {
                         style: {
@@ -619,7 +633,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                           boxSizing: "border-box"
                         },
                         children: [
-                          source != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                          source != null && /* @__PURE__ */ jsx2(
                             "span",
                             {
                               "data-viewer-source": "",
@@ -640,7 +654,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                         ]
                       }
                     ),
-                    hud != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                    hud != null && /* @__PURE__ */ jsx2(
                       "div",
                       {
                         "data-viewer-hud": "",
@@ -657,7 +671,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                   ]
                 }
               ),
-              hasLiveness && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              hasLiveness && /* @__PURE__ */ jsxs2(
                 "div",
                 {
                   "data-viewer-liveness": "",
@@ -675,12 +689,11 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                     backdropFilter: overlayChrome ? "blur(8px)" : void 0
                   },
                   children: [
-                    presentation.corner && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-                      _chunkDKANR6BIcjs.StatusIndicator,
+                    presentation.corner && /* @__PURE__ */ jsx2(
+                      StatusIndicator,
                       {
-                        role: "status",
-                        "aria-live": "polite",
-                        "aria-atomic": "true",
+                        "data-viewer-corner-status": "",
+                        "aria-hidden": "true",
                         tone: presentation.tone,
                         style: { flex: "0 0 auto", color: "var(--viewer-foreground)" },
                         children: labelContent
@@ -690,7 +703,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                   ]
                 }
               ),
-              topToolbar != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              topToolbar != null && /* @__PURE__ */ jsx2(
                 "div",
                 {
                   ref: toolbarShelfRef,
@@ -723,7 +736,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
             ]
           }
         ),
-        scope != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        scope != null && /* @__PURE__ */ jsx2(
           "div",
           {
             "data-viewer-scope": "",
@@ -747,7 +760,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
             children: scope
           }
         ),
-        bottomToolbar != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        bottomToolbar != null && /* @__PURE__ */ jsx2(
           "div",
           {
             ref: toolbarShelfRef,
@@ -788,7 +801,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
             children: bottomToolbar
           }
         ),
-        !blocking && !presentation.edge && status != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        !blocking && !presentation.edge && status != null && /* @__PURE__ */ jsx2(
           "div",
           {
             "data-viewer-status": "",
@@ -818,7 +831,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
             children: status
           }
         ),
-        !blocking && presentation.edge && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        !blocking && presentation.edge && /* @__PURE__ */ jsxs2(
           "div",
           {
             "data-viewer-edge-state": "",
@@ -845,19 +858,18 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
               overflow: "hidden"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ jsx2(
                 "div",
                 {
-                  role: "status",
-                  "aria-live": "polite",
-                  "aria-atomic": "true",
+                  "data-viewer-edge-summary": "",
+                  "aria-hidden": "true",
                   style: { display: "flex", alignItems: "center", gap: 4, flex: "0 1 auto", minWidth: 0, overflow: "hidden" },
                   children: stateSummary
                 }
               ),
-              status != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { flex: "0 0 auto", color: "var(--viewer-muted)", fontSize: "var(--caption2-size)" }, children: "\xB7" }),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              status != null && /* @__PURE__ */ jsxs2(React2.Fragment, { children: [
+                /* @__PURE__ */ jsx2("span", { "aria-hidden": "true", style: { flex: "0 0 auto", color: "var(--viewer-muted)", fontSize: "var(--caption2-size)" }, children: "\xB7" }),
+                /* @__PURE__ */ jsx2(
                   "span",
                   {
                     "data-viewer-edge-metadata": "",
@@ -877,11 +889,11 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                   }
                 )
               ] }),
-              stateAction != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { flex: "0 0 auto" }, children: stateAction })
+              stateAction != null && /* @__PURE__ */ jsx2("div", { style: { flex: "0 0 auto" }, children: stateAction })
             ]
           }
         ),
-        blocking && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        blocking && /* @__PURE__ */ jsxs2(
           "div",
           {
             ref: blockingLayerRef,
@@ -902,7 +914,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
               textAlign: "center"
             },
             children: [
-              source != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              source != null && /* @__PURE__ */ jsx2(
                 "div",
                 {
                   "data-viewer-blocking-source": "",
@@ -929,7 +941,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                   children: source
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              /* @__PURE__ */ jsxs2(
                 "div",
                 {
                   "data-viewer-blocking-body": "",
@@ -943,16 +955,14 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                     minHeight: 0
                   },
                   children: [
-                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                    /* @__PURE__ */ jsxs2(
                       "div",
                       {
                         "data-viewer-blocking-live": "",
-                        role: blockingStatusRole,
-                        "aria-live": blockingStatusRole === "alert" ? "assertive" : "polite",
-                        "aria-atomic": "true",
+                        "aria-hidden": "true",
                         style: { display: "grid", justifyItems: "center", gap: 10 },
                         children: [
-                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                          /* @__PURE__ */ jsx2(
                             "div",
                             {
                               "data-viewer-blocking-icon": "",
@@ -963,17 +973,17 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                                 minWidth: 24,
                                 minHeight: 24
                               },
-                              children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, StateMark, { presentation, icon: stateIcon })
+                              children: /* @__PURE__ */ jsx2(StateMark, { presentation, icon: stateIcon })
                             }
                           ),
-                          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", justifyItems: "center", gap: 4 }, children: [
-                            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { style: { color: "var(--viewer-foreground)", fontSize: "var(--label1-size)", lineHeight: 1.4 }, children: labelContent }),
-                            descriptionContent != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-viewer-blocking-description": "", style: { color: "var(--viewer-muted)", fontSize: "var(--caption1-size)", lineHeight: 1.55, overflowWrap: "anywhere" }, children: descriptionContent })
+                          /* @__PURE__ */ jsxs2("div", { style: { display: "grid", justifyItems: "center", gap: 4 }, children: [
+                            /* @__PURE__ */ jsx2("strong", { style: { color: "var(--viewer-foreground)", fontSize: "var(--label1-size)", lineHeight: 1.4 }, children: labelContent }),
+                            descriptionContent != null && /* @__PURE__ */ jsx2("span", { "data-viewer-blocking-description": "", style: { color: "var(--viewer-muted)", fontSize: "var(--caption1-size)", lineHeight: 1.55, overflowWrap: "anywhere" }, children: descriptionContent })
                           ] })
                         ]
                       }
                     ),
-                    stateAction != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-viewer-blocking-action": "", style: { marginTop: 4 }, children: stateAction })
+                    stateAction != null && /* @__PURE__ */ jsx2("div", { "data-viewer-blocking-action": "", style: { marginTop: 4 }, children: stateAction })
                   ]
                 }
               )
@@ -986,10 +996,10 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
 });
 ViewerFrame.displayName = "ViewerFrame";
 
-
-
-
-
-
-exports.resolveViewerState = resolveViewerState; exports.VIEWER_BLOCKING_STATES = VIEWER_BLOCKING_STATES2; exports.VIEWER_STATES = VIEWER_STATES2; exports.ViewerFrame = ViewerFrame;
-//# sourceMappingURL=chunk-C6FJX3RF.cjs.map
+export {
+  resolveViewerState,
+  VIEWER_BLOCKING_STATES2 as VIEWER_BLOCKING_STATES,
+  VIEWER_STATES2 as VIEWER_STATES,
+  ViewerFrame
+};
+//# sourceMappingURL=chunk-ZPZ6WWVJ.js.map

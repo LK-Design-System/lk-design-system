@@ -1,5 +1,8 @@
 "use client";
 import {
+  VisuallyHidden
+} from "./chunk-LW4BPLAH.js";
+import {
   StatusBadge
 } from "./chunk-YZIOOD3Y.js";
 import {
@@ -13,18 +16,8 @@ import {
 } from "./chunk-L2ZEGNVF.js";
 
 // components/editor/ViewportStatusBar.jsx
-import React2 from "react";
-
-// packages/core/dist/chunk-QD42XNRW.js
 import React from "react";
-import { jsx } from "react/jsx-runtime";
-function VisuallyHidden({ children, as = "span", ...rest }) {
-  const Comp = as;
-  return /* @__PURE__ */ jsx(Comp, { style: { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap", border: 0 }, ...rest, children });
-}
-
-// components/editor/ViewportStatusBar.jsx
-import { Fragment, jsx as jsx2, jsxs } from "react/jsx-runtime";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 var STATUS_LABEL = {
   negative: "\uC704\uD5D8",
   cautionary: "\uC8FC\uC758",
@@ -51,7 +44,7 @@ function StatusValue({ item }) {
       "data-unit-attachment": normalizedUnit === "" ? "none" : attachedUnit ? "attached" : "spaced",
       style: { display: "inline-flex", alignItems: "center", minWidth: 0, maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", ...numericStyle(item.mono) },
       children: [
-        /* @__PURE__ */ jsx2("span", { children: renderedValue }),
+        /* @__PURE__ */ jsx("span", { children: renderedValue }),
         normalizedUnit !== "" && /* @__PURE__ */ jsxs("span", { children: [
           unitSeparator,
           normalizedUnit
@@ -61,7 +54,7 @@ function StatusValue({ item }) {
   );
   const tone = item.tone != null && item.tone !== "default" ? normalizeStatusTone(item.tone) : null;
   return /* @__PURE__ */ jsxs(Fragment, { children: [
-    /* @__PURE__ */ jsx2(
+    /* @__PURE__ */ jsx(
       "strong",
       {
         style: {
@@ -78,7 +71,7 @@ function StatusValue({ item }) {
         children: lockup
       }
     ),
-    tone && /* @__PURE__ */ jsx2(
+    tone && /* @__PURE__ */ jsx(
       StatusBadge,
       {
         "data-viewport-status-tone": "",
@@ -95,6 +88,7 @@ function PersistentItem({ item }) {
   return /* @__PURE__ */ jsxs(
     "span",
     {
+      "data-viewport-status-item": "",
       title: item.title,
       style: {
         display: "inline-flex",
@@ -111,8 +105,8 @@ function PersistentItem({ item }) {
         letterSpacing: 0
       },
       children: [
-        /* @__PURE__ */ jsx2("span", { style: { flexShrink: 0, whiteSpace: "nowrap" }, children: item.label }),
-        /* @__PURE__ */ jsx2(StatusValue, { item })
+        /* @__PURE__ */ jsx("span", { style: { flexShrink: 0, whiteSpace: "nowrap" }, children: item.label }),
+        /* @__PURE__ */ jsx(StatusValue, { item })
       ]
     }
   );
@@ -152,7 +146,7 @@ function ViewportStatusBar({
         ...style
       },
       children: [
-        /* @__PURE__ */ jsx2(
+        /* @__PURE__ */ jsx(
           VisuallyHidden,
           {
             as: "span",
@@ -169,7 +163,7 @@ function ViewportStatusBar({
             "aria-hidden": "true",
             style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0, maxWidth: "min(46%, 420px)", overflow: "hidden", flex: "0 1 auto" },
             children: [
-              /* @__PURE__ */ jsx2(
+              /* @__PURE__ */ jsx(
                 "span",
                 {
                   "data-viewport-status-message": "",
@@ -177,7 +171,7 @@ function ViewportStatusBar({
                   children: message
                 }
               ),
-              resolvedMessageTone && /* @__PURE__ */ jsx2(
+              resolvedMessageTone && /* @__PURE__ */ jsx(
                 StatusBadge,
                 {
                   "data-viewport-message-tone": "",
@@ -189,8 +183,8 @@ function ViewportStatusBar({
             ]
           }
         ),
-        orderedItems.map(({ item, index }) => /* @__PURE__ */ jsx2(PersistentItem, { item }, item.key ?? `${String(item.label)}-${index}`)),
-        children != null && /* @__PURE__ */ jsx2("span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0, overflow: "hidden", marginLeft: "auto", flex: "0 1 auto" }, children })
+        orderedItems.map(({ item, index }) => /* @__PURE__ */ jsx(PersistentItem, { item }, item.key ?? `${String(item.label)}-${index}`)),
+        children != null && /* @__PURE__ */ jsx("span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0, overflow: "hidden", marginLeft: "auto", flex: "0 1 auto" }, children })
       ]
     }
   );
@@ -199,4 +193,4 @@ function ViewportStatusBar({
 export {
   ViewportStatusBar
 };
-//# sourceMappingURL=chunk-AJJSJBDO.js.map
+//# sourceMappingURL=chunk-4DIAMSQ4.js.map

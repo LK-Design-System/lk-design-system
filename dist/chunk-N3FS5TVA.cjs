@@ -1,11 +1,11 @@
-"use client";
-import {
-  ViewerFrame
-} from "./chunk-T3EXWR5V.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
+
+
+var _chunkWLCWVRGCcjs = require('./chunk-WLCWVRGC.cjs');
 
 // components/viz/Scene3DFrame.jsx
-import React from "react";
-import { jsx } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 function Scene3DFrame({
   children,
   title,
@@ -33,11 +33,11 @@ function Scene3DFrame({
 }) {
   const usesExplicitAxes = availability != null || connection != null || freshness != null || playback != null;
   const usesLegacyEmpty = !usesExplicitAxes && state == null && !loading && empty != null;
-  const resolvedState = usesExplicitAxes ? state : state ?? (loading ? "loading" : usesLegacyEmpty ? "no-source" : "ready");
-  const resolvedStateLabel = stateLabel ?? (usesLegacyEmpty ? empty : void 0);
-  const resolvedLabel = label ?? (typeof title === "string" && title.trim() ? `${title} 3D \uBDF0\uD3EC\uD2B8` : "3D \uBDF0\uD3EC\uD2B8");
-  return /* @__PURE__ */ jsx(
-    ViewerFrame,
+  const resolvedState = usesExplicitAxes ? state : _nullishCoalesce(state, () => ( (loading ? "loading" : usesLegacyEmpty ? "no-source" : "ready")));
+  const resolvedStateLabel = _nullishCoalesce(stateLabel, () => ( (usesLegacyEmpty ? empty : void 0)));
+  const resolvedLabel = _nullishCoalesce(label, () => ( (typeof title === "string" && title.trim() ? `${title} 3D \uBDF0\uD3EC\uD2B8` : "3D \uBDF0\uD3EC\uD2B8")));
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    _chunkWLCWVRGCcjs.ViewerFrame,
     {
       ...rest,
       label: resolvedLabel,
@@ -65,7 +65,7 @@ function Scene3DFrame({
   );
 }
 
-export {
-  Scene3DFrame
-};
-//# sourceMappingURL=chunk-XR52NO23.js.map
+
+
+exports.Scene3DFrame = Scene3DFrame;
+//# sourceMappingURL=chunk-N3FS5TVA.cjs.map
