@@ -39,6 +39,27 @@ async function openAnnotationSummary(canvasElement) {
     throw new Error('The image must reference the compact annotation disclosure.');
   }
 
+  // Every claim below is geometric, so all of it is measured against a settled
+  // layout — the image and its fonts finish loading after the play begins, and
+  // measuring through that produced a failure that named none of the terms it
+  // was checking.
+  const view0 = canvasElement.ownerDocument.defaultView;
+  const settleRect = async (element) => {
+    let previous = element.getBoundingClientRect();
+    for (let attempt = 0; attempt < 40; attempt += 1) {
+      await new Promise((resolve) => view0.requestAnimationFrame(resolve));
+      const current = element.getBoundingClientRect();
+      if (Math.abs(current.x - previous.x) < 0.5
+        && Math.abs(current.y - previous.y) < 0.5
+        && Math.abs(current.width - previous.width) < 0.5) {
+        return current;
+      }
+      previous = current;
+    }
+    return element.getBoundingClientRect();
+  };
+  await settleRect(disclosure);
+
   const disclosureBounds = disclosure.getBoundingClientRect();
   const captionBounds = disclosure.parentElement.getBoundingClientRect();
   const before = trigger.getBoundingClientRect();
@@ -78,15 +99,23 @@ async function openAnnotationSummary(canvasElement) {
     && panelBounds.width <= disclosureBounds.width + 1
     && Math.abs(panelBounds.right - disclosureBounds.right) <= 1;
 
-  if (trigger.getAttribute('aria-expanded') !== 'true'
-    || disclosure.querySelectorAll('ol > li').length !== regions.length + points.length
-    || !contentWidthTrigger
-    || !endAligned
-    || !contentWidthDisclosure
-    || !sameMetadataRow
-    || !panelEndAligned
-    || moved) {
-    throw new Error('The disclosed text alternative must keep its content-width trigger and panel end-aligned, open in place, and preserve every annotation in marker order.');
+  // Reported one term at a time. As a single `||` the failure named all eight
+  // claims and identified none of them, which is the difference between a
+  // contract that tells you what broke and one that only tells you it did.
+  const claims = [
+    [trigger.getAttribute('aria-expanded') === 'true',
+      'Disclosing the text alternative must expand its trigger.'],
+    [disclosure.querySelectorAll('ol > li').length === regions.length + points.length,
+      `The disclosure must list every annotation in marker order; expected ${regions.length + points.length}, found ${disclosure.querySelectorAll('ol > li').length}.`],
+    [contentWidthTrigger, 'The trigger must stay content-width inside its disclosure.'],
+    [endAligned, 'The trigger must stay end-aligned with its disclosure.'],
+    [contentWidthDisclosure, 'The disclosure must stay content-width inside the caption row.'],
+    [sameMetadataRow, 'The trigger must sit on the caption metadata row.'],
+    [panelEndAligned, 'The disclosed panel must stay within the disclosure and end-aligned with it.'],
+    [!moved, 'Disclosing the text alternative must open in place without moving the trigger.'],
+  ];
+  for (const [holds, message] of claims) {
+    if (!holds) throw new Error(message);
   }
 
   return trigger;
