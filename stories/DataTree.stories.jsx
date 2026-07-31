@@ -308,17 +308,26 @@ export const TreeSelectionContract = {
     await userEvent.keyboard('{Home}{ArrowLeft}');
 
     root.focus();
+    // End lands on `tokens`, which is deliberately disabled — focusable so it
+    // stays discoverable, never selectable ("동기화가 끝날 때까지 선택할 수
+    // 없습니다"). Activating it must therefore change nothing; the previous
+    // assertion demanded it become the controlled selection, which the node's
+    // own contract forbids.
     await userEvent.keyboard('{ArrowRight}{End}{Enter}');
+    if (selectedOutput.textContent?.trim() !== 'workspace') {
+      throw new Error('Activating a disabled item must leave the controlled selection untouched.');
+    }
+    await userEvent.keyboard('{ArrowUp}{Enter}');
     await waitFor(() => {
-      const selected = treeItemById(tree, 'tokens');
-      if (selectedOutput.textContent?.trim() !== 'tokens' || selected?.getAttribute('aria-selected') !== 'true') {
+      const selected = treeItemById(tree, 'forms');
+      if (selectedOutput.textContent?.trim() !== 'forms' || selected?.getAttribute('aria-selected') !== 'true') {
         throw new Error('Activation must request and render controlled selection.');
       }
     });
 
     await userEvent.keyboard('{Home}');
     if (document.activeElement !== root || root.getAttribute('aria-selected') !== 'false'
-      || treeItemById(tree, 'tokens')?.getAttribute('aria-selected') !== 'true') {
+      || treeItemById(tree, 'forms')?.getAttribute('aria-selected') !== 'true') {
       throw new Error('Roving focus must move independently from persistent selection.');
     }
 
@@ -328,7 +337,7 @@ export const TreeSelectionContract = {
       if (!nested || document.activeElement !== nested) {
         throw new Error('focusItem(id, { reveal: true }) must expand ancestors and focus the requested row.');
       }
-      if (nested.getAttribute('aria-selected') !== 'false' || selectedOutput.textContent?.trim() !== 'tokens') {
+      if (nested.getAttribute('aria-selected') !== 'false' || selectedOutput.textContent?.trim() !== 'forms') {
         throw new Error('Imperative focus must not change controlled selection.');
       }
     });

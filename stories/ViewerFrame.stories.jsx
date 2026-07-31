@@ -332,7 +332,11 @@ export const StatePlacement = {
       ) {
         throw new Error('A self-contained ViewerToolbar must expose its own grouped contrast surface.');
       }
-      if (!ownedControlSurface && controlShelf?.style.background !== 'var(--viewer-surface-elevated)') {
+      // Guarded on the shelf like every check above it: a frame may carry a
+      // topbar for source identity and place its controls in the corners
+      // instead. Without the guard the optional chain yielded undefined for a
+      // frame that has no shelf, which read as a shelf missing its surface.
+      if (controlShelf && !ownedControlSurface && controlShelf.style.background !== 'var(--viewer-surface-elevated)') {
         throw new Error('Viewer controls require a distinct grouped surface.');
       }
     }
