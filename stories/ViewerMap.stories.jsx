@@ -97,7 +97,11 @@ function InteractiveMapFixture() {
         </output>
         <label style={{ position: 'absolute', left: 34, top: 220, display: 'grid', gap: 4, width: 120, color: 'var(--viewer-muted)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-semibold)' }}>
           지도 투명도
-          <input type="range" min="0" max="100" defaultValue="70" style={{ width: '100%' }} />
+          {/* Height is set because a native range renders ~16px tall, under the
+              24px target minimum. This fixture exists to prove input isolation,
+              and it should not be the one control in the sweep that fails a
+              size rule it is not about. */}
+          <input type="range" min="0" max="100" defaultValue="70" style={{ width: '100%', height: 24 }} />
         </label>
       </div>
     </Map2DCanvas>

@@ -37,7 +37,7 @@ const VIVID_STATUS_RULES = [
   {
     role: 'positive',
     vivid: ['--color-semantic-status-positive', '#13BE4C', '2.47:1'],
-    text: ['--color-semantic-status-positive-text', '#087A32', '5.47:1'],
+    text: ['--color-semantic-status-positive-text', '#07702E', '5.47:1'],
   },
   {
     role: 'cautionary',

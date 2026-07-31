@@ -85,7 +85,7 @@
   --color-semantic-status-positive-surface: color-mix(in srgb, var(--color-semantic-status-positive) 14%, transparent);
   --color-semantic-status-positive-foreground: var(--color-semantic-status-positive);
   --color-semantic-status-positive-border: color-mix(in srgb, var(--color-semantic-status-positive) 38%, var(--color-semantic-line-normal-normal));
-  --color-semantic-status-positive-text: #087A32;
+  --color-semantic-status-positive-text: #07702E;
   --color-semantic-status-cautionary-surface: color-mix(in srgb, var(--color-semantic-status-cautionary) 18%, transparent);
   --color-semantic-status-cautionary-foreground: var(--color-semantic-status-cautionary);
   --color-semantic-status-cautionary-border: color-mix(in srgb, var(--color-semantic-status-cautionary) 42%, var(--color-semantic-line-normal-normal));

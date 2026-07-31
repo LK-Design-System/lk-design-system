@@ -518,7 +518,7 @@
 | `semantic.colorRoles.status-positive-border` | color | `--color-semantic-status-positive-border` | `light: color-mix(in srgb, var(--color-semantic-status-positive) 38%, var(--color-semantic-line-normal-normal)); dark: color-mix(in srgb, var(--color-semantic-status-positive) 44%, var(--color-semantic-line-normal-normal))` | — |
 | `semantic.colorRoles.status-positive-foreground` | color | `--color-semantic-status-positive-foreground` | `light: var(--color-semantic-status-positive); dark: var(--color-semantic-status-positive)` | — |
 | `semantic.colorRoles.status-positive-surface` | color | `--color-semantic-status-positive-surface` | `light: color-mix(in srgb, var(--color-semantic-status-positive) 14%, transparent); dark: color-mix(in srgb, var(--color-semantic-status-positive) 18%, transparent)` | — |
-| `semantic.colorRoles.status-positive-text` | color | `--color-semantic-status-positive-text` | `light: #087A32; dark: #5EE087` | — |
+| `semantic.colorRoles.status-positive-text` | color | `--color-semantic-status-positive-text` | `light: #07702E; dark: #5EE087` | — |
 | `semantic.control.focusRing` | shadow | `--color-semantic-focus-ring` | `0 0 0 4px var(--color-semantic-focus-ring)` | — |
 | `semantic.control.heightLg` | dimension | `--control-h-lg` | `var(--control-h-lg)` | — |
 | `semantic.control.heightMd` | dimension | `--control-h-md` | `var(--control-h-md)` | — |

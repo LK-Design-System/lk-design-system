@@ -84,7 +84,12 @@ export function ConnectionBadge({
       role={role ?? (!showLabel && (ariaLabel || stringLabel) ? 'img' : undefined)}
       aria-label={ariaLabel ?? (!showLabel ? stringLabel : undefined)}
       style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-sans)',
-      fontSize: size === 'sm' ? 12 : 13, fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-neutral)', ...style }} {...rest}>
+      // A viewer publishes `--viewer-foreground` to its subtree, and this badge
+      // is placed in viewer chrome as often as on a page. Reading the page label
+      // colour unconditionally painted near-black text on the dark viewer
+      // surface — 1.26:1, effectively invisible. The fallback keeps the page
+      // colour everywhere the property is not published.
+      fontSize: size === 'sm' ? 12 : 13, fontWeight: 'var(--fw-semibold)', color: 'var(--viewer-foreground, var(--color-semantic-label-neutral))', ...style }} {...rest}>
       <span data-lds-connection-motion="" style={{ position: 'relative', display: 'inline-flex', alignItems: 'flex-end', gap: 2, height: h,
         animation: animated ? 'lk-conn-blink 1s var(--ease-in-out) infinite' : 'none' }}>
         {[0, 1, 2].map((i) => (
