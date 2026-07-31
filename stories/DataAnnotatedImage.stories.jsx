@@ -44,6 +44,18 @@ async function openAnnotationSummary(canvasElement) {
   // measuring through that produced a failure that named none of the terms it
   // was checking.
   const view0 = canvasElement.ownerDocument.defaultView;
+  // The frame reserves the image's box through `aspect-ratio`, so the box is
+  // already stable while the bytes are still arriving and a rect-settle loop
+  // returns immediately. Decoding is what reflows the caption row afterwards,
+  // so wait for it explicitly rather than for the box to stop moving.
+  if (image.decode) await image.decode().catch(() => {});
+  else if (!image.complete) {
+    await new Promise((resolve) => {
+      image.addEventListener('load', resolve, { once: true });
+      image.addEventListener('error', resolve, { once: true });
+    });
+  }
+  if (canvasElement.ownerDocument.fonts?.ready) await canvasElement.ownerDocument.fonts.ready;
   const settleRect = async (element) => {
     let previous = element.getBoundingClientRect();
     for (let attempt = 0; attempt < 40; attempt += 1) {
@@ -96,9 +108,14 @@ async function openAnnotationSummary(canvasElement) {
   // measured between them. Viewport coordinates also move when the page moves —
   // the figure's image finishing its load shifts everything below it, and that
   // was being read as the disclosure pushing its trigger around.
+  // Measured from the edge the trigger is actually anchored to. It is
+  // end-aligned, so its distance from the disclosure's *left* edge is just
+  // `disclosureWidth - triggerWidth` — a term that moves whenever the caption
+  // row rewraps, which is the page reflowing and not this disclosure pushing
+  // its own trigger around.
   const afterDisclosure = disclosure.getBoundingClientRect();
-  const offsetBefore = { x: before.x - disclosureBounds.x, y: before.y - disclosureBounds.y };
-  const offsetAfter = { x: after.x - afterDisclosure.x, y: after.y - afterDisclosure.y };
+  const offsetBefore = { x: disclosureBounds.right - before.right, y: before.y - disclosureBounds.y };
+  const offsetAfter = { x: afterDisclosure.right - after.right, y: after.y - afterDisclosure.y };
   const moved = Math.abs(offsetBefore.x - offsetAfter.x) > 1
     || Math.abs(offsetBefore.y - offsetAfter.y) > 1
     || Math.abs(before.width - after.width) > 1;
