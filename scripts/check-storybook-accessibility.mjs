@@ -212,8 +212,20 @@ async function main() {
 
   // Docs pages carry the component decision guides. Shard and filter them the same way so a
   // sharded local run still covers every page exactly once.
+  // Only pages that own a guide are asked to render one. A cross-family entry
+  // point like the directory, and the loading pattern page, are deliberately
+  // absent from the component registry — demanding a guide of them reported a
+  // missing guide for pages that are not component pages at all. The registries
+  // are the same ones the guides are generated from, so this cannot drift.
+  const guideTitles = new Set([
+    ...(JSON.parse(await readFile(path.join(root, 'docs/components/component-content.json'), 'utf8')).guides || [])
+      .map((guide) => guide.storybookTitle),
+    ...(JSON.parse(await readFile(path.join(root, 'docs/foundations/foundation-content.json'), 'utf8')).foundations || [])
+      .map((foundation) => `LDS Core/Foundation/${foundation.title}`),
+  ]);
   const { stories: docsPages } = shardStories(
-    filterStories(Object.values(index.entries || {}).filter((entry) => entry.type === 'docs')),
+    filterStories(Object.values(index.entries || {})
+      .filter((entry) => entry.type === 'docs' && guideTitles.has(entry.title))),
   );
 
   const { server, origin } = await startStaticServer();

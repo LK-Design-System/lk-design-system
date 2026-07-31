@@ -47,8 +47,28 @@ async function openAnnotationSummary(canvasElement) {
   const contentWidthDisclosure = disclosureBounds.width < captionBounds.width - 1;
   const sameMetadataRow = Math.abs(before.top - captionBounds.top) <= 1;
   await userEvent.click(trigger);
-  await new Promise((resolve) => canvasElement.ownerDocument.defaultView.requestAnimationFrame(resolve));
-  const after = trigger.getBoundingClientRect();
+  // The claim is that opening does not move the trigger, so the comparison has
+  // to be made against a settled layout. One animation frame is not that: the
+  // panel expands, fonts and the image can still reflow after it, and the
+  // measurement landed mid-flight often enough to fail only under the headless
+  // runner. Wait until the trigger reports the same box twice in a row.
+  const view = canvasElement.ownerDocument.defaultView;
+  const frame = () => new Promise((resolve) => view.requestAnimationFrame(resolve));
+  const settled = async () => {
+    let previous = trigger.getBoundingClientRect();
+    for (let attempt = 0; attempt < 40; attempt += 1) {
+      await frame();
+      const current = trigger.getBoundingClientRect();
+      if (Math.abs(current.x - previous.x) < 0.5
+        && Math.abs(current.y - previous.y) < 0.5
+        && Math.abs(current.width - previous.width) < 0.5) {
+        return current;
+      }
+      previous = current;
+    }
+    return trigger.getBoundingClientRect();
+  };
+  const after = await settled();
   const panel = disclosure.querySelector('[role="region"]');
   const panelBounds = panel?.getBoundingClientRect();
   const moved = Math.abs(before.x - after.x) > 1
