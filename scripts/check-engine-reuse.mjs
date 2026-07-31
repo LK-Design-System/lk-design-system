@@ -89,10 +89,37 @@ function conditionallyMountedAriaLive(sourceFile) {
     }
     return false;
   }
+  // The defect is a *polite* region that first appears carrying its message:
+  // that is not a mutation of an existing region, so the announcement is
+  // dropped. Three shapes look like it to a bare attribute scan and are not it.
+  function attributeText(element, name) {
+    const tag = ts.isJsxElement(element) ? element.openingElement : element;
+    const attribute = tag.attributes.properties.find((property) =>
+      ts.isJsxAttribute(property) && property.name.getText(sourceFile) === name);
+    return attribute?.initializer ? attribute.initializer.getText(sourceFile) : null;
+  }
+  function isRealPoliteRegion(element) {
+    const live = attributeText(element, 'aria-live');
+    // `aria-live={undefined}` is a region switched off on purpose, usually to
+    // stop a second announcement of something already spoken elsewhere.
+    if (live === null || /\{\s*undefined\s*\}/.test(live) || /\{\s*false\s*\}/.test(live)) return false;
+    // Alerts are announced when they are inserted, by spec. Pre-mounting is
+    // what polite regions need; requiring it of an alert asks for the double
+    // announcement the alert-band states are deliberately avoiding.
+    const role = attributeText(element, 'role') ?? '';
+    if (/assertive/.test(live) || /alert/.test(role)) return false;
+    // A region with no children in the JSX has no message to arrive with — its
+    // text is written later through a ref, which is the persistent-region
+    // pattern rather than a violation of it.
+    if (ts.isJsxSelfClosingElement(element)) return false;
+    if (ts.isJsxElement(element) && element.children.every((child) =>
+      ts.isJsxText(child) && child.getText(sourceFile).trim() === '')) return false;
+    return true;
+  }
   function visit(node) {
     if (ts.isJsxAttribute(node) && node.name.getText(sourceFile) === 'aria-live') {
       const element = containingJsxElement(node);
-      if (element && isConditionallyMounted(element)) found += 1;
+      if (element && isConditionallyMounted(element) && isRealPoliteRegion(element)) found += 1;
     }
     ts.forEachChild(node, visit);
   }

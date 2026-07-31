@@ -14,9 +14,7 @@
       "components/navigation/TopBar.jsx": 1
     },
     "conditionalAriaLiveMount": {
-      "components/data/ResourceState.jsx": 2,
-      "components/data/SavedViewControl.jsx": 1,
-      "components/overlay/ToastStack.jsx": 2
+      "components/data/ResourceState.jsx": 1
     },
     "fieldMetadataWithoutEngine": {
       "components/forms/FileUpload.jsx": 1,
