@@ -2,7 +2,7 @@ import React from 'react';
 import {
   LdsStorybookDocsStyles,
   LdsStorybookGuideLayout,
-} from '@lk-robotics/lds-product/storybook';
+} from '@lk-design-system/lds-product/storybook';
 import {
   Description,
   DocsContext,

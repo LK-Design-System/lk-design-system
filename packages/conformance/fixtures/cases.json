@@ -68,28 +68,28 @@
     "name": "wrong-dependency-version",
     "expectedCodes": ["DEPENDENCY_VERSION"],
     "mutations": [
-      { "file": "package.json", "replace": "\"@lk-robotics/lds-core\": \"0.1.0-rc.1\"", "with": "\"@lk-robotics/lds-core\": \"0.1.0-rc.9\"" }
+      { "file": "package.json", "replace": "\"@lk-design-system/lds-core\": \"0.1.0-rc.1\"", "with": "\"@lk-design-system/lds-core\": \"0.1.0-rc.9\"" }
     ]
   },
   {
     "name": "local-link-dependency",
     "expectedCodes": ["LOCAL_DEPENDENCY"],
     "mutations": [
-      { "file": "package.json", "replace": "\"@lk-robotics/lds-core\": \"0.1.0-rc.1\"", "with": "\"@lk-robotics/lds-core\": \"file:../lds\"" }
+      { "file": "package.json", "replace": "\"@lk-design-system/lds-core\": \"0.1.0-rc.1\"", "with": "\"@lk-design-system/lds-core\": \"file:../lds\"" }
     ]
   },
   {
     "name": "missing-style-import",
     "expectedCodes": ["STYLE_IMPORT_ORDER"],
     "mutations": [
-      { "file": ".storybook/preview.jsx", "replace": "import '@lk-robotics/lds-theme/styles.css';\n", "with": "" }
+      { "file": ".storybook/preview.jsx", "replace": "import '@lk-design-system/lds-theme/styles.css';\n", "with": "" }
     ]
   },
   {
     "name": "duplicate-style-import",
     "expectedCodes": ["STYLE_IMPORT_ORDER"],
     "mutations": [
-      { "file": ".storybook/preview.jsx", "append": "import '@lk-robotics/lds-core/styles.css';\n" }
+      { "file": ".storybook/preview.jsx", "append": "import '@lk-design-system/lds-core/styles.css';\n" }
     ]
   },
   {
@@ -98,8 +98,8 @@
     "mutations": [
       {
         "file": ".storybook/preview.jsx",
-        "replace": "import '@lk-robotics/lds-core/styles.css';\nimport '@lk-robotics/lds-theme/styles.css';",
-        "with": "import '@lk-robotics/lds-theme/styles.css';\nimport '@lk-robotics/lds-core/styles.css';"
+        "replace": "import '@lk-design-system/lds-core/styles.css';\nimport '@lk-design-system/lds-theme/styles.css';",
+        "with": "import '@lk-design-system/lds-theme/styles.css';\nimport '@lk-design-system/lds-core/styles.css';"
       }
     ]
   },

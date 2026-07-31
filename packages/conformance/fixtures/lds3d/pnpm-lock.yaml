@@ -2,13 +2,13 @@ lockfileVersion: '9.0'
 importers:
   apps/docs:
     dependencies:
-      '@lk-robotics/lds-core':
+      '@lk-design-system/lds-core':
         specifier: 0.1.0-rc.1
         version: 0.1.0-rc.1
-      '@lk-robotics/lds-theme':
+      '@lk-design-system/lds-theme':
         specifier: 0.1.0-rc.1
         version: 0.1.0-rc.1
-      '@lk-robotics/lds-product':
+      '@lk-design-system/lds-product':
         specifier: 0.1.0-rc.1
         version: 0.1.0-rc.1
       '@lk-robotics/lds-robotics-ui':

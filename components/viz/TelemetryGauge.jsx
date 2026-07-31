@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
+import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
 import { normalizeBoundedValue } from '../internal/bounded-value.js';
 import {
   formatValueWithUnit,

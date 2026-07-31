@@ -8,17 +8,17 @@ const vendoredRoboticsRelease = {
   sha256: '011dc06b058efea94a58dc904dcebcb05379c003c3de40dcd39d15095d251216',
 };
 const workspacePackages = [
-  { id: 'core', name: '@lk-robotics/lds-core', dependencies: [], resources: ['tokens', 'assets'] },
-  { id: 'theme', name: '@lk-robotics/lds-theme', dependencies: ['@lk-robotics/lds-core'], resources: ['tokens', 'assets'] },
+  { id: 'core', name: '@lk-design-system/lds-core', dependencies: [], resources: ['tokens', 'assets'] },
+  { id: 'theme', name: '@lk-design-system/lds-theme', dependencies: ['@lk-design-system/lds-core'], resources: ['tokens', 'assets'] },
   // Product ships tokens because it owns a component tier of its own — the
   // `--component-viewer-*` surfaces every viewer frame and its consumers read.
   // That is not the semantic tier: Core and Theme still own `--color-`,
   // `--space-`, `--radius-`, and `--font-`, and product only composes them.
-  { id: 'product', name: '@lk-robotics/lds-product', dependencies: ['@lk-robotics/lds-core'], resources: ['tokens', 'assets'] },
+  { id: 'product', name: '@lk-design-system/lds-product', dependencies: ['@lk-design-system/lds-core'], resources: ['tokens', 'assets'] },
   {
     id: 'compat',
-    name: '@lk-robotics/design-system-core',
-    dependencies: ['@lk-robotics/lds-core', '@lk-robotics/lds-theme', '@lk-robotics/lds-product'],
+    name: '@lk-design-system/design-system-core',
+    dependencies: ['@lk-design-system/lds-core', '@lk-design-system/lds-theme', '@lk-design-system/lds-product'],
     externalDependencies: ['@lk-robotics/lds-robotics-ui'],
     resources: ['tokens', 'assets'],
     compatibility: true,
@@ -139,9 +139,9 @@ for (const expected of [
   'private: true',
   'npm publish',
   'GitHub Packages',
-  '@lk-robotics/lds-core',
-  '@lk-robotics/lds-theme',
-  '@lk-robotics/lds-product',
+  '@lk-design-system/lds-core',
+  '@lk-design-system/lds-theme',
+  '@lk-design-system/lds-product',
   '@lk-robotics/lds-robotics-ui',
 ]) {
   assert(policyText.includes(expected), `Docs must state publish or workspace package policy phrase: ${expected}`);

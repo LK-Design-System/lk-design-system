@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Button as RootButton } from '@lk-robotics/design-system-core';
-import { Button as CompatibilityDeepButton } from '@lk-robotics/design-system-core/components/buttons/Button';
-import { Button } from '@lk-robotics/design-system-core/core';
-import { ThemeToggle } from '@lk-robotics/design-system-core/theme';
+import { Button as RootButton } from '@lk-design-system/design-system-core';
+import { Button as CompatibilityDeepButton } from '@lk-design-system/design-system-core/components/buttons/Button';
+import { Button } from '@lk-design-system/design-system-core/core';
+import { ThemeToggle } from '@lk-design-system/design-system-core/theme';
 import {
   ConversationMessage,
   MessageFeed,
@@ -10,7 +10,7 @@ import {
   SourceDisclosure,
   VirtualKeypad,
   EquipmentStatusCard,
-} from '@lk-robotics/design-system-core/product';
+} from '@lk-design-system/design-system-core/product';
 import {
   WaypointMarker,
   LaneOverlay,
@@ -18,14 +18,14 @@ import {
   TrajectoryOverlay,
   SpatialRegion,
   FacilityTransition,
-} from '@lk-robotics/design-system-core/robotics';
-import { Button as CoreDeepButton } from '@lk-robotics/lds-core/components/buttons/Button';
-import { ThemeToggle as ThemeDeepToggle } from '@lk-robotics/lds-theme/components/selection/ThemeToggle';
-import { Table as ProductDeepTable } from '@lk-robotics/lds-product/components/data/Table';
-import { ViewerFrame as ProductDeepViewerFrame } from '@lk-robotics/lds-product/components/viz/ViewerFrame';
+} from '@lk-design-system/design-system-core/robotics';
+import { Button as CoreDeepButton } from '@lk-design-system/lds-core/components/buttons/Button';
+import { ThemeToggle as ThemeDeepToggle } from '@lk-design-system/lds-theme/components/selection/ThemeToggle';
+import { Table as ProductDeepTable } from '@lk-design-system/lds-product/components/data/Table';
+import { ViewerFrame as ProductDeepViewerFrame } from '@lk-design-system/lds-product/components/viz/ViewerFrame';
 
 // @ts-expect-error Robotics exports must not leak into the Core entrypoint.
-import { RobotStatusCard as InvalidCoreRobotStatusCard } from '@lk-robotics/design-system-core/core';
+import { RobotStatusCard as InvalidCoreRobotStatusCard } from '@lk-design-system/design-system-core/core';
 
 export const consumerContract: React.ReactElement = <Button variant="primary">확인</Button>;
 

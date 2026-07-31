@@ -3,10 +3,10 @@
   "version": "0.1.0-rc.3",
   "type": "module",
   "dependencies": {
-    "@lk-robotics/lds-core": "0.1.0-rc.1",
-    "@lk-robotics/lds-product": "0.1.0-rc.1"
+    "@lk-design-system/lds-core": "0.1.0-rc.1",
+    "@lk-design-system/lds-product": "0.1.0-rc.1"
   },
   "devDependencies": {
-    "@lk-robotics/lds-theme": "0.1.0-rc.1"
+    "@lk-design-system/lds-theme": "0.1.0-rc.1"
   }
 }

@@ -26,7 +26,7 @@
   },
   "tarballs": [
     {
-      "package": "@lk-robotics/design-system-core",
+      "package": "@lk-design-system/design-system-core",
       "version": "0.1.0",
       "sourceCommit": "679859bc8b5126bcff7146eaedd871bbe9e62891",
       "artifactPath": "visual-artifacts/package-smoke/pack/lk-robotics-design-system-core-0.1.0.tgz",

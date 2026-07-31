@@ -1,6 +1,6 @@
 {
-  "name": "@lk-robotics/lds-core",
-  "version": "0.1.0-rc.3",
+  "name": "@lk-design-system/lds-core",
+  "version": "0.1.0-rc.4",
   "description": "Generic foundation and DOM UI for the LK ROBOTICS design system.",
   "type": "module",
   "main": "./dist/index.js",
@@ -37,5 +37,14 @@
     "./styles.css": "./styles.css",
     "./tokens/*": "./tokens/*",
     "./assets/*": "./assets/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LK-Design-System/lk-design-system.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/LK-Design-System/lk-design-system#readme",
+  "bugs": {
+    "url": "https://github.com/LK-Design-System/lk-design-system/issues"
   }
 }

@@ -135,7 +135,7 @@
         ],
         "properties": {
           "package": {
-            "const": "@lk-robotics/design-system-core"
+            "const": "@lk-design-system/design-system-core"
           },
           "version": {
             "type": "string",

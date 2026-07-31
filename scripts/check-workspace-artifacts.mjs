@@ -14,10 +14,10 @@ const npmPrefixArguments = process.platform === 'win32'
   : [];
 
 const workspaces = [
-  { id: 'core', name: '@lk-robotics/lds-core', implementation: true },
-  { id: 'theme', name: '@lk-robotics/lds-theme', implementation: true },
-  { id: 'product', name: '@lk-robotics/lds-product', implementation: true },
-  { id: 'compat', name: '@lk-robotics/design-system-core', implementation: false },
+  { id: 'core', name: '@lk-design-system/lds-core', implementation: true },
+  { id: 'theme', name: '@lk-design-system/lds-theme', implementation: true },
+  { id: 'product', name: '@lk-design-system/lds-product', implementation: true },
+  { id: 'compat', name: '@lk-design-system/design-system-core', implementation: false },
   {
     id: 'robotics',
     name: '@lk-robotics/lds-robotics-ui',

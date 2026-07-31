@@ -10,7 +10,7 @@
       "observedCommit": "1078a59b057dc39372670b4011cef0eff499be35",
       "mainAtAudit": "0aa7f8d2856546d9193dac190f4777f0ca9caa64",
       "originMainAtAudit": "0aa7f8d2856546d9193dac190f4777f0ca9caa64",
-      "packageName": "@lk-robotics/design-system-core",
+      "packageName": "@lk-design-system/design-system-core",
       "packageVersion": "0.1.0",
       "publicEntrypoint": "src/index.js",
       "classification": "docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json"
@@ -60,7 +60,7 @@
     ]
   },
   "decisions": {
-    "namespace": "@lk-robotics",
+    "namespace": "@lk-design-system",
     "registry": "https://npm.pkg.github.com",
     "namingApprovalStatus": "approved",
     "packageManager": {
@@ -87,7 +87,7 @@
     },
     "compatibility": {
       "approvalStatus": "approved",
-      "facadePackage": "@lk-robotics/design-system-core",
+      "facadePackage": "@lk-design-system/design-system-core",
       "minimumStableReleases": 2,
       "minimumDays": 90,
       "cjs": "retain-in-facade-until-all-pinned-consumers-are-verified",
@@ -106,7 +106,7 @@
   "packageCatalog": [
     {
       "id": "core",
-      "name": "@lk-robotics/lds-core",
+      "name": "@lk-design-system/lds-core",
       "repository": "LK-ROBOTICS/lk-design-system",
       "accountableOwnerRole": "design-system-owner",
       "accountableOwner": "Jinhyuk Jang",
@@ -117,11 +117,11 @@
         "types": "required",
         "cjs": "not-published-use-compatibility-facade"
       },
-      "stylesEntry": "@lk-robotics/lds-core/styles.css"
+      "stylesEntry": "@lk-design-system/lds-core/styles.css"
     },
     {
       "id": "theme",
-      "name": "@lk-robotics/lds-theme",
+      "name": "@lk-design-system/lds-theme",
       "repository": "LK-ROBOTICS/lk-design-system",
       "accountableOwnerRole": "design-system-owner",
       "accountableOwner": "Jinhyuk Jang",
@@ -134,11 +134,11 @@
         "types": "required",
         "cjs": "not-published-use-compatibility-facade"
       },
-      "stylesEntry": "@lk-robotics/lds-theme/styles.css"
+      "stylesEntry": "@lk-design-system/lds-theme/styles.css"
     },
     {
       "id": "product",
-      "name": "@lk-robotics/lds-product",
+      "name": "@lk-design-system/lds-product",
       "repository": "LK-ROBOTICS/lk-design-system",
       "accountableOwnerRole": "frontend-platform-owner",
       "accountableOwner": "Jinhyuk Jang",
@@ -151,7 +151,7 @@
         "types": "required",
         "cjs": "not-published-use-compatibility-facade"
       },
-      "stylesEntry": "@lk-robotics/lds-product/styles.css"
+      "stylesEntry": "@lk-design-system/lds-product/styles.css"
     },
     {
       "id": "robotics-ui",
@@ -174,7 +174,7 @@
     },
     {
       "id": "compatibility",
-      "name": "@lk-robotics/design-system-core",
+      "name": "@lk-design-system/design-system-core",
       "repository": "LK-ROBOTICS/lk-design-system",
       "accountableOwnerRole": "frontend-platform-owner",
       "accountableOwner": "Jinhyuk Jang",
@@ -190,7 +190,7 @@
         "types": "required",
         "cjs": "required-during-support-window"
       },
-      "stylesEntry": "@lk-robotics/design-system-core/styles.css",
+      "stylesEntry": "@lk-design-system/design-system-core/styles.css",
       "ownsImplementation": false
     }
   ],
@@ -357,42 +357,129 @@
     "tokenSource": {
       "path": "tokens/source.json",
       "repositoryRole": "single-build-authority-with-package-projections",
-      "compatibilityExposure": "@lk-robotics/design-system-core/tokens/source.json",
+      "compatibilityExposure": "@lk-design-system/design-system-core/tokens/source.json",
       "sha256": "a44711dc3d404bc297a843d113cf68b42d5f4740692c37fed36c1858030b5c80",
       "runtimeUniqueCustomProperties": 718,
       "sourceUniqueCssNames": 479,
       "runtimeOnlyCssNames": 239,
       "sourceOnlyCssNames": 0,
       "subtreeAssignments": [
-        { "path": "primitive.space", "packageId": "core" },
-        { "path": "primitive.ratio", "packageId": "core" },
-        { "path": "primitive.radius", "packageId": "core" },
-        { "path": "primitive.typography", "packageId": "theme" },
-        { "path": "primitive.grid", "packageId": "core" },
-        { "path": "primitive.effect", "packageId": "theme" },
-        { "path": "primitive.colorRamps", "packageId": "theme" },
-        { "path": "semantic.action", "packageId": "core" },
-        { "path": "semantic.control", "packageId": "core" },
-        { "path": "semantic.border", "packageId": "core" },
-        { "path": "semantic.surface", "packageId": "core" },
-        { "path": "semantic.text", "packageId": "core" },
-        { "path": "semantic.status", "packageId": "core" },
-        { "path": "semantic.layout", "packageId": "core" },
-        { "path": "semantic.motion", "packageId": "theme" },
-        { "path": "semantic.colorRoles", "packageId": "theme" },
-        { "path": "component.button", "packageId": "core" },
-        { "path": "component.actionArea", "packageId": "core" },
-        { "path": "component.confirmDialog", "packageId": "core" },
-        { "path": "component.toggleIcon", "packageId": "core" },
-        { "path": "component.chip", "packageId": "core" },
-        { "path": "component.divider", "packageId": "core" },
-        { "path": "component.mobileSystemBars", "packageId": "core" },
-        { "path": "component.input", "packageId": "core" },
-        { "path": "component.card", "packageId": "core" },
-        { "path": "component.statusBadge", "packageId": "core" },
-        { "path": "component.badge", "packageId": "core" },
-        { "path": "component.notification", "packageId": "core" },
-        { "path": "modes", "packageId": "theme" }
+        {
+          "path": "primitive.space",
+          "packageId": "core"
+        },
+        {
+          "path": "primitive.ratio",
+          "packageId": "core"
+        },
+        {
+          "path": "primitive.radius",
+          "packageId": "core"
+        },
+        {
+          "path": "primitive.typography",
+          "packageId": "theme"
+        },
+        {
+          "path": "primitive.grid",
+          "packageId": "core"
+        },
+        {
+          "path": "primitive.effect",
+          "packageId": "theme"
+        },
+        {
+          "path": "primitive.colorRamps",
+          "packageId": "theme"
+        },
+        {
+          "path": "semantic.action",
+          "packageId": "core"
+        },
+        {
+          "path": "semantic.control",
+          "packageId": "core"
+        },
+        {
+          "path": "semantic.border",
+          "packageId": "core"
+        },
+        {
+          "path": "semantic.surface",
+          "packageId": "core"
+        },
+        {
+          "path": "semantic.text",
+          "packageId": "core"
+        },
+        {
+          "path": "semantic.status",
+          "packageId": "core"
+        },
+        {
+          "path": "semantic.layout",
+          "packageId": "core"
+        },
+        {
+          "path": "semantic.motion",
+          "packageId": "theme"
+        },
+        {
+          "path": "semantic.colorRoles",
+          "packageId": "theme"
+        },
+        {
+          "path": "component.button",
+          "packageId": "core"
+        },
+        {
+          "path": "component.actionArea",
+          "packageId": "core"
+        },
+        {
+          "path": "component.confirmDialog",
+          "packageId": "core"
+        },
+        {
+          "path": "component.toggleIcon",
+          "packageId": "core"
+        },
+        {
+          "path": "component.chip",
+          "packageId": "core"
+        },
+        {
+          "path": "component.divider",
+          "packageId": "core"
+        },
+        {
+          "path": "component.mobileSystemBars",
+          "packageId": "core"
+        },
+        {
+          "path": "component.input",
+          "packageId": "core"
+        },
+        {
+          "path": "component.card",
+          "packageId": "core"
+        },
+        {
+          "path": "component.statusBadge",
+          "packageId": "core"
+        },
+        {
+          "path": "component.badge",
+          "packageId": "core"
+        },
+        {
+          "path": "component.notification",
+          "packageId": "core"
+        },
+        {
+          "path": "modes",
+          "packageId": "theme"
+        }
       ],
       "knownProjectionDebt": "239 runtime custom-property names are not represented by a source.json css field; the shared --component-viewer-* names are Product-projected from the compatibility token source."
     },
@@ -444,9 +531,24 @@
         ],
         "splitRequired": true
       },
-      { "path": "tokens/color-atomic.css", "defaultPackageId": "theme", "sha256": "32f6b78e14b96974b24acdf9ebb4eecb41f65f6e094c70871fb81fdbda36f5ef", "customPropertyDeclarations": 176 },
-      { "path": "tokens/color-components.css", "defaultPackageId": "theme", "sha256": "57970e11a7c5600c024a6a315dcbc8ccbf9d99b577705a720e1347dac7b8a56c", "customPropertyDeclarations": 63 },
-      { "path": "tokens/color-semantic.css", "defaultPackageId": "theme", "sha256": "017a828e37145bb3ab49c9406c154fc0cabee6ba59a169a1bd74524b1cabbb7c", "customPropertyDeclarations": 336 },
+      {
+        "path": "tokens/color-atomic.css",
+        "defaultPackageId": "theme",
+        "sha256": "32f6b78e14b96974b24acdf9ebb4eecb41f65f6e094c70871fb81fdbda36f5ef",
+        "customPropertyDeclarations": 176
+      },
+      {
+        "path": "tokens/color-components.css",
+        "defaultPackageId": "theme",
+        "sha256": "57970e11a7c5600c024a6a315dcbc8ccbf9d99b577705a720e1347dac7b8a56c",
+        "customPropertyDeclarations": 63
+      },
+      {
+        "path": "tokens/color-semantic.css",
+        "defaultPackageId": "theme",
+        "sha256": "017a828e37145bb3ab49c9406c154fc0cabee6ba59a169a1bd74524b1cabbb7c",
+        "customPropertyDeclarations": 336
+      },
       {
         "path": "tokens/components.css",
         "defaultPackageId": "core",
@@ -466,7 +568,9 @@
         "defaultPackageId": "theme",
         "sha256": "ebdfd24b58d58e68cf8583504e553399e5c21c365d79118cde711eb30300a512",
         "customPropertyDeclarations": 85,
-        "contractConsumerPackageIds": ["core"],
+        "contractConsumerPackageIds": [
+          "core"
+        ],
         "ownershipNote": "Theme owns the LK shadow, motion, border, interaction, and effect values. Core components consume the generic token contract without owning these LK value declarations."
       },
       {
@@ -490,22 +594,91 @@
         ],
         "splitRequired": true
       },
-      { "path": "tokens/fonts.css", "defaultPackageId": "theme", "sha256": "e0b03a70add6584daba4e4a5b1adef82e6fb68a84a822f1f6d1f17d461f2d29a", "customPropertyDeclarations": 4 },
-      { "path": "tokens/grid.css", "defaultPackageId": "core", "sha256": "ef4cb4249c2206c14c12a0beba13e48998b552a9a8c02b9df00ef5556750a2b2", "customPropertyDeclarations": 32 },
-      { "path": "tokens/spacing.css", "defaultPackageId": "core", "sha256": "097de962592deb5ad657de17fb60def3605bc8476c9e766d03de5c391f4f28fb", "customPropertyDeclarations": 74 },
-      { "path": "tokens/typography.css", "defaultPackageId": "theme", "sha256": "768f2218ee1d3803e2620e1abb9273f3453a859d246486b74ea71d0a0e8775f6", "customPropertyDeclarations": 56 }
+      {
+        "path": "tokens/fonts.css",
+        "defaultPackageId": "theme",
+        "sha256": "e0b03a70add6584daba4e4a5b1adef82e6fb68a84a822f1f6d1f17d461f2d29a",
+        "customPropertyDeclarations": 4
+      },
+      {
+        "path": "tokens/grid.css",
+        "defaultPackageId": "core",
+        "sha256": "ef4cb4249c2206c14c12a0beba13e48998b552a9a8c02b9df00ef5556750a2b2",
+        "customPropertyDeclarations": 32
+      },
+      {
+        "path": "tokens/spacing.css",
+        "defaultPackageId": "core",
+        "sha256": "097de962592deb5ad657de17fb60def3605bc8476c9e766d03de5c391f4f28fb",
+        "customPropertyDeclarations": 74
+      },
+      {
+        "path": "tokens/typography.css",
+        "defaultPackageId": "theme",
+        "sha256": "768f2218ee1d3803e2620e1abb9273f3453a859d246486b74ea71d0a0e8775f6",
+        "customPropertyDeclarations": 56
+      }
     ]
   },
   "assets": {
     "totalFiles": 380,
     "rules": [
-      { "pathPrefix": "assets/brand/", "packageId": "theme", "role": "brand-runtime", "publish": true, "fileCount": 7, "inventorySha256": "6564184ce3c58282894632dcdbe71b9a7358df1c633be79bb7dff0274bf6e426" },
-      { "pathPrefix": "assets/fonts/", "packageId": "theme", "role": "font-runtime", "publish": true, "fileCount": 5, "inventorySha256": "40baf0de6d22dd9ed3f48d317c90eb88f1776aeef7f5b876a0c7fa522bfb9229" },
-      { "pathPrefix": "assets/icons/", "packageId": "core", "role": "icon-registry-runtime", "publish": true, "fileCount": 341, "inventorySha256": "ca9aacb305fca6341dee7d499805d7b6e77b8dbe0910950b8543e541afd4a3e3" },
-      { "pathPrefix": "assets/industry/", "packageId": "product", "role": "product-content-example", "publish": "review-in-wave-1", "fileCount": 10, "inventorySha256": "f2923f77d7093517ae6cefa47c2622eb8ced8057091f82fd108093229ba888a8" },
-      { "pathPrefix": "assets/products/", "packageId": "product", "role": "product-content-example", "publish": "review-in-wave-1", "fileCount": 5, "inventorySha256": "3a27b2bae5f066ed3352545fcb94e25cbfc76ab96df6507a74a2e5aac351c3bc" },
-      { "pathPrefix": "assets/source/", "packageId": "core", "role": "avatar-runtime-source", "publish": true, "fileCount": 5, "inventorySha256": "18d93b2bbbd111db9405c5dfd5f88a71e591bcc51e10fd225d18cdf02b66963a" },
-      { "pathPrefix": "assets/tech/", "packageId": "product", "role": "product-content-example", "publish": "review-in-wave-1", "fileCount": 7, "inventorySha256": "68ab39508043190d89a91b7b9ed9f917cfeba1fd00b4e499ca5bdab4acaf513f" }
+      {
+        "pathPrefix": "assets/brand/",
+        "packageId": "theme",
+        "role": "brand-runtime",
+        "publish": true,
+        "fileCount": 7,
+        "inventorySha256": "6564184ce3c58282894632dcdbe71b9a7358df1c633be79bb7dff0274bf6e426"
+      },
+      {
+        "pathPrefix": "assets/fonts/",
+        "packageId": "theme",
+        "role": "font-runtime",
+        "publish": true,
+        "fileCount": 5,
+        "inventorySha256": "40baf0de6d22dd9ed3f48d317c90eb88f1776aeef7f5b876a0c7fa522bfb9229"
+      },
+      {
+        "pathPrefix": "assets/icons/",
+        "packageId": "core",
+        "role": "icon-registry-runtime",
+        "publish": true,
+        "fileCount": 341,
+        "inventorySha256": "ca9aacb305fca6341dee7d499805d7b6e77b8dbe0910950b8543e541afd4a3e3"
+      },
+      {
+        "pathPrefix": "assets/industry/",
+        "packageId": "product",
+        "role": "product-content-example",
+        "publish": "review-in-wave-1",
+        "fileCount": 10,
+        "inventorySha256": "f2923f77d7093517ae6cefa47c2622eb8ced8057091f82fd108093229ba888a8"
+      },
+      {
+        "pathPrefix": "assets/products/",
+        "packageId": "product",
+        "role": "product-content-example",
+        "publish": "review-in-wave-1",
+        "fileCount": 5,
+        "inventorySha256": "3a27b2bae5f066ed3352545fcb94e25cbfc76ab96df6507a74a2e5aac351c3bc"
+      },
+      {
+        "pathPrefix": "assets/source/",
+        "packageId": "core",
+        "role": "avatar-runtime-source",
+        "publish": true,
+        "fileCount": 5,
+        "inventorySha256": "18d93b2bbbd111db9405c5dfd5f88a71e591bcc51e10fd225d18cdf02b66963a"
+      },
+      {
+        "pathPrefix": "assets/tech/",
+        "packageId": "product",
+        "role": "product-content-example",
+        "publish": "review-in-wave-1",
+        "fileCount": 7,
+        "inventorySha256": "68ab39508043190d89a91b7b9ed9f917cfeba1fd00b4e499ca5bdab4acaf513f"
+      }
     ],
     "roboticsUiCurrentFiles": 0,
     "lds3dCurrentFiles": 0
@@ -549,7 +722,11 @@
           "sha256": "584ea680a9290fd763f2270a42f028a0f07a6487a3560e8df06caee672177776",
           "commit": "41c319eb0ad863f67d73facc64f7dd2a13ab9585"
         },
-        "intendedPackageSet": ["core", "theme", "product"]
+        "intendedPackageSet": [
+          "core",
+          "theme",
+          "product"
+        ]
       },
       {
         "id": "visionops",
@@ -583,7 +760,11 @@
           "sha256": "7b56cc06b7ab77e682372674946b08629e04b0edb2983070d67dac0633648b94",
           "commit": "308da0c0624024ba2497cf05cda2841e4411b522"
         },
-        "intendedPackageSet": ["core", "theme", "product"]
+        "intendedPackageSet": [
+          "core",
+          "theme",
+          "product"
+        ]
       },
       {
         "id": "web-viz",
@@ -617,7 +798,12 @@
           "sha256": "402d8080e086414efadd31688c263bafcb452263e5c13532b3f4f544c4550ff1",
           "commit": "a984def117c05acd213f494cbb8a42e990595505"
         },
-        "intendedPackageSet": ["core", "theme", "product", "robotics-ui"]
+        "intendedPackageSet": [
+          "core",
+          "theme",
+          "product",
+          "robotics-ui"
+        ]
       },
       {
         "id": "context-hub",
@@ -651,7 +837,11 @@
           "sha256": "29071bc29e455fe06de43a752e23cdce869b98bfc4de20a5912753fe2ce413a8",
           "commit": "de124084b7e50049350a46f92c4ea4476269c58c"
         },
-        "intendedPackageSet": ["core", "theme", "product"]
+        "intendedPackageSet": [
+          "core",
+          "theme",
+          "product"
+        ]
       },
       {
         "id": "control",
@@ -685,7 +875,12 @@
           "sha256": "21d6711abd6e698045ca0408d3b79364c9d87ddc7ba91cbb261b0a844221a0b6",
           "commit": "93802fc2aa5d29f930380ae58d51dcb68322b5e7"
         },
-        "intendedPackageSet": ["core", "theme", "product", "robotics-ui"]
+        "intendedPackageSet": [
+          "core",
+          "theme",
+          "product",
+          "robotics-ui"
+        ]
       },
       {
         "id": "mlops",
@@ -719,7 +914,11 @@
           "sha256": "fa18ac109bf947eee0d21e97e938bdf50e24bacf275b28cb047ffa08b1f8f744",
           "commit": "0e9f3b03fccd60ab0575b55c18035cc9f9e91521"
         },
-        "intendedPackageSet": ["core", "theme", "product"]
+        "intendedPackageSet": [
+          "core",
+          "theme",
+          "product"
+        ]
       }
     ],
     "integrations": [
@@ -739,7 +938,7 @@
           "untrackedPaths": 78
         },
         "linkDependency": {
-          "package": "@lk-robotics/design-system-core",
+          "package": "@lk-design-system/design-system-core",
           "declaredAt": "apps/docs/package.json",
           "specifier": "link:../../../LK Design System",
           "declaredRelativePath": "../../../LK Design System",
@@ -782,17 +981,50 @@
           "cjsRequireOccurrences": 0
         },
         "deepSpecifiers": [
-          { "specifier": "@lk-robotics/design-system-core/components/buttons/Button", "targetPackageId": "core" },
-          { "specifier": "@lk-robotics/design-system-core/components/content/StatusBadge", "targetPackageId": "core" },
-          { "specifier": "@lk-robotics/design-system-core/components/editor/CanvasEditorShell", "targetPackageId": "robotics-ui" },
-          { "specifier": "@lk-robotics/design-system-core/components/editor/SelectionInspector", "targetPackageId": "robotics-ui" },
-          { "specifier": "@lk-robotics/design-system-core/components/editor/ViewportStatusBar", "targetPackageId": "robotics-ui" },
-          { "specifier": "@lk-robotics/design-system-core/components/icon/Icon", "targetPackageId": "core" },
-          { "specifier": "@lk-robotics/design-system-core/components/layout/Container", "targetPackageId": "core" },
-          { "specifier": "@lk-robotics/design-system-core/components/overlay/Drawer", "targetPackageId": "product" },
-          { "specifier": "@lk-robotics/design-system-core/components/selection/SegmentedControl", "targetPackageId": "core" },
-          { "specifier": "@lk-robotics/design-system-core/components/viz/Scene3DFrame", "targetPackageId": "robotics-ui" },
-          { "specifier": "@lk-robotics/design-system-core/components/viz/ViewerToolbar", "targetPackageId": "robotics-ui" }
+          {
+            "specifier": "@lk-design-system/design-system-core/components/buttons/Button",
+            "targetPackageId": "core"
+          },
+          {
+            "specifier": "@lk-design-system/design-system-core/components/content/StatusBadge",
+            "targetPackageId": "core"
+          },
+          {
+            "specifier": "@lk-design-system/design-system-core/components/editor/CanvasEditorShell",
+            "targetPackageId": "robotics-ui"
+          },
+          {
+            "specifier": "@lk-design-system/design-system-core/components/editor/SelectionInspector",
+            "targetPackageId": "robotics-ui"
+          },
+          {
+            "specifier": "@lk-design-system/design-system-core/components/editor/ViewportStatusBar",
+            "targetPackageId": "robotics-ui"
+          },
+          {
+            "specifier": "@lk-design-system/design-system-core/components/icon/Icon",
+            "targetPackageId": "core"
+          },
+          {
+            "specifier": "@lk-design-system/design-system-core/components/layout/Container",
+            "targetPackageId": "core"
+          },
+          {
+            "specifier": "@lk-design-system/design-system-core/components/overlay/Drawer",
+            "targetPackageId": "product"
+          },
+          {
+            "specifier": "@lk-design-system/design-system-core/components/selection/SegmentedControl",
+            "targetPackageId": "core"
+          },
+          {
+            "specifier": "@lk-design-system/design-system-core/components/viz/Scene3DFrame",
+            "targetPackageId": "robotics-ui"
+          },
+          {
+            "specifier": "@lk-design-system/design-system-core/components/viz/ViewerToolbar",
+            "targetPackageId": "robotics-ui"
+          }
         ],
         "scanEvidence": {
           "path": "docs/references/package-split/consumers/lds3d-docs.json",
@@ -800,7 +1032,12 @@
           "commit": "a7b4780f68ba4dbe169ef37500246a5eec166c9a"
         },
         "assetPathMigrationTarget": "compatibility-assets-until-direct-package-asset-paths-are-known",
-        "intendedPackageSet": ["core", "theme", "product", "robotics-ui"]
+        "intendedPackageSet": [
+          "core",
+          "theme",
+          "product",
+          "robotics-ui"
+        ]
       }
     ],
     "identityRule": "Use the full repository slug as identity. Do not merge LK-ROBOTICS/lkrobotics-control-full-daedeok with LDS3D evidence for LK-ROBOTICS/lkrobotics-control-full."
@@ -911,7 +1148,7 @@
             "atom-glyph-waiting": 4.847,
             "atom-glyph-waiting@8x": 5.357,
             "atom-glyph-completed": 15.306,
-            "atom-glyph-completed@8x": 25.0,
+            "atom-glyph-completed@8x": 25,
             "atom-glyph-rerouting": 16.709,
             "atom-glyph-rerouting@8x": 24.617
           }
@@ -935,7 +1172,7 @@
             "atom-glyph-waiting": 4.847,
             "atom-glyph-waiting@8x": 5.357,
             "atom-glyph-completed": 15.306,
-            "atom-glyph-completed@8x": 25.0,
+            "atom-glyph-completed@8x": 25,
             "atom-glyph-rerouting": 16.709,
             "atom-glyph-rerouting@8x": 24.617
           }
@@ -962,7 +1199,7 @@
       "reproductionCommand": "npm run check:package-migration:wave0",
       "tarballs": [
         {
-          "package": "@lk-robotics/design-system-core",
+          "package": "@lk-design-system/design-system-core",
           "version": "0.1.0",
           "sourceCommit": "679859bc8b5126bcff7146eaedd871bbe9e62891",
           "artifactPath": "visual-artifacts/package-smoke/pack/lk-robotics-design-system-core-0.1.0.tgz",

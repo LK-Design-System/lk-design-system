@@ -14,7 +14,7 @@ Storybook의 630개 스토리 역할·공개 여부·소유 컴포넌트와 190�
 
 ## 패키지 범위
 
-- 패키지명: `@lk-robotics/design-system-core`
+- 패키지명: `@lk-design-system/design-system-core`
 - React 컴포넌트 소스 파일: 202개
 - 공개 named export: 208개
 - 루트 aggregate export: Core 85개 · Theme 2개 · Product 121개 = 208개

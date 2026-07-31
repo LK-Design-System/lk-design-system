@@ -1,8 +1,8 @@
 import React from 'react';
-import { StatusIndicator } from '@lk-robotics/lds-core/components/content/StatusIndicator';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { Spinner } from '@lk-robotics/lds-core/components/status/Spinner';
-import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
+import { StatusIndicator } from '@lk-design-system/lds-core/components/content/StatusIndicator';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { Spinner } from '@lk-design-system/lds-core/components/status/Spinner';
+import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
 import {
   resolveViewerState,
   VIEWER_BLOCKING_STATES as INTERNAL_VIEWER_BLOCKING_STATES,

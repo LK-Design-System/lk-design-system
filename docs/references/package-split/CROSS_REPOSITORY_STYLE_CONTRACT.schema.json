@@ -25,7 +25,7 @@
             "additionalProperties": false,
             "required": ["name", "version", "workspace"],
             "properties": {
-              "name": { "type": "string", "pattern": "^@lk-robotics/" },
+              "name": { "type": "string", "pattern": "^@(lk-design-system|lk-robotics)/" },
               "version": { "type": "string", "minLength": 1 },
               "workspace": { "type": "string", "pattern": "^packages/" }
             }
@@ -159,7 +159,7 @@
             "required": ["name", "package", "definitionFile"],
             "properties": {
               "name": { "type": "string", "pattern": "^--[a-z0-9-]+$" },
-              "package": { "type": "string", "pattern": "^@lk-robotics/" },
+              "package": { "type": "string", "pattern": "^@(lk-design-system|lk-robotics)/" },
               "definitionFile": { "type": "string", "minLength": 1 }
             }
           }

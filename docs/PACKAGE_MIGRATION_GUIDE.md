@@ -20,11 +20,11 @@ The completed LDS3D docs migration is recorded in
 
 | Owner | Package | Dependencies |
 | --- | --- | --- |
-| Core | `@lk-robotics/lds-core` | — |
-| Theme | `@lk-robotics/lds-theme` | Core |
-| Product | `@lk-robotics/lds-product` | Core |
+| Core | `@lk-design-system/lds-core` | — |
+| Theme | `@lk-design-system/lds-theme` | Core |
+| Product | `@lk-design-system/lds-product` | Core |
 | Robotics UI | `@lk-robotics/lds-robotics-ui` | Core, Product |
-| Compatibility only | `@lk-robotics/design-system-core` | all four packages |
+| Compatibility only | `@lk-design-system/design-system-core` | all four packages |
 
 The canonical owner for every public export and deep component path is
 `docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json`. Do not infer a package
@@ -34,19 +34,19 @@ from a component folder name.
 
 | Existing import | Replacement |
 | --- | --- |
-| `@lk-robotics/design-system-core` | Import each symbol from its owner package. |
-| `@lk-robotics/design-system-core/core` | `@lk-robotics/lds-core` |
-| `@lk-robotics/design-system-core/theme` | `@lk-robotics/lds-theme` |
-| `@lk-robotics/design-system-core/product` | `@lk-robotics/lds-product` |
-| `@lk-robotics/design-system-core/robotics` | `@lk-robotics/lds-robotics-ui` |
-| `@lk-robotics/design-system-core/components/<path>` | `<owner package>/components/<path>` using the classification inventory. |
+| `@lk-design-system/design-system-core` | Import each symbol from its owner package. |
+| `@lk-design-system/design-system-core/core` | `@lk-design-system/lds-core` |
+| `@lk-design-system/design-system-core/theme` | `@lk-design-system/lds-theme` |
+| `@lk-design-system/design-system-core/product` | `@lk-design-system/lds-product` |
+| `@lk-design-system/design-system-core/robotics` | `@lk-robotics/lds-robotics-ui` |
+| `@lk-design-system/design-system-core/components/<path>` | `<owner package>/components/<path>` using the classification inventory. |
 
 For example:
 
 ```tsx
-import { Button } from '@lk-robotics/lds-core';
-import { ThemeToggle } from '@lk-robotics/lds-theme';
-import { TopBar } from '@lk-robotics/lds-product';
+import { Button } from '@lk-design-system/lds-core';
+import { ThemeToggle } from '@lk-design-system/lds-theme';
+import { TopBar } from '@lk-design-system/lds-product';
 import { Scene3DFrame } from '@lk-robotics/lds-robotics-ui';
 ```
 
@@ -56,9 +56,9 @@ Import the owner package CSS entries in dependency order. Product applications
 that use all layers should normally import all four entries:
 
 ```ts
-import '@lk-robotics/lds-core/styles.css';
-import '@lk-robotics/lds-theme/styles.css';
-import '@lk-robotics/lds-product/styles.css';
+import '@lk-design-system/lds-core/styles.css';
+import '@lk-design-system/lds-theme/styles.css';
+import '@lk-design-system/lds-product/styles.css';
 import '@lk-robotics/lds-robotics-ui/styles.css';
 ```
 

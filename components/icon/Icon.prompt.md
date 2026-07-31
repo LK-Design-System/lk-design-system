@@ -12,7 +12,7 @@ Use `Icon` for every product glyph before introducing a new drawing.
 ## Usage
 
 ```jsx
-import { Icon } from '@lk-robotics/design-system-core';
+import { Icon } from '@lk-design-system/design-system-core';
 
 // 장식용(기본값) — aria-hidden="true"로 렌더되어 보조기술이 건너뜁니다.
 <Icon name="search" />

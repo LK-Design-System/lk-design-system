@@ -85,11 +85,11 @@ Create these packages in the current monorepo, in dependency order:
 
 | Workspace | Package | Runtime package dependencies |
 | --- | --- | --- |
-| `packages/core` | `@lk-robotics/lds-core` | none |
-| `packages/theme` | `@lk-robotics/lds-theme` | Core |
-| `packages/product` | `@lk-robotics/lds-product` | Core |
+| `packages/core` | `@lk-design-system/lds-core` | none |
+| `packages/theme` | `@lk-design-system/lds-theme` | Core |
+| `packages/product` | `@lk-design-system/lds-product` | Core |
 | `packages/robotics-ui` | `@lk-robotics/lds-robotics-ui` | Core, Product |
-| `packages/compat` | `@lk-robotics/design-system-core` | all four packages |
+| `packages/compat` | `@lk-design-system/design-system-core` | all four packages |
 
 The canonical owner inventory is
 `docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json`: Core 88 modules,

@@ -10,7 +10,7 @@ import { build as esbuildBuild } from 'esbuild';
 import { chromium } from '@playwright/test';
 
 const root = process.cwd();
-const packageName = '@lk-robotics/design-system-core';
+const packageName = '@lk-design-system/design-system-core';
 const matrixRoot = path.join(root, 'visual-artifacts', 'wave0-consumer-matrix');
 const maxTarballBytes = 8 * 1024 * 1024;
 const maxSelectedButtonBytes = 150 * 1024;
@@ -270,7 +270,7 @@ createRoot(document.getElementById('root')).render(<App />);
   }
 
   const bundles = await bundleMetrics(appDir);
-  const installedPackage = JSON.parse(await readFile(path.join(appDir, 'node_modules', '@lk-robotics', 'design-system-core', 'package.json'), 'utf8'));
+  const installedPackage = JSON.parse(await readFile(path.join(appDir, 'node_modules', '@lk-design-system', 'design-system-core', 'package.json'), 'utf8'));
   assert(installedPackage.name === tarballInfo.package, 'Installed tarball package name drift.');
   assert(installedPackage.version === tarballInfo.version, 'Installed tarball package version drift.');
   const installedReact = consumerRequire('react/package.json').version;

@@ -126,7 +126,7 @@ async function main() {
   assert(full.sourceCommit === sourceCommit && full.sourceTag === baselineTag, 'Full-check evidence source drift.');
   const tarball = artifact.tarballs?.[0];
   assert(artifact.kind === 'lds-wave0-aggregate-artifact' && artifact.sourceCommit === sourceCommit && artifact.sourceTag === baselineTag, 'Artifact evidence source drift.');
-  assert(tarball?.package === '@lk-robotics/design-system-core' && tarball.sizeBytes > 0 && typeof tarball.sha256 === 'string', 'Artifact tarball evidence is incomplete.');
+  assert(tarball?.package === '@lk-design-system/design-system-core' && tarball.sizeBytes > 0 && typeof tarball.sha256 === 'string', 'Artifact tarball evidence is incomplete.');
   validatePlatformRun(windows, 'windows', sourceCommit, baselineTag, tarball);
   validatePlatformRun(linux, 'linux', sourceCommit, baselineTag, tarball);
 

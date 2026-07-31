@@ -63,6 +63,29 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.4 - 2026-07-31
+
+### Changed
+
+- **Breaking — package scope.** The four published packages move from `@lk-robotics/*` to `@lk-design-system/*`, matching the GitHub organization that owns this repository. GitHub Packages files a scoped npm package under the organization named by its scope, so the old names placed the design system under LK-ROBOTICS while its source lived under LK-Design-System.
+
+  | before | after |
+  | --- | --- |
+  | `@lk-robotics/lds-core` | `@lk-design-system/lds-core` |
+  | `@lk-robotics/lds-theme` | `@lk-design-system/lds-theme` |
+  | `@lk-robotics/lds-product` | `@lk-design-system/lds-product` |
+  | `@lk-robotics/design-system-core` | `@lk-design-system/design-system-core` |
+
+  There is no registry-level redirect for a scope rename. Consumers must add `@lk-design-system:registry=https://npm.pkg.github.com` to `.npmrc` and update their dependencies. The `@lk-robotics/*` packages stay published through the transition so a consumer that has not moved keeps resolving instead of failing with a 404.
+
+  `@lk-robotics/lds-robotics-ui` is unchanged in this release; it moves once the Robotics repository republishes under the new scope, after which the vendored tarball here is replaced.
+
+  Cross-repository governance recognises both scopes for the duration: the conformance CLI's LDS-package predicate, the consumer scanners, and the migration checks match either namespace, so a repository the migration has not reached is still checked rather than silently skipped.
+
+### Added
+
+- Every published manifest now declares `repository` (with `directory`), `homepage`, and `bugs`. Package and repository finally share an owner, so GitHub can link them; the workspace root previously pointed at `lk-design-system.github.io` rather than this repository.
+
 ## 0.1.0-rc.3 - 2026-07-30
 
 ### Fixed
@@ -106,7 +129,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Wizard footer` is rendered again. The prop was declared as a `ReactNode` but only ever read as a null check, so a custom footer was accepted and then discarded.
 - `SideNav` collapsed rail labels use the design system `Tooltip` instead of the native `title` attribute, so they are reachable by keyboard and touch rather than pointer-only.
 - `Menubar` drill mode keeps a valid ARIA menu: the back control is a `menuitem` inside the roving order, drill triggers expose `aria-expanded`, and radio runs are grouped.
-- Republished the release set to repair the `@lk-robotics/lds-core@0.1.0-rc.0` artifact, which shipped without `dist/` although its export map pointed at `./dist/*`, making every deep component subpath unresolvable for consumers (including `lds-robotics-ui` and this repository's own Storybook). `lds-core`, `lds-theme`, `lds-product`, and the `design-system-core` facade are released as `0.1.0-rc.1`; `lds-robotics-ui` is released as `0.1.0-rc.2` against them from its own repository.
+- Republished the release set to repair the `@lk-design-system/lds-core@0.1.0-rc.0` artifact, which shipped without `dist/` although its export map pointed at `./dist/*`, making every deep component subpath unresolvable for consumers (including `lds-robotics-ui` and this repository's own Storybook). `lds-core`, `lds-theme`, `lds-product`, and the `design-system-core` facade are released as `0.1.0-rc.1`; `lds-robotics-ui` is released as `0.1.0-rc.2` against them from its own repository.
 - Accordion and Collapsible collapsed content is now removed from the accessibility tree and tab order (`inert`) and each trigger names its panel via `aria-controls`, closing the benchmark-flagged disclosure defect.
 - Cross-entity label overlaps on dense navigation maps: a route's progress label could cover a trajectory's label, and adjacent `FacilityTransition` markers could cover each other's label blocks. Both cases are now coordinated (and gated by story play assertions) when composed under `NavigationAnnotationLayer`.
 
@@ -126,7 +149,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 ### Migration
 
 - Remove `collapsible` from `SideNav`. Own the collapsed state in the shell and pass `collapsed`/`onCollapsedChange`, then render the toggle at the start of the top bar (`SidebarTrigger` placement for side-first shells, `SideNavToggleButton` placement for header-first shells) with `aria-expanded` and `aria-controls` pointing at the `SideNav` id. Keyboard, focus restore, and the collapsed icon rail are unchanged; only the panel-internal button is gone.
-- New imports should use the owning layer subpath. Existing imports from `@lk-robotics/design-system-core` remain compatible during the migration window.
+- New imports should use the owning layer subpath. Existing imports from `@lk-design-system/design-system-core` remain compatible during the migration window.
 - Replace `ConversationMessage variant="soft|solid"` with `presentation="document|bubble"`; omit it for the role defaults. Replace `sourcePresentation` and source arrays with an explicit `SourceDisclosure` (or other provenance node) passed to the `sources` slot. Move response cancellation to `MessageComposer onStop`.
 - Replace `MessageComposer attachmentAction`/`secondaryActions` with `leadingActions`/`trailingActions`.
 - Replace `EquipmentStatusCard ringLabel`, `ringCaption`, `tone`, `direction`, `connection`, and `chips` with `status`, `statusTone`, and labeled `details`; compose direction or connection indicators inside detail values.

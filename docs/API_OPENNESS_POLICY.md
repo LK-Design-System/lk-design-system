@@ -8,7 +8,7 @@
 | Last reviewed | 2026-07-22 |
 | Source | [`references/quality/BENCHMARK_SHADCN.md`](references/quality/BENCHMARK_SHADCN.md), [`../DESIGN.md`](../DESIGN.md) |
 
-이 문서는 LDS 공개 컴포넌트 API를 **언제, 어떤 형태로 "열지"** 를 정하는 계약이다. `@lk-robotics/lds-*`의 모든
+이 문서는 LDS 공개 컴포넌트 API를 **언제, 어떤 형태로 "열지"** 를 정하는 계약이다. `@lk-design-system/lds-*`의 모든
 공개 컴포넌트에 적용되며, 충돌 시 [`../DESIGN.md`](../DESIGN.md)의 소유권 경계와
 [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md)의 API grammar가 상위 계약이다.
 

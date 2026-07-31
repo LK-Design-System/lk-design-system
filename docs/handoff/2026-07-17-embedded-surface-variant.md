@@ -77,7 +77,7 @@ After:
 </Scene3DFrame>
 ```
 
-Result: no canvas shrink (same as the inset), a true single outermost perimeter (the inset still showed two borders), and no forced border removal. Requires bumping the `@lk-robotics/design-system-core` dependency to a build that includes this change.
+Result: no canvas shrink (same as the inset), a true single outermost perimeter (the inset still showed two borders), and no forced border removal. Requires bumping the `@lk-design-system/design-system-core` dependency to a build that includes this change.
 
 ---
 

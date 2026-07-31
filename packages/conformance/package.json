@@ -1,5 +1,5 @@
 {
-  "name": "@lk-robotics/lds-conformance",
+  "name": "@lk-design-system/lds-conformance",
   "version": "0.1.0",
   "private": true,
   "description": "Cross-repository LDS style ownership and consumer conformance checks.",

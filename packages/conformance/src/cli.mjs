@@ -630,15 +630,23 @@ function yamlScalar(lines, key) {
 }
 
 function isLdsPackage(name) {
-  // LDS DOM UI packages only; the renamed @lk-robotics/lds-3d-* renderer
-  // family shares the prefix but is not an LDS dependency.
-  return name === '@lk-robotics/design-system-core'
-    || (name.startsWith('@lk-robotics/lds-') && !name.startsWith('@lk-robotics/lds-3d'));
+  // LDS DOM UI packages only; the lds-3d-* renderer family shares the prefix
+  // but is not an LDS dependency.
+  //
+  // Both scopes are recognised for as long as the migration from @lk-robotics
+  // to @lk-design-system is in flight. A consumer that has not moved yet still
+  // depends on the old names, and this rule has to keep catching it — matching
+  // only the new scope would silently stop protecting exactly the repositories
+  // the migration has not reached.
+  const scope = ['@lk-design-system', '@lk-robotics'].find((candidate) => name.startsWith(`${candidate}/`));
+  if (!scope) return false;
+  const local = name.slice(scope.length + 1);
+  return local === 'design-system-core' || (local.startsWith('lds-') && !local.startsWith('lds-3d'));
 }
 
 function sourceLdsImports(source) {
   const results = [];
-  for (const match of stripComments(source).matchAll(/(?:from\s*|import\s*(?:\(\s*)?|require\s*\(\s*)['"](@lk-robotics\/(?:lds-[^'"]+|design-system-core)(?:\/[^'"]*)?)['"]/g)) {
+  for (const match of stripComments(source).matchAll(/(?:from\s*|import\s*(?:\(\s*)?|require\s*\(\s*)['"]((?:@lk-design-system|@lk-robotics)\/(?:lds-[^'"]+|design-system-core)(?:\/[^'"]*)?)['"]/g)) {
     results.push({ name: match[1], index: match.index });
   }
   return results;
@@ -683,7 +691,7 @@ async function runLds3dCheck(options) {
   }
   for (const section of dependencySections) {
     for (const [name, specifier] of Object.entries(composition[section] || {})) {
-      if (name === '@lk-robotics/design-system-core') {
+      if (name === '@lk-design-system/design-system-core' || name === '@lk-robotics/design-system-core') {
         diagnostics.push(diagnostic('DEPENDENCY_VERSION', profile.compositionManifest, `${name} is the retired aggregate package; consume the split LDS packages.`));
       } else if (isLdsPackage(name) && localDependency(specifier)) {
         diagnostics.push(diagnostic('LOCAL_DEPENDENCY', profile.compositionManifest, `${name} uses prohibited local source specifier ${specifier}.`));

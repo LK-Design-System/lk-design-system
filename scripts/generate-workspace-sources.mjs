@@ -114,7 +114,7 @@ async function rewriteImports(target, layer, base) {
     const rootRel = sourceRel.startsWith('components/') ? sourceRel : `components/${sourceRel.replace(/^\.\//, '')}`;
     const owner = sourceOwner(rootRel);
     if (owner && owner !== layer) {
-      const packageName = `@lk-robotics/lds-${layers[owner]}`;
+      const packageName = `@lk-design-system/lds-${layers[owner]}`;
       return `${prefix}${packageName}/${rootRel}${suffix}`;
     }
     return all;

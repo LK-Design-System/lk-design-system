@@ -75,25 +75,25 @@ const indexHtml = `<!doctype html>
 
 const appSource = `import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Button as RootButton } from '@lk-robotics/design-system-core';
+import { Button as RootButton } from '@lk-design-system/design-system-core';
 import {
   Badge,
   Button,
   Card,
   EmptyState,
   Toast,
-} from '@lk-robotics/design-system-core/core';
+} from '@lk-design-system/design-system-core/core';
 import {
   Lockup,
   ThemeToggle,
-} from '@lk-robotics/design-system-core/theme';
+} from '@lk-design-system/design-system-core/theme';
 import {
   Table,
   TopBar,
   TopBarNavItem,
-} from '@lk-robotics/design-system-core/product';
-import { RobotStatusCard } from '@lk-robotics/design-system-core/robotics';
-import '@lk-robotics/design-system-core/styles.css';
+} from '@lk-design-system/design-system-core/product';
+import { RobotStatusCard } from '@lk-design-system/design-system-core/robotics';
+import '@lk-design-system/design-system-core/styles.css';
 
 const rows = [
   { id: 'RB-01', status: '정상', battery: '82%' },

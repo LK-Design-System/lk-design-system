@@ -82,28 +82,28 @@ LK ROBOTICS 핵심 디자인 시스템 패키지입니다. 토큰, React 컴포�
 ## 패키지 사용
 
 ```tsx
-import { Button } from '@lk-robotics/lds-core';
-import { ThemeToggle } from '@lk-robotics/lds-theme';
-import { ProductCard, TopBar } from '@lk-robotics/lds-product';
+import { Button } from '@lk-design-system/lds-core';
+import { ThemeToggle } from '@lk-design-system/lds-theme';
+import { ProductCard, TopBar } from '@lk-design-system/lds-product';
 import { RobotStatusCard } from '@lk-robotics/lds-robotics-ui';
 
-import '@lk-robotics/lds-core/styles.css';
-import '@lk-robotics/lds-theme/styles.css';
-import '@lk-robotics/lds-product/styles.css';
+import '@lk-design-system/lds-core/styles.css';
+import '@lk-design-system/lds-theme/styles.css';
+import '@lk-design-system/lds-product/styles.css';
 import '@lk-robotics/lds-robotics-ui/styles.css';
 ```
 
-새 코드는 `@lk-robotics/lds-core`, `@lk-robotics/lds-theme`,
-`@lk-robotics/lds-product`, `@lk-robotics/lds-robotics-ui`의 public export를
-사용합니다. 기존 `@lk-robotics/design-system-core` root, layer subpath,
+새 코드는 `@lk-design-system/lds-core`, `@lk-design-system/lds-theme`,
+`@lk-design-system/lds-product`, `@lk-robotics/lds-robotics-ui`의 public export를
+사용합니다. 기존 `@lk-design-system/design-system-core` root, layer subpath,
 `components/*`, CSS, token, asset 경로는 migration support window 동안
 compatibility facade로 유지합니다.
 
 패키지 메타데이터:
 
-- workspace root: `@lk-robotics/lds-workspace@0.1.0-rc.1` (`private: true`)
-- current packages: `@lk-robotics/lds-core`, `@lk-robotics/lds-theme`,
-  `@lk-robotics/lds-product`, `@lk-robotics/design-system-core` compatibility facade
+- workspace root: `@lk-design-system/lds-workspace@0.1.0-rc.1` (`private: true`)
+- current packages: `@lk-design-system/lds-core`, `@lk-design-system/lds-theme`,
+  `@lk-design-system/lds-product`, `@lk-design-system/design-system-core` compatibility facade
   (`0.1.0-rc.1`)
 - external Robotics: `@lk-robotics/lds-robotics-ui@0.1.0-rc.2`,
   `LK-Design-System/lk-design-system-robotics`

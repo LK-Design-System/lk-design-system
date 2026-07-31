@@ -9,7 +9,7 @@
 | Wave 0 source baseline | `wave0-baseline-2026-07-19-r2` → `679859bc8b5126bcff7146eaedd871bbe9e62891` |
 | Wave 0 attestation | `wave0-attested-2026-07-19` → `f8dd678f32c92798b05d7f97d84449dec916d3a4` |
 
-이 계획은 과거 단일 패키지였던 `@lk-robotics/design-system-core`를 소비 경계에
+이 계획은 과거 단일 패키지였던 `@lk-design-system/design-system-core`를 소비 경계에
 맞는 package로 나눈 과정과 Robotics UI 저장소 추출의 결정·증거를 정의한다.
 현재 Core/Theme/Product/compat package 분리와 Robotics 추출은 완료됐고, 실제 제품
 adoption과 compatibility facade 종료만 열려 있다. 기존 `lk-design-system-3d`는 계속
@@ -34,10 +34,10 @@ adoption과 compatibility facade 종료만 열려 있다. 기존 `lk-design-syst
 
 ```text
 lk-design-system                         # 계속 유지
-  @lk-robotics/lds-core                 # 범용 foundation·DOM UI
-  @lk-robotics/lds-theme                # LK brand·theme
-  @lk-robotics/lds-product              # 범용 LK product pattern
-  @lk-robotics/design-system-core       # 한시적 legacy compatibility facade
+  @lk-design-system/lds-core                 # 범용 foundation·DOM UI
+  @lk-design-system/lds-theme                # LK brand·theme
+  @lk-design-system/lds-product              # 범용 LK product pattern
+  @lk-design-system/design-system-core       # 한시적 legacy compatibility facade
 
 lk-design-system-robotics               # Wave 4 gate 통과 시에만 신설
   @lk-robotics/lds-robotics-ui          # Robotics DOM·SVG·2D domain UI
@@ -49,8 +49,8 @@ product repositories
   LDS package + Robotics UI + LDS3D를 필요한 조합으로 소비
 ```
 
-`@lk-robotics/lds-*` 이름은 기존 aggregate 패키지
-`@lk-robotics/design-system-core`와 새 실제 Core를 충돌 없이 병행하기 위한 권장안이다.
+`@lk-design-system/lds-*` 이름은 기존 aggregate 패키지
+`@lk-design-system/design-system-core`와 새 실제 Core를 충돌 없이 병행하기 위한 권장안이다.
 Wave 0에서 registry namespace를 최종 승인하되, 새 이름을 바꾸더라도 compatibility
 facade와 단계적 migration 원칙은 유지한다.
 
@@ -195,7 +195,7 @@ adapter가 serializable view model을 각 표면에 매핑한다.
 - owner별 Storybook evidence와 API report
 - 다른 package의 source path가 아닌 public package import
 
-기존 `@lk-robotics/design-system-core`는 한시적 compatibility facade로 남긴다.
+기존 `@lk-design-system/design-system-core`는 한시적 compatibility facade로 남긴다.
 
 - 기존 root, `/core`, `/theme`, `/product`, `/robotics`, `components/*`를 보존한다.
 - 구현은 새 package의 public export를 재수출한다.
@@ -255,7 +255,7 @@ LK Theme가 제공하는 value layer로 기록한다.
       `npm ci`로 정하고 CI에 적용한다.
 - [x] legacy secondary `pnpm-lock.yaml`을 local main에서 제거한다.
 - [x] clean `main` baseline tag, 현재 aggregate
-      `@lk-robotics/design-system-core` tarball checksum과 last-known-good release set을 만든다.
+      `@lk-design-system/design-system-core` tarball checksum과 last-known-good release set을 만든다.
 - [x] 실행 증거 원장 `references/package-split/MIGRATION_AUDIT.json`의 schema와
       verifier 책임을 정한다.
 

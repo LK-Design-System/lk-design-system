@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "df7a86fe2e9055957f6af05ad6e6de15b95bcd5ada29d80865c23ab71326e210",
+  "sourceFingerprint": "e01f88448b745576981ab8fca78303e0bfb9544edd297d59b22994bf3c25e362",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -19742,7 +19742,7 @@
       ],
       "tokens": [],
       "externalReferences": [],
-      "promptSha256": "97ebc44c3cc5398c3d47b4a0ac807493ccbb13518af9400bd80d2961e0f346ef"
+      "promptSha256": "928fa3aca89e09bf383388b1850e2f21a5e4e54019ee95ba4761b04d8645710e"
     },
     {
       "id": "aspect-ratio",

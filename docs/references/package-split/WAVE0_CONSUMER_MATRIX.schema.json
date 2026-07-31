@@ -40,7 +40,7 @@
           "properties": {
             "path": { "const": "docs/references/package-split/baselines/WAVE0_AGGREGATE_ARTIFACT.json" },
             "sha256": { "$ref": "#/$defs/sha256" },
-            "package": { "const": "@lk-robotics/design-system-core" },
+            "package": { "const": "@lk-design-system/design-system-core" },
             "version": { "type": "string", "minLength": 1 },
             "sizeBytes": { "type": "integer", "minimum": 1, "maximum": 8388608 },
             "tarballSha256": { "$ref": "#/$defs/sha256" }
@@ -98,7 +98,7 @@
       "additionalProperties": false,
       "required": ["package", "version", "sizeBytes", "sha256"],
       "properties": {
-        "package": { "const": "@lk-robotics/design-system-core" },
+        "package": { "const": "@lk-design-system/design-system-core" },
         "version": { "type": "string", "minLength": 1 },
         "sizeBytes": { "type": "integer", "minimum": 1, "maximum": 8388608 },
         "sha256": { "$ref": "#/$defs/sha256" }

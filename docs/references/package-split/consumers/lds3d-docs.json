@@ -55,47 +55,47 @@
   },
   "deepSpecifiers": [
     {
-      "specifier": "@lk-robotics/design-system-core/components/buttons/Button",
+      "specifier": "@lk-design-system/design-system-core/components/buttons/Button",
       "targetPackageId": "core"
     },
     {
-      "specifier": "@lk-robotics/design-system-core/components/content/StatusBadge",
+      "specifier": "@lk-design-system/design-system-core/components/content/StatusBadge",
       "targetPackageId": "core"
     },
     {
-      "specifier": "@lk-robotics/design-system-core/components/editor/CanvasEditorShell",
+      "specifier": "@lk-design-system/design-system-core/components/editor/CanvasEditorShell",
       "targetPackageId": "robotics-ui"
     },
     {
-      "specifier": "@lk-robotics/design-system-core/components/editor/SelectionInspector",
+      "specifier": "@lk-design-system/design-system-core/components/editor/SelectionInspector",
       "targetPackageId": "robotics-ui"
     },
     {
-      "specifier": "@lk-robotics/design-system-core/components/editor/ViewportStatusBar",
+      "specifier": "@lk-design-system/design-system-core/components/editor/ViewportStatusBar",
       "targetPackageId": "robotics-ui"
     },
     {
-      "specifier": "@lk-robotics/design-system-core/components/icon/Icon",
+      "specifier": "@lk-design-system/design-system-core/components/icon/Icon",
       "targetPackageId": "core"
     },
     {
-      "specifier": "@lk-robotics/design-system-core/components/layout/Container",
+      "specifier": "@lk-design-system/design-system-core/components/layout/Container",
       "targetPackageId": "core"
     },
     {
-      "specifier": "@lk-robotics/design-system-core/components/overlay/Drawer",
+      "specifier": "@lk-design-system/design-system-core/components/overlay/Drawer",
       "targetPackageId": "product"
     },
     {
-      "specifier": "@lk-robotics/design-system-core/components/selection/SegmentedControl",
+      "specifier": "@lk-design-system/design-system-core/components/selection/SegmentedControl",
       "targetPackageId": "core"
     },
     {
-      "specifier": "@lk-robotics/design-system-core/components/viz/Scene3DFrame",
+      "specifier": "@lk-design-system/design-system-core/components/viz/Scene3DFrame",
       "targetPackageId": "robotics-ui"
     },
     {
-      "specifier": "@lk-robotics/design-system-core/components/viz/ViewerToolbar",
+      "specifier": "@lk-design-system/design-system-core/components/viz/ViewerToolbar",
       "targetPackageId": "robotics-ui"
     }
   ],
@@ -104,7 +104,7 @@
       {
         "file": "apps/docs/package.json",
         "field": "dependencies",
-        "specifier": "@lk-robotics/design-system-core",
+        "specifier": "@lk-design-system/design-system-core",
         "version": "link:../../../LK Design System"
       }
     ],
@@ -113,43 +113,43 @@
         "file": "apps/docs/src/assets.stories.tsx",
         "line": 9,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/components.tsx",
         "line": 7,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/fixtures.stories.tsx",
         "line": 8,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/foundations.stories.tsx",
         "line": 8,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/pointcloud.scenarios.stories.tsx",
         "line": 2,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/primitives.stories.tsx",
         "line": 10,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/three-host.stories.tsx",
         "line": 2,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       }
     ],
     "rootBindings": [
@@ -348,47 +348,47 @@
     ],
     "deepSpecifiers": [
       {
-        "specifier": "@lk-robotics/design-system-core/components/buttons/Button",
+        "specifier": "@lk-design-system/design-system-core/components/buttons/Button",
         "targetPackageId": "core"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/content/StatusBadge",
+        "specifier": "@lk-design-system/design-system-core/components/content/StatusBadge",
         "targetPackageId": "core"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/editor/CanvasEditorShell",
+        "specifier": "@lk-design-system/design-system-core/components/editor/CanvasEditorShell",
         "targetPackageId": "robotics-ui"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/editor/SelectionInspector",
+        "specifier": "@lk-design-system/design-system-core/components/editor/SelectionInspector",
         "targetPackageId": "robotics-ui"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/editor/ViewportStatusBar",
+        "specifier": "@lk-design-system/design-system-core/components/editor/ViewportStatusBar",
         "targetPackageId": "robotics-ui"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/icon/Icon",
+        "specifier": "@lk-design-system/design-system-core/components/icon/Icon",
         "targetPackageId": "core"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/layout/Container",
+        "specifier": "@lk-design-system/design-system-core/components/layout/Container",
         "targetPackageId": "core"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/overlay/Drawer",
+        "specifier": "@lk-design-system/design-system-core/components/overlay/Drawer",
         "targetPackageId": "product"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/selection/SegmentedControl",
+        "specifier": "@lk-design-system/design-system-core/components/selection/SegmentedControl",
         "targetPackageId": "core"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/viz/Scene3DFrame",
+        "specifier": "@lk-design-system/design-system-core/components/viz/Scene3DFrame",
         "targetPackageId": "robotics-ui"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/viz/ViewerToolbar",
+        "specifier": "@lk-design-system/design-system-core/components/viz/ViewerToolbar",
         "targetPackageId": "robotics-ui"
       }
     ],
@@ -397,14 +397,14 @@
         "file": "apps/docs/.storybook/preview.ts",
         "line": 3,
         "kind": "esm-side-effect",
-        "specifier": "@lk-robotics/design-system-core/styles.css"
+        "specifier": "@lk-design-system/design-system-core/styles.css"
       }
     ],
     "assetFilesystemPaths": [
       {
         "file": "apps/docs/.storybook/main.ts",
         "line": 11,
-        "path": "@lk-robotics/design-system-core/assets"
+        "path": "@lk-design-system/design-system-core/assets"
       }
     ],
     "layerSubpathImports": [],
@@ -415,7 +415,7 @@
       {
         "file": "apps/docs/package.json",
         "field": "dependencies",
-        "specifier": "@lk-robotics/design-system-core",
+        "specifier": "@lk-design-system/design-system-core",
         "version": "link:../../../LK Design System"
       }
     ],
@@ -424,73 +424,73 @@
         "file": "apps/docs/src/assets.stories.tsx",
         "line": 10,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/components.tsx",
         "line": 7,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/fixtures.stories.tsx",
         "line": 8,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/foundations.stories.tsx",
         "line": 8,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/marker-layer.stories.tsx",
         "line": 2,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/occupancy-grid.stories.tsx",
         "line": 8,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/occupancy-map.scenarios.stories.tsx",
         "line": 7,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/pointcloud.scenarios.stories.tsx",
         "line": 21,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/primitives.stories.tsx",
         "line": 13,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/spatial-authoring.scenarios.stories.tsx",
         "line": 26,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/tf-marker.scenarios.stories.tsx",
         "line": 2,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       },
       {
         "file": "apps/docs/src/three-host.stories.tsx",
         "line": 2,
         "kind": "esm-from",
-        "specifier": "@lk-robotics/design-system-core"
+        "specifier": "@lk-design-system/design-system-core"
       }
     ],
     "rootBindings": [
@@ -1013,47 +1013,47 @@
     ],
     "deepSpecifiers": [
       {
-        "specifier": "@lk-robotics/design-system-core/components/buttons/Button",
+        "specifier": "@lk-design-system/design-system-core/components/buttons/Button",
         "targetPackageId": "core"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/content/StatusBadge",
+        "specifier": "@lk-design-system/design-system-core/components/content/StatusBadge",
         "targetPackageId": "core"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/editor/CanvasEditorShell",
+        "specifier": "@lk-design-system/design-system-core/components/editor/CanvasEditorShell",
         "targetPackageId": "robotics-ui"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/editor/SelectionInspector",
+        "specifier": "@lk-design-system/design-system-core/components/editor/SelectionInspector",
         "targetPackageId": "robotics-ui"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/editor/ViewportStatusBar",
+        "specifier": "@lk-design-system/design-system-core/components/editor/ViewportStatusBar",
         "targetPackageId": "robotics-ui"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/icon/Icon",
+        "specifier": "@lk-design-system/design-system-core/components/icon/Icon",
         "targetPackageId": "core"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/layout/Container",
+        "specifier": "@lk-design-system/design-system-core/components/layout/Container",
         "targetPackageId": "core"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/overlay/Drawer",
+        "specifier": "@lk-design-system/design-system-core/components/overlay/Drawer",
         "targetPackageId": "product"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/selection/SegmentedControl",
+        "specifier": "@lk-design-system/design-system-core/components/selection/SegmentedControl",
         "targetPackageId": "core"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/viz/Scene3DFrame",
+        "specifier": "@lk-design-system/design-system-core/components/viz/Scene3DFrame",
         "targetPackageId": "robotics-ui"
       },
       {
-        "specifier": "@lk-robotics/design-system-core/components/viz/ViewerToolbar",
+        "specifier": "@lk-design-system/design-system-core/components/viz/ViewerToolbar",
         "targetPackageId": "robotics-ui"
       }
     ],
@@ -1062,14 +1062,14 @@
         "file": "apps/docs/.storybook/preview.ts",
         "line": 3,
         "kind": "esm-side-effect",
-        "specifier": "@lk-robotics/design-system-core/styles.css"
+        "specifier": "@lk-design-system/design-system-core/styles.css"
       }
     ],
     "assetFilesystemPaths": [
       {
         "file": "apps/docs/.storybook/main.ts",
         "line": 19,
-        "path": "@lk-robotics/design-system-core/assets"
+        "path": "@lk-design-system/design-system-core/assets"
       }
     ],
     "layerSubpathImports": [],

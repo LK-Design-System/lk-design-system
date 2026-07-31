@@ -50,7 +50,7 @@ const verifyBaseline = process.argv.includes('--verify-baseline');
 const verifyBaselineIfPresent = process.argv.includes('--verify-baseline-if-present');
 const baselineModeCount = [captureBaseline, verifyBaseline, verifyBaselineIfPresent].filter(Boolean).length;
 const baselineRequested = captureBaseline || verifyBaseline || verifyBaselineIfPresent;
-const packageName = '@lk-robotics/design-system-core';
+const packageName = '@lk-design-system/design-system-core';
 const layerRepresentatives = {
   core: 'Button',
   theme: 'ThemeToggle',
@@ -325,7 +325,7 @@ for (const [index, [layer, representative]] of Object.entries(layerRepresentativ
 assert(typeof cjsLayers[0].RobotStatusCard === 'undefined', 'Core entry must not expose Robotics components.');
 assertRootIsLayerUnion(cjsPackage, cjsLayers, 'CJS');
 
-const installedRoot = path.join(installDir, 'node_modules', '@lk-robotics', 'design-system-core');
+const installedRoot = path.join(installDir, 'node_modules', '@lk-design-system', 'design-system-core');
 const esmPackage = await import(`${pathToFileURL(path.join(installedRoot, 'dist', 'index.js')).href}?smoke=${Date.now()}`);
 assert(typeof esmPackage.Button === 'function', 'Installed ESM root did not expose Button.');
 const esmLayers = await Promise.all(Object.keys(layerRepresentatives).map((layer) => (

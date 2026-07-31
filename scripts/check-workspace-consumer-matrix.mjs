@@ -15,13 +15,13 @@ const repositoryRoot = path.resolve(scriptDirectory, '..');
 const artifactRoot = path.join(repositoryRoot, 'visual-artifacts');
 const matrixRoot = path.join(artifactRoot, 'workspace-consumer-matrix');
 const expectedPackages = [
-  { id: 'core', name: '@lk-robotics/lds-core' },
-  { id: 'theme', name: '@lk-robotics/lds-theme' },
-  { id: 'product', name: '@lk-robotics/lds-product' },
-  { id: 'compat', name: '@lk-robotics/design-system-core' },
+  { id: 'core', name: '@lk-design-system/lds-core' },
+  { id: 'theme', name: '@lk-design-system/lds-theme' },
+  { id: 'product', name: '@lk-design-system/lds-product' },
+  { id: 'compat', name: '@lk-design-system/design-system-core' },
   { id: 'robotics', name: '@lk-robotics/lds-robotics-ui', external: true },
 ];
-const compatName = '@lk-robotics/design-system-core';
+const compatName = '@lk-design-system/design-system-core';
 const versions = [
   { id: 'React 18', fixture: 'react18', react: '18.3.1', reactDom: '18.3.1' },
   { id: 'React 19', fixture: 'react19', react: '19.2.3', reactDom: '19.2.3' },
@@ -170,17 +170,17 @@ async function prepareConsumer(appDirectory, version, packageSet, cacheDirectory
 async function verifyEsmImports(appDirectory) {
   const smokeFile = path.join(appDirectory, 'esm-smoke.mjs');
   await writeFile(smokeFile, `
-import * as Core from '@lk-robotics/lds-core';
-import * as Theme from '@lk-robotics/lds-theme';
-import * as Product from '@lk-robotics/lds-product';
+import * as Core from '@lk-design-system/lds-core';
+import * as Theme from '@lk-design-system/lds-theme';
+import * as Product from '@lk-design-system/lds-product';
 import * as Robotics from '@lk-robotics/lds-robotics-ui';
-import * as Compat from '@lk-robotics/design-system-core';
-import * as CompatCore from '@lk-robotics/design-system-core/core';
-import * as CompatTheme from '@lk-robotics/design-system-core/theme';
-import * as CompatProduct from '@lk-robotics/design-system-core/product';
-import * as CompatRobotics from '@lk-robotics/design-system-core/robotics';
-import { Button as CoreDeepButton } from '@lk-robotics/lds-core/components/buttons/Button';
-import { Button as CompatDeepButton } from '@lk-robotics/design-system-core/components/buttons/Button';
+import * as Compat from '@lk-design-system/design-system-core';
+import * as CompatCore from '@lk-design-system/design-system-core/core';
+import * as CompatTheme from '@lk-design-system/design-system-core/theme';
+import * as CompatProduct from '@lk-design-system/design-system-core/product';
+import * as CompatRobotics from '@lk-design-system/design-system-core/robotics';
+import { Button as CoreDeepButton } from '@lk-design-system/lds-core/components/buttons/Button';
+import { Button as CompatDeepButton } from '@lk-design-system/design-system-core/components/buttons/Button';
 if (typeof Core.Button !== 'function') throw new Error('Core Button ESM export is missing.');
 if (typeof Theme.ThemeToggle !== 'function') throw new Error('ThemeToggle ESM export is missing.');
 if (typeof Product.Table !== 'function') throw new Error('Product Table ESM export is missing.');
@@ -300,9 +300,9 @@ async function verifyConsumer(appDirectory, version, packageSet, requireBrowser)
 
   const appSource = `import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Button } from '@lk-robotics/lds-core';
-import { ThemeToggle } from '@lk-robotics/lds-theme';
-import { Table } from '@lk-robotics/lds-product';
+import { Button } from '@lk-design-system/lds-core';
+import { ThemeToggle } from '@lk-design-system/lds-theme';
+import { Table } from '@lk-design-system/lds-product';
 import { RobotStatusCard } from '${compatName}/robotics';
 import '${compatName}/styles.css';
 const imports = [ThemeToggle, Table, RobotStatusCard].filter(Boolean).length;
@@ -345,7 +345,7 @@ createRoot(document.getElementById('root')).render(<App />);
     const installed = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', ...item.name.split('/'), 'package.json'), 'utf8'));
     invariant(installed.name === item.name && installed.version === item.version, `${item.name} installed package identity drift.`);
   }
-  const compatManifest = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', '@lk-robotics', 'design-system-core', 'package.json'), 'utf8'));
+  const compatManifest = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', '@lk-design-system', 'design-system-core', 'package.json'), 'utf8'));
   const roboticsManifest = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', '@lk-robotics', 'lds-robotics-ui', 'package.json'), 'utf8'));
   invariant(
     roboticsManifest.name === '@lk-robotics/lds-robotics-ui' && roboticsManifest.version === compatManifest.dependencies?.['@lk-robotics/lds-robotics-ui'],

@@ -1,6 +1,6 @@
 {
-  "name": "@lk-robotics/lds-workspace",
-  "version": "0.1.0-rc.3",
+  "name": "@lk-design-system/lds-workspace",
+  "version": "0.1.0-rc.4",
   "packageManager": "npm@10.9.2",
   "private": true,
   "description": "Private workspace orchestrator for the layered LK ROBOTICS design system.",
@@ -165,13 +165,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LK-Design-System/lk-design-system.github.io.git"
+    "url": "git+https://github.com/LK-Design-System/lk-design-system.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/LK-Design-System/lk-design-system.github.io/issues"
+    "url": "https://github.com/LK-Design-System/lk-design-system/issues"
   },
-  "homepage": "https://lk-design-system.github.io/"
+  "homepage": "https://github.com/LK-Design-System/lk-design-system#readme"
 }

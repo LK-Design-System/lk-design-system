@@ -3,8 +3,8 @@ import { execFileSync } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
-const aggregatePackage = '@lk-robotics/design-system-core';
-const splitPackagePattern = /^@lk-robotics\/lds-(?:core|theme|product|robotics-ui)(?:\/|$)/;
+const aggregatePackage = '@lk-design-system/design-system-core';
+const splitPackagePattern = /^(?:@lk-design-system|@lk-robotics)\/lds-(?:core|theme|product|robotics-ui)(?:\/|$)/;
 const lds3dPackagePattern = /^@lk-robotics\/lds-3d-[a-z0-9-]+(?:\/|$)/;
 const dependencyFields = ['dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies'];
 const sourceExtensions = new Set([
@@ -201,7 +201,7 @@ for (const file of sourceFiles) {
     if (
       found.specifier === `${aggregatePackage}/styles.css` ||
       found.specifier.startsWith(`${aggregatePackage}/tokens/`) ||
-      /^@lk-robotics\/lds-(?:core|theme|product|robotics-ui)\/styles\.css$/.test(
+      /^(?:@lk-design-system|@lk-robotics)\/lds-(?:core|theme|product|robotics-ui)\/styles\.css$/.test(
         found.specifier,
       )
     ) {
@@ -220,7 +220,7 @@ for (const file of sourceFiles) {
       pushUnique(matches.cjsRequireOccurrences, matchKeys.cjsRequireOccurrences, entry);
     }
   }
-  const assetPattern = /(?:node_modules[\\/])?@lk-robotics[\\/]design-system-core[\\/]assets(?:[\\/][^'"`\s)]+)?/g;
+  const assetPattern = /(?:node_modules[\\/])?(?:@lk-design-system|@lk-robotics)[\\/]design-system-core[\\/]assets(?:[\\/][^'"`\s)]+)?/g;
   for (const found of source.matchAll(assetPattern)) {
     pushUnique(matches.assetFilesystemPaths, matchKeys.assetFilesystemPaths, {
       file,

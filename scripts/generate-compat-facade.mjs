@@ -17,9 +17,9 @@ const productOwnedExports = new Set(
     .flatMap((group) => group.exports ?? []),
 );
 const implementationPackages = [
-  { id: 'core', layerEntry: 'core', name: '@lk-robotics/lds-core' },
-  { id: 'theme', layerEntry: 'theme', name: '@lk-robotics/lds-theme' },
-  { id: 'product', layerEntry: 'product', name: '@lk-robotics/lds-product' },
+  { id: 'core', layerEntry: 'core', name: '@lk-design-system/lds-core' },
+  { id: 'theme', layerEntry: 'theme', name: '@lk-design-system/lds-theme' },
+  { id: 'product', layerEntry: 'product', name: '@lk-design-system/lds-product' },
   {
     id: 'robotics-ui',
     layerEntry: 'robotics',

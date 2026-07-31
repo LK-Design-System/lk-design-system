@@ -22,9 +22,9 @@ if (requestedFormat && workspacePackage !== 'compat') {
 const packageRoot = path.join('packages', workspacePackage);
 const sourceRoot = path.join(packageRoot, 'src');
 const implementationPackageNames = [
-  '@lk-robotics/lds-core',
-  '@lk-robotics/lds-theme',
-  '@lk-robotics/lds-product',
+  '@lk-design-system/lds-core',
+  '@lk-design-system/lds-theme',
+  '@lk-design-system/lds-product',
   '@lk-robotics/lds-robotics-ui',
 ];
 const formats = workspacePackage === 'compat'

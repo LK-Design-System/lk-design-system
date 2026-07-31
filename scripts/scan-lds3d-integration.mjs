@@ -4,7 +4,7 @@ import { lstat, readFile, readlink, realpath } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
-const aggregatePackage = '@lk-robotics/design-system-core';
+const aggregatePackage = '@lk-design-system/design-system-core';
 const sourceExtensions = new Set([
   '.cjs',
   '.css',
@@ -217,7 +217,7 @@ async function scanFiles(files, readSource, docsRoot, manifestSource, ownershipM
       });
     }
     bindings.push(...rootBindings(source, file, ownershipMaps.symbolTargets));
-    const assetPattern = /(?:LK Design System|lk-design-system|@lk-robotics[\\/]design-system-core)[\\/]assets(?:[\\/][^'"`\s)]+)?/gi;
+    const assetPattern = /(?:LK Design System|lk-design-system|(?:@lk-design-system|@lk-robotics)[\\/]design-system-core)[\\/]assets(?:[\\/][^'"`\s)]+)?/gi;
     for (const found of source.matchAll(assetPattern)) {
       assetMatches.push({
         file,

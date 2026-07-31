@@ -46,7 +46,7 @@
         "required": ["id", "name", "version", "integrity", "shasum", "tarball"],
         "properties": {
           "id": { "enum": ["core", "theme", "product", "robotics-ui", "compatibility"] },
-          "name": { "type": "string", "pattern": "^@lk-robotics/" },
+          "name": { "type": "string", "pattern": "^@(lk-design-system|lk-robotics)/" },
           "version": { "type": "string", "minLength": 1 },
           "integrity": { "type": "string", "pattern": "^sha512-" },
           "shasum": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
@@ -68,7 +68,7 @@
       "additionalProperties": false,
       "required": ["compatibilityPackage", "version", "supportWindow"],
       "properties": {
-        "compatibilityPackage": { "const": "@lk-robotics/design-system-core" },
+        "compatibilityPackage": { "const": "@lk-design-system/design-system-core" },
         "version": { "type": "string", "minLength": 1 },
         "supportWindow": { "type": "string", "minLength": 1 }
       }

@@ -1,8 +1,8 @@
 import React from 'react';
-import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
-import { StatusIndicator } from '@lk-robotics/lds-core/components/content/StatusIndicator';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { ScrollArea } from '@lk-robotics/lds-core/components/layout/ScrollArea';
+import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
+import { StatusIndicator } from '@lk-design-system/lds-core/components/content/StatusIndicator';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { ScrollArea } from '@lk-design-system/lds-core/components/layout/ScrollArea';
 
 const STATUS_PRESENTATION = {
   normal: {

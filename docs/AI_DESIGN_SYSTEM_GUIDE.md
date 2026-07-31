@@ -62,7 +62,7 @@ label 계열은 대비 기준으로 용도가 나뉩니다. `label-strong`·`lab
 
 UI 코드를 생성할 때:
 
-- 앱 진입점에서 `@lk-robotics/design-system-core/styles.css`를 한 번 import합니다.
+- 앱 진입점에서 `@lk-design-system/design-system-core/styles.css`를 한 번 import합니다.
 - 공통 UI를 새로 만들기 전에 패키지가 export하는 React 컴포넌트를 먼저 사용합니다.
 - Button/Input/Card 내부 동작과 시각 값은 component 토큰을 사용합니다.
 - 제품 레이아웃, 카피, 상태, surface는 semantic 토큰을 사용합니다.
@@ -200,8 +200,8 @@ AI 도구에 요청할 때 아래 구조를 사용하세요.
 ```text
 You are designing with the LK ROBOTICS design system.
 Read docs/AI_DESIGN_SYSTEM_GUIDE.md and tokens/source.json first.
-Import @lk-robotics/design-system-core/styles.css.
-Prefer exported components from @lk-robotics/design-system-core.
+Import @lk-design-system/design-system-core/styles.css.
+Prefer exported components from @lk-design-system/design-system-core.
 Use semantic tokens for product UI and component tokens for Button/Input/Card behavior.
 Do not invent colors, spacing, shadows, or control dimensions unless adding a reviewed token.
 Output production React code.

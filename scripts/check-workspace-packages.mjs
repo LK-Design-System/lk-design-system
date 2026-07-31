@@ -27,39 +27,39 @@ const packages = [
   {
     id: 'core',
     layer: 'core',
-    name: '@lk-robotics/lds-core',
+    name: '@lk-design-system/lds-core',
     dependencies: [],
     resources: ['styles.css', 'tokens', 'assets'],
   },
   {
     id: 'theme',
     layer: 'theme',
-    name: '@lk-robotics/lds-theme',
-    dependencies: ['@lk-robotics/lds-core'],
+    name: '@lk-design-system/lds-theme',
+    dependencies: ['@lk-design-system/lds-core'],
     resources: ['styles.css', 'tokens', 'assets'],
   },
   {
     id: 'product',
     layer: 'product',
-    name: '@lk-robotics/lds-product',
-    dependencies: ['@lk-robotics/lds-core'],
+    name: '@lk-design-system/lds-product',
+    dependencies: ['@lk-design-system/lds-core'],
     resources: ['styles.css', 'tokens', 'assets'],
   },
   {
     id: 'robotics-ui',
     layer: 'robotics',
     name: '@lk-robotics/lds-robotics-ui',
-    dependencies: ['@lk-robotics/lds-core', '@lk-robotics/lds-product'],
+    dependencies: ['@lk-design-system/lds-core', '@lk-design-system/lds-product'],
     resources: ['styles.css', 'tokens'],
     external: true,
   },
   {
     id: 'compat',
-    name: '@lk-robotics/design-system-core',
+    name: '@lk-design-system/design-system-core',
     dependencies: [
-      '@lk-robotics/lds-core',
-      '@lk-robotics/lds-theme',
-      '@lk-robotics/lds-product',
+      '@lk-design-system/lds-core',
+      '@lk-design-system/lds-theme',
+      '@lk-design-system/lds-product',
       '@lk-robotics/lds-robotics-ui',
     ],
     resources: ['styles.css', 'tokens', 'assets'],
@@ -171,18 +171,18 @@ function validateImplementationExports(manifest, packageInfo) {
 async function validateStorybookSurface(manifest) {
   const target = manifest.exports?.['./storybook'];
   if (!target || typeof target !== 'object') {
-    fail('@lk-robotics/lds-product: exports is missing the shared ./storybook Docs surface.');
+    fail('@lk-design-system/lds-product: exports is missing the shared ./storybook Docs surface.');
     return;
   }
   if (target.types !== './storybook/index.d.ts' || target.import !== './storybook/index.js') {
-    fail('@lk-robotics/lds-product: ./storybook must expose its canonical types and import entry.');
+    fail('@lk-design-system/lds-product: ./storybook must expose its canonical types and import entry.');
   }
   if (!manifest.files?.includes('storybook')) {
-    fail('@lk-robotics/lds-product: files is missing storybook.');
+    fail('@lk-design-system/lds-product: files is missing storybook.');
   }
   for (const filename of ['index.js', 'index.d.ts']) {
     if (!(await exists(path.join(root, 'packages', 'product', 'storybook', filename)))) {
-      fail(`@lk-robotics/lds-product: shared Storybook Docs surface is missing storybook/${filename}.`);
+      fail(`@lk-design-system/lds-product: shared Storybook Docs surface is missing storybook/${filename}.`);
     }
   }
 }
@@ -192,15 +192,15 @@ function validateCompatExports(manifest) {
   for (const key of conditional) {
     const target = manifest.exports?.[key];
     if (!target || typeof target !== 'object') {
-      fail(`@lk-robotics/design-system-core: exports is missing conditional entry ${key}.`);
+      fail(`@lk-design-system/design-system-core: exports is missing conditional entry ${key}.`);
       continue;
     }
     for (const condition of ['types', 'import', 'require']) {
-      if (!target[condition]) fail(`@lk-robotics/design-system-core: ${key} is missing ${condition}.`);
+      if (!target[condition]) fail(`@lk-design-system/design-system-core: ${key} is missing ${condition}.`);
     }
   }
   for (const key of ['./styles.css', './tokens/*', './assets/*']) {
-    if (!(key in (manifest.exports ?? {}))) fail(`@lk-robotics/design-system-core: exports is missing ${key}.`);
+    if (!(key in (manifest.exports ?? {}))) fail(`@lk-design-system/design-system-core: exports is missing ${key}.`);
   }
 }
 
@@ -288,7 +288,7 @@ async function validateFacade(ownershipRows) {
     if (statements.length === 0) fail(`${path.relative(root, file)}: facade file has no re-export.`);
     const actualSpecifiers = [];
     for (const statement of statements) {
-      const match = statement.match(/^export \* from ['"](@lk-robotics\/lds-(?:core|theme|product|robotics-ui)(?:\/components\/[^'"]+)?)['"];$/);
+      const match = statement.match(/^export \* from ['"]((?:@lk-design-system|@lk-robotics)\/lds-(?:core|theme|product|robotics-ui)(?:\/components\/[^'"]+)?)['"];$/);
       if (!match) {
         fail(`${path.relative(root, file)}: facade source may contain only implementation-package re-exports (${statement}).`);
         continue;

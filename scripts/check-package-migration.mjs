@@ -192,11 +192,11 @@ function validatePackageGraph(audit) {
 
   const packageById = new Map(packages.map((entry) => [entry.id, entry]));
   const expectedNames = {
-    core: '@lk-robotics/lds-core',
-    theme: '@lk-robotics/lds-theme',
-    product: '@lk-robotics/lds-product',
+    core: '@lk-design-system/lds-core',
+    theme: '@lk-design-system/lds-theme',
+    product: '@lk-design-system/lds-product',
     'robotics-ui': '@lk-robotics/lds-robotics-ui',
-    compatibility: '@lk-robotics/design-system-core',
+    compatibility: '@lk-design-system/design-system-core',
   };
   const expectedDependencies = {
     core: [],
@@ -211,7 +211,7 @@ function validatePackageGraph(audit) {
     if (!entry) continue;
     assert(entry.name === expectedNames[id], `${id}: package name drift.`);
     sameStringSet(entry.dependsOn || [], expectedDependencies[id], `${id}.dependsOn`);
-    assert(entry.name.startsWith('@lk-robotics/'), `${id}: package name must use @lk-robotics.`);
+    assert(entry.name.startsWith('@lk-design-system/'), `${id}: package name must use @lk-design-system.`);
     assert(
       entry.repository === audit.audit.source.repository,
       `${id}: repository must match the audited LDS repository.`,
@@ -236,7 +236,7 @@ function validatePackageGraph(audit) {
     packageById.get('compatibility')?.ownsImplementation === false,
     'Compatibility package must explicitly own no implementation.',
   );
-  assert(audit.decisions?.namespace === '@lk-robotics', 'Package namespace decision drift.');
+  assert(audit.decisions?.namespace === '@lk-design-system', 'Package namespace decision drift.');
   assert(
     audit.decisions?.registry === 'https://npm.pkg.github.com',
     'Package registry decision drift.',
@@ -1639,7 +1639,7 @@ function validProductScanEvidence(evidence, consumer, aggregateName) {
     typeof specifier === 'string' &&
     (specifier === aggregateName ||
       specifier.startsWith(`${aggregateName}/`) ||
-      /^@lk-robotics\/lds-(?:core|theme|product|robotics-ui)(?:\/|$)/.test(specifier));
+      /^(?:@lk-design-system|@lk-robotics)\/lds-(?:core|theme|product|robotics-ui)(?:\/|$)/.test(specifier));
   const isLds3dSpecifier = (specifier) =>
     typeof specifier === 'string' &&
     /^@lk-robotics\/lds-3d-[a-z0-9-]+(?:\/|$)/.test(specifier);
@@ -1655,7 +1655,7 @@ function validProductScanEvidence(evidence, consumer, aggregateName) {
       (entry) =>
         new RegExp(`^${aggregateName.replace('/', '\\/')}\/(?:core|theme|product|robotics)$`).test(
           entry.specifier,
-        ) || /^@lk-robotics\/lds-(?:core|theme|product|robotics-ui)(?:\/|$)/.test(entry.specifier),
+        ) || /^(?:@lk-design-system|@lk-robotics)\/lds-(?:core|theme|product|robotics-ui)(?:\/|$)/.test(entry.specifier),
     ) &&
     matches.componentDeepImports.every((entry) =>
       entry.specifier.startsWith(`${aggregateName}/components/`),
@@ -1664,7 +1664,7 @@ function validProductScanEvidence(evidence, consumer, aggregateName) {
       (entry) =>
         entry.specifier === `${aggregateName}/styles.css` ||
         entry.specifier.startsWith(`${aggregateName}/tokens/`) ||
-        /^@lk-robotics\/lds-(?:core|theme|product|robotics-ui)\/styles\.css$/.test(
+        /^(?:@lk-design-system|@lk-robotics)\/lds-(?:core|theme|product|robotics-ui)\/styles\.css$/.test(
           entry.specifier,
         ),
     ) &&

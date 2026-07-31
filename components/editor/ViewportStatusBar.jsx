@@ -1,6 +1,6 @@
 import React from 'react';
-import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
-import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
+import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
+import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
 import { normalizeStatusTone } from '../status/status-presentation.js';
 import {
   getUnitSeparator,
