@@ -1,6 +1,6 @@
 import React from 'react';
-import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
-import { normalizeStatusTone } from '@lk-robotics/lds-core/components/status/status-presentation';
+import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
+import { normalizeStatusTone } from '@lk-design-system/lds-core/components/status/status-presentation';
 
 /**
  * LK ROBOTICS — EquipmentStatusCard

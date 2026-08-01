@@ -1,5 +1,5 @@
 import React from 'react';
-import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
+import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
 
 /* `muted` and `disabled` used to render identically (same label ink, same 0.45
    swatch opacity), so the two contracted meanings were only distinguishable by

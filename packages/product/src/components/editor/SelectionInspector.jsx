@@ -1,16 +1,16 @@
 import React from 'react';
-import { ActionArea } from '@lk-robotics/lds-core/components/buttons/ActionArea';
-import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
-import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
-import { StatusIndicator } from '@lk-robotics/lds-core/components/content/StatusIndicator';
-import { Tag } from '@lk-robotics/lds-core/components/feedback/Tag';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { ActionArea } from '@lk-design-system/lds-core/components/buttons/ActionArea';
+import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
+import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
+import { StatusIndicator } from '@lk-design-system/lds-core/components/content/StatusIndicator';
+import { Tag } from '@lk-design-system/lds-core/components/feedback/Tag';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 import {
   getUnitSeparator,
   isAttachedUnit,
   normalizeUnit,
   normalizeValueText,
-} from '@lk-robotics/lds-core/components/internal/unit-format';
+} from '@lk-design-system/lds-core/components/internal/unit-format';
 
 function displayScalarValue(value, mixed) {
   if (mixed || value == null) return '—';

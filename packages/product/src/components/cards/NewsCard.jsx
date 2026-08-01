@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 /* Material/Fluent convention: the lift affordance belongs to keyboard focus as
    well as hover, but a pointer press must not leave it behind. `:focus-visible`

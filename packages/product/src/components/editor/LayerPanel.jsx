@@ -1,7 +1,7 @@
 import React from 'react';
-import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { normalizeStatusTone } from '@lk-robotics/lds-core/components/status/status-presentation';
+import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { normalizeStatusTone } from '@lk-design-system/lds-core/components/status/status-presentation';
 
 const LAYER_TONE = {
   offline: 'var(--color-semantic-label-neutral)',

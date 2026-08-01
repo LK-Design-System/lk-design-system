@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReorderList } from '../content/ReorderList.jsx';
-import { Checkbox } from '@lk-robotics/lds-core/components/forms/Checkbox';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Checkbox } from '@lk-design-system/lds-core/components/forms/Checkbox';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 function textLabel(node, fallback) {
   return typeof node === 'string' || typeof node === 'number' ? String(node) : fallback;

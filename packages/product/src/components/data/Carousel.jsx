@@ -1,6 +1,6 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { PageIndicator } from '@lk-robotics/lds-core/components/navigation/PageIndicator';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { PageIndicator } from '@lk-design-system/lds-core/components/navigation/PageIndicator';
 
 const hiddenStyle = { position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap', border: 0 };
 

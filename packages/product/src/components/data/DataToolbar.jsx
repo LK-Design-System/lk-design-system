@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchField } from '@lk-robotics/lds-core/components/forms/SearchField';
+import { SearchField } from '@lk-design-system/lds-core/components/forms/SearchField';
 
 /**
  * LK PRODUCT — DataToolbar

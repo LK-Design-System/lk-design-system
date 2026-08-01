@@ -1,7 +1,7 @@
 import React from 'react';
-import { Tooltip } from '@lk-robotics/lds-core/components/content/Tooltip';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { useLightDismiss } from '@lk-robotics/lds-core/components/overlay/anchored-overlay';
+import { Tooltip } from '@lk-design-system/lds-core/components/content/Tooltip';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { useLightDismiss } from '@lk-design-system/lds-core/components/overlay/anchored-overlay';
 
 const Chevron = ({ open }) => (
   <Icon name="chevron-down-small" size={14} aria-hidden="true" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }} />

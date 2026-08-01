@@ -1,7 +1,7 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
-import { StatusIndicator } from '@lk-robotics/lds-core/components/content/StatusIndicator';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
+import { StatusIndicator } from '@lk-design-system/lds-core/components/content/StatusIndicator';
 
 /**
  * LDS Product Content — LogViewer

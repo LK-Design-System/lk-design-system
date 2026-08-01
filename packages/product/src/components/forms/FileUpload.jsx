@@ -1,6 +1,6 @@
 import React from 'react';
-import { useFieldMetadata } from '@lk-robotics/lds-core/components/forms/field-shared';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { useFieldMetadata } from '@lk-design-system/lds-core/components/forms/field-shared';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 function matchesAccept(file, accept) {
   const rules = String(accept ?? '')

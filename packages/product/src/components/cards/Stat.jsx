@@ -1,5 +1,5 @@
 import React from 'react';
-import { isAttachedUnit, normalizeUnit } from '@lk-robotics/lds-core/components/internal/unit-format';
+import { isAttachedUnit, normalizeUnit } from '@lk-design-system/lds-core/components/internal/unit-format';
 
 /**
  * LK ROBOTICS — Stat

@@ -1,7 +1,7 @@
 import React from 'react';
-import { ToggleIcon } from '@lk-robotics/lds-core/components/buttons/ToggleIcon';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { Collapsible } from '@lk-robotics/lds-core/components/content/Collapsible';
+import { ToggleIcon } from '@lk-design-system/lds-core/components/buttons/ToggleIcon';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { Collapsible } from '@lk-design-system/lds-core/components/content/Collapsible';
 
 const ANNOTATION_TONE = {
   signal: 'var(--color-semantic-primary-normal)',

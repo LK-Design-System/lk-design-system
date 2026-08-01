@@ -1,9 +1,9 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
-import { Banner } from '@lk-robotics/lds-core/components/status/Banner';
-import { EmptyState } from '@lk-robotics/lds-core/components/status/EmptyState';
-import { Skeleton } from '@lk-robotics/lds-core/components/status/Skeleton';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
+import { Banner } from '@lk-design-system/lds-core/components/status/Banner';
+import { EmptyState } from '@lk-design-system/lds-core/components/status/EmptyState';
+import { Skeleton } from '@lk-design-system/lds-core/components/status/Skeleton';
 
 const STATE_PRESENTATION = {
   ready: {

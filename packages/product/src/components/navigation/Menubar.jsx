@@ -1,9 +1,9 @@
 import React from "react";
-import { Button } from '@lk-robotics/lds-core/components/buttons/Button';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { useMenuKeyboard } from '@lk-robotics/lds-core/components/internal/useMenuKeyboard';
-import { useSubmenuBranch } from '@lk-robotics/lds-core/components/internal/useSubmenuBranch';
-import { useFloatingPosition } from '@lk-robotics/lds-core/components/overlay/anchored-overlay';
+import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { useMenuKeyboard } from '@lk-design-system/lds-core/components/internal/useMenuKeyboard';
+import { useSubmenuBranch } from '@lk-design-system/lds-core/components/internal/useSubmenuBranch';
+import { useFloatingPosition } from '@lk-design-system/lds-core/components/overlay/anchored-overlay';
 
 const MENUBAR_PANEL_STYLE = {
   background: "var(--color-semantic-background-elevated-normal)",

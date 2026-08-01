@@ -1,8 +1,8 @@
 import React from 'react';
-import { Avatar } from '@lk-robotics/lds-core/components/feedback/Avatar';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { useMenuKeyboard } from '@lk-robotics/lds-core/components/internal/useMenuKeyboard';
-import { useFloatingPosition } from '@lk-robotics/lds-core/components/overlay/anchored-overlay';
+import { Avatar } from '@lk-design-system/lds-core/components/feedback/Avatar';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { useMenuKeyboard } from '@lk-design-system/lds-core/components/internal/useMenuKeyboard';
+import { useFloatingPosition } from '@lk-design-system/lds-core/components/overlay/anchored-overlay';
 
 /**
  * LK ROBOTICS — UserMenu

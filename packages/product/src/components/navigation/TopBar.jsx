@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLightDismiss } from '@lk-robotics/lds-core/components/overlay/anchored-overlay';
+import { useLightDismiss } from '@lk-design-system/lds-core/components/overlay/anchored-overlay';
 
 const TopBarToneContext = React.createContext('light');
 const TOP_BAR_STYLES = `

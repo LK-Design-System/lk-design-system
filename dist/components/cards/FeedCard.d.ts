@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { DropdownMenuItem } from '@lk-robotics/lds-core/components/overlay/DropdownMenu';
+import type { DropdownMenuItem } from '@lk-design-system/lds-core/components/overlay/DropdownMenu';
 import { ReactionLike, ReactionAction } from '../content/ReactionBar';
 
 export interface FeedAuthor {

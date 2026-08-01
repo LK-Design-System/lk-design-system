@@ -1,7 +1,7 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
-import { Spinner } from '@lk-robotics/lds-core/components/status/Spinner';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
+import { Spinner } from '@lk-design-system/lds-core/components/status/Spinner';
 
 const HEIGHTS = {
   sm: 'var(--control-h-sm)',

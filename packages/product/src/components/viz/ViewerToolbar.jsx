@@ -1,6 +1,6 @@
 import React from 'react';
-import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
-import { ToggleIcon } from '@lk-robotics/lds-core/components/buttons/ToggleIcon';
+import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
+import { ToggleIcon } from '@lk-design-system/lds-core/components/buttons/ToggleIcon';
 import { Toolbar } from '../navigation/Toolbar.jsx';
 import { VIEWER_OVERLAY_SURFACE } from './_viewerOverlaySurface.js';
 

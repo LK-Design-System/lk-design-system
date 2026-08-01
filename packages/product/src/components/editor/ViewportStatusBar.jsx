@@ -1,13 +1,13 @@
 import React from 'react';
-import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
-import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
-import { normalizeStatusTone } from '@lk-robotics/lds-core/components/status/status-presentation';
+import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
+import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
+import { normalizeStatusTone } from '@lk-design-system/lds-core/components/status/status-presentation';
 import {
   getUnitSeparator,
   isAttachedUnit,
   normalizeUnit,
   normalizeValueText,
-} from '@lk-robotics/lds-core/components/internal/unit-format';
+} from '@lk-design-system/lds-core/components/internal/unit-format';
 
 const STATUS_LABEL = {
   negative: '위험',

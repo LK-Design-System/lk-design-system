@@ -1,5 +1,5 @@
 import React from 'react';
-import { normalizeBoundedValue } from '@lk-robotics/lds-core/components/internal/bounded-value';
+import { normalizeBoundedValue } from '@lk-design-system/lds-core/components/internal/bounded-value';
 
 const THRESHOLD_FILL = {
   negative: 'var(--color-semantic-status-negative)',

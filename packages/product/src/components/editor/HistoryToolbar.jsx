@@ -1,7 +1,7 @@
 import React from 'react';
-import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
-import { Divider } from '@lk-robotics/lds-core/components/content/Divider';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
+import { Divider } from '@lk-design-system/lds-core/components/content/Divider';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 import { Toolbar } from '../navigation/Toolbar.jsx';
 
 /**

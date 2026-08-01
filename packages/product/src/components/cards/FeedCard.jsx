@@ -1,10 +1,10 @@
 import React from 'react';
-import { Avatar } from '@lk-robotics/lds-core/components/feedback/Avatar';
-import { Button } from '@lk-robotics/lds-core/components/buttons/Button';
-import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { ListCell } from '@lk-robotics/lds-core/components/content/ListCell';
-import { DropdownMenu } from '@lk-robotics/lds-core/components/overlay/DropdownMenu';
+import { Avatar } from '@lk-design-system/lds-core/components/feedback/Avatar';
+import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
+import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { ListCell } from '@lk-design-system/lds-core/components/content/ListCell';
+import { DropdownMenu } from '@lk-design-system/lds-core/components/overlay/DropdownMenu';
 import { ExpandableText } from '../content/ExpandableText.jsx';
 import { ReactionBar } from '../content/ReactionBar.jsx';
 

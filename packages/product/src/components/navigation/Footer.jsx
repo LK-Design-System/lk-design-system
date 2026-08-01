@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 /**
  * LK ROBOTICS — Footer

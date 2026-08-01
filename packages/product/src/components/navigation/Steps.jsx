@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 /* 화면에는 보이지 않고 스크린 리더에만 읽히는 상태 텍스트용 스타일. */
 const srOnly = {

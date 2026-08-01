@@ -22,7 +22,7 @@
   --component-viewer-light-map-boundary: color-mix(in srgb, var(--color-semantic-static-black) 28%, transparent);
 }
 
-/* Product-only component rules; projected to @lk-robotics/lds-product. */
+/* Product-only component rules; projected to @lk-design-system/lds-product. */
 @keyframes lk-conn-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.35; }

@@ -1,8 +1,8 @@
 import React from 'react';
-import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
-import { Chip } from '@lk-robotics/lds-core/components/feedback/Chip';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { FieldLabel, FieldMessage, useFieldMetadata } from '@lk-robotics/lds-core/components/forms/field-shared';
+import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
+import { Chip } from '@lk-design-system/lds-core/components/feedback/Chip';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { FieldLabel, FieldMessage, useFieldMetadata } from '@lk-design-system/lds-core/components/forms/field-shared';
 
 function optionText(option) {
   if (typeof option.label === 'string' || typeof option.label === 'number') return String(option.label);

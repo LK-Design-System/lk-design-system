@@ -1,7 +1,7 @@
 import React from 'react';
 import { Calendar } from '../data/Calendar.jsx';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { useLightDismiss } from '@lk-robotics/lds-core/components/overlay/anchored-overlay';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { useLightDismiss } from '@lk-design-system/lds-core/components/overlay/anchored-overlay';
 
 /**
  * LK ROBOTICS — DatePicker

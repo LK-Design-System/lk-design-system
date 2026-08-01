@@ -1,6 +1,6 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
 
 /**
  * LK ROBOTICS — ChecklistItem

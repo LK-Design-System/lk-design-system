@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@lk-robotics/lds-core/components/buttons/Button';
+import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
 
 const DIGITS = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 

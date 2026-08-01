@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from '@lk-robotics/lds-core/components/buttons/Button';
-import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
+import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
+import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
 
 const useIsomorphicLayoutEffect = typeof window === 'undefined'
   ? React.useEffect

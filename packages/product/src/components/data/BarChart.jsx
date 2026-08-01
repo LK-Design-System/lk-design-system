@@ -1,5 +1,5 @@
 import React from 'react';
-import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
+import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
 
 function nodeText(node) {
   if (typeof node === 'string' || typeof node === 'number') return String(node);

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
-import { Skeleton } from '@lk-robotics/lds-core/components/status/Skeleton';
-import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
+import { Skeleton } from '@lk-design-system/lds-core/components/status/Skeleton';
+import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
 
 const CHANGE_COLOR = {
   positive: 'var(--color-semantic-status-positive-text)',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 // Kept inline (not the VisuallyHidden component) so Link stays a single-import
 // leaf; same clipping recipe as the rest of the system's SR-only text.

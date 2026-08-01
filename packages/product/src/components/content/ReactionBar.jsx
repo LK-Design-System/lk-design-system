@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 // Compact large counts the way feeds do (1240 → "1.2천"), truncating rather than
 // rounding so a value never crosses into the next unit (9999 → "9.9천", not

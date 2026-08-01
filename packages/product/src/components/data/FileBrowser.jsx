@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 // Same visually-hidden recipe the rest of the library uses (DataGrid, Chip,
 // ToastStack): readable by assistive tech, absolutely positioned so it never

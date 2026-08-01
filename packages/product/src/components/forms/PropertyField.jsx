@@ -1,7 +1,7 @@
 import React from 'react';
-import { mergeIds, useFieldMetadata } from '@lk-robotics/lds-core/components/forms/field-shared';
-import { Button } from '@lk-robotics/lds-core/components/buttons/Button';
-import { Switch } from '@lk-robotics/lds-core/components/selection/Switch';
+import { mergeIds, useFieldMetadata } from '@lk-design-system/lds-core/components/forms/field-shared';
+import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
+import { Switch } from '@lk-design-system/lds-core/components/selection/Switch';
 
 /* label이 ReactNode여도 접근 가능 이름이 범용어로 붕괴하지 않도록 텍스트를 추출한다. */
 function getLabelText(label) {

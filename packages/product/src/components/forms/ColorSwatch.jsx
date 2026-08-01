@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 /* 문자열 색과 {value,label,disabled} 항목을 같은 계약으로 다룬다. label이 없으면
    원시 CSS 값을 접근 가능 이름으로 쓰지 않고 한국어 위치 이름으로 대체한다. */

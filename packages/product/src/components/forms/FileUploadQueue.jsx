@@ -1,9 +1,9 @@
 import React from 'react';
-import { Button } from '@lk-robotics/lds-core/components/buttons/Button';
-import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
-import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { VisuallyHidden } from '@lk-robotics/lds-core/components/layout/VisuallyHidden';
+import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
+import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
+import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
 import { ProgressBar } from '../status/ProgressBar.jsx';
 
 const STATUS_META = {

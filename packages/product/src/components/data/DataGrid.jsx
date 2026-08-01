@@ -1,7 +1,7 @@
 import React from 'react';
 import { thStyle, tdStyle } from './table-cell-styles.js';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
 
 function compareValues(a, b, dir) {
   if (a == null && b == null) return 0;

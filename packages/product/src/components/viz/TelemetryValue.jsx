@@ -1,11 +1,11 @@
 import React from 'react';
-import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
+import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
 import {
   getUnitSeparator,
   isAttachedUnit,
   normalizeUnit,
   normalizeValueText,
-} from '@lk-robotics/lds-core/components/internal/unit-format';
+} from '@lk-design-system/lds-core/components/internal/unit-format';
 import { TELEMETRY_STATUS_LABEL as STATUS_LABEL } from '../internal/telemetryStatusLabel.js';
 
 /**

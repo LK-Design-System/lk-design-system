@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from '@lk-robotics/lds-core/components/buttons/Button';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 const VISUALLY_HIDDEN_STYLE = {
   position: 'absolute',

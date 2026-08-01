@@ -1,9 +1,9 @@
 import React from 'react';
-import { TextButton } from '@lk-robotics/lds-core/components/buttons/TextButton';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { Chip } from '@lk-robotics/lds-core/components/feedback/Chip';
+import { TextButton } from '@lk-design-system/lds-core/components/buttons/TextButton';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { Chip } from '@lk-design-system/lds-core/components/feedback/Chip';
 import { Popover } from '../overlay/Popover.jsx';
-import { StatusBadge } from '@lk-robotics/lds-core/components/content/StatusBadge';
+import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
 
 const AVAILABILITY_META = {
   available: { label: '사용 가능', tone: 'positive' },

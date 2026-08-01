@@ -1,6 +1,6 @@
 import React from 'react';
-import { ToggleIcon } from '@lk-robotics/lds-core/components/buttons/ToggleIcon';
-import { Tooltip } from '@lk-robotics/lds-core/components/content/Tooltip';
+import { ToggleIcon } from '@lk-design-system/lds-core/components/buttons/ToggleIcon';
+import { Tooltip } from '@lk-design-system/lds-core/components/content/Tooltip';
 import { Toolbar } from '../navigation/Toolbar.jsx';
 
 /**

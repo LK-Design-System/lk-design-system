@@ -1,7 +1,7 @@
 import React from 'react';
-import { Input } from '@lk-robotics/lds-core/components/forms/Input';
-import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Input } from '@lk-design-system/lds-core/components/forms/Input';
+import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 function textLabel(value, fallback) {
   return typeof value === 'string' || typeof value === 'number' ? String(value).trim() || fallback : fallback;

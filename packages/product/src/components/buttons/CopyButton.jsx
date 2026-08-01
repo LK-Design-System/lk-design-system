@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from '@lk-robotics/lds-core/components/buttons/Button';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 // Screen-reader-only announcer geometry — the same recipe ToastStack uses for
 // its always-mounted live regions, so every announcement surface in the system

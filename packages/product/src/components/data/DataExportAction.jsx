@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button } from '@lk-robotics/lds-core/components/buttons/Button';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { Select } from '@lk-robotics/lds-core/components/forms/Select';
+import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { Select } from '@lk-design-system/lds-core/components/forms/Select';
 import { ProgressBar } from '../status/ProgressBar.jsx';
 
 const DEFAULT_FORMATS = [

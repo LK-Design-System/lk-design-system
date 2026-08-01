@@ -1,13 +1,13 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
-import { IconButton } from '@lk-robotics/lds-core/components/buttons/IconButton';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
 import {
   FieldStack,
   FieldStatusIcon,
   fieldBackground,
   fieldBorderColor,
   useFieldMetadata,
-} from '@lk-robotics/lds-core/components/forms/field-shared';
+} from '@lk-design-system/lds-core/components/forms/field-shared';
 
 const VISUALLY_HIDDEN_STYLE = {
   position: 'absolute',

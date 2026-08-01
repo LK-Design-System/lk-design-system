@@ -1,7 +1,7 @@
 "use client";
 import {
   ViewportStatusBar
-} from "../../chunk-4DIAMSQ4.js";
+} from "../../chunk-BPPMLEYO.js";
 import "../../chunk-LW4BPLAH.js";
 import "../../chunk-YZIOOD3Y.js";
 import "../../chunk-Q34VOAMJ.js";

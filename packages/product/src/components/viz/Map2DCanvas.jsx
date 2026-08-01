@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 import { ViewerFrame, VIEWER_BLOCKING_STATES } from './ViewerFrame.jsx';
 import { ViewerToolbar, ViewerToolbarButton } from './ViewerToolbar.jsx';
 import { resolveViewerState } from '../internal/viewer-state.js';

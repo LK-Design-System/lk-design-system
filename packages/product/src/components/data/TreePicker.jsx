@@ -1,6 +1,6 @@
 import React from 'react';
-import { Input } from '@lk-robotics/lds-core/components/forms/Input';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Input } from '@lk-design-system/lds-core/components/forms/Input';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 /* treeitem이 aria-checked를 소유하므로 행의 체크 표시는 순수 장식이다. 포커스 가능한
    컨트롤을 aria-hidden 안에 두지 않도록 Checkbox를 마운트하지 않고 md `box` Checkbox의

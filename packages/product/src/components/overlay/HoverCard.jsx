@@ -6,7 +6,7 @@ import {
   useControllableOpen,
   useFloatingPosition,
   useLightDismiss,
-} from '@lk-robotics/lds-core/components/overlay/anchored-overlay';
+} from '@lk-design-system/lds-core/components/overlay/anchored-overlay';
 
 /**
  * LK Product Extension — HoverCard

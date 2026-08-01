@@ -1,5 +1,5 @@
 import React from 'react';
-import { SegmentedControl } from '@lk-robotics/lds-core/components/selection/SegmentedControl';
+import { SegmentedControl } from '@lk-design-system/lds-core/components/selection/SegmentedControl';
 
 /* Development-only guard: a grouping control with no accessible name is a
    silent failure at runtime — assistive tech announces an anonymous group and

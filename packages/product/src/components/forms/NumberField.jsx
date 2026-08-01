@@ -1,11 +1,11 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 import {
   FieldStack,
   fieldBackground,
   fieldBorderColor,
   useFieldMetadata,
-} from '@lk-robotics/lds-core/components/forms/field-shared';
+} from '@lk-design-system/lds-core/components/forms/field-shared';
 
 /**
  * LK ROBOTICS — NumberField

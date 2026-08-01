@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 const ICONS = { light: 'sun', dark: 'moon', auto: 'desktop' };
 const LABELS = { light: 'Light', dark: 'Dark', auto: 'Auto' };

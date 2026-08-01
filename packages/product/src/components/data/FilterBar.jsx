@@ -1,7 +1,7 @@
 import React from 'react';
-import { TextButton } from '@lk-robotics/lds-core/components/buttons/TextButton';
-import { Chip } from '@lk-robotics/lds-core/components/feedback/Chip';
-import { Icon } from '@lk-robotics/lds-core/components/icon/Icon';
+import { TextButton } from '@lk-design-system/lds-core/components/buttons/TextButton';
+import { Chip } from '@lk-design-system/lds-core/components/feedback/Chip';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 const VARIANT_STYLE = {
   standalone: {
