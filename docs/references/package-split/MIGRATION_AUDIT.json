@@ -155,7 +155,7 @@
     },
     {
       "id": "robotics-ui",
-      "name": "@lk-robotics/lds-robotics-ui",
+      "name": "@lk-design-system/lds-robotics-ui",
       "repository": "LK-ROBOTICS/lk-design-system",
       "conditionalRepository": "LK-ROBOTICS/lk-design-system-robotics",
       "accountableOwnerRole": "robotics-domain-owner",
@@ -170,7 +170,7 @@
         "types": "required",
         "cjs": "not-published-use-compatibility-facade"
       },
-      "stylesEntry": "@lk-robotics/lds-robotics-ui/styles.css"
+      "stylesEntry": "@lk-design-system/lds-robotics-ui/styles.css"
     },
     {
       "id": "compatibility",

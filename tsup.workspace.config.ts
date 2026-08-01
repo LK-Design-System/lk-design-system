@@ -25,7 +25,7 @@ const implementationPackageNames = [
   '@lk-design-system/lds-core',
   '@lk-design-system/lds-theme',
   '@lk-design-system/lds-product',
-  '@lk-robotics/lds-robotics-ui',
+  '@lk-design-system/lds-robotics-ui',
 ];
 const formats = workspacePackage === 'compat'
   ? (requestedFormat ? [requestedFormat] : ['esm', 'cjs'])

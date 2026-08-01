@@ -9,7 +9,7 @@ ownership into this repository. The tarball is retained only so clean installs
 and CI do not depend on the legacy `@lk-robotics` GitHub Packages location,
 which no longer serves this release after the repository organization move.
 
-- Package: `@lk-robotics/lds-robotics-ui@0.1.0-rc.2`
+- Package: `@lk-design-system/lds-robotics-ui@0.1.0-rc.2`
 - SHA-256:
   `ad69eec796b0dba5b001dc3d4d554aea17017d2a5e0f702f5f28c0585f423ff2`
 - Contents: published `dist`, `styles.css`, and `tokens` only; no source tree

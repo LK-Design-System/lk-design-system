@@ -48,7 +48,7 @@ const packages = [
   {
     id: 'robotics-ui',
     layer: 'robotics',
-    name: '@lk-robotics/lds-robotics-ui',
+    name: '@lk-design-system/lds-robotics-ui',
     dependencies: ['@lk-design-system/lds-core', '@lk-design-system/lds-product'],
     resources: ['styles.css', 'tokens'],
     external: true,
@@ -60,7 +60,7 @@ const packages = [
       '@lk-design-system/lds-core',
       '@lk-design-system/lds-theme',
       '@lk-design-system/lds-product',
-      '@lk-robotics/lds-robotics-ui',
+      '@lk-design-system/lds-robotics-ui',
     ],
     resources: ['styles.css', 'tokens', 'assets'],
   },
@@ -119,8 +119,8 @@ async function readPublicEntry(file, label) {
 async function readExternalPublicEntry(file, label) {
   const surface = await readJson(file, label);
   if (!surface) return [];
-  if (surface.package?.name !== '@lk-robotics/lds-robotics-ui') {
-    fail(`${label}: expected the external surface to name @lk-robotics/lds-robotics-ui.`);
+  if (surface.package?.name !== '@lk-design-system/lds-robotics-ui') {
+    fail(`${label}: expected the external surface to name @lk-design-system/lds-robotics-ui.`);
     return [];
   }
   externalRoboticsVersion = surface.package?.version;
@@ -357,7 +357,7 @@ for (const packageInfo of packages) {
     fail(`${packageInfo.name}: internal dependency DAG is ${internalDependencies.join(', ') || '(none)'}; expected ${expectedDependencies.join(', ') || '(none)'}.`);
   }
   for (const dependency of expectedDependencies) {
-    const expectedVersion = dependency === '@lk-robotics/lds-robotics-ui'
+    const expectedVersion = dependency === '@lk-design-system/lds-robotics-ui'
       ? externalRoboticsVersion
       : releaseVersion;
     if (manifest.dependencies?.[dependency] !== expectedVersion) fail(`${packageInfo.name}: ${dependency} must use release version ${expectedVersion}.`);

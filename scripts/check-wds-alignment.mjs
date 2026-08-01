@@ -507,13 +507,13 @@ const directPublicExportRows = [...publicIndex.matchAll(/export\s+\{([^}]+)\}\s+
     source: path.posix.normalize(path.posix.join('src', match[2])),
   })),
 );
-assert(roboticsExternalSurface.package?.name === '@lk-robotics/lds-robotics-ui', 'Robotics external surface must identify the published robotics package.');
+assert(roboticsExternalSurface.package?.name === '@lk-design-system/lds-robotics-ui', 'Robotics external surface must identify the published robotics package.');
 assert(
-  !/export\s+\*\s+from\s+['"]@lk-robotics\/lds-robotics-ui['"]/.test(publicIndex),
+  !/export\s+\*\s+from\s+['"]@lk-design-system\/lds-robotics-ui['"]/.test(publicIndex),
   'src/index.js must not load the separately published Robotics package.',
 );
 assert(
-  /export\s+\*\s+from\s+['"]@lk-robotics\/lds-robotics-ui['"]/.test(roboticsEntry),
+  /export\s+\*\s+from\s+['"]@lk-design-system\/lds-robotics-ui['"]/.test(roboticsEntry),
   'src/robotics.js must re-export the published Robotics package.',
 );
 const externalPublicExportRows = roboticsExternalSurface.entries.flatMap((entry) =>

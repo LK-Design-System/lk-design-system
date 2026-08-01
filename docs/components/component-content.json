@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "e01f88448b745576981ab8fca78303e0bfb9544edd297d59b22994bf3c25e362",
+  "sourceFingerprint": "dedf184c4db67a4df4f972dcc7cf5e0f75d385bb87086fb4211e65b32a5c2039",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -29486,7 +29486,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/"
         }
       ],
-      "promptSha256": "40eb9592e3dccff3e463630393e091ae59ac8382fb2552cbb8e593012271bb39"
+      "promptSha256": "dd564513d5032509f909bf55f143c7cea286988fa71d355b5c90cd00d8f01c23"
     },
     {
       "id": "scene3-dframe",

@@ -20,7 +20,7 @@ dirty count, push 여부는 해당 시점의 historical snapshot이며 현재 �
   `@lk-design-system/lds-product` workspace package이며, 기존
   `@lk-design-system/design-system-core`는 migration support window 동안 compatibility facade다.
 - Robotics UI 구현은 별도 `LK-Design-System/lk-design-system-robotics` 저장소의
-  `@lk-robotics/lds-robotics-ui@0.1.0-rc.2`가 소유한다. 이 저장소는 Storybook integration
+  `@lk-design-system/lds-robotics-ui@0.1.0-rc.2`가 소유한다. 이 저장소는 Storybook integration
   consumer와 conformance contract만 유지하며 Robotics source의 원본이 아니다.
 - 현재 LDS 구현 표면은 174 source entry / 177 named export다. Storybook 감사 기준선은
   150 pages / 487 stories(341 public, 146 hidden)이며 모든 page/story review가 최신이다.

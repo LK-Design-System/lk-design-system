@@ -71,7 +71,7 @@ const externalStoryEvidence = new Set(
     .map(([file]) => file),
 );
 
-assert(roboticsExternalSurface.package?.name === '@lk-robotics/lds-robotics-ui', 'Robotics external surface must identify the published robotics package.');
+assert(roboticsExternalSurface.package?.name === '@lk-design-system/lds-robotics-ui', 'Robotics external surface must identify the published robotics package.');
 
 function hasRuntimeExport(exportName) {
   return hasNamedExport(runtimeExports, exportName) || externalRuntimeExports.has(exportName);

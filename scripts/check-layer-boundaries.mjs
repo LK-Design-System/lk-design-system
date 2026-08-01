@@ -8,7 +8,7 @@ const classificationPath = 'docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.jso
 const publicEntryPath = 'src/index.js';
 const roboticsEntryPath = 'src/robotics.js';
 const roboticsExternalSurfacePath = 'docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json';
-const roboticsExternalPackage = '@lk-robotics/lds-robotics-ui';
+const roboticsExternalPackage = '@lk-design-system/lds-robotics-ui';
 
 const layers = ['core', 'theme', 'product', 'robotics'];
 const layerSet = new Set(layers);

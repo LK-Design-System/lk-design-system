@@ -19,7 +19,7 @@ const expectedPackages = [
   { id: 'theme', name: '@lk-design-system/lds-theme' },
   { id: 'product', name: '@lk-design-system/lds-product' },
   { id: 'compat', name: '@lk-design-system/design-system-core' },
-  { id: 'robotics', name: '@lk-robotics/lds-robotics-ui', external: true },
+  { id: 'robotics', name: '@lk-design-system/lds-robotics-ui', external: true },
 ];
 const compatName = '@lk-design-system/design-system-core';
 const versions = [
@@ -173,7 +173,7 @@ async function verifyEsmImports(appDirectory) {
 import * as Core from '@lk-design-system/lds-core';
 import * as Theme from '@lk-design-system/lds-theme';
 import * as Product from '@lk-design-system/lds-product';
-import * as Robotics from '@lk-robotics/lds-robotics-ui';
+import * as Robotics from '@lk-design-system/lds-robotics-ui';
 import * as Compat from '@lk-design-system/design-system-core';
 import * as CompatCore from '@lk-design-system/design-system-core/core';
 import * as CompatTheme from '@lk-design-system/design-system-core/theme';
@@ -348,7 +348,7 @@ createRoot(document.getElementById('root')).render(<App />);
   const compatManifest = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', '@lk-design-system', 'design-system-core', 'package.json'), 'utf8'));
   const roboticsManifest = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', '@lk-robotics', 'lds-robotics-ui', 'package.json'), 'utf8'));
   invariant(
-    roboticsManifest.name === '@lk-robotics/lds-robotics-ui' && roboticsManifest.version === compatManifest.dependencies?.['@lk-robotics/lds-robotics-ui'],
+    roboticsManifest.name === '@lk-design-system/lds-robotics-ui' && roboticsManifest.version === compatManifest.dependencies?.['@lk-design-system/lds-robotics-ui'],
     'Packaged Robotics dependency does not match the compat package contract.',
   );
   invariant(consumerRequire('react/package.json').version === version.react, `${version.id} React version drift.`);

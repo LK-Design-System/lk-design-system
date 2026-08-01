@@ -23,7 +23,7 @@ const implementationPackages = [
   {
     id: 'robotics-ui',
     layerEntry: 'robotics',
-    name: '@lk-robotics/lds-robotics-ui',
+    name: '@lk-design-system/lds-robotics-ui',
     externalSurface: roboticsExternalSurface,
   },
 ];
@@ -57,7 +57,7 @@ async function readPublicEntry(entryPath) {
     if (!line.startsWith('export ')) continue;
     const match = line.match(exportLinePattern);
     if (!match) {
-      if (line === "export * from '@lk-robotics/lds-robotics-ui';") continue;
+      if (line === "export * from '@lk-design-system/lds-robotics-ui';") continue;
       throw new Error(`${path.relative(root, entryPath)} contains an unsupported public export: ${line}`);
     }
     const [, exportClause, componentPath] = match;
@@ -91,7 +91,7 @@ function assertSamePublicSurface(expected, actual, label) {
 }
 
 function readExternalSurface(surface, label) {
-  if (surface?.package?.name !== '@lk-robotics/lds-robotics-ui' || !Array.isArray(surface.entries)) {
+  if (surface?.package?.name !== '@lk-design-system/lds-robotics-ui' || !Array.isArray(surface.entries)) {
     throw new Error(`${label} is invalid.`);
   }
   const exportsByComponent = new Map();

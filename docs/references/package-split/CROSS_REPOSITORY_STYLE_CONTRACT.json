@@ -47,8 +47,8 @@
     "robotics-ui": {
       "repository": "LK-Design-System/lk-design-system-robotics",
       "package": {
-        "name": "@lk-robotics/lds-robotics-ui",
-        "version": "0.1.0-rc.3"
+        "name": "@lk-design-system/lds-robotics-ui",
+        "version": "0.1.0-rc.4"
       },
       "externalSurface": "docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json",
       "configFile": ".lds-conformance.json",
@@ -250,9 +250,9 @@
         },
         {
           "manifest": "apps/docs/package.json",
-          "name": "@lk-robotics/lds-robotics-ui",
+          "name": "@lk-design-system/lds-robotics-ui",
           "section": "dependencies",
-          "version": "0.1.0-rc.3"
+          "version": "0.1.0-rc.4"
         }
       ],
       "scanRoots": [
@@ -269,7 +269,7 @@
         "@lk-design-system/lds-core/styles.css",
         "@lk-design-system/lds-theme/styles.css",
         "@lk-design-system/lds-product/styles.css",
-        "@lk-robotics/lds-robotics-ui/styles.css",
+        "@lk-design-system/lds-robotics-ui/styles.css",
         "../src/styles.css"
       ],
       "storybookPreview": "apps/docs/.storybook/preview.ts",

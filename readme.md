@@ -85,16 +85,16 @@ LK ROBOTICS 핵심 디자인 시스템 패키지입니다. 토큰, React 컴포�
 import { Button } from '@lk-design-system/lds-core';
 import { ThemeToggle } from '@lk-design-system/lds-theme';
 import { ProductCard, TopBar } from '@lk-design-system/lds-product';
-import { RobotStatusCard } from '@lk-robotics/lds-robotics-ui';
+import { RobotStatusCard } from '@lk-design-system/lds-robotics-ui';
 
 import '@lk-design-system/lds-core/styles.css';
 import '@lk-design-system/lds-theme/styles.css';
 import '@lk-design-system/lds-product/styles.css';
-import '@lk-robotics/lds-robotics-ui/styles.css';
+import '@lk-design-system/lds-robotics-ui/styles.css';
 ```
 
 새 코드는 `@lk-design-system/lds-core`, `@lk-design-system/lds-theme`,
-`@lk-design-system/lds-product`, `@lk-robotics/lds-robotics-ui`의 public export를
+`@lk-design-system/lds-product`, `@lk-design-system/lds-robotics-ui`의 public export를
 사용합니다. 기존 `@lk-design-system/design-system-core` root, layer subpath,
 `components/*`, CSS, token, asset 경로는 migration support window 동안
 compatibility facade로 유지합니다.
@@ -105,7 +105,7 @@ compatibility facade로 유지합니다.
 - current packages: `@lk-design-system/lds-core`, `@lk-design-system/lds-theme`,
   `@lk-design-system/lds-product`, `@lk-design-system/design-system-core` compatibility facade
   (`0.1.0-rc.1`)
-- external Robotics: `@lk-robotics/lds-robotics-ui@0.1.0-rc.2`,
+- external Robotics: `@lk-design-system/lds-robotics-ui@0.1.0-rc.2`,
   `LK-Design-System/lk-design-system-robotics`
 - private workspace bootstrap: the exact Robotics RC tarball is retained under
   `vendor/` so clean CI installs do not depend on the retired pre-move package URL;

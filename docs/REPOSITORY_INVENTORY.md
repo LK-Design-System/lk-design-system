@@ -18,7 +18,7 @@ Storybook의 630개 스토리 역할·공개 여부·소유 컴포넌트와 190�
 - React 컴포넌트 소스 파일: 202개
 - 공개 named export: 208개
 - 루트 aggregate export: Core 85개 · Theme 2개 · Product 121개 = 208개
-- Robotics compatibility entry: `./robotics`가 별도 `@lk-robotics/lds-robotics-ui`의 34개 export를 재노출하며, 위 aggregate 수치에는 포함하지 않음
+- Robotics compatibility entry: `./robotics`가 별도 `@lk-design-system/lds-robotics-ui`의 34개 export를 재노출하며, 위 aggregate 수치에는 포함하지 않음
 - 컴포넌트 소스 디렉터리 18개: `brand`, `buttons`, `cards`, `communication`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `internal`, `layout`, `navigation`, `overlay`, `robotics`, `selection`, `status`, `viz`
 - 런타임 peer dependency: `react`
 - 선택 peer dependency: `react-dom`

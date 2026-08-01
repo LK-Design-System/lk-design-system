@@ -131,11 +131,11 @@
     }
   },
   "devDependencies": {
+    "@lk-design-system/lds-robotics-ui": "file:vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.4.tgz",
     "@playwright/test": "^1.61.1",
     "@storybook/addon-a11y": "10.4.6",
     "@storybook/addon-docs": "10.4.6",
     "@storybook/react-vite": "10.4.6",
-    "@lk-robotics/lds-robotics-ui": "file:vendor/lk-robotics-lds-robotics-ui-0.1.0-rc.3.tgz",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/react18": "npm:@types/react@^18.3.27",

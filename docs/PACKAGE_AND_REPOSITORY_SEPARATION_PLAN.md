@@ -40,7 +40,7 @@ lk-design-system                         # 계속 유지
   @lk-design-system/design-system-core       # 한시적 legacy compatibility facade
 
 lk-design-system-robotics               # Wave 4 gate 통과 시에만 신설
-  @lk-robotics/lds-robotics-ui          # Robotics DOM·SVG·2D domain UI
+  @lk-design-system/lds-robotics-ui          # Robotics DOM·SVG·2D domain UI
 
 lk-design-system-3d                     # 기존 형제 저장소 유지
   @lk-robotics/lds-3d-*        # 좌표·scene·asset·renderer package

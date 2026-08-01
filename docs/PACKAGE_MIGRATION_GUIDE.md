@@ -23,7 +23,7 @@ The completed LDS3D docs migration is recorded in
 | Core | `@lk-design-system/lds-core` | — |
 | Theme | `@lk-design-system/lds-theme` | Core |
 | Product | `@lk-design-system/lds-product` | Core |
-| Robotics UI | `@lk-robotics/lds-robotics-ui` | Core, Product |
+| Robotics UI | `@lk-design-system/lds-robotics-ui` | Core, Product |
 | Compatibility only | `@lk-design-system/design-system-core` | all four packages |
 
 The canonical owner for every public export and deep component path is
@@ -38,7 +38,7 @@ from a component folder name.
 | `@lk-design-system/design-system-core/core` | `@lk-design-system/lds-core` |
 | `@lk-design-system/design-system-core/theme` | `@lk-design-system/lds-theme` |
 | `@lk-design-system/design-system-core/product` | `@lk-design-system/lds-product` |
-| `@lk-design-system/design-system-core/robotics` | `@lk-robotics/lds-robotics-ui` |
+| `@lk-design-system/design-system-core/robotics` | `@lk-design-system/lds-robotics-ui` |
 | `@lk-design-system/design-system-core/components/<path>` | `<owner package>/components/<path>` using the classification inventory. |
 
 For example:
@@ -47,7 +47,7 @@ For example:
 import { Button } from '@lk-design-system/lds-core';
 import { ThemeToggle } from '@lk-design-system/lds-theme';
 import { TopBar } from '@lk-design-system/lds-product';
-import { Scene3DFrame } from '@lk-robotics/lds-robotics-ui';
+import { Scene3DFrame } from '@lk-design-system/lds-robotics-ui';
 ```
 
 ## CSS and assets
@@ -59,7 +59,7 @@ that use all layers should normally import all four entries:
 import '@lk-design-system/lds-core/styles.css';
 import '@lk-design-system/lds-theme/styles.css';
 import '@lk-design-system/lds-product/styles.css';
-import '@lk-robotics/lds-robotics-ui/styles.css';
+import '@lk-design-system/lds-robotics-ui/styles.css';
 ```
 
 The legacy `styles.css`, token and asset paths remain available through the

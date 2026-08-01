@@ -37,7 +37,7 @@
 
 - 포함: pan/zoom transform, optional grid, local zoom/reset controls, optional delegated fit command, zoom/status readout, controlled/uncontrolled viewport state.
 - 제외: 지도 tile/source 로딩, 좌표계 투영, layer schema, waypoint 편집, 경로 계획, fit-bounds 계산 자체. 이들은 renderer 또는 제품 계층의 책임입니다.
-- LDS Product 예시는 구조 지도처럼 중립적인 콘텐츠로 viewport 계약만 보여줍니다. Route·Trajectory·Waypoint·RobotPose의 의미와 시각 문법은 `@lk-robotics/lds-robotics-ui`가 소유하며, Product Storybook에서 임시 선·점·방향 마커로 재현하지 않습니다. 이 경계는 LDS Robotics revision `180f031541850444d302bcf6a94b96db563133cd`의 Navigation Path System 계약과 대조했습니다.
+- LDS Product 예시는 구조 지도처럼 중립적인 콘텐츠로 viewport 계약만 보여줍니다. Route·Trajectory·Waypoint·RobotPose의 의미와 시각 문법은 `@lk-design-system/lds-robotics-ui`가 소유하며, Product Storybook에서 임시 선·점·방향 마커로 재현하지 않습니다. 이 경계는 LDS Robotics revision `180f031541850444d302bcf6a94b96db563133cd`의 Navigation Path System 계약과 대조했습니다.
 - `ViewerToolbar`, `Icon`, LDS spacing/focus/toggle tokens를 재사용하며 독자적인 map-control visual language를 만들지 않습니다.
 
 ## External research basis

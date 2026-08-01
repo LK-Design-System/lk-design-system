@@ -4,8 +4,8 @@ import path from 'node:path';
 
 const root = process.cwd();
 const vendoredRoboticsRelease = {
-  path: 'vendor/lk-robotics-lds-robotics-ui-0.1.0-rc.3.tgz',
-  sha256: '011dc06b058efea94a58dc904dcebcb05379c003c3de40dcd39d15095d251216',
+  path: 'vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.4.tgz',
+  sha256: '83d67595b396d89302b535fef3d358ba4f5fa9374576c9cfc2f0f62e9faaa2b7',
 };
 const workspacePackages = [
   { id: 'core', name: '@lk-design-system/lds-core', dependencies: [], resources: ['tokens', 'assets'] },
@@ -19,7 +19,7 @@ const workspacePackages = [
     id: 'compat',
     name: '@lk-design-system/design-system-core',
     dependencies: ['@lk-design-system/lds-core', '@lk-design-system/lds-theme', '@lk-design-system/lds-product'],
-    externalDependencies: ['@lk-robotics/lds-robotics-ui'],
+    externalDependencies: ['@lk-design-system/lds-robotics-ui'],
     resources: ['tokens', 'assets'],
     compatibility: true,
   },
@@ -112,7 +112,7 @@ const changelog = await read('CHANGELOG.md');
 const deprecations = await read('docs/DEPRECATIONS.md');
 
 assert(rootPackage.private === true, 'The workspace orchestrator must remain private.');
-assert(roboticsExternalSurface.package?.name === '@lk-robotics/lds-robotics-ui', 'External Robotics surface must name the published Robotics package.');
+assert(roboticsExternalSurface.package?.name === '@lk-design-system/lds-robotics-ui', 'External Robotics surface must name the published Robotics package.');
 assert(typeof roboticsExternalSurface.package?.version === 'string' && roboticsExternalSurface.package.version.length > 0, 'External Robotics surface must pin a package version.');
 assert(
   rootPackage.devDependencies?.[roboticsExternalSurface.package.name] === `file:${vendoredRoboticsRelease.path}`,
@@ -142,7 +142,7 @@ for (const expected of [
   '@lk-design-system/lds-core',
   '@lk-design-system/lds-theme',
   '@lk-design-system/lds-product',
-  '@lk-robotics/lds-robotics-ui',
+  '@lk-design-system/lds-robotics-ui',
 ]) {
   assert(policyText.includes(expected), `Docs must state publish or workspace package policy phrase: ${expected}`);
 }

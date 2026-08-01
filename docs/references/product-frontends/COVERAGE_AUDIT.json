@@ -2266,7 +2266,7 @@
         "scripts/check-storybook-accessibility.mjs",
         "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification"
       ],
-      "closureDecision": "The shared map grammar is verified by the external @lk-robotics/lds-robotics-ui package at revision 0ae058d: HazardMarker owns stairs/ramp/dropoff/obstacle hazards and SpatialRegion owns slope terrain. A product-authored forbidden line is not a navigation lane and remains product renderer/editor geometry rather than a new LDS semantic primitive."
+      "closureDecision": "The shared map grammar is verified by the external @lk-design-system/lds-robotics-ui package at revision 0ae058d: HazardMarker owns stairs/ramp/dropoff/obstacle hazards and SpatialRegion owns slope terrain. A product-authored forbidden line is not a navigation lane and remains product renderer/editor geometry rather than a new LDS semantic primitive."
     },
     {
       "id": "WF-16",

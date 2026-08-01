@@ -18,7 +18,7 @@ const roboticsExternalSurfacePath = path.join(
   'package-split',
   'ROBOTICS_EXTERNAL_SURFACE.json',
 );
-const roboticsExternalPackage = '@lk-robotics/lds-robotics-ui';
+const roboticsExternalPackage = '@lk-design-system/lds-robotics-ui';
 
 const ownerLayers = ['core', 'theme', 'product', 'robotics'];
 

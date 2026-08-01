@@ -7,6 +7,6 @@
     "@lk-design-system/lds-core": "0.1.0-rc.1",
     "@lk-design-system/lds-theme": "0.1.0-rc.1",
     "@lk-design-system/lds-product": "0.1.0-rc.1",
-    "@lk-robotics/lds-robotics-ui": "0.1.0-rc.3"
+    "@lk-design-system/lds-robotics-ui": "0.1.0-rc.4"
   }
 }

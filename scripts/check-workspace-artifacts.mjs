@@ -20,7 +20,7 @@ const workspaces = [
   { id: 'compat', name: '@lk-design-system/design-system-core', implementation: false },
   {
     id: 'robotics',
-    name: '@lk-robotics/lds-robotics-ui',
+    name: '@lk-design-system/lds-robotics-ui',
     implementation: true,
     external: true,
   },

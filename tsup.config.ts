@@ -28,7 +28,7 @@ export default defineConfig({
     ...componentEntries(),
   },
   format: ['esm', 'cjs'],
-  external: ['react', 'react-dom', '@lk-robotics/lds-robotics-ui'],
+  external: ['react', 'react-dom', '@lk-design-system/lds-robotics-ui'],
   sourcemap: true,
   splitting: true,
   clean: true,

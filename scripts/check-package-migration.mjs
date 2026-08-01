@@ -195,7 +195,7 @@ function validatePackageGraph(audit) {
     core: '@lk-design-system/lds-core',
     theme: '@lk-design-system/lds-theme',
     product: '@lk-design-system/lds-product',
-    'robotics-ui': '@lk-robotics/lds-robotics-ui',
+    'robotics-ui': '@lk-design-system/lds-robotics-ui',
     compatibility: '@lk-design-system/design-system-core',
   };
   const expectedDependencies = {

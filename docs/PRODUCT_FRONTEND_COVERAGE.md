@@ -780,7 +780,7 @@ participant role·provider/stream transport·route·retrieval·RAG·persistence�
 
 ### WF-15 Map navigation and facility authoring
 
-현재 단계는 `verified`다. `LK-ROBOTICS/lk_web_viz`의 authoring source와 `TaskRunScreen`·`Map2DViewer` runtime source를 함께 pin해 point·line·region·landmark·층별 task target, observed path와 robot pose의 분리를 다시 읽었다. 구현·스토리 증거는 외부 `@lk-robotics/lds-robotics-ui` revision `0ae058d`에 있다. 이 작업은 **LK Robotics Extension**이며 WDS Core parity로 주장하지 않는다.
+현재 단계는 `verified`다. `LK-ROBOTICS/lk_web_viz`의 authoring source와 `TaskRunScreen`·`Map2DViewer` runtime source를 함께 pin해 point·line·region·landmark·층별 task target, observed path와 robot pose의 분리를 다시 읽었다. 구현·스토리 증거는 외부 `@lk-design-system/lds-robotics-ui` revision `0ae058d`에 있다. 이 작업은 **LK Robotics Extension**이며 WDS Core parity로 주장하지 않는다.
 
 필수 세 자산의 이번 Robotics Navigation 교차 판정은 다음과 같다. `supported` 계열 판정은 실제 component-level source mapping이 닫힌 경우에만 사용한다.
 
