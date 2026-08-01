@@ -2,7 +2,7 @@
   "$schema": "./LDS3D_EXTERNAL_SURFACE.schema.json",
   "schemaVersion": 1,
   "kind": "lds3d-external-public-surface",
-  "package": { "manifest": "package.json", "name": "@lk-robotics/lds-3d", "version": "0.1.0-alpha.1", "repository": "LK-Design-System/lk-design-system-3d" },
+  "package": { "manifest": "package.json", "name": "@lk-design-system/lds-3d", "version": "0.1.0-alpha.1", "repository": "LK-Design-System/lk-design-system-3d" },
   "upstreamTokenDependencies": [
     "--component-card-fg-dark",
     "--color-semantic-background-normal-alternative",
@@ -34,13 +34,13 @@
   ],
   "runtimeCustomProperties": ["--lds3d-inspector-width"],
   "packages": [
-    { "manifest": "packages/assets/package.json", "name": "@lk-robotics/lds-3d-assets", "version": "0.1.0-alpha.1", "exports": [".", "./schema", "./legacy", "./robots/catalog.json", "./robots/tron/tron.glb", "./robots/tron/tron.asset-manifest.json", "./robots/tron/provenance.json", "./asset-manifest.v1.schema.json", "./package.json"] },
-    { "manifest": "packages/core/package.json", "name": "@lk-robotics/lds-3d-core", "version": "0.1.0-alpha.1", "exports": [".", "./coordinates", "./occupancy-grid", "./entities", "./camera", "./interaction", "./renderer", "./time", "./theme", "./package.json"] },
-    { "manifest": "packages/markers/package.json", "name": "@lk-robotics/lds-3d-markers", "version": "0.1.0-alpha.1", "exports": [".", "./package.json"] },
-    { "manifest": "packages/pointcloud/package.json", "name": "@lk-robotics/lds-3d-pointcloud", "version": "0.1.0-alpha.1", "exports": [".", "./package.json"] },
-    { "manifest": "packages/r3f/package.json", "name": "@lk-robotics/lds-3d-r3f", "version": "0.1.0-alpha.1", "exports": [".", "./coordinates", "./themes", "./state", "./models", "./scene", "./package.json"] },
-    { "manifest": "packages/testing/package.json", "name": "@lk-robotics/lds-3d-testing", "version": "0.1.0-alpha.1", "exports": [".", "./fixtures", "./contracts", "./provenance", "./package.json"] },
-    { "manifest": "packages/tf/package.json", "name": "@lk-robotics/lds-3d-tf", "version": "0.1.0-alpha.1", "exports": [".", "./package.json"] },
-    { "manifest": "packages/three/package.json", "name": "@lk-robotics/lds-3d-three", "version": "0.1.0-alpha.1", "exports": [".", "./coordinates", "./r3f-bridge", "./package.json"] }
+    { "manifest": "packages/assets/package.json", "name": "@lk-design-system/lds-3d-assets", "version": "0.1.0-alpha.1", "exports": [".", "./schema", "./legacy", "./robots/catalog.json", "./robots/tron/tron.glb", "./robots/tron/tron.asset-manifest.json", "./robots/tron/provenance.json", "./asset-manifest.v1.schema.json", "./package.json"] },
+    { "manifest": "packages/core/package.json", "name": "@lk-design-system/lds-3d-core", "version": "0.1.0-alpha.1", "exports": [".", "./coordinates", "./occupancy-grid", "./entities", "./camera", "./interaction", "./renderer", "./time", "./theme", "./package.json"] },
+    { "manifest": "packages/markers/package.json", "name": "@lk-design-system/lds-3d-markers", "version": "0.1.0-alpha.1", "exports": [".", "./package.json"] },
+    { "manifest": "packages/pointcloud/package.json", "name": "@lk-design-system/lds-3d-pointcloud", "version": "0.1.0-alpha.1", "exports": [".", "./package.json"] },
+    { "manifest": "packages/r3f/package.json", "name": "@lk-design-system/lds-3d-r3f", "version": "0.1.0-alpha.1", "exports": [".", "./coordinates", "./themes", "./state", "./models", "./scene", "./package.json"] },
+    { "manifest": "packages/testing/package.json", "name": "@lk-design-system/lds-3d-testing", "version": "0.1.0-alpha.1", "exports": [".", "./fixtures", "./contracts", "./provenance", "./package.json"] },
+    { "manifest": "packages/tf/package.json", "name": "@lk-design-system/lds-3d-tf", "version": "0.1.0-alpha.1", "exports": [".", "./package.json"] },
+    { "manifest": "packages/three/package.json", "name": "@lk-design-system/lds-3d-three", "version": "0.1.0-alpha.1", "exports": [".", "./coordinates", "./r3f-bridge", "./package.json"] }
   ]
 }

@@ -71,7 +71,7 @@
     },
     "lds3d-ui": {
       "repository": "LK-Design-System/lk-design-system-3d",
-      "workspacePackage": { "manifest": "package.json", "name": "@lk-robotics/lds-3d", "version": "0.1.0-alpha.1" },
+      "workspacePackage": { "manifest": "package.json", "name": "@lk-design-system/lds-3d", "version": "0.1.0-alpha.1" },
       "compositionManifest": "apps/docs/package.json",
       "lockfile": "pnpm-lock.yaml",
       "externalSurface": "lds3d-external-surface.json",

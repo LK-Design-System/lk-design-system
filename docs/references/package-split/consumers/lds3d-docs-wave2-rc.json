@@ -44,8 +44,8 @@
   "verification": {
     "install": "passed: pnpm install --no-frozen-lockfile with GitHub Packages token",
     "workspaceBuild": "passed: pnpm run build",
-    "docsTypecheck": "passed: pnpm --filter @lk-robotics/design-system-3d-docs run typecheck",
-    "storybook": "passed: pnpm --filter @lk-robotics/design-system-3d-docs run build-storybook",
+    "docsTypecheck": "passed: pnpm --filter @lk-design-system/design-system-3d-docs run typecheck",
+    "storybook": "passed: pnpm --filter @lk-design-system/design-system-3d-docs run build-storybook",
     "scanner": "passed: no legacy aggregate, deep, CSS, asset, layer, CJS, or local-link references"
   },
   "rollback": {

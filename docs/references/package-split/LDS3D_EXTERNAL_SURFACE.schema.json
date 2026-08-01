@@ -14,7 +14,7 @@
       "required": ["manifest", "name", "version", "repository"],
       "properties": {
         "manifest": { "const": "package.json" },
-        "name": { "const": "@lk-robotics/lds-3d" },
+        "name": { "const": "@lk-design-system/lds-3d" },
         "version": { "const": "0.1.0-alpha.1" },
         "repository": { "const": "LK-Design-System/lk-design-system-3d" }
       }
@@ -30,7 +30,7 @@
         "required": ["manifest", "name", "version", "exports"],
         "properties": {
           "manifest": { "type": "string", "pattern": "^packages/[a-z0-9-]+/package\\.json$" },
-          "name": { "type": "string", "pattern": "^@lk-robotics/lds-3d-" },
+          "name": { "type": "string", "pattern": "^@lk-design-system/lds-3d-" },
           "version": { "const": "0.1.0-alpha.1" },
           "exports": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^\\." } }
         }
