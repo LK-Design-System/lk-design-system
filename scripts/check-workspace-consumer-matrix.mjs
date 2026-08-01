@@ -346,7 +346,7 @@ createRoot(document.getElementById('root')).render(<App />);
     invariant(installed.name === item.name && installed.version === item.version, `${item.name} installed package identity drift.`);
   }
   const compatManifest = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', '@lk-design-system', 'design-system-core', 'package.json'), 'utf8'));
-  const roboticsManifest = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', '@lk-robotics', 'lds-robotics-ui', 'package.json'), 'utf8'));
+  const roboticsManifest = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', '@lk-design-system', 'lds-robotics-ui', 'package.json'), 'utf8'));
   invariant(
     roboticsManifest.name === '@lk-design-system/lds-robotics-ui' && roboticsManifest.version === compatManifest.dependencies?.['@lk-design-system/lds-robotics-ui'],
     'Packaged Robotics dependency does not match the compat package contract.',

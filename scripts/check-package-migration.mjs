@@ -1642,7 +1642,7 @@ function validProductScanEvidence(evidence, consumer, aggregateName) {
       /^(?:@lk-design-system|@lk-robotics)\/lds-(?:core|theme|product|robotics-ui)(?:\/|$)/.test(specifier));
   const isLds3dSpecifier = (specifier) =>
     typeof specifier === 'string' &&
-    /^@lk-robotics\/lds-3d-[a-z0-9-]+(?:\/|$)/.test(specifier);
+    /^@lk-design-system\/lds-3d-[a-z0-9-]+(?:\/|$)/.test(specifier);
   return (
     matches.dependencyDeclarations.every(
       (entry) =>

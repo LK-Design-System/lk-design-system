@@ -5,7 +5,7 @@ import path from 'node:path';
 
 const aggregatePackage = '@lk-design-system/design-system-core';
 const splitPackagePattern = /^(?:@lk-design-system|@lk-robotics)\/lds-(?:core|theme|product|robotics-ui)(?:\/|$)/;
-const lds3dPackagePattern = /^@lk-robotics\/lds-3d-[a-z0-9-]+(?:\/|$)/;
+const lds3dPackagePattern = /^@lk-design-system\/lds-3d-[a-z0-9-]+(?:\/|$)/;
 const dependencyFields = ['dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies'];
 const sourceExtensions = new Set([
   '.cjs',
