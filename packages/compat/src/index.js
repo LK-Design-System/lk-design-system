@@ -4,4 +4,4 @@
 export * from '@lk-design-system/lds-core';
 export * from '@lk-design-system/lds-theme';
 export * from '@lk-design-system/lds-product';
-export * from '@lk-robotics/lds-robotics-ui';
+export * from '@lk-design-system/lds-robotics-ui';
