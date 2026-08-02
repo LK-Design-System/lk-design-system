@@ -1,6 +1,6 @@
 {
   "name": "@lk-design-system/design-system-core",
-  "version": "0.1.0-rc.19",
+  "version": "0.1.0-rc.20",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -17,9 +17,9 @@
     "THIRD_PARTY_NOTICES.md"
   ],
   "dependencies": {
-    "@lk-design-system/lds-core": "0.1.0-rc.19",
-    "@lk-design-system/lds-theme": "0.1.0-rc.19",
-    "@lk-design-system/lds-product": "0.1.0-rc.19",
+    "@lk-design-system/lds-core": "0.1.0-rc.20",
+    "@lk-design-system/lds-theme": "0.1.0-rc.20",
+    "@lk-design-system/lds-product": "0.1.0-rc.20",
     "@lk-design-system/lds-robotics-ui": "0.1.0-rc.4"
   },
   "peerDependencies": {

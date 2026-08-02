@@ -68,6 +68,13 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.20 - 2026-08-03
+
+### Fixed
+
+- `Table` and `DataGrid` no longer reserve a stable scrollbar gutter when they only scroll horizontally, so full-width row dividers reach the card edge again. Consumers can still opt into a stable gutter with `style.scrollbarGutter`.
+- Added a fast source-level regression gate for the default auto-gutter contract.
+
 ## 0.1.0-rc.19 - 2026-08-02
 
 ### Fixed

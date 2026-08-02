@@ -496,9 +496,9 @@ export function DataGrid({
       {...rest}
       className={['lk-scroll-surface', className].filter(Boolean).join(' ')}
       data-scrollbar="auto"
-      data-scroll-gutter="stable"
+      data-scroll-gutter="auto"
       aria-busy={loading || undefined}
-      style={{ overflowX: 'auto', scrollbarGutter: 'stable', ...(variant === 'embedded' ? null : { border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)' }), ...style }}
+      style={{ overflowX: 'auto', scrollbarGutter: 'auto', ...(variant === 'embedded' ? null : { border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-lg)' }), ...style }}
     >
       {/* Mounted for the grid's whole life; only their text changes. A live
           region inserted together with its first message (the bulk-action bar,

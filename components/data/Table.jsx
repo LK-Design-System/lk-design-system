@@ -100,8 +100,8 @@ export function Table({
       {...rest}
       className={['lk-scroll-surface', className].filter(Boolean).join(' ')}
       data-scrollbar="auto"
-      data-scroll-gutter="stable"
-      style={{ overflowX: 'auto', scrollbarGutter: 'stable', ...style }}
+      data-scroll-gutter="auto"
+      style={{ overflowX: 'auto', scrollbarGutter: 'auto', ...style }}
     >
       <table
         aria-label={nameFromAria ? tableLabel : undefined}

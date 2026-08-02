@@ -86,8 +86,8 @@ function Table({
       ...rest,
       className: ["lk-scroll-surface", className].filter(Boolean).join(" "),
       "data-scrollbar": "auto",
-      "data-scroll-gutter": "stable",
-      style: { overflowX: "auto", scrollbarGutter: "stable", ...style },
+      "data-scroll-gutter": "auto",
+      style: { overflowX: "auto", scrollbarGutter: "auto", ...style },
       children: /* @__PURE__ */ jsxs(
         "table",
         {
@@ -136,4 +136,4 @@ export {
   getTableDataCellStyle,
   Table
 };
-//# sourceMappingURL=chunk-5VSG26YB.js.map
+//# sourceMappingURL=chunk-M6SM5S4A.js.map

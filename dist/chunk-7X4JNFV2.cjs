@@ -86,8 +86,8 @@ function Table({
       ...rest,
       className: ["lk-scroll-surface", className].filter(Boolean).join(" "),
       "data-scrollbar": "auto",
-      "data-scroll-gutter": "stable",
-      style: { overflowX: "auto", scrollbarGutter: "stable", ...style },
+      "data-scroll-gutter": "auto",
+      style: { overflowX: "auto", scrollbarGutter: "auto", ...style },
       children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
         "table",
         {
@@ -136,4 +136,4 @@ function Table({
 
 
 exports.getTableHeaderCellStyle = getTableHeaderCellStyle; exports.getTableDataCellStyle = getTableDataCellStyle; exports.Table = Table;
-//# sourceMappingURL=chunk-A5FGYREU.cjs.map
+//# sourceMappingURL=chunk-7X4JNFV2.cjs.map

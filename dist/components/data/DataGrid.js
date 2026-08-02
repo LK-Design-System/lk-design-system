@@ -1,7 +1,7 @@
 "use client";
 import {
   DataGrid
-} from "../../chunk-CKFIDWYI.js";
+} from "../../chunk-T7BUA7AT.js";
 import "../../chunk-IGVXI6D7.js";
 import "../../chunk-QG7ACXGH.js";
 import "../../chunk-JNVDI5OO.js";
