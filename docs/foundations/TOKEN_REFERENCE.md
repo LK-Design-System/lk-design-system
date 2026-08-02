@@ -89,6 +89,10 @@
 | `component.divider.tokens.color` | color | `--component-divider-color` | `var(--component-divider-color)` | — |
 | `component.divider.tokens.thicknessNormal` | dimension | `--component-divider-thickness-normal` | `var(--component-divider-thickness-normal)` | — |
 | `component.divider.tokens.thicknessThick` | dimension | `--component-divider-thickness-thick` | `var(--component-divider-thickness-thick)` | — |
+| `component.iconButton.tokens.sizeCustom` | dimension | `--component-icon-button-size-custom` | `var(--component-icon-button-size-custom)` | — |
+| `component.iconButton.tokens.sizeMd` | dimension | `--component-icon-button-size-md` | `var(--component-icon-button-size-md)` | — |
+| `component.iconButton.tokens.sizeSm` | dimension | `--component-icon-button-size-sm` | `var(--component-icon-button-size-sm)` | — |
+| `component.iconButton.tokens.sizeXs` | dimension | `--component-icon-button-size-xs` | `var(--component-icon-button-size-xs)` | — |
 | `component.input.tokens.background` | color | `--component-input-bg` | `var(--component-input-bg)` | — |
 | `component.input.tokens.borderColor` | color | `--component-input-border-color` | `var(--component-input-border-color)` | — |
 | `component.input.tokens.borderColorFocus` | color | `--component-input-border-color-focus` | `var(--component-input-border-color-focus)` | — |

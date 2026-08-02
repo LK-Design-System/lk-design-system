@@ -244,6 +244,7 @@
     }
   ],
   "responsive": [
+    "intrinsic-width 계약: option 집합을 재는 숨은 sizer는 absolute 배치로 normal flow에서 제외되어, root 높이를 trigger보다 키우지 않습니다.",
     "시각 델타: 기존 높이, 여백, 반경, 색상, 선택 채움, 그림자는 유지합니다. 탐색 중인 옵션의 내부 포커스 선은 확정 선택과 키보드 포커스를 구분합니다. 선택된 옵션이 나중에 비활성화되면 값은 보존하되 primary 강조를 중립 비활성 채움·전경으로 바꿉니다."
   ],
   "contentGuidance": [

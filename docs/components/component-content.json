@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "5e2e59f13f3d388dcc075844e61b18bef44b5acb815879025a3f273e636d6628",
+  "sourceFingerprint": "20d40d6177f52b90aa326740c0c15dadb31a50e4a2bb3dfe7753b95a8283f015",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -880,9 +880,9 @@
         },
         {
           "name": "size",
-          "type": "number | \"custom\" | \"small\" | \"sm\" | \"medium\" | \"md\"",
+          "type": "number | \"xsmall\" | \"xs\" | \"custom\" | \"small\" | \"sm\" | \"medium\" | \"md\"",
           "required": false,
-          "description": "Square control size in px or size key. @default \"medium\"",
+          "description": "Square control size in px or size key. xs/xsmall is the 24px dense-action extension; custom preserves the WDS 28px compatibility size. @default \"medium\"",
           "owner": "IconButtonProps"
         },
         {
@@ -922,6 +922,10 @@
         }
       ],
       "tokens": [
+        "--component-icon-button-size-xs",
+        "--component-icon-button-size-custom",
+        "--component-icon-button-size-sm",
+        "--component-icon-button-size-md",
         "--color-semantic-secondary-surface",
         "--color-semantic-brand-ink",
         "--color-semantic-secondary-normal",
@@ -942,11 +946,15 @@
       ],
       "externalReferences": [
         {
+          "label": "WCAG 2.2 Target Size (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum"
+        },
+        {
           "label": "WAI-ARIA Button Pattern",
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/"
         }
       ],
-      "promptSha256": "b48e5d81f5459a932658581240883aa7af9f1722644566bb66bad0b2af8dda18"
+      "promptSha256": "d4cd66d2d724c1c65fb74175e724ee50114e332ba56be049920cb2d1843072c0"
     },
     {
       "id": "link",
@@ -11570,11 +11578,23 @@
           "url": "https://www.sap.com/design-system/fiori-design-android/v25-4/components/data-table/usage"
         },
         {
+          "label": "CSS Table Module Level 3",
+          "url": "https://www.w3.org/TR/css-tables-3/"
+        },
+        {
+          "label": "MUI X column dimensions",
+          "url": "https://mui.com/x/react-data-grid/column-dimensions/"
+        },
+        {
+          "label": "Carbon data table guidance",
+          "url": "https://v10.carbondesignsystem.com/components/data-table/usage/"
+        },
+        {
           "label": "WAI-ARIA APG Table pattern",
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/table/"
         }
       ],
-      "promptSha256": "d1a5c0b9ae3e97aea80701819a71b3058d4b58d618f2afd7377120c40a61dcbb"
+      "promptSha256": "5aa21bc76278af74a31b8fb785dbf710e1d7d127214153676392948fa080f066"
     },
     {
       "id": "tree",
@@ -19002,7 +19022,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/listbox/"
         }
       ],
-      "promptSha256": "9cb377224436fcf84ca02dec3649955a7d827d3890905b2981ed5f1afe5f4efb"
+      "promptSha256": "0b96a24da75e15e19ca9a6aa4e85845f2d86e654dc0f07a60f14b7073747bbe2"
     },
     {
       "id": "slider",
@@ -32046,9 +32066,9 @@
         },
         {
           "name": "size",
-          "type": "number | \"custom\" | \"small\" | \"sm\" | \"medium\" | \"md\"",
+          "type": "number | \"xsmall\" | \"xs\" | \"custom\" | \"small\" | \"sm\" | \"medium\" | \"md\"",
           "required": false,
-          "description": "Square control size in px or size key. @default \"medium\"",
+          "description": "Square control size in px or size key. xs/xsmall is the 24px dense-action extension; custom preserves the WDS 28px compatibility size. @default \"medium\"",
           "owner": "IconButtonProps"
         },
         {
@@ -32099,31 +32119,35 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "size: pixel size or size key, default medium (40)."
+          "rule": "xs / xsmall: --component-icon-button-size-xs (24px)"
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "custom: --component-icon-button-size-custom (28px)"
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "sm / small: --component-icon-button-size-sm (32px)"
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "md / medium: --component-icon-button-size-md (40px, default)"
         },
         {
           "subject": "--border-thin",
           "rule": "1px"
-        },
-        {
-          "subject": "--color-semantic-background-elevated-normal",
-          "rule": "light: #FFFFFF; dark: #212225"
-        },
-        {
-          "subject": "--color-semantic-brand-ink",
-          "rule": "light: #0E1329; dark: #E7EAF2"
-        },
-        {
-          "subject": "--color-semantic-fill-normal",
-          "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
         }
       ],
-      "responsive": [],
+      "responsive": [
+        "Dense 24px size extension.",
+        "Classification: WDS Core with an explicit LDS compatibility extension. The accepted local WDS component-set evidence defines 28px, 32px, and 40px Icon Button sizes. LDS preserves those sizes and adds size=\"xs\" with the xsmall alias as a 24px dense-action option for compact table rows."
+      ],
       "contentGuidance": [],
       "accessibility": [
         "Always provide label; it is the accessible name for the icon-only control. 누락하면 development 빌드에서 console 경고가 출력됩니다(production 번들에서는 제거됨). 이름을 외부 노드에서 참조해야 하면 aria-labelledby를 대신 쓰세요.",
         "Native disabled removes the command from focus. aria-disabled=\"true\" keeps it programmatically discoverable while applying unavailable styling and blocking activation; composite widgets decide whether it stays in their Arrow-key navigation model.",
-        "WAI-ARIA Button Pattern의 accessible name, Enter/Space, unavailable semantics를 따릅니다. WDS의 원형 Icon Button을 기본으로 유지하고 round={false}는 명시적인 LDS 확장입니다."
+        "WAI-ARIA Button Pattern의 accessible name, Enter/Space, unavailable semantics를 따릅니다. WDS의 원형 Icon Button을 기본으로 유지하고 round={false}는 명시적인 LDS 확장입니다.",
+        "WCAG 2.2 Target Size (Minimum) sets a 24 by 24 CSS pixel minimum target, subject to its documented exceptions. For that reason LDS does not add the observed 20px product workaround."
       ],
       "exceptions": [],
       "related": [
@@ -32173,6 +32197,10 @@
         "--color-semantic-secondary-surface",
         "--color-semantic-static-white",
         "--component-button-transition",
+        "--component-icon-button-size-custom",
+        "--component-icon-button-size-md",
+        "--component-icon-button-size-sm",
+        "--component-icon-button-size-xs",
         "--radius-md",
         "--radius-pill",
         "--viewer-foreground"
@@ -32217,6 +32245,10 @@
           "path": "stories/ActionIconButton.stories.jsx"
         },
         {
+          "label": "WCAG 2.2 Target Size (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum"
+        },
+        {
           "label": "WAI-ARIA Button Pattern",
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/"
         }
@@ -32232,7 +32264,7 @@
         "states": "evidence",
         "behavior": "evidence",
         "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
+        "responsive": "evidence",
         "contentGuidance": "omitted-no-evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
@@ -43497,6 +43529,7 @@
         }
       ],
       "responsive": [
+        "intrinsic-width 계약: option 집합을 재는 숨은 sizer는 absolute 배치로 normal flow에서 제외되어, root 높이를 trigger보다 키우지 않습니다.",
         "시각 델타: 기존 높이, 여백, 반경, 색상, 선택 채움, 그림자는 유지합니다. 탐색 중인 옵션의 내부 포커스 선은 확정 선택과 키보드 포커스를 구분합니다. 선택된 옵션이 나중에 비활성화되면 값은 보존하되 primary 강조를 중립 비활성 채움·전경으로 바꿉니다."
       ],
       "contentGuidance": [
@@ -55258,38 +55291,41 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "결측 값은 공백이나 0으로 위장하지 말고 render에서 보이는 —와 스크린리더용 값 없음을 함께 제공합니다. 로딩·오류는 셀 placeholder가 아니라 표의 resource state로 분리합니다."
+          "rule": "A custom render tree is still constrained by the cell, but nested flex or grid layouts must provide their own minWidth: 0 and overflow behavior."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "caption이 있으면 tableLabel과 tableLabelledBy는 무시됩니다. 보이는 캡션을 ARIA 이름으로 덮어쓰면 이름과 보이는 텍스트가 어긋나기 때문입니다(WCAG 2.5.3)."
+          "rule": "결측 값은 공백이나 0으로 위장하지 말고 render에서 보이는 —와 스크린리더용 값 없음을 함께 제공합니다. 로딩·오류는 셀 placeholder가 아니라 표의 resource state로 분리합니다."
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "표 시맨틱 계약 (WCAG 1.3.1)"
+          "rule": "caption이 있으면 tableLabel과 tableLabelledBy는 무시됩니다. 보이는 캡션을 ARIA 이름으로 덮어쓰면 이름과 보이는 텍스트가 어긋나기 때문입니다(WCAG 2.5.3)."
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "The CSS Table Module Level 3 explains why cell min-content widths participate in a table's intrinsic width. The contract therefore constrains both header and body cells, rather than styling only the header."
         },
         {
           "subject": "--color-semantic-fill-alternative",
           "rule": "light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12)"
-        },
-        {
-          "subject": "--color-semantic-label-strong",
-          "rule": "light: #000000; dark: #FFFFFF"
         }
       ],
       "responsive": [
+        "Prefer one truncate column per table. It uses the remaining width and ignores that column's width; other columns keep their explicit widths.",
+        "Horizontal scrolling remains the default overflow policy for tables whose intentionally fixed columns cannot fit. Truncation is not applied globally.",
         "columns — { key, label, align, width, render }. rows — 데이터 객체. size sm · md. hover — 행 워시. 상태 점·링크·액션에는 render를 쓰세요.",
         "getTableHeaderCellStyle({ padding, align, width }) and getTableDataCellStyle({ padding, align, width }) expose the LDS static-table cell presentation for product-owned table compositions that cannot use the full Table renderer. Preserve native and elements when using them."
       ],
       "contentGuidance": [
-        "caption — 표 위에 보이는 이며 동시에 표의 접근 가능한 이름입니다. 표 제목이 표 자체에 속할 때 첫 번째 선택지입니다."
+        "caption — 표 위에 보이는 이며 동시에 표의 접근 가능한 이름입니다. 표 제목이 표 자체에 속할 때 첫 번째 선택지입니다.",
+        "Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope=\"col\", tableLabel)을 씁니다."
       ],
       "accessibility": [
+        "The complete text remains in the DOM while the visible line uses an ellipsis. Do not add a duplicate accessible label just because text is visually clipped.",
         "rowHeaderKey — 행을 식별하는 컬럼의 key입니다. 지정하면 그 컬럼의 셀이 대신 가 되어, 스크린 리더가 나머지 셀을 읽을 때 행 이름을 함께 낭독합니다. 시각 표현은 데이터 셀과 동일하게 유지되고 시맨틱만 바뀝니다. 장비 ID·자산 코드처럼 행을 유일하게 지시하는 컬럼 하나에만 쓰세요.",
         "tableLabel — 보이는 캡션이 없을 때 에 직접 붙는 aria-label입니다. 래퍼 div가 아니라 표에 이름이 필요하므로, 밖에서 넘긴 aria-label(래퍼로 전달됨) 대신 이 prop을 쓰세요.",
         "tableLabelledBy — 표 밖에 이미 보이는 제목(heading 등)의 id를 연결해 의 aria-labelledby로 사용합니다. 보이는 제목이 있는 페이지에서는 이름을 중복 작성하지 말고 이 연결을 쓰세요.",
-        "getRowProps(row, index) merges native attributes such as data-, className, style, and pointer handlers. It does not add selection, focus, or grid semantics. Use DataGrid when rows must be selected, sorted, or navigated with the keyboard.",
-        "Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope=\"col\", tableLabel)을 씁니다."
+        "getRowProps(row, index) merges native attributes such as data-, className, style, and pointer handlers. It does not add selection, focus, or grid semantics. Use DataGrid when rows must be selected, sorted, or navigated with the keyboard."
       ],
       "exceptions": [],
       "related": [
@@ -55329,6 +55365,10 @@
       "examples": [
         {
           "label": "기본 조합",
+          "code": "<Table\n  columns={[\n    { key: 'name', label: 'Name', truncate: true },\n    { key: 'status', label: 'Status', width: 112 },\n    { key: 'actions', label: 'Actions', width: 48, align: 'right', render: renderActions },\n  ]}\n  rows={rows}\n/>"
+        },
+        {
+          "label": "추가 조합 2",
           "code": "<Table\n  caption=\"모델별 현장 상태\"\n  rowHeaderKey=\"code\"\n  getRowId={(row) => row.code}\n  columns={[\n    { key: 'code', label: '모델' },\n    { key: 'site', label: '현장' },\n    { key: 'status', label: '상태', render: (r) => <StatusBadge tone={r.tone}>{r.status}</StatusBadge> },\n  ]}\n  rows={[{ code: 'LKR-T1', site: '판교 물류센터', status: '가동중', tone: 'positive' }]}\n/>"
         }
       ],
@@ -55380,6 +55420,18 @@
         {
           "label": "SAP Fiori data table usage",
           "url": "https://www.sap.com/design-system/fiori-design-android/v25-4/components/data-table/usage"
+        },
+        {
+          "label": "CSS Table Module Level 3",
+          "url": "https://www.w3.org/TR/css-tables-3/"
+        },
+        {
+          "label": "MUI X column dimensions",
+          "url": "https://mui.com/x/react-data-grid/column-dimensions/"
+        },
+        {
+          "label": "Carbon data table guidance",
+          "url": "https://v10.carbondesignsystem.com/components/data-table/usage/"
         },
         {
           "label": "WAI-ARIA APG Table pattern",
