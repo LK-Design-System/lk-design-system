@@ -129,6 +129,7 @@
     "stories/FormCheckbox.stories.jsx": "LDS Core/Components/Selection and Input/Checkbox",
     "stories/FormDateRange.stories.jsx": "LDS Product/Selection and Input/Date Range",
     "stories/FormDateTime.stories.jsx": "LDS Product/Selection and Input/Date Picker",
+    "stories/FormFieldAction.stories.jsx": "LDS Product/Selection and Input/Field Action",
     "stories/FormFileUpload.stories.jsx": "LDS Product/Selection and Input/File Upload",
     "stories/FormFileUploadQueue.stories.jsx": "LDS Product/Selection and Input/File Upload Queue",
     "stories/FormInput.stories.jsx": "LDS Core/Components/Selection and Input/Input",
