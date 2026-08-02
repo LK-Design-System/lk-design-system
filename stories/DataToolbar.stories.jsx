@@ -209,6 +209,49 @@ export const MediumFilterDensity = {
   },
 };
 
+export const HeaderlessEmbeddedToolbar = {
+  name: '사용법 · 검색과 필터만 있는 목록 머리줄',
+  parameters: storyDescription(
+    '제목·설명·건수·액션 없이 검색과 필터만 두는 embedded 툴바입니다. 빈 머리 행을 만들지 않아 검색줄 위아래 여백이 같고, 모든 슬롯이 비면 툴바 표면도 남지 않습니다.',
+  ),
+  render: () => (
+    <main style={surfaceStyle}>
+      <DataToolbar
+        data-testid="headerless-toolbar"
+        variant="embedded"
+        searchPlaceholder="문서 검색"
+        filters={<FilterChip active>최근 수정</FilterChip>}
+      />
+      <div data-testid="empty-toolbar-host">
+        <DataToolbar searchable={false} />
+      </div>
+      <DataGrid columns={columns} rows={rows} getRowId={(row) => row.id} variant="embedded" />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const toolbar = canvasElement.querySelector('[data-testid="headerless-toolbar"]');
+    const controls = toolbar?.querySelector('[data-data-toolbar-controls]');
+    const emptyHost = canvasElement.querySelector('[data-testid="empty-toolbar-host"]');
+    if (!toolbar || !controls || toolbar.querySelector('[data-data-toolbar-header]')) {
+      throw new Error('A controls-only toolbar must omit its header row.');
+    }
+    if (toolbar.children.length !== 1) {
+      throw new Error('A controls-only toolbar must expose exactly one grid row.');
+    }
+    const toolbarRect = toolbar.getBoundingClientRect();
+    const controlsRect = controls.getBoundingClientRect();
+    const styles = getComputedStyle(toolbar);
+    const topSpace = controlsRect.top - toolbarRect.top - parseFloat(styles.borderTopWidth || '0');
+    const bottomSpace = toolbarRect.bottom - controlsRect.bottom - parseFloat(styles.borderBottomWidth || '0');
+    if (Math.abs(topSpace - bottomSpace) > 1) {
+      throw new Error(`Controls-only toolbar padding must be symmetric (${topSpace}px vs ${bottomSpace}px).`);
+    }
+    if (!emptyHost || emptyHost.childElementCount !== 0) {
+      throw new Error('A toolbar with no header or controls must render no empty surface.');
+    }
+  },
+};
+
 export const SearchlessEmbeddedToolbar = {
   name: '사용법 · 검색 없는 목록 머리줄',
   parameters: storyDescription(

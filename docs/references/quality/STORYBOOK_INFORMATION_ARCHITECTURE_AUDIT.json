@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "cafb02e329e5303fa6ff84acb951895d582cc2e4aadb5e2c9dbe5ee0159cd9f9",
+    "storybookIndexSha256": "869badb168d02bb11fe4919194973691d2029176aad16af81d719d42e048edaf",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,13 +62,13 @@
   },
   "summary": {
     "pages": 191,
-    "stories": 643,
-    "publicStories": 459,
+    "stories": 644,
+    "publicStories": 460,
     "hiddenStories": 184,
     "componentDescriptions": 187,
     "pagesWithVisibleCanvasIntroduction": 187,
     "pagesWithDecisionGuidance": 179,
-    "describedPublicStories": 459,
+    "describedPublicStories": 460,
     "reviewedPages": 190,
     "reviewedStories": 635,
     "staleReviewedPages": 3,
@@ -76,7 +76,7 @@
     "roles": {
       "foundation-reference": 20,
       "overview": 175,
-      "usage": 34,
+      "usage": 35,
       "variants-states": 95,
       "interaction": 53,
       "responsive": 65,
@@ -107,8 +107,8 @@
       },
       "Product": {
         "pages": 114,
-        "stories": 426,
-        "public": 325,
+        "stories": 427,
+        "public": 326,
         "hidden": 101,
         "guideReadyPages": 113
       },
@@ -12006,7 +12006,7 @@
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataToolbar.stories.jsx",
-      "sourceSha256": "ceb3d5764fe6a4dbeee5f1554428f65a9c65cd58d328b8b8bdf93b713479f456",
+      "sourceSha256": "acd081ac7761fb47399ff7f85a9088f9b8949c069eb740d3ffe3e1ff6f72efba",
       "primaryOwner": "DataToolbar",
       "ownerComponents": [
         "DataToolbar"
@@ -12020,13 +12020,13 @@
         "TextButton"
       ],
       "visibility": {
-        "public": 3,
+        "public": 4,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-operations-data-toolbar--toolbar-with-grid",
-        "describedPublicStories": 3,
+        "describedPublicStories": 4,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -12093,6 +12093,32 @@
           "supportingComponents": [
             "Button",
             "DataGrid"
+          ]
+        },
+        {
+          "id": "lds-product-data-operations-data-toolbar--headerless-embedded-toolbar",
+          "name": "사용법 · 검색과 필터만 있는 목록 머리줄",
+          "exportName": "HeaderlessEmbeddedToolbar",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "DataToolbar"
+          ],
+          "supportingComponents": [
+            "DataGrid",
+            "FilterChip"
           ]
         },
         {

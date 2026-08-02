@@ -35,4 +35,4 @@ export interface DataToolbarProps extends Omit<React.HTMLAttributes<HTMLDivEleme
 }
 
 /** DataGrid/Table 상단의 검색, 필터, 결과 수, 액션을 정렬하는 툴바. 선택 bulk action은 DataGrid가 담당합니다. */
-export function DataToolbar(props: DataToolbarProps): React.JSX.Element;
+export function DataToolbar(props: DataToolbarProps): React.JSX.Element | null;

@@ -57206,6 +57206,11 @@
             "role": "usage"
           },
           {
+            "id": "lds-product-data-operations-data-toolbar--headerless-embedded-toolbar",
+            "name": "사용법 · 검색과 필터만 있는 목록 머리줄",
+            "role": "usage"
+          },
+          {
             "id": "lds-product-data-operations-data-toolbar--medium-filter-density",
             "name": "반응형 · 기본 필터 밀도",
             "role": "responsive"

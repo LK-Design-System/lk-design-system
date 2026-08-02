@@ -99,7 +99,7 @@
 | [Description List](guides/product-data-display-description-list.md) | Product / Display | `DescriptionList` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Metric Card](guides/product-data-display-metric-card.md) | Product / Display | `MetricCard` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Resource State](guides/product-data-display-resource-state.md) | Product / Display | `ResourceState` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Data Toolbar](guides/product-data-operations-data-toolbar.md) | Product / Operations | `DataToolbar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
+| [Data Toolbar](guides/product-data-operations-data-toolbar.md) | Product / Operations | `DataToolbar` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Export Action](guides/product-data-operations-export-action.md) | Product / Operations | `DataExportAction` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Filter Bar](guides/product-data-operations-filter-bar.md) | Product / Operations | `FilterBar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Refresh Control](guides/product-data-operations-refresh-control.md) | Product / Operations | `RefreshControl` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |

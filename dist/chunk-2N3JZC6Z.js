@@ -31,6 +31,9 @@ function DataToolbar({
   };
   const compact = size === "sm";
   const resolvedFilters = typeof filters === "function" ? filters({ size }) : filters;
+  const hasHeader = title != null || description != null || count != null || actions != null;
+  const hasControls = searchable || resolvedFilters != null;
+  if (!hasHeader && !hasControls) return null;
   return /* @__PURE__ */ jsxs(
     "div",
     {
@@ -50,7 +53,7 @@ function DataToolbar({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
+        hasHeader && /* @__PURE__ */ jsxs("div", { "data-data-toolbar-header": true, style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
           /* @__PURE__ */ jsxs("div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
             (title != null || count != null) && /* @__PURE__ */ jsxs("div", { style: { display: "inline-flex", alignItems: "baseline", gap: "var(--space-2)", minWidth: 0 }, children: [
               title != null && /* @__PURE__ */ jsx("strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: compact ? "var(--body2-size)" : "var(--body1-size)", fontWeight: "var(--fw-semibold)", lineHeight: compact ? "var(--body2-line)" : "var(--body1-line)" }, children: title }),
@@ -63,7 +66,7 @@ function DataToolbar({
           ] }),
           actions != null && /* @__PURE__ */ jsx("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: actions })
         ] }),
-        (searchable || resolvedFilters != null) && /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
+        hasControls && /* @__PURE__ */ jsxs("div", { "data-data-toolbar-controls": true, style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
           searchable && /* @__PURE__ */ jsx("div", { style: { flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: /* @__PURE__ */ jsx(
             SearchField,
             {
@@ -84,4 +87,4 @@ function DataToolbar({
 export {
   DataToolbar
 };
-//# sourceMappingURL=chunk-NMB6PKOX.js.map
+//# sourceMappingURL=chunk-2N3JZC6Z.js.map

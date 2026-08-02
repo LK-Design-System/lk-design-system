@@ -8,16 +8,16 @@
 | Last reviewed | 2026-07-27 |
 | Machine-readable source | `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json` |
 
-Current generated census (2026-08-02): 191개 페이지와 643개 스토리. The machine-readable audit is authoritative for public/hidden visibility and review status.
+Current generated census (2026-08-02): 191개 페이지와 644개 스토리. The machine-readable audit is authoritative for public/hidden visibility and review status.
 
-- 공개 스토리: 459개
+- 공개 스토리: 460개
 - 숨김 스토리: 184개
 - 숨김 visual parity: 89개
 - 숨김 internal contract: 91개
 - 검토 완료 페이지: 190/191개
-- 스토리: 635/643개
+- 스토리: 635/644개
 - 검토 완료 페이지 190/191개
-- 스토리 635/643개
+- 스토리 635/644개
 
 ## Operations Dashboard pattern group
 

@@ -31,6 +31,9 @@ function DataToolbar({
   };
   const compact = size === "sm";
   const resolvedFilters = typeof filters === "function" ? filters({ size }) : filters;
+  const hasHeader = title != null || description != null || count != null || actions != null;
+  const hasControls = searchable || resolvedFilters != null;
+  if (!hasHeader && !hasControls) return null;
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
@@ -50,7 +53,7 @@ function DataToolbar({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
+        hasHeader && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-data-toolbar-header": true, style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
           /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
             (title != null || count != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "inline-flex", alignItems: "baseline", gap: "var(--space-2)", minWidth: 0 }, children: [
               title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: compact ? "var(--body2-size)" : "var(--body1-size)", fontWeight: "var(--fw-semibold)", lineHeight: compact ? "var(--body2-line)" : "var(--body1-line)" }, children: title }),
@@ -63,7 +66,7 @@ function DataToolbar({
           ] }),
           actions != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: actions })
         ] }),
-        (searchable || resolvedFilters != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
+        hasControls && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-data-toolbar-controls": true, style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
           searchable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             _chunkXT2VMJRKcjs.SearchField,
             {
@@ -84,4 +87,4 @@ function DataToolbar({
 
 
 exports.DataToolbar = DataToolbar;
-//# sourceMappingURL=chunk-V22YFDZ6.cjs.map
+//# sourceMappingURL=chunk-2H2N72G3.cjs.map

@@ -33,6 +33,13 @@ export function DataToolbar({
   };
   const compact = size === 'sm';
   const resolvedFilters = typeof filters === 'function' ? filters({ size }) : filters;
+  const hasHeader = title != null || description != null || count != null || actions != null;
+  const hasControls = searchable || resolvedFilters != null;
+
+  // Do not leave an empty bordered strip when the toolbar has no content. A
+  // controls-only toolbar must also have one grid row so `gap` cannot create
+  // asymmetric padding above the controls.
+  if (!hasHeader && !hasControls) return null;
 
   return (
     <div
@@ -54,29 +61,31 @@ export function DataToolbar({
       }}
       {...rest}
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap', minWidth: 0 }}>
-        <div style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
-          {/* WDS Card/List Cell title:description ratio — 16:13 (default),
-              15:13 (compact) — SemiBold title over a 13px muted description.
-              The result count sits beside the title as context, not next to
-              the export CTA where it reads ambiguously. */}
-          {(title != null || count != null) && (
-            <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: 'var(--space-2)', minWidth: 0 }}>
-              {title != null && <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: compact ? 'var(--body2-size)' : 'var(--body1-size)', fontWeight: 'var(--fw-semibold)', lineHeight: compact ? 'var(--body2-line)' : 'var(--body1-line)' }}>{title}</strong>}
-              {count != null && <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{count}개</span>}
+      {hasHeader && (
+        <div data-data-toolbar-header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap', minWidth: 0 }}>
+          <div style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
+            {/* WDS Card/List Cell title:description ratio — 16:13 (default),
+                15:13 (compact) — SemiBold title over a 13px muted description.
+                The result count sits beside the title as context, not next to
+                the export CTA where it reads ambiguously. */}
+            {(title != null || count != null) && (
+              <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: 'var(--space-2)', minWidth: 0 }}>
+                {title != null && <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: compact ? 'var(--body2-size)' : 'var(--body1-size)', fontWeight: 'var(--fw-semibold)', lineHeight: compact ? 'var(--body2-line)' : 'var(--body1-line)' }}>{title}</strong>}
+                {count != null && <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{count}개</span>}
+              </div>
+            )}
+            {description != null && <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', overflowWrap: 'anywhere' }}>{description}</span>}
+          </div>
+          {/* Header right slot holds page-level actions only. */}
+          {actions != null && (
+            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-end', gap: 'var(--space-2)', flexWrap: 'wrap', marginLeft: 'auto' }}>
+              {actions}
             </div>
           )}
-          {description != null && <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', overflowWrap: 'anywhere' }}>{description}</span>}
         </div>
-        {/* Header right slot holds page-level actions only. */}
-        {actions != null && (
-          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-end', gap: 'var(--space-2)', flexWrap: 'wrap', marginLeft: 'auto' }}>
-            {actions}
-          </div>
-        )}
-      </div>
-      {(searchable || resolvedFilters != null) && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0 }}>
+      )}
+      {hasControls && (
+        <div data-data-toolbar-controls style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0 }}>
           {searchable && (
             <div style={{ flex: '1 1 260px', minWidth: 200, maxWidth: 360 }}>
               <SearchField

@@ -28,17 +28,17 @@
     "packages": [
       {
         "name": "@lk-design-system/lds-core",
-        "version": "0.1.0-rc.7",
+        "version": "0.1.0-rc.8",
         "workspace": "packages/core"
       },
       {
         "name": "@lk-design-system/lds-theme",
-        "version": "0.1.0-rc.7",
+        "version": "0.1.0-rc.8",
         "workspace": "packages/theme"
       },
       {
         "name": "@lk-design-system/lds-product",
-        "version": "0.1.0-rc.7",
+        "version": "0.1.0-rc.8",
         "workspace": "packages/product"
       }
     ]
