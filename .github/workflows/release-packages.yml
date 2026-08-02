@@ -46,10 +46,13 @@ jobs:
           foreach ($releasePackage in $releasePackages) {
             $manifest = Get-Content "packages/$releasePackage/package.json" -Raw | ConvertFrom-Json
             npm view "$($manifest.name)@$($manifest.version)" version --registry https://npm.pkg.github.com 2>$null
-            if ($LASTEXITCODE -eq 0) {
+            $isPublished = $LASTEXITCODE -eq 0
+            $global:LASTEXITCODE = 0
+            if ($isPublished) {
               throw "$($manifest.name)@$($manifest.version) already exists; published versions are immutable."
             }
           }
+          exit 0
 
       - name: Run release gate
         run: npm run check:fast

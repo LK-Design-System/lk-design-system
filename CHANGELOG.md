@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.10 - 2026-08-02
+
+### Fixed
+
+- The immutable release probe now clears the expected `npm view` miss exit code before the PowerShell step completes, so a genuinely unpublished release candidate can proceed to validation and publication.
+
 ## 0.1.0-rc.9 - 2026-08-02
 
 ### Fixed
