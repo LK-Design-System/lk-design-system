@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.18 - 2026-08-02
+
+### Fixed
+
+- The Windows release availability probe now invokes `npm.cmd` through the shell, so it can distinguish an explicit registry 404 from process-launch errors before publishing immutable packages.
+
 ## 0.1.0-rc.17 - 2026-08-02
 
 ### Fixed

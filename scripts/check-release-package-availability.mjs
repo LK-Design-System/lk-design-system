@@ -5,6 +5,7 @@ import path from 'node:path';
 const root = process.cwd();
 const registry = 'https://npm.pkg.github.com';
 const packageIds = ['core', 'theme', 'product', 'compat'];
+const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -16,13 +17,13 @@ async function readJson(relativePath) {
 
 function registryProbe(name, version) {
   const result = spawnSync(
-    process.platform === 'win32' ? 'npm.cmd' : 'npm',
+    npmCommand,
     ['view', `${name}@${version}`, 'version', '--json', '--registry', registry],
-    { cwd: root, encoding: 'utf8', shell: false },
+    { cwd: root, encoding: 'utf8', shell: process.platform === 'win32' },
   );
   return {
     status: result.status,
-    output: `${result.stdout || ''}\n${result.stderr || ''}`.trim(),
+    output: `${result.stdout || ''}\n${result.stderr || ''}\n${result.error?.message || ''}`.trim(),
   };
 }
 
