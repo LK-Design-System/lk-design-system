@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }"use client";
 
 
-var _chunkPHF2KELAcjs = require('./chunk-PHF2KELA.cjs');
+var _chunkZGSB3FIFcjs = require('./chunk-ZGSB3FIF.cjs');
 
 
 var _chunkJM32VGPMcjs = require('./chunk-JM32VGPM.cjs');
@@ -47,7 +47,7 @@ function RefreshControl({
           lastUpdated
         ] }),
         Array.isArray(autoRefreshOptions) && autoRefreshOptions.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunkPHF2KELAcjs.Select,
+          _chunkZGSB3FIFcjs.Select,
           {
             value: autoRefreshValue,
             onChange: onAutoRefreshChange,
@@ -85,4 +85,4 @@ function RefreshControl({
 
 
 exports.RefreshControl = RefreshControl;
-//# sourceMappingURL=chunk-K3VRSZN2.cjs.map
+//# sourceMappingURL=chunk-BBYMDE73.cjs.map

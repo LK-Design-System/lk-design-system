@@ -99,6 +99,7 @@ export function Select({
   const [hover, setHover] = React.useState(false);
   const ref = React.useRef(null);
   const triggerRef = React.useRef(null);
+  const widthSizerRef = React.useRef(null);
   const optionRefs = React.useRef([]);
   const autoId = React.useId();
   const selId = id || `sel-${autoId}`;
@@ -137,6 +138,27 @@ export function Select({
   const activeFocus = visualOpen || focus || interaction === 'focused' || interaction === 'active-focused';
   const activeHover = !readOnly && (hover || active || interaction === 'hovered' || interaction === 'active' || interaction === 'active-focused');
   const ring = fieldBorderColor({ disabled: disabledState, readOnly, invalid: isInvalid, status, focused: activeFocus, hovered: activeHover });
+  const intrinsicLabels = React.useMemo(
+    () => [placeholder, ...norm.map(optionText)],
+    [norm, placeholder],
+  );
+  const [intrinsicMinWidth, setIntrinsicMinWidth] = React.useState(null);
+
+  React.useLayoutEffect(() => {
+    const sizer = widthSizerRef.current;
+    if (!sizer) return undefined;
+    const measure = () => {
+      const optionWidths = [...sizer.children].map((node) => node.getBoundingClientRect().width);
+      const tokenReserve = Number.parseFloat(getComputedStyle(sizer).getPropertyValue('--space-2')) || 8;
+      const nextWidth = Math.ceil(Math.max(0, ...optionWidths) + tokenReserve);
+      setIntrinsicMinWidth((current) => current === nextWidth ? current : nextWidth);
+    };
+    measure();
+    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
+    observer?.observe(sizer);
+    document.fonts?.ready?.then(measure);
+    return () => observer?.disconnect();
+  }, [intrinsicLabels, normalizedSize, iconLeft]);
 
   React.useEffect(() => {
     if (!visualOpen) return;
@@ -282,9 +304,63 @@ export function Select({
   };
 
   return (
-    <div data-readonly={readOnly ? 'true' : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--component-input-stack-gap)', ...style }}>
+    <div data-select-root="" data-readonly={readOnly ? 'true' : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--component-input-stack-gap)', minWidth: intrinsicMinWidth == null ? undefined : `min(100%, ${intrinsicMinWidth}px)`, maxWidth: '100%', ...style }}>
       <FieldLabel id={labelId} htmlFor={selId} label={label} required={required} />
       <div ref={ref} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ position: 'relative' }}>
+        <span
+          aria-hidden="true"
+          data-select-width-sizer=""
+          ref={widthSizerRef}
+          style={{
+            display: 'inline-grid',
+            width: 'max-content',
+            minWidth: 'max-content',
+            height: 0,
+            overflow: 'hidden',
+            visibility: 'hidden',
+            pointerEvents: 'none',
+            fontFamily: 'var(--font-sans)',
+            fontSize: 'var(--component-input-font-size)',
+            lineHeight: 'var(--component-input-line-height)',
+            letterSpacing: 'var(--component-input-letter-spacing)',
+          }}
+        >
+          {intrinsicLabels.map((text, index) => (
+            <button
+              key={`${index}-${text}`}
+              type="button"
+              disabled
+              tabIndex={-1}
+              aria-hidden="true"
+              style={{
+                gridArea: '1 / 1',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 'var(--space-2-5)',
+                width: 'max-content',
+                height: h,
+                padding: '0 var(--component-input-padding-x)',
+                boxSizing: 'border-box',
+                border: 'var(--component-input-border-width) solid transparent',
+                fontFamily: 'var(--font-sans)',
+                fontSize: 'var(--component-input-font-size)',
+                lineHeight: 'var(--component-input-line-height)',
+                letterSpacing: 'var(--component-input-letter-spacing)',
+                textAlign: 'left',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                {iconLeft && <span style={{ display: 'inline-flex', flex: '0 0 auto' }}>{iconLeft}</span>}
+                <span>{text}</span>
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--component-input-gap)', flex: '0 0 auto' }}>
+                <span style={{ width: 16, flex: '0 0 16px' }} />
+                <span style={{ width: 'var(--space-4-5)', flex: '0 0 var(--space-4-5)' }} />
+              </span>
+            </button>
+          ))}
+        </span>
         <button
           {...triggerProps}
           ref={triggerRef}
@@ -305,7 +381,7 @@ export function Select({
           onClick={handleTriggerClick}
           onKeyDown={handleTriggerKeyDown}
           style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2-5)', width: '100%',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2-5)', width: '100%', minWidth: 0, maxWidth: '100%', overflow: 'hidden',
             height: h, padding: '0 var(--component-input-padding-x)', boxSizing: 'border-box',
             background: fieldBackground({ disabled: disabledState, readOnly }), color: disabledState ? 'var(--color-semantic-label-disable)' : curr ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
             border: `var(--component-input-border-width) solid ${ring}`, borderRadius: 'var(--component-input-radius)',

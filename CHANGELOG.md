@@ -68,6 +68,13 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.11 - 2026-08-02
+
+### Fixed
+
+- The immutable release job now installs the pinned Playwright Chromium runtime before running browser-backed color-contrast checks on a clean GitHub Actions runner.
+- `Select` now derives its intrinsic minimum width from the complete option set instead of the current value, so choosing a shorter label no longer shifts neighboring toolbar controls; narrow containers still cap the control at their available width.
+
 ## 0.1.0-rc.10 - 2026-08-02
 
 ### Fixed

@@ -59,6 +59,54 @@ export const SelectStateContract = {
   ),
 };
 
+function SelectStableWidthFixture() {
+  const [value, setValue] = React.useState('recent');
+  return (
+    <main style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', maxWidth: '100%' }}>
+      <Select
+        aria-label="정렬"
+        value={value}
+        onChange={setValue}
+        options={[
+          { value: 'recent', label: '최근 변경순' },
+          { value: 'name', label: '이름순' },
+        ]}
+      />
+      <button type="button" data-contract="choose-recent" onClick={() => setValue('recent')}>긴 값 선택</button>
+      <button type="button" data-contract="choose-name" onClick={() => setValue('name')}>짧은 값 선택</button>
+    </main>
+  );
+}
+
+export const SelectStableOptionWidthContract = {
+  name: '옵션 집합 기준 고정 폭 계약',
+  tags: ['!dev'],
+  render: () => <SelectStableWidthFixture />,
+  play: async ({ canvasElement }) => {
+    const trigger = canvasElement.querySelector('[role="combobox"][aria-label="정렬"]');
+    const widthSizer = canvasElement.querySelector('[data-select-width-sizer]');
+    const chooseRecent = canvasElement.querySelector('[data-contract="choose-recent"]');
+    const chooseName = canvasElement.querySelector('[data-contract="choose-name"]');
+    if (!trigger || !widthSizer || !chooseRecent || !chooseName) {
+      throw new Error('Select stable-width contract targets are required.');
+    }
+    if (widthSizer.getAttribute('aria-hidden') !== 'true') {
+      throw new Error('The intrinsic width sizer must stay outside the accessibility tree.');
+    }
+
+    await userEvent.click(chooseRecent);
+    const longWidth = trigger.getBoundingClientRect().width;
+    await userEvent.click(chooseName);
+    await waitFor(() => {
+      if (!trigger.textContent?.includes('이름순')) throw new Error('The short option must be selected.');
+    });
+    const shortWidth = trigger.getBoundingClientRect().width;
+    if (Math.abs(longWidth - shortWidth) > 0.5) {
+      throw new Error(`Select width must remain stable across values (${longWidth}px -> ${shortWidth}px).`);
+    }
+  },
+};
+
 export const SelectKeyboardContract = {
   name: 'Select 키보드 계약',
   tags: ['!dev'],

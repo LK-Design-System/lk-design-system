@@ -89,6 +89,7 @@ function Select({
   const [hover, setHover] = _react2.default.useState(false);
   const ref = _react2.default.useRef(null);
   const triggerRef = _react2.default.useRef(null);
+  const widthSizerRef = _react2.default.useRef(null);
   const optionRefs = _react2.default.useRef([]);
   const autoId = _react2.default.useId();
   const selId = id || `sel-${autoId}`;
@@ -120,6 +121,26 @@ function Select({
   const activeFocus = visualOpen || focus || interaction === "focused" || interaction === "active-focused";
   const activeHover = !readOnly && (hover || active || interaction === "hovered" || interaction === "active" || interaction === "active-focused");
   const ring = _chunk4KUVQPIKcjs.fieldBorderColor.call(void 0, { disabled: disabledState, readOnly, invalid: isInvalid, status, focused: activeFocus, hovered: activeHover });
+  const intrinsicLabels = _react2.default.useMemo(
+    () => [placeholder, ...norm.map(optionText)],
+    [norm, placeholder]
+  );
+  const [intrinsicMinWidth, setIntrinsicMinWidth] = _react2.default.useState(null);
+  _react2.default.useLayoutEffect(() => {
+    const sizer = widthSizerRef.current;
+    if (!sizer) return void 0;
+    const measure = () => {
+      const optionWidths = [...sizer.children].map((node) => node.getBoundingClientRect().width);
+      const tokenReserve = Number.parseFloat(getComputedStyle(sizer).getPropertyValue("--space-2")) || 8;
+      const nextWidth = Math.ceil(Math.max(0, ...optionWidths) + tokenReserve);
+      setIntrinsicMinWidth((current) => current === nextWidth ? current : nextWidth);
+    };
+    measure();
+    const observer = typeof ResizeObserver === "function" ? new ResizeObserver(measure) : null;
+    _optionalChain([observer, 'optionalAccess', _ => _.observe, 'call', _2 => _2(sizer)]);
+    _optionalChain([document, 'access', _3 => _3.fonts, 'optionalAccess', _4 => _4.ready, 'optionalAccess', _5 => _5.then, 'call', _6 => _6(measure)]);
+    return () => _optionalChain([observer, 'optionalAccess', _7 => _7.disconnect, 'call', _8 => _8()]);
+  }, [intrinsicLabels, normalizedSize, iconLeft]);
   _react2.default.useEffect(() => {
     if (!visualOpen) return;
     setActiveIndex((current) => {
@@ -136,7 +157,7 @@ function Select({
   }, [locked]);
   _react2.default.useEffect(() => {
     if (!visualOpen || activeIndex < 0) return;
-    _optionalChain([optionRefs, 'access', _ => _.current, 'access', _2 => _2[activeIndex], 'optionalAccess', _3 => _3.scrollIntoView, 'optionalCall', _4 => _4({ block: "nearest" })]);
+    _optionalChain([optionRefs, 'access', _9 => _9.current, 'access', _10 => _10[activeIndex], 'optionalAccess', _11 => _11.scrollIntoView, 'optionalCall', _12 => _12({ block: "nearest" })]);
   }, [activeIndex, visualOpen]);
   const openList = (preferredIndex = selectedIndex >= 0 ? selectedIndex : 0) => {
     if (locked) return;
@@ -145,19 +166,19 @@ function Select({
   };
   const closeList = ({ restoreFocus = false } = {}) => {
     setOpen(false);
-    if (restoreFocus) _optionalChain([triggerRef, 'access', _5 => _5.current, 'optionalAccess', _6 => _6.focus, 'call', _7 => _7()]);
+    if (restoreFocus) _optionalChain([triggerRef, 'access', _13 => _13.current, 'optionalAccess', _14 => _14.focus, 'call', _15 => _15()]);
   };
   const pick = (index) => {
     if (locked) return;
     const option = norm[index];
     if (!option || option.disabled) return;
     if (!isControlled) setInternal(option.value);
-    _optionalChain([onChange, 'optionalCall', _8 => _8(option.value)]);
+    _optionalChain([onChange, 'optionalCall', _16 => _16(option.value)]);
     setActiveIndex(index);
     closeList({ restoreFocus: true });
   };
   const handleTriggerClick = (event) => {
-    _optionalChain([onTriggerClick, 'optionalCall', _9 => _9(event)]);
+    _optionalChain([onTriggerClick, 'optionalCall', _17 => _17(event)]);
     if (event.defaultPrevented || disabledState || readOnly) return;
     if (open) closeList();
     else openList();
@@ -192,7 +213,7 @@ function Select({
     else pick(match);
   };
   const handleTriggerKeyDown = (event) => {
-    _optionalChain([onTriggerKeyDown, 'optionalCall', _10 => _10(event)]);
+    _optionalChain([onTriggerKeyDown, 'optionalCall', _18 => _18(event)]);
     if (event.defaultPrevented || disabledState || readOnly) return;
     const firstEnabled = _nullishCoalesce(enabledIndices(norm)[0], () => ( -1));
     const lastEnabled = _nullishCoalesce(enabledIndices(norm).at(-1), () => ( -1));
@@ -250,9 +271,67 @@ function Select({
         break;
     }
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-readonly": readOnly ? "true" : void 0, style: { display: "flex", flexDirection: "column", gap: "var(--component-input-stack-gap)", ...style }, children: [
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-select-root": "", "data-readonly": readOnly ? "true" : void 0, style: { display: "flex", flexDirection: "column", gap: "var(--component-input-stack-gap)", minWidth: intrinsicMinWidth == null ? void 0 : `min(100%, ${intrinsicMinWidth}px)`, maxWidth: "100%", ...style }, children: [
     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk4KUVQPIKcjs.FieldLabel, { id: labelId, htmlFor: selId, label, required }),
     /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { ref, onMouseEnter: () => setHover(true), onMouseLeave: () => setHover(false), style: { position: "relative" }, children: [
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        "span",
+        {
+          "aria-hidden": "true",
+          "data-select-width-sizer": "",
+          ref: widthSizerRef,
+          style: {
+            display: "inline-grid",
+            width: "max-content",
+            minWidth: "max-content",
+            height: 0,
+            overflow: "hidden",
+            visibility: "hidden",
+            pointerEvents: "none",
+            fontFamily: "var(--font-sans)",
+            fontSize: "var(--component-input-font-size)",
+            lineHeight: "var(--component-input-line-height)",
+            letterSpacing: "var(--component-input-letter-spacing)"
+          },
+          children: intrinsicLabels.map((text, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+            "button",
+            {
+              type: "button",
+              disabled: true,
+              tabIndex: -1,
+              "aria-hidden": "true",
+              style: {
+                gridArea: "1 / 1",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "var(--space-2-5)",
+                width: "max-content",
+                height: h,
+                padding: "0 var(--component-input-padding-x)",
+                boxSizing: "border-box",
+                border: "var(--component-input-border-width) solid transparent",
+                fontFamily: "var(--font-sans)",
+                fontSize: "var(--component-input-font-size)",
+                lineHeight: "var(--component-input-line-height)",
+                letterSpacing: "var(--component-input-letter-spacing)",
+                textAlign: "left",
+                whiteSpace: "nowrap"
+              },
+              children: [
+                /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "inline-flex", alignItems: "center", gap: 8 }, children: [
+                  iconLeft && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { display: "inline-flex", flex: "0 0 auto" }, children: iconLeft }),
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: text })
+                ] }),
+                /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--component-input-gap)", flex: "0 0 auto" }, children: [
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { width: 16, flex: "0 0 16px" } }),
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { width: "var(--space-4-5)", flex: "0 0 var(--space-4-5)" } })
+                ] })
+              ]
+            },
+            `${index}-${text}`
+          ))
+        }
+      ),
       /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
         "button",
         {
@@ -265,7 +344,7 @@ function Select({
           "aria-haspopup": "listbox",
           "aria-expanded": visualOpen,
           "aria-controls": visualOpen ? listboxId : void 0,
-          "aria-activedescendant": visualOpen && activeIndex >= 0 && !_optionalChain([norm, 'access', _11 => _11[activeIndex], 'optionalAccess', _12 => _12.disabled]) ? `${selId}-option-${activeIndex}` : void 0,
+          "aria-activedescendant": visualOpen && activeIndex >= 0 && !_optionalChain([norm, 'access', _19 => _19[activeIndex], 'optionalAccess', _20 => _20.disabled]) ? `${selId}-option-${activeIndex}` : void 0,
           "aria-label": ariaLabel,
           "aria-labelledby": _nullishCoalesce(ariaLabelledBy, () => ( (!ariaLabel && label ? labelId : void 0))),
           "aria-describedby": describedBy,
@@ -280,6 +359,9 @@ function Select({
             justifyContent: "space-between",
             gap: "var(--space-2-5)",
             width: "100%",
+            minWidth: 0,
+            maxWidth: "100%",
+            overflow: "hidden",
             height: h,
             padding: "0 var(--component-input-padding-x)",
             boxSizing: "border-box",
@@ -343,4 +425,4 @@ function Select({
 
 
 exports.Select = Select;
-//# sourceMappingURL=chunk-PHF2KELA.cjs.map
+//# sourceMappingURL=chunk-ZGSB3FIF.cjs.map
