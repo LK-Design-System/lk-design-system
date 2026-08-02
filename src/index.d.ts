@@ -99,6 +99,7 @@ export { ColorSwatch } from '../components/forms/ColorSwatch';
 export { Combobox } from '../components/forms/Combobox';
 export { DatePicker } from '../components/forms/DatePicker';
 export { DateRangeField } from '../components/forms/DateRangeField';
+export { FieldAction } from '../components/forms/FieldAction';
 export { FileUpload } from '../components/forms/FileUpload';
 export { FileUploadQueue } from '../components/forms/FileUploadQueue';
 export { FormField } from '../components/forms/FormField';

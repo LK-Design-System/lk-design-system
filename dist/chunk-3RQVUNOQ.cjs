@@ -4,10 +4,10 @@
 var _chunkBQS4EIGJcjs = require('./chunk-BQS4EIGJ.cjs');
 
 
-var _chunk63NPKSTXcjs = require('./chunk-63NPKSTX.cjs');
-
-
 var _chunkVWNQOLARcjs = require('./chunk-VWNQOLAR.cjs');
+
+
+var _chunk63NPKSTXcjs = require('./chunk-63NPKSTX.cjs');
 
 // components/editor/HistoryToolbar.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -179,4 +179,4 @@ function HistoryToolbar({
 
 
 exports.Divider = Divider; exports.HistoryToolbar = HistoryToolbar;
-//# sourceMappingURL=chunk-HVIJVYC7.cjs.map
+//# sourceMappingURL=chunk-3RQVUNOQ.cjs.map

@@ -5,7 +5,7 @@
 | Type | Current parity register |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-20 |
+| Last reviewed | 2026-08-02 |
 | Source | accepted WDS `.fig`, parity audit JSON, current Storybook index |
 
 This ledger tracks parity between the WDS source and the current
@@ -19,12 +19,12 @@ parity gates.
 | Area | Source baseline | Current status |
 | --- | ---: | --- |
 | Runtime export gaps | 0 | No public export gap required by the WDS source |
-| React component entry exports | 202 | Public package component entries covered by checks |
-| Named public exports | 210 | Public package surface covered by type checks |
-| Storybook public stories | 455 | Component and pattern surfaces only |
-| Storybook hidden visual parity stories | 88 | Tagged `visual-parity` and `!dev` |
-| Visual inventory React stories | 635 | Current implementation stories checked by the accessibility guard |
-| Accessibility checked implementation stories | 635 | Current implementation stories checked by the accessibility guard |
+| React component entry exports | 203 | Public package component entries covered by checks |
+| Named public exports | 211 | Public package surface covered by type checks |
+| Storybook public stories | 457 | Component and pattern surfaces only |
+| Storybook hidden visual parity stories | 89 | Tagged `visual-parity` and `!dev` |
+| Visual inventory React stories | 640 | Current implementation stories checked by the accessibility guard |
+| Accessibility checked implementation stories | 640 | Current implementation stories checked by the accessibility guard |
 
 ## Parity source of truth
 

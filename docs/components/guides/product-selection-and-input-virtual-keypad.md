@@ -88,10 +88,10 @@
 | `ColorSwatch` | 대표 시나리오에서 조합 |
 | `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
+| `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
-| `NumberField` | 대표 시나리오에서 조합 |
 
 ## Examples
 

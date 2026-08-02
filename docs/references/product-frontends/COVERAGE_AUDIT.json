@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "auditedAt": "2026-07-27",
+  "auditedAt": "2026-08-02",
   "purpose": "Track source-backed product workflows through discovery, independent wireframing, LDS implementation, and interaction verification without treating current screens or component files as coverage proof.",
   "evidenceHierarchy": [
     "product goals and invariants",
@@ -22,13 +22,65 @@
     "verified": 16
   },
   "componentDispositionSummary": {
-    "keep": 16,
+    "keep": 17,
     "redesign": 6,
     "split": 8,
     "remove": 22,
     "separate-audit": 6
   },
   "componentDisposition": [
+    {
+      "name": "FieldAction",
+      "path": "components/forms/FieldAction.jsx",
+      "decision": "keep",
+      "workflowIds": [],
+      "reason": "Provides one reusable Input-plus-Button composition contract with shared density, native field-before-action order, and narrow reflow without owning the product value, validation, query, credential, mutation, or transport workflow.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "The pinned connection settings use full-width bottom submit actions and a two-action decrement/input/increment stepper. Neither is the one-field plus one-adjacent-action pattern owned by FieldAction.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/ConnectionSettingsScreen.tsx",
+              "blobSha": "b04f91a96fc49b399dddfd89b5c23b785f8349b0"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "supported by composition",
+          "reason": "Pinned robot and user list sources place a small TextField beside a search Button, so the shared density and reflow contract applies while Control retains filter values, query execution, pagination, and registration actions.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/facility/robotmanager/robot/index.jsx",
+              "blobSha": "fbb06c5b01b92926ff2f1b3e994c032fcda32f73"
+            },
+            {
+              "path": "frontend/src/views/user/index.jsx",
+              "blobSha": "8912b51c6eb612bd2beb2ed0206ee78ae6f03f2d"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "372a826b3d7f9f11cc29b0fd7b575ca0480228e0",
+          "classification": "supported by composition",
+          "reason": "Pinned LK Portal personal-context and administration sources each place a default Input beside a credential-issuance Button. FieldAction resolves their shared height and narrow layout while Portal retains credential naming, authorization, busy state, API calls, token display, and revocation.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/context/PersonalContextPage.tsx",
+              "blobSha": "cfa798d769e5c7ae0e48e9f236fdd730d60f4271"
+            },
+            {
+              "path": "src/components/admin/AdminWorkspace.tsx",
+              "blobSha": "0a7421a3732a3467c9e564de84f3697f874d6651"
+            }
+          ]
+        }
+      ]
+    },
     {
       "name": "ElevatorFleetOverview",
       "path": "components/viz/ElevatorFleetOverview.jsx",

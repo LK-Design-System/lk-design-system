@@ -11,10 +11,10 @@ LDS 컴포넌트 문서는 구현 예시 모음이 아니라 선택·상태·상
 
 ## Coverage
 
-- Public component entries: **202**
-- Named exports: **210**
+- Public component entries: **203**
+- Named exports: **211**
 - Component and Theme/Product decision guides: **172**
-- Entries without an owned Storybook page: **8** — reference registry에서 source·type·prompt 계약을 계속 추적합니다.
+- Entries without an owned Storybook page: **9** — reference registry에서 source·type·prompt 계약을 계속 추적합니다.
 
 ## Completion contract
 

@@ -63,6 +63,7 @@ export { Rating } from '../components/feedback/Rating';
 export { ColorSwatch } from '../components/forms/ColorSwatch';
 export { DatePicker } from '../components/forms/DatePicker';
 export { DateRangeField } from '../components/forms/DateRangeField';
+export { FieldAction } from '../components/forms/FieldAction';
 export { FileUpload } from '../components/forms/FileUpload';
 export { FileUploadQueue } from '../components/forms/FileUploadQueue';
 export { InputGroup } from '../components/forms/InputGroup';

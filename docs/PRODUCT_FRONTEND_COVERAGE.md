@@ -5,8 +5,20 @@
 | Type | Product workflow coverage contract and audit summary |
 | Status | Current · all 16 shared-responsibility workflow traces verified |
 | Owner | Product design/engineering · Design system owner |
-| Last reviewed | 2026-07-27 |
+| Last reviewed | 2026-08-02 |
 | Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
+
+## FieldAction · field + action 조합 계약 · 2026-08-02
+
+`FieldAction`은 기본 `Input` 48px와 기본 `Button` 40px를 같은 행에 놓을 때 생기는 높이 불일치를 제품별 CSS 없이 해소하는 LK Product Extension이다. 전역 Input/Button scale은 유지하고, 조합 안에서 `sm/md/lg`를 32/48/52px field 높이에 맞춘다. label·helper·error는 `FormField`, field 시각 상태는 `Input`, action 상태와 loading width는 `Button`이 계속 소유한다. DOM·Tab 순서는 field → action이며 360px 이하에서는 action이 다음 줄의 전체 너비 control로 reflow한다.
+
+| 제품 자산 | 고정 source | 판정 | LDS와 제품의 책임 경계 |
+| --- | --- | --- | --- |
+| LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/ConnectionSettingsScreen.tsx` (`b04f91a96fc49b399dddfd89b5c23b785f8349b0`) | not applicable | 검토 surface는 full-width 하단 submit action과 `- / input / +` stepper를 사용한다. 하나의 field + 하나의 인접 action 계약이 아니며 연결·저장 상태는 제품 소유다. |
+| LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/facility/robotmanager/robot/index.jsx` (`fbb06c5b01b92926ff2f1b3e994c032fcda32f73`) · `frontend/src/views/user/index.jsx` (`8912b51c6eb612bd2beb2ed0206ee78ae6f03f2d`) | supported by composition | 검색 TextField와 Button의 밀도·reflow는 FieldAction이 지원한다. filter 값, query, pagination과 등록 action은 Control 소유다. |
+| LK Portal | `372a826b3d7f9f11cc29b0fd7b575ca0480228e0` · `src/components/context/PersonalContextPage.tsx` (`cfa798d769e5c7ae0e48e9f236fdd730d60f4271`) · `src/components/admin/AdminWorkspace.tsx` (`0a7421a3732a3467c9e564de84f3697f874d6651`) | supported by composition | 연결 코드 발급 Input+Button 두 곳을 지원한다. 이름 검증, 권한, busy, API 호출, token 표시·폐기는 Portal 소유다. |
+
+아이콘·asset은 추가하지 않는다. Storybook의 기본/disabled/loading/긴 문구·오류/320px/native Enter 제출/Tab 순서가 조합 계약의 검증 근거다.
 
 ## 필수 LK 제품 자산 교차 검토
 

@@ -2,16 +2,16 @@
 import {
   Divider,
   HistoryToolbar
-} from "./chunk-6XK6EROX.js";
+} from "./chunk-6KIBU627.js";
 import {
   Toolbar
 } from "./chunk-ZFB2TNZT.js";
 import {
-  Icon
-} from "./chunk-KRO3ULVK.js";
-import {
   IconButton
 } from "./chunk-E7IJC64H.js";
+import {
+  Icon
+} from "./chunk-KRO3ULVK.js";
 
 // components/editor/CanvasEditorCommandBar.jsx
 import React from "react";
@@ -165,4 +165,4 @@ function CanvasEditorCommandBar({
 export {
   CanvasEditorCommandBar
 };
-//# sourceMappingURL=chunk-3KUGCIFG.js.map
+//# sourceMappingURL=chunk-CQJGNIAC.js.map

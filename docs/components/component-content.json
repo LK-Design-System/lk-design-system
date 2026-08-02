@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "89831e15f5c037516ea211a41a0d021c2515f712bd0d6b0d6161107cae9b98f5",
+  "sourceFingerprint": "101a5a703d8544a9f370523cdcef8379f0fa1de11a46cfd831cb6151ae4bc0aa",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -24,13 +24,14 @@
     "not-tracked": "This repository does not own or assert that platform implementation status."
   },
   "summary": {
-    "componentEntries": 202,
-    "publicExports": 210,
+    "componentEntries": 203,
+    "publicExports": 211,
     "guides": 172,
     "entriesWithoutOwnedPage": [
       "Stat",
       "AvatarGroup",
       "CheckboxGroup",
+      "FieldAction",
       "FormField",
       "RadioGroup",
       "Toolbar",
@@ -15003,6 +15004,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -15019,6 +15021,7 @@
       "classificationSiblings": [
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -15350,6 +15353,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -15366,6 +15370,7 @@
       "classificationSiblings": [
         "ColorSwatch",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -15532,6 +15537,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -15548,6 +15554,7 @@
       "classificationSiblings": [
         "ColorSwatch",
         "DatePicker",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -15709,14 +15716,14 @@
       "promptSha256": "e585dbedfbb6e7cc0ff39a041384313807124a2ab32159d8afcc92e592b85651"
     },
     {
-      "id": "file-upload",
-      "title": "FileUpload",
+      "id": "field-action",
+      "title": "FieldAction",
       "exports": [
-        "FileUpload"
+        "FieldAction"
       ],
-      "source": "components/forms/FileUpload.jsx",
-      "typeContract": "components/forms/FileUpload.d.ts",
-      "prompt": "components/forms/FileUpload.prompt.md",
+      "source": "components/forms/FieldAction.jsx",
+      "typeContract": "components/forms/FieldAction.d.ts",
+      "prompt": "components/forms/FieldAction.prompt.md",
       "group": "Selection and input product extensions",
       "ownerLayer": "product",
       "provenance": "product-extension",
@@ -15725,6 +15732,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -15742,6 +15750,160 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FileUpload",
+        "FileUploadQueue",
+        "IconPicker",
+        "NumberField",
+        "PinInput",
+        "PropertyField",
+        "SearchableMultiSelect",
+        "SecretField",
+        "TimePicker",
+        "ToggleButton",
+        "ValidationSummary",
+        "VirtualKeypad",
+        "WheelPicker"
+      ],
+      "storybookPages": [
+        "LDS Product/Selection and Input/Color Swatch",
+        "LDS Product/Selection and Input/Date Picker",
+        "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/File Upload Queue",
+        "LDS Product/Selection and Input/Icon Picker",
+        "LDS Product/Selection and Input/Number Field",
+        "LDS Product/Selection and Input/Pin Input",
+        "LDS Product/Selection and Input/Property Field",
+        "LDS Product/Selection and Input/Searchable Multi Select",
+        "LDS Product/Selection and Input/Secret Field",
+        "LDS Product/Selection and Input/Time Picker",
+        "LDS Product/Selection and Input/Toggle Button",
+        "LDS Product/Selection and Input/Validation Summary",
+        "LDS Product/Selection and Input/Virtual Keypad",
+        "LDS Product/Selection and Input/Wheel Picker"
+      ],
+      "props": [
+        {
+          "name": "as",
+          "type": "keyof React.JSX.IntrinsicElements",
+          "required": false,
+          "description": "Root element. Use form when the action submits the field. @default \"div\"",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "field",
+          "type": "React.ReactElement",
+          "required": true,
+          "description": "One LDS field control. Put shared label/helper/error content on FieldAction.",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "action",
+          "type": "React.ReactElement",
+          "required": true,
+          "description": "One LDS Button or button-compatible action.",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md' | 'lg' | 'small' | 'medium' | 'large'",
+          "required": false,
+          "description": "Shared field density. The composition aligns both controls to 32/48/52px. @default \"md\"",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "label",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "helper",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "error",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "htmlFor",
+          "type": "string",
+          "required": false,
+          "description": "Associates the shared label with the field control.",
+          "owner": "FieldActionProps"
+        }
+      ],
+      "tokens": [
+        "--control-h-sm",
+        "--control-h-md",
+        "--control-h-lg",
+        "--space-2"
+      ],
+      "externalReferences": [
+        {
+          "label": "USWDS Search",
+          "url": "https://designsystem.digital.gov/components/search/"
+        },
+        {
+          "label": "W3C H32: Providing submit buttons",
+          "url": "https://www.w3.org/WAI/WCAG21/Techniques/html/H32"
+        },
+        {
+          "label": "WCAG 2.2 Reflow 이해 문서",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
+        }
+      ],
+      "promptSha256": "09e5f4d62af21d6491ff2048c380679d1d1fdb4c654fb540a72cdca00147279f"
+    },
+    {
+      "id": "file-upload",
+      "title": "FileUpload",
+      "exports": [
+        "FileUpload"
+      ],
+      "source": "components/forms/FileUpload.jsx",
+      "typeContract": "components/forms/FileUpload.d.ts",
+      "prompt": "components/forms/FileUpload.prompt.md",
+      "group": "Selection and input product extensions",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
+      "wdsFamily": null,
+      "storyEvidence": [
+        "stories/FormAdvancedInputs.stories.jsx",
+        "stories/FormDateRange.stories.jsx",
+        "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
+        "stories/FormFileUploadQueue.stories.jsx",
+        "stories/FormPinInput.stories.jsx",
+        "stories/FormPropertyField.stories.jsx",
+        "stories/FormSearchableMultiSelect.stories.jsx",
+        "stories/FormSecretField.stories.jsx",
+        "stories/FormTimePicker.stories.jsx",
+        "stories/FormValidationSummary.stories.jsx",
+        "stories/SelectionColorSwatch.stories.jsx",
+        "stories/SelectionIconPicker.stories.jsx",
+        "stories/SelectionToggleButton.stories.jsx",
+        "stories/SelectionVirtualKeypad.stories.jsx",
+        "stories/SelectionWheelPicker.stories.jsx"
+      ],
+      "classificationSiblings": [
+        "ColorSwatch",
+        "DatePicker",
+        "DateRangeField",
+        "FieldAction",
         "FileUploadQueue",
         "IconPicker",
         "NumberField",
@@ -15905,6 +16067,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -15922,6 +16085,7 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "IconPicker",
         "NumberField",
@@ -16621,6 +16785,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -16638,6 +16803,7 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -16993,6 +17159,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -17010,6 +17177,7 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -17176,6 +17344,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -17193,6 +17362,7 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -17826,6 +17996,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -17843,6 +18014,7 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -18263,6 +18435,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -18280,6 +18453,7 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -19233,6 +19407,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -19250,6 +19425,7 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -19389,6 +19565,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -19406,6 +19583,7 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -19560,6 +19738,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -19577,6 +19756,7 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -27082,6 +27262,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -27099,6 +27280,7 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "NumberField",
@@ -28006,6 +28188,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -28023,6 +28206,7 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -28170,6 +28354,7 @@
         "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
         "stories/FormDateTime.stories.jsx",
+        "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
         "stories/FormPropertyField.stories.jsx",
@@ -28187,6 +28372,7 @@
         "ColorSwatch",
         "DatePicker",
         "DateRangeField",
+        "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
@@ -69535,6 +69721,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -69552,10 +69742,6 @@
         },
         {
           "component": "PinInput",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "PropertyField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -69815,6 +70001,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -69828,10 +70018,6 @@
         },
         {
           "component": "NumberField",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -70127,6 +70313,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -70140,10 +70330,6 @@
         },
         {
           "component": "NumberField",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -70392,6 +70578,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUploadQueue",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -70405,10 +70595,6 @@
         },
         {
           "component": "PinInput",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "PropertyField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -70682,15 +70868,15 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "IconPicker",
           "relationship": "대표 시나리오에서 조합"
         },
         {
           "component": "NumberField",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -70971,6 +71157,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -70984,10 +71174,6 @@
         },
         {
           "component": "PinInput",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "PropertyField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -71547,6 +71733,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -71556,10 +71746,6 @@
         },
         {
           "component": "IconPicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -72091,6 +72277,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -72100,10 +72290,6 @@
         },
         {
           "component": "IconPicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "NumberField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -72362,6 +72548,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -72375,10 +72565,6 @@
         },
         {
           "component": "NumberField",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -72715,6 +72901,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -72728,10 +72918,6 @@
         },
         {
           "component": "NumberField",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -73156,6 +73342,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -73165,10 +73355,6 @@
         },
         {
           "component": "IconPicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "NumberField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -73415,6 +73601,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -73424,10 +73614,6 @@
         },
         {
           "component": "IconPicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "NumberField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -73667,6 +73853,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -73676,10 +73866,6 @@
         },
         {
           "component": "IconPicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "NumberField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -74308,6 +74494,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -74317,10 +74507,6 @@
         },
         {
           "component": "IconPicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "NumberField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -74660,6 +74846,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -74669,10 +74859,6 @@
         },
         {
           "component": "IconPicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "NumberField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -74968,6 +75154,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "FieldAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FileUpload",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -74981,10 +75171,6 @@
         },
         {
           "component": "NumberField",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         }
       ],

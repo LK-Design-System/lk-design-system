@@ -145,6 +145,10 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
+      "component": "FieldAction",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "FileUploadQueue",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -158,10 +162,6 @@
     },
     {
       "component": "PinInput",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "PropertyField",
       "relationship": "대표 시나리오에서 조합"
     }
   ],

@@ -3,11 +3,11 @@ import {
   Toolbar
 } from "./chunk-ZFB2TNZT.js";
 import {
-  Icon
-} from "./chunk-KRO3ULVK.js";
-import {
   IconButton
 } from "./chunk-E7IJC64H.js";
+import {
+  Icon
+} from "./chunk-KRO3ULVK.js";
 
 // components/editor/HistoryToolbar.jsx
 import React2 from "react";
@@ -179,4 +179,4 @@ export {
   Divider,
   HistoryToolbar
 };
-//# sourceMappingURL=chunk-6XK6EROX.js.map
+//# sourceMappingURL=chunk-6KIBU627.js.map

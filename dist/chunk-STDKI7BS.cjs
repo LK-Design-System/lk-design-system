@@ -159,7 +159,7 @@ function DashboardShell({
           }
         ),
         narrowNavigation != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-dashboard-shell__narrow-navigation", inert: temporaryOpen ? true : void 0, children: withNavigationLabel(narrowNavigation, narrowNavigationLabel) }),
-        hasTemporaryNavigation && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        hasTemporaryNavigation && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunkNOZGFARUcjs.Drawer,
           {
             id: resolvedTemporaryNavigationId,

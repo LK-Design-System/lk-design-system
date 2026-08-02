@@ -2,16 +2,16 @@
 
 
 
-var _chunkHVIJVYC7cjs = require('./chunk-HVIJVYC7.cjs');
+var _chunk3RQVUNOQcjs = require('./chunk-3RQVUNOQ.cjs');
 
 
 var _chunkBQS4EIGJcjs = require('./chunk-BQS4EIGJ.cjs');
 
 
-var _chunk63NPKSTXcjs = require('./chunk-63NPKSTX.cjs');
-
-
 var _chunkVWNQOLARcjs = require('./chunk-VWNQOLAR.cjs');
+
+
+var _chunk63NPKSTXcjs = require('./chunk-63NPKSTX.cjs');
 
 // components/editor/CanvasEditorCommandBar.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -114,7 +114,7 @@ function CanvasEditorCommandBar({
     groups.push({
       key: "history",
       node: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-        _chunkHVIJVYC7cjs.HistoryToolbar,
+        _chunk3RQVUNOQcjs.HistoryToolbar,
         {
           label: historyLabel,
           canUndo,
@@ -150,7 +150,7 @@ function CanvasEditorCommandBar({
       style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexShrink: 0, ...style },
       children: groups.map((group, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
         index > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunkHVIJVYC7cjs.Divider,
+          _chunk3RQVUNOQcjs.Divider,
           {
             vertical: true,
             style: { minHeight: size === "md" ? 24 : 20, marginInline: "var(--space-1)", alignSelf: "center" }
@@ -165,4 +165,4 @@ function CanvasEditorCommandBar({
 
 
 exports.CanvasEditorCommandBar = CanvasEditorCommandBar;
-//# sourceMappingURL=chunk-VZEWJSQZ.cjs.map
+//# sourceMappingURL=chunk-LJ3A6KI5.cjs.map
