@@ -137,6 +137,12 @@ export const Overview = {
     // DropdownMenu panel은 trigger의 owner document로 portal된다. 조회 범위도
     // canvas subtree가 아니라 그 document여야 실제 소비 환경과 같다.
     const menu = await within(canvasElement.ownerDocument.body).findByRole('menu');
+    await waitFor(() => {
+      const panelStyle = getComputedStyle(menu.parentElement);
+      if (panelStyle.opacity !== '1' || panelStyle.pointerEvents === 'none') {
+        throw new Error('The portalled LanguageSwitcher menu must finish positioning before interaction.');
+      }
+    });
     const options = within(menu).getAllByRole('menuitemradio');
     if (options.length !== 2) throw new Error('LanguageSwitcher must render one radio item per locale.');
     if (options[0].getAttribute('aria-checked') !== 'true' || options[1].getAttribute('aria-checked') !== 'false') {
