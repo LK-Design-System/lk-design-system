@@ -29,11 +29,11 @@ const meta = {
       eyebrow: 'Product / Field Action',
       title: 'FieldAction은 입력과 그 값을 사용하는 한 개의 동작을 같은 밀도로 묶습니다',
       description:
-        '발급·조회·추가처럼 입력값에 대한 명시적 action을 별도 Button으로 유지합니다. 좁은 폭에서는 입력 다음 줄에 전체 너비 action을 배치하며 값과 side effect는 제품이 소유합니다.',
+        '발급·조회·추가처럼 입력값에 대한 명시적 action을 별도 동작 버튼으로 유지합니다. 좁은 폭에서는 입력 다음 줄에 전체 너비 action을 배치하며 값과 side effect는 제품이 소유합니다.',
     },
     docs: {
       description: {
-        component: 'InputGroup 내부 addon이 아닌 별도 field + action form 조합입니다. Input과 Button의 기존 상태 표현을 유지하고 높이·간격·reflow만 소유합니다.',
+        component: '입력 내부 addon이 아닌 별도 field + action form 조합입니다. 기존 입력과 동작 버튼의 상태 표현을 유지하고 높이·간격·reflow만 소유합니다.',
       },
     },
   },
