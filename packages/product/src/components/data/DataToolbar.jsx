@@ -97,7 +97,23 @@ export function DataToolbar({
               />
             </div>
           )}
-          {resolvedFilters != null && <div data-data-toolbar-filter-size={size} style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1-5)', flexWrap: 'wrap' }}>{resolvedFilters}</div>}
+          {resolvedFilters != null && (
+            <div
+              data-data-toolbar-filter-size={size}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 'var(--space-1-5)',
+                flex: '1 1 auto',
+                flexWrap: 'wrap',
+                width: 'max-content',
+                maxWidth: '100%',
+                minWidth: 0,
+              }}
+            >
+              {resolvedFilters}
+            </div>
+          )}
         </div>
       )}
     </div>

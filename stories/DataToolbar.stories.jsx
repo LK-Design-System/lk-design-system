@@ -140,6 +140,40 @@ function MediumFilterDensityDemo() {
   );
 }
 
+function MultiSelectFilterDemo({ width, testId }) {
+  const [language, setLanguage] = React.useState('all');
+  const [topic, setTopic] = React.useState('all');
+  const [sort, setSort] = React.useState('updated');
+  return (
+    <div data-testid={testId} style={{ width, maxWidth: '100%' }}>
+      <DataToolbar
+        variant="embedded"
+        size="sm"
+        searchPlaceholder="저장소 검색"
+        filters={({ size: filterSize }) => (
+          <>
+            <Select aria-label="언어" size={filterSize} value={language} onChange={setLanguage}>
+              <option value="all">모든 언어</option>
+              <option value="typescript">TypeScript</option>
+              <option value="python">Python</option>
+            </Select>
+            <Select aria-label="토픽" size={filterSize} value={topic} onChange={setTopic}>
+              <option value="all">모든 토픽</option>
+              <option value="robotics">로보틱스 자동화</option>
+              <option value="vision">컴퓨터 비전</option>
+            </Select>
+            <Select aria-label="정렬" size={filterSize} value={sort} onChange={setSort}>
+              <option value="updated">최근 수정순</option>
+              <option value="created">최근 생성순</option>
+              <option value="name">이름순</option>
+            </Select>
+          </>
+        )}
+      />
+    </div>
+  );
+}
+
 export const ToolbarWithGrid = {
   name: '개요',
   parameters: storyDescription(
@@ -205,6 +239,54 @@ export const MediumFilterDensity = {
     const selectHeight = Math.round(selectTrigger.getBoundingClientRect().height);
     if (searchHeight !== 48 || selectHeight !== 48 || searchHeight !== selectHeight) {
       throw new Error('Medium DataToolbar search and field filters must share the 48px field-control height.');
+    }
+  },
+};
+
+export const ResponsiveMultiSelectFilters = {
+  name: '반응형 · 다중 Select 필터',
+  parameters: storyDescription(
+    '검색과 여러 Select의 합산 폭이 들어가는 데스크톱에서는 한 줄을 유지하고, 좁은 표면에서만 필터 host와 내부 control이 순서대로 줄바꿈됩니다.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 1150 }}>
+      <MultiSelectFilterDemo width="100%" testId="multi-filter-desktop" />
+      <MultiSelectFilterDemo width={360} testId="multi-filter-narrow" />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const desktop = canvasElement.querySelector('[data-testid="multi-filter-desktop"]');
+    const desktopControls = desktop?.querySelector('[data-data-toolbar-controls]');
+    const desktopFilters = desktop?.querySelector('[data-data-toolbar-filter-size]');
+    const desktopSelects = [...(desktopFilters?.children || [])];
+    if (!desktopControls || !desktopFilters || desktopSelects.length !== 3) {
+      throw new Error('Desktop fixture must expose search plus three Select filters.');
+    }
+    const desktopTops = desktopSelects.map((select) => Math.round(select.getBoundingClientRect().top));
+    if (new Set(desktopTops).size !== 1 || Math.round(desktopFilters.getBoundingClientRect().height) !== 32) {
+      throw new Error('Three Select filters must stay on one 32px line when their intrinsic widths fit.');
+    }
+    const filterGap = parseFloat(getComputedStyle(desktopFilters).columnGap || '0');
+    const intrinsicWidth = desktopSelects.reduce((sum, select) => sum + select.getBoundingClientRect().width, 0)
+      + filterGap * (desktopSelects.length - 1);
+    if (desktopFilters.getBoundingClientRect().width + 1 < intrinsicWidth) {
+      throw new Error('Desktop filter host must preserve the combined intrinsic width of its controls.');
+    }
+
+    const narrow = canvasElement.querySelector('[data-testid="multi-filter-narrow"]');
+    const narrowControls = narrow?.querySelector('[data-data-toolbar-controls]');
+    const narrowFilters = narrow?.querySelector('[data-data-toolbar-filter-size]');
+    if (!narrow || !narrowControls || !narrowFilters) {
+      throw new Error('Narrow fixture must expose the responsive controls and filter host.');
+    }
+    const narrowRect = narrow.getBoundingClientRect();
+    const narrowControlsRect = narrowControls.getBoundingClientRect();
+    const narrowFiltersRect = narrowFilters.getBoundingClientRect();
+    if (narrow.scrollWidth > narrow.clientWidth + 1 || narrowFiltersRect.width > narrowControlsRect.width + 1) {
+      throw new Error('Narrow filter wrapping must not overflow the toolbar width.');
+    }
+    if (narrowFiltersRect.height <= 32 || narrowFiltersRect.left < narrowRect.left - 1 || narrowFiltersRect.right > narrowRect.right + 1) {
+      throw new Error('Narrow filters must wrap inside the available toolbar width.');
     }
   },
 };

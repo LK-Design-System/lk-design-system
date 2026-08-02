@@ -1,6 +1,6 @@
 "use client";
 
-// ../lk-design-system/packages/core/dist/chunk-4S3NAPS2.js
+// ../lk-design-system/packages/core/dist/chunk-ILQNQHTJ.js
 import React from "react";
 import { jsx } from "react/jsx-runtime";
 function isDevelopmentBuild() {
@@ -46,12 +46,14 @@ function IconButton({
     "[LDS] IconButton: label\uC740 \uC544\uC774\uCF58 \uC804\uC6A9 \uCEE8\uD2B8\uB864\uC758 \uC811\uADFC \uAC00\uB2A5\uD55C \uC774\uB984\uC785\uB2C8\uB2E4. label(\uB610\uB294 aria-labelledby)\uC744 \uC804\uB2EC\uD558\uC138\uC694."
   );
   const resolvedSize = typeof size === "number" ? size : {
-    custom: 28,
-    small: 32,
-    sm: 32,
-    medium: 40,
-    md: 40
-  }[size] || 40;
+    xsmall: "var(--component-icon-button-size-xs)",
+    xs: "var(--component-icon-button-size-xs)",
+    custom: "var(--component-icon-button-size-custom)",
+    small: "var(--component-icon-button-size-sm)",
+    sm: "var(--component-icon-button-size-sm)",
+    medium: "var(--component-icon-button-size-md)",
+    md: "var(--component-icon-button-size-md)"
+  }[size] || "var(--component-icon-button-size-md)";
   const palettes = {
     soft: { bg: "var(--color-semantic-secondary-surface)", bgHover: "var(--color-semantic-secondary-surface)", fg: "var(--color-semantic-brand-ink)", bd: "none" },
     solid: { bg: "var(--color-semantic-secondary-normal)", bgHover: "var(--color-semantic-secondary-normal)", fg: "var(--color-semantic-inverse-label)", bd: "none" },
@@ -139,4 +141,4 @@ function IconButton({
 export {
   IconButton
 };
-//# sourceMappingURL=chunk-EIGIGXJB.js.map
+//# sourceMappingURL=chunk-5ZFVLEMS.js.map

@@ -176,11 +176,11 @@ import {
 } from "./chunk-YJVXAXIQ.js";
 import {
   Map2DCanvas
-} from "./chunk-YCIHQ3QZ.js";
+} from "./chunk-MUZLROBP.js";
 import {
   ViewerToolbar,
   ViewerToolbarButton
-} from "./chunk-PG4XTP5U.js";
+} from "./chunk-V6ASCN4P.js";
 import {
   Scene3DFrame
 } from "./chunk-6AA64AXV.js";
@@ -347,7 +347,7 @@ import {
 } from "./chunk-QD5X65TG.js";
 import {
   CanvasEditorCommandBar
-} from "./chunk-WRUZKFK2.js";
+} from "./chunk-5O6AHIKS.js";
 import {
   CanvasEditorShell
 } from "./chunk-5YZJ22LY.js";
@@ -356,22 +356,22 @@ import {
 } from "./chunk-LKF2SH2Q.js";
 import {
   EditorToolbar
-} from "./chunk-ZWUCKVT3.js";
+} from "./chunk-4OYWSCEF.js";
 import "./chunk-3SHTXRUC.js";
 import {
   HistoryToolbar
-} from "./chunk-WR37ID7G.js";
+} from "./chunk-K2BIXQOH.js";
 import {
   Toolbar
 } from "./chunk-OHFWZZX3.js";
 import {
   LayerPanel
-} from "./chunk-L7EFKFKX.js";
+} from "./chunk-BNUTETQ5.js";
 import {
   SelectionInspector
-} from "./chunk-ZEYONAFU.js";
+} from "./chunk-QBCJME6Z.js";
 import "./chunk-NITZ4TPV.js";
-import "./chunk-EIGIGXJB.js";
+import "./chunk-5ZFVLEMS.js";
 import "./chunk-RUENHK23.js";
 import {
   ViewportStatusBar
@@ -414,7 +414,7 @@ import {
 import "./chunk-IGVXI6D7.js";
 import {
   DataToolbar
-} from "./chunk-TWKVD2I6.js";
+} from "./chunk-OLX3O6L7.js";
 import {
   DescriptionList
 } from "./chunk-UB4GTRKR.js";

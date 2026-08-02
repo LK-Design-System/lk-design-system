@@ -77,7 +77,23 @@ function DataToolbar({
               size
             }
           ) }),
-          resolvedFilters != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-data-toolbar-filter-size": size, style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1-5)", flexWrap: "wrap" }, children: resolvedFilters })
+          resolvedFilters != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            "div",
+            {
+              "data-data-toolbar-filter-size": size,
+              style: {
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "var(--space-1-5)",
+                flex: "1 1 auto",
+                flexWrap: "wrap",
+                width: "max-content",
+                maxWidth: "100%",
+                minWidth: 0
+              },
+              children: resolvedFilters
+            }
+          )
         ] })
       ]
     }
@@ -87,4 +103,4 @@ function DataToolbar({
 
 
 exports.DataToolbar = DataToolbar;
-//# sourceMappingURL=chunk-HHOMSLI4.cjs.map
+//# sourceMappingURL=chunk-CJJ25EDA.cjs.map

@@ -1,20 +1,20 @@
-"use client";
-import {
-  Toolbar
-} from "./chunk-OHFWZZX3.js";
-import {
-  IconButton
-} from "./chunk-EIGIGXJB.js";
-import {
-  Icon
-} from "./chunk-RUENHK23.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+var _chunk3VE2HGTTcjs = require('./chunk-3VE2HGTT.cjs');
+
+
+var _chunkQJNQGYQBcjs = require('./chunk-QJNQGYQB.cjs');
+
+
+var _chunkLQ7SPTG7cjs = require('./chunk-LQ7SPTG7.cjs');
 
 // components/editor/HistoryToolbar.jsx
-import React2 from "react";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 
 // ../lk-design-system/packages/core/dist/chunk-UI2I2TV5.js
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+
+var _jsxruntime = require('react/jsx-runtime');
 function Divider({
   vertical = false,
   label,
@@ -30,7 +30,7 @@ function Divider({
   const semantics = decorative ? decorativeProps : null;
   const verticalSemantics = decorative ? decorativeProps : { role: "separator", "aria-orientation": "vertical" };
   if (vertical) {
-    return /* @__PURE__ */ jsx(
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "span",
       {
         ...verticalSemantics,
@@ -48,7 +48,7 @@ function Divider({
   }
   if (label != null) {
     const rule = { flex: 1, height: thickness, background: color };
-    return /* @__PURE__ */ jsxs(
+    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
       "div",
       {
         ...decorative ? decorativeProps : {
@@ -60,8 +60,8 @@ function Divider({
         style: { display: "flex", alignItems: "center", gap: "var(--space-3-5)", ...style },
         ...rest,
         children: [
-          /* @__PURE__ */ jsx("span", { style: rule }),
-          /* @__PURE__ */ jsx(
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: rule }),
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "span",
             {
               style: {
@@ -75,12 +75,12 @@ function Divider({
               children: label
             }
           ),
-          /* @__PURE__ */ jsx("span", { style: rule })
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: rule })
         ]
       }
     );
   }
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "hr",
     {
       ...semantics,
@@ -97,7 +97,7 @@ function Divider({
 }
 
 // components/editor/HistoryToolbar.jsx
-import { jsx as jsx2, jsxs as jsxs2 } from "react/jsx-runtime";
+
 function HistoryToolbar({
   label = "\uD3B8\uC9D1 \uC774\uB825",
   canUndo = false,
@@ -120,14 +120,14 @@ function HistoryToolbar({
   const redoEnabled = canRedo && typeof onRedo === "function";
   const resetVisible = typeof onReset === "function";
   const actions = [
-    { key: "undo", label: "\uC2E4\uD589 \uCDE8\uC18C", icon: /* @__PURE__ */ jsx2(Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }), enabled: undoEnabled, onClick: onUndo, shortcuts: undoKeyShortcuts },
-    { key: "redo", label: "\uB2E4\uC2DC \uC2E4\uD589", icon: /* @__PURE__ */ jsx2("span", { style: { display: "inline-flex", transform: "scaleX(-1)" }, children: /* @__PURE__ */ jsx2(Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }) }), enabled: redoEnabled, onClick: onRedo, shortcuts: redoKeyShortcuts },
-    ...resetVisible ? [{ key: "reset", label: "\uBCC0\uACBD\uC0AC\uD56D \uCD08\uAE30\uD654", icon: /* @__PURE__ */ jsx2(Icon, { name: "reset", size: 16, "aria-hidden": "true" }), enabled: true, onClick: onReset }] : []
+    { key: "undo", label: "\uC2E4\uD589 \uCDE8\uC18C", icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }), enabled: undoEnabled, onClick: onUndo, shortcuts: undoKeyShortcuts },
+    { key: "redo", label: "\uB2E4\uC2DC \uC2E4\uD589", icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { display: "inline-flex", transform: "scaleX(-1)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }) }), enabled: redoEnabled, onClick: onRedo, shortcuts: redoKeyShortcuts },
+    ...resetVisible ? [{ key: "reset", label: "\uBCC0\uACBD\uC0AC\uD56D \uCD08\uAE30\uD654", icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: "reset", size: 16, "aria-hidden": "true" }), enabled: true, onClick: onReset }] : []
   ];
   const enabledActions = actions.filter((action) => action.enabled);
-  const preferredKey = enabledActions[0]?.key;
-  return /* @__PURE__ */ jsx2(
-    Toolbar,
+  const preferredKey = _optionalChain([enabledActions, 'access', _ => _[0], 'optionalAccess', _2 => _2.key]);
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    _chunk3VE2HGTTcjs.Toolbar,
     {
       role,
       "aria-label": ariaLabel,
@@ -136,7 +136,7 @@ function HistoryToolbar({
       itemSelector: "[data-lk-history-toolbar-item]",
       preferredItemKey: preferredKey,
       "aria-disabled": enabledActions.length === 0 || void 0,
-      tabIndex: enabledActions.length === 0 ? tabIndex ?? 0 : tabIndex,
+      tabIndex: enabledActions.length === 0 ? _nullishCoalesce(tabIndex, () => ( 0)) : tabIndex,
       onKeyDown,
       onFocusCapture,
       style: {
@@ -150,10 +150,10 @@ function HistoryToolbar({
         ...style
       },
       ...rest,
-      children: actions.map((action, index) => /* @__PURE__ */ jsxs2(React2.Fragment, { children: [
-        action.key === "reset" && /* @__PURE__ */ jsx2(Divider, { vertical: true, style: { minHeight: size === "md" ? 24 : 20, marginInline: "var(--space-1)", alignSelf: "center" } }),
-        /* @__PURE__ */ jsx2(
-          IconButton,
+      children: actions.map((action, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
+        action.key === "reset" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Divider, { vertical: true, style: { minHeight: size === "md" ? 24 : 20, marginInline: "var(--space-1)", alignSelf: "center" } }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          _chunkQJNQGYQBcjs.IconButton,
           {
             "data-history-index": index,
             "data-lk-history-toolbar-item": "",
@@ -175,8 +175,8 @@ function HistoryToolbar({
   );
 }
 
-export {
-  Divider,
-  HistoryToolbar
-};
-//# sourceMappingURL=chunk-WR37ID7G.js.map
+
+
+
+exports.Divider = Divider; exports.HistoryToolbar = HistoryToolbar;
+//# sourceMappingURL=chunk-SWWCCPCO.cjs.map

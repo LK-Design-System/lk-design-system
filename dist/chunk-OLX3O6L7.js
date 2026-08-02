@@ -77,7 +77,23 @@ function DataToolbar({
               size
             }
           ) }),
-          resolvedFilters != null && /* @__PURE__ */ jsx("div", { "data-data-toolbar-filter-size": size, style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1-5)", flexWrap: "wrap" }, children: resolvedFilters })
+          resolvedFilters != null && /* @__PURE__ */ jsx(
+            "div",
+            {
+              "data-data-toolbar-filter-size": size,
+              style: {
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "var(--space-1-5)",
+                flex: "1 1 auto",
+                flexWrap: "wrap",
+                width: "max-content",
+                maxWidth: "100%",
+                minWidth: 0
+              },
+              children: resolvedFilters
+            }
+          )
         ] })
       ]
     }
@@ -87,4 +103,4 @@ function DataToolbar({
 export {
   DataToolbar
 };
-//# sourceMappingURL=chunk-TWKVD2I6.js.map
+//# sourceMappingURL=chunk-OLX3O6L7.js.map

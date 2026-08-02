@@ -9,10 +9,127 @@ var _chunk3VE2HGTTcjs = require('./chunk-3VE2HGTT.cjs');
 // components/editor/EditorToolbar.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 
-// ../lk-design-system/packages/core/dist/chunk-TYMBWSJ5.js
+// ../lk-design-system/packages/core/dist/chunk-LEMJQTMT.js
 
-var lightDismissStack = [];
+var _reactdom = require('react-dom');
 var useSafeLayoutEffect = typeof window === "undefined" ? _react2.default.useEffect : _react2.default.useLayoutEffect;
+var overlayLayers = [];
+var THEME_SCOPE_CLASSES = ["theme-light", "theme-dark", "theme-auto"];
+function assignRef(ref, value) {
+  if (typeof ref === "function") ref(value);
+  else if (ref) ref.current = value;
+}
+var OverlayRuntimeContext = _react2.default.createContext({
+  portalTarget: null,
+  scopeTarget: null,
+  zIndexBase: 100,
+  direction: void 0,
+  colorScheme: void 0
+});
+function useOverlayRuntime() {
+  return _react2.default.useContext(OverlayRuntimeContext);
+}
+function syncOverlayLayers() {
+  overlayLayers.forEach((entry, index) => {
+    entry.setZIndex(_nullishCoalesce(entry.explicitZIndex, () => ( entry.zIndexBase + index)));
+  });
+}
+function useOverlayLayer({ open, zIndex } = {}) {
+  const { zIndexBase } = useOverlayRuntime();
+  const [resolvedZIndex, setResolvedZIndex] = _react2.default.useState(_nullishCoalesce(zIndex, () => ( zIndexBase)));
+  const entryRef = _react2.default.useRef(null);
+  if (!entryRef.current) entryRef.current = { setZIndex: setResolvedZIndex, explicitZIndex: zIndex, zIndexBase };
+  entryRef.current.explicitZIndex = zIndex;
+  entryRef.current.zIndexBase = zIndexBase;
+  useSafeLayoutEffect(() => {
+    if (!open) return void 0;
+    const entry = entryRef.current;
+    overlayLayers.push(entry);
+    syncOverlayLayers();
+    return () => {
+      const index = overlayLayers.indexOf(entry);
+      if (index >= 0) overlayLayers.splice(index, 1);
+      syncOverlayLayers();
+    };
+  }, [open]);
+  _react2.default.useEffect(() => {
+    if (zIndex != null) setResolvedZIndex(zIndex);
+    else syncOverlayLayers();
+  }, [zIndex, zIndexBase]);
+  const isTopmost = _react2.default.useCallback(() => overlayLayers.at(-1) === entryRef.current, []);
+  return { zIndex: resolvedZIndex, isTopmost };
+}
+function inheritedPortalScope(anchor, runtime) {
+  const themeHost = _optionalChain([anchor, 'optionalAccess', _ => _.closest, 'optionalCall', _2 => _2("[data-theme], .theme-light, .theme-dark, .theme-auto")]);
+  const directionHost = _optionalChain([anchor, 'optionalAccess', _3 => _3.closest, 'optionalCall', _4 => _4("[dir]")]);
+  const hostTheme = _optionalChain([themeHost, 'optionalAccess', _5 => _5.getAttribute, 'optionalCall', _6 => _6("data-theme")]);
+  const explicitTheme = themeHost && themeHost !== runtime.scopeTarget ? hostTheme : _nullishCoalesce(runtime.colorScheme, () => ( hostTheme));
+  const themeClass = themeHost && themeHost !== runtime.scopeTarget ? THEME_SCOPE_CLASSES.find((name) => _optionalChain([themeHost, 'access', _7 => _7.classList, 'optionalAccess', _8 => _8.contains, 'call', _9 => _9(name)])) : void 0;
+  return {
+    theme: explicitTheme || void 0,
+    themeClass,
+    direction: directionHost && directionHost !== runtime.scopeTarget ? _optionalChain([directionHost, 'access', _10 => _10.getAttribute, 'optionalCall', _11 => _11("dir")]) : _nullishCoalesce(runtime.direction, () => ( _optionalChain([directionHost, 'optionalAccess', _12 => _12.getAttribute, 'optionalCall', _13 => _13("dir")])))
+  };
+}
+function OverlayPortal({
+  children,
+  open = true,
+  withinPortal = true,
+  portalTarget,
+  anchorRef,
+  portalRef,
+  layer = "anchored"
+}) {
+  const runtime = useOverlayRuntime();
+  const portalNodeRef = _react2.default.useRef(null);
+  const setPortalNode = _react2.default.useCallback((node) => {
+    portalNodeRef.current = node;
+    assignRef(portalRef, node);
+  }, [portalRef]);
+  useSafeLayoutEffect(() => {
+    const node = portalNodeRef.current;
+    if (!open || !withinPortal || !node) return;
+    const committedScope = inheritedPortalScope(_optionalChain([anchorRef, 'optionalAccess', _14 => _14.current]), runtime);
+    if (committedScope.theme) node.setAttribute("data-theme", committedScope.theme);
+    else node.removeAttribute("data-theme");
+    THEME_SCOPE_CLASSES.forEach((name) => node.classList.remove(name));
+    if (committedScope.themeClass) node.classList.add(committedScope.themeClass);
+    if (committedScope.direction) node.setAttribute("dir", committedScope.direction);
+    else node.removeAttribute("dir");
+  }, [
+    anchorRef,
+    open,
+    portalTarget,
+    runtime.colorScheme,
+    runtime.direction,
+    runtime.portalTarget,
+    runtime.scopeTarget,
+    withinPortal
+  ]);
+  if (!open) return null;
+  if (!withinPortal) return children;
+  const anchor = _optionalChain([anchorRef, 'optionalAccess', _15 => _15.current]);
+  const ownerDocument = _nullishCoalesce(_nullishCoalesce(_nullishCoalesce(_optionalChain([anchor, 'optionalAccess', _16 => _16.ownerDocument]), () => ( _optionalChain([portalTarget, 'optionalAccess', _17 => _17.ownerDocument]))), () => ( _optionalChain([runtime, 'access', _18 => _18.portalTarget, 'optionalAccess', _19 => _19.ownerDocument]))), () => ( (typeof document !== "undefined" ? document : null)));
+  const target = _nullishCoalesce(_nullishCoalesce(_nullishCoalesce(portalTarget, () => ( runtime.portalTarget)), () => ( _optionalChain([ownerDocument, 'optionalAccess', _20 => _20.body]))), () => ( null));
+  const scope = inheritedPortalScope(anchor, runtime);
+  if (!target) return null;
+  return _reactdom.createPortal.call(void 0, 
+    _react2.default.createElement("div", {
+      ref: setPortalNode,
+      "data-lds-overlay-portal": "",
+      "data-overlay-layer": layer,
+      "data-theme": scope.theme,
+      className: scope.themeClass,
+      dir: scope.direction,
+      style: { display: "contents" }
+    }, children),
+    target
+  );
+}
+
+// ../lk-design-system/packages/core/dist/chunk-HTJFGC74.js
+
+var useSafeLayoutEffect2 = typeof window === "undefined" ? _react2.default.useEffect : _react2.default.useLayoutEffect;
 function samePosition(a, b) {
   const sameCoordinate = (left, right) => left == null || right == null ? left === right : Math.abs(left - right) < 0.5;
   return a.placement === b.placement && Math.abs(a.shiftX - b.shiftX) < 0.5 && Math.abs(a.shiftY - b.shiftY) < 0.5 && Math.abs((_nullishCoalesce(a.maxHeight, () => ( 0))) - (_nullishCoalesce(b.maxHeight, () => ( 0)))) < 0.5 && sameCoordinate(a.x, b.x) && sameCoordinate(a.y, b.y);
@@ -24,7 +141,7 @@ function useControllableOpen({ open, defaultOpen = false, onOpenChange }) {
   const setVisible = _react2.default.useCallback((nextValue) => {
     const next = typeof nextValue === "function" ? nextValue(visible) : nextValue;
     if (!controlled) setInternalOpen(next);
-    if (next !== visible) _optionalChain([onOpenChange, 'optionalCall', _ => _(next)]);
+    if (next !== visible) _optionalChain([onOpenChange, 'optionalCall', _21 => _21(next)]);
   }, [controlled, onOpenChange, visible]);
   return [visible, setVisible];
 }
@@ -34,10 +151,13 @@ function useLightDismiss({
   getTrigger,
   onDismiss,
   outsidePress = true,
-  shouldDismiss
+  shouldDismiss,
+  zIndex,
+  insideRefs = []
 }) {
+  const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayer({ open, zIndex });
   const optionsRef = _react2.default.useRef(null);
-  optionsRef.current = { getTrigger, onDismiss, outsidePress, shouldDismiss };
+  optionsRef.current = { getTrigger, onDismiss, outsidePress, shouldDismiss, insideRefs };
   const focusLatchRef = _react2.default.useRef(null);
   const releaseFocusLatch = _react2.default.useCallback(() => {
     const latch = focusLatchRef.current;
@@ -66,29 +186,29 @@ function useLightDismiss({
     if (!open) return void 0;
     releaseFocusLatch();
     const root = rootRef.current;
-    const ownerDocument = _nullishCoalesce(_optionalChain([root, 'optionalAccess', _2 => _2.ownerDocument]), () => ( document));
+    const ownerDocument = _nullishCoalesce(_optionalChain([root, 'optionalAccess', _22 => _22.ownerDocument]), () => ( document));
     const view = _nullishCoalesce(ownerDocument.defaultView, () => ( window));
-    const entry = {};
-    lightDismissStack.push(entry);
-    const vetoed = (reason, event) => _optionalChain([optionsRef, 'access', _3 => _3.current, 'access', _4 => _4.shouldDismiss, 'optionalCall', _5 => _5(reason, event)]) === false;
+    const vetoed = (reason, event) => _optionalChain([optionsRef, 'access', _23 => _23.current, 'access', _24 => _24.shouldDismiss, 'optionalCall', _25 => _25(reason, event)]) === false;
+    const containsTarget = (target) => _optionalChain([rootRef, 'access', _26 => _26.current, 'optionalAccess', _27 => _27.contains, 'call', _28 => _28(target)]) || optionsRef.current.insideRefs.some((insideRef) => _optionalChain([insideRef, 'optionalAccess', _29 => _29.current, 'optionalAccess', _30 => _30.contains, 'call', _31 => _31(target)]));
     const onPointerDown = (event) => {
-      if (!optionsRef.current.outsidePress || _optionalChain([rootRef, 'access', _6 => _6.current, 'optionalAccess', _7 => _7.contains, 'call', _8 => _8(event.target)])) return;
+      if (!isTopmost()) return;
+      if (!optionsRef.current.outsidePress || containsTarget(event.target)) return;
       if (vetoed("outside-press", event)) return;
-      _optionalChain([optionsRef, 'access', _9 => _9.current, 'access', _10 => _10.onDismiss, 'optionalCall', _11 => _11("outside-press")]);
+      _optionalChain([optionsRef, 'access', _32 => _32.current, 'access', _33 => _33.onDismiss, 'optionalCall', _34 => _34("outside-press")]);
     };
     const onKeyDown = (event) => {
-      if (lightDismissStack.at(-1) !== entry || event.defaultPrevented || event.key !== "Escape") return;
+      if (!isTopmost() || event.defaultPrevented || event.key !== "Escape") return;
       if (vetoed("escape", event)) return;
       event.preventDefault();
       const anchor = rootRef.current;
-      const trigger = _optionalChain([optionsRef, 'access', _12 => _12.current, 'access', _13 => _13.getTrigger, 'optionalCall', _14 => _14()]);
+      const trigger = _optionalChain([optionsRef, 'access', _35 => _35.current, 'access', _36 => _36.getTrigger, 'optionalCall', _37 => _37()]);
       const activeElement = ownerDocument.activeElement;
-      const ownsFocus = !!anchor && !!activeElement && anchor.contains(activeElement);
+      const ownsFocus = !!activeElement && containsTarget(activeElement);
       if (ownsFocus) latchDismissedTrigger();
-      _optionalChain([optionsRef, 'access', _15 => _15.current, 'access', _16 => _16.onDismiss, 'optionalCall', _17 => _17("escape")]);
+      _optionalChain([optionsRef, 'access', _38 => _38.current, 'access', _39 => _39.onDismiss, 'optionalCall', _40 => _40("escape")]);
       if (!ownsFocus || activeElement === trigger) return;
       view.requestAnimationFrame(() => {
-        if (_optionalChain([trigger, 'optionalAccess', _18 => _18.isConnected]) && typeof trigger.focus === "function") {
+        if (_optionalChain([trigger, 'optionalAccess', _41 => _41.isConnected]) && typeof trigger.focus === "function") {
           trigger.focus({ preventScroll: true });
         }
       });
@@ -98,10 +218,9 @@ function useLightDismiss({
     return () => {
       if (outsidePress) ownerDocument.removeEventListener("pointerdown", onPointerDown);
       ownerDocument.removeEventListener("keydown", onKeyDown);
-      const index = lightDismissStack.indexOf(entry);
-      if (index >= 0) lightDismissStack.splice(index, 1);
     };
-  }, [latchDismissedTrigger, open, outsidePress, releaseFocusLatch, rootRef]);
+  }, [isTopmost, latchDismissedTrigger, open, outsidePress, releaseFocusLatch, rootRef]);
+  return { zIndex: resolvedZIndex, isTopmost };
 }
 function useFloatingPosition({
   open,
@@ -121,7 +240,7 @@ function useFloatingPosition({
     x: null,
     y: null
   });
-  useSafeLayoutEffect(() => {
+  useSafeLayoutEffect2(() => {
     if (!open) {
       setPosition((previous) => {
         const next = {
@@ -139,7 +258,7 @@ function useFloatingPosition({
     const anchor = anchorRef.current;
     const panel = panelRef.current;
     if (!anchor || !panel) return void 0;
-    const view = _nullishCoalesce(_optionalChain([anchor, 'access', _19 => _19.ownerDocument, 'optionalAccess', _20 => _20.defaultView]), () => ( window));
+    const view = _nullishCoalesce(_optionalChain([anchor, 'access', _42 => _42.ownerDocument, 'optionalAccess', _43 => _43.defaultView]), () => ( window));
     let frame;
     const update = () => {
       const currentAnchor = anchorRef.current;
@@ -177,17 +296,19 @@ function useFloatingPosition({
       if (strategy === "fixed") {
         const renderedWidth = Math.min(naturalWidth, Math.max(0, view.innerWidth - viewportPadding * 2));
         const renderedHeight = Math.min(naturalHeight, availableHeight);
-        const unclampedX = verticalPlacement ? align === "right" ? anchorRect.right - renderedWidth : anchorRect.left : nextPlacement === "right" ? anchorRect.right + offset : anchorRect.left - offset - renderedWidth;
-        const unclampedY = verticalPlacement ? nextPlacement === "bottom" ? anchorRect.bottom + offset : anchorRect.top - offset - renderedHeight : anchorRect.top;
+        const unclampedX = verticalPlacement ? align === "right" || align === "trailing" ? anchorRect.right - renderedWidth : align === "center" ? anchorRect.left + (anchorRect.width - renderedWidth) / 2 : anchorRect.left : nextPlacement === "right" ? anchorRect.right + offset : anchorRect.left - offset - renderedWidth;
+        const unclampedY = verticalPlacement ? nextPlacement === "bottom" ? anchorRect.bottom + offset : anchorRect.top - offset - renderedHeight : align === "bottom" || align === "trailing" ? anchorRect.bottom - renderedHeight : align === "center" ? anchorRect.top + (anchorRect.height - renderedHeight) / 2 : anchorRect.top;
         const maxX = Math.max(viewportPadding, view.innerWidth - viewportPadding - renderedWidth);
         const maxY = Math.max(viewportPadding, view.innerHeight - viewportPadding - renderedHeight);
+        const x = Math.min(maxX, Math.max(viewportPadding, unclampedX));
+        const y = Math.min(maxY, Math.max(viewportPadding, unclampedY));
         const next2 = {
           placement: nextPlacement,
-          shiftX: 0,
-          shiftY: 0,
+          shiftX: x - unclampedX,
+          shiftY: y - unclampedY,
           maxHeight: availableHeight,
-          x: Math.min(maxX, Math.max(viewportPadding, unclampedX)),
-          y: Math.min(maxY, Math.max(viewportPadding, unclampedY))
+          x,
+          y
         };
         setPosition((previous) => samePosition(previous, next2) ? previous : next2);
         return;
@@ -226,13 +347,13 @@ function useFloatingPosition({
     view.addEventListener("resize", schedule);
     view.addEventListener("scroll", schedule, true);
     const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(schedule);
-    _optionalChain([observer, 'optionalAccess', _21 => _21.observe, 'call', _22 => _22(anchor)]);
-    _optionalChain([observer, 'optionalAccess', _23 => _23.observe, 'call', _24 => _24(panel)]);
+    _optionalChain([observer, 'optionalAccess', _44 => _44.observe, 'call', _45 => _45(anchor)]);
+    _optionalChain([observer, 'optionalAccess', _46 => _46.observe, 'call', _47 => _47(panel)]);
     return () => {
       view.cancelAnimationFrame(frame);
       view.removeEventListener("resize", schedule);
       view.removeEventListener("scroll", schedule, true);
-      _optionalChain([observer, 'optionalAccess', _25 => _25.disconnect, 'call', _26 => _26()]);
+      _optionalChain([observer, 'optionalAccess', _48 => _48.disconnect, 'call', _49 => _49()]);
     };
   }, [align, anchorRef, offset, open, panelRef, position.placement, position.shiftX, position.shiftY, requestedPlacement, strategy, viewportPadding]);
   return position;
@@ -241,10 +362,41 @@ function appendAriaReference(existing, id) {
   return [...new Set(`${_nullishCoalesce(existing, () => ( ""))} ${id}`.trim().split(/\s+/).filter(Boolean))].join(" ");
 }
 function findOverlayTrigger(root) {
-  return _nullishCoalesce(_optionalChain([root, 'optionalAccess', _27 => _27.querySelector, 'call', _28 => _28('[data-anchored-overlay-trigger], button, [role="button"], a[href], input, select, textarea')]), () => ( null));
+  return _nullishCoalesce(_optionalChain([root, 'optionalAccess', _50 => _50.querySelector, 'call', _51 => _51('[data-anchored-overlay-trigger], button, [role="button"], a[href], input, select, textarea')]), () => ( null));
 }
 
-// ../lk-design-system/packages/core/dist/chunk-CBLNHA7U.js
+// ../lk-design-system/packages/core/dist/chunk-UDFH7RFZ.js
+
+function cx(...values) {
+  return values.filter(Boolean).join(" ");
+}
+function partClassName(classNames, part, ...values) {
+  return cx(...values, _optionalChain([classNames, 'optionalAccess', _52 => _52[part]]));
+}
+function partStyle(styles, part) {
+  return _nullishCoalesce(_optionalChain([styles, 'optionalAccess', _53 => _53[part]]), () => ( void 0));
+}
+function componentVars(vars, prefix) {
+  if (!vars) return void 0;
+  return Object.fromEntries(
+    Object.entries(vars).filter(([name, value]) => name.startsWith(prefix) && value != null)
+  );
+}
+function assignRef2(ref, value) {
+  if (typeof ref === "function") {
+    ref(value);
+  } else if (ref && typeof ref === "object") {
+    ref.current = value;
+  }
+}
+function mergeRefs(...refs) {
+  return (value) => refs.forEach((ref) => assignRef2(ref, value));
+}
+function useMergedRefs(refA, refB, refC) {
+  return _react2.default.useMemo(() => mergeRefs(refA, refB, refC), [refA, refB, refC]);
+}
+
+// ../lk-design-system/packages/core/dist/chunk-53ZIUI4K.js
 
 var _jsxruntime = require('react/jsx-runtime');
 var POS = {
@@ -350,7 +502,7 @@ function normalizeDelay(delay) {
     close: _nullishCoalesce(delay.close, () => ( DEFAULT_DELAY.close))
   };
 }
-function Tooltip({
+var Tooltip = _react2.default.forwardRef(function Tooltip2({
   content,
   placement,
   position,
@@ -368,11 +520,19 @@ function Tooltip({
   onMouseLeave,
   onFocus,
   onBlur,
+  withinPortal = true,
+  portalTarget,
+  zIndex,
+  className,
+  classNames,
+  styles,
+  vars,
   ...rest
-}) {
+}, forwardedRef) {
   const [visible, setVisible] = useControllableOpen({ open, defaultOpen, onOpenChange });
   const requestedPlace = position || placement || "top";
   const wrapperRef = _react2.default.useRef(null);
+  const mergedWrapperRef = useMergedRefs(wrapperRef, forwardedRef);
   const bubbleRef = _react2.default.useRef(null);
   const tooltipId = _react2.default.useId();
   const getTrigger = _react2.default.useCallback(() => findOverlayTrigger(wrapperRef.current), []);
@@ -380,7 +540,9 @@ function Tooltip({
     open: visible,
     anchorRef: wrapperRef,
     panelRef: bubbleRef,
-    placement: requestedPlace
+    placement: requestedPlace,
+    strategy: withinPortal ? "fixed" : "absolute",
+    align: normalizeAlign(align)
   });
   const place = floating.placement;
   const pos = POS[place] || POS.top;
@@ -451,7 +613,7 @@ function Tooltip({
     },
     [clearTimer, setVisible]
   );
-  useLightDismiss({
+  const layer = useLightDismiss({
     open: visible,
     rootRef: wrapperRef,
     getTrigger,
@@ -459,23 +621,25 @@ function Tooltip({
       clearTimer();
       setVisible(false);
     },
-    outsidePress: false
+    outsidePress: false,
+    insideRefs: [bubbleRef],
+    zIndex
   });
   const showTooltip = (event) => {
-    _optionalChain([onMouseEnter, 'optionalCall', _29 => _29(event)]);
+    _optionalChain([onMouseEnter, 'optionalCall', _54 => _54(event)]);
     schedule(true, delays.open);
   };
   const hideTooltip = (event) => {
-    _optionalChain([onMouseLeave, 'optionalCall', _30 => _30(event)]);
+    _optionalChain([onMouseLeave, 'optionalCall', _55 => _55(event)]);
     schedule(false, delays.close);
   };
   const showOnFocus = (event) => {
-    _optionalChain([onFocus, 'optionalCall', _31 => _31(event)]);
+    _optionalChain([onFocus, 'optionalCall', _56 => _56(event)]);
     clearTimer();
     setVisible(true);
   };
   const hideOnBlur = (event) => {
-    _optionalChain([onBlur, 'optionalCall', _32 => _32(event)]);
+    _optionalChain([onBlur, 'optionalCall', _57 => _57(event)]);
     if (!event.currentTarget.contains(event.relatedTarget)) {
       clearTimer();
       setVisible(false);
@@ -489,36 +653,42 @@ function Tooltip({
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "span",
     {
-      ref: wrapperRef,
+      ref: mergedWrapperRef,
       ...rest,
+      "data-slot": "root",
+      "data-open": visible ? "true" : void 0,
+      className: partClassName(classNames, "root", className) || void 0,
       "data-anchored-overlay-trigger": validTrigger ? void 0 : "",
       "aria-describedby": validTrigger ? void 0 : tooltipId,
       tabIndex: rest.tabIndex,
-      style: { position: "relative", display: "inline-flex", ...style },
+      style: { ...componentVars(vars, "--lds-tooltip-"), position: "relative", display: "inline-flex", ...partStyle(styles, "root"), ...style },
       onMouseEnter: showTooltip,
       onMouseLeave: hideTooltip,
       onFocus: showOnFocus,
       onBlur: hideOnBlur,
       children: [
         renderedChildren,
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: wrapperRef, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "span",
           {
             ref: bubbleRef,
             id: tooltipId,
+            "data-slot": "bubble",
+            className: partClassName(classNames, "bubble") || void 0,
             role: "tooltip",
             "aria-hidden": visible ? false : void 0,
             "data-placement": place,
             style: {
-              position: "absolute",
-              ...pos,
-              ...bubbleOffset(place, align),
-              translate: `${floating.shiftX}px ${floating.shiftY}px`,
-              zIndex: 40,
-              pointerEvents: "auto",
+              ...componentVars(vars, "--lds-tooltip-"),
+              position: withinPortal ? "fixed" : "absolute",
+              ...withinPortal ? { top: _nullishCoalesce(floating.y, () => ( -9999)), left: _nullishCoalesce(floating.x, () => ( -9999)) } : pos,
+              ...withinPortal ? {} : bubbleOffset(place, align),
+              translate: withinPortal ? "none" : `${floating.shiftX}px ${floating.shiftY}px`,
+              zIndex: layer.zIndex,
+              pointerEvents: "none",
               display: "inline-flex",
               alignItems: "center",
-              padding: compact ? "5px 8px" : "8px 12px",
+              padding: `var(--lds-tooltip-padding, ${compact ? "5px 8px" : "8px 12px"})`,
               color: "var(--color-semantic-inverse-label)",
               fontFamily: "var(--font-sans)",
               fontSize: compact ? 11.5 : "var(--label1-size)",
@@ -528,7 +698,7 @@ function Tooltip({
               borderRadius: compact ? 6 : 8,
               boxSizing: "border-box",
               width: "max-content",
-              maxWidth: "min(20rem, calc(100vw - var(--space-8)))",
+              maxWidth: "var(--lds-tooltip-max-width, min(20rem, calc(100vw - var(--space-8))))",
               overflow: "visible",
               whiteSpace: "normal",
               overflowWrap: "anywhere",
@@ -536,7 +706,8 @@ function Tooltip({
               boxShadow: "var(--shadow-md)",
               visibility: visible && bubblePath ? "visible" : "hidden",
               opacity: visible ? 1 : 0,
-              transition: "opacity var(--dur-fast) var(--ease-out)"
+              transition: "opacity var(--dur-fast) var(--ease-out)",
+              ...partStyle(styles, "bubble")
             },
             children: [
               bubblePath && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
@@ -545,6 +716,8 @@ function Tooltip({
                   "aria-hidden": "true",
                   focusable: "false",
                   "data-lds-tooltip-surface": "",
+                  "data-slot": "surface",
+                  className: partClassName(classNames, "surface") || void 0,
                   "data-arrow-axis": _nullishCoalesce(arrowPosition, () => ( void 0)),
                   "data-arrow-height": arrow ? arrowHeight : void 0,
                   width: bubbleBox.w,
@@ -556,7 +729,8 @@ function Tooltip({
                     inset: 0,
                     display: "block",
                     overflow: "visible",
-                    pointerEvents: "none"
+                    pointerEvents: "none",
+                    ...partStyle(styles, "surface")
                   },
                   children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "path",
@@ -573,6 +747,8 @@ function Tooltip({
                 "span",
                 {
                   "data-lds-tooltip-content": true,
+                  "data-slot": "content",
+                  className: partClassName(classNames, "content") || void 0,
                   style: {
                     position: "relative",
                     zIndex: 1,
@@ -582,16 +758,20 @@ function Tooltip({
                     minWidth: 0,
                     maxHeight: contentMaxHeight,
                     overflowY: contentMaxHeight != null ? "auto" : void 0,
-                    overflowX: contentMaxHeight != null ? "hidden" : void 0
+                    overflowX: contentMaxHeight != null ? "hidden" : void 0,
+                    ...partStyle(styles, "content")
                   },
                   children: [
                     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: content }),
                     shortcut != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                       "span",
                       {
+                        "data-slot": "shortcut",
+                        className: partClassName(classNames, "shortcut") || void 0,
                         style: {
                           color: "var(--color-semantic-inverse-label-alternative-soft)",
-                          fontWeight: "var(--fw-bold)"
+                          fontWeight: "var(--fw-bold)",
+                          ...partStyle(styles, "shortcut")
                         },
                         children: shortcut
                       }
@@ -601,11 +781,11 @@ function Tooltip({
               )
             ]
           }
-        )
+        ) })
       ]
     }
   );
-}
+});
 
 // components/editor/EditorToolbar.jsx
 
@@ -720,4 +900,4 @@ function EditorToolbar({
 
 
 exports.EditorToolbar = EditorToolbar;
-//# sourceMappingURL=chunk-TBDOICX3.cjs.map
+//# sourceMappingURL=chunk-WGEQR54T.cjs.map

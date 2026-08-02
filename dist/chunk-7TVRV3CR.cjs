@@ -2,13 +2,13 @@
 
 
 
-var _chunkT63YK7GDcjs = require('./chunk-T63YK7GD.cjs');
+var _chunkSWWCCPCOcjs = require('./chunk-SWWCCPCO.cjs');
 
 
 var _chunk3VE2HGTTcjs = require('./chunk-3VE2HGTT.cjs');
 
 
-var _chunk5LU5FZ5Rcjs = require('./chunk-5LU5FZ5R.cjs');
+var _chunkQJNQGYQBcjs = require('./chunk-QJNQGYQB.cjs');
 
 
 var _chunkLQ7SPTG7cjs = require('./chunk-LQ7SPTG7.cjs');
@@ -28,7 +28,7 @@ function CommandButton({ action, size, index, tabStopKey }) {
   const active = !!action.active;
   const key = String(actionKey(action, index));
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-    _chunk5LU5FZ5Rcjs.IconButton,
+    _chunkQJNQGYQBcjs.IconButton,
     {
       "data-command-index": index,
       "data-lk-command-toolbar-item": "",
@@ -114,7 +114,7 @@ function CanvasEditorCommandBar({
     groups.push({
       key: "history",
       node: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-        _chunkT63YK7GDcjs.HistoryToolbar,
+        _chunkSWWCCPCOcjs.HistoryToolbar,
         {
           label: historyLabel,
           canUndo,
@@ -150,7 +150,7 @@ function CanvasEditorCommandBar({
       style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexShrink: 0, ...style },
       children: groups.map((group, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
         index > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-          _chunkT63YK7GDcjs.Divider,
+          _chunkSWWCCPCOcjs.Divider,
           {
             vertical: true,
             style: { minHeight: size === "md" ? 24 : 20, marginInline: "var(--space-1)", alignSelf: "center" }
@@ -165,4 +165,4 @@ function CanvasEditorCommandBar({
 
 
 exports.CanvasEditorCommandBar = CanvasEditorCommandBar;
-//# sourceMappingURL=chunk-VDI465SG.cjs.map
+//# sourceMappingURL=chunk-7TVRV3CR.cjs.map
