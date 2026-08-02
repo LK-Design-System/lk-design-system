@@ -128,6 +128,27 @@
       "required": false,
       "description": "외곽선 소유. \"embedded\"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default \"standalone\"",
       "owner": "DataToolbarProps"
+    },
+    {
+      "name": "classNames",
+      "type": "LdsClassNames",
+      "required": false,
+      "description": "",
+      "owner": "DataToolbarProps"
+    },
+    {
+      "name": "styles",
+      "type": "LdsStyles",
+      "required": false,
+      "description": "",
+      "owner": "DataToolbarProps"
+    },
+    {
+      "name": "vars",
+      "type": "LdsVars",
+      "required": false,
+      "description": "",
+      "owner": "DataToolbarProps"
     }
   ],
   "states": [
@@ -165,13 +186,16 @@
     }
   ],
   "responsive": [
+    "vars accepts only --lds-data-toolbar-padding, --lds-data-toolbar-gap, and --lds-data-toolbar-search-max-width; it does not add selection or pagination ownership.",
     "filters는 query를 좁히는 chip/menu 슬롯, actions는 열 표시·순서 설정 trigger, 내보내기 같은 전체 표 action 슬롯입니다. filters에 함수를 주면 { size }를 받아 검색과 같은 field control 밀도를 Select·SearchField 같은 자식에게 전달할 수 있습니다. 기존 ReactNode 슬롯도 그대로 지원합니다. 설정 UI와 저장 상태는 제품이 소유하고 visibleColumnKeys/columnOrder로 DataGrid에 전달합니다.",
     "selectedCount와 bulkActions는 DataToolbar props가 아닙니다. 선택 수, 선택 해제, bulk action은 DataGrid의 같은 높이 selection band에 둡니다.",
-    "PatternFly Toolbar design guidelines는 search filter와 filter group을 하나의 연관된 그룹으로 배치하고 모든 toolbar item을 세로 중앙 정렬합니다. LDS는 검색과 field형 필터에 같은 size를 전달하고, 고유 높이를 가진 chip은 늘리지 않고 중앙 정렬합니다.",
-    "PatternFly Filters는 text entry·single select·filter group을 같은 toolbar 안에서 조합할 수 있는 필터 유형으로 구분합니다. 따라서 LDS는 임의 자식을 강제로 clone하거나 높이를 덮지 않고 render-prop context로 field control 밀도만 전달합니다."
+    "PatternFly Toolbar design guidelines는 search filter와 filter group을 하나의 연관된 그룹으로 배치하고 모든 toolbar item을 세로 중앙 정렬합니다. LDS는 검색과 field형 필터에 같은 size를 전달하고, 고유 높이를 가진 chip은 늘리지 않고 중앙 정렬합니다."
   ],
   "contentGuidance": [
-    "DataToolbar — DataGrid/Table 위에서 제목, 결과 수, 검색, 필터, page-level action을 정렬하는 표면."
+    "className, style, and the default ref target the root collection toolbar surface.",
+    "Stable parts are root, header, heading, title, count, description, actions, controls, search, and filters. Header and controls slots exist only when their content exists.",
+    "DataToolbar — DataGrid/Table 위에서 제목, 결과 수, 검색, 필터, page-level action을 정렬하는 표면.",
+    "The header row is independent: title, description, count, or page-level actions keeps it present even when controls are omitted. If neither header content nor controls exist, DataToolbar returns null instead of leaving an empty bordered strip."
   ],
   "accessibility": [
     "WAI-ARIA APG Table pattern에 따라 DataToolbar가 표의 native semantics나 keyboard model을 대신하지 않습니다. 검색과 action은 각 native control의 정상 Tab 순서를 유지합니다."
@@ -235,6 +259,9 @@
     "--fw-semibold",
     "--label2-line",
     "--label2-size",
+    "--lds-data-toolbar-gap",
+    "--lds-data-toolbar-padding",
+    "--lds-data-toolbar-search-max-width",
     "--radius-md",
     "--space-1",
     "--space-1-5",
@@ -274,9 +301,14 @@
         "id": "lds-product-data-operations-data-toolbar--medium-filter-density",
         "name": "반응형 · 기본 필터 밀도",
         "role": "responsive"
+      },
+      {
+        "id": "lds-product-data-operations-data-toolbar--responsive-multi-select-filters",
+        "name": "반응형 · 다중 선택 필터",
+        "role": "responsive"
       }
     ],
-    "hiddenEvidence": 0
+    "hiddenEvidence": 1
   },
   "sources": [],
   "canonicalGuide": null,

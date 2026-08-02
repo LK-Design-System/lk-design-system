@@ -1,8 +1,21 @@
 import * as React from 'react';
 import { Button as RootButton } from '@lk-design-system/design-system-core';
 import { Button as CompatibilityDeepButton } from '@lk-design-system/design-system-core/components/buttons/Button';
-import { Button, Select, Tabs, TextButton } from '@lk-design-system/design-system-core/core';
-import { ThemeToggle } from '@lk-design-system/design-system-core/theme';
+import {
+  Button,
+  Card,
+  DropdownMenu,
+  Input,
+  Modal,
+  SearchField,
+  SegmentedControl,
+  Select,
+  Tabs,
+  Textarea,
+  TextButton,
+  Tooltip,
+} from '@lk-design-system/design-system-core/core';
+import { LdsProvider, ThemeToggle } from '@lk-design-system/design-system-core/theme';
 import {
   ConversationMessage,
   MessageFeed,
@@ -12,6 +25,8 @@ import {
   EquipmentStatusCard,
   DataToolbar,
   DashboardShell,
+  FieldAction,
+  Popover,
   SideNav,
 } from '@lk-design-system/design-system-core/product';
 import {
@@ -78,6 +93,155 @@ export const dataToolbarFilterDensityContract: React.ReactElement = (
       </Select>
     )}
   />
+);
+
+const buttonSurfaceRef = React.createRef<HTMLButtonElement>();
+const inputSurfaceRef = React.createRef<HTMLInputElement>();
+const textareaSurfaceRef = React.createRef<HTMLTextAreaElement>();
+const searchSurfaceRef = React.createRef<HTMLInputElement>();
+const selectSurfaceRef = React.createRef<HTMLButtonElement>();
+const fieldRootRef = React.createRef<HTMLDivElement>();
+const fieldActionSurfaceRef = React.createRef<HTMLFormElement>();
+const segmentedSurfaceRef = React.createRef<HTMLDivElement>();
+const tabsSurfaceRef = React.createRef<HTMLDivElement>();
+const cardSurfaceRef = React.createRef<HTMLDivElement>();
+const dataToolbarSurfaceRef = React.createRef<HTMLDivElement>();
+const sideNavSurfaceRef = React.createRef<HTMLElement>();
+const dropdownSurfaceRef = React.createRef<HTMLDivElement>();
+const popoverSurfaceRef = React.createRef<HTMLDivElement>();
+const tooltipSurfaceRef = React.createRef<HTMLSpanElement>();
+const modalSurfaceRef = React.createRef<HTMLDivElement>();
+
+export const refinedSurfaceAndRefContract: React.ReactElement = (
+  <>
+    <Button
+      ref={buttonSurfaceRef}
+      classNames={{ content: 'button-content' }}
+      styles={{ loader: { opacity: 0.8 } }}
+      vars={{ '--lds-button-height': '3rem' }}
+    >
+      저장
+    </Button>
+    <Input
+      ref={inputSurfaceRef}
+      rootRef={fieldRootRef}
+      label="이름"
+      classNames={{ control: 'input-control' }}
+      styles={{ input: { letterSpacing: '0.01em' } }}
+      vars={{ '--lds-input-height': '3rem' }}
+    />
+    <Textarea
+      ref={textareaSurfaceRef}
+      rootRef={fieldRootRef}
+      label="설명"
+      classNames={{ textarea: 'textarea-control' }}
+      vars={{ '--lds-textarea-min-height': '8rem' }}
+    />
+    <SearchField
+      ref={searchSurfaceRef}
+      rootRef={fieldRootRef}
+      label="검색"
+      classNames={{ clearButton: 'search-clear' }}
+      vars={{ '--lds-search-field-height': '3rem' }}
+    />
+    <Select
+      ref={selectSurfaceRef}
+      rootRef={fieldRootRef}
+      aria-label="상태"
+      options={[{ value: 'ready', label: '준비' }]}
+      classNames={{ dropdown: 'select-dropdown' }}
+      vars={{ '--lds-select-dropdown-max-height': '15rem' }}
+      withinPortal
+      portalTarget={null}
+    />
+    <FieldAction
+      ref={fieldActionSurfaceRef}
+      as="form"
+      field={<Input aria-label="코드" />}
+      action={<Button type="submit">적용</Button>}
+      classNames={{ row: 'field-action-row' }}
+      vars={{ '--lds-field-action-gap': '0.75rem' }}
+    />
+    <SegmentedControl
+      ref={segmentedSurfaceRef}
+      aria-label="보기"
+      options={['목록', '격자']}
+      classNames={{ segment: 'segment' }}
+      vars={{ '--lds-segmented-control-height': '2.5rem' }}
+    />
+    <Tabs
+      ref={tabsSurfaceRef}
+      items={['개요', '활동']}
+      classNames={{ indicator: 'tabs-indicator' }}
+      vars={{ '--lds-tabs-indicator-height': '0.125rem' }}
+    />
+    <Card
+      ref={cardSurfaceRef}
+      title="장비"
+      classNames={{ title: 'card-title' }}
+      vars={{ '--lds-card-padding': '1rem' }}
+    />
+    <DataToolbar
+      ref={dataToolbarSurfaceRef}
+      title="자료"
+      classNames={{ controls: 'toolbar-controls' }}
+      vars={{ '--lds-data-toolbar-gap': '0.75rem' }}
+    />
+    <SideNav
+      ref={sideNavSurfaceRef}
+      aria-label="계약 탐색"
+      items={[]}
+      classNames={{ item: 'side-nav-item' }}
+      vars={{ '--lds-side-nav-width': '15rem' }}
+    />
+    <DropdownMenu
+      ref={dropdownSurfaceRef}
+      trigger={<Button>메뉴</Button>}
+      items={[{ label: '열기' }]}
+      classNames={{ item: 'menu-item' }}
+      vars={{ '--lds-dropdown-menu-width': '14rem' }}
+      withinPortal
+      portalTarget={null}
+    />
+    <Popover
+      ref={popoverSurfaceRef}
+      trigger={<Button>세부 정보</Button>}
+      classNames={{ panel: 'popover-panel' }}
+      vars={{ '--lds-popover-width': '16rem' }}
+      withinPortal
+      portalTarget={null}
+    >
+      세부 내용
+    </Popover>
+    <Tooltip
+      ref={tooltipSurfaceRef}
+      content="설명"
+      classNames={{ bubble: 'tooltip-bubble' }}
+      vars={{ '--lds-tooltip-max-width': '12rem' }}
+      withinPortal
+      portalTarget={null}
+    >
+      <button type="button">도움말</button>
+    </Tooltip>
+    <Modal
+      ref={modalSurfaceRef}
+      open
+      onOpenChange={() => undefined}
+      title="설정"
+      classNames={{ body: 'modal-body' }}
+      vars={{ '--lds-modal-width': '32rem' }}
+      withinPortal
+      portalTarget={null}
+    >
+      설정 본문
+    </Modal>
+  </>
+);
+
+export const providerRuntimeContract: React.ReactElement = (
+  <LdsProvider defaultColorScheme="dark" direction="rtl" persist={false} portalTarget={null} zIndexBase={200}>
+    <Button>Provider child</Button>
+  </LdsProvider>
 );
 
 // Robotics navigation extension — renderer-neutral SVG feature contracts.

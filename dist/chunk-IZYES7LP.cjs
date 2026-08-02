@@ -56,7 +56,7 @@ function ProductCard({
   const HeadingTag = headingLevel === false || headingLevel == null ? "div" : `h${headingLevel}`;
   const resolvedLabel = _nullishCoalesce(ariaLabel, () => ( (typeof id === "string" ? id : void 0)));
   const resolvedImageFit = imageFit === "contain" ? "contain" : "cover";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "a",
     {
       href,
@@ -88,7 +88,7 @@ function ProductCard({
       },
       ...rest,
       children: [
-        image && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        image && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             "aria-hidden": "true",
@@ -98,7 +98,7 @@ function ProductCard({
               pointerEvents: "none"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "img",
                 {
                   src: image,
@@ -125,7 +125,7 @@ function ProductCard({
             ]
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             "aria-hidden": "true",

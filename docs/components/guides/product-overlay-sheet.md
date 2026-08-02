@@ -12,8 +12,13 @@
 
 ## 사용 판단
 
+### 사용
+
+- 기본 withinPortal=true이며 LdsProvider.portalTarget 또는 명시적 portalTarget에 렌더링됩니다. 가까운 theme scope와 dir을 상속하고 clipping ancestor를 벗어납니다.
+
 ### 사용하지 않음
 
+- 테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.
 - footer의 선택/취소 버튼처럼 보이는 dismiss 수단을 제공합니다. grab handle이나 scrim만으로 닫게 하지 않습니다.
 - Sheet 위에 다른 modal surface를 상시 중첩하지 않습니다. 불가피한 확인 surface가 열리면 최상위만 상호작용하고 닫힌 뒤 Sheet 내부 호출 지점으로 복원됩니다.
 
@@ -38,6 +43,9 @@
 | `returnFocusRef` | `React.RefObject` | No | 닫힌 뒤 자동으로 캡처한 trigger 대신 초점을 돌려보낼 요소. |
 | `restoreFocus` | `boolean` | No | 닫힌 뒤 trigger 또는 returnFocusRef로 초점을 복원합니다. @default true |
 | `ariaLabel` | `string` | No | title이 없을 때 사용할 접근 가능한 이름. @default "하단 시트" |
+| `withinPortal` | `boolean` | No | Render at the owner-document Portal boundary. @default true |
+| `portalTarget` | `HTMLElement \| null` | No |  |
+| `zIndex` | `number` | No |  |
 | `style` | `React.CSSProperties` | No |  |
 
 ## States
@@ -65,13 +73,17 @@
 - Sheet는 작은 화면에서 선택지나 짧은 보조 액션을 bottom edge에 제공하는 modal surface입니다. 분류는 LDS Product Extension이며 WDS parity axis가 아닌 LDS 반응형 패턴입니다.
 - 모바일 breakpoint 선택, drag gesture/속도, snap point, URL·query 상태는 제품 레이어 책임입니다. LDS Sheet는 controlled open/dismiss, 기존 표면 구조와 keyboard/ARIA 계약만 제공합니다.
 
+## Content and writing
+
+- WAI-ARIA APG Modal Dialog Pattern: bottom placement와 무관하게 modal surface의 focus trap, Escape, trigger 복원, ARIA 이름 계약을 적용했습니다.
+
 ## Accessibility
 
 - Drawer, Modal, ConfirmDialog를 sibling으로 확인했습니다. focus controller는 공유하지만 기존 bottom placement와 이동 방향을 유지합니다.
 - 제목은 aria-labelledby로 연결하고, 제목이 없으면 ariaLabel이 이름을 제공합니다.
+- zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다.
 - initialFocusRef → 첫 tabbable 요소 → dialog 표면 순으로 초기 초점을 선택합니다.
 - Tab/Shift+Tab, 외부 focus containment, Escape는 현재 stack의 최상위 Sheet에만 적용됩니다.
-- 닫히면 trigger 또는 returnFocusRef로 복원합니다. restoreFocus는 기본 true입니다.
 
 ## Related components
 

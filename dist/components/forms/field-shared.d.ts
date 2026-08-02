@@ -78,12 +78,17 @@ export interface FieldStackProps {
   status?: FieldStatus;
   /** 스택 루트에 병합할 스타일. */
   fieldStyle?: React.CSSProperties;
+  className?: string;
+  style?: React.CSSProperties;
+  labelProps?: Omit<FieldLabelProps & React.LabelHTMLAttributes<HTMLLabelElement>, 'htmlFor' | 'id' | 'label' | 'required'>;
+  messageProps?: Omit<FieldMessageProps & React.HTMLAttributes<HTMLSpanElement>, 'id' | 'message' | 'error' | 'status'>;
+  [key: `data-${string}`]: string | undefined;
   /** 컨트롤 렌더 결과. */
   children?: React.ReactNode;
 }
 
 /** 라벨 → 컨트롤 → 메시지 순서의 필드 수직 스택. 절대 위치 live 영역의 앵커도 소유한다. */
-export function FieldStack(props: FieldStackProps): React.JSX.Element;
+export const FieldStack: React.ForwardRefExoticComponent<FieldStackProps & React.RefAttributes<HTMLDivElement>>;
 
 export interface FieldStatusIconProps {
   /** 오류 여부. status보다 우선한다. @default false */

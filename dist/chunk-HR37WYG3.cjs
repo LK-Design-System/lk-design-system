@@ -27,7 +27,7 @@ function CommandButton({ action, size, index, tabStopKey }) {
   const disabled = !!action.disabled || typeof action.onClick !== "function";
   const active = !!action.active;
   const key = String(actionKey(action, index));
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     _chunk4DG5U4UWcjs.IconButton,
     {
       "data-command-index": index,
@@ -50,7 +50,7 @@ function CommandButton({ action, size, index, tabStopKey }) {
 function ActionToolbar({ actions, label, size }) {
   const enabledActions = actions.filter((action) => !action.disabled && typeof action.onClick === "function");
   const tabStopKey = enabledActions.length > 0 ? String(actionKey(enabledActions[0], actions.indexOf(enabledActions[0]))) : void 0;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     _chunk3VE2HGTTcjs.Toolbar,
     {
       label,
@@ -67,7 +67,7 @@ function ActionToolbar({ actions, label, size }) {
         borderRadius: 0,
         boxShadow: "none"
       },
-      children: actions.map((action, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      children: actions.map((action, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
         CommandButton,
         {
           action,
@@ -113,7 +113,7 @@ function CanvasEditorCommandBar({
   if (showHistory) {
     groups.push({
       key: "history",
-      node: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      node: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
         _chunkYQAFCY5Xcjs.HistoryToolbar,
         {
           label: historyLabel,
@@ -141,7 +141,7 @@ function CanvasEditorCommandBar({
       node: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "group", "aria-label": extraLabel, style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }, children })
     });
   }
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
     {
       ...rest,
@@ -149,7 +149,7 @@ function CanvasEditorCommandBar({
       "aria-label": _nullishCoalesce(ariaLabel, () => ( label)),
       style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexShrink: 0, ...style },
       children: groups.map((group, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
-        index > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        index > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           _chunkYQAFCY5Xcjs.Divider,
           {
             vertical: true,

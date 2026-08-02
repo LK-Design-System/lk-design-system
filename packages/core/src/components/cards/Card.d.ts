@@ -1,9 +1,14 @@
 import * as React from "react";
+import type { LdsClassNames, LdsStyles, LdsVars } from '../internal/surface.js';
 
-export interface CardProps extends Omit<
-  React.HTMLAttributes<HTMLElement>,
-  "title"
-> {
+export type CardPart = 'root' | 'content' | 'header' | 'actions' | 'media' | 'body' | 'title' | 'description' | 'footer';
+export type CardVariable =
+  | '--lds-card-padding'
+  | '--lds-card-radius'
+  | '--lds-card-gap'
+  | '--lds-card-max-width';
+
+export interface CardOwnProps {
   /** Root element used for non-interactive document semantics. @default "div" */
   as?: React.ElementType;
   /** Surface role. `subtle` is an inset grouping surface and defaults to no shadow. @default "default" */
@@ -52,7 +57,16 @@ export interface CardProps extends Omit<
   bottomContent?: React.ReactNode;
   footer?: React.ReactNode;
   children?: React.ReactNode;
+  classNames?: LdsClassNames<CardPart>;
+  styles?: LdsStyles<CardPart>;
+  vars?: LdsVars<CardVariable>;
 }
 
+export type CardProps<Element extends React.ElementType = 'div'> = CardOwnProps &
+  Omit<React.ComponentPropsWithoutRef<Element>, keyof CardOwnProps | 'as' | 'title'> & {
+    as?: Element;
+    ref?: React.ComponentPropsWithRef<Element>['ref'];
+  };
+
 /** 중립 화이트(또는 네이비) 서피스 — 헤어라인 보더, 부드러운 네이비 그림자, 16px 반경. */
-export function Card(props: CardProps): React.JSX.Element;
+export function Card<Element extends React.ElementType = 'div'>(props: CardProps<Element>): React.JSX.Element;

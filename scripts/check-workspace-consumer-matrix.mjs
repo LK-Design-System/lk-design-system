@@ -31,6 +31,11 @@ function invariant(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function isReactComponent(value) {
+  return typeof value === 'function'
+    || Boolean(value && typeof value === 'object' && value.$$typeof);
+}
+
 function optionValue(name) {
   const direct = process.argv.indexOf(name);
   if (direct >= 0) {
@@ -148,17 +153,37 @@ async function loadPackageSet(value) {
 
 async function prepareConsumer(appDirectory, version, packageSet, cacheDirectory) {
   const fixtureDirectory = path.join(repositoryRoot, 'scripts', 'fixtures', 'wave0-consumer', version.fixture);
+  const manifestPath = path.join(appDirectory, 'package.json');
   await rm(appDirectory, { recursive: true, force: true, maxRetries: 3 });
   await mkdir(path.join(appDirectory, 'src'), { recursive: true });
-  await copyFile(path.join(fixtureDirectory, 'package.json'), path.join(appDirectory, 'package.json'));
+  await copyFile(path.join(fixtureDirectory, 'package.json'), manifestPath);
   await copyFile(path.join(fixtureDirectory, 'package-lock.json'), path.join(appDirectory, 'package-lock.json'));
   await copyFile(path.join(repositoryRoot, '.npmrc'), path.join(appDirectory, '.npmrc'));
   const npmEnvironment = { npm_config_cache: cacheDirectory };
   runNpm(['ci', '--ignore-scripts', '--no-audit', '--no-fund'], appDirectory, { env: npmEnvironment });
+  const consumerManifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+  const localDependencies = Object.fromEntries(packageSet.tarballs.map((item) => [
+    item.name,
+    `file:${normalizePath(path.relative(appDirectory, item.tarball))}`,
+  ]));
+  // The external Robotics tarball intentionally remains locked to its own
+  // release, but this matrix verifies it against the current package set. Use
+  // the candidate Core/Product tarballs for those transitive edges and keep
+  // the matrix reproducible without private-registry access.
+  await writeFile(manifestPath, `${JSON.stringify({
+    ...consumerManifest,
+    dependencies: {
+      ...consumerManifest.dependencies,
+      ...localDependencies,
+    },
+    overrides: {
+      ...consumerManifest.overrides,
+      '@lk-design-system/lds-core': '$@lk-design-system/lds-core',
+      '@lk-design-system/lds-product': '$@lk-design-system/lds-product',
+    },
+  }, null, 2)}\n`, 'utf8');
   runNpm([
     'install',
-    ...packageSet.tarballs.map((item) => item.tarball),
-    '--no-save',
     '--package-lock=false',
     '--ignore-scripts',
     '--no-audit',
@@ -181,10 +206,12 @@ import * as CompatProduct from '@lk-design-system/design-system-core/product';
 import * as CompatRobotics from '@lk-design-system/design-system-core/robotics';
 import { Button as CoreDeepButton } from '@lk-design-system/lds-core/components/buttons/Button';
 import { Button as CompatDeepButton } from '@lk-design-system/design-system-core/components/buttons/Button';
-if (typeof Core.Button !== 'function') throw new Error('Core Button ESM export is missing.');
-if (typeof Theme.ThemeToggle !== 'function') throw new Error('ThemeToggle ESM export is missing.');
-if (typeof Product.Table !== 'function') throw new Error('Product Table ESM export is missing.');
-if (typeof Robotics.RobotStatusCard !== 'function') throw new Error('Robotics ESM export is missing.');
+const isReactComponent = (value) => typeof value === 'function'
+  || Boolean(value && typeof value === 'object' && value.$$typeof);
+if (!isReactComponent(Core.Button)) throw new Error('Core Button ESM export is missing.');
+if (!isReactComponent(Theme.ThemeToggle)) throw new Error('ThemeToggle ESM export is missing.');
+if (!isReactComponent(Product.Table)) throw new Error('Product Table ESM export is missing.');
+if (!isReactComponent(Robotics.RobotStatusCard)) throw new Error('Robotics ESM export is missing.');
 if (Compat.Button !== Core.Button || CompatCore.Button !== Core.Button) throw new Error('Core ESM facade identity drift.');
 if (Compat.ThemeToggle !== Theme.ThemeToggle || CompatTheme.ThemeToggle !== Theme.ThemeToggle) throw new Error('Theme ESM facade identity drift.');
 if (Compat.Table !== Product.Table || CompatProduct.Table !== Product.Table) throw new Error('Product ESM facade identity drift.');
@@ -282,12 +309,12 @@ async function verifyConsumer(appDirectory, version, packageSet, requireBrowser)
   const roboticsEntry = consumerRequire(`${compatName}/robotics`);
   const deepButton = consumerRequire(`${compatName}/components/buttons/Button`);
   const deepButtonExport = deepButton.Button || deepButton.default;
-  invariant(typeof rootEntry.Button === 'function', 'Compat root Button CJS export is missing.');
-  invariant(typeof coreEntry.Button === 'function', 'Compat Core layer CJS export is missing.');
-  invariant(typeof themeEntry.ThemeToggle === 'function', 'Compat Theme layer CJS export is missing.');
-  invariant(typeof productEntry.Table === 'function', 'Compat Product layer CJS export is missing.');
-  invariant(typeof roboticsEntry.RobotStatusCard === 'function', 'Compat Robotics layer CJS export is missing.');
-  invariant(typeof deepButtonExport === 'function', 'Compat deep Button CJS export is missing.');
+  invariant(isReactComponent(rootEntry.Button), 'Compat root Button CJS export is missing.');
+  invariant(isReactComponent(coreEntry.Button), 'Compat Core layer CJS export is missing.');
+  invariant(isReactComponent(themeEntry.ThemeToggle), 'Compat Theme layer CJS export is missing.');
+  invariant(isReactComponent(productEntry.Table), 'Compat Product layer CJS export is missing.');
+  invariant(isReactComponent(roboticsEntry.RobotStatusCard), 'Compat Robotics layer CJS export is missing.');
+  invariant(isReactComponent(deepButtonExport), 'Compat deep Button CJS export is missing.');
   invariant(rootEntry.Button === coreEntry.Button, 'Compat root and Core Button references differ.');
   invariant(rootEntry.Button === deepButtonExport, 'Compat root and deep Button references differ.');
   invariant(rootEntry.ThemeToggle === themeEntry.ThemeToggle, 'Compat root and Theme references differ.');
@@ -393,12 +420,15 @@ async function main() {
   await rm(workDirectory, { recursive: true, force: true, maxRetries: 3 });
   await mkdir(workDirectory, { recursive: true });
   try {
-    const consumers = [];
-    for (const version of versions) {
+    const consumers = await Promise.all(versions.map(async (version) => {
       const appDirectory = path.join(workDirectory, version.fixture);
-      await prepareConsumer(appDirectory, version, packageSet, cacheDirectory);
-      consumers.push(await verifyConsumer(appDirectory, version, packageSet, requireBrowser));
-    }
+      const versionCacheDirectory = path.join(cacheDirectory, version.fixture);
+      console.log(`Validating ${version.id} workspace consumer...`);
+      await prepareConsumer(appDirectory, version, packageSet, versionCacheDirectory);
+      const result = await verifyConsumer(appDirectory, version, packageSet, requireBrowser);
+      console.log(`Validated ${version.id} workspace consumer.`);
+      return result;
+    }));
     const report = {
       schemaVersion: 1,
       kind: 'lds-workspace-consumer-platform-run',

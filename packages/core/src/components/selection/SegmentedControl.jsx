@@ -1,4 +1,5 @@
 import React from 'react';
+import { componentVars, partClassName, partStyle } from '../internal/surface.js';
 
 function normalizeSegmentOption(option) {
   return typeof option === 'string'
@@ -10,7 +11,7 @@ function normalizeSegmentOption(option) {
 }
 
 /** Compact, mutually exclusive view or mode selection. */
-export function SegmentedControl({
+export const SegmentedControl = React.forwardRef(function SegmentedControl({
   options = [],
   value,
   defaultValue,
@@ -22,10 +23,14 @@ export function SegmentedControl({
   resize,
   disabled = false,
   disable = false,
+  className,
   style,
+  classNames,
+  styles,
+  vars,
   'aria-label': ariaLabel = '보기 선택',
   ...groupProps
-}) {
+}, forwardedRef) {
   const normalizedOptions = options.map(normalizeSegmentOption);
   const enabledIndices = normalizedOptions
     .map((option, index) => (option.disabled ? -1 : index))
@@ -68,21 +73,29 @@ export function SegmentedControl({
   return (
     <div
       {...groupProps}
+      ref={forwardedRef}
+      data-slot="root"
+      data-size={normalizedSize}
+      data-variant={outlined ? 'outlined' : 'solid'}
+      data-disabled={disabledState ? 'true' : undefined}
       role="radiogroup"
       aria-label={ariaLabel}
       aria-disabled={disabledState || undefined}
+      className={partClassName(classNames, 'root', className) || undefined}
       style={{
+        ...componentVars(vars, '--lds-segmented-control-'),
         display: 'inline-flex',
         width: fill ? '100%' : undefined,
-        height,
+        height: `var(--lds-segmented-control-height, ${height}px)`,
         boxSizing: 'border-box',
         justifySelf: fill ? undefined : 'start',
-        padding: outlined ? 0 : trackPadding,
-        gap: outlined ? 0 : 2,
+        padding: outlined ? 0 : `var(--lds-segmented-control-padding, ${trackPadding}px)`,
+        gap: outlined ? 0 : 'var(--lds-segmented-control-gap, 2px)',
         background: outlined ? 'var(--color-semantic-background-elevated-normal)' : 'var(--color-semantic-fill-normal)',
         border: outlined ? '1px solid var(--color-semantic-line-solid-normal)' : 'none',
-        borderRadius: trackRadius,
+        borderRadius: `var(--lds-segmented-control-radius, ${trackRadius})`,
         overflow: 'hidden',
+        ...partStyle(styles, 'root'),
         ...style,
       }}
     >
@@ -97,12 +110,15 @@ export function SegmentedControl({
           <button
             key={option.value}
             ref={(node) => { buttonRefs.current[index] = node; }}
+            data-slot="segment"
+            data-state={selected ? 'checked' : 'unchecked'}
             type="button"
             role="radio"
             aria-checked={selected}
             aria-disabled={optionDisabled || undefined}
             data-selected={selected ? 'true' : 'false'}
             data-disabled={optionDisabled ? 'true' : 'false'}
+            className={partClassName(classNames, 'segment', option.className) || undefined}
             tabIndex={!optionDisabled && index === rovingIndex ? 0 : -1}
             disabled={optionDisabled}
             onClick={() => pick(index)}
@@ -154,7 +170,7 @@ export function SegmentedControl({
                   : activeHover || activeFocus
                     ? 'var(--color-semantic-fill-normal)'
                     : 'transparent',
-              borderRadius: outlined ? 0 : segmentRadius,
+              borderRadius: outlined ? 0 : `var(--lds-segmented-control-segment-radius, ${segmentRadius})`,
               borderLeft: outlined && index > 0 ? '1px solid var(--color-semantic-line-solid-normal)' : 'none',
               boxShadow: [
                 active && !outlined && !optionDisabled ? 'var(--shadow-xs)' : null,
@@ -162,18 +178,23 @@ export function SegmentedControl({
               ].filter(Boolean).join(', ') || 'none',
               transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
               whiteSpace: 'nowrap',
+              ...partStyle(styles, 'segment'),
+              ...option.style,
             }}
           >
-            {option.icon && <span aria-hidden="true" style={{ display: 'inline-flex', flex: '0 0 auto' }}>{option.icon}</span>}
-            <span>{option.label}</span>
+            {option.icon && <span data-slot="icon" className={partClassName(classNames, 'icon') || undefined} aria-hidden="true" style={{ display: 'inline-flex', flex: '0 0 auto', ...partStyle(styles, 'icon') }}>{option.icon}</span>}
+            <span data-slot="label" className={partClassName(classNames, 'label') || undefined} style={partStyle(styles, 'label')}>{option.label}</span>
             {option.count != null && (
               <span
+                data-slot="count"
                 data-segment-count="true"
+                className={partClassName(classNames, 'count') || undefined}
                 style={{
                   minWidth: '1.25em',
                   fontVariantNumeric: 'tabular-nums',
                   fontWeight: 'var(--fw-bold)',
                   color: active ? 'currentColor' : 'var(--color-semantic-label-alternative)',
+                  ...partStyle(styles, 'count'),
                 }}
               >
                 {option.count}
@@ -184,4 +205,4 @@ export function SegmentedControl({
       })}
     </div>
   );
-}
+});

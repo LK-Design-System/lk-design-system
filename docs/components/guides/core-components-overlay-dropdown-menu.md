@@ -16,6 +16,7 @@
 
 - Use for trigger-bound command menus. Use Menubar for a horizontal application menu.
 - submenuMode — 서브메뉴 표현 방식(flyout 기본, drill).
+- Because the panel leaves its physical ancestor, the root portal copies the nearest explicit data-theme or .theme-light|dark|auto scope onto the portal wrapper. Semantic CSS variables therefore resolve against the same theme as the trigger even when document.body uses a different theme.
 
 ### 사용하지 않음
 
@@ -38,6 +39,8 @@
 | `trigger` | `React.ReactNode` | Yes |  |
 | `items` | `DropdownMenuItem[]` | Yes |  |
 | `align` | `"left" \| "right"` | No |  |
+| `position` | `'top' \| 'bottom' \| 'left' \| 'right'` | No | Preferred side; flips when space is insufficient. @default "bottom" |
+| `offset` | `number` | No | Trigger-to-panel gap in pixels. @default 8 |
 | `variant` | `"normal" \| "radio" \| "checkbox"` | No | menu variant axis. @default "normal" |
 | `submenuMode` | `"flyout" \| "drill"` | No | 중첩 서브메뉴 표현 방식. flyout은 부모 옆으로 겹겹이 뜨고(데스크톱 표준), drill은 같은 패널이 하위 목록으로 전환되며 상단에 뒤로 컨트롤을 둡니다(폭 고정·터치 친화). @default "flyout" |
 | `density` | `"compact" \| "default" \| "comfortable"` | No | Semantic menu row density. @default "default" |
@@ -55,6 +58,8 @@
 | `open` | `boolean` | No |  |
 | `defaultOpen` | `boolean` | No |  |
 | `onOpenChange` | `(open: boolean) = void` | No |  |
+| `withinPortal` | `boolean` | No | Escape clipping ancestors through the owner-document Portal. @default true |
+| `portalTarget` | `HTMLElement \| null` | No |  |
 
 ## States
 
@@ -68,7 +73,7 @@
 - WAI-ARIA Menu Button Pattern — menu button의 trigger 상태와 열림 시 첫/마지막 항목 focus 이동을 적용했습니다.
 - Menubar submenu와 check/radio glyph, elevated surface, keyboard engine, action button 순서를 공유합니다.
 - Popover는 임의의 interactive content surface이므로 16px content padding을 유지하고, 명령·선택 row를 담는 DropdownMenu의 8px shell과 구분합니다.
-- Root panels use the same owner-document portal boundary as flyout submenus and use the shared floating-position engine's fixed strategy. This lets a command menu escape a Table or other ancestor scroll container without weakening the ancestor's horizontal-overflow contract.
+- Geometry overrides are limited to --lds-dropdown-menu-width, --lds-dropdown-menu-min-width, and --lds-dropdown-menu-max-height. Menu roles, roving focus, nested stack, Escape, and focus restoration remain LDS-owned.
 
 ## 정량 규칙
 
@@ -91,6 +96,7 @@
 
 - menuActionArea는 서버 반영 비용이 크거나 여러 설정을 원자적으로 확정해야 하는 명시적인 staged workflow에서만 onCancel·onApply 중 제공된 실제 동작을 Cancel/Apply 버튼으로 만듭니다. 단순한 다중 선택이나 열기·복제·삭제처럼 선택 즉시 실행되는 메뉴에는 사용하지 않습니다. 기본 문구는 cancelLabel="취소", applyLabel="적용"이며 제품 문맥에 맞게 바꿀 수 있습니다. 콜백이나 custom action이 없으면 무동작 버튼을 만들지 않습니다.
 - Carbon Menu와 Menu Button — menu item 높이를 24/32/40/48px size 축으로 관리하고, 짧은 메뉴는 최소 160px에서 시작해 긴 label에 따라 최대 288px까지 확장합니다. LDS는 14/20px·40px을 desktop default로 두고 32/48px을 compact/comfortable density로 분리하며, 기존 LDS 리듬에 맞춰 적응형 폭을 176–320px로 조정합니다.
+- ref, className, and style target the anchor root. Stable parts are root, trigger, panel, menu, item, divider, and actionArea; per-item class/style composes after the shared item part.
 - React createPortal documents portals as the escape hatch for clipping ancestors while retaining React-tree context and event propagation.
 
 ## Accessibility
@@ -107,12 +113,12 @@
 | --- | --- |
 | `Button` | 대표 시나리오에서 조합 |
 | `Icon` | 대표 시나리오에서 조합 |
+| `Table` | 대표 시나리오에서 조합 |
 | `Alert` | 대표 시나리오에서 조합 |
 | `ConfirmDialog` | 대표 시나리오에서 조합 |
 | `Dimmer` | 대표 시나리오에서 조합 |
 | `Modal` | 대표 시나리오에서 조합 |
 | `Snackbar` | 대표 시나리오에서 조합 |
-| `Toast` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -171,6 +177,9 @@
 - `--fw-regular`
 - `--label2-line`
 - `--label2-size`
+- `--lds-dropdown-menu-max-height`
+- `--lds-dropdown-menu-min-width`
+- `--lds-dropdown-menu-width`
 - `--radius-5`
 - `--shadow-md`
 - `--space-2`

@@ -8,6 +8,7 @@ import {
   fieldTypography,
   mergeIds,
 } from './field-shared.js';
+import { componentVars, partClassName, partStyle } from '../internal/surface.js';
 
 function usePlaceholderStyle() {
   React.useEffect(() => {
@@ -24,7 +25,7 @@ function usePlaceholderStyle() {
  * Multi-line field matching Input's box, ring and focus halo. Vertically
  * resizable, min 120px.
  */
-export function Textarea({
+export const Textarea = React.forwardRef(function Textarea({
   label,
   helper,
   error,
@@ -39,9 +40,16 @@ export function Textarea({
   resize = 'normal',
   rows = 5,
   id,
+  className,
   style,
+  textareaClassName,
+  textareaStyle,
+  classNames,
+  styles,
+  vars,
+  rootRef,
   ...rest
-}) {
+}, forwardedRef) {
   const autoId = React.useId();
   const taId = id || `ta-${autoId}`;
   const message = error ?? helper;
@@ -59,14 +67,34 @@ export function Textarea({
   const minHeight = normalizedSize === 'sm' ? 96 : normalizedSize === 'lg' ? 160 : 120;
   const resizeMode = resize === 'fixed' ? 'none' : resize === 'limit' ? 'vertical' : 'vertical';
   return (
-    <div data-readonly={readOnly ? 'true' : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--component-input-stack-gap)', ...style }}>
-      <FieldLabel htmlFor={taId} label={label} required={required} />
-      <div style={{ position: 'relative' }}>
+    <div
+      ref={rootRef}
+      data-slot="root"
+      data-disabled={disabled ? 'true' : undefined}
+      data-readonly={readOnly ? 'true' : undefined}
+      data-invalid={isInvalid ? 'true' : undefined}
+      data-size={normalizedSize}
+      className={partClassName(classNames, 'root', className) || undefined}
+      style={{ ...componentVars(vars, '--lds-textarea-'), display: 'flex', flexDirection: 'column', gap: 'var(--component-input-stack-gap)', ...partStyle(styles, 'root'), ...style }}
+    >
+      <FieldLabel
+        data-slot="label"
+        className={partClassName(classNames, 'label') || undefined}
+        style={partStyle(styles, 'label')}
+        htmlFor={taId}
+        label={label}
+        required={required}
+        disabled={disabled}
+      />
+      <div data-slot="control" className={partClassName(classNames, 'control') || undefined} style={{ position: 'relative', ...partStyle(styles, 'control') }}>
         <textarea
+        ref={forwardedRef}
         id={taId}
         rows={rows}
+        data-slot="textarea"
         data-lds-field=""
         {...rest}
+        className={partClassName(classNames, 'textarea', textareaClassName) || undefined}
         disabled={disabled}
         readOnly={readOnly}
         required={required}
@@ -77,22 +105,26 @@ export function Textarea({
         onMouseEnter={(e) => { setHover(true); rest.onMouseEnter && rest.onMouseEnter(e); }}
         onMouseLeave={(e) => { setHover(false); rest.onMouseLeave && rest.onMouseLeave(e); }}
         style={{
-          width: '100%', resize: resizeMode, minHeight, maxHeight: resize === 'limit' ? minHeight * 2 : undefined, padding: `var(--space-3) ${isInvalid || status === 'positive' ? 'var(--space-10)' : 'var(--space-3)'} var(--space-3) var(--space-3)`,
+          width: '100%', resize: resizeMode,
+          minHeight: `var(--lds-textarea-min-height, ${minHeight}px)`,
+          maxHeight: resize === 'limit' ? `var(--lds-textarea-max-height, ${minHeight * 2}px)` : undefined,
+          padding: `var(--lds-textarea-padding, var(--space-3) ${isInvalid || status === 'positive' ? 'var(--space-10)' : 'var(--space-3)'} var(--space-3) var(--space-3))`,
           background: fieldBackground({ disabled, readOnly }), color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-text-color)',
-          border: `var(--component-input-border-width) solid ${ring}`, borderRadius: 'var(--component-input-radius)',
+          border: `var(--component-input-border-width) solid ${ring}`, borderRadius: 'var(--lds-textarea-radius, var(--component-input-radius))',
           boxShadow: activeFocus && !isInvalid ? 'var(--component-input-focus-shadow)' : 'none',
           transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
           fontFamily: 'var(--font-sans)', ...fieldTypography(normalizedSize),
           outline: 'none', boxSizing: 'border-box', cursor: disabled ? 'not-allowed' : readOnly ? 'text' : undefined,
+          ...partStyle(styles, 'textarea'), ...textareaStyle,
         }}
         />
         {(isInvalid || status === 'positive') && (
-          <span style={{ position: 'absolute', top: 'var(--space-3)', right: 'var(--space-3)', display: 'inline-flex', pointerEvents: 'none' }}>
+          <span data-slot="statusIcon" className={partClassName(classNames, 'statusIcon') || undefined} style={{ position: 'absolute', top: 'var(--space-3)', right: 'var(--space-3)', display: 'inline-flex', pointerEvents: 'none', ...partStyle(styles, 'statusIcon') }}>
             <FieldStatusIcon invalid={isInvalid} status={status} />
           </span>
         )}
       </div>
-      <FieldMessage id={messageId} message={message} error={error} status={status} />
+      <FieldMessage data-slot="message" className={partClassName(classNames, 'message') || undefined} style={partStyle(styles, 'message')} id={messageId} message={message} error={error} status={status} />
     </div>
   );
-}
+});

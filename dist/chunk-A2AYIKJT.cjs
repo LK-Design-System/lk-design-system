@@ -22,7 +22,7 @@ function Stat({
   const labColor = dark ? "var(--color-semantic-inverse-label-neutral-soft)" : "var(--color-semantic-label-alternative)";
   const displayUnit = typeof unit === "string" ? _chunk43Q7GJUBcjs.normalizeUnit.call(void 0, unit) : unit;
   const attachedUnit = typeof displayUnit === "string" && _chunk43Q7GJUBcjs.isAttachedUnit.call(void 0, displayUnit);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       style: {

@@ -2,12 +2,17 @@ import React from 'react';
 import { Tooltip } from '@lk-design-system/lds-core/components/content/Tooltip';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 import { useLightDismiss } from '@lk-design-system/lds-core/components/overlay/anchored-overlay';
+import { componentVars, partClassName, partStyle, useMergedRefs } from '@lk-design-system/lds-core/components/internal/surface';
 
 const Chevron = ({ open }) => (
   <Icon name="chevron-down-small" size={14} aria-hidden="true" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }} />
 );
 
 const LIST_ITEM_STYLE = { display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', minWidth: 0 };
+
+function cssLength(value) {
+  return typeof value === 'number' ? `${value}px` : value;
+}
 
 /**
  * Collapsed-rail label surface. Persistent rails keep the wrapper mounted in
@@ -37,17 +42,18 @@ function RailItemTooltip({ label, collapsed, enabled = true, children }) {
  * `value` and `collapsed`; SideNav never renders the collapse control itself.
  * Compact fixed rail → `NavRail`; mobile → `BottomNav`.
  */
-export function SideNav({
+export const SideNav = React.forwardRef(function SideNav({
   items = [], value, defaultValue, onChange,
   header, headerCollapsed, footer, width = 240,
   brandAlign = 'center', footerGap = 'var(--space-2)',
   surface = 'floating',
   collapsed, defaultCollapsed = false, onCollapsedChange, collapsedWidth = 64, overlay = false,
   autoExpandActiveGroup = true,
-  renderLink, className, style, onBlur, onFocus,
+  renderLink, className, style, classNames, styles, vars,
+  onBlur, onFocus, onClick, onMouseEnter, onMouseLeave,
   'aria-label': ariaLabel = '사이드 탐색',
   ...rest
-}) {
+}, forwardedRef) {
   const isControlled = value !== undefined;
   const flat = [];
   items.forEach((i) => { if (i && !i.heading && i.value != null) { flat.push(i); (i.children || []).forEach((c) => flat.push(c)); } });
@@ -71,6 +77,7 @@ export function SideNav({
   const panelId = `lk-sidenav-panel-${generatedPanelId}`;
 
   const navRef = React.useRef(null);
+  const mergedNavRef = useMergedRefs(navRef, forwardedRef);
   const hasPopover = () => !!(navRef.current && navRef.current.querySelector('[role="menu"]'));
   const peekT = React.useRef(null);
   const pointerInside = React.useRef(false);
@@ -152,19 +159,19 @@ export function SideNav({
     position: 'relative', display: 'flex', alignItems: 'center', justifyContent: col ? 'center' : 'flex-start', gap: 'var(--space-3)',
     // Width may animate between rail and panel, but vertical hit targets stay
     // fixed so pointer/focus positions do not drift during an overlay peek.
-    width: '100%', minHeight: 44, padding: col ? '11px 0' : '10px 12px', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)',
+    width: '100%', minHeight: 'var(--lds-side-nav-item-height, 44px)', padding: col ? '11px 0' : '10px 12px', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--lds-side-nav-item-radius, var(--radius-lg))',
     cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, textAlign: 'left', textDecoration: 'none', fontFamily: 'var(--font-sans)',
     fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)',
     background: active ? 'var(--color-semantic-primary-surface-strong)' : hovered && !disabled ? 'var(--color-semantic-fill-alternative)' : 'transparent', color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
-    transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)', ...extra,
+    transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)', ...extra, ...partStyle(styles, 'item'),
   });
   const labelSpan = (active, children) => (
-    <span style={{ flex: 1, minWidth: 0, fontSize: 'var(--label1-size)', fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{children}</span>
+    <span data-slot="label" className={partClassName(classNames, 'label') || undefined} style={{ flex: 1, minWidth: 0, fontSize: 'var(--label1-size)', fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', ...partStyle(styles, 'label') }}>{children}</span>
   );
   const pill = (active, badge) => (
-    <span style={{ flexShrink: 0, minWidth: 18, height: 18, padding: '0 6px', boxSizing: 'border-box', borderRadius: 'var(--radius-pill)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', lineHeight: '18px', textAlign: 'center', background: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-surface-strong)', color: active ? 'var(--color-semantic-background-elevated-normal)' : 'var(--color-semantic-label-normal)' }}>{badge}</span>
+    <span data-slot="badge" className={partClassName(classNames, 'badge') || undefined} style={{ flexShrink: 0, minWidth: 18, height: 18, padding: '0 6px', boxSizing: 'border-box', borderRadius: 'var(--radius-pill)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', lineHeight: '18px', textAlign: 'center', background: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-surface-strong)', color: active ? 'var(--color-semantic-background-elevated-normal)' : 'var(--color-semantic-label-normal)', ...partStyle(styles, 'badge') }}>{badge}</span>
   );
-  const dot = <span style={{ position: 'absolute', top: 7, right: 7, width: 7, height: 7, borderRadius: '50%', background: 'var(--color-semantic-primary-normal)' }} />;
+  const dot = <span data-slot="badge" className={partClassName(classNames, 'badge') || undefined} style={{ position: 'absolute', top: 7, right: 7, width: 7, height: 7, borderRadius: '50%', background: 'var(--color-semantic-primary-normal)', ...partStyle(styles, 'badge') }} />;
 
   const renderLeafControl = (item, { active, parentValue, ariaLabel, title, content, itemStyle }) => {
     const disabled = !!item.disabled;
@@ -177,13 +184,17 @@ export function SideNav({
       item.onClick?.(event);
     };
     const commonProps = {
+      'data-slot': 'item',
       'data-sidenav-value': item.value,
       'data-sidenav-parent': parentValue,
+      'data-state': active ? 'active' : 'inactive',
+      'data-disabled': disabled ? 'true' : undefined,
       'aria-label': ariaLabel,
       'aria-current': active ? 'page' : undefined,
       title,
       onClick: activate,
       ...hoverProps(item.value),
+      className: partClassName(classNames, 'item', item.className) || undefined,
       style: itemStyle,
       children: content,
     };
@@ -210,7 +221,9 @@ export function SideNav({
 
   const resolvedSurface = surface === 'docked' ? 'docked' : 'floating';
   const docked = resolvedSurface === 'docked';
-  const shell = { position: 'relative', display: 'flex', flexDirection: 'column', width: col ? collapsedWidth : width, boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: docked ? 'none' : '1px solid var(--color-semantic-line-solid-normal)', borderInlineEnd: docked ? '1px solid var(--color-semantic-line-solid-normal)' : undefined, borderRadius: docked ? 0 : 'var(--radius-xl)', boxShadow: docked ? 'none' : undefined, padding: 'var(--space-2-5)', transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
+  const resolvedWidth = cssLength(width);
+  const resolvedCollapsedWidth = cssLength(collapsedWidth);
+  const shell = { position: 'relative', display: 'flex', flexDirection: 'column', width: col ? `var(--lds-side-nav-collapsed-width, ${resolvedCollapsedWidth})` : `var(--lds-side-nav-width, ${resolvedWidth})`, boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: docked ? 'none' : '1px solid var(--color-semantic-line-solid-normal)', borderInlineEnd: docked ? '1px solid var(--color-semantic-line-solid-normal)' : undefined, borderRadius: docked ? 0 : 'var(--lds-side-nav-radius, var(--radius-xl))', boxShadow: docked ? 'none' : undefined, padding: 'var(--lds-side-nav-padding, var(--space-2-5))', transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
   const sideNavStyles = `
     [data-sidenav-value]:active:not(:disabled){background:var(--color-semantic-fill-normal)!important}
     [data-collapsed="true"] .lk-sidenav__scroll::-webkit-scrollbar{display:none}
@@ -218,18 +231,18 @@ export function SideNav({
   `;
   const brandRegionStyle = { position: 'relative', display: 'flex', flexDirection: col ? 'column' : 'row', alignItems: 'center', justifyContent: col || brandAlign === 'center' ? 'center' : 'flex-start', gap: 'var(--space-1-5)', minHeight: 24, padding: '14px 10px 18px' };
   const panelContent = (
-    <div id={panelId} className="lk-sidenav__panel-content" data-collapsed={col ? 'true' : 'false'} style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto', minHeight: 0 }}>
+    <div id={panelId} data-slot="panel" className={partClassName(classNames, 'panel', 'lk-sidenav__panel-content') || undefined} data-collapsed={col ? 'true' : 'false'} style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto', minHeight: 0, ...partStyle(styles, 'panel') }}>
       <style>{sideNavStyles}</style>
       {brand != null && (
-        <div className="lk-sidenav__brand" style={brandRegionStyle}>
+        <div data-slot="brand" className={partClassName(classNames, 'brand', 'lk-sidenav__brand') || undefined} style={{ ...brandRegionStyle, ...partStyle(styles, 'brand') }}>
           {brand}
         </div>
       )}
-      <ul className="lk-scroll-surface lk-sidenav__scroll" data-scrollbar="compact" data-scroll-gutter={col ? 'auto' : 'stable'} data-scrollbar-exception="collapsed-navigation-rail" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', flex: '1 1 auto', minHeight: 0, margin: 0, padding: 0, listStyle: 'none', overflowX: 'hidden', overflowY: 'auto', scrollbarWidth: col ? 'none' : undefined }}>
+      <ul data-slot="list" className={partClassName(classNames, 'list', 'lk-scroll-surface', 'lk-sidenav__scroll') || undefined} data-scrollbar="compact" data-scroll-gutter={col ? 'auto' : 'stable'} data-scrollbar-exception="collapsed-navigation-rail" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', flex: '1 1 auto', minHeight: 0, margin: 0, padding: 0, listStyle: 'none', overflowX: 'hidden', overflowY: 'auto', scrollbarWidth: col ? 'none' : undefined, ...partStyle(styles, 'list') }}>
         {items.map((o, i) => {
           if (o.heading) return col
-            ? <li key={'h' + i} style={LIST_ITEM_STYLE}><div aria-hidden="true" style={{ height: 1, flexShrink: 0, background: 'var(--color-semantic-line-solid-normal)', margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px' }} /></li>
-            : <li key={'h' + i} style={LIST_ITEM_STYLE}><div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px' }}>{o.heading}</div></li>;
+            ? <li key={'h' + i} style={LIST_ITEM_STYLE}><div data-slot="heading" className={partClassName(classNames, 'heading') || undefined} aria-hidden="true" style={{ height: 1, flexShrink: 0, background: 'var(--color-semantic-line-solid-normal)', margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px', ...partStyle(styles, 'heading') }} /></li>
+            : <li key={'h' + i} style={LIST_ITEM_STYLE}><div data-slot="heading" className={partClassName(classNames, 'heading') || undefined} style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px', ...partStyle(styles, 'heading') }}>{o.heading}</div></li>;
 
           const kids = o.children || [];
           const title = typeof o.label === 'string' ? o.label : undefined;
@@ -243,9 +256,9 @@ export function SideNav({
             return (
               <li key={o.value} style={LIST_ITEM_STYLE}>
                 <RailItemTooltip label={accessibleLabel} collapsed={col} enabled={!overlay}>
-                  <button type="button" data-sidenav-value={o.value} aria-label={col || o.ariaLabel ? accessibleLabel : undefined} aria-expanded={col ? undefined : isOpen} disabled={o.disabled} onClick={onParent} title={col ? undefined : accessibleLabel} {...hoverProps(o.value)}
+                  <button type="button" data-slot="item" data-state={childActive ? 'active-descendant' : 'inactive'} data-disabled={o.disabled ? 'true' : undefined} className={partClassName(classNames, 'item', o.className) || undefined} data-sidenav-value={o.value} aria-label={col || o.ariaLabel ? accessibleLabel : undefined} aria-expanded={col ? undefined : isOpen} disabled={o.disabled} onClick={onParent} title={col ? undefined : accessibleLabel} {...hoverProps(o.value)}
                     style={row(false, o.disabled, { color: childActive ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)' }, hovKey === o.value)}>
-                    {o.icon != null && <span aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex' }}>{o.icon}</span>}
+                    {o.icon != null && <span data-slot="icon" className={partClassName(classNames, 'icon') || undefined} aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex', ...partStyle(styles, 'icon') }}>{o.icon}</span>}
                     {!col && labelSpan(childActive, o.label)}
                     {!col && <Chevron open={isOpen} />}
                     {/* Active descendant state already uses stronger icon ink.
@@ -253,7 +266,7 @@ export function SideNav({
                   </button>
                 </RailItemTooltip>
                 {!col && isOpen && (
-                  <ul style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', margin: '0 0 4px', padding: 0, listStyle: 'none' }}>
+                  <ul data-slot="childList" className={partClassName(classNames, 'childList') || undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', margin: '0 0 4px', padding: 0, listStyle: 'none', ...partStyle(styles, 'childList') }}>
                     {kids.map((c) => {
                       const ca = c.value === val;
                       const childTitle = typeof c.label === 'string' ? c.label : c.ariaLabel;
@@ -268,11 +281,11 @@ export function SideNav({
                             content: (
                               <React.Fragment>
                                 {hasChildIcons && (
-                                  <span data-sidenav-child-icon aria-hidden="true" style={{ width: 'var(--space-4-5)', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                                  <span data-slot="icon" className={partClassName(classNames, 'icon') || undefined} data-sidenav-child-icon aria-hidden="true" style={{ width: 'var(--space-4-5)', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', ...partStyle(styles, 'icon') }}>
                                     {c.icon}
                                   </span>
                                 )}
-                                <span style={{ flex: 1, minWidth: 0, fontSize: 'var(--label2-size)', fontWeight: ca ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.label}</span>
+                                <span data-slot="label" className={partClassName(classNames, 'label') || undefined} style={{ flex: 1, minWidth: 0, fontSize: 'var(--label2-size)', fontWeight: ca ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', ...partStyle(styles, 'label') }}>{c.label}</span>
                                 {c.badge != null && pill(ca, c.badge)}
                               </React.Fragment>
                             ),
@@ -297,7 +310,7 @@ export function SideNav({
                   itemStyle: row(active, o.disabled, null, hovKey === o.value),
                   content: (
                     <React.Fragment>
-                      {o.icon != null && <span aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex' }}>{o.icon}</span>}
+                      {o.icon != null && <span data-slot="icon" className={partClassName(classNames, 'icon') || undefined} aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex', ...partStyle(styles, 'icon') }}>{o.icon}</span>}
                       {!col && labelSpan(active, o.label)}
                       {!col && o.badge != null && pill(active, o.badge)}
                       {col && o.badge != null && dot}
@@ -309,7 +322,7 @@ export function SideNav({
           );
         })}
       </ul>
-      <div style={{ marginTop: 'auto', paddingTop: footerGap }}>
+      <div data-slot="footer" className={partClassName(classNames, 'footer') || undefined} style={{ marginTop: 'auto', paddingTop: footerGap, ...partStyle(styles, 'footer') }}>
         {resolvedFooter != null && (
           <div style={{ paddingTop: 'var(--space-2-5)', marginLeft: 'var(--space-0-5)', marginRight: 'var(--space-0-5)', borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>{resolvedFooter}</div>
         )}
@@ -317,9 +330,12 @@ export function SideNav({
     </div>
   );
   return (
-    <nav ref={navRef} aria-label={ariaLabel} onClick={overlay && col ? (e) => { if (!e.target.closest('[data-sidenav-value], button')) setCol(false); } : undefined}
-      onMouseEnter={overlay ? () => { pointerInside.current = true; peek(true); } : undefined}
-      onMouseLeave={overlay ? () => { pointerInside.current = false; peek(false); } : undefined}
+    <nav ref={mergedNavRef} {...rest} aria-label={ariaLabel} onClick={onClick || (overlay && col) ? (e) => {
+      onClick?.(e);
+      if (!e.defaultPrevented && overlay && col && !e.target.closest('[data-sidenav-value], button')) setCol(false);
+    } : undefined}
+      onMouseEnter={onMouseEnter || overlay ? (e) => { onMouseEnter?.(e); if (!e.defaultPrevented && overlay) { pointerInside.current = true; peek(true); } } : undefined}
+      onMouseLeave={onMouseLeave || overlay ? (e) => { onMouseLeave?.(e); if (!e.defaultPrevented && overlay) { pointerInside.current = false; peek(false); } } : undefined}
       onFocus={overlay ? (e) => {
         onFocus?.(e);
         if (col && !restoringFocus.current && !e.currentTarget.contains(e.relatedTarget)) {
@@ -328,13 +344,19 @@ export function SideNav({
         }
       } : onFocus}
       onBlur={overlay ? (e) => { onBlur?.(e); if (!pointerInside.current && !e.currentTarget.contains(e.relatedTarget)) peek(false); } : onBlur}
-      className={['lk-sidenav', !overlay && 'lk-sidenav__surface', className].filter(Boolean).join(' ')}
-      style={overlay ? { position: 'relative', width: collapsedWidth, flexShrink: 0, ...style } : { ...shell, ...style }} {...rest} data-surface={resolvedSurface}>
+      data-slot="root"
+      data-state={col ? 'collapsed' : 'expanded'}
+      data-overlay={overlay ? 'true' : undefined}
+      className={partClassName(classNames, 'root', 'lk-sidenav', !overlay && 'lk-sidenav__surface', className) || undefined}
+      style={overlay
+        ? { ...componentVars(vars, '--lds-side-nav-'), position: 'relative', width: `var(--lds-side-nav-collapsed-width, ${resolvedCollapsedWidth})`, flexShrink: 0, ...partStyle(styles, 'root'), ...style }
+        : { ...componentVars(vars, '--lds-side-nav-'), ...shell, ...partStyle(styles, 'root'), ...style }}
+      data-surface={resolvedSurface}>
       {overlay ? (
         /* The elevation shadow only makes sense where the expanded panel actually covers content,
            so clip it to the inline-end overhang on both surfaces instead of blooming on all sides. */
-        <div className="lk-sidenav__surface" style={{ ...shell, position: 'absolute', top: 0, left: 0, height: '100%', zIndex: col ? 1 : 40, boxShadow: col ? 'none' : 'var(--shadow-lg)', clipPath: col ? undefined : 'inset(0 -120px 0 0)' }}>{panelContent}</div>
+        <div data-slot="overlaySurface" className={partClassName(classNames, 'overlaySurface', 'lk-sidenav__surface') || undefined} style={{ ...shell, position: 'absolute', top: 0, left: 0, height: '100%', zIndex: col ? 1 : 40, boxShadow: col ? 'none' : 'var(--shadow-lg)', clipPath: col ? undefined : 'inset(0 -120px 0 0)', ...partStyle(styles, 'overlaySurface') }}>{panelContent}</div>
       ) : panelContent}
     </nav>
   );
-}
+});

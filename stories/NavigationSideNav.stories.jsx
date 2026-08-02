@@ -772,3 +772,45 @@ export const SideNavUserMenuCard = {
   name: 'SideNav and UserMenu card parity',
   tags: ['!dev', 'visual-parity'],
 };
+
+function SideNavSurfaceRefFixture() {
+  const ref = React.useRef(null);
+  React.useLayoutEffect(() => {
+    ref.current?.setAttribute('data-ref-target', 'side-nav-root');
+  }, []);
+  return (
+    <SideNav
+      ref={ref}
+      aria-label="계약 탐색"
+      items={[
+        { value: 'overview', label: '운영 개요' },
+        { value: 'events', label: '이벤트', badge: 3 },
+      ]}
+      defaultValue="overview"
+      className="contract-side-nav-root"
+      classNames={{ item: 'contract-side-nav-item' }}
+      styles={{ label: { letterSpacing: '2px' } }}
+      vars={{ '--lds-side-nav-width': '260px', '--lds-side-nav-item-height': '48px' }}
+    />
+  );
+}
+
+export const SurfaceRefContract = {
+  name: 'Surface and ref contract',
+  tags: ['!dev'],
+  render: () => <SideNavSurfaceRefFixture />,
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-ref-target="side-nav-root"]');
+    const items = [...(root?.querySelectorAll('[data-slot="item"]') ?? [])];
+    const label = items[0]?.querySelector('[data-slot="label"]');
+    if (!(root instanceof HTMLElement) || root.tagName !== 'NAV' || root.dataset.slot !== 'root') {
+      throw new Error('SideNav ref must target the native nav landmark.');
+    }
+    if (!root.classList.contains('contract-side-nav-root') || !items.every((item) => item.classList.contains('contract-side-nav-item'))) {
+      throw new Error('SideNav root and named item classes must compose independently.');
+    }
+    if (root.dataset.state !== 'expanded' || getComputedStyle(root).width !== '260px' || getComputedStyle(items[0]).minHeight !== '48px' || getComputedStyle(label).letterSpacing !== '2px') {
+      throw new Error('SideNav state, vars, and named-part styles must reach their documented targets.');
+    }
+  },
+};

@@ -2930,6 +2930,25 @@
       ]
     },
     {
+      "pageTitle": "LDS Product/Selection and Input/Field Action",
+      "importPath": "./stories/FormFieldAction.stories.jsx",
+      "storyId": "lds-product-selection-and-input-field-action--field-action-overview",
+      "exportName": "FieldActionOverview",
+      "descriptionHash": "2b1230b7b75635b30876a31162b5b7fd0a2345e6f4f996d456bccd278c2c69ef",
+      "sentences": [
+        {
+          "hash": "459c0bd113a983ab95af43a49969f531056bfde1a0340c31ddcf73cb62fa9013",
+          "text": "기본 md 입력과 제출 버튼이 모두 48px control row에 놓입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "94bfb4aad80727321edc58c23f21b1786aee86baf7e39e61198676e6b2f42f09",
+          "text": "입력에서 Enter를 눌러도 같은 native form submit 경로를 사용합니다.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Product/Selection and Input/File Upload",
       "importPath": "./stories/FormFileUpload.stories.jsx",
       "storyId": "lds-product-selection-and-input-file-upload--keyboard-file-selection",

@@ -52,3 +52,11 @@
   <Card as="article" elevation="sm">Project A</Card>
 </Card>
 ```
+
+## Public surface and ref
+
+- `className`, `style`, and the default ref target the polymorphic root. The ref type follows the rendered `as` element.
+- Stable structured parts are `root`, `content`, `header`, `actions`, `media`, `body`, `title`, `description`, and `footer`. Optional parts do not render empty wrappers.
+- `classNames` and `styles` accept only those stable part keys; product selectors do not depend on Card's internal DOM order.
+- Root state is mirrored through `data-interactive`, `data-surface`, `data-dark`, and skeleton `data-loading`.
+- `vars` accepts only `--lds-card-padding`, `--lds-card-radius`, `--lds-card-gap`, and `--lds-card-max-width`. These cannot turn a non-interactive card into a control or bypass heading/nesting rules.

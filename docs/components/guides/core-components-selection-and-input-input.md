@@ -43,11 +43,13 @@
 | `interaction` | `"normal" \| "inactive" \| "hovered" \| "focused" \| "active" \| "active-focused"` | No |  |
 | `active` | `boolean` | No | active visual state alias. |
 | `focus` | `boolean` | No | focus visual state alias. |
-| `disable` | `boolean` | No | disabled alias. |
+| `disable` | `boolean` | No |  |
 | `resize` | `"normal" \| "fixed" \| "limit"` | No | textinput resize evidence axis; accepted for API parity. |
 | `platform` | `"ios" \| "android" \| "web"` | No | platform evidence axis; accepted for API parity. |
 | `variant` | `"textfield" \| "textarea"` | No | field variant evidence axis; accepted for API parity. |
 | `style` | `React.CSSProperties` | No | 래퍼 스타일(예: 그리드 셀용 minWidth). |
+| `className` | `string` | No | Public root class. |
+| `inputClassName` | `string` | No | Native input class. |
 
 ## States
 
@@ -69,17 +71,23 @@
 | --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
 | --color-semantic-label-assistive | light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28) |
 
+## Responsive
+
+- Stable parts are root, label, control, startIcon, input, endIcon, statusIcon, action, and message; conditionally absent content does not leave a slot wrapper.
+- vars accepts only --lds-input-height, --lds-input-padding-inline, --lds-input-radius, and --lds-input-gap. Visible label, helper/error association and native input semantics remain component-owned.
+
 ## Content and writing
 
 - Reference basis: GOV.UK Text input for visible labels, hints and error association; Carbon Text input for label/helper/error/read-only anatomy.
 - Keep essential instructions in the visible label or helper text. Placeholder text is supplementary and must not replace the label.
 - WDS Core examples retain the source sentence form (…해 주세요.) for placeholder parity. This intentionally differs from Fluent's no-period placeholder copy rule; Product/Robotics may use a short domain hint only when the visible label remains sufficient.
-- Input — 한 줄 텍스트 필드: 화이트 박스, 헤어라인 링, 그래파이트 포커스 헤일로. label, 선택적 iconLeft/iconRight, required, invalid를 전달하세요.
+- disable, legacy icon/action names and small|medium|large are compatibility aliases; new code uses native disabled, canonical slot names and sm|md|lg.
 
 ## Accessibility
 
 - Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced.
 - readOnly remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal.
+- className/style and rootRef target the public field stack root. The default ref, inputClassName, and inputStyle target the native focus target.
 
 ## Related components
 
@@ -122,6 +130,10 @@
 - `--dur-base`
 - `--ease-out`
 - `--font-sans`
+- `--lds-input-gap`
+- `--lds-input-height`
+- `--lds-input-padding-inline`
+- `--lds-input-radius`
 
 ### Source contracts
 

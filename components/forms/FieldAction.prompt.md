@@ -9,6 +9,13 @@
 />
 ```
 
+## Public surface and ref
+
+- `ref` points to the polymorphic root selected by `as` (`div` by default).
+- `className`/`style` target the root. Stable parts are `root`, `fieldStack`, `row`, `field`, and `action`.
+- `classNames` and `styles` accept only those stable part keys. `vars` accepts only `--lds-field-action-gap`; shared control height remains derived from the canonical `size`.
+- `htmlFor` associates the shared label with the field control. Field value, validation, submission, and loading remain product-owned.
+
 ## 책임과 기존 컴포넌트와의 차이
 
 - `Stack`은 범용 배치만 제공하며 자식 control의 밀도나 높이를 조정하지 않습니다. `FieldAction`은 field와 action의 크기 매핑 및 좁은 폭 재배치를 소유합니다.

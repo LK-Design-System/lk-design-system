@@ -38,7 +38,7 @@ function ActionArea({
 }) {
   const named = rest["aria-label"] != null || rest["aria-labelledby"] != null;
   const Root = named ? "section" : "div";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     Root,
     {
       className: "lk-action-area",
@@ -57,7 +57,7 @@ function ActionArea({
       },
       ...rest,
       children: [
-        summary && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        summary && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             style: {
@@ -68,7 +68,7 @@ function ActionArea({
             children: summary
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             style: {
@@ -87,7 +87,7 @@ function ActionArea({
             children
           }
         ),
-        caption && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        caption && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "p",
           {
             style: {
@@ -141,7 +141,7 @@ function Tag({ children, tone = "signal", size = "sm", solid = false, style, ...
   const t = TONES[tone] || TONES.signal;
   const resolvedSize = SIZES[size] ? size : "sm";
   const dimensions = SIZES[resolvedSize];
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "span",
     {
       className: `lk-tag lk-tag--${tone} lk-tag--${resolvedSize}`,
@@ -192,7 +192,7 @@ function FieldValue({ field }) {
   const normalizedUnit = field.mixed ? "" : _chunk43Q7GJUBcjs.normalizeUnit.call(void 0, field.unit);
   const unitSeparator = _chunk43Q7GJUBcjs.getUnitSeparator.call(void 0, normalizedUnit);
   const attachedUnit = _chunk43Q7GJUBcjs.isAttachedUnit.call(void 0, normalizedUnit);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
     {
       "data-selection-inspector-value": "",
@@ -221,7 +221,7 @@ function FieldValue({ field }) {
   );
 }
 function InspectorFields({ fields = [] }) {
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { children: fields.map((field, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { children: fields.map((field, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       style: {
@@ -255,7 +255,7 @@ function InspectorSection({ section }) {
       /* Wrap the disclosure control in a heading so the section title carries
          document structure (WCAG 1.3.1), matching the static branch's level.
          The heading is a bare block wrapper; the button owns the visuals. */
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "h4", { style: { margin: 0, font: "inherit", color: "inherit" }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "h4", { style: { margin: 0, font: "inherit", color: "inherit" }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
         "button",
         {
           type: "button",
@@ -291,7 +291,7 @@ function SelectionInspector({
   const count = _nullishCoalesce(selectionCount, () => ( (hasItem ? 1 : 0)));
   const canClearSelection = hasItem && typeof onClearSelection === "function";
   const selectionName = count > 1 ? `${count}\uAC1C \uAC1D\uCCB4 \uC120\uD0DD` : _optionalChain([item, 'optionalAccess', _ => _.label]);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "section",
     {
       "aria-label": typeof title === "string" ? title : "\uC120\uD0DD \uAC1D\uCCB4 \uC18D\uC131",
@@ -313,7 +313,7 @@ function SelectionInspector({
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "header", { style: { display: "grid", gap: "var(--space-2)", minWidth: 0, padding: "var(--space-3) var(--space-4)", borderBottom: "1px solid var(--color-semantic-line-normal-normal)", boxSizing: "border-box" }, children: [
           /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-2)", minWidth: 0 }, children: [
             /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)" }, children: title }),
-            canClearSelection && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            canClearSelection && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               _chunk4DG5U4UWcjs.IconButton,
               {
                 type: "button",

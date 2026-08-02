@@ -36,12 +36,15 @@
 | `arrow` | `boolean` | No |  |
 | `full` | `boolean` | No | Fill the available container width. @default false |
 | `disabled` | `boolean` | No | Disable activation and mark the control unavailable. @default false |
-| `disable` | `boolean` | No | Disable alias. @default false |
+| `disable` | `boolean` | No |  |
 | `iconOnly` | `boolean` | No | Render the icon-only square button treatment. Requires aria-label (or aria-labelledby); a development-only console warning fires when neither is supplied. |
 | `loading` | `boolean \| 'inline'` | No | Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation. true swaps the label for a centered spinner on the muted palette. "inline" keeps the label visible with a leading spinner and preserves the variant palette — for controls whose words must survive the wait (e.g. a safety stop reading "정지 요청 중"). Blocking semantics are identical in both modes. |
 | `loadingLabel` | `string` | No | Screen-reader label announced with the loading spinner (loading = true). @default "불러오는 중" |
 | `as` | `React.ElementType` | No | Render with another element or component, such as "a" for link CTAs. @default "button" |
 | `children` | `React.ReactNode` | No |  |
+| `classNames` | `LdsClassNames` | No | Stable classes for the public Button anatomy. |
+| `styles` | `LdsStyles` | No | Stable inline styles for the public Button anatomy. |
+| `vars` | `LdsVars` | No | Component-scoped geometry overrides. |
 
 ## States
 
@@ -51,6 +54,10 @@
 | disabled | Disable activation and mark the control unavailable. @default false |
 | loading | Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation. true swaps the label for a centered spinner on the muted palette. "inline" keeps the label visible with a leading spinner and preserves the variant palette — for controls whose words must survive the wait (e.g. a safety stop reading "정지 요청 중"). Blocking semantics are identical in both modes. |
 | loadingLabel | Screen-reader label announced with the loading spinner (loading = true). @default "불러오는 중" |
+
+## Behavior and interaction
+
+- Stable parts are root, content, and loader; each is mirrored by data-slot. data-disabled, data-loading, data-size, and data-variant expose actual component state.
 
 ## 정량 규칙
 
@@ -66,11 +73,13 @@
 
 - full: fills the container width.
 - 32/40/48 높이와 solid/outlined·primary/assistive·icon-only·disable 축은 WDS Button/Button component set을 따릅니다. danger, dark-surface 변형, loading과 polymorphic anchor는 명시적인 LDS 확장입니다.
+- vars accepts only --lds-button-height, --lds-button-padding, --lds-button-radius, and --lds-button-gap. It changes geometry without replacing Button semantics or loading behavior.
 
 ## Content and writing
 
 - loading="inline": the second loading presentation — the spinner sits beside the label and the variant palette stays. 말이 사라지면 안 되는 컨트롤(예: "정지 요청 중"을 계속 말해야 하는 안전 정지)용. 차단 계약은 true와 동일하고 표현만 다릅니다.
 - Ghost text also resolves from the rendered theme scope. Transparent fill and the hairline border carry its lower emphasis; text contrast is not reduced to create hierarchy.
+- classNames and styles accept only those stable part keys; they do not replace native Button semantics or activation ownership.
 
 ## Accessibility
 
@@ -177,6 +186,10 @@
 - `--component-button-signal-fg`
 - `--component-button-transition`
 - `--font-sans`
+- `--lds-button-gap`
+- `--lds-button-height`
+- `--lds-button-padding`
+- `--lds-button-radius`
 
 ### Source contracts
 
@@ -189,6 +202,7 @@
 
 - Disabled foreground, fill, and outlined border resolve semantic roles at the button's rendered theme scope, so nested dark surfaces do not inherit a root-resolved light alias.
 - arrow is deprecated and remains as a no-op compatibility prop.
+- disable and the small|medium|large size values are compatibility aliases. New code uses disabled and sm|md|lg.
 
 ## Sources
 

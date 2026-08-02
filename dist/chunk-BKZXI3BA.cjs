@@ -86,7 +86,7 @@ function FilterBar({
     };
     onRemoveFilter(filter.id);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "section",
     {
       role: "region",
@@ -120,7 +120,7 @@ function FilterBar({
               const value = textLabel(filter.value);
               const removeLabel = filter.removeLabel || `${label}${value ? ` ${value}` : ""} \uD544\uD130 \uC81C\uAC70`;
               const removable = typeof onRemoveFilter === "function";
-              return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                 _chunkBCWCCXJXcjs.Chip,
                 {
                   as: removable ? "button" : "span",

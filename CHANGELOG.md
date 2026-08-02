@@ -68,6 +68,20 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.21 - 2026-08-03
+
+### Added
+
+- Button, Input, Textarea, SearchField, Select, FieldAction, SegmentedControl, Tabs, Card, DataToolbar, SideNav, DropdownMenu, Popover, Tooltip, and Modal now expose typed root/ref, named-part `classNames`/`styles`, component-scoped `vars`, and stable `data-slot` contracts.
+- `LdsProvider`, `useLdsRuntime`, `createLocalStorageManager`, and `LdsColorSchemeScript` provide additive color-scheme, direction, locale, storage, Portal-target, and z-index runtime composition.
+- `MessageFeed viewportInset="compact|comfortable"` provides a semantic content-inset axis while preserving the chrome-free viewport and compact default.
+
+### Fixed
+
+- DropdownMenu, Popover, Tooltip, and Select popups now use the shared owner-document Portal, overlay stack, four-side flip/shift positioning, topmost dismiss, nearest theme/`dir` inheritance, and component-variable propagation outside clipping ancestors.
+- Modal, Drawer, Sheet, and ConfirmDialog now share Portal layering, nested topmost focus containment, background inerting, body scroll locking, and deterministic focus restoration.
+- Public refs now target the documented native control or semantic root, including polymorphic Button/Card/FieldAction roots and separate field `rootRef` targets.
+
 ## 0.1.0-rc.20 - 2026-08-03
 
 ### Fixed

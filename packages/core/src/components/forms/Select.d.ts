@@ -1,4 +1,11 @@
 import * as React from "react";
+import type { LdsClassNames, LdsStyles, LdsVars } from '../internal/surface.js';
+
+export type SelectPart = 'root' | 'label' | 'control' | 'trigger' | 'value' | 'indicators' | 'dropdown' | 'option' | 'message';
+export type SelectVariable =
+  | '--lds-select-min-width'
+  | '--lds-select-height'
+  | '--lds-select-dropdown-max-height';
 
 export interface SelectOption {
   value: string;
@@ -28,9 +35,9 @@ export interface SelectProps {
   disabled?: boolean;
   /** Keeps the current selection focusable and legible while preventing changes. */
   readOnly?: boolean;
-  /** disabled alias. */
+  /** @deprecated Use `disabled`. */
   disable?: boolean;
-  /** negative status alias. */
+  /** @deprecated Use `invalid` or `status="negative"`. */
   negative?: boolean;
   /** @default "md" */
   size?: "sm" | "md" | "lg" | "small" | "medium" | "large";
@@ -70,8 +77,28 @@ export interface SelectProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   /** `<option>` 자식(하위 호환) — `options`가 없을 때 사용. */
   children?: React.ReactNode;
+  /** Public root class and style. */
+  className?: string;
   style?: React.CSSProperties;
+  /** Native combobox trigger class and style. */
+  triggerClassName?: string;
+  triggerStyle?: React.CSSProperties;
+  /** Public root ref; the default ref targets the native trigger button. */
+  rootRef?: React.Ref<HTMLDivElement>;
+  classNames?: LdsClassNames<SelectPart>;
+  styles?: LdsStyles<SelectPart>;
+  vars?: LdsVars<SelectVariable>;
+  /** Escape clipping ancestors through the owner-document Portal. @default true */
+  withinPortal?: boolean;
+  portalTarget?: HTMLElement | null;
+  zIndex?: number;
+  /** Preferred popup side; flips when space is insufficient. @default "bottom" */
+  position?: 'top' | 'bottom' | 'left' | 'right';
+  /** Popup alignment. @default "left" */
+  align?: 'left' | 'right';
+  /** Trigger-to-popup gap in pixels. @default 6 */
+  offset?: number;
 }
 
 /** 커스텀 단일 선택 드롭다운(스타일된 트리거 + 플로팅 패널, 시그널 포커스). 네이티브 `<select>`가 아님. */
-export function Select(props: SelectProps): React.JSX.Element;
+export const Select: React.ForwardRefExoticComponent<SelectProps & React.RefAttributes<HTMLButtonElement>>;

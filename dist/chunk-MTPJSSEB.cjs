@@ -36,7 +36,7 @@ function Tag({ children, tone = "signal", size = "sm", solid = false, style, ...
   const t = TONES[tone] || TONES.signal;
   const resolvedSize = SIZES[size] ? size : "sm";
   const dimensions = SIZES[resolvedSize];
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "span",
     {
       className: `lk-tag lk-tag--${tone} lk-tag--${resolvedSize}`,

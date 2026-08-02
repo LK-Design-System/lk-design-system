@@ -43,6 +43,7 @@ export function MessageFeed({
   empty,
   maxHeight = 400,
   viewportMinHeight,
+  viewportInset = 'compact',
   busy = false,
   hasPrevious = false,
   loadingPrevious = false,
@@ -72,6 +73,7 @@ export function MessageFeed({
   const lastRequestedFollowingRef = React.useRef(following);
   const [retainJumpFocus, setRetainJumpFocus] = React.useState(false);
   const [historyLiveSuppressed, setHistoryLiveSuppressed] = React.useState(false);
+  const normalizedViewportInset = viewportInset === 'comfortable' ? 'comfortable' : 'compact';
 
   if (followingRef.current !== following) {
     followingRef.current = following;
@@ -321,6 +323,7 @@ export function MessageFeed({
         data-scrollbar="auto"
         data-scroll-gutter="stable"
         data-message-feed-viewport
+        data-message-feed-viewport-inset={normalizedViewportInset}
         data-history-live-suppressed={historyLiveSuppressed ? 'true' : undefined}
         role="log"
         aria-label={ariaLabel}
@@ -343,7 +346,8 @@ export function MessageFeed({
           overflowY: 'auto',
           overscrollBehavior: 'contain',
           scrollbarGutter: 'stable',
-          padding: 'var(--space-3) var(--space-2)',
+          paddingBlock: 'var(--space-3)',
+          paddingInline: normalizedViewportInset === 'comfortable' ? 'var(--space-4)' : 'var(--space-2)',
           border: 0,
           borderRadius: 0,
           background: 'transparent',

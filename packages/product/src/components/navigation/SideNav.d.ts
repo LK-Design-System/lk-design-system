@@ -1,4 +1,14 @@
 import * as React from 'react';
+import type { LdsClassNames, LdsStyles, LdsVars } from '@lk-design-system/lds-core/components/internal/surface';
+
+export type SideNavPart = 'root' | 'overlaySurface' | 'panel' | 'brand' | 'list' | 'heading' | 'item' | 'icon' | 'label' | 'badge' | 'childList' | 'footer';
+export type SideNavVariable =
+  | '--lds-side-nav-width'
+  | '--lds-side-nav-collapsed-width'
+  | '--lds-side-nav-padding'
+  | '--lds-side-nav-radius'
+  | '--lds-side-nav-item-height'
+  | '--lds-side-nav-item-radius';
 
 export interface SideNavChildItem {
   value: string;
@@ -14,6 +24,7 @@ export interface SideNavChildItem {
   target?: React.HTMLAttributeAnchorTarget;
   rel?: string;
   disabled?: boolean;
+  className?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
@@ -30,6 +41,7 @@ export interface SideNavItem {
   target?: React.HTMLAttributeAnchorTarget;
   rel?: string;
   disabled?: boolean;
+  className?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
   /** 서브메뉴 — 항목이 펼침/접힘 디스클로저 그룹이 됩니다(자체 선택값 없음). */
   children?: SideNavChildItem[];
@@ -78,7 +90,10 @@ export interface SideNavProps extends Omit<React.HTMLAttributes<HTMLElement>, 'o
   onChange?: (value: string) => void;
   /** href leaf를 router link로 치환하는 렌더 훅. 그룹 disclosure는 항상 button입니다. */
   renderLink?: (item: SideNavItem | SideNavChildItem, props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => React.ReactElement;
+  classNames?: LdsClassNames<SideNavPart>;
+  styles?: LdsStyles<SideNavPart>;
+  vars?: LdsVars<SideNavVariable>;
 }
 
 /** 넓은 라벨형 대시보드 사이드바 — 브랜드 헤더 + 그룹 내비(서브메뉴·배지) + 접힘 레일 + 고정 푸터. 고정 아이콘 레일은 `NavRail`. */
-export function SideNav(props: SideNavProps): React.JSX.Element;
+export const SideNav: React.ForwardRefExoticComponent<SideNavProps & React.RefAttributes<HTMLElement>>;

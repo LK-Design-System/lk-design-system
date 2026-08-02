@@ -124,7 +124,7 @@ function ContentBadge({
   }[resolvedVariant] || {};
   const startIcon = _nullishCoalesce(leading, () => ( (iconPosition !== "end" ? icon : null)));
   const endIcon = _nullishCoalesce(trailing, () => ( (iconPosition === "end" ? icon : null)));
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
     {
       style: {

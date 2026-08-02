@@ -45,7 +45,12 @@
         "stories/SelectionThemeToggle.stories.jsx"
       ],
       "exports": [
-        "ThemeToggle"
+        "LdsColorSchemeScript",
+        "LdsProvider",
+        "LdsRuntimeContext",
+        "ThemeToggle",
+        "createLocalStorageManager",
+        "useLdsRuntime"
       ]
     },
     {
@@ -871,7 +876,15 @@
       "ownerLayer": "core"
     },
     {
+      "path": "components/internal/surface.js",
+      "ownerLayer": "core"
+    },
+    {
       "path": "components/overlay/anchored-overlay.js",
+      "ownerLayer": "core"
+    },
+    {
+      "path": "components/overlay/overlay-platform.js",
       "ownerLayer": "core"
     },
     {

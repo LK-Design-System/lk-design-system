@@ -298,7 +298,8 @@ export const CollapsibleCitation = {
       throw new Error('The toggle must accept keyboard focus.');
     }
     await userEvent.click(toggle);
-    const panel = root.querySelector('[role="dialog"]');
+    const panelId = toggle.getAttribute('aria-controls');
+    const panel = panelId ? canvasElement.ownerDocument.getElementById(panelId) : null;
     if (!panel || toggle.getAttribute('aria-expanded') !== 'true') {
       throw new Error('Activating the toggle must open the source popover.');
     }
@@ -308,7 +309,7 @@ export const CollapsibleCitation = {
       throw new Error('Citations with an href must open the original source in a new tab.');
     }
     await userEvent.keyboard('{Escape}');
-    if (root.querySelector('[role="dialog"]') || toggle.getAttribute('aria-expanded') !== 'false') {
+    if ((panelId && canvasElement.ownerDocument.getElementById(panelId)) || toggle.getAttribute('aria-expanded') !== 'false') {
       throw new Error('Escape must close the source popover.');
     }
   },

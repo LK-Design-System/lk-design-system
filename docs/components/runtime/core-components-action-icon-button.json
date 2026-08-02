@@ -195,7 +195,7 @@
         "role": "interaction"
       }
     ],
-    "hiddenEvidence": 0
+    "hiddenEvidence": 1
   },
   "sources": [],
   "canonicalGuide": null,

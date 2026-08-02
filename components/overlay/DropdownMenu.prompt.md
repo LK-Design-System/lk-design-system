@@ -121,6 +121,11 @@ LDS 메뉴 토큰을 사용합니다.
   `normal` DropdownMenu와 danger item 조합으로 `supported by composition`입니다. 실제 rename,
   exclude, delete 상태와 확인 절차는 제품이 소유합니다.
 
+### Public surface and ref
+
+- `ref`, `className`, and `style` target the anchor root. Stable parts are `root`, `trigger`, `panel`, `menu`, `item`, `divider`, and `actionArea`; per-item class/style composes after the shared `item` part.
+- Geometry overrides are limited to `--lds-dropdown-menu-width`, `--lds-dropdown-menu-min-width`, and `--lds-dropdown-menu-max-height`. Menu roles, roving focus, nested stack, Escape, and focus restoration remain LDS-owned.
+
 ### Root portal and clipping contract (2026-08-02)
 
 - Root panels use the same owner-document portal boundary as flyout submenus and
@@ -130,6 +135,10 @@ LDS 메뉴 토큰을 사용합니다.
 - The trigger remains in the product DOM while `aria-controls` points to the
   portalled `role="menu"`. Opening still moves focus to the requested item;
   Escape closes the menu and restores trigger focus.
+- Because the panel leaves its physical ancestor, the root portal copies the
+  nearest explicit `data-theme` or `.theme-light|dark|auto` scope onto the
+  portal wrapper. Semantic CSS variables therefore resolve against the same
+  theme as the trigger even when `document.body` uses a different theme.
 - [CSS Overflow Module Level 3](https://www.w3.org/TR/css-overflow-3/#overflow-properties)
   confirms that `visible` on one axis computes to `auto` when the other axis is
   scrollable, so an absolutely positioned descendant cannot reliably escape a

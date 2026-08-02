@@ -31,6 +31,8 @@
 | [`components/README.md`](components/README.md) | 179개 public entry와 148개 컴포넌트 의사결정 가이드, 정적 reference·platform register, machine-readable registry와 LLM bundle |
 | [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | public API grammar와 컴포넌트별 상태 증거 |
 | [`API_OPENNESS_POLICY.md`](API_OPENNESS_POLICY.md) | 공개 API를 언제·어떤 형태로 여는지의 계약(구조는 열되 조합은 닫음) |
+| [`COMPONENT_SURFACE_CONTRACT.md`](COMPONENT_SURFACE_CONTRACT.md) | public root·named part·component vars·data state와 ref target 계약 |
+| [`OVERLAY_PLATFORM_CONTRACT.md`](OVERLAY_PLATFORM_CONTRACT.md) | Portal target·theme/direction·stacking·dismiss·modal focus/inert 공통 계약 |
 | [`ACCESSIBILITY_CONTRACTS.md`](ACCESSIBILITY_CONTRACTS.md) | semantic, keyboard, focus, screen-reader 계약 |
 | [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) | Storybook page ownership, role, visibility, naming 계약 |
 | [`STORYBOOK_MASTHEAD_COPY_CONTRACT.md`](STORYBOOK_MASTHEAD_COPY_CONTRACT.md) | Storybook Canvas masthead 카피의 작성 규칙과 Docs 본문과의 소유 경계 |
@@ -57,6 +59,7 @@
 
 | Document | Status |
 | --- | --- |
+| [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | Current implementation record — 이슈·문서·rc.16 근거를 통합한 핵심 UI 컴포넌트 계약, Styles/Slots, ref, overlay와 검증 결과; LK Portal 채택 검증 대기 |
 | [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | Wave 1 artifacts and Wave 4 Robotics extraction complete; product adoption and Wave 5 compatibility retirement remain open |
 | [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md) | Completed implementation plan; 결과 handoff로 연결 |
 | [`NAVIGATION_ATOMIZATION_PLAN.md`](NAVIGATION_ATOMIZATION_PLAN.md) | Proposed plan — Navigation 선·상태 어휘의 단일 소스화와 Encoding 문서화 |

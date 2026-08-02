@@ -7,6 +7,7 @@ import { flushSync } from 'react-dom';
 import { useMenuKeyboard } from '../../../components/internal/useMenuKeyboard.js';
 import {
   appendAriaReference,
+  inlineFloatingStyle,
   useControllableOpen,
   useFloatingPosition,
   useLightDismiss,
@@ -22,7 +23,7 @@ import {
 } from '../../../components/forms/field-shared.js';
 
 // Pure exports asserted directly from the driver script.
-window.__engine = { appendAriaReference, mergeIds, fieldBorderColor, fieldBackground };
+window.__engine = { appendAriaReference, inlineFloatingStyle, mergeIds, fieldBorderColor, fieldBackground };
 
 function MenuScenario({ id, items, withBack = false }) {
   const [open, setOpen] = React.useState(false);

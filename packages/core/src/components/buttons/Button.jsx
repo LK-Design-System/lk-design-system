@@ -1,5 +1,6 @@
 import React from 'react';
 import { Spinner } from '../status/Spinner.jsx';
+import { componentVars, partClassName, partStyle } from '../internal/surface.js';
 
 const pressedTone = (background) =>
   `color-mix(in srgb, ${background} 88%, var(--color-semantic-label-normal))`;
@@ -35,7 +36,7 @@ function useMissingNameWarning(shouldWarn, message) {
  *          dark (navy) · flat (cool-gray) · ghost (hairline) · on-dark (translucent, for navy sections)
  *          · danger (LDS safety extension; not a WDS parity axis)
  */
-export function Button({
+export const Button = React.forwardRef(function Button({
   children,
   variant = 'primary',
   color,
@@ -50,6 +51,9 @@ export function Button({
   as = 'button',
   className,
   style,
+  classNames,
+  styles,
+  vars,
   onMouseEnter,
   onMouseLeave,
   onMouseDown,
@@ -63,7 +67,7 @@ export function Button({
   'aria-disabled': ariaDisabled,
   'aria-busy': ariaBusy,
   ...rest
-}) {
+}, forwardedRef) {
   const [hover, setHover] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);
 
@@ -194,13 +198,14 @@ export function Button({
   const disabledBg = outlinedLike ? 'transparent' : 'var(--color-semantic-fill-normal)';
 
   const composed = {
+    ...componentVars(vars, '--lds-button-'),
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: gaps[normalizedSize] || gaps.md,
-    height: heights[normalizedSize] || heights.md,
+    gap: `var(--lds-button-gap, ${gaps[normalizedSize] || gaps.md})`,
+    height: `var(--lds-button-height, ${heights[normalizedSize] || heights.md})`,
     minWidth: iconOnly ? (heights[normalizedSize] || heights.md) : undefined,
-    padding: iconOnly ? 0 : (pads[normalizedSize] || pads.md),
+    padding: iconOnly ? 0 : `var(--lds-button-padding, ${pads[normalizedSize] || pads.md})`,
     width: full ? '100%' : undefined,
     fontFamily: 'var(--font-sans)',
     fontSize: fonts[normalizedSize] || fonts.md,
@@ -219,7 +224,7 @@ export function Button({
           ? `color-mix(in srgb, ${p.bgHover || p.bg} 96%, var(--color-semantic-label-normal))`
           : p.bg,
     border: visuallyBlocked ? disabledBorder : (active && hover && p.bdHover) ? p.bdHover : p.bd,
-    borderRadius: radii[normalizedSize] || radii.md,
+    borderRadius: `var(--lds-button-radius, ${radii[normalizedSize] || radii.md})`,
     boxShadow: active && p.elevated ? 'var(--component-button-shadow-rest)' : 'none',
     transform: 'none',
     // Inline loading is temporal, not forbidden — the wait cursor, not the ban.
@@ -229,6 +234,7 @@ export function Button({
     whiteSpace: 'nowrap',
     textDecoration: 'none',
     WebkitTapHighlightColor: 'transparent',
+    ...partStyle(styles, 'root'),
     ...style,
   };
 
@@ -236,7 +242,13 @@ export function Button({
   return (
     <Comp
       {...rest}
-      className={['lk-btn', `lk-btn--${wdsVariant}`, className].filter(Boolean).join(' ')}
+      ref={forwardedRef}
+      data-slot="root"
+      data-disabled={blocked ? 'true' : undefined}
+      data-loading={loadingActive ? (loadingInline ? 'inline' : 'true') : undefined}
+      data-size={normalizedSize}
+      data-variant={wdsVariant}
+      className={partClassName(classNames, 'root', 'lk-btn', `lk-btn--${wdsVariant}`, className)}
       style={composed}
       disabled={as === 'button' ? nativeDisabled : undefined}
       type={as === 'button' ? (type ?? 'button') : undefined}
@@ -266,7 +278,12 @@ export function Button({
     >
       {loading === true && (
         <>
-          <span aria-hidden="true" style={{ position: 'absolute', inset: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+          <span
+            aria-hidden="true"
+            data-slot="loader"
+            className={partClassName(classNames, 'loader') || undefined}
+            style={{ position: 'absolute', inset: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', ...partStyle(styles, 'loader') }}
+          >
             <Spinner size={16} color="currentColor" />
           </span>
           <span style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
@@ -275,6 +292,8 @@ export function Button({
         </>
       )}
       <span
+        data-slot="content"
+        className={partClassName(classNames, 'content') || undefined}
         aria-hidden={loading === true || undefined}
         style={{
           display: 'inline-flex',
@@ -282,6 +301,7 @@ export function Button({
           justifyContent: 'center',
           gap: gaps[normalizedSize] || gaps.md,
           visibility: loading === true ? 'hidden' : undefined,
+          ...partStyle(styles, 'content'),
         }}
       >
         {loadingInline && (
@@ -293,4 +313,4 @@ export function Button({
       </span>
     </Comp>
   );
-}
+});

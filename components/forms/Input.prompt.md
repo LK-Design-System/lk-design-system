@@ -16,3 +16,11 @@ References: [Fluent 2 Field](https://fluent2.microsoft.design/components/web/rea
 ```jsx
 <Input label="이메일" required iconLeft={mailIcon} placeholder="you@company.com" />
 ```
+
+## Public surface and ref
+
+- `className`/`style` and `rootRef` target the public field stack root. The default ref, `inputClassName`, and `inputStyle` target the native `<input>` focus target.
+- Stable parts are `root`, `label`, `control`, `startIcon`, `input`, `endIcon`, `statusIcon`, `action`, and `message`; conditionally absent content does not leave a slot wrapper.
+- Root state is mirrored through `data-disabled`, `data-readonly`, `data-invalid`, and `data-size`.
+- `vars` accepts only `--lds-input-height`, `--lds-input-padding-inline`, `--lds-input-radius`, and `--lds-input-gap`. Visible label, helper/error association and native input semantics remain component-owned.
+- `disable`, legacy icon/action names and `small|medium|large` are compatibility aliases; new code uses native `disabled`, canonical slot names and `sm|md|lg`.

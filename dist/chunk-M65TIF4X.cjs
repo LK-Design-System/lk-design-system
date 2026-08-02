@@ -44,7 +44,7 @@ function formatLine(line) {
   return [line.time, cfg.label, line.source, line.text].map(nodeText).filter(Boolean).join(" ");
 }
 function IconButton({ label, icon, active = false, disabled = false, rail = false, children, onClick }) {
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "button",
     {
       type: "button",
@@ -266,7 +266,7 @@ function LogViewer({
     (filter || search || tools) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }, children: [
       filter && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { display: "flex", gap: "var(--space-1-5)", flexWrap: "wrap", flex: "1 1 220px" }, children: ORDER.map((lvl) => {
         const on = active.has(lvl);
-        return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "button",
           {
             type: "button",
@@ -283,7 +283,7 @@ function LogViewer({
       }) }),
       search && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "label", { style: { flex: "1 1 180px", maxWidth: 260, minWidth: 160, height: 28, display: "inline-flex", alignItems: "center", gap: "var(--space-2)", padding: "0 9px", boxSizing: "border-box", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-sm)", background: "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-label-assistive)" }, children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "search", size: 14, "aria-hidden": "true" }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "input",
           {
             value: query,
@@ -315,7 +315,7 @@ function LogViewer({
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: cfg.log, fontWeight: "var(--fw-bold)" }, children: cfg.label }),
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-inverse-label-neutral-soft)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: line.source }),
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-inverse-label)", minWidth: 0, overflow: virtualActive || !wrap ? "hidden" : "visible", textOverflow: virtualActive || !wrap ? "ellipsis" : "clip" }, children: line.text }),
-          copyable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          copyable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "button",
             {
               type: "button",

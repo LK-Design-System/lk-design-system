@@ -1,8 +1,11 @@
 import React from 'react';
 import { anchoredPanelStyle } from './anchored-panel-style.js';
+import { OverlayPortal } from '@lk-design-system/lds-core/components/overlay/overlay-platform';
+import { componentVars, partClassName, partStyle, useMergedRefs } from '@lk-design-system/lds-core/components/internal/surface';
 import {
   appendAriaReference,
   findOverlayTrigger,
+  inlineFloatingStyle,
   useControllableOpen,
   useFloatingPosition,
   useLightDismiss,
@@ -13,34 +16,49 @@ import {
  * An anchored floating panel with arbitrary content (info, mini-forms, pickers).
  * Like DropdownMenu but you own the body. Closes on outside-click.
  */
-export function Popover({
+export const Popover = React.forwardRef(function Popover({
   trigger,
   children,
   align = 'left',
+  position: requestedPosition = 'bottom',
+  offset = 8,
   width = 260,
   open,
   defaultOpen = false,
   onOpenChange,
   ariaLabel = '팝오버',
+  withinPortal = true,
+  portalTarget,
+  zIndex,
+  className,
   style,
+  classNames,
+  styles,
+  vars,
   ...rest
-}) {
+}, forwardedRef) {
   const [visible, setVisible] = useControllableOpen({ open, defaultOpen, onOpenChange });
   const rootRef = React.useRef(null);
   const panelRef = React.useRef(null);
   const panelId = React.useId();
+  const mergedRootRef = useMergedRefs(rootRef, forwardedRef);
   const getTrigger = React.useCallback(() => findOverlayTrigger(rootRef.current), []);
   const position = useFloatingPosition({
     open: visible,
     anchorRef: rootRef,
     panelRef,
-    placement: 'bottom',
+    placement: requestedPosition,
+    offset,
+    strategy: withinPortal ? 'fixed' : 'absolute',
+    align,
   });
-  useLightDismiss({
+  const layer = useLightDismiss({
     open: visible,
     rootRef,
     getTrigger,
     onDismiss: () => setVisible(false),
+    insideRefs: [panelRef],
+    zIndex,
   });
 
   const toggle = (event) => {
@@ -74,20 +92,22 @@ export function Popover({
       </span>
     );
 
-  const verticalStyle = position.placement === 'top'
-    ? { top: 'auto', bottom: 'calc(100% + 8px)' }
-    : { top: 'calc(100% + 8px)', bottom: 'auto' };
-  const horizontalStyle = align === 'right'
-    ? { left: 'auto', right: 0 }
-    : { left: 0, right: 'auto' };
-
   return (
-    <div ref={rootRef} style={{ position: 'relative', display: 'inline-block', ...style }} {...rest}>
-      <span style={{ display: 'inline-flex' }}>{renderedTrigger}</span>
-      {visible && (
+    <div
+      ref={mergedRootRef}
+      data-slot="root"
+      data-open={visible ? 'true' : undefined}
+      className={partClassName(classNames, 'root', className) || undefined}
+      style={{ ...componentVars(vars, '--lds-popover-'), position: 'relative', display: 'inline-block', ...partStyle(styles, 'root'), ...style }}
+      {...rest}
+    >
+      <span data-slot="trigger" className={partClassName(classNames, 'trigger') || undefined} style={{ display: 'inline-flex', ...partStyle(styles, 'trigger') }}>{renderedTrigger}</span>
+      <OverlayPortal open={visible} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={rootRef} layer="anchored">
         <div
           ref={panelRef}
-          className="lk-scroll-surface"
+          data-slot="panel"
+          data-popover-portal={withinPortal ? 'true' : undefined}
+          className={partClassName(classNames, 'panel', 'lk-scroll-surface') || undefined}
           data-scrollbar="compact"
           data-scroll-gutter="stable"
           id={panelId}
@@ -95,18 +115,22 @@ export function Popover({
           aria-label={ariaLabel}
           data-placement={position.placement}
           style={{
+            ...componentVars(vars, '--lds-popover-'),
             ...anchoredPanelStyle(width),
-            ...verticalStyle,
-            ...horizontalStyle,
-            maxHeight: position.maxHeight ?? undefined,
+            width: `var(--lds-popover-width, ${typeof width === 'number' ? `${width}px` : width})`,
+            ...(withinPortal
+              ? { position: 'fixed', top: position.y ?? -9999, left: position.x ?? -9999, right: 'auto', bottom: 'auto', translate: 'none' }
+              : inlineFloatingStyle({ placement: position.placement, align, offset, shiftX: position.shiftX, shiftY: position.shiftY })),
+            zIndex: layer.zIndex,
+            maxHeight: `var(--lds-popover-max-height, ${position.maxHeight == null ? 'none' : `${position.maxHeight}px`})`,
             overflowY: 'auto',
             scrollbarGutter: 'stable',
-            translate: `${position.shiftX}px ${position.shiftY}px`,
+            ...partStyle(styles, 'panel'),
           }}
         >
           {children}
         </div>
-      )}
+      </OverlayPortal>
     </div>
   );
-}
+});

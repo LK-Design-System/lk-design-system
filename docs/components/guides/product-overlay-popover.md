@@ -12,6 +12,10 @@
 
 ## 사용 판단
 
+### 사용
+
+- The panel defaults to the common owner-document Portal (withinPortal=true), inherits the nearest explicit theme and dir, and uses the shared flip/clamp/topmost-dismiss stack. Use portalTarget or Provider configuration before opting out with withinPortal=false.
+
 ### 사용하지 않음
 
 - Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다.
@@ -30,11 +34,19 @@
 | `trigger` | `React.ReactNode` | Yes | 패널을 토글하는 요소. |
 | `children` | `React.ReactNode` | Yes | 패널 콘텐츠. |
 | `align` | `'left' \| 'right'` | No | 앵커 방향. @default "left" |
-| `width` | `number` | No | 패널 너비(px). @default 260 |
+| `position` | `'top' \| 'bottom' \| 'left' \| 'right'` | No | Preferred side; flips when space is insufficient. @default "bottom" |
+| `offset` | `number` | No | Trigger-to-panel gap in pixels. @default 8 |
+| `width` | `number \| string` | No | 패널 너비(px). @default 260 |
 | `open` | `boolean` | No | 제어된 열림 상태. |
 | `defaultOpen` | `boolean` | No | 비제어 초기 열림 상태. @default false |
 | `onOpenChange` | `(open: boolean) = void` | No | 열림 상태 변경 알림. |
 | `ariaLabel` | `string` | No | 비모달 dialog 표면의 접근 가능한 이름. @default "팝오버" |
+| `withinPortal` | `boolean` | No | Render in the owner-document Portal so clipping ancestors cannot cut the panel. @default true |
+| `portalTarget` | `HTMLElement \| null` | No | Explicit Portal target; defaults to provider target or owner-document body. |
+| `zIndex` | `number` | No | Explicit overlay layer override. |
+| `classNames` | `LdsClassNames` | No |  |
+| `styles` | `LdsStyles` | No |  |
+| `vars` | `LdsVars` | No |  |
 
 ## States
 
@@ -54,11 +66,13 @@
 ## Responsive
 
 - 패널은 선호 정렬을 유지하되 viewport 경계에서 반대쪽으로 flip하고 좌우를 clamp하며, 가용 높이를 넘는 본문만 세로 스크롤합니다.
+- ref, className, and style target the anchor root. Stable parts are root, trigger, and panel; panel geometry is limited to --lds-popover-width and --lds-popover-max-height.
 
 ## Accessibility
 
 - trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup="dialog"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요.
 - open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는 trigger로 초점을 복원하지만 비모달 Popover 자체는 focus trap을 만들지 않아 Tab이 trigger 다음의 패널 입력으로 이동합니다.
+- position, align, and offset are canonical placement inputs. Products own the arbitrary panel content, while LDS owns trigger ARIA, Portal positioning, outside press, Escape, and focus restoration.
 - WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다.
 - ariaLabel — 트리거에 보이는 텍스트가 없을 때 팝오버 콘텐츠의 접근성 이름을 지정합니다.
 
@@ -81,6 +95,11 @@
 ```
 
 ## Tokens and API
+
+### Tokens
+
+- `--lds-popover-max-height`
+- `--lds-popover-width`
 
 ### Source contracts
 

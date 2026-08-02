@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Normalize dist sourcemap paths so the committed bundle is byte-identical
+// Normalize generated dist details so the committed bundle is byte-identical
 // regardless of which machine (or checkout path) built it.
 //
 // Root cause this fixes: tsup/esbuild embeds ABSOLUTE build-machine paths in
@@ -24,6 +24,16 @@ function collectMaps(dir) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) out.push(...collectMaps(full));
     else if (entry.name.endsWith('.map')) out.push(full);
+  }
+  return out;
+}
+
+function collectGeneratedText(dir) {
+  const out = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...collectGeneratedText(full));
+    else if (/\.(?:c?js|d\.ts)$/.test(entry.name)) out.push(full);
   }
   return out;
 }
@@ -74,4 +84,16 @@ for (const mapFile of collectMaps(DIST)) {
   }
 }
 
-console.log(`Normalized ${changed} sourcemap path(s) under ${DIST}/.`);
+let whitespaceChanged = 0;
+for (const outputFile of collectGeneratedText(DIST)) {
+  const source = readFileSync(outputFile, 'utf8');
+  const normalized = source.replace(/[ \t]+(?=\r?$)/gm, '');
+  if (normalized !== source) {
+    writeFileSync(outputFile, normalized);
+    whitespaceChanged += 1;
+  }
+}
+
+console.log(
+  `Normalized ${changed} sourcemap path(s) and ${whitespaceChanged} generated text file(s) under ${DIST}/.`,
+);

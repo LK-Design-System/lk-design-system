@@ -9,10 +9,8 @@ const meta = {
   component: Button,
   args: {
     children: '버튼',
-    variant: 'solid',
-    color: 'primary',
-    size: 'medium',
-    arrow: false,
+    variant: 'primary',
+    size: 'md',
     full: false,
     disabled: false,
     loading: false,
@@ -20,15 +18,11 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['solid', 'outlined', 'primary', 'secondary', 'signal', 'danger', 'dark', 'flat', 'ghost', 'on-dark'],
-    },
-    color: {
-      control: 'inline-radio',
-      options: ['primary', 'assistive'],
+      options: ['primary', 'secondary', 'signal', 'danger', 'dark', 'flat', 'ghost', 'on-dark'],
     },
     size: {
       control: 'inline-radio',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
     },
     loading: {
       control: 'boolean',
@@ -91,7 +85,7 @@ export const ActionMatrix = {
   ),
   render: () => (
     <main style={{ display: 'grid', gap: 18, maxWidth: 760 }}>
-      {['large', 'medium', 'small'].map((size) => (
+      {['lg', 'md', 'sm'].map((size) => (
         <section key={size} style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
           <Button variant="solid" color="primary" size={size}>Primary</Button>
           <Button variant="solid" color="assistive" size={size}>Assistive</Button>
@@ -99,9 +93,9 @@ export const ActionMatrix = {
           <Button variant="outlined" color="assistive" size={size}>Assistive</Button>
           <Button variant="danger" size={size}>Danger</Button>
           <Button variant="solid" color="primary" size={size} iconOnly aria-label={`${size} icon only`}>
-            <Icon name="plus" size={size === 'small' ? 16 : 18} />
+            <Icon name="plus" size={size === 'sm' ? 16 : 18} />
           </Button>
-          <Button variant="solid" color="primary" size={size} disable>Disabled</Button>
+          <Button variant="solid" color="primary" size={size} disabled>Disabled</Button>
         </section>
       ))}
     </main>
@@ -116,9 +110,9 @@ export const SizesAndStates = {
   render: () => (
     <div style={{ display: 'grid', gap: 18, maxWidth: 720 }}>
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-        <Button size="small">Small</Button>
-        <Button size="medium">Medium</Button>
-        <Button size="large">Large</Button>
+        <Button size="sm">Small</Button>
+        <Button size="md">Medium</Button>
+        <Button size="lg">Large</Button>
       </div>
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
         <Button disabled>Disabled</Button>
@@ -373,6 +367,43 @@ export const DarkThemeGhost = {
       if (foreground !== scopedLabel) {
         throw new Error(`Ghost foreground must resolve at its rendered theme scope (${foreground} !== ${scopedLabel}).`);
       }
+    }
+  },
+};
+
+function ButtonSurfaceRefFixture() {
+  const ref = React.useRef(null);
+  React.useLayoutEffect(() => {
+    ref.current?.setAttribute('data-ref-target', 'button-root');
+  }, []);
+  return (
+    <Button
+      ref={ref}
+      className="contract-button-root"
+      classNames={{ content: 'contract-button-content' }}
+      styles={{ content: { letterSpacing: '1px' } }}
+      vars={{ '--lds-button-height': '44px' }}
+    >
+      Surface contract
+    </Button>
+  );
+}
+
+export const SurfaceRefContract = {
+  name: 'Surface and ref contract',
+  tags: ['!dev'],
+  render: () => <ButtonSurfaceRefFixture />,
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-ref-target="button-root"]');
+    const content = root?.querySelector('[data-slot="content"]');
+    if (!(root instanceof HTMLButtonElement) || root.dataset.slot !== 'root') {
+      throw new Error('Button ref, className, and data-slot must target the native root control.');
+    }
+    if (!root.classList.contains('contract-button-root') || !content?.classList.contains('contract-button-content')) {
+      throw new Error('Button root and named-part classes must compose independently.');
+    }
+    if (getComputedStyle(root).height !== '44px' || getComputedStyle(content).letterSpacing !== '1px') {
+      throw new Error('Button component vars and named-part styles must reach their documented targets.');
     }
   },
 };

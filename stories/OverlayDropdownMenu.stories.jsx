@@ -219,7 +219,8 @@ export const DropdownMenuTableOverflowContract = {
       const tableMenu = menuControlledBy(tableTrigger);
       if (!tableMenu) throw new Error('The table row action menu must open.');
       const panel = tableMenu.parentElement;
-      if (!panel.matches('[data-dropdown-menu-portal]') || panel.parentElement !== tableScroller.ownerDocument.body) {
+      const portal = panel.closest('[data-lds-overlay-portal]');
+      if (!panel.matches('[data-dropdown-menu-portal]') || !portal || portal.parentElement !== tableScroller.ownerDocument.body) {
         throw new Error('The root DropdownMenu panel must portal to the owner document body.');
       }
       if (getComputedStyle(panel).position !== 'fixed' || getComputedStyle(panel).opacity !== '1') {
@@ -588,3 +589,57 @@ export const DrillSubmenus = {
 };
 
 export const DropdownMenuCard = { ...DropdownMenuCardStory, name: 'DropdownMenu card parity', tags: ['!dev', 'visual-parity'] };
+
+function DropdownMenuSurfacePortalFixture() {
+  const ref = React.useRef(null);
+  React.useLayoutEffect(() => {
+    ref.current?.setAttribute('data-ref-target', 'dropdown-root');
+  }, []);
+  return (
+    <section data-theme="dark" dir="rtl" style={{ width: 140, height: 64, overflow: 'hidden', padding: 8 }}>
+      <DropdownMenu
+        ref={ref}
+        defaultOpen
+        trigger={<Button>메뉴 계약</Button>}
+        items={[{ label: '열기' }, { divider: true }, { label: '삭제', danger: true }]}
+        className="contract-dropdown-root"
+        classNames={{ panel: 'contract-dropdown-panel', item: 'contract-dropdown-item', divider: 'contract-dropdown-divider' }}
+        styles={{ item: { letterSpacing: '2px' } }}
+        vars={{ '--lds-dropdown-menu-width': '224px' }}
+      />
+    </section>
+  );
+}
+
+export const SurfaceRefPortalContract = {
+  name: 'Surface, ref, and Portal contract',
+  tags: ['!dev'],
+  render: () => <DropdownMenuSurfacePortalFixture />,
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const root = canvasElement.querySelector('[data-ref-target="dropdown-root"]');
+    const trigger = root?.querySelector('[aria-controls]');
+    const menu = await waitFor(() => {
+      const current = trigger ? menuControlledBy(trigger) : null;
+      if (!current) throw new Error('The DropdownMenu contract menu must mount.');
+      return current;
+    });
+    const panel = menu.closest('[data-slot="panel"]');
+    const portal = panel?.closest('[data-lds-overlay-portal]');
+    const items = [...menu.querySelectorAll('[data-slot="item"]')];
+    const divider = menu.querySelector('[data-slot="divider"]');
+    if (!(root instanceof HTMLDivElement) || root.dataset.slot !== 'root' || !root.classList.contains('contract-dropdown-root')) {
+      throw new Error('DropdownMenu ref and root class must target the public anchor root.');
+    }
+    if (!panel?.classList.contains('contract-dropdown-panel') || getComputedStyle(panel).width !== '224px' || items.length !== 2 || !items.every((item) => item.classList.contains('contract-dropdown-item')) || !divider?.classList.contains('contract-dropdown-divider')) {
+      throw new Error('DropdownMenu panel, item, divider, and variable contracts must reach their DOM targets.');
+    }
+    await waitFor(() => {
+      if (getComputedStyle(items[0]).letterSpacing !== '2px' || !portal || portal.parentElement !== ownerDocument.body || portal.dataset.theme !== 'dark' || portal.dir !== 'rtl') {
+        throw new Error(
+          `DropdownMenu named styles and nearest Portal scope must remain stable (letterSpacing=${getComputedStyle(items[0]).letterSpacing}, portal=${Boolean(portal)}, parent=${portal?.parentElement?.tagName ?? 'missing'}, bodyParent=${portal?.parentElement === ownerDocument.body}, theme=${portal?.dataset.theme ?? 'missing'}, dir=${portal?.getAttribute('dir') ?? 'missing'}, rootTheme=${root?.closest('[data-theme]')?.getAttribute('data-theme') ?? 'missing'}, rootDir=${root?.closest('[dir]')?.getAttribute('dir') ?? 'missing'}).`,
+        );
+      }
+    });
+  },
+};

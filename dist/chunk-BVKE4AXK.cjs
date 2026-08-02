@@ -36,7 +36,7 @@ function Bookmark({
     if (!disabled) setPressed(next);
   };
   const name = ariaLabel || (label ? `${label} \uBD81\uB9C8\uD06C` : "\uBD81\uB9C8\uD06C");
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "button",
     {
       type: "button",

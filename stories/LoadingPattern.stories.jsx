@@ -138,8 +138,30 @@ function resolveRecommendation({ seconds, layoutKnown, measurable }) {
 }
 
 async function chooseSelectOption(canvas, label, optionName) {
-  await userEvent.click(canvas.getByRole('combobox', { name: label }));
-  await userEvent.click(canvas.getByRole('option', { name: optionName }));
+  const trigger = canvas.getByRole('combobox', { name: label });
+  await userEvent.click(trigger);
+
+  let option;
+  await waitFor(() => {
+    const listboxId = trigger.getAttribute('aria-controls');
+    const listbox = listboxId ? trigger.ownerDocument.getElementById(listboxId) : null;
+
+    if (!listbox) {
+      throw new Error(`Select listbox for "${label}" is not mounted yet.`);
+    }
+
+    option = within(listbox).queryByRole('option', { name: optionName });
+    if (!option) {
+      throw new Error(`Select option "${optionName}" is not mounted yet.`);
+    }
+
+    const listboxStyle = getComputedStyle(listbox);
+    if (listboxStyle.pointerEvents === 'none' || listboxStyle.opacity === '0') {
+      throw new Error(`Select listbox for "${label}" is not positioned yet.`);
+    }
+  });
+
+  await userEvent.click(option);
 }
 
 function LoadingSignalSelector({ narrow = false }) {

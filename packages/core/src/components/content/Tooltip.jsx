@@ -6,6 +6,8 @@ import {
   useFloatingPosition,
   useLightDismiss,
 } from "../overlay/anchored-overlay.js";
+import { OverlayPortal } from '../overlay/overlay-platform.js';
+import { componentVars, partClassName, partStyle, useMergedRefs } from '../internal/surface.js';
 
 const POS = {
   top: { bottom: "100%", left: "50%" },
@@ -166,7 +168,7 @@ function normalizeDelay(delay) {
  * arrow always points at the trigger: for edge-aligned bubbles it is offset
  * back over the target centre rather than drifting to the bubble centre.
  */
-export function Tooltip({
+export const Tooltip = React.forwardRef(function Tooltip({
   content,
   placement,
   position,
@@ -184,11 +186,19 @@ export function Tooltip({
   onMouseLeave,
   onFocus,
   onBlur,
+  withinPortal = true,
+  portalTarget,
+  zIndex,
+  className,
+  classNames,
+  styles,
+  vars,
   ...rest
-}) {
+}, forwardedRef) {
   const [visible, setVisible] = useControllableOpen({ open, defaultOpen, onOpenChange });
   const requestedPlace = position || placement || "top";
   const wrapperRef = React.useRef(null);
+  const mergedWrapperRef = useMergedRefs(wrapperRef, forwardedRef);
   const bubbleRef = React.useRef(null);
   const tooltipId = React.useId();
   const getTrigger = React.useCallback(() => findOverlayTrigger(wrapperRef.current), []);
@@ -197,6 +207,8 @@ export function Tooltip({
     anchorRef: wrapperRef,
     panelRef: bubbleRef,
     placement: requestedPlace,
+    strategy: withinPortal ? 'fixed' : 'absolute',
+    align: normalizeAlign(align),
   });
   const place = floating.placement;
   const pos = POS[place] || POS.top;
@@ -284,7 +296,7 @@ export function Tooltip({
     [clearTimer, setVisible],
   );
 
-  useLightDismiss({
+  const layer = useLightDismiss({
     open: visible,
     rootRef: wrapperRef,
     getTrigger,
@@ -293,6 +305,8 @@ export function Tooltip({
       setVisible(false);
     },
     outsidePress: false,
+    insideRefs: [bubbleRef],
+    zIndex,
   });
 
   const showTooltip = (event) => {
@@ -326,8 +340,11 @@ export function Tooltip({
 
   return (
     <span
-      ref={wrapperRef}
+      ref={mergedWrapperRef}
       {...rest}
+      data-slot="root"
+      data-open={visible ? 'true' : undefined}
+      className={partClassName(classNames, 'root', className) || undefined}
       data-anchored-overlay-trigger={validTrigger ? undefined : ''}
       aria-describedby={validTrigger ? undefined : tooltipId}
       /* Never force the wrapper into the tab order. A bare string/fragment child
@@ -335,29 +352,33 @@ export function Tooltip({
          says a tooltip trigger must be a focusable control the author owns —
          auto-tabbing the wrapper pulled plain text into keyboard navigation. */
       tabIndex={rest.tabIndex}
-      style={{ position: "relative", display: "inline-flex", ...style }}
+      style={{ ...componentVars(vars, '--lds-tooltip-'), position: "relative", display: "inline-flex", ...partStyle(styles, 'root'), ...style }}
       onMouseEnter={showTooltip}
       onMouseLeave={hideTooltip}
       onFocus={showOnFocus}
       onBlur={hideOnBlur}
     >
       {renderedChildren}
+      <OverlayPortal open={visible} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={wrapperRef} layer="anchored">
       <span
         ref={bubbleRef}
         id={tooltipId}
+        data-slot="bubble"
+        className={partClassName(classNames, 'bubble') || undefined}
         role="tooltip"
         aria-hidden={visible ? false : undefined}
         data-placement={place}
         style={{
-          position: "absolute",
-          ...pos,
-          ...bubbleOffset(place, align),
-          translate: `${floating.shiftX}px ${floating.shiftY}px`,
-          zIndex: 40,
-          pointerEvents: "auto",
+          ...componentVars(vars, '--lds-tooltip-'),
+          position: withinPortal ? "fixed" : "absolute",
+          ...(withinPortal ? { top: floating.y ?? -9999, left: floating.x ?? -9999 } : pos),
+          ...(withinPortal ? {} : bubbleOffset(place, align)),
+          translate: withinPortal ? 'none' : `${floating.shiftX}px ${floating.shiftY}px`,
+          zIndex: layer.zIndex,
+          pointerEvents: "none",
           display: "inline-flex",
           alignItems: "center",
-          padding: compact ? "5px 8px" : "8px 12px",
+          padding: `var(--lds-tooltip-padding, ${compact ? '5px 8px' : '8px 12px'})`,
           color: "var(--color-semantic-inverse-label)",
           fontFamily: "var(--font-sans)",
           fontSize: compact ? 11.5 : "var(--label1-size)",
@@ -367,7 +388,7 @@ export function Tooltip({
           borderRadius: compact ? 6 : 8,
           boxSizing: "border-box",
           width: "max-content",
-          maxWidth: "min(20rem, calc(100vw - var(--space-8)))",
+          maxWidth: "var(--lds-tooltip-max-width, min(20rem, calc(100vw - var(--space-8))))",
           overflow: "visible",
           whiteSpace: "normal",
           overflowWrap: "anywhere",
@@ -376,6 +397,7 @@ export function Tooltip({
           visibility: visible && bubblePath ? "visible" : "hidden",
           opacity: visible ? 1 : 0,
           transition: "opacity var(--dur-fast) var(--ease-out)",
+          ...partStyle(styles, 'bubble'),
         }}
       >
         {bubblePath && (
@@ -383,6 +405,8 @@ export function Tooltip({
             aria-hidden="true"
             focusable="false"
             data-lds-tooltip-surface=""
+            data-slot="surface"
+            className={partClassName(classNames, 'surface') || undefined}
             data-arrow-axis={arrowPosition ?? undefined}
             data-arrow-height={arrow ? arrowHeight : undefined}
             width={bubbleBox.w}
@@ -395,6 +419,7 @@ export function Tooltip({
               display: "block",
               overflow: "visible",
               pointerEvents: "none",
+              ...partStyle(styles, 'surface'),
             }}
           >
             <path
@@ -409,6 +434,8 @@ export function Tooltip({
             remains a stable, non-scrolling speech-bubble silhouette. */}
         <span
           data-lds-tooltip-content
+          data-slot="content"
+          className={partClassName(classNames, 'content') || undefined}
           style={{
             position: "relative",
             zIndex: 1,
@@ -419,14 +446,18 @@ export function Tooltip({
             maxHeight: contentMaxHeight,
             overflowY: contentMaxHeight != null ? "auto" : undefined,
             overflowX: contentMaxHeight != null ? "hidden" : undefined,
+            ...partStyle(styles, 'content'),
           }}
         >
           <span>{content}</span>
           {shortcut != null && (
             <span
+              data-slot="shortcut"
+              className={partClassName(classNames, 'shortcut') || undefined}
               style={{
                 color: "var(--color-semantic-inverse-label-alternative-soft)",
                 fontWeight: "var(--fw-bold)",
+                ...partStyle(styles, 'shortcut'),
               }}
             >
               {shortcut}
@@ -434,6 +465,7 @@ export function Tooltip({
           )}
         </span>
       </span>
+      </OverlayPortal>
     </span>
   );
-}
+});

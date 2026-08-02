@@ -1,3 +1,4 @@
+import React from 'react';
 import { userEvent } from 'storybook/test';
 import { Icon, SegmentedControl } from '../src/index.js';
 import { SegmentedControlCard as SegmentedControlCardStory } from './SelectionStatus.shared.jsx';
@@ -162,4 +163,42 @@ export const SegmentedControlCard = {
   ...SegmentedControlCardStory,
   name: 'SegmentedControl card parity',
   tags: ['!dev', 'visual-parity'],
+};
+
+function SegmentedControlSurfaceRefFixture() {
+  const ref = React.useRef(null);
+  React.useLayoutEffect(() => {
+    ref.current?.setAttribute('data-ref-target', 'segmented-root');
+  }, []);
+  return (
+    <SegmentedControl
+      ref={ref}
+      options={['목록', '그리드']}
+      defaultValue="목록"
+      className="contract-segmented-root"
+      classNames={{ segment: 'contract-segment' }}
+      styles={{ label: { letterSpacing: '2px' } }}
+      vars={{ '--lds-segmented-control-height': '44px' }}
+    />
+  );
+}
+
+export const SurfaceRefContract = {
+  name: 'Surface and ref contract',
+  tags: ['!dev'],
+  render: () => <SegmentedControlSurfaceRefFixture />,
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-ref-target="segmented-root"]');
+    const segments = [...(root?.querySelectorAll('[data-slot="segment"]') ?? [])];
+    const label = segments[0]?.querySelector('[data-slot="label"]');
+    if (!(root instanceof HTMLDivElement) || root.getAttribute('role') !== 'radiogroup' || root.dataset.slot !== 'root') {
+      throw new Error('SegmentedControl ref must target the radiogroup root.');
+    }
+    if (!root.classList.contains('contract-segmented-root') || !segments.every((segment) => segment.classList.contains('contract-segment'))) {
+      throw new Error('SegmentedControl root and named segment classes must compose independently.');
+    }
+    if (segments[0]?.dataset.state !== 'checked' || getComputedStyle(root).height !== '44px' || getComputedStyle(label).letterSpacing !== '2px') {
+      throw new Error('SegmentedControl state, vars, and named-part styles must reach their documented targets.');
+    }
+  },
 };

@@ -1,3 +1,4 @@
+import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
 import {
   AutoComplete,
@@ -191,3 +192,45 @@ export const SearchClearFocusContract = {
 
 export const SearchFieldCard = { ...SearchFieldCardStory, name: 'SearchField card parity', tags: ['!dev', 'visual-parity'] };
 export const AutoCompleteCard = { ...AutoCompleteCardStory, name: 'AutoComplete card parity', tags: ['!dev', 'visual-parity'] };
+
+function SearchFieldSurfaceRefFixture() {
+  const inputRef = React.useRef(null);
+  const rootRef = React.useRef(null);
+  React.useLayoutEffect(() => {
+    inputRef.current?.setAttribute('data-ref-target', 'native-search');
+    rootRef.current?.setAttribute('data-root-ref-target', 'search-root');
+  }, []);
+  return (
+    <SearchField
+      ref={inputRef}
+      rootRef={rootRef}
+      label="검색 계약"
+      defaultValue="로봇"
+      className="contract-search-root"
+      inputClassName="contract-native-search"
+      classNames={{ control: 'contract-search-control' }}
+      styles={{ input: { letterSpacing: '2px' } }}
+      vars={{ '--lds-search-field-height': '44px' }}
+    />
+  );
+}
+
+export const SearchFieldSurfaceRefContract = {
+  name: 'SearchField surface and ref contract',
+  tags: ['!dev'],
+  render: () => <SearchFieldSurfaceRefFixture />,
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-root-ref-target="search-root"]');
+    const input = canvasElement.querySelector('[data-ref-target="native-search"]');
+    const control = root?.querySelector('[data-slot="control"]');
+    if (!(input instanceof HTMLInputElement) || input.type !== 'search' || root?.dataset.slot !== 'root') {
+      throw new Error('SearchField ref must target the native search input and rootRef must target the field root.');
+    }
+    if (!root.classList.contains('contract-search-root') || !input.classList.contains('contract-native-search') || !control?.classList.contains('contract-search-control')) {
+      throw new Error('SearchField root, native input, and named-part classes must remain separate.');
+    }
+    if (getComputedStyle(control).height !== '44px' || getComputedStyle(input).letterSpacing !== '2px') {
+      throw new Error('SearchField vars and named-part styles must reach their documented targets.');
+    }
+  },
+};

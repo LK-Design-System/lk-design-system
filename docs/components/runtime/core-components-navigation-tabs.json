@@ -55,7 +55,7 @@
       "name": "full",
       "type": "boolean",
       "required": false,
-      "description": "Legacy fill prop. Prefer resize=\"fill\". @default false",
+      "description": "",
       "owner": "TabsProps"
     },
     {
@@ -92,6 +92,27 @@
       "required": false,
       "description": "scroll axis. @default \"auto\"",
       "owner": "TabsProps"
+    },
+    {
+      "name": "classNames",
+      "type": "LdsClassNames",
+      "required": false,
+      "description": "",
+      "owner": "TabsProps"
+    },
+    {
+      "name": "styles",
+      "type": "LdsStyles",
+      "required": false,
+      "description": "",
+      "owner": "TabsProps"
+    },
+    {
+      "name": "vars",
+      "type": "LdsVars",
+      "required": false,
+      "description": "",
+      "owner": "TabsProps"
     }
   ],
   "states": [],
@@ -117,8 +138,12 @@
   "responsive": [
     "When used as CanvasEditorShell.responsiveNavigation, tabs switch only the narrow-screen region (canvas, layers, panel). Workspace modes that change tools and document behavior remain in subheader."
   ],
-  "contentGuidance": [],
+  "contentGuidance": [
+    "ref, className, and style target the tablist root."
+  ],
   "accessibility": [
+    "Stable parts are root, tab, label, count, trailing, and indicator; tabs expose data-state=\"active|inactive\" and data-disabled.",
+    "Only documented --lds-tabs- geometry variables are accepted. The component owns roving focus and activation; consumers own the corresponding tab panels.",
     "The selected tab is the single Tab stop. Left/Right, Home, and End move focus and activate the next enabled tab, following the WAI-ARIA Tabs pattern. 선택 탭이 비활성화되면 첫 번째 활성 탭이 Tab 스톱이 됩니다."
   ],
   "exceptions": [],
@@ -154,6 +179,10 @@
     "--font-sans",
     "--fw-semibold",
     "--headline2-size",
+    "--lds-tabs-gap",
+    "--lds-tabs-height",
+    "--lds-tabs-indicator-height",
+    "--lds-tabs-padding-inline",
     "--radius-sm",
     "--space-2"
   ],
@@ -175,7 +204,7 @@
         "role": "overview"
       }
     ],
-    "hiddenEvidence": 1
+    "hiddenEvidence": 2
   },
   "sources": [],
   "canonicalGuide": null,
@@ -190,7 +219,7 @@
     "behavior": "omitted-no-evidence",
     "quantitativeRules": "evidence",
     "responsive": "evidence",
-    "contentGuidance": "omitted-no-evidence",
+    "contentGuidance": "evidence",
     "accessibility": "evidence",
     "exceptions": "omitted-no-evidence",
     "related": "evidence",

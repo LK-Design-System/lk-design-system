@@ -24,6 +24,12 @@
   어긋납니다. 필요하면 `IconButton`·`Button` 같은 실제 control 로 감싸거나, 직접 `tabIndex` 를
   넘겨 명시적으로 선택하세요.
 
+## Public surface, ref, and Portal
+
+- `ref`, `className`, and `style` target the trigger wrapper. Stable parts are `root`, `bubble`, `surface`, `content`, and `shortcut`; geometry is limited to `--lds-tooltip-padding` and `--lds-tooltip-max-width`.
+- The bubble defaults to the common owner-document Portal, inherits the nearest explicit theme and `dir`, flips/clamps at viewport edges, and is removed from the DOM while closed. `placement` is deprecated; use `position`.
+- Tooltip remains non-interactive and pointer-transparent. Consumers provide a focusable trigger when keyboard users need the description; LDS owns `aria-describedby`, delay, Escape, and positioning.
+
 ## 공식 근거
 
 - [WAI-ARIA APG Tooltip Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)은

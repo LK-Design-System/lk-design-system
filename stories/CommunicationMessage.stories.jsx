@@ -999,7 +999,8 @@ export const InlineSourceFooter = {
     const toggleTopClosed = Math.round(toggle.getBoundingClientRect().top);
     const messageHeightClosed = Math.round(message.getBoundingClientRect().height);
     await userEvent.click(toggle);
-    const panel = collapsible.querySelector('[role="dialog"]');
+    const panelId = toggle.getAttribute('aria-controls');
+    const panel = panelId ? canvasElement.ownerDocument.getElementById(panelId) : null;
     if (!panel || toggle.getAttribute('aria-expanded') !== 'true') {
       throw new Error('토글 활성화는 출처 팝오버를 열어야 합니다.');
     }
@@ -1015,7 +1016,7 @@ export const InlineSourceFooter = {
       throw new Error('href 출처 행은 새 탭 링크여야 합니다.');
     }
     await userEvent.keyboard('{Escape}');
-    if (collapsible.querySelector('[role="dialog"]') || toggle.getAttribute('aria-expanded') !== 'false') {
+    if ((panelId && canvasElement.ownerDocument.getElementById(panelId)) || toggle.getAttribute('aria-expanded') !== 'false') {
       throw new Error('Escape는 출처 팝오버를 닫아야 합니다.');
     }
     assertNoPerMessageLiveRegions(canvasElement);

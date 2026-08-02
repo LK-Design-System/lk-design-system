@@ -1,3 +1,4 @@
+import React from 'react';
 import { Icon, Input } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -151,6 +152,48 @@ export const InputDescriptionContract = {
     const ids = input?.getAttribute('aria-describedby')?.split(/\s+/) ?? [];
     if (!ids.includes('external-input-description') || ids.length < 2) {
       throw new Error('Input must merge consumer and internal description ids.');
+    }
+  },
+};
+
+function InputSurfaceRefFixture() {
+  const inputRef = React.useRef(null);
+  const rootRef = React.useRef(null);
+  React.useLayoutEffect(() => {
+    inputRef.current?.setAttribute('data-ref-target', 'native-input');
+    rootRef.current?.setAttribute('data-root-ref-target', 'field-root');
+  }, []);
+  return (
+    <Input
+      ref={inputRef}
+      rootRef={rootRef}
+      label="계약 입력"
+      defaultValue="값"
+      className="contract-input-root"
+      inputClassName="contract-native-input"
+      classNames={{ control: 'contract-input-control' }}
+      styles={{ input: { letterSpacing: '2px' } }}
+      vars={{ '--lds-input-height': '44px' }}
+    />
+  );
+}
+
+export const SurfaceRefContract = {
+  name: 'Surface and ref contract',
+  tags: ['!dev'],
+  render: () => <InputSurfaceRefFixture />,
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-root-ref-target="field-root"]');
+    const input = canvasElement.querySelector('[data-ref-target="native-input"]');
+    const control = root?.querySelector('[data-slot="control"]');
+    if (!(input instanceof HTMLInputElement) || root?.dataset.slot !== 'root') {
+      throw new Error('Input default ref must target the native input and rootRef must target the field root.');
+    }
+    if (!root.classList.contains('contract-input-root') || !input.classList.contains('contract-native-input') || !control?.classList.contains('contract-input-control')) {
+      throw new Error('Input root, native input, and named-part classes must stay separated.');
+    }
+    if (getComputedStyle(control).height !== '44px' || getComputedStyle(input).letterSpacing !== '2px') {
+      throw new Error('Input vars and named-part styles must reach the documented targets.');
     }
   },
 };

@@ -1,12 +1,11 @@
 import React from 'react';
+import { useOverlayLayer } from '../overlay/overlay-platform.js';
 
 const MENU_ITEM_SELECTOR = [
   '[role="menuitem"]',
   '[role="menuitemradio"]',
   '[role="menuitemcheckbox"]',
 ].join(',');
-
-const menuKeyboardStack = [];
 
 // APG typeahead: characters typed in quick succession build one search string;
 // the buffer is dropped after a short idle so the next burst starts a new query.
@@ -30,7 +29,8 @@ function availableItems(menu) {
 }
 
 /** Private roving-focus engine shared by LDS menu surfaces. */
-export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0 }) {
+export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex }) {
+  const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayer({ open, zIndex });
   const menuRef = React.useRef(null);
   const pendingFocusRef = React.useRef('first');
   const entryFrameRef = React.useRef(null);
@@ -115,12 +115,9 @@ export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0 }) {
     if (!open) return undefined;
     const trigger = optionsRef.current.getTrigger?.();
     const ownerDocument = trigger?.ownerDocument ?? menuRef.current?.ownerDocument ?? document;
-    const entry = {};
-    menuKeyboardStack.push(entry);
-
     const handleDocumentKeyDown = (event) => {
       if (
-        menuKeyboardStack.at(-1) !== entry
+        !isTopmost()
         || event.defaultPrevented
         || event.key !== 'Escape'
       ) return;
@@ -131,10 +128,8 @@ export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0 }) {
     ownerDocument.addEventListener('keydown', handleDocumentKeyDown);
     return () => {
       ownerDocument.removeEventListener('keydown', handleDocumentKeyDown);
-      const index = menuKeyboardStack.indexOf(entry);
-      if (index >= 0) menuKeyboardStack.splice(index, 1);
     };
-  }, [closeMenu, open]);
+  }, [closeMenu, isTopmost, open]);
 
   const handleMenuKeyDown = React.useCallback((event) => {
     if (event.defaultPrevented) return;
@@ -185,5 +180,5 @@ export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0 }) {
     items[nextIndex].focus({ preventScroll: true });
   }, [cancelEntryFocus, closeMenu]);
 
-  return { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown };
+  return { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown, zIndex: resolvedZIndex, isTopmost };
 }

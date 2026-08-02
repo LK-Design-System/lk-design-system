@@ -244,7 +244,7 @@ export const MediumFilterDensity = {
 };
 
 export const ResponsiveMultiSelectFilters = {
-  name: '반응형 · 다중 Select 필터',
+  name: '반응형 · 다중 선택 필터',
   parameters: storyDescription(
     '검색과 여러 Select의 합산 폭이 들어가는 데스크톱에서는 한 줄을 유지하고, 좁은 표면에서만 필터 host와 내부 control이 순서대로 줄바꿈됩니다.',
   ),
@@ -359,6 +359,45 @@ export const SearchlessEmbeddedToolbar = {
     }
     if (toolbar.children.length !== 1) {
       throw new Error('A searchless toolbar without filters must not render an empty controls row.');
+    }
+  },
+};
+
+function DataToolbarSurfaceRefFixture() {
+  const ref = React.useRef(null);
+  React.useLayoutEffect(() => {
+    ref.current?.setAttribute('data-ref-target', 'data-toolbar-root');
+  }, []);
+  return (
+    <DataToolbar
+      ref={ref}
+      title="Surface contract"
+      count={3}
+      searchable={false}
+      className="contract-data-toolbar-root"
+      classNames={{ header: 'contract-data-toolbar-header' }}
+      styles={{ title: { letterSpacing: '1px' } }}
+      vars={{ '--lds-data-toolbar-padding': '18px' }}
+    />
+  );
+}
+
+export const SurfaceRefContract = {
+  name: 'Surface and ref contract',
+  tags: ['!dev'],
+  render: () => <DataToolbarSurfaceRefFixture />,
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-ref-target="data-toolbar-root"]');
+    const header = root?.querySelector('[data-slot="header"]');
+    const title = root?.querySelector('[data-slot="title"]');
+    if (!(root instanceof HTMLDivElement) || root.dataset.slot !== 'root') {
+      throw new Error('DataToolbar ref and root props must target the public surface.');
+    }
+    if (!root.classList.contains('contract-data-toolbar-root') || !header?.classList.contains('contract-data-toolbar-header')) {
+      throw new Error('DataToolbar root and named-part classes must compose independently.');
+    }
+    if (getComputedStyle(root).paddingTop !== '18px' || getComputedStyle(title).letterSpacing !== '1px') {
+      throw new Error('DataToolbar vars and named-part styles must reach the documented targets.');
     }
   },
 };

@@ -40,6 +40,20 @@
       "owner": "ModalProps"
     },
     {
+      "name": "defaultOpen",
+      "type": "boolean",
+      "required": false,
+      "description": "비제어 초기 열림 상태. @default false",
+      "owner": "ModalProps"
+    },
+    {
+      "name": "onOpenChange",
+      "type": "(open: boolean) = void",
+      "required": false,
+      "description": "canonical 열림 상태 변경 알림.",
+      "owner": "ModalProps"
+    },
+    {
       "name": "title",
       "type": "React.ReactNode",
       "required": false,
@@ -69,7 +83,7 @@
     },
     {
       "name": "width",
-      "type": "number",
+      "type": "number | string",
       "required": false,
       "description": "최대 너비(px). @default 520",
       "owner": "ModalProps"
@@ -115,15 +129,67 @@
       "required": false,
       "description": "",
       "owner": "ModalProps"
+    },
+    {
+      "name": "withinPortal",
+      "type": "boolean",
+      "required": false,
+      "description": "Render at the owner-document Portal boundary. @default true",
+      "owner": "ModalProps"
+    },
+    {
+      "name": "portalTarget",
+      "type": "HTMLElement | null",
+      "required": false,
+      "description": "",
+      "owner": "ModalProps"
+    },
+    {
+      "name": "zIndex",
+      "type": "number",
+      "required": false,
+      "description": "",
+      "owner": "ModalProps"
+    },
+    {
+      "name": "classNames",
+      "type": "LdsClassNames",
+      "required": false,
+      "description": "",
+      "owner": "ModalProps"
+    },
+    {
+      "name": "styles",
+      "type": "LdsStyles",
+      "required": false,
+      "description": "",
+      "owner": "ModalProps"
+    },
+    {
+      "name": "vars",
+      "type": "LdsVars",
+      "required": false,
+      "description": "",
+      "owner": "ModalProps"
     }
   ],
   "states": [
     {
       "state": "open",
       "rule": "열림 상태. @default false"
+    },
+    {
+      "state": "defaultOpen",
+      "rule": "비제어 초기 열림 상태. @default false"
+    },
+    {
+      "state": "onOpenChange",
+      "rule": "canonical 열림 상태 변경 알림."
     }
   ],
   "behavior": [
+    "Tab/Shift+Tab은 최상위 dialog 안에서 순환하고, 외부로 이동한 포커스도 최상위 dialog로 되돌립니다.",
+    "Escape, scrim, 닫기 버튼은 controlled onClose를 호출합니다. 키보드 사용자를 위해 onClose와 보이는 닫기/취소 액션을 함께 제공합니다.",
     "닫히면 기본적으로 실제 trigger로 복원합니다. 워크플로상 다음 요소가 더 적절하면 returnFocusRef, 복원이 의도적으로 불필요하면 restoreFocus={false}를 사용합니다.",
     "열려 있는 동안 배경 페이지 스크롤이 잠깁니다(useDialogFocus 공용 엔진이 소유). 중첩된 다이얼로그는 깊이를 세어 마지막 표면이 닫힐 때만 해제하고, 스크롤바가 사라지며 생기는 layout shift는 같은 폭의 body padding으로 보정합니다. Modal·ConfirmDialog·Alert가 모두 같은 계약을 상속합니다.",
     "Portal 선택, route 전환, 제출 상태와 데이터 보존은 제품 레이어가 소유합니다. Modal은 controlled open/dismiss, 표면 구조, focus/ARIA 계약만 소유합니다."
@@ -151,11 +217,11 @@
     "WAI-ARIA APG Modal Dialog Pattern: 내부 초기 초점, Tab/Shift+Tab 순환, Escape dismiss, 호출 지점 복귀, role=\"dialog\"/aria-modal/접근 가능한 이름을 계약으로 채택했습니다."
   ],
   "accessibility": [
+    "ref, className, and style target the role=\"dialog\" surface. Stable parts are backdrop, root, header, title, close, body, and footer; geometry is limited to --lds-modal-width, --lds-modal-max-height, and --lds-modal-radius.",
+    "Modal defaults to the common owner-document Portal. The shared modal stack owns z-order, background inert, body scroll lock, initial/trapped focus, topmost Escape, and focus restoration. portalTarget and zIndex are limited runtime overrides.",
     "가장 가까운 sibling은 ConfirmDialog, Alert, Drawer, Sheet입니다. ConfirmDialog의 초기 초점·Tab 순환·Escape·복원 동작을 공통 controller로 승격했습니다.",
     "title은 보이는 요소와 aria-labelledby로 연결합니다. 제목이 없으면 ariaLabel이 접근 가능한 이름을 제공합니다.",
-    "body(children)는 aria-describedby로 다이얼로그에 연결합니다. ConfirmDialog·Alert와 동일한 규칙이며, 이름(제목)만 읽히고 본문이 누락되는 상태를 막습니다.",
-    "열리면 initialFocusRef가 가리키는 내부 요소를 먼저 포커스합니다. 유효하지 않으면 첫 tabbable 요소, 그것도 없으면 dialog 자체를 포커스합니다.",
-    "Tab/Shift+Tab은 최상위 dialog 안에서 순환하고, 외부로 이동한 포커스도 최상위 dialog로 되돌립니다."
+    "body(children)는 aria-describedby로 다이얼로그에 연결합니다. ConfirmDialog·Alert와 동일한 규칙이며, 이름(제목)만 읽히고 본문이 누락되는 상태를 막습니다."
   ],
   "exceptions": [],
   "related": [
@@ -210,6 +276,9 @@
     "--font-sans",
     "--fw-extra",
     "--headline1-size",
+    "--lds-modal-max-height",
+    "--lds-modal-radius",
+    "--lds-modal-width",
     "--shadow-xl",
     "--space-2",
     "--space-4",
@@ -217,7 +286,9 @@
     "--space-6"
   ],
   "apiLinks": [],
-  "migration": [],
+  "migration": [
+    "open/onOpenChange is the canonical controlled API and defaultOpen is the uncontrolled API. onClose remains a compatibility side-effect callback and may be used together during migration."
+  ],
   "platformStatus": {
     "figma": "mapped",
     "react": "implemented",
@@ -244,7 +315,7 @@
         "role": "responsive"
       }
     ],
-    "hiddenEvidence": 1
+    "hiddenEvidence": 2
   },
   "sources": [],
   "canonicalGuide": null,

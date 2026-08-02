@@ -5,7 +5,7 @@
 | Type | Stable contract and component register |
 | Status | Current |
 | Owner | Component owners · Design system owner |
-| Last reviewed | 2026-07-27 |
+| Last reviewed | 2026-08-02 |
 
 ## Canonical public API grammar
 
@@ -35,6 +35,43 @@ matrix를 유지하고, 개별 페이지의 생성 가이드를 중복 작성하
 | Responsive | mobile, desktop, dense mode 기준 |
 | Migration | 이전 컴포넌트나 정적 HTML parity와의 관계 |
 
+## Refinement public surface register
+
+아래 15개 컴포넌트는 [`COMPONENT_SURFACE_CONTRACT.md`](COMPONENT_SURFACE_CONTRACT.md)의
+root·ref·named part·component variable 규칙을 적용한다. `className`과 `style`은 public
+root를, `classNames`와 `styles`는 선언에 열거된 part만, `vars`는 해당
+`--lds-<component>-*` prefix만 조정한다. portalled surface에는 root에서 끊기는 component
+variable을 패널에도 전달한다. 각 row의 실제 DOM·computed style·keyboard/focus 증거는
+동일 컴포넌트 Storybook의 `Surface and ref contract` 또는
+`Surface, ref, and Portal contract`가 소유한다.
+
+| Component | Public root / default ref | Stable surface and state boundary |
+| --- | --- | --- |
+| Button | polymorphic native control / 같은 root | `root`, `content`, `loader`; canonical `variant`·`size`, native disabled와 loading ownership |
+| Input | field stack / native `input` (`rootRef` 별도) | label·control·input·message parts; disabled, read-only, invalid와 description 연결 |
+| Textarea | field stack / native `textarea` (`rootRef` 별도) | label·control·textarea·message parts; multiline geometry, disabled, read-only, invalid |
+| SearchField | field stack / native search `input` (`rootRef` 별도) | control·input·clear action parts; query value는 native input, 검색 실행·결과는 제품 소유 |
+| Select | field stack / combobox trigger (`rootRef` 별도) | trigger·value·dropdown·option parts; controlled/uncontrolled value, listbox keyboard, stable intrinsic width와 Portal |
+| FieldAction | polymorphic composition root / 같은 root | field stack·row·field·action parts; field-before-action DOM/Tab order, 제출·loading은 자식/제품 소유 |
+| SegmentedControl | `radiogroup` / 같은 root | segment·icon·label·count parts; controlled/uncontrolled single selection과 disabled-item skip |
+| Tabs | `tablist` / 같은 root | tab·label·count·trailing·indicator parts; roving focus와 패널 content는 consumer 소유 |
+| Card | polymorphic surface / 같은 root | structured header/body/footer parts; interactive는 opt-in이며 nested interactive surface는 금지 |
+| DataToolbar | toolbar surface / 같은 root | header와 controls row는 content가 있을 때만 생성; query·selection·bulk policy는 제품/DataGrid 소유 |
+| SideNav | native `nav` / 같은 root | panel·brand·list·item·child list·footer parts; selected/disclosure/collapsed 표현과 route·permission 소유권 분리 |
+| DropdownMenu | anchor root / 같은 root | trigger·panel·menu·item·divider·action parts; menu semantics, nested stack, dismiss와 Portal은 LDS 소유 |
+| Popover | anchor root / 같은 root | trigger·panel parts; arbitrary body slot은 허용하되 positioning·dismiss·Portal은 LDS 소유 |
+| Tooltip | trigger wrapper / 같은 root | bubble·surface·content·shortcut parts; 비대화형 설명, `aria-describedby`, hover/focus/Escape와 Portal |
+| Modal | portalled dialog / dialog root | backdrop·root·header·title·close·body·footer parts; naming, trap, topmost Escape, restore, inert와 scroll lock은 LDS 소유 |
+
+### LdsProvider runtime contract
+
+`LdsProvider`는 additive runtime API다. `colorScheme`/`defaultColorScheme`/
+`onColorSchemeChange`, storage manager, `direction`, `locale`, DOM `target`, 기본
+`portalTarget`과 `zIndexBase`를 제공한다. `LdsColorSchemeScript`는 SSR 첫 paint 전에 저장된
+theme을 적용한다. Provider가 관리하는 target보다 가까운 명시적 theme/`dir` scope는
+overlay에서 우선하며, Provider 상태가 바뀌면 열린 custom-target Portal에도 동기화된다.
+기존 CSS-only `[data-theme]` consumer는 Provider 없이 계속 사용할 수 있다.
+
 ## Navigation composition matrix
 
 | 맥락 | 기본 조합 | 경계 |
@@ -60,6 +97,7 @@ Operations Dashboard의 기준은 루트 `DESIGN.md`다. Dashboard shell은 land
 | Callout | signal, positive, cautionary, negative, navy; optional semantic `headingLevel=2..6`, default non-heading title | tone default icon always present, custom icon size normalization, non-color label, heading-level story assertion |
 | OverlayStatusChip | neutral/cautionary/negative tone, icon override, caller-positioned absolute anchor (top-center default), pointer-transparent, `role="status"`, outside-inert placement | overview play pins absolute + pointer-events:none + status role outside inert; tones story with STATUS_TONE_STYLE glyphs, truncation, bottom placement override |
 | Tabs | hug/fill, small/medium/large, boolean legacy or number/CSS-length inline `padding`, optional trailing action, horizontal scrolling with full 2px indicator inside its scroll box | roving Tab stop and Arrow/Home/End keyboard contract; token-length padding alignment; constrained scroll fixture proves no indicator clipping or cross-axis scrollbar |
+| SegmentedControl | controlled/uncontrolled value, disabled group or item, optional per-item `count`, native radiogroup naming, roving Arrow/Home/End selection | count rendering, disabled-item skipping, keyboard selection and compact/narrow stories |
 | SideNav | `surface="floating|docked"` (`floating` compatibility default), expanded/collapsed controlled or uncontrolled state, product-shell-owned collapse control, optional overlay peek with uncontrolled runtime mode synchronization, selected, nested group with child icon slots, `brandAlign`, footer render state/gap, collapsed rail scrolling | floating/docked surface contract; external toggle `aria-expanded`·`aria-controls`; focus retention; parent-owned persistence; reduced motion; overlay pointer+focus delayed close, outside click/Escape close and persistent-parent focus restore; runtime overlay entry/exit state; decorative aligned child icons; start/center brand, footer state, hidden-scrollbar rail stories |
 | Card | polymorphic `as` root, default/subtle surface tone, elevation, interactive/dark, structured slots, semantic heading, `titleWrap="truncate|wrap"`, platform density, skeleton/save/toggle affordances | native section/list-item roots, light/dark inset-group ownership, heading and nested-interactive guards, long-title wrap assertion, desktop/mobile structured-card stories |
 | Table | native static table, size/hover, caption or ARIA name, row header, stable row id, `getRowProps`, public header/data cell-style helpers | `<th scope>` semantics, row metadata without grid/focus semantics, public style-helper composition story |
@@ -82,7 +120,7 @@ Operations Dashboard의 기준은 루트 `DESIGN.md`다. Dashboard shell은 land
 | Sparkline | accessible name/description, start/min/max/end summary, empty state, formatting | chart and empty-state stories |
 | ChartFrame | named title/description region, composable heading level, actions, legend, loading/empty/error/stale with last-good chart and freshness, narrow wrapping; false/null conditional children do not count as preserved data | normal, conditional-child loading/error and 320px stale stories |
 | FileBrowser | product-provided path and entries, explicit directory navigation versus file/folder selection, up action, selected ID, loading/error/empty, disabled navigation | file browser action-separation stories |
-| DataToolbar | optional search (`searchable=false`), filter, selected bulk action, result count, compact density | toolbar with grid and searchless embedded-list stories |
+| DataToolbar | independent optional header (`title`, `description`, result `count`, page-level `actions`) and controls rows; optional search (`searchable=false`), filters, compact density; returns `null` when both rows are empty; selected count and bulk actions remain DataGrid-owned | toolbar with grid, searchless embedded-list, header-only, controls-only and all-empty contracts |
 | DataExportAction | controlled/uncontrolled valid format/scope, disappearing-selection fallback, selected/all-matching counts, processing progress, success/error, allowed disabled/hidden reason, narrow wrapping | callback, scope fallback and 320px permission/progress stories |
 | FilterBar | controls, removable or read-only applied filters, clear all, result status, saved-view slot, embedded/standalone, narrow wrapping | interactive/read-only normal and 320px stories |
 | ResourceState | ready, loading, refreshing, empty, error, stale, offline, restricted; preserved last-good data and freshness | normal and 320px composed resource-state stories |
@@ -116,7 +154,8 @@ Operations Dashboard의 기준은 루트 `DESIGN.md`다. Dashboard shell은 land
 | TelemetryValue | value, unit, tone label, stale, timestamp and helper, compact density | responsive 320px, non-color state, numeric readout story |
 | Modal/Drawer/Sheet | controlled open/close, visible title or ariaLabel, Drawer short `subtitle` associated with `aria-describedby`, localized close label where applicable, initialFocusRef, bidirectional Tab trap, topmost Escape/containment, returnFocusRef/automatic trigger restore, normal/narrow overflow | nested modal and normal/320px overlay focus stories; Drawer visible subtitle association assertion |
 | ConfirmDialog | default, danger, warning text, cancel, confirm, pending/disabled, scrim/Escape dismiss, shared overlay stack, nested topmost Escape, initial focus/trap/restore | confirmation, nested overlay and safety-confirmation stories |
-| Select | controlled/uncontrolled value, combobox/listbox naming, Arrow/Home/End navigation, Enter/Space commit, Escape close/focus return, disabled/invalid/helper | selection control and keyboard-contract stories |
+| DropdownMenu | normal/radio/checkbox variants, compact/default/comfortable density, controlled/uncontrolled visibility, disabled/danger/divider/submenu items, optional action area, root/submenu owner-document portals, nearest explicit theme-scope inheritance | keyboard menu navigation, topmost Escape/focus restore, viewport positioning, clipping escape, theme inheritance and nested-menu stories |
+| Select | controlled/uncontrolled value, combobox/listbox naming, Arrow/Home/End navigation, Enter/Space commit, Escape close/focus return, disabled/invalid/helper, size-aware trigger/option typography, stable option-set intrinsic width that yields to consumer width constraints | selection control, keyboard contract, root/trigger geometry, stable-value width and constrained long-option no-overflow stories |
 | SearchableMultiSelect | async search, selected chip removal, keyboard option traversal that skips disabled options, loading/error/empty, max selection | searchable multi-select resource and disabled-option stories |
 | SecretField | masked/revealed, timed reveal, copy feedback, disabled, external re-auth composition | secret field story |
 | FileUploadQueue | queued/uploading/processing/succeeded/failed, progress, retry/remove/open, partial completion | upload queue states story |
@@ -128,7 +167,7 @@ Operations Dashboard의 기준은 루트 `DESIGN.md`다. Dashboard shell은 land
 | FieldAction | one LDS field plus one separate action, shared sm/md/lg density mapped to 32/48/52px, optional shared label/helper/error, native form composition, field-before-action DOM order, automatic single-column reflow at 360px | 32/48px alignment, disabled/loading/long-label/error, native Enter submit, direct Tab order and 320px full-width action stories |
 | ValidationSummary | one or more blocking errors, optional same-submit field-linked warnings, required issue `href`, automatic `label: message` action name, optional SPA activation, focus-led summary or opt-in count announcement; no warning-only/valid surface | summary-to-field focus, identical inline message/`aria-invalid`/`aria-describedby`, error-only announcement and 320px long-copy stories |
 | ConversationMessage | `authorRole` defaults assistant to borderless `document`, user to solid primary `bubble`, human-agent to a neutral fill `bubble`, system to a centered neutral pill chip, with an `AI`/`상담원` role badge and optional `roleBadgeLabel`; explicit `presentation="document|bubble"` and optional non-system `direction` remain independent overrides; single/first/middle/last grouping, static/delivery/response lifecycle (delivery adds `read` with a bubble-foot time + read receipt), response complete and delivery sent silent by default, aria-busy only on response pending/streaming/stopping, failed-only retry, rich body plus generic attachment/source/action ReactNode slots; canonical completed-AI composition places the inline source and action group as footer siblings, orders actions copy→regenerate→positive/negative feedback, maps product-owned feedback selection through `pressed`/`aria-pressed`, disables those follow-up actions while streaming, and exposes only retry when failed; DOM order identity→body→response status→attachments→sources→delivery meta/static status→actions, with `inlineSources` moving sources after the action group in the final footer | role/presentation anatomy, lifecycle and conditional status order, grouping and explicit slots, canonical AI source/action recipe, general assistant composition, approximately 760px and 320px, dark, long rich assistant document and multiline user primary bubble stories |
-| MessageFeed | transparent/chrome-free named viewport, role="log" polite additions-only live region, required controlled `following` with user-scroll/jump-to-latest reason, prepend scroll-anchor restoration, history load/busy, unread jump with focus retention, separate liveStatus status region, empty; focusable log supports Home/End/Page Up/Page Down viewport navigation without intercepting descendant controls; existing Core `Divider` composes named non-interactive date and first-unread boundaries while product owns their truth; parent owns app header/sidebar and outer panel surface | history anchoring, follow/unread, date/first-unread boundary composition, viewport keyboard navigation, empty/busy, transparent-feed composition, approximately 760px, 320px narrow and dark stories |
+| MessageFeed | transparent/chrome-free named viewport, role="log" polite additions-only live region, `viewportInset="compact|comfortable"` (8/16px inline, fixed 12px block), required controlled `following` with user-scroll/jump-to-latest reason, prepend scroll-anchor restoration, history load/busy, unread jump with focus retention, separate liveStatus status region, empty; focusable log supports Home/End/Page Up/Page Down viewport navigation without intercepting descendant controls; existing Core `Divider` composes named non-interactive date and first-unread boundaries while product owns their truth; parent owns app header/sidebar and outer panel surface | compact/comfortable inset, history anchoring, follow/unread, date/first-unread boundary composition, viewport keyboard navigation, empty/busy, transparent-feed composition, approximately 760px, 320px narrow and dark stories |
 | MessageComposer | controlled value, idle/submitting/streaming/stopping, enter/modifier-enter/button-only submit modes, IME-safe Enter, Shift+Enter newline, Alt-free Ctrl/Meta+Enter with Ctrl+Alt/AltGr rejection, disabled requires disabledReason and makes the slot-bearing shell inert, canSubmit/readOnly, elevated one-shell containing attachments → full-width autosize textarea → wrapping leading/trailing/send-or-stop action band; `statusLabel={null}` suppresses the default phase label; never infers transport completion or clears value | submit-mode, IME and AltGr collision guard, streaming stop, disabled-slot blocking, elevated one-shell hierarchy, normal/dark, approximately 760px and 320px multi-action stress stories |
 | VirtualKeypad | controlled canonical string value preserving `-`/`0.`/leading zeros, integer/decimal mode, optional sign, canonical `.` with localized display separator, min/max applied to confirmation validity only, maxLength, disabled/confirmDisabled, targetId focus preservation | integer/decimal and sign, range-invalid confirm, target-focus retention, 320px and landscape stories |
 

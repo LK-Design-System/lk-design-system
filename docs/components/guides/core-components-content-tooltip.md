@@ -26,7 +26,7 @@
 | --- | --- | --- | --- |
 | `content` | `React.ReactNode` | Yes |  |
 | `position` | `"top" \| "bottom" \| "left" \| "right"` | No | position axis. @default "top" |
-| `placement` | `"top" \| "bottom" \| "left" \| "right"` | No | Backward-compatible alias for position. |
+| `placement` | `"top" \| "bottom" \| "left" \| "right"` | No |  |
 | `size` | `"small" \| "sm" \| "medium" \| "md"` | No | size axis. @default "medium" |
 | `align` | `"leading" \| "center" \| "trailing" \| "left" \| "right" \| "top" \| "bottom"` | No | arrow alignment axis. @default "center" |
 | `shortcut` | `React.ReactNode` | No | shortcut axis. |
@@ -36,6 +36,12 @@
 | `defaultOpen` | `boolean` | No | 비제어 초기 열림 상태. @default false |
 | `onOpenChange` | `(open: boolean) = void` | No | 열림 상태 변경 알림. |
 | `children` | `React.ReactNode` | Yes |  |
+| `withinPortal` | `boolean` | No | Escape clipping ancestors through the owner-document Portal. @default true |
+| `portalTarget` | `HTMLElement \| null` | No |  |
+| `zIndex` | `number` | No |  |
+| `classNames` | `LdsClassNames` | No |  |
+| `styles` | `LdsStyles` | No |  |
+| `vars` | `LdsVars` | No |  |
 
 ## States
 
@@ -45,6 +51,10 @@
 | open | 제어된 열림 상태. |
 | defaultOpen | 비제어 초기 열림 상태. @default false |
 | onOpenChange | 열림 상태 변경 알림. |
+
+## Behavior and interaction
+
+- Tooltip - WDS hover/focus hint with arrow and optional shortcut.
 
 ## 정량 규칙
 
@@ -58,6 +68,8 @@
 
 ## Responsive
 
+- ref, className, and style target the trigger wrapper. Stable parts are root, bubble, surface, content, and shortcut; geometry is limited to --lds-tooltip-padding and --lds-tooltip-max-width.
+- The bubble defaults to the common owner-document Portal, inherits the nearest explicit theme and dir, flips/clamps at viewport edges, and is removed from the DOM while closed. placement is deprecated; use position.
 - 둥근 본체와 포인터는 하나의 SVG path로 그립니다. 별도 clip-path 삼각형을 본체에 1px 겹치는 방식은 브라우저 줌·DPR·fractional transform에서 이음새가 드러나므로 사용하지 않습니다. Medium 포인터는 12×6px, Small은 10×5px로 유지해 36px 안팎의 Tooltip 높이와 비례시킵니다.
 
 ## Content and writing
@@ -68,9 +80,9 @@
 
 - 콘텐츠는 짧은 보조 설명으로 제한하고, 지속되는 주석에는 Bubble, 서식·동작이 있는 본문에는 Popover를 사용합니다. focusable한 단일 trigger가 ARIA prop을 DOM에 전달해야 합니다.
 - hover와 focus가 같은 Tooltip을 열고 aria-describedby로 연결합니다. 포인터를 Tooltip 위로 옮겨도 유지되며, Escape는 trigger focus를 보존한 채 닫습니다. open · defaultOpen · onOpenChange로 상태를 제어할 수 있습니다.
+- Tooltip remains non-interactive and pointer-transparent. Consumers provide a focusable trigger when keyboard users need the description; LDS owns aria-describedby, delay, Escape, and positioning.
 - WAI-ARIA APG Tooltip Pattern은 role="tooltip", trigger aria-describedby, focus 유지, Escape dismiss를 정의합니다.
 - Fluent 2 Tooltip과 React Spectrum Tooltip은 hover/focus 동등성, 짧은 비필수 문구, focusable trigger, target을 가리키는 배치를 공통으로 권고합니다.
-- 분류는 WDS Core 시각 보정입니다. position, align, arrow, size와 상호작용·ARIA 계약은 바꾸지 않고, inverse surface의 내부 렌더링만 교체합니다.
 
 ## Exceptions
 
@@ -80,6 +92,7 @@
 
 | Component | Relationship |
 | --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
 | `Icon` | 대표 시나리오에서 조합 |
 | `IconButton` | 대표 시나리오에서 조합 |
 | `Accordion` | 대표 시나리오에서 조합 |
@@ -87,7 +100,6 @@
 | `Code` | 대표 시나리오에서 조합 |
 | `Collapsible` | 대표 시나리오에서 조합 |
 | `ContentBadge` | 대표 시나리오에서 조합 |
-| `Kbd` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -112,6 +124,8 @@
 - `--fw-semibold`
 - `--label1-line`
 - `--label1-size`
+- `--lds-tooltip-max-width`
+- `--lds-tooltip-padding`
 - `--shadow-md`
 - `--space-8`
 

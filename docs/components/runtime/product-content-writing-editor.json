@@ -94,7 +94,7 @@
       "name": "disable",
       "type": "boolean",
       "required": false,
-      "description": "Disable alias. @default false",
+      "description": "",
       "owner": "ButtonOwnProps"
     },
     {
@@ -130,6 +130,27 @@
       "type": "React.ReactNode",
       "required": false,
       "description": "",
+      "owner": "ButtonOwnProps"
+    },
+    {
+      "name": "classNames",
+      "type": "LdsClassNames",
+      "required": false,
+      "description": "Stable classes for the public Button anatomy.",
+      "owner": "ButtonOwnProps"
+    },
+    {
+      "name": "styles",
+      "type": "LdsStyles",
+      "required": false,
+      "description": "Stable inline styles for the public Button anatomy.",
+      "owner": "ButtonOwnProps"
+    },
+    {
+      "name": "vars",
+      "type": "LdsVars",
+      "required": false,
+      "description": "Component-scoped geometry overrides.",
       "owner": "ButtonOwnProps"
     },
     {
@@ -193,27 +214,6 @@
       "type": "string",
       "required": false,
       "description": "제어 본문 값.",
-      "owner": "ContentEditorProps"
-    },
-    {
-      "name": "defaultValue",
-      "type": "string",
-      "required": false,
-      "description": "비제어 본문 기본값.",
-      "owner": "ContentEditorProps"
-    },
-    {
-      "name": "onValueChange",
-      "type": "(value: string, event: React.ChangeEvent) = void",
-      "required": false,
-      "description": "본문 변경 콜백.",
-      "owner": "ContentEditorProps"
-    },
-    {
-      "name": "toolbar",
-      "type": "React.ReactNode",
-      "required": false,
-      "description": "툴바 전체를 대체하는 슬롯.",
       "owner": "ContentEditorProps"
     }
   ],
@@ -430,6 +430,10 @@
     "--fw-semibold",
     "--heading1-size",
     "--label2-size",
+    "--lds-button-gap",
+    "--lds-button-height",
+    "--lds-button-padding",
+    "--lds-button-radius",
     "--radius-md",
     "--radius-pill",
     "--radius-sm",

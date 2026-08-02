@@ -9,7 +9,7 @@ var _jsxruntime = require('react/jsx-runtime');
 function EmptyState({ icon, title, description, action, tone = "signal", headingLevel = 2, style, ...rest }) {
   const Heading = `h${Math.min(6, Math.max(2, headingLevel))}`;
   const palette = _chunkMBKOVB2Kcjs.statusToneStyle.call(void 0, tone);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       style: {

@@ -37,6 +37,10 @@ export interface ConfirmDialogProps extends Omit<React.HTMLAttributes<HTMLDivEle
   restoreFocus?: boolean;
   /** `title`이 없을 때 사용할 접근 가능한 이름. @default "확인 다이얼로그" */
   ariaLabel?: string;
+  /** Render at the owner-document Portal boundary. @default true */
+  withinPortal?: boolean;
+  portalTarget?: HTMLElement | null;
+  zIndex?: number;
 }
 
 /** 파괴적/안전 관련 액션을 명시적으로 확인하는 전용 다이얼로그. */

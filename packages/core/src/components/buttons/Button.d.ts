@@ -1,4 +1,12 @@
 import * as React from "react";
+import type { LdsClassNames, LdsStyles, LdsVars } from '../internal/surface.js';
+
+export type ButtonPart = 'root' | 'content' | 'loader';
+export type ButtonVariable =
+  | '--lds-button-height'
+  | '--lds-button-padding'
+  | '--lds-button-radius'
+  | '--lds-button-gap';
 
 export interface ButtonOwnProps {
   /** Visual action variant mapped through LK theme tokens. Also accepts "solid" and "outlined". @default "primary" */
@@ -23,7 +31,7 @@ export interface ButtonOwnProps {
   full?: boolean;
   /** Disable activation and mark the control unavailable. @default false */
   disabled?: boolean;
-  /** Disable alias. @default false */
+  /** @deprecated Use `disabled`. @default false */
   disable?: boolean;
   /**
    * Render the icon-only square button treatment. Requires `aria-label` (or
@@ -50,11 +58,18 @@ export interface ButtonOwnProps {
   /** Render with another element or component, such as "a" for link CTAs. @default "button" */
   as?: React.ElementType;
   children?: React.ReactNode;
+  /** Stable classes for the public Button anatomy. */
+  classNames?: LdsClassNames<ButtonPart>;
+  /** Stable inline styles for the public Button anatomy. */
+  styles?: LdsStyles<ButtonPart>;
+  /** Component-scoped geometry overrides. */
+  vars?: LdsVars<ButtonVariable>;
 }
 
 export type ButtonProps<Element extends React.ElementType = 'button'> = ButtonOwnProps &
   Omit<React.ComponentPropsWithoutRef<Element>, keyof ButtonOwnProps | 'as'> & {
     as?: Element;
+    ref?: React.ComponentPropsWithRef<Element>['ref'];
   };
 
 /**

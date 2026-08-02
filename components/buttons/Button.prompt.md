@@ -71,3 +71,11 @@ LK theme tokens.
   loading과 polymorphic anchor는 명시적인 LDS 확장입니다.
 
 TypeScript preserves the rendered element's props through the generic `as` contract. For example, `as="a"` accepts anchor props such as `href`, while the default button accepts native button props. Custom components receive their own declared props without widening the public surface to `any`.
+
+## Public surface and ref
+
+- Public root and native focus target are the same rendered element. `className`, `style`, and the default ref all target it, including polymorphic anchors.
+- Stable parts are `root`, `content`, and `loader`; each is mirrored by `data-slot`. `data-disabled`, `data-loading`, `data-size`, and `data-variant` expose actual component state.
+- `classNames` and `styles` accept only those stable part keys; they do not replace native Button semantics or activation ownership.
+- `vars` accepts only `--lds-button-height`, `--lds-button-padding`, `--lds-button-radius`, and `--lds-button-gap`. It changes geometry without replacing Button semantics or loading behavior.
+- `disable` and the `small|medium|large` size values are compatibility aliases. New code uses `disabled` and `sm|md|lg`.

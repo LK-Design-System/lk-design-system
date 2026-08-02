@@ -1,4 +1,11 @@
 import * as React from "react";
+import type { LdsClassNames, LdsStyles, LdsVars } from '../internal/surface.js';
+
+export type DropdownMenuPart = 'root' | 'trigger' | 'panel' | 'menu' | 'item' | 'divider' | 'actionArea';
+export type DropdownMenuVariable =
+  | '--lds-dropdown-menu-width'
+  | '--lds-dropdown-menu-min-width'
+  | '--lds-dropdown-menu-max-height';
 
 export interface DropdownMenuItem {
   label?: React.ReactNode;
@@ -10,7 +17,7 @@ export interface DropdownMenuItem {
   onClick?: () => void;
   danger?: boolean;
   disabled?: boolean;
-  /** disabled alias. */
+  /** @deprecated Use `disabled`. */
   disable?: boolean;
   /** active item state. */
   active?: boolean;
@@ -22,12 +29,20 @@ export interface DropdownMenuItem {
   variant?: "normal" | "radio" | "checkbox";
   /** 중첩 서브메뉴 항목. 있으면 이 항목은 서브메뉴를 여는 트리거가 되고(오른쪽 chevron·`aria-haspopup`), hover·클릭·오른쪽 화살표로 펼쳐집니다. */
   items?: DropdownMenuItem[];
+  /** Per-item class composed after the shared `item` part class. */
+  className?: string;
+  /** Per-item style composed after the shared `item` part style. */
+  style?: React.CSSProperties;
 }
 
 export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> {
   trigger: React.ReactNode;
   items: DropdownMenuItem[];
   align?: "left" | "right";
+  /** Preferred side; flips when space is insufficient. @default "bottom" */
+  position?: 'top' | 'bottom' | 'left' | 'right';
+  /** Trigger-to-panel gap in pixels. @default 8 */
+  offset?: number;
   /** menu variant axis. @default "normal" */
   variant?: "normal" | "radio" | "checkbox";
   /** 중첩 서브메뉴 표현 방식. `flyout`은 부모 옆으로 겹겹이 뜨고(데스크톱 표준), `drill`은 같은 패널이 하위 목록으로 전환되며 상단에 뒤로 컨트롤을 둡니다(폭 고정·터치 친화). @default "flyout" */
@@ -60,7 +75,14 @@ export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> 
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  /** Escape clipping ancestors through the owner-document Portal. @default true */
+  withinPortal?: boolean;
+  portalTarget?: HTMLElement | null;
+  zIndex?: number;
+  classNames?: LdsClassNames<DropdownMenuPart>;
+  styles?: LdsStyles<DropdownMenuPart>;
+  vars?: LdsVars<DropdownMenuVariable>;
 }
 
 /** dropdown menu with normal, radio, checkbox, scroll, and action-area support. */
-export function DropdownMenu(props: DropdownMenuProps): React.JSX.Element;
+export const DropdownMenu: React.ForwardRefExoticComponent<DropdownMenuProps & React.RefAttributes<HTMLDivElement>>;

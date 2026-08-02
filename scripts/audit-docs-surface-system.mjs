@@ -952,7 +952,7 @@ async function main() {
       if (runDedupContract && !allowedGuideOmissions.has(entry.id)) {
         try {
           await page.waitForFunction(
-            () => Boolean(document.querySelector('[data-component-guide],[data-foundation-guide],[data-component-guide-error]')),
+            () => Boolean(document.querySelector('[data-component-guide],[data-foundation-guide],[data-pattern-guide],[data-component-guide-error]')),
             null,
             { timeout: 15000 },
           );
@@ -961,6 +961,7 @@ async function main() {
             loading: Boolean(document.querySelector('[data-component-guide-loading]')),
             componentLayout: Boolean(document.querySelector('[data-component-guide-layout]')),
             foundationLayout: Boolean(document.querySelector('[data-foundation-guide-layout]')),
+            patternLayout: Boolean(document.querySelector('[data-pattern-guide-layout]')),
           }));
           allFindings.push({
             page: entry.title,

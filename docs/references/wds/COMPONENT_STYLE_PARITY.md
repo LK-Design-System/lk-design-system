@@ -48,7 +48,7 @@ S 32/8/14/13 · M 40/10/20/15 · L 48/12/28/16.
 - **Toggle Icon** — boxed toggle (r12) vs WDS pill. Retained per STYLE_PARITY_AUDIT.md.
 - **DropdownMenu density and width** — WDS `Menu/Menu` keeps a 16px container radius and its
   own cell-padding axis. LDS intentionally uses the shared utility-menu contract
-  (14px panel radius, 8px shell, 44px default row, 10px/12px row padding, 10px
+  (12px panel radius, 8px shell, 40px default row, 10px/16px row padding, 10px
   row radius, adaptive 176–320px content width) across DropdownMenu, TopBar, and
   LanguageSwitcher. This avoids the previous double horizontal inset, unlabelled
   40/48px density split, and blanket 320px panel width. WDS `Cell Padding` remains
@@ -131,7 +131,7 @@ Overlays that need interaction to measure were verified by reading the resolved
 style against the deep-reconstructed WDS reference:
 
 - **DropdownMenu** — WDS evidence remains `Menu/Menu` container r16; LDS resolves
-  `--component-menu-radius` to 14 as the signed-off shared utility-menu override
+  `--component-menu-radius` to 12 as the signed-off shared utility-menu override
   and uses the documented 176–320px adaptive width contract.
 - **Popover** — `anchored-panel-style.js` `--radius-lg` = **12** = WDS `Popover/Popover`
   container r12 ✅.

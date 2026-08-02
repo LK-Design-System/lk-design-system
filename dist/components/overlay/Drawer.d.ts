@@ -26,6 +26,10 @@ export interface DrawerProps {
   ariaLabel?: string;
   /** 닫기 버튼의 접근 가능한 이름. @default "닫기" */
   closeLabel?: string;
+  /** Render at the owner-document Portal boundary. @default true */
+  withinPortal?: boolean;
+  portalTarget?: HTMLElement | null;
+  zIndex?: number;
   /** 스크롤 body의 padding·layout을 조합별로 조정합니다. */
   bodyStyle?: React.CSSProperties;
   style?: React.CSSProperties;

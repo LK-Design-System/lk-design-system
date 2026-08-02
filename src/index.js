@@ -180,6 +180,7 @@ export { EquipmentStatusCard } from '../components/robotics/EquipmentStatusCard.
 export { ChoiceCard } from '../components/selection/ChoiceCard.jsx';
 export { FilterChip } from '../components/selection/FilterChip.jsx';
 export { IconPicker } from '../components/selection/IconPicker.jsx';
+export { createLocalStorageManager, LdsColorSchemeScript, LdsProvider, LdsRuntimeContext, useLdsRuntime } from '../components/selection/LdsProvider.jsx';
 export { MultiSelectChip } from '../components/selection/MultiSelectChip.jsx';
 export { SegmentedControl } from '../components/selection/SegmentedControl.jsx';
 export { Stepper } from '../components/selection/Stepper.jsx';

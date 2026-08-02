@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "97d9bcdf5266c821ac77d48dc9325b1bf0600ec606c76ab97fb823db1ba755b0",
+  "sourceFingerprint": "5688c95bfbd237d311bd48f390045481d1a257111a6a97d846ad8868fa9515fc",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -24,8 +24,8 @@
     "not-tracked": "This repository does not own or assert that platform implementation status."
   },
   "summary": {
-    "componentEntries": 203,
-    "publicExports": 211,
+    "componentEntries": 204,
+    "publicExports": 216,
     "guides": 173,
     "entriesWithoutOwnedPage": [
       "Stat",
@@ -35,6 +35,7 @@
       "RadioGroup",
       "Toolbar",
       "FilterChip",
+      "createLocalStorageManager",
       "MultiSelectChip"
     ]
   },
@@ -377,7 +378,7 @@
           "name": "disable",
           "type": "boolean",
           "required": false,
-          "description": "Disable alias. @default false",
+          "description": "",
           "owner": "ButtonOwnProps"
         },
         {
@@ -413,6 +414,27 @@
           "type": "React.ReactNode",
           "required": false,
           "description": "",
+          "owner": "ButtonOwnProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "Stable classes for the public Button anatomy.",
+          "owner": "ButtonOwnProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "Stable inline styles for the public Button anatomy.",
+          "owner": "ButtonOwnProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "Component-scoped geometry overrides.",
           "owner": "ButtonOwnProps"
         }
       ],
@@ -480,9 +502,13 @@
         "--color-semantic-line-solid-normal",
         "--color-semantic-line-normal-neutral",
         "--color-semantic-label-disable",
+        "--lds-button-gap",
+        "--lds-button-height",
+        "--lds-button-padding",
         "--font-sans",
         "--component-button-font-weight-assistive",
         "--component-button-font-weight",
+        "--lds-button-radius",
         "--component-button-shadow-rest",
         "--component-button-transition"
       ],
@@ -504,7 +530,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
         }
       ],
-      "promptSha256": "65fb865970f185e9e0328369066ac0d9dc17c7e8a9efc54bb52bae4d7a2e1161"
+      "promptSha256": "f37ed5b7e6d5633c733de7c5d845e4e6e578b50687ac3e4111c35c7663894993"
     },
     {
       "id": "button-group",
@@ -990,8 +1016,7 @@
         "LDS Product/Action/Link",
         "LDS Product/Action/Social Login",
         "LDS Product/Action/Speed Dial",
-        "LDS Product/Action/Split Button",
-        "LDS/Directory"
+        "LDS Product/Action/Split Button"
       ],
       "props": [
         {
@@ -1739,182 +1764,203 @@
           "type": "React.ElementType",
           "required": false,
           "description": "Root element used for non-interactive document semantics. @default \"div\"",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "surface",
           "type": "\"default\" | \"subtle\"",
           "required": false,
           "description": "Surface role. subtle is an inset grouping surface and defaults to no shadow. @default \"default\"",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "elevation",
           "type": "\"none\" | \"sm\" | \"md\" | \"lg\"",
           "required": false,
           "description": "기본 그림자 깊이. @default \"md\"",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "interactive",
           "type": "boolean",
           "required": false,
           "description": "카드 전체가 하나의 행동일 때. 호버 리프트 + 그림자 심화에 더해 role=\"button\", tabIndex=0, Enter/Space 활성화, :focus-visible 링을 부여합니다. 내부에 별도의 버튼·링크를 넣지 마세요.",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "dark",
           "type": "boolean",
           "required": false,
           "description": "다크 섹션용 네이비 서피스. @default false",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "headingLevel",
           "type": "1 | 2 | 3 | 4 | 5 | 6 | false",
           "required": false,
           "description": "구조화 모드 title 의 heading 레벨. false 면 heading 의미 없이 div 로 렌더링합니다(제목이 이미 바깥에 있을 때).",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "padding",
           "type": "number | string",
           "required": false,
           "description": "기본 32px 패딩을 재정의.",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "platform",
           "type": "\"desktop\" | \"mobile\"",
           "required": false,
           "description": "platform axis. @default \"desktop\"",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "skeleton",
           "type": "boolean",
           "required": false,
           "description": "skeleton axis. @default false",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "save",
           "type": "boolean",
           "required": false,
           "description": "save action axis. @default false",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "saved",
           "type": "boolean",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "onSave",
           "type": "(e: React.MouseEvent) = void",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "toggleIcon",
           "type": "React.ReactNode",
           "required": false,
           "description": "Toggle-icon affordance rendered in the top-right (WDS Card/List Card parity); shows alongside save.",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "thumbnail",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "topContent",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "leadingContent",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "trailingContent",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "title",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "titleWrap",
           "type": "\"truncate\" | \"wrap\"",
           "required": false,
           "description": "Structured title overflow policy. @default \"truncate\"",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "description",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "caption",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "subCaption",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "metaCaption",
           "type": "React.ReactNode",
           "required": false,
           "description": "Third caption tier — smallest meta line under subCaption (WDS three-tier caption parity).",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "bottomContent",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "footer",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "children",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "CardOwnProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "CardOwnProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "CardOwnProps"
         }
       ],
       "tokens": [
@@ -1930,6 +1976,7 @@
         "--component-card-shadow-md",
         "--component-card-shadow-lg",
         "--component-card-padding",
+        "--lds-card-gap",
         "--label2-size",
         "--label2-line",
         "--fw-medium",
@@ -1947,12 +1994,15 @@
         "--component-card-fg",
         "--component-card-border-dark",
         "--component-card-border",
+        "--lds-card-radius",
         "--component-card-radius",
         "--component-card-hover-transform",
-        "--component-card-transition"
+        "--component-card-transition",
+        "--lds-card-padding",
+        "--lds-card-max-width"
       ],
       "externalReferences": [],
-      "promptSha256": "100f894dff1db1339bcde746b86b7ce13d56546ac7bcd5bd1f6594e7d1a7b02c"
+      "promptSha256": "ccdad7b6ff38905ca7634424d193363f6d14a1073eeb2c2496bfcb2f6e171ab3"
     },
     {
       "id": "checklist-item",
@@ -3843,6 +3893,13 @@
           "owner": "MessageFeedProps"
         },
         {
+          "name": "viewportInset",
+          "type": "MessageFeedViewportInset",
+          "required": false,
+          "description": "Inline viewport padding. Use comfortable for reading surfaces and compact for dense embedded panels. @default \"compact\"",
+          "owner": "MessageFeedProps"
+        },
+        {
           "name": "busy",
           "type": "boolean",
           "required": false,
@@ -3924,11 +3981,11 @@
         "--space-2",
         "--font-sans",
         "--space-3",
+        "--space-4",
         "--color-semantic-label-normal",
         "--space-1",
         "--space-6",
         "--space-20",
-        "--space-4",
         "--color-semantic-label-alternative",
         "--body2-size",
         "--body2-line",
@@ -3990,7 +4047,7 @@
           "url": "https://www.figma.com/design/ss5Fq2VKd2UDoHk7SE9dPl/3-Free-AI-Chatbot-App-UI-Kit--Community-?node-id=10301-21963"
         }
       ],
-      "promptSha256": "39f403ae9969b82cbb3b7ca699f6bb23e2414002d23dc0c6ffb77af471b3d4d2"
+      "promptSha256": "ed7d044e34c33b452f870c93a064940883790edb17aedc3315fae9dc0e5033bb"
     },
     {
       "id": "accordion",
@@ -7400,7 +7457,7 @@
           "name": "placement",
           "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
           "required": false,
-          "description": "Backward-compatible alias for position.",
+          "description": "",
           "owner": "TooltipProps"
         },
         {
@@ -7465,14 +7522,58 @@
           "required": true,
           "description": "",
           "owner": "TooltipProps"
+        },
+        {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Escape clipping ancestors through the owner-document Portal. @default true",
+          "owner": "TooltipProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "TooltipProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "TooltipProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "TooltipProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "TooltipProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "TooltipProps"
         }
       ],
       "tokens": [
+        "--lds-tooltip-padding",
         "--color-semantic-inverse-label",
         "--font-sans",
         "--label1-size",
         "--fw-semibold",
         "--label1-line",
+        "--lds-tooltip-max-width",
         "--space-8",
         "--shadow-md",
         "--dur-fast",
@@ -7507,7 +7608,7 @@
           "url": "https://floating-ui.com/docs/floatingarrow"
         }
       ],
-      "promptSha256": "25d90813d2d74c378867884cae0e3e4a4672bf7ca351260f63da854b3f1a3436"
+      "promptSha256": "810ac454ee703f15943071102d3c4e878d1f8dae1535d9a0235312656bd7d4b0"
     },
     {
       "id": "annotated-image",
@@ -9386,11 +9487,34 @@
           "required": false,
           "description": "외곽선 소유. \"embedded\"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default \"standalone\"",
           "owner": "DataToolbarProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "DataToolbarProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "DataToolbarProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "DataToolbarProps"
         }
       ],
       "tokens": [
+        "--lds-data-toolbar-gap",
         "--space-2",
         "--space-3",
+        "--lds-data-toolbar-padding",
         "--color-semantic-line-solid-normal",
         "--radius-md",
         "--color-semantic-background-elevated-normal",
@@ -9406,6 +9530,7 @@
         "--label2-size",
         "--fw-medium",
         "--label2-line",
+        "--lds-data-toolbar-search-max-width",
         "--space-1-5"
       ],
       "externalReferences": [
@@ -9438,7 +9563,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/table/"
         }
       ],
-      "promptSha256": "c1c1dedfaddcb4afe157a1fbd6b9e050c375a70e4f3202f442bdf906d40b5ca2"
+      "promptSha256": "13d33aae308df9c658bc84d76976caf2ce56ed8705648e2c3f1c2c49988fbea7"
     },
     {
       "id": "description-list",
@@ -15830,72 +15955,94 @@
       "props": [
         {
           "name": "as",
-          "type": "keyof React.JSX.IntrinsicElements",
+          "type": "React.ElementType",
           "required": false,
           "description": "Root element. Use form when the action submits the field. @default \"div\"",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "field",
           "type": "React.ReactElement",
           "required": true,
           "description": "One LDS field control. Put shared label/helper/error content on FieldAction.",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "action",
           "type": "React.ReactElement",
           "required": true,
           "description": "One LDS Button or button-compatible action.",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "size",
           "type": "'sm' | 'md' | 'lg' | 'small' | 'medium' | 'large'",
           "required": false,
           "description": "Shared field density. The composition aligns both controls to 32/48/52px. @default \"md\"",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "label",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "helper",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "error",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "required",
           "type": "boolean",
           "required": false,
           "description": "",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "htmlFor",
           "type": "string",
           "required": false,
           "description": "Associates the shared label with the field control.",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionOwnProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionOwnProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionOwnProps"
         }
       ],
       "tokens": [
         "--control-h-sm",
         "--control-h-md",
         "--control-h-lg",
+        "--lds-field-action-gap",
         "--space-2"
       ],
       "externalReferences": [
@@ -15912,7 +16059,7 @@
           "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
         }
       ],
-      "promptSha256": "09e5f4d62af21d6491ff2048c380679d1d1fdb4c654fb540a72cdca00147279f"
+      "promptSha256": "f41d9f9cbcea5277412946eaa63b1d6c10e00223d65310197a95ec1b6bbcf85e"
     },
     {
       "id": "file-upload",
@@ -16562,7 +16709,7 @@
           "name": "disable",
           "type": "boolean",
           "required": false,
-          "description": "disabled alias.",
+          "description": "",
           "owner": "InputProps"
         },
         {
@@ -16592,6 +16739,55 @@
           "required": false,
           "description": "래퍼 스타일(예: 그리드 셀용 minWidth).",
           "owner": "InputProps"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Public root class.",
+          "owner": "InputProps"
+        },
+        {
+          "name": "inputClassName",
+          "type": "string",
+          "required": false,
+          "description": "Native input class.",
+          "owner": "InputProps"
+        },
+        {
+          "name": "inputStyle",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "Native input style.",
+          "owner": "InputProps"
+        },
+        {
+          "name": "rootRef",
+          "type": "React.Ref",
+          "required": false,
+          "description": "Public root ref; the default ref targets the native input.",
+          "owner": "InputProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "InputProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "InputProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "InputProps"
         }
       ],
       "tokens": [
@@ -16600,9 +16796,13 @@
         "--control-h-lg",
         "--component-input-height",
         "--component-input-stack-gap",
+        "--lds-input-gap",
         "--component-input-gap",
+        "--lds-input-height",
+        "--lds-input-padding-inline",
         "--component-input-padding-x",
         "--component-input-border-width",
+        "--lds-input-radius",
         "--component-input-radius",
         "--component-input-focus-shadow",
         "--dur-base",
@@ -16626,7 +16826,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
         }
       ],
-      "promptSha256": "b8af9693de986e33790f3634c6656922948483045d1a79af244a5c5c08566773"
+      "promptSha256": "77b78b3f823f152250a8fa866c194e6ab49cbc8dcdedeed13ad55e70abe81aba"
     },
     {
       "id": "input-group",
@@ -18415,23 +18615,90 @@
           "name": "fieldStyle",
           "type": "React.CSSProperties",
           "required": false,
-          "description": "Styles for the label/control/message stack.",
+          "description": "",
+          "owner": "SearchFieldProps"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Public root class.",
           "owner": "SearchFieldProps"
         },
         {
           "name": "style",
           "type": "React.CSSProperties",
           "required": false,
-          "description": "Styles for the input control shell.",
+          "description": "Public root style.",
+          "owner": "SearchFieldProps"
+        },
+        {
+          "name": "controlClassName",
+          "type": "string",
+          "required": false,
+          "description": "Input control-shell class.",
+          "owner": "SearchFieldProps"
+        },
+        {
+          "name": "controlStyle",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "Input control-shell style.",
+          "owner": "SearchFieldProps"
+        },
+        {
+          "name": "inputClassName",
+          "type": "string",
+          "required": false,
+          "description": "Native input class.",
+          "owner": "SearchFieldProps"
+        },
+        {
+          "name": "inputStyle",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "Native input style.",
+          "owner": "SearchFieldProps"
+        },
+        {
+          "name": "rootRef",
+          "type": "React.Ref",
+          "required": false,
+          "description": "Public root ref; the default ref targets the native search input.",
+          "owner": "SearchFieldProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "SearchFieldProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "SearchFieldProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
           "owner": "SearchFieldProps"
         }
       ],
       "tokens": [
         "--control-h-sm",
         "--component-input-height",
+        "--lds-search-field-gap",
         "--component-input-gap",
+        "--lds-search-field-height",
+        "--lds-search-field-padding-inline",
         "--component-input-padding-x",
         "--component-input-border-width",
+        "--lds-search-field-radius",
         "--component-input-radius",
         "--component-input-focus-shadow",
         "--dur-fast",
@@ -18455,7 +18722,7 @@
           "url": "https://www.w3.org/TR/WCAG22/#on-focus"
         }
       ],
-      "promptSha256": "36d3f4eb5566aec2c3df9f5f9c389fe0980d71d0325700693a6426e10681eb25"
+      "promptSha256": "cf7b539825bc6c57b4eca62d2a5be30f1bc851ee3a8e1d78625d863f812cfc28"
     },
     {
       "id": "secret-field",
@@ -18844,14 +19111,14 @@
           "name": "disable",
           "type": "boolean",
           "required": false,
-          "description": "disabled alias.",
+          "description": "",
           "owner": "SelectProps"
         },
         {
           "name": "negative",
           "type": "boolean",
           "required": false,
-          "description": "negative status alias.",
+          "description": "",
           "owner": "SelectProps"
         },
         {
@@ -18974,24 +19241,120 @@
           "owner": "SelectProps"
         },
         {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Public root class and style.",
+          "owner": "SelectProps"
+        },
+        {
           "name": "style",
           "type": "React.CSSProperties",
           "required": false,
           "description": "",
           "owner": "SelectProps"
+        },
+        {
+          "name": "triggerClassName",
+          "type": "string",
+          "required": false,
+          "description": "Native combobox trigger class and style.",
+          "owner": "SelectProps"
+        },
+        {
+          "name": "triggerStyle",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "",
+          "owner": "SelectProps"
+        },
+        {
+          "name": "rootRef",
+          "type": "React.Ref",
+          "required": false,
+          "description": "Public root ref; the default ref targets the native trigger button.",
+          "owner": "SelectProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "SelectProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "SelectProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "SelectProps"
+        },
+        {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Escape clipping ancestors through the owner-document Portal. @default true",
+          "owner": "SelectProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "SelectProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "SelectProps"
+        },
+        {
+          "name": "position",
+          "type": "'top' | 'bottom' | 'left' | 'right'",
+          "required": false,
+          "description": "Preferred popup side; flips when space is insufficient. @default \"bottom\"",
+          "owner": "SelectProps"
+        },
+        {
+          "name": "align",
+          "type": "'left' | 'right'",
+          "required": false,
+          "description": "Popup alignment. @default \"left\"",
+          "owner": "SelectProps"
+        },
+        {
+          "name": "offset",
+          "type": "number",
+          "required": false,
+          "description": "Trigger-to-popup gap in pixels. @default 6",
+          "owner": "SelectProps"
         }
       ],
       "tokens": [
+        "--component-menu-item-min-height",
+        "--control-h-md",
+        "--component-menu-item-padding-y",
+        "--space-3",
         "--control-h-sm",
         "--control-h-lg",
-        "--control-h-md",
         "--component-input-stack-gap",
+        "--lds-select-min-width",
         "--font-sans",
         "--space-2-5",
         "--component-input-padding-x",
         "--component-input-border-width",
         "--component-input-gap",
         "--space-4-5",
+        "--lds-select-height",
         "--color-semantic-label-disable",
         "--color-semantic-label-normal",
         "--color-semantic-label-alternative",
@@ -19003,18 +19366,22 @@
         "--color-semantic-primary-surface-strong",
         "--label2-size",
         "--fw-semibold",
+        "--lds-select-dropdown-max-height",
         "--color-semantic-background-elevated-normal",
         "--color-semantic-line-solid-normal",
-        "--radius-lg",
+        "--component-menu-radius",
         "--shadow-md",
-        "--space-1-5",
-        "--space-0-5",
-        "--radius-md",
+        "--component-menu-padding-y",
+        "--component-menu-padding-x",
+        "--component-menu-gap",
+        "--component-menu-item-padding-x",
+        "--component-menu-item-radius",
         "--color-semantic-fill-strong",
-        "--color-semantic-fill-normal",
+        "--component-menu-item-hover-bg",
+        "--component-menu-item-selected-bg",
         "--color-semantic-primary-normal",
-        "--fw-bold",
-        "--fw-medium"
+        "--fw-medium",
+        "--fw-regular"
       ],
       "externalReferences": [
         {
@@ -19028,9 +19395,21 @@
         {
           "label": "WAI-ARIA APG Listbox Pattern",
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/listbox/"
+        },
+        {
+          "label": "Carbon Dropdown",
+          "url": "https://carbondesignsystem.com/components/dropdown/usage/"
+        },
+        {
+          "label": "Fluent Select",
+          "url": "https://fluent2.microsoft.design/components/web/react/core/select/usage"
+        },
+        {
+          "label": "Fluent Menu",
+          "url": "https://fluent2.microsoft.design/components/web/react/core/menu/usage"
         }
       ],
-      "promptSha256": "0b96a24da75e15e19ca9a6aa4e85845f2d86e654dc0f07a60f14b7073747bbe2"
+      "promptSha256": "0c8242d25a0c9fc5ce2f06aac719ffcec8e99345f75b39113de026b9e8ce786a"
     },
     {
       "id": "slider",
@@ -19374,7 +19753,7 @@
           "name": "disable",
           "type": "boolean",
           "required": false,
-          "description": "disabled alias.",
+          "description": "",
           "owner": "TextareaProps"
         },
         {
@@ -19397,16 +19776,69 @@
           "required": false,
           "description": "래퍼 스타일.",
           "owner": "TextareaProps"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Public root class.",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "textareaClassName",
+          "type": "string",
+          "required": false,
+          "description": "Native textarea class.",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "textareaStyle",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "Native textarea style.",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "rootRef",
+          "type": "React.Ref",
+          "required": false,
+          "description": "Public root ref; the default ref targets the native textarea.",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "TextareaProps"
         }
       ],
       "tokens": [
         "--color-semantic-label-assistive",
         "--component-input-stack-gap",
+        "--lds-textarea-min-height",
+        "--lds-textarea-max-height",
+        "--lds-textarea-padding",
         "--space-3",
         "--space-10",
         "--color-semantic-label-disable",
         "--component-input-text-color",
         "--component-input-border-width",
+        "--lds-textarea-radius",
         "--component-input-radius",
         "--component-input-focus-shadow",
         "--dur-base",
@@ -19423,7 +19855,7 @@
           "url": "https://carbondesignsystem.com/components/text-area/usage/"
         }
       ],
-      "promptSha256": "7b989ad7fe1760be096de3f56ff113e4d98e192e80a2651a3c804098911dae24"
+      "promptSha256": "2891d8e02c4901000d44a958de9995e2238a096f5f8339bf3e999f4775796077"
     },
     {
       "id": "time-picker",
@@ -23561,6 +23993,27 @@
           "required": false,
           "description": "href leaf를 router link로 치환하는 렌더 훅. 그룹 disclosure는 항상 button입니다.",
           "owner": "SideNavProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "SideNavProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "SideNavProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "SideNavProps"
         }
       ],
       "tokens": [
@@ -23569,6 +24022,8 @@
         "--space-0-5",
         "--space-2",
         "--space-3",
+        "--lds-side-nav-item-height",
+        "--lds-side-nav-item-radius",
         "--radius-lg",
         "--font-sans",
         "--label1-size",
@@ -23583,8 +24038,12 @@
         "--caption2-size",
         "--color-semantic-primary-normal",
         "--color-semantic-background-elevated-normal",
+        "--lds-side-nav-collapsed-width",
+        "--lds-side-nav-width",
         "--color-semantic-line-solid-normal",
+        "--lds-side-nav-radius",
         "--radius-xl",
+        "--lds-side-nav-padding",
         "--space-2-5",
         "--dur-base",
         "--color-semantic-fill-normal",
@@ -23627,7 +24086,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/"
         }
       ],
-      "promptSha256": "b150658244059f39d39ea1cf020f9f79b538b758d4c8bf1fee9ba326996a3958"
+      "promptSha256": "9413608b4fc5eb5692c995949288e07eaab0ccdb4497e1ded2f17ab464272873"
     },
     {
       "id": "steps",
@@ -23777,7 +24236,7 @@
           "name": "full",
           "type": "boolean",
           "required": false,
-          "description": "Legacy fill prop. Prefer resize=\"fill\". @default false",
+          "description": "",
           "owner": "TabsProps"
         },
         {
@@ -23814,14 +24273,38 @@
           "required": false,
           "description": "scroll axis. @default \"auto\"",
           "owner": "TabsProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "TabsProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "TabsProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "TabsProps"
         }
       ],
       "tokens": [
         "--body2-size",
         "--headline2-size",
+        "--lds-tabs-gap",
+        "--lds-tabs-padding-inline",
         "--color-semantic-line-solid-normal",
         "--color-semantic-focus-indicator",
         "--radius-sm",
+        "--lds-tabs-height",
         "--space-2",
         "--font-sans",
         "--fw-semibold",
@@ -23829,7 +24312,8 @@
         "--color-semantic-label-neutral",
         "--dur-fast",
         "--ease-out",
-        "--color-semantic-primary-normal"
+        "--color-semantic-primary-normal",
+        "--lds-tabs-indicator-height"
       ],
       "externalReferences": [
         {
@@ -23837,7 +24321,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/"
         }
       ],
-      "promptSha256": "d1f8b4509589570433e48c32606faec6f0bca2d3c3b7363692b876cdff9652b2"
+      "promptSha256": "012cfe7863908ed89078d0511cde1cbbac38dc7b13d52ec08ecd91f254458df0"
     },
     {
       "id": "toolbar",
@@ -24977,6 +25461,27 @@
           "required": false,
           "description": "title이 없을 때 사용할 접근 가능한 이름. @default \"확인 다이얼로그\"",
           "owner": "ConfirmDialogProps"
+        },
+        {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Render at the owner-document Portal boundary. @default true",
+          "owner": "ConfirmDialogProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "ConfirmDialogProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "ConfirmDialogProps"
         }
       ],
       "tokens": [
@@ -25008,7 +25513,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/dialog/usage"
         }
       ],
-      "promptSha256": "523d5a63776617a8c912fd64338f0f74776ec1401a8edba025d6f3a39a493fc4"
+      "promptSha256": "fbb8561def76fe669b108c513d686616dc997ff8199316b1e7d6721915471985"
     },
     {
       "id": "dimmer",
@@ -25239,6 +25744,27 @@
           "owner": "DrawerProps"
         },
         {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Render at the owner-document Portal boundary. @default true",
+          "owner": "DrawerProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "DrawerProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "DrawerProps"
+        },
+        {
           "name": "bodyStyle",
           "type": "React.CSSProperties",
           "required": false,
@@ -25290,7 +25816,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/dialog/usage"
         }
       ],
-      "promptSha256": "32e455e7dcaefbeb3237549c4e89b32650ca4d65973410380b0897f139a39f31"
+      "promptSha256": "1894be907ac02da1a3f9450c9e0972c0e47caafbe04f1fbdd089ba148ea4075d"
     },
     {
       "id": "dropdown-menu",
@@ -25354,6 +25880,20 @@
           "type": "\"left\" | \"right\"",
           "required": false,
           "description": "",
+          "owner": "DropdownMenuProps"
+        },
+        {
+          "name": "position",
+          "type": "'top' | 'bottom' | 'left' | 'right'",
+          "required": false,
+          "description": "Preferred side; flips when space is insufficient. @default \"bottom\"",
+          "owner": "DropdownMenuProps"
+        },
+        {
+          "name": "offset",
+          "type": "number",
+          "required": false,
+          "description": "Trigger-to-panel gap in pixels. @default 8",
           "owner": "DropdownMenuProps"
         },
         {
@@ -25474,6 +26014,48 @@
           "required": false,
           "description": "",
           "owner": "DropdownMenuProps"
+        },
+        {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Escape clipping ancestors through the owner-document Portal. @default true",
+          "owner": "DropdownMenuProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "DropdownMenuProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "DropdownMenuProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "DropdownMenuProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "DropdownMenuProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "DropdownMenuProps"
         }
       ],
       "tokens": [
@@ -25520,6 +26102,9 @@
         "--component-menu-header-line-height",
         "--component-menu-header-font-weight",
         "--color-semantic-label-neutral",
+        "--lds-dropdown-menu-width",
+        "--lds-dropdown-menu-min-width",
+        "--lds-dropdown-menu-max-height",
         "--component-menu-scrollbar-gap",
         "--space-2"
       ],
@@ -25565,7 +26150,7 @@
           "url": "https://react.dev/reference/react-dom/createPortal"
         }
       ],
-      "promptSha256": "0b580bf6d06a115fced8a6c1631ef9a514149e53e7e7264d977eee6e9fdbd7ae"
+      "promptSha256": "ce02f49ea30c88acf23aa7574873fc98f6c594db2b7c04e499f4c0d980880aa0"
     },
     {
       "id": "hover-card",
@@ -25898,6 +26483,20 @@
           "owner": "ModalProps"
         },
         {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "description": "비제어 초기 열림 상태. @default false",
+          "owner": "ModalProps"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) = void",
+          "required": false,
+          "description": "canonical 열림 상태 변경 알림.",
+          "owner": "ModalProps"
+        },
+        {
           "name": "title",
           "type": "React.ReactNode",
           "required": false,
@@ -25927,7 +26526,7 @@
         },
         {
           "name": "width",
-          "type": "number",
+          "type": "number | string",
           "required": false,
           "description": "최대 너비(px). @default 520",
           "owner": "ModalProps"
@@ -25973,13 +26572,58 @@
           "required": false,
           "description": "",
           "owner": "ModalProps"
+        },
+        {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Render at the owner-document Portal boundary. @default true",
+          "owner": "ModalProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "ModalProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "ModalProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "ModalProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "ModalProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "ModalProps"
         }
       ],
       "tokens": [
         "--space-6",
         "--component-dialog-scrim",
         "--component-dialog-scrim-blur",
+        "--lds-modal-width",
+        "--lds-modal-max-height",
         "--color-semantic-background-elevated-normal",
+        "--lds-modal-radius",
         "--component-dialog-radius",
         "--shadow-xl",
         "--font-sans",
@@ -26011,7 +26655,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/drawer/usage"
         }
       ],
-      "promptSha256": "b3db4b5d4a47c198f8e5ed455f9bbe1163573bc6f8e525ea1b71a181856b62f6"
+      "promptSha256": "2de902d390227c0eb336103f5b5871e985ec4fe5427eabf91ee846da983c067d"
     },
     {
       "id": "popover",
@@ -26063,8 +26707,22 @@
           "owner": "PopoverProps"
         },
         {
-          "name": "width",
+          "name": "position",
+          "type": "'top' | 'bottom' | 'left' | 'right'",
+          "required": false,
+          "description": "Preferred side; flips when space is insufficient. @default \"bottom\"",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "offset",
           "type": "number",
+          "required": false,
+          "description": "Trigger-to-panel gap in pixels. @default 8",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "width",
+          "type": "number | string",
           "required": false,
           "description": "패널 너비(px). @default 260",
           "owner": "PopoverProps"
@@ -26096,9 +26754,54 @@
           "required": false,
           "description": "비모달 dialog 표면의 접근 가능한 이름. @default \"팝오버\"",
           "owner": "PopoverProps"
+        },
+        {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Render in the owner-document Portal so clipping ancestors cannot cut the panel. @default true",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "Explicit Portal target; defaults to provider target or owner-document body.",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "Explicit overlay layer override.",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "PopoverProps"
         }
       ],
-      "tokens": [],
+      "tokens": [
+        "--lds-popover-width",
+        "--lds-popover-max-height"
+      ],
       "externalReferences": [
         {
           "label": "Fluent 2 Popover",
@@ -26109,7 +26812,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
         }
       ],
-      "promptSha256": "8d94ebb930708777d98851a45f190fa6ffcdb32e9ae05954ad50f959c183554c"
+      "promptSha256": "64e599d51f402696de396d8f0654e7631019daba07ee1881808d5d539a4e5d02"
     },
     {
       "id": "sheet",
@@ -26220,6 +26923,27 @@
           "owner": "SheetProps"
         },
         {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Render at the owner-document Portal boundary. @default true",
+          "owner": "SheetProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "SheetProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "SheetProps"
+        },
+        {
           "name": "style",
           "type": "React.CSSProperties",
           "required": false,
@@ -26261,7 +26985,7 @@
           "url": "https://m2.material.io/develop/web/components/dialogs"
         }
       ],
-      "promptSha256": "1fa87ba9971d42304c30594644826b4ee9e946f27b2e1e511c6df86574c1b43e"
+      "promptSha256": "1063775cc571e59c66a33fca000e97259e44f4d651168fd64b797baefa3a0914"
     },
     {
       "id": "snackbar",
@@ -27456,6 +28180,143 @@
       "promptSha256": "9cfae1d25d5268e0d187f0663123104f6c095dfbb20ed3771225c0b6321c7587"
     },
     {
+      "id": "create-local-storage-manager",
+      "title": "createLocalStorageManager",
+      "exports": [
+        "createLocalStorageManager",
+        "LdsColorSchemeScript",
+        "LdsProvider",
+        "LdsRuntimeContext",
+        "useLdsRuntime"
+      ],
+      "source": "components/selection/LdsProvider.jsx",
+      "typeContract": "components/selection/LdsProvider.d.ts",
+      "prompt": "components/selection/LdsProvider.prompt.md",
+      "group": "Theme toggle override",
+      "ownerLayer": "theme",
+      "provenance": "theme-override",
+      "wdsFamily": null,
+      "storyEvidence": [
+        "stories/SelectionThemeToggle.stories.jsx"
+      ],
+      "classificationSiblings": [
+        "ThemeToggle"
+      ],
+      "storybookPages": [
+        "LDS Theme/Controls/Theme Toggle"
+      ],
+      "props": [
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "colorScheme",
+          "type": "LdsColorScheme",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "defaultColorScheme",
+          "type": "LdsColorScheme",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "onColorSchemeChange",
+          "type": "(value: LdsColorScheme) = void",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "storageManager",
+          "type": "LdsStorageManager",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "storageKey",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "persist",
+          "type": "boolean",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "target",
+          "type": "HTMLElement | string | null",
+          "required": false,
+          "description": "Theme/direction DOM target. null keeps runtime context only. @default document.documentElement",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "direction",
+          "type": "LdsDirection",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "zIndexBase",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "storageKey",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "LdsColorSchemeScriptProps"
+        },
+        {
+          "name": "defaultColorScheme",
+          "type": "LdsColorScheme",
+          "required": false,
+          "description": "",
+          "owner": "LdsColorSchemeScriptProps"
+        },
+        {
+          "name": "nonce",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "LdsColorSchemeScriptProps"
+        }
+      ],
+      "tokens": [],
+      "externalReferences": [],
+      "promptSha256": "b4b1069c4231aceb8e561734e8769bd5e13b17cd348b8ea4276dc275c19f55b6"
+    },
+    {
       "id": "multi-select-chip",
       "title": "MultiSelectChip",
       "exports": [
@@ -27675,7 +28536,7 @@
           "name": "disable",
           "type": "boolean",
           "required": false,
-          "description": "Disabled alias retained for compatibility; prefer disabled.",
+          "description": "",
           "owner": "SegmentedControlProps"
         },
         {
@@ -27683,6 +28544,27 @@
           "type": "string",
           "required": false,
           "description": "Accessible name for the mutually exclusive option group.",
+          "owner": "SegmentedControlProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "SegmentedControlProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "SegmentedControlProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
           "owner": "SegmentedControlProps"
         }
       ],
@@ -27694,9 +28576,13 @@
         "--radius-md",
         "--radius-10",
         "--radius-sm",
+        "--lds-segmented-control-height",
+        "--lds-segmented-control-padding",
+        "--lds-segmented-control-gap",
         "--color-semantic-background-elevated-normal",
         "--color-semantic-fill-normal",
         "--color-semantic-line-solid-normal",
+        "--lds-segmented-control-radius",
         "--font-sans",
         "--fw-semibold",
         "--fw-medium",
@@ -27705,6 +28591,7 @@
         "--color-semantic-label-neutral",
         "--color-semantic-fill-strong",
         "--color-semantic-primary-surface-strong",
+        "--lds-segmented-control-segment-radius",
         "--shadow-xs",
         "--color-semantic-focus-ring",
         "--dur-fast",
@@ -27722,7 +28609,7 @@
           "url": "https://developer.apple.com/design/human-interface-guidelines/segmented-controls"
         }
       ],
-      "promptSha256": "68a2962cc20b08f7646e7e469bbea53f115e9e4c6170e293bd77b4ca3dd18c9e"
+      "promptSha256": "862fd2a5e451e29f50ab36bcde6bff7192f03cfc887aef6c29ab29938355af7b"
     },
     {
       "id": "stepper",
@@ -28133,7 +29020,13 @@
       "storyEvidence": [
         "stories/SelectionThemeToggle.stories.jsx"
       ],
-      "classificationSiblings": [],
+      "classificationSiblings": [
+        "LdsColorSchemeScript",
+        "LdsProvider",
+        "LdsRuntimeContext",
+        "createLocalStorageManager",
+        "useLdsRuntime"
+      ],
       "storybookPages": [
         "LDS Theme/Controls/Theme Toggle"
       ],
@@ -28216,7 +29109,7 @@
         "--component-button-transition"
       ],
       "externalReferences": [],
-      "promptSha256": "85c8bf9a9bfe9c909274350a9e241891dfd7003c3f083e73f7d9b607fb6a8f37"
+      "promptSha256": "f2c385ff43ae2fa771c357b59f95c75caecf0390a6982d10f7ed1a40190f305f"
     },
     {
       "id": "toggle-button",
@@ -31521,7 +32414,7 @@
           "name": "disable",
           "type": "boolean",
           "required": false,
-          "description": "Disable alias. @default false",
+          "description": "",
           "owner": "ButtonOwnProps"
         },
         {
@@ -31558,6 +32451,27 @@
           "required": false,
           "description": "",
           "owner": "ButtonOwnProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "Stable classes for the public Button anatomy.",
+          "owner": "ButtonOwnProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "Stable inline styles for the public Button anatomy.",
+          "owner": "ButtonOwnProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "Component-scoped geometry overrides.",
+          "owner": "ButtonOwnProps"
         }
       ],
       "states": [
@@ -31578,7 +32492,9 @@
           "rule": "Screen-reader label announced with the loading spinner (loading = true). @default \"불러오는 중\""
         }
       ],
-      "behavior": [],
+      "behavior": [
+        "Stable parts are root, content, and loader; each is mirrored by data-slot. data-disabled, data-loading, data-size, and data-variant expose actual component state."
+      ],
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
@@ -31603,11 +32519,13 @@
       ],
       "responsive": [
         "full: fills the container width.",
-        "32/40/48 높이와 solid/outlined·primary/assistive·icon-only·disable 축은 WDS Button/Button component set을 따릅니다. danger, dark-surface 변형, loading과 polymorphic anchor는 명시적인 LDS 확장입니다."
+        "32/40/48 높이와 solid/outlined·primary/assistive·icon-only·disable 축은 WDS Button/Button component set을 따릅니다. danger, dark-surface 변형, loading과 polymorphic anchor는 명시적인 LDS 확장입니다.",
+        "vars accepts only --lds-button-height, --lds-button-padding, --lds-button-radius, and --lds-button-gap. It changes geometry without replacing Button semantics or loading behavior."
       ],
       "contentGuidance": [
         "loading=\"inline\": the second loading presentation — the spinner sits beside the label and the variant palette stays. 말이 사라지면 안 되는 컨트롤(예: \"정지 요청 중\"을 계속 말해야 하는 안전 정지)용. 차단 계약은 true와 동일하고 표현만 다릅니다.",
-        "Ghost text also resolves from the rendered theme scope. Transparent fill and the hairline border carry its lower emphasis; text contrast is not reduced to create hierarchy."
+        "Ghost text also resolves from the rendered theme scope. Transparent fill and the hairline border carry its lower emphasis; text contrast is not reduced to create hierarchy.",
+        "classNames and styles accept only those stable part keys; they do not replace native Button semantics or activation ownership."
       ],
       "accessibility": [
         "loading: prevents repeated activation, renders a spinner, and sets aria-busy; use loadingLabel for the single screen-reader name (기본값 불러오는 중). The existing content keeps its width while visually hidden, so loading does not move adjacent controls.",
@@ -31717,7 +32635,11 @@
         "--component-button-signal-bg-hover",
         "--component-button-signal-fg",
         "--component-button-transition",
-        "--font-sans"
+        "--font-sans",
+        "--lds-button-gap",
+        "--lds-button-height",
+        "--lds-button-padding",
+        "--lds-button-radius"
       ],
       "apiLinks": [
         "components/buttons/Button.jsx",
@@ -31727,7 +32649,8 @@
       ],
       "migration": [
         "Disabled foreground, fill, and outlined border resolve semantic roles at the button's rendered theme scope, so nested dark surfaces do not inherit a root-resolved light alias.",
-        "arrow is deprecated and remains as a no-op compatibility prop."
+        "arrow is deprecated and remains as a no-op compatibility prop.",
+        "disable and the small|medium|large size values are compatibility aliases. New code uses disabled and sm|md|lg."
       ],
       "platformStatus": {
         "figma": "mapped",
@@ -31775,7 +32698,7 @@
             "role": "interaction"
           }
         ],
-        "hiddenEvidence": 0
+        "hiddenEvidence": 1
       },
       "sources": [
         {
@@ -31812,7 +32735,7 @@
         "anatomy": "evidence",
         "properties": "evidence",
         "states": "evidence",
-        "behavior": "omitted-no-evidence",
+        "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
         "contentGuidance": "evidence",
@@ -32241,7 +33164,7 @@
             "role": "interaction"
           }
         ],
-        "hiddenEvidence": 0
+        "hiddenEvidence": 1
       },
       "sources": [
         {
@@ -33142,168 +34065,168 @@
           "type": "React.ElementType",
           "required": false,
           "description": "Root element used for non-interactive document semantics. @default \"div\"",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "surface",
           "type": "\"default\" | \"subtle\"",
           "required": false,
           "description": "Surface role. subtle is an inset grouping surface and defaults to no shadow. @default \"default\"",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "elevation",
           "type": "\"none\" | \"sm\" | \"md\" | \"lg\"",
           "required": false,
           "description": "기본 그림자 깊이. @default \"md\"",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "interactive",
           "type": "boolean",
           "required": false,
           "description": "카드 전체가 하나의 행동일 때. 호버 리프트 + 그림자 심화에 더해 role=\"button\", tabIndex=0, Enter/Space 활성화, :focus-visible 링을 부여합니다. 내부에 별도의 버튼·링크를 넣지 마세요.",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "dark",
           "type": "boolean",
           "required": false,
           "description": "다크 섹션용 네이비 서피스. @default false",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "headingLevel",
           "type": "1 | 2 | 3 | 4 | 5 | 6 | false",
           "required": false,
           "description": "구조화 모드 title 의 heading 레벨. false 면 heading 의미 없이 div 로 렌더링합니다(제목이 이미 바깥에 있을 때).",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "padding",
           "type": "number | string",
           "required": false,
           "description": "기본 32px 패딩을 재정의.",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "platform",
           "type": "\"desktop\" | \"mobile\"",
           "required": false,
           "description": "platform axis. @default \"desktop\"",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "skeleton",
           "type": "boolean",
           "required": false,
           "description": "skeleton axis. @default false",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "save",
           "type": "boolean",
           "required": false,
           "description": "save action axis. @default false",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "saved",
           "type": "boolean",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "onSave",
           "type": "(e: React.MouseEvent) = void",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "toggleIcon",
           "type": "React.ReactNode",
           "required": false,
           "description": "Toggle-icon affordance rendered in the top-right (WDS Card/List Card parity); shows alongside save.",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "thumbnail",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "topContent",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "leadingContent",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "trailingContent",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "title",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "titleWrap",
           "type": "\"truncate\" | \"wrap\"",
           "required": false,
           "description": "Structured title overflow policy. @default \"truncate\"",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "description",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "caption",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "subCaption",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "metaCaption",
           "type": "React.ReactNode",
           "required": false,
           "description": "Third caption tier — smallest meta line under subCaption (WDS three-tier caption parity).",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         },
         {
           "name": "bottomContent",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "CardProps"
+          "owner": "CardOwnProps"
         }
       ],
       "states": [
@@ -33337,9 +34260,14 @@
       ],
       "responsive": [
         "WDS axes: platform=\"desktop|mobile\", skeleton, save, toggleIcon (top-right toggle affordance beside save), structured slots (thumbnail, topContent, leadingContent, trailingContent, bottomContent, footer) and three text caption tiers (caption, title, description, subCaption, metaCaption).",
-        "titleWrap=\"truncate|wrap\" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination."
+        "titleWrap=\"truncate|wrap\" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination.",
+        "Stable structured parts are root, content, header, actions, media, body, title, description, and footer. Optional parts do not render empty wrappers.",
+        "vars accepts only --lds-card-padding, --lds-card-radius, --lds-card-gap, and --lds-card-max-width. These cannot turn a non-interactive card into a control or bypass heading/nesting rules."
       ],
-      "contentGuidance": [],
+      "contentGuidance": [
+        "className, style, and the default ref target the polymorphic root. The ref type follows the rendered as element.",
+        "classNames and styles accept only those stable part keys; product selectors do not depend on Card's internal DOM order."
+      ],
       "accessibility": [],
       "exceptions": [
         "Use surface=\"subtle\" for the inset surface that groups peer cards. It defaults to elevation=\"none\"; nested default-surface cards own their own border, radius, and elevation. An explicit elevation is still available for exceptional compositions."
@@ -33416,6 +34344,10 @@
         "--fw-semibold",
         "--label2-line",
         "--label2-size",
+        "--lds-card-gap",
+        "--lds-card-max-width",
+        "--lds-card-padding",
+        "--lds-card-radius",
         "--radius-md"
       ],
       "apiLinks": [
@@ -33468,7 +34400,7 @@
             "role": "variants-states"
           }
         ],
-        "hiddenEvidence": 1
+        "hiddenEvidence": 2
       },
       "sources": [
         {
@@ -33492,7 +34424,7 @@
         "behavior": "omitted-no-evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
-        "contentGuidance": "omitted-no-evidence",
+        "contentGuidance": "evidence",
         "accessibility": "omitted-no-evidence",
         "exceptions": "evidence",
         "related": "evidence",
@@ -35870,6 +36802,7 @@
         "Tooltip"
       ],
       "supportingComponents": [
+        "Button",
         "Icon",
         "IconButton"
       ],
@@ -35900,7 +36833,7 @@
           "name": "placement",
           "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
           "required": false,
-          "description": "Backward-compatible alias for position.",
+          "description": "",
           "owner": "TooltipProps"
         },
         {
@@ -35965,6 +36898,48 @@
           "required": true,
           "description": "",
           "owner": "TooltipProps"
+        },
+        {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Escape clipping ancestors through the owner-document Portal. @default true",
+          "owner": "TooltipProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "TooltipProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "TooltipProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "TooltipProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "TooltipProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "TooltipProps"
         }
       ],
       "states": [
@@ -35985,7 +36960,9 @@
           "rule": "열림 상태 변경 알림."
         }
       ],
-      "behavior": [],
+      "behavior": [
+        "Tooltip - WDS hover/focus hint with arrow and optional shortcut."
+      ],
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
@@ -36009,6 +36986,8 @@
         }
       ],
       "responsive": [
+        "ref, className, and style target the trigger wrapper. Stable parts are root, bubble, surface, content, and shortcut; geometry is limited to --lds-tooltip-padding and --lds-tooltip-max-width.",
+        "The bubble defaults to the common owner-document Portal, inherits the nearest explicit theme and dir, flips/clamps at viewport edges, and is removed from the DOM while closed. placement is deprecated; use position.",
         "둥근 본체와 포인터는 하나의 SVG path로 그립니다. 별도 clip-path 삼각형을 본체에 1px 겹치는 방식은 브라우저 줌·DPR·fractional transform에서 이음새가 드러나므로 사용하지 않습니다. Medium 포인터는 12×6px, Small은 10×5px로 유지해 36px 안팎의 Tooltip 높이와 비례시킵니다."
       ],
       "contentGuidance": [
@@ -36017,14 +36996,18 @@
       "accessibility": [
         "콘텐츠는 짧은 보조 설명으로 제한하고, 지속되는 주석에는 Bubble, 서식·동작이 있는 본문에는 Popover를 사용합니다. focusable한 단일 trigger가 ARIA prop을 DOM에 전달해야 합니다.",
         "hover와 focus가 같은 Tooltip을 열고 aria-describedby로 연결합니다. 포인터를 Tooltip 위로 옮겨도 유지되며, Escape는 trigger focus를 보존한 채 닫습니다. open · defaultOpen · onOpenChange로 상태를 제어할 수 있습니다.",
+        "Tooltip remains non-interactive and pointer-transparent. Consumers provide a focusable trigger when keyboard users need the description; LDS owns aria-describedby, delay, Escape, and positioning.",
         "WAI-ARIA APG Tooltip Pattern은 role=\"tooltip\", trigger aria-describedby, focus 유지, Escape dismiss를 정의합니다.",
-        "Fluent 2 Tooltip과 React Spectrum Tooltip은 hover/focus 동등성, 짧은 비필수 문구, focusable trigger, target을 가리키는 배치를 공통으로 권고합니다.",
-        "분류는 WDS Core 시각 보정입니다. position, align, arrow, size와 상호작용·ARIA 계약은 바꾸지 않고, inverse surface의 내부 렌더링만 교체합니다."
+        "Fluent 2 Tooltip과 React Spectrum Tooltip은 hover/focus 동등성, 짧은 비필수 문구, focusable trigger, target을 가리키는 배치를 공통으로 권고합니다."
       ],
       "exceptions": [
         "Fluent 2의 “포인터는 target을 가리켜야 한다”는 원칙을 유지합니다. 다만 edge align에서 target 중심과 둥근 모서리 회피를 동시에 만족할 수 없으면, 포인터가 분리되지 않도록 flat edge 안에서 target 방향으로 가장 가까운 위치에 clamp합니다."
       ],
       "related": [
+        {
+          "component": "Button",
+          "relationship": "대표 시나리오에서 조합"
+        },
         {
           "component": "Icon",
           "relationship": "대표 시나리오에서 조합"
@@ -36052,10 +37035,6 @@
         {
           "component": "ContentBadge",
           "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Kbd",
-          "relationship": "대표 시나리오에서 조합"
         }
       ],
       "examples": [
@@ -36075,6 +37054,8 @@
         "--fw-semibold",
         "--label1-line",
         "--label1-size",
+        "--lds-tooltip-max-width",
+        "--lds-tooltip-padding",
         "--shadow-md",
         "--space-8"
       ],
@@ -36111,7 +37092,7 @@
             "role": "interaction"
           }
         ],
-        "hiddenEvidence": 1
+        "hiddenEvidence": 2
       },
       "sources": [
         {
@@ -36156,7 +37137,7 @@
         "anatomy": "omitted-no-evidence",
         "properties": "evidence",
         "states": "evidence",
-        "behavior": "omitted-no-evidence",
+        "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
         "contentGuidance": "evidence",
@@ -38387,7 +39368,7 @@
           "name": "full",
           "type": "boolean",
           "required": false,
-          "description": "Legacy fill prop. Prefer resize=\"fill\". @default false",
+          "description": "",
           "owner": "TabsProps"
         },
         {
@@ -38424,6 +39405,27 @@
           "required": false,
           "description": "scroll axis. @default \"auto\"",
           "owner": "TabsProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "TabsProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "TabsProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "TabsProps"
         }
       ],
       "states": [],
@@ -38453,8 +39455,12 @@
       "responsive": [
         "When used as CanvasEditorShell.responsiveNavigation, tabs switch only the narrow-screen region (canvas, layers, panel). Workspace modes that change tools and document behavior remain in subheader."
       ],
-      "contentGuidance": [],
+      "contentGuidance": [
+        "ref, className, and style target the tablist root."
+      ],
       "accessibility": [
+        "Stable parts are root, tab, label, count, trailing, and indicator; tabs expose data-state=\"active|inactive\" and data-disabled.",
+        "Only documented --lds-tabs- geometry variables are accepted. The component owns roving focus and activation; consumers own the corresponding tab panels.",
         "The selected tab is the single Tab stop. Left/Right, Home, and End move focus and activate the next enabled tab, following the WAI-ARIA Tabs pattern. 선택 탭이 비활성화되면 첫 번째 활성 탭이 Tab 스톱이 됩니다.",
         "Tabs - WDS underline tab navigation for switching page sections."
       ],
@@ -38491,6 +39497,10 @@
         "--font-sans",
         "--fw-semibold",
         "--headline2-size",
+        "--lds-tabs-gap",
+        "--lds-tabs-height",
+        "--lds-tabs-indicator-height",
+        "--lds-tabs-padding-inline",
         "--radius-sm",
         "--space-2"
       ],
@@ -38517,7 +39527,7 @@
             "role": "overview"
           }
         ],
-        "hiddenEvidence": 1
+        "hiddenEvidence": 2
       },
       "sources": [
         {
@@ -38545,7 +39555,7 @@
         "behavior": "omitted-no-evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
-        "contentGuidance": "omitted-no-evidence",
+        "contentGuidance": "evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
         "related": "evidence",
@@ -38938,9 +39948,11 @@
       "purpose": "삭제·초기화·권한 해제처럼 결과가 크고 사용자의 명시적 동의가 필요한 단일 결정에 적합합니다. 설명·입력·여러 단계가 필요한 작업에는 Modal을, 위험도가 낮고 되돌릴 수 있는 동작에는 즉시 실행 후 Toast로 결과를 알리는 방식을 고려하세요.",
       "useWhen": [
         "조건이 충족되기 전에는 confirmDisabled, 요청 중에는 confirmLoading을 사용해 중복 실행을 막습니다.",
-        "안전한 기본 경로인 취소는 WDS 보조 액션 문법 variant=\"outlined\" color=\"assistive\", 확인은 기본 primary(파괴적일 때 danger)로 표현합니다. Modal·Drawer footer도 같은 보조 액션 문법을 씁니다."
+        "안전한 기본 경로인 취소는 WDS 보조 액션 문법 variant=\"outlined\" color=\"assistive\", 확인은 기본 primary(파괴적일 때 danger)로 표현합니다. Modal·Drawer footer도 같은 보조 액션 문법을 씁니다.",
+        "기본 withinPortal=true이며 LdsProvider.portalTarget 또는 명시적 portalTarget에 렌더링됩니다. 가까운 theme scope와 dir을 상속하고 clipping ancestor를 벗어납니다."
       ],
       "avoidWhen": [
+        "테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.",
         "ConfirmDialog는 route 전환, 비동기 실패 정책, 파괴적 작업 권한을 소유하지 않습니다. 제품은 controlled open 상태와 실제 실행 정책을 연결합니다."
       ],
       "anatomy": [
@@ -39091,6 +40103,27 @@
           "required": false,
           "description": "title이 없을 때 사용할 접근 가능한 이름. @default \"확인 다이얼로그\"",
           "owner": "ConfirmDialogProps"
+        },
+        {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Render at the owner-document Portal boundary. @default true",
+          "owner": "ConfirmDialogProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "ConfirmDialogProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "ConfirmDialogProps"
         }
       ],
       "states": [
@@ -39150,7 +40183,7 @@
         "Tab/Shift+Tab, 외부 focus containment, Escape는 현재 stack의 최상위 overlay만 소유합니다. ConfirmDialog가 다른 modal surface 위에서 닫히면 그 surface 내부의 호출 지점으로 돌아가며, base surface까지 닫힐 때 페이지 trigger로 복원합니다.",
         "닫힌 뒤 별도 위치로 이동해야 하면 returnFocusRef, 의도적으로 복원하지 않을 때만 restoreFocus={false}를 사용합니다.",
         "열려 있는 동안 배경 페이지 스크롤이 잠깁니다. 공용 useDialogFocus 엔진이 중첩 깊이를 세어 마지막 overlay가 닫힐 때만 해제하며, 스크롤바 제거로 인한 layout shift는 body padding으로 보정합니다.",
-        "WAI-ARIA APG Modal Dialog Pattern: 내부 초기 초점, Tab/Shift+Tab 순환, Escape dismiss, 호출 지점 복귀, role=\"dialog\"/aria-modal/접근 가능한 이름을 계약으로 채택했습니다."
+        "공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다. zIndex는 예외적 override입니다."
       ],
       "exceptions": [],
       "related": [
@@ -39508,12 +40541,14 @@
       ],
       "supportingComponents": [
         "Button",
-        "Icon"
+        "Icon",
+        "Table"
       ],
       "purpose": "버튼이나 항목에 연결된 짧은 명령 목록과 단일·다중 선택 메뉴를 제공할 때 적합합니다. 항상 보이는 앱 수준 메뉴나 즉시 노출해야 할 핵심 action에는 Dropdown Menu 대신 Menubar 또는 Button을 사용하세요.",
       "useWhen": [
         "Use for trigger-bound command menus. Use Menubar for a horizontal application menu.",
-        "submenuMode — 서브메뉴 표현 방식(flyout 기본, drill)."
+        "submenuMode — 서브메뉴 표현 방식(flyout 기본, drill).",
+        "Because the panel leaves its physical ancestor, the root portal copies the nearest explicit data-theme or .theme-light|dark|auto scope onto the portal wrapper. Semantic CSS variables therefore resolve against the same theme as the trigger even when document.body uses a different theme."
       ],
       "avoidWhen": [
         "React Aria Menu — 복합 menu의 방향키 이동, 명령/선택 item 역할, disabled item 제외를 따릅니다. WDS의 normal/radio/checkbox 시각 축은 변경하지 않습니다.",
@@ -39551,6 +40586,20 @@
           "type": "\"left\" | \"right\"",
           "required": false,
           "description": "",
+          "owner": "DropdownMenuProps"
+        },
+        {
+          "name": "position",
+          "type": "'top' | 'bottom' | 'left' | 'right'",
+          "required": false,
+          "description": "Preferred side; flips when space is insufficient. @default \"bottom\"",
+          "owner": "DropdownMenuProps"
+        },
+        {
+          "name": "offset",
+          "type": "number",
+          "required": false,
+          "description": "Trigger-to-panel gap in pixels. @default 8",
           "owner": "DropdownMenuProps"
         },
         {
@@ -39671,6 +40720,20 @@
           "required": false,
           "description": "",
           "owner": "DropdownMenuProps"
+        },
+        {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Escape clipping ancestors through the owner-document Portal. @default true",
+          "owner": "DropdownMenuProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "DropdownMenuProps"
         }
       ],
       "states": [
@@ -39684,7 +40747,7 @@
         "WAI-ARIA Menu Button Pattern — menu button의 trigger 상태와 열림 시 첫/마지막 항목 focus 이동을 적용했습니다.",
         "Menubar submenu와 check/radio glyph, elevated surface, keyboard engine, action button 순서를 공유합니다.",
         "Popover는 임의의 interactive content surface이므로 16px content padding을 유지하고, 명령·선택 row를 담는 DropdownMenu의 8px shell과 구분합니다.",
-        "Root panels use the same owner-document portal boundary as flyout submenus and use the shared floating-position engine's fixed strategy. This lets a command menu escape a Table or other ancestor scroll container without weakening the ancestor's horizontal-overflow contract."
+        "Geometry overrides are limited to --lds-dropdown-menu-width, --lds-dropdown-menu-min-width, and --lds-dropdown-menu-max-height. Menu roles, roving focus, nested stack, Escape, and focus restoration remain LDS-owned."
       ],
       "quantitativeRules": [
         {
@@ -39717,6 +40780,7 @@
       "contentGuidance": [
         "menuActionArea는 서버 반영 비용이 크거나 여러 설정을 원자적으로 확정해야 하는 명시적인 staged workflow에서만 onCancel·onApply 중 제공된 실제 동작을 Cancel/Apply 버튼으로 만듭니다. 단순한 다중 선택이나 열기·복제·삭제처럼 선택 즉시 실행되는 메뉴에는 사용하지 않습니다. 기본 문구는 cancelLabel=\"취소\", applyLabel=\"적용\"이며 제품 문맥에 맞게 바꿀 수 있습니다. 콜백이나 custom action이 없으면 무동작 버튼을 만들지 않습니다.",
         "Carbon Menu와 Menu Button — menu item 높이를 24/32/40/48px size 축으로 관리하고, 짧은 메뉴는 최소 160px에서 시작해 긴 label에 따라 최대 288px까지 확장합니다. LDS는 14/20px·40px을 desktop default로 두고 32/48px을 compact/comfortable density로 분리하며, 기존 LDS 리듬에 맞춰 적응형 폭을 176–320px로 조정합니다.",
+        "ref, className, and style target the anchor root. Stable parts are root, trigger, panel, menu, item, divider, and actionArea; per-item class/style composes after the shared item part.",
         "React createPortal documents portals as the escape hatch for clipping ancestors while retaining React-tree context and event propagation."
       ],
       "accessibility": [
@@ -39737,6 +40801,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "Table",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "Alert",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -39754,10 +40822,6 @@
         },
         {
           "component": "Snackbar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Toast",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -39808,6 +40872,9 @@
         "--fw-regular",
         "--label2-line",
         "--label2-size",
+        "--lds-dropdown-menu-max-height",
+        "--lds-dropdown-menu-min-width",
+        "--lds-dropdown-menu-width",
         "--radius-5",
         "--shadow-md",
         "--space-2",
@@ -39855,7 +40922,7 @@
             "role": "interaction"
           }
         ],
-        "hiddenEvidence": 1
+        "hiddenEvidence": 3
       },
       "sources": [
         {
@@ -39964,6 +41031,20 @@
           "owner": "ModalProps"
         },
         {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "description": "비제어 초기 열림 상태. @default false",
+          "owner": "ModalProps"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) = void",
+          "required": false,
+          "description": "canonical 열림 상태 변경 알림.",
+          "owner": "ModalProps"
+        },
+        {
           "name": "title",
           "type": "React.ReactNode",
           "required": false,
@@ -39993,7 +41074,7 @@
         },
         {
           "name": "width",
-          "type": "number",
+          "type": "number | string",
           "required": false,
           "description": "최대 너비(px). @default 520",
           "owner": "ModalProps"
@@ -40039,15 +41120,67 @@
           "required": false,
           "description": "",
           "owner": "ModalProps"
+        },
+        {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Render at the owner-document Portal boundary. @default true",
+          "owner": "ModalProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "ModalProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "ModalProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "ModalProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "ModalProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "ModalProps"
         }
       ],
       "states": [
         {
           "state": "open",
           "rule": "열림 상태. @default false"
+        },
+        {
+          "state": "defaultOpen",
+          "rule": "비제어 초기 열림 상태. @default false"
+        },
+        {
+          "state": "onOpenChange",
+          "rule": "canonical 열림 상태 변경 알림."
         }
       ],
       "behavior": [
+        "Tab/Shift+Tab은 최상위 dialog 안에서 순환하고, 외부로 이동한 포커스도 최상위 dialog로 되돌립니다.",
+        "Escape, scrim, 닫기 버튼은 controlled onClose를 호출합니다. 키보드 사용자를 위해 onClose와 보이는 닫기/취소 액션을 함께 제공합니다.",
         "닫히면 기본적으로 실제 trigger로 복원합니다. 워크플로상 다음 요소가 더 적절하면 returnFocusRef, 복원이 의도적으로 불필요하면 restoreFocus={false}를 사용합니다.",
         "열려 있는 동안 배경 페이지 스크롤이 잠깁니다(useDialogFocus 공용 엔진이 소유). 중첩된 다이얼로그는 깊이를 세어 마지막 표면이 닫힐 때만 해제하고, 스크롤바가 사라지며 생기는 layout shift는 같은 폭의 body padding으로 보정합니다. Modal·ConfirmDialog·Alert가 모두 같은 계약을 상속합니다.",
         "Portal 선택, route 전환, 제출 상태와 데이터 보존은 제품 레이어가 소유합니다. Modal은 controlled open/dismiss, 표면 구조, focus/ARIA 계약만 소유합니다."
@@ -40079,11 +41212,11 @@
         "WAI-ARIA APG Modal Dialog Pattern: 내부 초기 초점, Tab/Shift+Tab 순환, Escape dismiss, 호출 지점 복귀, role=\"dialog\"/aria-modal/접근 가능한 이름을 계약으로 채택했습니다."
       ],
       "accessibility": [
+        "ref, className, and style target the role=\"dialog\" surface. Stable parts are backdrop, root, header, title, close, body, and footer; geometry is limited to --lds-modal-width, --lds-modal-max-height, and --lds-modal-radius.",
+        "Modal defaults to the common owner-document Portal. The shared modal stack owns z-order, background inert, body scroll lock, initial/trapped focus, topmost Escape, and focus restoration. portalTarget and zIndex are limited runtime overrides.",
         "가장 가까운 sibling은 ConfirmDialog, Alert, Drawer, Sheet입니다. ConfirmDialog의 초기 초점·Tab 순환·Escape·복원 동작을 공통 controller로 승격했습니다.",
         "title은 보이는 요소와 aria-labelledby로 연결합니다. 제목이 없으면 ariaLabel이 접근 가능한 이름을 제공합니다.",
-        "body(children)는 aria-describedby로 다이얼로그에 연결합니다. ConfirmDialog·Alert와 동일한 규칙이며, 이름(제목)만 읽히고 본문이 누락되는 상태를 막습니다.",
-        "열리면 initialFocusRef가 가리키는 내부 요소를 먼저 포커스합니다. 유효하지 않으면 첫 tabbable 요소, 그것도 없으면 dialog 자체를 포커스합니다.",
-        "Tab/Shift+Tab은 최상위 dialog 안에서 순환하고, 외부로 이동한 포커스도 최상위 dialog로 되돌립니다."
+        "body(children)는 aria-describedby로 다이얼로그에 연결합니다. ConfirmDialog·Alert와 동일한 규칙이며, 이름(제목)만 읽히고 본문이 누락되는 상태를 막습니다."
       ],
       "exceptions": [],
       "related": [
@@ -40138,6 +41271,9 @@
         "--font-sans",
         "--fw-extra",
         "--headline1-size",
+        "--lds-modal-max-height",
+        "--lds-modal-radius",
+        "--lds-modal-width",
         "--shadow-xl",
         "--space-2",
         "--space-4",
@@ -40151,6 +41287,7 @@
         "stories/OverlayModal.stories.jsx"
       ],
       "migration": [
+        "open/onOpenChange is the canonical controlled API and defaultOpen is the uncontrolled API. onClose remains a compatibility side-effect callback and may be used together during migration.",
         "Modal은 현재 화면을 일시적으로 차단하고 비교적 긴 단일 작업이나 상세 내용을 처리하는 범용 다이얼로그입니다. 분류는 LDS Core overlay이며, 이번 변경은 WDS variant axis가 아닌 접근성 호환 계약입니다."
       ],
       "platformStatus": {
@@ -40179,7 +41316,7 @@
             "role": "responsive"
           }
         ],
-        "hiddenEvidence": 1
+        "hiddenEvidence": 2
       },
       "sources": [
         {
@@ -42066,7 +43203,7 @@
           "name": "disable",
           "type": "boolean",
           "required": false,
-          "description": "disabled alias.",
+          "description": "",
           "owner": "InputProps"
         },
         {
@@ -42095,6 +43232,20 @@
           "type": "React.CSSProperties",
           "required": false,
           "description": "래퍼 스타일(예: 그리드 셀용 minWidth).",
+          "owner": "InputProps"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Public root class.",
+          "owner": "InputProps"
+        },
+        {
+          "name": "inputClassName",
+          "type": "string",
+          "required": false,
+          "description": "Native input class.",
           "owner": "InputProps"
         }
       ],
@@ -42143,16 +43294,20 @@
           "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
         }
       ],
-      "responsive": [],
+      "responsive": [
+        "Stable parts are root, label, control, startIcon, input, endIcon, statusIcon, action, and message; conditionally absent content does not leave a slot wrapper.",
+        "vars accepts only --lds-input-height, --lds-input-padding-inline, --lds-input-radius, and --lds-input-gap. Visible label, helper/error association and native input semantics remain component-owned."
+      ],
       "contentGuidance": [
         "Reference basis: GOV.UK Text input for visible labels, hints and error association; Carbon Text input for label/helper/error/read-only anatomy.",
         "Keep essential instructions in the visible label or helper text. Placeholder text is supplementary and must not replace the label.",
         "WDS Core examples retain the source sentence form (…해 주세요.) for placeholder parity. This intentionally differs from Fluent's no-period placeholder copy rule; Product/Robotics may use a short domain hint only when the visible label remains sufficient.",
-        "Input — 한 줄 텍스트 필드: 화이트 박스, 헤어라인 링, 그래파이트 포커스 헤일로. label, 선택적 iconLeft/iconRight, required, invalid를 전달하세요."
+        "disable, legacy icon/action names and small|medium|large are compatibility aliases; new code uses native disabled, canonical slot names and sm|md|lg."
       ],
       "accessibility": [
         "Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced.",
-        "readOnly remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal."
+        "readOnly remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal.",
+        "className/style and rootRef target the public field stack root. The default ref, inputClassName, and inputStyle target the native focus target."
       ],
       "exceptions": [],
       "related": [
@@ -42211,7 +43366,11 @@
         "--control-h-sm",
         "--dur-base",
         "--ease-out",
-        "--font-sans"
+        "--font-sans",
+        "--lds-input-gap",
+        "--lds-input-height",
+        "--lds-input-padding-inline",
+        "--lds-input-radius"
       ],
       "apiLinks": [
         "components/forms/Input.jsx",
@@ -42241,7 +43400,7 @@
             "role": "usage"
           }
         ],
-        "hiddenEvidence": 3
+        "hiddenEvidence": 4
       },
       "sources": [
         {
@@ -42276,7 +43435,7 @@
         "states": "evidence",
         "behavior": "omitted-no-evidence",
         "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
+        "responsive": "evidence",
         "contentGuidance": "evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
@@ -42618,7 +43777,9 @@
       ],
       "supportingComponents": [],
       "purpose": "자유 검색어를 전송할 때는 SearchField, 입력 중 단일 후보를 제안할 때는 AutoComplete, 정해진 후보 여러 개를 고를 때는 Combobox를 사용하세요. 간단한 고정 목록은 Select가 더 적합합니다.",
-      "useWhen": [],
+      "useWhen": [
+        "ref points to the native search input; use rootRef for the complete field stack."
+      ],
       "avoidWhen": [],
       "anatomy": [
         {
@@ -42628,6 +43789,22 @@
         {
           "part": "clearLabel",
           "rule": "Accessible clear-action name. Defaults to a contextual 지우기."
+        },
+        {
+          "part": "controlClassName",
+          "rule": "Input control-shell class."
+        },
+        {
+          "part": "controlStyle",
+          "rule": "Input control-shell style."
+        },
+        {
+          "part": "inputClassName",
+          "rule": "Native input class."
+        },
+        {
+          "part": "inputStyle",
+          "rule": "Native input style."
         },
         {
           "part": "removeLabel",
@@ -42830,6 +44007,8 @@
       ],
       "responsive": [],
       "contentGuidance": [
+        "className and style customize the root. controlClassName/controlStyle target the bordered shell and inputClassName/inputStyle target the native input.",
+        "Stable parts are root, label, control, startIcon, input, statusIcon, clearButton, and message. Only documented --lds-search-field- geometry variables are accepted.",
         "네이티브 지우기 어포던스 제거 — type=\"search\"는 WebKit에서 자체 ✕ 글리프를 그려 커스텀 지우기 버튼과 두 개가 됩니다. 눈에 보이지만 이름이 없는 쪽이 하나 더 생기므로 ::-webkit-search-cancel-button 계열을 리셋합니다.",
         "필드·상태 prop: status(normal/positive/negative) · invalid(오류 강조 토글) · helper(보조 설명) · error(오류 메시지) · fieldStyle(전체 필드 컨테이너 스타일) · clearLabel(지우기 버튼의 스크린리더 레이블)."
       ],
@@ -42904,6 +44083,10 @@
         "--fw-semibold",
         "--label1-size",
         "--label2-size",
+        "--lds-search-field-gap",
+        "--lds-search-field-height",
+        "--lds-search-field-padding-inline",
+        "--lds-search-field-radius",
         "--radius-5",
         "--radius-input",
         "--radius-lg",
@@ -42949,7 +44132,7 @@
             "role": "overview"
           }
         ],
-        "hiddenEvidence": 6
+        "hiddenEvidence": 7
       },
       "sources": [
         {
@@ -42977,7 +44160,7 @@
       "guideDeltaFields": [],
       "sectionStatus": {
         "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
+        "useWhen": "evidence",
         "avoidWhen": "omitted-no-evidence",
         "anatomy": "evidence",
         "properties": "evidence",
@@ -43096,7 +44279,7 @@
           "name": "disable",
           "type": "boolean",
           "required": false,
-          "description": "Disabled alias retained for compatibility; prefer disabled.",
+          "description": "",
           "owner": "SegmentedControlProps"
         },
         {
@@ -43104,6 +44287,27 @@
           "type": "string",
           "required": false,
           "description": "Accessible name for the mutually exclusive option group.",
+          "owner": "SegmentedControlProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "SegmentedControlProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "SegmentedControlProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
           "owner": "SegmentedControlProps"
         }
       ],
@@ -43114,7 +44318,8 @@
         }
       ],
       "behavior": [
-        "SegmentedControl — 단일 선택 뷰 토글. 옵션이 쿨 그레이 트랙에 놓이고, 활성 옵션은 부드러운 그림자와 함께 화이트 필로 올라갑니다."
+        "SegmentedControl — 단일 선택 뷰 토글. 옵션이 쿨 그레이 트랙에 놓이고, 활성 옵션은 부드러운 그림자와 함께 화이트 필로 올라갑니다.",
+        "Semantics and keyboard contract."
       ],
       "quantitativeRules": [
         {
@@ -43142,14 +44347,16 @@
         "ButtonGroup의 단일 선택 모드는 이 컴포넌트를 조합합니다. 따라서 높이·disabled·roving 규칙을 ButtonGroup에서 별도로 다시 만들지 않습니다."
       ],
       "contentGuidance": [
+        "ref, className, and style target the radiogroup root.",
+        "Stable parts are root, segment, icon, label, and count; each segment exposes data-state=\"checked|unchecked\" and data-disabled.",
         "options — 문자열 또는 { value, label, icon, count, disabled }. count는 단일 선택 필터를 고르기 전에 값별 결과 건수를 비교해야 할 때 사용하며 라디오의 접근 가능한 이름과 함께 읽힙니다. value / defaultValue / onChange — 제어/비제어."
       ],
       "accessibility": [
+        "Geometry overrides are limited to the documented --lds-segmented-control- variables. Selection state and keyboard semantics stay owned by the component.",
         "SegmentedControl is a named radiogroup, not a tablist: each segment is a radio with one roving tab stop. Arrow keys wrap across enabled segments; Home and End choose the first and last enabled segment.",
         "옵션별 표준 비활성 API는 disabled입니다. disable과 interaction=\"inactive\"는 기존 증거 matrix를 위한 호환 별칭이며, 모두 native disabled + aria-disabled로 수렴하고 로빙 탐색에서 제외됩니다. 그룹의 disabled도 모든 segment에 같은 계약을 적용합니다.",
         "Use it for a small set of mutually exclusive views or modes. Use Tabs only when each label owns a distinct tab panel.",
-        "Reference basis: WAI-ARIA Radio Group pattern and Apple Segmented controls.",
-        "단일 선택 의미와 키보드는 native Radio 계열과 같습니다. 비활성인데 선택된 값은 선택 정보를 지우지 않되, Radio의 회색 중심 점처럼 primary 색을 제거하고 중립 채움·비활성 전경·semibold만 남깁니다."
+        "Reference basis: WAI-ARIA Radio Group pattern and Apple Segmented controls."
       ],
       "exceptions": [],
       "related": [
@@ -43212,6 +44419,11 @@
         "--fw-semibold",
         "--headline2-size",
         "--label1-size",
+        "--lds-segmented-control-gap",
+        "--lds-segmented-control-height",
+        "--lds-segmented-control-padding",
+        "--lds-segmented-control-radius",
+        "--lds-segmented-control-segment-radius",
         "--radius-10",
         "--radius-8",
         "--radius-md",
@@ -43241,7 +44453,7 @@
             "role": "overview"
           }
         ],
-        "hiddenEvidence": 4
+        "hiddenEvidence": 5
       },
       "sources": [
         {
@@ -43293,11 +44505,16 @@
       "ownerComponents": [
         "Select"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "Chip",
+        "Input",
+        "SearchField"
+      ],
       "purpose": "옵션을 항상 펼쳐 둘 필요가 없는 단일 선택 폼에 적합합니다. 검색·자유 입력·다중 선택이 필요할 때는 Select 대신 AutoComplete, Combobox 또는 Searchable Multi Select를 사용하세요.",
       "useWhen": [],
       "avoidWhen": [
-        "WAI-ARIA APG Listbox Pattern: 단일 선택의 option/aria-selected 의미와 DOM 포커스 대신 aria-activedescendant를 쓰는 합성 위젯 모델을 따릅니다."
+        "WAI-ARIA APG Listbox Pattern: 단일 선택의 option/aria-selected 의미와 DOM 포커스 대신 aria-activedescendant를 쓰는 합성 위젯 모델을 따릅니다.",
+        "Fluent Select와 Fluent Menu는 form value 선택과 즉시 실행 command를 구분합니다. LDS도 panel 시각 토큰만 공유하고 listbox와 menu의 DOM·focus 엔진은 공유하지 않습니다."
       ],
       "anatomy": [
         {
@@ -43319,6 +44536,10 @@
         {
           "part": "children",
           "rule": "자식(하위 호환) — options가 없을 때 사용."
+        },
+        {
+          "part": "triggerClassName",
+          "rule": "Native combobox trigger class and style."
         }
       ],
       "properties": [
@@ -43417,14 +44638,14 @@
           "name": "disable",
           "type": "boolean",
           "required": false,
-          "description": "disabled alias.",
+          "description": "",
           "owner": "SelectProps"
         },
         {
           "name": "negative",
           "type": "boolean",
           "required": false,
-          "description": "negative status alias.",
+          "description": "",
           "owner": "SelectProps"
         },
         {
@@ -43521,26 +44742,30 @@
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "타입 스케일 정합: 트리거와 옵션은 공통 --component-input-font-size(16px)를 사용합니다. WDS Select/AutoComplete 컴포넌트 집합 내부의 16px 텍스트 정의와 입력 계열의 본문 크기를 동시에 맞춥니다."
+          "rule": "로컬 WDS .fig의 열린 Select/Select variant는 내부 Menu instance(Variant=Checkbox, Cell Padding=12px)를 직접 합성하며, 그 option은 48px·16/24px Regular입니다. LDS는 checkbox 자체를 복제하지 않고 단일 선택에 맞는 trailing check로 번역하되, md/lg option의 comfortable 밀도는 보존합니다."
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "WDS 내부 Select/Select component-set(16215:33116)의 직접 축은 Active, Disable, Focus, Negative, Overflow, Render(Chip/Text)입니다. 옵션별 disabled와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다."
+          "rule": "Carbon Dropdown은 필드와 option을 하나의 size ramp로 관리하고 열린 목록을 같은 선택 컴포넌트의 일부로 취급합니다. LDS는 WDS에 없는 sm 확장을 shared-menu default 40px 밀도로 대응시킵니다."
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "타입·밀도 정합: 트리거와 옵션은 입력 계열의 size-aware typography를 함께 사용합니다. sm은 shared-menu default 밀도(40px, padding 10×16px, label1 14/20px), md와 lg는 comfortable 밀도(48px, padding 12×16px, body1 16/24px)에 대응합니다. 모든 크기는 panel radius 12px·padding 8px·gap 4px과 option radius 10px을 공유합니다."
         },
         {
           "subject": "--color-semantic-background-elevated-normal",
           "rule": "light: #FFFFFF; dark: #212225"
-        },
-        {
-          "subject": "--color-semantic-fill-normal",
-          "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
         }
       ],
       "responsive": [
-        "intrinsic-width 계약: option 집합을 재는 숨은 sizer는 absolute 배치로 normal flow에서 제외되어, root 높이를 trigger보다 키우지 않습니다.",
-        "시각 델타: 기존 높이, 여백, 반경, 색상, 선택 채움, 그림자는 유지합니다. 탐색 중인 옵션의 내부 포커스 선은 확정 선택과 키보드 포커스를 구분합니다. 선택된 옵션이 나중에 비활성화되면 값은 보존하되 primary 강조를 중립 비활성 채움·전경으로 바꿉니다."
+        "intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 absolute·clipped measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 scrollWidth를 바꾸지 않습니다. consumer의 root style이 지정한 minWidth, width, maxWidth는 측정 결과보다 우선합니다.",
+        "WDS 내부 Select/Select component-set(16215:33116)의 직접 축은 Active, Disable, Focus, Negative, Overflow, Render(Chip/Text)입니다. Size는 WDS 직접 축이 아니지만 열린 variant가 48px·16/24px Menu를 직접 포함하므로 md/lg 기본 option 밀도의 composition 근거로 사용합니다. 옵션별 disabled와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.",
+        "시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px primary inset ring으로 분리합니다.",
+        "vars accepts only --lds-select-min-width, --lds-select-height, and --lds-select-dropdown-max-height. Consumer root width constraints still override intrinsic measurement."
       ],
       "contentGuidance": [
+        "className/style and rootRef target the public field-stack root. The default ref, triggerClassName, and triggerStyle target the native combobox trigger.",
+        "Stable parts are root, label, control, trigger, value, indicators, dropdown, option, and message. Options additionally expose real data-active, data-selected, and data-disabled state.",
         "커스텀 단일 선택 드롭다운(스타일된 트리거 + 플로팅 패널, 시그널 포커스) — 네이티브 가 아닙니다. 옵션은 options(string[] 또는 {value,label}[]) 또는 자식으로 지정합니다. onChange는 선택된 value를 받습니다."
       ],
       "accessibility": [
@@ -43553,6 +44778,18 @@
       "exceptions": [],
       "related": [
         {
+          "component": "Chip",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "Input",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "SearchField",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "AutoComplete",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -43562,14 +44799,6 @@
         },
         {
           "component": "FormField",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Input",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "SearchField",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -43589,7 +44818,6 @@
       ],
       "tokens": [
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-fill-normal",
         "--color-semantic-fill-strong",
         "--color-semantic-label-alternative",
         "--color-semantic-label-assistive",
@@ -43605,21 +44833,31 @@
         "--component-input-padding-x",
         "--component-input-radius",
         "--component-input-stack-gap",
+        "--component-menu-gap",
+        "--component-menu-item-hover-bg",
+        "--component-menu-item-min-height",
+        "--component-menu-item-padding-x",
+        "--component-menu-item-padding-y",
+        "--component-menu-item-radius",
+        "--component-menu-item-selected-bg",
+        "--component-menu-padding-x",
+        "--component-menu-padding-y",
+        "--component-menu-radius",
         "--control-h-lg",
         "--control-h-md",
         "--control-h-sm",
         "--font-sans",
-        "--fw-bold",
         "--fw-medium",
+        "--fw-regular",
         "--fw-semibold",
         "--label2-size",
-        "--radius-lg",
-        "--radius-md",
+        "--lds-select-dropdown-max-height",
+        "--lds-select-height",
+        "--lds-select-min-width",
         "--radius-pill",
         "--shadow-md",
-        "--space-0-5",
-        "--space-1-5",
         "--space-2-5",
+        "--space-3",
         "--space-4-5"
       ],
       "apiLinks": [
@@ -43628,7 +44866,9 @@
         "components/forms/Select.prompt.md",
         "stories/FormSelect.stories.jsx"
       ],
-      "migration": [],
+      "migration": [
+        "disable, negative, and small|medium|large are compatibility aliases; new code uses disabled, invalid/status, and sm|md|lg."
+      ],
       "platformStatus": {
         "figma": "mapped",
         "react": "implemented",
@@ -43643,9 +44883,14 @@
             "id": "lds-core-components-selection-and-input-select--selects",
             "name": "개요",
             "role": "overview"
+          },
+          {
+            "id": "lds-core-components-selection-and-input-select--select-popup-densities",
+            "name": "사용법 · 팝업 밀도",
+            "role": "usage"
           }
         ],
-        "hiddenEvidence": 4
+        "hiddenEvidence": 8
       },
       "sources": [
         {
@@ -43667,6 +44912,18 @@
         {
           "label": "WAI-ARIA APG Listbox Pattern",
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/listbox/"
+        },
+        {
+          "label": "Carbon Dropdown",
+          "url": "https://carbondesignsystem.com/components/dropdown/usage/"
+        },
+        {
+          "label": "Fluent Select",
+          "url": "https://fluent2.microsoft.design/components/web/react/core/select/usage"
+        },
+        {
+          "label": "Fluent Menu",
+          "url": "https://fluent2.microsoft.design/components/web/react/core/menu/usage"
         }
       ],
       "canonicalGuide": null,
@@ -43688,7 +44945,7 @@
         "examples": "evidence",
         "tokens": "evidence",
         "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
+        "migration": "evidence"
       }
     },
     {
@@ -44750,7 +46007,7 @@
           "name": "disable",
           "type": "boolean",
           "required": false,
-          "description": "disabled alias.",
+          "description": "",
           "owner": "TextareaProps"
         },
         {
@@ -44772,6 +46029,55 @@
           "type": "React.CSSProperties",
           "required": false,
           "description": "래퍼 스타일.",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Public root class.",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "textareaClassName",
+          "type": "string",
+          "required": false,
+          "description": "Native textarea class.",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "textareaStyle",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "Native textarea style.",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "rootRef",
+          "type": "React.Ref",
+          "required": false,
+          "description": "Public root ref; the default ref targets the native textarea.",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "TextareaProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
           "owner": "TextareaProps"
         }
       ],
@@ -44814,8 +46120,10 @@
       ],
       "responsive": [],
       "contentGuidance": [
-        "Reference basis: GOV.UK Textarea and Carbon Text area.",
-        "Textarea — Input의 박스·포커스 헤일로와 맞춘 여러 줄 필드; 세로 리사이즈 가능."
+        "ref points to the native textarea; use rootRef for the field stack.",
+        "className and style customize the public root. Use textareaClassName and textareaStyle for the native control.",
+        "Stable parts are root, label, control, textarea, statusIcon, and message. Geometry overrides are limited to the documented --lds-textarea- variables.",
+        "Reference basis: GOV.UK Textarea and Carbon Text area."
       ],
       "accessibility": [
         "Textarea shares Input's label, required mark, helper/error typography, described-by merge, read-only fill, border, focus ring, and positive/negative status icon. Only multiline height and resize behavior differ."
@@ -44868,6 +46176,10 @@
         "--dur-base",
         "--ease-out",
         "--font-sans",
+        "--lds-textarea-max-height",
+        "--lds-textarea-min-height",
+        "--lds-textarea-padding",
+        "--lds-textarea-radius",
         "--space-10",
         "--space-3"
       ],
@@ -44899,7 +46211,7 @@
             "role": "usage"
           }
         ],
-        "hiddenEvidence": 3
+        "hiddenEvidence": 4
       },
       "sources": [
         {
@@ -49558,6 +50870,7 @@
       "purpose": "시간순 대화를 읽고 이전 기록을 이어 불러올 때 사용합니다. Feed는 접근 가능한 log, 이전 기록 위치 유지와 새 메시지 따라가기를 맡습니다. 정적 목록이나 시간순이 아닌 정보에는 사용하지 말고 List·Table을 사용하세요.",
       "useWhen": [
         "following=false이면 children 추가나 resize가 사용자의 읽기 위치를 bottom으로 끌어내리지 않습니다.",
+        "3 Free AI Chatbot App UI Kit의 왼쪽 general-assistant conversation에서 chrome-light reading flow만 secondary inspiration으로 사용합니다.",
         "LK Control Full Daedeok — not applicable. event supervision과 command history는 LogViewer 또는 domain status component가 적합하며 AI conversation log가 필수로 확인되지 않았습니다.",
         "representative review."
       ],
@@ -49619,6 +50932,13 @@
           "type": "number | string",
           "required": false,
           "description": "Optional minimum viewport height for persistent conversation panels.",
+          "owner": "MessageFeedProps"
+        },
+        {
+          "name": "viewportInset",
+          "type": "MessageFeedViewportInset",
+          "required": false,
+          "description": "Inline viewport padding. Use comfortable for reading surfaces and compact for dense embedded panels. @default \"compact\"",
           "owner": "MessageFeedProps"
         },
         {
@@ -49727,19 +51047,19 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "320px에서도 history → log → latest의 DOM order와 wrapping을 유지합니다."
+          "rule": "viewportInset=\"compact | comfortable\"은 scrollbar가 붙는 named log viewport의 inline content inset만 선택합니다. 기본 compact는 좌우 8px, reading/panel composition용 comfortable은 좌우 16px이며 두 값 모두 block 12px을 유지합니다. raw viewport style이나 CSS selector hook은 공개하지 않습니다."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "CSS Scroll Anchoring Level 1은 viewport 위 DOM 변경 시 사용자가 읽는 위치를 안정적으로 유지하는 목적을 정의합니다. MessageFeed는 history prepend의 비동기 DOM/height 변화와 live announcement 억제를 함께 제어해야 하므로 browser heuristic에만 맡기지 않고 scrollHeight delta로 수동 복원합니다."
+          "rule": "320px에서도 history → log → latest의 DOM order와 wrapping을 유지합니다."
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "WCAG 2.2를 focus order, keyboard access, status announcement, visible focus와 contrast의 최종 기준으로 사용합니다."
+          "rule": "CSS Scroll Anchoring Level 1은 viewport 위 DOM 변경 시 사용자가 읽는 위치를 안정적으로 유지하는 목적을 정의합니다. MessageFeed는 history prepend의 비동기 DOM/height 변화와 live announcement 억제를 함께 제어해야 하므로 browser heuristic에만 맡기지 않고 scrollHeight delta로 수동 복원합니다."
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "3 Free AI Chatbot App UI Kit의 왼쪽 general-assistant conversation에서 chrome-light reading flow만 secondary inspiration으로 사용합니다."
+          "rule": "WCAG 2.2를 focus order, keyboard access, status announcement, visible focus와 contrast의 최종 기준으로 사용합니다."
         },
         {
           "subject": "--body2-line",
@@ -49749,8 +51069,8 @@
       "responsive": [
         "maxHeight와 viewportMinHeight는 named log viewport의 크기만 제어합니다. 고정 application panel 크기를 강제하지 않습니다.",
         "transparent feed 위에서 assistant document는 reading column을 사용하고 user/human-agent bubble만 compact surface를 가집니다.",
-        "WAI-ARIA APG Feed pattern은 infinite article feed의 Page Up/Page Down 계약과 keyboard help의 discoverability를 강조합니다. MessageFeed는 article focus를 이동시키는 role=\"feed\"가 아니므로 같은 키 이름을 focusable log의 viewport scrolling에만 적용하고 aria-keyshortcuts로 노출합니다.",
-        "Slack screen reader guidance는 Home/End, Page Up/Page Down, first unread, 그리고 “where I left off” 시작 위치를 conversation convention으로 문서화합니다. MessageFeed는 roving message focus를 복제하지 않고 scroll 위치 보존, first-unread separator composition, viewport 단축키만 채택합니다."
+        "viewport inset은 logical padding-inline으로 적용해 RTL에서도 start/end가 뒤집히며, outer section surface나 scrollbar 위치를 이동시키지 않습니다.",
+        "WAI-ARIA APG Feed pattern은 infinite article feed의 Page Up/Page Down 계약과 keyboard help의 discoverability를 강조합니다. MessageFeed는 article focus를 이동시키는 role=\"feed\"가 아니므로 같은 키 이름을 focusable log의 viewport scrolling에만 적용하고 aria-keyshortcuts로 노출합니다."
       ],
       "contentGuidance": [
         "children을 시간순 DOM 순서로 받습니다. 자체 message schema, renderer, participant truth, provider 또는 transport를 만들지 않습니다.",
@@ -49869,7 +51189,7 @@
             "role": "responsive"
           }
         ],
-        "hiddenEvidence": 0
+        "hiddenEvidence": 1
       },
       "sources": [
         {
@@ -53982,7 +55302,7 @@
           "name": "disable",
           "type": "boolean",
           "required": false,
-          "description": "Disable alias. @default false",
+          "description": "",
           "owner": "ButtonOwnProps"
         },
         {
@@ -54018,6 +55338,27 @@
           "type": "React.ReactNode",
           "required": false,
           "description": "",
+          "owner": "ButtonOwnProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "Stable classes for the public Button anatomy.",
+          "owner": "ButtonOwnProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "Stable inline styles for the public Button anatomy.",
+          "owner": "ButtonOwnProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "Component-scoped geometry overrides.",
           "owner": "ButtonOwnProps"
         },
         {
@@ -54081,27 +55422,6 @@
           "type": "string",
           "required": false,
           "description": "제어 본문 값.",
-          "owner": "ContentEditorProps"
-        },
-        {
-          "name": "defaultValue",
-          "type": "string",
-          "required": false,
-          "description": "비제어 본문 기본값.",
-          "owner": "ContentEditorProps"
-        },
-        {
-          "name": "onValueChange",
-          "type": "(value: string, event: React.ChangeEvent) = void",
-          "required": false,
-          "description": "본문 변경 콜백.",
-          "owner": "ContentEditorProps"
-        },
-        {
-          "name": "toolbar",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "툴바 전체를 대체하는 슬롯.",
           "owner": "ContentEditorProps"
         }
       ],
@@ -54318,6 +55638,10 @@
         "--fw-semibold",
         "--heading1-size",
         "--label2-size",
+        "--lds-button-gap",
+        "--lds-button-height",
+        "--lds-button-padding",
+        "--lds-button-radius",
         "--radius-md",
         "--radius-pill",
         "--radius-sm",
@@ -55414,7 +56738,7 @@
             "role": "overview"
           }
         ],
-        "hiddenEvidence": 3
+        "hiddenEvidence": 4
       },
       "sources": [
         {
@@ -57097,6 +58421,27 @@
           "required": false,
           "description": "외곽선 소유. \"embedded\"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default \"standalone\"",
           "owner": "DataToolbarProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "DataToolbarProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "DataToolbarProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "DataToolbarProps"
         }
       ],
       "states": [
@@ -57134,13 +58479,16 @@
         }
       ],
       "responsive": [
+        "vars accepts only --lds-data-toolbar-padding, --lds-data-toolbar-gap, and --lds-data-toolbar-search-max-width; it does not add selection or pagination ownership.",
         "filters는 query를 좁히는 chip/menu 슬롯, actions는 열 표시·순서 설정 trigger, 내보내기 같은 전체 표 action 슬롯입니다. filters에 함수를 주면 { size }를 받아 검색과 같은 field control 밀도를 Select·SearchField 같은 자식에게 전달할 수 있습니다. 기존 ReactNode 슬롯도 그대로 지원합니다. 설정 UI와 저장 상태는 제품이 소유하고 visibleColumnKeys/columnOrder로 DataGrid에 전달합니다.",
         "selectedCount와 bulkActions는 DataToolbar props가 아닙니다. 선택 수, 선택 해제, bulk action은 DataGrid의 같은 높이 selection band에 둡니다.",
-        "PatternFly Toolbar design guidelines는 search filter와 filter group을 하나의 연관된 그룹으로 배치하고 모든 toolbar item을 세로 중앙 정렬합니다. LDS는 검색과 field형 필터에 같은 size를 전달하고, 고유 높이를 가진 chip은 늘리지 않고 중앙 정렬합니다.",
-        "PatternFly Filters는 text entry·single select·filter group을 같은 toolbar 안에서 조합할 수 있는 필터 유형으로 구분합니다. 따라서 LDS는 임의 자식을 강제로 clone하거나 높이를 덮지 않고 render-prop context로 field control 밀도만 전달합니다."
+        "PatternFly Toolbar design guidelines는 search filter와 filter group을 하나의 연관된 그룹으로 배치하고 모든 toolbar item을 세로 중앙 정렬합니다. LDS는 검색과 field형 필터에 같은 size를 전달하고, 고유 높이를 가진 chip은 늘리지 않고 중앙 정렬합니다."
       ],
       "contentGuidance": [
-        "DataToolbar — DataGrid/Table 위에서 제목, 결과 수, 검색, 필터, page-level action을 정렬하는 표면."
+        "className, style, and the default ref target the root collection toolbar surface.",
+        "Stable parts are root, header, heading, title, count, description, actions, controls, search, and filters. Header and controls slots exist only when their content exists.",
+        "DataToolbar — DataGrid/Table 위에서 제목, 결과 수, 검색, 필터, page-level action을 정렬하는 표면.",
+        "The header row is independent: title, description, count, or page-level actions keeps it present even when controls are omitted. If neither header content nor controls exist, DataToolbar returns null instead of leaving an empty bordered strip."
       ],
       "accessibility": [
         "WAI-ARIA APG Table pattern에 따라 DataToolbar가 표의 native semantics나 keyboard model을 대신하지 않습니다. 검색과 action은 각 native control의 정상 Tab 순서를 유지합니다."
@@ -57204,6 +58552,9 @@
         "--fw-semibold",
         "--label2-line",
         "--label2-size",
+        "--lds-data-toolbar-gap",
+        "--lds-data-toolbar-padding",
+        "--lds-data-toolbar-search-max-width",
         "--radius-md",
         "--space-1",
         "--space-1-5",
@@ -57248,9 +58599,14 @@
             "id": "lds-product-data-operations-data-toolbar--medium-filter-density",
             "name": "반응형 · 기본 필터 밀도",
             "role": "responsive"
+          },
+          {
+            "id": "lds-product-data-operations-data-toolbar--responsive-multi-select-filters",
+            "name": "반응형 · 다중 선택 필터",
+            "role": "responsive"
           }
         ],
-        "hiddenEvidence": 0
+        "hiddenEvidence": 1
       },
       "sources": [
         {
@@ -66251,6 +67607,27 @@
           "required": false,
           "description": "href leaf를 router link로 치환하는 렌더 훅. 그룹 disclosure는 항상 button입니다.",
           "owner": "SideNavProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "SideNavProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "SideNavProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "SideNavProps"
         }
       ],
       "states": [
@@ -66293,16 +67670,16 @@
         }
       ],
       "responsive": [
+        "Width, rail width, padding, radius, and item geometry can be tuned only through the documented --lds-side-nav- variables. Navigation value, routing, and shell collapse controls remain product-owned.",
         "접힌 레일과 펼친 패널은 SideNav가 소유하는 브랜드 아래 패딩 18px과 44px 목적지 행 높이를 공유합니다. header와 headerCollapsed 슬롯 자체의 intrinsic 높이는 제품이 맞추며, 레일에서는 label·badge가 사라지고 행의 가로 정렬만 바뀝니다.",
         "Carbon UI shell usage — 복잡한 제품 탐색은 header와 지속적인 left panel을 조합하고 좁은 폭에서는 탐색 표면을 전환합니다. 그래서 셸에 붙는 SideNav는 docked를, 독립 배치는 floating을 사용합니다.",
-        "The collapsed item rail scrolls vertically with a hidden native scrollbar. Do not reduce or remove authorized destinations merely to fit a short viewport; preserve keyboard and wheel scrolling.",
-        "Classification: LK Product Extension. WDS Navigation의 Category, Tab, Page Indicator, Pagination과 별개이며 데스크톱 제품 셸에서만 사용합니다."
+        "The collapsed item rail scrolls vertically with a hidden native scrollbar. Do not reduce or remove authorized destinations merely to fit a short viewport; preserve keyboard and wheel scrolling."
       ],
       "contentGuidance": [
+        "ref, className, and style target the native nav landmark.",
+        "Stable parts are root, overlaySurface, panel, brand, list, heading, item, icon, label, badge, childList, and footer. Root and items expose stable collapsed/active state attributes.",
         "items — { value, label, ariaLabel?, icon, badge?, href?, disabled?, children? } + { heading } 섹션 헤딩. 자식도 icon?: ReactNode를 받을 수 있으며, 한 그룹에 아이콘이 하나라도 있으면 모든 자식에 고정 슬롯을 예약해 라벨 시작선을 맞춥니다. 항목 전체는 native ul/li 리스트(그룹 자식은 중첩 ul)로 렌더되어 보조기술이 항목 수와 계층을 읽을 수 있고, 시각은 기존과 동일합니다(list-style 없음).",
-        "Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. 축소 가능 내비게이션도 상태를 설명하는 명시적인 제어를 제공하므로 LDS는 명시적 토글을 정식 수단으로 두고 hover peek를 선택 기능으로 제한합니다.",
-        "WAI-ARIA landmark regions — landmark와 명확한 accessible name을 유지합니다. 소비자가 aria-label을 주지 않으면 기본 이름 사이드 탐색을 제공하고, 같은 문서에 탐색 landmark가 여러 개면 고유한 이름으로 덮어씁니다. 현재 목적지는 aria-current=\"page\"로 노출하고, 키보드 focus 진입·이탈과 Esc 뒤에도 초점을 잃지 않습니다.",
-        "SideNav — 넓은 라벨형 대시보드 사이드바(브랜드 헤더 + 그룹 내비 + 서브메뉴 + 접힘 레일 + 고정 푸터)."
+        "Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. 축소 가능 내비게이션도 상태를 설명하는 명시적인 제어를 제공하므로 LDS는 명시적 토글을 정식 수단으로 두고 hover peek를 선택 기능으로 제한합니다."
       ],
       "accessibility": [
         "renderLink — native anchor 대신 router link를 쓸 때만 제공합니다. renderLink={(item, { href, ...props }) = }처럼 DS가 만든 aria-current, disabled, style, activation 계약을 전달합니다.",
@@ -66371,6 +67748,12 @@
         "--label1-line",
         "--label1-size",
         "--label2-size",
+        "--lds-side-nav-collapsed-width",
+        "--lds-side-nav-item-height",
+        "--lds-side-nav-item-radius",
+        "--lds-side-nav-padding",
+        "--lds-side-nav-radius",
+        "--lds-side-nav-width",
         "--radius-lg",
         "--radius-pill",
         "--radius-xl",
@@ -66442,7 +67825,7 @@
             "role": "interaction"
           }
         ],
-        "hiddenEvidence": 1
+        "hiddenEvidence": 2
       },
       "sources": [
         {
@@ -68144,8 +69527,11 @@
         "Sheet"
       ],
       "purpose": "넓은 화면에서 필터·속성·상세처럼 주 콘텐츠를 보조하는 작업을 옆 패널에 유지할 때 적합합니다. 작은 화면의 짧은 선택에는 Drawer 대신 Sheet를, 집중이 필요한 확인에는 Dialog를 사용하세요.",
-      "useWhen": [],
+      "useWhen": [
+        "기본 withinPortal=true이며 LdsProvider.portalTarget 또는 명시적 portalTarget에 렌더링됩니다. 가까운 theme scope와 dir을 상속하고 clipping ancestor를 벗어납니다."
+      ],
       "avoidWhen": [
+        "테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.",
         "scrim 클릭 닫기는 closeOnScrim으로 제어하지만, 유일한 dismiss 수단으로 사용하지 않습니다.",
         "Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다.",
         "Drawer는 현재 화면과 관련된 필터, 상세, 설정을 한쪽 edge에서 보조하는 modal side panel입니다. 분류는 LDS Product Extension이며 WDS variant axis를 추가하지 않습니다."
@@ -68268,6 +69654,27 @@
           "owner": "DrawerProps"
         },
         {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Render at the owner-document Portal boundary. @default true",
+          "owner": "DrawerProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "DrawerProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "DrawerProps"
+        },
+        {
           "name": "bodyStyle",
           "type": "React.CSSProperties",
           "required": false,
@@ -68319,15 +69726,16 @@
       ],
       "contentGuidance": [
         "제품 맥락에 맞는 닫기 명령은 closeLabel로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.",
+        "WAI-ARIA APG Modal Dialog Pattern: modal Drawer에도 내부 focus trap, Escape, 복원, 이름 있는 dialog 계약을 적용했습니다.",
         "Subtitle contract.",
         "Use subtitle for one short, visible sentence that clarifies the scope or consequence of the Drawer. When present it is rendered directly below title and associated with the dialog through aria-describedby."
       ],
       "accessibility": [
         "Modal, Sheet, ConfirmDialog를 sibling으로 확인했습니다. focus/keyboard 계약은 ConfirmDialog와 공유하되 표면은 기존 Drawer 그대로입니다.",
         "제목이 있으면 aria-labelledby, 없으면 ariaLabel을 사용합니다.",
+        "zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다.",
         "initialFocusRef → 첫 tabbable 요소 → dialog 표면 순으로 초기 초점을 선택합니다.",
-        "최상위 Drawer만 Tab/Shift+Tab 순환, 외부 focus containment, Escape dismiss를 소유합니다.",
-        "닫히면 trigger로 복원하며 returnFocusRef로 논리적 다음 지점을 지정할 수 있습니다. restoreFocus 기본값은 true입니다."
+        "최상위 Drawer만 Tab/Shift+Tab 순환, 외부 focus containment, Escape dismiss를 소유합니다."
       ],
       "exceptions": [],
       "related": [
@@ -68433,7 +69841,7 @@
       "guideDeltaFields": [],
       "sectionStatus": {
         "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
+        "useWhen": "evidence",
         "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
@@ -68998,7 +70406,9 @@
         "Button"
       ],
       "purpose": "클릭한 trigger 주변에서 설명·미니 폼·피커처럼 자유로운 콘텐츠를 잠시 다룰 때 적합합니다. 명령 목록이나 작업을 막는 복잡한 흐름에는 Popover 대신 Dropdown Menu 또는 Modal을 사용하세요.",
-      "useWhen": [],
+      "useWhen": [
+        "The panel defaults to the common owner-document Portal (withinPortal=true), inherits the nearest explicit theme and dir, and uses the shared flip/clamp/topmost-dismiss stack. Use portalTarget or Provider configuration before opting out with withinPortal=false."
+      ],
       "avoidWhen": [
         "Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다."
       ],
@@ -69035,8 +70445,22 @@
           "owner": "PopoverProps"
         },
         {
-          "name": "width",
+          "name": "position",
+          "type": "'top' | 'bottom' | 'left' | 'right'",
+          "required": false,
+          "description": "Preferred side; flips when space is insufficient. @default \"bottom\"",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "offset",
           "type": "number",
+          "required": false,
+          "description": "Trigger-to-panel gap in pixels. @default 8",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "width",
+          "type": "number | string",
           "required": false,
           "description": "패널 너비(px). @default 260",
           "owner": "PopoverProps"
@@ -69068,6 +70492,48 @@
           "required": false,
           "description": "비모달 dialog 표면의 접근 가능한 이름. @default \"팝오버\"",
           "owner": "PopoverProps"
+        },
+        {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Render in the owner-document Portal so clipping ancestors cannot cut the panel. @default true",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "Explicit Portal target; defaults to provider target or owner-document body.",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "Explicit overlay layer override.",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "PopoverProps"
         }
       ],
       "states": [
@@ -69096,12 +70562,14 @@
         }
       ],
       "responsive": [
-        "패널은 선호 정렬을 유지하되 viewport 경계에서 반대쪽으로 flip하고 좌우를 clamp하며, 가용 높이를 넘는 본문만 세로 스크롤합니다."
+        "패널은 선호 정렬을 유지하되 viewport 경계에서 반대쪽으로 flip하고 좌우를 clamp하며, 가용 높이를 넘는 본문만 세로 스크롤합니다.",
+        "ref, className, and style target the anchor root. Stable parts are root, trigger, and panel; panel geometry is limited to --lds-popover-width and --lds-popover-max-height."
       ],
       "contentGuidance": [],
       "accessibility": [
         "trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup=\"dialog\"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요.",
         "open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는 trigger로 초점을 복원하지만 비모달 Popover 자체는 focus trap을 만들지 않아 Tab이 trigger 다음의 패널 입력으로 이동합니다.",
+        "position, align, and offset are canonical placement inputs. Products own the arbitrary panel content, while LDS owns trigger ARIA, Portal positioning, outside press, Escape, and focus restoration.",
         "WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다.",
         "ariaLabel — 트리거에 보이는 텍스트가 없을 때 팝오버 콘텐츠의 접근성 이름을 지정합니다."
       ],
@@ -69126,7 +70594,10 @@
           "code": "<Popover trigger={<Button variant=\"ghost\">옵션</Button>} width={280}>\n  <FormField label=\"반경\"><Slider defaultValue={30} /></FormField>\n</Popover>"
         }
       ],
-      "tokens": [],
+      "tokens": [
+        "--lds-popover-max-height",
+        "--lds-popover-width"
+      ],
       "apiLinks": [
         "components/overlay/Popover.jsx",
         "components/overlay/Popover.d.ts",
@@ -69155,7 +70626,7 @@
             "role": "interaction"
           }
         ],
-        "hiddenEvidence": 1
+        "hiddenEvidence": 2
       },
       "sources": [
         {
@@ -69179,7 +70650,7 @@
       "guideDeltaFields": [],
       "sectionStatus": {
         "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
+        "useWhen": "evidence",
         "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
@@ -69192,7 +70663,7 @@
         "exceptions": "omitted-no-evidence",
         "related": "evidence",
         "examples": "evidence",
-        "tokens": "omitted-no-evidence",
+        "tokens": "evidence",
         "apiLinks": "evidence",
         "migration": "omitted-no-evidence"
       }
@@ -69211,8 +70682,11 @@
         "Button"
       ],
       "purpose": "모바일에서 짧은 선택 목록이나 보조 액션을 하단 패널로 제공할 때 적합합니다. 긴 편집 폼이나 데스크톱의 지속적인 보조 패널에는 Sheet 대신 전용 화면 또는 Drawer를 사용하세요.",
-      "useWhen": [],
+      "useWhen": [
+        "기본 withinPortal=true이며 LdsProvider.portalTarget 또는 명시적 portalTarget에 렌더링됩니다. 가까운 theme scope와 dir을 상속하고 clipping ancestor를 벗어납니다."
+      ],
       "avoidWhen": [
+        "테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.",
         "footer의 선택/취소 버튼처럼 보이는 dismiss 수단을 제공합니다. grab handle이나 scrim만으로 닫게 하지 않습니다.",
         "Sheet 위에 다른 modal surface를 상시 중첩하지 않습니다. 불가피한 확인 surface가 열리면 최상위만 상호작용하고 닫힌 뒤 Sheet 내부 호출 지점으로 복원됩니다."
       ],
@@ -69301,6 +70775,27 @@
           "owner": "SheetProps"
         },
         {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Render at the owner-document Portal boundary. @default true",
+          "owner": "SheetProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "",
+          "owner": "SheetProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "SheetProps"
+        },
+        {
           "name": "style",
           "type": "React.CSSProperties",
           "required": false,
@@ -69343,13 +70838,15 @@
         "Sheet는 작은 화면에서 선택지나 짧은 보조 액션을 bottom edge에 제공하는 modal surface입니다. 분류는 LDS Product Extension이며 WDS parity axis가 아닌 LDS 반응형 패턴입니다.",
         "모바일 breakpoint 선택, drag gesture/속도, snap point, URL·query 상태는 제품 레이어 책임입니다. LDS Sheet는 controlled open/dismiss, 기존 표면 구조와 keyboard/ARIA 계약만 제공합니다."
       ],
-      "contentGuidance": [],
+      "contentGuidance": [
+        "WAI-ARIA APG Modal Dialog Pattern: bottom placement와 무관하게 modal surface의 focus trap, Escape, trigger 복원, ARIA 이름 계약을 적용했습니다."
+      ],
       "accessibility": [
         "Drawer, Modal, ConfirmDialog를 sibling으로 확인했습니다. focus controller는 공유하지만 기존 bottom placement와 이동 방향을 유지합니다.",
         "제목은 aria-labelledby로 연결하고, 제목이 없으면 ariaLabel이 이름을 제공합니다.",
+        "zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다.",
         "initialFocusRef → 첫 tabbable 요소 → dialog 표면 순으로 초기 초점을 선택합니다.",
-        "Tab/Shift+Tab, 외부 focus containment, Escape는 현재 stack의 최상위 Sheet에만 적용됩니다.",
-        "닫히면 trigger 또는 returnFocusRef로 복원합니다. restoreFocus는 기본 true입니다."
+        "Tab/Shift+Tab, 외부 focus containment, Escape는 현재 stack의 최상위 Sheet에만 적용됩니다."
       ],
       "exceptions": [],
       "related": [
@@ -69452,7 +70949,7 @@
       "guideDeltaFields": [],
       "sectionStatus": {
         "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
+        "useWhen": "evidence",
         "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
@@ -69460,7 +70957,7 @@
         "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
-        "contentGuidance": "omitted-no-evidence",
+        "contentGuidance": "evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
         "related": "evidence",
@@ -70565,7 +72062,7 @@
         "Input",
         "InputGroup"
       ],
-      "purpose": "발급·조회·추가처럼 입력값에 대한 명시적 action을 별도 동작 버튼으로 유지합니다. 좁은 폭에서는 입력 다음 줄에 전체 너비 action을 배치하며 값과 side effect는 제품이 소유합니다.",
+      "purpose": "발급·조회·추가처럼 입력값에 대한 명시적 action이 한 개일 때 적합합니다. 입력 내부 addon이나 여러 동작을 나열하는 용도로는 피해야 합니다. 좁은 폭에서는 입력 다음 줄에 전체 너비 action을 배치하며 값과 side effect는 제품이 소유합니다.",
       "useWhen": [],
       "avoidWhen": [
         "아이콘이나 신규 asset은 추가하지 않습니다."
@@ -70579,70 +72076,92 @@
       "properties": [
         {
           "name": "as",
-          "type": "keyof React.JSX.IntrinsicElements",
+          "type": "React.ElementType",
           "required": false,
           "description": "Root element. Use form when the action submits the field. @default \"div\"",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "field",
           "type": "React.ReactElement",
           "required": true,
           "description": "One LDS field control. Put shared label/helper/error content on FieldAction.",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "action",
           "type": "React.ReactElement",
           "required": true,
           "description": "One LDS Button or button-compatible action.",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "size",
           "type": "'sm' | 'md' | 'lg' | 'small' | 'medium' | 'large'",
           "required": false,
           "description": "Shared field density. The composition aligns both controls to 32/48/52px. @default \"md\"",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "label",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "helper",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "error",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "required",
           "type": "boolean",
           "required": false,
           "description": "",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
         },
         {
           "name": "htmlFor",
           "type": "string",
           "required": false,
           "description": "Associates the shared label with the field control.",
-          "owner": "FieldActionProps"
+          "owner": "FieldActionOwnProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionOwnProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionOwnProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionOwnProps"
         }
       ],
       "states": [],
       "behavior": [
+        "ref points to the polymorphic root selected by as (div by default).",
         "Input.actionRight는 입력 내부의 지우기·보기 같은 국소 액션입니다. 제출·발급·조회처럼 값에 대한 명시적 변화를 요청하는 주요 action은 FieldAction에 둡니다.",
         "새 surface, border, shadow, radius, color, typography는 만들지 않습니다. Input과 Button의 기존 시각 상태를 그대로 조합합니다.",
         "FieldAction은 하나의 입력 필드와 그 값을 사용하는 별도 액션을 같은 행에 배치하는 LK Product Extension입니다. 입력 값, 검증, 제출, 네트워크 요청과 성공·실패 상태는 제품이 소유합니다."
@@ -70670,10 +72189,13 @@
         }
       ],
       "responsive": [
+        "classNames and styles accept only those stable part keys. vars accepts only --lds-field-action-gap; shared control height remains derived from the canonical size.",
         "Stack은 범용 배치만 제공하며 자식 control의 밀도나 높이를 조정하지 않습니다. FieldAction은 field와 action의 크기 매핑 및 좁은 폭 재배치를 소유합니다.",
         "loading 중 Button의 숨겨진 원래 label이 너비를 유지하므로 action column이 흔들리지 않습니다. disabled/loading 동작 자체는 Button 계약을 그대로 사용합니다."
       ],
       "contentGuidance": [
+        "className/style target the root. Stable parts are root, fieldStack, row, field, and action.",
+        "htmlFor associates the shared label with the field control. Field value, validation, submission, and loading remain product-owned.",
         "USWDS Search는 label이 있는 입력과 native submit button을 하나의 form composition으로 제공하며 버튼을 명시적 제출 동작으로 유지합니다. FieldAction도 입력 내부 장식이 아닌 별도 submit action을 유지합니다."
       ],
       "accessibility": [
@@ -70727,6 +72249,7 @@
         "--control-h-lg",
         "--control-h-md",
         "--control-h-sm",
+        "--lds-field-action-gap",
         "--space-2"
       ],
       "apiLinks": [
@@ -70753,11 +72276,11 @@
           },
           {
             "id": "lds-product-selection-and-input-field-action--field-action-narrow",
-            "name": "좁은 폭·긴 문구·오류",
+            "name": "반응형 · 좁은 폭·긴 문구·오류",
             "role": "responsive"
           }
         ],
-        "hiddenEvidence": 3
+        "hiddenEvidence": 4
       },
       "sources": [
         {
@@ -80109,9 +81632,15 @@
       "ownerComponents": [
         "ThemeToggle"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "Button",
+        "LdsProvider",
+        "Popover"
+      ],
       "purpose": "사용자에게 명시적인 appearance 선택권을 제공하는 설정 표면에 적합합니다. 단순 장식 전환이나 일시적인 상태 표시에는 사용하지 않으며, 테마 변경 뒤에도 레이블·포커스·선택 상태가 분명해야 합니다.",
-      "useWhen": [],
+      "useWhen": [
+        "애플리케이션에서 theme·direction·Portal 정책을 함께 구동할 때는 LdsProvider를 runtime의 단일 소유자로 두고 useLdsRuntime()의 colorScheme/setColorScheme를 이 control에 연결합니다. 이 경우 ThemeToggle target={null} persist={false}로 중복 DOM mutation과 storage write를 막습니다. CSS-only 소비자는 기존처럼 Provider 없이 사용할 수 있습니다."
+      ],
       "avoidWhen": [],
       "anatomy": [
         {
@@ -80210,7 +81739,36 @@
       "contentGuidance": [],
       "accessibility": [],
       "exceptions": [],
-      "related": [],
+      "related": [
+        {
+          "component": "Button",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "LdsProvider",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "Popover",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "LdsColorSchemeScript",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "LdsRuntimeContext",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "createLocalStorageManager",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "useLdsRuntime",
+          "relationship": "대표 시나리오에서 조합"
+        }
+      ],
       "examples": [
         {
           "label": "기본 조합",
@@ -80253,7 +81811,7 @@
             "role": "overview"
           }
         ],
-        "hiddenEvidence": 1
+        "hiddenEvidence": 2
       },
       "sources": [
         {
@@ -80269,7 +81827,7 @@
       "guideDeltaFields": [],
       "sectionStatus": {
         "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
+        "useWhen": "evidence",
         "avoidWhen": "omitted-no-evidence",
         "anatomy": "evidence",
         "properties": "evidence",
@@ -80280,7 +81838,7 @@
         "contentGuidance": "omitted-no-evidence",
         "accessibility": "omitted-no-evidence",
         "exceptions": "omitted-no-evidence",
-        "related": "omitted-no-evidence",
+        "related": "evidence",
         "examples": "evidence",
         "tokens": "evidence",
         "apiLinks": "evidence",

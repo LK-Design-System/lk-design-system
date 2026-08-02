@@ -168,7 +168,7 @@
       "name": "disable",
       "type": "boolean",
       "required": false,
-      "description": "disabled alias.",
+      "description": "",
       "owner": "InputProps"
     },
     {
@@ -197,6 +197,20 @@
       "type": "React.CSSProperties",
       "required": false,
       "description": "래퍼 스타일(예: 그리드 셀용 minWidth).",
+      "owner": "InputProps"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "required": false,
+      "description": "Public root class.",
+      "owner": "InputProps"
+    },
+    {
+      "name": "inputClassName",
+      "type": "string",
+      "required": false,
+      "description": "Native input class.",
       "owner": "InputProps"
     }
   ],
@@ -241,15 +255,19 @@
       "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
     }
   ],
-  "responsive": [],
+  "responsive": [
+    "Stable parts are root, label, control, startIcon, input, endIcon, statusIcon, action, and message; conditionally absent content does not leave a slot wrapper.",
+    "vars accepts only --lds-input-height, --lds-input-padding-inline, --lds-input-radius, and --lds-input-gap. Visible label, helper/error association and native input semantics remain component-owned."
+  ],
   "contentGuidance": [
     "Reference basis: GOV.UK Text input for visible labels, hints and error association; Carbon Text input for label/helper/error/read-only anatomy.",
     "Keep essential instructions in the visible label or helper text. Placeholder text is supplementary and must not replace the label.",
-    "Input — 한 줄 텍스트 필드: 화이트 박스, 헤어라인 링, 그래파이트 포커스 헤일로. label, 선택적 iconLeft/iconRight, required, invalid를 전달하세요."
+    "disable, legacy icon/action names and small|medium|large are compatibility aliases; new code uses native disabled, canonical slot names and sm|md|lg."
   ],
   "accessibility": [
     "Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced.",
-    "readOnly remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal."
+    "readOnly remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal.",
+    "className/style and rootRef target the public field stack root. The default ref, inputClassName, and inputStyle target the native focus target."
   ],
   "exceptions": [],
   "related": [
@@ -308,7 +326,11 @@
     "--control-h-sm",
     "--dur-base",
     "--ease-out",
-    "--font-sans"
+    "--font-sans",
+    "--lds-input-gap",
+    "--lds-input-height",
+    "--lds-input-padding-inline",
+    "--lds-input-radius"
   ],
   "apiLinks": [],
   "migration": [],
@@ -333,7 +355,7 @@
         "role": "usage"
       }
     ],
-    "hiddenEvidence": 3
+    "hiddenEvidence": 4
   },
   "sources": [],
   "canonicalGuide": null,
@@ -347,7 +369,7 @@
     "states": "evidence",
     "behavior": "omitted-no-evidence",
     "quantitativeRules": "evidence",
-    "responsive": "omitted-no-evidence",
+    "responsive": "evidence",
     "contentGuidance": "evidence",
     "accessibility": "evidence",
     "exceptions": "omitted-no-evidence",

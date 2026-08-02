@@ -46,6 +46,34 @@ export const Selects = {
   ),
 };
 
+export const SelectPopupDensities = {
+  name: '사용법 · 팝업 밀도',
+  parameters: storyDescription(
+    '필드 트리거 크기는 유지하면서 sm은 기본 행 밀도, md와 lg는 더 여유로운 행 밀도를 사용합니다.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', alignItems: 'start', gap: 'var(--space-6)', maxWidth: 820 }}>
+      {[
+        { size: 'sm', label: 'Small · 기본 행' },
+        { size: 'md', label: 'Medium · 넉넉한 행' },
+        { size: 'lg', label: 'Large · 넉넉한 행' },
+      ].map(({ size, label }) => (
+        <Select
+          key={size}
+          size={size}
+          label={label}
+          defaultValue="all"
+          options={[
+            { value: 'all', label: '내가 볼 수 있는 전체 지식' },
+            { value: 'project', label: '현재 프로젝트' },
+            { value: 'documents', label: '선택한 문서' },
+          ]}
+        />
+      ))}
+    </main>
+  ),
+};
+
 export const SelectStateContract = {
   name: 'Select 상태 계약',
   tags: ['!dev'],
@@ -62,18 +90,32 @@ export const SelectStateContract = {
 function SelectStableWidthFixture() {
   const [value, setValue] = React.useState('recent');
   return (
-    <main style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', maxWidth: '100%' }}>
-      <Select
-        aria-label="정렬"
-        value={value}
-        onChange={setValue}
-        options={[
-          { value: 'recent', label: '최근 변경순' },
-          { value: 'name', label: '이름순' },
-        ]}
-      />
-      <button type="button" data-contract="choose-recent" onClick={() => setValue('recent')}>긴 값 선택</button>
-      <button type="button" data-contract="choose-name" onClick={() => setValue('name')}>짧은 값 선택</button>
+    <main data-select-stable-width-fixture style={{ display: 'grid', gap: 'var(--space-4)', width: 520, maxWidth: '100%' }}>
+      <div style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', maxWidth: '100%', flexWrap: 'wrap' }}>
+        <Select
+          aria-label="정렬"
+          value={value}
+          onChange={setValue}
+          options={[
+            { value: 'recent', label: '최근 변경순' },
+            { value: 'name', label: '이름순' },
+          ]}
+        />
+        <button type="button" data-contract="choose-recent" onClick={() => setValue('recent')}>긴 값 선택</button>
+        <button type="button" data-contract="choose-name" onClick={() => setValue('name')}>짧은 값 선택</button>
+      </div>
+      <div data-contract="constrained-select-wrapper" style={{ width: 220, maxWidth: '100%', minWidth: 0 }}>
+        <Select
+          data-contract="constrained-select"
+          aria-label="제약 폭 정렬"
+          defaultValue="recent"
+          options={[
+            { value: 'recent', label: '최근 변경순' },
+            { value: 'long', label: '아주 길어서 부모의 제약 폭을 넘어서는 옵션 이름' },
+          ]}
+          style={{ width: 220, minWidth: 0, maxWidth: '100%' }}
+        />
+      </div>
     </main>
   );
 }
@@ -87,7 +129,13 @@ export const SelectStableOptionWidthContract = {
     const widthSizer = canvasElement.querySelector('[data-select-width-sizer]');
     const chooseRecent = canvasElement.querySelector('[data-contract="choose-recent"]');
     const chooseName = canvasElement.querySelector('[data-contract="choose-name"]');
-    if (!trigger || !widthSizer || !chooseRecent || !chooseName) {
+    const fixture = canvasElement.querySelector('[data-select-stable-width-fixture]');
+    const root = trigger?.closest('[data-select-root]');
+    const constrainedWrapper = canvasElement.querySelector('[data-contract="constrained-select-wrapper"]');
+    const constrainedTrigger = canvasElement.querySelector('[data-contract="constrained-select"]');
+    const constrainedRoot = constrainedTrigger?.closest('[data-select-root]');
+    if (!trigger || !widthSizer || !chooseRecent || !chooseName || !fixture || !root
+      || !constrainedWrapper || !constrainedTrigger || !constrainedRoot) {
       throw new Error('Select stable-width contract targets are required.');
     }
     if (widthSizer.getAttribute('aria-hidden') !== 'true') {
@@ -104,6 +152,23 @@ export const SelectStableOptionWidthContract = {
     if (Math.abs(longWidth - shortWidth) > 0.5) {
       throw new Error(`Select width must remain stable across values (${longWidth}px -> ${shortWidth}px).`);
     }
+
+    const rootRect = root.getBoundingClientRect();
+    const triggerRect = trigger.getBoundingClientRect();
+    if (Math.abs(rootRect.height - triggerRect.height) > 1 || Math.abs(rootRect.top - triggerRect.top) > 1) {
+      throw new Error('An unlabeled Select root must not reserve layout space outside its trigger.');
+    }
+
+    const constrainedRootWidth = constrainedRoot.getBoundingClientRect().width;
+    const constrainedTriggerWidth = constrainedTrigger.getBoundingClientRect().width;
+    if (constrainedRootWidth > 221 || constrainedTriggerWidth > 221) {
+      throw new Error(`Select must honor a constrained parent width (root ${constrainedRootWidth}px, trigger ${constrainedTriggerWidth}px).`);
+    }
+    [fixture, constrainedWrapper, constrainedRoot].forEach((element) => {
+      if (element.scrollWidth > element.clientWidth + 1) {
+        throw new Error('The intrinsic width measurement must not create horizontal scroll overflow.');
+      }
+    });
   },
 };
 
@@ -147,6 +212,125 @@ export const CompactFieldTypographyContract = {
     const mediumTypography = getComputedStyle(mediumInput);
     if (mediumTypography.fontSize !== '16px' || mediumTypography.lineHeight !== '24px') {
       throw new Error(`Medium input typography must retain body1 (received ${mediumTypography.fontSize}/${mediumTypography.lineHeight}).`);
+    }
+  },
+};
+
+export const SelectPopupDensityContract = {
+  name: 'Select popup density contract',
+  tags: ['!dev'],
+  render: () => (
+    <main style={{ display: 'flex', alignItems: 'start', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
+      {[
+        { size: 'sm', label: 'Density sm' },
+        { size: 'md', label: 'Density md' },
+        { size: 'lg', label: 'Density lg' },
+      ].map(({ size, label }) => (
+        <Select
+          key={size}
+          size={size}
+          aria-label={label}
+          defaultValue="one"
+          options={[
+            { value: 'one', label: 'Selected option' },
+            { value: 'two', label: 'Available option' },
+            { value: 'three', label: 'Another option' },
+          ]}
+        />
+      ))}
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const cases = [
+      { label: 'Density sm', density: 'default', rowHeight: 40, paddingY: 10, fontSize: 14, lineHeight: 20 },
+      { label: 'Density md', density: 'comfortable', rowHeight: 48, paddingY: 12, fontSize: 16, lineHeight: 24 },
+      { label: 'Density lg', density: 'comfortable', rowHeight: 48, paddingY: 12, fontSize: 16, lineHeight: 24 },
+    ];
+
+    for (const expected of cases) {
+      const trigger = canvasElement.querySelector(`[role="combobox"][aria-label="${expected.label}"]`);
+      if (!(trigger instanceof HTMLButtonElement)) {
+        throw new Error(`${expected.label} trigger is required.`);
+      }
+
+      await userEvent.click(trigger);
+      let listbox;
+      await waitFor(() => {
+        const listboxId = trigger.getAttribute('aria-controls');
+        listbox = listboxId ? canvasElement.ownerDocument.getElementById(listboxId) : null;
+        if (!listbox) throw new Error(`${expected.label} listbox must open.`);
+        const positionedStyle = getComputedStyle(listbox);
+        if (positionedStyle.pointerEvents === 'none' || positionedStyle.opacity === '0') {
+          throw new Error(`${expected.label} listbox must finish Portal positioning before pointer assertions.`);
+        }
+      });
+
+      const listboxStyle = getComputedStyle(listbox);
+      if (listbox.dataset.density !== expected.density
+        || listboxStyle.borderRadius !== '12px'
+        || listboxStyle.paddingTop !== '8px'
+        || listboxStyle.paddingRight !== '8px'
+        || listboxStyle.paddingBottom !== '8px'
+        || listboxStyle.paddingLeft !== '8px'
+        || listboxStyle.rowGap !== '4px') {
+        throw new Error(`${expected.label} must use the shared-menu shell and ${expected.density} density.`);
+      }
+
+      const rows = [...listbox.querySelectorAll('[role="option"]')];
+      const selected = listbox.querySelector('[role="option"][aria-selected="true"]');
+      const available = listbox.querySelector('[role="option"][aria-selected="false"]');
+      if (rows.length !== 3 || !selected || !available) {
+        throw new Error(`${expected.label} options are required.`);
+      }
+
+      rows.forEach((row) => {
+        const style = getComputedStyle(row);
+        const indicator = row.querySelector('[data-select-option-indicator]');
+        if (Math.abs(row.getBoundingClientRect().height - expected.rowHeight) > 0.5
+          || style.paddingTop !== `${expected.paddingY}px`
+          || style.paddingRight !== '16px'
+          || style.paddingBottom !== `${expected.paddingY}px`
+          || style.paddingLeft !== '16px'
+          || style.borderRadius !== '10px'
+          || style.fontSize !== `${expected.fontSize}px`
+          || style.lineHeight !== `${expected.lineHeight}px`
+          || !indicator) {
+          throw new Error(`${expected.label} option metrics must match its density contract.`);
+        }
+      });
+
+      const selectedStyle = getComputedStyle(selected);
+      const availableStyle = getComputedStyle(available);
+      if (selectedStyle.fontWeight !== '500' || availableStyle.fontWeight !== '400'
+        || getComputedStyle(selected.querySelector('[data-select-option-indicator]')).opacity !== '1'
+        || getComputedStyle(available.querySelector('[data-select-option-indicator]')).opacity !== '0') {
+        throw new Error(`${expected.label} must distinguish persistent selection from unselected options.`);
+      }
+
+      await userEvent.hover(available);
+      await waitFor(() => {
+        const hoveredStyle = getComputedStyle(available);
+        if (hoveredStyle.backgroundColor === 'rgba(0, 0, 0, 0)' || hoveredStyle.boxShadow !== 'none') {
+          throw new Error(`${expected.label} pointer hover must use neutral fill without a focus ring.`);
+        }
+      });
+
+      trigger.focus();
+      await userEvent.keyboard('{Home}');
+      await waitFor(() => {
+        const activeId = trigger.getAttribute('aria-activedescendant');
+        const activeOption = activeId ? canvasElement.ownerDocument.getElementById(activeId) : null;
+        if (!activeOption || getComputedStyle(activeOption).boxShadow === 'none') {
+          throw new Error(`${expected.label} keyboard active option must expose the primary inset ring.`);
+        }
+      });
+
+      await userEvent.keyboard('{Escape}');
+      await waitFor(() => {
+        if (trigger.getAttribute('aria-expanded') !== 'false' || trigger.hasAttribute('aria-controls')) {
+          throw new Error(`${expected.label} must close cleanly before the next density case.`);
+        }
+      });
     }
   },
 };
@@ -371,5 +555,48 @@ export const SelectDisabledOptionContract = {
         throw new Error('A Select disabled while open must close immediately and remove the popup.');
       }
     });
+  },
+};
+
+function SelectSurfaceRefFixture() {
+  const triggerRef = React.useRef(null);
+  const rootRef = React.useRef(null);
+  React.useLayoutEffect(() => {
+    triggerRef.current?.setAttribute('data-ref-target', 'select-trigger');
+    rootRef.current?.setAttribute('data-root-ref-target', 'select-root');
+  }, []);
+  return (
+    <Select
+      ref={triggerRef}
+      rootRef={rootRef}
+      aria-label="Surface contract select"
+      defaultValue="one"
+      options={[{ value: 'one', label: 'One' }, { value: 'two', label: 'Two' }]}
+      className="contract-select-root"
+      triggerClassName="contract-select-trigger"
+      classNames={{ value: 'contract-select-value' }}
+      styles={{ value: { letterSpacing: '1px' } }}
+      vars={{ '--lds-select-height': '44px' }}
+    />
+  );
+}
+
+export const SurfaceRefContract = {
+  name: 'Surface and ref contract',
+  tags: ['!dev'],
+  render: () => <SelectSurfaceRefFixture />,
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-root-ref-target="select-root"]');
+    const trigger = canvasElement.querySelector('[data-ref-target="select-trigger"]');
+    const value = trigger?.querySelector('[data-slot="value"]');
+    if (!(trigger instanceof HTMLButtonElement) || root?.dataset.slot !== 'root') {
+      throw new Error('Select default ref must target the native trigger and rootRef must target the public root.');
+    }
+    if (!root.classList.contains('contract-select-root') || !trigger.classList.contains('contract-select-trigger') || !value?.classList.contains('contract-select-value')) {
+      throw new Error('Select root, trigger, and named-part classes must stay separated.');
+    }
+    if (getComputedStyle(trigger).height !== '44px' || getComputedStyle(value).letterSpacing !== '1px') {
+      throw new Error('Select vars and named-part styles must reach the documented targets.');
+    }
   },
 };

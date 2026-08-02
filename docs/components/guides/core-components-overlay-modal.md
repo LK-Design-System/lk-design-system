@@ -31,26 +31,38 @@
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
 | `open` | `boolean` | No | 열림 상태. @default false |
+| `defaultOpen` | `boolean` | No | 비제어 초기 열림 상태. @default false |
+| `onOpenChange` | `(open: boolean) = void` | No | canonical 열림 상태 변경 알림. |
 | `title` | `React.ReactNode` | No | 보이는 제목. 제공하면 다이얼로그의 접근 가능한 이름으로 연결됩니다. |
 | `children` | `React.ReactNode` | No |  |
 | `footer` | `React.ReactNode` | No | 푸터 노드(예: Button). |
 | `onClose` | `() = void` | No | Escape, scrim, 닫기 액션이 호출하는 controlled dismiss callback. |
-| `width` | `number` | No | 최대 너비(px). @default 520 |
+| `width` | `number \| string` | No | 최대 너비(px). @default 520 |
 | `closeOnScrim` | `boolean` | No | scrim 클릭으로 닫기. @default true |
 | `initialFocusRef` | `React.RefObject` | No | 열릴 때 우선 초점을 받을 다이얼로그 내부 요소. |
 | `returnFocusRef` | `React.RefObject` | No | 닫힌 뒤 자동으로 캡처한 trigger 대신 초점을 돌려보낼 요소. |
 | `restoreFocus` | `boolean` | No | 닫힌 뒤 trigger 또는 returnFocusRef로 초점을 복원합니다. @default true |
 | `ariaLabel` | `string` | No | title이 없을 때 사용할 접근 가능한 이름. @default "모달" |
 | `style` | `React.CSSProperties` | No |  |
+| `withinPortal` | `boolean` | No | Render at the owner-document Portal boundary. @default true |
+| `portalTarget` | `HTMLElement \| null` | No |  |
+| `zIndex` | `number` | No |  |
+| `classNames` | `LdsClassNames` | No |  |
+| `styles` | `LdsStyles` | No |  |
+| `vars` | `LdsVars` | No |  |
 
 ## States
 
 | State | Contract |
 | --- | --- |
 | open | 열림 상태. @default false |
+| defaultOpen | 비제어 초기 열림 상태. @default false |
+| onOpenChange | canonical 열림 상태 변경 알림. |
 
 ## Behavior and interaction
 
+- Tab/Shift+Tab은 최상위 dialog 안에서 순환하고, 외부로 이동한 포커스도 최상위 dialog로 되돌립니다.
+- Escape, scrim, 닫기 버튼은 controlled onClose를 호출합니다. 키보드 사용자를 위해 onClose와 보이는 닫기/취소 액션을 함께 제공합니다.
 - 닫히면 기본적으로 실제 trigger로 복원합니다. 워크플로상 다음 요소가 더 적절하면 returnFocusRef, 복원이 의도적으로 불필요하면 restoreFocus={false}를 사용합니다.
 - 열려 있는 동안 배경 페이지 스크롤이 잠깁니다(useDialogFocus 공용 엔진이 소유). 중첩된 다이얼로그는 깊이를 세어 마지막 표면이 닫힐 때만 해제하고, 스크롤바가 사라지며 생기는 layout shift는 같은 폭의 body padding으로 보정합니다. Modal·ConfirmDialog·Alert가 모두 같은 계약을 상속합니다.
 - Portal 선택, route 전환, 제출 상태와 데이터 보존은 제품 레이어가 소유합니다. Modal은 controlled open/dismiss, 표면 구조, focus/ARIA 계약만 소유합니다.
@@ -71,11 +83,11 @@
 
 ## Accessibility
 
+- ref, className, and style target the role="dialog" surface. Stable parts are backdrop, root, header, title, close, body, and footer; geometry is limited to --lds-modal-width, --lds-modal-max-height, and --lds-modal-radius.
+- Modal defaults to the common owner-document Portal. The shared modal stack owns z-order, background inert, body scroll lock, initial/trapped focus, topmost Escape, and focus restoration. portalTarget and zIndex are limited runtime overrides.
 - 가장 가까운 sibling은 ConfirmDialog, Alert, Drawer, Sheet입니다. ConfirmDialog의 초기 초점·Tab 순환·Escape·복원 동작을 공통 controller로 승격했습니다.
 - title은 보이는 요소와 aria-labelledby로 연결합니다. 제목이 없으면 ariaLabel이 접근 가능한 이름을 제공합니다.
 - body(children)는 aria-describedby로 다이얼로그에 연결합니다. ConfirmDialog·Alert와 동일한 규칙이며, 이름(제목)만 읽히고 본문이 누락되는 상태를 막습니다.
-- 열리면 initialFocusRef가 가리키는 내부 요소를 먼저 포커스합니다. 유효하지 않으면 첫 tabbable 요소, 그것도 없으면 dialog 자체를 포커스합니다.
-- Tab/Shift+Tab은 최상위 dialog 안에서 순환하고, 외부로 이동한 포커스도 최상위 dialog로 되돌립니다.
 
 ## Related components
 
@@ -128,6 +140,9 @@ const firstFieldRef = useRef(null);
 - `--font-sans`
 - `--fw-extra`
 - `--headline1-size`
+- `--lds-modal-max-height`
+- `--lds-modal-radius`
+- `--lds-modal-width`
 - `--shadow-xl`
 - `--space-2`
 - `--space-4`
@@ -143,6 +158,7 @@ const firstFieldRef = useRef(null);
 
 ## Migration
 
+- open/onOpenChange is the canonical controlled API and defaultOpen is the uncontrolled API. onClose remains a compatibility side-effect callback and may be used together during migration.
 - Modal은 현재 화면을 일시적으로 차단하고 비교적 긴 단일 작업이나 상세 내용을 처리하는 범용 다이얼로그입니다. 분류는 LDS Core overlay이며, 이번 변경은 WDS variant axis가 아닌 접근성 호환 계약입니다.
 
 ## Sources

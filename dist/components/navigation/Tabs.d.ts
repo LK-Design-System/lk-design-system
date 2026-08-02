@@ -1,4 +1,12 @@
 import * as React from "react";
+import type { LdsClassNames, LdsStyles, LdsVars } from '../internal/surface.js';
+
+export type TabsPart = 'root' | 'tab' | 'label' | 'count' | 'trailing' | 'indicator';
+export type TabsVariable =
+  | '--lds-tabs-gap'
+  | '--lds-tabs-height'
+  | '--lds-tabs-padding-inline'
+  | '--lds-tabs-indicator-height';
 
 export type TabItem =
   | string
@@ -26,6 +34,7 @@ export type TabItem =
        * `id={panelId}`, `aria-labelledby={tab id}`, and `tabIndex={0}`.
        */
       panelId?: string;
+      className?: string;
       style?: React.CSSProperties;
     };
 
@@ -34,7 +43,7 @@ export interface TabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'o
   value?: string;
   defaultValue?: string;
   onChange?: (value: string, item: Exclude<TabItem, string>) => void;
-  /** Legacy fill prop. Prefer `resize="fill"`. @default false */
+  /** @deprecated Use `resize="fill"`. @default false */
   full?: boolean;
   /** resize axis. @default "hug" */
   resize?: "hug" | "fill";
@@ -46,7 +55,10 @@ export interface TabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'o
   trailingIconButton?: boolean | React.ReactNode;
   /** scroll axis. @default "auto" */
   scroll?: "auto" | boolean;
+  classNames?: LdsClassNames<TabsPart>;
+  styles?: LdsStyles<TabsPart>;
+  vars?: LdsVars<TabsVariable>;
 }
 
 /** underline tab navigation with hug/fill resize, size, padding, trailing icon, and scroll axes. */
-export function Tabs(props: TabsProps): React.JSX.Element;
+export const Tabs: React.ForwardRefExoticComponent<TabsProps & React.RefAttributes<HTMLDivElement>>;

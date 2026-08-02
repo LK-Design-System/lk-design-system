@@ -20,6 +20,10 @@ export interface SheetProps {
   restoreFocus?: boolean;
   /** `title`이 없을 때 사용할 접근 가능한 이름. @default "하단 시트" */
   ariaLabel?: string;
+  /** Render at the owner-document Portal boundary. @default true */
+  withinPortal?: boolean;
+  portalTarget?: HTMLElement | null;
+  zIndex?: number;
   style?: React.CSSProperties;
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormField } from '@lk-design-system/lds-core/components/forms/FormField';
+import { componentVars, partClassName, partStyle } from '@lk-design-system/lds-core/components/internal/surface';
 
 const CONTROL_HEIGHTS = {
   sm: 'var(--control-h-sm)',
@@ -32,6 +33,9 @@ export const FieldAction = React.forwardRef(function FieldAction({
   htmlFor,
   className,
   style,
+  classNames,
+  styles,
+  vars,
   ...rest
 }, forwardedRef) {
   const normalizedSize = normalizeSize(size);
@@ -62,11 +66,15 @@ export const FieldAction = React.forwardRef(function FieldAction({
     <Comp
       {...rest}
       ref={forwardedRef}
-      className={['lk-field-action', className].filter(Boolean).join(' ')}
+      data-slot="root"
+      data-size={normalizedSize}
+      className={partClassName(classNames, 'root', 'lk-field-action', className) || undefined}
       style={{
+        ...componentVars(vars, '--lds-field-action-'),
         width: '100%',
         minWidth: 0,
         containerType: 'inline-size',
+        ...partStyle(styles, 'root'),
         ...style,
       }}
     >
@@ -82,6 +90,9 @@ export const FieldAction = React.forwardRef(function FieldAction({
         }`}
       </style>
       <FormField
+        data-slot="fieldStack"
+        className={partClassName(classNames, 'fieldStack') || undefined}
+        style={partStyle(styles, 'fieldStack')}
         label={label}
         helper={helper}
         error={error}
@@ -89,21 +100,24 @@ export const FieldAction = React.forwardRef(function FieldAction({
         htmlFor={htmlFor}
       >
         <div
-          className="lk-field-action__row"
+          data-slot="row"
+          className={partClassName(classNames, 'row', 'lk-field-action__row') || undefined}
           style={{
             display: 'grid',
             gridTemplateColumns: 'minmax(0, 1fr) max-content',
             alignItems: 'start',
-            gap: 'var(--space-2)',
+            gap: 'var(--lds-field-action-gap, var(--space-2))',
             minWidth: 0,
+            ...partStyle(styles, 'row'),
           }}
         >
-          <div className="lk-field-action__field" style={{ minWidth: 0 }}>
+          <div data-slot="field" className={partClassName(classNames, 'field', 'lk-field-action__field') || undefined} style={{ minWidth: 0, ...partStyle(styles, 'field') }}>
             {fieldNode}
           </div>
           <div
-            className="lk-field-action__action"
-            style={{ display: 'inline-flex', alignItems: 'flex-start', minWidth: 0 }}
+            data-slot="action"
+            className={partClassName(classNames, 'action', 'lk-field-action__action') || undefined}
+            style={{ display: 'inline-flex', alignItems: 'flex-start', minWidth: 0, ...partStyle(styles, 'action') }}
           >
             {actionNode}
           </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useOverlayLayer } from './overlay-platform.js';
 
 const FOCUSABLE_SELECTOR = [
   'a[href]:not([tabindex="-1"])',
@@ -15,7 +16,6 @@ const FOCUSABLE_SELECTOR = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(', ');
 
-const BASE_OVERLAY_Z_INDEX = 100;
 const overlayStack = [];
 const useSafeLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 
@@ -82,9 +82,19 @@ function isTopOverlay(entry) {
   return overlayStack.at(-1) === entry;
 }
 
-function syncOverlayLayers() {
-  overlayStack.forEach((entry, index) => {
-    entry.setZIndex(BASE_OVERLAY_Z_INDEX + index);
+function inertBackground(portalNode) {
+  const container = portalNode?.parentElement;
+  if (!container) return () => {};
+  const siblings = Array.from(container.children).filter((element) => element !== portalNode);
+  const snapshots = siblings.map((element) => ({
+    element,
+    inert: element.hasAttribute('inert'),
+  }));
+  siblings.forEach((element) => element.setAttribute('inert', ''));
+  return () => snapshots.forEach(({ element, inert }) => {
+    if (!element.isConnected) return;
+    if (inert) element.setAttribute('inert', '');
+    else element.removeAttribute('inert');
   });
 }
 
@@ -107,9 +117,12 @@ export function useDialogFocus({
   returnFocusRef,
   restoreFocus = true,
   lockScroll = true,
+  inert = true,
+  portalRef,
+  zIndex,
 }) {
   const dialogRef = React.useRef(null);
-  const [zIndex, setZIndex] = React.useState(BASE_OVERLAY_Z_INDEX);
+  const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayer({ open, zIndex });
   const optionsRef = React.useRef(null);
   optionsRef.current = {
     onDismiss,
@@ -117,6 +130,8 @@ export function useDialogFocus({
     returnFocusRef,
     restoreFocus,
     lockScroll,
+    inert,
+    portalRef,
   };
 
   useSafeLayoutEffect(() => {
@@ -126,20 +141,22 @@ export function useDialogFocus({
     const ownerDocument = dialog?.ownerDocument ?? document;
     const view = ownerDocument.defaultView ?? window;
     const previouslyFocused = ownerDocument.activeElement;
-    const entry = { dialogRef, setZIndex };
+    const entry = { dialogRef };
     overlayStack.push(entry);
-    syncOverlayLayers();
     const scrollLocked = optionsRef.current.lockScroll;
     if (scrollLocked) lockBodyScroll(ownerDocument);
+    const restoreBackground = optionsRef.current.inert
+      ? inertBackground(optionsRef.current.portalRef?.current)
+      : () => {};
 
     const focusFrame = view.requestAnimationFrame(() => {
-      if (isTopOverlay(entry)) {
+      if (isTopmost()) {
         focusDialogStart(dialogRef.current, optionsRef.current.initialFocusRef);
       }
     });
 
     const onKeyDown = (event) => {
-      if (!isTopOverlay(entry) || event.defaultPrevented) return;
+      if (!isTopmost() || event.defaultPrevented) return;
 
       if (event.key === 'Escape') {
         if (optionsRef.current.onDismiss) {
@@ -174,7 +191,7 @@ export function useDialogFocus({
 
     const onFocusIn = (event) => {
       const currentDialog = dialogRef.current;
-      if (isTopOverlay(entry) && currentDialog && !currentDialog.contains(event.target)) {
+      if (isTopmost() && currentDialog && !currentDialog.contains(event.target)) {
         focusDialogStart(currentDialog, optionsRef.current.initialFocusRef);
       }
     };
@@ -187,11 +204,11 @@ export function useDialogFocus({
       ownerDocument.removeEventListener('keydown', onKeyDown);
       ownerDocument.removeEventListener('focusin', onFocusIn);
       if (scrollLocked) unlockBodyScroll();
+      restoreBackground();
 
       const wasTopOverlay = isTopOverlay(entry);
       const entryIndex = overlayStack.indexOf(entry);
       if (entryIndex >= 0) overlayStack.splice(entryIndex, 1);
-      syncOverlayLayers();
 
       if (!wasTopOverlay) return;
       const nextOverlay = overlayStack.at(-1);
@@ -208,5 +225,5 @@ export function useDialogFocus({
     };
   }, [open]);
 
-  return { dialogRef, zIndex };
+  return { dialogRef, zIndex: resolvedZIndex };
 }

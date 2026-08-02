@@ -132,7 +132,7 @@ function AnnotatedImage({
     if (!controlled) setInternalVisible(next);
     _optionalChain([onAnnotationsVisibleChange, 'optionalCall', _2 => _2(next)]);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "figure",
     {
       "data-label-display": labelDisplay,
@@ -148,7 +148,7 @@ function AnnotatedImage({
             display: none;
           }
         }` }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             ref: frameRef,
@@ -164,7 +164,7 @@ function AnnotatedImage({
               containerType: "inline-size"
             },
             children: [
-              src && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              src && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "img",
                 {
                   src,
@@ -178,7 +178,7 @@ function AnnotatedImage({
                   style: { display: "block", width: "100%", height: "100%", objectFit }
                 }
               ),
-              imageState !== "loaded" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              imageState !== "loaded" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "div",
                 {
                   role: imageState === "error" ? "alert" : "status",
@@ -186,7 +186,7 @@ function AnnotatedImage({
                   children: imageState === "loading" ? loadingMessage : imageState === "error" ? errorMessage : emptyMessage
                 }
               ),
-              imageState === "loaded" && annotations > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              imageState === "loaded" && annotations > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 _chunkSMSPAH2Mcjs.ToggleIcon,
                 {
                   size: "sm",
@@ -200,7 +200,7 @@ function AnnotatedImage({
                   children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: visible ? "eye" : "eye-slash", size: 16, "aria-hidden": "true" })
                 }
               ),
-              imageState === "loaded" && annotations > 0 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              imageState === "loaded" && annotations > 0 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                 "div",
                 {
                   id: overlayId,
@@ -215,7 +215,7 @@ function AnnotatedImage({
                       const placement = regionLabelPlacement(region, index, regions, overlayBox, frameSize.height);
                       return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { position: "absolute", left: percent(region.x), top: percent(region.y), width: percent(region.width), height: percent(region.height), boxSizing: "border-box", border: `var(--border-thick) solid ${color}`, borderRadius: "var(--radius-xs)" }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { position: "absolute", ...REGION_LABEL_POSITION[placement], display: "inline-flex", alignItems: "center", gap: "var(--space-1)", maxWidth: placement === "inside-top" ? "min(12.5rem, 100%)" : "12.5rem", padding: "var(--space-1) var(--space-2)", overflow: "hidden", boxSizing: "border-box", background: color, color: toneLabelColor(_nullishCoalesce(region.tone, () => ( "signal"))), fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)" }, children: [
                         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { flexShrink: 0, fontVariantNumeric: "tabular-nums" }, children: marker }),
-                        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                           "span",
                           {
                             className: "lk-annotated-image__label-text",
@@ -249,7 +249,7 @@ function AnnotatedImage({
         ),
         (caption != null || annotations > 0) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "figcaption", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-2) var(--space-3)", flexWrap: "wrap", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: [
           caption != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: caption }),
-          annotations > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          annotations > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             _chunkZ4LY27BEcjs.Collapsible,
             {
               id: detailsId,

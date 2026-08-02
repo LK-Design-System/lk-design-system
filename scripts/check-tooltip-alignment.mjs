@@ -133,9 +133,12 @@ async function main() {
       );
       if (!section) throw new Error('Tooltip alignment section is missing.');
 
-      return Array.from(section.querySelectorAll('[role="tooltip"]')).map((tip) => {
-        const wrapper = tip.parentElement;
-        const target = Array.from(wrapper.children).find((child) => child !== tip);
+      return Array.from(section.querySelectorAll('[aria-describedby]')).map((target) => {
+        const describedBy = target.getAttribute('aria-describedby')?.split(/\s+/).filter(Boolean) || [];
+        const tip = describedBy
+          .map((id) => document.getElementById(id))
+          .find((node) => node?.getAttribute('role') === 'tooltip');
+        if (!tip) throw new Error('A Tooltip alignment trigger must reference its portalled bubble.');
         const surface = tip.querySelector(':scope > svg[data-lds-tooltip-surface]');
         const paths = surface?.querySelectorAll(':scope > path');
         if (!surface || paths.length !== 1) {
@@ -146,6 +149,7 @@ async function main() {
         }
         const bubbleRect = rect(tip);
         const targetRect = rect(target);
+        const wrapperRect = rect(target.closest('[data-slot="root"]'));
         const shapeRect = rect(paths[0]);
         const arrowAxis = Number(surface.dataset.arrowAxis);
         const arrowHeight = Number(surface.dataset.arrowHeight);
@@ -167,6 +171,14 @@ async function main() {
           targetHeight: targetRect.height,
           bubbleWidth: bubbleRect.width,
           targetWidth: targetRect.width,
+          bubbleTop: bubbleRect.top,
+          bubbleLeft: bubbleRect.left,
+          targetTop: targetRect.top,
+          targetLeft: targetRect.left,
+          wrapperTop: wrapperRect.top,
+          wrapperLeft: wrapperRect.left,
+          inlineTop: tip.style.top,
+          inlineLeft: tip.style.left,
           arrowCenterVsBubbleCenterX: arrowPoint.cx - bubbleRect.cx,
           arrowCenterVsBubbleCenterY: arrowPoint.cy - bubbleRect.cy,
           arrowCenterVsTargetCenterX: arrowPoint.cx - targetRect.cx,
@@ -183,6 +195,10 @@ async function main() {
 
     if (measurements.length !== 6) {
       throw new Error(`Expected 6 tooltip alignment examples, received ${measurements.length}.`);
+    }
+
+    if (process.env.LDS_TOOLTIP_ALIGNMENT_DEBUG === '1') {
+      console.log(JSON.stringify(measurements, null, 2));
     }
 
     const [left, center, right, top, middle, bottom] = measurements;

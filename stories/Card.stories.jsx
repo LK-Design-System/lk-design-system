@@ -301,3 +301,43 @@ export const SemanticInsetGroup = {
     }
   },
 };
+
+function CardSurfaceRefFixture() {
+  const ref = React.useRef(null);
+  React.useLayoutEffect(() => {
+    ref.current?.setAttribute('data-ref-target', 'card-root');
+  }, []);
+  return (
+    <Card
+      ref={ref}
+      as="article"
+      title="Surface contract"
+      description="Named Card parts"
+      className="contract-card-root"
+      classNames={{ title: 'contract-card-title' }}
+      styles={{ description: { letterSpacing: '1px' } }}
+      vars={{ '--lds-card-padding': '20px', '--lds-card-radius': '10px' }}
+    />
+  );
+}
+
+export const SurfaceRefContract = {
+  name: 'Surface and ref contract',
+  tags: ['!dev'],
+  render: () => <CardSurfaceRefFixture />,
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-ref-target="card-root"]');
+    const title = root?.querySelector('[data-slot="title"]');
+    const description = root?.querySelector('[data-slot="description"]');
+    if (!(root instanceof HTMLElement) || root.tagName !== 'ARTICLE' || root.dataset.slot !== 'root') {
+      throw new Error('Card ref must follow the polymorphic public root.');
+    }
+    if (!root.classList.contains('contract-card-root') || !title?.classList.contains('contract-card-title')) {
+      throw new Error('Card root and named-part classes must compose independently.');
+    }
+    const rootStyle = getComputedStyle(root);
+    if (rootStyle.paddingTop !== '20px' || rootStyle.borderRadius !== '10px' || getComputedStyle(description).letterSpacing !== '1px') {
+      throw new Error('Card vars and named-part styles must reach the documented targets.');
+    }
+  },
+};

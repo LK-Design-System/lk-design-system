@@ -36,168 +36,168 @@
       "type": "React.ElementType",
       "required": false,
       "description": "Root element used for non-interactive document semantics. @default \"div\"",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "surface",
       "type": "\"default\" | \"subtle\"",
       "required": false,
       "description": "Surface role. subtle is an inset grouping surface and defaults to no shadow. @default \"default\"",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "elevation",
       "type": "\"none\" | \"sm\" | \"md\" | \"lg\"",
       "required": false,
       "description": "기본 그림자 깊이. @default \"md\"",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "interactive",
       "type": "boolean",
       "required": false,
       "description": "카드 전체가 하나의 행동일 때. 호버 리프트 + 그림자 심화에 더해 role=\"button\", tabIndex=0, Enter/Space 활성화, :focus-visible 링을 부여합니다. 내부에 별도의 버튼·링크를 넣지 마세요.",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "dark",
       "type": "boolean",
       "required": false,
       "description": "다크 섹션용 네이비 서피스. @default false",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "headingLevel",
       "type": "1 | 2 | 3 | 4 | 5 | 6 | false",
       "required": false,
       "description": "구조화 모드 title 의 heading 레벨. false 면 heading 의미 없이 div 로 렌더링합니다(제목이 이미 바깥에 있을 때).",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "padding",
       "type": "number | string",
       "required": false,
       "description": "기본 32px 패딩을 재정의.",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "platform",
       "type": "\"desktop\" | \"mobile\"",
       "required": false,
       "description": "platform axis. @default \"desktop\"",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "skeleton",
       "type": "boolean",
       "required": false,
       "description": "skeleton axis. @default false",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "save",
       "type": "boolean",
       "required": false,
       "description": "save action axis. @default false",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "saved",
       "type": "boolean",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "onSave",
       "type": "(e: React.MouseEvent) = void",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "toggleIcon",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "thumbnail",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "topContent",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "leadingContent",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "trailingContent",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "title",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "titleWrap",
       "type": "\"truncate\" | \"wrap\"",
       "required": false,
       "description": "Structured title overflow policy. @default \"truncate\"",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "description",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "caption",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "subCaption",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "metaCaption",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     },
     {
       "name": "bottomContent",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "CardProps"
+      "owner": "CardOwnProps"
     }
   ],
   "states": [
@@ -230,9 +230,14 @@
     }
   ],
   "responsive": [
-    "titleWrap=\"truncate|wrap\" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination."
+    "titleWrap=\"truncate|wrap\" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination.",
+    "Stable structured parts are root, content, header, actions, media, body, title, description, and footer. Optional parts do not render empty wrappers.",
+    "vars accepts only --lds-card-padding, --lds-card-radius, --lds-card-gap, and --lds-card-max-width. These cannot turn a non-interactive card into a control or bypass heading/nesting rules."
   ],
-  "contentGuidance": [],
+  "contentGuidance": [
+    "className, style, and the default ref target the polymorphic root. The ref type follows the rendered as element.",
+    "classNames and styles accept only those stable part keys; product selectors do not depend on Card's internal DOM order."
+  ],
   "accessibility": [],
   "exceptions": [
     "Use surface=\"subtle\" for the inset surface that groups peer cards. It defaults to elevation=\"none\"; nested default-surface cards own their own border, radius, and elevation. An explicit elevation is still available for exceptional compositions."
@@ -309,6 +314,10 @@
     "--fw-semibold",
     "--label2-line",
     "--label2-size",
+    "--lds-card-gap",
+    "--lds-card-max-width",
+    "--lds-card-padding",
+    "--lds-card-radius",
     "--radius-md"
   ],
   "apiLinks": [],
@@ -356,7 +365,7 @@
         "role": "variants-states"
       }
     ],
-    "hiddenEvidence": 1
+    "hiddenEvidence": 2
   },
   "sources": [],
   "canonicalGuide": null,
@@ -371,7 +380,7 @@
     "behavior": "omitted-no-evidence",
     "quantitativeRules": "evidence",
     "responsive": "evidence",
-    "contentGuidance": "omitted-no-evidence",
+    "contentGuidance": "evidence",
     "accessibility": "omitted-no-evidence",
     "exceptions": "evidence",
     "related": "evidence",

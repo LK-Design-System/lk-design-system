@@ -1,16 +1,6 @@
 import React from 'react';
-import { createPortal } from 'react-dom';
 import { useMenuKeyboard } from './useMenuKeyboard.js';
-
-function inheritedTheme(element) {
-  const host = element?.closest?.('[data-theme], .theme-light, .theme-dark, .theme-auto');
-  const explicitTheme = host?.getAttribute?.('data-theme');
-  if (explicitTheme) return explicitTheme;
-  if (host?.classList?.contains('theme-dark')) return 'dark';
-  if (host?.classList?.contains('theme-auto')) return 'auto';
-  if (host?.classList?.contains('theme-light')) return 'light';
-  return undefined;
-}
+import { OverlayPortal } from '../overlay/overlay-platform.js';
 
 /**
  * Shared submenu behavior for menu surfaces (DropdownMenu, Menubar). Owns the
@@ -29,7 +19,7 @@ export function useSubmenuBranch({ disabled = false } = {}) {
   const panelRef = React.useRef(null);
   const hoverTimer = React.useRef(null);
 
-  const { menuRef, requestItemFocus, handleMenuKeyDown } = useMenuKeyboard({
+  const { menuRef, requestItemFocus, handleMenuKeyDown, zIndex } = useMenuKeyboard({
     open,
     onClose: () => setOpen(false),
     getTrigger: () => triggerRef.current,
@@ -86,22 +76,20 @@ export function useSubmenuBranch({ disabled = false } = {}) {
   };
 
   const renderPanel = (children, panelStyle) => {
-    const target = triggerRef.current?.ownerDocument?.body || (typeof document !== 'undefined' ? document.body : null);
-    const portalTheme = inheritedTheme(triggerRef.current);
-    if (!open || !target) return null;
-    return createPortal(
+    if (!open) return null;
+    return (
+      <OverlayPortal open={open} anchorRef={triggerRef} layer="anchored">
       <div
         ref={panelRef}
         data-menu-portal=""
         data-submenu-portal=""
-        data-theme={portalTheme}
         onMouseEnter={clearTimer}
         onMouseLeave={scheduleClose}
         style={{
           position: 'fixed',
           top: subPos?.top ?? -9999,
           left: subPos?.left ?? -9999,
-          zIndex: 41,
+          zIndex,
           width: 'max-content',
           minWidth: 200,
           maxWidth: 'calc(100vw - var(--space-8))',
@@ -110,8 +98,8 @@ export function useSubmenuBranch({ disabled = false } = {}) {
         }}
       >
         {children}
-      </div>,
-      target,
+      </div>
+      </OverlayPortal>
     );
   };
 

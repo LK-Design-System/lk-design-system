@@ -10,12 +10,14 @@
   ],
   "supportingComponents": [
     "Button",
-    "Icon"
+    "Icon",
+    "Table"
   ],
   "purpose": "버튼이나 항목에 연결된 짧은 명령 목록과 단일·다중 선택 메뉴를 제공할 때 적합합니다. 항상 보이는 앱 수준 메뉴나 즉시 노출해야 할 핵심 action에는 Dropdown Menu 대신 Menubar 또는 Button을 사용하세요.",
   "useWhen": [
     "Use for trigger-bound command menus. Use Menubar for a horizontal application menu.",
-    "submenuMode — 서브메뉴 표현 방식(flyout 기본, drill)."
+    "submenuMode — 서브메뉴 표현 방식(flyout 기본, drill).",
+    "Because the panel leaves its physical ancestor, the root portal copies the nearest explicit data-theme or .theme-light|dark|auto scope onto the portal wrapper. Semantic CSS variables therefore resolve against the same theme as the trigger even when document.body uses a different theme."
   ],
   "avoidWhen": [
     "Floating UI flip, shift, size — preferred bottom을 우선하고 공간이 없으면 top으로 flip한 뒤 viewport 16px 안으로 shift하고, 남은 높이는 scrollable menu region의 max-height로 사용합니다.",
@@ -52,6 +54,20 @@
       "type": "\"left\" | \"right\"",
       "required": false,
       "description": "",
+      "owner": "DropdownMenuProps"
+    },
+    {
+      "name": "position",
+      "type": "'top' | 'bottom' | 'left' | 'right'",
+      "required": false,
+      "description": "Preferred side; flips when space is insufficient. @default \"bottom\"",
+      "owner": "DropdownMenuProps"
+    },
+    {
+      "name": "offset",
+      "type": "number",
+      "required": false,
+      "description": "Trigger-to-panel gap in pixels. @default 8",
       "owner": "DropdownMenuProps"
     },
     {
@@ -172,6 +188,20 @@
       "required": false,
       "description": "",
       "owner": "DropdownMenuProps"
+    },
+    {
+      "name": "withinPortal",
+      "type": "boolean",
+      "required": false,
+      "description": "Escape clipping ancestors through the owner-document Portal. @default true",
+      "owner": "DropdownMenuProps"
+    },
+    {
+      "name": "portalTarget",
+      "type": "HTMLElement | null",
+      "required": false,
+      "description": "",
+      "owner": "DropdownMenuProps"
     }
   ],
   "states": [
@@ -185,7 +215,7 @@
     "WAI-ARIA Menu Button Pattern — menu button의 trigger 상태와 열림 시 첫/마지막 항목 focus 이동을 적용했습니다.",
     "Menubar submenu와 check/radio glyph, elevated surface, keyboard engine, action button 순서를 공유합니다.",
     "Popover는 임의의 interactive content surface이므로 16px content padding을 유지하고, 명령·선택 row를 담는 DropdownMenu의 8px shell과 구분합니다.",
-    "Root panels use the same owner-document portal boundary as flyout submenus and use the shared floating-position engine's fixed strategy. This lets a command menu escape a Table or other ancestor scroll container without weakening the ancestor's horizontal-overflow contract."
+    "Geometry overrides are limited to --lds-dropdown-menu-width, --lds-dropdown-menu-min-width, and --lds-dropdown-menu-max-height. Menu roles, roving focus, nested stack, Escape, and focus restoration remain LDS-owned."
   ],
   "quantitativeRules": [
     {
@@ -213,6 +243,7 @@
   "contentGuidance": [
     "menuActionArea는 서버 반영 비용이 크거나 여러 설정을 원자적으로 확정해야 하는 명시적인 staged workflow에서만 onCancel·onApply 중 제공된 실제 동작을 Cancel/Apply 버튼으로 만듭니다. 단순한 다중 선택이나 열기·복제·삭제처럼 선택 즉시 실행되는 메뉴에는 사용하지 않습니다. 기본 문구는 cancelLabel=\"취소\", applyLabel=\"적용\"이며 제품 문맥에 맞게 바꿀 수 있습니다. 콜백이나 custom action이 없으면 무동작 버튼을 만들지 않습니다.",
     "Carbon Menu와 Menu Button — menu item 높이를 24/32/40/48px size 축으로 관리하고, 짧은 메뉴는 최소 160px에서 시작해 긴 label에 따라 최대 288px까지 확장합니다. LDS는 14/20px·40px을 desktop default로 두고 32/48px을 compact/comfortable density로 분리하며, 기존 LDS 리듬에 맞춰 적응형 폭을 176–320px로 조정합니다.",
+    "ref, className, and style target the anchor root. Stable parts are root, trigger, panel, menu, item, divider, and actionArea; per-item class/style composes after the shared item part.",
     "React createPortal documents portals as the escape hatch for clipping ancestors while retaining React-tree context and event propagation."
   ],
   "accessibility": [
@@ -233,6 +264,10 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
+      "component": "Table",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "Alert",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -250,10 +285,6 @@
     },
     {
       "component": "Snackbar",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "Toast",
       "relationship": "대표 시나리오에서 조합"
     }
   ],
@@ -304,6 +335,9 @@
     "--fw-regular",
     "--label2-line",
     "--label2-size",
+    "--lds-dropdown-menu-max-height",
+    "--lds-dropdown-menu-min-width",
+    "--lds-dropdown-menu-width",
     "--radius-5",
     "--shadow-md",
     "--space-2",
@@ -345,7 +379,7 @@
         "role": "interaction"
       }
     ],
-    "hiddenEvidence": 1
+    "hiddenEvidence": 3
   },
   "sources": [],
   "canonicalGuide": null,

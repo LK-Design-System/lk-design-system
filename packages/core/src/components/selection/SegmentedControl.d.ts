@@ -1,4 +1,13 @@
 import * as React from 'react';
+import type { LdsClassNames, LdsStyles, LdsVars } from '../internal/surface.js';
+
+export type SegmentedControlPart = 'root' | 'segment' | 'icon' | 'label' | 'count';
+export type SegmentedControlVariable =
+  | '--lds-segmented-control-height'
+  | '--lds-segmented-control-padding'
+  | '--lds-segmented-control-gap'
+  | '--lds-segmented-control-radius'
+  | '--lds-segmented-control-segment-radius';
 
 export type SegmentOption = string | {
   value: string;
@@ -11,6 +20,8 @@ export type SegmentOption = string | {
   disable?: boolean;
   /** `inactive` is a disabled evidence alias; prefer `disabled`. */
   interaction?: 'normal' | 'inactive' | 'hovered' | 'focused' | 'active' | 'active-focused';
+  className?: string;
+  style?: React.CSSProperties;
 };
 
 export interface SegmentedControlProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
@@ -25,11 +36,14 @@ export interface SegmentedControlProps extends Omit<React.HTMLAttributes<HTMLDiv
   full?: boolean;
   resize?: 'fill' | 'hug';
   disabled?: boolean;
-  /** Disabled alias retained for compatibility; prefer `disabled`. */
+  /** @deprecated Use `disabled`. */
   disable?: boolean;
   /** Accessible name for the mutually exclusive option group. */
   'aria-label'?: string;
+  classNames?: LdsClassNames<SegmentedControlPart>;
+  styles?: LdsStyles<SegmentedControlPart>;
+  vars?: LdsVars<SegmentedControlVariable>;
 }
 
 /** Roving-keyboard radio group for a compact set of mutually exclusive views or modes. */
-export function SegmentedControl(props: SegmentedControlProps): React.JSX.Element;
+export const SegmentedControl: React.ForwardRefExoticComponent<SegmentedControlProps & React.RefAttributes<HTMLDivElement>>;

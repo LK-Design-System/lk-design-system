@@ -25,6 +25,12 @@ const firstFieldRef = useRef(null);
 </Modal>
 ```
 
+## Public surface, ref, and Portal
+
+- `ref`, `className`, and `style` target the `role="dialog"` surface. Stable parts are `backdrop`, `root`, `header`, `title`, `close`, `body`, and `footer`; geometry is limited to `--lds-modal-width`, `--lds-modal-max-height`, and `--lds-modal-radius`.
+- Modal defaults to the common owner-document Portal. The shared modal stack owns z-order, background inert, body scroll lock, initial/trapped focus, topmost Escape, and focus restoration. `portalTarget` and `zIndex` are limited runtime overrides.
+- `open`/`onOpenChange` is the canonical controlled API and `defaultOpen` is the uncontrolled API. `onClose` remains a compatibility side-effect callback and may be used together during migration.
+
 ## 내부 비교와 시각 차이
 
 - 가장 가까운 sibling은 `ConfirmDialog`, `Alert`, `Drawer`, `Sheet`입니다. `ConfirmDialog`의 초기 초점·Tab 순환·Escape·복원 동작을 공통 controller로 승격했습니다.

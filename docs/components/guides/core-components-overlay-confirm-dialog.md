@@ -16,9 +16,11 @@
 
 - 조건이 충족되기 전에는 confirmDisabled, 요청 중에는 confirmLoading을 사용해 중복 실행을 막습니다.
 - 안전한 기본 경로인 취소는 WDS 보조 액션 문법 variant="outlined" color="assistive", 확인은 기본 primary(파괴적일 때 danger)로 표현합니다. Modal·Drawer footer도 같은 보조 액션 문법을 씁니다.
+- 기본 withinPortal=true이며 LdsProvider.portalTarget 또는 명시적 portalTarget에 렌더링됩니다. 가까운 theme scope와 dir을 상속하고 clipping ancestor를 벗어납니다.
 
 ### 사용하지 않음
 
+- 테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.
 - ConfirmDialog는 route 전환, 비동기 실패 정책, 파괴적 작업 권한을 소유하지 않습니다. 제품은 controlled open 상태와 실제 실행 정책을 연결합니다.
 
 ## Anatomy
@@ -53,6 +55,9 @@
 | `returnFocusRef` | `React.RefObject` | No | 닫힌 뒤 자동으로 캡처한 trigger 대신 초점을 돌려보낼 요소. |
 | `restoreFocus` | `boolean` | No | 닫힌 뒤 trigger 또는 returnFocusRef로 초점을 복원합니다. @default true |
 | `ariaLabel` | `string` | No | title이 없을 때 사용할 접근 가능한 이름. @default "확인 다이얼로그" |
+| `withinPortal` | `boolean` | No | Render at the owner-document Portal boundary. @default true |
+| `portalTarget` | `HTMLElement \| null` | No |  |
+| `zIndex` | `number` | No |  |
 
 ## States
 
@@ -89,7 +94,7 @@
 - Tab/Shift+Tab, 외부 focus containment, Escape는 현재 stack의 최상위 overlay만 소유합니다. ConfirmDialog가 다른 modal surface 위에서 닫히면 그 surface 내부의 호출 지점으로 돌아가며, base surface까지 닫힐 때 페이지 trigger로 복원합니다.
 - 닫힌 뒤 별도 위치로 이동해야 하면 returnFocusRef, 의도적으로 복원하지 않을 때만 restoreFocus={false}를 사용합니다.
 - 열려 있는 동안 배경 페이지 스크롤이 잠깁니다. 공용 useDialogFocus 엔진이 중첩 깊이를 세어 마지막 overlay가 닫힐 때만 해제하며, 스크롤바 제거로 인한 layout shift는 body padding으로 보정합니다.
-- WAI-ARIA APG Modal Dialog Pattern: 내부 초기 초점, Tab/Shift+Tab 순환, Escape dismiss, 호출 지점 복귀, role="dialog"/aria-modal/접근 가능한 이름을 계약으로 채택했습니다.
+- 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다. zIndex는 예외적 override입니다.
 
 ## Related components
 

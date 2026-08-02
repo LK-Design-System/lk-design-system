@@ -16,7 +16,7 @@ function textLabel(node, fallback) {
   return typeof node === "string" || typeof node === "number" ? String(node) : fallback;
 }
 function LockedLabel() {
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
     {
       title: "\uD45C\uC2DC \uC124\uC815 \uACE0\uC815",
@@ -75,7 +75,7 @@ function VisibilityManager({
       detail: item.description,
       accessibleText: `${accessibleText}, ${visibleText}${lockedText}`,
       disabled,
-      trailing: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+      trailing: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
         "span",
         {
           draggable: false,
@@ -91,7 +91,7 @@ function VisibilityManager({
           },
           children: [
             item.locked && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, LockedLabel, {}),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               _chunkKY7U47KCcjs.Checkbox,
               {
                 checked: Boolean(item.visible),
@@ -111,7 +111,7 @@ function VisibilityManager({
     };
   });
   const hasHeader = title != null || description != null || resetAction != null;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       className: ["lk-visibility-manager", className].filter(Boolean).join(" "),
@@ -131,7 +131,7 @@ function VisibilityManager({
       },
       ...rest,
       children: [
-        hasHeader && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        hasHeader && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             style: {
@@ -144,7 +144,7 @@ function VisibilityManager({
             },
             children: [
               (title != null || description != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: "var(--space-1)", flex: "1 1 180px", minWidth: 0 }, children: [
-                title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "span",
                   {
                     id: titleId,
@@ -159,7 +159,7 @@ function VisibilityManager({
                     children: title
                   }
                 ),
-                description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "span",
                   {
                     style: {
@@ -178,7 +178,7 @@ function VisibilityManager({
             ]
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           _chunkBTD2XVJWcjs.ReorderList,
           {
             items: mappedItems,

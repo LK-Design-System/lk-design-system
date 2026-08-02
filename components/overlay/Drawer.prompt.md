@@ -24,6 +24,12 @@ const firstFilterRef = useRef(null);
 - 제품 맥락에 맞는 닫기 명령은 `closeLabel`로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.
 - `bodyStyle`은 기본 body padding과 scroll contract를 유지하되, `DashboardShell temporaryNavigation`처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 `padding: 0` 같은 layout override를 전달합니다.
 
+## 공통 Portal·stack 계약
+
+- 기본 `withinPortal=true`이며 `LdsProvider.portalTarget` 또는 명시적 `portalTarget`에 렌더링됩니다. 가까운 theme scope와 `dir`을 상속하고 clipping ancestor를 벗어납니다.
+- `zIndex`는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다.
+- 테스트·특수 embedding에서만 `withinPortal=false`를 사용하며 이 경우 background inert는 적용하지 않습니다.
+
 ## 상호작용 계약
 
 - `initialFocusRef` → 첫 tabbable 요소 → dialog 표면 순으로 초기 초점을 선택합니다.

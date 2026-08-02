@@ -1,5 +1,7 @@
+import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
 import {
+  Button,
   Icon,
   IconButton,
   Tooltip,
@@ -38,13 +40,16 @@ function Section({ title, children }) {
   );
 }
 
-function AnchorBox({ label = 'target' }) {
+function AnchorBox({ label = 'target', style, ...rest }) {
   return (
-    <span
-      aria-hidden="true"
+    <button
+      {...rest}
+      type="button"
+      aria-label={rest['aria-label'] || `Tooltip anchor ${label}`}
       style={{
         width: 58,
         height: 58,
+        padding: 0,
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -53,10 +58,12 @@ function AnchorBox({ label = 'target' }) {
         background: 'var(--color-semantic-background-elevated-normal)',
         color: 'var(--color-semantic-label-alternative)',
         fontSize: 11,
+        cursor: 'default',
+        ...style,
       }}
     >
       {label}
-    </span>
+    </button>
   );
 }
 
@@ -172,7 +179,9 @@ export const TooltipPatterns = {
     for (const [testId, expectedPlacement] of cases) {
       const wrapper = canvasElement.querySelector(`[data-testid="${testId}"]`);
       if (!wrapper) throw new Error(`Tooltip overflow contract requires the ${testId} target.`);
-      const bubble = wrapper.querySelector('[role="tooltip"]');
+      const trigger = wrapper.querySelector('[aria-describedby]') ?? wrapper;
+      const tooltipId = trigger.getAttribute('aria-describedby')?.split(/\s+/).at(-1);
+      const bubble = tooltipId ? canvasElement.ownerDocument.getElementById(tooltipId) : null;
       if (!bubble) throw new Error(`${testId} must render a tooltip bubble.`);
       if (bubble.dataset.placement !== expectedPlacement) {
         throw new Error(`${testId} resolved to placement "${bubble.dataset.placement}", expected "${expectedPlacement}".`);
@@ -242,13 +251,15 @@ export const TooltipInteractionContract = {
   play: async ({ canvasElement }) => {
     const ownerDocument = canvasElement.ownerDocument;
     const trigger = canvasElement.querySelector('button[aria-label="장치 연결 정보"]');
-    const tooltip = canvasElement.querySelector('[role="tooltip"]');
-    if (!trigger || !tooltip) throw new Error('Tooltip contract story requires its trigger and bubble.');
+    if (!trigger) throw new Error('Tooltip contract story requires its trigger.');
     trigger.focus();
-    await waitFor(() => {
-      if (ownerDocument.defaultView.getComputedStyle(tooltip).visibility !== 'visible') {
+    const tooltip = await waitFor(() => {
+      const current = ownerDocument.getElementById(trigger.getAttribute('aria-describedby')?.split(/\s+/).at(-1));
+      if (!current) throw new Error('Keyboard focus must mount the portalled Tooltip.');
+      if (ownerDocument.defaultView.getComputedStyle(current).visibility !== 'visible') {
         throw new Error('Keyboard focus must show Tooltip.');
       }
+      return current;
     });
     if (!trigger.getAttribute('aria-describedby')?.split(/\s+/).includes(tooltip.id)) {
       throw new Error('Tooltip trigger must reference its tooltip.');
@@ -262,21 +273,22 @@ export const TooltipInteractionContract = {
     });
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      if (ownerDocument.defaultView.getComputedStyle(tooltip).visibility !== 'hidden') {
-        throw new Error('Escape must hide Tooltip without moving focus.');
+      if (ownerDocument.getElementById(tooltip.id)) {
+        throw new Error('Escape must unmount the Tooltip without moving focus.');
       }
       if (ownerDocument.activeElement !== trigger) throw new Error('Tooltip focus must remain on its trigger.');
     });
     trigger.blur();
     await userEvent.hover(trigger);
-    await waitFor(() => {
-      if (ownerDocument.defaultView.getComputedStyle(tooltip).visibility !== 'visible') {
+    const hoveredTooltip = await waitFor(() => {
+      const current = ownerDocument.getElementById(tooltip.id);
+      if (!current || ownerDocument.defaultView.getComputedStyle(current).visibility !== 'visible') {
         throw new Error('Pointer hover must reopen Tooltip.');
       }
+      return current;
     });
-    await userEvent.hover(tooltip);
-    if (ownerDocument.defaultView.getComputedStyle(tooltip).visibility !== 'visible') {
-      throw new Error('Tooltip must remain visible while the pointer moves over it.');
+    if (ownerDocument.defaultView.getComputedStyle(hoveredTooltip).pointerEvents !== 'none') {
+      throw new Error('Tooltip must remain non-interactive so it cannot capture the pointer or focus.');
     }
   },
 };
@@ -319,16 +331,17 @@ export const TooltipTriggerAndDelay = {
     }
 
     const trigger = canvasElement.querySelector('button[aria-label="연결 정보"]');
-    const tooltip = trigger.closest('span').querySelector('[role="tooltip"]');
+    const tooltipId = trigger.getAttribute('aria-describedby')?.split(/\s+/).at(-1);
     const view = canvasElement.ownerDocument.defaultView;
-    if (view.getComputedStyle(tooltip).visibility !== 'hidden') {
-      throw new Error('Tooltip의 초기 상태는 닫혀 있어야 합니다.');
+    if (tooltipId && canvasElement.ownerDocument.getElementById(tooltipId)) {
+      throw new Error('Tooltip의 초기 상태는 DOM에 렌더링되지 않아야 합니다.');
     }
     // 키보드 focus는 지연 없이 즉시 열립니다.
     trigger.focus();
     trigger.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
     await waitFor(() => {
-      if (view.getComputedStyle(tooltip).visibility !== 'visible') {
+      const tooltip = tooltipId ? canvasElement.ownerDocument.getElementById(tooltipId) : null;
+      if (!tooltip || view.getComputedStyle(tooltip).visibility !== 'visible') {
         throw new Error('키보드 focus는 지연 없이 Tooltip을 열어야 합니다.');
       }
     }, { timeout: 200 });
@@ -336,3 +349,53 @@ export const TooltipTriggerAndDelay = {
 };
 
 export const TooltipBubbleBookmarkDividerCard = { ...TooltipBubbleBookmarkDividerCardStory, name: 'Tooltip, Bubble, Bookmark, Divider card parity', tags: ['!dev', 'visual-parity'] };
+
+function TooltipSurfacePortalFixture() {
+  const ref = React.useRef(null);
+  React.useLayoutEffect(() => {
+    ref.current?.setAttribute('data-ref-target', 'tooltip-root');
+  }, []);
+  return (
+    <section data-theme="dark" dir="rtl" style={{ width: 120, height: 56, overflow: 'hidden', padding: 8 }}>
+      <Tooltip
+        ref={ref}
+        open
+        content="Tooltip surface contract"
+        className="contract-tooltip-root"
+        classNames={{ bubble: 'contract-tooltip-bubble' }}
+        styles={{ content: { letterSpacing: '2px' } }}
+        vars={{ '--lds-tooltip-max-width': '180px' }}
+      >
+        <Button>설명 계약</Button>
+      </Tooltip>
+    </section>
+  );
+}
+
+export const SurfaceRefPortalContract = {
+  name: 'Surface, ref, and Portal contract',
+  tags: ['!dev'],
+  render: () => <TooltipSurfacePortalFixture />,
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const root = canvasElement.querySelector('[data-ref-target="tooltip-root"]');
+    const trigger = root?.querySelector('button');
+    const tooltip = await waitFor(() => {
+      const id = trigger?.getAttribute('aria-describedby')?.split(/\s+/).at(-1);
+      const current = id ? ownerDocument.getElementById(id) : null;
+      if (!current) throw new Error('The Tooltip contract bubble must mount.');
+      return current;
+    });
+    const content = tooltip.querySelector('[data-slot="content"]');
+    const portal = tooltip.closest('[data-lds-overlay-portal]');
+    if (!(root instanceof HTMLSpanElement) || root.dataset.slot !== 'root' || !root.classList.contains('contract-tooltip-root')) {
+      throw new Error('Tooltip ref and root class must target the public trigger wrapper.');
+    }
+    if (!tooltip.classList.contains('contract-tooltip-bubble') || getComputedStyle(tooltip).maxWidth !== '180px' || getComputedStyle(content).letterSpacing !== '2px') {
+      throw new Error('Tooltip named parts and variables must reach the portalled bubble.');
+    }
+    if (!portal || portal.parentElement !== ownerDocument.body || portal.dataset.theme !== 'dark' || portal.dir !== 'rtl' || root.contains(tooltip)) {
+      throw new Error('Tooltip Portal must escape clipping while inheriting the nearest theme and direction scope.');
+    }
+  },
+};

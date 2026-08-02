@@ -38,12 +38,15 @@
 | `arrow` | `boolean` | No |  |
 | `full` | `boolean` | No | Fill the available container width. @default false |
 | `disabled` | `boolean` | No | Disable activation and mark the control unavailable. @default false |
-| `disable` | `boolean` | No | Disable alias. @default false |
+| `disable` | `boolean` | No |  |
 | `iconOnly` | `boolean` | No | Render the icon-only square button treatment. Requires aria-label (or aria-labelledby); a development-only console warning fires when neither is supplied. |
 | `loading` | `boolean \| 'inline'` | No | Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation. true swaps the label for a centered spinner on the muted palette. "inline" keeps the label visible with a leading spinner and preserves the variant palette — for controls whose words must survive the wait (e.g. a safety stop reading "정지 요청 중"). Blocking semantics are identical in both modes. |
 | `loadingLabel` | `string` | No | Screen-reader label announced with the loading spinner (loading = true). @default "불러오는 중" |
 | `as` | `React.ElementType` | No | Render with another element or component, such as "a" for link CTAs. @default "button" |
 | `children` | `React.ReactNode` | No |  |
+| `classNames` | `LdsClassNames` | No | Stable classes for the public Button anatomy. |
+| `styles` | `LdsStyles` | No | Stable inline styles for the public Button anatomy. |
+| `vars` | `LdsVars` | No | Component-scoped geometry overrides. |
 | `aria-label` | `string` | No | 에디터 영역 accessible label. @default "글 작성 에디터" |
 | `titleLabel` | `React.ReactNode` | No | 제목 필드 라벨. @default "제목" |
 | `titlePlaceholder` | `string` | No | 제목 placeholder. |
@@ -53,9 +56,6 @@
 | `bodyLabel` | `React.ReactNode` | No | 본문 필드 라벨. @default "본문" |
 | `placeholder` | `string` | No | 본문 placeholder. |
 | `value` | `string` | No | 제어 본문 값. |
-| `defaultValue` | `string` | No | 비제어 본문 기본값. |
-| `onValueChange` | `(value: string, event: React.ChangeEvent) = void` | No | 본문 변경 콜백. |
-| `toolbar` | `React.ReactNode` | No | 툴바 전체를 대체하는 슬롯. |
 
 ## States
 
@@ -224,6 +224,10 @@
 - `--fw-semibold`
 - `--heading1-size`
 - `--label2-size`
+- `--lds-button-gap`
+- `--lds-button-height`
+- `--lds-button-padding`
+- `--lds-button-radius`
 - `--radius-md`
 - `--radius-pill`
 - `--radius-sm`

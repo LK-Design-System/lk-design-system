@@ -13,6 +13,12 @@ export interface UseDialogFocusOptions {
   restoreFocus?: boolean;
   /** 열려 있는 동안 body 스크롤 잠금 여부(중첩 카운트 공유). @default true */
   lockScroll?: boolean;
+  /** portalled host 밖의 sibling을 inert 처리할지 여부. @default true */
+  inert?: boolean;
+  /** 공통 Portal wrapper ref. inert boundary를 결정한다. */
+  portalRef?: React.RefObject<HTMLDivElement | null>;
+  /** 공통 overlay stack 대신 사용할 explicit z-index. */
+  zIndex?: number;
 }
 
 export interface UseDialogFocusResult {

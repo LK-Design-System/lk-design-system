@@ -114,3 +114,45 @@ export const TextareaDescriptionContract = {
     }
   },
 };
+
+function TextareaSurfaceRefFixture() {
+  const textareaRef = React.useRef(null);
+  const rootRef = React.useRef(null);
+  React.useLayoutEffect(() => {
+    textareaRef.current?.setAttribute('data-ref-target', 'native-textarea');
+    rootRef.current?.setAttribute('data-root-ref-target', 'textarea-root');
+  }, []);
+  return (
+    <Textarea
+      ref={textareaRef}
+      rootRef={rootRef}
+      label="표면 계약"
+      defaultValue="여러 줄 값"
+      className="contract-textarea-root"
+      textareaClassName="contract-native-textarea"
+      classNames={{ control: 'contract-textarea-control' }}
+      styles={{ textarea: { letterSpacing: '2px' } }}
+      vars={{ '--lds-textarea-min-height': '132px' }}
+    />
+  );
+}
+
+export const SurfaceRefContract = {
+  name: 'Surface and ref contract',
+  tags: ['!dev'],
+  render: () => <TextareaSurfaceRefFixture />,
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-root-ref-target="textarea-root"]');
+    const textarea = canvasElement.querySelector('[data-ref-target="native-textarea"]');
+    const control = root?.querySelector('[data-slot="control"]');
+    if (!(textarea instanceof HTMLTextAreaElement) || root?.dataset.slot !== 'root') {
+      throw new Error('Textarea ref must target the native textarea and rootRef must target the field root.');
+    }
+    if (!root.classList.contains('contract-textarea-root') || !textarea.classList.contains('contract-native-textarea') || !control?.classList.contains('contract-textarea-control')) {
+      throw new Error('Textarea root, native control, and named-part classes must remain separate.');
+    }
+    if (getComputedStyle(textarea).minHeight !== '132px' || getComputedStyle(textarea).letterSpacing !== '2px') {
+      throw new Error('Textarea vars and named-part styles must reach the native control.');
+    }
+  },
+};

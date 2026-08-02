@@ -143,3 +143,42 @@ export const TabPatterns = {
 };
 
 export const TabsCard = { ...TabsCardStory, name: 'Tabs card parity', tags: ['!dev', 'visual-parity'] };
+
+function TabsSurfaceRefFixture() {
+  const ref = React.useRef(null);
+  React.useLayoutEffect(() => {
+    ref.current?.setAttribute('data-ref-target', 'tabs-root');
+  }, []);
+  return (
+    <Tabs
+      ref={ref}
+      items={[{ value: 'all', label: '전체' }, { value: 'open', label: '진행 중' }]}
+      defaultValue="all"
+      className="contract-tabs-root"
+      classNames={{ tab: 'contract-tab' }}
+      styles={{ label: { letterSpacing: '2px' } }}
+      vars={{ '--lds-tabs-height': '44px', '--lds-tabs-indicator-height': '3px' }}
+    />
+  );
+}
+
+export const SurfaceRefContract = {
+  name: 'Surface and ref contract',
+  tags: ['!dev'],
+  render: () => <TabsSurfaceRefFixture />,
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-ref-target="tabs-root"]');
+    const tabs = [...(root?.querySelectorAll('[data-slot="tab"]') ?? [])];
+    const label = tabs[0]?.querySelector('[data-slot="label"]');
+    const indicator = tabs[0]?.querySelector('[data-slot="indicator"]');
+    if (!(root instanceof HTMLDivElement) || root.getAttribute('role') !== 'tablist' || root.dataset.slot !== 'root') {
+      throw new Error('Tabs ref must target the tablist root.');
+    }
+    if (!root.classList.contains('contract-tabs-root') || !tabs.every((tab) => tab.classList.contains('contract-tab'))) {
+      throw new Error('Tabs root and named tab classes must compose independently.');
+    }
+    if (tabs[0]?.dataset.state !== 'active' || getComputedStyle(tabs[0]).height !== '44px' || getComputedStyle(indicator).height !== '3px' || getComputedStyle(label).letterSpacing !== '2px') {
+      throw new Error('Tabs state, vars, and named-part styles must reach their documented targets.');
+    }
+  },
+};

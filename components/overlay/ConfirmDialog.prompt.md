@@ -29,6 +29,12 @@
 - 열려 있는 동안 배경 페이지 스크롤이 잠깁니다. 공용 `useDialogFocus` 엔진이 중첩 깊이를 세어 마지막
   overlay가 닫힐 때만 해제하며, 스크롤바 제거로 인한 layout shift는 body padding으로 보정합니다.
 
+## 공통 Portal·stack 계약
+
+- 기본 `withinPortal=true`이며 `LdsProvider.portalTarget` 또는 명시적 `portalTarget`에 렌더링됩니다. 가까운 theme scope와 `dir`을 상속하고 clipping ancestor를 벗어납니다.
+- 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다. `zIndex`는 예외적 override입니다.
+- 테스트·특수 embedding에서만 `withinPortal=false`를 사용하며 이 경우 background inert는 적용하지 않습니다.
+
 ## 근거와 범위
 
 - 가장 가까운 sibling은 `Modal`, `Drawer`, `Sheet`, `Alert`입니다. 중앙 배치, 최대 너비, 제목·설명, `ActionArea` 구조와 시각 token은 그대로 두고 focus/Escape 계층만 동일한 modal 계약으로 정렬했습니다.

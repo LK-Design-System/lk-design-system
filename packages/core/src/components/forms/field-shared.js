@@ -32,13 +32,15 @@ export function useFieldMetadata({ prefix, id, label, helper, error, describedBy
   };
 }
 
-export function FieldLabel({ htmlFor, id, label, required = false, disabled = false }) {
+export function FieldLabel({ htmlFor, id, label, required = false, disabled = false, className, style, ...rest }) {
   if (label == null) return null;
   return React.createElement(
     'label',
     {
+      ...rest,
       id,
       htmlFor,
+      className,
       style: {
         // The enabled colour goes through the component-token seam, as the rest
         // of this label's type already does. Disabled stays semantic: the token
@@ -50,6 +52,7 @@ export function FieldLabel({ htmlFor, id, label, required = false, disabled = fa
         lineHeight: 'var(--component-input-label-line-height)',
         letterSpacing: 'var(--component-input-label-letter-spacing)',
         fontWeight: 'var(--component-input-label-font-weight)',
+        ...style,
       },
     },
     label,
@@ -57,13 +60,15 @@ export function FieldLabel({ htmlFor, id, label, required = false, disabled = fa
   );
 }
 
-export function FieldMessage({ id, message, error, status = 'normal' }) {
+export function FieldMessage({ id, message, error, status = 'normal', className, style, ...rest }) {
   if (message == null) return null;
   return React.createElement(
     'span',
     {
+      ...rest,
       id,
       role: error != null ? 'alert' : undefined,
+      className,
       style: {
         color: error != null || status === 'negative'
           ? 'var(--color-semantic-status-negative-text)'
@@ -72,24 +77,46 @@ export function FieldMessage({ id, message, error, status = 'normal' }) {
             : 'var(--color-semantic-label-neutral)',
         fontSize: 'var(--caption1-size)',
         lineHeight: 'var(--caption1-line)',
+        ...style,
       },
     },
     message,
   );
 }
 
-export function FieldStack({ fieldId, labelId, label, required, messageId, message, error, status, fieldStyle, children }) {
+export const FieldStack = React.forwardRef(function FieldStack({
+  fieldId,
+  labelId,
+  label,
+  required,
+  messageId,
+  message,
+  error,
+  status,
+  fieldStyle,
+  labelProps,
+  messageProps,
+  className,
+  style,
+  children,
+  ...rest
+}, forwardedRef) {
   return React.createElement(
     'div',
     // `position: relative` anchors the absolutely positioned screen-reader live
     // regions that fields render (Caps Lock warnings, copy results) to the field
     // instead of the page, without adding a grid row.
-    { style: { position: 'relative', display: 'grid', minWidth: 0, gap: 'var(--component-input-stack-gap)', ...fieldStyle } },
-    React.createElement(FieldLabel, { htmlFor: fieldId, id: labelId, label, required }),
+    {
+      ...rest,
+      ref: forwardedRef,
+      className,
+      style: { position: 'relative', display: 'grid', minWidth: 0, gap: 'var(--component-input-stack-gap)', ...fieldStyle, ...style },
+    },
+    React.createElement(FieldLabel, { ...labelProps, htmlFor: fieldId, id: labelId, label, required }),
     children,
-    React.createElement(FieldMessage, { id: messageId, message, error, status }),
+    React.createElement(FieldMessage, { ...messageProps, id: messageId, message, error, status }),
   );
-}
+});
 
 export function FieldStatusIcon({ invalid = false, status = 'normal', size = 16 }) {
   if (!invalid && status !== 'positive') return null;

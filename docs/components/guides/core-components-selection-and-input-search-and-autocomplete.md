@@ -10,12 +10,22 @@
 
 자유 검색어를 전송할 때는 SearchField, 입력 중 단일 후보를 제안할 때는 AutoComplete, 정해진 후보 여러 개를 고를 때는 Combobox를 사용하세요. 간단한 고정 목록은 Select가 더 적합합니다.
 
+## 사용 판단
+
+### 사용
+
+- ref points to the native search input; use rootRef for the complete field stack.
+
 ## Anatomy
 
 | Part | Contract |
 | --- | --- |
 | resultCountLabel | 일치 항목 수의 polite 안내 문구. |
 | clearLabel | Accessible clear-action name. Defaults to a contextual 지우기. |
+| controlClassName | Input control-shell class. |
+| controlStyle | Input control-shell style. |
+| inputClassName | Native input class. |
+| inputStyle | Native input style. |
 | removeLabel | 각 태그 삭제 버튼의 접근 가능한 이름을 만듭니다. |
 
 ## Properties
@@ -59,6 +69,8 @@
 
 ## Content and writing
 
+- className and style customize the root. controlClassName/controlStyle target the bordered shell and inputClassName/inputStyle target the native input.
+- Stable parts are root, label, control, startIcon, input, statusIcon, clearButton, and message. Only documented --lds-search-field- geometry variables are accepted.
 - 네이티브 지우기 어포던스 제거 — type="search"는 WebKit에서 자체 ✕ 글리프를 그려 커스텀 지우기 버튼과 두 개가 됩니다. 눈에 보이지만 이름이 없는 쪽이 하나 더 생기므로 ::-webkit-search-cancel-button 계열을 리셋합니다.
 - 필드·상태 prop: status(normal/positive/negative) · invalid(오류 강조 토글) · helper(보조 설명) · error(오류 메시지) · fieldStyle(전체 필드 컨테이너 스타일) · clearLabel(지우기 버튼의 스크린리더 레이블).
 
@@ -121,6 +133,10 @@
 - `--fw-semibold`
 - `--label1-size`
 - `--label2-size`
+- `--lds-search-field-gap`
+- `--lds-search-field-height`
+- `--lds-search-field-padding-inline`
+- `--lds-search-field-radius`
 - `--radius-5`
 - `--radius-input`
 - `--radius-lg`

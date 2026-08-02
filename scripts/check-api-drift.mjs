@@ -12,7 +12,7 @@ const updateBaseline = process.argv.includes('--update-baseline');
 // inherited. Custom handlers with bespoke signatures (onChange, onSelect, …)
 // are deliberately NOT listed so genuine contract drift is still caught.
 const inheritedProps = new Set([
-  'children', 'className', 'style', 'id', 'role', 'tabIndex',
+  'children', 'className', 'style', 'id', 'role', 'tabIndex', 'ref',
   // Standard DOM event handlers (React.DOMAttributes).
   'onClick', 'onKeyDown', 'onKeyUp', 'onKeyPress',
   'onFocus', 'onBlur', 'onFocusCapture', 'onBlurCapture',

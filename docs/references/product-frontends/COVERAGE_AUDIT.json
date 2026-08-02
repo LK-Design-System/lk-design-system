@@ -23,7 +23,7 @@
   },
   "componentDispositionSummary": {
     "keep": 17,
-    "redesign": 6,
+    "redesign": 7,
     "split": 8,
     "remove": 22,
     "separate-audit": 6
@@ -386,6 +386,65 @@
             {
               "path": "src/app/confluence/page.tsx",
               "blobSha": "5d40f347f4b391510ac8ce4a60d65c18a27214cc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Select",
+      "path": "components/forms/Select.jsx",
+      "decision": "redesign",
+      "workflowIds": [],
+      "reason": "Retains the bounded single-select combobox/listbox contract while aligning its floating panel and option rows with the shared menu surface. Small maps to default density, medium and large map to comfortable density, persistent selection remains separate from keyboard navigation, and products retain option vocabulary, query or mutation effects, persistence, session policy, and surrounding layout.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "classification": "supported by composition",
+          "reason": "The pinned connection settings expose a full-width controlled native Select for robot type. LDS Select covers the reusable label, options, value, size-aware trigger, popup, and selection interaction while Web Viz retains robot-type vocabulary, configuration hydration and saving, connection actions, and transport state.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/ConnectionSettingsScreen.tsx",
+              "blobSha": "b04f91a96fc49b399dddfd89b5c23b785f8349b0"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "supported by composition",
+          "reason": "The pinned user source contains small 120px role and status filters plus medium full-width required role and status fields. The Select density mapping supports both uses while Control retains filter draft and apply behavior, query and pagination, validation, user mutation, and error handling.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/user/index.jsx",
+              "blobSha": "8912b51c6eb612bd2beb2ed0206ee78ae6f03f2d"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "classification": "supported by composition",
+          "reason": "The pinned chat panel exposes a constrained controlled project selector with dynamic options and a loading-disabled state. LDS Select supports the input contract while Context Hub retains project options, scope resolution, session policy, provider and retrieval transport, persistence, and narrow chat-header reflow.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/chat/PortalChatPanel.tsx",
+              "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "372a826b3d7f9f11cc29b0fd7b575ca0480228e0",
+          "classification": "supported by composition",
+          "reason": "Supplemental LK Portal consumer evidence directly uses LDS Select for chat-context-scope. Its two-column wrapper grid and native select CSS assume a different DOM shape, so the answer-scope placement defect is a Portal wrapper seam and must not be repaired through global LDS Select anatomy or popup styling.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/chat/FloatingChat.tsx",
+              "blobSha": "6e2840f52850af8c25f49b6635b2bdcce780c737"
+            },
+            {
+              "path": "src/app/globals.css",
+              "blobSha": "3d00cf6be709733ea4c42f8d009f70663dce9621"
             }
           ]
         }

@@ -10,6 +10,12 @@
 
 사용자에게 명시적인 appearance 선택권을 제공하는 설정 표면에 적합합니다. 단순 장식 전환이나 일시적인 상태 표시에는 사용하지 않으며, 테마 변경 뒤에도 레이블·포커스·선택 상태가 분명해야 합니다.
 
+## 사용 판단
+
+### 사용
+
+- 애플리케이션에서 theme·direction·Portal 정책을 함께 구동할 때는 LdsProvider를 runtime의 단일 소유자로 두고 useLdsRuntime()의 colorScheme/setColorScheme를 이 control에 연결합니다. 이 경우 ThemeToggle target={null} persist={false}로 중복 DOM mutation과 storage write를 막습니다. CSS-only 소비자는 기존처럼 Provider 없이 사용할 수 있습니다.
+
 ## Anatomy
 
 | Part | Contract |
@@ -42,6 +48,18 @@
 | --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 | --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
 | --color-semantic-line-normal-normal | light: rgba(112, 115, 124, 0.22); dark: rgba(112, 115, 124, 0.32) |
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
+| `LdsProvider` | 대표 시나리오에서 조합 |
+| `Popover` | 대표 시나리오에서 조합 |
+| `LdsColorSchemeScript` | 대표 시나리오에서 조합 |
+| `LdsRuntimeContext` | 대표 시나리오에서 조합 |
+| `createLocalStorageManager` | 대표 시나리오에서 조합 |
+| `useLdsRuntime` | 대표 시나리오에서 조합 |
 
 ## Examples
 

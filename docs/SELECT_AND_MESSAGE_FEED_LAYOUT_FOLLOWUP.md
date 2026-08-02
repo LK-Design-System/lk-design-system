@@ -5,9 +5,10 @@
 | Type | Implementation follow-up |
 | Status | Follow-up |
 | Owner | LDS Core owner (`Select`) · LDS Product owner (`MessageFeed`) |
-| Last reviewed | 2026-08-02 |
+| Last reviewed | 2026-08-03 |
 | Consumer evidence | LK Portal floating knowledge chat, `@lk-design-system/*@0.1.0-rc.13` |
-| Completion source | Changed component source, focused Storybook contracts, generated workspace packages, immutable release artifact |
+| Completion source | Changed component source, focused Storybook contracts, generated workspace packages, verified local package candidate |
+| Implementation state | LDS source·story·generated rc.21 candidate 완료 · LK Portal pin·workaround 제거·workflow 검증 대기 |
 
 이 문서는 LK Portal의 플로팅 지식 대화에서 확인한 두 LDS 레이아웃 finding을
 나중에 동일한 근거와 범위로 수정하기 위한 실행 기록이다. 화면별 CSS 보정 목록이
@@ -17,7 +18,7 @@
 - `MessageFeed`: 내부 log viewport의 inline inset이 고정돼 panel composition이 정렬을
   공개 API로 선택할 수 없다.
 
-LK Portal의 배치·밀도 조정은 LDS 수정과 새 immutable package 채택 뒤의 별도 consumer
+LK Portal의 배치·밀도 조정은 LDS 수정과 새 versioned package 채택 뒤의 별도 consumer
 작업이다. 이 문서는 LK Portal 저장소에 내부 selector override를 추가하는 근거가 아니다.
 
 ## 관찰 조건과 재현값
@@ -268,14 +269,14 @@ Windows canonical artifact를 사용하고 필요하면 동일 package set을 Li
 
 ## 완료 체크리스트
 
-- [ ] Work item A: Select root/trigger 높이와 좌표 회귀 계약 추가
-- [ ] Work item A: constrained long-option overflow 계약 추가
-- [ ] Work item A: 구현 수정과 기존 keyboard/overlay 검증 통과
-- [ ] Work item B: workflow·sibling·product coverage·external review 기록
-- [ ] Work item B: `viewportInset` source/type/prompt/story/API matrix 반영
-- [ ] Canonical source에서 workspace packages 재생성
-- [ ] 정상·460px·320px 시각 검수
-- [ ] 전체 gate와 package/consumer 검증 통과
-- [ ] 새 immutable LDS package set 생성
+- [x] Work item A: Select root/trigger 높이와 좌표 회귀 계약 추가
+- [x] Work item A: constrained long-option overflow 계약 추가
+- [x] Work item A: 구현 수정과 기존 keyboard/overlay 검증 통과
+- [x] Work item B: workflow·sibling·product coverage·external review 기록
+- [x] Work item B: `viewportInset` source/type/prompt/story/API matrix 반영
+- [x] Canonical source에서 workspace packages 재생성
+- [x] 정상·460px·320px 시각 검수
+- [x] 전체 repository gate와 package/consumer 검증 통과
+- [x] 새 미발행 rc.21 local LDS package candidate set 생성 및 검증
 - [ ] LK Portal이 새 package set을 pin하고 내부 workaround를 제거
 - [ ] 이 문서의 Status를 `Completed`로 바꾸고 완료 revision/release를 기록

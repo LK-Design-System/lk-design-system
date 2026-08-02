@@ -151,7 +151,7 @@ function LineChart({
     dashed: item.dashed,
     disabled: item.points.length === 0
   }));
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       style: {
@@ -167,7 +167,7 @@ function LineChart({
       children: [
         description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: descriptionId, children: description }),
         resolvedSummary != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: summaryId, "data-chart-summary": true, children: resolvedSummary }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "svg",
           {
             viewBox: `0 0 ${chartWidth} ${chartHeight}`,
@@ -184,7 +184,7 @@ function LineChart({
             },
             children: [
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "defs", { children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "clipPath", { id: clipId, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "rect", { x: pad.left, y: pad.top, width: innerWidth, height: innerHeight }) }) }),
-              showGrid && yTickValues.map((tick) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              showGrid && yTickValues.map((tick) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "line",
                 {
                   x1: pad.left,
@@ -196,7 +196,7 @@ function LineChart({
                 },
                 `grid-${tick}`
               )),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "line",
                 {
                   x1: pad.left,
@@ -207,7 +207,7 @@ function LineChart({
                   strokeWidth: "1"
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "line",
                 {
                   x1: pad.left,
@@ -218,7 +218,7 @@ function LineChart({
                   strokeWidth: "1"
                 }
               ),
-              yTickValues.map((tick) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              yTickValues.map((tick) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "text",
                 {
                   x: pad.left - 8,
@@ -231,7 +231,7 @@ function LineChart({
                 },
                 `y-${tick}`
               )),
-              xTickValues.map((tick, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              xTickValues.map((tick, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "text",
                 {
                   x: sx(tick),
@@ -244,7 +244,7 @@ function LineChart({
                 },
                 `x-${tick}`
               )),
-              yLabel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              yLabel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "text",
                 {
                   x: 14,
@@ -261,7 +261,7 @@ function LineChart({
                 const y = sy(Number(line.y));
                 const color = line.color || "var(--color-semantic-data-viz-series-5)";
                 return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { children: [
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "line",
                     {
                       x1: pad.left,
@@ -273,7 +273,7 @@ function LineChart({
                       strokeDasharray: line.dashed === false ? void 0 : "4 4"
                     }
                   ),
-                  line.label != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  line.label != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "text",
                     {
                       x: pad.left + innerWidth - 4,
@@ -291,7 +291,7 @@ function LineChart({
                 const color = item.color || PALETTE[index % PALETTE.length];
                 const path = linePath(item.points, sx, sy);
                 return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { children: [
-                  item.points.length > 1 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  item.points.length > 1 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "path",
                     {
                       d: path,
@@ -303,7 +303,7 @@ function LineChart({
                       strokeDasharray: item.dashed ? "5 4" : void 0
                     }
                   ),
-                  (showPoints || item.points.length === 1) && item.points.map((point, pointIndex) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  (showPoints || item.points.length === 1) && item.points.map((point, pointIndex) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "circle",
                     {
                       cx: sx(point.x),
@@ -317,7 +317,7 @@ function LineChart({
                   ))
                 ] }, item.id);
               }) }),
-              !hasData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              !hasData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "text",
                 {
                   "data-chart-empty": true,
@@ -334,7 +334,7 @@ function LineChart({
             ]
           }
         ),
-        showLegend && normalized.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        showLegend && normalized.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           _chunkKXHNWUJLcjs.Legend,
           {
             items: legendItems,
@@ -343,7 +343,7 @@ function LineChart({
             style: { paddingLeft: pad.left, maxWidth: "100%" }
           }
         ),
-        xLabel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        xLabel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             style: {

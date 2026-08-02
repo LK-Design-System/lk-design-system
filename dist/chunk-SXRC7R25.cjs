@@ -89,7 +89,7 @@ function ListCell({
     }
     if (onKeyDown) onKeyDown(event);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       role: resolvedRole,
@@ -140,7 +140,7 @@ function ListCell({
       },
       ...rest,
       children: [
-        resolvedLeading != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        resolvedLeading != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             style: {
@@ -158,7 +158,7 @@ function ListCell({
             children: resolvedLeading
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             style: {
@@ -167,7 +167,7 @@ function ListCell({
               ...contentStyle
             },
             children: [
-              title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "div",
                 {
                   style: {
@@ -186,7 +186,7 @@ function ListCell({
                   children: title
                 }
               ),
-              description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "div",
                 {
                   style: {
@@ -207,7 +207,7 @@ function ListCell({
             ]
           }
         ),
-        (resolvedTrailing != null || chevron || selected) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        (resolvedTrailing != null || chevron || selected) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             style: {
@@ -225,7 +225,7 @@ function ListCell({
             ]
           }
         ),
-        divider && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        divider && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "aria-hidden": "true",

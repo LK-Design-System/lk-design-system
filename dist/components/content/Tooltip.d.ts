@@ -1,10 +1,14 @@
 import * as React from "react";
+import type { LdsClassNames, LdsStyles, LdsVars } from '../internal/surface.js';
+
+export type TooltipPart = 'root' | 'bubble' | 'surface' | 'content' | 'shortcut';
+export type TooltipVariable = '--lds-tooltip-padding' | '--lds-tooltip-max-width';
 
 export interface TooltipProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'content'> {
   content: React.ReactNode;
   /** position axis. @default "top" */
   position?: "top" | "bottom" | "left" | "right";
-  /** Backward-compatible alias for `position`. */
+  /** @deprecated Use `position`. */
   placement?: "top" | "bottom" | "left" | "right";
   /** size axis. @default "medium" */
   size?: "small" | "sm" | "medium" | "md";
@@ -29,7 +33,14 @@ export interface TooltipProps extends Omit<React.HTMLAttributes<HTMLSpanElement>
   /** 열림 상태 변경 알림. */
   onOpenChange?: (open: boolean) => void;
   children: React.ReactNode;
+  /** Escape clipping ancestors through the owner-document Portal. @default true */
+  withinPortal?: boolean;
+  portalTarget?: HTMLElement | null;
+  zIndex?: number;
+  classNames?: LdsClassNames<TooltipPart>;
+  styles?: LdsStyles<TooltipPart>;
+  vars?: LdsVars<TooltipVariable>;
 }
 
 /** tooltip with position, size, arrow alignment, and shortcut support. */
-export function Tooltip(props: TooltipProps): React.JSX.Element;
+export const Tooltip: React.ForwardRefExoticComponent<TooltipProps & React.RefAttributes<HTMLSpanElement>>;

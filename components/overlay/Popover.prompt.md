@@ -16,6 +16,12 @@
 - 패널은 선호 정렬을 유지하되 viewport 경계에서 반대쪽으로 flip하고 좌우를 clamp하며,
   가용 높이를 넘는 본문만 세로 스크롤합니다.
 
+## Public surface, ref, and Portal
+
+- `ref`, `className`, and `style` target the anchor root. Stable parts are `root`, `trigger`, and `panel`; panel geometry is limited to `--lds-popover-width` and `--lds-popover-max-height`.
+- The panel defaults to the common owner-document Portal (`withinPortal=true`), inherits the nearest explicit theme and `dir`, and uses the shared flip/clamp/topmost-dismiss stack. Use `portalTarget` or Provider configuration before opting out with `withinPortal=false`.
+- `position`, `align`, and `offset` are canonical placement inputs. Products own the arbitrary panel content, while LDS owns trigger ARIA, Portal positioning, outside press, Escape, and focus restoration.
+
 ## 시각 차이와 근거
 
 - Popover와 HoverCard는 `anchoredPanelStyle`의 elevated surface, 1px line, WDS Popover r12,

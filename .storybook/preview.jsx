@@ -12,6 +12,7 @@ import {
 import componentGuideIndex from '../docs/components/component-guide-index.json';
 import foundationContent from '../docs/foundations/foundation-content.json';
 import { ComponentGuideForStory } from '../stories/ComponentGuide.shared.jsx';
+import { DesignSystemDirectory } from '../stories/DesignSystemDirectory.shared.jsx';
 import { FoundationGuide } from '../stories/FoundationGuide.shared.jsx';
 import { patternGuides } from '../stories/PatternGuide.data.mjs';
 import { PatternGuide } from '../stories/PatternGuide.shared.jsx';
@@ -96,20 +97,33 @@ function GuideDocsPage() {
   // Storybook-authored title and description.
   let title;
   let relatedPatterns = [];
+  let directPatternGuide = null;
+  let docsGuide = null;
   try {
-    const componentStories = docsContext?.componentStories?.() ?? [];
-    const primaryStory = componentStories[0];
-    title = docsContext?.attachedCSFFile?.meta?.title
-      ?? primaryStory?.title;
+    // `attachedCSFFile` is an internal field and is no longer part of the
+    // Storybook 10 DocsContext contract. Resolve the attached meta through the
+    // public API, then fall back to the primary prepared story.
+    const resolvedMeta = docsContext?.resolveOf?.('meta', ['meta']);
+    const preparedMeta = resolvedMeta?.preparedMeta;
+    const primaryStory = docsContext?.storyById?.()
+      ?? docsContext?.componentStories?.()?.[0];
+    const metaParameters = preparedMeta?.parameters;
+    title = preparedMeta?.title ?? primaryStory?.title;
     relatedPatterns = primaryStory?.parameters?.relatedPatterns
-      ?? docsContext?.attachedCSFFile?.meta?.parameters?.relatedPatterns
+      ?? metaParameters?.relatedPatterns
       ?? [];
+    directPatternGuide = primaryStory?.parameters?.patternGuide
+      ?? metaParameters?.patternGuide
+      ?? null;
+    docsGuide = primaryStory?.parameters?.docsGuide
+      ?? metaParameters?.docsGuide
+      ?? null;
   } catch {
     title = undefined;
   }
   const componentSlug = title ? componentGuideByTitle.get(title) : null;
   const foundationSlug = title ? foundationGuideByTitle.get(title) : null;
-  const patternGuide = title ? patternGuideByTitle.get(title) : null;
+  const patternGuide = directPatternGuide ?? (title ? patternGuideByTitle.get(title) : null);
 
   return (
     <>
@@ -137,6 +151,11 @@ function GuideDocsPage() {
       {patternGuide ? (
         <LdsStorybookGuideLayout data-pattern-guide-layout>
           <PatternGuide pattern={patternGuide} sectionLevel={2} />
+        </LdsStorybookGuideLayout>
+      ) : null}
+      {docsGuide === 'directory' ? (
+        <LdsStorybookGuideLayout data-pattern-guide-layout>
+          <DesignSystemDirectory guide />
         </LdsStorybookGuideLayout>
       ) : null}
     </>

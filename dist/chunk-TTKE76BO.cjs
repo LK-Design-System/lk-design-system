@@ -51,7 +51,7 @@ function AvatarGroup({
     if (trailingContent === false || trailingContent == null) return null;
     if (_react2.default.isValidElement(trailingContent)) return trailingContent;
     const label = trailingContent === true ? _nullishCoalesce(trailingLabel, () => ( `\uC678 ${extra}\uBA85`)) : trailingContent;
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
       "span",
       {
         style: {
@@ -71,7 +71,7 @@ function AvatarGroup({
       }
     );
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       role: resolvedRole,
@@ -84,7 +84,7 @@ function AvatarGroup({
       ...rest,
       children: [
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "inline-flex", alignItems: "center" }, children: [
-          shown.map((it, i) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          shown.map((it, i) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             _chunkQV6BZEQ3cjs.Avatar,
             {
               src: it.src,
@@ -107,7 +107,7 @@ function AvatarGroup({
             },
             i
           )),
-          extra > 0 && !trailingContent && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          extra > 0 && !trailingContent && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
             "span",
             {
               style: {

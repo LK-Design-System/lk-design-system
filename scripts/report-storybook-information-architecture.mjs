@@ -107,6 +107,7 @@ const DOCUMENT_TYPE_CONTRACTS = {
 const PATTERN_TITLE_PREFIX = 'LDS Core/Patterns/';
 
 const PAGE_OWNER_OVERRIDES = {
+  'LDS/Directory': ['LDS Directory'],
   'LDS Core/Patterns/Loading': ['Patterns:Loading'],
   'LDS Core/Components/Layout/Mobile System Bars': ['MobileSystemBars'],
   'LDS Core/Components/Layout/Page Structure': ['Container', 'Section', 'Split'],

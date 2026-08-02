@@ -31,8 +31,11 @@
 | `full` | `boolean` | No |  |
 | `resize` | `'fill' \| 'hug'` | No |  |
 | `disabled` | `boolean` | No |  |
-| `disable` | `boolean` | No | Disabled alias retained for compatibility; prefer disabled. |
+| `disable` | `boolean` | No |  |
 | `aria-label` | `string` | No | Accessible name for the mutually exclusive option group. |
+| `classNames` | `LdsClassNames` | No |  |
+| `styles` | `LdsStyles` | No |  |
+| `vars` | `LdsVars` | No |  |
 
 ## States
 
@@ -43,6 +46,7 @@
 ## Behavior and interaction
 
 - SegmentedControl — 단일 선택 뷰 토글. 옵션이 쿨 그레이 트랙에 놓이고, 활성 옵션은 부드러운 그림자와 함께 화이트 필로 올라갑니다.
+- Semantics and keyboard contract.
 
 ## 정량 규칙
 
@@ -60,15 +64,17 @@
 
 ## Content and writing
 
+- ref, className, and style target the radiogroup root.
+- Stable parts are root, segment, icon, label, and count; each segment exposes data-state="checked|unchecked" and data-disabled.
 - options — 문자열 또는 { value, label, icon, count, disabled }. count는 단일 선택 필터를 고르기 전에 값별 결과 건수를 비교해야 할 때 사용하며 라디오의 접근 가능한 이름과 함께 읽힙니다. value / defaultValue / onChange — 제어/비제어.
 
 ## Accessibility
 
+- Geometry overrides are limited to the documented --lds-segmented-control- variables. Selection state and keyboard semantics stay owned by the component.
 - SegmentedControl is a named radiogroup, not a tablist: each segment is a radio with one roving tab stop. Arrow keys wrap across enabled segments; Home and End choose the first and last enabled segment.
 - 옵션별 표준 비활성 API는 disabled입니다. disable과 interaction="inactive"는 기존 증거 matrix를 위한 호환 별칭이며, 모두 native disabled + aria-disabled로 수렴하고 로빙 탐색에서 제외됩니다. 그룹의 disabled도 모든 segment에 같은 계약을 적용합니다.
 - Use it for a small set of mutually exclusive views or modes. Use Tabs only when each label owns a distinct tab panel.
 - Reference basis: WAI-ARIA Radio Group pattern and Apple Segmented controls.
-- 단일 선택 의미와 키보드는 native Radio 계열과 같습니다. 비활성인데 선택된 값은 선택 정보를 지우지 않되, Radio의 회색 중심 점처럼 primary 색을 제거하고 중립 채움·비활성 전경·semibold만 남깁니다.
 
 ## Related components
 
@@ -116,6 +122,11 @@
 - `--fw-semibold`
 - `--headline2-size`
 - `--label1-size`
+- `--lds-segmented-control-gap`
+- `--lds-segmented-control-height`
+- `--lds-segmented-control-padding`
+- `--lds-segmented-control-radius`
+- `--lds-segmented-control-segment-radius`
 - `--radius-10`
 - `--radius-8`
 - `--radius-md`

@@ -32,10 +32,17 @@
 | `interaction` | `"normal" \| "inactive" \| "hovered" \| "focused" \| "active" \| "active-focused"` | No |  |
 | `active` | `boolean` | No | active visual state alias. |
 | `focus` | `boolean` | No | focus visual state alias. |
-| `disable` | `boolean` | No | disabled alias. |
+| `disable` | `boolean` | No |  |
 | `resize` | `"normal" \| "fixed" \| "limit"` | No | resize axis. |
 | `rows` | `number` | No | 처음 보이는 줄 수. @default 5 |
 | `style` | `React.CSSProperties` | No | 래퍼 스타일. |
+| `className` | `string` | No | Public root class. |
+| `textareaClassName` | `string` | No | Native textarea class. |
+| `textareaStyle` | `React.CSSProperties` | No | Native textarea style. |
+| `rootRef` | `React.Ref` | No | Public root ref; the default ref targets the native textarea. |
+| `classNames` | `LdsClassNames` | No |  |
+| `styles` | `LdsStyles` | No |  |
+| `vars` | `LdsVars` | No |  |
 
 ## States
 
@@ -57,8 +64,10 @@
 
 ## Content and writing
 
+- ref points to the native textarea; use rootRef for the field stack.
+- className and style customize the public root. Use textareaClassName and textareaStyle for the native control.
+- Stable parts are root, label, control, textarea, statusIcon, and message. Geometry overrides are limited to the documented --lds-textarea- variables.
 - Reference basis: GOV.UK Textarea and Carbon Text area.
-- Textarea — Input의 박스·포커스 헤일로와 맞춘 여러 줄 필드; 세로 리사이즈 가능.
 
 ## Accessibility
 
@@ -98,6 +107,10 @@
 - `--dur-base`
 - `--ease-out`
 - `--font-sans`
+- `--lds-textarea-max-height`
+- `--lds-textarea-min-height`
+- `--lds-textarea-padding`
+- `--lds-textarea-radius`
 - `--space-10`
 - `--space-3`
 

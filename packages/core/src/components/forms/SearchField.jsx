@@ -9,6 +9,7 @@ import {
   fieldTypography,
   useFieldMetadata,
 } from './field-shared.js';
+import { componentVars, partClassName, partStyle, useMergedRefs } from '../internal/surface.js';
 
 function useSearchFieldStyles() {
   React.useEffect(() => {
@@ -27,7 +28,7 @@ input.lk-searchfield::-webkit-search-results-decoration{-webkit-appearance:none;
 }
 
 /** Search input with a leading search glyph and an optional clear action. */
-export function SearchField({
+export const SearchField = React.forwardRef(function SearchField({
   value,
   defaultValue,
   onChange,
@@ -45,7 +46,16 @@ export function SearchField({
   clearLabel,
   id,
   fieldStyle,
+  className,
   style,
+  controlClassName,
+  controlStyle,
+  inputClassName,
+  inputStyle,
+  classNames,
+  styles,
+  vars,
+  rootRef,
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
@@ -53,11 +63,12 @@ export function SearchField({
   onBlur,
   onKeyDown,
   ...inputProps
-}) {
+}, forwardedRef) {
   useSearchFieldStyles();
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue ?? '');
   const inputRef = React.useRef(null);
+  const mergedInputRef = useMergedRefs(inputRef, forwardedRef);
   const [focused, setFocused] = React.useState(false);
   const [hovered, setHovered] = React.useState(false);
   const currentValue = isControlled ? value : internal;
@@ -94,6 +105,14 @@ export function SearchField({
 
   return (
     <FieldStack
+      ref={rootRef}
+      data-slot="root"
+      data-disabled={disabled ? 'true' : undefined}
+      data-readonly={readOnly ? 'true' : undefined}
+      data-invalid={isInvalid ? 'true' : undefined}
+      data-size={normalizedSize}
+      className={partClassName(classNames, 'root', className) || undefined}
+      style={{ ...componentVars(vars, '--lds-search-field-'), ...partStyle(styles, 'root'), ...fieldStyle, ...style }}
       fieldId={metadata.fieldId}
       labelId={labelId}
       label={label}
@@ -102,33 +121,49 @@ export function SearchField({
       message={metadata.message}
       error={error}
       status={status}
-      fieldStyle={fieldStyle}
+      labelProps={{
+        'data-slot': 'label',
+        className: partClassName(classNames, 'label') || undefined,
+        style: partStyle(styles, 'label'),
+        disabled,
+      }}
+      messageProps={{
+        'data-slot': 'message',
+        className: partClassName(classNames, 'message') || undefined,
+        style: partStyle(styles, 'message'),
+      }}
     >
       <div
+        data-slot="control"
         data-readonly={readOnly ? 'true' : undefined}
+        className={partClassName(classNames, 'control', controlClassName) || undefined}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
           display: 'inline-flex',
           alignItems: 'center',
-          gap: 'var(--component-input-gap)',
+          gap: 'var(--lds-search-field-gap, var(--component-input-gap))',
           width: '100%',
-          height,
-          padding: '0 var(--component-input-padding-x)',
+          height: `var(--lds-search-field-height, ${height})`,
+          padding: '0 var(--lds-search-field-padding-inline, var(--component-input-padding-x))',
           boxSizing: 'border-box',
           background: fieldBackground({ disabled, readOnly }),
           border: `var(--component-input-border-width) solid ${borderColor}`,
-          borderRadius: 'var(--component-input-radius)',
+          borderRadius: 'var(--lds-search-field-radius, var(--component-input-radius))',
           boxShadow: focused ? 'var(--component-input-focus-shadow)' : 'none',
           transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
-          ...style,
+          ...partStyle(styles, 'control'),
+          ...controlStyle,
         }}
       >
-        <Icon name="search" size={18} color="var(--component-input-icon-color)" aria-hidden="true" style={{ flex: '0 0 auto' }} />
+        <span data-slot="startIcon" className={partClassName(classNames, 'startIcon') || undefined} style={{ display: 'inline-flex', flex: '0 0 auto', ...partStyle(styles, 'startIcon') }}>
+          <Icon name="search" size={18} color="var(--component-input-icon-color)" aria-hidden="true" />
+        </span>
         <input
           {...inputProps}
-          ref={inputRef}
-          className={['lk-searchfield', inputProps.className].filter(Boolean).join(' ')}
+          ref={mergedInputRef}
+          data-slot="input"
+          className={partClassName(classNames, 'input', 'lk-searchfield', inputClassName) || undefined}
           id={metadata.fieldId}
           type="search"
           value={currentValue}
@@ -169,11 +204,19 @@ export function SearchField({
             fontFamily: 'var(--font-sans)',
             ...fieldTypography(normalizedSize),
             color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-text-color)',
+            ...partStyle(styles, 'input'),
+            ...inputStyle,
           }}
         />
-        <FieldStatusIcon invalid={isInvalid} status={status} />
+        {(isInvalid || status === 'positive') && (
+          <span data-slot="statusIcon" className={partClassName(classNames, 'statusIcon') || undefined} style={{ display: 'inline-flex', ...partStyle(styles, 'statusIcon') }}>
+            <FieldStatusIcon invalid={isInvalid} status={status} />
+          </span>
+        )}
         {currentValue && !readOnly && (
           <IconButton
+            data-slot="clearButton"
+            className={partClassName(classNames, 'clearButton') || undefined}
             variant="plain"
             size="small"
             label={resolvedClearLabel}
@@ -185,7 +228,7 @@ export function SearchField({
               // focus returns to the input so the user can keep typing).
               inputRef.current?.focus();
             }}
-            style={{ flex: '0 0 auto', marginInline: -8 }}
+            style={{ flex: '0 0 auto', marginInline: -8, ...partStyle(styles, 'clearButton') }}
           >
             <Icon name="circle-close-fill" size={16} aria-hidden="true" />
           </IconButton>
@@ -193,4 +236,4 @@ export function SearchField({
       </div>
     </FieldStack>
   );
-}
+});

@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon } from "../icon/Icon.jsx";
+import { componentVars, partClassName, partStyle, useMergedRefs } from "../internal/surface.js";
 
 /* WDS tab model: zero horizontal item padding, 24px inter-tab gap,
  * constant 2px label-width indicator. S=15 (body2), M/L=17 (headline2). */
@@ -17,7 +18,7 @@ const SIZE = {
  * underline tab navigation. Supports hug/fill resize, size, padding,
  * optional trailing icon button slot, and horizontal scrolling.
  */
-export function Tabs({
+export const Tabs = React.forwardRef(function Tabs({
   items = [],
   value,
   defaultValue,
@@ -30,9 +31,13 @@ export function Tabs({
   scroll = "auto",
   className,
   style,
+  classNames,
+  styles,
+  vars,
   ...rest
-}) {
+}, forwardedRef) {
   const listRef = React.useRef(null);
+  const mergedListRef = useMergedRefs(listRef, forwardedRef);
   const idBase = React.useId();
   const norm = items.map((o) =>
     typeof o === "string" ? { value: o, label: o } : o,
@@ -46,6 +51,7 @@ export function Tabs({
   });
   const selected = isControlled ? value : internal;
   const s = SIZE[size] || SIZE.medium;
+  const normalizedSize = size === 'small' || size === 'sm' ? 'sm' : size === 'large' || size === 'lg' ? 'lg' : 'md';
   const fill = resize === "fill" || full;
   const scrollable = scroll === "auto" || scroll === true;
   const inlinePadding = padding === true
@@ -53,6 +59,7 @@ export function Tabs({
     : padding === false || padding == null
       ? 0
       : padding;
+  const resolvedInlinePadding = typeof inlinePadding === 'number' ? `${inlinePadding}px` : inlinePadding;
 
   /* Exactly one tab is the Tab stop. If the selected tab is disabled
    * (or nothing is selected), fall back to the first enabled tab. */
@@ -89,24 +96,29 @@ export function Tabs({
   return (
     <div
       {...rest}
-      ref={listRef}
-      className={["lk-scroll-surface", className].filter(Boolean).join(" ")}
+      ref={mergedListRef}
+      data-slot="root"
+      data-size={normalizedSize}
+      data-fill={fill ? 'true' : undefined}
+      className={partClassName(classNames, 'root', 'lk-scroll-surface', className) || undefined}
       data-scrollbar="compact"
       data-scroll-gutter="auto"
       role="tablist"
       aria-orientation="horizontal"
       style={{
+        ...componentVars(vars, '--lds-tabs-'),
         display: "flex",
         alignItems: "stretch",
-        gap: fill ? 0 : 24,
+        gap: fill ? 0 : 'var(--lds-tabs-gap, 24px)',
         maxWidth: "100%",
         overflowX: scrollable ? "auto" : "visible",
         // The indicator is now fully inside the tab box. Suppress the CSS
         // cross-axis auto overflow that an x-scroll container would otherwise
         // derive, without clipping any part of the 2px indicator.
         overflowY: scrollable ? "hidden" : "visible",
-        paddingInline: inlinePadding,
+        paddingInline: `var(--lds-tabs-padding-inline, ${resolvedInlinePadding || '0px'})`,
         borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
+        ...partStyle(styles, 'root'),
         ...style,
       }}
     >
@@ -125,7 +137,10 @@ export function Tabs({
         return (
           <button
             key={item.value}
-            className="lk-tabs__tab"
+            data-slot="tab"
+            data-state={active ? 'active' : 'inactive'}
+            data-disabled={item.disabled ? 'true' : undefined}
+            className={partClassName(classNames, 'tab', 'lk-tabs__tab', item.className) || undefined}
             type="button"
             role="tab"
             id={item.tabId ?? `${idBase}-tab-${item.value}`}
@@ -140,7 +155,7 @@ export function Tabs({
               flex: fill ? 1 : "0 0 auto",
               minWidth: 0,
               position: "relative",
-              height: s.height,
+              height: `var(--lds-tabs-height, ${s.height}px)`,
               padding: 0,
               border: "none",
               background: "transparent",
@@ -160,20 +175,24 @@ export function Tabs({
               whiteSpace: "nowrap",
               transition: "color var(--dur-fast) var(--ease-out)",
               outline: "none",
+              ...partStyle(styles, 'tab'),
               ...item.style,
             }}
           >
-            <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
+            <span data-slot="label" className={partClassName(classNames, 'label') || undefined} style={{ overflow: "hidden", textOverflow: "ellipsis", ...partStyle(styles, 'label') }}>
               {item.label}
             </span>
             {item.count != null && (
               <span
+                data-slot="count"
+                className={partClassName(classNames, 'count') || undefined}
                 style={{
                   fontSize: s.countSize,
                   fontWeight: "var(--fw-semibold)",
                   color: active
                     ? "var(--color-semantic-primary-normal)"
                     : "var(--color-semantic-label-neutral)",
+                  ...partStyle(styles, 'count'),
                 }}
               >
                 {item.count}
@@ -181,6 +200,8 @@ export function Tabs({
             )}
             {trailing && (
               <span
+                data-slot="trailing"
+                className={partClassName(classNames, 'trailing') || undefined}
                 aria-hidden="true"
                 style={{
                   display: "inline-flex",
@@ -189,6 +210,7 @@ export function Tabs({
                   color: active
                     ? "var(--color-semantic-label-normal)"
                     : "var(--color-semantic-label-neutral)",
+                  ...partStyle(styles, 'trailing'),
                 }}
               >
                 {trailing === true ? (
@@ -199,17 +221,19 @@ export function Tabs({
               </span>
             )}
             <span
-              className="lk-tabs__indicator"
+              data-slot="indicator"
+              className={partClassName(classNames, 'indicator', 'lk-tabs__indicator')}
               aria-hidden="true"
               style={{
                 position: "absolute",
                 left: 0,
                 right: 0,
                 bottom: 0,
-                height: 2,
+                height: 'var(--lds-tabs-indicator-height, 2px)',
                 borderRadius: 0,
                 background: active ? "var(--color-semantic-label-normal)" : "transparent",
                 transition: "background var(--dur-fast) var(--ease-out)",
+                ...partStyle(styles, 'indicator'),
               }}
             />
           </button>
@@ -217,4 +241,4 @@ export function Tabs({
       })}
     </div>
   );
-}
+});

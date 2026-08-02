@@ -114,13 +114,13 @@ export const ActionFooter = {
     if (!trigger) throw new Error('SelectionInspector destructive action must have a visible trigger.');
     await userEvent.click(trigger);
     await waitFor(() => {
-      const dialog = canvasElement.querySelector('[role="dialog"]');
+      const dialog = canvasElement.ownerDocument.querySelector('[role="dialog"]');
       if (!dialog?.textContent?.includes('선택 객체를 삭제할까요?')) throw new Error('Destructive action must open ConfirmDialog.');
       return dialog;
     });
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      if (canvasElement.querySelector('[role="dialog"]')) throw new Error('Escape must close the destructive confirmation.');
+      if (canvasElement.ownerDocument.querySelector('[role="dialog"]')) throw new Error('Escape must close the destructive confirmation.');
     });
   },
 };

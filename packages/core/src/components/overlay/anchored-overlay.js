@@ -1,6 +1,6 @@
 import React from 'react';
+import { useOverlayLayer } from './overlay-platform.js';
 
-const lightDismissStack = [];
 const useSafeLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 
 function samePosition(a, b) {
@@ -55,9 +55,12 @@ export function useLightDismiss({
   onDismiss,
   outsidePress = true,
   shouldDismiss,
+  zIndex,
+  insideRefs = [],
 }) {
+  const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayer({ open, zIndex });
   const optionsRef = React.useRef(null);
-  optionsRef.current = { getTrigger, onDismiss, outsidePress, shouldDismiss };
+  optionsRef.current = { getTrigger, onDismiss, outsidePress, shouldDismiss, insideRefs };
   const focusLatchRef = React.useRef(null);
 
   const releaseFocusLatch = React.useCallback(() => {
@@ -93,28 +96,28 @@ export function useLightDismiss({
     const root = rootRef.current;
     const ownerDocument = root?.ownerDocument ?? document;
     const view = ownerDocument.defaultView ?? window;
-    const entry = {};
-    lightDismissStack.push(entry);
-
     // `shouldDismiss` lets a surface veto a dismissal it does not own. The stack
     // above already covers nested surfaces that use this engine; the veto covers
     // the ones it cannot see, such as a menu a consumer nested inside the root
     // (SideNav's rail). Returning anything but `false` lets the dismissal run.
     const vetoed = (reason, event) => optionsRef.current.shouldDismiss?.(reason, event) === false;
+    const containsTarget = (target) => rootRef.current?.contains(target)
+      || optionsRef.current.insideRefs.some((insideRef) => insideRef?.current?.contains(target));
 
     const onPointerDown = (event) => {
-      if (!optionsRef.current.outsidePress || rootRef.current?.contains(event.target)) return;
+      if (!isTopmost()) return;
+      if (!optionsRef.current.outsidePress || containsTarget(event.target)) return;
       if (vetoed('outside-press', event)) return;
       optionsRef.current.onDismiss?.('outside-press');
     };
     const onKeyDown = (event) => {
-      if (lightDismissStack.at(-1) !== entry || event.defaultPrevented || event.key !== 'Escape') return;
+      if (!isTopmost() || event.defaultPrevented || event.key !== 'Escape') return;
       if (vetoed('escape', event)) return;
       event.preventDefault();
       const anchor = rootRef.current;
       const trigger = optionsRef.current.getTrigger?.();
       const activeElement = ownerDocument.activeElement;
-      const ownsFocus = !!anchor && !!activeElement && anchor.contains(activeElement);
+      const ownsFocus = !!activeElement && containsTarget(activeElement);
       if (ownsFocus) latchDismissedTrigger();
       optionsRef.current.onDismiss?.('escape');
       if (!ownsFocus || activeElement === trigger) return;
@@ -130,10 +133,10 @@ export function useLightDismiss({
     return () => {
       if (outsidePress) ownerDocument.removeEventListener('pointerdown', onPointerDown);
       ownerDocument.removeEventListener('keydown', onKeyDown);
-      const index = lightDismissStack.indexOf(entry);
-      if (index >= 0) lightDismissStack.splice(index, 1);
     };
-  }, [latchDismissedTrigger, open, outsidePress, releaseFocusLatch, rootRef]);
+  }, [isTopmost, latchDismissedTrigger, open, outsidePress, releaseFocusLatch, rootRef]);
+
+  return { zIndex: resolvedZIndex, isTopmost };
 }
 
 /**
@@ -182,6 +185,8 @@ export function useFloatingPosition({
     if (!anchor || !panel) return undefined;
     const view = anchor.ownerDocument?.defaultView ?? window;
     let frame;
+    let layoutFrame;
+    let disposed = false;
 
     const update = () => {
       const currentAnchor = anchorRef.current;
@@ -225,25 +230,47 @@ export function useFloatingPosition({
       const availableHeight = verticalPlacement
         ? Math.max(0, spaces[nextPlacement])
         : Math.max(0, view.innerHeight - viewportPadding * 2);
+      const anchorIntersectsX = anchorRect.right > viewportPadding
+        && anchorRect.left < view.innerWidth - viewportPadding;
+      const anchorIntersectsY = anchorRect.bottom > viewportPadding
+        && anchorRect.top < view.innerHeight - viewportPadding;
 
       if (strategy === 'fixed') {
         const renderedWidth = Math.min(naturalWidth, Math.max(0, view.innerWidth - viewportPadding * 2));
         const renderedHeight = Math.min(naturalHeight, availableHeight);
         const unclampedX = verticalPlacement
-          ? (align === 'right' ? anchorRect.right - renderedWidth : anchorRect.left)
+          ? (align === 'right' || align === 'trailing'
+            ? anchorRect.right - renderedWidth
+            : align === 'center'
+              ? anchorRect.left + (anchorRect.width - renderedWidth) / 2
+              : anchorRect.left)
           : (nextPlacement === 'right' ? anchorRect.right + offset : anchorRect.left - offset - renderedWidth);
         const unclampedY = verticalPlacement
           ? (nextPlacement === 'bottom' ? anchorRect.bottom + offset : anchorRect.top - offset - renderedHeight)
-          : anchorRect.top;
+          : (align === 'bottom' || align === 'trailing'
+            ? anchorRect.bottom - renderedHeight
+            : align === 'center'
+              ? anchorRect.top + (anchorRect.height - renderedHeight) / 2
+              : anchorRect.top);
         const maxX = Math.max(viewportPadding, view.innerWidth - viewportPadding - renderedWidth);
         const maxY = Math.max(viewportPadding, view.innerHeight - viewportPadding - renderedHeight);
+        // A fully off-screen anchor must keep its surface off-screen too. If we
+        // clamp that surface to the nearest viewport edge it becomes a detached
+        // floating label with no visible trigger. Clamp only along axes where
+        // the anchor actually intersects the usable viewport.
+        const x = anchorIntersectsX
+          ? Math.min(maxX, Math.max(viewportPadding, unclampedX))
+          : unclampedX;
+        const y = anchorIntersectsY
+          ? Math.min(maxY, Math.max(viewportPadding, unclampedY))
+          : unclampedY;
         const next = {
           placement: nextPlacement,
-          shiftX: 0,
-          shiftY: 0,
+          shiftX: x - unclampedX,
+          shiftY: y - unclampedY,
           maxHeight: availableHeight,
-          x: Math.min(maxX, Math.max(viewportPadding, unclampedX)),
-          y: Math.min(maxY, Math.max(viewportPadding, unclampedY)),
+          x,
+          y,
         };
         setPosition((previous) => (samePosition(previous, next) ? previous : next));
         return;
@@ -253,10 +280,6 @@ export function useFloatingPosition({
       const baseRight = panelRect.right - position.shiftX;
       const baseTop = panelRect.top - position.shiftY;
       const baseBottom = panelRect.bottom - position.shiftY;
-      const anchorIntersectsX = anchorRect.right > viewportPadding
-        && anchorRect.left < view.innerWidth - viewportPadding;
-      const anchorIntersectsY = anchorRect.bottom > viewportPadding
-        && anchorRect.top < view.innerHeight - viewportPadding;
       let shiftX = 0;
       let shiftY = 0;
       if (anchorIntersectsX) {
@@ -280,17 +303,50 @@ export function useFloatingPosition({
     };
 
     const schedule = () => {
+      if (disposed) return;
       view.cancelAnimationFrame(frame);
       frame = view.requestAnimationFrame(update);
     };
     schedule();
+
+    // A portalled panel uses viewport coordinates, so it does not naturally
+    // follow an anchor that moves without resizing. Grid settlement, late font
+    // metrics, images, and sibling disclosure can all produce that kind of
+    // layout shift. ResizeObserver cannot see it; track only the anchor box and
+    // schedule the heavier panel measurement when its viewport position moves.
+    if (strategy === 'fixed') {
+      let previousAnchorBox;
+      const watchAnchorLayout = () => {
+        if (disposed) return;
+        const currentAnchor = anchorRef.current;
+        if (!currentAnchor) return;
+        const rect = currentAnchor.getBoundingClientRect();
+        const nextAnchorBox = {
+          top: rect.top,
+          left: rect.left,
+          width: rect.width,
+          height: rect.height,
+        };
+        if (previousAnchorBox && (
+          Math.abs(previousAnchorBox.top - nextAnchorBox.top) >= 0.5
+          || Math.abs(previousAnchorBox.left - nextAnchorBox.left) >= 0.5
+          || Math.abs(previousAnchorBox.width - nextAnchorBox.width) >= 0.5
+          || Math.abs(previousAnchorBox.height - nextAnchorBox.height) >= 0.5
+        )) schedule();
+        previousAnchorBox = nextAnchorBox;
+        layoutFrame = view.requestAnimationFrame(watchAnchorLayout);
+      };
+      layoutFrame = view.requestAnimationFrame(watchAnchorLayout);
+    }
     view.addEventListener('resize', schedule);
     view.addEventListener('scroll', schedule, true);
     const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(schedule);
     observer?.observe(anchor);
     observer?.observe(panel);
     return () => {
+      disposed = true;
       view.cancelAnimationFrame(frame);
+      view.cancelAnimationFrame(layoutFrame);
       view.removeEventListener('resize', schedule);
       view.removeEventListener('scroll', schedule, true);
       observer?.disconnect();
@@ -298,6 +354,53 @@ export function useFloatingPosition({
   }, [align, anchorRef, offset, open, panelRef, position.placement, position.shiftX, position.shiftY, requestedPlacement, strategy, viewportPadding]);
 
   return position;
+}
+
+/**
+ * Converts the measured inline placement into absolute-position CSS. Portalled
+ * surfaces consume viewport x/y instead; in-tree surfaces need this shared map
+ * so top/left/right placements and logical alignment do not silently collapse
+ * to a bottom-left implementation.
+ */
+export function inlineFloatingStyle({
+  placement = 'bottom',
+  align = 'left',
+  offset = 8,
+  shiftX = 0,
+  shiftY = 0,
+} = {}) {
+  const gap = typeof offset === 'number' ? `${offset}px` : offset;
+  const normalizedAlign = align === 'leading'
+    ? (placement === 'top' || placement === 'bottom' ? 'left' : 'top')
+    : align === 'trailing'
+      ? (placement === 'top' || placement === 'bottom' ? 'right' : 'bottom')
+      : align;
+  const style = {
+    position: 'absolute',
+    top: 'auto',
+    right: 'auto',
+    bottom: 'auto',
+    left: 'auto',
+    translate: `${shiftX}px ${shiftY}px`,
+  };
+
+  if (placement === 'top' || placement === 'bottom') {
+    style[placement === 'top' ? 'bottom' : 'top'] = `calc(100% + ${gap})`;
+    if (normalizedAlign === 'right') style.right = 0;
+    else if (normalizedAlign === 'center') {
+      style.left = '50%';
+      style.transform = 'translateX(-50%)';
+    } else style.left = 0;
+    return style;
+  }
+
+  style[placement === 'left' ? 'right' : 'left'] = `calc(100% + ${gap})`;
+  if (normalizedAlign === 'bottom') style.bottom = 0;
+  else if (normalizedAlign === 'center') {
+    style.top = '50%';
+    style.transform = 'translateY(-50%)';
+  } else style.top = 0;
+  return style;
 }
 
 export function appendAriaReference(existing, id) {

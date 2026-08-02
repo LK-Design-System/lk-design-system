@@ -11,3 +11,5 @@
 // 한 영역만 테마링, 제어형:
 <ThemeToggle target="#preview" value={mode} onChange={setMode} showLabels={false} size="sm" />
 ```
+
+애플리케이션에서 theme·direction·Portal 정책을 함께 구동할 때는 `LdsProvider`를 runtime의 단일 소유자로 두고 `useLdsRuntime()`의 `colorScheme`/`setColorScheme`를 이 control에 연결합니다. 이 경우 `ThemeToggle target={null} persist={false}`로 중복 DOM mutation과 storage write를 막습니다. CSS-only 소비자는 기존처럼 Provider 없이 사용할 수 있습니다.

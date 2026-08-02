@@ -20,6 +20,13 @@ Classification: **LK Product Extension**. 선택 상태와 bulk action은 `DataG
 />
 ```
 
+## Public surface and ref
+
+- `className`, `style`, and the default ref target the root collection toolbar surface.
+- Stable parts are `root`, `header`, `heading`, `title`, `count`, `description`, `actions`, `controls`, `search`, and `filters`. Header and controls slots exist only when their content exists.
+- Root `data-size` and `data-variant` mirror the public density and perimeter state.
+- `vars` accepts only `--lds-data-toolbar-padding`, `--lds-data-toolbar-gap`, and `--lds-data-toolbar-search-max-width`; it does not add selection or pagination ownership.
+
 - 검색은 제어/비제어 모두 가능합니다. `searchValue`와 `onSearchChange`를 주면 제어됩니다.
 - `filters`는 query를 좁히는 chip/menu 슬롯, `actions`는 열 표시·순서 설정 trigger, 내보내기 같은 전체 표 action 슬롯입니다. `filters`에 함수를 주면 `{ size }`를 받아 검색과 같은 field control 밀도를 `Select`·`SearchField` 같은 자식에게 전달할 수 있습니다. 기존 ReactNode 슬롯도 그대로 지원합니다. 설정 UI와 저장 상태는 제품이 소유하고 `visibleColumnKeys`/`columnOrder`로 DataGrid에 전달합니다.
 - 여러 필터의 host는 자식의 `max-content` 폭을 우선 보존하고 툴바 가용 폭으로 상한을 둡니다. 검색과 필터 합계가 control 행에 들어가면 한 줄을 유지하고, 실제 공간이 부족할 때만 필터 host가 다음 줄로 이동한 뒤 내부 control을 감쌉니다. 제품별 breakpoint나 고정 필터 폭은 DataToolbar가 소유하지 않습니다.
@@ -38,6 +45,8 @@ Flex sizing 근거는 [CSS Flexible Box Layout Module Level 1](https://www.w3.or
 ## Search-optional collections
 
 `searchable` defaults to `true` for backward compatibility. Set `searchable={false}` when the product has no search state or search behavior. If filters are present, the filter row remains; if neither search nor filters are present, the controls row is omitted entirely.
+
+The header row is independent: `title`, `description`, `count`, or page-level `actions` keeps it present even when controls are omitted. If neither header content nor controls exist, `DataToolbar` returns `null` instead of leaving an empty bordered strip. Selection count and bulk actions never make either row appear; those remain `DataGrid` ownership.
 
 ```jsx
 <DataToolbar

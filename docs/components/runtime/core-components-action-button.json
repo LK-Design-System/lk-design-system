@@ -75,7 +75,7 @@
       "name": "disable",
       "type": "boolean",
       "required": false,
-      "description": "Disable alias. @default false",
+      "description": "",
       "owner": "ButtonOwnProps"
     },
     {
@@ -112,6 +112,27 @@
       "required": false,
       "description": "",
       "owner": "ButtonOwnProps"
+    },
+    {
+      "name": "classNames",
+      "type": "LdsClassNames",
+      "required": false,
+      "description": "Stable classes for the public Button anatomy.",
+      "owner": "ButtonOwnProps"
+    },
+    {
+      "name": "styles",
+      "type": "LdsStyles",
+      "required": false,
+      "description": "Stable inline styles for the public Button anatomy.",
+      "owner": "ButtonOwnProps"
+    },
+    {
+      "name": "vars",
+      "type": "LdsVars",
+      "required": false,
+      "description": "Component-scoped geometry overrides.",
+      "owner": "ButtonOwnProps"
     }
   ],
   "states": [
@@ -132,7 +153,9 @@
       "rule": "Screen-reader label announced with the loading spinner (loading = true). @default \"불러오는 중\""
     }
   ],
-  "behavior": [],
+  "behavior": [
+    "Stable parts are root, content, and loader; each is mirrored by data-slot. data-disabled, data-loading, data-size, and data-variant expose actual component state."
+  ],
   "quantitativeRules": [
     {
       "subject": "명시 규칙 1",
@@ -156,11 +179,13 @@
     }
   ],
   "responsive": [
-    "full: fills the container width."
+    "full: fills the container width.",
+    "vars accepts only --lds-button-height, --lds-button-padding, --lds-button-radius, and --lds-button-gap. It changes geometry without replacing Button semantics or loading behavior."
   ],
   "contentGuidance": [
     "loading=\"inline\": the second loading presentation — the spinner sits beside the label and the variant palette stays. 말이 사라지면 안 되는 컨트롤(예: \"정지 요청 중\"을 계속 말해야 하는 안전 정지)용. 차단 계약은 true와 동일하고 표현만 다릅니다.",
-    "Ghost text also resolves from the rendered theme scope. Transparent fill and the hairline border carry its lower emphasis; text contrast is not reduced to create hierarchy."
+    "Ghost text also resolves from the rendered theme scope. Transparent fill and the hairline border carry its lower emphasis; text contrast is not reduced to create hierarchy.",
+    "classNames and styles accept only those stable part keys; they do not replace native Button semantics or activation ownership."
   ],
   "accessibility": [
     "loading: prevents repeated activation, renders a spinner, and sets aria-busy; use loadingLabel for the single screen-reader name (기본값 불러오는 중). The existing content keeps its width while visually hidden, so loading does not move adjacent controls.",
@@ -270,12 +295,17 @@
     "--component-button-signal-bg-hover",
     "--component-button-signal-fg",
     "--component-button-transition",
-    "--font-sans"
+    "--font-sans",
+    "--lds-button-gap",
+    "--lds-button-height",
+    "--lds-button-padding",
+    "--lds-button-radius"
   ],
   "apiLinks": [],
   "migration": [
     "Disabled foreground, fill, and outlined border resolve semantic roles at the button's rendered theme scope, so nested dark surfaces do not inherit a root-resolved light alias.",
-    "arrow is deprecated and remains as a no-op compatibility prop."
+    "arrow is deprecated and remains as a no-op compatibility prop.",
+    "disable and the small|medium|large size values are compatibility aliases. New code uses disabled and sm|md|lg."
   ],
   "platformStatus": {
     "figma": "mapped",
@@ -323,7 +353,7 @@
         "role": "interaction"
       }
     ],
-    "hiddenEvidence": 0
+    "hiddenEvidence": 1
   },
   "sources": [],
   "canonicalGuide": null,
@@ -335,7 +365,7 @@
     "anatomy": "evidence",
     "properties": "evidence",
     "states": "evidence",
-    "behavior": "omitted-no-evidence",
+    "behavior": "evidence",
     "quantitativeRules": "evidence",
     "responsive": "evidence",
     "contentGuidance": "evidence",

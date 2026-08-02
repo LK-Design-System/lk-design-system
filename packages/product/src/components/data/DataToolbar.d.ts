@@ -1,4 +1,11 @@
 import * as React from 'react';
+import type { LdsClassNames, LdsStyles, LdsVars } from '@lk-design-system/lds-core/components/internal/surface';
+
+export type DataToolbarPart = 'root' | 'header' | 'heading' | 'title' | 'count' | 'description' | 'actions' | 'controls' | 'search' | 'filters';
+export type DataToolbarVariable =
+  | '--lds-data-toolbar-padding'
+  | '--lds-data-toolbar-gap'
+  | '--lds-data-toolbar-search-max-width';
 
 export type DataToolbarSize = 'sm' | 'md';
 
@@ -32,7 +39,10 @@ export interface DataToolbarProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   size?: DataToolbarSize;
   /** 외곽선 소유. "embedded"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default "standalone" */
   variant?: 'standalone' | 'embedded';
+  classNames?: LdsClassNames<DataToolbarPart>;
+  styles?: LdsStyles<DataToolbarPart>;
+  vars?: LdsVars<DataToolbarVariable>;
 }
 
 /** DataGrid/Table 상단의 검색, 필터, 결과 수, 액션을 정렬하는 툴바. 선택 bulk action은 DataGrid가 담당합니다. */
-export function DataToolbar(props: DataToolbarProps): React.JSX.Element | null;
+export const DataToolbar: React.ForwardRefExoticComponent<DataToolbarProps & React.RefAttributes<HTMLDivElement>>;

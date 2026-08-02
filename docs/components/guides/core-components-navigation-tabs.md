@@ -34,12 +34,15 @@
 | `value` | `string` | No |  |
 | `defaultValue` | `string` | No |  |
 | `onChange` | `(value: string, item: Exclude) = void` | No |  |
-| `full` | `boolean` | No | Legacy fill prop. Prefer resize="fill". @default false |
+| `full` | `boolean` | No |  |
 | `resize` | `"hug" \| "fill"` | No | resize axis. @default "hug" |
 | `size` | `"small" \| "sm" \| "medium" \| "md" \| "large" \| "lg"` | No | size axis. @default "medium" |
 | `padding` | `boolean \| number \| string` | No | Inline padding. true preserves the legacy 8px value; a number or CSS length sets an explicit inset. @default false |
 | `trailingIconButton` | `boolean \| React.ReactNode` | No | trailingIconButton axis. @default false |
 | `scroll` | `"auto" \| boolean` | No | scroll axis. @default "auto" |
+| `classNames` | `LdsClassNames` | No |  |
+| `styles` | `LdsStyles` | No |  |
+| `vars` | `LdsVars` | No |  |
 
 ## 정량 규칙
 
@@ -55,8 +58,14 @@
 
 - When used as CanvasEditorShell.responsiveNavigation, tabs switch only the narrow-screen region (canvas, layers, panel). Workspace modes that change tools and document behavior remain in subheader.
 
+## Content and writing
+
+- ref, className, and style target the tablist root.
+
 ## Accessibility
 
+- Stable parts are root, tab, label, count, trailing, and indicator; tabs expose data-state="active|inactive" and data-disabled.
+- Only documented --lds-tabs- geometry variables are accepted. The component owns roving focus and activation; consumers own the corresponding tab panels.
 - The selected tab is the single Tab stop. Left/Right, Home, and End move focus and activate the next enabled tab, following the WAI-ARIA Tabs pattern. 선택 탭이 비활성화되면 첫 번째 활성 탭이 Tab 스톱이 됩니다.
 - Tabs - WDS underline tab navigation for switching page sections.
 
@@ -92,6 +101,10 @@
 - `--font-sans`
 - `--fw-semibold`
 - `--headline2-size`
+- `--lds-tabs-gap`
+- `--lds-tabs-height`
+- `--lds-tabs-indicator-height`
+- `--lds-tabs-padding-inline`
 - `--radius-sm`
 - `--space-2`
 

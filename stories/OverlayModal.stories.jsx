@@ -161,19 +161,23 @@ export const ModalFocusContract = {
 
     await userEvent.click(trigger);
     await waitFor(() => {
-      const initial = canvasElement.querySelector('[data-testid="modal-initial-focus"]');
+      const initial = ownerDocument.querySelector('[data-testid="modal-initial-focus"]');
       if (!initial || ownerDocument.activeElement !== initial) {
         throw new Error('Modal must honor initialFocusRef when it opens.');
       }
     });
 
-    const mainDialog = canvasElement.querySelector('[role="dialog"]');
+    const mainDialog = ownerDocument.querySelector('[role="dialog"]');
     const labelledTitle = mainDialog && ownerDocument.getElementById(mainDialog.getAttribute('aria-labelledby'));
     if (!mainDialog || mainDialog.getAttribute('aria-modal') !== 'true' || !labelledTitle?.textContent?.includes('현장 알림')) {
       throw new Error('Modal must expose a named modal dialog surface.');
     }
+    const mainPortal = mainDialog.closest('[data-lds-overlay-portal]');
+    if (!mainPortal || mainPortal.parentElement !== ownerDocument.body || !canvasElement.closest('[inert]')) {
+      throw new Error('Modal must escape to the owner-document Portal and make the background inert.');
+    }
     const describedBody = ownerDocument.getElementById(mainDialog.getAttribute('aria-describedby'));
-    if (!describedBody?.contains(canvasElement.querySelector('[data-testid="modal-initial-focus"]'))) {
+    if (!describedBody?.contains(ownerDocument.querySelector('[data-testid="modal-initial-focus"]'))) {
       throw new Error('Modal must describe itself from its body, like ConfirmDialog and Alert.');
     }
 
@@ -200,38 +204,49 @@ export const ModalFocusContract = {
     const nestedTrigger = mainDialog.querySelector('[data-testid="nested-modal-trigger"]');
     await userEvent.click(nestedTrigger);
     await waitFor(() => {
-      const dialogs = canvasElement.querySelectorAll('[role="dialog"]');
+      const dialogs = ownerDocument.querySelectorAll('[role="dialog"]');
       if (dialogs.length !== 2 || !dialogs[1].contains(ownerDocument.activeElement)) {
         throw new Error('The latest Modal must become the active focus layer.');
       }
     });
 
-    const dialogs = canvasElement.querySelectorAll('[role="dialog"]');
+    const dialogs = ownerDocument.querySelectorAll('[role="dialog"]');
+    const parentPortal = dialogs[0].closest('[data-lds-overlay-portal]');
+    const topPortal = dialogs[1].closest('[data-lds-overlay-portal]');
+    if (!parentPortal?.hasAttribute('inert') || !topPortal || topPortal.hasAttribute('inert')) {
+      throw new Error('Only the topmost nested Modal Portal may remain interactive.');
+    }
     const parentLayer = Number.parseInt(ownerDocument.defaultView.getComputedStyle(dialogs[0].parentElement).zIndex, 10);
     const topLayer = Number.parseInt(ownerDocument.defaultView.getComputedStyle(dialogs[1].parentElement).zIndex, 10);
     if (!(topLayer > parentLayer)) throw new Error('The latest Modal must render above the previous overlay layer.');
 
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      if (canvasElement.querySelectorAll('[role="dialog"]').length !== 1 || ownerDocument.activeElement !== nestedTrigger) {
+      if (ownerDocument.querySelectorAll('[role="dialog"]').length !== 1 || ownerDocument.activeElement !== nestedTrigger) {
         throw new Error('Escape must close only the topmost Modal and restore its inner trigger.');
+      }
+      if (ownerDocument.querySelector('[role="dialog"]')?.closest('[data-lds-overlay-portal]')?.hasAttribute('inert')) {
+        throw new Error('The lower Modal must become interactive again after the top layer closes.');
       }
     });
 
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      if (canvasElement.querySelector('[role="dialog"]') || ownerDocument.activeElement !== trigger) {
+      if (ownerDocument.querySelector('[role="dialog"]') || ownerDocument.activeElement !== trigger) {
         throw new Error('Closing the base Modal must restore focus to its invoker.');
       }
       // Nested dialogs share one lock: it lifts only after the last one closes.
       if (ownerDocument.defaultView.getComputedStyle(ownerDocument.body).overflow === 'hidden') {
         throw new Error('Closing the last Modal must release the background scroll lock.');
       }
+      if (canvasElement.closest('[inert]')) {
+        throw new Error('Closing the last Modal must restore background interactivity.');
+      }
     });
 
     await userEvent.click(trigger);
     await waitFor(() => {
-      if (ownerDocument.activeElement !== canvasElement.querySelector('[data-testid="modal-initial-focus"]')) {
+      if (ownerDocument.activeElement !== ownerDocument.querySelector('[data-testid="modal-initial-focus"]')) {
         throw new Error('The representative Modal must remain open with its initial focus for visual review.');
       }
     });
@@ -247,12 +262,12 @@ export const ModalNarrowContent = {
   play: async ({ canvasElement }) => {
     const ownerDocument = canvasElement.ownerDocument;
     await waitFor(() => {
-      const dialog = canvasElement.querySelector('[role="dialog"]');
+      const dialog = ownerDocument.querySelector('[role="dialog"]');
       if (!dialog || !dialog.contains(ownerDocument.activeElement)) {
         throw new Error('The narrow Modal must move focus into its surface.');
       }
     });
-    const dialog = canvasElement.querySelector('[role="dialog"]');
+    const dialog = ownerDocument.querySelector('[role="dialog"]');
     const title = ownerDocument.getElementById(dialog.getAttribute('aria-labelledby'));
     const rect = dialog.getBoundingClientRect();
     if (!title?.textContent?.includes('긴 제목') || rect.left < 0 || rect.right > ownerDocument.defaultView.innerWidth) {
@@ -265,3 +280,49 @@ export const ModalNarrowContent = {
 };
 
 export const ModalCard = { ...ModalCardStory, name: 'Modal card parity', tags: ['!dev', 'visual-parity'] };
+
+function ModalSurfaceRefFixture() {
+  const ref = React.useRef(null);
+  React.useLayoutEffect(() => {
+    ref.current?.setAttribute('data-ref-target', 'modal-root');
+  }, []);
+  return (
+    <Modal
+      ref={ref}
+      defaultOpen
+      title="Modal surface contract"
+      className="contract-modal-root"
+      classNames={{ title: 'contract-modal-title' }}
+      styles={{ body: { letterSpacing: '2px' } }}
+      vars={{ '--lds-modal-width': '420px', '--lds-modal-radius': '10px' }}
+    >
+      Stable body
+    </Modal>
+  );
+}
+
+export const SurfaceRefPortalContract = {
+  name: 'Surface, ref, and Portal contract',
+  tags: ['!dev'],
+  render: () => <ModalSurfaceRefFixture />,
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const dialog = await waitFor(() => {
+      const current = ownerDocument.querySelector('[data-ref-target="modal-root"]');
+      if (!current) throw new Error('The Modal ref target must mount.');
+      return current;
+    });
+    const title = dialog.querySelector('[data-slot="title"]');
+    const body = dialog.querySelector('[data-slot="body"]');
+    const portal = dialog.closest('[data-lds-overlay-portal]');
+    if (!(dialog instanceof HTMLDivElement) || dialog.dataset.slot !== 'root' || !dialog.classList.contains('contract-modal-root')) {
+      throw new Error('Modal ref and root class must target the dialog surface.');
+    }
+    if (!title?.classList.contains('contract-modal-title') || getComputedStyle(dialog).maxWidth !== '420px' || getComputedStyle(dialog).borderRadius !== '10px' || getComputedStyle(body).letterSpacing !== '2px') {
+      throw new Error('Modal named parts and variables must reach their documented targets.');
+    }
+    if (!portal || portal.parentElement !== ownerDocument.body || !canvasElement.closest('[inert]')) {
+      throw new Error('Modal must use the owner-document Portal and inert the background.');
+    }
+  },
+};

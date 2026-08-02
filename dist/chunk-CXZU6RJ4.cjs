@@ -26,7 +26,7 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], headingLeve
     const descriptionId = `${rawId}-${i}-description`;
     const hasDescription = it.description != null && it.description !== "";
     return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { borderBottom: "1px solid var(--color-semantic-line-solid-normal)" }, children: [
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, HeadingTag, { ...headingProps, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, HeadingTag, { ...headingProps, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
         "button",
         {
           type: "button",
@@ -57,7 +57,7 @@ function Accordion({ items = [], multiple = false, defaultOpen = [], headingLeve
             it.leading != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { flexShrink: 0, display: "inline-flex", alignItems: "center" }, children: it.leading }),
             /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { flex: 1, minWidth: 0, display: "grid", gap: "var(--space-1)" }, children: [
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { id: titleId, style: { wordBreak: "keep-all" }, children: it.title }),
-              hasDescription && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              hasDescription && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "span",
                 {
                   id: descriptionId,

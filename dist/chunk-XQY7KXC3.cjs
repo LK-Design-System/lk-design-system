@@ -30,7 +30,7 @@ function ChartFrame({
   const preservesData = hasContent && ["refreshing", "stale", "offline", "error"].includes(resourceState);
   const resolvedHeadingLevel = Math.min(6, Math.max(1, headingLevel));
   const Heading = `h${resolvedHeadingLevel}`;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "section",
     {
       "aria-labelledby": titleId,
@@ -61,7 +61,7 @@ function ChartFrame({
           ] }),
           description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { id: descriptionId, style: { margin: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", overflowWrap: "anywhere" }, children: description })
         ] }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           _chunkVIZELXEFcjs.ResourceState,
           {
             state: resourceState,

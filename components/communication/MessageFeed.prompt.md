@@ -31,6 +31,7 @@
 - `children`을 시간순 DOM 순서로 받습니다. 자체 message schema, renderer, participant truth, provider 또는 transport를 만들지 않습니다.
 - feed는 chrome-free transparent container입니다. app panel, card, background, header/sidebar와 composer 연결 chrome은 parent가 필요한 경우 조합합니다.
 - `maxHeight`와 `viewportMinHeight`는 named log viewport의 크기만 제어합니다. 고정 application panel 크기를 강제하지 않습니다.
+- `viewportInset="compact | comfortable"`은 scrollbar가 붙는 named log viewport의 inline content inset만 선택합니다. 기본 `compact`는 좌우 8px, reading/panel composition용 `comfortable`은 좌우 16px이며 두 값 모두 block 12px을 유지합니다. raw viewport style이나 CSS selector hook은 공개하지 않습니다.
 - 제품은 streaming token 병합, persistence, search, moderation, unread 계산과 history retrieval을 소유합니다.
 - MessageFeed는 named log, history prepend 위치 복원, controlled bottom-follow와 관련 action 순서만 소유합니다.
 - 기존 Core `Divider`의 labeled separator 조합을 date/first-unread boundary로 재사용합니다. 날짜 계산, read receipt와 unread truth는 제품이 소유하며 Divider는 message schema나 live region을 만들지 않습니다.
@@ -63,6 +64,7 @@
 
 - transparent feed 위에서 assistant document는 reading column을 사용하고 user/human-agent bubble만 compact surface를 가집니다.
 - child 간 vertical rhythm은 chronological grouping을 보조하지만 문서 응답 전체를 messenger card stack으로 바꾸지 않습니다.
+- viewport inset은 logical `padding-inline`으로 적용해 RTL에서도 start/end가 뒤집히며, outer section surface나 scrollbar 위치를 이동시키지 않습니다.
 - 320px에서도 history → log → latest의 DOM order와 wrapping을 유지합니다.
 - dark theme는 parent semantic background를 그대로 받고 별도 inverse/console surface prop을 만들지 않습니다.
 

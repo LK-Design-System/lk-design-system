@@ -8,7 +8,7 @@
 | Storybook | `LDS Product/Selection and Input/Field Action` |
 | Source | `../component-content.json#product-selection-and-input-field-action` |
 
-발급·조회·추가처럼 입력값에 대한 명시적 action을 별도 동작 버튼으로 유지합니다. 좁은 폭에서는 입력 다음 줄에 전체 너비 action을 배치하며 값과 side effect는 제품이 소유합니다.
+발급·조회·추가처럼 입력값에 대한 명시적 action이 한 개일 때 적합합니다. 입력 내부 addon이나 여러 동작을 나열하는 용도로는 피해야 합니다. 좁은 폭에서는 입력 다음 줄에 전체 너비 action을 배치하며 값과 side effect는 제품이 소유합니다.
 
 ## 사용 판단
 
@@ -26,7 +26,7 @@
 
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
-| `as` | `keyof React.JSX.IntrinsicElements` | No | Root element. Use form when the action submits the field. @default "div" |
+| `as` | `React.ElementType` | No | Root element. Use form when the action submits the field. @default "div" |
 | `field` | `React.ReactElement` | Yes | One LDS field control. Put shared label/helper/error content on FieldAction. |
 | `action` | `React.ReactElement` | Yes | One LDS Button or button-compatible action. |
 | `size` | `'sm' \| 'md' \| 'lg' \| 'small' \| 'medium' \| 'large'` | No | Shared field density. The composition aligns both controls to 32/48/52px. @default "md" |
@@ -35,9 +35,13 @@
 | `error` | `React.ReactNode` | No |  |
 | `required` | `boolean` | No |  |
 | `htmlFor` | `string` | No | Associates the shared label with the field control. |
+| `classNames` | `LdsClassNames` | No |  |
+| `styles` | `LdsStyles` | No |  |
+| `vars` | `LdsVars` | No |  |
 
 ## Behavior and interaction
 
+- ref points to the polymorphic root selected by as (div by default).
 - Input.actionRight는 입력 내부의 지우기·보기 같은 국소 액션입니다. 제출·발급·조회처럼 값에 대한 명시적 변화를 요청하는 주요 action은 FieldAction에 둡니다.
 - 새 surface, border, shadow, radius, color, typography는 만들지 않습니다. Input과 Button의 기존 시각 상태를 그대로 조합합니다.
 - FieldAction은 하나의 입력 필드와 그 값을 사용하는 별도 액션을 같은 행에 배치하는 LK Product Extension입니다. 입력 값, 검증, 제출, 네트워크 요청과 성공·실패 상태는 제품이 소유합니다.
@@ -54,11 +58,14 @@
 
 ## Responsive
 
+- classNames and styles accept only those stable part keys. vars accepts only --lds-field-action-gap; shared control height remains derived from the canonical size.
 - Stack은 범용 배치만 제공하며 자식 control의 밀도나 높이를 조정하지 않습니다. FieldAction은 field와 action의 크기 매핑 및 좁은 폭 재배치를 소유합니다.
 - loading 중 Button의 숨겨진 원래 label이 너비를 유지하므로 action column이 흔들리지 않습니다. disabled/loading 동작 자체는 Button 계약을 그대로 사용합니다.
 
 ## Content and writing
 
+- className/style target the root. Stable parts are root, fieldStack, row, field, and action.
+- htmlFor associates the shared label with the field control. Field value, validation, submission, and loading remain product-owned.
 - USWDS Search는 label이 있는 입력과 native submit button을 하나의 form composition으로 제공하며 버튼을 명시적 제출 동작으로 유지합니다. FieldAction도 입력 내부 장식이 아닌 별도 submit action을 유지합니다.
 
 ## Accessibility
@@ -101,6 +108,7 @@
 - `--control-h-lg`
 - `--control-h-md`
 - `--control-h-sm`
+- `--lds-field-action-gap`
 - `--space-2`
 
 ### Source contracts

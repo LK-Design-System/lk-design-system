@@ -11,7 +11,7 @@ function StatList({ items = [], size = "md", style, ...rest }) {
     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-label-alternative)" }, children: item.label }),
     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", fontVariantNumeric: "tabular-nums" }, children: item.value })
   ] });
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "ul",
     {
       role: "list",
@@ -27,7 +27,7 @@ function StatList({ items = [], size = "md", style, ...rest }) {
         ...style
       },
       ...rest,
-      children: rows.map((item, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0 }, children: item.href ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      children: rows.map((item, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0 }, children: item.href ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
         "a",
         {
           href: item.href,

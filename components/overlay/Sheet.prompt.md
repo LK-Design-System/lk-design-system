@@ -21,6 +21,12 @@ const firstOptionRef = useRef(null);
 - 시각 delta inventory: headline/body typography, title·body·footer spacing, elevated fill/foreground, shadow, 40×4px grab handle, 기존 Button 크기와 hover/focus/disabled 처리를 유지합니다. 상단 radius와 bottom 방향은 기능상 유지하고 divider나 선택 marker를 새로 만들지 않습니다. grab handle은 장식이며 keyboard dismiss를 대신하지 않습니다.
 - 제목은 `aria-labelledby`로 연결하고, 제목이 없으면 `ariaLabel`이 이름을 제공합니다.
 
+## 공통 Portal·stack 계약
+
+- 기본 `withinPortal=true`이며 `LdsProvider.portalTarget` 또는 명시적 `portalTarget`에 렌더링됩니다. 가까운 theme scope와 `dir`을 상속하고 clipping ancestor를 벗어납니다.
+- `zIndex`는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다.
+- 테스트·특수 embedding에서만 `withinPortal=false`를 사용하며 이 경우 background inert는 적용하지 않습니다.
+
 ## 상호작용 계약
 
 - `initialFocusRef` → 첫 tabbable 요소 → dialog 표면 순으로 초기 초점을 선택합니다.

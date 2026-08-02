@@ -60,7 +60,7 @@ export const ConfirmationStates = {
   },
   play: async ({ canvasElement }) => {
     await waitFor(() => {
-      const dialog = canvasElement.querySelector('[role="dialog"][data-tone="danger"]');
+      const dialog = canvasElement.ownerDocument.querySelector('[role="dialog"][data-tone="danger"]');
       const titleId = dialog?.getAttribute('aria-labelledby');
       const title = titleId && canvasElement.ownerDocument.getElementById(titleId);
       const content = dialog?.firstElementChild;
@@ -127,21 +127,26 @@ export const OverlayStackContract = {
 
     await userEvent.click(baseTrigger);
     const innerTrigger = await waitFor(() => {
-      const trigger = canvasElement.querySelector('[data-testid="confirm-stack-inner-trigger"]');
+      const trigger = ownerDocument.querySelector('[data-testid="confirm-stack-inner-trigger"]');
       if (!trigger) throw new Error('The base Modal must expose the ConfirmDialog trigger.');
       return trigger;
     });
     await userEvent.click(innerTrigger);
 
     await waitFor(() => {
-      const dialogs = canvasElement.querySelectorAll('[role="dialog"]');
+      const dialogs = ownerDocument.querySelectorAll('[role="dialog"]');
       const cancel = dialogs[1]?.querySelector('[data-confirm-dialog-cancel]');
       if (dialogs.length !== 2 || !cancel || ownerDocument.activeElement !== cancel) {
         throw new Error('The topmost ConfirmDialog must move focus to its cancel action.');
       }
     });
 
-    let dialogs = canvasElement.querySelectorAll('[role="dialog"]');
+    let dialogs = ownerDocument.querySelectorAll('[role="dialog"]');
+    const modalPortal = dialogs[0]?.closest('[data-lds-overlay-portal]');
+    const confirmPortal = dialogs[1]?.closest('[data-lds-overlay-portal]');
+    if (!modalPortal?.hasAttribute('inert') || !confirmPortal || confirmPortal.hasAttribute('inert')) {
+      throw new Error('ConfirmDialog must share the modal Portal stack and inert the lower layer.');
+    }
     const parentLayer = Number.parseInt(ownerDocument.defaultView.getComputedStyle(dialogs[0].parentElement).zIndex, 10);
     const confirmLayer = Number.parseInt(ownerDocument.defaultView.getComputedStyle(dialogs[1].parentElement).zIndex, 10);
     if (!(confirmLayer > parentLayer)) throw new Error('ConfirmDialog must render above the existing overlay layer.');
@@ -157,7 +162,7 @@ export const OverlayStackContract = {
 
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      const remaining = canvasElement.querySelectorAll('[role="dialog"]');
+      const remaining = ownerDocument.querySelectorAll('[role="dialog"]');
       if (remaining.length !== 1 || ownerDocument.activeElement !== innerTrigger) {
         throw new Error('Escape must close only ConfirmDialog and restore its Modal trigger.');
       }
@@ -165,20 +170,20 @@ export const OverlayStackContract = {
 
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      if (canvasElement.querySelector('[role="dialog"]') || ownerDocument.activeElement !== baseTrigger) {
+      if (ownerDocument.querySelector('[role="dialog"]') || ownerDocument.activeElement !== baseTrigger) {
         throw new Error('The next Escape must close the base Modal and restore the page trigger.');
       }
     });
 
     await userEvent.click(baseTrigger);
     const reopenedInnerTrigger = await waitFor(() => {
-      const trigger = canvasElement.querySelector('[data-testid="confirm-stack-inner-trigger"]');
+      const trigger = ownerDocument.querySelector('[data-testid="confirm-stack-inner-trigger"]');
       if (!trigger) throw new Error('The reopened Modal must expose the ConfirmDialog trigger.');
       return trigger;
     });
     await userEvent.click(reopenedInnerTrigger);
     await waitFor(() => {
-      dialogs = canvasElement.querySelectorAll('[role="dialog"]');
+      dialogs = ownerDocument.querySelectorAll('[role="dialog"]');
       if (dialogs.length !== 2 || !dialogs[1].contains(ownerDocument.activeElement)) {
         throw new Error('The representative ConfirmDialog must remain the active visual layer.');
       }

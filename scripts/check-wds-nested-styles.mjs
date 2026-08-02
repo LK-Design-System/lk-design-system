@@ -32,7 +32,7 @@ const TARGETS = [
   { name: 'CheckboxSm', deepKey: 'Checkbox/box@sm', jsx: '<Checkbox size="sm" defaultChecked aria-label="c" />', sel: 'span[aria-hidden="true"]', dims: ['radius', 'height'] },
   { name: 'RadioMd', deepKey: 'Radio/box@md', jsx: '<Radio defaultChecked aria-label="r" />', sel: 'span[aria-hidden="true"]', dims: ['radius', 'height'] },
   { name: 'RadioSm', deepKey: 'Radio/box@sm', jsx: '<Radio size="sm" defaultChecked aria-label="r" />', sel: 'span[aria-hidden="true"]', dims: ['radius', 'height'] },
-  { name: 'Tooltip', deepKey: 'Tooltip/bubble', jsx: '<Tooltip defaultOpen content="메시지"><button>t</button></Tooltip>', sel: '[role="tooltip"]', dims: ['radius', 'padX'] },
+  { name: 'Tooltip', deepKey: 'Tooltip/bubble', jsx: '<Tooltip defaultOpen content="메시지"><button>t</button></Tooltip>', sel: '[role="tooltip"]', documentScope: true, dims: ['radius', 'padX'] },
   { name: 'Alert', deepKey: 'Alert/modal@web', jsx: '<Alert open platform="web" title="제목" description="내용" />', sel: '[role="alertdialog"]', dims: ['radius'] },
   { name: 'ListCell', deepKey: 'ListCell/interaction', jsx: '<ListCell title="제목" onClick={() => {}} />', sel: ':scope > *', dims: ['radius', 'height'] },
 ];
@@ -67,7 +67,7 @@ const measured = await page.evaluate((targets) => {
   const out = {};
   for (const t of targets) {
     const w = document.querySelector(`[data-measure="${t.name}"]`);
-    const el = w && w.querySelector(t.sel);
+    const el = t.documentScope ? document.querySelector(t.sel) : w && w.querySelector(t.sel);
     if (!el) { out[t.name] = null; continue; }
     const cs = getComputedStyle(el);
     out[t.name] = { height: px(cs.height), width: px(cs.width), radius: px(cs.borderTopLeftRadius), padX: px(cs.paddingLeft) };

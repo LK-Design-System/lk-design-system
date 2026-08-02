@@ -2,6 +2,7 @@ import React from 'react';
 import { IconButton } from '../buttons/IconButton.jsx';
 import { Icon } from '../icon/Icon.jsx';
 import { useDialogFocus } from './dialog-focus.js';
+import { OverlayPortal } from './overlay-platform.js';
 
 /**
  * LDS Product Extension — Drawer
@@ -24,6 +25,9 @@ export function Drawer({
   restoreFocus = true,
   ariaLabel = '서랍 패널',
   closeLabel = '닫기',
+  withinPortal = true,
+  portalTarget,
+  zIndex,
   bodyStyle,
   style,
   ...rest
@@ -31,12 +35,21 @@ export function Drawer({
   const [shown, setShown] = React.useState(false);
   const titleId = React.useId();
   const subtitleId = React.useId();
-  const { dialogRef, zIndex } = useDialogFocus({
+  const portalRef = React.useRef(null);
+  const portalAnchorRef = React.useRef(null);
+  if (open && !portalAnchorRef.current && typeof document !== 'undefined') {
+    portalAnchorRef.current = returnFocusRef?.current ?? document.activeElement;
+  }
+  if (!open) portalAnchorRef.current = null;
+  const { dialogRef, zIndex: resolvedZIndex } = useDialogFocus({
     open,
     onDismiss: onClose,
     initialFocusRef,
     returnFocusRef,
     restoreFocus,
+    portalRef,
+    inert: withinPortal,
+    zIndex,
   });
   React.useEffect(() => {
     if (open) { const id = requestAnimationFrame(() => setShown(true)); return () => cancelAnimationFrame(id); }
@@ -46,10 +59,11 @@ export function Drawer({
   const isRight = side === 'right';
   const hidden = isRight ? 'translateX(100%)' : 'translateX(-100%)';
   return (
+    <OverlayPortal open={open} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={portalAnchorRef} portalRef={portalRef} layer="modal">
     <div
       role="presentation"
       onClick={closeOnScrim ? (e) => { if (e.target === e.currentTarget && onClose) onClose(); } : undefined}
-      style={{ position: 'fixed', inset: 0, zIndex, background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))', opacity: shown ? 1 : 0, transition: 'opacity var(--dur-base) var(--ease-out)' }}
+      style={{ position: 'fixed', inset: 0, zIndex: resolvedZIndex, background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))', opacity: shown ? 1 : 0, transition: 'opacity var(--dur-base) var(--ease-out)' }}
     >
       <div
         ref={dialogRef}
@@ -79,5 +93,6 @@ export function Drawer({
         {footer != null && <div style={{ padding: 'var(--space-4) var(--space-6)', borderTop: '1px solid var(--color-semantic-line-solid-normal)', display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)' }}>{footer}</div>}
       </div>
     </div>
+    </OverlayPortal>
   );
 }

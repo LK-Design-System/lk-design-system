@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDialogFocus } from '@lk-design-system/lds-core/components/overlay/dialog-focus';
+import { OverlayPortal } from '@lk-design-system/lds-core/components/overlay/overlay-platform';
 
 /**
  * LDS Product Extension — Sheet
@@ -19,17 +20,29 @@ export function Sheet({
   returnFocusRef,
   restoreFocus = true,
   ariaLabel = '하단 시트',
+  withinPortal = true,
+  portalTarget,
+  zIndex,
   style,
   ...rest
 }) {
   const [shown, setShown] = React.useState(false);
   const titleId = React.useId();
-  const { dialogRef, zIndex } = useDialogFocus({
+  const portalRef = React.useRef(null);
+  const portalAnchorRef = React.useRef(null);
+  if (open && !portalAnchorRef.current && typeof document !== 'undefined') {
+    portalAnchorRef.current = returnFocusRef?.current ?? document.activeElement;
+  }
+  if (!open) portalAnchorRef.current = null;
+  const { dialogRef, zIndex: resolvedZIndex } = useDialogFocus({
     open,
     onDismiss: onClose,
     initialFocusRef,
     returnFocusRef,
     restoreFocus,
+    portalRef,
+    inert: withinPortal,
+    zIndex,
   });
   React.useEffect(() => {
     if (open) { const id = requestAnimationFrame(() => setShown(true)); return () => cancelAnimationFrame(id); }
@@ -37,10 +50,11 @@ export function Sheet({
   }, [open]);
   if (!open) return null;
   return (
+    <OverlayPortal open={open} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={portalAnchorRef} portalRef={portalRef} layer="modal">
     <div
       role="presentation"
       onClick={closeOnScrim ? (e) => { if (e.target === e.currentTarget && onClose) onClose(); } : undefined}
-      style={{ position: 'fixed', inset: 0, zIndex, background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))', opacity: shown ? 1 : 0, transition: 'opacity var(--dur-base) var(--ease-out)' }}
+      style={{ position: 'fixed', inset: 0, zIndex: resolvedZIndex, background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))', opacity: shown ? 1 : 0, transition: 'opacity var(--dur-base) var(--ease-out)' }}
     >
       <div
         ref={dialogRef}
@@ -60,5 +74,6 @@ export function Sheet({
         {footer != null && <div style={{ padding: '14px 22px 22px', display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)' }}>{footer}</div>}
       </div>
     </div>
+    </OverlayPortal>
   );
 }

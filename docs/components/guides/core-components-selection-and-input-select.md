@@ -15,6 +15,7 @@
 ### 사용하지 않음
 
 - WAI-ARIA APG Listbox Pattern: 단일 선택의 option/aria-selected 의미와 DOM 포커스 대신 aria-activedescendant를 쓰는 합성 위젯 모델을 따릅니다.
+- Fluent Select와 Fluent Menu는 form value 선택과 즉시 실행 command를 구분합니다. LDS도 panel 시각 토큰만 공유하고 listbox와 menu의 DOM·focus 엔진은 공유하지 않습니다.
 
 ## Anatomy
 
@@ -25,6 +26,7 @@
 | aria-label | 접근 가능한 이름. 보이는 label이 없을 때 지정합니다. |
 | aria-labelledby | 외부 라벨 요소의 id. |
 | children | 자식(하위 호환) — options가 없을 때 사용. |
+| triggerClassName | Native combobox trigger class and style. |
 
 ## Properties
 
@@ -43,8 +45,8 @@
 | `status` | `"normal" \| "positive" \| "negative"` | No |  |
 | `disabled` | `boolean` | No |  |
 | `readOnly` | `boolean` | No | Keeps the current selection focusable and legible while preventing changes. |
-| `disable` | `boolean` | No | disabled alias. |
-| `negative` | `boolean` | No | negative status alias. |
+| `disable` | `boolean` | No |  |
+| `negative` | `boolean` | No |  |
 | `size` | `"sm" \| "md" \| "lg" \| "small" \| "medium" \| "large"` | No |  |
 | `defaultOpen` | `boolean` | No | Opens the uncontrolled popup initially unless the control is disabled or read-only. |
 | `interaction` | `\| "normal" \| "inactive" \| "hovered" \| "focused" \| "active" \| "active-focused" \| "open"` | No |  |
@@ -75,18 +77,22 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 타입어헤드 계약: 인쇄 가능한 문자를 누르면 500ms 동안 유지되는 다중 문자 버퍼에 누적되어, 버퍼로 시작하는 첫 활성 옵션을 찾습니다. 열려 있으면 탐색 위치(aria-activedescendant)만 옮기고, 닫혀 있으면 값을 확정합니다. 같은 문자를 반복하면 그 문자로 시작하는 옵션들을 순환하고, 버퍼가 비어 있지 않을 때의 Space는 확정이 아니라 버퍼에 공백을 덧붙입니다(공백이 포함된 라벨 도달). 비활성 옵션과 래핑 규칙은 Arrow 탐색과 동일합니다. |
-| 명시 규칙 2 | 타입 스케일 정합: 트리거와 옵션은 공통 --component-input-font-size(16px)를 사용합니다. WDS Select/AutoComplete 컴포넌트 집합 내부의 16px 텍스트 정의와 입력 계열의 본문 크기를 동시에 맞춥니다. |
-| 명시 규칙 3 | WDS 내부 Select/Select component-set(16215:33116)의 직접 축은 Active, Disable, Focus, Negative, Overflow, Render(Chip/Text)입니다. 옵션별 disabled와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다. |
+| 명시 규칙 2 | 로컬 WDS .fig의 열린 Select/Select variant는 내부 Menu instance(Variant=Checkbox, Cell Padding=12px)를 직접 합성하며, 그 option은 48px·16/24px Regular입니다. LDS는 checkbox 자체를 복제하지 않고 단일 선택에 맞는 trailing check로 번역하되, md/lg option의 comfortable 밀도는 보존합니다. |
+| 명시 규칙 3 | Carbon Dropdown은 필드와 option을 하나의 size ramp로 관리하고 열린 목록을 같은 선택 컴포넌트의 일부로 취급합니다. LDS는 WDS에 없는 sm 확장을 shared-menu default 40px 밀도로 대응시킵니다. |
+| 명시 규칙 4 | 타입·밀도 정합: 트리거와 옵션은 입력 계열의 size-aware typography를 함께 사용합니다. sm은 shared-menu default 밀도(40px, padding 10×16px, label1 14/20px), md와 lg는 comfortable 밀도(48px, padding 12×16px, body1 16/24px)에 대응합니다. 모든 크기는 panel radius 12px·padding 8px·gap 4px과 option radius 10px을 공유합니다. |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 
 ## Responsive
 
-- intrinsic-width 계약: option 집합을 재는 숨은 sizer는 absolute 배치로 normal flow에서 제외되어, root 높이를 trigger보다 키우지 않습니다.
-- 시각 델타: 기존 높이, 여백, 반경, 색상, 선택 채움, 그림자는 유지합니다. 탐색 중인 옵션의 내부 포커스 선은 확정 선택과 키보드 포커스를 구분합니다. 선택된 옵션이 나중에 비활성화되면 값은 보존하되 primary 강조를 중립 비활성 채움·전경으로 바꿉니다.
+- intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 absolute·clipped measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 scrollWidth를 바꾸지 않습니다. consumer의 root style이 지정한 minWidth, width, maxWidth는 측정 결과보다 우선합니다.
+- WDS 내부 Select/Select component-set(16215:33116)의 직접 축은 Active, Disable, Focus, Negative, Overflow, Render(Chip/Text)입니다. Size는 WDS 직접 축이 아니지만 열린 variant가 48px·16/24px Menu를 직접 포함하므로 md/lg 기본 option 밀도의 composition 근거로 사용합니다. 옵션별 disabled와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.
+- 시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px primary inset ring으로 분리합니다.
+- vars accepts only --lds-select-min-width, --lds-select-height, and --lds-select-dropdown-max-height. Consumer root width constraints still override intrinsic measurement.
 
 ## Content and writing
 
+- className/style and rootRef target the public field-stack root. The default ref, triggerClassName, and triggerStyle target the native combobox trigger.
+- Stable parts are root, label, control, trigger, value, indicators, dropdown, option, and message. Options additionally expose real data-active, data-selected, and data-disabled state.
 - 커스텀 단일 선택 드롭다운(스타일된 트리거 + 플로팅 패널, 시그널 포커스) — 네이티브 가 아닙니다. 옵션은 options(string[] 또는 {value,label}[]) 또는 자식으로 지정합니다. onChange는 선택된 value를 받습니다.
 
 ## Accessibility
@@ -101,11 +107,12 @@
 
 | Component | Relationship |
 | --- | --- |
+| `Chip` | 대표 시나리오에서 조합 |
+| `Input` | 대표 시나리오에서 조합 |
+| `SearchField` | 대표 시나리오에서 조합 |
 | `AutoComplete` | 대표 시나리오에서 조합 |
 | `Combobox` | 대표 시나리오에서 조합 |
 | `FormField` | 대표 시나리오에서 조합 |
-| `Input` | 대표 시나리오에서 조합 |
-| `SearchField` | 대표 시나리오에서 조합 |
 | `TagInput` | 대표 시나리오에서 조합 |
 | `Textarea` | 대표 시나리오에서 조합 |
 
@@ -125,7 +132,6 @@
 ### Tokens
 
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-assistive`
@@ -141,21 +147,31 @@
 - `--component-input-padding-x`
 - `--component-input-radius`
 - `--component-input-stack-gap`
+- `--component-menu-gap`
+- `--component-menu-item-hover-bg`
+- `--component-menu-item-min-height`
+- `--component-menu-item-padding-x`
+- `--component-menu-item-padding-y`
+- `--component-menu-item-radius`
+- `--component-menu-item-selected-bg`
+- `--component-menu-padding-x`
+- `--component-menu-padding-y`
+- `--component-menu-radius`
 - `--control-h-lg`
 - `--control-h-md`
 - `--control-h-sm`
 - `--font-sans`
-- `--fw-bold`
 - `--fw-medium`
+- `--fw-regular`
 - `--fw-semibold`
 - `--label2-size`
-- `--radius-lg`
-- `--radius-md`
+- `--lds-select-dropdown-max-height`
+- `--lds-select-height`
+- `--lds-select-min-width`
 - `--radius-pill`
 - `--shadow-md`
-- `--space-0-5`
-- `--space-1-5`
 - `--space-2-5`
+- `--space-3`
 - `--space-4-5`
 
 ### Source contracts
@@ -165,6 +181,10 @@
 - `components/forms/Select.prompt.md`
 - `stories/FormSelect.stories.jsx`
 
+## Migration
+
+- disable, negative, and small|medium|large are compatibility aliases; new code uses disabled, invalid/status, and sm|md|lg.
+
 ## Sources
 
 - Select prompt contract: `components/forms/Select.prompt.md`
@@ -172,3 +192,6 @@
 - [WAI-ARIA APG Select-Only Combobox Example](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/)
 - [WAI-ARIA APG Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)
 - [WAI-ARIA APG Listbox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/)
+- [Carbon Dropdown](https://carbondesignsystem.com/components/dropdown/usage/)
+- [Fluent Select](https://fluent2.microsoft.design/components/web/react/core/select/usage)
+- [Fluent Menu](https://fluent2.microsoft.design/components/web/react/core/menu/usage)

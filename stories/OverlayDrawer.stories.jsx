@@ -151,12 +151,15 @@ export const DrawerSheetFocusContract = {
 
     await userEvent.click(drawerTrigger);
     await waitFor(() => {
-      if (ownerDocument.activeElement !== canvasElement.querySelector('[data-testid="drawer-initial-focus"]')) {
+      if (ownerDocument.activeElement !== ownerDocument.querySelector('[data-testid="drawer-initial-focus"]')) {
         throw new Error('Drawer must honor initialFocusRef.');
       }
     });
 
-    const drawer = canvasElement.querySelector('[role="dialog"]');
+    const drawer = ownerDocument.querySelector('[role="dialog"]');
+    if (!drawer?.closest('[data-lds-overlay-portal]') || !canvasElement.closest('[inert]')) {
+      throw new Error('Drawer must use the shared modal Portal and inert the background.');
+    }
     const drawerTitle = drawer && ownerDocument.getElementById(drawer.getAttribute('aria-labelledby'));
     const drawerSubtitle = drawer && ownerDocument.getElementById(drawer.getAttribute('aria-describedby'));
     const drawerFirst = drawer?.querySelector('button[aria-label="닫기"]');
@@ -173,19 +176,22 @@ export const DrawerSheetFocusContract = {
 
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      if (canvasElement.querySelector('[role="dialog"]') || ownerDocument.activeElement !== drawerTrigger) {
+      if (ownerDocument.querySelector('[role="dialog"]') || ownerDocument.activeElement !== drawerTrigger) {
         throw new Error('Escape must close Drawer and restore its invoker.');
       }
     });
 
     await userEvent.click(sheetTrigger);
     await waitFor(() => {
-      if (ownerDocument.activeElement !== canvasElement.querySelector('[data-testid="sheet-initial-focus"]')) {
+      if (ownerDocument.activeElement !== ownerDocument.querySelector('[data-testid="sheet-initial-focus"]')) {
         throw new Error('Sheet must honor initialFocusRef.');
       }
     });
 
-    const sheet = canvasElement.querySelector('[role="dialog"]');
+    const sheet = ownerDocument.querySelector('[role="dialog"]');
+    if (!sheet?.closest('[data-lds-overlay-portal]') || !canvasElement.closest('[inert]')) {
+      throw new Error('Sheet must use the shared modal Portal and inert the background.');
+    }
     const sheetFirst = sheet?.querySelector('[data-testid="sheet-initial-focus"]');
     const sheetLast = sheet?.querySelector('[data-testid="sheet-last-action"]');
     if (!sheetFirst || !sheetLast) throw new Error('Sheet requires visible first and last actions.');
@@ -198,14 +204,14 @@ export const DrawerSheetFocusContract = {
 
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      if (canvasElement.querySelector('[role="dialog"]') || ownerDocument.activeElement !== sheetTrigger) {
+      if (ownerDocument.querySelector('[role="dialog"]') || ownerDocument.activeElement !== sheetTrigger) {
         throw new Error('Escape must close Sheet and restore its invoker.');
       }
     });
 
     await userEvent.click(drawerTrigger);
     await waitFor(() => {
-      if (ownerDocument.activeElement !== canvasElement.querySelector('[data-testid="drawer-initial-focus"]')) {
+      if (ownerDocument.activeElement !== ownerDocument.querySelector('[data-testid="drawer-initial-focus"]')) {
         throw new Error('The representative Drawer must remain open for visual review.');
       }
     });

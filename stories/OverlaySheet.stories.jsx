@@ -106,12 +106,12 @@ export const SheetNarrowContent = {
   play: async ({ canvasElement }) => {
     const ownerDocument = canvasElement.ownerDocument;
     await waitFor(() => {
-      const sheet = canvasElement.querySelector('[role="dialog"]');
+      const sheet = ownerDocument.querySelector('[role="dialog"]');
       if (!sheet || !sheet.contains(ownerDocument.activeElement)) {
         throw new Error('The narrow Sheet must move focus into its surface.');
       }
     });
-    const sheet = canvasElement.querySelector('[role="dialog"]');
+    const sheet = ownerDocument.querySelector('[role="dialog"]');
     const title = ownerDocument.getElementById(sheet.getAttribute('aria-labelledby'));
     const rect = sheet.getBoundingClientRect();
     if (!title?.textContent?.includes('표시 옵션') || rect.left < 0 || rect.right > ownerDocument.defaultView.innerWidth) {

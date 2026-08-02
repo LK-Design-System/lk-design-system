@@ -14,6 +14,9 @@
 - [WAI-ARIA APG Select-Only Combobox Example](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/): DOM 포커스를 트리거에 유지하고 `aria-activedescendant`로 탐색 옵션을 알리며, `Escape`가 값을 변경하지 않는 탐색/확정 분리를 따릅니다. 이 예제가 요구하는 인쇄 문자 타입어헤드(다중 문자 버퍼, 동일 문자 순환)도 함께 구현합니다.
 - [WAI-ARIA APG Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/): `combobox`와 `listbox`의 연결, 확장 상태, 방향키·확정·취소 키 계약을 따릅니다.
 - [WAI-ARIA APG Listbox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/): 단일 선택의 `option`/`aria-selected` 의미와 DOM 포커스 대신 `aria-activedescendant`를 쓰는 합성 위젯 모델을 따릅니다.
+- 로컬 WDS `.fig`의 열린 `Select/Select` variant는 내부 `Menu` instance(`Variant=Checkbox`, `Cell Padding=12px`)를 직접 합성하며, 그 option은 48px·16/24px Regular입니다. LDS는 checkbox 자체를 복제하지 않고 단일 선택에 맞는 trailing check로 번역하되, `md`/`lg` option의 comfortable 밀도는 보존합니다.
+- [Carbon Dropdown](https://carbondesignsystem.com/components/dropdown/usage/)은 필드와 option을 하나의 size ramp로 관리하고 열린 목록을 같은 선택 컴포넌트의 일부로 취급합니다. LDS는 WDS에 없는 `sm` 확장을 shared-menu default 40px 밀도로 대응시킵니다.
+- [Fluent Select](https://fluent2.microsoft.design/components/web/react/core/select/usage)와 [Fluent Menu](https://fluent2.microsoft.design/components/web/react/core/menu/usage)는 form value 선택과 즉시 실행 command를 구분합니다. LDS도 panel 시각 토큰만 공유하고 `listbox`와 `menu`의 DOM·focus 엔진은 공유하지 않습니다.
 
 ```jsx
 <Select label="문의 유형"
@@ -22,9 +25,16 @@
   onChange={(v) => setType(v)} />
 ```
 
-- 타입 스케일 정합: 트리거와 옵션은 공통 `--component-input-font-size`(16px)를 사용합니다. WDS Select/AutoComplete 컴포넌트 집합 내부의 16px 텍스트 정의와 입력 계열의 본문 크기를 동시에 맞춥니다.
-- intrinsic-width 계약: option 집합을 재는 숨은 sizer는 absolute 배치로 normal flow에서 제외되어, root 높이를 trigger보다 키우지 않습니다.
+- 타입·밀도 정합: 트리거와 옵션은 입력 계열의 size-aware typography를 함께 사용합니다. `sm`은 shared-menu `default` 밀도(40px, padding 10×16px, `label1` 14/20px), `md`와 `lg`는 `comfortable` 밀도(48px, padding 12×16px, `body1` 16/24px)에 대응합니다. 모든 크기는 panel radius 12px·padding 8px·gap 4px과 option radius 10px을 공유합니다.
+- intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 absolute·clipped measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 `scrollWidth`를 바꾸지 않습니다. consumer의 root `style`이 지정한 `minWidth`, `width`, `maxWidth`는 측정 결과보다 우선합니다.
 - `readOnly`는 현재 값과 포커스를 유지하지만 팝업을 열거나 값을 바꾸지 않으며, 대체 배경과 `aria-readonly`로 비활성과 구분합니다.
-- WDS 내부 `Select/Select` component-set(16215:33116)의 직접 축은 `Active`, `Disable`, `Focus`, `Negative`, `Overflow`, `Render(Chip/Text)`입니다. 옵션별 `disabled`와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.
+- WDS 내부 `Select/Select` component-set(16215:33116)의 직접 축은 `Active`, `Disable`, `Focus`, `Negative`, `Overflow`, `Render(Chip/Text)`입니다. `Size`는 WDS 직접 축이 아니지만 열린 variant가 48px·16/24px Menu를 직접 포함하므로 `md`/`lg` 기본 option 밀도의 composition 근거로 사용합니다. 옵션별 `disabled`와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.
 - 형제 비교: `AutoComplete`와 `Combobox`가 이미 비활성 옵션을 `aria-disabled`로 노출하고 탐색·선택에서 제외합니다. Select도 같은 규칙을 사용하되, 검색과 다중 선택은 가져오지 않습니다.
-- 시각 델타: 기존 높이, 여백, 반경, 색상, 선택 채움, 그림자는 유지합니다. 탐색 중인 옵션의 내부 포커스 선은 확정 선택과 키보드 포커스를 구분합니다. 선택된 옵션이 나중에 비활성화되면 값은 보존하되 primary 강조를 중립 비활성 채움·전경으로 바꿉니다.
+- 시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px primary inset ring으로 분리합니다. 일반 option은 regular weight이며, 선택된 option이 나중에 비활성화되면 값은 보존하되 중립 비활성 채움·전경으로 바꿉니다.
+
+## Public surface and ref
+
+- `className`/`style` and `rootRef` target the public field-stack root. The default ref, `triggerClassName`, and `triggerStyle` target the native combobox trigger.
+- Stable parts are `root`, `label`, `control`, `trigger`, `value`, `indicators`, `dropdown`, `option`, and `message`. Options additionally expose real `data-active`, `data-selected`, and `data-disabled` state.
+- `vars` accepts only `--lds-select-min-width`, `--lds-select-height`, and `--lds-select-dropdown-max-height`. Consumer root width constraints still override intrinsic measurement.
+- `disable`, `negative`, and `small|medium|large` are compatibility aliases; new code uses `disabled`, `invalid`/`status`, and `sm|md|lg`.

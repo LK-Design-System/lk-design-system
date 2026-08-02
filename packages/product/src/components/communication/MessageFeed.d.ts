@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 export type MessageFeedFollowingReason = 'user-scroll' | 'jump-to-latest';
+export type MessageFeedViewportInset = 'compact' | 'comfortable';
 
 export interface MessageFeedProps extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
   /** Accessible name for the focusable conversation log. @default "메시지 내역" */
@@ -13,6 +14,8 @@ export interface MessageFeedProps extends Omit<React.HTMLAttributes<HTMLElement>
   maxHeight?: number | string;
   /** Optional minimum viewport height for persistent conversation panels. */
   viewportMinHeight?: number | string;
+  /** Inline viewport padding. Use comfortable for reading surfaces and compact for dense embedded panels. @default "compact" */
+  viewportInset?: MessageFeedViewportInset;
   /** Mark the log as busy while its current contents are being updated. @default false */
   busy?: boolean;
   /** Show the history-loading action before the log. @default false */

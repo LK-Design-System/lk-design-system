@@ -330,7 +330,7 @@ async function testFieldShared(page) {
   assert(errorWiring.ariaInvalid === 'true', 'the fixture control reflects the invalid state');
 
   const pure = await page.evaluate(() => {
-    const { mergeIds, appendAriaReference, fieldBorderColor, fieldBackground } = window.__engine;
+    const { mergeIds, appendAriaReference, inlineFloatingStyle, fieldBorderColor, fieldBackground } = window.__engine;
     return {
       merged: mergeIds('a b', 'b', undefined, 'c'),
       empty: mergeIds(undefined, '', null) ?? 'undefined',
@@ -343,6 +343,10 @@ async function testFieldShared(page) {
       disabledBackground: fieldBackground({ disabled: true }),
       readOnlyBackground: fieldBackground({ readOnly: true }),
       restingBackground: fieldBackground({}),
+      inlineTopLeft: inlineFloatingStyle({ placement: 'top', align: 'left', offset: 6 }),
+      inlineBottomRight: inlineFloatingStyle({ placement: 'bottom', align: 'right', offset: 10 }),
+      inlineLeftCenter: inlineFloatingStyle({ placement: 'left', align: 'center', offset: 4 }),
+      inlineRightBottom: inlineFloatingStyle({ placement: 'right', align: 'trailing', offset: 'var(--space-2)', shiftX: 3, shiftY: -2 }),
     };
   });
   assert(pure.merged === 'a b c', 'mergeIds deduplicates and joins ids');
@@ -356,6 +360,12 @@ async function testFieldShared(page) {
   assert(pure.disabledBackground === 'var(--color-semantic-fill-normal)', 'disabled background token');
   assert(pure.readOnlyBackground === 'var(--color-semantic-fill-alternative)', 'read-only background token');
   assert(pure.restingBackground === 'var(--color-semantic-background-elevated-normal)', 'resting background token');
+  assert(pure.inlineTopLeft.bottom === 'calc(100% + 6px)' && pure.inlineTopLeft.left === 0, 'inline top/left placement anchors above the trigger');
+  assert(pure.inlineBottomRight.top === 'calc(100% + 10px)' && pure.inlineBottomRight.right === 0, 'inline bottom/right placement anchors below the trigger');
+  assert(pure.inlineLeftCenter.right === 'calc(100% + 4px)' && pure.inlineLeftCenter.top === '50%', 'inline left/center placement anchors beside the trigger');
+  assert(pure.inlineLeftCenter.transform === 'translateY(-50%)', 'inline vertical center alignment applies its cross-axis transform');
+  assert(pure.inlineRightBottom.left === 'calc(100% + var(--space-2))' && pure.inlineRightBottom.bottom === 0, 'inline right/trailing placement supports token offsets');
+  assert(pure.inlineRightBottom.translate === '3px -2px', 'inline placement preserves measured viewport shifts');
 }
 
 async function main() {
@@ -402,7 +412,7 @@ async function main() {
   if (uniqueConsoleErrors.length > 0) {
     throw new Error(`Engine contract harness emitted console/page errors:\n${uniqueConsoleErrors.join('\n')}`);
   }
-  console.log(`Validated engine contracts: ${passed} assertions across useMenuKeyboard, useLightDismiss, useFloatingPosition, useDialogFocus, and field-shared.`);
+  console.log(`Validated engine contracts: ${passed} assertions across useMenuKeyboard, useLightDismiss, useFloatingPosition/inlineFloatingStyle, useDialogFocus, and field-shared.`);
 }
 
 main().catch((error) => {

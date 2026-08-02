@@ -636,6 +636,7 @@ export const Narrow320 = {
         unreadCount={18}
         viewportMinHeight={300}
         maxHeight={300}
+        viewportInset="comfortable"
       >
         <FeedMessage id="narrow-1" authorRole="assistant" author="AI Assistant with a long display name" time="10:31">
           긴 주소 https://example.com/reports/quarterly-planning/very-long-reference-path-without-shortening 를 포함한 문서형 답변입니다.
@@ -661,10 +662,48 @@ export const Narrow320 = {
     if (wrapper.scrollWidth > wrapper.clientWidth + 1 || log.scrollWidth > log.clientWidth + 1) {
       throw new Error('MessageFeed must not create horizontal overflow at 320px.');
     }
+    const logStyle = getComputedStyle(log);
+    if (logStyle.paddingLeft !== '16px' || logStyle.paddingRight !== '16px') {
+      throw new Error(`The comfortable narrow viewport inset must resolve to 16px (received ${logStyle.paddingLeft}/${logStyle.paddingRight}).`);
+    }
     const presentations = Array.from(log.querySelectorAll('.lk-conversation-message'))
       .map((message) => message.dataset.messagePresentation);
     if (presentations.join(',') !== 'document,bubble') {
       throw new Error('The narrow feed must preserve assistant document and user bubble presentations.');
     }
+  },
+};
+
+export const ViewportInsetContract = {
+  name: 'Viewport inset contract',
+  tags: ['!dev'],
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-4)', width: 360, maxWidth: '100%' }}>
+      <MessageFeed ariaLabel="Compact message feed" following viewportInset="compact" maxHeight={160}>
+        <FeedMessage id="inset-compact" authorRole="assistant" author="AI" time="10:41">Compact inset</FeedMessage>
+      </MessageFeed>
+      <MessageFeed ariaLabel="Comfortable message feed" following viewportInset="comfortable" maxHeight={160}>
+        <FeedMessage id="inset-comfortable" authorRole="assistant" author="AI" time="10:42">Comfortable inset</FeedMessage>
+      </MessageFeed>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const compact = canvasElement.querySelector('[data-message-feed-viewport-inset="compact"]');
+    const comfortable = canvasElement.querySelector('[data-message-feed-viewport-inset="comfortable"]');
+    if (!compact || !comfortable) throw new Error('Both MessageFeed viewport inset contracts are required.');
+
+    const compactStyle = getComputedStyle(compact);
+    const comfortableStyle = getComputedStyle(comfortable);
+    if (compactStyle.paddingLeft !== '8px' || compactStyle.paddingRight !== '8px') {
+      throw new Error(`Compact MessageFeed inline inset must resolve to 8px (received ${compactStyle.paddingLeft}/${compactStyle.paddingRight}).`);
+    }
+    if (comfortableStyle.paddingLeft !== '16px' || comfortableStyle.paddingRight !== '16px') {
+      throw new Error(`Comfortable MessageFeed inline inset must resolve to 16px (received ${comfortableStyle.paddingLeft}/${comfortableStyle.paddingRight}).`);
+    }
+    [compactStyle, comfortableStyle].forEach((computed) => {
+      if (computed.paddingTop !== '12px' || computed.paddingBottom !== '12px') {
+        throw new Error(`MessageFeed block inset must remain 12px (received ${computed.paddingTop}/${computed.paddingBottom}).`);
+      }
+    });
   },
 };

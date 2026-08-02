@@ -305,13 +305,28 @@ async function assertPackedSelectTokenContract(packed, consumerDirectory) {
 }
 
 async function installPackedDependencies(packed, consumerDirectory) {
-  const dependencies = Object.fromEntries(packed.map(({ name, tarball }) => [
+  const localDependencies = Object.fromEntries(packed.map(({ name, tarball }) => [
     name,
     `file:${path.relative(consumerDirectory, tarball).replaceAll('\\', '/')}`,
   ]));
+  const includesLockedRobotics = packed.some(({ id }) => id === 'robotics');
   await writeFile(
     path.join(consumerDirectory, 'package.json'),
-    `${JSON.stringify({ name: 'lds-workspace-artifact-smoke', private: true, type: 'module', dependencies }, null, 2)}\n`,
+    `${JSON.stringify({
+      name: 'lds-workspace-artifact-smoke',
+      private: true,
+      type: 'module',
+      dependencies: localDependencies,
+      ...(includesLockedRobotics ? {
+        // The locked external Robotics package was published against an older
+        // Core/Product release. This smoke is about the candidate package set
+        // as one unit, so keep those edges local and registry-independent.
+        overrides: {
+          '@lk-design-system/lds-core': '$@lk-design-system/lds-core',
+          '@lk-design-system/lds-product': '$@lk-design-system/lds-product',
+        },
+      } : {}),
+    }, null, 2)}\n`,
   );
   await writeFile(
     path.join(consumerDirectory, '.npmrc'),
@@ -319,7 +334,7 @@ async function installPackedDependencies(packed, consumerDirectory) {
   );
   await run(
     npmCommand,
-    [...npmPrefixArguments, 'install', '--ignore-scripts', '--no-audit', '--no-fund', '--legacy-peer-deps'],
+    [...npmPrefixArguments, 'install', '--offline', '--ignore-scripts', '--no-audit', '--no-fund', '--legacy-peer-deps'],
     {
       cwd: consumerDirectory,
       env: { npm_config_cache: path.join(path.dirname(consumerDirectory), 'npm-cache') },

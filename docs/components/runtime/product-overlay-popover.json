@@ -12,7 +12,9 @@
     "Button"
   ],
   "purpose": "클릭한 trigger 주변에서 설명·미니 폼·피커처럼 자유로운 콘텐츠를 잠시 다룰 때 적합합니다. 명령 목록이나 작업을 막는 복잡한 흐름에는 Popover 대신 Dropdown Menu 또는 Modal을 사용하세요.",
-  "useWhen": [],
+  "useWhen": [
+    "The panel defaults to the common owner-document Portal (withinPortal=true), inherits the nearest explicit theme and dir, and uses the shared flip/clamp/topmost-dismiss stack. Use portalTarget or Provider configuration before opting out with withinPortal=false."
+  ],
   "avoidWhen": [
     "Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다."
   ],
@@ -49,8 +51,22 @@
       "owner": "PopoverProps"
     },
     {
-      "name": "width",
+      "name": "position",
+      "type": "'top' | 'bottom' | 'left' | 'right'",
+      "required": false,
+      "description": "Preferred side; flips when space is insufficient. @default \"bottom\"",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "offset",
       "type": "number",
+      "required": false,
+      "description": "Trigger-to-panel gap in pixels. @default 8",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "width",
+      "type": "number | string",
       "required": false,
       "description": "패널 너비(px). @default 260",
       "owner": "PopoverProps"
@@ -82,6 +98,48 @@
       "required": false,
       "description": "비모달 dialog 표면의 접근 가능한 이름. @default \"팝오버\"",
       "owner": "PopoverProps"
+    },
+    {
+      "name": "withinPortal",
+      "type": "boolean",
+      "required": false,
+      "description": "Render in the owner-document Portal so clipping ancestors cannot cut the panel. @default true",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "portalTarget",
+      "type": "HTMLElement | null",
+      "required": false,
+      "description": "Explicit Portal target; defaults to provider target or owner-document body.",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "zIndex",
+      "type": "number",
+      "required": false,
+      "description": "Explicit overlay layer override.",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "classNames",
+      "type": "LdsClassNames",
+      "required": false,
+      "description": "",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "styles",
+      "type": "LdsStyles",
+      "required": false,
+      "description": "",
+      "owner": "PopoverProps"
+    },
+    {
+      "name": "vars",
+      "type": "LdsVars",
+      "required": false,
+      "description": "",
+      "owner": "PopoverProps"
     }
   ],
   "states": [
@@ -106,12 +164,14 @@
     }
   ],
   "responsive": [
-    "패널은 선호 정렬을 유지하되 viewport 경계에서 반대쪽으로 flip하고 좌우를 clamp하며, 가용 높이를 넘는 본문만 세로 스크롤합니다."
+    "패널은 선호 정렬을 유지하되 viewport 경계에서 반대쪽으로 flip하고 좌우를 clamp하며, 가용 높이를 넘는 본문만 세로 스크롤합니다.",
+    "ref, className, and style target the anchor root. Stable parts are root, trigger, and panel; panel geometry is limited to --lds-popover-width and --lds-popover-max-height."
   ],
   "contentGuidance": [],
   "accessibility": [
     "trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup=\"dialog\"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요.",
     "open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는 trigger로 초점을 복원하지만 비모달 Popover 자체는 focus trap을 만들지 않아 Tab이 trigger 다음의 패널 입력으로 이동합니다.",
+    "position, align, and offset are canonical placement inputs. Products own the arbitrary panel content, while LDS owns trigger ARIA, Portal positioning, outside press, Escape, and focus restoration.",
     "WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다.",
     "ariaLabel — 트리거에 보이는 텍스트가 없을 때 팝오버 콘텐츠의 접근성 이름을 지정합니다."
   ],
@@ -136,7 +196,10 @@
       "code": "<Popover trigger={<Button variant=\"ghost\">옵션</Button>} width={280}>\n  <FormField label=\"반경\"><Slider defaultValue={30} /></FormField>\n</Popover>"
     }
   ],
-  "tokens": [],
+  "tokens": [
+    "--lds-popover-max-height",
+    "--lds-popover-width"
+  ],
   "apiLinks": [],
   "migration": [],
   "platformStatus": {
@@ -160,14 +223,14 @@
         "role": "interaction"
       }
     ],
-    "hiddenEvidence": 1
+    "hiddenEvidence": 2
   },
   "sources": [],
   "canonicalGuide": null,
   "guideDeltaFields": [],
   "sectionStatus": {
     "purpose": "evidence",
-    "useWhen": "omitted-no-evidence",
+    "useWhen": "evidence",
     "avoidWhen": "evidence",
     "anatomy": "evidence",
     "properties": "evidence",
@@ -180,7 +243,7 @@
     "exceptions": "omitted-no-evidence",
     "related": "evidence",
     "examples": "evidence",
-    "tokens": "omitted-no-evidence",
+    "tokens": "evidence",
     "apiLinks": "evidence",
     "migration": "omitted-no-evidence"
   }

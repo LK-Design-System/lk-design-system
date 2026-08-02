@@ -20,6 +20,19 @@
 
 아이콘·asset은 추가하지 않는다. Storybook의 기본/disabled/loading/긴 문구·오류/320px/native Enter 제출/Tab 순서가 조합 계약의 검증 근거다.
 
+## Select · DropdownMenu 계열 팝업 밀도 정렬 · 2026-08-02
+
+`Select`는 form-field trigger와 `combobox/listbox/option` 의미를 유지하면서 팝업 표면과 option row만 공통 menu 문법에 맞춘 Core 재설계다. panel은 radius 12px·padding 8px·gap 4px, option은 radius 10px을 사용한다. `sm`은 shared-menu `default`의 40px·14/20px, `md/lg`는 `comfortable`의 48px·16/24px에 대응한다. 선택 상태는 지속 배경과 check로, 키보드 탐색 상태는 별도 inset focus ring으로 구분한다. Select trigger·trigger 폭을 따르는 panel·단일 값 유지·listbox keyboard 계약은 DropdownMenu와 합치지 않는다.
+
+| 제품 자산 | 고정 source | 판정 | LDS와 제품의 책임 경계 |
+| --- | --- | --- | --- |
+| LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/ConnectionSettingsScreen.tsx` (`b04f91a96fc49b399dddfd89b5c23b785f8349b0`) | supported by composition | full-width controlled robot-type 선택을 size-aware Select로 조합할 수 있다. robot-type vocabulary, config hydration·저장, connect/disconnect와 transport 상태는 Web Viz가 소유한다. |
+| LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/user/index.jsx` (`8912b51c6eb612bd2beb2ed0206ee78ae6f03f2d`) | supported by composition | `small` 120px role/status filter와 `medium` full-width required form field를 각각 `sm/default`와 `md/comfortable`로 조합할 수 있다. filter 적용·query·pagination, validation과 user mutation은 Control이 소유한다. |
+| LK Context Hub | `LK-ROBOTICS/lk_context_hub` · `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/chat/PortalChatPanel.tsx` (`b3a8a2eb0d33ff46be46c30413994de874d456d8`) | supported by composition | 제한 폭의 동적 project selector와 loading disabled 상태를 지원한다. project option·scope resolution·session policy, provider/RAG·persistence와 chat-header reflow는 Context Hub가 소유한다. |
+| LK Portal · 보조 consumer evidence | `LK-ROBOTICS-AX/lk_portal` · `372a826b3d7f9f11cc29b0fd7b575ca0480228e0` · `src/components/chat/FloatingChat.tsx` (`6e2840f52850af8c25f49b6635b2bdcce780c737`) · `src/app/globals.css` (`3d00cf6be709733ea4c42f8d009f70663dce9621`) | supported by composition | `chat-context-scope`가 LDS `Select size="sm"`을 직접 사용한다. 그러나 wrapper의 2열 grid, `small { grid-column: 2 }`, native `.chat-context-picker select` selector는 LDS root+button anatomy와 맞지 않는다. 답변 범위의 배치 수정은 Portal wrapper/grid 책임이며 LDS 전역 anatomy나 popup token으로 보정하지 않는다. |
+
+필수 세 제품의 판정은 모두 `supported by composition`이다. LK Portal 행은 필수 Context Hub 판정을 대체하지 않는 실제 consumer 보조 evidence다. 제품 source는 component 필요성, 크기·폭 제약, 상태와 ownership seam만 증명하며 LDS anatomy·색·token 값의 설계 authority로 사용하지 않는다.
+
 ## 필수 LK 제품 자산 교차 검토
 
 앞으로 신규 컴포넌트, 대규모 재설계, 도메인 컴포넌트 품질 검토는 Storybook이나 LDS 코드만 보고 완료 처리하지 않는다. 실제 LK 제품 자산의 코드와 이미 구현된 프론트엔드를 확인하여, 공유 컴포넌트가 실제 사용자 워크플로우를 조합 가능한 형태로 지원하는지 검토한다.
@@ -130,8 +143,8 @@ analytics, slide 내용, 권한, CTA 결과와 자동 회전 사용 여부는 �
 ### DropdownMenu 밀도·적응형 너비 재설계 제품 자산 판정 · 2026-07-26
 
 `DropdownMenu`는 trigger에 연결된 명령·선택 목록까지만 소유합니다. 이번 변경은
-DropdownMenu·TopBar·LanguageSwitcher의 기본 시각 밀도를 `8px shell / 44px row /
-10px 12px row padding`으로 통일하고, 기본 폭을 콘텐츠 기반 `176–320px` 범위로 제한합니다.
+DropdownMenu·TopBar·LanguageSwitcher의 기본 시각 밀도를 `8px shell / 40px row /
+10px 16px row padding`으로 통일하고, 기본 폭을 콘텐츠 기반 `176–320px` 범위로 제한합니다.
 고정 폭은 제품 레이아웃 정렬이 요구하는 명시적 예외이며, 제품별 action, mutation, confirmation,
 persistence를 공용 컴포넌트로 끌어오지 않습니다.
 

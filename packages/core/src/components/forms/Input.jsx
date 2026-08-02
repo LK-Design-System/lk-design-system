@@ -8,6 +8,7 @@ import {
   fieldTypography,
   mergeIds,
 } from './field-shared.js';
+import { componentVars, partClassName, partStyle } from '../internal/surface.js';
 
 function usePlaceholderStyle() {
   React.useEffect(() => {
@@ -24,7 +25,7 @@ function usePlaceholderStyle() {
  * Text field with optional label and leading/trailing icon. White box,
  * hairline ring, 12px radius, 48px default height. Focus = signal-ink ring + soft halo.
  */
-export function Input({
+export const Input = React.forwardRef(function Input({
   label,
   helper,
   error,
@@ -47,10 +48,17 @@ export function Input({
   platform,
   variant,
   id,
+  className,
   style,
+  inputClassName,
+  inputStyle,
+  classNames,
+  styles,
+  vars,
+  rootRef,
   'aria-label': ariaLabel,
   ...rest
-}) {
+}, forwardedRef) {
   const autoId = React.useId();
   const inputId = id || `in-${autoId}`;
   const message = error ?? helper;
@@ -70,25 +78,48 @@ export function Input({
   const endIcon = trailingIcon ?? iconRight;
   const endAction = trailingButton ?? actionRight;
   return (
-    <div data-readonly={readOnly ? 'true' : undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--component-input-stack-gap)', ...style }}>
-      <FieldLabel htmlFor={inputId} label={label} required={required} disabled={disabled} />
+    <div
+      ref={rootRef}
+      data-slot="root"
+      data-disabled={disabled ? 'true' : undefined}
+      data-readonly={readOnly ? 'true' : undefined}
+      data-invalid={isInvalid ? 'true' : undefined}
+      data-size={normalizedSize}
+      className={partClassName(classNames, 'root', className) || undefined}
+      style={{ ...componentVars(vars, '--lds-input-'), display: 'flex', flexDirection: 'column', gap: 'var(--component-input-stack-gap)', ...partStyle(styles, 'root'), ...style }}
+    >
+      <FieldLabel
+        data-slot="label"
+        className={partClassName(classNames, 'label') || undefined}
+        style={partStyle(styles, 'label')}
+        htmlFor={inputId}
+        label={label}
+        required={required}
+        disabled={disabled}
+      />
       <div
+        data-slot="control"
+        className={partClassName(classNames, 'control') || undefined}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         style={{
-        position: 'relative', display: 'flex', alignItems: 'center', gap: 'var(--component-input-gap)',
-        height: h, padding: '0 var(--component-input-padding-x)',
+        position: 'relative', display: 'flex', alignItems: 'center', gap: 'var(--lds-input-gap, var(--component-input-gap))',
+        height: `var(--lds-input-height, ${h})`, padding: '0 var(--lds-input-padding-inline, var(--component-input-padding-x))',
         background: fieldBackground({ disabled, readOnly }),
         border: `var(--component-input-border-width) solid ${ring}`,
-        borderRadius: 'var(--component-input-radius)',
+        borderRadius: 'var(--lds-input-radius, var(--component-input-radius))',
         boxShadow: activeFocus && !isInvalid ? 'var(--component-input-focus-shadow)' : 'none',
         transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
+        ...partStyle(styles, 'control'),
       }}>
-        {startIcon && <span style={{ color: 'var(--color-semantic-label-alternative)', display: 'inline-flex', flex: '0 0 auto' }}>{startIcon}</span>}
+        {startIcon && <span data-slot="startIcon" className={partClassName(classNames, 'startIcon') || undefined} style={{ color: 'var(--color-semantic-label-alternative)', display: 'inline-flex', flex: '0 0 auto', ...partStyle(styles, 'startIcon') }}>{startIcon}</span>}
         <input
+          ref={forwardedRef}
           id={inputId}
+          data-slot="input"
           data-lds-field=""
           {...rest}
+          className={partClassName(classNames, 'input', inputClassName) || undefined}
           disabled={disabled}
           readOnly={readOnly}
           required={required}
@@ -97,13 +128,13 @@ export function Input({
           aria-invalid={isInvalid || rest['aria-invalid'] || undefined}
           onFocus={(e) => { setFocused(true); rest.onFocus && rest.onFocus(e); }}
           onBlur={(e) => { setFocused(false); rest.onBlur && rest.onBlur(e); }}
-          style={{ flex: 1, minWidth: 0, height: '100%', boxSizing: 'border-box', border: 'none', outline: 'none', background: 'transparent', cursor: disabled ? 'not-allowed' : readOnly ? 'text' : undefined, fontFamily: 'var(--font-sans)', ...fieldTypography(normalizedSize), color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)' }}
+          style={{ flex: 1, minWidth: 0, height: '100%', boxSizing: 'border-box', border: 'none', outline: 'none', background: 'transparent', cursor: disabled ? 'not-allowed' : readOnly ? 'text' : undefined, fontFamily: 'var(--font-sans)', ...fieldTypography(normalizedSize), color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)', ...partStyle(styles, 'input'), ...inputStyle }}
         />
-        {endIcon && <span style={{ color: 'var(--color-semantic-label-alternative)', display: 'inline-flex', flex: '0 0 auto' }}>{endIcon}</span>}
-        {!endIcon && <FieldStatusIcon invalid={isInvalid} status={status} />}
-        {endAction && <span style={{ display: 'inline-flex', flex: '0 0 auto' }}>{endAction}</span>}
+        {endIcon && <span data-slot="endIcon" className={partClassName(classNames, 'endIcon') || undefined} style={{ color: 'var(--color-semantic-label-alternative)', display: 'inline-flex', flex: '0 0 auto', ...partStyle(styles, 'endIcon') }}>{endIcon}</span>}
+        {!endIcon && (isInvalid || status === 'positive') && <span data-slot="statusIcon" className={partClassName(classNames, 'statusIcon') || undefined} style={{ display: 'inline-flex', ...partStyle(styles, 'statusIcon') }}><FieldStatusIcon invalid={isInvalid} status={status} /></span>}
+        {endAction && <span data-slot="action" className={partClassName(classNames, 'action') || undefined} style={{ display: 'inline-flex', flex: '0 0 auto', ...partStyle(styles, 'action') }}>{endAction}</span>}
       </div>
-      <FieldMessage id={messageId} message={message} error={error} status={status} />
+      <FieldMessage data-slot="message" className={partClassName(classNames, 'message') || undefined} style={partStyle(styles, 'message')} id={messageId} message={message} error={error} status={status} />
     </div>
   );
-}
+});

@@ -1,5 +1,11 @@
 **SearchField** — 앞에 돋보기, 지우기 어포던스가 있는 검색 입력.
 
+## Public surface and ref
+
+- `ref` points to the native search input; use `rootRef` for the complete field stack.
+- `className` and `style` customize the root. `controlClassName`/`controlStyle` target the bordered shell and `inputClassName`/`inputStyle` target the native input.
+- Stable parts are `root`, `label`, `control`, `startIcon`, `input`, `statusIcon`, `clearButton`, and `message`. Only documented `--lds-search-field-*` geometry variables are accepted.
+
 ## Interaction and reference basis
 
 - Keep a visible label whenever the surrounding context does not already name the search. Enter submits the current query; Escape clears it. The clear action is 32px, has a contextual name such as `로봇 검색 지우기`, and is disabled with the field.

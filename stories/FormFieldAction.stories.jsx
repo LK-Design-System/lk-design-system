@@ -29,7 +29,7 @@ const meta = {
       eyebrow: 'Product / Field Action',
       title: 'FieldAction은 입력과 그 값을 사용하는 한 개의 동작을 같은 밀도로 묶습니다',
       description:
-        '발급·조회·추가처럼 입력값에 대한 명시적 action을 별도 동작 버튼으로 유지합니다. 좁은 폭에서는 입력 다음 줄에 전체 너비 action을 배치하며 값과 side effect는 제품이 소유합니다.',
+        '발급·조회·추가처럼 입력값에 대한 명시적 action이 한 개일 때 적합합니다. 입력 내부 addon이나 여러 동작을 나열하는 용도로는 피해야 합니다. 좁은 폭에서는 입력 다음 줄에 전체 너비 action을 배치하며 값과 side effect는 제품이 소유합니다.',
     },
     docs: {
       description: {
@@ -90,7 +90,7 @@ export const FieldActionStates = {
 };
 
 export const FieldActionNarrow = {
-  name: '좁은 폭·긴 문구·오류',
+  name: '반응형 · 좁은 폭·긴 문구·오류',
   parameters: storyDescription(
     '320px에서 긴 label·error와 action이 겹치지 않고 입력 다음 줄로 reflow합니다. action은 전체 너비가 되고 DOM·Tab 순서는 변하지 않습니다.',
   ),
@@ -191,4 +191,44 @@ export const FieldActionVisualParity = {
       </section>
     </main>
   ),
+};
+
+function FieldActionSurfaceRefFixture() {
+  const ref = React.useRef(null);
+  React.useLayoutEffect(() => {
+    ref.current?.setAttribute('data-ref-target', 'field-action-root');
+  }, []);
+  return (
+    <FieldAction
+      ref={ref}
+      as="form"
+      aria-label="발급 계약"
+      field={<Input aria-label="연결 이름" defaultValue="개발 PC" />}
+      action={<Button type="button">발급</Button>}
+      className="contract-field-action-root"
+      classNames={{ row: 'contract-field-action-row' }}
+      styles={{ action: { alignItems: 'center' } }}
+      vars={{ '--lds-field-action-gap': '13px' }}
+    />
+  );
+}
+
+export const SurfaceRefContract = {
+  name: 'Surface and ref contract',
+  tags: ['!dev'],
+  render: () => <FieldActionSurfaceRefFixture />,
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('[data-ref-target="field-action-root"]');
+    const row = root?.querySelector('[data-slot="row"]');
+    const action = root?.querySelector('[data-slot="action"]');
+    if (!(root instanceof HTMLFormElement) || root.dataset.slot !== 'root') {
+      throw new Error('FieldAction ref must follow the polymorphic root.');
+    }
+    if (!root.classList.contains('contract-field-action-root') || !row?.classList.contains('contract-field-action-row')) {
+      throw new Error('FieldAction root and named row classes must compose independently.');
+    }
+    if (getComputedStyle(row).columnGap !== '13px' || getComputedStyle(action).alignItems !== 'center') {
+      throw new Error('FieldAction vars and named-part styles must reach their documented targets.');
+    }
+  },
 };

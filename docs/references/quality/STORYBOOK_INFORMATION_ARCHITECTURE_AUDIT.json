@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "869badb168d02bb11fe4919194973691d2029176aad16af81d719d42e048edaf",
+    "storybookIndexSha256": "b99411630e45337cef29b14a53c37ebf6b6febc7a87a044296c022019df74080",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,27 +62,27 @@
   },
   "summary": {
     "pages": 191,
-    "stories": 644,
-    "publicStories": 460,
-    "hiddenStories": 184,
+    "stories": 669,
+    "publicStories": 462,
+    "hiddenStories": 207,
     "componentDescriptions": 187,
     "pagesWithVisibleCanvasIntroduction": 187,
-    "pagesWithDecisionGuidance": 179,
-    "describedPublicStories": 460,
-    "reviewedPages": 190,
-    "reviewedStories": 635,
-    "staleReviewedPages": 3,
+    "pagesWithDecisionGuidance": 180,
+    "describedPublicStories": 462,
+    "reviewedPages": 191,
+    "reviewedStories": 669,
+    "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
       "overview": 175,
-      "usage": 35,
+      "usage": 36,
       "variants-states": 95,
       "interaction": 53,
-      "responsive": 65,
+      "responsive": 66,
       "scenario": 21,
       "visual-parity": 89,
-      "internal-contract": 91
+      "internal-contract": 114
     },
     "dispositions": {
       "keep": 191,
@@ -93,9 +93,9 @@
     "layers": {
       "Core": {
         "pages": 57,
-        "stories": 189,
-        "public": 113,
-        "hidden": 76,
+        "stories": 206,
+        "public": 114,
+        "hidden": 92,
         "guideReadyPages": 57
       },
       "Foundation": {
@@ -107,16 +107,16 @@
       },
       "Product": {
         "pages": 114,
-        "stories": 427,
-        "public": 326,
-        "hidden": 101,
-        "guideReadyPages": 113
+        "stories": 434,
+        "public": 327,
+        "hidden": 107,
+        "guideReadyPages": 114
       },
       "Theme": {
         "pages": 3,
-        "stories": 5,
+        "stories": 6,
         "public": 3,
-        "hidden": 2,
+        "hidden": 3,
         "guideReadyPages": 3
       },
       "Other": {
@@ -227,7 +227,7 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/Button.stories.jsx",
-      "sourceSha256": "4b2612606959e959ec3586e8c26b3a502f550cb5903a2416b215361867a1aea7",
+      "sourceSha256": "d3bca1f0941578884948405273d35bfc2f23d0eecc03a2fcb0f41f06bb7496c1",
       "primaryOwner": "Button",
       "ownerComponents": [
         "Button"
@@ -237,7 +237,7 @@
       ],
       "visibility": {
         "public": 7,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -252,8 +252,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "4b2612606959e959ec3586e8c26b3a502f550cb5903a2416b215361867a1aea7",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "d3bca1f0941578884948405273d35bfc2f23d0eecc03a2fcb0f41f06bb7496c1",
       "stories": [
         {
           "id": "lds-core-components-action-button--playground",
@@ -421,6 +421,29 @@
             "Button"
           ],
           "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-action-button--surface-ref-contract",
+          "name": "Surface and ref contract",
+          "exportName": "SurfaceRefContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Button"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
@@ -516,7 +539,7 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/ActionIconButton.stories.jsx",
-      "sourceSha256": "5ac864413190710a3b051a82448ce4ee8bb91543130ef3468bbf556732e45d97",
+      "sourceSha256": "3a122ba480ec113c73db1c1bd0e77163ffa45f29d91aef3bfe38522f96123d0b",
       "primaryOwner": "IconButton",
       "ownerComponents": [
         "IconButton"
@@ -526,7 +549,7 @@
       ],
       "visibility": {
         "public": 2,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -541,8 +564,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "5ac864413190710a3b051a82448ce4ee8bb91543130ef3468bbf556732e45d97",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "3a122ba480ec113c73db1c1bd0e77163ffa45f29d91aef3bfe38522f96123d0b",
       "stories": [
         {
           "id": "lds-core-components-action-icon-button--icon-button-variants",
@@ -593,6 +616,31 @@
           "supportingComponents": [
             "Icon"
           ]
+        },
+        {
+          "id": "lds-core-components-action-icon-button--size-contract",
+          "name": "Size contract",
+          "exportName": "SizeContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "IconButton"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
@@ -876,7 +924,7 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/Card.stories.jsx",
-      "sourceSha256": "ffd4bc13b98e2180487070e3b54d8dcf65332b6b12b9145a7c5a3ddecefc6996",
+      "sourceSha256": "9a66a493bab875dc3c7cee30fef7e275677da4207d1840e5e768a323b95b326d",
       "primaryOwner": "Card",
       "ownerComponents": [
         "Card"
@@ -891,7 +939,7 @@
       ],
       "visibility": {
         "public": 6,
-        "hidden": 1
+        "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -906,8 +954,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-01",
-      "reviewedSourceSha256": "6812eb97ed56198dd5855b7270b9c4ebea2b93415ce18e83845c9ecbb3878a4f",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "9a66a493bab875dc3c7cee30fef7e275677da4207d1840e5e768a323b95b326d",
       "stories": [
         {
           "id": "lds-core-components-content-card--playground",
@@ -979,12 +1027,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Card"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-core-components-content-card--content-card-patterns",
@@ -1083,6 +1132,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-content-card--surface-ref-contract",
+          "name": "Surface and ref contract",
+          "exportName": "SurfaceRefContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Card"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
       "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
@@ -1988,18 +2060,19 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/ContentTooltip.stories.jsx",
-      "sourceSha256": "6238a96b5d6e2e911bc9804b1669d1daa8bb837b891ca9088319038713d8b027",
+      "sourceSha256": "4c57f3ceb6aa1d9fc339b67492f692ce26686499a252145238a8abfa47a9d68a",
       "primaryOwner": "Tooltip",
       "ownerComponents": [
         "Tooltip"
       ],
       "supportingComponents": [
+        "Button",
         "Icon",
         "IconButton"
       ],
       "visibility": {
         "public": 3,
-        "hidden": 1
+        "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -2014,8 +2087,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "6238a96b5d6e2e911bc9804b1669d1daa8bb837b891ca9088319038713d8b027",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "4c57f3ceb6aa1d9fc339b67492f692ce26686499a252145238a8abfa47a9d68a",
       "stories": [
         {
           "id": "lds-core-components-content-tooltip--tooltip-patterns",
@@ -2096,6 +2169,31 @@
             "IconButton"
           ],
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+        },
+        {
+          "id": "lds-core-components-content-tooltip--surface-ref-portal-contract",
+          "name": "Surface, ref, and Portal contract",
+          "exportName": "SurfaceRefPortalContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Tooltip"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-core-components-content-tooltip--tooltip-bubble-bookmark-divider-card",
@@ -2981,7 +3079,7 @@
       "layer": "Core",
       "family": "Navigation",
       "importPath": "./stories/NavigationTabs.stories.jsx",
-      "sourceSha256": "f8f320a8ac4c4ce4241996e669e054e7634eecc1edfaccf274c40738c3d2bc75",
+      "sourceSha256": "3643f2cc442363df438644a0f58cc7c17f2ce20202d168a47b4b8a96a4219db3",
       "primaryOwner": "Tabs",
       "ownerComponents": [
         "Tabs"
@@ -2989,7 +3087,7 @@
       "supportingComponents": [],
       "visibility": {
         "public": 1,
-        "hidden": 1
+        "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -3004,8 +3102,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-01",
-      "reviewedSourceSha256": "f8f320a8ac4c4ce4241996e669e054e7634eecc1edfaccf274c40738c3d2bc75",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "3643f2cc442363df438644a0f58cc7c17f2ce20202d168a47b4b8a96a4219db3",
       "stories": [
         {
           "id": "lds-core-components-navigation-tabs--tab-patterns",
@@ -3030,6 +3128,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-08-01 source and built-browser review confirmed the token-length padding fixture, full 2px in-box indicator, no cross-axis overflow, keyboard contract, role, ownership, and public visibility."
+        },
+        {
+          "id": "lds-core-components-navigation-tabs--surface-ref-contract",
+          "name": "Surface and ref contract",
+          "exportName": "SurfaceRefContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Tabs"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-core-components-navigation-tabs--tabs-card",
@@ -3216,7 +3337,7 @@
       "layer": "Core",
       "family": "Overlay",
       "importPath": "./stories/OverlayConfirmDialog.stories.jsx",
-      "sourceSha256": "ac2713c21c7d12eb754db349873efd05073288f9fa2ba851b3c31ffe44e6a727",
+      "sourceSha256": "44ffd653b008807ff1c1ab9447630180a27aece8a0fe417c41deaa6dedc57a85",
       "primaryOwner": "ConfirmDialog",
       "ownerComponents": [
         "ConfirmDialog"
@@ -3242,8 +3363,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "ac2713c21c7d12eb754db349873efd05073288f9fa2ba851b3c31ffe44e6a727",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "44ffd653b008807ff1c1ab9447630180a27aece8a0fe417c41deaa6dedc57a85",
       "stories": [
         {
           "id": "lds-core-components-overlay-confirm-dialog--confirmation-states",
@@ -3417,18 +3538,19 @@
       "layer": "Core",
       "family": "Overlay",
       "importPath": "./stories/OverlayDropdownMenu.stories.jsx",
-      "sourceSha256": "64cc71b33091faadf066620337ed03fcfd2d9709cc079270f8212f3302ebdf08",
+      "sourceSha256": "1c015d261c90b7be855c6bcb65e499ce63c87c4653f2196ad10848915d6600b6",
       "primaryOwner": "DropdownMenu",
       "ownerComponents": [
         "DropdownMenu"
       ],
       "supportingComponents": [
         "Button",
-        "Icon"
+        "Icon",
+        "Table"
       ],
       "visibility": {
         "public": 4,
-        "hidden": 1
+        "hidden": 3
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -3443,8 +3565,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "64cc71b33091faadf066620337ed03fcfd2d9709cc079270f8212f3302ebdf08",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "1c015d261c90b7be855c6bcb65e499ce63c87c4653f2196ad10848915d6600b6",
       "stories": [
         {
           "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-patterns",
@@ -3554,6 +3676,32 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
+          "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-table-overflow-contract",
+          "name": "계약 · 스크롤 컨테이너 탈출",
+          "exportName": "DropdownMenuTableOverflowContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DropdownMenu"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Table"
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
+        },
+        {
           "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-card",
           "name": "DropdownMenu card parity",
           "exportName": "DropdownMenuCard",
@@ -3575,6 +3723,31 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-overlay-dropdown-menu--surface-ref-portal-contract",
+          "name": "Surface, ref, and Portal contract",
+          "exportName": "SurfaceRefPortalContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DropdownMenu"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
@@ -3584,7 +3757,7 @@
       "layer": "Core",
       "family": "Overlay",
       "importPath": "./stories/OverlayModal.stories.jsx",
-      "sourceSha256": "3cdd8fe762960ac60da58b326ae674b0897bb0db96249028bf7b572cbdc2d3be",
+      "sourceSha256": "b52f113863655a379408dfa9a097ecc8e8a24e148da022db1f3111d36d4d26e3",
       "primaryOwner": "Modal",
       "ownerComponents": [
         "Modal"
@@ -3594,7 +3767,7 @@
       ],
       "visibility": {
         "public": 3,
-        "hidden": 1
+        "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -3609,8 +3782,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "3cdd8fe762960ac60da58b326ae674b0897bb0db96249028bf7b572cbdc2d3be",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "b52f113863655a379408dfa9a097ecc8e8a24e148da022db1f3111d36d4d26e3",
       "stories": [
         {
           "id": "lds-core-components-overlay-modal--modal-open",
@@ -3711,6 +3884,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-overlay-modal--surface-ref-portal-contract",
+          "name": "Surface, ref, and Portal contract",
+          "exportName": "SurfaceRefPortalContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Modal"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
@@ -4445,7 +4641,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormInput.stories.jsx",
-      "sourceSha256": "3a5e62bcf4159cc6aef510c9585f14eb1674faae815f1e4aa4fb26b9be815236",
+      "sourceSha256": "afadb0a9f9d6bad10f4115d9fd9214292b4aac6859d0f27cacbe5ce10e221eda",
       "primaryOwner": "Input",
       "ownerComponents": [
         "Input"
@@ -4455,7 +4651,7 @@
       ],
       "visibility": {
         "public": 2,
-        "hidden": 3
+        "hidden": 4
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -4470,8 +4666,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "3a5e62bcf4159cc6aef510c9585f14eb1674faae815f1e4aa4fb26b9be815236",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "afadb0a9f9d6bad10f4115d9fd9214292b4aac6859d0f27cacbe5ce10e221eda",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-input--input-overview",
@@ -4590,6 +4786,29 @@
             "Icon"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-input--surface-ref-contract",
+          "name": "Surface and ref contract",
+          "exportName": "SurfaceRefContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Input"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
@@ -4726,7 +4945,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormSearchAutocomplete.stories.jsx",
-      "sourceSha256": "7bd3f4ffe28d5d129e0d37627b531c9ca5e099b68a5adad75ecc4be2526a3bcc",
+      "sourceSha256": "9803892081927660115d3d5e520027706c111de7807241330a7d5bb8c61ea604",
       "primaryOwner": "SearchField",
       "ownerComponents": [
         "AutoComplete",
@@ -4737,7 +4956,7 @@
       "supportingComponents": [],
       "visibility": {
         "public": 1,
-        "hidden": 6
+        "hidden": 7
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -4752,8 +4971,8 @@
       "dispositionReason": "Kept as one LDS search/autocomplete page. The accepted local .fig snapshot has no WDS Search Field, Autocomplete, Combobox, or Tag Input component-set (only Search and Tag icons match); WDS Selection and Input centers on the single Textinput set. These are LDS extensions of Textinput, so splitting them into standalone WDS-component pages would invent taxonomy WDS does not define.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "7bd3f4ffe28d5d129e0d37627b531c9ca5e099b68a5adad75ecc4be2526a3bcc",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "9803892081927660115d3d5e520027706c111de7807241330a7d5bb8c61ea604",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-and-autocomplete",
@@ -4920,6 +5139,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-field-surface-ref-contract",
+          "name": "SearchField surface and ref contract",
+          "exportName": "SearchFieldSurfaceRefContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SearchField"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
@@ -4929,7 +5171,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/SelectionSegmentedControl.stories.jsx",
-      "sourceSha256": "23224ee0b55d7481e99d670872cd0ba8f9539d8ae77439ac80c5233aab06312e",
+      "sourceSha256": "76e7d6d56d98adedfc3f329379f8783dca163748eef6649eeaa4c6c671904902",
       "primaryOwner": "SegmentedControl",
       "ownerComponents": [
         "SegmentedControl"
@@ -4939,7 +5181,7 @@
       ],
       "visibility": {
         "public": 1,
-        "hidden": 4
+        "hidden": 5
       },
       "descriptionEvidence": {
         "componentDescription": false,
@@ -4954,8 +5196,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "db891d9df9fd05ed7112b29870179492477d4d78e0713e7ca81f716d9d407c07",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "76e7d6d56d98adedfc3f329379f8783dca163748eef6649eeaa4c6c671904902",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-segmented-control--segmented-control-overview",
@@ -4995,12 +5237,13 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "SegmentedControl"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-core-components-selection-and-input-segmented-control--segmented-keyboard-contract",
@@ -5069,6 +5312,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-segmented-control--surface-ref-contract",
+          "name": "Surface and ref contract",
+          "exportName": "SurfaceRefContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SegmentedControl"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
@@ -5078,20 +5344,24 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormSelect.stories.jsx",
-      "sourceSha256": "23667182f9d86f072d0447525920758a8d8384303e51229ab74fe23c9c6f603d",
+      "sourceSha256": "c5e6bc1884c4b2d69267452e3484e872432aec58445f909bb597893908263935",
       "primaryOwner": "Select",
       "ownerComponents": [
         "Select"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "Chip",
+        "Input",
+        "SearchField"
+      ],
       "visibility": {
-        "public": 1,
-        "hidden": 4
+        "public": 2,
+        "hidden": 8
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-selection-and-input-select--selects",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -5101,8 +5371,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "23667182f9d86f072d0447525920758a8d8384303e51229ab74fe23c9c6f603d",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "c5e6bc1884c4b2d69267452e3484e872432aec58445f909bb597893908263935",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-select--selects",
@@ -5128,6 +5398,29 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
+          "id": "lds-core-components-selection-and-input-select--select-popup-densities",
+          "name": "사용법 · 팝업 밀도",
+          "exportName": "SelectPopupDensities",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Select"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 public usage review confirmed that the three field sizes expose the intended default/comfortable popup density distinction without duplicating the overview."
+        },
+        {
           "id": "lds-core-components-selection-and-input-select--select-disabled-option-contract",
           "name": "비활성 옵션과 동적 잠금 계약",
           "exportName": "SelectDisabledOptionContract",
@@ -5149,6 +5442,56 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, internal-contract role, ownership, and hidden visibility review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-select--select-stable-option-width-contract",
+          "name": "옵션 집합 기준 고정 폭 계약",
+          "exportName": "SelectStableOptionWidthContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Select"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-select--compact-field-typography-contract",
+          "name": "Compact field typography contract",
+          "exportName": "CompactFieldTypographyContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Select"
+          ],
+          "supportingComponents": [
+            "Chip",
+            "Input",
+            "SearchField"
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-core-components-selection-and-input-select--select-state-contract",
@@ -5217,9 +5560,55 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-select--select-popup-density-contract",
+          "name": "Select popup density contract",
+          "exportName": "SelectPopupDensityContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Select"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 internal-contract review confirmed shared menu shell metrics, selected/hover/keyboard states, and clean close behavior across sm, md, and lg."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-select--surface-ref-contract",
+          "name": "Surface and ref contract",
+          "exportName": "SurfaceRefContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Select"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "2026-08-02 full Select source and built-index review complete. The public popup-density example is a distinct usage reference, the density fixture remains hidden as an internal contract, and stable-width, surface/ref, keyboard, typeahead, disabled-option, and typography contracts retain Select ownership and intended visibility. The portalled density play now waits for measured positioning before pointer assertions and passed five consecutive browser runs."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Slider and Range",
@@ -5604,7 +5993,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormTextarea.stories.jsx",
-      "sourceSha256": "d6d9fecaad732c95d9c5566d3c884a47f05dd6e9f6dedec429a83f01b1885109",
+      "sourceSha256": "1fa8c517e39dcfc4383f4cfed22964354105d7eaedf61a5d32b45fa822d1f0e5",
       "primaryOwner": "Textarea",
       "ownerComponents": [
         "Textarea"
@@ -5612,7 +6001,7 @@
       "supportingComponents": [],
       "visibility": {
         "public": 2,
-        "hidden": 3
+        "hidden": 4
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -5627,8 +6016,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "d6d9fecaad732c95d9c5566d3c884a47f05dd6e9f6dedec429a83f01b1885109",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "1fa8c517e39dcfc4383f4cfed22964354105d7eaedf61a5d32b45fa822d1f0e5",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-textarea--textarea-overview",
@@ -5697,6 +6086,29 @@
             "Textarea"
           ],
           "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-selection-and-input-textarea--surface-ref-contract",
+          "name": "Surface and ref contract",
+          "exportName": "SurfaceRefContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Textarea"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-core-components-selection-and-input-textarea--textarea-interaction-matrix",
@@ -7675,7 +8087,7 @@
       "layer": "Core",
       "family": "Patterns",
       "importPath": "./stories/LoadingPattern.stories.jsx",
-      "sourceSha256": "cbea20910a36c63dc4704a98ffb12f9907a314257b2b5b681e810f70162f4f68",
+      "sourceSha256": "56975f5dd2c5d8a60a3acb3be52c31415bfb838d993e0a5daafd0dfb0130cfe9",
       "primaryOwner": "Patterns:Loading",
       "ownerComponents": [
         "Patterns:Loading"
@@ -7709,8 +8121,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-01",
-      "reviewedSourceSha256": "cbea20910a36c63dc4704a98ffb12f9907a314257b2b5b681e810f70162f4f68",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "56975f5dd2c5d8a60a3acb3be52c31415bfb838d993e0a5daafd0dfb0130cfe9",
       "stories": [
         {
           "id": "lds-core-patterns-loading--loading-decision-guide",
@@ -7850,7 +8262,8 @@
             "Spinner"
           ]
         }
-      ]
+      ],
+      "reviewNote": "Loading signal guidance remains one coherent public page with overview, usage, interactive decision, lifecycle, and narrow-width evidence. Its portalled Select play helper now follows the trigger's aria-controls relationship and waits for the owned listbox to finish positioning before interaction; five consecutive browser accessibility runs completed all five plays with zero violations or console errors."
     },
     {
       "title": "LDS Product/Action/Bookmark",
@@ -8408,7 +8821,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "8f82ebab4da30f6ca7818359a0cb44da507e65ba138b4d41c18aadcad3c342ee",
+      "sourceSha256": "259bd6e46ea50c239bdff1718ac9d519f0a6ec186a0fa2245231793ee446e884",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
@@ -8440,7 +8853,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "8f82ebab4da30f6ca7818359a0cb44da507e65ba138b4d41c18aadcad3c342ee",
+      "reviewedSourceSha256": "259bd6e46ea50c239bdff1718ac9d519f0a6ec186a0fa2245231793ee446e884",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -8915,7 +9328,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageFeed.stories.jsx",
-      "sourceSha256": "934bea769db82aaf82de6b3cae85488676383eddb136e460839f62829efa41f9",
+      "sourceSha256": "75fbb94c12c91824e275726fe0df1679a128780a6670ac3d9581ac36f738870f",
       "primaryOwner": "MessageFeed",
       "ownerComponents": [
         "MessageFeed"
@@ -8928,7 +9341,7 @@
       ],
       "visibility": {
         "public": 7,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -8943,8 +9356,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "934bea769db82aaf82de6b3cae85488676383eddb136e460839f62829efa41f9",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "75fbb94c12c91824e275726fe0df1679a128780a6670ac3d9581ac36f738870f",
       "stories": [
         {
           "id": "lds-product-communication-message-feed--overview",
@@ -9130,6 +9543,31 @@
             "ConversationMessage"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-product-communication-message-feed--viewport-inset-contract",
+          "name": "Viewport inset contract",
+          "exportName": "ViewportInsetContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "MessageFeed"
+          ],
+          "supportingComponents": [
+            "ConversationMessage"
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
@@ -10506,7 +10944,7 @@
       "layer": "Product",
       "family": "Content",
       "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
-      "sourceSha256": "a53df9563c954b7c380d59bc7ed35dea6911231feb5730d09e428d1fb89a5864",
+      "sourceSha256": "62e4307828e422fc7052091cc8a3749ac9104a53b3fc5c82c2b8304e8ae1881c",
       "primaryOwner": "SourceDisclosure",
       "ownerComponents": [
         "SourceDisclosure"
@@ -10530,7 +10968,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "a53df9563c954b7c380d59bc7ed35dea6911231feb5730d09e428d1fb89a5864",
+      "reviewedSourceSha256": "62e4307828e422fc7052091cc8a3749ac9104a53b3fc5c82c2b8304e8ae1881c",
       "stories": [
         {
           "id": "lds-product-content-source-disclosure--availability-and-provenance",
@@ -11309,7 +11747,7 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataTable.stories.jsx",
-      "sourceSha256": "391ef3650a6ae05928fde739dca32077f510e66411665e6cf208ac5523ffe624",
+      "sourceSha256": "7f140364a0c7e13cfc92b1387181a5d0bd636a16d4fe13400facfb02804cb643",
       "primaryOwner": "Table",
       "ownerComponents": [
         "Table"
@@ -11317,7 +11755,7 @@
       "supportingComponents": [],
       "visibility": {
         "public": 1,
-        "hidden": 3
+        "hidden": 4
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -11332,8 +11770,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-01",
-      "reviewedSourceSha256": "391ef3650a6ae05928fde739dca32077f510e66411665e6cf208ac5523ffe624",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "7f140364a0c7e13cfc92b1387181a5d0bd636a16d4fe13400facfb02804cb643",
       "stories": [
         {
           "id": "lds-product-data-collections-table--static-table",
@@ -11404,6 +11842,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+        },
+        {
+          "id": "lds-product-data-collections-table--flexible-truncation-contract",
+          "name": "Flexible truncated column",
+          "exportName": "FlexibleTruncationContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Table"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-product-data-collections-table--table-card",
@@ -12006,7 +12467,7 @@
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataToolbar.stories.jsx",
-      "sourceSha256": "acd081ac7761fb47399ff7f85a9088f9b8949c069eb740d3ffe3e1ff6f72efba",
+      "sourceSha256": "d8021ac8a452af7cb25ed50f5f13f5167df1fbc40b26d503b274aee523dabfd1",
       "primaryOwner": "DataToolbar",
       "ownerComponents": [
         "DataToolbar"
@@ -12020,13 +12481,13 @@
         "TextButton"
       ],
       "visibility": {
-        "public": 4,
-        "hidden": 0
+        "public": 5,
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-operations-data-toolbar--toolbar-with-grid",
-        "describedPublicStories": 4,
+        "describedPublicStories": 5,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -12037,7 +12498,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "9058addc323c20812e682291c7711e680675b51c907d2fbf3452853e89c6bf49",
+      "reviewedSourceSha256": "d8021ac8a452af7cb25ed50f5f13f5167df1fbc40b26d503b274aee523dabfd1",
       "stories": [
         {
           "id": "lds-product-data-operations-data-toolbar--toolbar-with-grid",
@@ -12085,15 +12546,16 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "DataToolbar"
           ],
           "supportingComponents": [
             "Button",
             "DataGrid"
-          ]
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-product-data-operations-data-toolbar--headerless-embedded-toolbar",
@@ -12111,15 +12573,16 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "DataToolbar"
           ],
           "supportingComponents": [
             "DataGrid",
             "FilterChip"
-          ]
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-product-data-operations-data-toolbar--medium-filter-density",
@@ -12146,9 +12609,58 @@
             "Select"
           ],
           "reviewNote": "2026-08-02 source and built-browser review at 1024px and 390px confirmed the md render context keeps SearchField and Select at 48px, wraps controls without page overflow, and keeps descriptive copy within the toolbar."
+        },
+        {
+          "id": "lds-product-data-operations-data-toolbar--responsive-multi-select-filters",
+          "name": "반응형 · 다중 선택 필터",
+          "exportName": "ResponsiveMultiSelectFilters",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataToolbar"
+          ],
+          "supportingComponents": [
+            "Select"
+          ],
+          "reviewNote": "2026-08-02 source and built-browser review confirmed three intrinsic-width Select filters remain on one 32px row when space permits, wrap without horizontal overflow at 360px, and retain product-owned filter state."
+        },
+        {
+          "id": "lds-product-data-operations-data-toolbar--surface-ref-contract",
+          "name": "Surface and ref contract",
+          "exportName": "SurfaceRefContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataToolbar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "2026-08-02 source and built-browser re-review at 1024px and 390px confirmed medium filter density, narrow wrapping, description containment, public responsive role, and product-owned filter state."
+      "reviewNote": "2026-08-02 source and built-browser re-review confirmed medium density, the #30 multi-filter intrinsic-width and 360px wrapping contract, description containment, the stable surface/ref contract, public responsive roles, and product-owned filter state; all six stories completed play and Axe checks without violations or console errors."
     },
     {
       "title": "LDS Product/Data/Operations/Export Action",
@@ -14308,7 +14820,7 @@
       "layer": "Product",
       "family": "Editor",
       "importPath": "./stories/EditorSelectionInspector.stories.jsx",
-      "sourceSha256": "df4d72abc264442fcdff02e90009fe61e39b9231d96e6dc7551d03604671aaf7",
+      "sourceSha256": "69a5b798127ff0a2cfa57639fe170f88df92f8e5e1cac75bc2e57535a86740f9",
       "primaryOwner": "SelectionInspector",
       "ownerComponents": [
         "SelectionInspector"
@@ -14335,7 +14847,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "df4d72abc264442fcdff02e90009fe61e39b9231d96e6dc7551d03604671aaf7",
+      "reviewedSourceSha256": "69a5b798127ff0a2cfa57639fe170f88df92f8e5e1cac75bc2e57535a86740f9",
       "stories": [
         {
           "id": "lds-product-editor-selection-inspector--selected-object",
@@ -15674,7 +16186,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationLanguageSwitcher.stories.jsx",
-      "sourceSha256": "28751375fc2f4b07f353b429281d27589bce0082182348d7bffe50751ee8b708",
+      "sourceSha256": "cc2ece707af22d3626d894707beda922c7817aa23809f1dfb4b58666e8d7f173",
       "primaryOwner": "LanguageSwitcher",
       "ownerComponents": [
         "LanguageSwitcher"
@@ -15701,7 +16213,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "28751375fc2f4b07f353b429281d27589bce0082182348d7bffe50751ee8b708",
+      "reviewedSourceSha256": "cc2ece707af22d3626d894707beda922c7817aa23809f1dfb4b58666e8d7f173",
       "stories": [
         {
           "id": "lds-product-navigation-language-switcher--overview",
@@ -15955,7 +16467,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationSideNav.stories.jsx",
-      "sourceSha256": "39342625bedb10e3c76607d1277ffc63c3c9b99c320bd03e920b75fbd2acee47",
+      "sourceSha256": "9a9d26e5af531d7f914debecc2bb0e9ae6f65c2a9479ab49342c93252caf40b4",
       "primaryOwner": "SideNav",
       "ownerComponents": [
         "SideNav"
@@ -15967,7 +16479,7 @@
       ],
       "visibility": {
         "public": 8,
-        "hidden": 1
+        "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -15983,7 +16495,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "39342625bedb10e3c76607d1277ffc63c3c9b99c320bd03e920b75fbd2acee47",
+      "reviewedSourceSha256": "9a9d26e5af531d7f914debecc2bb0e9ae6f65c2a9479ab49342c93252caf40b4",
       "stories": [
         {
           "id": "lds-product-navigation-side-nav--link-destinations",
@@ -16218,6 +16730,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-navigation-side-nav--surface-ref-contract",
+          "name": "Surface and ref contract",
+          "exportName": "SurfaceRefContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SideNav"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
       "reviewNote": "2026-08-02 source, built-index, and browser re-review confirmed manual active-group ownership, child icon alignment, runtime overlay synchronization, 18px brand padding, and 44px navigation row geometry; the public name now uses audience-facing Korean."
@@ -17195,7 +17730,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayDrawer.stories.jsx",
-      "sourceSha256": "e2f6215108971bb7675a1d7eb98a9afec47de8749f6f326ddc2ec0cd0d18ac5c",
+      "sourceSha256": "fbb2943d19e5b2936081c420b0d988c5645e69dd905c72a9bcfad80cad77fddc",
       "primaryOwner": "Drawer",
       "ownerComponents": [
         "Drawer"
@@ -17221,8 +17756,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-01",
-      "reviewedSourceSha256": "e2f6215108971bb7675a1d7eb98a9afec47de8749f6f326ddc2ec0cd0d18ac5c",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "fbb2943d19e5b2936081c420b0d988c5645e69dd905c72a9bcfad80cad77fddc",
       "stories": [
         {
           "id": "lds-product-overlay-drawer--drawer-open",
@@ -17549,7 +18084,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayPopover.stories.jsx",
-      "sourceSha256": "e1e9d28ad9c3894e8f107adf0be606b8bfb05f66553db6da3a339699bbdb8708",
+      "sourceSha256": "ebe63028dc10c68eaea9bd61ac4f8d7400f0b66e244ff18f94ac43aaa8d1144d",
       "primaryOwner": "Popover",
       "ownerComponents": [
         "Popover"
@@ -17559,7 +18094,7 @@
       ],
       "visibility": {
         "public": 2,
-        "hidden": 1
+        "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -17574,8 +18109,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "e1e9d28ad9c3894e8f107adf0be606b8bfb05f66553db6da3a339699bbdb8708",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "ebe63028dc10c68eaea9bd61ac4f8d7400f0b66e244ff18f94ac43aaa8d1144d",
       "stories": [
         {
           "id": "lds-product-overlay-popover--popover-overview",
@@ -17649,6 +18184,31 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-overlay-popover--surface-ref-portal-contract",
+          "name": "Surface, ref, and Portal contract",
+          "exportName": "SurfaceRefPortalContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Popover"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
@@ -17658,7 +18218,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlaySheet.stories.jsx",
-      "sourceSha256": "713056edb850006963824e90273cb2ecb2a7793fcc405bc1a097cf3a55d3945f",
+      "sourceSha256": "e9b26c16f78076235046fbfdea8307340c7e4645d48a19f8e01c4221dd7910ec",
       "primaryOwner": "Sheet",
       "ownerComponents": [
         "Sheet"
@@ -17683,8 +18243,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "713056edb850006963824e90273cb2ecb2a7793fcc405bc1a097cf3a55d3945f",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "e9b26c16f78076235046fbfdea8307340c7e4645d48a19f8e01c4221dd7910ec",
       "stories": [
         {
           "id": "lds-product-overlay-sheet--sheet-open",
@@ -18242,7 +18802,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormFieldAction.stories.jsx",
-      "sourceSha256": "ccc67e89b545fdb30310eb66803cd9cf0249c3e52068e6d8c4fbedf2b425ab97",
+      "sourceSha256": "b55ac327e18925576d7505975c17c3b7ba2873404389f564f61662234547aeab",
       "primaryOwner": "FieldAction",
       "ownerComponents": [
         "FieldAction"
@@ -18254,25 +18814,23 @@
       ],
       "visibility": {
         "public": 2,
-        "hidden": 3
+        "hidden": 4
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-selection-and-input-field-action--field-action-overview",
         "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "b55ac327e18925576d7505975c17c3b7ba2873404389f564f61662234547aeab",
       "stories": [
         {
           "id": "lds-product-selection-and-input-field-action--field-action-overview",
@@ -18290,15 +18848,43 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "FieldAction"
           ],
           "supportingComponents": [
             "Button",
             "Input"
-          ]
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
+        },
+        {
+          "id": "lds-product-selection-and-input-field-action--field-action-narrow",
+          "name": "반응형 · 좁은 폭·긴 문구·오류",
+          "exportName": "FieldActionNarrow",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "FieldAction"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Input"
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-product-selection-and-input-field-action--field-action-states",
@@ -18315,41 +18901,16 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "FieldAction"
           ],
           "supportingComponents": [
             "Button",
             "Input"
-          ]
-        },
-        {
-          "id": "lds-product-selection-and-input-field-action--field-action-narrow",
-          "name": "좁은 폭·긴 문구·오류",
-          "exportName": "FieldActionNarrow",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
           ],
-          "role": "responsive",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [
-            "FieldAction"
-          ],
-          "supportingComponents": [
-            "Button",
-            "Input"
-          ]
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-product-selection-and-input-field-action--field-action-visual-parity",
@@ -18366,8 +18927,8 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "FieldAction"
           ],
@@ -18375,7 +18936,8 @@
             "Button",
             "Input",
             "InputGroup"
-          ]
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-product-selection-and-input-field-action--field-action-submit-contract",
@@ -18392,17 +18954,45 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "FieldAction"
           ],
           "supportingComponents": [
             "Button",
             "Input"
-          ]
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
+        },
+        {
+          "id": "lds-product-selection-and-input-field-action--surface-ref-contract",
+          "name": "Surface and ref contract",
+          "exportName": "SurfaceRefContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "FieldAction"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Input"
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
-      ]
+      ],
+      "reviewNote": "Reviewed FieldAction audience guidance, public responsive examples, hidden state/submit/visual/surface contracts, ownership, and visibility."
     },
     {
       "title": "LDS Product/Selection and Input/File Upload",
@@ -21944,7 +22534,7 @@
       "layer": "Product",
       "family": "Viewer",
       "importPath": "./stories/ViewerToolbar.stories.jsx",
-      "sourceSha256": "eb3d09796001b390ffa18c7e5ca032f87aeb381e181ec275408715a687da890a",
+      "sourceSha256": "40152f092198ad06e488208f187662b92eee47b28e0d30dd9e2b23b7b2921053",
       "primaryOwner": "ViewerToolbar",
       "ownerComponents": [
         "ViewerToolbar"
@@ -21973,7 +22563,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-08-01",
-      "reviewedSourceSha256": "eb3d09796001b390ffa18c7e5ca032f87aeb381e181ec275408715a687da890a",
+      "reviewedSourceSha256": "40152f092198ad06e488208f187662b92eee47b28e0d30dd9e2b23b7b2921053",
       "stories": [
         {
           "id": "lds-product-viewer-toolbar--viewer-toolbar-overview",
@@ -22577,15 +23167,19 @@
       "layer": "Theme",
       "family": "Controls",
       "importPath": "./stories/SelectionThemeToggle.stories.jsx",
-      "sourceSha256": "9dc1f2be97f06fd257902a4da13e4662503a4ebc979d85704926f6f09a679700",
+      "sourceSha256": "c64249496478f5834e770da83148c9d1d25aef4aea546b8b382a89f98f8446a9",
       "primaryOwner": "ThemeToggle",
       "ownerComponents": [
         "ThemeToggle"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "Button",
+        "LdsProvider",
+        "Popover"
+      ],
       "visibility": {
         "public": 1,
-        "hidden": 1
+        "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -22600,8 +23194,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Theme override or brand surface; keep this page and document allowed and disallowed use.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "9dc1f2be97f06fd257902a4da13e4662503a4ebc979d85704926f6f09a679700",
+      "reviewedAt": "2026-08-02",
+      "reviewedSourceSha256": "c64249496478f5834e770da83148c9d1d25aef4aea546b8b382a89f98f8446a9",
       "stories": [
         {
           "id": "lds-theme-controls-theme-toggle--theme-toggle-pattern",
@@ -22625,6 +23219,33 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-theme-controls-theme-toggle--provider-runtime-contract",
+          "name": "Provider runtime contract",
+          "exportName": "ProviderRuntimeContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ThemeToggle"
+          ],
+          "supportingComponents": [
+            "Button",
+            "LdsProvider",
+            "Popover"
+          ],
+          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
           "id": "lds-theme-controls-theme-toggle--theme-toggle-card",
@@ -22718,10 +23339,10 @@
       "layer": "Other",
       "family": "LDS",
       "importPath": "./stories/DesignSystemDirectory.stories.jsx",
-      "sourceSha256": "0a100dc6d6c14ca488fb79d91bf7b22fba01a016c08ed250ec1989d9bdc7a665",
-      "primaryOwner": "Link",
+      "sourceSha256": "7b7e888ee5a58656f59dabc5d59607093b0d963a0f10f98b374421d608cabc25",
+      "primaryOwner": "LDS Directory",
       "ownerComponents": [
-        "Link"
+        "LDS Directory"
       ],
       "supportingComponents": [],
       "visibility": {
@@ -22742,7 +23363,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "0a100dc6d6c14ca488fb79d91bf7b22fba01a016c08ed250ec1989d9bdc7a665",
+      "reviewedSourceSha256": "7b7e888ee5a58656f59dabc5d59607093b0d963a0f10f98b374421d608cabc25",
       "stories": [
         {
           "id": "lds-directory--overview",
@@ -22763,12 +23384,12 @@
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
-            "Link"
+            "LDS Directory"
           ],
           "supportingComponents": []
         }
       ],
-      "reviewNote": "2026-08-02 source and built-index re-review aligned the directory audience entry with the common `개요` name and added explicit use and avoid criteria. Links, ownership, visibility, and layout are unchanged."
+      "reviewNote": "2026-08-02 source, built-index, and Docs-surface re-review complete. Canvas and Docs now share one five-product registry; the Docs route adds a substantive product-family selection guide while the public `개요` story, direct links, visibility, and responsive table behavior remain unchanged."
     }
   ]
 }

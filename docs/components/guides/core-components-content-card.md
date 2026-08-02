@@ -78,6 +78,13 @@
 
 - WDS axes: platform="desktop|mobile", skeleton, save, toggleIcon (top-right toggle affordance beside save), structured slots (thumbnail, topContent, leadingContent, trailingContent, bottomContent, footer) and three text caption tiers (caption, title, description, subCaption, metaCaption).
 - titleWrap="truncate|wrap" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination.
+- Stable structured parts are root, content, header, actions, media, body, title, description, and footer. Optional parts do not render empty wrappers.
+- vars accepts only --lds-card-padding, --lds-card-radius, --lds-card-gap, and --lds-card-max-width. These cannot turn a non-interactive card into a control or bypass heading/nesting rules.
+
+## Content and writing
+
+- className, style, and the default ref target the polymorphic root. The ref type follows the rendered as element.
+- classNames and styles accept only those stable part keys; product selectors do not depend on Card's internal DOM order.
 
 ## Exceptions
 
@@ -146,6 +153,10 @@
 - `--fw-semibold`
 - `--label2-line`
 - `--label2-size`
+- `--lds-card-gap`
+- `--lds-card-max-width`
+- `--lds-card-padding`
+- `--lds-card-radius`
 - `--radius-md`
 
 ### Source contracts

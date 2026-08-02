@@ -228,13 +228,15 @@ export const ViewerToolbarOverview = {
     const layerSettings = toolbar.querySelector('[aria-label="레이어 설정"]');
     layerSettings.click();
     await waitForRender();
-    const layerSwitches = canvasElement.querySelectorAll('[role="switch"]');
+    const panelId = layerSettings.getAttribute('aria-controls');
+    const layerPanel = panelId ? canvasElement.ownerDocument.getElementById(panelId) : null;
+    const layerSwitches = layerPanel?.querySelectorAll('[role="switch"]') ?? [];
     if (layerSwitches.length !== 3 || ![...layerSwitches].some((control) => control.closest('label')?.textContent?.includes('보조 오버레이'))) {
       throw new Error('Layer settings must own the base, overlay, and guide visibility controls in one popover.');
     }
     layerSettings.click();
     await waitForRender();
-    if (canvasElement.querySelector('[role="dialog"]')) {
+    if (panelId && canvasElement.ownerDocument.getElementById(panelId)) {
       throw new Error('The layer settings verification must leave the overview in its default closed state.');
     }
   },

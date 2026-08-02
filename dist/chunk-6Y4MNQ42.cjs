@@ -28,7 +28,7 @@ function Sparkline({ data = [], width = 120, height = 32, color = "var(--color-s
   const titleId = `${rawId}-title`;
   const descriptionId = `${rawId}-description`;
   const describedBy = [ariaDescribedBy, descriptionId].filter(Boolean).join(" ") || void 0;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "svg",
     {
       width,
@@ -44,7 +44,7 @@ function Sparkline({ data = [], width = 120, height = 32, color = "var(--color-s
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "title", { id: titleId, children: ariaLabel || "\uCD94\uC138 \uCC28\uD2B8" }),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "desc", { id: descriptionId, "data-chart-summary": true, children: [description, resolvedSummary].filter(Boolean).join(" ") }),
-        !hasData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        !hasData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "text",
           {
             "data-chart-empty": true,

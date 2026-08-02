@@ -82,12 +82,16 @@ export const PopoverInteractionContract = {
     trigger.focus();
     await userEvent.keyboard('{Enter}');
     const panel = await waitFor(() => {
-      const current = canvasElement.querySelector('[role="dialog"][aria-label="협폭 운영 설정"]');
+      const current = ownerDocument.querySelector('[role="dialog"][aria-label="협폭 운영 설정"]');
       if (!current) throw new Error('Popover must open a named non-modal dialog.');
       return current;
     });
     if (trigger.getAttribute('aria-expanded') !== 'true' || trigger.getAttribute('aria-controls') !== panel.id) {
       throw new Error('Popover trigger must expose expanded and controls state.');
+    }
+    const portal = panel.closest('[data-lds-overlay-portal]');
+    if (!portal || portal.parentElement !== ownerDocument.body || getComputedStyle(panel).position !== 'fixed') {
+      throw new Error('Popover must escape clipping ancestors through the owner-document Portal.');
     }
     await userEvent.tab();
     if (ownerDocument.activeElement?.getAttribute('aria-label') !== '운영 반경') {
@@ -102,10 +106,62 @@ export const PopoverInteractionContract = {
     });
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      if (canvasElement.querySelector('[role="dialog"]')) throw new Error('Escape must close Popover.');
+      if (ownerDocument.querySelector('[role="dialog"][aria-label="협폭 운영 설정"]')) throw new Error('Escape must close Popover.');
       if (ownerDocument.activeElement !== trigger) throw new Error('Escape must restore the Popover trigger.');
     });
   },
 };
 
 export const PopoverCard = { ...PopoverCardStory, name: 'Popover card parity', tags: ['!dev', 'visual-parity'] };
+
+function PopoverSurfacePortalFixture() {
+  const ref = React.useRef(null);
+  React.useLayoutEffect(() => {
+    ref.current?.setAttribute('data-ref-target', 'popover-root');
+  }, []);
+  return (
+    <section data-theme="dark" dir="rtl" style={{ width: 140, height: 64, overflow: 'hidden', padding: 8 }}>
+      <Popover
+        ref={ref}
+        defaultOpen
+        ariaLabel="Popover surface contract"
+        trigger={<Button>표면 계약</Button>}
+        className="contract-popover-root"
+        classNames={{ panel: 'contract-popover-panel' }}
+        styles={{ panel: { letterSpacing: '2px' } }}
+        vars={{ '--lds-popover-width': '232px' }}
+      >
+        Portal scope
+      </Popover>
+    </section>
+  );
+}
+
+export const SurfaceRefPortalContract = {
+  name: 'Surface, ref, and Portal contract',
+  tags: ['!dev'],
+  render: () => <PopoverSurfacePortalFixture />,
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const root = canvasElement.querySelector('[data-ref-target="popover-root"]');
+    const panel = await waitFor(() => {
+      const current = ownerDocument.querySelector('[role="dialog"][aria-label="Popover surface contract"]');
+      if (!current) throw new Error('The Popover contract panel must mount.');
+      return current;
+    });
+    const portal = panel.closest('[data-lds-overlay-portal]');
+    if (!(root instanceof HTMLDivElement) || root.dataset.slot !== 'root' || !root.classList.contains('contract-popover-root')) {
+      throw new Error('Popover ref and root class must target the public anchor root.');
+    }
+    if (!panel.classList.contains('contract-popover-panel') || getComputedStyle(panel).width !== '232px' || getComputedStyle(panel).letterSpacing !== '2px') {
+      throw new Error('Popover named parts and variables must reach the portalled panel.');
+    }
+    await waitFor(() => {
+      if (!portal || portal.parentElement !== ownerDocument.body || portal.dataset.theme !== 'dark' || portal.dir !== 'rtl' || root.contains(panel)) {
+        throw new Error(
+          `Popover Portal must escape clipping while inheriting the nearest theme and direction scope (portal=${Boolean(portal)}, parent=${portal?.parentElement?.tagName ?? 'missing'}, bodyParent=${portal?.parentElement === ownerDocument.body}, theme=${portal?.dataset.theme ?? 'missing'}, dir=${portal?.getAttribute('dir') ?? 'missing'}, rootTheme=${root?.closest('[data-theme]')?.getAttribute('data-theme') ?? 'missing'}, rootDir=${root?.closest('[dir]')?.getAttribute('dir') ?? 'missing'}, contained=${root?.contains(panel)}).`,
+        );
+      }
+    });
+  },
+};

@@ -1,20 +1,11 @@
 import React from "react";
-import { createPortal } from 'react-dom';
 import { Icon } from "../icon/Icon.jsx";
 import { Button } from '../buttons/Button.jsx';
 import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
 import { useSubmenuBranch } from '../internal/useSubmenuBranch.jsx';
-import { useFloatingPosition } from './anchored-overlay.js';
-
-function inheritedTheme(element) {
-  const host = element?.closest?.('[data-theme], .theme-light, .theme-dark, .theme-auto');
-  const explicitTheme = host?.getAttribute?.('data-theme');
-  if (explicitTheme) return explicitTheme;
-  if (host?.classList?.contains('theme-dark')) return 'dark';
-  if (host?.classList?.contains('theme-auto')) return 'auto';
-  if (host?.classList?.contains('theme-light')) return 'light';
-  return undefined;
-}
+import { inlineFloatingStyle, useFloatingPosition } from './anchored-overlay.js';
+import { OverlayPortal } from './overlay-platform.js';
+import { componentVars, partClassName, partStyle, useMergedRefs } from '../internal/surface.js';
 
 const ACTION_CONTROL_SELECTOR = [
   'button:not(:disabled)',
@@ -246,7 +237,7 @@ function MenuItemContent({ item, variant, checked, disabled, description, traili
   );
 }
 
-function MenuItemButton({ item, variant, itemMetrics, onSelect, trailing, haspopup, onTriggerKeyDown }) {
+function MenuItemButton({ item, variant, itemMetrics, onSelect, trailing, haspopup, onTriggerKeyDown, classNames, styles }) {
   const [hover, setHover] = React.useState(false);
   const disabled = Boolean(item.disabled || item.disable);
   const checked = Boolean(item.checked || item.active);
@@ -254,6 +245,10 @@ function MenuItemButton({ item, variant, itemMetrics, onSelect, trailing, haspop
   const description = item.description ?? item.captionContent;
   return (
     <button
+      data-slot="item"
+      data-disabled={disabled ? 'true' : undefined}
+      data-state={checked ? 'checked' : 'unchecked'}
+      className={partClassName(classNames, 'item', item.className) || undefined}
       type="button"
       role={
         variant === "normal"
@@ -275,7 +270,7 @@ function MenuItemButton({ item, variant, itemMetrics, onSelect, trailing, haspop
       onKeyDown={onTriggerKeyDown}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      style={menuItemVisualStyle({ selected: current, checked, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), metrics: itemMetrics })}
+      style={{ ...menuItemVisualStyle({ selected: current, checked, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), metrics: itemMetrics }), ...partStyle(styles, 'item'), ...item.style }}
     >
       <MenuItemContent item={item} variant={variant} checked={checked} disabled={disabled} description={description} trailing={trailing} />
     </button>
@@ -332,8 +327,10 @@ function renderDrillItems(items, ctx) {
       return (
         <div
           key={index}
+          data-slot="divider"
+          className={partClassName(ctx.classNames, 'divider') || undefined}
           role="separator"
-          style={{ height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }}
+          style={{ height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px", ...partStyle(ctx.styles, 'divider') }}
         />
       );
     }
@@ -348,6 +345,8 @@ function renderDrillItems(items, ctx) {
           trailing={SUBMENU_CHEVRON}
           onSelect={() => ctx.drillIn(item)}
           onTriggerKeyDown={(event) => { if (event.key === "ArrowRight") { event.preventDefault(); ctx.drillIn(item); } }}
+          classNames={ctx.classNames}
+          styles={ctx.styles}
         />
       );
     }
@@ -358,12 +357,14 @@ function renderDrillItems(items, ctx) {
         variant={item.variant || ctx.variant}
         itemMetrics={ctx.itemMetrics}
         onSelect={ctx.closeAll}
+        classNames={ctx.classNames}
+        styles={ctx.styles}
       />
     );
   });
 }
 
-function MenuBranch({ item, variant, itemMetrics, closeAll }) {
+function MenuBranch({ item, variant, itemMetrics, closeAll, classNames, styles }) {
   const [hover, setHover] = React.useState(false);
   const disabled = Boolean(item.disabled || item.disable);
   const description = item.description ?? item.captionContent;
@@ -377,13 +378,16 @@ function MenuBranch({ item, variant, itemMetrics, closeAll }) {
     >
       <button
         ref={sub.triggerRef}
+        data-slot="item"
+        data-disabled={disabled ? 'true' : undefined}
+        className={partClassName(classNames, 'item', item.className) || undefined}
         type="button"
         role="menuitem"
         {...sub.triggerAria}
         tabIndex={-1}
         disabled={disabled}
         {...sub.triggerHandlers}
-        style={menuItemVisualStyle({ active: sub.open, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), metrics: itemMetrics })}
+        style={{ ...menuItemVisualStyle({ active: sub.open, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), metrics: itemMetrics }), ...partStyle(styles, 'item'), ...item.style }}
       >
         <MenuItemContent
           item={item}
@@ -403,7 +407,7 @@ function MenuBranch({ item, variant, itemMetrics, closeAll }) {
           onKeyDown={sub.menuKeyDown}
           style={{ display: "flex", flexDirection: "column", gap: "var(--component-menu-gap)" }}
         >
-          {renderMenuItems(item.items || [], { variant, itemMetrics, closeAll })}
+          {renderMenuItems(item.items || [], { variant, itemMetrics, closeAll, classNames, styles })}
         </div>,
         MENU_PANEL_STYLE,
       )}
@@ -417,8 +421,10 @@ function renderMenuItems(items, ctx) {
       return (
         <div
           key={index}
+          data-slot="divider"
+          className={partClassName(ctx.classNames, 'divider') || undefined}
           role="separator"
-          style={{ height: 1, flexShrink: 0, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px" }}
+          style={{ height: 1, flexShrink: 0, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px", ...partStyle(ctx.styles, 'divider') }}
         />
       );
     }
@@ -430,6 +436,8 @@ function renderMenuItems(items, ctx) {
           variant={item.variant || ctx.variant}
           itemMetrics={ctx.itemMetrics}
           closeAll={ctx.closeAll}
+          classNames={ctx.classNames}
+          styles={ctx.styles}
         />
       );
     }
@@ -440,6 +448,8 @@ function renderMenuItems(items, ctx) {
         variant={item.variant || ctx.variant}
         itemMetrics={ctx.itemMetrics}
         onSelect={ctx.closeAll}
+        classNames={ctx.classNames}
+        styles={ctx.styles}
       />
     );
   });
@@ -450,10 +460,12 @@ function renderMenuItems(items, ctx) {
  * menu popover with normal/radio/checkbox item variants and optional
  * action area.
  */
-export function DropdownMenu({
+export const DropdownMenu = React.forwardRef(function DropdownMenu({
   trigger,
   items = [],
   align = "left",
+  position: requestedPosition = 'bottom',
+  offset = 8,
   variant = "normal",
   submenuMode = "flyout",
   density = "default",
@@ -471,15 +483,23 @@ export function DropdownMenu({
   open,
   defaultOpen = false,
   onOpenChange,
+  withinPortal = true,
+  portalTarget,
+  zIndex,
+  className,
   style,
+  classNames,
+  styles,
+  vars,
   ...rest
-}) {
+}, forwardedRef) {
   const controlled = open !== undefined;
   const drill = submenuMode === "drill";
   const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
   const visible = controlled ? open : internalOpen;
   const [drillPath, setDrillPath] = React.useState([]);
   const ref = React.useRef(null);
+  const mergedRootRef = useMergedRefs(ref, forwardedRef);
   const panelRef = React.useRef(null);
   const actionAreaRef = React.useRef(null);
   const menuId = React.useId();
@@ -494,11 +514,12 @@ export function DropdownMenu({
   const drillItems = drillLevel ? (drillLevel.items || []) : items;
   const drillIn = (item) => setDrillPath((path) => [...path, item]);
   const drillBack = () => setDrillPath((path) => path.slice(0, -1));
-  const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = useMenuKeyboard({
+  const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown, zIndex: resolvedZIndex, isTopmost } = useMenuKeyboard({
     open: visible,
     onClose: () => setVisible(false),
     getTrigger: () => ref.current?.querySelector('[aria-haspopup="menu"], button, [role="button"], a[href]'),
     menuKey: drill ? drillPath.length : 0,
+    zIndex,
   });
 
   const toggleMenu = (event) => {
@@ -551,13 +572,11 @@ export function DropdownMenu({
     open: visible,
     anchorRef: ref,
     panelRef,
-    placement: 'bottom',
-    strategy: 'fixed',
+    placement: requestedPosition,
+    offset,
+    strategy: withinPortal ? 'fixed' : 'absolute',
     align,
   });
-  const portalTarget = ref.current?.ownerDocument?.body
-    ?? (typeof document !== 'undefined' ? document.body : null);
-  const portalTheme = inheritedTheme(ref.current);
   const showGeneratedActionArea = menuActionArea && (onApply || onCancel);
   const showActionArea = Boolean(action || showGeneratedActionArea);
   const panelMaxHeight = constrainedMaxHeight(maxHeight, position.maxHeight);
@@ -655,43 +674,52 @@ export function DropdownMenu({
   React.useEffect(() => {
     if (!visible) return undefined;
     const onDoc = (e) => {
+      if (!isTopmost()) return;
       if (ref.current && !ref.current.contains(e.target) && !e.target.closest?.("[data-menu-portal]")) {
         setVisible(false);
       }
     };
-    document.addEventListener("mousedown", onDoc);
-    return () => document.removeEventListener("mousedown", onDoc);
-  }, [visible]);
+    const ownerDocument = ref.current?.ownerDocument ?? document;
+    ownerDocument.addEventListener("mousedown", onDoc);
+    return () => ownerDocument.removeEventListener("mousedown", onDoc);
+  }, [isTopmost, visible]);
 
   return (
     <div
-      ref={ref}
-      style={{ position: "relative", display: "inline-block", ...style }}
+      ref={mergedRootRef}
+      data-slot="root"
+      data-open={visible ? 'true' : undefined}
+      className={partClassName(classNames, 'root', className) || undefined}
+      style={{ ...componentVars(vars, '--lds-dropdown-menu-'), position: "relative", display: "inline-block", ...partStyle(styles, 'root'), ...style }}
       {...rest}
     >
       <span
-        style={{ display: "inline-flex" }}
+        data-slot="trigger"
+        className={partClassName(classNames, 'trigger') || undefined}
+        style={{ display: "inline-flex", ...partStyle(styles, 'trigger') }}
       >
         {renderedTrigger}
       </span>
-      {visible && portalTarget && createPortal(
+      <OverlayPortal open={visible} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={ref} layer="anchored">
         <div
           ref={panelRef}
+          data-slot="panel"
           data-menu-portal=""
           data-dropdown-menu-portal=""
-          data-theme={portalTheme}
+          className={partClassName(classNames, 'panel') || undefined}
           data-placement={position.placement}
           style={{
-            position: "fixed",
-            top: position.y ?? -9999,
-            left: position.x ?? -9999,
-            opacity: position.x == null || position.y == null ? 0 : 1,
-            pointerEvents: position.x == null || position.y == null ? 'none' : 'auto',
-            zIndex: 40,
-            width: panelWidth,
-            minWidth: panelMinWidth,
+            ...componentVars(vars, '--lds-dropdown-menu-'),
+            ...(withinPortal
+              ? { position: 'fixed', top: position.y ?? -9999, left: position.x ?? -9999, right: 'auto', bottom: 'auto', translate: 'none' }
+              : inlineFloatingStyle({ placement: position.placement, align, offset, shiftX: position.shiftX, shiftY: position.shiftY })),
+            opacity: withinPortal && (position.x == null || position.y == null) ? 0 : 1,
+            pointerEvents: withinPortal && (position.x == null || position.y == null) ? 'none' : 'auto',
+            zIndex: resolvedZIndex,
+            width: `var(--lds-dropdown-menu-width, ${typeof panelWidth === 'number' ? `${panelWidth}px` : panelWidth})`,
+            minWidth: `var(--lds-dropdown-menu-min-width, ${typeof panelMinWidth === 'number' ? `${panelMinWidth}px` : panelMinWidth})`,
             maxWidth: panelMaxWidth,
-            maxHeight: panelMaxHeight ?? undefined,
+            maxHeight: panelMaxHeight == null ? 'var(--lds-dropdown-menu-max-height, none)' : `var(--lds-dropdown-menu-max-height, ${typeof panelMaxHeight === 'number' ? `${panelMaxHeight}px` : panelMaxHeight})`,
             overflow: panelMaxHeight != null ? 'hidden' : undefined,
             background: "var(--color-semantic-background-elevated-normal)",
             border: "1px solid var(--color-semantic-line-solid-normal)",
@@ -702,11 +730,13 @@ export function DropdownMenu({
             display: "flex",
             flexDirection: "column",
             gap: "var(--component-menu-gap)",
+            ...partStyle(styles, 'panel'),
           }}
         >
           <div
             ref={menuRef}
-            className="lk-scroll-surface"
+            data-slot="menu"
+            className={partClassName(classNames, 'menu', 'lk-scroll-surface') || undefined}
             data-scrollbar="compact"
             data-scroll-gutter={menuScrollable ? "stable" : "auto"}
             id={menuId}
@@ -731,6 +761,7 @@ export function DropdownMenu({
               overflowX: panelMaxHeight != null ? "hidden" : undefined,
               overflowY: panelMaxHeight != null ? "auto" : undefined,
               scrollbarGutter: menuScrollable ? "stable" : undefined,
+              ...partStyle(styles, 'menu'),
             }}
           >
             {drill ? (
@@ -741,6 +772,8 @@ export function DropdownMenu({
                   itemMetrics,
                   closeAll: () => closeMenu({ restoreFocus: true }),
                   drillIn,
+                  classNames,
+                  styles,
                 })}
               </>
             ) : (
@@ -748,12 +781,16 @@ export function DropdownMenu({
                 variant,
                 itemMetrics,
                 closeAll: () => closeMenu({ restoreFocus: true }),
+                classNames,
+                styles,
               })
             )}
           </div>
           {showActionArea && (
             <div
               ref={actionAreaRef}
+              data-slot="actionArea"
+              className={partClassName(classNames, 'actionArea') || undefined}
               role="group"
               aria-label="메뉴 작업"
               onKeyDown={handleActionAreaKeyDown}
@@ -764,6 +801,7 @@ export function DropdownMenu({
                 padding: "8px 4px 2px",
                 borderTop: "1px solid var(--color-semantic-line-solid-normal)",
                 flexShrink: 0,
+                ...partStyle(styles, 'actionArea'),
               }}
             >
               {action || (
@@ -782,9 +820,8 @@ export function DropdownMenu({
               )}
             </div>
           )}
-        </div>,
-        portalTarget,
-      )}
+        </div>
+      </OverlayPortal>
     </div>
   );
-}
+});

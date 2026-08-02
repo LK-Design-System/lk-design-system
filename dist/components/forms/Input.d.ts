@@ -1,4 +1,12 @@
 import * as React from "react";
+import type { LdsClassNames, LdsStyles, LdsVars } from '../internal/surface.js';
+
+export type InputPart = 'root' | 'label' | 'control' | 'startIcon' | 'input' | 'endIcon' | 'statusIcon' | 'action' | 'message';
+export type InputVariable =
+  | '--lds-input-height'
+  | '--lds-input-padding-inline'
+  | '--lds-input-radius'
+  | '--lds-input-gap';
 
 export interface InputProps extends Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -38,7 +46,7 @@ export interface InputProps extends Omit<
   active?: boolean;
   /** focus visual state alias. */
   focus?: boolean;
-  /** disabled alias. */
+  /** @deprecated Use `disabled`. */
   disable?: boolean;
   /** textinput resize evidence axis; accepted for API parity. */
   resize?: "normal" | "fixed" | "limit";
@@ -48,7 +56,18 @@ export interface InputProps extends Omit<
   variant?: "textfield" | "textarea";
   /** 래퍼 스타일(예: 그리드 셀용 minWidth). */
   style?: React.CSSProperties;
+  /** Public root class. */
+  className?: string;
+  /** Native input class. */
+  inputClassName?: string;
+  /** Native input style. */
+  inputStyle?: React.CSSProperties;
+  /** Public root ref; the default ref targets the native input. */
+  rootRef?: React.Ref<HTMLDivElement>;
+  classNames?: LdsClassNames<InputPart>;
+  styles?: LdsStyles<InputPart>;
+  vars?: LdsVars<InputVariable>;
 }
 
 /** 한 줄 텍스트 필드 — 화이트 박스, 헤어라인 링, 그래파이트 포커스 헤일로. */
-export function Input(props: InputProps): React.JSX.Element;
+export const Input: React.ForwardRefExoticComponent<InputProps & React.RefAttributes<HTMLInputElement>>;

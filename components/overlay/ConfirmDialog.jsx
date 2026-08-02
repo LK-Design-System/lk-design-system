@@ -2,6 +2,7 @@ import React from 'react';
 import { ActionArea } from '../buttons/ActionArea.jsx';
 import { Button } from '../buttons/Button.jsx';
 import { useDialogFocus } from './dialog-focus.js';
+import { OverlayPortal } from './overlay-platform.js';
 
 /**
  * LK ROBOTICS — ConfirmDialog
@@ -28,20 +29,32 @@ export function ConfirmDialog({
   returnFocusRef,
   restoreFocus = true,
   ariaLabel = '확인 다이얼로그',
+  withinPortal = true,
+  portalTarget,
+  zIndex,
   style,
   ...rest
 }) {
   const titleId = React.useId();
   const descriptionId = React.useId();
   const cancelFocusRef = React.useRef(null);
+  const portalRef = React.useRef(null);
+  const portalAnchorRef = React.useRef(null);
+  if (open && !portalAnchorRef.current && typeof document !== 'undefined') {
+    portalAnchorRef.current = returnFocusRef?.current ?? document.activeElement;
+  }
+  if (!open) portalAnchorRef.current = null;
   const dismiss = onCancel || onClose;
   const Heading = `h${Math.min(6, Math.max(2, headingLevel))}`;
-  const { dialogRef, zIndex } = useDialogFocus({
+  const { dialogRef, zIndex: resolvedZIndex } = useDialogFocus({
     open,
     onDismiss: dismiss,
     initialFocusRef: initialFocusRef ?? cancelFocusRef,
     returnFocusRef,
     restoreFocus,
+    portalRef,
+    inert: withinPortal,
+    zIndex,
   });
   const setDialogRef = React.useCallback((node) => {
     dialogRef.current = node;
@@ -49,10 +62,11 @@ export function ConfirmDialog({
   }, [dialogRef]);
   if (!open) return null;
   return (
+    <OverlayPortal open={open} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={portalAnchorRef} portalRef={portalRef} layer="modal">
     <div
       role="presentation"
       onClick={closeOnScrim ? (event) => { if (event.target === event.currentTarget && dismiss) dismiss(); } : undefined}
-      style={{ position: 'fixed', inset: 0, zIndex, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-6)', background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))' }}
+      style={{ position: 'fixed', inset: 0, zIndex: resolvedZIndex, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-6)', background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))' }}
     >
       <div
         ref={setDialogRef}
@@ -86,5 +100,6 @@ export function ConfirmDialog({
         </ActionArea>
       </div>
     </div>
+    </OverlayPortal>
   );
 }

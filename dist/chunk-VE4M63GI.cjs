@@ -101,7 +101,7 @@ function IconPicker({
       focusAndPick(lastEnabledIndex(options));
     }
   };
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
     {
       role: "radiogroup",
@@ -117,7 +117,7 @@ function IconPicker({
         ...style
       },
       ...rest,
-      children: options.length === 0 ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      children: options.length === 0 ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
         "div",
         {
           style: {
@@ -143,7 +143,7 @@ function IconPicker({
         const selected = option.value === current;
         const optionDisabled = disabled || !!option.disabled;
         const labelText = optionLabel(option);
-        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "button",
           {
             ref: (node) => {
@@ -188,7 +188,7 @@ function IconPicker({
               boxSizing: "border-box",
               transition: "background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
             },
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "span",
               {
                 "aria-hidden": "true",

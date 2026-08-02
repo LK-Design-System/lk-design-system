@@ -1,4 +1,12 @@
 import * as React from "react";
+import type { LdsClassNames, LdsStyles, LdsVars } from '../internal/surface.js';
+
+export type TextareaPart = 'root' | 'label' | 'control' | 'textarea' | 'statusIcon' | 'message';
+export type TextareaVariable =
+  | '--lds-textarea-min-height'
+  | '--lds-textarea-max-height'
+  | '--lds-textarea-padding'
+  | '--lds-textarea-radius';
 
 export interface TextareaProps extends Omit<
   React.TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -24,7 +32,7 @@ export interface TextareaProps extends Omit<
   active?: boolean;
   /** focus visual state alias. */
   focus?: boolean;
-  /** disabled alias. */
+  /** @deprecated Use `disabled`. */
   disable?: boolean;
   /** resize axis. */
   resize?: "normal" | "fixed" | "limit";
@@ -32,7 +40,18 @@ export interface TextareaProps extends Omit<
   rows?: number;
   /** 래퍼 스타일. */
   style?: React.CSSProperties;
+  /** Public root class. */
+  className?: string;
+  /** Native textarea class. */
+  textareaClassName?: string;
+  /** Native textarea style. */
+  textareaStyle?: React.CSSProperties;
+  /** Public root ref; the default ref targets the native textarea. */
+  rootRef?: React.Ref<HTMLDivElement>;
+  classNames?: LdsClassNames<TextareaPart>;
+  styles?: LdsStyles<TextareaPart>;
+  vars?: LdsVars<TextareaVariable>;
 }
 
 /** Input의 박스·링·포커스 헤일로와 맞춘 여러 줄 텍스트 필드. */
-export function Textarea(props: TextareaProps): React.JSX.Element;
+export const Textarea: React.ForwardRefExoticComponent<TextareaProps & React.RefAttributes<HTMLTextAreaElement>>;

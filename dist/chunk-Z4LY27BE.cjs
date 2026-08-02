@@ -13,7 +13,7 @@ function Collapsible({ title, children, defaultOpen = false, density = "default"
   const panelId = `${rawId}-panel`;
   const compact = density === "compact";
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-density": density, "data-align": align, style: { ...style }, ...rest, children: [
-    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
       "button",
       {
         type: "button",

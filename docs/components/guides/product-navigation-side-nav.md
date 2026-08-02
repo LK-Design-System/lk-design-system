@@ -60,6 +60,9 @@
 | `defaultValue` | `string` | No | 비제어 시 초기 활성 값. |
 | `onChange` | `(value: string) = void` | No |  |
 | `renderLink` | `(item: SideNavItem \| SideNavChildItem, props: React.AnchorHTMLAttributes) = React.ReactElement` | No | href leaf를 router link로 치환하는 렌더 훅. 그룹 disclosure는 항상 button입니다. |
+| `classNames` | `LdsClassNames` | No |  |
+| `styles` | `LdsStyles` | No |  |
+| `vars` | `LdsVars` | No |  |
 
 ## States
 
@@ -88,17 +91,17 @@
 
 ## Responsive
 
+- Width, rail width, padding, radius, and item geometry can be tuned only through the documented --lds-side-nav- variables. Navigation value, routing, and shell collapse controls remain product-owned.
 - 접힌 레일과 펼친 패널은 SideNav가 소유하는 브랜드 아래 패딩 18px과 44px 목적지 행 높이를 공유합니다. header와 headerCollapsed 슬롯 자체의 intrinsic 높이는 제품이 맞추며, 레일에서는 label·badge가 사라지고 행의 가로 정렬만 바뀝니다.
 - Carbon UI shell usage — 복잡한 제품 탐색은 header와 지속적인 left panel을 조합하고 좁은 폭에서는 탐색 표면을 전환합니다. 그래서 셸에 붙는 SideNav는 docked를, 독립 배치는 floating을 사용합니다.
 - The collapsed item rail scrolls vertically with a hidden native scrollbar. Do not reduce or remove authorized destinations merely to fit a short viewport; preserve keyboard and wheel scrolling.
-- Classification: LK Product Extension. WDS Navigation의 Category, Tab, Page Indicator, Pagination과 별개이며 데스크톱 제품 셸에서만 사용합니다.
 
 ## Content and writing
 
+- ref, className, and style target the native nav landmark.
+- Stable parts are root, overlaySurface, panel, brand, list, heading, item, icon, label, badge, childList, and footer. Root and items expose stable collapsed/active state attributes.
 - items — { value, label, ariaLabel?, icon, badge?, href?, disabled?, children? } + { heading } 섹션 헤딩. 자식도 icon?: ReactNode를 받을 수 있으며, 한 그룹에 아이콘이 하나라도 있으면 모든 자식에 고정 슬롯을 예약해 라벨 시작선을 맞춥니다. 항목 전체는 native ul/li 리스트(그룹 자식은 중첩 ul)로 렌더되어 보조기술이 항목 수와 계층을 읽을 수 있고, 시각은 기존과 동일합니다(list-style 없음).
 - Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. 축소 가능 내비게이션도 상태를 설명하는 명시적인 제어를 제공하므로 LDS는 명시적 토글을 정식 수단으로 두고 hover peek를 선택 기능으로 제한합니다.
-- WAI-ARIA landmark regions — landmark와 명확한 accessible name을 유지합니다. 소비자가 aria-label을 주지 않으면 기본 이름 사이드 탐색을 제공하고, 같은 문서에 탐색 landmark가 여러 개면 고유한 이름으로 덮어씁니다. 현재 목적지는 aria-current="page"로 노출하고, 키보드 focus 진입·이탈과 Esc 뒤에도 초점을 잃지 않습니다.
-- SideNav — 넓은 라벨형 대시보드 사이드바(브랜드 헤더 + 그룹 내비 + 서브메뉴 + 접힘 레일 + 고정 푸터).
 
 ## Accessibility
 
@@ -165,6 +168,12 @@
 - `--label1-line`
 - `--label1-size`
 - `--label2-size`
+- `--lds-side-nav-collapsed-width`
+- `--lds-side-nav-item-height`
+- `--lds-side-nav-item-radius`
+- `--lds-side-nav-padding`
+- `--lds-side-nav-radius`
+- `--lds-side-nav-width`
 - `--radius-lg`
 - `--radius-pill`
 - `--radius-xl`

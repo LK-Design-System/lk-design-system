@@ -27,13 +27,22 @@ export interface UseLightDismissOptions {
   onDismiss?: (reason: LightDismissReason) => void;
   /** 바깥 pointerdown으로 닫을지 여부. @default true */
   outsidePress?: boolean;
+  /** 특정 outside/Escape가 현재 surface 소유가 아니면 false를 반환해 dismiss를 막는다. */
+  shouldDismiss?: (reason: LightDismissReason, event: Event) => boolean | void;
+  /** 공통 overlay stack 대신 사용할 explicit layer. */
+  zIndex?: number;
+  /** Portal로 root 밖에 렌더된 content도 inside press/focus로 처리한다. */
+  insideRefs?: Array<React.RefObject<HTMLElement | null>>;
 }
 
 /**
  * 초점을 가두지 않는 light-dismiss 엔진: 바깥 클릭 + 최상단 Escape + Escape 재오픈 래치.
  * 소비자: Tooltip, HoverCard, Popover, DropdownMenu, Menubar, SplitButton, UserMenu.
  */
-export function useLightDismiss(options: UseLightDismissOptions): void;
+export function useLightDismiss(options: UseLightDismissOptions): {
+  zIndex: number;
+  isTopmost: () => boolean;
+};
 
 export type FloatingPlacement = 'top' | 'bottom' | 'left' | 'right';
 
@@ -50,6 +59,10 @@ export interface UseFloatingPositionOptions {
   offset?: number;
   /** 뷰포트 가장자리 여백(px). @default 16 */
   viewportPadding?: number;
+  /** in-tree absolute 또는 portalled fixed positioning. @default "absolute" */
+  strategy?: 'absolute' | 'fixed';
+  /** vertical placement에서 logical alignment. @default "left" */
+  align?: 'left' | 'right' | 'top' | 'bottom' | 'leading' | 'center' | 'trailing';
 }
 
 export interface FloatingPosition {
@@ -61,10 +74,25 @@ export interface FloatingPosition {
   shiftY: number;
   /** 배치 방향에서 사용 가능한 최대 높이(px). 닫힘 상태에서는 null. */
   maxHeight: number | null;
+  /** fixed strategy의 viewport X coordinate. */
+  x: number | null;
+  /** fixed strategy의 viewport Y coordinate. */
+  y: number | null;
 }
 
 /** 앵커드 패널 측정·flip·뷰포트 클램프 엔진. 시각 chrome과 정렬은 소비자가 소유한다. */
 export function useFloatingPosition(options: UseFloatingPositionOptions): FloatingPosition;
+
+export interface InlineFloatingStyleOptions {
+  placement?: FloatingPlacement;
+  align?: UseFloatingPositionOptions['align'];
+  offset?: number | string;
+  shiftX?: number;
+  shiftY?: number;
+}
+
+/** Absolute-position map for a non-portalled anchored panel. */
+export function inlineFloatingStyle(options?: InlineFloatingStyleOptions): React.CSSProperties;
 
 /** 기존 ARIA 참조 문자열에 id를 중복 없이 덧붙인다. */
 export function appendAriaReference(existing: string | null | undefined, id: string): string;

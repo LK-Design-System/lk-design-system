@@ -5,6 +5,12 @@
 <Tabs resize="fill" size="large" padding="var(--space-6)" trailingIconButton items={items} />
 ```
 
+## Public surface and ref
+
+- `ref`, `className`, and `style` target the `tablist` root.
+- Stable parts are `root`, `tab`, `label`, `count`, `trailing`, and `indicator`; tabs expose `data-state="active|inactive"` and `data-disabled`.
+- Only documented `--lds-tabs-*` geometry variables are accepted. The component owns roving focus and activation; consumers own the corresponding tab panels.
+
 - Use for section or route switching. Use `Category` for chip-like topic navigation.
 - WDS axes: `resize` (`hug`/`fill`), `size`, `padding`, `trailingIconButton`, and horizontal `scroll`. `padding={true}` preserves the legacy 8px inset; pass a number or CSS length such as `padding="var(--space-6)"` to align tabs with adjacent card content.
 - The 2px active indicator is drawn inside the tab box (`bottom: 0`). Scrollable tabs suppress cross-axis overflow only after the full indicator is inside, so the tablist cannot create a vertical scrollbar from its own indicator and the indicator is not clipped to 1px.

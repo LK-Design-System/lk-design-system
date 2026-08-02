@@ -91,7 +91,7 @@ function Carousel({
     setPlaying(false);
     setI((index % n + n) % n);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       role: "region",
@@ -118,13 +118,13 @@ function Carousel({
       ...rest,
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-carousel-live": true, "aria-live": rotating ? "off" : "polite", "aria-atomic": "true", style: hiddenStyle, children: n > 0 ? slideName(i) : "" }),
-        (autoPlay || showDots) && n > 1 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        (autoPlay || showDots) && n > 1 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             "data-carousel-controls": true,
             style: controlRailStyle,
             children: [
-              autoPlay ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              autoPlay ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "button",
                 {
                   type: "button",
@@ -143,7 +143,7 @@ function Carousel({
                   children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: playing ? "pause" : "play", size: 16, "aria-hidden": "true" })
                 }
               ) : null,
-              showDots ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              showDots ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 _chunkVYQHXHIRcjs.PageIndicator,
                 {
                   variant: "dot",
@@ -160,7 +160,7 @@ function Carousel({
         ),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-lds-carousel-track": true, style: { display: "flex", transform: `translateX(-${i * 100}%)`, transition: "transform var(--dur-slow) var(--ease-out)" }, children: slides.map((slide, idx) => {
           const current = idx === i;
-          return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "div",
             {
               role: "group",

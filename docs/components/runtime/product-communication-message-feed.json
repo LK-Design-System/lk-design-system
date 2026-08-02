@@ -17,6 +17,7 @@
   "purpose": "시간순 대화를 읽고 이전 기록을 이어 불러올 때 사용합니다. Feed는 접근 가능한 log, 이전 기록 위치 유지와 새 메시지 따라가기를 맡습니다. 정적 목록이나 시간순이 아닌 정보에는 사용하지 말고 List·Table을 사용하세요.",
   "useWhen": [
     "following=false이면 children 추가나 resize가 사용자의 읽기 위치를 bottom으로 끌어내리지 않습니다.",
+    "3 Free AI Chatbot App UI Kit의 왼쪽 general-assistant conversation에서 chrome-light reading flow만 secondary inspiration으로 사용합니다.",
     "LK Control Full Daedeok — not applicable. event supervision과 command history는 LogViewer 또는 domain status component가 적합하며 AI conversation log가 필수로 확인되지 않았습니다.",
     "representative review."
   ],
@@ -77,6 +78,13 @@
       "type": "number | string",
       "required": false,
       "description": "Optional minimum viewport height for persistent conversation panels.",
+      "owner": "MessageFeedProps"
+    },
+    {
+      "name": "viewportInset",
+      "type": "MessageFeedViewportInset",
+      "required": false,
+      "description": "Inline viewport padding. Use comfortable for reading surfaces and compact for dense embedded panels. @default \"compact\"",
       "owner": "MessageFeedProps"
     },
     {
@@ -185,19 +193,19 @@
   "quantitativeRules": [
     {
       "subject": "명시 규칙 1",
-      "rule": "320px에서도 history → log → latest의 DOM order와 wrapping을 유지합니다."
+      "rule": "viewportInset=\"compact | comfortable\"은 scrollbar가 붙는 named log viewport의 inline content inset만 선택합니다. 기본 compact는 좌우 8px, reading/panel composition용 comfortable은 좌우 16px이며 두 값 모두 block 12px을 유지합니다. raw viewport style이나 CSS selector hook은 공개하지 않습니다."
     },
     {
       "subject": "명시 규칙 2",
-      "rule": "CSS Scroll Anchoring Level 1은 viewport 위 DOM 변경 시 사용자가 읽는 위치를 안정적으로 유지하는 목적을 정의합니다. MessageFeed는 history prepend의 비동기 DOM/height 변화와 live announcement 억제를 함께 제어해야 하므로 browser heuristic에만 맡기지 않고 scrollHeight delta로 수동 복원합니다."
+      "rule": "320px에서도 history → log → latest의 DOM order와 wrapping을 유지합니다."
     },
     {
       "subject": "명시 규칙 3",
-      "rule": "WCAG 2.2를 focus order, keyboard access, status announcement, visible focus와 contrast의 최종 기준으로 사용합니다."
+      "rule": "CSS Scroll Anchoring Level 1은 viewport 위 DOM 변경 시 사용자가 읽는 위치를 안정적으로 유지하는 목적을 정의합니다. MessageFeed는 history prepend의 비동기 DOM/height 변화와 live announcement 억제를 함께 제어해야 하므로 browser heuristic에만 맡기지 않고 scrollHeight delta로 수동 복원합니다."
     },
     {
       "subject": "명시 규칙 4",
-      "rule": "3 Free AI Chatbot App UI Kit의 왼쪽 general-assistant conversation에서 chrome-light reading flow만 secondary inspiration으로 사용합니다."
+      "rule": "WCAG 2.2를 focus order, keyboard access, status announcement, visible focus와 contrast의 최종 기준으로 사용합니다."
     },
     {
       "subject": "--body2-line",
@@ -207,8 +215,8 @@
   "responsive": [
     "maxHeight와 viewportMinHeight는 named log viewport의 크기만 제어합니다. 고정 application panel 크기를 강제하지 않습니다.",
     "transparent feed 위에서 assistant document는 reading column을 사용하고 user/human-agent bubble만 compact surface를 가집니다.",
-    "WAI-ARIA APG Feed pattern은 infinite article feed의 Page Up/Page Down 계약과 keyboard help의 discoverability를 강조합니다. MessageFeed는 article focus를 이동시키는 role=\"feed\"가 아니므로 같은 키 이름을 focusable log의 viewport scrolling에만 적용하고 aria-keyshortcuts로 노출합니다.",
-    "Slack screen reader guidance는 Home/End, Page Up/Page Down, first unread, 그리고 “where I left off” 시작 위치를 conversation convention으로 문서화합니다. MessageFeed는 roving message focus를 복제하지 않고 scroll 위치 보존, first-unread separator composition, viewport 단축키만 채택합니다."
+    "viewport inset은 logical padding-inline으로 적용해 RTL에서도 start/end가 뒤집히며, outer section surface나 scrollbar 위치를 이동시키지 않습니다.",
+    "WAI-ARIA APG Feed pattern은 infinite article feed의 Page Up/Page Down 계약과 keyboard help의 discoverability를 강조합니다. MessageFeed는 article focus를 이동시키는 role=\"feed\"가 아니므로 같은 키 이름을 focusable log의 viewport scrolling에만 적용하고 aria-keyshortcuts로 노출합니다."
   ],
   "contentGuidance": [
     "children을 시간순 DOM 순서로 받습니다. 자체 message schema, renderer, participant truth, provider 또는 transport를 만들지 않습니다.",
@@ -322,7 +330,7 @@
         "role": "responsive"
       }
     ],
-    "hiddenEvidence": 0
+    "hiddenEvidence": 1
   },
   "sources": [],
   "canonicalGuide": null,
