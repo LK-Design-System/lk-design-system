@@ -122,6 +122,42 @@ export const SegmentedKeyboardContract = {
   },
 };
 
+export const CountedSingleSelectFilter = {
+  name: '건수 있는 단일 선택 필터',
+  tags: ['!dev'],
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-3)', width: 420, maxWidth: '100%' }}>
+      <SegmentedControl
+        data-contract="counted-filter"
+        aria-label="프로젝트 상태 필터"
+        options={[
+          { value: 'all', label: '전체', count: 12 },
+          { value: 'active', label: '진행 중', count: 8 },
+          { value: 'paused', label: '보류', count: 3 },
+        ]}
+        defaultValue="all"
+        full
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const group = canvasElement.querySelector('[data-contract="counted-filter"]');
+    const radios = [...(group?.querySelectorAll('[role="radio"]') ?? [])];
+    const counts = [...(group?.querySelectorAll('[data-segment-count="true"]') ?? [])];
+    if (group?.getAttribute('role') !== 'radiogroup' || radios.length !== 3 || counts.length !== 3) {
+      throw new Error('Counted filters must preserve one radiogroup with one count per radio option.');
+    }
+    if (radios.map((radio) => radio.textContent?.replace(/\s+/g, ' ').trim()).join('|') !== '전체12|진행 중8|보류3') {
+      throw new Error('Each result count must remain in the accessible radio label.');
+    }
+    radios[0].focus();
+    await userEvent.keyboard('{ArrowRight}');
+    if (radios[1].getAttribute('aria-checked') !== 'true' || canvasElement.ownerDocument.activeElement !== radios[1]) {
+      throw new Error('Counted filters must retain arrow-key selection and roving focus.');
+    }
+  },
+};
+
 export const SegmentedControlCard = {
   ...SegmentedControlCardStory,
   name: 'SegmentedControl card parity',

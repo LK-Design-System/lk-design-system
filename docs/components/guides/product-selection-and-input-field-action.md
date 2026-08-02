@@ -1,0 +1,119 @@
+# Field Action
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Product / Selection and Input |
+| Owner | `FieldAction` |
+| Storybook | `LDS Product/Selection and Input/Field Action` |
+| Source | `../component-content.json#product-selection-and-input-field-action` |
+
+발급·조회·추가처럼 입력값에 대한 명시적 action을 별도 동작 버튼으로 유지합니다. 좁은 폭에서는 입력 다음 줄에 전체 너비 action을 배치하며 값과 side effect는 제품이 소유합니다.
+
+## 사용 판단
+
+### 사용하지 않음
+
+- 아이콘이나 신규 asset은 추가하지 않습니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| action | One LDS Button or button-compatible action. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `as` | `keyof React.JSX.IntrinsicElements` | No | Root element. Use form when the action submits the field. @default "div" |
+| `field` | `React.ReactElement` | Yes | One LDS field control. Put shared label/helper/error content on FieldAction. |
+| `action` | `React.ReactElement` | Yes | One LDS Button or button-compatible action. |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'small' \| 'medium' \| 'large'` | No | Shared field density. The composition aligns both controls to 32/48/52px. @default "md" |
+| `label` | `React.ReactNode` | No |  |
+| `helper` | `React.ReactNode` | No |  |
+| `error` | `React.ReactNode` | No |  |
+| `required` | `boolean` | No |  |
+| `htmlFor` | `string` | No | Associates the shared label with the field control. |
+
+## Behavior and interaction
+
+- Input.actionRight는 입력 내부의 지우기·보기 같은 국소 액션입니다. 제출·발급·조회처럼 값에 대한 명시적 변화를 요청하는 주요 action은 FieldAction에 둡니다.
+- 새 surface, border, shadow, radius, color, typography는 만들지 않습니다. Input과 Button의 기존 시각 상태를 그대로 조합합니다.
+- FieldAction은 하나의 입력 필드와 그 값을 사용하는 별도 액션을 같은 행에 배치하는 LK Product Extension입니다. 입력 값, 검증, 제출, 네트워크 요청과 성공·실패 상태는 제품이 소유합니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | size="sm" \| "md" \| "lg"는 각각 field control 높이 32px·48px·52px를 사용합니다. field에는 같은 size를 전달하고, action은 Button의 해당 typography/padding/radius를 유지하면서 조합 높이만 field 높이에 맞춥니다. |
+| 명시 규칙 2 | 360px 이하에서는 field 다음 줄에 action을 배치하고 action을 전체 너비로 확장합니다. 정보와 기능을 잃지 않고 320 CSS px에서 한 방향으로 reflow해야 한다는 WCAG 기준을 따릅니다. |
+| 명시 규칙 3 | InputGroup과 달리 두 control 사이에 --space-2 간격이 있고 외곽선은 연결하지 않습니다. 별도 제출 action이라는 기능적 차이를 표현하기 위한 것입니다. |
+| 명시 규칙 4 | 기본 Button size="md"의 40px 높이를 48px field row에 맞추되, Button size="lg"로 승격하지 않으므로 md 글꼴·padding·radius 의미는 유지합니다. |
+| --space-2 | 8px |
+
+## Responsive
+
+- Stack은 범용 배치만 제공하며 자식 control의 밀도나 높이를 조정하지 않습니다. FieldAction은 field와 action의 크기 매핑 및 좁은 폭 재배치를 소유합니다.
+- loading 중 Button의 숨겨진 원래 label이 너비를 유지하므로 action column이 흔들리지 않습니다. disabled/loading 동작 자체는 Button 계약을 그대로 사용합니다.
+
+## Content and writing
+
+- USWDS Search는 label이 있는 입력과 native submit button을 하나의 form composition으로 제공하며 버튼을 명시적 제출 동작으로 유지합니다. FieldAction도 입력 내부 장식이 아닌 별도 submit action을 유지합니다.
+
+## Accessibility
+
+- InputGroup의 prefix/suffix는 입력 테두리 안에서 편집 값의 단위·프로토콜 같은 고정 문맥을 설명합니다. FieldAction의 action은 별도 Tab stop과 별도 테두리를 가진 독립 동작입니다.
+- FormField가 공유 label/helper/error를 소유하고, field와 action은 그 사이의 control row에서 입력→액션 DOM·Tab 순서를 유지합니다. field 자체에 label/helper/error를 중복 전달하지 않습니다.
+- W3C H32: Providing submit buttons는 form의 변화 요청을 명시적 submit button으로 제공합니다. as="form"과 Button type="submit" 조합은 native Enter 제출을 보존합니다.
+- WCAG 2.2 Reflow 이해 문서는 320 CSS px에서 정보·기능 손실과 양방향 스크롤 없이 재배치할 것을 요구합니다. 좁은 container에서 한 열로 바뀌는 이유입니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
+| `Input` | 대표 시나리오에서 조합 |
+| `InputGroup` | 대표 시나리오에서 조합 |
+| `ColorSwatch` | 대표 시나리오에서 조합 |
+| `DatePicker` | 대표 시나리오에서 조합 |
+| `DateRangeField` | 대표 시나리오에서 조합 |
+| `FileUpload` | 대표 시나리오에서 조합 |
+| `FileUploadQueue` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<FieldAction
+  as="form"
+  onSubmit={issueCredential}
+  field={<Input aria-label="연결 이름" value={name} onChange={setName} />}
+  action={<Button type="submit" loading={busy}>발급</Button>}
+/>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--control-h-lg`
+- `--control-h-md`
+- `--control-h-sm`
+- `--space-2`
+
+### Source contracts
+
+- `components/forms/FieldAction.jsx`
+- `components/forms/FieldAction.d.ts`
+- `components/forms/FieldAction.prompt.md`
+- `stories/FormFieldAction.stories.jsx`
+
+## Sources
+
+- FieldAction prompt contract: `components/forms/FieldAction.prompt.md`
+- Storybook implementation evidence: `stories/FormFieldAction.stories.jsx`
+- [USWDS Search](https://designsystem.digital.gov/components/search/)
+- [W3C H32: Providing submit buttons](https://www.w3.org/WAI/WCAG21/Techniques/html/H32)
+- [WCAG 2.2 Reflow 이해 문서](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)

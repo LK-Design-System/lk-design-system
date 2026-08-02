@@ -8,6 +8,17 @@
 | Last reviewed | 2026-07-27 |
 | Machine-readable source | `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json` |
 
+Current generated census (2026-08-02): 191개 페이지와 643개 스토리. The machine-readable audit is authoritative for public/hidden visibility and review status.
+
+- 공개 스토리: 459개
+- 숨김 스토리: 184개
+- 숨김 visual parity: 89개
+- 숨김 internal contract: 91개
+- 검토 완료 페이지: 190/191개
+- 스토리: 635/643개
+- 검토 완료 페이지 190/191개
+- 스토리 635/643개
+
 ## Operations Dashboard pattern group
 
 `LDS Product/Operations Dashboard`는 별도 디자인 시스템이 아니라 루트 `DESIGN.md`에 정의된 제품 패턴군이다. 이 그룹에는 shell과 반복 레이아웃처럼 운영 화면의 조합 경계를 직접 소유하는 페이지를 둔다. `TopBar`, `SideNav`, `MetricCard`, `ChartFrame`, `DataGrid`, `ResourceState`처럼 다른 제품 문맥에서도 독립적으로 재사용되는 컴포넌트는 기존 Navigation/Data 페이지를 유지하고 Operations Dashboard 예제에서 조합한다. 제품 route, 권한, KPI 수식, telemetry 판정과 완성 화면 template은 Storybook 소유가 아니다.

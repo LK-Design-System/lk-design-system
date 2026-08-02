@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "e3fac3f788a83762b45dfc75649c776f4cae6e26f2751d1910d2711f705c733a",
+    "storybookIndexSha256": "cafb02e329e5303fa6ff84acb951895d582cc2e4aadb5e2c9dbe5ee0159cd9f9",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -61,31 +61,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 190,
-    "stories": 635,
-    "publicStories": 455,
-    "hiddenStories": 180,
-    "componentDescriptions": 186,
-    "pagesWithVisibleCanvasIntroduction": 186,
+    "pages": 191,
+    "stories": 643,
+    "publicStories": 459,
+    "hiddenStories": 184,
+    "componentDescriptions": 187,
+    "pagesWithVisibleCanvasIntroduction": 187,
     "pagesWithDecisionGuidance": 179,
-    "describedPublicStories": 455,
+    "describedPublicStories": 459,
     "reviewedPages": 190,
     "reviewedStories": 635,
-    "staleReviewedPages": 0,
+    "staleReviewedPages": 3,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
-      "overview": 174,
-      "usage": 32,
+      "overview": 175,
+      "usage": 34,
       "variants-states": 95,
       "interaction": 53,
-      "responsive": 64,
+      "responsive": 65,
       "scenario": 21,
-      "visual-parity": 88,
-      "internal-contract": 88
+      "visual-parity": 89,
+      "internal-contract": 91
     },
     "dispositions": {
-      "keep": 190,
+      "keep": 191,
       "merge": 0,
       "split": 0,
       "hide": 0
@@ -93,9 +93,9 @@
     "layers": {
       "Core": {
         "pages": 57,
-        "stories": 187,
-        "public": 112,
-        "hidden": 75,
+        "stories": 189,
+        "public": 113,
+        "hidden": 76,
         "guideReadyPages": 57
       },
       "Foundation": {
@@ -106,10 +106,10 @@
         "guideReadyPages": 12
       },
       "Product": {
-        "pages": 113,
-        "stories": 420,
-        "public": 322,
-        "hidden": 98,
+        "pages": 114,
+        "stories": 426,
+        "public": 325,
+        "hidden": 101,
         "guideReadyPages": 113
       },
       "Theme": {
@@ -876,7 +876,7 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/Card.stories.jsx",
-      "sourceSha256": "6812eb97ed56198dd5855b7270b9c4ebea2b93415ce18e83845c9ecbb3878a4f",
+      "sourceSha256": "ffd4bc13b98e2180487070e3b54d8dcf65332b6b12b9145a7c5a3ddecefc6996",
       "primaryOwner": "Card",
       "ownerComponents": [
         "Card"
@@ -890,13 +890,13 @@
         "ToggleIcon"
       ],
       "visibility": {
-        "public": 5,
+        "public": 6,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-content-card--playground",
-        "describedPublicStories": 5,
+        "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 2,
         "decisionGuidance": true
       },
@@ -962,6 +962,29 @@
             "ToggleIcon"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-content-card--semantic-inset-group",
+          "name": "사용법 · 시맨틱 묶음 표면",
+          "exportName": "SemanticInsetGroup",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Card"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-core-components-content-card--content-card-patterns",
@@ -4906,7 +4929,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/SelectionSegmentedControl.stories.jsx",
-      "sourceSha256": "db891d9df9fd05ed7112b29870179492477d4d78e0713e7ca81f716d9d407c07",
+      "sourceSha256": "23224ee0b55d7481e99d670872cd0ba8f9539d8ae77439ac80c5233aab06312e",
       "primaryOwner": "SegmentedControl",
       "ownerComponents": [
         "SegmentedControl"
@@ -4916,7 +4939,7 @@
       ],
       "visibility": {
         "public": 1,
-        "hidden": 3
+        "hidden": 4
       },
       "descriptionEvidence": {
         "componentDescription": false,
@@ -4956,6 +4979,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-segmented-control--counted-single-select-filter",
+          "name": "건수 있는 단일 선택 필터",
+          "exportName": "CountedSingleSelectFilter",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "SegmentedControl"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-core-components-selection-and-input-segmented-control--segmented-keyboard-contract",
@@ -11961,7 +12006,7 @@
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataToolbar.stories.jsx",
-      "sourceSha256": "9058addc323c20812e682291c7711e680675b51c907d2fbf3452853e89c6bf49",
+      "sourceSha256": "ceb3d5764fe6a4dbeee5f1554428f65a9c65cd58d328b8b8bdf93b713479f456",
       "primaryOwner": "DataToolbar",
       "ownerComponents": [
         "DataToolbar"
@@ -11975,13 +12020,13 @@
         "TextButton"
       ],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-operations-data-toolbar--toolbar-with-grid",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -12023,6 +12068,32 @@
             "TextButton"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-data-operations-data-toolbar--searchless-embedded-toolbar",
+          "name": "사용법 · 검색 없는 목록 머리줄",
+          "exportName": "SearchlessEmbeddedToolbar",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "DataToolbar"
+          ],
+          "supportingComponents": [
+            "Button",
+            "DataGrid"
+          ]
         },
         {
           "id": "lds-product-data-operations-data-toolbar--medium-filter-density",
@@ -18139,6 +18210,173 @@
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
+      "title": "LDS Product/Selection and Input/Field Action",
+      "layer": "Product",
+      "family": "Selection and Input",
+      "importPath": "./stories/FormFieldAction.stories.jsx",
+      "sourceSha256": "ccc67e89b545fdb30310eb66803cd9cf0249c3e52068e6d8c4fbedf2b425ab97",
+      "primaryOwner": "FieldAction",
+      "ownerComponents": [
+        "FieldAction"
+      ],
+      "supportingComponents": [
+        "Button",
+        "Input",
+        "InputGroup"
+      ],
+      "visibility": {
+        "public": 2,
+        "hidden": 3
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-selection-and-input-field-action--field-action-overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": false
+      },
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "pending",
+      "reviewMethod": null,
+      "reviewedAt": null,
+      "reviewedSourceSha256": null,
+      "stories": [
+        {
+          "id": "lds-product-selection-and-input-field-action--field-action-overview",
+          "name": "개요",
+          "exportName": "FieldActionOverview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FieldAction"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Input"
+          ]
+        },
+        {
+          "id": "lds-product-selection-and-input-field-action--field-action-states",
+          "name": "상태와 밀도",
+          "exportName": "FieldActionStates",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FieldAction"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Input"
+          ]
+        },
+        {
+          "id": "lds-product-selection-and-input-field-action--field-action-narrow",
+          "name": "좁은 폭·긴 문구·오류",
+          "exportName": "FieldActionNarrow",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FieldAction"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Input"
+          ]
+        },
+        {
+          "id": "lds-product-selection-and-input-field-action--field-action-visual-parity",
+          "name": "FieldAction visual parity",
+          "exportName": "FieldActionVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FieldAction"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Input",
+            "InputGroup"
+          ]
+        },
+        {
+          "id": "lds-product-selection-and-input-field-action--field-action-submit-contract",
+          "name": "native 제출 계약",
+          "exportName": "FieldActionSubmitContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FieldAction"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Input"
+          ]
+        }
+      ]
     },
     {
       "title": "LDS Product/Selection and Input/File Upload",

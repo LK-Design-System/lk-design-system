@@ -9,7 +9,7 @@ const docsRoot = path.join(root, 'docs', 'components');
 const dedupBaselinePath = 'docs/references/quality/STORYBOOK_GUIDE_DEDUP_BASELINE.json';
 const updateDedupBaseline = process.argv.includes('--update-dedup-baseline');
 const metricVersion = 2;
-const metricGuideDenominator = 172;
+const metricGuideDenominator = 173;
 const hardDedupCeilings = {
   meanDuplicatedSharePercent: 61,
   guidesOverSixtyPercent: 92,

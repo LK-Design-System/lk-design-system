@@ -556,6 +556,10 @@
     "slug": "product-selection-and-input-date-range"
   },
   {
+    "storybookTitle": "LDS Product/Selection and Input/Field Action",
+    "slug": "product-selection-and-input-field-action"
+  },
+  {
     "storybookTitle": "LDS Product/Selection and Input/File Upload",
     "slug": "product-selection-and-input-file-upload"
   },

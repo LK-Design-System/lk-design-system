@@ -336,6 +336,11 @@
         "role": "usage"
       },
       {
+        "id": "lds-core-components-content-card--semantic-inset-group",
+        "name": "사용법 · 시맨틱 묶음 표면",
+        "role": "usage"
+      },
+      {
         "id": "lds-core-components-content-card--content-card-patterns",
         "name": "사용법 · 콘텐츠형과 목록형",
         "role": "usage"

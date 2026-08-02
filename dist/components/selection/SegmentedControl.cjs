@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkBVPNECL7cjs = require('../../chunk-BVPNECL7.cjs');
+var _chunk6HUM2PHIcjs = require('../../chunk-6HUM2PHI.cjs');
 
 
-exports.SegmentedControl = _chunkBVPNECL7cjs.SegmentedControl;
+exports.SegmentedControl = _chunk6HUM2PHIcjs.SegmentedControl;
 //# sourceMappingURL=SegmentedControl.cjs.map

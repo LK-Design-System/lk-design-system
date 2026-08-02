@@ -165,7 +165,20 @@ export function SegmentedControl({
             }}
           >
             {option.icon && <span aria-hidden="true" style={{ display: 'inline-flex', flex: '0 0 auto' }}>{option.icon}</span>}
-            {option.label}
+            <span>{option.label}</span>
+            {option.count != null && (
+              <span
+                data-segment-count="true"
+                style={{
+                  minWidth: '1.25em',
+                  fontVariantNumeric: 'tabular-nums',
+                  fontWeight: 'var(--fw-bold)',
+                  color: active ? 'currentColor' : 'var(--color-semantic-label-alternative)',
+                }}
+              >
+                {option.count}
+              </span>
+            )}
           </button>
         );
       })}

@@ -60,7 +60,7 @@
 
 ## Content and writing
 
-- options — 문자열 또는 { value, label, icon, disabled }. value / defaultValue / onChange — 제어/비제어.
+- options — 문자열 또는 { value, label, icon, count, disabled }. count는 단일 선택 필터를 고르기 전에 값별 결과 건수를 비교해야 할 때 사용하며 라디오의 접근 가능한 이름과 함께 읽힙니다. value / defaultValue / onChange — 제어/비제어.
 
 ## Accessibility
 
@@ -90,6 +90,7 @@
 ```jsx
 <SegmentedControl options={['KR', 'EN']} defaultValue="KR" onChange={setLang} />
 <SegmentedControl full options={[{value:'list',label:'리스트'},{value:'grid',label:'그리드'}]} />
+<SegmentedControl aria-label="상태 필터" options={[{value:'all',label:'전체',count:12},{value:'active',label:'진행 중',count:8}]} defaultValue="all" />
 ```
 
 ## Tokens and API
@@ -101,6 +102,7 @@
 - `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
 - `--color-semantic-focus-ring`
+- `--color-semantic-label-alternative`
 - `--color-semantic-label-disable`
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
@@ -109,6 +111,7 @@
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`
+- `--fw-bold`
 - `--fw-medium`
 - `--fw-semibold`
 - `--headline2-size`

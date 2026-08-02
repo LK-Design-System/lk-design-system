@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "28f73e4848cf7fd1b4d10a0d3d48a0f6ddbb2ca86215f4c719707b23e3895901",
+  "sourceFingerprint": "76f90ab3b60103abf3105b17f80908063251373981f72b29312c6f610e521fc3",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -26,12 +26,11 @@
   "summary": {
     "componentEntries": 203,
     "publicExports": 211,
-    "guides": 172,
+    "guides": 173,
     "entriesWithoutOwnedPage": [
       "Stat",
       "AvatarGroup",
       "CheckboxGroup",
-      "FieldAction",
       "FormField",
       "RadioGroup",
       "Toolbar",
@@ -15062,6 +15061,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -15411,6 +15411,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -15595,6 +15596,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -15790,6 +15792,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -15943,6 +15946,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
@@ -16125,6 +16129,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -16843,6 +16848,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -17217,6 +17223,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -17402,6 +17409,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -18054,6 +18062,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -18493,6 +18502,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -19465,6 +19475,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -19623,6 +19634,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -19796,6 +19808,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -27320,6 +27333,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -27685,7 +27699,9 @@
         "--shadow-xs",
         "--color-semantic-focus-ring",
         "--dur-fast",
-        "--ease-out"
+        "--ease-out",
+        "--fw-bold",
+        "--color-semantic-label-alternative"
       ],
       "externalReferences": [
         {
@@ -27697,7 +27713,7 @@
           "url": "https://developer.apple.com/design/human-interface-guidelines/segmented-controls"
         }
       ],
-      "promptSha256": "f7998535abba543f715d79b9805c498e12e155a1fe5871552bc69a0f17cd58c3"
+      "promptSha256": "68a2962cc20b08f7646e7e469bbea53f115e9e4c6170e293bd77b4ca3dd18c9e"
     },
     {
       "id": "stepper",
@@ -28246,6 +28262,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -28412,6 +28429,7 @@
         "LDS Product/Selection and Input/Color Swatch",
         "LDS Product/Selection and Input/Date Picker",
         "LDS Product/Selection and Input/Date Range",
+        "LDS Product/Selection and Input/Field Action",
         "LDS Product/Selection and Input/File Upload Queue",
         "LDS Product/Selection and Input/Icon Picker",
         "LDS Product/Selection and Input/Number Field",
@@ -33406,6 +33424,11 @@
           {
             "id": "lds-core-components-content-card--card-affordances",
             "name": "사용법 · 보조 동작과 미디어 정보",
+            "role": "usage"
+          },
+          {
+            "id": "lds-core-components-content-card--semantic-inset-group",
+            "name": "사용법 · 시맨틱 묶음 표면",
             "role": "usage"
           },
           {
@@ -43101,7 +43124,7 @@
         "ButtonGroup의 단일 선택 모드는 이 컴포넌트를 조합합니다. 따라서 높이·disabled·roving 규칙을 ButtonGroup에서 별도로 다시 만들지 않습니다."
       ],
       "contentGuidance": [
-        "options — 문자열 또는 { value, label, icon, disabled }. value / defaultValue / onChange — 제어/비제어."
+        "options — 문자열 또는 { value, label, icon, count, disabled }. count는 단일 선택 필터를 고르기 전에 값별 결과 건수를 비교해야 할 때 사용하며 라디오의 접근 가능한 이름과 함께 읽힙니다. value / defaultValue / onChange — 제어/비제어."
       ],
       "accessibility": [
         "SegmentedControl is a named radiogroup, not a tablist: each segment is a radio with one roving tab stop. Arrow keys wrap across enabled segments; Home and End choose the first and last enabled segment.",
@@ -43148,7 +43171,7 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<SegmentedControl options={['KR', 'EN']} defaultValue=\"KR\" onChange={setLang} />\n<SegmentedControl full options={[{value:'list',label:'리스트'},{value:'grid',label:'그리드'}]} />"
+          "code": "<SegmentedControl options={['KR', 'EN']} defaultValue=\"KR\" onChange={setLang} />\n<SegmentedControl full options={[{value:'list',label:'리스트'},{value:'grid',label:'그리드'}]} />\n<SegmentedControl aria-label=\"상태 필터\" options={[{value:'all',label:'전체',count:12},{value:'active',label:'진행 중',count:8}]} defaultValue=\"all\" />"
         }
       ],
       "tokens": [
@@ -43157,6 +43180,7 @@
         "--color-semantic-fill-normal",
         "--color-semantic-fill-strong",
         "--color-semantic-focus-ring",
+        "--color-semantic-label-alternative",
         "--color-semantic-label-disable",
         "--color-semantic-label-neutral",
         "--color-semantic-label-normal",
@@ -43165,6 +43189,7 @@
         "--dur-fast",
         "--ease-out",
         "--font-sans",
+        "--fw-bold",
         "--fw-medium",
         "--fw-semibold",
         "--headline2-size",
@@ -43198,7 +43223,7 @@
             "role": "overview"
           }
         ],
-        "hiddenEvidence": 3
+        "hiddenEvidence": 4
       },
       "sources": [
         {
@@ -57176,6 +57201,11 @@
             "role": "overview"
           },
           {
+            "id": "lds-product-data-operations-data-toolbar--searchless-embedded-toolbar",
+            "name": "사용법 · 검색 없는 목록 머리줄",
+            "role": "usage"
+          },
+          {
             "id": "lds-product-data-operations-data-toolbar--medium-filter-density",
             "name": "반응형 · 기본 필터 밀도",
             "role": "responsive"
@@ -70465,6 +70495,259 @@
         "quantitativeRules": "evidence",
         "responsive": "omitted-no-evidence",
         "contentGuidance": "omitted-no-evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "evidence",
+        "examples": "evidence",
+        "tokens": "evidence",
+        "apiLinks": "evidence",
+        "migration": "omitted-no-evidence"
+      }
+    },
+    {
+      "slug": "product-selection-and-input-field-action",
+      "title": "Field Action",
+      "storybookTitle": "LDS Product/Selection and Input/Field Action",
+      "layer": "Product",
+      "family": "Selection and Input",
+      "primaryOwner": "FieldAction",
+      "ownerComponents": [
+        "FieldAction"
+      ],
+      "supportingComponents": [
+        "Button",
+        "Input",
+        "InputGroup"
+      ],
+      "purpose": "발급·조회·추가처럼 입력값에 대한 명시적 action을 별도 동작 버튼으로 유지합니다. 좁은 폭에서는 입력 다음 줄에 전체 너비 action을 배치하며 값과 side effect는 제품이 소유합니다.",
+      "useWhen": [],
+      "avoidWhen": [
+        "아이콘이나 신규 asset은 추가하지 않습니다."
+      ],
+      "anatomy": [
+        {
+          "part": "action",
+          "rule": "One LDS Button or button-compatible action."
+        }
+      ],
+      "properties": [
+        {
+          "name": "as",
+          "type": "keyof React.JSX.IntrinsicElements",
+          "required": false,
+          "description": "Root element. Use form when the action submits the field. @default \"div\"",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "field",
+          "type": "React.ReactElement",
+          "required": true,
+          "description": "One LDS field control. Put shared label/helper/error content on FieldAction.",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "action",
+          "type": "React.ReactElement",
+          "required": true,
+          "description": "One LDS Button or button-compatible action.",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md' | 'lg' | 'small' | 'medium' | 'large'",
+          "required": false,
+          "description": "Shared field density. The composition aligns both controls to 32/48/52px. @default \"md\"",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "label",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "helper",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "error",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "",
+          "owner": "FieldActionProps"
+        },
+        {
+          "name": "htmlFor",
+          "type": "string",
+          "required": false,
+          "description": "Associates the shared label with the field control.",
+          "owner": "FieldActionProps"
+        }
+      ],
+      "states": [],
+      "behavior": [
+        "Input.actionRight는 입력 내부의 지우기·보기 같은 국소 액션입니다. 제출·발급·조회처럼 값에 대한 명시적 변화를 요청하는 주요 action은 FieldAction에 둡니다.",
+        "새 surface, border, shadow, radius, color, typography는 만들지 않습니다. Input과 Button의 기존 시각 상태를 그대로 조합합니다.",
+        "FieldAction은 하나의 입력 필드와 그 값을 사용하는 별도 액션을 같은 행에 배치하는 LK Product Extension입니다. 입력 값, 검증, 제출, 네트워크 요청과 성공·실패 상태는 제품이 소유합니다."
+      ],
+      "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "size=\"sm\" | \"md\" | \"lg\"는 각각 field control 높이 32px·48px·52px를 사용합니다. field에는 같은 size를 전달하고, action은 Button의 해당 typography/padding/radius를 유지하면서 조합 높이만 field 높이에 맞춥니다."
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "360px 이하에서는 field 다음 줄에 action을 배치하고 action을 전체 너비로 확장합니다. 정보와 기능을 잃지 않고 320 CSS px에서 한 방향으로 reflow해야 한다는 WCAG 기준을 따릅니다."
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "InputGroup과 달리 두 control 사이에 --space-2 간격이 있고 외곽선은 연결하지 않습니다. 별도 제출 action이라는 기능적 차이를 표현하기 위한 것입니다."
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "기본 Button size=\"md\"의 40px 높이를 48px field row에 맞추되, Button size=\"lg\"로 승격하지 않으므로 md 글꼴·padding·radius 의미는 유지합니다."
+        },
+        {
+          "subject": "--space-2",
+          "rule": "8px"
+        }
+      ],
+      "responsive": [
+        "Stack은 범용 배치만 제공하며 자식 control의 밀도나 높이를 조정하지 않습니다. FieldAction은 field와 action의 크기 매핑 및 좁은 폭 재배치를 소유합니다.",
+        "loading 중 Button의 숨겨진 원래 label이 너비를 유지하므로 action column이 흔들리지 않습니다. disabled/loading 동작 자체는 Button 계약을 그대로 사용합니다."
+      ],
+      "contentGuidance": [
+        "USWDS Search는 label이 있는 입력과 native submit button을 하나의 form composition으로 제공하며 버튼을 명시적 제출 동작으로 유지합니다. FieldAction도 입력 내부 장식이 아닌 별도 submit action을 유지합니다."
+      ],
+      "accessibility": [
+        "InputGroup의 prefix/suffix는 입력 테두리 안에서 편집 값의 단위·프로토콜 같은 고정 문맥을 설명합니다. FieldAction의 action은 별도 Tab stop과 별도 테두리를 가진 독립 동작입니다.",
+        "FormField가 공유 label/helper/error를 소유하고, field와 action은 그 사이의 control row에서 입력→액션 DOM·Tab 순서를 유지합니다. field 자체에 label/helper/error를 중복 전달하지 않습니다.",
+        "W3C H32: Providing submit buttons는 form의 변화 요청을 명시적 submit button으로 제공합니다. as=\"form\"과 Button type=\"submit\" 조합은 native Enter 제출을 보존합니다.",
+        "WCAG 2.2 Reflow 이해 문서는 320 CSS px에서 정보·기능 손실과 양방향 스크롤 없이 재배치할 것을 요구합니다. 좁은 container에서 한 열로 바뀌는 이유입니다."
+      ],
+      "exceptions": [],
+      "related": [
+        {
+          "component": "Button",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "Input",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "InputGroup",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "ColorSwatch",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DatePicker",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DateRangeField",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "FileUpload",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "FileUploadQueue",
+          "relationship": "대표 시나리오에서 조합"
+        }
+      ],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<FieldAction\n  as=\"form\"\n  onSubmit={issueCredential}\n  field={<Input aria-label=\"연결 이름\" value={name} onChange={setName} />}\n  action={<Button type=\"submit\" loading={busy}>발급</Button>}\n/>"
+        }
+      ],
+      "tokens": [
+        "--control-h-lg",
+        "--control-h-md",
+        "--control-h-sm",
+        "--space-2"
+      ],
+      "apiLinks": [
+        "components/forms/FieldAction.jsx",
+        "components/forms/FieldAction.d.ts",
+        "components/forms/FieldAction.prompt.md",
+        "stories/FormFieldAction.stories.jsx"
+      ],
+      "migration": [],
+      "platformStatus": {
+        "figma": "not-tracked",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/FormFieldAction.stories.jsx",
+        "entryStoryId": "lds-product-selection-and-input-field-action--field-action-overview",
+        "publicStories": [
+          {
+            "id": "lds-product-selection-and-input-field-action--field-action-overview",
+            "name": "개요",
+            "role": "overview"
+          },
+          {
+            "id": "lds-product-selection-and-input-field-action--field-action-narrow",
+            "name": "좁은 폭·긴 문구·오류",
+            "role": "responsive"
+          }
+        ],
+        "hiddenEvidence": 3
+      },
+      "sources": [
+        {
+          "label": "FieldAction prompt contract",
+          "path": "components/forms/FieldAction.prompt.md"
+        },
+        {
+          "label": "Storybook implementation evidence",
+          "path": "stories/FormFieldAction.stories.jsx"
+        },
+        {
+          "label": "USWDS Search",
+          "url": "https://designsystem.digital.gov/components/search/"
+        },
+        {
+          "label": "W3C H32: Providing submit buttons",
+          "url": "https://www.w3.org/WAI/WCAG21/Techniques/html/H32"
+        },
+        {
+          "label": "WCAG 2.2 Reflow 이해 문서",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
+        }
+      ],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "omitted-no-evidence",
+        "avoidWhen": "evidence",
+        "anatomy": "evidence",
+        "properties": "evidence",
+        "states": "omitted-no-evidence",
+        "behavior": "evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "evidence",
+        "contentGuidance": "evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
         "related": "evidence",

@@ -855,7 +855,7 @@ const nonFoundationPages = audit.pages.filter(
 );
 const tokenMap = tokenValueMap(tokenSource);
 const guides = nonFoundationPages.map((page) => guideFromPage(page, exportToEntry, sourceDetails, tokenMap));
-assert(guides.length === 172, `Expected 172 non-Foundation component pages, received ${guides.length}.`);
+assert(guides.length === 173, `Expected 173 non-Foundation component pages, received ${guides.length}.`);
 finalizeCanonicalGuides(guides);
 
 const coveredExports = new Set(guides.flatMap((guide) => guide.ownerComponents));

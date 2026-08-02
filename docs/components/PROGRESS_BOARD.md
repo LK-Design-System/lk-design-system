@@ -15,7 +15,7 @@
 | [Text Button](guides/core-components-action-text-button.md) | Core / Action | `TextButton` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Toggle Icon](guides/core-components-action-toggle-icon.md) | Core / Action | `ToggleIcon` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Avatar](guides/core-components-content-avatar.md) | Core / Content | `Avatar` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
-| [Card](guides/core-components-content-card.md) | Core / Content | `Card` | mapped | implemented | not-tracked | not-tracked | 5 public / 1 hidden |
+| [Card](guides/core-components-content-card.md) | Core / Content | `Card` | mapped | implemented | not-tracked | not-tracked | 6 public / 1 hidden |
 | [Content Badge](guides/core-components-content-content-badge.md) | Core / Content | `ContentBadge` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Disclosure](guides/core-components-content-disclosure.md) | Core / Content | `Accordion`, `Collapsible` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Lists](guides/core-components-content-lists.md) | Core / Content | `Accordion`, `ListCell` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
@@ -49,7 +49,7 @@
 | [Input](guides/core-components-selection-and-input-input.md) | Core / Selection and Input | `Input` | mapped | implemented | not-tracked | not-tracked | 2 public / 3 hidden |
 | [Radio](guides/core-components-selection-and-input-radio.md) | Core / Selection and Input | `Radio` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Search and Autocomplete](guides/core-components-selection-and-input-search-and-autocomplete.md) | Core / Selection and Input | `AutoComplete`, `Combobox`, `SearchField`, `TagInput` | mapped | implemented | not-tracked | not-tracked | 1 public / 6 hidden |
-| [Segmented Control](guides/core-components-selection-and-input-segmented-control.md) | Core / Selection and Input | `SegmentedControl` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
+| [Segmented Control](guides/core-components-selection-and-input-segmented-control.md) | Core / Selection and Input | `SegmentedControl` | mapped | implemented | not-tracked | not-tracked | 1 public / 4 hidden |
 | [Select](guides/core-components-selection-and-input-select.md) | Core / Selection and Input | `Select` | mapped | implemented | not-tracked | not-tracked | 1 public / 4 hidden |
 | [Slider and Range](guides/core-components-selection-and-input-slider-and-range.md) | Core / Selection and Input | `RangeSlider`, `Slider` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Stepper](guides/core-components-selection-and-input-stepper.md) | Core / Selection and Input | `Stepper` | mapped | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
@@ -99,7 +99,7 @@
 | [Description List](guides/product-data-display-description-list.md) | Product / Display | `DescriptionList` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Metric Card](guides/product-data-display-metric-card.md) | Product / Display | `MetricCard` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Resource State](guides/product-data-display-resource-state.md) | Product / Display | `ResourceState` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Data Toolbar](guides/product-data-operations-data-toolbar.md) | Product / Operations | `DataToolbar` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
+| [Data Toolbar](guides/product-data-operations-data-toolbar.md) | Product / Operations | `DataToolbar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Export Action](guides/product-data-operations-export-action.md) | Product / Operations | `DataExportAction` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Filter Bar](guides/product-data-operations-filter-bar.md) | Product / Operations | `FilterBar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Refresh Control](guides/product-data-operations-refresh-control.md) | Product / Operations | `RefreshControl` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
@@ -147,6 +147,7 @@
 | [Color Swatch](guides/product-selection-and-input-color-swatch.md) | Product / Selection and Input | `ColorSwatch` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Date Picker](guides/product-selection-and-input-date-picker.md) | Product / Selection and Input | `DatePicker` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Date Range](guides/product-selection-and-input-date-range.md) | Product / Selection and Input | `DateRangeField` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
+| [Field Action](guides/product-selection-and-input-field-action.md) | Product / Selection and Input | `FieldAction` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 3 hidden |
 | [File Upload](guides/product-selection-and-input-file-upload.md) | Product / Selection and Input | `FileUpload` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [File Upload Queue](guides/product-selection-and-input-file-upload-queue.md) | Product / Selection and Input | `FileUploadQueue` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Icon Picker](guides/product-selection-and-input-icon-picker.md) | Product / Selection and Input | `IconPicker` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |

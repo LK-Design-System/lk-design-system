@@ -260,6 +260,11 @@
         "role": "overview"
       },
       {
+        "id": "lds-product-data-operations-data-toolbar--searchless-embedded-toolbar",
+        "name": "사용법 · 검색 없는 목록 머리줄",
+        "role": "usage"
+      },
+      {
         "id": "lds-product-data-operations-data-toolbar--medium-filter-density",
         "name": "반응형 · 기본 필터 밀도",
         "role": "responsive"

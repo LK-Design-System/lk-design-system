@@ -4,6 +4,8 @@ export type SegmentOption = string | {
   value: string;
   label: React.ReactNode;
   icon?: React.ReactNode;
+  /** Result count announced with the option label. */
+  count?: number;
   disabled?: boolean;
   /** Disabled alias retained for compatibility; prefer `disabled`. */
   disable?: boolean;

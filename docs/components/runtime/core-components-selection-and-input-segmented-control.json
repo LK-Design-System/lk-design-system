@@ -141,7 +141,7 @@
     "ButtonGroup의 단일 선택 모드는 이 컴포넌트를 조합합니다. 따라서 높이·disabled·roving 규칙을 ButtonGroup에서 별도로 다시 만들지 않습니다."
   ],
   "contentGuidance": [
-    "options — 문자열 또는 { value, label, icon, disabled }. value / defaultValue / onChange — 제어/비제어."
+    "options — 문자열 또는 { value, label, icon, count, disabled }. count는 단일 선택 필터를 고르기 전에 값별 결과 건수를 비교해야 할 때 사용하며 라디오의 접근 가능한 이름과 함께 읽힙니다. value / defaultValue / onChange — 제어/비제어."
   ],
   "accessibility": [
     "SegmentedControl is a named radiogroup, not a tablist: each segment is a radio with one roving tab stop. Arrow keys wrap across enabled segments; Home and End choose the first and last enabled segment.",
@@ -188,7 +188,7 @@
   "examples": [
     {
       "label": "기본 조합",
-      "code": "<SegmentedControl options={['KR', 'EN']} defaultValue=\"KR\" onChange={setLang} />\n<SegmentedControl full options={[{value:'list',label:'리스트'},{value:'grid',label:'그리드'}]} />"
+      "code": "<SegmentedControl options={['KR', 'EN']} defaultValue=\"KR\" onChange={setLang} />\n<SegmentedControl full options={[{value:'list',label:'리스트'},{value:'grid',label:'그리드'}]} />\n<SegmentedControl aria-label=\"상태 필터\" options={[{value:'all',label:'전체',count:12},{value:'active',label:'진행 중',count:8}]} defaultValue=\"all\" />"
     }
   ],
   "tokens": [
@@ -197,6 +197,7 @@
     "--color-semantic-fill-normal",
     "--color-semantic-fill-strong",
     "--color-semantic-focus-ring",
+    "--color-semantic-label-alternative",
     "--color-semantic-label-disable",
     "--color-semantic-label-neutral",
     "--color-semantic-label-normal",
@@ -205,6 +206,7 @@
     "--dur-fast",
     "--ease-out",
     "--font-sans",
+    "--fw-bold",
     "--fw-medium",
     "--fw-semibold",
     "--headline2-size",
@@ -233,7 +235,7 @@
         "role": "overview"
       }
     ],
-    "hiddenEvidence": 3
+    "hiddenEvidence": 4
   },
   "sources": [],
   "canonicalGuide": null,

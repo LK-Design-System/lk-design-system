@@ -68,6 +68,17 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.6 - 2026-08-02
+
+### Added
+
+- `SegmentedControl` options accept `count`, allowing a named `radiogroup` to expose per-value result totals without falling back to independent toggle chips or tab semantics.
+- Counted segments retain the existing roving tab stop, Arrow/Home/End selection contract, disabled-option skipping, hover, selected state, and focus ring.
+
+### Migration
+
+- Replace hand-composed single-select `FilterChip` groups that display counts with `SegmentedControl` options shaped as `{ value, label, count }`.
+
 ## 0.1.0-rc.5 - 2026-08-02
 
 ### Added

@@ -10,9 +10,10 @@
 ```jsx
 <SegmentedControl options={['KR', 'EN']} defaultValue="KR" onChange={setLang} />
 <SegmentedControl full options={[{value:'list',label:'리스트'},{value:'grid',label:'그리드'}]} />
+<SegmentedControl aria-label="상태 필터" options={[{value:'all',label:'전체',count:12},{value:'active',label:'진행 중',count:8}]} defaultValue="all" />
 ```
 
-- **options** — 문자열 또는 `{ value, label, icon, disabled }`. **value / defaultValue / onChange** — 제어/비제어.
+- **options** — 문자열 또는 `{ value, label, icon, count, disabled }`. `count`는 단일 선택 필터를 고르기 전에 값별 결과 건수를 비교해야 할 때 사용하며 라디오의 접근 가능한 이름과 함께 읽힙니다. **value / defaultValue / onChange** — 제어/비제어.
 - **size** `sm|md|lg`는 전체 track 외곽 높이 32/40/48px입니다. Solid의 내부 padding과 Outlined의 border가 이 높이에 더해지지 않습니다. **full**은 컨테이너 폭까지 늘림.
 - 상호 배타적인 2–4개의 짧은 뷰에 쓰세요. 옵션이 많거나 길거나 실제 페이지 내비게이션에는 `Tabs`를 쓰세요.
 

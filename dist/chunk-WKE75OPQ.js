@@ -147,7 +147,20 @@ function SegmentedControl({
             },
             children: [
               option.icon && /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { display: "inline-flex", flex: "0 0 auto" }, children: option.icon }),
-              option.label
+              /* @__PURE__ */ jsx("span", { children: option.label }),
+              option.count != null && /* @__PURE__ */ jsx(
+                "span",
+                {
+                  "data-segment-count": "true",
+                  style: {
+                    minWidth: "1.25em",
+                    fontVariantNumeric: "tabular-nums",
+                    fontWeight: "var(--fw-bold)",
+                    color: active ? "currentColor" : "var(--color-semantic-label-alternative)"
+                  },
+                  children: option.count
+                }
+              )
             ]
           },
           option.value
@@ -160,4 +173,4 @@ function SegmentedControl({
 export {
   SegmentedControl
 };
-//# sourceMappingURL=chunk-S264AQ77.js.map
+//# sourceMappingURL=chunk-WKE75OPQ.js.map
