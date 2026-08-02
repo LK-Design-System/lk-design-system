@@ -3,6 +3,8 @@
   "findings": {
     "nonstandardSizeValues": [
       "components/buttons/IconButton.d.ts#IconButtonProps:size=custom",
+      "components/buttons/IconButton.d.ts#IconButtonProps:size=xs",
+      "components/buttons/IconButton.d.ts#IconButtonProps:size=xsmall",
       "components/content/ContentBadge.d.ts#ContentBadgeProps:size=xs",
       "components/content/ContentBadge.d.ts#ContentBadgeProps:size=xsmall",
       "components/feedback/Avatar.d.ts#AvatarProps:size=default",

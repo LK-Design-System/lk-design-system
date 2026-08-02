@@ -55,6 +55,31 @@ export const IconButtonVariants = {
   ),
 };
 
+export const SizeContract = {
+  name: 'Size contract',
+  tags: ['!dev'],
+  render: () => (
+    <main style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
+      <IconButton data-size-contract="xs" size="xs" label="Dense action"><Icon name="search" size={14} aria-hidden="true" /></IconButton>
+      <IconButton data-size-contract="xsmall" size="xsmall" label="Dense action alias"><Icon name="search" size={14} aria-hidden="true" /></IconButton>
+      <IconButton data-size-contract="custom" size="custom" label="WDS 28px action"><Icon name="search" size={16} aria-hidden="true" /></IconButton>
+      <IconButton data-size-contract="sm" size="sm" label="Small action"><Icon name="search" size={18} aria-hidden="true" /></IconButton>
+      <IconButton data-size-contract="md" size="md" label="Medium action"><Icon name="search" size={18} aria-hidden="true" /></IconButton>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const expectedSizes = { xs: '24px', xsmall: '24px', custom: '28px', sm: '32px', md: '40px' };
+    for (const [name, expected] of Object.entries(expectedSizes)) {
+      const control = canvasElement.querySelector(`[data-size-contract="${name}"]`);
+      if (!control) throw new Error(`Missing IconButton ${name} size contract target.`);
+      const computed = getComputedStyle(control);
+      if (computed.width !== expected || computed.height !== expected) {
+        throw new Error(`IconButton ${name} must resolve to ${expected}; received ${computed.width} by ${computed.height}.`);
+      }
+    }
+  },
+};
+
 function IconButtonStateDemo() {
   const [activations, setActivations] = React.useState(0);
   return (

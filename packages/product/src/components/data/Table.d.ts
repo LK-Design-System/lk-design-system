@@ -6,6 +6,8 @@ export interface TableColumn<Row extends Record<string, unknown> = Record<string
   label: React.ReactNode;
   align?: 'left' | 'center' | 'right';
   width?: number | string;
+  /** Let this column consume remaining width and ellipsize overflowing plain text. Prefer one truncate column per table; custom render layouts must also allow their own contents to shrink. @default false */
+  truncate?: boolean;
   /** 전체 행을 받는 커스텀 셀 렌더러. */
   render?: (row: Row) => React.ReactNode;
 }
@@ -37,6 +39,8 @@ export interface TableCellStyleOptions {
   /** Logical text alignment. @default "left" */
   align?: 'left' | 'center' | 'right';
   width?: number | string;
+  /** Apply the Table flexible-column constraint and text overflow treatment. @default false */
+  truncate?: boolean;
 }
 
 /** LDS Table 머리글 셀의 공개 스타일. 제품 소유 native table과 시각을 맞출 때 사용합니다. */

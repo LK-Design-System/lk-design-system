@@ -162,4 +162,50 @@ export const RowExtensionContract = {
   },
 };
 
+const flexibleText = 'context-hub-publication-with-a-name-that-is-intentionally-long-enough-to-exceed-the-available-column-width';
+
+export const FlexibleTruncationContract = {
+  name: 'Flexible truncated column',
+  tags: ['!dev'],
+  render: () => (
+    <Table
+      data-contract="flexible-truncation"
+      tableLabel="Flexible column contract"
+      columns={[
+        { key: 'code', label: 'Code', width: 64 },
+        { key: 'title', label: 'Publication title', truncate: true },
+        { key: 'owner', label: 'Owner', width: 72 },
+        { key: 'state', label: 'State', width: 72 },
+      ]}
+      rows={[{ code: 'PUB-104', title: flexibleText, owner: 'Robotics', state: 'Published' }]}
+      style={{ width: 520, maxWidth: '100%' }}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const surface = canvasElement.querySelector('[data-contract="flexible-truncation"]');
+    const flexibleHeader = surface?.querySelector('thead th:nth-child(2)');
+    const flexibleCell = surface?.querySelector('tbody tr:first-child td:nth-child(2)');
+    const fixedBodyCell = surface?.querySelector('tbody tr:first-child td:nth-child(3)');
+    const content = flexibleCell?.querySelector('[data-slot="truncated-content"]');
+    if (!surface || !flexibleHeader || !flexibleCell || !fixedBodyCell || !content) {
+      throw new Error('Table flexible truncation contract targets are required.');
+    }
+    if (flexibleHeader.style.width !== '100%' || flexibleHeader.style.maxWidth !== '0px') {
+      throw new Error('A truncate header must consume remaining width with a zero min-content constraint.');
+    }
+    if (flexibleCell.style.width !== '100%' || flexibleCell.style.maxWidth !== '0px') {
+      throw new Error('A truncate body cell must share the header sizing contract.');
+    }
+    if (fixedBodyCell.style.width !== '72px') {
+      throw new Error('Explicit column widths must apply to body cells as well as headers.');
+    }
+    if (content.style.textOverflow !== 'ellipsis' || content.textContent !== flexibleText) {
+      throw new Error('Truncated plain text must keep its complete DOM value and render an ellipsis policy.');
+    }
+    if (surface.scrollWidth > surface.clientWidth + 1) {
+      throw new Error('A single truncate column must not push the Table beyond its available width.');
+    }
+  },
+};
+
 export const TableCard = { ...TableCardStory, name: 'Table card parity', tags: ['!dev', 'visual-parity'] };

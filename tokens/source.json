@@ -2842,6 +2842,35 @@
         }
       }
     },
+    "iconButton": {
+      "component": "components/buttons/IconButton.jsx",
+      "tokens": {
+        "sizeXs": {
+          "$type": "dimension",
+          "$value": "var(--component-icon-button-size-xs)",
+          "css": "--component-icon-button-size-xs",
+          "$description": "24px LDS dense-action extension; not a WDS Icon Button size axis."
+        },
+        "sizeCustom": {
+          "$type": "dimension",
+          "$value": "var(--component-icon-button-size-custom)",
+          "css": "--component-icon-button-size-custom",
+          "$description": "Legacy public name for the WDS 28px Icon Button size."
+        },
+        "sizeSm": {
+          "$type": "dimension",
+          "$value": "var(--component-icon-button-size-sm)",
+          "css": "--component-icon-button-size-sm",
+          "ref": "semantic.control.heightSm"
+        },
+        "sizeMd": {
+          "$type": "dimension",
+          "$value": "var(--component-icon-button-size-md)",
+          "css": "--component-icon-button-size-md",
+          "ref": "semantic.control.heightMd"
+        }
+      }
+    },
     "actionArea": {
       "component": "components/buttons/ActionArea.jsx",
       "tokens": {

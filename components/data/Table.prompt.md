@@ -4,6 +4,43 @@ Header and body cells use `font-variant-numeric: tabular-nums` so values do not 
 
 Reference: [SAP Fiori data table usage](https://www.sap.com/design-system/fiori-design-android/v25-4/components/data-table/usage) recommends content-dependent alignment and right alignment for comparable numeric values.
 
+## Flexible truncated column
+
+Classification: **LDS Product extension**. `truncate: true` is an opt-in column
+layout contract for one long, plain-text field that should consume the table's
+remaining width without pushing fixed metadata or action columns outside the
+container.
+
+```jsx
+<Table
+  columns={[
+    { key: 'name', label: 'Name', truncate: true },
+    { key: 'status', label: 'Status', width: 112 },
+    { key: 'actions', label: 'Actions', width: 48, align: 'right', render: renderActions },
+  ]}
+  rows={rows}
+/>
+```
+
+- Prefer one `truncate` column per table. It uses the remaining width and
+  ignores that column's `width`; other columns keep their explicit widths.
+- The complete text remains in the DOM while the visible line uses an
+  ellipsis. Do not add a duplicate accessible label just because text is
+  visually clipped.
+- A custom `render` tree is still constrained by the cell, but nested flex or
+  grid layouts must provide their own `minWidth: 0` and overflow behavior.
+- Horizontal scrolling remains the default overflow policy for tables whose
+  intentionally fixed columns cannot fit. Truncation is not applied globally.
+
+The [CSS Table Module Level 3](https://www.w3.org/TR/css-tables-3/) explains why
+cell min-content widths participate in a table's intrinsic width. The contract
+therefore constrains both header and body cells, rather than styling only the
+header. [MUI X column dimensions](https://mui.com/x/react-data-grid/column-dimensions/)
+provides the comparable explicit flexible-column model, while
+[Carbon data table guidance](https://v10.carbondesignsystem.com/components/data-table/usage/)
+prefers giving tables enough room to avoid truncation. LDS follows both
+principles by keeping this behavior explicit and opt-in.
+
 **Table** — 대문자 캡션 헤더, tabular 행, 부드러운 호버 워시가 있는 차분한 데이터 표.
 
 ```jsx

@@ -8,6 +8,28 @@ such as navigation arrows, close, search, and tool commands.
 <IconButton variant="on-dark" label="Next">{chevronRight}</IconButton>
 ```
 
+## Dense 24px size extension
+
+Classification: **WDS Core with an explicit LDS compatibility extension**. The
+accepted local WDS component-set evidence defines 28px, 32px, and 40px Icon
+Button sizes. LDS preserves those sizes and adds `size="xs"` with the
+`xsmall` alias as a 24px dense-action option for compact table rows. The legacy
+`custom` key remains the public name of the WDS 28px size.
+
+- `xs` / `xsmall`: `--component-icon-button-size-xs` (24px)
+- `custom`: `--component-icon-button-size-custom` (28px)
+- `sm` / `small`: `--component-icon-button-size-sm` (32px)
+- `md` / `medium`: `--component-icon-button-size-md` (40px, default)
+
+[WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)
+sets a 24 by 24 CSS pixel minimum target, subject to its documented exceptions.
+For that reason LDS does not add the observed 20px product workaround. Use the
+24px extension only in deliberately dense action regions; general-purpose and
+touch-forward surfaces retain the 32px or 40px sizes. The visual delta is
+limited to the control box and its proportionally smaller glyph (typically
+14–16px); variant color, radius, focus, hover, pressed, and disabled contracts
+remain unchanged.
+
 - Always provide `label`; it is the accessible name for the icon-only control.
   누락하면 development 빌드에서 console 경고가 출력됩니다(production 번들에서는
   제거됨). 이름을 외부 노드에서 참조해야 하면 `aria-labelledby`를 대신 쓰세요.

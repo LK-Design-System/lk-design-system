@@ -1,13 +1,31 @@
 import React from 'react';
 import { thStyle, tdStyle } from './table-cell-styles.js';
 
-/** Public style helpers for product-owned native tables that must match LDS Table cells. */
-export function getTableHeaderCellStyle({ padding = '14px 16px', align = 'left', width } = {}) {
-  return { ...thStyle(padding), textAlign: align, width };
+function getColumnSizingStyle({ width, truncate = false }) {
+  return truncate
+    ? { width: '100%', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }
+    : { width };
 }
 
-export function getTableDataCellStyle({ padding = '14px 16px', align = 'left', width } = {}) {
-  return { ...tdStyle(padding), textAlign: align, width };
+/** Public style helpers for product-owned native tables that must match LDS Table cells. */
+export function getTableHeaderCellStyle({ padding = '14px 16px', align = 'left', width, truncate = false } = {}) {
+  return { ...thStyle(padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+}
+
+export function getTableDataCellStyle({ padding = '14px 16px', align = 'left', width, truncate = false } = {}) {
+  return { ...tdStyle(padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+}
+
+function TableCellContent({ truncate, children }) {
+  if (!truncate) return children;
+  return (
+    <span
+      data-slot="truncated-content"
+      style={{ display: 'block', minWidth: 0, maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+    >
+      {children}
+    </span>
+  );
 }
 
 function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProps }) {
@@ -30,15 +48,16 @@ function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProp
     >
       {columns.map((c) => {
         const content = typeof c.render === 'function' ? c.render(row) : row[c.key];
-        const cellStyle = { ...tdStyle(pad), textAlign: c.align || 'left' };
+        const cellStyle = getTableDataCellStyle({ padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate });
+        const cellContent = <TableCellContent truncate={c.truncate}>{content}</TableCellContent>;
         // WCAG 1.3.1 / APG Table pattern: the cell that identifies the row is a
         // row header, so a screen reader can read it back with every other cell
         // of that row. Presentation stays identical to a data cell (the <th>
         // user-agent bold is reset) — only the semantics change.
         if (rowHeaderKey != null && c.key === rowHeaderKey) {
-          return <th key={c.key} scope="row" style={{ ...cellStyle, fontWeight: 'inherit' }}>{content}</th>;
+          return <th key={c.key} scope="row" style={{ ...cellStyle, fontWeight: 'inherit' }}>{cellContent}</th>;
         }
-        return <td key={c.key} style={cellStyle}>{content}</td>;
+        return <td key={c.key} style={cellStyle}>{cellContent}</td>;
       })}
     </tr>
   );
@@ -107,7 +126,9 @@ export function Table({
         <thead>
           <tr>
             {columns.map((c) => (
-              <th key={c.key} scope="col" style={{ ...thStyle(pad), textAlign: c.align || 'left', width: c.width }}>{c.label}</th>
+              <th key={c.key} scope="col" style={getTableHeaderCellStyle({ padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate })}>
+                <TableCellContent truncate={c.truncate}>{c.label}</TableCellContent>
+              </th>
             ))}
           </tr>
         </thead>

@@ -62,12 +62,14 @@ export function IconButton({
   const resolvedSize = typeof size === 'number'
     ? size
     : ({
-        custom: 28,
-        small: 32,
-        sm: 32,
-        medium: 40,
-        md: 40,
-      }[size] || 40);
+        xsmall: 'var(--component-icon-button-size-xs)',
+        xs: 'var(--component-icon-button-size-xs)',
+        custom: 'var(--component-icon-button-size-custom)',
+        small: 'var(--component-icon-button-size-sm)',
+        sm: 'var(--component-icon-button-size-sm)',
+        medium: 'var(--component-icon-button-size-md)',
+        md: 'var(--component-icon-button-size-md)',
+      }[size] || 'var(--component-icon-button-size-md)');
   const palettes = {
     soft:    { bg: 'var(--color-semantic-secondary-surface)', bgHover: 'var(--color-semantic-secondary-surface)', fg: 'var(--color-semantic-brand-ink)', bd: 'none' },
     solid:   { bg: 'var(--color-semantic-secondary-normal)', bgHover: 'var(--color-semantic-secondary-normal)', fg: 'var(--color-semantic-inverse-label)', bd: 'none' },
