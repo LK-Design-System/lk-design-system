@@ -68,6 +68,17 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.16 - 2026-08-02
+
+### Added
+
+- `IconButton` now provides a token-backed 24px `xs` density while retaining the 28px WDS-compatible `custom` size, with explicit `sm` and `md` size tokens.
+- `Table` columns can opt into `truncate` so constrained tables ellipsize header and body content without forcing horizontal overflow.
+
+### Fixed
+
+- `Select size="sm"` keeps its hidden option-width measurement out of layout flow, so the root and trigger remain at the 32px compact height.
+
 ## 0.1.0-rc.15 - 2026-08-02
 
 ### Fixed
