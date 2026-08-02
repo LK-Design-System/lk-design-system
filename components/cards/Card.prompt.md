@@ -38,3 +38,17 @@
 - `SaveButton`(`save`)과 `toggleIcon` 은 포커스 가능한 요소이므로 규칙 1과 함께 쓰지 마세요.
 
 - `titleWrap="truncate|wrap"` controls structured-title overflow. The default `truncate` keeps dense card grids to one line; use `wrap` when the full document, report, or publication title is necessary to distinguish the destination. Wrapping changes only the title text flow and does not introduce a separate header/body padding axis.
+
+## Semantic roots and inset groups
+
+- Use `as="article"`, `as="section"`, or `as="li"` for a non-interactive card when that native document structure is meaningful. The default remains `div`.
+- Do not combine a document-structure `as` value with `interactive`: interactive cards intentionally expose a single button role. Keep a non-interactive semantic root when the card contains links or buttons.
+- Use `surface="subtle"` for the inset surface that groups peer cards. It defaults to `elevation="none"`; nested default-surface cards own their own border, radius, and elevation. An explicit elevation is still available for exceptional compositions.
+- `dark` remains the inverse-card compatibility axis and takes precedence over `surface`.
+
+```jsx
+<Card as="section" surface="subtle" aria-labelledby="related-title">
+  <h2 id="related-title">Related projects</h2>
+  <Card as="article" elevation="sm">Project A</Card>
+</Card>
+```

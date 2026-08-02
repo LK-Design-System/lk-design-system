@@ -10,6 +10,7 @@ function DataToolbar({
   title,
   description,
   count,
+  searchable = true,
   searchValue,
   defaultSearchValue = "",
   onSearchChange,
@@ -62,8 +63,8 @@ function DataToolbar({
           ] }),
           actions != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: actions })
         ] }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        (searchable || resolvedFilters != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
+          searchable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             _chunkXT2VMJRKcjs.SearchField,
             {
               value: currentSearch,
@@ -83,4 +84,4 @@ function DataToolbar({
 
 
 exports.DataToolbar = DataToolbar;
-//# sourceMappingURL=chunk-PN2AP7NT.cjs.map
+//# sourceMappingURL=chunk-V22YFDZ6.cjs.map

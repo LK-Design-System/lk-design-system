@@ -421,5 +421,5 @@ export const COLOR_SYSTEM_META = {
   "source": "tokens/source.json",
   "atomicTokens": 176,
   "semanticTokens": 112,
-  "componentTokens": 21
+  "componentTokens": 22
 };

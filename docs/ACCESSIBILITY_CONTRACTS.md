@@ -44,6 +44,7 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | Tree, ReorderList | treeitem/listitem은 키보드로 탐색 가능하고 expand/collapse 또는 move action에 accessible name이 있어야 함 |
 | ValidationSummary | 하나 이상의 차단 오류를 텍스트로 식별하고 모든 항목을 required native `href`로 실제 field/step에 연결한다. SPA activation은 anchor fallback을 보존하면서 focus·scroll을 옮기고, action name은 field label과 동일 inline message를 함께 포함한다. 원래 field는 같은 message를 `aria-describedby`로 연결하고 오류일 때 `aria-invalid="true"`를 가진다. submit 뒤 summary focus와 opt-in live count는 기본적으로 중복하지 않으며 warning-only·valid 결과는 별도 Callout/Notification을 사용한다. |
 | FieldAction | field와 action은 별도 native control과 별도 Tab stop을 유지하며 DOM·읽기·focus 순서는 field → action이다. 제출 조합은 `as="form"`과 `Button type="submit"`을 사용해 field의 Enter가 native submit 경로를 따른다. shared label은 `htmlFor`로 field에 연결하고 helper/error는 FormField 계약을 사용한다. 360px 이하에서는 기능 손실 없이 한 열로 reflow하며 action을 field와 같은 너비로 확장한다. |
+| Card | 비대화형 문서 표면은 `as="article|section|li"`로 native 구조를 보존할 수 있다. `interactive`는 루트를 button role로 바꾸므로 문서 구조용 `as`와 함께 사용하지 않고, 내부에 별도 링크·버튼이 있으면 비대화형 루트를 유지한다. |
 | AnnotatedImage, SourceDisclosure | 시각 overlay와 source provenance에는 텍스트 요약, availability, 원본으로 돌아가는 경로가 있어야 함 |
 | Product-owned conversation composition, SourceDisclosure, TreePicker, ConfirmDialog | message role과 streaming/error 상태를 semantic list에서 텍스트로 제공하고 unavailable composer는 이유를 연결하며 scope reset은 확인 가능해야 함 |
 | ContentEditor | 제목 input, 본문 textarea, toolbar button, 상태 live region 순서가 자연스러워야 함 |

@@ -68,6 +68,23 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.5 - 2026-08-02
+
+### Added
+
+- `FieldAction` provides the supported field-plus-action composition contract at compact and default densities.
+- `Card as` preserves native `article`, `section`, and `li` roots; `Card surface="subtle"` provides a flat inset group surface in light and dark themes.
+- `DataToolbar searchable={false}` supports count/filter/action-only collection headers without an inert search control or empty controls row.
+- Immutable package release workflow: the `lds-v<version>` tag identifies the exact source commit, every package in the set shares that version, and CI rejects a tag/version that already exists in GitHub Packages.
+
+### Fixed
+
+- Portal workarounds for Card semantics, inset group surfaces, searchless collection headers, and field/action height alignment can now be removed without local surface or dimension overrides.
+
+### Release
+
+- `0.1.0-rc.4` is retired and will not be overwritten again. This release is the first package set governed by the tag and registry preflight checks above.
+
 ## 0.1.0-rc.4 - 2026-07-31
 
 ### Changed

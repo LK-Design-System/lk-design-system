@@ -15,6 +15,11 @@
 ### 사용
 
 - Plain children-only Card usage is still supported for generic LDS surfaces.
+- Use as="article", as="section", or as="li" for a non-interactive card when that native document structure is meaningful. The default remains div.
+
+### 사용하지 않음
+
+- Do not combine a document-structure as value with interactive: interactive cards intentionally expose a single button role. Keep a non-interactive semantic root when the card contains links or buttons.
 
 ## Anatomy
 
@@ -28,6 +33,8 @@
 
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
+| `as` | `React.ElementType` | No | Root element used for non-interactive document semantics. @default "div" |
+| `surface` | `"default" \| "subtle"` | No | Surface role. subtle is an inset grouping surface and defaults to no shadow. @default "default" |
 | `elevation` | `"none" \| "sm" \| "md" \| "lg"` | No | 기본 그림자 깊이. @default "md" |
 | `interactive` | `boolean` | No | 카드 전체가 하나의 행동일 때. 호버 리프트 + 그림자 심화에 더해 role="button", tabIndex=0, Enter/Space 활성화, :focus-visible 링을 부여합니다. 내부에 별도의 버튼·링크를 넣지 마세요. |
 | `dark` | `boolean` | No | 다크 섹션용 네이비 서피스. @default false |
@@ -50,8 +57,6 @@
 | `subCaption` | `React.ReactNode` | No |  |
 | `metaCaption` | `React.ReactNode` | No | Third caption tier — smallest meta line under subCaption (WDS three-tier caption parity). |
 | `bottomContent` | `React.ReactNode` | No |  |
-| `footer` | `React.ReactNode` | No |  |
-| `children` | `React.ReactNode` | No |  |
 
 ## States
 
@@ -73,6 +78,10 @@
 
 - WDS axes: platform="desktop|mobile", skeleton, save, toggleIcon (top-right toggle affordance beside save), structured slots (thumbnail, topContent, leadingContent, trailingContent, bottomContent, footer) and three text caption tiers (caption, title, description, subCaption, metaCaption).
 - titleWrap="truncate|wrap" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination.
+
+## Exceptions
+
+- Use surface="subtle" for the inset surface that groups peer cards. It defaults to elevation="none"; nested default-surface cards own their own border, radius, and elevation. An explicit elevation is still available for exceptional compositions.
 
 ## Related components
 
@@ -120,6 +129,7 @@
 - `--color-semantic-primary-surface-strong`
 - `--component-card-bg`
 - `--component-card-bg-dark`
+- `--component-card-bg-subtle`
 - `--component-card-border`
 - `--component-card-border-dark`
 - `--component-card-fg`
@@ -144,6 +154,10 @@
 - `components/cards/Card.d.ts`
 - `components/cards/Card.prompt.md`
 - `stories/Card.stories.jsx`
+
+## Migration
+
+- dark remains the inverse-card compatibility axis and takes precedence over surface.
 
 ## Sources
 

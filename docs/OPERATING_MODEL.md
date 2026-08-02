@@ -53,6 +53,11 @@ root와 `components/*`는 호환 표면으로 유지합니다.
 5. Review: design, accessibility, engineering, domain safety, 실제 LK 제품 채택 관점으로 본다.
 6. Release: changelog, migration note, package version을 갱신한다.
 
+발행된 version 문자열은 불변이다. 모든 Core·Theme·Product·compat release set은
+`lds-v<version>` tag가 가리키는 단일 source commit에서 만들고, 이미 registry에
+존재하는 version은 다시 publish하지 않는다. package bytes가 바뀌면 release
+candidate 단계에서도 반드시 새 version을 사용한다.
+
 ## Change categories
 
 | Category | 예시 | 요구 문서 |

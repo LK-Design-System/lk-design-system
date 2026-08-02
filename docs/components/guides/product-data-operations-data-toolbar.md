@@ -33,6 +33,7 @@
 | `title` | `React.ReactNode` | No | 테이블/그리드 제목. |
 | `description` | `React.ReactNode` | No | 제목 아래 설명. |
 | `count` | `number` | No | 전체 결과 수. |
+| `searchable` | `boolean` | No | Render the search control. Set false for count/filter/action-only collections. @default true |
 | `searchValue` | `string` | No | 제어 검색어. |
 | `defaultSearchValue` | `string` | No | 비제어 검색어 초기값. @default "" |
 | `onSearchChange` | `(value: string) = void` | No | 검색어 변경 콜백. |
@@ -115,6 +116,18 @@
 />
 ```
 
+### 추가 조합 2
+
+```jsx
+<DataToolbar
+  variant="embedded"
+  searchable={false}
+  title="Documents"
+  count={documents.length}
+  actions={<Button size="sm">Sort</Button>}
+/>
+```
+
 ## Tokens and API
 
 ### Tokens
@@ -144,6 +157,10 @@
 - `components/data/DataToolbar.d.ts`
 - `components/data/DataToolbar.prompt.md`
 - `stories/DataToolbar.stories.jsx`
+
+## Migration
+
+- searchable defaults to true for backward compatibility. Set searchable={false} when the product has no search state or search behavior. If filters are present, the filter row remains; if neither search nor filters are present, the controls row is omitted entirely.
 
 ## Sources
 

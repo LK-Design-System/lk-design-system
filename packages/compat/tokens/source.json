@@ -1570,6 +1570,12 @@
         "css": "--color-semantic-background-elevated-normal",
         "ref": "semantic.colorRoles.background-elevated-normal"
       },
+      "inset": {
+        "$type": "color",
+        "$value": "var(--color-semantic-background-elevated-alternative)",
+        "css": "--color-semantic-background-elevated-alternative",
+        "ref": "semantic.colorRoles.background-elevated-alternative"
+      },
       "inverse": {
         "$type": "color",
         "$value": "var(--color-semantic-inverse-background)",
@@ -3455,6 +3461,13 @@
           "$value": "var(--component-card-bg)",
           "css": "--component-card-bg",
           "ref": "semantic.surface.card"
+        },
+        "backgroundSubtle": {
+          "$type": "color",
+          "$value": "var(--color-semantic-background-elevated-alternative)",
+          "css": "--component-card-bg-subtle",
+          "ref": "semantic.surface.inset",
+          "generated": true
         },
         "backgroundDark": {
           "$type": "color",

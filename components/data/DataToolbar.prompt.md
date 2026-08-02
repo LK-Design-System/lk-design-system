@@ -31,3 +31,17 @@ Classification: **LK Product Extension**. 선택 상태와 bulk action은 `DataG
 - [PatternFly Filters](https://www.patternfly.org/patterns/filters/design-guidelines/)는 text entry·single select·filter group을 같은 toolbar 안에서 조합할 수 있는 필터 유형으로 구분합니다. 따라서 LDS는 임의 자식을 강제로 clone하거나 높이를 덮지 않고 render-prop context로 field control 밀도만 전달합니다.
 - [Carbon Pagination usage](https://carbondesignsystem.com/components/pagination/usage/)는 table pagination을 표 아래에 stack되는 별도 component로 정의합니다.
 - [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns/table/)에 따라 DataToolbar가 표의 native semantics나 keyboard model을 대신하지 않습니다. 검색과 action은 각 native control의 정상 Tab 순서를 유지합니다.
+
+## Search-optional collections
+
+`searchable` defaults to `true` for backward compatibility. Set `searchable={false}` when the product has no search state or search behavior. If filters are present, the filter row remains; if neither search nor filters are present, the controls row is omitted entirely.
+
+```jsx
+<DataToolbar
+  variant="embedded"
+  searchable={false}
+  title="Documents"
+  count={documents.length}
+  actions={<Button size="sm">Sort</Button>}
+/>
+```

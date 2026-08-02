@@ -46,6 +46,7 @@
 | `component.button.tokens.transition` | transition | `--component-button-transition` | `none` | — |
 | `component.card.tokens.background` | color | `--component-card-bg` | `var(--component-card-bg)` | — |
 | `component.card.tokens.backgroundDark` | color | `--component-card-bg-dark` | `var(--component-card-bg-dark)` | — |
+| `component.card.tokens.backgroundSubtle` | color | `--component-card-bg-subtle` | `var(--color-semantic-background-elevated-alternative)` | — |
 | `component.card.tokens.border` | border | `--component-card-border` | `var(--component-card-border)` | — |
 | `component.card.tokens.foreground` | color | `--component-card-fg` | `var(--component-card-fg)` | — |
 | `component.card.tokens.foregroundDark` | color | `--component-card-fg-dark` | `var(--component-card-fg-dark)` | — |
@@ -533,6 +534,7 @@
 | `semantic.motion.fastOut` | transition | `--dur-fast, --ease-out` | `var(--dur-fast) var(--ease-out)` | — |
 | `semantic.status.danger` | color | `--color-semantic-status-negative` | `var(--color-semantic-status-negative)` | — |
 | `semantic.surface.card` | color | `--color-semantic-background-elevated-normal` | `var(--color-semantic-background-elevated-normal)` | — |
+| `semantic.surface.inset` | color | `--color-semantic-background-elevated-alternative` | `var(--color-semantic-background-elevated-alternative)` | — |
 | `semantic.surface.inverse` | color | `--color-semantic-inverse-background` | `var(--color-semantic-inverse-background)` | — |
 | `semantic.surface.raised` | color | `--color-semantic-background-elevated-normal` | `var(--color-semantic-background-elevated-normal)` | — |
 | `semantic.text.body` | color | `--color-semantic-label-normal` | `var(--color-semantic-label-normal)` | — |

@@ -55,7 +55,7 @@ const componentTokens = await read('tokens/components.css');
 // retired; Storybook is the source of truth.)
 const motionContracts = [
   [componentTokens, '--component-card-hover-transform: translateY(-4px);', 'tokens/components.css card hover token'],
-  [card, "boxShadow: interactive && hover ? 'var(--component-card-shadow-lg)' : shadows[elevation]", 'Card interactive shadow'],
+  [card, "boxShadow: interactive && hover ? 'var(--component-card-shadow-lg)' : shadows[resolvedElevation]", 'Card interactive shadow'],
   [card, "transform: interactive && hover ? 'var(--component-card-hover-transform)' : 'none'", 'Card interactive transform'],
   [newsCard, "boxShadow: hover ? 'var(--shadow-md)' : 'var(--shadow-xs)'", 'NewsCard hover shadow'],
   [newsCard, "transform: hover ? 'translateY(-2px)' : 'none'", 'NewsCard card lift'],

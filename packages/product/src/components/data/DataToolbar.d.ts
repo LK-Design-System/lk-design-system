@@ -14,6 +14,8 @@ export interface DataToolbarProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   description?: React.ReactNode;
   /** 전체 결과 수. */
   count?: number;
+  /** Render the search control. Set false for count/filter/action-only collections. @default true */
+  searchable?: boolean;
   /** 제어 검색어. */
   searchValue?: string;
   /** 비제어 검색어 초기값. @default "" */

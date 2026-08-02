@@ -66,6 +66,13 @@
       "owner": "DataToolbarProps"
     },
     {
+      "name": "searchable",
+      "type": "boolean",
+      "required": false,
+      "description": "Render the search control. Set false for count/filter/action-only collections. @default true",
+      "owner": "DataToolbarProps"
+    },
+    {
       "name": "searchValue",
       "type": "string",
       "required": false,
@@ -207,6 +214,10 @@
     {
       "label": "기본 조합",
       "code": "<DataToolbar\n  title=\"사용자 목록\"\n  description=\"조직에 등록된 계정\"\n  count={24}\n  searchValue={query}\n  onSearchChange={setQuery}\n  searchPlaceholder=\"사용자 검색\"\n  filters={({ size }) => (\n    <Select size={size} value={status} onChange={setStatus}>\n      <option value=\"all\">전체 상태</option>\n      <option value=\"online\">온라인</option>\n    </Select>\n  )}\n  actions={<Button size=\"sm\">내보내기</Button>}\n/>"
+    },
+    {
+      "label": "추가 조합 2",
+      "code": "<DataToolbar\n  variant=\"embedded\"\n  searchable={false}\n  title=\"Documents\"\n  count={documents.length}\n  actions={<Button size=\"sm\">Sort</Button>}\n/>"
     }
   ],
   "tokens": [
@@ -230,7 +241,9 @@
     "--space-3"
   ],
   "apiLinks": [],
-  "migration": [],
+  "migration": [
+    "searchable defaults to true for backward compatibility. Set searchable={false} when the product has no search state or search behavior. If filters are present, the filter row remains; if neither search nor filters are present, the controls row is omitted entirely."
+  ],
   "platformStatus": {
     "figma": "not-tracked",
     "react": "implemented",
@@ -274,6 +287,6 @@
     "examples": "evidence",
     "tokens": "evidence",
     "apiLinks": "evidence",
-    "migration": "omitted-no-evidence"
+    "migration": "evidence"
   }
 }

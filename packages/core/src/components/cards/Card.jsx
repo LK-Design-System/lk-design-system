@@ -63,8 +63,10 @@ function StructuredSkeleton({ compact }) {
  * `title` renders as a real heading (`headingLevel`, WCAG 1.3.1).
  */
 export function Card({
+  as: Component = 'div',
   children,
-  elevation = 'md',
+  elevation,
+  surface = 'default',
   interactive = false,
   dark = false,
   headingLevel = 3,
@@ -104,6 +106,7 @@ export function Card({
   };
   const [hover, setHover] = React.useState(false);
   const compact = platform === 'mobile';
+  const resolvedElevation = elevation ?? (surface === 'subtle' ? 'none' : 'md');
   const structured = skeleton || save || toggleIcon != null || thumbnail != null || topContent != null || leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null || bottomContent != null || footer != null;
   const resolvedPadding = padding != null ? padding : compact ? 12 : 'var(--component-card-padding)';
   const HeadingTag = headingLevel === false || headingLevel == null ? 'div' : `h${headingLevel}`;
@@ -149,7 +152,7 @@ export function Card({
     onKeyDown && onKeyDown(e);
   };
   return (
-    <div
+    <Component
       className={[interactive ? 'lk-card--interactive' : null, className].filter(Boolean).join(' ') || undefined}
       role={rest.role ?? (interactive ? 'button' : undefined)}
       tabIndex={rest.tabIndex ?? (interactive ? 0 : undefined)}
@@ -158,11 +161,15 @@ export function Card({
       onMouseEnter={(e) => { if (interactive) setHover(true); onMouseEnter && onMouseEnter(e); }}
       onMouseLeave={(e) => { if (interactive) setHover(false); onMouseLeave && onMouseLeave(e); }}
       style={{
-        background: dark ? 'var(--component-card-bg-dark)' : 'var(--component-card-bg)',
+        background: dark
+          ? 'var(--component-card-bg-dark)'
+          : surface === 'subtle'
+            ? 'var(--component-card-bg-subtle)'
+            : 'var(--component-card-bg)',
         color: dark ? 'var(--component-card-fg-dark)' : 'var(--component-card-fg)',
         border: dark ? 'var(--component-card-border-dark)' : 'var(--component-card-border)',
         borderRadius: 'var(--component-card-radius)',
-        boxShadow: interactive && hover ? 'var(--component-card-shadow-lg)' : shadows[elevation],
+        boxShadow: interactive && hover ? 'var(--component-card-shadow-lg)' : shadows[resolvedElevation],
         transform: interactive && hover ? 'var(--component-card-hover-transform)' : 'none',
         transition: 'var(--component-card-transition)',
         cursor: interactive ? 'pointer' : undefined,
@@ -173,6 +180,6 @@ export function Card({
       {...rest}
     >
       {structured ? structuredContent : children}
-    </div>
+    </Component>
   );
 }

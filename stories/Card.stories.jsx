@@ -9,6 +9,7 @@ const meta = {
   component: Card,
   args: {
     elevation: 'md',
+    surface: 'default',
     interactive: false,
     dark: false,
   },
@@ -16,6 +17,10 @@ const meta = {
     elevation: {
       control: 'inline-radio',
       options: ['none', 'sm', 'md', 'lg'],
+    },
+    surface: {
+      control: 'inline-radio',
+      options: ['default', 'subtle'],
     },
   },
   parameters: {
@@ -256,3 +261,43 @@ export const CardAffordances = {
 };
 
 export const CardCard = { ...CardCardStory, name: 'Card card parity', tags: ['!dev', 'visual-parity'] };
+
+export const SemanticInsetGroup = {
+  name: '사용법 · 시맨틱 묶음 표면',
+  parameters: storyDescription(
+    '관련 항목을 한 단계 내려앉은 표면에 묶고 각 항목은 독립된 문서 단위로 노출하는 상황입니다. 바깥 묶음은 평평하고 안쪽 항목이 고도를 소유하며 실제 HTML 요소가 문서 구조를 보존하는지 확인하세요.',
+  ),
+  render: () => (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'var(--space-5)', width: '100%', maxWidth: 880 }}>
+      {['light', 'dark'].map((theme) => (
+        <div key={theme} data-theme={theme} style={{ padding: 16, background: 'var(--color-semantic-background-normal-normal)', borderRadius: 'var(--radius-xl)' }}>
+          <Card as="section" surface="subtle" data-testid={`${theme}-inset-group`} aria-label={`${theme} 관련 항목`}>
+            <ul style={{ display: 'grid', gap: 'var(--space-3)', margin: 0, padding: 0, listStyle: 'none' }}>
+              <Card as="li" elevation="sm" data-testid={`${theme}-inset-item`}>
+                <article>
+                  <strong>{theme === 'light' ? '활성 프로젝트' : '보관 프로젝트'}</strong>
+                  <p style={{ margin: 'var(--space-2) 0 0', color: 'var(--color-semantic-label-alternative)' }}>각 항목이 고도와 내용을 소유합니다.</p>
+                </article>
+              </Card>
+            </ul>
+          </Card>
+        </div>
+      ))}
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    for (const theme of ['light', 'dark']) {
+      const group = canvasElement.querySelector(`[data-testid="${theme}-inset-group"]`);
+      const item = canvasElement.querySelector(`[data-testid="${theme}-inset-item"]`);
+      if (group?.tagName !== 'SECTION' || item?.tagName !== 'LI') {
+        throw new Error('The as prop must render the requested native section and list-item elements.');
+      }
+      if (getComputedStyle(group).backgroundColor === getComputedStyle(item).backgroundColor) {
+        throw new Error(`The ${theme} inset group must remain visually distinct from its nested item.`);
+      }
+      if (getComputedStyle(group).boxShadow !== 'none') {
+        throw new Error('A subtle group must default to a flat surface so nested items own elevation.');
+      }
+    }
+  },
+};

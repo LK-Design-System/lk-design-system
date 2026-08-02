@@ -10,6 +10,7 @@ function DataToolbar({
   title,
   description,
   count,
+  searchable = true,
   searchValue,
   defaultSearchValue = "",
   onSearchChange,
@@ -62,8 +63,8 @@ function DataToolbar({
           ] }),
           actions != null && /* @__PURE__ */ jsx("div", { style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto" }, children: actions })
         ] }),
-        /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
-          /* @__PURE__ */ jsx("div", { style: { flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: /* @__PURE__ */ jsx(
+        (searchable || resolvedFilters != null) && /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
+          searchable && /* @__PURE__ */ jsx("div", { style: { flex: "1 1 260px", minWidth: 200, maxWidth: 360 }, children: /* @__PURE__ */ jsx(
             SearchField,
             {
               value: currentSearch,
@@ -83,4 +84,4 @@ function DataToolbar({
 export {
   DataToolbar
 };
-//# sourceMappingURL=chunk-LMUM74O5.js.map
+//# sourceMappingURL=chunk-NMB6PKOX.js.map

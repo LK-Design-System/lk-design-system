@@ -208,3 +208,32 @@ export const MediumFilterDensity = {
     }
   },
 };
+
+export const SearchlessEmbeddedToolbar = {
+  name: '사용법 · 검색 없는 목록 머리줄',
+  parameters: storyDescription(
+    '검색 상태가 없는 목록에서 제목, 건수와 전체 범위 동작만 제공하는 상황입니다. 빈 검색 입력이나 불필요한 둘째 줄 없이 목록 표면의 머리줄만 남는지 확인하세요.',
+  ),
+  render: () => (
+    <main style={surfaceStyle}>
+      <DataToolbar
+        data-testid="searchless-toolbar"
+        variant="embedded"
+        searchable={false}
+        title="문서 목록"
+        count={rows.length}
+        actions={<Button size="sm" variant="ghost">최근 수정순</Button>}
+      />
+      <DataGrid columns={columns} rows={rows} getRowId={(row) => row.id} variant="embedded" />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const toolbar = canvasElement.querySelector('[data-testid="searchless-toolbar"]');
+    if (!toolbar || toolbar.querySelector('input[type="search"]')) {
+      throw new Error('searchable={false} must omit the search control.');
+    }
+    if (toolbar.children.length !== 1) {
+      throw new Error('A searchless toolbar without filters must not render an empty controls row.');
+    }
+  },
+};

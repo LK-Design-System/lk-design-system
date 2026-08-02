@@ -12,6 +12,7 @@ export function DataToolbar({
   title,
   description,
   count,
+  searchable = true,
   searchValue,
   defaultSearchValue = '',
   onSearchChange,
@@ -74,18 +75,22 @@ export function DataToolbar({
           </div>
         )}
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0 }}>
-        <div style={{ flex: '1 1 260px', minWidth: 200, maxWidth: 360 }}>
-          <SearchField
-            value={currentSearch}
-            onChange={setSearch}
-            placeholder={searchPlaceholder}
-            aria-label={searchPlaceholder}
-            size={size}
-          />
+      {(searchable || resolvedFilters != null) && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap', minWidth: 0 }}>
+          {searchable && (
+            <div style={{ flex: '1 1 260px', minWidth: 200, maxWidth: 360 }}>
+              <SearchField
+                value={currentSearch}
+                onChange={setSearch}
+                placeholder={searchPlaceholder}
+                aria-label={searchPlaceholder}
+                size={size}
+              />
+            </div>
+          )}
+          {resolvedFilters != null && <div data-data-toolbar-filter-size={size} style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1-5)', flexWrap: 'wrap' }}>{resolvedFilters}</div>}
         </div>
-        {resolvedFilters != null && <div data-data-toolbar-filter-size={size} style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1-5)', flexWrap: 'wrap' }}>{resolvedFilters}</div>}
-      </div>
+      )}
     </div>
   );
 }

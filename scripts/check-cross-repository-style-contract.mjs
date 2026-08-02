@@ -113,19 +113,21 @@ function checkLds3dProfile(styleContract, externalSurface, label) {
 }
 
 function checkProfileDependencyPins(styleContract, label) {
-  const canonicalVersions = new Map(
-    styleContract.lds.packages.map((entry) => [entry.name, entry.version]),
-  );
+  const canonicalPackages = new Set(styleContract.lds.packages.map((entry) => entry.name));
   const roboticsPackage = styleContract.profiles['robotics-ui'].package;
-  canonicalVersions.set(roboticsPackage.name, roboticsPackage.version);
+  canonicalPackages.add(roboticsPackage.name);
   for (const [profileName, profile] of Object.entries(styleContract.profiles)) {
     for (const dependency of profile.packageDependencies) {
-      const expectedVersion = canonicalVersions.get(dependency.name);
-      if (!expectedVersion) {
+      if (!canonicalPackages.has(dependency.name)) {
         throw new Error(`${label} ${profileName} dependency ${dependency.name} has no canonical package identity.`);
       }
-      if (dependency.version !== expectedVersion) {
-        throw new Error(`${label} ${profileName} dependency ${dependency.name} must pin ${expectedVersion}; received ${dependency.version}.`);
+      // Consumer profiles record the exact version they have verified; they do
+      // not move in lockstep with every additive LDS release. The corresponding
+      // external-surface checks above prove that the profile and consumer
+      // snapshot agree. Reject ranges and local links while allowing an older
+      // immutable release to remain pinned until that consumer is upgraded.
+      if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(dependency.version)) {
+        throw new Error(`${label} ${profileName} dependency ${dependency.name} must use an exact immutable version; received ${dependency.version}.`);
       }
     }
   }

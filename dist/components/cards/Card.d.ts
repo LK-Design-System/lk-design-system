@@ -1,9 +1,13 @@
 import * as React from "react";
 
 export interface CardProps extends Omit<
-  React.HTMLAttributes<HTMLDivElement>,
+  React.HTMLAttributes<HTMLElement>,
   "title"
 > {
+  /** Root element used for non-interactive document semantics. @default "div" */
+  as?: React.ElementType;
+  /** Surface role. `subtle` is an inset grouping surface and defaults to no shadow. @default "default" */
+  surface?: "default" | "subtle";
   /** 기본 그림자 깊이. @default "md" */
   elevation?: "none" | "sm" | "md" | "lg";
   /**

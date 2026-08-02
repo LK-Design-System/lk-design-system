@@ -1767,9 +1767,12 @@
       ],
       "purpose": "제목, 설명, 미디어, 메타 정보와 제한된 행동이 함께 이동해야 하는 콘텐츠 단위에 적합합니다. 단순한 행 목록은 List Cell을, 화면 전체의 큰 구획은 Section이나 Container를 사용하고, 모든 영역을 습관적으로 카드 안에 중첩하지 마세요.",
       "useWhen": [
-        "Plain children-only Card usage is still supported for generic LDS surfaces."
+        "Plain children-only Card usage is still supported for generic LDS surfaces.",
+        "Use as=\"article\", as=\"section\", or as=\"li\" for a non-interactive card when that native document structure is meaningful. The default remains div."
       ],
-      "avoidWhen": [],
+      "avoidWhen": [
+        "Do not combine a document-structure as value with interactive: interactive cards intentionally expose a single button role. Keep a non-interactive semantic root when the card contains links or buttons."
+      ],
       "anatomy": [
         {
           "part": "titleWrap",
@@ -1777,6 +1780,20 @@
         }
       ],
       "properties": [
+        {
+          "name": "as",
+          "type": "React.ElementType",
+          "required": false,
+          "description": "Root element used for non-interactive document semantics. @default \"div\"",
+          "owner": "CardProps"
+        },
+        {
+          "name": "surface",
+          "type": "\"default\" | \"subtle\"",
+          "required": false,
+          "description": "Surface role. subtle is an inset grouping surface and defaults to no shadow. @default \"default\"",
+          "owner": "CardProps"
+        },
         {
           "name": "elevation",
           "type": "\"none\" | \"sm\" | \"md\" | \"lg\"",
@@ -1930,20 +1947,6 @@
           "required": false,
           "description": "",
           "owner": "CardProps"
-        },
-        {
-          "name": "footer",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "",
-          "owner": "CardProps"
-        },
-        {
-          "name": "children",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "",
-          "owner": "CardProps"
         }
       ],
       "states": [
@@ -1980,7 +1983,9 @@
       ],
       "contentGuidance": [],
       "accessibility": [],
-      "exceptions": [],
+      "exceptions": [
+        "Use surface=\"subtle\" for the inset surface that groups peer cards. It defaults to elevation=\"none\"; nested default-surface cards own their own border, radius, and elevation. An explicit elevation is still available for exceptional compositions."
+      ],
       "related": [
         {
           "component": "Button",
@@ -2036,6 +2041,7 @@
         "--color-semantic-primary-surface-strong",
         "--component-card-bg",
         "--component-card-bg-dark",
+        "--component-card-bg-subtle",
         "--component-card-border",
         "--component-card-border-dark",
         "--component-card-fg",
@@ -2055,7 +2061,9 @@
         "--radius-md"
       ],
       "apiLinks": [],
-      "migration": [],
+      "migration": [
+        "dark remains the inverse-card compatibility axis and takes precedence over surface."
+      ],
       "platformStatus": {
         "figma": "mapped",
         "react": "implemented",
@@ -2100,7 +2108,7 @@
       "sectionStatus": {
         "purpose": "evidence",
         "useWhen": "evidence",
-        "avoidWhen": "omitted-no-evidence",
+        "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
         "states": "evidence",
@@ -2109,12 +2117,12 @@
         "responsive": "evidence",
         "contentGuidance": "omitted-no-evidence",
         "accessibility": "omitted-no-evidence",
-        "exceptions": "omitted-no-evidence",
+        "exceptions": "evidence",
         "related": "evidence",
         "examples": "evidence",
         "tokens": "evidence",
         "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
+        "migration": "evidence"
       }
     },
     {
@@ -23681,6 +23689,13 @@
           "owner": "DataToolbarProps"
         },
         {
+          "name": "searchable",
+          "type": "boolean",
+          "required": false,
+          "description": "Render the search control. Set false for count/filter/action-only collections. @default true",
+          "owner": "DataToolbarProps"
+        },
+        {
           "name": "searchValue",
           "type": "string",
           "required": false,
@@ -23822,6 +23837,10 @@
         {
           "label": "기본 조합",
           "code": "<DataToolbar\n  title=\"사용자 목록\"\n  description=\"조직에 등록된 계정\"\n  count={24}\n  searchValue={query}\n  onSearchChange={setQuery}\n  searchPlaceholder=\"사용자 검색\"\n  filters={({ size }) => (\n    <Select size={size} value={status} onChange={setStatus}>\n      <option value=\"all\">전체 상태</option>\n      <option value=\"online\">온라인</option>\n    </Select>\n  )}\n  actions={<Button size=\"sm\">내보내기</Button>}\n/>"
+        },
+        {
+          "label": "추가 조합 2",
+          "code": "<DataToolbar\n  variant=\"embedded\"\n  searchable={false}\n  title=\"Documents\"\n  count={documents.length}\n  actions={<Button size=\"sm\">Sort</Button>}\n/>"
         }
       ],
       "tokens": [
@@ -23845,7 +23864,9 @@
         "--space-3"
       ],
       "apiLinks": [],
-      "migration": [],
+      "migration": [
+        "searchable defaults to true for backward compatibility. Set searchable={false} when the product has no search state or search behavior. If filters are present, the filter row remains; if neither search nor filters are present, the controls row is omitted entirely."
+      ],
       "platformStatus": {
         "figma": "not-tracked",
         "react": "implemented",
@@ -23889,7 +23910,7 @@
         "examples": "evidence",
         "tokens": "evidence",
         "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
+        "migration": "evidence"
       }
     },
     {

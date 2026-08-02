@@ -1,0 +1,58 @@
+name: Release immutable package set
+
+on:
+  push:
+    tags:
+      - 'lds-v*'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ github.token }}
+
+    steps:
+      - name: Checkout tagged source
+        uses: actions/checkout@v7.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Setup canonical Node and GitHub Packages
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 22.17.1
+          registry-url: https://npm.pkg.github.com
+          scope: '@lk-design-system'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify tag and package-set identity
+        run: npm run check:release-immutability -- --tag
+
+      - name: Reject an already-published version
+        shell: pwsh
+        run: |
+          $releasePackages = 'core', 'theme', 'product', 'compat'
+          foreach ($releasePackage in $releasePackages) {
+            $manifest = Get-Content "packages/$releasePackage/package.json" -Raw | ConvertFrom-Json
+            npm view "$($manifest.name)@$($manifest.version)" version --registry https://npm.pkg.github.com 2>$null
+            if ($LASTEXITCODE -eq 0) {
+              throw "$($manifest.name)@$($manifest.version) already exists; published versions are immutable."
+            }
+          }
+
+      - name: Run release gate
+        run: npm run check:fast
+
+      - name: Publish package set in dependency order
+        shell: pwsh
+        run: |
+          npm publish ./packages/core --ignore-scripts
+          npm publish ./packages/theme --ignore-scripts
+          npm publish ./packages/product --ignore-scripts
+          npm publish ./packages/compat --ignore-scripts
