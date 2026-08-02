@@ -37,25 +37,8 @@ jobs:
       - name: Verify tag and package-set identity
         run: npm run check:release-immutability -- --tag
 
-      - name: Reject an already-published version
-        shell: pwsh
-        run: |
-          # A missing package version is the expected success path here. Newer
-          # PowerShell runners can promote a native non-zero exit to a
-          # terminating error before `$LASTEXITCODE` is inspected, so keep
-          # native exit handling explicit for this probe.
-          $PSNativeCommandUseErrorActionPreference = $false
-          $releasePackages = 'core', 'theme', 'product', 'compat'
-          foreach ($releasePackage in $releasePackages) {
-            $manifest = Get-Content "packages/$releasePackage/package.json" -Raw | ConvertFrom-Json
-            npm view "$($manifest.name)@$($manifest.version)" version --registry https://npm.pkg.github.com 2>$null
-            $isPublished = $LASTEXITCODE -eq 0
-            $global:LASTEXITCODE = 0
-            if ($isPublished) {
-              throw "$($manifest.name)@$($manifest.version) already exists; published versions are immutable."
-            }
-          }
-          exit 0
+      - name: Verify that every package version is available
+        run: node scripts/check-release-package-availability.mjs
 
       - name: Run release gate
         run: npm run check:fast

@@ -68,6 +68,13 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.17 - 2026-08-02
+
+### Fixed
+
+- `Select` now has a packed Core + Theme artifact gate: every fallback-free CSS custom property referenced by its shipped module graph must be defined by the two shipped stylesheets, preventing listbox and option layout tokens from silently falling back to browser defaults.
+- The immutable-package release workflow now distinguishes an explicit registry 404 from authentication or transport failures; it never treats an unverified package lookup as permission to reuse a version.
+
 ## 0.1.0-rc.16 - 2026-08-02
 
 ### Added

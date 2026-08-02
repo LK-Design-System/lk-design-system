@@ -25,6 +25,7 @@ const workspaces = [
     external: true,
   },
 ];
+const selectOnly = process.argv.includes('--select-only');
 
 function invariant(condition, message) {
   if (!condition) throw new Error(message);
@@ -221,10 +222,96 @@ async function linkRuntimePeer(consumerDirectory, peerName) {
   await symlink(source, destination, process.platform === 'win32' ? 'junction' : 'dir');
 }
 
-async function smokeConsumer(packed, consumerDirectory) {
+async function resolveLocalModule(fromFile, specifier) {
+  const direct = path.resolve(path.dirname(fromFile), specifier);
+  const candidates = [direct, `${direct}.js`, path.join(direct, 'index.js')];
+  for (const candidate of candidates) {
+    try {
+      await access(candidate);
+      return candidate;
+    } catch {
+      // Try the next valid ESM resolution candidate.
+    }
+  }
+  throw new Error(`Unable to resolve packed Select dependency ${specifier} from ${fromFile}.`);
+}
+
+async function readLocalModuleGraph(entryFile, visited = new Set()) {
+  const normalized = path.resolve(entryFile);
+  if (visited.has(normalized)) return '';
+  visited.add(normalized);
+  const source = await readFile(normalized, 'utf8');
+  const relativeImports = [
+    ...source.matchAll(/\b(?:import|export)\s+(?:[^'";]*?\s+from\s+)?['"](\.[^'"]+)['"]/g),
+  ].map((match) => match[1]);
+  const dependencies = await Promise.all(relativeImports.map(async (specifier) => (
+    readLocalModuleGraph(await resolveLocalModule(normalized, specifier), visited)
+  )));
+  return [source, ...dependencies].join('\n');
+}
+
+async function readCssImportGraph(entryFile, visited = new Set()) {
+  const normalized = path.resolve(entryFile);
+  if (visited.has(normalized)) return '';
+  visited.add(normalized);
+  const source = await readFile(normalized, 'utf8');
+  const relativeImports = [
+    ...source.matchAll(/@import\s+(?:url\()?['"](\.[^'"]+\.css)['"][^;]*;/g),
+  ].map((match) => match[1]);
+  const dependencies = await Promise.all(relativeImports.map((specifier) => (
+    readCssImportGraph(path.resolve(path.dirname(normalized), specifier), visited)
+  )));
+  return [source, ...dependencies].join('\n');
+}
+
+function cssCustomProperties(source) {
+  return new Set([...source.matchAll(/(?<![A-Za-z0-9-])(--[A-Za-z0-9-]+)\s*:/g)].map((match) => match[1]));
+}
+
+function cssVariableReferences(source) {
+  return [...source.matchAll(/var\(\s*(--[A-Za-z0-9-]+)(?:\s*,[^)]*)?\)/g)].map((match) => ({
+    name: match[1],
+    hasFallback: match[0].includes(','),
+  }));
+}
+
+async function assertPackedSelectTokenContract(packed, consumerDirectory) {
+  const core = packed.find(({ id }) => id === 'core');
+  const theme = packed.find(({ id }) => id === 'theme');
+  invariant(core && theme, 'Packed Select token contract requires the Core and Theme packages.');
+
+  const installedCore = path.join(consumerDirectory, 'node_modules', ...core.name.split('/'));
+  const installedTheme = path.join(consumerDirectory, 'node_modules', ...theme.name.split('/'));
+  const selectSource = await readLocalModuleGraph(
+    path.join(installedCore, 'dist', 'components', 'forms', 'Select.js'),
+  );
+  invariant(selectSource.includes('listbox') && selectSource.includes('option'), 'Packed Core Select must retain its listbox and option implementation.');
+
+  const css = [
+    await readCssImportGraph(path.join(installedCore, 'styles.css')),
+    await readCssImportGraph(path.join(installedTheme, 'styles.css')),
+  ].join('\n');
+  const definitions = cssCustomProperties(css);
+  const unresolved = [...new Set(
+    cssVariableReferences(selectSource)
+      .filter(({ name, hasFallback }) => !hasFallback && !definitions.has(name))
+      .map(({ name }) => name),
+  )].sort();
+  invariant(
+    unresolved.length === 0,
+    `Packed Core Select references fallback-free CSS variables missing from Core + Theme styles: ${unresolved.join(', ')}.`,
+  );
+  console.log(`Validated packed Select token contract: ${definitions.size} Core + Theme tokens cover the Select module graph.`);
+}
+
+async function installPackedDependencies(packed, consumerDirectory) {
+  const dependencies = Object.fromEntries(packed.map(({ name, tarball }) => [
+    name,
+    `file:${path.relative(consumerDirectory, tarball).replaceAll('\\', '/')}`,
+  ]));
   await writeFile(
     path.join(consumerDirectory, 'package.json'),
-    `${JSON.stringify({ name: 'lds-workspace-artifact-smoke', private: true, type: 'module' }, null, 2)}\n`,
+    `${JSON.stringify({ name: 'lds-workspace-artifact-smoke', private: true, type: 'module', dependencies }, null, 2)}\n`,
   );
   await writeFile(
     path.join(consumerDirectory, '.npmrc'),
@@ -232,7 +319,7 @@ async function smokeConsumer(packed, consumerDirectory) {
   );
   await run(
     npmCommand,
-    [...npmPrefixArguments, 'install', '--ignore-scripts', '--no-audit', '--no-fund', '--legacy-peer-deps', ...packed.map(({ tarball }) => tarball)],
+    [...npmPrefixArguments, 'install', '--ignore-scripts', '--no-audit', '--no-fund', '--legacy-peer-deps'],
     {
       cwd: consumerDirectory,
       env: { npm_config_cache: path.join(path.dirname(consumerDirectory), 'npm-cache') },
@@ -240,6 +327,16 @@ async function smokeConsumer(packed, consumerDirectory) {
   );
   await linkRuntimePeer(consumerDirectory, 'react');
   await linkRuntimePeer(consumerDirectory, 'react-dom');
+}
+
+async function smokePackedSelect(packed, consumerDirectory) {
+  await installPackedDependencies(packed, consumerDirectory);
+  await assertPackedSelectTokenContract(packed, consumerDirectory);
+}
+
+async function smokeConsumer(packed, consumerDirectory) {
+  await installPackedDependencies(packed, consumerDirectory);
+  await assertPackedSelectTokenContract(packed, consumerDirectory);
 
   const compat = packed.find(({ id }) => id === 'compat');
   const tokenFile = firstStaticSubpath(compat.files, 'tokens');
@@ -291,7 +388,16 @@ async function main() {
   let completed = false;
   try {
     const packed = [];
-    for (const workspace of workspaces) packed.push(await packWorkspace(workspace, tarballDirectory));
+    const selectedWorkspaces = selectOnly
+      ? workspaces.filter(({ id }) => id === 'core' || id === 'theme')
+      : workspaces;
+    for (const workspace of selectedWorkspaces) packed.push(await packWorkspace(workspace, tarballDirectory));
+    if (selectOnly) {
+      await smokePackedSelect(packed, consumerDirectory);
+      completed = true;
+      console.log('Packed Select token smoke passed: the Core + Theme tarballs install together and cover every fallback-free Select CSS variable.');
+      return;
+    }
     await smokeConsumer(packed, consumerDirectory);
     if (persistent) {
       const packages = [];

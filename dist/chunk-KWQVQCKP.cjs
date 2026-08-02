@@ -1,25 +1,25 @@
-"use client";
-import {
-  ToggleIcon
-} from "./chunk-3SHTXRUC.js";
-import {
-  Toolbar
-} from "./chunk-OHFWZZX3.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+var _chunk2PQ23RCXcjs = require('./chunk-2PQ23RCX.cjs');
+
+
+var _chunk3VE2HGTTcjs = require('./chunk-3VE2HGTT.cjs');
 
 // components/editor/EditorToolbar.jsx
-import React5 from "react";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 
 // ../lk-design-system/packages/core/dist/chunk-LEMJQTMT.js
-import React from "react";
-import { createPortal } from "react-dom";
-var useSafeLayoutEffect = typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
+
+var _reactdom = require('react-dom');
+var useSafeLayoutEffect = typeof window === "undefined" ? _react2.default.useEffect : _react2.default.useLayoutEffect;
 var overlayLayers = [];
 var THEME_SCOPE_CLASSES = ["theme-light", "theme-dark", "theme-auto"];
 function assignRef(ref, value) {
   if (typeof ref === "function") ref(value);
   else if (ref) ref.current = value;
 }
-var OverlayRuntimeContext = React.createContext({
+var OverlayRuntimeContext = _react2.default.createContext({
   portalTarget: null,
   scopeTarget: null,
   zIndexBase: 100,
@@ -27,17 +27,17 @@ var OverlayRuntimeContext = React.createContext({
   colorScheme: void 0
 });
 function useOverlayRuntime() {
-  return React.useContext(OverlayRuntimeContext);
+  return _react2.default.useContext(OverlayRuntimeContext);
 }
 function syncOverlayLayers() {
   overlayLayers.forEach((entry, index) => {
-    entry.setZIndex(entry.explicitZIndex ?? entry.zIndexBase + index);
+    entry.setZIndex(_nullishCoalesce(entry.explicitZIndex, () => ( entry.zIndexBase + index)));
   });
 }
 function useOverlayLayer({ open, zIndex } = {}) {
   const { zIndexBase } = useOverlayRuntime();
-  const [resolvedZIndex, setResolvedZIndex] = React.useState(zIndex ?? zIndexBase);
-  const entryRef = React.useRef(null);
+  const [resolvedZIndex, setResolvedZIndex] = _react2.default.useState(_nullishCoalesce(zIndex, () => ( zIndexBase)));
+  const entryRef = _react2.default.useRef(null);
   if (!entryRef.current) entryRef.current = { setZIndex: setResolvedZIndex, explicitZIndex: zIndex, zIndexBase };
   entryRef.current.explicitZIndex = zIndex;
   entryRef.current.zIndexBase = zIndexBase;
@@ -52,23 +52,23 @@ function useOverlayLayer({ open, zIndex } = {}) {
       syncOverlayLayers();
     };
   }, [open]);
-  React.useEffect(() => {
+  _react2.default.useEffect(() => {
     if (zIndex != null) setResolvedZIndex(zIndex);
     else syncOverlayLayers();
   }, [zIndex, zIndexBase]);
-  const isTopmost = React.useCallback(() => overlayLayers.at(-1) === entryRef.current, []);
+  const isTopmost = _react2.default.useCallback(() => overlayLayers.at(-1) === entryRef.current, []);
   return { zIndex: resolvedZIndex, isTopmost };
 }
 function inheritedPortalScope(anchor, runtime) {
-  const themeHost = anchor?.closest?.("[data-theme], .theme-light, .theme-dark, .theme-auto");
-  const directionHost = anchor?.closest?.("[dir]");
-  const hostTheme = themeHost?.getAttribute?.("data-theme");
-  const explicitTheme = themeHost && themeHost !== runtime.scopeTarget ? hostTheme : runtime.colorScheme ?? hostTheme;
-  const themeClass = themeHost && themeHost !== runtime.scopeTarget ? THEME_SCOPE_CLASSES.find((name) => themeHost.classList?.contains(name)) : void 0;
+  const themeHost = _optionalChain([anchor, 'optionalAccess', _ => _.closest, 'optionalCall', _2 => _2("[data-theme], .theme-light, .theme-dark, .theme-auto")]);
+  const directionHost = _optionalChain([anchor, 'optionalAccess', _3 => _3.closest, 'optionalCall', _4 => _4("[dir]")]);
+  const hostTheme = _optionalChain([themeHost, 'optionalAccess', _5 => _5.getAttribute, 'optionalCall', _6 => _6("data-theme")]);
+  const explicitTheme = themeHost && themeHost !== runtime.scopeTarget ? hostTheme : _nullishCoalesce(runtime.colorScheme, () => ( hostTheme));
+  const themeClass = themeHost && themeHost !== runtime.scopeTarget ? THEME_SCOPE_CLASSES.find((name) => _optionalChain([themeHost, 'access', _7 => _7.classList, 'optionalAccess', _8 => _8.contains, 'call', _9 => _9(name)])) : void 0;
   return {
     theme: explicitTheme || void 0,
     themeClass,
-    direction: directionHost && directionHost !== runtime.scopeTarget ? directionHost.getAttribute?.("dir") : runtime.direction ?? directionHost?.getAttribute?.("dir")
+    direction: directionHost && directionHost !== runtime.scopeTarget ? _optionalChain([directionHost, 'access', _10 => _10.getAttribute, 'optionalCall', _11 => _11("dir")]) : _nullishCoalesce(runtime.direction, () => ( _optionalChain([directionHost, 'optionalAccess', _12 => _12.getAttribute, 'optionalCall', _13 => _13("dir")])))
   };
 }
 function OverlayPortal({
@@ -81,15 +81,15 @@ function OverlayPortal({
   layer = "anchored"
 }) {
   const runtime = useOverlayRuntime();
-  const portalNodeRef = React.useRef(null);
-  const setPortalNode = React.useCallback((node) => {
+  const portalNodeRef = _react2.default.useRef(null);
+  const setPortalNode = _react2.default.useCallback((node) => {
     portalNodeRef.current = node;
     assignRef(portalRef, node);
   }, [portalRef]);
   useSafeLayoutEffect(() => {
     const node = portalNodeRef.current;
     if (!open || !withinPortal || !node) return;
-    const committedScope = inheritedPortalScope(anchorRef?.current, runtime);
+    const committedScope = inheritedPortalScope(_optionalChain([anchorRef, 'optionalAccess', _14 => _14.current]), runtime);
     if (committedScope.theme) node.setAttribute("data-theme", committedScope.theme);
     else node.removeAttribute("data-theme");
     THEME_SCOPE_CLASSES.forEach((name) => node.classList.remove(name));
@@ -108,13 +108,13 @@ function OverlayPortal({
   ]);
   if (!open) return null;
   if (!withinPortal) return children;
-  const anchor = anchorRef?.current;
-  const ownerDocument = anchor?.ownerDocument ?? portalTarget?.ownerDocument ?? runtime.portalTarget?.ownerDocument ?? (typeof document !== "undefined" ? document : null);
-  const target = portalTarget ?? runtime.portalTarget ?? ownerDocument?.body ?? null;
+  const anchor = _optionalChain([anchorRef, 'optionalAccess', _15 => _15.current]);
+  const ownerDocument = _nullishCoalesce(_nullishCoalesce(_nullishCoalesce(_optionalChain([anchor, 'optionalAccess', _16 => _16.ownerDocument]), () => ( _optionalChain([portalTarget, 'optionalAccess', _17 => _17.ownerDocument]))), () => ( _optionalChain([runtime, 'access', _18 => _18.portalTarget, 'optionalAccess', _19 => _19.ownerDocument]))), () => ( (typeof document !== "undefined" ? document : null)));
+  const target = _nullishCoalesce(_nullishCoalesce(_nullishCoalesce(portalTarget, () => ( runtime.portalTarget)), () => ( _optionalChain([ownerDocument, 'optionalAccess', _20 => _20.body]))), () => ( null));
   const scope = inheritedPortalScope(anchor, runtime);
   if (!target) return null;
-  return createPortal(
-    React.createElement("div", {
+  return _reactdom.createPortal.call(void 0, 
+    _react2.default.createElement("div", {
       ref: setPortalNode,
       "data-lds-overlay-portal": "",
       "data-overlay-layer": layer,
@@ -127,21 +127,21 @@ function OverlayPortal({
   );
 }
 
-// ../lk-design-system/packages/core/dist/chunk-HTJFGC74.js
-import React2 from "react";
-var useSafeLayoutEffect2 = typeof window === "undefined" ? React2.useEffect : React2.useLayoutEffect;
+// ../lk-design-system/packages/core/dist/chunk-WDIXUVRP.js
+
+var useSafeLayoutEffect2 = typeof window === "undefined" ? _react2.default.useEffect : _react2.default.useLayoutEffect;
 function samePosition(a, b) {
   const sameCoordinate = (left, right) => left == null || right == null ? left === right : Math.abs(left - right) < 0.5;
-  return a.placement === b.placement && Math.abs(a.shiftX - b.shiftX) < 0.5 && Math.abs(a.shiftY - b.shiftY) < 0.5 && Math.abs((a.maxHeight ?? 0) - (b.maxHeight ?? 0)) < 0.5 && sameCoordinate(a.x, b.x) && sameCoordinate(a.y, b.y);
+  return a.placement === b.placement && Math.abs(a.shiftX - b.shiftX) < 0.5 && Math.abs(a.shiftY - b.shiftY) < 0.5 && Math.abs((_nullishCoalesce(a.maxHeight, () => ( 0))) - (_nullishCoalesce(b.maxHeight, () => ( 0)))) < 0.5 && sameCoordinate(a.x, b.x) && sameCoordinate(a.y, b.y);
 }
 function useControllableOpen({ open, defaultOpen = false, onOpenChange }) {
   const controlled = open !== void 0;
-  const [internalOpen, setInternalOpen] = React2.useState(defaultOpen);
+  const [internalOpen, setInternalOpen] = _react2.default.useState(defaultOpen);
   const visible = controlled ? open : internalOpen;
-  const setVisible = React2.useCallback((nextValue) => {
+  const setVisible = _react2.default.useCallback((nextValue) => {
     const next = typeof nextValue === "function" ? nextValue(visible) : nextValue;
     if (!controlled) setInternalOpen(next);
-    if (next !== visible) onOpenChange?.(next);
+    if (next !== visible) _optionalChain([onOpenChange, 'optionalCall', _21 => _21(next)]);
   }, [controlled, onOpenChange, visible]);
   return [visible, setVisible];
 }
@@ -156,17 +156,17 @@ function useLightDismiss({
   insideRefs = []
 }) {
   const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayer({ open, zIndex });
-  const optionsRef = React2.useRef(null);
+  const optionsRef = _react2.default.useRef(null);
   optionsRef.current = { getTrigger, onDismiss, outsidePress, shouldDismiss, insideRefs };
-  const focusLatchRef = React2.useRef(null);
-  const releaseFocusLatch = React2.useCallback(() => {
+  const focusLatchRef = _react2.default.useRef(null);
+  const releaseFocusLatch = _react2.default.useCallback(() => {
     const latch = focusLatchRef.current;
     if (!latch) return;
     focusLatchRef.current = null;
     latch.root.removeEventListener("focusin", latch.onFocusIn, true);
     latch.root.removeEventListener("focusout", latch.onFocusOut, true);
   }, []);
-  const latchDismissedTrigger = React2.useCallback(() => {
+  const latchDismissedTrigger = _react2.default.useCallback(() => {
     const root = rootRef.current;
     if (!root) return;
     releaseFocusLatch();
@@ -181,34 +181,34 @@ function useLightDismiss({
     root.addEventListener("focusout", onFocusOut, true);
     focusLatchRef.current = { root, onFocusIn, onFocusOut };
   }, [releaseFocusLatch, rootRef]);
-  React2.useEffect(() => releaseFocusLatch, [releaseFocusLatch]);
-  React2.useEffect(() => {
+  _react2.default.useEffect(() => releaseFocusLatch, [releaseFocusLatch]);
+  _react2.default.useEffect(() => {
     if (!open) return void 0;
     releaseFocusLatch();
     const root = rootRef.current;
-    const ownerDocument = root?.ownerDocument ?? document;
-    const view = ownerDocument.defaultView ?? window;
-    const vetoed = (reason, event) => optionsRef.current.shouldDismiss?.(reason, event) === false;
-    const containsTarget = (target) => rootRef.current?.contains(target) || optionsRef.current.insideRefs.some((insideRef) => insideRef?.current?.contains(target));
+    const ownerDocument = _nullishCoalesce(_optionalChain([root, 'optionalAccess', _22 => _22.ownerDocument]), () => ( document));
+    const view = _nullishCoalesce(ownerDocument.defaultView, () => ( window));
+    const vetoed = (reason, event) => _optionalChain([optionsRef, 'access', _23 => _23.current, 'access', _24 => _24.shouldDismiss, 'optionalCall', _25 => _25(reason, event)]) === false;
+    const containsTarget = (target) => _optionalChain([rootRef, 'access', _26 => _26.current, 'optionalAccess', _27 => _27.contains, 'call', _28 => _28(target)]) || optionsRef.current.insideRefs.some((insideRef) => _optionalChain([insideRef, 'optionalAccess', _29 => _29.current, 'optionalAccess', _30 => _30.contains, 'call', _31 => _31(target)]));
     const onPointerDown = (event) => {
       if (!isTopmost()) return;
       if (!optionsRef.current.outsidePress || containsTarget(event.target)) return;
       if (vetoed("outside-press", event)) return;
-      optionsRef.current.onDismiss?.("outside-press");
+      _optionalChain([optionsRef, 'access', _32 => _32.current, 'access', _33 => _33.onDismiss, 'optionalCall', _34 => _34("outside-press")]);
     };
     const onKeyDown = (event) => {
       if (!isTopmost() || event.defaultPrevented || event.key !== "Escape") return;
       if (vetoed("escape", event)) return;
       event.preventDefault();
       const anchor = rootRef.current;
-      const trigger = optionsRef.current.getTrigger?.();
+      const trigger = _optionalChain([optionsRef, 'access', _35 => _35.current, 'access', _36 => _36.getTrigger, 'optionalCall', _37 => _37()]);
       const activeElement = ownerDocument.activeElement;
       const ownsFocus = !!activeElement && containsTarget(activeElement);
       if (ownsFocus) latchDismissedTrigger();
-      optionsRef.current.onDismiss?.("escape");
+      _optionalChain([optionsRef, 'access', _38 => _38.current, 'access', _39 => _39.onDismiss, 'optionalCall', _40 => _40("escape")]);
       if (!ownsFocus || activeElement === trigger) return;
       view.requestAnimationFrame(() => {
-        if (trigger?.isConnected && typeof trigger.focus === "function") {
+        if (_optionalChain([trigger, 'optionalAccess', _41 => _41.isConnected]) && typeof trigger.focus === "function") {
           trigger.focus({ preventScroll: true });
         }
       });
@@ -232,7 +232,7 @@ function useFloatingPosition({
   strategy = "absolute",
   align = "left"
 }) {
-  const [position, setPosition] = React2.useState({
+  const [position, setPosition] = _react2.default.useState({
     placement: requestedPlacement,
     shiftX: 0,
     shiftY: 0,
@@ -258,8 +258,10 @@ function useFloatingPosition({
     const anchor = anchorRef.current;
     const panel = panelRef.current;
     if (!anchor || !panel) return void 0;
-    const view = anchor.ownerDocument?.defaultView ?? window;
+    const view = _nullishCoalesce(_optionalChain([anchor, 'access', _42 => _42.ownerDocument, 'optionalAccess', _43 => _43.defaultView]), () => ( window));
     let frame;
+    let layoutFrame;
+    let disposed = false;
     const update = () => {
       const currentAnchor = anchorRef.current;
       const currentPanel = panelRef.current;
@@ -293,6 +295,8 @@ function useFloatingPosition({
       }
       const verticalPlacement = nextPlacement === "top" || nextPlacement === "bottom";
       const availableHeight = verticalPlacement ? Math.max(0, spaces[nextPlacement]) : Math.max(0, view.innerHeight - viewportPadding * 2);
+      const anchorIntersectsX = anchorRect.right > viewportPadding && anchorRect.left < view.innerWidth - viewportPadding;
+      const anchorIntersectsY = anchorRect.bottom > viewportPadding && anchorRect.top < view.innerHeight - viewportPadding;
       if (strategy === "fixed") {
         const renderedWidth = Math.min(naturalWidth, Math.max(0, view.innerWidth - viewportPadding * 2));
         const renderedHeight = Math.min(naturalHeight, availableHeight);
@@ -300,8 +304,8 @@ function useFloatingPosition({
         const unclampedY = verticalPlacement ? nextPlacement === "bottom" ? anchorRect.bottom + offset : anchorRect.top - offset - renderedHeight : align === "bottom" || align === "trailing" ? anchorRect.bottom - renderedHeight : align === "center" ? anchorRect.top + (anchorRect.height - renderedHeight) / 2 : anchorRect.top;
         const maxX = Math.max(viewportPadding, view.innerWidth - viewportPadding - renderedWidth);
         const maxY = Math.max(viewportPadding, view.innerHeight - viewportPadding - renderedHeight);
-        const x = Math.min(maxX, Math.max(viewportPadding, unclampedX));
-        const y = Math.min(maxY, Math.max(viewportPadding, unclampedY));
+        const x = anchorIntersectsX ? Math.min(maxX, Math.max(viewportPadding, unclampedX)) : unclampedX;
+        const y = anchorIntersectsY ? Math.min(maxY, Math.max(viewportPadding, unclampedY)) : unclampedY;
         const next2 = {
           placement: nextPlacement,
           shiftX: x - unclampedX,
@@ -317,8 +321,6 @@ function useFloatingPosition({
       const baseRight = panelRect.right - position.shiftX;
       const baseTop = panelRect.top - position.shiftY;
       const baseBottom = panelRect.bottom - position.shiftY;
-      const anchorIntersectsX = anchorRect.right > viewportPadding && anchorRect.left < view.innerWidth - viewportPadding;
-      const anchorIntersectsY = anchorRect.bottom > viewportPadding && anchorRect.top < view.innerHeight - viewportPadding;
       let shiftX = 0;
       let shiftY = 0;
       if (anchorIntersectsX) {
@@ -340,41 +342,63 @@ function useFloatingPosition({
       setPosition((previous) => samePosition(previous, next) ? previous : next);
     };
     const schedule = () => {
+      if (disposed) return;
       view.cancelAnimationFrame(frame);
       frame = view.requestAnimationFrame(update);
     };
     schedule();
+    if (strategy === "fixed") {
+      let previousAnchorBox;
+      const watchAnchorLayout = () => {
+        if (disposed) return;
+        const currentAnchor = anchorRef.current;
+        if (!currentAnchor) return;
+        const rect = currentAnchor.getBoundingClientRect();
+        const nextAnchorBox = {
+          top: rect.top,
+          left: rect.left,
+          width: rect.width,
+          height: rect.height
+        };
+        if (previousAnchorBox && (Math.abs(previousAnchorBox.top - nextAnchorBox.top) >= 0.5 || Math.abs(previousAnchorBox.left - nextAnchorBox.left) >= 0.5 || Math.abs(previousAnchorBox.width - nextAnchorBox.width) >= 0.5 || Math.abs(previousAnchorBox.height - nextAnchorBox.height) >= 0.5)) schedule();
+        previousAnchorBox = nextAnchorBox;
+        layoutFrame = view.requestAnimationFrame(watchAnchorLayout);
+      };
+      layoutFrame = view.requestAnimationFrame(watchAnchorLayout);
+    }
     view.addEventListener("resize", schedule);
     view.addEventListener("scroll", schedule, true);
     const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(schedule);
-    observer?.observe(anchor);
-    observer?.observe(panel);
+    _optionalChain([observer, 'optionalAccess', _44 => _44.observe, 'call', _45 => _45(anchor)]);
+    _optionalChain([observer, 'optionalAccess', _46 => _46.observe, 'call', _47 => _47(panel)]);
     return () => {
+      disposed = true;
       view.cancelAnimationFrame(frame);
+      view.cancelAnimationFrame(layoutFrame);
       view.removeEventListener("resize", schedule);
       view.removeEventListener("scroll", schedule, true);
-      observer?.disconnect();
+      _optionalChain([observer, 'optionalAccess', _48 => _48.disconnect, 'call', _49 => _49()]);
     };
   }, [align, anchorRef, offset, open, panelRef, position.placement, position.shiftX, position.shiftY, requestedPlacement, strategy, viewportPadding]);
   return position;
 }
 function appendAriaReference(existing, id) {
-  return [...new Set(`${existing ?? ""} ${id}`.trim().split(/\s+/).filter(Boolean))].join(" ");
+  return [...new Set(`${_nullishCoalesce(existing, () => ( ""))} ${id}`.trim().split(/\s+/).filter(Boolean))].join(" ");
 }
 function findOverlayTrigger(root) {
-  return root?.querySelector('[data-anchored-overlay-trigger], button, [role="button"], a[href], input, select, textarea') ?? null;
+  return _nullishCoalesce(_optionalChain([root, 'optionalAccess', _50 => _50.querySelector, 'call', _51 => _51('[data-anchored-overlay-trigger], button, [role="button"], a[href], input, select, textarea')]), () => ( null));
 }
 
 // ../lk-design-system/packages/core/dist/chunk-UDFH7RFZ.js
-import React3 from "react";
+
 function cx(...values) {
   return values.filter(Boolean).join(" ");
 }
 function partClassName(classNames, part, ...values) {
-  return cx(...values, classNames?.[part]);
+  return cx(...values, _optionalChain([classNames, 'optionalAccess', _52 => _52[part]]));
 }
 function partStyle(styles, part) {
-  return styles?.[part] ?? void 0;
+  return _nullishCoalesce(_optionalChain([styles, 'optionalAccess', _53 => _53[part]]), () => ( void 0));
 }
 function componentVars(vars, prefix) {
   if (!vars) return void 0;
@@ -393,12 +417,12 @@ function mergeRefs(...refs) {
   return (value) => refs.forEach((ref) => assignRef2(ref, value));
 }
 function useMergedRefs(refA, refB, refC) {
-  return React3.useMemo(() => mergeRefs(refA, refB, refC), [refA, refB, refC]);
+  return _react2.default.useMemo(() => mergeRefs(refA, refB, refC), [refA, refB, refC]);
 }
 
-// ../lk-design-system/packages/core/dist/chunk-53ZIUI4K.js
-import React4 from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+// ../lk-design-system/packages/core/dist/chunk-QYXTLNRI.js
+
+var _jsxruntime = require('react/jsx-runtime');
 var POS = {
   top: { bottom: "100%", left: "50%" },
   bottom: { top: "100%", left: "50%" },
@@ -465,7 +489,7 @@ function roundedBubblePath(placement, width, height, radius, arrowPosition, arro
   const rightArrow = hasArrow && placement === "left";
   const bottomArrow = hasArrow && placement === "top";
   const leftArrow = hasArrow && placement === "right";
-  const c = arrowPosition ?? 0;
+  const c = _nullishCoalesce(arrowPosition, () => ( 0));
   const commands = [`M ${r} 0`];
   if (topArrow) {
     commands.push(`H ${c - arrowHalf}`, `L ${c} ${-arrowHeight}`, `L ${c + arrowHalf} 0`);
@@ -498,11 +522,11 @@ function normalizeDelay(delay) {
   if (delay == null) return DEFAULT_DELAY;
   if (typeof delay === "number") return { open: delay, close: 0 };
   return {
-    open: delay.open ?? DEFAULT_DELAY.open,
-    close: delay.close ?? DEFAULT_DELAY.close
+    open: _nullishCoalesce(delay.open, () => ( DEFAULT_DELAY.open)),
+    close: _nullishCoalesce(delay.close, () => ( DEFAULT_DELAY.close))
   };
 }
-var Tooltip = React4.forwardRef(function Tooltip2({
+var Tooltip = _react2.default.forwardRef(function Tooltip2({
   content,
   placement,
   position,
@@ -531,11 +555,11 @@ var Tooltip = React4.forwardRef(function Tooltip2({
 }, forwardedRef) {
   const [visible, setVisible] = useControllableOpen({ open, defaultOpen, onOpenChange });
   const requestedPlace = position || placement || "top";
-  const wrapperRef = React4.useRef(null);
+  const wrapperRef = _react2.default.useRef(null);
   const mergedWrapperRef = useMergedRefs(wrapperRef, forwardedRef);
-  const bubbleRef = React4.useRef(null);
-  const tooltipId = React4.useId();
-  const getTrigger = React4.useCallback(() => findOverlayTrigger(wrapperRef.current), []);
+  const bubbleRef = _react2.default.useRef(null);
+  const tooltipId = _react2.default.useId();
+  const getTrigger = _react2.default.useCallback(() => findOverlayTrigger(wrapperRef.current), []);
   const floating = useFloatingPosition({
     open: visible,
     anchorRef: wrapperRef,
@@ -553,12 +577,12 @@ var Tooltip = React4.forwardRef(function Tooltip2({
   const bubbleVerticalPadding = compact ? 10 : 16;
   const contentMaxHeight = floating.maxHeight != null ? Math.max(0, floating.maxHeight - bubbleVerticalPadding) : void 0;
   const bubbleRadius = compact ? 6 : 8;
-  const [target, setTarget] = React4.useState(null);
-  const [bubbleBox, setBubbleBox] = React4.useState(null);
+  const [target, setTarget] = _react2.default.useState(null);
+  const [bubbleBox, setBubbleBox] = _react2.default.useState(null);
   const edgeAligned = START_ALIGNS.has(normalizedAlign) || END_ALIGNS.has(normalizedAlign);
-  React4.useLayoutEffect(() => {
+  _react2.default.useLayoutEffect(() => {
     if (!wrapperRef.current) return;
-    const node = getTrigger() ?? wrapperRef.current;
+    const node = _nullishCoalesce(getTrigger(), () => ( wrapperRef.current));
     const sameBox = (prev, r) => prev && prev.w === r.width && prev.h === r.height ? prev : { w: r.width, h: r.height };
     const measure = () => {
       if (arrow && edgeAligned) setTarget((prev) => sameBox(prev, node.getBoundingClientRect()));
@@ -591,15 +615,15 @@ var Tooltip = React4.forwardRef(function Tooltip2({
     arrowHeight
   ) : null;
   const delays = normalizeDelay(delay);
-  const timerRef = React4.useRef(null);
-  const clearTimer = React4.useCallback(() => {
+  const timerRef = _react2.default.useRef(null);
+  const clearTimer = _react2.default.useCallback(() => {
     if (timerRef.current != null) {
       clearTimeout(timerRef.current);
       timerRef.current = null;
     }
   }, []);
-  React4.useEffect(() => clearTimer, [clearTimer]);
-  const schedule = React4.useCallback(
+  _react2.default.useEffect(() => clearTimer, [clearTimer]);
+  const schedule = _react2.default.useCallback(
     (next, ms) => {
       clearTimer();
       if (!ms) {
@@ -626,31 +650,31 @@ var Tooltip = React4.forwardRef(function Tooltip2({
     zIndex
   });
   const showTooltip = (event) => {
-    onMouseEnter?.(event);
+    _optionalChain([onMouseEnter, 'optionalCall', _54 => _54(event)]);
     schedule(true, delays.open);
   };
   const hideTooltip = (event) => {
-    onMouseLeave?.(event);
+    _optionalChain([onMouseLeave, 'optionalCall', _55 => _55(event)]);
     schedule(false, delays.close);
   };
   const showOnFocus = (event) => {
-    onFocus?.(event);
+    _optionalChain([onFocus, 'optionalCall', _56 => _56(event)]);
     clearTimer();
     setVisible(true);
   };
   const hideOnBlur = (event) => {
-    onBlur?.(event);
+    _optionalChain([onBlur, 'optionalCall', _57 => _57(event)]);
     if (!event.currentTarget.contains(event.relatedTarget)) {
       clearTimer();
       setVisible(false);
     }
   };
-  const validTrigger = React4.isValidElement(children) && children.type !== React4.Fragment;
-  const renderedChildren = validTrigger ? React4.cloneElement(children, {
+  const validTrigger = _react2.default.isValidElement(children) && children.type !== _react2.default.Fragment;
+  const renderedChildren = validTrigger ? _react2.default.cloneElement(children, {
     "data-anchored-overlay-trigger": "",
     "aria-describedby": appendAriaReference(children.props["aria-describedby"], tooltipId)
   }) : children;
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "span",
     {
       ref: mergedWrapperRef,
@@ -668,7 +692,7 @@ var Tooltip = React4.forwardRef(function Tooltip2({
       onBlur: hideOnBlur,
       children: [
         renderedChildren,
-        /* @__PURE__ */ jsx(OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: wrapperRef, layer: "anchored", children: /* @__PURE__ */ jsxs(
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: wrapperRef, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "span",
           {
             ref: bubbleRef,
@@ -681,7 +705,7 @@ var Tooltip = React4.forwardRef(function Tooltip2({
             style: {
               ...componentVars(vars, "--lds-tooltip-"),
               position: withinPortal ? "fixed" : "absolute",
-              ...withinPortal ? { top: floating.y ?? -9999, left: floating.x ?? -9999 } : pos,
+              ...withinPortal ? { top: _nullishCoalesce(floating.y, () => ( -9999)), left: _nullishCoalesce(floating.x, () => ( -9999)) } : pos,
               ...withinPortal ? {} : bubbleOffset(place, align),
               translate: withinPortal ? "none" : `${floating.shiftX}px ${floating.shiftY}px`,
               zIndex: layer.zIndex,
@@ -710,7 +734,7 @@ var Tooltip = React4.forwardRef(function Tooltip2({
               ...partStyle(styles, "bubble")
             },
             children: [
-              bubblePath && /* @__PURE__ */ jsx(
+              bubblePath && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "svg",
                 {
                   "aria-hidden": "true",
@@ -718,7 +742,7 @@ var Tooltip = React4.forwardRef(function Tooltip2({
                   "data-lds-tooltip-surface": "",
                   "data-slot": "surface",
                   className: partClassName(classNames, "surface") || void 0,
-                  "data-arrow-axis": arrowPosition ?? void 0,
+                  "data-arrow-axis": _nullishCoalesce(arrowPosition, () => ( void 0)),
                   "data-arrow-height": arrow ? arrowHeight : void 0,
                   width: bubbleBox.w,
                   height: bubbleBox.h,
@@ -732,7 +756,7 @@ var Tooltip = React4.forwardRef(function Tooltip2({
                     pointerEvents: "none",
                     ...partStyle(styles, "surface")
                   },
-                  children: /* @__PURE__ */ jsx(
+                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "path",
                     {
                       d: bubblePath,
@@ -743,7 +767,7 @@ var Tooltip = React4.forwardRef(function Tooltip2({
                   )
                 }
               ),
-              /* @__PURE__ */ jsxs(
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "span",
                 {
                   "data-lds-tooltip-content": true,
@@ -762,8 +786,8 @@ var Tooltip = React4.forwardRef(function Tooltip2({
                     ...partStyle(styles, "content")
                   },
                   children: [
-                    /* @__PURE__ */ jsx("span", { children: content }),
-                    shortcut != null && /* @__PURE__ */ jsx(
+                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: content }),
+                    shortcut != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                       "span",
                       {
                         "data-slot": "shortcut",
@@ -788,7 +812,7 @@ var Tooltip = React4.forwardRef(function Tooltip2({
 });
 
 // components/editor/EditorToolbar.jsx
-import { jsx as jsx2, jsxs as jsxs2 } from "react/jsx-runtime";
+
 function EditorToolbar({
   items = [],
   value,
@@ -807,23 +831,23 @@ function EditorToolbar({
 }) {
   const controlled = value !== void 0;
   const first = items[0] && (items[0].value != null ? items[0].value : items[0]);
-  const [internal, setInternal] = React5.useState(defaultValue != null ? defaultValue : first);
+  const [internal, setInternal] = _react2.default.useState(defaultValue != null ? defaultValue : first);
   const cur = controlled ? value : internal;
   const activeEnabledItem = items.find((item) => {
     const itemValue = item.value != null ? item.value : item;
     return itemValue === cur && !disabled && !item.disabled;
   });
   const firstEnabledItem = items.find((item) => !disabled && !item.disabled);
-  const preferredFocusItem = activeEnabledItem ?? firstEnabledItem ?? (!disabled ? items[0] : void 0);
+  const preferredFocusItem = _nullishCoalesce(_nullishCoalesce(activeEnabledItem, () => ( firstEnabledItem)), () => ( (!disabled ? items[0] : void 0)));
   const preferredFocusValue = preferredFocusItem != null ? preferredFocusItem.value != null ? preferredFocusItem.value : preferredFocusItem : void 0;
   const pick = (v, itemDisabled) => {
     if (disabled || itemDisabled) return;
     if (!controlled) setInternal(v);
     onChange && onChange(v);
   };
-  const resolvedTooltipPosition = tooltipPosition ?? (orientation === "vertical" ? "right" : "bottom");
-  return /* @__PURE__ */ jsx2(
-    Toolbar,
+  const resolvedTooltipPosition = _nullishCoalesce(tooltipPosition, () => ( (orientation === "vertical" ? "right" : "bottom")));
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    _chunk3VE2HGTTcjs.Toolbar,
     {
       ...rest,
       className: ["lk-editor-toolbar", className].filter(Boolean).join(" "),
@@ -854,19 +878,19 @@ function EditorToolbar({
         const on = v === cur;
         const itemDisabled = disabled || !!it.disabled;
         const itemLabel = it.label || String(v);
-        const itemDisabledReason = it.disabledReason ?? disabledReason;
-        return /* @__PURE__ */ jsx2(
+        const itemDisabledReason = _nullishCoalesce(it.disabledReason, () => ( disabledReason));
+        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           Tooltip,
           {
-            content: itemDisabled && itemDisabledReason != null ? /* @__PURE__ */ jsxs2("span", { style: { display: "grid", gap: 2 }, children: [
-              /* @__PURE__ */ jsx2("span", { children: itemLabel }),
-              /* @__PURE__ */ jsx2("span", { style: { color: "var(--color-semantic-inverse-label-alternative-soft)", fontWeight: "var(--fw-medium)" }, children: itemDisabledReason })
+            content: itemDisabled && itemDisabledReason != null ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: 2 }, children: [
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: itemLabel }),
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-inverse-label-alternative-soft)", fontWeight: "var(--fw-medium)" }, children: itemDisabledReason })
             ] }) : itemLabel,
             shortcut: it.shortcut,
             position: resolvedTooltipPosition,
             size: "sm",
-            children: /* @__PURE__ */ jsx2(
-              ToggleIcon,
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              _chunk2PQ23RCXcjs.ToggleIcon,
               {
                 className: "lk-editor-toolbar__button",
                 label: itemLabel,
@@ -874,7 +898,7 @@ function EditorToolbar({
                 variant: "plain",
                 pressed: on,
                 "aria-disabled": itemDisabled || void 0,
-                "aria-keyshortcuts": it.ariaKeyShortcuts ?? (typeof it.shortcut === "string" ? it.shortcut : void 0),
+                "aria-keyshortcuts": _nullishCoalesce(it.ariaKeyShortcuts, () => ( (typeof it.shortcut === "string" ? it.shortcut : void 0))),
                 "aria-description": itemDisabled && typeof itemDisabledReason === "string" ? itemDisabledReason : void 0,
                 "data-lk-editor-toolbar-item": "",
                 "data-lk-toolbar-key": String(v),
@@ -886,7 +910,7 @@ function EditorToolbar({
                   padding: 0,
                   lineHeight: 0
                 },
-                children: /* @__PURE__ */ jsx2("span", { "aria-hidden": "true", style: { width: 16, height: 16, display: "inline-grid", placeItems: "center", flex: "0 0 auto" }, children: it.icon || v })
+                children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { width: 16, height: 16, display: "inline-grid", placeItems: "center", flex: "0 0 auto" }, children: it.icon || v })
               }
             )
           },
@@ -897,7 +921,7 @@ function EditorToolbar({
   );
 }
 
-export {
-  EditorToolbar
-};
-//# sourceMappingURL=chunk-4OYWSCEF.js.map
+
+
+exports.EditorToolbar = EditorToolbar;
+//# sourceMappingURL=chunk-KWQVQCKP.cjs.map
