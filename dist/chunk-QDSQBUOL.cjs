@@ -7,6 +7,15 @@ var _chunkRP4ROXV5cjs = require('./chunk-RP4ROXV5.cjs');
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 var _reactdom = require('react-dom');
 var _jsxruntime = require('react/jsx-runtime');
+function inheritedTheme(element) {
+  const host = _optionalChain([element, 'optionalAccess', _ => _.closest, 'optionalCall', _2 => _2("[data-theme], .theme-light, .theme-dark, .theme-auto")]);
+  const explicitTheme = _optionalChain([host, 'optionalAccess', _3 => _3.getAttribute, 'optionalCall', _4 => _4("data-theme")]);
+  if (explicitTheme) return explicitTheme;
+  if (_optionalChain([host, 'optionalAccess', _5 => _5.classList, 'optionalAccess', _6 => _6.contains, 'call', _7 => _7("theme-dark")])) return "dark";
+  if (_optionalChain([host, 'optionalAccess', _8 => _8.classList, 'optionalAccess', _9 => _9.contains, 'call', _10 => _10("theme-auto")])) return "auto";
+  if (_optionalChain([host, 'optionalAccess', _11 => _11.classList, 'optionalAccess', _12 => _12.contains, 'call', _13 => _13("theme-light")])) return "light";
+  return void 0;
+}
 function useSubmenuBranch({ disabled = false } = {}) {
   const [open, setOpen] = _react2.default.useState(false);
   const [subPos, setSubPos] = _react2.default.useState(null);
@@ -31,13 +40,13 @@ function useSubmenuBranch({ disabled = false } = {}) {
       setSubPos(null);
       return;
     }
-    const anchor = _optionalChain([triggerRef, 'access', _ => _.current, 'optionalAccess', _2 => _2.getBoundingClientRect, 'call', _3 => _3()]);
-    const view = _optionalChain([triggerRef, 'access', _4 => _4.current, 'optionalAccess', _5 => _5.ownerDocument, 'optionalAccess', _6 => _6.defaultView]);
+    const anchor = _optionalChain([triggerRef, 'access', _14 => _14.current, 'optionalAccess', _15 => _15.getBoundingClientRect, 'call', _16 => _16()]);
+    const view = _optionalChain([triggerRef, 'access', _17 => _17.current, 'optionalAccess', _18 => _18.ownerDocument, 'optionalAccess', _19 => _19.defaultView]);
     if (!anchor || !view) return;
-    const parentPanel = _optionalChain([triggerRef, 'access', _7 => _7.current, 'optionalAccess', _8 => _8.closest, 'call', _9 => _9('[role="menu"]'), 'optionalAccess', _10 => _10.parentElement]);
-    const parentRect = _nullishCoalesce(_optionalChain([parentPanel, 'optionalAccess', _11 => _11.getBoundingClientRect, 'call', _12 => _12()]), () => ( anchor));
-    const panelWidth = _optionalChain([panelRef, 'access', _13 => _13.current, 'optionalAccess', _14 => _14.offsetWidth]) || 200;
-    const panelHeight = _optionalChain([panelRef, 'access', _15 => _15.current, 'optionalAccess', _16 => _16.offsetHeight]) || 0;
+    const parentPanel = _optionalChain([triggerRef, 'access', _20 => _20.current, 'optionalAccess', _21 => _21.closest, 'call', _22 => _22('[role="menu"]'), 'optionalAccess', _23 => _23.parentElement]);
+    const parentRect = _nullishCoalesce(_optionalChain([parentPanel, 'optionalAccess', _24 => _24.getBoundingClientRect, 'call', _25 => _25()]), () => ( anchor));
+    const panelWidth = _optionalChain([panelRef, 'access', _26 => _26.current, 'optionalAccess', _27 => _27.offsetWidth]) || 200;
+    const panelHeight = _optionalChain([panelRef, 'access', _28 => _28.current, 'optionalAccess', _29 => _29.offsetHeight]) || 0;
     const gap = 4;
     const openLeft = view.innerWidth - parentRect.right < panelWidth + gap + 8 && parentRect.left > panelWidth + gap + 8;
     let top = anchor.top - 6;
@@ -52,7 +61,7 @@ function useSubmenuBranch({ disabled = false } = {}) {
   };
   const closeSub = ({ restoreFocus } = {}) => {
     setOpen(false);
-    if (restoreFocus) _optionalChain([triggerRef, 'access', _17 => _17.current, 'optionalAccess', _18 => _18.focus, 'call', _19 => _19({ preventScroll: true })]);
+    if (restoreFocus) _optionalChain([triggerRef, 'access', _30 => _30.current, 'optionalAccess', _31 => _31.focus, 'call', _32 => _32({ preventScroll: true })]);
   };
   const scheduleOpen = () => {
     if (disabled) return;
@@ -86,7 +95,8 @@ function useSubmenuBranch({ disabled = false } = {}) {
     handleMenuKeyDown(event);
   };
   const renderPanel = (children, panelStyle) => {
-    const target = _optionalChain([triggerRef, 'access', _20 => _20.current, 'optionalAccess', _21 => _21.ownerDocument, 'optionalAccess', _22 => _22.body]) || (typeof document !== "undefined" ? document.body : null);
+    const target = _optionalChain([triggerRef, 'access', _33 => _33.current, 'optionalAccess', _34 => _34.ownerDocument, 'optionalAccess', _35 => _35.body]) || (typeof document !== "undefined" ? document.body : null);
+    const portalTheme = inheritedTheme(triggerRef.current);
     if (!open || !target) return null;
     return _reactdom.createPortal.call(void 0, 
       /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
@@ -95,12 +105,13 @@ function useSubmenuBranch({ disabled = false } = {}) {
           ref: panelRef,
           "data-menu-portal": "",
           "data-submenu-portal": "",
+          "data-theme": portalTheme,
           onMouseEnter: clearTimer,
           onMouseLeave: scheduleClose,
           style: {
             position: "fixed",
-            top: _nullishCoalesce(_optionalChain([subPos, 'optionalAccess', _23 => _23.top]), () => ( -9999)),
-            left: _nullishCoalesce(_optionalChain([subPos, 'optionalAccess', _24 => _24.left]), () => ( -9999)),
+            top: _nullishCoalesce(_optionalChain([subPos, 'optionalAccess', _36 => _36.top]), () => ( -9999)),
+            left: _nullishCoalesce(_optionalChain([subPos, 'optionalAccess', _37 => _37.left]), () => ( -9999)),
             zIndex: 41,
             width: "max-content",
             minWidth: 200,
@@ -125,4 +136,4 @@ function useSubmenuBranch({ disabled = false } = {}) {
 
 
 exports.useSubmenuBranch = useSubmenuBranch;
-//# sourceMappingURL=chunk-FHFXWO7F.cjs.map
+//# sourceMappingURL=chunk-QDSQBUOL.cjs.map

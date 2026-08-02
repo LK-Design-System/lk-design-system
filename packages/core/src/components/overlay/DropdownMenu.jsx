@@ -6,6 +6,16 @@ import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
 import { useSubmenuBranch } from '../internal/useSubmenuBranch.jsx';
 import { useFloatingPosition } from './anchored-overlay.js';
 
+function inheritedTheme(element) {
+  const host = element?.closest?.('[data-theme], .theme-light, .theme-dark, .theme-auto');
+  const explicitTheme = host?.getAttribute?.('data-theme');
+  if (explicitTheme) return explicitTheme;
+  if (host?.classList?.contains('theme-dark')) return 'dark';
+  if (host?.classList?.contains('theme-auto')) return 'auto';
+  if (host?.classList?.contains('theme-light')) return 'light';
+  return undefined;
+}
+
 const ACTION_CONTROL_SELECTOR = [
   'button:not(:disabled)',
   'a[href]',
@@ -547,6 +557,7 @@ export function DropdownMenu({
   });
   const portalTarget = ref.current?.ownerDocument?.body
     ?? (typeof document !== 'undefined' ? document.body : null);
+  const portalTheme = inheritedTheme(ref.current);
   const showGeneratedActionArea = menuActionArea && (onApply || onCancel);
   const showActionArea = Boolean(action || showGeneratedActionArea);
   const panelMaxHeight = constrainedMaxHeight(maxHeight, position.maxHeight);
@@ -668,6 +679,7 @@ export function DropdownMenu({
           ref={panelRef}
           data-menu-portal=""
           data-dropdown-menu-portal=""
+          data-theme={portalTheme}
           data-placement={position.placement}
           style={{
             position: "fixed",

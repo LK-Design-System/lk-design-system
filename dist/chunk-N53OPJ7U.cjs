@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
 
 
-var _chunkFHFXWO7Fcjs = require('./chunk-FHFXWO7F.cjs');
+var _chunkQDSQBUOLcjs = require('./chunk-QDSQBUOL.cjs');
 
 
 var _chunkRP4ROXV5cjs = require('./chunk-RP4ROXV5.cjs');
@@ -241,7 +241,7 @@ function MenubarDrillHeader({ title, onBack }) {
 }
 function MenubarBranch({ item, variant, close }) {
   const disabled = Boolean(item.disabled || item.disable);
-  const sub = _chunkFHFXWO7Fcjs.useSubmenuBranch.call(void 0, { disabled });
+  const sub = _chunkQDSQBUOLcjs.useSubmenuBranch.call(void 0, { disabled });
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { position: "relative" }, onMouseEnter: sub.containerHandlers.onMouseEnter, onMouseLeave: sub.containerHandlers.onMouseLeave, children: [
     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       MenuItem,
@@ -658,4 +658,4 @@ function Menubar({
 
 
 exports.Menubar = Menubar;
-//# sourceMappingURL=chunk-OWVH37WK.cjs.map
+//# sourceMappingURL=chunk-N53OPJ7U.cjs.map

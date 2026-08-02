@@ -1,7 +1,7 @@
 "use client";
 import {
   useSubmenuBranch
-} from "../../chunk-Q734BU7E.js";
+} from "../../chunk-YFJKNEMA.js";
 import "../../chunk-VOME4WON.js";
 export {
   useSubmenuBranch

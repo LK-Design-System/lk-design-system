@@ -1,7 +1,7 @@
 "use client";
 import {
   useSubmenuBranch
-} from "./chunk-Q734BU7E.js";
+} from "./chunk-YFJKNEMA.js";
 import {
   useMenuKeyboard
 } from "./chunk-VOME4WON.js";
@@ -658,4 +658,4 @@ function Menubar({
 export {
   Menubar
 };
-//# sourceMappingURL=chunk-XYGCR4VV.js.map
+//# sourceMappingURL=chunk-KFV63BQ2.js.map

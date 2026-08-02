@@ -2,6 +2,16 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { useMenuKeyboard } from './useMenuKeyboard.js';
 
+function inheritedTheme(element) {
+  const host = element?.closest?.('[data-theme], .theme-light, .theme-dark, .theme-auto');
+  const explicitTheme = host?.getAttribute?.('data-theme');
+  if (explicitTheme) return explicitTheme;
+  if (host?.classList?.contains('theme-dark')) return 'dark';
+  if (host?.classList?.contains('theme-auto')) return 'auto';
+  if (host?.classList?.contains('theme-light')) return 'light';
+  return undefined;
+}
+
 /**
  * Shared submenu behavior for menu surfaces (DropdownMenu, Menubar). Owns the
  * open state, hover intent timers, roving-focus engine, keyboard (Arrow
@@ -77,12 +87,14 @@ export function useSubmenuBranch({ disabled = false } = {}) {
 
   const renderPanel = (children, panelStyle) => {
     const target = triggerRef.current?.ownerDocument?.body || (typeof document !== 'undefined' ? document.body : null);
+    const portalTheme = inheritedTheme(triggerRef.current);
     if (!open || !target) return null;
     return createPortal(
       <div
         ref={panelRef}
         data-menu-portal=""
         data-submenu-portal=""
+        data-theme={portalTheme}
         onMouseEnter={clearTimer}
         onMouseLeave={scheduleClose}
         style={{

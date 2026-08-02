@@ -99,7 +99,12 @@ const measured = await page.evaluate(() => {
   const out = {};
   for (const w of document.querySelectorAll('[data-measure]')) {
     // styled root = the wrapper's descendant with the largest area that has a radius or background/border
-    const cands = [...w.querySelectorAll('*')].filter((e) => { const cs = getComputedStyle(e); return px(cs.borderTopLeftRadius) > 0 || cs.backgroundColor !== 'rgba(0, 0, 0, 0)' || cs.borderTopStyle !== 'none'; });
+    const cands = [...w.querySelectorAll('*')].filter((e) => {
+      const cs = getComputedStyle(e);
+      const rect = e.getBoundingClientRect();
+      if (cs.display === 'none' || cs.visibility === 'hidden' || rect.width === 0 || rect.height === 0) return false;
+      return px(cs.borderTopLeftRadius) > 0 || cs.backgroundColor !== 'rgba(0, 0, 0, 0)' || cs.borderTopStyle !== 'none';
+    });
     const el = cands.sort((a, b) => b.getBoundingClientRect().width * b.getBoundingClientRect().height - a.getBoundingClientRect().width * a.getBoundingClientRect().height)[0] || w.firstElementChild;
     const cs = getComputedStyle(el);
     out[w.getAttribute('data-measure')] = { height: px(cs.height), radius: px(cs.borderTopLeftRadius), padX: px(cs.paddingLeft), fontSize: px(cs.fontSize) };

@@ -7,7 +7,7 @@ var _chunkPAR24VMUcjs = require('./chunk-PAR24VMU.cjs');
 var _chunkFYBO6ALUcjs = require('./chunk-FYBO6ALU.cjs');
 
 
-var _chunkD7CNDVUWcjs = require('./chunk-D7CNDVUW.cjs');
+var _chunkHK5EYES2cjs = require('./chunk-HK5EYES2.cjs');
 
 
 var _chunkQV6BZEQ3cjs = require('./chunk-QV6BZEQ3.cjs');
@@ -71,7 +71,7 @@ function FeedCard({
     trailing = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", marginLeft: "var(--space-2)" }, children: [
       showFollow && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkJM32VGPMcjs.Button, { variant: following ? "ghost" : "secondary", size: "sm", onClick: onFollowToggle, children: resolvedFollowLabel }),
       showMenu && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
-        _chunkD7CNDVUWcjs.DropdownMenu,
+        _chunkHK5EYES2cjs.DropdownMenu,
         {
           align: "right",
           items: menuItems,
@@ -118,4 +118,4 @@ function FeedCard({
 
 
 exports.FeedCard = FeedCard;
-//# sourceMappingURL=chunk-ZUNPPCNQ.cjs.map
+//# sourceMappingURL=chunk-NTQFLPOO.cjs.map

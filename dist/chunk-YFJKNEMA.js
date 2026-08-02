@@ -7,6 +7,15 @@ import {
 import React from "react";
 import { createPortal } from "react-dom";
 import { jsx } from "react/jsx-runtime";
+function inheritedTheme(element) {
+  const host = element?.closest?.("[data-theme], .theme-light, .theme-dark, .theme-auto");
+  const explicitTheme = host?.getAttribute?.("data-theme");
+  if (explicitTheme) return explicitTheme;
+  if (host?.classList?.contains("theme-dark")) return "dark";
+  if (host?.classList?.contains("theme-auto")) return "auto";
+  if (host?.classList?.contains("theme-light")) return "light";
+  return void 0;
+}
 function useSubmenuBranch({ disabled = false } = {}) {
   const [open, setOpen] = React.useState(false);
   const [subPos, setSubPos] = React.useState(null);
@@ -87,6 +96,7 @@ function useSubmenuBranch({ disabled = false } = {}) {
   };
   const renderPanel = (children, panelStyle) => {
     const target = triggerRef.current?.ownerDocument?.body || (typeof document !== "undefined" ? document.body : null);
+    const portalTheme = inheritedTheme(triggerRef.current);
     if (!open || !target) return null;
     return createPortal(
       /* @__PURE__ */ jsx(
@@ -95,6 +105,7 @@ function useSubmenuBranch({ disabled = false } = {}) {
           ref: panelRef,
           "data-menu-portal": "",
           "data-submenu-portal": "",
+          "data-theme": portalTheme,
           onMouseEnter: clearTimer,
           onMouseLeave: scheduleClose,
           style: {
@@ -125,4 +136,4 @@ function useSubmenuBranch({ disabled = false } = {}) {
 export {
   useSubmenuBranch
 };
-//# sourceMappingURL=chunk-Q734BU7E.js.map
+//# sourceMappingURL=chunk-YFJKNEMA.js.map

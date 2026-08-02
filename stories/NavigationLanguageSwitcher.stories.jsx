@@ -134,7 +134,9 @@ export const Overview = {
     trigger.focus();
     await userEvent.keyboard('{ArrowDown}');
 
-    const menu = await within(demo).findByRole('menu');
+    // DropdownMenu panel은 trigger의 owner document로 portal된다. 조회 범위도
+    // canvas subtree가 아니라 그 document여야 실제 소비 환경과 같다.
+    const menu = await within(canvasElement.ownerDocument.body).findByRole('menu');
     const options = within(menu).getAllByRole('menuitemradio');
     if (options.length !== 2) throw new Error('LanguageSwitcher must render one radio item per locale.');
     if (options[0].getAttribute('aria-checked') !== 'true' || options[1].getAttribute('aria-checked') !== 'false') {
@@ -186,7 +188,7 @@ export const Overview = {
       if (within(demo).getByText('locale: en').textContent !== 'locale: en') {
         throw new Error('LanguageSwitcher must report the selected locale value.');
       }
-      if (demo.querySelector('[role="menu"]')) {
+      if (canvasElement.ownerDocument.querySelector('[role="menu"]')) {
         throw new Error('Selecting a locale must close the menu.');
       }
       if (canvasElement.ownerDocument.activeElement !== trigger) {
@@ -219,7 +221,7 @@ export const AdaptiveWidth = {
 
     await userEvent.click(trigger);
 
-    const menu = await within(demo).findByRole('menu');
+    const menu = await within(canvasElement.ownerDocument.body).findByRole('menu');
     const panel = menu.parentElement;
     const longLabel = within(menu).getByText('Português (Brasil)');
     const longLabelCell = longLabel.parentElement;
@@ -272,7 +274,7 @@ export const Disabled = {
     const trigger = within(canvasElement).getByRole('button', { name: '언어 선택' });
     if (!trigger.disabled) throw new Error('Disabled LanguageSwitcher must use a native disabled trigger.');
     await userEvent.click(trigger);
-    if (canvasElement.querySelector('[role="menu"]')) {
+    if (canvasElement.ownerDocument.querySelector('[role="menu"]')) {
       throw new Error('Disabled LanguageSwitcher must not open a menu.');
     }
   },

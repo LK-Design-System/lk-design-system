@@ -68,6 +68,14 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.14 - 2026-08-02
+
+### Fixed
+
+- Portalled root and nested menus now preserve the nearest explicit light, dark, or automatic theme, so escaping an overflow container does not reset overlay colors.
+- Storybook portal contracts now query the owner document, keep the visual comparison story isolated from the Table overflow regression, and ignore hidden measurement controls in rendered-style checks.
+- Development dependency overrides resolve the current PostCSS path-traversal and brace-expansion denial-of-service advisories.
+
 ## 0.1.0-rc.13 - 2026-08-02
 
 ### Fixed

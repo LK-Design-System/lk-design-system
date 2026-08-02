@@ -111,31 +111,6 @@ export const DropdownMenuPatterns = {
         </div>
       </Section>
 
-      <Section title="스크롤 컨테이너 안의 행 동작">
-        <Table
-          data-contract="dropdown-table-overflow"
-          tableLabel="문서 목록"
-          columns={[
-            { key: 'name', label: '이름' },
-            {
-              key: 'actions',
-              label: '작업',
-              align: 'right',
-              width: 96,
-              render: () => (
-                <DropdownMenu
-                  align="right"
-                  density="compact"
-                  trigger={<Button variant="ghost" size="sm">더보기</Button>}
-                  items={[{ label: '새 버전' }, { divider: true }, { label: '삭제', danger: true }]}
-                />
-              ),
-            },
-          ]}
-          rows={[{ id: 'document-1', name: '문서 하나' }]}
-          style={{ maxWidth: 520 }}
-        />
-      </Section>
     </main>
   ),
   play: async ({ canvasElement }) => {
@@ -199,6 +174,40 @@ export const DropdownMenuPatterns = {
       }
     });
 
+  },
+};
+
+export const DropdownMenuTableOverflowContract = {
+  name: '계약 · 스크롤 컨테이너 탈출',
+  tags: ['!dev'],
+  render: () => (
+    <main style={{ minHeight: 320, padding: 24 }}>
+      <Table
+        data-contract="dropdown-table-overflow"
+        tableLabel="문서 목록"
+        columns={[
+          { key: 'name', label: '이름' },
+          {
+            key: 'actions',
+            label: '작업',
+            align: 'right',
+            width: 96,
+            render: () => (
+              <DropdownMenu
+                align="right"
+                density="compact"
+                trigger={<Button variant="ghost" size="sm">더보기</Button>}
+                items={[{ label: '새 버전' }, { divider: true }, { label: '삭제', danger: true }]}
+              />
+            ),
+          },
+        ]}
+        rows={[{ id: 'document-1', name: '문서 하나' }]}
+        style={{ maxWidth: 520 }}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
     const tableScroller = canvasElement.querySelector('[data-contract="dropdown-table-overflow"]');
     if (!tableScroller) throw new Error('The clipped-container DropdownMenu contract requires a Table scroll container.');
     const tableTrigger = [...tableScroller.querySelectorAll('button')]
@@ -206,9 +215,8 @@ export const DropdownMenuPatterns = {
     if (!tableTrigger) throw new Error('The clipped-container DropdownMenu contract requires a table trigger.');
     const scrollHeightBefore = tableScroller.scrollHeight;
     await userEvent.click(tableTrigger);
-    let tableMenu;
     await waitFor(() => {
-      tableMenu = menuControlledBy(tableTrigger);
+      const tableMenu = menuControlledBy(tableTrigger);
       if (!tableMenu) throw new Error('The table row action menu must open.');
       const panel = tableMenu.parentElement;
       if (!panel.matches('[data-dropdown-menu-portal]') || panel.parentElement !== tableScroller.ownerDocument.body) {
