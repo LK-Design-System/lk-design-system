@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkITIFTVTBcjs = require('../../chunk-ITIFTVTB.cjs');
+var _chunkNFE2XSRZcjs = require('../../chunk-NFE2XSRZ.cjs');
 
 
-exports.IconButton = _chunkITIFTVTBcjs.IconButton;
+exports.IconButton = _chunkNFE2XSRZcjs.IconButton;
 //# sourceMappingURL=IconButton.cjs.map

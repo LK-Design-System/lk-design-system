@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkKF63A6NHcjs = require('../../chunk-KF63A6NH.cjs');
-require('../../chunk-FVL575B5.cjs');
+var _chunkTBDOICX3cjs = require('../../chunk-TBDOICX3.cjs');
+require('../../chunk-2PQ23RCX.cjs');
 require('../../chunk-3VE2HGTT.cjs');
 
 
-exports.EditorToolbar = _chunkKF63A6NHcjs.EditorToolbar;
+exports.EditorToolbar = _chunkTBDOICX3cjs.EditorToolbar;
 //# sourceMappingURL=EditorToolbar.cjs.map

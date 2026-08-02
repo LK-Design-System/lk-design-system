@@ -53,6 +53,13 @@
   --component-button-transform-hover: none;
   --component-button-transform-pressed: none;
 
+  /* ---- Icon Button ----------------------------------------------------- */
+  /* 24px is an LDS dense-action extension. WDS sizes remain 28/32/40px. */
+  --component-icon-button-size-xs: 24px;
+  --component-icon-button-size-custom: 28px;
+  --component-icon-button-size-sm: 32px;
+  --component-icon-button-size-md: 40px;
+
   --component-button-primary-bg: var(--color-semantic-primary-normal);
   --component-button-primary-bg-hover: var(--component-button-primary-bg);
   --component-button-primary-fg: var(--color-semantic-static-white);
