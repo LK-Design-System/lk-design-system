@@ -37,6 +37,11 @@ jobs:
       - name: Reject an already-published version
         shell: pwsh
         run: |
+          # A missing package version is the expected success path here. Newer
+          # PowerShell runners can promote a native non-zero exit to a
+          # terminating error before `$LASTEXITCODE` is inspected, so keep
+          # native exit handling explicit for this probe.
+          $PSNativeCommandUseErrorActionPreference = $false
           $releasePackages = 'core', 'theme', 'product', 'compat'
           foreach ($releasePackage in $releasePackages) {
             $manifest = Get-Content "packages/$releasePackage/package.json" -Raw | ConvertFrom-Json
