@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface TextButtonProps extends React.HTMLAttributes<HTMLElement> {
+export interface TextButtonOwnProps {
   /** Text action tone mapped through LK theme tokens. @default "signal" */
   tone?: "signal" | "neutral" | "danger";
   /** color axis. When set, it takes precedence over tone. */
@@ -28,5 +28,10 @@ export interface TextButtonProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
 }
 
+export type TextButtonProps<Element extends React.ElementType = 'button'> = TextButtonOwnProps &
+  Omit<React.ComponentPropsWithoutRef<Element>, keyof TextButtonOwnProps | 'as'> & {
+    as?: Element;
+  };
+
 /** Action/Text Button primitive for low-emphasis text actions. */
-export function TextButton(props: TextButtonProps): React.JSX.Element;
+export function TextButton<Element extends React.ElementType = 'button'>(props: TextButtonProps<Element>): React.JSX.Element;

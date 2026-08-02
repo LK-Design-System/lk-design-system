@@ -38,8 +38,8 @@
         "height": 860
       },
       "reducedMotion": "no-preference",
-      "bytes": 112514,
-      "sha256": "f757d546f8e2599f61a57eb696191133246abe7f8a08f5982d8677b353cbb609"
+      "bytes": 118429,
+      "sha256": "3c1fcb6f9a9352f3315749909bd4edce2597af8a51779c0c44c340fff96afabd"
     },
     {
       "name": "wds-content-card-patterns",
@@ -50,8 +50,8 @@
         "height": 860
       },
       "reducedMotion": "no-preference",
-      "bytes": 99574,
-      "sha256": "8b51d27b01d0d341e71c71b4dd36986ab052ce78abb5223c7f80b168c8feb4e5"
+      "bytes": 104790,
+      "sha256": "f9e3d5c9e7cd5610cc010abf002deb66e0ec160551047a11a343f58f2d396769"
     },
     {
       "name": "action-button-matrix",

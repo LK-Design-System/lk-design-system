@@ -8,6 +8,8 @@ export interface DrawerProps {
   /** 패널 너비(px). @default 380 */
   width?: number;
   title?: React.ReactNode;
+  /** 제목 아래의 짧은 보조 설명. dialog의 `aria-describedby`와 연결됩니다. */
+  subtitle?: React.ReactNode;
   children?: React.ReactNode;
   footer?: React.ReactNode;
   /** Escape, scrim, 닫기 액션이 호출하는 controlled dismiss callback. */
@@ -24,6 +26,8 @@ export interface DrawerProps {
   ariaLabel?: string;
   /** 닫기 버튼의 접근 가능한 이름. @default "닫기" */
   closeLabel?: string;
+  /** 스크롤 body의 padding·layout을 조합별로 조정합니다. */
+  bodyStyle?: React.CSSProperties;
   style?: React.CSSProperties;
 }
 

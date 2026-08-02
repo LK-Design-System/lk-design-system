@@ -38,6 +38,8 @@ export interface CardProps extends Omit<
   leadingContent?: React.ReactNode;
   trailingContent?: React.ReactNode;
   title?: React.ReactNode;
+  /** Structured title overflow policy. @default "truncate" */
+  titleWrap?: "truncate" | "wrap";
   description?: React.ReactNode;
   caption?: React.ReactNode;
   subCaption?: React.ReactNode;

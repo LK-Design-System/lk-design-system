@@ -110,7 +110,7 @@ const meta = {
       storyId: 'lds-directory--overview',
       eyebrow: 'LDS',
       title: 'Design System Directory',
-      description: 'LDS 제품군별 컴포넌트 카탈로그와 문서로 이동합니다.',
+      description: '여러 LDS 제품군의 카탈로그와 문서 중 어디에서 시작할지 선택할 때 사용합니다. 개별 컴포넌트의 API·상태·사용법을 확인할 때는 이 디렉터리를 사용하지 않고 해당 제품군의 컴포넌트 안내 페이지로 이동합니다.',
     },
     docs: {
       description: {
@@ -123,7 +123,7 @@ const meta = {
 export default meta;
 
 export const Overview = {
-  name: 'Design System Directory',
+  name: '개요',
   parameters: storyDescription('LDS Core, LDS Robotics, 그리고 이후 공개될 LDS 제품군으로 이동하는 공통 시작 화면입니다.'),
   render: () => <DesignSystemDirectory />,
   // Asserted over the registry rather than row by row: a family added to

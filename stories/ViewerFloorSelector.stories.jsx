@@ -94,7 +94,7 @@ function ViewerSurfaceFixture() {
 }
 
 export const OnViewerSurface = {
-  name: '뷰어 표면 위',
+  name: '사용법 · 뷰어 표면 배치',
   parameters: storyDescription(
     'Floor Selector가 실제로 놓이는 자리입니다. 층 전환은 "무엇을 보는가"라 상단 우측 scope 레일에, 줌·초기화는 "어떻게 보는가"라 우하단 toolbar에 들어가 같은 우측 정렬선을 공유합니다. 컨트롤 곡률이 뷰어 표면·툴바와 같은 계열인지, 다크 표면 위에서 비선택 층이 읽히는지, 두 슬롯이 하나의 우측 열로 읽히는지 확인하세요.',
   ),

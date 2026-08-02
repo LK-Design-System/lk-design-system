@@ -15,14 +15,17 @@
 ### 사용하지 않음
 
 - scrim 클릭 닫기는 closeOnScrim으로 제어하지만, 유일한 dismiss 수단으로 사용하지 않습니다.
+- Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다.
 - Drawer는 현재 화면과 관련된 필터, 상세, 설정을 한쪽 edge에서 보조하는 modal side panel입니다. 분류는 LDS Product Extension이며 WDS variant axis를 추가하지 않습니다.
 
 ## Anatomy
 
 | Part | Contract |
 | --- | --- |
+| subtitle | 제목 아래의 짧은 보조 설명. dialog의 aria-describedby와 연결됩니다. |
 | ariaLabel | title이 없을 때 사용할 접근 가능한 이름. @default "서랍 패널" |
 | closeLabel | 닫기 버튼의 접근 가능한 이름. @default "닫기" |
+| bodyStyle | 스크롤 body의 padding·layout을 조합별로 조정합니다. |
 
 ## Properties
 
@@ -32,6 +35,7 @@
 | `side` | `'left' \| 'right'` | No | 슬라이드인 방향. @default "right" |
 | `width` | `number` | No | 패널 너비(px). @default 380 |
 | `title` | `React.ReactNode` | No |  |
+| `subtitle` | `React.ReactNode` | No | 제목 아래의 짧은 보조 설명. dialog의 aria-describedby와 연결됩니다. |
 | `children` | `React.ReactNode` | No |  |
 | `footer` | `React.ReactNode` | No |  |
 | `onClose` | `() = void` | No | Escape, scrim, 닫기 액션이 호출하는 controlled dismiss callback. |
@@ -41,6 +45,7 @@
 | `restoreFocus` | `boolean` | No | 닫힌 뒤 trigger 또는 returnFocusRef로 초점을 복원합니다. @default true |
 | `ariaLabel` | `string` | No | title이 없을 때 사용할 접근 가능한 이름. @default "서랍 패널" |
 | `closeLabel` | `string` | No | 닫기 버튼의 접근 가능한 이름. @default "닫기" |
+| `bodyStyle` | `React.CSSProperties` | No | 스크롤 body의 padding·layout을 조합별로 조정합니다. |
 | `style` | `React.CSSProperties` | No |  |
 
 ## States
@@ -59,8 +64,8 @@
 | --- | --- |
 | 명시 규칙 1 | Modal과 달리 좌/우 edge에 붙고, side, 380px 기본 폭, 92vw 상한, slide transition을 유지합니다. 이 차이는 본문 맥락과 나란히 연결되는 보조 작업이라는 기능으로 정당화됩니다. |
 | 명시 규칙 2 | 시각 delta inventory: headline/body typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. header/body는 space-5 space-6, footer는 space-4 space-6, action gap은 space-2로 Modal과 맞춥니다. radius와 선택/활성 marker는 추가하지 않고 side 방향만 기존 public axis로 유지합니다. |
-| 명시 규칙 3 | Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. 여러 overlay Drawer 동시 노출은 제외했습니다. |
-| 명시 규칙 4 | Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다. |
+| 명시 규칙 3 | bodyStyle은 기본 body padding과 scroll contract를 유지하되, DashboardShell temporaryNavigation처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 padding: 0 같은 layout override를 전달합니다. |
+| 명시 규칙 4 | Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. 여러 overlay Drawer 동시 노출은 제외했습니다. |
 | --body2-size | 15px |
 
 ## Responsive
@@ -71,6 +76,8 @@
 ## Content and writing
 
 - 제품 맥락에 맞는 닫기 명령은 closeLabel로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.
+- Subtitle contract.
+- Use subtitle for one short, visible sentence that clarifies the scope or consequence of the Drawer. When present it is rendered directly below title and associated with the dialog through aria-describedby.
 
 ## Accessibility
 
@@ -125,7 +132,10 @@ const firstFilterRef = useRef(null);
 - `--font-sans`
 - `--fw-extra`
 - `--headline1-size`
+- `--label1-reading-line`
+- `--label1-size`
 - `--shadow-xl`
+- `--space-1`
 - `--space-2`
 - `--space-4`
 - `--space-5`

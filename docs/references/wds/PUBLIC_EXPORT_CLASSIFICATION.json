@@ -249,6 +249,8 @@
         "DonutChart",
         "FileBrowser",
         "FilterBar",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
         "ResourceState",

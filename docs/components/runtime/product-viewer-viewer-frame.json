@@ -418,6 +418,11 @@
         "role": "variants-states"
       },
       {
+        "id": "lds-product-viewer-shared-viewer-frame--control-placement-contract",
+        "name": "상호작용 · 네 모서리 컨트롤 배치",
+        "role": "interaction"
+      },
+      {
         "id": "lds-product-viewer-shared-viewer-frame--blocking-focus-transition",
         "name": "상호작용 · 차단 전환 · 포커스 복구",
         "role": "interaction"
@@ -426,11 +431,6 @@
         "id": "lds-product-viewer-shared-viewer-frame--narrow-blocking-state",
         "name": "반응형 · 좁은 폭 · 차단 정보와 복구",
         "role": "responsive"
-      },
-      {
-        "id": "lds-product-viewer-shared-viewer-frame--control-placement-contract",
-        "name": "배치 규약 · 네 모서리",
-        "role": "interaction"
       }
     ],
     "hiddenEvidence": 0

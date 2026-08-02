@@ -22,6 +22,7 @@ const firstFilterRef = useRef(null);
 - 시각 delta inventory: headline/body typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. header/body는 `space-5 space-6`, footer는 `space-4 space-6`, action gap은 `space-2`로 Modal과 맞춥니다. radius와 선택/활성 marker는 추가하지 않고 `side` 방향만 기존 public axis로 유지합니다.
 - 제목이 있으면 `aria-labelledby`, 없으면 `ariaLabel`을 사용합니다.
 - 제품 맥락에 맞는 닫기 명령은 `closeLabel`로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.
+- `bodyStyle`은 기본 body padding과 scroll contract를 유지하되, `DashboardShell temporaryNavigation`처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 `padding: 0` 같은 layout override를 전달합니다.
 
 ## 상호작용 계약
 
@@ -41,3 +42,7 @@ const firstFilterRef = useRef(null);
 - [Fluent 2 Dialog](https://fluent2.microsoft.design/components/web/react/core/dialog/usage): 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다.
 
 필터 query 직렬화, 변경 유실 경고 조건, route 상태와 반응형으로 inline surface로 전환하는 정책은 제품 레이어가 소유합니다.
+
+## Subtitle contract
+
+Use `subtitle` for one short, visible sentence that clarifies the scope or consequence of the Drawer. When present it is rendered directly below `title` and associated with the dialog through `aria-describedby`. Complex instructions, lists, validation, or independently navigable content belong in the body and must not be compressed into the subtitle.

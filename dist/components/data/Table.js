@@ -1,9 +1,13 @@
 "use client";
 import {
-  Table
-} from "../../chunk-HR623JO2.js";
-import "../../chunk-22ESLNNA.js";
+  Table,
+  getTableDataCellStyle,
+  getTableHeaderCellStyle
+} from "../../chunk-H6ZH3MQA.js";
+import "../../chunk-IGVXI6D7.js";
 export {
-  Table
+  Table,
+  getTableDataCellStyle,
+  getTableHeaderCellStyle
 };
 //# sourceMappingURL=Table.js.map

@@ -146,7 +146,7 @@ function PlacementCase({ title, note, legend, children }) {
 }
 
 export const ControlPlacementContract = {
-  name: '배치 규약 · 네 모서리',
+  name: '상호작용 · 네 모서리 컨트롤 배치',
   parameters: storyDescription(
     '뷰포트를 조작하는 컨트롤은 우하단에 두고 상단은 읽기 전용 정보에 남깁니다. 지도·3D는 줌과 초기화를, 영상은 재생 도구를 같은 자리에서 받습니다. 상단 우측이 비어야 라이브 같은 상시 상태가 화면 끝에 붙을 수 있습니다.',
   ),

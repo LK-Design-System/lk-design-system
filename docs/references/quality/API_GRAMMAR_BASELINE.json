@@ -26,7 +26,7 @@
       "components/buttons/Link.d.ts#LinkProps:tone=inherit",
       "components/buttons/SocialButton.d.ts#SocialButtonProps:tone=brand",
       "components/buttons/SocialButton.d.ts#SocialButtonProps:tone=outline",
-      "components/buttons/TextButton.d.ts#TextButtonProps:tone=danger",
+      "components/buttons/TextButton.d.ts#TextButtonOwnProps:tone=danger",
       "components/cards/FeatureCard.d.ts#FeatureCardProps:tone=amber",
       "components/cards/FeatureCard.d.ts#FeatureCardProps:tone=navy",
       "components/cards/FeatureCard.d.ts#FeatureCardProps:tone=steel",

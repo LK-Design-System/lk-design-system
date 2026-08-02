@@ -186,7 +186,7 @@ function ProductShellTopBarFixture({ showTransitionDemo = false }) {
 }
 
 export const TopBarDefault = {
-  name: '개요 · 제품 셸',
+  name: '개요',
   parameters: storyDescription(
     '제품 셸 최상단에서 브랜드·좌측 정렬 주 탐색·우측 전역 도구를 전폭으로 배치합니다. 모서리와 외곽 그림자 없이 하단 구분선으로 본문에 연결되는 기본형인지 확인하세요.',
   ),
@@ -479,7 +479,7 @@ function ShellPreview({ layout }) {
 }
 
 export const DashboardShellComposition = {
-  name: '반응형 · DashboardShell 전환',
+  name: '반응형 · 대시보드 셸 전환',
   parameters: storyDescription(
     '제품에 Side Nav가 있으면 Top Bar는 브랜드와 전역 도구만 소유합니다. 넓은 화면의 Side Nav와 좁은 화면의 Bottom Nav를 DashboardShell이 전환하며 로컬 목적지를 Top Bar에 중복하지 않습니다.',
   ),

@@ -1,7 +1,7 @@
 {
   "summary": {
     "componentEntries": 202,
-    "publicExports": 208,
+    "publicExports": 210,
     "guides": 172,
     "entriesWithoutOwnedPage": [
       "Stat",
@@ -262,7 +262,8 @@
       "purpose": "폼 제출, 저장, 확인처럼 사용자가 결과를 예상할 수 있는 단일 행동에 적합합니다. 아이콘만 필요한 좁은 도구 영역은 Icon Button, 배경 없는 보조 행동은 Text Button, 켬·끔 상태를 유지해야 하면 Toggle Icon을 사용하세요.",
       "useWhen": [
         "Use IconButton for icon-only one-shot actions and ToggleIcon for icon-only persistent state actions.",
-        "Footer action mapping is fixed: execute/save/apply uses the primary action; cancel/back uses variant=\"outlined\" color=\"assistive\"; destructive confirmation uses variant=\"danger\" and a ConfirmDialog."
+        "Footer action mapping is fixed: execute/save/apply uses the primary action; cancel/back uses variant=\"outlined\" color=\"assistive\"; destructive confirmation uses variant=\"danger\" and a ConfirmDialog.",
+        "TypeScript preserves the rendered element's props through the generic as contract. For example, as=\"a\" accepts anchor props such as href, while the default button accepts native button props. Custom components receive their own declared props without widening the public surface to any."
       ],
       "avoidWhen": [],
       "anatomy": [
@@ -281,84 +282,84 @@
           "type": "| \"primary\" | \"secondary\" | \"signal\" | \"danger\" | \"dark\" | \"flat\" | \"ghost\" | \"on-dark\" | \"solid\" | \"outlined\"",
           "required": false,
           "description": "Visual action variant mapped through LK theme tokens. Also accepts \"solid\" and \"outlined\". @default \"primary\"",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "color",
           "type": "\"primary\" | \"assistive\"",
           "required": false,
           "description": "color axis for solid/outlined buttons. @default \"primary\"",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "size",
           "type": "\"sm\" | \"md\" | \"lg\" | \"small\" | \"medium\" | \"large\"",
           "required": false,
           "description": "Control height, padding, and text size. Aliases map small/medium/large to sm/md/lg. @default \"md\"",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "arrow",
           "type": "boolean",
           "required": false,
           "description": "",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "full",
           "type": "boolean",
           "required": false,
           "description": "Fill the available container width. @default false",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "disabled",
           "type": "boolean",
           "required": false,
           "description": "Disable activation and mark the control unavailable. @default false",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "disable",
           "type": "boolean",
           "required": false,
           "description": "Disable alias. @default false",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "iconOnly",
           "type": "boolean",
           "required": false,
           "description": "Render the icon-only square button treatment. Requires aria-label (or aria-labelledby); a development-only console warning fires when neither is supplied.",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "loading",
           "type": "boolean | 'inline'",
           "required": false,
           "description": "Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation. true swaps the label for a centered spinner on the muted palette. \"inline\" keeps the label visible with a leading spinner and preserves the variant palette — for controls whose words must survive the wait (e.g. a safety stop reading \"정지 요청 중\"). Blocking semantics are identical in both modes.",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "loadingLabel",
           "type": "string",
           "required": false,
           "description": "Screen-reader label announced with the loading spinner (loading = true). @default \"불러오는 중\"",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "as",
           "type": "React.ElementType",
           "required": false,
           "description": "Render with another element or component, such as \"a\" for link CTAs. @default \"button\"",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "children",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         }
       ],
       "states": [
@@ -1026,77 +1027,77 @@
           "type": "\"signal\" | \"neutral\" | \"danger\"",
           "required": false,
           "description": "Text action tone mapped through LK theme tokens. @default \"signal\"",
-          "owner": "TextButtonProps"
+          "owner": "TextButtonOwnProps"
         },
         {
           "name": "color",
           "type": "\"primary\" | \"assistive\"",
           "required": false,
           "description": "color axis. When set, it takes precedence over tone.",
-          "owner": "TextButtonProps"
+          "owner": "TextButtonOwnProps"
         },
         {
           "name": "size",
           "type": "\"sm\" | \"md\" | \"lg\" | \"small\" | \"medium\" | \"large\"",
           "required": false,
           "description": "Aliases map small/medium/large to sm/md/lg. @default \"md\"",
-          "owner": "TextButtonProps"
+          "owner": "TextButtonOwnProps"
         },
         {
           "name": "arrow",
           "type": "boolean",
           "required": false,
           "description": "",
-          "owner": "TextButtonProps"
+          "owner": "TextButtonOwnProps"
         },
         {
           "name": "underline",
           "type": "boolean",
           "required": false,
           "description": "Draw an underline for link-style usage. @default false",
-          "owner": "TextButtonProps"
+          "owner": "TextButtonOwnProps"
         },
         {
           "name": "disabled",
           "type": "boolean",
           "required": false,
           "description": "",
-          "owner": "TextButtonProps"
+          "owner": "TextButtonOwnProps"
         },
         {
           "name": "disable",
           "type": "boolean",
           "required": false,
           "description": "Disable alias.",
-          "owner": "TextButtonProps"
+          "owner": "TextButtonOwnProps"
         },
         {
           "name": "loading",
           "type": "boolean",
           "required": false,
           "description": "Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled).",
-          "owner": "TextButtonProps"
+          "owner": "TextButtonOwnProps"
         },
         {
           "name": "loadingLabel",
           "type": "string",
           "required": false,
           "description": "Screen-reader label announced with the loading spinner. @default \"불러오는 중\"",
-          "owner": "TextButtonProps"
+          "owner": "TextButtonOwnProps"
         },
         {
           "name": "as",
           "type": "React.ElementType",
           "required": false,
           "description": "Render with another element or component, such as \"a\". @default \"button\"",
-          "owner": "TextButtonProps"
+          "owner": "TextButtonOwnProps"
         },
         {
           "name": "children",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "TextButtonProps"
+          "owner": "TextButtonOwnProps"
         }
       ],
       "states": [
@@ -1768,7 +1769,12 @@
         "Plain children-only Card usage is still supported for generic LDS surfaces."
       ],
       "avoidWhen": [],
-      "anatomy": [],
+      "anatomy": [
+        {
+          "part": "titleWrap",
+          "rule": "Structured title overflow policy. @default \"truncate\""
+        }
+      ],
       "properties": [
         {
           "name": "elevation",
@@ -1883,6 +1889,13 @@
           "owner": "CardProps"
         },
         {
+          "name": "titleWrap",
+          "type": "\"truncate\" | \"wrap\"",
+          "required": false,
+          "description": "Structured title overflow policy. @default \"truncate\"",
+          "owner": "CardProps"
+        },
+        {
           "name": "description",
           "type": "React.ReactNode",
           "required": false,
@@ -1961,7 +1974,9 @@
           "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
         }
       ],
-      "responsive": [],
+      "responsive": [
+        "titleWrap=\"truncate|wrap\" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination."
+      ],
       "contentGuidance": [],
       "accessibility": [],
       "exceptions": [],
@@ -5374,7 +5389,7 @@
       "supportingComponents": [
         "Stack"
       ],
-      "purpose": "기본 스크롤바는 OS·브라우저 설정을 존중합니다. 공간이 좁은 메뉴와 패널만 compact를 선택하고, 스크롤바가 나타나도 내용 폭이 흔들리지 않도록 기본 gutter를 확보합니다. 실제로 넘치는 영역은 키보드로 도달할 수 있어야 합니다.",
+      "purpose": "높이가 제한된 로그·목록·데이터 스트립처럼 독립 스크롤 경계가 필요할 때 ScrollArea를 사용합니다. 페이지 본문 전체나 넘치지 않는 컨테이너에는 사용하지 않습니다. 기본 스크롤바는 OS 설정을 존중하고, 좁은 패널만 compact를 선택합니다. 실제로 넘치는 영역은 키보드로 도달할 수 있어야 합니다.",
       "useWhen": [
         "강제 색상 모드에서는 사용자 에이전트의 스크롤바 색상과 폭으로 돌아갑니다."
       ],
@@ -6599,9 +6614,9 @@
         },
         {
           "name": "padding",
-          "type": "boolean",
+          "type": "boolean | number | string",
           "required": false,
-          "description": "padding axis. @default false",
+          "description": "Inline padding. true preserves the legacy 8px value; a number or CSS length sets an explicit inset. @default false",
           "owner": "TabsProps"
         },
         {
@@ -6623,7 +6638,11 @@
       "behavior": [],
       "quantitativeRules": [
         {
-          "subject": "명시 규칙 1",
+          "subject": "명시 규칙 2",
+          "rule": "The 2px active indicator is drawn inside the tab box (bottom: 0). Scrollable tabs suppress cross-axis overflow only after the full indicator is inside, so the tablist cannot create a vertical scrollbar from its own indicator and the indicator is not clipped to 1px."
+        },
+        {
+          "subject": "명시 규칙 3",
           "rule": "탭↔패널 연결: 각 탭은 useId() 기반 id를 자동으로 가지며, item.tabId로 재정의할 수 있습니다. item.panelId를 넘기면 탭에 aria-controls로 연결됩니다. 소비 측은 패널을 role=\"tabpanel\", id={panelId}, aria-labelledby={탭 id}, tabIndex={0}으로 표시하세요."
         },
         {
@@ -6633,14 +6652,6 @@
         {
           "subject": "--color-semantic-focus-indicator",
           "rule": "light: #2F6FB0; dark: #7FB0DE"
-        },
-        {
-          "subject": "--color-semantic-label-neutral",
-          "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
-        },
-        {
-          "subject": "--color-semantic-label-normal",
-          "rule": "light: #171718; dark: #F7F7F7"
         }
       ],
       "responsive": [
@@ -6668,7 +6679,7 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<Tabs items={[{ value: 'all', label: 'All' }, { value: 'open', label: 'Open' }]} defaultValue=\"all\" />\n<Tabs resize=\"fill\" size=\"large\" padding trailingIconButton items={items} />"
+          "code": "<Tabs items={[{ value: 'all', label: 'All' }, { value: 'open', label: 'Open' }]} defaultValue=\"all\" />\n<Tabs resize=\"fill\" size=\"large\" padding=\"var(--space-6)\" trailingIconButton items={items} />"
         }
       ],
       "tokens": [
@@ -6716,7 +6727,7 @@
         "anatomy": "evidence",
         "properties": "evidence",
         "states": "omitted-no-evidence",
-        "behavior": "evidence",
+        "behavior": "omitted-no-evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
         "contentGuidance": "omitted-no-evidence",
@@ -13202,6 +13213,13 @@
           "type": "React.ReactNode",
           "required": false,
           "description": "",
+          "owner": "CalloutProps"
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3 | 4 | 5 | 6 | false",
+          "required": false,
+          "description": "문서 구조에 맞는 제목 레벨. 기본 false는 기존 비-heading title을 유지합니다. @default false",
           "owner": "CalloutProps"
         },
         {
@@ -20826,84 +20844,84 @@
           "type": "| \"primary\" | \"secondary\" | \"signal\" | \"danger\" | \"dark\" | \"flat\" | \"ghost\" | \"on-dark\" | \"solid\" | \"outlined\"",
           "required": false,
           "description": "Visual action variant mapped through LK theme tokens. Also accepts \"solid\" and \"outlined\". @default \"primary\"",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "color",
           "type": "\"primary\" | \"assistive\"",
           "required": false,
           "description": "color axis for solid/outlined buttons. @default \"primary\"",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "size",
           "type": "\"sm\" | \"md\" | \"lg\" | \"small\" | \"medium\" | \"large\"",
           "required": false,
           "description": "Control height, padding, and text size. Aliases map small/medium/large to sm/md/lg. @default \"md\"",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "arrow",
           "type": "boolean",
           "required": false,
           "description": "",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "full",
           "type": "boolean",
           "required": false,
           "description": "Fill the available container width. @default false",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "disabled",
           "type": "boolean",
           "required": false,
           "description": "Disable activation and mark the control unavailable. @default false",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "disable",
           "type": "boolean",
           "required": false,
           "description": "Disable alias. @default false",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "iconOnly",
           "type": "boolean",
           "required": false,
           "description": "Render the icon-only square button treatment. Requires aria-label (or aria-labelledby); a development-only console warning fires when neither is supplied.",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "loading",
           "type": "boolean | 'inline'",
           "required": false,
           "description": "Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation. true swaps the label for a centered spinner on the muted palette. \"inline\" keeps the label visible with a leading spinner and preserves the variant palette — for controls whose words must survive the wait (e.g. a safety stop reading \"정지 요청 중\"). Blocking semantics are identical in both modes.",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "loadingLabel",
           "type": "string",
           "required": false,
           "description": "Screen-reader label announced with the loading spinner (loading = true). @default \"불러오는 중\"",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "as",
           "type": "React.ElementType",
           "required": false,
           "description": "Render with another element or component, such as \"a\" for link CTAs. @default \"button\"",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "children",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
-          "owner": "ButtonProps"
+          "owner": "ButtonOwnProps"
         },
         {
           "name": "aria-label",
@@ -22085,6 +22103,13 @@
           "required": false,
           "description": "React key로 쓸 안정적인 행 식별자. 생략하면 row.id, 그다음 배열 index를 씁니다.",
           "owner": "TableProps"
+        },
+        {
+          "name": "getRowProps",
+          "type": "(row: Row, index: number) = React.HTMLAttributes",
+          "required": false,
+          "description": "행별 className, style, data attribute와 이벤트를 에 전달합니다.",
+          "owner": "TableProps"
         }
       ],
       "states": [],
@@ -22118,7 +22143,8 @@
         }
       ],
       "responsive": [
-        "columns — { key, label, align, width, render }. rows — 데이터 객체. size sm · md. hover — 행 워시. 상태 점·링크·액션에는 render를 쓰세요."
+        "columns — { key, label, align, width, render }. rows — 데이터 객체. size sm · md. hover — 행 워시. 상태 점·링크·액션에는 render를 쓰세요.",
+        "getTableHeaderCellStyle({ padding, align, width }) and getTableDataCellStyle({ padding, align, width }) expose the LDS static-table cell presentation for product-owned table compositions that cannot use the full Table renderer. Preserve native and elements when using them."
       ],
       "contentGuidance": [
         "caption — 표 위에 보이는 이며 동시에 표의 접근 가능한 이름입니다. 표 제목이 표 자체에 속할 때 첫 번째 선택지입니다."
@@ -22127,6 +22153,7 @@
         "rowHeaderKey — 행을 식별하는 컬럼의 key입니다. 지정하면 그 컬럼의 셀이 대신 가 되어, 스크린 리더가 나머지 셀을 읽을 때 행 이름을 함께 낭독합니다. 시각 표현은 데이터 셀과 동일하게 유지되고 시맨틱만 바뀝니다. 장비 ID·자산 코드처럼 행을 유일하게 지시하는 컬럼 하나에만 쓰세요.",
         "tableLabel — 보이는 캡션이 없을 때 에 직접 붙는 aria-label입니다. 래퍼 div가 아니라 표에 이름이 필요하므로, 밖에서 넘긴 aria-label(래퍼로 전달됨) 대신 이 prop을 쓰세요.",
         "tableLabelledBy — 표 밖에 이미 보이는 제목(heading 등)의 id를 연결해 의 aria-labelledby로 사용합니다. 보이는 제목이 있는 페이지에서는 이름을 중복 작성하지 말고 이 연결을 쓰세요.",
+        "getRowProps(row, index) merges native attributes such as data-, className, style, and pointer handlers. It does not add selection, focus, or grid semantics. Use DataGrid when rows must be selected, sorted, or navigated with the keyboard.",
         "Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope=\"col\", tableLabel)을 씁니다."
       ],
       "exceptions": [],
@@ -22199,7 +22226,7 @@
             "role": "overview"
           }
         ],
-        "hiddenEvidence": 2
+        "hiddenEvidence": 3
       },
       "sources": [],
       "canonicalGuide": null,
@@ -23600,6 +23627,7 @@
         "DataGrid",
         "FilterChip",
         "Icon",
+        "Select",
         "TextButton"
       ],
       "purpose": "표나 그리드 바로 위에서 검색·필터·결과 수·페이지 수준 action을 함께 제공할 때 적합합니다. 선택된 행에만 적용되는 bulk action이나 전역 앱 명령에는 Data Toolbar 대신 선택 band 또는 Command Bar를 사용하세요.",
@@ -23617,8 +23645,16 @@
           "rule": "제목 아래 설명."
         },
         {
+          "part": "filters",
+          "rule": "필터 chip/menu 슬롯. 함수면 검색 필드와 같은 control size를 받습니다."
+        },
+        {
           "part": "actions",
           "rule": "우측 일반 액션 슬롯."
+        },
+        {
+          "part": "size",
+          "rule": "밀도. @default \"md\""
         }
       ],
       "properties": [
@@ -23673,9 +23709,9 @@
         },
         {
           "name": "filters",
-          "type": "React.ReactNode",
+          "type": "React.ReactNode | ((context: DataToolbarFilterContext) = React.ReactNode)",
           "required": false,
-          "description": "필터 chip/menu 슬롯.",
+          "description": "필터 chip/menu 슬롯. 함수면 검색 필드와 같은 control size를 받습니다.",
           "owner": "DataToolbarProps"
         },
         {
@@ -23687,7 +23723,7 @@
         },
         {
           "name": "size",
-          "type": "'sm' | 'md'",
+          "type": "DataToolbarSize",
           "required": false,
           "description": "밀도. @default \"md\"",
           "owner": "DataToolbarProps"
@@ -23714,6 +23750,10 @@
       ],
       "quantitativeRules": [
         {
+          "subject": "명시 규칙 1",
+          "rule": "size=\"sm\"은 검색과 render-prop filter control에 32px compact 밀도를, 기본 md는 48px field 밀도를 제공합니다. action용 Button 척도와 field 척도는 전역에서 합치지 않습니다. FilterChip은 고유 32px pill 높이를 유지하며 control 행 중앙에 정렬됩니다."
+        },
+        {
           "subject": "--body1-line",
           "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
         },
@@ -23731,8 +23771,10 @@
         }
       ],
       "responsive": [
-        "filters는 query를 좁히는 chip/menu 슬롯, actions는 열 표시·순서 설정 trigger, 내보내기 같은 전체 표 action 슬롯입니다. 설정 UI와 저장 상태는 제품이 소유하고 visibleColumnKeys/columnOrder로 DataGrid에 전달합니다.",
-        "selectedCount와 bulkActions는 DataToolbar props가 아닙니다. 선택 수, 선택 해제, bulk action은 DataGrid의 같은 높이 selection band에 둡니다."
+        "filters는 query를 좁히는 chip/menu 슬롯, actions는 열 표시·순서 설정 trigger, 내보내기 같은 전체 표 action 슬롯입니다. filters에 함수를 주면 { size }를 받아 검색과 같은 field control 밀도를 Select·SearchField 같은 자식에게 전달할 수 있습니다. 기존 ReactNode 슬롯도 그대로 지원합니다. 설정 UI와 저장 상태는 제품이 소유하고 visibleColumnKeys/columnOrder로 DataGrid에 전달합니다.",
+        "selectedCount와 bulkActions는 DataToolbar props가 아닙니다. 선택 수, 선택 해제, bulk action은 DataGrid의 같은 높이 selection band에 둡니다.",
+        "PatternFly Toolbar design guidelines는 search filter와 filter group을 하나의 연관된 그룹으로 배치하고 모든 toolbar item을 세로 중앙 정렬합니다. LDS는 검색과 field형 필터에 같은 size를 전달하고, 고유 높이를 가진 chip은 늘리지 않고 중앙 정렬합니다.",
+        "PatternFly Filters는 text entry·single select·filter group을 같은 toolbar 안에서 조합할 수 있는 필터 유형으로 구분합니다. 따라서 LDS는 임의 자식을 강제로 clone하거나 높이를 덮지 않고 render-prop context로 field control 밀도만 전달합니다."
       ],
       "contentGuidance": [
         "DataToolbar — DataGrid/Table 위에서 제목, 결과 수, 검색, 필터, page-level action을 정렬하는 표면."
@@ -23759,6 +23801,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "Select",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "TextButton",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -23769,16 +23815,12 @@
         {
           "component": "BarChart",
           "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
         }
       ],
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<DataToolbar\n  title=\"사용자 목록\"\n  description=\"조직에 등록된 계정\"\n  count={24}\n  searchValue={query}\n  onSearchChange={setQuery}\n  searchPlaceholder=\"사용자 검색\"\n  filters={<FilterChip active>온라인</FilterChip>}\n  actions={<Button size=\"sm\">내보내기</Button>}\n/>"
+          "code": "<DataToolbar\n  title=\"사용자 목록\"\n  description=\"조직에 등록된 계정\"\n  count={24}\n  searchValue={query}\n  onSearchChange={setQuery}\n  searchPlaceholder=\"사용자 검색\"\n  filters={({ size }) => (\n    <Select size={size} value={status} onChange={setStatus}>\n      <option value=\"all\">전체 상태</option>\n      <option value=\"online\">온라인</option>\n    </Select>\n  )}\n  actions={<Button size=\"sm\">내보내기</Button>}\n/>"
         }
       ],
       "tokens": [
@@ -23790,8 +23832,6 @@
         "--color-semantic-label-alternative",
         "--color-semantic-label-strong",
         "--color-semantic-line-solid-normal",
-        "--component-button-height-md",
-        "--component-button-height-sm",
         "--font-sans",
         "--fw-medium",
         "--fw-semibold",
@@ -23819,6 +23859,11 @@
             "id": "lds-product-data-operations-data-toolbar--toolbar-with-grid",
             "name": "개요",
             "role": "overview"
+          },
+          {
+            "id": "lds-product-data-operations-data-toolbar--medium-filter-density",
+            "name": "반응형 · 기본 필터 밀도",
+            "role": "responsive"
           }
         ],
         "hiddenEvidence": 0
@@ -28787,6 +28832,11 @@
             "role": "usage"
           },
           {
+            "id": "lds-product-editor-selection-inspector--action-footer",
+            "name": "사용법 · 선택 객체 작업",
+            "role": "usage"
+          },
+          {
             "id": "lds-product-editor-selection-inspector--empty-selection",
             "name": "변형·상태 · 선택 객체 없음",
             "role": "variants-states"
@@ -28795,11 +28845,6 @@
             "id": "lds-product-editor-selection-inspector--unit-formatting-at-320",
             "name": "반응형 · 320px 단위 결합",
             "role": "responsive"
-          },
-          {
-            "id": "lds-product-editor-selection-inspector--action-footer",
-            "name": "시나리오 · 선택 객체 작업",
-            "role": "usage"
           }
         ],
         "hiddenEvidence": 2
@@ -30684,20 +30729,20 @@
           "rule": "좁은 화면의 navigation landmark 슬롯. BottomNav를 사용합니다. 생략하면 navigation이 좁은 화면에서 본문 앞에 유지됩니다."
         },
         {
-          "part": "topology",
-          "rule": "header-first는 전폭 header 아래에 탐색을 두고, side-first는 넓은 화면에서 탐색을 전체 높이의 첫 열에 둡니다. @default \"header-first\""
+          "part": "temporaryNavigation",
+          "rule": "좁은 화면에서 modal Drawer로 표시할 계층형 탐색 슬롯. 제공하면 좁은 화면에서 넓은 navigation은 숨고 본문은 그대로 유지됩니다."
         },
         {
-          "part": "mainLabel",
-          "rule": "main landmark의 접근 가능한 이름."
+          "part": "temporaryNavigationOpen",
+          "rule": "temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false"
         },
         {
-          "part": "skipLabel",
-          "rule": "첫 focus 대상인 건너뛰기 링크 문구. @default \"본문으로 건너뛰기\""
+          "part": "onTemporaryNavigationClose",
+          "rule": "Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청."
         },
         {
-          "part": "navigationLabel",
-          "rule": "넓은 화면 navigation의 기본 접근 가능한 이름. @default \"주 탐색\""
+          "part": "temporaryNavigationId",
+          "rule": "헤더 trigger의 aria-controls와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다."
         }
       ],
       "properties": [
@@ -30720,6 +30765,76 @@
           "type": "React.ReactNode",
           "required": false,
           "description": "좁은 화면의 navigation landmark 슬롯. BottomNav를 사용합니다. 생략하면 navigation이 좁은 화면에서 본문 앞에 유지됩니다.",
+          "owner": "DashboardShellProps"
+        },
+        {
+          "name": "temporaryNavigation",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "좁은 화면에서 modal Drawer로 표시할 계층형 탐색 슬롯. 제공하면 좁은 화면에서 넓은 navigation은 숨고 본문은 그대로 유지됩니다.",
+          "owner": "DashboardShellProps"
+        },
+        {
+          "name": "temporaryNavigationOpen",
+          "type": "boolean",
+          "required": false,
+          "description": "temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false",
+          "owner": "DashboardShellProps"
+        },
+        {
+          "name": "onTemporaryNavigationClose",
+          "type": "() = void",
+          "required": false,
+          "description": "Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청.",
+          "owner": "DashboardShellProps"
+        },
+        {
+          "name": "temporaryNavigationId",
+          "type": "string",
+          "required": false,
+          "description": "헤더 trigger의 aria-controls와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다.",
+          "owner": "DashboardShellProps"
+        },
+        {
+          "name": "temporaryNavigationTitle",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "Drawer에 보이는 탐색 제목.",
+          "owner": "DashboardShellProps"
+        },
+        {
+          "name": "temporaryNavigationLabel",
+          "type": "string",
+          "required": false,
+          "description": "Drawer dialog와 내부 navigation의 접근 가능한 이름. @default \"주 탐색\"",
+          "owner": "DashboardShellProps"
+        },
+        {
+          "name": "temporaryNavigationCloseLabel",
+          "type": "string",
+          "required": false,
+          "description": "Drawer 닫기 버튼의 접근 가능한 이름. @default \"탐색 닫기\"",
+          "owner": "DashboardShellProps"
+        },
+        {
+          "name": "temporaryNavigationWidth",
+          "type": "number",
+          "required": false,
+          "description": "temporaryNavigation Drawer 너비(px). @default 320",
+          "owner": "DashboardShellProps"
+        },
+        {
+          "name": "temporaryNavigationInitialFocusRef",
+          "type": "React.RefObject",
+          "required": false,
+          "description": "Drawer가 열릴 때 우선 초점을 받을 내부 요소.",
+          "owner": "DashboardShellProps"
+        },
+        {
+          "name": "temporaryNavigationReturnFocusRef",
+          "type": "React.RefObject",
+          "required": false,
+          "description": "Drawer가 닫힐 때 초점을 복원할 persistent trigger.",
           "owner": "DashboardShellProps"
         },
         {
@@ -30793,10 +30908,17 @@
           "owner": "DashboardShellProps"
         }
       ],
-      "states": [],
+      "states": [
+        {
+          "state": "temporaryNavigationOpen",
+          "rule": "temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false"
+        }
+      ],
       "behavior": [
         "Carbon UI shell usage — 지속적인 header, 선택적인 left panel, product→global 순서를 분리하고 좁은 폭에서는 header link를 left navigation으로 이동합니다. LDS 셸도 header와 제품 탐색을 별도 슬롯으로 유지합니다.",
-        "의도적 제외: 라우터 인스턴스, 인증·권한 판정, drawer open state, URL 동기화, 데이터 새로고침, 사용자별 셸 저장은 제품이 소유합니다. DashboardShell은 슬롯 배치와 landmark, skip link, 반응형 전환만 소유합니다."
+        "Carbon UI shell accessibility — 첫 keyboard 항목으로 skip-to-main을 제공하고 native header 구조를 사용합니다. LDS도 보이는 focus skip link와 실제 focus 가능한 main 목적지를 제공합니다.",
+        "WAI-ARIA APG Modal Dialog Pattern — modal 배경은 inert이고, Tab/Shift+Tab은 dialog 안에 머물며 Escape와 호출 지점 복원을 제공해야 합니다. temporary navigation은 이 책임을 제품별 scrim 코드가 아니라 공용 Drawer 엔진에서 상속합니다.",
+        "의도적 제외: 라우터 인스턴스, 인증·권한 판정, drawer open state의 저장, URL 동기화, 데이터 새로고침, 사용자별 셸 저장은 제품이 소유합니다. DashboardShell은 슬롯 배치와 landmark, skip link, 반응형 전환, temporary Drawer의 modal coordination만 소유합니다."
       ],
       "quantitativeRules": [
         {
@@ -30809,7 +30931,7 @@
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "넓은 구성은 auto + minmax(0, 1fr), 좁은 구성은 단일 본문 열과 하단 탐색 행입니다. 이 배치 차이는 탐색 공간을 확보하기 위한 기능적 차이이며 새로운 장식 언어가 아닙니다."
+          "rule": "넓은 구성은 auto + minmax(0, 1fr), 좁은 구성은 단일 본문 열과 선택적인 하단 탐색 행입니다. temporary navigation은 문서 흐름을 차지하지 않고 왼쪽 edge의 기존 Drawer 표면을 사용합니다. 이 배치 차이는 탐색 공간을 확보하기 위한 기능적 차이이며 새로운 장식 언어가 아닙니다."
         },
         {
           "subject": "명시 규칙 4",
@@ -30832,10 +30954,10 @@
       ],
       "accessibility": [
         "의미·키보드 순서는 본문 건너뛰기 → header/banner → 넓은 주 탐색 → main → 좁은 주 탐색입니다. CSS로 숨겨진 탐색 슬롯은 접근성 트리에서도 제외됩니다.",
-        "TopBar, SideNav, NavRail, BottomNav의 control/icon 크기, typography, radius, border, fill, active/focus/disabled 처리를 그대로 유지합니다.",
-        "건너뛰기 링크의 테두리는 primary 색으로 focus 위치를 알리고, 문구는 semantic label 색을 사용해 밝은·어두운 셸 배경 모두에서 본문 텍스트 대비를 유지합니다.",
-        "Carbon UI shell accessibility — 첫 keyboard 항목으로 skip-to-main을 제공하고 native header 구조를 사용합니다. LDS도 보이는 focus skip link와 실제 focus 가능한 main 목적지를 제공합니다.",
-        "WAI-ARIA landmark regions — header, nav, main을 논리적 최상위 영역으로 두고 한 문서의 main을 하나로 유지합니다."
+        "목적지가 네 개를 넘거나 disclosure 계층을 유지해야 하는 좁은 화면은 temporaryNavigation에 SideNav를 전달합니다. 제품이 trigger와 temporaryNavigationOpen 상태·라우트 선택을 소유하고, 셸은 기존 Drawer 엔진으로 스크림, Tab containment, Escape, 초점 복원, body scroll lock을 제공합니다. 열려 있는 동안 skip link·header·wide navigation·main·bottom navigation은 inert입니다.",
+        "header trigger는 temporaryNavigationId를 가리키는 aria-controls와 실제 open state의 aria-expanded를 갖습니다. 일반 dismiss는 temporaryNavigationReturnFocusRef로 trigger에 복원하고, 목적지를 선택한 뒤에는 제품이 Drawer를 닫고 focus 가능한 main으로 이동할 수 있습니다.",
+        "temporaryNavigationLabel은 dialog와 내부 nav의 접근 가능한 이름, temporaryNavigationCloseLabel은 닫기 버튼 이름, temporaryNavigationWidth는 px 단위 Drawer 폭입니다. 특별한 업무 순서가 있을 때만 temporaryNavigationInitialFocusRef로 첫 초점을 재정의하고, 기본은 Drawer 안의 첫 focusable control입니다.",
+        "TopBar, SideNav, NavRail, BottomNav의 control/icon 크기, typography, radius, border, fill, active/focus/disabled 처리를 그대로 유지합니다."
       ],
       "exceptions": [],
       "related": [
@@ -30875,7 +30997,7 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<DashboardShell\n  topology=\"side-first\"\n  header={<TopBar brand=\"대덕 운영\" actions={<GlobalActions />} />}\n  navigation={(\n    <SideNav\n      surface=\"docked\"\n      header={<Lockup />}\n      footer={<UserMenu />}\n      items={items}\n    />\n  )}\n  narrowNavigation={<BottomNav items={compactItems} />}\n>\n  <Container size=\"wide\">…</Container>\n</DashboardShell>"
+          "code": "<DashboardShell\n  topology=\"side-first\"\n  header={<TopBar brand=\"대덕 운영\" actions={<GlobalActions />} />}\n  navigation={(\n    <SideNav\n      surface=\"docked\"\n      header={<Lockup />}\n      footer={<UserMenu />}\n      items={items}\n    />\n  )}\n  temporaryNavigation={<SideNav items={items} surface=\"docked\" />}\n  temporaryNavigationOpen={navigationOpen}\n  onTemporaryNavigationClose={() => setNavigationOpen(false)}\n  temporaryNavigationId=\"product-navigation-drawer\"\n  temporaryNavigationTitle=\"주 탐색\"\n  temporaryNavigationReturnFocusRef={menuButtonRef}\n>\n  <Container size=\"wide\">…</Container>\n</DashboardShell>"
         }
       ],
       "tokens": [
@@ -30939,7 +31061,7 @@
         "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
-        "states": "omitted-no-evidence",
+        "states": "evidence",
         "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
@@ -31404,19 +31526,19 @@
             "role": "overview"
           },
           {
+            "id": "lds-product-navigation-language-switcher--top-bar-placement",
+            "name": "사용법 · 상단 막대 배치",
+            "role": "usage"
+          },
+          {
             "id": "lds-product-navigation-language-switcher--disabled",
-            "name": "비활성",
+            "name": "변형·상태 · 비활성",
             "role": "variants-states"
           },
           {
             "id": "lds-product-navigation-language-switcher--adaptive-width",
-            "name": "적응형 폭",
+            "name": "시나리오 · 적응형 폭",
             "role": "scenario"
-          },
-          {
-            "id": "lds-product-navigation-language-switcher--top-bar-placement",
-            "name": "TopBar 배치",
-            "role": "usage"
           }
         ],
         "hiddenEvidence": 1
@@ -31703,11 +31825,14 @@
       ],
       "purpose": "데스크톱 제품에서 그룹·하위 항목·배지·계정 진입점을 계속 노출할 때 적합합니다. 35개의 평면 목적지만 필요하면 Adaptive Navigation을, 페이지 안 이동이면 Anchor를 사용하세요.",
       "useWhen": [
-        "Atlassian navigation system layout — 접기 토글(SideNavToggleButton)은 top nav 항목이며 사이드 패널 내부에 두지 않습니다. shadcn/ui Sidebar의 SidebarTrigger(본문 상단 바 시작)와 IBM Carbon UI shell 헤더 햄버거도 같은 원칙입니다. LDS는 이 원칙을 따라 셸의 접기 토글을 상단 바 시작 부분에 두며, side-first에서는 shadcn 배치를, header-first에서는 Atlassian 배치를 사용합니다."
+        "Atlassian navigation system layout — 접기 토글(SideNavToggleButton)은 top nav 항목이며 사이드 패널 내부에 두지 않습니다. shadcn/ui Sidebar의 SidebarTrigger(본문 상단 바 시작)와 IBM Carbon UI shell 헤더 햄버거도 같은 원칙입니다. LDS는 이 원칙을 따라 셸의 접기 토글을 상단 바 시작 부분에 두며, side-first에서는 shadcn 배치를, header-first에서는 Atlassian 배치를 사용합니다.",
+        "footer accepts either a node or a render function receiving { collapsed, expanded, overlay }. Use the render form when the account/footer composition must change before an overlay peek or rail collapse exposes it.",
+        "Child destinations accept icon; when any child in a group has one, SideNav reserves the same decorative slot for every sibling."
       ],
       "avoidWhen": [
         "접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 아이콘의 강한 잉크로만 표시해 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.",
         "Carbon UI shell left panel style — sub-menu hover와 sub-menu item selected를 별도 상태로 정의합니다. LDS도 펼침·hover·현재 위치의 상태 분리는 따르되, Carbon의 4px interactive border는 내부 NavRail·TopBar 선택 문법과 맞지 않아 채택하지 않고 현재 leaf의 선택 배경만 유지합니다.",
+        "Carbon UI shell left panel accessibility — rail은 hover나 focus에서 펼쳐져도 같은 링크·서브메뉴 keyboard model을 유지합니다. 이 동작을 LDS에 적용할 때는 동일 DOM뿐 아니라 44px hit target과 세로 위치도 유지해, 포인터와 키보드 사용자가 확장 중 움직이는 목적지를 다시 추적하지 않게 합니다.",
         "대시보드·관리 제품의 주 탐색으로 UserMenu를 푸터에 조합합니다. TopBar가 함께 있으면 전역 utility만 담당하게 하고 로고·경로를 중복하지 않으며, 평면형 대안인 NavRail과 동시에 주 탐색으로 사용하지 않습니다."
       ],
       "anatomy": [
@@ -31724,8 +31849,16 @@
           "rule": "접힌 상태의 브랜드(예: ). 없으면 header를 그대로 사용."
         },
         {
+          "part": "brandAlign",
+          "rule": "펼친 브랜드 영역의 가로 정렬. 접힌 레일은 항상 가운데 정렬합니다. @default 'center'"
+        },
+        {
           "part": "footer",
-          "rule": "하단에 고정되는 푸터."
+          "rule": "하단 고정 영역. 함수면 overlay peek를 포함한 실제 내부 접힘 상태를 받습니다."
+        },
+        {
+          "part": "footerGap",
+          "rule": "스크롤 목록과 푸터 구분선 사이의 간격. @default 'var(--space-2)'"
         },
         {
           "part": "renderLink",
@@ -31762,10 +31895,24 @@
           "owner": "SideNavProps"
         },
         {
-          "name": "footer",
-          "type": "React.ReactNode",
+          "name": "brandAlign",
+          "type": "'start' | 'center'",
           "required": false,
-          "description": "하단에 고정되는 푸터.",
+          "description": "펼친 브랜드 영역의 가로 정렬. 접힌 레일은 항상 가운데 정렬합니다. @default 'center'",
+          "owner": "SideNavProps"
+        },
+        {
+          "name": "footer",
+          "type": "React.ReactNode | ((state: { collapsed: boolean; expanded: boolean; overlay: boolean }) = React.ReactNode)",
+          "required": false,
+          "description": "하단 고정 영역. 함수면 overlay peek를 포함한 실제 내부 접힘 상태를 받습니다.",
+          "owner": "SideNavProps"
+        },
+        {
+          "name": "footerGap",
+          "type": "number | string",
+          "required": false,
+          "description": "스크롤 목록과 푸터 구분선 사이의 간격. @default 'var(--space-2)'",
           "owner": "SideNavProps"
         },
         {
@@ -31807,14 +31954,21 @@
           "name": "collapsedWidth",
           "type": "number",
           "required": false,
-          "description": "접힌 아이콘 레일 폭. 기본 64px에서도 브랜드 마크와 경계 토글을 유지합니다. @default 64",
+          "description": "접힌 아이콘 레일 폭. 기본 64px에서 브랜드 마크와 목적지 아이콘을 유지합니다. @default 64",
           "owner": "SideNavProps"
         },
         {
           "name": "overlay",
           "type": "boolean",
           "required": false,
-          "description": "오버레이 모드 — 레이아웃은 레일 폭 고정, 호버(피크)·키보드 초점·클릭으로 펼치면 패널이 콘텐츠 위로 뜨고, 마우스 아웃과 초점 이탈·바깥 클릭·Esc로 접힘. 시작은 접힘. @default false",
+          "description": "오버레이 모드 — 레이아웃은 레일 폭 고정, 호버(피크)·키보드 초점·클릭으로 펼치면 패널이 콘텐츠 위로 뜹니다. 비제어 런타임 전환 시 진입은 접고 이탈은 이전 persistent 상태를 복원하며, 제어 모드는 부모가 collapsed를 갱신합니다. @default false",
+          "owner": "SideNavProps"
+        },
+        {
+          "name": "autoExpandActiveGroup",
+          "type": "boolean",
+          "required": false,
+          "description": "활성 자식이 속한 disclosure 그룹을 초기 선택과 값 변경 때 자동으로 펼칩니다. false이면 활성 표시는 유지하되 그룹 열림은 사용자 상호작용과 독립됩니다. @default true",
           "owner": "SideNavProps"
         },
         {
@@ -31846,12 +32000,22 @@
           "owner": "SideNavProps"
         }
       ],
-      "states": [],
+      "states": [
+        {
+          "state": "footer",
+          "rule": "하단 고정 영역. 함수면 overlay peek를 포함한 실제 내부 접힘 상태를 받습니다."
+        },
+        {
+          "state": "autoExpandActiveGroup",
+          "rule": "활성 자식이 속한 disclosure 그룹을 초기 선택과 값 변경 때 자동으로 펼칩니다. false이면 활성 표시는 유지하되 그룹 열림은 사용자 상호작용과 독립됩니다. @default true"
+        }
+      ],
       "behavior": [
-        "collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌며, 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.",
+        "collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌므로 런타임 overlay 전환 때도 부모가 원하는 collapsed 값을 함께 갱신해야 합니다. 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.",
         "floating은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. docked는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, fill, active marker를 공유합니다.",
         "WAI Disclosure Navigation — 부모 button의 aria-expanded는 자식 노출 상태이고 leaf link의 aria-current=\"page\"는 현재 위치입니다. LDS는 두 상태를 같은 persistent highlight로 합치지 않습니다.",
-        "라우터 생성, URL 동기화, 권한에 따른 item 제거, 접힘 상태 영속화는 제품이 소유합니다."
+        "brandAlign=\"center|start\" controls the expanded brand region. The collapsed mark remains centered so the 64px rail stays balanced.",
+        "In uncontrolled mode, changing overlay at runtime collapses on entry and restores the prior persistent state on exit. In controlled mode, the product updates collapsed explicitly."
       ],
       "quantitativeRules": [
         {
@@ -31876,19 +32040,22 @@
         }
       ],
       "responsive": [
-        "Carbon UI shell usage — 복잡한 제품 탐색은 header와 지속적인 left panel을 조합하고 좁은 폭에서는 탐색 표면을 전환합니다. 그래서 셸에 붙는 SideNav는 docked를, 독립 배치는 floating을 사용합니다."
+        "접힌 레일과 펼친 패널은 SideNav가 소유하는 브랜드 아래 패딩 18px과 44px 목적지 행 높이를 공유합니다. header와 headerCollapsed 슬롯 자체의 intrinsic 높이는 제품이 맞추며, 레일에서는 label·badge가 사라지고 행의 가로 정렬만 바뀝니다.",
+        "Carbon UI shell usage — 복잡한 제품 탐색은 header와 지속적인 left panel을 조합하고 좁은 폭에서는 탐색 표면을 전환합니다. 그래서 셸에 붙는 SideNav는 docked를, 독립 배치는 floating을 사용합니다.",
+        "The collapsed item rail scrolls vertically with a hidden native scrollbar. Do not reduce or remove authorized destinations merely to fit a short viewport; preserve keyboard and wheel scrolling."
       ],
       "contentGuidance": [
-        "items — { value, label, ariaLabel?, icon, badge?, href?, disabled?, children? } + { heading } 섹션 헤딩. 항목 전체는 native ul/li 리스트(그룹 자식은 중첩 ul)로 렌더되어 보조기술이 항목 수와 계층을 읽을 수 있고, 시각은 기존과 동일합니다(list-style 없음). href leaf는 native anchor, href가 없는 leaf는 기존 선택 button입니다.",
+        "items — { value, label, ariaLabel?, icon, badge?, href?, disabled?, children? } + { heading } 섹션 헤딩. 자식도 icon?: ReactNode를 받을 수 있으며, 한 그룹에 아이콘이 하나라도 있으면 모든 자식에 고정 슬롯을 예약해 라벨 시작선을 맞춥니다. 항목 전체는 native ul/li 리스트(그룹 자식은 중첩 ul)로 렌더되어 보조기술이 항목 수와 계층을 읽을 수 있고, 시각은 기존과 동일합니다(list-style 없음).",
         "Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. 축소 가능 내비게이션도 상태를 설명하는 명시적인 제어를 제공하므로 LDS는 명시적 토글을 정식 수단으로 두고 hover peek를 선택 기능으로 제한합니다.",
+        "WAI-ARIA landmark regions — landmark와 명확한 accessible name을 유지합니다. 소비자가 aria-label을 주지 않으면 기본 이름 사이드 탐색을 제공하고, 같은 문서에 탐색 landmark가 여러 개면 고유한 이름으로 덮어씁니다. 현재 목적지는 aria-current=\"page\"로 노출하고, 키보드 focus 진입·이탈과 Esc 뒤에도 초점을 잃지 않습니다.",
         "SideNav — 넓은 라벨형 대시보드 사이드바(브랜드 헤더 + 그룹 내비 + 서브메뉴 + 접힘 레일 + 고정 푸터)."
       ],
       "accessibility": [
         "renderLink — native anchor 대신 router link를 쓸 때만 제공합니다. renderLink={(item, { href, ...props }) = }처럼 DS가 만든 aria-current, disabled, style, activation 계약을 전달합니다.",
-        "overlay — overlay peek는 공간이 제한된 데스크톱에서만 쓰는 선택 기능입니다. 접힌 overlay는 hover뿐 아니라 키보드 focus 진입에서도 펼쳐지며 포인터와 focus가 모두 이탈하면 다시 접힙니다. 바깥 클릭과 Esc도 레일로 복귀시키고, Esc로 자식 항목이 사라질 때 focus는 레일에 남는 부모 항목으로 복구됩니다. 펼침 그림자는 TOKENGOVERNANCE.md의 elevation 규칙에 따라 콘텐츠를 실제로 덮는 inline-end 쪽에만 남기고 나머지 변은 clip-path로 잘라냅니다(엣지 부착 오버레이의 기준 구현).",
+        "overlay — overlay peek는 공간이 제한된 데스크톱에서만 쓰는 선택 기능입니다. 비제어 SideNav에서 overlay가 런타임에 false → true로 바뀌면 레일로 접고, true → false로 돌아오면 overlay 진입 전의 persistent 접힘 상태를 복원합니다. 접힌 overlay는 hover뿐 아니라 키보드 focus 진입에서도 펼쳐지며 포인터와 focus가 모두 이탈하면 다시 접힙니다. 바깥 클릭과 Esc도 레일로 복귀시키고, Esc로 자식 항목이 사라질 때 focus는 레일에 남는 부모 항목으로 복구됩니다.",
+        "autoExpandActiveGroup — 기본 true는 활성 자식의 그룹을 초기 선택과 값 변경 때 자동으로 엽니다. false이면 활성 값·부모의 현재 경로 잉크·자식을 열었을 때의 aria-current는 그대로 두고 disclosure open state만 사용자 조작과 분리합니다. 제품이 패널을 열 때 모든 그룹을 닫아 두고 싶다면 이 축을 끄되 현재 route를 지우지 않습니다.",
         "지속 선택 표면은 aria-current=\"page\"인 현재 leaf 목적지만 소유합니다. 현재 목적지는 LDS의 NavRail·TopBar와 같은 primary wash와 굵은 label을 사용하며 별도 시작 표시선은 추가하지 않습니다. 펼쳐진 부모는 배경을 유지하지 않고 chevron과 활성 자손을 뜻하는 강한 label/icon만 사용하며, pointer hover는 선택 표면보다 약한 neutral fill-alternative, pressed는 fill-normal, keyboard focus는 전역 focus ring으로 분리합니다.",
-        "NavRail/BottomNav와 같은 icon, caption/label scale, primary surface/ink, aria-current=\"page\"를 사용합니다. SideNav에만 섹션 heading, badge, 자식 indent, disclosure chevron, 펼친 panel width가 있습니다. 이는 계층 구조와 상태 수를 표현하기 위한 기능 차이입니다.",
-        "anchor와 button은 동일한 padding, radius, fill, hover, focus, disabled 시각을 공유합니다. 링크 여부가 아니라 aria-current만 지속 선택 배경을 만들며, 링크라는 이유로 underline이나 shadow를 추가하지 않습니다."
+        "NavRail/BottomNav와 같은 icon, caption/label scale, primary surface/ink, aria-current=\"page\"를 사용합니다. SideNav에만 섹션 heading, badge, 자식 indent, disclosure chevron, 펼친 panel width가 있습니다. 이는 계층 구조와 상태 수를 표현하기 위한 기능 차이입니다."
       ],
       "exceptions": [],
       "related": [
@@ -31928,7 +32095,7 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<SideNav\n  defaultValue=\"docs-overview\" onChange={setTab}\n  surface=\"docked\"\n  header={<Lockup variant=\"inline\" color=\"var(--color-semantic-label-normal)\" height={24} />}\n  headerCollapsed={<Lockup variant=\"mark\" color=\"var(--color-semantic-label-normal)\" height={20} />}\n  items={[\n    { heading: '문서' },\n    { value: 'dash', label: '대시보드', href: '/dashboard', icon: <Icon name=\"home\" size={19} /> },\n    { value: 'docs', label: '문서', icon: <Icon name=\"document\" size={19} />, children: [\n      { value: 'docs-overview', label: '개요', href: '/docs', badge: '8' },\n      { value: 'docs-components', label: '컴포넌트', href: '/docs/components' },\n    ] },\n    { value: 'events', label: '이벤트', icon: <Icon name=\"bell\" size={19} />, badge: '5' },\n  ]}\n/>"
+          "code": "<SideNav\n  defaultValue=\"docs-overview\" onChange={setTab}\n  surface=\"docked\"\n  header={<Lockup variant=\"inline\" color=\"var(--color-semantic-label-normal)\" height={24} />}\n  headerCollapsed={<Lockup variant=\"mark\" color=\"var(--color-semantic-label-normal)\" height={20} />}\n  items={[\n    { heading: '문서' },\n    { value: 'dash', label: '대시보드', href: '/dashboard', icon: <Icon name=\"home\" size={19} /> },\n    { value: 'docs', label: '문서', icon: <Icon name=\"document\" size={19} />, children: [\n      { value: 'docs-overview', label: '개요', href: '/docs', icon: <Icon name=\"home\" size={16} />, badge: '8' },\n      { value: 'docs-components', label: '컴포넌트', href: '/docs/components' },\n    ] },\n    { value: 'events', label: '이벤트', icon: <Icon name=\"bell\" size={19} />, badge: '5' },\n  ]}\n/>"
         }
       ],
       "tokens": [
@@ -31956,8 +32123,10 @@
         "--shadow-lg",
         "--space-0-5",
         "--space-1-5",
+        "--space-2",
         "--space-2-5",
-        "--space-3"
+        "--space-3",
+        "--space-4-5"
       ],
       "apiLinks": [],
       "migration": [
@@ -32000,12 +32169,17 @@
           },
           {
             "id": "lds-product-navigation-side-nav--collapsed-parent-expansion",
-            "name": "상호작용 · 접힌 그룹 펼치기",
+            "name": "상호작용 · 접힌 그룹과 겹침 모드 전환",
             "role": "interaction"
           },
           {
             "id": "lds-product-navigation-side-nav--controlled-collapse",
             "name": "상호작용 · 제어 상태",
+            "role": "interaction"
+          },
+          {
+            "id": "lds-product-navigation-side-nav--manual-active-group-expansion",
+            "name": "상호작용 · 활성 표시와 그룹 열림 분리",
             "role": "interaction"
           }
         ],
@@ -32020,7 +32194,7 @@
         "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
-        "states": "omitted-no-evidence",
+        "states": "evidence",
         "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
@@ -32494,7 +32668,7 @@
         "publicStories": [
           {
             "id": "lds-product-navigation-top-bar--top-bar-default",
-            "name": "개요 · 제품 셸",
+            "name": "개요",
             "role": "overview"
           },
           {
@@ -32514,7 +32688,7 @@
           },
           {
             "id": "lds-product-navigation-top-bar--dashboard-shell-composition",
-            "name": "반응형 · DashboardShell 전환",
+            "name": "반응형 · 대시보드 셸 전환",
             "role": "responsive"
           },
           {
@@ -33217,6 +33391,11 @@
             "role": "responsive"
           },
           {
+            "id": "lds-product-layout-dashboard-shell--temporary-navigation",
+            "name": "반응형 · 계층형 임시 탐색",
+            "role": "responsive"
+          },
+          {
             "id": "lds-product-layout-dashboard-shell--auto-navigation-fallback",
             "name": "반응형 · 좁은 화면의 대체 탐색",
             "role": "responsive"
@@ -33500,9 +33679,14 @@
       "purpose": "넓은 화면에서 필터·속성·상세처럼 주 콘텐츠를 보조하는 작업을 옆 패널에 유지할 때 적합합니다. 작은 화면의 짧은 선택에는 Drawer 대신 Sheet를, 집중이 필요한 확인에는 Dialog를 사용하세요.",
       "useWhen": [],
       "avoidWhen": [
-        "scrim 클릭 닫기는 closeOnScrim으로 제어하지만, 유일한 dismiss 수단으로 사용하지 않습니다."
+        "scrim 클릭 닫기는 closeOnScrim으로 제어하지만, 유일한 dismiss 수단으로 사용하지 않습니다.",
+        "Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다."
       ],
       "anatomy": [
+        {
+          "part": "subtitle",
+          "rule": "제목 아래의 짧은 보조 설명. dialog의 aria-describedby와 연결됩니다."
+        },
         {
           "part": "ariaLabel",
           "rule": "title이 없을 때 사용할 접근 가능한 이름. @default \"서랍 패널\""
@@ -33510,6 +33694,10 @@
         {
           "part": "closeLabel",
           "rule": "닫기 버튼의 접근 가능한 이름. @default \"닫기\""
+        },
+        {
+          "part": "bodyStyle",
+          "rule": "스크롤 body의 padding·layout을 조합별로 조정합니다."
         }
       ],
       "properties": [
@@ -33539,6 +33727,13 @@
           "type": "React.ReactNode",
           "required": false,
           "description": "",
+          "owner": "DrawerProps"
+        },
+        {
+          "name": "subtitle",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "제목 아래의 짧은 보조 설명. dialog의 aria-describedby와 연결됩니다.",
           "owner": "DrawerProps"
         },
         {
@@ -33605,6 +33800,13 @@
           "owner": "DrawerProps"
         },
         {
+          "name": "bodyStyle",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "스크롤 body의 padding·layout을 조합별로 조정합니다.",
+          "owner": "DrawerProps"
+        },
+        {
           "name": "style",
           "type": "React.CSSProperties",
           "required": false,
@@ -33632,11 +33834,11 @@
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. 여러 overlay Drawer 동시 노출은 제외했습니다."
+          "rule": "bodyStyle은 기본 body padding과 scroll contract를 유지하되, DashboardShell temporaryNavigation처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 padding: 0 같은 layout override를 전달합니다."
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다."
+          "rule": "Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. 여러 overlay Drawer 동시 노출은 제외했습니다."
         },
         {
           "subject": "--body2-size",
@@ -33647,7 +33849,9 @@
         "필터 query 직렬화, 변경 유실 경고 조건, route 상태와 반응형으로 inline surface로 전환하는 정책은 제품 레이어가 소유합니다."
       ],
       "contentGuidance": [
-        "제품 맥락에 맞는 닫기 명령은 closeLabel로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다."
+        "제품 맥락에 맞는 닫기 명령은 closeLabel로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.",
+        "Subtitle contract.",
+        "Use subtitle for one short, visible sentence that clarifies the scope or consequence of the Drawer. When present it is rendered directly below title and associated with the dialog through aria-describedby."
       ],
       "accessibility": [
         "Modal, Sheet, ConfirmDialog를 sibling으로 확인했습니다. focus/keyboard 계약은 ConfirmDialog와 공유하되 표면은 기존 Drawer 그대로입니다.",
@@ -33695,7 +33899,10 @@
         "--font-sans",
         "--fw-extra",
         "--headline1-size",
+        "--label1-reading-line",
+        "--label1-size",
         "--shadow-xl",
+        "--space-1",
         "--space-2",
         "--space-4",
         "--space-5",
@@ -42350,7 +42557,7 @@
         "ElevatorFleetOverview"
       ],
       "supportingComponents": [],
-      "purpose": "같은 건물의 엘리베이터는 하나의 층 눈금을 공유하고, 건물 그룹은 좌우로 이어 붙습니다. 건물마다 층 구성이 다르므로 건물 사이의 같은 층 이름을 같은 높이에 맞추지 않습니다.",
+      "purpose": "여러 건물의 엘리베이터 위치와 운행 상태를 한 번에 비교해야 할 때 사용합니다. 한 대의 상세 제어, 호출 입력, 시간 추세 분석에는 사용하지 않고 해당 전용 화면으로 이동합니다. 같은 건물의 엘리베이터는 하나의 층 눈금을 공유하고, 건물 그룹은 좌우로 이어 붙습니다. 건물마다 층 구성이 다르므로 건물 사이의 같은 층 이름을 같은 높이에 맞추지 않습니다.",
       "useWhen": [
         "Vantage GALileo Lobby Monitoring: 엘리베이터 group에서 car position, direction, door state, service mode와 call을 함께 보여 줍니다. 이 컴포넌트는 개요에 필요한 position/direction/status만 남기고 call 입력과 service control은 제품 영역으로 제외합니다.",
         "Vantage NEXUS Position Indicator: floor position, direction, door zone과 층 중심으로부터의 상대 위치를 구분합니다. 첫 계약은 discrete floor만 지원하며 between-floor distance와 door-zone calibration은 telemetry 제품 계약이 확인되기 전까지 의도적으로 제외합니다."
@@ -42533,7 +42740,7 @@
         "publicStories": [
           {
             "id": "lds-product-viewer-elevator-fleet-overview--fleet-overview",
-            "name": "통합 관제",
+            "name": "개요",
             "role": "overview"
           }
         ],
@@ -42741,8 +42948,8 @@
           },
           {
             "id": "lds-product-viewer-floor-selector--on-viewer-surface",
-            "name": "뷰어 표면 위",
-            "role": "overview"
+            "name": "사용법 · 뷰어 표면 배치",
+            "role": "usage"
           }
         ],
         "hiddenEvidence": 2
@@ -43855,6 +44062,11 @@
             "role": "variants-states"
           },
           {
+            "id": "lds-product-viewer-shared-viewer-frame--control-placement-contract",
+            "name": "상호작용 · 네 모서리 컨트롤 배치",
+            "role": "interaction"
+          },
+          {
             "id": "lds-product-viewer-shared-viewer-frame--blocking-focus-transition",
             "name": "상호작용 · 차단 전환 · 포커스 복구",
             "role": "interaction"
@@ -43863,11 +44075,6 @@
             "id": "lds-product-viewer-shared-viewer-frame--narrow-blocking-state",
             "name": "반응형 · 좁은 폭 · 차단 정보와 복구",
             "role": "responsive"
-          },
-          {
-            "id": "lds-product-viewer-shared-viewer-frame--control-placement-contract",
-            "name": "배치 규약 · 네 모서리",
-            "role": "interaction"
           }
         ],
         "hiddenEvidence": 0

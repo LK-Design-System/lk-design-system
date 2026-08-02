@@ -299,7 +299,7 @@
     "publicStories": [
       {
         "id": "lds-product-navigation-top-bar--top-bar-default",
-        "name": "개요 · 제품 셸",
+        "name": "개요",
         "role": "overview"
       },
       {
@@ -319,7 +319,7 @@
       },
       {
         "id": "lds-product-navigation-top-bar--dashboard-shell-composition",
-        "name": "반응형 · DashboardShell 전환",
+        "name": "반응형 · 대시보드 셸 전환",
         "role": "responsive"
       },
       {

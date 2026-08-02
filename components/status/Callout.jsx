@@ -22,12 +22,13 @@ function normalizeIcon(icon, fallbackIcon) {
  * Heavier than Banner — for guidance, tips, and important standing notes in body
  * content.
  */
-export function Callout({ tone = 'signal', title, children, icon, style, ...rest }) {
+export function Callout({ tone = 'signal', title, headingLevel = false, children, icon, style, ...rest }) {
   const normalizedTone = tone === 'navy' ? 'offline' : normalizeStatusTone(tone);
   const palette = statusToneStyle(normalizedTone);
   const c = palette.foreground;
   const defaultIcon = <Icon name={palette.icon} size={ICON_SIZE} />;
   const normalizedIcon = normalizeIcon(icon, defaultIcon);
+  const Heading = headingLevel ? `h${headingLevel}` : 'div';
   return (
     <div
       style={{
@@ -61,7 +62,7 @@ export function Callout({ tone = 'signal', title, children, icon, style, ...rest
         {normalizedIcon}
       </span>
       <div style={{ flex: 1, minWidth: 0 }}>
-        {title != null && <div style={{ fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', marginBottom: children != null ? 4 : 0 }}>{title}</div>}
+        {title != null && <Heading style={{ margin: 0, fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', marginBottom: children != null ? 4 : 0 }}>{title}</Heading>}
         {children != null && <div style={{ fontSize: 'var(--label1-size)', lineHeight: 1.65, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
       </div>
     </div>

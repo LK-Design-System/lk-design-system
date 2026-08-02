@@ -36,3 +36,5 @@
 
 - `headingLevel` — 구조화 모드의 `title` 은 기본적으로 `<h3>` 로 렌더링됩니다(WCAG 1.3.1). 카드가 놓이는 문서의 제목 계층에 맞춰 `1`–`6` 을 주고, 제목이 이미 카드 바깥에 있으면 `headingLevel={false}` 로 heading 의미를 끄세요. 레벨은 건너뛰지 않습니다.
 - `SaveButton`(`save`)과 `toggleIcon` 은 포커스 가능한 요소이므로 규칙 1과 함께 쓰지 마세요.
+
+- `titleWrap="truncate|wrap"` controls structured-title overflow. The default `truncate` keeps dense card grids to one line; use `wrap` when the full document, report, or publication title is necessary to distinguish the destination. Wrapping changes only the title text flow and does not introduce a separate header/body padding axis.

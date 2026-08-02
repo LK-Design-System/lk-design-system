@@ -177,8 +177,8 @@ const linkedNavigationItems = [
     label: '미션',
     icon: <Icon name="document" size={18} />,
     children: [
-      { value: 'missions-live', label: '실행 중', href: '#missions-live', onClick: (event) => event.preventDefault() },
-      { value: 'missions-queued', label: '아주 긴 대기 작업 목적지와 원격 점검 상세 이름', href: '#missions-queued', onClick: (event) => event.preventDefault() },
+      { value: 'missions-live', label: '실행 중', icon: <Icon name="bell" size={16} />, href: '#missions-live', onClick: (event) => event.preventDefault() },
+      { value: 'missions-queued', label: '아주 긴 대기 작업 목적지와 원격 점검 상세 이름', icon: <Icon name="clock" size={16} />, href: '#missions-queued', onClick: (event) => event.preventDefault() },
     ],
   },
   { value: 'disabled', label: '권한 없는 목적지', href: '#disabled', icon: <Icon name="setting" size={18} />, disabled: true },
@@ -237,8 +237,13 @@ function DockedSideNavFixture({ defaultCollapsed = false, initialValue = 'overvi
         onCollapsedChange={setCollapsed}
         width={252}
         collapsedWidth={64}
+        brandAlign="start"
         header={<Lockup variant="inline" height={22} />}
         headerCollapsed={<Lockup variant="mark" height={22} />}
+        footerGap="var(--space-3)"
+        footer={({ collapsed: footerCollapsed }) => (
+          <output data-testid="docked-footer-state">{footerCollapsed ? '접힌 계정 영역' : '펼친 계정 영역'}</output>
+        )}
         style={{ height: 420 }}
       />
     </div>
@@ -284,8 +289,16 @@ function ControlledCollapseFixture() {
 
 function CollapsedParentFixture() {
   const [value, setValue] = React.useState('overview');
+  const [overlay, setOverlay] = React.useState(false);
   return (
     <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
+      <Button
+        data-testid="overlay-mode-toggle"
+        variant="secondary"
+        onClick={() => setOverlay((current) => !current)}
+      >
+        {overlay ? '고정 탐색으로 전환' : '겹침 탐색으로 전환'}
+      </Button>
       <output data-testid="collapsed-parent-output">선택: {value}</output>
       <SideNav
         data-testid="collapsed-parent-side-nav"
@@ -295,6 +308,7 @@ function CollapsedParentFixture() {
         onChange={setValue}
         surface="docked"
         defaultCollapsed
+        overlay={overlay}
         width={252}
         collapsedWidth={64}
         header={<Lockup variant="inline" height={22} />}
@@ -302,6 +316,21 @@ function CollapsedParentFixture() {
         style={{ height: 420 }}
       />
     </div>
+  );
+}
+
+function ManualActiveGroupFixture() {
+  return (
+    <SideNav
+      data-testid="manual-active-group-side-nav"
+      aria-label="수동 그룹 탐색"
+      items={navigationItems}
+      value="missions-live"
+      autoExpandActiveGroup={false}
+      width={252}
+      header={<Lockup variant="inline" height={22} />}
+      style={{ height: 420 }}
+    />
   );
 }
 
@@ -331,6 +360,10 @@ export const LinkDestinations = {
     const nestedList = queued?.closest('ul');
     if (!nestedList || nestedList === list || nestedList.closest('li')?.closest('ul') !== list) {
       throw new Error('SideNav group children must render as a nested list inside the parent list item.');
+    }
+    const childIcon = queued?.querySelector('[data-sidenav-child-icon]');
+    if (!childIcon || childIcon.getAttribute('aria-hidden') !== 'true') {
+      throw new Error('SideNav group children must expose an aligned decorative icon slot.');
     }
     const queuedLabel = Array.from(queued?.querySelectorAll('span') ?? []).find((node) => node.textContent === '아주 긴 대기 작업 목적지와 원격 점검 상세 이름');
     if (!queued || !queuedLabel || getComputedStyle(queuedLabel).textOverflow !== 'ellipsis' || queuedLabel.scrollWidth <= queuedLabel.clientWidth) {
@@ -371,11 +404,13 @@ export const LinkDestinations = {
 export const DockedSurface = {
   name: '변형·상태 · 셸 고정형 표면',
   parameters: storyDescription(
-    '제품 셸에 붙는 docked 표면을 검증합니다. 접기 토글은 셸 상단 바(패널 밖)에 있고 SideNav는 collapsed 제어 프롭으로만 구동되며, 패널 안에는 어떤 토글도 렌더되지 않습니다.',
+    '제품 셸에 붙는 docked 표면을 검증합니다. 접기 토글은 셸 상단 바(패널 밖)에 있고 SideNav는 collapsed 제어 프롭으로만 구동되며, 패널 안에는 어떤 토글도 렌더되지 않습니다. 레일과 펼친 패널의 브랜드 영역·행 높이도 같아 전환 중 목적지가 세로로 움직이지 않습니다.',
   ),
   render: () => <DockedSideNavFixture />,
   play: async ({ canvasElement }) => {
     const nav = canvasElement.querySelector('[data-testid="docked-side-nav"]');
+    const brand = nav?.querySelector('.lk-sidenav__brand');
+    const footerState = nav?.querySelector('[data-testid="docked-footer-state"]');
     const styles = nav ? getComputedStyle(nav) : null;
     const inlineEndWidth = styles?.getPropertyValue('border-inline-end-width');
     if (!nav || nav.dataset.surface !== 'docked' || !styles
@@ -386,6 +421,14 @@ export const DockedSurface = {
       || styles.boxShadow !== 'none') {
       throw new Error('Docked SideNav must remove the floating outline, radius, and shadow while retaining one logical end divider.');
     }
+    if (getComputedStyle(brand).justifyContent !== 'flex-start' || footerState?.textContent !== '펼친 계정 영역') {
+      throw new Error('Expanded SideNav must honor start-aligned branding and receive expanded footer render state.');
+    }
+    const overview = nav.querySelector('[data-sidenav-value="overview"]');
+    const expandedGeometry = {
+      brandPaddingBottom: Number.parseFloat(getComputedStyle(brand).paddingBottom),
+      rowHeight: overview?.getBoundingClientRect().height,
+    };
 
     const activateChild = canvasElement.querySelector('[data-testid="activate-docked-child"]');
     if (!activateChild) throw new Error('The controlled child-route fixture must expose an external route change.');
@@ -407,8 +450,19 @@ export const DockedSurface = {
     if (control.textContent?.trim() !== '사이드바 펼치기'
       || control.getAttribute('aria-expanded') !== 'false'
       || panel.dataset.collapsed !== 'true'
+      || footerState?.textContent !== '접힌 계정 영역'
       || canvasElement.ownerDocument.activeElement !== control) {
       throw new Error('Collapsing from the shell toggle must keep focus on the toggle and flip its announced state.');
+    }
+    const collapsedGeometry = {
+      brandPaddingBottom: Number.parseFloat(getComputedStyle(brand).paddingBottom),
+      rowHeight: overview?.getBoundingClientRect().height,
+    };
+    if (expandedGeometry.brandPaddingBottom !== 18
+      || collapsedGeometry.brandPaddingBottom !== 18
+      || Math.abs(collapsedGeometry.rowHeight - expandedGeometry.rowHeight) >= 1
+      || Math.round(collapsedGeometry.rowHeight) !== 44) {
+      throw new Error('Collapsed and expanded SideNav states must preserve 18px brand bottom padding and a 44px row height.');
     }
     await userEvent.click(control);
     await waitForWidth(nav, 252);
@@ -516,16 +570,17 @@ export const ControlledCollapse = {
 };
 
 export const CollapsedParentExpansion = {
-  name: '상호작용 · 접힌 그룹 펼치기',
+  name: '상호작용 · 접힌 그룹과 겹침 모드 전환',
   parameters: storyDescription(
-    '접힌 레일에서 자식이 있는 부모를 선택하면 목적지 이동 없이 패널과 해당 그룹만 열리고 키보드 초점은 같은 부모에 남습니다.',
+    '접힌 레일의 그룹 확장과 런타임 overlay 전환을 함께 검증합니다. 비제어 SideNav는 overlay 진입 때 접히고 이탈 때 이전 고정형 접힘 상태를 복원합니다.',
   ),
   render: () => <CollapsedParentFixture />,
   play: async ({ canvasElement }) => {
     const nav = canvasElement.querySelector('[data-testid="collapsed-parent-side-nav"]');
     const parent = nav?.querySelector('[data-sidenav-value="missions"]');
     const output = canvasElement.querySelector('[data-testid="collapsed-parent-output"]');
-    if (!nav || !parent || !output) throw new Error('Collapsed hierarchy fixtures must expose their parent and selection evidence.');
+    const overlayToggle = canvasElement.querySelector('[data-testid="overlay-mode-toggle"]');
+    if (!nav || !parent || !output || !overlayToggle || !nav.querySelector('.lk-sidenav__panel-content')) throw new Error('Collapsed hierarchy fixtures must expose their parent, mode control, and selection evidence.');
     parent.focus();
     await userEvent.keyboard('{Enter}');
     await waitForWidth(nav, 252);
@@ -534,6 +589,43 @@ export const CollapsedParentExpansion = {
       || !nav.querySelector('[data-sidenav-parent="missions"]')
       || !output.textContent.includes('overview')) {
       throw new Error('A rail parent must expand and reveal its group without selecting a leaf or moving focus.');
+    }
+    await userEvent.click(overlayToggle);
+    await waitFor(() => {
+      if (nav.querySelector('.lk-sidenav__panel-content')?.dataset.collapsed !== 'true') {
+        throw new Error('Entering overlay mode at runtime must collapse an uncontrolled SideNav.');
+      }
+    });
+    if (nav.querySelector('[data-sidenav-parent="missions"]')) {
+      throw new Error('Collapsed overlay mode must hide expanded child rows.');
+    }
+    await userEvent.click(overlayToggle);
+    await waitForWidth(nav, 252);
+    if (nav.querySelector('.lk-sidenav__panel-content')?.dataset.collapsed !== 'false' || !nav.querySelector('[data-sidenav-parent="missions"]')) {
+      throw new Error('Leaving overlay mode must restore the previous persistent expanded state and open group.');
+    }
+  },
+};
+
+export const ManualActiveGroupExpansion = {
+  name: '상호작용 · 활성 표시와 그룹 열림 분리',
+  parameters: storyDescription(
+    'autoExpandActiveGroup=false이면 활성 자식 값과 부모의 현재 경로 문맥을 유지하면서 disclosure 그룹은 닫힌 상태로 시작합니다. 사용자가 그룹을 열면 그때 활성 자식이 aria-current와 선택 표면을 소유합니다.',
+  ),
+  render: () => <ManualActiveGroupFixture />,
+  play: async ({ canvasElement }) => {
+    const nav = canvasElement.querySelector('[data-testid="manual-active-group-side-nav"]');
+    const parent = nav?.querySelector('[data-sidenav-value="missions"]');
+    if (!nav || !parent || parent.getAttribute('aria-expanded') !== 'false'
+      || nav.querySelector('[data-sidenav-parent="missions"]')) {
+      throw new Error('Disabling active-group auto expansion must keep the active disclosure closed initially.');
+    }
+
+    await userEvent.click(parent);
+    const activeChild = nav.querySelector('[data-sidenav-value="missions-live"]');
+    if (parent.getAttribute('aria-expanded') !== 'true'
+      || activeChild?.getAttribute('aria-current') !== 'page') {
+      throw new Error('Opening the disclosure manually must reveal the preserved active child and aria-current state.');
     }
   },
 };

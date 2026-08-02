@@ -28,14 +28,15 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | Checkbox, Switch, Radio | Space로 토글, RadioGroup은 Arrow key로 이동 |
 | Select, Combobox, AutoComplete | Arrow key로 옵션 이동, Enter로 선택, Escape로 닫기 |
 | ScrollArea와 내부 스크롤 표면 | 실제로 넘치는 독립 영역은 접근 가능한 이름과 Tab 정지점을 가져 방향키·Page Up/Down·Home/End로 이동할 수 있어야 한다. 기본 스크롤바는 OS 설정을 유지하고, `compact`는 공간이 제한된 표면만 선택한다. 숨김은 대체 위치 단서와 이동 수단이 검증된 명시적 예외만 허용하며 forced-colors에서는 사용자 에이전트 표현으로 복귀한다. |
-| Tabs, SegmentedControl | Arrow key로 인접 항목 이동, Home/End는 첫/마지막 항목 |
+| Tabs, SegmentedControl | Arrow key로 인접 항목 이동, Home/End는 첫/마지막 항목. 스크롤 가능한 Tabs의 2px 활성 지표는 tablist 경계 안에 온전히 남고 자체 세로 스크롤을 만들지 않는다. |
 | PageIndicator, Carousel | interactive dots는 이름 있는 native button group이며 standalone은 `aria-current="page"`와 24×24px target, media는 slide label·position, `aria-current="true"` + focusable `aria-disabled="true"`, 32×44px target을 제공한다. Carousel 자동 회전 control은 첫 Tab 대상이고 focus 진입·명시적 navigation 시 멈추며 reduced-motion에서 track/pill transition을 제거한다. |
 | LanguageSwitcher, DropdownMenu | 아이콘 전용 trigger는 주변 UI 언어로 번역된 이름을 가지며 Enter/Space/Arrow Down으로 첫 항목, Arrow Up으로 마지막 항목을 연다. menu는 Up/Down·Home/End·typeahead·Escape focus 복원을 지원한다. LanguageSwitcher의 native-name label은 각 `lang`을 가지며 현재 locale은 inline-end visible check와 `menuitemradio`의 `aria-checked`로 함께 노출한다. |
 | PageHeader, RecordHeader | 자체 키보드 상태는 만들지 않는다. DOM과 읽기 순서는 context/visual→제목·상태→설명·세부 정보→actions를 유지하고 CSS reflow로 바꾸지 않는다. heading 단계는 주변 문서 구조와 연결하며 icon-only action은 이름을 가져야 한다. |
-| Modal, Drawer, Sheet, Alert, ConfirmDialog | Escape 닫기, 내부 focus trap, 닫힌 뒤 trigger로 focus restore |
-| Toast, Notification, Banner, Callout | 자동 소멸 정보는 live region 정책을 명시, 중요한 알림은 수동 dismiss 제공 |
+| Modal, Drawer, Sheet, Alert, ConfirmDialog | Escape 닫기, 내부 focus trap, 닫힌 뒤 trigger로 focus restore. Drawer의 짧은 visible subtitle은 `aria-describedby`로 연결하고 복잡한 지시는 body에 둔다. |
+| Toast, Notification, Banner, Callout | 자동 소멸 정보는 live region 정책을 명시, 중요한 알림은 수동 dismiss 제공. standing Callout은 기본 live region이 아니며 실제 하위 절을 시작할 때만 주변 문서 계층에 맞는 `headingLevel`을 쓴다. |
 | OverlayStatusChip | `role="status"` polite live region으로 표면 상태를 알리고, 설명 대상 컨트롤이 `inert`여도 읽히도록 호출부가 그 서브트리 밖에 배치한다. `pointer-events: none`으로 재활성화 입력을 가로채지 않으며, 상태는 색만이 아니라 톤 글리프와 필수 텍스트 라벨로 전달한다 |
-| DataGrid, Table, Tree, TopicTree | row/cell/treeitem focus 기준, 확장/축소 키, 선택 상태를 명시 |
+| DataGrid, Table, Tree, TopicTree | row/cell/treeitem focus 기준, 확장/축소 키, 선택 상태를 명시. 정적 Table의 `getRowProps`는 native `<tr>` 메타데이터만 확장하고 자동으로 focus·selection·grid role을 만들지 않는다. |
+| SideNav | native `nav` 이름, `ul`/`li` 계층, disclosure의 `aria-expanded`, 현재 leaf의 `aria-current="page"`를 유지한다. 접기 토글은 제품 셸이 소유하고 SideNav id를 `aria-controls`로 참조하며, 접힌 레일의 스크롤은 wheel·keyboard 도달성을 보존한다. 자식 아이콘 슬롯은 장식으로 숨기고 라벨 이름을 유지하며, 비제어 런타임 overlay 전환은 진입 시 접고 이탈 시 이전 persistent 상태를 복원한다. |
 | SearchableMultiSelect, DataGrid, FileBrowser | stable item name/ID, listbox 또는 row activation, 선택 상태, bulk action 진입 순서, 빈/loading/error announcement를 명시 |
 | Button, ActionArea, ConfirmDialog | product-owned disabled reason과 blocker를 action보다 먼저 읽을 수 있고 pending 중 중복 실행이 차단되어야 함 |
 | StatusBadge, StatusIndicator, Timeline, ProgressBar, ConnectionBadge, EquipmentStatusCard | StatusBadge는 색과 무관하게 읽히는 lifecycle/result 라벨을 제공하고 자동 live region을 만들지 않는다. StatusIndicator의 dot은 장식으로 숨기고 live availability/freshness 라벨을 반드시 표시하며 pulse는 reduced motion에서 정지한다. 설비 카드는 heading → visible status → labeled facts → actions 순서를 유지하고 live region이 과도하게 반복되지 않아야 함 |

@@ -192,6 +192,75 @@ function SideFirstShell({ headingLevel = 1 }) {
   );
 }
 
+function TemporaryNavigationShell() {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState('overview');
+  const triggerRef = React.useRef(null);
+  const panelId = 'temporary-navigation-panel';
+  const mainId = 'temporary-navigation-main';
+
+  const selectDestination = (nextValue) => {
+    setValue(nextValue);
+    setOpen(false);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.getElementById(mainId)?.focus({ preventScroll: true });
+    }));
+  };
+
+  const header = (
+    <TopBar
+      height={56}
+      brand={<Lockup variant="mark" height={22} />}
+      actions={(
+        <IconButton
+          ref={triggerRef}
+          data-testid="temporary-navigation-trigger"
+          variant="plain"
+          size={36}
+          label="주 탐색 열기"
+          aria-controls={panelId}
+          aria-expanded={open}
+          onClick={() => setOpen(true)}
+        >
+          <Icon name="menu" size={18} aria-hidden="true" />
+        </IconButton>
+      )}
+    />
+  );
+
+  return (
+    <DashboardShell
+      data-testid="temporary-navigation-shell"
+      data-selected-destination={value}
+      layout="narrow"
+      topology="side-first"
+      header={header}
+      navigation={<NavigationSlot />}
+      temporaryNavigation={(
+        <SideNav
+          aria-label="좁은 화면 주 탐색"
+          items={wideItems}
+          value={value}
+          onChange={selectDestination}
+          surface="docked"
+          width="100%"
+          header={<ProductIdentity />}
+          style={{ height: '100%', minHeight: 0 }}
+        />
+      )}
+      temporaryNavigationOpen={open}
+      onTemporaryNavigationClose={() => setOpen(false)}
+      temporaryNavigationId={panelId}
+      temporaryNavigationTitle="주 탐색"
+      temporaryNavigationReturnFocusRef={triggerRef}
+      mainId={mainId}
+      style={{ minHeight: 720 }}
+    >
+      <ShellContent />
+    </DashboardShell>
+  );
+}
+
 const meta = {
   title: 'LDS Product/Operations Dashboard/Dashboard Shell',
   tags: ['autodocs'],
@@ -399,6 +468,56 @@ export const Narrow320 = {
     }
     if (getComputedStyle(wideRegion).display !== 'none' || narrowRegion.querySelector('[data-sidenav-collapse-toggle]')) {
       throw new Error('The narrow navigation surface must not expose the desktop SideNav collapse control.');
+    }
+  },
+};
+
+export const TemporaryNavigation = {
+  name: '반응형 · 계층형 임시 탐색',
+  parameters: storyDescription(
+    '목적지가 많은 좁은 화면에서 SideNav를 modal Drawer로 전환합니다. 제품이 trigger·open state·route selection을 소유하고, DashboardShell은 스크림·focus containment·Escape·초점 복원·body scroll lock·배경 inert를 기존 Drawer 엔진으로 제공합니다.',
+  ),
+  render: () => <TemporaryNavigationShell />,
+  play: async ({ canvasElement }) => {
+    const shell = canvasElement.querySelector('[data-testid="temporary-navigation-shell"]');
+    const trigger = canvasElement.querySelector('[data-testid="temporary-navigation-trigger"]');
+    const headerRegion = shell?.querySelector('.lk-dashboard-shell__header');
+    const wideRegion = shell?.querySelector('.lk-dashboard-shell__navigation');
+    const main = shell?.querySelector('main');
+    if (!shell || !trigger || !headerRegion || !wideRegion || !main
+      || shell.dataset.hasTemporaryNavigation !== 'true'
+      || getComputedStyle(wideRegion).display !== 'none') {
+      throw new Error('A narrow temporary-navigation shell must hide the persistent navigation without stacking it before main.');
+    }
+
+    await userEvent.click(trigger);
+    const dialog = canvasElement.ownerDocument.querySelector('#temporary-navigation-panel[role="dialog"]');
+    if (!dialog || dialog.getAttribute('aria-modal') !== 'true'
+      || trigger.getAttribute('aria-controls') !== dialog.id
+      || trigger.getAttribute('aria-expanded') !== 'true'
+      || !headerRegion.hasAttribute('inert')
+      || !wideRegion.hasAttribute('inert')
+      || !main.hasAttribute('inert')) {
+      throw new Error('Opening temporary navigation must expose a named modal Drawer and inert every shell background region.');
+    }
+
+    await userEvent.keyboard('{Escape}');
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    if (canvasElement.ownerDocument.querySelector('#temporary-navigation-panel')
+      || canvasElement.ownerDocument.activeElement !== trigger
+      || trigger.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('Escape must close temporary navigation and restore focus to its persistent trigger.');
+    }
+
+    await userEvent.click(trigger);
+    const activity = canvasElement.ownerDocument.querySelector('#temporary-navigation-panel [data-sidenav-value="activity"]');
+    if (!activity) throw new Error('The temporary Drawer must preserve the hierarchical SideNav destinations.');
+    await userEvent.click(activity);
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    if (shell.dataset.selectedDestination !== 'activity'
+      || canvasElement.ownerDocument.querySelector('#temporary-navigation-panel')
+      || canvasElement.ownerDocument.activeElement !== main) {
+      throw new Error('Selecting a temporary destination must close the Drawer while the product moves focus to main.');
     }
   },
 };

@@ -14,6 +14,7 @@ export function Drawer({
   side = 'right',
   width = 380,
   title,
+  subtitle,
   children,
   footer,
   onClose,
@@ -23,11 +24,13 @@ export function Drawer({
   restoreFocus = true,
   ariaLabel = '서랍 패널',
   closeLabel = '닫기',
+  bodyStyle,
   style,
   ...rest
 }) {
   const [shown, setShown] = React.useState(false);
   const titleId = React.useId();
+  const subtitleId = React.useId();
   const { dialogRef, zIndex } = useDialogFocus({
     open,
     onDismiss: onClose,
@@ -53,14 +56,18 @@ export function Drawer({
         role="dialog"
         aria-modal="true"
         aria-labelledby={title != null ? titleId : undefined}
+        aria-describedby={subtitle != null ? subtitleId : undefined}
         aria-label={title == null ? ariaLabel : undefined}
         tabIndex={-1}
         style={{ position: 'absolute', top: 0, bottom: 0, [isRight ? 'right' : 'left']: 0, width, maxWidth: '92vw', display: 'flex', flexDirection: 'column', background: 'var(--color-semantic-background-elevated-normal)', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', transform: shown ? 'none' : hidden, transition: 'transform var(--dur-slow) var(--ease-out)', ...style }}
         {...rest}
       >
-        {(title != null || onClose) && (
+        {(title != null || subtitle != null || onClose) && (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-5) var(--space-6)', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
-            <div id={titleId} style={{ flex: 1, minWidth: 0, fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>
+            <div style={{ flex: 1, minWidth: 0, display: 'grid', gap: 'var(--space-1)' }}>
+              {title != null && <div id={titleId} style={{ fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>}
+              {subtitle != null && <div id={subtitleId} style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-reading-line)', overflowWrap: 'anywhere' }}>{subtitle}</div>}
+            </div>
             {onClose && (
               <IconButton size="sm" variant="plain" label={closeLabel} onClick={onClose}>
                 <Icon name="close" size={20} aria-hidden="true" />
@@ -68,7 +75,7 @@ export function Drawer({
             )}
           </div>
         )}
-        <div className="lk-scroll-surface" data-scrollbar="auto" data-scroll-gutter="stable" style={{ flex: 1, padding: 'var(--space-5) var(--space-6)', overflow: 'auto', scrollbarGutter: 'stable', fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
+        <div className="lk-scroll-surface" data-scrollbar="auto" data-scroll-gutter="stable" style={{ flex: 1, padding: 'var(--space-5) var(--space-6)', overflow: 'auto', scrollbarGutter: 'stable', fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all', ...bodyStyle }}>{children}</div>
         {footer != null && <div style={{ padding: 'var(--space-4) var(--space-6)', borderTop: '1px solid var(--color-semantic-line-solid-normal)', display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)' }}>{footer}</div>}
       </div>
     </div>

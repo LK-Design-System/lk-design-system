@@ -31,9 +31,7 @@ export function DataToolbar({
     onSearchChange && onSearchChange(value);
   };
   const compact = size === 'sm';
-  // Snap every control to the DS button-height scale so search, chips, and
-  // buttons share one baseline (sm 32 / md 40) instead of an invented rhythm.
-  const controlHeight = compact ? 'var(--component-button-height-sm)' : 'var(--component-button-height-md)';
+  const resolvedFilters = typeof filters === 'function' ? filters({ size }) : filters;
 
   return (
     <div
@@ -67,7 +65,7 @@ export function DataToolbar({
               {count != null && <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap' }}>{count}개</span>}
             </div>
           )}
-          {description != null && <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)' }}>{description}</span>}
+          {description != null && <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', overflowWrap: 'anywhere' }}>{description}</span>}
         </div>
         {/* Header right slot holds page-level actions only. */}
         {actions != null && (
@@ -83,11 +81,10 @@ export function DataToolbar({
             onChange={setSearch}
             placeholder={searchPlaceholder}
             aria-label={searchPlaceholder}
-            size="sm"
-            style={{ height: controlHeight }}
+            size={size}
           />
         </div>
-        {filters != null && <div style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1-5)', flexWrap: 'wrap' }}>{filters}</div>}
+        {resolvedFilters != null && <div data-data-toolbar-filter-size={size} style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1-5)', flexWrap: 'wrap' }}>{resolvedFilters}</div>}
       </div>
     </div>
   );

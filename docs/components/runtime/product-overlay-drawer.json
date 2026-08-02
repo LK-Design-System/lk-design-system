@@ -15,9 +15,14 @@
   "purpose": "넓은 화면에서 필터·속성·상세처럼 주 콘텐츠를 보조하는 작업을 옆 패널에 유지할 때 적합합니다. 작은 화면의 짧은 선택에는 Drawer 대신 Sheet를, 집중이 필요한 확인에는 Dialog를 사용하세요.",
   "useWhen": [],
   "avoidWhen": [
-    "scrim 클릭 닫기는 closeOnScrim으로 제어하지만, 유일한 dismiss 수단으로 사용하지 않습니다."
+    "scrim 클릭 닫기는 closeOnScrim으로 제어하지만, 유일한 dismiss 수단으로 사용하지 않습니다.",
+    "Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다."
   ],
   "anatomy": [
+    {
+      "part": "subtitle",
+      "rule": "제목 아래의 짧은 보조 설명. dialog의 aria-describedby와 연결됩니다."
+    },
     {
       "part": "ariaLabel",
       "rule": "title이 없을 때 사용할 접근 가능한 이름. @default \"서랍 패널\""
@@ -25,6 +30,10 @@
     {
       "part": "closeLabel",
       "rule": "닫기 버튼의 접근 가능한 이름. @default \"닫기\""
+    },
+    {
+      "part": "bodyStyle",
+      "rule": "스크롤 body의 padding·layout을 조합별로 조정합니다."
     }
   ],
   "properties": [
@@ -54,6 +63,13 @@
       "type": "React.ReactNode",
       "required": false,
       "description": "",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "subtitle",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "제목 아래의 짧은 보조 설명. dialog의 aria-describedby와 연결됩니다.",
       "owner": "DrawerProps"
     },
     {
@@ -120,6 +136,13 @@
       "owner": "DrawerProps"
     },
     {
+      "name": "bodyStyle",
+      "type": "React.CSSProperties",
+      "required": false,
+      "description": "스크롤 body의 padding·layout을 조합별로 조정합니다.",
+      "owner": "DrawerProps"
+    },
+    {
       "name": "style",
       "type": "React.CSSProperties",
       "required": false,
@@ -147,11 +170,11 @@
     },
     {
       "subject": "명시 규칙 3",
-      "rule": "Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. 여러 overlay Drawer 동시 노출은 제외했습니다."
+      "rule": "bodyStyle은 기본 body padding과 scroll contract를 유지하되, DashboardShell temporaryNavigation처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 padding: 0 같은 layout override를 전달합니다."
     },
     {
       "subject": "명시 규칙 4",
-      "rule": "Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다."
+      "rule": "Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. 여러 overlay Drawer 동시 노출은 제외했습니다."
     },
     {
       "subject": "--body2-size",
@@ -162,7 +185,9 @@
     "필터 query 직렬화, 변경 유실 경고 조건, route 상태와 반응형으로 inline surface로 전환하는 정책은 제품 레이어가 소유합니다."
   ],
   "contentGuidance": [
-    "제품 맥락에 맞는 닫기 명령은 closeLabel로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다."
+    "제품 맥락에 맞는 닫기 명령은 closeLabel로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.",
+    "Subtitle contract.",
+    "Use subtitle for one short, visible sentence that clarifies the scope or consequence of the Drawer. When present it is rendered directly below title and associated with the dialog through aria-describedby."
   ],
   "accessibility": [
     "Modal, Sheet, ConfirmDialog를 sibling으로 확인했습니다. focus/keyboard 계약은 ConfirmDialog와 공유하되 표면은 기존 Drawer 그대로입니다.",
@@ -210,7 +235,10 @@
     "--font-sans",
     "--fw-extra",
     "--headline1-size",
+    "--label1-reading-line",
+    "--label1-size",
     "--shadow-xl",
+    "--space-1",
     "--space-2",
     "--space-4",
     "--space-5",

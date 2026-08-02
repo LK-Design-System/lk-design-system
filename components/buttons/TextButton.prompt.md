@@ -27,3 +27,5 @@ compact "more" actions.
 - [WAI-ARIA Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/)의
   keyboard/disabled 계약을 따릅니다. WDS 직접 축은 primary/assistive,
   small/medium, disable이며 `danger`, `lg`, underline, loading, anchor는 LDS 확장입니다.
+
+TypeScript preserves the rendered element's props through the generic `as` contract. `as="a"` accepts anchor props such as `href`; the default remains a native button, and custom components retain their declared prop requirements.

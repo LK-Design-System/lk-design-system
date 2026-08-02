@@ -150,6 +150,7 @@ Compiled source: docs/components/component-content.json
 - Use IconButton for icon-only one-shot actions and ToggleIcon for icon-only persistent state actions.
 - Footer action mapping is fixed: execute/save/apply uses the primary action; cancel/back uses variant="outlined" color="assistive"; destructive confirmation uses variant="danger" and a ConfirmDialog.
 - Button is the WDS Action/Button primitive for primary, secondary, and supporting actions. LDS keeps WDS action roles but maps visual values through LK theme tokens.
+- TypeScript preserves the rendered element's props through the generic as contract. For example, as="a" accepts anchor props such as href, while the default button accepts native button props. Custom components receive their own declared props without widening the public surface to any.
 
 ## Anatomy
 
@@ -991,6 +992,7 @@ Compiled source: docs/components/component-content.json
 | Part | Contract |
 | --- | --- |
 | toggleIcon | Toggle-icon affordance rendered in the top-right (WDS Card/List Card parity); shows alongside save. |
+| titleWrap | Structured title overflow policy. @default "truncate" |
 | metaCaption | Third caption tier — smallest meta line under subCaption (WDS three-tier caption parity). |
 
 ## Properties
@@ -1013,6 +1015,7 @@ Compiled source: docs/components/component-content.json
 | `leadingContent` | `React.ReactNode` | No |  |
 | `trailingContent` | `React.ReactNode` | No |  |
 | `title` | `React.ReactNode` | No |  |
+| `titleWrap` | `"truncate" \| "wrap"` | No | Structured title overflow policy. @default "truncate" |
 | `description` | `React.ReactNode` | No |  |
 | `caption` | `React.ReactNode` | No |  |
 | `subCaption` | `React.ReactNode` | No |  |
@@ -1040,6 +1043,7 @@ Compiled source: docs/components/component-content.json
 ## Responsive
 
 - WDS axes: platform="desktop|mobile", skeleton, save, toggleIcon (top-right toggle affordance beside save), structured slots (thumbnail, topContent, leadingContent, trailingContent, bottomContent, footer) and three text caption tiers (caption, title, description, subCaption, metaCaption).
+- titleWrap="truncate|wrap" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination.
 
 ## Related components
 
@@ -2828,7 +2832,7 @@ iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포�
 | Storybook | `LDS Core/Components/Layout/Scroll and Accessibility` |
 | Source | `../component-content.json#core-components-layout-scroll-and-accessibility` |
 
-기본 스크롤바는 OS·브라우저 설정을 존중합니다. 공간이 좁은 메뉴와 패널만 compact를 선택하고, 스크롤바가 나타나도 내용 폭이 흔들리지 않도록 기본 gutter를 확보합니다. 실제로 넘치는 영역은 키보드로 도달할 수 있어야 합니다.
+높이가 제한된 로그·목록·데이터 스트립처럼 독립 스크롤 경계가 필요할 때 ScrollArea를 사용합니다. 페이지 본문 전체나 넘치지 않는 컨테이너에는 사용하지 않습니다. 기본 스크롤바는 OS 설정을 존중하고, 좁은 패널만 compact를 선택합니다. 실제로 넘치는 영역은 키보드로 도달할 수 있어야 합니다.
 
 ## 사용 판단
 
@@ -3455,23 +3459,19 @@ iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포�
 | `full` | `boolean` | No | Legacy fill prop. Prefer resize="fill". @default false |
 | `resize` | `"hug" \| "fill"` | No | resize axis. @default "hug" |
 | `size` | `"small" \| "sm" \| "medium" \| "md" \| "large" \| "lg"` | No | size axis. @default "medium" |
-| `padding` | `boolean` | No | padding axis. @default false |
+| `padding` | `boolean \| number \| string` | No | Inline padding. true preserves the legacy 8px value; a number or CSS length sets an explicit inset. @default false |
 | `trailingIconButton` | `boolean \| React.ReactNode` | No | trailingIconButton axis. @default false |
 | `scroll` | `"auto" \| boolean` | No | scroll axis. @default "auto" |
-
-## Behavior and interaction
-
-- WDS axes: resize (hug/fill), size, padding, trailingIconButton, and horizontal scroll.
 
 ## 정량 규칙
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | 탭↔패널 연결: 각 탭은 useId() 기반 id를 자동으로 가지며, item.tabId로 재정의할 수 있습니다. item.panelId를 넘기면 탭에 aria-controls로 연결됩니다. 소비 측은 패널을 role="tabpanel", id={panelId}, aria-labelledby={탭 id}, tabIndex={0}으로 표시하세요. |
+| 명시 규칙 1 | WDS axes: resize (hug/fill), size, padding, trailingIconButton, and horizontal scroll. padding={true} preserves the legacy 8px inset; pass a number or CSS length such as padding="var(--space-6)" to align tabs with adjacent card content. |
+| 명시 규칙 2 | The 2px active indicator is drawn inside the tab box (bottom: 0). Scrollable tabs suppress cross-axis overflow only after the full indicator is inside, so the tablist cannot create a vertical scrollbar from its own indicator and the indicator is not clipped to 1px. |
+| 명시 규칙 3 | 탭↔패널 연결: 각 탭은 useId() 기반 id를 자동으로 가지며, item.tabId로 재정의할 수 있습니다. item.panelId를 넘기면 탭에 aria-controls로 연결됩니다. 소비 측은 패널을 role="tabpanel", id={panelId}, aria-labelledby={탭 id}, tabIndex={0}으로 표시하세요. |
 | --body2-size | 15px |
 | --color-semantic-focus-indicator | light: #2F6FB0; dark: #7FB0DE |
-| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
-| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
 
 ## Responsive
 
@@ -3496,7 +3496,7 @@ iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포�
 
 ```jsx
 <Tabs items={[{ value: 'all', label: 'All' }, { value: 'open', label: 'Open' }]} defaultValue="all" />
-<Tabs resize="fill" size="large" padding trailingIconButton items={items} />
+<Tabs resize="fill" size="large" padding="var(--space-6)" trailingIconButton items={items} />
 ```
 
 ## Tokens and API
@@ -6688,6 +6688,7 @@ const firstFieldRef = useRef(null);
 | `closeLabel` | `string` | No | 닫기 버튼의 접근성 레이블. @default "닫기" |
 | `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative' \| 'navy'` | No |  |
 | `title` | `React.ReactNode` | No |  |
+| `headingLevel` | `2 \| 3 \| 4 \| 5 \| 6 \| false` | No | 문서 구조에 맞는 제목 레벨. 기본 false는 기존 비-heading title을 유지합니다. @default false |
 | `icon` | `React.ReactElement \| null` | No | tone별 기본 아이콘을 교체합니다. 생략하거나 null을 전달해도 기본 아이콘은 유지됩니다. |
 | `children` | `React.ReactNode` | No |  |
 
@@ -11603,6 +11604,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | `tableLabelledBy` | `string` | No | 표 밖의 제목 요소 id. 보이는 캡션이 없을 때 의 aria-labelledby가 됩니다. |
 | `rowHeaderKey` | `keyof Row & string` | No | 행을 식별하는 컬럼 key. 지정하면 해당 셀이 로 렌더링됩니다. |
 | `getRowId` | `(row: Row, index: number) = React.Key` | No | React key로 쓸 안정적인 행 식별자. 생략하면 row.id, 그다음 배열 index를 씁니다. |
+| `getRowProps` | `(row: Row, index: number) = React.HTMLAttributes` | No | 행별 className, style, data attribute와 이벤트를 에 전달합니다. |
 
 ## Behavior and interaction
 
@@ -11625,6 +11627,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 ## Responsive
 
 - columns — { key, label, align, width, render }. rows — 데이터 객체. size sm · md. hover — 행 워시. 상태 점·링크·액션에는 render를 쓰세요.
+- getTableHeaderCellStyle({ padding, align, width }) and getTableDataCellStyle({ padding, align, width }) expose the LDS static-table cell presentation for product-owned table compositions that cannot use the full Table renderer. Preserve native and elements when using them.
 
 ## Content and writing
 
@@ -11635,6 +11638,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - rowHeaderKey — 행을 식별하는 컬럼의 key입니다. 지정하면 그 컬럼의 셀이 대신 가 되어, 스크린 리더가 나머지 셀을 읽을 때 행 이름을 함께 낭독합니다. 시각 표현은 데이터 셀과 동일하게 유지되고 시맨틱만 바뀝니다. 장비 ID·자산 코드처럼 행을 유일하게 지시하는 컬럼 하나에만 쓰세요.
 - tableLabel — 보이는 캡션이 없을 때 에 직접 붙는 aria-label입니다. 래퍼 div가 아니라 표에 이름이 필요하므로, 밖에서 넘긴 aria-label(래퍼로 전달됨) 대신 이 prop을 쓰세요.
 - tableLabelledBy — 표 밖에 이미 보이는 제목(heading 등)의 id를 연결해 의 aria-labelledby로 사용합니다. 보이는 제목이 있는 페이지에서는 이름을 중복 작성하지 말고 이 연결을 쓰세요.
+- getRowProps(row, index) merges native attributes such as data-, className, style, and pointer handlers. It does not add selection, focus, or grid semantics. Use DataGrid when rows must be selected, sorted, or navigated with the keyboard.
 - Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope="col", tableLabel)을 씁니다.
 
 ## Related components
@@ -12445,7 +12449,9 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | --- | --- |
 | title | 테이블/그리드 제목. |
 | description | 제목 아래 설명. |
+| filters | 필터 chip/menu 슬롯. 함수면 검색 필드와 같은 control size를 받습니다. |
 | actions | 우측 일반 액션 슬롯. |
+| size | 밀도. @default "md" |
 
 ## Properties
 
@@ -12458,9 +12464,9 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | `defaultSearchValue` | `string` | No | 비제어 검색어 초기값. @default "" |
 | `onSearchChange` | `(value: string) = void` | No | 검색어 변경 콜백. |
 | `searchPlaceholder` | `string` | No | 검색 input placeholder와 accessible name. @default "검색" |
-| `filters` | `React.ReactNode` | No | 필터 chip/menu 슬롯. |
+| `filters` | `React.ReactNode \| ((context: DataToolbarFilterContext) = React.ReactNode)` | No | 필터 chip/menu 슬롯. 함수면 검색 필드와 같은 control size를 받습니다. |
 | `actions` | `React.ReactNode` | No | 우측 일반 액션 슬롯. |
-| `size` | `'sm' \| 'md'` | No | 밀도. @default "md" |
+| `size` | `DataToolbarSize` | No | 밀도. @default "md" |
 | `variant` | `'standalone' \| 'embedded'` | No | 외곽선 소유. "embedded"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default "standalone" |
 
 ## States
@@ -12480,6 +12486,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 | Subject | Rule |
 | --- | --- |
+| 명시 규칙 1 | size="sm"은 검색과 render-prop filter control에 32px compact 밀도를, 기본 md는 48px field 밀도를 제공합니다. action용 Button 척도와 field 척도는 전역에서 합치지 않습니다. FilterChip은 고유 32px pill 높이를 유지하며 control 행 중앙에 정렬됩니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 | --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 | --body2-line | 22px |
@@ -12487,8 +12494,10 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 ## Responsive
 
-- filters는 query를 좁히는 chip/menu 슬롯, actions는 열 표시·순서 설정 trigger, 내보내기 같은 전체 표 action 슬롯입니다. 설정 UI와 저장 상태는 제품이 소유하고 visibleColumnKeys/columnOrder로 DataGrid에 전달합니다.
+- filters는 query를 좁히는 chip/menu 슬롯, actions는 열 표시·순서 설정 trigger, 내보내기 같은 전체 표 action 슬롯입니다. filters에 함수를 주면 { size }를 받아 검색과 같은 field control 밀도를 Select·SearchField 같은 자식에게 전달할 수 있습니다. 기존 ReactNode 슬롯도 그대로 지원합니다. 설정 UI와 저장 상태는 제품이 소유하고 visibleColumnKeys/columnOrder로 DataGrid에 전달합니다.
 - selectedCount와 bulkActions는 DataToolbar props가 아닙니다. 선택 수, 선택 해제, bulk action은 DataGrid의 같은 높이 selection band에 둡니다.
+- PatternFly Toolbar design guidelines는 search filter와 filter group을 하나의 연관된 그룹으로 배치하고 모든 toolbar item을 세로 중앙 정렬합니다. LDS는 검색과 field형 필터에 같은 size를 전달하고, 고유 높이를 가진 chip은 늘리지 않고 중앙 정렬합니다.
+- PatternFly Filters는 text entry·single select·filter group을 같은 toolbar 안에서 조합할 수 있는 필터 유형으로 구분합니다. 따라서 LDS는 임의 자식을 강제로 clone하거나 높이를 덮지 않고 render-prop context로 field control 밀도만 전달합니다.
 
 ## Content and writing
 
@@ -12506,10 +12515,10 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | `DataGrid` | 대표 시나리오에서 조합 |
 | `FilterChip` | 대표 시나리오에서 조합 |
 | `Icon` | 대표 시나리오에서 조합 |
+| `Select` | 대표 시나리오에서 조합 |
 | `TextButton` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -12523,7 +12532,12 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
   searchValue={query}
   onSearchChange={setQuery}
   searchPlaceholder="사용자 검색"
-  filters={<FilterChip active>온라인</FilterChip>}
+  filters={({ size }) => (
+    <Select size={size} value={status} onChange={setStatus}>
+      <option value="all">전체 상태</option>
+      <option value="online">온라인</option>
+    </Select>
+  )}
   actions={<Button size="sm">내보내기</Button>}
 />
 ```
@@ -12540,8 +12554,6 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-strong`
 - `--color-semantic-line-solid-normal`
-- `--component-button-height-md`
-- `--component-button-height-sm`
 - `--font-sans`
 - `--fw-medium`
 - `--fw-semibold`
@@ -12565,6 +12577,8 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - DataToolbar prompt contract: `components/data/DataToolbar.prompt.md`
 - Storybook implementation evidence: `stories/DataToolbar.stories.jsx`
 - [Carbon Data table usage](https://carbondesignsystem.com/components/data-table/usage/)
+- [PatternFly Toolbar design guidelines](https://v4-archive.patternfly.org/v4/components/toolbar/design-guidelines/)
+- [PatternFly Filters](https://www.patternfly.org/patterns/filters/design-guidelines/)
 - [Carbon Pagination usage](https://carbondesignsystem.com/components/pagination/usage/)
 - [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns/table/)
 
@@ -16208,10 +16222,10 @@ css
 | header | header/banner landmark를 소유하는 상단 슬롯. LDS에서는 TopBar를 권장합니다. |
 | navigation | 넓은 화면의 navigation landmark 슬롯. SideNav 또는 NavRail을 사용합니다. |
 | narrowNavigation | 좁은 화면의 navigation landmark 슬롯. BottomNav를 사용합니다. 생략하면 navigation이 좁은 화면에서 본문 앞에 유지됩니다. |
-| topology | header-first는 전폭 header 아래에 탐색을 두고, side-first는 넓은 화면에서 탐색을 전체 높이의 첫 열에 둡니다. @default "header-first" |
-| mainLabel | main landmark의 접근 가능한 이름. |
-| skipLabel | 첫 focus 대상인 건너뛰기 링크 문구. @default "본문으로 건너뛰기" |
-| navigationLabel | 넓은 화면 navigation의 기본 접근 가능한 이름. @default "주 탐색" |
+| temporaryNavigation | 좁은 화면에서 modal Drawer로 표시할 계층형 탐색 슬롯. 제공하면 좁은 화면에서 넓은 navigation은 숨고 본문은 그대로 유지됩니다. |
+| temporaryNavigationOpen | temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false |
+| onTemporaryNavigationClose | Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청. |
+| temporaryNavigationId | 헤더 trigger의 aria-controls와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다. |
 
 ## Properties
 
@@ -16220,6 +16234,16 @@ css
 | `header` | `React.ReactNode` | No | header/banner landmark를 소유하는 상단 슬롯. LDS에서는 TopBar를 권장합니다. |
 | `navigation` | `React.ReactNode` | No | 넓은 화면의 navigation landmark 슬롯. SideNav 또는 NavRail을 사용합니다. |
 | `narrowNavigation` | `React.ReactNode` | No | 좁은 화면의 navigation landmark 슬롯. BottomNav를 사용합니다. 생략하면 navigation이 좁은 화면에서 본문 앞에 유지됩니다. |
+| `temporaryNavigation` | `React.ReactNode` | No | 좁은 화면에서 modal Drawer로 표시할 계층형 탐색 슬롯. 제공하면 좁은 화면에서 넓은 navigation은 숨고 본문은 그대로 유지됩니다. |
+| `temporaryNavigationOpen` | `boolean` | No | temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false |
+| `onTemporaryNavigationClose` | `() = void` | No | Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청. |
+| `temporaryNavigationId` | `string` | No | 헤더 trigger의 aria-controls와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다. |
+| `temporaryNavigationTitle` | `React.ReactNode` | No | Drawer에 보이는 탐색 제목. |
+| `temporaryNavigationLabel` | `string` | No | Drawer dialog와 내부 navigation의 접근 가능한 이름. @default "주 탐색" |
+| `temporaryNavigationCloseLabel` | `string` | No | Drawer 닫기 버튼의 접근 가능한 이름. @default "탐색 닫기" |
+| `temporaryNavigationWidth` | `number` | No | temporaryNavigation Drawer 너비(px). @default 320 |
+| `temporaryNavigationInitialFocusRef` | `React.RefObject` | No | Drawer가 열릴 때 우선 초점을 받을 내부 요소. |
+| `temporaryNavigationReturnFocusRef` | `React.RefObject` | No | Drawer가 닫힐 때 초점을 복원할 persistent trigger. |
 | `children` | `React.ReactNode` | No |  |
 | `layout` | `'auto' \| 'wide' \| 'narrow'` | No | auto는 768px 미만에서 좁은 구성을 사용합니다. @default "auto" |
 | `topology` | `'header-first' \| 'side-first'` | No | header-first는 전폭 header 아래에 탐색을 두고, side-first는 넓은 화면에서 탐색을 전체 높이의 첫 열에 둡니다. @default "header-first" |
@@ -16231,10 +16255,18 @@ css
 | `navigationLabel` | `string` | No | 넓은 화면 navigation의 기본 접근 가능한 이름. @default "주 탐색" |
 | `narrowNavigationLabel` | `string` | No | 좁은 화면 navigation의 기본 접근 가능한 이름. @default "주 탐색" |
 
+## States
+
+| State | Contract |
+| --- | --- |
+| temporaryNavigationOpen | temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false |
+
 ## Behavior and interaction
 
 - Carbon UI shell usage — 지속적인 header, 선택적인 left panel, product→global 순서를 분리하고 좁은 폭에서는 header link를 left navigation으로 이동합니다. LDS 셸도 header와 제품 탐색을 별도 슬롯으로 유지합니다.
-- 의도적 제외: 라우터 인스턴스, 인증·권한 판정, drawer open state, URL 동기화, 데이터 새로고침, 사용자별 셸 저장은 제품이 소유합니다. DashboardShell은 슬롯 배치와 landmark, skip link, 반응형 전환만 소유합니다.
+- Carbon UI shell accessibility — 첫 keyboard 항목으로 skip-to-main을 제공하고 native header 구조를 사용합니다. LDS도 보이는 focus skip link와 실제 focus 가능한 main 목적지를 제공합니다.
+- WAI-ARIA APG Modal Dialog Pattern — modal 배경은 inert이고, Tab/Shift+Tab은 dialog 안에 머물며 Escape와 호출 지점 복원을 제공해야 합니다. temporary navigation은 이 책임을 제품별 scrim 코드가 아니라 공용 Drawer 엔진에서 상속합니다.
+- 의도적 제외: 라우터 인스턴스, 인증·권한 판정, drawer open state의 저장, URL 동기화, 데이터 새로고침, 사용자별 셸 저장은 제품이 소유합니다. DashboardShell은 슬롯 배치와 landmark, skip link, 반응형 전환, temporary Drawer의 modal coordination만 소유합니다.
 
 ## 정량 규칙
 
@@ -16242,7 +16274,7 @@ css
 | --- | --- |
 | 명시 규칙 1 | layout — auto는 LDS의 sm=768px 아래에서 좁은 구성을 사용합니다. Storybook과 테스트에서는 wide/narrow로 상태를 결정적으로 고정할 수 있습니다. |
 | 명시 규칙 2 | main은 하나만 렌더링하고 tabIndex={-1}과 안정적인 id를 가져 skip link의 실제 focus 목적지가 됩니다. mainLabel은 같은 문서에 여러 셸이 있는 검증 fixture에서만 명시합니다. |
-| 명시 규칙 3 | 넓은 구성은 auto + minmax(0, 1fr), 좁은 구성은 단일 본문 열과 하단 탐색 행입니다. 이 배치 차이는 탐색 공간을 확보하기 위한 기능적 차이이며 새로운 장식 언어가 아닙니다. |
+| 명시 규칙 3 | 넓은 구성은 auto + minmax(0, 1fr), 좁은 구성은 단일 본문 열과 선택적인 하단 탐색 행입니다. temporary navigation은 문서 흐름을 차지하지 않고 왼쪽 edge의 기존 Drawer 표면을 사용합니다. 이 배치 차이는 탐색 공간을 확보하기 위한 기능적 차이이며 새로운 장식 언어가 아닙니다. |
 | 명시 규칙 4 | Container의 page margin과 최대 폭, PageHeader의 본문 위계, DashboardGrid의 카드 간격은 각각 해당 컴포넌트가 소유합니다. |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
 
@@ -16261,10 +16293,10 @@ css
 ## Accessibility
 
 - 의미·키보드 순서는 본문 건너뛰기 → header/banner → 넓은 주 탐색 → main → 좁은 주 탐색입니다. CSS로 숨겨진 탐색 슬롯은 접근성 트리에서도 제외됩니다.
+- 목적지가 네 개를 넘거나 disclosure 계층을 유지해야 하는 좁은 화면은 temporaryNavigation에 SideNav를 전달합니다. 제품이 trigger와 temporaryNavigationOpen 상태·라우트 선택을 소유하고, 셸은 기존 Drawer 엔진으로 스크림, Tab containment, Escape, 초점 복원, body scroll lock을 제공합니다. 열려 있는 동안 skip link·header·wide navigation·main·bottom navigation은 inert입니다.
+- header trigger는 temporaryNavigationId를 가리키는 aria-controls와 실제 open state의 aria-expanded를 갖습니다. 일반 dismiss는 temporaryNavigationReturnFocusRef로 trigger에 복원하고, 목적지를 선택한 뒤에는 제품이 Drawer를 닫고 focus 가능한 main으로 이동할 수 있습니다.
+- temporaryNavigationLabel은 dialog와 내부 nav의 접근 가능한 이름, temporaryNavigationCloseLabel은 닫기 버튼 이름, temporaryNavigationWidth는 px 단위 Drawer 폭입니다. 특별한 업무 순서가 있을 때만 temporaryNavigationInitialFocusRef로 첫 초점을 재정의하고, 기본은 Drawer 안의 첫 focusable control입니다.
 - TopBar, SideNav, NavRail, BottomNav의 control/icon 크기, typography, radius, border, fill, active/focus/disabled 처리를 그대로 유지합니다.
-- 건너뛰기 링크의 테두리는 primary 색으로 focus 위치를 알리고, 문구는 semantic label 색을 사용해 밝은·어두운 셸 배경 모두에서 본문 텍스트 대비를 유지합니다.
-- Carbon UI shell accessibility — 첫 keyboard 항목으로 skip-to-main을 제공하고 native header 구조를 사용합니다. LDS도 보이는 focus skip link와 실제 focus 가능한 main 목적지를 제공합니다.
-- WAI-ARIA landmark regions — header, nav, main을 논리적 최상위 영역으로 두고 한 문서의 main을 하나로 유지합니다.
 
 ## Related components
 
@@ -16295,7 +16327,12 @@ css
       items={items}
     />
   )}
-  narrowNavigation={<BottomNav items={compactItems} />}
+  temporaryNavigation={<SideNav items={items} surface="docked" />}
+  temporaryNavigationOpen={navigationOpen}
+  onTemporaryNavigationClose={() => setNavigationOpen(false)}
+  temporaryNavigationId="product-navigation-drawer"
+  temporaryNavigationTitle="주 탐색"
+  temporaryNavigationReturnFocusRef={menuButtonRef}
 >
   <Container size="wide">…</Container>
 </DashboardShell>
@@ -16335,6 +16372,7 @@ css
 - [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/)
 - [Carbon UI shell accessibility](https://carbondesignsystem.com/components/UI-shell-header/accessibility/)
 - [Fluent Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
+- [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [WAI-ARIA landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
 
 
@@ -16780,11 +16818,14 @@ css
 ### 사용
 
 - Atlassian navigation system layout — 접기 토글(SideNavToggleButton)은 top nav 항목이며 사이드 패널 내부에 두지 않습니다. shadcn/ui Sidebar의 SidebarTrigger(본문 상단 바 시작)와 IBM Carbon UI shell 헤더 햄버거도 같은 원칙입니다. LDS는 이 원칙을 따라 셸의 접기 토글을 상단 바 시작 부분에 두며, side-first에서는 shadcn 배치를, header-first에서는 Atlassian 배치를 사용합니다.
+- footer accepts either a node or a render function receiving { collapsed, expanded, overlay }. Use the render form when the account/footer composition must change before an overlay peek or rail collapse exposes it.
+- Child destinations accept icon; when any child in a group has one, SideNav reserves the same decorative slot for every sibling.
 
 ### 사용하지 않음
 
 - 접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 아이콘의 강한 잉크로만 표시해 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.
 - Carbon UI shell left panel style — sub-menu hover와 sub-menu item selected를 별도 상태로 정의합니다. LDS도 펼침·hover·현재 위치의 상태 분리는 따르되, Carbon의 4px interactive border는 내부 NavRail·TopBar 선택 문법과 맞지 않아 채택하지 않고 현재 leaf의 선택 배경만 유지합니다.
+- Carbon UI shell left panel accessibility — rail은 hover나 focus에서 펼쳐져도 같은 링크·서브메뉴 keyboard model을 유지합니다. 이 동작을 LDS에 적용할 때는 동일 DOM뿐 아니라 44px hit target과 세로 위치도 유지해, 포인터와 키보드 사용자가 확장 중 움직이는 목적지를 다시 추적하지 않게 합니다.
 - 대시보드·관리 제품의 주 탐색으로 UserMenu를 푸터에 조합합니다. TopBar가 함께 있으면 전역 utility만 담당하게 하고 로고·경로를 중복하지 않으며, 평면형 대안인 NavRail과 동시에 주 탐색으로 사용하지 않습니다.
 
 ## Anatomy
@@ -16794,7 +16835,9 @@ css
 | aria-label | nav landmark의 접근 가능한 이름. @default '사이드 탐색' |
 | header | 상단 브랜드 영역(예: ). |
 | headerCollapsed | 접힌 상태의 브랜드(예: ). 없으면 header를 그대로 사용. |
-| footer | 하단에 고정되는 푸터. |
+| brandAlign | 펼친 브랜드 영역의 가로 정렬. 접힌 레일은 항상 가운데 정렬합니다. @default 'center' |
+| footer | 하단 고정 영역. 함수면 overlay peek를 포함한 실제 내부 접힘 상태를 받습니다. |
+| footerGap | 스크롤 목록과 푸터 구분선 사이의 간격. @default 'var(--space-2)' |
 | renderLink | href leaf를 router link로 치환하는 렌더 훅. 그룹 disclosure는 항상 button입니다. |
 
 ## Properties
@@ -16805,25 +16848,36 @@ css
 | `aria-label` | `string` | No | nav landmark의 접근 가능한 이름. @default '사이드 탐색' |
 | `header` | `React.ReactNode` | No | 상단 브랜드 영역(예: ). |
 | `headerCollapsed` | `React.ReactNode` | No | 접힌 상태의 브랜드(예: ). 없으면 header를 그대로 사용. |
-| `footer` | `React.ReactNode` | No | 하단에 고정되는 푸터. |
+| `brandAlign` | `'start' \| 'center'` | No | 펼친 브랜드 영역의 가로 정렬. 접힌 레일은 항상 가운데 정렬합니다. @default 'center' |
+| `footer` | `React.ReactNode \| ((state: { collapsed: boolean; expanded: boolean; overlay: boolean }) = React.ReactNode)` | No | 하단 고정 영역. 함수면 overlay peek를 포함한 실제 내부 접힘 상태를 받습니다. |
+| `footerGap` | `number \| string` | No | 스크롤 목록과 푸터 구분선 사이의 간격. @default 'var(--space-2)' |
 | `width` | `number \| string` | No | 펼친 폭. @default 240 |
 | `surface` | `'floating' \| 'docked'` | No | 외곽 표면. floating은 전체 outline과 radius를, docked는 논리적 끝 divider만 사용합니다. @default 'floating' |
 | `collapsed` | `boolean` | No | 제어되는 접힘 상태. 접기 토글은 셸의 상단 바에 두고 이 프롭으로 패널을 구동합니다. 상태 영속화는 SideNav가 아니라 소비 제품이 소유합니다. |
 | `defaultCollapsed` | `boolean` | No | 비제어 시 초기 접힘. @default false |
 | `onCollapsedChange` | `(collapsed: boolean) = void` | No | 다음 접힘 상태 요청. controlled 사용 시 부모가 collapsed를 갱신하기 전에는 시각 상태가 바뀌지 않습니다. |
-| `collapsedWidth` | `number` | No | 접힌 아이콘 레일 폭. 기본 64px에서도 브랜드 마크와 경계 토글을 유지합니다. @default 64 |
-| `overlay` | `boolean` | No | 오버레이 모드 — 레이아웃은 레일 폭 고정, 호버(피크)·키보드 초점·클릭으로 펼치면 패널이 콘텐츠 위로 뜨고, 마우스 아웃과 초점 이탈·바깥 클릭·Esc로 접힘. 시작은 접힘. @default false |
+| `collapsedWidth` | `number` | No | 접힌 아이콘 레일 폭. 기본 64px에서 브랜드 마크와 목적지 아이콘을 유지합니다. @default 64 |
+| `overlay` | `boolean` | No | 오버레이 모드 — 레이아웃은 레일 폭 고정, 호버(피크)·키보드 초점·클릭으로 펼치면 패널이 콘텐츠 위로 뜹니다. 비제어 런타임 전환 시 진입은 접고 이탈은 이전 persistent 상태를 복원하며, 제어 모드는 부모가 collapsed를 갱신합니다. @default false |
+| `autoExpandActiveGroup` | `boolean` | No | 활성 자식이 속한 disclosure 그룹을 초기 선택과 값 변경 때 자동으로 펼칩니다. false이면 활성 표시는 유지하되 그룹 열림은 사용자 상호작용과 독립됩니다. @default true |
 | `value` | `string` | No | 제어되는 활성 값. |
 | `defaultValue` | `string` | No | 비제어 시 초기 활성 값. |
 | `onChange` | `(value: string) = void` | No |  |
 | `renderLink` | `(item: SideNavItem \| SideNavChildItem, props: React.AnchorHTMLAttributes) = React.ReactElement` | No | href leaf를 router link로 치환하는 렌더 훅. 그룹 disclosure는 항상 button입니다. |
 
+## States
+
+| State | Contract |
+| --- | --- |
+| footer | 하단 고정 영역. 함수면 overlay peek를 포함한 실제 내부 접힘 상태를 받습니다. |
+| autoExpandActiveGroup | 활성 자식이 속한 disclosure 그룹을 초기 선택과 값 변경 때 자동으로 펼칩니다. false이면 활성 표시는 유지하되 그룹 열림은 사용자 상호작용과 독립됩니다. @default true |
+
 ## Behavior and interaction
 
-- collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌며, 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.
+- collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌므로 런타임 overlay 전환 때도 부모가 원하는 collapsed 값을 함께 갱신해야 합니다. 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.
 - floating은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. docked는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, fill, active marker를 공유합니다.
 - WAI Disclosure Navigation — 부모 button의 aria-expanded는 자식 노출 상태이고 leaf link의 aria-current="page"는 현재 위치입니다. LDS는 두 상태를 같은 persistent highlight로 합치지 않습니다.
-- 라우터 생성, URL 동기화, 권한에 따른 item 제거, 접힘 상태 영속화는 제품이 소유합니다.
+- brandAlign="center|start" controls the expanded brand region. The collapsed mark remains centered so the 64px rail stays balanced.
+- In uncontrolled mode, changing overlay at runtime collapses on entry and restores the prior persistent state on exit. In controlled mode, the product updates collapsed explicitly.
 
 ## 정량 규칙
 
@@ -16837,22 +16891,25 @@ css
 
 ## Responsive
 
+- 접힌 레일과 펼친 패널은 SideNav가 소유하는 브랜드 아래 패딩 18px과 44px 목적지 행 높이를 공유합니다. header와 headerCollapsed 슬롯 자체의 intrinsic 높이는 제품이 맞추며, 레일에서는 label·badge가 사라지고 행의 가로 정렬만 바뀝니다.
 - Carbon UI shell usage — 복잡한 제품 탐색은 header와 지속적인 left panel을 조합하고 좁은 폭에서는 탐색 표면을 전환합니다. 그래서 셸에 붙는 SideNav는 docked를, 독립 배치는 floating을 사용합니다.
+- The collapsed item rail scrolls vertically with a hidden native scrollbar. Do not reduce or remove authorized destinations merely to fit a short viewport; preserve keyboard and wheel scrolling.
 - Classification: LK Product Extension. WDS Navigation의 Category, Tab, Page Indicator, Pagination과 별개이며 데스크톱 제품 셸에서만 사용합니다.
 
 ## Content and writing
 
-- items — { value, label, ariaLabel?, icon, badge?, href?, disabled?, children? } + { heading } 섹션 헤딩. 항목 전체는 native ul/li 리스트(그룹 자식은 중첩 ul)로 렌더되어 보조기술이 항목 수와 계층을 읽을 수 있고, 시각은 기존과 동일합니다(list-style 없음). href leaf는 native anchor, href가 없는 leaf는 기존 선택 button입니다.
+- items — { value, label, ariaLabel?, icon, badge?, href?, disabled?, children? } + { heading } 섹션 헤딩. 자식도 icon?: ReactNode를 받을 수 있으며, 한 그룹에 아이콘이 하나라도 있으면 모든 자식에 고정 슬롯을 예약해 라벨 시작선을 맞춥니다. 항목 전체는 native ul/li 리스트(그룹 자식은 중첩 ul)로 렌더되어 보조기술이 항목 수와 계층을 읽을 수 있고, 시각은 기존과 동일합니다(list-style 없음).
 - Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. 축소 가능 내비게이션도 상태를 설명하는 명시적인 제어를 제공하므로 LDS는 명시적 토글을 정식 수단으로 두고 hover peek를 선택 기능으로 제한합니다.
+- WAI-ARIA landmark regions — landmark와 명확한 accessible name을 유지합니다. 소비자가 aria-label을 주지 않으면 기본 이름 사이드 탐색을 제공하고, 같은 문서에 탐색 landmark가 여러 개면 고유한 이름으로 덮어씁니다. 현재 목적지는 aria-current="page"로 노출하고, 키보드 focus 진입·이탈과 Esc 뒤에도 초점을 잃지 않습니다.
 - SideNav — 넓은 라벨형 대시보드 사이드바(브랜드 헤더 + 그룹 내비 + 서브메뉴 + 접힘 레일 + 고정 푸터).
 
 ## Accessibility
 
 - renderLink — native anchor 대신 router link를 쓸 때만 제공합니다. renderLink={(item, { href, ...props }) = }처럼 DS가 만든 aria-current, disabled, style, activation 계약을 전달합니다.
-- overlay — overlay peek는 공간이 제한된 데스크톱에서만 쓰는 선택 기능입니다. 접힌 overlay는 hover뿐 아니라 키보드 focus 진입에서도 펼쳐지며 포인터와 focus가 모두 이탈하면 다시 접힙니다. 바깥 클릭과 Esc도 레일로 복귀시키고, Esc로 자식 항목이 사라질 때 focus는 레일에 남는 부모 항목으로 복구됩니다. 펼침 그림자는 TOKENGOVERNANCE.md의 elevation 규칙에 따라 콘텐츠를 실제로 덮는 inline-end 쪽에만 남기고 나머지 변은 clip-path로 잘라냅니다(엣지 부착 오버레이의 기준 구현).
+- overlay — overlay peek는 공간이 제한된 데스크톱에서만 쓰는 선택 기능입니다. 비제어 SideNav에서 overlay가 런타임에 false → true로 바뀌면 레일로 접고, true → false로 돌아오면 overlay 진입 전의 persistent 접힘 상태를 복원합니다. 접힌 overlay는 hover뿐 아니라 키보드 focus 진입에서도 펼쳐지며 포인터와 focus가 모두 이탈하면 다시 접힙니다. 바깥 클릭과 Esc도 레일로 복귀시키고, Esc로 자식 항목이 사라질 때 focus는 레일에 남는 부모 항목으로 복구됩니다.
+- autoExpandActiveGroup — 기본 true는 활성 자식의 그룹을 초기 선택과 값 변경 때 자동으로 엽니다. false이면 활성 값·부모의 현재 경로 잉크·자식을 열었을 때의 aria-current는 그대로 두고 disclosure open state만 사용자 조작과 분리합니다. 제품이 패널을 열 때 모든 그룹을 닫아 두고 싶다면 이 축을 끄되 현재 route를 지우지 않습니다.
 - 지속 선택 표면은 aria-current="page"인 현재 leaf 목적지만 소유합니다. 현재 목적지는 LDS의 NavRail·TopBar와 같은 primary wash와 굵은 label을 사용하며 별도 시작 표시선은 추가하지 않습니다. 펼쳐진 부모는 배경을 유지하지 않고 chevron과 활성 자손을 뜻하는 강한 label/icon만 사용하며, pointer hover는 선택 표면보다 약한 neutral fill-alternative, pressed는 fill-normal, keyboard focus는 전역 focus ring으로 분리합니다.
 - NavRail/BottomNav와 같은 icon, caption/label scale, primary surface/ink, aria-current="page"를 사용합니다. SideNav에만 섹션 heading, badge, 자식 indent, disclosure chevron, 펼친 panel width가 있습니다. 이는 계층 구조와 상태 수를 표현하기 위한 기능 차이입니다.
-- anchor와 button은 동일한 padding, radius, fill, hover, focus, disabled 시각을 공유합니다. 링크 여부가 아니라 aria-current만 지속 선택 배경을 만들며, 링크라는 이유로 underline이나 shadow를 추가하지 않습니다.
 
 ## Related components
 
@@ -16881,7 +16938,7 @@ css
     { heading: '문서' },
     { value: 'dash', label: '대시보드', href: '/dashboard', icon: <Icon name="home" size={19} /> },
     { value: 'docs', label: '문서', icon: <Icon name="document" size={19} />, children: [
-      { value: 'docs-overview', label: '개요', href: '/docs', badge: '8' },
+      { value: 'docs-overview', label: '개요', href: '/docs', icon: <Icon name="home" size={16} />, badge: '8' },
       { value: 'docs-components', label: '컴포넌트', href: '/docs/components' },
     ] },
     { value: 'events', label: '이벤트', icon: <Icon name="bell" size={19} />, badge: '5' },
@@ -16917,8 +16974,10 @@ css
 - `--shadow-lg`
 - `--space-0-5`
 - `--space-1-5`
+- `--space-2`
 - `--space-2-5`
 - `--space-3`
+- `--space-4-5`
 
 ### Source contracts
 
@@ -16938,6 +16997,7 @@ css
 - [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/)
 - [Carbon UI shell left panel style](https://carbondesignsystem.com/components/UI-shell-left-panel/style/)
 - [Fluent Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
+- [Carbon UI shell left panel accessibility](https://preview.carbondesignsystem.com/building-blocks/core/components/ui-shell-left-panel/accessibility)
 - [Atlassian navigation system layout](https://atlassian.design/components/navigation-system/layout/examples)
 - [shadcn/ui Sidebar](https://ui.shadcn.com/docs/components/base/sidebar)
 - [WAI-ARIA landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
@@ -17602,6 +17662,7 @@ side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓
 - [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/)
 - [Carbon UI shell accessibility](https://carbondesignsystem.com/components/UI-shell-header/accessibility/)
 - [Fluent Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
+- [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [WAI-ARIA landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
 
 
@@ -17749,14 +17810,17 @@ side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓
 ### 사용하지 않음
 
 - scrim 클릭 닫기는 closeOnScrim으로 제어하지만, 유일한 dismiss 수단으로 사용하지 않습니다.
+- Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다.
 - Drawer는 현재 화면과 관련된 필터, 상세, 설정을 한쪽 edge에서 보조하는 modal side panel입니다. 분류는 LDS Product Extension이며 WDS variant axis를 추가하지 않습니다.
 
 ## Anatomy
 
 | Part | Contract |
 | --- | --- |
+| subtitle | 제목 아래의 짧은 보조 설명. dialog의 aria-describedby와 연결됩니다. |
 | ariaLabel | title이 없을 때 사용할 접근 가능한 이름. @default "서랍 패널" |
 | closeLabel | 닫기 버튼의 접근 가능한 이름. @default "닫기" |
+| bodyStyle | 스크롤 body의 padding·layout을 조합별로 조정합니다. |
 
 ## Properties
 
@@ -17766,6 +17830,7 @@ side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓
 | `side` | `'left' \| 'right'` | No | 슬라이드인 방향. @default "right" |
 | `width` | `number` | No | 패널 너비(px). @default 380 |
 | `title` | `React.ReactNode` | No |  |
+| `subtitle` | `React.ReactNode` | No | 제목 아래의 짧은 보조 설명. dialog의 aria-describedby와 연결됩니다. |
 | `children` | `React.ReactNode` | No |  |
 | `footer` | `React.ReactNode` | No |  |
 | `onClose` | `() = void` | No | Escape, scrim, 닫기 액션이 호출하는 controlled dismiss callback. |
@@ -17775,6 +17840,7 @@ side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓
 | `restoreFocus` | `boolean` | No | 닫힌 뒤 trigger 또는 returnFocusRef로 초점을 복원합니다. @default true |
 | `ariaLabel` | `string` | No | title이 없을 때 사용할 접근 가능한 이름. @default "서랍 패널" |
 | `closeLabel` | `string` | No | 닫기 버튼의 접근 가능한 이름. @default "닫기" |
+| `bodyStyle` | `React.CSSProperties` | No | 스크롤 body의 padding·layout을 조합별로 조정합니다. |
 | `style` | `React.CSSProperties` | No |  |
 
 ## States
@@ -17793,8 +17859,8 @@ side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓
 | --- | --- |
 | 명시 규칙 1 | Modal과 달리 좌/우 edge에 붙고, side, 380px 기본 폭, 92vw 상한, slide transition을 유지합니다. 이 차이는 본문 맥락과 나란히 연결되는 보조 작업이라는 기능으로 정당화됩니다. |
 | 명시 규칙 2 | 시각 delta inventory: headline/body typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. header/body는 space-5 space-6, footer는 space-4 space-6, action gap은 space-2로 Modal과 맞춥니다. radius와 선택/활성 marker는 추가하지 않고 side 방향만 기존 public axis로 유지합니다. |
-| 명시 규칙 3 | Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. 여러 overlay Drawer 동시 노출은 제외했습니다. |
-| 명시 규칙 4 | Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다. |
+| 명시 규칙 3 | bodyStyle은 기본 body padding과 scroll contract를 유지하되, DashboardShell temporaryNavigation처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 padding: 0 같은 layout override를 전달합니다. |
+| 명시 규칙 4 | Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. 여러 overlay Drawer 동시 노출은 제외했습니다. |
 | --body2-size | 15px |
 
 ## Responsive
@@ -17805,6 +17871,8 @@ side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓
 ## Content and writing
 
 - 제품 맥락에 맞는 닫기 명령은 closeLabel로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.
+- Subtitle contract.
+- Use subtitle for one short, visible sentence that clarifies the scope or consequence of the Drawer. When present it is rendered directly below title and associated with the dialog through aria-describedby.
 
 ## Accessibility
 
@@ -17859,7 +17927,10 @@ const firstFilterRef = useRef(null);
 - `--font-sans`
 - `--fw-extra`
 - `--headline1-size`
+- `--label1-reading-line`
+- `--label1-size`
 - `--shadow-xl`
+- `--space-1`
 - `--space-2`
 - `--space-4`
 - `--space-5`
@@ -22367,7 +22438,7 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 | Storybook | `LDS Product/Viewer/Elevator Fleet Overview` |
 | Source | `../component-content.json#product-viewer-elevator-fleet-overview` |
 
-같은 건물의 엘리베이터는 하나의 층 눈금을 공유하고, 건물 그룹은 좌우로 이어 붙습니다. 건물마다 층 구성이 다르므로 건물 사이의 같은 층 이름을 같은 높이에 맞추지 않습니다.
+여러 건물의 엘리베이터 위치와 운행 상태를 한 번에 비교해야 할 때 사용합니다. 한 대의 상세 제어, 호출 입력, 시간 추세 분석에는 사용하지 않고 해당 전용 화면으로 이동합니다. 같은 건물의 엘리베이터는 하나의 층 눈금을 공유하고, 건물 그룹은 좌우로 이어 붙습니다. 건물마다 층 구성이 다르므로 건물 사이의 같은 층 이름을 같은 높이에 맞추지 않습니다.
 
 ## 사용 판단
 

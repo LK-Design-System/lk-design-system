@@ -8,7 +8,7 @@
 | Storybook | `LDS Core/Components/Layout/Scroll and Accessibility` |
 | Source | `../component-content.json#core-components-layout-scroll-and-accessibility` |
 
-기본 스크롤바는 OS·브라우저 설정을 존중합니다. 공간이 좁은 메뉴와 패널만 compact를 선택하고, 스크롤바가 나타나도 내용 폭이 흔들리지 않도록 기본 gutter를 확보합니다. 실제로 넘치는 영역은 키보드로 도달할 수 있어야 합니다.
+높이가 제한된 로그·목록·데이터 스트립처럼 독립 스크롤 경계가 필요할 때 ScrollArea를 사용합니다. 페이지 본문 전체나 넘치지 않는 컨테이너에는 사용하지 않습니다. 기본 스크롤바는 OS 설정을 존중하고, 좁은 패널만 compact를 선택합니다. 실제로 넘치는 영역은 키보드로 도달할 수 있어야 합니다.
 
 ## 사용 판단
 

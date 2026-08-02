@@ -74,9 +74,9 @@
     },
     {
       "name": "padding",
-      "type": "boolean",
+      "type": "boolean | number | string",
       "required": false,
-      "description": "padding axis. @default false",
+      "description": "Inline padding. true preserves the legacy 8px value; a number or CSS length sets an explicit inset. @default false",
       "owner": "TabsProps"
     },
     {
@@ -98,7 +98,11 @@
   "behavior": [],
   "quantitativeRules": [
     {
-      "subject": "명시 규칙 1",
+      "subject": "명시 규칙 2",
+      "rule": "The 2px active indicator is drawn inside the tab box (bottom: 0). Scrollable tabs suppress cross-axis overflow only after the full indicator is inside, so the tablist cannot create a vertical scrollbar from its own indicator and the indicator is not clipped to 1px."
+    },
+    {
+      "subject": "명시 규칙 3",
       "rule": "탭↔패널 연결: 각 탭은 useId() 기반 id를 자동으로 가지며, item.tabId로 재정의할 수 있습니다. item.panelId를 넘기면 탭에 aria-controls로 연결됩니다. 소비 측은 패널을 role=\"tabpanel\", id={panelId}, aria-labelledby={탭 id}, tabIndex={0}으로 표시하세요."
     },
     {
@@ -108,14 +112,6 @@
     {
       "subject": "--color-semantic-focus-indicator",
       "rule": "light: #2F6FB0; dark: #7FB0DE"
-    },
-    {
-      "subject": "--color-semantic-label-neutral",
-      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
-    },
-    {
-      "subject": "--color-semantic-label-normal",
-      "rule": "light: #171718; dark: #F7F7F7"
     }
   ],
   "responsive": [
@@ -143,7 +139,7 @@
   "examples": [
     {
       "label": "기본 조합",
-      "code": "<Tabs items={[{ value: 'all', label: 'All' }, { value: 'open', label: 'Open' }]} defaultValue=\"all\" />\n<Tabs resize=\"fill\" size=\"large\" padding trailingIconButton items={items} />"
+      "code": "<Tabs items={[{ value: 'all', label: 'All' }, { value: 'open', label: 'Open' }]} defaultValue=\"all\" />\n<Tabs resize=\"fill\" size=\"large\" padding=\"var(--space-6)\" trailingIconButton items={items} />"
     }
   ],
   "tokens": [
@@ -191,7 +187,7 @@
     "anatomy": "evidence",
     "properties": "evidence",
     "states": "omitted-no-evidence",
-    "behavior": "evidence",
+    "behavior": "omitted-no-evidence",
     "quantitativeRules": "evidence",
     "responsive": "evidence",
     "contentGuidance": "omitted-no-evidence",

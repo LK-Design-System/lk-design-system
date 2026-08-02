@@ -104,7 +104,7 @@ export const EmptySelection = {
 };
 
 export const ActionFooter = {
-  name: '시나리오 · 선택 객체 작업',
+  name: '사용법 · 선택 객체 작업',
   parameters: storyDescription(
     '선택 객체의 변경 적용과 삭제 작업을 인스펙터 하단에서 제공하는 상황입니다. 파괴적 액션이 danger 표현으로 구분되고 기본 적용 버튼과 떨어져 있으며 실행 전에 확인 단계를 거치는지 확인하세요.',
   ),

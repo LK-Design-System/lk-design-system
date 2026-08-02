@@ -80,6 +80,17 @@ export const TabPatterns = {
       <WiredTabsDemo />
       <Tabs items={tabItems} defaultValue="activity" resize="fill" size="medium" padding trailingIconButton />
       <Tabs items={tabItems} defaultValue="settings" resize="hug" size="large" scroll />
+      <div style={{ width: 260, maxWidth: '100%' }}>
+        <Tabs
+          data-testid="scroll-padding-tabs"
+          items={tabItems}
+          defaultValue="overview"
+          resize="hug"
+          size="small"
+          padding="var(--space-6)"
+          scroll="auto"
+        />
+      </div>
     </main>
   ),
   play: async ({ canvasElement }) => {
@@ -115,6 +126,18 @@ export const TabPatterns = {
     }
     if (tabs.filter((tab) => tab.tabIndex === 0).length !== 1) {
       throw new Error('Exactly one tab may be the Tab stop (tabIndex 0).');
+    }
+    const scrollTabs = canvasElement.querySelector('[data-testid="scroll-padding-tabs"]');
+    const indicator = scrollTabs?.querySelector('[aria-selected="true"] .lk-tabs__indicator');
+    if (!scrollTabs || !indicator) throw new Error('Scrollable padding fixture must expose its active indicator.');
+    const listBox = scrollTabs.getBoundingClientRect();
+    const indicatorBox = indicator.getBoundingClientRect();
+    const styles = getComputedStyle(scrollTabs);
+    if (styles.paddingInlineStart !== '24px' || styles.overflowY !== 'hidden') {
+      throw new Error('Tabs must accept token-length inline padding and suppress cross-axis scrolling.');
+    }
+    if (Math.abs(indicatorBox.height - 2) >= 0.1 || indicatorBox.bottom > listBox.bottom + 0.1 || indicatorBox.top < listBox.top - 0.1) {
+      throw new Error('The complete 2px active indicator must remain inside the tab scroll box.');
     }
   },
 };

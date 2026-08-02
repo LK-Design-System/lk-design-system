@@ -73,7 +73,7 @@ export { RefreshControl } from '../components/data/RefreshControl';
 export { ResourceState } from '../components/data/ResourceState';
 export { SavedViewControl } from '../components/data/SavedViewControl';
 export { Sparkline } from '../components/data/Sparkline';
-export { Table } from '../components/data/Table';
+export { getTableDataCellStyle, getTableHeaderCellStyle, Table } from '../components/data/Table';
 export { Tree } from '../components/data/Tree';
 export { TreePicker } from '../components/data/TreePicker';
 export { VisibilityManager } from '../components/data/VisibilityManager';

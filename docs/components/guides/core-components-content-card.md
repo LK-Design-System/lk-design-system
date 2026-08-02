@@ -21,6 +21,7 @@
 | Part | Contract |
 | --- | --- |
 | toggleIcon | Toggle-icon affordance rendered in the top-right (WDS Card/List Card parity); shows alongside save. |
+| titleWrap | Structured title overflow policy. @default "truncate" |
 | metaCaption | Third caption tier — smallest meta line under subCaption (WDS three-tier caption parity). |
 
 ## Properties
@@ -43,6 +44,7 @@
 | `leadingContent` | `React.ReactNode` | No |  |
 | `trailingContent` | `React.ReactNode` | No |  |
 | `title` | `React.ReactNode` | No |  |
+| `titleWrap` | `"truncate" \| "wrap"` | No | Structured title overflow policy. @default "truncate" |
 | `description` | `React.ReactNode` | No |  |
 | `caption` | `React.ReactNode` | No |  |
 | `subCaption` | `React.ReactNode` | No |  |
@@ -70,6 +72,7 @@
 ## Responsive
 
 - WDS axes: platform="desktop|mobile", skeleton, save, toggleIcon (top-right toggle affordance beside save), structured slots (thumbnail, topContent, leadingContent, trailingContent, bottomContent, footer) and three text caption tiers (caption, title, description, subCaption, metaCaption).
+- titleWrap="truncate|wrap" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination.
 
 ## Related components
 

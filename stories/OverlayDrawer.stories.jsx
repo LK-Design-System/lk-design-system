@@ -40,6 +40,7 @@ function DrawerOpenExample() {
       <Drawer
         open={open}
         title="필터"
+        subtitle="현재 문서 목록에 적용할 조건을 선택합니다."
         onClose={() => setOpen(false)}
         footer={<Button variant="solid" color="primary" onClick={() => setOpen(false)}>적용</Button>}
       >
@@ -62,6 +63,7 @@ function DrawerSheetFocusFixture() {
       <Drawer
         open={drawerOpen}
         title="장치 상태와 운영 그룹 필터"
+        subtitle="현재 장치 목록에 적용하며 저장된 보기에는 영향을 주지 않습니다."
         initialFocusRef={drawerInitialRef}
         onClose={() => setDrawerOpen(false)}
         footer={(
@@ -156,10 +158,11 @@ export const DrawerSheetFocusContract = {
 
     const drawer = canvasElement.querySelector('[role="dialog"]');
     const drawerTitle = drawer && ownerDocument.getElementById(drawer.getAttribute('aria-labelledby'));
+    const drawerSubtitle = drawer && ownerDocument.getElementById(drawer.getAttribute('aria-describedby'));
     const drawerFirst = drawer?.querySelector('button[aria-label="닫기"]');
     const drawerLast = drawer?.querySelector('[data-testid="drawer-last-action"]');
-    if (!drawerTitle?.textContent?.includes('운영 그룹') || !drawerFirst || !drawerLast) {
-      throw new Error('Drawer must expose its visible title and boundary actions.');
+    if (!drawerTitle?.textContent?.includes('운영 그룹') || !drawerSubtitle?.textContent?.includes('저장된 보기') || !drawerFirst || !drawerLast) {
+      throw new Error('Drawer must expose and associate its visible title, short subtitle, and boundary actions.');
     }
     drawerLast.focus();
     await userEvent.tab();

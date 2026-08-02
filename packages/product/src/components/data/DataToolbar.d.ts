@@ -1,5 +1,12 @@
 import * as React from 'react';
 
+export type DataToolbarSize = 'sm' | 'md';
+
+export interface DataToolbarFilterContext {
+  /** 검색 필드와 같은 필터 control 밀도. */
+  size: DataToolbarSize;
+}
+
 export interface DataToolbarProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** 테이블/그리드 제목. */
   title?: React.ReactNode;
@@ -15,12 +22,12 @@ export interface DataToolbarProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   onSearchChange?: (value: string) => void;
   /** 검색 input placeholder와 accessible name. @default "검색" */
   searchPlaceholder?: string;
-  /** 필터 chip/menu 슬롯. */
-  filters?: React.ReactNode;
+  /** 필터 chip/menu 슬롯. 함수면 검색 필드와 같은 control size를 받습니다. */
+  filters?: React.ReactNode | ((context: DataToolbarFilterContext) => React.ReactNode);
   /** 우측 일반 액션 슬롯. */
   actions?: React.ReactNode;
   /** 밀도. @default "md" */
-  size?: 'sm' | 'md';
+  size?: DataToolbarSize;
   /** 외곽선 소유. "embedded"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default "standalone" */
   variant?: 'standalone' | 'embedded';
 }

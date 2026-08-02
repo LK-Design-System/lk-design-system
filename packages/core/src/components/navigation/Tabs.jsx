@@ -47,6 +47,12 @@ export function Tabs({
   const selected = isControlled ? value : internal;
   const s = SIZE[size] || SIZE.medium;
   const fill = resize === "fill" || full;
+  const scrollable = scroll === "auto" || scroll === true;
+  const inlinePadding = padding === true
+    ? 8
+    : padding === false || padding == null
+      ? 0
+      : padding;
 
   /* Exactly one tab is the Tab stop. If the selected tab is disabled
    * (or nothing is selected), fall back to the first enabled tab. */
@@ -94,8 +100,12 @@ export function Tabs({
         alignItems: "stretch",
         gap: fill ? 0 : 24,
         maxWidth: "100%",
-        overflowX: scroll === "auto" || scroll === true ? "auto" : "visible",
-        paddingInline: padding ? 8 : 0,
+        overflowX: scrollable ? "auto" : "visible",
+        // The indicator is now fully inside the tab box. Suppress the CSS
+        // cross-axis auto overflow that an x-scroll container would otherwise
+        // derive, without clipping any part of the 2px indicator.
+        overflowY: scrollable ? "hidden" : "visible",
+        paddingInline: inlinePadding,
         borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
         ...style,
       }}
@@ -189,12 +199,13 @@ export function Tabs({
               </span>
             )}
             <span
+              className="lk-tabs__indicator"
               aria-hidden="true"
               style={{
                 position: "absolute",
                 left: 0,
                 right: 0,
-                bottom: -1,
+                bottom: 0,
                 height: 2,
                 borderRadius: 0,
                 background: active ? "var(--color-semantic-label-normal)" : "transparent",

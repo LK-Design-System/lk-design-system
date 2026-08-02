@@ -1,4 +1,5 @@
 import React from 'react';
+import { Drawer } from '../overlay/Drawer.jsx';
 
 const DASHBOARD_SHELL_STYLES = `
 .lk-dashboard-shell{
@@ -41,18 +42,24 @@ const DASHBOARD_SHELL_STYLES = `
 .lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="true"] .lk-dashboard-shell__navigation{display:none}
 .lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="true"] .lk-dashboard-shell__main{grid-column:1;grid-row:2}
 .lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="true"] .lk-dashboard-shell__narrow-navigation{display:block;grid-column:1;grid-row:3;position:sticky;bottom:0;padding-bottom:var(--mobile-safe-area-bottom)}
-.lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="false"]{grid-template-rows:auto auto minmax(0,1fr)}
-.lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="false"] .lk-dashboard-shell__navigation{display:block;grid-column:1;grid-row:2}
-.lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="false"] .lk-dashboard-shell__main{grid-column:1;grid-row:3}
+.lk-dashboard-shell[data-layout="narrow"][data-has-temporary-navigation="true"]{grid-template-rows:auto minmax(0,1fr)}
+.lk-dashboard-shell[data-layout="narrow"][data-has-temporary-navigation="true"] .lk-dashboard-shell__navigation{display:none}
+.lk-dashboard-shell[data-layout="narrow"][data-has-temporary-navigation="true"] .lk-dashboard-shell__main{grid-column:1;grid-row:2}
+.lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="false"][data-has-temporary-navigation="false"]{grid-template-rows:auto auto minmax(0,1fr)}
+.lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="false"][data-has-temporary-navigation="false"] .lk-dashboard-shell__navigation{display:block;grid-column:1;grid-row:2}
+.lk-dashboard-shell[data-layout="narrow"][data-has-narrow-navigation="false"][data-has-temporary-navigation="false"] .lk-dashboard-shell__main{grid-column:1;grid-row:3}
 @media(max-width:767px){
   .lk-dashboard-shell[data-layout="auto"]{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
   .lk-dashboard-shell[data-layout="auto"] .lk-dashboard-shell__header{grid-column:1;grid-row:1}
   .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="true"] .lk-dashboard-shell__navigation{display:none}
   .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="true"] .lk-dashboard-shell__main{grid-column:1;grid-row:2}
   .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="true"] .lk-dashboard-shell__narrow-navigation{display:block;grid-column:1;grid-row:3;position:sticky;bottom:0;padding-bottom:var(--mobile-safe-area-bottom)}
-  .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="false"]{grid-template-rows:auto auto minmax(0,1fr)}
-  .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="false"] .lk-dashboard-shell__navigation{display:block;grid-column:1;grid-row:2}
-  .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="false"] .lk-dashboard-shell__main{grid-column:1;grid-row:3}
+  .lk-dashboard-shell[data-layout="auto"][data-has-temporary-navigation="true"]{grid-template-rows:auto minmax(0,1fr)}
+  .lk-dashboard-shell[data-layout="auto"][data-has-temporary-navigation="true"] .lk-dashboard-shell__navigation{display:none}
+  .lk-dashboard-shell[data-layout="auto"][data-has-temporary-navigation="true"] .lk-dashboard-shell__main{grid-column:1;grid-row:2}
+  .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="false"][data-has-temporary-navigation="false"]{grid-template-rows:auto auto minmax(0,1fr)}
+  .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="false"][data-has-temporary-navigation="false"] .lk-dashboard-shell__navigation{display:block;grid-column:1;grid-row:2}
+  .lk-dashboard-shell[data-layout="auto"][data-has-narrow-navigation="false"][data-has-temporary-navigation="false"] .lk-dashboard-shell__main{grid-column:1;grid-row:3}
 }
 `;
 
@@ -77,6 +84,16 @@ export function DashboardShell({
   header,
   navigation,
   narrowNavigation,
+  temporaryNavigation,
+  temporaryNavigationOpen = false,
+  onTemporaryNavigationClose,
+  temporaryNavigationId,
+  temporaryNavigationTitle,
+  temporaryNavigationLabel = '주 탐색',
+  temporaryNavigationCloseLabel = '탐색 닫기',
+  temporaryNavigationWidth = 320,
+  temporaryNavigationInitialFocusRef,
+  temporaryNavigationReturnFocusRef,
   children,
   layout = 'auto',
   topology = 'header-first',
@@ -93,7 +110,25 @@ export function DashboardShell({
 }) {
   const generatedId = React.useId().replace(/:/g, '');
   const resolvedMainId = mainId || `lk-dashboard-main-${generatedId}`;
+  const resolvedTemporaryNavigationId = temporaryNavigationId || `lk-dashboard-temporary-navigation-${generatedId}`;
   const resolvedTopology = topology === 'side-first' ? 'side-first' : 'header-first';
+  const [autoNarrow, setAutoNarrow] = React.useState(false);
+
+  React.useEffect(() => {
+    if (layout !== 'auto' || typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      setAutoNarrow(false);
+      return undefined;
+    }
+    const query = window.matchMedia('(max-width: 767px)');
+    const update = () => setAutoNarrow(query.matches);
+    update();
+    query.addEventListener?.('change', update);
+    return () => query.removeEventListener?.('change', update);
+  }, [layout]);
+
+  const isNarrowLayout = layout === 'narrow' || (layout === 'auto' && autoNarrow);
+  const hasTemporaryNavigation = temporaryNavigation != null;
+  const temporaryOpen = hasTemporaryNavigation && temporaryNavigationOpen && isNarrowLayout;
 
   return (
     <div
@@ -101,6 +136,8 @@ export function DashboardShell({
       data-layout={layout}
       data-topology={resolvedTopology}
       data-has-narrow-navigation={narrowNavigation != null ? 'true' : 'false'}
+      data-has-temporary-navigation={hasTemporaryNavigation ? 'true' : 'false'}
+      data-temporary-navigation-open={temporaryOpen ? 'true' : 'false'}
       style={{
         minHeight: '100dvh',
         width: '100%',
@@ -114,11 +151,11 @@ export function DashboardShell({
       }}
       {...rest}
     >
-      <a className="lk-dashboard-shell__skip" href={`#${resolvedMainId}`}>{skipLabel}</a>
+      <a className="lk-dashboard-shell__skip" href={`#${resolvedMainId}`} inert={temporaryOpen ? true : undefined}>{skipLabel}</a>
       <style>{DASHBOARD_SHELL_STYLES}</style>
-      {header != null && <div className="lk-dashboard-shell__header">{header}</div>}
+      {header != null && <div className="lk-dashboard-shell__header" inert={temporaryOpen ? true : undefined}>{header}</div>}
       {navigation != null && (
-        <div className="lk-dashboard-shell__navigation">
+        <div className="lk-dashboard-shell__navigation" inert={temporaryOpen ? true : undefined}>
           {withNavigationLabel(navigation, navigationLabel)}
         </div>
       )}
@@ -128,13 +165,31 @@ export function DashboardShell({
         aria-label={mainLabel}
         className={['lk-dashboard-shell__main', mainClassName].filter(Boolean).join(' ')}
         style={mainStyle}
+        inert={temporaryOpen ? true : undefined}
       >
         {children}
       </main>
       {narrowNavigation != null && (
-        <div className="lk-dashboard-shell__narrow-navigation">
+        <div className="lk-dashboard-shell__narrow-navigation" inert={temporaryOpen ? true : undefined}>
           {withNavigationLabel(narrowNavigation, narrowNavigationLabel)}
         </div>
+      )}
+      {hasTemporaryNavigation && (
+        <Drawer
+          id={resolvedTemporaryNavigationId}
+          open={temporaryOpen}
+          side="left"
+          width={temporaryNavigationWidth}
+          title={temporaryNavigationTitle}
+          ariaLabel={temporaryNavigationLabel}
+          closeLabel={temporaryNavigationCloseLabel}
+          onClose={onTemporaryNavigationClose}
+          initialFocusRef={temporaryNavigationInitialFocusRef}
+          returnFocusRef={temporaryNavigationReturnFocusRef}
+          bodyStyle={{ padding: 0, overflow: 'hidden', scrollbarGutter: 'auto' }}
+        >
+          {withNavigationLabel(temporaryNavigation, temporaryNavigationLabel)}
+        </Drawer>
       )}
     </div>
   );

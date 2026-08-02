@@ -31,16 +31,19 @@ function RailItemTooltip({ label, collapsed, enabled = true, children }) {
  * A wide labeled dashboard sidebar: brand `header` (+ `headerCollapsed` for the
  * rail state), grouped nav `items` (icon + label + badge, `{ heading }` section
  * rows, `children` sub-menus with disclosure), optional pinned `footer`, and a
- * built-in collapse toggle (`collapsible`). Active item takes the cyan wash +
+ * product-shell-owned collapse control. Active item takes the cyan wash +
  * signal ink. Collapsed = icon rail (labels become tooltips, badges become
  * dots, headings become hairlines). Controlled or uncontrolled for both
- * `value` and `collapsed`. Compact fixed rail → `NavRail`; mobile → `BottomNav`.
+ * `value` and `collapsed`; SideNav never renders the collapse control itself.
+ * Compact fixed rail → `NavRail`; mobile → `BottomNav`.
  */
 export function SideNav({
   items = [], value, defaultValue, onChange,
   header, headerCollapsed, footer, width = 240,
+  brandAlign = 'center', footerGap = 'var(--space-2)',
   surface = 'floating',
   collapsed, defaultCollapsed = false, onCollapsedChange, collapsedWidth = 64, overlay = false,
+  autoExpandActiveGroup = true,
   renderLink, className, style, onBlur, onFocus,
   'aria-label': ariaLabel = '사이드 탐색',
   ...rest
@@ -53,9 +56,17 @@ export function SideNav({
   const pick = (v) => { if (!isControlled) setInternal(v); onChange && onChange(v); };
 
   const colControlled = collapsed !== undefined;
+  const persistentCollapsedRef = React.useRef(defaultCollapsed);
+  const previousOverlayRef = React.useRef(overlay);
   const [colInternal, setColInternal] = React.useState(defaultCollapsed || overlay);
   const col = colControlled ? collapsed : colInternal;
-  const setCol = (c) => { if (!colControlled) setColInternal(c); onCollapsedChange && onCollapsedChange(c); };
+  const setCol = (c) => {
+    if (!colControlled) {
+      setColInternal(c);
+      if (!overlay) persistentCollapsedRef.current = c;
+    }
+    onCollapsedChange && onCollapsedChange(c);
+  };
   const generatedPanelId = React.useId().replace(/:/g, '');
   const panelId = `lk-sidenav-panel-${generatedPanelId}`;
 
@@ -64,6 +75,13 @@ export function SideNav({
   const peekT = React.useRef(null);
   const pointerInside = React.useRef(false);
   const restoringFocus = React.useRef(false);
+  React.useEffect(() => {
+    const previousOverlay = previousOverlayRef.current;
+    previousOverlayRef.current = overlay;
+    if (colControlled || previousOverlay === overlay) return;
+    clearTimeout(peekT.current);
+    setColInternal(overlay ? true : persistentCollapsedRef.current);
+  }, [colControlled, overlay]);
   const collapseAndRestoreFocus = () => {
     clearTimeout(peekT.current);
     const activeElement = document.activeElement;
@@ -107,11 +125,14 @@ export function SideNav({
 
   const [open, setOpen] = React.useState(() => {
     const o = {};
-    items.forEach((i) => { if (i && i.children && i.children.some((c) => c.value === val)) o[i.value] = true; });
+    if (autoExpandActiveGroup) {
+      items.forEach((i) => { if (i && i.children && i.children.some((c) => c.value === val)) o[i.value] = true; });
+    }
     return o;
   });
 
   React.useEffect(() => {
+    if (!autoExpandActiveGroup) return;
     const activeParent = items.find((item) => (
       item
       && !item.heading
@@ -123,13 +144,15 @@ export function SideNav({
         ? current
         : { ...current, [activeParent.value]: true }
     ));
-  }, [items, val]);
+  }, [autoExpandActiveGroup, items, val]);
 
   const [hovKey, setHovKey] = React.useState(null);
   const hoverProps = (k) => ({ onMouseEnter: () => setHovKey(k), onMouseLeave: () => setHovKey(null) });
   const row = (active, disabled, extra, hovered) => ({
     position: 'relative', display: 'flex', alignItems: 'center', justifyContent: col ? 'center' : 'flex-start', gap: 'var(--space-3)',
-    width: '100%', minHeight: col ? undefined : 44, padding: col ? '11px 0' : '10px 12px', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)',
+    // Width may animate between rail and panel, but vertical hit targets stay
+    // fixed so pointer/focus positions do not drift during an overlay peek.
+    width: '100%', minHeight: 44, padding: col ? '11px 0' : '10px 12px', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)',
     cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, textAlign: 'left', textDecoration: 'none', fontFamily: 'var(--font-sans)',
     fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)',
     background: active ? 'var(--color-semantic-primary-surface-strong)' : hovered && !disabled ? 'var(--color-semantic-fill-alternative)' : 'transparent', color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
@@ -181,15 +204,19 @@ export function SideNav({
   };
 
   const brand = col ? (headerCollapsed != null ? headerCollapsed : header) : header;
+  const resolvedFooter = typeof footer === 'function'
+    ? footer({ collapsed: col, expanded: !col, overlay })
+    : footer;
 
   const resolvedSurface = surface === 'docked' ? 'docked' : 'floating';
   const docked = resolvedSurface === 'docked';
   const shell = { position: 'relative', display: 'flex', flexDirection: 'column', width: col ? collapsedWidth : width, boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: docked ? 'none' : '1px solid var(--color-semantic-line-solid-normal)', borderInlineEnd: docked ? '1px solid var(--color-semantic-line-solid-normal)' : undefined, borderRadius: docked ? 0 : 'var(--radius-xl)', boxShadow: docked ? 'none' : undefined, padding: 'var(--space-2-5)', transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
   const sideNavStyles = `
     [data-sidenav-value]:active:not(:disabled){background:var(--color-semantic-fill-normal)!important}
+    [data-collapsed="true"] .lk-sidenav__scroll::-webkit-scrollbar{display:none}
     @media(prefers-reduced-motion:reduce){.lk-sidenav__surface{transition-duration:0s!important;animation-duration:0s!important}}
   `;
-  const brandRegionStyle = { position: 'relative', display: 'flex', flexDirection: col ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-1-5)', minHeight: 24, padding: col ? '14px 10px 10px' : '14px 10px 18px' };
+  const brandRegionStyle = { position: 'relative', display: 'flex', flexDirection: col ? 'column' : 'row', alignItems: 'center', justifyContent: col || brandAlign === 'center' ? 'center' : 'flex-start', gap: 'var(--space-1-5)', minHeight: 24, padding: '14px 10px 18px' };
   const panelContent = (
     <div id={panelId} className="lk-sidenav__panel-content" data-collapsed={col ? 'true' : 'false'} style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto', minHeight: 0 }}>
       <style>{sideNavStyles}</style>
@@ -198,7 +225,7 @@ export function SideNav({
           {brand}
         </div>
       )}
-      <ul className="lk-scroll-surface lk-sidenav__scroll" data-scrollbar="compact" data-scroll-gutter={col ? 'auto' : 'stable'} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', flex: '1 1 auto', minHeight: 0, margin: 0, padding: 0, listStyle: 'none', overflowX: col ? 'visible' : 'hidden', overflowY: col ? 'visible' : 'auto' }}>
+      <ul className="lk-scroll-surface lk-sidenav__scroll" data-scrollbar="compact" data-scroll-gutter={col ? 'auto' : 'stable'} data-scrollbar-exception="collapsed-navigation-rail" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', flex: '1 1 auto', minHeight: 0, margin: 0, padding: 0, listStyle: 'none', overflowX: 'hidden', overflowY: 'auto', scrollbarWidth: col ? 'none' : undefined }}>
         {items.map((o, i) => {
           if (o.heading) return col
             ? <li key={'h' + i} style={LIST_ITEM_STYLE}><div aria-hidden="true" style={{ height: 1, flexShrink: 0, background: 'var(--color-semantic-line-solid-normal)', margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px' }} /></li>
@@ -211,6 +238,7 @@ export function SideNav({
           if (kids.length > 0) {
             const isOpen = !!open[o.value];
             const childActive = kids.some((c) => c.value === val);
+            const hasChildIcons = kids.some((c) => c.icon != null);
             const onParent = () => { if (col) { setCol(false); setOpen((s) => ({ ...s, [o.value]: true })); } else { setOpen((s) => ({ ...s, [o.value]: !s[o.value] })); } };
             return (
               <li key={o.value} style={LIST_ITEM_STYLE}>
@@ -236,9 +264,14 @@ export function SideNav({
                             parentValue: o.value,
                             ariaLabel: c.ariaLabel,
                             title: childTitle,
-                            itemStyle: row(ca, c.disabled, { padding: '8px 12px 8px 42px' }, hovKey === c.value),
+                            itemStyle: row(ca, c.disabled, { padding: hasChildIcons ? '8px 12px 8px 24px' : '8px 12px 8px 42px', gap: hasChildIcons ? 'var(--space-2)' : undefined }, hovKey === c.value),
                             content: (
                               <React.Fragment>
+                                {hasChildIcons && (
+                                  <span data-sidenav-child-icon aria-hidden="true" style={{ width: 'var(--space-4-5)', flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    {c.icon}
+                                  </span>
+                                )}
                                 <span style={{ flex: 1, minWidth: 0, fontSize: 'var(--label2-size)', fontWeight: ca ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.label}</span>
                                 {c.badge != null && pill(ca, c.badge)}
                               </React.Fragment>
@@ -276,9 +309,9 @@ export function SideNav({
           );
         })}
       </ul>
-      <div style={{ marginTop: 'auto', paddingTop: 8 }}>
-        {footer != null && (
-          <div style={{ paddingTop: 'var(--space-2-5)', marginLeft: 'var(--space-0-5)', marginRight: 'var(--space-0-5)', borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>{footer}</div>
+      <div style={{ marginTop: 'auto', paddingTop: footerGap }}>
+        {resolvedFooter != null && (
+          <div style={{ paddingTop: 'var(--space-2-5)', marginLeft: 'var(--space-0-5)', marginRight: 'var(--space-0-5)', borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>{resolvedFooter}</div>
         )}
       </div>
     </div>

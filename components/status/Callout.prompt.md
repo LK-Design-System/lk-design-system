@@ -18,3 +18,5 @@
 - [Carbon Notification usage](https://carbondesignsystem.com/components/notification/usage/)의 callout 분류처럼, 정적이고 맥락적인 정보를 일시적 notification과 분리합니다. LDS Callout도 기본 dismiss/action/live semantics를 두지 않습니다.
 - [Primer Banner](https://primer.style/product/components/banner/)와 [Fluent 2 MessageBar](https://fluent2.microsoft.design/components/web/react/core/messagebar/usage)는 상태 메시지와 컨테이너 결합 방식을 보여 줍니다. 그 역할이 필요한 경우 Callout 표면을 억지로 flush 처리하지 않고 `Banner`를 선택합니다.
 - [GNOME HIG Banners](https://developer.gnome.org/hig/patterns/feedback/banners.html)가 view-level 상태를 banner로 다루는 것과 구분해, Callout은 현재 상태를 발표하는 영역이 아니라 본문 이해를 돕는 standing note로 남깁니다. 외부 스타일을 복제하지 않고 LDS의 semantic tone과 표면 규칙을 유지합니다.
+
+Use `headingLevel={2|3|4|5|6}` when the Callout title starts a real subsection in the document outline. The default is `false`, which preserves a visually emphasized `div` without inventing a heading level. Choose the level from the surrounding page hierarchy rather than from the Callout's visual size.

@@ -30,10 +30,10 @@
 | header | header/banner landmark를 소유하는 상단 슬롯. LDS에서는 TopBar를 권장합니다. |
 | navigation | 넓은 화면의 navigation landmark 슬롯. SideNav 또는 NavRail을 사용합니다. |
 | narrowNavigation | 좁은 화면의 navigation landmark 슬롯. BottomNav를 사용합니다. 생략하면 navigation이 좁은 화면에서 본문 앞에 유지됩니다. |
-| topology | header-first는 전폭 header 아래에 탐색을 두고, side-first는 넓은 화면에서 탐색을 전체 높이의 첫 열에 둡니다. @default "header-first" |
-| mainLabel | main landmark의 접근 가능한 이름. |
-| skipLabel | 첫 focus 대상인 건너뛰기 링크 문구. @default "본문으로 건너뛰기" |
-| navigationLabel | 넓은 화면 navigation의 기본 접근 가능한 이름. @default "주 탐색" |
+| temporaryNavigation | 좁은 화면에서 modal Drawer로 표시할 계층형 탐색 슬롯. 제공하면 좁은 화면에서 넓은 navigation은 숨고 본문은 그대로 유지됩니다. |
+| temporaryNavigationOpen | temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false |
+| onTemporaryNavigationClose | Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청. |
+| temporaryNavigationId | 헤더 trigger의 aria-controls와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다. |
 
 ## Properties
 
@@ -42,6 +42,16 @@
 | `header` | `React.ReactNode` | No | header/banner landmark를 소유하는 상단 슬롯. LDS에서는 TopBar를 권장합니다. |
 | `navigation` | `React.ReactNode` | No | 넓은 화면의 navigation landmark 슬롯. SideNav 또는 NavRail을 사용합니다. |
 | `narrowNavigation` | `React.ReactNode` | No | 좁은 화면의 navigation landmark 슬롯. BottomNav를 사용합니다. 생략하면 navigation이 좁은 화면에서 본문 앞에 유지됩니다. |
+| `temporaryNavigation` | `React.ReactNode` | No | 좁은 화면에서 modal Drawer로 표시할 계층형 탐색 슬롯. 제공하면 좁은 화면에서 넓은 navigation은 숨고 본문은 그대로 유지됩니다. |
+| `temporaryNavigationOpen` | `boolean` | No | temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false |
+| `onTemporaryNavigationClose` | `() = void` | No | Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청. |
+| `temporaryNavigationId` | `string` | No | 헤더 trigger의 aria-controls와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다. |
+| `temporaryNavigationTitle` | `React.ReactNode` | No | Drawer에 보이는 탐색 제목. |
+| `temporaryNavigationLabel` | `string` | No | Drawer dialog와 내부 navigation의 접근 가능한 이름. @default "주 탐색" |
+| `temporaryNavigationCloseLabel` | `string` | No | Drawer 닫기 버튼의 접근 가능한 이름. @default "탐색 닫기" |
+| `temporaryNavigationWidth` | `number` | No | temporaryNavigation Drawer 너비(px). @default 320 |
+| `temporaryNavigationInitialFocusRef` | `React.RefObject` | No | Drawer가 열릴 때 우선 초점을 받을 내부 요소. |
+| `temporaryNavigationReturnFocusRef` | `React.RefObject` | No | Drawer가 닫힐 때 초점을 복원할 persistent trigger. |
 | `children` | `React.ReactNode` | No |  |
 | `layout` | `'auto' \| 'wide' \| 'narrow'` | No | auto는 768px 미만에서 좁은 구성을 사용합니다. @default "auto" |
 | `topology` | `'header-first' \| 'side-first'` | No | header-first는 전폭 header 아래에 탐색을 두고, side-first는 넓은 화면에서 탐색을 전체 높이의 첫 열에 둡니다. @default "header-first" |
@@ -53,10 +63,18 @@
 | `navigationLabel` | `string` | No | 넓은 화면 navigation의 기본 접근 가능한 이름. @default "주 탐색" |
 | `narrowNavigationLabel` | `string` | No | 좁은 화면 navigation의 기본 접근 가능한 이름. @default "주 탐색" |
 
+## States
+
+| State | Contract |
+| --- | --- |
+| temporaryNavigationOpen | temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false |
+
 ## Behavior and interaction
 
 - Carbon UI shell usage — 지속적인 header, 선택적인 left panel, product→global 순서를 분리하고 좁은 폭에서는 header link를 left navigation으로 이동합니다. LDS 셸도 header와 제품 탐색을 별도 슬롯으로 유지합니다.
-- 의도적 제외: 라우터 인스턴스, 인증·권한 판정, drawer open state, URL 동기화, 데이터 새로고침, 사용자별 셸 저장은 제품이 소유합니다. DashboardShell은 슬롯 배치와 landmark, skip link, 반응형 전환만 소유합니다.
+- Carbon UI shell accessibility — 첫 keyboard 항목으로 skip-to-main을 제공하고 native header 구조를 사용합니다. LDS도 보이는 focus skip link와 실제 focus 가능한 main 목적지를 제공합니다.
+- WAI-ARIA APG Modal Dialog Pattern — modal 배경은 inert이고, Tab/Shift+Tab은 dialog 안에 머물며 Escape와 호출 지점 복원을 제공해야 합니다. temporary navigation은 이 책임을 제품별 scrim 코드가 아니라 공용 Drawer 엔진에서 상속합니다.
+- 의도적 제외: 라우터 인스턴스, 인증·권한 판정, drawer open state의 저장, URL 동기화, 데이터 새로고침, 사용자별 셸 저장은 제품이 소유합니다. DashboardShell은 슬롯 배치와 landmark, skip link, 반응형 전환, temporary Drawer의 modal coordination만 소유합니다.
 
 ## 정량 규칙
 
@@ -64,7 +82,7 @@
 | --- | --- |
 | 명시 규칙 1 | layout — auto는 LDS의 sm=768px 아래에서 좁은 구성을 사용합니다. Storybook과 테스트에서는 wide/narrow로 상태를 결정적으로 고정할 수 있습니다. |
 | 명시 규칙 2 | main은 하나만 렌더링하고 tabIndex={-1}과 안정적인 id를 가져 skip link의 실제 focus 목적지가 됩니다. mainLabel은 같은 문서에 여러 셸이 있는 검증 fixture에서만 명시합니다. |
-| 명시 규칙 3 | 넓은 구성은 auto + minmax(0, 1fr), 좁은 구성은 단일 본문 열과 하단 탐색 행입니다. 이 배치 차이는 탐색 공간을 확보하기 위한 기능적 차이이며 새로운 장식 언어가 아닙니다. |
+| 명시 규칙 3 | 넓은 구성은 auto + minmax(0, 1fr), 좁은 구성은 단일 본문 열과 선택적인 하단 탐색 행입니다. temporary navigation은 문서 흐름을 차지하지 않고 왼쪽 edge의 기존 Drawer 표면을 사용합니다. 이 배치 차이는 탐색 공간을 확보하기 위한 기능적 차이이며 새로운 장식 언어가 아닙니다. |
 | 명시 규칙 4 | Container의 page margin과 최대 폭, PageHeader의 본문 위계, DashboardGrid의 카드 간격은 각각 해당 컴포넌트가 소유합니다. |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
 
@@ -83,10 +101,10 @@
 ## Accessibility
 
 - 의미·키보드 순서는 본문 건너뛰기 → header/banner → 넓은 주 탐색 → main → 좁은 주 탐색입니다. CSS로 숨겨진 탐색 슬롯은 접근성 트리에서도 제외됩니다.
+- 목적지가 네 개를 넘거나 disclosure 계층을 유지해야 하는 좁은 화면은 temporaryNavigation에 SideNav를 전달합니다. 제품이 trigger와 temporaryNavigationOpen 상태·라우트 선택을 소유하고, 셸은 기존 Drawer 엔진으로 스크림, Tab containment, Escape, 초점 복원, body scroll lock을 제공합니다. 열려 있는 동안 skip link·header·wide navigation·main·bottom navigation은 inert입니다.
+- header trigger는 temporaryNavigationId를 가리키는 aria-controls와 실제 open state의 aria-expanded를 갖습니다. 일반 dismiss는 temporaryNavigationReturnFocusRef로 trigger에 복원하고, 목적지를 선택한 뒤에는 제품이 Drawer를 닫고 focus 가능한 main으로 이동할 수 있습니다.
+- temporaryNavigationLabel은 dialog와 내부 nav의 접근 가능한 이름, temporaryNavigationCloseLabel은 닫기 버튼 이름, temporaryNavigationWidth는 px 단위 Drawer 폭입니다. 특별한 업무 순서가 있을 때만 temporaryNavigationInitialFocusRef로 첫 초점을 재정의하고, 기본은 Drawer 안의 첫 focusable control입니다.
 - TopBar, SideNav, NavRail, BottomNav의 control/icon 크기, typography, radius, border, fill, active/focus/disabled 처리를 그대로 유지합니다.
-- 건너뛰기 링크의 테두리는 primary 색으로 focus 위치를 알리고, 문구는 semantic label 색을 사용해 밝은·어두운 셸 배경 모두에서 본문 텍스트 대비를 유지합니다.
-- Carbon UI shell accessibility — 첫 keyboard 항목으로 skip-to-main을 제공하고 native header 구조를 사용합니다. LDS도 보이는 focus skip link와 실제 focus 가능한 main 목적지를 제공합니다.
-- WAI-ARIA landmark regions — header, nav, main을 논리적 최상위 영역으로 두고 한 문서의 main을 하나로 유지합니다.
 
 ## Related components
 
@@ -117,7 +135,12 @@
       items={items}
     />
   )}
-  narrowNavigation={<BottomNav items={compactItems} />}
+  temporaryNavigation={<SideNav items={items} surface="docked" />}
+  temporaryNavigationOpen={navigationOpen}
+  onTemporaryNavigationClose={() => setNavigationOpen(false)}
+  temporaryNavigationId="product-navigation-drawer"
+  temporaryNavigationTitle="주 탐색"
+  temporaryNavigationReturnFocusRef={menuButtonRef}
 >
   <Container size="wide">…</Container>
 </DashboardShell>
@@ -157,4 +180,5 @@
 - [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/)
 - [Carbon UI shell accessibility](https://carbondesignsystem.com/components/UI-shell-header/accessibility/)
 - [Fluent Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
+- [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [WAI-ARIA landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)

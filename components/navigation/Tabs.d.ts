@@ -40,8 +40,8 @@ export interface TabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'o
   resize?: "hug" | "fill";
   /** size axis. @default "medium" */
   size?: "small" | "sm" | "medium" | "md" | "large" | "lg";
-  /** padding axis. @default false */
-  padding?: boolean;
+  /** Inline padding. `true` preserves the legacy 8px value; a number or CSS length sets an explicit inset. @default false */
+  padding?: boolean | number | string;
   /** trailingIconButton axis. @default false */
   trailingIconButton?: boolean | React.ReactNode;
   /** scroll axis. @default "auto" */

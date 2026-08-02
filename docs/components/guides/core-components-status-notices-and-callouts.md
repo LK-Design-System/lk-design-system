@@ -40,6 +40,7 @@
 | `closeLabel` | `string` | No | 닫기 버튼의 접근성 레이블. @default "닫기" |
 | `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative' \| 'navy'` | No |  |
 | `title` | `React.ReactNode` | No |  |
+| `headingLevel` | `2 \| 3 \| 4 \| 5 \| 6 \| false` | No | 문서 구조에 맞는 제목 레벨. 기본 false는 기존 비-heading title을 유지합니다. @default false |
 | `icon` | `React.ReactElement \| null` | No | tone별 기본 아이콘을 교체합니다. 생략하거나 null을 전달해도 기본 아이콘은 유지됩니다. |
 | `children` | `React.ReactNode` | No |  |
 

@@ -177,8 +177,8 @@
       },
       {
         "id": "lds-product-viewer-floor-selector--on-viewer-surface",
-        "name": "뷰어 표면 위",
-        "role": "overview"
+        "name": "사용법 · 뷰어 표면 배치",
+        "role": "usage"
       }
     ],
     "hiddenEvidence": 2

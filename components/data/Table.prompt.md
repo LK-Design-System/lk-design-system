@@ -39,3 +39,8 @@ Reference: [SAP Fiori data table usage](https://www.sap.com/design-system/fiori-
 - **getRowId** — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 `row.id`, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.
 
 Reference: [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns/table/) — 열/행 헤더는 `<th>`와 `scope`로 표현하고 표에는 이름을 부여합니다. 자사 `DataGrid`도 같은 기준(`scope="col"`, `tableLabel`)을 씁니다.
+
+## Row and cell-style extension points
+
+- `getRowProps(row, index)` merges native `<tr>` attributes such as `data-*`, `className`, `style`, and pointer handlers. It does not add selection, focus, or grid semantics. Use `DataGrid` when rows must be selected, sorted, or navigated with the keyboard.
+- `getTableHeaderCellStyle({ padding, align, width })` and `getTableDataCellStyle({ padding, align, width })` expose the LDS static-table cell presentation for product-owned table compositions that cannot use the full `Table` renderer. Preserve native `<th scope="col|row">` and `<td>` elements when using them.

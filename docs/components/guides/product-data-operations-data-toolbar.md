@@ -22,7 +22,9 @@
 | --- | --- |
 | title | 테이블/그리드 제목. |
 | description | 제목 아래 설명. |
+| filters | 필터 chip/menu 슬롯. 함수면 검색 필드와 같은 control size를 받습니다. |
 | actions | 우측 일반 액션 슬롯. |
+| size | 밀도. @default "md" |
 
 ## Properties
 
@@ -35,9 +37,9 @@
 | `defaultSearchValue` | `string` | No | 비제어 검색어 초기값. @default "" |
 | `onSearchChange` | `(value: string) = void` | No | 검색어 변경 콜백. |
 | `searchPlaceholder` | `string` | No | 검색 input placeholder와 accessible name. @default "검색" |
-| `filters` | `React.ReactNode` | No | 필터 chip/menu 슬롯. |
+| `filters` | `React.ReactNode \| ((context: DataToolbarFilterContext) = React.ReactNode)` | No | 필터 chip/menu 슬롯. 함수면 검색 필드와 같은 control size를 받습니다. |
 | `actions` | `React.ReactNode` | No | 우측 일반 액션 슬롯. |
-| `size` | `'sm' \| 'md'` | No | 밀도. @default "md" |
+| `size` | `DataToolbarSize` | No | 밀도. @default "md" |
 | `variant` | `'standalone' \| 'embedded'` | No | 외곽선 소유. "embedded"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default "standalone" |
 
 ## States
@@ -57,6 +59,7 @@
 
 | Subject | Rule |
 | --- | --- |
+| 명시 규칙 1 | size="sm"은 검색과 render-prop filter control에 32px compact 밀도를, 기본 md는 48px field 밀도를 제공합니다. action용 Button 척도와 field 척도는 전역에서 합치지 않습니다. FilterChip은 고유 32px pill 높이를 유지하며 control 행 중앙에 정렬됩니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 | --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 | --body2-line | 22px |
@@ -64,8 +67,10 @@
 
 ## Responsive
 
-- filters는 query를 좁히는 chip/menu 슬롯, actions는 열 표시·순서 설정 trigger, 내보내기 같은 전체 표 action 슬롯입니다. 설정 UI와 저장 상태는 제품이 소유하고 visibleColumnKeys/columnOrder로 DataGrid에 전달합니다.
+- filters는 query를 좁히는 chip/menu 슬롯, actions는 열 표시·순서 설정 trigger, 내보내기 같은 전체 표 action 슬롯입니다. filters에 함수를 주면 { size }를 받아 검색과 같은 field control 밀도를 Select·SearchField 같은 자식에게 전달할 수 있습니다. 기존 ReactNode 슬롯도 그대로 지원합니다. 설정 UI와 저장 상태는 제품이 소유하고 visibleColumnKeys/columnOrder로 DataGrid에 전달합니다.
 - selectedCount와 bulkActions는 DataToolbar props가 아닙니다. 선택 수, 선택 해제, bulk action은 DataGrid의 같은 높이 selection band에 둡니다.
+- PatternFly Toolbar design guidelines는 search filter와 filter group을 하나의 연관된 그룹으로 배치하고 모든 toolbar item을 세로 중앙 정렬합니다. LDS는 검색과 field형 필터에 같은 size를 전달하고, 고유 높이를 가진 chip은 늘리지 않고 중앙 정렬합니다.
+- PatternFly Filters는 text entry·single select·filter group을 같은 toolbar 안에서 조합할 수 있는 필터 유형으로 구분합니다. 따라서 LDS는 임의 자식을 강제로 clone하거나 높이를 덮지 않고 render-prop context로 field control 밀도만 전달합니다.
 
 ## Content and writing
 
@@ -83,10 +88,10 @@
 | `DataGrid` | 대표 시나리오에서 조합 |
 | `FilterChip` | 대표 시나리오에서 조합 |
 | `Icon` | 대표 시나리오에서 조합 |
+| `Select` | 대표 시나리오에서 조합 |
 | `TextButton` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -100,7 +105,12 @@
   searchValue={query}
   onSearchChange={setQuery}
   searchPlaceholder="사용자 검색"
-  filters={<FilterChip active>온라인</FilterChip>}
+  filters={({ size }) => (
+    <Select size={size} value={status} onChange={setStatus}>
+      <option value="all">전체 상태</option>
+      <option value="online">온라인</option>
+    </Select>
+  )}
   actions={<Button size="sm">내보내기</Button>}
 />
 ```
@@ -117,8 +127,6 @@
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-strong`
 - `--color-semantic-line-solid-normal`
-- `--component-button-height-md`
-- `--component-button-height-sm`
 - `--font-sans`
 - `--fw-medium`
 - `--fw-semibold`
@@ -142,5 +150,7 @@
 - DataToolbar prompt contract: `components/data/DataToolbar.prompt.md`
 - Storybook implementation evidence: `stories/DataToolbar.stories.jsx`
 - [Carbon Data table usage](https://carbondesignsystem.com/components/data-table/usage/)
+- [PatternFly Toolbar design guidelines](https://v4-archive.patternfly.org/v4/components/toolbar/design-guidelines/)
+- [PatternFly Filters](https://www.patternfly.org/patterns/filters/design-guidelines/)
 - [Carbon Pagination usage](https://carbondesignsystem.com/components/pagination/usage/)
 - [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns/table/)

@@ -93,13 +93,13 @@
 | [Writing Editor](guides/product-content-writing-editor.md) | Product / Content | `Button`, `ContentEditor`, `Icon`, `StatusBadge` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Data Grid](guides/product-data-collections-data-grid.md) | Product / Collections | `DataGrid` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 0 hidden |
 | [File Browser](guides/product-data-collections-file-browser.md) | Product / Collections | `FileBrowser` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
-| [Table](guides/product-data-collections-table.md) | Product / Collections | `Table` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
+| [Table](guides/product-data-collections-table.md) | Product / Collections | `Table` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Tree](guides/product-data-collections-tree.md) | Product / Collections | `Tree` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Carousel](guides/product-data-display-carousel.md) | Product / Display | `Carousel` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
 | [Description List](guides/product-data-display-description-list.md) | Product / Display | `DescriptionList` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Metric Card](guides/product-data-display-metric-card.md) | Product / Display | `MetricCard` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Resource State](guides/product-data-display-resource-state.md) | Product / Display | `ResourceState` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Data Toolbar](guides/product-data-operations-data-toolbar.md) | Product / Operations | `DataToolbar` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
+| [Data Toolbar](guides/product-data-operations-data-toolbar.md) | Product / Operations | `DataToolbar` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Export Action](guides/product-data-operations-export-action.md) | Product / Operations | `DataExportAction` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Filter Bar](guides/product-data-operations-filter-bar.md) | Product / Operations | `FilterBar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Refresh Control](guides/product-data-operations-refresh-control.md) | Product / Operations | `RefreshControl` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
@@ -130,13 +130,13 @@
 | [Footer](guides/product-navigation-footer.md) | Product / Navigation | `Footer` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Language Switcher](guides/product-navigation-language-switcher.md) | Product / Navigation | `LanguageSwitcher` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Menubar](guides/product-navigation-menubar.md) | Product / Navigation | `Menubar` | mapped | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
-| [Side Nav](guides/product-navigation-side-nav.md) | Product / Navigation | `SideNav` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
+| [Side Nav](guides/product-navigation-side-nav.md) | Product / Navigation | `SideNav` | not-tracked | implemented | not-tracked | not-tracked | 8 public / 1 hidden |
 | [Steps](guides/product-navigation-steps.md) | Product / Navigation | `Steps` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Top Bar](guides/product-navigation-top-bar.md) | Product / Navigation | `TopBar` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
 | [User Menu](guides/product-navigation-user-menu.md) | Product / Navigation | `UserMenu` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Wizard](guides/product-navigation-wizard.md) | Product / Navigation | `Wizard` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Dashboard Grid](guides/product-operations-dashboard-dashboard-grid.md) | Product / Operations Dashboard | `DashboardGrid` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
-| [Dashboard Shell](guides/product-operations-dashboard-dashboard-shell.md) | Product / Operations Dashboard | `DashboardShell` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 0 hidden |
+| [Dashboard Shell](guides/product-operations-dashboard-dashboard-shell.md) | Product / Operations Dashboard | `DashboardShell` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 0 hidden |
 | [Command Palette](guides/product-overlay-command-palette.md) | Product / Overlay | `CommandPalette` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
 | [Drawer](guides/product-overlay-drawer.md) | Product / Overlay | `Drawer` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Hover Card](guides/product-overlay-hover-card.md) | Product / Overlay | `HoverCard` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |

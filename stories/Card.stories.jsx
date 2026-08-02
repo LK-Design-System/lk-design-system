@@ -164,7 +164,8 @@ export const ContentCardPatterns = {
           topContent={<ContentBadge color="accent" size="xsmall">콘텐츠</ContentBadge>}
           thumbnail={<Thumbnail ratio="16/10" placeholder={false} style={{ background: 'linear-gradient(135deg, var(--color-semantic-fill-normal), var(--color-semantic-fill-alternative))' }} />}
           caption="카테고리"
-          title="콘텐츠 카드"
+          title="여러 문장 단위로 이어지는 긴 콘텐츠 카드 제목도 정보 손실 없이 표시합니다"
+          titleWrap="wrap"
           description="썸네일, 저장 액션, 제목, 설명, 보조 정보를 하나의 중립 카드 표면에 배치합니다."
           bottomContent={<div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}><ContentBadge size="xsmall">신규</ContentBadge><ContentBadge size="xsmall">추천</ContentBadge></div>}
         />
@@ -206,10 +207,14 @@ export const ContentCardPatterns = {
   ),
   play: async ({ canvasElement }) => {
     const headings = [...canvasElement.querySelectorAll('h3')].map((h) => h.textContent);
-    for (const title of ['콘텐츠 카드', '모바일 콘텐츠 카드']) {
+    for (const title of ['여러 문장 단위로 이어지는 긴 콘텐츠 카드 제목도 정보 손실 없이 표시합니다', '모바일 콘텐츠 카드']) {
       if (!headings.includes(title)) {
         throw new Error(`구조화 카드의 title은 실제 heading으로 렌더링되어야 합니다(WCAG 1.3.1): ${title}`);
       }
+    }
+    const wrappedTitle = [...canvasElement.querySelectorAll('h3')].find((heading) => heading.textContent?.startsWith('여러 문장'));
+    if (!wrappedTitle || getComputedStyle(wrappedTitle).whiteSpace !== 'normal') {
+      throw new Error('Card titleWrap="wrap" must preserve the complete visible title across lines.');
     }
   },
 };

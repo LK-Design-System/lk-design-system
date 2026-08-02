@@ -220,6 +220,11 @@
         "role": "usage"
       },
       {
+        "id": "lds-product-editor-selection-inspector--action-footer",
+        "name": "사용법 · 선택 객체 작업",
+        "role": "usage"
+      },
+      {
         "id": "lds-product-editor-selection-inspector--empty-selection",
         "name": "변형·상태 · 선택 객체 없음",
         "role": "variants-states"
@@ -228,11 +233,6 @@
         "id": "lds-product-editor-selection-inspector--unit-formatting-at-320",
         "name": "반응형 · 320px 단위 결합",
         "role": "responsive"
-      },
-      {
-        "id": "lds-product-editor-selection-inspector--action-footer",
-        "name": "시나리오 · 선택 객체 작업",
-        "role": "usage"
       }
     ],
     "hiddenEvidence": 2

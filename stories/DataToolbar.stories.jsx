@@ -6,6 +6,7 @@ import {
   DataToolbar,
   FilterChip,
   Icon,
+  Select,
   StatusBadge,
   TextButton,
 } from '../src/index.js';
@@ -75,11 +76,11 @@ function ToolbarWithGridDemo() {
         description="검색, 필터, 선택 후 작업을 표와 같은 표면에서 정렬합니다."
         count={rows.length}
         searchPlaceholder="사용자 검색"
-        filters={(
+        filters={({ size: filterSize }) => (
           <>
-            <FilterChip size="sm" active>활성</FilterChip>
-            <FilterChip size="sm">검토 필요</FilterChip>
-            <FilterChip size="sm">비활성</FilterChip>
+            <FilterChip size={filterSize} active>활성</FilterChip>
+            <FilterChip size={filterSize}>검토 필요</FilterChip>
+            <FilterChip size={filterSize}>비활성</FilterChip>
           </>
         )}
         actions={<Button size="sm" variant="ghost"><Icon name="upload" size={16} aria-hidden="true" />내보내기</Button>}
@@ -109,6 +110,33 @@ function ToolbarWithGridDemo() {
         }}
       />
     </main>
+  );
+}
+
+function MediumFilterDensityDemo() {
+  const [scope, setScope] = React.useState('all');
+  return (
+    <div style={{ width: '100%', maxWidth: 760 }}>
+      <DataToolbar
+        data-testid="medium-density-toolbar"
+        title="자료 목록"
+        description="기본 밀도에서 검색과 필드형 필터의 높이를 맞춥니다."
+        searchPlaceholder="자료 검색"
+        filters={({ size: filterSize }) => (
+          <Select
+            aria-label="자료 유형 필터"
+            size={filterSize}
+            value={scope}
+            onChange={setScope}
+            style={{ minWidth: 160 }}
+          >
+            <option value="all">전체 유형</option>
+            <option value="document">문서</option>
+            <option value="dataset">데이터셋</option>
+          </Select>
+        )}
+      />
+    </div>
   );
 }
 
@@ -154,6 +182,29 @@ export const ToolbarWithGrid = {
     await userEvent.click(clear);
     if (canvasElement.querySelector('[role="group"][aria-label="사용자 일괄 작업"]')) {
       throw new Error('Clearing must return to an empty explicit selection and close the bulk band.');
+    }
+  },
+};
+
+export const MediumFilterDensity = {
+  name: '반응형 · 기본 필터 밀도',
+  parameters: storyDescription(
+    '기본 md 밀도에서 검색과 Select가 field 척도 48px을 공유합니다. actions는 별도 header 행에 남고 FilterChip은 고유 pill 높이를 유지한 채 control 행 중앙에 정렬됩니다.',
+  ),
+  render: () => <MediumFilterDensityDemo />,
+  play: async ({ canvasElement }) => {
+    const toolbar = canvasElement.querySelector('[data-testid="medium-density-toolbar"]');
+    const searchInput = toolbar?.querySelector('input[type="search"]');
+    const searchSurface = searchInput?.parentElement;
+    const selectTrigger = toolbar?.querySelector('[role="combobox"]');
+    const filterHost = toolbar?.querySelector('[data-data-toolbar-filter-size]');
+    if (!toolbar || !searchSurface || !selectTrigger || filterHost?.dataset.dataToolbarFilterSize !== 'md') {
+      throw new Error('The medium DataToolbar fixture must expose search, Select, and the md filter context.');
+    }
+    const searchHeight = Math.round(searchSurface.getBoundingClientRect().height);
+    const selectHeight = Math.round(selectTrigger.getBoundingClientRect().height);
+    if (searchHeight !== 48 || selectHeight !== 48 || searchHeight !== selectHeight) {
+      throw new Error('Medium DataToolbar search and field filters must share the 48px field-control height.');
     }
   },
 };

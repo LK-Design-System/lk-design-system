@@ -202,19 +202,19 @@
         "role": "overview"
       },
       {
+        "id": "lds-product-navigation-language-switcher--top-bar-placement",
+        "name": "사용법 · 상단 막대 배치",
+        "role": "usage"
+      },
+      {
         "id": "lds-product-navigation-language-switcher--disabled",
-        "name": "비활성",
+        "name": "변형·상태 · 비활성",
         "role": "variants-states"
       },
       {
         "id": "lds-product-navigation-language-switcher--adaptive-width",
-        "name": "적응형 폭",
+        "name": "시나리오 · 적응형 폭",
         "role": "scenario"
-      },
-      {
-        "id": "lds-product-navigation-language-switcher--top-bar-placement",
-        "name": "TopBar 배치",
-        "role": "usage"
       }
     ],
     "hiddenEvidence": 1

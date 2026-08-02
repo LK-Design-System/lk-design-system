@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button as RootButton } from '@lk-design-system/design-system-core';
 import { Button as CompatibilityDeepButton } from '@lk-design-system/design-system-core/components/buttons/Button';
-import { Button } from '@lk-design-system/design-system-core/core';
+import { Button, Select, Tabs, TextButton } from '@lk-design-system/design-system-core/core';
 import { ThemeToggle } from '@lk-design-system/design-system-core/theme';
 import {
   ConversationMessage,
@@ -10,6 +10,9 @@ import {
   SourceDisclosure,
   VirtualKeypad,
   EquipmentStatusCard,
+  DataToolbar,
+  DashboardShell,
+  SideNav,
 } from '@lk-design-system/design-system-core/product';
 import {
   WaypointMarker,
@@ -28,6 +31,54 @@ import { ViewerFrame as ProductDeepViewerFrame } from '@lk-design-system/lds-pro
 import { RobotStatusCard as InvalidCoreRobotStatusCard } from '@lk-design-system/design-system-core/core';
 
 export const consumerContract: React.ReactElement = <Button variant="primary">확인</Button>;
+export const polymorphicButtonContract: React.ReactElement = <Button as="a" href="/reports">보고서</Button>;
+export const polymorphicTextButtonContract: React.ReactElement = <TextButton as="a" href="/documents">문서</TextButton>;
+export const tabsLengthPaddingContract: React.ReactElement = (
+  <Tabs
+    items={[{ value: 'overview', label: '개요' }, { value: 'activity', label: '활동' }]}
+    defaultValue="overview"
+    padding="var(--space-6)"
+    scroll="auto"
+  />
+);
+export const sideNavChildIconContract: React.ReactElement = (
+  <SideNav
+    aria-label="제품 탐색"
+    overlay
+    autoExpandActiveGroup={false}
+    items={[{
+      value: 'work',
+      label: '작업',
+      children: [{ value: 'documents', label: '문서', icon: <span aria-hidden="true">D</span> }],
+    }]}
+  />
+);
+const temporaryNavigationTriggerRef = React.createRef<HTMLButtonElement>();
+export const dashboardTemporaryNavigationContract: React.ReactElement = (
+  <DashboardShell
+    layout="narrow"
+    navigation={<SideNav aria-label="넓은 탐색" items={[]} />}
+    temporaryNavigation={<SideNav aria-label="좁은 탐색" items={[]} />}
+    temporaryNavigationOpen
+    onTemporaryNavigationClose={() => undefined}
+    temporaryNavigationId="consumer-navigation-drawer"
+    temporaryNavigationTitle="주 탐색"
+    temporaryNavigationReturnFocusRef={temporaryNavigationTriggerRef}
+  >
+    <p>본문</p>
+  </DashboardShell>
+);
+export const dataToolbarFilterDensityContract: React.ReactElement = (
+  <DataToolbar
+    size="md"
+    searchPlaceholder="자료 검색"
+    filters={({ size }) => (
+      <Select size={size} aria-label="자료 유형">
+        <option value="all">전체</option>
+      </Select>
+    )}
+  />
+);
 
 // Robotics navigation extension — renderer-neutral SVG feature contracts.
 export const rootCompatibilityContract: React.ReactElement = <RootButton>Root compatibility</RootButton>;

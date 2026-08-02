@@ -39,20 +39,20 @@
       "rule": "좁은 화면의 navigation landmark 슬롯. BottomNav를 사용합니다. 생략하면 navigation이 좁은 화면에서 본문 앞에 유지됩니다."
     },
     {
-      "part": "topology",
-      "rule": "header-first는 전폭 header 아래에 탐색을 두고, side-first는 넓은 화면에서 탐색을 전체 높이의 첫 열에 둡니다. @default \"header-first\""
+      "part": "temporaryNavigation",
+      "rule": "좁은 화면에서 modal Drawer로 표시할 계층형 탐색 슬롯. 제공하면 좁은 화면에서 넓은 navigation은 숨고 본문은 그대로 유지됩니다."
     },
     {
-      "part": "mainLabel",
-      "rule": "main landmark의 접근 가능한 이름."
+      "part": "temporaryNavigationOpen",
+      "rule": "temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false"
     },
     {
-      "part": "skipLabel",
-      "rule": "첫 focus 대상인 건너뛰기 링크 문구. @default \"본문으로 건너뛰기\""
+      "part": "onTemporaryNavigationClose",
+      "rule": "Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청."
     },
     {
-      "part": "navigationLabel",
-      "rule": "넓은 화면 navigation의 기본 접근 가능한 이름. @default \"주 탐색\""
+      "part": "temporaryNavigationId",
+      "rule": "헤더 trigger의 aria-controls와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다."
     }
   ],
   "properties": [
@@ -75,6 +75,76 @@
       "type": "React.ReactNode",
       "required": false,
       "description": "좁은 화면의 navigation landmark 슬롯. BottomNav를 사용합니다. 생략하면 navigation이 좁은 화면에서 본문 앞에 유지됩니다.",
+      "owner": "DashboardShellProps"
+    },
+    {
+      "name": "temporaryNavigation",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "좁은 화면에서 modal Drawer로 표시할 계층형 탐색 슬롯. 제공하면 좁은 화면에서 넓은 navigation은 숨고 본문은 그대로 유지됩니다.",
+      "owner": "DashboardShellProps"
+    },
+    {
+      "name": "temporaryNavigationOpen",
+      "type": "boolean",
+      "required": false,
+      "description": "temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false",
+      "owner": "DashboardShellProps"
+    },
+    {
+      "name": "onTemporaryNavigationClose",
+      "type": "() = void",
+      "required": false,
+      "description": "Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청.",
+      "owner": "DashboardShellProps"
+    },
+    {
+      "name": "temporaryNavigationId",
+      "type": "string",
+      "required": false,
+      "description": "헤더 trigger의 aria-controls와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다.",
+      "owner": "DashboardShellProps"
+    },
+    {
+      "name": "temporaryNavigationTitle",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Drawer에 보이는 탐색 제목.",
+      "owner": "DashboardShellProps"
+    },
+    {
+      "name": "temporaryNavigationLabel",
+      "type": "string",
+      "required": false,
+      "description": "Drawer dialog와 내부 navigation의 접근 가능한 이름. @default \"주 탐색\"",
+      "owner": "DashboardShellProps"
+    },
+    {
+      "name": "temporaryNavigationCloseLabel",
+      "type": "string",
+      "required": false,
+      "description": "Drawer 닫기 버튼의 접근 가능한 이름. @default \"탐색 닫기\"",
+      "owner": "DashboardShellProps"
+    },
+    {
+      "name": "temporaryNavigationWidth",
+      "type": "number",
+      "required": false,
+      "description": "temporaryNavigation Drawer 너비(px). @default 320",
+      "owner": "DashboardShellProps"
+    },
+    {
+      "name": "temporaryNavigationInitialFocusRef",
+      "type": "React.RefObject",
+      "required": false,
+      "description": "Drawer가 열릴 때 우선 초점을 받을 내부 요소.",
+      "owner": "DashboardShellProps"
+    },
+    {
+      "name": "temporaryNavigationReturnFocusRef",
+      "type": "React.RefObject",
+      "required": false,
+      "description": "Drawer가 닫힐 때 초점을 복원할 persistent trigger.",
       "owner": "DashboardShellProps"
     },
     {
@@ -148,10 +218,17 @@
       "owner": "DashboardShellProps"
     }
   ],
-  "states": [],
+  "states": [
+    {
+      "state": "temporaryNavigationOpen",
+      "rule": "temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false"
+    }
+  ],
   "behavior": [
     "Carbon UI shell usage — 지속적인 header, 선택적인 left panel, product→global 순서를 분리하고 좁은 폭에서는 header link를 left navigation으로 이동합니다. LDS 셸도 header와 제품 탐색을 별도 슬롯으로 유지합니다.",
-    "의도적 제외: 라우터 인스턴스, 인증·권한 판정, drawer open state, URL 동기화, 데이터 새로고침, 사용자별 셸 저장은 제품이 소유합니다. DashboardShell은 슬롯 배치와 landmark, skip link, 반응형 전환만 소유합니다."
+    "Carbon UI shell accessibility — 첫 keyboard 항목으로 skip-to-main을 제공하고 native header 구조를 사용합니다. LDS도 보이는 focus skip link와 실제 focus 가능한 main 목적지를 제공합니다.",
+    "WAI-ARIA APG Modal Dialog Pattern — modal 배경은 inert이고, Tab/Shift+Tab은 dialog 안에 머물며 Escape와 호출 지점 복원을 제공해야 합니다. temporary navigation은 이 책임을 제품별 scrim 코드가 아니라 공용 Drawer 엔진에서 상속합니다.",
+    "의도적 제외: 라우터 인스턴스, 인증·권한 판정, drawer open state의 저장, URL 동기화, 데이터 새로고침, 사용자별 셸 저장은 제품이 소유합니다. DashboardShell은 슬롯 배치와 landmark, skip link, 반응형 전환, temporary Drawer의 modal coordination만 소유합니다."
   ],
   "quantitativeRules": [
     {
@@ -164,7 +241,7 @@
     },
     {
       "subject": "명시 규칙 3",
-      "rule": "넓은 구성은 auto + minmax(0, 1fr), 좁은 구성은 단일 본문 열과 하단 탐색 행입니다. 이 배치 차이는 탐색 공간을 확보하기 위한 기능적 차이이며 새로운 장식 언어가 아닙니다."
+      "rule": "넓은 구성은 auto + minmax(0, 1fr), 좁은 구성은 단일 본문 열과 선택적인 하단 탐색 행입니다. temporary navigation은 문서 흐름을 차지하지 않고 왼쪽 edge의 기존 Drawer 표면을 사용합니다. 이 배치 차이는 탐색 공간을 확보하기 위한 기능적 차이이며 새로운 장식 언어가 아닙니다."
     },
     {
       "subject": "명시 규칙 4",
@@ -187,10 +264,10 @@
   ],
   "accessibility": [
     "의미·키보드 순서는 본문 건너뛰기 → header/banner → 넓은 주 탐색 → main → 좁은 주 탐색입니다. CSS로 숨겨진 탐색 슬롯은 접근성 트리에서도 제외됩니다.",
-    "TopBar, SideNav, NavRail, BottomNav의 control/icon 크기, typography, radius, border, fill, active/focus/disabled 처리를 그대로 유지합니다.",
-    "건너뛰기 링크의 테두리는 primary 색으로 focus 위치를 알리고, 문구는 semantic label 색을 사용해 밝은·어두운 셸 배경 모두에서 본문 텍스트 대비를 유지합니다.",
-    "Carbon UI shell accessibility — 첫 keyboard 항목으로 skip-to-main을 제공하고 native header 구조를 사용합니다. LDS도 보이는 focus skip link와 실제 focus 가능한 main 목적지를 제공합니다.",
-    "WAI-ARIA landmark regions — header, nav, main을 논리적 최상위 영역으로 두고 한 문서의 main을 하나로 유지합니다."
+    "목적지가 네 개를 넘거나 disclosure 계층을 유지해야 하는 좁은 화면은 temporaryNavigation에 SideNav를 전달합니다. 제품이 trigger와 temporaryNavigationOpen 상태·라우트 선택을 소유하고, 셸은 기존 Drawer 엔진으로 스크림, Tab containment, Escape, 초점 복원, body scroll lock을 제공합니다. 열려 있는 동안 skip link·header·wide navigation·main·bottom navigation은 inert입니다.",
+    "header trigger는 temporaryNavigationId를 가리키는 aria-controls와 실제 open state의 aria-expanded를 갖습니다. 일반 dismiss는 temporaryNavigationReturnFocusRef로 trigger에 복원하고, 목적지를 선택한 뒤에는 제품이 Drawer를 닫고 focus 가능한 main으로 이동할 수 있습니다.",
+    "temporaryNavigationLabel은 dialog와 내부 nav의 접근 가능한 이름, temporaryNavigationCloseLabel은 닫기 버튼 이름, temporaryNavigationWidth는 px 단위 Drawer 폭입니다. 특별한 업무 순서가 있을 때만 temporaryNavigationInitialFocusRef로 첫 초점을 재정의하고, 기본은 Drawer 안의 첫 focusable control입니다.",
+    "TopBar, SideNav, NavRail, BottomNav의 control/icon 크기, typography, radius, border, fill, active/focus/disabled 처리를 그대로 유지합니다."
   ],
   "exceptions": [],
   "related": [
@@ -230,7 +307,7 @@
   "examples": [
     {
       "label": "기본 조합",
-      "code": "<DashboardShell\n  topology=\"side-first\"\n  header={<TopBar brand=\"대덕 운영\" actions={<GlobalActions />} />}\n  navigation={(\n    <SideNav\n      surface=\"docked\"\n      header={<Lockup />}\n      footer={<UserMenu />}\n      items={items}\n    />\n  )}\n  narrowNavigation={<BottomNav items={compactItems} />}\n>\n  <Container size=\"wide\">…</Container>\n</DashboardShell>"
+      "code": "<DashboardShell\n  topology=\"side-first\"\n  header={<TopBar brand=\"대덕 운영\" actions={<GlobalActions />} />}\n  navigation={(\n    <SideNav\n      surface=\"docked\"\n      header={<Lockup />}\n      footer={<UserMenu />}\n      items={items}\n    />\n  )}\n  temporaryNavigation={<SideNav items={items} surface=\"docked\" />}\n  temporaryNavigationOpen={navigationOpen}\n  onTemporaryNavigationClose={() => setNavigationOpen(false)}\n  temporaryNavigationId=\"product-navigation-drawer\"\n  temporaryNavigationTitle=\"주 탐색\"\n  temporaryNavigationReturnFocusRef={menuButtonRef}\n>\n  <Container size=\"wide\">…</Container>\n</DashboardShell>"
     }
   ],
   "tokens": [
@@ -294,7 +371,7 @@
     "avoidWhen": "evidence",
     "anatomy": "evidence",
     "properties": "evidence",
-    "states": "omitted-no-evidence",
+    "states": "evidence",
     "behavior": "evidence",
     "quantitativeRules": "evidence",
     "responsive": "evidence",

@@ -8,6 +8,9 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 ### Added
 
+- `DataToolbar.filters` render context: `filters={({ size }) => ...}`가 검색과 같은 `sm`/`md` field control 밀도를 전달하며 기존 ReactNode 슬롯은 호환됩니다.
+- `DashboardShell`에 계층형 좁은 화면 탐색을 위한 controlled `temporaryNavigation` Drawer 계약을 추가했습니다. 공용 modal 엔진의 스크림·focus containment·Escape·복원·scroll lock을 재사용하고 열린 동안 셸 배경을 `inert` 처리합니다.
+- `SideNav autoExpandActiveGroup={false}`로 활성 route 표시와 disclosure 자동 펼침을 분리할 수 있습니다. 기본값 `true`는 기존 동작을 보존합니다.
 - `StatusIndicator` Core 컴포넌트: 실시간 가용성·연결·freshness를 6px semantic dot과 필수 visible label로 표시하며, 실제 변화 중인 신호에만 reduced-motion-safe `pulse`를 명시합니다.
 - `RecordHeader` Product Extension for person, robot, order, and other record identity: optional visual, required record title, badge, description, details, actions, composable heading level, and 320px action reflow.
 - Scroll-surface governance: `check:scroll-surfaces` enforces the native default, standardized compact opt-in, forced-colors fallback, and explicit reasons for the only hidden-scrollbar exceptions; Storybook Axe now includes `scrollable-region-focusable`.
@@ -27,6 +30,8 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - 43 hidden contract stories pinning the keyboard/ARIA/live-region contracts above; inventory grew to 480 implementation stories (public surface unchanged at 335).
 ### Fixed
 
+- `SideNav`의 접힌 레일 행이 38px, 펼친 행이 44px이고 브랜드 아래 패딩도 10/18px로 달라 overlay peek 때 목적지가 세로로 이동하던 문제를 고쳤습니다. 두 상태는 44px 행과 같은 브랜드 아래 패딩을 공유합니다.
+- `DataToolbar size="md"`가 48px field형 필터 옆 검색만 40px로 축소하던 문제를 고쳤습니다. 기본 검색은 다시 48px field 척도를 사용하고 `filters` render context로 같은 밀도를 전달합니다.
 - `Calendar` could not leave the selected month: the view snapped back on every render, disabling previous/next, PageUp/PageDown, and month-boundary arrows (also through `DatePicker`). The displayed month is now owned by user navigation, and the header buttons keep focus so they can be pressed repeatedly.
 - `CopyButton` reported "복사됨" even when the clipboard write failed; failures now render and announce a distinct error state through an always-mounted status region.
 - `HoverCard` could not be dismissed with Escape: restoring focus to the trigger re-fired the open-on-focus rule and reopened the card. The shared dismiss engine now latches the trigger until focus actually leaves, which also hardens `Tooltip` and `Popover`.

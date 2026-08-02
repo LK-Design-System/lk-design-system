@@ -53,6 +53,9 @@ const hiddenScrollbarPatterns = [
   /::-webkit-scrollbar[^}]*\{[^}]*display\s*:\s*none/s,
 ];
 const allowedHiddenFiles = new Map([
+  ['components/navigation/SideNav.jsx', [
+    'data-scrollbar-exception="collapsed-navigation-rail"',
+  ]],
   ['components/navigation/TopBar.jsx', [
     'data-scrollbar-exception="single-row-global-navigation"',
     'data-scrollbar-exception="single-row-global-actions"',

@@ -33,3 +33,26 @@ export const Typography = {
   },
 };
 
+export const ReadingRhythm = {
+  name: '참조 · 긴 본문 행간',
+  parameters: storyDescription(
+    '긴 설명과 보조 문장을 위한 reading 유틸리티를 비교합니다. 크기와 굵기는 기존 계층을 유지하면서 기본 UI 레이블보다 넓은 행간만 적용합니다.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 680 }}>
+      <p className="type-body1-reading" data-testid="body-reading" style={{ margin: 0 }}>
+        본문이 여러 줄로 이어질 때는 body reading 행간을 사용해 문장 사이의 시각적 밀도를 낮춥니다. 짧은 버튼과 표 레이블에는 기본 body 또는 label 계층을 유지합니다.
+      </p>
+      <p className="type-label1-reading" data-testid="label-reading" style={{ margin: 0 }}>
+        카드 설명이나 보조 안내처럼 작은 글자가 여러 줄로 이어지면 label reading 행간을 사용할 수 있습니다.
+      </p>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const body = canvasElement.querySelector('[data-testid="body-reading"]');
+    const label = canvasElement.querySelector('[data-testid="label-reading"]');
+    if (getComputedStyle(body).lineHeight !== '26px' || getComputedStyle(label).lineHeight !== '22px') {
+      throw new Error('Reading utility classes must use the published reading line-height tokens.');
+    }
+  },
+};

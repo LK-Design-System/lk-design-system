@@ -14,7 +14,8 @@
   "purpose": "폼 제출, 저장, 확인처럼 사용자가 결과를 예상할 수 있는 단일 행동에 적합합니다. 아이콘만 필요한 좁은 도구 영역은 Icon Button, 배경 없는 보조 행동은 Text Button, 켬·끔 상태를 유지해야 하면 Toggle Icon을 사용하세요.",
   "useWhen": [
     "Use IconButton for icon-only one-shot actions and ToggleIcon for icon-only persistent state actions.",
-    "Footer action mapping is fixed: execute/save/apply uses the primary action; cancel/back uses variant=\"outlined\" color=\"assistive\"; destructive confirmation uses variant=\"danger\" and a ConfirmDialog."
+    "Footer action mapping is fixed: execute/save/apply uses the primary action; cancel/back uses variant=\"outlined\" color=\"assistive\"; destructive confirmation uses variant=\"danger\" and a ConfirmDialog.",
+    "TypeScript preserves the rendered element's props through the generic as contract. For example, as=\"a\" accepts anchor props such as href, while the default button accepts native button props. Custom components receive their own declared props without widening the public surface to any."
   ],
   "avoidWhen": [],
   "anatomy": [
@@ -33,84 +34,84 @@
       "type": "| \"primary\" | \"secondary\" | \"signal\" | \"danger\" | \"dark\" | \"flat\" | \"ghost\" | \"on-dark\" | \"solid\" | \"outlined\"",
       "required": false,
       "description": "Visual action variant mapped through LK theme tokens. Also accepts \"solid\" and \"outlined\". @default \"primary\"",
-      "owner": "ButtonProps"
+      "owner": "ButtonOwnProps"
     },
     {
       "name": "color",
       "type": "\"primary\" | \"assistive\"",
       "required": false,
       "description": "color axis for solid/outlined buttons. @default \"primary\"",
-      "owner": "ButtonProps"
+      "owner": "ButtonOwnProps"
     },
     {
       "name": "size",
       "type": "\"sm\" | \"md\" | \"lg\" | \"small\" | \"medium\" | \"large\"",
       "required": false,
       "description": "Control height, padding, and text size. Aliases map small/medium/large to sm/md/lg. @default \"md\"",
-      "owner": "ButtonProps"
+      "owner": "ButtonOwnProps"
     },
     {
       "name": "arrow",
       "type": "boolean",
       "required": false,
       "description": "",
-      "owner": "ButtonProps"
+      "owner": "ButtonOwnProps"
     },
     {
       "name": "full",
       "type": "boolean",
       "required": false,
       "description": "Fill the available container width. @default false",
-      "owner": "ButtonProps"
+      "owner": "ButtonOwnProps"
     },
     {
       "name": "disabled",
       "type": "boolean",
       "required": false,
       "description": "Disable activation and mark the control unavailable. @default false",
-      "owner": "ButtonProps"
+      "owner": "ButtonOwnProps"
     },
     {
       "name": "disable",
       "type": "boolean",
       "required": false,
       "description": "Disable alias. @default false",
-      "owner": "ButtonProps"
+      "owner": "ButtonOwnProps"
     },
     {
       "name": "iconOnly",
       "type": "boolean",
       "required": false,
       "description": "Render the icon-only square button treatment. Requires aria-label (or aria-labelledby); a development-only console warning fires when neither is supplied.",
-      "owner": "ButtonProps"
+      "owner": "ButtonOwnProps"
     },
     {
       "name": "loading",
       "type": "boolean | 'inline'",
       "required": false,
       "description": "Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled) so keyboard focus is not lost on activation. true swaps the label for a centered spinner on the muted palette. \"inline\" keeps the label visible with a leading spinner and preserves the variant palette — for controls whose words must survive the wait (e.g. a safety stop reading \"정지 요청 중\"). Blocking semantics are identical in both modes.",
-      "owner": "ButtonProps"
+      "owner": "ButtonOwnProps"
     },
     {
       "name": "loadingLabel",
       "type": "string",
       "required": false,
       "description": "Screen-reader label announced with the loading spinner (loading = true). @default \"불러오는 중\"",
-      "owner": "ButtonProps"
+      "owner": "ButtonOwnProps"
     },
     {
       "name": "as",
       "type": "React.ElementType",
       "required": false,
       "description": "Render with another element or component, such as \"a\" for link CTAs. @default \"button\"",
-      "owner": "ButtonProps"
+      "owner": "ButtonOwnProps"
     },
     {
       "name": "children",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "ButtonProps"
+      "owner": "ButtonOwnProps"
     }
   ],
   "states": [

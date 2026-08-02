@@ -69,3 +69,5 @@ LK theme tokens.
 - 32/40/48 높이와 solid/outlined·primary/assistive·icon-only·disable 축은
   WDS `Button/Button` component set을 따릅니다. `danger`, dark-surface 변형,
   loading과 polymorphic anchor는 명시적인 LDS 확장입니다.
+
+TypeScript preserves the rendered element's props through the generic `as` contract. For example, `as="a"` accepts anchor props such as `href`, while the default button accepts native button props. Custom components receive their own declared props without widening the public surface to `any`.

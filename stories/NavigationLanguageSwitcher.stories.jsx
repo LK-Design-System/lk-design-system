@@ -202,7 +202,7 @@ export const Overview = {
 };
 
 export const AdaptiveWidth = {
-  name: '적응형 폭',
+  name: '시나리오 · 적응형 폭',
   parameters: storyDescription(
     '짧은 언어명에서는 TopBar 최소 폭을 유지하고, 긴 native name이 추가되면 viewport 상한 안에서 필요한 만큼만 확장합니다.',
   ),
@@ -240,7 +240,7 @@ export const AdaptiveWidth = {
 };
 
 export const TopBarPlacement = {
-  name: 'TopBar 배치',
+  name: '사용법 · 상단 막대 배치',
   parameters: storyDescription(
     '일반 폭에서는 Language Switcher를 TopBar 우측에서 Theme Toggle 앞에 둡니다. 360px 좁은 폭에서는 제품 셸이 action overflow 또는 설정 Drawer 이동을 결정하며 컴포넌트가 breakpoint를 추측하지 않습니다.',
   ),
@@ -263,7 +263,7 @@ export const TopBarPlacement = {
 };
 
 export const Disabled = {
-  name: '비활성',
+  name: '변형·상태 · 비활성',
   parameters: storyDescription(
     '언어 변경이 제품 정책이나 번역 readiness 때문에 불가능한 상태입니다. trigger는 native disabled이고 menu를 열지 않습니다.',
   ),

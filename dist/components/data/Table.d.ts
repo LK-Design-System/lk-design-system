@@ -27,7 +27,22 @@ export interface TableProps<Row extends Record<string, unknown> = Record<string,
   rowHeaderKey?: keyof Row & string;
   /** React key로 쓸 안정적인 행 식별자. 생략하면 `row.id`, 그다음 배열 index를 씁니다. */
   getRowId?: (row: Row, index: number) => React.Key;
+  /** 행별 className, style, data attribute와 이벤트를 `<tr>`에 전달합니다. */
+  getRowProps?: (row: Row, index: number) => React.HTMLAttributes<HTMLTableRowElement>;
 }
+
+export interface TableCellStyleOptions {
+  /** Cell padding. @default "14px 16px" */
+  padding?: number | string;
+  /** Logical text alignment. @default "left" */
+  align?: 'left' | 'center' | 'right';
+  width?: number | string;
+}
+
+/** LDS Table 머리글 셀의 공개 스타일. 제품 소유 native table과 시각을 맞출 때 사용합니다. */
+export function getTableHeaderCellStyle(options?: TableCellStyleOptions): React.CSSProperties;
+/** LDS Table 데이터 셀의 공개 스타일. 제품 소유 native table과 시각을 맞출 때 사용합니다. */
+export function getTableDataCellStyle(options?: TableCellStyleOptions): React.CSSProperties;
 
 /** 차분한 데이터 표 — 캡션 헤더, tabular 행, 호버 워시, 커스텀 셀. */
 export function Table<Row extends Record<string, unknown> = Record<string, unknown>>(props: TableProps<Row>): React.JSX.Element;

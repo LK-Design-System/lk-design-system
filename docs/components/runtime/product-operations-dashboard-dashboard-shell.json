@@ -72,6 +72,11 @@
         "role": "responsive"
       },
       {
+        "id": "lds-product-layout-dashboard-shell--temporary-navigation",
+        "name": "반응형 · 계층형 임시 탐색",
+        "role": "responsive"
+      },
+      {
         "id": "lds-product-layout-dashboard-shell--auto-navigation-fallback",
         "name": "반응형 · 좁은 화면의 대체 탐색",
         "role": "responsive"

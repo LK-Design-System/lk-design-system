@@ -20,6 +20,18 @@
 | LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend` | WF-16 fixed header + wide/temporary SideNav + supervision composition 확인 · hierarchical narrow navigation은 제품 소유 Drawer composition으로 경계 확정 |
 | LK Context Hub | `LK-ROBOTICS/lk_context_hub` · `de124084b7e50049350a46f92c4ea4476269c58c` · `src` | WF-16 full-height SideNav + offset main + card/collection composition 확인 · LDS narrow anatomy는 flat BottomNav로 한정 |
 
+### Context Hub LDS 요청 감사 · 2026-08-01
+
+Context Hub의 작업 중 parity ledger(`docs/working/product-ui-parity-ledger-20260726.md`)에 모인 요청을 commit `f644678393cc29b0f88be16bb0bc168b5816cbe6`의 제품 source와 기존 WF-16 경계에 대조했다. ledger와 `Sidebar.tsx`는 검토 시점에 수정 중이므로 화면 구조를 복제하는 canonical source가 아니라 gap intake로만 사용했다.
+
+| 제품 자산 | 판정 | 이번 LDS 계약 | 제품이 계속 소유하는 것 |
+| --- | --- | --- | --- |
+| LK Context Hub | supported by shared contract | `SideNav`의 expanded brand 정렬·footer render state/gap·collapsed rail scroll·자식 아이콘·비제어 runtime overlay 동기화·활성 그룹 자동 펼침 분리·레일/패널 세로 치수 안정화, `DashboardShell`의 계층형 temporary navigation modal coordination, `DataToolbar`의 검색/field 필터 밀도 전달, `Tabs`의 안쪽 2px 지표·길이형 padding, `Drawer` subtitle, `Table` row metadata/style helper, `Card` title wrap, `Callout` heading, polymorphic action type, reading line utility | 제품명·브랜드 조합, route·권한, footer 내용, controlled open/collapse 정책, 실제 filter 값/query, table row 의미, 출처 분쟁/권위 판정, 실제 페이지 padding |
+| LK Web Viz | not applicable to the request source | 기존 다크 theme scope, `Fab`, table/card/callout 계약을 필요할 때 조합 가능 | viewer/map shell, telemetry truth, route와 command |
+| LK Control Full Daedeok | not applicable to the request source | 기존 SideNav/Drawer/Table 계약과 DashboardShell temporary navigation을 필요할 때 조합 가능 | fixed shell breakpoint, destination hierarchy·route, supervision state와 command |
+
+`Tag tone="neutral"`, `ListCell divider`, GitHub/Hugging Face `BrandLogo`, floating action용 `Fab`, `data-theme="dark"`는 이미 공개되어 있어 중복 API를 만들지 않았다. Confluence 공식 마크와 새 graph glyph는 승인된 source asset이 확보되기 전까지 레지스트리에 추정 경로를 넣지 않는다. `SourceDisclosure`의 분쟁 여부와 `DescriptionList`의 권위 필드 묶음은 제품 데이터 의미이므로 공용 컴포넌트 축으로 올리지 않는다. 상태색·translucent state처럼 공유 토큰 값을 바꾸는 요청은 token governance의 별도 영향 검토와 승인을 거친다.
+
 ### RecordHeader · PageHeader 책임 분리 판정 · 2026-07-27
 
 페이지의 위치와 업무를 설명하는 `PageHeader`에서 사람·로봇·주문 같은 대상 정체성
@@ -214,7 +226,7 @@ persistence를 공용 컴포넌트로 끌어오지 않습니다.
 
 ### Control
 
-- dashboard shell navigation: fixed utility header와 wide/temporary SideNav 사이에서 현재 목적지를 유지하고 supervision main으로 이동한다. narrow drawer의 focus/Escape/restore는 LDS 통합 단계에서 별도로 닫아야 한다.
+- dashboard shell navigation: fixed utility header와 wide/temporary SideNav 사이에서 현재 목적지를 유지하고 supervision main으로 이동한다. narrow Drawer의 focus/Escape/restore/background inert는 DashboardShell의 temporary navigation 계약이 소유한다.
 - robot supervision: 로봇을 선택하고 map/video/status/facility/event를 같은 시점의 truth로 읽는다.
 - manual control session: target과 연결을 확인하고 control authority를 획득한 뒤 hold/release, focus loss, connection loss, emergency stop을 안전하게 처리한다.
 - procedure authoring: 목적·로봇·map target을 정하고 순서형 step을 작성·검증·미리보기·template 저장 후 명시적으로 전송한다.
@@ -299,7 +311,7 @@ narrow
 - 제품 identity는 TopBar 또는 SideNav 중 한 곳만 소유한다. SideNav가 로고·제품명을 가지면 TopBar에는 workspace, search, notification, help, account 같은 utility만 둔다.
 - `DashboardShell topology="header-first"`는 전폭 header 아래에 navigation/main을 두는 호환 기본값이고, `topology="side-first"`는 wide 화면에서 full-height navigation 옆에 utility header/main을 둔다. 두 topology는 narrow에서 동일한 단일 열 navigation handoff로 수렴한다.
 - 계층형 desktop navigation은 `SideNav surface="docked"`를 기본 조합으로 삼고, 기존 카드형 표면은 명시적인 `surface="floating"`으로 보존한다. persistent 접기/펼치기는 브랜드와 분리되어 논리적 끝 divider 안쪽 같은 위치를 유지하는 36px control이 정식 진입점이다. 64px rail에서도 control·브랜드·현재 부모 맥락을 유지하고, hover overlay와 overlay inline control은 별도 보조 기능으로 다룬다. 접힘 영속화는 제품이 controlled state로 소유한다.
-- 작은 화면에서는 wide SideNav를 그대로 축소하지 않는다. temporary navigation이 닫힐 때 현재 main 문맥을 유지하고 persistent trigger로 focus를 복구한다.
+- 작은 화면에서는 wide SideNav를 그대로 축소하지 않는다. 계층형 temporary navigation은 DashboardShell의 modal Drawer 계약으로 전환하고, dismiss 때 persistent trigger로 focus를 복구하며 route 선택 뒤 main 이동은 제품이 소유한다.
 - `DashboardGrid`는 동급 요약이나 destination 반복을 배치할 뿐 중요도와 의미를 만들지 않는다. 서로 다른 우선순위는 section heading과 명시적인 span 조합으로 표현한다.
 - 세 pinned 제품에서 공통 KPI 요구는 확인되지 않았다. `MetricCard`는 선택적 composition이고 `DashboardShell`의 필수 anatomy가 아니다.
 - loading, empty, error, stale, offline, restricted는 데이터를 소유한 Card, `ResourceState`, `ChartFrame`, `DataGrid`에 남긴다. shell이 제품 workflow state machine이나 screen-sized template이 되어서는 안 된다.
@@ -309,7 +321,7 @@ narrow
 | 제품 자산 | 고정 revision과 source blob | 판정 | workflow seam |
 | --- | --- | --- | --- |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | supported by composition | 실제 logo + TopBar utility + current robot Card + ROS Bridge/관제서버/MQTT Status + destination Card launcher를 조합한다. 계층형 SideNav, KPI, table, chart는 이 pinned 화면에 없으므로 not applicable이다. robot switching, poll/reconnect, map launch와 route는 제품 소유다. |
-| LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/layout/MainLayout/index.jsx` (`2436725e49f6364fdb99f2047907f300ca367865`) · `MainLayout/Sidebar/index.jsx` (`749805a966552f957a61359c1b892a44f06af0a4`) · `RobotDashboard/pages/Dashboard.jsx` (`b0fd86a6b4c735aca390cd6dd179f766fa071f08`) | supported by composition | fixed TopBar, permanent/persistent/temporary SideNav, status·chart·table-like collection을 LDS 조합으로 지원한다. narrow drawer의 focus/Escape/restore 검증은 gap이며 map/video renderer, telemetry truth, facility state machine, command와 action eligibility는 제품 소유다. |
+| LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/layout/MainLayout/index.jsx` (`2436725e49f6364fdb99f2047907f300ca367865`) · `MainLayout/Sidebar/index.jsx` (`749805a966552f957a61359c1b892a44f06af0a4`) · `RobotDashboard/pages/Dashboard.jsx` (`b0fd86a6b4c735aca390cd6dd179f766fa071f08`) | supported by composition | fixed TopBar, permanent/persistent/temporary SideNav, status·chart·table-like collection을 LDS 조합으로 지원한다. narrow Drawer의 focus/Escape/restore/background inert는 DashboardShell 계약으로 검증하며 map/video renderer, telemetry truth, facility state machine, command와 action eligibility는 제품 소유다. |
 | LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/layout/Sidebar.tsx` (`6f8be361287aada76ff3b2e4f6ca4022706b3b87`) · `AuthShell.tsx` (`b525cdd54dfbf73eeec9d8867cd23a3d07c1630b`) · `src/app/page.tsx` (`e5fde4ba50eb52a826c6df8016196d410f2d1d99`) | supported by composition | full-height product SideNav, offset main, destination Card와 project collection을 조합한다. pinned source에는 narrow navigation이 없어 adaptive collapse/drawer가 gap이다. project ranking, attention truth, routes, permissions, chat 위치와 query는 제품 소유다. |
 
 ### WF-03 Guarded remote action
@@ -959,11 +971,11 @@ alert threshold, filtering, drawer, route와 원격 명령은 제품 소유다.
 | WF-13 | `DatePicker`, `TimePicker`, `CheckboxGroup`, `ValidationSummary`, `SearchableMultiSelect`, `Button`/`ActionArea` 조합 | recurrence schema, eligibility, conflict calculation, task lookup, persistence, occurrence execution |
 | WF-14 | `DataGrid`, `SourceDisclosure`, `ValidationSummary`, `DescriptionList`, `Textarea`, `ActionArea` 조합으로 eligibility/approval/release를 구분 | metric verdict policy, authorization, persistence, external release evidence |
 | WF-15 | 외부 Robotics 패키지의 point/lane/route/trajectory/region/facility/hazard renderer와 named semantic mirror 계약 | projection, floor topology, editor commands, persistence, robot pose, product-only forbidden-line geometry |
-| WF-16 | `DashboardShell`, `SideNav`, `TopBar`, `BottomNav`의 landmark, wide/narrow slot, collapse, focus/Escape 계약 | destination hierarchy, route, permission, query, hierarchical narrow Drawer composition |
+| WF-16 | `DashboardShell`, `SideNav`, `TopBar`, `BottomNav`의 landmark, wide/narrow/temporary slot, collapse, modal focus/Escape/restore/inert 계약 | destination hierarchy, route, permission, query, Drawer open state |
 
 WF-15는 외부 Robotics 패키지 revision `0ae058d`의 navigation/hazard/terrain renderer와 normal/narrow stories로 닫혔다. `forbidden` authoring line은 제품 geometry로 남겨 `LaneOverlay`로 위장하지 않는다.
 
-WF-16은 세 필수 제품의 pinned shell/navigation source와 독립 anatomy를 연결하고, `SideNav`의 docked/floating, controlled collapse, reduced motion, keyboard overlay open/close/Escape/focus restore, `DashboardShell` normal/narrow reflow, TopBar overflow, landmark 계약을 기존 interaction stories로 검증했다. LDS v1 narrow anatomy는 네 개 이하 flat destination의 `BottomNav`이며, hierarchical temporary Drawer는 제품 composition으로 남긴다.
+WF-16은 세 필수 제품의 pinned shell/navigation source와 독립 anatomy를 연결하고, `SideNav`의 docked/floating, controlled collapse, active-group auto expansion 분리, reduced motion, keyboard overlay open/close/Escape/focus restore, `DashboardShell` normal/narrow reflow와 hierarchical temporary Drawer의 focus/Escape/restore/inert, TopBar overflow, landmark 계약을 interaction stories로 검증했다. 네 개 이하 flat destination은 `BottomNav`, 계층형 destination은 `temporaryNavigation`에 전달한 `SideNav`를 사용하며 route·permission·open state는 제품이 소유한다.
 
 검증 범위는 2026-07-14 기준 다음과 같다.
 

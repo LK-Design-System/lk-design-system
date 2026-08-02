@@ -1,13 +1,32 @@
 import React from 'react';
 import { thStyle, tdStyle } from './table-cell-styles.js';
 
-function TableRow({ columns, row, pad, hover, rowHeaderKey }) {
+/** Public style helpers for product-owned native tables that must match LDS Table cells. */
+export function getTableHeaderCellStyle({ padding = '14px 16px', align = 'left', width } = {}) {
+  return { ...thStyle(padding), textAlign: align, width };
+}
+
+export function getTableDataCellStyle({ padding = '14px 16px', align = 'left', width } = {}) {
+  return { ...tdStyle(padding), textAlign: align, width };
+}
+
+function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProps }) {
   const [h, setH] = React.useState(false);
+  const rowProps = getRowProps?.(row, rowIndex) ?? {};
+  const {
+    className,
+    style,
+    onMouseEnter,
+    onMouseLeave,
+    ...restRowProps
+  } = rowProps;
   return (
     <tr
-      onMouseEnter={() => setH(true)}
-      onMouseLeave={() => setH(false)}
-      style={{ background: hover && h ? 'var(--color-semantic-fill-alternative)' : 'transparent', transition: 'background var(--dur-fast) var(--ease-out)' }}
+      {...restRowProps}
+      className={className}
+      onMouseEnter={(event) => { setH(true); onMouseEnter?.(event); }}
+      onMouseLeave={(event) => { setH(false); onMouseLeave?.(event); }}
+      style={{ background: hover && h ? 'var(--color-semantic-fill-alternative)' : 'transparent', transition: 'background var(--dur-fast) var(--ease-out)', ...style }}
     >
       {columns.map((c) => {
         const content = typeof c.render === 'function' ? c.render(row) : row[c.key];
@@ -47,6 +66,7 @@ export function Table({
   tableLabelledBy,
   rowHeaderKey,
   getRowId,
+  getRowProps,
   className,
   style,
   ...rest
@@ -97,9 +117,11 @@ export function Table({
               key={getRowId ? getRowId(r, ri) : (r?.id ?? ri)}
               columns={columns}
               row={r}
+              rowIndex={ri}
               pad={pad}
               hover={hover}
               rowHeaderKey={rowHeaderKey}
+              getRowProps={getRowProps}
             />
           ))}
         </tbody>

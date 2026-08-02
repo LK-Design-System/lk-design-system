@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonOwnProps {
   /** Visual action variant mapped through LK theme tokens. Also accepts "solid" and "outlined". @default "primary" */
   variant?:
     | "primary"
@@ -52,8 +52,13 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   children?: React.ReactNode;
 }
 
+export type ButtonProps<Element extends React.ElementType = 'button'> = ButtonOwnProps &
+  Omit<React.ComponentPropsWithoutRef<Element>, keyof ButtonOwnProps | 'as'> & {
+    as?: Element;
+  };
+
 /**
  * Action/Button primitive. LDS keeps the role while mapping color,
  * state, and emphasis through LK theme tokens.
  */
-export function Button(props: ButtonProps): React.JSX.Element;
+export function Button<Element extends React.ElementType = 'button'>(props: ButtonProps<Element>): React.JSX.Element;

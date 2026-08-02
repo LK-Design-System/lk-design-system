@@ -3,6 +3,8 @@ import * as React from 'react';
 export interface SideNavChildItem {
   value: string;
   label: React.ReactNode;
+  /** 펼친 자식 목적지의 장식 아이콘 또는 브랜드 마크. */
+  icon?: React.ReactNode;
   /** 복합 label의 명시적 접근 가능한 이름. */
   ariaLabel?: string;
   /** 우측 카운트/상태 배지. */
@@ -47,8 +49,12 @@ export interface SideNavProps extends Omit<React.HTMLAttributes<HTMLElement>, 'o
   header?: React.ReactNode;
   /** 접힌 상태의 브랜드(예: `<Lockup variant="mark" height={20} />`). 없으면 header를 그대로 사용. */
   headerCollapsed?: React.ReactNode;
-  /** 하단에 고정되는 푸터. */
-  footer?: React.ReactNode;
+  /** 펼친 브랜드 영역의 가로 정렬. 접힌 레일은 항상 가운데 정렬합니다. @default 'center' */
+  brandAlign?: 'start' | 'center';
+  /** 하단 고정 영역. 함수면 overlay peek를 포함한 실제 내부 접힘 상태를 받습니다. */
+  footer?: React.ReactNode | ((state: { collapsed: boolean; expanded: boolean; overlay: boolean }) => React.ReactNode);
+  /** 스크롤 목록과 푸터 구분선 사이의 간격. @default 'var(--space-2)' */
+  footerGap?: number | string;
   /** 펼친 폭. @default 240 */
   width?: number | string;
   /** 외곽 표면. floating은 전체 outline과 radius를, docked는 논리적 끝 divider만 사용합니다. @default 'floating' */
@@ -59,10 +65,12 @@ export interface SideNavProps extends Omit<React.HTMLAttributes<HTMLElement>, 'o
   defaultCollapsed?: boolean;
   /** 다음 접힘 상태 요청. controlled 사용 시 부모가 collapsed를 갱신하기 전에는 시각 상태가 바뀌지 않습니다. */
   onCollapsedChange?: (collapsed: boolean) => void;
-  /** 접힌 아이콘 레일 폭. 기본 64px에서도 브랜드 마크와 경계 토글을 유지합니다. @default 64 */
+  /** 접힌 아이콘 레일 폭. 기본 64px에서 브랜드 마크와 목적지 아이콘을 유지합니다. @default 64 */
   collapsedWidth?: number;
-  /** 오버레이 모드 — 레이아웃은 레일 폭 고정, 호버(피크)·키보드 초점·클릭으로 펼치면 패널이 콘텐츠 위로 뜨고, 마우스 아웃과 초점 이탈·바깥 클릭·Esc로 접힘. 시작은 접힘. @default false */
+  /** 오버레이 모드 — 레이아웃은 레일 폭 고정, 호버(피크)·키보드 초점·클릭으로 펼치면 패널이 콘텐츠 위로 뜹니다. 비제어 런타임 전환 시 진입은 접고 이탈은 이전 persistent 상태를 복원하며, 제어 모드는 부모가 collapsed를 갱신합니다. @default false */
   overlay?: boolean;
+  /** 활성 자식이 속한 disclosure 그룹을 초기 선택과 값 변경 때 자동으로 펼칩니다. `false`이면 활성 표시는 유지하되 그룹 열림은 사용자 상호작용과 독립됩니다. @default true */
+  autoExpandActiveGroup?: boolean;
   /** 제어되는 활성 값. */
   value?: string;
   /** 비제어 시 초기 활성 값. */

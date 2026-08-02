@@ -19,4 +19,5 @@ side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓
 - [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/)
 - [Carbon UI shell accessibility](https://carbondesignsystem.com/components/UI-shell-header/accessibility/)
 - [Fluent Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
+- [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [WAI-ARIA landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)

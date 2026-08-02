@@ -50,7 +50,7 @@ export const NoticesAndCallouts = {
           <h2 id="standing-callout-examples" style={{ margin: 0, fontSize: 'var(--body1-size)', color: 'var(--color-semantic-label-strong)' }}>본문에 남는 가이드 · Callout</h2>
           <p style={{ margin: 0, fontSize: 'var(--label1-size)', color: 'var(--color-semantic-label-neutral)' }}>상태를 실시간 발표하지 않고, 작업 중 계속 참고할 절차와 맥락을 설명합니다.</p>
         </div>
-        <Callout tone="cautionary" title="작업 전 확인">
+        <Callout tone="cautionary" title="작업 전 확인" headingLevel={3}>
           저장하기 전에 필수 입력값과 적용 대상을 확인하세요. 이 안내는 작업 절차가 끝날 때까지 본문에 남습니다.
         </Callout>
         <Callout tone="signal" title="권한 요청 방법">
@@ -59,6 +59,13 @@ export const NoticesAndCallouts = {
       </section>
     </main>
   ),
+  play: async ({ canvasElement }) => {
+    const semanticTitle = [...canvasElement.querySelectorAll('h3')]
+      .find((heading) => heading.textContent?.trim() === '작업 전 확인');
+    if (!semanticTitle) {
+      throw new Error('Callout headingLevel must render its title as the requested semantic heading.');
+    }
+  },
 };
 
 export const BannerSurfaceVariants = {

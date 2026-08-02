@@ -17,6 +17,7 @@
 - Use IconButton for icon-only one-shot actions and ToggleIcon for icon-only persistent state actions.
 - Footer action mapping is fixed: execute/save/apply uses the primary action; cancel/back uses variant="outlined" color="assistive"; destructive confirmation uses variant="danger" and a ConfirmDialog.
 - Button is the WDS Action/Button primitive for primary, secondary, and supporting actions. LDS keeps WDS action roles but maps visual values through LK theme tokens.
+- TypeScript preserves the rendered element's props through the generic as contract. For example, as="a" accepts anchor props such as href, while the default button accepts native button props. Custom components receive their own declared props without widening the public surface to any.
 
 ## Anatomy
 

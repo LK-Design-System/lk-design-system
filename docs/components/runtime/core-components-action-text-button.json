@@ -28,77 +28,77 @@
       "type": "\"signal\" | \"neutral\" | \"danger\"",
       "required": false,
       "description": "Text action tone mapped through LK theme tokens. @default \"signal\"",
-      "owner": "TextButtonProps"
+      "owner": "TextButtonOwnProps"
     },
     {
       "name": "color",
       "type": "\"primary\" | \"assistive\"",
       "required": false,
       "description": "color axis. When set, it takes precedence over tone.",
-      "owner": "TextButtonProps"
+      "owner": "TextButtonOwnProps"
     },
     {
       "name": "size",
       "type": "\"sm\" | \"md\" | \"lg\" | \"small\" | \"medium\" | \"large\"",
       "required": false,
       "description": "Aliases map small/medium/large to sm/md/lg. @default \"md\"",
-      "owner": "TextButtonProps"
+      "owner": "TextButtonOwnProps"
     },
     {
       "name": "arrow",
       "type": "boolean",
       "required": false,
       "description": "",
-      "owner": "TextButtonProps"
+      "owner": "TextButtonOwnProps"
     },
     {
       "name": "underline",
       "type": "boolean",
       "required": false,
       "description": "Draw an underline for link-style usage. @default false",
-      "owner": "TextButtonProps"
+      "owner": "TextButtonOwnProps"
     },
     {
       "name": "disabled",
       "type": "boolean",
       "required": false,
       "description": "",
-      "owner": "TextButtonProps"
+      "owner": "TextButtonOwnProps"
     },
     {
       "name": "disable",
       "type": "boolean",
       "required": false,
       "description": "Disable alias.",
-      "owner": "TextButtonProps"
+      "owner": "TextButtonOwnProps"
     },
     {
       "name": "loading",
       "type": "boolean",
       "required": false,
       "description": "Show the action loading state and prevent repeated activation. The control stays focusable while loading (aria-disabled + aria-busy rather than native disabled).",
-      "owner": "TextButtonProps"
+      "owner": "TextButtonOwnProps"
     },
     {
       "name": "loadingLabel",
       "type": "string",
       "required": false,
       "description": "Screen-reader label announced with the loading spinner. @default \"불러오는 중\"",
-      "owner": "TextButtonProps"
+      "owner": "TextButtonOwnProps"
     },
     {
       "name": "as",
       "type": "React.ElementType",
       "required": false,
       "description": "Render with another element or component, such as \"a\". @default \"button\"",
-      "owner": "TextButtonProps"
+      "owner": "TextButtonOwnProps"
     },
     {
       "name": "children",
       "type": "React.ReactNode",
       "required": false,
       "description": "",
-      "owner": "TextButtonProps"
+      "owner": "TextButtonOwnProps"
     }
   ],
   "states": [

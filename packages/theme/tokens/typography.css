@@ -102,5 +102,9 @@
 .type-body2 { font-family: var(--font-sans); font-weight: 500; font-size: var(--body2-size); line-height: var(--body2-line); letter-spacing: var(--body2-spacing); }
 .type-label1 { font-family: var(--font-sans); font-weight: 500; font-size: var(--label1-size); line-height: var(--label1-line); letter-spacing: var(--label1-spacing); }
 .type-label2 { font-family: var(--font-sans); font-weight: 500; font-size: var(--label2-size); line-height: var(--label2-line); letter-spacing: var(--label2-spacing); }
+.type-body1-reading { font-family: var(--font-sans); font-weight: 500; font-size: var(--body1-size); line-height: var(--body1-reading-line); letter-spacing: var(--body1-spacing); }
+.type-body2-reading { font-family: var(--font-sans); font-weight: 500; font-size: var(--body2-size); line-height: var(--body2-reading-line); letter-spacing: var(--body2-spacing); }
+.type-label1-reading { font-family: var(--font-sans); font-weight: 500; font-size: var(--label1-size); line-height: var(--label1-reading-line); letter-spacing: var(--label1-spacing); }
+.type-label2-reading { font-family: var(--font-sans); font-weight: 500; font-size: var(--label2-size); line-height: var(--label2-reading-line); letter-spacing: var(--label2-spacing); }
 .type-caption1 { font-family: var(--font-sans); font-weight: 500; font-size: var(--caption1-size); line-height: var(--caption1-line); letter-spacing: var(--caption1-spacing); }
 .type-caption2 { font-family: var(--font-sans); font-weight: 500; font-size: var(--caption2-size); line-height: var(--caption2-line); letter-spacing: var(--caption2-spacing); }

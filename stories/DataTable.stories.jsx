@@ -1,4 +1,4 @@
-import { StatusBadge, Table } from '../src/index.js';
+import { getTableHeaderCellStyle, StatusBadge, Table } from '../src/index.js';
 import { TableCard as TableCardStory } from './DataDisplay.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -122,6 +122,42 @@ export const TableSemanticsContract = {
     const firstRowCells = table.querySelectorAll('tbody tr:first-child td');
     if (firstRowCells.length !== columns.length - 1) {
       throw new Error('행 헤더로 승격된 셀 하나를 제외한 나머지는 <td>로 남아야 합니다.');
+    }
+  },
+};
+
+export const RowExtensionContract = {
+  name: '사용법 · 행 메타데이터 확장',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    '읽기 전용 표에 선택 의미를 추가하지 않고 행별 상태·테스트 식별자·이벤트를 연결하는 계약입니다. 정렬·선택·키보드 행 탐색이 필요하면 Table이 아니라 Data Grid를 사용하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-3)', width: '100%', maxWidth: 1040, minWidth: 0 }}>
+      <div style={{ ...getTableHeaderCellStyle({ align: 'left' }), borderRadius: 'var(--radius-sm)' }}>
+        공개 헤더 셀 스타일 헬퍼를 사용하는 보조 표 레이블
+      </div>
+      <Table
+        tableLabel="행 확장 계약"
+        columns={columns}
+        rows={rows}
+        getRowProps={(row, index) => ({
+          'data-row-id': row.id,
+          'data-row-index': index,
+          className: row.status === '중지' ? 'is-stopped' : undefined,
+        })}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const renderedRows = [...canvasElement.querySelectorAll('tbody tr')];
+    if (renderedRows.length !== rows.length
+      || renderedRows.some((row, index) => row.dataset.rowId !== rows[index].id || row.dataset.rowIndex !== String(index))
+      || !renderedRows.at(-1)?.classList.contains('is-stopped')) {
+      throw new Error('getRowProps must merge row metadata without changing native table semantics.');
+    }
+    if (renderedRows.some((row) => row.hasAttribute('role') || row.hasAttribute('tabindex'))) {
+      throw new Error('Static Table row extension must not introduce grid or keyboard-selection semantics by default.');
     }
   },
 };

@@ -37,23 +37,19 @@
 | `full` | `boolean` | No | Legacy fill prop. Prefer resize="fill". @default false |
 | `resize` | `"hug" \| "fill"` | No | resize axis. @default "hug" |
 | `size` | `"small" \| "sm" \| "medium" \| "md" \| "large" \| "lg"` | No | size axis. @default "medium" |
-| `padding` | `boolean` | No | padding axis. @default false |
+| `padding` | `boolean \| number \| string` | No | Inline padding. true preserves the legacy 8px value; a number or CSS length sets an explicit inset. @default false |
 | `trailingIconButton` | `boolean \| React.ReactNode` | No | trailingIconButton axis. @default false |
 | `scroll` | `"auto" \| boolean` | No | scroll axis. @default "auto" |
-
-## Behavior and interaction
-
-- WDS axes: resize (hug/fill), size, padding, trailingIconButton, and horizontal scroll.
 
 ## 정량 규칙
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | 탭↔패널 연결: 각 탭은 useId() 기반 id를 자동으로 가지며, item.tabId로 재정의할 수 있습니다. item.panelId를 넘기면 탭에 aria-controls로 연결됩니다. 소비 측은 패널을 role="tabpanel", id={panelId}, aria-labelledby={탭 id}, tabIndex={0}으로 표시하세요. |
+| 명시 규칙 1 | WDS axes: resize (hug/fill), size, padding, trailingIconButton, and horizontal scroll. padding={true} preserves the legacy 8px inset; pass a number or CSS length such as padding="var(--space-6)" to align tabs with adjacent card content. |
+| 명시 규칙 2 | The 2px active indicator is drawn inside the tab box (bottom: 0). Scrollable tabs suppress cross-axis overflow only after the full indicator is inside, so the tablist cannot create a vertical scrollbar from its own indicator and the indicator is not clipped to 1px. |
+| 명시 규칙 3 | 탭↔패널 연결: 각 탭은 useId() 기반 id를 자동으로 가지며, item.tabId로 재정의할 수 있습니다. item.panelId를 넘기면 탭에 aria-controls로 연결됩니다. 소비 측은 패널을 role="tabpanel", id={panelId}, aria-labelledby={탭 id}, tabIndex={0}으로 표시하세요. |
 | --body2-size | 15px |
 | --color-semantic-focus-indicator | light: #2F6FB0; dark: #7FB0DE |
-| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
-| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
 
 ## Responsive
 
@@ -78,7 +74,7 @@
 
 ```jsx
 <Tabs items={[{ value: 'all', label: 'All' }, { value: 'open', label: 'Open' }]} defaultValue="all" />
-<Tabs resize="fill" size="large" padding trailingIconButton items={items} />
+<Tabs resize="fill" size="large" padding="var(--space-6)" trailingIconButton items={items} />
 ```
 
 ## Tokens and API

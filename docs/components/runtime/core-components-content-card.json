@@ -21,7 +21,12 @@
     "Plain children-only Card usage is still supported for generic LDS surfaces."
   ],
   "avoidWhen": [],
-  "anatomy": [],
+  "anatomy": [
+    {
+      "part": "titleWrap",
+      "rule": "Structured title overflow policy. @default \"truncate\""
+    }
+  ],
   "properties": [
     {
       "name": "elevation",
@@ -136,6 +141,13 @@
       "owner": "CardProps"
     },
     {
+      "name": "titleWrap",
+      "type": "\"truncate\" | \"wrap\"",
+      "required": false,
+      "description": "Structured title overflow policy. @default \"truncate\"",
+      "owner": "CardProps"
+    },
+    {
       "name": "description",
       "type": "React.ReactNode",
       "required": false,
@@ -214,7 +226,9 @@
       "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
     }
   ],
-  "responsive": [],
+  "responsive": [
+    "titleWrap=\"truncate|wrap\" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination."
+  ],
   "contentGuidance": [],
   "accessibility": [],
   "exceptions": [],
