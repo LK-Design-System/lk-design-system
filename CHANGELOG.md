@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.7 - 2026-08-02
+
+### Fixed
+
+- Restored the nested `@lk-design-system/lds-core` and `lds-product` rc.4 lock entries required by the vendored Robotics rc.4 package, so the immutable release workflow can install the tagged source with `npm ci`.
+
 ## 0.1.0-rc.6 - 2026-08-02
 
 ### Added
