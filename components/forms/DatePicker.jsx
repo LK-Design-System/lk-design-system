@@ -2,6 +2,7 @@ import React from 'react';
 import { Calendar } from '../data/Calendar.jsx';
 import { Icon } from '../icon/Icon.jsx';
 import { useLightDismiss } from '../overlay/anchored-overlay.js';
+import { fieldTypography } from './field-shared.js';
 
 /**
  * LK ROBOTICS — DatePicker
@@ -33,7 +34,7 @@ export function DatePicker({ value, defaultValue, onChange, isDateDisabled, minD
     if (disabled && open) setOpen(false);
   }, [disabled, open]);
   const fmt = (d) => { if (!d) return ''; const dt = d instanceof Date ? d : new Date(d); return `${dt.getFullYear()}. ${String(dt.getMonth() + 1).padStart(2, '0')}. ${String(dt.getDate()).padStart(2, '0')}`; };
-  const h = size === 'sm' ? 'var(--control-h-sm)' : 'var(--component-input-height)';
+  const h = size === 'sm' || size === 'small' ? 'var(--control-h-sm)' : 'var(--component-input-height)';
   // Same precedence as Input/Select/Textarea: an invalid field keeps the
   // negative ring even while it is focused or open.
   const borderColor = invalid
@@ -87,7 +88,7 @@ export function DatePicker({ value, defaultValue, onChange, isDateDisabled, minD
         onClick={() => setOpen((current) => !current)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--component-input-gap)', width: full ? '100%' : undefined, height: h, padding: '0 var(--component-input-padding-x)', minWidth: full ? 0 : 200, boxSizing: 'border-box', background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--component-input-bg)', border: `1px solid ${borderColor}`, borderRadius: 'var(--component-input-radius)', boxShadow: focused || open ? 'var(--component-input-focus-shadow)' : 'none', cursor: disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', color: disabled ? 'var(--color-semantic-label-disable)' : sel ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)' }}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--component-input-gap)', width: full ? '100%' : undefined, height: h, padding: '0 var(--component-input-padding-x)', minWidth: full ? 0 : 200, boxSizing: 'border-box', background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--component-input-bg)', border: `1px solid ${borderColor}`, borderRadius: 'var(--component-input-radius)', boxShadow: focused || open ? 'var(--component-input-focus-shadow)' : 'none', cursor: disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', ...fieldTypography(size), color: disabled ? 'var(--color-semantic-label-disable)' : sel ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)' }}
       >
         <Icon name="calendar" size={18} color="var(--color-semantic-label-alternative)" aria-hidden="true" />
         <span style={{ flex: 1, textAlign: 'left' }}>{formattedValue || placeholder}</span>

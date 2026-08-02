@@ -92,7 +92,6 @@
 - `--component-input-border-color-focus`
 - `--component-input-border-color-invalid`
 - `--component-input-focus-shadow`
-- `--component-input-font-size`
 - `--component-input-gap`
 - `--component-input-height`
 - `--component-input-padding-x`

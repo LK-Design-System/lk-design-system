@@ -6,6 +6,7 @@ import {
   FieldStatusIcon,
   fieldBackground,
   fieldBorderColor,
+  fieldTypography,
   useFieldMetadata,
 } from './field-shared.js';
 
@@ -206,9 +207,7 @@ export function Combobox({
               : 'var(--color-semantic-label-alternative)',
           cursor: disabled ? 'not-allowed' : readOnly ? 'default' : 'pointer',
           fontFamily: 'var(--font-sans)',
-          fontSize: 'var(--component-input-font-size)',
-          lineHeight: 'var(--component-input-line-height)',
-          letterSpacing: 'var(--component-input-letter-spacing)',
+          ...fieldTypography(normalizedSize),
           textAlign: 'left',
           transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
         }}
@@ -252,7 +251,7 @@ export function Combobox({
                 onMouseDown={(event) => event.preventDefault()}
                 onMouseEnter={() => { if (!option.disabled) setActiveIndex(index); }}
                 onClick={() => toggle(index)}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', padding: '9px 10px', borderRadius: 'var(--radius-md)', background: selected ? 'var(--color-semantic-primary-surface-strong)' : active ? 'var(--color-semantic-fill-normal)' : 'transparent', color: option.disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)', cursor: option.disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)' }}
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', padding: '9px 10px', borderRadius: 'var(--radius-md)', background: selected ? 'var(--color-semantic-primary-surface-strong)' : active ? 'var(--color-semantic-fill-normal)' : 'transparent', color: option.disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)', cursor: option.disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', ...fieldTypography(normalizedSize) }}
               >
                 <span aria-hidden="true" style={{ width: 18, height: 18, borderRadius: 'var(--radius-5)', border: `1.5px solid ${selected ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`, background: selected ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   {selected && <Icon name="check" size={16} color="var(--color-semantic-static-white)" aria-hidden="true" />}

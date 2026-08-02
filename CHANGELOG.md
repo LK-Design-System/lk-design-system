@@ -4,7 +4,7 @@ All notable package-facing changes are recorded here. The package follows semant
 
 ## Unreleased
 
-Repository-wide accessibility and convention sweep across the Core (55 areas) and Product (69 areas) layers, audited against WAI-ARIA APG, WCAG 2.2, and current industry systems, with every fix pinned by a hidden contract story. 480 stories are Axe-clean with 261 play contracts.
+Repository-wide accessibility and convention sweep across the Core (55 areas) and Product (69 areas) layers, audited against WAI-ARIA APG, WCAG 2.2, and current industry systems, with every fix pinned by a hidden contract story. 481 stories are Axe-clean with 262 play contracts.
 
 ### Added
 
@@ -27,7 +27,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `ChecklistItem stateLabel` (visually hidden 포함/제외 text) and `as` for list semantics; `SpecRow` renders `dl`/`dt`/`dd` with a `grouped` mode for composed spec tables.
 - `FeatureCard`/`NewsCard`/`ProductCard` inherit the Card improvements: real headings with `headingLevel`, keyboard activation for interactive cards, links named by their headline instead of the full card text, and focus-visible affordances matching hover.
 - `ResourceState headingLevel` (ChartFrame passes its own level + 1); `Fab type`; `TimePicker` labelled group; `WheelPicker` type-ahead and settle-commit (one commit per drum stop instead of per scroll frame); `IconPicker` grid-aware 2D keyboard movement with a single tab stop; `PropertyField`/`InputGroup` label and describedby wiring with consumer `onChange` passthrough.
-- 43 hidden contract stories pinning the keyboard/ARIA/live-region contracts above; inventory grew to 480 implementation stories (public surface unchanged at 335).
+- 44 hidden contract stories pinning the keyboard/ARIA/live-region contracts above; inventory grew to 481 implementation stories (public surface unchanged at 335).
 ### Fixed
 
 - `SideNav`의 접힌 레일 행이 38px, 펼친 행이 44px이고 브랜드 아래 패딩도 10/18px로 달라 overlay peek 때 목적지가 세로로 이동하던 문제를 고쳤습니다. 두 상태는 44px 행과 같은 브랜드 아래 패딩을 공유합니다.
@@ -67,6 +67,13 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Meter` consumers targeting `role="progressbar"` should target `role="meter"`; `aria-valuenow` is now in caller units rather than a 0–100 projection.
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
+
+## 0.1.0-rc.12 - 2026-08-02
+
+### Fixed
+
+- Release artifacts are regenerated with the repository's canonical Node 22.17.1 and npm 10.9.2 runtime so the clean-runner generated-artifact gate is deterministic.
+- `size="sm"` input controls now use component-owned label1 typography tokens (14px/20px) while the existing body1 tokens remain the medium-size default. `Input`, `SearchField`, `Select`, `AutoComplete`, `Combobox`, `PasswordInput`, `InputGroup`, `NumberField`, `TimePicker`, `DatePicker`, and `Textarea` share the compact density contract.
 
 ## 0.1.0-rc.11 - 2026-08-02
 

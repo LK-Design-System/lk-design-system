@@ -9,6 +9,15 @@ export function mergeIds(...values) {
   return ids.length ? [...new Set(ids)].join(' ') : undefined;
 }
 
+export function fieldTypography(size = 'md') {
+  const compact = size === 'sm' || size === 'small';
+  return {
+    fontSize: compact ? 'var(--component-input-font-size-sm)' : 'var(--component-input-font-size)',
+    lineHeight: compact ? 'var(--component-input-line-height-sm)' : 'var(--component-input-line-height)',
+    letterSpacing: compact ? 'var(--component-input-letter-spacing-sm)' : 'var(--component-input-letter-spacing)',
+  };
+}
+
 export function useFieldMetadata({ prefix, id, label, helper, error, describedBy }) {
   const autoId = React.useId();
   const fieldId = id ?? `${prefix}-${autoId}`;

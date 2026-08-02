@@ -10108,11 +10108,8 @@
         "--color-semantic-label-normal",
         "--component-input-border-width",
         "--component-input-focus-shadow",
-        "--component-input-font-size",
         "--component-input-gap",
         "--component-input-height",
-        "--component-input-letter-spacing",
-        "--component-input-line-height",
         "--component-input-padding-x",
         "--component-input-radius",
         "--component-input-stack-gap",
@@ -10751,12 +10748,9 @@
         "--component-button-transition",
         "--component-input-border-width",
         "--component-input-focus-shadow",
-        "--component-input-font-size",
         "--component-input-gap",
         "--component-input-height",
         "--component-input-icon-color",
-        "--component-input-letter-spacing",
-        "--component-input-line-height",
         "--component-input-padding-x",
         "--component-input-radius",
         "--component-input-text-color",
@@ -11394,10 +11388,7 @@
         "--component-button-transition",
         "--component-input-border-width",
         "--component-input-focus-shadow",
-        "--component-input-font-size",
         "--component-input-gap",
-        "--component-input-letter-spacing",
-        "--component-input-line-height",
         "--component-input-padding-x",
         "--component-input-radius",
         "--component-input-stack-gap",
@@ -12505,12 +12496,12 @@
           "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
         },
         {
-          "subject": "--component-input-font-size",
-          "rule": "var(--body1-size)"
+          "subject": "--component-input-stack-gap",
+          "rule": "var(--space-2)"
         },
         {
-          "subject": "--component-input-letter-spacing",
-          "rule": "var(--body1-spacing)"
+          "subject": "--space-10",
+          "rule": "40px"
         }
       ],
       "responsive": [],
@@ -12563,9 +12554,6 @@
         "--color-semantic-label-disable",
         "--component-input-border-width",
         "--component-input-focus-shadow",
-        "--component-input-font-size",
-        "--component-input-letter-spacing",
-        "--component-input-line-height",
         "--component-input-radius",
         "--component-input-stack-gap",
         "--component-input-text-color",
@@ -35548,7 +35536,6 @@
         "--component-input-border-color-focus",
         "--component-input-border-color-invalid",
         "--component-input-focus-shadow",
-        "--component-input-font-size",
         "--component-input-gap",
         "--component-input-height",
         "--component-input-padding-x",
@@ -37043,8 +37030,8 @@
           "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
         },
         {
-          "subject": "--component-input-font-size",
-          "rule": "var(--body1-size)"
+          "subject": "--fw-semibold",
+          "rule": "600"
         }
       ],
       "responsive": [],
@@ -37078,10 +37065,7 @@
         "--component-input-border-color",
         "--component-input-border-width",
         "--component-input-focus-shadow",
-        "--component-input-font-size",
         "--component-input-height",
-        "--component-input-letter-spacing",
-        "--component-input-line-height",
         "--component-input-padding-x",
         "--component-input-radius",
         "--component-input-text-color",
@@ -37332,7 +37316,6 @@
         "--color-semantic-label-normal",
         "--color-semantic-line-solid-normal",
         "--component-input-focus-shadow",
-        "--component-input-font-size",
         "--component-input-height",
         "--component-input-padding-x",
         "--component-input-radius",
@@ -37570,11 +37553,8 @@
         "--color-semantic-status-cautionary-text",
         "--component-input-border-width",
         "--component-input-focus-shadow",
-        "--component-input-font-size",
         "--component-input-gap",
         "--component-input-height",
-        "--component-input-letter-spacing",
-        "--component-input-line-height",
         "--component-input-padding-x",
         "--component-input-radius",
         "--component-input-text-color",
@@ -39026,10 +39006,8 @@
         "--component-input-border-color",
         "--component-input-border-color-focus",
         "--component-input-focus-shadow",
-        "--component-input-font-size",
         "--component-input-height",
         "--component-input-icon-color",
-        "--component-input-line-height",
         "--component-input-radius",
         "--component-input-text-color",
         "--control-h-sm",

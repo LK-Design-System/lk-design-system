@@ -6,6 +6,7 @@ import {
   FieldStatusIcon,
   fieldBackground,
   fieldBorderColor,
+  fieldTypography,
   useFieldMetadata,
 } from './field-shared.js';
 
@@ -186,13 +187,13 @@ export function PasswordInput({
           style={{
             flex: 1,
             minWidth: 0,
+            height: '100%',
+            boxSizing: 'border-box',
             border: 'none',
             outline: 'none',
             background: 'transparent',
             fontFamily: 'var(--font-sans)',
-            fontSize: 'var(--component-input-font-size)',
-            lineHeight: 'var(--component-input-line-height)',
-            letterSpacing: 'var(--component-input-letter-spacing)',
+            ...fieldTypography(normalizedSize),
             color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-text-color)',
           }}
         />

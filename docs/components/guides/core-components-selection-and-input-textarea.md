@@ -52,8 +52,8 @@
 | --- | --- |
 | --color-semantic-label-assistive | light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28) |
 | --color-semantic-label-disable | light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52) |
-| --component-input-font-size | var(--body1-size) |
-| --component-input-letter-spacing | var(--body1-spacing) |
+| --component-input-stack-gap | var(--space-2) |
+| --space-10 | 40px |
 
 ## Content and writing
 
@@ -92,9 +92,6 @@
 - `--color-semantic-label-disable`
 - `--component-input-border-width`
 - `--component-input-focus-shadow`
-- `--component-input-font-size`
-- `--component-input-letter-spacing`
-- `--component-input-line-height`
 - `--component-input-radius`
 - `--component-input-stack-gap`
 - `--component-input-text-color`

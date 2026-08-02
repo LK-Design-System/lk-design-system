@@ -161,8 +161,8 @@
       "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
     },
     {
-      "subject": "--component-input-font-size",
-      "rule": "var(--body1-size)"
+      "subject": "--fw-semibold",
+      "rule": "600"
     }
   ],
   "responsive": [],
@@ -196,10 +196,7 @@
     "--component-input-border-color",
     "--component-input-border-width",
     "--component-input-focus-shadow",
-    "--component-input-font-size",
     "--component-input-height",
-    "--component-input-letter-spacing",
-    "--component-input-line-height",
     "--component-input-padding-x",
     "--component-input-radius",
     "--component-input-text-color",

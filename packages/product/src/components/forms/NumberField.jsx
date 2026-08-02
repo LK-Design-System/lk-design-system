@@ -4,6 +4,7 @@ import {
   FieldStack,
   fieldBackground,
   fieldBorderColor,
+  fieldTypography,
   useFieldMetadata,
 } from '@lk-design-system/lds-core/components/forms/field-shared';
 
@@ -59,7 +60,7 @@ export function NumberField({ value, defaultValue = 0, min = -Infinity, max = In
     if (!isControlled) setInternal(clamped);
     if (clamped !== Number(val)) onChange && onChange(clamped);
   };
-  const h = size === 'sm' ? 'var(--control-h-sm)' : 'var(--component-input-height)';
+  const h = size === 'sm' || size === 'small' ? 'var(--control-h-sm)' : 'var(--component-input-height)';
   const arrow = (dir) => {
     const off = disabled || readOnly || (dir < 0 ? stepBase <= min : stepBase >= max);
     return (
@@ -82,7 +83,7 @@ export function NumberField({ value, defaultValue = 0, min = -Infinity, max = In
         onFocus={(event) => { setFocused(true); onFocus?.(event); }}
         onBlur={(event) => { setFocused(false); settle(); onBlur?.(event); }}
         onKeyDown={(event) => { if (event.key === 'Enter') settle(); onKeyDown?.(event); }}
-        style={{ width: 92, padding: '0 var(--component-input-padding-x)', border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', fontWeight: 'var(--fw-semibold)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)' }}
+        style={{ width: 92, padding: '0 var(--component-input-padding-x)', border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--font-sans)', ...fieldTypography(size), fontWeight: 'var(--fw-semibold)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)' }}
       />
       {/* The steppers are rendered inline rather than by a component declared in
           this body: a nested component is a new type on every render, so React

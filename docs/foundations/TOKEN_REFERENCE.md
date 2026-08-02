@@ -93,6 +93,7 @@
 | `component.input.tokens.borderColor` | color | `--component-input-border-color` | `var(--component-input-border-color)` | — |
 | `component.input.tokens.borderColorFocus` | color | `--component-input-border-color-focus` | `var(--component-input-border-color-focus)` | — |
 | `component.input.tokens.borderColorInvalid` | color | `--component-input-border-color-invalid` | `var(--component-input-border-color-invalid)` | — |
+| `component.input.tokens.compactTypography` | typography | `--component-input-font-size-sm, --component-input-line-height-sm, --component-input-letter-spacing-sm` | `label1` | — |
 | `component.input.tokens.focusShadow` | shadow | `--component-input-focus-shadow` | `var(--component-input-focus-shadow)` | — |
 | `component.input.tokens.height` | dimension | `--component-input-height` | `var(--component-input-height)` | — |
 | `component.input.tokens.labelTypography` | typography | `--component-input-label-font-size, --component-input-label-line-height, --component-input-label-letter-spacing` | `label1` | — |

@@ -5,6 +5,7 @@ import {
   FieldStatusIcon,
   fieldBackground,
   fieldBorderColor,
+  fieldTypography,
   mergeIds,
 } from './field-shared.js';
 
@@ -81,7 +82,7 @@ export function Textarea({
           border: `var(--component-input-border-width) solid ${ring}`, borderRadius: 'var(--component-input-radius)',
           boxShadow: activeFocus && !isInvalid ? 'var(--component-input-focus-shadow)' : 'none',
           transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
-          fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', letterSpacing: 'var(--component-input-letter-spacing)', lineHeight: 'var(--component-input-line-height)',
+          fontFamily: 'var(--font-sans)', ...fieldTypography(normalizedSize),
           outline: 'none', boxSizing: 'border-box', cursor: disabled ? 'not-allowed' : readOnly ? 'text' : undefined,
         }}
         />

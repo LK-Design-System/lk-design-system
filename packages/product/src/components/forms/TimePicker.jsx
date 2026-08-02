@@ -1,11 +1,12 @@
 import React from 'react';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { fieldTypography } from '@lk-design-system/lds-core/components/forms/field-shared';
 
 function pad(number) {
   return String(number).padStart(2, '0');
 }
 
-function TimeSelect({ value, options, onChange, height, ariaLabel, disabled }) {
+function TimeSelect({ value, options, onChange, height, size, ariaLabel, disabled }) {
   const [focused, setFocused] = React.useState(false);
 
   return (
@@ -31,8 +32,7 @@ function TimeSelect({ value, options, onChange, height, ariaLabel, disabled }) {
           cursor: disabled ? 'not-allowed' : 'pointer',
           outline: 'none',
           fontFamily: 'var(--font-sans)',
-          fontSize: 'var(--component-input-font-size)',
-          lineHeight: 'var(--component-input-line-height)',
+          ...fieldTypography(size),
           fontWeight: 'var(--fw-semibold)',
           fontVariantNumeric: 'tabular-nums',
           transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
@@ -81,7 +81,7 @@ export function TimePicker({
   const normalizedStep = Number.isFinite(minuteStep)
     ? Math.max(1, Math.min(60, Math.round(minuteStep)))
     : 5;
-  const height = size === 'sm' ? 'var(--control-h-sm)' : 'var(--component-input-height)';
+  const height = size === 'sm' || size === 'small' ? 'var(--control-h-sm)' : 'var(--component-input-height)';
   const hours = Array.from({ length: 24 }, (_, index) => index);
   const minutes = Array.from({ length: Math.ceil(60 / normalizedStep) }, (_, index) => index * normalizedStep)
     .filter((option) => option < 60);
@@ -104,9 +104,9 @@ export function TimePicker({
       aria-disabled={disabled || undefined}
       style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontFamily: 'var(--font-sans)', ...style }}
     >
-      <TimeSelect value={hour} options={hours} onChange={(nextHour) => commit(nextHour, minute)} height={height} ariaLabel={hourLabel} disabled={disabled} />
+      <TimeSelect value={hour} options={hours} onChange={(nextHour) => commit(nextHour, minute)} height={height} size={size} ariaLabel={hourLabel} disabled={disabled} />
       <span aria-hidden="true" style={{ fontWeight: 'var(--fw-bold)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-alternative)' }}>:</span>
-      <TimeSelect value={minute} options={minutes} onChange={(nextMinute) => commit(hour, nextMinute)} height={height} ariaLabel={minuteLabel} disabled={disabled} />
+      <TimeSelect value={minute} options={minutes} onChange={(nextMinute) => commit(hour, nextMinute)} height={height} size={size} ariaLabel={minuteLabel} disabled={disabled} />
     </div>
   );
 }

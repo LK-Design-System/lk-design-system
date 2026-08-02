@@ -155,12 +155,12 @@
       "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
     },
     {
-      "subject": "--component-input-font-size",
-      "rule": "var(--body1-size)"
+      "subject": "--component-input-stack-gap",
+      "rule": "var(--space-2)"
     },
     {
-      "subject": "--component-input-letter-spacing",
-      "rule": "var(--body1-spacing)"
+      "subject": "--space-10",
+      "rule": "40px"
     }
   ],
   "responsive": [],
@@ -213,9 +213,6 @@
     "--color-semantic-label-disable",
     "--component-input-border-width",
     "--component-input-focus-shadow",
-    "--component-input-font-size",
-    "--component-input-letter-spacing",
-    "--component-input-line-height",
     "--component-input-radius",
     "--component-input-stack-gap",
     "--component-input-text-color",

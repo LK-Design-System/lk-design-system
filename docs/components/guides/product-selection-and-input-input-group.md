@@ -41,7 +41,7 @@
 | --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 | --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
 | --color-semantic-label-disable | light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52) |
-| --component-input-font-size | var(--body1-size) |
+| --fw-semibold | 600 |
 
 ## Content and writing
 
@@ -80,10 +80,7 @@
 - `--component-input-border-color`
 - `--component-input-border-width`
 - `--component-input-focus-shadow`
-- `--component-input-font-size`
 - `--component-input-height`
-- `--component-input-letter-spacing`
-- `--component-input-line-height`
 - `--component-input-padding-x`
 - `--component-input-radius`
 - `--component-input-text-color`

@@ -5,6 +5,7 @@ import {
   FieldStatusIcon,
   fieldBackground,
   fieldBorderColor,
+  fieldTypography,
   mergeIds,
 } from './field-shared.js';
 
@@ -96,7 +97,7 @@ export function Input({
           aria-invalid={isInvalid || rest['aria-invalid'] || undefined}
           onFocus={(e) => { setFocused(true); rest.onFocus && rest.onFocus(e); }}
           onBlur={(e) => { setFocused(false); rest.onBlur && rest.onBlur(e); }}
-          style={{ flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent', cursor: disabled ? 'not-allowed' : readOnly ? 'text' : undefined, fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)' }}
+          style={{ flex: 1, minWidth: 0, height: '100%', boxSizing: 'border-box', border: 'none', outline: 'none', background: 'transparent', cursor: disabled ? 'not-allowed' : readOnly ? 'text' : undefined, fontFamily: 'var(--font-sans)', ...fieldTypography(normalizedSize), color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)' }}
         />
         {endIcon && <span style={{ color: 'var(--color-semantic-label-alternative)', display: 'inline-flex', flex: '0 0 auto' }}>{endIcon}</span>}
         {!endIcon && <FieldStatusIcon invalid={isInvalid} status={status} />}

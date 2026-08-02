@@ -79,7 +79,6 @@
 - `--color-semantic-label-normal`
 - `--color-semantic-line-solid-normal`
 - `--component-input-focus-shadow`
-- `--component-input-font-size`
 - `--component-input-height`
 - `--component-input-padding-x`
 - `--component-input-radius`

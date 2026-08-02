@@ -5,6 +5,7 @@ import {
   FieldStatusIcon,
   fieldBackground,
   fieldBorderColor,
+  fieldTypography,
   useFieldMetadata,
 } from './field-shared.js';
 
@@ -247,6 +248,7 @@ export function AutoComplete({
             flex: 1,
             minWidth: 0,
             height: '100%',
+            boxSizing: 'border-box',
             padding: 0,
             border: 0,
             outline: 0,
@@ -254,9 +256,7 @@ export function AutoComplete({
             color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-input-text-color)',
             cursor: disabled ? 'not-allowed' : readOnly ? 'text' : 'text',
             fontFamily: 'var(--font-sans)',
-            fontSize: 'var(--component-input-font-size)',
-            lineHeight: 'var(--component-input-line-height)',
-            letterSpacing: 'var(--component-input-letter-spacing)',
+            ...fieldTypography(normalizedSize),
           }}
         />
         <FieldStatusIcon invalid={isInvalid} status={status} />
@@ -313,8 +313,7 @@ export function AutoComplete({
                       : 'var(--color-semantic-label-normal)',
                   cursor: option.disabled ? 'not-allowed' : 'pointer',
                   fontFamily: 'var(--font-sans)',
-                  fontSize: 'var(--component-input-font-size)',
-                  lineHeight: 'var(--component-input-line-height)',
+                  ...fieldTypography(normalizedSize),
                 }}
               >
                 {option.label}

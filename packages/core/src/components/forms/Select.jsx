@@ -7,6 +7,7 @@ import {
   FieldStatusIcon,
   fieldBackground,
   fieldBorderColor,
+  fieldTypography,
   mergeIds,
 } from './field-shared.js';
 
@@ -320,9 +321,7 @@ export function Select({
             visibility: 'hidden',
             pointerEvents: 'none',
             fontFamily: 'var(--font-sans)',
-            fontSize: 'var(--component-input-font-size)',
-            lineHeight: 'var(--component-input-line-height)',
-            letterSpacing: 'var(--component-input-letter-spacing)',
+            ...fieldTypography(normalizedSize),
           }}
         >
           {intrinsicLabels.map((text, index) => (
@@ -343,9 +342,7 @@ export function Select({
                 boxSizing: 'border-box',
                 border: 'var(--component-input-border-width) solid transparent',
                 fontFamily: 'var(--font-sans)',
-                fontSize: 'var(--component-input-font-size)',
-                lineHeight: 'var(--component-input-line-height)',
-                letterSpacing: 'var(--component-input-letter-spacing)',
+                ...fieldTypography(normalizedSize),
                 textAlign: 'left',
                 whiteSpace: 'nowrap',
               }}
@@ -387,7 +384,7 @@ export function Select({
             border: `var(--component-input-border-width) solid ${ring}`, borderRadius: 'var(--component-input-radius)',
             boxShadow: activeFocus && !isInvalid ? 'var(--component-input-focus-shadow)' : 'none',
             cursor: disabledState ? 'not-allowed' : readOnly ? 'default' : 'pointer',
-            fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', letterSpacing: 'var(--component-input-letter-spacing)', textAlign: 'left',
+            fontFamily: 'var(--font-sans)', ...fieldTypography(normalizedSize), textAlign: 'left',
             transition: 'var(--component-button-transition)',
           }}
         >
@@ -420,7 +417,7 @@ export function Select({
                   onMouseDown={(event) => event.preventDefault()}
                   onClick={() => pick(index)}
                   onMouseEnter={() => { if (!o.disabled) setActiveIndex(index); }}
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2-5)', padding: '9px 12px', borderRadius: 'var(--radius-md)', cursor: o.disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', fontSize: 'var(--component-input-font-size)', lineHeight: 'var(--component-input-line-height)', color: o.disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)', background: o.disabled && on ? 'var(--color-semantic-fill-strong)' : on ? 'var(--color-semantic-primary-surface-strong)' : isActive ? 'var(--color-semantic-fill-normal)' : 'transparent', boxShadow: isActive && !o.disabled ? 'inset 0 0 0 2px var(--color-semantic-primary-normal)' : 'none', fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)' }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2-5)', padding: '9px 12px', borderRadius: 'var(--radius-md)', cursor: o.disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', ...fieldTypography(normalizedSize), color: o.disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)', background: o.disabled && on ? 'var(--color-semantic-fill-strong)' : on ? 'var(--color-semantic-primary-surface-strong)' : isActive ? 'var(--color-semantic-fill-normal)' : 'transparent', boxShadow: isActive && !o.disabled ? 'inset 0 0 0 2px var(--color-semantic-primary-normal)' : 'none', fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)' }}
                 >
                   <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{o.label}</span>
                   {on && <Icon name="check" size={15} color={o.disabled ? 'var(--color-semantic-label-disable)' : undefined} aria-hidden="true" style={{ flexShrink: 0 }} />}

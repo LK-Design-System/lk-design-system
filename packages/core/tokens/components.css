@@ -236,8 +236,11 @@
   --component-input-icon-color: var(--color-semantic-label-alternative);
   --component-input-text-color: var(--color-semantic-label-normal);
   --component-input-font-size: var(--body1-size);
+  --component-input-font-size-sm: var(--label1-size);
   --component-input-line-height: var(--body1-line);
+  --component-input-line-height-sm: var(--label1-line);
   --component-input-letter-spacing: var(--body1-spacing);
+  --component-input-letter-spacing-sm: var(--label1-spacing);
   --component-input-label-color: var(--color-semantic-label-normal);
   --component-input-label-font-size: var(--label1-size);
   --component-input-label-line-height: var(--label1-line);

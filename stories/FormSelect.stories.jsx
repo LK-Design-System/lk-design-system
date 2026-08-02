@@ -1,6 +1,6 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
-import { Select } from '../src/index.js';
+import { Chip, Input, SearchField, Select } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -103,6 +103,44 @@ export const SelectStableOptionWidthContract = {
     const shortWidth = trigger.getBoundingClientRect().width;
     if (Math.abs(longWidth - shortWidth) > 0.5) {
       throw new Error(`Select width must remain stable across values (${longWidth}px -> ${shortWidth}px).`);
+    }
+  },
+};
+
+export const CompactFieldTypographyContract = {
+  name: 'Compact field typography contract',
+  tags: ['!dev'],
+  render: () => (
+    <main style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+      <Input data-contract="compact-input" size="sm" aria-label="Compact input" defaultValue="Input" />
+      <SearchField data-contract="compact-search" size="sm" aria-label="Compact search" defaultValue="Search" />
+      <Select data-contract="compact-select" size="sm" aria-label="Compact select" defaultValue="one" options={[{ value: 'one', label: 'Select' }]} />
+      <Chip data-contract="compact-chip" size="sm">Chip</Chip>
+      <Input data-contract="medium-input" size="md" aria-label="Medium input" defaultValue="Input" />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const compactFields = ['compact-input', 'compact-search', 'compact-select']
+      .map((contract) => canvasElement.querySelector(`[data-contract="${contract}"]`));
+    const compactChip = canvasElement.querySelector('[data-contract="compact-chip"]');
+    const mediumInput = canvasElement.querySelector('[data-contract="medium-input"]');
+    if (compactFields.some((field) => !field) || !compactChip || !mediumInput) {
+      throw new Error('Compact typography contract targets are required.');
+    }
+
+    compactFields.forEach((field) => {
+      const computed = getComputedStyle(field);
+      if (computed.fontSize !== '14px' || computed.lineHeight !== '20px') {
+        throw new Error(`Compact input typography must resolve to label1 (received ${computed.fontSize}/${computed.lineHeight}).`);
+      }
+    });
+    const chipTypography = getComputedStyle(compactChip);
+    if (chipTypography.fontSize !== '14px') {
+      throw new Error(`Compact inputs must align with compact Chip typography (received ${chipTypography.fontSize}).`);
+    }
+    const mediumTypography = getComputedStyle(mediumInput);
+    if (mediumTypography.fontSize !== '16px' || mediumTypography.lineHeight !== '24px') {
+      throw new Error(`Medium input typography must retain body1 (received ${mediumTypography.fontSize}/${mediumTypography.lineHeight}).`);
     }
   },
 };

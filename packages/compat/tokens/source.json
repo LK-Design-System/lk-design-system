@@ -3450,6 +3450,16 @@
             "--component-input-label-letter-spacing"
           ],
           "ref": "primitive.typography.label1"
+        },
+        "compactTypography": {
+          "$type": "typography",
+          "$value": "label1",
+          "css": [
+            "--component-input-font-size-sm",
+            "--component-input-line-height-sm",
+            "--component-input-letter-spacing-sm"
+          ],
+          "ref": "primitive.typography.label1"
         }
       }
     },
