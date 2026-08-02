@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.15 - 2026-08-02
+
+### Fixed
+
+- The LanguageSwitcher interaction contract now waits for its portalled menu to finish fixed-position layout before clicking an option, removing a Windows CI timing race without changing component behavior.
+
 ## 0.1.0-rc.14 - 2026-08-02
 
 ### Fixed

@@ -51,6 +51,7 @@
 | [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md) | product source pins와 `check:product-frontends` |
 | [`HANDOFF.md`](HANDOFF.md) | 현재 HEAD, 작업 상태, 최신 날짜별 handoff 포인터 |
 | [`HANDOFF_STORYBOOK_DOCS_SURFACE.md`](HANDOFF_STORYBOOK_DOCS_SURFACE.md) | Storybook Docs 표면 작업의 인계 문서 — 구현·검증 상태, evidence-only 가이드와 3% 중복 ratchet, 다시 깨기 쉬운 지점 |
+| [`SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md`](SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md) | LK Portal에서 확인한 Select intrinsic-width 레이아웃 결함과 MessageFeed viewport inset 계약 부족의 재현·수정·검증·릴리스 인계 |
 
 ## Plans, audits, and historical decisions
 
