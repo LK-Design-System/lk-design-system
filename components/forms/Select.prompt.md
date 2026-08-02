@@ -23,6 +23,7 @@
 ```
 
 - 타입 스케일 정합: 트리거와 옵션은 공통 `--component-input-font-size`(16px)를 사용합니다. WDS Select/AutoComplete 컴포넌트 집합 내부의 16px 텍스트 정의와 입력 계열의 본문 크기를 동시에 맞춥니다.
+- intrinsic-width 계약: option 집합을 재는 숨은 sizer는 absolute 배치로 normal flow에서 제외되어, root 높이를 trigger보다 키우지 않습니다.
 - `readOnly`는 현재 값과 포커스를 유지하지만 팝업을 열거나 값을 바꾸지 않으며, 대체 배경과 `aria-readonly`로 비활성과 구분합니다.
 - WDS 내부 `Select/Select` component-set(16215:33116)의 직접 축은 `Active`, `Disable`, `Focus`, `Negative`, `Overflow`, `Render(Chip/Text)`입니다. 옵션별 `disabled`와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.
 - 형제 비교: `AutoComplete`와 `Combobox`가 이미 비활성 옵션을 `aria-disabled`로 노출하고 탐색·선택에서 제외합니다. Select도 같은 규칙을 사용하되, 검색과 다중 선택은 가져오지 않습니다.

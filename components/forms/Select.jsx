@@ -313,6 +313,7 @@ export function Select({
           data-select-width-sizer=""
           ref={widthSizerRef}
           style={{
+            position: 'absolute',
             display: 'inline-grid',
             width: 'max-content',
             minWidth: 'max-content',

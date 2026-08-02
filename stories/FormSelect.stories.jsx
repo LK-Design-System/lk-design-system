@@ -122,9 +122,10 @@ export const CompactFieldTypographyContract = {
   play: async ({ canvasElement }) => {
     const compactFields = ['compact-input', 'compact-search', 'compact-select']
       .map((contract) => canvasElement.querySelector(`[data-contract="${contract}"]`));
+    const compactSelectRoot = compactFields[2]?.closest('[data-select-root]');
     const compactChip = canvasElement.querySelector('[data-contract="compact-chip"]');
     const mediumInput = canvasElement.querySelector('[data-contract="medium-input"]');
-    if (compactFields.some((field) => !field) || !compactChip || !mediumInput) {
+    if (compactFields.some((field) => !field) || !compactSelectRoot || !compactChip || !mediumInput) {
       throw new Error('Compact typography contract targets are required.');
     }
 
@@ -134,6 +135,11 @@ export const CompactFieldTypographyContract = {
         throw new Error(`Compact input typography must resolve to label1 (received ${computed.fontSize}/${computed.lineHeight}).`);
       }
     });
+    const compactSelectRect = compactFields[2].getBoundingClientRect();
+    const compactSelectRootRect = compactSelectRoot.getBoundingClientRect();
+    if (Math.abs(compactSelectRect.height - 32) > 0.5 || Math.abs(compactSelectRootRect.height - 32) > 0.5) {
+      throw new Error(`Compact Select root and trigger must both stay 32px tall (received ${compactSelectRootRect.height}px/${compactSelectRect.height}px).`);
+    }
     const chipTypography = getComputedStyle(compactChip);
     if (chipTypography.fontSize !== '14px') {
       throw new Error(`Compact inputs must align with compact Chip typography (received ${chipTypography.fontSize}).`);
