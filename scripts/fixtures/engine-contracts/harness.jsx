@@ -104,11 +104,11 @@ function DismissScenario({ id, outsidePress = true, openOnFocus = true }) {
   );
 }
 
-function FloatingScenario({ id, anchorStyle, placement = 'bottom', panelHeight = 240 }) {
+function FloatingScenario({ id, anchorStyle, placement = 'bottom', panelHeight = 240, strategy = 'absolute', align = 'left' }) {
   const anchorRef = React.useRef(null);
   const panelRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
-  const position = useFloatingPosition({ open, anchorRef: anchorRef, panelRef, placement });
+  const position = useFloatingPosition({ open, anchorRef: anchorRef, panelRef, placement, strategy, align });
   return (
     <div style={{ position: 'fixed', ...anchorStyle }}>
       <button ref={anchorRef} data-testid={`${id}-anchor`} onClick={() => setOpen((value) => !value)}>
@@ -120,13 +120,17 @@ function FloatingScenario({ id, anchorStyle, placement = 'bottom', panelHeight =
           data-testid={`${id}-panel`}
           data-placement={position.placement}
           data-maxheight={position.maxHeight == null ? 'null' : String(Math.round(position.maxHeight))}
+          data-x={position.x == null ? 'null' : String(Math.round(position.x))}
+          data-y={position.y == null ? 'null' : String(Math.round(position.y))}
           style={{
-            position: 'absolute',
-            left: 0,
-            [position.placement === 'top' ? 'bottom' : 'top']: '100%',
+            position: strategy,
+            left: strategy === 'fixed' ? (position.x ?? -9999) : 0,
+            top: strategy === 'fixed' ? (position.y ?? -9999) : (position.placement === 'bottom' ? '100%' : 'auto'),
+            bottom: strategy === 'fixed' ? 'auto' : (position.placement === 'top' ? '100%' : 'auto'),
             width: 160,
             height: panelHeight,
-            transform: `translate(${position.shiftX}px, ${position.shiftY}px)`,
+            transform: strategy === 'fixed' ? undefined : `translate(${position.shiftX}px, ${position.shiftY}px)`,
+            visibility: strategy === 'fixed' && position.x == null ? 'hidden' : 'visible',
             background: '#dddddd',
           }}
         >
@@ -246,6 +250,7 @@ function App() {
       <p id="external-note">외부 설명 텍스트</p>
       <FloatingScenario id="float-bottom" anchorStyle={{ top: 100, left: 100 }} />
       <FloatingScenario id="float-flip" anchorStyle={{ bottom: 8, left: 100 }} />
+      <FloatingScenario id="float-fixed" anchorStyle={{ top: 120, left: 420 }} strategy="fixed" align="right" panelHeight={120} />
       <div style={{ height: '150vh' }} data-testid="page-filler">스크롤 확보용</div>
     </main>
   );

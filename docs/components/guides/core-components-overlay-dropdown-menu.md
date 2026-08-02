@@ -22,6 +22,7 @@
 - React Aria Menu — 복합 menu의 방향키 이동, 명령/선택 item 역할, disabled item 제외를 따릅니다. WDS의 normal/radio/checkbox 시각 축은 변경하지 않습니다.
 - Floating UI flip, shift, size — preferred bottom을 우선하고 공간이 없으면 top으로 flip한 뒤 viewport 16px 안으로 shift하고, 남은 높이는 scrollable menu region의 max-height로 사용합니다.
 - Menubar의 persistent horizontal top-level chrome은 포함하지 않고 단일 trigger 관계만 유지합니다.
+- CSS Overflow Module Level 3 confirms that visible on one axis computes to auto when the other axis is scrollable, so an absolutely positioned descendant cannot reliably escape a horizontal scroll wrapper.
 
 ## Anatomy
 
@@ -67,6 +68,7 @@
 - WAI-ARIA Menu Button Pattern — menu button의 trigger 상태와 열림 시 첫/마지막 항목 focus 이동을 적용했습니다.
 - Menubar submenu와 check/radio glyph, elevated surface, keyboard engine, action button 순서를 공유합니다.
 - Popover는 임의의 interactive content surface이므로 16px content padding을 유지하고, 명령·선택 row를 담는 DropdownMenu의 8px shell과 구분합니다.
+- Root panels use the same owner-document portal boundary as flyout submenus and use the shared floating-position engine's fixed strategy. This lets a command menu escape a Table or other ancestor scroll container without weakening the ancestor's horizontal-overflow contract.
 
 ## 정량 규칙
 
@@ -89,6 +91,7 @@
 
 - menuActionArea는 서버 반영 비용이 크거나 여러 설정을 원자적으로 확정해야 하는 명시적인 staged workflow에서만 onCancel·onApply 중 제공된 실제 동작을 Cancel/Apply 버튼으로 만듭니다. 단순한 다중 선택이나 열기·복제·삭제처럼 선택 즉시 실행되는 메뉴에는 사용하지 않습니다. 기본 문구는 cancelLabel="취소", applyLabel="적용"이며 제품 문맥에 맞게 바꿀 수 있습니다. 콜백이나 custom action이 없으면 무동작 버튼을 만들지 않습니다.
 - Carbon Menu와 Menu Button — menu item 높이를 24/32/40/48px size 축으로 관리하고, 짧은 메뉴는 최소 160px에서 시작해 긴 label에 따라 최대 288px까지 확장합니다. LDS는 14/20px·40px을 desktop default로 두고 32/48px을 compact/comfortable density로 분리하며, 기존 LDS 리듬에 맞춰 적응형 폭을 176–320px로 조정합니다.
+- React createPortal documents portals as the escape hatch for clipping ancestors while retaining React-tree context and event propagation.
 
 ## Accessibility
 

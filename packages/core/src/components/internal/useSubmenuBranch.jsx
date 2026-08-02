@@ -82,6 +82,7 @@ export function useSubmenuBranch({ disabled = false } = {}) {
       <div
         ref={panelRef}
         data-menu-portal=""
+        data-submenu-portal=""
         onMouseEnter={clearTimer}
         onMouseLeave={scheduleClose}
         style={{

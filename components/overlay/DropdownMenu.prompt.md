@@ -120,3 +120,23 @@ LDS 메뉴 토큰을 사용합니다.
   (`5d40f347f4b391510ac8ce4a60d65c18a27214cc`): 표 행의 이름 변경·동기화 제외·삭제 메뉴는
   `normal` DropdownMenu와 danger item 조합으로 `supported by composition`입니다. 실제 rename,
   exclude, delete 상태와 확인 절차는 제품이 소유합니다.
+
+### Root portal and clipping contract (2026-08-02)
+
+- Root panels use the same owner-document portal boundary as flyout submenus and
+  use the shared floating-position engine's fixed strategy. This lets a command
+  menu escape a `Table` or other ancestor scroll container without weakening the
+  ancestor's horizontal-overflow contract.
+- The trigger remains in the product DOM while `aria-controls` points to the
+  portalled `role="menu"`. Opening still moves focus to the requested item;
+  Escape closes the menu and restores trigger focus.
+- [CSS Overflow Module Level 3](https://www.w3.org/TR/css-overflow-3/#overflow-properties)
+  confirms that `visible` on one axis computes to `auto` when the other axis is
+  scrollable, so an absolutely positioned descendant cannot reliably escape a
+  horizontal scroll wrapper.
+- [React `createPortal`](https://react.dev/reference/react-dom/createPortal)
+  documents portals as the escape hatch for clipping ancestors while retaining
+  React-tree context and event propagation.
+- [WAI-ARIA Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
+  remains the accessibility contract: `aria-haspopup`, `aria-expanded`, optional
+  `aria-controls`, menu roles, and first/last-item keyboard focus are unchanged.

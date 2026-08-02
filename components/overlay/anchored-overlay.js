@@ -4,10 +4,15 @@ const lightDismissStack = [];
 const useSafeLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 
 function samePosition(a, b) {
+  const sameCoordinate = (left, right) => (
+    left == null || right == null ? left === right : Math.abs(left - right) < 0.5
+  );
   return a.placement === b.placement
     && Math.abs(a.shiftX - b.shiftX) < 0.5
     && Math.abs(a.shiftY - b.shiftY) < 0.5
-    && Math.abs((a.maxHeight ?? 0) - (b.maxHeight ?? 0)) < 0.5;
+    && Math.abs((a.maxHeight ?? 0) - (b.maxHeight ?? 0)) < 0.5
+    && sameCoordinate(a.x, b.x)
+    && sameCoordinate(a.y, b.y);
 }
 
 /** Internal controlled/uncontrolled state shared by anchored overlays. */
@@ -132,9 +137,10 @@ export function useLightDismiss({
 }
 
 /**
- * Measures an inline anchored panel, flips it toward the roomier side, and
- * translates it back inside the viewport. Callers keep ownership of the
- * component-specific chrome and alignment.
+ * Measures an anchored panel, flips it toward the roomier side, and keeps it
+ * inside the viewport. Inline callers use the default absolute strategy and
+ * consume shiftX/shiftY. Portalled callers use the fixed strategy and consume
+ * x/y. Callers keep ownership of component-specific chrome.
  */
 export function useFloatingPosition({
   open,
@@ -143,18 +149,29 @@ export function useFloatingPosition({
   placement: requestedPlacement = 'bottom',
   offset = 8,
   viewportPadding = 16,
+  strategy = 'absolute',
+  align = 'left',
 }) {
   const [position, setPosition] = React.useState({
     placement: requestedPlacement,
     shiftX: 0,
     shiftY: 0,
     maxHeight: null,
+    x: null,
+    y: null,
   });
 
   useSafeLayoutEffect(() => {
     if (!open) {
       setPosition((previous) => {
-        const next = { placement: requestedPlacement, shiftX: 0, shiftY: 0, maxHeight: null };
+        const next = {
+          placement: requestedPlacement,
+          shiftX: 0,
+          shiftY: 0,
+          maxHeight: null,
+          x: null,
+          y: null,
+        };
         return samePosition(previous, next) ? previous : next;
       });
       return undefined;
@@ -193,7 +210,42 @@ export function useFloatingPosition({
         : requestedPlacement;
 
       if (position.placement !== nextPlacement) {
-        setPosition({ placement: nextPlacement, shiftX: 0, shiftY: 0, maxHeight: null });
+        setPosition({
+          placement: nextPlacement,
+          shiftX: 0,
+          shiftY: 0,
+          maxHeight: null,
+          x: null,
+          y: null,
+        });
+        return;
+      }
+
+      const verticalPlacement = nextPlacement === 'top' || nextPlacement === 'bottom';
+      const availableHeight = verticalPlacement
+        ? Math.max(0, spaces[nextPlacement])
+        : Math.max(0, view.innerHeight - viewportPadding * 2);
+
+      if (strategy === 'fixed') {
+        const renderedWidth = Math.min(naturalWidth, Math.max(0, view.innerWidth - viewportPadding * 2));
+        const renderedHeight = Math.min(naturalHeight, availableHeight);
+        const unclampedX = verticalPlacement
+          ? (align === 'right' ? anchorRect.right - renderedWidth : anchorRect.left)
+          : (nextPlacement === 'right' ? anchorRect.right + offset : anchorRect.left - offset - renderedWidth);
+        const unclampedY = verticalPlacement
+          ? (nextPlacement === 'bottom' ? anchorRect.bottom + offset : anchorRect.top - offset - renderedHeight)
+          : anchorRect.top;
+        const maxX = Math.max(viewportPadding, view.innerWidth - viewportPadding - renderedWidth);
+        const maxY = Math.max(viewportPadding, view.innerHeight - viewportPadding - renderedHeight);
+        const next = {
+          placement: nextPlacement,
+          shiftX: 0,
+          shiftY: 0,
+          maxHeight: availableHeight,
+          x: Math.min(maxX, Math.max(viewportPadding, unclampedX)),
+          y: Math.min(maxY, Math.max(viewportPadding, unclampedY)),
+        };
+        setPosition((previous) => (samePosition(previous, next) ? previous : next));
         return;
       }
 
@@ -216,15 +268,13 @@ export function useFloatingPosition({
         else if (baseBottom > view.innerHeight - viewportPadding) shiftY = view.innerHeight - viewportPadding - baseBottom;
       }
 
-      const verticalPlacement = nextPlacement === 'top' || nextPlacement === 'bottom';
-      const availableHeight = verticalPlacement
-        ? Math.max(0, spaces[nextPlacement])
-        : Math.max(0, view.innerHeight - viewportPadding * 2);
       const next = {
         placement: nextPlacement,
         shiftX,
         shiftY,
         maxHeight: availableHeight,
+        x: null,
+        y: null,
       };
       setPosition((previous) => (samePosition(previous, next) ? previous : next));
     };
@@ -245,7 +295,7 @@ export function useFloatingPosition({
       view.removeEventListener('scroll', schedule, true);
       observer?.disconnect();
     };
-  }, [anchorRef, offset, open, panelRef, position.placement, position.shiftX, position.shiftY, requestedPlacement, viewportPadding]);
+  }, [align, anchorRef, offset, open, panelRef, position.placement, position.shiftX, position.shiftY, requestedPlacement, strategy, viewportPadding]);
 
   return position;
 }

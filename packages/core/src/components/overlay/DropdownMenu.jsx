@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from 'react-dom';
 import { Icon } from "../icon/Icon.jsx";
 import { Button } from '../buttons/Button.jsx';
 import { useMenuKeyboard } from '../internal/useMenuKeyboard.js';
@@ -541,7 +542,11 @@ export function DropdownMenu({
     anchorRef: ref,
     panelRef,
     placement: 'bottom',
+    strategy: 'fixed',
+    align,
   });
+  const portalTarget = ref.current?.ownerDocument?.body
+    ?? (typeof document !== 'undefined' ? document.body : null);
   const showGeneratedActionArea = menuActionArea && (onApply || onCancel);
   const showActionArea = Boolean(action || showGeneratedActionArea);
   const panelMaxHeight = constrainedMaxHeight(maxHeight, position.maxHeight);
@@ -585,15 +590,26 @@ export function DropdownMenu({
       drillBack();
       return;
     }
-    if (event.key === 'Tab' && !event.shiftKey) {
-      const firstAction = focusableActionControls(actionAreaRef.current)[0];
-      if (firstAction) {
-        event.preventDefault();
-        firstAction.focus({ preventScroll: true });
-        return;
-      }
+    if (event.key === 'Tab') {
+      const firstAction = !event.shiftKey ? focusableActionControls(actionAreaRef.current)[0] : null;
+      event.preventDefault();
+      if (firstAction) firstAction.focus({ preventScroll: true });
+      else focusOutsideMenu(event.shiftKey ? -1 : 1);
+      return;
     }
     handleMenuKeyDown(event);
+  };
+
+  const focusOutsideMenu = (direction) => {
+    const triggerElement = ref.current?.querySelector('[aria-haspopup="menu"], button, [role="button"], a[href]');
+    const ownerDocument = triggerElement?.ownerDocument;
+    const controls = Array.from(ownerDocument?.querySelectorAll(ACTION_CONTROL_SELECTOR) ?? []).filter(
+      (control) => !control.closest('[data-menu-portal]') && control.getClientRects().length > 0,
+    );
+    const triggerIndex = controls.indexOf(triggerElement);
+    const target = triggerIndex >= 0 ? controls[triggerIndex + direction] : null;
+    setVisible(false);
+    target?.focus({ preventScroll: true });
   };
 
   const handleActionAreaKeyDown = (event) => {
@@ -615,8 +631,8 @@ export function DropdownMenu({
       return;
     }
     if (event.key === 'Tab' && !event.shiftKey && currentIndex === controls.length - 1) {
-      const view = event.currentTarget.ownerDocument.defaultView ?? window;
-      view.setTimeout(() => setVisible(false), 0);
+      event.preventDefault();
+      focusOutsideMenu(1);
     }
   };
 
@@ -647,17 +663,18 @@ export function DropdownMenu({
       >
         {renderedTrigger}
       </span>
-      {visible && (
+      {visible && portalTarget && createPortal(
         <div
           ref={panelRef}
+          data-menu-portal=""
+          data-dropdown-menu-portal=""
           data-placement={position.placement}
           style={{
-            position: "absolute",
-            top: position.placement === 'bottom' ? "calc(100% + 8px)" : 'auto',
-            bottom: position.placement === 'top' ? "calc(100% + 8px)" : 'auto',
-            left: align === 'left' ? 0 : 'auto',
-            right: align === 'right' ? 0 : 'auto',
-            translate: `${position.shiftX}px ${position.shiftY}px`,
+            position: "fixed",
+            top: position.y ?? -9999,
+            left: position.x ?? -9999,
+            opacity: position.x == null || position.y == null ? 0 : 1,
+            pointerEvents: position.x == null || position.y == null ? 'none' : 'auto',
             zIndex: 40,
             width: panelWidth,
             minWidth: panelMinWidth,
@@ -753,7 +770,8 @@ export function DropdownMenu({
               )}
             </div>
           )}
-        </div>
+        </div>,
+        portalTarget,
       )}
     </div>
   );

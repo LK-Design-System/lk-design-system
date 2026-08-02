@@ -68,6 +68,13 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.13 - 2026-08-02
+
+### Fixed
+
+- Source line endings are normalized to LF before package generation so legacy root bundles are byte-identical between long-lived Windows checkouts and clean GitHub runners.
+- `DropdownMenu` root panels now portal to the owner document with fixed viewport positioning, so row-action menus escape `Table` and other scroll-container clipping without changing the container's scroll height. Existing trigger/menu ARIA wiring, keyboard focus, flip, shift, and constrained-height behavior are preserved.
+
 ## 0.1.0-rc.12 - 2026-08-02
 
 ### Fixed

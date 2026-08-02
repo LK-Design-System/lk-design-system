@@ -4,6 +4,7 @@ import {
   Button,
   DropdownMenu,
   Icon,
+  Table,
 } from '../src/index.js';
 import { DropdownMenuCard as DropdownMenuCardStory } from './Overlay.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
@@ -15,6 +16,17 @@ const menuItems = [
   { label: '비활성 항목', disable: true },
   { label: '삭제', danger: true, shortcut: 'Del' },
 ];
+
+function menuControlledBy(trigger) {
+  const menuId = trigger?.getAttribute('aria-controls');
+  return menuId ? trigger.ownerDocument.getElementById(menuId) : null;
+}
+
+function openMenusControlledInside(container) {
+  return [...container.querySelectorAll('[aria-haspopup="menu"][aria-expanded="true"][aria-controls]')]
+    .map(menuControlledBy)
+    .filter(Boolean);
+}
 
 const meta = {
   title: 'LDS Core/Components/Overlay/Dropdown Menu',
@@ -98,16 +110,42 @@ export const DropdownMenuPatterns = {
           <CheckboxMenuPreview />
         </div>
       </Section>
+
+      <Section title="스크롤 컨테이너 안의 행 동작">
+        <Table
+          data-contract="dropdown-table-overflow"
+          tableLabel="문서 목록"
+          columns={[
+            { key: 'name', label: '이름' },
+            {
+              key: 'actions',
+              label: '작업',
+              align: 'right',
+              width: 96,
+              render: () => (
+                <DropdownMenu
+                  align="right"
+                  density="compact"
+                  trigger={<Button variant="ghost" size="sm">더보기</Button>}
+                  items={[{ label: '새 버전' }, { divider: true }, { label: '삭제', danger: true }]}
+                />
+              ),
+            },
+          ]}
+          rows={[{ id: 'document-1', name: '문서 하나' }]}
+          style={{ maxWidth: 520 }}
+        />
+      </Section>
     </main>
   ),
   play: async ({ canvasElement }) => {
-    const menus = [...canvasElement.querySelectorAll('[role="menu"]')];
+    const menus = openMenusControlledInside(canvasElement);
     if (menus.length !== 3) throw new Error('DropdownMenu patterns must render all three open variants.');
 
     for (const menu of menus) {
       const panelStyle = getComputedStyle(menu.parentElement);
       if (panelStyle.paddingTop !== '8px' || panelStyle.paddingRight !== '8px') {
-        throw new Error('Every default DropdownMenu panel must use the shared 8px shell padding.');
+        throw new Error(`Every default DropdownMenu panel must use the shared 8px shell padding; received ${panelStyle.paddingTop}/${panelStyle.paddingRight}.`);
       }
       const singleLineItems = [...menu.querySelectorAll('[role^="menuitem"]')]
         .filter((item) => !item.querySelector('span > span + span'));
@@ -160,6 +198,34 @@ export const DropdownMenuPatterns = {
         throw new Error('DropdownMenu must not reserve scrollbar spacing when its items do not overflow.');
       }
     });
+
+    const tableScroller = canvasElement.querySelector('[data-contract="dropdown-table-overflow"]');
+    if (!tableScroller) throw new Error('The clipped-container DropdownMenu contract requires a Table scroll container.');
+    const tableTrigger = [...tableScroller.querySelectorAll('button')]
+      .find((button) => button.textContent?.trim() === '더보기');
+    if (!tableTrigger) throw new Error('The clipped-container DropdownMenu contract requires a table trigger.');
+    const scrollHeightBefore = tableScroller.scrollHeight;
+    await userEvent.click(tableTrigger);
+    let tableMenu;
+    await waitFor(() => {
+      tableMenu = menuControlledBy(tableTrigger);
+      if (!tableMenu) throw new Error('The table row action menu must open.');
+      const panel = tableMenu.parentElement;
+      if (!panel.matches('[data-dropdown-menu-portal]') || panel.parentElement !== tableScroller.ownerDocument.body) {
+        throw new Error('The root DropdownMenu panel must portal to the owner document body.');
+      }
+      if (getComputedStyle(panel).position !== 'fixed' || getComputedStyle(panel).opacity !== '1') {
+        throw new Error('The portalled root DropdownMenu panel must use a visible fixed position.');
+      }
+    });
+    if (Math.abs(tableScroller.scrollHeight - scrollHeightBefore) > 1) {
+      throw new Error('Opening a row action menu must not increase the Table scroll container height.');
+    }
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (menuControlledBy(tableTrigger)) throw new Error('Escape must close the portalled row action menu.');
+      if (tableTrigger.ownerDocument.activeElement !== tableTrigger) throw new Error('Escape must restore the row action trigger focus.');
+    });
   },
 };
 
@@ -211,7 +277,7 @@ export const DropdownMenuKeyboardContract = {
     await waitFor(() => {
       if (ownerDocument.activeElement?.textContent?.trim() !== '열기') throw new Error('DropdownMenu must focus its first item.');
     });
-    const menu = canvasElement.querySelector('[role="menu"]');
+    const menu = menuControlledBy(dropdownTrigger);
     if (!menu || menu.getAttribute('aria-labelledby') !== dropdownTrigger.id) {
       throw new Error('DropdownMenu must label its menu from the trigger.');
     }
@@ -246,7 +312,7 @@ export const DropdownMenuKeyboardContract = {
       throw new Error('Tab from an immediate command menu must close it and continue to the next control.');
     }
     await waitFor(() => {
-      if (canvasElement.querySelector('[data-contract="keyboard"] [role="menu"]')) {
+      if (menuControlledBy(dropdownTrigger)) {
         throw new Error('Immediate command menu must close when Tab leaves it.');
       }
     });
@@ -260,7 +326,7 @@ export const DropdownMenuKeyboardContract = {
     await userEvent.keyboard('{End}');
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      if (multiSelection.querySelector('[role="menu"]')) throw new Error('Escape must close the multi-selection menu.');
+      if (menuControlledBy(multiTrigger)) throw new Error('Escape must close the multi-selection menu.');
       if (ownerDocument.activeElement !== multiTrigger) throw new Error('Escape must restore multi-selection trigger focus.');
     });
 
@@ -270,12 +336,12 @@ export const DropdownMenuKeyboardContract = {
     allDisabledTrigger.focus();
     await userEvent.keyboard('{ArrowDown}');
     await waitFor(() => {
-      if (!allDisabled.querySelector('[role="menu"]')) throw new Error('All-disabled DropdownMenu must open.');
+      if (!menuControlledBy(allDisabledTrigger)) throw new Error('All-disabled DropdownMenu must open.');
       if (ownerDocument.activeElement !== allDisabledTrigger) throw new Error('All-disabled DropdownMenu must retain trigger focus.');
     });
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      if (allDisabled.querySelector('[role="menu"]')) throw new Error('Trigger Escape must close an all-disabled DropdownMenu.');
+      if (menuControlledBy(allDisabledTrigger)) throw new Error('Trigger Escape must close an all-disabled DropdownMenu.');
       if (ownerDocument.activeElement !== allDisabledTrigger) throw new Error('Trigger Escape must preserve focus.');
     });
   },
@@ -438,15 +504,16 @@ export const DrillSubmenus = {
       branch = doc.activeElement;
       if (branch?.getAttribute('aria-haspopup') !== 'menu') throw new Error('내보내기는 서브메뉴 트리거여야 합니다.');
     });
-    const panelWidthBefore = canvasElement.querySelector('[data-contract="drill"] [role="menu"]')?.parentElement?.getBoundingClientRect().width;
+    const rootMenu = menuControlledBy(trigger);
+    const panelWidthBefore = rootMenu?.parentElement?.getBoundingClientRect().width;
 
     await userEvent.keyboard('{ArrowRight}'); // 하위 목록으로 drill in (같은 패널 전환)
     await waitFor(() => {
       if (doc.activeElement?.textContent?.trim() !== 'PDF로 내보내기') throw new Error('drill in 후 하위 첫 항목에 포커스해야 합니다.');
     });
     // flyout과 달리 서브는 별도 패널(portal)이 아니라 같은 메뉴 안이어야 합니다.
-    if (doc.querySelector('[data-menu-portal]')) throw new Error('drill 모드는 별도 서브 패널을 띄우지 않아야 합니다.');
-    const back = canvasElement.querySelector('[data-contract="drill"] button[aria-label^="뒤로"]');
+    if (doc.querySelector('[data-submenu-portal]')) throw new Error('drill 모드는 별도 서브 패널을 띄우지 않아야 합니다.');
+    const back = rootMenu.querySelector('button[aria-label^="뒤로"]');
     if (!back) throw new Error('drill 하위 레벨에는 뒤로 컨트롤이 있어야 합니다.');
     // 뒤로 컨트롤은 role="menu"의 직계 자식이므로 menuitem 계열 role을 가져야 하고
     // (ARIA required children), roving 대상에 포함되어 키보드로 도달할 수 있어야 합니다.
@@ -465,7 +532,7 @@ export const DrillSubmenus = {
     ) {
       throw new Error('drill 뒤로 행은 14px/40px 위계와 한 줄 divider만 사용해야 합니다.');
     }
-    const drillMenu = canvasElement.querySelector('[data-contract="drill"] [role="menu"]');
+    const drillMenu = menuControlledBy(trigger);
     const nonMenuChildren = [...drillMenu.children].filter((child) => {
       const role = child.getAttribute('role');
       return role !== 'menuitem' && role !== 'menuitemradio' && role !== 'menuitemcheckbox' && role !== 'separator' && role !== 'none' && role !== 'presentation' && role !== 'group';
@@ -493,7 +560,7 @@ export const DrillSubmenus = {
 
     await userEvent.keyboard('{ArrowLeft}'); // 상위로 복귀
     await waitFor(() => {
-      if (canvasElement.querySelector('[data-contract="drill"] button[aria-label^="뒤로"]')) throw new Error('왼쪽 화살표로 상위 레벨에 복귀해야 합니다.');
+      if (menuControlledBy(trigger)?.querySelector('button[aria-label^="뒤로"]')) throw new Error('왼쪽 화살표로 상위 레벨에 복귀해야 합니다.');
       // roving 엔진이 상위 첫 항목에 포커스를 되돌린 뒤에만 키 입력을 이어간다
       // (포커스 정착 전에 ArrowDown을 보내면 재진입이 레이스로 실패한다).
       if (doc.activeElement?.textContent?.trim() !== '이름 바꾸기') throw new Error('drill 복귀 후 상위 첫 항목에 포커스해야 합니다.');
@@ -507,7 +574,7 @@ export const DrillSubmenus = {
     await userEvent.keyboard('{Enter}');
     await waitFor(() => {
       if (canvasElement.querySelector('[data-picked]')?.textContent !== 'PDF') throw new Error('하위 명령 선택이 onClick을 호출해야 합니다.');
-      if (canvasElement.querySelector('[data-contract="drill"] [role="menu"]')) throw new Error('하위 명령 선택은 전체 메뉴를 닫아야 합니다.');
+      if (menuControlledBy(trigger)) throw new Error('하위 명령 선택은 전체 메뉴를 닫아야 합니다.');
     });
   },
 };

@@ -226,6 +226,20 @@ async function testFloatingPosition(page) {
     'an anchor without room below flips the panel to the top',
   );
   await page.getByTestId('float-flip-anchor').click();
+
+  await page.getByTestId('float-fixed-anchor').click();
+  await settleFrames(page, 4);
+  const fixedAnchor = page.getByTestId('float-fixed-anchor');
+  const fixedPanel = page.getByTestId('float-fixed-panel');
+  const fixedX = await fixedPanel.getAttribute('data-x');
+  const fixedY = await fixedPanel.getAttribute('data-y');
+  assert(fixedX !== 'null' && fixedY !== 'null', 'the fixed strategy reports viewport coordinates');
+  const [anchorBox, panelBox] = await Promise.all([fixedAnchor.boundingBox(), fixedPanel.boundingBox()]);
+  assert(anchorBox && panelBox && Math.abs(panelBox.x + panelBox.width - (anchorBox.x + anchorBox.width)) < 1,
+    'fixed right alignment pins the panel end edge to the anchor end edge');
+  assert(anchorBox && panelBox && panelBox.y >= anchorBox.y + anchorBox.height,
+    'a roomy fixed panel opens below its anchor');
+  await page.getByTestId('float-fixed-anchor').click();
 }
 
 async function testDialogFocus(page) {
