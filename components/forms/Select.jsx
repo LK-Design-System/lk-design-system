@@ -53,6 +53,10 @@ function selectOptionMetrics(size) {
     paddingY: compact
       ? 'var(--component-menu-item-padding-y)'
       : 'var(--space-3)',
+    // Options read from the shared-menu type ramp (DropdownMenu's default and
+    // comfortable densities), not the input ramp the trigger uses.
+    fontSize: compact ? 'var(--component-menu-item-font-size)' : 'var(--body1-size)',
+    lineHeight: compact ? 'var(--component-menu-item-line-height)' : 'var(--body1-line)',
   };
 }
 
@@ -60,7 +64,8 @@ function selectOptionMetrics(size) {
  * LK ROBOTICS — Select
  * A custom single-select dropdown (NOT a native <select>): a styled trigger with
  * a chevron + a floating option panel, matching Combobox / DropdownMenu. Signal-ink
- * focus, the chosen option highlighted in signal, outside-click to close. Options
+ * focus on the trigger; the open panel follows the DropdownMenu monochrome state
+ * model (neutral fill + weight + trailing check), outside-click to close. Options
  * come from `options` (string[] or {value,label}[]) or from <option> children.
  * Controlled (`value`) or uncontrolled (`defaultValue`).
  */
@@ -553,7 +558,9 @@ export const Select = React.forwardRef(function Select({
                     borderRadius: 'var(--component-menu-item-radius)',
                     cursor: o.disabled ? 'not-allowed' : 'pointer',
                     fontFamily: 'var(--font-sans)',
-                    ...fieldTypography(normalizedSize),
+                    fontSize: optionMetrics.fontSize,
+                    lineHeight: optionMetrics.lineHeight,
+                    letterSpacing: 0,
                     color: o.disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)',
                     background: o.disabled && on
                       ? 'var(--color-semantic-fill-strong)'
@@ -563,7 +570,7 @@ export const Select = React.forwardRef(function Select({
                           ? 'var(--component-menu-item-selected-bg)'
                           : 'transparent',
                     boxShadow: isActive && !o.disabled && activeModality === 'keyboard'
-                      ? 'inset 0 0 0 2px var(--color-semantic-primary-normal)'
+                      ? 'inset 0 0 0 2px var(--component-menu-item-active-ring-color)'
                       : 'none',
                     fontWeight: on ? 'var(--fw-medium)' : 'var(--fw-regular)',
                     ...partStyle(styles, 'option'),
@@ -575,7 +582,7 @@ export const Select = React.forwardRef(function Select({
                     aria-hidden="true"
                     style={{ display: 'inline-flex', width: 16, height: 16, flex: '0 0 16px', alignItems: 'center', justifyContent: 'center', opacity: on ? 1 : 0 }}
                   >
-                    <Icon name="check" size={16} color={o.disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-primary-normal)'} aria-hidden="true" />
+                    <Icon name="check" size={16} color={o.disabled ? 'var(--color-semantic-label-disable)' : 'var(--component-menu-item-check-color)'} aria-hidden="true" />
                   </span>
                 </div>
               );

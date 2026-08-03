@@ -2213,7 +2213,7 @@
         "$type": "color",
         "css": "--color-semantic-brand-ink",
         "modes": {
-          "light": "#0E1329",
+          "light": "#1B2240",
           "dark": "#E7EAF2"
         },
         "origin": "lds-extension",
@@ -2223,8 +2223,8 @@
         "$type": "color",
         "css": "--color-semantic-brand-surface-raised",
         "modes": {
-          "light": "#2A3042",
-          "dark": "#2A3247"
+          "light": "#373F59",
+          "dark": "#37415E"
         },
         "origin": "lds-extension",
         "group": "brand"
@@ -2233,8 +2233,8 @@
         "$type": "color",
         "css": "--color-semantic-brand-canvas-from",
         "modes": {
-          "light": "#141C3C",
-          "dark": "#141C3C"
+          "light": "#212B53",
+          "dark": "#212B53"
         },
         "origin": "lds-extension",
         "group": "brand"
@@ -2243,8 +2243,8 @@
         "$type": "color",
         "css": "--color-semantic-brand-canvas-to",
         "modes": {
-          "light": "#0C1024",
-          "dark": "#0C1024"
+          "light": "#191F3B",
+          "dark": "#191F3B"
         },
         "origin": "lds-extension",
         "group": "brand"
@@ -2253,8 +2253,8 @@
         "$type": "color",
         "css": "--color-semantic-brand-stage-from",
         "modes": {
-          "light": "#161D33",
-          "dark": "#161D33"
+          "light": "#232C4A",
+          "dark": "#232C4A"
         },
         "origin": "lds-extension",
         "group": "brand"
@@ -2263,8 +2263,8 @@
         "$type": "color",
         "css": "--color-semantic-brand-stage-to",
         "modes": {
-          "light": "#0E1329",
-          "dark": "#0E1329"
+          "light": "#1B2240",
+          "dark": "#1B2240"
         },
         "origin": "lds-extension",
         "group": "brand"
@@ -3315,6 +3315,20 @@
           "css": "--component-menu-item-selected-bg",
           "ref": "semantic.colorRoles.fill-alternative",
           "source": "List Cell/List Cell"
+        },
+        "itemCheckColor": {
+          "$type": "color",
+          "$value": "var(--component-menu-item-check-color)",
+          "css": "--component-menu-item-check-color",
+          "ref": "semantic.colorRoles.label-normal",
+          "source": "LDS shared menu state"
+        },
+        "itemActiveRingColor": {
+          "$type": "color",
+          "$value": "var(--component-menu-item-active-ring-color)",
+          "css": "--component-menu-item-active-ring-color",
+          "ref": "semantic.colorRoles.label-normal",
+          "source": "LDS shared menu state"
         }
       }
     },

@@ -106,6 +106,8 @@
 | `component.menu.tokens.headerFontSize` | dimension | `--component-menu-header-font-size` | `var(--component-menu-header-font-size)` | — |
 | `component.menu.tokens.headerFontWeight` | fontWeight | `--component-menu-header-font-weight` | `var(--component-menu-header-font-weight)` | — |
 | `component.menu.tokens.headerLineHeight` | dimension | `--component-menu-header-line-height` | `var(--component-menu-header-line-height)` | — |
+| `component.menu.tokens.itemActiveRingColor` | color | `--component-menu-item-active-ring-color` | `var(--component-menu-item-active-ring-color)` | — |
+| `component.menu.tokens.itemCheckColor` | color | `--component-menu-item-check-color` | `var(--component-menu-item-check-color)` | — |
 | `component.menu.tokens.itemFontSize` | dimension | `--component-menu-item-font-size` | `var(--component-menu-item-font-size)` | — |
 | `component.menu.tokens.itemHoverBg` | color | `--component-menu-item-hover-bg` | `var(--component-menu-item-hover-bg)` | — |
 | `component.menu.tokens.itemLineHeight` | dimension | `--component-menu-item-line-height` | `var(--component-menu-item-line-height)` | — |
@@ -441,12 +443,12 @@
 | `semantic.colorRoles.background-normal-normal` | color | `--color-semantic-background-normal-normal` | `light: #FFFFFF; dark: #1B1C1E` | — |
 | `semantic.colorRoles.background-transparent-alternative` | color | `--color-semantic-background-transparent-alternative` | `light: rgba(255, 255, 255, 0.28); dark: rgba(33, 34, 37, 0.61)` | — |
 | `semantic.colorRoles.background-transparent-normal` | color | `--color-semantic-background-transparent-normal` | `light: rgba(255, 255, 255, 0.08); dark: rgba(33, 34, 37, 0.61)` | — |
-| `semantic.colorRoles.brand-canvas-from` | color | `--color-semantic-brand-canvas-from` | `light: #141C3C; dark: #141C3C` | — |
-| `semantic.colorRoles.brand-canvas-to` | color | `--color-semantic-brand-canvas-to` | `light: #0C1024; dark: #0C1024` | — |
-| `semantic.colorRoles.brand-ink` | color | `--color-semantic-brand-ink` | `light: #0E1329; dark: #E7EAF2` | — |
-| `semantic.colorRoles.brand-stage-from` | color | `--color-semantic-brand-stage-from` | `light: #161D33; dark: #161D33` | — |
-| `semantic.colorRoles.brand-stage-to` | color | `--color-semantic-brand-stage-to` | `light: #0E1329; dark: #0E1329` | — |
-| `semantic.colorRoles.brand-surface-raised` | color | `--color-semantic-brand-surface-raised` | `light: #2A3042; dark: #2A3247` | — |
+| `semantic.colorRoles.brand-canvas-from` | color | `--color-semantic-brand-canvas-from` | `light: #212B53; dark: #212B53` | — |
+| `semantic.colorRoles.brand-canvas-to` | color | `--color-semantic-brand-canvas-to` | `light: #191F3B; dark: #191F3B` | — |
+| `semantic.colorRoles.brand-ink` | color | `--color-semantic-brand-ink` | `light: #1B2240; dark: #E7EAF2` | — |
+| `semantic.colorRoles.brand-stage-from` | color | `--color-semantic-brand-stage-from` | `light: #232C4A; dark: #232C4A` | — |
+| `semantic.colorRoles.brand-stage-to` | color | `--color-semantic-brand-stage-to` | `light: #1B2240; dark: #1B2240` | — |
+| `semantic.colorRoles.brand-surface-raised` | color | `--color-semantic-brand-surface-raised` | `light: #373F59; dark: #37415E` | — |
 | `semantic.colorRoles.data-viz-series-1` | color | `--color-semantic-data-viz-series-1` | `light: var(--color-semantic-primary-normal); dark: var(--color-semantic-primary-normal)` | — |
 | `semantic.colorRoles.data-viz-series-2` | color | `--color-semantic-data-viz-series-2` | `light: var(--color-semantic-accent-foreground-cyan); dark: var(--color-semantic-accent-foreground-cyan)` | — |
 | `semantic.colorRoles.data-viz-series-3` | color | `--color-semantic-data-viz-series-3` | `light: var(--color-semantic-accent-foreground-violet); dark: var(--color-semantic-accent-foreground-violet)` | — |

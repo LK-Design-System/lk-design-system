@@ -119,7 +119,7 @@
     },
     {
       "subject": "명시 규칙 4",
-      "rule": "서피스는 --color-semantic-inverse-background(라이트에서 0E1329, 다크에선 페이지에서 떠 보이는 raised 네이비), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다."
+      "rule": "서피스는 --color-semantic-inverse-background(라이트에서 1B1C1E, 다크에선 페이지와 반전되는 인버스 서피스), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다."
     },
     {
       "subject": "--body2-size",

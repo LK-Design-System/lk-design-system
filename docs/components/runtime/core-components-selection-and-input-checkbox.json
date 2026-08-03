@@ -240,7 +240,7 @@
     },
     {
       "subject": "--color-semantic-brand-ink",
-      "rule": "light: #0E1329; dark: #E7EAF2"
+      "rule": "light: #1B2240; dark: #E7EAF2"
     },
     {
       "subject": "--color-semantic-fill-normal",

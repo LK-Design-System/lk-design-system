@@ -50,6 +50,7 @@ dirty count, push 여부는 해당 시점의 historical snapshot이며 현재 �
 - 외부 Robotics 표면: `references/package-split/ROBOTICS_EXTERNAL_SURFACE.json`
 - package release·소비자: `references/package-split/releases/`,
   `references/package-split/WAVE2_PRODUCT_RESCAN.json`
+- 현재 layout follow-up: [`SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md`](SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md)
 
 ## Verification commands
 

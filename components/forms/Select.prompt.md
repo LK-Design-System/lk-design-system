@@ -25,12 +25,12 @@
   onChange={(v) => setType(v)} />
 ```
 
-- 타입·밀도 정합: 트리거와 옵션은 입력 계열의 size-aware typography를 함께 사용합니다. `sm`은 shared-menu `default` 밀도(40px, padding 10×16px, `label1` 14/20px), `md`와 `lg`는 `comfortable` 밀도(48px, padding 12×16px, `body1` 16/24px)에 대응합니다. 모든 크기는 panel radius 12px·padding 8px·gap 4px과 option radius 10px을 공유합니다.
+- 타입·밀도 정합: 트리거는 입력 계열의 size-aware typography를 유지하고, 옵션은 shared-menu 타입 램프를 소비합니다. `sm`은 shared-menu `default` 밀도(40px, padding 10×16px, `--component-menu-item-font-size` 14/20px), `md`와 `lg`는 `comfortable` 밀도(48px, padding 12×16px, `body1` 16/24px)에 대응합니다. 모든 크기는 panel radius 12px·padding 8px·gap 4px과 option radius 10px을 공유합니다.
 - intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 absolute·clipped measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 `scrollWidth`를 바꾸지 않습니다. consumer의 root `style`이 지정한 `minWidth`, `width`, `maxWidth`는 측정 결과보다 우선합니다.
 - `readOnly`는 현재 값과 포커스를 유지하지만 팝업을 열거나 값을 바꾸지 않으며, 대체 배경과 `aria-readonly`로 비활성과 구분합니다.
 - WDS 내부 `Select/Select` component-set(16215:33116)의 직접 축은 `Active`, `Disable`, `Focus`, `Negative`, `Overflow`, `Render(Chip/Text)`입니다. `Size`는 WDS 직접 축이 아니지만 열린 variant가 48px·16/24px Menu를 직접 포함하므로 `md`/`lg` 기본 option 밀도의 composition 근거로 사용합니다. 옵션별 `disabled`와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.
 - 형제 비교: `AutoComplete`와 `Combobox`가 이미 비활성 옵션을 `aria-disabled`로 노출하고 탐색·선택에서 제외합니다. Select도 같은 규칙을 사용하되, 검색과 다중 선택은 가져오지 않습니다.
-- 시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px primary inset ring으로 분리합니다. 일반 option은 regular weight이며, 선택된 option이 나중에 비활성화되면 값은 보존하되 중립 비활성 채움·전경으로 바꿉니다.
+- 시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px inset ring으로 분리합니다. check와 ring은 `--component-menu-item-check-color`/`--component-menu-item-active-ring-color`를 통해 기본 무채색(label-normal)으로 렌더링되어 DropdownMenu의 monochrome 상태 모델을 따르며, 테마가 이 토큰을 재지정해 액센트로 되돌릴 수 있습니다. 일반 option은 regular weight이며, 선택된 option이 나중에 비활성화되면 값은 보존하되 중립 비활성 채움·전경으로 바꿉니다.
 
 ## Public surface and ref
 

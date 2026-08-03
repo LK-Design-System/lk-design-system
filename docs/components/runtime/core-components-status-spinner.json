@@ -68,12 +68,12 @@
   "behavior": [],
   "quantitativeRules": [
     {
-      "subject": "--color-semantic-fill-strong",
-      "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
+      "subject": "--color-semantic-brand-ink",
+      "rule": "light: #1B2240; dark: #E7EAF2"
     },
     {
-      "subject": "--color-semantic-label-normal",
-      "rule": "light: #171718; dark: #F7F7F7"
+      "subject": "--color-semantic-fill-strong",
+      "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
     },
     {
       "subject": "--color-semantic-primary-normal",
@@ -117,8 +117,8 @@
     }
   ],
   "tokens": [
+    "--color-semantic-brand-ink",
     "--color-semantic-fill-strong",
-    "--color-semantic-label-normal",
     "--color-semantic-primary-normal",
     "--font-sans",
     "--label1-size",

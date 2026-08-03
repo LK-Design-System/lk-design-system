@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "4d92e74f25d883fa8c4268c4b089594b7c6e82b67ff5cfbb86dcc2fc39e4d7b0",
+  "sourceFingerprint": "8b1d22c8a13e3afba6f2ac5e03920534ee0e99a38ed58c00a806ebfce9b312ba",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -168,8 +168,7 @@
       ],
       "tokens": [
         "--color-semantic-static-white",
-        "--color-semantic-primary-normal",
-        "--color-semantic-label-normal"
+        "--color-semantic-brand-ink"
       ],
       "externalReferences": [],
       "promptSha256": "5fc087b0c9ac7ecc6abee3bb510e1b3c2bcbb9e0eecd061bb6ce3d3bfa089c56"
@@ -19344,6 +19343,10 @@
         "--control-h-md",
         "--component-menu-item-padding-y",
         "--space-3",
+        "--component-menu-item-font-size",
+        "--body1-size",
+        "--component-menu-item-line-height",
+        "--body1-line",
         "--control-h-sm",
         "--control-h-lg",
         "--component-input-stack-gap",
@@ -19379,9 +19382,10 @@
         "--color-semantic-fill-strong",
         "--component-menu-item-hover-bg",
         "--component-menu-item-selected-bg",
-        "--color-semantic-primary-normal",
+        "--component-menu-item-active-ring-color",
         "--fw-medium",
-        "--fw-regular"
+        "--fw-regular",
+        "--component-menu-item-check-color"
       ],
       "externalReferences": [
         {
@@ -19409,7 +19413,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/menu/usage"
         }
       ],
-      "promptSha256": "0c8242d25a0c9fc5ce2f06aac719ffcec8e99345f75b39113de026b9e8ce786a"
+      "promptSha256": "9bc8d5e118d060f8fec41ceae01d3f7fe939cd6f74e8eed581ac239e1567ec07"
     },
     {
       "id": "slider",
@@ -23083,7 +23087,7 @@
         "--color-semantic-inverse-line-normal"
       ],
       "externalReferences": [],
-      "promptSha256": "6abce5a447e17134659b6958bf92047bc7c7f90ddab6c1f3f38ceb6fdd565ccf"
+      "promptSha256": "93fcf273ef095d78eaba6b2f070ae48d4123410cacaefe8dc3d26812024568fb"
     },
     {
       "id": "language-switcher",
@@ -30351,7 +30355,7 @@
       ],
       "tokens": [
         "--color-semantic-primary-normal",
-        "--color-semantic-label-normal",
+        "--color-semantic-brand-ink",
         "--space-2-5",
         "--font-sans",
         "--label1-size",
@@ -33887,7 +33891,7 @@
         },
         {
           "subject": "--color-semantic-brand-ink",
-          "rule": "light: #0E1329; dark: #E7EAF2"
+          "rule": "light: #1B2240; dark: #E7EAF2"
         },
         {
           "subject": "--color-semantic-interaction-inactive",
@@ -42536,7 +42540,7 @@
         },
         {
           "subject": "--color-semantic-brand-ink",
-          "rule": "light: #0E1329; dark: #E7EAF2"
+          "rule": "light: #1B2240; dark: #E7EAF2"
         },
         {
           "subject": "--color-semantic-fill-normal",
@@ -43634,7 +43638,7 @@
         },
         {
           "subject": "--color-semantic-brand-ink",
-          "rule": "light: #0E1329; dark: #E7EAF2"
+          "rule": "light: #1B2240; dark: #E7EAF2"
         }
       ],
       "responsive": [],
@@ -44757,17 +44761,17 @@
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "타입·밀도 정합: 트리거와 옵션은 입력 계열의 size-aware typography를 함께 사용합니다. sm은 shared-menu default 밀도(40px, padding 10×16px, label1 14/20px), md와 lg는 comfortable 밀도(48px, padding 12×16px, body1 16/24px)에 대응합니다. 모든 크기는 panel radius 12px·padding 8px·gap 4px과 option radius 10px을 공유합니다."
+          "rule": "타입·밀도 정합: 트리거는 입력 계열의 size-aware typography를 유지하고, 옵션은 shared-menu 타입 램프를 소비합니다. sm은 shared-menu default 밀도(40px, padding 10×16px, --component-menu-item-font-size 14/20px), md와 lg는 comfortable 밀도(48px, padding 12×16px, body1 16/24px)에 대응합니다. 모든 크기는 panel radius 12px·padding 8px·gap 4px과 option radius 10px을 공유합니다."
         },
         {
-          "subject": "--color-semantic-background-elevated-normal",
-          "rule": "light: #FFFFFF; dark: #212225"
+          "subject": "--body1-line",
+          "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
         }
       ],
       "responsive": [
         "intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 absolute·clipped measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 scrollWidth를 바꾸지 않습니다. consumer의 root style이 지정한 minWidth, width, maxWidth는 측정 결과보다 우선합니다.",
         "WDS 내부 Select/Select component-set(16215:33116)의 직접 축은 Active, Disable, Focus, Negative, Overflow, Render(Chip/Text)입니다. Size는 WDS 직접 축이 아니지만 열린 variant가 48px·16/24px Menu를 직접 포함하므로 md/lg 기본 option 밀도의 composition 근거로 사용합니다. 옵션별 disabled와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.",
-        "시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px primary inset ring으로 분리합니다.",
+        "시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px inset ring으로 분리합니다.",
         "vars accepts only --lds-select-min-width, --lds-select-height, and --lds-select-dropdown-max-height. Consumer root width constraints still override intrinsic measurement."
       ],
       "contentGuidance": [
@@ -44824,6 +44828,8 @@
         }
       ],
       "tokens": [
+        "--body1-line",
+        "--body1-size",
         "--color-semantic-background-elevated-normal",
         "--color-semantic-fill-strong",
         "--color-semantic-label-alternative",
@@ -44831,7 +44837,6 @@
         "--color-semantic-label-disable",
         "--color-semantic-label-normal",
         "--color-semantic-line-solid-normal",
-        "--color-semantic-primary-normal",
         "--color-semantic-primary-surface-strong",
         "--component-button-transition",
         "--component-input-border-width",
@@ -44841,7 +44846,11 @@
         "--component-input-radius",
         "--component-input-stack-gap",
         "--component-menu-gap",
+        "--component-menu-item-active-ring-color",
+        "--component-menu-item-check-color",
+        "--component-menu-item-font-size",
         "--component-menu-item-hover-bg",
+        "--component-menu-item-line-height",
         "--component-menu-item-min-height",
         "--component-menu-item-padding-x",
         "--component-menu-item-padding-y",
@@ -47831,12 +47840,12 @@
       "behavior": [],
       "quantitativeRules": [
         {
-          "subject": "--color-semantic-fill-strong",
-          "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
+          "subject": "--color-semantic-brand-ink",
+          "rule": "light: #1B2240; dark: #E7EAF2"
         },
         {
-          "subject": "--color-semantic-label-normal",
-          "rule": "light: #171718; dark: #F7F7F7"
+          "subject": "--color-semantic-fill-strong",
+          "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
         },
         {
           "subject": "--color-semantic-primary-normal",
@@ -47880,8 +47889,8 @@
         }
       ],
       "tokens": [
+        "--color-semantic-brand-ink",
         "--color-semantic-fill-strong",
-        "--color-semantic-label-normal",
         "--color-semantic-primary-normal",
         "--font-sans",
         "--label1-size",
@@ -66715,7 +66724,7 @@
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "서피스는 --color-semantic-inverse-background(라이트에서 0E1329, 다크에선 페이지에서 떠 보이는 raised 네이비), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다."
+          "rule": "서피스는 --color-semantic-inverse-background(라이트에서 1B1C1E, 다크에선 페이지와 반전되는 인버스 서피스), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다."
         },
         {
           "subject": "--body2-size",
@@ -81553,12 +81562,8 @@
       "behavior": [],
       "quantitativeRules": [
         {
-          "subject": "--color-semantic-label-normal",
-          "rule": "light: #171718; dark: #F7F7F7"
-        },
-        {
-          "subject": "--color-semantic-primary-normal",
-          "rule": "light: #3878B3; dark: #5390C9"
+          "subject": "--color-semantic-brand-ink",
+          "rule": "light: #1B2240; dark: #E7EAF2"
         }
       ],
       "responsive": [
@@ -81575,8 +81580,7 @@
         }
       ],
       "tokens": [
-        "--color-semantic-label-normal",
-        "--color-semantic-primary-normal",
+        "--color-semantic-brand-ink",
         "--color-semantic-static-white"
       ],
       "apiLinks": [

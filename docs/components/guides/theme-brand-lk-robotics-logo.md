@@ -38,8 +38,7 @@
 
 | Subject | Rule |
 | --- | --- |
-| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
-| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+| --color-semantic-brand-ink | light: #1B2240; dark: #E7EAF2 |
 
 ## Responsive
 
@@ -59,8 +58,7 @@
 
 ### Tokens
 
-- `--color-semantic-label-normal`
-- `--color-semantic-primary-normal`
+- `--color-semantic-brand-ink`
 - `--color-semantic-static-white`
 
 ### Source contracts

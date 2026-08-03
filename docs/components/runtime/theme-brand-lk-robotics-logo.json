@@ -75,12 +75,8 @@
   "behavior": [],
   "quantitativeRules": [
     {
-      "subject": "--color-semantic-label-normal",
-      "rule": "light: #171718; dark: #F7F7F7"
-    },
-    {
-      "subject": "--color-semantic-primary-normal",
-      "rule": "light: #3878B3; dark: #5390C9"
+      "subject": "--color-semantic-brand-ink",
+      "rule": "light: #1B2240; dark: #E7EAF2"
     }
   ],
   "responsive": [
@@ -97,8 +93,7 @@
     }
   ],
   "tokens": [
-    "--color-semantic-label-normal",
-    "--color-semantic-primary-normal",
+    "--color-semantic-brand-ink",
     "--color-semantic-static-white"
   ],
   "apiLinks": [],

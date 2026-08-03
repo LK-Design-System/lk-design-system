@@ -79,14 +79,14 @@
 | 명시 규칙 1 | 타입어헤드 계약: 인쇄 가능한 문자를 누르면 500ms 동안 유지되는 다중 문자 버퍼에 누적되어, 버퍼로 시작하는 첫 활성 옵션을 찾습니다. 열려 있으면 탐색 위치(aria-activedescendant)만 옮기고, 닫혀 있으면 값을 확정합니다. 같은 문자를 반복하면 그 문자로 시작하는 옵션들을 순환하고, 버퍼가 비어 있지 않을 때의 Space는 확정이 아니라 버퍼에 공백을 덧붙입니다(공백이 포함된 라벨 도달). 비활성 옵션과 래핑 규칙은 Arrow 탐색과 동일합니다. |
 | 명시 규칙 2 | 로컬 WDS .fig의 열린 Select/Select variant는 내부 Menu instance(Variant=Checkbox, Cell Padding=12px)를 직접 합성하며, 그 option은 48px·16/24px Regular입니다. LDS는 checkbox 자체를 복제하지 않고 단일 선택에 맞는 trailing check로 번역하되, md/lg option의 comfortable 밀도는 보존합니다. |
 | 명시 규칙 3 | Carbon Dropdown은 필드와 option을 하나의 size ramp로 관리하고 열린 목록을 같은 선택 컴포넌트의 일부로 취급합니다. LDS는 WDS에 없는 sm 확장을 shared-menu default 40px 밀도로 대응시킵니다. |
-| 명시 규칙 4 | 타입·밀도 정합: 트리거와 옵션은 입력 계열의 size-aware typography를 함께 사용합니다. sm은 shared-menu default 밀도(40px, padding 10×16px, label1 14/20px), md와 lg는 comfortable 밀도(48px, padding 12×16px, body1 16/24px)에 대응합니다. 모든 크기는 panel radius 12px·padding 8px·gap 4px과 option radius 10px을 공유합니다. |
-| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
+| 명시 규칙 4 | 타입·밀도 정합: 트리거는 입력 계열의 size-aware typography를 유지하고, 옵션은 shared-menu 타입 램프를 소비합니다. sm은 shared-menu default 밀도(40px, padding 10×16px, --component-menu-item-font-size 14/20px), md와 lg는 comfortable 밀도(48px, padding 12×16px, body1 16/24px)에 대응합니다. 모든 크기는 panel radius 12px·padding 8px·gap 4px과 option radius 10px을 공유합니다. |
+| --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
 
 - intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 absolute·clipped measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 scrollWidth를 바꾸지 않습니다. consumer의 root style이 지정한 minWidth, width, maxWidth는 측정 결과보다 우선합니다.
 - WDS 내부 Select/Select component-set(16215:33116)의 직접 축은 Active, Disable, Focus, Negative, Overflow, Render(Chip/Text)입니다. Size는 WDS 직접 축이 아니지만 열린 variant가 48px·16/24px Menu를 직접 포함하므로 md/lg 기본 option 밀도의 composition 근거로 사용합니다. 옵션별 disabled와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.
-- 시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px primary inset ring으로 분리합니다.
+- 시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px inset ring으로 분리합니다.
 - vars accepts only --lds-select-min-width, --lds-select-height, and --lds-select-dropdown-max-height. Consumer root width constraints still override intrinsic measurement.
 
 ## Content and writing
@@ -131,6 +131,8 @@
 
 ### Tokens
 
+- `--body1-line`
+- `--body1-size`
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-fill-strong`
 - `--color-semantic-label-alternative`
@@ -138,7 +140,6 @@
 - `--color-semantic-label-disable`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-solid-normal`
-- `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-strong`
 - `--component-button-transition`
 - `--component-input-border-width`
@@ -148,7 +149,11 @@
 - `--component-input-radius`
 - `--component-input-stack-gap`
 - `--component-menu-gap`
+- `--component-menu-item-active-ring-color`
+- `--component-menu-item-check-color`
+- `--component-menu-item-font-size`
 - `--component-menu-item-hover-bg`
+- `--component-menu-item-line-height`
 - `--component-menu-item-min-height`
 - `--component-menu-item-padding-x`
 - `--component-menu-item-padding-y`

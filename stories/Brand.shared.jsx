@@ -17,7 +17,6 @@ export default meta;
 
 const toneLabels = [
   ['ink', '기본 잉크'],
-  ['brand', '브랜드 블루'],
   ['white', '반전 화이트'],
 ];
 
@@ -72,23 +71,6 @@ export const LKRoboticsLogo = {
       </section>
 
       <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
-        <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>앱 아이콘 · 파비콘</h2>
-        <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          심볼을 라운드 네이비 타일에 얹은 앱 아이콘 형태입니다. 브라우저 탭 파비콘과 홈 화면 아이콘에 쓰며, 이 자리에서는
-          로크업 대신 고정된 이 형태를 사용합니다. 원본:{' '}
-          <code style={{ fontSize: 12, color: 'var(--color-semantic-label-alternative)' }}>assets/brand/lk-favicon.svg</code>
-        </p>
-        <div style={{ display: 'flex', gap: 'var(--space-6)', flexWrap: 'wrap', alignItems: 'flex-end', padding: 'var(--space-5)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
-          {[96, 64, 48, 32, 16].map((size) => (
-            <div key={size} style={{ display: 'grid', gap: 8, justifyItems: 'center' }}>
-              <img src="./assets/brand/lk-favicon.svg" alt="LK ROBOTICS 앱 아이콘" width={size} height={size} style={{ display: 'block' }} />
-              <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>{size}px</code>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
         <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>톤</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
           {toneLabels.map(([tone, label]) => {
@@ -102,14 +84,14 @@ export const LKRoboticsLogo = {
                   gap: 'var(--space-4)',
                   minHeight: 132,
                   padding: 'var(--space-5)',
-                  border: isDark ? '1px solid var(--color-semantic-inverse-background)' : '1px solid var(--color-semantic-line-normal-normal)',
+                  border: isDark ? '1px solid var(--color-semantic-brand-stage-to)' : '1px solid var(--color-semantic-line-normal-normal)',
                   borderRadius: 'var(--radius-lg)',
-                  background: isDark ? 'var(--color-semantic-inverse-background)' : 'var(--color-semantic-background-elevated-normal)',
+                  background: isDark ? 'var(--color-semantic-brand-stage-to)' : 'var(--color-semantic-background-elevated-normal)',
                 }}
               >
                 <Lockup variant="inline" tone={tone} height={28} />
                 <div style={{ display: 'grid', gap: 4 }}>
-                  <strong style={{ color: isDark ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-label-normal)' }}>{label}</strong>
+                  <strong style={{ color: isDark ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-normal)' }}>{label}</strong>
                   <code style={{ color: isDark ? 'var(--color-semantic-inverse-label-neutral-soft)' : 'var(--color-semantic-label-alternative)', fontSize: 12 }}>
                     tone="{tone}"
                   </code>
@@ -142,6 +124,66 @@ export const LKRoboticsLogo = {
           </div>
         </div>
       </section>
+
+      <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
+        <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>앱 아이콘 · 파비콘</h2>
+        <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+          심볼을 라운드 네이비 타일에 얹은 앱 아이콘 형태입니다. 브라우저 탭 파비콘과 홈 화면 아이콘에 쓰며, 이 자리에서는
+          로크업 대신 고정된 이 형태를 사용합니다. 원본:{' '}
+          <code style={{ fontSize: 12, color: 'var(--color-semantic-label-alternative)' }}>assets/brand/lk-favicon.svg</code>
+        </p>
+        <div style={{ display: 'flex', gap: 'var(--space-6)', flexWrap: 'wrap', alignItems: 'flex-end', padding: 'var(--space-5)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
+          {[96, 64, 48, 32, 16].map((size) => (
+            <div key={size} style={{ display: 'grid', gap: 8, justifyItems: 'center' }}>
+              <img src="./assets/brand/lk-favicon.svg" alt="LK ROBOTICS 앱 아이콘" width={size} height={size} style={{ display: 'block' }} />
+              <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>{size}px</code>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
+        <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>사각형 타일</h2>
+        <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+          스택형 로크업을 정사각 타일에 얹은 형태입니다. 소셜 프로필·아바타처럼 정사각 슬롯이 고정된
+          자리에 쓰며, 모서리 라운드는 얹는 쪽 플랫폼이 결정합니다. 네이비 바탕(반전 화이트)과 화이트
+          바탕(기본 잉크) 두 벌을 제공합니다. 원본:{' '}
+          <code style={{ fontSize: 12, color: 'var(--color-semantic-label-alternative)' }}>assets/brand/lk-logo-tile-navy.svg · lk-logo-tile-light.svg</code>
+        </p>
+        <div style={{ display: 'grid', gap: 'var(--space-5)', padding: 'var(--space-5)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
+          {[['lk-logo-tile-navy.svg', '네이비 바탕'], ['lk-logo-tile-light.svg', '화이트 바탕']].map(([file, label]) => (
+            <div key={file} style={{ display: 'flex', gap: 'var(--space-6)', flexWrap: 'wrap', alignItems: 'flex-end' }}>
+              {[160, 96, 64, 48].map((size) => (
+                <div key={size} style={{ display: 'grid', gap: 8, justifyItems: 'center' }}>
+                  <img src={`./assets/brand/${file}`} alt={`LK ROBOTICS 사각형 타일 로고 (${label})`} width={size} height={size} style={{ display: 'block', border: file.includes('light') ? '1px solid var(--color-semantic-line-solid-neutral)' : 'none' }} />
+                  <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>{size}px</code>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
+        <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>가로형 배너</h2>
+        <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+          가로형 로크업을 여백 규정(½X)까지 포함해 배경에 얹은 배너형입니다. 서명·헤더 이미지처럼 가로
+          슬롯이 고정된 자리에 쓰며, 네이비 바탕과 화이트 바탕 두 벌을 제공합니다. 원본:{' '}
+          <code style={{ fontSize: 12, color: 'var(--color-semantic-label-alternative)' }}>assets/brand/lk-logo-banner-navy.svg · lk-logo-banner-light.svg</code>
+        </p>
+        <div style={{ display: 'grid', gap: 'var(--space-5)', padding: 'var(--space-5)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
+          {[['lk-logo-banner-navy.svg', '네이비 바탕'], ['lk-logo-banner-light.svg', '화이트 바탕']].map(([file, label]) => (
+            <div key={file} style={{ display: 'flex', gap: 'var(--space-6)', flexWrap: 'wrap', alignItems: 'flex-end' }}>
+              {[96, 64, 44, 28].map((height) => (
+                <div key={height} style={{ display: 'grid', gap: 8, justifyItems: 'center' }}>
+                  <img src={`./assets/brand/${file}`} alt={`LK ROBOTICS 가로형 배너 로고 (${label})`} height={height} style={{ display: 'block', border: file.includes('light') ? '1px solid var(--color-semantic-line-solid-neutral)' : 'none' }} />
+                  <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>{height}px</code>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   ),
 };
@@ -161,7 +203,7 @@ export const LockupOverlineCard = {
             <Lockup variant="stacked" tone="ink" height={66} />
             <Lockup variant="inline" tone="ink" height={30} />
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-8)', flexWrap: 'wrap', padding: '20px 24px', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-inverse-background)', marginTop: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-8)', flexWrap: 'wrap', padding: '20px 24px', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-brand-stage-to)', marginTop: 12 }}>
             <Lockup variant="mark" tone="white" height={46} />
             <Lockup variant="stacked" tone="white" height={66} />
             <Lockup variant="inline" tone="white" height={30} />

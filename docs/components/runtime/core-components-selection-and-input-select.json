@@ -245,16 +245,16 @@
     },
     {
       "subject": "명시 규칙 4",
-      "rule": "타입·밀도 정합: 트리거와 옵션은 입력 계열의 size-aware typography를 함께 사용합니다. sm은 shared-menu default 밀도(40px, padding 10×16px, label1 14/20px), md와 lg는 comfortable 밀도(48px, padding 12×16px, body1 16/24px)에 대응합니다. 모든 크기는 panel radius 12px·padding 8px·gap 4px과 option radius 10px을 공유합니다."
+      "rule": "타입·밀도 정합: 트리거는 입력 계열의 size-aware typography를 유지하고, 옵션은 shared-menu 타입 램프를 소비합니다. sm은 shared-menu default 밀도(40px, padding 10×16px, --component-menu-item-font-size 14/20px), md와 lg는 comfortable 밀도(48px, padding 12×16px, body1 16/24px)에 대응합니다. 모든 크기는 panel radius 12px·padding 8px·gap 4px과 option radius 10px을 공유합니다."
     },
     {
-      "subject": "--color-semantic-background-elevated-normal",
-      "rule": "light: #FFFFFF; dark: #212225"
+      "subject": "--body1-line",
+      "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
     }
   ],
   "responsive": [
     "intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 absolute·clipped measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 scrollWidth를 바꾸지 않습니다. consumer의 root style이 지정한 minWidth, width, maxWidth는 측정 결과보다 우선합니다.",
-    "시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px primary inset ring으로 분리합니다.",
+    "시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px inset ring으로 분리합니다.",
     "vars accepts only --lds-select-min-width, --lds-select-height, and --lds-select-dropdown-max-height. Consumer root width constraints still override intrinsic measurement."
   ],
   "contentGuidance": [
@@ -310,6 +310,8 @@
     }
   ],
   "tokens": [
+    "--body1-line",
+    "--body1-size",
     "--color-semantic-background-elevated-normal",
     "--color-semantic-fill-strong",
     "--color-semantic-label-alternative",
@@ -317,7 +319,6 @@
     "--color-semantic-label-disable",
     "--color-semantic-label-normal",
     "--color-semantic-line-solid-normal",
-    "--color-semantic-primary-normal",
     "--color-semantic-primary-surface-strong",
     "--component-button-transition",
     "--component-input-border-width",
@@ -327,7 +328,11 @@
     "--component-input-radius",
     "--component-input-stack-gap",
     "--component-menu-gap",
+    "--component-menu-item-active-ring-color",
+    "--component-menu-item-check-color",
+    "--component-menu-item-font-size",
     "--component-menu-item-hover-bg",
+    "--component-menu-item-line-height",
     "--component-menu-item-min-height",
     "--component-menu-item-padding-x",
     "--component-menu-item-padding-y",

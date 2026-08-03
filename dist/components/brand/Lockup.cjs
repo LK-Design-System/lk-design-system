@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk32KKIHC3cjs = require('../../chunk-32KKIHC3.cjs');
+var _chunkBPW6ZLPRcjs = require('../../chunk-BPW6ZLPR.cjs');
 require('../../chunk-NKOFS67F.cjs');
 
 
-exports.Lockup = _chunk32KKIHC3cjs.Lockup;
+exports.Lockup = _chunkBPW6ZLPRcjs.Lockup;
 //# sourceMappingURL=Lockup.cjs.map

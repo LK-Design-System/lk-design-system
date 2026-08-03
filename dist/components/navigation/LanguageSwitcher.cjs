@@ -1,12 +1,12 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkFBNUJOO2cjs = require('../../chunk-FBNUJOO2.cjs');
-require('../../chunk-FV4KP7VK.cjs');
+var _chunkULL2S4LMcjs = require('../../chunk-ULL2S4LM.cjs');
+require('../../chunk-CXEC2Y2Z.cjs');
 require('../../chunk-R7U43XDR.cjs');
 require('../../chunk-5UG3O2FQ.cjs');
-require('../../chunk-MBPRD3ZE.cjs');
-require('../../chunk-MZLV6E4I.cjs');
+require('../../chunk-A7XJRMSK.cjs');
+require('../../chunk-JLJ3ERVE.cjs');
 require('../../chunk-GWMGPLNW.cjs');
 require('../../chunk-NFE2XSRZ.cjs');
 require('../../chunk-ENN7YVH5.cjs');
@@ -15,5 +15,5 @@ require('../../chunk-X5XHQEI5.cjs');
 require('../../chunk-NKOFS67F.cjs');
 
 
-exports.LanguageSwitcher = _chunkFBNUJOO2cjs.LanguageSwitcher;
+exports.LanguageSwitcher = _chunkULL2S4LMcjs.LanguageSwitcher;
 //# sourceMappingURL=LanguageSwitcher.cjs.map

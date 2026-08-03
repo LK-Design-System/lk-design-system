@@ -194,6 +194,11 @@
      Selected axis). Weaker than hover-bg so the pointer/focus row reads above
      selected rows; checked radio/checkbox items use their glyph instead. */
   --component-menu-item-selected-bg: var(--color-semantic-fill-alternative);
+  /* Selection glyph + keyboard-active ring for option lists sharing this menu
+     surface (Select). Achromatic by default so option lists follow the
+     DropdownMenu monochrome state model; themes may re-point them at an accent. */
+  --component-menu-item-check-color: var(--color-semantic-label-normal);
+  --component-menu-item-active-ring-color: var(--color-semantic-label-normal);
 
   /* ---- Top Bar navigation menu ------------------------------------------ */
   --component-topbar-menu-min-width: var(--component-menu-min-width);

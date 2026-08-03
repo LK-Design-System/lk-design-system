@@ -37,7 +37,7 @@ export function Spinner({ size, thickness, color = 'var(--color-semantic-primary
        counters stay hollow) and every letter rides a staggered vertical wave. */
     const mark = (
       <svg viewBox={LK_LOGO_VIEWBOX.inline} height={resolvedSize} aria-hidden="true" style={{ display: 'block', overflow: 'visible' }}>
-        <g transform="translate(0,504) scale(0.1,-0.1)" fill="var(--color-semantic-label-normal)">
+        <g transform="translate(0,504) scale(0.1,-0.1)" fill="var(--color-semantic-brand-ink)">
           {LK_LETTERS.map((d, i) => (
             <path key={`lk${i}`} data-wave d={d} fillRule="evenodd" style={{ animation: `lk-brand-wave-lk 1.15s ease-in-out ${brandDelay(i)}s infinite` }} />
           ))}
