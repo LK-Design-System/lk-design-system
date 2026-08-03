@@ -22,10 +22,10 @@ function availableItems(menu) {
     return !item.disabled && item.getAttribute("aria-disabled") !== "true";
   });
 }
-function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex }) {
+function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex, focusOnOpen = true }) {
   const { zIndex: resolvedZIndex, isTopmost } = _chunkF4O2CAUIcjs.useOverlayLayer.call(void 0, { open, zIndex });
   const menuRef = _react2.default.useRef(null);
-  const pendingFocusRef = _react2.default.useRef("first");
+  const pendingFocusRef = _react2.default.useRef(focusOnOpen ? "first" : null);
   const entryFrameRef = _react2.default.useRef(null);
   const typeaheadRef = _react2.default.useRef({ query: "", timer: null });
   const optionsRef = _react2.default.useRef(null);
@@ -62,6 +62,8 @@ function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex }) {
   }, []);
   useSafeLayoutEffect(() => {
     if (!open) return void 0;
+    const pendingFocus = pendingFocusRef.current;
+    if (pendingFocus == null) return void 0;
     const menu = menuRef.current;
     const view = _nullishCoalesce(_optionalChain([menu, 'optionalAccess', _7 => _7.ownerDocument, 'optionalAccess', _8 => _8.defaultView]), () => ( window));
     const frame = view.requestAnimationFrame(() => {
@@ -70,16 +72,16 @@ function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex }) {
       items.forEach((item) => {
         item.tabIndex = -1;
       });
-      const target = pendingFocusRef.current === "last" ? items.at(-1) : _nullishCoalesce(items.find((item) => !item.hasAttribute(MENU_BACK_ATTRIBUTE)), () => ( items[0]));
+      const target = pendingFocus === "last" ? items.at(-1) : _nullishCoalesce(items.find((item) => !item.hasAttribute(MENU_BACK_ATTRIBUTE)), () => ( items[0]));
       _optionalChain([target, 'optionalAccess', _9 => _9.focus, 'call', _10 => _10({ preventScroll: true })]);
-      pendingFocusRef.current = "first";
+      pendingFocusRef.current = focusOnOpen ? "first" : null;
     });
     entryFrameRef.current = frame;
     return () => {
       view.cancelAnimationFrame(frame);
       if (entryFrameRef.current === frame) entryFrameRef.current = null;
     };
-  }, [open, menuKey]);
+  }, [focusOnOpen, open, menuKey]);
   const closeMenu = _react2.default.useCallback(({ restoreFocus = false } = {}) => {
     const trigger = _optionalChain([optionsRef, 'access', _11 => _11.current, 'access', _12 => _12.getTrigger, 'optionalCall', _13 => _13()]);
     const view = _nullishCoalesce(_optionalChain([trigger, 'optionalAccess', _14 => _14.ownerDocument, 'optionalAccess', _15 => _15.defaultView]), () => ( window));
@@ -150,4 +152,4 @@ function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex }) {
 
 
 exports.useMenuKeyboard = useMenuKeyboard;
-//# sourceMappingURL=chunk-NAGM7POU.cjs.map
+//# sourceMappingURL=chunk-5UG3O2FQ.cjs.map

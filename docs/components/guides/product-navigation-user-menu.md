@@ -26,6 +26,7 @@
 | `status` | `'online' \| 'busy' \| 'offline'` | No | 아바타 상태 점. |
 | `items` | `UserMenuItem[]` | No | 위로 열리는 계정 메뉴 항목. |
 | `collapsed` | `boolean` | No | SideNav 접힘 상태와 동기화 — 아바타만 표시. @default false |
+| `viewportPadding` | `number` | No | Viewport inset in pixels used to clamp the upward menu. @default 12 |
 
 ## States
 
@@ -39,9 +40,9 @@
 | --- | --- |
 | 명시 규칙 1 | 타입 스케일 정합: 항목 13.5px → --label2-size(13px), 상세 11.5px → --caption1-size(12px)로 스냅했습니다. 이름(13px bold)과의 위계는 굵기·색으로 유지됩니다. |
 | 명시 규칙 2 | Menu shell은 Dropdown Menu와 같은 elevated surface, r16, 8px/20px padding, shadow-md를 사용합니다. |
+| 명시 규칙 3 | Implementation note: viewportPadding controls the inline popover viewport clamp inset in pixels. The default 12 keeps docked SideNav footer menus aligned with their account trigger. Pointer opening keeps focus on the trigger; keyboard opening enters the first command so the two surfaces do not compete for emphasis. |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
 
 ## Responsive
 

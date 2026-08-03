@@ -24,6 +24,8 @@ export interface UserMenuProps extends React.HTMLAttributes<HTMLDivElement> {
   items?: UserMenuItem[];
   /** SideNav 접힘 상태와 동기화 — 아바타만 표시. @default false */
   collapsed?: boolean;
+  /** Viewport inset in pixels used to clamp the upward menu. @default 12 */
+  viewportPadding?: number;
 }
 
 /** 사이드바 푸터용 계정 행 — 아바타 + 이름/역할 + 위로 열리는 계정 메뉴. SideNav `footer` 슬롯에 배치. */

@@ -1,5 +1,7 @@
 # UserMenu
 
+Implementation note: `viewportPadding` controls the inline popover viewport clamp inset in pixels. The default `12` keeps docked SideNav footer menus aligned with their account trigger. Pointer opening keeps focus on the trigger; keyboard opening enters the first command so the two surfaces do not compete for emphasis.
+
 Classification: **LK Product Extension**. 대시보드에서 `SideNav` 푸터에 배치하는 계정 액션이며, 위로 열리는 구조이므로 TopBar의 계정 메뉴나 전역 내비게이션으로 사용하지 않습니다.
 
 사이드바 푸터용 계정 행. 아바타 + 이름/역할 + 셰브론이 트리거이고, 계정 메뉴가 **위로** 열립니다. SideNav의 `collapsed`와 같은 값을 넘기면 접힌 레일에서 아바타만 남습니다.

@@ -68,7 +68,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
-## 0.1.0-rc.21 - 2026-08-03
+## 0.1.0-rc.22 - 2026-08-03
 
 ### Added
 
@@ -78,6 +78,8 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 ### Fixed
 
+- `UserMenu` pointer opening no longer moves focus onto the first menu item, so the open trigger and menu do not compete for emphasis. Keyboard opening retains first/last-item entry focus.
+- Docked `SideNav` footer `UserMenu` popovers now align their inline start with the account trigger by default. Consumers can override the `viewportPadding` clamp inset when a different viewport gutter is required.
 - DropdownMenu, Popover, Tooltip, and Select popups now use the shared owner-document Portal, overlay stack, four-side flip/shift positioning, topmost dismiss, nearest theme/`dir` inheritance, and component-variable propagation outside clipping ancestors.
 - Modal, Drawer, Sheet, and ConfirmDialog now share Portal layering, nested topmost focus containment, background inerting, body scroll locking, and deterministic focus restoration.
 - Public refs now target the documented native control or semantic root, including polymorphic Button/Card/FieldAction roots and separate field `rootRef` targets.

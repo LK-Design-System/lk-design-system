@@ -4,7 +4,7 @@
 var _chunkQV6BZEQ3cjs = require('./chunk-QV6BZEQ3.cjs');
 
 
-var _chunkNAGM7POUcjs = require('./chunk-NAGM7POU.cjs');
+var _chunk5UG3O2FQcjs = require('./chunk-5UG3O2FQ.cjs');
 
 
 var _chunkENN7YVH5cjs = require('./chunk-ENN7YVH5.cjs');
@@ -15,17 +15,18 @@ var _chunkX5XHQEI5cjs = require('./chunk-X5XHQEI5.cjs');
 // components/navigation/UserMenu.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 var _jsxruntime = require('react/jsx-runtime');
-function UserMenu({ name, detail, src, status, items = [], collapsed = false, style, ...rest }) {
+function UserMenu({ name, detail, src, status, items = [], collapsed = false, viewportPadding = 12, style, ...rest }) {
   const [open, setOpen] = _react2.default.useState(false);
   const [hov, setHov] = _react2.default.useState(-1);
   const ref = _react2.default.useRef(null);
   const triggerRef = _react2.default.useRef(null);
   const menuId = _react2.default.useId();
   const triggerId = _react2.default.useId();
-  const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = _chunkNAGM7POUcjs.useMenuKeyboard.call(void 0, {
+  const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = _chunk5UG3O2FQcjs.useMenuKeyboard.call(void 0, {
     open,
     onClose: () => setOpen(false),
-    getTrigger: () => triggerRef.current
+    getTrigger: () => triggerRef.current,
+    focusOnOpen: false
   });
   _react2.default.useEffect(() => {
     if (!open) return void 0;
@@ -39,10 +40,7 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
   }, [open]);
   const toggleMenu = () => {
     if (open) setOpen(false);
-    else {
-      requestItemFocus("first");
-      setOpen(true);
-    }
+    else setOpen(true);
   };
   const handleTriggerKeyDown = (event) => {
     if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
@@ -59,7 +57,8 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
     open,
     anchorRef: ref,
     panelRef: menuRef,
-    placement: "top"
+    placement: "top",
+    viewportPadding
   });
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { ref, style: { position: "relative", ...style }, ...rest, children: [
     open && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { ref: menuRef, id: menuId, role: "menu", "aria-labelledby": triggerId, "data-placement": position.placement, onKeyDown: handleMenuKeyDown, style: { position: "absolute", top: position.placement === "bottom" ? "calc(100% + 8px)" : "auto", bottom: position.placement === "top" ? "calc(100% + 8px)" : "auto", left: 0, minWidth: collapsed ? 200 : "100%", maxWidth: "calc(100vw - var(--space-8))", maxHeight: _nullishCoalesce(position.maxHeight, () => ( void 0)), overflowY: position.maxHeight != null ? "auto" : void 0, translate: `${position.shiftX}px ${position.shiftY}px`, boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--component-menu-radius)", padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)", boxShadow: "var(--shadow-md)", zIndex: 30 }, children: items.map((it, i) => it.divider ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "separator", style: { height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "5px 4px" } }, "d" + i) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
@@ -114,4 +113,4 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
 
 
 exports.UserMenu = UserMenu;
-//# sourceMappingURL=chunk-QJTOKT4P.cjs.map
+//# sourceMappingURL=chunk-ED6MWBUF.cjs.map

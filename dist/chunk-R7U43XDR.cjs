@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
 
 
-var _chunkNAGM7POUcjs = require('./chunk-NAGM7POU.cjs');
+var _chunk5UG3O2FQcjs = require('./chunk-5UG3O2FQ.cjs');
 
 
 var _chunkF4O2CAUIcjs = require('./chunk-F4O2CAUI.cjs');
@@ -16,7 +16,7 @@ function useSubmenuBranch({ disabled = false } = {}) {
   const triggerRef = _react2.default.useRef(null);
   const panelRef = _react2.default.useRef(null);
   const hoverTimer = _react2.default.useRef(null);
-  const { menuRef, requestItemFocus, handleMenuKeyDown, zIndex } = _chunkNAGM7POUcjs.useMenuKeyboard.call(void 0, {
+  const { menuRef, requestItemFocus, handleMenuKeyDown, zIndex } = _chunk5UG3O2FQcjs.useMenuKeyboard.call(void 0, {
     open,
     onClose: () => setOpen(false),
     getTrigger: () => triggerRef.current
@@ -123,4 +123,4 @@ function useSubmenuBranch({ disabled = false } = {}) {
 
 
 exports.useSubmenuBranch = useSubmenuBranch;
-//# sourceMappingURL=chunk-TGFR5MRP.cjs.map
+//# sourceMappingURL=chunk-R7U43XDR.cjs.map

@@ -29,10 +29,10 @@ function availableItems(menu) {
 }
 
 /** Private roving-focus engine shared by LDS menu surfaces. */
-export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex }) {
+export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex, focusOnOpen = true }) {
   const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayer({ open, zIndex });
   const menuRef = React.useRef(null);
-  const pendingFocusRef = React.useRef('first');
+  const pendingFocusRef = React.useRef(focusOnOpen ? 'first' : null);
   const entryFrameRef = React.useRef(null);
   const typeaheadRef = React.useRef({ query: '', timer: null });
   const optionsRef = React.useRef(null);
@@ -79,26 +79,28 @@ export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex
 
   useSafeLayoutEffect(() => {
     if (!open) return undefined;
+    const pendingFocus = pendingFocusRef.current;
+    if (pendingFocus == null) return undefined;
     const menu = menuRef.current;
     const view = menu?.ownerDocument?.defaultView ?? window;
     const frame = view.requestAnimationFrame(() => {
       entryFrameRef.current = null;
       const items = availableItems(menuRef.current);
       items.forEach((item) => { item.tabIndex = -1; });
-      const target = pendingFocusRef.current === 'last'
+      const target = pendingFocus === 'last'
         ? items.at(-1)
         // Entry focus lands on the first *command*: a drill-up control is part
         // of the roving collection but must not swallow the level's entry.
         : items.find((item) => !item.hasAttribute(MENU_BACK_ATTRIBUTE)) ?? items[0];
       target?.focus({ preventScroll: true });
-      pendingFocusRef.current = 'first';
+      pendingFocusRef.current = focusOnOpen ? 'first' : null;
     });
     entryFrameRef.current = frame;
     return () => {
       view.cancelAnimationFrame(frame);
       if (entryFrameRef.current === frame) entryFrameRef.current = null;
     };
-  }, [open, menuKey]);
+  }, [focusOnOpen, open, menuKey]);
 
   const closeMenu = React.useCallback(({ restoreFocus = false } = {}) => {
     const trigger = optionsRef.current.getTrigger?.();

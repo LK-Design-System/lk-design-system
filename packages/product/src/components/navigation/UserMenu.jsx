@@ -12,7 +12,7 @@ import { useFloatingPosition } from '@lk-design-system/lds-core/components/overl
  * Menu items reuse the DropdownMenu item shape (label · icon · onClick ·
  * danger · disabled · divider). Designed for the SideNav `footer` slot.
  */
-export function UserMenu({ name, detail, src, status, items = [], collapsed = false, style, ...rest }) {
+export function UserMenu({ name, detail, src, status, items = [], collapsed = false, viewportPadding = 12, style, ...rest }) {
   const [open, setOpen] = React.useState(false);
   const [hov, setHov] = React.useState(-1);
   const ref = React.useRef(null);
@@ -23,6 +23,7 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
     open,
     onClose: () => setOpen(false),
     getTrigger: () => triggerRef.current,
+    focusOnOpen: false,
   });
   React.useEffect(() => {
     if (!open) return undefined;
@@ -33,10 +34,7 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
 
   const toggleMenu = () => {
     if (open) setOpen(false);
-    else {
-      requestItemFocus('first');
-      setOpen(true);
-    }
+    else setOpen(true);
   };
   const handleTriggerKeyDown = (event) => {
     if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
@@ -54,6 +52,7 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
     anchorRef: ref,
     panelRef: menuRef,
     placement: 'top',
+    viewportPadding,
   });
 
   return (

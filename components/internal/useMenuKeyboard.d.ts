@@ -9,6 +9,8 @@ export interface UseMenuKeyboardOptions {
   getTrigger?: () => HTMLElement | null | undefined;
   /** 드릴 레벨 등 같은 메뉴 노드에서 항목 집합이 교체될 때 증가시키는 키. entry focus와 typeahead를 재시작한다. @default 0 */
   menuKey?: number | string;
+  /** Whether opening the menu without an explicit request should focus its first item. @default true */
+  focusOnOpen?: boolean;
 }
 
 export interface UseMenuKeyboardResult {

@@ -1,33 +1,33 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-var _chunkTGFR5MRPcjs = require('./chunk-TGFR5MRP.cjs');
-
-
-var _chunkNAGM7POUcjs = require('./chunk-NAGM7POU.cjs');
-
-
-var _chunkMBPRD3ZEcjs = require('./chunk-MBPRD3ZE.cjs');
-
-
-
-
-
-var _chunkGWMGPLNWcjs = require('./chunk-GWMGPLNW.cjs');
-
-
-
-var _chunkENN7YVH5cjs = require('./chunk-ENN7YVH5.cjs');
-
-
-var _chunkF4O2CAUIcjs = require('./chunk-F4O2CAUI.cjs');
-
-
-var _chunkX5XHQEI5cjs = require('./chunk-X5XHQEI5.cjs');
+"use client";
+import {
+  useSubmenuBranch
+} from "./chunk-DOLKVCRR.js";
+import {
+  useMenuKeyboard
+} from "./chunk-OPIN7X2Q.js";
+import {
+  Button
+} from "./chunk-G2DCTRZH.js";
+import {
+  componentVars,
+  partClassName,
+  partStyle,
+  useMergedRefs
+} from "./chunk-A2U7YIGP.js";
+import {
+  inlineFloatingStyle,
+  useFloatingPosition
+} from "./chunk-SFKCQB3X.js";
+import {
+  OverlayPortal
+} from "./chunk-7MEK4Y6F.js";
+import {
+  Icon
+} from "./chunk-JNVDI5OO.js";
 
 // components/overlay/DropdownMenu.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 var ACTION_CONTROL_SELECTOR = [
   "button:not(:disabled)",
   "a[href]",
@@ -42,10 +42,10 @@ var MENU_ITEM_SELECTOR = [
   '[role="menuitemcheckbox"]'
 ].join(",");
 function focusableActionControls(region) {
-  return Array.from(_nullishCoalesce(_optionalChain([region, 'optionalAccess', _ => _.querySelectorAll, 'call', _2 => _2(ACTION_CONTROL_SELECTOR)]), () => ( [])));
+  return Array.from(region?.querySelectorAll(ACTION_CONTROL_SELECTOR) ?? []);
 }
 function availableMenuItems(menu) {
-  return Array.from(_nullishCoalesce(_optionalChain([menu, 'optionalAccess', _3 => _3.querySelectorAll, 'call', _4 => _4(MENU_ITEM_SELECTOR)]), () => ( []))).filter(
+  return Array.from(menu?.querySelectorAll(MENU_ITEM_SELECTOR) ?? []).filter(
     (item) => !item.disabled && item.getAttribute("aria-disabled") !== "true"
   );
 }
@@ -59,7 +59,7 @@ function CheckMark({ variant, checked, disabled }) {
   if (!variant || variant === "normal") return null;
   const activeColor = disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-primary-normal)";
   if (variant === "radio") {
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ jsx(
       "span",
       {
         "aria-hidden": "true",
@@ -73,7 +73,7 @@ function CheckMark({ variant, checked, disabled }) {
           justifyContent: "center",
           flexShrink: 0
         },
-        children: checked && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        children: checked && /* @__PURE__ */ jsx(
           "span",
           {
             style: {
@@ -87,7 +87,7 @@ function CheckMark({ variant, checked, disabled }) {
       }
     );
   }
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ jsx(
     "span",
     {
       "aria-hidden": "true",
@@ -103,7 +103,7 @@ function CheckMark({ variant, checked, disabled }) {
         justifyContent: "center",
         flexShrink: 0
       },
-      children: checked && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "check", size: 11, "aria-hidden": "true" })
+      children: checked && /* @__PURE__ */ jsx(Icon, { name: "check", size: 11, "aria-hidden": "true" })
     }
   );
 }
@@ -138,7 +138,7 @@ function normalizeCellPadding(cellPadding) {
 function resolveMenuItemMetrics({ density, cellPadding, verticalPadding }) {
   const base = MENU_ITEM_DENSITIES[density] || MENU_ITEM_DENSITIES.default;
   const legacyCell = normalizeCellPadding(cellPadding);
-  const legacyVertical = normalizeCellPadding(_nullishCoalesce(verticalPadding, () => ( cellPadding)));
+  const legacyVertical = normalizeCellPadding(verticalPadding ?? cellPadding);
   if (!legacyCell && !legacyVertical) return base;
   return {
     ...base,
@@ -186,13 +186,13 @@ var MENU_PANEL_STYLE = {
   gap: "var(--component-menu-gap)"
 };
 function MenuItemContent({ item, variant, checked, disabled, description, trailing }) {
-  const indicator = item.icon || /* @__PURE__ */ _jsxruntime.jsx.call(void 0, CheckMark, { variant, checked, disabled });
+  const indicator = item.icon || /* @__PURE__ */ jsx(CheckMark, { variant, checked, disabled });
   const indicatorAtEnd = item.iconPosition === "end";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
     !indicatorAtEnd && indicator,
-    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: 4, minWidth: 0, flex: 1 }, children: [
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { overflowWrap: "anywhere" }, children: item.label }),
-      description && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    /* @__PURE__ */ jsxs("span", { style: { display: "grid", gap: 4, minWidth: 0, flex: 1 }, children: [
+      /* @__PURE__ */ jsx("span", { style: { overflowWrap: "anywhere" }, children: item.label }),
+      description && /* @__PURE__ */ jsx(
         "span",
         {
           style: {
@@ -206,7 +206,7 @@ function MenuItemContent({ item, variant, checked, disabled, description, traili
       )
     ] }),
     trailing,
-    item.shortcut && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    item.shortcut && /* @__PURE__ */ jsx(
       "span",
       {
         style: {
@@ -221,18 +221,18 @@ function MenuItemContent({ item, variant, checked, disabled, description, traili
   ] });
 }
 function MenuItemButton({ item, variant, itemMetrics, onSelect, trailing, haspopup, onTriggerKeyDown, classNames, styles }) {
-  const [hover, setHover] = _react2.default.useState(false);
+  const [hover, setHover] = React.useState(false);
   const disabled = Boolean(item.disabled || item.disable);
   const checked = Boolean(item.checked || item.active);
   const current = variant === "normal" && checked;
-  const description = _nullishCoalesce(item.description, () => ( item.captionContent));
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  const description = item.description ?? item.captionContent;
+  return /* @__PURE__ */ jsx(
     "button",
     {
       "data-slot": "item",
       "data-disabled": disabled ? "true" : void 0,
       "data-state": checked ? "checked" : "unchecked",
-      className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "item", item.className) || void 0,
+      className: partClassName(classNames, "item", item.className) || void 0,
       type: "button",
       role: variant === "normal" ? "menuitem" : variant === "radio" ? "menuitemradio" : "menuitemcheckbox",
       "aria-checked": variant === "normal" ? void 0 : checked,
@@ -242,20 +242,20 @@ function MenuItemButton({ item, variant, itemMetrics, onSelect, trailing, haspop
       disabled,
       onClick: () => {
         if (disabled) return;
-        _optionalChain([item, 'access', _5 => _5.onClick, 'optionalCall', _6 => _6()]);
-        _optionalChain([onSelect, 'optionalCall', _7 => _7(item)]);
+        item.onClick?.();
+        onSelect?.(item);
       },
       onKeyDown: onTriggerKeyDown,
       onMouseEnter: () => setHover(true),
       onMouseLeave: () => setHover(false),
-      style: { ...menuItemVisualStyle({ selected: current, checked, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), metrics: itemMetrics }), ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "item"), ...item.style },
-      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, MenuItemContent, { item, variant, checked, disabled, description, trailing })
+      style: { ...menuItemVisualStyle({ selected: current, checked, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), metrics: itemMetrics }), ...partStyle(styles, "item"), ...item.style },
+      children: /* @__PURE__ */ jsx(MenuItemContent, { item, variant, checked, disabled, description, trailing })
     }
   );
 }
-var SUBMENU_CHEVRON = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "chevron-right-small", size: 16, "aria-hidden": "true", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)" } });
+var SUBMENU_CHEVRON = /* @__PURE__ */ jsx(Icon, { name: "chevron-right-small", size: 16, "aria-hidden": "true", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)" } });
 function DrillHeader({ title, onBack, itemMetrics }) {
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ jsxs(
     "button",
     {
       type: "button",
@@ -290,8 +290,8 @@ function DrillHeader({ title, onBack, itemMetrics }) {
         color: "var(--color-semantic-label-neutral)"
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "chevron-left-small", size: 16, "aria-hidden": "true" }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title })
+        /* @__PURE__ */ jsx(Icon, { name: "chevron-left-small", size: 16, "aria-hidden": "true" }),
+        /* @__PURE__ */ jsx("span", { style: { overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: title })
       ]
     }
   );
@@ -299,19 +299,19 @@ function DrillHeader({ title, onBack, itemMetrics }) {
 function renderDrillItems(items, ctx) {
   return items.map((item, index) => {
     if (item.divider) {
-      return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      return /* @__PURE__ */ jsx(
         "div",
         {
           "data-slot": "divider",
-          className: _chunkGWMGPLNWcjs.partClassName.call(void 0, ctx.classNames, "divider") || void 0,
+          className: partClassName(ctx.classNames, "divider") || void 0,
           role: "separator",
-          style: { height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, ctx.styles, "divider") }
+          style: { height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px", ...partStyle(ctx.styles, "divider") }
         },
         index
       );
     }
     if (item.items && item.items.length) {
-      return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      return /* @__PURE__ */ jsx(
         MenuItemButton,
         {
           item,
@@ -332,7 +332,7 @@ function renderDrillItems(items, ctx) {
         index
       );
     }
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ jsx(
       MenuItemButton,
       {
         item,
@@ -347,11 +347,11 @@ function renderDrillItems(items, ctx) {
   });
 }
 function MenuBranch({ item, variant, itemMetrics, closeAll, classNames, styles }) {
-  const [hover, setHover] = _react2.default.useState(false);
+  const [hover, setHover] = React.useState(false);
   const disabled = Boolean(item.disabled || item.disable);
-  const description = _nullishCoalesce(item.description, () => ( item.captionContent));
-  const sub = _chunkTGFR5MRPcjs.useSubmenuBranch.call(void 0, { disabled });
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  const description = item.description ?? item.captionContent;
+  const sub = useSubmenuBranch({ disabled });
+  return /* @__PURE__ */ jsxs(
     "div",
     {
       style: { position: "relative", flexShrink: 0 },
@@ -364,21 +364,21 @@ function MenuBranch({ item, variant, itemMetrics, closeAll, classNames, styles }
         sub.containerHandlers.onMouseLeave();
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ jsx(
           "button",
           {
             ref: sub.triggerRef,
             "data-slot": "item",
             "data-disabled": disabled ? "true" : void 0,
-            className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "item", item.className) || void 0,
+            className: partClassName(classNames, "item", item.className) || void 0,
             type: "button",
             role: "menuitem",
             ...sub.triggerAria,
             tabIndex: -1,
             disabled,
             ...sub.triggerHandlers,
-            style: { ...menuItemVisualStyle({ active: sub.open, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), metrics: itemMetrics }), ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "item"), ...item.style },
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            style: { ...menuItemVisualStyle({ active: sub.open, hovered: hover, disabled, danger: item.danger, hasDescription: Boolean(description), metrics: itemMetrics }), ...partStyle(styles, "item"), ...item.style },
+            children: /* @__PURE__ */ jsx(
               MenuItemContent,
               {
                 item,
@@ -386,13 +386,13 @@ function MenuBranch({ item, variant, itemMetrics, closeAll, classNames, styles }
                 checked: false,
                 disabled,
                 description,
-                trailing: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "chevron-right-small", size: 16, "aria-hidden": "true", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)" } })
+                trailing: /* @__PURE__ */ jsx(Icon, { name: "chevron-right-small", size: 16, "aria-hidden": "true", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)" } })
               }
             )
           }
         ),
         sub.renderPanel(
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          /* @__PURE__ */ jsx(
             "div",
             {
               ref: sub.menuRef,
@@ -413,19 +413,19 @@ function MenuBranch({ item, variant, itemMetrics, closeAll, classNames, styles }
 function renderMenuItems(items, ctx) {
   return items.map((item, index) => {
     if (item.divider) {
-      return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      return /* @__PURE__ */ jsx(
         "div",
         {
           "data-slot": "divider",
-          className: _chunkGWMGPLNWcjs.partClassName.call(void 0, ctx.classNames, "divider") || void 0,
+          className: partClassName(ctx.classNames, "divider") || void 0,
           role: "separator",
-          style: { height: 1, flexShrink: 0, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, ctx.styles, "divider") }
+          style: { height: 1, flexShrink: 0, background: "var(--color-semantic-line-solid-normal)", margin: "6px 4px", ...partStyle(ctx.styles, "divider") }
         },
         index
       );
     }
     if (item.items && item.items.length) {
-      return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      return /* @__PURE__ */ jsx(
         MenuBranch,
         {
           item,
@@ -438,7 +438,7 @@ function renderMenuItems(items, ctx) {
         index
       );
     }
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ jsx(
       MenuItemButton,
       {
         item,
@@ -452,7 +452,7 @@ function renderMenuItems(items, ctx) {
     );
   });
 }
-var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
+var DropdownMenu = React.forwardRef(function DropdownMenu2({
   trigger,
   items = [],
   align = "left",
@@ -487,37 +487,37 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
 }, forwardedRef) {
   const controlled = open !== void 0;
   const drill = submenuMode === "drill";
-  const [internalOpen, setInternalOpen] = _react2.default.useState(defaultOpen);
+  const [internalOpen, setInternalOpen] = React.useState(defaultOpen);
   const visible = controlled ? open : internalOpen;
-  const [drillPath, setDrillPath] = _react2.default.useState([]);
-  const ref = _react2.default.useRef(null);
-  const mergedRootRef = _chunkGWMGPLNWcjs.useMergedRefs.call(void 0, ref, forwardedRef);
-  const panelRef = _react2.default.useRef(null);
-  const actionAreaRef = _react2.default.useRef(null);
-  const menuId = _react2.default.useId();
-  const generatedTriggerId = _react2.default.useId();
-  const triggerId = _nullishCoalesce(_optionalChain([trigger, 'optionalAccess', _8 => _8.props, 'optionalAccess', _9 => _9.id]), () => ( generatedTriggerId));
+  const [drillPath, setDrillPath] = React.useState([]);
+  const ref = React.useRef(null);
+  const mergedRootRef = useMergedRefs(ref, forwardedRef);
+  const panelRef = React.useRef(null);
+  const actionAreaRef = React.useRef(null);
+  const menuId = React.useId();
+  const generatedTriggerId = React.useId();
+  const triggerId = trigger?.props?.id ?? generatedTriggerId;
   const setVisible = (next) => {
     if (!controlled) setInternalOpen(next);
-    _optionalChain([onOpenChange, 'optionalCall', _10 => _10(next)]);
+    onOpenChange?.(next);
   };
-  _react2.default.useEffect(() => {
+  React.useEffect(() => {
     if (!visible) setDrillPath([]);
   }, [visible]);
   const drillLevel = drillPath.length ? drillPath[drillPath.length - 1] : null;
   const drillItems = drillLevel ? drillLevel.items || [] : items;
   const drillIn = (item) => setDrillPath((path) => [...path, item]);
   const drillBack = () => setDrillPath((path) => path.slice(0, -1));
-  const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown, zIndex: resolvedZIndex, isTopmost } = _chunkNAGM7POUcjs.useMenuKeyboard.call(void 0, {
+  const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown, zIndex: resolvedZIndex, isTopmost } = useMenuKeyboard({
     open: visible,
     onClose: () => setVisible(false),
-    getTrigger: () => _optionalChain([ref, 'access', _11 => _11.current, 'optionalAccess', _12 => _12.querySelector, 'call', _13 => _13('[aria-haspopup="menu"], button, [role="button"], a[href]')]),
+    getTrigger: () => ref.current?.querySelector('[aria-haspopup="menu"], button, [role="button"], a[href]'),
     menuKey: drill ? drillPath.length : 0,
     zIndex
   });
   const toggleMenu = (event) => {
-    _optionalChain([trigger, 'optionalAccess', _14 => _14.props, 'optionalAccess', _15 => _15.onClick, 'optionalCall', _16 => _16(event)]);
-    if (_optionalChain([event, 'optionalAccess', _17 => _17.defaultPrevented])) return;
+    trigger?.props?.onClick?.(event);
+    if (event?.defaultPrevented) return;
     if (visible) setVisible(false);
     else {
       requestItemFocus("first");
@@ -525,7 +525,7 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
     }
   };
   const handleTriggerKeyDown = (event) => {
-    _optionalChain([trigger, 'optionalAccess', _18 => _18.props, 'optionalAccess', _19 => _19.onKeyDown, 'optionalCall', _20 => _20(event)]);
+    trigger?.props?.onKeyDown?.(event);
     if (event.defaultPrevented) return;
     if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
       event.preventDefault();
@@ -537,14 +537,14 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
       setVisible(true);
     }
   };
-  const renderedTrigger = _react2.default.isValidElement(trigger) && trigger.type !== _react2.default.Fragment ? _react2.default.cloneElement(trigger, {
+  const renderedTrigger = React.isValidElement(trigger) && trigger.type !== React.Fragment ? React.cloneElement(trigger, {
     id: triggerId,
     "aria-haspopup": "menu",
     "aria-expanded": visible,
     "aria-controls": visible ? menuId : void 0,
     onClick: toggleMenu,
     onKeyDown: handleTriggerKeyDown
-  }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  }) : /* @__PURE__ */ jsx(
     "span",
     {
       id: triggerId,
@@ -558,7 +558,7 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
       children: trigger
     }
   );
-  const position = _chunkENN7YVH5cjs.useFloatingPosition.call(void 0, {
+  const position = useFloatingPosition({
     open: visible,
     anchorRef: ref,
     panelRef,
@@ -572,11 +572,11 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
   const panelMaxHeight = constrainedMaxHeight(maxHeight, position.maxHeight);
   const itemMetrics = resolveMenuItemMetrics({ density, cellPadding, verticalPadding });
   const usesAdaptiveWidth = width == null;
-  const panelWidth = _nullishCoalesce(width, () => ( "max-content"));
-  const panelMinWidth = _nullishCoalesce(minWidth, () => ( (usesAdaptiveWidth ? "min(var(--component-menu-min-width), calc(100vw - var(--space-8)))" : 0)));
+  const panelWidth = width ?? "max-content";
+  const panelMinWidth = minWidth ?? (usesAdaptiveWidth ? "min(var(--component-menu-min-width), calc(100vw - var(--space-8)))" : 0);
   const panelMaxWidth = usesAdaptiveWidth ? "min(var(--component-menu-max-width), calc(100vw - var(--space-8)))" : "calc(100vw - var(--space-8))";
-  const [menuScrollable, setMenuScrollable] = _react2.default.useState(false);
-  _react2.default.useLayoutEffect(() => {
+  const [menuScrollable, setMenuScrollable] = React.useState(false);
+  React.useLayoutEffect(() => {
     const menu = menuRef.current;
     if (!visible || panelMaxHeight == null || !menu) {
       setMenuScrollable(false);
@@ -610,15 +610,15 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
     handleMenuKeyDown(event);
   };
   const focusOutsideMenu = (direction) => {
-    const triggerElement = _optionalChain([ref, 'access', _21 => _21.current, 'optionalAccess', _22 => _22.querySelector, 'call', _23 => _23('[aria-haspopup="menu"], button, [role="button"], a[href]')]);
-    const ownerDocument = _optionalChain([triggerElement, 'optionalAccess', _24 => _24.ownerDocument]);
-    const controls = Array.from(_nullishCoalesce(_optionalChain([ownerDocument, 'optionalAccess', _25 => _25.querySelectorAll, 'call', _26 => _26(ACTION_CONTROL_SELECTOR)]), () => ( []))).filter(
+    const triggerElement = ref.current?.querySelector('[aria-haspopup="menu"], button, [role="button"], a[href]');
+    const ownerDocument = triggerElement?.ownerDocument;
+    const controls = Array.from(ownerDocument?.querySelectorAll(ACTION_CONTROL_SELECTOR) ?? []).filter(
       (control) => !control.closest("[data-menu-portal]") && control.getClientRects().length > 0
     );
     const triggerIndex = controls.indexOf(triggerElement);
     const target = triggerIndex >= 0 ? controls[triggerIndex + direction] : null;
     setVisible(false);
-    _optionalChain([target, 'optionalAccess', _27 => _27.focus, 'call', _28 => _28({ preventScroll: true })]);
+    target?.focus({ preventScroll: true });
   };
   const handleActionAreaKeyDown = (event) => {
     if (event.key === "Escape") {
@@ -627,7 +627,7 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
       return;
     }
     const controls = focusableActionControls(actionAreaRef.current);
-    const currentControl = _optionalChain([event, 'access', _29 => _29.target, 'access', _30 => _30.closest, 'optionalCall', _31 => _31(ACTION_CONTROL_SELECTOR)]);
+    const currentControl = event.target.closest?.(ACTION_CONTROL_SELECTOR);
     const currentIndex = controls.indexOf(currentControl);
     if (event.key === "ArrowUp" || event.key === "Tab" && event.shiftKey && currentIndex === 0) {
       const lastItem = availableMenuItems(menuRef.current).at(-1);
@@ -643,52 +643,52 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
     }
   };
   const finishAction = (callback) => {
-    _optionalChain([callback, 'optionalCall', _32 => _32()]);
+    callback?.();
     closeMenu({ restoreFocus: true });
   };
-  _react2.default.useEffect(() => {
+  React.useEffect(() => {
     if (!visible) return void 0;
     const onDoc = (e) => {
       if (!isTopmost()) return;
-      if (ref.current && !ref.current.contains(e.target) && !_optionalChain([e, 'access', _33 => _33.target, 'access', _34 => _34.closest, 'optionalCall', _35 => _35("[data-menu-portal]")])) {
+      if (ref.current && !ref.current.contains(e.target) && !e.target.closest?.("[data-menu-portal]")) {
         setVisible(false);
       }
     };
-    const ownerDocument = _nullishCoalesce(_optionalChain([ref, 'access', _36 => _36.current, 'optionalAccess', _37 => _37.ownerDocument]), () => ( document));
+    const ownerDocument = ref.current?.ownerDocument ?? document;
     ownerDocument.addEventListener("mousedown", onDoc);
     return () => ownerDocument.removeEventListener("mousedown", onDoc);
   }, [isTopmost, visible]);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ jsxs(
     "div",
     {
       ref: mergedRootRef,
       "data-slot": "root",
       "data-open": visible ? "true" : void 0,
-      className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "root", className) || void 0,
-      style: { ..._chunkGWMGPLNWcjs.componentVars.call(void 0, vars, "--lds-dropdown-menu-"), position: "relative", display: "inline-block", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "root"), ...style },
+      className: partClassName(classNames, "root", className) || void 0,
+      style: { ...componentVars(vars, "--lds-dropdown-menu-"), position: "relative", display: "inline-block", ...partStyle(styles, "root"), ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ jsx(
           "span",
           {
             "data-slot": "trigger",
-            className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "trigger") || void 0,
-            style: { display: "inline-flex", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "trigger") },
+            className: partClassName(classNames, "trigger") || void 0,
+            style: { display: "inline-flex", ...partStyle(styles, "trigger") },
             children: renderedTrigger
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF4O2CAUIcjs.OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: ref, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ jsx(OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: ref, layer: "anchored", children: /* @__PURE__ */ jsxs(
           "div",
           {
             ref: panelRef,
             "data-slot": "panel",
             "data-menu-portal": "",
             "data-dropdown-menu-portal": "",
-            className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "panel") || void 0,
+            className: partClassName(classNames, "panel") || void 0,
             "data-placement": position.placement,
             style: {
-              ..._chunkGWMGPLNWcjs.componentVars.call(void 0, vars, "--lds-dropdown-menu-"),
-              ...withinPortal ? { position: "fixed", top: _nullishCoalesce(position.y, () => ( -9999)), left: _nullishCoalesce(position.x, () => ( -9999)), right: "auto", bottom: "auto", translate: "none" } : _chunkENN7YVH5cjs.inlineFloatingStyle.call(void 0, { placement: position.placement, align, offset, shiftX: position.shiftX, shiftY: position.shiftY }),
+              ...componentVars(vars, "--lds-dropdown-menu-"),
+              ...withinPortal ? { position: "fixed", top: position.y ?? -9999, left: position.x ?? -9999, right: "auto", bottom: "auto", translate: "none" } : inlineFloatingStyle({ placement: position.placement, align, offset, shiftX: position.shiftX, shiftY: position.shiftY }),
               opacity: withinPortal && (position.x == null || position.y == null) ? 0 : 1,
               pointerEvents: withinPortal && (position.x == null || position.y == null) ? "none" : "auto",
               zIndex: resolvedZIndex,
@@ -706,15 +706,15 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
               display: "flex",
               flexDirection: "column",
               gap: "var(--component-menu-gap)",
-              ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "panel")
+              ...partStyle(styles, "panel")
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ jsx(
                 "div",
                 {
                   ref: menuRef,
                   "data-slot": "menu",
-                  className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "menu", "lk-scroll-surface") || void 0,
+                  className: partClassName(classNames, "menu", "lk-scroll-surface") || void 0,
                   "data-scrollbar": "compact",
                   "data-scroll-gutter": menuScrollable ? "stable" : "auto",
                   id: menuId,
@@ -723,9 +723,9 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
                   tabIndex: menuScrollable ? 0 : void 0,
                   onFocus: (event) => {
                     if (event.target !== event.currentTarget) return;
-                    const cameFromMenu = event.relatedTarget && _optionalChain([menuRef, 'access', _38 => _38.current, 'optionalAccess', _39 => _39.contains, 'call', _40 => _40(event.relatedTarget)]);
+                    const cameFromMenu = event.relatedTarget && menuRef.current?.contains(event.relatedTarget);
                     const nextTarget = cameFromMenu ? event.currentTarget.ownerDocument.getElementById(triggerId) : availableMenuItems(menuRef.current)[0];
-                    _optionalChain([nextTarget, 'optionalAccess', _41 => _41.focus, 'call', _42 => _42({ preventScroll: true })]);
+                    nextTarget?.focus({ preventScroll: true });
                   },
                   onKeyDown: handleMenuRegionKeyDown,
                   style: {
@@ -737,10 +737,10 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
                     overflowX: panelMaxHeight != null ? "hidden" : void 0,
                     overflowY: panelMaxHeight != null ? "auto" : void 0,
                     scrollbarGutter: menuScrollable ? "stable" : void 0,
-                    ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "menu")
+                    ...partStyle(styles, "menu")
                   },
-                  children: drill ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-                    drillLevel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, DrillHeader, { title: drillLevel.label, onBack: drillBack, itemMetrics }),
+                  children: drill ? /* @__PURE__ */ jsxs(Fragment, { children: [
+                    drillLevel && /* @__PURE__ */ jsx(DrillHeader, { title: drillLevel.label, onBack: drillBack, itemMetrics }),
                     renderDrillItems(drillItems, {
                       variant,
                       itemMetrics,
@@ -758,12 +758,12 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
                   })
                 }
               ),
-              showActionArea && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              showActionArea && /* @__PURE__ */ jsx(
                 "div",
                 {
                   ref: actionAreaRef,
                   "data-slot": "actionArea",
-                  className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "actionArea") || void 0,
+                  className: partClassName(classNames, "actionArea") || void 0,
                   role: "group",
                   "aria-label": "\uBA54\uB274 \uC791\uC5C5",
                   onKeyDown: handleActionAreaKeyDown,
@@ -774,11 +774,11 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
                     padding: "8px 4px 2px",
                     borderTop: "1px solid var(--color-semantic-line-solid-normal)",
                     flexShrink: 0,
-                    ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "actionArea")
+                    ...partStyle(styles, "actionArea")
                   },
-                  children: action || /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-                    onCancel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkMBPRD3ZEcjs.Button, { variant: "outlined", color: "assistive", size: "sm", onClick: () => finishAction(onCancel), children: cancelLabel }),
-                    onApply && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkMBPRD3ZEcjs.Button, { size: "sm", onClick: () => finishAction(onApply), children: applyLabel })
+                  children: action || /* @__PURE__ */ jsxs(Fragment, { children: [
+                    onCancel && /* @__PURE__ */ jsx(Button, { variant: "outlined", color: "assistive", size: "sm", onClick: () => finishAction(onCancel), children: cancelLabel }),
+                    onApply && /* @__PURE__ */ jsx(Button, { size: "sm", onClick: () => finishAction(onApply), children: applyLabel })
                   ] })
                 }
               )
@@ -790,7 +790,7 @@ var DropdownMenu = _react2.default.forwardRef(function DropdownMenu2({
   );
 });
 
-
-
-exports.DropdownMenu = DropdownMenu;
-//# sourceMappingURL=chunk-7U5RMCYX.cjs.map
+export {
+  DropdownMenu
+};
+//# sourceMappingURL=chunk-EV4VFRRN.js.map

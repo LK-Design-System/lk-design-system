@@ -4,7 +4,7 @@ import {
 } from "./chunk-D3LFYXJ5.js";
 import {
   useMenuKeyboard
-} from "./chunk-HLYVVWSC.js";
+} from "./chunk-OPIN7X2Q.js";
 import {
   useFloatingPosition
 } from "./chunk-SFKCQB3X.js";
@@ -15,7 +15,7 @@ import {
 // components/navigation/UserMenu.jsx
 import React from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
-function UserMenu({ name, detail, src, status, items = [], collapsed = false, style, ...rest }) {
+function UserMenu({ name, detail, src, status, items = [], collapsed = false, viewportPadding = 12, style, ...rest }) {
   const [open, setOpen] = React.useState(false);
   const [hov, setHov] = React.useState(-1);
   const ref = React.useRef(null);
@@ -25,7 +25,8 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
   const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = useMenuKeyboard({
     open,
     onClose: () => setOpen(false),
-    getTrigger: () => triggerRef.current
+    getTrigger: () => triggerRef.current,
+    focusOnOpen: false
   });
   React.useEffect(() => {
     if (!open) return void 0;
@@ -39,10 +40,7 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
   }, [open]);
   const toggleMenu = () => {
     if (open) setOpen(false);
-    else {
-      requestItemFocus("first");
-      setOpen(true);
-    }
+    else setOpen(true);
   };
   const handleTriggerKeyDown = (event) => {
     if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
@@ -59,7 +57,8 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
     open,
     anchorRef: ref,
     panelRef: menuRef,
-    placement: "top"
+    placement: "top",
+    viewportPadding
   });
   return /* @__PURE__ */ jsxs("div", { ref, style: { position: "relative", ...style }, ...rest, children: [
     open && /* @__PURE__ */ jsx("div", { ref: menuRef, id: menuId, role: "menu", "aria-labelledby": triggerId, "data-placement": position.placement, onKeyDown: handleMenuKeyDown, style: { position: "absolute", top: position.placement === "bottom" ? "calc(100% + 8px)" : "auto", bottom: position.placement === "top" ? "calc(100% + 8px)" : "auto", left: 0, minWidth: collapsed ? 200 : "100%", maxWidth: "calc(100vw - var(--space-8))", maxHeight: position.maxHeight ?? void 0, overflowY: position.maxHeight != null ? "auto" : void 0, translate: `${position.shiftX}px ${position.shiftY}px`, boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--component-menu-radius)", padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)", boxShadow: "var(--shadow-md)", zIndex: 30 }, children: items.map((it, i) => it.divider ? /* @__PURE__ */ jsx("div", { role: "separator", style: { height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "5px 4px" } }, "d" + i) : /* @__PURE__ */ jsxs(
@@ -114,4 +113,4 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, st
 export {
   UserMenu
 };
-//# sourceMappingURL=chunk-2HBZHDYI.js.map
+//# sourceMappingURL=chunk-A2VKLMK4.js.map

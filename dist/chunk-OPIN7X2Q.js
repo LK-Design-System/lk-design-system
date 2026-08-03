@@ -22,10 +22,10 @@ function availableItems(menu) {
     return !item.disabled && item.getAttribute("aria-disabled") !== "true";
   });
 }
-function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex }) {
+function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex, focusOnOpen = true }) {
   const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayer({ open, zIndex });
   const menuRef = React.useRef(null);
-  const pendingFocusRef = React.useRef("first");
+  const pendingFocusRef = React.useRef(focusOnOpen ? "first" : null);
   const entryFrameRef = React.useRef(null);
   const typeaheadRef = React.useRef({ query: "", timer: null });
   const optionsRef = React.useRef(null);
@@ -62,6 +62,8 @@ function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex }) {
   }, []);
   useSafeLayoutEffect(() => {
     if (!open) return void 0;
+    const pendingFocus = pendingFocusRef.current;
+    if (pendingFocus == null) return void 0;
     const menu = menuRef.current;
     const view = menu?.ownerDocument?.defaultView ?? window;
     const frame = view.requestAnimationFrame(() => {
@@ -70,16 +72,16 @@ function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex }) {
       items.forEach((item) => {
         item.tabIndex = -1;
       });
-      const target = pendingFocusRef.current === "last" ? items.at(-1) : items.find((item) => !item.hasAttribute(MENU_BACK_ATTRIBUTE)) ?? items[0];
+      const target = pendingFocus === "last" ? items.at(-1) : items.find((item) => !item.hasAttribute(MENU_BACK_ATTRIBUTE)) ?? items[0];
       target?.focus({ preventScroll: true });
-      pendingFocusRef.current = "first";
+      pendingFocusRef.current = focusOnOpen ? "first" : null;
     });
     entryFrameRef.current = frame;
     return () => {
       view.cancelAnimationFrame(frame);
       if (entryFrameRef.current === frame) entryFrameRef.current = null;
     };
-  }, [open, menuKey]);
+  }, [focusOnOpen, open, menuKey]);
   const closeMenu = React.useCallback(({ restoreFocus = false } = {}) => {
     const trigger = optionsRef.current.getTrigger?.();
     const view = trigger?.ownerDocument?.defaultView ?? window;
@@ -150,4 +152,4 @@ function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex }) {
 export {
   useMenuKeyboard
 };
-//# sourceMappingURL=chunk-HLYVVWSC.js.map
+//# sourceMappingURL=chunk-OPIN7X2Q.js.map

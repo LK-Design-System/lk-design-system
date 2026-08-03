@@ -1,7 +1,7 @@
 "use client";
 import {
   useMenuKeyboard
-} from "./chunk-HLYVVWSC.js";
+} from "./chunk-OPIN7X2Q.js";
 import {
   OverlayPortal
 } from "./chunk-7MEK4Y6F.js";
@@ -123,4 +123,4 @@ function useSubmenuBranch({ disabled = false } = {}) {
 export {
   useSubmenuBranch
 };
-//# sourceMappingURL=chunk-Q3IJS6NB.js.map
+//# sourceMappingURL=chunk-DOLKVCRR.js.map

@@ -1,5 +1,5 @@
 import { userEvent, waitFor } from 'storybook/test';
-import { UserMenu } from '../src/index.js';
+import { SideNav, UserMenu } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -80,6 +80,43 @@ export const UserMenus = {
     await waitFor(() => {
       if (canvasElement.querySelector('[role="menu"]')) throw new Error('Tab must close the UserMenu per the documented contract.');
       if (collapsedTrigger.getAttribute('aria-expanded') !== 'false') throw new Error('Tab must reset the collapsed trigger disclosure state.');
+    });
+  },
+};
+
+export const DockedSideNavContract = {
+  name: 'Docked SideNav alignment',
+  tags: ['!dev'],
+  render: () => (
+    <SideNav
+      data-testid="docked-user-menu-nav"
+      aria-label="Primary navigation"
+      surface="docked"
+      width={256}
+      style={{ height: 480 }}
+      items={[{ value: 'home', label: 'Home' }]}
+      footer={<UserMenu name="Operator" detail="Administrator" items={[{ label: 'Profile' }, { label: 'Settings' }]} />}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const trigger = canvasElement.querySelector('button[aria-haspopup="menu"]');
+    await userEvent.click(trigger);
+    await waitFor(() => {
+      const menu = canvasElement.querySelector('[role="menu"]');
+      if (!menu) throw new Error('Docked UserMenu must render its menu after pointer open.');
+      const triggerRect = trigger.getBoundingClientRect();
+      const menuRect = menu.getBoundingClientRect();
+      if (Math.abs(menuRect.left - triggerRect.left) > 1) {
+        throw new Error('Docked UserMenu menu must align its inline start with the trigger.');
+      }
+      if (ownerDocument.activeElement !== trigger) {
+        throw new Error('Pointer opening must keep focus on the UserMenu trigger.');
+      }
+      const firstItem = menu.querySelector('[role="menuitem"]');
+      if (!firstItem || firstItem.style.background !== 'transparent') {
+        throw new Error('Pointer opening must not emphasize the first menu item.');
+      }
     });
   },
 };

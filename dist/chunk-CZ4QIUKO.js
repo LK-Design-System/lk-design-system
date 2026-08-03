@@ -1,17 +1,17 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-var _chunk7U5RMCYXcjs = require('./chunk-7U5RMCYX.cjs');
-
-
-var _chunkNFE2XSRZcjs = require('./chunk-NFE2XSRZ.cjs');
-
-
-var _chunkX5XHQEI5cjs = require('./chunk-X5XHQEI5.cjs');
+"use client";
+import {
+  DropdownMenu
+} from "./chunk-EV4VFRRN.js";
+import {
+  IconButton
+} from "./chunk-QG7ACXGH.js";
+import {
+  Icon
+} from "./chunk-JNVDI5OO.js";
 
 // components/navigation/LanguageSwitcher.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx } from "react/jsx-runtime";
 function LanguageSwitcher({
   locales = [],
   value,
@@ -29,7 +29,7 @@ function LanguageSwitcher({
   );
   const unavailable = disabled || !currentLocale || !hasAvailableAlternative;
   const items = locales.map((locale) => ({
-    icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    icon: /* @__PURE__ */ jsx(
       "span",
       {
         "aria-hidden": "true",
@@ -44,20 +44,20 @@ function LanguageSwitcher({
           flexShrink: 0,
           color: locale.disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-primary-normal)"
         },
-        children: locale.value === value && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkX5XHQEI5cjs.Icon, { name: "check", size: 16, "aria-hidden": "true" })
+        children: locale.value === value && /* @__PURE__ */ jsx(Icon, { name: "check", size: 16, "aria-hidden": "true" })
       }
     ),
     iconPosition: "end",
-    label: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { lang: _nullishCoalesce(locale.lang, () => ( locale.value)), dir: "auto", children: locale.label }),
+    label: /* @__PURE__ */ jsx("span", { lang: locale.lang ?? locale.value, dir: "auto", children: locale.label }),
     checked: locale.value === value,
     disabled: disabled || locale.disabled,
     onClick: () => {
       if (locale.value === value || locale.disabled) return;
-      _optionalChain([onChange, 'optionalCall', _ => _(locale.value, { locale })]);
+      onChange?.(locale.value, { locale });
     }
   }));
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-    _chunk7U5RMCYXcjs.DropdownMenu,
+  return /* @__PURE__ */ jsx(
+    DropdownMenu,
     {
       "data-language-switcher": "",
       ...rest,
@@ -65,8 +65,8 @@ function LanguageSwitcher({
       variant: "radio",
       items,
       style,
-      trigger: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-        _chunkNFE2XSRZcjs.IconButton,
+      trigger: /* @__PURE__ */ jsx(
+        IconButton,
         {
           "data-language-switcher-trigger": "",
           type: "button",
@@ -79,8 +79,8 @@ function LanguageSwitcher({
             "--viewer-foreground": "var(--color-semantic-inverse-label)",
             color: unavailable ? "var(--color-semantic-inverse-label-disable-soft)" : "var(--color-semantic-inverse-label)"
           } : void 0,
-          children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-            _chunkX5XHQEI5cjs.Icon,
+          children: /* @__PURE__ */ jsx(
+            Icon,
             {
               "data-language-switcher-icon": "",
               name: "globe",
@@ -94,7 +94,7 @@ function LanguageSwitcher({
   );
 }
 
-
-
-exports.LanguageSwitcher = LanguageSwitcher;
-//# sourceMappingURL=chunk-TSQ5MBLN.cjs.map
+export {
+  LanguageSwitcher
+};
+//# sourceMappingURL=chunk-CZ4QIUKO.js.map

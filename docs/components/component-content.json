@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "5688c95bfbd237d311bd48f390045481d1a257111a6a97d846ad8868fa9515fc",
+  "sourceFingerprint": "4d92e74f25d883fa8c4268c4b089594b7c6e82b67ff5cfbb86dcc2fc39e4d7b0",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -24761,6 +24761,13 @@
           "required": false,
           "description": "SideNav 접힘 상태와 동기화 — 아바타만 표시. @default false",
           "owner": "UserMenuProps"
+        },
+        {
+          "name": "viewportPadding",
+          "type": "number",
+          "required": false,
+          "description": "Viewport inset in pixels used to clamp the upward menu. @default 12",
+          "owner": "UserMenuProps"
         }
       ],
       "tokens": [
@@ -24799,7 +24806,7 @@
           "url": "https://react-aria.adobe.com/Menu"
         }
       ],
-      "promptSha256": "eabf8143ff8e68fbce6dd532fe4560a6bfda2bc1bb30491270a8446dea8061d2"
+      "promptSha256": "ca19f4e8d9b0ade4f40733b509ae1aaa89b6163530e016588217e18ca9c472c5"
     },
     {
       "id": "wizard",
@@ -68517,6 +68524,13 @@
           "required": false,
           "description": "SideNav 접힘 상태와 동기화 — 아바타만 표시. @default false",
           "owner": "UserMenuProps"
+        },
+        {
+          "name": "viewportPadding",
+          "type": "number",
+          "required": false,
+          "description": "Viewport inset in pixels used to clamp the upward menu. @default 12",
+          "owner": "UserMenuProps"
         }
       ],
       "states": [
@@ -68536,16 +68550,16 @@
           "rule": "Menu shell은 Dropdown Menu와 같은 elevated surface, r16, 8px/20px padding, shadow-md를 사용합니다."
         },
         {
+          "subject": "명시 규칙 3",
+          "rule": "Implementation note: viewportPadding controls the inline popover viewport clamp inset in pixels. The default 12 keeps docked SideNav footer menus aligned with their account trigger. Pointer opening keeps focus on the trigger; keyboard opening enters the first command so the two surfaces do not compete for emphasis."
+        },
+        {
           "subject": "--caption1-size",
           "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
         },
         {
           "subject": "--color-semantic-background-elevated-normal",
           "rule": "light: #FFFFFF; dark: #212225"
-        },
-        {
-          "subject": "--color-semantic-label-alternative",
-          "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
         }
       ],
       "responsive": [
