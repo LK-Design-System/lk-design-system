@@ -161,7 +161,7 @@ npm run check:audit
 npm run check:ops-release
 ```
 
-패키지 진입 파일은 현재 204개의 React 컴포넌트 소스 파일(`components/**/*.jsx`) 기준으로 생성됩니다.
+패키지 진입 파일은 현재 205개의 React 컴포넌트 소스 파일(`components/**/*.jsx`) 기준으로 생성됩니다.
 
 ```powershell
 npm run generate:entry
@@ -178,11 +178,11 @@ npm run storybook
 npm run build:storybook
 ```
 
-현재 이 저장소의 public Storybook sidebar는 `LDS Core/Foundation`, `LDS Core/Components`, `LDS Theme`, `LDS Product` 아래의 컴포넌트와 패턴 표면 464개 story를 다룹니다. `LDS Robotics` Storybook은 `LK Design System Robotics` 저장소가 별도로 소유합니다.
+현재 이 저장소의 public Storybook sidebar는 `LDS Core/Foundation`, `LDS Core/Components`, `LDS Theme`, `LDS Product` 아래의 컴포넌트와 패턴 표면 467개 story를 다룹니다. `LDS Robotics` Storybook은 `LK Design System Robotics` 저장소가 별도로 소유합니다.
 WDS 원천 번호 체계(`1 Theme`, `3 Component / 2 Action` 등)는 public sidebar title이 아니라 `docs/references/wds/`의 근거 데이터에만 남깁니다.
 `LDS Product`와 별도 저장소의 `LDS Robotics`는 재사용 가능한 확장 컴포넌트/패턴만 다루며, 완성된 앱 화면, 템플릿, 워크플로우, 데모 페이지를 Storybook source of truth로 올리지 않습니다.
 보고/감사/보정표 UI와 운영 문서는 Storybook에 노출하지 않습니다. 원본 파일과 React 표면의 대응 데이터는 `stories/Audit.data.jsx`에 보관하고, 자동 검증 스크립트가 이 데이터를 읽습니다.
-WDS 원본 및 실제 확장 컴포넌트 회귀를 비교하기 위한 89개 `visual-parity` story는 direct iframe 검증용으로만 남기고 `!dev` 태그로 sidebar에서 숨깁니다. `npm run check:storybook-public`이 public 중복 노출과 parity story 노출을 차단합니다.
+WDS 원본 및 실제 확장 컴포넌트 회귀를 비교하기 위한 90개 `visual-parity` story는 direct iframe 검증용으로만 남기고 `!dev` 태그로 sidebar에서 숨깁니다. `npm run check:storybook-public`이 public 중복 노출과 parity story 노출을 차단합니다.
 접근성, 토큰 lifecycle, 컴포넌트 상태 매트릭스, 도메인 컴포넌트 계약, 릴리즈와 ownership 같은 기준은 `docs/` 아래 Markdown 문서에서 관리합니다.
 컴포넌트 선택·Anatomy·properties·states·정량 규칙·Do/Don't·접근성·token/API는 `docs/components/`의 생성 가이드와 각 공개 Storybook `개요`에서 확인합니다. `.prompt.md`, `.d.ts`, source, Storybook audit와 token source를 변경한 뒤 `npm run generate:components`와 `npm run check:components`를 실행합니다.
 레포 수치가 바뀌면 `npm run report:inventory`로 현재 값을 확인하고, `npm run check:inventory`로 README/docs/story 표시 수치가 stale하지 않은지 검증합니다.
@@ -210,7 +210,7 @@ CI는 `npm ci`, 패키지 빌드, 토큰/타입 surface/contract/publish policy/
 
 ## 컴포넌트 범위
 
-이 패키지는 다음 그룹에 걸쳐 204개의 React 컴포넌트 소스 파일을 export합니다.
+이 패키지는 다음 그룹에 걸쳐 205개의 React 컴포넌트 소스 파일을 export합니다.
 
 - `brand`
 - `buttons`

@@ -68,7 +68,31 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.29 - 2026-08-04
+
+### Fixed
+
+- Regenerated the tracked artifacts from the exact rc.29 source revision after the release version bump so bundle hashes match the canonical Windows build.
+
+## 0.1.0-rc.30 - 2026-08-04
+
+### Fixed
+
+- Removed stale generated bundle chunks so the tracked package artifacts exactly match the canonical Windows build used by the immutable release gate.
+
 ## 0.1.0-rc.28 - 2026-08-04
+
+### Fixed
+
+- Updated the package-split contract pins and workspace dependency identities for the immutable rc.28 package set.
+
+## 0.1.0-rc.27 - 2026-08-04
+
+### Fixed
+
+- Regenerated the tracked Windows package artifacts from the canonical CI toolchain so the immutable release gate and consumer package set use reproducible hashes.
+
+## 0.1.0-rc.26 - 2026-08-04
 
 ### Added
 
