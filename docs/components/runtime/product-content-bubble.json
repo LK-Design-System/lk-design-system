@@ -57,8 +57,8 @@
       "rule": "light: #FFFFFF; dark: #212225"
     },
     {
-      "subject": "--color-semantic-inverse-background",
-      "rule": "light: #1B1C1E; dark: #FFFFFF"
+      "subject": "--color-semantic-brand-surface",
+      "rule": "light: #05132B; dark: #05132B"
     },
     {
       "subject": "--color-semantic-label-normal",
@@ -86,7 +86,7 @@
   ],
   "tokens": [
     "--color-semantic-background-elevated-normal",
-    "--color-semantic-inverse-background",
+    "--color-semantic-brand-surface",
     "--color-semantic-label-normal",
     "--color-semantic-line-solid-normal",
     "--color-semantic-static-white",

@@ -18,7 +18,7 @@
 | `component.actionArea.tokens.paddingY` | dimension | `--component-action-area-padding-y` | `var(--component-action-area-padding-y)` | — |
 | `component.badge.tokens.cautionaryBg` | color | `--component-badge-cautionary-bg` | `var(--color-semantic-status-cautionary-surface)` | — |
 | `component.badge.tokens.cautionaryFg` | color | `--component-badge-cautionary-fg` | `var(--color-semantic-status-cautionary-text)` | — |
-| `component.badge.tokens.navyBg` | color | `--component-badge-navy-bg` | `var(--color-semantic-secondary-normal)` | — |
+| `component.badge.tokens.navyBg` | color | `--component-badge-navy-bg` | `var(--color-semantic-brand-surface)` | — |
 | `component.badge.tokens.navyFg` | color | `--component-badge-navy-fg` | `var(--color-semantic-static-white)` | — |
 | `component.badge.tokens.negativeBg` | color | `--component-badge-negative-bg` | `var(--color-semantic-status-negative-surface)` | — |
 | `component.badge.tokens.negativeFg` | color | `--component-badge-negative-fg` | `var(--color-semantic-status-negative-text)` | — |
@@ -443,12 +443,8 @@
 | `semantic.colorRoles.background-normal-normal` | color | `--color-semantic-background-normal-normal` | `light: #FFFFFF; dark: #1B1C1E` | — |
 | `semantic.colorRoles.background-transparent-alternative` | color | `--color-semantic-background-transparent-alternative` | `light: rgba(255, 255, 255, 0.28); dark: rgba(33, 34, 37, 0.61)` | — |
 | `semantic.colorRoles.background-transparent-normal` | color | `--color-semantic-background-transparent-normal` | `light: rgba(255, 255, 255, 0.08); dark: rgba(33, 34, 37, 0.61)` | — |
-| `semantic.colorRoles.brand-canvas-from` | color | `--color-semantic-brand-canvas-from` | `light: #212B53; dark: #212B53` | — |
-| `semantic.colorRoles.brand-canvas-to` | color | `--color-semantic-brand-canvas-to` | `light: #191F3B; dark: #191F3B` | — |
-| `semantic.colorRoles.brand-ink` | color | `--color-semantic-brand-ink` | `light: #1B2240; dark: #E7EAF2` | — |
-| `semantic.colorRoles.brand-stage-from` | color | `--color-semantic-brand-stage-from` | `light: #232C4A; dark: #232C4A` | — |
-| `semantic.colorRoles.brand-stage-to` | color | `--color-semantic-brand-stage-to` | `light: #1B2240; dark: #1B2240` | — |
-| `semantic.colorRoles.brand-surface-raised` | color | `--color-semantic-brand-surface-raised` | `light: #373F59; dark: #37415E` | — |
+| `semantic.colorRoles.brand-ink` | color | `--color-semantic-brand-ink` | `light: #05132B; dark: #E7EAF2` | — |
+| `semantic.colorRoles.brand-surface` | color | `--color-semantic-brand-surface` | `light: #05132B; dark: #05132B` | — |
 | `semantic.colorRoles.data-viz-series-1` | color | `--color-semantic-data-viz-series-1` | `light: var(--color-semantic-primary-normal); dark: var(--color-semantic-primary-normal)` | — |
 | `semantic.colorRoles.data-viz-series-2` | color | `--color-semantic-data-viz-series-2` | `light: var(--color-semantic-accent-foreground-cyan); dark: var(--color-semantic-accent-foreground-cyan)` | — |
 | `semantic.colorRoles.data-viz-series-3` | color | `--color-semantic-data-viz-series-3` | `light: var(--color-semantic-accent-foreground-violet); dark: var(--color-semantic-accent-foreground-violet)` | — |

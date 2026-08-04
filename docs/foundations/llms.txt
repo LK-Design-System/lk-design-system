@@ -481,7 +481,7 @@ LDS의 시각 결정이 코드·Storybook·Figma·AI 출력에서 같은 의미�
 | Owner | Foundation owner |
 | Source | `foundation-content.json#gradient` |
 
-gradient를 정보 의미가 아니라 제한된 전환·fade·브랜드 강조에 사용하고 임의 각도와 stop 확산을 막습니다.
+gradient를 정보 의미가 아니라 제한된 전환·fade에 사용하고, 장식적 브랜드 배경에는 단색 semantic surface를 사용합니다.
 
 ## 목적과 원리
 
@@ -502,7 +502,7 @@ gradient를 정보 의미가 아니라 제한된 전환·fade·브랜드 강조�
 | 상황 | 사용 | 피함 |
 | --- | --- | --- |
 | 스크롤 경계 fade | mask token | 불투명 overlay |
-| 브랜드 stage | 승인된 semantic gradient | 새 hex stop |
+| 브랜드 stage | solid semantic surface | 장식 gradient |
 | 상태 표현 | solid semantic surface | gradient severity |
 
 ## 정량 규칙
@@ -541,7 +541,7 @@ gradient를 정보 의미가 아니라 제한된 전환·fade·브랜드 강조�
 | 상황 | 결정 |
 | --- | --- |
 | ScrollArea 하단 | bottom mask로 더 많은 콘텐츠가 있음을 암시하되 scroll control은 유지 |
-| Hero | 승인된 brand-stage gradient 위 텍스트 대비를 light/dark에서 검증 |
+| Hero | brand-surface 단색 면 위 텍스트 대비를 light/dark에서 검증 |
 
 ## 토큰과 API
 
@@ -549,7 +549,7 @@ gradient를 정보 의미가 아니라 제한된 전환·fade·브랜드 강조�
 
 - `--decorate-gradient-*`
 - `--decorate-mask-fade-*`
-- `--color-semantic-brand-stage-*`
+- `--color-semantic-brand-surface`
 
 ### Components and checks
 

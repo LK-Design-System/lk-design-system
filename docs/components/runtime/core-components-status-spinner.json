@@ -68,10 +68,6 @@
   "behavior": [],
   "quantitativeRules": [
     {
-      "subject": "--color-semantic-brand-ink",
-      "rule": "light: #1B2240; dark: #E7EAF2"
-    },
-    {
       "subject": "--color-semantic-fill-strong",
       "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
     },
@@ -82,6 +78,10 @@
     {
       "subject": "--label1-size",
       "rule": "{\"fontSize\":\"14px\",\"lineHeight\":\"20px\",\"letterSpacing\":\"0.0145em\"}"
+    },
+    {
+      "subject": "--space-2-5",
+      "rule": "10px"
     }
   ],
   "responsive": [
@@ -117,7 +117,6 @@
     }
   ],
   "tokens": [
-    "--color-semantic-brand-ink",
     "--color-semantic-fill-strong",
     "--color-semantic-primary-normal",
     "--font-sans",

@@ -30,7 +30,7 @@ Foundation은 토큰 목록이 아니라 디자인 결정을 반복 가능하게
 - [Typography](typography.md) — 글자 크기보다 정보의 역할과 읽는 순서를 먼저 정하고, 한글·라틴·가나가 같은 위계와 리듬으로 읽히도록 합니다.
 - [Iconography](iconography.md) — 기능·상태·탐색 의미를 일관된 glyph와 이름으로 전달하고, 새 그림을 만들기 전에 공용 registry를 재사용합니다.
 - [Elevation](elevation.md) — 표면의 물리적 장식이 아니라 겹침·소유권·주의 우선순위를 일관되게 표현하고 z-index 경쟁을 방지합니다.
-- [Gradient](gradient.md) — gradient를 정보 의미가 아니라 제한된 전환·fade·브랜드 강조에 사용하고 임의 각도와 stop 확산을 막습니다.
+- [Gradient](gradient.md) — gradient를 정보 의미가 아니라 제한된 전환·fade에 사용하고, 장식적 브랜드 배경에는 단색 semantic surface를 사용합니다.
 - [Inclusive Design](inclusive-design.md) — 시각·청각·운동·인지 능력과 일시적 제약이 달라도 핵심 정보와 작업을 동등하게 이용하도록 설계합니다.
 - [International Design](international-design.md) — 번역을 넘어 날짜·시간·숫자·단위·통화·방향·문자열 길이가 달라도 의미와 레이아웃이 유지되도록 합니다.
 - [Layout](layout.md) — 콘텐츠 목적·밀도·작업 관계에 따라 grid, container, shell, region을 선택하고 viewport 변화에도 읽는 순서와 작업 맥락을 유지합니다.

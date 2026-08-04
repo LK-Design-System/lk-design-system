@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "b99411630e45337cef29b14a53c37ebf6b6febc7a87a044296c022019df74080",
+    "storybookIndexSha256": "dbcb070a08deefcb4ec61996c1284a88e701c45b56d6feb5a7a631b703b54ecd",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,15 +62,15 @@
   },
   "summary": {
     "pages": 192,
-    "stories": 675,
+    "stories": 676,
     "publicStories": 465,
-    "hiddenStories": 210,
+    "hiddenStories": 211,
     "componentDescriptions": 188,
     "pagesWithVisibleCanvasIntroduction": 188,
     "pagesWithDecisionGuidance": 181,
     "describedPublicStories": 465,
     "reviewedPages": 192,
-    "reviewedStories": 675,
+    "reviewedStories": 676,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
@@ -82,7 +82,7 @@
       "responsive": 67,
       "scenario": 21,
       "visual-parity": 90,
-      "internal-contract": 116
+      "internal-contract": 117
     },
     "dispositions": {
       "keep": 192,
@@ -107,9 +107,9 @@
       },
       "Product": {
         "pages": 115,
-        "stories": 440,
+        "stories": 441,
         "public": 330,
-        "hidden": 110,
+        "hidden": 111,
         "guideReadyPages": 115
       },
       "Theme": {
@@ -17327,15 +17327,17 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationUserMenu.stories.jsx",
-      "sourceSha256": "6b59785da879411ff889fb096142085730e765647a59ab3e8fe4c6559774cb5d",
+      "sourceSha256": "01e429c51c8a46176b647aed7482a8c6a5da42666adac5316f21c43448a9c098",
       "primaryOwner": "UserMenu",
       "ownerComponents": [
         "UserMenu"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "SideNav"
+      ],
       "visibility": {
         "public": 1,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -17350,8 +17352,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "6b59785da879411ff889fb096142085730e765647a59ab3e8fe4c6559774cb5d",
+      "reviewedAt": "2026-08-04",
+      "reviewedSourceSha256": "01e429c51c8a46176b647aed7482a8c6a5da42666adac5316f21c43448a9c098",
       "stories": [
         {
           "id": "lds-product-navigation-user-menu--user-menus",
@@ -17376,6 +17378,31 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-navigation-user-menu--docked-side-nav-contract",
+          "name": "Docked SideNav alignment",
+          "exportName": "DockedSideNavContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "UserMenu"
+          ],
+          "supportingComponents": [
+            "SideNav"
+          ],
+          "reviewNote": "2026-08-04 hidden docked SideNav footer alignment, pointer-open focus, and neutral first-item contract reviewed."
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."

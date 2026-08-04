@@ -592,7 +592,7 @@
       "slug": "gradient",
       "title": "Gradient",
       "status": "current",
-      "purpose": "gradient를 정보 의미가 아니라 제한된 전환·fade·브랜드 강조에 사용하고 임의 각도와 stop 확산을 막습니다.",
+      "purpose": "gradient를 정보 의미가 아니라 제한된 전환·fade에 사용하고, 장식적 브랜드 배경에는 단색 semantic surface를 사용합니다.",
       "principles": [
         "gradient는 콘텐츠 대비를 해치지 않습니다.",
         "방향과 stop은 token으로 재사용합니다.",
@@ -620,8 +620,8 @@
         ],
         [
           "브랜드 stage",
-          "승인된 semantic gradient",
-          "새 hex stop"
+          "solid semantic surface",
+          "장식 gradient"
         ],
         [
           "상태 표현",
@@ -679,13 +679,13 @@
         ],
         [
           "Hero",
-          "승인된 brand-stage gradient 위 텍스트 대비를 light/dark에서 검증"
+          "brand-surface 단색 면 위 텍스트 대비를 light/dark에서 검증"
         ]
       ],
       "tokens": [
         "--decorate-gradient-*",
         "--decorate-mask-fade-*",
-        "--color-semantic-brand-stage-*"
+        "--color-semantic-brand-surface"
       ],
       "apis": [
         "FoundationDecorate story"
@@ -815,7 +815,9 @@
       "principles": [
         "표시 문자열과 canonical value를 분리합니다.",
         "locale formatter를 제품 경계에서 주입합니다.",
-        "한국어 길이를 최대 길이로 가정하지 않습니다."
+        "한국어 길이를 최대 길이로 가정하지 않습니다.",
+        "번역은 locale 사이의 의미 이전이고 윤문은 같은 locale 안의 명확성과 자연스러움을 개선하는 작업으로 구분합니다.",
+        "동적 값이 있는 문장도 조각을 이어 붙이지 않고 locale별 완성 문장으로 관리합니다."
       ],
       "semanticModel": [
         [

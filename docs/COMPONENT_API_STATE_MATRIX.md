@@ -37,7 +37,7 @@ matrix를 유지하고, 개별 페이지의 생성 가이드를 중복 작성하
 
 ## Refinement public surface register
 
-아래 15개 컴포넌트는 [`COMPONENT_SURFACE_CONTRACT.md`](COMPONENT_SURFACE_CONTRACT.md)의
+아래 16개 컴포넌트는 [`COMPONENT_SURFACE_CONTRACT.md`](COMPONENT_SURFACE_CONTRACT.md)의
 root·ref·named part·component variable 규칙을 적용한다. `className`과 `style`은 public
 root를, `classNames`와 `styles`는 선언에 열거된 part만, `vars`는 해당
 `--lds-<component>-*` prefix만 조정한다. portalled surface에는 root에서 끊기는 component
@@ -57,6 +57,7 @@ variable을 패널에도 전달한다. 각 row의 실제 DOM·computed style·ke
 | Tabs | `tablist` / 같은 root | tab·label·count·trailing·indicator parts; roving focus와 패널 content는 consumer 소유 |
 | Card | polymorphic surface / 같은 root | structured header/body/footer parts; interactive는 opt-in이며 nested interactive surface는 금지 |
 | DataToolbar | toolbar surface / 같은 root | header와 controls row는 content가 있을 때만 생성; query·selection·bulk policy는 제품/DataGrid 소유 |
+| DataCollectionPanel | polymorphic collection surface / 같은 root | toolbar·state·wide content·compact content·footer parts; embedded perimeter와 responsive slot 전환은 LDS, query·row 의미·compact markup·pagination state는 제품 소유 |
 | SideNav | native `nav` / 같은 root | panel·brand·list·item·child list·footer parts; selected/disclosure/collapsed 표현과 route·permission 소유권 분리 |
 | DropdownMenu | anchor root / 같은 root | trigger·panel·menu·item·divider·action parts; menu semantics, nested stack, dismiss와 Portal은 LDS 소유 |
 | Popover | anchor root / 같은 root | trigger·panel parts; arbitrary body slot은 허용하되 positioning·dismiss·Portal은 LDS 소유 |
@@ -121,6 +122,7 @@ Operations Dashboard의 기준은 루트 `DESIGN.md`다. Dashboard shell은 land
 | ChartFrame | named title/description region, composable heading level, actions, legend, loading/empty/error/stale with last-good chart and freshness, narrow wrapping; false/null conditional children do not count as preserved data | normal, conditional-child loading/error and 320px stale stories |
 | FileBrowser | product-provided path and entries, explicit directory navigation versus file/folder selection, up action, selected ID, loading/error/empty, disabled navigation | file browser action-separation stories |
 | DataToolbar | independent optional header (`title`, `description`, result `count`, page-level `actions`) and controls rows; optional search (`searchable=false`), filters, compact density; returns `null` when both rows are empty; selected count and bulk actions remain DataGrid-owned | toolbar with grid, searchless embedded-list, header-only, controls-only and all-empty contracts |
+| DataCollectionPanel | embedded DataToolbar props, embedded ResourceState props, wide children, optional product-authored compact content, footer, auto/wide/narrow layout; one perimeter and toolbar → state/content → freshness → footer order | Portal-shaped long-content overview, 320px semantic-list swap, native Table overflow fallback, loading/empty/stale, surface/ref stories |
 | DataExportAction | controlled/uncontrolled valid format/scope, disappearing-selection fallback, selected/all-matching counts, processing progress, success/error, allowed disabled/hidden reason, narrow wrapping | callback, scope fallback and 320px permission/progress stories |
 | FilterBar | controls, removable or read-only applied filters, clear all, result status, saved-view slot, embedded/standalone, narrow wrapping | interactive/read-only normal and 320px stories |
 | ResourceState | ready, loading, refreshing, empty, error, stale, offline, restricted; preserved last-good data and freshness | normal and 320px composed resource-state stories |

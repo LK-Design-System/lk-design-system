@@ -134,7 +134,7 @@
 | [Side Nav](guides/product-navigation-side-nav.md) | Product / Navigation | `SideNav` | not-tracked | implemented | not-tracked | not-tracked | 8 public / 2 hidden |
 | [Steps](guides/product-navigation-steps.md) | Product / Navigation | `Steps` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Top Bar](guides/product-navigation-top-bar.md) | Product / Navigation | `TopBar` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
-| [User Menu](guides/product-navigation-user-menu.md) | Product / Navigation | `UserMenu` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
+| [User Menu](guides/product-navigation-user-menu.md) | Product / Navigation | `UserMenu` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Wizard](guides/product-navigation-wizard.md) | Product / Navigation | `Wizard` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Dashboard Grid](guides/product-operations-dashboard-dashboard-grid.md) | Product / Operations Dashboard | `DashboardGrid` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Dashboard Shell](guides/product-operations-dashboard-dashboard-shell.md) | Product / Operations Dashboard | `DashboardShell` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 0 hidden |

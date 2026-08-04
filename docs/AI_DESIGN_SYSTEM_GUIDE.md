@@ -181,6 +181,7 @@ Operations Dashboard는 별도 디자인 시스템이나 화면형 컴포넌트�
 | 차트 | `ChartFrame` + 개별 chart + `Legend` | frame은 title/context/action/state 순서, chart는 accessible name·description·결정적 텍스트 요약을 소유합니다. 0합계를 임의의 1로 치환하지 않습니다. |
 | 리소스 상태 | `ResourceState` | initial loading은 콘텐츠를 대체하고, refreshing/stale/offline/error는 마지막 정상 데이터를 유지합니다. 읽기 순서는 상태 메시지 → 콘텐츠 → freshness입니다. fetch·retry·stale 계산은 제품 소유입니다. |
 | 검색·필터 | `DataToolbar` + `FilterBar` + `DateRangeField` | page-level 검색/action, 적용 필터 제거·초기화, 기간 입력을 분리합니다. query·URL·facet fetch·preset 날짜 계산은 제품 소유입니다. |
+| 데이터 컬렉션 표면 | `DataCollectionPanel` + `Table`/`DataGrid` + `Pagination` | 패널은 toolbar·resource state·content·footer의 연속 perimeter와 읽기 순서만 소유합니다. 좁은 표현이 필요하면 제품이 semantic `compactContent`를 제공하고, 없으면 Table의 native 구조와 가로 overflow를 유지합니다. query·fetch·권한·행 의미·페이지 상태는 제품 소유입니다. |
 | 표 | `DataGrid` + `Pagination` + `VisibilityManager` | page와 all-matching 선택 범위 및 행별 선택 가능성을 명시하고 열 표시·순서·고정·다중 정렬·확장·편집을 controlled로 전달합니다. pagination 입력은 외부 page와 동기화합니다. virtualization과 편집 lifecycle은 전문 제품 계층에 둡니다. |
 | 목록 상세 | `PrimaryDetail` | 넓은 화면은 이름 있는 병렬 region, 좁은 화면은 focus-managed 서랍 패널을 사용합니다. 선택·route·breakpoint source of truth는 제품 소유입니다. |
 | 운영 action | `RefreshControl` + `DataExportAction` | polling·파일 생성·download·RBAC 판정을 실행하지 않습니다. freshness, 항상 유효한 형식/범위, 진행 상태, 사용할 수 없는 이유만 일관되게 표시합니다. |
