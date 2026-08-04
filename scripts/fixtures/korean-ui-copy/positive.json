@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "1",
+  "contractId": "https://design.lk-robotics.com/contracts/korean-ui-copy/v1",
+  "contractVersion": "2026-08-04",
+  "productId": "fixture-product",
+  "rulesetVersion": "2026-08-04",
+  "copySets": [
+    {
+      "id": "fixture.keep",
+      "sourceHash": "AUTO",
+      "surface": "/fixture/keep",
+      "audience": "member",
+      "task": "현재 문구를 확인한다",
+      "policyTags": ["ordinary_copy"],
+      "items": [
+        {
+          "key": "heading",
+          "role": "heading",
+          "text": "LK Portal 연결",
+          "sources": [{ "kind": "ui", "file": "src/Keep.tsx" }]
+        }
+      ],
+      "protected": {
+        "machine": {
+          "properNouns": ["LK Portal"],
+          "placeholders": [],
+          "numbersAndUnits": [],
+          "literals": []
+        },
+        "humanReview": {
+          "facts": [],
+          "behavior": [],
+          "permissionsAndLifecycle": []
+        }
+      },
+      "review": {
+        "sourceHash": "AUTO",
+        "candidateHash": "AUTO",
+        "verdict": "KEEP",
+        "semanticDelta": "NONE",
+        "decisions": [
+          { "key": "heading", "verdict": "KEEP", "reasonCodes": ["NO_CHANGE_REQUIRED"] }
+        ],
+        "questions": [],
+        "reviewer": "fixture-copy-reviewer",
+        "reviewedAt": "2026-08-04T00:00:00+09:00"
+      },
+      "approvals": []
+    },
+    {
+      "id": "fixture.revise",
+      "sourceHash": "AUTO",
+      "surface": "/fixture/revise",
+      "audience": "member",
+      "task": "변경 내용을 저장한다",
+      "policyTags": ["ordinary_copy"],
+      "items": [
+        {
+          "key": "action.idle",
+          "role": "button",
+          "text": "저장하기",
+          "sources": [{ "kind": "ui", "file": "src/Revise.tsx" }]
+        }
+      ],
+      "protected": {
+        "machine": {
+          "properNouns": [],
+          "placeholders": [],
+          "numbersAndUnits": [],
+          "literals": []
+        },
+        "humanReview": {
+          "facts": [],
+          "behavior": ["동일한 저장 동작"],
+          "permissionsAndLifecycle": []
+        }
+      },
+      "review": {
+        "sourceHash": "AUTO",
+        "candidateHash": "AUTO",
+        "verdict": "REVISE",
+        "semanticDelta": "NONE",
+        "decisions": [
+          { "key": "action.idle", "verdict": "REVISE", "text": "저장", "reasonCodes": ["COPY_NATURAL"] }
+        ],
+        "questions": [],
+        "reviewer": "fixture-copy-reviewer",
+        "reviewedAt": "2026-08-04T00:00:00+09:00"
+      },
+      "approvals": []
+    },
+    {
+      "id": "fixture.blocked",
+      "sourceHash": "AUTO",
+      "surface": "/fixture/blocked",
+      "audience": "administrator",
+      "task": "보존 정책을 확인한다",
+      "policyTags": ["retention"],
+      "items": [
+        {
+          "key": "description",
+          "role": "description",
+          "text": "기록을 일정 기간 보관합니다.",
+          "sources": [{ "kind": "ui", "file": "src/Blocked.tsx" }]
+        }
+      ],
+      "protected": {
+        "machine": {
+          "properNouns": [],
+          "placeholders": [],
+          "numbersAndUnits": [],
+          "literals": []
+        },
+        "humanReview": {
+          "facts": ["보관 기간이 확정되지 않음"],
+          "behavior": [],
+          "permissionsAndLifecycle": ["보존 정책"]
+        }
+      },
+      "review": {
+        "sourceHash": "AUTO",
+        "candidateHash": "AUTO",
+        "verdict": "BLOCKED",
+        "semanticDelta": "UNKNOWN",
+        "decisions": [
+          { "key": "description", "verdict": "BLOCKED", "reasonCodes": ["COPY_FACT"] }
+        ],
+        "questions": ["정확한 보관 기간은 얼마인가요?"],
+        "reviewer": "fixture-product-reviewer",
+        "reviewedAt": "2026-08-04T00:00:00+09:00"
+      },
+      "approvals": []
+    }
+  ]
+}

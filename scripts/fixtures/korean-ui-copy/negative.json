@@ -1,0 +1,136 @@
+{
+  "cases": [
+    {
+      "name": "protected number changed",
+      "expectedCodes": ["COPY_FACT"],
+      "catalog": {
+        "schemaVersion": "1",
+        "contractId": "https://design.lk-robotics.com/contracts/korean-ui-copy/v1",
+        "contractVersion": "2026-08-04",
+        "productId": "fixture-product",
+        "rulesetVersion": "2026-08-04",
+        "copySets": [
+          {
+            "id": "fixture.fact-change",
+            "sourceHash": "AUTO",
+            "surface": "/fixture/fact-change",
+            "audience": "member",
+            "task": "유효 기간을 확인한다",
+            "policyTags": ["credential"],
+            "items": [{
+              "key": "description",
+              "role": "description",
+              "text": "연결 코드는 90일 동안 사용할 수 있습니다.",
+              "sources": [{ "kind": "ui", "file": "src/FactChange.tsx" }]
+            }],
+            "protected": {
+              "machine": {
+                "properNouns": [],
+                "placeholders": [],
+                "numbersAndUnits": ["90일"],
+                "literals": []
+              },
+              "humanReview": { "facts": [], "behavior": [], "permissionsAndLifecycle": [] }
+            },
+            "review": {
+              "sourceHash": "AUTO",
+              "candidateHash": "AUTO",
+              "verdict": "REVISE",
+              "semanticDelta": "NONE",
+              "decisions": [{
+                "key": "description",
+                "verdict": "REVISE",
+                "text": "연결 코드는 30일 동안 사용할 수 있습니다.",
+                "reasonCodes": ["COPY_NATURAL"]
+              }],
+              "questions": [],
+              "reviewer": "fixture-copy-reviewer",
+              "reviewedAt": "2026-08-04T00:00:00+09:00"
+            },
+            "approvals": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "decision order differs",
+      "expectedCodes": ["COPY_DECISION_COVERAGE"],
+      "catalog": {
+        "schemaVersion": "1",
+        "contractId": "https://design.lk-robotics.com/contracts/korean-ui-copy/v1",
+        "contractVersion": "2026-08-04",
+        "productId": "fixture-product",
+        "rulesetVersion": "2026-08-04",
+        "copySets": [
+          {
+            "id": "fixture.decision-order",
+            "sourceHash": "AUTO",
+            "surface": "/fixture/order",
+            "audience": "member",
+            "task": "항목을 확인한다",
+            "policyTags": ["ordinary_copy"],
+            "items": [
+              { "key": "heading", "role": "heading", "text": "제목", "sources": [{ "kind": "ui", "file": "src/Order.tsx" }] },
+              { "key": "description", "role": "description", "text": "설명입니다.", "sources": [{ "kind": "ui", "file": "src/Order.tsx" }] }
+            ],
+            "protected": {
+              "machine": { "properNouns": [], "placeholders": [], "numbersAndUnits": [], "literals": [] },
+              "humanReview": { "facts": [], "behavior": [], "permissionsAndLifecycle": [] }
+            },
+            "review": {
+              "sourceHash": "AUTO",
+              "candidateHash": "AUTO",
+              "verdict": "KEEP",
+              "semanticDelta": "NONE",
+              "decisions": [
+                { "key": "description", "verdict": "KEEP", "reasonCodes": ["NO_CHANGE_REQUIRED"] },
+                { "key": "heading", "verdict": "KEEP", "reasonCodes": ["NO_CHANGE_REQUIRED"] }
+              ],
+              "questions": [],
+              "reviewer": "fixture-copy-reviewer",
+              "reviewedAt": "2026-08-04T00:00:00+09:00"
+            },
+            "approvals": []
+          }
+        ]
+      }
+    },
+    {
+      "name": "stale source hash",
+      "expectedCodes": ["COPY_SOURCE_HASH"],
+      "catalog": {
+        "schemaVersion": "1",
+        "contractId": "https://design.lk-robotics.com/contracts/korean-ui-copy/v1",
+        "contractVersion": "2026-08-04",
+        "productId": "fixture-product",
+        "rulesetVersion": "2026-08-04",
+        "copySets": [
+          {
+            "id": "fixture.stale-hash",
+            "sourceHash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+            "surface": "/fixture/stale",
+            "audience": "member",
+            "task": "문구를 확인한다",
+            "policyTags": ["ordinary_copy"],
+            "items": [{ "key": "heading", "role": "heading", "text": "현재 문구", "sources": [{ "kind": "ui", "file": "src/Stale.tsx" }] }],
+            "protected": {
+              "machine": { "properNouns": [], "placeholders": [], "numbersAndUnits": [], "literals": [] },
+              "humanReview": { "facts": [], "behavior": [], "permissionsAndLifecycle": [] }
+            },
+            "review": {
+              "sourceHash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+              "candidateHash": "AUTO",
+              "verdict": "KEEP",
+              "semanticDelta": "NONE",
+              "decisions": [{ "key": "heading", "verdict": "KEEP", "reasonCodes": ["NO_CHANGE_REQUIRED"] }],
+              "questions": [],
+              "reviewer": "fixture-copy-reviewer",
+              "reviewedAt": "2026-08-04T00:00:00+09:00"
+            },
+            "approvals": []
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": "2026-08-04",
+  "mode": "new-findings-only",
+  "description": "Known deterministic findings for LDS-owned Korean UI copy contract fixtures. Naturalness is never baselined or blocked.",
+  "knownFindings": []
+}
