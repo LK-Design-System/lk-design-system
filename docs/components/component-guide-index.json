@@ -332,6 +332,10 @@
     "slug": "product-content-writing-editor"
   },
   {
+    "storybookTitle": "LDS Product/Data/Collections/Data Collection Panel",
+    "slug": "product-data-collections-data-collection-panel"
+  },
+  {
     "storybookTitle": "LDS Product/Data/Collections/Data Grid",
     "slug": "product-data-collections-data-grid"
   },

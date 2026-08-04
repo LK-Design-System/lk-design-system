@@ -199,7 +199,7 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "DataGrid",
+      "component": "DataCollectionPanel",
       "relationship": "대표 시나리오에서 조합"
     }
   ],

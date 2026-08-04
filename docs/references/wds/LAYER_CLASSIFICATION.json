@@ -97,6 +97,7 @@
     "stories/DataBarChart.stories.jsx": "LDS Product/Data/Visualization/Bar Chart",
     "stories/DataCalendar.stories.jsx": "LDS Product/Selection and Input/Calendar",
     "stories/DataChartFrame.stories.jsx": "LDS Product/Data/Visualization/Chart Frame",
+    "stories/DataCollectionPanel.stories.jsx": "LDS Product/Data/Collections/Data Collection Panel",
     "stories/DataDescriptionList.stories.jsx": "LDS Product/Data/Display/Description List",
     "stories/DataDonutChart.stories.jsx": "LDS Product/Data/Visualization/Donut Chart",
     "stories/DataExportAction.stories.jsx": "LDS Product/Data/Operations/Export Action",

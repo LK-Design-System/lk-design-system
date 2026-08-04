@@ -26,7 +26,7 @@ const requiredDocs = [
   },
   {
     file: 'docs/COMPONENT_SURFACE_CONTRACT.md',
-    phrases: ['Root and native target', 'Named parts', 'Component variables', 'Initial 15-component conformance register'],
+    phrases: ['Root and native target', 'Named parts', 'Component variables', 'Initial 16-component conformance register'],
   },
   {
     file: 'docs/OVERLAY_PLATFORM_CONTRACT.md',
@@ -45,6 +45,7 @@ const refinementComponents = [
   ['Tabs', 'components/navigation/Tabs.d.ts', 'stories/NavigationTabs.stories.jsx'],
   ['Card', 'components/cards/Card.d.ts', 'stories/Card.stories.jsx'],
   ['DataToolbar', 'components/data/DataToolbar.d.ts', 'stories/DataToolbar.stories.jsx'],
+  ['DataCollectionPanel', 'components/data/DataCollectionPanel.d.ts', 'stories/DataCollectionPanel.stories.jsx'],
   ['SideNav', 'components/navigation/SideNav.d.ts', 'stories/NavigationSideNav.stories.jsx'],
   ['DropdownMenu', 'components/overlay/DropdownMenu.d.ts', 'stories/OverlayDropdownMenu.stories.jsx'],
   ['Popover', 'components/overlay/Popover.d.ts', 'stories/OverlayPopover.stories.jsx'],

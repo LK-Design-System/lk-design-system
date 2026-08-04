@@ -61,31 +61,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 191,
-    "stories": 669,
-    "publicStories": 462,
-    "hiddenStories": 207,
-    "componentDescriptions": 187,
-    "pagesWithVisibleCanvasIntroduction": 187,
-    "pagesWithDecisionGuidance": 180,
-    "describedPublicStories": 462,
-    "reviewedPages": 191,
-    "reviewedStories": 669,
+    "pages": 192,
+    "stories": 675,
+    "publicStories": 465,
+    "hiddenStories": 210,
+    "componentDescriptions": 188,
+    "pagesWithVisibleCanvasIntroduction": 188,
+    "pagesWithDecisionGuidance": 181,
+    "describedPublicStories": 465,
+    "reviewedPages": 192,
+    "reviewedStories": 675,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
-      "overview": 175,
+      "overview": 176,
       "usage": 36,
-      "variants-states": 95,
+      "variants-states": 96,
       "interaction": 53,
-      "responsive": 66,
+      "responsive": 67,
       "scenario": 21,
-      "visual-parity": 89,
-      "internal-contract": 114
+      "visual-parity": 90,
+      "internal-contract": 116
     },
     "dispositions": {
-      "keep": 191,
+      "keep": 192,
       "merge": 0,
       "split": 0,
       "hide": 0
@@ -106,11 +106,11 @@
         "guideReadyPages": 12
       },
       "Product": {
-        "pages": 114,
-        "stories": 434,
-        "public": 327,
-        "hidden": 107,
-        "guideReadyPages": 114
+        "pages": 115,
+        "stories": 440,
+        "public": 330,
+        "hidden": 110,
+        "guideReadyPages": 115
       },
       "Theme": {
         "pages": 3,
@@ -11463,6 +11463,217 @@
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
+      "title": "LDS Product/Data/Collections/Data Collection Panel",
+      "layer": "Product",
+      "family": "Collections",
+      "importPath": "./stories/DataCollectionPanel.stories.jsx",
+      "sourceSha256": "e8551e18ef901502d4d0d2468f49dae60ac7ae2413bd56dae3bb7d85eeb22b1e",
+      "primaryOwner": "DataCollectionPanel",
+      "ownerComponents": [
+        "DataCollectionPanel"
+      ],
+      "supportingComponents": [
+        "ContentBadge",
+        "Pagination",
+        "Select",
+        "StatusBadge",
+        "Table"
+      ],
+      "visibility": {
+        "public": 3,
+        "hidden": 3
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-data-collections-data-collection-panel--overview",
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-08-04",
+      "reviewedSourceSha256": "e8551e18ef901502d4d0d2468f49dae60ac7ae2413bd56dae3bb7d85eeb22b1e",
+      "stories": [
+        {
+          "id": "lds-product-data-collections-data-collection-panel--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataCollectionPanel"
+          ],
+          "supportingComponents": [
+            "ContentBadge",
+            "Pagination",
+            "Select",
+            "StatusBadge",
+            "Table"
+          ],
+          "reviewNote": "2026-08-04 overview ownership, canvas introduction, long-content example, and DOM-order contract reviewed."
+        },
+        {
+          "id": "lds-product-data-collections-data-collection-panel--resource-states",
+          "name": "변형·상태 · 불러오기, 빈 결과, 오래된 데이터",
+          "exportName": "ResourceStates",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataCollectionPanel"
+          ],
+          "supportingComponents": [
+            "ContentBadge",
+            "Pagination",
+            "Select",
+            "StatusBadge",
+            "Table"
+          ],
+          "reviewNote": "2026-08-04 resource-state role and blocking versus preserved-data footer behavior reviewed."
+        },
+        {
+          "id": "lds-product-data-collections-data-collection-panel--narrow-collection",
+          "name": "반응형 · 좁은 의미 목록",
+          "exportName": "NarrowCollection",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataCollectionPanel"
+          ],
+          "supportingComponents": [
+            "ContentBadge",
+            "Pagination",
+            "Select",
+            "StatusBadge",
+            "Table"
+          ],
+          "reviewNote": "2026-08-04 responsive role, semantic compact-list example, and hidden duplicate-content behavior reviewed."
+        },
+        {
+          "id": "lds-product-data-collections-data-collection-panel--wide-fallback-without-compact-content",
+          "name": "좁은 화면 · Table overflow 보존",
+          "exportName": "WideFallbackWithoutCompactContent",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataCollectionPanel"
+          ],
+          "supportingComponents": [
+            "ContentBadge",
+            "Pagination",
+            "Select",
+            "StatusBadge",
+            "Table"
+          ],
+          "reviewNote": "2026-08-04 hidden native Table overflow fallback contract reviewed."
+        },
+        {
+          "id": "lds-product-data-collections-data-collection-panel--data-collection-panel-visual-parity",
+          "name": "DataCollectionPanel visual parity",
+          "exportName": "DataCollectionPanelVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataCollectionPanel"
+          ],
+          "supportingComponents": [
+            "ContentBadge",
+            "Pagination",
+            "Select",
+            "StatusBadge",
+            "Table"
+          ],
+          "reviewNote": "2026-08-04 hidden visual-regression specimen reviewed."
+        },
+        {
+          "id": "lds-product-data-collections-data-collection-panel--surface-and-ref-contract",
+          "name": "Surface and ref contract",
+          "exportName": "SurfaceAndRefContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataCollectionPanel"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-04 polymorphic ref, named parts, styles, and component-variable contract reviewed."
+        }
+      ],
+      "reviewNote": "2026-08-04 source, Product ownership, use/avoid guidance, public roles, responsive composition, resource states, and hidden contract evidence reviewed."
     },
     {
       "title": "LDS Product/Data/Collections/Data Grid",
