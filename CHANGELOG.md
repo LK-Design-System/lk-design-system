@@ -84,7 +84,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 - Added interaction and Axe-guarded stories for layout boundaries, state policy, semantic narrow content, surface customization, and null-footer suppression; validated the packaged Product extension in the LK Portal project directory.
 
-## 0.1.0-rc.22 - 2026-08-03
+## 0.1.0-rc.25 - 2026-08-04
 
 ### Added
 
@@ -94,6 +94,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 ### Fixed
 
+- `SideNav` now supports opt-in single-group disclosure plus controlled and uncontrolled expanded-group state. Active route changes and collapsed-rail expansion respect the selected policy without changing the existing multiple-group default.
 - `UserMenu` pointer opening no longer moves focus onto the first menu item, so the open trigger and menu do not compete for emphasis. Keyboard opening retains first/last-item entry focus.
 - Docked `SideNav` footer `UserMenu` popovers now align their inline start with the account trigger by default. Consumers can override the `viewportPadding` clamp inset when a different viewport gutter is required.
 - DropdownMenu, Popover, Tooltip, and Select popups now use the shared owner-document Portal, overlay stack, four-side flip/shift positioning, topmost dismiss, nearest theme/`dir` inheritance, and component-variable propagation outside clipping ancestors.
