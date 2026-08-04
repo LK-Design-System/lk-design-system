@@ -68,6 +68,16 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.34 - 2026-08-05
+
+### Added
+
+- `SideNav multiple={false}` supports accordion navigation so only one disclosure group remains open at a time. The Portal sidebar opts into this mode.
+
+### Fixed
+
+- Regenerated the tracked legacy distribution artifacts so the SideNav accordion release is reproducible in CI.
+
 ## 0.1.0-rc.33 - 2026-08-05
 
 ### Added

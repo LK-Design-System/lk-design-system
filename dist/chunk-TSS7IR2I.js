@@ -49,6 +49,7 @@ var SideNav = React.forwardRef(function SideNav2({
   collapsedWidth = 64,
   overlay = false,
   autoExpandActiveGroup = true,
+  multiple = true,
   renderLink,
   className,
   style,
@@ -140,20 +141,31 @@ var SideNav = React.forwardRef(function SideNav2({
     }
   });
   const [open, setOpen] = React.useState(() => {
-    const o = {};
-    if (autoExpandActiveGroup) {
-      items.forEach((i) => {
-        if (i && i.children && i.children.some((c) => c.value === val)) o[i.value] = true;
-      });
-    }
-    return o;
+    if (!autoExpandActiveGroup) return {};
+    const activeParent = items.find((item) => item && !item.heading && item.children?.some((child) => child.value === val));
+    return activeParent ? { [activeParent.value]: true } : {};
+  });
+  const openGroup = (groupValue) => setOpen((current) => multiple ? { ...current, [groupValue]: true } : { [groupValue]: true });
+  const toggleGroup = (groupValue) => setOpen((current) => {
+    if (current[groupValue]) return { ...current, [groupValue]: false };
+    return multiple ? { ...current, [groupValue]: true } : { [groupValue]: true };
   });
   React.useEffect(() => {
     if (!autoExpandActiveGroup) return;
     const activeParent = items.find((item) => item && !item.heading && item.children?.some((child) => child.value === val));
     if (!activeParent) return;
-    setOpen((current) => current[activeParent.value] ? current : { ...current, [activeParent.value]: true });
-  }, [autoExpandActiveGroup, items, val]);
+    setOpen((current) => current[activeParent.value] ? current : multiple ? { ...current, [activeParent.value]: true } : { [activeParent.value]: true });
+  }, [autoExpandActiveGroup, items, multiple, val]);
+  React.useEffect(() => {
+    if (multiple) return;
+    setOpen((current) => {
+      const opened = Object.keys(current).filter((key) => current[key]);
+      if (opened.length <= 1) return current;
+      const activeParent = items.find((item) => item && !item.heading && item.children?.some((child) => child.value === val));
+      const keep = activeParent && current[activeParent.value] ? activeParent.value : opened[0];
+      return keep ? { [keep]: true } : {};
+    });
+  }, [items, multiple, val]);
   const [hovKey, setHovKey] = React.useState(null);
   const hoverProps = (k) => ({ onMouseEnter: () => setHovKey(k), onMouseLeave: () => setHovKey(null) });
   const row = (active, disabled, extra, hovered) => ({
@@ -252,9 +264,9 @@ var SideNav = React.forwardRef(function SideNav2({
         const onParent = () => {
           if (col) {
             setCol(false);
-            setOpen((s) => ({ ...s, [o.value]: true }));
+            openGroup(o.value);
           } else {
-            setOpen((s) => ({ ...s, [o.value]: !s[o.value] }));
+            toggleGroup(o.value);
           }
         };
         return /* @__PURE__ */ jsxs("li", { style: LIST_ITEM_STYLE, children: [
@@ -368,4 +380,4 @@ var SideNav = React.forwardRef(function SideNav2({
 export {
   SideNav
 };
-//# sourceMappingURL=chunk-HUY5HYNV.js.map
+//# sourceMappingURL=chunk-TSS7IR2I.js.map

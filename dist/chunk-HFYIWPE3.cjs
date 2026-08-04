@@ -49,6 +49,7 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
   collapsedWidth = 64,
   overlay = false,
   autoExpandActiveGroup = true,
+  multiple = true,
   renderLink,
   className,
   style,
@@ -140,20 +141,31 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
     }
   });
   const [open, setOpen] = _react2.default.useState(() => {
-    const o = {};
-    if (autoExpandActiveGroup) {
-      items.forEach((i) => {
-        if (i && i.children && i.children.some((c) => c.value === val)) o[i.value] = true;
-      });
-    }
-    return o;
+    if (!autoExpandActiveGroup) return {};
+    const activeParent = items.find((item) => item && !item.heading && _optionalChain([item, 'access', _21 => _21.children, 'optionalAccess', _22 => _22.some, 'call', _23 => _23((child) => child.value === val)]));
+    return activeParent ? { [activeParent.value]: true } : {};
+  });
+  const openGroup = (groupValue) => setOpen((current) => multiple ? { ...current, [groupValue]: true } : { [groupValue]: true });
+  const toggleGroup = (groupValue) => setOpen((current) => {
+    if (current[groupValue]) return { ...current, [groupValue]: false };
+    return multiple ? { ...current, [groupValue]: true } : { [groupValue]: true };
   });
   _react2.default.useEffect(() => {
     if (!autoExpandActiveGroup) return;
-    const activeParent = items.find((item) => item && !item.heading && _optionalChain([item, 'access', _21 => _21.children, 'optionalAccess', _22 => _22.some, 'call', _23 => _23((child) => child.value === val)]));
+    const activeParent = items.find((item) => item && !item.heading && _optionalChain([item, 'access', _24 => _24.children, 'optionalAccess', _25 => _25.some, 'call', _26 => _26((child) => child.value === val)]));
     if (!activeParent) return;
-    setOpen((current) => current[activeParent.value] ? current : { ...current, [activeParent.value]: true });
-  }, [autoExpandActiveGroup, items, val]);
+    setOpen((current) => current[activeParent.value] ? current : multiple ? { ...current, [activeParent.value]: true } : { [activeParent.value]: true });
+  }, [autoExpandActiveGroup, items, multiple, val]);
+  _react2.default.useEffect(() => {
+    if (multiple) return;
+    setOpen((current) => {
+      const opened = Object.keys(current).filter((key) => current[key]);
+      if (opened.length <= 1) return current;
+      const activeParent = items.find((item) => item && !item.heading && _optionalChain([item, 'access', _27 => _27.children, 'optionalAccess', _28 => _28.some, 'call', _29 => _29((child) => child.value === val)]));
+      const keep = activeParent && current[activeParent.value] ? activeParent.value : opened[0];
+      return keep ? { [keep]: true } : {};
+    });
+  }, [items, multiple, val]);
   const [hovKey, setHovKey] = _react2.default.useState(null);
   const hoverProps = (k) => ({ onMouseEnter: () => setHovKey(k), onMouseLeave: () => setHovKey(null) });
   const row = (active, disabled, extra, hovered) => ({
@@ -194,7 +206,7 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
         return;
       }
       pick(item.value);
-      _optionalChain([item, 'access', _24 => _24.onClick, 'optionalCall', _25 => _25(event)]);
+      _optionalChain([item, 'access', _30 => _30.onClick, 'optionalCall', _31 => _31(event)]);
     };
     const commonProps = {
       "data-slot": "item",
@@ -252,9 +264,9 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
         const onParent = () => {
           if (col) {
             setCol(false);
-            setOpen((s) => ({ ...s, [o.value]: true }));
+            openGroup(o.value);
           } else {
-            setOpen((s) => ({ ...s, [o.value]: !s[o.value] }));
+            toggleGroup(o.value);
           }
         };
         return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { style: LIST_ITEM_STYLE, children: [
@@ -322,32 +334,32 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
       ...rest,
       "aria-label": ariaLabel,
       onClick: onClick || overlay && col ? (e) => {
-        _optionalChain([onClick, 'optionalCall', _26 => _26(e)]);
+        _optionalChain([onClick, 'optionalCall', _32 => _32(e)]);
         if (!e.defaultPrevented && overlay && col && !e.target.closest("[data-sidenav-value], button")) setCol(false);
       } : void 0,
       onMouseEnter: onMouseEnter || overlay ? (e) => {
-        _optionalChain([onMouseEnter, 'optionalCall', _27 => _27(e)]);
+        _optionalChain([onMouseEnter, 'optionalCall', _33 => _33(e)]);
         if (!e.defaultPrevented && overlay) {
           pointerInside.current = true;
           peek(true);
         }
       } : void 0,
       onMouseLeave: onMouseLeave || overlay ? (e) => {
-        _optionalChain([onMouseLeave, 'optionalCall', _28 => _28(e)]);
+        _optionalChain([onMouseLeave, 'optionalCall', _34 => _34(e)]);
         if (!e.defaultPrevented && overlay) {
           pointerInside.current = false;
           peek(false);
         }
       } : void 0,
       onFocus: overlay ? (e) => {
-        _optionalChain([onFocus, 'optionalCall', _29 => _29(e)]);
+        _optionalChain([onFocus, 'optionalCall', _35 => _35(e)]);
         if (col && !restoringFocus.current && !e.currentTarget.contains(e.relatedTarget)) {
           clearTimeout(peekT.current);
           setCol(false);
         }
       } : onFocus,
       onBlur: overlay ? (e) => {
-        _optionalChain([onBlur, 'optionalCall', _30 => _30(e)]);
+        _optionalChain([onBlur, 'optionalCall', _36 => _36(e)]);
         if (!pointerInside.current && !e.currentTarget.contains(e.relatedTarget)) peek(false);
       } : onBlur,
       "data-slot": "root",
@@ -368,4 +380,4 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
 
 
 exports.SideNav = SideNav;
-//# sourceMappingURL=chunk-KO7YC3GH.cjs.map
+//# sourceMappingURL=chunk-HFYIWPE3.cjs.map
