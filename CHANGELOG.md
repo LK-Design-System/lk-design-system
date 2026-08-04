@@ -74,6 +74,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 - Regenerated the tracked artifacts from the exact rc.29 source revision after the release version bump so bundle hashes match the canonical Windows build.
 
+## 0.1.0-rc.31 - 2026-08-04
+
+### Added
+
+- Added the Korean UI copy review contract, deterministic validation, and cross-repository product copy integration.
+
 ## 0.1.0-rc.30 - 2026-08-04
 
 ### Fixed
