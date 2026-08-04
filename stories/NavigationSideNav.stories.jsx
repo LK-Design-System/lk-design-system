@@ -23,6 +23,19 @@ const navigationItems = [
   { value: 'settings', label: '권한 관리', icon: <Icon name="setting" size={18} />, disabled: true },
 ];
 
+const singleOpenNavigationItems = [
+  ...navigationItems,
+  {
+    value: 'reports',
+    label: 'Reports',
+    icon: <Icon name="layers" size={18} />,
+    children: [
+      { value: 'reports-overview', label: 'Overview' },
+      { value: 'reports-history', label: 'History' },
+    ],
+  },
+];
+
 const accountItems = [
   { label: '프로필' },
   { label: '설정' },
@@ -316,6 +329,20 @@ function CollapsedParentFixture() {
         style={{ height: 420 }}
       />
     </div>
+  );
+}
+
+function SingleOpenGroupsFixture() {
+  return (
+    <SideNav
+      data-testid="single-open-side-nav"
+      aria-label="Single-open navigation"
+      items={singleOpenNavigationItems}
+      multiple={false}
+      defaultValue="overview"
+      width={252}
+      style={{ height: 420 }}
+    />
   );
 }
 
@@ -626,6 +653,30 @@ export const ManualActiveGroupExpansion = {
     if (parent.getAttribute('aria-expanded') !== 'true'
       || activeChild?.getAttribute('aria-current') !== 'page') {
       throw new Error('Opening the disclosure manually must reveal the preserved active child and aria-current state.');
+    }
+  },
+};
+
+export const SingleOpenGroups = {
+  name: 'Single-open disclosure groups',
+  parameters: storyDescription(
+    'multiple={false} keeps the SideNav disclosure hierarchy compact by allowing only one group to remain open at a time.',
+  ),
+  render: () => <SingleOpenGroupsFixture />,
+  play: async ({ canvasElement }) => {
+    const nav = canvasElement.querySelector('[data-testid="single-open-side-nav"]');
+    const groups = [...(nav?.querySelectorAll('button[aria-expanded]') ?? [])];
+    if (!nav || groups.length < 2) throw new Error('The single-open story must expose at least two disclosure groups.');
+
+    await userEvent.click(groups[0]);
+    if (groups[0].getAttribute('aria-expanded') !== 'true') {
+      throw new Error('The first disclosure group must open when selected.');
+    }
+    await userEvent.click(groups[1]);
+    if (groups[0].getAttribute('aria-expanded') !== 'false'
+      || groups[1].getAttribute('aria-expanded') !== 'true'
+      || groups.filter((group) => group.getAttribute('aria-expanded') === 'true').length !== 1) {
+      throw new Error('multiple={false} must close the previous group before opening the next group.');
     }
   },
 };

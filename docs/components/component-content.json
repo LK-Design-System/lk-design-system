@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "f38e8af2f5ca694daf0d8177450b20c87f1db2f610afefe397d70f5269f796ee",
+  "sourceFingerprint": "44dcbea5ca65e89933299e765af8c575ab3d533d152193657fff4cb622c318d4",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -24231,6 +24231,13 @@
           "owner": "SideNavProps"
         },
         {
+          "name": "multiple",
+          "type": "boolean",
+          "required": false,
+          "description": "Allows multiple disclosure groups to remain open. Set to false for accordion behavior. @default true",
+          "owner": "SideNavProps"
+        },
+        {
           "name": "value",
           "type": "string",
           "required": false,
@@ -24350,7 +24357,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/"
         }
       ],
-      "promptSha256": "9413608b4fc5eb5692c995949288e07eaab0ccdb4497e1ded2f17ab464272873"
+      "promptSha256": "c133d8861669a2f22984712f469eab09b52eaad2aea413a0f266bf3b87d78cbd"
     },
     {
       "id": "steps",
@@ -68164,6 +68171,13 @@
           "owner": "SideNavProps"
         },
         {
+          "name": "multiple",
+          "type": "boolean",
+          "required": false,
+          "description": "Allows multiple disclosure groups to remain open. Set to false for accordion behavior. @default true",
+          "owner": "SideNavProps"
+        },
+        {
           "name": "value",
           "type": "string",
           "required": false,
@@ -68225,10 +68239,10 @@
       ],
       "behavior": [
         "collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌므로 런타임 overlay 전환 때도 부모가 원하는 collapsed 값을 함께 갱신해야 합니다. 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.",
+        "multiple — 기본 true는 여러 disclosure 그룹을 동시에 열어 둘 수 있습니다. multiple={false}이면 한 번에 한 그룹만 열리는 accordion 동작이 되며, 다른 그룹을 열 때 기존 그룹은 닫힙니다. 활성 자식이 바뀌면 활성 그룹을 우선 유지합니다.",
         "floating은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. docked는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, fill, active marker를 공유합니다.",
         "WAI Disclosure Navigation — 부모 button의 aria-expanded는 자식 노출 상태이고 leaf link의 aria-current=\"page\"는 현재 위치입니다. LDS는 두 상태를 같은 persistent highlight로 합치지 않습니다.",
-        "brandAlign=\"center|start\" controls the expanded brand region. The collapsed mark remains centered so the 64px rail stays balanced.",
-        "In uncontrolled mode, changing overlay at runtime collapses on entry and restores the prior persistent state on exit. In controlled mode, the product updates collapsed explicitly."
+        "brandAlign=\"center|start\" controls the expanded brand region. The collapsed mark remains centered so the 64px rail stays balanced."
       ],
       "quantitativeRules": [
         {

@@ -56,6 +56,7 @@
 | `collapsedWidth` | `number` | No | 접힌 아이콘 레일 폭. 기본 64px에서 브랜드 마크와 목적지 아이콘을 유지합니다. @default 64 |
 | `overlay` | `boolean` | No | 오버레이 모드 — 레이아웃은 레일 폭 고정, 호버(피크)·키보드 초점·클릭으로 펼치면 패널이 콘텐츠 위로 뜹니다. 비제어 런타임 전환 시 진입은 접고 이탈은 이전 persistent 상태를 복원하며, 제어 모드는 부모가 collapsed를 갱신합니다. @default false |
 | `autoExpandActiveGroup` | `boolean` | No | 활성 자식이 속한 disclosure 그룹을 초기 선택과 값 변경 때 자동으로 펼칩니다. false이면 활성 표시는 유지하되 그룹 열림은 사용자 상호작용과 독립됩니다. @default true |
+| `multiple` | `boolean` | No | Allows multiple disclosure groups to remain open. Set to false for accordion behavior. @default true |
 | `value` | `string` | No | 제어되는 활성 값. |
 | `defaultValue` | `string` | No | 비제어 시 초기 활성 값. |
 | `onChange` | `(value: string) = void` | No |  |
@@ -74,10 +75,10 @@
 ## Behavior and interaction
 
 - collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌므로 런타임 overlay 전환 때도 부모가 원하는 collapsed 값을 함께 갱신해야 합니다. 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.
+- multiple — 기본 true는 여러 disclosure 그룹을 동시에 열어 둘 수 있습니다. multiple={false}이면 한 번에 한 그룹만 열리는 accordion 동작이 되며, 다른 그룹을 열 때 기존 그룹은 닫힙니다. 활성 자식이 바뀌면 활성 그룹을 우선 유지합니다.
 - floating은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. docked는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, fill, active marker를 공유합니다.
 - WAI Disclosure Navigation — 부모 button의 aria-expanded는 자식 노출 상태이고 leaf link의 aria-current="page"는 현재 위치입니다. LDS는 두 상태를 같은 persistent highlight로 합치지 않습니다.
 - brandAlign="center|start" controls the expanded brand region. The collapsed mark remains centered so the 64px rail stays balanced.
-- In uncontrolled mode, changing overlay at runtime collapses on entry and restores the prior persistent state on exit. In controlled mode, the product updates collapsed explicitly.
 
 ## 정량 규칙
 

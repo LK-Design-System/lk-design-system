@@ -49,6 +49,7 @@ export const SideNav = React.forwardRef(function SideNav({
   surface = 'floating',
   collapsed, defaultCollapsed = false, onCollapsedChange, collapsedWidth = 64, overlay = false,
   autoExpandActiveGroup = true,
+  multiple = true,
   renderLink, className, style, classNames, styles, vars,
   onBlur, onFocus, onClick, onMouseEnter, onMouseLeave,
   'aria-label': ariaLabel = '사이드 탐색',
@@ -131,11 +132,21 @@ export const SideNav = React.forwardRef(function SideNav({
   });
 
   const [open, setOpen] = React.useState(() => {
-    const o = {};
-    if (autoExpandActiveGroup) {
-      items.forEach((i) => { if (i && i.children && i.children.some((c) => c.value === val)) o[i.value] = true; });
-    }
-    return o;
+    if (!autoExpandActiveGroup) return {};
+    const activeParent = items.find((item) => (
+      item
+      && !item.heading
+      && item.children?.some((child) => child.value === val)
+    ));
+    return activeParent ? { [activeParent.value]: true } : {};
+  });
+
+  const openGroup = (groupValue) => setOpen((current) => (
+    multiple ? { ...current, [groupValue]: true } : { [groupValue]: true }
+  ));
+  const toggleGroup = (groupValue) => setOpen((current) => {
+    if (current[groupValue]) return { ...current, [groupValue]: false };
+    return multiple ? { ...current, [groupValue]: true } : { [groupValue]: true };
   });
 
   React.useEffect(() => {
@@ -149,9 +160,24 @@ export const SideNav = React.forwardRef(function SideNav({
     setOpen((current) => (
       current[activeParent.value]
         ? current
-        : { ...current, [activeParent.value]: true }
+        : multiple ? { ...current, [activeParent.value]: true } : { [activeParent.value]: true }
     ));
-  }, [autoExpandActiveGroup, items, val]);
+  }, [autoExpandActiveGroup, items, multiple, val]);
+
+  React.useEffect(() => {
+    if (multiple) return;
+    setOpen((current) => {
+      const opened = Object.keys(current).filter((key) => current[key]);
+      if (opened.length <= 1) return current;
+      const activeParent = items.find((item) => (
+        item
+        && !item.heading
+        && item.children?.some((child) => child.value === val)
+      ));
+      const keep = activeParent && current[activeParent.value] ? activeParent.value : opened[0];
+      return keep ? { [keep]: true } : {};
+    });
+  }, [items, multiple, val]);
 
   const [hovKey, setHovKey] = React.useState(null);
   const hoverProps = (k) => ({ onMouseEnter: () => setHovKey(k), onMouseLeave: () => setHovKey(null) });
@@ -252,7 +278,7 @@ export const SideNav = React.forwardRef(function SideNav({
             const isOpen = !!open[o.value];
             const childActive = kids.some((c) => c.value === val);
             const hasChildIcons = kids.some((c) => c.icon != null);
-            const onParent = () => { if (col) { setCol(false); setOpen((s) => ({ ...s, [o.value]: true })); } else { setOpen((s) => ({ ...s, [o.value]: !s[o.value] })); } };
+            const onParent = () => { if (col) { setCol(false); openGroup(o.value); } else { toggleGroup(o.value); } };
             return (
               <li key={o.value} style={LIST_ITEM_STYLE}>
                 <RailItemTooltip label={accessibleLabel} collapsed={col} enabled={!overlay}>

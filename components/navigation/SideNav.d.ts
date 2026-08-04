@@ -83,6 +83,8 @@ export interface SideNavProps extends Omit<React.HTMLAttributes<HTMLElement>, 'o
   overlay?: boolean;
   /** 활성 자식이 속한 disclosure 그룹을 초기 선택과 값 변경 때 자동으로 펼칩니다. `false`이면 활성 표시는 유지하되 그룹 열림은 사용자 상호작용과 독립됩니다. @default true */
   autoExpandActiveGroup?: boolean;
+  /** Allows multiple disclosure groups to remain open. Set to false for accordion behavior. @default true */
+  multiple?: boolean;
   /** 제어되는 활성 값. */
   value?: string;
   /** 비제어 시 초기 활성 값. */
