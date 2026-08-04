@@ -53,6 +53,9 @@ export const BadgeTagPatterns = {
         <PushBadge data-testid="push-badge-count" count={7}>
           <IconButton data-testid="push-badge-control" variant="ghost" label="알림"><Icon name="bell" /></IconButton>
         </PushBadge>
+        <PushBadge count={3} tone="navy">
+          <IconButton variant="ghost" label="브랜드 알림"><Icon name="bell" /></IconButton>
+        </PushBadge>
       </section>
     </main>
   ),

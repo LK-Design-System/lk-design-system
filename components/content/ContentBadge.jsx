@@ -5,7 +5,7 @@ const BRAND_FOREGROUND = "color-mix(in srgb, var(--color-semantic-primary-normal
 const TONES = {
   signal: "var(--color-semantic-primary-normal)",
   accent: "var(--color-semantic-primary-normal)",
-  navy: "var(--color-semantic-inverse-background)",
+  navy: "var(--color-semantic-brand-surface)",
   neutral: "var(--color-semantic-label-alternative)",
   positive: "var(--color-semantic-status-positive)",
   cautionary: "var(--color-semantic-status-cautionary)",
@@ -24,7 +24,7 @@ const TONES = {
 const SOLID_TONES = {
   signal: "var(--color-semantic-primary-normal)",
   accent: "var(--color-semantic-primary-normal)",
-  navy: "var(--color-semantic-inverse-background)",
+  navy: "var(--color-semantic-brand-surface)",
   neutral: "var(--color-semantic-label-alternative)",
   positive: "var(--color-semantic-status-positive-text)",
   cautionary: "var(--color-semantic-status-cautionary-text)",
@@ -37,7 +37,7 @@ const SOLID_TONES = {
 const TEXT_TONES = {
   signal: BRAND_FOREGROUND,
   accent: BRAND_FOREGROUND,
-  navy: "var(--color-semantic-inverse-background)",
+  navy: "var(--color-semantic-brand-ink)",
   neutral: "var(--color-semantic-label-neutral)",
   positive: "var(--color-semantic-status-positive-text)",
   cautionary: "var(--color-semantic-status-cautionary-text)",
@@ -137,7 +137,11 @@ export function ContentBadge({
       : SOLID_TONES[resolvedTone] || baseColor);
   const solidFg =
     accentContentColor ||
-    (neutralColor ? "var(--color-semantic-label-neutral)" : "var(--color-semantic-background-normal-normal)");
+    (neutralColor
+      ? "var(--color-semantic-label-neutral)"
+      : resolvedTone === "navy"
+        ? "var(--color-semantic-static-white)"
+        : "var(--color-semantic-background-normal-normal)");
   const borderColor =
     accentContentColor ||
     (neutralColor

@@ -140,7 +140,7 @@ export function TopBar({ brand, children, actions, navigationLabel = '주 탐색
         display: 'flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 20px)',
         width: '100%', maxWidth: '100%', minWidth: 0, overflow: 'visible',
         height, paddingInline: 'clamp(16px, 4vw, 32px)', boxSizing: 'border-box',
-        background: dark ? 'linear-gradient(135deg, var(--color-semantic-brand-canvas-from), var(--color-semantic-brand-canvas-to))' : (sticky ? 'color-mix(in srgb, var(--color-semantic-background-elevated-normal) 88%, transparent)' : 'var(--color-semantic-background-elevated-normal)'),
+        background: dark ? 'var(--color-semantic-brand-surface)' : (sticky ? 'color-mix(in srgb, var(--color-semantic-background-elevated-normal) 88%, transparent)' : 'var(--color-semantic-background-elevated-normal)'),
         color: dark ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-label-normal)',
         borderBottom: bordered ? `1px solid ${dark ? 'var(--color-semantic-inverse-fill-normal)' : 'var(--color-semantic-line-normal-normal)'}` : 'none',
         backdropFilter: sticky ? 'saturate(150%) blur(8px)' : 'none',

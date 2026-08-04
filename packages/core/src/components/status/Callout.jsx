@@ -23,8 +23,16 @@ function normalizeIcon(icon, fallbackIcon) {
  * content.
  */
 export function Callout({ tone = 'signal', title, headingLevel = false, children, icon, style, ...rest }) {
-  const normalizedTone = tone === 'navy' ? 'offline' : normalizeStatusTone(tone);
-  const palette = statusToneStyle(normalizedTone);
+  const navy = tone === 'navy';
+  const normalizedTone = navy ? 'offline' : normalizeStatusTone(tone);
+  const palette = navy
+    ? {
+        icon: 'circle-info',
+        foreground: 'var(--color-semantic-static-white)',
+        surface: 'var(--color-semantic-brand-surface)',
+        border: 'var(--color-semantic-inverse-line-normal)',
+      }
+    : statusToneStyle(normalizedTone);
   const c = palette.foreground;
   const defaultIcon = <Icon name={palette.icon} size={ICON_SIZE} />;
   const normalizedIcon = normalizeIcon(icon, defaultIcon);
@@ -62,8 +70,8 @@ export function Callout({ tone = 'signal', title, headingLevel = false, children
         {normalizedIcon}
       </span>
       <div style={{ flex: 1, minWidth: 0 }}>
-        {title != null && <Heading style={{ margin: 0, fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', marginBottom: children != null ? 4 : 0 }}>{title}</Heading>}
-        {children != null && <div style={{ fontSize: 'var(--label1-size)', lineHeight: 1.65, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
+        {title != null && <Heading style={{ margin: 0, fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: navy ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-normal)', marginBottom: children != null ? 4 : 0 }}>{title}</Heading>}
+        {children != null && <div style={{ fontSize: 'var(--label1-size)', lineHeight: 1.65, color: navy ? 'var(--color-semantic-inverse-label-neutral-soft)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
       </div>
     </div>
   );
