@@ -1,7 +1,7 @@
 "use client";
 import {
   SideNav
-} from "../../chunk-HUY5HYNV.js";
+} from "../../chunk-U56MWVCS.js";
 import "../../chunk-DBO3K2LI.js";
 import "../../chunk-A2U7YIGP.js";
 import "../../chunk-SFKCQB3X.js";

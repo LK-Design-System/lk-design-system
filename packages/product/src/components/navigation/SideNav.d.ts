@@ -83,6 +83,14 @@ export interface SideNavProps extends Omit<React.HTMLAttributes<HTMLElement>, 'o
   overlay?: boolean;
   /** 활성 자식이 속한 disclosure 그룹을 초기 선택과 값 변경 때 자동으로 펼칩니다. `false`이면 활성 표시는 유지하되 그룹 열림은 사용자 상호작용과 독립됩니다. @default true */
   autoExpandActiveGroup?: boolean;
+  /** 그룹 disclosure 정책. `multiple`은 여러 그룹을 동시에 열고, `single`은 최대 한 그룹만 엽니다. @default 'multiple' */
+  groupExpansionMode?: 'multiple' | 'single';
+  /** 제어되는 열린 그룹 값 목록. 지정하면 SideNav는 상태를 직접 바꾸지 않고 변경 요청만 알립니다. */
+  expandedGroupValues?: string[];
+  /** 비제어 열린 그룹의 초기 값 목록. @default [] */
+  defaultExpandedGroupValues?: string[];
+  /** 열린 그룹 변경 요청. `changedValue`는 토글된 그룹이고 `expanded`는 요청된 다음 상태입니다. */
+  onExpandedGroupValuesChange?: (values: string[], changedValue: string, expanded: boolean) => void;
   /** 제어되는 활성 값. */
   value?: string;
   /** 비제어 시 초기 활성 값. */

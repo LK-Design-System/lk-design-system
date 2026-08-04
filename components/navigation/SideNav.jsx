@@ -14,6 +14,19 @@ function cssLength(value) {
   return typeof value === 'number' ? `${value}px` : value;
 }
 
+function uniqueGroupValues(values, availableValues, mode) {
+  const available = new Set(availableValues);
+  const unique = [];
+  for (const value of values || []) {
+    if (available.has(value) && !unique.includes(value)) unique.push(value);
+  }
+  return mode === 'single' ? unique.slice(-1) : unique;
+}
+
+function sameValues(left, right) {
+  return left.length === right.length && left.every((value, index) => value === right[index]);
+}
+
 /**
  * Collapsed-rail label surface. Persistent rails keep the wrapper mounted in
  * both states so the item control retains its DOM identity (and focus) across
@@ -49,6 +62,7 @@ export const SideNav = React.forwardRef(function SideNav({
   surface = 'floating',
   collapsed, defaultCollapsed = false, onCollapsedChange, collapsedWidth = 64, overlay = false,
   autoExpandActiveGroup = true,
+  groupExpansionMode = 'multiple', expandedGroupValues, defaultExpandedGroupValues, onExpandedGroupValuesChange,
   renderLink, className, style, classNames, styles, vars,
   onBlur, onFocus, onClick, onMouseEnter, onMouseLeave,
   'aria-label': ariaLabel = '사이드 탐색',
@@ -130,28 +144,41 @@ export const SideNav = React.forwardRef(function SideNav({
     onDismiss: (reason) => { if (reason === 'escape') collapseAndRestoreFocus(); else setCol(true); },
   });
 
-  const [open, setOpen] = React.useState(() => {
-    const o = {};
-    if (autoExpandActiveGroup) {
-      items.forEach((i) => { if (i && i.children && i.children.some((c) => c.value === val)) o[i.value] = true; });
-    }
-    return o;
-  });
+  const groupValues = items.filter((item) => item && !item.heading && item.children?.length > 0).map((item) => item.value);
+  const activeGroupValue = autoExpandActiveGroup
+    ? items.find((item) => item && !item.heading && item.children?.some((child) => child.value === val))?.value
+    : undefined;
+  const initialExpandedGroupValues = uniqueGroupValues(
+    [...(defaultExpandedGroupValues || []), ...(activeGroupValue == null ? [] : [activeGroupValue])],
+    groupValues,
+    groupExpansionMode,
+  );
+  const expandedGroupsControlled = expandedGroupValues !== undefined;
+  const [internalExpandedGroupValues, setInternalExpandedGroupValues] = React.useState(initialExpandedGroupValues);
+  const expandedValues = uniqueGroupValues(
+    expandedGroupsControlled ? expandedGroupValues : internalExpandedGroupValues,
+    groupValues,
+    groupExpansionMode,
+  );
+  const requestExpandedGroupValues = (nextValues, changedValue, expanded) => {
+    const next = uniqueGroupValues(nextValues, groupValues, groupExpansionMode);
+    if (!expandedGroupsControlled) setInternalExpandedGroupValues(next);
+    onExpandedGroupValuesChange?.(next, changedValue, expanded);
+  };
 
   React.useEffect(() => {
-    if (!autoExpandActiveGroup) return;
-    const activeParent = items.find((item) => (
-      item
-      && !item.heading
-      && item.children?.some((child) => child.value === val)
-    ));
-    if (!activeParent) return;
-    setOpen((current) => (
-      current[activeParent.value]
-        ? current
-        : { ...current, [activeParent.value]: true }
-    ));
-  }, [autoExpandActiveGroup, items, val]);
+    if (expandedGroupsControlled) return;
+    const normalized = uniqueGroupValues(internalExpandedGroupValues, groupValues, groupExpansionMode);
+    if (!sameValues(normalized, internalExpandedGroupValues)) setInternalExpandedGroupValues(normalized);
+  }, [expandedGroupsControlled, groupExpansionMode, groupValues.join('\u0001'), internalExpandedGroupValues]);
+
+  React.useEffect(() => {
+    if (activeGroupValue == null || expandedValues.includes(activeGroupValue)) return;
+    const next = groupExpansionMode === 'single'
+      ? [activeGroupValue]
+      : [...expandedValues, activeGroupValue];
+    requestExpandedGroupValues(next, activeGroupValue, true);
+  }, [activeGroupValue, autoExpandActiveGroup, groupExpansionMode]);
 
   const [hovKey, setHovKey] = React.useState(null);
   const hoverProps = (k) => ({ onMouseEnter: () => setHovKey(k), onMouseLeave: () => setHovKey(null) });
@@ -249,10 +276,16 @@ export const SideNav = React.forwardRef(function SideNav({
           const accessibleLabel = o.ariaLabel || title;
 
           if (kids.length > 0) {
-            const isOpen = !!open[o.value];
+            const isOpen = expandedValues.includes(o.value);
             const childActive = kids.some((c) => c.value === val);
             const hasChildIcons = kids.some((c) => c.icon != null);
-            const onParent = () => { if (col) { setCol(false); setOpen((s) => ({ ...s, [o.value]: true })); } else { setOpen((s) => ({ ...s, [o.value]: !s[o.value] })); } };
+            const onParent = () => {
+              const nextExpanded = isOpen
+                ? expandedValues.filter((value) => value !== o.value)
+                : groupExpansionMode === 'single' ? [o.value] : [...expandedValues, o.value];
+              if (col) setCol(false);
+              requestExpandedGroupValues(nextExpanded, o.value, !isOpen);
+            };
             return (
               <li key={o.value} style={LIST_ITEM_STYLE}>
                 <RailItemTooltip label={accessibleLabel} collapsed={col} enabled={!overlay}>
