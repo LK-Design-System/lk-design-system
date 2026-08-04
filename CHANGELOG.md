@@ -74,6 +74,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 - Regenerated the tracked artifacts from the exact rc.29 source revision after the release version bump so bundle hashes match the canonical Windows build.
 
+## 0.1.0-rc.30 - 2026-08-04
+
+### Fixed
+
+- Removed stale generated bundle chunks so the tracked package artifacts exactly match the canonical Windows build used by the immutable release gate.
+
 ## 0.1.0-rc.28 - 2026-08-04
 
 ### Fixed
