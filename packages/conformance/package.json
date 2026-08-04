@@ -1,6 +1,6 @@
 {
   "name": "@lk-design-system/lds-conformance",
-  "version": "0.1.0-rc.25",
+  "version": "0.1.0-rc.22",
   "private": true,
   "description": "Cross-repository LDS style ownership and consumer conformance checks.",
   "type": "module",

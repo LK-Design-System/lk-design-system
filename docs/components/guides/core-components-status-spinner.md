@@ -44,10 +44,10 @@
 
 | Subject | Rule |
 | --- | --- |
-| --color-semantic-brand-ink | light: #1B2240; dark: #E7EAF2 |
 | --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
 | --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
 | --label1-size | {"fontSize":"14px","lineHeight":"20px","letterSpacing":"0.0145em"} |
+| --space-2-5 | 10px |
 
 ## Responsive
 
@@ -80,7 +80,6 @@
 
 ### Tokens
 
-- `--color-semantic-brand-ink`
 - `--color-semantic-fill-strong`
 - `--color-semantic-primary-normal`
 - `--font-sans`

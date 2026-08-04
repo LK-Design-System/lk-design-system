@@ -5,8 +5,20 @@
 | Type | Product workflow coverage contract and audit summary |
 | Status | Current · all 16 shared-responsibility workflow traces verified |
 | Owner | Product design/engineering · Design system owner |
-| Last reviewed | 2026-08-02 |
+| Last reviewed | 2026-08-04 |
 | Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
+
+## DataCollectionPanel · collection surface composition · 2026-08-04
+
+`DataCollectionPanel`은 반복되는 `DataToolbar → ResourceState → Table/DataGrid 또는 제품 작성 compact content → Pagination` 순서를 하나의 연속 표면으로 묶는 LK Product Extension이다. 패널은 perimeter, 읽기 순서, blocking 상태의 footer 억제, container 기반 wide/compact 전환만 소유한다. query, fetch, 권한, 행 의미와 action, compact item markup, pagination 상태는 제품이 소유한다.
+
+| 제품 자산 | 고정 source | 판정 | LDS와 제품의 책임 경계 |
+| --- | --- | --- | --- |
+| LK Web Viz | `4701e1dcfb0d0e9163c74c227da2d6feb801cb30` · `frontend/src/screens/TaskHistoryScreen.tsx` (`a529eb93bfdd51d77298f18c13e78bbc2a1b9631`) | not applicable | 현재 작업 이력은 실행별 command와 event log를 포함한 card feed이며 공통 table-shaped collection perimeter가 없다. |
+| LK Control Full Daedeok | `3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19` · `frontend/src/views/user/index.jsx` (`1c6c8446e723207a9bd5f4daa991a0b266ccc279`) | supported by composition | filter, loading/error/empty, table, pagination 순서를 조합할 수 있다. fetch, permission, dialog, mutation, row action과 route는 Control 소유다. |
+| LK Context Hub | `6a46bc18ce26fce55b14bf7ffe6d9da0ca027967` · `src/components/catalog/ProjectDirectory.tsx` (`cf7ab1ccb7d805bd4599ef206a9b2b2bcb82a02d`) | supported by composition | 반복되는 Card, embedded toolbar, resource state, desktop Table, mobile list, Pagination plumbing을 패널로 대체할 수 있다. query, domain count, 행 action과 compact markup은 Context Hub 소유다. |
+
+Storybook은 실제형 긴 프로젝트명·설명·상태·연결 수를 사용해 normal/320px, native Table overflow fallback, loading/empty/stale, DOM 순서와 숨겨진 중복 focus target 제거를 검증한다. 신규 아이콘이나 제품 asset은 추가하지 않는다.
 
 ## FieldAction · field + action 조합 계약 · 2026-08-02
 

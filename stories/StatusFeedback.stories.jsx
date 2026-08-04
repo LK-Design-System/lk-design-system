@@ -56,6 +56,9 @@ export const NoticesAndCallouts = {
         <Callout tone="signal" title="권한 요청 방법">
           편집 권한이 없다면 프로젝트 관리자에게 역할 변경을 요청하세요. 승인 후 페이지를 새로고침하면 됩니다.
         </Callout>
+        <Callout tone="navy" title="브랜드 기준 안내">
+          네이비 안내 면은 공식 SVG와 같은 #05132B를 사용합니다.
+        </Callout>
       </section>
     </main>
   ),

@@ -155,12 +155,12 @@
       "rule": "15px"
     },
     {
-      "subject": "--color-semantic-label-neutral",
-      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+      "subject": "--color-semantic-brand-surface",
+      "rule": "light: #05132B; dark: #05132B"
     },
     {
-      "subject": "--color-semantic-label-normal",
-      "rule": "light: #171718; dark: #F7F7F7"
+      "subject": "--color-semantic-inverse-label-neutral-soft",
+      "rule": "light: rgba(255, 255, 255, 0.62); dark: rgba(255, 255, 255, 0.62)"
     }
   ],
   "responsive": [],
@@ -202,8 +202,12 @@
   ],
   "tokens": [
     "--body2-size",
+    "--color-semantic-brand-surface",
+    "--color-semantic-inverse-label-neutral-soft",
+    "--color-semantic-inverse-line-normal",
     "--color-semantic-label-neutral",
     "--color-semantic-label-normal",
+    "--color-semantic-static-white",
     "--font-sans",
     "--fw-bold",
     "--label1-size",

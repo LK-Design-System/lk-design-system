@@ -62,13 +62,13 @@
 
 | Component | Relationship |
 | --- | --- |
+| `SideNav` | 대표 시나리오에서 조합 |
 | `Anchor` | 대표 시나리오에서 조합 |
 | `BottomNav` | 대표 시나리오에서 조합 |
 | `Breadcrumb` | 대표 시나리오에서 조합 |
 | `Footer` | 대표 시나리오에서 조합 |
 | `LanguageSwitcher` | 대표 시나리오에서 조합 |
 | `NavRail` | 대표 시나리오에서 조합 |
-| `SideNav` | 대표 시나리오에서 조합 |
 | `Steps` | 대표 시나리오에서 조합 |
 
 ## Examples

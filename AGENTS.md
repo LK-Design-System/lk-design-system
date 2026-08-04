@@ -27,6 +27,13 @@
 - `LDS Product` and `LDS Robotics` are for reusable extension components and patterns. Do not add application screens, templates, workflows, demos, or example pages there.
 - Hidden visual parity stories are allowed only when they exist to support visual regression of a real component surface and are tagged with `!dev` and `visual-parity`.
 
+## Storybook Development Startup
+
+- For local iterative Storybook work, run `npm run storybook:dev` from the repository root. This uses the stable local command `storybook dev -p 6006 --host 127.0.0.1 --no-open` without an unnecessary generation step.
+- Do not use `npm run storybook` for every development-server restart: that script regenerates the color system before starting Storybook. Run `npm run generate:colors` separately when token sources change or when generated colors need to be refreshed.
+- Preserve the Vite/Storybook cache between restarts. If Storybook reports `Re-optimizing dependencies`, let that one-time warm-up finish before judging startup performance; clear the cache only when diagnosing stale or broken dependency optimization.
+- Use `npm run build:storybook` for static-build and CI verification, not as the normal hot-reload development workflow.
+
 ## LK Product Asset Workflow Coverage (MANDATORY)
 
 - Complete the product-workflow gate in `docs/COMPONENT_WORKFLOW.md` for every new component, substantial redesign, and domain-component review. At minimum, explicitly consider **LK Web Viz**, **LK Control Full Daedeok**, and **LK Context Hub**; record `not applicable` with a concrete reason instead of silently omitting an asset.

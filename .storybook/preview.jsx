@@ -47,7 +47,7 @@ const canvasShell = (viewMode) => ({
 });
 
 const darkBackgroundNames = new Set(['dark', 'navy', 'inverse']);
-const darkBackgroundValues = new Set(['#101828', '#0e1329', '#1b2240', '#0a0e1a', '#151a2b']);
+const darkBackgroundValues = new Set(['#05132b', '#101828', '#0e1329', '#0a0e1a', '#151a2b']);
 const componentGuideByTitle = new Map(componentGuideIndex.map((guide) => [guide.storybookTitle, guide.slug]));
 // Foundation pages are titled by the foundation they document, so the last title segment is
 // the join key back to the structured guide.
@@ -207,7 +207,7 @@ export const parameters = {
     values: [
       { name: 'Base', value: '#f7f8fb' },
       { name: 'Card', value: '#ffffff' },
-      { name: 'Navy', value: '#101828' },
+      { name: 'Navy', value: '#05132B' },
       { name: 'Dark', value: '#0a0e1a' },
     ],
   },

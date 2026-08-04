@@ -921,7 +921,7 @@ Compiled source: docs/components/component-content.json
 | 명시 규칙 1 | status 점과 pushBadge는 색만으로 의미를 전달하지 않습니다(WCAG 1.4.1 / 1.1.1). 두 표식 모두 텍스트 대체를 갖습니다. |
 | 명시 규칙 2 | aria-label을 주면 Avatar는 role="img"가 되고 하위 노드가 노출되지 않으므로, 대체 텍스트가 그 이름 뒤에 합쳐집니다 → "김한, 다른 용무 중, 읽지 않음 3건". 이름이 없으면 visually-hidden 텍스트로 문서 순서에 렌더됩니다. aria-labelledby만 준 경우에는 생성된 hidden 노드 id가 aria-labelledby에 자동으로 이어붙습니다. |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-brand-ink | light: #1B2240; dark: #E7EAF2 |
+| --color-semantic-brand-ink | light: #05132B; dark: #E7EAF2 |
 | --color-semantic-interaction-inactive | light: #989BA2; dark: #5A5C63 |
 
 ## Content and writing
@@ -1277,14 +1277,16 @@ Compiled source: docs/components/component-content.json
 - `--caption2-size`
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-background-normal-normal`
+- `--color-semantic-brand-ink`
+- `--color-semantic-brand-surface`
 - `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
-- `--color-semantic-inverse-background`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-primary-normal`
+- `--color-semantic-static-white`
 - `--color-semantic-status-cautionary`
 - `--color-semantic-status-cautionary-text`
 - `--color-semantic-status-negative`
@@ -4935,7 +4937,7 @@ const firstFieldRef = useRef(null);
 | 명시 규칙 1 | Checkbox, Radio, and Switch use the same 8px control-to-label gap. Checkbox remains independently toggleable and uses mixed only for a true aggregate indeterminate state. |
 | 명시 규칙 2 | 타깃 크기: 시각 박스는 md 18px · sm 16px 그대로 두고, 그 위에 놓인 투명한 네이티브 input만 24×24px로 확장해 WCAG 2.5.8 (Target Size, Minimum)을 만족시킵니다. 픽셀 출력은 변하지 않습니다. |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-brand-ink | light: #1B2240; dark: #E7EAF2 |
+| --color-semantic-brand-ink | light: #05132B; dark: #E7EAF2 |
 | --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 
 ## Accessibility
@@ -5412,7 +5414,7 @@ const firstFieldRef = useRef(null);
 | 명시 규칙 2 | Radio — 1.5px 헤어라인 원(20px, sm 16px). 선택되면 원이 시그널 잉크로 채워지고 화이트 중앙 점이 나타납니다. 그룹은 같은 name을 공유하세요. |
 | --body2-size | 15px |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-brand-ink | light: #1B2240; dark: #E7EAF2 |
+| --color-semantic-brand-ink | light: #05132B; dark: #E7EAF2 |
 
 ## Content and writing
 
@@ -6640,6 +6642,7 @@ const firstFieldRef = useRef(null);
 - `--color-semantic-accent-foreground-blue`
 - `--color-semantic-accent-foreground-red`
 - `--color-semantic-background-elevated-normal`
+- `--color-semantic-brand-surface`
 - `--color-semantic-data-viz-series-4`
 - `--color-semantic-data-viz-series-5`
 - `--color-semantic-fill-strong`
@@ -6648,7 +6651,6 @@ const firstFieldRef = useRef(null);
 - `--color-semantic-label-strong`
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-strong`
-- `--color-semantic-secondary-normal`
 - `--color-semantic-secondary-surface`
 - `--color-semantic-static-black`
 - `--color-semantic-static-white`
@@ -6895,8 +6897,8 @@ const firstFieldRef = useRef(null);
 | 명시 규칙 1 | 타입 스케일 정합: 제목 14.5px → --body2-size(15px), 본문 13.5px → --label1-size(14px)로 스냅했습니다. Toast 메시지(body2)·Snackbar 메시지(label1)와 같은 단계로 정렬됩니다. |
 | 명시 규칙 2 | Fluent 2 MessageBar의 card-level 배치 원칙을 따라 패널 상태 Banner는 header 바로 아래, 제어 본문보다 먼저 읽히게 합니다. 상태·설명·액션의 순서도 DOM 순서와 일치시킵니다. |
 | --body2-size | 15px |
-| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
-| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
+| --color-semantic-brand-surface | light: #05132B; dark: #05132B |
+| --color-semantic-inverse-label-neutral-soft | light: rgba(255, 255, 255, 0.62); dark: rgba(255, 255, 255, 0.62) |
 
 ## Content and writing
 
@@ -6930,8 +6932,12 @@ const firstFieldRef = useRef(null);
 ### Tokens
 
 - `--body2-size`
+- `--color-semantic-brand-surface`
+- `--color-semantic-inverse-label-neutral-soft`
+- `--color-semantic-inverse-line-normal`
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
+- `--color-semantic-static-white`
 - `--font-sans`
 - `--fw-bold`
 - `--label1-size`
@@ -7370,10 +7376,10 @@ const firstFieldRef = useRef(null);
 
 | Subject | Rule |
 | --- | --- |
-| --color-semantic-brand-ink | light: #1B2240; dark: #E7EAF2 |
 | --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
 | --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
 | --label1-size | {"fontSize":"14px","lineHeight":"20px","letterSpacing":"0.0145em"} |
+| --space-2-5 | 10px |
 
 ## Responsive
 
@@ -7406,7 +7412,6 @@ const firstFieldRef = useRef(null);
 
 ### Tokens
 
-- `--color-semantic-brand-ink`
 - `--color-semantic-fill-strong`
 - `--color-semantic-primary-normal`
 - `--font-sans`
@@ -9166,7 +9171,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | 명시 규칙 1 | 대화에는 쓰지 마세요. tone은 대상 배경 위에서 읽히는 서피스를 고르는 시각 선택일 뿐 화자 정보를 담지 않습니다. 두 화자를 navy/light로 나누면 발신자를 색으로만 구분하게 되어 WCAG 1.4.1에 걸립니다. 채팅·대화 기록은 작성자 이름과 역할을 텍스트로 유지하는 ConversationMessage(그리고 목록 컨테이너 MessageFeed)를 쓰세요. |
 | 명시 규칙 2 | 폭은 최대 280px로 묶어 한 줄이 읽기 좋은 길이를 넘지 않게 합니다. 더 긴 본문이 필요하면 콜아웃이 아니라 Popover나 본문 영역으로 승격하세요. |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-inverse-background | light: #1B1C1E; dark: #FFFFFF |
+| --color-semantic-brand-surface | light: #05132B; dark: #05132B |
 | --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
 
 ## Content and writing
@@ -9194,7 +9199,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 ### Tokens
 
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-inverse-background`
+- `--color-semantic-brand-surface`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-static-white`
@@ -9541,12 +9546,12 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--body2-size`
 - `--color-semantic-accent-foreground-blue`
 - `--color-semantic-accent-foreground-orange`
-- `--color-semantic-brand-ink`
-- `--color-semantic-fill-strong`
+- `--color-semantic-brand-surface`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-strong`
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-normal`
+- `--color-semantic-static-white`
 - `--component-card-bg`
 - `--component-card-border`
 - `--component-card-padding`
@@ -10227,7 +10232,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 제품 코드는 실제 heading — id는 headingLevel(기본 3)로 렌더됩니다. 카탈로그가 놓인 문서 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false}로 heading 의미를 끕니다. 레벨은 건너뛰지 않습니다(WCAG 1.3.1). |
-| 명시 규칙 2 | 이미지 톤 — 사진 위 네이비 그레이드는 상단 6%에서 하단 18%까지만 적용해 서로 다른 제품 사진의 색조를 LDS 무대로 가볍게 묶되 원본 대비를 과도하게 죽이지 않습니다. 이미지 밝기 보정은 1.03입니다. |
+| 명시 규칙 2 | 이미지 톤 — 사진은 브랜드색으로 일괄 착색하지 않고 원본의 색조를 유지합니다. 이미지 밝기 보정은 1.03입니다. |
 | 명시 규칙 3 | 가독성 스크림 — 스크림은 카드 전체 높이에 비례해 늘어나지 않고 하단에 고정됩니다. 짧은 가로형에서는 카드 높이의 84%, 그보다 큰 정사각·세로형에서는 space-32 + space-28(240px)까지만 사용합니다. 램프는 상단 투명, 28% 지점 12%, 58% 지점 72%, 하단은 scrim-dark 토큰의 원래 강도입니다. 제목은 inverse 100%, 설명·선택형 카테고리·기본 CTA는 inverse-label-strong-soft 92%입니다. |
 | 명시 규칙 4 | 패딩 — 콘텐츠는 모든 폭에서 space-6(24px), 제목·설명 사이는 space-2(8px), 선택형 카테고리·제목 사이는 space-1(4px)을 사용합니다. 고정 패딩을 한곳에서 소유해 카드별 임의 오프셋을 허용하지 않습니다. |
 | --border-hairline-dark | 1px solid rgba(255, 255, 255, 0.08) · 1px solid rgba(255, 255, 255, 0.12) |
@@ -10298,8 +10303,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--border-hairline-dark`
 - `--caption1-line`
 - `--caption1-size`
-- `--color-semantic-brand-stage-from`
-- `--color-semantic-brand-stage-to`
+- `--color-semantic-brand-surface`
 - `--color-semantic-inverse-label`
 - `--color-semantic-inverse-label-strong-soft`
 - `--dur-base`
@@ -17223,7 +17227,7 @@ css
 - 접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 아이콘의 강한 잉크로만 표시해 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.
 - Carbon UI shell left panel style — sub-menu hover와 sub-menu item selected를 별도 상태로 정의합니다. LDS도 펼침·hover·현재 위치의 상태 분리는 따르되, Carbon의 4px interactive border는 내부 NavRail·TopBar 선택 문법과 맞지 않아 채택하지 않고 현재 leaf의 선택 배경만 유지합니다.
 - Carbon UI shell left panel accessibility — rail은 hover나 focus에서 펼쳐져도 같은 링크·서브메뉴 keyboard model을 유지합니다. 이 동작을 LDS에 적용할 때는 동일 DOM뿐 아니라 44px hit target과 세로 위치도 유지해, 포인터와 키보드 사용자가 확장 중 움직이는 목적지를 다시 추적하지 않게 합니다.
-- WAI-ARIA Disclosure Pattern — 그룹 트리거는 button으로 동작하고 aria-expanded가 실제 자식 콘텐츠의 표시 상태를 반영해야 합니다. single 정책은 이 동일한 disclosure semantics 위에 공간 절약형 상호 배타 상태만 추가하며, 키보드 Enter/Space와 포커스 계약은 변경하지 않습니다.
+- 대시보드·관리 제품의 주 탐색으로 UserMenu를 푸터에 조합합니다. TopBar가 함께 있으면 전역 utility만 담당하게 하고 로고·경로를 중복하지 않으며, 평면형 대안인 NavRail과 동시에 주 탐색으로 사용하지 않습니다.
 
 ## Anatomy
 
@@ -17256,15 +17260,13 @@ css
 | `collapsedWidth` | `number` | No | 접힌 아이콘 레일 폭. 기본 64px에서 브랜드 마크와 목적지 아이콘을 유지합니다. @default 64 |
 | `overlay` | `boolean` | No | 오버레이 모드 — 레이아웃은 레일 폭 고정, 호버(피크)·키보드 초점·클릭으로 펼치면 패널이 콘텐츠 위로 뜹니다. 비제어 런타임 전환 시 진입은 접고 이탈은 이전 persistent 상태를 복원하며, 제어 모드는 부모가 collapsed를 갱신합니다. @default false |
 | `autoExpandActiveGroup` | `boolean` | No | 활성 자식이 속한 disclosure 그룹을 초기 선택과 값 변경 때 자동으로 펼칩니다. false이면 활성 표시는 유지하되 그룹 열림은 사용자 상호작용과 독립됩니다. @default true |
-| `groupExpansionMode` | `'multiple' \| 'single'` | No | 그룹 disclosure 정책. multiple은 여러 그룹을 동시에 열고, single은 최대 한 그룹만 엽니다. @default 'multiple' |
-| `expandedGroupValues` | `string[]` | No | 제어되는 열린 그룹 값 목록. 지정하면 SideNav는 상태를 직접 바꾸지 않고 변경 요청만 알립니다. |
-| `defaultExpandedGroupValues` | `string[]` | No | 비제어 열린 그룹의 초기 값 목록. @default [] |
-| `onExpandedGroupValuesChange` | `(values: string[], changedValue: string, expanded: boolean) = void` | No | 열린 그룹 변경 요청. changedValue는 토글된 그룹이고 expanded는 요청된 다음 상태입니다. |
 | `value` | `string` | No | 제어되는 활성 값. |
 | `defaultValue` | `string` | No | 비제어 시 초기 활성 값. |
 | `onChange` | `(value: string) = void` | No |  |
 | `renderLink` | `(item: SideNavItem \| SideNavChildItem, props: React.AnchorHTMLAttributes) = React.ReactElement` | No | href leaf를 router link로 치환하는 렌더 훅. 그룹 disclosure는 항상 button입니다. |
 | `classNames` | `LdsClassNames` | No |  |
+| `styles` | `LdsStyles` | No |  |
+| `vars` | `LdsVars` | No |  |
 
 ## States
 
@@ -17272,26 +17274,23 @@ css
 | --- | --- |
 | footer | 하단 고정 영역. 함수면 overlay peek를 포함한 실제 내부 접힘 상태를 받습니다. |
 | autoExpandActiveGroup | 활성 자식이 속한 disclosure 그룹을 초기 선택과 값 변경 때 자동으로 펼칩니다. false이면 활성 표시는 유지하되 그룹 열림은 사용자 상호작용과 독립됩니다. @default true |
-| expandedGroupValues | 제어되는 열린 그룹 값 목록. 지정하면 SideNav는 상태를 직접 바꾸지 않고 변경 요청만 알립니다. |
-| defaultExpandedGroupValues | 비제어 열린 그룹의 초기 값 목록. @default [] |
-| onExpandedGroupValuesChange | 열린 그룹 변경 요청. changedValue는 토글된 그룹이고 expanded는 요청된 다음 상태입니다. |
 
 ## Behavior and interaction
 
 - collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌므로 런타임 overlay 전환 때도 부모가 원하는 collapsed 값을 함께 갱신해야 합니다. 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.
 - floating은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. docked는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, fill, active marker를 공유합니다.
-- WAI-ARIA landmark regions — landmark와 명확한 accessible name을 유지합니다. 소비자가 aria-label을 주지 않으면 기본 이름 사이드 탐색을 제공하고, 같은 문서에 탐색 landmark가 여러 개면 고유한 이름으로 덮어씁니다. 현재 목적지는 aria-current="page"로 노출하고, 키보드 focus 진입·이탈과 Esc 뒤에도 초점을 잃지 않습니다.
-- Windows Expander guidance — 여러 확장 영역에서 한 번에 하나만 열도록 하는 정책은 선택 가능한 편의 기능이어야 하며 사용자가 다시 열림을 제어할 수 있어야 합니다. 그래서 기본값은 기존 multiple로 유지하고 single을 명시적 opt-in으로 제공합니다.
 - WAI Disclosure Navigation — 부모 button의 aria-expanded는 자식 노출 상태이고 leaf link의 aria-current="page"는 현재 위치입니다. LDS는 두 상태를 같은 persistent highlight로 합치지 않습니다.
+- brandAlign="center|start" controls the expanded brand region. The collapsed mark remains centered so the 64px rail stays balanced.
+- In uncontrolled mode, changing overlay at runtime collapses on entry and restores the prior persistent state on exit. In controlled mode, the product updates collapsed explicitly.
 
 ## 정량 규칙
 
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 접힘 — 접기/펼치기 수단은 상단 바 시작 부분에 두는 외부 토글 하나뿐이며, collapsed/onCollapsedChange 제어 프롭으로 패널 상태를 구동합니다. side-first 셸에서는 본문 상단 바의 시작(shadcn/ui SidebarTrigger 배치), header-first 셸에서는 전폭 상단 바의 시작(Atlassian top-nav SideNavToggleButton 배치)입니다. 접기 토글을 사이드 패널 내부에 두지 않으며, SideNav는 자체 토글을 렌더하지 않습니다. |
-| 명시 규칙 2 | groupExpansionMode / expandedGroupValues / defaultExpandedGroupValues / onExpandedGroupValuesChange — 기본 multiple은 기존처럼 여러 disclosure 그룹을 동시에 엽니다. single은 한 번에 최대 한 그룹만 열고, 다른 그룹을 열면 이전 그룹을 닫으며 열린 그룹을 다시 누르면 접습니다. |
-| 명시 규칙 3 | header / headerCollapsed / footer — 브랜드는 Lockup 사용(inline 20px / mark 22px 권장). 푸터는 height 지정 시 바닥 고정. |
-| 명시 규칙 4 | 내비게이션 disabled 표면은 wrapper opacity 0.45를 공통 문법으로 사용합니다. 개별 자식의 색 토큰을 다시 바꿔 이중으로 흐리게 만들지 않습니다. |
+| 명시 규칙 2 | header / headerCollapsed / footer — 브랜드는 Lockup 사용(inline 20px / mark 22px 권장). 푸터는 height 지정 시 바닥 고정. |
+| 명시 규칙 3 | 내비게이션 disabled 표면은 wrapper opacity 0.45를 공통 문법으로 사용합니다. 개별 자식의 색 토큰을 다시 바꿔 이중으로 흐리게 만들지 않습니다. |
+| 명시 규칙 4 | 타입 스케일 정합: 섹션 헤딩 10.5px → --caption2-size(11px, 스케일 하한; 대문자 letterSpacing 1px 유지), 자식 항목 13.5px → --label2-size(13px)로 스냅했습니다. 14px 부모 항목보다 1px 아래 위계는 그대로 유지됩니다. |
 | --caption2-size | 11px |
 
 ## Responsive
@@ -17306,7 +17305,7 @@ css
 - ref, className, and style target the native nav landmark.
 - Stable parts are root, overlaySurface, panel, brand, list, heading, item, icon, label, badge, childList, and footer. Root and items expose stable collapsed/active state attributes.
 - items — { value, label, ariaLabel?, icon, badge?, href?, disabled?, children? } + { heading } 섹션 헤딩. 자식도 icon?: ReactNode를 받을 수 있으며, 한 그룹에 아이콘이 하나라도 있으면 모든 자식에 고정 슬롯을 예약해 라벨 시작선을 맞춥니다. 항목 전체는 native ul/li 리스트(그룹 자식은 중첩 ul)로 렌더되어 보조기술이 항목 수와 계층을 읽을 수 있고, 시각은 기존과 동일합니다(list-style 없음).
-- 타입 스케일 정합: 섹션 헤딩 10.5px → --caption2-size(11px, 스케일 하한; 대문자 letterSpacing 1px 유지), 자식 항목 13.5px → --label2-size(13px)로 스냅했습니다. 14px 부모 항목보다 1px 아래 위계는 그대로 유지됩니다.
+- Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. 축소 가능 내비게이션도 상태를 설명하는 명시적인 제어를 제공하므로 LDS는 명시적 토글을 정식 수단으로 두고 hover peek를 선택 기능으로 제한합니다.
 
 ## Accessibility
 
@@ -17412,7 +17411,7 @@ css
 - [Atlassian navigation system layout](https://atlassian.design/components/navigation-system/layout/examples)
 - [shadcn/ui Sidebar](https://ui.shadcn.com/docs/components/base/sidebar)
 - [WAI-ARIA landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
-- [WAI-ARIA Disclosure Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/)
+- [WAI Disclosure Navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/)
 
 
 ---
@@ -17630,8 +17629,7 @@ css
 
 - `--body2-size`
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-brand-canvas-from`
-- `--color-semantic-brand-canvas-to`
+- `--color-semantic-brand-surface`
 - `--color-semantic-fill-alternative`
 - `--color-semantic-fill-normal`
 - `--color-semantic-inverse-fill-normal`
@@ -17755,13 +17753,13 @@ css
 
 | Component | Relationship |
 | --- | --- |
+| `SideNav` | 대표 시나리오에서 조합 |
 | `Anchor` | 대표 시나리오에서 조합 |
 | `BottomNav` | 대표 시나리오에서 조합 |
 | `Breadcrumb` | 대표 시나리오에서 조합 |
 | `Footer` | 대표 시나리오에서 조합 |
 | `LanguageSwitcher` | 대표 시나리오에서 조합 |
 | `NavRail` | 대표 시나리오에서 조합 |
-| `SideNav` | 대표 시나리오에서 조합 |
 | `Steps` | 대표 시나리오에서 조합 |
 
 ## Examples
@@ -23854,7 +23852,7 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 | Storybook | `LDS Theme/Brand/LK ROBOTICS Logo` |
 | Source | `../component-content.json#theme-brand-lk-robotics-logo` |
 
-제품 식별이 필요한 시작점과 브랜드 표면에 정해진 lockup과 여백으로 사용하는 데 적합합니다. 기능 아이콘이나 장식처럼 반복 사용하지 않으며, 비율·색상·자간을 임의로 바꾸거나 다른 문구와 재조합하지 않습니다.
+기업 표기형과 기본형은 원본 조합을 그대로 사용하고, 제품 UI 파생형은 같은 벡터 윤곽만 재사용합니다. 기능 아이콘이나 장식처럼 반복 사용하지 않으며 비율·색상·자간을 임의로 바꾸지 않습니다.
 
 ## Anatomy
 
@@ -23867,7 +23865,7 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
 | `variant` | `'mark' \| 'stacked' \| 'inline'` | No | 'mark'(심볼만) · 'stacked'(기본) · 'inline'(가로). @default "inline" |
-| `tone` | `'ink' \| 'white' \| 'brand' \| 'current'` | No | 채움 프리셋 — 'ink' 네이비 · 'white' · 'brand' 시그널 잉크 · 'current'(currentColor). @default "ink" |
+| `tone` | `'ink' \| 'white' \| 'brand' \| 'current'` | No | 채움 프리셋 — 'ink'/'brand' 공식 네이비(05132B) · 'white' · 'current'(currentColor). @default "ink" |
 | `color` | `string` | No | 명시적 채움, tone을 재정의. |
 | `height` | `number` | No | 렌더 픽셀 높이. @default 32 mark / 64 stacked / 28 inline |
 | `title` | `string` | No | 접근성 이름. @default "LK ROBOTICS" |
@@ -23878,17 +23876,11 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 | State | Contract |
 | --- | --- |
 | variant | 'mark'(심볼만) · 'stacked'(기본) · 'inline'(가로). @default "inline" |
-| tone | 채움 프리셋 — 'ink' 네이비 · 'white' · 'brand' 시그널 잉크 · 'current'(currentColor). @default "ink" |
-
-## 정량 규칙
-
-| Subject | Rule |
-| --- | --- |
-| --color-semantic-brand-ink | light: #1B2240; dark: #E7EAF2 |
+| tone | 채움 프리셋 — 'ink'/'brand' 공식 네이비(05132B) · 'white' · 'current'(currentColor). @default "ink" |
 
 ## Responsive
 
-- LK ROBOTICS 로고. 에셋 파일 없이 자체 완결형 SVG입니다. variant는 mark/stacked/inline, tone은 ink/white/brand/current, 크기는 height로 지정합니다. 구성(마크·워드마크 비율)은 원본 트레이스 에셋(assets/brand/lk-logo-.svg)과 동일하게 고정 — 워드마크를 임의로 확대/재배치하지 마세요.
+- LK ROBOTICS 로고. 제공된 공식 원본 SVG의 실제 path를 사용하는 자체 완결형 SVG입니다. stacked는 공식 원본의 배경 없는 조합이고, mark와 inline은 공식 윤곽을 그대로 사용하는 제품 UI 파생형입니다. tone은 ink/white/brand/current, 크기는 height로 지정합니다. 워드마크를 임의로 확대·재배치하거나 로고 색을 UI 토큰으로 바꾸지 마세요.
 
 ## Examples
 
@@ -23901,11 +23893,6 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 ```
 
 ## Tokens and API
-
-### Tokens
-
-- `--color-semantic-brand-ink`
-- `--color-semantic-static-white`
 
 ### Source contracts
 

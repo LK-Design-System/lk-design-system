@@ -28,11 +28,6 @@ function isFocusVisible(node) {
  * ring itself comes from the global `tokens/focus.css` policy). The card is one
  * link, so it must never contain another focusable element.
  */
-// A low-strength navy grade keeps mixed photography in the LDS visual family
-// without flattening the source image.
-const PC_GRADE = [
-  'linear-gradient(180deg, color-mix(in srgb, var(--color-semantic-brand-stage-from) 6%, transparent) 0%, color-mix(in srgb, var(--color-semantic-brand-stage-to) 18%, transparent) 100%)',
-].join(', ');
 // Keep the scrim anchored to the content instead of stretching it over the
 // whole card. Its capped depth protects the same text block on landscape,
 // square, and portrait cards without veiling the extra portrait image area.
@@ -92,7 +87,7 @@ export function ProductCard({
       style={{
         position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
         aspectRatio: resolveRatio(ratio),
-        background: 'linear-gradient(180deg, var(--color-semantic-brand-stage-from) 0%, var(--color-semantic-brand-stage-to) 100%)',
+        background: 'var(--color-semantic-brand-surface)',
         border: '1px solid var(--border-hairline-dark)', borderRadius: 'var(--radius-2xl)', overflow: 'hidden',
         boxShadow: hover ? 'var(--shadow-xl)' : 'var(--shadow-sm)',
         transition: 'box-shadow var(--dur-base) var(--ease-out)',
@@ -128,7 +123,6 @@ export function ProductCard({
               transform: hover ? 'scale(1.05)' : 'scale(1)', transition: 'transform 600ms var(--ease-out)',
             }}
           />
-          <div style={{ position: 'absolute', inset: 0, background: PC_GRADE }} />
         </div>
       )}
       <div

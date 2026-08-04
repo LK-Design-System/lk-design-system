@@ -592,7 +592,7 @@
       "slug": "gradient",
       "title": "Gradient",
       "status": "current",
-      "purpose": "gradient를 정보 의미가 아니라 제한된 전환·fade·브랜드 강조에 사용하고 임의 각도와 stop 확산을 막습니다.",
+      "purpose": "gradient를 정보 의미가 아니라 제한된 전환·fade에 사용하고, 장식적 브랜드 배경에는 단색 semantic surface를 사용합니다.",
       "principles": [
         "gradient는 콘텐츠 대비를 해치지 않습니다.",
         "방향과 stop은 token으로 재사용합니다.",
@@ -620,8 +620,8 @@
         ],
         [
           "브랜드 stage",
-          "승인된 semantic gradient",
-          "새 hex stop"
+          "solid semantic surface",
+          "장식 gradient"
         ],
         [
           "상태 표현",
@@ -679,13 +679,13 @@
         ],
         [
           "Hero",
-          "승인된 brand-stage gradient 위 텍스트 대비를 light/dark에서 검증"
+          "brand-surface 단색 면 위 텍스트 대비를 light/dark에서 검증"
         ]
       ],
       "tokens": [
         "--decorate-gradient-*",
         "--decorate-mask-fade-*",
-        "--color-semantic-brand-stage-*"
+        "--color-semantic-brand-surface"
       ],
       "apis": [
         "FoundationDecorate story"

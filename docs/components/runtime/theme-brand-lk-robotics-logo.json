@@ -9,7 +9,7 @@
     "Lockup"
   ],
   "supportingComponents": [],
-  "purpose": "제품 식별이 필요한 시작점과 브랜드 표면에 정해진 lockup과 여백으로 사용하는 데 적합합니다. 기능 아이콘이나 장식처럼 반복 사용하지 않으며, 비율·색상·자간을 임의로 바꾸거나 다른 문구와 재조합하지 않습니다.",
+  "purpose": "기업 표기형과 기본형은 원본 조합을 그대로 사용하고, 제품 UI 파생형은 같은 벡터 윤곽만 재사용합니다. 기능 아이콘이나 장식처럼 반복 사용하지 않으며 비율·색상·자간을 임의로 바꾸지 않습니다.",
   "useWhen": [],
   "avoidWhen": [],
   "anatomy": [
@@ -30,7 +30,7 @@
       "name": "tone",
       "type": "'ink' | 'white' | 'brand' | 'current'",
       "required": false,
-      "description": "채움 프리셋 — 'ink' 네이비 · 'white' · 'brand' 시그널 잉크 · 'current'(currentColor). @default \"ink\"",
+      "description": "채움 프리셋 — 'ink'/'brand' 공식 네이비(05132B) · 'white' · 'current'(currentColor). @default \"ink\"",
       "owner": "LockupProps"
     },
     {
@@ -69,18 +69,13 @@
     },
     {
       "state": "tone",
-      "rule": "채움 프리셋 — 'ink' 네이비 · 'white' · 'brand' 시그널 잉크 · 'current'(currentColor). @default \"ink\""
+      "rule": "채움 프리셋 — 'ink'/'brand' 공식 네이비(05132B) · 'white' · 'current'(currentColor). @default \"ink\""
     }
   ],
   "behavior": [],
-  "quantitativeRules": [
-    {
-      "subject": "--color-semantic-brand-ink",
-      "rule": "light: #1B2240; dark: #E7EAF2"
-    }
-  ],
+  "quantitativeRules": [],
   "responsive": [
-    "LK ROBOTICS 로고. 에셋 파일 없이 자체 완결형 SVG입니다. variant는 mark/stacked/inline, tone은 ink/white/brand/current, 크기는 height로 지정합니다. 구성(마크·워드마크 비율)은 원본 트레이스 에셋(assets/brand/lk-logo-.svg)과 동일하게 고정 — 워드마크를 임의로 확대/재배치하지 마세요."
+    "LK ROBOTICS 로고. 제공된 공식 원본 SVG의 실제 path를 사용하는 자체 완결형 SVG입니다. stacked는 공식 원본의 배경 없는 조합이고, mark와 inline은 공식 윤곽을 그대로 사용하는 제품 UI 파생형입니다. tone은 ink/white/brand/current, 크기는 height로 지정합니다. 워드마크를 임의로 확대·재배치하거나 로고 색을 UI 토큰으로 바꾸지 마세요."
   ],
   "contentGuidance": [],
   "accessibility": [],
@@ -92,10 +87,7 @@
       "code": "<Lockup variant=\"inline\" tone=\"ink\" height={28} />\n<Lockup variant=\"mark\" tone=\"white\" height={40} />\n<Lockup variant=\"stacked\" height={72} />"
     }
   ],
-  "tokens": [
-    "--color-semantic-brand-ink",
-    "--color-semantic-static-white"
-  ],
+  "tokens": [],
   "apiLinks": [],
   "migration": [],
   "platformStatus": {
@@ -127,14 +119,14 @@
     "properties": "evidence",
     "states": "evidence",
     "behavior": "omitted-no-evidence",
-    "quantitativeRules": "evidence",
+    "quantitativeRules": "omitted-no-evidence",
     "responsive": "evidence",
     "contentGuidance": "omitted-no-evidence",
     "accessibility": "omitted-no-evidence",
     "exceptions": "omitted-no-evidence",
     "related": "omitted-no-evidence",
     "examples": "evidence",
-    "tokens": "evidence",
+    "tokens": "omitted-no-evidence",
     "apiLinks": "evidence",
     "migration": "omitted-no-evidence"
   }

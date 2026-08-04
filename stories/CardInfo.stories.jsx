@@ -46,13 +46,17 @@ export const FeatureCards = {
           headingLevel={2} boxed tone="amber" icon={<Icon name="triangle-exclamation" size={22} />} title="위험 상태 알림">
           경고와 조치가 필요한 이벤트를 차분한 상태 색상으로 분리합니다.
         </FeatureCard>
+        <FeatureCard
+          headingLevel={2} boxed tone="navy" icon={<Icon name="robot" size={22} />} title="브랜드 기능 식별">
+          공식 네이비 타일로 LK ROBOTICS 고유 기능을 식별합니다.
+        </FeatureCard>
       </section>
     </main>
   ),
   play: async ({ canvasElement }) => {
     // The canvas page title owns the h1, so these demo cards title themselves at h2.
     const headings = Array.from(canvasElement.querySelectorAll('h2'));
-    if (headings.length !== 2) {
+    if (headings.length !== 3) {
       throw new Error('FeatureCard 제목은 실제 heading으로 렌더되어야 합니다(WCAG 1.3.1).');
     }
     if (canvasElement.querySelector('[role="button"], button, a')) {

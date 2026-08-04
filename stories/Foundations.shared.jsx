@@ -24,7 +24,6 @@ const colors = [
   ['Secondary', 'var(--color-semantic-secondary-normal)'],
   ['Accent tint', 'var(--color-semantic-primary-surface-normal)'],
   ['Ink', 'var(--color-semantic-brand-ink)'],
-  ['Slate', 'var(--color-semantic-brand-surface-raised)'],
   ['Border', 'var(--color-semantic-line-solid-normal)'],
   ['Green (vivid)', 'var(--color-semantic-status-positive)'],
   ['Amber (vivid)', 'var(--color-semantic-status-cautionary)'],

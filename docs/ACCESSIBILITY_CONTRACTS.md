@@ -36,6 +36,7 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | Toast, Notification, Banner, Callout | 자동 소멸 정보는 live region 정책을 명시, 중요한 알림은 수동 dismiss 제공. standing Callout은 기본 live region이 아니며 실제 하위 절을 시작할 때만 주변 문서 계층에 맞는 `headingLevel`을 쓴다. |
 | OverlayStatusChip | `role="status"` polite live region으로 표면 상태를 알리고, 설명 대상 컨트롤이 `inert`여도 읽히도록 호출부가 그 서브트리 밖에 배치한다. `pointer-events: none`으로 재활성화 입력을 가로채지 않으며, 상태는 색만이 아니라 톤 글리프와 필수 텍스트 라벨로 전달한다 |
 | DataGrid, Table, Tree, TopicTree | row/cell/treeitem focus 기준, 확장/축소 키, 선택 상태를 명시. 정적 Table의 `getRowProps`는 native `<tr>` 메타데이터만 확장하고 자동으로 focus·selection·grid role을 만들지 않는다. |
+| DataCollectionPanel | toolbar → resource message → 현재 표시 content → freshness → footer의 DOM/읽기 순서를 유지한다. compact content가 있으면 wide/compact 중 하나만 display와 접근성 트리에 참여하고, 없으면 native Table 구조와 가로 overflow를 유지한다. root section을 landmark로 사용할 때는 `aria-label` 또는 `aria-labelledby`로 이름을 제공한다. |
 | SideNav | native `nav` 이름, `ul`/`li` 계층, disclosure의 `aria-expanded`, 현재 leaf의 `aria-current="page"`를 유지한다. 접기 토글은 제품 셸이 소유하고 SideNav id를 `aria-controls`로 참조하며, 접힌 레일의 스크롤은 wheel·keyboard 도달성을 보존한다. 자식 아이콘 슬롯은 장식으로 숨기고 라벨 이름을 유지하며, 비제어 런타임 overlay 전환은 진입 시 접고 이탈 시 이전 persistent 상태를 복원한다. |
 | SearchableMultiSelect, DataGrid, FileBrowser | stable item name/ID, listbox 또는 row activation, 선택 상태, bulk action 진입 순서, 빈/loading/error announcement를 명시 |
 | Button, ActionArea, ConfirmDialog | product-owned disabled reason과 blocker를 action보다 먼저 읽을 수 있고 pending 중 중복 실행이 차단되어야 함 |

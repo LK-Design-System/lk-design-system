@@ -8,7 +8,9 @@
   "ownerComponents": [
     "UserMenu"
   ],
-  "supportingComponents": [],
+  "supportingComponents": [
+    "SideNav"
+  ],
   "purpose": "사이드바 푸터에서 현재 사용자·상태·프로필·로그아웃을 묶을 때 적합합니다. 상단 전역 명령이나 제품 탐색에는 User Menu 대신 Top Bar나 Side Nav를 사용하세요.",
   "useWhen": [],
   "avoidWhen": [
@@ -109,6 +111,10 @@
   "exceptions": [],
   "related": [
     {
+      "component": "SideNav",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "Anchor",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -130,10 +136,6 @@
     },
     {
       "component": "NavRail",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "SideNav",
       "relationship": "대표 시나리오에서 조합"
     },
     {
@@ -191,7 +193,7 @@
         "role": "overview"
       }
     ],
-    "hiddenEvidence": 0
+    "hiddenEvidence": 1
   },
   "sources": [],
   "canonicalGuide": null,

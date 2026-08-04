@@ -32,7 +32,7 @@ function withFoldedName(children, extra) {
  * 7건"), otherwise emitted as visually hidden text next to it.
  */
 export function PushBadge({ children, count, dot = false, max = 99, tone = 'negative', label, style, ...rest }) {
-  const c = tone === 'signal' ? 'var(--color-semantic-primary-normal)' : tone === 'navy' ? 'var(--color-semantic-inverse-background)' : 'var(--color-semantic-status-negative-text)';
+  const c = tone === 'signal' ? 'var(--color-semantic-primary-normal)' : tone === 'navy' ? 'var(--color-semantic-brand-surface)' : 'var(--color-semantic-status-negative-text)';
   const show = dot || (count != null && count > 0);
   const visualLabel = count > max ? `${max}+` : count;
   /* A bare dot carries no value, so it stays silent unless the consumer names

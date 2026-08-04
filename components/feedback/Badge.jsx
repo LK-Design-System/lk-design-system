@@ -2,7 +2,7 @@ import React from 'react';
 
 const PALETTES = {
   signal: { bg: 'var(--component-badge-signal-bg)', fg: 'var(--component-badge-signal-fg)', dot: 'var(--color-semantic-primary-normal)' },
-  navy: { bg: 'var(--component-badge-navy-bg)', fg: 'var(--component-badge-navy-fg)', dot: 'var(--color-semantic-secondary-normal)' },
+  navy: { bg: 'var(--component-badge-navy-bg)', fg: 'var(--component-badge-navy-fg)', dot: 'var(--color-semantic-brand-surface)' },
   steel: { bg: 'var(--component-badge-steel-bg)', fg: 'var(--component-badge-steel-fg)', dot: 'var(--color-semantic-accent-foreground-blue)' },
   amber: { bg: 'var(--component-badge-cautionary-bg)', fg: 'var(--component-badge-cautionary-fg)', dot: 'var(--color-semantic-status-cautionary-foreground)' },
   red: { bg: 'var(--component-badge-negative-bg)', fg: 'var(--component-badge-negative-fg)', dot: 'var(--color-semantic-status-negative-foreground)' },
@@ -10,9 +10,9 @@ const PALETTES = {
   cautionary: { bg: 'var(--component-badge-cautionary-bg)', fg: 'var(--component-badge-cautionary-fg)', dot: 'var(--color-semantic-status-cautionary-foreground)' },
   negative: { bg: 'var(--component-badge-negative-bg)', fg: 'var(--component-badge-negative-fg)', dot: 'var(--color-semantic-status-negative-foreground)' },
   // Backward-compatible color-name aliases.
-  indigo: { bg: 'var(--component-badge-navy-bg)', fg: 'var(--component-badge-navy-fg)', dot: 'var(--color-semantic-secondary-normal)' },
+  indigo: { bg: 'var(--component-badge-navy-bg)', fg: 'var(--component-badge-navy-fg)', dot: 'var(--color-semantic-brand-surface)' },
   green: { bg: 'var(--component-badge-positive-bg)', fg: 'var(--component-badge-positive-fg)', dot: 'var(--color-semantic-status-positive-foreground)' },
-  ink: { bg: 'var(--component-badge-navy-bg)', fg: 'var(--component-badge-navy-fg)', dot: 'var(--color-semantic-secondary-normal)' },
+  ink: { bg: 'var(--component-badge-navy-bg)', fg: 'var(--component-badge-navy-fg)', dot: 'var(--color-semantic-brand-surface)' },
 };
 
 /* Counts overflow like PushBadge: values above `max` render as "max+". Only a

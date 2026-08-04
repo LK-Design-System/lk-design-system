@@ -1,8 +1,8 @@
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
-<rect x="0" y="0" width="512" height="512" rx="112" ry="112" fill="#1b2240"></rect>
-<g transform="translate(256,256) scale(1.6667) translate(-251,-212.5)">
-<g transform="translate(0.000000,504.000000) scale(0.100000,-0.100000)" fill="#ffffff" stroke="none">
-<path fill-rule="evenodd" d="M1938 3103 l2 -703 248 0 247 0 101 -123 c56 -67 125 -150 154 -184 l52 -63 -596 0 -596 0 0 890 0 890 193 -2 192 -3 3 -702z&#xA;M3470 3795 c0 -3 -155 -212 -346 -466 -190 -253 -347 -466 -350 -473 -3 -7 152 -195 345 -420 193 -224 351 -409 351 -412 0 -2 -112 -4 -248 -4 l-248 0 -347 410 c-191 225 -347 414 -347 420 0 6 170 222 377 480 l378 470 217 0 c120 0 218 -2 218 -5z"></path>
-</g>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
+  <title>LK ROBOTICS app icon</title>
+  <rect width="512" height="512" rx="112" fill="#05132b" />
+  <g transform="translate(256 256) scale(5.30600371) translate(-376.986665 -181.271268)">
+    <path d="m 0,0 v -42.031 h 28.142 l -7.307,8.749 H 9.11 L 9.11,0 Z" transform="matrix(1.3333333,0,0,-1.3333333,346.60933,153.18987)" fill="#ffffff" />
+    <path d="m 0,0 h -10.446 l -18.057,-22.549 16.508,-19.483 h 11.798 l -16.76,19.483 z" transform="matrix(1.3333333,0,0,-1.3333333,407.364,153.31)" fill="#ffffff" />
+  </g>
 </svg>

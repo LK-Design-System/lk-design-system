@@ -36,8 +36,7 @@ const productStageStyle = {
   display: 'flex',
   gap: 16,
   padding: 24,
-  background:
-    'radial-gradient(120% 82% at 100% 0%, var(--color-semantic-focus-ring), transparent 56%), linear-gradient(158deg, var(--color-semantic-brand-stage-from) 0%, var(--color-semantic-brand-stage-to) 100%)',
+  background: 'var(--color-semantic-brand-surface)',
   border: '1px solid var(--color-semantic-inverse-line-normal)',
   borderRadius: 'var(--radius-2xl)',
   boxShadow: 'var(--shadow-xl)',
@@ -220,7 +219,7 @@ export const SpecRowCard = {
         <div style={{ flex: 1, background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-xs)', padding: '22px 24px' }}>
           <SpecsBlock />
         </div>
-        <div style={{ flex: 1, position: 'relative', overflow: 'hidden', border: '1px solid var(--color-semantic-inverse-line-normal)', borderRadius: 'var(--radius-2xl)', boxShadow: 'var(--shadow-xl)', padding: '22px 24px', background: 'radial-gradient(120% 82% at 100% 0%, var(--color-semantic-focus-ring), transparent 56%), linear-gradient(158deg, var(--color-semantic-brand-stage-from) 0%, var(--color-semantic-brand-stage-to) 100%)' }}>
+        <div style={{ flex: 1, position: 'relative', overflow: 'hidden', border: '1px solid var(--color-semantic-inverse-line-normal)', borderRadius: 'var(--radius-2xl)', boxShadow: 'var(--shadow-xl)', padding: '22px 24px', background: 'var(--color-semantic-brand-surface)' }}>
           <DarkSpecsBlock />
         </div>
       </div>
@@ -252,7 +251,7 @@ export const StatCard = {
       <Card elevation="sm" padding={22} style={{ width: 260 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <Stat value="205" label="구현 검증" accent="signal" />
-          <Stat value="467" label="공개 스토리" accent="ink" />
+          <Stat value="465" label="공개 스토리" accent="ink" />
         </div>
       </Card>
     </div>

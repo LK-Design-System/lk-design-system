@@ -1,10 +1,12 @@
 import React from 'react';
-import { LK_D, ROBO_D, ROBO_INLINE, LK_LOGO_VIEWBOX, LK_LETTER_GROUPS, ROBO_LETTER_GROUPS, splitSubpaths, joinLetters } from '../brand/lk-logo-paths.js';
+import { LK_LOGO_COLORS, LK_LOGO_VIEWBOX, LK_PATHS, ROBOTICS_INLINE_SCALE, ROBOTICS_INLINE_TRANSFORM, ROBOTICS_PATHS } from '../brand/lk-logo-paths.js';
 
-const LK_LETTERS = joinLetters(splitSubpaths(LK_D), LK_LETTER_GROUPS);
-const ROBO_LETTERS = joinLetters(splitSubpaths(ROBO_D), ROBO_LETTER_GROUPS);
-const BRAND_LETTER_COUNT = LK_LETTERS.length + ROBO_LETTERS.length;
+const BRAND_LETTER_COUNT = LK_PATHS.length + ROBOTICS_PATHS.length;
 const brandDelay = (order) => (BRAND_LETTER_COUNT > 1 ? (order / (BRAND_LETTER_COUNT - 1)) * 0.55 : 0).toFixed(3);
+// Preserves the legacy Brand Spinner's ~3.2px on-screen travel at its default
+// 22px height under the official SVG coordinate system.
+const BRAND_WAVE_AMPLITUDE = 7;
+const ROBOTICS_WAVE_AMPLITUDE = (BRAND_WAVE_AMPLITUDE / ROBOTICS_INLINE_SCALE).toFixed(6);
 
 function useKeyframes(id, css) {
   React.useEffect(() => {
@@ -25,9 +27,9 @@ export function Spinner({ size, thickness, color = 'var(--color-semantic-primary
      override needs `!important` to win over it — same as the brand wave below
      (WCAG 2.3.3). */
   useKeyframes('lk-spin-kf', '@keyframes lk-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){[data-lds-spinner-ring]{animation:none!important}}');
-  // Two amplitudes: ROBOTICS carries an extra 3.9x group scale, so its local
-  // translate is 1/3.9 of LK's to bob by the same on-screen amount.
-  useKeyframes('lk-brand-wave-kf', '@keyframes lk-brand-wave-lk{0%,55%,100%{transform:translateY(0)}27%{transform:translateY(300px)}}@keyframes lk-brand-wave-robo{0%,55%,100%{transform:translateY(0)}27%{transform:translateY(77px)}}@media (prefers-reduced-motion: reduce){[data-wave]{animation:none!important}}');
+  // ROBOTICS carries the derived inline scale, so its local amplitude derives
+  // from that scale and every official source path moves by the same amount.
+  useKeyframes('lk-brand-wave-kf', `@keyframes lk-brand-wave-lk{0%,55%,100%{transform:translateY(0)}27%{transform:translateY(${BRAND_WAVE_AMPLITUDE}px)}}@keyframes lk-brand-wave-robo{0%,55%,100%{transform:translateY(0)}27%{transform:translateY(${ROBOTICS_WAVE_AMPLITUDE}px)}}@media (prefers-reduced-motion: reduce){[data-wave]{animation:none!important}}`);
   /* Defaults: circular 28px diameter; brand wordmark 22px cap height. */
   const resolvedSize = size ?? (variant === 'brand' ? 22 : 28);
 
@@ -37,13 +39,17 @@ export function Spinner({ size, thickness, color = 'var(--color-semantic-primary
        counters stay hollow) and every letter rides a staggered vertical wave. */
     const mark = (
       <svg viewBox={LK_LOGO_VIEWBOX.inline} height={resolvedSize} aria-hidden="true" style={{ display: 'block', overflow: 'visible' }}>
-        <g transform="translate(0,504) scale(0.1,-0.1)" fill="var(--color-semantic-brand-ink)">
-          {LK_LETTERS.map((d, i) => (
-            <path key={`lk${i}`} data-wave d={d} fillRule="evenodd" style={{ animation: `lk-brand-wave-lk 1.15s ease-in-out ${brandDelay(i)}s infinite` }} />
+        <g fill={LK_LOGO_COLORS.navy} fillRule="nonzero">
+          {LK_PATHS.map((path, i) => (
+            <g key={`lk${i}`} transform={path.transform}>
+              <path data-wave d={path.d} style={{ animation: `lk-brand-wave-lk 1.15s ease-in-out ${brandDelay(i)}s infinite` }} />
+            </g>
           ))}
-          <g transform={ROBO_INLINE}>
-            {ROBO_LETTERS.map((d, i) => (
-              <path key={`ro${i}`} data-wave d={d} fillRule="evenodd" style={{ animation: `lk-brand-wave-robo 1.15s ease-in-out ${brandDelay(LK_LETTERS.length + i)}s infinite` }} />
+          <g transform={ROBOTICS_INLINE_TRANSFORM}>
+            {ROBOTICS_PATHS.map((path, i) => (
+              <g key={`ro${i}`} transform={path.transform}>
+                <path data-wave d={path.d} style={{ animation: `lk-brand-wave-robo 1.15s ease-in-out ${brandDelay(LK_PATHS.length + i)}s infinite` }} />
+              </g>
             ))}
           </g>
         </g>

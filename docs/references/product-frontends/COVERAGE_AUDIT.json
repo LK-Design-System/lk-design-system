@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "auditedAt": "2026-08-02",
+  "auditedAt": "2026-08-04",
   "purpose": "Track source-backed product workflows through discovery, independent wireframing, LDS implementation, and interaction verification without treating current screens or component files as coverage proof.",
   "evidenceHierarchy": [
     "product goals and invariants",
@@ -22,7 +22,7 @@
     "verified": 16
   },
   "componentDispositionSummary": {
-    "keep": 17,
+    "keep": 18,
     "redesign": 7,
     "split": 8,
     "remove": 22,
@@ -76,6 +76,56 @@
             {
               "path": "src/components/admin/AdminWorkspace.tsx",
               "blobSha": "0a7421a3732a3467c9e564de84f3697f874d6651"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DataCollectionPanel",
+      "path": "components/data/DataCollectionPanel.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-01"
+      ],
+      "reason": "Provides one reusable continuous collection surface and reading order for DataToolbar, ResourceState, wide or product-authored compact content, freshness, and footer pagination without owning query state, fetching, permissions, row semantics, domain actions, compact item markup, or pagination state.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "4701e1dcfb0d0e9163c74c227da2d6feb801cb30",
+          "classification": "not applicable",
+          "reason": "The pinned task history is a product-specific card feed with per-run commands and expandable event logs, and the current frontend has no table-shaped resource collection requiring the shared toolbar, state, content, and pagination perimeter.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/TaskHistoryScreen.tsx",
+              "blobSha": "a529eb93bfdd51d77298f18c13e78bbc2a1b9631"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19",
+          "classification": "supported by composition",
+          "reason": "The pinned user directory repeats filters, loading and error branches, a native table-shaped collection, empty content, and pagination. DataCollectionPanel can own their shared perimeter and order while Control retains fetch, filter execution, permissions, dialogs, mutations, row actions, and routing.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/user/index.jsx",
+              "blobSha": "1c6c8446e723207a9bd5f4daa991a0b266ccc279"
+            }
+          ]
+        },
+        {
+          "repo": "context-hub",
+          "repository": "LK-ROBOTICS/lk_context_hub",
+          "sourceRevision": "6a46bc18ce26fce55b14bf7ffe6d9da0ca027967",
+          "classification": "supported by composition",
+          "reason": "The pinned project directory already repeats Card, embedded DataToolbar, ResourceState, desktop Table, product-authored mobile list, and Pagination. DataCollectionPanel removes the repeated perimeter and responsive slot plumbing while Context Hub retains query state, permissions, row meaning and actions, domain counts, compact item markup, and pagination state.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/catalog/ProjectDirectory.tsx",
+              "blobSha": "cf7ab1ccb7d805bd4599ef206a9b2b2bcb82a02d"
             }
           ]
         }
@@ -1046,21 +1096,21 @@
     {
       "id": "web-viz",
       "repository": "LK-ROBOTICS/lk_web_viz",
-      "commit": "a984def117c05acd213f494cbb8a42e990595505",
+      "commit": "4701e1dcfb0d0e9163c74c227da2d6feb801cb30",
       "frontendRoot": "frontend",
       "framework": "Vite 6, React 19, react-konva"
     },
     {
       "id": "context-hub",
       "repository": "LK-ROBOTICS/lk_context_hub",
-      "commit": "de124084b7e50049350a46f92c4ea4476269c58c",
+      "commit": "6a46bc18ce26fce55b14bf7ffe6d9da0ca027967",
       "frontendRoot": "src",
       "framework": "Next.js 16, React 19"
     },
     {
       "id": "control",
       "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
-      "commit": "93802fc2aa5d29f930380ae58d51dcb68322b5e7",
+      "commit": "3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19",
       "frontendRoot": "frontend",
       "framework": "Vite 6, React 18, MUI 6"
     },
@@ -1139,12 +1189,14 @@
         "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-01-attention-to-context"
       ],
       "implementationEvidence": [
+        "components/data/DataCollectionPanel.jsx",
         "components/data/DataGrid.jsx",
         "components/data/DataToolbar.jsx",
         "components/data/FileBrowser.jsx",
         "components/data/TreePicker.jsx"
       ],
       "storyEvidence": [
+        "stories/DataCollectionPanel.stories.jsx",
         "stories/DataGrid.stories.jsx",
         "stories/DataToolbar.stories.jsx",
         "stories/DataFileBrowser.stories.jsx",

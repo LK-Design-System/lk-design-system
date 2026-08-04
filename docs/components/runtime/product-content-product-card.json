@@ -117,7 +117,7 @@
     },
     {
       "subject": "명시 규칙 2",
-      "rule": "이미지 톤 — 사진 위 네이비 그레이드는 상단 6%에서 하단 18%까지만 적용해 서로 다른 제품 사진의 색조를 LDS 무대로 가볍게 묶되 원본 대비를 과도하게 죽이지 않습니다. 이미지 밝기 보정은 1.03입니다."
+      "rule": "이미지 톤 — 사진은 브랜드색으로 일괄 착색하지 않고 원본의 색조를 유지합니다. 이미지 밝기 보정은 1.03입니다."
     },
     {
       "subject": "명시 규칙 3",
@@ -197,8 +197,7 @@
     "--border-hairline-dark",
     "--caption1-line",
     "--caption1-size",
-    "--color-semantic-brand-stage-from",
-    "--color-semantic-brand-stage-to",
+    "--color-semantic-brand-surface",
     "--color-semantic-inverse-label",
     "--color-semantic-inverse-label-strong-soft",
     "--dur-base",

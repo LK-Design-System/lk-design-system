@@ -64,8 +64,8 @@
 | 명시 규칙 1 | 타입 스케일 정합: 제목 14.5px → --body2-size(15px), 본문 13.5px → --label1-size(14px)로 스냅했습니다. Toast 메시지(body2)·Snackbar 메시지(label1)와 같은 단계로 정렬됩니다. |
 | 명시 규칙 2 | Fluent 2 MessageBar의 card-level 배치 원칙을 따라 패널 상태 Banner는 header 바로 아래, 제어 본문보다 먼저 읽히게 합니다. 상태·설명·액션의 순서도 DOM 순서와 일치시킵니다. |
 | --body2-size | 15px |
-| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
-| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
+| --color-semantic-brand-surface | light: #05132B; dark: #05132B |
+| --color-semantic-inverse-label-neutral-soft | light: rgba(255, 255, 255, 0.62); dark: rgba(255, 255, 255, 0.62) |
 
 ## Content and writing
 
@@ -99,8 +99,12 @@
 ### Tokens
 
 - `--body2-size`
+- `--color-semantic-brand-surface`
+- `--color-semantic-inverse-label-neutral-soft`
+- `--color-semantic-inverse-line-normal`
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
+- `--color-semantic-static-white`
 - `--font-sans`
 - `--fw-bold`
 - `--label1-size`

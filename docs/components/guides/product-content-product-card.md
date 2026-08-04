@@ -48,7 +48,7 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 제품 코드는 실제 heading — id는 headingLevel(기본 3)로 렌더됩니다. 카탈로그가 놓인 문서 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false}로 heading 의미를 끕니다. 레벨은 건너뛰지 않습니다(WCAG 1.3.1). |
-| 명시 규칙 2 | 이미지 톤 — 사진 위 네이비 그레이드는 상단 6%에서 하단 18%까지만 적용해 서로 다른 제품 사진의 색조를 LDS 무대로 가볍게 묶되 원본 대비를 과도하게 죽이지 않습니다. 이미지 밝기 보정은 1.03입니다. |
+| 명시 규칙 2 | 이미지 톤 — 사진은 브랜드색으로 일괄 착색하지 않고 원본의 색조를 유지합니다. 이미지 밝기 보정은 1.03입니다. |
 | 명시 규칙 3 | 가독성 스크림 — 스크림은 카드 전체 높이에 비례해 늘어나지 않고 하단에 고정됩니다. 짧은 가로형에서는 카드 높이의 84%, 그보다 큰 정사각·세로형에서는 space-32 + space-28(240px)까지만 사용합니다. 램프는 상단 투명, 28% 지점 12%, 58% 지점 72%, 하단은 scrim-dark 토큰의 원래 강도입니다. 제목은 inverse 100%, 설명·선택형 카테고리·기본 CTA는 inverse-label-strong-soft 92%입니다. |
 | 명시 규칙 4 | 패딩 — 콘텐츠는 모든 폭에서 space-6(24px), 제목·설명 사이는 space-2(8px), 선택형 카테고리·제목 사이는 space-1(4px)을 사용합니다. 고정 패딩을 한곳에서 소유해 카드별 임의 오프셋을 허용하지 않습니다. |
 | --border-hairline-dark | 1px solid rgba(255, 255, 255, 0.08) · 1px solid rgba(255, 255, 255, 0.12) |
@@ -119,8 +119,7 @@
 - `--border-hairline-dark`
 - `--caption1-line`
 - `--caption1-size`
-- `--color-semantic-brand-stage-from`
-- `--color-semantic-brand-stage-to`
+- `--color-semantic-brand-surface`
 - `--color-semantic-inverse-label`
 - `--color-semantic-inverse-label-strong-soft`
 - `--dur-base`

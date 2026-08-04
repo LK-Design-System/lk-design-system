@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Semantic color roles — 112 tokens / light and dark (GENERATED — do not hand-edit)
+   LK ROBOTICS — Semantic color roles — 108 tokens / light and dark (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -64,12 +64,8 @@
   --color-semantic-background-transparent-alternative: rgba(255, 255, 255, 0.28);
   --color-semantic-accent-violet: transparent;
   --color-semantic-accent-cyan: transparent;
-  --color-semantic-brand-ink: #1B2240;
-  --color-semantic-brand-surface-raised: #373F59;
-  --color-semantic-brand-canvas-from: #212B53;
-  --color-semantic-brand-canvas-to: #191F3B;
-  --color-semantic-brand-stage-from: #232C4A;
-  --color-semantic-brand-stage-to: #1B2240;
+  --color-semantic-brand-ink: #05132B;
+  --color-semantic-brand-surface: #05132B;
   --color-semantic-secondary-normal: #2C3547;
   --color-semantic-secondary-surface: #EAECF1;
   --color-semantic-background-band: #F4F4F5;
@@ -180,11 +176,7 @@
   --color-semantic-accent-violet: transparent;
   --color-semantic-accent-cyan: transparent;
   --color-semantic-brand-ink: #E7EAF2;
-  --color-semantic-brand-surface-raised: #37415E;
-  --color-semantic-brand-canvas-from: #212B53;
-  --color-semantic-brand-canvas-to: #191F3B;
-  --color-semantic-brand-stage-from: #232C4A;
-  --color-semantic-brand-stage-to: #1B2240;
+  --color-semantic-brand-surface: #05132B;
   --color-semantic-secondary-normal: #2C3547;
   --color-semantic-secondary-surface: rgba(255, 255, 255, 0.10);
   --color-semantic-background-band: #0E121F;
@@ -296,11 +288,7 @@
     --color-semantic-accent-violet: transparent;
     --color-semantic-accent-cyan: transparent;
     --color-semantic-brand-ink: #E7EAF2;
-    --color-semantic-brand-surface-raised: #37415E;
-    --color-semantic-brand-canvas-from: #212B53;
-    --color-semantic-brand-canvas-to: #191F3B;
-    --color-semantic-brand-stage-from: #232C4A;
-    --color-semantic-brand-stage-to: #1B2240;
+    --color-semantic-brand-surface: #05132B;
     --color-semantic-secondary-normal: #2C3547;
     --color-semantic-secondary-surface: rgba(255, 255, 255, 0.10);
     --color-semantic-background-band: #0E121F;

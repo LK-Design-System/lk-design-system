@@ -2213,58 +2213,18 @@
         "$type": "color",
         "css": "--color-semantic-brand-ink",
         "modes": {
-          "light": "#1B2240",
+          "light": "#05132B",
           "dark": "#E7EAF2"
         },
         "origin": "lds-extension",
         "group": "brand"
       },
-      "brand-surface-raised": {
+      "brand-surface": {
         "$type": "color",
-        "css": "--color-semantic-brand-surface-raised",
+        "css": "--color-semantic-brand-surface",
         "modes": {
-          "light": "#373F59",
-          "dark": "#37415E"
-        },
-        "origin": "lds-extension",
-        "group": "brand"
-      },
-      "brand-canvas-from": {
-        "$type": "color",
-        "css": "--color-semantic-brand-canvas-from",
-        "modes": {
-          "light": "#212B53",
-          "dark": "#212B53"
-        },
-        "origin": "lds-extension",
-        "group": "brand"
-      },
-      "brand-canvas-to": {
-        "$type": "color",
-        "css": "--color-semantic-brand-canvas-to",
-        "modes": {
-          "light": "#191F3B",
-          "dark": "#191F3B"
-        },
-        "origin": "lds-extension",
-        "group": "brand"
-      },
-      "brand-stage-from": {
-        "$type": "color",
-        "css": "--color-semantic-brand-stage-from",
-        "modes": {
-          "light": "#232C4A",
-          "dark": "#232C4A"
-        },
-        "origin": "lds-extension",
-        "group": "brand"
-      },
-      "brand-stage-to": {
-        "$type": "color",
-        "css": "--color-semantic-brand-stage-to",
-        "modes": {
-          "light": "#1B2240",
-          "dark": "#1B2240"
+          "light": "#05132B",
+          "dark": "#05132B"
         },
         "origin": "lds-extension",
         "group": "brand"
@@ -3647,7 +3607,7 @@
         "navyBg": {
           "$type": "color",
           "css": "--component-badge-navy-bg",
-          "$value": "var(--color-semantic-secondary-normal)",
+          "$value": "var(--color-semantic-brand-surface)",
           "generated": true
         },
         "navyFg": {

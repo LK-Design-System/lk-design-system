@@ -3,7 +3,7 @@ import * as React from 'react';
 export interface LockupProps extends Omit<React.SVGProps<SVGSVGElement>, 'color'> {
   /** 'mark'(심볼만) · 'stacked'(기본) · 'inline'(가로). @default "inline" */
   variant?: 'mark' | 'stacked' | 'inline';
-  /** 채움 프리셋 — 'ink' 네이비 · 'white' · 'brand' 시그널 잉크 · 'current'(currentColor). @default "ink" */
+  /** 채움 프리셋 — 'ink'/'brand' 공식 네이비(`#05132B`) · 'white' · 'current'(currentColor). @default "ink" */
   tone?: 'ink' | 'white' | 'brand' | 'current';
   /** 명시적 채움, `tone`을 재정의. */
   color?: string;
@@ -15,5 +15,5 @@ export interface LockupProps extends Omit<React.SVGProps<SVGSVGElement>, 'color'
   decorative?: boolean;
 }
 
-/** LK ROBOTICS 로고 — mark / stacked / inline, 틴트 가능한 SVG로 인라인 렌더. */
+/** 공식 원본 path 기반 LK ROBOTICS 로고 — mark / stacked / inline SVG. */
 export function Lockup(props: LockupProps): React.JSX.Element;

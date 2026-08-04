@@ -115,8 +115,7 @@
 
 - `--body2-size`
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-brand-canvas-from`
-- `--color-semantic-brand-canvas-to`
+- `--color-semantic-brand-surface`
 - `--color-semantic-fill-alternative`
 - `--color-semantic-fill-normal`
 - `--color-semantic-inverse-fill-normal`

@@ -243,7 +243,7 @@ export const ATOMIC = {
     ]
   }
 };
-export const SEMANTIC = ["static-white","primary-normal","background-normal-normal","fill-strong","label-normal","fill-normal","static-black","label-strong","line-normal-normal","line-normal-alternative","inverse-background","inverse-label","primary-strong","primary-heavy","label-neutral","label-alternative","label-assistive","label-disable","background-normal-alternative","background-elevated-normal","background-elevated-alternative","interaction-inactive","interaction-disable","line-normal-neutral","line-normal-_strong","fill-alternative","status-positive","status-cautionary","status-negative","accent-background-lime","accent-background-cyan","accent-background-light-blue","accent-background-violet","accent-background-pink","material-dimmer","inverse-primary","line-solid-normal","line-solid-neutral","line-solid-alternative","line-solid-_strong","accent-background-red-orange","accent-background-purple","accent-foreground-lime","accent-foreground-cyan","accent-foreground-light-blue","accent-foreground-violet","accent-foreground-purple","accent-foreground-pink","accent-foreground-red-orange","accent-foreground-red","accent-foreground-orange","accent-foreground-green","accent-foreground-blue","material-background-onbackground","material-outline-outline","background-transparent-normal","background-transparent-alternative","accent-violet","accent-cyan","brand-ink","brand-surface-raised","brand-canvas-from","brand-canvas-to","brand-stage-from","brand-stage-to","secondary-normal","secondary-surface","background-band","primary-surface-normal","primary-surface-strong","focus-ring","focus-indicator","status-info","status-info-foreground","status-info-surface","status-info-border","status-info-text","status-positive-surface","status-positive-foreground","status-positive-border","status-positive-text","status-cautionary-surface","status-cautionary-foreground","status-cautionary-border","status-cautionary-text","status-negative-surface","status-negative-foreground","status-negative-border","status-negative-text","status-neutral-surface","status-neutral-border","status-neutral-text","accent-blue-text","inverse-label-strong-soft","inverse-label-neutral-soft","inverse-label-alternative-soft","inverse-label-assistive-soft","inverse-label-disable-soft","inverse-icon-muted","inverse-fill-normal","inverse-fill-hover","inverse-fill-strong","inverse-line-normal","inverse-line-strong","data-viz-series-1","data-viz-series-2","data-viz-series-3","data-viz-series-4","data-viz-series-5","data-viz-series-6","data-viz-series-7","data-viz-series-8"];
+export const SEMANTIC = ["static-white","primary-normal","background-normal-normal","fill-strong","label-normal","fill-normal","static-black","label-strong","line-normal-normal","line-normal-alternative","inverse-background","inverse-label","primary-strong","primary-heavy","label-neutral","label-alternative","label-assistive","label-disable","background-normal-alternative","background-elevated-normal","background-elevated-alternative","interaction-inactive","interaction-disable","line-normal-neutral","line-normal-_strong","fill-alternative","status-positive","status-cautionary","status-negative","accent-background-lime","accent-background-cyan","accent-background-light-blue","accent-background-violet","accent-background-pink","material-dimmer","inverse-primary","line-solid-normal","line-solid-neutral","line-solid-alternative","line-solid-_strong","accent-background-red-orange","accent-background-purple","accent-foreground-lime","accent-foreground-cyan","accent-foreground-light-blue","accent-foreground-violet","accent-foreground-purple","accent-foreground-pink","accent-foreground-red-orange","accent-foreground-red","accent-foreground-orange","accent-foreground-green","accent-foreground-blue","material-background-onbackground","material-outline-outline","background-transparent-normal","background-transparent-alternative","accent-violet","accent-cyan","brand-ink","brand-surface","secondary-normal","secondary-surface","background-band","primary-surface-normal","primary-surface-strong","focus-ring","focus-indicator","status-info","status-info-foreground","status-info-surface","status-info-border","status-info-text","status-positive-surface","status-positive-foreground","status-positive-border","status-positive-text","status-cautionary-surface","status-cautionary-foreground","status-cautionary-border","status-cautionary-text","status-negative-surface","status-negative-foreground","status-negative-border","status-negative-text","status-neutral-surface","status-neutral-border","status-neutral-text","accent-blue-text","inverse-label-strong-soft","inverse-label-neutral-soft","inverse-label-alternative-soft","inverse-label-assistive-soft","inverse-label-disable-soft","inverse-icon-muted","inverse-fill-normal","inverse-fill-hover","inverse-fill-strong","inverse-line-normal","inverse-line-strong","data-viz-series-1","data-viz-series-2","data-viz-series-3","data-viz-series-4","data-viz-series-5","data-viz-series-6","data-viz-series-7","data-viz-series-8"];
 export const SEMANTIC_GROUPS = {
   "static": [
     "static-white",
@@ -365,11 +365,7 @@ export const SEMANTIC_GROUPS = {
   ],
   "brand": [
     "brand-ink",
-    "brand-surface-raised",
-    "brand-canvas-from",
-    "brand-canvas-to",
-    "brand-stage-from",
-    "brand-stage-to"
+    "brand-surface"
   ],
   "secondary": [
     "secondary-normal",
@@ -420,6 +416,6 @@ export const STATUS_FAMILIES = {
 export const COLOR_SYSTEM_META = {
   "source": "tokens/source.json",
   "atomicTokens": 176,
-  "semanticTokens": 112,
+  "semanticTokens": 108,
   "componentTokens": 22
 };

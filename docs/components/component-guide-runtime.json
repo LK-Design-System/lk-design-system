@@ -1667,7 +1667,7 @@
         },
         {
           "subject": "--color-semantic-brand-ink",
-          "rule": "light: #1B2240; dark: #E7EAF2"
+          "rule": "light: #05132B; dark: #E7EAF2"
         },
         {
           "subject": "--color-semantic-interaction-inactive",
@@ -2377,14 +2377,16 @@
         "--caption2-size",
         "--color-semantic-background-elevated-normal",
         "--color-semantic-background-normal-normal",
+        "--color-semantic-brand-ink",
+        "--color-semantic-brand-surface",
         "--color-semantic-fill-normal",
         "--color-semantic-fill-strong",
-        "--color-semantic-inverse-background",
         "--color-semantic-label-alternative",
         "--color-semantic-label-neutral",
         "--color-semantic-label-normal",
         "--color-semantic-line-normal-normal",
         "--color-semantic-primary-normal",
+        "--color-semantic-static-white",
         "--color-semantic-status-cautionary",
         "--color-semantic-status-cautionary-text",
         "--color-semantic-status-negative",
@@ -9615,7 +9617,7 @@
         },
         {
           "subject": "--color-semantic-brand-ink",
-          "rule": "light: #1B2240; dark: #E7EAF2"
+          "rule": "light: #05132B; dark: #E7EAF2"
         },
         {
           "subject": "--color-semantic-fill-normal",
@@ -10625,7 +10627,7 @@
         },
         {
           "subject": "--color-semantic-brand-ink",
-          "rule": "light: #1B2240; dark: #E7EAF2"
+          "rule": "light: #05132B; dark: #E7EAF2"
         }
       ],
       "responsive": [],
@@ -13244,6 +13246,7 @@
         "--color-semantic-accent-foreground-blue",
         "--color-semantic-accent-foreground-red",
         "--color-semantic-background-elevated-normal",
+        "--color-semantic-brand-surface",
         "--color-semantic-data-viz-series-4",
         "--color-semantic-data-viz-series-5",
         "--color-semantic-fill-strong",
@@ -13252,7 +13255,6 @@
         "--color-semantic-label-strong",
         "--color-semantic-primary-normal",
         "--color-semantic-primary-surface-strong",
-        "--color-semantic-secondary-normal",
         "--color-semantic-secondary-surface",
         "--color-semantic-static-black",
         "--color-semantic-static-white",
@@ -13693,12 +13695,12 @@
           "rule": "15px"
         },
         {
-          "subject": "--color-semantic-label-neutral",
-          "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+          "subject": "--color-semantic-brand-surface",
+          "rule": "light: #05132B; dark: #05132B"
         },
         {
-          "subject": "--color-semantic-label-normal",
-          "rule": "light: #171718; dark: #F7F7F7"
+          "subject": "--color-semantic-inverse-label-neutral-soft",
+          "rule": "light: rgba(255, 255, 255, 0.62); dark: rgba(255, 255, 255, 0.62)"
         }
       ],
       "responsive": [],
@@ -13740,8 +13742,12 @@
       ],
       "tokens": [
         "--body2-size",
+        "--color-semantic-brand-surface",
+        "--color-semantic-inverse-label-neutral-soft",
+        "--color-semantic-inverse-line-normal",
         "--color-semantic-label-neutral",
         "--color-semantic-label-normal",
+        "--color-semantic-static-white",
         "--font-sans",
         "--fw-bold",
         "--label1-size",
@@ -14468,10 +14474,6 @@
       "behavior": [],
       "quantitativeRules": [
         {
-          "subject": "--color-semantic-brand-ink",
-          "rule": "light: #1B2240; dark: #E7EAF2"
-        },
-        {
           "subject": "--color-semantic-fill-strong",
           "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
         },
@@ -14482,6 +14484,10 @@
         {
           "subject": "--label1-size",
           "rule": "{\"fontSize\":\"14px\",\"lineHeight\":\"20px\",\"letterSpacing\":\"0.0145em\"}"
+        },
+        {
+          "subject": "--space-2-5",
+          "rule": "10px"
         }
       ],
       "responsive": [
@@ -14517,7 +14523,6 @@
         }
       ],
       "tokens": [
-        "--color-semantic-brand-ink",
         "--color-semantic-fill-strong",
         "--color-semantic-primary-normal",
         "--font-sans",
@@ -17617,8 +17622,8 @@
           "rule": "light: #FFFFFF; dark: #212225"
         },
         {
-          "subject": "--color-semantic-inverse-background",
-          "rule": "light: #1B1C1E; dark: #FFFFFF"
+          "subject": "--color-semantic-brand-surface",
+          "rule": "light: #05132B; dark: #05132B"
         },
         {
           "subject": "--color-semantic-label-normal",
@@ -17646,7 +17651,7 @@
       ],
       "tokens": [
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-inverse-background",
+        "--color-semantic-brand-surface",
         "--color-semantic-label-normal",
         "--color-semantic-line-solid-normal",
         "--color-semantic-static-white",
@@ -18287,12 +18292,12 @@
         "--body2-size",
         "--color-semantic-accent-foreground-blue",
         "--color-semantic-accent-foreground-orange",
-        "--color-semantic-brand-ink",
-        "--color-semantic-fill-strong",
+        "--color-semantic-brand-surface",
         "--color-semantic-label-alternative",
         "--color-semantic-label-strong",
         "--color-semantic-primary-normal",
         "--color-semantic-primary-surface-normal",
+        "--color-semantic-static-white",
         "--component-card-bg",
         "--component-card-border",
         "--component-card-padding",
@@ -19693,7 +19698,7 @@
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "이미지 톤 — 사진 위 네이비 그레이드는 상단 6%에서 하단 18%까지만 적용해 서로 다른 제품 사진의 색조를 LDS 무대로 가볍게 묶되 원본 대비를 과도하게 죽이지 않습니다. 이미지 밝기 보정은 1.03입니다."
+          "rule": "이미지 톤 — 사진은 브랜드색으로 일괄 착색하지 않고 원본의 색조를 유지합니다. 이미지 밝기 보정은 1.03입니다."
         },
         {
           "subject": "명시 규칙 3",
@@ -19773,8 +19778,7 @@
         "--border-hairline-dark",
         "--caption1-line",
         "--caption1-size",
-        "--color-semantic-brand-stage-from",
-        "--color-semantic-brand-stage-to",
+        "--color-semantic-brand-surface",
         "--color-semantic-inverse-label",
         "--color-semantic-inverse-label-strong-soft",
         "--dur-base",
@@ -32605,7 +32609,7 @@
         "접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 아이콘의 강한 잉크로만 표시해 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.",
         "Carbon UI shell left panel style — sub-menu hover와 sub-menu item selected를 별도 상태로 정의합니다. LDS도 펼침·hover·현재 위치의 상태 분리는 따르되, Carbon의 4px interactive border는 내부 NavRail·TopBar 선택 문법과 맞지 않아 채택하지 않고 현재 leaf의 선택 배경만 유지합니다.",
         "Carbon UI shell left panel accessibility — rail은 hover나 focus에서 펼쳐져도 같은 링크·서브메뉴 keyboard model을 유지합니다. 이 동작을 LDS에 적용할 때는 동일 DOM뿐 아니라 44px hit target과 세로 위치도 유지해, 포인터와 키보드 사용자가 확장 중 움직이는 목적지를 다시 추적하지 않게 합니다.",
-        "WAI-ARIA Disclosure Pattern — 그룹 트리거는 button으로 동작하고 aria-expanded가 실제 자식 콘텐츠의 표시 상태를 반영해야 합니다. single 정책은 이 동일한 disclosure semantics 위에 공간 절약형 상호 배타 상태만 추가하며, 키보드 Enter/Space와 포커스 계약은 변경하지 않습니다."
+        "대시보드·관리 제품의 주 탐색으로 UserMenu를 푸터에 조합합니다. TopBar가 함께 있으면 전역 utility만 담당하게 하고 로고·경로를 중복하지 않으며, 평면형 대안인 NavRail과 동시에 주 탐색으로 사용하지 않습니다."
       ],
       "anatomy": [
         {
@@ -32744,34 +32748,6 @@
           "owner": "SideNavProps"
         },
         {
-          "name": "groupExpansionMode",
-          "type": "'multiple' | 'single'",
-          "required": false,
-          "description": "그룹 disclosure 정책. multiple은 여러 그룹을 동시에 열고, single은 최대 한 그룹만 엽니다. @default 'multiple'",
-          "owner": "SideNavProps"
-        },
-        {
-          "name": "expandedGroupValues",
-          "type": "string[]",
-          "required": false,
-          "description": "제어되는 열린 그룹 값 목록. 지정하면 SideNav는 상태를 직접 바꾸지 않고 변경 요청만 알립니다.",
-          "owner": "SideNavProps"
-        },
-        {
-          "name": "defaultExpandedGroupValues",
-          "type": "string[]",
-          "required": false,
-          "description": "비제어 열린 그룹의 초기 값 목록. @default []",
-          "owner": "SideNavProps"
-        },
-        {
-          "name": "onExpandedGroupValuesChange",
-          "type": "(values: string[], changedValue: string, expanded: boolean) = void",
-          "required": false,
-          "description": "열린 그룹 변경 요청. changedValue는 토글된 그룹이고 expanded는 요청된 다음 상태입니다.",
-          "owner": "SideNavProps"
-        },
-        {
           "name": "value",
           "type": "string",
           "required": false,
@@ -32805,6 +32781,20 @@
           "required": false,
           "description": "",
           "owner": "SideNavProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "SideNavProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "SideNavProps"
         }
       ],
       "states": [
@@ -32815,26 +32805,14 @@
         {
           "state": "autoExpandActiveGroup",
           "rule": "활성 자식이 속한 disclosure 그룹을 초기 선택과 값 변경 때 자동으로 펼칩니다. false이면 활성 표시는 유지하되 그룹 열림은 사용자 상호작용과 독립됩니다. @default true"
-        },
-        {
-          "state": "expandedGroupValues",
-          "rule": "제어되는 열린 그룹 값 목록. 지정하면 SideNav는 상태를 직접 바꾸지 않고 변경 요청만 알립니다."
-        },
-        {
-          "state": "defaultExpandedGroupValues",
-          "rule": "비제어 열린 그룹의 초기 값 목록. @default []"
-        },
-        {
-          "state": "onExpandedGroupValuesChange",
-          "rule": "열린 그룹 변경 요청. changedValue는 토글된 그룹이고 expanded는 요청된 다음 상태입니다."
         }
       ],
       "behavior": [
         "collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌므로 런타임 overlay 전환 때도 부모가 원하는 collapsed 값을 함께 갱신해야 합니다. 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.",
         "floating은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. docked는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, fill, active marker를 공유합니다.",
-        "WAI-ARIA landmark regions — landmark와 명확한 accessible name을 유지합니다. 소비자가 aria-label을 주지 않으면 기본 이름 사이드 탐색을 제공하고, 같은 문서에 탐색 landmark가 여러 개면 고유한 이름으로 덮어씁니다. 현재 목적지는 aria-current=\"page\"로 노출하고, 키보드 focus 진입·이탈과 Esc 뒤에도 초점을 잃지 않습니다.",
-        "Windows Expander guidance — 여러 확장 영역에서 한 번에 하나만 열도록 하는 정책은 선택 가능한 편의 기능이어야 하며 사용자가 다시 열림을 제어할 수 있어야 합니다. 그래서 기본값은 기존 multiple로 유지하고 single을 명시적 opt-in으로 제공합니다.",
-        "WAI Disclosure Navigation — 부모 button의 aria-expanded는 자식 노출 상태이고 leaf link의 aria-current=\"page\"는 현재 위치입니다. LDS는 두 상태를 같은 persistent highlight로 합치지 않습니다."
+        "WAI Disclosure Navigation — 부모 button의 aria-expanded는 자식 노출 상태이고 leaf link의 aria-current=\"page\"는 현재 위치입니다. LDS는 두 상태를 같은 persistent highlight로 합치지 않습니다.",
+        "brandAlign=\"center|start\" controls the expanded brand region. The collapsed mark remains centered so the 64px rail stays balanced.",
+        "In uncontrolled mode, changing overlay at runtime collapses on entry and restores the prior persistent state on exit. In controlled mode, the product updates collapsed explicitly."
       ],
       "quantitativeRules": [
         {
@@ -32843,15 +32821,15 @@
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "groupExpansionMode / expandedGroupValues / defaultExpandedGroupValues / onExpandedGroupValuesChange — 기본 multiple은 기존처럼 여러 disclosure 그룹을 동시에 엽니다. single은 한 번에 최대 한 그룹만 열고, 다른 그룹을 열면 이전 그룹을 닫으며 열린 그룹을 다시 누르면 접습니다."
-        },
-        {
-          "subject": "명시 규칙 3",
           "rule": "header / headerCollapsed / footer — 브랜드는 Lockup 사용(inline 20px / mark 22px 권장). 푸터는 height 지정 시 바닥 고정."
         },
         {
-          "subject": "명시 규칙 4",
+          "subject": "명시 규칙 3",
           "rule": "내비게이션 disabled 표면은 wrapper opacity 0.45를 공통 문법으로 사용합니다. 개별 자식의 색 토큰을 다시 바꿔 이중으로 흐리게 만들지 않습니다."
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "타입 스케일 정합: 섹션 헤딩 10.5px → --caption2-size(11px, 스케일 하한; 대문자 letterSpacing 1px 유지), 자식 항목 13.5px → --label2-size(13px)로 스냅했습니다. 14px 부모 항목보다 1px 아래 위계는 그대로 유지됩니다."
         },
         {
           "subject": "--caption2-size",
@@ -32868,7 +32846,7 @@
         "ref, className, and style target the native nav landmark.",
         "Stable parts are root, overlaySurface, panel, brand, list, heading, item, icon, label, badge, childList, and footer. Root and items expose stable collapsed/active state attributes.",
         "items — { value, label, ariaLabel?, icon, badge?, href?, disabled?, children? } + { heading } 섹션 헤딩. 자식도 icon?: ReactNode를 받을 수 있으며, 한 그룹에 아이콘이 하나라도 있으면 모든 자식에 고정 슬롯을 예약해 라벨 시작선을 맞춥니다. 항목 전체는 native ul/li 리스트(그룹 자식은 중첩 ul)로 렌더되어 보조기술이 항목 수와 계층을 읽을 수 있고, 시각은 기존과 동일합니다(list-style 없음).",
-        "타입 스케일 정합: 섹션 헤딩 10.5px → --caption2-size(11px, 스케일 하한; 대문자 letterSpacing 1px 유지), 자식 항목 13.5px → --label2-size(13px)로 스냅했습니다. 14px 부모 항목보다 1px 아래 위계는 그대로 유지됩니다."
+        "Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. 축소 가능 내비게이션도 상태를 설명하는 명시적인 제어를 제공하므로 LDS는 명시적 토글을 정식 수단으로 두고 hover peek를 선택 기능으로 제한합니다."
       ],
       "accessibility": [
         "renderLink — native anchor 대신 router link를 쓸 때만 제공합니다. renderLink={(item, { href, ...props }) = }처럼 DS가 만든 aria-current, disabled, style, activation 계약을 전달합니다.",
@@ -33439,8 +33417,7 @@
       "tokens": [
         "--body2-size",
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-brand-canvas-from",
-        "--color-semantic-brand-canvas-to",
+        "--color-semantic-brand-surface",
         "--color-semantic-fill-alternative",
         "--color-semantic-fill-normal",
         "--color-semantic-inverse-fill-normal",
@@ -33563,7 +33540,9 @@
       "ownerComponents": [
         "UserMenu"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "SideNav"
+      ],
       "purpose": "사이드바 푸터에서 현재 사용자·상태·프로필·로그아웃을 묶을 때 적합합니다. 상단 전역 명령이나 제품 탐색에는 User Menu 대신 Top Bar나 Side Nav를 사용하세요.",
       "useWhen": [],
       "avoidWhen": [
@@ -33664,6 +33643,10 @@
       "exceptions": [],
       "related": [
         {
+          "component": "SideNav",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "Anchor",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -33685,10 +33668,6 @@
         },
         {
           "component": "NavRail",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "SideNav",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -33746,7 +33725,7 @@
             "role": "overview"
           }
         ],
-        "hiddenEvidence": 0
+        "hiddenEvidence": 1
       },
       "sources": [],
       "canonicalGuide": null,
@@ -45303,7 +45282,7 @@
         "Lockup"
       ],
       "supportingComponents": [],
-      "purpose": "제품 식별이 필요한 시작점과 브랜드 표면에 정해진 lockup과 여백으로 사용하는 데 적합합니다. 기능 아이콘이나 장식처럼 반복 사용하지 않으며, 비율·색상·자간을 임의로 바꾸거나 다른 문구와 재조합하지 않습니다.",
+      "purpose": "기업 표기형과 기본형은 원본 조합을 그대로 사용하고, 제품 UI 파생형은 같은 벡터 윤곽만 재사용합니다. 기능 아이콘이나 장식처럼 반복 사용하지 않으며 비율·색상·자간을 임의로 바꾸지 않습니다.",
       "useWhen": [],
       "avoidWhen": [],
       "anatomy": [
@@ -45324,7 +45303,7 @@
           "name": "tone",
           "type": "'ink' | 'white' | 'brand' | 'current'",
           "required": false,
-          "description": "채움 프리셋 — 'ink' 네이비 · 'white' · 'brand' 시그널 잉크 · 'current'(currentColor). @default \"ink\"",
+          "description": "채움 프리셋 — 'ink'/'brand' 공식 네이비(05132B) · 'white' · 'current'(currentColor). @default \"ink\"",
           "owner": "LockupProps"
         },
         {
@@ -45363,18 +45342,13 @@
         },
         {
           "state": "tone",
-          "rule": "채움 프리셋 — 'ink' 네이비 · 'white' · 'brand' 시그널 잉크 · 'current'(currentColor). @default \"ink\""
+          "rule": "채움 프리셋 — 'ink'/'brand' 공식 네이비(05132B) · 'white' · 'current'(currentColor). @default \"ink\""
         }
       ],
       "behavior": [],
-      "quantitativeRules": [
-        {
-          "subject": "--color-semantic-brand-ink",
-          "rule": "light: #1B2240; dark: #E7EAF2"
-        }
-      ],
+      "quantitativeRules": [],
       "responsive": [
-        "LK ROBOTICS 로고. 에셋 파일 없이 자체 완결형 SVG입니다. variant는 mark/stacked/inline, tone은 ink/white/brand/current, 크기는 height로 지정합니다. 구성(마크·워드마크 비율)은 원본 트레이스 에셋(assets/brand/lk-logo-.svg)과 동일하게 고정 — 워드마크를 임의로 확대/재배치하지 마세요."
+        "LK ROBOTICS 로고. 제공된 공식 원본 SVG의 실제 path를 사용하는 자체 완결형 SVG입니다. stacked는 공식 원본의 배경 없는 조합이고, mark와 inline은 공식 윤곽을 그대로 사용하는 제품 UI 파생형입니다. tone은 ink/white/brand/current, 크기는 height로 지정합니다. 워드마크를 임의로 확대·재배치하거나 로고 색을 UI 토큰으로 바꾸지 마세요."
       ],
       "contentGuidance": [],
       "accessibility": [],
@@ -45386,10 +45360,7 @@
           "code": "<Lockup variant=\"inline\" tone=\"ink\" height={28} />\n<Lockup variant=\"mark\" tone=\"white\" height={40} />\n<Lockup variant=\"stacked\" height={72} />"
         }
       ],
-      "tokens": [
-        "--color-semantic-brand-ink",
-        "--color-semantic-static-white"
-      ],
+      "tokens": [],
       "apiLinks": [],
       "migration": [],
       "platformStatus": {
@@ -45421,14 +45392,14 @@
         "properties": "evidence",
         "states": "evidence",
         "behavior": "omitted-no-evidence",
-        "quantitativeRules": "evidence",
+        "quantitativeRules": "omitted-no-evidence",
         "responsive": "evidence",
         "contentGuidance": "omitted-no-evidence",
         "accessibility": "omitted-no-evidence",
         "exceptions": "omitted-no-evidence",
         "related": "omitted-no-evidence",
         "examples": "evidence",
-        "tokens": "evidence",
+        "tokens": "omitted-no-evidence",
         "apiLinks": "evidence",
         "migration": "omitted-no-evidence"
       }
