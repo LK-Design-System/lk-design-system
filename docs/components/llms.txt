@@ -557,9 +557,7 @@ Compiled source: docs/components/component-content.json
 
 - `--border-thin`
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-brand-ink`
 - `--color-semantic-fill-normal`
-- `--color-semantic-inverse-label`
 - `--color-semantic-label-disable`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-neutral`
@@ -921,8 +919,8 @@ Compiled source: docs/components/component-content.json
 | 명시 규칙 1 | status 점과 pushBadge는 색만으로 의미를 전달하지 않습니다(WCAG 1.4.1 / 1.1.1). 두 표식 모두 텍스트 대체를 갖습니다. |
 | 명시 규칙 2 | aria-label을 주면 Avatar는 role="img"가 되고 하위 노드가 노출되지 않으므로, 대체 텍스트가 그 이름 뒤에 합쳐집니다 → "김한, 다른 용무 중, 읽지 않음 3건". 이름이 없으면 visually-hidden 텍스트로 문서 순서에 렌더됩니다. aria-labelledby만 준 경우에는 생성된 hidden 노드 id가 aria-labelledby에 자동으로 이어붙습니다. |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-brand-ink | light: #05132B; dark: #E7EAF2 |
 | --color-semantic-interaction-inactive | light: #989BA2; dark: #5A5C63 |
+| --color-semantic-label-assistive | light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28) |
 
 ## Content and writing
 
@@ -957,9 +955,9 @@ Compiled source: docs/components/component-content.json
 ### Tokens
 
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-brand-ink`
 - `--color-semantic-interaction-inactive`
 - `--color-semantic-label-assistive`
+- `--color-semantic-label-normal`
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-normal`
@@ -1278,6 +1276,7 @@ Compiled source: docs/components/component-content.json
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-background-normal-normal`
 - `--color-semantic-brand-ink`
+- `--color-semantic-brand-on-surface`
 - `--color-semantic-brand-surface`
 - `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
@@ -1286,7 +1285,6 @@ Compiled source: docs/components/component-content.json
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-primary-normal`
-- `--color-semantic-static-white`
 - `--color-semantic-status-cautionary`
 - `--color-semantic-status-cautionary-text`
 - `--color-semantic-status-negative`
@@ -4937,8 +4935,8 @@ const firstFieldRef = useRef(null);
 | 명시 규칙 1 | Checkbox, Radio, and Switch use the same 8px control-to-label gap. Checkbox remains independently toggleable and uses mixed only for a true aggregate indeterminate state. |
 | 명시 규칙 2 | 타깃 크기: 시각 박스는 md 18px · sm 16px 그대로 두고, 그 위에 놓인 투명한 네이티브 input만 24×24px로 확장해 WCAG 2.5.8 (Target Size, Minimum)을 만족시킵니다. 픽셀 출력은 변하지 않습니다. |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-brand-ink | light: #05132B; dark: #E7EAF2 |
 | --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
+| --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
 
 ## Accessibility
 
@@ -4975,13 +4973,13 @@ const firstFieldRef = useRef(null);
 ### Tokens
 
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-brand-ink`
 - `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
 - `--color-semantic-focus-ring`
 - `--color-semantic-interaction-inactive`
 - `--color-semantic-label-disable`
 - `--color-semantic-label-neutral`
+- `--color-semantic-label-normal`
 - `--color-semantic-line-normal-neutral`
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-normal`
@@ -5414,7 +5412,7 @@ const firstFieldRef = useRef(null);
 | 명시 규칙 2 | Radio — 1.5px 헤어라인 원(20px, sm 16px). 선택되면 원이 시그널 잉크로 채워지고 화이트 중앙 점이 나타납니다. 그룹은 같은 name을 공유하세요. |
 | --body2-size | 15px |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-brand-ink | light: #05132B; dark: #E7EAF2 |
+| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 
 ## Content and writing
 
@@ -5452,10 +5450,10 @@ const firstFieldRef = useRef(null);
 
 - `--body2-size`
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-brand-ink`
 - `--color-semantic-fill-normal`
 - `--color-semantic-focus-ring`
 - `--color-semantic-label-disable`
+- `--color-semantic-label-normal`
 - `--color-semantic-line-normal-neutral`
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-normal`
@@ -6642,6 +6640,7 @@ const firstFieldRef = useRef(null);
 - `--color-semantic-accent-foreground-blue`
 - `--color-semantic-accent-foreground-red`
 - `--color-semantic-background-elevated-normal`
+- `--color-semantic-brand-on-surface`
 - `--color-semantic-brand-surface`
 - `--color-semantic-data-viz-series-4`
 - `--color-semantic-data-viz-series-5`
@@ -6897,8 +6896,8 @@ const firstFieldRef = useRef(null);
 | 명시 규칙 1 | 타입 스케일 정합: 제목 14.5px → --body2-size(15px), 본문 13.5px → --label1-size(14px)로 스냅했습니다. Toast 메시지(body2)·Snackbar 메시지(label1)와 같은 단계로 정렬됩니다. |
 | 명시 규칙 2 | Fluent 2 MessageBar의 card-level 배치 원칙을 따라 패널 상태 Banner는 header 바로 아래, 제어 본문보다 먼저 읽히게 합니다. 상태·설명·액션의 순서도 DOM 순서와 일치시킵니다. |
 | --body2-size | 15px |
-| --color-semantic-brand-surface | light: #05132B; dark: #05132B |
-| --color-semantic-inverse-label-neutral-soft | light: rgba(255, 255, 255, 0.62); dark: rgba(255, 255, 255, 0.62) |
+| --color-semantic-brand-on-surface-border | light: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent) |
+| --color-semantic-brand-on-surface-subtle | light: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent) |
 
 ## Content and writing
 
@@ -6932,12 +6931,12 @@ const firstFieldRef = useRef(null);
 ### Tokens
 
 - `--body2-size`
+- `--color-semantic-brand-on-surface`
+- `--color-semantic-brand-on-surface-border`
+- `--color-semantic-brand-on-surface-subtle`
 - `--color-semantic-brand-surface`
-- `--color-semantic-inverse-label-neutral-soft`
-- `--color-semantic-inverse-line-normal`
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
-- `--color-semantic-static-white`
 - `--font-sans`
 - `--fw-bold`
 - `--label1-size`
@@ -9199,10 +9198,10 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 ### Tokens
 
 - `--color-semantic-background-elevated-normal`
+- `--color-semantic-brand-on-surface`
 - `--color-semantic-brand-surface`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-solid-normal`
-- `--color-semantic-static-white`
 - `--font-sans`
 - `--label1-size`
 - `--radius-xl`
@@ -9546,12 +9545,12 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--body2-size`
 - `--color-semantic-accent-foreground-blue`
 - `--color-semantic-accent-foreground-orange`
+- `--color-semantic-brand-on-surface`
 - `--color-semantic-brand-surface`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-strong`
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-normal`
-- `--color-semantic-static-white`
 - `--component-card-bg`
 - `--component-card-border`
 - `--component-card-padding`
@@ -10303,9 +10302,9 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--border-hairline-dark`
 - `--caption1-line`
 - `--caption1-size`
+- `--color-semantic-brand-on-surface`
+- `--color-semantic-brand-on-surface-muted`
 - `--color-semantic-brand-surface`
-- `--color-semantic-inverse-label`
-- `--color-semantic-inverse-label-strong-soft`
 - `--dur-base`
 - `--dur-fast`
 - `--ease-out`
@@ -16870,7 +16869,6 @@ css
 - `--body2-size`
 - `--caption1-size`
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-brand-ink`
 - `--color-semantic-inverse-background`
 - `--color-semantic-inverse-label`
 - `--color-semantic-inverse-label-alternative-soft`
@@ -17629,18 +17627,17 @@ css
 
 - `--body2-size`
 - `--color-semantic-background-elevated-normal`
+- `--color-semantic-brand-on-surface`
+- `--color-semantic-brand-on-surface-border`
+- `--color-semantic-brand-on-surface-subtle`
 - `--color-semantic-brand-surface`
 - `--color-semantic-fill-alternative`
 - `--color-semantic-fill-normal`
-- `--color-semantic-inverse-fill-normal`
-- `--color-semantic-inverse-label`
-- `--color-semantic-inverse-label-neutral-soft`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-normal`
 - `--color-semantic-label-strong`
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-primary-normal`
-- `--color-semantic-static-white`
 - `--component-topbar-menu-gap`
 - `--component-topbar-menu-item-hover-bg`
 - `--component-topbar-menu-item-min-height`

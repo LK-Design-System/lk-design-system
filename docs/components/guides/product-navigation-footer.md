@@ -89,7 +89,6 @@
 - `--body2-size`
 - `--caption1-size`
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-brand-ink`
 - `--color-semantic-inverse-background`
 - `--color-semantic-inverse-label`
 - `--color-semantic-inverse-label-alternative-soft`

@@ -28,9 +28,9 @@ export function Callout({ tone = 'signal', title, headingLevel = false, children
   const palette = navy
     ? {
         icon: 'circle-info',
-        foreground: 'var(--color-semantic-static-white)',
+        foreground: 'var(--color-semantic-brand-on-surface)',
         surface: 'var(--color-semantic-brand-surface)',
-        border: 'var(--color-semantic-inverse-line-normal)',
+        border: 'var(--color-semantic-brand-on-surface-border)',
       }
     : statusToneStyle(normalizedTone);
   const c = palette.foreground;
@@ -70,8 +70,8 @@ export function Callout({ tone = 'signal', title, headingLevel = false, children
         {normalizedIcon}
       </span>
       <div style={{ flex: 1, minWidth: 0 }}>
-        {title != null && <Heading style={{ margin: 0, fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: navy ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-normal)', marginBottom: children != null ? 4 : 0 }}>{title}</Heading>}
-        {children != null && <div style={{ fontSize: 'var(--label1-size)', lineHeight: 1.65, color: navy ? 'var(--color-semantic-inverse-label-neutral-soft)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
+        {title != null && <Heading style={{ margin: 0, fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: navy ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-label-normal)', marginBottom: children != null ? 4 : 0 }}>{title}</Heading>}
+        {children != null && <div style={{ fontSize: 'var(--label1-size)', lineHeight: 1.65, color: navy ? 'var(--color-semantic-brand-on-surface-subtle)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
       </div>
     </div>
   );

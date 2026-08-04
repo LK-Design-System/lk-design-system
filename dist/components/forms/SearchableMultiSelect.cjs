@@ -1,12 +1,12 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk6YCIYN6Mcjs = require('../../chunk-6YCIYN6M.cjs');
+var _chunkEIO2J3CAcjs = require('../../chunk-EIO2J3CA.cjs');
 require('../../chunk-HYN6PXKL.cjs');
 require('../../chunk-BCWCCXJX.cjs');
-require('../../chunk-NFE2XSRZ.cjs');
+require('../../chunk-I6NJHF3L.cjs');
 require('../../chunk-X5XHQEI5.cjs');
 
 
-exports.SearchableMultiSelect = _chunk6YCIYN6Mcjs.SearchableMultiSelect;
+exports.SearchableMultiSelect = _chunkEIO2J3CAcjs.SearchableMultiSelect;
 //# sourceMappingURL=SearchableMultiSelect.cjs.map

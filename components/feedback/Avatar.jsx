@@ -190,7 +190,7 @@ export function Avatar({
   const fallbackBg = deactivated
     ? "var(--color-semantic-interaction-inactive)"
     : "var(--color-semantic-secondary-surface)";
-  const fallbackFg = deactivated ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-brand-ink)";
+  const fallbackFg = deactivated ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-label-normal)";
   const interactionStyle = resolveInteractionStyle(interaction);
   const resolvedBorderWeight = borderColor && !borderWeight ? 1 : borderWeight;
   const border = resolvedBorderWeight

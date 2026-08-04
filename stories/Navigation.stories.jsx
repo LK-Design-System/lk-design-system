@@ -426,7 +426,7 @@ export const LandingHeader = {
           navAlign="center"
           navigationLabel="어두운 랜딩 주 탐색"
           brand={<Lockup variant="inline" tone="white" height={22} />}
-          actions={<IconButton variant="on-dark" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--color-semantic-inverse-label)' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="on-dark" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--color-semantic-brand-on-surface)' }}>{SearchIcon}</IconButton>}
           style={{ borderRadius: 'var(--radius-xl)' }}
         >
           <TopBarNavItem active href="#" menuItems={productMenu}>개요</TopBarNavItem>
@@ -773,8 +773,8 @@ const topBarMenuStyle = {
 };
 
 function TopBarStaticNav({ dark = false }) {
-  const activeColor = dark ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-primary-normal)';
-  const idleColor = dark ? 'var(--color-semantic-inverse-label-neutral-soft)' : 'var(--color-semantic-label-alternative)';
+  const activeColor = dark ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-primary-normal)';
+  const idleColor = dark ? 'var(--color-semantic-brand-on-surface-subtle)' : 'var(--color-semantic-label-alternative)';
   const underline = dark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-normal)';
   const itemStyle = {
     padding: '10px 12px',
@@ -821,7 +821,7 @@ export const TopBarCard = {
           dark
           navAlign="center"
           brand={<Lockup variant="inline" tone="white" height={22} />}
-          actions={<IconButton variant="ghost" label="Search" style={{ background: 'transparent', border: 'none', color: 'var(--color-semantic-inverse-label)' }}>{SearchIcon}</IconButton>}
+          actions={<IconButton variant="ghost" label="Search" style={{ background: 'transparent', border: 'none', color: 'var(--color-semantic-brand-on-surface)' }}>{SearchIcon}</IconButton>}
         >
           <TopBarStaticNav dark />
         </TopBar>

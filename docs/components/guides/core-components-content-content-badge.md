@@ -102,6 +102,7 @@
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-background-normal-normal`
 - `--color-semantic-brand-ink`
+- `--color-semantic-brand-on-surface`
 - `--color-semantic-brand-surface`
 - `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
@@ -110,7 +111,6 @@
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-primary-normal`
-- `--color-semantic-static-white`
 - `--color-semantic-status-cautionary`
 - `--color-semantic-status-cautionary-text`
 - `--color-semantic-status-negative`

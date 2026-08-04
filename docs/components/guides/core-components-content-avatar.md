@@ -58,8 +58,8 @@
 | 명시 규칙 1 | status 점과 pushBadge는 색만으로 의미를 전달하지 않습니다(WCAG 1.4.1 / 1.1.1). 두 표식 모두 텍스트 대체를 갖습니다. |
 | 명시 규칙 2 | aria-label을 주면 Avatar는 role="img"가 되고 하위 노드가 노출되지 않으므로, 대체 텍스트가 그 이름 뒤에 합쳐집니다 → "김한, 다른 용무 중, 읽지 않음 3건". 이름이 없으면 visually-hidden 텍스트로 문서 순서에 렌더됩니다. aria-labelledby만 준 경우에는 생성된 hidden 노드 id가 aria-labelledby에 자동으로 이어붙습니다. |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-brand-ink | light: #05132B; dark: #E7EAF2 |
 | --color-semantic-interaction-inactive | light: #989BA2; dark: #5A5C63 |
+| --color-semantic-label-assistive | light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28) |
 
 ## Content and writing
 
@@ -94,9 +94,9 @@
 ### Tokens
 
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-brand-ink`
 - `--color-semantic-interaction-inactive`
 - `--color-semantic-label-assistive`
+- `--color-semantic-label-normal`
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-normal`

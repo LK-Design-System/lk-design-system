@@ -37,7 +37,7 @@ const productStageStyle = {
   gap: 16,
   padding: 24,
   background: 'var(--color-semantic-brand-surface)',
-  border: '1px solid var(--color-semantic-inverse-line-normal)',
+  border: '1px solid var(--color-semantic-brand-on-surface-border)',
   borderRadius: 'var(--radius-2xl)',
   boxShadow: 'var(--shadow-xl)',
   overflow: 'hidden',

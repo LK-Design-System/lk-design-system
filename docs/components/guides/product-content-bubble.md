@@ -59,10 +59,10 @@
 ### Tokens
 
 - `--color-semantic-background-elevated-normal`
+- `--color-semantic-brand-on-surface`
 - `--color-semantic-brand-surface`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-solid-normal`
-- `--color-semantic-static-white`
 - `--font-sans`
 - `--label1-size`
 - `--radius-xl`

@@ -72,7 +72,7 @@
 
   --component-button-secondary-bg: var(--color-semantic-secondary-normal);
   --component-button-secondary-bg-hover: var(--component-button-secondary-bg);
-  --component-button-secondary-fg: var(--color-semantic-inverse-label);
+  --component-button-secondary-fg: var(--color-semantic-static-white);
   --component-button-secondary-shadow-hover: var(--component-button-shadow-rest);
 
   --component-button-signal-bg: var(--color-semantic-primary-normal);
@@ -87,7 +87,7 @@
 
   --component-button-flat-bg: var(--color-semantic-secondary-surface);
   --component-button-flat-bg-hover: var(--component-button-flat-bg);
-  --component-button-flat-fg: var(--color-semantic-brand-ink);
+  --component-button-flat-fg: var(--color-semantic-label-normal);
 
   --component-button-ghost-bg: transparent;
   --component-button-ghost-bg-hover: var(--component-button-ghost-bg);

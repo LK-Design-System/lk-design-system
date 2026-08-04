@@ -140,7 +140,7 @@ export function ContentBadge({
     (neutralColor
       ? "var(--color-semantic-label-neutral)"
       : resolvedTone === "navy"
-        ? "var(--color-semantic-static-white)"
+        ? "var(--color-semantic-brand-on-surface)"
         : "var(--color-semantic-background-normal-normal)");
   const borderColor =
     accentContentColor ||

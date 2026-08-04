@@ -33,6 +33,7 @@ function withFoldedName(children, extra) {
  */
 export function PushBadge({ children, count, dot = false, max = 99, tone = 'negative', label, style, ...rest }) {
   const c = tone === 'signal' ? 'var(--color-semantic-primary-normal)' : tone === 'navy' ? 'var(--color-semantic-brand-surface)' : 'var(--color-semantic-status-negative-text)';
+  const foreground = tone === 'navy' ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-static-white)';
   const show = dot || (count != null && count > 0);
   const visualLabel = count > max ? `${max}+` : count;
   /* A bare dot carries no value, so it stays silent unless the consumer names
@@ -50,7 +51,7 @@ export function PushBadge({ children, count, dot = false, max = 99, tone = 'nega
       {show && (dot ? (
         <span aria-hidden="true" style={{ position: 'absolute', top: -1, right: -1, width: 9, height: 9, borderRadius: '50%', background: c, border: '2px solid var(--color-semantic-background-elevated-normal)', boxSizing: 'content-box' }} />
       ) : (
-        <span aria-hidden="true" style={{ position: 'absolute', top: -7, right: -9, minWidth: 18, height: 18, padding: '0 5px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: c, color: 'var(--color-semantic-static-white)', borderRadius: 'var(--radius-pill)', border: '2px solid var(--color-semantic-background-elevated-normal)', boxSizing: 'content-box', fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{visualLabel}</span>
+        <span aria-hidden="true" style={{ position: 'absolute', top: -7, right: -9, minWidth: 18, height: 18, padding: '0 5px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: c, color: foreground, borderRadius: 'var(--radius-pill)', border: '2px solid var(--color-semantic-background-elevated-normal)', boxSizing: 'content-box', fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{visualLabel}</span>
       ))}
     </span>
   );

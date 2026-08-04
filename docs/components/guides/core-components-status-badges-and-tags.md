@@ -94,6 +94,7 @@
 - `--color-semantic-accent-foreground-blue`
 - `--color-semantic-accent-foreground-red`
 - `--color-semantic-background-elevated-normal`
+- `--color-semantic-brand-on-surface`
 - `--color-semantic-brand-surface`
 - `--color-semantic-data-viz-series-4`
 - `--color-semantic-data-viz-series-5`

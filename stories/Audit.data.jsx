@@ -130,7 +130,7 @@ const templateItems = [
 ];
 
 const tokenGroups = [
-  ['브랜드 네이비', 'var(--color-semantic-brand-ink)', '텍스트와 다크 서피스의 기준'],
+  ['브랜드 네이비', 'var(--color-semantic-brand-ink)', '일반 화면의 브랜드 전경'],
   ['프라이머리 애저', 'var(--color-semantic-primary-normal)', '주요 CTA'],
   ['시그널 강조색', 'var(--color-semantic-primary-normal)', '링크, 활성 상태, 감지 신호'],
   ['쿨 뉴트럴', 'var(--color-semantic-label-alternative)', '보조 텍스트와 미세 구분'],

@@ -100,9 +100,7 @@
 
 - `--border-thin`
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-brand-ink`
 - `--color-semantic-fill-normal`
-- `--color-semantic-inverse-label`
 - `--color-semantic-label-disable`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-neutral`

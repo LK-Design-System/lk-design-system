@@ -2229,6 +2229,46 @@
         "origin": "lds-extension",
         "group": "brand"
       },
+      "brand-on-surface": {
+        "$type": "color",
+        "css": "--color-semantic-brand-on-surface",
+        "modes": {
+          "light": "var(--color-semantic-static-white)",
+          "dark": "var(--color-semantic-static-white)"
+        },
+        "origin": "lds-extension",
+        "group": "brand"
+      },
+      "brand-on-surface-muted": {
+        "$type": "color",
+        "css": "--color-semantic-brand-on-surface-muted",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-static-white) 92%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-static-white) 92%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "brand"
+      },
+      "brand-on-surface-subtle": {
+        "$type": "color",
+        "css": "--color-semantic-brand-on-surface-subtle",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "brand"
+      },
+      "brand-on-surface-border": {
+        "$type": "color",
+        "css": "--color-semantic-brand-on-surface-border",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "brand"
+      },
       "secondary-normal": {
         "$type": "color",
         "css": "--color-semantic-secondary-normal",
@@ -3613,7 +3653,7 @@
         "navyFg": {
           "$type": "color",
           "css": "--component-badge-navy-fg",
-          "$value": "var(--color-semantic-static-white)",
+          "$value": "var(--color-semantic-brand-on-surface)",
           "generated": true
         },
         "steelBg": {
@@ -3977,7 +4017,7 @@
           "tokens/components.css"
         ],
         "values": [
-          "var(--color-semantic-brand-ink)"
+          "var(--color-semantic-label-normal)"
         ],
         "classification": "runtime-projection",
         "reason": "Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked."
@@ -4417,7 +4457,7 @@
           "tokens/components.css"
         ],
         "values": [
-          "var(--color-semantic-inverse-label)"
+          "var(--color-semantic-static-white)"
         ],
         "classification": "runtime-projection",
         "reason": "Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked."

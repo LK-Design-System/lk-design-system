@@ -46,7 +46,7 @@ function BackToTopButton() {
   return (
     <button type="button" onClick={toTop} aria-label="맨 위로"
       style={{ position: 'fixed', right: 28, bottom: 28, zIndex: 60, width: 50, height: 50, borderRadius: 'var(--radius-pill)',
-        border: '1px solid var(--color-semantic-line-solid-normal)', background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-brand-ink)', cursor: 'pointer',
+        border: '1px solid var(--color-semantic-line-solid-normal)', background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-label-normal)', cursor: 'pointer',
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-md)',
         opacity: show ? 1 : 0, transform: show ? 'none' : 'translateY(8px)', pointerEvents: show ? 'auto' : 'none',
         transition: 'opacity 180ms var(--ease-out), transform 180ms var(--ease-out)' }}>

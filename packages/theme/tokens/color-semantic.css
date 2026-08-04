@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Semantic color roles — 108 tokens / light and dark (GENERATED — do not hand-edit)
+   LK ROBOTICS — Semantic color roles — 112 tokens / light and dark (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -66,6 +66,10 @@
   --color-semantic-accent-cyan: transparent;
   --color-semantic-brand-ink: #05132B;
   --color-semantic-brand-surface: #05132B;
+  --color-semantic-brand-on-surface: var(--color-semantic-static-white);
+  --color-semantic-brand-on-surface-muted: color-mix(in srgb, var(--color-semantic-static-white) 92%, transparent);
+  --color-semantic-brand-on-surface-subtle: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent);
+  --color-semantic-brand-on-surface-border: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent);
   --color-semantic-secondary-normal: #2C3547;
   --color-semantic-secondary-surface: #EAECF1;
   --color-semantic-background-band: #F4F4F5;
@@ -177,6 +181,10 @@
   --color-semantic-accent-cyan: transparent;
   --color-semantic-brand-ink: #E7EAF2;
   --color-semantic-brand-surface: #05132B;
+  --color-semantic-brand-on-surface: var(--color-semantic-static-white);
+  --color-semantic-brand-on-surface-muted: color-mix(in srgb, var(--color-semantic-static-white) 92%, transparent);
+  --color-semantic-brand-on-surface-subtle: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent);
+  --color-semantic-brand-on-surface-border: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent);
   --color-semantic-secondary-normal: #2C3547;
   --color-semantic-secondary-surface: rgba(255, 255, 255, 0.10);
   --color-semantic-background-band: #0E121F;
@@ -289,6 +297,10 @@
     --color-semantic-accent-cyan: transparent;
     --color-semantic-brand-ink: #E7EAF2;
     --color-semantic-brand-surface: #05132B;
+    --color-semantic-brand-on-surface: var(--color-semantic-static-white);
+    --color-semantic-brand-on-surface-muted: color-mix(in srgb, var(--color-semantic-static-white) 92%, transparent);
+    --color-semantic-brand-on-surface-subtle: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent);
+    --color-semantic-brand-on-surface-border: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent);
     --color-semantic-secondary-normal: #2C3547;
     --color-semantic-secondary-surface: rgba(255, 255, 255, 0.10);
     --color-semantic-background-band: #0E121F;

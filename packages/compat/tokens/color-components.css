@@ -17,7 +17,7 @@
   --component-badge-signal-bg: var(--color-semantic-primary-normal);
   --component-badge-signal-fg: var(--color-semantic-static-white);
   --component-badge-navy-bg: var(--color-semantic-brand-surface);
-  --component-badge-navy-fg: var(--color-semantic-static-white);
+  --component-badge-navy-fg: var(--color-semantic-brand-on-surface);
   --component-badge-steel-bg: var(--color-semantic-primary-surface-strong);
   --component-badge-steel-fg: var(--color-semantic-accent-blue-text);
   --component-badge-positive-bg: var(--color-semantic-status-positive-surface);
@@ -42,7 +42,7 @@
   --component-badge-signal-bg: var(--color-semantic-primary-heavy);
   --component-badge-signal-fg: var(--color-semantic-static-white);
   --component-badge-navy-bg: var(--color-semantic-brand-surface);
-  --component-badge-navy-fg: var(--color-semantic-static-white);
+  --component-badge-navy-fg: var(--color-semantic-brand-on-surface);
   --component-badge-steel-bg: var(--color-semantic-primary-surface-strong);
   --component-badge-steel-fg: var(--color-semantic-accent-blue-text);
   --component-badge-positive-bg: var(--color-semantic-status-positive-surface);
@@ -68,7 +68,7 @@
     --component-badge-signal-bg: var(--color-semantic-primary-heavy);
     --component-badge-signal-fg: var(--color-semantic-static-white);
     --component-badge-navy-bg: var(--color-semantic-brand-surface);
-    --component-badge-navy-fg: var(--color-semantic-static-white);
+    --component-badge-navy-fg: var(--color-semantic-brand-on-surface);
     --component-badge-steel-bg: var(--color-semantic-primary-surface-strong);
     --component-badge-steel-fg: var(--color-semantic-accent-blue-text);
     --component-badge-positive-bg: var(--color-semantic-status-positive-surface);

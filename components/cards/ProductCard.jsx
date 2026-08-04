@@ -137,17 +137,17 @@ export function ProductCard({
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
           {/* Optional category is neutral inverse text: the image-led surface
               should not promote secondary metadata above the product code. */}
-          {category && <span style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--color-semantic-inverse-label-strong-soft)' }}>{category}</span>}
-          <HeadingTag style={{ margin: 0, fontSize: 'var(--fs-h5)', lineHeight: 'var(--lh-h5)', fontWeight: 'var(--fw-extra)', letterSpacing: 'var(--ls-h5)', color: 'var(--color-semantic-inverse-label)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{id}</HeadingTag>
+          {category && <span style={{ fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', color: 'var(--color-semantic-brand-on-surface-muted)' }}>{category}</span>}
+          <HeadingTag style={{ margin: 0, fontSize: 'var(--fs-h5)', lineHeight: 'var(--lh-h5)', fontWeight: 'var(--fw-extra)', letterSpacing: 'var(--ls-h5)', color: 'var(--color-semantic-brand-on-surface)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{id}</HeadingTag>
         </div>
         {/* 2-line clamp keeps the content block inside the protected scrim zone
             so long copy never grows up into the subject area. */}
-        {description && <p style={{ margin: 0, fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-reading-line)', color: 'var(--color-semantic-inverse-label-strong-soft)', wordBreak: 'keep-all', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden' }}>{description}</p>}
+        {description && <p style={{ margin: 0, fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-reading-line)', color: 'var(--color-semantic-brand-on-surface-muted)', wordBreak: 'keep-all', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden' }}>{description}</p>}
         {cta && (
           <span style={{
             alignSelf: 'flex-end', marginTop: 4, whiteSpace: 'nowrap',
             fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0,
-            color: hover ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-inverse-label-strong-soft)',
+            color: hover ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-brand-on-surface-muted)',
             textDecoration: hover ? 'underline' : 'none', textUnderlineOffset: 3,
             transition: 'color var(--dur-fast) var(--ease-out)',
           }}>{cta}</span>

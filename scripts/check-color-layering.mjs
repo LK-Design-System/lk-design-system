@@ -32,6 +32,9 @@ const implementationFiles = [
   ...await collect('stories', (file) => /\.(jsx|js|tsx|ts|css)$/.test(file)),
 ];
 const failures = [];
+const brandInkComponentAllowlist = new Set([
+  'components/content/ContentBadge.jsx',
+]);
 for (const file of implementationFiles) {
   const text = await readFile(path.join(root, file), 'utf8');
   if (/var\(\s*--bw-[a-zA-Z0-9_-]+/.test(text)) failures.push(`${file}: removed --bw-* color variable`);
@@ -41,6 +44,12 @@ for (const file of implementationFiles) {
   }
   if (file.startsWith('components/') && text.includes('--color-atomic-')) {
     failures.push(`${file}: component implementation references an atomic color directly`);
+  }
+  if (file.startsWith('components/') && text.includes('--color-semantic-brand-surface') && /--color-semantic-inverse-(?:label|line|fill)/.test(text)) {
+    failures.push(`${file}: fixed brand-surface must use brand-on-surface roles, not theme-inverting inverse roles`);
+  }
+  if (file.startsWith('components/') && text.includes('--color-semantic-brand-ink') && !brandInkComponentAllowlist.has(file)) {
+    failures.push(`${file}: brand-ink is reserved for explicit brand/navy foregrounds; use a normal label or component role`);
   }
   if (/var\(\s*--component-(?:banner|callout)-/.test(text)) {
     failures.push(`${file}: --component-banner-*/--component-callout-* aliases are deprecated; consume status surface colors via statusToneStyle`);

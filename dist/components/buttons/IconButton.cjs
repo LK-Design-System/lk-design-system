@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkNFE2XSRZcjs = require('../../chunk-NFE2XSRZ.cjs');
+var _chunkI6NJHF3Lcjs = require('../../chunk-I6NJHF3L.cjs');
 
 
-exports.IconButton = _chunkNFE2XSRZcjs.IconButton;
+exports.IconButton = _chunkI6NJHF3Lcjs.IconButton;
 //# sourceMappingURL=IconButton.cjs.map

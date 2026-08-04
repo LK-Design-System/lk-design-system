@@ -949,15 +949,13 @@
         "--component-icon-button-size-sm",
         "--component-icon-button-size-md",
         "--color-semantic-secondary-surface",
-        "--color-semantic-brand-ink",
+        "--color-semantic-label-normal",
         "--color-semantic-secondary-normal",
-        "--color-semantic-inverse-label",
-        "--color-semantic-primary-normal",
         "--color-semantic-static-white",
+        "--color-semantic-primary-normal",
         "--color-semantic-background-elevated-normal",
         "--color-semantic-line-solid-normal",
         "--viewer-foreground",
-        "--color-semantic-label-normal",
         "--color-semantic-label-disable",
         "--color-semantic-fill-normal",
         "--border-thin",
@@ -2192,7 +2190,7 @@
         "--color-semantic-primary-surface-normal",
         "--color-semantic-accent-foreground-blue",
         "--color-semantic-accent-foreground-orange",
-        "--color-semantic-static-white",
+        "--color-semantic-brand-on-surface",
         "--color-semantic-brand-surface",
         "--component-card-bg",
         "--component-card-border",
@@ -3075,12 +3073,12 @@
         "--caption1-line",
         "--fw-bold",
         "--ls-overline",
-        "--color-semantic-inverse-label-strong-soft",
+        "--color-semantic-brand-on-surface-muted",
         "--fs-h5",
         "--lh-h5",
         "--fw-extra",
         "--ls-h5",
-        "--color-semantic-inverse-label",
+        "--color-semantic-brand-on-surface",
         "--label1-size",
         "--label1-reading-line",
         "--label2-size",
@@ -4382,7 +4380,7 @@
       "tokens": [
         "--color-semantic-brand-surface",
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-static-white",
+        "--color-semantic-brand-on-surface",
         "--color-semantic-label-normal",
         "--color-semantic-line-solid-normal",
         "--radius-xl",
@@ -4751,7 +4749,7 @@
         "--color-semantic-background-elevated-normal",
         "--color-semantic-fill-normal",
         "--color-semantic-fill-strong",
-        "--color-semantic-static-white",
+        "--color-semantic-brand-on-surface",
         "--color-semantic-background-normal-normal",
         "--color-semantic-line-normal-normal",
         "--font-sans",
@@ -14025,7 +14023,7 @@
         "--color-semantic-status-negative",
         "--color-semantic-interaction-inactive",
         "--color-semantic-secondary-surface",
-        "--color-semantic-brand-ink",
+        "--color-semantic-label-normal",
         "--color-semantic-line-normal-normal",
         "--dur-fast",
         "--ease-out",
@@ -14645,8 +14643,9 @@
         "--color-semantic-primary-normal",
         "--color-semantic-brand-surface",
         "--color-semantic-status-negative-text",
-        "--color-semantic-background-elevated-normal",
+        "--color-semantic-brand-on-surface",
         "--color-semantic-static-white",
+        "--color-semantic-background-elevated-normal",
         "--radius-pill",
         "--font-sans",
         "--caption2-size",
@@ -15304,7 +15303,7 @@
         "--component-input-gap",
         "--font-sans",
         "--label1-size",
-        "--color-semantic-brand-ink",
+        "--color-semantic-label-normal",
         "--fw-bold"
       ],
       "externalReferences": [
@@ -18200,7 +18199,7 @@
         "--component-input-gap",
         "--font-sans",
         "--body2-size",
-        "--color-semantic-brand-ink",
+        "--color-semantic-label-normal",
         "--fw-bold",
         "--radius-pill",
         "--color-semantic-focus-ring",
@@ -23328,7 +23327,7 @@
         "--radius-pill",
         "--color-semantic-line-solid-normal",
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-brand-ink",
+        "--color-semantic-label-normal",
         "--shadow-md",
         "--ease-out",
         "--font-sans",
@@ -23337,7 +23336,6 @@
         "--caption1-size",
         "--color-semantic-label-alternative",
         "--space-4-5",
-        "--color-semantic-label-normal",
         "--color-semantic-inverse-label-neutral-soft",
         "--color-semantic-inverse-background",
         "--body2-size",
@@ -24873,16 +24871,15 @@
         "--color-semantic-fill-normal",
         "--color-semantic-brand-surface",
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-inverse-label",
+        "--color-semantic-brand-on-surface",
         "--color-semantic-label-normal",
-        "--color-semantic-inverse-fill-normal",
+        "--color-semantic-brand-on-surface-border",
         "--color-semantic-line-normal-normal",
         "--font-sans",
         "--space-2-5",
-        "--color-semantic-static-white",
         "--color-semantic-primary-normal",
         "--color-semantic-label-strong",
-        "--color-semantic-inverse-label-neutral-soft",
+        "--color-semantic-brand-on-surface-subtle",
         "--color-semantic-label-alternative",
         "--body2-size",
         "--dur-fast",
@@ -29927,9 +29924,9 @@
         }
       ],
       "tokens": [
-        "--color-semantic-static-white",
+        "--color-semantic-brand-on-surface",
         "--color-semantic-brand-surface",
-        "--color-semantic-inverse-line-normal",
+        "--color-semantic-brand-on-surface-border",
         "--space-3-5",
         "--radius-lg",
         "--font-sans",
@@ -29938,7 +29935,7 @@
         "--fw-bold",
         "--color-semantic-label-normal",
         "--label1-size",
-        "--color-semantic-inverse-label-neutral-soft",
+        "--color-semantic-brand-on-surface-subtle",
         "--color-semantic-label-neutral"
       ],
       "externalReferences": [
@@ -33391,9 +33388,7 @@
       "tokens": [
         "--border-thin",
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-brand-ink",
         "--color-semantic-fill-normal",
-        "--color-semantic-inverse-label",
         "--color-semantic-label-disable",
         "--color-semantic-label-normal",
         "--color-semantic-line-normal-neutral",
@@ -34154,12 +34149,12 @@
           "rule": "light: #FFFFFF; dark: #212225"
         },
         {
-          "subject": "--color-semantic-brand-ink",
-          "rule": "light: #05132B; dark: #E7EAF2"
-        },
-        {
           "subject": "--color-semantic-interaction-inactive",
           "rule": "light: #989BA2; dark: #5A5C63"
+        },
+        {
+          "subject": "--color-semantic-label-assistive",
+          "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
         }
       ],
       "responsive": [],
@@ -34204,9 +34199,9 @@
       ],
       "tokens": [
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-brand-ink",
         "--color-semantic-interaction-inactive",
         "--color-semantic-label-assistive",
+        "--color-semantic-label-normal",
         "--color-semantic-line-normal-normal",
         "--color-semantic-line-solid-normal",
         "--color-semantic-primary-normal",
@@ -34912,6 +34907,7 @@
         "--color-semantic-background-elevated-normal",
         "--color-semantic-background-normal-normal",
         "--color-semantic-brand-ink",
+        "--color-semantic-brand-on-surface",
         "--color-semantic-brand-surface",
         "--color-semantic-fill-normal",
         "--color-semantic-fill-strong",
@@ -34920,7 +34916,6 @@
         "--color-semantic-label-normal",
         "--color-semantic-line-normal-normal",
         "--color-semantic-primary-normal",
-        "--color-semantic-static-white",
         "--color-semantic-status-cautionary",
         "--color-semantic-status-cautionary-text",
         "--color-semantic-status-negative",
@@ -42805,12 +42800,12 @@
           "rule": "light: #FFFFFF; dark: #212225"
         },
         {
-          "subject": "--color-semantic-brand-ink",
-          "rule": "light: #05132B; dark: #E7EAF2"
-        },
-        {
           "subject": "--color-semantic-fill-normal",
           "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+        },
+        {
+          "subject": "--color-semantic-fill-strong",
+          "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
         }
       ],
       "responsive": [],
@@ -42865,13 +42860,13 @@
       ],
       "tokens": [
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-brand-ink",
         "--color-semantic-fill-normal",
         "--color-semantic-fill-strong",
         "--color-semantic-focus-ring",
         "--color-semantic-interaction-inactive",
         "--color-semantic-label-disable",
         "--color-semantic-label-neutral",
+        "--color-semantic-label-normal",
         "--color-semantic-line-normal-neutral",
         "--color-semantic-line-solid-normal",
         "--color-semantic-primary-normal",
@@ -43903,8 +43898,8 @@
           "rule": "light: #FFFFFF; dark: #212225"
         },
         {
-          "subject": "--color-semantic-brand-ink",
-          "rule": "light: #05132B; dark: #E7EAF2"
+          "subject": "--color-semantic-fill-normal",
+          "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
         }
       ],
       "responsive": [],
@@ -43959,10 +43954,10 @@
       "tokens": [
         "--body2-size",
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-brand-ink",
         "--color-semantic-fill-normal",
         "--color-semantic-focus-ring",
         "--color-semantic-label-disable",
+        "--color-semantic-label-normal",
         "--color-semantic-line-normal-neutral",
         "--color-semantic-line-solid-normal",
         "--color-semantic-primary-normal",
@@ -46745,6 +46740,7 @@
         "--color-semantic-accent-foreground-blue",
         "--color-semantic-accent-foreground-red",
         "--color-semantic-background-elevated-normal",
+        "--color-semantic-brand-on-surface",
         "--color-semantic-brand-surface",
         "--color-semantic-data-viz-series-4",
         "--color-semantic-data-viz-series-5",
@@ -47244,12 +47240,12 @@
           "rule": "15px"
         },
         {
-          "subject": "--color-semantic-brand-surface",
-          "rule": "light: #05132B; dark: #05132B"
+          "subject": "--color-semantic-brand-on-surface-border",
+          "rule": "light: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)"
         },
         {
-          "subject": "--color-semantic-inverse-label-neutral-soft",
-          "rule": "light: rgba(255, 255, 255, 0.62); dark: rgba(255, 255, 255, 0.62)"
+          "subject": "--color-semantic-brand-on-surface-subtle",
+          "rule": "light: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent)"
         }
       ],
       "responsive": [],
@@ -47291,12 +47287,12 @@
       ],
       "tokens": [
         "--body2-size",
+        "--color-semantic-brand-on-surface",
+        "--color-semantic-brand-on-surface-border",
+        "--color-semantic-brand-on-surface-subtle",
         "--color-semantic-brand-surface",
-        "--color-semantic-inverse-label-neutral-soft",
-        "--color-semantic-inverse-line-normal",
         "--color-semantic-label-neutral",
         "--color-semantic-label-normal",
-        "--color-semantic-static-white",
         "--font-sans",
         "--fw-bold",
         "--label1-size",
@@ -51628,10 +51624,10 @@
       ],
       "tokens": [
         "--color-semantic-background-elevated-normal",
+        "--color-semantic-brand-on-surface",
         "--color-semantic-brand-surface",
         "--color-semantic-label-normal",
         "--color-semantic-line-solid-normal",
-        "--color-semantic-static-white",
         "--font-sans",
         "--label1-size",
         "--radius-xl",
@@ -52311,12 +52307,12 @@
         "--body2-size",
         "--color-semantic-accent-foreground-blue",
         "--color-semantic-accent-foreground-orange",
+        "--color-semantic-brand-on-surface",
         "--color-semantic-brand-surface",
         "--color-semantic-label-alternative",
         "--color-semantic-label-strong",
         "--color-semantic-primary-normal",
         "--color-semantic-primary-surface-normal",
-        "--color-semantic-static-white",
         "--component-card-bg",
         "--component-card-border",
         "--component-card-padding",
@@ -53889,9 +53885,9 @@
         "--border-hairline-dark",
         "--caption1-line",
         "--caption1-size",
+        "--color-semantic-brand-on-surface",
+        "--color-semantic-brand-on-surface-muted",
         "--color-semantic-brand-surface",
-        "--color-semantic-inverse-label",
-        "--color-semantic-inverse-label-strong-soft",
         "--dur-base",
         "--dur-fast",
         "--ease-out",
@@ -67359,7 +67355,6 @@
         "--body2-size",
         "--caption1-size",
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-brand-ink",
         "--color-semantic-inverse-background",
         "--color-semantic-inverse-label",
         "--color-semantic-inverse-label-alternative-soft",
@@ -68898,18 +68893,17 @@
       "tokens": [
         "--body2-size",
         "--color-semantic-background-elevated-normal",
+        "--color-semantic-brand-on-surface",
+        "--color-semantic-brand-on-surface-border",
+        "--color-semantic-brand-on-surface-subtle",
         "--color-semantic-brand-surface",
         "--color-semantic-fill-alternative",
         "--color-semantic-fill-normal",
-        "--color-semantic-inverse-fill-normal",
-        "--color-semantic-inverse-label",
-        "--color-semantic-inverse-label-neutral-soft",
         "--color-semantic-label-alternative",
         "--color-semantic-label-normal",
         "--color-semantic-label-strong",
         "--color-semantic-line-normal-normal",
         "--color-semantic-primary-normal",
-        "--color-semantic-static-white",
         "--component-topbar-menu-gap",
         "--component-topbar-menu-item-hover-bg",
         "--component-topbar-menu-item-min-height",

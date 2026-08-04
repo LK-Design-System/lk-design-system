@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkUBIYI4D5cjs = require('../../chunk-UBIYI4D5.cjs');
+var _chunk3DSWAMMXcjs = require('../../chunk-3DSWAMMX.cjs');
 require('../../chunk-677EM4M2.cjs');
 
 
-exports.PushBadge = _chunkUBIYI4D5cjs.PushBadge;
+exports.PushBadge = _chunk3DSWAMMXcjs.PushBadge;
 //# sourceMappingURL=PushBadge.cjs.map

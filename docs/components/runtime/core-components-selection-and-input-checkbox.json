@@ -239,12 +239,12 @@
       "rule": "light: #FFFFFF; dark: #212225"
     },
     {
-      "subject": "--color-semantic-brand-ink",
-      "rule": "light: #05132B; dark: #E7EAF2"
-    },
-    {
       "subject": "--color-semantic-fill-normal",
       "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+    },
+    {
+      "subject": "--color-semantic-fill-strong",
+      "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
     }
   ],
   "responsive": [],
@@ -299,13 +299,13 @@
   ],
   "tokens": [
     "--color-semantic-background-elevated-normal",
-    "--color-semantic-brand-ink",
     "--color-semantic-fill-normal",
     "--color-semantic-fill-strong",
     "--color-semantic-focus-ring",
     "--color-semantic-interaction-inactive",
     "--color-semantic-label-disable",
     "--color-semantic-label-neutral",
+    "--color-semantic-label-normal",
     "--color-semantic-line-normal-neutral",
     "--color-semantic-line-solid-normal",
     "--color-semantic-primary-normal",

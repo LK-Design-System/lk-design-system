@@ -23,7 +23,7 @@ const colors = [
   ['Primary hover', 'var(--color-semantic-primary-strong)'],
   ['Secondary', 'var(--color-semantic-secondary-normal)'],
   ['Accent tint', 'var(--color-semantic-primary-surface-normal)'],
-  ['Ink', 'var(--color-semantic-brand-ink)'],
+  ['Brand ink', 'var(--color-semantic-brand-ink)'],
   ['Border', 'var(--color-semantic-line-solid-normal)'],
   ['Green (vivid)', 'var(--color-semantic-status-positive)'],
   ['Amber (vivid)', 'var(--color-semantic-status-cautionary)'],

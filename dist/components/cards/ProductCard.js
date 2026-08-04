@@ -1,7 +1,7 @@
 "use client";
 import {
   ProductCard
-} from "../../chunk-MJWZD4RY.js";
+} from "../../chunk-WP6GO2QJ.js";
 export {
   ProductCard
 };

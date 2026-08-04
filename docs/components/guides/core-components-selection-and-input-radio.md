@@ -55,7 +55,7 @@
 | 명시 규칙 2 | Radio — 1.5px 헤어라인 원(20px, sm 16px). 선택되면 원이 시그널 잉크로 채워지고 화이트 중앙 점이 나타납니다. 그룹은 같은 name을 공유하세요. |
 | --body2-size | 15px |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-brand-ink | light: #05132B; dark: #E7EAF2 |
+| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 
 ## Content and writing
 
@@ -93,10 +93,10 @@
 
 - `--body2-size`
 - `--color-semantic-background-elevated-normal`
-- `--color-semantic-brand-ink`
 - `--color-semantic-fill-normal`
 - `--color-semantic-focus-ring`
 - `--color-semantic-label-disable`
+- `--color-semantic-label-normal`
 - `--color-semantic-line-normal-neutral`
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-normal`

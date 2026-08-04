@@ -71,10 +71,10 @@ export function IconButton({
         md: 'var(--component-icon-button-size-md)',
       }[size] || 'var(--component-icon-button-size-md)');
   const palettes = {
-    soft:    { bg: 'var(--color-semantic-secondary-surface)', bgHover: 'var(--color-semantic-secondary-surface)', fg: 'var(--color-semantic-brand-ink)', bd: 'none' },
-    solid:   { bg: 'var(--color-semantic-secondary-normal)', bgHover: 'var(--color-semantic-secondary-normal)', fg: 'var(--color-semantic-inverse-label)', bd: 'none' },
+    soft:    { bg: 'var(--color-semantic-secondary-surface)', bgHover: 'var(--color-semantic-secondary-surface)', fg: 'var(--color-semantic-label-normal)', bd: 'none' },
+    solid:   { bg: 'var(--color-semantic-secondary-normal)', bgHover: 'var(--color-semantic-secondary-normal)', fg: 'var(--color-semantic-static-white)', bd: 'none' },
     signal:  { bg: 'var(--color-semantic-primary-normal)', bgHover: 'var(--color-semantic-primary-normal)', fg: 'var(--color-semantic-static-white)', bd: 'none' },
-    ghost:   { bg: 'var(--color-semantic-background-elevated-normal)', bgHover: 'var(--color-semantic-background-elevated-normal)', fg: 'var(--color-semantic-brand-ink)', bd: '1px solid var(--color-semantic-line-solid-normal)' },
+    ghost:   { bg: 'var(--color-semantic-background-elevated-normal)', bgHover: 'var(--color-semantic-background-elevated-normal)', fg: 'var(--color-semantic-label-normal)', bd: '1px solid var(--color-semantic-line-solid-normal)' },
     plain:   { bg: 'transparent', bgHover: 'color-mix(in srgb, var(--viewer-foreground, var(--color-semantic-label-normal)) 7%, transparent)', fg: 'var(--viewer-foreground, var(--color-semantic-label-normal))', bd: '1px solid transparent' },
     'on-dark': {
       bg: 'color-mix(in srgb, var(--color-semantic-static-white) 10%, transparent)',

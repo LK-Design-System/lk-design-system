@@ -141,8 +141,8 @@ export function TopBar({ brand, children, actions, navigationLabel = '주 탐색
         width: '100%', maxWidth: '100%', minWidth: 0, overflow: 'visible',
         height, paddingInline: 'clamp(16px, 4vw, 32px)', boxSizing: 'border-box',
         background: dark ? 'var(--color-semantic-brand-surface)' : (sticky ? 'color-mix(in srgb, var(--color-semantic-background-elevated-normal) 88%, transparent)' : 'var(--color-semantic-background-elevated-normal)'),
-        color: dark ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-label-normal)',
-        borderBottom: bordered ? `1px solid ${dark ? 'var(--color-semantic-inverse-fill-normal)' : 'var(--color-semantic-line-normal-normal)'}` : 'none',
+        color: dark ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-label-normal)',
+        borderBottom: bordered ? `1px solid ${dark ? 'var(--color-semantic-brand-on-surface-border)' : 'var(--color-semantic-line-normal-normal)'}` : 'none',
         backdropFilter: sticky ? 'saturate(150%) blur(8px)' : 'none',
         WebkitBackdropFilter: sticky ? 'saturate(150%) blur(8px)' : 'none',
         fontFamily: 'var(--font-sans)', ...style,
@@ -315,10 +315,10 @@ export function TopBarNavItem({
     || (typeof children === 'string' || typeof children === 'number' ? `${children} 하위 메뉴` : '하위 메뉴');
 
   const fg = active
-    ? (onDark ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-primary-normal)')
+    ? (onDark ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-primary-normal)')
     : activeOrHover
-      ? (onDark ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-strong)')
-      : (onDark ? 'var(--color-semantic-inverse-label-neutral-soft)' : 'var(--color-semantic-label-alternative)');
+      ? (onDark ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-label-strong)')
+      : (onDark ? 'var(--color-semantic-brand-on-surface-subtle)' : 'var(--color-semantic-label-alternative)');
 
   return (
     <span

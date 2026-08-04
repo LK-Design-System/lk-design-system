@@ -87,13 +87,38 @@ const BRAND_SOLIDS = [
   {
     token: '--color-semantic-brand-ink',
     label: '브랜드 잉크',
-    where: '브랜드 배경 위에 얹는 글자색입니다. 로고를 칠하는 색이 아니며, 테마에 따라 값이 뒤집힙니다.',
+    where: '일반 화면 위에서 브랜드 네이비의 인상을 내는 전경색입니다. 테마에 따라 밝게 바뀌며, 브랜드 배경 위에는 사용하지 않습니다.',
+  },
+];
+
+const BRAND_ON_SURFACE = [
+  {
+    token: '--color-semantic-brand-on-surface',
+    label: '강조 전경',
+    sample: '제목과 핵심 액션',
+  },
+  {
+    token: '--color-semantic-brand-on-surface-muted',
+    label: '보조 전경',
+    sample: '설명과 보조 액션',
+  },
+  {
+    token: '--color-semantic-brand-on-surface-subtle',
+    label: '약한 전경',
+    sample: '메타데이터와 부가 정보',
+  },
+  {
+    token: '--color-semantic-brand-on-surface-border',
+    label: '브랜드 경계선',
+    sample: '네이비 면 내부의 구분선',
+    kind: 'border',
   },
 ];
 
 const BRAND_TOKEN_NAMES = [
   ...BRAND_SURFACES.map((surface) => surface.token),
   ...BRAND_SOLIDS.map((solid) => solid.token),
+  ...BRAND_ON_SURFACE.map((foreground) => foreground.token),
 ];
 
 // Values are read from a node inside this section rather than transcribed, because
@@ -309,6 +334,36 @@ function BrandColorReference() {
             </div>
           ))}
         </div>
+        <div
+          style={{
+            display: 'grid',
+            gap: 'var(--space-3)',
+            padding: 'var(--space-5)',
+            borderRadius: 'var(--radius-lg)',
+            background: 'var(--color-semantic-brand-surface)',
+            border: '1px solid var(--color-semantic-brand-on-surface-border)',
+          }}
+        >
+          <strong style={{ color: 'var(--color-semantic-brand-on-surface)' }}>브랜드 서피스 전용 전경</strong>
+          {BRAND_ON_SURFACE.map((foreground) => (
+            <div
+              key={foreground.token}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'minmax(100px, 0.8fr) minmax(140px, 1fr)',
+                gap: 'var(--space-3)',
+                alignItems: 'center',
+                paddingTop: 'var(--space-2)',
+                borderTop: `1px solid var(${foreground.kind === 'border' ? foreground.token : '--color-semantic-brand-on-surface-border'})`,
+              }}
+            >
+              <span style={{ color: `var(${foreground.kind === 'border' ? '--color-semantic-brand-on-surface-subtle' : foreground.token})` }}>{foreground.label}</span>
+              <span style={{ color: 'var(--color-semantic-brand-on-surface-subtle)', fontSize: 12 }}>
+                {foreground.sample}<br /><code>{foreground.token}</code>
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div
@@ -326,7 +381,8 @@ function BrandColorReference() {
           <li>
             <strong>브랜드 네이비 토큰도 공식 <code>#05132B</code>에 맞춥니다.</strong>{' '}
             <code>--color-semantic-brand-surface</code>와 라이트 모드의 <code>--color-semantic-brand-ink</code>가 같은 값을
-            공유하지만, 로고 path는 토큰으로 다시 칠하지 않고 공식 자산의 고정 색을 유지합니다.
+            공유하지만 역할은 다릅니다. 네이비 면 위의 글자·아이콘·경계선에는 <code>brand-on-surface*</code>를 사용하고,
+            로고 path는 토큰으로 다시 칠하지 않고 공식 자산의 고정 색을 유지합니다.
           </li>
           <li>
             <strong><code>#6BBBDD</code>는 UI 파란색이 아닙니다.</strong> 기업 표기형의 한글 법인명에만 들어가는
@@ -475,8 +531,8 @@ export const LKRoboticsLogo = {
               >
                 <Lockup variant="inline" tone={tone} height={28} />
                 <div style={{ display: 'grid', gap: 4 }}>
-                  <strong style={{ color: isDark ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-normal)' }}>{label}</strong>
-                  <code style={{ color: isDark ? 'var(--color-semantic-inverse-label-neutral-soft)' : 'var(--color-semantic-label-alternative)', fontSize: 12 }}>
+                  <strong style={{ color: isDark ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-label-normal)' }}>{label}</strong>
+                  <code style={{ color: isDark ? 'var(--color-semantic-brand-on-surface-subtle)' : 'var(--color-semantic-label-alternative)', fontSize: 12 }}>
                     tone="{tone}"
                   </code>
                 </div>

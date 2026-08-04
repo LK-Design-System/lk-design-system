@@ -170,12 +170,12 @@
       "rule": "light: #FFFFFF; dark: #212225"
     },
     {
-      "subject": "--color-semantic-brand-ink",
-      "rule": "light: #05132B; dark: #E7EAF2"
-    },
-    {
       "subject": "--color-semantic-interaction-inactive",
       "rule": "light: #989BA2; dark: #5A5C63"
+    },
+    {
+      "subject": "--color-semantic-label-assistive",
+      "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
     }
   ],
   "responsive": [],
@@ -220,9 +220,9 @@
   ],
   "tokens": [
     "--color-semantic-background-elevated-normal",
-    "--color-semantic-brand-ink",
     "--color-semantic-interaction-inactive",
     "--color-semantic-label-assistive",
+    "--color-semantic-label-normal",
     "--color-semantic-line-normal-normal",
     "--color-semantic-line-solid-normal",
     "--color-semantic-primary-normal",

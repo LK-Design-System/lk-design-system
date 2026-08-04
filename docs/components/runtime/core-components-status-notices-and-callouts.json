@@ -155,12 +155,12 @@
       "rule": "15px"
     },
     {
-      "subject": "--color-semantic-brand-surface",
-      "rule": "light: #05132B; dark: #05132B"
+      "subject": "--color-semantic-brand-on-surface-border",
+      "rule": "light: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)"
     },
     {
-      "subject": "--color-semantic-inverse-label-neutral-soft",
-      "rule": "light: rgba(255, 255, 255, 0.62); dark: rgba(255, 255, 255, 0.62)"
+      "subject": "--color-semantic-brand-on-surface-subtle",
+      "rule": "light: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent)"
     }
   ],
   "responsive": [],
@@ -202,12 +202,12 @@
   ],
   "tokens": [
     "--body2-size",
+    "--color-semantic-brand-on-surface",
+    "--color-semantic-brand-on-surface-border",
+    "--color-semantic-brand-on-surface-subtle",
     "--color-semantic-brand-surface",
-    "--color-semantic-inverse-label-neutral-soft",
-    "--color-semantic-inverse-line-normal",
     "--color-semantic-label-neutral",
     "--color-semantic-label-normal",
-    "--color-semantic-static-white",
     "--font-sans",
     "--fw-bold",
     "--label1-size",

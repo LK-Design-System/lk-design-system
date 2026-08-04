@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkQYP5KK7Vcjs = require('../../chunk-QYP5KK7V.cjs');
+var _chunkWMFVFUK7cjs = require('../../chunk-WMFVFUK7.cjs');
 
 
-exports.Bubble = _chunkQYP5KK7Vcjs.Bubble;
+exports.Bubble = _chunkWMFVFUK7cjs.Bubble;
 //# sourceMappingURL=Bubble.cjs.map

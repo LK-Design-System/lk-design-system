@@ -106,7 +106,7 @@ export function Checkbox({
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 'var(--component-input-gap)',
         cursor: disabledState ? 'not-allowed' : 'pointer',
-        fontFamily: 'var(--font-sans)', fontSize: normalizedSize === 'sm' ? 'var(--label1-size)' : '15px', letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-brand-ink)',
+        fontFamily: 'var(--font-sans)', fontSize: normalizedSize === 'sm' ? 'var(--label1-size)' : '15px', letterSpacing: 0, color: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)',
         fontWeight: bold ? 'var(--fw-bold)' : undefined,
         ...style,
       }}

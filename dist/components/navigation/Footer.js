@@ -1,7 +1,7 @@
 "use client";
 import {
   Footer
-} from "../../chunk-E3KETPWU.js";
+} from "../../chunk-ORQVCDJ3.js";
 import "../../chunk-JNVDI5OO.js";
 export {
   Footer
