@@ -11,13 +11,19 @@ AI 도구에게 LK ROBOTICS UI 설계나 구현을 맡길 때 가장 먼저 제�
 
 ## UI copy conventions
 
-- Complete Korean descriptive messages ending in `-습니다`, `-세요`, or `-해 주세요` use a final period. Noun labels, titles, status fragments, and loading labels omit it.
-- WDS Core field placeholders follow the local WDS sentence pattern (`입력해 주세요.`, `선택해 주세요.`). Essential instructions still belong in labels or helper text, following [Fluent 2 Field accessibility guidance](https://fluent2.microsoft.design/components/web/react/core/field/usage).
-- Product and Robotics surfaces may use a concise domain hint only when a persistent visible label already explains the field. Do not mix `입력하세요` and `입력해 주세요` within one component family.
-- 사용자 요청·복구 지시는 `-해 주세요.`로 통일합니다. 빈 상태에서 부담 없는 탐색을 권하는
-  `-해 보세요.`만 예외이며, 오류는 `원인 1문장 + 다음 행동 1문장` 순서로 씁니다.
-- 일반 UI 카피는 `프레임`, `컬렉션`, `키`로 표기합니다. 로마자는 API·컴포넌트명·코드
-  식별자처럼 원문 보존이 필요한 고유명사에만 사용합니다.
+한국어 UI 문장의 canonical 작성 기준은 [`Writing`](foundations/writing.md), 상황별 표현 강도는
+[`Voice and Tone`](foundations/voice-and-tone.md), locale 경계는
+[`International Design`](foundations/international-design.md)을 따릅니다. AI를 이용한 구조화 검토와
+승인 경계는 [`UI Copy Review Contract`](COPY_REVIEW_CONTRACT.md)가 소유합니다.
+
+- 제품의 실제 동작·권한·보안·보존·상태 전이를 먼저 확인하고, 알 수 없으면 추측하지 않고 `BLOCKED`합니다.
+- 고유명사·숫자·기간·단위·placeholder·부정·한정 표현을 보존합니다.
+- 문자열 하나가 아니라 같은 사용자 흐름의 제목·설명·상태·action을 copy set으로 검토합니다.
+- 자연스럽고 기준을 만족하는 문구는 `KEEP`하며 수정률을 높이기 위해 바꾸지 않습니다.
+- 의미를 보존하며 국소 수정할 수 있을 때만 `REVISE`하고, 생성형 후보를 자동 반영하지 않습니다.
+- 완전한 한국어 설명·요청 문장에는 마침표를 쓰고 제목·라벨·버튼·상태에는 생략합니다. 로딩에는 ASCII `...`가 아니라 `…`를 사용합니다.
+- WDS Core field placeholder는 해당 WDS 문장 패턴(`입력해 주세요.`, `선택해 주세요.`)을 따르되 필수 지침은 label 또는 helper text에 둡니다.
+- Product와 Robotics의 정식 명칭·상태 사전·복구 행동은 각 제품 계약이 소유하며 LDS나 AI가 전역 치환하지 않습니다.
 
 ## Data display conventions
 
