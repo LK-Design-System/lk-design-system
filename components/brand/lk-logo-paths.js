@@ -1,37 +1,80 @@
 /**
- * LK ROBOTICS wordmark geometry — traced from assets/brand/lk-logo-*.svg.
- * Shared by Lockup (static logo) and Spinner (brand wave loader) so the two
- * never drift. Plain .js so generate-entry.mjs never promotes it to an export.
+ * Official LK ROBOTICS vector geometry from `logo_LKR.svg` (`logo_LKR.ai`).
  *
- * Drawn under a `translate(0,504) scale(0.1,-0.1)` outer transform. LK_D holds
- * the two "LK" glyph subpaths; ROBO_D holds the "ROBOTICS" glyph subpaths and
- * is repositioned by ROBO_INLINE so its cap height matches "LK".
+ * The source contains two square lockups. These paths are copied from the
+ * standard lockup (the version without the Korean legal-name line), preserving
+ * every original path and transform. `Lockup` reuses the same contours for the
+ * mark, the source-stacked composition, and the derived inline UI composition.
  */
-export const LK_D = "M1938 3103 l2 -703 248 0 247 0 101 -123 c56 -67 125 -150 154 -184 l52 -63 -596 0 -596 0 0 890 0 890 193 -2 192 -3 3 -702z M3470 3795 c0 -3 -155 -212 -346 -466 -190 -253 -347 -466 -350 -473 -3 -7 152 -195 345 -420 193 -224 351 -409 351 -412 0 -2 -112 -4 -248 -4 l-248 0 -347 410 c-191 225 -347 414 -347 420 0 6 170 222 377 480 l378 470 217 0 c120 0 218 -2 218 -5z";
+export const LK_PATHS = Object.freeze([
+  {
+    d: 'm 0,0 v -42.031 h 28.142 l -7.307,8.749 H 9.11 L 9.11,0 Z',
+    transform: 'matrix(1.3333333 0 0 -1.3333333 346.60933 153.18987)',
+  },
+  {
+    d: 'm 0,0 h -10.446 l -18.057,-22.549 16.508,-19.483 h 11.798 l -16.76,19.483 z',
+    transform: 'matrix(1.3333333 0 0 -1.3333333 407.364 153.31)',
+  },
+]);
 
-export const ROBO_D = "M4120 1630 c20 -5 45 -16 55 -24 19 -13 18 -15 -9 -55 -31 -45 -39 -47 -76 -26 -32 18 -71 19 -96 1 -15 -12 -17 -18 -8 -33 11 -18 27 -25 103 -44 27 -6 58 -24 78 -44 28 -28 33 -40 33 -83 0 -58 -23 -93 -81 -122 -63 -33 -185 -21 -255 25 l-25 16 31 39 31 39 42 -19 c72 -33 137 -23 137 21 0 18 -29 30 -100 44 -84 17 -120 59 -120 139 0 36 6 52 28 76 47 53 147 74 232 50z M1545 1619 c68 -17 131 -78 151 -145 44 -151 -60 -284 -220 -284 -138 1 -226 87 -226 219 0 156 134 251 295 210z M2540 1620 c49 -13 109 -66 131 -114 24 -53 24 -139 0 -192 -70 -155 -321 -165 -408 -16 -40 67 -40 157 -1 224 53 89 167 129 278 98z M3752 1598 c24 -13 43 -28 43 -33 0 -6 -12 -26 -27 -45 -24 -30 -30 -33 -45 -22 -47 33 -84 43 -119 32 -113 -38 -113 -202 0 -240 36 -12 77 -2 108 27 15 14 21 12 57 -18 22 -19 41 -37 41 -41 0 -16 -78 -58 -122 -66 -109 -21 -213 26 -261 118 -24 45 -28 64 -25 106 8 92 65 167 154 200 54 20 142 12 196 -18z M1107 1599 c58 -28 80 -72 75 -147 -1 -12 -20 -40 -42 -61 l-41 -40 34 -48 c19 -26 42 -60 52 -75 l17 -28 -63 0 -64 0 -45 70 c-38 58 -49 70 -72 70 l-28 0 0 -75 0 -75 -55 0 -55 0 0 215 0 215 122 0 c103 0 128 -3 165 -21z M2085 1605 c33 -16 55 -50 55 -86 0 -28 -26 -75 -45 -83 -13 -5 -7 -14 26 -46 40 -38 41 -42 36 -86 -3 -32 -13 -54 -31 -73 -26 -26 -29 -26 -186 -29 l-160 -3 0 210 0 211 136 0 c102 0 144 -4 169 -15z M3130 1575 l0 -44 -72 -3 -73 -3 -3 -167 -2 -168 -55 0 -55 0 0 170 0 170 -65 0 -65 0 0 45 0 45 195 0 195 0 0 -45z M3320 1405 l0 -215 -55 0 -55 0 0 215 0 215 55 0 55 0 0 -215z M1443 1533 c-12 -2 -36 -20 -53 -39 -25 -29 -30 -43 -30 -88 0 -38 6 -61 20 -78 45 -58 129 -61 174 -7 79 93 5 233 -111 212z M2399 1517 c-22 -15 -39 -38 -49 -65 -13 -37 -13 -47 0 -84 16 -45 66 -88 102 -88 35 0 88 32 103 61 8 15 15 46 15 69 0 55 -22 94 -64 114 -46 22 -67 20 -107 -7z M930 1475 l0 -55 48 0 c56 0 92 21 92 55 0 39 -25 55 -86 55 l-54 0 0 -55z M1890 1495 l0 -36 63 3 c62 3 62 3 62 33 0 30 0 30 -62 33 l-63 3 0 -36z M1890 1325 l0 -45 63 0 c49 0 68 4 80 18 41 45 13 72 -75 72 l-68 0 0 -45z";
+export const ROBOTICS_PATHS = Object.freeze([
+  {
+    letter: 'R',
+    d: 'm 0,0 v 2.562 h 2.146 c 0.676,0 1.223,-0.547 1.223,-1.222 V 1.222 C 3.369,0.547 2.822,0 2.146,0 Z m 6.548,-5.362 -2.684,3.881 c 1.272,0.498 2.161,1.622 2.161,2.918 0,1.754 -1.626,3.181 -3.627,3.181 h -4.96 V -5.456 h 2.623 v 3.622 h 1.126 l 2.325,-3.528 z',
+    transform: 'matrix(1.3333333 0 0 -1.3333333 327.06413 228.30813)',
+  },
+  {
+    letter: 'O',
+    d: 'm 0,0 c 0,-1.5 -1.216,-2.716 -2.716,-2.716 -1.5,0 -2.716,1.216 -2.716,2.716 v 0.617 c 0,1.5 1.216,2.716 2.716,2.716 C -1.216,3.333 0,2.117 0,0.617 Z m -2.23,5.469 h -0.735 c -2.804,0 -5.077,-2.274 -5.077,-5.077 V 0.249 c 0,-2.804 2.273,-5.076 5.077,-5.076 h 0.735 c 2.804,0 5.077,2.272 5.077,5.076 v 0.143 c 0,2.803 -2.273,5.077 -5.077,5.077',
+    transform: 'matrix(1.3333333 0 0 -1.3333333 347.71827 229.17827)',
+  },
+  {
+    letter: 'B',
+    d: 'M 0,0 H -2.686 V 2.206 H 0 C 0.61,2.206 1.103,1.712 1.103,1.104 1.103,0.494 0.61,0 0,0 m -2.686,5.955 h 2.316 c 0.477,0 0.863,-0.387 0.863,-0.864 V 5.015 C 0.493,4.538 0.107,4.151 -0.37,4.151 H -2.686 Z M 1.439,3.34 c 1.011,0.284 1.752,1.212 1.752,2.313 0,1.253 -1.017,2.27 -2.271,2.27 h -6.198 l 0.048,-9.844 h 6.268 c 1.464,0 2.651,1.187 2.651,2.651 0,1.325 -0.977,2.422 -2.25,2.61',
+    transform: 'matrix(1.3333333 0 0 -1.3333333 360.86 232.7684)',
+  },
+  {
+    letter: 'O',
+    d: 'm 0,0 c 0,-1.5 -1.216,-2.716 -2.717,-2.716 -1.499,0 -2.715,1.216 -2.715,2.716 v 0.617 c 0,1.5 1.216,2.716 2.715,2.716 C -1.216,3.333 0,2.117 0,0.617 Z m -2.23,5.468 h -0.736 c -2.803,0 -5.076,-2.273 -5.076,-5.076 V 0.249 c 0,-2.804 2.273,-5.076 5.076,-5.076 h 0.736 c 2.803,0 5.076,2.272 5.076,5.076 v 0.143 c 0,2.803 -2.273,5.076 -5.076,5.076',
+    transform: 'matrix(1.3333333 0 0 -1.3333333 378.77893 229.11493)',
+  },
+  {
+    letter: 'T',
+    d: 'm 0,0 h -9.205 v -2.23 h 3.227 v -7.876 h 2.561 v 7.876 l 3.417,0 z',
+    transform: 'matrix(1.3333333 0 0 -1.3333333 396.27067 222.0768)',
+  },
+  {
+    letter: 'I',
+    d: 'm 301.805,148.159 h -2.609 v 10.058 h 2.609 z',
+    transform: 'matrix(1.3333333 0 0 -1.3333333 0 433.096)',
+  },
+  {
+    letter: 'C',
+    d: 'm 0,0 c -1.547,0 -2.8,1.339 -2.8,2.989 0,1.651 1.253,2.989 2.8,2.989 0.952,0 1.793,-0.508 2.298,-1.284 L 4.036,6.545 C 3.024,7.525 1.61,8.137 0.047,8.137 c -3.067,0 -5.563,-2.35 -5.563,-5.237 0,-2.887 2.496,-5.237 5.563,-5.237 1.658,0 3.148,0.687 4.168,1.775 L 2.173,1.107 C 1.661,0.432 0.878,0 0,0',
+    transform: 'matrix(1.3333333 0 0 -1.3333333 412.2276 232.6732)',
+  },
+  {
+    letter: 'S',
+    d: 'm 0,0 1.519,2.04 c 0,0 -0.962,1.281 -4.058,1.115 -3.095,-0.166 -3.926,-1.993 -3.914,-3.108 0.012,-1.115 0.403,-2.099 1.211,-2.68 0.806,-0.582 2.253,-0.711 2.253,-0.711 0,0 2.004,-0.297 1.945,-1.02 -0.059,-0.725 -0.688,-1.01 -1.305,-1.022 -0.617,-0.011 -1.85,0.286 -3.013,1.022 l -1.447,-1.828 c 0,0 0.842,-1.044 3.772,-1.446 2.93,-0.404 4.508,1.612 4.674,2.3 0.165,0.688 0.355,1.97 -0.546,2.894 -0.902,0.926 -1.732,1.186 -3.226,1.424 -1.495,0.238 -1.566,1.079 -1.329,1.4 0.238,0.32 1.163,0.782 2.23,0.284 C -0.166,0.166 0,0 0,0',
+    transform: 'matrix(1.3333333 0 0 -1.3333333 427.80493 225.73027)',
+  },
+]);
 
-export const ROBO_INLINE = "translate(969.35,-2590.76) scale(3.90323)"; // ROBOTICS cap height == LK
+// The source wordmark is scaled so its rendered contour matches the official
+// mark's visible height, vertically centered, then moved right with a gap equal
+// to 20% of the mark width. No source contour is edited.
+export const ROBOTICS_INLINE_SCALE = 3.87834784;
+export const ROBOTICS_INLINE_TRANSFORM =
+  `translate(419.514934 181.271214) scale(${ROBOTICS_INLINE_SCALE}) translate(-323.648130 -228.744312)`;
 
-export const LK_LOGO_VIEWBOX = {
-  mark: "144.26 112.26 213.48 200.48",
-  stacked: "68.86 109.86 364.29 289.16",
-  inline: "140.68 108.68 1609.93 207.64",
-};
+export const LK_LOGO_VIEWBOX = Object.freeze({
+  mark: '342.6093 149.1899 68.7547 64.1628',
+  stacked: '319.6481 149.1899 114.8128 91.2631',
+  inline: '342.6093 149.1899 494.0432 64.1628',
+});
 
-/** Split a merged path `d` into its subpaths (one per uppercase M moveto). */
-export function splitSubpaths(d) {
-  return d.trim().split(/(?=M)/).map((s) => s.trim()).filter(Boolean);
-}
-
-/* Glyph groupings: which subpath indices form each letter (outer shape + its
-   counters). A letter must be ONE path with fill-rule evenodd so the counter
-   cuts a hole instead of filling solid. Indices reference splitSubpaths()
-   output; groups are listed left-to-right in reading order. */
-export const LK_LETTER_GROUPS = [[0], [1]]; // L · K
-export const ROBO_LETTER_GROUPS = [[4, 10], [1, 8], [5, 11, 12], [2, 9], [6], [7], [3], [0]]; // R O B O T I C S
-
-/** Join the subpaths of each letter group into one `d` string. */
-export function joinLetters(parts, groups) {
-  return groups.map((g) => g.map((i) => parts[i]).join(' '));
-}
+export const LK_LOGO_COLORS = Object.freeze({
+  navy: '#05132b',
+  accent: '#6bbbdd',
+  white: '#ffffff',
+});

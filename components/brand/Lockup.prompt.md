@@ -1,6 +1,6 @@
 # Lockup
 
-LK ROBOTICS 로고. 에셋 파일 없이 자체 완결형 SVG입니다. `variant`는 mark/stacked/inline, `tone`은 ink/white/brand/current, 크기는 `height`로 지정합니다. 구성(마크·워드마크 비율)은 원본 트레이스 에셋(`assets/brand/lk-logo-*.svg`)과 동일하게 고정 — 워드마크를 임의로 확대/재배치하지 마세요.
+LK ROBOTICS 로고. 제공된 공식 원본 SVG의 실제 path를 사용하는 자체 완결형 SVG입니다. `stacked`는 공식 원본의 배경 없는 조합이고, `mark`와 `inline`은 공식 윤곽을 그대로 사용하는 제품 UI 파생형입니다. `tone`은 ink/white/brand/current, 크기는 `height`로 지정합니다. 워드마크를 임의로 확대·재배치하거나 로고 색을 UI 토큰으로 바꾸지 마세요.
 
 ```jsx
 <Lockup variant="inline" tone="ink" height={28} />
