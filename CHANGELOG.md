@@ -68,6 +68,13 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.35 - 2026-08-05
+
+### Fixed
+
+- Synced the Storybook inventory, information-architecture audit, primary-description review, and generated component registry to the current 680-story release surface.
+- Added reviewed coverage for the SideNav single-open scenario and the Data Collection Panel implementation-contract stories.
+
 ## 0.1.0-rc.34 - 2026-08-05
 
 ### Added
