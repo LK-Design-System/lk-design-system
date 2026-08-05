@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.37 - 2026-08-05
+
+### Fixed
+
+- `Input` narrows instead of overflowing a container it does not fit. Both of the field's flex boxes carried the default `min-width: auto`, so the field could not shrink below its content's minimum size — with an `actionRight` that minimum is the text area plus every action button, and the field spilled out of any container narrower than roughly 310px. Measured against `SecretField` (reveal + copy) inside a 271px callout: the field was 307px and overflowed by 36px, and now matches its container. Every composition built on `Input` inherits the fix.
+
 ## 0.1.0-rc.36 - 2026-08-05
 
 ### Fixed

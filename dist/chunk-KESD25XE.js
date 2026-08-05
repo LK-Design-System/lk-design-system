@@ -88,7 +88,23 @@ var Input = React.forwardRef(function Input2({
       "data-invalid": isInvalid ? "true" : void 0,
       "data-size": normalizedSize,
       className: partClassName(classNames, "root", className) || void 0,
-      style: { ...componentVars(vars, "--lds-input-"), display: "flex", flexDirection: "column", gap: "var(--component-input-stack-gap)", ...partStyle(styles, "root"), ...style },
+      style: {
+        /*
+          `minWidth: 0` here and on the control below. A flex item defaults to
+          `min-width: auto`, which refuses to shrink past its content's minimum
+          size. With an `actionRight` that minimum is the input plus every
+          action, so the field overflowed any container narrower than roughly
+          310px instead of narrowing its text area. Consumer `styles`/`style`
+          are spread afterwards and still win.
+        */
+        ...componentVars(vars, "--lds-input-"),
+        display: "flex",
+        flexDirection: "column",
+        minWidth: 0,
+        gap: "var(--component-input-stack-gap)",
+        ...partStyle(styles, "root"),
+        ...style
+      },
       children: [
         /* @__PURE__ */ jsx(
           FieldLabel,
@@ -113,6 +129,7 @@ var Input = React.forwardRef(function Input2({
               position: "relative",
               display: "flex",
               alignItems: "center",
+              minWidth: 0,
               gap: "var(--lds-input-gap, var(--component-input-gap))",
               height: `var(--lds-input-height, ${h})`,
               padding: "0 var(--lds-input-padding-inline, var(--component-input-padding-x))",
@@ -166,4 +183,4 @@ var Input = React.forwardRef(function Input2({
 export {
   Input
 };
-//# sourceMappingURL=chunk-NBR64B5X.js.map
+//# sourceMappingURL=chunk-KESD25XE.js.map
