@@ -406,6 +406,11 @@
         "id": "lds-product-navigation-side-nav--manual-active-group-expansion",
         "name": "상호작용 · 활성 표시와 그룹 열림 분리",
         "role": "interaction"
+      },
+      {
+        "id": "lds-product-navigation-side-nav--single-open-groups",
+        "name": "시나리오 · 한 번에 하나만 여는 그룹",
+        "role": "scenario"
       }
     ],
     "hiddenEvidence": 2
