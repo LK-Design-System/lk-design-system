@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.36 - 2026-08-05
+
+### Fixed
+
+- `SecretField` copies where the Clipboard API does not exist. `navigator.clipboard` is exposed only in a secure context, so a product served over plain HTTP on a LAN hostname had a copy button that could do nothing but report failure — on a field whose value is typically shown once. The component now falls back to the legacy selection command, which needs no secure context and which browsers still honour inside a user gesture. Behaviour is unchanged wherever the Clipboard API is present.
+
 ## 0.1.0-rc.35 - 2026-08-05
 
 ### Fixed

@@ -20,6 +20,40 @@ function contextualActionLabel(fieldLabel, actionLabel) {
   if (!fieldLabel) return action;
   return action.includes(fieldLabel) ? action : `${fieldLabel} ${action}`;
 }
+async function writeToClipboard(value) {
+  if (_optionalChain([navigator, 'access', _ => _.clipboard, 'optionalAccess', _2 => _2.writeText])) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+  if (typeof document === "undefined" || typeof document.execCommand !== "function") {
+    throw new Error("Clipboard API is unavailable.");
+  }
+  const carrier = document.createElement("textarea");
+  carrier.value = value;
+  carrier.readOnly = true;
+  carrier.setAttribute("aria-hidden", "true");
+  carrier.tabIndex = -1;
+  Object.assign(carrier.style, {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    width: "1px",
+    height: "1px",
+    padding: "0",
+    border: "0",
+    opacity: "0"
+  });
+  const previouslyFocused = document.activeElement;
+  document.body.appendChild(carrier);
+  try {
+    carrier.select();
+    carrier.setSelectionRange(0, value.length);
+    if (!document.execCommand("copy")) throw new Error("Clipboard API is unavailable.");
+  } finally {
+    carrier.remove();
+    if (previouslyFocused && typeof previouslyFocused.focus === "function") previouslyFocused.focus();
+  }
+}
 function SecretField({
   label = "\uBE44\uBC00 \uAC12",
   value = "",
@@ -64,14 +98,14 @@ function SecretField({
   _react2.default.useEffect(() => {
     if (!requestedShow || canReveal) return;
     if (!controlled) setInternalRevealed(false);
-    _optionalChain([onRevealChangeRef, 'access', _ => _.current, 'optionalCall', _2 => _2(false)]);
+    _optionalChain([onRevealChangeRef, 'access', _3 => _3.current, 'optionalCall', _4 => _4(false)]);
   }, [canReveal, controlled, requestedShow]);
   _react2.default.useEffect(() => {
     if (timerRef.current) window.clearTimeout(timerRef.current);
     if (!show || revealDurationMs <= 0) return void 0;
     timerRef.current = window.setTimeout(() => {
       if (!controlled) setInternalRevealed(false);
-      _optionalChain([onRevealChangeRef, 'access', _3 => _3.current, 'optionalCall', _4 => _4(false)]);
+      _optionalChain([onRevealChangeRef, 'access', _5 => _5.current, 'optionalCall', _6 => _6(false)]);
     }, revealDurationMs);
     return () => window.clearTimeout(timerRef.current);
   }, [controlled, revealDurationMs, show]);
@@ -87,7 +121,7 @@ function SecretField({
   const setShow = (next) => {
     if (next && !canReveal) return;
     if (!controlled) setInternalRevealed(next);
-    _optionalChain([onRevealChangeRef, 'access', _5 => _5.current, 'optionalCall', _6 => _6(next)]);
+    _optionalChain([onRevealChangeRef, 'access', _7 => _7.current, 'optionalCall', _8 => _8(next)]);
   };
   const copy = async () => {
     if (disabled || !copyable || !hasValue) return;
@@ -95,8 +129,7 @@ function SecretField({
     const copiedValue = String(value);
     const requestId = ++copyRequestRef.current;
     try {
-      if (!_optionalChain([navigator, 'access', _7 => _7.clipboard, 'optionalAccess', _8 => _8.writeText])) throw new Error("Clipboard API is unavailable.");
-      await navigator.clipboard.writeText(copiedValue);
+      await writeToClipboard(copiedValue);
       _optionalChain([onCopy, 'optionalCall', _9 => _9(copiedValue)]);
       if (requestId !== copyRequestRef.current) return;
       setCopyState("success");
@@ -149,4 +182,4 @@ function SecretField({
 
 
 exports.SecretField = SecretField;
-//# sourceMappingURL=chunk-F35NJHXW.cjs.map
+//# sourceMappingURL=chunk-HPBTZKSF.cjs.map

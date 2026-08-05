@@ -20,6 +20,40 @@ function contextualActionLabel(fieldLabel, actionLabel) {
   if (!fieldLabel) return action;
   return action.includes(fieldLabel) ? action : `${fieldLabel} ${action}`;
 }
+async function writeToClipboard(value) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+  if (typeof document === "undefined" || typeof document.execCommand !== "function") {
+    throw new Error("Clipboard API is unavailable.");
+  }
+  const carrier = document.createElement("textarea");
+  carrier.value = value;
+  carrier.readOnly = true;
+  carrier.setAttribute("aria-hidden", "true");
+  carrier.tabIndex = -1;
+  Object.assign(carrier.style, {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    width: "1px",
+    height: "1px",
+    padding: "0",
+    border: "0",
+    opacity: "0"
+  });
+  const previouslyFocused = document.activeElement;
+  document.body.appendChild(carrier);
+  try {
+    carrier.select();
+    carrier.setSelectionRange(0, value.length);
+    if (!document.execCommand("copy")) throw new Error("Clipboard API is unavailable.");
+  } finally {
+    carrier.remove();
+    if (previouslyFocused && typeof previouslyFocused.focus === "function") previouslyFocused.focus();
+  }
+}
 function SecretField({
   label = "\uBE44\uBC00 \uAC12",
   value = "",
@@ -95,8 +129,7 @@ function SecretField({
     const copiedValue = String(value);
     const requestId = ++copyRequestRef.current;
     try {
-      if (!navigator.clipboard?.writeText) throw new Error("Clipboard API is unavailable.");
-      await navigator.clipboard.writeText(copiedValue);
+      await writeToClipboard(copiedValue);
       onCopy?.(copiedValue);
       if (requestId !== copyRequestRef.current) return;
       setCopyState("success");
@@ -149,4 +182,4 @@ function SecretField({
 export {
   SecretField
 };
-//# sourceMappingURL=chunk-7P3VNW3A.js.map
+//# sourceMappingURL=chunk-WKRXUPET.js.map

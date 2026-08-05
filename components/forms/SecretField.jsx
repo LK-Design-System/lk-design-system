@@ -13,6 +13,55 @@ function contextualActionLabel(fieldLabel, actionLabel) {
   return action.includes(fieldLabel) ? action : `${fieldLabel} ${action}`;
 }
 
+/*
+  `navigator.clipboard` is exposed only in a secure context. A product served
+  over plain HTTP on a LAN hostname has no Clipboard API at all, so a copy
+  button there could previously do nothing but fail — and this field usually
+  carries a value the user is shown exactly once.
+
+  The fallback is the legacy selection command, which browsers still honour
+  inside a user gesture and which does not require a secure context. It runs
+  only when the modern API is missing, so nothing changes where the Clipboard
+  API exists.
+*/
+async function writeToClipboard(value) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+  if (typeof document === 'undefined' || typeof document.execCommand !== 'function') {
+    throw new Error('Clipboard API is unavailable.');
+  }
+  const carrier = document.createElement('textarea');
+  carrier.value = value;
+  carrier.readOnly = true;
+  carrier.setAttribute('aria-hidden', 'true');
+  carrier.tabIndex = -1;
+  // The node has to stay selectable, so it is hidden by size and opacity
+  // rather than `display: none`, which would make the selection uncopyable.
+  // `position: fixed` keeps the surrounding layout and scroll position still.
+  Object.assign(carrier.style, {
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    width: '1px',
+    height: '1px',
+    padding: '0',
+    border: '0',
+    opacity: '0',
+  });
+  const previouslyFocused = document.activeElement;
+  document.body.appendChild(carrier);
+  try {
+    carrier.select();
+    carrier.setSelectionRange(0, value.length);
+    if (!document.execCommand('copy')) throw new Error('Clipboard API is unavailable.');
+  } finally {
+    carrier.remove();
+    if (previouslyFocused && typeof previouslyFocused.focus === 'function') previouslyFocused.focus();
+  }
+}
+
 /** Read-only secret field with controlled reveal duration and copy feedback. */
 export function SecretField({
   label = '비밀 값',
@@ -95,8 +144,7 @@ export function SecretField({
     const copiedValue = String(value);
     const requestId = ++copyRequestRef.current;
     try {
-      if (!navigator.clipboard?.writeText) throw new Error('Clipboard API is unavailable.');
-      await navigator.clipboard.writeText(copiedValue);
+      await writeToClipboard(copiedValue);
       onCopy?.(copiedValue);
       if (requestId !== copyRequestRef.current) return;
       setCopyState('success');
