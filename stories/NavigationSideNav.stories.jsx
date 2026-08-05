@@ -658,7 +658,7 @@ export const ManualActiveGroupExpansion = {
 };
 
 export const SingleOpenGroups = {
-  name: 'Single-open disclosure groups',
+  name: '시나리오 · 한 번에 하나만 여는 그룹',
   parameters: storyDescription(
     'multiple={false} keeps the SideNav disclosure hierarchy compact by allowing only one group to remain open at a time.',
   ),
