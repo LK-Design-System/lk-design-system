@@ -13,7 +13,7 @@ Current generated census (2026-08-05): 192개 페이지와 680개 스토리. The
 - 공개 스토리: 466개
 - 숨김 스토리: 214개
 - 숨김 visual parity: 90개
-- 숨김 internal contract: 117개
+- 숨김 internal contract: 120개
 - 검토 완료 페이지: 192/192개
 - 검토 완료 스토리: 680/680개
 
@@ -30,7 +30,7 @@ Current generated census (2026-08-05): 192개 페이지와 680개 스토리. The
 - 공개 스토리: 466개
 - 숨김 스토리: 214개
 - 숨김 visual parity: 90개
-- 숨김 internal contract: 117개
+- 숨김 internal contract: 120개
 - 검토 완료 페이지 192/192개, 스토리 680/680개다. 변경된 기존 페이지의 source hash와 신규 스토리 검토는 감사 원장에 그대로 남겨 두며, `check:storybook-ia`가 소유권·공개 여부·이름·설명과 함께 회귀를 막는다.
 - Component 문서 시스템은 public component entry 205개와 named export 217개를 전수 추적하고, 174개 evidence-only 결정 가이드를 `docs/components/guides/*.md`와 `llms.txt`로 생성한다. Storybook의 Docs 탭에는 사용 판단 · Properties · Accessibility · Tokens만 렌더링한다. 전체 카탈로그와 플랫폼 현황은 Storybook 운영 화면이 아니라 생성 문서 `COMPONENT_REFERENCE.md`와 `PROGRESS_BOARD.md`가 소유한다.
 - 2026-07-26 Docs와 Canvas의 책임을 분리했다. Docs는 Storybook 제목·설명과 Foundation·Component 또는 Pattern의 결정 가이드만 싣고, `<DocsStory>`·`<Primary>`·`<Stories>`·`<Controls>`를 렌더링하지 않는다. 스토리 specimen, args, controls와 play lifecycle은 각 Canvas 엔트리에만 남는다. `check:docs-surface`는 생성된 Docs 경로를 전수 감사하고, 문장 hash 원장은 187개 primary story 설명을 검증한다.
@@ -45,7 +45,7 @@ Current generated census (2026-08-05): 192개 페이지와 680개 스토리. The
 - 목적 설명이 있는 공개 스토리: 466개
 - Foundation: 16페이지, 22스토리(공개 17·숨김 5)
 - Core: 57페이지, 206스토리(공개 114·숨김 92)
-- Product: 115페이지, 441스토리(공개 330·숨김 111)
+- Product: 115페이지, 445스토리(공개 331·숨김 114)
 - Theme: 3페이지, 6스토리(공개 3·숨김 3)
 - Other: 1페이지, 1스토리(공개 1·숨김 0)
 - 공개 스토리 표시명 계약은 감사 원장의 권고 변경과 함께 추적한다.
