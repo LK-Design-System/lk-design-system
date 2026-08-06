@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.54 - 2026-08-06
+
+### Fixed
+
+- `NetworkGraph`가 그림이 바뀐 것을 보조기술에 알립니다. 이웃을 펼쳐 대상이 늘거나 필터로 그림이 비는 순간을 상시 마운트된 polite 영역이 말합니다 — 종전에는 큐를 눌러 대상이 6개에서 9개가 되어도 아무 말이 없었습니다. 이 컴포넌트가 더한 바로 그 상호작용이 보조기술에는 일어나지 않은 일이었습니다. 첫 렌더에는 말하지 않습니다.
+
 ## 0.1.0-rc.53 - 2026-08-06
 
 ### Fixed

@@ -755,6 +755,25 @@ export const ExpandCollapse = {
     if (nodeCount() !== before) {
       throw new Error(`Enter on the cue must collapse again (${nodeCount()} ≠ ${before}).`);
     }
+
+    /*
+      바뀌었으면 «말해» 줘야 한다. 큐를 눌러 노드가 늘고 주는 것은 이
+      컴포넌트가 더한 바로 그 상호작용인데, 화면만 바뀌고 소리는 조용하면
+      보조기술에는 일어나지 않은 일이다.
+
+      영역은 «항상» 붙어 있어야 한다 — 알릴 때만 붙였다 떼면 보조기술이 그
+      순간을 놓친다.
+    */
+    const live = canvasElement.querySelector('[data-network-announcement]');
+    if (!live) {
+      throw new Error('A graph that changes must keep a live region mounted.');
+    }
+    if (live.getAttribute('aria-live') !== 'polite') {
+      throw new Error('Graph changes are not urgent; the region must be polite.');
+    }
+    if (!live.textContent.includes(String(before))) {
+      throw new Error(`The collapse must be announced (heard "${live.textContent}").`);
+    }
   },
 };
 

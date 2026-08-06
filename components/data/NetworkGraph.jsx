@@ -1107,6 +1107,32 @@ export function NetworkGraph({
   }, [anchors, edges, fittedCaptionWidth, fittedLabelWidth, isDot, metrics, nodeShape, nodes, showEdgeLabels]);
 
   const hasData = nodes.length > 0;
+
+  /*
+    그림이 바뀌면 «말해» 준다.
+
+    큐를 눌러 이웃을 펼치면 노드가 6개에서 9개가 되는데, 종전에는 아무 말도
+    없었다. 화면은 바뀌고 소리는 조용하다 — 이 컴포넌트가 더한 바로 그
+    상호작용이 보조기술에는 일어나지 않은 일이었다. 필터로 그림이 통째로
+    비는 순간도 마찬가지였다.
+
+    말하는 것은 «규모»다. 왜 바뀌었는지는 이 컴포넌트가 알 수 없다 — 소비자가
+    다른 노드 목록을 준 것뿐이므로, 아는 사실만 말한다.
+
+    첫 렌더에는 말하지 않는다. 아직 아무것도 «바뀌지» 않았고, 처음 만나는
+    그림의 규모는 요약이 이미 말하고 있다.
+  */
+  const [announcement, setAnnouncement] = React.useState('');
+  const lastScaleRef = React.useRef(null);
+  React.useEffect(() => {
+    const scale = `${nodes.length}:${edges.length}`;
+    const previous = lastScaleRef.current;
+    lastScaleRef.current = scale;
+    if (previous === null || previous === scale) return;
+    setAnnouncement(
+      hasData ? `대상 ${nodes.length}개, 관계 ${edges.length}개` : nodeText(emptyLabel),
+    );
+  }, [edges.length, emptyLabel, hasData, nodes.length]);
   /*
     요약이 하는 일은 «규모»를 알려 주는 것이지 내용을 옮겨 적는 것이 아니다.
     이름을 전부 이어 붙이면 노드 300개짜리 그림에서 3,200자가 되어, 사용자가
@@ -1288,6 +1314,19 @@ export function NetworkGraph({
       style={{ minWidth: 0, height, fontFamily: 'var(--font-sans)', ...style }}
       {...rest}
     >
+      {/*
+        바뀐 것을 알리는 자리. «항상» 붙어 있어야 한다 — 알릴 때만 붙였다
+        떼면 보조기술이 그 순간을 놓친다. 이 저장소의 다른 컴포넌트들이 살아
+        있는 영역을 상시 마운트해 두는 것과 같은 이유다.
+      */}
+      <VisuallyHidden
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        data-network-announcement
+      >
+        {announcement}
+      </VisuallyHidden>
       {description != null && <VisuallyHidden id={descriptionId}>{description}</VisuallyHidden>}
       {/* 요약이 «보이는 문장과 같으면» 숨겨서 또 말하지 않는다. 빈 그림에서
           자동 요약은 빈 상태 문구 그 자체이므로, 두 번 들리기만 한다. */}
