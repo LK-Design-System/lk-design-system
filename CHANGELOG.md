@@ -68,6 +68,14 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.50 - 2026-08-06
+
+계약 문서만 바뀝니다. 구현은 rc.49와 같습니다.
+
+- `NetworkGraph`의 `force` 비용을 실측해 적었습니다: 노드 100개 43ms, 200개 55ms, 400개 160ms, 800개 395ms. 격자로 이웃만 보는 근사를 시험했으나 매 틱 격자를 세우는 비용이 더 커서 되돌렸습니다.
+- 노드 끌기가 마우스와 손가락 둘 다에서 동작한다는 것을 계약에 적었습니다. 이미 그렇게 되어 있었지만 적혀 있지 않았습니다.
+- 미니맵은 만들지 않습니다. 「보는 창」을 소유한 것은 액자이므로, 액자·확대 조절·범례와 같은 경계에 둡니다.
+
 ## 0.1.0-rc.49 - 2026-08-06
 
 ### Fixed
