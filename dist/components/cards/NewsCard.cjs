@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk7FLSXZQZcjs = require('../../chunk-7FLSXZQZ.cjs');
-require('../../chunk-B6GRMPJU.cjs');
+var _chunkRTR6YRPWcjs = require('../../chunk-RTR6YRPW.cjs');
+require('../../chunk-3ATRKSQ7.cjs');
 
 
-exports.NewsCard = _chunk7FLSXZQZcjs.NewsCard;
+exports.NewsCard = _chunkRTR6YRPWcjs.NewsCard;
 //# sourceMappingURL=NewsCard.cjs.map

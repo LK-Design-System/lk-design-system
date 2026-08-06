@@ -2333,10 +2333,10 @@
     },
     {
       "name": "unlink",
-      "source": "lds-custom",
+      "source": "material-symbols",
       "sourcePath": "assets/icon-source-overrides/unlink.svg",
       "assetPath": "assets/icons/unlink.svg",
-      "viewBox": "0 0 24 24"
+      "viewBox": "0 -960 960 960"
     },
     {
       "name": "color-logo-apple",

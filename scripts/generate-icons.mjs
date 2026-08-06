@@ -8,6 +8,9 @@ const customIconSourceRoot = path.join(repoRoot, 'assets', 'icon-source-override
 const assetsRoot = path.join(repoRoot, 'assets', 'icons');
 const componentFile = path.join(repoRoot, 'components', 'icon', 'Icon.jsx');
 const typesFile = path.join(repoRoot, 'components', 'icon', 'Icon.d.ts');
+const CUSTOM_ICON_SOURCES = new Map([
+  ['unlink', 'material-symbols'],
+]);
 
 const LEGACY_LINE_OPEN = '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
 const LEGACY_LINE_CLOSE = '</g>';
@@ -348,8 +351,8 @@ export default Icon;
 }
 
 function buildManifest(entries, rasterFiles) {
-  const customSvgEntries = entries.filter((entry) => entry.source === 'lds-custom');
-  const wdsSvgEntries = entries.filter((entry) => entry.source !== 'lds-legacy' && entry.source !== 'lds-custom');
+  const customSvgEntries = entries.filter((entry) => entry.isCustom === true);
+  const wdsSvgEntries = entries.filter((entry) => entry.source !== 'lds-legacy' && entry.isCustom !== true);
   return {
     source: {
       name: 'Base icon source / Icon',
@@ -420,7 +423,8 @@ for (const file of customSvgFiles) {
   copiedSvgFiles.push(assetRel);
   importedEntries.push({
     name,
-    source: 'lds-custom',
+    source: CUSTOM_ICON_SOURCES.get(name) || 'lds-custom',
+    isCustom: true,
     sourcePath: toPosix(path.relative(repoRoot, file)),
     assetPath: assetRel,
     viewBox: normalized.viewBox,

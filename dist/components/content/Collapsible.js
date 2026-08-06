@@ -1,8 +1,8 @@
 "use client";
 import {
   Collapsible
-} from "../../chunk-KDICTHLP.js";
-import "../../chunk-ON44Y65B.js";
+} from "../../chunk-CTDXVOJ4.js";
+import "../../chunk-DW4HVC6S.js";
 export {
   Collapsible
 };

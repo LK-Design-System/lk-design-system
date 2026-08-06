@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkML3ESD54cjs = require('../../chunk-ML3ESD54.cjs');
+var _chunk6WINGPCOcjs = require('../../chunk-6WINGPCO.cjs');
 require('../../chunk-33JG4LII.cjs');
-require('../../chunk-B6GRMPJU.cjs');
+require('../../chunk-3ATRKSQ7.cjs');
 
 
-exports.FilterChip = _chunkML3ESD54cjs.FilterChip;
+exports.FilterChip = _chunk6WINGPCOcjs.FilterChip;
 //# sourceMappingURL=FilterChip.cjs.map

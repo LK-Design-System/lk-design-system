@@ -1,8 +1,8 @@
 "use client";
 import {
   Rating
-} from "../../chunk-WFKKVSTN.js";
-import "../../chunk-ON44Y65B.js";
+} from "../../chunk-TCYFSBBE.js";
+import "../../chunk-DW4HVC6S.js";
 export {
   Rating
 };

@@ -20,12 +20,17 @@ Wanted brand assets.
 
 ## Material Symbols (Google)
 
-The LK Robotics navigation marker badge glyphs are derived from **Material
-Symbols** (rounded style, filled weight) by Google, used under the **Apache
+The LK Robotics navigation marker badge glyphs and LDS `Icon` `unlink` glyph
+are derived from **Material Symbols** by Google, used under the **Apache
 License, Version 2.0**.
 
 - Source: https://github.com/google/material-design-icons
 - License: https://www.apache.org/licenses/LICENSE-2.0
+
+The LDS `unlink` asset is the unmodified Material Symbols `link_off` outlined
+path from `@material-symbols/svg-400@0.45.10`, kept on its native
+`0 -960 960 960` viewBox. Its inherited fill is set to `currentColor` solely so
+it follows the LDS `Icon` color API; no runtime dependency is added.
 
 The icon artwork is unmodified: the SVG path data is embedded verbatim from the
 Material Symbols rounded fill set (native viewBox `0 -960 960 960`) and is only
