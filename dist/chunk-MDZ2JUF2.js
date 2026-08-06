@@ -59,6 +59,7 @@ function AutoComplete({
   autoHighlight = false,
   resultCountLabel = (count) => `${count}\uAC1C \uACB0\uACFC`,
   size = "md",
+  startIcon,
   id,
   style,
   fieldStyle,
@@ -174,6 +175,15 @@ function AutoComplete({
           boxShadow: focused && !isInvalid ? "var(--component-input-focus-shadow)" : "none",
           transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"
         }, children: [
+          startIcon ? /* @__PURE__ */ jsx(
+            "span",
+            {
+              "data-slot": "startIcon",
+              "aria-hidden": "true",
+              style: { display: "inline-flex", flex: "0 0 auto", color: "var(--component-input-icon-color)" },
+              children: startIcon
+            }
+          ) : null,
           /* @__PURE__ */ jsx(
             "input",
             {
@@ -316,4 +326,4 @@ function AutoComplete({
 export {
   AutoComplete
 };
-//# sourceMappingURL=chunk-BPRIBVYB.js.map
+//# sourceMappingURL=chunk-MDZ2JUF2.js.map

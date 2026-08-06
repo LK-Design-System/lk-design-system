@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "810711d345a2ca24d49c30952585796060ee7cdb1c3a4c33cd37aaf3d57ba811",
+  "sourceFingerprint": "8d087c22c5e83a7f748446c504264d8743fc790b1380ce0b711e7cec5bbd9190",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -15368,7 +15368,7 @@
           "url": "https://carbondesignsystem.com/components/text-input/usage/"
         }
       ],
-      "promptSha256": "fa8fcbd5e9ce619f2defb768d87c9b413456da1f07af760dc77211c62982b013"
+      "promptSha256": "6da7d5d2858919b896dcb97a898e65588e1b53d44461fd0408c033f7648f1d82"
     },
     {
       "id": "checkbox",
