@@ -68,6 +68,13 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.45 - 2026-08-06
+
+### Fixed
+
+- `NetworkGraph`가 같은 두 노드를 잇는 관계들을 부채처럼 «각자 다른» 곡률로 벌립니다. 종전에는 모두에게 같은 곡률을 주어 같은 방향으로 난 둘이 정확히 포개졌습니다 — 화면에 관계 셋이 있는데 눈에는 둘만 보였습니다. 부채는 쌍을 기준으로 펴므로 반대로 흐르는 관계도 남의 자리에 앉지 않고, 홀수 개일 때 한가운데 것은 곧게 남습니다.
+- `NetworkGraph`가 관계 이름도 담길 자리에 맞춰 자릅니다. 담길 상자가 없어 보이지만 그대로 두면 라벨 하나가 그림 밖으로 뻗어 액자에 잘리거나 가로 스크롤을 만듭니다. 전체 이름은 관계의 접근성 이름과 `<title>`에 남습니다.
+
 ## 0.1.0-rc.44 - 2026-08-06
 
 ### Added
