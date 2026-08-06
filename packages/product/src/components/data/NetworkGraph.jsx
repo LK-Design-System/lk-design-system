@@ -132,6 +132,33 @@ function layoutNodes(nodes, layout, metrics) {
 function edgePath(from, to, metrics) {
   if (!from || !to) return null;
 
+  /*
+    자기 자신을 잇는 관계. 「이 대상이 자기 자신에게 무언가 한다」는 실제로
+    있는 사실이므로(자기 참조·재귀·순환) 조용히 지워서는 안 된다. 그런데
+    시작점과 끝점이 같으면 방향이 없어 보통의 곡선 식이 성립하지 않는다.
+
+    관행대로 노드 «위»에 작은 고리를 얹는다. 노드 둘레의 두 점에서 나가고
+    들어오며, 제어점 둘을 바깥으로 밀어 고리를 만든다. 같은 노드에 고리가
+    여럿이면 각도를 돌려 겹치지 않게 한다.
+  */
+  if (from === to || (from.x === to.x && from.y === to.y)) {
+    const radius = from.radius ?? (metrics.shape === 'dot' ? DOT_RADIUS : metrics.height / 2);
+    const turn = (metrics.selfIndex ?? 0) * (Math.PI / 3);
+    const spread = Math.PI / 7;
+    const base = -Math.PI / 2 + turn;
+    const exit = base - spread;
+    const enter = base + spread;
+    /* 3차 베지어는 제어점까지 «닿지» 않고 그 안쪽으로 부푼다. 고리가 노드만큼은
+       커야 관계로 읽히므로 제어점을 노드 반지름의 몇 배까지 밀어 둔다. */
+    const reach = radius * 4.2;
+    return {
+      start: { x: from.x + Math.cos(exit) * radius, y: from.y + Math.sin(exit) * radius },
+      control: { x: from.x + Math.cos(exit) * reach, y: from.y + Math.sin(exit) * reach },
+      controlOut: { x: from.x + Math.cos(enter) * reach, y: from.y + Math.sin(enter) * reach },
+      end: { x: from.x + Math.cos(enter) * radius, y: from.y + Math.sin(enter) * radius },
+    };
+  }
+
   const dx = to.x - from.x;
   const dy = to.y - from.y;
 
@@ -312,8 +339,25 @@ function settledForcePositions(nodes, edges, base, radiusOf, footprintOf) {
   return new Map(bodies.map((body) => [body.id, { x: body.x, y: body.y }]));
 }
 
-function pointOnCurve({ start, control, end }, t) {
+/*
+  곡선은 두 가지다. 보통의 관계는 2차 베지어로 충분하지만, 자기 자신을 잇는
+  관계는 시작점과 끝점이 같아 2차로는 «고리»가 되지 않는다 — 제어점이 하나뿐
+  이면 나갔다 되돌아오는 선분이 되어, 길이 0의 path로 화면에서 사라진다.
+  실제로 그랬다. 고리에는 제어점이 둘 필요하므로 3차를 쓴다.
+*/
+function pointOnCurve(curve, t) {
+  const { start, control, controlOut, end } = curve;
   const inverse = 1 - t;
+  if (controlOut) {
+    const a = inverse * inverse * inverse;
+    const b = 3 * inverse * inverse * t;
+    const c = 3 * inverse * t * t;
+    const d = t * t * t;
+    return {
+      x: a * start.x + b * control.x + c * controlOut.x + d * end.x,
+      y: a * start.y + b * control.y + c * controlOut.y + d * end.y,
+    };
+  }
   return {
     x: inverse * inverse * start.x + 2 * inverse * t * control.x + t * t * end.x,
     y: inverse * inverse * start.y + 2 * inverse * t * control.y + t * t * end.y,
@@ -348,9 +392,22 @@ const LABEL_CANDIDATE_T = [0.5, 0.38, 0.62, 0.28, 0.72];
    곡선에서 수직으로 «떨어뜨리는» 후보가 있어야 빠져나갈 자리가 생긴다. */
 const LABEL_CANDIDATE_OFFSET = [0, 18, -18, 34, -34, 52, -52];
 
-function curveTangent({ start, control, end }, t) {
-  const x = 2 * (1 - t) * (control.x - start.x) + 2 * t * (end.x - control.x);
-  const y = 2 * (1 - t) * (control.y - start.y) + 2 * t * (end.y - control.y);
+function curveTangent(curve, t) {
+  const { start, control, controlOut, end } = curve;
+  let x;
+  let y;
+  if (controlOut) {
+    const inverse = 1 - t;
+    x = 3 * inverse * inverse * (control.x - start.x)
+      + 6 * inverse * t * (controlOut.x - control.x)
+      + 3 * t * t * (end.x - controlOut.x);
+    y = 3 * inverse * inverse * (control.y - start.y)
+      + 6 * inverse * t * (controlOut.y - control.y)
+      + 3 * t * t * (end.y - controlOut.y);
+  } else {
+    x = 2 * (1 - t) * (control.x - start.x) + 2 * t * (end.x - control.x);
+    y = 2 * (1 - t) * (control.y - start.y) + 2 * t * (end.y - control.y);
+  }
   const length = Math.hypot(x, y) || 1;
   return { x: x / length, y: y / length };
 }
@@ -400,8 +457,8 @@ function placeEdgeLabels(entries, obstacles) {
 }
 
 export function NetworkGraph({
-  nodes = [],
-  edges = [],
+  nodes: nodesInput = [],
+  edges: edgesInput = [],
   layout = 'layered',
   nodeShape = 'card',
   showEdgeLabels = true,
@@ -428,6 +485,34 @@ export function NetworkGraph({
   const metrics = SHAPE[nodeShape] ?? SHAPE.card;
   const isDot = nodeShape === 'dot';
   const isForce = layout === 'force';
+
+  /*
+    `id`는 이 컴포넌트의 «열쇠»다. 노드를 잇고, 포커스 순회를 세우고, 애니메이션
+    사이에 같은 노드를 알아보는 일이 모두 `id`로 이뤄진다. 같은 `id`가 둘이면
+    그 셋이 한꺼번에 어긋난다 — 실제로 roving tabindex가 무너져 `tabindex="0"`인
+    노드가 둘이 되었다. 탭 한 번에 그림 «안»으로 들어가고 그 다음은 방향키라는
+    계약이 깨지는 것이다.
+
+    데이터가 잘못됐다고 그림 전체를 포기하지는 않는다. 먼저 온 것을 남기고
+    뒤엣것을 버린다 — 「없는 끝점을 가리키는 엣지는 그리지 않는다」와 같은 태도다.
+  */
+  const nodes = React.useMemo(() => {
+    const seen = new Set();
+    return nodesInput.filter((node) => {
+      if (seen.has(node.id)) return false;
+      seen.add(node.id);
+      return true;
+    });
+  }, [nodesInput]);
+
+  const edges = React.useMemo(() => {
+    const seen = new Set();
+    return edgesInput.filter((edge) => {
+      if (seen.has(edge.id)) return false;
+      seen.add(edge.id);
+      return true;
+    });
+  }, [edgesInput]);
 
   /* force도 격자에서 출발한다 — 초기 좌표가 결정론의 절반이다. */
   const gridPositions = React.useMemo(
@@ -740,12 +825,21 @@ export function NetworkGraph({
       const key = [edge.from, edge.to].sort().join('→');
       pairCounts.set(key, (pairCounts.get(key) ?? 0) + 1);
     });
+    // 같은 노드에 걸린 고리가 여럿이면 각도를 돌려 겹치지 않게 한다.
+    const selfSeen = new Map();
     const entries = edges.map((edge) => ({
       edge,
       curve: edgePath(anchors.get(edge.from), anchors.get(edge.to), {
         ...metrics,
         shape: nodeShape,
         parallel: (pairCounts.get([edge.from, edge.to].sort().join('→')) ?? 0) > 1,
+        selfIndex: edge.from === edge.to
+          ? (() => {
+            const seen = selfSeen.get(edge.from) ?? 0;
+            selfSeen.set(edge.from, seen + 1);
+            return seen;
+          })()
+          : 0,
       }),
       text: showEdgeLabels
         ? `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ''}`.trim()
@@ -809,6 +903,17 @@ export function NetworkGraph({
     `expanded`를 소비자가 알려주는 이유: 펼치고 나면 `collapsedCount`는 0이
     되므로 그것만으로는 「접을 게 있다」를 알 수 없다.
   */
+  /*
+    뿌리 강조도 `dot` 전용이다. 노드-링크에서 `root`는 「탐색이 여기서
+    시작했다」는 뜻이지만, 플로우에서 `root`는 그저 «첫 단계»이고 그 사실은
+    이미 왼쪽 끝이라는 자리가 말한다. 같은 표시를 양쪽에 두면 한쪽에서는
+    거짓말이 된다.
+  */
+  const isRootNode = React.useCallback(
+    (node) => isDot && node.root === true,
+    [isDot],
+  );
+
   const hasCue = React.useCallback(
     (node) => (
       /*
@@ -941,7 +1046,10 @@ export function NetworkGraph({
             {laidOutEdges.map(({ edge, curve, text, label: labelPoint }) => {
               if (!curve) return null;
               const path = {
-                d: `M ${curve.start.x} ${curve.start.y} Q ${curve.control.x} ${curve.control.y} ${curve.end.x} ${curve.end.y}`,
+                // 제어점이 둘이면 고리(3차), 하나면 보통의 관계(2차).
+                d: curve.controlOut
+                  ? `M ${curve.start.x} ${curve.start.y} C ${curve.control.x} ${curve.control.y} ${curve.controlOut.x} ${curve.controlOut.y} ${curve.end.x} ${curve.end.y}`
+                  : `M ${curve.start.x} ${curve.start.y} Q ${curve.control.x} ${curve.control.y} ${curve.end.x} ${curve.end.y}`,
                 label: labelPoint,
               };
               const color = edge.color || edgeColor;
@@ -1027,6 +1135,10 @@ export function NetworkGraph({
                   aria-label={[
                     labelText,
                     captionText,
+                    /* 뿌리는 링으로도 보이지만 그것만으로는 눈으로 보는
+                       사람에게만 전해진다. 「여기서 시작했다」는 탐색의
+                       사실이므로 이름에도 넣는다. */
+                    isRootNode(node) ? '탐색 시작점' : null,
                     // 큐가 없는 장르에서는 이 안내도 없다 — 갈 곳 없는 사실이다.
                     hasCue(node) && node.collapsedCount > 0
                       ? `접힌 연결 ${node.collapsedCount}개`
@@ -1072,6 +1184,27 @@ export function NetworkGraph({
                        구조가 보인다. 선택은 테두리 링으로 표시한다 — 채움색은
                        이미 범주가 쓰고 있다. */
                     <>
+                      {/*
+                        탐색이 시작된 자리. 노드-링크 도구들(Bloom의 씨앗 노드가
+                        대표)은 뿌리를 눈에 띄게 두는데, 그러지 않으면 「이 그림이
+                        무엇을 중심으로 펼쳐진 것인가」가 사라진다.
+
+                        크기로 말하지 않는다 — 반지름은 이미 «양»을 인코딩한다.
+                        선택 링(실선, r+5)보다 «바깥»에 «파선»으로 둔다. 그래야
+                        뿌리를 선택했을 때 두 링이 자리도 모양도 달라 겹쳐 읽히지
+                        않는다.
+                      */}
+                      {isRootNode(node) && (
+                        <circle
+                          data-network-root-ring="true"
+                          r={radius + 9}
+                          fill="none"
+                          stroke={color}
+                          strokeWidth={1.5}
+                          strokeDasharray="4 4"
+                          opacity={0.75}
+                        />
+                      )}
                       {selected && (
                         <circle
                           r={radius + 5}

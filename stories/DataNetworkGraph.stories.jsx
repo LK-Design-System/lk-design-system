@@ -213,6 +213,11 @@ export const StagedFlow = {
   play: async ({ canvasElement }) => {
     assertNoPresentationalSubtree(canvasElement, '영상 파이프라인');
     assertFocusableNodes(canvasElement, '영상 파이프라인');
+    /* 흐름도에서 첫 단계라는 사실은 «왼쪽 끝»이라는 자리가 이미 말한다.
+       노드-링크의 「탐색 시작점」 표시를 여기 두면 없는 개념을 그리는 셈이다. */
+    if (canvasElement.querySelector('[data-network-root-ring]')) {
+      throw new Error('The flow genre must not draw the node-link root ring.');
+    }
     assertEdgesAttachFacingSides(canvasElement, '영상 파이프라인');
     assertDeterministicLayout(canvasElement, '영상 파이프라인');
 
@@ -421,6 +426,24 @@ export const ForceLayout = {
         }
       }
     }
+    /*
+      탐색의 출발점은 그림에서 읽혀야 하고, 보는 방법이 하나뿐이어서는 안
+      된다. 링만 있으면 눈으로 보는 사람에게만 전해지므로 이름에도 있어야
+      한다 — 여기서 지키는 것은 그 둘이 «같은 노드»를 가리킨다는 점이다.
+    */
+    const rings = canvasElement.querySelectorAll('[data-network-root-ring]');
+    if (rings.length !== 1) {
+      throw new Error(`Exactly one root ring expected, found ${rings.length}.`);
+    }
+    const ringOwner = rings[0].closest('[data-network-node]');
+    if (!ringOwner?.getAttribute('aria-label')?.includes('탐색 시작점')) {
+      throw new Error('The root node must announce that it is the starting point.');
+    }
+    const announced = Array.from(canvasElement.querySelectorAll('[data-network-node]'))
+      .filter((node) => node.getAttribute('aria-label')?.includes('탐색 시작점'));
+    if (announced.length !== 1 || announced[0] !== ringOwner) {
+      throw new Error('The drawn root and the announced root must be the same node.');
+    }
     assertNoPresentationalSubtree(canvasElement, '회사 지식망 · force');
     assertFocusableNodes(canvasElement, '회사 지식망 · force');
   },
@@ -511,6 +534,79 @@ export const ExpandCollapse = {
     for (let i = 0; i < 40 && nodeCount() !== before; i += 1) await wait(150);
     if (nodeCount() !== before) {
       throw new Error(`Enter on the cue must collapse again (${nodeCount()} ≠ ${before}).`);
+    }
+  },
+};
+
+/*
+  실제 데이터는 깨끗하지 않다. 자기 자신을 가리키는 관계, 없는 끝점, 같은 `id`가
+  둘. 이 스토리는 그런 입력에서도 그림이 서지 그림이 무너지지 않는다는 계약을
+  붙잡는다 — 그리고 «무엇을 버렸는지»가 규칙으로 정해져 있다는 것도.
+*/
+export const DegenerateInput = {
+  name: '변형·상태 · 성치 않은 입력',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '자기 참조·재귀·순환은 실제로 있는 사실이므로 노드 위의 고리로 그립니다. 같은 노드에 고리가 여럿이면 각도를 돌립니다. 없는 끝점을 가리키는 관계와 중복된 `id`는 그리지 않습니다 — 먼저 온 것을 남깁니다.',
+      },
+    },
+  },
+  render: () => (
+    <main style={{ width: 'min(760px, 100%)' }}>
+      <NetworkGraph
+        label="성치 않은 입력"
+        nodeShape="dot"
+        layout="force"
+        height={360}
+        nodes={[
+          { id: 'hub', label: '스케줄러', caption: '시스템', color: '#c2410c', root: true },
+          { id: 'hub', label: '중복된 스케줄러', caption: '버려집니다' },
+          { id: 'job', label: '집계 작업', caption: '작업', color: '#2563eb', depth: 1 },
+        ]}
+        edges={[
+          { id: 'self-1', from: 'hub', to: 'hub', label: '자신을 다시 부름' },
+          { id: 'self-2', from: 'hub', to: 'hub', label: '재시도' },
+          { id: 'runs', from: 'hub', to: 'job', label: '실행함' },
+          { id: 'ghost', from: 'hub', to: '없는-노드', label: '그려지지 않음' },
+        ]}
+        onSelectNode={() => {}}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const nodes = canvasElement.querySelectorAll('[data-network-node]');
+    if (nodes.length !== 2) {
+      throw new Error(`A duplicate id must not become a second node (found ${nodes.length}).`);
+    }
+    /* 탭 스톱은 «하나»다. 중복 `id`가 roving tabindex를 무너뜨려 실제로 둘이 된
+       적이 있다 — 그림 안으로 들어가는 문이 둘이 되면 계약이 아니다. */
+    const stops = canvasElement.querySelectorAll('[data-network-node][tabindex="0"]');
+    if (stops.length !== 1) {
+      throw new Error(`The node set must be one tab stop (found ${stops.length}).`);
+    }
+    const drawn = Array.from(canvasElement.querySelectorAll('[data-network-edge]'));
+    if (drawn.some((edge) => edge.getAttribute('data-network-edge') === 'ghost')) {
+      throw new Error('An edge pointing at a missing endpoint must not be drawn.');
+    }
+    /* 고리는 «보여야» 한다. 2차 베지어로는 시작점과 끝점이 같아 길이 0의
+       선이 되어 사라졌다. 제어점 둘짜리 3차여야 고리가 된다. */
+    for (const id of ['self-1', 'self-2']) {
+      const path = canvasElement.querySelector(`[data-network-edge="${id}"] path`);
+      const d = path?.getAttribute('d') ?? '';
+      if (!d.includes(' C ')) {
+        throw new Error(`A self-referencing edge must be drawn as a loop (${id}).`);
+      }
+      if (path.getTotalLength() < 40) {
+        throw new Error(`A self-referencing loop must have visible length (${id}).`);
+      }
+    }
+    const [first, second] = ['self-1', 'self-2'].map(
+      (id) => canvasElement.querySelector(`[data-network-edge="${id}"] path`).getAttribute('d'),
+    );
+    if (first === second) {
+      throw new Error('Two loops on the same node must not sit on top of each other.');
     }
   },
 };

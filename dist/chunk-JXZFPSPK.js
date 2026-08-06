@@ -87,6 +87,21 @@ function layoutNodes(nodes, layout, metrics) {
 }
 function edgePath(from, to, metrics) {
   if (!from || !to) return null;
+  if (from === to || from.x === to.x && from.y === to.y) {
+    const radius = from.radius ?? (metrics.shape === "dot" ? DOT_RADIUS : metrics.height / 2);
+    const turn = (metrics.selfIndex ?? 0) * (Math.PI / 3);
+    const spread = Math.PI / 7;
+    const base = -Math.PI / 2 + turn;
+    const exit = base - spread;
+    const enter = base + spread;
+    const reach = radius * 4.2;
+    return {
+      start: { x: from.x + Math.cos(exit) * radius, y: from.y + Math.sin(exit) * radius },
+      control: { x: from.x + Math.cos(exit) * reach, y: from.y + Math.sin(exit) * reach },
+      controlOut: { x: from.x + Math.cos(enter) * reach, y: from.y + Math.sin(enter) * reach },
+      end: { x: from.x + Math.cos(enter) * radius, y: from.y + Math.sin(enter) * radius }
+    };
+  }
   const dx = to.x - from.x;
   const dy = to.y - from.y;
   if (metrics.shape === "dot") {
@@ -217,8 +232,19 @@ function settledForcePositions(nodes, edges, base, radiusOf, footprintOf) {
   for (let tick = 0; tick < FORCE_TICKS; tick += 1) forceTick(bodies, links);
   return new Map(bodies.map((body) => [body.id, { x: body.x, y: body.y }]));
 }
-function pointOnCurve({ start, control, end }, t) {
+function pointOnCurve(curve, t) {
+  const { start, control, controlOut, end } = curve;
   const inverse = 1 - t;
+  if (controlOut) {
+    const a = inverse * inverse * inverse;
+    const b = 3 * inverse * inverse * t;
+    const c = 3 * inverse * t * t;
+    const d = t * t * t;
+    return {
+      x: a * start.x + b * control.x + c * controlOut.x + d * end.x,
+      y: a * start.y + b * control.y + c * controlOut.y + d * end.y
+    };
+  }
   return {
     x: inverse * inverse * start.x + 2 * inverse * t * control.x + t * t * end.x,
     y: inverse * inverse * start.y + 2 * inverse * t * control.y + t * t * end.y
@@ -231,9 +257,18 @@ function boxOverlapArea(a, b) {
 }
 var LABEL_CANDIDATE_T = [0.5, 0.38, 0.62, 0.28, 0.72];
 var LABEL_CANDIDATE_OFFSET = [0, 18, -18, 34, -34, 52, -52];
-function curveTangent({ start, control, end }, t) {
-  const x = 2 * (1 - t) * (control.x - start.x) + 2 * t * (end.x - control.x);
-  const y = 2 * (1 - t) * (control.y - start.y) + 2 * t * (end.y - control.y);
+function curveTangent(curve, t) {
+  const { start, control, controlOut, end } = curve;
+  let x;
+  let y;
+  if (controlOut) {
+    const inverse = 1 - t;
+    x = 3 * inverse * inverse * (control.x - start.x) + 6 * inverse * t * (controlOut.x - control.x) + 3 * t * t * (end.x - controlOut.x);
+    y = 3 * inverse * inverse * (control.y - start.y) + 6 * inverse * t * (controlOut.y - control.y) + 3 * t * t * (end.y - controlOut.y);
+  } else {
+    x = 2 * (1 - t) * (control.x - start.x) + 2 * t * (end.x - control.x);
+    y = 2 * (1 - t) * (control.y - start.y) + 2 * t * (end.y - control.y);
+  }
   const length = Math.hypot(x, y) || 1;
   return { x: x / length, y: y / length };
 }
@@ -269,8 +304,8 @@ function placeEdgeLabels(entries, obstacles) {
   });
 }
 function NetworkGraph({
-  nodes = [],
-  edges = [],
+  nodes: nodesInput = [],
+  edges: edgesInput = [],
   layout = "layered",
   nodeShape = "card",
   showEdgeLabels = true,
@@ -296,6 +331,22 @@ function NetworkGraph({
   const metrics = SHAPE[nodeShape] ?? SHAPE.card;
   const isDot = nodeShape === "dot";
   const isForce = layout === "force";
+  const nodes = React.useMemo(() => {
+    const seen = /* @__PURE__ */ new Set();
+    return nodesInput.filter((node) => {
+      if (seen.has(node.id)) return false;
+      seen.add(node.id);
+      return true;
+    });
+  }, [nodesInput]);
+  const edges = React.useMemo(() => {
+    const seen = /* @__PURE__ */ new Set();
+    return edgesInput.filter((edge) => {
+      if (seen.has(edge.id)) return false;
+      seen.add(edge.id);
+      return true;
+    });
+  }, [edgesInput]);
   const gridPositions = React.useMemo(
     () => layoutNodes(nodes, isForce ? "layered" : layout, metrics),
     [isForce, layout, metrics, nodes]
@@ -515,12 +566,18 @@ function NetworkGraph({
       const key = [edge.from, edge.to].sort().join("\u2192");
       pairCounts.set(key, (pairCounts.get(key) ?? 0) + 1);
     });
+    const selfSeen = /* @__PURE__ */ new Map();
     const entries = edges.map((edge) => ({
       edge,
       curve: edgePath(anchors.get(edge.from), anchors.get(edge.to), {
         ...metrics,
         shape: nodeShape,
-        parallel: (pairCounts.get([edge.from, edge.to].sort().join("\u2192")) ?? 0) > 1
+        parallel: (pairCounts.get([edge.from, edge.to].sort().join("\u2192")) ?? 0) > 1,
+        selfIndex: edge.from === edge.to ? (() => {
+          const seen = selfSeen.get(edge.from) ?? 0;
+          selfSeen.set(edge.from, seen + 1);
+          return seen;
+        })() : 0
       }),
       text: showEdgeLabels ? `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ""}`.trim() : ""
     }));
@@ -544,6 +601,10 @@ function NetworkGraph({
   const automaticSummary = hasData ? `\uB300\uC0C1 ${nodes.length}\uAC1C, \uAD00\uACC4 ${edges.length}\uAC1C. ${nodes.map((node) => nodeText(node.label) || node.id).join(", ")}` : nodeText(emptyLabel);
   const resolvedSummary = summary ?? automaticSummary;
   const [focusedKey, setFocusedKey] = React.useState(null);
+  const isRootNode = React.useCallback(
+    (node) => isDot && node.root === true,
+    [isDot]
+  );
   const hasCue = React.useCallback(
     (node) => (
       /*
@@ -652,7 +713,8 @@ function NetworkGraph({
               /* @__PURE__ */ jsx("g", { "data-network-edges": true, children: laidOutEdges.map(({ edge, curve, text, label: labelPoint }) => {
                 if (!curve) return null;
                 const path = {
-                  d: `M ${curve.start.x} ${curve.start.y} Q ${curve.control.x} ${curve.control.y} ${curve.end.x} ${curve.end.y}`,
+                  // 제어점이 둘이면 고리(3차), 하나면 보통의 관계(2차).
+                  d: curve.controlOut ? `M ${curve.start.x} ${curve.start.y} C ${curve.control.x} ${curve.control.y} ${curve.controlOut.x} ${curve.controlOut.y} ${curve.end.x} ${curve.end.y}` : `M ${curve.start.x} ${curve.start.y} Q ${curve.control.x} ${curve.control.y} ${curve.end.x} ${curve.end.y}`,
                   label: labelPoint
                 };
                 const color = edge.color || edgeColor;
@@ -734,6 +796,10 @@ function NetworkGraph({
                     "aria-label": [
                       labelText,
                       captionText,
+                      /* 뿌리는 링으로도 보이지만 그것만으로는 눈으로 보는
+                         사람에게만 전해진다. 「여기서 시작했다」는 탐색의
+                         사실이므로 이름에도 넣는다. */
+                      isRootNode(node) ? "\uD0D0\uC0C9 \uC2DC\uC791\uC810" : null,
                       // 큐가 없는 장르에서는 이 안내도 없다 — 갈 곳 없는 사실이다.
                       hasCue(node) && node.collapsedCount > 0 ? `\uC811\uD78C \uC5F0\uACB0 ${node.collapsedCount}\uAC1C` : null,
                       hasCue(node) && isExpanded(node) ? "\uC5F0\uACB0 \uD3BC\uCE68" : null
@@ -769,6 +835,18 @@ function NetworkGraph({
                                구조가 보인다. 선택은 테두리 링으로 표시한다 — 채움색은
                                이미 범주가 쓰고 있다. */
                             /* @__PURE__ */ jsxs(Fragment, { children: [
+                              isRootNode(node) && /* @__PURE__ */ jsx(
+                                "circle",
+                                {
+                                  "data-network-root-ring": "true",
+                                  r: radius + 9,
+                                  fill: "none",
+                                  stroke: color,
+                                  strokeWidth: 1.5,
+                                  strokeDasharray: "4 4",
+                                  opacity: 0.75
+                                }
+                              ),
                               selected && /* @__PURE__ */ jsx(
                                 "circle",
                                 {
@@ -973,4 +1051,4 @@ function NetworkGraph({
 export {
   NetworkGraph
 };
-//# sourceMappingURL=chunk-KUJFWCKF.js.map
+//# sourceMappingURL=chunk-JXZFPSPK.js.map

@@ -54,7 +54,13 @@ export interface NetworkGraphNode {
   column?: number;
   /** 같은 단계 안의 묶음. 정렬에만 쓰입니다. */
   group?: string;
-  /** `layered` 배치의 중심 노드. */
+  /**
+   * 탐색이 시작된 노드.
+   *
+   * `layered` 배치에서는 층의 중심이 되고, `dot`에서는 파선 링과 「탐색
+   * 시작점」이라는 이름으로 드러납니다. `card`에서는 첫 단계라는 사실을 이미
+   * 왼쪽 끝이라는 자리가 말하므로 아무것도 덧그리지 않습니다.
+   */
   root?: boolean;
   /** `layered` 배치에서 뿌리로부터의 거리. */
   depth?: number;
