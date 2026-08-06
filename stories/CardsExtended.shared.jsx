@@ -250,8 +250,8 @@ export const StatCard = {
     <div data-visual-crop-root style={{ width: 320, height: 180, background: 'var(--color-semantic-background-normal-alternative)', padding: 24, boxSizing: 'border-box' }}>
       <Card elevation="sm" padding={22} style={{ width: 260 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <Stat value="205" label="구현 검증" accent="signal" />
-          <Stat value="466" label="공개 스토리" accent="ink" />
+          <Stat value="206" label="구현 검증" accent="signal" />
+          <Stat value="472" label="공개 스토리" accent="ink" />
         </div>
       </Card>
     </div>
