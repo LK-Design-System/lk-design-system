@@ -1,6 +1,6 @@
 {
   "name": "@lk-design-system/lds-workspace",
-  "version": "0.1.0-rc.41",
+  "version": "0.1.0-rc.42",
   "packageManager": "npm@10.9.2",
   "private": true,
   "description": "Private workspace orchestrator for the layered LK ROBOTICS design system.",

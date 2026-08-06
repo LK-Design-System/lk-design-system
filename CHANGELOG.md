@@ -68,6 +68,14 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.42 - 2026-08-06
+
+### Fixed
+
+- `NetworkGraph`의 `dot` 노드가 이름이 차지하는 자리까지를 몸집으로 칩니다. 이름은 원 «밖»에 있고 원보다 훨씬 넓은데(반지름 16px 점에 붙은 「플랫폼·개발자 도구」는 110px가 넘습니다) 충돌 힘이 반지름만 보고 밀어, 점 둘은 안 닿는데 이름끼리 포개졌습니다. `card`도 상자 크기로 밀립니다 — 종전에는 점의 기본 반지름으로 밀리고 있었습니다.
+- `NetworkGraph`의 `dot` 노드 이름과 캡션에 배경색 후광을 둡니다(`paint-order`). 관계선은 직선이라 돌아가지 않으므로, 선이 이름 위를 지나도 글자가 계속 읽힙니다.
+- `NetworkGraph`의 관계 라벨이 피해 가는 상자를 글자가 실제로 놓이는 자리에 맞췄습니다. 캡션 상자가 2px 위에 잡혀 있어 스침이 남았습니다.
+
 ## 0.1.0-rc.41 - 2026-08-06
 
 ### Added
