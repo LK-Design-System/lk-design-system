@@ -3,13 +3,13 @@
     "name": "Base icon source / Icon",
     "importedFrom": "C:/Users/MSI/Downloads/Icon",
     "importedAt": "2026-07-07",
-    "note": "SVG files are normalized for LDS Icon usage. Color logo SVGs keep original fills and embedded image data."
+    "note": "SVG files are normalized for LDS Icon usage. Color logo SVGs keep original fills and embedded image data. Repository-local additions live in assets/icon-source-overrides/."
   },
   "counts": {
-    "svgImported": 339,
+    "svgImported": 340,
     "rasterCopied": 1,
-    "publicIconNames": 357,
-    "sourceIconNames": 339,
+    "publicIconNames": 358,
+    "sourceIconNames": 340,
     "ldsLegacyFallbacks": 18
   },
   "icons": [
@@ -2329,6 +2329,13 @@
       "sourcePath": "Normal/Normal.svg",
       "assetPath": "assets/icons/normal.svg",
       "viewBox": "0 0 18 19"
+    },
+    {
+      "name": "unlink",
+      "source": "lds-custom",
+      "sourcePath": "assets/icon-source-overrides/unlink.svg",
+      "assetPath": "assets/icons/unlink.svg",
+      "viewBox": "0 0 24 24"
     },
     {
       "name": "color-logo-apple",

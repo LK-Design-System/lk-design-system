@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const sourceRoot = path.resolve(process.argv[2] || process.env.WDS_ICON_SOURCE || 'C:/Users/MSI/Downloads/Icon');
+const customIconSourceRoot = path.join(repoRoot, 'assets', 'icon-source-overrides');
 const assetsRoot = path.join(repoRoot, 'assets', 'icons');
 const componentFile = path.join(repoRoot, 'components', 'icon', 'Icon.jsx');
 const typesFile = path.join(repoRoot, 'components', 'icon', 'Icon.d.ts');
@@ -78,6 +79,14 @@ function iconNameFor(filePath, usedNames) {
   }
   usedNames.add(candidate);
   return candidate;
+}
+
+function customIconNameFor(filePath, usedNames) {
+  const name = toKebab(path.basename(filePath));
+  if (!name) throw new Error(`Custom icon has no usable name: ${filePath}`);
+  if (usedNames.has(name)) throw new Error(`Custom icon name conflicts with the registry: ${name}`);
+  usedNames.add(name);
+  return name;
 }
 
 async function collectFiles(dir, predicate, output = []) {
@@ -166,6 +175,32 @@ async function readLegacyIcons() {
         sourcePath: 'components/icon/Icon.jsx',
         viewBox: '0 0 24 24',
         body,
+      });
+    }
+
+    return entries;
+  } catch {
+    return [];
+  }
+}
+
+async function readManifestLegacyIcons() {
+  try {
+    const manifest = JSON.parse(await readFile(path.join(assetsRoot, 'manifest.json'), 'utf8'));
+    const source = await readFile(componentFile, 'utf8');
+    const iconSvg = objectLiteralFrom(source, 'ICON_SVG');
+    const entries = [];
+
+    for (const icon of manifest.icons ?? []) {
+      if (icon?.source !== 'lds-legacy' || typeof icon.name !== 'string') continue;
+      const definition = iconSvg[icon.name];
+      if (!definition || typeof definition.body !== 'string') continue;
+      entries.push({
+        name: icon.name,
+        source: 'lds-legacy',
+        sourcePath: icon.sourcePath || 'assets/icons/manifest.json',
+        viewBox: definition.viewBox || icon.viewBox || '0 0 24 24',
+        body: definition.body,
       });
     }
 
@@ -318,7 +353,7 @@ function buildManifest(entries, copiedFiles, rasterFiles) {
       name: 'Base icon source / Icon',
       importedFrom: toPosix(sourceRoot),
       importedAt: new Date().toISOString().slice(0, 10),
-      note: 'SVG files are normalized for LDS Icon usage. Color logo SVGs keep original fills and embedded image data.',
+      note: 'SVG files are normalized for LDS Icon usage. Color logo SVGs keep original fills and embedded image data. Repository-local additions live in assets/icon-source-overrides/.',
     },
     counts: {
       svgImported: copiedFiles.length,
@@ -339,7 +374,9 @@ function buildManifest(entries, copiedFiles, rasterFiles) {
 }
 
 const svgFiles = await collectFiles(sourceRoot, (file) => file.toLowerCase().endsWith('.svg'));
+const customSvgFiles = await collectFiles(customIconSourceRoot, (file) => file.toLowerCase().endsWith('.svg'));
 const rasterSourceFiles = await collectFiles(sourceRoot, (file) => /\.(png|jpg|jpeg|webp)$/i.test(file));
+const manifestLegacyEntries = await readManifestLegacyIcons();
 
 // Resolve and read the source inventory before replacing generated output. A
 // missing or unreadable source must leave the existing icon package intact.
@@ -369,6 +406,23 @@ for (const file of svgFiles) {
   });
 }
 
+for (const file of customSvgFiles) {
+  const name = customIconNameFor(file, usedNames);
+  const raw = await readFile(file, 'utf8');
+  const normalized = normalizeSvg(raw, 'monochrome');
+  const assetRel = `assets/icons/${name}.svg`;
+  await writeFile(path.join(repoRoot, assetRel), normalized.svg, 'utf8');
+  copiedSvgFiles.push(assetRel);
+  importedEntries.push({
+    name,
+    source: 'lds-custom',
+    sourcePath: toPosix(path.relative(repoRoot, file)),
+    assetPath: assetRel,
+    viewBox: normalized.viewBox,
+    body: normalized.body,
+  });
+}
+
 const rasterFiles = [];
 for (const file of rasterSourceFiles) {
   const rel = path.relative(sourceRoot, file);
@@ -378,8 +432,21 @@ for (const file of rasterSourceFiles) {
   rasterFiles.push(destRel);
 }
 
-const legacyEntries = (await readLegacyIcons()).filter((entry) => !usedNames.has(entry.name));
+const legacyByName = new Map([
+  ...manifestLegacyEntries,
+  ...(await readLegacyIcons()).map((entry) => ({
+    ...entry,
+    assetPath: `assets/icons/${entry.name}.svg`,
+    svg: `<svg viewBox="${entry.viewBox}" xmlns="http://www.w3.org/2000/svg">${entry.body}</svg>\n`,
+  })),
+].map((entry) => [entry.name, entry]));
+const legacyEntries = [...legacyByName.values()].filter((entry) => !usedNames.has(entry.name));
 for (const entry of legacyEntries) usedNames.add(entry.name);
+for (const entry of legacyEntries) {
+  if (entry.assetPath && entry.svg) {
+    await writeFile(path.join(repoRoot, entry.assetPath), entry.svg, 'utf8');
+  }
+}
 
 const entries = orderEntries([...importedEntries, ...legacyEntries]);
 const manifest = buildManifest(entries, copiedSvgFiles, rasterFiles);

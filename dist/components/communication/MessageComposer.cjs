@@ -1,13 +1,13 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkYH5CU4B5cjs = require('../../chunk-YH5CU4B5.cjs');
+var _chunkTKX5DUATcjs = require('../../chunk-TKX5DUAT.cjs');
 require('../../chunk-6S5YR4GD.cjs');
 require('../../chunk-UMVFIUFV.cjs');
 require('../../chunk-GWMGPLNW.cjs');
-require('../../chunk-X5XHQEI5.cjs');
+require('../../chunk-B6GRMPJU.cjs');
 require('../../chunk-UOF2MNMP.cjs');
 
 
-exports.MessageComposer = _chunkYH5CU4B5cjs.MessageComposer;
+exports.MessageComposer = _chunkTKX5DUATcjs.MessageComposer;
 //# sourceMappingURL=MessageComposer.cjs.map

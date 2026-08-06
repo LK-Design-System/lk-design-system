@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkNW2IXG7Rcjs = require('../../chunk-NW2IXG7R.cjs');
-require('../../chunk-X5XHQEI5.cjs');
+var _chunk7RYSLVLEcjs = require('../../chunk-7RYSLVLE.cjs');
+require('../../chunk-B6GRMPJU.cjs');
 
 
-exports.Thumbnail = _chunkNW2IXG7Rcjs.Thumbnail;
+exports.Thumbnail = _chunk7RYSLVLEcjs.Thumbnail;
 //# sourceMappingURL=Thumbnail.cjs.map

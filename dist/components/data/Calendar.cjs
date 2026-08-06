@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkDURAZHAVcjs = require('../../chunk-DURAZHAV.cjs');
-require('../../chunk-X5XHQEI5.cjs');
+var _chunkOTVGJDKEcjs = require('../../chunk-OTVGJDKE.cjs');
+require('../../chunk-B6GRMPJU.cjs');
 
 
-exports.Calendar = _chunkDURAZHAVcjs.Calendar;
+exports.Calendar = _chunkOTVGJDKEcjs.Calendar;
 //# sourceMappingURL=Calendar.cjs.map

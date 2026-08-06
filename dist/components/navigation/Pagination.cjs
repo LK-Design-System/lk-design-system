@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkA4F37F3Rcjs = require('../../chunk-A4F37F3R.cjs');
-require('../../chunk-X5XHQEI5.cjs');
+var _chunkBPBL3LJJcjs = require('../../chunk-BPBL3LJJ.cjs');
+require('../../chunk-B6GRMPJU.cjs');
 
 
-exports.Pagination = _chunkA4F37F3Rcjs.Pagination;
+exports.Pagination = _chunkBPBL3LJJcjs.Pagination;
 //# sourceMappingURL=Pagination.cjs.map

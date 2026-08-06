@@ -1,8 +1,8 @@
 "use client";
 import {
   DockPanel
-} from "../../chunk-LKF2SH2Q.js";
-import "../../chunk-JNVDI5OO.js";
+} from "../../chunk-NXNR4XLR.js";
+import "../../chunk-ON44Y65B.js";
 export {
   DockPanel
 };

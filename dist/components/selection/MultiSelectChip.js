@@ -1,9 +1,9 @@
 "use client";
 import {
   MultiSelectChip
-} from "../../chunk-DW5SSTJ7.js";
+} from "../../chunk-KXGOWWF4.js";
 import "../../chunk-ULXPFTSH.js";
-import "../../chunk-JNVDI5OO.js";
+import "../../chunk-ON44Y65B.js";
 export {
   MultiSelectChip
 };

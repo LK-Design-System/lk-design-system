@@ -1,11 +1,11 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkBHX4ZA4Xcjs = require('../../chunk-BHX4ZA4X.cjs');
+var _chunkNUCOLERXcjs = require('../../chunk-NUCOLERX.cjs');
 require('../../chunk-GB2NOCK7.cjs');
 require('../../chunk-I6NJHF3L.cjs');
-require('../../chunk-X5XHQEI5.cjs');
+require('../../chunk-B6GRMPJU.cjs');
 
 
-exports.DataGrid = _chunkBHX4ZA4Xcjs.DataGrid;
+exports.DataGrid = _chunkNUCOLERXcjs.DataGrid;
 //# sourceMappingURL=DataGrid.cjs.map

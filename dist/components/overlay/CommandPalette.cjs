@@ -1,11 +1,11 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkV3BGXWB3cjs = require('../../chunk-V3BGXWB3.cjs');
+var _chunkUYXJF7CScjs = require('../../chunk-UYXJF7CS.cjs');
 require('../../chunk-2HYMUCSD.cjs');
 require('../../chunk-F4O2CAUI.cjs');
-require('../../chunk-X5XHQEI5.cjs');
+require('../../chunk-B6GRMPJU.cjs');
 
 
-exports.CommandPalette = _chunkV3BGXWB3cjs.CommandPalette;
+exports.CommandPalette = _chunkUYXJF7CScjs.CommandPalette;
 //# sourceMappingURL=CommandPalette.cjs.map

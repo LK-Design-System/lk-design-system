@@ -1,11 +1,11 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk43YQXPUNcjs = require('../../chunk-43YQXPUN.cjs');
-require('../../chunk-Z4LY27BE.cjs');
+var _chunk24XHHNQ4cjs = require('../../chunk-24XHHNQ4.cjs');
+require('../../chunk-ZYXFA6YM.cjs');
 require('../../chunk-SMSPAH2M.cjs');
-require('../../chunk-X5XHQEI5.cjs');
+require('../../chunk-B6GRMPJU.cjs');
 
 
-exports.AnnotatedImage = _chunk43YQXPUNcjs.AnnotatedImage;
+exports.AnnotatedImage = _chunk24XHHNQ4cjs.AnnotatedImage;
 //# sourceMappingURL=AnnotatedImage.cjs.map

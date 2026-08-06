@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkG4WWRZADcjs = require('../../chunk-G4WWRZAD.cjs');
-require('../../chunk-X5XHQEI5.cjs');
+var _chunk64SCVYNKcjs = require('../../chunk-64SCVYNK.cjs');
+require('../../chunk-B6GRMPJU.cjs');
 
 
-exports.Breadcrumb = _chunkG4WWRZADcjs.Breadcrumb;
+exports.Breadcrumb = _chunk64SCVYNKcjs.Breadcrumb;
 //# sourceMappingURL=Breadcrumb.cjs.map
