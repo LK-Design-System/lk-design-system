@@ -23,8 +23,13 @@ export type NetworkGraphEdgeState =
  * - `columns`: `column`으로 단계를 고정합니다. source → processor → sink처럼
  *   진행 방향이 정해진 흐름도용.
  * - `manual`: 노드의 `x`/`y`를 그대로 씁니다. 앱이 자체 배치기를 가진 경우.
+ * - `force`: 물리(고무줄·반발·충돌·중심)로 자리를 잡는 노드-링크 장르의 표준
+ *   배치. 격자에서 출발해 고정 틱 수만큼 결정론적으로 수렴하고, 모션이
+ *   허용되면 잦아드는 과정을 애니메이션으로 보여주며 노드를 끌 수 있습니다.
+ *   `dot`과 함께 쓰세요 — 단계가 고정된 카드 흐름도에 물리를 넣으면 읽을 수
+ *   없습니다.
  */
-export type NetworkGraphLayout = 'layered' | 'columns' | 'manual';
+export type NetworkGraphLayout = 'layered' | 'columns' | 'manual' | 'force';
 
 /**
  * 관계도 UI의 두 관행. 장르를 섞으면 둘 다 실패합니다.
@@ -55,9 +60,18 @@ export interface NetworkGraphNode {
   depth?: number;
   /** `dot`에서 반지름이 인코딩할 양. 넓이가 값에 비례하도록 제곱근으로 매핑합니다. */
   size?: number;
-  /** 접혀 있는 이웃의 수. 0보다 크면 노드 왼쪽 위에 `+N` 확장 큐를 그리고,
-      접근 가능한 이름과 `aria-expanded`가 함께 따라갑니다. */
+  /** 접혀 있는 이웃의 수. 0보다 크면 노드 왼쪽 위에 `+N` 펼치기 큐를 그리고,
+      노드의 접근 가능한 이름도 그 개수를 말합니다. `nodeShape="dot"`에서만
+      쓰입니다 — 플로우 에디터에서 접히는 것은 이웃이 아니라 한 노드 안의
+      서브그래프이고, 그것은 다른 개념입니다. */
   collapsedCount?: number;
+  /**
+   * 이 노드의 이웃이 펼쳐져 있는지. 펼치고 나면 `collapsedCount`가 0이 되어
+   * 그것만으로는 「접을 것이 있다」를 알 수 없으므로 따로 받습니다. `true`면
+   * 큐가 사라지지 않고 `−`(접기)로 바뀌어 같은 자리에 남습니다 — 없애면
+   * 왕복이 비대칭이 되고 키보드로는 접을 길이 사라집니다.
+   */
+  expanded?: boolean;
   /** `manual` 배치에서의 좌표. */
   x?: number;
   y?: number;
@@ -86,6 +100,12 @@ export interface NetworkGraphProps extends Omit<React.HTMLAttributes<HTMLDivElem
   nodeShape?: NetworkGraphNodeShape;
   /** 관계 라벨을 그릴지. 노드가 많으면 꺼서 구조만 남깁니다. @default true */
   showEdgeLabels?: boolean;
+  /**
+   * `force` 배치의 움직임. `auto`는 수렴 애니메이션과 드래그를 켜되
+   * `prefers-reduced-motion`이면 수렴 상태를 바로 그립니다. `none`은 항상
+   * 수렴 상태만 그립니다(시각 회귀 시험·SSR용). @default "auto"
+   */
+  motion?: 'auto' | 'none';
   /** 노드에 색이 없을 때 쓰는 기본값. */
   nodeColor?: string;
   /** 관계에 색이 없을 때 쓰는 기본값. */
@@ -94,7 +114,11 @@ export interface NetworkGraphProps extends Omit<React.HTMLAttributes<HTMLDivElem
   selectedEdgeId?: string;
   onSelectNode?: (node: NetworkGraphNode) => void;
   onSelectEdge?: (edge: NetworkGraphEdge) => void;
-  /** 이웃 펼치기/접기. 주면 노드가 `aria-expanded`를 갖고 더블클릭·`+`/`-`에 반응합니다. */
+  /** 이웃 펼치기/접기. 주면 `+N` 큐가 이름과 `aria-expanded`를 가진 별도
+      버튼이 되어 클릭·키보드 순회 양쪽에서 같은 표적으로 동작하고, 노드
+      더블클릭도 같은 동작을 부릅니다. 노드·관계를 실제로 늘리고 줄이는 것은
+      소비자의 몫이며, `force`에서는 새 노드가 이웃의 자리에서 태어나 물리에
+      밀려 퍼집니다(진입 애니메이션). */
   onToggleNode?: (node: NetworkGraphNode) => void;
   /** 그림 전체의 접근성 이름. @default "관계도" */
   label?: string;

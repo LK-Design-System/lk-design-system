@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NetworkGraph } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -17,10 +18,35 @@ function assertFocusableNodes(canvasElement, label) {
     throw new Error(`${label}: every focusable node needs an accessible name (${unnamed.length} without one).`);
   }
 
-  // roving tabindex — 노드 묶음은 하나의 tab stop이어야 한다.
-  const tabStops = nodes.filter((node) => node.getAttribute('tabindex') === '0');
+  /* roving tabindex — 그림 전체가 하나의 tab stop이어야 한다. 순회의 자리는
+     노드와 «펼치기 큐» 둘 다이므로 큐까지 세어 하나만 열려 있는지 본다. */
+  const stops = Array.from(
+    canvasElement.querySelectorAll('[data-network-node], [data-network-collapse-cue]'),
+  );
+  const tabStops = stops.filter((stop) => stop.getAttribute('tabindex') === '0');
   if (tabStops.length !== 1) {
-    throw new Error(`${label}: node group must expose exactly one tab stop (found ${tabStops.length}).`);
+    throw new Error(`${label}: the drawing must expose exactly one tab stop (found ${tabStops.length}).`);
+  }
+
+  /* 큐는 클릭 표적이면서 키보드 표적이어야 한다 — 한쪽만 열면 같은 동작에
+     두 등급의 접근이 생긴다. 실제로 그렇게 났던 결함이라 못 박는다. */
+  Array.from(canvasElement.querySelectorAll('[data-network-collapse-cue]')).forEach((cue) => {
+    if (cue.getAttribute('aria-hidden') === 'true') {
+      throw new Error(`${label}: the expand cue is clickable, so it must not be hidden from assistive technology.`);
+    }
+    if (!cue.getAttribute('aria-label') || cue.getAttribute('tabindex') === null) {
+      throw new Error(`${label}: the expand cue needs an accessible name and a place in the focus order.`);
+    }
+    if (!['true', 'false'].includes(cue.getAttribute('aria-expanded'))) {
+      throw new Error(`${label}: a cue must report its expanded state.`);
+    }
+  });
+
+  /* 노드는 «선택»만 한다. 노드가 aria-expanded까지 들면 스크린 리더는
+     「축소됨, 버튼」으로 읽는데 누르면 선택이 되어 기대와 어긋난다. */
+  const confused = nodes.filter((node) => node.hasAttribute('aria-expanded'));
+  if (confused.length) {
+    throw new Error(`${label}: selection and expansion must not share one control (${confused.length} node(s) carry aria-expanded).`);
   }
 }
 
@@ -306,6 +332,13 @@ export const ConventionComparison = {
     const graphs = canvasElement.querySelectorAll('[data-chart-type="network"]');
     if (graphs.length !== 2) throw new Error('Comparison must render both conventions side by side.');
 
+    /* 장르 경계: 펼치기 큐는 노드-링크의 개념이라 dot에만 있어야 한다.
+       플로우에서 접히는 것은 이웃이 아니라 서브그래프이고 열리는 방향도
+       다르므로, 같은 기호를 쓰면 둘 다 잘못 읽힌다. */
+    if (graphs[1].querySelector('[data-network-collapse-cue]')) {
+      throw new Error('The flow-editor convention must not borrow the node-link expand cue.');
+    }
+
     // dot 관행의 핵심: 반지름이 양을 인코딩한다. 값이 다르면 원도 달라야 한다.
     const circles = Array.from(graphs[0].querySelectorAll('[data-network-node-body]'))
       .map((c) => Number(c.getAttribute('r')));
@@ -316,6 +349,145 @@ export const ConventionComparison = {
     // card 관행의 핵심: 연결이 정해진 포트로 들고 난다.
     if (!graphs[1].querySelector('[data-network-port]')) {
       throw new Error('Flow-editor convention must expose ports, or connections have no declared entry and exit.');
+    }
+  },
+};
+
+export const ForceLayout = {
+  name: '배치 · 물리로 잦아드는 관계도',
+  parameters: storyDescription(
+    '노드-링크 장르의 표준인 force-directed 배치입니다. 격자에서 출발해 물리(고무줄·반발·충돌·중심)로 잦아들고, 노드를 끌면 이웃이 따라 출렁입니다. 모션 줄이기 설정에서는 수렴한 자리에 바로 그려지는지, 수렴 결과가 실행마다 같은지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ width: 'min(760px, 100%)' }}>
+      <section style={{ background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)' }}>
+        <NetworkGraph
+          label="회사 지식망 · force"
+          nodeShape="dot"
+          layout="force"
+          height={420}
+          nodes={sameNodes}
+          edges={sameEdges}
+          onSelectNode={() => {}}
+          onToggleNode={() => {}}
+        />
+      </section>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    /*
+      물리는 살아 있어도 계약은 죽어 있으면 안 된다. 수렴을 기다린 뒤
+      확인한다 — 프레임 간 이동이 멎을 때까지 표를 두 번 떠서 비교한다.
+    */
+    const read = () => Array.from(canvasElement.querySelectorAll('[data-network-node]'))
+      .map((node) => node.getAttribute('transform'))
+      .join('|');
+    const wait = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
+    let before = read();
+    for (let i = 0; i < 40; i += 1) {
+      await wait(200);
+      const after = read();
+      if (after === before && after) break;
+      before = after;
+    }
+    const transforms = Array.from(canvasElement.querySelectorAll('[data-network-node]'))
+      .map((node) => node.getAttribute('transform'));
+    if (transforms.some((value) => !value || value.includes('NaN'))) {
+      throw new Error('Force layout must settle every node on a finite position.');
+    }
+    if (new Set(transforms).size !== transforms.length) {
+      throw new Error('Force layout must not settle two nodes on the same point.');
+    }
+    assertNoPresentationalSubtree(canvasElement, '회사 지식망 · force');
+    assertFocusableNodes(canvasElement, '회사 지식망 · force');
+  },
+};
+
+/*
+  펼치기는 데이터의 일이다 — 컴포넌트는 `+N` 큐(클릭 표적)와 더블클릭·`+`/`-`
+  키로 `onToggleNode`를 부르고, 노드·관계를 실제로 늘리는 것은 소비자다. 이
+  데모가 그 계약의 소비자 쪽 절반이다. force에서는 새 노드가 이웃의 자리에서
+  태어나 물리에 밀려 퍼지므로, 펼침 애니메이션은 별도 트랜지션이 아니라 물리
+  그 자체다.
+*/
+const hiddenNeighbours = [
+  { id: 'repo-portal', label: 'lk_portal', caption: '리포지토리', color: '#0e7490', size: 2 },
+  { id: 'repo-pet', label: 'pet', caption: '리포지토리', color: '#0e7490', size: 1 },
+  { id: 'doc-runbook', label: '운영 런북', caption: '문서', color: '#15803d', size: 1 },
+];
+
+const hiddenEdges = [
+  { id: 'x1', from: 'jin', to: 'repo-portal', label: '커밋함' },
+  { id: 'x2', from: 'jin', to: 'repo-pet', label: '커밋함' },
+  { id: 'x3', from: 'jin', to: 'doc-runbook', label: '작성함' },
+];
+
+function ExpandableKnowledgeGraph() {
+  const [expanded, setExpanded] = useState(false);
+  const nodes = [
+    ...sameNodes.map((node) => (
+      node.id === 'jin'
+        // 펼친 뒤에는 접힌 것이 없지만 «접을 것»은 있다. 그래서 `expanded`를
+        // 함께 넘겨야 큐가 `−`로 남아 왕복이 대칭이 된다.
+        ? { ...node, collapsedCount: expanded ? 0 : 3, expanded }
+        : node
+    )),
+    ...(expanded ? hiddenNeighbours : []),
+  ];
+  const edges = [...sameEdges, ...(expanded ? hiddenEdges : [])];
+  return (
+    <NetworkGraph
+      label="회사 지식망 · 펼치기"
+      nodeShape="dot"
+      layout="force"
+      height={420}
+      nodes={nodes}
+      edges={edges}
+      onSelectNode={() => {}}
+      onToggleNode={(node) => {
+        if (node.id === 'jin') setExpanded((value) => !value);
+      }}
+    />
+  );
+}
+
+export const ExpandCollapse = {
+  name: '상호작용 · 접힌 이웃 펼치기',
+  parameters: storyDescription(
+    '장진혁의 `+3` 큐를 누르면 접혀 있던 리포지토리·문서가 그 자리에서 태어나 물리에 밀려 퍼집니다. 큐가 직접 눌리는지, 새 노드가 튀지 않고 퍼져 나오는지, 다시 접으면 큐가 돌아오는지 확인하세요.',
+  ),
+  render: () => <ExpandableKnowledgeGraph />,
+  play: async ({ canvasElement }) => {
+    const wait = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
+    const nodeCount = () => canvasElement.querySelectorAll('[data-network-node]').length;
+    const cue = () => canvasElement.querySelector('[data-network-collapse-cue]');
+
+    for (let i = 0; i < 40 && !cue(); i += 1) await wait(150);
+    if (!cue()) throw new Error('Collapsed node must show its +N cue.');
+    const before = nodeCount();
+    if (cue().getAttribute('aria-expanded') !== 'false') {
+      throw new Error('A collapsed cue must report aria-expanded="false".');
+    }
+
+    cue().dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    for (let i = 0; i < 40 && nodeCount() === before; i += 1) await wait(150);
+    if (nodeCount() !== before + 3) {
+      throw new Error(`Pressing the cue must expand the hidden neighbours (${before} → ${nodeCount()}).`);
+    }
+
+    /* 큐는 사라지지 않고 접기로 바뀌어야 한다 — 사라지면 키보드로 되돌아갈
+       길이 없어져 왕복이 비대칭이 된다. 실제로 그렇게 났던 결함이다. */
+    if (!cue()) throw new Error('The cue must remain as a collapse control after expanding.');
+    if (cue().getAttribute('aria-expanded') !== 'true') {
+      throw new Error('An expanded cue must report aria-expanded="true".');
+    }
+
+    // 키보드만으로 되접기.
+    cue().focus();
+    document.activeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    for (let i = 0; i < 40 && nodeCount() !== before; i += 1) await wait(150);
+    if (nodeCount() !== before) {
+      throw new Error(`Enter on the cue must collapse again (${nodeCount()} ≠ ${before}).`);
     }
   },
 };

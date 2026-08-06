@@ -137,7 +137,12 @@ function edgePath(from, to, metrics) {
 
   /* 원은 어느 방향에서 와도 둘레가 같으므로 중심을 잇는 선 위에서 반지름만큼
      물러난다. 사각형처럼 «어느 면에 붙일지»를 고를 필요가 없다 — 노드-링크
-     관행이 배치를 자유롭게 둘 수 있는 이유이기도 하다. */
+     관행이 배치를 자유롭게 둘 수 있는 이유이기도 하다.
+
+     선은 «직선»이 기본이다. Obsidian·Gephi·Bloom 모두 원 사이를 곧게 긋는다
+     — 구조를 읽는 그림에서 곡률은 정보가 아니라 장식이다. 휘는 것은 같은 두
+     노드 사이에 관계가 여럿일 때뿐이고, 그때의 곡률은 겹침을 푸는 정보다.
+     왕복 한 쌍은 단위 벡터가 반대라 같은 식으로도 서로 반대쪽으로 휜다. */
   if (metrics.shape === 'dot') {
     const distance = Math.hypot(dx, dy) || 1;
     const unitX = dx / distance;
@@ -146,8 +151,7 @@ function edgePath(from, to, metrics) {
     const startY = from.y + unitY * (from.radius ?? DOT_RADIUS);
     const endX = to.x - unitX * (to.radius ?? DOT_RADIUS);
     const endY = to.y - unitY * (to.radius ?? DOT_RADIUS);
-    // 살짝 휘게 해서 같은 두 노드 사이의 왕복 관계가 겹쳐 보이지 않게 한다.
-    const bow = Math.min(28, distance / 6);
+    const bow = metrics.parallel ? Math.min(28, distance / 6) : 0;
     const controlX = (startX + endX) / 2 - unitY * bow;
     const controlY = (startY + endY) / 2 + unitX * bow;
     return { start: { x: startX, y: startY }, control: { x: controlX, y: controlY }, end: { x: endX, y: endY } };
@@ -176,6 +180,136 @@ function edgePath(from, to, metrics) {
   const controlX = (from.x + to.x) / 2 + bow;
   const controlY = (startY + endY) / 2;
   return { start: { x: from.x, y: startY }, control: { x: controlX, y: controlY }, end: { x: to.x, y: endY } };
+}
+
+/*
+  Force-directed 배치. 노드-링크 장르(Obsidian 그래프 뷰 · Neo4j Bloom ·
+  Gephi)의 사실상 표준으로, 격자가 아니라 물리로 자리를 잡는다 — 관계는
+  고무줄처럼 당기고, 노드끼리는 밀어내고, 겹치면 튕겨나고, 전체는 중심에
+  묶인다. 잦아드는 과정이 이 장르 특유의 「찰랑거림」이다.
+
+  d3-force를 들이지 않고 직접 쓴 이유: LDS는 런타임 의존성이 없는 구조이고,
+  필요한 물리는 힘 넷과 감쇠 적분뿐이다. 우리 규모(수십 노드)에서는 O(n²)
+  반발로 충분해 Barnes-Hut 같은 근사도 필요 없다.
+
+  결정론은 유지된다. 초기 좌표는 격자 배치 + id 해시의 미세한 흔들림이고
+  (완전히 일직선인 노드들이 같은 선 위에서만 밀리는 것을 막는다), 난수 없이
+  고정 틱 수만큼 돌리므로 같은 입력이면 같은 수렴 상태가 나온다. 사용자가
+  끌면 그때부터는 입력이 달라진 것이므로 결정론 주장 밖이다.
+*/
+/*
+  틱 수와 «프레임당» 틱 수가 함께 체감 속도를 정한다. 프레임당 3틱은 물리를
+  세 배로 감아 퍼지는 것이 아니라 튀는 것으로 읽혔다. 1틱이면 감쇠 곡선이
+  그대로 눈에 보인다. 그만큼 총 시간이 늘어나므로 틱 수는 줄인다 — 감쇠가
+  0.82라 150틱이면 속도가 사실상 0이라(0.82^150) 수렴에는 충분하고,
+  60fps에서 2.5초 남짓이라 기다린다는 느낌도 들지 않는다.
+*/
+const FORCE_TICKS = 150;
+const FORCE_TICKS_PER_FRAME = 1;
+const FORCE_LINK_LENGTH = 132;
+const FORCE_CHARGE = 9000;
+const FORCE_LINK_K = 0.06;
+const FORCE_CENTER_K = 0.012;
+const FORCE_DAMPING = 0.82;
+const FORCE_COLLIDE_PADDING = 16;
+/** 펼칠 때 새 노드가 이웃 둘레 어디쯤에서 태어날지. */
+const FORCE_BIRTH_RADIUS = 46;
+
+function forceJitter(id, axis) {
+  return ((stableHash(`${id}:${axis}`) % 1000) / 1000 - 0.5) * 8;
+}
+
+function createForceBodies(nodes, base, radiusOf) {
+  return nodes.map((node) => {
+    const point = base.get(node.id) ?? { x: 0, y: 0 };
+    return {
+      id: node.id,
+      x: point.x + forceJitter(node.id, 'x'),
+      y: point.y + forceJitter(node.id, 'y'),
+      vx: 0,
+      vy: 0,
+      r: radiusOf(node) || DOT_RADIUS,
+      fx: null,
+      fy: null,
+    };
+  });
+}
+
+function createForceLinks(edges, bodies) {
+  const byId = new Map(bodies.map((body) => [body.id, body]));
+  return edges
+    .map((edge) => ({ a: byId.get(edge.from), b: byId.get(edge.to) }))
+    .filter((link) => link.a && link.b && link.a !== link.b);
+}
+
+function forceTick(bodies, links) {
+  for (let i = 0; i < bodies.length; i += 1) {
+    for (let j = i + 1; j < bodies.length; j += 1) {
+      const a = bodies[i];
+      const b = bodies[j];
+      let dx = b.x - a.x;
+      let dy = b.y - a.y;
+      let squared = dx * dx + dy * dy;
+      if (squared < 1) {
+        // 정확히 겹친 두 노드는 밀 방향이 없다. 난수 대신 id 해시로 방향을
+        // 정해 결정론을 지킨다.
+        const angle = stableHash(`${a.id}:${b.id}`) % 360;
+        dx = Math.cos(angle);
+        dy = Math.sin(angle);
+        squared = 1;
+      }
+      const distance = Math.sqrt(squared);
+      const ux = dx / distance;
+      const uy = dy / distance;
+      const repulsion = Math.min(FORCE_CHARGE / squared, 60);
+      a.vx -= ux * repulsion;
+      a.vy -= uy * repulsion;
+      b.vx += ux * repulsion;
+      b.vy += uy * repulsion;
+      const overlap = a.r + b.r + FORCE_COLLIDE_PADDING - distance;
+      if (overlap > 0) {
+        a.vx -= ux * overlap * 0.5;
+        a.vy -= uy * overlap * 0.5;
+        b.vx += ux * overlap * 0.5;
+        b.vy += uy * overlap * 0.5;
+      }
+    }
+  }
+  for (const link of links) {
+    const dx = link.b.x - link.a.x;
+    const dy = link.b.y - link.a.y;
+    const distance = Math.hypot(dx, dy) || 1;
+    const pull = FORCE_LINK_K * (distance - FORCE_LINK_LENGTH);
+    const ux = dx / distance;
+    const uy = dy / distance;
+    link.a.vx += ux * pull;
+    link.a.vy += uy * pull;
+    link.b.vx -= ux * pull;
+    link.b.vy -= uy * pull;
+  }
+  for (const body of bodies) {
+    if (body.fx != null) {
+      // 끌리는 중인 노드는 포인터가 소유한다. 물리는 이웃에만 흐른다.
+      body.x = body.fx;
+      body.y = body.fy;
+      body.vx = 0;
+      body.vy = 0;
+      continue;
+    }
+    body.vx -= body.x * FORCE_CENTER_K;
+    body.vy -= body.y * FORCE_CENTER_K;
+    body.vx *= FORCE_DAMPING;
+    body.vy *= FORCE_DAMPING;
+    body.x += body.vx;
+    body.y += body.vy;
+  }
+}
+
+function settledForcePositions(nodes, edges, base, radiusOf) {
+  const bodies = createForceBodies(nodes, base, radiusOf);
+  const links = createForceLinks(edges, bodies);
+  for (let tick = 0; tick < FORCE_TICKS; tick += 1) forceTick(bodies, links);
+  return new Map(bodies.map((body) => [body.id, { x: body.x, y: body.y }]));
 }
 
 function pointOnCurve({ start, control, end }, t) {
@@ -257,6 +391,7 @@ export function NetworkGraph({
   layout = 'layered',
   nodeShape = 'card',
   showEdgeLabels = true,
+  motion = 'auto',
   nodeColor = 'var(--color-semantic-primary-normal)',
   edgeColor = 'var(--color-semantic-line-solid-normal)',
   selectedNodeId,
@@ -278,10 +413,12 @@ export function NetworkGraph({
 
   const metrics = SHAPE[nodeShape] ?? SHAPE.card;
   const isDot = nodeShape === 'dot';
+  const isForce = layout === 'force';
 
-  const positions = React.useMemo(
-    () => layoutNodes(nodes, layout, metrics),
-    [layout, metrics, nodes],
+  /* force도 격자에서 출발한다 — 초기 좌표가 결정론의 절반이다. */
+  const gridPositions = React.useMemo(
+    () => layoutNodes(nodes, isForce ? 'layered' : layout, metrics),
+    [isForce, layout, metrics, nodes],
   );
   const nodeById = React.useMemo(
     () => new Map(nodes.map((node) => [node.id, node])),
@@ -302,6 +439,217 @@ export function NetworkGraph({
     },
     [isDot, nodes],
   );
+
+  const settledPositions = React.useMemo(
+    () => (isForce ? settledForcePositions(nodes, edges, gridPositions, radiusOf) : null),
+    [edges, gridPositions, isForce, nodes, radiusOf],
+  );
+
+  /*
+    움직임은 선택이고 도착점은 결정론이다. 수렴 애니메이션과 드래그의 살아
+    있는 좌표는 이 상태가 들고, 꺼져 있으면(모션 줄이기 설정·`motion="none"`)
+    수렴 상태를 바로 그린다. 애니메이션도 같은 tick 함수를 같은 횟수만큼
+    돌리므로 마지막 프레임은 정적 수렴 상태와 동일하다.
+  */
+  const [livePositions, setLivePositions] = React.useState(null);
+  /* 첫 렌더 «전에» 알아야 한다. effect에서 읽어 상태를 뒤집으면 첫 페인트가
+     수렴 상태로 찍힌 뒤 격자로 되돌아가 애니메이션이 시작된다 — 한 프레임
+     번쩍임이 생긴다. SSR에서는 모른다고 치고 움직임 없는 쪽으로 둔다. */
+  const [reduceMotion, setReduceMotion] = React.useState(() => (
+    typeof window === 'undefined' || !window.matchMedia
+      ? true
+      : window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ));
+  const simRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return undefined;
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = (event) => setReduceMotion(event.matches);
+    media.addEventListener('change', onChange);
+    return () => media.removeEventListener('change', onChange);
+  }, []);
+
+  const motionAllowed = isForce && motion !== 'none' && !reduceMotion;
+
+  /* 직전 커밋의 표시 좌표. 펼치기로 노드가 늘어날 때 «기존 노드는 제자리,
+     새 노드는 이웃의 자리에서 출발»을 만들기 위한 기억이다. */
+  const lastPositionsRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!isForce) {
+      simRef.current = null;
+      setLivePositions(null);
+      return undefined;
+    }
+    /*
+      출발 좌표. 첫 마운트는 격자에서(결정론의 절반), 그 뒤의 변경 — 펼치기 —
+      에서는 기존 노드를 직전 자리에 두고 새 노드를 «이미 자리 잡은 이웃» 위에
+      태어나게 한다. 그러면 반발력이 밀어내며 꽃 피듯 퍼진다. 이 장르의 펼침
+      애니메이션은 별도 트랜지션이 아니라 물리 그 자체다(Obsidian·Bloom).
+    */
+    const previous = lastPositionsRef.current;
+    const seeds = new Map();
+    nodes.forEach((node) => {
+      const kept = previous?.get(node.id);
+      if (kept) seeds.set(node.id, kept);
+    });
+    nodes.forEach((node) => {
+      if (seeds.has(node.id)) return;
+      const link = edges.find((edge) => (
+        (edge.from === node.id && seeds.has(edge.to))
+        || (edge.to === node.id && seeds.has(edge.from))
+      ));
+      const anchorId = link ? (link.from === node.id ? link.to : link.from) : null;
+      const anchor = anchorId && seeds.get(anchorId);
+      if (!anchor) {
+        seeds.set(node.id, gridPositions.get(node.id) || { x: 0, y: 0 });
+        return;
+      }
+      /* 같은 이웃에서 태어나는 노드가 여럿이면 «정확히 같은 점»에서 출발하게
+         된다. 그러면 첫 틱에 반발이 상한까지 걸려 폭발하듯 튄다. 이웃 둘레의
+         작은 원 위에 id 해시로 자리를 나눠 앉히면 — 여전히 결정론이면서 —
+         처음부터 서로 떨어져 있어 부드럽게 퍼진다. */
+      const angle = (stableHash(node.id) % 360) * (Math.PI / 180);
+      seeds.set(node.id, {
+        x: anchor.x + Math.cos(angle) * FORCE_BIRTH_RADIUS,
+        y: anchor.y + Math.sin(angle) * FORCE_BIRTH_RADIUS,
+      });
+    });
+    const bodies = createForceBodies(nodes, seeds, radiusOf);
+    const links = createForceLinks(edges, bodies);
+    simRef.current = { bodies, links, byId: new Map(bodies.map((b) => [b.id, b])) };
+    if (!motionAllowed) {
+      // 움직임 없이 도착점만. 드래그를 위해 몸체는 수렴 상태로 맞춰 둔다.
+      for (let tick = 0; tick < FORCE_TICKS; tick += 1) forceTick(bodies, links);
+      setLivePositions(null);
+      return undefined;
+    }
+    let frame = 0;
+    let ticked = 0;
+    const step = () => {
+      for (let i = 0; i < FORCE_TICKS_PER_FRAME && ticked < FORCE_TICKS; i += 1, ticked += 1) {
+        forceTick(bodies, links);
+      }
+      setLivePositions(new Map(bodies.map((b) => [b.id, { x: b.x, y: b.y }])));
+      if (ticked < FORCE_TICKS) frame = window.requestAnimationFrame(step);
+    };
+    frame = window.requestAnimationFrame(step);
+    return () => window.cancelAnimationFrame(frame);
+  }, [edges, gridPositions, isForce, motionAllowed, nodes, radiusOf]);
+
+  /*
+    드래그. 노드를 끌면 그 노드는 포인터가 소유하고 물리는 이웃으로 흐른다 —
+    이 장르에서 사용자가 구조를 «만져 보는» 방법이다. 끌린 뒤의 좌표는 입력이
+    달라진 것이므로 결정론 주장 밖이고, 모션이 꺼져 있으면 드래그도 물리를
+    돌리지 않는다(수렴 상태 유지).
+  */
+  const svgRef = React.useRef(null);
+  const dragRef = React.useRef(null);
+  const suppressClickRef = React.useRef(false);
+
+  const toGraphPoint = React.useCallback((event) => {
+    const svg = svgRef.current;
+    if (!svg) return null;
+    const matrix = svg.getScreenCTM();
+    if (!matrix) return null;
+    const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(matrix.inverse());
+    return { x: point.x, y: point.y };
+  }, []);
+
+  const dragTicker = React.useCallback(() => {
+    const sim = simRef.current;
+    if (!sim || !dragRef.current) return;
+    forceTick(sim.bodies, sim.links);
+    setLivePositions(new Map(sim.bodies.map((b) => [b.id, { x: b.x, y: b.y }])));
+    dragRef.current.frame = window.requestAnimationFrame(dragTicker);
+  }, []);
+
+  const nodePointerDown = React.useCallback((event, node) => {
+    if (!isForce || !motionAllowed || !simRef.current) return;
+    const start = toGraphPoint(event);
+    if (!start) return;
+    dragRef.current = { id: node.id, start, moved: false, frame: 0 };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }, [isForce, motionAllowed, toGraphPoint]);
+
+  const nodePointerMove = React.useCallback((event) => {
+    const drag = dragRef.current;
+    const sim = simRef.current;
+    if (!drag || !sim) return;
+    const point = toGraphPoint(event);
+    if (!point) return;
+    if (!drag.moved) {
+      if (Math.hypot(point.x - drag.start.x, point.y - drag.start.y) < 4) return;
+      drag.moved = true;
+      suppressClickRef.current = true;
+      drag.frame = window.requestAnimationFrame(dragTicker);
+    }
+    const body = sim.byId.get(drag.id);
+    if (body) {
+      body.fx = point.x;
+      body.fy = point.y;
+    }
+  }, [dragTicker, toGraphPoint]);
+
+  const nodePointerUp = React.useCallback(() => {
+    const drag = dragRef.current;
+    const sim = simRef.current;
+    if (!drag) return;
+    window.cancelAnimationFrame(drag.frame);
+    dragRef.current = null;
+    if (sim) {
+      const body = sim.byId.get(drag.id);
+      if (body) {
+        body.fx = null;
+        body.fy = null;
+      }
+      if (drag.moved) {
+        /* 손을 뗀 뒤 잦아드는 꼬리. 프레임당 한 틱이라 이 횟수가 곧 지속
+           시간이다(150틱 ≈ 2.5초). 짧게 끊으면 아직 움직이는 중에 멎어
+           경직돼 보인다. */
+        let cooled = 0;
+        const cool = () => {
+          if (!simRef.current || dragRef.current) return;
+          forceTick(sim.bodies, sim.links);
+          setLivePositions(new Map(sim.bodies.map((b) => [b.id, { x: b.x, y: b.y }])));
+          cooled += 1;
+          if (cooled < 150) window.requestAnimationFrame(cool);
+        };
+        window.requestAnimationFrame(cool);
+      }
+    }
+    // click은 pointerup 뒤에 온다. 다음 틱에 풀어 끌기 끝의 오선택만 막는다.
+    window.setTimeout(() => { suppressClickRef.current = false; }, 0);
+  }, []);
+
+  /* 움직임이 켜져 있으면 첫 페인트는 «출발점»(격자)이어야 한다. 도착점을
+     먼저 보여주고 출발점으로 되감으면 번쩍인다. 꺼져 있으면 도착점만 그린다. */
+  const positions = isForce
+    ? (livePositions ?? (motionAllowed ? gridPositions : settledPositions))
+    : gridPositions;
+
+  React.useEffect(() => {
+    lastPositionsRef.current = positions;
+  });
+
+  /* 마운트 이후에 «새로» 들어온 노드만 진입 애니메이션을 받는다. 첫 렌더의
+     전체 등장까지 애니메이션하면 화면이 열릴 때마다 전부 튀어오른다. */
+  const mountedRef = React.useRef(false);
+  const previousIdsRef = React.useRef(new Set());
+  const enteringIds = React.useMemo(() => {
+    const entering = new Set();
+    if (mountedRef.current) {
+      nodes.forEach((node) => {
+        if (!previousIdsRef.current.has(node.id)) entering.add(node.id);
+      });
+    }
+    return entering;
+  }, [nodes]);
+  React.useEffect(() => {
+    mountedRef.current = true;
+    previousIdsRef.current = new Set(nodes.map((node) => node.id));
+  }, [nodes]);
 
   const anchors = React.useMemo(() => {
     const map = new Map();
@@ -324,7 +672,11 @@ export function NetworkGraph({
   );
 
   const bounds = React.useMemo(() => {
-    const values = [...positions.values()];
+    /* 액자는 «도착점» 기준으로 잡는다. 수렴 애니메이션이나 드래그 중의 살아
+       있는 좌표를 따라가면 화면 전체가 프레임마다 출렁인다 — 흔들리는 것은
+       노드여야지 액자가 아니다. */
+    const frame = isForce ? settledPositions : positions;
+    const values = [...(frame?.values() ?? [])];
     if (!values.length) return { minX: 0, minY: 0, width: metrics.width, height: metrics.height };
     const xs = values.map((point) => point.x);
     const ys = values.map((point) => point.y);
@@ -335,16 +687,23 @@ export function NetworkGraph({
       width: Math.max(...xs) - Math.min(...xs) + padding * 2,
       height: Math.max(...ys) - Math.min(...ys) + metrics.height * 2,
     };
-  }, [metrics, positions]);
+  }, [isForce, metrics, positions, settledPositions]);
 
   /* 관계의 곡선과 라벨 자리를 한 번에 계산한다. 라벨 배치가 «다른» 라벨과
      노드를 모두 봐야 하므로, 그리는 중에 하나씩 정할 수 없다. */
   const laidOutEdges = React.useMemo(() => {
+    // 같은 두 노드를 잇는 관계가 여럿인 쌍. 이때만 직선을 포기하고 휜다.
+    const pairCounts = new Map();
+    edges.forEach((edge) => {
+      const key = [edge.from, edge.to].sort().join('→');
+      pairCounts.set(key, (pairCounts.get(key) ?? 0) + 1);
+    });
     const entries = edges.map((edge) => ({
       edge,
       curve: edgePath(anchors.get(edge.from), anchors.get(edge.to), {
         ...metrics,
         shape: nodeShape,
+        parallel: (pairCounts.get([edge.from, edge.to].sort().join('→')) ?? 0) > 1,
       }),
       text: showEdgeLabels
         ? `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ''}`.trim()
@@ -381,47 +740,91 @@ export function NetworkGraph({
   const resolvedSummary = summary ?? automaticSummary;
 
   /*
-    키보드 계약. 노드가 하나의 tab stop 묶음(roving tabindex)이 되고, 방향키로
-    옮겨 다니며 Enter/Space로 선택한다. 이 계약을 컴포넌트가 갖는 이유는 두
-    소비자가 각각 `role="button" tabIndex={0}`을 손으로 세우고 있었고, 한쪽은
-    바깥 SVG에 `role="img"`를 얹어 그 노드들을 보조기술에서 통째로 지워버리고
-    있었기 때문이다. 포커스가 가는 곳은 반드시 이름을 가져야 한다.
-  */
-  const [focusedId, setFocusedId] = React.useState(null);
-  const activeId = focusedId && nodeById.has(focusedId) ? focusedId : nodes[0]?.id;
+    키보드 계약. 그림 전체가 하나의 tab stop 묶음(roving tabindex)이고, 방향키로
+    옮겨 다니며 Enter/Space로 그 자리의 것을 실행한다. 이 계약을 컴포넌트가 갖는
+    이유는 두 소비자가 각각 `role="button" tabIndex={0}`을 손으로 세우고 있었고,
+    한쪽은 바깥 SVG에 `role="img"`를 얹어 그 노드들을 보조기술에서 통째로
+    지워버리고 있었기 때문이다. 포커스가 가는 곳은 반드시 이름을 가져야 한다.
 
-  const moveFocus = React.useCallback(
-    (fromId, delta) => {
-      const order = nodes.map((node) => node.id);
-      const index = order.indexOf(fromId);
-      if (index < 0) return;
-      const next = order[(index + delta + order.length) % order.length];
-      setFocusedId(next);
-      const element = document.getElementById(`${rawId}-node-${stableHash(String(next))}`);
-      element?.focus();
-    },
-    [nodes, rawId],
+    묶음의 «자리»는 노드 하나가 아니라 「노드」와 「그 노드의 펼치기 큐」 둘이다.
+    큐를 시각 사용자에게만 클릭 표적으로 열어 주고 키보드에는 닫아 두면, 같은
+    동작에 두 등급의 접근을 만드는 셈이 된다. 그래서 큐도 이름과 `aria-expanded`
+    를 가진 별도의 버튼으로 순회에 들어온다 — 시각과 키보드가 같은 표적을 쓴다.
+
+    노드에서 `aria-expanded`를 떼어낸 것도 같은 이유다. 한 요소가 「누르면
+    선택」과 「펼침 상태」를 동시에 말하면 스크린 리더는 "축소됨, 버튼"으로
+    읽어 주는데 정작 누르면 선택이 된다 — 기대와 동작이 어긋난다.
+  */
+  const [focusedKey, setFocusedKey] = React.useState(null);
+
+  /*
+    큐가 있는 노드인가. 접을 것이 있거나(`expanded`) 펼칠 것이 있으면 있다.
+    `expanded`를 소비자가 알려주는 이유: 펼치고 나면 `collapsedCount`는 0이
+    되므로 그것만으로는 「접을 게 있다」를 알 수 없다.
+  */
+  const hasCue = React.useCallback(
+    (node) => (
+      /*
+        큐는 `dot`에만 그린다. 「접힌 이웃을 사방으로 펼친다」는 노드-링크의
+        개념이고, 플로우 에디터에서 접히는 것은 이웃이 아니라 «한 노드 안의
+        서브그래프»다(n8n 서브워크플로 · Node-RED subflow · Blender node group ·
+        Unreal collapsed graph). 열리는 방향도 다르다 — 사방이 아니라 안으로
+        들어가거나 그 자리에서 아래로 펼쳐진다. 같은 기호로 다른 개념을
+        말하면 둘 다 잘못 읽히므로, 플로우 쪽 서브그래프는 요구가 확인된 뒤
+        별도 개념으로 설계한다.
+      */
+      isDot
+      && Boolean(onToggleNode)
+      && (node.expanded === true || node.collapsedCount > 0)
+    ),
+    [isDot, onToggleNode],
+  );
+  const isExpanded = React.useCallback((node) => node.expanded === true, []);
+
+  const focusOrder = React.useMemo(() => {
+    const order = [];
+    nodes.forEach((node) => {
+      order.push({ key: `node:${node.id}`, node, kind: 'node' });
+      if (hasCue(node)) order.push({ key: `cue:${node.id}`, node, kind: 'cue' });
+    });
+    return order;
+  }, [hasCue, nodes]);
+
+  const activeKey = focusOrder.some((stop) => stop.key === focusedKey)
+    ? focusedKey
+    : focusOrder[0]?.key;
+
+  const stopDomId = React.useCallback(
+    (key) => `${rawId}-stop-${stableHash(key)}`,
+    [rawId],
   );
 
-  function nodeKeyDown(event, node) {
+  const moveFocus = React.useCallback(
+    (fromKey, delta) => {
+      const index = focusOrder.findIndex((stop) => stop.key === fromKey);
+      if (index < 0) return;
+      const next = focusOrder[(index + delta + focusOrder.length) % focusOrder.length];
+      setFocusedKey(next.key);
+      document.getElementById(stopDomId(next.key))?.focus();
+    },
+    [focusOrder, stopDomId],
+  );
+
+  function stopKeyDown(event, stop) {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
-      onSelectNode?.(node);
+      if (stop.kind === 'cue') onToggleNode?.(stop.node);
+      else onSelectNode?.(stop.node);
       return;
     }
     if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
       event.preventDefault();
-      moveFocus(node.id, 1);
+      moveFocus(stop.key, 1);
       return;
     }
     if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
       event.preventDefault();
-      moveFocus(node.id, -1);
-      return;
-    }
-    if (onToggleNode && (event.key === '+' || event.key === '-')) {
-      event.preventDefault();
-      onToggleNode(node);
+      moveFocus(stop.key, -1);
     }
   }
 
@@ -452,6 +855,7 @@ export function NetworkGraph({
         </span>
       ) : (
         <svg
+          ref={svgRef}
           /* `role="img"`를 쓰지 않는다 — 안에 포커스 가능한 노드가 있고, `img`는
              하위 트리를 presentational로 만들어 그것들을 지워 버린다. */
           role="group"
@@ -464,6 +868,11 @@ export function NetworkGraph({
           viewBox={`${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`}
           style={{ display: 'block', width: '100%', height: '100%', overflow: 'visible' }}
         >
+          {/* 진입 스케일-인. 노드 로컬 원점(0,0) 기준으로 자라난다. */}
+          {/* 진입은 «자라난다»여야지 «튀어오른다»가 아니다. 0.3에서 시작하면
+              배율이 세 배 넘게 뛰어 화면이 들썩이므로 0.72에서 시작하고,
+              감속 곡선(ease-out)에 시간을 넉넉히 준다. */}
+          <style>{'@keyframes ldsNetworkEnter { from { opacity: 0; transform: scale(0.72); } }'}</style>
           <defs>
             {edgeColors.map((color) => (
               <marker
@@ -554,38 +963,62 @@ export function NetworkGraph({
               const selected = selectedNodeId === node.id;
               const labelText = nodeText(node.label) || node.id;
               const captionText = nodeText(node.caption);
-              const domId = `${rawId}-node-${stableHash(String(node.id))}`;
+              const nodeStop = { key: `node:${node.id}`, node, kind: 'node' };
               const radius = radiusOf(node);
               return (
                 <g
                   key={node.id}
-                  id={domId}
+                  id={stopDomId(nodeStop.key)}
                   data-network-node={node.id}
                   data-state={node.state ?? 'normal'}
                   data-selected={selected ? 'true' : undefined}
                   role="button"
-                  tabIndex={node.id === activeId ? 0 : -1}
-                  /* 접힌 개수는 눈에는 +N 큐로, 귀에는 이름으로 전달한다.
-                     배지가 그림일 뿐이라 aria-expanded만으로는 「몇 개가
-                     접혔는지」를 스크린 리더가 들을 수 없다. */
+                  tabIndex={nodeStop.key === activeKey ? 0 : -1}
+                  /* 접힘 여부는 이름에도 넣는다. 큐가 따로 있어도, 노드에
+                     닿았을 때 「이 노드에 아직 더 있다」를 듣지 못하면
+                     스크린 리더 사용자는 큐로 갈 이유를 모른다. */
                   aria-label={[
                     labelText,
                     captionText,
-                    node.collapsedCount > 0 ? `접힌 연결 ${node.collapsedCount}개` : null,
+                    // 큐가 없는 장르에서는 이 안내도 없다 — 갈 곳 없는 사실이다.
+                    hasCue(node) && node.collapsedCount > 0
+                      ? `접힌 연결 ${node.collapsedCount}개`
+                      : null,
+                    hasCue(node) && isExpanded(node) ? '연결 펼침' : null,
                   ].filter(Boolean).join(', ')}
                   aria-pressed={selected ? 'true' : undefined}
-                  aria-expanded={
-                    onToggleNode && node.collapsedCount != null
-                      ? node.collapsedCount === 0 ? 'true' : 'false'
-                      : undefined
-                  }
                   transform={`translate(${position.x} ${position.y})`}
-                  style={{ cursor: onSelectNode ? 'pointer' : 'default', opacity: tone.opacity }}
-                  onFocus={() => setFocusedId(node.id)}
-                  onClick={() => onSelectNode?.(node)}
-                  onDoubleClick={() => onToggleNode?.(node)}
-                  onKeyDown={(event) => nodeKeyDown(event, node)}
+                  style={{
+                    cursor: onSelectNode ? 'pointer' : 'default',
+                    opacity: tone.opacity,
+                    touchAction: isForce ? 'none' : undefined,
+                  }}
+                  onFocus={() => setFocusedKey(nodeStop.key)}
+                  onClick={() => {
+                    // 드래그 끝의 pointerup 직후 오는 click은 선택이 아니다.
+                    if (suppressClickRef.current) return;
+                    onSelectNode?.(node);
+                  }}
+                  /* 더블클릭도 큐가 있는 장르에서만. 큐를 안 그리는 화면에서
+                     숨은 단축키만 살아 있으면 발견도 예측도 되지 않는다. */
+                  onDoubleClick={() => { if (hasCue(node)) onToggleNode?.(node); }}
+                  onPointerDown={(event) => nodePointerDown(event, node)}
+                  onPointerMove={nodePointerMove}
+                  onPointerUp={nodePointerUp}
+                  onPointerCancel={nodePointerUp}
+                  onKeyDown={(event) => stopKeyDown(event, nodeStop)}
                 >
+                  {/* 펼치기로 «마운트 이후에» 들어온 노드의 진입. force에서는
+                      이웃 자리에서 태어나 물리에 밀려 퍼지는 것이 이미 진입
+                      애니메이션이고, 이 스케일-인은 격자 배치에서도 새 노드가
+                      튀지 않고 자라나게 한다. 모션 줄이기면 애니메이션 없음. */}
+                  <g
+                    style={
+                      enteringIds.has(node.id) && !reduceMotion && motion !== 'none'
+                        ? { animation: 'ldsNetworkEnter 520ms cubic-bezier(0.22, 1, 0.36, 1)' }
+                        : undefined
+                    }
+                  >
                   {isDot ? (
                     /* 노드-링크 관행: 색이 찬 원 + 바깥 라벨. 라벨을 밖에 두면
                        원이 작아질 수 있고, 원이 작아야 노드가 많아져도 연결
@@ -695,27 +1128,67 @@ export function NetworkGraph({
                       ))}
                     </>
                   )}
-                  {node.collapsedCount > 0 && (() => {
+                  {hasCue(node) && (() => {
                     /*
-                      접힌 이웃의 확장 큐. 그래프 도구의 관행(Cytoscape
-                      expand-collapse가 대표)은 접힌 노드 «왼쪽 위»에 plus 계열
+                      펼치기·접기 큐. 그래프 도구의 관행(Cytoscape
+                      expand-collapse가 대표)은 노드 «왼쪽 위»에 plus 계열
                       기호를 그린다. 숫자만 적으면 무엇의 숫자인지 읽히지
                       않는다 — `+`가 「더 있다」와 「눌러서 연다」를 함께
                       말하므로 `+N`으로 적는다. 오른쪽 위가 아닌 이유: 그쪽
                       축은 카드의 출력 포트가 이미 쓰고 있고, 관행의 기본
                       자리도 왼쪽 위다.
 
-                      펼치는 동작(더블클릭·`+`/`-` 키)은 노드가 갖고, 이 큐는
-                      그 상태의 표시다. 개수는 노드의 접근 가능한 이름에도
-                      들어가므로 눈과 귀가 같은 사실을 듣는다.
+                      큐는 «사라지지 않는다». 펼친 뒤 `−`로 바뀌어 같은 자리에
+                      남는다 — Cytoscape가 expand 큐와 collapse 큐를 쌍으로
+                      두는 이유이고, 없애면 왕복이 비대칭이 된다. 실제로 그렇게
+                      만들었다가 키보드로는 펼칠 수만 있고 접을 수 없는 상태가
+                      나왔다(접기가 노드 더블클릭에만 있었다).
+
+                      큐는 표시이자 버튼이다. 그래서 이름과 `aria-expanded`를
+                      이것이 갖고 키보드 순회에도 들어온다. 시각 사용자에게만
+                      표적을 열어 주면 같은 동작에 두 등급의 접근이 생긴다.
                     */
+                    const expanded = isExpanded(node);
                     const cue = isDot
                       ? { x: -radius * 0.72, y: -radius * 0.72 }
                       : { x: -metrics.width / 2 + 8, y: -metrics.height / 2 };
-                    const cueText = `+${node.collapsedCount}`;
-                    const cueWidth = cueText.length * 7 + 8;
+                    const cueText = expanded ? '−' : `+${node.collapsedCount}`;
+                    const cueWidth = Math.max(18, cueText.length * 7 + 8);
+                    const cueStop = { key: `cue:${node.id}`, node, kind: 'cue' };
                     return (
-                      <g data-network-collapse-cue aria-hidden="true">
+                      /*
+                        노드로 이벤트가 흐르면 클릭이 «선택»이 되고 pointerdown이
+                        드래그를 시작하므로 여기서 끊는다.
+                      */
+                      <g
+                        data-network-collapse-cue
+                        id={stopDomId(cueStop.key)}
+                        role="button"
+                        tabIndex={cueStop.key === activeKey ? 0 : -1}
+                        aria-label={
+                          expanded
+                            ? `${labelText}의 펼친 연결 접기`
+                            : `${labelText}의 접힌 연결 ${node.collapsedCount}개 펼치기`
+                        }
+                        aria-expanded={expanded ? 'true' : 'false'}
+                        style={{ cursor: onToggleNode ? 'pointer' : undefined }}
+                        onFocus={() => setFocusedKey(cueStop.key)}
+                        onKeyDown={(event) => {
+                          /* 큐는 노드의 자식이라 keydown이 두 번 처리된다 —
+                             큐에서 한 칸, 노드에서 또 한 칸 움직여 순회가
+                             상쇄되거나 건너뛴다. 클릭·포인터와 같은 이유로
+                             여기서 끊는다. */
+                          event.stopPropagation();
+                          stopKeyDown(event, cueStop);
+                        }}
+                        onClick={(event) => {
+                          if (!onToggleNode) return;
+                          event.stopPropagation();
+                          onToggleNode(node);
+                        }}
+                        onDoubleClick={(event) => event.stopPropagation()}
+                        onPointerDown={(event) => event.stopPropagation()}
+                      >
                         <rect
                           x={cue.x - cueWidth / 2}
                           y={cue.y - 9}
@@ -742,6 +1215,7 @@ export function NetworkGraph({
                       </g>
                     );
                   })()}
+                  </g>
                 </g>
               );
             })}
