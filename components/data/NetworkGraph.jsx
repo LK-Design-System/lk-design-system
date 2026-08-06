@@ -27,8 +27,8 @@ const SHAPE = {
   /* 열 간격은 카드 폭 + 관계 라벨이 들어갈 통로다. 220이면 통로가 52px뿐이라
      라벨이 놓일 자리가 아예 없어 노드 위로 밀려났다. 플로우 에디터가 열을
      넉넉히 띄우는 이유가 이것이다. */
-  card: { width: 168, height: 52, columnGap: 300, rowGap: 92 },
-  dot: { width: 96, height: 96, columnGap: 150, rowGap: 92 },
+  card: { width: 168, height: 52, columnPitch: 300, rowPitch: 92 },
+  dot: { width: 96, height: 96, columnPitch: 150, rowPitch: 92 },
 };
 const DOT_RADIUS = 16;
 const DOT_RADIUS_MAX = 30;
@@ -110,12 +110,12 @@ function layoutNodes(nodes, layout, metrics) {
       const group = String(left.group ?? '').localeCompare(String(right.group ?? ''));
       return group !== 0 ? group : String(left.id).localeCompare(String(right.id));
     });
-    const columnHeight = (inColumn.length - 1) * metrics.rowGap;
-    const top = ((tallest - 1) * metrics.rowGap - columnHeight) / 2;
+    const columnHeight = (inColumn.length - 1) * metrics.rowPitch;
+    const top = ((tallest - 1) * metrics.rowPitch - columnHeight) / 2;
     inColumn.forEach((node, rowIndex) => {
       positions.set(node.id, {
-        x: columnIndex * metrics.columnGap,
-        y: top + rowIndex * metrics.rowGap,
+        x: columnIndex * metrics.columnPitch,
+        y: top + rowIndex * metrics.rowPitch,
       });
     });
   });

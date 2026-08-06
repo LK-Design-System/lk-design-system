@@ -94,11 +94,11 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "ChartFrame",
+      "component": "Carousel",
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "Carousel",
+      "component": "ChartFrame",
       "relationship": "대표 시나리오에서 조합"
     },
     {
@@ -106,11 +106,11 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "DataGrid",
+      "component": "DataExportAction",
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "DataToolbar",
+      "component": "DataGrid",
       "relationship": "대표 시나리오에서 조합"
     }
   ],

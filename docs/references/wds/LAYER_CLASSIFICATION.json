@@ -106,6 +106,7 @@
     "stories/DataGrid.stories.jsx": "LDS Product/Data/Collections/Data Grid",
     "stories/DataLegend.stories.jsx": "LDS Product/Data/Visualization/Legend",
     "stories/DataLineChart.stories.jsx": "LDS Product/Data/Visualization/Line Chart",
+    "stories/DataNetworkGraph.stories.jsx": "LDS Product/Data/Visualization/Network Graph",
     "stories/DataRefreshControl.stories.jsx": "LDS Product/Data/Operations/Refresh Control",
     "stories/DataResourceState.stories.jsx": "LDS Product/Data/Display/Resource State",
     "stories/DataSavedView.stories.jsx": "LDS Product/Data/Operations/Saved View",

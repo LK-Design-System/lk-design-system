@@ -81,15 +81,15 @@ function assertDeterministicLayout(canvasElement, label) {
 }
 
 const knowledgeColor = {
-  project: '#2563eb',
-  system: '#c2410c',
-  developer: '#a21caf',
+  project: 'var(--color-semantic-primary-normal)',
+  system: 'var(--color-semantic-accent-foreground-orange)',
+  developer: 'var(--color-semantic-accent-foreground-purple)',
 };
 
 const pipelineColor = {
-  source: '#0e7490',
-  processor: '#4f46e5',
-  sink: '#15803d',
+  source: 'var(--color-semantic-accent-foreground-cyan)',
+  processor: 'var(--color-semantic-accent-foreground-violet)',
+  sink: 'var(--color-semantic-accent-foreground-green)',
 };
 
 const meta = {

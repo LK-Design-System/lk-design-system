@@ -347,7 +347,9 @@ export default Icon;
 `;
 }
 
-function buildManifest(entries, copiedFiles, rasterFiles) {
+function buildManifest(entries, rasterFiles) {
+  const customSvgEntries = entries.filter((entry) => entry.source === 'lds-custom');
+  const wdsSvgEntries = entries.filter((entry) => entry.source !== 'lds-legacy' && entry.source !== 'lds-custom');
   return {
     source: {
       name: 'Base icon source / Icon',
@@ -356,7 +358,10 @@ function buildManifest(entries, copiedFiles, rasterFiles) {
       note: 'SVG files are normalized for LDS Icon usage. Color logo SVGs keep original fills and embedded image data. Repository-local additions live in assets/icon-source-overrides/.',
     },
     counts: {
-      svgImported: copiedFiles.length,
+      // Keep the WDS import count separate from repository-local extensions so
+      // alignment checks continue to prove every upstream glyph is present.
+      svgImported: wdsSvgEntries.length,
+      customSvgImported: customSvgEntries.length,
       rasterCopied: rasterFiles.length,
       publicIconNames: entries.length,
       sourceIconNames: entries.filter((entry) => entry.source !== 'lds-legacy').length,
@@ -449,7 +454,7 @@ for (const entry of legacyEntries) {
 }
 
 const entries = orderEntries([...importedEntries, ...legacyEntries]);
-const manifest = buildManifest(entries, copiedSvgFiles, rasterFiles);
+const manifest = buildManifest(entries, rasterFiles);
 
 await writeFile(path.join(assetsRoot, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
 await writeFile(componentFile, buildComponent(entries), 'utf8');

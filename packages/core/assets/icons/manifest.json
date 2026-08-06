@@ -6,7 +6,8 @@
     "note": "SVG files are normalized for LDS Icon usage. Color logo SVGs keep original fills and embedded image data. Repository-local additions live in assets/icon-source-overrides/."
   },
   "counts": {
-    "svgImported": 340,
+    "svgImported": 339,
+    "customSvgImported": 1,
     "rasterCopied": 1,
     "publicIconNames": 358,
     "sourceIconNames": 340,

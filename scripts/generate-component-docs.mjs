@@ -783,7 +783,7 @@ const [entrySource, classification, audit, tokenSource] = await Promise.all([
   readJson('tokens/source.json'),
 ]);
 const entries = componentEntries(entrySource, classification);
-assert(entries.length === 205, `Expected 205 public component entries, received ${entries.length}.`);
+assert(entries.length === 206, `Expected 206 public component entries, received ${entries.length}.`);
 
 const allExports = new Set(entries.flatMap((entry) => entry.exports));
 const sourceDetails = new Map();

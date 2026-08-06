@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "44dcbea5ca65e89933299e765af8c575ab3d533d152193657fff4cb622c318d4",
+  "sourceFingerprint": "a0b7bb67d132cb2948ea4912a98cc10191ebc052fba59e0b391b70b4c22effd6",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -24,11 +24,12 @@
     "not-tracked": "This repository does not own or assert that platform implementation status."
   },
   "summary": {
-    "componentEntries": 205,
-    "publicExports": 217,
+    "componentEntries": 206,
+    "publicExports": 218,
     "guides": 174,
     "entriesWithoutOwnedPage": [
       "Stat",
+      "NetworkGraph",
       "AvatarGroup",
       "CheckboxGroup",
       "FormField",
@@ -7641,33 +7642,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -7883,33 +7886,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -8060,33 +8065,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -8235,7 +8242,8 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
@@ -8243,25 +8251,26 @@
         "Calendar",
         "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -8429,7 +8438,8 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
@@ -8437,25 +8447,26 @@
         "Calendar",
         "Carousel",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -8657,33 +8668,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -8855,14 +8868,15 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
         "DataGrid",
         "DataToolbar",
@@ -8870,18 +8884,19 @@
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -9114,33 +9129,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
-        "DataToolbar",
         "DataExportAction",
+        "DataToolbar",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -9567,33 +9584,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
-        "DataGrid",
         "DataExportAction",
+        "DataGrid",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -9818,33 +9837,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -9947,33 +9968,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -10136,33 +10159,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -10365,33 +10390,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -10576,33 +10603,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -10713,33 +10742,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -10936,6 +10967,236 @@
       "promptSha256": "0b0a775f9c04776fe0aec4761f19030b2ad408275829bffc6fb89e6a5f3dc403"
     },
     {
+      "id": "network-graph",
+      "title": "NetworkGraph",
+      "exports": [
+        "NetworkGraph"
+      ],
+      "source": "components/data/NetworkGraph.jsx",
+      "typeContract": "components/data/NetworkGraph.d.ts",
+      "prompt": "components/data/NetworkGraph.prompt.md",
+      "group": "Data visualization and data workflows",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
+      "wdsFamily": null,
+      "storyEvidence": [
+        "stories/ContentCarousel.stories.jsx",
+        "stories/DataAnnotatedImage.stories.jsx",
+        "stories/DataCalendar.stories.jsx",
+        "stories/DataChartFrame.stories.jsx",
+        "stories/DataCollectionPanel.stories.jsx",
+        "stories/DataDescriptionList.stories.jsx",
+        "stories/DataBarChart.stories.jsx",
+        "stories/DataDonutChart.stories.jsx",
+        "stories/DataSparkline.stories.jsx",
+        "stories/DataFilterBar.stories.jsx",
+        "stories/DataFileBrowser.stories.jsx",
+        "stories/DataLegend.stories.jsx",
+        "stories/DataLineChart.stories.jsx",
+        "stories/DataExportAction.stories.jsx",
+        "stories/DataRefreshControl.stories.jsx",
+        "stories/DataResourceState.stories.jsx",
+        "stories/DataGrid.stories.jsx",
+        "stories/DataTable.stories.jsx",
+        "stories/DataToolbar.stories.jsx",
+        "stories/DataSavedView.stories.jsx",
+        "stories/DataVisibilityManager.stories.jsx",
+        "stories/DataTree.stories.jsx",
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
+      ],
+      "classificationSiblings": [
+        "AnnotatedImage",
+        "BarChart",
+        "Calendar",
+        "Carousel",
+        "ChartFrame",
+        "DataCollectionPanel",
+        "DataExportAction",
+        "DataGrid",
+        "DataToolbar",
+        "DescriptionList",
+        "DonutChart",
+        "FileBrowser",
+        "FilterBar",
+        "Legend",
+        "LineChart",
+        "RefreshControl",
+        "ResourceState",
+        "SavedViewControl",
+        "Sparkline",
+        "Table",
+        "Tree",
+        "TreePicker",
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
+      ],
+      "storybookPages": [
+        "LDS Product/Data/Collections/Data Collection Panel",
+        "LDS Product/Data/Collections/Data Grid",
+        "LDS Product/Data/Collections/File Browser",
+        "LDS Product/Data/Collections/Table",
+        "LDS Product/Data/Collections/Tree",
+        "LDS Product/Data/Display/Carousel",
+        "LDS Product/Data/Display/Description List",
+        "LDS Product/Data/Display/Resource State",
+        "LDS Product/Data/Operations/Data Toolbar",
+        "LDS Product/Data/Operations/Export Action",
+        "LDS Product/Data/Operations/Filter Bar",
+        "LDS Product/Data/Operations/Refresh Control",
+        "LDS Product/Data/Operations/Saved View",
+        "LDS Product/Data/Operations/Visibility Manager",
+        "LDS Product/Data/Visualization/Annotated Image",
+        "LDS Product/Data/Visualization/Bar Chart",
+        "LDS Product/Data/Visualization/Chart Frame",
+        "LDS Product/Data/Visualization/Donut Chart",
+        "LDS Product/Data/Visualization/Legend",
+        "LDS Product/Data/Visualization/Line Chart",
+        "LDS Product/Data/Visualization/Sparkline",
+        "LDS Product/Selection and Input/Calendar",
+        "LDS Product/Selection and Input/Tree Picker"
+      ],
+      "props": [
+        {
+          "name": "nodes",
+          "type": "NetworkGraphNode[]",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "edges",
+          "type": "NetworkGraphEdge[]",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "layout",
+          "type": "NetworkGraphLayout",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "nodeShape",
+          "type": "NetworkGraphNodeShape",
+          "required": false,
+          "description": "노드를 어느 관행으로 그릴지. @default \"card\"",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "showEdgeLabels",
+          "type": "boolean",
+          "required": false,
+          "description": "관계 라벨을 그릴지. 노드가 많으면 꺼서 구조만 남깁니다. @default true",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "nodeColor",
+          "type": "string",
+          "required": false,
+          "description": "노드에 색이 없을 때 쓰는 기본값.",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "edgeColor",
+          "type": "string",
+          "required": false,
+          "description": "관계에 색이 없을 때 쓰는 기본값.",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "selectedNodeId",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "selectedEdgeId",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "onSelectNode",
+          "type": "(node: NetworkGraphNode) = void",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "onSelectEdge",
+          "type": "(edge: NetworkGraphEdge) = void",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "onToggleNode",
+          "type": "(node: NetworkGraphNode) = void",
+          "required": false,
+          "description": "이웃 펼치기/접기. 주면 노드가 aria-expanded를 갖고 더블클릭·+/-에 반응합니다.",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "description": "그림 전체의 접근성 이름. @default \"관계도\"",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "description",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "화면에 보이지 않는 설명.",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "summary",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "화면에 보이지 않는 요약. 생략하면 대상·관계 수와 이름으로 자동 생성합니다.",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "emptyLabel",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "height",
+          "type": "number | string",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        }
+      ],
+      "tokens": [
+        "--color-semantic-primary-normal",
+        "--color-semantic-line-solid-normal",
+        "--font-sans",
+        "--color-semantic-label-alternative",
+        "--label2-size",
+        "--label2-line",
+        "--caption1-size",
+        "--color-semantic-background-elevated-normal",
+        "--fw-bold",
+        "--color-semantic-label-strong",
+        "--radius-md",
+        "--color-semantic-background-normal-alternative",
+        "--color-semantic-label-neutral"
+      ],
+      "externalReferences": [],
+      "promptSha256": "580302c5e17f3cd7098c0e3fb279af984cbce0697480ef66722ed674089b1574"
+    },
+    {
       "id": "refresh-control",
       "title": "RefreshControl",
       "exports": [
@@ -10971,33 +11232,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
+        "NetworkGraph",
         "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -11172,33 +11435,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
+        "NetworkGraph",
         "RefreshControl",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -11377,33 +11642,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -11637,33 +11904,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -11821,26 +12090,28 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Tree",
@@ -12015,33 +12286,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -12209,33 +12482,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -12478,33 +12753,35 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "classificationSiblings": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
-        "TreePicker"
+        "TreePicker",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ],
       "storybookPages": [
         "LDS Product/Data/Collections/Data Collection Panel",
@@ -56649,7 +56926,7 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -56980,11 +57257,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -56992,11 +57269,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataGrid",
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataToolbar",
+          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -57265,11 +57542,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -57277,11 +57554,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataGrid",
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataToolbar",
+          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -57565,11 +57842,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -58069,11 +58346,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -58081,11 +58358,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataGrid",
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataToolbar",
+          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -58762,11 +59039,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -59473,11 +59750,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -59792,7 +60069,7 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -60058,11 +60335,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -60070,11 +60347,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataGrid",
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataToolbar",
+          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -60389,11 +60666,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -60401,11 +60678,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataGrid",
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataToolbar",
+          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -60679,11 +60956,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -60691,11 +60968,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataGrid",
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataToolbar",
+          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -60991,15 +61268,19 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "ChartFrame",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "DataCollectionPanel",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -61008,10 +61289,6 @@
         },
         {
           "component": "DataToolbar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -61293,15 +61570,19 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "ChartFrame",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "DataCollectionPanel",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -61310,10 +61591,6 @@
         },
         {
           "component": "DataToolbar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -61879,11 +62156,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -61891,11 +62168,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataGrid",
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataToolbar",
+          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -62101,11 +62378,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -62113,11 +62390,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataGrid",
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataToolbar",
+          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -62428,11 +62705,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -62440,11 +62717,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataGrid",
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataToolbar",
+          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -62711,11 +62988,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -62723,11 +63000,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataGrid",
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataToolbar",
+          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -71691,15 +71968,19 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "ChartFrame",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "DataCollectionPanel",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -71708,10 +71989,6 @@
         },
         {
           "component": "DataToolbar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -76691,11 +76968,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ChartFrame",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -76703,11 +76980,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataGrid",
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DataToolbar",
+          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
