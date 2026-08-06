@@ -8,6 +8,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 ### Added
 
+- `AutoComplete startIcon`으로 컨트롤 앞에 아이콘을 놓을 수 있습니다. `SearchField`가 이미 쓰는 `startIcon` 슬롯과 같은 자리이며, 값이 채워져 `placeholder`가 사라진 뒤에도 그 칸이 목록을 뒤진다는 사실을 남깁니다. 기본값은 없으므로 기존 화면은 그대로입니다.
 - `DataToolbar.filters` render context: `filters={({ size }) => ...}`가 검색과 같은 `sm`/`md` field control 밀도를 전달하며 기존 ReactNode 슬롯은 호환됩니다.
 - `DashboardShell`에 계층형 좁은 화면 탐색을 위한 controlled `temporaryNavigation` Drawer 계약을 추가했습니다. 공용 modal 엔진의 스크림·focus containment·Escape·복원·scroll lock을 재사용하고 열린 동안 셸 배경을 `inert` 처리합니다.
 - `SideNav autoExpandActiveGroup={false}`로 활성 route 표시와 disclosure 자동 펼침을 분리할 수 있습니다. 기본값 `true`는 기존 동작을 보존합니다.
