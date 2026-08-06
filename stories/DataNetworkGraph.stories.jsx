@@ -397,6 +397,21 @@ export const ConventionComparison = {
     if (!graphs[1].querySelector('[data-network-port]')) {
       throw new Error('Flow-editor convention must expose ports, or connections have no declared entry and exit.');
     }
+
+    /*
+      흐름도의 자리는 «의미»다 — 왼쪽이 앞 단계이고, 사용자가 놓은 자리는
+      사용자의 저작물이다. 그래서 카드는 층 배치의 격자 위에 정확히 앉아야
+      한다. 물리가 카드를 옮기면 소수점이 붙은 좌표가 나오는데, 그것이 이
+      경계가 무너졌다는 지문이다 — 실제로 계약 문서만 「force는 dot 전용」이라
+      적혀 있고 구현은 카드도 떠다니게 두고 있었다.
+    */
+    for (const card of graphs[1].querySelectorAll('[data-network-node]')) {
+      const spot = /translate\((-?[\d.]+) (-?[\d.]+)\)/.exec(card.getAttribute('transform'));
+      if (!spot) throw new Error('Every card must be positioned by the layout.');
+      if (!Number.isInteger(Number(spot[1])) || !Number.isInteger(Number(spot[2]))) {
+        throw new Error(`A card must sit on the layout grid, not where physics left it (${spot[1]}, ${spot[2]}).`);
+      }
+    }
   },
 };
 

@@ -160,9 +160,36 @@ function resolveColumns(nodes) {
 function layoutNodes(nodes, layout, metrics) {
   if (!nodes.length) return new Map();
   if (layout === 'manual') {
-    return new Map(
-      nodes.map((node) => [node.id, { x: Number(node.x) || 0, y: Number(node.y) || 0 }]),
-    );
+    /*
+      준 좌표는 그대로 쓴다. 문제는 «주지 않은» 좌표다.
+
+      종전에는 `Number(node.x) || 0`으로 원점에 놓았다. 그러면 좌표 없는
+      노드가 여럿일 때 모두 한 점에 쌓이고, 하필 그 자리에 놓인 노드가 있으면
+      그 아래로 숨는다 — 화면에서 사라진 것과 같은데 아무도 알려 주지 않는다.
+
+      그래서 놓인 것들의 «아래»에 한 줄로 늘어놓는다. 남의 자리를 침범하지
+      않고, 좌표를 주지 않았다는 사실이 눈에 보이며, 순서가 입력에서만 나오므로
+      여전히 결정론이다.
+    */
+    const placed = new Map();
+    const unplaced = [];
+    nodes.forEach((node) => {
+      const x = Number(node.x);
+      const y = Number(node.y);
+      if (Number.isFinite(x) && Number.isFinite(y)) placed.set(node.id, { x, y });
+      else unplaced.push(node);
+    });
+    if (!unplaced.length) return placed;
+    const lowest = placed.size
+      ? Math.max(...[...placed.values()].map((point) => point.y)) + metrics.rowPitch
+      : 0;
+    const leftmost = placed.size
+      ? Math.min(...[...placed.values()].map((point) => point.x))
+      : 0;
+    unplaced.forEach((node, index) => {
+      placed.set(node.id, { x: leftmost + index * metrics.columnPitch, y: lowest });
+    });
+    return placed;
   }
 
   const columns = resolveColumns(nodes);
@@ -577,7 +604,20 @@ export function NetworkGraph({
 
   const metrics = SHAPE[nodeShape] ?? SHAPE.card;
   const isDot = nodeShape === 'dot';
-  const isForce = layout === 'force';
+  /*
+    물리는 `dot`에만 건다.
+
+    흐름도에서는 «위치가 곧 의미»이고(왼쪽이 앞 단계), 사용자가 배치한 자리는
+    사용자의 저작물이다. 물리가 노드를 옮기면 둘 다 무너진다 —
+    n8n·Node-RED·Blender·Unreal 어디도 노드를 스스로 움직이게 두지 않는다.
+    계약 문서는 이미 그렇게 적혀 있었는데 구현이 따르지 않아, `card`에
+    `force`를 주면 카드가 실제로 떠다녔다. 문서가 거짓말을 하고 있던 셈이다.
+
+    `dot`이 아니면 층 배치로 돌린다. 펼치기 큐를 `card`에서 그리지 않는 것과
+    같은 태도다 — 장르에 없는 개념은 조용히 없다.
+  */
+  const isForce = layout === 'force' && isDot;
+  const effectiveLayout = layout === 'force' ? 'layered' : layout;
 
   /*
     `id`는 이 컴포넌트의 «열쇠»다. 노드를 잇고, 포커스 순회를 세우고, 애니메이션
@@ -609,8 +649,8 @@ export function NetworkGraph({
 
   /* force도 격자에서 출발한다 — 초기 좌표가 결정론의 절반이다. */
   const gridPositions = React.useMemo(
-    () => layoutNodes(nodes, isForce ? 'layered' : layout, metrics),
-    [isForce, layout, metrics, nodes],
+    () => layoutNodes(nodes, effectiveLayout, metrics),
+    [effectiveLayout, metrics, nodes],
   );
   const nodeById = React.useMemo(
     () => new Map(nodes.map((node) => [node.id, node])),

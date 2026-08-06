@@ -87,9 +87,21 @@ function resolveColumns(nodes) {
 function layoutNodes(nodes, layout, metrics) {
   if (!nodes.length) return /* @__PURE__ */ new Map();
   if (layout === "manual") {
-    return new Map(
-      nodes.map((node) => [node.id, { x: Number(node.x) || 0, y: Number(node.y) || 0 }])
-    );
+    const placed = /* @__PURE__ */ new Map();
+    const unplaced = [];
+    nodes.forEach((node) => {
+      const x = Number(node.x);
+      const y = Number(node.y);
+      if (Number.isFinite(x) && Number.isFinite(y)) placed.set(node.id, { x, y });
+      else unplaced.push(node);
+    });
+    if (!unplaced.length) return placed;
+    const lowest = placed.size ? Math.max(...[...placed.values()].map((point) => point.y)) + metrics.rowPitch : 0;
+    const leftmost = placed.size ? Math.min(...[...placed.values()].map((point) => point.x)) : 0;
+    unplaced.forEach((node, index) => {
+      placed.set(node.id, { x: leftmost + index * metrics.columnPitch, y: lowest });
+    });
+    return placed;
   }
   const columns = resolveColumns(nodes);
   const byColumn = /* @__PURE__ */ new Map();
@@ -366,7 +378,8 @@ function NetworkGraph({
   const summaryId = `${rawId}-summary`;
   const metrics = _nullishCoalesce(SHAPE[nodeShape], () => ( SHAPE.card));
   const isDot = nodeShape === "dot";
-  const isForce = layout === "force";
+  const isForce = layout === "force" && isDot;
+  const effectiveLayout = layout === "force" ? "layered" : layout;
   const nodes = _react2.default.useMemo(() => {
     const seen = /* @__PURE__ */ new Set();
     return nodesInput.filter((node) => {
@@ -384,8 +397,8 @@ function NetworkGraph({
     });
   }, [edgesInput]);
   const gridPositions = _react2.default.useMemo(
-    () => layoutNodes(nodes, isForce ? "layered" : layout, metrics),
-    [isForce, layout, metrics, nodes]
+    () => layoutNodes(nodes, effectiveLayout, metrics),
+    [effectiveLayout, metrics, nodes]
   );
   const nodeById = _react2.default.useMemo(
     () => new Map(nodes.map((node) => [node.id, node])),
@@ -1169,4 +1182,4 @@ function NetworkGraph({
 
 
 exports.NetworkGraph = NetworkGraph;
-//# sourceMappingURL=chunk-KKS2DLZK.cjs.map
+//# sourceMappingURL=chunk-5FE6HAUC.cjs.map
