@@ -359,7 +359,15 @@ function NetworkGraph({
   showEdgeLabels = true,
   motion = "auto",
   nodeColor = "var(--color-semantic-primary-normal)",
-  edgeColor = "var(--color-semantic-line-solid-normal)",
+  /*
+      관계선의 기본색. 종전에는 구분선용 hairline 토큰이었는데, 그것은 «칸을
+      나누는» 색이지 «데이터를 그리는» 색이 아니다. 배경 대비가 1.3:1이라
+      색을 주지 않은 소비자에게는 관계가 사실상 보이지 않았다 — 관계선은 내용을
+      이해하는 데 필요한 그래픽이므로 3:1을 지켜야 한다(WCAG 1.4.11).
+  
+      여전히 «선» 토큰이면서 대비를 갖는 것으로 바꾼다(측정 4.74:1).
+    */
+  edgeColor = "var(--color-semantic-line-normal-normal)",
   selectedNodeId,
   selectedEdgeId,
   onSelectNode,
@@ -686,7 +694,7 @@ function NetworkGraph({
               데가 없어 보이지만, 그대로 두면 라벨 하나가 그림 «밖»으로 뻗어나가
               액자에 잘리거나 가로 스크롤을 만든다. 실제로 28자짜리 이름이 폭
               192px 그림에서 336px를 차지했다.
-
+      
               전체 이름은 관계의 접근성 이름과 `<title>`에 남는다.
             */
       fullText: showEdgeLabels ? `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ""}`.trim() : "",
@@ -1010,12 +1018,12 @@ function NetworkGraph({
                               ),
                               selected && /*
                                                         「이것을 골랐다」는 표시.
-
+                              
                                                         종전에는 노드의 유형 색을 40% 불투명도로 둘렀다.
                                                         범주와 이어져 보기에는 좋았지만, 배경 대비가
                                                         1.6:1까지 떨어져 사실상 보이지 않았다 — 비텍스트
                                                         표시가 지켜야 하는 3:1의 절반이다.
-
+                              
                                                         색을 «앱이 소유»하는 것이 문제의 핵심이다. 어떤 색이
                                                         올지 모르는데 그 색에 대비를 맡길 수는 없다. 그래서
                                                         선택 링은 글자와 같은 강한 중립색으로 긋는다 — 어떤
@@ -1271,4 +1279,4 @@ function NetworkGraph({
 export {
   NetworkGraph
 };
-//# sourceMappingURL=chunk-JJLUJQA7.js.map
+//# sourceMappingURL=chunk-IDYIQP6J.js.map

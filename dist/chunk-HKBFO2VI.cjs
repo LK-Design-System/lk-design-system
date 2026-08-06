@@ -177,7 +177,7 @@ function MessageComposer({
     disabledReasonId,
     counterId
   );
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "form",
     {
       ...formProps,
@@ -205,7 +205,7 @@ function MessageComposer({
       },
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "label", { htmlFor: textareaId, style: VISUALLY_HIDDEN_STYLE, children: inputLabel }),
-        description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "p",
           {
             id: descriptionId,
@@ -219,7 +219,7 @@ function MessageComposer({
             children: description
           }
         ),
-        disabled && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        disabled && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "p",
           {
             id: disabledReasonId,
@@ -233,7 +233,7 @@ function MessageComposer({
             children: disabledReason
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             "data-composer-shell": "",
@@ -258,7 +258,7 @@ function MessageComposer({
               transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"
             },
             children: [
-              attachments != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              attachments != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "div",
                 {
                   "data-composer-attachments": "",
@@ -270,7 +270,7 @@ function MessageComposer({
                   children: attachments
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "div",
                 {
                   "data-composer-control-row": "",
@@ -282,7 +282,7 @@ function MessageComposer({
                     boxSizing: "border-box"
                   },
                   children: [
-                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                       "textarea",
                       {
                         ...restTextareaProps,
@@ -345,7 +345,7 @@ function MessageComposer({
                         }
                       }
                     ),
-                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                       "div",
                       {
                         "data-composer-actions-row": "",
@@ -361,7 +361,7 @@ function MessageComposer({
                           flexWrap: "wrap"
                         },
                         children: [
-                          hasLeadingActions && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                          hasLeadingActions && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                             "div",
                             {
                               role: "group",
@@ -379,7 +379,7 @@ function MessageComposer({
                             }
                           ),
                           !hasLeadingActions && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { flex: "1 1 auto" } }),
-                          hasTrailingActions && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                          hasTrailingActions && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                             "div",
                             {
                               role: "group",
@@ -396,7 +396,7 @@ function MessageComposer({
                               children: trailingActions
                             }
                           ),
-                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                             "div",
                             {
                               ref: primaryActionRef,
@@ -410,7 +410,7 @@ function MessageComposer({
                                 minHeight: ACTION_SLOT_SIZE_TOKEN,
                                 boxSizing: "border-box"
                               },
-                              children: nonIdle ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                              children: nonIdle ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                                 _chunk6S5YR4GDcjs.Button,
                                 {
                                   type: "button",
@@ -425,7 +425,7 @@ function MessageComposer({
                                   },
                                   children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "square-fill", size: 16, "aria-hidden": "true" })
                                 }
-                              ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                              ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                                 _chunk6S5YR4GDcjs.Button,
                                 {
                                   type: "submit",
@@ -448,7 +448,7 @@ function MessageComposer({
             ]
           }
         ),
-        (resolvedStatusLabel != null || maxLength != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        (resolvedStatusLabel != null || maxLength != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             style: {
@@ -470,7 +470,7 @@ function MessageComposer({
             ]
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "div",
           {
             "data-composer-live-status": "",

@@ -42,7 +42,7 @@ function TelemetryValue({
   const normalizedUnit = _chunk43Q7GJUBcjs.normalizeUnit.call(void 0, unit);
   const unitSeparator = _chunk43Q7GJUBcjs.getUnitSeparator.call(void 0, normalizedUnit);
   const attachedUnit = _chunk43Q7GJUBcjs.isAttachedUnit.call(void 0, normalizedUnit);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       "data-tone": resolvedTone,
@@ -61,7 +61,7 @@ function TelemetryValue({
       children: [
         label != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { maxWidth: "100%", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: 1.35, fontWeight: "var(--fw-bold)", overflowWrap: "anywhere", textAlign: align === "end" ? "right" : "left" }, children: label }),
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", justifyContent, columnGap: "var(--space-2)", rowGap: "var(--space-1)", maxWidth: "100%", minWidth: 0, flexWrap: "wrap" }, children: [
-          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
             "strong",
             {
               "data-telemetry-value-lockup": "",

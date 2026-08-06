@@ -55,7 +55,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
   const h = size === "sm" || size === "small" ? "var(--control-h-sm)" : "var(--component-input-height)";
   const arrow = (dir) => {
     const off = disabled || readOnly || (dir < 0 ? stepBase <= min : stepBase >= max);
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "button",
       {
         type: "button",
@@ -69,7 +69,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
     );
   };
   const control = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "inline-flex", alignItems: "stretch", width: "fit-content", height: h, border: `1px solid ${_chunkDSYH34X7cjs.fieldBorderColor.call(void 0, { disabled, readOnly, invalid: isInvalid, focused })}`, borderRadius: "var(--component-input-radius)", background: _chunkDSYH34X7cjs.fieldBackground.call(void 0, { disabled, readOnly }), boxShadow: focused ? "var(--component-input-focus-shadow)" : "none", overflow: "hidden", transition: "border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)", ...style }, children: [
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "input",
       {
         ...rest,
@@ -109,7 +109,7 @@ function NumberField({ value, defaultValue = 0, min = -Infinity, max = Infinity,
     ] })
   ] });
   if (!metadata.hasMetadata) return control;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     _chunkDSYH34X7cjs.FieldStack,
     {
       fieldId: metadata.fieldId,

@@ -43,7 +43,7 @@ function Spinner({ size, thickness, color = "var(--color-semantic-primary-normal
     ] });
   }
   const t = thickness || Math.max(2, Math.round(resolvedSize / 10));
-  const ring = /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  const ring = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "span",
     {
       "data-lds-spinner-ring": true,

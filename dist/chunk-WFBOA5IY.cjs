@@ -79,7 +79,7 @@ function SocialButton({
   const Comp = as;
   const isNativeButton = as === "button";
   const label = typeof children === "string" ? children : labels[provider];
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     Comp,
     {
       className: `lk-social-btn lk-social-btn--${provider}`,

@@ -67,7 +67,7 @@ function Rating({
   };
   const stars = Array.from({ length: max }).map((_, i) => {
     const filled = i < Math.floor(shown);
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "span",
       {
         "aria-hidden": "true",
@@ -85,7 +85,7 @@ function Rating({
     );
   });
   if (readOnly) {
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "span",
       {
         role: "img",
@@ -98,7 +98,7 @@ function Rating({
       }
     );
   }
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "span",
     {
       role: "slider",

@@ -68,7 +68,7 @@ function PropertyField({
     if (typeof document === "undefined") return;
     _optionalChain([document, 'access', _3 => _3.getElementById, 'call', _4 => _4(inputId), 'optionalAccess', _5 => _5.click, 'call', _6 => _6()]);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       "data-disabled": disabled ? "" : void 0,
@@ -108,7 +108,7 @@ function PropertyField({
               }
             },
             label,
-            dirty && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            dirty && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "span",
               {
                 "aria-hidden": "true",
@@ -123,7 +123,7 @@ function PropertyField({
             )
           ),
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { id: dirtyId, hidden: true, children: dirtyLabel }),
-          hint != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          hint != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "span",
             {
               id: hintId,
@@ -142,7 +142,7 @@ function PropertyField({
             }
           )
         ] }),
-        isToggle ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        isToggle ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunkXWY5DDJVcjs.Switch,
           {
             size: "sm",
@@ -154,7 +154,7 @@ function PropertyField({
             "aria-describedby": descriptionIds,
             onChange: (next) => setDraft(next)
           }
-        ) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        ) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "span",
           {
             style: {
@@ -165,7 +165,7 @@ function PropertyField({
               minWidth: 0
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "input",
                 {
                   id: inputId,
@@ -210,7 +210,7 @@ function PropertyField({
                   }
                 }
               ),
-              unit != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              unit != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "span",
                 {
                   id: unitId,
@@ -228,7 +228,7 @@ function PropertyField({
             ]
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunk6S5YR4GDcjs.Button,
           {
             size: "sm",

@@ -51,7 +51,7 @@ function TextButton({
   const ariaBlocked = ariaDisabled === true || ariaDisabled === "true";
   const blocked = disabledState || ariaBlocked;
   const Comp = as;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     Comp,
     {
       ...rest,

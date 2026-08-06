@@ -108,7 +108,7 @@ function PasswordInput({
     if (typeof _optionalChain([event, 'optionalAccess', _5 => _5.getModifierState]) !== "function") return;
     setCapsLock(readCapsLock(event));
   };
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     _chunkDSYH34X7cjs.FieldStack,
     {
       fieldId: metadata.fieldId,
@@ -121,7 +121,7 @@ function PasswordInput({
       status,
       fieldStyle,
       children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             "data-readonly": readOnly ? "true" : void 0,
@@ -143,7 +143,7 @@ function PasswordInput({
               ...style
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "input",
                 {
                   ...inputProps,
@@ -197,7 +197,7 @@ function PasswordInput({
                 }
               ),
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkDSYH34X7cjs.FieldStatusIcon, { invalid: isInvalid, status }),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 _chunkI6NJHF3Lcjs.IconButton,
                 {
                   variant: "plain",
@@ -214,7 +214,7 @@ function PasswordInput({
           }
         ),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { role: "status", "aria-live": "polite", style: VISUALLY_HIDDEN_STYLE, children: capsLockOn ? capsLockLabel : "" }),
-        capsLockOn && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        capsLockOn && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "span",
           {
             "aria-hidden": "true",

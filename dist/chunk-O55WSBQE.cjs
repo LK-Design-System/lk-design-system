@@ -6,7 +6,7 @@ var _jsxruntime = require('react/jsx-runtime');
 var MONO = 'var(--font-mono, ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace)';
 function Code({ children, block = false, style, ...rest }) {
   if (block) {
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "pre",
       {
         style: {
@@ -26,7 +26,7 @@ function Code({ children, block = false, style, ...rest }) {
       }
     );
   }
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "code",
     {
       style: {

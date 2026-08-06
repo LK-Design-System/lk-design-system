@@ -26,7 +26,7 @@ function EquipmentStatusCard({
   const hasDetails = details.length > 0;
   const hasFooter = meta != null || actions != null;
   const resolvedStatusTone = _chunkMBKOVB2Kcjs.normalizeStatusTone.call(void 0, statusTone);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "article",
     {
       "data-equipment-status-tone": resolvedStatusTone,
@@ -47,7 +47,7 @@ function EquipmentStatusCard({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "header",
           {
             style: {
@@ -60,7 +60,7 @@ function EquipmentStatusCard({
             },
             children: [
               /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "flex-start", gap: "var(--space-3)", flex: "1 1 16rem", minWidth: 0 }, children: [
-                icon != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                icon != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "span",
                   {
                     "aria-hidden": "true",
@@ -69,7 +69,7 @@ function EquipmentStatusCard({
                   }
                 ),
                 /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     Heading,
                     {
                       style: {
@@ -83,7 +83,7 @@ function EquipmentStatusCard({
                       children: title
                     }
                   ),
-                  description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "div",
                     {
                       style: {
@@ -97,7 +97,7 @@ function EquipmentStatusCard({
                   )
                 ] })
               ] }),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 _chunkGW3BLGYBcjs.StatusBadge,
                 {
                   tone: resolvedStatusTone,
@@ -116,7 +116,7 @@ function EquipmentStatusCard({
             ]
           }
         ),
-        hasDetails && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        hasDetails && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "dl",
           {
             style: {
@@ -128,7 +128,7 @@ function EquipmentStatusCard({
               borderTop: "1px solid var(--color-semantic-line-normal-normal)"
             },
             children: details.map((detail, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", alignContent: "start", gap: "var(--space-1)", minWidth: 0 }, children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "dt",
                 {
                   style: {
@@ -140,7 +140,7 @@ function EquipmentStatusCard({
                   children: detail.label
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "dd",
                 {
                   style: {
@@ -161,7 +161,7 @@ function EquipmentStatusCard({
             ] }, index))
           }
         ),
-        hasFooter && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        hasFooter && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "footer",
           {
             style: {
@@ -175,7 +175,7 @@ function EquipmentStatusCard({
               borderTop: "1px solid var(--color-semantic-line-normal-normal)"
             },
             children: [
-              meta != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              meta != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "div",
                 {
                   style: {

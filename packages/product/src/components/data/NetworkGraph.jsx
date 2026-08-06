@@ -595,7 +595,15 @@ export function NetworkGraph({
   showEdgeLabels = true,
   motion = 'auto',
   nodeColor = 'var(--color-semantic-primary-normal)',
-  edgeColor = 'var(--color-semantic-line-solid-normal)',
+  /*
+    관계선의 기본색. 종전에는 구분선용 hairline 토큰이었는데, 그것은 «칸을
+    나누는» 색이지 «데이터를 그리는» 색이 아니다. 배경 대비가 1.3:1이라
+    색을 주지 않은 소비자에게는 관계가 사실상 보이지 않았다 — 관계선은 내용을
+    이해하는 데 필요한 그래픽이므로 3:1을 지켜야 한다(WCAG 1.4.11).
+
+    여전히 «선» 토큰이면서 대비를 갖는 것으로 바꾼다(측정 4.74:1).
+  */
+  edgeColor = 'var(--color-semantic-line-normal-normal)',
   selectedNodeId,
   selectedEdgeId,
   onSelectNode,

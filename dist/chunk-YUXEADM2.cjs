@@ -82,7 +82,7 @@ function ToggleButton({
     if (!isControlled) setInternal(next);
     _optionalChain([onChange, 'optionalCall', _2 => _2(next)]);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "button",
     {
       ...rest,

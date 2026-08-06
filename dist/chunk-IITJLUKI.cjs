@@ -114,7 +114,7 @@ function SearchableMultiSelect({
     commit(selected.filter((item) => item !== selectedValue));
     _optionalChain([inputRef, 'access', _6 => _6.current, 'optionalAccess', _7 => _7.focus, 'call', _8 => _8()]);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       ...rest,
@@ -132,7 +132,7 @@ function SearchableMultiSelect({
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { role: "status", "aria-live": "polite", "aria-atomic": "true", style: { position: "absolute", width: 1, height: 1, margin: -1, padding: 0, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap", border: 0 }, children: popupOpen ? loading ? loadingLabel : !hasOptionList ? emptyLabel : maxReached ? resolvedMaxLabel : "" : "" }),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkDSYH34X7cjs.FieldLabel, { htmlFor: inputId, label, required, disabled }),
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { position: "relative", minWidth: 0 }, children: [
-          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
             "div",
             {
               onMouseDown: (event) => {
@@ -158,7 +158,7 @@ function SearchableMultiSelect({
               children: [
                 selectedOptions.map((option) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunkBCWCCXJXcjs.Chip, { size: "sm", variant: "outlined", disabled, style: { maxWidth: "100%", paddingRight: locked ? void 0 : "var(--space-0)" }, children: [
                   /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }, children: option.label }),
-                  !locked && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  !locked && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     _chunkI6NJHF3Lcjs.IconButton,
                     {
                       variant: "soft",
@@ -171,7 +171,7 @@ function SearchableMultiSelect({
                     }
                   )
                 ] }, String(option.value))),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "input",
                   {
                     ref: inputRef,
@@ -234,7 +234,7 @@ function SearchableMultiSelect({
           popupOpen && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { position: "absolute", zIndex: 40, left: 0, right: 0, top: "calc(100% + 6px)", padding: "var(--space-1-5)", display: "grid", gap: "var(--space-0-5)", boxSizing: "border-box", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-lg)", background: "var(--color-semantic-background-elevated-normal)", boxShadow: "var(--shadow-md)" }, children: [
             /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { id: listboxId, role: "listbox", "aria-multiselectable": "true", "aria-busy": loading || void 0, style: { maxHeight: 248, overflowY: "auto", display: "flex", flexDirection: "column", gap: "var(--space-0-5)" }, children: hasOptionList && filteredOptions.map((option, index) => {
               const selectedOption = selectedSet.has(option.value);
-              return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "div",
                 {
                   id: optionDomId(listboxId, option),

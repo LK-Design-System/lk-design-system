@@ -32,7 +32,7 @@ function RefreshControl({
   const unavailable = disabled || refreshing;
   const refreshDisabled = disabled || typeof onRefresh !== "function";
   const autoRefreshDisabled = disabled || typeof onAutoRefreshChange !== "function";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       role: "group",
@@ -46,7 +46,7 @@ function RefreshControl({
           ": ",
           lastUpdated
         ] }),
-        Array.isArray(autoRefreshOptions) && autoRefreshOptions.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        Array.isArray(autoRefreshOptions) && autoRefreshOptions.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunkNVEDZHWRcjs.Select,
           {
             value: autoRefreshValue,
@@ -58,7 +58,7 @@ function RefreshControl({
             style: { width: 150 }
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunk6S5YR4GDcjs.Button,
           {
             type: "button",

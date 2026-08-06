@@ -133,6 +133,52 @@ function assertEdgesAttachFacingSides(canvasElement, label) {
   });
 }
 
+/*
+  관계선은 «내용을 이해하는 데 필요한» 그래픽이므로 배경과 3:1은 지켜야 한다
+  (WCAG 1.4.11). 기본색이 구분선용 hairline 토큰이던 때 1.3:1이었다 — 색을
+  주지 않은 소비자에게는 관계가 사실상 보이지 않았다.
+
+  꺼진 관계(`disabled`)는 예외다. 비활성 요소는 이 기준에서 빠진다.
+*/
+function assertEdgesAreVisible(canvasElement, label) {
+  const toRgb = (value) => (value.match(/[\d.]+/g) ?? []).slice(0, 3).map(Number);
+  const luminance = (rgb) => {
+    const [r, g, b] = rgb.map((channel) => {
+      const unit = channel / 255;
+      return unit <= 0.03928 ? unit / 12.92 : ((unit + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const contrast = (a, b) => {
+    const [high, low] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+    return (high + 0.05) / (low + 0.05);
+  };
+  const backdrop = (() => {
+    let node = canvasElement;
+    while (node) {
+      const value = getComputedStyle(node).backgroundColor;
+      const rgb = toRgb(value);
+      if (rgb.length === 3 && !/rgba\([^)]*,\s*0\)/.test(value)) return rgb;
+      node = node.parentElement;
+    }
+    return [255, 255, 255];
+  })();
+
+  Array.from(canvasElement.querySelectorAll('[data-network-edge]')).forEach((group) => {
+    if (group.getAttribute('data-state') === 'disabled') return;
+    const line = group.querySelector('path');
+    const style = getComputedStyle(line);
+    const stroke = toRgb(style.stroke);
+    if (stroke.length !== 3) return;
+    const alpha = Number(style.opacity) || 1;
+    const blended = stroke.map((channel, index) => channel * alpha + backdrop[index] * (1 - alpha));
+    const ratio = contrast(blended, backdrop);
+    if (ratio < 3) {
+      throw new Error(`${label}: a relation line must clear 3:1 against its backdrop (got ${ratio.toFixed(2)}).`);
+    }
+  });
+}
+
 function assertDeterministicLayout(canvasElement, label) {
   const positions = Array.from(canvasElement.querySelectorAll('[data-network-node]'))
     .map((node) => node.getAttribute('transform'));
@@ -215,6 +261,7 @@ export const RelationshipOverview = {
     assertFocusableNodes(canvasElement, '회사 지식망');
     assertEdgesAttachFacingSides(canvasElement, '회사 지식망');
     assertDeterministicLayout(canvasElement, '회사 지식망');
+    assertEdgesAreVisible(canvasElement, '회사 지식망');
     /*
       방향키는 «방향»을 뜻한다. 순회가 입력 배열 순서를 따르면 →를 눌렀는데
       왼쪽 노드로 가는 일이 생기므로, 순서는 화면에 놓인 자리를 따라야 한다 —
@@ -302,6 +349,7 @@ export const StagedFlow = {
     }
     assertEdgesAttachFacingSides(canvasElement, '영상 파이프라인');
     assertDeterministicLayout(canvasElement, '영상 파이프라인');
+    assertEdgesAreVisible(canvasElement, '영상 파이프라인');
 
     // 상태는 색이 아니라 별도 축이어야 한다 — 같은 유형이면 상태가 달라도 색이 같다.
     const nodes = Array.from(canvasElement.querySelectorAll('[data-network-node]'));

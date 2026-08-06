@@ -30,7 +30,7 @@ function BackToTopButton() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
   };
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "button",
     {
       type: "button",
@@ -80,7 +80,7 @@ function Footer({
     if (l.href == null) {
       return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { ...typography, color: base }, children: l.label }, key);
     }
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "a",
       {
         href: l.href,

@@ -16,7 +16,7 @@ function RecordHeader({
 }) {
   const resolvedHeadingLevel = Math.min(6, Math.max(1, headingLevel));
   const Heading = `h${resolvedHeadingLevel}`;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "header",
     {
       style: {
@@ -27,7 +27,7 @@ function RecordHeader({
         ...style
       },
       ...rest,
-      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
         "div",
         {
           style: {
@@ -40,7 +40,7 @@ function RecordHeader({
           },
           children: [
             visual != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-record-header-visual": true, style: { display: "flex", flexShrink: 0 }, children: visual }),
-            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
               "div",
               {
                 "data-record-header-content": true,
@@ -51,7 +51,7 @@ function RecordHeader({
                   minWidth: 0
                 },
                 children: [
-                  /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+                  /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                     "div",
                     {
                       style: {
@@ -62,7 +62,7 @@ function RecordHeader({
                         minWidth: 0
                       },
                       children: [
-                        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                           Heading,
                           {
                             style: {
@@ -83,7 +83,7 @@ function RecordHeader({
                       ]
                     }
                   ),
-                  description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "p",
                     {
                       style: {
@@ -99,7 +99,7 @@ function RecordHeader({
                       children: description
                     }
                   ),
-                  details != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  details != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "div",
                     {
                       "data-record-header-details": true,
@@ -116,7 +116,7 @@ function RecordHeader({
                 ]
               }
             ),
-            actions != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            actions != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "div",
               {
                 "data-record-header-actions": true,

@@ -54,7 +54,7 @@ function ScrollArea({
       "ScrollArea: a scrollable region is keyboard focusable and needs an accessible name \u2014 pass `label` (or `labelledBy`)."
     );
   }, [isFocusable, named, rest.role]);
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "div",
     {
       ...rest,
@@ -153,7 +153,7 @@ function useElevatorFleetStyles() {
 }
 function LandingDoor({ active, color }) {
   const size = active ? 24 : 20;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "span",
     {
       "aria-hidden": "true",
@@ -186,7 +186,7 @@ function FloorRow({
   const inactiveColor = "var(--color-semantic-line-normal-normal)";
   const iconColor = active ? presentation.accent : inactiveColor;
   const rowBorder = groundLine ? "2px solid var(--color-semantic-label-assistive)" : "1px solid var(--color-semantic-line-normal-normal)";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "span",
     {
       "aria-hidden": "true",
@@ -223,7 +223,7 @@ function ElevatorColumn({ building, elevator }) {
   const directionIcon = !offline && direction === "up" ? "chevron-up-small" : !offline && direction === "down" ? "chevron-down-small" : null;
   const directionLabel = _nullishCoalesce(elevator.directionLabel, () => ( (direction === "up" ? "\uC0C1\uC2B9 \uC911" : direction === "down" ? "\uD558\uAC15 \uC911" : "\uC815\uC9C0")));
   const positionSummary = offline ? `${elevator.name} \uB9C8\uC9C0\uB9C9 \uD655\uC778 \uC704\uCE58 ${elevator.currentFloor}, ${_nullishCoalesce(elevator.statusLabel, () => ( status))}` : `${elevator.name} \uD604\uC7AC \uC704\uCE58 ${elevator.currentFloor}, ${directionLabel}, ${_nullishCoalesce(elevator.statusLabel, () => ( status))}`;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "article",
     {
       className: "lk-elevator-column",
@@ -239,7 +239,7 @@ function ElevatorColumn({ building, elevator }) {
         gap: "var(--space-2)"
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "div",
           {
             style: {
@@ -255,7 +255,7 @@ function ElevatorColumn({ building, elevator }) {
               background: offline ? "var(--color-semantic-background-normal-alternative)" : "var(--color-semantic-background-elevated-normal)"
             },
             children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "span",
                 {
                   style: {
@@ -274,7 +274,7 @@ function ElevatorColumn({ building, elevator }) {
                 }
               ),
               /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "var(--space-2)", minWidth: 0 }, children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "strong",
                   {
                     style: {
@@ -290,7 +290,7 @@ function ElevatorColumn({ building, elevator }) {
                     children: elevator.name
                   }
                 ),
-                status !== "normal" && elevator.updatedLabel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                status !== "normal" && elevator.updatedLabel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "span",
                   {
                     style: {
@@ -307,7 +307,7 @@ function ElevatorColumn({ building, elevator }) {
             ] })
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             style: {
@@ -318,7 +318,7 @@ function ElevatorColumn({ building, elevator }) {
               background: offline ? "var(--color-semantic-background-normal-alternative)" : "var(--color-semantic-background-elevated-normal)"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "div",
                 {
                   style: {
@@ -334,7 +334,7 @@ function ElevatorColumn({ building, elevator }) {
                     textAlign: "center"
                   },
                   children: [
-                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                       "span",
                       {
                         style: {
@@ -343,7 +343,7 @@ function ElevatorColumn({ building, elevator }) {
                           gap: "var(--space-1)"
                         },
                         children: [
-                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                             "strong",
                             {
                               "data-position-value": elevator.currentFloor,
@@ -356,7 +356,7 @@ function ElevatorColumn({ building, elevator }) {
                               children: elevator.currentFloor
                             }
                           ),
-                          offline && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                          offline && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                             "span",
                             {
                               style: {
@@ -370,7 +370,7 @@ function ElevatorColumn({ building, elevator }) {
                         ]
                       }
                     ),
-                    !offline && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                    !offline && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                       "span",
                       {
                         className: "lk-elevator-direction",
@@ -393,12 +393,12 @@ function ElevatorColumn({ building, elevator }) {
                   ]
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "div",
                 {
                   role: "img",
                   "aria-label": positionSummary,
-                  children: floors.map((floor, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  children: floors.map((floor, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     FloorRow,
                     {
                       floor,
@@ -426,7 +426,7 @@ function BuildingGroup({ building, headingLevel, headingId }) {
   const attentionCount = elevators.filter(
     (elevator) => normalizeStatus(elevator.status) !== "normal"
   ).length;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "section",
     {
       "aria-labelledby": headingId,
@@ -435,7 +435,7 @@ function BuildingGroup({ building, headingLevel, headingId }) {
         flex: "0 0 auto"
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "header",
           {
             style: {
@@ -448,7 +448,7 @@ function BuildingGroup({ building, headingLevel, headingId }) {
               boxSizing: "border-box"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 Heading,
                 {
                   id: headingId,
@@ -465,14 +465,14 @@ function BuildingGroup({ building, headingLevel, headingId }) {
             ]
           }
         ),
-        elevators.length ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { display: "flex", alignItems: "flex-start", gap: "var(--space-2)" }, children: elevators.map((elevator) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        elevators.length ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { display: "flex", alignItems: "flex-start", gap: "var(--space-2)" }, children: elevators.map((elevator) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           ElevatorColumn,
           {
             building,
             elevator
           },
           elevator.id
-        )) }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        )) }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "div",
           {
             role: "status",
@@ -506,7 +506,7 @@ function ElevatorFleetOverview({
   const instanceId = _react2.default.useId().replace(/:/g, "");
   const attentionCount = getAttentionCount(buildings);
   if (!buildings.length) {
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "div",
       {
         role: "status",
@@ -530,7 +530,7 @@ function ElevatorFleetOverview({
       }
     );
   }
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "section",
     {
       "aria-label": label,
@@ -549,7 +549,7 @@ function ElevatorFleetOverview({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "header",
           {
             className: "lk-elevator-fleet-heading",
@@ -573,7 +573,7 @@ function ElevatorFleetOverview({
             ]
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           ScrollArea,
           {
             className: "lk-elevator-fleet-scroll",
@@ -588,7 +588,7 @@ function ElevatorFleetOverview({
               overflowY: "hidden",
               background: "var(--color-semantic-background-normal-normal)"
             },
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "div",
               {
                 style: {
@@ -600,7 +600,7 @@ function ElevatorFleetOverview({
                   padding: "var(--space-3)",
                   boxSizing: "border-box"
                 },
-                children: buildings.map((building, buildingIndex) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                children: buildings.map((building, buildingIndex) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   BuildingGroup,
                   {
                     building,

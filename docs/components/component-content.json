@@ -11187,7 +11187,7 @@
       ],
       "tokens": [
         "--color-semantic-primary-normal",
-        "--color-semantic-line-solid-normal",
+        "--color-semantic-line-normal-normal",
         "--font-sans",
         "--color-semantic-label-alternative",
         "--label2-size",

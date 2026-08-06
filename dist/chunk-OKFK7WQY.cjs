@@ -270,7 +270,7 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
           }
         };
         return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { style: LIST_ITEM_STYLE, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, RailItemTooltip, { label: accessibleLabel, collapsed: col, enabled: !overlay, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, RailItemTooltip, { label: accessibleLabel, collapsed: col, enabled: !overlay, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
             "button",
             {
               type: "button",
@@ -327,7 +327,7 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
     }) }),
     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-slot": "footer", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "footer") || void 0, style: { marginTop: "auto", paddingTop: footerGap, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "footer") }, children: resolvedFooter != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { paddingTop: "var(--space-2-5)", marginLeft: "var(--space-0-5)", marginRight: "var(--space-0-5)", borderTop: "1px solid var(--color-semantic-line-solid-normal)" }, children: resolvedFooter }) })
   ] });
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "nav",
     {
       ref: mergedNavRef,

@@ -120,7 +120,7 @@ function DashboardShell({
   const isNarrowLayout = layout === "narrow" || layout === "auto" && autoNarrow;
   const hasTemporaryNavigation = temporaryNavigation != null;
   const temporaryOpen = hasTemporaryNavigation && temporaryNavigationOpen && isNarrowLayout;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       className: ["lk-dashboard-shell", className].filter(Boolean).join(" "),
@@ -146,7 +146,7 @@ function DashboardShell({
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: DASHBOARD_SHELL_STYLES }),
         header != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-dashboard-shell__header", inert: temporaryOpen ? true : void 0, children: header }),
         navigation != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-dashboard-shell__navigation", inert: temporaryOpen ? true : void 0, children: withNavigationLabel(navigation, navigationLabel) }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "main",
           {
             id: resolvedMainId,
@@ -159,7 +159,7 @@ function DashboardShell({
           }
         ),
         narrowNavigation != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-dashboard-shell__narrow-navigation", inert: temporaryOpen ? true : void 0, children: withNavigationLabel(narrowNavigation, narrowNavigationLabel) }),
-        hasTemporaryNavigation && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        hasTemporaryNavigation && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunkLJK5DY6Jcjs.Drawer,
           {
             id: resolvedTemporaryNavigationId,

@@ -31,7 +31,7 @@ function StateRow({ children, role }) {
 }
 function DirectoryOpenButton({ entry, disabled, onNavigate }) {
   if (typeof onNavigate !== "function") return null;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "button",
     {
       type: "button",
@@ -66,7 +66,7 @@ function FileBrowser({
   ...rest
 }) {
   const upDisabled = disabled || navigationDisabled || loading || path === "/" || typeof onUp !== "function";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       role: "group",
@@ -77,7 +77,7 @@ function FileBrowser({
       ...rest,
       children: [
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "header", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0, padding: "var(--space-2) var(--space-3)", borderBottom: "1px solid var(--color-semantic-line-normal-normal)", background: "var(--color-semantic-background-elevated-alternative)" }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "button",
             {
               type: "button",
@@ -104,7 +104,7 @@ function FileBrowser({
           const primaryNavigates = !primarySelects && navigationAvailable;
           const primaryDisabled = rowDisabled || !primarySelects && !primaryNavigates;
           return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { style: { display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: 4, alignItems: "center" }, children: [
-            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
               "button",
               {
                 type: "button",

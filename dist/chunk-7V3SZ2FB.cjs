@@ -113,7 +113,7 @@ function Spinner({ size, thickness, color = "var(--color-semantic-primary-normal
     ] });
   }
   const t = thickness || Math.max(2, Math.round(resolvedSize / 10));
-  const ring = /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  const ring = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "span",
     {
       "data-lds-spinner-ring": true,
@@ -315,7 +315,7 @@ var TONE_COLOR = {
 };
 function StateMark({ presentation, icon, size = 22 }) {
   if (presentation.busy && icon == null) {
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-viewer-state-icon": "spinner", "aria-hidden": "true", style: { display: "inline-flex" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-viewer-state-icon": "spinner", "aria-hidden": "true", style: { display: "inline-flex" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       Spinner,
       {
         size,
@@ -326,7 +326,7 @@ function StateMark({ presentation, icon, size = 22 }) {
       }
     ) });
   }
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "span",
     {
       "data-viewer-state-icon": icon == null ? presentation.icon : "custom",
@@ -501,7 +501,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, StateMark, { presentation, icon: stateIcon, size: 16 }),
     /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: 2, minWidth: 0 }, children: [
       /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-viewer-edge-label": "", style: { fontSize: "var(--caption2-size)", lineHeight: 1.35, fontWeight: "var(--fw-bold)", color: "var(--viewer-foreground)" }, children: labelContent }),
-      descriptionContent != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      descriptionContent != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
         "span",
         {
           "data-viewer-edge-description": "",
@@ -521,7 +521,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
       )
     ] })
   ] });
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       ...rest,
@@ -598,7 +598,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
         ...style
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunkSO26HRBScjs.VisuallyHidden,
           {
             as: "div",
@@ -609,7 +609,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
             children: [labelContent, descriptionContent].filter((part) => typeof part === "string" && part !== "").join(", ")
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             "data-viewer-content": "",
@@ -629,7 +629,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
             ]
           }
         ),
-        (source != null || badges != null || liveness != null || hud != null || topToolbar != null || presentation.corner) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        (source != null || badges != null || liveness != null || hud != null || topToolbar != null || presentation.corner) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             ref: topbarRef,
@@ -649,7 +649,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
               pointerEvents: "none"
             },
             children: [
-              (source != null || badges != null || hud != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              (source != null || badges != null || hud != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "div",
                 {
                   "data-viewer-identity": "",
@@ -667,7 +667,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                     backdropFilter: overlayChrome ? "blur(8px)" : void 0
                   },
                   children: [
-                    (source != null || badges != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+                    (source != null || badges != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                       "div",
                       {
                         style: {
@@ -681,7 +681,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                           boxSizing: "border-box"
                         },
                         children: [
-                          source != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                          source != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                             "span",
                             {
                               "data-viewer-source": "",
@@ -702,7 +702,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                         ]
                       }
                     ),
-                    hud != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                    hud != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                       "div",
                       {
                         "data-viewer-hud": "",
@@ -719,7 +719,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                   ]
                 }
               ),
-              hasLiveness && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              hasLiveness && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "div",
                 {
                   "data-viewer-liveness": "",
@@ -737,7 +737,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                     backdropFilter: overlayChrome ? "blur(8px)" : void 0
                   },
                   children: [
-                    presentation.corner && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                    presentation.corner && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                       _chunkDKANR6BIcjs.StatusIndicator,
                       {
                         "data-viewer-corner-status": "",
@@ -751,7 +751,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                   ]
                 }
               ),
-              topToolbar != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              topToolbar != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "div",
                 {
                   ref: toolbarShelfRef,
@@ -784,7 +784,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
             ]
           }
         ),
-        scope != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        scope != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "div",
           {
             "data-viewer-scope": "",
@@ -808,7 +808,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
             children: scope
           }
         ),
-        bottomToolbar != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        bottomToolbar != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "div",
           {
             ref: toolbarShelfRef,
@@ -849,7 +849,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
             children: bottomToolbar
           }
         ),
-        !blocking && !presentation.edge && status != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        !blocking && !presentation.edge && status != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "div",
           {
             "data-viewer-status": "",
@@ -879,7 +879,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
             children: status
           }
         ),
-        !blocking && presentation.edge && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        !blocking && presentation.edge && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             "data-viewer-edge-state": "",
@@ -906,7 +906,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
               overflow: "hidden"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "div",
                 {
                   "data-viewer-edge-summary": "",
@@ -917,7 +917,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
               ),
               status != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
                 /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { flex: "0 0 auto", color: "var(--viewer-muted)", fontSize: "var(--caption2-size)" }, children: "\xB7" }),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "span",
                   {
                     "data-viewer-edge-metadata": "",
@@ -941,7 +941,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
             ]
           }
         ),
-        blocking && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        blocking && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             ref: blockingLayerRef,
@@ -962,7 +962,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
               textAlign: "center"
             },
             children: [
-              source != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              source != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "div",
                 {
                   "data-viewer-blocking-source": "",
@@ -989,7 +989,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                   children: source
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "div",
                 {
                   "data-viewer-blocking-body": "",
@@ -1003,14 +1003,14 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                     minHeight: 0
                   },
                   children: [
-                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                       "div",
                       {
                         "data-viewer-blocking-live": "",
                         "aria-hidden": "true",
                         style: { display: "grid", justifyItems: "center", gap: 10 },
                         children: [
-                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                             "div",
                             {
                               "data-viewer-blocking-icon": "",

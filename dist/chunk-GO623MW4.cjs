@@ -32,7 +32,7 @@ function Banner({ tone = "info", variant = "standalone", title, children, action
   const t = _chunkMBKOVB2Kcjs.statusToneStyle.call(void 0, normalizedTone);
   const urgent = normalizedTone === "negative";
   const resolvedVariant = variant === "embedded" ? "embedded" : "standalone";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       role: urgent ? "alert" : "status",
