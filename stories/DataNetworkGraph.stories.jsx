@@ -249,6 +249,17 @@ export const StagedFlow = {
     if (canvasElement.querySelector('[data-network-root-ring]')) {
       throw new Error('The flow genre must not draw the node-link root ring.');
     }
+    /* 이름은 «면 안»에 있다. 면 밖으로 흘러나오면 그건 담긴 것이 아니다. */
+    for (const node of canvasElement.querySelectorAll('[data-network-node]')) {
+      const face = node.querySelector('rect')?.getBBox();
+      if (!face) continue;
+      for (const text of node.querySelectorAll('text')) {
+        const box = text.getBBox();
+        if (box.x < face.x || box.x + box.width > face.x + face.width) {
+          throw new Error(`A card label must stay inside its face ("${text.textContent}").`);
+        }
+      }
+    }
     assertEdgesAttachFacingSides(canvasElement, '영상 파이프라인');
     assertDeterministicLayout(canvasElement, '영상 파이프라인');
 

@@ -53,6 +53,76 @@ const EDGE_STATE_STYLE = {
   disabled: { opacity: 0.3, dash: '2 4', width: 1 },
 };
 
+/*
+  글자 폭을 어림한다. SVG 텍스트의 실제 폭은 그려 봐야 알 수 있는데, 배치는
+  그리기 «전»에 정해져야 한다.
+
+  글자 수에 평균값을 곱하던 방식은 한글에서 틀린다 — 한글은 라틴의 두 배 폭에
+  가깝고, 「LK Portal」과 「플랫폼·개발자 도구」는 같은 12자라도 폭이 배쯤
+  차이난다. 넓은 글자와 좁은 글자를 나눠 세면 그 오차가 사라진다.
+
+  일부러 조금 «넉넉하게» 잡는다. 좁게 잡으면 라벨이 놓을 자리가 없다고 잘못
+  판단하거나, 자를 글자를 덜 잘라 상자 밖으로 흘러넘친다.
+*/
+const LABEL_FONT_SIZE = 13;
+const CAPTION_FONT_SIZE = 12;
+const NARROW_RATIO = 0.55;
+/** 점 관행에서 이름 한 줄에 허용할 최대 폭. 이름 하나가 그림의 폭을 정하지 않도록. */
+const DOT_LABEL_MAX_WIDTH = 168;
+
+/* 한 줄이 세로로 차지하는 자리. 글꼴 크기에서 나와야 한다 — 숫자를 따로 적어
+   두면 글꼴이 바뀔 때 라벨이 피하는 상자만 옛 크기에 남는다. */
+const LINE_HEIGHT_RATIO = 1.35;
+function lineHeight(fontSize) {
+  return fontSize * LINE_HEIGHT_RATIO;
+}
+
+function isWideGlyph(code) {
+  // 한글·한자·가나와 전각 문장부호. 대략 한 글자가 한 em을 차지한다.
+  return (code >= 0x1100 && code <= 0x115f)
+    || (code >= 0x2e80 && code <= 0xa4cf)
+    || (code >= 0xac00 && code <= 0xd7a3)
+    || (code >= 0xf900 && code <= 0xfaff)
+    || (code >= 0xfe30 && code <= 0xfe6f)
+    || (code >= 0xff00 && code <= 0xff60);
+}
+
+function estimateTextWidth(text, fontSize) {
+  if (!text) return 0;
+  let width = 0;
+  for (let index = 0; index < text.length; index += 1) {
+    width += isWideGlyph(text.charCodeAt(index)) ? fontSize : fontSize * NARROW_RATIO;
+  }
+  return width;
+}
+
+/*
+  이름이 담길 자리보다 길면 잘라 «…»을 붙인다.
+
+  카드 관행에서는 이름이 면 «안»에 있으므로 넘치면 상자 밖으로 흘러나온다 —
+  실제로 그랬다. 점 관행에서는 밖에 있어 흘러넘칠 상자가 없지만, 그대로 두면
+  이름 하나가 그림 전체의 폭을 정한다.
+
+  SVG에는 `text-overflow`가 없어 위의 어림치로 자른다. 라벨 배치가 쓰는 것과
+  같은 함수다 — 두 곳이 다른 폭을 믿으면 한쪽이 반드시 틀린다.
+
+  자르는 것은 «보이는 글자»뿐이다. 전체 이름은 노드의 접근성 이름과 `<title>`에
+  그대로 남으므로, 보조기술과 마우스 양쪽에서 온전히 읽을 수 있다.
+*/
+function fitText(text, maxWidth, fontSize) {
+  if (!text || estimateTextWidth(text, fontSize) <= maxWidth) return text;
+  const room = maxWidth - estimateTextWidth('…', fontSize);
+  let width = 0;
+  let cut = 0;
+  while (cut < text.length) {
+    const step = isWideGlyph(text.charCodeAt(cut)) ? fontSize : fontSize * NARROW_RATIO;
+    if (width + step > room) break;
+    width += step;
+    cut += 1;
+  }
+  return cut === 0 ? '…' : `${text.slice(0, cut).trimEnd()}…`;
+}
+
 function nodeText(node) {
   if (typeof node === 'string' || typeof node === 'number') return String(node);
   if (Array.isArray(node)) return node.map(nodeText).filter(Boolean).join(' ');
@@ -420,7 +490,7 @@ function placeEdgeLabels(entries, obstacles) {
     // 여기서 필요한 것은 «겹치는가»의 판정이지 정확한 폭이 아니다.
     // 12px caption 기준 실측에 가까운 글자당 폭. 과대평가하면 놓을 자리가 없다고
     // 잘못 판단해 라벨이 제자리로 되돌아온다.
-    const width = entry.text.length * 6.2 + 6;
+    const width = estimateTextWidth(entry.text, CAPTION_FONT_SIZE) + 6;
     const height = 16;
     /* 빈자리를 못 찾더라도 후보들이 «얼마나» 나쁜지는 서로 다르다. 그래서
        도는 동안 가장 덜 겹치는 후보를 기억해 둔다 — 예전에는 곡선 한가운데로
@@ -553,16 +623,37 @@ export function NetworkGraph({
 
     카드 관행에서는 이름이 «안»에 있으므로 상자 자체가 몸집이다.
   */
+  /* 밀어낼 자리도, 라벨이 피할 자리도 «그려지는» 글자를 따라야 한다. 잘리기
+     «전»의 폭으로 재면 있지도 않은 글자를 피하게 된다. */
+  const labelRoomFor = React.useCallback(
+    () => (isDot ? DOT_LABEL_MAX_WIDTH : metrics.width - 32),
+    [isDot, metrics.width],
+  );
+  const fittedLabelWidth = React.useCallback(
+    (node) => estimateTextWidth(
+      fitText(nodeText(node.label) || node.id, labelRoomFor(), LABEL_FONT_SIZE),
+      LABEL_FONT_SIZE,
+    ),
+    [labelRoomFor],
+  );
+  const fittedCaptionWidth = React.useCallback(
+    (node) => estimateTextWidth(
+      fitText(nodeText(node.caption), labelRoomFor(), CAPTION_FONT_SIZE),
+      CAPTION_FONT_SIZE,
+    ),
+    [labelRoomFor],
+  );
+
   const footprintOf = React.useCallback(
     (node) => {
       if (!isDot) return Math.hypot(metrics.width, metrics.height) / 2;
       const radius = radiusOf(node) || DOT_RADIUS;
-      const nameWidth = (nodeText(node.label) || node.id).length * 6.8;
-      const captionWidth = nodeText(node.caption).length * 6.2;
+      const nameWidth = fittedLabelWidth(node);
+      const captionWidth = fittedCaptionWidth(node);
       const below = radius + (nodeText(node.caption) ? 35 : 20);
       return Math.max(radius, below, nameWidth / 2, captionWidth / 2);
     },
-    [isDot, metrics.height, metrics.width, radiusOf],
+    [fittedCaptionWidth, fittedLabelWidth, isDot, metrics.height, metrics.width, radiusOf],
   );
 
   const settledPositions = React.useMemo(
@@ -875,18 +966,18 @@ export function NetworkGraph({
          기준으로 하므로 각각 글자 높이의 절반만큼 올려 잡는다. 2px씩 넉넉하게
          두는 것은 여백이 아니라 오차 몫이다 — 글자 폭을 글자 수로 어림하고
          있어서 실제와 몇 px 어긋난다. */
-      const nameWidth = (nodeText(node.label) || node.id).length * 6.8 + 8;
-      const captionWidth = nodeText(node.caption).length * 6.2 + 8;
+      const nameWidth = fittedLabelWidth(node) + 8;
+      const captionWidth = fittedCaptionWidth(node) + 8;
       return [
         { x: point.x, y: point.y, width: point.radius * 2, height: point.radius * 2 },
-        { x: point.x, y: point.y + point.radius + 12, width: nameWidth, height: 18 },
+        { x: point.x, y: point.y + point.radius + 12, width: nameWidth, height: lineHeight(LABEL_FONT_SIZE) },
         ...(captionWidth > 8
-          ? [{ x: point.x, y: point.y + point.radius + 28, width: captionWidth, height: 17 }]
+          ? [{ x: point.x, y: point.y + point.radius + 28, width: captionWidth, height: lineHeight(CAPTION_FONT_SIZE) }]
           : []),
       ];
     });
     return placeEdgeLabels(entries, obstacles);
-  }, [anchors, edges, isDot, metrics, nodeShape, nodes, showEdgeLabels]);
+  }, [anchors, edges, fittedCaptionWidth, fittedLabelWidth, isDot, metrics, nodeShape, nodes, showEdgeLabels]);
 
   const hasData = nodes.length > 0;
   const automaticSummary = hasData
@@ -1167,6 +1258,12 @@ export function NetworkGraph({
               const captionText = nodeText(node.caption);
               const nodeStop = { key: `node:${node.id}`, node, kind: 'node' };
               const radius = radiusOf(node);
+              /* 카드는 면 안쪽 여백을 뺀 만큼, 점은 이름 하나가 그림의 폭을
+                 정하지 않을 만큼. 두 관행의 담을 자리가 다르다. */
+              const labelRoom = isDot ? DOT_LABEL_MAX_WIDTH : metrics.width - 32;
+              const shownLabel = fitText(labelText, labelRoom, LABEL_FONT_SIZE);
+              const shownCaption = fitText(captionText, labelRoom, CAPTION_FONT_SIZE);
+              const truncated = shownLabel !== labelText || shownCaption !== captionText;
               return (
                 <g
                   key={node.id}
@@ -1225,6 +1322,10 @@ export function NetworkGraph({
                         : undefined
                     }
                   >
+                  {/* 잘린 이름의 «전체»를 마우스에도 돌려준다. 보조기술은 이미
+                      노드의 접근성 이름에서 전체를 받는다. 자르지 않았으면
+                      같은 말을 두 번 하지 않는다. */}
+                  {truncated && <title>{[labelText, captionText].filter(Boolean).join(', ')}</title>}
                   {isDot ? (
                     /* 노드-링크 관행: 색이 찬 원 + 바깥 라벨. 라벨을 밖에 두면
                        원이 작아질 수 있고, 원이 작아야 노드가 많아져도 연결
@@ -1294,7 +1395,7 @@ export function NetworkGraph({
                           pointerEvents: 'none',
                         }}
                       >
-                        {labelText}
+                        {shownLabel}
                       </text>
                       {captionText && (
                         <text
@@ -1310,7 +1411,7 @@ export function NetworkGraph({
                             pointerEvents: 'none',
                           }}
                         >
-                          {captionText}
+                          {shownCaption}
                         </text>
                       )}
                     </>
@@ -1344,7 +1445,7 @@ export function NetworkGraph({
                           pointerEvents: 'none',
                         }}
                       >
-                        {labelText}
+                        {shownLabel}
                       </text>
                       {captionText && (
                         // 이름과 같은 왼쪽 기준선. 두 줄은 한 덩어리로 읽혀야 한다.
@@ -1357,7 +1458,7 @@ export function NetworkGraph({
                             pointerEvents: 'none',
                           }}
                         >
-                          {captionText}
+                          {shownCaption}
                         </text>
                       )}
                       {[-1, 1].map((side) => (
