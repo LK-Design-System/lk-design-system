@@ -424,7 +424,14 @@ function NetworkGraph({
     const links = createForceLinks(edges, bodies);
     simRef.current = { bodies, links, byId: new Map(bodies.map((b) => [b.id, b])) };
     if (!motionAllowed) {
-      for (let tick = 0; tick < FORCE_TICKS; tick += 1) forceTick(bodies, links);
+      bodies.forEach((body) => {
+        const settled = settledPositions?.get(body.id);
+        if (!settled) return;
+        body.x = settled.x;
+        body.y = settled.y;
+        body.vx = 0;
+        body.vy = 0;
+      });
       setLivePositions(null);
       return void 0;
     }
@@ -439,7 +446,7 @@ function NetworkGraph({
     };
     frame = window.requestAnimationFrame(step);
     return () => window.cancelAnimationFrame(frame);
-  }, [edges, footprintOf, gridPositions, isForce, motionAllowed, nodes, radiusOf]);
+  }, [edges, footprintOf, gridPositions, isForce, motionAllowed, nodes, radiusOf, settledPositions]);
   const svgRef = React.useRef(null);
   const dragRef = React.useRef(null);
   const suppressClickRef = React.useRef(false);
@@ -622,13 +629,24 @@ function NetworkGraph({
   );
   const isExpanded = React.useCallback((node) => node.expanded === true, []);
   const focusOrder = React.useMemo(() => {
+    const row = Math.max(1, metrics.rowPitch / 2);
+    const settled = settledPositions ?? gridPositions;
+    const ordered = [...nodes].sort((left, right) => {
+      const a = settled.get(left.id);
+      const b = settled.get(right.id);
+      if (!a || !b) return 0;
+      const rowDelta = Math.round(a.y / row) - Math.round(b.y / row);
+      if (rowDelta !== 0) return rowDelta;
+      if (a.x !== b.x) return a.x - b.x;
+      return String(left.id).localeCompare(String(right.id));
+    });
     const order = [];
-    nodes.forEach((node) => {
+    ordered.forEach((node) => {
       order.push({ key: `node:${node.id}`, node, kind: "node" });
       if (hasCue(node)) order.push({ key: `cue:${node.id}`, node, kind: "cue" });
     });
     return order;
-  }, [hasCue, nodes]);
+  }, [gridPositions, hasCue, metrics.rowPitch, nodes, settledPositions]);
   const activeKey = focusOrder.some((stop) => stop.key === focusedKey) ? focusedKey : focusOrder[0]?.key;
   const stopDomId = React.useCallback(
     (key) => `${rawId}-stop-${stableHash(key)}`,
@@ -1051,4 +1069,4 @@ function NetworkGraph({
 export {
   NetworkGraph
 };
-//# sourceMappingURL=chunk-JXZFPSPK.js.map
+//# sourceMappingURL=chunk-ZEQ4AXIF.js.map

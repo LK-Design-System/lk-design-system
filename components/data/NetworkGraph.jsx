@@ -647,8 +647,24 @@ export function NetworkGraph({
     const links = createForceLinks(edges, bodies);
     simRef.current = { bodies, links, byId: new Map(bodies.map((b) => [b.id, b])) };
     if (!motionAllowed) {
-      // 움직임 없이 도착점만. 드래그를 위해 몸체는 수렴 상태로 맞춰 둔다.
-      for (let tick = 0; tick < FORCE_TICKS; tick += 1) forceTick(bodies, links);
+      /*
+        움직임 없이 도착점만. 도착점은 `settledPositions`가 «이미» 같은 tick
+        함수를 같은 횟수만큼 돌려 구해 두었으므로, 여기서 다시 돌리는 것은
+        같은 계산을 두 번 하는 것이다 — 노드 800개에서 0.5초를 한 번 더
+        무는 일이었다. 몸체에는 그 결과를 옮겨 담기만 한다.
+
+        (모션이 꺼져 있으면 드래그도 막혀 있으므로 몸체를 쓰는 곳은 없다.
+        그래도 맞춰 두는 것은, 사용자가 도중에 모션 설정을 바꿔 이 effect가
+        다시 도는 순간 몸체가 엉뚱한 자리에 있으면 안 되기 때문이다.)
+      */
+      bodies.forEach((body) => {
+        const settled = settledPositions?.get(body.id);
+        if (!settled) return;
+        body.x = settled.x;
+        body.y = settled.y;
+        body.vx = 0;
+        body.vy = 0;
+      });
       setLivePositions(null);
       return undefined;
     }
@@ -663,7 +679,7 @@ export function NetworkGraph({
     };
     frame = window.requestAnimationFrame(step);
     return () => window.cancelAnimationFrame(frame);
-  }, [edges, footprintOf, gridPositions, isForce, motionAllowed, nodes, radiusOf]);
+  }, [edges, footprintOf, gridPositions, isForce, motionAllowed, nodes, radiusOf, settledPositions]);
 
   /*
     드래그. 노드를 끌면 그 노드는 포인터가 소유하고 물리는 이웃으로 흐른다 —
@@ -933,14 +949,45 @@ export function NetworkGraph({
   );
   const isExpanded = React.useCallback((node) => node.expanded === true, []);
 
+  /*
+    방향키가 도는 순서는 «화면에 놓인 자리»를 따른다.
+
+    입력 배열 순서로 돌면 →를 눌렀는데 왼쪽 노드로 가는 일이 생긴다. 그림에서
+    방향키는 방향을 뜻하므로 그것은 거짓말이다. 그렇다고 「누른 방향에서 가장
+    가까운 노드」로 바꾸면 큐가 순회에서 떨어져 나간다 — 큐는 자기 노드 «옆»에
+    있어야 키보드로 닿을 수 있고, 그 도달 가능성이 방향의 정확함보다 크다.
+
+    그래서 순서 자체를 읽는 순서로 세운다. 위에서 아래로, 같은 줄 안에서는
+    왼쪽에서 오른쪽으로. 그러면 →는 대체로 오른쪽으로 가고 ↓는 아래로 가면서도
+    큐는 자기 노드 바로 뒤에 남는다.
+
+    줄은 노드 높이의 절반으로 묶는다. 정확히 같은 y가 아니어도 나란히 보이는
+    것들은 한 줄로 읽히기 때문이다. 자리를 모르면(좌표가 아직 없으면) 입력
+    순서를 쓴다 — 순서가 없는 것보다는 낫다.
+
+    기준은 «도착» 좌표다. 물리로 흔들리는 중의 좌표를 쓰면 순회 순서가 프레임
+    마다 바뀌어, 방향키를 누르는 동안 발밑이 움직인다.
+  */
   const focusOrder = React.useMemo(() => {
+    const row = Math.max(1, metrics.rowPitch / 2);
+    const settled = settledPositions ?? gridPositions;
+    const ordered = [...nodes].sort((left, right) => {
+      const a = settled.get(left.id);
+      const b = settled.get(right.id);
+      if (!a || !b) return 0;
+      const rowDelta = Math.round(a.y / row) - Math.round(b.y / row);
+      if (rowDelta !== 0) return rowDelta;
+      if (a.x !== b.x) return a.x - b.x;
+      // 자리가 같으면 `id`로 가른다 — 순회 순서도 결정론이어야 한다.
+      return String(left.id).localeCompare(String(right.id));
+    });
     const order = [];
-    nodes.forEach((node) => {
+    ordered.forEach((node) => {
       order.push({ key: `node:${node.id}`, node, kind: 'node' });
       if (hasCue(node)) order.push({ key: `cue:${node.id}`, node, kind: 'cue' });
     });
     return order;
-  }, [hasCue, nodes]);
+  }, [gridPositions, hasCue, metrics.rowPitch, nodes, settledPositions]);
 
   const activeKey = focusOrder.some((stop) => stop.key === focusedKey)
     ? focusedKey

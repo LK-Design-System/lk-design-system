@@ -175,6 +175,37 @@ export const RelationshipOverview = {
     assertFocusableNodes(canvasElement, '회사 지식망');
     assertEdgesAttachFacingSides(canvasElement, '회사 지식망');
     assertDeterministicLayout(canvasElement, '회사 지식망');
+    /*
+      방향키는 «방향»을 뜻한다. 순회가 입력 배열 순서를 따르면 →를 눌렀는데
+      왼쪽 노드로 가는 일이 생기므로, 순서는 화면에 놓인 자리를 따라야 한다 —
+      위에서 아래로, 같은 줄 안에서는 왼쪽에서 오른쪽으로.
+    */
+    const wait = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
+    const spotOf = (element) => {
+      const owner = element?.closest?.('[data-network-node]');
+      const parsed = /translate\(([-\d.]+)[ ,]+([-\d.]+)\)/.exec(owner?.getAttribute('transform') ?? '');
+      return parsed ? { x: Number(parsed[1]), y: Number(parsed[2]) } : null;
+    };
+    const entry = canvasElement.querySelector('[data-network-node][tabindex="0"]');
+    entry.focus();
+    const walked = [spotOf(document.activeElement)];
+    for (let step = 0; step < canvasElement.querySelectorAll('[data-network-node]').length - 1; step += 1) {
+      document.activeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+      await wait(60);
+      walked.push(spotOf(document.activeElement));
+    }
+    for (let step = 1; step < walked.length; step += 1) {
+      const previous = walked[step - 1];
+      const current = walked[step];
+      if (!previous || !current) throw new Error('Arrow navigation left the node set.');
+      const movedDown = current.y > previous.y;
+      const sameRowMovedRight = current.y === previous.y && current.x > previous.x;
+      if (!movedDown && !sameRowMovedRight) {
+        throw new Error(
+          `Arrow order must read top-to-bottom then left-to-right (${JSON.stringify(previous)} → ${JSON.stringify(current)}).`,
+        );
+      }
+    }
   },
 };
 

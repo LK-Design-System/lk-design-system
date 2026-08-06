@@ -424,7 +424,14 @@ function NetworkGraph({
     const links = createForceLinks(edges, bodies);
     simRef.current = { bodies, links, byId: new Map(bodies.map((b) => [b.id, b])) };
     if (!motionAllowed) {
-      for (let tick = 0; tick < FORCE_TICKS; tick += 1) forceTick(bodies, links);
+      bodies.forEach((body) => {
+        const settled = _optionalChain([settledPositions, 'optionalAccess', _3 => _3.get, 'call', _4 => _4(body.id)]);
+        if (!settled) return;
+        body.x = settled.x;
+        body.y = settled.y;
+        body.vx = 0;
+        body.vy = 0;
+      });
       setLivePositions(null);
       return void 0;
     }
@@ -439,7 +446,7 @@ function NetworkGraph({
     };
     frame = window.requestAnimationFrame(step);
     return () => window.cancelAnimationFrame(frame);
-  }, [edges, footprintOf, gridPositions, isForce, motionAllowed, nodes, radiusOf]);
+  }, [edges, footprintOf, gridPositions, isForce, motionAllowed, nodes, radiusOf, settledPositions]);
   const svgRef = _react2.default.useRef(null);
   const dragRef = _react2.default.useRef(null);
   const suppressClickRef = _react2.default.useRef(false);
@@ -548,7 +555,7 @@ function NetworkGraph({
   );
   const bounds = _react2.default.useMemo(() => {
     const frame = isForce ? settledPositions : positions;
-    const values = [..._nullishCoalesce(_optionalChain([frame, 'optionalAccess', _3 => _3.values, 'call', _4 => _4()]), () => ( []))];
+    const values = [..._nullishCoalesce(_optionalChain([frame, 'optionalAccess', _5 => _5.values, 'call', _6 => _6()]), () => ( []))];
     if (!values.length) return { minX: 0, minY: 0, width: metrics.width, height: metrics.height };
     const xs = values.map((point) => point.x);
     const ys = values.map((point) => point.y);
@@ -622,14 +629,25 @@ function NetworkGraph({
   );
   const isExpanded = _react2.default.useCallback((node) => node.expanded === true, []);
   const focusOrder = _react2.default.useMemo(() => {
+    const row = Math.max(1, metrics.rowPitch / 2);
+    const settled = _nullishCoalesce(settledPositions, () => ( gridPositions));
+    const ordered = [...nodes].sort((left, right) => {
+      const a = settled.get(left.id);
+      const b = settled.get(right.id);
+      if (!a || !b) return 0;
+      const rowDelta = Math.round(a.y / row) - Math.round(b.y / row);
+      if (rowDelta !== 0) return rowDelta;
+      if (a.x !== b.x) return a.x - b.x;
+      return String(left.id).localeCompare(String(right.id));
+    });
     const order = [];
-    nodes.forEach((node) => {
+    ordered.forEach((node) => {
       order.push({ key: `node:${node.id}`, node, kind: "node" });
       if (hasCue(node)) order.push({ key: `cue:${node.id}`, node, kind: "cue" });
     });
     return order;
-  }, [hasCue, nodes]);
-  const activeKey = focusOrder.some((stop) => stop.key === focusedKey) ? focusedKey : _optionalChain([focusOrder, 'access', _5 => _5[0], 'optionalAccess', _6 => _6.key]);
+  }, [gridPositions, hasCue, metrics.rowPitch, nodes, settledPositions]);
+  const activeKey = focusOrder.some((stop) => stop.key === focusedKey) ? focusedKey : _optionalChain([focusOrder, 'access', _7 => _7[0], 'optionalAccess', _8 => _8.key]);
   const stopDomId = _react2.default.useCallback(
     (key) => `${rawId}-stop-${stableHash(key)}`,
     [rawId]
@@ -640,15 +658,15 @@ function NetworkGraph({
       if (index < 0) return;
       const next = focusOrder[(index + delta + focusOrder.length) % focusOrder.length];
       setFocusedKey(next.key);
-      _optionalChain([document, 'access', _7 => _7.getElementById, 'call', _8 => _8(stopDomId(next.key)), 'optionalAccess', _9 => _9.focus, 'call', _10 => _10()]);
+      _optionalChain([document, 'access', _9 => _9.getElementById, 'call', _10 => _10(stopDomId(next.key)), 'optionalAccess', _11 => _11.focus, 'call', _12 => _12()]);
     },
     [focusOrder, stopDomId]
   );
   function stopKeyDown(event, stop) {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      if (stop.kind === "cue") _optionalChain([onToggleNode, 'optionalCall', _11 => _11(stop.node)]);
-      else _optionalChain([onSelectNode, 'optionalCall', _12 => _12(stop.node)]);
+      if (stop.kind === "cue") _optionalChain([onToggleNode, 'optionalCall', _13 => _13(stop.node)]);
+      else _optionalChain([onSelectNode, 'optionalCall', _14 => _14(stop.node)]);
       return;
     }
     if (event.key === "ArrowRight" || event.key === "ArrowDown") {
@@ -814,10 +832,10 @@ function NetworkGraph({
                     onFocus: () => setFocusedKey(nodeStop.key),
                     onClick: () => {
                       if (suppressClickRef.current) return;
-                      _optionalChain([onSelectNode, 'optionalCall', _13 => _13(node)]);
+                      _optionalChain([onSelectNode, 'optionalCall', _15 => _15(node)]);
                     },
                     onDoubleClick: () => {
-                      if (hasCue(node)) _optionalChain([onToggleNode, 'optionalCall', _14 => _14(node)]);
+                      if (hasCue(node)) _optionalChain([onToggleNode, 'optionalCall', _16 => _16(node)]);
                     },
                     onPointerDown: (event) => nodePointerDown(event, node),
                     onPointerMove: nodePointerMove,
@@ -1051,4 +1069,4 @@ function NetworkGraph({
 
 
 exports.NetworkGraph = NetworkGraph;
-//# sourceMappingURL=chunk-RKMRZ3QM.cjs.map
+//# sourceMappingURL=chunk-JCKQ3PMX.cjs.map
