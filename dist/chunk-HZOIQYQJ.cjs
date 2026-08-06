@@ -61,7 +61,7 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, vi
     viewportPadding
   });
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { ref, style: { position: "relative", ...style }, ...rest, children: [
-    open && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { ref: menuRef, id: menuId, role: "menu", "aria-labelledby": triggerId, "data-placement": position.placement, onKeyDown: handleMenuKeyDown, style: { position: "absolute", top: position.placement === "bottom" ? "calc(100% + 8px)" : "auto", bottom: position.placement === "top" ? "calc(100% + 8px)" : "auto", left: 0, minWidth: collapsed ? 200 : "100%", maxWidth: "calc(100vw - var(--space-8))", maxHeight: _nullishCoalesce(position.maxHeight, () => ( void 0)), overflowY: position.maxHeight != null ? "auto" : void 0, translate: `${position.shiftX}px ${position.shiftY}px`, boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--component-menu-radius)", padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)", boxShadow: "var(--shadow-md)", zIndex: 30 }, children: items.map((it, i) => it.divider ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "separator", style: { height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "5px 4px" } }, "d" + i) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    open && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { ref: menuRef, id: menuId, role: "menu", "aria-labelledby": triggerId, "data-placement": position.placement, onKeyDown: handleMenuKeyDown, style: { position: "absolute", top: position.placement === "bottom" ? "calc(100% + 8px)" : "auto", bottom: position.placement === "top" ? "calc(100% + 8px)" : "auto", left: 0, minWidth: collapsed ? 200 : "100%", maxWidth: "calc(100vw - var(--space-8))", maxHeight: _nullishCoalesce(position.maxHeight, () => ( void 0)), overflowY: position.maxHeight != null ? "auto" : void 0, translate: `${position.shiftX}px ${position.shiftY}px`, boxSizing: "border-box", background: "var(--color-semantic-background-elevated-normal)", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--component-menu-radius)", padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)", boxShadow: "var(--shadow-md)", zIndex: 30 }, children: items.map((it, i) => it.divider ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "separator", style: { height: 1, background: "var(--color-semantic-line-solid-normal)", margin: "5px 4px" } }, "d" + i) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
       "button",
       {
         type: "button",
@@ -84,7 +84,7 @@ function UserMenu({ name, detail, src, status, items = [], collapsed = false, vi
       },
       i
     )) }),
-    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
       "button",
       {
         ref: triggerRef,

@@ -270,7 +270,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
     "data-anchored-overlay-trigger": "",
     "aria-describedby": _chunkENN7YVH5cjs.appendAriaReference.call(void 0, children.props["aria-describedby"], tooltipId)
   }) : children;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
     {
       ref: mergedWrapperRef,
@@ -288,7 +288,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
       onBlur: hideOnBlur,
       children: [
         renderedChildren,
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF4O2CAUIcjs.OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: wrapperRef, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF4O2CAUIcjs.OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: wrapperRef, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "span",
           {
             ref: bubbleRef,
@@ -330,7 +330,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
               ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "bubble")
             },
             children: [
-              bubblePath && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              bubblePath && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "svg",
                 {
                   "aria-hidden": "true",
@@ -352,7 +352,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
                     pointerEvents: "none",
                     ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "surface")
                   },
-                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "path",
                     {
                       d: bubblePath,
@@ -363,7 +363,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
                   )
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                 "span",
                 {
                   "data-lds-tooltip-content": true,
@@ -383,7 +383,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
                   },
                   children: [
                     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: content }),
-                    shortcut != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                    shortcut != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                       "span",
                       {
                         "data-slot": "shortcut",

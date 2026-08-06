@@ -61,7 +61,7 @@ function ThemeToggle({
   const h = size === "sm" ? 32 : 38;
   const fs = size === "sm" ? 12.5 : 13.5;
   const isz = size === "sm" ? 15 : 16;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
     {
       role: "radiogroup",
@@ -81,7 +81,7 @@ function ThemeToggle({
       ...rest,
       children: options.map((v) => {
         const on = cur === v;
-        return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "button",
           {
             type: "button",

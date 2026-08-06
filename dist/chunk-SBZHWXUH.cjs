@@ -136,7 +136,7 @@ function ChoiceCard({
     outline: "none",
     ...style
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     Root,
     {
       ...rootProps,
@@ -174,7 +174,7 @@ function ChoiceCard({
       },
       style: isFrame ? frameStyle : choiceStyle,
       children: [
-        nativeChoice && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        nativeChoice && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "input",
           {
             ...inputProps,
@@ -214,7 +214,7 @@ function ChoiceCard({
             }
           }
         ),
-        !isFrame && icon != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        !isFrame && icon != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "aria-hidden": "true",
@@ -231,7 +231,7 @@ function ChoiceCard({
           !isFrame && description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { id: descriptionId, style: { marginTop: "var(--space-1)", fontSize: "var(--label2-size)", lineHeight: 1.55, color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children: description }),
           children
         ] }),
-        !isFrame && showIndicator && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        !isFrame && showIndicator && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "aria-hidden": "true",

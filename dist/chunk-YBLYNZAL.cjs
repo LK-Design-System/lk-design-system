@@ -119,7 +119,7 @@ function Alert({
     letterSpacing: 0,
     whiteSpace: "nowrap"
   };
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
     {
       role: "presentation",
@@ -137,7 +137,7 @@ function Alert({
         background: "var(--component-dialog-scrim)",
         backdropFilter: "blur(var(--component-dialog-scrim-blur))"
       },
-      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
         "div",
         {
           ref: setDialogRef,
@@ -159,7 +159,7 @@ function Alert({
           },
           ...rest,
           children: [
-            heading && title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            heading && title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "div",
               {
                 id: titleId,
@@ -173,7 +173,7 @@ function Alert({
                 children: title
               }
             ),
-            body != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            body != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "div",
               {
                 id: descriptionId,
@@ -186,7 +186,7 @@ function Alert({
                 children: body
               }
             ),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "div",
               {
                 style: {
@@ -196,7 +196,7 @@ function Alert({
                   marginTop: 20
                 },
                 children: actions != null ? actions : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
-                  secondary && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  secondary && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "button",
                     {
                       "data-alert-secondary": true,
@@ -210,7 +210,7 @@ function Alert({
                       children: secondary
                     }
                   ),
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "button",
                     {
                       "data-alert-primary": true,

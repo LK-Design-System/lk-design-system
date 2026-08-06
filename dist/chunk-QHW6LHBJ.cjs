@@ -75,7 +75,7 @@ function HoverCard({
   const renderedTrigger = _react2.default.isValidElement(trigger) && trigger.type !== _react2.default.Fragment ? _react2.default.cloneElement(trigger, {
     "data-anchored-overlay-trigger": "",
     "aria-describedby": _chunkENN7YVH5cjs.appendAriaReference.call(void 0, trigger.props["aria-describedby"], panelId)
-  }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "span",
     {
       "data-anchored-overlay-trigger": "",
@@ -86,7 +86,7 @@ function HoverCard({
   );
   const verticalStyle = position.placement === "top" ? { top: "auto", bottom: "calc(100% + 8px)" } : { top: "calc(100% + 8px)", bottom: "auto" };
   const horizontalStyle = align === "right" ? { left: "auto", right: 0 } : { left: 0, right: "auto" };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
     {
       ref: rootRef,
@@ -98,7 +98,7 @@ function HoverCard({
       onBlur: hideOnBlur,
       children: [
         renderedTrigger,
-        visible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        visible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             ref: panelRef,

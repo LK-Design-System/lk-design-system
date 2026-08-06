@@ -107,7 +107,7 @@ function PinInput({ length = 6, value, defaultValue = "", onChange, onComplete, 
   };
   const boxH = size === "sm" ? 40 : 48;
   const boxW = size === "sm" ? 36 : 44;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { ...rest, role: "group", "aria-label": groupLabel, style: { display: "inline-flex", gap: 8, ...style }, children: Array.from({ length: normalizedLength }).map((_, i) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { ...rest, role: "group", "aria-label": groupLabel, style: { display: "inline-flex", gap: 8, ...style }, children: Array.from({ length: normalizedLength }).map((_, i) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "input",
     {
       ref: (el) => {

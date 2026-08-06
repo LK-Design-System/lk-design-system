@@ -40,7 +40,7 @@ function Swatch({ shape = "square", color, dashed = false, disabled = false, siz
   const cfg = SIZE[size] || SIZE.md;
   const opacity = disabled ? 0.45 : 1;
   if (shape === "line") {
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
       "span",
       {
         "aria-hidden": "true",
@@ -57,7 +57,7 @@ function Swatch({ shape = "square", color, dashed = false, disabled = false, siz
   }
   const isDot = shape === "dot";
   const boxSize = isDot ? cfg.marker : cfg.square;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "span",
     {
       "aria-hidden": "true",
@@ -87,7 +87,7 @@ function Legend({
   const vertical = direction === "vertical";
   const cfg = SIZE[size] || SIZE.md;
   const hasItems = items.length > 0;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "ul",
     {
       "aria-label": ariaLabel || "\uBC94\uB840",
@@ -107,7 +107,7 @@ function Legend({
       },
       ...rest,
       children: [
-        !hasItems && emptyLabel != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        !hasItems && emptyLabel != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "li",
           {
             style: {
@@ -125,7 +125,7 @@ function Legend({
           const muted = !!item.muted || disabled;
           const itemColor = muted ? "var(--color-semantic-label-alternative)" : "var(--color-semantic-label-neutral)";
           const state = disabled ? "disabled" : item.muted ? "muted" : void 0;
-          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
             "li",
             {
               "data-legend-state": state,
@@ -143,7 +143,7 @@ function Legend({
                 opacity: 1
               },
               children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   Swatch,
                   {
                     shape: item.shape,
@@ -153,7 +153,7 @@ function Legend({
                     size
                   }
                 ),
-                /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                   "span",
                   {
                     "data-legend-label": true,
@@ -170,7 +170,7 @@ function Legend({
                     ]
                   }
                 ),
-                item.value != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                item.value != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "span",
                   {
                     style: {

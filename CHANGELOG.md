@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.49 - 2026-08-06
+
+### Fixed
+
+- `NetworkGraph`의 기본 `edgeColor`가 대비를 갖는 선 색으로 바뀌었습니다. 종전에는 구분선용 hairline 토큰이라 색을 주지 않은 소비자의 관계선이 배경 대비 1.3:1이었습니다 — 관계가 사실상 보이지 않았습니다. 관계선은 내용을 이해하는 데 필요한 그래픽이므로 배경과 3:1을 지켜야 합니다(WCAG 1.4.11). 측정 4.74:1입니다. `edge.color`를 주는 소비자는 영향받지 않습니다.
+
 ## 0.1.0-rc.48 - 2026-08-06
 
 ### Fixed

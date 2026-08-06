@@ -68,7 +68,7 @@ var SegmentedControl = _react2.default.forwardRef(function SegmentedControl2({
     const next = (base + direction + enabledIndices.length) % enabledIndices.length;
     pick(enabledIndices[next], { focus: true });
   };
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
     {
       ...groupProps,
@@ -104,7 +104,7 @@ var SegmentedControl = _react2.default.forwardRef(function SegmentedControl2({
         const active = selected || optionInteraction === "active" || optionInteraction === "active-focused";
         const activeHover = !optionDisabled && optionInteraction === "hovered";
         const activeFocus = !optionDisabled && (optionInteraction === "focused" || optionInteraction === "active-focused");
-        return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "button",
           {
             ref: (node) => {
@@ -170,7 +170,7 @@ var SegmentedControl = _react2.default.forwardRef(function SegmentedControl2({
             children: [
               option.icon && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "icon", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "icon") || void 0, "aria-hidden": "true", style: { display: "inline-flex", flex: "0 0 auto", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "icon") }, children: option.icon }),
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "label", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "label") || void 0, style: _chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "label"), children: option.label }),
-              option.count != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              option.count != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "span",
                 {
                   "data-slot": "count",

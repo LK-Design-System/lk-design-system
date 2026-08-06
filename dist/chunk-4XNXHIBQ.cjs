@@ -6,7 +6,7 @@ var _jsxruntime = require('react/jsx-runtime');
 function Overline({ children, as = "div", tone = "muted", onDark = false, style, ...rest }) {
   const Comp = as;
   const color = onDark ? tone === "signal" ? "var(--color-semantic-inverse-primary)" : tone === "ink" ? "var(--color-semantic-static-white)" : "var(--color-semantic-inverse-label-neutral-soft)" : tone === "signal" ? "var(--color-semantic-primary-normal)" : tone === "ink" ? "var(--color-semantic-label-strong)" : "var(--color-semantic-label-alternative)";
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     Comp,
     {
       style: {

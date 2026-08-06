@@ -37,7 +37,7 @@ function CircularProgress({
   const circ = 2 * Math.PI * r;
   const dashOffset = indeterminate ? circ * 0.72 : circ * (1 - pct / 100);
   const ariaLabel = typeof label === "string" ? label : void 0;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
     {
       role: "progressbar",
@@ -50,7 +50,7 @@ function CircularProgress({
       style: { position: "relative", display: "inline-flex", width: size, height: size, ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "svg",
           {
             "data-lds-circular-progress": true,

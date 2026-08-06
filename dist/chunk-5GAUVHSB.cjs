@@ -15,7 +15,7 @@ function pad(number) {
 function TimeSelect({ value, options, onChange, height, size, ariaLabel, disabled }) {
   const [focused, setFocused] = _react2.default.useState(false);
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { position: "relative", display: "inline-flex" }, children: [
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
       "select",
       {
         value,
@@ -46,7 +46,7 @@ function TimeSelect({ value, options, onChange, height, size, ariaLabel, disable
         children: options.map((option) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "option", { value: option, children: pad(option) }, option))
       }
     ),
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
       "span",
       {
         "aria-hidden": "true",
@@ -94,7 +94,7 @@ function TimePicker({
     if (!isControlled) setInternal(nextValue);
     _optionalChain([onChange, 'optionalCall', _2 => _2(nextValue)]);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       ...rest,

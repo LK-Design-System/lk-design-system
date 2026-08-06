@@ -332,7 +332,7 @@ var Select = _react2.default.forwardRef(function Select2({
         break;
     }
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       ref: rootRef,
@@ -348,7 +348,7 @@ var Select = _react2.default.forwardRef(function Select2({
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkDSYH34X7cjs.FieldLabel, { "data-slot": "label", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "label") || void 0, style: _chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "label"), id: labelId, htmlFor: selId, label, required, disabled: disabledState }),
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "control", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "control") || void 0, ref, onMouseEnter: () => setHover(true), onMouseLeave: () => setHover(false), style: { position: "relative", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "control") }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "span",
             {
               "aria-hidden": "true",
@@ -364,7 +364,7 @@ var Select = _react2.default.forwardRef(function Select2({
                 pointerEvents: "none",
                 contain: "layout style paint"
               },
-              children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "span",
                 {
                   "aria-hidden": "true",
@@ -377,7 +377,7 @@ var Select = _react2.default.forwardRef(function Select2({
                     fontFamily: "var(--font-sans)",
                     ..._chunkDSYH34X7cjs.fieldTypography.call(void 0, normalizedSize)
                   },
-                  children: intrinsicLabels.map((text, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                  children: intrinsicLabels.map((text, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                     "button",
                     {
                       type: "button",
@@ -416,7 +416,7 @@ var Select = _react2.default.forwardRef(function Select2({
               )
             }
           ),
-          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
             "button",
             {
               ...triggerProps,
@@ -480,7 +480,7 @@ var Select = _react2.default.forwardRef(function Select2({
               ]
             }
           ),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF4O2CAUIcjs.OverlayPortal, { open: visualOpen, withinPortal, portalTarget, anchorRef: triggerRef, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF4O2CAUIcjs.OverlayPortal, { open: visualOpen, withinPortal, portalTarget, anchorRef: triggerRef, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "div",
             {
               ref: dropdownRef,
@@ -515,7 +515,7 @@ var Select = _react2.default.forwardRef(function Select2({
               children: norm.map((o, index) => {
                 const on = o.value === sel;
                 const isActive = index === activeIndex;
-                return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                   "div",
                   {
                     id: `${selId}-option-${index}`,
@@ -559,7 +559,7 @@ var Select = _react2.default.forwardRef(function Select2({
                     },
                     children: [
                       /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: o.label }),
-                      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                      /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                         "span",
                         {
                           "data-select-option-indicator": "",

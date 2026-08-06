@@ -78,7 +78,7 @@ var Input = _react2.default.forwardRef(function Input2({
   const startIcon = _nullishCoalesce(leadingIcon, () => ( iconLeft));
   const endIcon = _nullishCoalesce(trailingIcon, () => ( iconRight));
   const endAction = _nullishCoalesce(trailingButton, () => ( actionRight));
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       ref: rootRef,
@@ -106,7 +106,7 @@ var Input = _react2.default.forwardRef(function Input2({
         ...style
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           _chunkDSYH34X7cjs.FieldLabel,
           {
             "data-slot": "label",
@@ -118,7 +118,7 @@ var Input = _react2.default.forwardRef(function Input2({
             disabled
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             "data-slot": "control",
@@ -142,7 +142,7 @@ var Input = _react2.default.forwardRef(function Input2({
             },
             children: [
               startIcon && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "startIcon", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "startIcon") || void 0, style: { color: "var(--color-semantic-label-alternative)", display: "inline-flex", flex: "0 0 auto", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "startIcon") }, children: startIcon }),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "input",
                 {
                   ref: forwardedRef,

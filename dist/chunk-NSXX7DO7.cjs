@@ -79,7 +79,7 @@ function Stepper({
       if (off) return;
       stepBy(delta);
     };
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
       "button",
       {
         type: "button",
@@ -169,7 +169,7 @@ function Stepper({
         break;
     }
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       role: "group",
@@ -190,7 +190,7 @@ function Stepper({
       ...rest,
       children: [
         renderStepBtn("minus"),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             role: "spinbutton",

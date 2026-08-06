@@ -277,7 +277,7 @@ function Map2DCanvas({
   const renderedChildren = typeof children === "function" ? children({ viewport: t, setViewport: commitViewport }) : children;
   const centeredContent = contentOrigin === "center";
   const gridPosition = centeredContent ? `calc(50% + ${t.x}px) calc(50% + ${t.y}px)` : `${t.x}px ${t.y}px`;
-  const viewerToolbar = controls ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  const viewerToolbar = controls ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     _chunkZAZAKA7Bcjs.ViewerToolbar,
     {
       orientation: "vertical",
@@ -292,7 +292,7 @@ function Map2DCanvas({
       ]
     }
   ) : void 0;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     _chunk7V3SZ2FBcjs.ViewerFrame,
     {
       ...rootProps,
@@ -339,7 +339,7 @@ function Map2DCanvas({
         backgroundPosition: grid ? gridPosition : void 0,
         ...style
       },
-      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
         "div",
         {
           "data-lk-map-content": "",

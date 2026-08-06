@@ -19,7 +19,7 @@ function RadioGroup({ options = [], value, defaultValue, onChange, name, directi
   const gname = name || autoId;
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "radiogroup", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
     const on = o.value === val;
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
       _chunkINHRFCFTcjs.Radio,
       {
         name: gname,

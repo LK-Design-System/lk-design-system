@@ -72,7 +72,7 @@ function ColorSwatch({
       pick(enabledIndices[enabledIndices.length - 1], { focus: true });
     }
   };
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
     {
       role: "radiogroup",
@@ -84,7 +84,7 @@ function ColorSwatch({
         const on = swatch.value === val;
         const swatchDisabled = disabled || swatch.disabled;
         const showFocusRing = focusedIndex === index && !swatchDisabled;
-        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "button",
           {
             ref: (node) => {
@@ -121,7 +121,7 @@ function ColorSwatch({
               ].filter(Boolean).join(", "),
               transition: "box-shadow var(--dur-fast) var(--ease-out)"
             },
-            children: on && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: on && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               _chunk3ATRKSQ7cjs.Icon,
               {
                 name: "check",

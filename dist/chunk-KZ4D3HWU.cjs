@@ -39,7 +39,7 @@ function Dimmer({
     };
   }, [open, blockInteraction, busy]);
   if (!open) return null;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
     {
       ref: scrimRef,
@@ -58,7 +58,7 @@ function Dimmer({
         ...style
       },
       ...rest,
-      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
         "span",
         {
           "data-dimmer-content": "",

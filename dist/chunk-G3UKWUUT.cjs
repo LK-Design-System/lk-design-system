@@ -54,7 +54,7 @@ function ConnectionBadge({
   const bw = size === "sm" ? 3 : 4;
   const isError = usesCanonicalState ? resolvedState === "failed" : legacyStatus === "error";
   const isSevered = isError || (usesCanonicalState ? resolvedState === "disconnected" : legacyStatus === "offline");
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
     {
       "data-connection-state": resolvedState,

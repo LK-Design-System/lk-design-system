@@ -4,7 +4,7 @@
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 var _jsxruntime = require('react/jsx-runtime');
 function Kbd({ children, style, ...rest }) {
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "kbd",
     {
       style: {

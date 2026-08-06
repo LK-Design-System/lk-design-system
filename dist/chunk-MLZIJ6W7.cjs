@@ -88,7 +88,7 @@ function DataExportAction({
     if (!scopeControlled) setInternalScope(next);
     _optionalChain([onScopeChange, 'optionalCall', _8 => _8(next)]);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       role: "group",
@@ -98,7 +98,7 @@ function DataExportAction({
       ...rest,
       children: [
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             _chunkNVEDZHWRcjs.Select,
             {
               value: format,
@@ -110,7 +110,7 @@ function DataExportAction({
               style: { width: 118 }
             }
           ),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             _chunkNVEDZHWRcjs.Select,
             {
               value: scope,
@@ -122,7 +122,7 @@ function DataExportAction({
               style: { width: 176 }
             }
           ),
-          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
             _chunk6S5YR4GDcjs.Button,
             {
               type: "button",
@@ -141,7 +141,7 @@ function DataExportAction({
             }
           )
         ] }),
-        processing && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        processing && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           _chunkHYUU3DJPcjs.ProgressBar,
           {
             value: typeof progress === "number" ? progress : 0,

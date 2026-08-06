@@ -32,7 +32,7 @@ function FeatureCard({
     }
     onKeyDown && onKeyDown(e);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       role: _nullishCoalesce(rest.role, () => ( (activatable ? "button" : void 0))),

@@ -38,7 +38,7 @@ function BatteryGauge({ value = 0, tone, showLabel = true, size = "md", style, .
   const sm = size === "sm";
   const w = sm ? 20 : 24;
   const h = sm ? 10 : 12;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
     {
       role: "img",
