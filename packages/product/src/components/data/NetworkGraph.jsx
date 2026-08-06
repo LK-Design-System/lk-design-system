@@ -252,7 +252,26 @@ function edgePath(from, to, metrics) {
     const startY = from.y + unitY * (from.radius ?? DOT_RADIUS);
     const endX = to.x - unitX * (to.radius ?? DOT_RADIUS);
     const endY = to.y - unitY * (to.radius ?? DOT_RADIUS);
-    const bow = metrics.parallel ? Math.min(28, distance / 6) : 0;
+    /*
+      같은 두 노드를 잇는 관계가 여럿이면 부채처럼 벌린다.
+
+      종전에는 「여럿인가」만 보고 모두에게 «같은» 곡률을 주었다. 그러면 같은
+      방향으로 난 둘은 정확히 포개져, 곡률을 쓰는 이유(겹침을 푼다)가 사라진다.
+      제 몫의 자리를 주려면 각자가 무리 안에서 «몇 번째»인지 알아야 한다.
+
+      가운데를 0으로 두고 좌우로 벌리므로, 홀수 개일 때 한가운데 것은 곧게
+      남는다 — 굽힐 이유가 없는 선은 굽히지 않는다.
+
+      부채는 «쌍»을 기준으로 편다. 법선은 진행 방향에서 나오므로, 반대로 흐르는
+      관계는 같은 자리 번호를 받고도 거울처럼 뒤집혀 남의 자리에 앉는다. 실제로
+      정방향 둘과 역방향 하나를 두었더니 첫째와 셋째가 같은 길로 갔다. 그래서
+      역방향이면 자리 번호의 부호를 미리 뒤집어 그 뒤집힘을 상쇄한다.
+    */
+    const fanStep = Math.min(28, distance / 6);
+    const seat = metrics.parallelCount > 1
+      ? (metrics.parallelIndex ?? 0) - (metrics.parallelCount - 1) / 2
+      : 0;
+    const bow = seat * (metrics.parallelReversed ? -1 : 1) * fanStep;
     const controlX = (startX + endX) / 2 - unitY * bow;
     const controlY = (startY + endY) / 2 + unitX * bow;
     return { start: { x: startX, y: startY }, control: { x: controlX, y: controlY }, end: { x: endX, y: endY } };
@@ -938,12 +957,22 @@ export function NetworkGraph({
     });
     // 같은 노드에 걸린 고리가 여럿이면 각도를 돌려 겹치지 않게 한다.
     const selfSeen = new Map();
+    // 같은 쌍을 잇는 관계가 여럿이면 부채처럼 벌린다. 각자 «몇 번째»인지 센다.
+    const pairSeen = new Map();
     const entries = edges.map((edge) => ({
       edge,
       curve: edgePath(anchors.get(edge.from), anchors.get(edge.to), {
         ...metrics,
         shape: nodeShape,
-        parallel: (pairCounts.get([edge.from, edge.to].sort().join('→')) ?? 0) > 1,
+        parallelCount: pairCounts.get([edge.from, edge.to].sort().join('→')) ?? 1,
+        parallelIndex: (() => {
+          const key = [edge.from, edge.to].sort().join('→');
+          const seen = pairSeen.get(key) ?? 0;
+          pairSeen.set(key, seen + 1);
+          return seen;
+        })(),
+        // 이 관계가 쌍의 «정렬된» 방향과 반대로 흐르는가.
+        parallelReversed: [edge.from, edge.to].sort()[0] !== edge.from,
         selfIndex: edge.from === edge.to
           ? (() => {
             const seen = selfSeen.get(edge.from) ?? 0;

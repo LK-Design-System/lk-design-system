@@ -626,6 +626,8 @@ export const DegenerateInput = {
           { id: 'self-1', from: 'hub', to: 'hub', label: '자신을 다시 부름' },
           { id: 'self-2', from: 'hub', to: 'hub', label: '재시도' },
           { id: 'runs', from: 'hub', to: 'job', label: '실행함' },
+          { id: 'runs-again', from: 'hub', to: 'job', label: '다시 실행함' },
+          { id: 'reports', from: 'job', to: 'hub', label: '보고함' },
           { id: 'ghost', from: 'hub', to: '없는-노드', label: '그려지지 않음' },
         ]}
         onSelectNode={() => {}}
@@ -646,6 +648,14 @@ export const DegenerateInput = {
     const drawn = Array.from(canvasElement.querySelectorAll('[data-network-edge]'));
     if (drawn.some((edge) => edge.getAttribute('data-network-edge') === 'ghost')) {
       throw new Error('An edge pointing at a missing endpoint must not be drawn.');
+    }
+    /*
+      두 관계가 정확히 같은 길로 가면 하나는 없는 것과 같다. 곡률을 쓰는 이유가
+      바로 겹침을 푸는 것이므로, 어떤 두 관계도 같은 path를 가져서는 안 된다.
+    */
+    const paths = drawn.map((edge) => edge.querySelector('path')?.getAttribute('d'));
+    if (new Set(paths).size !== paths.length) {
+      throw new Error('Two relations must not be drawn along the very same path.');
     }
     /* 고리는 «보여야» 한다. 2차 베지어로는 시작점과 끝점이 같아 길이 0의
        선이 되어 사라졌다. 제어점 둘짜리 3차여야 고리가 된다. */
