@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.48 - 2026-08-06
+
+### Fixed
+
+- `NetworkGraph`의 선택 표시가 유형 색이 아니라 강한 중립색으로 그려집니다. 종전에는 유형 색을 40% 불투명도로 둘러 배경 대비가 1.6:1까지 떨어졌습니다 — 비텍스트 표시가 지켜야 하는 3:1의 절반입니다. 색은 앱이 소유하므로 그 색에 대비를 맡길 수 없습니다. 무엇을 골랐는지는 링 안의 채움색이 이미 말합니다. `card`도 테두리 굵기만 바뀌던 것에서 같은 링을 받습니다.
+
 ## 0.1.0-rc.47 - 2026-08-06
 
 ### Fixed
