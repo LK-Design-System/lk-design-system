@@ -68,6 +68,22 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.44 - 2026-08-06
+
+### Added
+
+- `NetworkGraph`의 `root`가 «탐색 시작점»으로 드러납니다. `dot`에서 파선 링과 접근성 이름이 함께 붙어, 그림이 무엇을 중심으로 펼쳐진 것인지 보는 사람과 듣는 사람 모두에게 전해집니다. 크기로 말하지 않습니다 — 반지름은 `size`가 쓰는 축입니다. `card`에서는 첫 단계라는 사실을 왼쪽 끝이라는 자리가 이미 말하므로 아무것도 덧그리지 않습니다.
+
+### Fixed
+
+- `NetworkGraph`가 자기 자신을 잇는 관계를 노드 위의 고리로 그립니다. 종전에는 2차 베지어로 그려져 시작점과 끝점이 같아 길이 0의 path가 되었고, 관계가 화면에서 사라지면서도 탭으로는 닿았습니다. 같은 노드에 고리가 여럿이면 각도를 돌립니다.
+- `NetworkGraph`가 중복된 노드·관계 `id`를 그리지 않습니다. 먼저 온 것만 남깁니다 — 같은 `id`가 둘이면 `tabindex="0"`인 노드가 둘이 되어 「탭 한 번에 그림 안으로」라는 계약이 깨졌습니다.
+- `NetworkGraph`의 방향키가 화면에 놓인 자리를 따라 돕니다. 위에서 아래로, 같은 줄 안에서는 왼쪽에서 오른쪽으로. 종전에는 입력 배열 순서를 따라, →를 눌렀는데 왼쪽 노드로 가는 일이 있었습니다.
+- `NetworkGraph`가 이름을 담길 자리에 맞춰 자릅니다(`…`). `card`에서 긴 이름이 면 밖으로 흘러나오고 있었습니다. 전체 이름은 접근성 이름과 `<title>`에 남습니다. 글자 폭은 넓은 글자와 좁은 글자를 나눠 세어 어림합니다 — 글자 수에 평균값을 곱하면 「LK Portal」과 「플랫폼·개발자 도구」가 같은 폭으로 계산됩니다.
+- `NetworkGraph`의 펼치기 큐가 24×24로 눌립니다. 보이는 칩은 노드를 가리지 않도록 18px로 두고, 관계선이 쓰는 것과 같은 방식으로 투명한 표적을 겹칩니다.
+- `NetworkGraph`의 자동 요약이 규모를 말하고 내용을 옮겨 적지 않습니다. 앞의 열 개만 이름으로 부릅니다 — 노드 300개에서 3,204자를 읽던 것이 81자가 됩니다.
+- `NetworkGraph`가 모션이 꺼져 있을 때 같은 물리 계산을 두 번 돌리지 않습니다. 노드 800개에서 0.5초를 한 번 더 물던 일입니다.
+
 ## 0.1.0-rc.43 - 2026-08-06
 
 ### Fixed
