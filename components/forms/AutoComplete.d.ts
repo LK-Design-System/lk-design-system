@@ -42,6 +42,17 @@ export interface AutoCompleteProps extends Omit<
   resultCountLabel?: (count: number) => string;
   /** @default "md" */
   size?: 'sm' | 'md' | 'small' | 'medium';
+  /**
+   * 컨트롤 앞에 놓는 아이콘.
+   *
+   * `AutoComplete`는 겉모습이 `Input`과 같아, 값이 채워져 있으면 그 칸에서 목록을
+   * 뒤질 수 있다는 사실이 화면에 남지 않는다(`placeholder`는 빈 칸에만 보인다).
+   * 여러 입력이 나란히 선 화면에서 찾는 칸과 적는 칸을 가르려면 표시가 필요하다.
+   *
+   * `SearchField`의 `startIcon` 파트와 같은 자리이며, 기본값은 없다 — 켜는 쪽을
+   * 소비자가 정한다.
+   */
+  startIcon?: React.ReactNode;
   /** 제어와 팝업을 감싸는 기존 컨테이너 스타일. */
   style?: React.CSSProperties;
   /** label/helper/error를 포함한 전체 필드 스타일. */

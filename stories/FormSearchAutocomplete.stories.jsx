@@ -3,6 +3,7 @@ import { userEvent, waitFor } from 'storybook/test';
 import {
   AutoComplete,
   Combobox,
+  Icon,
   SearchField,
   TagInput,
 } from '../src/index.js';
@@ -46,6 +47,24 @@ export const SearchAndAutocomplete = {
       <AutoComplete label="로봇 제안" helper="입력하면 일치하는 단일 후보를 제안합니다." options={options} defaultValue="물류 로봇" placeholder="이름 입력" />
       <Combobox label="로봇 유형" helper="정해진 후보에서 여러 개를 선택합니다." options={options} defaultValue={['물류 로봇', '서빙 로봇']} />
       <TagInput label="관리 태그" defaultValue={['중요', '검사']} />
+    </main>
+  ),
+};
+
+export const AutocompleteStartIcon = {
+  name: '찾는 칸 표시',
+  parameters: storyDescription(
+    'AutoComplete는 겉모습이 Input과 같아, 값이 채워져 있으면 그 칸에서 목록을 뒤질 수 있다는 사실이 화면에 남지 않습니다(placeholder는 빈 칸에만 보입니다). 여러 입력이 나란히 선 화면에서는 startIcon으로 찾는 칸과 적는 칸을 가르세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 520 }}>
+      <AutoComplete label="표시 없음" options={options} defaultValue="물류 로봇" />
+      <AutoComplete
+        label="표시 있음"
+        options={options}
+        defaultValue="물류 로봇"
+        startIcon={<Icon name="search" size={18} />}
+      />
     </main>
   ),
 };

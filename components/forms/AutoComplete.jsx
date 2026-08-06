@@ -66,6 +66,7 @@ export function AutoComplete({
   autoHighlight = false,
   resultCountLabel = (count) => `${count}개 결과`,
   size = 'md',
+  startIcon,
   id,
   style,
   fieldStyle,
@@ -194,6 +195,15 @@ export function AutoComplete({
         boxShadow: focused && !isInvalid ? 'var(--component-input-focus-shadow)' : 'none',
         transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
       }}>
+        {startIcon ? (
+          <span
+            data-slot="startIcon"
+            aria-hidden="true"
+            style={{ display: 'inline-flex', flex: '0 0 auto', color: 'var(--component-input-icon-color)' }}
+          >
+            {startIcon}
+          </span>
+        ) : null}
         <input
           {...inputProps}
           ref={inputRef}
