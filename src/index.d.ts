@@ -70,6 +70,7 @@ export { FileBrowser } from '../components/data/FileBrowser';
 export { FilterBar } from '../components/data/FilterBar';
 export { Legend } from '../components/data/Legend';
 export { LineChart } from '../components/data/LineChart';
+export { NetworkGraph } from '../components/data/NetworkGraph';
 export { RefreshControl } from '../components/data/RefreshControl';
 export { ResourceState } from '../components/data/ResourceState';
 export { SavedViewControl } from '../components/data/SavedViewControl';

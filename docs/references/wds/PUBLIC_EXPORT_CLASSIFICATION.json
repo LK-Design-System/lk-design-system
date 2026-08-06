@@ -240,34 +240,36 @@
         "stories/DataSavedView.stories.jsx",
         "stories/DataVisibilityManager.stories.jsx",
         "stories/DataTree.stories.jsx",
-        "stories/DataTreePicker.stories.jsx"
+        "stories/DataTreePicker.stories.jsx",
+        "stories/DataNetworkGraph.stories.jsx"
       ],
       "exports": [
         "AnnotatedImage",
         "BarChart",
         "Calendar",
-        "ChartFrame",
         "Carousel",
+        "ChartFrame",
         "DataCollectionPanel",
+        "DataExportAction",
         "DataGrid",
         "DataToolbar",
-        "DataExportAction",
         "DescriptionList",
         "DonutChart",
         "FileBrowser",
         "FilterBar",
-        "getTableDataCellStyle",
-        "getTableHeaderCellStyle",
         "Legend",
         "LineChart",
-        "ResourceState",
+        "NetworkGraph",
         "RefreshControl",
+        "ResourceState",
         "SavedViewControl",
         "Sparkline",
         "Table",
         "Tree",
         "TreePicker",
-        "VisibilityManager"
+        "VisibilityManager",
+        "getTableDataCellStyle",
+        "getTableHeaderCellStyle"
       ]
     },
     {

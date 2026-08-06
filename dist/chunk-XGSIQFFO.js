@@ -1,11 +1,11 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
-
-
-var _chunkHZDUHR7Icjs = require('./chunk-HZDUHR7I.cjs');
+"use client";
+import {
+  ViewerFrame
+} from "./chunk-2QBVK7A3.js";
 
 // components/viz/VideoStreamTile.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx } from "react/jsx-runtime";
 function VideoStreamTile({
   children,
   label,
@@ -38,10 +38,10 @@ function VideoStreamTile({
   ...rest
 }) {
   const usesExplicitAxes = availability != null || connection != null || freshness != null || playback != null;
-  const resolvedState = usesExplicitAxes ? state : _nullishCoalesce(_nullishCoalesce(state, () => ( status)), () => ( "idle"));
-  const resolvedAriaLabel = _nullishCoalesce(ariaLabel, () => ( (typeof label === "string" && label.trim() ? `${label} \uC601\uC0C1 \uC2A4\uD2B8\uB9BC` : "\uC601\uC0C1 \uC2A4\uD2B8\uB9BC")));
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-    _chunkHZDUHR7Icjs.ViewerFrame,
+  const resolvedState = usesExplicitAxes ? state : state ?? status ?? "idle";
+  const resolvedAriaLabel = ariaLabel ?? (typeof label === "string" && label.trim() ? `${label} \uC601\uC0C1 \uC2A4\uD2B8\uB9BC` : "\uC601\uC0C1 \uC2A4\uD2B8\uB9BC");
+  return /* @__PURE__ */ jsx(
+    ViewerFrame,
     {
       ...rest,
       label: resolvedAriaLabel,
@@ -71,7 +71,7 @@ function VideoStreamTile({
   );
 }
 
-
-
-exports.VideoStreamTile = VideoStreamTile;
-//# sourceMappingURL=chunk-6PFQLISD.cjs.map
+export {
+  VideoStreamTile
+};
+//# sourceMappingURL=chunk-XGSIQFFO.js.map
