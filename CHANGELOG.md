@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.38 - 2026-08-06
+
+### Added
+
+- `NetworkGraph` — 대상과 관계를 노드·엣지로 그리는 관계도. 두 소비 제품이 각각 손으로 구현하던 것(합쳐 2000줄 남짓)을 하나로 모았습니다. `nodeShape`로 업계의 두 관행을 모두 그립니다: `dot`은 노드-링크 다이어그램(색이 찬 원 + 바깥 라벨, 색은 범주·반지름은 양), `card`는 플로우 에디터(이름을 담는 카드 + 좌우 포트). 배치는 `layered`·`columns`·`manual` 전략이고 셋 다 결정론적이라 시각 회귀 비교가 성립합니다. 노드·관계의 상태(`live`/`degraded`/`blocked`/`idle`/`disabled`)는 유형 색을 건드리지 않고 불투명도와 파선으로만 표현합니다 — 「무엇인가」와 「지금 어떤가」가 한 색에 섞이면 둘 다 읽을 수 없습니다. 유형 색은 값을 구분하는 데이터이므로 앱이 소유하고 컴포넌트는 받기만 합니다. 노드 묶음은 하나의 roving tab stop이고 방향키로 이동, Enter/Space로 선택하며, 접힌 이웃은 왼쪽 위 `+N` 확장 큐와 접근 가능한 이름이 함께 알립니다. 액자·확대 조절·범례는 그리지 않습니다 — `ViewerFrame`·`ViewerToolbar`·`Legend`와 조합하세요.
+
 ## 0.1.0-rc.37 - 2026-08-05
 
 ### Fixed
