@@ -827,7 +827,7 @@ function NetworkGraph({
             viewBox: `${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`,
             style: { display: "block", width: "100%", height: "100%", overflow: "visible" },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: "@keyframes ldsNetworkEnter { from { opacity: 0; transform: scale(0.72); } }" }),
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: "@keyframes ldsNetworkEnter { from { opacity: 0; transform: scale(0.72); } }[data-network-focus-ring]{opacity:0;}[data-network-node]:focus-visible [data-network-focus-ring],[data-network-collapse-cue]:focus-visible [data-network-focus-ring]{opacity:1;}[data-network-node]:focus,[data-network-collapse-cue]:focus{outline:none;}" }),
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "defs", { children: edgeColors.map((color) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "marker",
                 {
@@ -967,6 +967,29 @@ function NetworkGraph({
                         style: enteringIds.has(node.id) && !reduceMotion && motion !== "none" ? { animation: "ldsNetworkEnter 520ms cubic-bezier(0.22, 1, 0.36, 1)" } : void 0,
                         children: [
                           truncated && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "title", { children: [labelText, captionText].filter(Boolean).join(", ") }),
+                          isDot ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                            "circle",
+                            {
+                              "data-network-focus-ring": true,
+                              r: radius + 7,
+                              fill: "none",
+                              stroke: "var(--color-semantic-focus-indicator)",
+                              strokeWidth: 2
+                            }
+                          ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                            "rect",
+                            {
+                              "data-network-focus-ring": true,
+                              x: -metrics.width / 2 - 3,
+                              y: -metrics.height / 2 - 3,
+                              width: metrics.width + 6,
+                              height: metrics.height + 6,
+                              rx: "var(--radius-md)",
+                              fill: "none",
+                              stroke: "var(--color-semantic-focus-indicator)",
+                              strokeWidth: 2
+                            }
+                          ),
                           isDot ? (
                             /* 노드-링크 관행: 색이 찬 원 + 바깥 라벨. 라벨을 밖에 두면
                                원이 작아질 수 있고, 원이 작아야 노드가 많아져도 연결
@@ -1152,6 +1175,21 @@ function NetworkGraph({
                                     /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                       "rect",
                                       {
+                                        "data-network-focus-ring": true,
+                                        x: cue.x - Math.max(cueWidth, CUE_MIN_TARGET) / 2 - 2,
+                                        y: cue.y - CUE_MIN_TARGET / 2 - 2,
+                                        width: Math.max(cueWidth, CUE_MIN_TARGET) + 4,
+                                        height: CUE_MIN_TARGET + 4,
+                                        rx: 9,
+                                        fill: "none",
+                                        stroke: "var(--color-semantic-focus-indicator)",
+                                        strokeWidth: 2,
+                                        pointerEvents: "none"
+                                      }
+                                    ),
+                                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                                      "rect",
+                                      {
                                         x: cue.x - cueWidth / 2,
                                         y: cue.y - 9,
                                         width: cueWidth,
@@ -1201,4 +1239,4 @@ function NetworkGraph({
 
 
 exports.NetworkGraph = NetworkGraph;
-//# sourceMappingURL=chunk-COHJILH2.cjs.map
+//# sourceMappingURL=chunk-VJ3BWEFW.cjs.map

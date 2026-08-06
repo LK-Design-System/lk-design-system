@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "5d32d7389777931fe90cbcbecb7d53af7cbedecd15a78651d6d80282cfcb33f9",
+  "sourceFingerprint": "7ac818724a4b668f782fb5caee46a0d365cbd2614620f757a1f3d2e5fc692c21",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -11194,14 +11194,15 @@
         "--label2-line",
         "--caption1-size",
         "--color-semantic-background-elevated-normal",
+        "--color-semantic-focus-indicator",
+        "--radius-md",
         "--fw-bold",
         "--color-semantic-label-strong",
-        "--radius-md",
         "--color-semantic-background-normal-alternative",
         "--color-semantic-label-neutral"
       ],
       "externalReferences": [],
-      "promptSha256": "f9af0d25347187bfb933fc096477aa3c870d1d6647bebf2293ec0ab4cdff5a27"
+      "promptSha256": "3669f1251517a9664a6da52e907f60d3d082646cc3230e836db50376a5704f8e"
     },
     {
       "id": "refresh-control",

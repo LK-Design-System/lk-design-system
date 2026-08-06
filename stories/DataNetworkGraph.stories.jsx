@@ -42,6 +42,25 @@ function assertFocusableNodes(canvasElement, label) {
     }
   });
 
+  /*
+    포커스가 «보여야» 한다. 이 그림은 거의 전부가 키보드 계약인데, 정작 지금
+    어디에 있는지가 화면에 없었다 — 포커스는 갔지만 `outline`은 `none`이었다.
+    SVG에서 `outline`은 제대로 그려지지 않으므로 링을 직접 그린다.
+
+    여기서 지키는 것은 「순회의 모든 자리가 링을 갖는가」와 「가만히 있을 때는
+    보이지 않는가」다. «언제» 켜지는지는 `:focus-visible`에 맡겼고, 그것은
+    브라우저의 신뢰된 입력에서만 켜지므로 스토리에서 재현할 수 없다.
+  */
+  stops.forEach((stop) => {
+    const ring = stop.querySelector('[data-network-focus-ring]');
+    if (!ring) {
+      throw new Error(`${label}: every focus stop needs a visible focus indicator.`);
+    }
+    if (getComputedStyle(ring).opacity !== '0') {
+      throw new Error(`${label}: the focus ring must stay hidden until focus lands.`);
+    }
+  });
+
   /* 노드는 «선택»만 한다. 노드가 aria-expanded까지 들면 스크린 리더는
      「축소됨, 버튼」으로 읽는데 누르면 선택이 되어 기대와 어긋난다. */
   const confused = nodes.filter((node) => node.hasAttribute('aria-expanded'));

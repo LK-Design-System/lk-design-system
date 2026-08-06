@@ -1294,7 +1294,23 @@ export function NetworkGraph({
           {/* 진입은 «자라난다»여야지 «튀어오른다»가 아니다. 0.3에서 시작하면
               배율이 세 배 넘게 뛰어 화면이 들썩이므로 0.72에서 시작하고,
               감속 곡선(ease-out)에 시간을 넉넉히 준다. */}
-          <style>{'@keyframes ldsNetworkEnter { from { opacity: 0; transform: scale(0.72); } }'}</style>
+          {/*
+            포커스는 «보여야» 한다. 이 그림은 방향키로 돌아다니고 큐를 눌러
+            펼치는, 거의 전부가 키보드 계약인 컴포넌트인데 정작 지금 어디에
+            있는지가 화면에 없었다 — 포커스는 갔지만 `outline`은 `none`이었다.
+            SVG에서는 `outline`이 제대로 그려지지 않으므로 링을 직접 그린다.
+
+            «언제» 보일지는 `:focus-visible`에 맡긴다. 마우스로 눌렀을 때까지
+            링이 남으면 선택 표시와 뒤섞인다 — 이 저장소의 다른 컴포넌트들이
+            쓰는 것과 같은 규칙이다.
+          */}
+          <style>
+            {'@keyframes ldsNetworkEnter { from { opacity: 0; transform: scale(0.72); } }'
+              + '[data-network-focus-ring]{opacity:0;}'
+              + '[data-network-node]:focus-visible [data-network-focus-ring],'
+              + '[data-network-collapse-cue]:focus-visible [data-network-focus-ring]{opacity:1;}'
+              + '[data-network-node]:focus,[data-network-collapse-cue]:focus{outline:none;}'}
+          </style>
           <defs>
             {edgeColors.map((color) => (
               <marker
@@ -1460,6 +1476,29 @@ export function NetworkGraph({
                       노드의 접근성 이름에서 전체를 받는다. 자르지 않았으면
                       같은 말을 두 번 하지 않는다. */}
                   {truncated && <title>{[labelText, captionText].filter(Boolean).join(', ')}</title>}
+                  {/* 포커스 링. 선택 링(유형 색)과 «다른 색»이어야 한다 —
+                      「지금 여기 있다」와 「이것을 골랐다」는 다른 말이다. */}
+                  {isDot ? (
+                    <circle
+                      data-network-focus-ring
+                      r={radius + 7}
+                      fill="none"
+                      stroke="var(--color-semantic-focus-indicator)"
+                      strokeWidth={2}
+                    />
+                  ) : (
+                    <rect
+                      data-network-focus-ring
+                      x={-metrics.width / 2 - 3}
+                      y={-metrics.height / 2 - 3}
+                      width={metrics.width + 6}
+                      height={metrics.height + 6}
+                      rx="var(--radius-md)"
+                      fill="none"
+                      stroke="var(--color-semantic-focus-indicator)"
+                      strokeWidth={2}
+                    />
+                  )}
                   {isDot ? (
                     /* 노드-링크 관행: 색이 찬 원 + 바깥 라벨. 라벨을 밖에 두면
                        원이 작아질 수 있고, 원이 작아야 노드가 많아져도 연결
@@ -1684,6 +1723,20 @@ export function NetworkGraph({
                           width={Math.max(cueWidth, CUE_MIN_TARGET)}
                           height={CUE_MIN_TARGET}
                           fill="transparent"
+                        />
+                        {/* 큐도 순회의 «자리»이므로 포커스가 보여야 한다.
+                            링은 눌리는 표적을 두르지, 보이는 칩이 아니다. */}
+                        <rect
+                          data-network-focus-ring
+                          x={cue.x - Math.max(cueWidth, CUE_MIN_TARGET) / 2 - 2}
+                          y={cue.y - CUE_MIN_TARGET / 2 - 2}
+                          width={Math.max(cueWidth, CUE_MIN_TARGET) + 4}
+                          height={CUE_MIN_TARGET + 4}
+                          rx={9}
+                          fill="none"
+                          stroke="var(--color-semantic-focus-indicator)"
+                          strokeWidth={2}
+                          pointerEvents="none"
                         />
                         <rect
                           x={cue.x - cueWidth / 2}
