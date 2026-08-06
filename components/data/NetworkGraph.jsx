@@ -1398,6 +1398,26 @@ export function NetworkGraph({
                       종전에는 `tabIndex={-1}`이라 마우스로만 고를 수 있었다.
                     */
                     const edgeStop = { key: `edge:${edge.id}`, edge, kind: 'edge' };
+                    /*
+                      관계가 «무엇과 무엇 사이»인지 말한다.
+
+                      종전에는 라벨만 이름으로 썼다. 그래서 스크린 리더에는
+                      「사용함, 버튼」이라고만 들렸고, 같은 라벨을 가진 관계가
+                      여럿이면 서로 구별조차 되지 않았다 — 관계가 전부인 그림
+                      에서 관계의 자리가 아무 정보도 나르지 않았던 셈이다.
+
+                      눈으로 보는 사람은 선의 «양 끝»에서 그것을 읽는다. 듣는
+                      사람에게는 이름이 그 자리다. 방향이 있으면 「A에서 B로」,
+                      화살표를 끈 관계는 「A와 B 사이」로 말한다.
+                    */
+                    const fromName = nodeText(nodeById.get(edge.from)?.label) || edge.from;
+                    const toName = nodeText(nodeById.get(edge.to)?.label) || edge.to;
+                    const between = edge.from === edge.to
+                      ? `${fromName} 자기 자신`
+                      : (edge.directed === false
+                        ? `${fromName}와 ${toName} 사이`
+                        : `${fromName}에서 ${toName}로`);
+                    const edgeName = [between, fullText].filter(Boolean).join(', ') || '관계';
                     return (
                       <>
                         {/* 포커스 링. 관계선은 면이 없으므로 링도 «선»이다 —
@@ -1420,7 +1440,7 @@ export function NetworkGraph({
                           id={stopDomId(edgeStop.key)}
                           role="button"
                           tabIndex={edgeStop.key === activeKey ? 0 : -1}
-                          aria-label={fullText || '관계'}
+                          aria-label={edgeName}
                           aria-pressed={selected ? 'true' : undefined}
                           onFocus={() => setFocusedKey(edgeStop.key)}
                           onKeyDown={(event) => stopKeyDown(event, edgeStop)}

@@ -589,11 +589,28 @@ export const ForceLayout = {
     if (!reachable.length) {
       throw new Error('A selectable relation must take a place in the focus order.');
     }
-    reachable.forEach((target) => {
-      if (!target.getAttribute('aria-label')) {
-        throw new Error('A focusable relation needs an accessible name.');
+    /*
+      관계의 이름은 «무엇과 무엇 사이»를 말해야 한다. 라벨만 쓰면 스크린 리더에
+      「사용함, 버튼」이라고만 들리고, 같은 라벨을 가진 관계가 여럿이면 서로
+      구별조차 되지 않는다 — 관계가 전부인 그림에서 그 자리가 아무 정보도
+      나르지 않게 된다. 눈으로 보는 사람은 선의 양 끝에서 그것을 읽는다.
+    */
+    const spoken = reachable.map((target) => target.getAttribute('aria-label'));
+    if (spoken.some((name) => !name)) {
+      throw new Error('A focusable relation needs an accessible name.');
+    }
+    const nodeNames = Array.from(canvasElement.querySelectorAll('[data-network-node]'))
+      .map((node) => node.getAttribute('aria-label')?.split(',')[0]?.trim())
+      .filter(Boolean);
+    spoken.forEach((name) => {
+      const mentions = nodeNames.filter((nodeName) => name.includes(nodeName)).length;
+      if (mentions < 2) {
+        throw new Error(`A relation must name both of its ends (heard "${name}").`);
       }
     });
+    if (new Set(spoken).size !== spoken.length) {
+      throw new Error('Two relations must not be indistinguishable to a screen reader.');
+    }
     const edgeStops = new Set(reachable.map((target) => target.getAttribute('id')));
     if (edgeStops.size !== reachable.length) {
       throw new Error('Every relation stop needs its own id, or focus cannot move between them.');

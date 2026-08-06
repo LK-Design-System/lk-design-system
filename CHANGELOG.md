@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.52 - 2026-08-06
+
+### Fixed
+
+- `NetworkGraph`의 관계가 «양 끝»을 말합니다 — 「LK Portal에서 Context Gateway로, 사용함」. 종전에는 라벨만 이름으로 써서 스크린 리더에 「사용함, 버튼」이라고만 들렸고, 같은 라벨을 가진 관계가 여럿이면 서로 구별조차 되지 않았습니다. 관계가 전부인 그림에서 관계의 자리가 아무 정보도 나르지 않던 셈입니다. `directed={false}`는 「A와 B 사이」, 자기 참조는 「A 자기 자신」으로 말합니다.
+
 ## 0.1.0-rc.51 - 2026-08-06
 
 ### Fixed
