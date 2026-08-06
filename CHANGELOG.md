@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.51 - 2026-08-06
+
+### Fixed
+
+- `NetworkGraph`에서 `onSelectEdge`를 준 관계를 키보드로 고를 수 있습니다. 종전에는 관계선에 `role="button"`과 이름을 주고도 `tabIndex={-1}`이라 마우스로만 고를 수 있었습니다 — 같은 동작에 두 등급의 접근이 생기던 자리입니다. 관계는 «떠나는 노드» 뒤에 자리를 잡아 「이 대상 — 이 대상에서 나가는 관계들 — 다음 대상」으로 읽히고, 포커스 링도 붙습니다. 탭 스톱은 여전히 하나입니다.
+
 ## 0.1.0-rc.50 - 2026-08-06
 
 계약 문서만 바뀝니다. 구현은 rc.49와 같습니다.
