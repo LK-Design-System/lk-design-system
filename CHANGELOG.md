@@ -68,6 +68,19 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.41 - 2026-08-06
+
+### Added
+
+- `NetworkGraph`에 `layout="force"` — 물리로 자리를 잡는 노드-링크 장르의 표준 배치입니다. 관계는 고무줄처럼 당기고, 노드끼리는 밀어내고, 겹치면 튕겨나고, 전체는 중심에 묶입니다. 격자에서 출발해 고정 틱 수만큼 돌리고 난수를 쓰지 않으므로 수렴 좌표는 여전히 결정론적이며, 움직임만 선택입니다 — `prefers-reduced-motion`이거나 `motion="none"`이면 수렴한 자리를 바로 그립니다. 노드를 끌면 그 노드는 포인터가 소유하고 물리는 이웃으로 흐릅니다.
+- `NetworkGraph`의 `+N` 펼치기 큐가 «컨트롤»이 되었습니다. 이름과 `aria-expanded`를 갖고 roving 포커스 순회에 들어와, 클릭과 키보드가 같은 표적을 씁니다. 펼친 뒤에도 사라지지 않고 `−`로 남아 왕복이 대칭입니다. 새 노드는 이웃 둘레에서 태어나 물리에 밀려 퍼집니다(`node.expanded`로 상태를 알려주세요).
+
+### Fixed
+
+- `NetworkGraph`의 `dot` 관계선을 직선으로 되돌렸습니다. 곡률은 같은 두 노드를 잇는 관계가 여럿일 때만 씁니다 — 구조를 읽는 그림에서 그 외의 곡률은 정보가 아니라 장식입니다.
+- `NetworkGraph`에서 선택과 펼침이 한 컨트롤을 나눠 쓰던 문제를 고쳤습니다. 노드는 더 이상 `aria-expanded`를 들지 않습니다 — 스크린 리더가 「축소됨, 버튼」으로 읽는데 누르면 선택되어 기대와 어긋났습니다.
+- `layout="force"`와 펼치기 큐는 `nodeShape="dot"`에서만 동작합니다. 흐름도에서는 위치가 의미이고 배치가 사용자의 저작물이라 무엇도 노드를 스스로 옮겨서는 안 되며, 플로우에서 접히는 것은 이웃이 아니라 한 노드 안의 서브그래프라 개념이 다릅니다.
+
 ## 0.1.0-rc.40 - 2026-08-06
 
 ### Fixed
