@@ -23,6 +23,10 @@
       "rule": "일치 항목 수의 polite 안내 문구."
     },
     {
+      "part": "startIcon",
+      "rule": "컨트롤 앞에 놓는 아이콘. AutoComplete는 겉모습이 Input과 같아, 값이 채워져 있으면 그 칸에서 목록을 뒤질 수 있다는 사실이 화면에 남지 않는다(placeholder는 빈 칸에만 보인다). 여러 입력이 나란히 선 화면에서 찾는 칸과 적는 칸을 가르려면 표시가 필요하다. SearchField의 startIcon 파트와 같은 자리이며, 기본값은 없다 — 켜는 쪽을 소비자가 정한다."
+    },
+    {
       "part": "clearLabel",
       "rule": "Accessible clear-action name. Defaults to a contextual 지우기."
     },
@@ -41,10 +45,6 @@
     {
       "part": "inputStyle",
       "rule": "Native input style."
-    },
-    {
-      "part": "removeLabel",
-      "rule": "각 태그 삭제 버튼의 접근 가능한 이름을 만듭니다."
     }
   ],
   "properties": [
@@ -175,6 +175,13 @@
       "owner": "AutoCompleteProps"
     },
     {
+      "name": "startIcon",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "컨트롤 앞에 놓는 아이콘. AutoComplete는 겉모습이 Input과 같아, 값이 채워져 있으면 그 칸에서 목록을 뒤질 수 있다는 사실이 화면에 남지 않는다(placeholder는 빈 칸에만 보인다). 여러 입력이 나란히 선 화면에서 찾는 칸과 적는 칸을 가르려면 표시가 필요하다. SearchField의 startIcon 파트와 같은 자리이며, 기본값은 없다 — 켜는 쪽을 소비자가 정한다.",
+      "owner": "AutoCompleteProps"
+    },
+    {
       "name": "style",
       "type": "React.CSSProperties",
       "required": false,
@@ -205,13 +212,6 @@
     {
       "name": "defaultValue",
       "type": "string[]",
-      "required": false,
-      "description": "",
-      "owner": "ComboboxProps"
-    },
-    {
-      "name": "onChange",
-      "type": "(value: string[]) = void",
       "required": false,
       "description": "",
       "owner": "ComboboxProps"

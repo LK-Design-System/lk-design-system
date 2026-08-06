@@ -5505,12 +5505,12 @@ const firstFieldRef = useRef(null);
 | Part | Contract |
 | --- | --- |
 | resultCountLabel | 일치 항목 수의 polite 안내 문구. |
+| startIcon | 컨트롤 앞에 놓는 아이콘. AutoComplete는 겉모습이 Input과 같아, 값이 채워져 있으면 그 칸에서 목록을 뒤질 수 있다는 사실이 화면에 남지 않는다(placeholder는 빈 칸에만 보인다). 여러 입력이 나란히 선 화면에서 찾는 칸과 적는 칸을 가르려면 표시가 필요하다. SearchField의 startIcon 파트와 같은 자리이며, 기본값은 없다 — 켜는 쪽을 소비자가 정한다. |
 | clearLabel | Accessible clear-action name. Defaults to a contextual 지우기. |
 | controlClassName | Input control-shell class. |
 | controlStyle | Input control-shell style. |
 | inputClassName | Native input class. |
 | inputStyle | Native input style. |
-| removeLabel | 각 태그 삭제 버튼의 접근 가능한 이름을 만듭니다. |
 
 ## Properties
 
@@ -5534,12 +5534,12 @@ const firstFieldRef = useRef(null);
 | `autoHighlight` | `boolean` | No | 입력할 때 첫 후보를 자동으로 활성 옵션으로 지정할지 여부. 기본값 false는 APG list-autocomplete의 수동 선택(manual selection)으로, 사용자가 방향키로 이동하기 전에는 aria-activedescendant가 비어 있고 Enter가 제안을 확정하지 않습니다. true면 이전(적극적) 동작으로 되돌립니다. |
 | `resultCountLabel` | `(count: number) = string` | No | 일치 항목 수의 polite 안내 문구. |
 | `size` | `'sm' \| 'md' \| 'small' \| 'medium'` | No |  |
+| `startIcon` | `React.ReactNode` | No | 컨트롤 앞에 놓는 아이콘. AutoComplete는 겉모습이 Input과 같아, 값이 채워져 있으면 그 칸에서 목록을 뒤질 수 있다는 사실이 화면에 남지 않는다(placeholder는 빈 칸에만 보인다). 여러 입력이 나란히 선 화면에서 찾는 칸과 적는 칸을 가르려면 표시가 필요하다. SearchField의 startIcon 파트와 같은 자리이며, 기본값은 없다 — 켜는 쪽을 소비자가 정한다. |
 | `style` | `React.CSSProperties` | No | 제어와 팝업을 감싸는 기존 컨테이너 스타일. |
 | `fieldStyle` | `React.CSSProperties` | No | label/helper/error를 포함한 전체 필드 스타일. |
 | `options` | `ComboboxOption[]` | Yes |  |
 | `value` | `string[]` | No |  |
 | `defaultValue` | `string[]` | No |  |
-| `onChange` | `(value: string[]) = void` | No |  |
 
 ## 정량 규칙
 
