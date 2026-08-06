@@ -80,6 +80,8 @@ export const SearchAndAutocompleteStates = {
       <AutoComplete label="비활성 제안" options={options} defaultValue="서빙 로봇" disabled />
       <AutoComplete label="빈 제안" options={[]} emptyLabel="제안할 항목이 없습니다." />
       <Combobox label="완료된 선택" options={options} defaultValue={['용접 로봇']} status="positive" helper="선택이 저장되었습니다." />
+      <Combobox label="비활성 선택" options={options} defaultValue={['용접 로봇']} disabled />
+      <TagInput label="비활성 태그" defaultValue={['중요']} disabled />
     </main>
   ),
 };
