@@ -952,8 +952,23 @@ export function NetworkGraph({
           })()
           : 0,
       }),
-      text: showEdgeLabels
+      /*
+        관계 이름도 담길 자리에 맞춘다. 노드 이름과 달리 상자가 없어 흘러넘칠
+        데가 없어 보이지만, 그대로 두면 라벨 하나가 그림 «밖»으로 뻗어나가
+        액자에 잘리거나 가로 스크롤을 만든다. 실제로 28자짜리 이름이 폭
+        192px 그림에서 336px를 차지했다.
+
+        전체 이름은 관계의 접근성 이름과 `<title>`에 남는다.
+      */
+      fullText: showEdgeLabels
         ? `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ''}`.trim()
+        : '',
+      text: showEdgeLabels
+        ? fitText(
+          `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ''}`.trim(),
+          isDot ? DOT_LABEL_MAX_WIDTH : metrics.width,
+          CAPTION_FONT_SIZE,
+        )
         : '',
     }));
     const obstacles = nodes.flatMap((node) => {
@@ -1198,7 +1213,7 @@ export function NetworkGraph({
           </defs>
 
           <g data-network-edges>
-            {laidOutEdges.map(({ edge, curve, text, label: labelPoint }) => {
+            {laidOutEdges.map(({ edge, curve, text, fullText, label: labelPoint }) => {
               if (!curve) return null;
               const path = {
                 // 제어점이 둘이면 고리(3차), 하나면 보통의 관계(2차).
@@ -1213,6 +1228,8 @@ export function NetworkGraph({
               const labelText = text;
               return (
                 <g key={edge.id} data-network-edge={edge.id} data-state={edge.state ?? 'normal'}>
+                  {/* 잘린 관계 이름의 전체를 마우스에도 돌려준다. */}
+                  {fullText && fullText !== labelText && <title>{fullText}</title>}
                   <path
                     d={path.d}
                     fill="none"
@@ -1233,7 +1250,7 @@ export function NetworkGraph({
                       style={{ cursor: 'pointer' }}
                       role="button"
                       tabIndex={-1}
-                      aria-label={labelText || '관계'}
+                      aria-label={fullText || '관계'}
                       onClick={() => onSelectEdge(edge)}
                     />
                   )}

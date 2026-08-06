@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "a0b7bb67d132cb2948ea4912a98cc10191ebc052fba59e0b391b70b4c22effd6",
+  "sourceFingerprint": "ad14793e52b663e2abd9665dcd15046261d0c680fc3674b490c3d472497a0ef4",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -11094,6 +11094,13 @@
           "owner": "NetworkGraphProps"
         },
         {
+          "name": "motion",
+          "type": "'auto' | 'none'",
+          "required": false,
+          "description": "force 배치의 움직임. auto는 수렴 애니메이션과 드래그를 켜되 prefers-reduced-motion이면 수렴 상태를 바로 그립니다. none은 항상 수렴 상태만 그립니다(시각 회귀 시험·SSR용). @default \"auto\"",
+          "owner": "NetworkGraphProps"
+        },
+        {
           "name": "nodeColor",
           "type": "string",
           "required": false,
@@ -11139,7 +11146,7 @@
           "name": "onToggleNode",
           "type": "(node: NetworkGraphNode) = void",
           "required": false,
-          "description": "이웃 펼치기/접기. 주면 노드가 aria-expanded를 갖고 더블클릭·+/-에 반응합니다.",
+          "description": "이웃 펼치기/접기. 주면 +N 큐가 이름과 aria-expanded를 가진 별도 버튼이 되어 클릭·키보드 순회 양쪽에서 같은 표적으로 동작하고, 노드 더블클릭도 같은 동작을 부릅니다. 노드·관계를 실제로 늘리고 줄이는 것은 소비자의 몫이며, force에서는 새 노드가 이웃의 자리에서 태어나 물리에 밀려 퍼집니다(진입 애니메이션).",
           "owner": "NetworkGraphProps"
         },
         {
@@ -11194,7 +11201,7 @@
         "--color-semantic-label-neutral"
       ],
       "externalReferences": [],
-      "promptSha256": "580302c5e17f3cd7098c0e3fb279af984cbce0697480ef66722ed674089b1574"
+      "promptSha256": "136b8f61e690535de32e6956460f5cb7f4e68295a487bf80e722ce4e6b252ffd"
     },
     {
       "id": "refresh-control",

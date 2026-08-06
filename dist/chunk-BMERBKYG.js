@@ -638,7 +638,20 @@ function NetworkGraph({
           return seen;
         })() : 0
       }),
-      text: showEdgeLabels ? `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ""}`.trim() : ""
+      /*
+              관계 이름도 담길 자리에 맞춘다. 노드 이름과 달리 상자가 없어 흘러넘칠
+              데가 없어 보이지만, 그대로 두면 라벨 하나가 그림 «밖»으로 뻗어나가
+              액자에 잘리거나 가로 스크롤을 만든다. 실제로 28자짜리 이름이 폭
+              192px 그림에서 336px를 차지했다.
+
+              전체 이름은 관계의 접근성 이름과 `<title>`에 남는다.
+            */
+      fullText: showEdgeLabels ? `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ""}`.trim() : "",
+      text: showEdgeLabels ? fitText(
+        `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ""}`.trim(),
+        isDot ? DOT_LABEL_MAX_WIDTH : metrics.width,
+        CAPTION_FONT_SIZE
+      ) : ""
     }));
     const obstacles = nodes.flatMap((node) => {
       const point = anchors.get(node.id);
@@ -786,7 +799,7 @@ function NetworkGraph({
                 },
                 color
               )) }),
-              /* @__PURE__ */ jsx("g", { "data-network-edges": true, children: laidOutEdges.map(({ edge, curve, text, label: labelPoint }) => {
+              /* @__PURE__ */ jsx("g", { "data-network-edges": true, children: laidOutEdges.map(({ edge, curve, text, fullText, label: labelPoint }) => {
                 if (!curve) return null;
                 const path = {
                   // 제어점이 둘이면 고리(3차), 하나면 보통의 관계(2차).
@@ -798,6 +811,7 @@ function NetworkGraph({
                 const selected = selectedEdgeId === edge.id;
                 const labelText = text;
                 return /* @__PURE__ */ jsxs("g", { "data-network-edge": edge.id, "data-state": edge.state ?? "normal", children: [
+                  fullText && fullText !== labelText && /* @__PURE__ */ jsx("title", { children: fullText }),
                   /* @__PURE__ */ jsx(
                     "path",
                     {
@@ -822,7 +836,7 @@ function NetworkGraph({
                       style: { cursor: "pointer" },
                       role: "button",
                       tabIndex: -1,
-                      "aria-label": labelText || "\uAD00\uACC4",
+                      "aria-label": fullText || "\uAD00\uACC4",
                       onClick: () => onSelectEdge(edge)
                     }
                   ),
@@ -1144,4 +1158,4 @@ function NetworkGraph({
 export {
   NetworkGraph
 };
-//# sourceMappingURL=chunk-5637LIXE.js.map
+//# sourceMappingURL=chunk-BMERBKYG.js.map
