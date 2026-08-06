@@ -69,6 +69,8 @@ const CAPTION_FONT_SIZE = 12;
 const NARROW_RATIO = 0.55;
 /** 점 관행에서 이름 한 줄에 허용할 최대 폭. 이름 하나가 그림의 폭을 정하지 않도록. */
 const DOT_LABEL_MAX_WIDTH = 168;
+/** 펼치기 큐가 «눌리는» 최소 크기. WCAG 2.2 «Target Size (Minimum)»의 24px. */
+const CUE_MIN_TARGET = 24;
 
 /* 한 줄이 세로로 차지하는 자리. 글꼴 크기에서 나와야 한다 — 숫자를 따로 적어
    두면 글꼴이 바뀔 때 라벨이 피하는 상자만 옛 크기에 남는다. */
@@ -1536,6 +1538,21 @@ export function NetworkGraph({
                         onDoubleClick={(event) => event.stopPropagation()}
                         onPointerDown={(event) => event.stopPropagation()}
                       >
+                        {/*
+                          누를 수 있는 자리를 최소 표적 크기까지 넓힌다. 보이는
+                          칩은 노드를 가리지 않도록 작아야 하지만(18px), 손가락과
+                          거친 포인터에게 18px는 좁다 — WCAG 2.2의 24×24다.
+                          그래서 관계선이 이미 쓰는 방법을 그대로 쓴다: 보이지
+                          않는 넓은 표적을 겹친다.
+                        */}
+                        <rect
+                          data-network-cue-target
+                          x={cue.x - Math.max(cueWidth, CUE_MIN_TARGET) / 2}
+                          y={cue.y - CUE_MIN_TARGET / 2}
+                          width={Math.max(cueWidth, CUE_MIN_TARGET)}
+                          height={CUE_MIN_TARGET}
+                          fill="transparent"
+                        />
                         <rect
                           x={cue.x - cueWidth / 2}
                           y={cue.y - 9}
@@ -1545,6 +1562,7 @@ export function NetworkGraph({
                           fill="var(--color-semantic-background-normal-alternative)"
                           stroke={color}
                           strokeWidth={1}
+                          pointerEvents="none"
                         />
                         <text
                           x={cue.x}

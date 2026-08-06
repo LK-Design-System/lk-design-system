@@ -556,6 +556,21 @@ export const ExpandCollapse = {
     if (cue().getAttribute('aria-expanded') !== 'false') {
       throw new Error('A collapsed cue must report aria-expanded="false".');
     }
+    /*
+      눌리는 자리는 보이는 칩보다 넓다. 칩은 노드를 가리지 않도록 작아야 하지만
+      (18px), 손가락과 거친 포인터에게 그것은 좁다 — WCAG 2.2가 요구하는
+      24×24다. 칩이 아니라 «투명한 표적»이 포인터를 받는지도 함께 지킨다.
+    */
+    const target = cue().querySelector('[data-network-cue-target]');
+    if (!target) throw new Error('The cue must carry a widened pointer target.');
+    const targetBox = target.getBoundingClientRect();
+    if (targetBox.width < 24 || targetBox.height < 24) {
+      throw new Error(`The cue target must be at least 24x24 (got ${targetBox.width}x${targetBox.height}).`);
+    }
+    const chip = cue().querySelector('rect:not([data-network-cue-target])');
+    if (chip && getComputedStyle(chip).pointerEvents !== 'none') {
+      throw new Error('The visible chip must not intercept the widened target.');
+    }
 
     cue().dispatchEvent(new MouseEvent('click', { bubbles: true }));
     for (let i = 0; i < 40 && nodeCount() === before; i += 1) await wait(150);

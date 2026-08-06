@@ -34,6 +34,7 @@ var LABEL_FONT_SIZE = 13;
 var CAPTION_FONT_SIZE = 12;
 var NARROW_RATIO = 0.55;
 var DOT_LABEL_MAX_WIDTH = 168;
+var CUE_MIN_TARGET = 24;
 var LINE_HEIGHT_RATIO = 1.35;
 function lineHeight(fontSize) {
   return fontSize * LINE_HEIGHT_RATIO;
@@ -1076,6 +1077,17 @@ function NetworkGraph({
                                     /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                       "rect",
                                       {
+                                        "data-network-cue-target": true,
+                                        x: cue.x - Math.max(cueWidth, CUE_MIN_TARGET) / 2,
+                                        y: cue.y - CUE_MIN_TARGET / 2,
+                                        width: Math.max(cueWidth, CUE_MIN_TARGET),
+                                        height: CUE_MIN_TARGET,
+                                        fill: "transparent"
+                                      }
+                                    ),
+                                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                                      "rect",
+                                      {
                                         x: cue.x - cueWidth / 2,
                                         y: cue.y - 9,
                                         width: cueWidth,
@@ -1083,7 +1095,8 @@ function NetworkGraph({
                                         rx: 9,
                                         fill: "var(--color-semantic-background-normal-alternative)",
                                         stroke: color,
-                                        strokeWidth: 1
+                                        strokeWidth: 1,
+                                        pointerEvents: "none"
                                       }
                                     ),
                                     /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
@@ -1124,4 +1137,4 @@ function NetworkGraph({
 
 
 exports.NetworkGraph = NetworkGraph;
-//# sourceMappingURL=chunk-PXCROFGJ.cjs.map
+//# sourceMappingURL=chunk-MIHE4M34.cjs.map
