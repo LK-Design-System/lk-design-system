@@ -62,7 +62,7 @@ function FileUpload({
     names.length > 0 ? `${names.join(", ")}, \uC120\uD0DD\uB428` : "",
     rejectedNames.length > 0 ? `${rejectedNames.join(", ")}, \uD5C8\uC6A9\uB418\uC9C0 \uC54A\uB294 \uD30C\uC77C\uC774\uB77C \uC81C\uC678\uB428` : ""
   ].filter(Boolean).join(". ");
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       ...rest,
@@ -105,7 +105,7 @@ function FileUpload({
         ...style
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "input",
           {
             id: inputId,
@@ -136,7 +136,7 @@ function FileUpload({
             }
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "label",
           {
             htmlFor: inputId,
@@ -153,7 +153,7 @@ function FileUpload({
               cursor: disabled ? "not-allowed" : "pointer"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "span",
                 {
                   "aria-hidden": "true",
@@ -170,7 +170,7 @@ function FileUpload({
                   children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "upload", size: 20, "aria-hidden": "true" })
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "span",
                 {
                   style: {
@@ -186,7 +186,7 @@ function FileUpload({
                   children: hint
                 }
               ),
-              names.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              names.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "span",
                 {
                   "aria-hidden": "true",
@@ -206,7 +206,7 @@ function FileUpload({
             ]
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             role: "status",

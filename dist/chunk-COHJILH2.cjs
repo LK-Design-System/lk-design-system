@@ -686,7 +686,7 @@ function NetworkGraph({
               데가 없어 보이지만, 그대로 두면 라벨 하나가 그림 «밖»으로 뻗어나가
               액자에 잘리거나 가로 스크롤을 만든다. 실제로 28자짜리 이름이 폭
               192px 그림에서 336px를 차지했다.
-      
+
               전체 이름은 관계의 접근성 이름과 `<title>`에 남는다.
             */
       fullText: showEdgeLabels ? `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ""}`.trim() : "",
@@ -793,7 +793,7 @@ function NetworkGraph({
       moveFocus(stop.key, -1);
     }
   }
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       "data-chart-type": "network",
@@ -802,7 +802,7 @@ function NetworkGraph({
       children: [
         description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: descriptionId, children: description }),
         resolvedSummary != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: summaryId, "data-chart-summary": true, children: resolvedSummary }),
-        !hasData ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        !hasData ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "data-chart-empty": true,
@@ -817,7 +817,7 @@ function NetworkGraph({
             },
             children: emptyLabel
           }
-        ) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        ) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "svg",
           {
             ref: svgRef,
@@ -828,7 +828,7 @@ function NetworkGraph({
             style: { display: "block", width: "100%", height: "100%", overflow: "visible" },
             children: [
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: "@keyframes ldsNetworkEnter { from { opacity: 0; transform: scale(0.72); } }" }),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "defs", { children: edgeColors.map((color) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "defs", { children: edgeColors.map((color) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "marker",
                 {
                   id: markerId(color),
@@ -855,7 +855,7 @@ function NetworkGraph({
                 const labelText = text;
                 return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { "data-network-edge": edge.id, "data-state": _nullishCoalesce(edge.state, () => ( "normal")), children: [
                   fullText && fullText !== labelText && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "title", { children: fullText }),
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "path",
                     {
                       d: path.d,
@@ -869,7 +869,7 @@ function NetworkGraph({
                   ),
                   onSelectEdge && /* 곡선은 누르기 어려우므로 투명한 넓은 선을 겹쳐 표적을
                      넓힌다. 이름은 아래 접근 가능한 요소가 갖는다. */
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "path",
                     {
                       d: path.d,
@@ -887,7 +887,7 @@ function NetworkGraph({
                      정한다. 그래도 마지막 후보까지 막히면 겹친 채로 놓이므로,
                      배경색 테두리를 글자 «뒤»로 깔아(`paint-order`) 그 경우의
                      가독성을 지킨다. */
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "text",
                     {
                       x: path.label.x,
@@ -921,7 +921,7 @@ function NetworkGraph({
                 const shownLabel = fitText(labelText, labelRoom, LABEL_FONT_SIZE);
                 const shownCaption = fitText(captionText, labelRoom, CAPTION_FONT_SIZE);
                 const truncated = shownLabel !== labelText || shownCaption !== captionText;
-                return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "g",
                   {
                     id: stopDomId(nodeStop.key),
@@ -961,7 +961,7 @@ function NetworkGraph({
                     onPointerUp: nodePointerUp,
                     onPointerCancel: nodePointerUp,
                     onKeyDown: (event) => stopKeyDown(event, nodeStop),
-                    children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                    children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                       "g",
                       {
                         style: enteringIds.has(node.id) && !reduceMotion && motion !== "none" ? { animation: "ldsNetworkEnter 520ms cubic-bezier(0.22, 1, 0.36, 1)" } : void 0,
@@ -973,7 +973,7 @@ function NetworkGraph({
                                구조가 보인다. 선택은 테두리 링으로 표시한다 — 채움색은
                                이미 범주가 쓰고 있다. */
                             /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-                              isRootNode(node) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                              isRootNode(node) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                 "circle",
                                 {
                                   "data-network-root-ring": "true",
@@ -985,7 +985,7 @@ function NetworkGraph({
                                   opacity: 0.75
                                 }
                               ),
-                              selected && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                              selected && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                 "circle",
                                 {
                                   r: radius + 5,
@@ -995,7 +995,7 @@ function NetworkGraph({
                                   opacity: 0.4
                                 }
                               ),
-                              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                 "circle",
                                 {
                                   "data-network-node-body": "dot",
@@ -1006,7 +1006,7 @@ function NetworkGraph({
                                   strokeDasharray: tone.strokeDasharray
                                 }
                               ),
-                              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                 "text",
                                 {
                                   y: radius + 16,
@@ -1024,7 +1024,7 @@ function NetworkGraph({
                                   children: shownLabel
                                 }
                               ),
-                              captionText && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                              captionText && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                 "text",
                                 {
                                   y: radius + 31,
@@ -1047,7 +1047,7 @@ function NetworkGraph({
                                있어야 연결이 어디로 들고 나는지 읽히고, 흐름이 한 방향
                                으로 정렬된다. */
                             /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-                              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                 "rect",
                                 {
                                   x: -metrics.width / 2,
@@ -1061,7 +1061,7 @@ function NetworkGraph({
                                   strokeDasharray: tone.strokeDasharray
                                 }
                               ),
-                              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                 "text",
                                 {
                                   x: -metrics.width / 2 + 16,
@@ -1076,7 +1076,7 @@ function NetworkGraph({
                                 }
                               ),
                               captionText && // 이름과 같은 왼쪽 기준선. 두 줄은 한 덩어리로 읽혀야 한다.
-                              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                 "text",
                                 {
                                   x: -metrics.width / 2 + 16,
@@ -1089,7 +1089,7 @@ function NetworkGraph({
                                   children: shownCaption
                                 }
                               ),
-                              [-1, 1].map((side) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                              [-1, 1].map((side) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                 "circle",
                                 {
                                   "data-network-port": side < 0 ? "in" : "out",
@@ -1115,7 +1115,7 @@ function NetworkGraph({
                                 노드로 이벤트가 흐르면 클릭이 «선택»이 되고 pointerdown이
                                 드래그를 시작하므로 여기서 끊는다.
                               */
-                              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                                 "g",
                                 {
                                   "data-network-collapse-cue": true,
@@ -1138,7 +1138,7 @@ function NetworkGraph({
                                   onDoubleClick: (event) => event.stopPropagation(),
                                   onPointerDown: (event) => event.stopPropagation(),
                                   children: [
-                                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                       "rect",
                                       {
                                         "data-network-cue-target": true,
@@ -1149,7 +1149,7 @@ function NetworkGraph({
                                         fill: "transparent"
                                       }
                                     ),
-                                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                       "rect",
                                       {
                                         x: cue.x - cueWidth / 2,
@@ -1163,7 +1163,7 @@ function NetworkGraph({
                                         pointerEvents: "none"
                                       }
                                     ),
-                                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                       "text",
                                       {
                                         x: cue.x,

@@ -48,7 +48,7 @@ function Snackbar({
   const urgent = normalized === "negative";
   const showClose = closeButton !== false && typeof onClose === "function";
   const minHeight = heading != null && hasDescription ? 72 : hasDescription ? 68 : 54;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       role: urgent ? "alert" : "status",
@@ -73,7 +73,7 @@ function Snackbar({
       },
       ...rest,
       children: [
-        leadingIcon && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        leadingIcon && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "aria-hidden": "true",
@@ -87,7 +87,7 @@ function Snackbar({
           }
         ),
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0, flex: 1 }, children: [
-          heading != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          heading != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "strong",
             {
               style: {
@@ -99,7 +99,7 @@ function Snackbar({
               children: heading
             }
           ),
-          hasDescription && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          hasDescription && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "span",
             {
               style: {
@@ -116,7 +116,7 @@ function Snackbar({
              two transient surfaces speak the same size for the same role. */
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontSize: "var(--body2-size)", lineHeight: "var(--body2-line)", letterSpacing: "var(--body2-spacing)" }, children })
         ] }),
-        action != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        action != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "button",
           {
             type: "button",
@@ -150,7 +150,7 @@ function Snackbar({
             children: action
           }
         ),
-        showClose && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        showClose && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "button",
           {
             type: "button",

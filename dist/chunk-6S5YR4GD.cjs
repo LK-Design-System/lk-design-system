@@ -115,7 +115,7 @@ var Button = _react2.default.forwardRef(function Button2({
     large: "lg"
   }[size] || size;
   const iconSize = iconOnly ? iconOnlyIconSizes[normalizedSize] || iconOnlyIconSizes.md : iconSizes[normalizedSize] || iconSizes.md;
-  const content = _react2.default.Children.toArray(children).map((child, index) => typeof child === "string" || typeof child === "number" ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: child }, `text-${index}`) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  const content = _react2.default.Children.toArray(children).map((child, index) => typeof child === "string" || typeof child === "number" ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: child }, `text-${index}`) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "span",
     {
       style: { display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: iconSize, flexShrink: 0 },
@@ -186,7 +186,7 @@ var Button = _react2.default.forwardRef(function Button2({
     ...style
   };
   const Comp = as;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     Comp,
     {
       ...rest,
@@ -241,7 +241,7 @@ var Button = _react2.default.forwardRef(function Button2({
       },
       children: [
         loading === true && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "span",
             {
               "aria-hidden": "true",
@@ -253,7 +253,7 @@ var Button = _react2.default.forwardRef(function Button2({
           ),
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0, 0, 0, 0)", whiteSpace: "nowrap", border: 0 }, children: loadingLabel })
         ] }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "span",
           {
             "data-slot": "content",

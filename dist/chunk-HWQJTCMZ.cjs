@@ -29,7 +29,7 @@ function StatusIndicator({
   }, []);
   const normalizedTone = tone === "critical" ? "negative" : _chunkMBKOVB2Kcjs.normalizeStatusTone.call(void 0, tone);
   const color = INDICATOR[normalizedTone] || INDICATOR.offline;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
     {
       className: `lk-status-indicator lk-status-indicator--${tone}`,
@@ -47,7 +47,7 @@ function StatusIndicator({
       },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "aria-hidden": "true",
@@ -61,7 +61,7 @@ function StatusIndicator({
               background: color,
               boxShadow: tone === "critical" ? `0 0 0 2px var(--color-semantic-background-elevated-normal), 0 0 0 3px ${color}` : "none"
             },
-            children: pulse && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: pulse && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "span",
               {
                 "data-lds-status-indicator-pulse": "",

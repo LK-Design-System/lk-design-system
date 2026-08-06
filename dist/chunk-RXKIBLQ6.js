@@ -686,7 +686,7 @@ function NetworkGraph({
               데가 없어 보이지만, 그대로 두면 라벨 하나가 그림 «밖»으로 뻗어나가
               액자에 잘리거나 가로 스크롤을 만든다. 실제로 28자짜리 이름이 폭
               192px 그림에서 336px를 차지했다.
-      
+
               전체 이름은 관계의 접근성 이름과 `<title>`에 남는다.
             */
       fullText: showEdgeLabels ? `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ""}`.trim() : "",

@@ -237,7 +237,7 @@ function MessageFeed({
   const showJump = !following || normalizedUnreadCount > 0 || retainJumpFocus;
   const jumpAccessibleLabel = normalizedUnreadCount > 0 ? `${jumpToLatestLabel}, \uC77D\uC9C0 \uC54A\uC740 \uBA54\uC2DC\uC9C0 ${normalizedUnreadCount}\uAC1C` : jumpToLatestLabel;
   const isBusy = busy || loadingPrevious;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "section",
     {
       ...rest,
@@ -253,12 +253,12 @@ function MessageFeed({
         ...style
       },
       children: [
-        hasPrevious && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        hasPrevious && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             "data-message-feed-history-control": true,
             style: { display: "flex", justifyContent: "center", minWidth: 0 },
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               _chunk6S5YR4GDcjs.Button,
               {
                 type: "button",
@@ -274,7 +274,7 @@ function MessageFeed({
             )
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             id: viewportId,
@@ -315,7 +315,7 @@ function MessageFeed({
               color: "var(--color-semantic-label-normal)",
               outlineOffset: "var(--space-1)"
             },
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "div",
               {
                 ref: contentRef,
@@ -327,7 +327,7 @@ function MessageFeed({
                   minWidth: 0,
                   marginInline: "auto"
                 },
-                children: messageCount > 0 ? children : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                children: messageCount > 0 ? children : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "div",
                   {
                     "data-message-feed-empty": true,
@@ -350,13 +350,13 @@ function MessageFeed({
             )
           }
         ),
-        showJump && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        showJump && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             "data-message-feed-jump-control": true,
             style: { display: "flex", justifyContent: "center", minWidth: 0 },
             children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { position: "relative", display: "inline-flex" }, children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 _chunkI6NJHF3Lcjs.IconButton,
                 {
                   type: "button",
@@ -370,7 +370,7 @@ function MessageFeed({
                   children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "arrow-down", size: 18, "aria-hidden": "true" })
                 }
               ),
-              normalizedUnreadCount > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              normalizedUnreadCount > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "span",
                 {
                   "aria-hidden": "true",
@@ -401,7 +401,7 @@ function MessageFeed({
             ] })
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           _chunk677EM4M2cjs.VisuallyHidden,
           {
             as: "div",

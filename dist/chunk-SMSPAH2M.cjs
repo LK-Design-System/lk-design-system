@@ -67,7 +67,7 @@ function ToggleIcon({
     }
   };
   const palette = _nullishCoalesce(palettes[variant], () => ( palettes.default));
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "button",
     {
       ...rest,

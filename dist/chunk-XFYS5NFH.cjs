@@ -21,7 +21,7 @@ function OverlayStatusChip({
   const palette = _chunkMBKOVB2Kcjs.statusToneStyle.call(void 0, normalizedTone);
   const neutral = normalizedTone === "offline";
   const glyph = _nullishCoalesce(icon, () => ( palette.icon));
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
     {
       "data-overlay-status-chip": "",
@@ -54,7 +54,7 @@ function OverlayStatusChip({
       },
       ...rest,
       children: [
-        glyph != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        glyph != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           _chunk3ATRKSQ7cjs.Icon,
           {
             name: glyph,

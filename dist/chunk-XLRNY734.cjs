@@ -44,7 +44,7 @@ function Skeleton({
   if (variant === "text") {
     const h2 = height || 14;
     const alignItems = align === "center" ? "center" : align === "trailing" ? "flex-end" : "flex-start";
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { display: "flex", flexDirection: "column", alignItems, ...style }, ...rest, children: Array.from({ length: lines }).map((_, i) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { display: "flex", flexDirection: "column", alignItems, ...style }, ...rest, children: Array.from({ length: lines }).map((_, i) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
       "span",
       {
         "data-lds-skeleton": true,
@@ -65,7 +65,7 @@ function Skeleton({
   const r = isCircle ? "50%" : radius != null ? radius : SKELETON_RADIUS;
   const w = isCircle ? resolvedWidth === "100%" ? 40 : resolvedWidth : resolvedWidth;
   const h = isCircle ? height || (resolvedWidth === "100%" ? 40 : resolvedWidth) : height || 16;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "span",
     {
       "data-lds-skeleton": true,

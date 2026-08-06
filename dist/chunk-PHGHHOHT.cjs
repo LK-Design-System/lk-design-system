@@ -106,7 +106,7 @@ function useTopBarMenuLayer({ open, anchorRef, panelRef }) {
 }
 function TopBar({ brand, children, actions, navigationLabel = "\uC8FC \uD0D0\uC0C9", navAlign = "start", sticky = false, bordered = true, dark = false, height = 64, style, ...rest }) {
   const tone = dark ? "dark" : "light";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "header",
     {
       style: {
@@ -258,7 +258,7 @@ function TopBarNavItem({
   };
   const resolvedMenuTriggerLabel = menuTriggerLabel || (typeof children === "string" || typeof children === "number" ? `${children} \uD558\uC704 \uBA54\uB274` : "\uD558\uC704 \uBA54\uB274");
   const fg = active ? onDark ? "var(--color-semantic-brand-on-surface)" : "var(--color-semantic-primary-normal)" : activeOrHover ? onDark ? "var(--color-semantic-brand-on-surface)" : "var(--color-semantic-label-strong)" : onDark ? "var(--color-semantic-brand-on-surface-subtle)" : "var(--color-semantic-label-alternative)";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
     {
       ref: wrapperRef,
@@ -290,7 +290,7 @@ function TopBarNavItem({
       onKeyDown: handleMenuKeyboard,
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           PrimaryComp,
           {
             ref: (node) => {
@@ -325,7 +325,7 @@ function TopBarNavItem({
             },
             children: [
               children,
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "span",
                 {
                   "data-top-bar-active-indicator": true,
@@ -347,7 +347,7 @@ function TopBarNavItem({
             ]
           }
         ),
-        href && hasMenu ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        href && hasMenu ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "button",
           {
             ref: menuTriggerRef,
@@ -371,7 +371,7 @@ function TopBarNavItem({
               color: fg,
               cursor: "pointer"
             },
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "svg",
               {
                 "data-top-bar-menu-chevron": true,
@@ -392,7 +392,7 @@ function TopBarNavItem({
             )
           }
         ) : null,
-        _optionalChain([menuItems, 'optionalAccess', _43 => _43.length]) ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        _optionalChain([menuItems, 'optionalAccess', _43 => _43.length]) ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "ul",
           {
             ref: menuRef,
@@ -433,7 +433,7 @@ function TopBarNavItem({
             onMouseLeave: schedulePointerLeave,
             children: menuItems.map((item, index) => {
               const ItemComp = item.href ? "a" : "button";
-              return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { display: "block" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { display: "block" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 ItemComp,
                 {
                   ref: (node) => {

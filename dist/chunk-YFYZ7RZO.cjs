@@ -29,7 +29,7 @@ function LanguageSwitcher({
   );
   const unavailable = disabled || !currentLocale || !hasAvailableAlternative;
   const items = locales.map((locale) => ({
-    icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
       "span",
       {
         "aria-hidden": "true",
@@ -56,7 +56,7 @@ function LanguageSwitcher({
       _optionalChain([onChange, 'optionalCall', _ => _(locale.value, { locale })]);
     }
   }));
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     _chunkTUBOAPREcjs.DropdownMenu,
     {
       "data-language-switcher": "",
@@ -65,7 +65,7 @@ function LanguageSwitcher({
       variant: "radio",
       items,
       style,
-      trigger: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      trigger: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
         _chunkI6NJHF3Lcjs.IconButton,
         {
           "data-language-switcher-trigger": "",
@@ -79,7 +79,7 @@ function LanguageSwitcher({
             "--viewer-foreground": "var(--color-semantic-inverse-label)",
             color: unavailable ? "var(--color-semantic-inverse-label-disable-soft)" : "var(--color-semantic-inverse-label)"
           } : void 0,
-          children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             _chunk3ATRKSQ7cjs.Icon,
             {
               "data-language-switcher-icon": "",

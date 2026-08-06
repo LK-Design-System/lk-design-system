@@ -74,7 +74,7 @@ function ViewerToolbar({
   ...rootProps
 }) {
   const resolvedAppearance = TOOLBAR_APPEARANCES[appearance] ? appearance : "minimal";
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, ViewerToolbarAppearanceContext.Provider, { value: resolvedAppearance, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, ViewerToolbarAppearanceContext.Provider, { value: resolvedAppearance, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     _chunk3VE2HGTTcjs.Toolbar,
     {
       ...rootProps,
@@ -136,7 +136,7 @@ function ViewerToolbarButton({
   const icon = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { width: 16, height: 16, display: "inline-grid", placeItems: "center", flex: "0 0 auto" }, children });
   if (resolvedKind === "toggle") {
     const controlledPressed = _nullishCoalesce(pressed, () => ( active));
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
       _chunkFVL575B5cjs.ToggleIcon,
       {
         ...commonProps,
@@ -148,7 +148,7 @@ function ViewerToolbarButton({
       }
     );
   }
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     _chunk3H3EZZTFcjs.IconButton,
     {
       ...commonProps,

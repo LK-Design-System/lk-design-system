@@ -68,6 +68,14 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.46 - 2026-08-06
+
+### Fixed
+
+- `NetworkGraph`의 `layout="force"`가 `card`에서 층 배치로 돌아갑니다. 계약은 「`force`도 `dot` 전용」이라 못박고 있었지만 구현이 `nodeShape`을 보지 않아, `card`에 주면 카드가 실제로 떠다녔습니다 — 흐름도에서 위치는 곧 의미이고 사용자가 놓은 자리는 사용자의 저작물입니다.
+- `NetworkGraph`의 `layout="manual"`이 좌표를 주지 않은 노드를 놓인 것들 «아래»에 한 줄로 늘어놓습니다. 종전에는 원점에 몰아 두어, 좌표 없는 노드끼리 쌓이고 그 자리의 노드 아래로 숨었습니다. 같은 좌표를 «일부러» 준 경우는 그대로 겹칩니다.
+- `NetworkGraph`의 `card` 세로 관계가 사이에 «낀» 노드가 있을 때만 옆으로 돌아갑니다. 종전에는 피할 것이 없어도 늘 부풀어, 나란한 카드 둘 사이에 74px짜리 활이 생겼습니다.
+
 ## 0.1.0-rc.45 - 2026-08-06
 
 ### Fixed

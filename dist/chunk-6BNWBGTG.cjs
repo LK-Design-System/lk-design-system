@@ -106,7 +106,7 @@ var SearchField = _react2.default.forwardRef(function SearchField2({
     focused,
     hovered
   });
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     _chunkDSYH34X7cjs.FieldStack,
     {
       ref: rootRef,
@@ -136,7 +136,7 @@ var SearchField = _react2.default.forwardRef(function SearchField2({
         className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "message") || void 0,
         style: _chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "message")
       },
-      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
         "div",
         {
           "data-slot": "control",
@@ -162,7 +162,7 @@ var SearchField = _react2.default.forwardRef(function SearchField2({
           },
           children: [
             /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "startIcon", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "startIcon") || void 0, style: { display: "inline-flex", flex: "0 0 auto", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "startIcon") }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "search", size: 18, color: "var(--component-input-icon-color)", "aria-hidden": "true" }) }),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "input",
               {
                 ...inputProps,
@@ -215,7 +215,7 @@ var SearchField = _react2.default.forwardRef(function SearchField2({
               }
             ),
             (isInvalid || status === "positive") && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "statusIcon", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "statusIcon") || void 0, style: { display: "inline-flex", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "statusIcon") }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkDSYH34X7cjs.FieldStatusIcon, { invalid: isInvalid, status }) }),
-            currentValue && !readOnly && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            currentValue && !readOnly && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               _chunkI6NJHF3Lcjs.IconButton,
               {
                 "data-slot": "clearButton",

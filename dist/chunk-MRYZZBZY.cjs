@@ -48,7 +48,7 @@ function PrimaryDetail({
     _optionalChain([onDetailClose, 'optionalCall', _5 => _5()]);
     focusReturnTarget();
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       "data-primary-detail-mode": resolvedMode,
@@ -64,7 +64,7 @@ function PrimaryDetail({
       ...rest,
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "section", { "aria-label": primaryLabel, style: { minWidth: 0, minHeight: 0, ...primaryStyle }, children: primary }),
-        resolvedMode === "inline" && detailOpen && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        resolvedMode === "inline" && detailOpen && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "aside",
           {
             role: "region",
@@ -83,7 +83,7 @@ function PrimaryDetail({
             children: [
               (detailTitle != null || onDetailClose) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "header", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", minWidth: 0, minHeight: 52, padding: "var(--space-3) var(--space-4)", borderBottom: "1px solid var(--color-semantic-line-normal-normal)", boxSizing: "border-box" }, children: [
                 detailTitle != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { id: titleId, style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "var(--color-semantic-label-strong)", fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)", fontWeight: "var(--fw-bold)" }, children: detailTitle }),
-                onDetailClose && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                onDetailClose && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "button",
                   {
                     type: "button",
@@ -99,7 +99,7 @@ function PrimaryDetail({
             ]
           }
         ),
-        resolvedMode === "overlay" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        resolvedMode === "overlay" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           _chunkLJK5DY6Jcjs.Drawer,
           {
             open: detailOpen,

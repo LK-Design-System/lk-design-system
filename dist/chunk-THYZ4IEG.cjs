@@ -12,7 +12,7 @@ function resolveTone(tone) {
 }
 function StatusBadge({ children, tone = "positive", style, ...rest }) {
   const appearance = resolveTone(tone);
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "span",
     {
       className: `lk-status-badge lk-status-badge--${tone}`,

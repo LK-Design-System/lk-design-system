@@ -113,7 +113,7 @@ var ValidationSummary = _react2.default.forwardRef(function ValidationSummary2({
       `ValidationSummary: issue "${missingTargetIssue.id}" requires a non-empty href to its owning field or step.`
     );
   }
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "section",
     {
       ...rest,
@@ -152,7 +152,7 @@ var ValidationSummary = _react2.default.forwardRef(function ValidationSummary2({
             padding: var(--space-2) var(--space-3) !important;
           }
         }` }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "header",
           {
             className: "lk-validation-summary__header",
@@ -166,7 +166,7 @@ var ValidationSummary = _react2.default.forwardRef(function ValidationSummary2({
               background: "var(--color-semantic-background-elevated-normal)"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 Heading,
                 {
                   id: titleId,
@@ -181,7 +181,7 @@ var ValidationSummary = _react2.default.forwardRef(function ValidationSummary2({
                   children: resolvedTitle
                 }
               ),
-              description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "p",
                 {
                   id: descriptionId,
@@ -198,7 +198,7 @@ var ValidationSummary = _react2.default.forwardRef(function ValidationSummary2({
             ]
           }
         ),
-        announce && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        announce && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             role: "alert",
@@ -207,14 +207,14 @@ var ValidationSummary = _react2.default.forwardRef(function ValidationSummary2({
             children: summaryLabel
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-validation-summary__groups", children: groups.map((group) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-validation-summary__groups", children: groups.map((group) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "section",
           {
             "aria-labelledby": group.headingId,
             className: "lk-validation-summary__group",
             "data-severity": group.key,
             children: [
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                 "div",
                 {
                   className: "lk-validation-summary__group-heading",
@@ -227,7 +227,7 @@ var ValidationSummary = _react2.default.forwardRef(function ValidationSummary2({
                   },
                   children: [
                     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: group.icon, size: 16, color: group.foreground, "aria-hidden": "true" }),
-                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                       GroupHeading,
                       {
                         id: group.headingId,
@@ -250,7 +250,7 @@ var ValidationSummary = _react2.default.forwardRef(function ValidationSummary2({
                   ]
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { style: { margin: 0, padding: 0, listStyle: "none" }, children: group.items.map((issue) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { style: { margin: 0, padding: 0, listStyle: "none" }, children: group.items.map((issue) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                 "li",
                 {
                   className: "lk-validation-summary__item",
@@ -262,7 +262,7 @@ var ValidationSummary = _react2.default.forwardRef(function ValidationSummary2({
                     boxSizing: "border-box"
                   },
                   children: [
-                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                       "strong",
                       {
                         style: {
@@ -274,7 +274,7 @@ var ValidationSummary = _react2.default.forwardRef(function ValidationSummary2({
                         children: issue.label
                       }
                     ),
-                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                       _chunkDI6ICGWYcjs.TextButton,
                       {
                         size: "sm",

@@ -14,7 +14,7 @@ function formatCountKo(n) {
   return `${Math.floor(n / divisor * 10) / 10}${unit}`;
 }
 function Count({ children }) {
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "span",
     {
       "aria-hidden": "true",
@@ -30,7 +30,7 @@ function Count({ children }) {
 }
 function ReactionControl({ label, pressed, active, onClick, boxSize, children }) {
   const [hover, setHover] = _react2.default.useState(false);
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "button",
     {
       type: "button",
@@ -81,7 +81,7 @@ function ReactionBar({
   };
   const withCount = (base, count) => count == null ? base : `${base} ${count}\uAC1C`;
   const item = { display: "inline-flex", alignItems: "center", gap: "var(--space-1)" };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       role: "group",
@@ -95,7 +95,7 @@ function ReactionBar({
       ...rest,
       children: [
         like && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: item, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             ReactionControl,
             {
               label: withCount(_nullishCoalesce(like.label, () => ( "\uC88B\uC544\uC694")), like.count),

@@ -18,7 +18,7 @@ function getTableDataCellStyle({ padding = "14px 16px", align = "left", width, t
 }
 function TableCellContent({ truncate, children }) {
   if (!truncate) return children;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "span",
     {
       "data-slot": "truncated-content",
@@ -37,7 +37,7 @@ function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProp
     onMouseLeave,
     ...restRowProps
   } = rowProps;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "tr",
     {
       ...restRowProps,
@@ -80,7 +80,7 @@ function Table({
 }) {
   const pad = size === "sm" ? "10px 12px" : "14px 16px";
   const nameFromAria = caption == null;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
     {
       ...rest,
@@ -88,14 +88,14 @@ function Table({
       "data-scrollbar": "auto",
       "data-scroll-gutter": "auto",
       style: { overflowX: "auto", scrollbarGutter: "auto", ...style },
-      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
         "table",
         {
           "aria-label": nameFromAria ? tableLabel : void 0,
           "aria-labelledby": nameFromAria ? tableLabelledBy : void 0,
           style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" },
           children: [
-            caption != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            caption != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "caption",
               {
                 style: {
@@ -111,7 +111,7 @@ function Table({
               }
             ),
             /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "thead", { children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tr", { children: columns.map((c) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "th", { scope: "col", style: getTableHeaderCellStyle({ padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate }), children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, TableCellContent, { truncate: c.truncate, children: c.label }) }, c.key)) }) }),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tbody", { children: rows.map((r, ri) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tbody", { children: rows.map((r, ri) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               TableRow,
               {
                 columns,

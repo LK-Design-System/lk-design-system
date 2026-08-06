@@ -10,7 +10,7 @@ function SourceTag({ children, label = "SOURCE", href, tone = "default", style, 
   const Comp = isLink ? "a" : "span";
   const [hover, setHover] = _react2.default.useState(false);
   const onDark = tone === "onDark";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     Comp,
     {
       href,

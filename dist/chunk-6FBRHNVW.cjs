@@ -92,7 +92,7 @@ function TelemetryGauge({
   const center = size / 2;
   const circumference = 2 * Math.PI * radius;
   const arcLength = circumference * 0.75;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       style: {
@@ -106,7 +106,7 @@ function TelemetryGauge({
       },
       ...rootProps,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             role: "meter",
@@ -119,7 +119,7 @@ function TelemetryGauge({
             "aria-valuetext": resolvedValueText,
             style: { position: "relative", width: size, height: size, maxWidth: "100%" },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                 "svg",
                 {
                   "aria-hidden": "true",
@@ -128,7 +128,7 @@ function TelemetryGauge({
                   viewBox: `0 0 ${size} ${size}`,
                   style: { display: "block", transform: "rotate(135deg)" },
                   children: [
-                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                       "circle",
                       {
                         cx: center,
@@ -141,7 +141,7 @@ function TelemetryGauge({
                         strokeDasharray: `${arcLength} ${circumference}`
                       }
                     ),
-                    pct > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                    pct > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                       "circle",
                       {
                         cx: center,
@@ -158,7 +158,7 @@ function TelemetryGauge({
                   ]
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { position: "absolute", inset: 0, display: "grid", placeItems: "center", minWidth: 0 }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { position: "absolute", inset: 0, display: "grid", placeItems: "center", minWidth: 0 }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                 "strong",
                 {
                   "data-telemetry-gauge-lockup": "",

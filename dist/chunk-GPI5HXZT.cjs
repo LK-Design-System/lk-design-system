@@ -110,7 +110,7 @@ function CommandPalette({
       }, onKeyDown: onInputKeyDown, placeholder, "aria-label": typeof placeholder === "string" ? placeholder : "\uBA85\uB839 \uAC80\uC0C9", style: { flex: 1, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-sans)", fontSize: "var(--headline2-size)", color: "var(--color-semantic-label-normal)" } })
     ] }),
     /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { ref: listRef, className: "lk-scroll-surface", "data-scrollbar": "compact", "data-scroll-gutter": "stable", style: { maxHeight: 340, overflowY: "auto", scrollbarGutter: "stable", padding: 8 }, children: [
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { id: listboxId, role: "listbox", "aria-label": "\uBA85\uB839", children: filtered.map((c, i) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { id: listboxId, role: "listbox", "aria-label": "\uBA85\uB839", children: filtered.map((c, i) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
         "button",
         {
           id: `${optionIdBase}-${i}`,

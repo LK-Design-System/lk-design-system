@@ -12,7 +12,7 @@ function MobileSystemBars({
   ...rest
 }) {
   const isAndroid = platform === "android";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       "aria-hidden": "true",
@@ -26,7 +26,7 @@ function MobileSystemBars({
       },
       ...rest,
       children: [
-        showStatus && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        showStatus && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             style: {
@@ -40,13 +40,13 @@ function MobileSystemBars({
             },
             children: [
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: time }),
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                 "span",
                 {
                   style: { display: "inline-flex", alignItems: "center", gap: 4 },
                   children: [
                     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: isAndroid ? "LTE" : "5G" }),
-                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                       "span",
                       {
                         style: {
@@ -64,7 +64,7 @@ function MobileSystemBars({
           }
         ),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", {}),
-        showHome && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        showHome && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             style: {
@@ -72,7 +72,7 @@ function MobileSystemBars({
               display: "grid",
               placeItems: "center"
             },
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "span",
               {
                 style: {

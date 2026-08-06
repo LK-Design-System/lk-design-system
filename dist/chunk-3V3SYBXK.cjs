@@ -51,7 +51,7 @@ function RangeSlider({
   const overlapping = Math.abs(pctHi - pctLo) < 5;
   const loOnTop = overlapping && pctLo >= 50;
   const groupName = _nullishCoalesce(label, () => ( ariaLabel));
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       role: groupName || ariaLabelledBy ? "group" : void 0,
@@ -64,7 +64,7 @@ function RangeSlider({
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { position: "relative", height: 24 }, children: [
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { position: "absolute", top: 9, left: 0, right: 0, height: 6, borderRadius: "var(--radius-pill)", background: "var(--color-semantic-fill-strong)" } }),
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { position: "absolute", top: 9, height: 6, borderRadius: "var(--radius-pill)", background: disabled ? "var(--color-semantic-interaction-inactive)" : "var(--color-semantic-primary-normal)", left: `${pctLo}%`, right: `${100 - pctHi}%` } }),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "input",
             {
               className: "lk-rangeslider",
@@ -79,7 +79,7 @@ function RangeSlider({
               onChange: (e) => setLo(Number(e.target.value))
             }
           ),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "input",
             {
               className: "lk-rangeslider",
