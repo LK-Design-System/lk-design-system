@@ -32,6 +32,43 @@ function assertNoPresentationalSubtree(canvasElement, label) {
   }
 }
 
+/*
+  엣지는 두 노드의 마주 보는 면에 붙어야 한다. 진행 방향을 보지 않고 늘 출발
+  노드의 오른쪽과 도착 노드의 왼쪽을 잡으면, 오른쪽에서 왼쪽으로 흐르는 관계가
+  두 노드를 관통하며 화면을 가로지른다. 실제로 그렇게 났던 결함이라 못 박는다.
+*/
+function assertEdgesAttachFacingSides(canvasElement, label) {
+  const center = new Map(
+    Array.from(canvasElement.querySelectorAll('[data-network-node]')).map((node) => {
+      const [, x, y] = /translate\((-?[\d.]+) (-?[\d.]+)\)/.exec(node.getAttribute('transform')) ?? [];
+      return [node.getAttribute('data-network-node'), { x: Number(x), y: Number(y) }];
+    }),
+  );
+
+  const centers = [...center.values()];
+  const nearestCenter = (px, py) =>
+    centers.reduce((best, c) => (Math.hypot(c.x - px, c.y - py) < Math.hypot(best.x - px, best.y - py) ? c : best), centers[0]);
+
+  Array.from(canvasElement.querySelectorAll('[data-network-edge]')).forEach((group) => {
+    const d = group.querySelector('path')?.getAttribute('d') ?? '';
+    const match = /M (-?[\d.]+) (-?[\d.]+) Q (-?[\d.]+) (-?[\d.]+) (-?[\d.]+) (-?[\d.]+)/.exec(d);
+    if (!match) throw new Error(`${label}: edge must render a quadratic path.`);
+    const [, sx, sy, , , ex, ey] = match.map(Number);
+
+    // 마주 보는 면에 붙으면 끝점 사이는 중심 사이보다 «짧다». 반대편에 붙어
+    // 감싸 돌면 노드 하나 폭만큼 «길어진다» — 그게 이 결함의 지문이다.
+    const endpointSpan = Math.hypot(ex - sx, ey - sy);
+    const fromCenter = nearestCenter(sx, sy);
+    const toCenter = nearestCenter(ex, ey);
+    const centerSpan = Math.hypot(toCenter.x - fromCenter.x, toCenter.y - fromCenter.y);
+    if (endpointSpan > centerSpan + 1) {
+      throw new Error(
+        `${label}: edge attaches to the far sides and sweeps across its own nodes (endpoints ${Math.round(endpointSpan)}px apart, centres ${Math.round(centerSpan)}px).`,
+      );
+    }
+  });
+}
+
 function assertDeterministicLayout(canvasElement, label) {
   const positions = Array.from(canvasElement.querySelectorAll('[data-network-node]'))
     .map((node) => node.getAttribute('transform'));
@@ -110,6 +147,7 @@ export const RelationshipOverview = {
   play: async ({ canvasElement }) => {
     assertNoPresentationalSubtree(canvasElement, '회사 지식망');
     assertFocusableNodes(canvasElement, '회사 지식망');
+    assertEdgesAttachFacingSides(canvasElement, '회사 지식망');
     assertDeterministicLayout(canvasElement, '회사 지식망');
   },
 };
@@ -149,6 +187,7 @@ export const StagedFlow = {
   play: async ({ canvasElement }) => {
     assertNoPresentationalSubtree(canvasElement, '영상 파이프라인');
     assertFocusableNodes(canvasElement, '영상 파이프라인');
+    assertEdgesAttachFacingSides(canvasElement, '영상 파이프라인');
     assertDeterministicLayout(canvasElement, '영상 파이프라인');
 
     // 상태는 색이 아니라 별도 축이어야 한다 — 같은 유형이면 상태가 달라도 색이 같다.

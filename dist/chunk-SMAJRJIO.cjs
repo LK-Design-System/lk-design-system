@@ -1,11 +1,11 @@
-"use client";
-import {
-  VisuallyHidden
-} from "./chunk-LSN3BTKD.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+var _chunk677EM4M2cjs = require('./chunk-677EM4M2.cjs');
 
 // components/data/NetworkGraph.jsx
-import React from "react";
-import { Fragment, jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 var NODE_WIDTH = 168;
 var NODE_HEIGHT = 52;
 var COLUMN_GAP = 220;
@@ -28,7 +28,7 @@ var EDGE_STATE_STYLE = {
 function nodeText(node) {
   if (typeof node === "string" || typeof node === "number") return String(node);
   if (Array.isArray(node)) return node.map(nodeText).filter(Boolean).join(" ");
-  if (React.isValidElement(node)) return nodeText(node.props.children);
+  if (_react2.default.isValidElement(node)) return nodeText(node.props.children);
   return "";
 }
 function stableHash(value) {
@@ -56,7 +56,7 @@ function layoutNodes(nodes, layout) {
   const byColumn = /* @__PURE__ */ new Map();
   nodes.forEach((node, index) => {
     const column = columns[index];
-    byColumn.set(column, [...byColumn.get(column) ?? [], node]);
+    byColumn.set(column, [..._nullishCoalesce(byColumn.get(column), () => ( [])), node]);
   });
   const positions = /* @__PURE__ */ new Map();
   const orderedColumns = [...byColumn.keys()].sort((left, right) => left - right);
@@ -66,7 +66,7 @@ function layoutNodes(nodes, layout) {
   );
   orderedColumns.forEach((column, columnIndex) => {
     const inColumn = [...byColumn.get(column)].sort((left, right) => {
-      const group = String(left.group ?? "").localeCompare(String(right.group ?? ""));
+      const group = String(_nullishCoalesce(left.group, () => ( ""))).localeCompare(String(_nullishCoalesce(right.group, () => ( ""))));
       return group !== 0 ? group : String(left.id).localeCompare(String(right.id));
     });
     const columnHeight = (inColumn.length - 1) * ROW_GAP;
@@ -82,17 +82,35 @@ function layoutNodes(nodes, layout) {
 }
 function edgePath(from, to) {
   if (!from || !to) return null;
-  const startX = from.x + NODE_WIDTH / 2;
-  const startY = from.y;
-  const endX = to.x - NODE_WIDTH / 2;
-  const endY = to.y;
-  const sameColumn = Math.abs(startX - endX) < 1;
-  const controlX = sameColumn ? startX + Math.max(48, Math.abs(endY - startY) / 2) : (startX + endX) / 2;
-  const controlY = sameColumn ? (startY + endY) / 2 : (startY + endY) / 2;
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const halfWidth = NODE_WIDTH / 2;
+  const halfHeight = NODE_HEIGHT / 2;
+  const horizontal = Math.abs(dx) > NODE_WIDTH * 0.75;
+  if (horizontal) {
+    const direction2 = Math.sign(dx);
+    const startX = from.x + direction2 * halfWidth;
+    const endX = to.x - direction2 * halfWidth;
+    const controlX2 = (startX + endX) / 2;
+    const controlY2 = (from.y + to.y) / 2;
+    return {
+      d: `M ${startX} ${from.y} Q ${controlX2} ${controlY2} ${endX} ${to.y}`,
+      label: {
+        x: 0.25 * startX + 0.5 * controlX2 + 0.25 * endX,
+        y: 0.25 * from.y + 0.5 * controlY2 + 0.25 * to.y
+      }
+    };
+  }
+  const direction = Math.sign(dy) || 1;
+  const startY = from.y + direction * halfHeight;
+  const endY = to.y - direction * halfHeight;
+  const bow = Math.max(48, Math.abs(endY - startY) / 2);
+  const controlX = (from.x + to.x) / 2 + bow;
+  const controlY = (startY + endY) / 2;
   return {
-    d: `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`,
+    d: `M ${from.x} ${startY} Q ${controlX} ${controlY} ${to.x} ${endY}`,
     label: {
-      x: 0.25 * startX + 0.5 * controlX + 0.25 * endX,
+      x: 0.25 * from.x + 0.5 * controlX + 0.25 * to.x,
       y: 0.25 * startY + 0.5 * controlY + 0.25 * endY
     }
   };
@@ -116,23 +134,23 @@ function NetworkGraph({
   style,
   ...rest
 }) {
-  const rawId = React.useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const rawId = _react2.default.useId().replace(/[^a-zA-Z0-9_-]/g, "");
   const descriptionId = `${rawId}-description`;
   const summaryId = `${rawId}-summary`;
-  const positions = React.useMemo(() => layoutNodes(nodes, layout), [layout, nodes]);
-  const nodeById = React.useMemo(
+  const positions = _react2.default.useMemo(() => layoutNodes(nodes, layout), [layout, nodes]);
+  const nodeById = _react2.default.useMemo(
     () => new Map(nodes.map((node) => [node.id, node])),
     [nodes]
   );
-  const edgeColors = React.useMemo(
+  const edgeColors = _react2.default.useMemo(
     () => [...new Set(edges.map((edge) => edge.color || edgeColor))].sort(),
     [edgeColor, edges]
   );
-  const markerId = React.useCallback(
+  const markerId = _react2.default.useCallback(
     (color) => `lds-network-arrow-${rawId}-${stableHash(color)}`,
     [rawId]
   );
-  const bounds = React.useMemo(() => {
+  const bounds = _react2.default.useMemo(() => {
     const values = [...positions.values()];
     if (!values.length) return { minX: 0, minY: 0, width: NODE_WIDTH, height: NODE_HEIGHT };
     const xs = values.map((point) => point.x);
@@ -147,10 +165,10 @@ function NetworkGraph({
   }, [positions]);
   const hasData = nodes.length > 0;
   const automaticSummary = hasData ? `\uB300\uC0C1 ${nodes.length}\uAC1C, \uAD00\uACC4 ${edges.length}\uAC1C. ${nodes.map((node) => nodeText(node.label) || node.id).join(", ")}` : nodeText(emptyLabel);
-  const resolvedSummary = summary ?? automaticSummary;
-  const [focusedId, setFocusedId] = React.useState(null);
-  const activeId = focusedId && nodeById.has(focusedId) ? focusedId : nodes[0]?.id;
-  const moveFocus = React.useCallback(
+  const resolvedSummary = _nullishCoalesce(summary, () => ( automaticSummary));
+  const [focusedId, setFocusedId] = _react2.default.useState(null);
+  const activeId = focusedId && nodeById.has(focusedId) ? focusedId : _optionalChain([nodes, 'access', _ => _[0], 'optionalAccess', _2 => _2.id]);
+  const moveFocus = _react2.default.useCallback(
     (fromId, delta) => {
       const order = nodes.map((node) => node.id);
       const index = order.indexOf(fromId);
@@ -158,14 +176,14 @@ function NetworkGraph({
       const next = order[(index + delta + order.length) % order.length];
       setFocusedId(next);
       const element = document.getElementById(`${rawId}-node-${stableHash(String(next))}`);
-      element?.focus();
+      _optionalChain([element, 'optionalAccess', _3 => _3.focus, 'call', _4 => _4()]);
     },
     [nodes, rawId]
   );
   function nodeKeyDown(event, node) {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      onSelectNode?.(node);
+      _optionalChain([onSelectNode, 'optionalCall', _5 => _5(node)]);
       return;
     }
     if (event.key === "ArrowRight" || event.key === "ArrowDown") {
@@ -183,16 +201,16 @@ function NetworkGraph({
       onToggleNode(node);
     }
   }
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       "data-chart-type": "network",
       style: { minWidth: 0, height, fontFamily: "var(--font-sans)", ...style },
       ...rest,
       children: [
-        description != null && /* @__PURE__ */ jsx(VisuallyHidden, { id: descriptionId, children: description }),
-        resolvedSummary != null && /* @__PURE__ */ jsx(VisuallyHidden, { id: summaryId, "data-chart-summary": true, children: resolvedSummary }),
-        !hasData ? /* @__PURE__ */ jsx(
+        description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: descriptionId, children: description }),
+        resolvedSummary != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: summaryId, "data-chart-summary": true, children: resolvedSummary }),
+        !hasData ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "data-chart-empty": true,
@@ -207,7 +225,7 @@ function NetworkGraph({
             },
             children: emptyLabel
           }
-        ) : /* @__PURE__ */ jsxs(
+        ) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "svg",
           {
             role: "group",
@@ -216,7 +234,7 @@ function NetworkGraph({
             viewBox: `${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`,
             style: { display: "block", width: "100%", height: "100%", overflow: "visible" },
             children: [
-              /* @__PURE__ */ jsx("defs", { children: edgeColors.map((color) => /* @__PURE__ */ jsx(
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "defs", { children: edgeColors.map((color) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "marker",
                 {
                   id: markerId(color),
@@ -226,19 +244,19 @@ function NetworkGraph({
                   refX: "7",
                   refY: "4",
                   orient: "auto",
-                  children: /* @__PURE__ */ jsx("path", { d: "M0,0 L8,4 L0,8 Z", fill: color })
+                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: "M0,0 L8,4 L0,8 Z", fill: color })
                 },
                 color
               )) }),
-              /* @__PURE__ */ jsx("g", { "data-network-edges": true, children: edges.map((edge) => {
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { "data-network-edges": true, children: edges.map((edge) => {
                 const path = edgePath(positions.get(edge.from), positions.get(edge.to));
                 if (!path) return null;
                 const color = edge.color || edgeColor;
-                const tone = EDGE_STATE_STYLE[edge.state] ?? EDGE_STATE_STYLE.normal;
+                const tone = _nullishCoalesce(EDGE_STATE_STYLE[edge.state], () => ( EDGE_STATE_STYLE.normal));
                 const selected = selectedEdgeId === edge.id;
                 const labelText = nodeText(edge.label);
-                return /* @__PURE__ */ jsxs("g", { "data-network-edge": edge.id, "data-state": edge.state ?? "normal", children: [
-                  /* @__PURE__ */ jsx(
+                return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { "data-network-edge": edge.id, "data-state": _nullishCoalesce(edge.state, () => ( "normal")), children: [
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "path",
                     {
                       d: path.d,
@@ -252,7 +270,7 @@ function NetworkGraph({
                   ),
                   onSelectEdge && /* 곡선은 누르기 어려우므로 투명한 넓은 선을 겹쳐 표적을
                      넓힌다. 이름은 아래 접근 가능한 요소가 갖는다. */
-                  /* @__PURE__ */ jsx(
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "path",
                     {
                       d: path.d,
@@ -266,7 +284,7 @@ function NetworkGraph({
                       onClick: () => onSelectEdge(edge)
                     }
                   ),
-                  labelText && /* @__PURE__ */ jsxs(
+                  labelText && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                     "text",
                     {
                       x: path.label.x,
@@ -285,21 +303,21 @@ function NetworkGraph({
                   )
                 ] }, edge.id);
               }) }),
-              /* @__PURE__ */ jsx("g", { "data-network-nodes": true, children: nodes.map((node) => {
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { "data-network-nodes": true, children: nodes.map((node) => {
                 const position = positions.get(node.id);
                 if (!position) return null;
                 const color = node.color || nodeColor;
-                const tone = NODE_STATE_STYLE[node.state] ?? NODE_STATE_STYLE.normal;
+                const tone = _nullishCoalesce(NODE_STATE_STYLE[node.state], () => ( NODE_STATE_STYLE.normal));
                 const selected = selectedNodeId === node.id;
                 const labelText = nodeText(node.label) || node.id;
                 const captionText = nodeText(node.caption);
                 const domId = `${rawId}-node-${stableHash(String(node.id))}`;
-                return /* @__PURE__ */ jsxs(
+                return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                   "g",
                   {
                     id: domId,
                     "data-network-node": node.id,
-                    "data-state": node.state ?? "normal",
+                    "data-state": _nullishCoalesce(node.state, () => ( "normal")),
                     "data-selected": selected ? "true" : void 0,
                     role: "button",
                     tabIndex: node.id === activeId ? 0 : -1,
@@ -309,11 +327,11 @@ function NetworkGraph({
                     transform: `translate(${position.x} ${position.y})`,
                     style: { cursor: onSelectNode ? "pointer" : "default", opacity: tone.opacity },
                     onFocus: () => setFocusedId(node.id),
-                    onClick: () => onSelectNode?.(node),
-                    onDoubleClick: () => onToggleNode?.(node),
+                    onClick: () => _optionalChain([onSelectNode, 'optionalCall', _6 => _6(node)]),
+                    onDoubleClick: () => _optionalChain([onToggleNode, 'optionalCall', _7 => _7(node)]),
                     onKeyDown: (event) => nodeKeyDown(event, node),
                     children: [
-                      /* @__PURE__ */ jsx(
+                      /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                         "rect",
                         {
                           x: -NODE_WIDTH / 2,
@@ -327,8 +345,8 @@ function NetworkGraph({
                           strokeDasharray: tone.strokeDasharray
                         }
                       ),
-                      /* @__PURE__ */ jsx("circle", { cx: -NODE_WIDTH / 2 + 18, cy: 0, r: 5, fill: color }),
-                      /* @__PURE__ */ jsx(
+                      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "circle", { cx: -NODE_WIDTH / 2 + 18, cy: 0, r: 5, fill: color }),
+                      /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                         "text",
                         {
                           x: -NODE_WIDTH / 2 + 32,
@@ -342,7 +360,7 @@ function NetworkGraph({
                           children: labelText
                         }
                       ),
-                      captionText && /* @__PURE__ */ jsx(
+                      captionText && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                         "text",
                         {
                           x: -NODE_WIDTH / 2 + 32,
@@ -357,8 +375,8 @@ function NetworkGraph({
                       ),
                       node.collapsedCount > 0 && /* 접힌 이웃의 개수. 눌러서 펼치는 동작은 노드 자신이
                          갖고(`aria-expanded`), 이 배지는 그 상태의 표시다. */
-                      /* @__PURE__ */ jsxs(Fragment, { children: [
-                        /* @__PURE__ */ jsx(
+                      /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
+                        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                           "circle",
                           {
                             cx: NODE_WIDTH / 2 - 14,
@@ -369,7 +387,7 @@ function NetworkGraph({
                             strokeWidth: 1
                           }
                         ),
-                        /* @__PURE__ */ jsx(
+                        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                           "text",
                           {
                             x: NODE_WIDTH / 2 - 14,
@@ -397,7 +415,7 @@ function NetworkGraph({
   );
 }
 
-export {
-  NetworkGraph
-};
-//# sourceMappingURL=chunk-OSFHP7QN.js.map
+
+
+exports.NetworkGraph = NetworkGraph;
+//# sourceMappingURL=chunk-SMAJRJIO.cjs.map

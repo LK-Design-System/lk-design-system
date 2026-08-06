@@ -1,7 +1,7 @@
 "use client";
 import {
   NetworkGraph
-} from "../../chunk-OSFHP7QN.js";
+} from "../../chunk-SCWZRZ5O.js";
 import "../../chunk-LSN3BTKD.js";
 export {
   NetworkGraph

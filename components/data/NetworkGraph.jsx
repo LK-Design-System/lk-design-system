@@ -102,22 +102,49 @@ function layoutNodes(nodes, layout) {
   return positions;
 }
 
+/*
+  엣지는 두 노드의 «마주 보는» 면에 붙어야 한다. 진행 방향을 보지 않고 늘
+  출발 노드의 오른쪽과 도착 노드의 왼쪽을 잡으면, 오른쪽에서 왼쪽으로 가는
+  관계가 두 노드를 관통하며 화면을 가로지른다. 배치가 층·열이어도 관계는
+  거꾸로 흐를 수 있다 — 개발자가 프로젝트에 기여하는 방향이 그렇다.
+*/
 function edgePath(from, to) {
   if (!from || !to) return null;
-  const startX = from.x + NODE_WIDTH / 2;
-  const startY = from.y;
-  const endX = to.x - NODE_WIDTH / 2;
-  const endY = to.y;
-  // 같은 열 안의 연결은 직선이면 노드를 관통하므로 바깥으로 부풀린다.
-  const sameColumn = Math.abs(startX - endX) < 1;
-  const controlX = sameColumn
-    ? startX + Math.max(48, Math.abs(endY - startY) / 2)
-    : (startX + endX) / 2;
-  const controlY = sameColumn ? (startY + endY) / 2 : (startY + endY) / 2;
+
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const halfWidth = NODE_WIDTH / 2;
+  const halfHeight = NODE_HEIGHT / 2;
+
+  // 가로 간격이 노드 폭보다 좁으면 좌우로 붙일 자리가 없어 위아래로 붙인다.
+  const horizontal = Math.abs(dx) > NODE_WIDTH * 0.75;
+
+  if (horizontal) {
+    const direction = Math.sign(dx);
+    const startX = from.x + direction * halfWidth;
+    const endX = to.x - direction * halfWidth;
+    const controlX = (startX + endX) / 2;
+    const controlY = (from.y + to.y) / 2;
+    return {
+      d: `M ${startX} ${from.y} Q ${controlX} ${controlY} ${endX} ${to.y}`,
+      label: {
+        x: 0.25 * startX + 0.5 * controlX + 0.25 * endX,
+        y: 0.25 * from.y + 0.5 * controlY + 0.25 * to.y,
+      },
+    };
+  }
+
+  const direction = Math.sign(dy) || 1;
+  const startY = from.y + direction * halfHeight;
+  const endY = to.y - direction * halfHeight;
+  // 같은 칸에 세로로 이웃한 노드는 직선이면 사이의 노드를 관통하므로 옆으로 부풀린다.
+  const bow = Math.max(48, Math.abs(endY - startY) / 2);
+  const controlX = (from.x + to.x) / 2 + bow;
+  const controlY = (startY + endY) / 2;
   return {
-    d: `M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`,
+    d: `M ${from.x} ${startY} Q ${controlX} ${controlY} ${to.x} ${endY}`,
     label: {
-      x: 0.25 * startX + 0.5 * controlX + 0.25 * endX,
+      x: 0.25 * from.x + 0.5 * controlX + 0.25 * to.x,
       y: 0.25 * startY + 0.5 * controlY + 0.25 * endY,
     },
   };
