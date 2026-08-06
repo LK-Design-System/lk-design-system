@@ -667,3 +667,58 @@ export const DegenerateInput = {
     }
   },
 };
+
+/*
+  규모가 커졌을 때. 여기서 지키는 것은 그림이 아니라 «요약»이다 — 보조기술
+  사용자가 그림을 훑지 않고도 규모를 알게 하려던 장치가, 이름을 전부 이어
+  붙이는 바람에 훑는 것보다 오래 걸리는 일이 되어 있었다.
+*/
+export const LargeGraph = {
+  name: '배치 · 규모가 큰 관계도',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '자동 요약은 «규모»를 말하고 내용을 옮겨 적지 않습니다. 앞의 열 개만 이름으로 부르고 나머지는 수로 말합니다 — 하나하나의 이름은 그 노드에 닿았을 때 노드가 말합니다.',
+      },
+    },
+  },
+  render: () => (
+    <main style={{ width: 'min(760px, 100%)' }}>
+      <NetworkGraph
+        label="규모가 큰 관계도"
+        nodeShape="dot"
+        layout="force"
+        height={420}
+        nodes={Array.from({ length: 24 }, (_, index) => ({
+          id: `n${index}`,
+          label: `대상 ${index + 1}`,
+          caption: index % 3 === 0 ? '시스템' : '프로젝트',
+          color: index % 3 === 0 ? '#c2410c' : '#2563eb',
+          root: index === 0,
+        }))}
+        edges={Array.from({ length: 23 }, (_, index) => ({
+          id: `e${index}`,
+          from: `n${Math.floor(index / 3)}`,
+          to: `n${index + 1}`,
+        }))}
+        showEdgeLabels={false}
+        onSelectNode={() => {}}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const summary = canvasElement.querySelector('[data-chart-summary]')?.textContent ?? '';
+    if (!summary.startsWith('대상 24개, 관계 23개.')) {
+      throw new Error(`The summary must lead with scale (got "${summary.slice(0, 40)}").`);
+    }
+    /* 이름을 전부 부르지 않는다. 24개를 다 부르면 요약이 아니라 목록이다. */
+    const named = summary.split('.').slice(1).join('.').split(',').length;
+    if (named > 11) {
+      throw new Error(`The summary must not name every node (named ${named}).`);
+    }
+    if (!/외 \d+개/.test(summary)) {
+      throw new Error('The summary must say how many nodes it did not name.');
+    }
+  },
+};

@@ -35,6 +35,7 @@ var CAPTION_FONT_SIZE = 12;
 var NARROW_RATIO = 0.55;
 var DOT_LABEL_MAX_WIDTH = 168;
 var CUE_MIN_TARGET = 24;
+var SUMMARY_NAME_LIMIT = 10;
 var LINE_HEIGHT_RATIO = 1.35;
 function lineHeight(fontSize) {
   return fontSize * LINE_HEIGHT_RATIO;
@@ -656,7 +657,13 @@ function NetworkGraph({
     return placeEdgeLabels(entries, obstacles);
   }, [anchors, edges, fittedCaptionWidth, fittedLabelWidth, isDot, metrics, nodeShape, nodes, showEdgeLabels]);
   const hasData = nodes.length > 0;
-  const automaticSummary = hasData ? `\uB300\uC0C1 ${nodes.length}\uAC1C, \uAD00\uACC4 ${edges.length}\uAC1C. ${nodes.map((node) => nodeText(node.label) || node.id).join(", ")}` : nodeText(emptyLabel);
+  const automaticSummary = hasData ? (() => {
+    const names = nodes.map((node) => nodeText(node.label) || node.id);
+    const shown = names.slice(0, SUMMARY_NAME_LIMIT);
+    const rest2 = names.length - shown.length;
+    const listed = rest2 > 0 ? `${shown.join(", ")} \uC678 ${rest2}\uAC1C` : shown.join(", ");
+    return `\uB300\uC0C1 ${nodes.length}\uAC1C, \uAD00\uACC4 ${edges.length}\uAC1C. ${listed}`;
+  })() : nodeText(emptyLabel);
   const resolvedSummary = summary ?? automaticSummary;
   const [focusedKey, setFocusedKey] = React.useState(null);
   const isRootNode = React.useCallback(
@@ -1137,4 +1144,4 @@ function NetworkGraph({
 export {
   NetworkGraph
 };
-//# sourceMappingURL=chunk-YJ6NQ37E.js.map
+//# sourceMappingURL=chunk-5637LIXE.js.map

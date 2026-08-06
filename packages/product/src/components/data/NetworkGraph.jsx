@@ -71,6 +71,8 @@ const NARROW_RATIO = 0.55;
 const DOT_LABEL_MAX_WIDTH = 168;
 /** 펼치기 큐가 «눌리는» 최소 크기. WCAG 2.2 «Target Size (Minimum)»의 24px. */
 const CUE_MIN_TARGET = 24;
+/** 자동 요약이 이름으로 부르는 대상의 수. 나머지는 수로 말한다. */
+const SUMMARY_NAME_LIMIT = 10;
 
 /* 한 줄이 세로로 차지하는 자리. 글꼴 크기에서 나와야 한다 — 숫자를 따로 적어
    두면 글꼴이 바뀔 때 라벨이 피하는 상자만 옛 크기에 남는다. */
@@ -982,10 +984,23 @@ export function NetworkGraph({
   }, [anchors, edges, fittedCaptionWidth, fittedLabelWidth, isDot, metrics, nodeShape, nodes, showEdgeLabels]);
 
   const hasData = nodes.length > 0;
+  /*
+    요약이 하는 일은 «규모»를 알려 주는 것이지 내용을 옮겨 적는 것이 아니다.
+    이름을 전부 이어 붙이면 노드 300개짜리 그림에서 3,200자가 되어, 사용자가
+    아직 아무것도 하지 않았는데 이름 300개를 끝까지 듣게 된다 — 그림을 훑지
+    않아도 되게 하려던 것이 훑는 것보다 오래 걸리는 일이 된다.
+
+    그래서 앞의 몇 개만 이름으로 말하고 나머지는 수로 말한다. 하나하나의
+    이름은 노드에 닿았을 때 그 노드가 말한다.
+  */
   const automaticSummary = hasData
-    ? `대상 ${nodes.length}개, 관계 ${edges.length}개. ${nodes
-      .map((node) => nodeText(node.label) || node.id)
-      .join(', ')}`
+    ? (() => {
+      const names = nodes.map((node) => nodeText(node.label) || node.id);
+      const shown = names.slice(0, SUMMARY_NAME_LIMIT);
+      const rest = names.length - shown.length;
+      const listed = rest > 0 ? `${shown.join(', ')} 외 ${rest}개` : shown.join(', ');
+      return `대상 ${nodes.length}개, 관계 ${edges.length}개. ${listed}`;
+    })()
     : nodeText(emptyLabel);
   const resolvedSummary = summary ?? automaticSummary;
 
