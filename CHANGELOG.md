@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.47 - 2026-08-06
+
+### Fixed
+
+- `NetworkGraph`의 포커스가 «보입니다». 순회의 모든 자리(노드와 펼치기 큐)가 `:focus-visible`에서 켜지는 링을 갖습니다. 종전에는 포커스가 가도 `outline`이 `none`이라 화면에 아무 표시가 없었습니다 — 거의 전부가 키보드 계약인 컴포넌트에서 자기 자리를 볼 수 없었습니다(WCAG 2.4.7). 선택 링과 다른 색을 씁니다: 「지금 여기 있다」와 「이것을 골랐다」는 다른 말입니다.
+
 ## 0.1.0-rc.46 - 2026-08-06
 
 ### Fixed
