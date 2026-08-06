@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkVJ3BWEFWcjs = require('../../chunk-VJ3BWEFW.cjs');
+var _chunkAKGQEGWOcjs = require('../../chunk-AKGQEGWO.cjs');
 require('../../chunk-677EM4M2.cjs');
 
 
-exports.NetworkGraph = _chunkVJ3BWEFWcjs.NetworkGraph;
+exports.NetworkGraph = _chunkAKGQEGWOcjs.NetworkGraph;
 //# sourceMappingURL=NetworkGraph.cjs.map

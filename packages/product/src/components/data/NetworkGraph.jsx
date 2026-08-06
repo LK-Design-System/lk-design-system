@@ -1527,12 +1527,26 @@ export function NetworkGraph({
                         />
                       )}
                       {selected && (
+                        /*
+                          「이것을 골랐다」는 표시.
+
+                          종전에는 노드의 유형 색을 40% 불투명도로 둘렀다.
+                          범주와 이어져 보기에는 좋았지만, 배경 대비가
+                          1.6:1까지 떨어져 사실상 보이지 않았다 — 비텍스트
+                          표시가 지켜야 하는 3:1의 절반이다.
+
+                          색을 «앱이 소유»하는 것이 문제의 핵심이다. 어떤 색이
+                          올지 모르는데 그 색에 대비를 맡길 수는 없다. 그래서
+                          선택 링은 글자와 같은 강한 중립색으로 긋는다 — 어떤
+                          팔레트가 와도 읽힌다. 무엇을 골랐는지는 그 링 «안»의
+                          채움색이 이미 말하고 있다.
+                        */
                         <circle
-                          r={radius + 5}
+                          data-network-selected-ring
+                          r={radius + 4}
                           fill="none"
-                          stroke={color}
+                          stroke="var(--color-semantic-label-strong)"
                           strokeWidth={2}
-                          opacity={0.4}
                         />
                       )}
                       <circle
@@ -1593,6 +1607,23 @@ export function NetworkGraph({
                        있어야 연결이 어디로 들고 나는지 읽히고, 흐름이 한 방향
                        으로 정렬된다. */
                     <>
+                      {selected && (
+                        /* 점 관행과 같은 이유로 강한 중립색이다. 테두리를
+                           1.5에서 2.5로 굵히는 것만으로는 「골랐다」가 서지
+                           않는다 — 색이 앱 소유라 굵기 차이가 어떤 팔레트에서
+                           얼마나 보일지 이 컴포넌트가 알 수 없다. */
+                        <rect
+                          data-network-selected-ring
+                          x={-metrics.width / 2 - 4}
+                          y={-metrics.height / 2 - 4}
+                          width={metrics.width + 8}
+                          height={metrics.height + 8}
+                          rx="var(--radius-md)"
+                          fill="none"
+                          stroke="var(--color-semantic-label-strong)"
+                          strokeWidth={2}
+                        />
+                      )}
                       <rect
                         x={-metrics.width / 2}
                         y={-metrics.height / 2}

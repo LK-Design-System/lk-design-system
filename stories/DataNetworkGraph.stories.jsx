@@ -51,6 +51,25 @@ function assertFocusableNodes(canvasElement, label) {
     보이지 않는가」다. «언제» 켜지는지는 `:focus-visible`에 맡겼고, 그것은
     브라우저의 신뢰된 입력에서만 켜지므로 스토리에서 재현할 수 없다.
   */
+  /*
+    「골랐다」도 보여야 한다. 종전에는 유형 색을 40% 불투명도로 둘렀는데 배경
+    대비가 1.6:1까지 떨어져 사실상 보이지 않았다 — 비텍스트 표시의 3:1의 절반
+    이다. 색을 «앱이 소유»하는 것이 문제의 핵심이므로, 어떤 팔레트가 와도
+    읽히도록 강한 중립색으로 긋는다. 무엇을 골랐는지는 링 안의 채움색이 이미
+    말한다.
+  */
+  Array.from(canvasElement.querySelectorAll('[data-network-selected-ring]')).forEach((ring) => {
+    const stroke = getComputedStyle(ring).stroke;
+    const owner = ring.closest('[data-network-node]');
+    const body = owner?.querySelector('[data-network-node-body]');
+    if (body && stroke === getComputedStyle(body).fill) {
+      throw new Error(`${label}: selection must not lean on the app-owned category colour for its contrast.`);
+    }
+    if (Number(getComputedStyle(ring).opacity) < 1) {
+      throw new Error(`${label}: a selection indicator must not be drawn at reduced opacity.`);
+    }
+  });
+
   stops.forEach((stop) => {
     const ring = stop.querySelector('[data-network-focus-ring]');
     if (!ring) {
@@ -129,6 +148,8 @@ const knowledgeColor = {
   project: 'var(--color-semantic-primary-normal)',
   system: 'var(--color-semantic-accent-foreground-orange)',
   developer: 'var(--color-semantic-accent-foreground-purple)',
+  repository: 'var(--color-semantic-accent-foreground-cyan)',
+  document: 'var(--color-semantic-accent-foreground-green)',
 };
 
 const pipelineColor = {
@@ -533,9 +554,9 @@ export const ForceLayout = {
   그 자체다.
 */
 const hiddenNeighbours = [
-  { id: 'repo-portal', label: 'lk_portal', caption: '리포지토리', color: '#0e7490', size: 2 },
-  { id: 'repo-pet', label: 'pet', caption: '리포지토리', color: '#0e7490', size: 1 },
-  { id: 'doc-runbook', label: '운영 런북', caption: '문서', color: '#15803d', size: 1 },
+  { id: 'repo-portal', label: 'lk_portal', caption: '리포지토리', color: knowledgeColor.repository, size: 2 },
+  { id: 'repo-pet', label: 'pet', caption: '리포지토리', color: knowledgeColor.repository, size: 1 },
+  { id: 'doc-runbook', label: '운영 런북', caption: '문서', color: knowledgeColor.document, size: 1 },
 ];
 
 const hiddenEdges = [
@@ -652,9 +673,9 @@ export const DegenerateInput = {
         layout="force"
         height={360}
         nodes={[
-          { id: 'hub', label: '스케줄러', caption: '시스템', color: '#c2410c', root: true },
+          { id: 'hub', label: '스케줄러', caption: '시스템', color: knowledgeColor.system, root: true },
           { id: 'hub', label: '중복된 스케줄러', caption: '버려집니다' },
-          { id: 'job', label: '집계 작업', caption: '작업', color: '#2563eb', depth: 1 },
+          { id: 'job', label: '집계 작업', caption: '작업', color: knowledgeColor.project, depth: 1 },
         ]}
         edges={[
           { id: 'self-1', from: 'hub', to: 'hub', label: '자신을 다시 부름' },
@@ -738,7 +759,7 @@ export const LargeGraph = {
           id: `n${index}`,
           label: `대상 ${index + 1}`,
           caption: index % 3 === 0 ? '시스템' : '프로젝트',
-          color: index % 3 === 0 ? '#c2410c' : '#2563eb',
+          color: index % 3 === 0 ? knowledgeColor.system : knowledgeColor.project,
           root: index === 0,
         }))}
         edges={Array.from({ length: 23 }, (_, index) => ({

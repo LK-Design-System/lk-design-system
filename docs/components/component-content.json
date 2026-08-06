@@ -11196,8 +11196,8 @@
         "--color-semantic-background-elevated-normal",
         "--color-semantic-focus-indicator",
         "--radius-md",
-        "--fw-bold",
         "--color-semantic-label-strong",
+        "--fw-bold",
         "--color-semantic-background-normal-alternative",
         "--color-semantic-label-neutral"
       ],
