@@ -229,3 +229,93 @@ export const EmptyGraph = {
     }
   },
 };
+
+/*
+  같은 데이터를 업계의 두 관행으로 나란히 그린다. 이 스토리의 목적은 «고르기»다
+  — 어느 쪽이 예쁜지가 아니라, 이 화면이 무엇을 읽히려는 화면인지에 따라 답이
+  정해진다는 것을 눈으로 확인하는 자리다.
+*/
+const sameNodes = [
+  { id: 'portal', label: 'LK Portal', caption: '프로젝트', color: knowledgeColor.project, root: true, column: 0, size: 9 },
+  { id: 'gateway', label: 'Context Gateway', caption: '시스템', color: knowledgeColor.system, depth: 1, column: 1, size: 5 },
+  { id: 'wiki', label: 'Semantic Wiki', caption: '시스템', color: knowledgeColor.system, depth: 1, column: 1, size: 4 },
+  { id: 'jin', label: '장진혁', caption: '개발자', color: knowledgeColor.developer, depth: 1, column: 1, size: 3, collapsedCount: 3 },
+  { id: 'pet', label: 'PET Collector', caption: '프로젝트', color: knowledgeColor.project, depth: 2, column: 2, size: 6 },
+  { id: 'vision', label: 'Vision Automation', caption: '프로젝트', color: knowledgeColor.project, depth: 2, column: 2, size: 2 },
+];
+
+const sameEdges = [
+  { id: 'c1', from: 'portal', to: 'gateway', label: '사용함' },
+  { id: 'c2', from: 'portal', to: 'wiki', label: '사용함' },
+  { id: 'c3', from: 'jin', to: 'portal', label: '기여함', count: 4 },
+  { id: 'c4', from: 'gateway', to: 'pet', label: '수집함' },
+  { id: 'c5', from: 'gateway', to: 'vision', label: '수집함' },
+];
+
+function ConventionPanel({ title, note, children }) {
+  return (
+    <section style={{ minWidth: 0, background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)' }}>
+      <h3 style={{ margin: 0, fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)' }}>{title}</h3>
+      <p style={{ margin: 'var(--space-1) 0 var(--space-4)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: 'var(--color-semantic-label-alternative)' }}>{note}</p>
+      {children}
+    </section>
+  );
+}
+
+export const ConventionComparison = {
+  name: '관행 비교 · 노드-링크와 플로우 에디터',
+  parameters: storyDescription(
+    '같은 데이터를 업계의 두 관행으로 나란히 그린 상황입니다. 어느 쪽이 이 데이터를 더 잘 읽히게 하는지 비교하세요 — 연결 구조를 읽는 화면인지, 각 단계가 무엇을 하는지 읽는 화면인지에 따라 답이 갈립니다.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-5)', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', width: 'min(1100px, 100%)' }}>
+      <ConventionPanel
+        title="노드-링크 다이어그램 — nodeShape=&quot;dot&quot;"
+        note="Neo4j Bloom · Gephi · Obsidian 계열. 색이 찬 원과 바깥 라벨. 색은 범주, 반지름은 양. 노드가 작아 연결 구조가 먼저 읽힙니다."
+      >
+        <NetworkGraph
+          label="회사 지식망 · 노드-링크"
+          nodeShape="dot"
+          layout="layered"
+          height={340}
+          nodes={sameNodes}
+          edges={sameEdges}
+          onSelectNode={() => {}}
+          onToggleNode={() => {}}
+        />
+      </ConventionPanel>
+
+      <ConventionPanel
+        title="플로우 에디터 — nodeShape=&quot;card&quot;"
+        note="n8n · React Flow · Node-RED 계열. 이름을 담는 카드와 좌우 포트. 각 단계가 무엇을 하는지 먼저 읽히고, 흐름이 한 방향으로 정렬됩니다."
+      >
+        <NetworkGraph
+          label="회사 지식망 · 플로우 에디터"
+          nodeShape="card"
+          layout="columns"
+          height={340}
+          nodes={sameNodes}
+          edges={sameEdges}
+          onSelectNode={() => {}}
+          onToggleNode={() => {}}
+        />
+      </ConventionPanel>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const graphs = canvasElement.querySelectorAll('[data-chart-type="network"]');
+    if (graphs.length !== 2) throw new Error('Comparison must render both conventions side by side.');
+
+    // dot 관행의 핵심: 반지름이 양을 인코딩한다. 값이 다르면 원도 달라야 한다.
+    const circles = Array.from(graphs[0].querySelectorAll('[data-network-node-body]'))
+      .map((c) => Number(c.getAttribute('r')));
+    if (new Set(circles).size < 2) {
+      throw new Error('Node-link convention must encode size, otherwise the radius carries no data.');
+    }
+
+    // card 관행의 핵심: 연결이 정해진 포트로 들고 난다.
+    if (!graphs[1].querySelector('[data-network-port]')) {
+      throw new Error('Flow-editor convention must expose ports, or connections have no declared entry and exit.');
+    }
+  },
+};

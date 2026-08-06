@@ -26,6 +26,17 @@ export type NetworkGraphEdgeState =
  */
 export type NetworkGraphLayout = 'layered' | 'columns' | 'manual';
 
+/**
+ * 관계도 UI의 두 관행. 장르를 섞으면 둘 다 실패합니다.
+ * - `dot`: 노드-링크 다이어그램(Neo4j Bloom · Gephi · Obsidian 계열). 색이 찬
+ *   원과 바깥 라벨. 색은 범주, 반지름은 `size`가 정하는 양을 인코딩합니다.
+ *   연결 **구조**를 읽는 것이 목적일 때 — 지식 그래프, 의존성 탐색.
+ * - `card`: 플로우 에디터(n8n · React Flow · Node-RED 계열). 이름을 담는 카드와
+ *   좌우 포트. 각 단계가 **무엇을 하는가**를 읽는 것이 목적일 때 — 파이프라인,
+ *   워크플로.
+ */
+export type NetworkGraphNodeShape = 'dot' | 'card';
+
 export interface NetworkGraphNode {
   id: string;
   label: React.ReactNode;
@@ -42,7 +53,10 @@ export interface NetworkGraphNode {
   root?: boolean;
   /** `layered` 배치에서 뿌리로부터의 거리. */
   depth?: number;
-  /** 접혀 있는 이웃의 수. 0보다 크면 배지로 표시하고 `aria-expanded`가 따라갑니다. */
+  /** `dot`에서 반지름이 인코딩할 양. 넓이가 값에 비례하도록 제곱근으로 매핑합니다. */
+  size?: number;
+  /** 접혀 있는 이웃의 수. 0보다 크면 노드 왼쪽 위에 `+N` 확장 큐를 그리고,
+      접근 가능한 이름과 `aria-expanded`가 함께 따라갑니다. */
   collapsedCount?: number;
   /** `manual` 배치에서의 좌표. */
   x?: number;
@@ -68,6 +82,10 @@ export interface NetworkGraphProps extends Omit<React.HTMLAttributes<HTMLDivElem
   edges?: NetworkGraphEdge[];
   /** @default "layered" */
   layout?: NetworkGraphLayout;
+  /** 노드를 어느 관행으로 그릴지. @default "card" */
+  nodeShape?: NetworkGraphNodeShape;
+  /** 관계 라벨을 그릴지. 노드가 많으면 꺼서 구조만 남깁니다. @default true */
+  showEdgeLabels?: boolean;
   /** 노드에 색이 없을 때 쓰는 기본값. */
   nodeColor?: string;
   /** 관계에 색이 없을 때 쓰는 기본값. */
