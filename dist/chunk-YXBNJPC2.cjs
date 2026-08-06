@@ -31,7 +31,7 @@ function CanvasEditorDockRegion({
   style,
   children
 }) {
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "div",
     {
       className,
@@ -39,7 +39,7 @@ function CanvasEditorDockRegion({
         if (event.key === "Escape") reasonRef.current = "escape";
       },
       style: { minWidth: 0, minHeight: 0, zIndex: 2, ...style },
-      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
         _chunkIWL3UL3Acjs.DockPanel,
         {
           side,
@@ -134,7 +134,7 @@ function CanvasEditorShell({
     layersReasonRef.current = "toggle";
     setLayersOpen(open, reason);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       className: rootClassName,
@@ -157,7 +157,7 @@ function CanvasEditorShell({
       },
       ...rest,
       children: [
-        hasHeader && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        hasHeader && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "header",
           {
             className: "lk-canvas-editor-shell__header",
@@ -183,7 +183,7 @@ function CanvasEditorShell({
         ),
         subheader != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-canvas-editor-shell__subheader", style: { flexShrink: 0 }, children: subheader }),
         responsiveNavigation != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-canvas-editor-shell__responsive-navigation", style: { flexShrink: 0 }, children: responsiveNavigation }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             className: bodyClass,
@@ -200,7 +200,7 @@ function CanvasEditorShell({
               overflow: "hidden"
             },
             children: [
-              hasTools && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              hasTools && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "div",
                 {
                   role: "group",
@@ -210,7 +210,7 @@ function CanvasEditorShell({
                   children: tools
                 }
               ),
-              hasLayers && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              hasLayers && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 CanvasEditorDockRegion,
                 {
                   className: "lk-canvas-editor-shell__layers",
@@ -227,7 +227,7 @@ function CanvasEditorShell({
                   children: layers
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "section",
                 {
                   className: "lk-canvas-editor-shell__canvas",
@@ -236,7 +236,7 @@ function CanvasEditorShell({
                   children
                 }
               ),
-              hasPanel && !isPanelDrawer && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              hasPanel && !isPanelDrawer && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 CanvasEditorDockRegion,
                 {
                   className: "lk-canvas-editor-shell__panel lk-canvas-editor-shell__panel--docked",
@@ -253,7 +253,7 @@ function CanvasEditorShell({
                   children: panel
                 }
               ),
-              hasPanel && isPanelDrawer && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              hasPanel && isPanelDrawer && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 CanvasEditorDockRegion,
                 {
                   className: "lk-canvas-editor-shell__panel lk-canvas-editor-shell__panel--drawer",
@@ -274,7 +274,7 @@ function CanvasEditorShell({
             ]
           }
         ),
-        status != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        status != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "div",
           {
             role: "group",

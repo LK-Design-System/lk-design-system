@@ -41,7 +41,7 @@ function ListingCard({
   const statusName = typeof status === "string" && status.trim() ? status.trim() : null;
   const resolvedLabel = _nullishCoalesce(ariaLabel, () => ( (titleName ? [titleName, altName, statusName].filter(Boolean).join(". ") : void 0)));
   const rows = Array.isArray(meta) ? meta.filter(Boolean) : [];
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "a",
     {
       href,

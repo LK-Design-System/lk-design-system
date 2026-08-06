@@ -66,7 +66,7 @@ function PageIndicator({
       background: dotBackground(active),
       transition: media ? "width var(--dur-base) var(--ease-out)" : void 0
     });
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "div",
       {
         role: "group",
@@ -84,7 +84,7 @@ function PageIndicator({
         children: interactive ? Array.from({ length: total }).map((_, index) => {
           const p = index + 1;
           const active = p === current;
-          return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "button",
             {
               type: "button",
@@ -107,7 +107,7 @@ function PageIndicator({
                 justifyContent: "center",
                 cursor: media && active ? "default" : "pointer"
               },
-              children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "span",
                 {
                   "aria-hidden": "true",
@@ -120,7 +120,7 @@ function PageIndicator({
           );
         }) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: srOnlyStyle, children: `${current}\uBC88\uC9F8 / \uC804\uCCB4 ${total}` }),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "span",
             {
               "aria-hidden": "true",
@@ -132,7 +132,7 @@ function PageIndicator({
               children: Array.from({ length: total }).map((_, index) => {
                 const p = index + 1;
                 const active = p === current;
-                return media ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                return media ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "span",
                   {
                     style: {
@@ -142,7 +142,7 @@ function PageIndicator({
                       alignItems: "center",
                       justifyContent: "center"
                     },
-                    children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                    children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                       "span",
                       {
                         "data-lds-page-indicator-dot": active ? "active" : "inactive",
@@ -151,7 +151,7 @@ function PageIndicator({
                     )
                   },
                   p
-                ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "span",
                   {
                     "data-lds-page-indicator-dot": active ? "active" : "inactive",
@@ -167,7 +167,7 @@ function PageIndicator({
     );
   }
   const s = COUNTER_SIZE[size] || COUNTER_SIZE.medium;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "span",
     {
       "data-page-indicator-presentation": "standalone",

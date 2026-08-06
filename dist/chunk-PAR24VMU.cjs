@@ -49,7 +49,7 @@ function ExpandableText({
   };
   const clampStyle = expanded ? null : { display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: lines, overflow: "hidden" };
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style, ...rest, children: [
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       Tag,
       {
         ref: textRef,
@@ -68,7 +68,7 @@ function ExpandableText({
         children
       }
     ),
-    overflowing && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    overflowing && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "button",
       {
         type: "button",

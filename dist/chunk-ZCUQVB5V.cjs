@@ -30,7 +30,7 @@ function Divider({
   const semantics = decorative ? decorativeProps : null;
   const verticalSemantics = decorative ? decorativeProps : { role: "separator", "aria-orientation": "vertical" };
   if (vertical) {
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "span",
       {
         ...verticalSemantics,
@@ -48,7 +48,7 @@ function Divider({
   }
   if (label != null) {
     const rule = { flex: 1, height: thickness, background: color };
-    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
       "div",
       {
         ...decorative ? decorativeProps : {
@@ -61,7 +61,7 @@ function Divider({
         ...rest,
         children: [
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: rule }),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "span",
             {
               style: {
@@ -80,7 +80,7 @@ function Divider({
       }
     );
   }
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "hr",
     {
       ...semantics,
@@ -126,7 +126,7 @@ function HistoryToolbar({
   ];
   const enabledActions = actions.filter((action) => action.enabled);
   const preferredKey = _optionalChain([enabledActions, 'access', _ => _[0], 'optionalAccess', _2 => _2.key]);
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     _chunk3VE2HGTTcjs.Toolbar,
     {
       role,
@@ -152,7 +152,7 @@ function HistoryToolbar({
       ...rest,
       children: actions.map((action, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
         action.key === "reset" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Divider, { vertical: true, style: { minHeight: size === "md" ? 24 : 20, marginInline: "var(--space-1)", alignSelf: "center" } }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunk3H3EZZTFcjs.IconButton,
           {
             "data-history-index": index,

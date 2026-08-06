@@ -147,7 +147,7 @@ function TreeNode({
       focusTreeItem(target, setFocusKey);
     }
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       role: "treeitem",
@@ -186,7 +186,7 @@ function TreeNode({
       },
       style: { outline: "none" },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             style: {
@@ -219,7 +219,7 @@ function TreeNode({
                 node.description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption2-size)", lineHeight: 1.35, fontWeight: "var(--fw-medium)", overflowWrap: "anywhere" }, children: node.description })
               ] }),
               node.meta != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { marginLeft: "auto", flex: "0 1 auto", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", fontWeight: "var(--fw-medium)" }, children: node.meta }),
-              node.end != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              node.end != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "span",
                 {
                   "data-tree-row-end": "",
@@ -232,7 +232,7 @@ function TreeNode({
             ]
           }
         ),
-        has && open && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "group", children: node.children.map((child, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        has && open && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "group", children: node.children.map((child, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           TreeNode,
           {
             node: child,
@@ -331,7 +331,7 @@ var Tree = _react2.default.forwardRef(function Tree2({
       focusTreeItem(visibleItem, setFocusKey);
     }
   }), [expandedSet, nodes]);
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "div",
     {
       ref: treeRef,
@@ -339,7 +339,7 @@ var Tree = _react2.default.forwardRef(function Tree2({
       "aria-label": _nullishCoalesce(_nullishCoalesce(ariaLabel, () => ( htmlAriaLabel)), () => ( (rest["aria-labelledby"] == null ? "Hierarchy" : void 0))),
       style: { display: "grid", gap: "var(--space-0-5)", fontFamily: "var(--font-sans)", ...style },
       ...rest,
-      children: nodes.map((node, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      children: nodes.map((node, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
         TreeNode,
         {
           node,

@@ -54,7 +54,7 @@ function MultiToggleSegment({ option, active, first, last, sizeStyle, disabled, 
   const blocked = disabled || option.disabled || option.disable;
   const restingBackground = active ? "var(--color-semantic-primary-surface-strong)" : "var(--color-semantic-background-elevated-normal)";
   const interactiveBackground = pressed ? `color-mix(in srgb, ${restingBackground} 88%, var(--color-semantic-label-normal))` : hover && !active ? "var(--color-semantic-fill-alternative)" : restingBackground;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "button",
     {
       type: "button",
@@ -143,7 +143,7 @@ function ButtonGroup({
     "[LDS] ButtonGroup: \uADF8\uB8F9\uC758 \uBAA9\uC801\uC744 \uC124\uBA85\uD558\uB294 aria-label(\uB610\uB294 aria-labelledby)\uC774 \uD544\uC694\uD569\uB2C8\uB2E4. \uC774\uB984\uC774 \uC5C6\uC73C\uBA74 \uBCF4\uC870 \uAE30\uC220\uC5D0 \uBAA9\uC801\uC744 \uC54C \uC218 \uC5C6\uB294 \uADF8\uB8F9\uC73C\uB85C \uB178\uCD9C\uB429\uB2C8\uB2E4."
   );
   if (!multiple) {
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       _chunkFA32RMMScjs.SegmentedControl,
       {
         options: norm,
@@ -168,7 +168,7 @@ function ButtonGroup({
     _optionalChain([onChange, 'optionalCall', _ => _(next)]);
   };
   const sizeStyle = SIZE_STYLES[normalizedSize] || SIZE_STYLES.md;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "div",
     {
       ...rest,
@@ -177,7 +177,7 @@ function ButtonGroup({
       "aria-disabled": disabledState || void 0,
       className: ["lk-button-group", className].filter(Boolean).join(" "),
       style: { display: "inline-flex", alignItems: "stretch", height: sizeStyle.height, boxSizing: "border-box", ...style },
-      children: norm.map((option, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      children: norm.map((option, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
         MultiToggleSegment,
         {
           option,

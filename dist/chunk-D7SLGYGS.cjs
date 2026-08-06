@@ -33,7 +33,7 @@ function Callout({ tone = "signal", title, headingLevel = false, children, icon,
   const defaultIcon = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: palette.icon, size: ICON_SIZE });
   const normalizedIcon = normalizeIcon(icon, defaultIcon);
   const Heading = headingLevel ? `h${headingLevel}` : "div";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       style: {
@@ -50,7 +50,7 @@ function Callout({ tone = "signal", title, headingLevel = false, children, icon,
       },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "span",
           {
             "aria-hidden": "true",

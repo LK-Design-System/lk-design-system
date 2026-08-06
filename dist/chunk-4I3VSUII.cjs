@@ -59,7 +59,7 @@ function Fab({
     /* `rest` is spread FIRST — matching Button and IconButton — so the
        component's own type, accessible name, disabled semantics, and handlers
        cannot be silently clobbered by a consumer prop. */
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "button",
       {
         ...rest,

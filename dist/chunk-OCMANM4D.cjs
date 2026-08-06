@@ -26,7 +26,7 @@ function Notification({
   const [focused, setFocused] = _react2.default.useState(false);
   const Root = onClick ? "button" : "div";
   const background = unread ? hovered ? "var(--color-semantic-primary-surface-strong)" : "var(--component-notification-unread-surface)" : hovered ? "var(--color-semantic-fill-alternative)" : "transparent";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     Root,
     {
       ...rest,
@@ -69,7 +69,7 @@ function Notification({
         ...style
       },
       children: [
-        icon != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        icon != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "span",
           {
             "aria-hidden": "true",

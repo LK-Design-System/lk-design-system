@@ -5,7 +5,7 @@ var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 var _jsxruntime = require('react/jsx-runtime');
 function SpecRow({ label, value, labelWidth = "34%", divider = true, grouped = false, style, ...rest }) {
   const Row = grouped ? "div" : "dl";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     Row,
     {
       style: {

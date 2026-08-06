@@ -54,7 +54,7 @@ function FileUploadQueue({
   const isGrid = layout === "grid";
   const summary = queueSummary(items);
   const summaryLabel = summary.length > 0 ? summary.map((group) => `${group.label} ${group.count}\uAC1C`).join(", ") : "\uD30C\uC77C \uC5C6\uC74C";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "section",
     {
       "aria-label": typeof title === "string" ? title : "\uD30C\uC77C \uCC98\uB9AC",
@@ -94,7 +94,7 @@ function FileUploadQueue({
             margin-top: var(--space-1);
           }
         }` }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunk677EM4M2cjs.VisuallyHidden,
           {
             className: "lk-file-upload-queue__live-summary",
@@ -108,7 +108,7 @@ function FileUploadQueue({
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "document", size: 22, color: "var(--color-semantic-label-neutral)", "aria-hidden": "true" }),
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { minWidth: 0 }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)", fontWeight: "var(--fw-bold)" }, children: title }) })
         ] }) }),
-        items.length === 0 && !(isGrid && trigger != null) ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-file-upload-queue__empty", role: "status", style: { flex: "1 1 auto", display: "grid", placeItems: "center", minHeight: "var(--space-16)", boxSizing: "border-box", padding: "var(--space-6) var(--space-4)", color: "var(--color-semantic-label-neutral)", textAlign: "center", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: emptyLabel }) }) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        items.length === 0 && !(isGrid && trigger != null) ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-file-upload-queue__empty", role: "status", style: { flex: "1 1 auto", display: "grid", placeItems: "center", minHeight: "var(--space-16)", boxSizing: "border-box", padding: "var(--space-6) var(--space-4)", color: "var(--color-semantic-label-neutral)", textAlign: "center", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: emptyLabel }) }) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "ul",
           {
             style: isGrid ? { margin: 0, padding: "var(--space-2)", listStyle: "none", display: "flex", flexWrap: "wrap", gap: "var(--space-3)" } : { margin: 0, padding: 0, listStyle: "none" },
@@ -129,7 +129,7 @@ function FileUploadQueue({
                   const cornerAction = busy && onCancel ? { label: `${item.name} \uCC98\uB9AC \uCDE8\uC18C`, onClick: () => onCancel(item) } : canRemove ? { label: `${item.name} ${item.status === "succeeded" ? "\uBAA9\uB85D\uC5D0\uC11C \uC81C\uAC70" : "\uC81C\uAC70"}`, onClick: () => onRemove(item) } : null;
                   const isMedia = item.thumbnailSrc != null;
                   if (!isMedia) {
-                    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+                    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                       "li",
                       {
                         className: "lk-file-upload-queue__item lk-file-upload-queue__item--grid lk-file-upload-queue__item--file",
@@ -139,7 +139,7 @@ function FileUploadQueue({
                             /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { flexShrink: 0, width: 48, height: 48, borderRadius: "var(--radius-md)", background: "var(--color-semantic-fill-normal)", color: "var(--color-semantic-label-neutral)", display: "grid", placeItems: "center" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "document", size: 22, "aria-hidden": "true" }) }),
                             /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { minWidth: 0, display: "grid", gap: "var(--space-1)" }, children: [
                               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { style: { minWidth: 0, color: "var(--color-semantic-label-normal)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 2, overflow: "hidden", wordBreak: "break-all" }, children: item.name }),
-                              busy ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                              busy ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                                 _chunkHYUU3DJPcjs.ProgressBar,
                                 {
                                   "aria-label": `${item.name} ${meta.label}`,
@@ -159,7 +159,7 @@ function FileUploadQueue({
                       item.id
                     );
                   }
-                  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+                  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                     "li",
                     {
                       className: "lk-file-upload-queue__item lk-file-upload-queue__item--grid lk-file-upload-queue__item--media",
@@ -167,7 +167,7 @@ function FileUploadQueue({
                       children: [
                         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { position: "relative", width: "100%", aspectRatio: "1 / 1", borderRadius: "var(--radius-md)", overflow: "hidden", background: "var(--color-semantic-fill-normal)", display: "grid", placeItems: "center", color: "var(--color-semantic-label-neutral)" }, children: [
                           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "img", { src: item.thumbnailSrc, alt: "", loading: "lazy", decoding: "async", style: { width: "100%", height: "100%", objectFit: "cover" } }),
-                          busy && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { position: "absolute", inset: 0, display: "grid", alignContent: "center", gap: "var(--space-1)", padding: "var(--space-3)", background: "var(--scrim-dark)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                          busy && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { position: "absolute", inset: 0, display: "grid", alignContent: "center", gap: "var(--space-1)", padding: "var(--space-3)", background: "var(--scrim-dark)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                             _chunkHYUU3DJPcjs.ProgressBar,
                             {
                               "aria-label": `${item.name} ${meta.label}`,
@@ -188,7 +188,7 @@ function FileUploadQueue({
                     item.id
                   );
                 }
-                return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+                return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                   "li",
                   {
                     className: "lk-file-upload-queue__item lk-file-upload-queue__item--list",
@@ -213,7 +213,7 @@ function FileUploadQueue({
                           ] }),
                           !busy && (item.sizeLabel != null || item.message != null) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: item.status === "failed" ? "var(--color-semantic-status-negative-text)" : "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: _nullishCoalesce(item.message, () => ( item.sizeLabel)) })
                         ] }),
-                        busy && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                        busy && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                           _chunkHYUU3DJPcjs.ProgressBar,
                           {
                             className: "lk-file-upload-queue__progress",

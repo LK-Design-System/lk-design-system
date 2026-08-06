@@ -51,7 +51,7 @@ function TagInput({
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", minHeight: 50, padding: "8px 10px", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-input)", background: "var(--color-semantic-background-elevated-normal)", opacity: disabled ? 0.45 : 1, ...style }, ...rest, children: [
     tags.map((t) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-0-5)", height: 28, padding: "0 2px 0 11px", background: "var(--color-semantic-primary-surface-strong)", color: "var(--color-semantic-label-normal)", borderRadius: "var(--radius-pill)", fontFamily: "var(--font-sans)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)" }, children: [
       t,
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
         "button",
         {
           type: "button",
@@ -67,7 +67,7 @@ function TagInput({
         }
       )
     ] }, t)),
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "input",
       {
         ref: inputRef,

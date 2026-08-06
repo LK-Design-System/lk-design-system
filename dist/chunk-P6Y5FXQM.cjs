@@ -22,7 +22,7 @@ function Link({ children, href, tone = "signal", underline = "hover", external =
   const [hover, setHover] = _react2.default.useState(false);
   const color = tone === "neutral" ? "var(--color-semantic-label-neutral)" : tone === "inherit" ? "inherit" : "var(--color-semantic-primary-normal)";
   const showUnderline = underline === "always" || underline === "hover" && hover;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "a",
     {
       href,

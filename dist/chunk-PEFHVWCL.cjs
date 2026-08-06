@@ -26,7 +26,7 @@ function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChang
   };
   const pct = (val - min) / (max - min) * 100;
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-3-5)", ...style }, children: [
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "input",
       {
         className: "lk-slider",

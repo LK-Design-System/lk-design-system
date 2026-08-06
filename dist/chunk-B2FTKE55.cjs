@@ -62,7 +62,7 @@ function DateRangeField({
     if (!isControlled) setInternalValue(nextValue);
     _optionalChain([onChange, 'optionalCall', _3 => _3(nextValue)]);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       role: "group",
@@ -76,7 +76,7 @@ function DateRangeField({
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))", gap: "var(--space-2)", minWidth: 0 }, children: [
           /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
             showFieldLabels && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-label-normal)", fontSize: "var(--component-input-label-font-size)", fontWeight: "var(--component-input-label-font-weight)", lineHeight: "var(--component-input-label-line-height)" }, children: startLabel }),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               _chunk3TLI7525cjs.DatePicker,
               {
                 value: range.start,
@@ -94,7 +94,7 @@ function DateRangeField({
           ] }),
           /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
             showFieldLabels && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-label-normal)", fontSize: "var(--component-input-label-font-size)", fontWeight: "var(--component-input-label-font-weight)", lineHeight: "var(--component-input-label-line-height)" }, children: endLabel }),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               _chunk3TLI7525cjs.DatePicker,
               {
                 value: range.end,

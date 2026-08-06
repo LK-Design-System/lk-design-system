@@ -18,7 +18,7 @@ function Divider({
   const semantics = decorative ? decorativeProps : null;
   const verticalSemantics = decorative ? decorativeProps : { role: "separator", "aria-orientation": "vertical" };
   if (vertical) {
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "span",
       {
         ...verticalSemantics,
@@ -36,7 +36,7 @@ function Divider({
   }
   if (label != null) {
     const rule = { flex: 1, height: thickness, background: color };
-    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
       "div",
       {
         ...decorative ? decorativeProps : {
@@ -49,7 +49,7 @@ function Divider({
         ...rest,
         children: [
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: rule }),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "span",
             {
               style: {
@@ -68,7 +68,7 @@ function Divider({
       }
     );
   }
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "hr",
     {
       ...semantics,

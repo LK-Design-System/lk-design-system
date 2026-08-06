@@ -30,7 +30,7 @@ function isConfirmableValue(value, { mode, allowNegative, min, max, maxLength })
   return true;
 }
 function EmptyKeyCell() {
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "span",
     {
       "aria-hidden": "true",
@@ -105,7 +105,7 @@ function VirtualKeypad({
     // while preserving the disabled foreground contract.
     color: buttonDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)"
   });
-  const renderDigit = (digit) => /* @__PURE__ */ _react.createElement.call(void 0,
+  const renderDigit = (digit) => /* @__PURE__ */ _react.createElement.call(void 0, 
     _chunk6S5YR4GDcjs.Button,
     {
       ...commonButtonProps,
@@ -127,7 +127,7 @@ function VirtualKeypad({
     const nextValue = currentValue === "" ? "0." : currentValue === "-" ? "-0." : `${currentValue}.`;
     commit(nextValue, { action: "decimal", key: "." });
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       ...rest,
@@ -158,7 +158,7 @@ function VirtualKeypad({
       },
       children: [
         DIGITS.map(renderDigit),
-        allowNegative ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        allowNegative ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunk6S5YR4GDcjs.Button,
           {
             ...commonButtonProps,
@@ -173,7 +173,7 @@ function VirtualKeypad({
           }
         ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, EmptyKeyCell, {}),
         renderDigit("0"),
-        mode === "decimal" ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        mode === "decimal" ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunk6S5YR4GDcjs.Button,
           {
             ...commonButtonProps,
@@ -186,7 +186,7 @@ function VirtualKeypad({
             children: decimalSeparator
           }
         ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, EmptyKeyCell, {}),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunk6S5YR4GDcjs.Button,
           {
             ...commonButtonProps,
@@ -200,7 +200,7 @@ function VirtualKeypad({
             children: "C"
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunk6S5YR4GDcjs.Button,
           {
             ...commonButtonProps,
@@ -214,7 +214,7 @@ function VirtualKeypad({
             children: "\u232B"
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunk6S5YR4GDcjs.Button,
           {
             ...commonButtonProps,

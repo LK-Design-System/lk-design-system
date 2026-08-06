@@ -96,7 +96,7 @@ function Toast({
   }, [autoDismissMs, paused]);
   const pause = () => setPaused(true);
   const resume = () => setPaused(false);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       role: hosted ? void 0 : urgent ? "alert" : "status",
@@ -136,7 +136,7 @@ function Toast({
       },
       ...rest,
       children: [
-        leadingIcon && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        leadingIcon && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "span",
           {
             "aria-hidden": "true",
@@ -144,7 +144,7 @@ function Toast({
             children: icon || /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: t.name, size: 22, "aria-hidden": "true" })
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "span",
           {
             ref: messageRef,
@@ -161,7 +161,7 @@ function Toast({
             children
           }
         ),
-        action != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        action != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "button",
           {
             type: "button",
@@ -191,7 +191,7 @@ function Toast({
             children: action
           }
         ),
-        onClose && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        onClose && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "button",
           {
             type: "button",

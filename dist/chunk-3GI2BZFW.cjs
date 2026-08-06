@@ -96,7 +96,7 @@ function PickerNode({
     if (!nodeDisabled && actionableSelectionIds.length > 0) onToggleSelection(actionableSelectionIds, state.checked);
   };
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { role: "none", style: { margin: 0, padding: 0, listStyle: "none" }, children: [
-    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
       "div",
       {
         ref: (element) => registerNode(node.id, element),
@@ -176,7 +176,7 @@ function PickerNode({
           transition: "background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
         },
         children: [
-          branch && !query ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          branch && !query ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "span",
             {
               "aria-hidden": "true",
@@ -191,14 +191,14 @@ function PickerNode({
               children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { display: "inline-flex", transform: expanded ? "rotate(90deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "chevron-right", size: 16, "aria-hidden": "true" }) })
             }
           ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { width: "var(--component-toggle-icon-size-sm)" } }),
-          selectable ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          selectable ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "span",
             {
               "aria-hidden": "true",
               "data-tree-picker-check": "",
               "data-tree-picker-check-state": state.mixed ? "mixed" : state.checked ? "checked" : "unchecked",
               style: { display: "inline-flex", alignItems: "center", justifyContent: "center", lineHeight: 0 },
-              children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "span",
                 {
                   style: {
@@ -232,7 +232,7 @@ function PickerNode({
         ]
       }
     ),
-    branch && expanded && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { id: groupId, role: "group", style: { margin: 0, padding: 0, listStyle: "none" }, children: children.map((child) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    branch && expanded && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { id: groupId, role: "group", style: { margin: 0, padding: 0, listStyle: "none" }, children: children.map((child) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       PickerNode,
       {
         node: child,
@@ -373,7 +373,7 @@ function TreePicker({
     _optionalChain([onQueryChange, 'optionalCall', _13 => _13(value)]);
   };
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { width: "100%", minWidth: 0, display: "grid", gap: "var(--space-2)", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       _chunk4ZZF2IWJcjs.Input,
       {
         type: "search",
@@ -387,7 +387,7 @@ function TreePicker({
         "aria-controls": treeId
       }
     ),
-    visibleNodes.length === 0 ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    visibleNodes.length === 0 ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "div",
       {
         id: treeId,
@@ -395,7 +395,7 @@ function TreePicker({
         style: { minHeight: 104, maxHeight, display: "grid", placeItems: "center", padding: "var(--space-4)", boxSizing: "border-box", color: "var(--color-semantic-label-neutral)", textAlign: "center", fontSize: "var(--label2-size)", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)" },
         children: nodes.length === 0 ? emptyMessage : noResultsMessage
       }
-    ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "ul",
       {
         id: treeId,
@@ -404,7 +404,7 @@ function TreePicker({
         "aria-multiselectable": "true",
         "aria-disabled": disabled || void 0,
         style: { minHeight: 104, maxHeight, margin: 0, padding: "var(--space-1)", overflow: "auto", listStyle: "none", border: "1px solid var(--color-semantic-line-normal-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)" },
-        children: visibleNodes.map((node) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        children: visibleNodes.map((node) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           PickerNode,
           {
             node,

@@ -78,7 +78,7 @@ function InputGroup({
     if (!isControlled) setInternal(nextValue);
     _optionalChain([onChange, 'optionalCall', _ => _(nextValue)]);
   };
-  const Addon = ({ node, side, addonId }) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  const Addon = ({ node, side, addonId }) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "span",
     {
       id: addonId,
@@ -97,7 +97,7 @@ function InputGroup({
       children: node
     }
   );
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     _chunkDSYH34X7cjs.FieldStack,
     {
       fieldId: metadata.fieldId,
@@ -109,7 +109,7 @@ function InputGroup({
       error,
       status,
       fieldStyle,
-      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
         "div",
         {
           ...groupProps,
@@ -139,7 +139,7 @@ function InputGroup({
           },
           children: [
             prefix != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Addon, { node: prefix, side: "left", addonId: prefixId }),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "input",
               {
                 ...inputRest,

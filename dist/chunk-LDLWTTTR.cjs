@@ -71,7 +71,7 @@ function FloorSelector({ floors = [], value, defaultValue, onChange, appearance 
     ...style
   }, ...rest, children: norm.map((f, index) => {
     const on = f.value === cur;
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "button",
       {
         type: "button",

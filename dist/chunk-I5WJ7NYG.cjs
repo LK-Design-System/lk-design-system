@@ -45,7 +45,7 @@ function BarChart({
   }).join(", ") : nodeText(emptyLabel) || "\uB370\uC774\uD130\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.";
   const resolvedSummary = _nullishCoalesce(summary, () => ( automaticSummary));
   const valueReserve = showValue ? `calc(var(--caption1-line) + ${LABEL_GAP}px)` : 0;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       role: "img",
@@ -67,7 +67,7 @@ function BarChart({
       children: [
         description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: descriptionId, children: description }),
         resolvedSummary != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: summaryId, "data-chart-summary": true, children: resolvedSummary }),
-        !hasData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        !hasData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "span",
           {
             "data-chart-empty": true,
@@ -85,7 +85,7 @@ function BarChart({
           const value = values[index];
           const barHeight = `${Math.max(0, value) / max * 100}%`;
           return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
-            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
               "div",
               {
                 style: {
@@ -101,7 +101,7 @@ function BarChart({
                 },
                 children: [
                   showValue && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { flexShrink: 0, fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: datum.value }),
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "div",
                     {
                       "aria-hidden": "true",
@@ -121,7 +121,7 @@ function BarChart({
                 ]
               }
             ),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "span",
               {
                 "data-chart-label": true,

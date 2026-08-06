@@ -62,7 +62,7 @@ function Prose({ children, measure = "68ch", style, className, ...rest }) {
     observer.observe(element);
     return () => observer.disconnect();
   }, [children]);
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "div",
     {
       ref: root,

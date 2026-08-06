@@ -73,7 +73,7 @@ var Modal = _react2.default.forwardRef(function Modal2({
   });
   const mergedDialogRef = _chunkGWMGPLNWcjs.useMergedRefs.call(void 0, dialogRef, forwardedRef);
   if (!visible) return null;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF4O2CAUIcjs.OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: portalAnchorRef, portalRef, layer: "modal", children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF4O2CAUIcjs.OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: portalAnchorRef, portalRef, layer: "modal", children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "div",
     {
       "data-slot": "backdrop",
@@ -83,7 +83,7 @@ var Modal = _react2.default.forwardRef(function Modal2({
         if (e.target === e.currentTarget) requestClose();
       } : void 0,
       style: { position: "fixed", inset: 0, zIndex: resolvedZIndex, display: "flex", alignItems: "center", justifyContent: "center", padding: "var(--space-6)", background: "var(--component-dialog-scrim)", backdropFilter: "blur(var(--component-dialog-scrim-blur))", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "backdrop") },
-      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
         "div",
         {
           ref: mergedDialogRef,
