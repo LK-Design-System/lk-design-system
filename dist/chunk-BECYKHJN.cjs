@@ -142,7 +142,7 @@ function Combobox({
       setOpen(false);
     }
   };
-  const control = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  const control = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       ref: rootRef,
@@ -151,7 +151,7 @@ function Combobox({
       onMouseLeave: () => setHovered(false),
       style: { position: "relative", width: "100%", minWidth: 0, ...style },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "button",
           {
             ...triggerProps,
@@ -208,7 +208,7 @@ function Combobox({
             ]
           }
         ),
-        open && !locked && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        open && !locked && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             id: listboxId,
@@ -219,7 +219,7 @@ function Combobox({
             children: normalized.map((option, index) => {
               const selected = selectedSet.has(option.value);
               const active = index === activeIndex;
-              return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+              return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                 "div",
                 {
                   id: optionId(listboxId, option),

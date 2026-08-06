@@ -26,7 +26,7 @@ function Anchor({ items = [], active, onChange, style, ...rest }) {
     const on = it.href === cur;
     const hov = hovered === it.href;
     return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { style: { display: "flex", flexDirection: "column", gap: "var(--space-0-5)" }, children: [
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
         "a",
         {
           href: it.href,

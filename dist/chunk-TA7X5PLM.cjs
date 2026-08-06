@@ -153,7 +153,7 @@ function SecretField({
     // `position: relative` anchors the sr-only announcer below to this field
     // instead of the document body.
     /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { position: "relative", display: "grid", gap: "var(--space-1)", ...style }, children: [
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
         _chunk4ZZF2IWJcjs.Input,
         {
           ...rest,

@@ -17,7 +17,7 @@ function ActionArea({
 }) {
   const named = rest["aria-label"] != null || rest["aria-labelledby"] != null;
   const Root = named ? "section" : "div";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     Root,
     {
       className: "lk-action-area",
@@ -36,7 +36,7 @@ function ActionArea({
       },
       ...rest,
       children: [
-        summary && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        summary && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             style: {
@@ -47,7 +47,7 @@ function ActionArea({
             children: summary
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             style: {
@@ -66,7 +66,7 @@ function ActionArea({
             children
           }
         ),
-        caption && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        caption && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "p",
           {
             style: {

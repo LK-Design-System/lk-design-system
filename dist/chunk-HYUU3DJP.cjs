@@ -47,7 +47,7 @@ function ProgressBar({
         "%"
       ] })
     ] }),
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
       "div",
       {
         role: "progressbar",

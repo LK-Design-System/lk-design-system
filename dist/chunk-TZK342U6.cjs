@@ -66,7 +66,7 @@ function Pagination({
   const go = (p) => {
     if (p >= 1 && p <= total && p !== current) _optionalChain([onChange, 'optionalCall', _ => _(p)]);
   };
-  const Arrow = ({ dir, disabled }) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  const Arrow = ({ dir, disabled }) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "button",
     {
       type: "button",
@@ -88,7 +88,7 @@ function Pagination({
       children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: dir === "prev" ? "chevron-left-small" : "chevron-right-small", size: 18, "aria-hidden": "true" })
     }
   );
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "nav",
     {
       "aria-label": navigationLabel,
@@ -111,7 +111,7 @@ function Pagination({
       },
       ...rest,
       children: [
-        _nullishCoalesce(leadingContent, () => ( (pageSize != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        _nullishCoalesce(leadingContent, () => ( (pageSize != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "select",
           {
             value: pageSize,
@@ -121,7 +121,7 @@ function Pagination({
             children: pageSizeOptions.map((option) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "option", { value: option, children: option }, option))
           }
         )))),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "span",
           {
             style: {
@@ -138,7 +138,7 @@ function Pagination({
             children: [
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Arrow, { dir: "prev", disabled: current <= 1 }),
               pages.map(
-                (p, i) => typeof p === "string" ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                (p, i) => typeof p === "string" ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "span",
                   {
                     "aria-hidden": "true",
@@ -151,7 +151,7 @@ function Pagination({
                     children: "\u2026"
                   },
                   p + i
-                ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "button",
                   {
                     type: "button",
@@ -182,7 +182,7 @@ function Pagination({
           }
         ),
         _nullishCoalesce(trailingContent, () => ( /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "inline-flex", alignItems: "center", gap: 8 }, children: [
-          showCounter && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          showCounter && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
             "span",
             {
               style: {
@@ -197,7 +197,7 @@ function Pagination({
               ]
             }
           ),
-          showPageJump && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          showPageJump && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
             "label",
             {
               style: {
@@ -209,7 +209,7 @@ function Pagination({
               },
               children: [
                 /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: pageJumpLabel }),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "input",
                   {
                     type: "number",

@@ -201,7 +201,7 @@ function WheelPicker({
       if (handleTypeahead(event)) event.preventDefault();
     }
   };
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
     {
       "data-disabled": inactive ? "true" : void 0,
@@ -222,7 +222,7 @@ function WheelPicker({
         ...style
       },
       ...rest,
-      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
         "ul",
         {
           ref: listRef,
@@ -260,7 +260,7 @@ function WheelPicker({
             perspectiveOrigin: "50% 50%"
           },
           children: [
-            !hasOptions && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            !hasOptions && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "li",
               {
                 role: "option",
@@ -289,7 +289,7 @@ function WheelPicker({
               const selected = index === selectedIndex;
               const highlighted = index === activeIndex;
               const optionDisabled = Boolean(option.disabled);
-              return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "li",
                 {
                   id: getOptionId(listId, index),
@@ -319,7 +319,7 @@ function WheelPicker({
                     transition: "opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)",
                     userSelect: "none"
                   },
-                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "span",
                     {
                       style: {

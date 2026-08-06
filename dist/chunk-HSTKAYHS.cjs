@@ -70,7 +70,7 @@ function FeedCard({
   if (showFollow || showMenu) {
     trailing = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", marginLeft: "var(--space-2)" }, children: [
       showFollow && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk6S5YR4GDcjs.Button, { variant: following ? "ghost" : "secondary", size: "sm", onClick: onFollowToggle, children: resolvedFollowLabel }),
-      showMenu && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      showMenu && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
         _chunkTUBOAPREcjs.DropdownMenu,
         {
           align: "right",
@@ -80,7 +80,7 @@ function FeedCard({
       )
     ] });
   }
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "article",
     {
       "aria-label": _nullishCoalesce(ariaLabel, () => ( (name ? `${name}\uB2D8\uC758 \uAC8C\uC2DC\uBB3C` : void 0))),
@@ -94,7 +94,7 @@ function FeedCard({
       ...rest,
       children: [
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { padding: "var(--space-4)", display: "flex", flexDirection: "column", gap: "var(--space-3)" }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             _chunkLMAAGFGRcjs.ListCell,
             {
               leading: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5ZIVVBEBcjs.Avatar, { src, name, variant, size: "medium" }),

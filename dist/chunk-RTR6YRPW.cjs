@@ -23,7 +23,7 @@ function NewsCard({ image, imageAlt = "", category, title, excerpt, source, date
   const altName = typeof imageAlt === "string" && imageAlt.trim() ? imageAlt.trim() : null;
   const resolvedLabel = _nullishCoalesce(ariaLabel, () => ( (titleName ? altName ? `${titleName}. ${altName}` : titleName : void 0)));
   const ArrowR = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "arrow-right", size: 15, "aria-hidden": "true" });
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "a",
     {
       href,

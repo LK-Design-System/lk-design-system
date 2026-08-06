@@ -79,7 +79,7 @@ function SplitMenuItem({ item, onSelect }) {
   const [hover, setHover] = _react2.default.useState(false);
   const [pressed, setPressed] = _react2.default.useState(false);
   const disabled = Boolean(item.disabled || item.disable);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "button",
     {
       type: "button",
@@ -205,7 +205,7 @@ function SplitButton({
     letterSpacing: sizeStyle.letterSpacing,
     transition: "var(--component-button-transition)"
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       ref: rootRef,
@@ -214,7 +214,7 @@ function SplitButton({
       style: { position: "relative", display: "inline-flex", ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "button",
           {
             type: "button",
@@ -260,7 +260,7 @@ function SplitButton({
             ]
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "button",
           {
             ref: menuTriggerRef,
@@ -306,7 +306,7 @@ function SplitButton({
             children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "chevron-down-small", size: sizeStyle.iconSize, "aria-hidden": "true" })
           }
         ),
-        open && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        open && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             ref: (node) => {
@@ -337,7 +337,7 @@ function SplitButton({
               padding: "var(--component-menu-padding-y) var(--component-menu-padding-x)",
               boxSizing: "border-box"
             },
-            children: items.map((item, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: items.map((item, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               SplitMenuItem,
               {
                 item,

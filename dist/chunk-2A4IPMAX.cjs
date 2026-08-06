@@ -73,7 +73,7 @@ function CopyButton({
   const failed = status === "error";
   const feedbackBackground = copied ? { background: "var(--color-semantic-primary-surface-strong)" } : failed ? { background: "var(--color-semantic-status-negative-surface)" } : null;
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { position: "relative", display: "inline-flex" }, children: [
-    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
       _chunk6S5YR4GDcjs.Button,
       {
         variant: "flat",

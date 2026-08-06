@@ -1212,13 +1212,36 @@ export function NetworkGraph({
       // 자리가 같으면 `id`로 가른다 — 순회 순서도 결정론이어야 한다.
       return String(left.id).localeCompare(String(right.id));
     });
+    /*
+      관계도 순회의 «자리»다.
+
+      종전에는 관계에 `role="button"`과 이름을 주고도 `tabIndex={-1}`로 두어,
+      마우스로는 고를 수 있는데 키보드로는 닿을 수 없었다. 큐에서 이미
+      「시각 사용자에게만 표적을 열어 주면 같은 동작에 두 등급의 접근이
+      생긴다」고 정해 놓고 관계선에는 지키지 않고 있었다.
+
+      자리는 «떠나는 노드» 뒤다. 큐가 자기 노드 뒤에 붙는 것과 같은 규칙이고,
+      그래야 「이 대상 — 이 대상에서 나가는 관계들 — 다음 대상」으로 읽힌다.
+      관계를 따로 모아 두면 어느 대상의 관계인지가 순서에서 사라진다.
+    */
+    const leaving = new Map();
+    if (onSelectEdge) {
+      edges.forEach((edge) => {
+        const bucket = leaving.get(edge.from);
+        if (bucket) bucket.push(edge);
+        else leaving.set(edge.from, [edge]);
+      });
+    }
     const order = [];
     ordered.forEach((node) => {
       order.push({ key: `node:${node.id}`, node, kind: 'node' });
       if (hasCue(node)) order.push({ key: `cue:${node.id}`, node, kind: 'cue' });
+      (leaving.get(node.id) ?? []).forEach((edge) => {
+        order.push({ key: `edge:${edge.id}`, edge, kind: 'edge' });
+      });
     });
     return order;
-  }, [gridPositions, hasCue, metrics.rowPitch, nodes, settledPositions]);
+  }, [edges, gridPositions, hasCue, metrics.rowPitch, nodes, onSelectEdge, settledPositions]);
 
   const activeKey = focusOrder.some((stop) => stop.key === focusedKey)
     ? focusedKey
@@ -1244,6 +1267,7 @@ export function NetworkGraph({
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       if (stop.kind === 'cue') onToggleNode?.(stop.node);
+      else if (stop.kind === 'edge') onSelectEdge?.(stop.edge);
       else onSelectNode?.(stop.node);
       return;
     }
@@ -1317,7 +1341,11 @@ export function NetworkGraph({
               + '[data-network-focus-ring]{opacity:0;}'
               + '[data-network-node]:focus-visible [data-network-focus-ring],'
               + '[data-network-collapse-cue]:focus-visible [data-network-focus-ring]{opacity:1;}'
-              + '[data-network-node]:focus,[data-network-collapse-cue]:focus{outline:none;}'}
+              /* 관계선의 링은 포커스를 받는 path의 «형제»다(링이 아래로 깔려야
+                 선을 덮지 않는다). 그래서 조상에서 걸어 준다. */
+              + '[data-network-edge]:has(path:focus-visible) [data-network-focus-ring]{opacity:1;}'
+              + '[data-network-node]:focus,[data-network-collapse-cue]:focus,'
+              + '[data-network-edge] path:focus{outline:none;}'}
           </style>
           <defs>
             {edgeColors.map((color) => (
@@ -1363,21 +1391,44 @@ export function NetworkGraph({
                     opacity={tone.opacity}
                     markerEnd={edge.directed === false ? undefined : `url(#${markerId(color)})`}
                   />
-                  {onSelectEdge && (
-                    /* 곡선은 누르기 어려우므로 투명한 넓은 선을 겹쳐 표적을
-                       넓힌다. 이름은 아래 접근 가능한 요소가 갖는다. */
-                    <path
-                      d={path.d}
-                      fill="none"
-                      stroke="transparent"
-                      strokeWidth={16}
-                      style={{ cursor: 'pointer' }}
-                      role="button"
-                      tabIndex={-1}
-                      aria-label={fullText || '관계'}
-                      onClick={() => onSelectEdge(edge)}
-                    />
-                  )}
+                  {onSelectEdge && (() => {
+                    /*
+                      곡선은 가늘어 누르기 어려우므로 투명한 넓은 선을 겹쳐
+                      표적을 넓힌다. 그리고 그 표적은 «키보드에도» 열려 있다 —
+                      종전에는 `tabIndex={-1}`이라 마우스로만 고를 수 있었다.
+                    */
+                    const edgeStop = { key: `edge:${edge.id}`, edge, kind: 'edge' };
+                    return (
+                      <>
+                        {/* 포커스 링. 관계선은 면이 없으므로 링도 «선»이다 —
+                            같은 길을 더 굵게, 포커스 지시 색으로 덧그린다. */}
+                        <path
+                          data-network-focus-ring
+                          d={path.d}
+                          fill="none"
+                          stroke="var(--color-semantic-focus-indicator)"
+                          strokeWidth={tone.width + 4}
+                          strokeLinecap="round"
+                          pointerEvents="none"
+                        />
+                        <path
+                          d={path.d}
+                          fill="none"
+                          stroke="transparent"
+                          strokeWidth={16}
+                          style={{ cursor: 'pointer' }}
+                          id={stopDomId(edgeStop.key)}
+                          role="button"
+                          tabIndex={edgeStop.key === activeKey ? 0 : -1}
+                          aria-label={fullText || '관계'}
+                          aria-pressed={selected ? 'true' : undefined}
+                          onFocus={() => setFocusedKey(edgeStop.key)}
+                          onKeyDown={(event) => stopKeyDown(event, edgeStop)}
+                          onClick={() => onSelectEdge(edge)}
+                        />
+                      </>
+                    );
+                  })()}
                   {labelText && path.label && (
                     /* 자리는 위 `placeEdgeLabels`가 다른 라벨·노드를 모두 보고
                        정한다. 그래도 마지막 후보까지 막히면 겹친 채로 놓이므로,

@@ -151,7 +151,7 @@ function AutoComplete({
       setOpen(false);
     }
   };
-  const control = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  const control = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       ref: rootRef,
@@ -174,7 +174,7 @@ function AutoComplete({
           boxShadow: focused && !isInvalid ? "var(--component-input-focus-shadow)" : "none",
           transition: "border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"
         }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "input",
             {
               ...inputProps,
@@ -237,7 +237,7 @@ function AutoComplete({
           ),
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkDSYH34X7cjs.FieldStatusIcon, { invalid: isInvalid, status })
         ] }),
-        popupOpen && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        popupOpen && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             id: listboxId,
@@ -260,7 +260,7 @@ function AutoComplete({
             children: filtered.length ? filtered.map((option, index) => {
               const selected = optionText(option) === String(_nullishCoalesce(currentValue, () => ( "")));
               const active = index === activeIndex;
-              return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "div",
                 {
                   id: optionId(listboxId, option),
@@ -296,7 +296,7 @@ function AutoComplete({
     }
   );
   if (!hasMetadata) return control;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     _chunkDSYH34X7cjs.FieldStack,
     {
       fieldId,

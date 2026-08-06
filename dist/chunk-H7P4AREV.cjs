@@ -78,7 +78,7 @@ var Popover = _react2.default.forwardRef(function Popover2({
     "aria-controls": visible ? _chunkENN7YVH5cjs.appendAriaReference.call(void 0, _optionalChain([trigger, 'optionalAccess', _5 => _5.props, 'optionalAccess', _6 => _6["aria-controls"]]), panelId) : _optionalChain([trigger, 'optionalAccess', _7 => _7.props, 'optionalAccess', _8 => _8["aria-controls"]]),
     onClick: toggle
   };
-  const renderedTrigger = _react2.default.isValidElement(trigger) && trigger.type !== _react2.default.Fragment ? _react2.default.cloneElement(trigger, triggerProps) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  const renderedTrigger = _react2.default.isValidElement(trigger) && trigger.type !== _react2.default.Fragment ? _react2.default.cloneElement(trigger, triggerProps) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "span",
     {
       ...triggerProps,
@@ -93,7 +93,7 @@ var Popover = _react2.default.forwardRef(function Popover2({
       children: trigger
     }
   );
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       ref: mergedRootRef,
@@ -104,7 +104,7 @@ var Popover = _react2.default.forwardRef(function Popover2({
       ...rest,
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "trigger", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "trigger") || void 0, style: { display: "inline-flex", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "trigger") }, children: renderedTrigger }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF4O2CAUIcjs.OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: rootRef, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF4O2CAUIcjs.OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: rootRef, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             ref: panelRef,

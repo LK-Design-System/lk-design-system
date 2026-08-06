@@ -67,7 +67,7 @@ function Thumbnail({
   const pos = ALIGN[overlayAlign] || ALIGN["top-left"];
   const hasOverlay = overlay || children;
   const showScrim = hasOverlay && (overlayScrim === "auto" ? !!src : !!overlayScrim);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       style: {
@@ -84,7 +84,7 @@ function Thumbnail({
       },
       ...rest,
       children: [
-        src && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        src && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "img",
           {
             src,
@@ -97,7 +97,7 @@ function Thumbnail({
             }
           }
         ),
-        !src && placeholder && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        !src && placeholder && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "aria-hidden": "true",
@@ -111,7 +111,7 @@ function Thumbnail({
             children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: placeholderIcon, size: Math.min(32, Math.max(18, 24)) })
           }
         ),
-        showScrim && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        showScrim && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "aria-hidden": "true",
@@ -123,7 +123,7 @@ function Thumbnail({
             }
           }
         ),
-        hasOverlay && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        hasOverlay && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             style: {

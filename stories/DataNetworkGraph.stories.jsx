@@ -519,6 +519,7 @@ export const ForceLayout = {
           nodes={sameNodes}
           edges={sameEdges}
           onSelectNode={() => {}}
+          onSelectEdge={() => {}}
           onToggleNode={() => {}}
         />
       </section>
@@ -576,6 +577,28 @@ export const ForceLayout = {
       된다. 링만 있으면 눈으로 보는 사람에게만 전해지므로 이름에도 있어야
       한다 — 여기서 지키는 것은 그 둘이 «같은 노드»를 가리킨다는 점이다.
     */
+    /*
+      관계도 키보드로 닿아야 한다. 종전에는 관계선에 `role="button"`과 이름을
+      주고도 `tabIndex={-1}`로 두어, 마우스로는 고를 수 있는데 키보드로는
+      닿을 수 없었다 — 큐에서 이미 정해 놓은 「같은 동작에 두 등급의 접근을
+      만들지 않는다」를 관계선에는 지키지 않고 있었다.
+    */
+    const reachable = Array.from(
+      canvasElement.querySelectorAll('[data-network-edge] [role="button"][tabindex]'),
+    );
+    if (!reachable.length) {
+      throw new Error('A selectable relation must take a place in the focus order.');
+    }
+    reachable.forEach((target) => {
+      if (!target.getAttribute('aria-label')) {
+        throw new Error('A focusable relation needs an accessible name.');
+      }
+    });
+    const edgeStops = new Set(reachable.map((target) => target.getAttribute('id')));
+    if (edgeStops.size !== reachable.length) {
+      throw new Error('Every relation stop needs its own id, or focus cannot move between them.');
+    }
+
     const rings = canvasElement.querySelectorAll('[data-network-root-ring]');
     if (rings.length !== 1) {
       throw new Error(`Exactly one root ring expected, found ${rings.length}.`);

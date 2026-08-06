@@ -115,7 +115,7 @@ function LdsProvider({
     direction,
     locale
   }), [direction, locale, resolvedColorScheme, setColorScheme]);
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, LdsRuntimeContext.Provider, { value, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, LdsRuntimeContext.Provider, { value, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     _chunkF4O2CAUIcjs.OverlayRuntimeProvider,
     {
       portalTarget,

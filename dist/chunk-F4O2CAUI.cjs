@@ -118,7 +118,7 @@ function OverlayPortal({
   const target = _nullishCoalesce(_nullishCoalesce(_nullishCoalesce(portalTarget, () => ( runtime.portalTarget)), () => ( _optionalChain([ownerDocument, 'optionalAccess', _20 => _20.body]))), () => ( null));
   const scope = inheritedPortalScope(anchor, runtime);
   if (!target) return null;
-  return _reactdom.createPortal.call(void 0, 
+  return _reactdom.createPortal.call(void 0,
     _react2.default.createElement("div", {
       ref: setPortalNode,
       "data-lds-overlay-portal": "",

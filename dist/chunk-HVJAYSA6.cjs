@@ -79,7 +79,7 @@ var Tabs = _react2.default.forwardRef(function Tabs2({
     pick(nextItem);
     _optionalChain([Array, 'access', _6 => _6.from, 'call', _7 => _7(_nullishCoalesce(_optionalChain([listRef, 'access', _8 => _8.current, 'optionalAccess', _9 => _9.querySelectorAll, 'call', _10 => _10('[role="tab"]')]), () => ( []))), 'access', _11 => _11.find, 'call', _12 => _12((tab) => tab.dataset.tabValue === String(nextItem.value)), 'optionalAccess', _13 => _13.focus, 'call', _14 => _14()]);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       ...rest,
@@ -120,7 +120,7 @@ var Tabs = _react2.default.forwardRef(function Tabs2({
         norm.map((item) => {
           const active = item.value === selected;
           const trailing = _nullishCoalesce(_nullishCoalesce(item.trailingIconButton, () => ( item.trailing)), () => ( trailingIconButton));
-          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+          return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
             "button",
             {
               "data-slot": "tab",
@@ -164,7 +164,7 @@ var Tabs = _react2.default.forwardRef(function Tabs2({
               },
               children: [
                 /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "label", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "label") || void 0, style: { overflow: "hidden", textOverflow: "ellipsis", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "label") }, children: item.label }),
-                item.count != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                item.count != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "span",
                   {
                     "data-slot": "count",
@@ -178,7 +178,7 @@ var Tabs = _react2.default.forwardRef(function Tabs2({
                     children: item.count
                   }
                 ),
-                trailing && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                trailing && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "span",
                   {
                     "data-slot": "trailing",
@@ -194,7 +194,7 @@ var Tabs = _react2.default.forwardRef(function Tabs2({
                     children: trailing === true ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "chevron-right-small", size: 15, "aria-hidden": "true" }) : trailing
                   }
                 ),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "span",
                   {
                     "data-slot": "indicator",

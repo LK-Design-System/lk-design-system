@@ -83,7 +83,7 @@ function resolveAlternative(explicit, fallback) {
   return fallback || null;
 }
 function PlaceholderGlyph({ kind, deactivated }) {
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "svg",
     {
       "aria-hidden": "true",
@@ -95,7 +95,7 @@ function PlaceholderGlyph({ kind, deactivated }) {
         display: "block",
         color: deactivated ? "var(--color-semantic-background-elevated-normal)" : "var(--color-semantic-label-assistive)"
       },
-      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
         "path",
         {
           fillRule: "evenodd",
@@ -171,7 +171,7 @@ function Avatar({
   const composedLabel = foldIntoLabel ? [ariaLabel, ...alternatives].join(", ") : ariaLabel;
   const composedLabelledBy = named && !foldIntoLabel && alternativeIds.length ? [ariaLabelledBy, ...alternativeIds].filter(Boolean).join(" ") : ariaLabelledBy;
   const renderAlternativeText = alternatives.length > 0 && !foldIntoLabel;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
     {
       role: named ? "img" : void 0,
@@ -191,7 +191,7 @@ function Avatar({
       },
       ...rest,
       children: [
-        src ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        src ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "img",
           {
             src,
@@ -200,7 +200,7 @@ function Avatar({
             height: resolvedSize,
             style: { ...avatarBoxStyle, display: "block", objectFit: "cover" }
           }
-        ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             style: {
@@ -214,7 +214,7 @@ function Avatar({
               fontWeight: "var(--fw-bold)",
               fontSize: Math.round(resolvedSize * 0.38)
             },
-            children: showInitials ? initials : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: showInitials ? initials : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               PlaceholderGlyph,
               {
                 kind: placeholderKind === "initials" ? normalizedVariant : placeholderKind,
@@ -223,7 +223,7 @@ function Avatar({
             )
           }
         ),
-        deactivated && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        deactivated && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "aria-hidden": "true",
@@ -234,7 +234,7 @@ function Avatar({
               overflow: "hidden",
               pointerEvents: "none"
             },
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "span",
               {
                 style: {
@@ -252,7 +252,7 @@ function Avatar({
             )
           }
         ),
-        showStatus && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        showStatus && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "aria-hidden": "true",
@@ -270,7 +270,7 @@ function Avatar({
           }
         ),
         renderAlternativeText && alternatives.map((text, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: alternativeIds[index], children: text }, alternativeIds[index])),
-        showPushBadge && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+        showPushBadge && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "aria-hidden": "true",

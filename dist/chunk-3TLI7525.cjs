@@ -49,7 +49,7 @@ function DatePicker({ value, defaultValue, onChange, isDateDisabled, minDate, ma
     setOpen(false);
     window.requestAnimationFrame(() => _optionalChain([buttonRef, 'access', _2 => _2.current, 'optionalAccess', _3 => _3.focus, 'call', _4 => _4()]));
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       ref,
@@ -72,7 +72,7 @@ function DatePicker({ value, defaultValue, onChange, isDateDisabled, minDate, ma
       },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "button",
           {
             ref: buttonRef,

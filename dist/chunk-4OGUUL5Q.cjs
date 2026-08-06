@@ -94,7 +94,7 @@ function Checkbox({
   _react2.default.useEffect(() => {
     if (inputRef.current) inputRef.current.indeterminate = mixed;
   });
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "label",
     {
       "data-disabled": disabledState ? "" : void 0,
@@ -115,7 +115,7 @@ function Checkbox({
       },
       children: [
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { position: "relative", display: "inline-flex", flexShrink: 0, lineHeight: 0 }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "input",
             {
               ref: inputRef,

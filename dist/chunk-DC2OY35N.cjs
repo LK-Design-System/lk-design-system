@@ -95,7 +95,7 @@ function MetricCard({
         unit != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--body2-size)", lineHeight: "var(--body2-line)", fontWeight: "var(--fw-semibold)" }, children: unit })
       ] }),
       (delta != null || period != null || baseline != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0, flexWrap: "wrap" }, children: [
-        delta != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        delta != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "span",
           {
             "data-change-direction": direction,
@@ -120,7 +120,7 @@ function MetricCard({
       caption != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", overflowWrap: "anywhere" }, children: caption })
     ] });
   }
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       role,
@@ -156,7 +156,7 @@ function MetricCard({
               lastUpdated
             ] })
           ] }),
-          action != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          action != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "div",
             {
               "data-metric-action": true,

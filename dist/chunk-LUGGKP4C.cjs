@@ -24,7 +24,7 @@ function PageHeader({
   const resolvedHeadingLevel = Math.min(6, Math.max(1, headingLevel));
   const Heading = `h${resolvedHeadingLevel}`;
   const hasContext = breadcrumb != null || eyebrow != null;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "header",
     {
       style: {
@@ -42,7 +42,7 @@ function PageHeader({
           breadcrumb != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { minWidth: 0 }, children: breadcrumb }),
           eyebrow != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-bold)", letterSpacing: "var(--label2-spacing)", color: "var(--color-semantic-label-neutral)" }, children: eyebrow })
         ] }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             style: {

@@ -48,7 +48,7 @@ function nodeLabel(node, fallback) {
 }
 function MoveButton({ direction, label, disabled, onClick }) {
   const icon = direction === "up" ? "arrow-up" : "arrow-down";
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "button",
     {
       type: "button",
@@ -151,7 +151,7 @@ function ReorderList({
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { id: instructionId, style: hiddenStyle, children: "Alt\uC640 \uC704\uCABD \uB610\uB294 \uC544\uB798\uCABD \uD654\uC0B4\uD45C \uD0A4\uB85C \uD56D\uBAA9 \uC21C\uC11C\uB97C \uBC14\uAFC0 \uC218 \uC788\uC2B5\uB2C8\uB2E4." }),
     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { id: liveId, role: "status", "aria-live": "polite", style: hiddenStyle, children: announcement }),
-    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
       "ul",
       {
         role,
@@ -172,7 +172,7 @@ function ReorderList({
         },
         ...rest,
         children: [
-          items.length === 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          items.length === 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "li",
             {
               "aria-disabled": "true",
@@ -204,7 +204,7 @@ function ReorderList({
             const hasTrailing = item.trailing != null || showMoveButtons;
             const dividerLeft = cfg.paddingX + HANDLE_COLUMN_WIDTH + cfg.gap + (showIndex ? INDEX_COLUMN_WIDTH + cfg.gap : 0);
             const dividerRight = cfg.paddingX + (hasTrailing ? TRAILING_DIVIDER_OFFSET : 0);
-            return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+            return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
               "li",
               {
                 role: "listitem",
@@ -264,7 +264,7 @@ function ReorderList({
                   outline: "none"
                 },
                 children: [
-                  (dropBefore || dropAfter) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  (dropBefore || dropAfter) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "span",
                     {
                       "aria-hidden": "true",
@@ -281,7 +281,7 @@ function ReorderList({
                       }
                     }
                   ),
-                  /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                  /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                     "div",
                     {
                       style: {
@@ -300,7 +300,7 @@ function ReorderList({
                         transition: "background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)"
                       },
                       children: [
-                        index > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                        index > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                           "span",
                           {
                             "aria-hidden": "true",
@@ -316,7 +316,7 @@ function ReorderList({
                             }
                           }
                         ),
-                        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                           "span",
                           {
                             "aria-hidden": "true",
@@ -332,7 +332,7 @@ function ReorderList({
                             children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "handle", size: 18, "aria-hidden": "true" })
                           }
                         ),
-                        showIndex && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                        showIndex && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                           "span",
                           {
                             "aria-hidden": "true",
@@ -348,7 +348,7 @@ function ReorderList({
                           }
                         ),
                         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { minWidth: 0 }, children: [
-                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                             "span",
                             {
                               style: {
@@ -366,7 +366,7 @@ function ReorderList({
                               children: item.label
                             }
                           ),
-                          item.detail != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                          item.detail != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                             "span",
                             {
                               style: {
@@ -386,7 +386,7 @@ function ReorderList({
                             }
                           )
                         ] }),
-                        (item.trailing != null || showMoveButtons) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+                        (item.trailing != null || showMoveButtons) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
                           "span",
                           {
                             style: {
@@ -400,7 +400,7 @@ function ReorderList({
                             children: [
                               item.trailing != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: item.trailing }),
                               showMoveButtons && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "inline-flex", alignItems: "center", gap: 4, flexShrink: 0 }, children: [
-                                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                                /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                   MoveButton,
                                   {
                                     direction: "up",
@@ -409,7 +409,7 @@ function ReorderList({
                                     onClick: () => move(index, index - 1, "button")
                                   }
                                 ),
-                                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                                /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                                   MoveButton,
                                   {
                                     direction: "down",

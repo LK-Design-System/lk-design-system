@@ -144,7 +144,7 @@ function DockPanel({
   const panelName = titleText || ariaLabel || "\uB3C4\uD0B9 \uD328\uB110";
   const handleLabel = isOpen ? `${panelName} \uC811\uAE30` : `${panelName} \uD3BC\uCE58\uAE30`;
   const resizeLabel = `${panelName} \uB108\uBE44 \uC870\uC808`;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
     {
       "data-side": side,
@@ -160,7 +160,7 @@ function DockPanel({
         ...style
       },
       ...rest,
-      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
         "div",
         {
           style: {
@@ -172,7 +172,7 @@ function DockPanel({
             transition: isResizing ? "none" : "width var(--dur-normal, 220ms) var(--ease-out)"
           },
           children: [
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "button",
               {
                 ref: handleRef,
@@ -206,7 +206,7 @@ function DockPanel({
                 children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: getHandleIcon(side, isOpen), size: 14, "aria-hidden": "true" })
               }
             ),
-            canResize && isOpen && activeNumericWidth !== void 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+            canResize && isOpen && activeNumericWidth !== void 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "div",
               {
                 role: "separator",
@@ -238,7 +238,7 @@ function DockPanel({
                   zIndex: 2,
                   outline: "none"
                 },
-                children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "span",
                   {
                     "aria-hidden": "true",
@@ -251,7 +251,7 @@ function DockPanel({
                 )
               }
             ),
-            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
               "aside",
               {
                 id: panelId,
@@ -280,7 +280,7 @@ function DockPanel({
                   boxShadow: "var(--shadow-md)"
                 },
                 children: [
-                  title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "header",
                     {
                       style: {
@@ -292,7 +292,7 @@ function DockPanel({
                         borderBottom: "1px solid var(--color-semantic-line-normal-normal)",
                         boxSizing: "border-box"
                       },
-                      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                         "div",
                         {
                           id: titleId,
@@ -311,7 +311,7 @@ function DockPanel({
                       )
                     }
                   ),
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "div",
                     {
                       style: {
@@ -324,7 +324,7 @@ function DockPanel({
                       children
                     }
                   ),
-                  footer != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  footer != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "footer",
                     {
                       style: {

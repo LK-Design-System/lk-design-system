@@ -364,7 +364,7 @@ function NetworkGraph({
       나누는» 색이지 «데이터를 그리는» 색이 아니다. 배경 대비가 1.3:1이라
       색을 주지 않은 소비자에게는 관계가 사실상 보이지 않았다 — 관계선은 내용을
       이해하는 데 필요한 그래픽이므로 3:1을 지켜야 한다(WCAG 1.4.11).
-  
+
       여전히 «선» 토큰이면서 대비를 갖는 것으로 바꾼다(측정 4.74:1).
     */
   edgeColor = "var(--color-semantic-line-normal-normal)",
@@ -694,7 +694,7 @@ function NetworkGraph({
               데가 없어 보이지만, 그대로 두면 라벨 하나가 그림 «밖»으로 뻗어나가
               액자에 잘리거나 가로 스크롤을 만든다. 실제로 28자짜리 이름이 폭
               192px 그림에서 336px를 차지했다.
-      
+
               전체 이름은 관계의 접근성 이름과 `<title>`에 남는다.
             */
       fullText: showEdgeLabels ? `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ""}`.trim() : "",
@@ -762,13 +762,24 @@ function NetworkGraph({
       if (a.x !== b.x) return a.x - b.x;
       return String(left.id).localeCompare(String(right.id));
     });
+    const leaving = /* @__PURE__ */ new Map();
+    if (onSelectEdge) {
+      edges.forEach((edge) => {
+        const bucket = leaving.get(edge.from);
+        if (bucket) bucket.push(edge);
+        else leaving.set(edge.from, [edge]);
+      });
+    }
     const order = [];
     ordered.forEach((node) => {
       order.push({ key: `node:${node.id}`, node, kind: "node" });
       if (hasCue(node)) order.push({ key: `cue:${node.id}`, node, kind: "cue" });
+      (leaving.get(node.id) ?? []).forEach((edge) => {
+        order.push({ key: `edge:${edge.id}`, edge, kind: "edge" });
+      });
     });
     return order;
-  }, [gridPositions, hasCue, metrics.rowPitch, nodes, settledPositions]);
+  }, [edges, gridPositions, hasCue, metrics.rowPitch, nodes, onSelectEdge, settledPositions]);
   const activeKey = focusOrder.some((stop) => stop.key === focusedKey) ? focusedKey : focusOrder[0]?.key;
   const stopDomId = React.useCallback(
     (key) => `${rawId}-stop-${stableHash(key)}`,
@@ -788,6 +799,7 @@ function NetworkGraph({
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       if (stop.kind === "cue") onToggleNode?.(stop.node);
+      else if (stop.kind === "edge") onSelectEdge?.(stop.edge);
       else onSelectNode?.(stop.node);
       return;
     }
@@ -835,7 +847,7 @@ function NetworkGraph({
             viewBox: `${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`,
             style: { display: "block", width: "100%", height: "100%", overflow: "visible" },
             children: [
-              /* @__PURE__ */ jsx("style", { children: "@keyframes ldsNetworkEnter { from { opacity: 0; transform: scale(0.72); } }[data-network-focus-ring]{opacity:0;}[data-network-node]:focus-visible [data-network-focus-ring],[data-network-collapse-cue]:focus-visible [data-network-focus-ring]{opacity:1;}[data-network-node]:focus,[data-network-collapse-cue]:focus{outline:none;}" }),
+              /* @__PURE__ */ jsx("style", { children: "@keyframes ldsNetworkEnter { from { opacity: 0; transform: scale(0.72); } }[data-network-focus-ring]{opacity:0;}[data-network-node]:focus-visible [data-network-focus-ring],[data-network-collapse-cue]:focus-visible [data-network-focus-ring]{opacity:1;}[data-network-edge]:has(path:focus-visible) [data-network-focus-ring]{opacity:1;}[data-network-node]:focus,[data-network-collapse-cue]:focus,[data-network-edge] path:focus{outline:none;}" }),
               /* @__PURE__ */ jsx("defs", { children: edgeColors.map((color) => /* @__PURE__ */ jsx(
                 "marker",
                 {
@@ -875,22 +887,41 @@ function NetworkGraph({
                       markerEnd: edge.directed === false ? void 0 : `url(#${markerId(color)})`
                     }
                   ),
-                  onSelectEdge && /* 곡선은 누르기 어려우므로 투명한 넓은 선을 겹쳐 표적을
-                     넓힌다. 이름은 아래 접근 가능한 요소가 갖는다. */
-                  /* @__PURE__ */ jsx(
-                    "path",
-                    {
-                      d: path.d,
-                      fill: "none",
-                      stroke: "transparent",
-                      strokeWidth: 16,
-                      style: { cursor: "pointer" },
-                      role: "button",
-                      tabIndex: -1,
-                      "aria-label": fullText || "\uAD00\uACC4",
-                      onClick: () => onSelectEdge(edge)
-                    }
-                  ),
+                  onSelectEdge && (() => {
+                    const edgeStop = { key: `edge:${edge.id}`, edge, kind: "edge" };
+                    return /* @__PURE__ */ jsxs(Fragment, { children: [
+                      /* @__PURE__ */ jsx(
+                        "path",
+                        {
+                          "data-network-focus-ring": true,
+                          d: path.d,
+                          fill: "none",
+                          stroke: "var(--color-semantic-focus-indicator)",
+                          strokeWidth: tone.width + 4,
+                          strokeLinecap: "round",
+                          pointerEvents: "none"
+                        }
+                      ),
+                      /* @__PURE__ */ jsx(
+                        "path",
+                        {
+                          d: path.d,
+                          fill: "none",
+                          stroke: "transparent",
+                          strokeWidth: 16,
+                          style: { cursor: "pointer" },
+                          id: stopDomId(edgeStop.key),
+                          role: "button",
+                          tabIndex: edgeStop.key === activeKey ? 0 : -1,
+                          "aria-label": fullText || "\uAD00\uACC4",
+                          "aria-pressed": selected ? "true" : void 0,
+                          onFocus: () => setFocusedKey(edgeStop.key),
+                          onKeyDown: (event) => stopKeyDown(event, edgeStop),
+                          onClick: () => onSelectEdge(edge)
+                        }
+                      )
+                    ] });
+                  })(),
                   labelText && path.label && /* 자리는 위 `placeEdgeLabels`가 다른 라벨·노드를 모두 보고
                      정한다. 그래도 마지막 후보까지 막히면 겹친 채로 놓이므로,
                      배경색 테두리를 글자 «뒤»로 깔아(`paint-order`) 그 경우의
@@ -1018,12 +1049,12 @@ function NetworkGraph({
                               ),
                               selected && /*
                                                         「이것을 골랐다」는 표시.
-                              
+
                                                         종전에는 노드의 유형 색을 40% 불투명도로 둘렀다.
                                                         범주와 이어져 보기에는 좋았지만, 배경 대비가
                                                         1.6:1까지 떨어져 사실상 보이지 않았다 — 비텍스트
                                                         표시가 지켜야 하는 3:1의 절반이다.
-                              
+
                                                         색을 «앱이 소유»하는 것이 문제의 핵심이다. 어떤 색이
                                                         올지 모르는데 그 색에 대비를 맡길 수는 없다. 그래서
                                                         선택 링은 글자와 같은 강한 중립색으로 긋는다 — 어떤
@@ -1279,4 +1310,4 @@ function NetworkGraph({
 export {
   NetworkGraph
 };
-//# sourceMappingURL=chunk-IDYIQP6J.js.map
+//# sourceMappingURL=chunk-6RCQJS4O.js.map

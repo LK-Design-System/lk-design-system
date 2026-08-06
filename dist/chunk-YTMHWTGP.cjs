@@ -25,7 +25,7 @@ function ToolbarButton({ item, active, disabled, onAction, index, tabIndex, onFo
   const [hover, setHover] = _react2.default.useState(false);
   const isDisabled = disabled || item.disabled;
   const label = item.label || item.value;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "button",
     {
       type: "button",
@@ -152,7 +152,7 @@ function ContentEditor({
     onValueChange && onValueChange(next, event);
     textareaProps && textareaProps.onChange && textareaProps.onChange(event);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "section",
     {
       id: rootId,
@@ -180,7 +180,7 @@ function ContentEditor({
             titleLabel,
             required && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, RequiredMark, {})
           ] }),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "input",
             {
               id: resolvedTitleId,
@@ -216,7 +216,7 @@ function ContentEditor({
             }
           )
         ] }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             style: {
@@ -230,7 +230,7 @@ function ContentEditor({
               background: "var(--color-semantic-background-normal-alternative)"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "div",
                 {
                   ref: toolbarRef,
@@ -238,7 +238,7 @@ function ContentEditor({
                   "aria-label": "\uAE00 \uD3B8\uC9D1 \uB3C4\uAD6C",
                   onKeyDown: handleToolbarKeyDown,
                   style: { display: "flex", alignItems: "center", gap: "var(--space-1-5)", flexWrap: "wrap", minWidth: 0 },
-                  children: toolbar != null ? toolbar : toolbarItems.map((item, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+                  children: toolbar != null ? toolbar : toolbarItems.map((item, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     ToolbarButton,
                     {
                       item,
@@ -262,7 +262,7 @@ function ContentEditor({
             bodyLabel,
             required && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, RequiredMark, {})
           ] }),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "textarea",
             {
               id: resolvedBodyId,
@@ -302,7 +302,7 @@ function ContentEditor({
             }
           )
         ] }),
-        hasFooter && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
+        hasFooter && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             style: {
