@@ -133,7 +133,7 @@ var FORCE_BIRTH_RADIUS = 46;
 function forceJitter(id, axis) {
   return (stableHash(`${id}:${axis}`) % 1e3 / 1e3 - 0.5) * 8;
 }
-function createForceBodies(nodes, base, radiusOf) {
+function createForceBodies(nodes, base, radiusOf, footprintOf) {
   return nodes.map((node) => {
     const point = _nullishCoalesce(base.get(node.id), () => ( { x: 0, y: 0 }));
     return {
@@ -142,7 +142,7 @@ function createForceBodies(nodes, base, radiusOf) {
       y: point.y + forceJitter(node.id, "y"),
       vx: 0,
       vy: 0,
-      r: radiusOf(node) || DOT_RADIUS,
+      r: footprintOf ? footprintOf(node) : radiusOf(node) || DOT_RADIUS,
       fx: null,
       fy: null
     };
@@ -211,8 +211,8 @@ function forceTick(bodies, links) {
     body.y += body.vy;
   }
 }
-function settledForcePositions(nodes, edges, base, radiusOf) {
-  const bodies = createForceBodies(nodes, base, radiusOf);
+function settledForcePositions(nodes, edges, base, radiusOf, footprintOf) {
+  const bodies = createForceBodies(nodes, base, radiusOf, footprintOf);
   const links = createForceLinks(edges, bodies);
   for (let tick = 0; tick < FORCE_TICKS; tick += 1) forceTick(bodies, links);
   return new Map(bodies.map((body) => [body.id, { x: body.x, y: body.y }]));
@@ -307,9 +307,20 @@ function NetworkGraph({
     },
     [isDot, nodes]
   );
+  const footprintOf = _react2.default.useCallback(
+    (node) => {
+      if (!isDot) return Math.hypot(metrics.width, metrics.height) / 2;
+      const radius = radiusOf(node) || DOT_RADIUS;
+      const nameWidth = (nodeText(node.label) || node.id).length * 6.8;
+      const captionWidth = nodeText(node.caption).length * 6.2;
+      const below = radius + (nodeText(node.caption) ? 35 : 20);
+      return Math.max(radius, below, nameWidth / 2, captionWidth / 2);
+    },
+    [isDot, metrics.height, metrics.width, radiusOf]
+  );
   const settledPositions = _react2.default.useMemo(
-    () => isForce ? settledForcePositions(nodes, edges, gridPositions, radiusOf) : null,
-    [edges, gridPositions, isForce, nodes, radiusOf]
+    () => isForce ? settledForcePositions(nodes, edges, gridPositions, radiusOf, footprintOf) : null,
+    [edges, footprintOf, gridPositions, isForce, nodes, radiusOf]
   );
   const [livePositions, setLivePositions] = _react2.default.useState(null);
   const [reduceMotion, setReduceMotion] = _react2.default.useState(() => typeof window === "undefined" || !window.matchMedia ? true : window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -350,7 +361,7 @@ function NetworkGraph({
         y: anchor.y + Math.sin(angle) * FORCE_BIRTH_RADIUS
       });
     });
-    const bodies = createForceBodies(nodes, seeds, radiusOf);
+    const bodies = createForceBodies(nodes, seeds, radiusOf, footprintOf);
     const links = createForceLinks(edges, bodies);
     simRef.current = { bodies, links, byId: new Map(bodies.map((b) => [b.id, b])) };
     if (!motionAllowed) {
@@ -369,7 +380,7 @@ function NetworkGraph({
     };
     frame = window.requestAnimationFrame(step);
     return () => window.cancelAnimationFrame(frame);
-  }, [edges, gridPositions, isForce, motionAllowed, nodes, radiusOf]);
+  }, [edges, footprintOf, gridPositions, isForce, motionAllowed, nodes, radiusOf]);
   const svgRef = _react2.default.useRef(null);
   const dragRef = _react2.default.useRef(null);
   const suppressClickRef = _react2.default.useRef(false);
@@ -515,8 +526,8 @@ function NetworkGraph({
       const captionWidth = nodeText(node.caption).length * 6.2 + 8;
       return [
         { x: point.x, y: point.y, width: point.radius * 2, height: point.radius * 2 },
-        { x: point.x, y: point.y + point.radius + 11, width: nameWidth, height: 16 },
-        ...captionWidth > 8 ? [{ x: point.x, y: point.y + point.radius + 26, width: captionWidth, height: 14 }] : []
+        { x: point.x, y: point.y + point.radius + 12, width: nameWidth, height: 18 },
+        ...captionWidth > 8 ? [{ x: point.x, y: point.y + point.radius + 28, width: captionWidth, height: 17 }] : []
       ];
     });
     return placeEdgeLabels(entries, obstacles);
@@ -780,6 +791,10 @@ function NetworkGraph({
                                     fontSize: "var(--label2-size)",
                                     fontWeight: "var(--fw-bold)",
                                     fill: "var(--color-semantic-label-strong)",
+                                    paintOrder: "stroke",
+                                    stroke: "var(--color-semantic-background-elevated-normal)",
+                                    strokeWidth: 4,
+                                    strokeLinejoin: "round",
                                     pointerEvents: "none"
                                   },
                                   children: labelText
@@ -793,6 +808,10 @@ function NetworkGraph({
                                   style: {
                                     fontSize: "var(--caption1-size)",
                                     fill: "var(--color-semantic-label-alternative)",
+                                    paintOrder: "stroke",
+                                    stroke: "var(--color-semantic-background-elevated-normal)",
+                                    strokeWidth: 3,
+                                    strokeLinejoin: "round",
                                     pointerEvents: "none"
                                   },
                                   children: captionText
@@ -946,4 +965,4 @@ function NetworkGraph({
 
 
 exports.NetworkGraph = NetworkGraph;
-//# sourceMappingURL=chunk-P6UVKTJF.cjs.map
+//# sourceMappingURL=chunk-KBI2BKAL.cjs.map

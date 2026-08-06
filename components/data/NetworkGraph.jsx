@@ -219,7 +219,7 @@ function forceJitter(id, axis) {
   return ((stableHash(`${id}:${axis}`) % 1000) / 1000 - 0.5) * 8;
 }
 
-function createForceBodies(nodes, base, radiusOf) {
+function createForceBodies(nodes, base, radiusOf, footprintOf) {
   return nodes.map((node) => {
     const point = base.get(node.id) ?? { x: 0, y: 0 };
     return {
@@ -228,7 +228,7 @@ function createForceBodies(nodes, base, radiusOf) {
       y: point.y + forceJitter(node.id, 'y'),
       vx: 0,
       vy: 0,
-      r: radiusOf(node) || DOT_RADIUS,
+      r: footprintOf ? footprintOf(node) : radiusOf(node) || DOT_RADIUS,
       fx: null,
       fy: null,
     };
@@ -305,8 +305,8 @@ function forceTick(bodies, links) {
   }
 }
 
-function settledForcePositions(nodes, edges, base, radiusOf) {
-  const bodies = createForceBodies(nodes, base, radiusOf);
+function settledForcePositions(nodes, edges, base, radiusOf, footprintOf) {
+  const bodies = createForceBodies(nodes, base, radiusOf, footprintOf);
   const links = createForceLinks(edges, bodies);
   for (let tick = 0; tick < FORCE_TICKS; tick += 1) forceTick(bodies, links);
   return new Map(bodies.map((body) => [body.id, { x: body.x, y: body.y }]));
@@ -440,9 +440,37 @@ export function NetworkGraph({
     [isDot, nodes],
   );
 
+  /*
+    충돌이 밀어내야 하는 것은 «점»이 아니라 «점과 그 이름»이다.
+
+    점 관행에서 이름은 원 밖 아래에 있고, 원보다 훨씬 넓다 — 반지름 16px짜리
+    점에 「플랫폼·개발자 도구」가 붙으면 실제로 차지하는 폭은 110px가 넘는다.
+    반지름만 보고 밀면 점 둘은 안 닿는데 이름끼리는 포개진다. 자리를 옮겨
+    피하는 수도 없다. 이름의 자리는 점에 매여 있기 때문이다.
+
+    그래서 이름을 감싸는 원까지를 몸집으로 친다. 세로로는 캡션 밑선까지,
+    가로로는 두 줄 중 넓은 쪽의 절반까지다. 원 하나로는 아래로만 뻗은 이 모양을
+    정확히 표현할 수 없지만, 어긋나는 쪽이 «더 넉넉히»이므로 안전하다.
+
+    카드 관행에서는 이름이 «안»에 있으므로 상자 자체가 몸집이다.
+  */
+  const footprintOf = React.useCallback(
+    (node) => {
+      if (!isDot) return Math.hypot(metrics.width, metrics.height) / 2;
+      const radius = radiusOf(node) || DOT_RADIUS;
+      const nameWidth = (nodeText(node.label) || node.id).length * 6.8;
+      const captionWidth = nodeText(node.caption).length * 6.2;
+      const below = radius + (nodeText(node.caption) ? 35 : 20);
+      return Math.max(radius, below, nameWidth / 2, captionWidth / 2);
+    },
+    [isDot, metrics.height, metrics.width, radiusOf],
+  );
+
   const settledPositions = React.useMemo(
-    () => (isForce ? settledForcePositions(nodes, edges, gridPositions, radiusOf) : null),
-    [edges, gridPositions, isForce, nodes, radiusOf],
+    () => (isForce
+      ? settledForcePositions(nodes, edges, gridPositions, radiusOf, footprintOf)
+      : null),
+    [edges, footprintOf, gridPositions, isForce, nodes, radiusOf],
   );
 
   /*
@@ -516,7 +544,7 @@ export function NetworkGraph({
         y: anchor.y + Math.sin(angle) * FORCE_BIRTH_RADIUS,
       });
     });
-    const bodies = createForceBodies(nodes, seeds, radiusOf);
+    const bodies = createForceBodies(nodes, seeds, radiusOf, footprintOf);
     const links = createForceLinks(edges, bodies);
     simRef.current = { bodies, links, byId: new Map(bodies.map((b) => [b.id, b])) };
     if (!motionAllowed) {
@@ -536,7 +564,7 @@ export function NetworkGraph({
     };
     frame = window.requestAnimationFrame(step);
     return () => window.cancelAnimationFrame(frame);
-  }, [edges, gridPositions, isForce, motionAllowed, nodes, radiusOf]);
+  }, [edges, footprintOf, gridPositions, isForce, motionAllowed, nodes, radiusOf]);
 
   /*
     드래그. 노드를 끌면 그 노드는 포인터가 소유하고 물리는 이웃으로 흐른다 —
@@ -718,13 +746,18 @@ export function NetworkGraph({
       }
       /* 점은 이름이 원 «밖»에 있다. 원만 피하면 라벨 위에 얹히므로, 원 아래
          두 줄도 함께 막는다 — 이 관행에서 이름은 노드의 일부다. */
+      /* 상자는 글자가 «실제로» 놓이는 자리를 따라간다. 이름의 밑선은
+         `radius + 16`, 캡션은 `radius + 31`이고 상자는 밑선이 아니라 가운데를
+         기준으로 하므로 각각 글자 높이의 절반만큼 올려 잡는다. 2px씩 넉넉하게
+         두는 것은 여백이 아니라 오차 몫이다 — 글자 폭을 글자 수로 어림하고
+         있어서 실제와 몇 px 어긋난다. */
       const nameWidth = (nodeText(node.label) || node.id).length * 6.8 + 8;
       const captionWidth = nodeText(node.caption).length * 6.2 + 8;
       return [
         { x: point.x, y: point.y, width: point.radius * 2, height: point.radius * 2 },
-        { x: point.x, y: point.y + point.radius + 11, width: nameWidth, height: 16 },
+        { x: point.x, y: point.y + point.radius + 12, width: nameWidth, height: 18 },
         ...(captionWidth > 8
-          ? [{ x: point.x, y: point.y + point.radius + 26, width: captionWidth, height: 14 }]
+          ? [{ x: point.x, y: point.y + point.radius + 28, width: captionWidth, height: 17 }]
           : []),
       ];
     });
@@ -1042,6 +1075,17 @@ export function NetworkGraph({
                         strokeWidth={2}
                         strokeDasharray={tone.strokeDasharray}
                       />
+                      {/*
+                        이름은 원 «밖»에 있으므로 관계선이 그 위를 지날 수 있다.
+                        선은 직선이라 돌아가지 않고, 라벨 자리를 옮기는 해법도
+                        여기서는 못 쓴다 — 이름의 자리는 노드에 매여 있다.
+
+                        그래서 배경색 테두리를 글자 «뒤»에 깐다(`paint-order`).
+                        지나가는 선이 글자에 닿기 직전에 끊겨 보이므로 이름이
+                        계속 읽힌다. 관계 라벨이 마지막 후보까지 막혔을 때 쓰는
+                        것과 같은 장치이고, 이 관행의 도구들(Gephi·Bloom)이
+                        라벨에 후광을 두는 이유도 같다.
+                      */}
                       <text
                         y={radius + 16}
                         textAnchor="middle"
@@ -1049,6 +1093,10 @@ export function NetworkGraph({
                           fontSize: 'var(--label2-size)',
                           fontWeight: 'var(--fw-bold)',
                           fill: 'var(--color-semantic-label-strong)',
+                          paintOrder: 'stroke',
+                          stroke: 'var(--color-semantic-background-elevated-normal)',
+                          strokeWidth: 4,
+                          strokeLinejoin: 'round',
                           pointerEvents: 'none',
                         }}
                       >
@@ -1061,6 +1109,10 @@ export function NetworkGraph({
                           style={{
                             fontSize: 'var(--caption1-size)',
                             fill: 'var(--color-semantic-label-alternative)',
+                            paintOrder: 'stroke',
+                            stroke: 'var(--color-semantic-background-elevated-normal)',
+                            strokeWidth: 3,
+                            strokeLinejoin: 'round',
                             pointerEvents: 'none',
                           }}
                         >

@@ -398,6 +398,29 @@ export const ForceLayout = {
     if (new Set(transforms).size !== transforms.length) {
       throw new Error('Force layout must not settle two nodes on the same point.');
     }
+    /*
+      이름이 서로 겹치면 안 된다. 점 관행에서 이름은 원 «밖»에 있고 원보다
+      훨씬 넓으므로, 충돌이 반지름만 보고 밀면 점은 안 닿는데 이름끼리
+      포개진다. 실제로 그래서 포털 화면에서 이름 위로 관계선과 다른 이름이
+      올라탔고, 몸집을 이름까지로 넓혀 고쳤다. 여기서 지키는 것은 그 결과다 —
+      「이름 상자 둘이 겹치지 않는가」이지 어떤 힘으로 그걸 이뤘는가가 아니다.
+
+      1px 이하는 글자 상자의 반올림 오차로 보고 넘긴다.
+    */
+    const boxes = Array.from(canvasElement.querySelectorAll('svg text'))
+      .map((text) => text.getBoundingClientRect())
+      .filter((box) => box.width > 0 && box.height > 0);
+    for (let i = 0; i < boxes.length; i += 1) {
+      for (let j = i + 1; j < boxes.length; j += 1) {
+        const a = boxes[i];
+        const b = boxes[j];
+        const overlapX = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+        const overlapY = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+        if (overlapX > 1 && overlapY > 1) {
+          throw new Error('Force layout must not settle two labels on top of each other.');
+        }
+      }
+    }
     assertNoPresentationalSubtree(canvasElement, '회사 지식망 · force');
     assertFocusableNodes(canvasElement, '회사 지식망 · force');
   },
