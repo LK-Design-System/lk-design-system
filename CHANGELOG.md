@@ -68,6 +68,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.43 - 2026-08-06
+
+### Fixed
+
+- `NetworkGraph`의 관계 라벨이 빈자리를 못 찾을 때 «가장 덜 겹치는» 후보로 갑니다. 종전에는 곡선 한가운데로 되돌렸는데, 그 자리는 하필 이미 막힌다고 판정한 첫 번째 후보였습니다. 그렇게 놓은 자리도 차지한 것으로 기록해 뒤따르는 라벨이 같은 자리에 쌓이지 않게 합니다.
+
 ## 0.1.0-rc.42 - 2026-08-06
 
 ### Fixed

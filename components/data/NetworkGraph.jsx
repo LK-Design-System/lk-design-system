@@ -320,13 +320,14 @@ function pointOnCurve({ start, control, end }, t) {
   };
 }
 
-function boxesHit(a, b) {
-  return !(
-    a.x + a.width / 2 <= b.x - b.width / 2
-    || b.x + b.width / 2 <= a.x - a.width / 2
-    || a.y + a.height / 2 <= b.y - b.height / 2
-    || b.y + b.height / 2 <= a.y - a.height / 2
-  );
+/* 「겹치는가」가 아니라 「얼마나 겹치는가」. 0이면 빈자리이고, 빈자리가 하나도
+   없을 때는 이 값으로 후보들 사이의 우열을 가린다. */
+function boxOverlapArea(a, b) {
+  const x = Math.min(a.x + a.width / 2, b.x + b.width / 2)
+    - Math.max(a.x - a.width / 2, b.x - b.width / 2);
+  const y = Math.min(a.y + a.height / 2, b.y + b.height / 2)
+    - Math.max(a.y - a.height / 2, b.y - b.height / 2);
+  return x > 0 && y > 0 ? x * y : 0;
 }
 
 /*
@@ -364,6 +365,12 @@ function placeEdgeLabels(entries, obstacles) {
     // 잘못 판단해 라벨이 제자리로 되돌아온다.
     const width = entry.text.length * 6.2 + 6;
     const height = 16;
+    /* 빈자리를 못 찾더라도 후보들이 «얼마나» 나쁜지는 서로 다르다. 그래서
+       도는 동안 가장 덜 겹치는 후보를 기억해 둔다 — 예전에는 곡선 한가운데로
+       되돌렸는데, 그 자리는 하필 후보 중 첫 번째, 즉 이미 막힌다고 판정한
+       자리였다. 겹침이 불가피할 때 고를 것은 «제자리»가 아니라 «가장 덜
+       겹치는 자리»다. */
+    let best = null;
     for (const t of LABEL_CANDIDATE_T) {
       const base = pointOnCurve(entry.curve, t);
       const tangent = curveTangent(entry.curve, t);
@@ -374,14 +381,21 @@ function placeEdgeLabels(entries, obstacles) {
           y: base.y + tangent.x * offset,
         };
         const box = { x: point.x, y: point.y - 6, width, height };
-        if (!placed.some((other) => boxesHit(box, other))) {
+        const cost = placed.reduce((sum, other) => sum + boxOverlapArea(box, other), 0);
+        if (cost === 0) {
           placed.push(box);
           return { ...entry, label: point };
         }
+        if (!best || cost < best.cost) best = { cost, point, box };
       }
     }
-    const fallback = pointOnCurve(entry.curve, LABEL_CANDIDATE_T[0]);
-    return { ...entry, label: fallback };
+    if (best) {
+      // 놓은 자리는 겹치더라도 «놓았다»고 기록한다. 그래야 뒤따르는 라벨이
+      // 같은 자리에 또 쌓이지 않는다.
+      placed.push(best.box);
+      return { ...entry, label: best.point };
+    }
+    return { ...entry, label: pointOnCurve(entry.curve, LABEL_CANDIDATE_T[0]) };
   });
 }
 

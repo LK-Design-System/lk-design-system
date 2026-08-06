@@ -224,8 +224,10 @@ function pointOnCurve({ start, control, end }, t) {
     y: inverse * inverse * start.y + 2 * inverse * t * control.y + t * t * end.y
   };
 }
-function boxesHit(a, b) {
-  return !(a.x + a.width / 2 <= b.x - b.width / 2 || b.x + b.width / 2 <= a.x - a.width / 2 || a.y + a.height / 2 <= b.y - b.height / 2 || b.y + b.height / 2 <= a.y - a.height / 2);
+function boxOverlapArea(a, b) {
+  const x = Math.min(a.x + a.width / 2, b.x + b.width / 2) - Math.max(a.x - a.width / 2, b.x - b.width / 2);
+  const y = Math.min(a.y + a.height / 2, b.y + b.height / 2) - Math.max(a.y - a.height / 2, b.y - b.height / 2);
+  return x > 0 && y > 0 ? x * y : 0;
 }
 var LABEL_CANDIDATE_T = [0.5, 0.38, 0.62, 0.28, 0.72];
 var LABEL_CANDIDATE_OFFSET = [0, 18, -18, 34, -34, 52, -52];
@@ -241,6 +243,7 @@ function placeEdgeLabels(entries, obstacles) {
     if (!entry.curve || !entry.text) return { ...entry, label: null };
     const width = entry.text.length * 6.2 + 6;
     const height = 16;
+    let best = null;
     for (const t of LABEL_CANDIDATE_T) {
       const base = pointOnCurve(entry.curve, t);
       const tangent = curveTangent(entry.curve, t);
@@ -250,14 +253,19 @@ function placeEdgeLabels(entries, obstacles) {
           y: base.y + tangent.x * offset
         };
         const box = { x: point.x, y: point.y - 6, width, height };
-        if (!placed.some((other) => boxesHit(box, other))) {
+        const cost = placed.reduce((sum, other) => sum + boxOverlapArea(box, other), 0);
+        if (cost === 0) {
           placed.push(box);
           return { ...entry, label: point };
         }
+        if (!best || cost < best.cost) best = { cost, point, box };
       }
     }
-    const fallback = pointOnCurve(entry.curve, LABEL_CANDIDATE_T[0]);
-    return { ...entry, label: fallback };
+    if (best) {
+      placed.push(best.box);
+      return { ...entry, label: best.point };
+    }
+    return { ...entry, label: pointOnCurve(entry.curve, LABEL_CANDIDATE_T[0]) };
   });
 }
 function NetworkGraph({
@@ -965,4 +973,4 @@ function NetworkGraph({
 
 
 exports.NetworkGraph = NetworkGraph;
-//# sourceMappingURL=chunk-KBI2BKAL.cjs.map
+//# sourceMappingURL=chunk-IMSYF4HF.cjs.map
