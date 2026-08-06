@@ -43,7 +43,7 @@ var DataToolbar = _react2.default.forwardRef(function DataToolbar2({
   const hasHeader = title != null || description != null || count != null || actions != null;
   const hasControls = searchable || resolvedFilters != null;
   if (!hasHeader && !hasControls) return null;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       ref: forwardedRef,
@@ -83,7 +83,7 @@ var DataToolbar = _react2.default.forwardRef(function DataToolbar2({
           actions != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-slot": "actions", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "actions") || void 0, style: { display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-2)", flexWrap: "wrap", marginLeft: "auto", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "actions") }, children: actions })
         ] }),
         hasControls && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "controls", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "controls") || void 0, "data-data-toolbar-controls": true, style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "controls") }, children: [
-          searchable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-slot": "search", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "search") || void 0, style: { flex: "1 1 260px", minWidth: 200, maxWidth: "var(--lds-data-toolbar-search-max-width, 360px)", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "search") }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          searchable && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-slot": "search", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "search") || void 0, style: { flex: "1 1 260px", minWidth: 200, maxWidth: "var(--lds-data-toolbar-search-max-width, 360px)", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "search") }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             _chunk6BNWBGTGcjs.SearchField,
             {
               value: currentSearch,
@@ -93,7 +93,7 @@ var DataToolbar = _react2.default.forwardRef(function DataToolbar2({
               size
             }
           ) }),
-          resolvedFilters != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          resolvedFilters != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "div",
             {
               "data-slot": "filters",

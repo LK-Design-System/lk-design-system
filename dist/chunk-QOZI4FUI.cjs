@@ -142,7 +142,7 @@ function LayerRow({
     onSelect(layer.id);
   };
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { role: "none", style: { margin: 0, padding: 0, listStyle: "none" }, children: [
-    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
       "div",
       {
         role: "treeitem",
@@ -230,7 +230,7 @@ function LayerRow({
           cursor: layerDisabled ? "not-allowed" : "pointer"
         },
         children: [
-          hasChildren ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          hasChildren ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "button",
             {
               type: "button",
@@ -253,7 +253,7 @@ function LayerRow({
             ] })
           ] }),
           rowMeta != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { className: "lk-layer-panel__row-meta", style: { maxWidth: 76, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: rowMeta }),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             _chunk3H3EZZTFcjs.IconButton,
             {
               variant: "ghost",
@@ -273,7 +273,7 @@ function LayerRow({
               children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkO5WLSYUKcjs.Icon, { name: visible ? "eye" : "eye-slash", size: 16, "aria-hidden": "true" })
             }
           ),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             _chunk3H3EZZTFcjs.IconButton,
             {
               variant: locked ? "soft" : "ghost",
@@ -296,7 +296,7 @@ function LayerRow({
         ]
       }
     ),
-    hasChildren && expanded && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { role: "group", style: { margin: 0, padding: 0, listStyle: "none" }, children: layer.children.map((child) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    hasChildren && expanded && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { role: "group", style: { margin: 0, padding: 0, listStyle: "none" }, children: layer.children.map((child) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       LayerRow,
       {
         layer: child,
@@ -427,7 +427,7 @@ function LayerPanel({
     typeaheadRef.current = { query, time: now };
     focusTreeRowByText(current, query, setFocusId);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "section",
     {
       className: "lk-layer-panel",
@@ -451,7 +451,7 @@ function LayerPanel({
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", letterSpacing: 0 }, children: title }),
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { marginLeft: "auto", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: layerIds.length })
         ] }),
-        layers.length === 0 ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "status", style: { display: "grid", placeItems: "center", minHeight: 120, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-medium)", textAlign: "center" }, children: emptyLabel }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        layers.length === 0 ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "status", style: { display: "grid", placeItems: "center", minHeight: 120, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: "var(--fw-medium)", textAlign: "center" }, children: emptyLabel }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "ul",
           {
             role: "tree",
@@ -459,7 +459,7 @@ function LayerPanel({
             "aria-multiselectable": "false",
             "aria-disabled": disabled || void 0,
             style: { minHeight: 0, overflow: "auto", margin: 0, padding: 0, listStyle: "none" },
-            children: layers.map((layer) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            children: layers.map((layer) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               LayerRow,
               {
                 layer,

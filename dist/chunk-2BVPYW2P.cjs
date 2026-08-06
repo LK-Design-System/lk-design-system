@@ -59,7 +59,7 @@ function DonutChart({
   }).join(", ")}`;
   const resolvedSummary = _nullishCoalesce(summary, () => ( automaticSummary));
   const centerContent = centerLabel != null ? centerLabel : !hasSegments ? emptyLabel : showTotal ? total : null;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       role: "img",
@@ -79,7 +79,7 @@ function DonutChart({
               const value = values[index];
               if (value <= 0) return null;
               const dash = value / total * circ;
-              const el = /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              const el = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "circle",
                 {
                   "data-donut-segment": true,
@@ -98,7 +98,7 @@ function DonutChart({
               return el;
             })
           ] }),
-          centerContent != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          centerContent != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "span",
             {
               "data-chart-center-value": true,

@@ -4,7 +4,7 @@
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 var _jsxruntime = require('react/jsx-runtime');
 function Mini({ children, onClick, disabled, label }) {
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "button",
     {
       type: "button",
@@ -70,7 +70,7 @@ function StepList({ steps = [], onChange, editable = true, onAdd, addLabel = "\u
         ] })
       ] }, st.id != null ? st.id : i);
     }) }),
-    editable && onAdd && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+    editable && onAdd && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
       "button",
       {
         type: "button",

@@ -72,7 +72,7 @@ var PRESERVED_DATA_STATES = /* @__PURE__ */ new Set(["refreshing", "error", "sta
 var BLOCKING_STATES = /* @__PURE__ */ new Set(["empty", "restricted"]);
 var ASSERTIVE_BLOCKING_STATES = /* @__PURE__ */ new Set(["error", "offline"]);
 function DefaultLoadingContent() {
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       "data-resource-state-skeleton": true,
@@ -113,7 +113,7 @@ function ResourceState({
   const isBlocking = BLOCKING_STATES.has(resolvedState) || !hasContent && !isLoading && resolvedState !== "ready";
   const preservesContent = hasContent && PRESERVED_DATA_STATES.has(resolvedState);
   const assertive = isBlocking && ASSERTIVE_BLOCKING_STATES.has(resolvedState);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "section",
     {
       "data-resource-state": resolvedState,
@@ -130,7 +130,7 @@ function ResourceState({
       ...rest,
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { role: "status", "aria-live": "polite", "aria-atomic": "true", children: resolvedState !== "ready" && !assertive ? `${resolvedTitle}${resolvedDescription ? `. ${resolvedDescription}` : ""}` : "" }),
-        preservesContent && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        preservesContent && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunkGO623MW4cjs.Banner,
           {
             "data-resource-state-message": "",
@@ -145,7 +145,7 @@ function ResourceState({
           }
         ),
         isLoading && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { minWidth: 0 }, children: _nullishCoalesce(loadingContent, () => ( /* @__PURE__ */ _jsxruntime.jsx.call(void 0, DefaultLoadingContent, {}))) }),
-        isBlocking && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: assertive ? "alert" : void 0, "aria-live": assertive ? "assertive" : void 0, style: { minWidth: 0 }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        isBlocking && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: assertive ? "alert" : void 0, "aria-live": assertive ? "assertive" : void 0, style: { minWidth: 0 }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunkYNRA4IIWcjs.EmptyState,
           {
             icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: presentation.icon, size: 26, "aria-hidden": "true" }),
@@ -157,7 +157,7 @@ function ResourceState({
           }
         ) }),
         !isLoading && !isBlocking && children,
-        !isLoading && !isBlocking && lastUpdated != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        !isLoading && !isBlocking && lastUpdated != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "div",
           {
             "data-resource-state-freshness": true,

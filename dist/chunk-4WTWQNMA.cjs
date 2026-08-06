@@ -113,7 +113,7 @@ function OverlayPortal({
   const target = _nullishCoalesce(_nullishCoalesce(_nullishCoalesce(portalTarget, () => ( runtime.portalTarget)), () => ( _optionalChain([ownerDocument, 'optionalAccess', _20 => _20.body]))), () => ( null));
   const scope = inheritedPortalScope(anchor, runtime);
   if (!target) return null;
-  return _reactdom.createPortal.call(void 0,
+  return _reactdom.createPortal.call(void 0, 
     _react2.default.createElement("div", {
       ref: setPortalNode,
       "data-lds-overlay-portal": "",
@@ -674,7 +674,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
     "data-anchored-overlay-trigger": "",
     "aria-describedby": appendAriaReference(children.props["aria-describedby"], tooltipId)
   }) : children;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "span",
     {
       ref: mergedWrapperRef,
@@ -692,7 +692,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
       onBlur: hideOnBlur,
       children: [
         renderedChildren,
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: wrapperRef, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: wrapperRef, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "span",
           {
             ref: bubbleRef,
@@ -734,7 +734,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
               ...partStyle(styles, "bubble")
             },
             children: [
-              bubblePath && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              bubblePath && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "svg",
                 {
                   "aria-hidden": "true",
@@ -756,7 +756,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
                     pointerEvents: "none",
                     ...partStyle(styles, "surface")
                   },
-                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "path",
                     {
                       d: bubblePath,
@@ -767,7 +767,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
                   )
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "span",
                 {
                   "data-lds-tooltip-content": true,
@@ -787,7 +787,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
                   },
                   children: [
                     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: content }),
-                    shortcut != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                    shortcut != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                       "span",
                       {
                         "data-slot": "shortcut",
@@ -846,7 +846,7 @@ function EditorToolbar({
     onChange && onChange(v);
   };
   const resolvedTooltipPosition = _nullishCoalesce(tooltipPosition, () => ( (orientation === "vertical" ? "right" : "bottom")));
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     _chunk3VE2HGTTcjs.Toolbar,
     {
       ...rest,
@@ -879,7 +879,7 @@ function EditorToolbar({
         const itemDisabled = disabled || !!it.disabled;
         const itemLabel = it.label || String(v);
         const itemDisabledReason = _nullishCoalesce(it.disabledReason, () => ( disabledReason));
-        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           Tooltip,
           {
             content: itemDisabled && itemDisabledReason != null ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: 2 }, children: [
@@ -889,7 +889,7 @@ function EditorToolbar({
             shortcut: it.shortcut,
             position: resolvedTooltipPosition,
             size: "sm",
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               _chunkFVL575B5cjs.ToggleIcon,
               {
                 className: "lk-editor-toolbar__button",

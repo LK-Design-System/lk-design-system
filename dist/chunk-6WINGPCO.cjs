@@ -24,7 +24,7 @@ function FilterChip({
 }) {
   const [hover, setHover] = _react2.default.useState(false);
   const isDisclosure = caret;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "button",
     {
       type: "button",

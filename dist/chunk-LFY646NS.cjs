@@ -61,7 +61,7 @@ function MenuItemMark({ variant, checked, disabled }) {
   if (!variant || variant === "normal") return null;
   const activeColor = disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-primary-normal)";
   if (variant === "radio") {
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "span",
       {
         "aria-hidden": "true",
@@ -75,7 +75,7 @@ function MenuItemMark({ variant, checked, disabled }) {
           justifyContent: "center",
           flexShrink: 0
         },
-        children: checked && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        children: checked && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "span",
           {
             style: {
@@ -89,7 +89,7 @@ function MenuItemMark({ variant, checked, disabled }) {
       }
     );
   }
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "span",
     {
       "aria-hidden": "true",
@@ -115,7 +115,7 @@ function MenuItem({ item, variant, close, trailing, haspopup, expanded, buttonRe
   const disabled = Boolean(item.disabled || item.disable);
   const isTrigger = Boolean(haspopup);
   const active = hover && !disabled || Boolean(activeOverride);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "button",
     {
       ref: buttonRef,
@@ -153,7 +153,7 @@ function MenuItem({ item, variant, close, trailing, haspopup, expanded, buttonRe
         opacity: disabled ? 0.45 : 1
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "span",
           {
             style: {
@@ -166,7 +166,7 @@ function MenuItem({ item, variant, close, trailing, haspopup, expanded, buttonRe
               variant !== "normal" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { display: "inline-flex", marginTop: item.description ? 2 : 0 }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, MenuItemMark, { variant, checked, disabled }) }),
               item.icon,
               /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: "var(--space-0-5)", minWidth: 0 }, children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "span",
                   {
                     style: {
@@ -183,7 +183,7 @@ function MenuItem({ item, variant, close, trailing, haspopup, expanded, buttonRe
             ]
           }
         ),
-        trailing || (item.shortcut ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        trailing || (item.shortcut ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "span",
           {
             style: {
@@ -200,7 +200,7 @@ function MenuItem({ item, variant, close, trailing, haspopup, expanded, buttonRe
 }
 var MENUBAR_CHEVRON = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "chevron-right-small", size: 16, "aria-hidden": "true", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)" } });
 function MenubarDrillHeader({ title, onBack }) {
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "button",
     {
       type: "button",
@@ -243,7 +243,7 @@ function MenubarBranch({ item, variant, close }) {
   const disabled = Boolean(item.disabled || item.disable);
   const sub = _chunkR7U43XDRcjs.useSubmenuBranch.call(void 0, { disabled });
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { position: "relative" }, onMouseEnter: sub.containerHandlers.onMouseEnter, onMouseLeave: sub.containerHandlers.onMouseLeave, children: [
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       MenuItem,
       {
         item,
@@ -259,7 +259,7 @@ function MenubarBranch({ item, variant, close }) {
       }
     ),
     sub.renderPanel(
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
         "div",
         {
           ref: sub.menuRef,
@@ -301,7 +301,7 @@ function renderMenubarDrillItems(items, ctx) {
     items,
     (item, index) => {
       if (item.divider) {
-        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "div",
           {
             role: "separator",
@@ -311,7 +311,7 @@ function renderMenubarDrillItems(items, ctx) {
         );
       }
       if (item.items && item.items.length) {
-        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           MenuItem,
           {
             item,
@@ -341,7 +341,7 @@ function renderMenubarItems(items, ctx) {
     items,
     (item, index) => {
       if (item.divider) {
-        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "div",
           {
             role: "separator",
@@ -514,7 +514,7 @@ function Menubar({
     _optionalChain([callback, 'optionalCall', _25 => _25()]);
     closeMenu({ restoreFocus: true });
   };
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "div",
     {
       ref,
@@ -538,7 +538,7 @@ function Menubar({
         const showActionArea = Boolean(menu.action || actionAreaRequested && (applyAction || cancelAction));
         const panelMaxHeight = constrainedMaxHeight(menu.maxHeight || maxHeight, position.maxHeight);
         return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { role: "none", style: { position: "relative" }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "button",
             {
               ref: (node) => {
@@ -575,7 +575,7 @@ function Menubar({
               children: menu.label
             }
           ),
-          open === index && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+          open === index && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
             "div",
             {
               ref: panelRef,
@@ -602,7 +602,7 @@ function Menubar({
                 flexDirection: "column"
               },
               children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "div",
                   {
                     ref: menuRef,
@@ -624,7 +624,7 @@ function Menubar({
                     })
                   }
                 ),
-                showActionArea && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                showActionArea && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "div",
                   {
                     ref: actionAreaRef,

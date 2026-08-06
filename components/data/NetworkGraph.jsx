@@ -322,8 +322,19 @@ function edgePath(from, to, metrics) {
   const direction = Math.sign(dy) || 1;
   const startY = from.y + direction * halfHeight;
   const endY = to.y - direction * halfHeight;
-  // 같은 칸에 세로로 이웃한 노드는 직선이면 사이의 노드를 관통하므로 옆으로 부풀린다.
-  const bow = Math.max(48, Math.abs(endY - startY) / 2);
+  /*
+    세로로 이어지는 관계. 직선이면 «사이에 낀» 노드를 관통하므로 옆으로
+    부풀려 돌아간다.
+
+    다만 돌아가는 것은 피할 것이 있을 때뿐이다. 종전에는 사이에 아무것도
+    없어도 늘 부풀렸고, 거리가 멀수록 더 부풀었다 — 위아래로 나란한 카드 둘
+    사이에 74px짜리 활이 생겨, 없는 장애물을 피해 가는 것처럼 읽혔다.
+    흐름 편집기(n8n·Node-RED)에서 위아래로 이어진 두 노드는 완만한 S로
+    잇지 큰 호를 그리지 않는다.
+  */
+  const bow = metrics.verticallyBlocked
+    ? Math.max(48, Math.abs(endY - startY) / 2)
+    : 0;
   const controlX = (from.x + to.x) / 2 + bow;
   const controlY = (startY + endY) / 2;
   return { start: { x: from.x, y: startY }, control: { x: controlX, y: controlY }, end: { x: to.x, y: endY } };
@@ -1013,6 +1024,26 @@ export function NetworkGraph({
         })(),
         // 이 관계가 쌍의 «정렬된» 방향과 반대로 흐르는가.
         parallelReversed: [edge.from, edge.to].sort()[0] !== edge.from,
+        /*
+          세로로 이을 때 두 노드 «사이»에 다른 노드가 끼어 있는가. 끼어 있으면
+          직선이 그 노드를 관통하므로 옆으로 돌아가야 하고, 없으면 돌아갈
+          이유가 없다. 카드 폭의 절반 안에 들어오는 것만 장애물로 본다 —
+          옆 칸의 노드는 직선의 길을 막지 않는다.
+        */
+        verticallyBlocked: (() => {
+          const from = anchors.get(edge.from);
+          const to = anchors.get(edge.to);
+          if (!from || !to) return false;
+          const top = Math.min(from.y, to.y);
+          const bottom = Math.max(from.y, to.y);
+          return nodes.some((other) => {
+            if (other.id === edge.from || other.id === edge.to) return false;
+            const point = anchors.get(other.id);
+            if (!point) return false;
+            return point.y > top && point.y < bottom
+              && Math.abs(point.x - (from.x + to.x) / 2) < metrics.width / 2;
+          });
+        })(),
         selfIndex: edge.from === edge.to
           ? (() => {
             const seen = selfSeen.get(edge.from) ?? 0;

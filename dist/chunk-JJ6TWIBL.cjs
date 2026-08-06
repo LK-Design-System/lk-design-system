@@ -40,7 +40,7 @@ function SpeedDial({ icon, actions = [], open, defaultOpen = false, onOpenChange
     event.stopPropagation();
     close({ restoreFocus: true });
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       ref: rootRef,
@@ -48,7 +48,7 @@ function SpeedDial({ icon, actions = [], open, defaultOpen = false, onOpenChange
       style: { display: "inline-flex", flexDirection: "column-reverse", alignItems: "flex-end", gap: 12, fontFamily: "var(--font-sans)", ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "button",
           {
             ref: triggerRef,
@@ -80,7 +80,7 @@ function SpeedDial({ icon, actions = [], open, defaultOpen = false, onOpenChange
           const actionId = `${dialId}-action-${i}`;
           return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2-5)" }, children: [
             /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { id: actionId, style: { padding: "4px 9px", borderRadius: "var(--radius-sm)", background: "var(--color-semantic-inverse-background)", color: "var(--color-semantic-inverse-label)", fontSize: "var(--caption1-size)", fontWeight: "var(--fw-semibold)", boxShadow: "var(--shadow-sm)", whiteSpace: "nowrap" }, children: a.label }),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
               "button",
               {
                 type: "button",

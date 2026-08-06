@@ -66,7 +66,7 @@ function ConfirmDialog({
     cancelFocusRef.current = _nullishCoalesce(_optionalChain([node, 'optionalAccess', _2 => _2.querySelector, 'call', _3 => _3("[data-confirm-dialog-cancel]")]), () => ( null));
   }, [dialogRef]);
   if (!open) return null;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF4O2CAUIcjs.OverlayPortal, { open, withinPortal, portalTarget, anchorRef: portalAnchorRef, portalRef, layer: "modal", children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF4O2CAUIcjs.OverlayPortal, { open, withinPortal, portalTarget, anchorRef: portalAnchorRef, portalRef, layer: "modal", children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "div",
     {
       role: "presentation",
@@ -74,7 +74,7 @@ function ConfirmDialog({
         if (event.target === event.currentTarget && dismiss) dismiss();
       } : void 0,
       style: { position: "fixed", inset: 0, zIndex: resolvedZIndex, display: "flex", alignItems: "center", justifyContent: "center", padding: "var(--space-6)", background: "var(--component-dialog-scrim)", backdropFilter: "blur(var(--component-dialog-scrim-blur))" },
-      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
         "div",
         {
           ref: setDialogRef,
@@ -94,7 +94,7 @@ function ConfirmDialog({
             ] }),
             /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunkLRACKP3Dcjs.ActionArea, { compact: true, divider: false, align: "end", style: { padding: 0, background: "transparent" }, children: [
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk6S5YR4GDcjs.Button, { "data-confirm-dialog-cancel": true, variant: "outlined", color: "assistive", onClick: () => _optionalChain([dismiss, 'optionalCall', _4 => _4()]), children: cancelLabel }),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 _chunk6S5YR4GDcjs.Button,
                 {
                   variant: tone === "danger" ? "danger" : "primary",

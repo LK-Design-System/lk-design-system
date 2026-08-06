@@ -113,7 +113,7 @@ function Chip(props) {
   const Comp = resolvedAs;
   const ariaPressed = hasToggleState && (isButton || needsButtonRole) && !disabledState ? pressedState : void 0;
   const hiddenSelectedLabel = ariaPressed === void 0 && pressedState && selectedLabel ? selectedLabel : null;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     Comp,
     {
       type: isButton ? _nullishCoalesce(rest.type, () => ( "button")) : void 0,
@@ -171,7 +171,7 @@ function Chip(props) {
       },
       ...rest,
       children: [
-        thumbnail && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        thumbnail && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "span",
           {
             "aria-hidden": "true",

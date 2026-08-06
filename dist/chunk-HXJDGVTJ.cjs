@@ -67,7 +67,7 @@ var Textarea = _react2.default.forwardRef(function Textarea2({
   const ring = _chunkDSYH34X7cjs.fieldBorderColor.call(void 0, { disabled, readOnly, invalid: isInvalid, status, focused: activeFocus, hovered: activeHover });
   const minHeight = normalizedSize === "sm" ? 96 : normalizedSize === "lg" ? 160 : 120;
   const resizeMode = resize === "fixed" ? "none" : resize === "limit" ? "vertical" : "vertical";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       ref: rootRef,
@@ -79,7 +79,7 @@ var Textarea = _react2.default.forwardRef(function Textarea2({
       className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "root", className) || void 0,
       style: { ..._chunkGWMGPLNWcjs.componentVars.call(void 0, vars, "--lds-textarea-"), display: "flex", flexDirection: "column", gap: "var(--component-input-stack-gap)", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "root"), ...style },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunkDSYH34X7cjs.FieldLabel,
           {
             "data-slot": "label",
@@ -92,7 +92,7 @@ var Textarea = _react2.default.forwardRef(function Textarea2({
           }
         ),
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "control", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "control") || void 0, style: { position: "relative", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "control") }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "textarea",
             {
               ref: forwardedRef,

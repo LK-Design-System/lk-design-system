@@ -77,7 +77,7 @@ function Category({
     pick(nextItem);
     _optionalChain([Array, 'access', _10 => _10.from, 'call', _11 => _11(_nullishCoalesce(_optionalChain([groupRef, 'access', _12 => _12.current, 'optionalAccess', _13 => _13.querySelectorAll, 'call', _14 => _14('[role="radio"]')]), () => ( []))), 'access', _15 => _15.find, 'call', _16 => _16((chip) => chip.dataset.categoryValue === String(nextItem.value)), 'optionalAccess', _17 => _17.focus, 'call', _18 => _18()]);
   };
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "div",
     {
       ...rest,
@@ -108,7 +108,7 @@ function Category({
           fg: active ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-label-neutral)",
           border: active ? "var(--color-semantic-label-normal)" : "var(--color-semantic-line-solid-normal)"
         };
-        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "button",
           {
             type: "button",

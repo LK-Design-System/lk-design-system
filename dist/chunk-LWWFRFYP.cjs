@@ -15,7 +15,7 @@ function DashboardGrid({
 }) {
   const minimum = toLength(minCardWidth);
   if (fillLastRow) {
-    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
       "div",
       {
         className: ["lk-dashboard-grid", "lk-dashboard-grid-fill", className].filter(Boolean).join(" "),
@@ -39,7 +39,7 @@ function DashboardGrid({
       }
     );
   }
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       className: ["lk-dashboard-grid", className].filter(Boolean).join(" "),

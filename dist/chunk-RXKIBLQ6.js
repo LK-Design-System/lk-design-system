@@ -179,7 +179,7 @@ function edgePath(from, to, metrics) {
   const direction = Math.sign(dy) || 1;
   const startY = from.y + direction * halfHeight;
   const endY = to.y - direction * halfHeight;
-  const bow = Math.max(48, Math.abs(endY - startY) / 2);
+  const bow = metrics.verticallyBlocked ? Math.max(48, Math.abs(endY - startY) / 2) : 0;
   const controlX = (from.x + to.x) / 2 + bow;
   const controlY = (startY + endY) / 2;
   return { start: { x: from.x, y: startY }, control: { x: controlX, y: controlY }, end: { x: to.x, y: endY } };
@@ -656,6 +656,25 @@ function NetworkGraph({
         })(),
         // 이 관계가 쌍의 «정렬된» 방향과 반대로 흐르는가.
         parallelReversed: [edge.from, edge.to].sort()[0] !== edge.from,
+        /*
+          세로로 이을 때 두 노드 «사이»에 다른 노드가 끼어 있는가. 끼어 있으면
+          직선이 그 노드를 관통하므로 옆으로 돌아가야 하고, 없으면 돌아갈
+          이유가 없다. 카드 폭의 절반 안에 들어오는 것만 장애물로 본다 —
+          옆 칸의 노드는 직선의 길을 막지 않는다.
+        */
+        verticallyBlocked: (() => {
+          const from = anchors.get(edge.from);
+          const to = anchors.get(edge.to);
+          if (!from || !to) return false;
+          const top = Math.min(from.y, to.y);
+          const bottom = Math.max(from.y, to.y);
+          return nodes.some((other) => {
+            if (other.id === edge.from || other.id === edge.to) return false;
+            const point = anchors.get(other.id);
+            if (!point) return false;
+            return point.y > top && point.y < bottom && Math.abs(point.x - (from.x + to.x) / 2) < metrics.width / 2;
+          });
+        })(),
         selfIndex: edge.from === edge.to ? (() => {
           const seen = selfSeen.get(edge.from) ?? 0;
           selfSeen.set(edge.from, seen + 1);
@@ -667,7 +686,7 @@ function NetworkGraph({
               데가 없어 보이지만, 그대로 두면 라벨 하나가 그림 «밖»으로 뻗어나가
               액자에 잘리거나 가로 스크롤을 만든다. 실제로 28자짜리 이름이 폭
               192px 그림에서 336px를 차지했다.
-
+      
               전체 이름은 관계의 접근성 이름과 `<title>`에 남는다.
             */
       fullText: showEdgeLabels ? `${nodeText(edge.label)}${edge.count > 1 ? ` ${edge.count}` : ""}`.trim() : "",
@@ -1182,4 +1201,4 @@ function NetworkGraph({
 export {
   NetworkGraph
 };
-//# sourceMappingURL=chunk-S3IDZLW5.js.map
+//# sourceMappingURL=chunk-RXKIBLQ6.js.map

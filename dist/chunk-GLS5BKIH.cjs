@@ -19,7 +19,7 @@ function CheckboxGroup({ options = [], value, defaultValue = [], onChange, direc
   };
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "group", style: { display: "flex", flexDirection: direction === "row" ? "row" : "column", gap: direction === "row" ? 20 : 14, flexWrap: "wrap", ...style }, ...rest, children: norm.map((o) => {
     const on = Array.isArray(val) && val.includes(o.value);
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       _chunk4OGUUL5Qcjs.Checkbox,
       {
         value: o.value,

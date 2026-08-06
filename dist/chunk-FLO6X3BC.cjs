@@ -37,7 +37,7 @@ function StatusValue({ item }) {
   const normalizedUnit = _chunk43Q7GJUBcjs.normalizeUnit.call(void 0, item.unit);
   const unitSeparator = _chunk43Q7GJUBcjs.getUnitSeparator.call(void 0, normalizedUnit);
   const attachedUnit = _chunk43Q7GJUBcjs.isAttachedUnit.call(void 0, normalizedUnit);
-  const lockup = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  const lockup = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "span",
     {
       "data-viewport-status-value": "",
@@ -54,7 +54,7 @@ function StatusValue({ item }) {
   );
   const tone = item.tone != null && item.tone !== "default" ? _chunkMBKOVB2Kcjs.normalizeStatusTone.call(void 0, item.tone) : null;
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "strong",
       {
         style: {
@@ -71,7 +71,7 @@ function StatusValue({ item }) {
         children: lockup
       }
     ),
-    tone && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    tone && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       _chunkGW3BLGYBcjs.StatusBadge,
       {
         "data-viewport-status-tone": "",
@@ -85,7 +85,7 @@ function StatusValue({ item }) {
 function PersistentItem({ item }) {
   const priority = _nullishCoalesce(item.priority, () => ( "normal"));
   const shrink = priority === "high" ? 0 : priority === "low" ? 2 : 1;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "span",
     {
       "data-viewport-status-item": "",
@@ -127,7 +127,7 @@ function ViewportStatusBar({
     return priorityDifference || a.index - b.index;
   });
   const resolvedMessageTone = messageTone === "default" ? null : _chunkMBKOVB2Kcjs.normalizeStatusTone.call(void 0, messageTone);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     "div",
     {
       ...rest,
@@ -146,7 +146,7 @@ function ViewportStatusBar({
         ...style
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           _chunkSO26HRBScjs.VisuallyHidden,
           {
             as: "span",
@@ -157,13 +157,13 @@ function ViewportStatusBar({
             children: message != null ? [message, resolvedMessageTone ? _nullishCoalesce(messageToneLabel, () => ( STATUS_LABEL[resolvedMessageTone])) : null].filter(Boolean).join(", ") : ""
           }
         ),
-        message != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        message != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
           "span",
           {
             "aria-hidden": "true",
             style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0, maxWidth: "min(46%, 420px)", overflow: "hidden", flex: "0 1 auto" },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 "span",
                 {
                   "data-viewport-status-message": "",
@@ -171,7 +171,7 @@ function ViewportStatusBar({
                   children: message
                 }
               ),
-              resolvedMessageTone && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              resolvedMessageTone && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 _chunkGW3BLGYBcjs.StatusBadge,
                 {
                   "data-viewport-message-tone": "",

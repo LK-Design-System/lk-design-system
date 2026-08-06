@@ -55,7 +55,7 @@ function ExternalLinkContent({ children }) {
 }
 function renderSourceChip(source, onSourceActivate) {
   const chipLink = source.href != null ? { as: "a", href: source.href, target: "_blank", rel: "noopener noreferrer" } : typeof onSourceActivate === "function" ? { as: "button", type: "button", onClick: () => onSourceActivate(source) } : {};
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { minWidth: 0, maxWidth: "100%" }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { minWidth: 0, maxWidth: "100%" }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     _chunkBCWCCXJXcjs.Chip,
     {
       size: "sm",
@@ -76,7 +76,7 @@ function renderSourceRow(source, onSourceActivate) {
   const interactive = source.href != null || typeof onSourceActivate === "function";
   const Comp = source.href != null ? "a" : typeof onSourceActivate === "function" ? "button" : "span";
   const linkProps = source.href != null ? { href: source.href, target: "_blank", rel: "noopener noreferrer" } : typeof onSourceActivate === "function" ? { type: "button", onClick: () => onSourceActivate(source) } : {};
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { minWidth: 0 }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { minWidth: 0 }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     Comp,
     {
       className: "lk-source-disclosure__row",
@@ -143,7 +143,7 @@ function SourceDisclosure({
             outline: 2px solid var(--color-semantic-focus-ring);
             outline-offset: -2px;
           }` }),
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
         _chunkH7P4AREVcjs.Popover,
         {
           ...rest,
@@ -153,7 +153,7 @@ function SourceDisclosure({
           defaultOpen,
           ariaLabel: typeof title === "string" ? title : "\uCD9C\uCC98",
           style,
-          trigger: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+          trigger: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
             "button",
             {
               type: "button",
@@ -184,7 +184,7 @@ function SourceDisclosure({
               ]
             }
           ),
-          children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             "ul",
             {
               className: "lk-source-disclosure__rows",
@@ -196,7 +196,7 @@ function SourceDisclosure({
       )
     ] });
   }
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
     Root,
     {
       ...rest,
@@ -257,7 +257,7 @@ function SourceDisclosure({
           }
         }` }),
         titleVisuallyHidden && description == null ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Heading, { id: titleId, style: VISUALLY_HIDDEN_STYLE, children: title }) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "header", { style: { display: "grid", gap: "var(--space-1)" }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
             Heading,
             {
               id: titleId,
@@ -285,7 +285,7 @@ function SourceDisclosure({
           // line per source, opens the original on activation, no inline
           // disclosure, availability, or card surface.
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { style: { margin: 0, padding: 0, listStyle: "none", display: "flex", flexWrap: "wrap", gap: "var(--space-2)", minWidth: 0 }, children: sources.map((source) => renderSourceChip(source, onSourceActivate)) })
-        ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
           "ul",
           {
             style: {
@@ -304,7 +304,7 @@ function SourceDisclosure({
               const resolvedActionLabel = _nullishCoalesce(source.actionLabel, () => ( openLabel));
               const resolvedActionAriaLabel = actionAriaLabel(source, resolvedActionLabel);
               const directAction = !hasDetails && hasAction;
-              const directLabel = directAction && source.href != null ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              const directLabel = directAction && source.href != null ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 _chunkDI6ICGWYcjs.TextButton,
                 {
                   as: "a",
@@ -318,7 +318,7 @@ function SourceDisclosure({
                   style: { justifyContent: "flex-start", maxWidth: "100%", minHeight: 0, lineHeight: "var(--label1-line)", textAlign: "left", whiteSpace: "normal" },
                   children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, ExternalLinkContent, { children: source.label })
                 }
-              ) : directAction ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              ) : directAction ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                 _chunkDI6ICGWYcjs.TextButton,
                 {
                   size: "sm",
@@ -334,7 +334,7 @@ function SourceDisclosure({
                 directLabel,
                 (source.kind != null || source.location != null) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", overflowWrap: "anywhere" }, children: [source.kind, source.location].filter(Boolean).join(" \xB7 ") })
               ] });
-              const rowSummary = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              const rowSummary = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, 
                 "span",
                 {
                   className: hasDetails ? "lk-source-disclosure__summary-content" : "lk-source-disclosure__static-content",
@@ -350,7 +350,7 @@ function SourceDisclosure({
                   children: [
                     identity,
                     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkTHYZ4IEGcjs.StatusBadge, { className: "lk-source-disclosure__status", tone: availability.tone, style: { flexShrink: 0, whiteSpace: "nowrap" }, children: _nullishCoalesce(source.availabilityLabel, () => ( availability.label)) }),
-                    hasDetails && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                    hasDetails && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                       _chunk3ATRKSQ7cjs.Icon,
                       {
                         className: "lk-source-disclosure__chevron",
@@ -365,7 +365,7 @@ function SourceDisclosure({
                 }
               );
               return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { borderTop: index > 0 ? "1px solid var(--color-semantic-line-normal-alternative)" : "none" }, children: hasDetails ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "details", { className: "lk-source-disclosure__details", open: source.defaultExpanded || void 0, children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                   "summary",
                   {
                     className: "lk-source-disclosure__summary",
@@ -375,7 +375,7 @@ function SourceDisclosure({
                 ),
                 /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { className: "lk-source-disclosure__panel", style: { display: "grid", gap: "var(--space-3)", padding: "var(--space-2) var(--space-4) var(--space-4)" }, children: [
                   source.description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: source.description }),
-                  source.excerpt != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  source.excerpt != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
                     "blockquote",
                     {
                       cite: source.href,

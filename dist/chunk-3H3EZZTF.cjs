@@ -71,7 +71,7 @@ function IconButton({
   const disabledState = disabled || disable;
   const ariaBlocked = ariaDisabled === true || ariaDisabled === "true";
   const blocked = disabledState || ariaBlocked;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
     "button",
     {
       ...rest,

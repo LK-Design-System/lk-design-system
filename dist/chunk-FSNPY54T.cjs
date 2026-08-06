@@ -57,7 +57,7 @@ function Meter({
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-meter-threshold": band, style: { color: THRESHOLD_TEXT[band], whiteSpace: "nowrap" }, children: bandLabel })
       ] })
     ] }),
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, 
       "div",
       {
         role: "meter",
