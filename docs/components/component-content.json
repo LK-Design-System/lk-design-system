@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "95acfa99e5d62983302353fe483136dc59b38f4f6ddd22648918828f233cf9a2",
+  "sourceFingerprint": "35a661c156161d79416ee7f219e8866892e728368faf12e28ee4c4d53940aa2e",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -11202,7 +11202,7 @@
         "--color-semantic-label-neutral"
       ],
       "externalReferences": [],
-      "promptSha256": "90bbdc6fbb083cf0e251e6368dbf643e1ba0cb12726e6358b4295e0b133a079e"
+      "promptSha256": "b618d479333aaf7d932a9d6349a57c333847656abd53358d5c3a26115bbf4ea3"
     },
     {
       "id": "refresh-control",

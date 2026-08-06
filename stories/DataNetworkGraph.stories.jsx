@@ -388,6 +388,26 @@ export const EmptyGraph = {
     if (!empty || !empty.textContent.trim()) {
       throw new Error('An empty graph must say why it is empty.');
     }
+    /*
+      빈 그림에도 «이름»이 있어야 한다. 종전에는 이름을 가진 것이 SVG뿐이라,
+      그릴 것이 없으면 이름도 함께 사라졌다 — 스크린 리더에는 「표시할 관계가
+      없습니다」만 남고 «무엇이» 비었는지가 없었다. 한 화면에 관계도가 둘이면
+      어느 쪽 이야기인지조차 알 수 없다.
+    */
+    if (!empty.getAttribute('aria-label')) {
+      throw new Error('An empty graph must still say what it is.');
+    }
+    /* 설명은 «이어져» 있어야 한다. 가리키는 대상이 사라지면 숨은 설명은
+       아무도 읽지 않는 죽은 마크업이 된다. */
+    const describedBy = empty.getAttribute('aria-describedby');
+    if (describedBy && !canvasElement.querySelector(`#${CSS.escape(describedBy)}`)) {
+      throw new Error('The description must point at an element that exists.');
+    }
+    /* 같은 문장을 두 번 말하지 않는다. 자동 요약은 빈 상태 문구 그 자체다. */
+    const summary = canvasElement.querySelector('[data-chart-summary]');
+    if (summary && summary.textContent.trim() === empty.textContent.trim()) {
+      throw new Error('An empty graph must not announce the same sentence twice.');
+    }
   },
 };
 

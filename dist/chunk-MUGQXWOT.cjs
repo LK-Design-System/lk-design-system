@@ -821,22 +821,39 @@ function NetworkGraph({
       ...rest,
       children: [
         description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: descriptionId, children: description }),
-        resolvedSummary != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: summaryId, "data-chart-summary": true, children: resolvedSummary }),
-        !hasData ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          "span",
-          {
-            "data-chart-empty": true,
-            style: {
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-              color: "var(--color-semantic-label-alternative)",
-              fontSize: "var(--label2-size)",
-              lineHeight: "var(--label2-line)"
-            },
-            children: emptyLabel
-          }
+        resolvedSummary != null && (hasData || resolvedSummary !== nodeText(emptyLabel)) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: summaryId, "data-chart-summary": true, children: resolvedSummary }),
+        !hasData ? (
+          /*
+                    빈 그림에도 «이름»이 있어야 한다.
+
+                    종전에는 이름을 가진 것이 SVG뿐이라, 그릴 것이 없으면 SVG가 통째로
+                    빠지면서 이름도 함께 사라졌다. 스크린 리더에는 「표시할 관계가
+                    없습니다」만 남는데, 무엇이 비었는지가 없다 — 한 화면에 관계도가
+                    둘이면 어느 쪽 이야기인지조차 알 수 없다.
+
+                    설명도 미아가 되어 있었다. `aria-describedby`를 들고 있던 것이
+                    그 사라진 SVG였으므로, 숨은 설명은 DOM에 남아 아무도 가리키지 않는
+                    죽은 마크업이었다. 여기서 다시 이어 준다.
+                  */
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            "div",
+            {
+              role: "group",
+              "aria-label": label || "\uAD00\uACC4\uB3C4",
+              "aria-describedby": description != null ? descriptionId : void 0,
+              "data-chart-empty": true,
+              style: {
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100%",
+                color: "var(--color-semantic-label-alternative)",
+                fontSize: "var(--label2-size)",
+                lineHeight: "var(--label2-line)"
+              },
+              children: emptyLabel
+            }
+          )
         ) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "svg",
           {
@@ -1314,4 +1331,4 @@ function NetworkGraph({
 
 
 exports.NetworkGraph = NetworkGraph;
-//# sourceMappingURL=chunk-CF2DDN7E.cjs.map
+//# sourceMappingURL=chunk-MUGQXWOT.cjs.map

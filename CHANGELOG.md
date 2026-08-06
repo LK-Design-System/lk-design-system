@@ -68,6 +68,14 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.53 - 2026-08-06
+
+### Fixed
+
+- `NetworkGraph`의 빈 그림도 «이름»을 갖습니다. 종전에는 이름을 SVG만 갖고 있어 그릴 것이 없으면 이름도 함께 사라졌고, 스크린 리더에는 「표시할 관계가 없습니다」만 남아 무엇이 비었는지 알 수 없었습니다 — 한 화면에 관계도가 둘이면 어느 쪽 이야기인지조차 알 수 없었습니다.
+- `NetworkGraph`의 빈 그림에서 `description`이 다시 이어집니다. `aria-describedby`를 들고 있던 것이 그 사라진 SVG였으므로, 숨은 설명은 아무도 가리키지 않는 죽은 마크업이었습니다.
+- `NetworkGraph`가 빈 상태에서 같은 문장을 두 번 말하지 않습니다. 자동 요약은 빈 상태 문구 그 자체입니다.
+
 ## 0.1.0-rc.52 - 2026-08-06
 
 ### Fixed

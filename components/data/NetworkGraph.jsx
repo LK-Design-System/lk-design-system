@@ -1289,11 +1289,28 @@ export function NetworkGraph({
       {...rest}
     >
       {description != null && <VisuallyHidden id={descriptionId}>{description}</VisuallyHidden>}
-      {resolvedSummary != null && (
+      {/* 요약이 «보이는 문장과 같으면» 숨겨서 또 말하지 않는다. 빈 그림에서
+          자동 요약은 빈 상태 문구 그 자체이므로, 두 번 들리기만 한다. */}
+      {resolvedSummary != null && (hasData || resolvedSummary !== nodeText(emptyLabel)) && (
         <VisuallyHidden id={summaryId} data-chart-summary>{resolvedSummary}</VisuallyHidden>
       )}
       {!hasData ? (
-        <span
+        /*
+          빈 그림에도 «이름»이 있어야 한다.
+
+          종전에는 이름을 가진 것이 SVG뿐이라, 그릴 것이 없으면 SVG가 통째로
+          빠지면서 이름도 함께 사라졌다. 스크린 리더에는 「표시할 관계가
+          없습니다」만 남는데, 무엇이 비었는지가 없다 — 한 화면에 관계도가
+          둘이면 어느 쪽 이야기인지조차 알 수 없다.
+
+          설명도 미아가 되어 있었다. `aria-describedby`를 들고 있던 것이
+          그 사라진 SVG였으므로, 숨은 설명은 DOM에 남아 아무도 가리키지 않는
+          죽은 마크업이었다. 여기서 다시 이어 준다.
+        */
+        <div
+          role="group"
+          aria-label={label || '관계도'}
+          aria-describedby={description != null ? descriptionId : undefined}
           data-chart-empty
           style={{
             display: 'flex',
@@ -1306,7 +1323,7 @@ export function NetworkGraph({
           }}
         >
           {emptyLabel}
-        </span>
+        </div>
       ) : (
         <svg
           ref={svgRef}
