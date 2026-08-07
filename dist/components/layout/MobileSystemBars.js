@@ -1,7 +1,7 @@
 "use client";
 import {
   MobileSystemBars
-} from "../../chunk-TLPH2UII.js";
+} from "../../chunk-65FTL2TH.js";
 export {
   MobileSystemBars
 };

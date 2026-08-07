@@ -1,8 +1,8 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }"use client";
+"use client";
 
 // components/layout/MobileSystemBars.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
 function MobileSystemBars({
   platform = "ios",
   showStatus = true,
@@ -12,7 +12,7 @@ function MobileSystemBars({
   ...rest
 }) {
   const isAndroid = platform === "android";
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ jsxs(
     "div",
     {
       "aria-hidden": "true",
@@ -26,7 +26,7 @@ function MobileSystemBars({
       },
       ...rest,
       children: [
-        showStatus && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        showStatus && /* @__PURE__ */ jsxs(
           "div",
           {
             style: {
@@ -39,21 +39,21 @@ function MobileSystemBars({
               fontWeight: "var(--fw-bold)"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: time }),
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              /* @__PURE__ */ jsx("span", { children: time }),
+              /* @__PURE__ */ jsxs(
                 "span",
                 {
                   style: { display: "inline-flex", alignItems: "center", gap: 4 },
                   children: [
-                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: isAndroid ? "LTE" : "5G" }),
-                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                    /* @__PURE__ */ jsx("span", { children: isAndroid ? "LTE" : "5G" }),
+                    /* @__PURE__ */ jsx(
                       "span",
                       {
                         style: {
                           width: 18,
                           height: 8,
                           border: "1px solid currentColor",
-                          borderRadius: "var(--radius-xs)"
+                          borderRadius: 2
                         }
                       }
                     )
@@ -63,8 +63,8 @@ function MobileSystemBars({
             ]
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", {}),
-        showHome && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ jsx("span", {}),
+        showHome && /* @__PURE__ */ jsx(
           "div",
           {
             style: {
@@ -72,7 +72,7 @@ function MobileSystemBars({
               display: "grid",
               placeItems: "center"
             },
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            children: /* @__PURE__ */ jsx(
               "span",
               {
                 style: {
@@ -90,7 +90,7 @@ function MobileSystemBars({
   );
 }
 
-
-
-exports.MobileSystemBars = MobileSystemBars;
-//# sourceMappingURL=chunk-2DVJZLEV.cjs.map
+export {
+  MobileSystemBars
+};
+//# sourceMappingURL=chunk-65FTL2TH.js.map

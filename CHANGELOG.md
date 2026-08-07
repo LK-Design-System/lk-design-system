@@ -69,6 +69,19 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.56 - 2026-08-07
+
+### Fixed
+
+- `FileBrowser`의 선택된 행에 테두리가 돌아왔습니다. 램프에 없는 `--color-semantic-line-normal-strong`을 참조한 탓에 `border` 단축 속성이 통째로 무효가 되어 테두리가 아예 그려지지 않았고, 선택은 배경 틴트와 글자 굵기로만 전달되고 있었습니다. 같은 일을 하는 `Tree`와 같은 `--color-semantic-primary-normal`을 씁니다 — 선택은 구분선이 아니라 강조 상태입니다. 흰 바탕 대비 4.66:1로 WCAG 2.2 1.4.11(3:1)을 넘습니다.
+- `SourceDisclosure`의 인용문 좌측 규칙이 돌아왔습니다. 같은 원인으로 `borderLeft`가 무효가 되어 발췌가 패널 본문과 나란히 붙은 채 인용이라는 표시가 사라져 있었습니다. 똑같은 3px 좌측 규칙을 그리는 `Blockquote`와 같은 `--color-semantic-primary-normal`을 씁니다.
+- `AnnotatedImage`의 관심 영역 상자와 지점 라벨이 다시 둥글어집니다. `--radius-xs`가 정의되지 않아 `borderRadius`가 무효가 되고 초깃값 0으로 떨어져 모서리가 각져 있었습니다.
+- `MobileSystemBars`의 배터리 윤곽이 각진 사각형으로 그려지던 것을 고쳤습니다. 같은 `--radius-xs` 결함이었습니다. 이 글리프는 제품 UI가 아니라 OS 크롬을 흉내 낸 것이라 주변과 같이 raw 픽셀로 그리며, 램프의 4px은 8px 높이의 절반이라 끝이 캡슐이 되므로 2px을 명시합니다.
+
+### Added
+
+- `--radius-xs: 4px`. 명명 반지름 램프가 `sm`(6px)에서 시작해 그 아래 단계가 없었는데, 두 컴포넌트가 각각 `--radius-xs`를 참조하고 있었습니다 — 램프에 그 단계가 있는 것처럼 읽힌다는 뜻이라 사용처가 아니라 램프의 빈자리가 결함이었습니다. `--radius-4`(WDS 배지 패리티용 별칭)로 바꿔 쓰면 다음 사람이 다시 `--radius-xs`를 찾게 됩니다.
+
 ## 0.1.0-rc.55 - 2026-08-07
 
 ### Fixed

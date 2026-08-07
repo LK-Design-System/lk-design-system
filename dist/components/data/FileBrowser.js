@@ -1,7 +1,7 @@
 "use client";
 import {
   FileBrowser
-} from "../../chunk-CL2PQLMT.js";
+} from "../../chunk-CLJBXYHR.js";
 import "../../chunk-DW4HVC6S.js";
 export {
   FileBrowser

@@ -130,7 +130,6 @@
     "--mobile-home-indicator-height",
     "--mobile-status-bar-min-height",
     "--radius-pill",
-    "--radius-xs",
     "--space-4"
   ],
   "apiLinks": [],

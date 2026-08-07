@@ -199,6 +199,11 @@
       }
     },
     "radius": {
+      "xs": {
+        "$type": "dimension",
+        "$value": "4px",
+        "css": "--radius-xs"
+      },
       "sm": {
         "$type": "dimension",
         "$value": "6px",

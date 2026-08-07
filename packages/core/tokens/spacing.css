@@ -51,6 +51,7 @@
   --ratio-9-21: 9 / 21;
 
   /* ---- Radii ------------------------------------------- */
+  --radius-xs: 4px; /* annotation boxes, status bar pills — the step below sm */
   --radius-sm: 6px; /* checkbox, tags, small chips */
   --radius-md: 12px; /* buttons, tabs, controls (base radius = 12) */
   --radius-input: 12px; /* text inputs, selects (kit-exact) */

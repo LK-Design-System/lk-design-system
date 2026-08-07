@@ -373,6 +373,7 @@
 | `primitive.radius.pill` | dimension | `--radius-pill` | `999px` | — |
 | `primitive.radius.sm` | dimension | `--radius-sm` | `6px` | — |
 | `primitive.radius.xl` | dimension | `--radius-xl` | `16px` | — |
+| `primitive.radius.xs` | dimension | `--radius-xs` | `4px` | — |
 | `primitive.ratio.1-1` | ratio | `--ratio-1-1` | `1 / 1` | — |
 | `primitive.ratio.1-2` | ratio | `--ratio-1-2` | `1 / 2` | — |
 | `primitive.ratio.10-16` | ratio | `--ratio-10-16` | `10 / 16` | — |

@@ -447,9 +447,16 @@ export function SourceDisclosure({
                         </p>
                       )}
                       {source.excerpt != null && (
+                        /* The excerpt rule matches `Blockquote`, which draws the
+                           same 3px left rule for the same purpose. This read
+                           `--color-semantic-line-normal-strong`, a step the ramp
+                           never defined, so the `borderLeft` shorthand was
+                           invalid at computed-value time and the quote lost its
+                           rule entirely — the excerpt sat flush with the panel
+                           text with nothing marking it as quoted. */
                         <blockquote
                           cite={source.href}
-                          style={{ margin: 0, padding: '0 0 0 var(--space-3)', borderLeft: '3px solid var(--color-semantic-line-normal-strong)', color: 'var(--color-semantic-label-strong)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}
+                          style={{ margin: 0, padding: '0 0 0 var(--space-3)', borderLeft: '3px solid var(--color-semantic-primary-normal)', color: 'var(--color-semantic-label-strong)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}
                         >
                           {source.excerpt}
                         </blockquote>

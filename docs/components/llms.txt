@@ -2775,7 +2775,6 @@ iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포�
 - `--mobile-home-indicator-height`
 - `--mobile-status-bar-min-height`
 - `--radius-pill`
-- `--radius-xs`
 - `--space-4`
 
 ### Source contracts
@@ -10882,7 +10881,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--color-semantic-label-strong`
 - `--color-semantic-line-normal-alternative`
 - `--color-semantic-line-normal-normal`
-- `--color-semantic-line-normal-strong`
+- `--color-semantic-primary-normal`
 - `--dur-base`
 - `--dur-fast`
 - `--ease-out`
@@ -11885,7 +11884,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-strong`
 - `--color-semantic-line-normal-normal`
-- `--color-semantic-line-normal-strong`
+- `--color-semantic-primary-normal`
 - `--font-mono`
 - `--font-sans`
 - `--fw-medium`

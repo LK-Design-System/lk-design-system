@@ -44,12 +44,20 @@ export function MobileSystemBars({
             style={{ display: "inline-flex", alignItems: "center", gap: 4 }}
           >
             <span>{isAndroid ? "LTE" : "5G"}</span>
+            {/* The battery outline is OS chrome, not product UI, so it is drawn
+                in raw pixels like the rest of this glyph. It used to ask for
+                `--radius-xs`, which the ramp never defined — the declaration was
+                invalid and the outline rendered as a hard rectangle. The ramp
+                now defines that step at 4px, but 4px is half of this glyph's
+                8px height, which would round the ends into a capsule instead of
+                a battery. Real status-bar batteries carry about a third of
+                their height. */}
             <span
               style={{
                 width: 18,
                 height: 8,
                 border: "1px solid currentColor",
-                borderRadius: "var(--radius-xs)",
+                borderRadius: 2,
               }}
             />
           </span>

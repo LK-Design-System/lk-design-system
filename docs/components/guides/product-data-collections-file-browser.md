@@ -105,7 +105,7 @@
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-strong`
 - `--color-semantic-line-normal-normal`
-- `--color-semantic-line-normal-strong`
+- `--color-semantic-primary-normal`
 - `--font-mono`
 - `--font-sans`
 - `--fw-medium`

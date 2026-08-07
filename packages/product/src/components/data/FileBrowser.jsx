@@ -129,7 +129,15 @@ export function FileBrowser({
                   if (primarySelects) onSelectionChange(entry);
                   else if (primaryNavigates) onNavigate(entry);
                 }}
-                style={{ display: 'grid', gridTemplateColumns: '24px minmax(0, 1fr) auto', gap: 'var(--space-2)', alignItems: 'center', minHeight: 42, minWidth: 0, padding: '0 var(--space-3)', border: selected ? '1px solid var(--color-semantic-line-normal-strong)' : '1px solid transparent', borderRadius: 'var(--radius-sm)', background: selected ? 'var(--color-semantic-fill-normal)' : 'transparent', color: rowDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-strong)', textAlign: 'left', cursor: primaryDisabled ? 'default' : 'pointer', fontFamily: 'inherit' }}
+                /* Selected rows take the accent border `Tree` already uses for
+                   the same job — selection is an accent state, not a divider.
+                   This read `--color-semantic-line-normal-strong`, which the
+                   ramp never defined, so the whole `border` shorthand was
+                   invalid at computed-value time and no border was drawn at
+                   all; selection survived only as a background tint and a
+                   heavier label. The transparent border on unselected rows
+                   keeps the row from shifting when selection moves. */
+                style={{ display: 'grid', gridTemplateColumns: '24px minmax(0, 1fr) auto', gap: 'var(--space-2)', alignItems: 'center', minHeight: 42, minWidth: 0, padding: '0 var(--space-3)', border: selected ? '1px solid var(--color-semantic-primary-normal)' : '1px solid transparent', borderRadius: 'var(--radius-sm)', background: selected ? 'var(--color-semantic-fill-normal)' : 'transparent', color: rowDisabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-strong)', textAlign: 'left', cursor: primaryDisabled ? 'default' : 'pointer', fontFamily: 'inherit' }}
               >
                 <Icon name={directory ? 'folder' : 'document'} size={18} aria-hidden="true" />
                 <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--label1-size)', fontWeight: directory || selected ? 'var(--fw-semibold)' : 'var(--fw-medium)' }}>{entry.name}</span>

@@ -81,7 +81,6 @@ iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포�
 - `--mobile-home-indicator-height`
 - `--mobile-status-bar-min-height`
 - `--radius-pill`
-- `--radius-xs`
 - `--space-4`
 
 ### Source contracts

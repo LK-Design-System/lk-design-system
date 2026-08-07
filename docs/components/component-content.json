@@ -6586,7 +6586,7 @@
         "--dur-base",
         "--color-semantic-line-normal-alternative",
         "--space-4",
-        "--color-semantic-line-normal-strong"
+        "--color-semantic-primary-normal"
       ],
       "externalReferences": [
         {
@@ -10345,7 +10345,7 @@
         "--font-mono",
         "--label2-size",
         "--space-0-5",
-        "--color-semantic-line-normal-strong",
+        "--color-semantic-primary-normal",
         "--color-semantic-fill-normal",
         "--fw-semibold",
         "--fw-medium",
@@ -22107,7 +22107,6 @@
         "--space-4",
         "--caption1-size",
         "--fw-bold",
-        "--radius-xs",
         "--mobile-home-indicator-height",
         "--component-system-bars-home-width",
         "--component-system-bars-home-height",
@@ -38299,7 +38298,6 @@
         "--mobile-home-indicator-height",
         "--mobile-status-bar-min-height",
         "--radius-pill",
-        "--radius-xs",
         "--space-4"
       ],
       "apiLinks": [
@@ -55275,7 +55273,7 @@
         "--color-semantic-label-strong",
         "--color-semantic-line-normal-alternative",
         "--color-semantic-line-normal-normal",
-        "--color-semantic-line-normal-strong",
+        "--color-semantic-primary-normal",
         "--dur-base",
         "--dur-fast",
         "--ease-out",
@@ -57306,7 +57304,7 @@
         "--color-semantic-label-neutral",
         "--color-semantic-label-strong",
         "--color-semantic-line-normal-normal",
-        "--color-semantic-line-normal-strong",
+        "--color-semantic-primary-normal",
         "--font-mono",
         "--font-sans",
         "--fw-medium",

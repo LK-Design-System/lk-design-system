@@ -375,11 +375,18 @@ function SourceDisclosure({
                 ),
                 /* @__PURE__ */ jsxs("div", { className: "lk-source-disclosure__panel", style: { display: "grid", gap: "var(--space-3)", padding: "var(--space-2) var(--space-4) var(--space-4)" }, children: [
                   source.description != null && /* @__PURE__ */ jsx("p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" }, children: source.description }),
-                  source.excerpt != null && /* @__PURE__ */ jsx(
+                  source.excerpt != null && /* The excerpt rule matches `Blockquote`, which draws the
+                     same 3px left rule for the same purpose. This read
+                     `--color-semantic-line-normal-strong`, a step the ramp
+                     never defined, so the `borderLeft` shorthand was
+                     invalid at computed-value time and the quote lost its
+                     rule entirely — the excerpt sat flush with the panel
+                     text with nothing marking it as quoted. */
+                  /* @__PURE__ */ jsx(
                     "blockquote",
                     {
                       cite: source.href,
-                      style: { margin: 0, padding: "0 0 0 var(--space-3)", borderLeft: "3px solid var(--color-semantic-line-normal-strong)", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" },
+                      style: { margin: 0, padding: "0 0 0 var(--space-3)", borderLeft: "3px solid var(--color-semantic-primary-normal)", color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" },
                       children: source.excerpt
                     }
                   ),
@@ -411,4 +418,4 @@ function SourceDisclosure({
 export {
   SourceDisclosure
 };
-//# sourceMappingURL=chunk-ZHYTQKAF.js.map
+//# sourceMappingURL=chunk-L42OYI7U.js.map

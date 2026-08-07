@@ -115,7 +115,7 @@ function FileBrowser({
                   if (primarySelects) onSelectionChange(entry);
                   else if (primaryNavigates) onNavigate(entry);
                 },
-                style: { display: "grid", gridTemplateColumns: "24px minmax(0, 1fr) auto", gap: "var(--space-2)", alignItems: "center", minHeight: 42, minWidth: 0, padding: "0 var(--space-3)", border: selected ? "1px solid var(--color-semantic-line-normal-strong)" : "1px solid transparent", borderRadius: "var(--radius-sm)", background: selected ? "var(--color-semantic-fill-normal)" : "transparent", color: rowDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-strong)", textAlign: "left", cursor: primaryDisabled ? "default" : "pointer", fontFamily: "inherit" },
+                style: { display: "grid", gridTemplateColumns: "24px minmax(0, 1fr) auto", gap: "var(--space-2)", alignItems: "center", minHeight: 42, minWidth: 0, padding: "0 var(--space-3)", border: selected ? "1px solid var(--color-semantic-primary-normal)" : "1px solid transparent", borderRadius: "var(--radius-sm)", background: selected ? "var(--color-semantic-fill-normal)" : "transparent", color: rowDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-strong)", textAlign: "left", cursor: primaryDisabled ? "default" : "pointer", fontFamily: "inherit" },
                 children: [
                   /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: directory ? "folder" : "document", size: 18, "aria-hidden": "true" }),
                   /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label1-size)", fontWeight: directory || selected ? "var(--fw-semibold)" : "var(--fw-medium)" }, children: entry.name }),
@@ -134,4 +134,4 @@ function FileBrowser({
 
 
 exports.FileBrowser = FileBrowser;
-//# sourceMappingURL=chunk-54LVTEXH.cjs.map
+//# sourceMappingURL=chunk-XXTG536Q.cjs.map
