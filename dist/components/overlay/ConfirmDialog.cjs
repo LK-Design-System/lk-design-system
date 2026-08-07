@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkC6OO7JA6cjs = require('../../chunk-C6OO7JA6.cjs');
+var _chunkHUA7ZRPEcjs = require('../../chunk-HUA7ZRPE.cjs');
 require('../../chunk-2HYMUCSD.cjs');
 require('../../chunk-6S5YR4GD.cjs');
 require('../../chunk-UMVFIUFV.cjs');
@@ -11,5 +11,5 @@ require('../../chunk-UOF2MNMP.cjs');
 require('../../chunk-LRACKP3D.cjs');
 
 
-exports.ConfirmDialog = _chunkC6OO7JA6cjs.ConfirmDialog;
+exports.ConfirmDialog = _chunkHUA7ZRPEcjs.ConfirmDialog;
 //# sourceMappingURL=ConfirmDialog.cjs.map

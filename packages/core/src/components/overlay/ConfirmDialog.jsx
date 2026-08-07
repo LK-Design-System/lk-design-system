@@ -81,8 +81,18 @@ export function ConfirmDialog({
         {...rest}
       >
         <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
-          {title != null && <Heading id={titleId} style={{ margin: 0, color: 'var(--color-semantic-label-normal)', fontSize: 'var(--heading3-size)', lineHeight: 'var(--heading3-line)', fontWeight: 'var(--fw-extra)' }}>{title}</Heading>}
-          {children != null && <div id={descriptionId} style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', wordBreak: 'keep-all' }}>{children}</div>}
+          {/* 제목과 본문은 Modal·Sheet·Drawer와 같은 단을 쓴다 — 이 넷은 같은
+              가족이고, 묻는 창만 다른 활자 위계를 가질 이유가 없다.
+
+              여기에는 `--heading3-*`이 적혀 있었는데 그 토큰은 존재하지 않는다.
+              램프는 heading 22/20, headline 18/17, body 16/15, label 14/13이고
+              heading3은 어느 단계도 아니다. 없는 커스텀 속성을 참조한 `font-size`
+              선언은 계산 시점에 무효가 되어 상속값으로 떨어지므로, 제목은
+              18px이 아니라 부모의 14px로 그려졌다 — 본문(label1, 역시 14px)과
+              «완전히 같은 크기»가 되어 위계가 굵기 하나에만 걸려 있었다.
+              본문이 두 줄이면 제목보다 커 보이는 것이 당연했다. */}
+          {title != null && <Heading id={titleId} style={{ margin: 0, color: 'var(--color-semantic-label-normal)', fontSize: 'var(--headline1-size)', lineHeight: 'var(--headline1-line)', letterSpacing: 0, fontWeight: 'var(--fw-extra)' }}>{title}</Heading>}
+          {children != null && <div id={descriptionId} style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--body2-size)', lineHeight: 1.7, wordBreak: 'keep-all' }}>{children}</div>}
         </div>
         <ActionArea compact divider={false} align="end" style={{ padding: 0, background: 'transparent' }}>
           <Button data-confirm-dialog-cancel variant="outlined" color="assistive" onClick={() => dismiss?.()}>

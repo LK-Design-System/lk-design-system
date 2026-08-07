@@ -21,6 +21,13 @@
 - `tone="danger"`는 확인 버튼에 파괴적 스타일을 적용합니다. 위험의 내용과 결과는 별도 상태 뱃지 대신 구체적인 제목·본문·동작 라벨로 설명합니다.
 - 조건이 충족되기 전에는 `confirmDisabled`, 요청 중에는 `confirmLoading`을 사용해 중복 실행을 막습니다.
 - 하단 CTA는 `ActionArea align="end"`와 기본 `Button` medium 높이(40px)를 따르며, 버튼 사이는 spacing token 8px을 유지합니다.
+- 활자는 `Modal`·`Sheet`·`Drawer`와 같은 단을 씁니다 — 제목 `--headline1-*`(18px) `--fw-extra`,
+  본문 `--body2-size`(15px) `line-height: 1.7` `--color-semantic-label-neutral`. 이 넷은 한 가족이라
+  묻는 창만 다른 위계를 가질 이유가 없습니다. 한때 제목이 `--heading3-*`으로 적혀 있었는데 그
+  토큰은 램프에 없습니다(heading 22/20, headline 18/17, body 16/15, label 14/13). 없는 커스텀
+  속성을 폴백 없이 참조한 `font-size`는 계산 시점에 무효가 되어 상속값으로 떨어지므로 제목이
+  본문과 «같은 크기»로 그려졌고, 위계가 굵기 하나에만 걸렸습니다. `check:token-hygiene`의
+  `danglingReferences`가 이 부류를 막습니다.
 - 안전한 기본 경로인 취소는 WDS 보조 액션 문법 `variant="outlined" color="assistive"`, 확인은
   기본 primary(파괴적일 때 danger)로 표현합니다. Modal·Drawer footer도 같은 보조 액션 문법을 씁니다.
 - `Modal`, `Drawer`, `Sheet`와 같은 공통 overlay focus controller를 사용합니다. 열리면 기본적으로 취소 액션으로 초점을 이동하고, 필요하면 `initialFocusRef`로 다른 내부 요소를 지정할 수 있습니다.

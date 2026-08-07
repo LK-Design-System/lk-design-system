@@ -224,19 +224,19 @@
     },
     {
       "subject": "명시 규칙 2",
-      "rule": "가장 가까운 sibling은 Modal, Drawer, Sheet, Alert입니다. 중앙 배치, 최대 너비, 제목·설명, ActionArea 구조와 시각 token은 그대로 두고 focus/Escape 계층만 동일한 modal 계약으로 정렬했습니다."
+      "rule": "활자는 Modal·Sheet·Drawer와 같은 단을 씁니다 — 제목 --headline1-(18px) --fw-extra, 본문 --body2-size(15px) line-height: 1.7 --color-semantic-label-neutral. 이 넷은 한 가족이라 묻는 창만 다른 위계를 가질 이유가 없습니다. 한때 제목이 --heading3-으로 적혀 있었는데 그 토큰은 램프에 없습니다(heading 22/20, headline 18/17, body 16/15, label 14/13)."
     },
     {
       "subject": "명시 규칙 3",
+      "rule": "가장 가까운 sibling은 Modal, Drawer, Sheet, Alert입니다. 중앙 배치, 최대 너비, 제목·설명, ActionArea 구조와 시각 token은 그대로 두고 focus/Escape 계층만 동일한 modal 계약으로 정렬했습니다."
+    },
+    {
+      "subject": "명시 규칙 4",
       "rule": "Fluent 2 Dialog: 확인 surface의 분명한 제목·본문·동작 구조를 유지하고, 불가피한 중첩에서는 최상위 surface만 상호작용하도록 했습니다."
     },
     {
-      "subject": "--color-semantic-background-elevated-normal",
-      "rule": "light: #FFFFFF; dark: #212225"
-    },
-    {
-      "subject": "--color-semantic-label-neutral",
-      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+      "subject": "--body2-size",
+      "rule": "15px"
     }
   ],
   "responsive": [],
@@ -293,6 +293,7 @@
     }
   ],
   "tokens": [
+    "--body2-size",
     "--color-semantic-background-elevated-normal",
     "--color-semantic-label-neutral",
     "--color-semantic-label-normal",
@@ -302,10 +303,8 @@
     "--component-dialog-scrim-blur",
     "--font-sans",
     "--fw-extra",
-    "--heading3-line",
-    "--heading3-size",
-    "--label1-line",
-    "--label1-size",
+    "--headline1-line",
+    "--headline1-size",
     "--shadow-xl",
     "--space-2",
     "--space-4",

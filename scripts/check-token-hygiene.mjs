@@ -89,7 +89,36 @@ const componentDefinitions = definitions
   .filter(({ rel, name }) => rel === 'tokens/components.css' && name.startsWith('--component-'))
   .map(({ name }) => name);
 
+/*
+ * 참조됐지만 «어디에도 정의되지 않은» 커스텀 속성.
+ *
+ * 이 파일의 나머지 검사는 전부 반대 방향 — 정의해 놓고 안 쓰는 것 — 만 본다.
+ * 그래서 `--heading3-size`(램프에 없는 단계)를 참조하던 ConfirmDialog가
+ * 오래 통과했다. 없는 커스텀 속성을 폴백 없이 참조하면 그 선언은 계산
+ * 시점에 무효가 되고, 조용히 상속값이나 초깃값으로 떨어진다. `font-size`면
+ * 글자 크기가 부모 값이 되고, `border` 같은 단축 속성이면 테두리가 통째로
+ * 사라진다. 아무 곳에서도 오류가 나지 않아 눈으로 볼 때까지 살아남는다.
+ *
+ * 폴백이 있는 `var(--x, ...)`는 뺀다 — 그것은 없을 수 있음을 «알고» 쓴 것이다.
+ * 컴포넌트가 자기 루트에 심는 지역 변수(ViewerFrame의 `--viewer-*`처럼
+ * 인라인 style 객체 키로 들어가는 것)도 정의로 친다.
+ */
+const assignedNames = new Set(definitionCounts.keys());
+for (const source of fileSources.values()) {
+  for (const match of source.matchAll(/(--[a-zA-Z0-9_-]+)\s*:/g)) assignedNames.add(match[1]);
+  for (const match of source.matchAll(/['"](--[a-zA-Z0-9_-]+)['"]\s*:/g)) assignedNames.add(match[1]);
+}
+const danglingReferences = new Set();
+for (const [absolute, source] of fileSources) {
+  const rel = path.relative(root, absolute).replaceAll('\\', '/');
+  for (const match of source.matchAll(/var\(\s*(--[a-zA-Z0-9_-]+)\s*([,)])/g)) {
+    if (match[2] === ',' || assignedNames.has(match[1])) continue;
+    danglingReferences.add(`${rel}:${match[1]}`);
+  }
+}
+
 const findings = {
+  danglingReferences: [...danglingReferences].sort(),
   missingComponentSource: [...new Set(componentDefinitions.filter((name) => !sourceComponentNames.has(name)))].sort(),
   unusedTokens: [...definitionCounts.keys()]
     .filter((name) => (occurrenceCounts.get(name) || 0) <= (definitionCounts.get(name) || 0))

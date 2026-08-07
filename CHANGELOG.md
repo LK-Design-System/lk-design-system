@@ -69,6 +69,16 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.55 - 2026-08-07
+
+### Fixed
+
+- `ConfirmDialog`의 제목이 본문과 같은 크기로 그려지던 것을 고쳤습니다. 제목이 램프에 없는 `--heading3-*`을 참조하고 있었고, 정의되지 않은 커스텀 속성을 폴백 없이 쓴 `font-size` 선언은 계산 시점에 무효가 되어 상속값으로 떨어집니다 — 18px이어야 할 제목이 본문과 똑같은 14px로 그려져 위계가 굵기 하나에만 걸려 있었습니다. 본문이 두 줄만 되어도 제목보다 커 보였습니다. 이제 형제인 `Modal`·`Sheet`·`Drawer`와 같은 단을 씁니다 — 제목 `--headline1-*`(18px) `--fw-extra`, 본문 `--body2-size`(15px) `line-height: 1.7`.
+
+### Added
+
+- `check:token-hygiene`에 `danglingReferences` 검사를 더했습니다. 이 파일의 나머지 검사는 전부 「정의해 놓고 안 쓰는」 방향만 보았기 때문에 위 `--heading3-size` 같은 반대 방향 — 「참조하는데 정의가 없는」 — 결함이 조용히 살아남았습니다. 폴백 없는 `var(--x)`가 어디에도 정의되지 않으면 이제 실패합니다. 컴포넌트가 자기 루트에 심는 지역 변수(`ViewerFrame`의 `--viewer-*` 등)는 정의로 인정합니다. 기존 4건(`--radius-xs` 2파일, `--color-semantic-line-normal-strong` 2파일)은 알려진 부채로 baseline에 기록했습니다.
+
 ## 0.1.0-rc.54 - 2026-08-06
 
 ### Fixed

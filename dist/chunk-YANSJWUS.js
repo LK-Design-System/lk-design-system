@@ -89,8 +89,8 @@ function ConfirmDialog({
           ...rest,
           children: [
             /* @__PURE__ */ jsxs("div", { style: { display: "grid", gap: "var(--space-2)" }, children: [
-              title != null && /* @__PURE__ */ jsx(Heading, { id: titleId, style: { margin: 0, color: "var(--color-semantic-label-normal)", fontSize: "var(--heading3-size)", lineHeight: "var(--heading3-line)", fontWeight: "var(--fw-extra)" }, children: title }),
-              children != null && /* @__PURE__ */ jsx("div", { id: descriptionId, style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", wordBreak: "keep-all" }, children })
+              title != null && /* @__PURE__ */ jsx(Heading, { id: titleId, style: { margin: 0, color: "var(--color-semantic-label-normal)", fontSize: "var(--headline1-size)", lineHeight: "var(--headline1-line)", letterSpacing: 0, fontWeight: "var(--fw-extra)" }, children: title }),
+              children != null && /* @__PURE__ */ jsx("div", { id: descriptionId, style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--body2-size)", lineHeight: 1.7, wordBreak: "keep-all" }, children })
             ] }),
             /* @__PURE__ */ jsxs(ActionArea, { compact: true, divider: false, align: "end", style: { padding: 0, background: "transparent" }, children: [
               /* @__PURE__ */ jsx(Button, { "data-confirm-dialog-cancel": true, variant: "outlined", color: "assistive", onClick: () => dismiss?.(), children: cancelLabel }),
@@ -116,4 +116,4 @@ function ConfirmDialog({
 export {
   ConfirmDialog
 };
-//# sourceMappingURL=chunk-QIBLGZKL.js.map
+//# sourceMappingURL=chunk-YANSJWUS.js.map

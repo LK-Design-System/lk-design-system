@@ -89,8 +89,8 @@ function ConfirmDialog({
           ...rest,
           children: [
             /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: "var(--space-2)" }, children: [
-              title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Heading, { id: titleId, style: { margin: 0, color: "var(--color-semantic-label-normal)", fontSize: "var(--heading3-size)", lineHeight: "var(--heading3-line)", fontWeight: "var(--fw-extra)" }, children: title }),
-              children != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { id: descriptionId, style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", wordBreak: "keep-all" }, children })
+              title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Heading, { id: titleId, style: { margin: 0, color: "var(--color-semantic-label-normal)", fontSize: "var(--headline1-size)", lineHeight: "var(--headline1-line)", letterSpacing: 0, fontWeight: "var(--fw-extra)" }, children: title }),
+              children != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { id: descriptionId, style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--body2-size)", lineHeight: 1.7, wordBreak: "keep-all" }, children })
             ] }),
             /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunkLRACKP3Dcjs.ActionArea, { compact: true, divider: false, align: "end", style: { padding: 0, background: "transparent" }, children: [
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk6S5YR4GDcjs.Button, { "data-confirm-dialog-cancel": true, variant: "outlined", color: "assistive", onClick: () => _optionalChain([dismiss, 'optionalCall', _4 => _4()]), children: cancelLabel }),
@@ -116,4 +116,4 @@ function ConfirmDialog({
 
 
 exports.ConfirmDialog = ConfirmDialog;
-//# sourceMappingURL=chunk-C6OO7JA6.cjs.map
+//# sourceMappingURL=chunk-HUA7ZRPE.cjs.map

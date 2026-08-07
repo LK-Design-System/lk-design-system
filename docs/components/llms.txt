@@ -3841,10 +3841,10 @@ iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포�
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 하단 CTA는 ActionArea align="end"와 기본 Button medium 높이(40px)를 따르며, 버튼 사이는 spacing token 8px을 유지합니다. |
-| 명시 규칙 2 | 가장 가까운 sibling은 Modal, Drawer, Sheet, Alert입니다. 중앙 배치, 최대 너비, 제목·설명, ActionArea 구조와 시각 token은 그대로 두고 focus/Escape 계층만 동일한 modal 계약으로 정렬했습니다. |
-| 명시 규칙 3 | Fluent 2 Dialog: 확인 surface의 분명한 제목·본문·동작 구조를 유지하고, 불가피한 중첩에서는 최상위 surface만 상호작용하도록 했습니다. |
-| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
+| 명시 규칙 2 | 활자는 Modal·Sheet·Drawer와 같은 단을 씁니다 — 제목 --headline1-(18px) --fw-extra, 본문 --body2-size(15px) line-height: 1.7 --color-semantic-label-neutral. 이 넷은 한 가족이라 묻는 창만 다른 위계를 가질 이유가 없습니다. 한때 제목이 --heading3-으로 적혀 있었는데 그 토큰은 램프에 없습니다(heading 22/20, headline 18/17, body 16/15, label 14/13). |
+| 명시 규칙 3 | 가장 가까운 sibling은 Modal, Drawer, Sheet, Alert입니다. 중앙 배치, 최대 너비, 제목·설명, ActionArea 구조와 시각 token은 그대로 두고 focus/Escape 계층만 동일한 modal 계약으로 정렬했습니다. |
+| 명시 규칙 4 | Fluent 2 Dialog: 확인 surface의 분명한 제목·본문·동작 구조를 유지하고, 불가피한 중첩에서는 최상위 surface만 상호작용하도록 했습니다. |
+| --body2-size | 15px |
 
 ## Content and writing
 
@@ -3896,6 +3896,7 @@ iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포�
 
 ### Tokens
 
+- `--body2-size`
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
@@ -3905,10 +3906,8 @@ iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포�
 - `--component-dialog-scrim-blur`
 - `--font-sans`
 - `--fw-extra`
-- `--heading3-line`
-- `--heading3-size`
-- `--label1-line`
-- `--label1-size`
+- `--headline1-line`
+- `--headline1-size`
 - `--shadow-xl`
 - `--space-2`
 - `--space-4`

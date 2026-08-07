@@ -2,6 +2,12 @@
   "schemaVersion": 1,
   "description": "Known token hygiene debt. New missing-source, dead, invalid, misleading, cross-owner, or raw-color tokens are rejected.",
   "findings": {
+    "danglingReferences": [
+      "components/content/SourceDisclosure.jsx:--color-semantic-line-normal-strong",
+      "components/data/AnnotatedImage.jsx:--radius-xs",
+      "components/data/FileBrowser.jsx:--color-semantic-line-normal-strong",
+      "components/layout/MobileSystemBars.jsx:--radius-xs"
+    ],
     "missingComponentSource": [
       "--component-action-area-shadow-sticky",
       "--component-action-area-z-index",
