@@ -1,4 +1,6 @@
-**Blockquote** — 시그널 잉크 좌측 룰이 있는 인용.
+**Blockquote** — 조용한 채움 표면 위의 인용.
+
+이전의 3px primary 좌측 룰은 제거했습니다. primary는 이 시스템의 인터랙션 잉크라 인용이 링크나 선택 강조로 읽혔고, 채움 상자는 「다른 문서에서 떠온 글」이라는 스니펫 관용구입니다. `SourceDisclosure`의 발췌와 같은 처리라 인용은 시스템 어디서나 한 가지 모양입니다. `Prose`의 마크다운 `blockquote`도 같은 표면을 씁니다.
 
 ```jsx
 <Blockquote attribution="문서 가이드">문서 화면에서는 상태, 조치, 결과가 같은 위계 안에서 읽혀야 합니다.</Blockquote>

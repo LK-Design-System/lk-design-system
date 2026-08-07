@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk4OOX3FGKcjs = require('../../chunk-4OOX3FGK.cjs');
+var _chunkXX5J7YKUcjs = require('../../chunk-XX5J7YKU.cjs');
 
 
-exports.Blockquote = _chunk4OOX3FGKcjs.Blockquote;
+exports.Blockquote = _chunkXX5J7YKUcjs.Blockquote;
 //# sourceMappingURL=Blockquote.cjs.map

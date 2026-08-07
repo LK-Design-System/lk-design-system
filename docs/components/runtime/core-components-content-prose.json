@@ -52,16 +52,16 @@
       "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
     },
     {
+      "subject": "--color-semantic-fill-alternative",
+      "rule": "light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12)"
+    },
+    {
       "subject": "--color-semantic-fill-normal",
       "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
     },
     {
       "subject": "--color-semantic-fill-strong",
       "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
-    },
-    {
-      "subject": "--color-semantic-inverse-background",
-      "rule": "light: #1B1C1E; dark: #FFFFFF"
     }
   ],
   "responsive": [],
@@ -112,6 +112,7 @@
   ],
   "tokens": [
     "--body1-size",
+    "--color-semantic-fill-alternative",
     "--color-semantic-fill-normal",
     "--color-semantic-fill-strong",
     "--color-semantic-inverse-background",

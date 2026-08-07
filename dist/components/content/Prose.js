@@ -1,7 +1,7 @@
 "use client";
 import {
   Prose
-} from "../../chunk-W7EMCBMY.js";
+} from "../../chunk-324YZEXD.js";
 export {
   Prose
 };

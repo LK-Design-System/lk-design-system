@@ -29,7 +29,7 @@ const PROSE_CSS = `
 .lk-prose code{padding:2px 6px;background:var(--color-semantic-fill-strong);color:var(--color-semantic-label-normal);border-radius:var(--radius-sm);font-family:${MONO};font-size:0.9em;overflow-wrap:anywhere;}
 .lk-prose pre{margin:var(--space-4) 0;padding:var(--space-4);background:var(--color-semantic-inverse-background);color:var(--color-semantic-inverse-label);border-radius:var(--radius-lg);overflow-x:auto;font-family:${MONO};font-size:var(--label2-size);line-height:1.6;}
 .lk-prose pre code{padding:0;background:transparent;color:inherit;border-radius:0;font-size:1em;}
-.lk-prose blockquote{margin:var(--space-4) 0;padding:var(--space-2) 0 var(--space-2) var(--space-5);border-inline-start:3px solid var(--color-semantic-primary-normal);color:var(--color-semantic-label-normal);}
+.lk-prose blockquote{margin:var(--space-4) 0;padding:var(--space-3) var(--space-4);background:var(--color-semantic-fill-alternative);border-radius:var(--radius-sm);color:var(--color-semantic-label-normal);}
 .lk-prose hr{margin:var(--space-8) 0;border:0;border-top:1px solid var(--color-semantic-line-normal-normal);}
 .lk-prose img{max-width:100%;height:auto;border-radius:var(--radius-md);}
 .lk-prose table{width:100%;margin:var(--space-4) 0;border-collapse:collapse;font-size:var(--label2-size);}

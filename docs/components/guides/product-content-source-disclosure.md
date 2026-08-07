@@ -148,7 +148,6 @@
 - `--color-semantic-label-strong`
 - `--color-semantic-line-normal-alternative`
 - `--color-semantic-line-normal-normal`
-- `--color-semantic-primary-normal`
 - `--dur-base`
 - `--dur-fast`
 - `--ease-out`

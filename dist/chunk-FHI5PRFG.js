@@ -192,7 +192,7 @@ function SourceRow({ source, first, onSourceActivate }) {
             {
               cite: source.href,
               className: "lk-source-disclosure__excerpt",
-              style: { margin: 0, padding: "0 0 0 var(--space-3)", borderLeft: "3px solid var(--color-semantic-primary-normal)", color: "var(--color-semantic-label-strong)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" },
+              style: { margin: 0, padding: "var(--space-2) var(--space-3)", background: "var(--color-semantic-fill-alternative)", borderRadius: "var(--radius-sm)", color: "var(--color-semantic-label-strong)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" },
               children: source.excerpt
             }
           ),
@@ -281,7 +281,7 @@ function renderSourceRow(source, onSourceActivate) {
       {
         cite: source.href,
         className: "lk-source-disclosure__row-excerpt",
-        style: { margin: "0 0 var(--space-1) var(--space-2)", padding: "0 var(--space-2) 0 var(--space-3)", borderLeft: "3px solid var(--color-semantic-primary-normal)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" },
+        style: { margin: "0 var(--space-2) var(--space-1)", padding: "var(--space-1) var(--space-2)", background: "var(--color-semantic-fill-alternative)", borderRadius: "var(--radius-sm)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" },
         children: source.excerpt
       }
     )
@@ -476,4 +476,4 @@ function SourceDisclosure({
 export {
   SourceDisclosure
 };
-//# sourceMappingURL=chunk-32KXRB3E.js.map
+//# sourceMappingURL=chunk-FHI5PRFG.js.map

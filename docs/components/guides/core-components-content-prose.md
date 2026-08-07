@@ -41,9 +41,9 @@
 | --- | --- |
 | 명시 규칙 1 | heading 레벨 — 콘텐츠가 정한 레벨(h1–h6)을 그대로 조판하고 재번호하지 않습니다. 문서 계층에 맞는 레벨을 제품이 emit해야 합니다(WCAG 1.3.1). 카드 heading의 headingLevel 선례와 정합. |
 | --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
+| --color-semantic-fill-alternative | light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12) |
 | --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 | --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
-| --color-semantic-inverse-background | light: #1B1C1E; dark: #FFFFFF |
 
 ## Accessibility
 
@@ -77,6 +77,7 @@
 ### Tokens
 
 - `--body1-size`
+- `--color-semantic-fill-alternative`
 - `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
 - `--color-semantic-inverse-background`

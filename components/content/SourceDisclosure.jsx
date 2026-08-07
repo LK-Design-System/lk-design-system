@@ -243,13 +243,16 @@ function SourceRow({ source, first, onSourceActivate }) {
           }}
         >
           {/* The quoted passage is why the row is worth opening, so it leads
-              the panel and reads at body weight. Description and metadata
-              explain it; they do not compete with it. */}
+              the panel and reads at body weight. It sits on the same quiet
+              fill surface `Blockquote` uses — the snippet idiom, text visibly
+              lifted out of the original — so quoting looks like one thing
+              across the system. A colored bar here read as a selection or
+              link accent, not as quoting. */}
           {source.excerpt != null && (
             <blockquote
               cite={source.href}
               className="lk-source-disclosure__excerpt"
-              style={{ margin: 0, padding: '0 0 0 var(--space-3)', borderLeft: '3px solid var(--color-semantic-primary-normal)', color: 'var(--color-semantic-label-strong)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}
+              style={{ margin: 0, padding: 'var(--space-2) var(--space-3)', background: 'var(--color-semantic-fill-alternative)', borderRadius: 'var(--radius-sm)', color: 'var(--color-semantic-label-strong)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)' }}
             >
               {source.excerpt}
             </blockquote>
@@ -369,7 +372,7 @@ function renderSourceRow(source, onSourceActivate) {
         <blockquote
           cite={source.href}
           className="lk-source-disclosure__row-excerpt"
-          style={{ margin: '0 0 var(--space-1) var(--space-2)', padding: '0 var(--space-2) 0 var(--space-3)', borderLeft: '3px solid var(--color-semantic-primary-normal)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}
+          style={{ margin: '0 var(--space-2) var(--space-1)', padding: 'var(--space-1) var(--space-2)', background: 'var(--color-semantic-fill-alternative)', borderRadius: 'var(--radius-sm)', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}
         >
           {source.excerpt}
         </blockquote>

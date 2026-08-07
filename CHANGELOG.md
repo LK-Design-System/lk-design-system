@@ -69,6 +69,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.58 - 2026-08-07
+
+### Changed
+
+- 인용 표현을 시스템 전체에서 조용한 채움 상자 하나로 통일했습니다. `Blockquote`와 `Prose`의 마크다운 `blockquote`가 그리던 3px primary 좌측 룰을 제거하고 `--color-semantic-fill-alternative` 배경 + `--radius-sm` 표면으로 바꿨습니다 — primary는 이 시스템의 인터랙션 잉크라 인용이 링크나 선택 강조로 읽혔고, 채움 상자는 「다른 문서에서 떠온 글」이라는 스니펫 관용구입니다. `SourceDisclosure`의 발췌(rc.57에서 Blockquote의 룰을 물려받아 같은 문제를 안고 있던 곳)도 목록 패널과 인라인 팝오버 양쪽에서 같은 표면을 씁니다. API 변경은 없습니다.
+
 ## 0.1.0-rc.57 - 2026-08-07
 
 ### Changed

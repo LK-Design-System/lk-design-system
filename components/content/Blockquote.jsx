@@ -2,12 +2,19 @@ import React from 'react';
 
 /**
  * LK ROBOTICS — Blockquote
- * A quotation with a signal-ink left rule (인용, 고객 사례). Optional
+ * A quotation on a quiet fill surface (인용, 고객 사례). Optional
  * `attribution` renders a muted source line.
+ *
+ * The former 3px primary left rule is gone: primary is this system's
+ * interaction ink, so a quotation wearing it read as a link or a selection
+ * accent rather than as quoting. The fill box is the snippet idiom — text
+ * visibly lifted out of another document — and it is the same treatment
+ * SourceDisclosure gives a cited excerpt, so quoting looks like one thing
+ * everywhere.
  *
  * HTML convention — the attribution is NOT part of the quotation, so it lives
  * in `<figcaption>` next to the `<blockquote>` inside a `<figure>`, per the
- * HTML spec's "attribution outside the blockquote" guidance. The left rule and
+ * HTML spec's "attribution outside the blockquote" guidance. The surface and
  * padding move to the figure so the visual is unchanged.
  *
  * Naming — `attribution` is the human-readable source. The HTML `cite`
@@ -17,7 +24,7 @@ import React from 'react';
 export function Blockquote({ children, attribution, cite, citeUrl, style, ...rest }) {
   const source = attribution ?? cite;
   const quoteStyle = { fontSize: 'var(--headline2-size)', lineHeight: 1.7, letterSpacing: 0, color: 'var(--color-semantic-label-normal)', wordBreak: 'keep-all' };
-  const frameStyle = { margin: 0, padding: '6px 0 6px 20px', borderLeft: '3px solid var(--color-semantic-primary-normal)', fontFamily: 'var(--font-sans)', ...style };
+  const frameStyle = { margin: 0, padding: 'var(--space-3) var(--space-4)', background: 'var(--color-semantic-fill-alternative)', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-sans)', ...style };
 
   if (source == null) {
     return (

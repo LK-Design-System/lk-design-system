@@ -1,8 +1,8 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }"use client";
+"use client";
 
 // components/content/Prose.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx } from "react/jsx-runtime";
 var MONO = 'var(--font-mono, ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace)';
 var PROSE_CSS = `
 .lk-prose{color:var(--color-semantic-label-neutral);font-family:var(--font-sans);line-height:var(--label1-reading-line);letter-spacing:var(--label1-spacing);word-break:keep-all;overflow-wrap:anywhere;}
@@ -25,7 +25,7 @@ var PROSE_CSS = `
 .lk-prose code{padding:2px 6px;background:var(--color-semantic-fill-strong);color:var(--color-semantic-label-normal);border-radius:var(--radius-sm);font-family:${MONO};font-size:0.9em;overflow-wrap:anywhere;}
 .lk-prose pre{margin:var(--space-4) 0;padding:var(--space-4);background:var(--color-semantic-inverse-background);color:var(--color-semantic-inverse-label);border-radius:var(--radius-lg);overflow-x:auto;font-family:${MONO};font-size:var(--label2-size);line-height:1.6;}
 .lk-prose pre code{padding:0;background:transparent;color:inherit;border-radius:0;font-size:1em;}
-.lk-prose blockquote{margin:var(--space-4) 0;padding:var(--space-2) 0 var(--space-2) var(--space-5);border-inline-start:3px solid var(--color-semantic-primary-normal);color:var(--color-semantic-label-normal);}
+.lk-prose blockquote{margin:var(--space-4) 0;padding:var(--space-3) var(--space-4);background:var(--color-semantic-fill-alternative);border-radius:var(--radius-sm);color:var(--color-semantic-label-normal);}
 .lk-prose hr{margin:var(--space-8) 0;border:0;border-top:1px solid var(--color-semantic-line-normal-normal);}
 .lk-prose img{max-width:100%;height:auto;border-radius:var(--radius-md);}
 .lk-prose table{width:100%;margin:var(--space-4) 0;border-collapse:collapse;font-size:var(--label2-size);}
@@ -34,7 +34,7 @@ var PROSE_CSS = `
 .lk-prose ul.contains-task-list,.lk-prose li.task-list-item{list-style:none;}
 .lk-prose li.task-list-item{padding-inline-start:0;}
 `;
-var useSafeLayoutEffect = typeof window === "undefined" ? _react2.default.useEffect : _react2.default.useLayoutEffect;
+var useSafeLayoutEffect = typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
 function useProseStyles() {
   useSafeLayoutEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-prose-css")) return;
@@ -46,8 +46,8 @@ function useProseStyles() {
 }
 function Prose({ children, measure = "68ch", style, className, ...rest }) {
   useProseStyles();
-  const root = _react2.default.useRef(null);
-  _react2.default.useEffect(() => {
+  const root = React.useRef(null);
+  React.useEffect(() => {
     const element = root.current;
     if (!element || typeof ResizeObserver === "undefined") return void 0;
     const update = () => {
@@ -62,7 +62,7 @@ function Prose({ children, measure = "68ch", style, className, ...rest }) {
     observer.observe(element);
     return () => observer.disconnect();
   }, [children]);
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ jsx(
     "div",
     {
       ref: root,
@@ -74,7 +74,7 @@ function Prose({ children, measure = "68ch", style, className, ...rest }) {
   );
 }
 
-
-
-exports.Prose = Prose;
-//# sourceMappingURL=chunk-7HMPEBFQ.cjs.map
+export {
+  Prose
+};
+//# sourceMappingURL=chunk-324YZEXD.js.map

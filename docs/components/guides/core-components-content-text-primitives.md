@@ -44,10 +44,10 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 타입 스케일 정합: 출처 13.5px → --label2-size(13px)로 스냅했습니다(−0.5px, 인용문 대비 뮤트 위계 유지). 인용문(headline2)과 함께 전 사이트가 토큰 스케일 위에 있습니다. |
+| 명시 규칙 2 | 이전의 3px primary 좌측 룰은 제거했습니다. primary는 이 시스템의 인터랙션 잉크라 인용이 링크나 선택 강조로 읽혔고, 채움 상자는 「다른 문서에서 떠온 글」이라는 스니펫 관용구입니다. SourceDisclosure의 발췌와 같은 처리라 인용은 시스템 어디서나 한 가지 모양입니다. Prose의 마크다운 blockquote도 같은 표면을 씁니다. |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --caption2-size | 11px |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 
 ## Content and writing
 
@@ -83,6 +83,7 @@
 - `--caption1-size`
 - `--caption2-size`
 - `--color-semantic-background-elevated-normal`
+- `--color-semantic-fill-alternative`
 - `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
 - `--color-semantic-inverse-background`
@@ -108,6 +109,7 @@
 - `--radius-pill`
 - `--radius-sm`
 - `--space-3`
+- `--space-4`
 
 ### Source contracts
 
