@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "e802fc573075f5e3f2c6ff7414487a2c4dd3f335bf94b12a3dd5a0b3aa6ab43b",
+  "sourceFingerprint": "b9254ac9c7babe89d22a4f222da208dc1d1377b8527f7c95d2a999da0c2df59e",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -6568,7 +6568,6 @@
         "--space-6",
         "--space-2",
         "--space-3",
-        "--space-4",
         "--radius-sm",
         "--color-semantic-label-alternative",
         "--dur-fast",
@@ -6577,6 +6576,7 @@
         "--color-semantic-label-neutral",
         "--caption1-size",
         "--caption1-line",
+        "--space-4",
         "--space-8",
         "--color-semantic-fill-alternative",
         "--color-semantic-label-normal",
@@ -6586,10 +6586,7 @@
         "--body1-size",
         "--body1-line",
         "--fw-bold",
-        "--body1-spacing",
-        "--color-semantic-line-normal-normal",
-        "--radius-md",
-        "--color-semantic-background-elevated-normal"
+        "--body1-spacing"
       ],
       "externalReferences": [
         {
@@ -6641,7 +6638,7 @@
           "url": "https://design-system.w3.org/components/quote.html"
         }
       ],
-      "promptSha256": "62724a391a2218dbfd4a398cf2673f73b525897640d1bc0847a7a1b03a329822"
+      "promptSha256": "06dc6c84f16df5adc2e592c72b779b848d7a6ce6a2afa2a7ed109c9e3da99236"
     },
     {
       "id": "source-tag",
@@ -55355,7 +55352,6 @@
         "--body1-spacing",
         "--caption1-line",
         "--caption1-size",
-        "--color-semantic-background-elevated-normal",
         "--color-semantic-fill-alternative",
         "--color-semantic-focus-ring",
         "--color-semantic-label-alternative",
@@ -55363,7 +55359,6 @@
         "--color-semantic-label-normal",
         "--color-semantic-label-strong",
         "--color-semantic-line-normal-alternative",
-        "--color-semantic-line-normal-normal",
         "--dur-base",
         "--dur-fast",
         "--ease-out",
@@ -55373,7 +55368,6 @@
         "--fw-semibold",
         "--label1-line",
         "--label1-size",
-        "--radius-md",
         "--radius-sm",
         "--space-1",
         "--space-2",

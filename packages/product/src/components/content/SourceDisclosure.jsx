@@ -178,7 +178,11 @@ function SourceRow({ source, first, onSourceActivate }) {
           alignItems: 'start',
           columnGap: 'var(--space-2)',
           rowGap: 'var(--space-1)',
-          padding: 'var(--space-3) var(--space-4)',
+          /* No inline padding: with the container owning the surface, the rows
+             align on the same axis as the heading above them. The row carries
+             no hover fill of its own, so there is nothing for side padding to
+             extend. */
+          padding: 'var(--space-3) 0',
         }}
       >
         {hasPanel ? (
@@ -238,7 +242,9 @@ function SourceRow({ source, first, onSourceActivate }) {
           style={{
             display: expanded ? 'grid' : 'none',
             gap: 'var(--space-3)',
-            padding: '0 var(--space-4) var(--space-4)',
+            padding: '0 0 var(--space-4)',
+            /* Aligns the panel with the row's identity column, which starts
+               past the 24px disclosure target and its 8px gap. */
             marginInlineStart: 'var(--space-8)',
           }}
         >
@@ -406,7 +412,7 @@ const PANEL_CSS = `.lk-source-disclosure__toggle:hover,
   }
   .lk-source-disclosure__panel {
     margin-inline-start: 0 !important;
-    padding: 0 var(--space-3) var(--space-3) !important;
+    padding: 0 0 var(--space-3) !important;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -588,17 +594,12 @@ export function SourceDisclosure({
           {visible.map((source) => renderSourceChip(source, onSourceActivate))}
         </ul>
       ) : (
-        <ul
-          style={{
-            margin: 0,
-            padding: 0,
-            overflow: 'hidden',
-            listStyle: 'none',
-            border: '1px solid var(--color-semantic-line-normal-normal)',
-            borderRadius: 'var(--radius-md)',
-            background: 'var(--color-semantic-background-elevated-normal)',
-          }}
-        >
+        /* Borderless: the embedding container owns the surface. Provenance is
+           always read inside something — a document card, a Collapsible, a
+           detail panel — so drawing a perimeter here puts a second border a
+           few pixels inside the first. Rows are separated by their own rules,
+           which is all the grouping a list needs once a surface encloses it. */
+        <ul style={{ margin: 0, padding: 0, listStyle: 'none' }}>
           {visible.map((source, index) => (
             <SourceRow key={source.id} source={source} first={index === 0} onSourceActivate={onSourceActivate} />
           ))}

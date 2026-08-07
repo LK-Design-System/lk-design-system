@@ -139,7 +139,6 @@
 - `--body1-spacing`
 - `--caption1-line`
 - `--caption1-size`
-- `--color-semantic-background-elevated-normal`
 - `--color-semantic-fill-alternative`
 - `--color-semantic-focus-ring`
 - `--color-semantic-label-alternative`
@@ -147,7 +146,6 @@
 - `--color-semantic-label-normal`
 - `--color-semantic-label-strong`
 - `--color-semantic-line-normal-alternative`
-- `--color-semantic-line-normal-normal`
 - `--dur-base`
 - `--dur-fast`
 - `--ease-out`
@@ -157,7 +155,6 @@
 - `--fw-semibold`
 - `--label1-line`
 - `--label1-size`
-- `--radius-md`
 - `--radius-sm`
 - `--space-1`
 - `--space-2`

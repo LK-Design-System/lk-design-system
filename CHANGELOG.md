@@ -69,6 +69,14 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.59 - 2026-08-07
+
+### Fixed
+
+- `SourceDisclosure`의 `list` 변형이 자기 테두리·모서리·배경을 그리던 것을 제거했습니다. 2026-07-17 표면 감사는 이 컴포넌트를 **A 전략(테두리 없는 콘텐츠 — 컨테이너가 표면을 소유)** 으로 분류해 `Tree`·`LogViewer`·`StepList`와 같은 자리에 두었지만, 코드는 최초 공개 릴리스부터 자기 둘레를 그리고 있어 분류와 맞은 적이 없었습니다. provenance는 언제나 무언가 안에서 읽히므로(문서 카드, `Collapsible`, 상세 패널) 이 둘레는 감싸는 표면의 테두리 몇 px 안쪽에 두 번째 테두리를 만들었습니다 — 감사가 막으려던 바로 그 이중 둘레입니다. 행의 좌우 패딩도 함께 없애 목록이 위의 제목과 같은 축에 정렬됩니다. 그룹 표시는 행 사이 구분선이 소유합니다.
+
+`ChartFrame`·`MetricCard`처럼 「제목을 카드 안 헤더로」 두는 배치는 C 전략(항상 최외곽)의 계약이라 이 컴포넌트의 모델이 아닙니다. 계약을 `SourceDisclosure.prompt.md`에 명시하고, 목록이 둘레를 다시 그리거나 제목 축에서 벗어나면 실패하는 단언을 스토리에 넣었습니다.
+
 ## 0.1.0-rc.58 - 2026-08-07
 
 ### Changed

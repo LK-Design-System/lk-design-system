@@ -124,7 +124,11 @@ function SourceRow({ source, first, onSourceActivate }) {
           alignItems: "start",
           columnGap: "var(--space-2)",
           rowGap: "var(--space-1)",
-          padding: "var(--space-3) var(--space-4)"
+          /* No inline padding: with the container owning the surface, the rows
+             align on the same axis as the heading above them. The row carries
+             no hover fill of its own, so there is nothing for side padding to
+             extend. */
+          padding: "var(--space-3) 0"
         },
         children: [
           hasPanel ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
@@ -183,7 +187,9 @@ function SourceRow({ source, first, onSourceActivate }) {
         style: {
           display: expanded ? "grid" : "none",
           gap: "var(--space-3)",
-          padding: "0 var(--space-4) var(--space-4)",
+          padding: "0 0 var(--space-4)",
+          /* Aligns the panel with the row's identity column, which starts
+             past the 24px disclosure target and its 8px gap. */
           marginInlineStart: "var(--space-8)"
         },
         children: [
@@ -312,7 +318,7 @@ var PANEL_CSS = `.lk-source-disclosure__toggle:hover,
   }
   .lk-source-disclosure__panel {
     margin-inline-start: 0 !important;
-    padding: 0 var(--space-3) var(--space-3) !important;
+    padding: 0 0 var(--space-3) !important;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -452,20 +458,13 @@ function SourceDisclosure({
           ),
           description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: description })
         ] }),
-        visible.length === 0 ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { style: mutedLineStyle, children: _nullishCoalesce(withheldLine, () => ( emptyMessage)) }) : variant === "chips" ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { style: { margin: 0, padding: 0, listStyle: "none", display: "flex", flexWrap: "wrap", gap: "var(--space-2)", minWidth: 0 }, children: visible.map((source) => renderSourceChip(source, onSourceActivate)) }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          "ul",
-          {
-            style: {
-              margin: 0,
-              padding: 0,
-              overflow: "hidden",
-              listStyle: "none",
-              border: "1px solid var(--color-semantic-line-normal-normal)",
-              borderRadius: "var(--radius-md)",
-              background: "var(--color-semantic-background-elevated-normal)"
-            },
-            children: visible.map((source, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, SourceRow, { source, first: index === 0, onSourceActivate }, source.id))
-          }
+        visible.length === 0 ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { style: mutedLineStyle, children: _nullishCoalesce(withheldLine, () => ( emptyMessage)) }) : variant === "chips" ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { style: { margin: 0, padding: 0, listStyle: "none", display: "flex", flexWrap: "wrap", gap: "var(--space-2)", minWidth: 0 }, children: visible.map((source) => renderSourceChip(source, onSourceActivate)) }) : (
+          /* Borderless: the embedding container owns the surface. Provenance is
+             always read inside something — a document card, a Collapsible, a
+             detail panel — so drawing a perimeter here puts a second border a
+             few pixels inside the first. Rows are separated by their own rules,
+             which is all the grouping a list needs once a surface encloses it. */
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { style: { margin: 0, padding: 0, listStyle: "none" }, children: visible.map((source, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, SourceRow, { source, first: index === 0, onSourceActivate }, source.id)) })
         ),
         visible.length > 0 && withheldLine != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { className: "lk-source-disclosure__withheld", style: { margin: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: withheldLine })
       ]
@@ -476,4 +475,4 @@ function SourceDisclosure({
 
 
 exports.SourceDisclosure = SourceDisclosure;
-//# sourceMappingURL=chunk-XLLMHJXF.cjs.map
+//# sourceMappingURL=chunk-C57IYUWP.cjs.map

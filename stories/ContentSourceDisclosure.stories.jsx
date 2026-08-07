@@ -1,4 +1,4 @@
-import { SourceDisclosure } from '../src/index.js';
+import { Card, SourceDisclosure } from '../src/index.js';
 import { userEvent } from 'storybook/test';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -105,7 +105,12 @@ export const AvailabilityAndProvenance = {
 export const ProvenanceList = {
   name: '변형·상태 · 출처 비교 목록',
   parameters: storyDescription(
-    '여러 출처의 시점과 근거를 나란히 비교하는 상황입니다. 정상 출처는 배지 없이 조용히 서고 예외만 배지를 다는지, 펼침이 native details가 아니라 aria-expanded를 가진 버튼인지, 펼친 패널이 인용구로 시작하는지 확인하세요.',
+    '여러 출처의 시점과 근거를 나란히 비교하는 상황입니다. 표면은 감싸는 카드가 소유하고 목록은 자기 테두리를 그리지 않으므로 둘레가 하나로 보이는지, 정상 출처는 배지 없이 조용히 서고 예외만 배지를 다는지, 펼침이 native details가 아니라 aria-expanded를 가진 버튼인지, 펼친 패널이 인용구로 시작하는지 확인하세요.',
+  ),
+  render: (args) => (
+    <Card elevation="sm" padding="var(--space-5)" headingLevel={false}>
+      <SourceDisclosure {...args} />
+    </Card>
   ),
   args: {
     variant: 'list',
@@ -145,6 +150,18 @@ export const ProvenanceList = {
     if (!root || rows.length !== 3) throw new Error('The list variant must render one row per source.');
     if (root.querySelector('details, summary')) {
       throw new Error('The disclosure must not rely on native details/summary, whose state announcement breaks once the marker is hidden.');
+    }
+    /* The embedding container owns the surface. A perimeter here would sit a
+       few pixels inside the card's own, which is the double-border the surface
+       audit classifies this component out of. */
+    const listStyle = getComputedStyle(root.querySelector('ul'));
+    if (listStyle.borderTopWidth !== '0px' || listStyle.borderTopLeftRadius !== '0px') {
+      throw new Error('The source list must not draw its own perimeter — the container owns the surface.');
+    }
+    /* Rows share the heading's axis, so nothing is inset relative to the name
+       of the group it belongs to. */
+    if (Math.abs(rows[0].getBoundingClientRect().left - root.querySelector('h2').getBoundingClientRect().left) > 1) {
+      throw new Error('Source rows must align on the same axis as the heading above them.');
     }
     /* A reachable source is silent. Badging the normal case is what stops the
        abnormal one from standing out. */
