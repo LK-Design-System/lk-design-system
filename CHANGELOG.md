@@ -69,6 +69,14 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.60 - 2026-08-07
+
+### Fixed
+
+- `SourceDisclosure`가 래칫 baseline에 묻어 두고 있던 계약 부채를 갚았습니다. `API_DRIFT_BASELINE`은 이 컴포넌트의 `emptyMessage`·`headingLevel`·`onSourceActivate`를 「문서화되지 않은 prop」으로 등재해 검사를 통과시키고 있었고, 네 번째 항목 `openLabel`은 rc.57에서 삭제된 prop이라 존재하지도 않는 것을 계속 면제하고 있었습니다. 셋을 `prompt.md`에 문서화하고 죽은 항목을 지워 baseline에서 이 컴포넌트 항목을 통째로 제거했습니다.
+- `STORY_COVERAGE_BASELINE`의 `emptyStateGaps`에 올라 있던 것도 해소했습니다. `emptyMessage` prop이 있는데 `sources={[]}`를 보여 주는 스토리가 없었습니다. 빈 목록이 목록·토글·액션을 만들지 않고 한 줄로만 알리는지, 그리고 그 줄이 권한 때문에 비었을 때의 집계 줄과 섞이지 않는지 검증하는 스토리를 더했습니다(7건 → 6건).
+- `list` 변형 설명에 rc.59에서 제거한 「테두리 있는」이 남아 계약이 자기모순이던 것을 고쳤습니다.
+
 ## 0.1.0-rc.59 - 2026-08-07
 
 ### Fixed

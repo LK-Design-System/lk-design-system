@@ -16,9 +16,12 @@
 ```
 
 - 한 source를 본문 옆에서 짧게 귀속할 때는 `SourceTag`, 여러 source의 상태와 provenance를 비교할 때는 `SourceDisclosure`를 사용합니다. FAQ/문서 섹션처럼 일반 콘텐츠를 접을 때는 `Accordion` 또는 `Collapsible`가 소유합니다.
+- `title`은 이 목록의 이름이고 `headingLevel`(2–6)은 그 이름이 감싸는 문서의 heading 위계에서 어디에 앉을지를 정합니다. 주변 heading보다 한 단계 아래를 넘겨 outline이 건너뛰지 않게 합니다. 이미 같은 이름을 보이게 제공하는 표면에 끼워 넣을 때만 `titleVisuallyHidden`으로 시각적 중복을 없애며, 이름 자체는 보조 기술에 그대로 남습니다.
+- `sources`가 비면 `emptyMessage`가 나갑니다. 「무엇이 없다」가 아니라 「이 화면이 근거를 찾지 못했다」를 말하는 자리이므로, 조회에 실패한 것과 근거가 애초에 없는 것을 제품이 구분해 문구를 넘깁니다. 권한 때문에 비었을 때는 `emptyMessage` 대신 `hiddenMessage`가 나갑니다 — 아무것도 없는 것과 볼 수 없는 것은 다른 사실입니다.
+- `href`가 없는 source는 `onSourceActivate(source)`로 제품이 이동을 소유합니다. 앱 내부 라우팅, 드로어 열기, 미리보기처럼 새 탭이 답이 아닐 때 씁니다. `href`가 있으면 그쪽이 이기고 label이 새 탭 링크가 됩니다. 둘 다 없으면 label은 정적 텍스트로 남고 없는 액션을 암시하지 않습니다.
 - `variant`가 표면을 결정합니다. 하나의 prop이 셋 중 하나를 고르며 boolean 조합으로 표면을 만들지 않습니다.
   - `inline`(기본): source 목록을 `출처 N개` 아이콘+라벨 토글 하나 뒤로 접고, 활성화하면 앵커드 `Popover`로 띄웁니다. 닫힘 상태가 한 줄이고 패널이 떠서 열리므로 주변 레이아웃을 밀지 않으며, 바깥 pointer press나 Escape로 닫힙니다(비모달). 토글 텍스트가 disclosure의 접근 가능한 이름이라 반복되는 landmark heading을 투사하지 않습니다. 조사한 assistant 제품들이 공통으로 도달한 resting shape입니다. `defaultOpen`으로 팝오버가 열린 상태에서 시작할 수 있으며, 출처를 항상 노출해야 하는 고신뢰 맥락에서는 `defaultOpen` 대신 `chips`나 `list`를 씁니다.
-  - `list`: 테두리 있는 provenance 목록으로 source마다 펼침 행을 둡니다. 여러 source의 상태·시점·근거를 나란히 비교해야 할 때만 사용합니다.
+  - `list`: source마다 펼침 행을 둔 provenance 목록입니다. 여러 source의 상태·시점·근거를 나란히 비교해야 할 때만 사용합니다. 표면은 감싸는 컨테이너가 소유합니다(아래 참조).
   - `chips`: 각 source를 attachment chip 무게의 한 줄 link chip으로 렌더합니다. 열거된 source가 모두 열람 가능하다고 전제되는 맥락에서 씁니다.
 - **availability는 예외일 때만 배지를 만듭니다.** `available`과 값을 넘기지 않은 경우는 아무것도 그리지 않습니다. 정상 상태에 배지를 달면 비정상 상태가 눈에 띄지 않게 되고, 세 행이 세 가지 색을 달면 근거 목록이 아니라 상태 대시보드로 읽힙니다. 배지가 나가는 값은 `stale`·`missing`·`error`·`unknown` 넷입니다.
 - **`restricted`는 행을 만들지 않습니다.** 열람 권한이 없는 source는 목록에서 빠지고 건수만 집계됩니다. 제목을 그리는 것 자체가 그 문서의 존재를 밝히는 일이고, 권한 검사는 바로 그 공개를 막으려고 있습니다. 제품이 상류에서 이미 걸러 낸 건수는 `hiddenCount`로 더합니다. 집계는 별도 한 줄로 나가며 눈에 보이는 source 개수(`inline` 토글의 `N개` 포함)에 절대 합산하지 않습니다 — 트리밍 전에 센 총계는 숨긴 사실을 그대로 흘립니다. 문구를 바꿀 때는 `hiddenMessage`로 필요한 권한과 요청 경로를 말하고, 숨긴 source의 이름은 말하지 않습니다.

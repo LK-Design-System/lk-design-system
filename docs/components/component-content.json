@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "b9254ac9c7babe89d22a4f222da208dc1d1377b8527f7c95d2a999da0c2df59e",
+  "sourceFingerprint": "a066781857450ea77e22c106779da16dfe8682209e7228dd7f7418c25f1dbfb6",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -6638,7 +6638,7 @@
           "url": "https://design-system.w3.org/components/quote.html"
         }
       ],
-      "promptSha256": "06dc6c84f16df5adc2e592c72b779b848d7a6ce6a2afa2a7ed109c9e3da99236"
+      "promptSha256": "32ad7e711f0db7890cedb6a5425152aad6642eb8d7ac005c4457cc3d2d2f8903"
     },
     {
       "id": "source-tag",
@@ -55262,30 +55262,30 @@
       ],
       "behavior": [
         "한 source를 본문 옆에서 짧게 귀속할 때는 SourceTag, 여러 source의 상태와 provenance를 비교할 때는 SourceDisclosure를 사용합니다. FAQ/문서 섹션처럼 일반 콘텐츠를 접을 때는 Accordion 또는 Collapsible가 소유합니다.",
-        "list: 테두리 있는 provenance 목록으로 source마다 펼침 행을 둡니다. 여러 source의 상태·시점·근거를 나란히 비교해야 할 때만 사용합니다.",
+        "list: source마다 펼침 행을 둔 provenance 목록입니다. 여러 source의 상태·시점·근거를 나란히 비교해야 할 때만 사용합니다. 표면은 감싸는 컨테이너가 소유합니다(아래 참조).",
         "chips: 각 source를 attachment chip 무게의 한 줄 link chip으로 렌더합니다. 열거된 source가 모두 열람 가능하다고 전제되는 맥락에서 씁니다.",
-        "metadata는 key와 value를 붙여 두 열로 세웁니다. 넓은 표면에서 auto-fit track은 두 쌍을 양 끝으로 벌려 한 레코드로 읽히지 않게 만듭니다.",
-        "StatusBadge: soft semantic surface와 명시적 상태 text 계약을 그대로 사용합니다. 지속적으로 변하는 freshness 신호가 필요할 때만 제품이 StatusIndicator를 별도로 조합합니다."
+        "펼친 패널은 excerpt로 시작합니다. 행을 열어 볼 이유가 인용된 문장이므로 label 무게로 먼저 서고, description과 metadata가 뒤따라 그것을 설명합니다. excerpt는 blockquote이며 href가 있으면 HTML cite 속성으로 원본 URL을 연결합니다.",
+        "metadata는 key와 value를 붙여 두 열로 세웁니다. 넓은 표면에서 auto-fit track은 두 쌍을 양 끝으로 벌려 한 레코드로 읽히지 않게 만듭니다."
       ],
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "disclosure button은 행 앞머리에 서고 접힘 chevron-right-small이 펼치면 90° 회전합니다. glyph보다 button이 커서 24×24 target을 소유합니다(WCAG 2.2 SC 2.5.8). 펼칠 것이 없는 행은 동작 없는 컨트롤을 만들지 않고 같은 폭의 spacer로 정렬만 맞춥니다."
+          "rule": "title은 이 목록의 이름이고 headingLevel(2–6)은 그 이름이 감싸는 문서의 heading 위계에서 어디에 앉을지를 정합니다. 주변 heading보다 한 단계 아래를 넘겨 outline이 건너뛰지 않게 합니다. 이미 같은 이름을 보이게 제공하는 표면에 끼워 넣을 때만 titleVisuallyHidden으로 시각적 중복을 없애며, 이름 자체는 보조 기술에 그대로 남습니다."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "WCAG 2.2 SC 2.5.8 Target Size (Minimum)은 24×24 CSS px를 요구합니다. chevron glyph가 아니라 button이 target을 소유합니다."
+          "rule": "disclosure button은 행 앞머리에 서고 접힘 chevron-right-small이 펼치면 90° 회전합니다. glyph보다 button이 커서 24×24 target을 소유합니다(WCAG 2.2 SC 2.5.8). 펼칠 것이 없는 행은 동작 없는 컨트롤을 만들지 않고 같은 폭의 spacer로 정렬만 맞춥니다."
         },
         {
           "subject": "명시 규칙 3",
+          "rule": "WCAG 2.2 SC 2.5.8 Target Size (Minimum)은 24×24 CSS px를 요구합니다. chevron glyph가 아니라 button이 target을 소유합니다."
+        },
+        {
+          "subject": "명시 규칙 4",
           "rule": "RFC 9110 §15.5.5는 서버가 리소스의 존재 자체를 밝히기를 거부해도 된다고 정합니다. 권한 없는 source를 목록에서 빼는 근거입니다."
         },
         {
           "subject": "--body1-line",
-          "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
-        },
-        {
-          "subject": "--body1-size",
           "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
         }
       ],
@@ -55294,10 +55294,10 @@
         "SourceTag: 단일 출처용 compact pill과 외부 이동 표시를 재사용 기준으로 확인했습니다."
       ],
       "contentGuidance": [
+        "sources가 비면 emptyMessage가 나갑니다. 「무엇이 없다」가 아니라 「이 화면이 근거를 찾지 못했다」를 말하는 자리이므로, 조회에 실패한 것과 근거가 애초에 없는 것을 제품이 구분해 문구를 넘깁니다. 권한 때문에 비었을 때는 emptyMessage 대신 hiddenMessage가 나갑니다 — 아무것도 없는 것과 볼 수 없는 것은 다른 사실입니다.",
+        "href가 없는 source는 onSourceActivate(source)로 제품이 이동을 소유합니다. 앱 내부 라우팅, 드로어 열기, 미리보기처럼 새 탭이 답이 아닐 때 씁니다. href가 있으면 그쪽이 이기고 label이 새 탭 링크가 됩니다. 둘 다 없으면 label은 정적 텍스트로 남고 없는 액션을 암시하지 않습니다.",
         "restricted는 행을 만들지 않습니다. 열람 권한이 없는 source는 목록에서 빠지고 건수만 집계됩니다. 제목을 그리는 것 자체가 그 문서의 존재를 밝히는 일이고, 권한 검사는 바로 그 공개를 막으려고 있습니다. 제품이 상류에서 이미 걸러 낸 건수는 hiddenCount로 더합니다. 집계는 별도 한 줄로 나가며 눈에 보이는 source 개수(inline 토글의 N개 포함)에 절대 합산하지 않습니다 — 트리밍 전에 센 총계는 숨긴 사실을 그대로 흘립니다.",
-        "badge는 availability와 다른 축입니다. 검증 판정, 민감도 등급처럼 제품이 소유하고 항상 보여야 하는 라벨은 badge로 넘깁니다. 한 주장이 확인됨이면서 그 출처가 동시에 오래됨일 수 있으므로 두 배지는 각각 나갑니다. availability를 판정 라벨로 전용하지 않습니다.",
-        "source label 자체가 목적지입니다. href가 있으면 label이 새 탭 링크가 되고 external-link icon을 표시합니다. onSourceActivate만 있으면 label이 button이 됩니다. 행에서 가장 무거운 요소가 펼치기만 하고 실제 이동은 패널 안 작은 링크에 묻히는 구조를 만들지 않습니다.",
-        "펼친 패널은 excerpt로 시작합니다. 행을 열어 볼 이유가 인용된 문장이므로 label 무게로 먼저 서고, description과 metadata가 뒤따라 그것을 설명합니다. excerpt는 blockquote이며 href가 있으면 HTML cite 속성으로 원본 URL을 연결합니다."
+        "badge는 availability와 다른 축입니다. 검증 판정, 민감도 등급처럼 제품이 소유하고 항상 보여야 하는 라벨은 badge로 넘깁니다. 한 주장이 확인됨이면서 그 출처가 동시에 오래됨일 수 있으므로 두 배지는 각각 나갑니다. availability를 판정 라벨로 전용하지 않습니다."
       ],
       "accessibility": [
         "inline(기본): source 목록을 출처 N개 아이콘+라벨 토글 하나 뒤로 접고, 활성화하면 앵커드 Popover로 띄웁니다. 닫힘 상태가 한 줄이고 패널이 떠서 열리므로 주변 레이아웃을 밀지 않으며, 바깥 pointer press나 Escape로 닫힙니다(비모달). 토글 텍스트가 disclosure의 접근 가능한 이름이라 반복되는 landmark heading을 투사하지 않습니다. 조사한 assistant 제품들이 공통으로 도달한 resting shape입니다.",
@@ -55308,6 +55308,7 @@
       ],
       "exceptions": [
         "availability는 예외일 때만 배지를 만듭니다. available과 값을 넘기지 않은 경우는 아무것도 그리지 않습니다. 정상 상태에 배지를 달면 비정상 상태가 눈에 띄지 않게 되고, 세 행이 세 가지 색을 달면 근거 목록이 아니라 상태 대시보드로 읽힙니다. 배지가 나가는 값은 stale·missing·error·unknown 넷입니다.",
+        "읽기 순서는 source label → kind/location → 예외 배지이며, 펼친 뒤 excerpt → description → 관측·갱신 metadata로 이어집니다.",
         "GOV.UK Tag는 tag를 interactive 요소로 만들지 말고, 색만으로 정보를 전하지 말며, 쓸 만하다고 보는 가장 적은 수의 상태로 시작하도록 합니다. availability 배지를 예외로 한정한 근거입니다."
       ],
       "related": [

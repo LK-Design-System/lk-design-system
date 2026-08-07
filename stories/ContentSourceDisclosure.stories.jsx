@@ -252,6 +252,33 @@ export const WithheldSources = {
   },
 };
 
+export const NoSources = {
+  name: '변형·상태 · 빈 목록',
+  parameters: storyDescription(
+    '근거를 하나도 붙이지 못한 응답이나 문서의 상황입니다. 없는 목록·토글·액션을 만들지 않고 한 줄로만 알리는지, 그리고 그 문구가 「근거가 없다」를 말하지 「불러오지 못했다」로 읽히지 않는지 확인하세요. 권한 때문에 비었을 때는 이 문구 대신 집계 줄이 나갑니다.',
+  ),
+  args: {
+    variant: 'list',
+    sources: [],
+  },
+  render: (args) => (
+    <SourceDisclosure {...args} emptyMessage="이 응답에 연결된 근거가 없습니다." />
+  ),
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('.lk-source-disclosure');
+    if (!root) throw new Error('An empty source list must still render its named region.');
+    if (root.querySelector('ul, li, details, a, button, .lk-source-disclosure__status')) {
+      throw new Error('An empty source list must not render a list, a toggle, or an action that leads nowhere.');
+    }
+    if (!root.textContent?.includes('이 응답에 연결된 근거가 없습니다.')) {
+      throw new Error('The empty state must show the product-supplied emptyMessage.');
+    }
+    if (root.querySelector('.lk-source-disclosure__withheld')) {
+      throw new Error('An empty list is not a withheld list — the aggregate line must stay out of it.');
+    }
+  },
+};
+
 export const MissingSource = {
   name: '변형·상태 · 출처 없음',
   parameters: storyDescription(

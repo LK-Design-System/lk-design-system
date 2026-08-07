@@ -88,14 +88,6 @@
         "trailingStyle"
       ]
     },
-    "components/content/SourceDisclosure.jsx#SourceDisclosure": {
-      "undocumentedProps": [
-        "emptyMessage",
-        "headingLevel",
-        "onSourceActivate",
-        "openLabel"
-      ]
-    },
     "components/content/Thumbnail.jsx#Thumbnail": {
       "undocumentedProps": [
         "fit",
@@ -167,9 +159,7 @@
     },
     "components/data/NetworkGraph.jsx#NetworkGraph": {
       "undocumentedProps": [
-        "description",
         "height",
-        "nodeShape",
         "selectedEdgeId",
         "showEdgeLabels"
       ]

@@ -158,7 +158,6 @@
     ],
     "emptyStateGaps": [
       "components/content/ReorderList.jsx#ReorderList",
-      "components/content/SourceDisclosure.jsx#SourceDisclosure",
       "components/data/AnnotatedImage.jsx#AnnotatedImage",
       "components/data/DonutChart.jsx#DonutChart",
       "components/data/SavedViewControl.jsx#SavedViewControl",
