@@ -69,6 +69,22 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.57 - 2026-08-07
+
+### Changed
+
+- `SourceDisclosure`: replaced the `compact`/`collapsible` booleans with a single `variant: 'inline' | 'list' | 'chips'` (default `'inline'`) — a recessive "출처 N개" toggle that opens an anchored Popover, the resting shape the surveyed AI-assistant products (ChatGPT, Claude.ai, Gemini, Copilot, NotebookLM) converge on. `availability` no longer draws a badge for `available` or an omitted value; only the exception states (`stale`/`missing`/`error`/`unknown`) do, so a reachable source stays silent instead of competing for attention with the ones that need it. A new `badge` field carries a product-owned, always-visible verdict (a verification result, a sensitivity class) — a separate axis from reachability, since one source can be both 확인됨 and 오래됨 at once.
+
+### Removed
+
+- `SourceDisclosure` no longer renders a row for `availability: 'restricted'`. A source the user cannot open is withheld rather than listed — showing its title discloses that it exists, which is exactly what the permission check exists to prevent (RFC 9110 §15.5.5; every permission-aware search product surveyed omits rather than shows a locked placeholder). Withheld sources are reported as one aggregate line (`hiddenMessage`, combined with any upstream `hiddenCount`) and never folded into a visible source count. Native `details`/`summary` is gone in favor of a real disclosure button with `aria-expanded`/`aria-controls`: hiding the default marker to draw a custom chevron was breaking expanded-state announcement in VoiceOver/JAWS/NVDA, and iOS Safari + VoiceOver does not expose `summary`'s role or state at all. The button owns a 24×24 target per WCAG 2.2 SC 2.5.8; the source label itself is now the link, so the heaviest element in the row is the one that goes somewhere.
+
+### Migration
+
+- `compact` → `variant="chips"`. `collapsible` → drop the prop; it is now the default (`variant="inline"`). A bordered comparison list is `variant="list"`.
+- `availability: 'available'` no longer needs to be set — omit it. Product-owned verdicts previously carried on `availability`/`availabilityLabel` (e.g. 확인됨/이견 있음) move to the new `badge` field.
+- Sources already filtered out for lack of permission should stop being passed with `availability: 'restricted'` and instead be counted into `hiddenCount`; the row never rendered regardless, but its label text is no longer read at all.
+
 ## 0.1.0-rc.56 - 2026-08-07
 
 ### Fixed

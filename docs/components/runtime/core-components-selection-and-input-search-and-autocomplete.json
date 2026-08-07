@@ -11,7 +11,9 @@
     "SearchField",
     "TagInput"
   ],
-  "supportingComponents": [],
+  "supportingComponents": [
+    "Icon"
+  ],
   "purpose": "자유 검색어를 전송할 때는 SearchField, 입력 중 단일 후보를 제안할 때는 AutoComplete, 정해진 후보 여러 개를 고를 때는 Combobox를 사용하세요. 간단한 고정 목록은 Select가 더 적합합니다.",
   "useWhen": [
     "ref points to the native search input; use rootRef for the complete field stack."
@@ -268,6 +270,10 @@
       "relationship": "같은 페이지가 소유"
     },
     {
+      "component": "Icon",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "FormField",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -352,6 +358,11 @@
         "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-and-autocomplete",
         "name": "개요",
         "role": "overview"
+      },
+      {
+        "id": "lds-core-components-selection-and-input-search-and-autocomplete--autocomplete-start-icon",
+        "name": "찾는 칸 표시",
+        "role": "usage"
       }
     ],
     "hiddenEvidence": 7

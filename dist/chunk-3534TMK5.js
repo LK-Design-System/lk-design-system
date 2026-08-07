@@ -1,14 +1,14 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-var _chunkI6NJHF3Lcjs = require('./chunk-I6NJHF3L.cjs');
-
-
-var _chunk3ATRKSQ7cjs = require('./chunk-3ATRKSQ7.cjs');
+"use client";
+import {
+  IconButton
+} from "./chunk-EFNOOM3R.js";
+import {
+  Icon
+} from "./chunk-DW4HVC6S.js";
 
 // components/communication/ConversationMessage.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 var ROLE_LABELS = {
   user: "\uC0AC\uC6A9\uC790",
   assistant: "AI \uC5B4\uC2DC\uC2A4\uD134\uD2B8",
@@ -60,10 +60,10 @@ var VISUALLY_HIDDEN_STYLE = {
   border: 0
 };
 function normalizeLifecycle(lifecycle) {
-  if (_optionalChain([lifecycle, 'optionalAccess', _ => _.kind]) === "delivery" && LIFECYCLE_LABELS.delivery[lifecycle.state]) {
+  if (lifecycle?.kind === "delivery" && LIFECYCLE_LABELS.delivery[lifecycle.state]) {
     return lifecycle;
   }
-  if (_optionalChain([lifecycle, 'optionalAccess', _2 => _2.kind]) === "response" && LIFECYCLE_LABELS.response[lifecycle.state]) {
+  if (lifecycle?.kind === "response" && LIFECYCLE_LABELS.response[lifecycle.state]) {
     return lifecycle;
   }
   return { kind: "static" };
@@ -118,11 +118,11 @@ function ConversationMessage({
   "aria-labelledby": ariaLabelledby,
   ...rest
 }) {
-  const authorId = _react2.default.useId();
-  const roleId = _react2.default.useId();
+  const authorId = React.useId();
+  const roleId = React.useId();
   const systemMessage = authorRole === "system";
-  const resolvedPresentation = systemMessage ? "system" : presentation === "document" || presentation === "bubble" ? presentation : _nullishCoalesce(ROLE_PRESENTATIONS[authorRole], () => ( "document"));
-  const defaultDirection = _nullishCoalesce(ROLE_DIRECTIONS[authorRole], () => ( "inbound"));
+  const resolvedPresentation = systemMessage ? "system" : presentation === "document" || presentation === "bubble" ? presentation : ROLE_PRESENTATIONS[authorRole] ?? "document";
+  const defaultDirection = ROLE_DIRECTIONS[authorRole] ?? "inbound";
   const resolvedDirection = systemMessage ? "system" : direction === "outbound" || direction === "inbound" ? direction : defaultDirection;
   const outbound = resolvedDirection === "outbound";
   const documentPresentation = resolvedPresentation === "document";
@@ -143,7 +143,7 @@ function ConversationMessage({
   const inlineFooter = inlineSources && sources != null;
   const lifecycleColor = lifecycleTone(lifecycleKind, lifecycleState);
   const resolvedAriaLabelledby = ariaLabel || ariaLabelledby ? ariaLabelledby : `${authorId} ${roleId}`;
-  const resolvedRoleBadge = roleBadgeLabel !== void 0 ? roleBadgeLabel : _nullishCoalesce(ROLE_BADGE_LABELS[authorRole], () => ( null));
+  const resolvedRoleBadge = roleBadgeLabel !== void 0 ? roleBadgeLabel : ROLE_BADGE_LABELS[authorRole] ?? null;
   const clusterStyle = {
     gridColumn: contentColumn,
     display: "grid",
@@ -216,7 +216,7 @@ function ConversationMessage({
     fontSize: "var(--body2-size)",
     lineHeight: "var(--body2-line)"
   };
-  const statusPart = resolvedStatusLabel != null ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  const statusPart = resolvedStatusLabel != null ? /* @__PURE__ */ jsxs(
     "p",
     {
       "data-message-part": "status",
@@ -233,7 +233,7 @@ function ConversationMessage({
         lineHeight: "var(--caption2-line)"
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ jsx(
           "span",
           {
             "aria-hidden": "true",
@@ -251,7 +251,7 @@ function ConversationMessage({
     }
   ) : null;
   const readReceiptLabel = lifecycleKind === "delivery" && lifecycleState === "read" ? LIFECYCLE_LABELS.delivery.read : null;
-  const outboundMeta = outbound && (resolvedStatusLabel != null || readReceiptLabel != null || timestamp != null) ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  const outboundMeta = outbound && (resolvedStatusLabel != null || readReceiptLabel != null || timestamp != null) ? /* @__PURE__ */ jsxs(
     "p",
     {
       "data-message-part": "meta",
@@ -268,8 +268,8 @@ function ConversationMessage({
         lineHeight: "var(--caption2-line)"
       },
       children: [
-        resolvedStatusLabel != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0 }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        resolvedStatusLabel != null && /* @__PURE__ */ jsxs("span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0 }, children: [
+          /* @__PURE__ */ jsx(
             "span",
             {
               "aria-hidden": "true",
@@ -284,14 +284,14 @@ function ConversationMessage({
           ),
           resolvedStatusLabel
         ] }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-message-read-receipt": true, style: { fontWeight: "var(--fw-medium)" }, children: readReceiptLabel }),
-        timestamp != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "time", { dateTime, style: { flexShrink: 0, fontVariantNumeric: "tabular-nums" }, children: timestamp })
+        /* @__PURE__ */ jsx("span", { "data-message-read-receipt": true, style: { fontWeight: "var(--fw-medium)" }, children: readReceiptLabel }),
+        timestamp != null && /* @__PURE__ */ jsx("time", { dateTime, style: { flexShrink: 0, fontVariantNumeric: "tabular-nums" }, children: timestamp })
       ]
     }
   ) : null;
-  const actionButtons = hasActions ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
-    canRetry && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-      _chunkI6NJHF3Lcjs.IconButton,
+  const actionButtons = hasActions ? /* @__PURE__ */ jsxs(Fragment, { children: [
+    canRetry && /* @__PURE__ */ jsx(
+      IconButton,
       {
         size: "small",
         round: false,
@@ -299,11 +299,11 @@ function ConversationMessage({
         label: retryLabel,
         "data-message-retry": true,
         onClick: () => onRetry(),
-        children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3ATRKSQ7cjs.Icon, { name: "refresh", size: 16, "aria-hidden": "true" })
+        children: /* @__PURE__ */ jsx(Icon, { name: "refresh", size: 16, "aria-hidden": "true" })
       }
     ),
-    hasMessageActions && messageActions.map((action) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-      _chunkI6NJHF3Lcjs.IconButton,
+    hasMessageActions && messageActions.map((action) => /* @__PURE__ */ jsx(
+      IconButton,
       {
         size: "small",
         round: false,
@@ -325,7 +325,7 @@ function ConversationMessage({
     )),
     actions
   ] }) : null;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ jsxs(
     "article",
     {
       ...rest,
@@ -353,7 +353,7 @@ function ConversationMessage({
         ...style
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ jsxs(
           "div",
           {
             "data-message-part": "identity",
@@ -367,7 +367,7 @@ function ConversationMessage({
               minWidth: 0
             } : VISUALLY_HIDDEN_STYLE,
             children: [
-              showAvatar && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              showAvatar && /* @__PURE__ */ jsx(
                 "span",
                 {
                   "aria-hidden": "true",
@@ -385,7 +385,7 @@ function ConversationMessage({
                   children: avatar
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              /* @__PURE__ */ jsxs(
                 "span",
                 {
                   style: identityVisible ? {
@@ -399,7 +399,7 @@ function ConversationMessage({
                     textAlign: outbound ? "right" : "left"
                   } : void 0,
                   children: [
-                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                    /* @__PURE__ */ jsx(
                       "strong",
                       {
                         id: authorId,
@@ -414,8 +414,8 @@ function ConversationMessage({
                         children: author
                       }
                     ),
-                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { id: roleId, style: VISUALLY_HIDDEN_STYLE, children: _nullishCoalesce(ROLE_LABELS[authorRole], () => ( authorRole)) }),
-                    resolvedRoleBadge != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                    /* @__PURE__ */ jsx("span", { id: roleId, style: VISUALLY_HIDDEN_STYLE, children: ROLE_LABELS[authorRole] ?? authorRole }),
+                    resolvedRoleBadge != null && /* @__PURE__ */ jsx(
                       "span",
                       {
                         "aria-hidden": "true",
@@ -434,7 +434,7 @@ function ConversationMessage({
                         children: resolvedRoleBadge
                       }
                     ),
-                    timestamp != null && !outbound && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                    timestamp != null && !outbound && /* @__PURE__ */ jsx(
                       "time",
                       {
                         dateTime,
@@ -454,8 +454,8 @@ function ConversationMessage({
             ]
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-message-part": "content", style: clusterStyle, children: [
-          systemMessage ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-message-part": "body", "data-message-presentation": "system", style: bodyStyle, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ jsxs("div", { "data-message-part": "content", style: clusterStyle, children: [
+          systemMessage ? /* @__PURE__ */ jsx("div", { "data-message-part": "body", "data-message-presentation": "system", style: bodyStyle, children: /* @__PURE__ */ jsx(
             "div",
             {
               style: {
@@ -474,15 +474,15 @@ function ConversationMessage({
               },
               children
             }
-          ) }) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-message-part": "body", "data-message-presentation": resolvedPresentation, style: bodyStyle, children: [
-            error != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+          ) }) : /* @__PURE__ */ jsxs("div", { "data-message-part": "body", "data-message-presentation": resolvedPresentation, style: bodyStyle, children: [
+            error != null && /* @__PURE__ */ jsxs(
               "span",
               {
                 "data-message-error": true,
                 style: { display: "inline-flex", alignItems: "flex-start", gap: "var(--space-2)" },
                 children: [
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-                    _chunk3ATRKSQ7cjs.Icon,
+                  /* @__PURE__ */ jsx(
+                    Icon,
                     {
                       name: "triangle-exclamation",
                       size: 18,
@@ -490,14 +490,14 @@ function ConversationMessage({
                       style: { flexShrink: 0, marginTop: "0.1em", color: "var(--color-semantic-label-alternative)" }
                     }
                   ),
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: error })
+                  /* @__PURE__ */ jsx("span", { children: error })
                 ]
               }
             ),
             children
           ] }),
           lifecycleKind === "response" && !outbound && statusPart,
-          attachments != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          attachments != null && /* @__PURE__ */ jsx(
             "div",
             {
               "data-message-part": "attachments",
@@ -505,7 +505,7 @@ function ConversationMessage({
               children: attachments
             }
           ),
-          sources != null && !inlineFooter && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          sources != null && !inlineFooter && /* @__PURE__ */ jsx(
             "div",
             {
               "data-message-part": "sources",
@@ -518,10 +518,10 @@ function ConversationMessage({
             // ChatGPT-style footer: the action bar and the (typically collapsed)
             // provenance share one wrapping row. The sources node keeps its own
             // data-message-part and accessible name — display:contents makes the
-            // collapsible SourceDisclosure the flex item so it sits beside the
+            // inline SourceDisclosure the flex item so it sits beside the
             // action group when closed and spans the row when open — and stays a
             // sibling of, not a member of, the 메시지 동작 group.
-            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+            /* @__PURE__ */ jsxs(
               "div",
               {
                 "data-message-part": "footer",
@@ -535,7 +535,7 @@ function ConversationMessage({
                   flexWrap: "wrap"
                 },
                 children: [
-                  hasActions && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  hasActions && /* @__PURE__ */ jsx(
                     "div",
                     {
                       "data-message-part": "actions",
@@ -551,11 +551,11 @@ function ConversationMessage({
                       children: actionButtons
                     }
                   ),
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-message-part": "sources", style: { display: "contents" }, children: sources })
+                  /* @__PURE__ */ jsx("div", { "data-message-part": "sources", style: { display: "contents" }, children: sources })
                 ]
               }
             )
-          ) : hasActions ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          ) : hasActions ? /* @__PURE__ */ jsx(
             "div",
             {
               "data-message-part": "actions",
@@ -579,7 +579,7 @@ function ConversationMessage({
   );
 }
 
-
-
-exports.ConversationMessage = ConversationMessage;
-//# sourceMappingURL=chunk-U2RVGVT3.cjs.map
+export {
+  ConversationMessage
+};
+//# sourceMappingURL=chunk-3534TMK5.js.map

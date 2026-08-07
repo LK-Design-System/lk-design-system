@@ -87,6 +87,7 @@
 | `AutoComplete` | 같은 페이지가 소유 |
 | `Combobox` | 같은 페이지가 소유 |
 | `TagInput` | 같은 페이지가 소유 |
+| `Icon` | 대표 시나리오에서 조합 |
 | `FormField` | 대표 시나리오에서 조합 |
 | `Input` | 대표 시나리오에서 조합 |
 | `Select` | 대표 시나리오에서 조합 |

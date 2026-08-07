@@ -416,6 +416,10 @@
     "slug": "product-data-visualization-line-chart"
   },
   {
+    "storybookTitle": "LDS Product/Data/Visualization/Network Graph",
+    "slug": "product-data-visualization-network-graph"
+  },
+  {
     "storybookTitle": "LDS Product/Data/Visualization/Sparkline",
     "slug": "product-data-visualization-sparkline"
   },

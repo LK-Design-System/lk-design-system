@@ -2,10 +2,9 @@
   "summary": {
     "componentEntries": 206,
     "publicExports": 218,
-    "guides": 174,
+    "guides": 175,
     "entriesWithoutOwnedPage": [
       "Stat",
-      "NetworkGraph",
       "AvatarGroup",
       "CheckboxGroup",
       "FormField",
@@ -10750,7 +10749,9 @@
         "SearchField",
         "TagInput"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "Icon"
+      ],
       "purpose": "자유 검색어를 전송할 때는 SearchField, 입력 중 단일 후보를 제안할 때는 AutoComplete, 정해진 후보 여러 개를 고를 때는 Combobox를 사용하세요. 간단한 고정 목록은 Select가 더 적합합니다.",
       "useWhen": [
         "ref points to the native search input; use rootRef for the complete field stack."
@@ -11007,6 +11008,10 @@
           "relationship": "같은 페이지가 소유"
         },
         {
+          "component": "Icon",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "FormField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -11091,6 +11096,11 @@
             "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-and-autocomplete",
             "name": "개요",
             "role": "overview"
+          },
+          {
+            "id": "lds-core-components-selection-and-input-search-and-autocomplete--autocomplete-start-icon",
+            "name": "찾는 칸 표시",
+            "role": "usage"
           }
         ],
         "hiddenEvidence": 7
@@ -20584,13 +20594,14 @@
       "supportingComponents": [],
       "purpose": "응답이나 문서의 근거가 된 출처·시점·가용성·원본 경로를 투명하게 제시할 때 적합합니다. 단순 관련 링크나 일반 속성 목록에는 SourceDisclosure 대신 Link 또는 Description List를 사용하세요.",
       "useWhen": [
-        "GOV.UK Details는 일부 사용자만 필요한 부가 정보에 disclosure를 사용하고, 대부분에게 필요한 정보는 숨기지 않으며 summary text를 짧고 설명적으로 쓰도록 합니다. 따라서 action만 있는 source는 직접 link로 노출합니다.",
+        "GOV.UK Details는 일부 사용자만 필요한 부가 정보에 disclosure를 사용하고, 대부분에게 필요한 정보는 숨기지 않으며 summary text를 짧고 설명적으로 쓰도록 합니다. 따라서 펼칠 provenance가 없는 source는 disclosure를 만들지 않습니다.",
         "W3C Design System Quote는 인용 원본 URL을 blockquote의 cite 속성으로 제공하도록 안내합니다.",
         "SourceDisclosure는 제품이 제공한 source provenance, availability, freshness metadata와 원본으로 돌아가는 경로를 하나의 중립 목록으로 보여주는 LK Product Extension입니다."
       ],
       "avoidWhen": [
         "source 조회, permission, freshness 계산, excerpt 생성과 renderer 선택은 제품이 소유합니다. LDS는 URL이나 timestamp에서 availability를 추론하지 않습니다.",
-        "USWDS Collection은 source/attribution metadata를 list item으로 묶고, 모호한 “read more” 대신 각 item의 고유한 heading을 원본에 연결하며 외부 이동을 표시하도록 합니다. SourceDisclosure도 action-only item의 label을 직접 이동 경로로 사용합니다."
+        "SharePoint search security trimming은 사전 트리밍이 \"refiner 데이터와 hit count를 통한 정보 유출을 막는다\"고 명시합니다. 숨긴 건수를 보이는 총계에 합산하지 않는 근거입니다.",
+        "USWDS Collection은 모호한 \"read more\" 대신 각 item의 고유한 heading을 원본에 연결하고 외부 이동을 표시하도록 합니다. source label 자체를 이동 경로로 쓰는 근거입니다."
       ],
       "anatomy": [
         {
@@ -20649,31 +20660,31 @@
           "owner": "SourceDisclosureProps"
         },
         {
-          "name": "openLabel",
-          "type": "React.ReactNode",
+          "name": "variant",
+          "type": "SourceDisclosureVariant",
           "required": false,
-          "description": "",
-          "owner": "SourceDisclosureProps"
-        },
-        {
-          "name": "compact",
-          "type": "boolean",
-          "required": false,
-          "description": "Render each source as a single-line chip (opens the original on activation) instead of the bordered disclosure card. Use where a citation should read at the weight of an attachment chip — e.g. references under a chat answer. Drops inline detail disclosure, availability, and the card surface. @default false",
-          "owner": "SourceDisclosureProps"
-        },
-        {
-          "name": "collapsible",
-          "type": "boolean",
-          "required": false,
-          "description": "Collapse the compact source list behind a single \"출처\" icon+label toggle (no pill, matching the footer action controls) that opens it in an anchored Popover (dropdown), so the surrounding layout never shifts. The toggle is the disclosure's accessible name — no landmark heading is projected — and the floating panel (which lists each source as a borderless row) closes on outside-press or Escape. @default false",
+          "description": "inline collapses the sources behind a recessive \"출처 N개\" toggle that opens an anchored Popover, so the surrounding layout never shifts. list renders the bordered provenance list, one expandable row per source, for comparing several sources' state side by side. chips renders each source as a single-line link chip at attachment weight. @default \"inline\"",
           "owner": "SourceDisclosureProps"
         },
         {
           "name": "defaultOpen",
           "type": "boolean",
           "required": false,
-          "description": "Start with the collapsible source popover open. Only applies when collapsible is set. @default false",
+          "description": "Start with the inline source popover open. Only applies to the inline variant. @default false",
+          "owner": "SourceDisclosureProps"
+        },
+        {
+          "name": "hiddenCount",
+          "type": "number",
+          "required": false,
+          "description": "Sources the product withheld upstream, added to the ones this component withholds for restricted availability. Reported as one aggregate line; never named, and never folded into the visible source count. @default 0",
+          "owner": "SourceDisclosureProps"
+        },
+        {
+          "name": "hiddenMessage",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "Replaces the default withheld-sources line. Name what access is needed and how to ask for it — never name the withheld source.",
           "owner": "SourceDisclosureProps"
         }
       ],
@@ -20683,14 +20694,42 @@
           "rule": "Keeps the section name available to assistive technology when an embedding surface already supplies a visible label."
         },
         {
+          "state": "variant",
+          "rule": "inline collapses the sources behind a recessive \"출처 N개\" toggle that opens an anchored Popover, so the surrounding layout never shifts. list renders the bordered provenance list, one expandable row per source, for comparing several sources' state side by side. chips renders each source as a single-line link chip at attachment weight. @default \"inline\""
+        },
+        {
           "state": "defaultOpen",
-          "rule": "Start with the collapsible source popover open. Only applies when collapsible is set. @default false"
+          "rule": "Start with the inline source popover open. Only applies to the inline variant. @default false"
+        },
+        {
+          "state": "hiddenCount",
+          "rule": "Sources the product withheld upstream, added to the ones this component withholds for restricted availability. Reported as one aggregate line; never named, and never folded into the visible source count. @default 0"
+        },
+        {
+          "state": "hiddenMessage",
+          "rule": "Replaces the default withheld-sources line. Name what access is needed and how to ask for it — never name the withheld source."
         }
       ],
       "behavior": [
-        "한 source를 본문 옆에서 짧게 귀속할 때는 SourceTag, 여러 source의 상태와 provenance를 비교할 때는 SourceDisclosure를 사용합니다. FAQ/문서 섹션처럼 일반 콘텐츠를 접을 때는 Accordion 또는 Collapsible가 소유합니다."
+        "한 source를 본문 옆에서 짧게 귀속할 때는 SourceTag, 여러 source의 상태와 provenance를 비교할 때는 SourceDisclosure를 사용합니다. FAQ/문서 섹션처럼 일반 콘텐츠를 접을 때는 Accordion 또는 Collapsible가 소유합니다.",
+        "list: 테두리 있는 provenance 목록으로 source마다 펼침 행을 둡니다. 여러 source의 상태·시점·근거를 나란히 비교해야 할 때만 사용합니다.",
+        "chips: 각 source를 attachment chip 무게의 한 줄 link chip으로 렌더합니다. 열거된 source가 모두 열람 가능하다고 전제되는 맥락에서 씁니다.",
+        "metadata는 key와 value를 붙여 두 열로 세웁니다. 넓은 표면에서 auto-fit track은 두 쌍을 양 끝으로 벌려 한 레코드로 읽히지 않게 만듭니다.",
+        "StatusBadge: soft semantic surface와 명시적 상태 text 계약을 그대로 사용합니다. 지속적으로 변하는 freshness 신호가 필요할 때만 제품이 StatusIndicator를 별도로 조합합니다."
       ],
       "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "disclosure button은 행 앞머리에 서고 접힘 chevron-right-small이 펼치면 90° 회전합니다. glyph보다 button이 커서 24×24 target을 소유합니다(WCAG 2.2 SC 2.5.8). 펼칠 것이 없는 행은 동작 없는 컨트롤을 만들지 않고 같은 폭의 spacer로 정렬만 맞춥니다."
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "WCAG 2.2 SC 2.5.8 Target Size (Minimum)은 24×24 CSS px를 요구합니다. chevron glyph가 아니라 button이 target을 소유합니다."
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "RFC 9110 §15.5.5는 서버가 리소스의 존재 자체를 밝히기를 거부해도 된다고 정합니다. 권한 없는 source를 목록에서 빼는 근거입니다."
+        },
         {
           "subject": "--body1-line",
           "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
@@ -20698,36 +20737,29 @@
         {
           "subject": "--body1-size",
           "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
-        },
-        {
-          "subject": "--body1-spacing",
-          "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
-        },
-        {
-          "subject": "--caption1-line",
-          "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
         }
       ],
       "responsive": [
-        "compact는 각 source를 attachment chip 무게의 한 줄 link chip으로 렌더합니다(카드 surface·inline disclosure·availability badge 없이, 활성화 시 원본을 엽니다). 열거된 source가 모두 열람 가능하다고 전제되는 맥락 — 예: 챗 답변 아래 citation — 에서 availability가 steady-state 노이즈가 되지 않도록 사용합니다. 펼쳐야 할 provenance(description·excerpt·metadata)가 실제로 있을 때는 기본 card를 유지합니다.",
-        "좁은 폭에서는 availability가 identity 아래로 이동하고 chevron은 첫 행 끝에 남습니다. 내부 가로 스크롤이나 source별 중첩 card를 만들지 않습니다.",
-        "SourceTag: 단일 출처용 compact pill과 외부 이동 표시를 재사용 기준으로 확인했습니다.",
-        "Carbon Accordion은 header·end icon·panel anatomy, 간결한 title, 수평 overflow 금지와 좁은 공간의 정렬을 제시합니다. LDS chevron을 행 끝에 두고 panel을 identity와 정렬한 근거입니다."
+        "좁은 폭에서는 배지가 identity 아래로 이동하고 chevron은 첫 행 앞머리에 남습니다. 내부 가로 스크롤이나 source별 중첩 card를 만들지 않습니다.",
+        "SourceTag: 단일 출처용 compact pill과 외부 이동 표시를 재사용 기준으로 확인했습니다."
       ],
       "contentGuidance": [
-        "읽기 순서는 source label → kind/location → availability → disclosure cue이며, 펼친 뒤 description/excerpt → 관측·갱신 metadata → 원본 action으로 이어집니다.",
-        "description, excerpt, timestamp 또는 metadata처럼 선택적인 상세 정보가 있을 때만 native details/summary를 사용합니다. action만 있는 source는 불필요한 disclosure를 만들지 않고 source label 자체를 link/button으로 제공합니다.",
-        "availability는 StatusBadge의 soft semantic surface + 명시적 텍스트 한 번으로만 표현합니다. disclosure chevron과 external-link icon은 각각 펼침 상태와 새 창 이동만 설명합니다.",
-        "href action은 새 탭으로 열리고 external-link icon을 표시합니다. 복합 label/action에는 actionAriaLabel을 제공합니다."
+        "restricted는 행을 만들지 않습니다. 열람 권한이 없는 source는 목록에서 빠지고 건수만 집계됩니다. 제목을 그리는 것 자체가 그 문서의 존재를 밝히는 일이고, 권한 검사는 바로 그 공개를 막으려고 있습니다. 제품이 상류에서 이미 걸러 낸 건수는 hiddenCount로 더합니다. 집계는 별도 한 줄로 나가며 눈에 보이는 source 개수(inline 토글의 N개 포함)에 절대 합산하지 않습니다 — 트리밍 전에 센 총계는 숨긴 사실을 그대로 흘립니다.",
+        "badge는 availability와 다른 축입니다. 검증 판정, 민감도 등급처럼 제품이 소유하고 항상 보여야 하는 라벨은 badge로 넘깁니다. 한 주장이 확인됨이면서 그 출처가 동시에 오래됨일 수 있으므로 두 배지는 각각 나갑니다. availability를 판정 라벨로 전용하지 않습니다.",
+        "source label 자체가 목적지입니다. href가 있으면 label이 새 탭 링크가 되고 external-link icon을 표시합니다. onSourceActivate만 있으면 label이 button이 됩니다. 행에서 가장 무거운 요소가 펼치기만 하고 실제 이동은 패널 안 작은 링크에 묻히는 구조를 만들지 않습니다.",
+        "펼친 패널은 excerpt로 시작합니다. 행을 열어 볼 이유가 인용된 문장이므로 label 무게로 먼저 서고, description과 metadata가 뒤따라 그것을 설명합니다. excerpt는 blockquote이며 href가 있으면 HTML cite 속성으로 원본 URL을 연결합니다."
       ],
       "accessibility": [
-        "disclosure chevron은 상태를 보조하는 장식 icon이고 summary 전체가 trigger입니다. native keyboard/expanded semantics를 유지하며 별도 aria-expanded를 중복 구현하지 않습니다.",
-        "collapsible은 source 목록을 출처 아이콘+라벨 토글 하나 뒤로 접어 resting footprint를 한 줄로 줄이고, 활성화하면 앵커드 Popover(드롭다운)로 목록(source당 테두리 없는 한 줄 행)을 띄웁니다. 토글은 pill·개수·chevron 없이 아이콘과 출처 문구만 두어 footer의 다른 action 컨트롤과 같은 무게·높이로 읽힙니다. 토글은 메시지 action bar 옆 제자리에 고정되고 패널은 떠서 열리므로 주변 레이아웃을 밀지 않으며, 바깥 pointer press나 Escape로 닫힙니다(비모달).",
+        "inline(기본): source 목록을 출처 N개 아이콘+라벨 토글 하나 뒤로 접고, 활성화하면 앵커드 Popover로 띄웁니다. 닫힘 상태가 한 줄이고 패널이 떠서 열리므로 주변 레이아웃을 밀지 않으며, 바깥 pointer press나 Escape로 닫힙니다(비모달). 토글 텍스트가 disclosure의 접근 가능한 이름이라 반복되는 landmark heading을 투사하지 않습니다. 조사한 assistant 제품들이 공통으로 도달한 resting shape입니다.",
+        "native details/summary 대신 커스텀 disclosure를 씁니다. 행이 링크와 배지를 함께 들고 있고, summary 안의 중첩 interactive 요소는 native 지원이 무너지는 바로 그 지점입니다. iOS Safari + VoiceOver는 role과 state를 아예 노출하지 못하고, 자체 chevron을 그리려고 기본 marker를 지우는 순간 VoiceOver·JAWS·NVDA의 펼침 상태 안내가 깨집니다(일부 조합에서는 marker 방향이 유일한 state 신호입니다).",
         "기본 visible title은 독립 provenance 목록의 시작점을 제공합니다. 이미 근거 N개처럼 동등한 visible label을 제공하는 embedding surface만 titleVisuallyHidden을 사용해 중복 heading을 제거할 수 있으며, section의 aria-labelledby 이름은 그대로 유지됩니다.",
-        "Accordion / Collapsible: 행 끝 chevron, 전체 header trigger, focus·expanded cue를 시각 기준으로 삼되 SourceDisclosure는 native details/summary를 유지합니다.",
-        "WAI-ARIA APG Accordion은 header 전체의 Enter/Space 조작, expanded state, header와 panel의 명확한 연결을 요구합니다. 이 컴포넌트는 동일한 interaction 기대를 native details/summary semantics로 충족합니다."
+        "Accordion / Collapsible: 행 끝 chevron, 전체 header trigger, focus·expanded cue를 시각 기준으로 삼되 SourceDisclosure는 행이 링크와 배지를 들고 있어 전체 행 trigger를 쓰지 않습니다.",
+        "WAI-ARIA APG Disclosure는 aria-expanded를 가진 button을 요구합니다. 행은 문서의 한 레코드이지 탐색 대상 heading이 아니므로 Accordion이 요구하는 heading wrapper를 쓰지 않고 Disclosure를 각 행에 적용합니다."
       ],
-      "exceptions": [],
+      "exceptions": [
+        "availability는 예외일 때만 배지를 만듭니다. available과 값을 넘기지 않은 경우는 아무것도 그리지 않습니다. 정상 상태에 배지를 달면 비정상 상태가 눈에 띄지 않게 되고, 세 행이 세 가지 색을 달면 근거 목록이 아니라 상태 대시보드로 읽힙니다. 배지가 나가는 값은 stale·missing·error·unknown 넷입니다.",
+        "GOV.UK Tag는 tag를 interactive 요소로 만들지 말고, 색만으로 정보를 전하지 말며, 쓸 만하다고 보는 가장 적은 수의 상태로 시작하도록 합니다. availability 배지를 예외로 한정한 근거입니다."
+      ],
       "related": [
         {
           "component": "ContentEditor",
@@ -20761,7 +20793,7 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<SourceDisclosure\n  sources={[\n    {\n      id: 'ops-log',\n      label: 'OPS / robot-07 inspection log',\n      kind: 'log',\n      availability: 'available',\n      observedAt: '2026-07-10 09:14',\n      excerpt: 'thermal sensor response timeout',\n      href: 'https://example.com/ops-log',\n    },\n  ]}\n/>"
+          "code": "<SourceDisclosure\n  sources={[\n    {\n      id: 'ops-log',\n      label: 'OPS / robot-07 inspection log',\n      kind: 'log',\n      observedAt: '2026-07-10 09:14',\n      excerpt: 'thermal sensor response timeout',\n      href: 'https://example.com/ops-log',\n    },\n  ]}\n/>"
         }
       ],
       "tokens": [
@@ -20795,6 +20827,7 @@
         "--space-2",
         "--space-3",
         "--space-4",
+        "--space-6",
         "--space-8"
       ],
       "apiLinks": [],
@@ -20815,13 +20848,23 @@
             "role": "overview"
           },
           {
+            "id": "lds-product-content-source-disclosure--withheld-sources",
+            "name": "변형·상태 · 권한 없는 출처",
+            "role": "variants-states"
+          },
+          {
             "id": "lds-product-content-source-disclosure--direct-source-link",
             "name": "변형·상태 · 세부 정보 없는 출처 링크",
             "role": "variants-states"
           },
           {
-            "id": "lds-product-content-source-disclosure--collapsible-citation",
-            "name": "변형·상태 · 접히는 출처 토글",
+            "id": "lds-product-content-source-disclosure--verdict-badge",
+            "name": "변형·상태 · 제품이 정한 판정 배지",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-content-source-disclosure--provenance-list",
+            "name": "변형·상태 · 출처 비교 목록",
             "role": "variants-states"
           },
           {
@@ -20862,7 +20905,7 @@
         "responsive": "evidence",
         "contentGuidance": "evidence",
         "accessibility": "evidence",
-        "exceptions": "omitted-no-evidence",
+        "exceptions": "evidence",
         "related": "evidence",
         "examples": "evidence",
         "tokens": "evidence",
@@ -27665,6 +27708,348 @@
         "behavior": "omitted-no-evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
+        "contentGuidance": "evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "evidence",
+        "examples": "evidence",
+        "tokens": "evidence",
+        "apiLinks": "evidence",
+        "migration": "omitted-no-evidence"
+      }
+    },
+    {
+      "slug": "product-data-visualization-network-graph",
+      "title": "Network Graph",
+      "storybookTitle": "LDS Product/Data/Visualization/Network Graph",
+      "layer": "Product",
+      "family": "Visualization",
+      "primaryOwner": "NetworkGraph",
+      "ownerComponents": [
+        "NetworkGraph"
+      ],
+      "supportingComponents": [],
+      "purpose": "대상 사이의 연결 자체가 답인 화면에 씁니다. 값의 크기를 비교할 때는 Bar Chart, 시간에 따른 변화는 Line Chart, 공간 위의 위치는 Map2DCanvas를 쓰세요. 액자·확대 조절·범례는 ViewerFrame · ViewerToolbar · Legend와 조합합니다.",
+      "useWhen": [
+        "force 배치도 dot 전용입니다. card에 주면 층 배치로 돌아갑니다. 흐름도에서는 위치가 곧 의미이고(왼쪽이 앞 단계), 사용자가 배치한 자리는 사용자의 저작물입니다. 물리가 노드를 옮기면 둘 다 무너집니다 — n8n·Node-RED·Blender·Unreal 어디도 노드를 스스로 움직이게 두지 않습니다.",
+        "액자·확대 조절·범례는 이 컴포넌트가 그리지 않습니다. 미니맵도 마찬가지입니다 — 미니맵은 「지금 어디를 보고 있는가」를 말하는 장치이고, 그 「보는 창」을 소유한 것은 관계도가 아니라 액자입니다. 관계도는 그림 전체를 좌표계 그대로 그리고, 그 중 얼마를 보여 줄지는 조합이 정합니다. ViewerFrame, ViewerToolbar, Legend와 조합하세요 — 관계도는 그림만 소유합니다."
+      ],
+      "avoidWhen": [
+        "nodes/edges는 평평한 배열이고 id로 잇습니다. 존재하지 않는 끝점을 가리키는 엣지는 그리지 않습니다.",
+        "색은 앱이 소유합니다. node.color와 edge.color는 유형을 구분하는 데이터이지 장식이 아니므로, 시맨틱 토큰으로 바꾸면 구분 자체가 사라집니다. 컴포넌트는 색을 받기만 하고 정하지 않습니다. 색을 주지 않으면 nodeColor/edgeColor 기본값을 씁니다.",
+        "그림이 바뀌면 말해 줍니다. 이웃을 펼쳐 대상이 늘거나, 필터로 그림이 비는 순간을 상시 마운트된 polite 영역이 알립니다 — 화면만 바뀌고 소리가 조용하면 보조기술에는 일어나지 않은 일입니다. 말하는 것은 «규모»입니다(왜 바뀌었는지는 이 컴포넌트가 알 수 없습니다). 첫 렌더에는 말하지 않습니다 — 아직 바뀐 것이 없고, 처음 만나는 규모는 요약이 이미 말합니다.",
+        "펼치기 큐는 dot에만 있습니다. 「접힌 이웃을 사방으로 펼친다」는 노드-링크의 개념입니다. 플로우 에디터에서 접히는 것은 이웃이 아니라 한 노드 안의 서브그래프이고(n8n 서브워크플로 · Node-RED subflow · Blender node group · Unreal collapsed graph), 열리는 방향도 사방이 아니라 안쪽입니다. 같은 기호로 다른 개념을 말하면 둘 다 잘못 읽히므로 card에서는 collapsedCount·expanded·더블클릭 토글이 모두 동작하지 않습니다."
+      ],
+      "anatomy": [
+        {
+          "part": "showEdgeLabels",
+          "rule": "관계 라벨을 그릴지. 노드가 많으면 꺼서 구조만 남깁니다. @default true"
+        },
+        {
+          "part": "label",
+          "rule": "그림 전체의 접근성 이름. @default \"관계도\""
+        },
+        {
+          "part": "description",
+          "rule": "화면에 보이지 않는 설명."
+        }
+      ],
+      "properties": [
+        {
+          "name": "nodes",
+          "type": "NetworkGraphNode[]",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "edges",
+          "type": "NetworkGraphEdge[]",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "layout",
+          "type": "NetworkGraphLayout",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "nodeShape",
+          "type": "NetworkGraphNodeShape",
+          "required": false,
+          "description": "노드를 어느 관행으로 그릴지. @default \"card\"",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "showEdgeLabels",
+          "type": "boolean",
+          "required": false,
+          "description": "관계 라벨을 그릴지. 노드가 많으면 꺼서 구조만 남깁니다. @default true",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "motion",
+          "type": "'auto' | 'none'",
+          "required": false,
+          "description": "force 배치의 움직임. auto는 수렴 애니메이션과 드래그를 켜되 prefers-reduced-motion이면 수렴 상태를 바로 그립니다. none은 항상 수렴 상태만 그립니다(시각 회귀 시험·SSR용). @default \"auto\"",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "nodeColor",
+          "type": "string",
+          "required": false,
+          "description": "노드에 색이 없을 때 쓰는 기본값.",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "edgeColor",
+          "type": "string",
+          "required": false,
+          "description": "관계에 색이 없을 때 쓰는 기본값.",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "selectedNodeId",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "selectedEdgeId",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "onSelectNode",
+          "type": "(node: NetworkGraphNode) = void",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "onSelectEdge",
+          "type": "(edge: NetworkGraphEdge) = void",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "onToggleNode",
+          "type": "(node: NetworkGraphNode) = void",
+          "required": false,
+          "description": "이웃 펼치기/접기. 주면 +N 큐가 이름과 aria-expanded를 가진 별도 버튼이 되어 클릭·키보드 순회 양쪽에서 같은 표적으로 동작하고, 노드 더블클릭도 같은 동작을 부릅니다. 노드·관계를 실제로 늘리고 줄이는 것은 소비자의 몫이며, force에서는 새 노드가 이웃의 자리에서 태어나 물리에 밀려 퍼집니다(진입 애니메이션).",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "description": "그림 전체의 접근성 이름. @default \"관계도\"",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "description",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "화면에 보이지 않는 설명.",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "summary",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "화면에 보이지 않는 요약. 생략하면 대상·관계 수와 이름으로 자동 생성합니다.",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "emptyLabel",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        },
+        {
+          "name": "height",
+          "type": "number | string",
+          "required": false,
+          "description": "",
+          "owner": "NetworkGraphProps"
+        }
+      ],
+      "states": [],
+      "behavior": [
+        "id는 열쇠입니다. 노드를 잇는 일, 포커스 순회를 세우는 일, 애니메이션 사이에 같은 노드를 알아보는 일이 모두 id로 이뤄집니다. 같은 id가 둘이면 먼저 온 것만 남깁니다 — 그리지 않고 버리는 편이, 탭 스톱이 둘이 되어 「탭 한 번에 그림 안으로」라는 계약이 깨지는 것보다 낫습니다.",
+        "배치는 전략입니다. layered는 root/depth로 층을 쌓고, columns는 column으로 단계를 고정하며, manual은 x/y를 그대로 쓰고, force는 물리로 자리를 잡습니다. 어떤 전략이든 같은 입력이면 같은 좌표가 나옵니다 — 위치 결정은 정렬된 순서와 안정 해시에서만 나오고 난수를 쓰지 않으므로 시각 회귀 시험이 성립합니다. force도 고정 틱 수만큼 돌린 결과가 도착점이며, 움직임만 선택입니다.",
+        "움직임은 선택이고 도착점은 결정론입니다. motion=\"none\"이면 수렴한 자리를 바로 그리고, prefers-reduced-motion도 같게 봅니다. 어느 쪽이든 좌표는 같습니다 — 움직임을 끈다고 다른 그림이 나오지 않습니다.",
+        "상태를 색으로 표현하지 마세요. 유형 색과 충돌합니다."
+      ],
+      "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "표시는 앱의 색에 대비를 기대지 않습니다. 「골랐다」는 강한 중립색 링으로, 포커스는 포커스 지시 색으로 긋습니다 — 어떤 팔레트가 올지 모르는데 그 색에 가독성을 맡길 수 없습니다. 무엇을 골랐는지는 링 «안»의 채움색이 이미 말합니다. 색을 주지 않았을 때의 기본 관계선도 구분선용 hairline이 아니라 대비를 갖는 선 색입니다 — 관계선은 내용을 이해하는 데 필요한 그래픽이므로 배경과 3:1을 지켜야 합니다."
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "summary를 주지 않으면 대상·관계 수와 앞쪽 이름 몇 개로 자동 생성해 보이지 않는 요약으로 연결합니다. 요약이 하는 일은 «규모»를 알려 주는 것이지 내용을 옮겨 적는 것이 아닙니다 — 이름을 전부 이어 붙이면 노드 300개짜리 그림에서 3,200자가 되어, 그림을 훑지 않아도 되게 하려던 장치가 훑는 것보다 오래 걸립니다. 하나하나의 이름은 그 노드에 닿았을 때 노드가 말합니다."
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "onSelectEdge를 주면 관계도 순회의 자리가 됩니다. 곡선은 가늘어 누르기 어려우므로 투명한 넓은 선을 겹쳐 표적을 넓히고, 그 표적은 키보드에도 열려 있습니다 — 마우스로만 고를 수 있으면 같은 동작에 두 등급의 접근이 생깁니다. 자리는 «떠나는 노드» 뒤라서 「이 대상 — 이 대상에서 나가는 관계들 — 다음 대상」으로 읽힙니다. 관계의 이름은 「A에서 B로, 사용함」처럼 «양 끝»을 말합니다 — 라벨만 쓰면 「사용함, 버튼」이라고만 들리고 같은 라벨을 가진 관계끼리 구별되지 않습니다."
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "count는 접혀 있는 동일 관계의 수, collapsedCount는 접혀 있는 이웃의 수입니다. 둘 다 1 이상일 때만 표시합니다."
+        },
+        {
+          "subject": "--caption1-size",
+          "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+        }
+      ],
+      "responsive": [],
+      "contentGuidance": [
+        "상태는 색과 다른 축입니다. state는 색을 바꾸지 않고 불투명도와 파선으로만 표현합니다. 「무엇인가」(색)와 「지금 어떤가」(상태)가 한 값에서 섞이면 둘 다 읽을 수 없게 됩니다. Legend로 색을 설명할 때 상태가 색을 흔들지 않는 것도 같은 이유입니다.",
+        "root는 탐색이 시작된 자리입니다. dot에서는 파선 링과 「탐색 시작점」이라는 이름으로 함께 드러납니다 — 링만 두면 눈으로 보는 사람에게만 전해집니다. 크기로 말하지 않습니다(반지름은 size가 쓰는 축입니다). card에서는 첫 단계라는 사실을 왼쪽 끝이라는 자리가 이미 말하므로 아무것도 덧그리지 않습니다.",
+        "강제 색상 모드에서 색을 지켜 내려 하지 않습니다. 이 그림에서 색은 데이터이지만 «유일한» 부호가 아닙니다 — 모든 노드와 관계에 이름이 직접 붙어 있어, 색이 사용자의 팔레트로 바뀌어도 무엇이 무엇인지 읽힙니다. 색을 지키자고 forced-color-adjust: none을 쓰면 대비가 필요해 그 팔레트를 고른 사람에게서 대비를 빼앗습니다.",
+        "노드(dot, 노드-링크): 유형 색이 «찬» 원 + 원 «밖» 아래의 이름과 부가 한 줄 + 뿌리 파선 링 + 왼쪽 위 펼치기 큐. 이름을 밖에 두어야 원이 작아질 수 있고, 원이 작아야 노드가 많아져도 연결 구조가 보입니다. 이름 뒤에는 배경색 후광을 깔아 선이 지나가도 읽히게 합니다."
+      ],
+      "accessibility": [
+        "포커스는 보입니다. 순회의 모든 자리(노드와 펼치기 큐)가 :focus-visible에서 켜지는 링을 갖습니다. SVG에서는 outline이 제대로 그려지지 않아 링을 직접 그리며, 선택 링(유형 색)과 «다른 색»을 씁니다 — 「지금 여기 있다」와 「이것을 골랐다」는 다른 말입니다.",
+        "노드는 포커스 가능한 컨트롤입니다. 노드 묶음이 하나의 tab stop(roving tabindex)이 되고, 방향키로 옮겨 다니며 Enter/Space로 선택합니다.",
+        "펼치기 큐는 노드가 아니라 «따로 선 컨트롤»입니다. aria-expanded는 큐가 갖고 노드는 갖지 않습니다 — 노드에 두었더니 스크린 리더가 「축소됨, 버튼」으로 읽는데 누르면 선택되어 기대와 어긋났습니다. 큐도 키보드 순회에 들어오므로 클릭과 키보드가 같은 표적을 씁니다. 펼친 뒤에도 사라지지 않고 −로 남아 왕복이 대칭입니다.",
+        "바깥 SVG에 role=\"img\"를 쓰지 않습니다. img는 하위 트리를 통째로 presentational로 만들어, 포커스는 가는데 보조기술은 무엇에 닿았는지 말하지 못하는 상태를 만듭니다. 그림 전체의 이름은 label이 갖고, 노드는 각자 이름을 갖습니다.",
+        "이름은 담길 자리에 맞춰 잘립니다. card는 면 안쪽 폭에, dot은 이름 하나가 그림 전체의 폭을 정하지 않을 만큼입니다. 관계 이름도 같습니다 — 담길 상자가 없어 보이지만, 그대로 두면 라벨 하나가 그림 «밖»으로 뻗어 액자에 잘리거나 가로 스크롤을 만듭니다. 자르는 것은 보이는 글자뿐이고, 전체 이름은 노드의 접근성 이름과 에 그대로 남습니다. 글자 폭은 넓은 글자(한글·한자·가나)와 좁은 글자를 나눠 세어 어림합니다 — 글자 수에 평균값을 곱하면 「LK Portal」과 「플랫폼·개발자 도구」가 같은 폭으로 계산됩니다."
+      ],
+      "exceptions": [],
+      "related": [
+        {
+          "component": "AnnotatedImage",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "BarChart",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "Calendar",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "Carousel",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "ChartFrame",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataCollectionPanel",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataExportAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataGrid",
+          "relationship": "대표 시나리오에서 조합"
+        }
+      ],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<NetworkGraph\n  label=\"회사 지식망\"\n  layout=\"layered\"\n  nodes={[\n    { id: 'portal', label: 'LK Portal', caption: '프로젝트', color: kindColor.project, root: true },\n    { id: 'gateway', label: 'Context Gateway', caption: '시스템', color: kindColor.system, depth: 1 },\n    { id: 'jin', label: '장진혁', caption: '개발자', color: kindColor.developer, depth: 1, collapsedCount: 3 },\n  ]}\n  edges={[\n    { id: 'e1', from: 'portal', to: 'gateway', label: '사용함' },\n    { id: 'e2', from: 'jin', to: 'portal', label: '기여함', count: 4 },\n  ]}\n  selectedNodeId={selected?.id}\n  onSelectNode={(node) => openDetail(node)}\n  onToggleNode={(node) => expand(node)}\n/>"
+        }
+      ],
+      "tokens": [
+        "--caption1-size",
+        "--color-semantic-background-elevated-normal",
+        "--color-semantic-background-normal-alternative",
+        "--color-semantic-focus-indicator",
+        "--color-semantic-label-alternative",
+        "--color-semantic-label-neutral",
+        "--color-semantic-label-strong",
+        "--color-semantic-line-normal-normal",
+        "--color-semantic-primary-normal",
+        "--font-sans",
+        "--fw-bold",
+        "--label2-line",
+        "--label2-size",
+        "--radius-md"
+      ],
+      "apiLinks": [],
+      "migration": [],
+      "platformStatus": {
+        "figma": "not-tracked",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/DataNetworkGraph.stories.jsx",
+        "entryStoryId": "lds-product-data-visualization-network-graph--relationship-overview",
+        "publicStories": [
+          {
+            "id": "lds-product-data-visualization-network-graph--relationship-overview",
+            "name": "개요",
+            "role": "overview"
+          },
+          {
+            "id": "lds-product-data-visualization-network-graph--empty-graph",
+            "name": "변형·상태 · 빈 관계",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-data-visualization-network-graph--degenerate-input",
+            "name": "변형·상태 · 성치 않은 입력",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-data-visualization-network-graph--expand-collapse",
+            "name": "상호작용 · 접힌 이웃 펼치기",
+            "role": "interaction"
+          },
+          {
+            "id": "lds-product-data-visualization-network-graph--convention-comparison",
+            "name": "관행 비교 · 노드-링크와 플로우 에디터",
+            "role": "scenario"
+          },
+          {
+            "id": "lds-product-data-visualization-network-graph--large-graph",
+            "name": "배치 · 규모가 큰 관계도",
+            "role": "scenario"
+          },
+          {
+            "id": "lds-product-data-visualization-network-graph--staged-flow",
+            "name": "배치 · 단계가 정해진 흐름",
+            "role": "scenario"
+          },
+          {
+            "id": "lds-product-data-visualization-network-graph--force-layout",
+            "name": "배치 · 물리로 잦아드는 관계도",
+            "role": "scenario"
+          }
+        ],
+        "hiddenEvidence": 0
+      },
+      "sources": [],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "evidence",
+        "avoidWhen": "evidence",
+        "anatomy": "evidence",
+        "properties": "evidence",
+        "states": "omitted-no-evidence",
+        "behavior": "evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "omitted-no-evidence",
         "contentGuidance": "evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",

@@ -170,7 +170,7 @@ export default meta;
 const assistantAvatar = <Avatar name="AI Assistant" size="small" />;
 const userAvatar = <Avatar name="김서윤" size="small" />;
 
-// Consumed through EvidenceBlock, which renders the collapsible "출처" toggle +
+// Consumed through EvidenceBlock, which renders the collapsed "출처" toggle +
 // popover — so only id/label/href are used. Provenance fields (kind, location,
 // availability) render in the card mode and are demonstrated in
 // ContentSourceDisclosure's own stories, not here.
@@ -184,7 +184,7 @@ const answerSources = [
 // "출처" toggle that opens the source list in a Popover. Products pair it with
 // inlineSources on messages that have an action bar so it joins the footer row.
 function EvidenceBlock() {
-  return <SourceDisclosure title="출처" collapsible sources={answerSources} />;
+  return <SourceDisclosure title="출처" sources={answerSources} />;
 }
 
 function AttachmentChip({ children = 'weekly-meeting-notes.pdf' }) {
@@ -504,7 +504,7 @@ export const GroupedMessagesAndSlots = {
     const slotFooter = assistant?.querySelector('[data-message-part="footer"]');
     if (!slotFooter?.querySelector('[data-message-part="actions"][role="group"]')
       || !slotFooter.querySelector('[data-message-part="sources"] .lk-source-disclosure')) {
-      throw new Error('The footer must compose the action group and the collapsible 출처 toggle together.');
+      throw new Error('The footer must compose the action group and the collapsed 출처 toggle together.');
     }
   },
 };
@@ -649,7 +649,7 @@ export const NarrowLongContent = {
         authorLabel="AI 연구·작성 어시스턴트"
         avatar={assistantAvatar}
         lifecycle={{ kind: 'response', state: 'streaming' }}
-        sources={<SourceDisclosure title="출처" collapsible sources={narrowSources} />}
+        sources={<SourceDisclosure title="출처" sources={narrowSources} />}
       >
         <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
           <p style={{ margin: 0 }}>아래 예시는 긴 식별자를 생략하지 않고 보여 줍니다.</p>
@@ -940,7 +940,7 @@ function InlineSourceFooterFixture() {
         dateTime="2026-07-12T10:24:00+09:00"
         lifecycle={{ kind: 'response', state: 'complete' }}
         inlineSources
-        sources={<SourceDisclosure title="출처" collapsible sources={answerSources} />}
+        sources={<SourceDisclosure title="출처" sources={answerSources} />}
         messageActions={answerActions}
       >
         <AssistantAnswer />
@@ -963,10 +963,10 @@ export const InlineSourceFooter = {
     if (!footer) throw new Error('inlineSources는 action bar와 출처를 하나의 footer 행에 조합해야 합니다.');
     const actions = footer.querySelector('[data-message-part="actions"][role="group"]');
     const sources = footer.querySelector('[data-message-part="sources"]');
-    const collapsible = sources?.querySelector('.lk-source-disclosure--collapsible');
-    const toggle = collapsible?.querySelector('button.lk-source-disclosure__toggle');
+    const inlineSources = sources?.querySelector('.lk-source-disclosure--inline');
+    const toggle = inlineSources?.querySelector('button.lk-source-disclosure__toggle');
     if (!actions || !sources || !toggle) {
-      throw new Error('footer는 action group과 collapsible 출처 토글을 함께 조합해야 합니다.');
+      throw new Error('footer는 action group과 접힌 출처 토글을 함께 조합해야 합니다.');
     }
     const actionLabels = Array.from(actions.querySelectorAll('[data-message-action]'))
       .map((action) => action.getAttribute('aria-label'));
@@ -986,7 +986,7 @@ export const InlineSourceFooter = {
     if (!toggle.textContent?.includes('출처')) {
       throw new Error('접힌 토글은 "출처" 라벨을 보여야 합니다.');
     }
-    if (toggle.getAttribute('aria-expanded') !== 'false' || collapsible.querySelector('[role="dialog"]')) {
+    if (toggle.getAttribute('aria-expanded') !== 'false' || inlineSources.querySelector('[role="dialog"]')) {
       throw new Error('inlineSources 출처는 기본적으로 닫혀 있어야 합니다.');
     }
     // sources가 본문 위 별도 행으로 중복 렌더되면 안 되고, footer가 마지막 content 파트여야 합니다.

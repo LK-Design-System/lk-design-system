@@ -606,7 +606,7 @@ export function ConversationMessage({
           // ChatGPT-style footer: the action bar and the (typically collapsed)
           // provenance share one wrapping row. The sources node keeps its own
           // data-message-part and accessible name — display:contents makes the
-          // collapsible SourceDisclosure the flex item so it sits beside the
+          // inline SourceDisclosure the flex item so it sits beside the
           // action group when closed and spans the row when open — and stays a
           // sibling of, not a member of, the 메시지 동작 group.
           <div

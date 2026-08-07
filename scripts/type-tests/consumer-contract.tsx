@@ -381,6 +381,34 @@ export const embeddedSourceContract: React.ReactElement = (
   />
 );
 
+export const provenanceListContract: React.ReactElement = (
+  <SourceDisclosure
+    variant="list"
+    title="확인 기록"
+    hiddenCount={2}
+    hiddenMessage="권한이 없어 출처 2개는 표시하지 않았습니다."
+    sources={[
+      {
+        id: 'ops-log',
+        label: 'OPS / robot-07 inspection log',
+        kind: 'log',
+        badge: { label: '확인됨', tone: 'positive' },
+        availability: 'stale',
+        excerpt: 'thermal sensor response timeout',
+        observedAt: '2026-07-10 09:14',
+        metadata: [{ label: 'commit', value: '8f31b2a' }],
+        href: 'https://example.com/logs/robot-07',
+        defaultExpanded: true,
+      },
+      { id: 'restricted', label: '접근할 수 없는 문서', availability: 'restricted' },
+    ]}
+  />
+);
+
+export const chipSourceContract: React.ReactElement = (
+  <SourceDisclosure variant="chips" sources={[{ id: 'policy', label: '운영 정책', href: 'https://example.com/policy' }]} />
+);
+
 export const richUserMessageContract: React.ReactElement = (
   <ConversationMessage authorRole="user" author="김서윤">
     <a href="https://example.com/source">근거 열기</a>

@@ -48,7 +48,7 @@
 | [Chip](guides/core-components-selection-and-input-chip.md) | Core / Selection and Input | `Chip` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 4 hidden |
 | [Input](guides/core-components-selection-and-input-input.md) | Core / Selection and Input | `Input` | mapped | implemented | not-tracked | not-tracked | 2 public / 4 hidden |
 | [Radio](guides/core-components-selection-and-input-radio.md) | Core / Selection and Input | `Radio` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
-| [Search and Autocomplete](guides/core-components-selection-and-input-search-and-autocomplete.md) | Core / Selection and Input | `AutoComplete`, `Combobox`, `SearchField`, `TagInput` | mapped | implemented | not-tracked | not-tracked | 1 public / 7 hidden |
+| [Search and Autocomplete](guides/core-components-selection-and-input-search-and-autocomplete.md) | Core / Selection and Input | `AutoComplete`, `Combobox`, `SearchField`, `TagInput` | mapped | implemented | not-tracked | not-tracked | 2 public / 7 hidden |
 | [Segmented Control](guides/core-components-selection-and-input-segmented-control.md) | Core / Selection and Input | `SegmentedControl` | mapped | implemented | not-tracked | not-tracked | 1 public / 5 hidden |
 | [Select](guides/core-components-selection-and-input-select.md) | Core / Selection and Input | `Select` | mapped | implemented | not-tracked | not-tracked | 2 public / 8 hidden |
 | [Slider and Range](guides/core-components-selection-and-input-slider-and-range.md) | Core / Selection and Input | `RangeSlider`, `Slider` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
@@ -87,7 +87,7 @@
 | [Reaction Bar](guides/product-content-reaction-bar.md) | Product / Content | `ReactionBar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Record Header](guides/product-content-record-header.md) | Product / Content | `RecordHeader` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Reorder List](guides/product-content-reorder-list.md) | Product / Content | `ReorderList` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
-| [Source Disclosure](guides/product-content-source-disclosure.md) | Product / Content | `SourceDisclosure` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 0 hidden |
+| [Source Disclosure](guides/product-content-source-disclosure.md) | Product / Content | `SourceDisclosure` | not-tracked | implemented | not-tracked | not-tracked | 9 public / 0 hidden |
 | [Spec Row](guides/product-content-spec-row.md) | Product / Content | `SpecRow` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Stat List](guides/product-content-stat-list.md) | Product / Content | `StatList` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Writing Editor](guides/product-content-writing-editor.md) | Product / Content | `Button`, `ContentEditor`, `Icon`, `StatusBadge` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
@@ -112,6 +112,7 @@
 | [Donut Chart](guides/product-data-visualization-donut-chart.md) | Product / Visualization | `DonutChart` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Legend](guides/product-data-visualization-legend.md) | Product / Visualization | `Legend` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Line Chart](guides/product-data-visualization-line-chart.md) | Product / Visualization | `LineChart` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
+| [Network Graph](guides/product-data-visualization-network-graph.md) | Product / Visualization | `NetworkGraph` | not-tracked | implemented | not-tracked | not-tracked | 8 public / 0 hidden |
 | [Sparkline](guides/product-data-visualization-sparkline.md) | Product / Visualization | `Sparkline` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Canvas Shell](guides/product-editor-canvas-shell.md) | Product / Editor | `CanvasEditorShell` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Command Bar](guides/product-editor-command-bar.md) | Product / Editor | `CanvasEditorCommandBar` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |

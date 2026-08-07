@@ -28,17 +28,94 @@ export default meta;
 export const AvailabilityAndProvenance = {
   name: '개요',
   parameters: storyDescription(
-    '가용·오래됨·접근 제한 출처를 한 근거 목록에서 비교하는 상황입니다. 각 상태와 관측 시점, 세부 근거, 원본 이동 경로가 과장 없이 구분되는지 확인하세요.',
+    '답변 아래 근거를 귀속하는 기본 상황입니다. 닫힌 상태가 한 줄로 머무르고, 열면 패널이 떠서 주변을 밀지 않으며, 토글의 개수가 볼 수 있는 출처만 세는지 확인하세요. 권한이 없는 출처는 목록에 나타나지 않고 집계 한 줄로만 알립니다.',
   ),
   args: {
-    description: '응답이나 문서 판단에 사용한 source의 현재 가용성을 확인합니다.',
+    sources: [
+      {
+        id: 'ops-log',
+        label: 'OPS / robot-07 inspection log',
+        excerpt: 'thermal sensor response timeout',
+        href: 'https://example.com/logs/robot-07',
+      },
+      {
+        id: 'credential-audit',
+        label: 'Credential audit / upload-service',
+        excerpt: 'token expired at 13:40',
+        href: 'https://example.com/audits/upload-service',
+      },
+      {
+        id: 'runtime-note',
+        label: 'Robot runtime 4.8 release note',
+        href: 'https://example.com/releases/runtime-4-8',
+      },
+      {
+        id: 'private-runbook',
+        label: 'Production recovery runbook',
+        availability: 'restricted',
+      },
+    ],
+  },
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const toggle = canvasElement.querySelector('button.lk-source-disclosure__toggle');
+    if (!toggle) throw new Error('The default variant must collapse behind a single source toggle.');
+    if (canvasElement.querySelector('section.lk-source-disclosure') || canvasElement.querySelector('h2, h3, h4, h5, h6')) {
+      throw new Error('A collapsed citation must not project a repeated landmark heading.');
+    }
+    if (!toggle.textContent?.includes('출처')) throw new Error('The toggle must show the 출처 label.');
+    /* Three sources are visible and a fourth is withheld. A count that reported
+       four would disclose the existence of the restricted source, which is the
+       fact withholding the row exists to protect. */
+    if (!toggle.textContent?.includes('3개') || toggle.textContent.includes('4개')) {
+      throw new Error('The toggle count must report visible sources only, never withheld ones.');
+    }
+    if (canvasElement.textContent?.includes('Production recovery runbook')) {
+      throw new Error('A restricted source must never render its label.');
+    }
+    if (toggle.getAttribute('aria-expanded') !== 'false' || doc.querySelector('[role="dialog"]')) {
+      throw new Error('The default variant must start collapsed with no open panel.');
+    }
+    toggle.focus();
+    if (doc.activeElement !== toggle) throw new Error('The toggle must accept keyboard focus.');
+    await userEvent.click(toggle);
+    const panelId = toggle.getAttribute('aria-controls');
+    const panel = panelId ? doc.getElementById(panelId) : null;
+    if (!panel || toggle.getAttribute('aria-expanded') !== 'true') {
+      throw new Error('Activating the toggle must open the source popover.');
+    }
+    const rows = Array.from(panel.querySelectorAll('.lk-source-disclosure__row'));
+    if (rows.length !== 3) throw new Error('The open popover must render one row per visible source.');
+    if (rows.some((row) => row.tagName !== 'A' || row.getAttribute('target') !== '_blank')) {
+      throw new Error('Citations with an href must open the original source in a new tab.');
+    }
+    if (!panel.querySelector('blockquote.lk-source-disclosure__row-excerpt')) {
+      throw new Error('A source carrying an excerpt must show the quoted passage in the popover.');
+    }
+    if (!panel.textContent?.includes('권한이 없어')) {
+      throw new Error('Withheld sources must be reported as an aggregate line.');
+    }
+    await userEvent.keyboard('{Escape}');
+    if ((panelId && doc.getElementById(panelId)) || toggle.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('Escape must close the source popover.');
+    }
+  },
+};
+
+export const ProvenanceList = {
+  name: '변형·상태 · 출처 비교 목록',
+  parameters: storyDescription(
+    '여러 출처의 시점과 근거를 나란히 비교하는 상황입니다. 정상 출처는 배지 없이 조용히 서고 예외만 배지를 다는지, 펼침이 native details가 아니라 aria-expanded를 가진 버튼인지, 펼친 패널이 인용구로 시작하는지 확인하세요.',
+  ),
+  args: {
+    variant: 'list',
+    description: '응답이나 문서 판단에 사용한 source의 근거와 시점을 확인합니다.',
     sources: [
       {
         id: 'ops-log',
         label: 'OPS / robot-07 inspection log',
         kind: 'log',
         location: 'Context Hub',
-        availability: 'available',
         observedAt: '2026-07-10 09:14',
         excerpt: 'thermal sensor response timeout',
         metadata: [{ label: 'commit', value: '8f31b2a' }],
@@ -54,39 +131,107 @@ export const AvailabilityAndProvenance = {
         excerpt: 'token expired at 13:40',
       },
       {
-        id: 'private-runbook',
-        label: 'Production recovery runbook',
-        kind: 'document',
-        availability: 'restricted',
-        description: '현재 사용자에게 source read 권한이 없습니다.',
+        id: 'runtime-note',
+        label: 'Robot runtime 4.8 release note',
+        kind: 'release note',
+        location: 'Vendor documentation',
+        href: 'https://example.com/releases/runtime-4-8',
       },
     ],
-    onSourceActivate: () => {},
   },
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('.lk-source-disclosure');
-    const list = root?.querySelector(':scope > ul');
-    const details = root?.querySelector('details');
-    const summary = details?.querySelector('summary');
-    if (!root || !list || !details || !summary) {
-      throw new Error('SourceDisclosure must render a native disclosure list for provenance details.');
+    const rows = root ? Array.from(root.querySelectorAll('.lk-source-disclosure__source-row')) : [];
+    if (!root || rows.length !== 3) throw new Error('The list variant must render one row per source.');
+    if (root.querySelector('details, summary')) {
+      throw new Error('The disclosure must not rely on native details/summary, whose state announcement breaks once the marker is hidden.');
     }
-    if (summary.querySelector('a, button')) {
-      throw new Error('The native summary trigger must not contain nested interactive actions.');
+    /* A reachable source is silent. Badging the normal case is what stops the
+       abnormal one from standing out. */
+    const badges = Array.from(root.querySelectorAll('.lk-source-disclosure__status'));
+    if (badges.length !== 1 || !badges[0].textContent?.includes('오래됨')) {
+      throw new Error('Only exceptions carry an availability badge — available and omitted availability must stay silent.');
     }
-    summary.focus();
-    if (canvasElement.ownerDocument.activeElement !== summary) {
-      throw new Error('A native source summary must accept keyboard focus.');
+    /* The third source has nothing to expand, so it must not invent a control. */
+    const toggles = Array.from(root.querySelectorAll('button.lk-source-disclosure__disclosure'));
+    if (toggles.length !== 2) throw new Error('Only sources with provenance to reveal may render a disclosure button.');
+    for (const toggle of toggles) {
+      if (!toggle.getAttribute('aria-controls') || toggle.getAttribute('aria-expanded') == null) {
+        throw new Error('Each disclosure button must own aria-expanded and aria-controls.');
+      }
+      const { width, height } = toggle.getBoundingClientRect();
+      if (width < 24 || height < 24) {
+        throw new Error('The disclosure target must meet the 24x24 minimum of WCAG 2.2 SC 2.5.8.');
+      }
     }
-    await userEvent.click(summary);
-    if (details.open) throw new Error('Activating the native summary must collapse an open source disclosure.');
-    await userEvent.click(summary);
-    if (!details.open) throw new Error('Activating the native summary must expand a collapsed source disclosure.');
-    const sourceLink = details.querySelector('a[target="_blank"]');
-    if (!sourceLink || sourceLink.getAttribute('rel') !== 'noopener noreferrer') {
-      throw new Error('External source actions must use a safe new-tab link.');
+    const [first] = toggles;
+    const panel = canvasElement.ownerDocument.getElementById(first.getAttribute('aria-controls'));
+    if (!panel || first.getAttribute('aria-expanded') !== 'true') {
+      throw new Error('A source marked defaultExpanded must start open.');
     }
-    summary.blur();
+    if (panel.firstElementChild?.tagName !== 'BLOCKQUOTE') {
+      throw new Error('The quoted passage is why the row is worth opening — it must lead the panel.');
+    }
+    /* The label is the destination; navigation must not be buried in the panel. */
+    const label = rows[0].querySelector('a[target="_blank"]');
+    if (!label || label.getAttribute('rel') !== 'noopener noreferrer') {
+      throw new Error('The source label itself must be the safe new-tab link.');
+    }
+    if (panel.querySelector('a, button')) {
+      throw new Error('An expanded panel must not repeat the navigation the label already owns.');
+    }
+    first.focus();
+    if (canvasElement.ownerDocument.activeElement !== first) {
+      throw new Error('A disclosure button must accept keyboard focus.');
+    }
+    await userEvent.click(first);
+    if (first.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('Activating the disclosure must collapse an open source.');
+    }
+    first.blur();
+  },
+};
+
+export const WithheldSources = {
+  name: '변형·상태 · 권한 없는 출처',
+  parameters: storyDescription(
+    '근거 중 일부를 열람할 권한이 없는 상황입니다. 제목·종류·경로 어느 것도 드러나지 않고, 제품이 상류에서 이미 걸러 낸 건수까지 합쳐 한 줄로만 알리는지 확인하세요. 잠긴 자리 표시 행을 만들면 그 문서가 존재한다는 사실 자체가 공개됩니다.',
+  ),
+  args: {
+    variant: 'list',
+    description: '볼 수 있는 근거만 목록에 서고, 볼 수 없는 근거는 건수로만 알립니다.',
+    hiddenCount: 1,
+    hiddenMessage: '권한이 없어 출처 3개는 표시하지 않았습니다. 담당자에게 열람 권한을 요청하세요.',
+    sources: [
+      {
+        id: 'ops-log',
+        label: 'OPS / robot-07 inspection log',
+        kind: 'log',
+        observedAt: '2026-07-10 09:14',
+        excerpt: 'thermal sensor response timeout',
+        href: 'https://example.com/logs/robot-07',
+      },
+      { id: 'private-runbook', label: 'Production recovery runbook', kind: 'document', availability: 'restricted' },
+      { id: 'payroll-export', label: 'Payroll export 2026-Q2', kind: 'spreadsheet', availability: 'restricted' },
+    ],
+  },
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('.lk-source-disclosure');
+    const rows = root ? Array.from(root.querySelectorAll('.lk-source-disclosure__source-row')) : [];
+    if (!root || rows.length !== 1) throw new Error('A restricted source must not become a row.');
+    for (const leaked of ['Production recovery runbook', 'Payroll export', 'spreadsheet']) {
+      if (root.textContent?.includes(leaked)) {
+        throw new Error(`A withheld source must not disclose "${leaked}".`);
+      }
+    }
+    const withheld = root.querySelector('.lk-source-disclosure__withheld');
+    /* Two withheld here plus one the product filtered upstream. */
+    if (!withheld?.textContent?.includes('3개')) {
+      throw new Error('The aggregate must add hiddenCount to the sources withheld here.');
+    }
+    if (withheld.querySelector('a, button')) {
+      throw new Error('The withheld line must not offer a path to content the user cannot open.');
+    }
   },
 };
 
@@ -96,12 +241,16 @@ export const MissingSource = {
     '참조했던 원본이 삭제되어 세부 정보와 이동 액션을 제공할 수 없는 상황입니다. 존재하지 않는 disclosure나 링크를 만들지 않고 출처 없음 상태를 정적으로 알리는지 확인하세요.',
   ),
   args: {
+    variant: 'list',
     sources: [{ id: 'missing', label: 'Deleted build artifact', availability: 'missing' }],
   },
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('.lk-source-disclosure');
     if (!root || root.querySelector('details, summary, a, button')) {
       throw new Error('A source without details or an action must remain a static list row.');
+    }
+    if (!root.querySelector('.lk-source-disclosure__status')?.textContent?.includes('찾을 수 없음')) {
+      throw new Error('A missing source must state that it can no longer be reached.');
     }
   },
 };
@@ -112,6 +261,7 @@ export const UnresolvedAvailability = {
     '출처 자체는 알려져 있지만 현재 가용성을 확인하지 못한 상황입니다. 확인 실패와 상태 불명이 서로 다른 라벨로 전달되고 사용할 수 없는 액션을 암시하지 않는지 확인하세요.',
   ),
   args: {
+    variant: 'list',
     description: '가용성을 확인하지 못한 source도 과장된 별도 화면 없이 같은 중립 목록 구조에서 구분합니다.',
     sources: [
       {
@@ -132,7 +282,7 @@ export const UnresolvedAvailability = {
   },
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('.lk-source-disclosure');
-    const rows = root?.querySelectorAll('.lk-source-disclosure__static-row');
+    const rows = root?.querySelectorAll('.lk-source-disclosure__source-row');
     const statuses = Array.from(root?.querySelectorAll('.lk-source-disclosure__status') ?? [])
       .map((status) => status.textContent?.trim());
     if (!root || rows?.length !== 2) {
@@ -147,12 +297,57 @@ export const UnresolvedAvailability = {
   },
 };
 
+export const VerdictBadge = {
+  name: '변형·상태 · 제품이 정한 판정 배지',
+  parameters: storyDescription(
+    '한 문장에 붙은 확인 기록처럼 제품이 스스로 정한 판정을 항상 보여 줘야 하는 상황입니다. 판정과 가용성이 서로 다른 축이라 한 출처가 확인됨이면서 동시에 오래됨일 수 있고, 두 배지가 각각 나가는지 확인하세요.',
+  ),
+  args: {
+    variant: 'list',
+    title: '확인 기록',
+    sources: [
+      {
+        id: 'claim-verified',
+        label: '2026년 2분기 검사 실패율은 직전 분기보다 낮았다',
+        kind: '확인 기록 3건',
+        badge: { label: '확인됨', tone: 'positive' },
+        metadata: [{ label: '확인 기록', value: '3건' }],
+      },
+      {
+        id: 'claim-stale',
+        label: '업로드 서비스의 자격 증명은 자동으로 갱신된다',
+        kind: '확인 기록 1건',
+        badge: { label: '이견 있음', tone: 'negative' },
+        availability: 'stale',
+        updatedAt: '2026-07-09 18:02',
+      },
+    ],
+  },
+  play: async ({ canvasElement }) => {
+    const root = canvasElement.querySelector('.lk-source-disclosure');
+    const groups = root ? Array.from(root.querySelectorAll('.lk-source-disclosure__status')) : [];
+    if (!root || groups.length !== 2) throw new Error('Each source carrying a verdict must render its badge group.');
+    if (groups[0].children.length !== 1 || !groups[0].textContent?.includes('확인됨')) {
+      throw new Error('A product verdict must show even when availability is silent.');
+    }
+    /* Verdict and reachability are different axes, so they do not collapse
+       into one slot when a source carries both. */
+    if (groups[1].children.length !== 2) {
+      throw new Error('A verdict and an availability exception must render as separate badges.');
+    }
+    if (!groups[1].textContent?.includes('이견 있음') || !groups[1].textContent?.includes('오래됨')) {
+      throw new Error('Both the verdict and the availability exception must remain readable.');
+    }
+  },
+};
+
 export const DirectSourceLink = {
   name: '변형·상태 · 세부 정보 없는 출처 링크',
   parameters: storyDescription(
     '추가 provenance 없이 원본 문서로 바로 이동할 수 있는 상황입니다. 불필요한 disclosure 단계를 만들지 않고 고유한 출처 이름이 안전한 외부 링크가 되는지 확인하세요.',
   ),
   args: {
+    variant: 'list',
     description: '추가 provenance가 없으면 불필요한 disclosure 없이 source 이름에서 바로 원본으로 이동합니다.',
     sources: [
       {
@@ -160,7 +355,6 @@ export const DirectSourceLink = {
         label: 'Robot runtime 4.8 release note',
         kind: 'release note',
         location: 'Vendor documentation',
-        availability: 'available',
         href: 'https://example.com/releases/runtime-4-8',
       },
     ],
@@ -168,11 +362,14 @@ export const DirectSourceLink = {
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('.lk-source-disclosure');
     const link = root?.querySelector('a[href="https://example.com/releases/runtime-4-8"]');
-    if (!root || root.querySelector('details, summary') || !link) {
+    if (!root || root.querySelector('details, summary, button') || !link) {
       throw new Error('An action-only source must expose its label as a direct link without a disclosure step.');
     }
     if (!link.textContent?.includes('Robot runtime 4.8 release note')) {
       throw new Error('The direct source link must use the unique source label, not a generic action label.');
+    }
+    if (root.querySelector('.lk-source-disclosure__status')) {
+      throw new Error('A reachable source must not carry an availability badge.');
     }
   },
 };
@@ -180,18 +377,19 @@ export const DirectSourceLink = {
 export const NarrowLongProvenance = {
   name: '반응형 · 좁은 폭과 긴 출처 정보',
   parameters: storyDescription(
-    '320px 폭에서 긴 출처명·위치·제한 사유·메타데이터를 함께 보여 주는 상황입니다. 상태 배지와 summary가 영역 안에서 줄바꿈되고 가로 overflow 없이 읽히는지 확인하세요.',
+    '320px 폭에서 긴 출처명·위치·메타데이터를 함께 보여 주는 상황입니다. 상태 배지와 identity가 영역 안에서 줄바꿈되고 가로 overflow 없이 읽히는지 확인하세요.',
   ),
   args: {
-    description: '긴 identity와 제한 상태가 좁은 폭에서도 겹치거나 잘리지 않아야 합니다.',
+    variant: 'list',
+    description: '긴 identity와 예외 상태가 좁은 폭에서도 겹치거나 잘리지 않아야 합니다.',
     sources: [
       {
-        id: 'restricted-telemetry-archive',
+        id: 'stale-telemetry-archive',
         label: 'Autonomous warehouse robot telemetry archive / safety-validation-2026-Q3',
         kind: 'telemetry archive',
-        location: 'Restricted Evidence Registry / APAC operations',
-        availability: 'restricted',
-        description: '현재 사용자에게 원본 archive를 읽을 권한이 없습니다. 접근 승인을 요청할 수 있습니다.',
+        location: 'Evidence Registry / APAC operations',
+        availability: 'stale',
+        description: '원본 archive가 마지막 동기화 이후 갱신되지 않았습니다.',
         observedAt: '2026-07-10 09:14 KST',
         metadata: [
           { label: 'retention', value: '365 days' },
@@ -200,7 +398,6 @@ export const NarrowLongProvenance = {
         defaultExpanded: true,
       },
     ],
-    onSourceActivate: () => {},
   },
   render: (args) => (
     <div style={{ width: 320, maxWidth: '100%' }}>
@@ -209,16 +406,14 @@ export const NarrowLongProvenance = {
   ),
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('.lk-source-disclosure');
-    const summary = root?.querySelector('summary');
+    const row = root?.querySelector('.lk-source-disclosure__source-row');
     const status = root?.querySelector('.lk-source-disclosure__status');
-    if (!root || !summary || !status) throw new Error('The narrow provenance story is missing its disclosure anatomy.');
+    if (!root || !row || !status) throw new Error('The narrow provenance story is missing its disclosure anatomy.');
     if (root.scrollWidth > root.clientWidth + 1) {
       throw new Error('SourceDisclosure must not create horizontal overflow at 320px.');
     }
-    const summaryRect = summary.getBoundingClientRect();
-    const statusRect = status.getBoundingClientRect();
-    if (statusRect.right > summaryRect.right + 1) {
-      throw new Error('The availability badge must remain inside the narrow summary row.');
+    if (status.getBoundingClientRect().right > row.getBoundingClientRect().right + 1) {
+      throw new Error('The availability badge must remain inside the narrow row.');
     }
   },
 };
@@ -226,13 +421,13 @@ export const NarrowLongProvenance = {
 export const CompactCitationChips = {
   name: '반응형 · 컴팩트 인용 칩',
   parameters: storyDescription(
-    '챗 답변 아래 citation처럼 모든 source가 열람 가능하다고 전제되는 맥락에서는 compact 모드로 각 source를 attachment chip 무게의 한 줄 link chip으로 보여 줍니다. card·펼침·availability 배지 없이 활성화 시 원본을 열고, 320px에서 긴 라벨은 ellipsis로 잘립니다. 여기서는 시각적 heading을 숨겨(titleVisuallyHidden) chip만 남깁니다.',
+    '챗 답변 아래 citation처럼 모든 source가 열람 가능하다고 전제되는 맥락에서는 chips 변형으로 각 source를 attachment chip 무게의 한 줄 link chip으로 보여 줍니다. card·펼침·availability 배지 없이 활성화 시 원본을 열고, 320px에서 긴 라벨은 ellipsis로 잘립니다. 여기서는 시각적 heading을 숨겨(titleVisuallyHidden) chip만 남깁니다.',
   ),
   args: {
     title: '레퍼런스',
     headingLevel: 3,
     titleVisuallyHidden: true,
-    compact: true,
+    variant: 'chips',
     sources: [
       { id: 'meeting-notes', label: '업로드된 주간 회의록 · 2026-07-12', href: 'https://example.com/meeting-notes' },
       { id: 'planning', label: 'Quarterly-product-planning-notes-with-a-very-long-file-name-and-revision-history.pdf', href: 'https://example.com/files/quarterly-planning' },
@@ -246,8 +441,8 @@ export const CompactCitationChips = {
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('.lk-source-disclosure');
     const chips = root ? Array.from(root.querySelectorAll('.lk-source-disclosure__chip')) : [];
-    if (!root || chips.length !== 2) throw new Error('Compact mode must render one link chip per source.');
-    if (root.querySelector('.lk-source-disclosure__status') || root.querySelector('details')) {
+    if (!root || chips.length !== 2) throw new Error('The chips variant must render one link chip per source.');
+    if (root.querySelector('.lk-source-disclosure__status') || root.querySelector('.lk-source-disclosure__disclosure')) {
       throw new Error('Compact citations must not render an availability badge or a disclosure panel.');
     }
     if (chips.some((chip) => chip.tagName !== 'A' || chip.getAttribute('target') !== '_blank')) {
@@ -255,62 +450,6 @@ export const CompactCitationChips = {
     }
     if (root.scrollWidth > root.clientWidth + 1) {
       throw new Error('Compact citations must not create horizontal overflow at 320px.');
-    }
-  },
-};
-
-export const CollapsibleCitation = {
-  name: '변형·상태 · 접히는 출처 토글',
-  parameters: storyDescription(
-    '챗 답변 footer처럼 출처를 항상 노출할 필요가 없을 때 collapsible로 compact chip 목록을 "출처" 토글 하나 뒤로 접습니다. 닫힘 상태는 한 줄이고, 누르면 앵커드 Popover(드롭다운)로 목록이 떠서 열려 레이아웃을 밀지 않으며 바깥 클릭·Esc로 닫힙니다. 토글 텍스트가 disclosure의 접근 가능한 이름이라 반복되는 landmark heading을 만들지 않습니다.',
-  ),
-  args: {
-    title: '출처',
-    collapsible: true,
-    sources: [
-      { id: 'catalog', label: 'KT 제품 카탈로그 · 2026', href: 'https://example.com/kt-catalog' },
-      { id: 'spec', label: '에어컨 설치 사양서', href: 'https://example.com/install-spec' },
-      { id: 'as', label: 'A/S 안내 · 대덕 지사', href: 'https://example.com/as-guide' },
-    ],
-  },
-  play: async ({ canvasElement }) => {
-    const root = canvasElement.querySelector('.lk-source-disclosure--collapsible');
-    if (!root) throw new Error('A collapsible citation must render the Popover disclosure.');
-    const toggle = root.querySelector('button.lk-source-disclosure__toggle');
-    if (!toggle) throw new Error('A collapsible citation must render a "출처" toggle.');
-    if (toggle.querySelector('a, button')) {
-      throw new Error('The toggle must not contain nested interactive actions.');
-    }
-    if (toggle.getAttribute('aria-haspopup') !== 'dialog') {
-      throw new Error('The toggle must advertise a dialog popup.');
-    }
-    if (!toggle.textContent?.includes('출처')) {
-      throw new Error('The collapsed toggle must show the 출처 label.');
-    }
-    if (toggle.getAttribute('aria-expanded') !== 'false' || root.querySelector('[role="dialog"]')) {
-      throw new Error('A collapsible citation must start collapsed with no open panel.');
-    }
-    if (canvasElement.querySelector('section.lk-source-disclosure') || root.querySelector('h2, h3, h4, h5, h6')) {
-      throw new Error('A collapsed citation must not project a repeated landmark heading.');
-    }
-    toggle.focus();
-    if (canvasElement.ownerDocument.activeElement !== toggle) {
-      throw new Error('The toggle must accept keyboard focus.');
-    }
-    await userEvent.click(toggle);
-    const panelId = toggle.getAttribute('aria-controls');
-    const panel = panelId ? canvasElement.ownerDocument.getElementById(panelId) : null;
-    if (!panel || toggle.getAttribute('aria-expanded') !== 'true') {
-      throw new Error('Activating the toggle must open the source popover.');
-    }
-    const rows = Array.from(panel.querySelectorAll('.lk-source-disclosure__row'));
-    if (rows.length !== 3) throw new Error('The open popover must render one row per source.');
-    if (rows.some((row) => row.tagName !== 'A' || row.getAttribute('target') !== '_blank')) {
-      throw new Error('Citations with an href must open the original source in a new tab.');
-    }
-    await userEvent.keyboard('{Escape}');
-    if ((panelId && canvasElement.ownerDocument.getElementById(panelId)) || toggle.getAttribute('aria-expanded') !== 'false') {
-      throw new Error('Escape must close the source popover.');
     }
   },
 };
