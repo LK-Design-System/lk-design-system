@@ -1,6 +1,6 @@
 {
   "name": "@lk-design-system/lds-workspace",
-  "version": "0.1.0-rc.60",
+  "version": "0.1.0-rc.61",
   "packageManager": "npm@10.9.2",
   "private": true,
   "description": "Private workspace orchestrator for the layered LK ROBOTICS design system.",
@@ -39,7 +39,7 @@
     "check:consumer:matrix": "node scripts/check-wave0-consumer-matrix.mjs",
     "capture:consumer:matrix": "node scripts/check-wave0-consumer-matrix.mjs --capture",
     "assemble:consumer:matrix": "node scripts/assemble-wave0-consumer-matrix.mjs",
-    "check:fast": "node scripts/run-package-scripts.mjs build check:packed-select check:table-scroll-gutter check:tokens check:spacing-scale check:story-tokens check:guide-surfaces check:storybook-copy check:korean-ui-copy check:foundations check:components check:conformance check:token-hygiene check:scroll-surfaces check:colors check:type-surface check:type-consumer check:layers check:package-migration check:api-drift check:api-grammar check:dimension-literals check:motion-hygiene check:prompt-contracts check:story-coverage check:engine-reuse check:engine-contracts check:parity check:foundation-parity check:component-styles check:contracts check:docs check:product-frontends check:wds-alignment check:wds-local-fig check:avatar-duplicates check:story-subjects check:visual-token-drift check:release-immutability check:publish-policy check:deprecations check:types check:entry check:generated check:consumer",
+    "check:fast": "node scripts/run-package-scripts.mjs build check:packed-select check:table-scroll-gutter check:tokens check:spacing-scale check:story-tokens check:guide-surfaces check:storybook-copy check:korean-ui-copy check:foundations check:components check:conformance check:token-hygiene check:scroll-surfaces check:surface-ownership check:colors check:type-surface check:type-consumer check:layers check:package-migration check:api-drift check:api-grammar check:dimension-literals check:motion-hygiene check:prompt-contracts check:story-coverage check:engine-reuse check:engine-contracts check:parity check:foundation-parity check:component-styles check:contracts check:docs check:product-frontends check:wds-alignment check:wds-local-fig check:avatar-duplicates check:story-subjects check:visual-token-drift check:release-immutability check:publish-policy check:deprecations check:types check:entry check:generated check:consumer",
     "check:inventory": "node scripts/report-inventory.mjs --check-docs",
     "check:storybook": "node scripts/run-package-scripts.mjs build:storybook check:component-styles-rendered check:nested-styles check:inventory check:storybook-ia check:tooltip-alignment check:storybook-public check:a11y check:visual-regression",
     "check:pack": "node scripts/check-workspace-artifacts.mjs",
@@ -125,7 +125,8 @@
     "update:target-size-baseline": "node scripts/check-storybook-accessibility.mjs --update-target-baseline",
     "check:ops-release": "node scripts/run-package-scripts.mjs check check:audit",
     "check:storybook-public": "node scripts/check-storybook-public-surface.mjs && node scripts/check-storybook-public-copy.mjs",
-    "check:tooltip-alignment": "node scripts/check-tooltip-alignment.mjs"
+    "check:tooltip-alignment": "node scripts/check-tooltip-alignment.mjs",
+    "check:surface-ownership": "node scripts/check-surface-ownership.mjs"
   },
   "peerDependencies": {
     "react": ">=18 <20",

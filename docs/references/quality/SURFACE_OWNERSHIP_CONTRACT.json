@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "source": "docs/handoff/2026-07-17-embedded-surface-variant.md",
+  "purpose": "Machine-readable form of the surface-ownership audit. Before this file the A/B/C classification lived only in a handoff document, so nothing compared it against the code — which is how SourceDisclosure drew its own perimeter from the initial public release until rc.59 while being classified as borderless content.",
+  "strategies": {
+    "borderless": "Draws no perimeter of its own; the embedding container owns the surface. Enforced: the root element must not declare a border or a border radius.",
+    "embedded-variant": "Draws its own perimeter by default and drops it under variant=\"embedded\" to bond with a parent surface. Not auto-verified — the perimeter often sits on an inner message/table surface rather than the root, and the variant wiring differs per component.",
+    "outermost": "Contractually the outermost surface; nesting is discouraged. Not auto-verified — these legitimately draw a perimeter, and where they draw it varies."
+  },
+  "components": [
+    { "name": "Tree", "path": "components/data/Tree.jsx", "strategy": "borderless" },
+    { "name": "LogViewer", "path": "components/content/LogViewer.jsx", "strategy": "borderless" },
+    { "name": "StepList", "path": "components/content/StepList.jsx", "strategy": "borderless", "note": "Each step item is its own bordered card; that is item styling, not a component perimeter." },
+    { "name": "SourceDisclosure", "path": "components/content/SourceDisclosure.jsx", "strategy": "borderless" },
+    { "name": "PrimaryDetail", "path": "components/layout/PrimaryDetail.jsx", "strategy": "borderless" },
+    { "name": "AnnotatedImage", "path": "components/data/AnnotatedImage.jsx", "strategy": "borderless", "note": "The inner image viewport draws a frame around the picture; the component root does not." },
+    { "name": "EmptyState", "path": "components/status/EmptyState.jsx", "strategy": "borderless" },
+    { "name": "Notification", "path": "components/feedback/Notification.jsx", "strategy": "borderless" },
+
+    { "name": "Banner", "path": "components/status/Banner.jsx", "strategy": "embedded-variant" },
+    { "name": "FilterBar", "path": "components/data/FilterBar.jsx", "strategy": "embedded-variant" },
+    { "name": "ResourceState", "path": "components/data/ResourceState.jsx", "strategy": "embedded-variant" },
+    { "name": "ViewerFrame", "path": "components/viz/ViewerFrame.jsx", "strategy": "embedded-variant" },
+    { "name": "DataGrid", "path": "components/data/DataGrid.jsx", "strategy": "embedded-variant" },
+    { "name": "DataToolbar", "path": "components/data/DataToolbar.jsx", "strategy": "embedded-variant" },
+
+    { "name": "Card", "path": "components/cards/Card.jsx", "strategy": "outermost" },
+    { "name": "MetricCard", "path": "components/cards/MetricCard.jsx", "strategy": "outermost" },
+    { "name": "NewsCard", "path": "components/cards/NewsCard.jsx", "strategy": "outermost" },
+    { "name": "ChartFrame", "path": "components/data/ChartFrame.jsx", "strategy": "outermost" },
+    { "name": "EquipmentStatusCard", "path": "components/robotics/EquipmentStatusCard.jsx", "strategy": "outermost" },
+    { "name": "ContentEditor", "path": "components/content/ContentEditor.jsx", "strategy": "outermost" },
+    { "name": "CanvasEditorShell", "path": "components/editor/CanvasEditorShell.jsx", "strategy": "outermost" },
+
+    { "name": "ValidationSummary", "path": "components/forms/ValidationSummary.jsx", "strategy": "outermost", "deferred": true },
+    { "name": "FileUploadQueue", "path": "components/forms/FileUploadQueue.jsx", "strategy": "outermost", "deferred": true },
+    { "name": "ReorderList", "path": "components/content/ReorderList.jsx", "strategy": "outermost", "deferred": true },
+    { "name": "FileBrowser", "path": "components/data/FileBrowser.jsx", "strategy": "outermost", "deferred": true }
+  ],
+  "externalComponents": [
+    { "name": "TopicTree", "strategy": "borderless", "ownedBy": "lk-design-system-robotics" },
+    { "name": "RobotStatusCard", "strategy": "outermost", "ownedBy": "lk-design-system-robotics" },
+    { "name": "ManualControlSession", "strategy": "outermost", "ownedBy": "lk-design-system-robotics" }
+  ],
+  "deferredNote": "The 2026-07-17 audit left these four drawing their own perimeter with no nested usage in the repository. Give each an embedded variant only when a real nested composition appears; adding it speculatively dilutes the convention."
+}

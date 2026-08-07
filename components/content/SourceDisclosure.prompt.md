@@ -32,7 +32,7 @@
 - 펼친 패널은 **excerpt로 시작합니다.** 행을 열어 볼 이유가 인용된 문장이므로 label 무게로 먼저 서고, description과 metadata가 뒤따라 그것을 설명합니다. excerpt는 `blockquote`이며 `href`가 있으면 HTML `cite` 속성으로 원본 URL을 연결합니다.
 - metadata는 key와 value를 붙여 두 열로 세웁니다. 넓은 표면에서 auto-fit track은 두 쌍을 양 끝으로 벌려 한 레코드로 읽히지 않게 만듭니다.
 - 읽기 순서는 source label → kind/location → 예외 배지이며, 펼친 뒤 excerpt → description → 관측·갱신 metadata로 이어집니다.
-- **자기 둘레를 그리지 않습니다.** 표면은 감싸는 컨테이너가 소유합니다(표면 감사의 A 전략 — `Tree`·`LogViewer`·`StepList`와 같은 분류). provenance는 언제나 무언가 안에서 읽힙니다 — 문서 카드, `Collapsible`, 상세 패널 — 그래서 여기서 테두리를 그리면 첫 테두리 몇 px 안쪽에 두 번째 테두리가 생깁니다. `list` 변형의 그룹 표시는 행 사이 구분선만으로 충분하고, 행에는 좌우 패딩을 두지 않아 위의 제목과 같은 축에 정렬됩니다. 카드가 필요하면 제품이 `Card`로 감쌉니다. 항상 최외곽인 `ChartFrame`·`MetricCard`(C 전략)의 「제목을 카드 안 헤더로」 배치는 이 컴포넌트의 모델이 아닙니다.
+- **자기 둘레를 그리지 않습니다.** 표면은 감싸는 컨테이너가 소유합니다(표면 감사의 A 전략 — `Tree`·`LogViewer`·`StepList`와 같은 분류). 이 분류는 `docs/references/quality/SURFACE_OWNERSHIP_CONTRACT.json`에 있고 `check:surface-ownership`이 루트 요소를 대조합니다. provenance는 언제나 무언가 안에서 읽힙니다 — 문서 카드, `Collapsible`, 상세 패널 — 그래서 여기서 테두리를 그리면 첫 테두리 몇 px 안쪽에 두 번째 테두리가 생깁니다. `list` 변형의 그룹 표시는 행 사이 구분선만으로 충분하고, 행에는 좌우 패딩을 두지 않아 위의 제목과 같은 축에 정렬됩니다. 카드가 필요하면 제품이 `Card`로 감쌉니다. 항상 최외곽인 `ChartFrame`·`MetricCard`(C 전략)의 「제목을 카드 안 헤더로」 배치는 이 컴포넌트의 모델이 아닙니다.
 - 좁은 폭에서는 배지가 identity 아래로 이동하고 chevron은 첫 행 앞머리에 남습니다. 내부 가로 스크롤이나 source별 중첩 card를 만들지 않습니다.
 - source 조회, permission, freshness 계산, excerpt 생성과 renderer 선택은 제품이 소유합니다. LDS는 URL이나 timestamp에서 availability를 추론하지 않습니다.
 - 기본 visible `title`은 독립 provenance 목록의 시작점을 제공합니다. 이미 `근거 N개`처럼 동등한 visible label을 제공하는 embedding surface만 `titleVisuallyHidden`을 사용해 중복 heading을 제거할 수 있으며, section의 `aria-labelledby` 이름은 그대로 유지됩니다.

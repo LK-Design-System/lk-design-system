@@ -69,6 +69,16 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.61 - 2026-08-07
+
+### Added
+
+- `check:surface-ownership` — 표면 소유 분류를 코드와 대조하는 검사입니다. A/B/C 분류는 2026-07-17 핸드오프 문서에만 있었고 어떤 검사도 코드와 비교하지 않았습니다. 그래서 `SourceDisclosure`가 「테두리 없는 콘텐츠」로 분류된 채 최초 공개 릴리스부터 rc.59까지 자기 둘레를 그렸고, 이미 테두리가 있는 제품 카드 안에서 두 번째 테두리를 만들고 있었습니다. 분류를 `docs/references/quality/SURFACE_OWNERSHIP_CONTRACT.json`으로 옮기고 `check:fast`에 연결했습니다.
+
+  검사 범위를 정직하게 좁혔습니다. **borderless로 분류된 컴포넌트의 루트 요소가 테두리나 모서리를 선언하지 않는지**만 단언합니다 — 위의 실패 양상이고 루트의 style 객체만으로 건전하게 판정됩니다. `embedded-variant`와 `outermost`는 둘레를 그리는 게 맞지만 그리는 **위치**가 컴포넌트마다 달라(`ResourceState`는 안쪽 메시지 표면, `DataToolbar`는 아래 구분선만) 일괄 단언이 맞을 때보다 틀릴 때가 많으므로, 분류만 유지하고 자동 검증하지 않습니다. 파서가 루트를 찾지 못하면 통과가 아니라 실패이며 `rootUnresolved`와 사유를 계약에 적어야 합니다 — 침묵을 준수로 읽지 않기 위해서입니다.
+
+  이 검사로 나머지 borderless 컴포넌트 8종(`Tree`·`LogViewer`·`StepList`·`PrimaryDetail`·`AnnotatedImage`·`EmptyState`·`Notification`·`SourceDisclosure`) 감사도 함께 끝났습니다. 루트에 둘레를 그리는 곳은 없었습니다 — rc.59에서 고친 것이 유일한 위반이었습니다.
+
 ## 0.1.0-rc.60 - 2026-08-07
 
 ### Fixed

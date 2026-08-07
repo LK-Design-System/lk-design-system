@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "a066781857450ea77e22c106779da16dfe8682209e7228dd7f7418c25f1dbfb6",
+  "sourceFingerprint": "363692db109d2cdb2fc4e405cfc7c69d841fafb9ce22a8685c209dcfa3d5d99d",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -6638,7 +6638,7 @@
           "url": "https://design-system.w3.org/components/quote.html"
         }
       ],
-      "promptSha256": "32ad7e711f0db7890cedb6a5425152aad6642eb8d7ac005c4457cc3d2d2f8903"
+      "promptSha256": "57cb1f94409240a4bdd069130a392f859208d9430f78c6e310048f2b033fc3bc"
     },
     {
       "id": "source-tag",
