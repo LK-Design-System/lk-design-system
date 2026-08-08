@@ -8,6 +8,7 @@ export type SideNavVariable =
   | '--lds-side-nav-padding'
   | '--lds-side-nav-radius'
   | '--lds-side-nav-item-height'
+  | '--lds-side-nav-child-item-height'
   | '--lds-side-nav-item-radius';
 
 export interface SideNavChildItem {

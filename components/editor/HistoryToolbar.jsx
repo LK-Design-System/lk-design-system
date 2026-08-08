@@ -71,7 +71,12 @@ export function HistoryToolbar({
             data-history-index={index}
             data-lk-history-toolbar-item=""
             data-lk-toolbar-key={action.key}
-            variant="ghost"
+            /* `plain`: the Toolbar above owns the surface (transparent
+               background, no border of its own), which is the grouped-toolbar
+               case `plain` exists for. A hairline box per button is for controls
+               floating over content that must assert their own boundary — see
+               `ViewerToolbar`, which sits on the same editor screen. */
+            variant="plain"
             round={false}
             size={size}
             disabled={!action.enabled}

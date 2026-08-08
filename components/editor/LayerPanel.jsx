@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
+import { ToggleIcon } from '@lk-design-system/lds-core/components/buttons/ToggleIcon';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 import { normalizeStatusTone } from '../status/status-presentation.js';
 
@@ -259,43 +259,42 @@ function LayerRow({
         </span>
       )}
 
-      <IconButton
-        variant="ghost"
-        round={false}
+      {/* Visibility and lock are persistent on/off state, which is `ToggleIcon`'s
+          contract rather than an `IconButton` carrying its own `aria-pressed`.
+          `plain` because the row owns the hover surface; the boxed look belongs
+          to controls floating over content. `onClick` still runs first, so the
+          row-select underneath stays suppressed. */}
+      <ToggleIcon
+        variant="plain"
         size="sm"
         label={`${labelText} ${visible ? '숨기기' : '보이기'}`}
-        aria-pressed={visible}
+        pressed={visible}
         disabled={layerDisabled}
         data-layer-action="visibility"
         tabIndex={-1}
         style={{ gridColumn: 4 }}
-        onClick={(event) => {
-          event.stopPropagation();
-          onToggleVisible(layer.id, !visible);
-        }}
+        onClick={(event) => event.stopPropagation()}
+        onChange={(next) => onToggleVisible(layer.id, next)}
         onKeyDown={(event) => handleLayerActionKeyDown(event, 'lock')}
       >
         <Icon name={visible ? 'eye' : 'eye-slash'} size={16} aria-hidden="true" />
-      </IconButton>
+      </ToggleIcon>
 
-      <IconButton
-        variant={locked ? 'soft' : 'ghost'}
-        round={false}
+      <ToggleIcon
+        variant="plain"
         size="sm"
         label={`${labelText} ${locked ? '잠금 해제' : '잠금'}`}
-        aria-pressed={locked}
+        pressed={locked}
         disabled={layerDisabled}
         data-layer-action="lock"
         tabIndex={-1}
         style={{ gridColumn: 5 }}
-        onClick={(event) => {
-          event.stopPropagation();
-          onToggleLocked(layer.id, !locked);
-        }}
+        onClick={(event) => event.stopPropagation()}
+        onChange={(next) => onToggleLocked(layer.id, next)}
         onKeyDown={(event) => handleLayerActionKeyDown(event, 'visibility')}
       >
         <Icon name={locked ? 'lock' : 'lock-open'} size={16} aria-hidden="true" />
-      </IconButton>
+      </ToggleIcon>
       </div>
 
       {hasChildren && expanded && (

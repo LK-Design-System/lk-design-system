@@ -124,6 +124,7 @@
 - `--color-semantic-status-cautionary`
 - `--color-semantic-status-negative`
 - `--color-semantic-status-positive`
+- `--component-icon-button-size-custom`
 - `--font-mono`
 - `--font-sans`
 - `--fw-bold`

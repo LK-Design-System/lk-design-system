@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkG4B6PCFYcjs = require('../../chunk-G4B6PCFY.cjs');
+var _chunkCI7FFY47cjs = require('../../chunk-CI7FFY47.cjs');
 require('../../chunk-HYUU3DJP.cjs');
 require('../../chunk-THYZ4IEG.cjs');
 require('../../chunk-MBKOVB2K.cjs');
@@ -14,5 +14,5 @@ require('../../chunk-3ATRKSQ7.cjs');
 require('../../chunk-UOF2MNMP.cjs');
 
 
-exports.FileUploadQueue = _chunkG4B6PCFYcjs.FileUploadQueue;
+exports.FileUploadQueue = _chunkCI7FFY47cjs.FileUploadQueue;
 //# sourceMappingURL=FileUploadQueue.cjs.map

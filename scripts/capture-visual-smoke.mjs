@@ -183,6 +183,17 @@ const targets = [
     viewport: { width: 900, height: 620 },
   },
   {
+    name: 'product-sidenav-docked-collapsed-dark',
+    match: { importPath: './stories/NavigationSideNav.stories.jsx', exportName: 'DockedCollapsed' },
+    query: { globals: 'backgrounds.value:Dark' },
+    viewport: { width: 900, height: 620 },
+  },
+  {
+    name: 'product-sidenav-docked-collapsed-narrow',
+    match: { importPath: './stories/NavigationSideNav.stories.jsx', exportName: 'DockedCollapsed' },
+    viewport: { width: 360, height: 620 },
+  },
+  {
     name: 'product-sidenav-docked-reduced-motion',
     match: { importPath: './stories/NavigationSideNav.stories.jsx', exportName: 'DockedCollapsed' },
     viewport: { width: 900, height: 620 },

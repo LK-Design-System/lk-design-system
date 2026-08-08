@@ -152,7 +152,6 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--body1-size`
 - `--body2-line`
 - `--body2-size`
-- `--border-thin`
 - `--caption1-line`
 - `--caption1-size`
 - `--caption2-line`
@@ -167,7 +166,6 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--color-semantic-primary-heavy`
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-normal`
-- `--color-semantic-primary-surface-strong`
 - `--color-semantic-static-white`
 - `--color-semantic-status-negative`
 - `--font-sans`

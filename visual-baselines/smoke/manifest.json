@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "count": 36,
+  "count": 38,
   "maxDiffRatio": 0.01,
   "captures": [
     {
@@ -368,8 +368,8 @@
         "height": 620
       },
       "reducedMotion": "no-preference",
-      "bytes": 12374,
-      "sha256": "58bd26b3bd605ad26a2a2600ed51b25f0facb5053aaff12646da74035e23e165"
+      "bytes": 14140,
+      "sha256": "8ddf18da8a7418767b2b6a5e0b7c93ce5aa80c21f95a3383feb64538d1be8ffa"
     },
     {
       "name": "product-sidenav-docked-reduced-motion",
@@ -380,8 +380,8 @@
         "height": 620
       },
       "reducedMotion": "reduce",
-      "bytes": 12374,
-      "sha256": "58bd26b3bd605ad26a2a2600ed51b25f0facb5053aaff12646da74035e23e165"
+      "bytes": 14140,
+      "sha256": "8ddf18da8a7418767b2b6a5e0b7c93ce5aa80c21f95a3383feb64538d1be8ffa"
     },
     {
       "name": "product-dashboard-shell-normal",
@@ -442,6 +442,32 @@
       "reducedMotion": "no-preference",
       "bytes": 19306,
       "sha256": "b784ad6f646190f67c7c7643ea390ed27dc18bf1d67fd9be6d0ca9a86e9d2c86"
+    },
+    {
+      "name": "product-sidenav-docked-collapsed-dark",
+      "id": "lds-product-navigation-side-nav--docked-collapsed",
+      "query": {
+        "globals": "backgrounds.value:Dark"
+      },
+      "viewport": {
+        "width": 900,
+        "height": 620
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 14223,
+      "sha256": "02a3a63fce1f90ed0234b35563ba296f8ffc1f4a8dcd1b59de54b23a8429a495"
+    },
+    {
+      "name": "product-sidenav-docked-collapsed-narrow",
+      "id": "lds-product-navigation-side-nav--docked-collapsed",
+      "query": {},
+      "viewport": {
+        "width": 360,
+        "height": 620
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 12631,
+      "sha256": "e1c7adc4ffceb1710240bb42cbfb41694a5243e841a0ce2676641faf1416e851"
     }
   ]
 }

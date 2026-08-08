@@ -1,4 +1,6 @@
 import React from 'react';
+import { IconButton } from '../buttons/IconButton.jsx';
+import { ToggleIcon } from '../buttons/ToggleIcon.jsx';
 import { Icon } from '../icon/Icon.jsx';
 import { VisuallyHidden } from '../layout/VisuallyHidden.jsx';
 import { StatusIndicator } from './StatusIndicator.jsx';
@@ -53,38 +55,13 @@ function formatLine(line) {
   return [line.time, cfg.label, line.source, line.text].map(nodeText).filter(Boolean).join(' ');
 }
 
-function IconButton({ label, icon, active = false, disabled = false, rail = false, children, onClick }) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      title={label}
-      aria-pressed={active || undefined}
-      disabled={disabled}
-      onClick={onClick}
-      style={{
-        position: 'relative',
-        width: 28,
-        height: 28,
-        border: '1px solid var(--color-semantic-line-normal-normal)',
-        borderRadius: 'var(--radius-sm)',
-        background: active ? 'var(--color-semantic-inverse-background)' : 'var(--color-semantic-background-elevated-normal)',
-        color: active ? 'var(--color-semantic-inverse-label)' : 'var(--color-semantic-label-neutral)',
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity: disabled ? 0.45 : 1,
-        fontFamily: 'inherit',
-        padding: 0,
-      }}
-    >
-      <Icon name={icon} size={15} aria-hidden="true" />
-      {rail && <span aria-hidden="true" style={{ position: 'absolute', left: 8, right: 8, bottom: 6, height: 1.5, borderRadius: 'var(--radius-pill)', background: 'currentColor' }} />}
-      {children}
-    </button>
-  );
-}
+// The log tools use the boxed variant on purpose. Unlike the editor toolbars —
+// where a `Toolbar` owns one shared surface and its buttons stay `plain` — this
+// row has no surface of its own: the level chips and the search field beside
+// these buttons each carry their own border and background, so a bare glyph
+// would be the odd control out. `ghost` / ToggleIcon `default` is that same
+// boxed treatment, taken from tokens instead of restated here.
+const LOG_TOOL_SIDE = 'var(--component-icon-button-size-custom)';
 
 export function LogViewer({
   lines = [],
@@ -326,12 +303,39 @@ export function LogViewer({
           )}
           {tools && (
             <div role="group" aria-label="로그 도구" style={{ display: 'inline-flex', gap: 'var(--space-1-5)', flex: '0 0 auto' }}>
-              <IconButton label={paused ? '로그 tail 재개' : '로그 tail 일시정지'} icon={paused ? 'play' : 'pause'} active={paused} onClick={togglePause} />
-              <IconButton label={latestCount > 0 ? `최신 로그로 이동, 새 로그 ${latestCount > 99 ? '99+' : latestCount}줄` : '최신 로그로 이동'} icon="arrow-down" rail onClick={jumpToLatest}>
+              {/* Tail pause holds state across renders, so it is a ToggleIcon
+                  rather than a button carrying its own `aria-pressed`. */}
+              <ToggleIcon
+                size="sm"
+                label={paused ? '로그 tail 재개' : '로그 tail 일시정지'}
+                title={paused ? '로그 tail 재개' : '로그 tail 일시정지'}
+                pressed={paused}
+                onChange={() => togglePause()}
+                style={{ width: LOG_TOOL_SIDE, height: LOG_TOOL_SIDE }}
+              >
+                <Icon name={paused ? 'play' : 'pause'} size={15} aria-hidden="true" />
+              </ToggleIcon>
+              <IconButton
+                variant="ghost"
+                round={false}
+                size="custom"
+                label={latestCount > 0 ? `최신 로그로 이동, 새 로그 ${latestCount > 99 ? '99+' : latestCount}줄` : '최신 로그로 이동'}
+                title="최신 로그로 이동"
+                onClick={jumpToLatest}
+                style={{ position: 'relative' }}
+              >
+                <Icon name="arrow-down" size={15} aria-hidden="true" />
+                <span aria-hidden="true" style={{ position: 'absolute', left: 8, right: 8, bottom: 6, height: 1.5, borderRadius: 'var(--radius-pill)', background: 'currentColor' }} />
                 {latestCount > 0 && <span aria-hidden="true" style={{ position: 'absolute', top: -5, right: -5, minWidth: 16, height: 16, padding: '0 4px', boxSizing: 'border-box', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-status-negative)', color: 'var(--color-semantic-static-white)', fontSize: 'var(--caption2-size)', lineHeight: '16px', fontWeight: 'var(--fw-bold)' }}>{latestCount > 99 ? '99+' : `+${latestCount}`}</span>}
               </IconButton>
-              <IconButton label="표시 로그 지우기" icon="trash" disabled={currentLines.length === 0} onClick={clearVisible} />
-              {onExport && <IconButton label="로그 내보내기" icon="download" disabled={shown.length === 0} onClick={() => onExport(shown)} />}
+              <IconButton variant="ghost" round={false} size="custom" label="표시 로그 지우기" title="표시 로그 지우기" disabled={currentLines.length === 0} onClick={clearVisible}>
+                <Icon name="trash" size={15} aria-hidden="true" />
+              </IconButton>
+              {onExport && (
+                <IconButton variant="ghost" round={false} size="custom" label="로그 내보내기" title="로그 내보내기" disabled={shown.length === 0} onClick={() => onExport(shown)}>
+                  <Icon name="download" size={15} aria-hidden="true" />
+                </IconButton>
+              )}
             </div>
           )}
         </div>

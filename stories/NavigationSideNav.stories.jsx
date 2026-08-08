@@ -111,6 +111,19 @@ function canvasDocument(node) {
   return node?.ownerDocument || document;
 }
 
+function resolveCssColor(node, property, token) {
+  const reference = canvasDocument(node).createElement('span');
+  const container = node?.parentElement || canvasDocument(node).body;
+  reference.style.position = 'fixed';
+  reference.style.visibility = 'hidden';
+  reference.style.pointerEvents = 'none';
+  reference.style[property] = token;
+  container.appendChild(reference);
+  const value = getComputedStyle(reference)[property];
+  reference.remove();
+  return value;
+}
+
 /* SideNav overlay는 160/480ms 타이머로 확장·축소한다. 백그라운드 탭에서는
    Chromium이 타이머를 1초 단위로 스로틀해 단계가 뒤엉키므로(접근성 가드는
    스로틀링을 끄고 실행), 포인터 이벤트는 네이티브 mouseover/mouseout으로
@@ -503,7 +516,7 @@ export const DockedSurface = {
 export const DockedCollapsed = {
   name: '변형·상태 · 접힌 아이콘 레일',
   parameters: storyDescription(
-    '64px 레일에서 브랜드 마크, 활성 부모 표시, 목적지 아이콘이 충돌 없이 남고, 셸 상단 바의 외부 토글로 펼침·접힘이 제어되는 상태입니다.',
+    '64px 레일에서 숨겨진 현재 목적지의 부모가 primary wash 선택 프록시를 맡고, 펼치면 실제 leaf로 강조가 이동합니다. 브랜드 마크와 목적지 아이콘은 충돌 없이 남고 셸 상단 바의 외부 토글이 상태를 제어합니다.',
   ),
   render: () => <DockedSideNavFixture defaultCollapsed initialValue="missions-queued" />,
   play: async ({ canvasElement }) => {
@@ -516,6 +529,15 @@ export const DockedCollapsed = {
       || !activeParent
       || nav.querySelector('[data-sidenav-parent="missions"]')) {
       throw new Error('The collapsed visual story must retain the active parent while hiding its child rows.');
+    }
+    const expectedProxyBackground = resolveCssColor(activeParent, 'backgroundColor', 'var(--color-semantic-primary-surface-strong)');
+    const expectedProxyInk = resolveCssColor(activeParent, 'color', 'var(--color-semantic-primary-normal)');
+    const collapsedProxyStyle = getComputedStyle(activeParent);
+    if (activeParent.dataset.state !== 'active-descendant'
+      || activeParent.hasAttribute('aria-current')
+      || collapsedProxyStyle.backgroundColor !== expectedProxyBackground
+      || collapsedProxyStyle.color !== expectedProxyInk) {
+      throw new Error('A collapsed active descendant must expose a primary visual proxy without moving aria-current to its disclosure parent.');
     }
 
     const railItem = nav.querySelector('[data-sidenav-value="overview"]');
@@ -552,11 +574,27 @@ export const DockedCollapsed = {
 
     await userEvent.click(initial.control);
     await waitForWidth(nav, 252);
+    const expectedExpandedParentInk = resolveCssColor(activeParent, 'color', 'var(--color-semantic-label-normal)');
+    await waitFor(() => {
+      const activeChild = nav.querySelector('[data-sidenav-value="missions-queued"]');
+      const expandedParentStyle = getComputedStyle(activeParent);
+      if (activeChild?.getAttribute('aria-current') !== 'page'
+        || activeParent.hasAttribute('aria-current')
+        || expandedParentStyle.backgroundColor !== 'rgba(0, 0, 0, 0)'
+        || expandedParentStyle.color !== expectedExpandedParentInk
+        || getComputedStyle(activeChild).backgroundColor !== expectedProxyBackground) {
+        throw new Error('Expanding the rail must transfer the selected surface to the actual current leaf while the parent returns to disclosure styling.');
+      }
+    });
     await userEvent.click(initial.control);
     await waitForWidth(nav, 64);
-    if (initial.control.textContent?.trim() !== '사이드바 펼치기') {
-      throw new Error('The collapsed visual story must finish in its named state.');
-    }
+    await waitFor(() => {
+      if (initial.control.textContent?.trim() !== '사이드바 펼치기'
+        || getComputedStyle(activeParent).backgroundColor !== expectedProxyBackground
+        || activeParent.hasAttribute('aria-current')) {
+        throw new Error('The collapsed visual story must finish in its named state.');
+      }
+    });
     initial.control.blur();
   },
 };

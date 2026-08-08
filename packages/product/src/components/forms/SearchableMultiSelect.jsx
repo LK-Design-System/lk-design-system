@@ -173,13 +173,15 @@ export function SearchableMultiSelect({
           <Chip key={String(option.value)} size="sm" variant="outlined" disabled={disabled} style={{ maxWidth: '100%', paddingRight: locked ? undefined : 'var(--space-0)' }}>
             <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>{option.label}</span>
             {!locked && (
+              /* `plain`, not `soft` with its fill cancelled inline: the Chip
+                 owns the surface this sits on, which is what `plain` names. */
               <IconButton
-                variant="soft"
+                variant="plain"
                 round={false}
                 size={24}
                 label={`${optionText(option)} 선택 해제`}
                 onClick={() => remove(option.value)}
-                style={{ flex: '0 0 auto', background: 'transparent' }}
+                style={{ flex: '0 0 auto' }}
               >
                 <Icon name="close" size={14} aria-hidden="true" />
               </IconButton>

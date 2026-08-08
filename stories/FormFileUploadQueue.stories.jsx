@@ -389,3 +389,56 @@ export const MediaAttachments = {
     }
   },
 };
+
+export const GridDocumentFailure = {
+  name: '변형·상태 · 그리드에서 실패한 문서의 복구',
+  parameters: storyDescription(
+    '사진과 문서를 함께 첨부하다 썸네일 없는 문서만 실패한 상황입니다. 문서는 그림으로 식별되지 않아 칩으로 그려지므로 복구 액션이 타일 위가 아니라 칩 안에 놓입니다. 칩 안의 다시 시도와 칩 위에 뜬 제거가 서로 다른 표현을 쓰는지, 두 액션 모두 접근 이름에 파일명을 담는지 확인하세요.',
+  ),
+  render: () => (
+    <FileUploadQueue
+      layout="grid"
+      title="자료 첨부"
+      items={[
+        { id: 'photo', name: '현장_01.jpg', status: 'succeeded', thumbnailSrc: photo('#2b8a3e'), sizeLabel: '1.2MB' },
+        { id: 'doc', name: '기존_시설_지도_좌표계.hwp', status: 'failed', message: '좌표계 메타데이터를 읽을 수 없습니다.', sizeLabel: '3.1MB' },
+      ]}
+      onRetry={() => {}}
+      onRemove={() => {}}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const chip = canvasElement.querySelector('.lk-file-upload-queue__item--file');
+    if (!chip) throw new Error('썸네일이 없는 항목은 파일 칩으로 렌더되어야 합니다.');
+
+    const retry = chip.querySelector('[aria-label*="다시 시도"]');
+    if (!retry) throw new Error('실패한 문서 칩은 복구 액션을 제공해야 합니다.');
+    const remove = chip.querySelector('[aria-label*="제거"]');
+    if (!remove) throw new Error('실패한 문서 칩은 제거 액션도 제공해야 합니다.');
+
+    // 재시도는 칩 안에 놓이고 제거는 칩 위에 떠 있다. 표현이 갈리는 근거가
+    // 이 배치이므로, 배치부터 확인한 뒤 표현을 확인한다.
+    if (getComputedStyle(retry.parentElement).position === 'absolute') {
+      throw new Error('다시 시도는 칩 안쪽 액션이므로 떠 있으면 안 됩니다.');
+    }
+    if (getComputedStyle(remove.parentElement).position !== 'absolute') {
+      throw new Error('제거는 칩 위에 뜨는 코너 액션이어야 합니다.');
+    }
+
+    // 칩은 이미 테두리와 배경을 가진 카드다. 그 안의 액션까지 hairline 상자를
+    // 쓰면 상자 안 상자가 되므로 plain을 쓰고, 받쳐주는 표면이 없는 코너
+    // 액션만 ghost로 자기 경계를 그린다.
+    if (!retry.classList.contains('lk-iconbtn--plain')) {
+      throw new Error('카드 안쪽 액션은 plain이어야 합니다(표면은 칩이 소유합니다).');
+    }
+    if (!remove.classList.contains('lk-iconbtn--ghost')) {
+      throw new Error('받쳐주는 표면이 없는 코너 액션은 ghost로 자기 경계를 그려야 합니다.');
+    }
+
+    for (const control of [retry, remove]) {
+      if (!/기존_시설_지도_좌표계\.hwp/.test(control.getAttribute('aria-label') || '')) {
+        throw new Error('아이콘 전용 액션은 접근 이름에 파일명을 포함해야 합니다.');
+      }
+    }
+  },
+};

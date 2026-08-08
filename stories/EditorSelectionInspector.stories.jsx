@@ -56,12 +56,10 @@ function ActionFooterFixture() {
         <SelectionInspector
           item={inspectorItem}
           sections={inspectorSections.slice(0, 1)}
-          actions={(
-            <>
-              <Button data-testid="inspector-delete" variant="danger" onClick={() => setDeleteOpen(true)}>삭제</Button>
-              <Button style={{ marginInlineStart: 'auto' }}>적용</Button>
-            </>
-          )}
+          menuItems={[
+            { label: '객체 삭제', danger: true, onClick: () => setDeleteOpen(true) },
+          ]}
+          actions={<Button variant="primary">적용</Button>}
         />
       </InspectorFrame>
       <ConfirmDialog
@@ -106,21 +104,31 @@ export const EmptySelection = {
 export const ActionFooter = {
   name: '사용법 · 선택 객체 작업',
   parameters: storyDescription(
-    '선택 객체의 변경 적용과 삭제 작업을 인스펙터 하단에서 제공하는 상황입니다. 파괴적 액션이 danger 표현으로 구분되고 기본 적용 버튼과 떨어져 있으며 실행 전에 확인 단계를 거치는지 확인하세요.',
+    '선택 객체의 변경 적용과 삭제 작업을 나누어 제공하는 상황입니다. 커밋 흐름인 적용은 하단 액션 영역이 소유하고, 객체 자체를 지우는 작업은 객체 정체성이 있는 헤더의 오버플로 메뉴에 danger 항목으로 들어갑니다. 파괴적 액션이 기본 적용 버튼과 같은 줄에 놓이지 않고 실행 전에 확인 단계를 거치는지 확인하세요.',
   ),
   render: () => <ActionFooterFixture />,
   play: async ({ canvasElement }) => {
-    const trigger = canvasElement.querySelector('[data-testid="inspector-delete"]');
-    if (!trigger) throw new Error('SelectionInspector destructive action must have a visible trigger.');
+    const ownerDocument = canvasElement.ownerDocument;
+    const trigger = canvasElement.querySelector('[aria-haspopup="menu"]');
+    if (!trigger) throw new Error('SelectionInspector object actions must have a visible overflow trigger.');
     await userEvent.click(trigger);
+
+    const deleteItem = await waitFor(() => {
+      const item = Array.from(ownerDocument.querySelectorAll('[role="menuitem"]'))
+        .find((node) => (node.textContent || '').includes('객체 삭제'));
+      if (!item) throw new Error('Overflow menu must expose the destructive object action.');
+      return item;
+    });
+    await userEvent.click(deleteItem);
+
     await waitFor(() => {
-      const dialog = canvasElement.ownerDocument.querySelector('[role="dialog"]');
+      const dialog = ownerDocument.querySelector('[role="dialog"]');
       if (!dialog?.textContent?.includes('선택 객체를 삭제할까요?')) throw new Error('Destructive action must open ConfirmDialog.');
       return dialog;
     });
     await userEvent.keyboard('{Escape}');
     await waitFor(() => {
-      if (canvasElement.ownerDocument.querySelector('[role="dialog"]')) throw new Error('Escape must close the destructive confirmation.');
+      if (ownerDocument.querySelector('[role="dialog"]')) throw new Error('Escape must close the destructive confirmation.');
     });
   },
 };

@@ -211,8 +211,13 @@ export function FileUploadQueue({
                           </span>
                         )}
                       </div>
+                      {/* `plain`: this action sits inside the row, and the row is
+                          already a bounded card with its own border and elevated
+                          background. A hairline box here is a box inside a box.
+                          The corner actions below keep `ghost` because they float
+                          over the thumbnail and have no surface backing them. */}
                       {item.status === 'failed' && onRetry && (
-                        <IconButton variant="ghost" round size="sm" label={`${item.name} 다시 시도`} onClick={() => onRetry(item)} style={{ flexShrink: 0 }}>
+                        <IconButton variant="plain" round size="sm" label={`${item.name} 다시 시도`} onClick={() => onRetry(item)} style={{ flexShrink: 0 }}>
                           <Icon name="refresh" size={16} aria-hidden="true" />
                         </IconButton>
                       )}

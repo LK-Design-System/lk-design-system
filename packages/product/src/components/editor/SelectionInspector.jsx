@@ -5,6 +5,7 @@ import { StatusBadge } from '@lk-design-system/lds-core/components/content/Statu
 import { StatusIndicator } from '@lk-design-system/lds-core/components/content/StatusIndicator';
 import { Tag } from '@lk-design-system/lds-core/components/feedback/Tag';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { DropdownMenu } from '@lk-design-system/lds-core/components/overlay/DropdownMenu';
 import {
   getUnitSeparator,
   isAttachedUnit,
@@ -30,7 +31,13 @@ function FieldValue({ field }) {
     warning: 'var(--color-semantic-status-cautionary-text)',
     danger: 'var(--color-semantic-status-negative-text)',
   }[field.tone] || (field.mixed ? 'var(--color-semantic-label-neutral)' : 'var(--color-semantic-label-strong)');
-  const align = field.align ?? (typeof field.value === 'number' ? 'right' : 'left');
+  // Every row is a different property, so the value column is never a series to
+  // compare down. Right-aligning numbers here buys no digit alignment either —
+  // the unit rides along in the same span, and `m²` and `m/s` are different
+  // widths, so the digits land in a different place on every row — while the
+  // text rows stay left. The result is a column ragged on both edges. One left
+  // edge for every value; `align` stays available for the rare explicit case.
+  const align = field.align ?? 'left';
   const renderedValue = displayScalarValue(field.value, field.mixed);
   const normalizedUnit = field.mixed ? '' : normalizeUnit(field.unit);
   const unitSeparator = getUnitSeparator(normalizedUnit);
@@ -143,9 +150,12 @@ export function SelectionInspector({
   item,
   selectionCount,
   title = '선택 객체',
+  titleVisuallyHidden = false,
   emptyLabel = '선택한 객체가 없습니다.',
   sections = [],
   actions,
+  menuItems,
+  menuLabel = '객체 작업',
   onClearSelection,
   clearSelectionLabel = '선택 해제',
   clearSelectionAriaLabel = '모든 선택 해제',
@@ -156,7 +166,57 @@ export function SelectionInspector({
   const hasItem = item != null;
   const count = selectionCount ?? (hasItem ? 1 : 0);
   const canClearSelection = hasItem && typeof onClearSelection === 'function';
+  const hasMenu = hasItem && (menuItems?.length ?? 0) > 0;
   const selectionName = count > 1 ? `${count}개 객체 선택` : item?.label;
+
+  // Object-scoped commands belong beside the object's identity, not in the
+  // commit footer — deleting the selection is not a step in the apply/cancel
+  // flow, and a lone danger button parked opposite 적용 reads as a second
+  // commit action. They collapse into one overflow trigger rather than a row of
+  // icons: a bare trash glyph next to the clear-selection X pairs two
+  // destructive-looking controls whose consequences are nothing alike.
+  //
+  // Held as a value because its row depends on whether the eyebrow is drawn:
+  // with a visible title they share that row, and without one they ride the
+  // object-name line instead of stranding an empty band above it.
+  const controls = (hasMenu || canClearSelection) ? (
+    <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)', marginInlineStart: 'auto', flexShrink: 0 }}>
+      {hasMenu && (
+        <DropdownMenu
+          align="right"
+          items={menuItems}
+          trigger={(
+            /* `plain`, not `ghost`: these rest on the header surface the panel
+               owns, the same placement as the Modal/Drawer close buttons. The
+               hairline `ghost` box is for controls floating over content that
+               must assert their own boundary. */
+            <IconButton type="button" size="sm" variant="plain" round={false} label={menuLabel}>
+              <Icon name="more-vertical" size={16} aria-hidden="true" />
+            </IconButton>
+          )}
+        />
+      )}
+      {canClearSelection && (
+        <IconButton
+          type="button"
+          size="sm"
+          variant="plain"
+          round={false}
+          label={clearSelectionAriaLabel}
+          title={typeof clearSelectionLabel === 'string' ? clearSelectionLabel : clearSelectionAriaLabel}
+          onClick={onClearSelection}
+        >
+          <Icon name="close" size={16} aria-hidden="true" />
+        </IconButton>
+      )}
+    </span>
+  ) : null;
+
+  // With the eyebrow hidden and nothing selected there is no header content at
+  // all. The element stays so the two grid rows keep their shape — the empty
+  // state centres itself in the second row — but sheds the padding and rule
+  // that would otherwise draw an empty band across the top of the panel.
+  const headerHasContent = !titleVisuallyHidden || hasItem;
 
   return (
     <section
@@ -176,30 +236,33 @@ export function SelectionInspector({
       }}
       {...rest}
     >
-      <header style={{ display: 'grid', gap: 'var(--space-2)', minWidth: 0, padding: 'var(--space-3) var(--space-4)', borderBottom: '1px solid var(--color-semantic-line-normal-normal)', boxSizing: 'border-box' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)', minWidth: 0 }}>
-          <strong style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)' }}>
-            {title}
-          </strong>
-          {canClearSelection && (
-            <IconButton
-              type="button"
-              size="sm"
-              variant="ghost"
-              round={false}
-              label={clearSelectionAriaLabel}
-              title={typeof clearSelectionLabel === 'string' ? clearSelectionLabel : clearSelectionAriaLabel}
-              onClick={onClearSelection}
-            >
-              <Icon name="close" size={16} aria-hidden="true" />
-            </IconButton>
-          )}
-        </div>
+      <header style={{ display: 'grid', gap: 'var(--space-2)', minWidth: 0, padding: headerHasContent ? 'var(--space-3) var(--space-4)' : 0, borderBottom: headerHasContent ? '1px solid var(--color-semantic-line-normal-normal)' : 'none', boxSizing: 'border-box' }}>
+        {/* Docked inside `CanvasEditorShell`, the panel region is already named
+            by `panelLabel`, and the object's own name sits directly below — so
+            the eyebrow says a third time what two other elements already say.
+            `titleVisuallyHidden` drops it from view there. The region keeps its
+            accessible name either way: the `<section>` is labelled by `title`
+            through `aria-label`, not by this element. */}
+        {!titleVisuallyHidden && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-2)', minWidth: 0 }}>
+            <strong style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-neutral)' }}>
+              {title}
+            </strong>
+            {controls}
+          </div>
+        )}
         {hasItem && (
           <div style={{ display: 'grid', gap: 'var(--space-2)', minWidth: 0 }}>
-            <h3 style={{ minWidth: 0, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--headline2-size)', lineHeight: 'var(--headline2-line)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)', letterSpacing: 0 }}>
-              {selectionName}
-            </h3>
+            {/* Without an eyebrow row to hold them, the controls sit on the
+                object-name line. Parking them on a row of their own would leave
+                a band of empty header above the name — the panel would look
+                like it had lost its title rather than never drawn one. */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', minWidth: 0 }}>
+              <h3 style={{ flex: 1, minWidth: 0, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--headline2-size)', lineHeight: 'var(--headline2-line)', fontWeight: 'var(--fw-bold)', color: 'var(--color-semantic-label-strong)', letterSpacing: 0 }}>
+                {selectionName}
+              </h3>
+              {titleVisuallyHidden && controls}
+            </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', minWidth: 0, flexWrap: 'wrap' }}>
               {item.kind != null && <Tag tone="neutral">{item.kind}</Tag>}
               {item.status != null && (

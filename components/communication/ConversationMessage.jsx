@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconButton } from '../buttons/IconButton.jsx';
+import { ToggleIcon } from '../buttons/ToggleIcon.jsx';
 import { Icon } from '../icon/Icon.jsx';
 
 const ROLE_LABELS = {
@@ -382,27 +383,38 @@ export function ConversationMessage({
           <Icon name="refresh" size={16} aria-hidden="true" />
         </IconButton>
       )}
-      {hasMessageActions && messageActions.map((action) => (
-        <IconButton
-          key={action.key}
-          size="small"
-          round={false}
-          variant="plain"
-          label={action.label}
-          disabled={action.disabled}
-          aria-pressed={action.pressed}
-          data-selected={typeof action.pressed === 'boolean' ? String(action.pressed) : undefined}
-          data-message-action={action.key}
-          onClick={action.onClick}
-          style={action.pressed ? {
-            color: 'var(--color-semantic-primary-normal)',
-            background: 'var(--color-semantic-primary-surface-strong)',
-            border: 'var(--border-thin) solid var(--color-semantic-primary-normal)',
-          } : undefined}
-        >
-          {action.icon}
-        </IconButton>
-      ))}
+      {/* An action that reports `pressed` holds that state across renders —
+          pinning, bookmarking, marking a message — so it is a `ToggleIcon`,
+          which owns `aria-pressed` and the active palette itself. Reaching for
+          `IconButton` here meant hand-painting the pressed look through inline
+          `style`, a private copy of a contract the primitive already keeps.
+          Actions without `pressed` stay fire-and-forget `IconButton`s. The two
+          sizes agree: `sm` and `small` are both 32px. */}
+      {hasMessageActions && messageActions.map((action) => {
+        const shared = {
+          round: false,
+          variant: 'plain',
+          label: action.label,
+          disabled: action.disabled,
+          'data-message-action': action.key,
+        };
+        return typeof action.pressed === 'boolean' ? (
+          <ToggleIcon
+            key={action.key}
+            {...shared}
+            size="sm"
+            pressed={action.pressed}
+            data-selected={String(action.pressed)}
+            onChange={() => action.onClick?.()}
+          >
+            {action.icon}
+          </ToggleIcon>
+        ) : (
+          <IconButton key={action.key} {...shared} size="small" onClick={action.onClick}>
+            {action.icon}
+          </IconButton>
+        );
+      })}
       {actions}
     </>
   ) : null;

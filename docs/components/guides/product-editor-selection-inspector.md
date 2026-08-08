@@ -12,10 +12,21 @@
 
 ## 사용 판단
 
+### 사용
+
+- Use it for a selected canvas or scene object such as a waypoint, route segment, zone, map annotation, crop volume, or bounding box. Keep it separate from layer/display selection.
+
 ### 사용하지 않음
 
 - Use selectionCount for multi-selection and field.mixed for properties that do not share one value. Mixed values render as —; do not invent a representative value.
 - TaskCreateScreen has no selected-object inspection decision, so SelectionInspector is not applicable to that workflow. Keep the task form and step list product-owned instead of forcing any canvas workflow into this component.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| titleVisuallyHidden | 제목을 시각적으로만 숨깁니다. region의 접근 가능한 이름은 유지됩니다. @default false |
+| menuLabel | 오버플로 트리거의 접근 가능한 이름. @default '객체 작업' |
 
 ## Properties
 
@@ -24,21 +35,30 @@
 | `item` | `SelectionInspectorItem \| null` | No |  |
 | `selectionCount` | `number` | No | 다중 선택 개수. 2 이상이면 공통 속성 inspector 제목으로 표시합니다. |
 | `title` | `React.ReactNode` | No |  |
+| `titleVisuallyHidden` | `boolean` | No | 제목을 시각적으로만 숨깁니다. region의 접근 가능한 이름은 유지됩니다. @default false |
 | `emptyLabel` | `React.ReactNode` | No |  |
 | `sections` | `SelectionInspectorSection[]` | No |  |
 | `actions` | `React.ReactNode` | No |  |
+| `menuItems` | `DropdownMenuItem[]` | No | 헤더 오버플로 메뉴에 놓이는 객체 범위 명령. 파괴적 항목은 danger: true를 사용합니다. |
+| `menuLabel` | `string` | No | 오버플로 트리거의 접근 가능한 이름. @default '객체 작업' |
 | `onClearSelection` | `React.MouseEventHandler` | No |  |
 | `clearSelectionLabel` | `React.ReactNode` | No |  |
 | `clearSelectionAriaLabel` | `string` | No |  |
 | `children` | `React.ReactNode` | No |  |
 
+## States
+
+| State | Contract |
+| --- | --- |
+| titleVisuallyHidden | 제목을 시각적으로만 숨깁니다. region의 접근 가능한 이름은 유지됩니다. @default false |
+
 ## Behavior and interaction
 
 - Keep selection identity and status fixed at the top, make property groups independently collapsible, and keep object-scoped actions in the sticky actions area.
 - Figma right properties panel and selection guidance support a selection-bound right panel and one shared canvas/tree selection model.
+- Unity Inspector supports a contextual property surface that follows the selected object.
 - Adobe Spectrum Action Bar keeps contextual actions grouped while preserving a safe zone between selection identity and actions; LDS uses the same separation principle inside the inspector footer.
-- The resulting LDS contract covers no selection, one selection, multi/mixed selection, status, read-only/locked content supplied by consumers, and object actions. Domain-specific property schemas remain Product/Robotics composition.
-- SelectionInspector - Selection-bound identity and properties region.
+- WAI-ARIA APG Modal Dialog Pattern defines the focus, Escape, and return-focus contract for the destructive confirmation.
 
 ## 정량 규칙
 
@@ -50,20 +70,25 @@
 | --color-semantic-label-strong | light: #000000; dark: #FFFFFF |
 | --color-semantic-line-normal-alternative | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 
+## Responsive
+
+- Object-scoped commands — deleting the selection, duplicating it, locking it — go in menuItems, the header overflow menu beside the object's identity, not in the commit footer. Deleting the object is not a step in applying an edit, and a lone danger button parked opposite Apply reads as a second commit action.
+- The overflow menu is one trigger rather than a row of icon buttons. A bare trash glyph sitting next to the clear-selection X pairs two destructive-looking controls whose consequences are nothing alike — clearing a selection is free, deleting the object is not.
+
 ## Content and writing
 
 - statusPresentation="indicator" is for live availability, connection, or freshness and renders the Core StatusIndicator. Keep the default "badge" for lifecycle and result labels.
+- Field values are left-aligned regardless of type, matching the SpecRow/DescriptionList key-value grammar. Each row is a separate property rather than a column of comparable figures, and the unit shares the value span, so right-aligning numbers aligns no digits and only leaves the column ragged on both edges.
 - With no item and no selectionCount, the inspector shows emptyLabel (default 선택한 객체가 없습니다.) as a status region. Keep it a short instruction about selecting on the canvas, not a workflow message.
 - SelectionInspector is a named region rather than a second nested complementary landmark. CanvasEditorShell/DockPanel owns the docked or overlay panel landmark and resize/collapse behavior.
-- Field and object status use the canonical signal / positive / cautionary / negative vocabulary. warning and danger are compatibility aliases, not names for new usage.
 
 ## Accessibility
 
-- Keep reversible commit actions at the trailing edge. A destructive object action uses the danger button grammar, is separated from the primary commit action with flexible space, and opens ConfirmDialog before execution. Do not disguise deletion as a neutral assistive action beside Apply.
+- menuLabel (default 객체 작업) is the overflow trigger's accessible name. Override it when the workflow names object commands differently, the way clearSelectionAriaLabel is overridden.
 - Standard field value is a string/number/boolean and unit is a string. Surrounding whitespace is removed; %, ‰, and plane-angle ° attach, while SI·compound units and °C/°F keep one literal space in both visible and accessible DOM text.
 - For editable or composed properties, use the explicit valueNode escape or section children. valueNode bypasses automatic unit formatting, so the consumer owns its complete visible and accessible text. The inspector itself does not invent a second form-control language.
 - Use onClearSelection when the workflow supports clearing the current canvas selection. Keep the clear action in the inspector header.
-- In pinned lkwebviz coverage, SelectionInspector can satisfy only the selected-object part of the right properties/settings region. Active tab/tool state, PGM settings and product forms remain separate product-owned composition; the source does not define this component's anatomy or style.
+- Use titleVisuallyHidden when the surrounding surface already names the panel — docked in CanvasEditorShell, panelLabel names the region and the object's own name sits directly below, so the visible eyebrow states a third time what two other elements already state.
 
 ## Related components
 
@@ -110,6 +135,7 @@
 - `--headline2-size`
 - `--label2-line`
 - `--label2-size`
+- `--space-1`
 - `--space-2`
 - `--space-3`
 - `--space-4`

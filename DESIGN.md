@@ -3,7 +3,7 @@
 ## Source of truth
 
 - Status: Current — all 16 workflow responsibility traces are verified.
-- Last refreshed: 2026-07-21
+- Last refreshed: 2026-08-08
 - Primary product surfaces: LK operations dashboards, product application shells, data-heavy monitoring and investigation surfaces, and the shared component layers that support them.
 - Evidence reviewed: `readme.md`, `docs/OPERATING_MODEL.md`, `docs/PRODUCT_FRONTEND_COVERAGE.md`, `docs/AI_DESIGN_SYSTEM_GUIDE.md`, `docs/COMPONENT_API_STATE_MATRIX.md`, `docs/STORYBOOK_INFORMATION_ARCHITECTURE.md`, `components/layout/DashboardShell.*`, `components/layout/DashboardGrid.*`, and their Storybook stories.
 - Decision: Operations Dashboard is an **LDS Product pattern family**, not a separate design system, repository, theme, or complete screen template.
@@ -89,7 +89,7 @@
 - New/changed components: no new public component is required for the initial Operations Dashboard system pass. `DashboardShell` and `DashboardGrid` keep their existing API names and are reclassified in Storybook as the Operations Dashboard pattern family.
 - Variants and states:
   - Shell: header-first and side-first wide topology; auto, wide, and narrow layout; explicit narrow-navigation fallback.
-  - Side navigation: expanded or 64px rail; controlled or uncontrolled ownership; stable boundary control; nested-parent expansion; separate persistent and overlay behavior.
+  - Side navigation: expanded or 64px rail; controlled or uncontrolled ownership; stable boundary control; nested-parent expansion; separate persistent and overlay behavior. When collapse hides the current leaf, its disclosure parent temporarily carries a primary visual selection proxy; expansion returns the surface to the leaf while `aria-current` remains leaf-owned.
   - Data surfaces: ready, initial loading, refreshing, empty, error, stale, offline, restricted, disabled, and last-good-data preservation where applicable.
   - Theme: light, dark, and intentional nested theme islands without hard-coded surface colors.
 - Token/component ownership:

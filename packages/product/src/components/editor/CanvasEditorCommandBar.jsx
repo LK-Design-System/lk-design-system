@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
+import { ToggleIcon } from '@lk-design-system/lds-core/components/buttons/ToggleIcon';
 import { Divider } from '@lk-design-system/lds-core/components/content/Divider';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 import { Toolbar } from '../navigation/Toolbar.jsx';
@@ -14,25 +15,44 @@ function actionIcon(icon) {
   return icon;
 }
 
+// `action.active` being defined is what separates a persistent on/off command
+// from a one-shot one, and the two get different primitives: `ToggleIcon` owns
+// `aria-pressed` and its pressed styling, `IconButton` is for fire-and-forget.
+// Both take `plain` because the Toolbar around them owns the surface — same
+// split `ViewerToolbar` makes.
 function CommandButton({ action, size, index, tabStopKey }) {
   const disabled = !!action.disabled || typeof action.onClick !== 'function';
   const active = !!action.active;
   const key = String(actionKey(action, index));
+  const commonProps = {
+    'data-command-index': index,
+    'data-lk-command-toolbar-item': '',
+    'data-lk-toolbar-key': key,
+    variant: 'plain',
+    size,
+    label: action.label,
+    title: action.label,
+    'aria-keyshortcuts': action.ariaKeyShortcuts,
+    disabled,
+    tabIndex: !disabled && key === tabStopKey ? 0 : -1,
+  };
+
+  if (action.active !== undefined) {
+    return (
+      <ToggleIcon
+        {...commonProps}
+        pressed={active}
+        onChange={disabled ? undefined : () => action.onClick?.()}
+      >
+        {actionIcon(action.icon)}
+      </ToggleIcon>
+    );
+  }
 
   return (
     <IconButton
-      data-command-index={index}
-      data-lk-command-toolbar-item=""
-      data-lk-toolbar-key={key}
-      variant={active ? 'signal' : 'ghost'}
+      {...commonProps}
       round={false}
-      size={size}
-      label={action.label}
-      title={action.label}
-      aria-pressed={action.active === undefined ? undefined : active}
-      aria-keyshortcuts={action.ariaKeyShortcuts}
-      disabled={disabled}
-      tabIndex={!disabled && key === tabStopKey ? 0 : -1}
       onClick={disabled ? undefined : action.onClick}
     >
       {actionIcon(action.icon)}

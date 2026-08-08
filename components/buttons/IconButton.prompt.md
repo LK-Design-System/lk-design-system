@@ -34,6 +34,10 @@ remain unchanged.
   누락하면 development 빌드에서 console 경고가 출력됩니다(production 번들에서는
   제거됨). 이름을 외부 노드에서 참조해야 하면 `aria-labelledby`를 대신 쓰세요.
 - **variant**: `soft`, `solid`, `signal`, `ghost`, `plain`, `on-dark`. `plain`은 grouped toolbar처럼 부모 surface가 hover/background를 소유하는 조합용입니다.
+- **`plain` vs `ghost` 판정 기준** — 컨트롤이 얹힌 표면이 배경을 소유하면 `plain`, 컨트롤이 스스로 경계를 세워야 하면 `ghost`입니다. 결정하는 질문은 "이 버튼의 이웃이 각자 테두리를 갖는가"입니다.
+  - `plain`: 패널·다이얼로그 헤더의 닫기/오버플로(`Modal`, `Drawer`, `SelectionInspector`, `FeedCard`), 공유 표면 위의 grouped toolbar(`ViewerToolbar`, `HistoryToolbar`, `CanvasEditorCommandBar`), 리스트 행 안의 인라인 컨트롤(`LayerPanel`), 이미 채워진 컨테이너 안의 컨트롤(`SearchableMultiSelect`의 Chip 내부).
+  - `ghost`: 콘텐츠 위에 떠서 자기 경계가 필요한 컨트롤(`FileUploadQueue`의 썸네일 코너 액션), 그리고 이웃 컨트롤이 모두 각자 테두리를 갖는 행(`LogViewer`의 로그 도구 — 옆의 레벨 chip과 검색 필드가 테두리를 가짐).
+  - `soft`를 고른 뒤 인라인 스타일로 `background: transparent`를 덮어쓰고 있다면 그건 `plain`을 길게 쓴 것입니다. variant를 바꾸고 오버라이드를 지우세요.
 - **size**: pixel size or size key, default `medium` (40).
 - **round**: circular by default (WDS icon buttons are always circular); pass
   `round={false}` for the rounded-square look.

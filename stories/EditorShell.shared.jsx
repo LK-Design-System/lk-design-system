@@ -223,6 +223,7 @@ function InspectorForSelection({ selectedObject, onClearSelection, onDirty }) {
   return (
     <SelectionInspector
       item={selected}
+      titleVisuallyHidden
       sections={selected?.sections ?? []}
       onClearSelection={selected ? onClearSelection : undefined}
       actions={selected ? (

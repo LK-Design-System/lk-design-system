@@ -48,6 +48,7 @@
 
 ## Behavior and interaction
 
+- plain: 패널·다이얼로그 헤더의 닫기/오버플로(Modal, Drawer, SelectionInspector, FeedCard), 공유 표면 위의 grouped toolbar(ViewerToolbar, HistoryToolbar, CanvasEditorCommandBar), 리스트 행 안의 인라인 컨트롤(LayerPanel), 이미 채워진 컨테이너 안의 컨트롤(SearchableMultiSelect의 Chip 내부).
 - IconButton is the WDS Action/Icon Button primitive for icon-only actions such as navigation arrows, close, search, and tool commands.
 
 ## 정량 규칙
