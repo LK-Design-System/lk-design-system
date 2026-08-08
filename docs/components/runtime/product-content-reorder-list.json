@@ -131,6 +131,10 @@
   "exceptions": [],
   "related": [
     {
+      "component": "ConnectionRow",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "ContentEditor",
       "relationship": "대표 시나리오에서 조합"
     },

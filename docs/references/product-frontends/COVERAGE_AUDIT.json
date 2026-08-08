@@ -22,13 +22,39 @@
     "verified": 16
   },
   "componentDispositionSummary": {
-    "keep": 18,
+    "keep": 19,
     "redesign": 7,
     "split": 8,
     "remove": 22,
     "separate-audit": 6
   },
   "componentDisposition": [
+    {
+      "name": "ConnectionRow",
+      "path": "components/content/ConnectionRow.jsx",
+      "decision": "keep",
+      "workflowIds": [],
+      "reason": "Provides one reusable account or resource connection surface with decorative identity, visible connection state, detail, state-aware action emphasis, and 320px reflow without owning permissions, mutations, confirmation, routing, copy, or account selection.",
+      "assetReviews": [
+        {
+          "repo": "context-hub",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "372a826b3d7f9f11cc29b0fd7b575ca0480228e0",
+          "classification": "supported by composition",
+          "reason": "The issue inventory identifies six Portal connection consumers that repeat the same identity, status, detail, and action anatomy with inconsistent visual and destructive emphasis. ConnectionRow closes only that shared presentation while Portal retains provider metadata, account cardinality, permissions, mutations, confirmation, routing, and state copy.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/context/PersonalContextPage.tsx",
+              "blobSha": "cfa798d769e5c7ae0e48e9f236fdd730d60f4271"
+            },
+            {
+              "path": "src/components/admin/AdminWorkspace.tsx",
+              "blobSha": "0a7421a3732a3467c9e564de84f3697f874d6651"
+            }
+          ]
+        }
+      ]
+    },
     {
       "name": "FieldAction",
       "path": "components/forms/FieldAction.jsx",

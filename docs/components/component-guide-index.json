@@ -272,6 +272,10 @@
     "slug": "product-content-checklist-item"
   },
   {
+    "storybookTitle": "LDS Product/Content/Connection Row",
+    "slug": "product-content-connection-row"
+  },
+  {
     "storybookTitle": "LDS Product/Content/Expandable Text",
     "slug": "product-content-expandable-text"
   },

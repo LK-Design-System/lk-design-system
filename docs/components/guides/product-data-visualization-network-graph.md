@@ -41,7 +41,7 @@
 | `layout` | `NetworkGraphLayout` | No |  |
 | `nodeShape` | `NetworkGraphNodeShape` | No | 노드를 어느 관행으로 그릴지. @default "card" |
 | `showEdgeLabels` | `boolean` | No | 관계 라벨을 그릴지. 노드가 많으면 꺼서 구조만 남깁니다. @default true |
-| `motion` | `'auto' \| 'none'` | No | force 배치의 움직임. auto는 수렴 애니메이션과 드래그를 켜되 prefers-reduced-motion이면 수렴 상태를 바로 그립니다. none은 항상 수렴 상태만 그립니다(시각 회귀 시험·SSR용). @default "auto" |
+| `motion` | `'auto' \| 'none'` | No | force 배치의 움직임. auto는 수렴 애니메이션과 드래그를 켜되 prefers-reduced-motion이면 수렴 상태를 바로 그립니다. none은 항상 수렴 상태만 그립니다(결정적 레이아웃 검증·SSR용). @default "auto" |
 | `nodeColor` | `string` | No | 노드에 색이 없을 때 쓰는 기본값. |
 | `edgeColor` | `string` | No | 관계에 색이 없을 때 쓰는 기본값. |
 | `selectedNodeId` | `string` | No |  |
@@ -58,7 +58,7 @@
 ## Behavior and interaction
 
 - id는 열쇠입니다. 노드를 잇는 일, 포커스 순회를 세우는 일, 애니메이션 사이에 같은 노드를 알아보는 일이 모두 id로 이뤄집니다. 같은 id가 둘이면 먼저 온 것만 남깁니다 — 그리지 않고 버리는 편이, 탭 스톱이 둘이 되어 「탭 한 번에 그림 안으로」라는 계약이 깨지는 것보다 낫습니다.
-- 배치는 전략입니다. layered는 root/depth로 층을 쌓고, columns는 column으로 단계를 고정하며, manual은 x/y를 그대로 쓰고, force는 물리로 자리를 잡습니다. 어떤 전략이든 같은 입력이면 같은 좌표가 나옵니다 — 위치 결정은 정렬된 순서와 안정 해시에서만 나오고 난수를 쓰지 않으므로 시각 회귀 시험이 성립합니다. force도 고정 틱 수만큼 돌린 결과가 도착점이며, 움직임만 선택입니다.
+- 배치는 전략입니다. layered는 root/depth로 층을 쌓고, columns는 column으로 단계를 고정하며, manual은 x/y를 그대로 쓰고, force는 물리로 자리를 잡습니다. 어떤 전략이든 같은 입력이면 같은 좌표가 나옵니다 — 위치 결정은 정렬된 순서와 안정 해시에서만 나오고 난수를 쓰지 않으므로 결정적인 레이아웃 검증이 가능합니다. force도 고정 틱 수만큼 돌린 결과가 도착점이며, 움직임만 선택입니다.
 - 움직임은 선택이고 도착점은 결정론입니다. motion="none"이면 수렴한 자리를 바로 그리고, prefers-reduced-motion도 같게 봅니다. 어느 쪽이든 좌표는 같습니다 — 움직임을 끈다고 다른 그림이 나오지 않습니다.
 - 상태를 색으로 표현하지 마세요. 유형 색과 충돌합니다.
 

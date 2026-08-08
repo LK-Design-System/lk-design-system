@@ -65,7 +65,7 @@
 | 명시 규칙 2 | Reference basis: Carbon Search, GOV.UK Text input, WCAG 2.2 3.2.1 On Focus. |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
+| --color-semantic-background-normal-alternative | light: #F7F7F8; dark: #0F0F10 |
 
 ## Content and writing
 
@@ -108,6 +108,7 @@
 
 - `--caption1-size`
 - `--color-semantic-background-elevated-normal`
+- `--color-semantic-background-normal-alternative`
 - `--color-semantic-fill-normal`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-disable`

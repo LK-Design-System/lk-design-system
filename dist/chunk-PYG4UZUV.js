@@ -1,0 +1,182 @@
+"use client";
+import {
+  IconButton
+} from "./chunk-TAZ6IYIO.js";
+import {
+  Icon
+} from "./chunk-4EDUCS2J.js";
+import {
+  Toolbar
+} from "./chunk-OHFWZZX3.js";
+
+// components/editor/HistoryToolbar.jsx
+import React2 from "react";
+
+// packages/core/dist/chunk-UI2I2TV5.js
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
+function Divider({
+  vertical = false,
+  label,
+  inset = 0,
+  variant = "normal",
+  decorative = false,
+  style,
+  ...rest
+}) {
+  const thickness = variant === "thick" ? "var(--component-divider-thickness-thick)" : "var(--component-divider-thickness-normal)";
+  const color = variant === "thick" ? "var(--component-divider-color-thick)" : "var(--component-divider-color-normal)";
+  const decorativeProps = { role: "none", "aria-hidden": "true" };
+  const semantics = decorative ? decorativeProps : null;
+  const verticalSemantics = decorative ? decorativeProps : { role: "separator", "aria-orientation": "vertical" };
+  if (vertical) {
+    return /* @__PURE__ */ jsx(
+      "span",
+      {
+        ...verticalSemantics,
+        style: {
+          display: "inline-block",
+          width: thickness,
+          alignSelf: "stretch",
+          minHeight: 32,
+          background: color,
+          ...style
+        },
+        ...rest
+      }
+    );
+  }
+  if (label != null) {
+    const rule = { flex: 1, height: thickness, background: color };
+    return /* @__PURE__ */ jsxs(
+      "div",
+      {
+        ...decorative ? decorativeProps : {
+          role: "separator",
+          /* separator gets no name from its contents — expose the visible
+             label explicitly so "또는" is announced, not just a boundary. */
+          "aria-label": typeof label === "string" ? label : void 0
+        },
+        style: { display: "flex", alignItems: "center", gap: "var(--space-3-5)", ...style },
+        ...rest,
+        children: [
+          /* @__PURE__ */ jsx("span", { style: rule }),
+          /* @__PURE__ */ jsx(
+            "span",
+            {
+              style: {
+                fontFamily: "var(--font-sans)",
+                fontSize: "var(--label2-size)",
+                fontWeight: "var(--fw-semibold)",
+                letterSpacing: 0,
+                color: "var(--color-semantic-label-alternative)",
+                whiteSpace: "nowrap"
+              },
+              children: label
+            }
+          ),
+          /* @__PURE__ */ jsx("span", { style: rule })
+        ]
+      }
+    );
+  }
+  return /* @__PURE__ */ jsx(
+    "hr",
+    {
+      ...semantics,
+      style: {
+        border: "none",
+        height: thickness,
+        background: color,
+        margin: `0 ${inset}px`,
+        ...style
+      },
+      ...rest
+    }
+  );
+}
+
+// components/editor/HistoryToolbar.jsx
+import { jsx as jsx2, jsxs as jsxs2 } from "react/jsx-runtime";
+function HistoryToolbar({
+  label = "\uD3B8\uC9D1 \uC774\uB825",
+  canUndo = false,
+  canRedo = false,
+  onUndo,
+  onRedo,
+  onReset,
+  undoKeyShortcuts,
+  redoKeyShortcuts,
+  size = "sm",
+  role = "toolbar",
+  tabIndex,
+  onKeyDown,
+  onFocusCapture,
+  style,
+  "aria-label": ariaLabel,
+  ...rest
+}) {
+  const undoEnabled = canUndo && typeof onUndo === "function";
+  const redoEnabled = canRedo && typeof onRedo === "function";
+  const resetVisible = typeof onReset === "function";
+  const actions = [
+    { key: "undo", label: "\uC2E4\uD589 \uCDE8\uC18C", icon: /* @__PURE__ */ jsx2(Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }), enabled: undoEnabled, onClick: onUndo, shortcuts: undoKeyShortcuts },
+    { key: "redo", label: "\uB2E4\uC2DC \uC2E4\uD589", icon: /* @__PURE__ */ jsx2("span", { style: { display: "inline-flex", transform: "scaleX(-1)" }, children: /* @__PURE__ */ jsx2(Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }) }), enabled: redoEnabled, onClick: onRedo, shortcuts: redoKeyShortcuts },
+    ...resetVisible ? [{ key: "reset", label: "\uBCC0\uACBD\uC0AC\uD56D \uCD08\uAE30\uD654", icon: /* @__PURE__ */ jsx2(Icon, { name: "reset", size: 16, "aria-hidden": "true" }), enabled: true, onClick: onReset }] : []
+  ];
+  const enabledActions = actions.filter((action) => action.enabled);
+  const preferredKey = enabledActions[0]?.key;
+  return /* @__PURE__ */ jsx2(
+    Toolbar,
+    {
+      role,
+      "aria-label": ariaLabel,
+      label,
+      orientation: "horizontal",
+      itemSelector: "[data-lk-history-toolbar-item]",
+      preferredItemKey: preferredKey,
+      "aria-disabled": enabledActions.length === 0 || void 0,
+      tabIndex: enabledActions.length === 0 ? tabIndex ?? 0 : tabIndex,
+      onKeyDown,
+      onFocusCapture,
+      style: {
+        gap: "var(--space-1)",
+        padding: 0,
+        background: "transparent",
+        border: 0,
+        borderRadius: 0,
+        boxShadow: "none",
+        fontFamily: "var(--font-sans)",
+        ...style
+      },
+      ...rest,
+      children: actions.map((action, index) => /* @__PURE__ */ jsxs2(React2.Fragment, { children: [
+        action.key === "reset" && /* @__PURE__ */ jsx2(Divider, { vertical: true, style: { minHeight: size === "md" ? 24 : 20, marginInline: "var(--space-1)", alignSelf: "center" } }),
+        /* @__PURE__ */ jsx2(
+          IconButton,
+          {
+            "data-history-index": index,
+            "data-lk-history-toolbar-item": "",
+            "data-lk-toolbar-key": action.key,
+            variant: "ghost",
+            round: false,
+            size,
+            disabled: !action.enabled,
+            onClick: action.enabled ? action.onClick : void 0,
+            tabIndex: action.enabled && action.key === preferredKey ? 0 : -1,
+            title: action.label,
+            label: action.label,
+            "aria-keyshortcuts": action.shortcuts,
+            children: action.icon
+          }
+        )
+      ] }, action.key))
+    }
+  );
+}
+
+export {
+  Divider,
+  HistoryToolbar
+};
+//# sourceMappingURL=chunk-PYG4UZUV.js.map

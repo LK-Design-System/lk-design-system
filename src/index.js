@@ -34,6 +34,7 @@ export { Bookmark } from '../components/content/Bookmark.jsx';
 export { Bubble } from '../components/content/Bubble.jsx';
 export { Code } from '../components/content/Code.jsx';
 export { Collapsible } from '../components/content/Collapsible.jsx';
+export { ConnectionRow } from '../components/content/ConnectionRow.jsx';
 export { ContentBadge } from '../components/content/ContentBadge.jsx';
 export { ContentEditor } from '../components/content/ContentEditor.jsx';
 export { Divider } from '../components/content/Divider.jsx';

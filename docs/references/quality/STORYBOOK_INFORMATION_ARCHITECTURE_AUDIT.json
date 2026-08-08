@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "2a237953b5b0ac99b734e728733d6adf55b4c2333eae57fcb1370134be1b7833",
+    "storybookIndexSha256": "ada25b22426ac724d37b4fbe75f1a0b67c8a800312c72ccd496a3e66e5d23a5c",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -61,31 +61,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 193,
-    "stories": 691,
-    "publicStories": 477,
-    "hiddenStories": 214,
-    "componentDescriptions": 189,
-    "pagesWithVisibleCanvasIntroduction": 189,
-    "pagesWithDecisionGuidance": 181,
-    "describedPublicStories": 477,
-    "reviewedPages": 192,
-    "reviewedStories": 679,
-    "staleReviewedPages": 3,
+    "pages": 194,
+    "stories": 698,
+    "publicStories": 482,
+    "hiddenStories": 216,
+    "componentDescriptions": 190,
+    "pagesWithVisibleCanvasIntroduction": 190,
+    "pagesWithDecisionGuidance": 183,
+    "describedPublicStories": 482,
+    "reviewedPages": 194,
+    "reviewedStories": 698,
+    "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
-      "overview": 177,
+      "overview": 178,
       "usage": 37,
-      "variants-states": 100,
+      "variants-states": 103,
       "interaction": 54,
-      "responsive": 67,
+      "responsive": 68,
       "scenario": 26,
-      "visual-parity": 90,
-      "internal-contract": 120
+      "visual-parity": 91,
+      "internal-contract": 121
     },
     "dispositions": {
-      "keep": 193,
+      "keep": 194,
       "merge": 0,
       "split": 0,
       "hide": 0
@@ -106,11 +106,11 @@
         "guideReadyPages": 12
       },
       "Product": {
-        "pages": 116,
-        "stories": 455,
-        "public": 341,
-        "hidden": 114,
-        "guideReadyPages": 115
+        "pages": 117,
+        "stories": 462,
+        "public": 346,
+        "hidden": 116,
+        "guideReadyPages": 117
       },
       "Theme": {
         "pages": 3,
@@ -4945,7 +4945,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormSearchAutocomplete.stories.jsx",
-      "sourceSha256": "d879b15ee56c2a3e404c3a172f63f0782c3506ba9b0f0cf589156e0e0150f6a5",
+      "sourceSha256": "5669b41b48a149c68c51100621837f05e27f4d9fa0e42b33777bb34611406c41",
       "primaryOwner": "SearchField",
       "ownerComponents": [
         "AutoComplete",
@@ -4974,7 +4974,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "9803892081927660115d3d5e520027706c111de7807241330a7d5bb8c61ea604",
+      "reviewedSourceSha256": "5669b41b48a149c68c51100621837f05e27f4d9fa0e42b33777bb34611406c41",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-and-autocomplete",
@@ -5002,6 +5002,30 @@
             "TagInput"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-search-and-autocomplete--autocomplete-start-icon",
+          "name": "사용법 · 찾는 칸 표시",
+          "exportName": "AutocompleteStartIcon",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "AutoComplete"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ]
         },
         {
           "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-clear-focus-contract",
@@ -5096,30 +5120,6 @@
             "AutoComplete"
           ],
           "supportingComponents": []
-        },
-        {
-          "id": "lds-core-components-selection-and-input-search-and-autocomplete--autocomplete-start-icon",
-          "name": "찾는 칸 표시",
-          "exportName": "AutocompleteStartIcon",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "test"
-          ],
-          "role": "usage",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [
-            "AutoComplete"
-          ],
-          "supportingComponents": [
-            "Icon"
-          ]
         },
         {
           "id": "lds-core-components-selection-and-input-search-and-autocomplete--auto-complete-card",
@@ -8880,7 +8880,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "259bd6e46ea50c239bdff1718ac9d519f0a6ec186a0fa2245231793ee446e884",
+      "reviewedSourceSha256": "b6debb98ff3352221ef1fa5c6818f38c5aa5c0a166a66a55f5cf29aa8aa518ff",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -9759,6 +9759,197 @@
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
+      "title": "LDS Product/Content/Connection Row",
+      "layer": "Product",
+      "family": "Content",
+      "importPath": "./stories/ContentConnectionRow.stories.jsx",
+      "sourceSha256": "5586bba74b9b4ecf1bd26e56911a0f58a0dc61c8a42062ab0c7a4d61ccc1fa93",
+      "primaryOwner": "ConnectionRow",
+      "ownerComponents": [
+        "ConnectionRow"
+      ],
+      "supportingComponents": [
+        "Avatar",
+        "Button",
+        "Icon"
+      ],
+      "visibility": {
+        "public": 4,
+        "hidden": 2
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-content-connection-row--connected",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-08-08",
+      "reviewedSourceSha256": "5586bba74b9b4ecf1bd26e56911a0f58a0dc61c8a42062ab0c7a4d61ccc1fa93",
+      "stories": [
+        {
+          "id": "lds-product-content-connection-row--connected",
+          "name": "개요",
+          "exportName": "Connected",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConnectionRow"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Icon"
+          ]
+        },
+        {
+          "id": "lds-product-content-connection-row--disconnected",
+          "name": "변형·상태 · 연결 안 됨",
+          "exportName": "Disconnected",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConnectionRow"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Icon"
+          ]
+        },
+        {
+          "id": "lds-product-content-connection-row--pending",
+          "name": "변형·상태 · 연결 중",
+          "exportName": "Pending",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConnectionRow"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Icon"
+          ]
+        },
+        {
+          "id": "lds-product-content-connection-row--narrow-reflow",
+          "name": "반응형 · 320px 액션 재배치",
+          "exportName": "NarrowReflow",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConnectionRow"
+          ],
+          "supportingComponents": [
+            "Avatar",
+            "Button"
+          ]
+        },
+        {
+          "id": "lds-product-content-connection-row--connection-row-visual-parity",
+          "name": "ConnectionRow visual parity",
+          "exportName": "ConnectionRowVisualParity",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConnectionRow"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Icon"
+          ]
+        },
+        {
+          "id": "lds-product-content-connection-row--decorative-visual-contract",
+          "name": "Decorative visual contract",
+          "exportName": "DecorativeVisualContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConnectionRow"
+          ],
+          "supportingComponents": [
+            "Avatar",
+            "Button"
+          ]
+        }
+      ]
     },
     {
       "title": "LDS Product/Content/Expandable Text",
@@ -10971,20 +11162,22 @@
       "layer": "Product",
       "family": "Content",
       "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
-      "sourceSha256": "30c79367dac38b09836b529b9da8126d57f07caa43398a3b088bb384644b8aa2",
+      "sourceSha256": "6aba92cd8bbb25dbe24bfe4e4f3902e1d7a7de51727003c182bd8b0cb0fe6583",
       "primaryOwner": "SourceDisclosure",
       "ownerComponents": [
         "SourceDisclosure"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "Card"
+      ],
       "visibility": {
-        "public": 9,
+        "public": 10,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-content-source-disclosure--availability-and-provenance",
-        "describedPublicStories": 9,
+        "describedPublicStories": 10,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -10994,8 +11187,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "62e4307828e422fc7052091cc8a3749ac9104a53b3fc5c82c2b8304e8ae1881c",
+      "reviewedAt": "2026-08-08",
+      "reviewedSourceSha256": "6aba92cd8bbb25dbe24bfe4e4f3902e1d7a7de51727003c182bd8b0cb0fe6583",
       "stories": [
         {
           "id": "lds-product-content-source-disclosure--availability-and-provenance",
@@ -11037,8 +11230,31 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SourceDisclosure"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-content-source-disclosure--no-sources",
+          "name": "변형·상태 · 빈 목록",
+          "exportName": "NoSources",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "SourceDisclosure"
           ],
@@ -11084,8 +11300,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "SourceDisclosure"
           ],
@@ -11107,12 +11323,14 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "SourceDisclosure"
           ],
-          "supportingComponents": []
+          "supportingComponents": [
+            "Card"
+          ]
         },
         {
           "id": "lds-product-content-source-disclosure--missing-source",
@@ -11211,7 +11429,7 @@
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. Reviewed in the running dev server: the Canvas opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas. The 2026-08-08 re-review adds an explicit default title arg to AvailabilityAndProvenance and confirms the representative uncontrolled Canvas exposes the title control, reruns its play contract, and reflects runtime arg updates in the toggle text."
     },
     {
       "title": "LDS Product/Content/Spec Row",
@@ -14386,7 +14604,7 @@
       "layer": "Product",
       "family": "Visualization",
       "importPath": "./stories/DataNetworkGraph.stories.jsx",
-      "sourceSha256": "f6de66c6b92c88d89ba4c3d0740a6ea8f53a2506d9a070140d603a3ff76f248a",
+      "sourceSha256": "69d60499ae8ef5d1289bd8a60310d5116609068e4c9ea664f139dd51970c8c44",
       "primaryOwner": "NetworkGraph",
       "ownerComponents": [
         "NetworkGraph"
@@ -14401,18 +14619,16 @@
         "storyGuideId": "lds-product-data-visualization-network-graph--relationship-overview",
         "describedPublicStories": 8,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
-      "reviewStatus": "pending",
-      "reviewMethod": null,
-      "reviewedAt": null,
-      "reviewedSourceSha256": null,
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-08-08",
+      "reviewedSourceSha256": "69d60499ae8ef5d1289bd8a60310d5116609068e4c9ea664f139dd51970c8c44",
       "stories": [
         {
           "id": "lds-product-data-visualization-network-graph--relationship-overview",
@@ -14430,8 +14646,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "NetworkGraph"
           ],
@@ -14453,8 +14669,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "NetworkGraph"
           ],
@@ -14476,8 +14692,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "NetworkGraph"
           ],
@@ -14499,31 +14715,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
-          "ownerComponents": [
-            "NetworkGraph"
-          ],
-          "supportingComponents": []
-        },
-        {
-          "id": "lds-product-data-visualization-network-graph--convention-comparison",
-          "name": "관행 비교 · 노드-링크와 플로우 에디터",
-          "exportName": "ConventionComparison",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "scenario",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "NetworkGraph"
           ],
@@ -14531,7 +14724,7 @@
         },
         {
           "id": "lds-product-data-visualization-network-graph--large-graph",
-          "name": "배치 · 규모가 큰 관계도",
+          "name": "시나리오 · 규모가 큰 관계도",
           "exportName": "LargeGraph",
           "visibility": "public",
           "tags": [
@@ -14545,8 +14738,31 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "NetworkGraph"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-data-visualization-network-graph--convention-comparison",
+          "name": "시나리오 · 노드-링크와 플로우 에디터",
+          "exportName": "ConventionComparison",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "NetworkGraph"
           ],
@@ -14554,7 +14770,7 @@
         },
         {
           "id": "lds-product-data-visualization-network-graph--staged-flow",
-          "name": "배치 · 단계가 정해진 흐름",
+          "name": "시나리오 · 단계가 정해진 흐름",
           "exportName": "StagedFlow",
           "visibility": "public",
           "tags": [
@@ -14568,8 +14784,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "NetworkGraph"
           ],
@@ -14577,7 +14793,7 @@
         },
         {
           "id": "lds-product-data-visualization-network-graph--force-layout",
-          "name": "배치 · 물리로 잦아드는 관계도",
+          "name": "시나리오 · 물리로 잦아드는 관계도",
           "exportName": "ForceLayout",
           "visibility": "public",
           "tags": [
@@ -14591,8 +14807,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "NetworkGraph"
           ],

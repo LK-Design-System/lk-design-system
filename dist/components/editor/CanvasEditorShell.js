@@ -1,9 +1,9 @@
 "use client";
 import {
   CanvasEditorShell
-} from "../../chunk-I4LU7YGY.js";
-import "../../chunk-5PU3MJKX.js";
-import "../../chunk-DW4HVC6S.js";
+} from "../../chunk-EFP4FTOS.js";
+import "../../chunk-6M5WADRM.js";
+import "../../chunk-B2YSRUC3.js";
 export {
   CanvasEditorShell
 };

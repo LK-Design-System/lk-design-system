@@ -193,6 +193,7 @@
       "ownerLayer": "product",
       "provenance": "product-extension",
       "storyEvidence": [
+        "stories/ContentConnectionRow.stories.jsx",
         "stories/ContentEditor.stories.jsx",
         "stories/ContentExpandableText.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
@@ -203,6 +204,7 @@
         "stories/ContentStatList.stories.jsx"
       ],
       "exports": [
+        "ConnectionRow",
         "ContentEditor",
         "ExpandableText",
         "LogViewer",

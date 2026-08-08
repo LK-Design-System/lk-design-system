@@ -8,7 +8,9 @@
   "ownerComponents": [
     "SourceDisclosure"
   ],
-  "supportingComponents": [],
+  "supportingComponents": [
+    "Card"
+  ],
   "purpose": "응답이나 문서의 근거가 된 출처·시점·가용성·원본 경로를 투명하게 제시할 때 적합합니다. 단순 관련 링크나 일반 속성 목록에는 SourceDisclosure 대신 Link 또는 Description List를 사용하세요.",
   "useWhen": [
     "GOV.UK Details는 일부 사용자만 필요한 부가 정보에 disclosure를 사용하고, 대부분에게 필요한 정보는 숨기지 않으며 summary text를 짧고 설명적으로 쓰도록 합니다. 따라서 펼칠 provenance가 없는 source는 disclosure를 만들지 않습니다.",
@@ -180,6 +182,14 @@
   ],
   "related": [
     {
+      "component": "Card",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ConnectionRow",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "ContentEditor",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -201,10 +211,6 @@
     },
     {
       "component": "ReorderList",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "StatList",
       "relationship": "대표 시나리오에서 조합"
     }
   ],
@@ -264,6 +270,11 @@
       {
         "id": "lds-product-content-source-disclosure--withheld-sources",
         "name": "변형·상태 · 권한 없는 출처",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-content-source-disclosure--no-sources",
+        "name": "변형·상태 · 빈 목록",
         "role": "variants-states"
       },
       {

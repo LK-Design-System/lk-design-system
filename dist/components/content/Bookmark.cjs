@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkDRT4PHH6cjs = require('../../chunk-DRT4PHH6.cjs');
-require('../../chunk-3ATRKSQ7.cjs');
+var _chunk7PUYJ6BLcjs = require('../../chunk-7PUYJ6BL.cjs');
+require('../../chunk-OZR3K6TY.cjs');
 
 
-exports.Bookmark = _chunkDRT4PHH6cjs.Bookmark;
+exports.Bookmark = _chunk7PUYJ6BLcjs.Bookmark;
 //# sourceMappingURL=Bookmark.cjs.map

@@ -8,6 +8,12 @@
 | Last reviewed | 2026-08-04 |
 | Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
 
+## ConnectionRow · connected account/resource surface · 2026-08-08
+
+`ConnectionRow`는 LK Portal의 `SynologyChatWorkspace`, `PetWorkspace`, `ConfluenceConnections`, `CatalogResourceDetail`, `RepositoryDrawer`, `ProjectWorkspace`에서 반복되는 계정·자원 연결 행을 하나의 LK Product Extension으로 묶는다. LDS는 `visual → name/status → detail → actions` 순서, visible 상태, 보조 액션 강조와 320px reflow만 소유한다. 계정 cardinality, 연결·해제 mutation, 권한, 확인, route와 문구는 Portal이 소유한다.
+
+Storybook은 connected/pending/disconnected 상태, 320px action reflow, 장식 visual의 접근성 트리 제외, named part와 visual parity를 검증한다. 공개 표면은 Product entry에만 추가하며 Core `StatusIndicator`, `Avatar`, `Button`을 조합한다.
+
 ## DataCollectionPanel · collection surface composition · 2026-08-04
 
 `DataCollectionPanel`은 반복되는 `DataToolbar → ResourceState → Table/DataGrid 또는 제품 작성 compact content → Pagination` 순서를 하나의 연속 표면으로 묶는 LK Product Extension이다. 패널은 perimeter, 읽기 순서, blocking 상태의 footer 억제, container 기반 wide/compact 전환만 소유한다. query, fetch, 권한, 행 의미와 action, compact item markup, pagination 상태는 제품이 소유한다.
