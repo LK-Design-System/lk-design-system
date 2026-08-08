@@ -1,11 +1,11 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkXKQWL6VGcjs = require('../../chunk-XKQWL6VG.cjs');
+var _chunkEZ5QZ7KIcjs = require('../../chunk-EZ5QZ7KI.cjs');
 require('../../chunk-TGRNUIFM.cjs');
-require('../../chunk-3VE2HGTT.cjs');
 require('../../chunk-FVL575B5.cjs');
+require('../../chunk-3VE2HGTT.cjs');
 
 
-exports.EditorToolbar = _chunkXKQWL6VGcjs.EditorToolbar;
+exports.EditorToolbar = _chunkEZ5QZ7KIcjs.EditorToolbar;
 //# sourceMappingURL=EditorToolbar.cjs.map

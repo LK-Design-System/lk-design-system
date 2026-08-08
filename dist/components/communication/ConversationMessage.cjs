@@ -1,11 +1,11 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk6PB7SX7Jcjs = require('../../chunk-6PB7SX7J.cjs');
+var _chunkA7SICFDCcjs = require('../../chunk-A7SICFDC.cjs');
 require('../../chunk-SMSPAH2M.cjs');
 require('../../chunk-I6NJHF3L.cjs');
-require('../../chunk-3ATRKSQ7.cjs');
+require('../../chunk-OZR3K6TY.cjs');
 
 
-exports.ConversationMessage = _chunk6PB7SX7Jcjs.ConversationMessage;
+exports.ConversationMessage = _chunkA7SICFDCcjs.ConversationMessage;
 //# sourceMappingURL=ConversationMessage.cjs.map

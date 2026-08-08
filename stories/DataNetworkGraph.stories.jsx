@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { NetworkGraph } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
+// Use when relationships between entities are the primary information.
+// Avoid when comparing values, showing time series, or locating items in space.
+
 /*
   관계도의 계약 중 자동으로 지킬 수 있는 것들.
 
@@ -297,7 +300,7 @@ export const RelationshipOverview = {
 };
 
 export const StagedFlow = {
-  name: '배치 · 단계가 정해진 흐름',
+  name: '시나리오 · 단계가 정해진 흐름',
   parameters: storyDescription(
     'source → processor → sink처럼 진행 방향이 정해진 파이프라인입니다. `column`으로 단계를 고정하고 노드·관계의 상태를 함께 표시하는 상황이며, 상태가 유형 색을 흔들지 않는지 확인하세요.',
   ),
@@ -444,7 +447,7 @@ function ConventionPanel({ title, note, children }) {
 }
 
 export const ConventionComparison = {
-  name: '관행 비교 · 노드-링크와 플로우 에디터',
+  name: '시나리오 · 노드-링크와 플로우 에디터',
   parameters: storyDescription(
     '같은 데이터를 업계의 두 관행으로 나란히 그린 상황입니다. 어느 쪽이 이 데이터를 더 잘 읽히게 하는지 비교하세요 — 연결 구조를 읽는 화면인지, 각 단계가 무엇을 하는지 읽는 화면인지에 따라 답이 갈립니다.',
   ),
@@ -524,7 +527,7 @@ export const ConventionComparison = {
 };
 
 export const ForceLayout = {
-  name: '배치 · 물리로 잦아드는 관계도',
+  name: '시나리오 · 물리로 잦아드는 관계도',
   parameters: storyDescription(
     '노드-링크 장르의 표준인 force-directed 배치입니다. 격자에서 출발해 물리(고무줄·반발·충돌·중심)로 잦아들고, 노드를 끌면 이웃이 따라 출렁입니다. 모션 줄이기 설정에서는 수렴한 자리에 바로 그려지는지, 수렴 결과가 실행마다 같은지 확인하세요.',
   ),
@@ -866,7 +869,7 @@ export const DegenerateInput = {
   붙이는 바람에 훑는 것보다 오래 걸리는 일이 되어 있었다.
 */
 export const LargeGraph = {
-  name: '배치 · 규모가 큰 관계도',
+  name: '시나리오 · 규모가 큰 관계도',
   parameters: {
     docs: {
       description: {

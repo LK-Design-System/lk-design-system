@@ -31,6 +31,7 @@ export const AvailabilityAndProvenance = {
     '답변 아래 근거를 귀속하는 기본 상황입니다. 닫힌 상태가 한 줄로 머무르고, 열면 패널이 떠서 주변을 밀지 않으며, 토글의 개수가 볼 수 있는 출처만 세는지 확인하세요. 권한이 없는 출처는 목록에 나타나지 않고 집계 한 줄로만 알립니다.',
   ),
   args: {
+    title: '출처',
     sources: [
       {
         id: 'ops-log',

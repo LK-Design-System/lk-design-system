@@ -22,6 +22,7 @@ export { MessageComposer } from '../components/communication/MessageComposer';
 export { MessageFeed } from '../components/communication/MessageFeed';
 export { Bookmark } from '../components/content/Bookmark';
 export { Bubble } from '../components/content/Bubble';
+export { ConnectionRow } from '../components/content/ConnectionRow';
 export { ContentEditor } from '../components/content/ContentEditor';
 export { ExpandableText } from '../components/content/ExpandableText';
 export { LogViewer } from '../components/content/LogViewer';

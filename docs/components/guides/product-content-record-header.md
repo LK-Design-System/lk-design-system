@@ -80,8 +80,8 @@
 | `IconButton` | 대표 시나리오에서 조합 |
 | `StatList` | 대표 시나리오에서 조합 |
 | `StatusBadge` | 대표 시나리오에서 조합 |
+| `ConnectionRow` | 대표 시나리오에서 조합 |
 | `ContentEditor` | 대표 시나리오에서 조합 |
-| `ExpandableText` | 대표 시나리오에서 조합 |
 
 ## Examples
 

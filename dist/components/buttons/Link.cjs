@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkP6Y5FXQMcjs = require('../../chunk-P6Y5FXQM.cjs');
-require('../../chunk-3ATRKSQ7.cjs');
+var _chunkZYAC465Vcjs = require('../../chunk-ZYAC465V.cjs');
+require('../../chunk-OZR3K6TY.cjs');
 
 
-exports.Link = _chunkP6Y5FXQMcjs.Link;
+exports.Link = _chunkZYAC465Vcjs.Link;
 //# sourceMappingURL=Link.cjs.map

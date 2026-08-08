@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "f573f3ea2c9801ff45f2427125240378490de5d223f79dafc8b2b5aba55b21bc",
+  "sourceFingerprint": "8401deafc94c5290a21e8160b46fc6c40c7d17fcf469010667b4d4bba97a4227",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -24,9 +24,9 @@
     "not-tracked": "This repository does not own or assert that platform implementation status."
   },
   "summary": {
-    "componentEntries": 206,
-    "publicExports": 218,
-    "guides": 175,
+    "componentEntries": 207,
+    "publicExports": 219,
+    "guides": 176,
     "entriesWithoutOwnedPage": [
       "Stat",
       "AvatarGroup",
@@ -4590,6 +4590,178 @@
       "promptSha256": "f36095be80d23a747f87793a97bc459d6b6f5b49d776e9d81249e80c0c6c6282"
     },
     {
+      "id": "connection-row",
+      "title": "ConnectionRow",
+      "exports": [
+        "ConnectionRow"
+      ],
+      "source": "components/content/ConnectionRow.jsx",
+      "typeContract": "components/content/ConnectionRow.d.ts",
+      "prompt": "components/content/ConnectionRow.prompt.md",
+      "group": "Content product extensions",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
+      "wdsFamily": null,
+      "storyEvidence": [
+        "stories/ContentConnectionRow.stories.jsx",
+        "stories/ContentEditor.stories.jsx",
+        "stories/ContentExpandableText.stories.jsx",
+        "stories/ContentLogViewer.stories.jsx",
+        "stories/ContentReactionBar.stories.jsx",
+        "stories/ContentRecordHeader.stories.jsx",
+        "stories/ContentReorderList.stories.jsx",
+        "stories/ContentSourceDisclosure.stories.jsx",
+        "stories/ContentStatList.stories.jsx"
+      ],
+      "classificationSiblings": [
+        "ContentEditor",
+        "ExpandableText",
+        "LogViewer",
+        "ReactionBar",
+        "RecordHeader",
+        "ReorderList",
+        "SourceDisclosure",
+        "StatList"
+      ],
+      "storybookPages": [
+        "LDS Product/Content/Connection Row",
+        "LDS Product/Content/Expandable Text",
+        "LDS Product/Content/Log Viewer",
+        "LDS Product/Content/Reaction Bar",
+        "LDS Product/Content/Record Header",
+        "LDS Product/Content/Reorder List",
+        "LDS Product/Content/Source Disclosure",
+        "LDS Product/Content/Stat List",
+        "LDS Product/Content/Writing Editor"
+      ],
+      "props": [
+        {
+          "name": "as",
+          "type": "React.ElementType",
+          "required": false,
+          "description": "Root element. Use as=\"li\" when the row belongs to a semantic list. @default \"div\"",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "visual",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "Decorative identity visual. Avatar, Thumbnail, or a service logo are accepted; interactive content is not.",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "name",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "Visible account, service, or resource name.",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "status",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "Visible product-authored state label. It must communicate the state without color.",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "detail",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "Supporting identifier, scope, owner, or last-connected information.",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "actions",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "Product-owned actions that follow the state-specific action rules.",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "state",
+          "type": "ConnectionRowState",
+          "required": false,
+          "description": "Presentational connection state. @default \"disconnected\"",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "ConnectionRowOwnProps"
+        }
+      ],
+      "tokens": [
+        "--lds-connection-row-action-gap",
+        "--space-2",
+        "--space-1",
+        "--lds-connection-row-gap",
+        "--space-3",
+        "--lds-connection-row-min-height",
+        "--lds-connection-row-padding",
+        "--space-4",
+        "--component-card-border",
+        "--component-card-radius",
+        "--component-card-bg",
+        "--component-card-fg",
+        "--font-sans",
+        "--lds-connection-row-visual-size",
+        "--color-semantic-label-strong",
+        "--body1-size",
+        "--fw-semibold",
+        "--body1-line",
+        "--color-semantic-label-alternative",
+        "--label2-size",
+        "--label2-line"
+      ],
+      "externalReferences": [
+        {
+          "label": "Shopify Polaris Account connection",
+          "url": "https://github.com/Shopify/polaris-react-archive/blob/af6ffb66a5b1d20f6c2c898b334a1ebb53728ba2/polaris.shopify.com/content/components/actions/account-connection.mdx"
+        },
+        {
+          "label": "GitHub OAuth app authorization",
+          "url": "https://docs.github.com/en/apps/oauth-apps/using-oauth-apps/authorizing-oauth-apps"
+        },
+        {
+          "label": "Google third-party connections",
+          "url": "https://support.google.com/accounts/answer/13533235?hl=en"
+        },
+        {
+          "label": "WCAG 2.2 Use of Color",
+          "url": "https://www.w3.org/TR/WCAG22/#use-of-color"
+        },
+        {
+          "label": "Target Size",
+          "url": "https://www.w3.org/TR/WCAG22/#target-size-minimum"
+        },
+        {
+          "label": "Non-text Contrast",
+          "url": "https://www.w3.org/TR/WCAG22/#non-text-contrast"
+        },
+        {
+          "label": "Reflow",
+          "url": "https://www.w3.org/TR/WCAG22/#reflow"
+        }
+      ],
+      "promptSha256": "4ee7614d32229d68ea07744c0a0585b089382d6d613013758a359ae907965b4b"
+    },
+    {
       "id": "content-badge",
       "title": "ContentBadge",
       "exports": [
@@ -4773,6 +4945,7 @@
       "provenance": "product-extension",
       "wdsFamily": null,
       "storyEvidence": [
+        "stories/ContentConnectionRow.stories.jsx",
         "stories/ContentEditor.stories.jsx",
         "stories/ContentExpandableText.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
@@ -4783,6 +4956,7 @@
         "stories/ContentStatList.stories.jsx"
       ],
       "classificationSiblings": [
+        "ConnectionRow",
         "ExpandableText",
         "LogViewer",
         "ReactionBar",
@@ -4792,6 +4966,7 @@
         "StatList"
       ],
       "storybookPages": [
+        "LDS Product/Content/Connection Row",
         "LDS Product/Content/Expandable Text",
         "LDS Product/Content/Log Viewer",
         "LDS Product/Content/Reaction Bar",
@@ -5162,6 +5337,7 @@
       "provenance": "product-extension",
       "wdsFamily": null,
       "storyEvidence": [
+        "stories/ContentConnectionRow.stories.jsx",
         "stories/ContentEditor.stories.jsx",
         "stories/ContentExpandableText.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
@@ -5172,6 +5348,7 @@
         "stories/ContentStatList.stories.jsx"
       ],
       "classificationSiblings": [
+        "ConnectionRow",
         "ContentEditor",
         "LogViewer",
         "ReactionBar",
@@ -5181,6 +5358,7 @@
         "StatList"
       ],
       "storybookPages": [
+        "LDS Product/Content/Connection Row",
         "LDS Product/Content/Expandable Text",
         "LDS Product/Content/Log Viewer",
         "LDS Product/Content/Reaction Bar",
@@ -5613,6 +5791,7 @@
       "provenance": "product-extension",
       "wdsFamily": null,
       "storyEvidence": [
+        "stories/ContentConnectionRow.stories.jsx",
         "stories/ContentEditor.stories.jsx",
         "stories/ContentExpandableText.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
@@ -5623,6 +5802,7 @@
         "stories/ContentStatList.stories.jsx"
       ],
       "classificationSiblings": [
+        "ConnectionRow",
         "ContentEditor",
         "ExpandableText",
         "ReactionBar",
@@ -5632,6 +5812,7 @@
         "StatList"
       ],
       "storybookPages": [
+        "LDS Product/Content/Connection Row",
         "LDS Product/Content/Expandable Text",
         "LDS Product/Content/Log Viewer",
         "LDS Product/Content/Reaction Bar",
@@ -6073,6 +6254,7 @@
       "provenance": "product-extension",
       "wdsFamily": null,
       "storyEvidence": [
+        "stories/ContentConnectionRow.stories.jsx",
         "stories/ContentEditor.stories.jsx",
         "stories/ContentExpandableText.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
@@ -6083,6 +6265,7 @@
         "stories/ContentStatList.stories.jsx"
       ],
       "classificationSiblings": [
+        "ConnectionRow",
         "ContentEditor",
         "ExpandableText",
         "LogViewer",
@@ -6092,6 +6275,7 @@
         "StatList"
       ],
       "storybookPages": [
+        "LDS Product/Content/Connection Row",
         "LDS Product/Content/Expandable Text",
         "LDS Product/Content/Log Viewer",
         "LDS Product/Content/Reaction Bar",
@@ -6181,6 +6365,7 @@
       "provenance": "product-extension",
       "wdsFamily": null,
       "storyEvidence": [
+        "stories/ContentConnectionRow.stories.jsx",
         "stories/ContentEditor.stories.jsx",
         "stories/ContentExpandableText.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
@@ -6191,6 +6376,7 @@
         "stories/ContentStatList.stories.jsx"
       ],
       "classificationSiblings": [
+        "ConnectionRow",
         "ContentEditor",
         "ExpandableText",
         "LogViewer",
@@ -6200,6 +6386,7 @@
         "StatList"
       ],
       "storybookPages": [
+        "LDS Product/Content/Connection Row",
         "LDS Product/Content/Expandable Text",
         "LDS Product/Content/Log Viewer",
         "LDS Product/Content/Reaction Bar",
@@ -6320,6 +6507,7 @@
       "provenance": "product-extension",
       "wdsFamily": null,
       "storyEvidence": [
+        "stories/ContentConnectionRow.stories.jsx",
         "stories/ContentEditor.stories.jsx",
         "stories/ContentExpandableText.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
@@ -6330,6 +6518,7 @@
         "stories/ContentStatList.stories.jsx"
       ],
       "classificationSiblings": [
+        "ConnectionRow",
         "ContentEditor",
         "ExpandableText",
         "LogViewer",
@@ -6339,6 +6528,7 @@
         "StatList"
       ],
       "storybookPages": [
+        "LDS Product/Content/Connection Row",
         "LDS Product/Content/Expandable Text",
         "LDS Product/Content/Log Viewer",
         "LDS Product/Content/Reaction Bar",
@@ -6450,6 +6640,7 @@
       "provenance": "product-extension",
       "wdsFamily": null,
       "storyEvidence": [
+        "stories/ContentConnectionRow.stories.jsx",
         "stories/ContentEditor.stories.jsx",
         "stories/ContentExpandableText.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
@@ -6460,6 +6651,7 @@
         "stories/ContentStatList.stories.jsx"
       ],
       "classificationSiblings": [
+        "ConnectionRow",
         "ContentEditor",
         "ExpandableText",
         "LogViewer",
@@ -6469,6 +6661,7 @@
         "StatList"
       ],
       "storybookPages": [
+        "LDS Product/Content/Connection Row",
         "LDS Product/Content/Expandable Text",
         "LDS Product/Content/Log Viewer",
         "LDS Product/Content/Reaction Bar",
@@ -6762,6 +6955,7 @@
       "provenance": "product-extension",
       "wdsFamily": null,
       "storyEvidence": [
+        "stories/ContentConnectionRow.stories.jsx",
         "stories/ContentEditor.stories.jsx",
         "stories/ContentExpandableText.stories.jsx",
         "stories/ContentLogViewer.stories.jsx",
@@ -6772,6 +6966,7 @@
         "stories/ContentStatList.stories.jsx"
       ],
       "classificationSiblings": [
+        "ConnectionRow",
         "ContentEditor",
         "ExpandableText",
         "LogViewer",
@@ -6781,6 +6976,7 @@
         "SourceDisclosure"
       ],
       "storybookPages": [
+        "LDS Product/Content/Connection Row",
         "LDS Product/Content/Expandable Text",
         "LDS Product/Content/Log Viewer",
         "LDS Product/Content/Reaction Bar",
@@ -11140,7 +11336,7 @@
           "name": "motion",
           "type": "'auto' | 'none'",
           "required": false,
-          "description": "force 배치의 움직임. auto는 수렴 애니메이션과 드래그를 켜되 prefers-reduced-motion이면 수렴 상태를 바로 그립니다. none은 항상 수렴 상태만 그립니다(시각 회귀 시험·SSR용). @default \"auto\"",
+          "description": "force 배치의 움직임. auto는 수렴 애니메이션과 드래그를 켜되 prefers-reduced-motion이면 수렴 상태를 바로 그립니다. none은 항상 수렴 상태만 그립니다(결정적 레이아웃 검증·SSR용). @default \"auto\"",
           "owner": "NetworkGraphProps"
         },
         {
@@ -11245,7 +11441,7 @@
         "--color-semantic-label-neutral"
       ],
       "externalReferences": [],
-      "promptSha256": "4f727c6307b87369088915b9092f6ffd410ca27e0960cddf3d2e64bb9d8afe41"
+      "promptSha256": "03a08eb683ede8c87ccede464c93e4476e5f0d97b931b98e55f824550c8e46bb"
     },
     {
       "id": "refresh-control",
@@ -20245,6 +20441,7 @@
       "tokens": [
         "--color-semantic-line-solid-normal",
         "--radius-input",
+        "--color-semantic-background-normal-alternative",
         "--color-semantic-background-elevated-normal",
         "--space-0-5",
         "--color-semantic-primary-surface-strong",
@@ -21084,8 +21281,21 @@
         }
       ],
       "tokens": [],
-      "externalReferences": [],
-      "promptSha256": "928fa3aca89e09bf383388b1850e2f21a5e4e54019ee95ba4761b04d8645710e"
+      "externalReferences": [
+        {
+          "label": "Material Symbols source",
+          "url": "https://github.com/google/material-design-icons/tree/master/symbols/web/deployed_code"
+        },
+        {
+          "label": "Material Symbols license",
+          "url": "https://github.com/google/material-design-icons/blob/master/LICENSE"
+        },
+        {
+          "label": "Carbon icon library",
+          "url": "https://v10.carbondesignsystem.com/guidelines/icons/library/"
+        }
+      ],
+      "promptSha256": "7a1d90a001c0dc4ef4cf24e80c4f1184c10a0b56de8d4a156891aec63b191c55"
     },
     {
       "id": "aspect-ratio",
@@ -44653,8 +44863,8 @@
           "rule": "light: #FFFFFF; dark: #212225"
         },
         {
-          "subject": "--color-semantic-fill-normal",
-          "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+          "subject": "--color-semantic-background-normal-alternative",
+          "rule": "light: #F7F7F8; dark: #0F0F10"
         }
       ],
       "responsive": [],
@@ -44713,6 +44923,7 @@
       "tokens": [
         "--caption1-size",
         "--color-semantic-background-elevated-normal",
+        "--color-semantic-background-normal-alternative",
         "--color-semantic-fill-normal",
         "--color-semantic-label-alternative",
         "--color-semantic-label-disable",
@@ -44789,7 +45000,7 @@
           },
           {
             "id": "lds-core-components-selection-and-input-search-and-autocomplete--autocomplete-start-icon",
-            "name": "찾는 칸 표시",
+            "name": "사용법 · 찾는 칸 표시",
             "role": "usage"
           }
         ],
@@ -52287,6 +52498,323 @@
       }
     },
     {
+      "slug": "product-content-connection-row",
+      "title": "Connection Row",
+      "storybookTitle": "LDS Product/Content/Connection Row",
+      "layer": "Product",
+      "family": "Content",
+      "primaryOwner": "ConnectionRow",
+      "ownerComponents": [
+        "ConnectionRow"
+      ],
+      "supportingComponents": [
+        "Avatar",
+        "Button",
+        "Icon"
+      ],
+      "purpose": "계정·서비스·저장소 연결이 반복되는 설정 화면에서 사용합니다. LDS는 visual부터 action까지의 읽기 순서와 상태 표현, 좁은 폭 재배치만 소유하고 연결 실행·권한·확인은 제품에 남깁니다.",
+      "useWhen": [
+        "connected: 관리 또는 연결 해제를 보조 액션으로 제공합니다. 연결 해제는 행에서 variant=\"outlined\" color=\"assistive\"를 사용하고, 파괴적 강조와 최종 확인은 ConfirmDialog가 소유합니다.",
+        "GitHub OAuth app authorization은 사용자가 연결된 앱과 접근 범위를 검토하고 오래된 연결을 제거할 수 있어야 함을 보여 줍니다.",
+        "Google third-party connections은 앱 이름, 접근 권한, 연결 검토·삭제를 사용자가 통제하는 구조를 설명합니다.",
+        "LDS는 여섯 소비처의 layout drift만 줄입니다. 제품별 계정 cardinality, provider metadata, mutation, permission, confirmation, route는 그대로 Portal에 남습니다."
+      ],
+      "avoidWhen": [
+        "pending: 취소 또는 다시 시도 같은 하나의 회복 액션만 제공합니다. 같은 요청을 중복 생성하는 연결 버튼을 함께 노출하지 않습니다.",
+        "disconnected: 연결 시작이 유일한 주 액션일 때 primary 문법을 사용할 수 있습니다. 권한이 없으면 disabled control과 이유를 제품이 제공합니다.",
+        "ConnectionRow는 연결된 계정·서비스·저장소·자원을 한 줄로 식별하고 현재 상태와 관련 액션을 함께 보여 주는 LK Product Extension입니다. 제품마다 Avatar, 상태 위치, 연결 해제 강조를 다시 조립하지 않도록 표면과 읽기 순서만 닫으며, 실제 연결 workflow는 소유하지 않습니다."
+      ],
+      "anatomy": [
+        {
+          "part": "actions",
+          "rule": "Product-owned actions that follow the state-specific action rules."
+        }
+      ],
+      "properties": [
+        {
+          "name": "as",
+          "type": "React.ElementType",
+          "required": false,
+          "description": "Root element. Use as=\"li\" when the row belongs to a semantic list. @default \"div\"",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "visual",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "Decorative identity visual. Avatar, Thumbnail, or a service logo are accepted; interactive content is not.",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "name",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "Visible account, service, or resource name.",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "status",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "Visible product-authored state label. It must communicate the state without color.",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "detail",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "Supporting identifier, scope, owner, or last-connected information.",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "actions",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "Product-owned actions that follow the state-specific action rules.",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "state",
+          "type": "ConnectionRowState",
+          "required": false,
+          "description": "Presentational connection state. @default \"disconnected\"",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "ConnectionRowOwnProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "ConnectionRowOwnProps"
+        }
+      ],
+      "states": [
+        {
+          "state": "status",
+          "rule": "Visible product-authored state label. It must communicate the state without color."
+        },
+        {
+          "state": "state",
+          "rule": "Presentational connection state. @default \"disconnected\""
+        }
+      ],
+      "behavior": [
+        "상태 dot은 장식이고 visible status가 상태를 전달합니다. 자동 live region은 만들지 않습니다. 실제 비동기 결과를 알릴 필요가 있으면 제품 workflow가 별도 status region을 소유합니다.",
+        "LK Portal에서 SynologyChatWorkspace, PetWorkspace, ConfluenceConnections, CatalogResourceDetail, RepositoryDrawer, ProjectWorkspace가 같은 account/resource connection anatomy를 서로 다르게 조립한다는 issue evidence를 출발점으로 삼았습니다."
+      ],
+      "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "root는 420px 이하 container에서 actions를 다음 grid line으로 내립니다. 이름과 상세 정보는 overflow-wrap:anywhere를 사용하며 320 CSS px에서 가로 스크롤을 만들지 않습니다."
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "액션 wrapper는 줄바꿈을 허용하고 직접 자식 control의 최소 target을 24×24px로 보장합니다. 제품은 가능한 한 LDS Button 또는 IconButton을 사용합니다."
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "custom styles로 상태 dot 또는 focus indicator의 3:1 비텍스트 대비를 약화하지 않습니다."
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "WCAG 2.2 Use of Color, Target Size, Non-text Contrast, Reflow를 적용합니다."
+        },
+        {
+          "subject": "--body1-line",
+          "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+        }
+      ],
+      "responsive": [
+        "vars는 --lds-connection-row-min-height, --lds-connection-row-padding, --lds-connection-row-gap, --lds-connection-row-action-gap, --lds-connection-row-visual-size를 받습니다."
+      ],
+      "contentGuidance": [
+        "DOM과 읽기 순서는 visual → name → status → detail → actions입니다. CSS reflow로 이 순서를 바꾸지 않습니다.",
+        "stable named part는 root, visual, name, status, detail, actions입니다.",
+        "state=\"connected | pending | disconnected\"는 상태 dot의 tone과 pending pulse만 결정합니다. status의 visible text는 제품이 작성하며 색만으로 상태를 전달하면 안 됩니다.",
+        "실제 연결·해제, optimistic/polling 상태, 권한, route, 확인 절차, 상태·날짜 문구, 표시할 계정 집합은 제품이 소유합니다."
+      ],
+      "accessibility": [
+        "visual은 Avatar, Thumbnail, 서비스 로고를 받습니다. 옆의 필수 name이 같은 정체성을 제공하므로 wrapper가 aria-hidden=\"true\"로 접근성 트리에서 제외합니다. interactive control은 visual에 넣지 않습니다."
+      ],
+      "exceptions": [],
+      "related": [
+        {
+          "component": "Avatar",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "Button",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "Icon",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "ContentEditor",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "ExpandableText",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "LogViewer",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "ReactionBar",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "RecordHeader",
+          "relationship": "대표 시나리오에서 조합"
+        }
+      ],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<ConnectionRow\n  as=\"li\"\n  visual={<Avatar name=\"Synology Chat\" variant=\"company\" />}\n  name=\"Synology Chat\"\n  state=\"connected\"\n  status=\"연결됨\"\n  detail=\"workspace@lkrobotics.co.kr · 5분 전 확인\"\n  actions={<Button size=\"sm\" variant=\"outlined\" color=\"assistive\">연결 해제</Button>}\n/>"
+        }
+      ],
+      "tokens": [
+        "--body1-line",
+        "--body1-size",
+        "--color-semantic-label-alternative",
+        "--color-semantic-label-strong",
+        "--component-card-bg",
+        "--component-card-border",
+        "--component-card-fg",
+        "--component-card-radius",
+        "--font-sans",
+        "--fw-semibold",
+        "--label2-line",
+        "--label2-size",
+        "--lds-connection-row-action-gap",
+        "--lds-connection-row-gap",
+        "--lds-connection-row-min-height",
+        "--lds-connection-row-padding",
+        "--lds-connection-row-visual-size",
+        "--space-1",
+        "--space-2",
+        "--space-3",
+        "--space-4"
+      ],
+      "apiLinks": [
+        "components/content/ConnectionRow.jsx",
+        "components/content/ConnectionRow.d.ts",
+        "components/content/ConnectionRow.prompt.md",
+        "stories/ContentConnectionRow.stories.jsx"
+      ],
+      "migration": [],
+      "platformStatus": {
+        "figma": "not-tracked",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/ContentConnectionRow.stories.jsx",
+        "entryStoryId": "lds-product-content-connection-row--connected",
+        "publicStories": [
+          {
+            "id": "lds-product-content-connection-row--connected",
+            "name": "개요",
+            "role": "overview"
+          },
+          {
+            "id": "lds-product-content-connection-row--disconnected",
+            "name": "변형·상태 · 연결 안 됨",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-content-connection-row--pending",
+            "name": "변형·상태 · 연결 중",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-content-connection-row--narrow-reflow",
+            "name": "반응형 · 320px 액션 재배치",
+            "role": "responsive"
+          }
+        ],
+        "hiddenEvidence": 2
+      },
+      "sources": [
+        {
+          "label": "ConnectionRow prompt contract",
+          "path": "components/content/ConnectionRow.prompt.md"
+        },
+        {
+          "label": "Storybook implementation evidence",
+          "path": "stories/ContentConnectionRow.stories.jsx"
+        },
+        {
+          "label": "Shopify Polaris Account connection",
+          "url": "https://github.com/Shopify/polaris-react-archive/blob/af6ffb66a5b1d20f6c2c898b334a1ebb53728ba2/polaris.shopify.com/content/components/actions/account-connection.mdx"
+        },
+        {
+          "label": "GitHub OAuth app authorization",
+          "url": "https://docs.github.com/en/apps/oauth-apps/using-oauth-apps/authorizing-oauth-apps"
+        },
+        {
+          "label": "Google third-party connections",
+          "url": "https://support.google.com/accounts/answer/13533235?hl=en"
+        },
+        {
+          "label": "WCAG 2.2 Use of Color",
+          "url": "https://www.w3.org/TR/WCAG22/#use-of-color"
+        },
+        {
+          "label": "Target Size",
+          "url": "https://www.w3.org/TR/WCAG22/#target-size-minimum"
+        },
+        {
+          "label": "Non-text Contrast",
+          "url": "https://www.w3.org/TR/WCAG22/#non-text-contrast"
+        },
+        {
+          "label": "Reflow",
+          "url": "https://www.w3.org/TR/WCAG22/#reflow"
+        }
+      ],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "evidence",
+        "avoidWhen": "evidence",
+        "anatomy": "evidence",
+        "properties": "evidence",
+        "states": "evidence",
+        "behavior": "evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "evidence",
+        "contentGuidance": "evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "evidence",
+        "examples": "evidence",
+        "tokens": "evidence",
+        "apiLinks": "evidence",
+        "migration": "omitted-no-evidence"
+      }
+    },
+    {
       "slug": "product-content-expandable-text",
       "title": "Expandable Text",
       "storybookTitle": "LDS Product/Content/Expandable Text",
@@ -52436,6 +52964,10 @@
       ],
       "exceptions": [],
       "related": [
+        {
+          "component": "ConnectionRow",
+          "relationship": "대표 시나리오에서 조합"
+        },
         {
           "component": "ContentEditor",
           "relationship": "대표 시나리오에서 조합"
@@ -53560,6 +54092,10 @@
       "exceptions": [],
       "related": [
         {
+          "component": "ConnectionRow",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "ContentEditor",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -54502,6 +55038,10 @@
       "exceptions": [],
       "related": [
         {
+          "component": "ConnectionRow",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "ContentEditor",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -54773,11 +55313,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ContentEditor",
+          "component": "ConnectionRow",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ExpandableText",
+          "component": "ContentEditor",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -55029,6 +55569,10 @@
       "exceptions": [],
       "related": [
         {
+          "component": "ConnectionRow",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "ContentEditor",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -55167,7 +55711,9 @@
       "ownerComponents": [
         "SourceDisclosure"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "Card"
+      ],
       "purpose": "응답이나 문서의 근거가 된 출처·시점·가용성·원본 경로를 투명하게 제시할 때 적합합니다. 단순 관련 링크나 일반 속성 목록에는 SourceDisclosure 대신 Link 또는 Description List를 사용하세요.",
       "useWhen": [
         "GOV.UK Details는 일부 사용자만 필요한 부가 정보에 disclosure를 사용하고, 대부분에게 필요한 정보는 숨기지 않으며 summary text를 짧고 설명적으로 쓰도록 합니다. 따라서 펼칠 provenance가 없는 source는 disclosure를 만들지 않습니다.",
@@ -55339,6 +55885,14 @@
       ],
       "related": [
         {
+          "component": "Card",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "ConnectionRow",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "ContentEditor",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -55360,10 +55914,6 @@
         },
         {
           "component": "ReorderList",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "StatList",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -55428,6 +55978,11 @@
           {
             "id": "lds-product-content-source-disclosure--withheld-sources",
             "name": "변형·상태 · 권한 없는 출처",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-content-source-disclosure--no-sources",
+            "name": "변형·상태 · 빈 목록",
             "role": "variants-states"
           },
           {
@@ -55805,6 +56360,10 @@
       ],
       "exceptions": [],
       "related": [
+        {
+          "component": "ConnectionRow",
+          "relationship": "대표 시나리오에서 조합"
+        },
         {
           "component": "ContentEditor",
           "relationship": "대표 시나리오에서 조합"
@@ -56235,6 +56794,10 @@
           "relationship": "같은 페이지가 소유"
         },
         {
+          "component": "ConnectionRow",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "ExpandableText",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -56248,10 +56811,6 @@
         },
         {
           "component": "RecordHeader",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "ReorderList",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -63055,7 +63614,7 @@
           "name": "motion",
           "type": "'auto' | 'none'",
           "required": false,
-          "description": "force 배치의 움직임. auto는 수렴 애니메이션과 드래그를 켜되 prefers-reduced-motion이면 수렴 상태를 바로 그립니다. none은 항상 수렴 상태만 그립니다(시각 회귀 시험·SSR용). @default \"auto\"",
+          "description": "force 배치의 움직임. auto는 수렴 애니메이션과 드래그를 켜되 prefers-reduced-motion이면 수렴 상태를 바로 그립니다. none은 항상 수렴 상태만 그립니다(결정적 레이아웃 검증·SSR용). @default \"auto\"",
           "owner": "NetworkGraphProps"
         },
         {
@@ -63146,7 +63705,7 @@
       "states": [],
       "behavior": [
         "id는 열쇠입니다. 노드를 잇는 일, 포커스 순회를 세우는 일, 애니메이션 사이에 같은 노드를 알아보는 일이 모두 id로 이뤄집니다. 같은 id가 둘이면 먼저 온 것만 남깁니다 — 그리지 않고 버리는 편이, 탭 스톱이 둘이 되어 「탭 한 번에 그림 안으로」라는 계약이 깨지는 것보다 낫습니다.",
-        "배치는 전략입니다. layered는 root/depth로 층을 쌓고, columns는 column으로 단계를 고정하며, manual은 x/y를 그대로 쓰고, force는 물리로 자리를 잡습니다. 어떤 전략이든 같은 입력이면 같은 좌표가 나옵니다 — 위치 결정은 정렬된 순서와 안정 해시에서만 나오고 난수를 쓰지 않으므로 시각 회귀 시험이 성립합니다. force도 고정 틱 수만큼 돌린 결과가 도착점이며, 움직임만 선택입니다.",
+        "배치는 전략입니다. layered는 root/depth로 층을 쌓고, columns는 column으로 단계를 고정하며, manual은 x/y를 그대로 쓰고, force는 물리로 자리를 잡습니다. 어떤 전략이든 같은 입력이면 같은 좌표가 나옵니다 — 위치 결정은 정렬된 순서와 안정 해시에서만 나오고 난수를 쓰지 않으므로 결정적인 레이아웃 검증이 가능합니다. force도 고정 틱 수만큼 돌린 결과가 도착점이며, 움직임만 선택입니다.",
         "움직임은 선택이고 도착점은 결정론입니다. motion=\"none\"이면 수렴한 자리를 바로 그리고, prefers-reduced-motion도 같게 봅니다. 어느 쪽이든 좌표는 같습니다 — 움직임을 끈다고 다른 그림이 나오지 않습니다.",
         "상태를 색으로 표현하지 마세요. 유형 색과 충돌합니다."
       ],
@@ -63281,23 +63840,23 @@
             "role": "interaction"
           },
           {
-            "id": "lds-product-data-visualization-network-graph--convention-comparison",
-            "name": "관행 비교 · 노드-링크와 플로우 에디터",
+            "id": "lds-product-data-visualization-network-graph--large-graph",
+            "name": "시나리오 · 규모가 큰 관계도",
             "role": "scenario"
           },
           {
-            "id": "lds-product-data-visualization-network-graph--large-graph",
-            "name": "배치 · 규모가 큰 관계도",
+            "id": "lds-product-data-visualization-network-graph--convention-comparison",
+            "name": "시나리오 · 노드-링크와 플로우 에디터",
             "role": "scenario"
           },
           {
             "id": "lds-product-data-visualization-network-graph--staged-flow",
-            "name": "배치 · 단계가 정해진 흐름",
+            "name": "시나리오 · 단계가 정해진 흐름",
             "role": "scenario"
           },
           {
             "id": "lds-product-data-visualization-network-graph--force-layout",
-            "name": "배치 · 물리로 잦아드는 관계도",
+            "name": "시나리오 · 물리로 잦아드는 관계도",
             "role": "scenario"
           }
         ],

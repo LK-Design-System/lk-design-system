@@ -69,7 +69,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
-## 0.1.0-rc.62 - 2026-08-08
+## 0.1.0-rc.63 - 2026-08-08
 
 ### Fixed
 
@@ -79,6 +79,25 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 - `SideNav` disclosure 자식 행 높이를 44px에서 36px로 낮추고 `--lds-side-nav-child-item-height`로 노출했습니다. 자식이 부모와 같은 높이면 위계가 들여쓰기와 1px 폰트 차이로만 남아 열린 그룹이 트리로 읽히지 않았고, `multiple={false}` accordion 소비자에서는 그룹 하나가 패널 세로를 과하게 차지했습니다. 자식 행은 접힌 레일에 존재하지 않으므로 레일↔패널 44px 행 높이 계약은 그대로이며, 36px는 WCAG 2.5.8 최소 타깃(24px)을 넘습니다. 이전 밀도가 필요한 소비자는 이 변수를 `44px`로 되돌립니다.
 - rc.61이 세운 `check:surface-ownership`가 요구하는 후속 정리입니다. 상태를 들고 있는 액션이 `IconButton`에 인라인 `style`로 pressed 팔레트를 직접 칠하던 자리를 `ToggleIcon`으로 되돌렸습니다 — `aria-pressed`와 활성 팔레트는 프리미티브가 이미 소유한 계약이라, 소비 컴포넌트가 사본을 들고 있으면 갈라집니다. `ConversationMessage`(메시지 액션), `LogViewer`, `SelectionInspector`, `CanvasEditorCommandBar`, `HistoryToolbar`, `LayerPanel`, `FileUploadQueue`, `SearchableMultiSelect`가 대상이며, `pressed`가 없는 fire-and-forget 액션은 `IconButton`으로 남습니다. `SelectionInspector`는 지역 `IconButton` 재구현을 지우고 공용 프리미티브를 씁니다.
+
+## 0.1.0-rc.62 - 2026-08-08
+
+### Added
+
+- `ConnectionRow` Product 컴포넌트: 연결 이름, 설명, 상태, 장식 시각 요소와 작업 슬롯을 한 행에 배치하고 420px 이하에서 작업을 별도 행으로 재배치합니다. 상태는 공용 `StatusIndicator`를 합성하며 제품이 권한·변경·확인 흐름을 소유합니다. (#43)
+- AI/ML 모델을 나타내는 `model` 아이콘을 Apache 2.0 Material Symbols `deployed_code` 원본과 명시적 출처 정보로 아이콘 생성 파이프라인에 추가했습니다. (#44)
+
+### Fixed
+
+- `NetworkGraph`의 노드 클릭 표식과 edge control이 축소된 SVG 안에서도 최소 포인터 목표를 유지하고, 중첩 interactive semantics 없이 각각 독립된 컨트롤이 되도록 수정했습니다.
+- 비활성 `TagInput`이 wrapper opacity로 텍스트 대비를 잃던 문제를 없애고, 읽기 가능한 비활성 표면과 `aria-disabled` 계약을 유지합니다.
+- Docs surface 감사의 제거된 Source Disclosure story ID를 현재 `AvailabilityAndProvenance` 대표 Canvas로 교체하고, uncontrolled arg 갱신·play lifecycle을 다시 검증합니다.
+
+### Verified
+
+- 기존 `DataCollectionPanel` 구현·타입·반응형 스토리·접근성 계약과 공개 export가 rc.26부터 존재함을 재검증했습니다. (#34)
+- 698개 Storybook story의 Axe 감사, 194개 Docs 표면, public/hidden IA 원장, 타입 소비자, 아이콘 정렬과 시각 회귀 검사를 통과했습니다.
+
 
 ## 0.1.0-rc.61 - 2026-08-07
 

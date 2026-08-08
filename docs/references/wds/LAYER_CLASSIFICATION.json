@@ -75,6 +75,7 @@
     "stories/ContentBadgesAnnotations.stories.jsx": "LDS Core/Components/Content/Content Badge",
     "stories/ContentBubble.stories.jsx": "LDS Product/Content/Bubble",
     "stories/ContentCarousel.stories.jsx": "LDS Product/Data/Display/Carousel",
+    "stories/ContentConnectionRow.stories.jsx": "LDS Product/Content/Connection Row",
     "stories/ContentDisclosure.stories.jsx": "LDS Core/Components/Content/Disclosure",
     "stories/ContentEditor.stories.jsx": "LDS Product/Content/Writing Editor",
     "stories/ContentExpandableText.stories.jsx": "LDS Product/Content/Expandable Text",

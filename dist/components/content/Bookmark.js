@@ -1,8 +1,8 @@
 "use client";
 import {
   Bookmark
-} from "../../chunk-WJG53OQ4.js";
-import "../../chunk-DW4HVC6S.js";
+} from "../../chunk-PAM2LLBV.js";
+import "../../chunk-B2YSRUC3.js";
 export {
   Bookmark
 };
