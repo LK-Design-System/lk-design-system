@@ -1571,6 +1571,20 @@
       ]
     },
     {
+      "pageTitle": "LDS Product/Content/Connection Row",
+      "importPath": "./stories/ContentConnectionRow.stories.jsx",
+      "storyId": "lds-product-content-connection-row--connected",
+      "exportName": "Connected",
+      "descriptionHash": "68babaadcdda7b247119c88b934b8cd1207cb96c2e5965c4087ba9f4f9b5374e",
+      "sentences": [
+        {
+          "hash": "68babaadcdda7b247119c88b934b8cd1207cb96c2e5965c4087ba9f4f9b5374e",
+          "text": "연결된 서비스는 visible 상태와 최근 확인 정보를 유지하고, 연결 해제는 보조 액션 문법으로 낮춥니다.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Product/Content/Expandable Text",
       "importPath": "./stories/ContentExpandableText.stories.jsx",
       "storyId": "lds-product-content-expandable-text--overview",
@@ -1784,16 +1798,21 @@
       "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
       "storyId": "lds-product-content-source-disclosure--availability-and-provenance",
       "exportName": "AvailabilityAndProvenance",
-      "descriptionHash": "f1008a93da3db39a60fe2cb4af719edc88689ddc1a99735f1a05541fca8fa9eb",
+      "descriptionHash": "403f14920aef9d3e23ed47506b50722da281ddf69fc69843e2cc299573c9ad65",
       "sentences": [
         {
-          "hash": "e52b5ca6c5bac096e887c2619e4b9146490c34572c132bd317b39de6f838ad32",
-          "text": "가용·오래됨·접근 제한 출처를 한 근거 목록에서 비교하는 상황입니다.",
+          "hash": "e0f6cc31af5432352f0a9f3dd74c86a7f61484254cde884959dbadcb1fb9d2b0",
+          "text": "답변 아래 근거를 귀속하는 기본 상황입니다.",
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "ffaa898526f8c3452582de372f147320a5e2adc83a714873b0644b00dd8277c1",
-          "text": "각 상태와 관측 시점, 세부 근거, 원본 이동 경로가 과장 없이 구분되는지 확인하세요.",
+          "hash": "c84aebf6424a19188702d7572cd7db9aa67bba491b3f1ae36c40e948bf603ac0",
+          "text": "닫힌 상태가 한 줄로 머무르고, 열면 패널이 떠서 주변을 밀지 않으며, 토글의 개수가 볼 수 있는 출처만 세는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "431120b79fd6b054e4486902cc80a40574da82581ef13c7a259c7cd821660568",
+          "text": "권한이 없는 출처는 목록에 나타나지 않고 집계 한 줄로만 알립니다.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -2245,6 +2264,25 @@
         {
           "hash": "43ac8684ed7a65e15d46d060821f84a20ee6a9c9281ab6496e3091f202e7d5fd",
           "text": "축·범례·요약이 series 차이를 설명하고 선만으로도 추세를 따라갈 수 있는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Data/Visualization/Network Graph",
+      "importPath": "./stories/DataNetworkGraph.stories.jsx",
+      "storyId": "lds-product-data-visualization-network-graph--relationship-overview",
+      "exportName": "RelationshipOverview",
+      "descriptionHash": "1544fb69955999982b105ebbc4e9a36be2d2ee510a3680c33966b4f99f08a80a",
+      "sentences": [
+        {
+          "hash": "0429ec95244b4fa1c577e2101a31df733b59722823993dae119ef31cb1ab60d9",
+          "text": "회사 지식망에서 프로젝트·시스템·개발자가 어떻게 이어져 있는지 보는 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "c63ad498c93abb324d592a6fb468603030f3ba058b3048bf4de7987114e6791f",
+          "text": "뿌리에서 뻗어 나가는 층 배치와 접힌 이웃 배지가 규모를 전달하는지, 노드마다 접근 가능한 이름이 있는지 확인하세요.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -3597,6 +3635,24 @@
           "decision": "retained-in-canvas"
         }
       ]
+    }
+  ],
+  "resolvedMigrations": [
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Product/Content/Source Disclosure",
+      "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
+      "hash": "e52b5ca6c5bac096e887c2619e4b9146490c34572c132bd317b39de6f838ad32",
+      "text": "가용·오래됨·접근 제한 출처를 한 근거 목록에서 비교하는 상황입니다.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Product/Content/Source Disclosure",
+      "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
+      "hash": "ffaa898526f8c3452582de372f147320a5e2adc83a714873b0644b00dd8277c1",
+      "text": "각 상태와 관측 시점, 세부 근거, 원본 이동 경로가 과장 없이 구분되는지 확인하세요.",
+      "previousDecision": "retained-in-canvas"
     }
   ],
   "migrations": []

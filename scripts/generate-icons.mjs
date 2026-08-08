@@ -9,6 +9,7 @@ const assetsRoot = path.join(repoRoot, 'assets', 'icons');
 const componentFile = path.join(repoRoot, 'components', 'icon', 'Icon.jsx');
 const typesFile = path.join(repoRoot, 'components', 'icon', 'Icon.d.ts');
 const CUSTOM_ICON_SOURCES = new Map([
+  ['model', 'material-symbols'],
   ['unlink', 'material-symbols'],
 ]);
 

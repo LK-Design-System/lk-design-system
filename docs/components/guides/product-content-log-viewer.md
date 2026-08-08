@@ -82,6 +82,7 @@
 
 | Component | Relationship |
 | --- | --- |
+| `ConnectionRow` | 대표 시나리오에서 조합 |
 | `ContentEditor` | 대표 시나리오에서 조합 |
 | `ExpandableText` | 대표 시나리오에서 조합 |
 | `ReactionBar` | 대표 시나리오에서 조합 |

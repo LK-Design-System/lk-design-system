@@ -1,12 +1,12 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkKX5SNSEKcjs = require('../../chunk-KX5SNSEK.cjs');
-require('../../chunk-ZCUQVB5V.cjs');
-require('../../chunk-3VE2HGTT.cjs');
+var _chunkQHK2G5MOcjs = require('../../chunk-QHK2G5MO.cjs');
+require('../../chunk-VWDWTC7Q.cjs');
 require('../../chunk-3H3EZZTF.cjs');
-require('../../chunk-O5WLSYUK.cjs');
+require('../../chunk-XETQ3OW3.cjs');
+require('../../chunk-3VE2HGTT.cjs');
 
 
-exports.CanvasEditorCommandBar = _chunkKX5SNSEKcjs.CanvasEditorCommandBar;
+exports.CanvasEditorCommandBar = _chunkQHK2G5MOcjs.CanvasEditorCommandBar;
 //# sourceMappingURL=CanvasEditorCommandBar.cjs.map

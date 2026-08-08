@@ -76,6 +76,7 @@
 | [Message Feed](guides/product-communication-message-feed.md) | Product / Communication | `MessageFeed` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
 | [Bubble](guides/product-content-bubble.md) | Product / Content | `Bubble` | mapped | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Checklist Item](guides/product-content-checklist-item.md) | Product / Content | `ChecklistItem` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
+| [Connection Row](guides/product-content-connection-row.md) | Product / Content | `ConnectionRow` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
 | [Expandable Text](guides/product-content-expandable-text.md) | Product / Content | `ExpandableText` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Feature Card](guides/product-content-feature-card.md) | Product / Content | `FeatureCard` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Feed Card](guides/product-content-feed-card.md) | Product / Content | `FeedCard` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
@@ -87,7 +88,7 @@
 | [Reaction Bar](guides/product-content-reaction-bar.md) | Product / Content | `ReactionBar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Record Header](guides/product-content-record-header.md) | Product / Content | `RecordHeader` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Reorder List](guides/product-content-reorder-list.md) | Product / Content | `ReorderList` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
-| [Source Disclosure](guides/product-content-source-disclosure.md) | Product / Content | `SourceDisclosure` | not-tracked | implemented | not-tracked | not-tracked | 9 public / 0 hidden |
+| [Source Disclosure](guides/product-content-source-disclosure.md) | Product / Content | `SourceDisclosure` | not-tracked | implemented | not-tracked | not-tracked | 10 public / 0 hidden |
 | [Spec Row](guides/product-content-spec-row.md) | Product / Content | `SpecRow` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Stat List](guides/product-content-stat-list.md) | Product / Content | `StatList` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Writing Editor](guides/product-content-writing-editor.md) | Product / Content | `Button`, `ContentEditor`, `Icon`, `StatusBadge` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |

@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk2XUIVLAAcjs = require('../../chunk-2XUIVLAA.cjs');
-require('../../chunk-3ATRKSQ7.cjs');
+var _chunkUBT2ONJ4cjs = require('../../chunk-UBT2ONJ4.cjs');
+require('../../chunk-OZR3K6TY.cjs');
 
 
-exports.ReactionBar = _chunk2XUIVLAAcjs.ReactionBar;
+exports.ReactionBar = _chunkUBT2ONJ4cjs.ReactionBar;
 //# sourceMappingURL=ReactionBar.cjs.map

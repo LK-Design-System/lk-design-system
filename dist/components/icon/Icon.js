@@ -3,7 +3,7 @@ import {
   ICON_NAMES,
   Icon,
   Icon_default
-} from "../../chunk-DW4HVC6S.js";
+} from "../../chunk-B2YSRUC3.js";
 export {
   ICON_NAMES,
   Icon,

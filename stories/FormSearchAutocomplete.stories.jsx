@@ -52,7 +52,7 @@ export const SearchAndAutocomplete = {
 };
 
 export const AutocompleteStartIcon = {
-  name: '찾는 칸 표시',
+  name: '사용법 · 찾는 칸 표시',
   parameters: storyDescription(
     'AutoComplete는 겉모습이 Input과 같아, 값이 채워져 있으면 그 칸에서 목록을 뒤질 수 있다는 사실이 화면에 남지 않습니다(placeholder는 빈 칸에만 보입니다). 여러 입력이 나란히 선 화면에서는 startIcon으로 찾는 칸과 적는 칸을 가르세요.',
   ),

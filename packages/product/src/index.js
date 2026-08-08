@@ -21,6 +21,7 @@ export { MessageComposer } from './components/communication/MessageComposer.jsx'
 export { MessageFeed } from './components/communication/MessageFeed.jsx';
 export { Bookmark } from './components/content/Bookmark.jsx';
 export { Bubble } from './components/content/Bubble.jsx';
+export { ConnectionRow } from './components/content/ConnectionRow.jsx';
 export { ContentEditor } from './components/content/ContentEditor.jsx';
 export { ExpandableText } from './components/content/ExpandableText.jsx';
 export { LogViewer } from './components/content/LogViewer.jsx';

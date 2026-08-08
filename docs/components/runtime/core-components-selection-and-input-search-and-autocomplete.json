@@ -239,8 +239,8 @@
       "rule": "light: #FFFFFF; dark: #212225"
     },
     {
-      "subject": "--color-semantic-fill-normal",
-      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+      "subject": "--color-semantic-background-normal-alternative",
+      "rule": "light: #F7F7F8; dark: #0F0F10"
     }
   ],
   "responsive": [],
@@ -299,6 +299,7 @@
   "tokens": [
     "--caption1-size",
     "--color-semantic-background-elevated-normal",
+    "--color-semantic-background-normal-alternative",
     "--color-semantic-fill-normal",
     "--color-semantic-label-alternative",
     "--color-semantic-label-disable",
@@ -361,7 +362,7 @@
       },
       {
         "id": "lds-core-components-selection-and-input-search-and-autocomplete--autocomplete-start-icon",
-        "name": "찾는 칸 표시",
+        "name": "사용법 · 찾는 칸 표시",
         "role": "usage"
       }
     ],

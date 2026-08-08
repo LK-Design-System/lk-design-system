@@ -317,6 +317,10 @@
       "relationship": "같은 페이지가 소유"
     },
     {
+      "component": "ConnectionRow",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "ExpandableText",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -330,10 +334,6 @@
     },
     {
       "component": "RecordHeader",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "ReorderList",
       "relationship": "대표 시나리오에서 조합"
     }
   ],

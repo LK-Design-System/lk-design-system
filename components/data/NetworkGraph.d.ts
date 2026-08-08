@@ -109,7 +109,7 @@ export interface NetworkGraphProps extends Omit<React.HTMLAttributes<HTMLDivElem
   /**
    * `force` 배치의 움직임. `auto`는 수렴 애니메이션과 드래그를 켜되
    * `prefers-reduced-motion`이면 수렴 상태를 바로 그립니다. `none`은 항상
-   * 수렴 상태만 그립니다(시각 회귀 시험·SSR용). @default "auto"
+   * 수렴 상태만 그립니다(결정적 레이아웃 검증·SSR용). @default "auto"
    */
   motion?: 'auto' | 'none';
   /** 노드에 색이 없을 때 쓰는 기본값. */

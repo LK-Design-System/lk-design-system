@@ -1,12 +1,12 @@
 {
   "version": 1,
   "expected": {
-    "stories": 691,
-    "docs": 193,
-    "publicStories": 477,
-    "hiddenStories": 214,
-    "storyIdsSha256": "25977171cc7069cb597f8b0cac4d8e6005dc870cbbeece3869f389742bd08814",
-    "visibilitySha256": "0a11e385f88a200b23b66a0f1fa36401f109300828edc8b4acae0d005b366a2f"
+    "stories": 698,
+    "docs": 194,
+    "publicStories": 482,
+    "hiddenStories": 216,
+    "storyIdsSha256": "f9aa6a02b9742afb19d936e0919949247fc1609ff6d361f35be55cfe57f84558",
+    "visibilitySha256": "0f84cb07627ee5389dd052185fbfbb3f0e8ab5976afc42b4bdf71dca75a64219"
   },
   "allowedGuideOmissions": [],
   "canonicalDocs": [
@@ -34,7 +34,7 @@
     },
     {
       "mode": "uncontrolled",
-      "storyId": "lds-product-content-source-disclosure--collapsible-citation",
+      "storyId": "lds-product-content-source-disclosure--availability-and-provenance",
       "arg": "title",
       "control": "title",
       "updatedValue": "Runtime sources · 출처",

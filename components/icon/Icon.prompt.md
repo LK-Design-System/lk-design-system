@@ -9,6 +9,29 @@ Use `Icon` for every product glyph before introducing a new drawing.
 - Color brand icons keep their original WDS fills and are exposed with the `color-` prefix.
 - LK Robotics-only glyphs remain as a small extension set when WDS has no matching asset.
 
+### AI/ML model glyph decision
+
+- Owner and provenance: `core` / `wds-adjacent`. `model` is a public base-registry
+  name, but its artwork is a licensed repository-local extension rather than WDS
+  source evidence.
+- Semantic role: a stored or deployed AI/ML model artifact. Keep `sparkle`,
+  `magic-wand`, and `ai-review` for AI actions and review behavior.
+- Registry review: `storage` already means datasets; `component`, `instance`, and
+  `template` describe different objects; the `lds-legacy` `layers` glyph uses a
+  stroke treatment that does not match the filled base set.
+- Geometry: Material Symbols `deployed_code` (rounded, filled, 24 px) supplies the
+  cube form under Apache-2.0. The path stays on its native `0 -960 960 960`
+  viewBox and inherits `currentColor`.
+- Naming: Carbon's official icon library exposes `Model` and `Machine learning
+  model`, so LDS uses the semantic registry name `model` instead of the visual
+  name `cube`.
+- Intended use: catalog or navigation destinations that list model artifacts.
+  It does not mean “run AI”, “generate”, “review”, or a generic software package.
+- References:
+  [Material Symbols source](https://github.com/google/material-design-icons/tree/master/symbols/web/deployed_code) ·
+  [Material Symbols license](https://github.com/google/material-design-icons/blob/master/LICENSE) ·
+  [Carbon icon library](https://v10.carbondesignsystem.com/guidelines/icons/library/)
+
 ## Usage
 
 ```jsx

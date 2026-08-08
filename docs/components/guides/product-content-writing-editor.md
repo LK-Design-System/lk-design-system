@@ -109,11 +109,11 @@
 | `Button` | 같은 페이지가 소유 |
 | `Icon` | 같은 페이지가 소유 |
 | `StatusBadge` | 같은 페이지가 소유 |
+| `ConnectionRow` | 대표 시나리오에서 조합 |
 | `ExpandableText` | 대표 시나리오에서 조합 |
 | `LogViewer` | 대표 시나리오에서 조합 |
 | `ReactionBar` | 대표 시나리오에서 조합 |
 | `RecordHeader` | 대표 시나리오에서 조합 |
-| `ReorderList` | 대표 시나리오에서 조합 |
 
 ## Examples
 

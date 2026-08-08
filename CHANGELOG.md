@@ -69,6 +69,24 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.62 - 2026-08-08
+
+### Added
+
+- `ConnectionRow` Product 컴포넌트: 연결 이름, 설명, 상태, 장식 시각 요소와 작업 슬롯을 한 행에 배치하고 420px 이하에서 작업을 별도 행으로 재배치합니다. 상태는 공용 `StatusIndicator`를 합성하며 제품이 권한·변경·확인 흐름을 소유합니다. (#43)
+- AI/ML 모델을 나타내는 `model` 아이콘을 Apache 2.0 Material Symbols `deployed_code` 원본과 명시적 출처 정보로 아이콘 생성 파이프라인에 추가했습니다. (#44)
+
+### Fixed
+
+- `NetworkGraph`의 노드 클릭 표식과 edge control이 축소된 SVG 안에서도 최소 포인터 목표를 유지하고, 중첩 interactive semantics 없이 각각 독립된 컨트롤이 되도록 수정했습니다.
+- 비활성 `TagInput`이 wrapper opacity로 텍스트 대비를 잃던 문제를 없애고, 읽기 가능한 비활성 표면과 `aria-disabled` 계약을 유지합니다.
+- Docs surface 감사의 제거된 Source Disclosure story ID를 현재 `AvailabilityAndProvenance` 대표 Canvas로 교체하고, uncontrolled arg 갱신·play lifecycle을 다시 검증합니다.
+
+### Verified
+
+- 기존 `DataCollectionPanel` 구현·타입·반응형 스토리·접근성 계약과 공개 export가 rc.26부터 존재함을 재검증했습니다. (#34)
+- 698개 Storybook story의 Axe 감사, 194개 Docs 표면, public/hidden IA 원장, 타입 소비자, 아이콘 정렬과 시각 회귀 검사를 통과했습니다.
+
 ## 0.1.0-rc.61 - 2026-08-07
 
 ### Added

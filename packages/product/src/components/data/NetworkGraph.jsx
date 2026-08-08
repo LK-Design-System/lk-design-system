@@ -30,7 +30,7 @@ const SHAPE = {
   card: { width: 168, height: 52, columnPitch: 300, rowPitch: 92 },
   dot: { width: 96, height: 96, columnPitch: 150, rowPitch: 92 },
 };
-const DOT_RADIUS = 16;
+const DOT_RADIUS = 18;
 const DOT_RADIUS_MAX = 30;
 
 /* 상태는 색이 아니라 의미다. 소비자가 유형 색을 주고, 상태는 그 색을 어떻게
@@ -70,7 +70,8 @@ const NARROW_RATIO = 0.55;
 /** 점 관행에서 이름 한 줄에 허용할 최대 폭. 이름 하나가 그림의 폭을 정하지 않도록. */
 const DOT_LABEL_MAX_WIDTH = 168;
 /** 펼치기 큐가 «눌리는» 최소 크기. WCAG 2.2 «Target Size (Minimum)»의 24px. */
-const CUE_MIN_TARGET = 24;
+// SVG viewBox scaling can shrink user units below CSS pixels in responsive frames.
+const CUE_MIN_TARGET = 28;
 /** 자동 요약이 이름으로 부르는 대상의 수. 나머지는 수로 말한다. */
 const SUMMARY_NAME_LIMIT = 10;
 
@@ -1399,9 +1400,9 @@ export function NetworkGraph({
               + '[data-network-collapse-cue]:focus-visible [data-network-focus-ring]{opacity:1;}'
               /* 관계선의 링은 포커스를 받는 path의 «형제»다(링이 아래로 깔려야
                  선을 덮지 않는다). 그래서 조상에서 걸어 준다. */
-              + '[data-network-edge]:has(path:focus-visible) [data-network-focus-ring]{opacity:1;}'
+              + '[data-network-edge]:has([data-network-edge-control]:focus-visible) [data-network-focus-ring]{opacity:1;}'
               + '[data-network-node]:focus,[data-network-collapse-cue]:focus,'
-              + '[data-network-edge] path:focus{outline:none;}'}
+              + '[data-network-edge-control]:focus{outline:none;}'}
           </style>
           <defs>
             {edgeColors.map((color) => (
@@ -1474,6 +1475,15 @@ export function NetworkGraph({
                         ? `${fromName}와 ${toName} 사이`
                         : `${fromName}에서 ${toName}로`);
                     const edgeName = [between, fullText].filter(Boolean).join(', ') || '관계';
+                    const targetCenter = curve.controlOut
+                      ? {
+                        x: (curve.start.x + 3 * curve.control.x + 3 * curve.controlOut.x + curve.end.x) / 8,
+                        y: (curve.start.y + 3 * curve.control.y + 3 * curve.controlOut.y + curve.end.y) / 8,
+                      }
+                      : {
+                        x: (curve.start.x + 2 * curve.control.x + curve.end.x) / 4,
+                        y: (curve.start.y + 2 * curve.control.y + curve.end.y) / 4,
+                      };
                     return (
                       <>
                         {/* 포커스 링. 관계선은 면이 없으므로 링도 «선»이다 —
@@ -1487,12 +1497,8 @@ export function NetworkGraph({
                           strokeLinecap="round"
                           pointerEvents="none"
                         />
-                        <path
-                          d={path.d}
-                          fill="none"
-                          stroke="transparent"
-                          strokeWidth={16}
-                          style={{ cursor: 'pointer' }}
+                        <g
+                          data-network-edge-control
                           id={stopDomId(edgeStop.key)}
                           role="button"
                           tabIndex={edgeStop.key === activeKey ? 0 : -1}
@@ -1501,7 +1507,22 @@ export function NetworkGraph({
                           onFocus={() => setFocusedKey(edgeStop.key)}
                           onKeyDown={(event) => stopKeyDown(event, edgeStop)}
                           onClick={() => onSelectEdge(edge)}
-                        />
+                        >
+                          <rect
+                            x={targetCenter.x - 20}
+                            y={targetCenter.y - 20}
+                            width={40}
+                            height={40}
+                            fill="transparent"
+                          />
+                          <path
+                            d={path.d}
+                            fill="none"
+                            stroke="transparent"
+                            strokeWidth={40}
+                            style={{ cursor: 'pointer' }}
+                          />
+                        </g>
                       </>
                     );
                   })()}
@@ -1550,8 +1571,8 @@ export function NetworkGraph({
               const shownCaption = fitText(captionText, labelRoom, CAPTION_FONT_SIZE);
               const truncated = shownLabel !== labelText || shownCaption !== captionText;
               return (
+                <g key={node.id}>
                 <g
-                  key={node.id}
                   id={stopDomId(nodeStop.key)}
                   data-network-node={node.id}
                   data-state={node.state ?? 'normal'}
@@ -1814,6 +1835,8 @@ export function NetworkGraph({
                       ))}
                     </>
                   )}
+                  </g>
+                </g>
                   {hasCue(node) && (() => {
                     /*
                       펼치기·접기 큐. 그래프 도구의 관행(Cytoscape
@@ -1849,6 +1872,7 @@ export function NetworkGraph({
                       <g
                         data-network-collapse-cue
                         id={stopDomId(cueStop.key)}
+                        transform={`translate(${position.x} ${position.y})`}
                         role="button"
                         tabIndex={cueStop.key === activeKey ? 0 : -1}
                         aria-label={
@@ -1931,7 +1955,6 @@ export function NetworkGraph({
                       </g>
                     );
                   })()}
-                  </g>
                 </g>
               );
             })}
