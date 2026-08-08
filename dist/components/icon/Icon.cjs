@@ -3,10 +3,10 @@
 
 
 
-var _chunkOZR3K6TYcjs = require('../../chunk-OZR3K6TY.cjs');
+var _chunkVHQHPPYQcjs = require('../../chunk-VHQHPPYQ.cjs');
 
 
 
 
-exports.ICON_NAMES = _chunkOZR3K6TYcjs.ICON_NAMES; exports.Icon = _chunkOZR3K6TYcjs.Icon; exports.default = _chunkOZR3K6TYcjs.Icon_default;
+exports.ICON_NAMES = _chunkVHQHPPYQcjs.ICON_NAMES; exports.Icon = _chunkVHQHPPYQcjs.Icon; exports.default = _chunkVHQHPPYQcjs.Icon_default;
 //# sourceMappingURL=Icon.cjs.map

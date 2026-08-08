@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkD24BJNMTcjs = require('../../chunk-D24BJNMT.cjs');
-require('../../chunk-OZR3K6TY.cjs');
+var _chunkANZ6JOVDcjs = require('../../chunk-ANZ6JOVD.cjs');
+require('../../chunk-VHQHPPYQ.cjs');
 
 
-exports.Rating = _chunkD24BJNMTcjs.Rating;
+exports.Rating = _chunkANZ6JOVDcjs.Rating;
 //# sourceMappingURL=Rating.cjs.map

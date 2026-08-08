@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkZ246IBPRcjs = require('../../chunk-Z246IBPR.cjs');
-require('../../chunk-OZR3K6TY.cjs');
+var _chunkDPBVGAOScjs = require('../../chunk-DPBVGAOS.cjs');
+require('../../chunk-VHQHPPYQ.cjs');
 
 
-exports.Accordion = _chunkZ246IBPRcjs.Accordion;
+exports.Accordion = _chunkDPBVGAOScjs.Accordion;
 //# sourceMappingURL=Accordion.cjs.map

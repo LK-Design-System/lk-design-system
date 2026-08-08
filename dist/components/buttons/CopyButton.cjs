@@ -1,13 +1,13 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkNNH2XBXZcjs = require('../../chunk-NNH2XBXZ.cjs');
+var _chunkTEPTBPGYcjs = require('../../chunk-TEPTBPGY.cjs');
 require('../../chunk-6S5YR4GD.cjs');
 require('../../chunk-UMVFIUFV.cjs');
 require('../../chunk-GWMGPLNW.cjs');
-require('../../chunk-OZR3K6TY.cjs');
+require('../../chunk-VHQHPPYQ.cjs');
 require('../../chunk-UOF2MNMP.cjs');
 
 
-exports.CopyButton = _chunkNNH2XBXZcjs.CopyButton;
+exports.CopyButton = _chunkTEPTBPGYcjs.CopyButton;
 //# sourceMappingURL=CopyButton.cjs.map

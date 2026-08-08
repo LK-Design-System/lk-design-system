@@ -7,11 +7,11 @@
   },
   "counts": {
     "svgImported": 339,
-    "customSvgImported": 2,
+    "customSvgImported": 19,
     "rasterCopied": 1,
     "publicIconNames": 359,
-    "sourceIconNames": 341,
-    "ldsLegacyFallbacks": 18
+    "sourceIconNames": 358,
+    "ldsLegacyFallbacks": 1
   },
   "icons": [
     {
@@ -2332,10 +2332,101 @@
       "viewBox": "0 0 18 19"
     },
     {
-      "name": "model",
+      "name": "battery-charging",
       "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/battery-charging.svg",
+      "assetPath": "assets/icons/battery-charging.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "battery",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/battery.svg",
+      "assetPath": "assets/icons/battery.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "cpu",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/cpu.svg",
+      "assetPath": "assets/icons/cpu.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "crosshair",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/crosshair.svg",
+      "assetPath": "assets/icons/crosshair.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "gauge",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/gauge.svg",
+      "assetPath": "assets/icons/gauge.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "joystick",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/joystick.svg",
+      "assetPath": "assets/icons/joystick.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "layers",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/layers.svg",
+      "assetPath": "assets/icons/layers.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "lidar",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/lidar.svg",
+      "assetPath": "assets/icons/lidar.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "map",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/map.svg",
+      "assetPath": "assets/icons/map.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "maximize",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/maximize.svg",
+      "assetPath": "assets/icons/maximize.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "model",
+      "source": "lds-authored",
       "sourcePath": "assets/icon-source-overrides/model.svg",
       "assetPath": "assets/icons/model.svg",
+      "viewBox": "0 0 24 24"
+    },
+    {
+      "name": "robot",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/robot.svg",
+      "assetPath": "assets/icons/robot.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "route",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/route.svg",
+      "assetPath": "assets/icons/route.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "signal",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/signal.svg",
+      "assetPath": "assets/icons/signal.svg",
       "viewBox": "0 -960 960 960"
     },
     {
@@ -2343,6 +2434,34 @@
       "source": "material-symbols",
       "sourcePath": "assets/icon-source-overrides/unlink.svg",
       "assetPath": "assets/icons/unlink.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "volume-2",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/volume-2.svg",
+      "assetPath": "assets/icons/volume-2.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "volume-x",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/volume-x.svg",
+      "assetPath": "assets/icons/volume-x.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "waypoint",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/waypoint.svg",
+      "assetPath": "assets/icons/waypoint.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "zone",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/zone.svg",
+      "assetPath": "assets/icons/zone.svg",
       "viewBox": "0 -960 960 960"
     },
     {
@@ -2399,108 +2518,6 @@
       "source": "base-color",
       "sourcePath": "Color/Name=logoYoutube.svg",
       "assetPath": "assets/icons/color-logo-youtube.svg",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "robot",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "joystick",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "waypoint",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "route",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "zone",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "layers",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "lidar",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "battery",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "battery-charging",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "gauge",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "signal",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "crosshair",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "map",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "cpu",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "volume-x",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "maximize",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
-      "viewBox": "0 0 24 24"
-    },
-    {
-      "name": "volume-2",
-      "source": "lds-legacy",
-      "sourcePath": "components/icon/Icon.jsx",
       "viewBox": "0 0 24 24"
     },
     {

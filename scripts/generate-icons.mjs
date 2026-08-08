@@ -9,8 +9,32 @@ const assetsRoot = path.join(repoRoot, 'assets', 'icons');
 const componentFile = path.join(repoRoot, 'components', 'icon', 'Icon.jsx');
 const typesFile = path.join(repoRoot, 'components', 'icon', 'Icon.d.ts');
 const CUSTOM_ICON_SOURCES = new Map([
-  ['model', 'material-symbols'],
+  // `model`은 LDS가 직접 그렸다. 업계는 모델 산출물에 아이소메트릭 정육면체를 쓰지만
+  // Material Symbols `deployed_code`는 세 면을 채우는 디자인이라 base set의 외곽선
+  // 두께(24 그리드에서 2)로 낼 수 있는 변형이 없다. 실루엣과 내부 모서리를 base
+  // 두께의 채운 path로 그렸다.
+  ['model', 'lds-authored'],
   ['unlink', 'material-symbols'],
+  // 로봇·지도 의미는 base 원본에 없어 예전에는 stroke로 그린 fallback으로 들고
+  // 있었다. Material Symbols outlined 원본으로 갈아 base와 같은 채운 path로 맞춘다.
+  // 위쪽 이름이 LDS 이름, 주석이 원본 glyph다.
+  ['robot', 'material-symbols'], // smart_toy
+  ['joystick', 'material-symbols'], // sports_esports
+  ['waypoint', 'material-symbols'], // pin_drop
+  ['route', 'material-symbols'], // route
+  ['zone', 'material-symbols'], // fence
+  ['layers', 'material-symbols'], // layers
+  ['lidar', 'material-symbols'], // sensors
+  ['battery', 'material-symbols'], // battery_0_bar
+  ['battery-charging', 'material-symbols'], // battery_charging_full
+  ['gauge', 'material-symbols'], // speed
+  ['signal', 'material-symbols'], // signal_cellular_alt
+  ['crosshair', 'material-symbols'], // gps_fixed
+  ['map', 'material-symbols'], // map
+  ['cpu', 'material-symbols'], // memory
+  ['volume-x', 'material-symbols'], // volume_off
+  ['maximize', 'material-symbols'], // fullscreen
+  ['volume-2', 'material-symbols'], // volume_up
 ]);
 
 const LEGACY_LINE_OPEN = '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">';
@@ -346,7 +370,9 @@ export interface IconProps extends React.SVGAttributes<SVGElement> {
 
 export const ICON_NAMES: readonly ${tuple};
 
-export function Icon(props: IconProps): JSX.Element;
+// 전역 \`JSX\` 네임스페이스는 React 19 소비자 tsconfig에서 해석되지 않는다.
+// 소비자 타입 검사가 보는 이름으로 낸다.
+export function Icon(props: IconProps): React.JSX.Element;
 export default Icon;
 `;
 }

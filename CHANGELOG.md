@@ -69,6 +69,21 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.64 - 2026-08-09
+
+### Added
+
+- `check:icon-drawing-style` — 아이콘이 같은 손으로 그려졌는지 수치로 보는 검사입니다. 이름·정렬 검사는 있었지만 드로잉 스타일을 보는 검사가 없어, 획 두께가 base의 3.5배인 글리프가 경고 없이 들어왔습니다. Storybook 시각 회귀와 같은 chromium으로 각 글리프를 rasterize해 획 두께 중위값(24 그리드에서 1.5–3)과 잉크 비율(36% 이하)을 재고, base 이름이 stroke로 그려지는 것을 막습니다. solid가 의도인 글리프는 `-fill`·`-thick`·`nav-*` 접미사나 `SOLID_BY_DESIGN` 등록으로 가릅니다.
+
+### Fixed
+
+- `model` 아이콘을 base 외곽선 두께로 다시 그렸습니다. rc.62가 들여온 Material Symbols `deployed_code`는 세 면을 채우는 디자인이라 획 두께가 7.0, 잉크 비율이 40%였고, base 외곽선(중위값 2.25, 15–31%) 사이에서 그 글리프만 두껍고 어둡게 보였습니다. `deployed_code`에는 외곽선 변형이 없으므로 아이소메트릭 정육면체의 실루엣과 내부 모서리를 base 두께의 채운 path로 직접 그렸습니다 — 두께 2.25, 잉크 25.8%로 `storage`(26.6%)와 같은 자리입니다.
+- 로봇·지도 의미 17개(`robot`·`joystick`·`waypoint`·`route`·`zone`·`layers`·`lidar`·`battery`·`battery-charging`·`gauge`·`signal`·`crosshair`·`map`·`cpu`·`volume-x`·`maximize`·`volume-2`)를 base와 같은 채운 path로 갈았습니다. 이전 구현은 `components/icon/Icon.jsx`에 남은 `stroke-width="2"` 선 그림 fallback이었고, iconography 문서가 인정한 Robotics extension이 아니라 옛 컴포넌트의 잔재였습니다. Apache 2.0 Material Symbols outlined 원본에 출처를 명시해 `assets/icon-source-overrides/`로 옮겼습니다. `ldsLegacyFallbacks`는 18에서 1(`apple`, 브랜드 마크)로 줄었습니다.
+
+### Changed
+
+- Iconography 가이드에 획 두께와 잉크 비율 기준을 적었습니다. 검사가 막는 값과 문서가 말하는 값이 같은 자리에서 나옵니다.
+
 ## 0.1.0-rc.63 - 2026-08-08
 
 ### Fixed
