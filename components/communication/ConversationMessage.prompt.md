@@ -40,6 +40,8 @@
 - `groupPosition`은 `single | first | middle | last`이며 grouped run은 `avatar`를 first에만 전달해도 같은 32px identity column을 예약합니다. `authorLabel`은 비문자 author의 접근 가능한 이름, `dateTime`은 `<time>`의 machine-readable 값입니다.
 - `statusLabel={null}`은 기본 lifecycle 문구를 숨기고, `error`를 지정하면 중복 lifecycle status 문구가 기본 억제됩니다. failed message의 retry 아이콘 접근 이름은 `retryLabel`로 현지화합니다.
 - `roleBadgeLabel`은 이름 옆 역할 배지를 덮어씁니다. assistant 기본 `AI`, human-agent 기본 `상담원`이며 `null`은 배지를 숨깁니다. 배지는 장식이고 접근 가능한 역할명(`ROLE_LABELS`)은 항상 별도로 announce됩니다.
+- `identityVisibility="hidden"`은 작성자 행을 시각적으로만 숨기고 접근 가능한 이름(`author` + 역할명)은 유지합니다. 2자 대화에서 outbound solid primary bubble처럼 정렬과 fill이 이미 화자를 말하는 표면 전용입니다. 화자가 셋 이상이거나 bubble/fill 구분이 없는 표면에서는 쓰지 않습니다. grouped `middle | last`는 이 prop과 무관하게 이미 숨겨집니다.
+- `messageActionsVisibility="on-demand"`는 액션바를 opacity 0으로 쉬게 하고 hover 또는 focus-within에서 드러냅니다. 레이아웃 행과 접근성 트리는 그대로라 reflow가 없고 키보드 초점이 그대로 드러내므로 disclosure가 아니라 시각적 감쇠입니다. hover가 없는 coarse pointer와, 복구 경로인 실패 턴의 retry 바에는 적용되지 않고 항상 보입니다.
 
 ## 내부 LDS 비교와 visual delta
 

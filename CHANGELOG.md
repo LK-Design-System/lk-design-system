@@ -2,6 +2,15 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.67.1 - 2026-08-09
+
+Interim vendor drop from branch `chat-message-identity-actions` (built on rc.67 HEAD `6fea1752`, excluding the concurrent uncommitted worktree changes). Fold into the next full rc when the release line settles.
+
+### Added
+
+- `ConversationMessage identityVisibility="hidden"`: 정렬과 fill이 이미 화자를 말하는 표면(2자 대화의 outbound solid primary bubble 등)에서 작성자 행을 시각적으로만 숨깁니다. 접근 가능한 이름(author + 역할명)은 유지되고, grouped `middle | last`의 기존 숨김 동작은 그대로입니다.
+- `ConversationMessage messageActionsVisibility="on-demand"`: 액션바를 opacity 0으로 쉬게 하고 hover 또는 focus-within에서 드러냅니다. 레이아웃 행과 접근성 트리는 유지되어 reflow가 없고, hover가 없는 coarse pointer와 실패 턴의 retry 바에는 적용되지 않습니다.
+
 ## Unreleased
 
 Repository-wide accessibility and convention sweep across the Core (55 areas) and Product (69 areas) layers, audited against WAI-ARIA APG, WCAG 2.2, and current industry systems, with every fix pinned by a hidden contract story. 481 stories are Axe-clean with 262 play contracts.

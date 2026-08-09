@@ -22,7 +22,7 @@
     "participant는 presentation=\"document\" | \"bubble\"로 표현 방식을 명시할 수 있습니다. presentation은 정보 위계이지 protocol, 권한, 신뢰도 또는 발신자 role을 바꾸지 않습니다.",
     "direction은 participant 배치만 재정의합니다. user는 기본 outbound, assistant와 human-agent는 기본 inbound이며 system은 항상 system 방향입니다. 시각 정렬 때문에 DOM 순서를 뒤집지 않습니다.",
     "Ant Design X Bubble은 role, placement, content, variant, loading과 footer action을 분리합니다. LDS도 role과 presentation을 분리하되 일반 AI 장문 응답은 borderless document, 짧은 사용자 발화는 bubble로 적응했습니다.",
-    "user 자신의 발화는 primary fill bubble로 화자를 표식하되, 특정 제품(slothpilot/Context Hub)의 messenger shell·palette·app chrome을 통째로 차용하지는 않습니다. 오른쪽 search/research 화면도 complete screen으로 가져오지 않고, provenance가 필요할 때 SourceDisclosure를 slot에 조합합니다."
+    "3 Free AI Chatbot App UI Kit의 왼쪽 slothGPT/general-assistant archetype만 secondary visual inspiration으로 사용합니다."
   ],
   "avoidWhen": [
     "sources에는 SourceDisclosure, attachments에는 FileUploadQueue나 제품의 완료된 attachment 표현을 조합합니다. source 개수나 파일 상태에서 presentation을 추론하지 않습니다.",
@@ -34,6 +34,10 @@
     {
       "part": "authorLabel",
       "rule": "Accessible author name when author is not plain text."
+    },
+    {
+      "part": "messageActionsVisibility",
+      "rule": "'on-demand' rests the action bar at opacity 0 and reveals it on hover or focus-within. Layout and the accessible tree are unchanged; coarse pointers and failed-turn retry bars stay always visible. @default 'always'"
     },
     {
       "part": "roleBadgeLabel",
@@ -54,10 +58,6 @@
     {
       "part": "messageActions",
       "rule": "Primary icon action bar rendered below the body. Each entry becomes an icon-only IconButton; products own the glyph and handlers. Coexists with the actions slot."
-    },
-    {
-      "part": "error",
-      "rule": "Failed-response body content. When set, a muted warning glyph is prefixed and the redundant lifecycle status label is suppressed by default. Not a live region — the MessageFeed log announces it."
     }
   ],
   "properties": [
@@ -87,6 +87,20 @@
       "type": "string",
       "required": false,
       "description": "Accessible author name when author is not plain text.",
+      "owner": "ConversationMessageBaseProps"
+    },
+    {
+      "name": "identityVisibility",
+      "type": "'visible' | 'hidden'",
+      "required": false,
+      "description": "'hidden' keeps the author in the accessible name only, for surfaces where alignment and fill already state the speaker (e.g. the outbound bubble in a two-party chat). Grouped middle/last items are already hidden regardless. @default 'visible'",
+      "owner": "ConversationMessageBaseProps"
+    },
+    {
+      "name": "messageActionsVisibility",
+      "type": "'always' | 'on-demand'",
+      "required": false,
+      "description": "'on-demand' rests the action bar at opacity 0 and reveals it on hover or focus-within. Layout and the accessible tree are unchanged; coarse pointers and failed-turn retry bars stay always visible. @default 'always'",
       "owner": "ConversationMessageBaseProps"
     },
     {
@@ -190,6 +204,10 @@
   ],
   "states": [
     {
+      "state": "identityVisibility",
+      "rule": "'hidden' keeps the author in the accessible name only, for surfaces where alignment and fill already state the speaker (e.g. the outbound bubble in a two-party chat). Grouped middle/last items are already hidden regardless. @default 'visible'"
+    },
+    {
       "state": "statusLabel",
       "rule": "Optional lifecycle label override. null suppresses it; delivery sent, delivery read, and response complete are silent by default (read surfaces as a bubble-foot receipt instead)."
     },
@@ -211,15 +229,15 @@
     },
     {
       "subject": "명시 규칙 2",
-      "rule": "WCAG 2.2의 구조, focus, name과 contrast 요구를 최종 접근성 기준으로 사용합니다."
+      "rule": "identityVisibility=\"hidden\"은 작성자 행을 시각적으로만 숨기고 접근 가능한 이름(author + 역할명)은 유지합니다. 2자 대화에서 outbound solid primary bubble처럼 정렬과 fill이 이미 화자를 말하는 표면 전용입니다. 화자가 셋 이상이거나 bubble/fill 구분이 없는 표면에서는 쓰지 않습니다. grouped middle | last는 이 prop과 무관하게 이미 숨겨집니다."
     },
     {
       "subject": "명시 규칙 3",
-      "rule": "3 Free AI Chatbot App UI Kit의 왼쪽 slothGPT/general-assistant archetype만 secondary visual inspiration으로 사용합니다."
+      "rule": "messageActionsVisibility=\"on-demand\"는 액션바를 opacity 0으로 쉬게 하고 hover 또는 focus-within에서 드러냅니다. 레이아웃 행과 접근성 트리는 그대로라 reflow가 없고 키보드 초점이 그대로 드러내므로 disclosure가 아니라 시각적 감쇠입니다. hover가 없는 coarse pointer와, 복구 경로인 실패 턴의 retry 바에는 적용되지 않고 항상 보입니다."
     },
     {
       "subject": "명시 규칙 4",
-      "rule": "약 760px: long rich assistant document → compact user solid primary bubble → system 중앙 pill 칩 → optional human-agent neutral fill bubble의 reading order를 확인합니다."
+      "rule": "WCAG 2.2의 구조, focus, name과 contrast 요구를 최종 접근성 기준으로 사용합니다."
     },
     {
       "subject": "--body1-line",
@@ -230,7 +248,7 @@
     "inlineSources는 sources 슬롯을 body 아래 별도 행이 아니라 action bar와 같은 footer 행에 배치합니다(ChatGPT식). 접힌 를 넣으면 resting 상태가 아이콘+출처 토글 한 줄이 되어 copy·재생성 아이콘 옆에 나란히 놓이고, 누르면 출처 목록이 SourceDisclosure의 앵커드 Popover(드롭다운)로 떠서 열려 본문 레이아웃을 밀지 않습니다.",
     "semantic DOM과 시각 reading order는 identity(author/timestamp) → body → response status → attachments → sources → delivery/static status → actions입니다. rich content는 document surface 안에서 자연스럽게 길어지고, compact 발화는 bubble로 묶입니다. inlineSources일 때 sources는 이 자리에서 빠져 마지막 footer 행에서 action group 뒤에 형제로 배치됩니다.",
     "채택한 것은 long-form assistant document, compact user prompt, answer action과 하단 composer의 상대적 위계입니다. exact color, typography, avatar artwork, logo, sidebar, app shell, shadow와 asset은 복사하지 않습니다.",
-    "320px: 긴 한글·영문·URL·code와 source/attachment/action slot이 horizontal overflow 없이 wrapping 또는 자체 overflow를 갖는지 확인합니다."
+    "약 760px: long rich assistant document → compact user solid primary bubble → system 중앙 pill 칩 → optional human-agent neutral fill bubble의 reading order를 확인합니다."
   ],
   "contentGuidance": [
     "children은 본문, attachments, sources, actions는 각각 ReactNode 조합 slot입니다. messageActions는 복사·재생성·더보기 같은 하단 quick-action을 배열로 받아 컴포넌트가 icon-only 버튼 액션바로 렌더하며 actions slot과 공존합니다. error는 실패 응답 본문을 받아 무채색 경고 glyph를 앞에 붙입니다. Message가 source schema, 파일 처리, Markdown renderer 또는 action 정책을 소유하지 않습니다.",
@@ -303,6 +321,8 @@
     "--color-semantic-primary-surface-normal",
     "--color-semantic-static-white",
     "--color-semantic-status-negative",
+    "--dur-fast",
+    "--ease-out",
     "--font-sans",
     "--fw-medium",
     "--fw-semibold",

@@ -56,6 +56,18 @@ const meta = {
       description: '비문자 author를 위한 접근 가능한 작성자 이름입니다.',
       table: { type: { summary: 'string' } },
     },
+    identityVisibility: {
+      control: 'inline-radio',
+      options: ['visible', 'hidden'],
+      description: '정렬과 fill이 이미 화자를 말하는 표면에서 작성자 행을 시각적으로만 숨깁니다. 접근 가능한 이름은 유지됩니다.',
+      table: { defaultValue: { summary: 'visible' }, type: { summary: "'visible' | 'hidden'" } },
+    },
+    messageActionsVisibility: {
+      control: 'inline-radio',
+      options: ['always', 'on-demand'],
+      description: '액션바를 hover/focus-within에서만 드러냅니다. 레이아웃과 접근성 트리는 유지되고 coarse pointer와 retry 바는 항상 보입니다.',
+      table: { defaultValue: { summary: 'always' }, type: { summary: "'always' | 'on-demand'" } },
+    },
     roleBadgeLabel: {
       control: 'text',
       description: '이름 옆 장식 역할 배지를 재정의합니다. null이면 배지를 숨깁니다.',
@@ -1020,5 +1032,77 @@ export const InlineSourceFooter = {
       throw new Error('Escape는 출처 팝오버를 닫아야 합니다.');
     }
     assertNoPerMessageLiveRegions(canvasElement);
+  },
+};
+
+export const IdentityAndActionVisibility = {
+  name: '사용법 · 화자 표기와 액션 노출 조절',
+  parameters: storyDescription(
+    '2자 대화처럼 정렬과 fill이 이미 화자를 말하는 표면에서는 identityVisibility="hidden"으로 작성자 행을 시각적으로만 숨기고 접근 가능한 이름은 유지합니다. messageActionsVisibility="on-demand"는 액션바를 hover/focus-within에서만 드러내되 레이아웃과 접근성 트리를 유지하며, coarse pointer와 실패 턴의 retry 바는 항상 보입니다.',
+  ),
+  render: () => (
+    <div data-visibility-fixture style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 480 }}>
+      <ConversationMessage
+        data-visibility-message="hidden-identity"
+        authorRole="user"
+        author="나"
+        identityVisibility="hidden"
+        timestamp="오후 2:41"
+        dateTime="2026-08-09T14:41:00+09:00"
+      >
+        정렬과 fill이 화자를 말하므로 라벨 행은 숨깁니다.
+      </ConversationMessage>
+      <ConversationMessage
+        data-visibility-message="on-demand-actions"
+        authorRole="assistant"
+        author="AI Assistant"
+        messageActionsVisibility="on-demand"
+        messageActions={[
+          { key: 'copy', icon: <Icon name="copy" size={16} aria-hidden="true" />, label: '응답 복사' },
+        ]}
+      >
+        완료된 응답의 액션바는 hover 또는 키보드 초점에서 드러납니다.
+      </ConversationMessage>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const hiddenIdentity = canvasElement.querySelector('[data-visibility-message="hidden-identity"]');
+    const identity = hiddenIdentity?.querySelector('[data-message-part="identity"]');
+    if (!identity || identity.getAttribute('data-visually-hidden') !== 'true') {
+      throw new Error('identityVisibility="hidden"은 작성자 행을 시각적으로만 숨겨야 합니다.');
+    }
+    const authorName = identity.textContent ?? '';
+    if (!authorName.includes('나') || !authorName.includes('사용자')) {
+      throw new Error('숨긴 작성자 행도 접근 가능한 이름과 역할명을 유지해야 합니다.');
+    }
+
+    const onDemand = canvasElement.querySelector('[data-visibility-message="on-demand-actions"]');
+    const actionBar = onDemand?.querySelector('[data-message-part="actions"]');
+    const copyButton = onDemand?.querySelector('[data-message-action="copy"]');
+    if (!actionBar || !copyButton) throw new Error('on-demand 액션바 예시가 불완전합니다.');
+    const hoverCapable = window.matchMedia('(hover: hover)').matches;
+    if (hoverCapable) {
+      if (window.getComputedStyle(actionBar).opacity !== '0') {
+        throw new Error('on-demand 액션바는 쉬는 상태에서 opacity 0이어야 합니다.');
+      }
+      const restingHeight = Math.round(onDemand.getBoundingClientRect().height);
+      copyButton.focus();
+      await waitFor(() => {
+        if (window.getComputedStyle(actionBar).opacity !== '1') {
+          throw new Error('focus-within은 on-demand 액션바를 드러내야 합니다.');
+        }
+      });
+      if (Math.round(onDemand.getBoundingClientRect().height) !== restingHeight) {
+        throw new Error('액션바 드러남은 레이아웃(높이)을 바꾸지 않아야 합니다.');
+      }
+      copyButton.blur();
+      await waitFor(() => {
+        if (window.getComputedStyle(actionBar).opacity !== '0') {
+          throw new Error('초점이 떠나면 on-demand 액션바가 다시 쉬어야 합니다.');
+        }
+      });
+    } else if (window.getComputedStyle(actionBar).opacity !== '1') {
+      throw new Error('hover가 없는 환경에서는 on-demand 액션바가 항상 보여야 합니다.');
+    }
   },
 };
