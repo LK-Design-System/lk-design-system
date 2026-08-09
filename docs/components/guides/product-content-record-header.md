@@ -15,6 +15,7 @@
 ### 사용
 
 - visual은 Avatar·Thumbnail 같은 대상 식별자입니다. 장식 이미지면 대체 텍스트를 비우고, 식별에 필요한 이미지면 슬롯 컴포넌트가 대상 이름을 제공합니다.
+- size="md|sm"은 기본 md인 opt-in 크기 축입니다. sm은 PageHeader와 같은 --heading2- 제목 scale을 사용하고 내부/행 gap을 한 단계 조밀화합니다. description의 --label1-와 details의 --label2- typography는 그대로 유지하며 루트에 data-size를 노출합니다.
 
 ### 사용하지 않음
 
@@ -40,6 +41,7 @@
 | `details` | `React.ReactNode` | No | StatList 또는 간결한 속성처럼 대상을 보충하는 세부 정보. |
 | `actions` | `React.ReactNode` | No | 대상에 적용되는 설정·공유 등의 액션 영역. |
 | `headingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | No | 제목의 문서 heading 단계. @default 1 |
+| `size` | `'sm' \| 'md'` | No | 제목 scale과 내부/행 gap을 조정하는 헤더 크기. description·details typography는 유지합니다. @default "md" |
 
 ## Behavior and interaction
 
@@ -56,8 +58,13 @@
 | 명시 규칙 1 | 기본 headingLevel={1}입니다. 상위 PageHeader나 문서 제목이 이미 있으면 실제 heading 계층에 맞춰 2–6을 명시합니다. |
 | 명시 규칙 2 | 좁은 폭에서는 visual과 내용이 먼저 읽히고 actions가 다음 flex line으로 내려갑니다. 긴 이름과 설명은 320 CSS px에서도 가로 스크롤을 만들지 않습니다. |
 | 명시 규칙 3 | WCAG 2.2 Reflow에 맞춰 320 CSS px 상당의 폭에서 양방향 스크롤 없이 재배치합니다. |
+| 명시 규칙 4 | Carbon Data Table usage가 toolbar·header·row size를 함께 pairing하듯, scan-heavy 화면에서는 RecordHeader size="sm"을 인접한 compact Card/Table/toolbar와 일관되게 조합합니다. Carbon spacing과 Fluent 2 layout에 따라 작은 spacing token은 관련성을 강화하되, 좁은 폭에서는 reflow와 touch target을 함께 보존합니다. |
 | --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
 | --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
+
+## Responsive
+
+- 실제 .fig 검사에서 RecordHeader component set은 확인되지 않았으므로 size는 WDS parity가 아니라 LDS Product compatibility extension입니다. MUI density guidance처럼 필요한 헤더에서만 명시적으로 선택하고 global dense theme로 강제하지 않습니다.
 
 ## Content and writing
 
@@ -89,6 +96,7 @@
 
 ```jsx
 <RecordHeader
+  size="sm"
   visual={<Avatar name="장진혁" size="xlarge" />}
   title="장진혁"
   badge={<StatusBadge tone="positive">인증됨</StatusBadge>}
@@ -110,13 +118,18 @@
 - `--heading1-line`
 - `--heading1-size`
 - `--heading1-spacing`
+- `--heading2-line`
+- `--heading2-size`
+- `--heading2-spacing`
 - `--label1-reading-line`
 - `--label1-size`
 - `--label1-spacing`
 - `--label2-line`
 - `--label2-size`
 - `--label2-spacing`
+- `--space-1`
 - `--space-2`
+- `--space-3`
 - `--space-4`
 
 ### Source contracts
@@ -136,3 +149,5 @@
 - [PatternFly Page Header](https://www.patternfly.org/component-groups/content-containers/page-header/)
 - [PatternFly Masthead](https://www.patternfly.org/components/masthead/design-guidelines/)
 - [WCAG 2.2 Reflow](https://www.w3.org/TR/WCAG22/#reflow)
+- [MUI density guidance](https://mui.com/material-ui/customization/density/)
+- [Carbon Data Table usage](https://carbondesignsystem.com/components/data-table/usage/)

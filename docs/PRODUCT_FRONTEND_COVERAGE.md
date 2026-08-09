@@ -5,8 +5,22 @@
 | Type | Product workflow coverage contract and audit summary |
 | Status | Current · all 16 shared-responsibility workflow traces verified |
 | Owner | Product design/engineering · Design system owner |
-| Last reviewed | 2026-08-04 |
+| Last reviewed | 2026-08-09 |
 | Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
+
+## Card · FeatureCard · RecordHeader console density · 2026-08-09
+
+정보가 많은 데스크톱 콘솔이 한 화면에서 더 많은 비교 대상을 보여 주되, 읽기 화면과 기존 소비자의 출력은 바꾸지 않도록 명시적인 opt-in 축을 추가한다. Core `Card`와 Product `FeatureCard`는 `density="comfortable|compact"`를, Product `RecordHeader`는 기존 `PageHeader` 문법과 같은 `size="sm|md"`를 제공한다. 기본값은 각각 `comfortable`, `md`이며 `Card`의 명시적 `padding`과 WDS `platform="mobile"` 계약이 우선한다. 밀도는 공간과 아이콘 타일 크기만 바꾸고 본문 타이포, DOM/읽기 순서, heading, interactive 의미, 색과 elevation은 바꾸지 않는다.
+
+이 축은 WDS parity가 아닌 명시적 LDS 확장이다. 로컬 `.fig`의 `Card/Card` component set에는 `Platform=Desktop|Mobile`, `Skeleton=False|True`만 있고 density는 없으며, `FeatureCard`와 `RecordHeader` component set도 없다. [Material UI Density](https://mui.com/material-ui/customization/density/)의 component-level opt-in과 전역 강제 회피, [Carbon Data table](https://carbondesignsystem.com/components/data-table/usage/)의 toolbar/header/row size pairing, [Carbon Spacing](https://carbondesignsystem.com/elements/spacing/overview/)과 [Fluent Layout](https://fluent2.microsoft.design/layout)의 일관된 spacing ramp·근접성 원칙을 적용하되 외부 시스템의 시각값은 복제하지 않는다.
+
+| 제품 자산 | 고정 source | 판정 | LDS와 제품의 책임 경계 |
+| --- | --- | --- | --- |
+| LK Portal | `LK-ROBOTICS-AX/lk_portal` · `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/components/catalog/DatasetDetailPage.tsx` (`ba4ff94e412bf8236e69279a08942b72abfb3916`) · `src/components/catalog/ModelDetailPage.tsx` (`4ca2980702c876537dfe74b017918a3996361e49`) · `src/components/catalog/detail/CatalogResourceDetail.tsx` (`4c4b3e82b0bf685352b26b89f526b7e8a9e6ca11`) · `src/app/sources/page.tsx` (`5835c4151eb5ce289d17f5e270b53075d658d998`) · `src/components/shared/DetailHeader.tsx` (`a5ce7c4ce2f237d2c16c3ace09c6b2e1919c2c39`) | supported by composition | 반복되는 정보 Card, 다섯 destination FeatureCard와 공용 record identity가 compact 축을 직접 소비한다. route, 권한, provider 어휘, record 데이터·action, section 선택과 보고서 읽기 화면의 comfortable 예외는 Portal이 소유한다. |
+| LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | not applicable to compact adoption | 고정 source는 편안한 destination/status surface를 쓰는 flat dashboard이며 반복되는 dense record-detail stack이나 RecordHeader가 없다. 기존 comfortable 기본값을 유지한다. |
+| LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` (`b0fd86a6b4c735aca390cd6dd179f766fa071f08`) | Card supported by composition · FeatureCard/RecordHeader not applicable | 한 viewport의 여러 감시 영역은 optional compact Card로 조합할 수 있다. telemetry truth, command, breakpoint와 완성 화면은 Control이 소유하며 feature launcher와 record identity 계약은 현재 source가 요구하지 않는다. |
+
+Storybook은 Card/FeatureCard comfortable 대 compact, RecordHeader md 대 sm을 normal/narrow에서 함께 렌더하고, spacing만 변하며 heading·설명 typography와 읽기 순서가 유지되는지 검증한다. 새 icon이나 asset은 추가하지 않는다.
 
 ## ConnectionRow · connected account/resource surface · 2026-08-08
 
@@ -79,15 +93,15 @@ Context Hub의 작업 중 parity ledger(`docs/working/product-ui-parity-ledger-2
 
 페이지의 위치와 업무를 설명하는 `PageHeader`에서 사람·로봇·주문 같은 대상 정체성
 구조를 분리했습니다. `RecordHeader`는 visual, 대상 이름, badge, description, details와
-대상 actions의 안정된 읽기 순서만 소유하는 Product Extension입니다. 세 필수 제품의
-고정 source에는 이 전체 해부학을 재사용할 현재 workflow가 없어 adoption 판정은 모두
-`not applicable`입니다.
+대상 actions의 안정된 읽기 순서만 소유하는 Product Extension입니다. Web Viz와
+Control에는 이 전체 해부학을 재사용할 현재 workflow가 없고, LK Portal은 공용
+`DetailHeader`를 통해 여러 record 상세 화면에서 이미 조합합니다.
 
 | 제품 자산 | 고정 source | 판정 | 이유 |
 | --- | --- | --- | --- |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | not applicable | 선택 로봇과 연결 상태는 있지만 이름·식별 visual·세부 통계·대상 actions를 함께 가진 재사용 레코드 헤더는 없습니다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/layout/MainLayout/index.jsx` (`2436725e49f6364fdb99f2047907f300ca367865`) · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` (`b0fd86a6b4c735aca390cd6dd179f766fa071f08`) | not applicable | 셸·탐색·로봇 감시 화면을 조합하지만 일반화 가능한 레코드 정체성 헤더 해부학은 없습니다. |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/layout/AuthShell.tsx` (`b525cdd54dfbf73eeec9d8867cd23a3d07c1630b`) · `src/app/page.tsx` (`e5fde4ba50eb52a826c6df8016196d410f2d1d99`) | not applicable | 계정·제품 identity와 destination card는 있지만 레코드 상세용 visual·이름·details·actions 묶음은 없습니다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/components/shared/DetailHeader.tsx` (`a5ce7c4ce2f237d2c16c3ace09c6b2e1919c2c39`) | supported by composition | 데이터셋·모델·카탈로그·프로젝트·서비스·개발자 상세가 공용 adapter에서 RecordHeader를 조합합니다. compact `size="sm"`만 LDS가 소유하고 뒤로가기, route, 권한, 데이터와 action은 Portal이 소유합니다. |
 
 대상 데이터 fetch, route, 권한, 실제 설정·공유·팔로우 mutation, 통계 계산과 포맷은
 제품이 소유합니다. 이 분리는 제품 화면을 복제하거나 새 workflow를 주장하지 않고,

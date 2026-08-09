@@ -48,13 +48,21 @@ function useCardStyles() {
     document.head.appendChild(el);
   }, []);
 }
-function StructuredSkeleton({ compact, className, style }) {
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "content", className, style: { display: "grid", gap: compact ? 10 : 12, ...style }, children: [
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkXLRNY734cjs.Skeleton, { variant: "rect", height: compact ? 132 : 156, radius: 12 }),
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkXLRNY734cjs.Skeleton, { variant: "text", length: "50%" }),
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkXLRNY734cjs.Skeleton, { variant: "text", length: "82%" }),
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkXLRNY734cjs.Skeleton, { variant: "text", length: "64%" })
-  ] });
+function StructuredSkeleton({ mobile, dense, className, style }) {
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+    "div",
+    {
+      "data-slot": "content",
+      className,
+      style: { display: "grid", gap: mobile ? "var(--space-2-5)" : dense ? "var(--space-2)" : "var(--space-3)", ...style },
+      children: [
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkXLRNY734cjs.Skeleton, { variant: "rect", height: mobile ? 132 : 156, radius: 12 }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkXLRNY734cjs.Skeleton, { variant: "text", length: "50%" }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkXLRNY734cjs.Skeleton, { variant: "text", length: "82%" }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkXLRNY734cjs.Skeleton, { variant: "text", length: "64%" })
+      ]
+    }
+  );
 }
 var Card = _react2.default.forwardRef(function Card2({
   as: Component = "div",
@@ -66,6 +74,7 @@ var Card = _react2.default.forwardRef(function Card2({
   headingLevel = 3,
   padding,
   platform = "desktop",
+  density = "comfortable",
   skeleton = false,
   save = false,
   saved = false,
@@ -102,26 +111,30 @@ var Card = _react2.default.forwardRef(function Card2({
     lg: "var(--component-card-shadow-lg)"
   };
   const [hover, setHover] = _react2.default.useState(false);
-  const compact = platform === "mobile";
+  const mobile = platform === "mobile";
+  const dense = density === "compact" && !mobile;
   const resolvedElevation = _nullishCoalesce(elevation, () => ( (surface === "subtle" ? "none" : "md")));
   const structured = skeleton || save || toggleIcon != null || thumbnail != null || topContent != null || leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null || bottomContent != null || footer != null;
-  const resolvedPadding = padding != null ? padding : compact ? 12 : "var(--component-card-padding)";
-  const resolvedPaddingValue = typeof resolvedPadding === "number" ? `${resolvedPadding}px` : resolvedPadding;
+  const defaultPadding = mobile ? "var(--space-3)" : dense ? "var(--space-4)" : "var(--component-card-padding)";
+  const resolvedPaddingValue = padding != null ? typeof padding === "number" ? `${padding}px` : padding : `var(--lds-card-padding, ${defaultPadding})`;
+  const contentGap = mobile ? "var(--space-1-5)" : dense ? "var(--space-1)" : "var(--space-2)";
+  const groupGap = dense ? "var(--space-2)" : "var(--space-3)";
+  const actionGap = dense ? "var(--space-1)" : "var(--space-2)";
   const HeadingTag = headingLevel === false || headingLevel == null ? "div" : `h${headingLevel}`;
-  const structuredContent = skeleton ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, StructuredSkeleton, { compact, className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "content") || void 0, style: _chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "content") }) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "content", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "content") || void 0, style: { display: "grid", gap: `var(--lds-card-gap, ${compact ? "6px" : "8px"})`, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "content") }, children: [
-    (topContent != null || save || toggleIcon != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "header", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "header") || void 0, style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "header") }, children: [
+  const structuredContent = skeleton ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, StructuredSkeleton, { mobile, dense, className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "content") || void 0, style: _chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "content") }) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "content", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "content") || void 0, style: { display: "grid", gap: `var(--lds-card-gap, ${contentGap})`, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "content") }, children: [
+    (topContent != null || save || toggleIcon != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "header", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "header") || void 0, style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: groupGap, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "header") }, children: [
       /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { minWidth: 0 }, children: topContent }),
-      (save || toggleIcon != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "actions", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "actions") || void 0, style: { display: "flex", alignItems: "center", gap: 8, flexShrink: 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "actions") }, children: [
+      (save || toggleIcon != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "actions", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "actions") || void 0, style: { display: "flex", alignItems: "center", gap: actionGap, flexShrink: 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "actions") }, children: [
         toggleIcon,
         save && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, SaveButton, { saved, onClick: onSave })
       ] })
     ] }),
     thumbnail != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-slot": "media", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "media") || void 0, style: _chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "media"), children: thumbnail }),
-    (leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "body", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "body") || void 0, style: { display: "flex", alignItems: "flex-start", gap: 12, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "body") }, children: [
+    (leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "body", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "body") || void 0, style: { display: "flex", alignItems: "flex-start", gap: groupGap, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "body") }, children: [
       leadingContent != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { flexShrink: 0 }, children: leadingContent }),
       /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: 4, minWidth: 0, flex: 1 }, children: [
         caption != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", color: "var(--color-semantic-label-alternative)", fontWeight: "var(--fw-medium)" }, children: caption }),
-        title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, HeadingTag, { "data-slot": "title", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "title") || void 0, style: { margin: 0, fontSize: compact ? "var(--body2-size)" : "var(--body1-size)", lineHeight: 1.5, color: dark ? "var(--component-card-fg-dark)" : "var(--color-semantic-label-strong)", fontWeight: "var(--fw-semibold)", overflow: titleWrap === "truncate" ? "hidden" : void 0, textOverflow: titleWrap === "truncate" ? "ellipsis" : void 0, whiteSpace: titleWrap === "truncate" ? "nowrap" : "normal", overflowWrap: titleWrap === "wrap" ? "anywhere" : void 0, wordBreak: titleWrap === "wrap" ? "keep-all" : void 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "title") }, children: title }),
+        title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, HeadingTag, { "data-slot": "title", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "title") || void 0, style: { margin: 0, fontSize: mobile ? "var(--body2-size)" : "var(--body1-size)", lineHeight: 1.5, color: dark ? "var(--component-card-fg-dark)" : "var(--color-semantic-label-strong)", fontWeight: "var(--fw-semibold)", overflow: titleWrap === "truncate" ? "hidden" : void 0, textOverflow: titleWrap === "truncate" ? "ellipsis" : void 0, whiteSpace: titleWrap === "truncate" ? "nowrap" : "normal", overflowWrap: titleWrap === "wrap" ? "anywhere" : void 0, wordBreak: titleWrap === "wrap" ? "keep-all" : void 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "title") }, children: title }),
         description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-slot": "description", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "description") || void 0, style: { fontSize: "var(--label2-size)", lineHeight: 1.5, color: dark ? "var(--color-semantic-inverse-label-neutral-soft)" : "var(--color-semantic-label-alternative)", wordBreak: "keep-all", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "description") }, children: description }),
         subCaption != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { fontSize: "var(--caption1-size)", lineHeight: 1.35, color: "var(--color-semantic-label-alternative)" }, children: subCaption }),
         metaCaption != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { fontSize: "var(--caption2-size)", lineHeight: 1.3, color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: metaCaption })
@@ -148,6 +161,7 @@ var Card = _react2.default.forwardRef(function Card2({
       "data-surface": surface,
       "data-dark": dark ? "true" : void 0,
       "data-loading": skeleton ? "true" : void 0,
+      "data-density": density,
       className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "root", interactive ? "lk-card--interactive" : null, className) || void 0,
       role: _nullishCoalesce(rest.role, () => ( (interactive ? "button" : void 0))),
       tabIndex: _nullishCoalesce(rest.tabIndex, () => ( (interactive ? 0 : void 0))),
@@ -171,8 +185,8 @@ var Card = _react2.default.forwardRef(function Card2({
         transform: interactive && hover ? "var(--component-card-hover-transform)" : "none",
         transition: "var(--component-card-transition)",
         cursor: interactive ? "pointer" : void 0,
-        padding: `var(--lds-card-padding, ${resolvedPaddingValue})`,
-        maxWidth: compact ? "var(--lds-card-max-width, 320px)" : "var(--lds-card-max-width, none)",
+        padding: resolvedPaddingValue,
+        maxWidth: mobile ? "var(--lds-card-max-width, 320px)" : "var(--lds-card-max-width, none)",
         ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "root"),
         ...style
       },
@@ -185,4 +199,4 @@ var Card = _react2.default.forwardRef(function Card2({
 
 
 exports.Card = Card;
-//# sourceMappingURL=chunk-66HC3OKL.cjs.map
+//# sourceMappingURL=chunk-PT47KCJK.cjs.map

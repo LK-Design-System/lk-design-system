@@ -12,6 +12,7 @@ const meta = {
     surface: 'default',
     interactive: false,
     dark: false,
+    density: 'comfortable',
   },
   argTypes: {
     elevation: {
@@ -22,9 +23,17 @@ const meta = {
       control: 'inline-radio',
       options: ['default', 'subtle'],
     },
+    density: {
+      control: 'inline-radio',
+      options: ['comfortable', 'compact'],
+    },
   },
   parameters: {
     storyGuide: {
+      propertyLimit: '25',
+      numericRuleLimit: '8',
+      quantitativeRuleLimit: '10',
+      responsiveRuleLimit: '6',
       storyId: 'lds-core-components-content-card--playground',
       eyebrow: 'Core / Content / Card',
       title: '서로 관련된 정보와 행동을 하나의 독립된 표면으로 묶습니다',
@@ -90,6 +99,101 @@ export const Elevation = {
       ))}
     </div>
   ),
+};
+
+function CardDensityPair({ mode }) {
+  const narrow = mode === 'narrow';
+  return (
+    <section
+      aria-label={`${narrow ? '좁은 폭' : '일반 폭'} 카드 밀도 비교`}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+        gap: 'var(--space-3)',
+        width: narrow ? 'min(320px, 100%)' : '100%',
+        maxWidth: narrow ? undefined : 720,
+      }}
+    >
+      {['comfortable', 'compact'].map((density) => (
+        <Card
+          key={density}
+          data-density-contract={`${mode}-${density}`}
+          density={density}
+          headingLevel={2}
+          caption={density === 'compact' ? '조밀형' : '기본형'}
+          title={`${density === 'compact' ? '조밀형' : '기본형'} 카드`}
+          titleWrap="wrap"
+          description="밀도는 간격만 조정하고 제목 크기는 유지합니다."
+          bottomContent={<span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)' }}>보조 정보</span>}
+          style={{ width: '100%', minWidth: 0, boxSizing: 'border-box' }}
+        />
+      ))}
+    </section>
+  );
+}
+
+export const DensityCompatibility = {
+  name: '반응형 · 기본형과 조밀형 밀도',
+  parameters: storyDescription(
+    '데스크톱 Card의 comfortable·compact를 일반 폭과 320px 좁은 폭에서 나란히 비교합니다. compact는 패딩과 내부 간격만 줄이고 제목 typography를 유지하며, 명시적 padding과 mobile platform 계약은 우선합니다.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 760 }}>
+      <CardDensityPair mode="normal" />
+      <CardDensityPair mode="narrow" />
+      <section aria-label="카드 밀도 우선순위" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 'var(--space-3)', width: 'min(680px, 100%)' }}>
+        <Card
+          data-density-contract="explicit-padding"
+          density="compact"
+          padding={20}
+          headingLevel={2}
+          title="직접 지정한 여백"
+          description="직접 지정한 여백이 조밀형 기본값보다 우선합니다."
+        />
+        <Card
+          data-density-contract="mobile-contract"
+          platform="mobile"
+          density="compact"
+          headingLevel={2}
+          title="모바일 계약"
+          description="모바일의 12px/320px 계약을 유지합니다."
+        />
+      </section>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const expectations = [
+      ['normal-comfortable', 'comfortable', '32px', '8px'],
+      ['normal-compact', 'compact', '16px', '4px'],
+      ['narrow-comfortable', 'comfortable', '32px', '8px'],
+      ['narrow-compact', 'compact', '16px', '4px'],
+    ];
+    for (const [contract, density, padding, gap] of expectations) {
+      const card = canvasElement.querySelector(`[data-density-contract="${contract}"]`);
+      const content = card?.querySelector('[data-slot="content"]');
+      if (!(card instanceof HTMLElement) || !(content instanceof HTMLElement)) {
+        throw new Error(`Card density fixture is incomplete: ${contract}`);
+      }
+      if (card.dataset.density !== density || getComputedStyle(card).paddingTop !== padding || getComputedStyle(content).gap !== gap) {
+        throw new Error(`Card ${contract} must expose density and resolve the documented padding/content gap.`);
+      }
+    }
+    for (const mode of ['normal', 'narrow']) {
+      const comfortableTitle = canvasElement.querySelector(`[data-density-contract="${mode}-comfortable"] [data-slot="title"]`);
+      const compactTitle = canvasElement.querySelector(`[data-density-contract="${mode}-compact"] [data-slot="title"]`);
+      if (!comfortableTitle || !compactTitle || getComputedStyle(comfortableTitle).fontSize !== getComputedStyle(compactTitle).fontSize) {
+        throw new Error(`Card density must not reduce the ${mode} title scale.`);
+      }
+    }
+    const explicit = canvasElement.querySelector('[data-density-contract="explicit-padding"]');
+    const mobile = canvasElement.querySelector('[data-density-contract="mobile-contract"]');
+    if (!(explicit instanceof HTMLElement) || getComputedStyle(explicit).paddingTop !== '20px') {
+      throw new Error('An explicit Card padding prop must win over compact density.');
+    }
+    if (!(mobile instanceof HTMLElement) || getComputedStyle(mobile).paddingTop !== '12px' || getComputedStyle(mobile).maxWidth !== '320px') {
+      throw new Error('Card platform="mobile" must preserve its 12px padding and 320px max-width contract.');
+    }
+  },
 };
 
 export const InteractiveAndDark = {

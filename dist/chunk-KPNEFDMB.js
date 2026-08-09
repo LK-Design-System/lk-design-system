@@ -1,8 +1,8 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }"use client";
+"use client";
 
 // components/content/RecordHeader.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
 function RecordHeader({
   visual,
   title,
@@ -11,14 +11,17 @@ function RecordHeader({
   details,
   actions,
   headingLevel = 1,
+  size = "md",
   style,
   ...rest
 }) {
   const resolvedHeadingLevel = Math.min(6, Math.max(1, headingLevel));
   const Heading = `h${resolvedHeadingLevel}`;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  const compact = size === "sm";
+  return /* @__PURE__ */ jsx(
     "header",
     {
+      "data-size": size,
       style: {
         width: "100%",
         minWidth: 0,
@@ -27,63 +30,63 @@ function RecordHeader({
         ...style
       },
       ...rest,
-      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+      children: /* @__PURE__ */ jsxs(
         "div",
         {
           style: {
             display: "flex",
             flexWrap: "wrap",
             alignItems: "flex-start",
-            columnGap: "var(--space-4)",
-            rowGap: "var(--space-4)",
+            columnGap: compact ? "var(--space-3)" : "var(--space-4)",
+            rowGap: compact ? "var(--space-3)" : "var(--space-4)",
             minWidth: 0
           },
           children: [
-            visual != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-record-header-visual": true, style: { display: "flex", flexShrink: 0 }, children: visual }),
-            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+            visual != null && /* @__PURE__ */ jsx("div", { "data-record-header-visual": true, style: { display: "flex", flexShrink: 0 }, children: visual }),
+            /* @__PURE__ */ jsxs(
               "div",
               {
                 "data-record-header-content": true,
                 style: {
                   display: "grid",
-                  gap: "var(--space-2)",
+                  gap: compact ? "var(--space-1)" : "var(--space-2)",
                   flex: "1 1 12rem",
                   minWidth: 0
                 },
                 children: [
-                  /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+                  /* @__PURE__ */ jsxs(
                     "div",
                     {
                       style: {
                         display: "flex",
                         alignItems: "center",
                         flexWrap: "wrap",
-                        gap: "var(--space-2)",
+                        gap: compact ? "var(--space-1)" : "var(--space-2)",
                         minWidth: 0
                       },
                       children: [
-                        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                        /* @__PURE__ */ jsx(
                           Heading,
                           {
                             style: {
                               margin: 0,
                               minWidth: 0,
                               color: "var(--color-semantic-label-strong)",
-                              fontSize: "var(--heading1-size)",
-                              lineHeight: "var(--heading1-line)",
+                              fontSize: compact ? "var(--heading2-size)" : "var(--heading1-size)",
+                              lineHeight: compact ? "var(--heading2-line)" : "var(--heading1-line)",
                               fontWeight: "var(--fw-extra)",
-                              letterSpacing: "var(--heading1-spacing)",
+                              letterSpacing: compact ? "var(--heading2-spacing)" : "var(--heading1-spacing)",
                               wordBreak: "keep-all",
                               overflowWrap: "anywhere"
                             },
                             children: title
                           }
                         ),
-                        badge != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-record-header-badge": true, style: { display: "flex", flexShrink: 0 }, children: badge })
+                        badge != null && /* @__PURE__ */ jsx("div", { "data-record-header-badge": true, style: { display: "flex", flexShrink: 0 }, children: badge })
                       ]
                     }
                   ),
-                  description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  description != null && /* @__PURE__ */ jsx(
                     "p",
                     {
                       style: {
@@ -99,7 +102,7 @@ function RecordHeader({
                       children: description
                     }
                   ),
-                  details != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  details != null && /* @__PURE__ */ jsx(
                     "div",
                     {
                       "data-record-header-details": true,
@@ -116,7 +119,7 @@ function RecordHeader({
                 ]
               }
             ),
-            actions != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            actions != null && /* @__PURE__ */ jsx(
               "div",
               {
                 "data-record-header-actions": true,
@@ -126,7 +129,7 @@ function RecordHeader({
                   justifyContent: "flex-end",
                   flex: "0 1 auto",
                   flexWrap: "wrap",
-                  gap: "var(--space-2)",
+                  gap: compact ? "var(--space-1)" : "var(--space-2)",
                   minWidth: 0,
                   maxWidth: "100%",
                   marginInlineStart: "auto"
@@ -141,7 +144,7 @@ function RecordHeader({
   );
 }
 
-
-
-exports.RecordHeader = RecordHeader;
-//# sourceMappingURL=chunk-RR7R6HFQ.cjs.map
+export {
+  RecordHeader
+};
+//# sourceMappingURL=chunk-KPNEFDMB.js.map

@@ -5,7 +5,7 @@
 | Type | Stable contract |
 | Status | Current |
 | Owner | Design system owner · Accessibility reviewer |
-| Last reviewed | 2026-07-27 |
+| Last reviewed | 2026-08-09 |
 
 LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제품 팀이 매번 새로 판단하지 않도록 하는 계약입니다. 모든 interactive 컴포넌트는 아래 항목을 Storybook 예시, 코드, 또는 테스트 근거로 증명해야 합니다.
 
@@ -31,7 +31,7 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | Tabs, SegmentedControl | Arrow key로 인접 항목 이동, Home/End는 첫/마지막 항목. 스크롤 가능한 Tabs의 2px 활성 지표는 tablist 경계 안에 온전히 남고 자체 세로 스크롤을 만들지 않는다. |
 | PageIndicator, Carousel | interactive dots는 이름 있는 native button group이며 standalone은 `aria-current="page"`와 24×24px target, media는 slide label·position, `aria-current="true"` + focusable `aria-disabled="true"`, 32×44px target을 제공한다. Carousel 자동 회전 control은 첫 Tab 대상이고 focus 진입·명시적 navigation 시 멈추며 reduced-motion에서 track/pill transition을 제거한다. |
 | LanguageSwitcher, DropdownMenu | 아이콘 전용 trigger는 주변 UI 언어로 번역된 이름을 가지며 Enter/Space/Arrow Down으로 첫 항목, Arrow Up으로 마지막 항목을 연다. menu는 Up/Down·Home/End·typeahead·Escape focus 복원을 지원한다. LanguageSwitcher의 native-name label은 각 `lang`을 가지며 현재 locale은 inline-end visible check와 `menuitemradio`의 `aria-checked`로 함께 노출한다. |
-| PageHeader, RecordHeader | 자체 키보드 상태는 만들지 않는다. DOM과 읽기 순서는 context/visual→제목·상태→설명·세부 정보→actions를 유지하고 CSS reflow로 바꾸지 않는다. heading 단계는 주변 문서 구조와 연결하며 icon-only action은 이름을 가져야 한다. |
+| PageHeader, RecordHeader | 자체 키보드 상태는 만들지 않는다. DOM과 읽기 순서는 context/visual→제목·상태→설명·세부 정보→actions를 유지하고 CSS reflow로 바꾸지 않는다. heading 단계는 주변 문서 구조와 연결하며 icon-only action은 이름을 가져야 한다. `size`는 제목·간격의 시각 밀도만 바꾸며 heading 단계, description/details 본문 크기, DOM·focus 순서를 바꾸지 않는다. |
 | ConnectionRow | DOM과 읽기 순서는 visual→name→visible status→detail→actions를 유지한다. name과 중복되는 visual은 `aria-hidden`으로 제외하고 interactive content를 넣지 않는다. 상태는 색만으로 전달하지 않으며 action target은 최소 24×24 CSS px, 320px에서는 actions를 다음 line으로 내려 가로 scroll을 만들지 않는다. |
 | Modal, Drawer, Sheet, Alert, ConfirmDialog | Escape 닫기, 내부 focus trap, 닫힌 뒤 trigger로 focus restore. Drawer의 짧은 visible subtitle은 `aria-describedby`로 연결하고 복잡한 지시는 body에 둔다. |
 | Toast, Notification, Banner, Callout | 자동 소멸 정보는 live region 정책을 명시, 중요한 알림은 수동 dismiss 제공. standing Callout은 기본 live region이 아니며 실제 하위 절을 시작할 때만 주변 문서 계층에 맞는 `headingLevel`을 쓴다. |
@@ -46,7 +46,7 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | Tree, ReorderList | treeitem/listitem은 키보드로 탐색 가능하고 expand/collapse 또는 move action에 accessible name이 있어야 함 |
 | ValidationSummary | 하나 이상의 차단 오류를 텍스트로 식별하고 모든 항목을 required native `href`로 실제 field/step에 연결한다. SPA activation은 anchor fallback을 보존하면서 focus·scroll을 옮기고, action name은 field label과 동일 inline message를 함께 포함한다. 원래 field는 같은 message를 `aria-describedby`로 연결하고 오류일 때 `aria-invalid="true"`를 가진다. submit 뒤 summary focus와 opt-in live count는 기본적으로 중복하지 않으며 warning-only·valid 결과는 별도 Callout/Notification을 사용한다. |
 | FieldAction | field와 action은 별도 native control과 별도 Tab stop을 유지하며 DOM·읽기·focus 순서는 field → action이다. 제출 조합은 `as="form"`과 `Button type="submit"`을 사용해 field의 Enter가 native submit 경로를 따른다. shared label은 `htmlFor`로 field에 연결하고 helper/error는 FormField 계약을 사용한다. 360px 이하에서는 기능 손실 없이 한 열로 reflow하며 action을 field와 같은 너비로 확장한다. |
-| Card | 비대화형 문서 표면은 `as="article|section|li"`로 native 구조를 보존할 수 있다. `interactive`는 루트를 button role로 바꾸므로 문서 구조용 `as`와 함께 사용하지 않고, 내부에 별도 링크·버튼이 있으면 비대화형 루트를 유지한다. |
+| Card, FeatureCard | 비대화형 문서 표면은 `as="article|section|li"`로 native 구조를 보존할 수 있다. `interactive`/`onClick`은 루트를 button role로 바꾸므로 문서 구조용 root와 함께 사용하지 않고, 내부에 별도 링크·버튼이 있으면 비대화형 루트를 유지한다. `density`는 spacing과 FeatureCard icon tile만 바꾸며 heading, 본문 타이포, 접근 이름, target, DOM·focus 순서를 바꾸지 않는다. |
 | AnnotatedImage, SourceDisclosure | 시각 overlay와 source provenance에는 텍스트 요약, availability, 원본으로 돌아가는 경로가 있어야 함 |
 | Product-owned conversation composition, SourceDisclosure, TreePicker, ConfirmDialog | message role과 streaming/error 상태를 semantic list에서 텍스트로 제공하고 unavailable composer는 이유를 연결하며 scope reset은 확인 가능해야 함 |
 | ContentEditor | 제목 input, 본문 textarea, toolbar button, 상태 live region 순서가 자연스러워야 함 |

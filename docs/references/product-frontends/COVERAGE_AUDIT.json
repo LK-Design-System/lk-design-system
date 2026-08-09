@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "auditedAt": "2026-08-04",
+  "auditedAt": "2026-08-09",
   "purpose": "Track source-backed product workflows through discovery, independent wireframing, LDS implementation, and interaction verification without treating current screens or component files as coverage proof.",
   "evidenceHierarchy": [
     "product goals and invariants",
@@ -22,13 +22,121 @@
     "verified": 16
   },
   "componentDispositionSummary": {
-    "keep": 19,
+    "keep": 21,
     "redesign": 7,
     "split": 8,
     "remove": 22,
     "separate-audit": 6
   },
   "componentDisposition": [
+    {
+      "name": "Card",
+      "path": "components/cards/Card.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-16"
+      ],
+      "reason": "Keeps the backward-compatible comfortable surface and adds an explicit compact density for information-rich product consoles. Explicit padding and the WDS mobile platform contract retain precedence; typography, semantics, interaction, surface, and elevation do not change with density.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "a984def117c05acd213f494cbb8a42e990595505",
+          "classification": "not applicable",
+          "reason": "The pinned flat dashboard uses comfortable destination and status surfaces and does not establish a repeated dense desktop record-detail card stack. The existing Card default remains unchanged.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "93802fc2aa5d29f930380ae58d51dcb68322b5e7",
+          "classification": "supported by composition",
+          "reason": "The pinned supervision dashboard combines multiple monitoring regions in one desktop viewport. Optional compact Card spacing can support those information groups while Control retains telemetry truth, commands, layout breakpoints, and screen composition.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "e5ee99d5062170e26abe63d9105c2b8a024ce710",
+          "classification": "supported by composition",
+          "reason": "Pinned Portal detail sources repeat many neutral information cards in one console page. Compact Card spacing increases simultaneous evidence visibility while Portal retains record data, route, permissions, section selection, and reading-view exceptions.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/catalog/DatasetDetailPage.tsx",
+              "blobSha": "ba4ff94e412bf8236e69279a08942b72abfb3916"
+            },
+            {
+              "path": "src/components/catalog/ModelDetailPage.tsx",
+              "blobSha": "4ca2980702c876537dfe74b017918a3996361e49"
+            },
+            {
+              "path": "src/components/catalog/detail/CatalogResourceDetail.tsx",
+              "blobSha": "4c4b3e82b0bf685352b26b89f526b7e8a9e6ca11"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FeatureCard",
+      "path": "components/cards/FeatureCard.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-16"
+      ],
+      "reason": "Keeps the comfortable feature-introduction surface and adds an explicit compact density for product launchers. Density changes spacing and icon-tile size only; title hierarchy, copy typography, tone, and activation semantics remain stable.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "a984def117c05acd213f494cbb8a42e990595505",
+          "classification": "not applicable",
+          "reason": "The pinned dashboard has a flat launcher, but it does not require the Portal-specific five-destination compact feature grid and the existing comfortable Card composition remains available.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "93802fc2aa5d29f930380ae58d51dcb68322b5e7",
+          "classification": "not applicable",
+          "reason": "The pinned supervision screen is a monitoring workspace rather than a feature-introduction launcher grid.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "e5ee99d5062170e26abe63d9105c2b8a024ce710",
+          "classification": "supported by composition",
+          "reason": "The pinned sources page renders five service and document destinations with FeatureCard. Compact density lets those destinations form one coherent console launcher without changing routes, provider vocabulary, permissions, or destination copy.",
+          "sourceEvidence": [
+            {
+              "path": "src/app/sources/page.tsx",
+              "blobSha": "5835c4151eb5ce289d17f5e270b53075d658d998"
+            }
+          ]
+        }
+      ]
+    },
     {
       "name": "ConnectionRow",
       "path": "components/content/ConnectionRow.jsx",
@@ -235,17 +343,15 @@
           ]
         },
         {
-          "repo": "context-hub",
-          "classification": "not applicable",
-          "reason": "The pinned shell and home route expose account or product identity and destination cards but no record-detail visual, name, details, and actions composition.",
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "e5ee99d5062170e26abe63d9105c2b8a024ce710",
+          "classification": "supported by composition",
+          "reason": "The pinned shared DetailHeader already composes RecordHeader across dataset, model, catalog, project, service, and developer detail routes. The small size aligns repeated record identity with compact console pages while Portal retains back navigation, route, permissions, data, and actions.",
           "sourceEvidence": [
             {
-              "path": "src/components/layout/AuthShell.tsx",
-              "blobSha": "b525cdd54dfbf73eeec9d8867cd23a3d07c1630b"
-            },
-            {
-              "path": "src/app/page.tsx",
-              "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+              "path": "src/components/shared/DetailHeader.tsx",
+              "blobSha": "a5ce7c4ce2f237d2c16c3ace09c6b2e1919c2c39"
             }
           ]
         }

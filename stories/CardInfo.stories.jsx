@@ -11,9 +11,20 @@ import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
   title: 'LDS Product/Content/Feature Card',
+  component: FeatureCard,
   tags: ['autodocs'],
+  args: {
+    density: 'comfortable',
+  },
+  argTypes: {
+    density: {
+      control: 'inline-radio',
+      options: ['comfortable', 'compact'],
+    },
+  },
   parameters: {
     storyGuide: {
+      quantitativeRuleLimit: '6',
       storyId: 'lds-product-content-feature-card--feature-cards',
       eyebrow: 'Product / Feature Card',
       title: '사용자가 제품 기능의 목적과 차이를 짧은 설명으로 비교합니다',
@@ -61,6 +72,78 @@ export const FeatureCards = {
     }
     if (canvasElement.querySelector('[role="button"], button, a')) {
       throw new Error('onClick 없는 기능 셀은 인터랙티브 요소를 만들지 않아야 합니다.');
+    }
+  },
+};
+
+function FeatureCardDensityPair({ mode }) {
+  const narrow = mode === 'narrow';
+  return (
+    <section
+      aria-label={`${narrow ? '좁은 폭' : '일반 폭'} 기능 카드 밀도 비교`}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+        gap: 'var(--space-3)',
+        width: narrow ? 'min(320px, 100%)' : '100%',
+        maxWidth: narrow ? undefined : 720,
+      }}
+    >
+      {['comfortable', 'compact'].map((density) => (
+        <FeatureCard
+          key={density}
+          data-density-contract={`${mode}-${density}`}
+          density={density}
+          headingLevel={2}
+          boxed
+          tone="signal"
+          icon={<Icon name="layers" size={20} />}
+          title={`${density === 'compact' ? '조밀형' : '기본형'} 기능`}
+          style={{ width: '100%', minWidth: 0, boxSizing: 'border-box' }}
+        >
+          밀도는 공간과 아이콘 크기만 조정하며 제목과 본문 크기는 유지합니다.
+        </FeatureCard>
+      ))}
+    </section>
+  );
+}
+
+export const DensityCompatibility = {
+  name: '반응형 · 기본형과 조밀형 밀도',
+  parameters: storyDescription(
+    'boxed FeatureCard의 comfortable·compact를 일반 폭과 320px 좁은 폭에서 나란히 비교합니다. compact는 spacing ramp와 아이콘 크기만 조정하고 typography를 유지합니다.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 760 }}>
+      <FeatureCardDensityPair mode="normal" />
+      <FeatureCardDensityPair mode="narrow" />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const expectations = [
+      ['normal-comfortable', 'comfortable', '32px', '16px', '52px', '8px'],
+      ['normal-compact', 'compact', '16px', '12px', '40px', '4px'],
+      ['narrow-comfortable', 'comfortable', '32px', '16px', '52px', '8px'],
+      ['narrow-compact', 'compact', '16px', '12px', '40px', '4px'],
+    ];
+    for (const [contract, density, padding, outerGap, iconSize, textGap] of expectations) {
+      const card = canvasElement.querySelector(`[data-density-contract="${contract}"]`);
+      const icon = card?.firstElementChild;
+      const content = card?.lastElementChild;
+      if (!(card instanceof HTMLElement) || !(icon instanceof HTMLElement) || !(content instanceof HTMLElement)) {
+        throw new Error(`FeatureCard density fixture is incomplete: ${contract}`);
+      }
+      const cardStyle = getComputedStyle(card);
+      if (card.dataset.density !== density || cardStyle.paddingTop !== padding || cardStyle.gap !== outerGap || getComputedStyle(icon).width !== iconSize || getComputedStyle(content).gap !== textGap) {
+        throw new Error(`FeatureCard ${contract} must resolve the documented density dimensions.`);
+      }
+    }
+    for (const mode of ['normal', 'narrow']) {
+      const comfortableTitle = canvasElement.querySelector(`[data-density-contract="${mode}-comfortable"] h2`);
+      const compactTitle = canvasElement.querySelector(`[data-density-contract="${mode}-compact"] h2`);
+      if (!comfortableTitle || !compactTitle || getComputedStyle(comfortableTitle).fontSize !== getComputedStyle(compactTitle).fontSize) {
+        throw new Error(`FeatureCard density must not reduce the ${mode} title scale.`);
+      }
     }
   },
 };

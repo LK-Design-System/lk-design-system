@@ -40,10 +40,14 @@ function useCardStyles() {
   }, []);
 }
 
-function StructuredSkeleton({ compact, className, style }) {
+function StructuredSkeleton({ mobile, dense, className, style }) {
   return (
-    <div data-slot="content" className={className} style={{ display: 'grid', gap: compact ? 10 : 12, ...style }}>
-      <Skeleton variant="rect" height={compact ? 132 : 156} radius={12} />
+    <div
+      data-slot="content"
+      className={className}
+      style={{ display: 'grid', gap: mobile ? 'var(--space-2-5)' : dense ? 'var(--space-2)' : 'var(--space-3)', ...style }}
+    >
+      <Skeleton variant="rect" height={mobile ? 132 : 156} radius={12} />
       <Skeleton variant="text" length="50%" />
       <Skeleton variant="text" length="82%" />
       <Skeleton variant="text" length="64%" />
@@ -73,6 +77,7 @@ export const Card = React.forwardRef(function Card({
   headingLevel = 3,
   padding,
   platform = 'desktop',
+  density = 'comfortable',
   skeleton = false,
   save = false,
   saved = false,
@@ -109,21 +114,27 @@ export const Card = React.forwardRef(function Card({
     lg: 'var(--component-card-shadow-lg)',
   };
   const [hover, setHover] = React.useState(false);
-  const compact = platform === 'mobile';
+  const mobile = platform === 'mobile';
+  const dense = density === 'compact' && !mobile;
   const resolvedElevation = elevation ?? (surface === 'subtle' ? 'none' : 'md');
   const structured = skeleton || save || toggleIcon != null || thumbnail != null || topContent != null || leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null || bottomContent != null || footer != null;
-  const resolvedPadding = padding != null ? padding : compact ? 12 : 'var(--component-card-padding)';
-  const resolvedPaddingValue = typeof resolvedPadding === 'number' ? `${resolvedPadding}px` : resolvedPadding;
+  const defaultPadding = mobile ? 'var(--space-3)' : dense ? 'var(--space-4)' : 'var(--component-card-padding)';
+  const resolvedPaddingValue = padding != null
+    ? typeof padding === 'number' ? `${padding}px` : padding
+    : `var(--lds-card-padding, ${defaultPadding})`;
+  const contentGap = mobile ? 'var(--space-1-5)' : dense ? 'var(--space-1)' : 'var(--space-2)';
+  const groupGap = dense ? 'var(--space-2)' : 'var(--space-3)';
+  const actionGap = dense ? 'var(--space-1)' : 'var(--space-2)';
   const HeadingTag = headingLevel === false || headingLevel == null ? 'div' : `h${headingLevel}`;
   const structuredContent = skeleton ? (
-    <StructuredSkeleton compact={compact} className={partClassName(classNames, 'content') || undefined} style={partStyle(styles, 'content')} />
+    <StructuredSkeleton mobile={mobile} dense={dense} className={partClassName(classNames, 'content') || undefined} style={partStyle(styles, 'content')} />
   ) : (
-    <div data-slot="content" className={partClassName(classNames, 'content') || undefined} style={{ display: 'grid', gap: `var(--lds-card-gap, ${compact ? '6px' : '8px'})`, ...partStyle(styles, 'content') }}>
+    <div data-slot="content" className={partClassName(classNames, 'content') || undefined} style={{ display: 'grid', gap: `var(--lds-card-gap, ${contentGap})`, ...partStyle(styles, 'content') }}>
       {(topContent != null || save || toggleIcon != null) && (
-        <div data-slot="header" className={partClassName(classNames, 'header') || undefined} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, ...partStyle(styles, 'header') }}>
+        <div data-slot="header" className={partClassName(classNames, 'header') || undefined} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: groupGap, ...partStyle(styles, 'header') }}>
           <div style={{ minWidth: 0 }}>{topContent}</div>
           {(save || toggleIcon != null) && (
-            <div data-slot="actions" className={partClassName(classNames, 'actions') || undefined} style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0, ...partStyle(styles, 'actions') }}>
+            <div data-slot="actions" className={partClassName(classNames, 'actions') || undefined} style={{ display: 'flex', alignItems: 'center', gap: actionGap, flexShrink: 0, ...partStyle(styles, 'actions') }}>
               {toggleIcon}
               {save && <SaveButton saved={saved} onClick={onSave} />}
             </div>
@@ -132,11 +143,11 @@ export const Card = React.forwardRef(function Card({
       )}
       {thumbnail != null && <div data-slot="media" className={partClassName(classNames, 'media') || undefined} style={partStyle(styles, 'media')}>{thumbnail}</div>}
       {(leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null) && (
-        <div data-slot="body" className={partClassName(classNames, 'body') || undefined} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, ...partStyle(styles, 'body') }}>
+        <div data-slot="body" className={partClassName(classNames, 'body') || undefined} style={{ display: 'flex', alignItems: 'flex-start', gap: groupGap, ...partStyle(styles, 'body') }}>
           {leadingContent != null && <div style={{ flexShrink: 0 }}>{leadingContent}</div>}
           <div style={{ display: 'grid', gap: 4, minWidth: 0, flex: 1 }}>
             {caption != null && <div style={{ fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', color: 'var(--color-semantic-label-alternative)', fontWeight: 'var(--fw-medium)' }}>{caption}</div>}
-            {title != null && <HeadingTag data-slot="title" className={partClassName(classNames, 'title') || undefined} style={{ margin: 0, fontSize: compact ? 'var(--body2-size)' : 'var(--body1-size)', lineHeight: 1.5, color: dark ? 'var(--component-card-fg-dark)' : 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflow: titleWrap === 'truncate' ? 'hidden' : undefined, textOverflow: titleWrap === 'truncate' ? 'ellipsis' : undefined, whiteSpace: titleWrap === 'truncate' ? 'nowrap' : 'normal', overflowWrap: titleWrap === 'wrap' ? 'anywhere' : undefined, wordBreak: titleWrap === 'wrap' ? 'keep-all' : undefined, ...partStyle(styles, 'title') }}>{title}</HeadingTag>}
+            {title != null && <HeadingTag data-slot="title" className={partClassName(classNames, 'title') || undefined} style={{ margin: 0, fontSize: mobile ? 'var(--body2-size)' : 'var(--body1-size)', lineHeight: 1.5, color: dark ? 'var(--component-card-fg-dark)' : 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflow: titleWrap === 'truncate' ? 'hidden' : undefined, textOverflow: titleWrap === 'truncate' ? 'ellipsis' : undefined, whiteSpace: titleWrap === 'truncate' ? 'nowrap' : 'normal', overflowWrap: titleWrap === 'wrap' ? 'anywhere' : undefined, wordBreak: titleWrap === 'wrap' ? 'keep-all' : undefined, ...partStyle(styles, 'title') }}>{title}</HeadingTag>}
             {description != null && <div data-slot="description" className={partClassName(classNames, 'description') || undefined} style={{ fontSize: 'var(--label2-size)', lineHeight: 1.5, color: dark ? 'var(--color-semantic-inverse-label-neutral-soft)' : 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all', ...partStyle(styles, 'description') }}>{description}</div>}
             {subCaption != null && <div style={{ fontSize: 'var(--caption1-size)', lineHeight: 1.35, color: 'var(--color-semantic-label-alternative)' }}>{subCaption}</div>}
             {metaCaption != null && <div style={{ fontSize: 'var(--caption2-size)', lineHeight: 1.3, color: 'var(--color-semantic-label-alternative)', fontVariantNumeric: 'tabular-nums' }}>{metaCaption}</div>}
@@ -164,6 +175,7 @@ export const Card = React.forwardRef(function Card({
       data-surface={surface}
       data-dark={dark ? 'true' : undefined}
       data-loading={skeleton ? 'true' : undefined}
+      data-density={density}
       className={partClassName(classNames, 'root', interactive ? 'lk-card--interactive' : null, className) || undefined}
       role={rest.role ?? (interactive ? 'button' : undefined)}
       tabIndex={rest.tabIndex ?? (interactive ? 0 : undefined)}
@@ -185,8 +197,8 @@ export const Card = React.forwardRef(function Card({
         transform: interactive && hover ? 'var(--component-card-hover-transform)' : 'none',
         transition: 'var(--component-card-transition)',
         cursor: interactive ? 'pointer' : undefined,
-        padding: `var(--lds-card-padding, ${resolvedPaddingValue})`,
-        maxWidth: compact ? 'var(--lds-card-max-width, 320px)' : 'var(--lds-card-max-width, none)',
+        padding: resolvedPaddingValue,
+        maxWidth: mobile ? 'var(--lds-card-max-width, 320px)' : 'var(--lds-card-max-width, none)',
         ...partStyle(styles, 'root'),
         ...style,
       }}

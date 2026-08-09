@@ -16,6 +16,7 @@ function FeatureCard({
   children,
   tone = "signal",
   boxed = false,
+  density = "comfortable",
   headingLevel = 4,
   style,
   onClick,
@@ -24,6 +25,7 @@ function FeatureCard({
 }) {
   const t = ICON_TONES[tone] || ICON_TONES.signal;
   const activatable = typeof onClick === "function";
+  const compact = density === "compact";
   const HeadingTag = headingLevel === false || headingLevel == null ? "div" : `h${headingLevel}`;
   const handleKeyDown = (e) => {
     if (activatable && (e.key === "Enter" || e.key === " ") && e.target === e.currentTarget) {
@@ -35,6 +37,7 @@ function FeatureCard({
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
+      "data-density": density,
       role: _nullishCoalesce(rest.role, () => ( (activatable ? "button" : void 0))),
       tabIndex: _nullishCoalesce(rest.tabIndex, () => ( (activatable ? 0 : void 0))),
       onClick,
@@ -42,21 +45,21 @@ function FeatureCard({
       style: {
         display: "flex",
         flexDirection: "column",
-        gap: "16px",
+        gap: compact ? "var(--space-3)" : "var(--space-4)",
         background: boxed ? "var(--component-card-bg)" : "transparent",
         border: boxed ? "var(--component-card-border)" : "none",
         borderRadius: boxed ? "var(--component-card-radius)" : 0,
         /* Card's default rest elevation (elevation="md") — same value as the
            previous var(--shadow-md), now tracked via the card token. */
         boxShadow: boxed ? "var(--component-card-shadow-md)" : "none",
-        padding: boxed ? "var(--component-card-padding)" : 0,
+        padding: boxed ? compact ? "var(--space-4)" : "var(--component-card-padding)" : 0,
         cursor: activatable ? "pointer" : void 0,
         ...style
       },
       ...rest,
       children: [
-        icon && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: 52, height: 52, borderRadius: "var(--radius-14)", color: t.fg, background: t.bg }, children: icon }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", flexDirection: "column", gap: "8px" }, children: [
+        icon && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: compact ? "var(--space-10)" : 52, height: compact ? "var(--space-10)" : 52, borderRadius: "var(--radius-14)", color: t.fg, background: t.bg }, children: icon }),
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", flexDirection: "column", gap: compact ? "var(--space-1)" : "var(--space-2)" }, children: [
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, HeadingTag, { style: { fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-strong)", margin: 0, wordBreak: "keep-all" }, children: title }),
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { style: { fontSize: "var(--body2-size)", lineHeight: 1.7, color: "var(--color-semantic-label-alternative)", margin: 0, wordBreak: "keep-all" }, children })
         ] })
@@ -68,4 +71,4 @@ function FeatureCard({
 
 
 exports.FeatureCard = FeatureCard;
-//# sourceMappingURL=chunk-LAMQUGIV.cjs.map
+//# sourceMappingURL=chunk-7GA7LUNI.cjs.map

@@ -8,10 +8,21 @@
 ```jsx
 <Card platform="mobile" save title="Title" description="Description" />
 <Card platform="desktop" skeleton headingLevel={2} />
+<Card density="compact" title="Dense console card" description="Typography stays unchanged." />
 ```
 
-- WDS axes: `platform="desktop|mobile"`, `skeleton`, `save`, `toggleIcon` (top-right toggle affordance beside `save`), structured slots (`thumbnail`, `topContent`, `leadingContent`, `trailingContent`, `bottomContent`, `footer`) and three text caption tiers (`caption`, `title`, `description`, `subCaption`, `metaCaption`).
+- 실제 `.fig`의 `Card/Card` component set을 검사한 결과, 확인되는 축은 `Platform=Desktop|Mobile`과 `Skeleton=False|True`뿐입니다. `density`는 WDS parity 축이 아니라 **명시적인 LDS Core compatibility extension**입니다.
+- `save`, `toggleIcon`(top-right toggle affordance beside `save`), structured slots (`thumbnail`, `topContent`, `leadingContent`, `trailingContent`, `bottomContent`, `footer`) and three text caption tiers (`caption`, `title`, `description`, `subCaption`, `metaCaption`) are LDS's structured Card API; do not describe them as extra axes discovered in the inspected component set.
 - Plain children-only Card usage is still supported for generic LDS surfaces.
+
+## Density compatibility extension
+
+- `density="comfortable|compact"` is opt-in and defaults to `comfortable`. On desktop, `comfortable` keeps the component Card padding (currently 32px) and `compact` uses `--space-4` (16px), then tightens related content/header/body/action gaps with the LDS spacing scale. It does **not** reduce Card typography.
+- `platform="mobile"` keeps its existing 12px padding and 320px max-width contract even when `density="compact"` is present. Platform can retain its existing mobile title scale; density itself never changes type size.
+- An explicit `padding` prop wins over platform/density defaults and `--lds-card-padding`. Use `vars` for the default padding only when the prop is absent. The root mirrors the resolved API choice as `data-density`.
+- [MUI density guidance](https://mui.com/material-ui/customization/density/) treats density as an opt-in adjustment through component props, spacing, and size; its dense demo theme is not a recommendation to force compactness across an entire application. Adopt compact Card only where scan-heavy console context needs it.
+- [Carbon spacing](https://carbondesignsystem.com/elements/spacing/overview/) uses a spacing scale to establish relationships and control density, while [Fluent 2 layout](https://fluent2.microsoft.design/layout) uses smaller component spacers to strengthen relationships and allows responsive spacing adjustments. Keep compact values on the LDS spacing ramp rather than introducing one-off pixels.
+- In data-heavy consoles, pair Card density deliberately with neighboring controls and tables. [Carbon Data Table usage](https://carbondesignsystem.com/components/data-table/usage/) pairs toolbar/header/row sizes rather than mixing independent density decisions inside one region.
 
 ## 카드 전체 클릭 vs 내부 인터랙티브 요소
 
@@ -58,5 +69,5 @@
 - `className`, `style`, and the default ref target the polymorphic root. The ref type follows the rendered `as` element.
 - Stable structured parts are `root`, `content`, `header`, `actions`, `media`, `body`, `title`, `description`, and `footer`. Optional parts do not render empty wrappers.
 - `classNames` and `styles` accept only those stable part keys; product selectors do not depend on Card's internal DOM order.
-- Root state is mirrored through `data-interactive`, `data-surface`, `data-dark`, and skeleton `data-loading`.
+- Root state is mirrored through `data-interactive`, `data-surface`, `data-dark`, `data-density`, and skeleton `data-loading`.
 - `vars` accepts only `--lds-card-padding`, `--lds-card-radius`, `--lds-card-gap`, and `--lds-card-max-width`. These cannot turn a non-interactive card into a control or bypass heading/nesting rules.

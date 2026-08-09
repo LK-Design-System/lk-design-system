@@ -69,6 +69,14 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.67 - 2026-08-09
+
+### Added
+
+- `Card density="compact"` adds an opt-in 16px desktop information surface with tighter internal spacing while preserving `comfortable` as the default, explicit `padding` precedence, the existing mobile platform contract, typography, semantics, and interaction.
+- `FeatureCard density="compact"` adds an opt-in launcher density with 16px boxed padding, 12px group spacing, a 40px icon tile, and unchanged title/body typography.
+- `RecordHeader size="sm"` adds a compact record-identity header aligned with the existing small `PageHeader` scale while preserving heading level, description/details typography, DOM order, and actions.
+
 ## 0.1.0-rc.65 - 2026-08-09
 
 ### Fixed

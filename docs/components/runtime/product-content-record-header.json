@@ -18,7 +18,8 @@
   ],
   "purpose": "사람·로봇·주문처럼 대상 자체가 화면의 주인공일 때 사용합니다. 시각 식별자, 이름, 배지, 설명, 세부 정보와 대상 액션을 안정된 읽기 순서로 묶으며, 화면의 위치·업무만 설명할 때는 사용하지 않습니다.",
   "useWhen": [
-    "visual은 Avatar·Thumbnail 같은 대상 식별자입니다. 장식 이미지면 대체 텍스트를 비우고, 식별에 필요한 이미지면 슬롯 컴포넌트가 대상 이름을 제공합니다."
+    "visual은 Avatar·Thumbnail 같은 대상 식별자입니다. 장식 이미지면 대체 텍스트를 비우고, 식별에 필요한 이미지면 슬롯 컴포넌트가 대상 이름을 제공합니다.",
+    "size=\"md|sm\"은 기본 md인 opt-in 크기 축입니다. sm은 PageHeader와 같은 --heading2- 제목 scale을 사용하고 내부/행 gap을 한 단계 조밀화합니다. description의 --label1-와 details의 --label2- typography는 그대로 유지하며 루트에 data-size를 노출합니다."
   ],
   "avoidWhen": [
     "LK Control Full Daedeok — not applicable. 고정된 MainLayout과 Robot Dashboard는 셸·탐색·감시 화면을 조합하며 일반화 가능한 레코드 정체성 헤더를 제공하지 않습니다.",
@@ -87,6 +88,13 @@
       "required": false,
       "description": "제목의 문서 heading 단계. @default 1",
       "owner": "RecordHeaderProps"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "제목 scale과 내부/행 gap을 조정하는 헤더 크기. description·details typography는 유지합니다. @default \"md\"",
+      "owner": "RecordHeaderProps"
     }
   ],
   "states": [],
@@ -108,6 +116,10 @@
     {
       "subject": "명시 규칙 3",
       "rule": "WCAG 2.2 Reflow에 맞춰 320 CSS px 상당의 폭에서 양방향 스크롤 없이 재배치합니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "Carbon Data Table usage가 toolbar·header·row size를 함께 pairing하듯, scan-heavy 화면에서는 RecordHeader size=\"sm\"을 인접한 compact Card/Table/toolbar와 일관되게 조합합니다. Carbon spacing과 Fluent 2 layout에 따라 작은 spacing token은 관련성을 강화하되, 좁은 폭에서는 reflow와 touch target을 함께 보존합니다."
     },
     {
       "subject": "--color-semantic-label-neutral",
@@ -166,7 +178,7 @@
   "examples": [
     {
       "label": "기본 조합",
-      "code": "<RecordHeader\n  visual={<Avatar name=\"장진혁\" size=\"xlarge\" />}\n  title=\"장진혁\"\n  badge={<StatusBadge tone=\"positive\">인증됨</StatusBadge>}\n  description=\"Physical AI Engineer · 신입 · 개발\"\n  details={<StatList items={profileStats} />}\n  actions={<Button variant=\"outlined\">설정</Button>}\n/>"
+      "code": "<RecordHeader\n  size=\"sm\"\n  visual={<Avatar name=\"장진혁\" size=\"xlarge\" />}\n  title=\"장진혁\"\n  badge={<StatusBadge tone=\"positive\">인증됨</StatusBadge>}\n  description=\"Physical AI Engineer · 신입 · 개발\"\n  details={<StatList items={profileStats} />}\n  actions={<Button variant=\"outlined\">설정</Button>}\n/>"
     }
   ],
   "tokens": [
@@ -178,13 +190,18 @@
     "--heading1-line",
     "--heading1-size",
     "--heading1-spacing",
+    "--heading2-line",
+    "--heading2-size",
+    "--heading2-spacing",
     "--label1-reading-line",
     "--label1-size",
     "--label1-spacing",
     "--label2-line",
     "--label2-size",
     "--label2-spacing",
+    "--space-1",
     "--space-2",
+    "--space-3",
     "--space-4"
   ],
   "apiLinks": [],
@@ -203,6 +220,11 @@
         "id": "lds-product-content-record-header--record-header-overview",
         "name": "개요",
         "role": "overview"
+      },
+      {
+        "id": "lds-product-content-record-header--size-compatibility",
+        "name": "변형·상태 · 기본형과 작은 크기",
+        "role": "variants-states"
       },
       {
         "id": "lds-product-content-record-header--dark-theme",
@@ -229,7 +251,7 @@
     "states": "omitted-no-evidence",
     "behavior": "evidence",
     "quantitativeRules": "evidence",
-    "responsive": "omitted-no-evidence",
+    "responsive": "evidence",
     "contentGuidance": "evidence",
     "accessibility": "evidence",
     "exceptions": "omitted-no-evidence",
