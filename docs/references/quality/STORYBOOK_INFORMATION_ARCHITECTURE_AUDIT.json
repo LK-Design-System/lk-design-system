@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "ada25b22426ac724d37b4fbe75f1a0b67c8a800312c72ccd496a3e66e5d23a5c",
+    "storybookIndexSha256": "6daa5e95f65890323d333755c8fd1bbec3eddaf81496072681c0ff168cf07bb3",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,22 +62,22 @@
   },
   "summary": {
     "pages": 194,
-    "stories": 698,
-    "publicStories": 482,
+    "stories": 699,
+    "publicStories": 483,
     "hiddenStories": 216,
     "componentDescriptions": 190,
     "pagesWithVisibleCanvasIntroduction": 190,
     "pagesWithDecisionGuidance": 183,
-    "describedPublicStories": 482,
+    "describedPublicStories": 483,
     "reviewedPages": 194,
-    "reviewedStories": 698,
+    "reviewedStories": 699,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
       "overview": 178,
       "usage": 37,
-      "variants-states": 103,
+      "variants-states": 104,
       "interaction": 54,
       "responsive": 68,
       "scenario": 26,
@@ -107,8 +107,8 @@
       },
       "Product": {
         "pages": 117,
-        "stories": 462,
-        "public": 346,
+        "stories": 463,
+        "public": 347,
         "hidden": 116,
         "guideReadyPages": 117
       },
@@ -15619,7 +15619,7 @@
       "layer": "Product",
       "family": "Editor",
       "importPath": "./stories/EditorSelectionInspector.stories.jsx",
-      "sourceSha256": "460cd8697687dc0b7aa5198dcb07a7e895dbfed8c9282b39ab77a2cd8f26625e",
+      "sourceSha256": "f237c54ce661ee845009c0e3f205618d52321214175f4010f73fe6c4aa342cb7",
       "primaryOwner": "SelectionInspector",
       "ownerComponents": [
         "SelectionInspector"
@@ -15645,8 +15645,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-05",
-      "reviewedSourceSha256": "460cd8697687dc0b7aa5198dcb07a7e895dbfed8c9282b39ab77a2cd8f26625e",
+      "reviewedAt": "2026-08-09",
+      "reviewedSourceSha256": "f237c54ce661ee845009c0e3f205618d52321214175f4010f73fe6c4aa342cb7",
       "stories": [
         {
           "id": "lds-product-editor-selection-inspector--selected-object",
@@ -15814,7 +15814,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-08-02 source and built-index re-review confirmed the action footer is usage guidance under the required public prefix; its destructive-action separation, confirmation flow, ownership, and visibility are unchanged.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
+      "reviewNote": "2026-08-02 source and built-index re-review confirmed the action footer is usage guidance under the required public prefix; its destructive-action separation, confirmation flow, ownership, and visibility are unchanged.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation.\n\n2026-08-09 source, ownership, visibility, and generated Storybook contract re-review complete."
     },
     {
       "title": "LDS Product/Editor/Viewport Status Bar",
@@ -17266,7 +17266,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationSideNav.stories.jsx",
-      "sourceSha256": "42d8a989ec6884cac9ded893b24e7b44fe77f3900800adfe68f736fc658f7b83",
+      "sourceSha256": "bdf5e25a9682c1237bd36f90ffa496f5c5982e8f032e88d68e4684d6bba24a0f",
       "primaryOwner": "SideNav",
       "ownerComponents": [
         "SideNav"
@@ -17293,8 +17293,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-05",
-      "reviewedSourceSha256": "42d8a989ec6884cac9ded893b24e7b44fe77f3900800adfe68f736fc658f7b83",
+      "reviewedAt": "2026-08-09",
+      "reviewedSourceSha256": "bdf5e25a9682c1237bd36f90ffa496f5c5982e8f032e88d68e4684d6bba24a0f",
       "stories": [
         {
           "id": "lds-product-navigation-side-nav--link-destinations",
@@ -17578,7 +17578,7 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "2026-08-02 source, built-index, and browser re-review confirmed manual active-group ownership, child icon alignment, runtime overlay synchronization, 18px brand padding, and 44px navigation row geometry; the public name now uses audience-facing Korean.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation.\n\n2026-08-05 Storybook naming re-review confirmed the new public scenario entry uses the required Korean role prefix."
+      "reviewNote": "2026-08-02 source, built-index, and browser re-review confirmed manual active-group ownership, child icon alignment, runtime overlay synchronization, 18px brand padding, and 44px navigation row geometry; the public name now uses audience-facing Korean.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation.\n\n2026-08-05 Storybook naming re-review confirmed the new public scenario entry uses the required Korean role prefix.\n\n2026-08-09 source, ownership, visibility, and generated Storybook contract re-review complete."
     },
     {
       "title": "LDS Product/Navigation/Steps",
@@ -19907,7 +19907,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormFileUploadQueue.stories.jsx",
-      "sourceSha256": "c8fe9a626e56684fa8ca867080c71094320424fc1782a9b8d0335bf3e5c7c465",
+      "sourceSha256": "8f48e345b1ae2a9330d800e0c1dd1faf221b9bf2cd51d051d46eee89066fdc50",
       "primaryOwner": "FileUploadQueue",
       "ownerComponents": [
         "FileUploadQueue"
@@ -19917,13 +19917,13 @@
         "Icon"
       ],
       "visibility": {
-        "public": 4,
+        "public": 5,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-selection-and-input-file-upload-queue--upload-and-conversion",
-        "describedPublicStories": 4,
+        "describedPublicStories": 5,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -19933,8 +19933,8 @@
       "dispositionReason": "File Upload Queue now owns post-selection transfer, processing, failure, and recovery states, while File Upload owns file selection and drop input. The two pages answer distinct user decisions.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-01",
-      "reviewedSourceSha256": "c8fe9a626e56684fa8ca867080c71094320424fc1782a9b8d0335bf3e5c7c465",
+      "reviewedAt": "2026-08-09",
+      "reviewedSourceSha256": "8f48e345b1ae2a9330d800e0c1dd1faf221b9bf2cd51d051d46eee89066fdc50",
       "stories": [
         {
           "id": "lds-product-selection-and-input-file-upload-queue--upload-and-conversion",
@@ -19961,6 +19961,30 @@
             "FileUpload"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-selection-and-input-file-upload-queue--grid-document-failure",
+          "name": "변형·상태 · 그리드에서 실패한 문서의 복구",
+          "exportName": "GridDocumentFailure",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "FileUploadQueue"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-09 recovered-document error treatment, retry action, ownership, and rendered contract review complete."
         },
         {
           "id": "lds-product-selection-and-input-file-upload-queue--queue-states",
@@ -20036,7 +20060,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\n\n2026-08-09 source, ownership, visibility, and generated Storybook contract re-review complete."
     },
     {
       "title": "LDS Product/Selection and Input/Icon Picker",

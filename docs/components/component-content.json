@@ -74822,6 +74822,11 @@
             "role": "overview"
           },
           {
+            "id": "lds-product-selection-and-input-file-upload-queue--grid-document-failure",
+            "name": "변형·상태 · 그리드에서 실패한 문서의 복구",
+            "role": "variants-states"
+          },
+          {
             "id": "lds-product-selection-and-input-file-upload-queue--queue-states",
             "name": "변형·상태 · 대기 · 업로드와 빈 상태",
             "role": "variants-states"

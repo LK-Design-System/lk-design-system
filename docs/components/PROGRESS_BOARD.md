@@ -152,7 +152,7 @@
 | [Date Range](guides/product-selection-and-input-date-range.md) | Product / Selection and Input | `DateRangeField` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Field Action](guides/product-selection-and-input-field-action.md) | Product / Selection and Input | `FieldAction` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 4 hidden |
 | [File Upload](guides/product-selection-and-input-file-upload.md) | Product / Selection and Input | `FileUpload` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
-| [File Upload Queue](guides/product-selection-and-input-file-upload-queue.md) | Product / Selection and Input | `FileUploadQueue` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
+| [File Upload Queue](guides/product-selection-and-input-file-upload-queue.md) | Product / Selection and Input | `FileUploadQueue` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 0 hidden |
 | [Icon Picker](guides/product-selection-and-input-icon-picker.md) | Product / Selection and Input | `IconPicker` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Input Group](guides/product-selection-and-input-input-group.md) | Product / Selection and Input | `InputGroup` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Number Field](guides/product-selection-and-input-number-field.md) | Product / Selection and Input | `NumberField` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
