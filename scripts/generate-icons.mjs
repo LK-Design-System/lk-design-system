@@ -9,11 +9,11 @@ const assetsRoot = path.join(repoRoot, 'assets', 'icons');
 const componentFile = path.join(repoRoot, 'components', 'icon', 'Icon.jsx');
 const typesFile = path.join(repoRoot, 'components', 'icon', 'Icon.d.ts');
 const CUSTOM_ICON_SOURCES = new Map([
-  // `model`은 LDS가 직접 그렸다. 업계는 모델 산출물에 아이소메트릭 정육면체를 쓰지만
-  // Material Symbols `deployed_code`는 세 면을 채우는 디자인이라 base set의 외곽선
-  // 두께(24 그리드에서 2)로 낼 수 있는 변형이 없다. 실루엣과 내부 모서리를 base
-  // 두께의 채운 path로 그렸다.
-  ['model', 'lds-authored'],
+  // `model`은 Material Symbols `deployed_code`의 FILL=0 판이다. rc.62는 FILL=1(채움)을
+  // 들여와 획 두께가 7.0이었고, rc.64는 "외곽선 변형이 없다"고 잘못 판단해 직접 그렸다.
+  // 같은 이름의 두 변형을 반드시 구분해 받는다 — 원본 URL은 `.../deployed_code/default/`
+  // (FILL=0)이고 `.../deployed_code/fill1/`이 채움이다.
+  ['model', 'material-symbols'],
   ['unlink', 'material-symbols'],
   // 로봇·지도 의미는 base 원본에 없어 예전에는 stroke로 그린 fallback으로 들고
   // 있었다. Material Symbols outlined 원본으로 갈아 base와 같은 채운 path로 맞춘다.

@@ -1,8 +1,8 @@
 "use client";
 import {
   Accordion
-} from "../../chunk-ADMIPGR2.js";
-import "../../chunk-B3OCRDVS.js";
+} from "../../chunk-GAPWLBMP.js";
+import "../../chunk-S26PXDE3.js";
 export {
   Accordion
 };

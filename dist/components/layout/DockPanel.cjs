@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkMCIU3YPMcjs = require('../../chunk-MCIU3YPM.cjs');
-require('../../chunk-VHQHPPYQ.cjs');
+var _chunk7LCWMEYIcjs = require('../../chunk-7LCWMEYI.cjs');
+require('../../chunk-F72KSGF7.cjs');
 
 
-exports.DockPanel = _chunkMCIU3YPMcjs.DockPanel;
+exports.DockPanel = _chunk7LCWMEYIcjs.DockPanel;
 //# sourceMappingURL=DockPanel.cjs.map

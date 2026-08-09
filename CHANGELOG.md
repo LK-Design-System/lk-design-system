@@ -69,6 +69,20 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.65 - 2026-08-09
+
+### Fixed
+
+- `model` 아이콘을 Material Symbols `deployed_code`의 FILL=0 원본으로 교체했습니다. 획 두께 2.25 · 잉크 26.8%로 base 외곽선 중위값(2.25)과 같고, 손으로 그린 판보다 꼭짓점 처리가 정확합니다 — 직접 그린 판은 이음매를 축에 맞춘 정사각형으로 덮어 위·아래 꼭짓점이 벌어져 있었습니다. 소비자가 볼 수 있는 변화는 그 두 꼭짓점이 닫히는 것뿐입니다.
+
+### Changed
+
+- `model`의 출처를 `lds-authored`에서 `material-symbols`로 되돌렸습니다. 업스트림이 관리하는 원본을 쓰므로 저장소가 좌표를 들고 있지 않습니다.
+
+### Corrected
+
+- rc.64는 "`deployed_code`에는 외곽선 변형이 없으므로 직접 그렸다"고 적었습니다. 사실이 아닙니다. 같은 glyph에 FILL 축이 있고 `.../deployed_code/default/`가 FILL=0(외곽선), `.../deployed_code/fill1/`이 FILL=1(채움)입니다. rc.62가 들여온 것이 FILL=1이었고, rc.64는 처음 받은 파일을 측정하지 않고 path 구조만 보고 채움 디자인이라 단정한 뒤 대체 후보만 측정했습니다. 두 변형을 구분해 받으라는 근거를 생성기 주석에 남겼습니다.
+
 ## 0.1.0-rc.64 - 2026-08-09
 
 ### Added

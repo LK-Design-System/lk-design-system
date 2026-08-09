@@ -1,8 +1,8 @@
 "use client";
 import {
   Link
-} from "../../chunk-HX5ZDGJR.js";
-import "../../chunk-B3OCRDVS.js";
+} from "../../chunk-WQ6HIE77.js";
+import "../../chunk-S26PXDE3.js";
 export {
   Link
 };

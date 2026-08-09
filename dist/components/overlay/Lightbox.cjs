@@ -1,11 +1,11 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkAZ3ROSIYcjs = require('../../chunk-AZ3ROSIY.cjs');
+var _chunk6UZK5PLGcjs = require('../../chunk-6UZK5PLG.cjs');
 require('../../chunk-2HYMUCSD.cjs');
 require('../../chunk-F4O2CAUI.cjs');
-require('../../chunk-VHQHPPYQ.cjs');
+require('../../chunk-F72KSGF7.cjs');
 
 
-exports.Lightbox = _chunkAZ3ROSIYcjs.Lightbox;
+exports.Lightbox = _chunk6UZK5PLGcjs.Lightbox;
 //# sourceMappingURL=Lightbox.cjs.map

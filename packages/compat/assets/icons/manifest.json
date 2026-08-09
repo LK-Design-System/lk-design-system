@@ -2,7 +2,7 @@
   "source": {
     "name": "Base icon source / Icon",
     "importedFrom": "C:/Users/MSI/Downloads/Icon",
-    "importedAt": "2026-08-08",
+    "importedAt": "2026-08-09",
     "note": "SVG files are normalized for LDS Icon usage. Color logo SVGs keep original fills and embedded image data. Repository-local additions live in assets/icon-source-overrides/."
   },
   "counts": {
@@ -2403,10 +2403,10 @@
     },
     {
       "name": "model",
-      "source": "lds-authored",
+      "source": "material-symbols",
       "sourcePath": "assets/icon-source-overrides/model.svg",
       "assetPath": "assets/icons/model.svg",
-      "viewBox": "0 0 24 24"
+      "viewBox": "0 -960 960 960"
     },
     {
       "name": "robot",

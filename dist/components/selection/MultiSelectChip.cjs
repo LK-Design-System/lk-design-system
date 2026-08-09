@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkRJ2OSHITcjs = require('../../chunk-RJ2OSHIT.cjs');
+var _chunk267YJMNZcjs = require('../../chunk-267YJMNZ.cjs');
 require('../../chunk-33JG4LII.cjs');
-require('../../chunk-VHQHPPYQ.cjs');
+require('../../chunk-F72KSGF7.cjs');
 
 
-exports.MultiSelectChip = _chunkRJ2OSHITcjs.MultiSelectChip;
+exports.MultiSelectChip = _chunk267YJMNZcjs.MultiSelectChip;
 //# sourceMappingURL=MultiSelectChip.cjs.map

@@ -1,9 +1,9 @@
 "use client";
 import {
   Carousel
-} from "../../chunk-T2ZHYKE3.js";
+} from "../../chunk-LBMKFIQU.js";
 import "../../chunk-C2SGY23J.js";
-import "../../chunk-B3OCRDVS.js";
+import "../../chunk-S26PXDE3.js";
 export {
   Carousel
 };
