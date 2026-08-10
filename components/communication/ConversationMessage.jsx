@@ -439,6 +439,10 @@ export function ConversationMessage({
           variant="plain"
           label={retryLabel}
           data-message-retry
+          /* 액션 아이콘은 본문과 경쟁하지 않는 보조 톤이다(ChatGPT·Claude
+             관례). 같은 컴포넌트의 메타 아이콘들이 쓰는 label-alternative를
+             그대로 쓴다 — hover 배경 틴트는 IconButton이 소유한다. */
+          style={{ color: 'var(--color-semantic-label-alternative)' }}
           onClick={() => onRetry()}
         >
           <Icon name="refresh" size={16} aria-hidden="true" />
@@ -471,7 +475,17 @@ export function ConversationMessage({
             {action.icon}
           </ToggleIcon>
         ) : (
-          <IconButton key={action.key} {...shared} size="small" onClick={action.onClick}>
+          <IconButton
+            key={action.key}
+            {...shared}
+            size="small"
+            /* 액션 아이콘의 평시 톤은 본문과 경쟁하지 않는 보조 톤이다
+               (ChatGPT·Claude 관례). 같은 컴포넌트의 메타 아이콘들이 쓰는
+               label-alternative를 그대로 쓴다. pressed 상태를 갖는 ToggleIcon은
+               자체 팔레트를 소유하므로 여기서는 건드리지 않는다. */
+            style={{ color: 'var(--color-semantic-label-alternative)' }}
+            onClick={action.onClick}
+          >
             {action.icon}
           </IconButton>
         );

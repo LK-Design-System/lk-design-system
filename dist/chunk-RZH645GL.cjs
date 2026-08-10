@@ -13,7 +13,7 @@ var _chunkYDE4VOYTcjs = require('./chunk-YDE4VOYT.cjs');
 var _chunk5ZIVVBEBcjs = require('./chunk-5ZIVVBEB.cjs');
 
 
-var _chunkAVUSBQ7Scjs = require('./chunk-AVUSBQ7S.cjs');
+var _chunkDONIGXI7cjs = require('./chunk-DONIGXI7.cjs');
 
 
 var _chunk3NWU3G2Pcjs = require('./chunk-3NWU3G2P.cjs');
@@ -95,7 +95,7 @@ function FeedCard({
       children: [
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { padding: "var(--space-4)", display: "flex", flexDirection: "column", gap: "var(--space-3)" }, children: [
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-            _chunkAVUSBQ7Scjs.ListCell,
+            _chunkDONIGXI7cjs.ListCell,
             {
               leading: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5ZIVVBEBcjs.Avatar, { src, name, variant, size: "medium" }),
               leadingStyle: { marginRight: "var(--space-1)" },
@@ -118,4 +118,4 @@ function FeedCard({
 
 
 exports.FeedCard = FeedCard;
-//# sourceMappingURL=chunk-7RDWWP7Z.cjs.map
+//# sourceMappingURL=chunk-RZH645GL.cjs.map

@@ -139,6 +139,13 @@
       "owner": "ListCellProps"
     },
     {
+      "name": "selectedPresentation",
+      "type": "\"accent-check\" | \"tint\"",
+      "required": false,
+      "description": "",
+      "owner": "ListCellProps"
+    },
+    {
       "name": "disabled",
       "type": "boolean",
       "required": false,
@@ -192,13 +199,6 @@
       "type": "\"top\" | \"center\"",
       "required": false,
       "description": "세로 정렬. @default \"center\"",
-      "owner": "ListCellProps"
-    },
-    {
-      "name": "interaction",
-      "type": "boolean | \"normal\" | \"hovered\" | \"focused\" | \"pressed\" | \"active\"",
-      "required": false,
-      "description": "Storybook/state rendering aid for interaction states.",
       "owner": "ListCellProps"
     }
   ],
@@ -303,6 +303,7 @@
     "--caption1-line",
     "--caption1-size",
     "--color-semantic-fill-alternative",
+    "--color-semantic-fill-normal",
     "--color-semantic-fill-strong",
     "--color-semantic-focus-ring",
     "--color-semantic-label-alternative",
@@ -367,7 +368,7 @@
     "behavior": "evidence",
     "quantitativeRules": "evidence",
     "responsive": "omitted-no-evidence",
-    "contentGuidance": "omitted-no-evidence",
+    "contentGuidance": "evidence",
     "accessibility": "evidence",
     "exceptions": "omitted-no-evidence",
     "related": "evidence",

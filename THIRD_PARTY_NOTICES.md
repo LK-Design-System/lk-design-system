@@ -45,7 +45,7 @@ SOFTWARE.
 
 ## Montserrat
 
-The outlined `ROBOTICS` wordmark is generated from Montserrat ExtraBold 800,
+The outlined `ROBOTICS` wordmark and approved `Portal` product name are generated from Montserrat ExtraBold 800,
 Version 7.222, obtained from the official Montserrat v7.222 release. The exact
 static TTF is retained as a build-time source only; it is not loaded by the LDS
 runtime and does not replace Pretendard as the UI typeface.

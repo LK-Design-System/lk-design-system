@@ -10,7 +10,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 ### Added
 
-- 재현 가능한 LK ROBOTICS 로고 제작 규정을 추가했습니다. `ROBOTICS`는 해시로 고정한 Montserrat ExtraBold 800 v7.222와 기본 커닝·자간 0·균일 스케일에서 path로 생성하며, `check:brand`가 글꼴·라이선스·13개 승인 SVG·런타임 윤곽의 드리프트를 차단합니다.
+- 재현 가능한 LK ROBOTICS 로고 제작 규정을 추가했습니다. `ROBOTICS`와 승인 제품 워드마크 `PORTAL`(대문자)은 해시로 고정한 Montserrat ExtraBold 800 v7.222와 기본 커닝·자간 0·균일 스케일에서 path로 생성하며(마크와의 간격은 심볼 폭의 0.35배), `Lockup variant="portal"`은 런타임 폰트 없이 `LK Portal` 제품 로고를 제공합니다. `check:brand`가 글꼴·라이선스·15개 승인 SVG·런타임 윤곽의 드리프트를 차단합니다.
 - `AutoComplete startIcon`으로 컨트롤 앞에 아이콘을 놓을 수 있습니다. `SearchField`가 이미 쓰는 `startIcon` 슬롯과 같은 자리이며, 값이 채워져 `placeholder`가 사라진 뒤에도 그 칸이 목록을 뒤진다는 사실을 남깁니다. 기본값은 없으므로 기존 화면은 그대로입니다.
 - `DataToolbar.filters` render context: `filters={({ size }) => ...}`가 검색과 같은 `sm`/`md` field control 밀도를 전달하며 기존 ReactNode 슬롯은 호환됩니다.
 - `DashboardShell`에 계층형 좁은 화면 탐색을 위한 controlled `temporaryNavigation` Drawer 계약을 추가했습니다. 공용 modal 엔진의 스크림·focus containment·Escape·복원·scroll lock을 재사용하고 열린 동안 셸 배경을 `inert` 처리합니다.
@@ -73,6 +73,28 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Meter` consumers targeting `role="progressbar"` should target `role="meter"`; `aria-valuenow` is now in caller units rather than a 0–100 projection.
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
+
+## 0.1.0-rc.69.4 - 2026-08-10
+
+### Added
+
+- `FeatureCard tone="moss"`를 추가했다. `steel`(#336CA1)은 `signal`(#3878B3)과 같은 파랑 계열이라 카드 셋 이상을 나란히 두고 색으로 구분할 때 사실상 한 색으로 읽힌다. `amber`와 같은 파생 규칙(accent 전경 + 전경색 14% 틴트 배경)으로 초록 색상축을 제공한다.
+
+### Changed
+
+- 승인 제품 워드마크를 title-case `Portal`에서 대문자 `PORTAL`로 바꾸고, LK 심볼과의 간격을 심볼 보이는 폭의 0.2배에서 0.35배로 넓혔다. 회사 락업(`LK ROBOTICS`)과 대소문자 문법을 맞추고, 20px 사이드바 렌더에서 0.2배(약 3.8px)일 때 K 사선과 P가 붙어 한 단어로 읽히던 문제를 해소한다. 글리프 핀과 잉크 경계는 대문자 기준으로 갱신했다.
+
+## 0.1.0-rc.69.3 - 2026-08-10
+
+### Changed
+
+- `ConversationMessage`의 quick action·retry 아이콘 평시 톤을 label-normal에서 `label-alternative`(같은 컴포넌트의 메타 아이콘 톤)로 낮췄다. 본문과 같은 진한 톤은 읽기 흐름과 경쟁한다(ChatGPT·Claude의 muted 액션 관례). pressed 상태를 갖는 `ToggleIcon` 액션은 자체 팔레트를 유지한다.
+
+## 0.1.0-rc.69.2 - 2026-08-10
+
+### Added
+
+- `ListCell selectedPresentation="tint"`: 체크·액센트 없이 중립 fill만 지속시키는 selected 표시 값. 기본 `accent-check`(WDS 선택 패턴)는 "여럿 중 하나 고름"의 시맨틱이라, 대화 목록·내비게이션처럼 "지금 열려 있는 항목"을 표시하는 목록에서는 체크가 선택 과업으로 오독된다. aria/키보드 계약은 변하지 않는다.
 
 ## 0.1.0-rc.69.1 - 2026-08-10
 

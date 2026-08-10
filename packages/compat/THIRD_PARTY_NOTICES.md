@@ -33,7 +33,7 @@ SOFTWARE.
 
 ## Montserrat
 
-The outlined `ROBOTICS` wordmark assets in this package were generated from
+The outlined `ROBOTICS` wordmark and approved `Portal` product-name assets in this package were generated from
 Montserrat ExtraBold 800, Version 7.222 (Copyright 2011 The Montserrat Project
 Authors), licensed under the SIL Open Font License 1.1. No font binary or
 runtime font dependency is included. Source and license provenance are kept in

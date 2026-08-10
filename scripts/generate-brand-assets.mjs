@@ -9,13 +9,14 @@ const root = process.cwd();
 const checkOnly = process.argv.includes('--check');
 const manifestPath = path.join(root, 'assets/brand/lk-logo-construction.json');
 const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+const portalWordmark = manifest.productWordmarks.portal;
 const fontBuffer = await readFile(path.join(root, manifest.wordmark.fontFile));
 const corporateFontBuffer = await readFile(path.join(root, manifest.corporateName.fontFile));
 const licenseBuffer = await readFile(path.join(root, manifest.wordmark.licenseFile));
 const corporateLicenseBuffer = await readFile(path.join(root, manifest.corporateName.licenseFile));
 
 assertEqual(manifest.schemaVersion, 1, 'manifest schema version');
-assertEqual(manifest.constructionVersion, 3, 'logo construction version');
+assertEqual(manifest.constructionVersion, 4, 'logo construction version');
 assertEqual(
   geometrySha256({ paths: LK_MARK_PATHS, bounds: LOGO_GEOMETRY.markBounds }),
   manifest.symbol.geometrySha256,
@@ -33,6 +34,24 @@ assertEqual(manifest.wordmark.letterSpacing, 0, 'letter spacing');
 assertEqual(manifest.wordmark.horizontalScale, 1, 'horizontal scale');
 assertEqual(manifest.wordmark.verticalScale, 1, 'vertical scale');
 assertEqual(manifest.wordmark.manualGlyphEdits, false, 'manual glyph edits');
+assertEqual(portalWordmark.text, 'PORTAL', 'portal wordmark text');
+assertEqual(portalWordmark.case, 'uppercase', 'portal wordmark case');
+assertEqual(portalWordmark.text, portalWordmark.text.toUpperCase(), 'uppercase portal wordmark text');
+assertEqual(portalWordmark.family, manifest.wordmark.family, 'portal wordmark font family');
+assertEqual(portalWordmark.style, manifest.wordmark.style, 'portal wordmark font style');
+assertEqual(portalWordmark.weight, manifest.wordmark.weight, 'portal wordmark font weight');
+assertEqual(portalWordmark.fontVersion, manifest.wordmark.fontVersion, 'portal wordmark font version');
+assertEqual(portalWordmark.fontFile, manifest.wordmark.fontFile, 'portal wordmark font file');
+assertEqual(portalWordmark.fontSha256, manifest.wordmark.fontSha256, 'portal wordmark font SHA-256');
+assertEqual(portalWordmark.fontSource, manifest.wordmark.fontSource, 'portal wordmark font source');
+assertEqual(portalWordmark.license, manifest.wordmark.license, 'portal wordmark font license');
+assertEqual(portalWordmark.licenseFile, manifest.wordmark.licenseFile, 'portal wordmark license file');
+assertEqual(portalWordmark.licenseSha256, manifest.wordmark.licenseSha256, 'portal wordmark license SHA-256');
+assertEqual(portalWordmark.kerning, 'font-default', 'portal wordmark kerning rule');
+assertEqual(portalWordmark.letterSpacing, 0, 'portal wordmark letter spacing');
+assertEqual(portalWordmark.horizontalScale, 1, 'portal wordmark horizontal scale');
+assertEqual(portalWordmark.verticalScale, 1, 'portal wordmark vertical scale');
+assertEqual(portalWordmark.manualGlyphEdits, false, 'portal wordmark manual glyph edits');
 assertEqual(manifest.corporateName.normalization, 'NFC', 'corporate-name normalization');
 assertEqual(manifest.corporateName.text.normalize('NFC'), manifest.corporateName.text, 'NFC corporate-name text');
 assertEqual(manifest.corporateName.kerning, 'font-default', 'corporate-name kerning rule');
@@ -41,6 +60,7 @@ assertEqual(manifest.corporateName.horizontalScale, 1, 'corporate-name horizonta
 assertEqual(manifest.corporateName.verticalScale, 1, 'corporate-name vertical scale');
 assertEqual(manifest.corporateName.manualGlyphEdits, false, 'corporate-name manual glyph edits');
 assertEqual(manifest.output.wordmarkAsOutlines, true, 'outline output rule');
+assertEqual(manifest.output.productWordmarksAsOutlines, true, 'product wordmark outline output rule');
 assertEqual(manifest.output.corporateNameAsOutlines, true, 'corporate-name outline output rule');
 assertEqual(manifest.output.textElementsAllowed, false, 'text element rule');
 assertEqual(manifest.output.runtimeFontDependency, false, 'runtime font dependency rule');
@@ -121,6 +141,46 @@ assertArrayEqual(
   [sourceBoundsRaw.x1, sourceBoundsRaw.y1, sourceBoundsRaw.x2, sourceBoundsRaw.y2],
   [70, -714, 5522, 14],
   'wordmark ink bounds',
+);
+
+const portalText = portalWordmark.text;
+const portalLetters = [...portalText];
+const portalGlyphRows = [];
+const portalFinalAdvance = font.forEachGlyph(
+  portalText,
+  0,
+  0,
+  font.unitsPerEm,
+  { kerning: true },
+  (glyph, x, y, fontSize) => {
+    const glyphPath = glyph.getPath(x, y, fontSize);
+    portalGlyphRows.push({
+      letter: portalLetters[portalGlyphRows.length],
+      glyphId: glyph.index,
+      origin: x,
+      d: glyphPath.toPathData(3),
+    });
+  },
+);
+
+assertEqual(portalGlyphRows.length, portalLetters.length, 'portal glyph count');
+assertArrayEqual(portalGlyphRows.map((row) => row.letter), portalLetters, 'portal glyph sequence');
+assertArrayEqual(portalGlyphRows.map((row) => row.glyphId), [169, 134, 172, 194, 4, 110], 'portal glyph IDs');
+assertArrayEqual(portalGlyphRows.map((row) => row.origin), [0, 737, 1583, 2313, 2913, 3699], 'portal kerning-aware glyph origins');
+assertEqual(portalFinalAdvance, 4309, 'portal kerning-aware word advance');
+
+const portalPath = font.getPath(portalText, 0, 0, font.unitsPerEm, { kerning: true });
+const portalSourceBoundsRaw = portalPath.getBoundingBox();
+const portalSourceBounds = Object.freeze({
+  x: portalSourceBoundsRaw.x1,
+  y: portalSourceBoundsRaw.y1,
+  width: portalSourceBoundsRaw.x2 - portalSourceBoundsRaw.x1,
+  height: portalSourceBoundsRaw.y2 - portalSourceBoundsRaw.y1,
+});
+assertArrayEqual(
+  [portalSourceBoundsRaw.x1, portalSourceBoundsRaw.y1, portalSourceBoundsRaw.x2, portalSourceBoundsRaw.y2],
+  [70, -714, 4301, 14],
+  'portal wordmark ink bounds',
 );
 
 const corporateText = manifest.corporateName.text.normalize('NFC');
@@ -209,9 +269,26 @@ const inlineTransform = matrix(
   inlineBounds.y - stackedBounds.y * inlineScale,
 );
 
+assertEqual(layout.portal.visibleWordmarkHeightToX, 1, 'portal visible wordmark height');
+assertEqual(layout.portal.gapToMarkWidth, 0.35, 'portal wordmark gap');
+assertEqual(layout.portal.verticalAlignment, 'visible-bounds', 'portal wordmark alignment');
+const portalScale = (markBounds.height * layout.portal.visibleWordmarkHeightToX) / portalSourceBounds.height;
+const portalBounds = Object.freeze({
+  x: markBounds.x + markBounds.width + markBounds.width * layout.portal.gapToMarkWidth,
+  y: markBounds.y,
+  width: portalSourceBounds.width * portalScale,
+  height: portalSourceBounds.height * portalScale,
+});
+const portalTransform = matrix(
+  portalScale,
+  portalBounds.x - portalSourceBounds.x * portalScale,
+  portalBounds.y - portalSourceBounds.y * portalScale,
+);
+
 const markViewBox = padBounds(markBounds, layout.tightPaddingSourceUnits);
 const stackedViewBox = padBounds(unionBounds(markBounds, stackedBounds), layout.tightPaddingSourceUnits);
 const inlineViewBox = padBounds(unionBounds(markBounds, inlineBounds), layout.tightPaddingSourceUnits);
+const portalViewBox = padBounds(unionBounds(markBounds, portalBounds), layout.tightPaddingSourceUnits);
 const bannerClearSpace = markBounds.height * layout.banner.clearSpaceToX;
 const bannerViewBox = padBounds(unionBounds(markBounds, inlineBounds), bannerClearSpace);
 
@@ -219,6 +296,10 @@ const generatedWordmarkPaths = glyphRows.map((row) => ({
   letter: row.letter,
   d: row.d,
   transform: stackedTransform,
+}));
+const generatedPortalPaths = portalGlyphRows.map((row) => ({
+  letter: row.letter,
+  d: row.d,
 }));
 
 assertEqual(layout.corporate.visibleWidthToX, 1.9, 'corporate-name visible width');
@@ -277,6 +358,11 @@ outputs.set('components/brand/lk-logo-paths.js', renderRuntimeModule({
   inlineViewBox,
   colors,
 }));
+outputs.set('components/brand/lk-portal-lockup-paths.js', renderPortalRuntimeModule({
+  generatedPortalPaths,
+  portalTransform,
+  portalViewBox,
+}));
 
 outputs.set('assets/brand/lk-logo-navy.svg', renderSvg({
   title: 'LK ROBOTICS stacked logo',
@@ -297,6 +383,16 @@ outputs.set('assets/brand/lk-logo-inline-white.svg', renderSvg({
   title: 'LK ROBOTICS inline logo',
   viewBox: inlineViewBox,
   body: renderInline(colors.white),
+}));
+outputs.set('assets/brand/lk-logo-portal-navy.svg', renderSvg({
+  title: 'LK Portal logo',
+  viewBox: portalViewBox,
+  body: renderPortal(colors.navy),
+}));
+outputs.set('assets/brand/lk-logo-portal-white.svg', renderSvg({
+  title: 'LK Portal logo',
+  viewBox: portalViewBox,
+  body: renderPortal(colors.white),
 }));
 outputs.set('assets/brand/lk-logo-banner-navy.svg', renderSvg({
   title: 'LK ROBOTICS navy banner logo',
@@ -433,7 +529,6 @@ function renderRuntimeModule({
     `    transform: ${JSON.stringify(row.transform)},`,
     '  },',
   ].join('\n')).join('\n');
-
   return `/**
  * Generated by scripts/generate-brand-assets.mjs. Do not edit by hand.
  *
@@ -469,6 +564,37 @@ export const LK_LOGO_COLORS = Object.freeze({
 `;
 }
 
+function renderPortalRuntimeModule({
+  generatedPortalPaths: portalPaths,
+  portalTransform: productPortalTransform,
+  portalViewBox: portalBox,
+}) {
+  const portalRows = portalPaths.map((row) => [
+    '  {',
+    `    letter: ${JSON.stringify(row.letter)},`,
+    `    d: ${JSON.stringify(row.d)},`,
+    '  },',
+  ].join('\n')).join('\n');
+
+  return `/**
+ * Generated by scripts/generate-brand-assets.mjs. Do not edit by hand.
+ *
+ * Portal is outlined from the pinned static Montserrat ExtraBold 800
+ * v${manifest.wordmark.fontVersion} font with default kerning, zero added letter spacing,
+ * uniform scaling, and no glyph edits. No runtime font is required.
+ * Font SHA-256: ${manifest.wordmark.fontSha256}
+ */
+export const PORTAL_PATHS = Object.freeze([
+${portalRows}
+]);
+
+// Portal's visible height equals the LK symbol's visible height, with a gap
+// equal to 35% of the symbol's visible width.
+export const PORTAL_INLINE_TRANSFORM = ${JSON.stringify(productPortalTransform)};
+export const PORTAL_LOCKUP_VIEWBOX = ${JSON.stringify(formatViewBox(portalBox))};
+`;
+}
+
 function renderSvg({ title, viewBox, body }) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${formatViewBox(viewBox)}" preserveAspectRatio="xMidYMid meet">
   <title>${title}</title>
@@ -499,6 +625,16 @@ function renderInline(fill, indent = 1) {
   ].join('\n');
 }
 
+function renderPortal(fill, indent = 1) {
+  const spaces = '  '.repeat(indent);
+  return [
+    renderMark(fill, indent),
+    `${spaces}<g transform="${portalTransform}">`,
+    generatedPortalPaths.map((row) => renderPath(row, fill, indent + 1)).join('\n'),
+    `${spaces}</g>`,
+  ].join('\n');
+}
+
 function renderSquare({ square, background, foreground, corporate = false }) {
   const rows = [renderRect(square, background, 1)];
   if (corporate) {
@@ -516,7 +652,8 @@ function renderSquare({ square, background, foreground, corporate = false }) {
 
 function renderPath(row, fill, indent) {
   const spaces = '  '.repeat(indent);
-  return `${spaces}<path d="${row.d}" transform="${row.transform}" fill="${fill}" />`;
+  const transform = row.transform ? ` transform="${row.transform}"` : '';
+  return `${spaces}<path d="${row.d}"${transform} fill="${fill}" />`;
 }
 
 function renderRect(box, fill, indent) {
@@ -573,7 +710,12 @@ function matrix(scale, translateX, translateY, precision = 6) {
 
 function formatViewBox(box) {
   const normalized = normalizeBox(box);
-  return [normalized.x, normalized.y, normalized.width, normalized.height].map(formatNumber).join(' ');
+  return [
+    formatNumber(normalized.x, 0),
+    formatNumber(normalized.y, 1),
+    formatNumber(normalized.width, 2),
+    formatNumber(normalized.height, 3),
+  ].join(' ');
 }
 
 function formatNumber(value, precision = 6) {
@@ -590,11 +732,26 @@ function serializeFontkitPath(value, precision = 3) {
 
 function validateProductionOutput(relativePath, content) {
   if (relativePath.endsWith('.svg')) {
+    if (/\bundefined\b/.test(content)) throw new Error(`${relativePath} contains an undefined serialized value.`);
     if (/<text\b/i.test(content)) throw new Error(`${relativePath} contains a text element.`);
     if (/font-(?:family|weight|style)|@font-face/i.test(content)) throw new Error(`${relativePath} contains a runtime font dependency.`);
+    const expectsPortalWordmark = [
+      'assets/brand/lk-logo-portal-navy.svg',
+      'assets/brand/lk-logo-portal-white.svg',
+    ].includes(relativePath);
     const wordmarkPathCount = generatedWordmarkPaths.filter((row) => content.includes(`d="${row.d}"`)).length;
-    if (wordmarkPathCount !== generatedWordmarkPaths.length) {
+    if (!expectsPortalWordmark && wordmarkPathCount !== generatedWordmarkPaths.length) {
       throw new Error(`${relativePath} does not contain all ${generatedWordmarkPaths.length} outlined wordmark glyphs.`);
+    }
+    if (expectsPortalWordmark && wordmarkPathCount !== 0) {
+      throw new Error(`${relativePath} unexpectedly contains ROBOTICS wordmark glyphs.`);
+    }
+    const portalPathCount = generatedPortalPaths.filter((row) => content.includes(`d="${row.d}"`)).length;
+    if (expectsPortalWordmark && portalPathCount !== generatedPortalPaths.length) {
+      throw new Error(`${relativePath} does not contain all ${generatedPortalPaths.length} outlined Portal glyphs.`);
+    }
+    if (!expectsPortalWordmark && portalPathCount !== 0) {
+      throw new Error(`${relativePath} unexpectedly contains Portal wordmark glyphs.`);
     }
     const expectsCorporateName = [
       'assets/brand/lk-logo-master.svg',

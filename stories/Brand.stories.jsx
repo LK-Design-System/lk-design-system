@@ -13,11 +13,11 @@ const meta = {
       eyebrow: 'Theme / Brand',
       title: 'LK ROBOTICS 로고는 고정된 심볼·글꼴·배치 규정에서 생성합니다',
       description:
-        'LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS는 Montserrat ExtraBold 800 v7.222, 한글 법인명은 Noto Sans KR ExtraBold 800 v2.004-H2에서 아웃라인으로 생성합니다. 승인 SVG 또는 Lockup만 사용하며 기능 아이콘처럼 반복하거나 비율·색상·자간을 임의로 바꾸지 않습니다.',
+        'LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS와 승인 제품명 Portal은 Montserrat ExtraBold 800 v7.222, 한글 법인명은 Noto Sans KR ExtraBold 800 v2.004-H2에서 아웃라인으로 생성합니다. 승인 SVG 또는 Lockup만 사용하며 기능 아이콘처럼 반복하거나 비율·색상·자간을 임의로 바꾸지 않습니다.',
     },
     docs: {
       description: {
-        component: '고정된 LK 심볼, Montserrat ExtraBold 800 워드마크, Noto Sans KR ExtraBold 800 한글 법인명 규정에서 생성한 승인 SVG와 제품 UI 파생형을 확인하는 브랜드 파운데이션입니다.',
+        component: '고정된 LK 심볼, Montserrat ExtraBold 800 워드마크·Portal 제품명, Noto Sans KR ExtraBold 800 한글 법인명 규정에서 생성한 승인 SVG와 제품 UI 파생형을 확인하는 브랜드 파운데이션입니다.',
       },
     },
   },

@@ -8,6 +8,10 @@ var ICON_TONES = {
   // teal tile (default)
   steel: { fg: "var(--color-semantic-accent-foreground-blue)", bg: "var(--color-semantic-primary-surface-normal)" },
   amber: { fg: "var(--color-semantic-accent-foreground-orange)", bg: "color-mix(in srgb, var(--color-semantic-accent-foreground-orange) 14%, transparent)" },
+  /* steel(#336CA1)은 signal(#3878B3)과 같은 파랑 계열이라 셋 이상을 나란히
+     구분해야 하는 그리드에서 사실상 한 색으로 읽힌다. moss는 그 자리를 위한
+     세 번째 색상축이다 — amber와 같은 파생 규칙(전경 14% 틴트 배경)을 쓴다. */
+  moss: { fg: "var(--color-semantic-accent-foreground-green)", bg: "color-mix(in srgb, var(--color-semantic-accent-foreground-green) 14%, transparent)" },
   navy: { fg: "var(--color-semantic-brand-on-surface)", bg: "var(--color-semantic-brand-surface)" }
 };
 function FeatureCard({
@@ -71,4 +75,4 @@ function FeatureCard({
 export {
   FeatureCard
 };
-//# sourceMappingURL=chunk-GB54SOJK.js.map
+//# sourceMappingURL=chunk-PRQW4BSJ.js.map

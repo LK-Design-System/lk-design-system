@@ -37,6 +37,7 @@ function ListCell({
   divider = false,
   chevron = false,
   selected = false,
+  selectedPresentation = "accent-check",
   disabled = false,
   disable = false,
   fillWidth = true,
@@ -78,7 +79,9 @@ function ListCell({
   const resolvedRole = _nullishCoalesce(role, () => ( (clickable ? "button" : void 0)));
   const supportsAriaSelected = ["option", "tab", "row", "gridcell", "treeitem"].includes(resolvedRole);
   const resolvedTabIndex = disabledState ? -1 : _nullishCoalesce(tabIndex, () => ( (clickable ? 0 : void 0)));
-  const background = disabledState ? "transparent" : activePressed ? "var(--color-semantic-fill-strong)" : activeHover ? "var(--color-semantic-fill-alternative)" : "transparent";
+  const selectedAccent = selected && selectedPresentation !== "tint";
+  const selectedTint = selected && selectedPresentation === "tint";
+  const background = disabledState ? "transparent" : activePressed ? "var(--color-semantic-fill-strong)" : selectedTint ? "var(--color-semantic-fill-normal)" : activeHover ? "var(--color-semantic-fill-alternative)" : "transparent";
   const handleClick = (event) => {
     if (!disabledState && onClick) onClick(event);
   };
@@ -97,6 +100,7 @@ function ListCell({
       "aria-selected": supportsAriaSelected ? selected || void 0 : void 0,
       "aria-pressed": resolvedRole === "button" && selected ? true : void 0,
       "data-selected": selected ? "" : void 0,
+      "data-selected-presentation": selected ? selectedPresentation : void 0,
       "data-disabled": disabledState ? "" : void 0,
       "data-interaction": activeFocus ? "focused" : activePressed ? "pressed" : activeHover ? "hovered" : "normal",
       tabIndex: resolvedTabIndex,
@@ -176,7 +180,7 @@ function ListCell({
                     fontWeight: selected ? "var(--fw-medium)" : "var(--fw-regular)",
                     lineHeight: "var(--body1-line)",
                     letterSpacing: 0,
-                    color: disabledState ? "var(--color-semantic-label-disable)" : selected ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)",
+                    color: disabledState ? "var(--color-semantic-label-disable)" : selectedAccent ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-normal)",
                     overflow: textEllipsis ? "hidden" : void 0,
                     textOverflow: textEllipsis ? "ellipsis" : void 0,
                     whiteSpace: textEllipsis ? "nowrap" : "normal",
@@ -207,7 +211,7 @@ function ListCell({
             ]
           }
         ),
-        (resolvedTrailing != null || chevron || selected) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        (resolvedTrailing != null || chevron || selectedAccent) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "div",
           {
             style: {
@@ -215,12 +219,12 @@ function ListCell({
               display: "flex",
               alignItems: "center",
               gap: 8,
-              color: disabledState ? "var(--color-semantic-label-disable)" : selected ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)",
+              color: disabledState ? "var(--color-semantic-label-disable)" : selectedAccent ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-label-alternative)",
               ...trailingStyle
             },
             children: [
               resolvedTrailing,
-              selected && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF72KSGF7cjs.Icon, { name: "check", size: 16, "aria-hidden": "true" }),
+              selectedAccent && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF72KSGF7cjs.Icon, { name: "check", size: 16, "aria-hidden": "true" }),
               chevron && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF72KSGF7cjs.Icon, { name: "chevron-right", size: 16, "aria-hidden": "true" })
             ]
           }
@@ -249,4 +253,4 @@ function ListCell({
 
 
 exports.ListCell = ListCell;
-//# sourceMappingURL=chunk-AVUSBQ7S.cjs.map
+//# sourceMappingURL=chunk-DONIGXI7.cjs.map

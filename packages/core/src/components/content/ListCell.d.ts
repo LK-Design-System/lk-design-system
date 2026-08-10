@@ -24,6 +24,8 @@ export interface ListCellProps extends Omit<
   chevron?: boolean;
   /** 선택 상태. @default false */
   selected?: boolean;
+  /** selected의 표시 방식. "accent-check"는 WDS 선택 패턴(액센트 제목 + 체크)으로 "여럿 중 하나 고름"을 말하고, "tint"는 체크·액센트 없이 중립 fill만 유지해 대화·내비게이션 목록의 "지금 열려 있는 항목"을 말한다. @default "accent-check" */
+  selectedPresentation?: "accent-check" | "tint";
   /** 비활성 상태. @default false */
   disabled?: boolean;
   /** disabled alias. */

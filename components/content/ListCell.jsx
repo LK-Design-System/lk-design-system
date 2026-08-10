@@ -48,6 +48,7 @@ export function ListCell({
   divider = false,
   chevron = false,
   selected = false,
+  selectedPresentation = "accent-check",
   disabled = false,
   disable = false,
   fillWidth = true,
@@ -95,15 +96,22 @@ export function ListCell({
   const resolvedTabIndex = disabledState
     ? -1
     : (tabIndex ?? (clickable ? 0 : undefined));
-  /* WDS selected pattern: no background tint — the title turns accent and a
-     trailing check appears instead. */
+  /* WDS selected pattern (`accent-check`): no background tint — the title
+     turns accent and a trailing check appears instead. That is choose-one
+     semantics. `tint` marks the *currently open* item instead — a persistent
+     neutral fill with no check and no accent, the convention of conversation
+     and navigation lists where every row stays a plain destination. */
+  const selectedAccent = selected && selectedPresentation !== "tint";
+  const selectedTint = selected && selectedPresentation === "tint";
   const background = disabledState
     ? "transparent"
     : activePressed
       ? "var(--color-semantic-fill-strong)"
-      : activeHover
-        ? "var(--color-semantic-fill-alternative)"
-        : "transparent";
+      : selectedTint
+        ? "var(--color-semantic-fill-normal)"
+        : activeHover
+          ? "var(--color-semantic-fill-alternative)"
+          : "transparent";
 
   const handleClick = (event) => {
     if (!disabledState && onClick) onClick(event);
@@ -123,6 +131,7 @@ export function ListCell({
       aria-selected={supportsAriaSelected ? selected || undefined : undefined}
       aria-pressed={resolvedRole === "button" && selected ? true : undefined}
       data-selected={selected ? "" : undefined}
+      data-selected-presentation={selected ? selectedPresentation : undefined}
       data-disabled={disabledState ? "" : undefined}
       data-interaction={
         activeFocus
@@ -221,7 +230,7 @@ export function ListCell({
               letterSpacing: 0,
               color: disabledState
                 ? "var(--color-semantic-label-disable)"
-                : selected
+                : selectedAccent
                   ? "var(--color-semantic-primary-normal)"
                   : "var(--color-semantic-label-normal)",
               overflow: textEllipsis ? "hidden" : undefined,
@@ -255,7 +264,7 @@ export function ListCell({
           </div>
         )}
       </div>
-      {(resolvedTrailing != null || chevron || selected) && (
+      {(resolvedTrailing != null || chevron || selectedAccent) && (
         <div
           style={{
             flexShrink: 0,
@@ -264,14 +273,14 @@ export function ListCell({
             gap: 8,
             color: disabledState
               ? "var(--color-semantic-label-disable)"
-              : selected
+              : selectedAccent
                 ? "var(--color-semantic-primary-normal)"
                 : "var(--color-semantic-label-alternative)",
             ...trailingStyle,
           }}
         >
           {resolvedTrailing}
-          {selected && <Icon name="check" size={16} aria-hidden="true" />}
+          {selectedAccent && <Icon name="check" size={16} aria-hidden="true" />}
           {chevron && (
             <Icon name="chevron-right" size={16} aria-hidden="true" />
           )}

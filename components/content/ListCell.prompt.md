@@ -8,6 +8,7 @@
 
 - WDS axes: **verticalPadding** `none · small · medium · large · custom`, **verticalAlign** `top · center`, **fillWidth**, **textEllipsis**, **divider**, **chevron**, **selected**, **disabled**, **interaction** `normal · hovered · focused · pressed`.
 - Slot aliases are supported: `leadingContent`/`trailingContent` map to `leading`/`trailing`; `disable` maps to `disabled`.
+- `selectedPresentation`은 LDS 확장 축이다. 기본 `accent-check`는 WDS 선택 패턴(액센트 제목 + trailing 체크)으로 "여럿 중 하나 고름"을 말한다. `tint`는 체크·액센트 없이 중립 fill(`--color-semantic-fill-normal`)만 지속시켜 대화 목록·내비게이션처럼 "지금 열려 있는 항목"을 말한다 — 매 행이 여전히 평범한 목적지인 목록에서 체크는 선택 과업으로 오독된다(ChatGPT·Claude 대화 목록 관례). pressed fill은 tint보다 진하고 hover fill은 tint보다 옅어 상태 구분이 유지된다.
 - Use `onClick` for keyboard-operable interactive rows. Use `interaction` only to render fixed visual states in Storybook or tests.
 
 ## 목록 시맨틱

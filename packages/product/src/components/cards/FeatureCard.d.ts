@@ -8,7 +8,7 @@ export interface FeatureCardProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   /** 보조 설명. */
   children?: React.ReactNode;
   /** 아이콘 타일 톤. @default "signal" */
-  tone?: 'signal' | 'steel' | 'amber' | 'navy';
+  tone?: 'signal' | 'steel' | 'amber' | 'moss' | 'navy';
   /** 화이트 Card 서피스로 감싸기. @default false */
   boxed?: boolean;
   /** spacing과 icon 크기만 조정하는 opt-in 밀도. typography는 유지합니다. @default "comfortable" */

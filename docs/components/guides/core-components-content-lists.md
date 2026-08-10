@@ -37,6 +37,7 @@
 | `divider` | `boolean` | No | 헤어라인 밑줄 추가. @default false |
 | `chevron` | `boolean` | No | 오른쪽 chevron을 추가. @default false |
 | `selected` | `boolean` | No | 선택 상태. @default false |
+| `selectedPresentation` | `"accent-check" \| "tint"` | No | selected의 표시 방식. "accent-check"는 WDS 선택 패턴(액센트 제목 + 체크)으로 "여럿 중 하나 고름"을 말하고, "tint"는 체크·액센트 없이 중립 fill만 유지해 대화·내비게이션 목록의 "지금 열려 있는 항목"을 말한다. @default "accent-check" |
 | `disabled` | `boolean` | No | 비활성 상태. @default false |
 | `disable` | `boolean` | No | disabled alias. |
 | `fillWidth` | `boolean` | No | 가능한 폭을 채움. @default true |
@@ -45,7 +46,6 @@
 | `paddingY` | `number` | No | verticalPadding="custom"일 때 직접 패딩 지정. |
 | `paddingX` | `number \| string` | No | 좌우 패딩. @default 20 |
 | `verticalAlign` | `"top" \| "center"` | No | 세로 정렬. @default "center" |
-| `interaction` | `boolean \| "normal" \| "hovered" \| "focused" \| "pressed" \| "active"` | No | Storybook/state rendering aid for interaction states. |
 
 ## States
 
@@ -53,6 +53,7 @@
 | --- | --- |
 | defaultOpen | 마운트 시 열려 있는 인덱스. @default [] |
 | selected | 선택 상태. @default false |
+| selectedPresentation | selected의 표시 방식. "accent-check"는 WDS 선택 패턴(액센트 제목 + 체크)으로 "여럿 중 하나 고름"을 말하고, "tint"는 체크·액센트 없이 중립 fill만 유지해 대화·내비게이션 목록의 "지금 열려 있는 항목"을 말한다. @default "accent-check" |
 | disabled | 비활성 상태. @default false |
 | interaction | Storybook/state rendering aid for interaction states. |
 
@@ -69,6 +70,10 @@
 | --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 | --body2-size | 15px |
 | --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+
+## Content and writing
+
+- selectedPresentation은 LDS 확장 축이다. 기본 accent-check는 WDS 선택 패턴(액센트 제목 + trailing 체크)으로 "여럿 중 하나 고름"을 말한다. tint는 체크·액센트 없이 중립 fill(--color-semantic-fill-normal)만 지속시켜 대화 목록·내비게이션처럼 "지금 열려 있는 항목"을 말한다 — 매 행이 여전히 평범한 목적지인 목록에서 체크는 선택 과업으로 오독된다(ChatGPT·Claude 대화 목록 관례).
 
 ## Accessibility
 
@@ -120,6 +125,7 @@
 - `--caption1-line`
 - `--caption1-size`
 - `--color-semantic-fill-alternative`
+- `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
 - `--color-semantic-focus-ring`
 - `--color-semantic-label-alternative`

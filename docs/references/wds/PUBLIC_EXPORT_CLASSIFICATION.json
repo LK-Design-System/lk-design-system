@@ -851,6 +851,10 @@
       "ownerLayer": "core"
     },
     {
+      "path": "components/brand/lk-portal-lockup-paths.js",
+      "ownerLayer": "theme"
+    },
+    {
       "path": "components/data/table-cell-styles.js",
       "ownerLayer": "product"
     },

@@ -410,8 +410,8 @@ export const LKRoboticsLogo = {
           LK ROBOTICS 로고
         </h2>
         <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          커스텀 LK 심볼, Montserrat ExtraBold 800 워드마크, Noto Sans KR ExtraBold 800 한글 법인명을 하나의 제작 규정으로 정리했습니다. 공식 사각 조합은
-          색·비율·배치를 고정한 네이비·화이트 바탕 자산 중 하나를 사용하고, 제품 UI용 mark·stacked·inline도 같은 생성 원본을 사용합니다.
+          커스텀 LK 심볼, Montserrat ExtraBold 800 워드마크·제품명, Noto Sans KR ExtraBold 800 한글 법인명을 하나의 제작 규정으로 정리했습니다. 공식 사각 조합은
+          색·비율·배치를 고정한 네이비·화이트 바탕 자산 중 하나를 사용하고, 제품 UI용 mark·stacked·inline·portal도 같은 생성 원본을 사용합니다.
         </p>
       </header>
 
@@ -432,6 +432,7 @@ export const LKRoboticsLogo = {
         <ul style={{ margin: 0, paddingInlineStart: '1.2em', maxWidth: 800, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.8 }}>
           <li><strong>LK:</strong> 기존 커스텀 벡터 심볼을 정본으로 유지</li>
           <li><strong>ROBOTICS:</strong> 고정 TTF의 SHA-256을 검증한 뒤 아웃라인 생성</li>
+          <li><strong>Portal:</strong> 같은 고정 TTF에서 title case·기본 커닝·추가 자간 0으로 생성한 승인 제품명</li>
           <li><strong>한글 법인명:</strong> 고정 가변 TTF의 SHA-256과 <code>wght=800</code> 인스턴스를 검증한 뒤 0.105em 자간으로 아웃라인 생성</li>
           <li><strong>배치:</strong> inline은 심볼과 워드마크의 보이는 높이를 같게 하고, 간격은 심볼 보이는 폭의 20%</li>
           <li><strong>사용:</strong> 승인 SVG 또는 <code>Lockup</code>만 사용하고 텍스트로 재조판하지 않음</li>
@@ -500,12 +501,13 @@ export const LKRoboticsLogo = {
           <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>제품 UI 파생형</h2>
           <p style={{ margin: 0, maxWidth: 760, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
             내비게이션처럼 사각 로고를 그대로 놓기 어려운 제품 표면을 위한 조합입니다. 글자 윤곽은 공식 SVG와 같고,
-            <strong> inline만 가로 배치를 위해 위치와 크기를 조정</strong>합니다.
+            <strong> inline과 portal만 가로 배치를 위해 위치와 크기를 조정</strong>합니다.
           </p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-4)' }}>
           {[
             ['inline', '가로형', 30],
+            ['portal', 'LK Portal 제품형', 20],
             ['stacked', '스택형', 72],
             ['mark', '심볼', 44],
           ].map(([variant, label, height]) => (
@@ -532,6 +534,26 @@ export const LKRoboticsLogo = {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
+        <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
+          <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>LK Portal 사이드바 적용</h2>
+          <p style={{ margin: 0, maxWidth: 760, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+            사이드바의 펼친 상태는 20px 제품형을 사용하고, 접힌 상태는 문맥이 분명하므로 LK 심볼만 사용합니다.
+            링크가 이미 <code>aria-label=&quot;LK Portal&quot;</code>을 제공하면 내부 로고는 <code>decorative</code>로 처리합니다.
+          </p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
+          <div style={{ display: 'grid', alignContent: 'center', gap: 'var(--space-3)', minHeight: 112, padding: 'var(--space-5)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
+            <Lockup variant="portal" tone="ink" height={20} />
+            <code style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 12 }}>portal · ink · 20px</code>
+          </div>
+          <div style={{ display: 'grid', alignContent: 'center', gap: 'var(--space-3)', minHeight: 112, padding: 'var(--space-5)', border: `1px solid ${OFFICIAL_LOGO_NAVY}`, borderRadius: 'var(--radius-lg)', background: OFFICIAL_LOGO_NAVY }}>
+            <Lockup variant="portal" tone="white" height={20} />
+            <code style={{ color: 'var(--color-semantic-brand-on-surface-subtle)', fontSize: 12 }}>portal · white · 20px</code>
+          </div>
         </div>
       </section>
 
@@ -673,19 +695,21 @@ export const LockupOverlineCard = {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         <div>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', marginBottom: 10 }}>
-            Lockup — mark · stacked · inline
+            Lockup — mark · stacked · inline · portal
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-8)', flexWrap: 'wrap', padding: '20px 24px', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-static-white)', border: '1px solid var(--color-semantic-line-solid-normal)' }}>
             <Lockup variant="mark" tone="ink" height={46} />
             <Lockup variant="stacked" tone="ink" height={66} />
             <Lockup variant="inline" tone="ink" height={30} />
             <Lockup variant="inline" tone="ink" height={20} />
+            <Lockup variant="portal" tone="ink" height={20} />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-8)', flexWrap: 'wrap', padding: '20px 24px', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-brand-surface)', marginTop: 12 }}>
             <Lockup variant="mark" tone="white" height={46} />
             <Lockup variant="stacked" tone="white" height={66} />
             <Lockup variant="inline" tone="white" height={30} />
             <Lockup variant="inline" tone="white" height={20} />
+            <Lockup variant="portal" tone="white" height={20} />
           </div>
         </div>
         <div>

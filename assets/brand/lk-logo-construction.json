@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "constructionVersion": 3,
+  "constructionVersion": 4,
   "brand": "LK ROBOTICS",
   "symbol": {
     "name": "LK",
@@ -53,6 +53,27 @@
     "verticalScale": 1,
     "manualGlyphEdits": false
   },
+  "productWordmarks": {
+    "portal": {
+      "text": "PORTAL",
+      "case": "uppercase",
+      "family": "Montserrat",
+      "style": "ExtraBold",
+      "weight": 800,
+      "fontVersion": "7.222",
+      "fontFile": "vendor/montserrat-v7.222/Montserrat-ExtraBold.ttf",
+      "fontSha256": "1B364C3400BF7B1CC2C47A25DD0D3EDD8331DA451412AA5539080F78F8F70B63",
+      "fontSource": "https://github.com/JulietaUla/Montserrat/releases/tag/v7.222",
+      "license": "SIL Open Font License 1.1",
+      "licenseFile": "vendor/montserrat-v7.222/OFL.txt",
+      "licenseSha256": "41F82BB4D24B304F30F7136BC47ABDD083782E4265C984160F5649D1E78EA49C",
+      "kerning": "font-default",
+      "letterSpacing": 0,
+      "horizontalScale": 1,
+      "verticalScale": 1,
+      "manualGlyphEdits": false
+    }
+  },
   "layout": {
     "xDefinition": "visible height of the custom LK symbol",
     "tightPaddingSourceUnits": 4,
@@ -64,6 +85,11 @@
     "inline": {
       "visibleWordmarkHeightToX": 1,
       "gapToMarkWidth": 0.2,
+      "verticalAlignment": "visible-bounds"
+    },
+    "portal": {
+      "visibleWordmarkHeightToX": 1,
+      "gapToMarkWidth": 0.35,
       "verticalAlignment": "visible-bounds"
     },
     "banner": {
@@ -86,6 +112,7 @@
   "output": {
     "format": "SVG",
     "wordmarkAsOutlines": true,
+    "productWordmarksAsOutlines": true,
     "corporateNameAsOutlines": true,
     "textElementsAllowed": false,
     "runtimeFontDependency": false,

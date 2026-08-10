@@ -57,6 +57,10 @@ export const FeatureCards = {
           경고와 조치가 필요한 이벤트를 차분한 상태 색상으로 분리합니다.
         </FeatureCard>
         <FeatureCard
+          headingLevel={2} boxed tone="moss" icon={<Icon name="circle-check" size={22} />} title="세 번째 색상축">
+          카드 셋 이상을 나란히 둘 때 signal·amber와 색상이 겹치지 않습니다.
+        </FeatureCard>
+        <FeatureCard
           headingLevel={2} boxed tone="navy" icon={<Icon name="robot" size={22} />} title="브랜드 기능 식별">
           공식 네이비 타일로 LK ROBOTICS 고유 기능을 식별합니다.
         </FeatureCard>
@@ -66,7 +70,7 @@ export const FeatureCards = {
   play: async ({ canvasElement }) => {
     // The canvas page title owns the h1, so these demo cards title themselves at h2.
     const headings = Array.from(canvasElement.querySelectorAll('h2'));
-    if (headings.length !== 3) {
+    if (headings.length !== 4) {
       throw new Error('FeatureCard 제목은 실제 heading으로 렌더되어야 합니다(WCAG 1.3.1).');
     }
     if (canvasElement.querySelector('[role="button"], button, a')) {

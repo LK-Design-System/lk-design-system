@@ -1499,6 +1499,7 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 | `divider` | `boolean` | No | 헤어라인 밑줄 추가. @default false |
 | `chevron` | `boolean` | No | 오른쪽 chevron을 추가. @default false |
 | `selected` | `boolean` | No | 선택 상태. @default false |
+| `selectedPresentation` | `"accent-check" \| "tint"` | No | selected의 표시 방식. "accent-check"는 WDS 선택 패턴(액센트 제목 + 체크)으로 "여럿 중 하나 고름"을 말하고, "tint"는 체크·액센트 없이 중립 fill만 유지해 대화·내비게이션 목록의 "지금 열려 있는 항목"을 말한다. @default "accent-check" |
 | `disabled` | `boolean` | No | 비활성 상태. @default false |
 | `disable` | `boolean` | No | disabled alias. |
 | `fillWidth` | `boolean` | No | 가능한 폭을 채움. @default true |
@@ -1507,7 +1508,6 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 | `paddingY` | `number` | No | verticalPadding="custom"일 때 직접 패딩 지정. |
 | `paddingX` | `number \| string` | No | 좌우 패딩. @default 20 |
 | `verticalAlign` | `"top" \| "center"` | No | 세로 정렬. @default "center" |
-| `interaction` | `boolean \| "normal" \| "hovered" \| "focused" \| "pressed" \| "active"` | No | Storybook/state rendering aid for interaction states. |
 
 ## States
 
@@ -1515,6 +1515,7 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 | --- | --- |
 | defaultOpen | 마운트 시 열려 있는 인덱스. @default [] |
 | selected | 선택 상태. @default false |
+| selectedPresentation | selected의 표시 방식. "accent-check"는 WDS 선택 패턴(액센트 제목 + 체크)으로 "여럿 중 하나 고름"을 말하고, "tint"는 체크·액센트 없이 중립 fill만 유지해 대화·내비게이션 목록의 "지금 열려 있는 항목"을 말한다. @default "accent-check" |
 | disabled | 비활성 상태. @default false |
 | interaction | Storybook/state rendering aid for interaction states. |
 
@@ -1531,6 +1532,10 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 | --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 | --body2-size | 15px |
 | --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+
+## Content and writing
+
+- selectedPresentation은 LDS 확장 축이다. 기본 accent-check는 WDS 선택 패턴(액센트 제목 + trailing 체크)으로 "여럿 중 하나 고름"을 말한다. tint는 체크·액센트 없이 중립 fill(--color-semantic-fill-normal)만 지속시켜 대화 목록·내비게이션처럼 "지금 열려 있는 항목"을 말한다 — 매 행이 여전히 평범한 목적지인 목록에서 체크는 선택 과업으로 오독된다(ChatGPT·Claude 대화 목록 관례).
 
 ## Accessibility
 
@@ -1582,6 +1587,7 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 - `--caption1-line`
 - `--caption1-size`
 - `--color-semantic-fill-alternative`
+- `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
 - `--color-semantic-focus-ring`
 - `--color-semantic-label-alternative`
@@ -9703,7 +9709,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | `icon` | `React.ReactNode` | No | 틴트 타일에 표시되는 인라인 SVG 글리프. |
 | `title` | `React.ReactNode` | No | 제목. |
 | `children` | `React.ReactNode` | No | 보조 설명. |
-| `tone` | `'signal' \| 'steel' \| 'amber' \| 'navy'` | No | 아이콘 타일 톤. @default "signal" |
+| `tone` | `'signal' \| 'steel' \| 'amber' \| 'moss' \| 'navy'` | No | 아이콘 타일 톤. @default "signal" |
 | `boxed` | `boolean` | No | 화이트 Card 서피스로 감싸기. @default false |
 | `density` | `'comfortable' \| 'compact'` | No | spacing과 icon 크기만 조정하는 opt-in 밀도. typography는 유지합니다. @default "comfortable" |
 | `headingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| false` | No | title의 heading 레벨. 카드가 놓인 문서의 제목 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 false로 heading 의미를 끕니다. 레벨은 건너뛰지 않습니다. @default 4 |
@@ -9718,10 +9724,10 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | density — comfortable(기본) · compact. Compact는 boxed padding을 --space-4(16px), icon-to-content gap을 --space-3(12px), icon tile을 --space-10(40px), title-to-description gap을 --space-1(4px)로 조정합니다. 제목과 본문 typography는 바꾸지 않으며 루트에 data-density를 노출합니다. |
-| 명시 규칙 2 | headingLevel — title은 실제 heading으로 렌더되며 기본 레벨은 h4입니다(Core Card의 구조화 title은 h3). 카드가 놓인 문서의 제목 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false}로 heading 의미를 끄세요. 레벨은 건너뛰지 않습니다(WCAG 1.3.1). |
-| 명시 규칙 3 | 카드 전체 클릭 — onClick을 주면 카드 루트가 role="button" · tabIndex=0이 되고 Enter/Space로 활성화됩니다(WCAG 2.1.1). 포커스 링은 토큰 레이어(tokens/focus.css)의 전역 :focus-visible 규칙이 담당하므로 카드가 따로 그리지 않습니다. 이때 카드 안에 버튼·링크 같은 포커스 가능한 요소를 넣지 마세요 — 중첩 인터랙티브는 유효하지 않은 마크업이고 카드 이름이 본문 전체로 길어집니다. 행동이 여러 개면 onClick 없이 각 액션을 카드 안에 두세요. |
-| 명시 규칙 4 | 타입 스케일 정합: 제목 19px → --headline1-size(18px, −1px 의도된 변경), 본문 15.5px → --body2-size(15px)로 스냅했습니다. NewsCard 제목(headline1)과 같은 카드 제목 단계로 정렬합니다. |
+| 명시 규칙 1 | tone — signal(틸 타일, 기본) · steel · amber · moss · navy. steel은 signal과 같은 파랑 계열이므로 카드 셋 이상을 나란히 두고 색으로 구분하려면 signal·amber·moss처럼 색상(hue)이 다른 톤을 고르세요. moss와 amber는 전용 surface 토큰 없이 전경색의 14% 틴트를 타일 배경으로 파생합니다. |
+| 명시 규칙 2 | density — comfortable(기본) · compact. Compact는 boxed padding을 --space-4(16px), icon-to-content gap을 --space-3(12px), icon tile을 --space-10(40px), title-to-description gap을 --space-1(4px)로 조정합니다. 제목과 본문 typography는 바꾸지 않으며 루트에 data-density를 노출합니다. |
+| 명시 규칙 3 | headingLevel — title은 실제 heading으로 렌더되며 기본 레벨은 h4입니다(Core Card의 구조화 title은 h3). 카드가 놓인 문서의 제목 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false}로 heading 의미를 끄세요. 레벨은 건너뛰지 않습니다(WCAG 1.3.1). |
+| 명시 규칙 4 | 카드 전체 클릭 — onClick을 주면 카드 루트가 role="button" · tabIndex=0이 되고 Enter/Space로 활성화됩니다(WCAG 2.1.1). 포커스 링은 토큰 레이어(tokens/focus.css)의 전역 :focus-visible 규칙이 담당하므로 카드가 따로 그리지 않습니다. 이때 카드 안에 버튼·링크 같은 포커스 가능한 요소를 넣지 마세요 — 중첩 인터랙티브는 유효하지 않은 마크업이고 카드 이름이 본문 전체로 길어집니다. 행동이 여러 개면 onClick 없이 각 액션을 카드 안에 두세요. |
 | --body2-size | 15px |
 
 ## Responsive
@@ -9731,6 +9737,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 
 ## Content and writing
 
+- 타입 스케일 정합: 제목 19px → --headline1-size(18px, −1px 의도된 변경), 본문 15.5px → --body2-size(15px)로 스냅했습니다. NewsCard 제목(headline1)과 같은 카드 제목 단계로 정렬합니다.
 - FeatureCard — 틴트된 아이콘 타일 + 제목 + 설명(기능 셀). boxed는 Card 서피스로 감쌉니다.
 
 ## Related components
@@ -9765,6 +9772,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 
 - `--body2-size`
 - `--color-semantic-accent-foreground-blue`
+- `--color-semantic-accent-foreground-green`
 - `--color-semantic-accent-foreground-orange`
 - `--color-semantic-brand-on-surface`
 - `--color-semantic-brand-surface`
@@ -24365,30 +24373,37 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 | Storybook | `LDS Theme/Brand/LK ROBOTICS Logo` |
 | Source | `../component-content.json#theme-brand-lk-robotics-logo` |
 
-LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS는 Montserrat ExtraBold 800 v7.222, 한글 법인명은 Noto Sans KR ExtraBold 800 v2.004-H2에서 아웃라인으로 생성합니다. 승인 SVG 또는 Lockup만 사용하며 기능 아이콘처럼 반복하거나 비율·색상·자간을 임의로 바꾸지 않습니다.
+LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS와 승인 제품명 Portal은 Montserrat ExtraBold 800 v7.222, 한글 법인명은 Noto Sans KR ExtraBold 800 v2.004-H2에서 아웃라인으로 생성합니다. 승인 SVG 또는 Lockup만 사용하며 기능 아이콘처럼 반복하거나 비율·색상·자간을 임의로 바꾸지 않습니다.
+
+## 사용 판단
+
+### 사용
+
+- 최소 크기: 디지털 160px, 권장 192px 이상, 인쇄 32mm. 이보다 작으면 법인명 없는 기본형 사용.
+- 제품 적용 범위: LK Portal 사이드바 헤더는 지원합니다. Web Viz와 Control은 LK Portal을 식별하는 화면이 아니므로 이 제품형의 적용 대상이 아닙니다.
 
 ## Anatomy
 
 | Part | Contract |
 | --- | --- |
-| title | 접근성 이름. @default "LK ROBOTICS" |
+| title | 접근성 이름. portal은 "LK Portal", 나머지는 "LK ROBOTICS"가 기본값입니다. |
 
 ## Properties
 
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
-| `variant` | `'mark' \| 'stacked' \| 'inline'` | No | 'mark'(심볼만) · 'stacked'(기본) · 'inline'(가로). @default "inline" |
+| `variant` | `'mark' \| 'stacked' \| 'inline' \| 'portal'` | No | 'mark'(심볼만) · 'stacked' · 'inline'(가로) · 'portal'(승인된 LK Portal 제품 로고). @default "inline" |
 | `tone` | `'ink' \| 'white' \| 'brand' \| 'current'` | No | 채움 프리셋 — 'ink'/'brand' 공식 네이비(05132B) · 'white' · 'current'(currentColor). @default "ink" |
 | `color` | `string` | No | 명시적 채움, tone을 재정의. |
 | `height` | `number` | No | 렌더 픽셀 높이. @default 32 mark / 64 stacked / 28 inline |
-| `title` | `string` | No | 접근성 이름. @default "LK ROBOTICS" |
+| `title` | `string` | No | 접근성 이름. portal은 "LK Portal", 나머지는 "LK ROBOTICS"가 기본값입니다. |
 | `decorative` | `boolean` | No | 이미지가 아니라 장식으로 표시(aria-hidden). @default false |
 
 ## States
 
 | State | Contract |
 | --- | --- |
-| variant | 'mark'(심볼만) · 'stacked'(기본) · 'inline'(가로). @default "inline" |
+| variant | 'mark'(심볼만) · 'stacked' · 'inline'(가로) · 'portal'(승인된 LK Portal 제품 로고). @default "inline" |
 | tone | 채움 프리셋 — 'ink'/'brand' 공식 네이비(05132B) · 'white' · 'current'(currentColor). @default "ink" |
 
 ## 정량 규칙
@@ -24396,18 +24411,25 @@ LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS는 Montserrat ExtraBol
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | ROBOTICS: 대문자, Montserrat ExtraBold 정적 weight 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지 |
-| 명시 규칙 2 | 주식회사 엘케이로보틱스: NFC 텍스트, Noto Sans KR 가변 TTF의 명명된 ExtraBold wght=800 Version 2.004-H2, 글꼴 기본 커닝, 글자 사이 자간 0.105em, 마지막 글자 뒤 자간 없음, 가로·세로 비율 1:1, 글리프 수동 수정 금지 |
-| 명시 규칙 3 | 배치: 법인명 보이는 폭 1.90X, 상단 로크업과의 간격 0.21X, 상단 로크업의 보이는 중심축에 가운데 정렬 |
-| 명시 규칙 4 | 최소 크기: 디지털 160px, 권장 192px 이상, 인쇄 32mm. 이보다 작으면 법인명 없는 기본형 사용 |
+| 명시 규칙 2 | PORTAL: 대문자, 같은 Montserrat ExtraBold 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지 |
+| 명시 규칙 3 | 주식회사 엘케이로보틱스: NFC 텍스트, Noto Sans KR 가변 TTF의 명명된 ExtraBold wght=800 Version 2.004-H2, 글꼴 기본 커닝, 글자 사이 자간 0.105em, 마지막 글자 뒤 자간 없음, 가로·세로 비율 1:1, 글리프 수동 수정 금지 |
+| 명시 규칙 4 | 배치: 법인명 보이는 폭 1.90X, 상단 로크업과의 간격 0.21X, 상단 로크업의 보이는 중심축에 가운데 정렬 |
 
 ## Responsive
 
-- X는 커스텀 LK 심볼의 보이는 높이입니다. stacked는 워드마크 명목 cap height를 0.25X로 하고 심볼 보이는 폭의 0.2배만큼 띄워 가운데 정렬합니다. inline은 워드마크의 보이는 높이를 1X로 하고 같은 0.2배 간격을 둡니다. 배너 최소 여백은 사방 0.5X, 제품 UI용 inline 최소 렌더 높이는 20px입니다.
+- X는 커스텀 LK 심볼의 보이는 높이입니다. stacked는 워드마크 명목 cap height를 0.25X로 하고 심볼 보이는 폭의 0.2배만큼 띄워 가운데 정렬합니다. inline은 워드마크의 보이는 높이를 1X로 하고 같은 0.2배 간격을 둡니다. portal도 보이는 높이 1X를 쓰되 간격은 심볼 보이는 폭의 0.35배입니다 — 20px 사이드바 렌더에서 0.2배(약 3.8px)는 K 사선과 P가 붙어 보여 한 단어로 읽혔습니다. 배너 최소 여백은 사방 0.5X, 제품 UI용 inline 최소 렌더 높이는 20px입니다.
 
 ## Content and writing
 
-- LK ROBOTICS의 승인 로고 컴포넌트입니다. LK는 커스텀 벡터 심볼이고, ROBOTICS는 고정된 Montserrat ExtraBold 800 v7.222 글꼴에서 생성한 아웃라인입니다. 기업 표기형의 주식회사 엘케이로보틱스는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 승인 SVG 또는 Lockup만 사용하며 워드마크나 법인명을 텍스트로 다시 조판하지 않습니다.
+- variant="portal"은 자유 텍스트 슬롯이 아니라 승인된 LK Portal 고정 조합입니다. 다른 제품명을 전달하거나 PORTAL만 별도 폰트 텍스트로 조판하지 않습니다.
+- LK ROBOTICS의 승인 로고 컴포넌트입니다. LK는 커스텀 벡터 심볼이고, ROBOTICS와 승인된 제품 워드마크 PORTAL은 고정된 Montserrat ExtraBold 800 v7.222 글꼴에서 생성한 아웃라인입니다. 기업 표기형의 주식회사 엘케이로보틱스는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 승인 SVG 또는 Lockup만 사용하며 워드마크·제품명·법인명을 텍스트로 다시 조판하지 않습니다.
 - 승인 SVG와 Lockup은 동일한 생성 원본을 사용합니다. 개별 SVG path를 직접 편집하거나 텍스트로 다시 만들지 않습니다.
+
+## Accessibility
+
+- 가장 가까운 기존 형식은 inline입니다. 시각 차이는 ROBOTICS를 PORTAL 아웃라인으로 교체한 것과 0.35배 간격뿐이며 LK 심볼, 1X 높이, 색상과 접근성 규칙은 같습니다.
+- 단독 사용 시 접근성 이름은 LK Portal입니다. 이미 aria-label="LK Portal"이 있는 링크 안에서는 decorative로 중복 이름을 만들지 않습니다.
+- 외부 기준 검토: Atlassian 로고 지침은 제품 식별 시 심볼과 설명적 제품명을 함께 쓰고 맥락이 명확할 때만 심볼 단독형을 쓰도록 안내합니다. W3C 이미지 접근성 지침과 WCAG 2.2에 따라 의미 있는 로고는 하나의 접근성 이름을 제공하고, 중복되는 내부 로고는 장식으로 숨깁니다. 이 검토 결과를 고정 제품형과 decorative 계약에 반영했습니다.
 
 ## Examples
 
@@ -24415,6 +24437,7 @@ LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS는 Montserrat ExtraBol
 
 ```jsx
 <Lockup variant="inline" tone="ink" height={28} />
+<Lockup variant="portal" tone="ink" height={20} />
 <Lockup variant="mark" tone="white" height={40} />
 <Lockup variant="stacked" height={72} />
 ```
@@ -24434,6 +24457,9 @@ LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS는 Montserrat ExtraBol
 - Storybook implementation evidence: `stories/Brand.stories.jsx`
 - [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)
 - [Noto Sans KR 공식 Google Fonts 소스](https://github.com/google/fonts/tree/4efc2774c63917927efe769ca845def6bd6debae/ofl/notosanskr)
+- [Atlassian 로고 지침](https://atlassian.design/foundations/logos)
+- [W3C 이미지 접근성 지침](https://www.w3.org/WAI/tutorials/images/)
+- [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
 
 
 ---
