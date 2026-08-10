@@ -23,7 +23,7 @@
 | `date` | `React.ReactNode` | No | 날짜(tabular 숫자). |
 | `dateTime` | `string` | No | date의 기계 판독 값(ISO 8601). 주면 날짜가 time 엘리먼트로 렌더됩니다. |
 | `cta` | `React.ReactNode` | No | 선택적 콜투액션 라벨(끝 화살표와 함께 렌더). |
-| `href` | `string` | No | 기사 링크. @default "" |
+| `href` | `string` | No | 기사 링크. @default "#" |
 | `headingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| false` | No | 헤드라인의 heading 레벨. 목록이 놓인 문서 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 false로 끕니다. @default 3 |
 
 ## 정량 규칙

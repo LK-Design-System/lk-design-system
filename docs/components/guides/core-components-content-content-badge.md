@@ -52,7 +52,7 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | variant="solid" 은 채움 위에 반전 텍스트(--color-semantic-background-normal-normal)를 올립니다. 따라서 채움색 자체가 AA 4.5:1 을 넘어야 합니다. |
-| 명시 규칙 2 | 원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive 13BE4C ≈ 2.5:1, -cautionary EB9C33 ≈ 2.3:1, -negative EE5656 ≈ 3.2:1. accent(3878B3 ≈ 4.7:1)만 통과합니다. |
+| 명시 규칙 2 | 원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive #13BE4C ≈ 2.5:1, -cautionary #EB9C33 ≈ 2.3:1, -negative #EE5656 ≈ 3.2:1. accent(#3878B3 ≈ 4.7:1)만 통과합니다. |
 | 명시 규칙 3 | 그래서 solid 의 상태 톤 채움은 AA -text 토큰(--color-semantic-status-positive-text 등)을 씁니다. 라이트에서는 진한 잉크(5.5–7.5:1), 다크에서는 밝은 톤 + 어두운 반전 텍스트로 뒤집혀 두 테마 모두 통과합니다. |
 | 명시 규칙 4 | 상태를 색으로만 전달하지 마세요(WCAG 1.4.1). 라벨 텍스트나 아이콘으로 의미를 함께 주세요. |
 | --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |

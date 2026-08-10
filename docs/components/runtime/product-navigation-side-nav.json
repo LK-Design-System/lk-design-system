@@ -399,6 +399,11 @@
         "role": "overview"
       },
       {
+        "id": "lds-product-navigation-side-nav--navy-docked-surface",
+        "name": "변형·상태 · 브랜드 네이비 외형",
+        "role": "variants-states"
+      },
+      {
         "id": "lds-product-navigation-side-nav--docked-surface",
         "name": "변형·상태 · 셸 고정형 표면",
         "role": "variants-states"

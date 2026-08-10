@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   LK_LOGO_COLORS,
+  LK_LOGO_USAGE,
   LK_LOGO_VIEWBOX as VIEWBOX,
   LK_PATHS,
   ROBOTICS_INLINE_TRANSFORM,
@@ -10,40 +11,76 @@ import {
   PORTAL_INLINE_TRANSFORM,
   PORTAL_LOCKUP_VIEWBOX,
   PORTAL_PATHS,
+  PORTAL_MINIMUM_RENDERED_HEIGHT_PX,
 } from './lk-portal-lockup-paths.js';
+
+/* `portal`은 승인 제품 로크업이라 회사 variant와 같은 계약(최소 높이 보정,
+   intrinsic width, viewBox 검증)을 그대로 받아야 한다. 생성 모듈이 서로 다를
+   뿐이므로 여기서 한 표에 합쳐 이후 로직이 variant를 구분하지 않게 한다. */
+const VARIANT_VIEWBOX = Object.freeze({ ...VIEWBOX, portal: PORTAL_LOCKUP_VIEWBOX });
+const MINIMUM_HEIGHT = Object.freeze({
+  ...LK_LOGO_USAGE.minimumRenderedHeightPx,
+  portal: PORTAL_MINIMUM_RENDERED_HEIGHT_PX,
+});
+const DEFAULT_HEIGHT = Object.freeze({ mark: 32, stacked: 64, inline: 28, portal: 28 });
+const VIEWBOX_METRICS = Object.freeze(Object.fromEntries(
+  Object.entries(VARIANT_VIEWBOX).map(([variant, value]) => {
+    const [, , width, height] = value.split(/\s+/).map(Number);
+    return [variant, Object.freeze({ width, height })];
+  }),
+));
 
 /**
  * LK ROBOTICS — Lockup
  * Self-contained SVG generated from the regulated brand construction. LK is
- * custom vector geometry; ROBOTICS and approved product names are outlined
- * from the pinned Montserrat ExtraBold 800 v7.222 font. No runtime font is
- * required.
- * `tone`: 'ink'/'brand' = official #05132B · 'white' · 'current'. Size via
- * `height`. Decorative instances get aria-hidden.
+ * custom vector geometry; ROBOTICS and the approved product wordmark PORTAL are
+ * outlined from the pinned Montserrat ExtraBold 800 v7.222 font. No runtime font
+ * is required.
+ * `tone`: 'ink'/'brand' = official #05132B · 'white' · compatibility currentColor.
+ * Constrained black-only output uses the existing explicit `color="#000000"` escape hatch.
+ * `height` is the requested natural height; narrow parents scale both axes down
+ * together instead of clipping or distorting. Decorative instances get aria-hidden.
+ *
+ * `title` defaults per variant: the product lockup names itself `LK Portal`,
+ * every company variant names itself `LK ROBOTICS`.
  */
 export function Lockup({ variant = 'inline', tone = 'ink', color, height, title, decorative = false, style, ...rest }) {
+  const resolvedVariant = Object.prototype.hasOwnProperty.call(VARIANT_VIEWBOX, variant) ? variant : 'inline';
   const fill = color || (tone === 'white' ? LK_LOGO_COLORS.white : tone === 'current' ? 'currentColor' : LK_LOGO_COLORS.navy);
-  const vb = variant === 'portal' ? PORTAL_LOCKUP_VIEWBOX : (VIEWBOX[variant] || VIEWBOX.inline);
-  const h = height != null ? height : (variant === 'mark' ? 32 : variant === 'stacked' ? 64 : 28);
-  const accessibleTitle = title ?? (variant === 'portal' ? 'LK Portal' : 'LK ROBOTICS');
+  const vb = VARIANT_VIEWBOX[resolvedVariant];
+  const minimumHeight = MINIMUM_HEIGHT[resolvedVariant];
+  const requestedHeight = Number.isFinite(height) ? height : DEFAULT_HEIGHT[resolvedVariant];
+  const h = Math.max(requestedHeight, minimumHeight);
+  const metrics = VIEWBOX_METRICS[resolvedVariant];
+  const intrinsicWidth = Number((h * metrics.width / metrics.height).toFixed(6));
+  const accessibleTitle = title ?? (resolvedVariant === 'portal' ? 'LK Portal' : 'LK ROBOTICS');
   const a11y = decorative ? { 'aria-hidden': true } : { role: 'img', 'aria-label': accessibleTitle };
   return (
-    <svg viewBox={vb} height={h} {...a11y} style={{ display: 'block', ...style }} {...rest}>
+    <svg
+      viewBox={vb}
+      width={intrinsicWidth}
+      height={h}
+      preserveAspectRatio="xMidYMid meet"
+      data-lockup-variant={resolvedVariant}
+      {...a11y}
+      {...rest}
+      style={{ display: 'block', maxWidth: '100%', height: 'auto', ...style }}
+    >
       <g fill={fill} fillRule="nonzero">
         {LK_PATHS.map((path, index) => (
           <path key={`lk-${index}`} d={path.d} transform={path.transform} />
         ))}
-        {variant === 'stacked' && ROBOTICS_PATHS.map((path, index) => (
+        {resolvedVariant === 'stacked' && ROBOTICS_PATHS.map((path, index) => (
           <path key={`${path.letter}-${index}`} d={path.d} transform={path.transform} />
         ))}
-        {variant === 'inline' && (
+        {resolvedVariant === 'inline' && (
           <g transform={ROBOTICS_INLINE_TRANSFORM}>
             {ROBOTICS_PATHS.map((path, index) => (
               <path key={`${path.letter}-${index}`} d={path.d} transform={path.transform} />
             ))}
           </g>
         )}
-        {variant === 'portal' && (
+        {resolvedVariant === 'portal' && (
           <g transform={PORTAL_INLINE_TRANSFORM}>
             {PORTAL_PATHS.map((path, index) => (
               <path key={`${path.letter}-${index}`} d={path.d} />

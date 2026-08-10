@@ -54,7 +54,7 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | colors — 문자열 CSS 색 또는 {value, label?, disabled?} 항목의 배열. value / defaultValue / onChange(color) — 선택된 색. size(px, 기본 28) · shape(rounded · circle) · label(radiogroup 접근 가능 이름, 기본 색상 선택) · disabled(그룹 전체 비활성). |
-| 명시 규칙 2 | 항목의 접근 가능 이름은 label입니다. 한국어 색 이름을 항상 제공하세요. CF6360이나 var(--color-…) 같은 원시 CSS 값은 이름으로 쓰지 않으며, label이 없으면 위치 기반 한국어 이름(색상 1, 색상 2 …)으로 대체합니다. |
+| 명시 규칙 2 | 항목의 접근 가능 이름은 label입니다. 한국어 색 이름을 항상 제공하세요. #CF6360이나 var(--color-…) 같은 원시 CSS 값은 이름으로 쓰지 않으며, label이 없으면 위치 기반 한국어 이름(색상 1, 색상 2 …)으로 대체합니다. |
 | 명시 규칙 3 | WCAG 2.2 Use of Color (1.4.1) — 선택 상태를 색만으로 전달하지 않도록 체크 표시를 병행합니다. |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
 | --color-semantic-focus-ring | light: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent); dark: color-mix(in srgb, var(--color-semantic-primary-normal) 40%, transparent) |

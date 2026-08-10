@@ -13,8 +13,8 @@ import "./chunk-7MEK4Y6F.js";
 import "./chunk-S26PXDE3.js";
 import {
   Lockup
-} from "./chunk-P2MXOZ7B.js";
-import "./chunk-GSQTW7K7.js";
+} from "./chunk-D4DSISKT.js";
+import "./chunk-F35F4DHT.js";
 export {
   LdsColorSchemeScript,
   LdsProvider,

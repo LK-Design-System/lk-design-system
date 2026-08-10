@@ -72,7 +72,7 @@
       "name": "href",
       "type": "string",
       "required": false,
-      "description": "항목 링크. @default \"\"",
+      "description": "항목 링크. @default \"#\"",
       "owner": "ListingCardProps"
     }
   ],

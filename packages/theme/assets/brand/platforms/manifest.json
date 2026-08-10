@@ -1,0 +1,503 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": 1,
+  "generatedBy": "scripts/generate-brand-platform-assets.mjs",
+  "brandStandard": {
+    "version": "1.0.0",
+    "status": "current-repository-standard",
+    "governanceSha256": "84b087515ec89a24fd94e95a7264f3111fb0d4041329be4032bb902eb3b28281",
+    "minimumSizePolicy": {
+      "status": "repository-policy-pending-human-optical-approval",
+      "humanOpticalApproval": false,
+      "approvalRecord": null
+    }
+  },
+  "source": {
+    "constructionManifest": {
+      "path": "assets/brand/lk-logo-construction.json",
+      "schemaVersion": 1,
+      "constructionVersion": 4,
+      "sha256": "9f4712f7e1b67dccb3b9463413155046805918c39aa6a275aa16dd915c408e56",
+      "distribution": "repository-root-only",
+      "resolvableInPackage": false
+    },
+    "governance": {
+      "path": "docs/brand/lk-logo-governance.json",
+      "sha256": "84b087515ec89a24fd94e95a7264f3111fb0d4041329be4032bb902eb3b28281",
+      "distribution": "repository-docs-only",
+      "resolvableInPackage": false
+    },
+    "assetSetSha256": "f7bc6532ba993b0fda69bf77c322099703aa37006b094051b34d5d3cf3644f5f",
+    "assets": [
+      {
+        "id": "mark-navy",
+        "family": "mark",
+        "tone": "navy",
+        "usage": "general-brand-asset",
+        "path": "assets/brand/lk-mark-navy.svg",
+        "sha256": "1e636ea31a1a9a82bc6e01bccde9a85315479d86da99ce394510e1fa1ec146e3",
+        "byteLength": 484,
+        "title": "LK ROBOTICS mark",
+        "viewBox": {
+          "x": 342.60933,
+          "y": 149.18987,
+          "width": 68.75467,
+          "height": 64.1628
+        },
+        "colors": [
+          "#05132b"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": true,
+          "android": true,
+          "web": true
+        }
+      },
+      {
+        "id": "mark-white",
+        "family": "mark",
+        "tone": "white",
+        "usage": "general-brand-asset",
+        "path": "assets/brand/lk-mark-white.svg",
+        "sha256": "78ed59f51baf98d035242d7de5e6fde05b21d5708e12018ded697c765db7be36",
+        "byteLength": 484,
+        "title": "LK ROBOTICS mark",
+        "viewBox": {
+          "x": 342.60933,
+          "y": 149.18987,
+          "width": 68.75467,
+          "height": 64.1628
+        },
+        "colors": [
+          "#ffffff"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": true,
+          "android": true,
+          "web": true
+        }
+      },
+      {
+        "id": "logo-inline-navy",
+        "family": "inline",
+        "tone": "navy",
+        "usage": "general-brand-asset",
+        "path": "assets/brand/lk-logo-inline-navy.svg",
+        "sha256": "1789fa9df782cf1fbc93f57167b174672741c515b9936696c6ce59f2cc87c287",
+        "byteLength": 4367,
+        "title": "LK ROBOTICS inline logo",
+        "viewBox": {
+          "x": 342.60933,
+          "y": 149.18987,
+          "width": 501.50943,
+          "height": 64.1628
+        },
+        "colors": [
+          "#05132b"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": true,
+          "android": true,
+          "web": true
+        }
+      },
+      {
+        "id": "logo-inline-white",
+        "family": "inline",
+        "tone": "white",
+        "usage": "general-brand-asset",
+        "path": "assets/brand/lk-logo-inline-white.svg",
+        "sha256": "2584a5ac9b27cc603a19f66bef631e0059ab5c219314310371710fae42df10a0",
+        "byteLength": 4367,
+        "title": "LK ROBOTICS inline logo",
+        "viewBox": {
+          "x": 342.60933,
+          "y": 149.18987,
+          "width": 501.50943,
+          "height": 64.1628
+        },
+        "colors": [
+          "#ffffff"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": true,
+          "android": true,
+          "web": true
+        }
+      },
+      {
+        "id": "logo-stacked-navy",
+        "family": "stacked",
+        "tone": "navy",
+        "usage": "general-brand-asset",
+        "path": "assets/brand/lk-logo-navy.svg",
+        "sha256": "8c920d45563187d5cad9ea4dd5f05eff27e3bacf3e41dd4525262ef9f4a5d5b7",
+        "byteLength": 4277,
+        "title": "LK ROBOTICS stacked logo",
+        "viewBox": {
+          "x": 318.308168,
+          "y": 149.18987,
+          "width": 117.356995,
+          "height": 90.916062
+        },
+        "colors": [
+          "#05132b"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": true,
+          "android": true,
+          "web": true
+        }
+      },
+      {
+        "id": "logo-stacked-white",
+        "family": "stacked",
+        "tone": "white",
+        "usage": "general-brand-asset",
+        "path": "assets/brand/lk-logo-white.svg",
+        "sha256": "9637f8e642b95f38cfa0ed4270ff4a4d9af1b23d950295e634cdb82856cc04ce",
+        "byteLength": 4277,
+        "title": "LK ROBOTICS stacked logo",
+        "viewBox": {
+          "x": 318.308168,
+          "y": 149.18987,
+          "width": 117.356995,
+          "height": 90.916062
+        },
+        "colors": [
+          "#ffffff"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": true,
+          "android": true,
+          "web": true
+        }
+      },
+      {
+        "id": "logo-banner-navy",
+        "family": "banner",
+        "tone": "navy",
+        "usage": "general-brand-asset",
+        "path": "assets/brand/lk-logo-banner-navy.svg",
+        "sha256": "e56b1830065ec9ac6d5079493aef43a32a7287c350c2da7e60967ce9f78f0f1e",
+        "byteLength": 4463,
+        "title": "LK ROBOTICS navy banner logo",
+        "viewBox": {
+          "x": 318.52793,
+          "y": 125.10847,
+          "width": 549.67223,
+          "height": 112.3256
+        },
+        "colors": [
+          "#05132b",
+          "#ffffff"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": true,
+          "android": true,
+          "web": true
+        }
+      },
+      {
+        "id": "logo-banner-light",
+        "family": "banner",
+        "tone": "light",
+        "usage": "general-brand-asset",
+        "path": "assets/brand/lk-logo-banner-light.svg",
+        "sha256": "2e4b1ecdc20803653fb75c227aae2036c6d811820fb157dceb20a447e55f06b3",
+        "byteLength": 4464,
+        "title": "LK ROBOTICS light banner logo",
+        "viewBox": {
+          "x": 318.52793,
+          "y": 125.10847,
+          "width": 549.67223,
+          "height": 112.3256
+        },
+        "colors": [
+          "#05132b",
+          "#ffffff"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": true,
+          "android": true,
+          "web": true
+        }
+      },
+      {
+        "id": "logo-square-navy",
+        "family": "square",
+        "tone": "navy",
+        "usage": "general-brand-asset",
+        "path": "assets/brand/lk-logo-official.svg",
+        "sha256": "5f7e84b108fc915be8a911c4f994d63126fd7ff631e227973696de65293eaf91",
+        "byteLength": 4342,
+        "title": "LK ROBOTICS logo",
+        "viewBox": {
+          "x": 297.4293,
+          "y": 114.3693,
+          "width": 158.74,
+          "height": 158.74
+        },
+        "colors": [
+          "#05132b",
+          "#ffffff"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": true,
+          "android": true,
+          "web": true
+        }
+      },
+      {
+        "id": "logo-square-light",
+        "family": "square",
+        "tone": "light",
+        "usage": "general-brand-asset",
+        "path": "assets/brand/lk-logo-official-light.svg",
+        "sha256": "83c12ab87c31a25d660a2a88d774642388ee4e46a75624025e32f649becc07df",
+        "byteLength": 4362,
+        "title": "LK ROBOTICS logo on light background",
+        "viewBox": {
+          "x": 297.4293,
+          "y": 114.3693,
+          "width": 158.74,
+          "height": 158.74
+        },
+        "colors": [
+          "#05132b",
+          "#ffffff"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": true,
+          "android": true,
+          "web": true
+        }
+      },
+      {
+        "id": "logo-corporate-square-navy",
+        "family": "corporateSquare",
+        "tone": "navy",
+        "usage": "general-brand-asset",
+        "path": "assets/brand/lk-logo-official-corporate.svg",
+        "sha256": "4f79ce7fddb226d8e360a2eeabf4b8b7f7a6a607a75efcf24179d570a4099cef",
+        "byteLength": 11110,
+        "title": "LK ROBOTICS corporate logo — 주식회사 엘케이로보틱스",
+        "viewBox": {
+          "x": 77.0213,
+          "y": 114.3693,
+          "width": 158.74,
+          "height": 158.74
+        },
+        "colors": [
+          "#05132b",
+          "#6bbbdd",
+          "#ffffff"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": true,
+          "android": true,
+          "web": true
+        }
+      },
+      {
+        "id": "logo-corporate-square-light",
+        "family": "corporateSquare",
+        "tone": "light",
+        "usage": "general-brand-asset",
+        "path": "assets/brand/lk-logo-official-corporate-light.svg",
+        "sha256": "990bcb6d3acb5686d54e85877fd93332f8a5515214b6640529ac1bf5c78e3749",
+        "byteLength": 11130,
+        "title": "LK ROBOTICS corporate logo on light background — 주식회사 엘케이로보틱스",
+        "viewBox": {
+          "x": 77.0213,
+          "y": 114.3693,
+          "width": 158.74,
+          "height": 158.74
+        },
+        "colors": [
+          "#05132b",
+          "#6bbbdd",
+          "#ffffff"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": true,
+          "android": true,
+          "web": true
+        }
+      },
+      {
+        "id": "favicon",
+        "family": "favicon",
+        "tone": "navy",
+        "usage": "browser-favicon-only",
+        "path": "assets/brand/lk-favicon.svg",
+        "sha256": "ef11cef7f3495ed039330c4b472b26fa97b14d0d8b71d20b5e6b32ca6163d949",
+        "byteLength": 628,
+        "title": "LK ROBOTICS favicon tile",
+        "viewBox": {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        },
+        "colors": [
+          "#05132b",
+          "#ffffff"
+        ],
+        "platforms": {
+          "figma": true,
+          "ios": false,
+          "android": false,
+          "web": true
+        }
+      }
+    ]
+  },
+  "clearSpace": {
+    "definition": "Clear-space application is family-specific; transparent lockups require external space, banners embed it, and contained assets preserve their complete canvas.",
+    "unit": "X",
+    "xDefinition": "visible height of the custom LK symbol",
+    "measurement": "visible-artwork-bounds",
+    "application": "family-specific",
+    "transparentAssetApplication": "external-around-visible-bounds",
+    "externalMinimumAppliesTo": [
+      "mark",
+      "stacked",
+      "inline"
+    ],
+    "minimumToX": 0.5,
+    "coBrandMinimumToX": 1,
+    "applicationByFamily": {
+      "mark": "external-required-from-visible-artwork-bounds",
+      "inline": "external-required-from-visible-artwork-bounds",
+      "stacked": "external-required-from-visible-artwork-bounds",
+      "banner": "embedded-in-source-asset",
+      "square": "preserve-complete-containment-canvas",
+      "corporateSquare": "preserve-complete-containment-canvas",
+      "favicon": "preserve-complete-containment-canvas"
+    }
+  },
+  "familyContracts": {
+    "mark": {
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 20,
+        "unit": "platform-logical-unit"
+      },
+      "minimumVisibleArtworkHeight": {
+        "axis": "visible-artwork-height",
+        "value": 16,
+        "unit": "platform-logical-unit"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 21.431318,
+        "unit": "platform-logical-unit"
+      }
+    },
+    "inline": {
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 20,
+        "unit": "platform-logical-unit"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 156.324048,
+        "unit": "platform-logical-unit"
+      }
+    },
+    "stacked": {
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 64,
+        "unit": "platform-logical-unit"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 82.61299,
+        "unit": "platform-logical-unit"
+      }
+    },
+    "banner": {
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 28,
+        "unit": "platform-logical-unit"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 137.019722,
+        "unit": "platform-logical-unit"
+      }
+    },
+    "square": {
+      "minimumRendered": {
+        "axis": "edge",
+        "value": 64,
+        "unit": "platform-logical-unit"
+      },
+      "recommendedRendered": {
+        "axis": "edge",
+        "value": 96,
+        "unit": "platform-logical-unit"
+      }
+    },
+    "corporateSquare": {
+      "minimumRendered": {
+        "axis": "edge",
+        "value": 160,
+        "unit": "platform-logical-unit"
+      },
+      "recommendedRendered": {
+        "axis": "edge",
+        "value": 192,
+        "unit": "platform-logical-unit"
+      }
+    },
+    "favicon": {
+      "minimumRendered": {
+        "axis": "edge",
+        "value": 16,
+        "unit": "platform-logical-unit"
+      }
+    }
+  },
+  "platformLogicalUnits": {
+    "figma": "design-px",
+    "ios": "pt",
+    "android": "dp",
+    "web": "css-px"
+  },
+  "platforms": {
+    "figma": {
+      "contract": "assets/brand/platforms/figma/import-manifest.json",
+      "integration": "manual-import-contract",
+      "liveSync": false
+    },
+    "ios": {
+      "contract": "assets/brand/platforms/ios/manifest.json",
+      "assetCatalog": "assets/brand/platforms/ios/LKBrandAssets.xcassets"
+    },
+    "android": {
+      "contract": "assets/brand/platforms/android/manifest.json",
+      "resourceRoot": "assets/brand/platforms/android/res"
+    },
+    "web": {
+      "contract": "assets/brand/platforms/web/manifest.json",
+      "assetsCopied": false
+    }
+  }
+}

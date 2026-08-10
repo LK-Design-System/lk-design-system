@@ -334,6 +334,11 @@
         "id": "lds-product-communication-message-feed--narrow-320",
         "name": "반응형 · 320px",
         "role": "responsive"
+      },
+      {
+        "id": "lds-product-communication-message-feed--compact-density",
+        "name": "밀도 · compact",
+        "role": "responsive"
       }
     ],
     "hiddenEvidence": 1

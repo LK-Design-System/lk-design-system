@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-08-10",
+  "purpose": "Pin how the three required LK product frontends currently consume company identity assets, separate the LDS-owned brand contract from product-owned composition, and make downstream migration gaps explicit.",
+  "evidenceVerification": {
+    "sourceObjects": "manually-verified-against-local-git-objects-at-audit-date",
+    "automatedCheck": "validates-required-product-coverage-pin-format-documentation-and-brand-size-contracts-without-fetching-product-repositories"
+  },
+  "standard": {
+    "constructionManifest": "assets/brand/lk-logo-construction.json",
+    "runtimeComponent": "components/brand/Lockup.jsx",
+    "constructionVersion": 4,
+    "geometryVersion": "1.0",
+    "smallUseVariantApproved": false
+  },
+  "ownershipBoundary": {
+    "designSystemOwns": [
+      "LK symbol and wordmark geometry",
+      "approved positive, reverse, monochrome, square, inline, stacked, banner, and corporate outputs",
+      "brand colors, clear space, and minimum rendered sizes",
+      "deterministic source hashes and platform export contracts"
+    ],
+    "productOwns": [
+      "product name adjacent to the company mark",
+      "route and click behavior",
+      "responsive placement that preserves the LDS clear-space and minimum-size contract",
+      "migration timing and package-version rollout"
+    ]
+  },
+  "requiredProducts": [
+    "web-viz",
+    "control",
+    "portal"
+  ],
+  "reviews": [
+    {
+      "id": "web-viz",
+      "repository": "LK-ROBOTICS/lk_web_viz",
+      "sourceRevision": "a984def117c05acd213f494cbb8a42e990595505",
+      "classification": "migration-required",
+      "finding": "The product repeats a product-local 264 by 233 gradient PNG rather than the canonical outlined LK assets. The four call sites meet or exceed the intended rendered-size floor but the artwork, color treatment, and source provenance are outside the brand contract.",
+      "replacement": {
+        "headerVariant": "inline",
+        "headerRenderedHeightPx": 32,
+        "loginVariant": "mark",
+        "loginRenderedHeightPx": 80,
+        "productNameComposition": "LK Web Viz remains product-owned adjacent copy; it is not added to the company logo paths."
+      },
+      "sourceEvidence": [
+        {
+          "path": "frontend/public/logo.png",
+          "blobSha": "7b82890c35b292a8364d75b9c4c3cae20c112728",
+          "note": "264 by 233 transparent PNG containing a blue gradient LK symbol."
+        },
+        {
+          "path": "frontend/src/screens/ConnectionSettingsScreen.tsx",
+          "blobSha": "b04f91a96fc49b399dddfd89b5c23b785f8349b0",
+          "note": "Uses /logo.png at h-8."
+        },
+        {
+          "path": "frontend/src/screens/DashboardScreen.tsx",
+          "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26",
+          "note": "Uses /logo.png at h-8."
+        },
+        {
+          "path": "frontend/src/screens/LoginScreen.tsx",
+          "blobSha": "9147ae71533d51b268fd528515bbed9087fc9771",
+          "note": "Uses /logo.png in an 80 by 80 slot."
+        },
+        {
+          "path": "frontend/src/screens/RobotSelectScreen.tsx",
+          "blobSha": "fc363c63ea768c560d56012dcf4f9bfa055dec0d",
+          "note": "Uses /logo.png at h-8."
+        }
+      ]
+    },
+    {
+      "id": "control",
+      "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+      "sourceRevision": "3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19",
+      "classification": "migration-required",
+      "finding": "Navigation uses an independently stored square logo-light.svg and authentication uses favicon.ico. Both are large enough for the intended slots, but neither is tied to the current construction manifest or generator, so product and LDS geometry can drift.",
+      "replacement": {
+        "navigationVariant": "official-square",
+        "navigationRenderedSquarePx": 55,
+        "navigationDecision": "The observed 55px slot is below the new 64px basic-square minimum; use mark at 55px or increase the official-square slot to at least 64px.",
+        "loginVariant": "official-square",
+        "loginRenderedSquarePx": 100,
+        "productNameComposition": "로봇 관제 시스템 remains product-owned adjacent copy."
+      },
+      "sourceEvidence": [
+        {
+          "path": "frontend/src/ui-component/Logo.jsx",
+          "blobSha": "b62d864ab996a9cbffb6159ab75476a94ae8e9d1",
+          "note": "Loads /logo-light.svg with a default 55 by 55 slot."
+        },
+        {
+          "path": "frontend/src/layout/MainLayout/LogoSection/index.jsx",
+          "blobSha": "7286ab8cd371a55837f17f8376b7c55ffa234ab1",
+          "note": "Owns routing and delegates visual identity to Logo."
+        },
+        {
+          "path": "frontend/public/logo-light.svg",
+          "blobSha": "7adf75493a9ef9d8a7865a5943268b7f319a0886",
+          "note": "Product-local square SVG not generated from the current LDS manifest."
+        },
+        {
+          "path": "frontend/src/views/pages/authentication/Login.jsx",
+          "blobSha": "01e5ad9218a656898e3283050acb5035f17d0253",
+          "note": "Loads /favicon.ico in a 100 by 100 slot."
+        },
+        {
+          "path": "frontend/public/favicon.ico",
+          "blobSha": "f18a448b5f90ff4c23470f4bf34ef1efc70f6f66",
+          "note": "Product-local raster icon with no construction-manifest provenance."
+        }
+      ]
+    },
+    {
+      "id": "portal",
+      "repository": "LK-ROBOTICS-AX/lk_portal",
+      "sourceRevision": "546f11e4640b5a9ec81fc210a5085581b9d277bc",
+      "classification": "contract-compatible-upgrade-required",
+      "finding": "LK Portal's sidebar composition already uses the LDS Lockup mark at a 20px rendered SVG height and keeps the visible Portal label as product-owned adjacent copy. Under the current viewBox this exposes at least the required 16px visible LK artwork height, but the pinned rc.23 package predates the current construction contract and must be upgraded to receive the standardized outputs.",
+      "replacement": {
+        "variant": "mark",
+        "renderedHeightPx": 20,
+        "packageAction": "Upgrade @lk-design-system/lds-theme from the pinned rc.23 artifact to a release containing constructionVersion 3 and geometryVersion 1.0.",
+        "productNameComposition": "LK Portal remains the product identity; its visible Portal label remains product-owned adjacent copy."
+      },
+      "sourceEvidence": [
+        {
+          "path": "src/components/layout/Sidebar.tsx",
+          "blobSha": "9c03733773249af3c5dd6676657d889166d50df3",
+          "note": "Uses Lockup variant=mark at height 20 for expanded and collapsed navigation."
+        },
+        {
+          "path": "package.json",
+          "blobSha": "8ec342eb55559de7d62879ebfd83fa554161a588",
+          "note": "Pins @lk-design-system/lds-theme to a local rc.23 package."
+        },
+        {
+          "path": "vendor/lk-design-system-lds-theme-0.1.0-rc.23.tgz",
+          "blobSha": "81f778b415fb876c48db7dca7d696301b9a789d9",
+          "note": "Pinned package artifact that predates the current brand construction release."
+        }
+      ]
+    }
+  ]
+}

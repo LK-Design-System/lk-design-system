@@ -10,8 +10,15 @@
   ],
   "supportingComponents": [
     "Button",
+    "Callout",
+    "CheckboxGroup",
+    "ChoiceCard",
+    "DrawerSection",
+    "FileUpload",
     "Input",
-    "Sheet"
+    "Select",
+    "Sheet",
+    "Textarea"
   ],
   "purpose": "넓은 화면에서 필터·속성·상세처럼 주 콘텐츠를 보조하는 작업을 옆 패널에 유지할 때 적합합니다. 작은 화면의 짧은 선택에는 Drawer 대신 Sheet를, 집중이 필요한 확인에는 Dialog를 사용하세요.",
   "useWhen": [
@@ -283,19 +290,31 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
+      "component": "Callout",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "CheckboxGroup",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ChoiceCard",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DrawerSection",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "FileUpload",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "Input",
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "Sheet",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "CommandPalette",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "Lightbox",
+      "component": "Select",
       "relationship": "대표 시나리오에서 조합"
     }
   ],

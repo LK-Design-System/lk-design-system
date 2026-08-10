@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "7645f04d0210f2db5115c631df76f885dd236af8f8eb233113f339629aadaa1e",
+    "storybookIndexSha256": "0bb263c06342fd9b0f9da01fe87eb05f8d06e18f75d41ff7740004b54d3a4c5f",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,27 +62,27 @@
   },
   "summary": {
     "pages": 194,
-    "stories": 703,
-    "publicStories": 487,
-    "hiddenStories": 216,
+    "stories": 716,
+    "publicStories": 494,
+    "hiddenStories": 222,
     "componentDescriptions": 190,
     "pagesWithVisibleCanvasIntroduction": 190,
-    "pagesWithDecisionGuidance": 183,
-    "describedPublicStories": 487,
+    "pagesWithDecisionGuidance": 182,
+    "describedPublicStories": 494,
     "reviewedPages": 194,
     "reviewedStories": 703,
-    "staleReviewedPages": 0,
+    "staleReviewedPages": 9,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
       "overview": 178,
-      "usage": 37,
-      "variants-states": 105,
+      "usage": 39,
+      "variants-states": 106,
       "interaction": 54,
-      "responsive": 71,
+      "responsive": 75,
       "scenario": 26,
-      "visual-parity": 91,
-      "internal-contract": 121
+      "visual-parity": 95,
+      "internal-contract": 123
     },
     "dispositions": {
       "keep": 194,
@@ -93,9 +93,9 @@
     "layers": {
       "Core": {
         "pages": 57,
-        "stories": 208,
+        "stories": 209,
         "public": 116,
-        "hidden": 92,
+        "hidden": 93,
         "guideReadyPages": 57
       },
       "Foundation": {
@@ -107,10 +107,10 @@
       },
       "Product": {
         "pages": 117,
-        "stories": 466,
-        "public": 350,
-        "hidden": 116,
-        "guideReadyPages": 117
+        "stories": 478,
+        "public": 357,
+        "hidden": 121,
+        "guideReadyPages": 116
       },
       "Theme": {
         "pages": 3,
@@ -3562,7 +3562,7 @@
       "layer": "Core",
       "family": "Overlay",
       "importPath": "./stories/OverlayDropdownMenu.stories.jsx",
-      "sourceSha256": "1c015d261c90b7be855c6bcb65e499ce63c87c4653f2196ad10848915d6600b6",
+      "sourceSha256": "0ad860cbe056a3967614438ff1d8b023748f30127d653262ed77d6422955e112",
       "primaryOwner": "DropdownMenu",
       "ownerComponents": [
         "DropdownMenu"
@@ -3574,7 +3574,7 @@
       ],
       "visibility": {
         "public": 4,
-        "hidden": 3
+        "hidden": 4
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -3724,6 +3724,30 @@
             "Table"
           ],
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
+        },
+        {
+          "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-collision-boundary-contract",
+          "name": "계약 · collision boundary",
+          "exportName": "DropdownMenuCollisionBoundaryContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "DropdownMenu"
+          ],
+          "supportingComponents": [
+            "Button"
+          ]
         },
         {
           "id": "lds-core-components-overlay-dropdown-menu--dropdown-menu-card",
@@ -6437,7 +6461,7 @@
       "layer": "Core",
       "family": "Status",
       "importPath": "./stories/StatusFeedback.stories.jsx",
-      "sourceSha256": "467e9d619d80a6b1bf6ff0ccffff620522c0fb006d01d2126526d65737fb8345",
+      "sourceSha256": "f5bcb3a7928c83fbda1a2795da5cd6a1715584a4c34a727c164342eabcacb424",
       "primaryOwner": "Banner",
       "ownerComponents": [
         "Banner",
@@ -8872,28 +8896,33 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "b6debb98ff3352221ef1fa5c6818f38c5aa5c0a166a66a55f5cf29aa8aa518ff",
+      "sourceSha256": "a8ff0b70e6e7f0002f89548109fec89d66fdfaddb379520b16917aae87b24a4a",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
       ],
       "supportingComponents": [
         "Avatar",
+        "Button",
         "Chip",
+        "DropdownMenu",
         "Icon",
         "IconButton",
         "MessageComposer",
         "MessageFeed",
+        "Popover",
+        "RadioGroup",
+        "Slider",
         "SourceDisclosure"
       ],
       "visibility": {
-        "public": 8,
-        "hidden": 1
+        "public": 12,
+        "hidden": 5
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-message--message-overview",
-        "describedPublicStories": 8,
+        "describedPublicStories": 12,
         "publicStoriesWithCanvasGuidance": 4,
         "decisionGuidance": true
       },
@@ -8992,6 +9021,39 @@
           "reviewNote": "2026-07-21 human review confirmed the AI response action bar is usage guidance, matching its public name and order; owner, visibility, description, play, and render evidence remain valid."
         },
         {
+          "id": "lds-product-communication-message--composer-overlay-conversation-column",
+          "name": "사용법 · 작성기 오버레이 조합",
+          "exportName": "ComposerOverlayConversationColumn",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Button",
+            "DropdownMenu",
+            "Icon",
+            "IconButton",
+            "MessageComposer",
+            "MessageFeed",
+            "Popover",
+            "RadioGroup",
+            "Slider"
+          ]
+        },
+        {
           "id": "lds-product-communication-message--conversation-composition",
           "name": "사용법 · 피드·메시지·작성기 구성",
           "exportName": "ConversationComposition",
@@ -9019,6 +9081,31 @@
             "MessageFeed"
           ],
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
+        },
+        {
+          "id": "lds-product-communication-message--identity-and-action-visibility",
+          "name": "사용법 · 화자 표기와 액션 노출 조절",
+          "exportName": "IdentityAndActionVisibility",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ]
         },
         {
           "id": "lds-product-communication-message--dark-theme",
@@ -9126,6 +9213,182 @@
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
+          "id": "lds-product-communication-message--compact-density",
+          "name": "밀도 · compact",
+          "exportName": "CompactDensity",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton"
+          ]
+        },
+        {
+          "id": "lds-product-communication-message--compact-conversation-column",
+          "name": "밀도 · compact 대화 열",
+          "exportName": "CompactConversationColumn",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton",
+            "MessageComposer",
+            "MessageFeed"
+          ]
+        },
+        {
+          "id": "lds-product-communication-message--composer-overlay-conversation-narrow-contract",
+          "name": "작성기 오버레이 대화 열 296px 계약",
+          "exportName": "ComposerOverlayConversationNarrowContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Button",
+            "DropdownMenu",
+            "Icon",
+            "IconButton",
+            "MessageComposer",
+            "MessageFeed",
+            "Popover",
+            "RadioGroup",
+            "Slider"
+          ]
+        },
+        {
+          "id": "lds-product-communication-message--composer-overlay-conversation-wide-contract",
+          "name": "작성기 오버레이 대화 열 460px 계약",
+          "exportName": "ComposerOverlayConversationWideContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Button",
+            "DropdownMenu",
+            "Icon",
+            "IconButton",
+            "MessageComposer",
+            "MessageFeed",
+            "Popover",
+            "RadioGroup",
+            "Slider"
+          ]
+        },
+        {
+          "id": "lds-product-communication-message--compact-conversation-column-contract",
+          "name": "조밀한 대화 열 296px 계약",
+          "exportName": "CompactConversationColumnContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton",
+            "MessageComposer",
+            "MessageFeed"
+          ]
+        },
+        {
+          "id": "lds-product-communication-message--compact-conversation-column-wide-contract",
+          "name": "조밀한 대화 열 460px 계약",
+          "exportName": "CompactConversationColumnWideContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton",
+            "MessageComposer",
+            "MessageFeed"
+          ]
+        },
+        {
           "id": "lds-product-communication-message--message-family-visual-parity",
           "name": "Conversation message family visual parity",
           "exportName": "MessageFamilyVisualParity",
@@ -9156,7 +9419,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageComposer.stories.jsx",
-      "sourceSha256": "7e58046cae187cf25c74bcaa89087e376c9e6342dd23f31290bbcdaab98aebab",
+      "sourceSha256": "951ed72d232e55d505c38f2ae70cffbbf8b2207dac9abda69bfd31b14d04656e",
       "primaryOwner": "MessageComposer",
       "ownerComponents": [
         "MessageComposer"
@@ -9168,17 +9431,19 @@
         "IconButton"
       ],
       "visibility": {
-        "public": 6,
+        "public": 7,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-message-composer--message-composer-overview",
-        "describedPublicStories": 6,
+        "describedPublicStories": 7,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
+        "decisionGuidance": false
       },
-      "missingGuidance": [],
+      "missingGuidance": [
+        "when-to-use-and-avoid"
+      ],
       "guidePriority": "high",
       "disposition": "keep",
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
@@ -9349,6 +9614,32 @@
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
+          "id": "lds-product-communication-message-composer--compact-density",
+          "name": "밀도 · compact",
+          "exportName": "CompactDensity",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "MessageComposer"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton"
+          ]
+        },
+        {
           "id": "lds-product-communication-message-composer--lifecycle-status-and-focus-contract",
           "name": "상태 알림과 중지 초점 계약",
           "exportName": "LifecycleStatusAndFocusContract",
@@ -9379,7 +9670,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageFeed.stories.jsx",
-      "sourceSha256": "75fbb94c12c91824e275726fe0df1679a128780a6670ac3d9581ac36f738870f",
+      "sourceSha256": "09ac2b2a7656993ea4e7fc6c7f58f2250ccd562c62fbe3c0e1b4282fb22edd5d",
       "primaryOwner": "MessageFeed",
       "ownerComponents": [
         "MessageFeed"
@@ -9391,13 +9682,13 @@
         "Spinner"
       ],
       "visibility": {
-        "public": 7,
+        "public": 8,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-message-feed--overview",
-        "describedPublicStories": 7,
+        "describedPublicStories": 8,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -9594,6 +9885,31 @@
             "ConversationMessage"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-product-communication-message-feed--compact-density",
+          "name": "밀도 · compact",
+          "exportName": "CompactDensity",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "MessageFeed"
+          ],
+          "supportingComponents": [
+            "ConversationMessage"
+          ]
         },
         {
           "id": "lds-product-communication-message-feed--viewport-inset-contract",
@@ -17342,7 +17658,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationSideNav.stories.jsx",
-      "sourceSha256": "bdf5e25a9682c1237bd36f90ffa496f5c5982e8f032e88d68e4684d6bba24a0f",
+      "sourceSha256": "c411bc967031f2d8e7109e858cba2e08c9a4b9e3cc1ba8117d3d8065cb9f3521",
       "primaryOwner": "SideNav",
       "ownerComponents": [
         "SideNav"
@@ -17353,13 +17669,13 @@
         "UserMenu"
       ],
       "visibility": {
-        "public": 9,
+        "public": 10,
         "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-navigation-side-nav--link-destinations",
-        "describedPublicStories": 9,
+        "describedPublicStories": 10,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -17395,6 +17711,32 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-08-01 source and built-browser review confirmed child destination icon-slot alignment and decorative semantics alongside the existing link/disclosure contract."
+        },
+        {
+          "id": "lds-product-navigation-side-nav--navy-docked-surface",
+          "name": "변형·상태 · 브랜드 네이비 외형",
+          "exportName": "NavyDockedSurface",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "SideNav"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Lockup"
+          ]
         },
         {
           "id": "lds-product-navigation-side-nav--docked-surface",
@@ -18656,15 +18998,22 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayDrawer.stories.jsx",
-      "sourceSha256": "8ae59b8cdaa9fb903e1466f1fca5c03e17d6ce6c1ea92e5bfb74d4b05956be6c",
+      "sourceSha256": "2cb7ca144a4685e5954a57a942256c3586f4d9645415c3d9f39bb3eb9e5e2516",
       "primaryOwner": "Drawer",
       "ownerComponents": [
         "Drawer"
       ],
       "supportingComponents": [
         "Button",
+        "Callout",
+        "CheckboxGroup",
+        "ChoiceCard",
+        "DrawerSection",
+        "FileUpload",
         "Input",
-        "Sheet"
+        "Select",
+        "Sheet",
+        "Textarea"
       ],
       "visibility": {
         "public": 3,
@@ -18761,7 +19110,14 @@
           ],
           "supportingComponents": [
             "Button",
-            "Input"
+            "Callout",
+            "CheckboxGroup",
+            "ChoiceCard",
+            "DrawerSection",
+            "FileUpload",
+            "Input",
+            "Select",
+            "Textarea"
           ],
           "reviewNote": "2026-08-09 source, built index, and live rendered review at 900x800 and 360x700 confirmed compact Drawer ownership, responsive role, public visibility, density metrics, focus behavior, and no horizontal overflow."
         },
@@ -19038,7 +19394,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayPopover.stories.jsx",
-      "sourceSha256": "ebe63028dc10c68eaea9bd61ac4f8d7400f0b66e244ff18f94ac43aaa8d1144d",
+      "sourceSha256": "21e8fa19e5bfd7989a475fffc6fd8581bc5a2b4be110b88c9bc285403242ab03",
       "primaryOwner": "Popover",
       "ownerComponents": [
         "Popover"
@@ -19048,7 +19404,7 @@
       ],
       "visibility": {
         "public": 2,
-        "hidden": 2
+        "hidden": 3
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -19109,6 +19465,30 @@
           "recommendedVisibility": "public",
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Popover"
+          ],
+          "supportingComponents": [
+            "Button"
+          ]
+        },
+        {
+          "id": "lds-product-overlay-popover--collision-boundary-contract",
+          "name": "계약 · collision boundary",
+          "exportName": "CollisionBoundaryContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
           "ownerComponents": [
             "Popover"
           ],
@@ -24065,7 +24445,13 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/Brand.stories.jsx",
-      "sourceSha256": "210915dfae82a0d0e809ea346a2bd126a3914e124b2426ecf6b5528ed1e4290d",
+      "sourceSha256": "b0682ed56b89168988384039f41be106f528c1ccf3d925f710a3b8f093317c30",
+      "sourceDependencies": [
+        {
+          "path": "stories/Brand.shared.jsx",
+          "sha256": "6ec0e8f6c9a78728f6dec7efede562f45446541220be3d1a4e8baaec3ce1e5ef"
+        }
+      ],
       "primaryOwner": "Lockup",
       "ownerComponents": [
         "Lockup"

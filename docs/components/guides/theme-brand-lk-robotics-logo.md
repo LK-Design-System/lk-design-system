@@ -8,14 +8,22 @@
 | Storybook | `LDS Theme/Brand/LK ROBOTICS Logo` |
 | Source | `../component-content.json#theme-brand-lk-robotics-logo` |
 
-LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS와 승인 제품명 Portal은 Montserrat ExtraBold 800 v7.222, 한글 법인명은 Noto Sans KR ExtraBold 800 v2.004-H2에서 아웃라인으로 생성합니다. 승인 SVG 또는 Lockup만 사용하며 기능 아이콘처럼 반복하거나 비율·색상·자간을 임의로 바꾸지 않습니다.
+LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 800 v7.222, 한글 법인명은 Noto Sans KR ExtraBold 800 v2.004-H2에서 아웃라인으로 생성합니다. construction grid, variant 저장소 정책 최소 크기, 0.5X/1X 여백, 배경·오용·플랫폼 전달 규칙을 함께 확인합니다.
 
 ## 사용 판단
 
 ### 사용
 
-- 최소 크기: 디지털 160px, 권장 192px 이상, 인쇄 32mm. 이보다 작으면 법인명 없는 기본형 사용.
-- 제품 적용 범위: LK Portal 사이드바 헤더는 지원합니다. Web Viz와 Control은 LK Portal을 식별하는 화면이 아니므로 이 제품형의 적용 대상이 아닙니다.
+- 적용 범위는 LK Portal을 식별하는 화면입니다. Web Viz와 Control은 그 대상이 아니므로 회사 변형을 사용합니다.
+- Positive: 흰색 또는 밝고 단순한 단색 배경에는 공식 네이비 tone="ink"를 사용합니다.
+- Reverse: 공식 네이비 또는 충분히 어둡고 단순한 배경에는 tone="white"를 사용합니다.
+
+### 사용하지 않음
+
+- ROBOTICS: 대문자, Montserrat ExtraBold 정적 weight 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지.
+- 주식회사 엘케이로보틱스: NFC, Noto Sans KR ExtraBold wght=800 Version 2.004-H2, 글꼴 기본 커닝, 글자 사이 0.105em, 마지막 글자 뒤 자간 없음, 가로·세로 비율 1:1, 글리프 수동 수정 금지.
+- 공식 사각형 자산은 전경과 배경이 함께 고정된 조합입니다. tone, currentColor나 UI semantic token으로 다시 칠하지 않습니다.
+- 이 manifest들은 deterministic 전달 입력과 hash를 기록할 뿐입니다. Figma live sync, 실제 업로드, 디자이너 승인이나 제품 저장소 적용을 증명하지 않습니다. 특히 iOS AppIcon과 Android adaptive icon은 현재 제공하지 않습니다.
 
 ## Anatomy
 
@@ -27,10 +35,10 @@ LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS와 승인 제품명 Po
 
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
-| `variant` | `'mark' \| 'stacked' \| 'inline' \| 'portal'` | No | 'mark'(심볼만) · 'stacked' · 'inline'(가로) · 'portal'(승인된 LK Portal 제품 로고). @default "inline" |
-| `tone` | `'ink' \| 'white' \| 'brand' \| 'current'` | No | 채움 프리셋 — 'ink'/'brand' 공식 네이비(05132B) · 'white' · 'current'(currentColor). @default "ink" |
-| `color` | `string` | No | 명시적 채움, tone을 재정의. |
-| `height` | `number` | No | 렌더 픽셀 높이. @default 32 mark / 64 stacked / 28 inline |
+| `variant` | `'mark' \| 'stacked' \| 'inline' \| 'portal'` | No | 'mark'(심볼만) · 'stacked' · 'inline'(가로) · 'portal'(승인된 LK Portal 제품 로크업). @default "inline" |
+| `tone` | `'ink' \| 'white' \| 'brand' \| 'current'` | No | 채움 프리셋 — 공식 네이비, 반전 화이트, 호환용 currentColor. 제약된 검정 단색 출력은 color="#000000"을 명시합니다. @default "ink" |
+| `color` | `string` | No | 호환용 명시 채움. 임의 색을 공식 로고 사용으로 승인하지 않으며 신규 사용은 tone을 우선합니다. |
+| `height` | `number` | No | 요청 자연 높이. 최소 20 mark / 64 stacked / 20 inline으로 보정됩니다. 기본 responsive style의 축소는 실제 표시 최소를 보장하지 않습니다. @default 32 / 64 / 28 |
 | `title` | `string` | No | 접근성 이름. portal은 "LK Portal", 나머지는 "LK ROBOTICS"가 기본값입니다. |
 | `decorative` | `boolean` | No | 이미지가 아니라 장식으로 표시(aria-hidden). @default false |
 
@@ -38,33 +46,45 @@ LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS와 승인 제품명 Po
 
 | State | Contract |
 | --- | --- |
-| variant | 'mark'(심볼만) · 'stacked' · 'inline'(가로) · 'portal'(승인된 LK Portal 제품 로고). @default "inline" |
-| tone | 채움 프리셋 — 'ink'/'brand' 공식 네이비(05132B) · 'white' · 'current'(currentColor). @default "ink" |
+| variant | 'mark'(심볼만) · 'stacked' · 'inline'(가로) · 'portal'(승인된 LK Portal 제품 로크업). @default "inline" |
+| tone | 채움 프리셋 — 공식 네이비, 반전 화이트, 호환용 currentColor. 제약된 검정 단색 출력은 color="#000000"을 명시합니다. @default "ink" |
+
+## Behavior and interaction
+
+- 변형 선택과 저장소 정책 최소 크기 (광학 승인 대기).
 
 ## 정량 규칙
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | ROBOTICS: 대문자, Montserrat ExtraBold 정적 weight 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지 |
-| 명시 규칙 2 | PORTAL: 대문자, 같은 Montserrat ExtraBold 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지 |
-| 명시 규칙 3 | 주식회사 엘케이로보틱스: NFC 텍스트, Noto Sans KR 가변 TTF의 명명된 ExtraBold wght=800 Version 2.004-H2, 글꼴 기본 커닝, 글자 사이 자간 0.105em, 마지막 글자 뒤 자간 없음, 가로·세로 비율 1:1, 글리프 수동 수정 금지 |
-| 명시 규칙 4 | 배치: 법인명 보이는 폭 1.90X, 상단 로크업과의 간격 0.21X, 상단 로크업의 보이는 중심축에 가운데 정렬 |
+| 명시 규칙 1 | 심볼의 정규화된 보이는 치수는 W = 1.08176X, H = 1X입니다. |
+| 명시 규칙 2 | 투명 배경 mark·stacked·inline의 외부 clear space는 보이는 로고 bounds부터 사방 0.5X, 공동 브랜딩은 1X입니다. banner는 0.5X를 배경 안에 포함하고, 기본/기업 사각형과 favicon tile은 생성된 전체 캔버스가 보호면입니다. 타이트한 배포 SVG의 내부 패딩과 혼동하지 않습니다. |
+| 명시 규칙 3 | geometry v1.0의 path, transform, visible bounds와 SHA-256이 정본입니다. 작도 도표는 검증 기준이며 심볼을 다시 그리는 템플릿이 아닙니다. |
+| 명시 규칙 4 | 작은 크기용 별도 redraw는 승인되지 않았습니다. optical test와 승인 기록 전까지 모든 크기에서 v1.0을 유지합니다. |
 
 ## Responsive
 
-- X는 커스텀 LK 심볼의 보이는 높이입니다. stacked는 워드마크 명목 cap height를 0.25X로 하고 심볼 보이는 폭의 0.2배만큼 띄워 가운데 정렬합니다. inline은 워드마크의 보이는 높이를 1X로 하고 같은 0.2배 간격을 둡니다. portal도 보이는 높이 1X를 쓰되 간격은 심볼 보이는 폭의 0.35배입니다 — 20px 사이드바 렌더에서 0.2배(약 3.8px)는 K 사선과 P가 붙어 보여 한 단어로 읽혔습니다. 배너 최소 여백은 사방 0.5X, 제품 UI용 inline 최소 렌더 높이는 20px입니다.
+- X는 패딩이나 SVG viewBox가 아니라 LK 심볼 path의 보이는 높이입니다.
+- PORTAL(승인 제품 워드마크): 같은 글꼴·같은 제작 규정. 회사 워드마크와 대소문자 문법을 맞춥니다. 배치는 보이는 높이 1X에 심볼 보이는 폭의 0.35X 간격이며, inline의 0.2X보다 넓은 이유는 20px 렌더에서 0.2X(약 3.8px)일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다.
+- | 변형 | 사용 | 최소 크기 | | --- | --- | --- | | mark | 브랜드가 이미 식별되는 좁은 제품 UI | 렌더 높이 20px. 이때 보이는 심볼은 16px 이상. 최소 슬롯 폭 21.431318px | | stacked | 세로형·정사각형에 가까운 독립 로크업 | 렌더 높이 64px. 최소 슬롯 폭 82.612990px | | inline | TopBar·SideNav·가로 헤더 | 렌더 높이 20px. 최소 슬롯 폭 156.324048px | | portal | LK Portal 제품 셸의 SideNav·헤더 | 렌더 높이 20px.
+- height는 요청하는 자연 렌더 높이이며 variant별 최소값 아래에서는 최소값으로 보정됩니다. 기본 출력은 실제 variant viewBox 비율로 intrinsic width를 계산하고 max-width: 100%; height: auto를 적용해, 스타일을 재정의하지 않은 좁은 부모에서는 두 축을 같은 비율로 축소합니다. 이 반응형 축소는 overflow를 피하지만 실제 표시 높이도 낮추므로 저장소 정책 최소 크기를 대신 보장하지 않습니다.
 
 ## Content and writing
 
 - variant="portal"은 자유 텍스트 슬롯이 아니라 승인된 LK Portal 고정 조합입니다. 다른 제품명을 전달하거나 PORTAL만 별도 폰트 텍스트로 조판하지 않습니다.
-- LK ROBOTICS의 승인 로고 컴포넌트입니다. LK는 커스텀 벡터 심볼이고, ROBOTICS와 승인된 제품 워드마크 PORTAL은 고정된 Montserrat ExtraBold 800 v7.222 글꼴에서 생성한 아웃라인입니다. 기업 표기형의 주식회사 엘케이로보틱스는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 승인 SVG 또는 Lockup만 사용하며 워드마크·제품명·법인명을 텍스트로 다시 조판하지 않습니다.
-- 승인 SVG와 Lockup은 동일한 생성 원본을 사용합니다. 개별 SVG path를 직접 편집하거나 텍스트로 다시 만들지 않습니다.
+- LK ROBOTICS의 공식 로고 컴포넌트입니다. LK는 geometry v1.0으로 동결한 커스텀 벡터 심볼이고, ROBOTICS는 Montserrat ExtraBold 800 v7.222에서 생성한 아웃라인입니다. 기업 표기형의 주식회사 엘케이로보틱스는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 공식 SVG 또는 Lockup만 사용하며 워드마크나 법인명을 텍스트로 다시 조판하지 않습니다.
+- 늘임·찌그러뜨림, 회전, 임의 색, 텍스트 재조판, 그림자·외곽선·그라디언트, path 크롭과 LK/ROBOTICS 재배치는 금지합니다.
 
 ## Accessibility
 
-- 가장 가까운 기존 형식은 inline입니다. 시각 차이는 ROBOTICS를 PORTAL 아웃라인으로 교체한 것과 0.35배 간격뿐이며 LK 심볼, 1X 높이, 색상과 접근성 규칙은 같습니다.
-- 단독 사용 시 접근성 이름은 LK Portal입니다. 이미 aria-label="LK Portal"이 있는 링크 안에서는 decorative로 중복 이름을 만들지 않습니다.
-- 외부 기준 검토: Atlassian 로고 지침은 제품 식별 시 심볼과 설명적 제품명을 함께 쓰고 맥락이 명확할 때만 심볼 단독형을 쓰도록 안내합니다. W3C 이미지 접근성 지침과 WCAG 2.2에 따라 의미 있는 로고는 하나의 접근성 이름을 제공하고, 중복되는 내부 로고는 장식으로 숨깁니다. 이 검토 결과를 고정 제품형과 decorative 계약에 반영했습니다.
+- 가장 가까운 회사 변형은 inline입니다. 차이는 ROBOTICS 대신 PORTAL 아웃라인을 쓰고 간격이 0.35X라는 점뿐이며, LK 심볼·1X 높이·최소 크기 보정·색상·접근성 규칙은 모두 같습니다.
+- 접근성 이름의 기본값은 LK Portal입니다(회사 변형은 LK ROBOTICS). 이미 aria-label="LK Portal"이 있는 링크 안에서는 decorative로 중복 이름을 만들지 않습니다.
+- 사진 배경: 로고와 clear space 전체에 안정적인 대비가 없으면 사진 위에 직접 놓지 않고 공식 단색 보호면을 사용합니다.
+- 호환용 color와 tone="current"는 기존 제품 통합을 위한 escape hatch이며, 임의 색을 공식 브랜드 색으로 승인하지 않습니다.
+
+## Exceptions
+
+- Mono: 단색 출력 제약이 확인된 경우에만 검정 tone="current" color="#000000" 또는 흰색 반전을 사용합니다. 기업 표기형의 포인트 색을 임의 회색으로 바꾸지 않습니다.
 
 ## Examples
 
@@ -72,9 +92,9 @@ LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS와 승인 제품명 Po
 
 ```jsx
 <Lockup variant="inline" tone="ink" height={28} />
-<Lockup variant="portal" tone="ink" height={20} />
-<Lockup variant="mark" tone="white" height={40} />
-<Lockup variant="stacked" height={72} />
+<Lockup variant="mark" tone="white" height={32} decorative />
+<Lockup variant="stacked" tone="current" color="#000000" height={64} />
+<Lockup variant="portal" tone="white" height={20} />
 ```
 
 ## Tokens and API
@@ -90,8 +110,9 @@ LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS와 승인 제품명 Po
 
 - Lockup prompt contract: `components/brand/Lockup.prompt.md`
 - Storybook implementation evidence: `stories/Brand.stories.jsx`
+- Figma vector import contract: `assets/brand/platforms/figma/import-manifest.json`
+- iOS vector asset contract: `assets/brand/platforms/ios/manifest.json`
+- Android VectorDrawable contract: `assets/brand/platforms/android/manifest.json`
+- Web canonical SVG contract: `assets/brand/platforms/web/manifest.json`
 - [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)
 - [Noto Sans KR 공식 Google Fonts 소스](https://github.com/google/fonts/tree/4efc2774c63917927efe769ca845def6bd6debae/ofl/notosanskr)
-- [Atlassian 로고 지침](https://atlassian.design/foundations/logos)
-- [W3C 이미지 접근성 지침](https://www.w3.org/WAI/tutorials/images/)
-- [WCAG 2.2](https://www.w3.org/TR/WCAG22/)

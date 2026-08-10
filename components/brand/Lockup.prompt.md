@@ -1,38 +1,75 @@
 # Lockup
 
-LK ROBOTICS의 승인 로고 컴포넌트입니다. `LK`는 커스텀 벡터 심볼이고, `ROBOTICS`와 승인된 제품 워드마크 `PORTAL`은 고정된 Montserrat ExtraBold 800 v7.222 글꼴에서 생성한 아웃라인입니다. 기업 표기형의 `주식회사 엘케이로보틱스`는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 승인 SVG 또는 `Lockup`만 사용하며 워드마크·제품명·법인명을 텍스트로 다시 조판하지 않습니다.
+LK ROBOTICS의 공식 로고 컴포넌트입니다. `LK`는 geometry v1.0으로 동결한 커스텀 벡터 심볼이고, `ROBOTICS`는 Montserrat ExtraBold 800 v7.222에서 생성한 아웃라인입니다. 기업 표기형의 `주식회사 엘케이로보틱스`는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 공식 SVG 또는 `Lockup`만 사용하며 워드마크나 법인명을 텍스트로 다시 조판하지 않습니다.
 
-## 제작 규정
+## 정본과 작도 검증
+
+- `X`는 패딩이나 SVG `viewBox`가 아니라 LK 심볼 path의 **보이는 높이**입니다.
+- 심볼의 정규화된 보이는 치수는 `W = 1.08176X`, `H = 1X`입니다.
+- 투명 배경 `mark`·`stacked`·`inline`의 외부 clear space는 보이는 로고 bounds부터 사방 `0.5X`, 공동 브랜딩은 `1X`입니다. banner는 `0.5X`를 배경 안에 포함하고, 기본/기업 사각형과 favicon tile은 생성된 전체 캔버스가 보호면입니다. 타이트한 배포 SVG의 내부 패딩과 혼동하지 않습니다.
+- geometry v1.0의 path, transform, visible bounds와 SHA-256이 정본입니다. 작도 도표는 검증 기준이며 심볼을 다시 그리는 템플릿이 아닙니다.
+- 작은 크기용 별도 redraw는 승인되지 않았습니다. optical test와 승인 기록 전까지 모든 크기에서 v1.0을 유지합니다.
+
+## 워드마크와 법인명
 
 - `ROBOTICS`: 대문자, Montserrat ExtraBold 정적 weight 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지
-- `PORTAL`: 대문자, 같은 Montserrat ExtraBold 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지
-- 배포 형식: `<text>`가 없는 SVG path. 런타임 글꼴 의존성 없음
-- UI 본문 글꼴은 Pretendard 유지. Montserrat와 Noto Sans KR은 로고 생성 전용
+- `PORTAL`(승인 제품 워드마크): 같은 글꼴·같은 제작 규정. 회사 워드마크와 대소문자 문법을 맞춥니다. 배치는 보이는 높이 `1X`에 심볼 보이는 폭의 `0.35X` 간격이며, `inline`의 `0.2X`보다 넓은 이유는 20px 렌더에서 `0.2X`(약 3.8px)일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다.
+- `주식회사 엘케이로보틱스`: NFC, Noto Sans KR ExtraBold `wght=800` Version 2.004-H2, 글꼴 기본 커닝, 글자 사이 `0.105em`, 마지막 글자 뒤 자간 없음, 가로·세로 비율 1:1, 글리프 수동 수정 금지
+- 법인명 배치: 보이는 폭 `1.90X`, 상단 로크업과 간격 `0.21X`, 상단 로크업의 보이는 중심축에 가운데 정렬
+- 배포 결과는 `<text>`와 런타임 폰트가 없는 SVG path입니다. Montserrat와 Noto Sans KR은 build-time 생성 재료이며 UI 본문 글꼴이 아닙니다.
 
-### 한글 법인명
+## 변형 선택과 저장소 정책 최소 크기 (광학 승인 대기)
 
-- `주식회사 엘케이로보틱스`: NFC 텍스트, Noto Sans KR 가변 TTF의 명명된 ExtraBold `wght=800` Version 2.004-H2, 글꼴 기본 커닝, 글자 사이 자간 `0.105em`, 마지막 글자 뒤 자간 없음, 가로·세로 비율 1:1, 글리프 수동 수정 금지
-- 배치: 법인명 보이는 폭 `1.90X`, 상단 로크업과의 간격 `0.21X`, 상단 로크업의 보이는 중심축에 가운데 정렬
-- 최소 크기: 디지털 160px, 권장 192px 이상, 인쇄 32mm. 이보다 작으면 법인명 없는 기본형 사용
+| 변형 | 사용 | 최소 크기 |
+| --- | --- | --- |
+| `mark` | 브랜드가 이미 식별되는 좁은 제품 UI | 렌더 높이 20px. 이때 보이는 심볼은 16px 이상. 최소 슬롯 폭 21.431318px |
+| `stacked` | 세로형·정사각형에 가까운 독립 로크업 | 렌더 높이 64px. 최소 슬롯 폭 82.612990px |
+| `inline` | TopBar·SideNav·가로 헤더 | 렌더 높이 20px. 최소 슬롯 폭 156.324048px |
+| `portal` | LK Portal 제품 셸의 SideNav·헤더 | 렌더 높이 20px. 최소 슬롯 폭 129.803096px |
+| banner SVG | 서명·고정 가로 슬롯 | 렌더 높이 28px. 최소 슬롯 폭 137.019722px |
+| 기본 사각형 SVG | 프로필·브랜드 타일 | 64px 정사각형, 96px 이상 권장 |
+| 기업 표기형 SVG | 회사 소개·대외 문서·법인 식별 | 160px 정사각형, 192px 이상 권장, 인쇄 32mm 이상 |
+| favicon tile | 브라우저 favicon | 16px 정사각형 |
 
-`X`는 커스텀 LK 심볼의 보이는 높이입니다. `stacked`는 워드마크 명목 cap height를 `0.25X`로 하고 심볼 보이는 폭의 `0.2배`만큼 띄워 가운데 정렬합니다. `inline`은 워드마크의 보이는 높이를 `1X`로 하고 같은 `0.2배` 간격을 둡니다. `portal`도 보이는 높이 `1X`를 쓰되 간격은 심볼 보이는 폭의 `0.35배`입니다 — 20px 사이드바 렌더에서 0.2배(약 3.8px)는 K 사선과 P가 붙어 보여 한 단어로 읽혔습니다. 배너 최소 여백은 사방 `0.5X`, 제품 UI용 inline 최소 렌더 높이는 20px입니다.
+favicon tile은 iOS AppIcon이나 Android adaptive icon이 아닙니다. 두 앱 아이콘은 별도 제작·승인이 필요합니다.
+
+## 반응형 크기
+
+`height`는 요청하는 자연 렌더 높이이며 variant별 최소값 아래에서는 최소값으로 보정됩니다. 기본 출력은 실제 variant `viewBox` 비율로 intrinsic width를 계산하고 `max-width: 100%; height: auto`를 적용해, 스타일을 재정의하지 않은 좁은 부모에서는 두 축을 같은 비율로 축소합니다. 이 반응형 축소는 overflow를 피하지만 실제 표시 높이도 낮추므로 저장소 정책 최소 크기를 대신 보장하지 않습니다. 최소 규격을 유지하려면 mark 21.431318px, stacked 82.612990px, inline 156.324048px, portal 129.803096px, banner 137.019722px 이상의 슬롯 폭을 확보합니다. 더 좁으면 `inline`·`portal`에서 `mark`로 전환하거나 슬롯을 넓힙니다.
+
+기존 SVG API 호환을 위해 `width`, `viewBox`, `preserveAspectRatio` prop override는 전달되지만 브랜드 사용에서는 미승인입니다. `style.width`/`style.height`를 함께 덮어 최소 규격이나 비율 보호를 우회하지 않습니다.
+
+```jsx
+<Lockup variant="inline" tone="ink" height={28} />
+<Lockup variant="mark" tone="white" height={32} decorative />
+<Lockup variant="stacked" tone="current" color="#000000" height={64} />
+<Lockup variant="portal" tone="white" height={20} />
+```
 
 ## LK Portal 제품형
 
 - `variant="portal"`은 자유 텍스트 슬롯이 아니라 승인된 `LK Portal` 고정 조합입니다. 다른 제품명을 전달하거나 `PORTAL`만 별도 폰트 텍스트로 조판하지 않습니다.
-- 가장 가까운 기존 형식은 `inline`입니다. 시각 차이는 `ROBOTICS`를 `PORTAL` 아웃라인으로 교체한 것과 `0.35배` 간격뿐이며 LK 심볼, 1X 높이, 색상과 접근성 규칙은 같습니다.
-- 단독 사용 시 접근성 이름은 `LK Portal`입니다. 이미 `aria-label="LK Portal"`이 있는 링크 안에서는 `decorative`로 중복 이름을 만들지 않습니다.
-- 제품 적용 범위: LK Portal 사이드바 헤더는 지원합니다. Web Viz와 Control은 LK Portal을 식별하는 화면이 아니므로 이 제품형의 적용 대상이 아닙니다.
+- 가장 가까운 회사 변형은 `inline`입니다. 차이는 `ROBOTICS` 대신 `PORTAL` 아웃라인을 쓰고 간격이 `0.35X`라는 점뿐이며, LK 심볼·`1X` 높이·최소 크기 보정·색상·접근성 규칙은 모두 같습니다.
+- 접근성 이름의 기본값은 `LK Portal`입니다(회사 변형은 `LK ROBOTICS`). 이미 `aria-label="LK Portal"`이 있는 링크 안에서는 `decorative`로 중복 이름을 만들지 않습니다.
+- 적용 범위는 LK Portal을 식별하는 화면입니다. Web Viz와 Control은 그 대상이 아니므로 회사 변형을 사용합니다.
 
-승인 SVG와 `Lockup`은 동일한 생성 원본을 사용합니다. 개별 SVG path를 직접 편집하거나 텍스트로 다시 만들지 않습니다.
+## 색상과 배경
 
-```jsx
-<Lockup variant="inline" tone="ink" height={28} />
-<Lockup variant="portal" tone="ink" height={20} />
-<Lockup variant="mark" tone="white" height={40} />
-<Lockup variant="stacked" height={72} />
-```
+- **Positive:** 흰색 또는 밝고 단순한 단색 배경에는 공식 네이비 `tone="ink"`를 사용합니다.
+- **Reverse:** 공식 네이비 또는 충분히 어둡고 단순한 배경에는 `tone="white"`를 사용합니다.
+- **Mono:** 단색 출력 제약이 확인된 경우에만 검정 `tone="current" color="#000000"` 또는 흰색 반전을 사용합니다. 기업 표기형의 포인트 색을 임의 회색으로 바꾸지 않습니다.
+- **사진 배경:** 로고와 clear space 전체에 안정적인 대비가 없으면 사진 위에 직접 놓지 않고 공식 단색 보호면을 사용합니다.
+- 공식 사각형 자산은 전경과 배경이 함께 고정된 조합입니다. `tone`, `currentColor`나 UI semantic token으로 다시 칠하지 않습니다.
+- 호환용 `color`와 `tone="current"`는 기존 제품 통합을 위한 escape hatch이며, 임의 색을 공식 브랜드 색으로 승인하지 않습니다.
 
-글꼴 출처는 [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)와 [Noto Sans KR 공식 Google Fonts 소스](https://github.com/google/fonts/tree/4efc2774c63917927efe769ca845def6bd6debae/ofl/notosanskr)이며, 모두 SIL OFL 1.1을 따릅니다.
+늘임·찌그러뜨림, 회전, 임의 색, 텍스트 재조판, 그림자·외곽선·그라디언트, path 크롭과 LK/ROBOTICS 재배치는 금지합니다.
 
-외부 기준 검토: [Atlassian 로고 지침](https://atlassian.design/foundations/logos)은 제품 식별 시 심볼과 설명적 제품명을 함께 쓰고 맥락이 명확할 때만 심볼 단독형을 쓰도록 안내합니다. [W3C 이미지 접근성 지침](https://www.w3.org/WAI/tutorials/images/)과 [WCAG 2.2](https://www.w3.org/TR/WCAG22/)에 따라 의미 있는 로고는 하나의 접근성 이름을 제공하고, 중복되는 내부 로고는 장식으로 숨깁니다. 이 검토 결과를 고정 제품형과 `decorative` 계약에 반영했습니다.
+## 플랫폼 전달
+
+- 공통 플랫폼 계약: `assets/brand/platforms/manifest.json`
+- Figma 수동 import 계약: `assets/brand/platforms/figma/import-manifest.json`
+- iOS/Android/Web manifest는 각 플랫폼 하위 디렉터리에 있습니다.
+
+이 manifest들은 deterministic 전달 입력과 hash를 기록할 뿐입니다. Figma live sync, 실제 업로드, 디자이너 승인이나 제품 저장소 적용을 증명하지 않습니다. 특히 iOS AppIcon과 Android adaptive icon은 현재 제공하지 않습니다.
+
+글꼴 출처는 [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)와 [Noto Sans KR 공식 Google Fonts 소스](https://github.com/google/fonts/tree/4efc2774c63917927efe769ca845def6bd6debae/ofl/notosanskr)이며, 모두 SIL OFL 1.1을 따릅니다. 전체 브랜드 운영 규정은 `docs/brand/LK_LOGO_STANDARD.md`를 따릅니다.

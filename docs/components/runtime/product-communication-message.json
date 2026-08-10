@@ -10,11 +10,16 @@
   ],
   "supportingComponents": [
     "Avatar",
+    "Button",
     "Chip",
+    "DropdownMenu",
     "Icon",
     "IconButton",
     "MessageComposer",
     "MessageFeed",
+    "Popover",
+    "RadioGroup",
+    "Slider",
     "SourceDisclosure"
   ],
   "purpose": "AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞일 때 사용합니다. 긴 응답의 목록·코드·출처는 읽기 흐름으로, 짧은 발화는 화자별 말풍선으로 구분합니다. 대화 맥락이 없는 안내나 폼 오류에는 사용하지 말고 Callout·FormField를 사용하세요.",
@@ -278,7 +283,15 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "Chip",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DropdownMenu",
       "relationship": "대표 시나리오에서 조합"
     },
     {
@@ -295,10 +308,6 @@
     },
     {
       "component": "MessageFeed",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "SourceDisclosure",
       "relationship": "대표 시나리오에서 조합"
     }
   ],
@@ -374,8 +383,18 @@
         "role": "usage"
       },
       {
+        "id": "lds-product-communication-message--composer-overlay-conversation-column",
+        "name": "사용법 · 작성기 오버레이 조합",
+        "role": "usage"
+      },
+      {
         "id": "lds-product-communication-message--conversation-composition",
         "name": "사용법 · 피드·메시지·작성기 구성",
+        "role": "usage"
+      },
+      {
+        "id": "lds-product-communication-message--identity-and-action-visibility",
+        "name": "사용법 · 화자 표기와 액션 노출 조절",
         "role": "usage"
       },
       {
@@ -397,9 +416,19 @@
         "id": "lds-product-communication-message--narrow-long-content",
         "name": "반응형 · 320px 긴 콘텐츠",
         "role": "responsive"
+      },
+      {
+        "id": "lds-product-communication-message--compact-density",
+        "name": "밀도 · compact",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-communication-message--compact-conversation-column",
+        "name": "밀도 · compact 대화 열",
+        "role": "responsive"
       }
     ],
-    "hiddenEvidence": 1
+    "hiddenEvidence": 5
   },
   "sources": [],
   "canonicalGuide": null,

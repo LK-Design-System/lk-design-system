@@ -379,10 +379,30 @@ for (const guide of content.guides) {
   assert(guide.storybook.publicStories.length >= 1, `${guide.slug}: public Storybook evidence is required.`);
   assert(guide.storybook.entryStoryId, `${guide.slug}: an audience entry story id is required.`);
   assert(guide.platformStatus.react === 'implemented', `${guide.slug}: React status must match public implementation evidence.`);
-  assert(
-    guide.platformStatus.ios === 'not-tracked' && guide.platformStatus.android === 'not-tracked',
-    `${guide.slug}: this repository must not invent external platform status.`,
-  );
+  if (guide.primaryOwner === 'Lockup') {
+    assert(guide.platformStatus.figma === 'import-contract', `${guide.slug}: Figma must report the generated import contract without claiming live sync.`);
+    assert(
+      guide.platformStatus.ios === 'asset-contract' && guide.platformStatus.android === 'asset-contract',
+      `${guide.slug}: native logo delivery must report generated asset contracts without claiming product adoption.`,
+    );
+    for (const contractPath of [
+      'assets/brand/platforms/figma/import-manifest.json',
+      'assets/brand/platforms/ios/manifest.json',
+      'assets/brand/platforms/android/manifest.json',
+      'assets/brand/platforms/web/manifest.json',
+    ]) {
+      await access(path.join(root, contractPath));
+      assert(
+        guide.sources.some((source) => source.path === contractPath),
+        `${guide.slug}: generated platform source is missing: ${contractPath}`,
+      );
+    }
+  } else {
+    assert(
+      guide.platformStatus.ios === 'not-tracked' && guide.platformStatus.android === 'not-tracked',
+      `${guide.slug}: this repository must not invent external platform status.`,
+    );
+  }
   const generatedGuide = path.join(docsRoot, 'guides', `${guide.slug}.md`);
   const guideText = await readFile(generatedGuide, 'utf8');
   assert(guideText.startsWith(`# ${guide.title}\n`), `${guide.slug}: generated guide title is stale.`);

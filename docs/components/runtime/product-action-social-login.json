@@ -34,7 +34,7 @@
       "name": "tone",
       "type": "'outline' | 'brand'",
       "required": false,
-      "description": "'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2). @default \"outline\"",
+      "description": "'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 #1877F2). @default \"outline\"",
       "owner": "SocialButtonProps"
     },
     {
@@ -83,7 +83,7 @@
   "states": [
     {
       "state": "tone",
-      "rule": "'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2). @default \"outline\""
+      "rule": "'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 #1877F2). @default \"outline\""
     },
     {
       "state": "disabled",
@@ -98,11 +98,11 @@
     },
     {
       "subject": "명시 규칙 2",
-      "rule": "페이스북 브랜드 필은 흰 텍스트 AA(4.5:1)를 위해 공식 1877F2를 1465D8로 어둡게 조정한 의도적 이탈입니다. tone=\"brand\"의 원색 필과 킷 섀도는 다크 테마 자동 대응 대상이 아니며, 테마 대응이 필요하면 기본 tone=\"outline\"을 쓰세요."
+      "rule": "페이스북 브랜드 필은 흰 텍스트 AA(4.5:1)를 위해 공식 #1877F2를 #1465D8로 어둡게 조정한 의도적 이탈입니다. tone=\"brand\"의 원색 필과 킷 섀도는 다크 테마 자동 대응 대상이 아니며, 테마 대응이 필요하면 기본 tone=\"outline\"을 쓰세요."
     },
     {
       "subject": "명시 규칙 3",
-      "rule": "\"…로 계속하기\" 소셜 로그인 버튼. 소셜 로그인 킷의 6개 심볼(Continue with Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로 통합. 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법(52px 높이 · radius-md · 16px 볼드 · 토큰 모션)을 따르고, 기본 tone=\"outline\"은 DS 네이티브(서피스+헤어라인+풀컬러 마크, 다크 테마 자동 대응), tone=\"brand\"는 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2)을…"
+      "rule": "\"…로 계속하기\" 소셜 로그인 버튼. 소셜 로그인 킷의 6개 심볼(Continue with Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로 통합. 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법(52px 높이 · radius-md · 16px 볼드 · 토큰 모션)을 따르고, 기본 tone=\"outline\"은 DS 네이티브(서피스+헤어라인+풀컬러 마크, 다크 테마 자동 대응), tone=\"brand\"는 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 #1877F2)을…"
     },
     {
       "subject": "--body1-size",

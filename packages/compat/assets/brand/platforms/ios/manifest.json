@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": 1,
+  "generatedBy": "scripts/generate-brand-platform-assets.mjs",
+  "brandStandard": {
+    "version": "1.0.0",
+    "status": "current-repository-standard",
+    "governanceSha256": "84b087515ec89a24fd94e95a7264f3111fb0d4041329be4032bb902eb3b28281",
+    "minimumSizePolicy": {
+      "status": "repository-policy-pending-human-optical-approval",
+      "humanOpticalApproval": false,
+      "approvalRecord": null
+    }
+  },
+  "sourceAssetSetSha256": "f7bc6532ba993b0fda69bf77c322099703aa37006b094051b34d5d3cf3644f5f",
+  "sourceConstructionVersion": 4,
+  "sourceConstructionManifestSha256": "9f4712f7e1b67dccb3b9463413155046805918c39aa6a275aa16dd915c408e56",
+  "delivery": {
+    "type": "xcode-asset-catalog",
+    "moduleName": "consumer-defined",
+    "preservesVectorRepresentation": true,
+    "appIconStatus": "not-provided",
+    "note": "These are scalable imagesets, not an AppIcon.appiconset or evidence of App Store approval."
+  },
+  "measurementUnit": "pt",
+  "clearSpace": {
+    "definition": "Clear-space application is family-specific; transparent lockups require external space, banners embed it, and contained assets preserve their complete canvas.",
+    "unit": "X",
+    "xDefinition": "visible height of the custom LK symbol",
+    "measurement": "visible-artwork-bounds",
+    "application": "family-specific",
+    "transparentAssetApplication": "external-around-visible-bounds",
+    "externalMinimumAppliesTo": [
+      "mark",
+      "stacked",
+      "inline"
+    ],
+    "minimumToX": 0.5,
+    "coBrandMinimumToX": 1,
+    "applicationByFamily": {
+      "mark": "external-required-from-visible-artwork-bounds",
+      "inline": "external-required-from-visible-artwork-bounds",
+      "stacked": "external-required-from-visible-artwork-bounds",
+      "banner": "embedded-in-source-asset",
+      "square": "preserve-complete-containment-canvas",
+      "corporateSquare": "preserve-complete-containment-canvas",
+      "favicon": "preserve-complete-containment-canvas"
+    }
+  },
+  "assetCatalogPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets",
+  "assets": [
+    {
+      "id": "mark-navy",
+      "imagesetName": "LKMarkNavy",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-mark-navy.svg",
+      "sourceSha256": "1e636ea31a1a9a82bc6e01bccde9a85315479d86da99ce394510e1fa1ec146e3",
+      "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKMarkNavy.imageset/lk-mark-navy.svg",
+      "copiedSvgSha256": "1e636ea31a1a9a82bc6e01bccde9a85315479d86da99ce394510e1fa1ec146e3",
+      "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 20,
+        "unit": "pt"
+      },
+      "minimumVisibleArtworkHeight": {
+        "axis": "visible-artwork-height",
+        "value": 16,
+        "unit": "pt"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 21.431318,
+        "unit": "pt"
+      }
+    },
+    {
+      "id": "mark-white",
+      "imagesetName": "LKMarkWhite",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-mark-white.svg",
+      "sourceSha256": "78ed59f51baf98d035242d7de5e6fde05b21d5708e12018ded697c765db7be36",
+      "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKMarkWhite.imageset/lk-mark-white.svg",
+      "copiedSvgSha256": "78ed59f51baf98d035242d7de5e6fde05b21d5708e12018ded697c765db7be36",
+      "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 20,
+        "unit": "pt"
+      },
+      "minimumVisibleArtworkHeight": {
+        "axis": "visible-artwork-height",
+        "value": 16,
+        "unit": "pt"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 21.431318,
+        "unit": "pt"
+      }
+    },
+    {
+      "id": "logo-inline-navy",
+      "imagesetName": "LKLogoInlineNavy",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-inline-navy.svg",
+      "sourceSha256": "1789fa9df782cf1fbc93f57167b174672741c515b9936696c6ce59f2cc87c287",
+      "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoInlineNavy.imageset/lk-logo-inline-navy.svg",
+      "copiedSvgSha256": "1789fa9df782cf1fbc93f57167b174672741c515b9936696c6ce59f2cc87c287",
+      "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 20,
+        "unit": "pt"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 156.324048,
+        "unit": "pt"
+      }
+    },
+    {
+      "id": "logo-inline-white",
+      "imagesetName": "LKLogoInlineWhite",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-inline-white.svg",
+      "sourceSha256": "2584a5ac9b27cc603a19f66bef631e0059ab5c219314310371710fae42df10a0",
+      "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoInlineWhite.imageset/lk-logo-inline-white.svg",
+      "copiedSvgSha256": "2584a5ac9b27cc603a19f66bef631e0059ab5c219314310371710fae42df10a0",
+      "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 20,
+        "unit": "pt"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 156.324048,
+        "unit": "pt"
+      }
+    },
+    {
+      "id": "logo-stacked-navy",
+      "imagesetName": "LKLogoStackedNavy",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-navy.svg",
+      "sourceSha256": "8c920d45563187d5cad9ea4dd5f05eff27e3bacf3e41dd4525262ef9f4a5d5b7",
+      "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoStackedNavy.imageset/lk-logo-navy.svg",
+      "copiedSvgSha256": "8c920d45563187d5cad9ea4dd5f05eff27e3bacf3e41dd4525262ef9f4a5d5b7",
+      "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 64,
+        "unit": "pt"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 82.61299,
+        "unit": "pt"
+      }
+    },
+    {
+      "id": "logo-stacked-white",
+      "imagesetName": "LKLogoStackedWhite",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-white.svg",
+      "sourceSha256": "9637f8e642b95f38cfa0ed4270ff4a4d9af1b23d950295e634cdb82856cc04ce",
+      "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoStackedWhite.imageset/lk-logo-white.svg",
+      "copiedSvgSha256": "9637f8e642b95f38cfa0ed4270ff4a4d9af1b23d950295e634cdb82856cc04ce",
+      "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 64,
+        "unit": "pt"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 82.61299,
+        "unit": "pt"
+      }
+    },
+    {
+      "id": "logo-banner-navy",
+      "imagesetName": "LKLogoBannerNavy",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-banner-navy.svg",
+      "sourceSha256": "e56b1830065ec9ac6d5079493aef43a32a7287c350c2da7e60967ce9f78f0f1e",
+      "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoBannerNavy.imageset/lk-logo-banner-navy.svg",
+      "copiedSvgSha256": "e56b1830065ec9ac6d5079493aef43a32a7287c350c2da7e60967ce9f78f0f1e",
+      "clearSpaceApplication": "embedded-in-source-asset",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 28,
+        "unit": "pt"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 137.019722,
+        "unit": "pt"
+      }
+    },
+    {
+      "id": "logo-banner-light",
+      "imagesetName": "LKLogoBannerLight",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-banner-light.svg",
+      "sourceSha256": "2e4b1ecdc20803653fb75c227aae2036c6d811820fb157dceb20a447e55f06b3",
+      "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoBannerLight.imageset/lk-logo-banner-light.svg",
+      "copiedSvgSha256": "2e4b1ecdc20803653fb75c227aae2036c6d811820fb157dceb20a447e55f06b3",
+      "clearSpaceApplication": "embedded-in-source-asset",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 28,
+        "unit": "pt"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 137.019722,
+        "unit": "pt"
+      }
+    },
+    {
+      "id": "logo-square-navy",
+      "imagesetName": "LKLogoSquareNavy",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-official.svg",
+      "sourceSha256": "5f7e84b108fc915be8a911c4f994d63126fd7ff631e227973696de65293eaf91",
+      "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoSquareNavy.imageset/lk-logo-official.svg",
+      "copiedSvgSha256": "5f7e84b108fc915be8a911c4f994d63126fd7ff631e227973696de65293eaf91",
+      "clearSpaceApplication": "preserve-complete-containment-canvas",
+      "minimumRendered": {
+        "axis": "edge",
+        "value": 64,
+        "unit": "pt"
+      },
+      "recommendedRendered": {
+        "axis": "edge",
+        "value": 96,
+        "unit": "pt"
+      }
+    },
+    {
+      "id": "logo-square-light",
+      "imagesetName": "LKLogoSquareLight",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-official-light.svg",
+      "sourceSha256": "83c12ab87c31a25d660a2a88d774642388ee4e46a75624025e32f649becc07df",
+      "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoSquareLight.imageset/lk-logo-official-light.svg",
+      "copiedSvgSha256": "83c12ab87c31a25d660a2a88d774642388ee4e46a75624025e32f649becc07df",
+      "clearSpaceApplication": "preserve-complete-containment-canvas",
+      "minimumRendered": {
+        "axis": "edge",
+        "value": 64,
+        "unit": "pt"
+      },
+      "recommendedRendered": {
+        "axis": "edge",
+        "value": 96,
+        "unit": "pt"
+      }
+    },
+    {
+      "id": "logo-corporate-square-navy",
+      "imagesetName": "LKLogoCorporateSquareNavy",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-official-corporate.svg",
+      "sourceSha256": "4f79ce7fddb226d8e360a2eeabf4b8b7f7a6a607a75efcf24179d570a4099cef",
+      "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoCorporateSquareNavy.imageset/lk-logo-official-corporate.svg",
+      "copiedSvgSha256": "4f79ce7fddb226d8e360a2eeabf4b8b7f7a6a607a75efcf24179d570a4099cef",
+      "clearSpaceApplication": "preserve-complete-containment-canvas",
+      "minimumRendered": {
+        "axis": "edge",
+        "value": 160,
+        "unit": "pt"
+      },
+      "recommendedRendered": {
+        "axis": "edge",
+        "value": 192,
+        "unit": "pt"
+      }
+    },
+    {
+      "id": "logo-corporate-square-light",
+      "imagesetName": "LKLogoCorporateSquareLight",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-official-corporate-light.svg",
+      "sourceSha256": "990bcb6d3acb5686d54e85877fd93332f8a5515214b6640529ac1bf5c78e3749",
+      "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoCorporateSquareLight.imageset/lk-logo-official-corporate-light.svg",
+      "copiedSvgSha256": "990bcb6d3acb5686d54e85877fd93332f8a5515214b6640529ac1bf5c78e3749",
+      "clearSpaceApplication": "preserve-complete-containment-canvas",
+      "minimumRendered": {
+        "axis": "edge",
+        "value": 160,
+        "unit": "pt"
+      },
+      "recommendedRendered": {
+        "axis": "edge",
+        "value": 192,
+        "unit": "pt"
+      }
+    }
+  ],
+  "excludedAssets": [
+    {
+      "id": "favicon",
+      "reason": "Browser favicon only; do not ship it in a native iOS asset catalog or use it as AppIcon."
+    }
+  ]
+}

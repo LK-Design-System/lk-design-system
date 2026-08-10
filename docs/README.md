@@ -5,7 +5,7 @@
 | Type | Documentation index |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-08-09 |
+| Last reviewed | 2026-08-10 |
 
 이 문서는 `docs/`의 공식 탐색 진입점이다. 문서가 충돌하면 아래 source-of-truth 순서와 각 문서의 `Type`·`Status`를 기준으로 판단한다.
 
@@ -20,6 +20,7 @@
 7. 현재 저장소 상태와 최신 handoff: [`HANDOFF.md`](HANDOFF.md)
 8. Foundation 원리·선택 기준·토큰 참조: [`foundations/README.md`](foundations/README.md)
 9. 컴포넌트 선택·Anatomy·상태·접근성·API 참조: [`components/README.md`](components/README.md)
+10. LK ROBOTICS 로고 제작·배포·승인 규정: [`brand/README.md`](brand/README.md)
 
 ## Stable policies and contracts
 
@@ -30,6 +31,7 @@
 | [`OPERATING_MODEL.md`](OPERATING_MODEL.md) | ownership, change category, release와 migration 운영 |
 | [`PACKAGE_MIGRATION_GUIDE.md`](PACKAGE_MIGRATION_GUIDE.md) | Wave 2 consumer import, CSS, artifact-pin, and rollback guidance |
 | [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md) | token source of truth와 변경 정책 |
+| [`brand/LK_LOGO_STANDARD.md`](brand/LK_LOGO_STANDARD.md) | LK ROBOTICS 로고 v1.0 정본, 작도 검증, 변형·여백·최소 크기, 색상·인쇄·공동 브랜딩·승인 정책 |
 | [`foundations/README.md`](foundations/README.md) | 전체 Foundation의 canonical guide, machine-readable content와 LLM bundle |
 | [`components/README.md`](components/README.md) | public component 의사결정 가이드, 정적 reference·platform register, machine-readable registry와 LLM bundle |
 | [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | public API grammar와 컴포넌트별 상태 증거 |
@@ -60,6 +62,7 @@
 | Component 선택 | [Component index](components/README.md)와 targeted guide; [component LLM bundle](components/llms.txt)은 retrieval용 |
 | Icon inventory | [Iconography guide](foundations/iconography.md) · [icon manifest](../packages/core/assets/icons/manifest.json) |
 | Cross-component loading | [Loading pattern](LOADING_PATTERN.md) |
+| Logo master, usage, and approval | [LK ROBOTICS logo standard](brand/LK_LOGO_STANDARD.md) · [governance record](brand/lk-logo-governance.json) |
 
 Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 index와 다른 agent entrypoint에는 그 상세 목록을 복제하지 않습니다.
 

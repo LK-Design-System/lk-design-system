@@ -22,7 +22,7 @@
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
 | `provider` | `'google' \| 'apple' \| 'facebook'` | No | 플랫폼. @default "google" |
-| `tone` | `'outline' \| 'brand'` | No | 'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2). @default "outline" |
+| `tone` | `'outline' \| 'brand'` | No | 'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 #1877F2). @default "outline" |
 | `iconOnly` | `boolean` | No | 원형 아이콘 버튼(48px 서클, 라벨은 aria-label로) — 아이콘 행 패턴용. @default false |
 | `align` | `'center' \| 'left'` | No | 아이콘·라벨 정렬 — 킷의 Centre / Left Aligned 두 변형. @default "center" |
 | `full` | `boolean` | No | 컨테이너 전체 폭. @default false |
@@ -34,7 +34,7 @@
 
 | State | Contract |
 | --- | --- |
-| tone | 'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2). @default "outline" |
+| tone | 'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 #1877F2). @default "outline" |
 | disabled | 비활성(흐림, 상호작용 불가). @default false |
 
 ## 정량 규칙
@@ -42,8 +42,8 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | iconOnly는 원형 48px 마크 버튼이며 이 경우에만 aria-label(+title)로 같은 문구를 실어 이름 없는 버튼이 되지 않게 합니다. |
-| 명시 규칙 2 | 페이스북 브랜드 필은 흰 텍스트 AA(4.5:1)를 위해 공식 1877F2를 1465D8로 어둡게 조정한 의도적 이탈입니다. tone="brand"의 원색 필과 킷 섀도는 다크 테마 자동 대응 대상이 아니며, 테마 대응이 필요하면 기본 tone="outline"을 쓰세요. |
-| 명시 규칙 3 | "…로 계속하기" 소셜 로그인 버튼. 소셜 로그인 킷의 6개 심볼(Continue with Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로 통합. 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법(52px 높이 · radius-md · 16px 볼드 · 토큰 모션)을 따르고, 기본 tone="outline"은 DS 네이티브(서피스+헤어라인+풀컬러 마크, 다크 테마 자동 대응), tone="brand"는 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2)을… |
+| 명시 규칙 2 | 페이스북 브랜드 필은 흰 텍스트 AA(4.5:1)를 위해 공식 #1877F2를 #1465D8로 어둡게 조정한 의도적 이탈입니다. tone="brand"의 원색 필과 킷 섀도는 다크 테마 자동 대응 대상이 아니며, 테마 대응이 필요하면 기본 tone="outline"을 쓰세요. |
+| 명시 규칙 3 | "…로 계속하기" 소셜 로그인 버튼. 소셜 로그인 킷의 6개 심볼(Continue with Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로 통합. 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법(52px 높이 · radius-md · 16px 볼드 · 토큰 모션)을 따르고, 기본 tone="outline"은 DS 네이티브(서피스+헤어라인+풀컬러 마크, 다크 테마 자동 대응), tone="brand"는 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 #1877F2)을… |
 | --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
 

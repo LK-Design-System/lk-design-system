@@ -116,10 +116,13 @@
 | Component | Relationship |
 | --- | --- |
 | `Button` | 대표 시나리오에서 조합 |
+| `Callout` | 대표 시나리오에서 조합 |
+| `CheckboxGroup` | 대표 시나리오에서 조합 |
+| `ChoiceCard` | 대표 시나리오에서 조합 |
+| `DrawerSection` | 대표 시나리오에서 조합 |
+| `FileUpload` | 대표 시나리오에서 조합 |
 | `Input` | 대표 시나리오에서 조합 |
-| `Sheet` | 대표 시나리오에서 조합 |
-| `CommandPalette` | 대표 시나리오에서 조합 |
-| `Lightbox` | 대표 시나리오에서 조합 |
+| `Select` | 대표 시나리오에서 조합 |
 
 ## Examples
 

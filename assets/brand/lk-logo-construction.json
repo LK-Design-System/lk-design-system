@@ -5,6 +5,7 @@
   "symbol": {
     "name": "LK",
     "construction": "custom-vector",
+    "geometryVersion": "1.0",
     "geometrySource": "scripts/brand/lk-logo-source.mjs",
     "geometrySha256": "A18E62B89807FA68355FA0E03C39CA33A94AC247DCCACB5BD2248F525D0632EE"
   },
@@ -77,23 +78,56 @@
   "layout": {
     "xDefinition": "visible height of the custom LK symbol",
     "tightPaddingSourceUnits": 4,
+    "safeArea": {
+      "measurement": "visible-artwork-bounds",
+      "application": "external-around-visible-bounds",
+      "minimumClearSpaceToX": 0.5,
+      "coBrandClearSpaceToX": 1,
+      "appliesTo": [
+        "mark",
+        "stacked",
+        "inline"
+      ]
+    },
+    "mark": {
+      "minimumVisibleArtworkHeightPx": 16,
+      "minimumRenderedHeightPx": 20
+    },
     "stacked": {
       "nominalCapHeightToX": 0.25,
       "gapToMarkWidth": 0.2,
-      "horizontalAlignment": "center"
+      "horizontalAlignment": "center",
+      "minimumRenderedHeightPx": 64
     },
     "inline": {
       "visibleWordmarkHeightToX": 1,
       "gapToMarkWidth": 0.2,
-      "verticalAlignment": "visible-bounds"
+      "verticalAlignment": "visible-bounds",
+      "minimumRenderedHeightPx": 20
     },
     "portal": {
       "visibleWordmarkHeightToX": 1,
       "gapToMarkWidth": 0.35,
-      "verticalAlignment": "visible-bounds"
+      "verticalAlignment": "visible-bounds",
+      "minimumRenderedHeightPx": 20
     },
     "banner": {
-      "clearSpaceToX": 0.5
+      "clearSpaceToX": 0.5,
+      "minimumRenderedHeightPx": 28
+    },
+    "officialSquare": {
+      "minimumRenderedSquarePx": 64,
+      "recommendedRenderedSquarePx": 96
+    },
+    "favicon": {
+      "minimumRenderedSquarePx": 16,
+      "referenceCanvasSizePx": 512,
+      "cornerRadiusPx": 112,
+      "markScale": 5.30600371,
+      "markCenterSourceUnits": {
+        "x": 376.986665,
+        "y": 181.271268
+      }
     },
     "corporate": {
       "visibleWidthToX": 1.9,

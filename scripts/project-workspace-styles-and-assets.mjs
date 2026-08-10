@@ -1,13 +1,39 @@
-import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { access, cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
 const tokensRoot = path.join(root, 'tokens');
 const assetsRoot = path.join(root, 'assets');
-const internalBrandManifest = path.resolve(assetsRoot, 'brand', 'lk-logo-construction.json');
+const rootOnlyBrandAssets = new Set([
+  path.resolve(assetsRoot, 'brand', 'lk-logo-construction.json'),
+  path.resolve(assetsRoot, 'brand', 'lk-logo-master.svg'),
+]);
 
 function shouldProjectAsset(source) {
-  return path.resolve(source) !== internalBrandManifest;
+  return !rootOnlyBrandAssets.has(path.resolve(source));
+}
+
+async function assertPackageBrandProjection(packageName) {
+  const packageBrandRoot = path.join(root, 'packages', packageName, 'assets', 'brand');
+  for (const rootOnlyPath of rootOnlyBrandAssets) {
+    const packagedPath = path.join(packageBrandRoot, path.basename(rootOnlyPath));
+    try {
+      await access(packagedPath);
+      throw new Error(`${packageName} package must not distribute root-only brand asset ${path.basename(rootOnlyPath)}.`);
+    } catch (error) {
+      if (error?.code !== 'ENOENT') throw error;
+    }
+  }
+
+  const placementSvgs = (await readdir(path.join(assetsRoot, 'brand')))
+    .filter((name) => name.endsWith('.svg') && name !== 'lk-logo-master.svg')
+    .sort();
+  // 15 company assets + 2 LK Portal product lockups (navy/white).
+  if (placementSvgs.length !== 17) {
+    throw new Error(`Expected 17 placement-ready brand SVGs, received ${placementSvgs.length}.`);
+  }
+  for (const fileName of placementSvgs) await access(path.join(packageBrandRoot, fileName));
+  await access(path.join(packageBrandRoot, 'platforms', 'manifest.json'));
 }
 
 async function recreateDirectory(target) {
@@ -144,5 +170,7 @@ await cp(path.join(root, 'styles.css'), path.join(root, 'packages', 'compat', 's
 await copyAssetDirectories('core', ['icons', 'source']);
 await copyAssetDirectories('theme', ['brand', 'fonts']);
 await copyAssetDirectories('product', ['industry', 'products', 'tech']);
+await assertPackageBrandProjection('theme');
+await assertPackageBrandProjection('compat');
 
 console.log('Projected Core, Theme, Product, and compatibility CSS/assets; Robotics UI owns its assets in the external repository.');
