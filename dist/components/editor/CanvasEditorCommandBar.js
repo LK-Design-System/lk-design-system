@@ -1,11 +1,11 @@
 "use client";
 import {
   CanvasEditorCommandBar
-} from "../../chunk-3RQPJ2R4.js";
-import "../../chunk-GH7V47YU.js";
+} from "../../chunk-7JQIIRLY.js";
+import "../../chunk-X55S6ZMZ.js";
 import "../../chunk-OHFWZZX3.js";
-import "../../chunk-TAZ6IYIO.js";
-import "../../chunk-KRO3ULVK.js";
+import "../../chunk-LCWM2LTJ.js";
+import "../../chunk-RUENHK23.js";
 export {
   CanvasEditorCommandBar
 };
