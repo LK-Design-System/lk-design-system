@@ -4,6 +4,11 @@ import path from 'node:path';
 const root = process.cwd();
 const tokensRoot = path.join(root, 'tokens');
 const assetsRoot = path.join(root, 'assets');
+const internalBrandManifest = path.resolve(assetsRoot, 'brand', 'lk-logo-construction.json');
+
+function shouldProjectAsset(source) {
+  return path.resolve(source) !== internalBrandManifest;
+}
 
 async function recreateDirectory(target) {
   await rm(target, { recursive: true, force: true });
@@ -22,7 +27,10 @@ async function copyAssetDirectories(packageName, directories) {
   const targetRoot = path.join(root, 'packages', packageName, 'assets');
   await recreateDirectory(targetRoot);
   for (const directory of directories) {
-    await cp(path.join(assetsRoot, directory), path.join(targetRoot, directory), { recursive: true });
+    await cp(path.join(assetsRoot, directory), path.join(targetRoot, directory), {
+      recursive: true,
+      filter: shouldProjectAsset,
+    });
   }
 }
 
@@ -127,7 +135,10 @@ await writeFile(path.join(root, 'packages', 'product', 'styles.css'), [
 await recreateDirectory(path.join(root, 'packages', 'compat', 'tokens'));
 await recreateDirectory(path.join(root, 'packages', 'compat', 'assets'));
 await cp(tokensRoot, path.join(root, 'packages', 'compat', 'tokens'), { recursive: true });
-await cp(assetsRoot, path.join(root, 'packages', 'compat', 'assets'), { recursive: true });
+await cp(assetsRoot, path.join(root, 'packages', 'compat', 'assets'), {
+  recursive: true,
+  filter: shouldProjectAsset,
+});
 await cp(path.join(root, 'styles.css'), path.join(root, 'packages', 'compat', 'styles.css'));
 
 await copyAssetDirectories('core', ['icons', 'source']);

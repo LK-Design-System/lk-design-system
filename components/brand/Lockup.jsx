@@ -9,9 +9,9 @@ import {
 
 /**
  * LK ROBOTICS — Lockup
- * Self-contained SVG built from the actual paths in the official `logo_LKR.svg`
- * master. `stacked` keeps the source composition without its square background;
- * `mark` and `inline` are UI derivatives that preserve the source contours.
+ * Self-contained SVG generated from the regulated brand construction. LK is
+ * custom vector geometry; ROBOTICS is outlined from the pinned Montserrat
+ * ExtraBold 800 v7.222 font. No runtime font is required.
  * `tone`: 'ink'/'brand' = official #05132B · 'white' · 'current'. Size via
  * `height`. Decorative instances get aria-hidden.
  */

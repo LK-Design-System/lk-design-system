@@ -17,3 +17,12 @@ which no longer serves this release after the repository organization move.
 When a successor package is published from its canonical repository, replace
 the root workspace's file dependency with that immutable release and remove
 this tarball in the same verified change.
+
+`montserrat-v7.222/` contains the exact OFL-licensed static font used only at
+build time to generate the outlined LK ROBOTICS wordmark. Its README records
+the pinned upstream release, hashes, and replacement policy.
+
+`noto-sans-kr-v2.004-h2/` contains the exact unmodified OFL-licensed variable
+TTF used only at build time to generate the outlined Korean corporate
+descriptor. Its README records the pinned source, hashes, `wght=800` instance,
+tracking rule, and replacement policy.

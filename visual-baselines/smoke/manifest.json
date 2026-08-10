@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "count": 38,
+  "count": 40,
   "maxDiffRatio": 0.01,
   "captures": [
     {
@@ -468,6 +468,30 @@
       "reducedMotion": "no-preference",
       "bytes": 12631,
       "sha256": "e1c7adc4ffceb1710240bb42cbfb41694a5243e841a0ce2676641faf1416e851"
+    },
+    {
+      "name": "theme-lk-robotics-lockup",
+      "id": "lds-theme-brand-lk-robotics-logo--lockup-overline-card",
+      "query": {},
+      "viewport": {
+        "width": 860,
+        "height": 700
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 58429,
+      "sha256": "a053a5eed529ef32c0493ceac74a92a55ba4c909c2a1d4b9b0117c94b533bc9a"
+    },
+    {
+      "name": "theme-brand-spinner-reduced-motion",
+      "id": "lds-theme-status-brand-spinner--brand-loading",
+      "query": {},
+      "viewport": {
+        "width": 520,
+        "height": 220
+      },
+      "reducedMotion": "reduce",
+      "bytes": 45731,
+      "sha256": "31f8a2f973be66b084379a7abf72ba531ed82c925e2520be05c01f838635f504"
     }
   ]
 }

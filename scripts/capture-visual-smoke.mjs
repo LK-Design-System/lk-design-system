@@ -34,6 +34,18 @@ const targets = [
     viewport: { width: 980, height: 620 },
   },
   {
+    name: 'theme-lk-robotics-lockup',
+    match: { importPath: './stories/Brand.stories.jsx', exportName: 'LockupOverlineCard' },
+    viewport: { width: 860, height: 700 },
+  },
+  {
+    name: 'theme-brand-spinner-reduced-motion',
+    match: { importPath: './stories/ThemeBrandSpinner.stories.jsx', exportName: 'BrandLoading' },
+    viewport: { width: 520, height: 220 },
+    reducedMotion: 'reduce',
+    reducedMotionSelectors: ['[data-wave]'],
+  },
+  {
     name: 'react-card-interactive-dark',
     match: { importPath: './stories/Card.stories.jsx', exportName: 'InteractiveAndDark' },
     viewport: { width: 980, height: 520 },
@@ -228,7 +240,7 @@ const targets = [
 ];
 
 // Robotics visual coverage lives in the split repository's representative
-// Storybook browser gate. Keep this root baseline limited to LDS Core/Product.
+// Storybook browser gate. Keep this root baseline limited to LDS Core/Theme/Product.
 const requestedCaptureNames = onlyArguments.length === 0
   ? null
   : onlyArguments[0].slice('--only='.length).split(',').map((name) => name.trim()).filter(Boolean);

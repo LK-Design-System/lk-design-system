@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "constructionVersion": 3,
+  "brand": "LK ROBOTICS",
+  "symbol": {
+    "name": "LK",
+    "construction": "custom-vector",
+    "geometrySource": "scripts/brand/lk-logo-source.mjs",
+    "geometrySha256": "A18E62B89807FA68355FA0E03C39CA33A94AC247DCCACB5BD2248F525D0632EE"
+  },
+  "corporateName": {
+    "text": "주식회사 엘케이로보틱스",
+    "normalization": "NFC",
+    "family": "Noto Sans KR",
+    "style": "ExtraBold",
+    "weight": 800,
+    "releaseVersion": "2.004-H2",
+    "sourceCommit": "4efc2774c63917927efe769ca845def6bd6debae",
+    "fontVersion": "2.004-H2",
+    "fontVersionMetadata": "Version 2.004-H2;hotconv 1.0.118;makeotfexe 2.5.65603",
+    "fontFormat": "variable-ttf",
+    "fontFile": "vendor/noto-sans-kr-v2.004-h2/NotoSansKR-wght.ttf",
+    "fontSha256": "194018E6B2B293A7964F037B25C0249CE1418BC9AB3C971060A03AA57861E252",
+    "fontSource": "https://raw.githubusercontent.com/google/fonts/4efc2774c63917927efe769ca845def6bd6debae/ofl/notosanskr/NotoSansKR%5Bwght%5D.ttf",
+    "license": "SIL Open Font License 1.1",
+    "licenseFile": "vendor/noto-sans-kr-v2.004-h2/OFL.txt",
+    "licenseSha256": "1C05C68C34F9708415AADA51F17E1B0092D2CEA709BF4A94CD38114F9E73D7D9",
+    "variation": {
+      "wght": 800
+    },
+    "kerning": "font-default",
+    "letterSpacingEm": 0.105,
+    "horizontalScale": 1,
+    "verticalScale": 1,
+    "manualGlyphEdits": false
+  },
+  "wordmark": {
+    "text": "ROBOTICS",
+    "case": "uppercase",
+    "family": "Montserrat",
+    "style": "ExtraBold",
+    "weight": 800,
+    "fontVersion": "7.222",
+    "fontFile": "vendor/montserrat-v7.222/Montserrat-ExtraBold.ttf",
+    "fontSha256": "1B364C3400BF7B1CC2C47A25DD0D3EDD8331DA451412AA5539080F78F8F70B63",
+    "fontSource": "https://github.com/JulietaUla/Montserrat/releases/tag/v7.222",
+    "license": "SIL Open Font License 1.1",
+    "licenseFile": "vendor/montserrat-v7.222/OFL.txt",
+    "licenseSha256": "41F82BB4D24B304F30F7136BC47ABDD083782E4265C984160F5649D1E78EA49C",
+    "kerning": "font-default",
+    "letterSpacing": 0,
+    "horizontalScale": 1,
+    "verticalScale": 1,
+    "manualGlyphEdits": false
+  },
+  "layout": {
+    "xDefinition": "visible height of the custom LK symbol",
+    "tightPaddingSourceUnits": 4,
+    "stacked": {
+      "nominalCapHeightToX": 0.25,
+      "gapToMarkWidth": 0.2,
+      "horizontalAlignment": "center"
+    },
+    "inline": {
+      "visibleWordmarkHeightToX": 1,
+      "gapToMarkWidth": 0.2,
+      "verticalAlignment": "visible-bounds"
+    },
+    "banner": {
+      "clearSpaceToX": 0.5
+    },
+    "corporate": {
+      "visibleWidthToX": 1.9,
+      "gapFromLockupToX": 0.21,
+      "horizontalAlignment": "lockup-visible-center",
+      "minimumRenderedSquarePx": 160,
+      "recommendedRenderedSquarePx": 192,
+      "minimumPrintedSquareMm": 32
+    }
+  },
+  "colors": {
+    "navy": "#05132b",
+    "accent": "#6bbbdd",
+    "white": "#ffffff"
+  },
+  "output": {
+    "format": "SVG",
+    "wordmarkAsOutlines": true,
+    "corporateNameAsOutlines": true,
+    "textElementsAllowed": false,
+    "runtimeFontDependency": false,
+    "constructionManifestDistribution": "repository-root-only"
+  }
+}
