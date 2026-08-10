@@ -49,7 +49,7 @@ export const SideNav = React.forwardRef(function SideNav({
   surface = 'floating',
   collapsed, defaultCollapsed = false, onCollapsedChange, collapsedWidth = 64, overlay = false,
   autoExpandActiveGroup = true,
-  multiple = true,
+  multiple = false,
   renderLink, className, style, classNames, styles, vars,
   onBlur, onFocus, onClick, onMouseEnter, onMouseLeave,
   'aria-label': ariaLabel = '사이드 탐색',
@@ -156,7 +156,12 @@ export const SideNav = React.forwardRef(function SideNav({
       && !item.heading
       && item.children?.some((child) => child.value === val)
     ));
-    if (!activeParent) return;
+    if (!activeParent) {
+      if (!multiple) {
+        setOpen((current) => Object.values(current).some(Boolean) ? {} : current);
+      }
+      return;
+    }
     setOpen((current) => (
       current[activeParent.value]
         ? current
@@ -188,11 +193,7 @@ export const SideNav = React.forwardRef(function SideNav({
     width: '100%', minHeight: 'var(--lds-side-nav-item-height, 44px)', padding: col ? '11px 0' : '10px 12px', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--lds-side-nav-item-radius, var(--radius-lg))',
     cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, textAlign: 'left', textDecoration: 'none', fontFamily: 'var(--font-sans)',
     fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)',
-    // Hover is `fill-normal`, not `fill-alternative`. On the elevated surface a
-    // navigation panel actually sits on, `fill-alternative` is a 5% neutral —
-    // below the perception floor on a 44px row, so the largest hit targets in the
-    // shell read as inert. It stays weaker than the 14% primary selection wash.
-    background: active ? 'var(--color-semantic-primary-surface-strong)' : hovered && !disabled ? 'var(--color-semantic-fill-normal)' : 'transparent', color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
+    background: active ? 'var(--color-semantic-primary-surface-strong)' : hovered && !disabled ? 'var(--color-semantic-fill-alternative)' : 'transparent', color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
     transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)', ...extra, ...partStyle(styles, 'item'),
   });
   const labelSpan = (active, children) => (
@@ -209,6 +210,9 @@ export const SideNav = React.forwardRef(function SideNav({
       if (disabled) {
         event.preventDefault();
         return;
+      }
+      if (!parentValue && !multiple) {
+        setOpen((current) => Object.values(current).some(Boolean) ? {} : current);
       }
       pick(item.value);
       item.onClick?.(event);
@@ -255,7 +259,7 @@ export const SideNav = React.forwardRef(function SideNav({
   const resolvedCollapsedWidth = cssLength(collapsedWidth);
   const shell = { position: 'relative', display: 'flex', flexDirection: 'column', width: col ? `var(--lds-side-nav-collapsed-width, ${resolvedCollapsedWidth})` : `var(--lds-side-nav-width, ${resolvedWidth})`, boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: docked ? 'none' : '1px solid var(--color-semantic-line-solid-normal)', borderInlineEnd: docked ? '1px solid var(--color-semantic-line-solid-normal)' : undefined, borderRadius: docked ? 0 : 'var(--lds-side-nav-radius, var(--radius-xl))', boxShadow: docked ? 'none' : undefined, padding: 'var(--lds-side-nav-padding, var(--space-2-5))', transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
   const sideNavStyles = `
-    [data-sidenav-value]:active:not(:disabled){background:var(--color-semantic-fill-strong)!important}
+    [data-sidenav-value]:active:not(:disabled){background:var(--color-semantic-fill-normal)!important}
     [data-collapsed="true"] .lk-sidenav__scroll::-webkit-scrollbar{display:none}
     @media(prefers-reduced-motion:reduce){.lk-sidenav__surface{transition-duration:0s!important;animation-duration:0s!important}}
   `;
@@ -281,23 +285,22 @@ export const SideNav = React.forwardRef(function SideNav({
           if (kids.length > 0) {
             const isOpen = !!open[o.value];
             const childActive = kids.some((c) => c.value === val);
-            const collapsedActiveProxy = col && childActive;
             const hasChildIcons = kids.some((c) => c.icon != null);
             const onParent = () => { if (col) { setCol(false); openGroup(o.value); } else { toggleGroup(o.value); } };
             return (
               <li key={o.value} style={LIST_ITEM_STYLE}>
                 <RailItemTooltip label={accessibleLabel} collapsed={col} enabled={!overlay}>
                   <button type="button" data-slot="item" data-state={childActive ? 'active-descendant' : 'inactive'} data-disabled={o.disabled ? 'true' : undefined} className={partClassName(classNames, 'item', o.className) || undefined} data-sidenav-value={o.value} aria-label={col || o.ariaLabel ? accessibleLabel : undefined} aria-expanded={col ? undefined : isOpen} disabled={o.disabled} onClick={onParent} title={col ? undefined : accessibleLabel} {...hoverProps(o.value)}
-                    style={row(collapsedActiveProxy, o.disabled, { color: collapsedActiveProxy ? 'var(--color-semantic-primary-normal)' : childActive ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)' }, hovKey === o.value)}>
+                    style={row(false, o.disabled, { color: childActive ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)' }, hovKey === o.value)}>
                     {o.icon != null && <span data-slot="icon" className={partClassName(classNames, 'icon') || undefined} aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex', ...partStyle(styles, 'icon') }}>{o.icon}</span>}
                     {!col && labelSpan(childActive, o.label)}
                     {!col && <Chevron open={isOpen} />}
-                    {/* When the active leaf is hidden, its disclosure parent carries a visual
-                        selection proxy. The real leaf remains the only aria-current owner. */}
+                    {/* Active descendant state already uses stronger icon ink.
+                        Reserve the collapsed dot exclusively for a real badge. */}
                   </button>
                 </RailItemTooltip>
                 {!col && isOpen && (
-                  <ul data-slot="childList" className={partClassName(classNames, 'childList') || undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', margin: '0 0 4px', padding: 0, listStyle: 'none', ...partStyle(styles, 'childList') }}>
+                  <ul data-slot="childList" className={partClassName(classNames, 'childList') || undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', margin: '0 0 4px', padding: 0, paddingInlineStart: 'var(--space-3)', listStyle: 'none', ...partStyle(styles, 'childList') }}>
                     {kids.map((c) => {
                       const ca = c.value === val;
                       const childTitle = typeof c.label === 'string' ? c.label : c.ariaLabel;
@@ -308,7 +311,7 @@ export const SideNav = React.forwardRef(function SideNav({
                             parentValue: o.value,
                             ariaLabel: c.ariaLabel,
                             title: childTitle,
-                            itemStyle: row(ca, c.disabled, { minHeight: 'var(--lds-side-nav-child-item-height, 36px)', padding: hasChildIcons ? '8px 12px 8px 24px' : '8px 12px 8px 42px', gap: hasChildIcons ? 'var(--space-2)' : undefined }, hovKey === c.value),
+                            itemStyle: row(ca, c.disabled, { paddingBlock: 'var(--space-2)', paddingInlineStart: hasChildIcons ? 'var(--space-4)' : '42px', paddingInlineEnd: 'var(--space-3)', gap: hasChildIcons ? 'var(--space-2)' : undefined }, hovKey === c.value),
                             content: (
                               <React.Fragment>
                                 {hasChildIcons && (
@@ -316,7 +319,7 @@ export const SideNav = React.forwardRef(function SideNav({
                                     {c.icon}
                                   </span>
                                 )}
-                                <span data-slot="label" className={partClassName(classNames, 'label') || undefined} style={{ flex: 1, minWidth: 0, fontSize: 'var(--label2-size)', fontWeight: ca ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', ...partStyle(styles, 'label') }}>{c.label}</span>
+                                <span data-slot="label" className={partClassName(classNames, 'label') || undefined} style={{ flex: 1, minWidth: 0, fontSize: 'var(--label2-size)', fontWeight: ca ? 'var(--fw-bold)' : 'var(--fw-medium)', lineHeight: 'var(--label2-line)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', ...partStyle(styles, 'label') }}>{c.label}</span>
                                 {c.badge != null && pill(ca, c.badge)}
                               </React.Fragment>
                             ),

@@ -27,7 +27,7 @@ function variantStyle(variant, palette) {
     borderRadius: "var(--radius-lg)"
   };
 }
-function Banner({ tone = "info", variant = "standalone", title, children, action, onClose, closeLabel = "\uB2EB\uAE30", style, ...rest }) {
+function Banner({ tone = "signal", variant = "standalone", title, children, action, onClose, closeLabel = "\uB2EB\uAE30", style, ...rest }) {
   const normalizedTone = normalizeStatusTone(tone);
   const t = statusToneStyle(normalizedTone);
   const urgent = normalizedTone === "negative";
@@ -65,4 +65,8 @@ function Banner({ tone = "info", variant = "standalone", title, children, action
 export {
   Banner
 };
+<<<<<<<< HEAD:dist/chunk-PJ6DNK6F.js
 //# sourceMappingURL=chunk-PJ6DNK6F.js.map
+========
+//# sourceMappingURL=chunk-IOTZJ7UI.js.map
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-IOTZJ7UI.js

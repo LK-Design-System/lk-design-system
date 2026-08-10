@@ -132,6 +132,11 @@ LDS 메뉴 토큰을 사용합니다.
   use the shared floating-position engine's fixed strategy. This lets a command
   menu escape a `Table` or other ancestor scroll container without weakening the
   ancestor's horizontal-overflow contract.
+- `collisionBoundary`는 element 또는 ref를 받아 root panel의 positioning 경계를 viewport와
+  해당 요소의 보이는 교집합으로 좁힙니다. `collisionPadding` 기본 16px을 적용한 뒤 flip, shift,
+  `maxWidth/maxHeight`를 계산하며, 명시적 `width`·`minWidth`·style도 그 가용 크기를 넘지 못합니다.
+  생략하면 기존 viewport 경계가 byte/behavior-compatible하게 유지됩니다. 이 API는 Portal target을
+  바꾸지 않으므로 body Portal로 clipping을 탈출하면서 chat panel 안에 menu geometry를 제한합니다.
 - The trigger remains in the product DOM while `aria-controls` points to the
   portalled `role="menu"`. Opening still moves focus to the requested item;
   Escape closes the menu and restores trigger focus.
@@ -149,3 +154,5 @@ LDS 메뉴 토큰을 사용합니다.
 - [WAI-ARIA Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
   remains the accessibility contract: `aria-haspopup`, `aria-expanded`, optional
   `aria-controls`, menu roles, and first/last-item keyboard focus are unchanged.
+- [React Aria Popover](https://react-spectrum.adobe.com/react-aria/Popover.html)의
+  `boundaryElement`처럼 Portal mount target과 positioning boundary는 서로 다른 책임입니다.

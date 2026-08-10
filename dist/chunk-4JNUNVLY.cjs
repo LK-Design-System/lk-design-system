@@ -27,7 +27,7 @@ function variantStyle(variant, palette) {
     borderRadius: "var(--radius-lg)"
   };
 }
-function Banner({ tone = "info", variant = "standalone", title, children, action, onClose, closeLabel = "\uB2EB\uAE30", style, ...rest }) {
+function Banner({ tone = "signal", variant = "standalone", title, children, action, onClose, closeLabel = "\uB2EB\uAE30", style, ...rest }) {
   const normalizedTone = _chunkMBKOVB2Kcjs.normalizeStatusTone.call(void 0, tone);
   const t = _chunkMBKOVB2Kcjs.statusToneStyle.call(void 0, normalizedTone);
   const urgent = normalizedTone === "negative";
@@ -65,4 +65,8 @@ function Banner({ tone = "info", variant = "standalone", title, children, action
 
 
 exports.Banner = Banner;
+<<<<<<<< HEAD:dist/chunk-4JNUNVLY.cjs
 //# sourceMappingURL=chunk-4JNUNVLY.cjs.map
+========
+//# sourceMappingURL=chunk-NACO3GUR.cjs.map
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-NACO3GUR.cjs

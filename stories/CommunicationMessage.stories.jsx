@@ -1,13 +1,18 @@
 import React from 'react';
-import { userEvent, waitFor } from 'storybook/test';
+import { fireEvent, userEvent, waitFor } from 'storybook/test';
 import {
   Avatar,
+  Button,
   Chip,
   ConversationMessage,
+  DropdownMenu,
   Icon,
   IconButton,
   MessageComposer,
   MessageFeed,
+  Popover,
+  RadioGroup,
+  Slider,
   SourceDisclosure,
 } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
@@ -40,6 +45,12 @@ const meta = {
       options: ['single', 'first', 'middle', 'last'],
       description: '같은 작성자의 연속 메시지에서 identity 반복과 bubble 모서리 연결을 조정합니다.',
       table: { defaultValue: { summary: 'single' }, type: { summary: "'single' | 'first' | 'middle' | 'last'" } },
+    },
+    density: {
+      control: 'inline-radio',
+      options: ['comfortable', 'compact'],
+      description: '메시지 안쪽 간격과 아바타 슬롯을 조절합니다. comfortable은 기존 렌더링을 유지하고 compact는 좁은 대화 열의 세로 공간만 줄이며 타이포그래피와 동작 target은 유지합니다.',
+      table: { defaultValue: { summary: 'comfortable' }, type: { summary: "'comfortable' | 'compact'" } },
     },
     lifecycle: {
       control: 'object',
@@ -169,6 +180,8 @@ export default meta;
 
 const assistantAvatar = <Avatar name="AI Assistant" size="small" />;
 const userAvatar = <Avatar name="김서윤" size="small" />;
+const compactAssistantAvatar = <Avatar name="AI 어시스턴트" size="xsmall" />;
+const compactUserAvatar = <Avatar name="김서윤" size="xsmall" />;
 
 // Consumed through EvidenceBlock, which renders the collapsed "출처" toggle +
 // popover — so only id/label/href are used. Provenance fields (kind, location,
@@ -251,6 +264,51 @@ function assertNoPerMessageLiveRegions(root) {
     || message.querySelector('[aria-live], [role="log"], [role="status"], [role="alert"]')
   ));
   if (invalid) throw new Error('ConversationMessage must not create a per-message live region.');
+}
+
+function assertNoHorizontalOverflow(root, label) {
+  if (root.scrollWidth > root.clientWidth + 1) {
+    throw new Error(`${label} must not create horizontal overflow.`);
+  }
+}
+
+function assertFixtureWidth(fixture, preferredWidth, label) {
+  const host = fixture.parentElement;
+  const hostStyle = host ? getComputedStyle(host) : null;
+  const availableWidth = host
+    ? host.clientWidth - (Number.parseFloat(hostStyle.paddingLeft) || 0) - (Number.parseFloat(hostStyle.paddingRight) || 0)
+    : preferredWidth;
+  const expectedWidth = Math.min(preferredWidth, availableWidth);
+  if (Math.abs(fixture.getBoundingClientRect().width - expectedWidth) > 1) {
+    throw new Error(`${label} must fill the available container up to ${preferredWidth}px.`);
+  }
+}
+
+function assertMinimumActionTargetAndNoOverlap(root, label) {
+  const actions = Array.from(root.querySelectorAll('button')).filter((action) => {
+    const rect = action.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0;
+  });
+  if (!actions.length) throw new Error(`${label} must expose visible actions for the compact target check.`);
+
+  for (const action of actions) {
+    const rect = action.getBoundingClientRect();
+    if (rect.width < 24 || rect.height < 24) {
+      throw new Error(`${label} actions must retain a minimum 24px target.`);
+    }
+  }
+
+  for (let index = 0; index < actions.length; index += 1) {
+    const current = actions[index].getBoundingClientRect();
+    for (const candidate of actions.slice(index + 1)) {
+      const next = candidate.getBoundingClientRect();
+      const overlaps = current.left < next.right - 0.5
+        && current.right > next.left + 0.5
+        && current.top < next.bottom - 0.5
+        && current.bottom > next.top + 0.5;
+      if (overlaps) throw new Error(`${label} actions must not overlap.`);
+    }
+  }
 }
 
 function OverviewFixture(messageArgs) {
@@ -341,6 +399,39 @@ export const MessageOverview = {
       throw new Error('System messages must not render an avatar.');
     }
     assertNoPerMessageLiveRegions(fixture);
+  },
+};
+
+export const CompactDensity = {
+  name: '밀도 · compact',
+  parameters: storyDescription(
+    '460px 대화 열에서 compact 밀도의 단일 메시지를 확인합니다. 정보 순서와 동작 대상은 유지하면서 짧은 문장·시간·동작이 한 메시지 안에서 겹치지 않아야 합니다.',
+  ),
+  render: () => (
+    <main data-compact-message style={{ width: 460, maxWidth: '100%', minWidth: 0 }}>
+      <ConversationMessage
+        density="compact"
+        authorRole="assistant"
+        author="AI 어시스턴트"
+        timestamp="10:28"
+        dateTime="2026-07-12T10:28:00+09:00"
+        lifecycle={{ kind: 'response', state: 'complete' }}
+        actions={<><CopyAction /><CondenseAction /></>}
+      >
+        조밀한 밀도에서도 제품 화면 요소를 더하지 않고 재사용 가능한 대화 메시지를 읽기 쉽게 유지합니다.
+      </ConversationMessage>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const fixture = canvasElement.querySelector('[data-compact-message]');
+    const message = fixture?.querySelector('.lk-conversation-message');
+    if (!fixture || !message) throw new Error('The compact message fixture is incomplete.');
+    assertFixtureWidth(fixture, 460, 'The compact message fixture');
+    if (message.dataset.density !== 'compact') {
+      throw new Error('ConversationMessage must expose data-density="compact".');
+    }
+    assertNoHorizontalOverflow(fixture, 'Compact ConversationMessage');
+    assertMinimumActionTargetAndNoOverlap(message, 'Compact ConversationMessage');
   },
 };
 
@@ -622,6 +713,744 @@ export const ConversationComposition = {
     if (appended.dataset.messagePresentation !== 'bubble' || appended.dataset.direction !== 'outbound' || input.value !== '') {
       throw new Error('The product fixture must append a user bubble and clear its controlled draft.');
     }
+  },
+};
+
+const compactConversationEntries = [
+  {
+    id: 'compact-assistant',
+    authorRole: 'assistant',
+    author: 'AI 어시스턴트',
+    avatar: compactAssistantAvatar,
+    body: '재사용 가능한 대화 열은 피드, 메시지, 작성기의 읽기 순서를 유지합니다.',
+    lifecycle: { kind: 'response', state: 'complete' },
+  },
+  {
+    id: 'compact-user',
+    authorRole: 'user',
+    author: '김서윤',
+    avatar: compactUserAvatar,
+    body: '좁은 컨테이너 폭에서도 조밀한 구성을 유지합니다.',
+    lifecycle: { kind: 'delivery', state: 'sent' },
+  },
+  {
+    id: 'compact-follow-up',
+    authorRole: 'assistant',
+    author: 'AI 어시스턴트',
+    avatar: compactAssistantAvatar,
+    body: '작성기는 스크롤 가능한 기록 아래에 계속 보입니다.',
+    lifecycle: { kind: 'response', state: 'complete' },
+  },
+];
+
+function CompactConversationColumnFixture({ width, height, fixtureId }) {
+  const [value, setValue] = React.useState('간단한 초안');
+  return (
+    <main
+      data-compact-conversation-column={fixtureId}
+      style={{
+        display: 'grid',
+        gridTemplateRows: 'minmax(0, 1fr) auto',
+        gap: 'var(--space-3)',
+        width,
+        maxWidth: '100%',
+        height,
+        minWidth: 0,
+        boxSizing: 'border-box',
+      }}
+    >
+      <MessageFeed
+        density="compact"
+        data-compact-conversation-feed
+        ariaLabel="조밀한 대화 기록"
+        following
+        viewportMinHeight={0}
+        maxHeight="100%"
+        style={{ height: '100%', minHeight: 0 }}
+      >
+        {compactConversationEntries.map((entry) => (
+          <ConversationMessage
+            key={entry.id}
+            density="compact"
+            data-compact-conversation-message={entry.id}
+            authorRole={entry.authorRole}
+            author={entry.author}
+            avatar={entry.avatar}
+            lifecycle={entry.lifecycle}
+          >
+            {entry.body}
+          </ConversationMessage>
+        ))}
+      </MessageFeed>
+      <MessageComposer
+        density="compact"
+        data-compact-conversation-composer
+        value={value}
+        onValueChange={setValue}
+        onSubmit={() => {}}
+        formLabel="조밀한 대화 작성"
+        inputLabel="메시지"
+        placeholder="메시지를 작성하세요"
+        minRows={1}
+        maxRows={2}
+        leadingActions={<AddFileAction />}
+        trailingActions={(
+          <IconButton label="작성 옵션" size="small" round={false} variant="plain">
+            <Icon name="template" size={16} />
+          </IconButton>
+        )}
+      />
+    </main>
+  );
+}
+
+function assertCompactConversationColumn(canvasElement, fixtureId, expectedWidth) {
+  const column = canvasElement.querySelector(`[data-compact-conversation-column="${fixtureId}"]`);
+  const feed = column?.querySelector('[data-compact-conversation-feed]');
+  const log = feed?.querySelector('[role="log"]');
+  const composer = column?.querySelector('[data-compact-conversation-composer]');
+  const messages = log ? Array.from(log.querySelectorAll('.lk-conversation-message')) : [];
+  if (!column || !feed || !log || !composer || messages.length !== compactConversationEntries.length) {
+    throw new Error('The compact conversation column is incomplete.');
+  }
+
+  const columnRect = column.getBoundingClientRect();
+  const feedRect = feed.getBoundingClientRect();
+  const logRect = log.getBoundingClientRect();
+  const composerRect = composer.getBoundingClientRect();
+  assertFixtureWidth(column, expectedWidth, 'The compact conversation');
+  if (columnRect.height > 360) {
+    throw new Error('The compact conversation must remain a short column no taller than 360px.');
+  }
+  if (feed.style.minHeight !== '0px' || getComputedStyle(feed).minHeight !== '0px') {
+    throw new Error('The compact feed must opt into min-height: 0 inside the remaining grid row.');
+  }
+  if (feedRect.height <= 0 || feedRect.bottom > composerRect.top - 1 || logRect.bottom > feedRect.bottom + 1) {
+    throw new Error('The feed must occupy only the remaining height above the visible composer.');
+  }
+  if (composerRect.width <= 0 || composerRect.height <= 0 || composerRect.bottom > columnRect.bottom + 1) {
+    throw new Error('The compact composer must remain visible inside the narrow conversation column.');
+  }
+  if (feed.dataset.density !== 'compact' || composer.dataset.density !== 'compact' || messages.some((message) => message.dataset.density !== 'compact')) {
+    throw new Error('Every compact conversation primitive must expose data-density="compact".');
+  }
+  const avatarSlots = Array.from(log.querySelectorAll('[data-message-avatar]'));
+  if (avatarSlots.length !== messages.length || avatarSlots.some((slot) => {
+    const slotRect = slot.getBoundingClientRect();
+    const avatarRect = slot.firstElementChild?.getBoundingClientRect();
+    return Math.abs(slotRect.width - 24) > 1
+      || Math.abs(slotRect.height - 24) > 1
+      || !avatarRect
+      || avatarRect.width > slotRect.width + 1
+      || avatarRect.height > slotRect.height + 1;
+  })) {
+    throw new Error('Compact messages must keep each xsmall avatar inside its 24px slot.');
+  }
+
+  [column, feed, log, composer].forEach((node) => assertNoHorizontalOverflow(node, 'Compact conversation column'));
+  if (log.contains(composer) || !(log.compareDocumentPosition(composer) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+    throw new Error('The log must precede the independent composer form in DOM order.');
+  }
+
+  const input = composer.querySelector('[data-composer-input]');
+  const leading = composer.querySelector('[data-composer-leading-actions]');
+  const trailing = composer.querySelector('[data-composer-trailing-actions]');
+  const primary = composer.querySelector('[data-composer-primary-action]');
+  if (!input || !leading || !trailing || !primary
+    || !(input.compareDocumentPosition(leading) & Node.DOCUMENT_POSITION_FOLLOWING)
+    || !(leading.compareDocumentPosition(trailing) & Node.DOCUMENT_POSITION_FOLLOWING)
+    || !(trailing.compareDocumentPosition(primary) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+    throw new Error('The narrow composer must preserve input, utility actions, and primary action DOM order.');
+  }
+  assertMinimumActionTargetAndNoOverlap(composer, 'Compact conversation composer');
+}
+
+export const CompactConversationColumn = {
+  name: '밀도 · compact 대화 열',
+  parameters: storyDescription(
+    '360px의 짧은 일반 대화 열입니다. 완성 제품 화면·포털·고정 패널을 복제하지 않고, compact MessageFeed·ConversationMessage·MessageComposer를 하나의 재사용 가능한 흐름으로 조합합니다.',
+  ),
+  render: () => <CompactConversationColumnFixture width={360} height={336} fixtureId="public" />,
+  play: async ({ canvasElement }) => {
+    assertCompactConversationColumn(canvasElement, 'public', 360);
+  },
+};
+
+export const CompactConversationColumnWideContract = {
+  name: '조밀한 대화 열 460px 계약',
+  tags: ['!dev', 'visual-parity'],
+  render: () => <CompactConversationColumnFixture width={460} height={336} fixtureId="wide-contract" />,
+  play: async ({ canvasElement }) => {
+    assertCompactConversationColumn(canvasElement, 'wide-contract', 460);
+  },
+};
+
+export const CompactConversationColumnContract = {
+  name: '조밀한 대화 열 296px 계약',
+  tags: ['!dev', 'visual-parity'],
+  render: () => <CompactConversationColumnFixture width={296} height={312} fixtureId="contract" />,
+  play: async ({ canvasElement }) => {
+    assertCompactConversationColumn(canvasElement, 'contract', 296);
+  },
+};
+
+function ComposerAddSourceMenu({ onCommand, overlayProps = {} }) {
+  return (
+    <DropdownMenu
+      align="right"
+      position="top"
+      density="compact"
+      maxHeight={172}
+      {...overlayProps}
+      trigger={(
+        <IconButton
+          data-composer-overlay-trigger="add-source"
+          label="추가 및 출처 명령"
+          size="small"
+          round={false}
+          variant="plain"
+        >
+          <Icon name="circle-plus" size={16} />
+        </IconButton>
+      )}
+      items={[
+        {
+          label: '파일 또는 출처 추가',
+          description: '현재 초안에 참고 자료를 연결합니다.',
+          icon: <Icon name="attachment" size={16} />,
+          onClick: () => onCommand('파일 또는 출처 추가'),
+        },
+        {
+          label: '연결한 출처 확인',
+          description: '대화에 이미 연결된 근거를 다시 확인합니다.',
+          icon: <Icon name="document-search" size={16} />,
+          onClick: () => onCommand('연결한 출처 확인'),
+        },
+        { divider: true },
+        {
+          label: '긴 참고 문서에서 관련 근거를 이어 붙입니다',
+          description: '좁은 작성기에서도 긴 한국어 설명이 잘리고 가로로 넘치지 않아야 합니다.',
+          icon: <Icon name="link" size={16} />,
+          onClick: () => onCommand('긴 참고 문서 연결'),
+        },
+        {
+          label: '초안에 필요한 출처만 남기기',
+          description: '제출 전에 참고 자료 범위를 간단히 정리합니다.',
+          icon: <Icon name="list" size={16} />,
+          onClick: () => onCommand('필요한 출처만 남기기'),
+        },
+        {
+          label: '출처 없이 일반 초안으로 계속하기',
+          description: '연결된 자료를 제거하지 않고 초안의 참조만 바꿉니다.',
+          icon: <Icon name="document-text" size={16} />,
+          onClick: () => onCommand('일반 초안으로 계속하기'),
+        },
+      ]}
+    />
+  );
+}
+
+function ComposerSafetyPopover({ readOnly, onToggleReadOnly, overlayProps = {} }) {
+  return (
+    <Popover
+      align="right"
+      position="top"
+      width={280}
+      ariaLabel="읽기 전용과 안전 안내"
+      {...overlayProps}
+      trigger={(
+        <IconButton
+          data-composer-overlay-trigger="safety"
+          label="읽기 전용과 안전 안내"
+          size="small"
+          round={false}
+          variant="plain"
+        >
+          <Icon name="lock" size={16} />
+        </IconButton>
+      )}
+    >
+      <div data-composer-overlay-safety style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        <div style={{ display: 'grid', gap: 'var(--space-1)' }}>
+          <strong style={{ color: 'var(--color-semantic-label-strong)' }}>읽기 전용 초안</strong>
+          <p style={{ margin: 0, color: 'var(--color-semantic-label-alternative)' }}>
+            읽기 전용은 초안을 선택·복사할 수 있지만 편집과 전송은 막습니다.
+          </p>
+          <p style={{ margin: 0, color: 'var(--color-semantic-label-alternative)' }}>
+            권한 부여, 외부 명령 실행, 자료 전송 정책은 이 조합이 아니라 제품이 소유합니다.
+          </p>
+        </div>
+        <Button type="button" size="sm" variant="ghost" onClick={onToggleReadOnly}>
+          {readOnly ? '읽기 전용 해제' : '읽기 전용으로 전환'}
+        </Button>
+      </div>
+    </Popover>
+  );
+}
+
+function ComposerModePopover({ mode, onModeChange, detail, onDetailChange, overlayProps = {} }) {
+  return (
+    <Popover
+      align="right"
+      position="top"
+      width={280}
+      ariaLabel="응답 모드와 자세함"
+      {...overlayProps}
+      trigger={(
+        <IconButton
+          data-composer-overlay-trigger="mode"
+          label="응답 모드와 자세함"
+          size="small"
+          round={false}
+          variant="plain"
+        >
+          <Icon name="tune" size={16} />
+        </IconButton>
+      )}
+    >
+      <div data-composer-overlay-mode style={{ display: 'grid', gap: 'var(--space-4)' }}>
+        <section aria-labelledby="composer-response-mode-title" style={{ display: 'grid', gap: 'var(--space-2)' }}>
+          <strong id="composer-response-mode-title" style={{ color: 'var(--color-semantic-label-strong)' }}>응답 모드</strong>
+          <RadioGroup
+            aria-label="응답 모드"
+            name="composer-response-mode"
+            value={mode}
+            onChange={onModeChange}
+            options={[
+              { value: 'balanced', label: '균형', description: '간결함과 근거 설명을 함께 유지합니다.' },
+              { value: 'concise', label: '간결', description: '핵심 결론과 다음 행동을 우선합니다.' },
+              { value: 'detailed', label: '자세히', description: '필요한 배경과 근거를 더 많이 설명합니다.' },
+            ]}
+            style={{ gap: 'var(--space-2)' }}
+          />
+        </section>
+        <section aria-labelledby="composer-detail-title" style={{ display: 'grid', gap: 'var(--space-2)' }}>
+          <strong id="composer-detail-title" style={{ color: 'var(--color-semantic-label-strong)' }}>응답 자세함</strong>
+          <Slider
+            aria-label="응답 자세함"
+            min={0}
+            max={100}
+            step={10}
+            value={detail}
+            onChange={onDetailChange}
+            showValue
+          />
+        </section>
+      </div>
+    </Popover>
+  );
+}
+
+function ComposerOverlayColumnFixture({ width, height, fixtureId, pinToViewport = false, overlayProps = {} }) {
+  const clipRef = React.useRef(null);
+  const [value, setValue] = React.useState('근거와 결론을 간단히 정리해 주세요.');
+  const [lastCommand, setLastCommand] = React.useState('선택 전');
+  const [readOnly, setReadOnly] = React.useState(false);
+  const [mode, setMode] = React.useState('balanced');
+  const [detail, setDetail] = React.useState(40);
+  const boundaryOverlayProps = { collisionBoundary: clipRef };
+  return (
+    <div
+      ref={clipRef}
+      data-composer-overlay-clip={fixtureId}
+      style={{
+        width,
+        maxWidth: 'calc(100vw - 8px)',
+        height,
+        minWidth: 0,
+        overflow: 'hidden',
+        boxSizing: 'border-box',
+        ...(pinToViewport ? { position: 'fixed', insetInlineEnd: 4, bottom: 4 } : {}),
+      }}
+    >
+      <main
+        data-composer-overlay-column={fixtureId}
+        style={{
+          display: 'grid',
+          gridTemplateRows: 'minmax(0, 1fr) auto',
+          gap: 'var(--space-3)',
+          width: '100%',
+          height: '100%',
+          minWidth: 0,
+          boxSizing: 'border-box',
+        }}
+      >
+        <MessageFeed
+          density="compact"
+          data-composer-overlay-feed
+          ariaLabel="오버레이 작성기 대화 기록"
+          following
+          viewportMinHeight={0}
+          maxHeight="100%"
+          style={{ height: '100%', minHeight: 0 }}
+        >
+          {compactConversationEntries.map((entry) => (
+            <ConversationMessage
+              key={entry.id}
+              density="compact"
+              data-composer-overlay-message={entry.id}
+              authorRole={entry.authorRole}
+              author={entry.author}
+              avatar={entry.avatar}
+              lifecycle={entry.lifecycle}
+            >
+              {entry.body}
+            </ConversationMessage>
+          ))}
+        </MessageFeed>
+        <MessageComposer
+          density="compact"
+          data-composer-overlay-composer
+          value={value}
+          onValueChange={setValue}
+          onSubmit={() => {}}
+          readOnly={readOnly}
+          formLabel="오버레이 작성기 대화 작성"
+          inputLabel="메시지"
+          description="추가, 안전 안내, 응답 모드는 보조 메뉴에서 조정합니다."
+          placeholder="메시지를 작성하세요"
+          minRows={1}
+          maxRows={2}
+          leadingActions={(
+            <ComposerAddSourceMenu
+              onCommand={setLastCommand}
+              overlayProps={{ ...boundaryOverlayProps, ...overlayProps.commandMenu }}
+            />
+          )}
+          trailingActions={(
+            <>
+              <ComposerSafetyPopover
+                readOnly={readOnly}
+                onToggleReadOnly={() => setReadOnly((current) => !current)}
+                overlayProps={{ ...boundaryOverlayProps, ...overlayProps.safetyPopover }}
+              />
+              <ComposerModePopover
+                mode={mode}
+                onModeChange={setMode}
+                detail={detail}
+                onDetailChange={setDetail}
+                overlayProps={{ ...boundaryOverlayProps, ...overlayProps.modePopover }}
+              />
+            </>
+          )}
+        />
+        <output hidden data-composer-overlay-command>{lastCommand}</output>
+        <output hidden data-composer-overlay-read-only>{String(readOnly)}</output>
+        <output hidden data-composer-overlay-mode-value>{mode}</output>
+        <output hidden data-composer-overlay-detail-value>{detail}</output>
+      </main>
+    </div>
+  );
+}
+
+function getControlledOverlay(trigger) {
+  const overlayId = trigger.getAttribute('aria-controls');
+  return overlayId ? trigger.ownerDocument.getElementById(overlayId) : null;
+}
+
+function readComposerOverlayGeometry(column) {
+  const composer = column.querySelector('[data-composer-overlay-composer]');
+  const feed = column.querySelector('[data-composer-overlay-feed]');
+  if (!composer || !feed) throw new Error('The composer overlay geometry target is incomplete.');
+  const composerRect = composer.getBoundingClientRect();
+  const feedRect = feed.getBoundingClientRect();
+  return {
+    columnScrollWidth: column.scrollWidth,
+    columnScrollHeight: column.scrollHeight,
+    composer: {
+      left: composerRect.left,
+      top: composerRect.top,
+      width: composerRect.width,
+      height: composerRect.height,
+    },
+    feed: {
+      left: feedRect.left,
+      top: feedRect.top,
+      width: feedRect.width,
+      height: feedRect.height,
+    },
+  };
+}
+
+function assertComposerOverlayGeometryUnchanged(column, before, label) {
+  const after = readComposerOverlayGeometry(column);
+  if (after.columnScrollWidth !== before.columnScrollWidth || after.columnScrollHeight !== before.columnScrollHeight) {
+    throw new Error(`${label} must not change the short conversation column scroll geometry.`);
+  }
+  for (const key of ['left', 'top', 'width', 'height']) {
+    if (Math.abs(after.composer[key] - before.composer[key]) > 1 || Math.abs(after.feed[key] - before.feed[key]) > 1) {
+      throw new Error(`${label} must not shift the feed or composer geometry.`);
+    }
+  }
+}
+
+function assertOverlayInViewport(panel, ownerDocument, label) {
+  const viewport = ownerDocument.defaultView;
+  const rect = panel.getBoundingClientRect();
+  const inset = 15;
+  if (!viewport || rect.left < inset || rect.right > viewport.innerWidth - inset || rect.top < inset || rect.bottom > viewport.innerHeight - inset) {
+    throw new Error(`${label} must remain within the anchored overlay viewport boundary.`);
+  }
+}
+
+function assertOverlayInsideCollisionBoundary(panel, boundary, label) {
+  const panelRect = panel.getBoundingClientRect();
+  const boundaryRect = boundary.getBoundingClientRect();
+  const inset = 15;
+  if (panelRect.left < boundaryRect.left + inset - 1
+    || panelRect.right > boundaryRect.right - inset + 1
+    || panelRect.top < boundaryRect.top + inset - 1
+    || panelRect.bottom > boundaryRect.bottom - inset + 1) {
+    throw new Error(`${label} must remain inside the clipped conversation column collision boundary.`);
+  }
+}
+
+async function waitForOverlayBounds(panel, boundary, ownerDocument, label) {
+  await waitFor(() => {
+    assertOverlayInViewport(panel, ownerDocument, label);
+    assertOverlayInsideCollisionBoundary(panel, boundary, label);
+  });
+}
+
+async function waitForDropdownPanel(trigger) {
+  let menu;
+  let panel;
+  await waitFor(() => {
+    menu = getControlledOverlay(trigger);
+    panel = menu?.parentElement;
+    if (!menu || menu.getAttribute('role') !== 'menu' || !panel?.matches('[data-dropdown-menu-portal]')) {
+      throw new Error('The add and source trigger must control a mounted menu.');
+    }
+    const style = getComputedStyle(panel);
+    if (style.position !== 'fixed' || style.opacity === '0' || style.pointerEvents === 'none') {
+      throw new Error('The add and source menu must finish owner-document positioning.');
+    }
+  });
+  return { menu, panel };
+}
+
+async function waitForComposerPopover(trigger, label) {
+  let panel;
+  await waitFor(() => {
+    panel = getControlledOverlay(trigger);
+    if (!panel || panel.getAttribute('role') !== 'dialog') {
+      throw new Error(`${label} trigger must control a mounted dialog.`);
+    }
+    const style = getComputedStyle(panel);
+    if (style.position !== 'fixed' || style.opacity === '0' || style.pointerEvents === 'none') {
+      throw new Error(`${label} Popover must finish owner-document positioning.`);
+    }
+  });
+  return panel;
+}
+
+function assertOwnerDocumentPortal(panel, trigger, dataAttribute, label) {
+  const portal = panel.closest('[data-lds-overlay-portal]');
+  if (!panel.matches(dataAttribute) || !portal || portal.parentElement !== trigger.ownerDocument.body) {
+    throw new Error(`${label} must escape the clipped conversation column through the owner-document Portal.`);
+  }
+}
+
+function assertComposerOverlayColumn(canvasElement, fixtureId, expectedWidth) {
+  const clip = canvasElement.querySelector(`[data-composer-overlay-clip="${fixtureId}"]`);
+  const column = canvasElement.querySelector(`[data-composer-overlay-column="${fixtureId}"]`);
+  const feed = column?.querySelector('[data-composer-overlay-feed]');
+  const log = feed?.querySelector('[role="log"]');
+  const composer = column?.querySelector('[data-composer-overlay-composer]');
+  const messages = log ? Array.from(log.querySelectorAll('.lk-conversation-message')) : [];
+  if (!clip || !column || !feed || !log || !composer || messages.length !== compactConversationEntries.length) {
+    throw new Error('The composer overlay conversation column is incomplete.');
+  }
+  assertFixtureWidth(clip, expectedWidth, 'The composer overlay conversation');
+  const clipRect = clip.getBoundingClientRect();
+  const columnRect = column.getBoundingClientRect();
+  const feedRect = feed.getBoundingClientRect();
+  const composerRect = composer.getBoundingClientRect();
+  if (clipRect.height > 360 || Math.abs(clipRect.height - columnRect.height) > 1) {
+    throw new Error('The composer overlay fixture must remain a short, clipped conversation column.');
+  }
+  if (feed.style.minHeight !== '0px' || getComputedStyle(feed).minHeight !== '0px') {
+    throw new Error('The overlay feed must opt into min-height: 0 in its remaining grid row.');
+  }
+  if (feedRect.height <= 0 || feedRect.bottom > composerRect.top - 1 || composerRect.bottom > columnRect.bottom + 1) {
+    throw new Error('The overlay feed must remain above a visible independent composer.');
+  }
+  if (feed.dataset.density !== 'compact' || composer.dataset.density !== 'compact' || messages.some((message) => message.dataset.density !== 'compact')) {
+    throw new Error('The overlay conversation must expose compact density on every primitive.');
+  }
+  [clip, column, feed, log, composer].forEach((node) => assertNoHorizontalOverflow(node, 'Composer overlay conversation column'));
+  if (log.contains(composer) || !(log.compareDocumentPosition(composer) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+    throw new Error('The overlay log must precede its independent composer in DOM order.');
+  }
+  const input = composer.querySelector('[data-composer-input]');
+  const leading = composer.querySelector('[data-composer-leading-actions]');
+  const trailing = composer.querySelector('[data-composer-trailing-actions]');
+  const primary = composer.querySelector('[data-composer-primary-action]');
+  if (!input || !leading || !trailing || !primary
+    || !(input.compareDocumentPosition(leading) & Node.DOCUMENT_POSITION_FOLLOWING)
+    || !(leading.compareDocumentPosition(trailing) & Node.DOCUMENT_POSITION_FOLLOWING)
+    || !(trailing.compareDocumentPosition(primary) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+    throw new Error('The overlay composer must preserve input, utility, and primary-action DOM order.');
+  }
+  assertMinimumActionTargetAndNoOverlap(composer, 'Composer overlay composer');
+  return { clip, column, composer, input };
+}
+
+async function assertComposerOverlayInteractions(canvasElement, fixtureId, expectedWidth, { mustOpenAboveComposer = false } = {}) {
+  const { clip, column, composer, input } = assertComposerOverlayColumn(canvasElement, fixtureId, expectedWidth);
+  const ownerDocument = canvasElement.ownerDocument;
+  const commandTrigger = composer.querySelector('[data-composer-overlay-trigger="add-source"]');
+  const safetyTrigger = composer.querySelector('[data-composer-overlay-trigger="safety"]');
+  const modeTrigger = composer.querySelector('[data-composer-overlay-trigger="mode"]');
+  if (!commandTrigger || !safetyTrigger || !modeTrigger
+    || commandTrigger.getAttribute('aria-haspopup') !== 'menu'
+    || safetyTrigger.getAttribute('aria-haspopup') !== 'dialog'
+    || modeTrigger.getAttribute('aria-haspopup') !== 'dialog'
+    || commandTrigger.getAttribute('aria-expanded') !== 'false'
+    || safetyTrigger.getAttribute('aria-expanded') !== 'false'
+    || modeTrigger.getAttribute('aria-expanded') !== 'false') {
+    throw new Error('Composer overlay triggers must expose their menu or dialog relationships.');
+  }
+
+  const commandGeometry = readComposerOverlayGeometry(column);
+  commandTrigger.focus();
+  await userEvent.keyboard('{ArrowDown}');
+  const { menu, panel: commandPanel } = await waitForDropdownPanel(commandTrigger);
+  assertOwnerDocumentPortal(commandPanel, commandTrigger, '[data-dropdown-menu-portal]', 'The add and source menu');
+  await waitForOverlayBounds(commandPanel, clip, ownerDocument, 'The add and source menu');
+  assertComposerOverlayGeometryUnchanged(column, commandGeometry, 'Opening the add and source menu');
+  if (clip.contains(commandPanel)) throw new Error('The add and source menu must not remain clipped by the conversation column.');
+  if (mustOpenAboveComposer && commandPanel.dataset.placement !== 'top') {
+    throw new Error('The viewport-bottom narrow fixture must flip the add and source menu above its composer.');
+  }
+  if (commandTrigger.getAttribute('aria-expanded') !== 'true') {
+    throw new Error('Opening the add and source menu must update its aria-expanded state.');
+  }
+  const commandRows = Array.from(menu.querySelectorAll('[role^="menuitem"]'));
+  if (menu.scrollHeight <= menu.clientHeight + 1 || commandRows.some((row) => row.scrollHeight > row.clientHeight + 1)) {
+    throw new Error('Long Korean add and source commands must wrap and scroll inside the menu without clipping rows.');
+  }
+  const selectedCommand = commandRows.find((row) => row.textContent?.includes('출처 없이 일반 초안으로 계속하기'));
+  if (!selectedCommand) throw new Error('The add and source menu requires its long command option.');
+  selectedCommand.focus();
+  await userEvent.keyboard('{Enter}');
+  await waitFor(() => {
+    if (getControlledOverlay(commandTrigger)
+      || column.querySelector('[data-composer-overlay-command]')?.textContent !== '일반 초안으로 계속하기'
+      || commandTrigger.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('Selecting an add and source command must update state and close the menu.');
+    }
+  });
+  commandTrigger.focus();
+  await userEvent.keyboard('{Enter}');
+  const { panel: reopenedCommandPanel } = await waitForDropdownPanel(commandTrigger);
+  await waitForOverlayBounds(reopenedCommandPanel, clip, ownerDocument, 'The reopened add and source menu');
+  await userEvent.keyboard('{Escape}');
+  await waitFor(() => {
+    if (getControlledOverlay(commandTrigger)
+      || ownerDocument.activeElement !== commandTrigger
+      || commandTrigger.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('Escape must close the add and source menu and restore its trigger focus.');
+    }
+  });
+
+  const safetyGeometry = readComposerOverlayGeometry(column);
+  safetyTrigger.focus();
+  await userEvent.keyboard('{Enter}');
+  const safetyPanel = await waitForComposerPopover(safetyTrigger, 'The safety');
+  if (safetyTrigger.getAttribute('aria-expanded') !== 'true') {
+    throw new Error('Opening the safety Popover must update its aria-expanded state.');
+  }
+  assertOwnerDocumentPortal(safetyPanel, safetyTrigger, '[data-popover-portal="true"]', 'The safety Popover');
+  await waitForOverlayBounds(safetyPanel, clip, ownerDocument, 'The safety Popover');
+  assertComposerOverlayGeometryUnchanged(column, safetyGeometry, 'Opening the safety Popover');
+  if (clip.contains(safetyPanel)) throw new Error('The safety Popover must not remain clipped by the conversation column.');
+  const readOnlyToggle = safetyPanel.querySelector('button');
+  for (let tabCount = 0; readOnlyToggle && ownerDocument.activeElement !== readOnlyToggle && tabCount < 4; tabCount += 1) {
+    await userEvent.tab();
+  }
+  if (!readOnlyToggle || ownerDocument.activeElement !== readOnlyToggle) {
+    throw new Error('Keyboard Tab must reach the readable state control inside its Popover.');
+  }
+  await userEvent.click(readOnlyToggle);
+  await waitFor(() => {
+    if (!input.readOnly || !composer.querySelector('button[type="submit"]')?.disabled
+      || column.querySelector('[data-composer-overlay-read-only]')?.textContent !== 'true') {
+      throw new Error('The safety Popover must be able to place the composed draft in read-only mode.');
+    }
+  });
+  await userEvent.keyboard('{Escape}');
+  await waitFor(() => {
+    if (getControlledOverlay(safetyTrigger)
+      || ownerDocument.activeElement !== safetyTrigger
+      || safetyTrigger.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('Escape must close the safety Popover and restore its trigger focus.');
+    }
+  });
+
+  const modeGeometry = readComposerOverlayGeometry(column);
+  modeTrigger.focus();
+  await userEvent.keyboard('{Enter}');
+  const modePanel = await waitForComposerPopover(modeTrigger, 'The response mode');
+  if (modeTrigger.getAttribute('aria-expanded') !== 'true') {
+    throw new Error('Opening the response mode Popover must update its aria-expanded state.');
+  }
+  assertOwnerDocumentPortal(modePanel, modeTrigger, '[data-popover-portal="true"]', 'The response mode Popover');
+  await waitForOverlayBounds(modePanel, clip, ownerDocument, 'The response mode Popover');
+  assertComposerOverlayGeometryUnchanged(column, modeGeometry, 'Opening the response mode Popover');
+  if (clip.contains(modePanel)) throw new Error('The response mode Popover must not remain clipped by the conversation column.');
+  const concise = modePanel.querySelector('input[type="radio"][value="concise"]');
+  const detail = modePanel.querySelector('input[type="range"][aria-label="응답 자세함"]');
+  if (!concise || !detail || concise.checked) throw new Error('The response mode Popover must expose controlled radio and slider settings.');
+  await userEvent.click(concise);
+  await waitFor(() => {
+    if (!concise.checked || column.querySelector('[data-composer-overlay-mode-value]')?.textContent !== 'concise') {
+      throw new Error('Selecting a response mode must update the controlled RadioGroup state.');
+    }
+  });
+  detail.focus();
+  fireEvent.change(detail, { target: { value: '70' } });
+  await waitFor(() => {
+    if (detail.value !== '70' || column.querySelector('[data-composer-overlay-detail-value]')?.textContent !== '70') {
+      throw new Error('Changing the response detail Slider must update the composed setting.');
+    }
+  });
+  await userEvent.keyboard('{Escape}');
+  await waitFor(() => {
+    if (getControlledOverlay(modeTrigger)
+      || ownerDocument.activeElement !== modeTrigger
+      || modeTrigger.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('Escape must close the response mode Popover and restore its trigger focus.');
+    }
+  });
+}
+
+export const ComposerOverlayConversationColumn = {
+  name: '사용법 · 작성기 오버레이 조합',
+  parameters: storyDescription(
+    '360px의 짧은 일반 대화 열에서 추가·출처 명령, 읽기 전용 안내, 응답 모드와 자세함을 MessageComposer의 named slot으로 조합합니다. 메뉴와 Popover는 제품 화면을 복제하지 않고 owner-document Portal로 피드 위에만 떠서 작성기 레이아웃을 밀지 않습니다.',
+  ),
+  render: () => <ComposerOverlayColumnFixture width={360} height={336} fixtureId="public" />,
+  play: async ({ canvasElement }) => {
+    await assertComposerOverlayInteractions(canvasElement, 'public', 360);
+  },
+};
+
+export const ComposerOverlayConversationWideContract = {
+  name: '작성기 오버레이 대화 열 460px 계약',
+  tags: ['!dev', 'visual-parity'],
+  render: () => <ComposerOverlayColumnFixture width={460} height={336} fixtureId="wide-contract" />,
+  play: async ({ canvasElement }) => {
+    await assertComposerOverlayInteractions(canvasElement, 'wide-contract', 460);
+  },
+};
+
+export const ComposerOverlayConversationNarrowContract = {
+  name: '작성기 오버레이 대화 열 296px 계약',
+  tags: ['!dev', 'visual-parity'],
+  render: () => <ComposerOverlayColumnFixture width={296} height={312} fixtureId="narrow-contract" pinToViewport />,
+  play: async ({ canvasElement }) => {
+    await assertComposerOverlayInteractions(canvasElement, 'narrow-contract', 296, { mustOpenAboveComposer: true });
   },
 };
 

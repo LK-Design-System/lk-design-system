@@ -1,7 +1,11 @@
 "use client";
 import {
   ResourceState
+<<<<<<<< HEAD:dist/chunk-I2EUT7JM.js
 } from "./chunk-2XKAK4LO.js";
+========
+} from "./chunk-HTKSAH6J.js";
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-S5C47X6D.js
 
 // components/data/ChartFrame.jsx
 import React from "react";
@@ -86,4 +90,8 @@ function ChartFrame({
 export {
   ChartFrame
 };
+<<<<<<<< HEAD:dist/chunk-I2EUT7JM.js
 //# sourceMappingURL=chunk-I2EUT7JM.js.map
+========
+//# sourceMappingURL=chunk-S5C47X6D.js.map
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-S5C47X6D.js

@@ -1,7 +1,11 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }"use client";
 
 
+<<<<<<<< HEAD:dist/chunk-IXGVLSNI.cjs
 var _chunkEIKBVRSZcjs = require('./chunk-EIKBVRSZ.cjs');
+========
+var _chunkSDI7JUXFcjs = require('./chunk-SDI7JUXF.cjs');
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-RHUI6T4R.cjs
 
 // components/data/ChartFrame.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -62,7 +66,11 @@ function ChartFrame({
           description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { id: descriptionId, style: { margin: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", overflowWrap: "anywhere" }, children: description })
         ] }),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+<<<<<<<< HEAD:dist/chunk-IXGVLSNI.cjs
           _chunkEIKBVRSZcjs.ResourceState,
+========
+          _chunkSDI7JUXFcjs.ResourceState,
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-RHUI6T4R.cjs
           {
             state: resourceState,
             title: stateTitle,
@@ -86,4 +94,8 @@ function ChartFrame({
 
 
 exports.ChartFrame = ChartFrame;
+<<<<<<<< HEAD:dist/chunk-IXGVLSNI.cjs
 //# sourceMappingURL=chunk-IXGVLSNI.cjs.map
+========
+//# sourceMappingURL=chunk-RHUI6T4R.cjs.map
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-RHUI6T4R.cjs

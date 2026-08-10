@@ -4,7 +4,11 @@
 var _chunkEIKBVRSZcjs = require('./chunk-EIKBVRSZ.cjs');
 
 
+<<<<<<<< HEAD:dist/chunk-WYN6TSF4.cjs
 var _chunkHVDJBUBUcjs = require('./chunk-HVDJBUBU.cjs');
+========
+var _chunkSDI7JUXFcjs = require('./chunk-SDI7JUXF.cjs');
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-C5747XRU.cjs
 
 
 
@@ -98,7 +102,11 @@ var DataCollectionPanel = _react2.default.forwardRef(function DataCollectionPane
             "data-slot": "state",
             className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "state", "lk-data-collection-panel__state") || void 0,
             style: { minWidth: 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "state") },
+<<<<<<<< HEAD:dist/chunk-WYN6TSF4.cjs
             children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunkEIKBVRSZcjs.ResourceState, { ...resolvedResourceState, state, messageVariant: "embedded", children: [
+========
+            children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunkSDI7JUXFcjs.ResourceState, { ...resolvedResourceState, state, messageVariant: "embedded", children: [
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-C5747XRU.cjs
               hasWideContent && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "div",
                 {
@@ -147,4 +155,8 @@ var DataCollectionPanel = _react2.default.forwardRef(function DataCollectionPane
 
 
 exports.DataCollectionPanel = DataCollectionPanel;
+<<<<<<<< HEAD:dist/chunk-WYN6TSF4.cjs
 //# sourceMappingURL=chunk-WYN6TSF4.cjs.map
+========
+//# sourceMappingURL=chunk-C5747XRU.cjs.map
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-C5747XRU.cjs

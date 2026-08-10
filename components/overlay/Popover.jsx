@@ -29,6 +29,8 @@ export const Popover = React.forwardRef(function Popover({
   ariaLabel = '팝오버',
   withinPortal = true,
   portalTarget,
+  collisionBoundary,
+  collisionPadding = 16,
   zIndex,
   className,
   style,
@@ -49,6 +51,8 @@ export const Popover = React.forwardRef(function Popover({
     panelRef,
     placement: requestedPosition,
     offset,
+    viewportPadding: collisionPadding,
+    collisionBoundary,
     strategy: withinPortal ? 'fixed' : 'absolute',
     align,
   });
@@ -60,6 +64,12 @@ export const Popover = React.forwardRef(function Popover({
     insideRefs: [panelRef],
     zIndex,
   });
+  const boundaryMaxWidth = collisionBoundary != null && position.maxWidth != null
+    ? `${position.maxWidth}px`
+    : null;
+  const boundaryMaxHeight = collisionBoundary != null && position.maxHeight != null
+    ? `${position.maxHeight}px`
+    : null;
 
   const toggle = (event) => {
     trigger?.props?.onClick?.(event);
@@ -126,6 +136,8 @@ export const Popover = React.forwardRef(function Popover({
             overflowY: 'auto',
             scrollbarGutter: 'stable',
             ...partStyle(styles, 'panel'),
+            ...(boundaryMaxWidth == null ? null : { minWidth: 0, maxWidth: boundaryMaxWidth }),
+            ...(boundaryMaxHeight == null ? null : { minHeight: 0, maxHeight: boundaryMaxHeight, overflow: 'auto' }),
           }}
         >
           {children}

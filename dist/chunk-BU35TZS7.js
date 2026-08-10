@@ -1,10 +1,14 @@
 "use client";
 import {
   ResourceState
+<<<<<<<< HEAD:dist/chunk-BU35TZS7.js
 } from "./chunk-2XKAK4LO.js";
 import {
   DataToolbar
 } from "./chunk-XNSAPDWD.js";
+========
+} from "./chunk-HTKSAH6J.js";
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-A34U4YL4.js
 import {
   componentVars,
   partClassName,
@@ -147,4 +151,8 @@ var DataCollectionPanel = React.forwardRef(function DataCollectionPanel2({
 export {
   DataCollectionPanel
 };
+<<<<<<<< HEAD:dist/chunk-BU35TZS7.js
 //# sourceMappingURL=chunk-BU35TZS7.js.map
+========
+//# sourceMappingURL=chunk-A34U4YL4.js.map
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-A34U4YL4.js

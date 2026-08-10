@@ -6,7 +6,14 @@ const root = process.cwd();
 const baselinePath = path.join(root, 'docs', 'references', 'quality', 'API_GRAMMAR_BASELINE.json');
 const update = process.argv.includes('--update-baseline');
 const allowedSizes = new Set(['sm', 'md', 'lg', 'small', 'medium', 'large']);
-const allowedTones = new Set(['positive', 'cautionary', 'negative', 'signal', 'offline', 'info', 'success', 'warning', 'error', 'normal', 'neutral', 'critical', 'online']);
+// The status-tone axis has exactly one canonical lexicon, the one STATUS_TONE_STYLE keys on.
+// `normalizeStatusTone` also accepts pre-canonicalisation aliases (info · success · warning ·
+// error · normal · neutral · critical · online) and they keep rendering, but they used to sit in
+// this allow-set — which meant every new component could reach for `warning` instead of
+// `cautionary` for free, and the vocabulary re-split as fast as it was unified. They are now
+// ledgered in API_GRAMMAR_BASELINE.json instead: existing unions pass, new ones fail.
+// QUALITY_GAP_AUDIT.json ("status tone 어휘 3계열 잔존") tracks retiring them for real.
+const allowedTones = new Set(['positive', 'cautionary', 'negative', 'signal', 'offline']);
 
 async function collect(dir, out = []) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {

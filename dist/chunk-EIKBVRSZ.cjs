@@ -1,7 +1,11 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
 
 
+<<<<<<<< HEAD:dist/chunk-EIKBVRSZ.cjs
 var _chunk4JNUNVLYcjs = require('./chunk-4JNUNVLY.cjs');
+========
+var _chunkNACO3GURcjs = require('./chunk-NACO3GUR.cjs');
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-SDI7JUXF.cjs
 
 
 var _chunkYNRA4IIWcjs = require('./chunk-YNRA4IIW.cjs');
@@ -131,7 +135,11 @@ function ResourceState({
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { role: "status", "aria-live": "polite", "aria-atomic": "true", children: resolvedState !== "ready" && !assertive ? `${resolvedTitle}${resolvedDescription ? `. ${resolvedDescription}` : ""}` : "" }),
         preservesContent && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+<<<<<<<< HEAD:dist/chunk-EIKBVRSZ.cjs
           _chunk4JNUNVLYcjs.Banner,
+========
+          _chunkNACO3GURcjs.Banner,
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-SDI7JUXF.cjs
           {
             "data-resource-state-message": "",
             role: void 0,
@@ -190,4 +198,8 @@ function ResourceState({
 
 
 exports.ResourceState = ResourceState;
+<<<<<<<< HEAD:dist/chunk-EIKBVRSZ.cjs
 //# sourceMappingURL=chunk-EIKBVRSZ.cjs.map
+========
+//# sourceMappingURL=chunk-SDI7JUXF.cjs.map
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-SDI7JUXF.cjs

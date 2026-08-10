@@ -31,7 +31,9 @@
 - `children`을 시간순 DOM 순서로 받습니다. 자체 message schema, renderer, participant truth, provider 또는 transport를 만들지 않습니다.
 - feed는 chrome-free transparent container입니다. app panel, card, background, header/sidebar와 composer 연결 chrome은 parent가 필요한 경우 조합합니다.
 - `maxHeight`와 `viewportMinHeight`는 named log viewport의 크기만 제어합니다. 고정 application panel 크기를 강제하지 않습니다.
-- `viewportInset="compact | comfortable"`은 scrollbar가 붙는 named log viewport의 inline content inset만 선택합니다. 기본 `compact`는 좌우 8px, reading/panel composition용 `comfortable`은 좌우 16px이며 두 값 모두 block 12px을 유지합니다. raw viewport style이나 CSS selector hook은 공개하지 않습니다.
+- `density="comfortable | compact"`은 message 사이 vertical gap과 viewport block padding만 선택합니다. 기본 `comfortable`은 기존 24px/12px을 보존하고 `compact`는 16px/8px token 단계로 줄이며 scroll, DOM/ARIA와 action 크기는 바꾸지 않습니다.
+- `viewportInset="compact | comfortable"`은 scrollbar가 붙는 named log viewport의 inline content inset만 선택합니다. 기본 `compact`는 좌우 8px, reading/panel composition용 `comfortable`은 좌우 16px이며 block padding은 `density`가 독립적으로 소유합니다. raw viewport style이나 CSS selector hook은 공개하지 않습니다.
+- `density`와 `viewportInset`은 독립 축입니다. 따라서 prop을 모두 생략하면 기존 렌더링과 같은 comfortable vertical rhythm과 compact inline inset을 사용합니다.
 - 제품은 streaming token 병합, persistence, search, moderation, unread 계산과 history retrieval을 소유합니다.
 - MessageFeed는 named log, history prepend 위치 복원, controlled bottom-follow와 관련 action 순서만 소유합니다.
 - 기존 Core `Divider`의 labeled separator 조합을 date/first-unread boundary로 재사용합니다. 날짜 계산, read receipt와 unread truth는 제품이 소유하며 Divider는 message schema나 live region을 만들지 않습니다.
@@ -68,6 +70,11 @@
 - 320px에서도 history → log → latest의 DOM order와 wrapping을 유지합니다.
 - dark theme는 parent semantic background를 그대로 받고 별도 inverse/console surface prop을 만들지 않습니다.
 
+### LK Portal consumer evidence와 compact 계약
+
+- [`SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md`](../../docs/SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md)의 LK Portal floating knowledge chat은 460×674px panel에서 실제 feed를 조합합니다. `density="compact"`는 이처럼 세로 공간이 제한된 panel의 message rhythm만 줄이고, Portal chrome이나 `viewportInset` 선택을 추론하지 않습니다.
+- 320px에서는 두 density 모두 message content와 history/latest control이 가로 overflow 없이 reflow되어야 합니다. compact는 control 크기를 줄이지 않으므로 내장 action의 pointer target은 계속 24×24 CSS px 이상입니다.
+
 ## authoritative external review
 
 - [WAI-ARIA `log`](https://www.w3.org/TR/wai-aria/#log)는 새 정보가 의미 있는 순서로 추가되는 live region이며 chat history를 대표 예로 듭니다. MessageFeed 하나만 named polite log를 소유합니다.
@@ -75,6 +82,9 @@
 - [WAI-ARIA APG Feed pattern](https://www.w3.org/WAI/ARIA/apg/patterns/feed/)은 infinite article feed의 Page Up/Page Down 계약과 keyboard help의 discoverability를 강조합니다. MessageFeed는 article focus를 이동시키는 `role="feed"`가 아니므로 같은 키 이름을 focusable log의 viewport scrolling에만 적용하고 `aria-keyshortcuts`로 노출합니다.
 - [Slack screen reader guidance](https://slack.com/help/articles/360000411963-Use-Slack-with-a-screen-reader)는 Home/End, Page Up/Page Down, first unread, 그리고 “where I left off” 시작 위치를 conversation convention으로 문서화합니다. MessageFeed는 roving message focus를 복제하지 않고 scroll 위치 보존, first-unread separator composition, viewport 단축키만 채택합니다.
 - [CSS Scroll Anchoring Level 1](https://www.w3.org/TR/css-scroll-anchoring-1/)은 viewport 위 DOM 변경 시 사용자가 읽는 위치를 안정적으로 유지하는 목적을 정의합니다. MessageFeed는 history prepend의 비동기 DOM/height 변화와 live announcement 억제를 함께 제어해야 하므로 browser heuristic에만 맡기지 않고 `scrollHeight` delta로 수동 복원합니다.
+- [WCAG 2.2 Understanding 1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)는 세로 scrolling content가 320 CSS px 상당 폭에서 정보·기능 손실이나 2차원 scrolling 없이 reflow되어야 한다고 설명합니다. density는 inline inset과 overflow 계약을 바꾸지 않습니다.
+- [WCAG 2.2 Understanding 2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)는 pointer target의 최소 크기를 24×24 CSS px로 정의합니다. compact도 history/latest action을 축소하지 않습니다.
+- [Carbon spacing](https://carbondesignsystem.com/elements/spacing/overview/)은 spacing token의 작은 단계로 component density를 조정하면서 정보 관계와 hierarchy를 유지하도록 안내합니다. MessageFeed도 typography나 semantic surface 대신 vertical spacing token만 전환합니다.
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)를 focus order, keyboard access, status announcement, visible focus와 contrast의 최종 기준으로 사용합니다.
 - [Carbon AI Chat overview](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Overview.html)는 rich chat content와 extensible response surface를 설명합니다. feed는 그 content를 제한하지 않는 generic chronological container로 남습니다.
 - [Carbon AI Chat server communication](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Server_communication.html)은 history, partial response와 cancellation을 분리합니다. history retrieval과 lifecycle truth는 제품이 소유하고 feed는 위치와 announcement만 관리합니다.
@@ -96,7 +106,7 @@
 ## representative review
 
 - 약 760px: transparent log 안의 document/bubble/system reading flow, named log와 parent chrome 경계를 확인합니다.
-- 320px: 긴 rich response, multiline prompt, history/latest action과 horizontal overflow 부재를 확인합니다.
+- 320px: comfortable/compact 모두 긴 rich response, multiline prompt, history/latest action과 horizontal overflow 부재 및 최소 24×24 CSS px action target을 확인합니다.
 - dark: 별도 feed fill 없이 parent background에서 focus, message identity, system 칩과 text contrast를 확인합니다.
 - history/follow: prepend anchor, 성공·무결과·실패 뒤 announcement 억제 해제, following=false 위치 보존과 latest action의 focus/callback을 확인합니다.
 - empty/busy: empty는 log 안, phase status는 log 밖에 두고 busy 구간에만 `aria-busy`가 있어야 합니다.

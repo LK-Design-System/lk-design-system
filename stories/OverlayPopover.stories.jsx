@@ -112,6 +112,165 @@ export const PopoverInteractionContract = {
   },
 };
 
+function CollisionPopoverContent() {
+  return (
+    <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
+      <label style={{ display: 'grid', gap: 'var(--space-1)' }}>
+        응답 길이
+        <input aria-label="응답 길이" defaultValue="보통" />
+      </label>
+      {Array.from({ length: 12 }, (_, index) => (
+        <span key={index}>설정 설명 {index + 1}</span>
+      ))}
+    </div>
+  );
+}
+
+function PopoverCollisionBoundaryFixture() {
+  const portalBoundaryRef = React.useRef(null);
+  const inlineBoundaryRef = React.useRef(null);
+  const boundaryStyle = {
+    position: 'relative',
+    width: 300,
+    height: 260,
+    padding: 'var(--space-3)',
+    boxSizing: 'border-box',
+    border: '1px solid var(--color-semantic-line-solid-normal)',
+    borderRadius: 'var(--radius-lg)',
+  };
+  const anchorStyle = {
+    display: 'flex',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    width: '100%',
+    height: '100%',
+  };
+  return (
+    <main style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-6)', minHeight: 340 }}>
+      <section ref={inlineBoundaryRef} data-popover-collision-boundary="inline" style={{ ...boundaryStyle, overflow: 'visible' }}>
+        <div style={anchorStyle}>
+          <Popover
+            trigger={<Button size="sm">Inline 경계 설정</Button>}
+            ariaLabel="Inline 경계 설정"
+            position="bottom"
+            width={360}
+            collisionBoundary={inlineBoundaryRef}
+            collisionPadding={8}
+            withinPortal={false}
+          >
+            <CollisionPopoverContent />
+          </Popover>
+        </div>
+      </section>
+      <section ref={portalBoundaryRef} data-popover-collision-boundary="portal" style={{ ...boundaryStyle, overflow: 'hidden' }}>
+        <div style={anchorStyle}>
+          <Popover
+            trigger={<Button size="sm">Portal 경계 설정</Button>}
+            ariaLabel="Portal 경계 설정"
+            position="bottom"
+            width={360}
+            collisionBoundary={portalBoundaryRef}
+            collisionPadding={8}
+            styles={{ panel: { minWidth: 480, minHeight: 480, overflow: 'visible' } }}
+          >
+            <CollisionPopoverContent />
+          </Popover>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function assertPopoverInsideBoundary(panel, boundary, padding = 8) {
+  const panelRect = panel.getBoundingClientRect();
+  const boundaryRect = boundary.getBoundingClientRect();
+  const view = boundary.ownerDocument.defaultView;
+  const effectiveBoundary = {
+    left: Math.max(0, boundaryRect.left) + padding,
+    right: Math.min(view.innerWidth, boundaryRect.right) - padding,
+    top: Math.max(0, boundaryRect.top) + padding,
+    bottom: Math.min(view.innerHeight, boundaryRect.bottom) - padding,
+  };
+  const tolerance = 1;
+  if (
+    panelRect.left < effectiveBoundary.left - tolerance
+    || panelRect.right > effectiveBoundary.right + tolerance
+    || panelRect.top < effectiveBoundary.top - tolerance
+    || panelRect.bottom > effectiveBoundary.bottom + tolerance
+  ) {
+    throw new Error(
+      `Popover must stay inside its collision boundary (panel=${panelRect.left},${panelRect.top},${panelRect.right},${panelRect.bottom}; boundary=${boundaryRect.left},${boundaryRect.top},${boundaryRect.right},${boundaryRect.bottom}).`,
+    );
+  }
+}
+
+export const CollisionBoundaryContract = {
+  name: '계약 · collision boundary',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    'Portal target과 positioning 경계를 분리합니다. ref로 전달한 패널 경계와 viewport의 교집합 안에서 fixed·absolute Popover가 폭과 높이를 줄이고 위로 flip하며, 경계 resize 뒤에도 다시 배치되어야 합니다.',
+  ),
+  render: () => <PopoverCollisionBoundaryFixture />,
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const cases = [
+      { kind: 'inline', label: 'Inline 경계 설정', position: 'absolute', portalled: false },
+      { kind: 'portal', label: 'Portal 경계 설정', position: 'fixed', portalled: true },
+    ];
+
+    for (const contract of cases) {
+      const boundary = canvasElement.querySelector(`[data-popover-collision-boundary="${contract.kind}"]`);
+      const trigger = [...(boundary?.querySelectorAll('button') ?? [])]
+        .find((button) => button.textContent?.trim() === contract.label);
+      if (!boundary || !trigger) throw new Error(`Popover ${contract.kind} collision fixture is incomplete.`);
+
+      trigger.focus();
+      await userEvent.keyboard('{Enter}');
+      const panel = await waitFor(() => {
+        const id = trigger.getAttribute('aria-controls');
+        const current = id ? ownerDocument.getElementById(id) : null;
+        if (!current) throw new Error(`Popover ${contract.kind} collision panel must open.`);
+        return current;
+      });
+      const portal = panel.closest('[data-lds-overlay-portal]');
+      if (getComputedStyle(panel).position !== contract.position
+        || Boolean(portal) !== contract.portalled
+        || (portal && portal.parentElement !== ownerDocument.body)) {
+        throw new Error(`Popover ${contract.kind} must preserve its Portal/positioning strategy.`);
+      }
+      if (trigger.getAttribute('aria-expanded') !== 'true' || panel.getAttribute('role') !== 'dialog') {
+        throw new Error('Collision constraints must not change Popover trigger/dialog semantics.');
+      }
+
+      await waitFor(() => {
+        assertPopoverInsideBoundary(panel, boundary);
+        if (panel.dataset.placement !== 'top') throw new Error('A bottom-edge Popover must flip above inside its collision boundary.');
+        if (panel.scrollHeight <= panel.clientHeight) throw new Error('Collision maxHeight must make overflowing Popover content scroll.');
+      });
+      await userEvent.tab();
+      if (ownerDocument.activeElement?.getAttribute('aria-label') !== '응답 길이') {
+        throw new Error('Collision positioning must preserve Popover content focus order.');
+      }
+
+      if (contract.kind === 'portal') {
+        boundary.style.width = '252px';
+        await waitFor(() => {
+          assertPopoverInsideBoundary(panel, boundary);
+          if (panel.getBoundingClientRect().width > 236.5) {
+            throw new Error('Popover must recompute maxWidth after its collision boundary resizes.');
+          }
+        });
+      }
+
+      await userEvent.keyboard('{Escape}');
+      await waitFor(() => {
+        if (trigger.getAttribute('aria-expanded') !== 'false') throw new Error('Escape must close a collision-constrained Popover.');
+        if (ownerDocument.activeElement !== trigger) throw new Error('Escape must restore the constrained Popover trigger.');
+      });
+    }
+  },
+};
+
 export const PopoverCard = { ...PopoverCardStory, name: 'Popover card parity', tags: ['!dev', 'visual-parity'] };
 
 function PopoverSurfacePortalFixture() {

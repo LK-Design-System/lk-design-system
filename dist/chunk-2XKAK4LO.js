@@ -1,7 +1,11 @@
 "use client";
 import {
   Banner
+<<<<<<<< HEAD:dist/chunk-2XKAK4LO.js
 } from "./chunk-PJ6DNK6F.js";
+========
+} from "./chunk-IOTZJ7UI.js";
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-HTKSAH6J.js
 import {
   EmptyState
 } from "./chunk-BAQSETO6.js";
@@ -190,4 +194,8 @@ function ResourceState({
 export {
   ResourceState
 };
+<<<<<<<< HEAD:dist/chunk-2XKAK4LO.js
 //# sourceMappingURL=chunk-2XKAK4LO.js.map
+========
+//# sourceMappingURL=chunk-HTKSAH6J.js.map
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-HTKSAH6J.js

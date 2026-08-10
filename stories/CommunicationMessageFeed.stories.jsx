@@ -33,6 +33,12 @@ const meta = {
       description: '고정형 대화 영역을 조합할 때 사용하는 viewport 최소 높이입니다.',
       table: { type: { summary: 'number | string' } },
     },
+    density: {
+      control: 'inline-radio',
+      options: ['comfortable', 'compact'],
+      description: 'log의 세로 여백과 메시지 사이 간격을 조절합니다. comfortable은 기존 읽기 밀도를 유지하고 compact는 좁은 대화 열의 세로 공간만 줄이며 viewportInset은 바꾸지 않습니다.',
+      table: { defaultValue: { summary: 'comfortable' }, type: { summary: "'comfortable' | 'compact'" } },
+    },
     busy: {
       control: 'boolean',
       description: '현재 log 콘텐츠를 갱신하는 동안 aria-busy를 설정합니다.',
@@ -232,6 +238,79 @@ export const Overview = {
     }
     if (log.hasAttribute('data-message-feed-surface')) {
       throw new Error('MessageFeed must not expose a product surface axis.');
+    }
+  },
+};
+
+export const CompactDensity = {
+  name: '밀도 · compact',
+  parameters: storyDescription(
+    '460px의 짧은 대화 기록에서 compact 피드 안쪽 여백과 조밀한 메시지 하나를 확인합니다. 이전 기록과 최신 메시지 동작은 기록 영역 앞뒤의 읽기 순서를 유지하고, 피드는 제품 표면을 추가하지 않습니다.',
+  ),
+  render: () => (
+    <main data-compact-feed style={{ width: 460, maxWidth: '100%', minWidth: 0 }}>
+      <MessageFeed
+        density="compact"
+        ariaLabel="조밀한 메시지 기록"
+        following={false}
+        hasPrevious
+        onLoadPrevious={() => {}}
+        unreadCount={2}
+        viewportMinHeight={180}
+        maxHeight={180}
+        viewportInset="compact"
+      >
+        <FeedMessage density="compact" id="compact-feed-assistant" authorRole="assistant" author="AI 어시스턴트" time="10:31">
+          조밀한 피드 여백은 좁은 재사용 대화 열에서도 기록을 쉽게 훑을 수 있게 합니다.
+        </FeedMessage>
+        <FeedMessage density="compact" id="compact-feed-user" authorRole="user" author="김서윤" time="10:32">
+          가로 스크롤 영역 없이 최신 응답을 계속 보이게 해 주세요.
+        </FeedMessage>
+      </MessageFeed>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const fixture = canvasElement.querySelector('[data-compact-feed]');
+    const feed = fixture?.querySelector('[data-message-feed]');
+    const log = feed?.querySelector('[role="log"]');
+    const actions = fixture ? Array.from(fixture.querySelectorAll('button')) : [];
+    if (!fixture || !feed || !log || actions.length !== 2) {
+      throw new Error('The compact feed fixture is incomplete.');
+    }
+    const host = fixture.parentElement;
+    const hostStyle = host ? getComputedStyle(host) : null;
+    const availableWidth = host
+      ? host.clientWidth - (Number.parseFloat(hostStyle.paddingLeft) || 0) - (Number.parseFloat(hostStyle.paddingRight) || 0)
+      : 460;
+    if (Math.abs(fixture.getBoundingClientRect().width - Math.min(460, availableWidth)) > 1) {
+      throw new Error('The compact feed fixture must fill the available container up to 460px.');
+    }
+    if (feed.dataset.density !== 'compact') {
+      throw new Error('MessageFeed must expose data-density="compact".');
+    }
+    const logStyle = getComputedStyle(log);
+    if (logStyle.paddingTop !== '8px' || logStyle.paddingBottom !== '8px') {
+      throw new Error(`Compact MessageFeed block inset must resolve to 8px (received ${logStyle.paddingTop}/${logStyle.paddingBottom}).`);
+    }
+    if (Array.from(log.querySelectorAll('.lk-conversation-message')).some((message) => message.dataset.density !== 'compact')) {
+      throw new Error('Compact feed examples must preserve compact child message density.');
+    }
+    if (fixture.scrollWidth > fixture.clientWidth + 1 || feed.scrollWidth > feed.clientWidth + 1 || log.scrollWidth > log.clientWidth + 1) {
+      throw new Error('Compact MessageFeed must not create horizontal overflow.');
+    }
+    for (let index = 0; index < actions.length; index += 1) {
+      const current = actions[index].getBoundingClientRect();
+      if (current.width < 24 || current.height < 24) {
+        throw new Error('Compact MessageFeed actions must retain a minimum 24px target.');
+      }
+      for (const candidate of actions.slice(index + 1)) {
+        const next = candidate.getBoundingClientRect();
+        const overlaps = current.left < next.right - 0.5
+          && current.right > next.left + 0.5
+          && current.top < next.bottom - 0.5
+          && current.bottom > next.top + 0.5;
+        if (overlaps) throw new Error('Compact MessageFeed actions must not overlap.');
+      }
     }
   },
 };

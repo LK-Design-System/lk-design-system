@@ -1,5 +1,6 @@
 import * as React from "react";
 import type { LdsClassNames, LdsStyles, LdsVars } from '../internal/surface.js';
+import type { FloatingCollisionBoundary } from './anchored-overlay.js';
 
 export type DropdownMenuPart = 'root' | 'trigger' | 'panel' | 'menu' | 'item' | 'divider' | 'actionArea';
 export type DropdownMenuVariable =
@@ -78,6 +79,10 @@ export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> 
   /** Escape clipping ancestors through the owner-document Portal. @default true */
   withinPortal?: boolean;
   portalTarget?: HTMLElement | null;
+  /** Element/ref whose visible viewport intersection constrains the root panel. Defaults to the viewport. */
+  collisionBoundary?: FloatingCollisionBoundary;
+  /** Inset from every collision-boundary edge in CSS pixels. @default 16 */
+  collisionPadding?: number;
   zIndex?: number;
   classNames?: LdsClassNames<DropdownMenuPart>;
   styles?: LdsStyles<DropdownMenuPart>;

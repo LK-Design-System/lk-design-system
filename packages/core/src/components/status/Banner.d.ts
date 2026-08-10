@@ -1,7 +1,12 @@
 import * as React from 'react';
 
 export interface BannerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
-  /** 톤. @default "info" */
+  /**
+   * 톤. canonical은 `signal · positive · cautionary · negative`이며 `info · success · warning · error`는
+   * canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다).
+   * 기본값은 canonical 표기입니다 — 이전 기본값 `"info"`는 같은 표면으로 정규화되던 별칭 표기였습니다.
+   * @default "signal"
+   */
   tone?: 'signal' | 'positive' | 'cautionary' | 'negative' | 'info' | 'success' | 'warning' | 'error';
   /** 표면 배치. embedded는 부모 패널 내부의 edge-to-edge 상태 띠입니다. @default "standalone" */
   variant?: 'standalone' | 'embedded';

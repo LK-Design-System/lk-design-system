@@ -351,7 +351,6 @@ function SingleOpenGroupsFixture() {
       data-testid="single-open-side-nav"
       aria-label="Single-open navigation"
       items={singleOpenNavigationItems}
-      multiple={false}
       defaultValue="overview"
       width={252}
       style={{ height: 420 }}
@@ -405,9 +404,21 @@ export const LinkDestinations = {
     if (!childIcon || childIcon.getAttribute('aria-hidden') !== 'true') {
       throw new Error('SideNav group children must expose an aligned decorative icon slot.');
     }
+    const parentLabel = group.querySelector('[data-slot="label"]');
     const queuedLabel = Array.from(queued?.querySelectorAll('span') ?? []).find((node) => node.textContent === '아주 긴 대기 작업 목적지와 원격 점검 상세 이름');
     if (!queued || !queuedLabel || getComputedStyle(queuedLabel).textOverflow !== 'ellipsis' || queuedLabel.scrollWidth <= queuedLabel.clientWidth) {
       throw new Error('Expanded linked children must preserve the long-label truncation contract.');
+    }
+    const childSurfaceInset = Math.round(queued.getBoundingClientRect().left - group.getBoundingClientRect().left);
+    const childLabelInset = Math.round(queuedLabel.getBoundingClientRect().left - parentLabel?.getBoundingClientRect().left);
+    const childListInset = Math.round(Number.parseFloat(getComputedStyle(nestedList).paddingInlineStart));
+    const iconChildPadding = Math.round(Number.parseFloat(getComputedStyle(queued).paddingInlineStart));
+    if (childListInset !== 12
+      || iconChildPadding !== 16
+      || childSurfaceInset !== 12
+      || childLabelInset !== 12
+      || Math.round(Number.parseFloat(getComputedStyle(queuedLabel).lineHeight)) !== 18) {
+      throw new Error('Icon children must inset both their destination surface and label by 12px while using the label2 line height.');
     }
     await userEvent.unhover(group);
     await waitFor(() => {
@@ -477,6 +488,13 @@ export const DockedSurface = {
     const activeParent = nav.querySelector('[data-sidenav-value="missions"]');
     if (!activeChild || activeChild.getAttribute('aria-current') !== 'page' || activeParent?.getAttribute('aria-expanded') !== 'true') {
       throw new Error('A controlled child route must reveal its parent group and expose the active destination.');
+    }
+    const activeChildLabel = activeChild.querySelector('[data-slot="label"]');
+    const activeParentLabel = activeParent.querySelector('[data-slot="label"]');
+    const childSurfaceInset = Math.round(activeChild.getBoundingClientRect().left - activeParent.getBoundingClientRect().left);
+    const childLabelInset = Math.round(activeChildLabel?.getBoundingClientRect().left - activeParentLabel?.getBoundingClientRect().left);
+    if (childSurfaceInset !== 12 || childLabelInset !== 12) {
+      throw new Error('Icon-free children must retain the same 12px surface and label hierarchy inset as icon children.');
     }
 
     const { control, panel } = externalCollapseContract(canvasElement, nav);
@@ -698,7 +716,7 @@ export const ManualActiveGroupExpansion = {
 export const SingleOpenGroups = {
   name: '시나리오 · 한 번에 하나만 여는 그룹',
   parameters: storyDescription(
-    'multiple={false} keeps the SideNav disclosure hierarchy compact by allowing only one group to remain open at a time.',
+    'The default SideNav accordion keeps the disclosure hierarchy compact: selecting another group or top-level destination closes the previously open group.',
   ),
   render: () => <SingleOpenGroupsFixture />,
   play: async ({ canvasElement }) => {
@@ -714,7 +732,11 @@ export const SingleOpenGroups = {
     if (groups[0].getAttribute('aria-expanded') !== 'false'
       || groups[1].getAttribute('aria-expanded') !== 'true'
       || groups.filter((group) => group.getAttribute('aria-expanded') === 'true').length !== 1) {
-      throw new Error('multiple={false} must close the previous group before opening the next group.');
+      throw new Error('The default SideNav accordion must close the previous group before opening the next group.');
+    }
+    await userEvent.click(nav.querySelector('[data-sidenav-value="overview"]'));
+    if (groups.some((group) => group.getAttribute('aria-expanded') === 'true')) {
+      throw new Error('Selecting a top-level destination must close the open disclosure group.');
     }
   },
 };

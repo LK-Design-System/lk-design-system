@@ -10,7 +10,7 @@ var _chunkF72KSGF7cjs = require('./chunk-F72KSGF7.cjs');
 // components/status/Callout.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 var _jsxruntime = require('react/jsx-runtime');
-var ICON_SIZE = 20;
+var ICON_SIZE = 24;
 function normalizeIcon(icon, fallbackIcon) {
   if (!_react2.default.isValidElement(icon)) return fallbackIcon;
   return _react2.default.cloneElement(icon, {
@@ -38,12 +38,12 @@ function Callout({ tone = "signal", title, headingLevel = false, children, icon,
     {
       style: {
         display: "flex",
-        gap: "var(--space-3-5)",
-        padding: "16px 18px",
+        gap: "var(--space-4)",
+        padding: "var(--space-5) var(--space-6)",
         boxSizing: "border-box",
         background: palette.surface,
         border: `1px solid ${palette.border}`,
-        borderRadius: "var(--radius-lg)",
+        borderRadius: "var(--radius-xl)",
         boxShadow: "none",
         fontFamily: "var(--font-sans)",
         ...style
@@ -62,15 +62,14 @@ function Callout({ tone = "signal", title, headingLevel = false, children, icon,
               justifyContent: "center",
               color: c,
               lineHeight: 0,
-              flexShrink: 0,
-              marginTop: "var(--space-0-5)"
+              flexShrink: 0
             },
             children: normalizedIcon
           }
         ),
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Heading, { style: { margin: 0, fontSize: "var(--body2-size)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: navy ? "var(--color-semantic-brand-on-surface)" : "var(--color-semantic-label-normal)", marginBottom: children != null ? 4 : 0 }, children: title }),
-          children != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { fontSize: "var(--label1-size)", lineHeight: 1.65, color: navy ? "var(--color-semantic-brand-on-surface-subtle)" : "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
+          title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Heading, { style: { margin: 0, fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: navy ? "var(--color-semantic-brand-on-surface)" : "var(--color-semantic-label-normal)", marginBottom: children != null ? "var(--space-1-5)" : 0 }, children: title }),
+          children != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { fontSize: "var(--label1-size)", lineHeight: "var(--label1-reading-line)", color: navy ? "var(--color-semantic-brand-on-surface-subtle)" : "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
         ] })
       ]
     }
@@ -80,4 +79,8 @@ function Callout({ tone = "signal", title, headingLevel = false, children, icon,
 
 
 exports.Callout = Callout;
+<<<<<<<< HEAD:dist/chunk-Q2V3RZSG.cjs
 //# sourceMappingURL=chunk-Q2V3RZSG.cjs.map
+========
+//# sourceMappingURL=chunk-EVDSXWAC.cjs.map
+>>>>>>>> codex/brand-color-role-hardening:dist/chunk-EVDSXWAC.cjs
