@@ -30,10 +30,6 @@ const meta = {
   },
   parameters: {
     storyGuide: {
-      propertyLimit: '25',
-      numericRuleLimit: '8',
-      quantitativeRuleLimit: '10',
-      responsiveRuleLimit: '6',
       storyId: 'lds-core-components-content-card--playground',
       eyebrow: 'Core / Content / Card',
       title: '서로 관련된 정보와 행동을 하나의 독립된 표면으로 묶습니다',

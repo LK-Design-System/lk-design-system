@@ -63,7 +63,7 @@ Classification: **LK Robotics Extension**. `TrajectoryOverlay`는 한 지도에 
 
 - LK Web Viz `a984def117c05acd213f494cbb8a42e990595505`: `TaskRunScreen`과 `Map2DViewer`가 observed history line과 robot pose를 별도 layer로 전달·렌더하므로 Trajectory progress-head는 `supported by composition`입니다.
 - LK Control Full Daedeok `93802fc2aa5d29f930380ae58d51dcb68322b5e7`: `InteractiveMap`도 path history와 current robot+heading을 분리하므로 `supported by composition`입니다.
-- LK Context Hub `de124084b7e50049350a46f92c4ea4476269c58c`: map/floor/navigation 진입점이 없어 `not applicable`입니다. 상세 blob pin과 product-owned reset/transport seam은 `docs/references/product-frontends/COVERAGE_AUDIT.json`이 소유합니다.
+- LK Portal `e5ee99d5062170e26abe63d9105c2b8a024ce710`: map/floor/navigation 진입점이 없어 `not applicable`입니다. 상세 blob pin과 product-owned reset/transport seam은 `docs/references/product-frontends/COVERAGE_AUDIT.json`이 소유합니다.
 
 ## Intentional exclusions
 

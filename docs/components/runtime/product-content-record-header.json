@@ -124,10 +124,6 @@
     {
       "subject": "--color-semantic-label-neutral",
       "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
-    },
-    {
-      "subject": "--color-semantic-label-normal",
-      "rule": "light: #171718; dark: #F7F7F7"
     }
   ],
   "responsive": [],

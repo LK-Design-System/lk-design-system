@@ -49,7 +49,7 @@
 
 - **LK Web Viz** — `not applicable`. pinned source `LK-ROBOTICS/lk_web_viz@a984def117c05acd213f494cbb8a42e990595505`의 현재 canvas/editor workflow에는 form-level validation summary 소비 근거가 없습니다. 지도·편집기 상태를 오류 요약으로 재분류하지 않습니다.
 - **LK Control Full Daedeok** — `supported by composition`. pinned source `LK-ROBOTICS/lkrobotics-control-full-daedeok@93802fc2aa5d29f930380ae58d51dcb68322b5e7`의 command modal, procedure 관리 화면, schedule form에서 blocking validation을 field controls와 함께 조합할 수 있습니다. eligibility, command schema, persistence와 실행은 제품 소유입니다.
-- **LK Context Hub** — `supported by composition`. pinned source `LK-ROBOTICS/lk_context_hub@de124084b7e50049350a46f92c4ea4476269c58c`의 Scope Manager에서 staged scope 변경의 field-level validation과 함께 사용할 수 있습니다. scope schema, mutation과 business validation은 제품 소유입니다.
+- **LK Portal** — `supported by composition`. pinned source `LK-ROBOTICS-AX/lk_portal@e5ee99d5062170e26abe63d9105c2b8a024ce710`의 Scope Manager에서 staged scope 변경의 field-level validation과 함께 사용할 수 있습니다. scope schema, mutation과 business validation은 제품 소유입니다.
 - source pin과 workflow 판정의 authority는 `docs/references/product-frontends/COVERAGE_AUDIT.json`의 WF-03/WF-04/WF-05/WF-13입니다. 이번 변경은 기존 coverage classification을 넓히지 않고 실제 field return path만 강화합니다.
 
 ## External research basis

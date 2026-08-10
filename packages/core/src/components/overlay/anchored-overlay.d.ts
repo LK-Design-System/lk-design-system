@@ -45,6 +45,7 @@ export function useLightDismiss(options: UseLightDismissOptions): {
 };
 
 export type FloatingPlacement = 'top' | 'bottom' | 'left' | 'right';
+export type FloatingCollisionBoundary = HTMLElement | React.RefObject<HTMLElement | null>;
 
 export interface UseFloatingPositionOptions {
   /** 패널이 열려 있는지 여부. 닫히면 위치가 초기화된다. */
@@ -59,6 +60,8 @@ export interface UseFloatingPositionOptions {
   offset?: number;
   /** 뷰포트 가장자리 여백(px). @default 16 */
   viewportPadding?: number;
+  /** Optional element/ref whose visible intersection with the viewport becomes the collision boundary. */
+  collisionBoundary?: FloatingCollisionBoundary;
   /** in-tree absolute 또는 portalled fixed positioning. @default "absolute" */
   strategy?: 'absolute' | 'fixed';
   /** vertical placement에서 logical alignment. @default "left" */
@@ -72,6 +75,8 @@ export interface FloatingPosition {
   shiftX: number;
   /** 뷰포트 안으로 되밀기 위한 Y 이동량(px). */
   shiftY: number;
+  /** 충돌 경계 안에서 사용할 수 있는 최대 너비(px). 닫힘 상태에서는 null. */
+  maxWidth: number | null;
   /** 배치 방향에서 사용 가능한 최대 높이(px). 닫힘 상태에서는 null. */
   maxHeight: number | null;
   /** fixed strategy의 viewport X coordinate. */
@@ -80,7 +85,7 @@ export interface FloatingPosition {
   y: number | null;
 }
 
-/** 앵커드 패널 측정·flip·뷰포트 클램프 엔진. 시각 chrome과 정렬은 소비자가 소유한다. */
+/** 앵커드 패널 측정·flip·viewport/explicit-boundary 클램프 엔진. 시각 chrome과 정렬은 소비자가 소유한다. */
 export function useFloatingPosition(options: UseFloatingPositionOptions): FloatingPosition;
 
 export interface InlineFloatingStyleOptions {

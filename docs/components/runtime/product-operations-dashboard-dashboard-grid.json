@@ -82,9 +82,7 @@
     "fillLastRow를 켠 경우에만 wrap 배치로 전환해 마지막 행의 잔여 카드가 남은 폭을 채웁니다. 표면·간격·typography 계약은 동일하며 기본값은 기존 grid 동작 그대로입니다.",
     "Carbon UI shell usage — 셸과 본문을 분리하고 좁은 폭에서 탐색 구조를 전환합니다. DashboardGrid는 셸이 제공한 본문 폭 안에서만 반응합니다."
   ],
-  "contentGuidance": [
-    "LK Context Hub — 프로젝트/attention landing의 Card/DataGrid 반복은 supported by composition이지만 route·query·권한과 카드 우선순위는 제품이 소유합니다."
-  ],
+  "contentGuidance": [],
   "accessibility": [
     "카드의 typography, fill, divider, active/focus/disabled 표현은 카드 컴포넌트의 계약이며 DashboardGrid가 재정의하지 않습니다."
   ],
@@ -154,7 +152,7 @@
     "behavior": "evidence",
     "quantitativeRules": "evidence",
     "responsive": "evidence",
-    "contentGuidance": "evidence",
+    "contentGuidance": "omitted-no-evidence",
     "accessibility": "evidence",
     "exceptions": "omitted-no-evidence",
     "related": "evidence",

@@ -167,7 +167,7 @@ export { Alert } from '../components/overlay/Alert';
 export { CommandPalette } from '../components/overlay/CommandPalette';
 export { ConfirmDialog } from '../components/overlay/ConfirmDialog';
 export { Dimmer } from '../components/overlay/Dimmer';
-export { Drawer } from '../components/overlay/Drawer';
+export { Drawer, DrawerSection } from '../components/overlay/Drawer';
 export { DropdownMenu } from '../components/overlay/DropdownMenu';
 export { HoverCard } from '../components/overlay/HoverCard';
 export { Lightbox } from '../components/overlay/Lightbox';

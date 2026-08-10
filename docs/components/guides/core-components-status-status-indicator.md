@@ -43,7 +43,7 @@
 - 현재 결과나 수명주기 상태를 채움 라벨로 표시할 때는 StatusBadge를 사용합니다. StatusIndicator는 연결·가용성·freshness처럼 계속 관찰되는 신호에만 사용합니다.
 - pulse는 연결 중·재연결 중처럼 실제 변화 중인 신호에만 명시합니다. prefers-reduced-motion에서는 멈추고 라벨만으로 의미가 유지됩니다. critical은 정적 이중 링을 보조 단서로 제공하지만 자동 pulse하지 않습니다.
 - StatusIndicator는 실시간 가용성·연결·freshness를 컬러 점과 명시적 라벨로 보여주는 조용한 Core 신호입니다.
-- 실제 connection state machine, freshness 임계값, polling과 announcement는 제품이 소유합니다. LK Web Viz, LK Control Full Daedeok, LK Context Hub는 이 primitive를 조합할 수 있지만 이번 분리는 제품 route나 transport 계약을 바꾸지 않으므로 세 자산 검토는 모두 not applicable입니다.
+- Storybook에서 steady/pulse/offline/critical, 긴 label, light/dark와 reduced motion을 확인합니다.
 
 ## Accessibility
 

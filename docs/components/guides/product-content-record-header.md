@@ -60,7 +60,6 @@
 | 명시 규칙 3 | WCAG 2.2 Reflow에 맞춰 320 CSS px 상당의 폭에서 양방향 스크롤 없이 재배치합니다. |
 | 명시 규칙 4 | Carbon Data Table usage가 toolbar·header·row size를 함께 pairing하듯, scan-heavy 화면에서는 RecordHeader size="sm"을 인접한 compact Card/Table/toolbar와 일관되게 조합합니다. Carbon spacing과 Fluent 2 layout에 따라 작은 spacing token은 관련성을 강화하되, 좁은 폭에서는 reflow와 touch target을 함께 보존합니다. |
 | --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
-| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
 
 ## Responsive
 

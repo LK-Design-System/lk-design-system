@@ -24,7 +24,6 @@ const meta = {
   },
   parameters: {
     storyGuide: {
-      quantitativeRuleLimit: '6',
       storyId: 'lds-product-content-record-header--record-header-overview',
       eyebrow: 'Product / Content / Record Header',
       title: '레코드 헤더는 페이지의 위치가 아니라 현재 보고 있는 대상을 식별합니다',

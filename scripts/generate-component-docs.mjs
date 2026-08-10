@@ -152,15 +152,7 @@ function literalText(node) {
 function storyGuideFromSource(source, fileName) {
   const sourceFile = ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.JSX);
   let result = {};
-  const metadataKeys = new Set([
-    'omitGuideFields',
-    'canonicalGuide',
-    'guideDeltaFields',
-    'propertyLimit',
-    'numericRuleLimit',
-    'quantitativeRuleLimit',
-    'responsiveRuleLimit',
-  ]);
+  const metadataKeys = new Set(['omitGuideFields', 'canonicalGuide', 'guideDeltaFields']);
   function visit(node) {
     if (ts.isPropertyAssignment(node) && propertyName(node.name) === 'storyGuide') {
       assert(
@@ -274,17 +266,6 @@ function normalizeGuideFields(value, label, { required = false } = {}) {
     seen.add(field);
   }
   return fields;
-}
-
-function guideLimit(storyGuide, key, fallback, maximum = 32) {
-  const raw = storyGuide[key];
-  if (raw === undefined) return fallback;
-  const value = Number(raw);
-  assert(
-    Number.isInteger(value) && value >= fallback && value <= maximum,
-    `storyGuide.${key} must be an integer string between ${fallback} and ${maximum}.`,
-  );
-  return value;
 }
 
 function hasGuideEvidence(value) {
@@ -478,10 +459,6 @@ function guideFromPage(page, entriesByExport, sourceDetails, tokenMap) {
   const primaryDetails = primary ? sourceDetails.get(primary.source) : details[0];
   const prompt = primaryDetails?.promptData || { lead: '', blocks: [], bullets: [], links: [], codeExamples: [] };
   const storyGuide = primaryDetails?.storyGuidesByImport?.get(page.importPath) || {};
-  const propertyLimit = guideLimit(storyGuide, 'propertyLimit', 24, 64);
-  const numericRuleLimit = guideLimit(storyGuide, 'numericRuleLimit', 4, 16);
-  const quantitativeRuleLimit = guideLimit(storyGuide, 'quantitativeRuleLimit', 5, 20);
-  const responsiveRuleLimit = guideLimit(storyGuide, 'responsiveRuleLimit', 4, 12);
   const omitGuideFields = normalizeGuideFields(storyGuide.omitGuideFields, 'omitGuideFields');
   const canonicalSlug = String(storyGuide.canonicalGuide ?? '').trim();
   const guideDeltaFields = normalizeGuideFields(
@@ -513,9 +490,9 @@ function guideFromPage(page, entriesByExport, sourceDetails, tokenMap) {
   // the widest net, so it fishes last, from what the specific sections left behind.
   const claimed = new Set();
   claim(claimed, purpose);
-  const numericLines = matching(allPromptLines, numericKeywords, claimed, numericRuleLimit);
+  const numericLines = matching(allPromptLines, numericKeywords, claimed, 4);
   const a11yLines = matching(allPromptLines, a11yKeywords, claimed, 6);
-  const responsiveLines = matching(allPromptLines, responsiveKeywords, claimed, Math.max(5, responsiveRuleLimit));
+  const responsiveLines = matching(allPromptLines, responsiveKeywords, claimed, 5);
   const contentLines = matching(allPromptLines, contentKeywords, claimed, 5);
   const exceptionLines = matching(allPromptLines, exceptionKeywords, claimed, 4);
   const migrationLines = matching(allPromptLines, migrationKeywords, claimed, 5);
@@ -565,9 +542,9 @@ function guideFromPage(page, entriesByExport, sourceDetails, tokenMap) {
     .map(([token, value]) => ({ subject: token, rule: value }));
   const promptRules = numericLines
     .map((rule, index) => ({ subject: `명시 규칙 ${index + 1}`, rule }));
-  const quantitativeRules = [...promptRules, ...tokenRules].slice(0, quantitativeRuleLimit);
+  const quantitativeRules = [...promptRules, ...tokenRules].slice(0, 5);
   const behavior = evidenceLines(behaviorLines, 5);
-  const responsive = evidenceLines(responsiveLines, responsiveRuleLimit);
+  const responsive = evidenceLines(responsiveLines, 4);
   const contentGuidance = evidenceLines(contentLines, 4);
   const accessibility = evidenceLines(a11yLines, 5);
   const exceptions = evidenceLines(exceptionLines, 3);
@@ -607,7 +584,7 @@ function guideFromPage(page, entriesByExport, sourceDetails, tokenMap) {
     useWhen,
     avoidWhen,
     anatomy,
-    properties: properties.slice(0, propertyLimit),
+    properties: properties.slice(0, 24),
     states,
     behavior,
     quantitativeRules,

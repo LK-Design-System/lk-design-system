@@ -36,9 +36,9 @@ export default meta;
 
 const projects = [
   {
-    id: 'context-hub-v3',
-    name: 'LK Context Hub v3',
-    key: 'context-hub-v3',
+    id: 'portal-v3',
+    name: 'LK Portal v3',
+    key: 'portal-v3',
     status: '진행 중',
     description: '근거 기반 Context, Wiki, 보고서와 연동 서비스를 한곳에서 탐색하는 지식 허브입니다.',
     counts: { sources: 0, people: 1, documents: 0, development: 0 },

@@ -17,6 +17,7 @@
 - Atlassian navigation system layout — 접기 토글(SideNavToggleButton)은 top nav 항목이며 사이드 패널 내부에 두지 않습니다. shadcn/ui Sidebar의 SidebarTrigger(본문 상단 바 시작)와 IBM Carbon UI shell 헤더 햄버거도 같은 원칙입니다. LDS는 이 원칙을 따라 셸의 접기 토글을 상단 바 시작 부분에 두며, side-first에서는 shadcn 배치를, header-first에서는 Atlassian 배치를 사용합니다.
 - footer accepts either a node or a render function receiving { collapsed, expanded, overlay }. Use the render form when the account/footer composition must change before an overlay peek or rail collapse exposes it.
 - Child destinations accept icon; when any child in a group has one, SideNav reserves the same decorative slot for every sibling.
+- appearance="default"는 data-theme="dark" 또는 .theme-dark 안에서 기존 dark semantic surface를 그대로 사용합니다. appearance="brand"는 generic dark theme와 별개인 명시적이고 theme-stable한 제품 셸 팔레트입니다.
 
 ### 사용하지 않음
 
@@ -50,6 +51,7 @@
 | `footerGap` | `number \| string` | No | 스크롤 목록과 푸터 구분선 사이의 간격. @default 'var(--space-2)' |
 | `width` | `number \| string` | No | 펼친 폭. @default 240 |
 | `surface` | `'floating' \| 'docked'` | No | 외곽 표면. floating은 전체 outline과 radius를, docked는 논리적 끝 divider만 사용합니다. @default 'floating' |
+| `appearance` | `'default' \| 'brand'` | No | 색상 외형. default는 현재 theme semantic 색을 그대로 사용하고, brand는 밝은 작업면과 대비되는 평면 브랜드 네이비 셸을 사용합니다. 배치 형태는 surface가 별도로 소유합니다. @default 'default' |
 | `collapsed` | `boolean` | No | 제어되는 접힘 상태. 접기 토글은 셸의 상단 바에 두고 이 프롭으로 패널을 구동합니다. 상태 영속화는 SideNav가 아니라 소비 제품이 소유합니다. |
 | `defaultCollapsed` | `boolean` | No | 비제어 시 초기 접힘. @default false |
 | `onCollapsedChange` | `(collapsed: boolean) = void` | No | 다음 접힘 상태 요청. controlled 사용 시 부모가 collapsed를 갱신하기 전에는 시각 상태가 바뀌지 않습니다. |
@@ -74,11 +76,11 @@
 
 ## Behavior and interaction
 
+- appearance — default(기본)는 기존 semantic color와 현재 theme를 픽셀 그대로 따릅니다. brand는 평면 브랜드 네이비 셸과 상태 잉크를 사용하는 theme-stable 컴포넌트 외형입니다. surface가 배치 geometry를, appearance가 SideNav 내부 색 역할만 소유하므로 두 축은 독립입니다. 알 수 없는 런타임 값은 default로 안전하게 돌아갑니다.
 - collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌므로 런타임 overlay 전환 때도 부모가 원하는 collapsed 값을 함께 갱신해야 합니다. 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.
 - multiple — 기본 true는 여러 disclosure 그룹을 동시에 열어 둘 수 있습니다. multiple={false}이면 한 번에 한 그룹만 열리는 accordion 동작이 되며, 다른 그룹을 열 때 기존 그룹은 닫힙니다. 활성 자식이 바뀌면 활성 그룹을 우선 유지합니다.
 - floating은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. docked는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, fill, active marker를 공유합니다.
 - WAI-ARIA landmark regions — landmark와 명확한 accessible name을 유지합니다. 소비자가 aria-label을 주지 않으면 기본 이름 사이드 탐색을 제공하고, 같은 문서에 탐색 landmark가 여러 개면 고유한 이름으로 덮어씁니다. 현재 목적지는 aria-current="page"로 노출하고, 키보드 focus 진입·이탈과 Esc 뒤에도 초점을 잃지 않습니다.
-- WAI Disclosure Navigation — 부모 button의 aria-expanded는 자식 노출 상태이고 leaf link의 aria-current="page"는 현재 위치입니다. LDS는 접힌 부모에 시각 프록시를 표시해도 aria-current를 옮기지 않아 두 의미를 합치지 않습니다.
 
 ## 정량 규칙
 
@@ -151,15 +153,32 @@
 
 ### Tokens
 
+- `--_lds-side-nav-focus-indicator`
+- `--_lds-side-nav-pressed-surface`
 - `--caption2-size`
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
+- `--color-semantic-focus-indicator`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-strong`
+- `--component-side-nav-brand-active-foreground`
+- `--component-side-nav-brand-active-hover-surface`
+- `--component-side-nav-brand-badge-active-surface`
+- `--component-side-nav-brand-badge-foreground`
+- `--component-side-nav-brand-badge-surface`
+- `--component-side-nav-brand-divider`
+- `--component-side-nav-brand-focus-indicator`
+- `--component-side-nav-brand-foreground`
+- `--component-side-nav-brand-hover-foreground`
+- `--component-side-nav-brand-hover-surface`
+- `--component-side-nav-brand-muted-foreground`
+- `--component-side-nav-brand-pressed-surface`
+- `--component-side-nav-brand-subtle-foreground`
+- `--component-side-nav-brand-surface`
 - `--dur-base`
 - `--dur-fast`
 - `--ease-out`

@@ -71,7 +71,7 @@ category reference**에서의 독립 도출이다. ListingCard는 그 세 근거
 
 ## 커버리지 원장 메모
 
-고정 제품(**LK Web Viz**, **LK Control Full Daedeok**, **LK Context Hub**)은 로컬 체크아웃이 없어
+고정 제품(**LK Web Viz**, **LK Control Full Daedeok**, **LK Portal**)은 로컬 체크아웃이 없어
 소스로 리스팅 표면을 재확인하지 못했다(`unverified`). ListingCard는 제품 요구가 아니라 보편 카테고리
 근거로 채택했으므로 이 미확인은 착수를 막지 않는다. 이후 제품 소스에서 "제목 + 기간 + 상태 배지"
 그리드가 확인되면 커버리지 원장에 매핑을 기록한다.

@@ -10,9 +10,72 @@ function samePosition(a, b) {
   return a.placement === b.placement
     && Math.abs(a.shiftX - b.shiftX) < 0.5
     && Math.abs(a.shiftY - b.shiftY) < 0.5
-    && Math.abs((a.maxHeight ?? 0) - (b.maxHeight ?? 0)) < 0.5
+    && sameCoordinate(a.maxWidth, b.maxWidth)
+    && sameCoordinate(a.maxHeight, b.maxHeight)
     && sameCoordinate(a.x, b.x)
     && sameCoordinate(a.y, b.y);
+}
+
+function resolveCollisionBoundary(boundary, ownerDocument) {
+  const candidate = boundary && typeof boundary === 'object' && 'current' in boundary
+    ? boundary.current
+    : boundary;
+  if (!candidate || candidate.ownerDocument !== ownerDocument || candidate.isConnected === false) return null;
+  return typeof candidate.getBoundingClientRect === 'function' ? candidate : null;
+}
+
+function insetCollisionRect(view, boundary, padding) {
+  const viewport = { top: 0, right: view.innerWidth, bottom: view.innerHeight, left: 0 };
+  const source = boundary?.getBoundingClientRect() ?? viewport;
+  const clampToViewport = (value, start, end) => Math.min(end, Math.max(start, value));
+  const intersection = {
+    top: clampToViewport(source.top, viewport.top, viewport.bottom),
+    right: clampToViewport(source.right, viewport.left, viewport.right),
+    bottom: clampToViewport(source.bottom, viewport.top, viewport.bottom),
+    left: clampToViewport(source.left, viewport.left, viewport.right),
+  };
+  const collapseAxis = (start, end) => {
+    const insetStart = start + padding;
+    const insetEnd = end - padding;
+    if (insetEnd >= insetStart) return [insetStart, insetEnd];
+    const midpoint = (Math.min(start, end) + Math.max(start, end)) / 2;
+    return [midpoint, midpoint];
+  };
+  const [left, right] = collapseAxis(intersection.left, intersection.right);
+  const [top, bottom] = collapseAxis(intersection.top, intersection.bottom);
+  return {
+    top,
+    right,
+    bottom,
+    left,
+    width: Math.max(0, right - left),
+    height: Math.max(0, bottom - top),
+  };
+}
+
+function measuredBox(element) {
+  if (!element) return null;
+  const rect = element.getBoundingClientRect();
+  return { top: rect.top, left: rect.left, width: rect.width, height: rect.height };
+}
+
+function naturalBorderBoxWidth(element, renderedWidth) {
+  if (!(element.scrollWidth > 0) || !(element.clientWidth > 0)) return renderedWidth;
+  // scrollWidth describes the scroll area, not the rendered border-box. In
+  // particular, a vertical scrollbar (including a stable gutter) and panel
+  // borders are absent from it. Add that non-client chrome back before using
+  // the measurement for fixed-position clamping, and never report less than
+  // the border-box already on screen.
+  const nonClientChrome = Math.max(0, renderedWidth - element.clientWidth);
+  return Math.max(renderedWidth, element.scrollWidth + nonClientChrome);
+}
+
+function boxChanged(previous, next) {
+  if (!previous || !next) return previous !== next;
+  return Math.abs(previous.top - next.top) >= 0.5
+    || Math.abs(previous.left - next.left) >= 0.5
+    || Math.abs(previous.width - next.width) >= 0.5
+    || Math.abs(previous.height - next.height) >= 0.5;
 }
 
 /** Internal controlled/uncontrolled state shared by anchored overlays. */
@@ -141,7 +204,8 @@ export function useLightDismiss({
 
 /**
  * Measures an anchored panel, flips it toward the roomier side, and keeps it
- * inside the viewport. Inline callers use the default absolute strategy and
+ * inside the viewport or an explicit collision boundary intersected with it.
+ * Inline callers use the default absolute strategy and
  * consume shiftX/shiftY. Portalled callers use the fixed strategy and consume
  * x/y. Callers keep ownership of component-specific chrome.
  */
@@ -152,6 +216,7 @@ export function useFloatingPosition({
   placement: requestedPlacement = 'bottom',
   offset = 8,
   viewportPadding = 16,
+  collisionBoundary,
   strategy = 'absolute',
   align = 'left',
 }) {
@@ -159,6 +224,7 @@ export function useFloatingPosition({
     placement: requestedPlacement,
     shiftX: 0,
     shiftY: 0,
+    maxWidth: null,
     maxHeight: null,
     x: null,
     y: null,
@@ -171,6 +237,7 @@ export function useFloatingPosition({
           placement: requestedPlacement,
           shiftX: 0,
           shiftY: 0,
+          maxWidth: null,
           maxHeight: null,
           x: null,
           y: null,
@@ -183,7 +250,9 @@ export function useFloatingPosition({
     const anchor = anchorRef.current;
     const panel = panelRef.current;
     if (!anchor || !panel) return undefined;
-    const view = anchor.ownerDocument?.defaultView ?? window;
+    const ownerDocument = anchor.ownerDocument;
+    const view = ownerDocument?.defaultView ?? window;
+    const padding = Number.isFinite(viewportPadding) ? Math.max(0, viewportPadding) : 16;
     let frame;
     let layoutFrame;
     let disposed = false;
@@ -194,16 +263,18 @@ export function useFloatingPosition({
       if (!currentAnchor || !currentPanel) return;
       const anchorRect = currentAnchor.getBoundingClientRect();
       const panelRect = currentPanel.getBoundingClientRect();
+      const boundaryElement = resolveCollisionBoundary(collisionBoundary, ownerDocument);
+      const boundaryRect = insetCollisionRect(view, boundaryElement, padding);
       const naturalWidth = Math.min(
-        currentPanel.scrollWidth || panelRect.width,
-        Math.max(0, view.innerWidth - viewportPadding * 2),
+        naturalBorderBoxWidth(currentPanel, panelRect.width),
+        boundaryRect.width,
       );
       const naturalHeight = currentPanel.scrollHeight || panelRect.height;
       const spaces = {
-        top: anchorRect.top - offset - viewportPadding,
-        bottom: view.innerHeight - anchorRect.bottom - offset - viewportPadding,
-        left: anchorRect.left - offset - viewportPadding,
-        right: view.innerWidth - anchorRect.right - offset - viewportPadding,
+        top: anchorRect.top - offset - boundaryRect.top,
+        bottom: boundaryRect.bottom - anchorRect.bottom - offset,
+        left: anchorRect.left - offset - boundaryRect.left,
+        right: boundaryRect.right - anchorRect.right - offset,
       };
       const opposite = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
       const required = requestedPlacement === 'left' || requestedPlacement === 'right'
@@ -219,6 +290,7 @@ export function useFloatingPosition({
           placement: nextPlacement,
           shiftX: 0,
           shiftY: 0,
+          maxWidth: null,
           maxHeight: null,
           x: null,
           y: null,
@@ -227,16 +299,19 @@ export function useFloatingPosition({
       }
 
       const verticalPlacement = nextPlacement === 'top' || nextPlacement === 'bottom';
+      const availableWidth = verticalPlacement
+        ? boundaryRect.width
+        : Math.max(0, spaces[nextPlacement]);
       const availableHeight = verticalPlacement
         ? Math.max(0, spaces[nextPlacement])
-        : Math.max(0, view.innerHeight - viewportPadding * 2);
-      const anchorIntersectsX = anchorRect.right > viewportPadding
-        && anchorRect.left < view.innerWidth - viewportPadding;
-      const anchorIntersectsY = anchorRect.bottom > viewportPadding
-        && anchorRect.top < view.innerHeight - viewportPadding;
+        : boundaryRect.height;
+      const anchorIntersectsX = anchorRect.right > boundaryRect.left
+        && anchorRect.left < boundaryRect.right;
+      const anchorIntersectsY = anchorRect.bottom > boundaryRect.top
+        && anchorRect.top < boundaryRect.bottom;
 
       if (strategy === 'fixed') {
-        const renderedWidth = Math.min(naturalWidth, Math.max(0, view.innerWidth - viewportPadding * 2));
+        const renderedWidth = Math.min(naturalWidth, availableWidth);
         const renderedHeight = Math.min(naturalHeight, availableHeight);
         const unclampedX = verticalPlacement
           ? (align === 'right' || align === 'trailing'
@@ -252,22 +327,23 @@ export function useFloatingPosition({
             : align === 'center'
               ? anchorRect.top + (anchorRect.height - renderedHeight) / 2
               : anchorRect.top);
-        const maxX = Math.max(viewportPadding, view.innerWidth - viewportPadding - renderedWidth);
-        const maxY = Math.max(viewportPadding, view.innerHeight - viewportPadding - renderedHeight);
+        const maxX = Math.max(boundaryRect.left, boundaryRect.right - renderedWidth);
+        const maxY = Math.max(boundaryRect.top, boundaryRect.bottom - renderedHeight);
         // A fully off-screen anchor must keep its surface off-screen too. If we
-        // clamp that surface to the nearest viewport edge it becomes a detached
+        // clamp that surface to the nearest collision edge it becomes a detached
         // floating label with no visible trigger. Clamp only along axes where
-        // the anchor actually intersects the usable viewport.
+        // the anchor actually intersects the usable collision rect.
         const x = anchorIntersectsX
-          ? Math.min(maxX, Math.max(viewportPadding, unclampedX))
+          ? Math.min(maxX, Math.max(boundaryRect.left, unclampedX))
           : unclampedX;
         const y = anchorIntersectsY
-          ? Math.min(maxY, Math.max(viewportPadding, unclampedY))
+          ? Math.min(maxY, Math.max(boundaryRect.top, unclampedY))
           : unclampedY;
         const next = {
           placement: nextPlacement,
           shiftX: x - unclampedX,
           shiftY: y - unclampedY,
+          maxWidth: availableWidth,
           maxHeight: availableHeight,
           x,
           y,
@@ -283,18 +359,19 @@ export function useFloatingPosition({
       let shiftX = 0;
       let shiftY = 0;
       if (anchorIntersectsX) {
-        if (baseLeft < viewportPadding) shiftX = viewportPadding - baseLeft;
-        else if (baseRight > view.innerWidth - viewportPadding) shiftX = view.innerWidth - viewportPadding - baseRight;
+        if (baseLeft < boundaryRect.left) shiftX = boundaryRect.left - baseLeft;
+        else if (baseRight > boundaryRect.right) shiftX = boundaryRect.right - baseRight;
       }
       if (anchorIntersectsY) {
-        if (baseTop < viewportPadding) shiftY = viewportPadding - baseTop;
-        else if (baseBottom > view.innerHeight - viewportPadding) shiftY = view.innerHeight - viewportPadding - baseBottom;
+        if (baseTop < boundaryRect.top) shiftY = boundaryRect.top - baseTop;
+        else if (baseBottom > boundaryRect.bottom) shiftY = boundaryRect.bottom - baseBottom;
       }
 
       const next = {
         placement: nextPlacement,
         shiftX,
         shiftY,
+        maxWidth: availableWidth,
         maxHeight: availableHeight,
         x: null,
         y: null,
@@ -309,31 +386,22 @@ export function useFloatingPosition({
     };
     schedule();
 
-    // A portalled panel uses viewport coordinates, so it does not naturally
-    // follow an anchor that moves without resizing. Grid settlement, late font
-    // metrics, images, and sibling disclosure can all produce that kind of
-    // layout shift. ResizeObserver cannot see it; track only the anchor box and
-    // schedule the heavier panel measurement when its viewport position moves.
-    if (strategy === 'fixed') {
+    // Fixed panels and explicit collision boundaries do not necessarily follow
+    // layout-only movement. ResizeObserver cannot see transforms or position
+    // changes, so track both the anchor and the live boundary box.
+    if (strategy === 'fixed' || collisionBoundary != null) {
       let previousAnchorBox;
+      let previousBoundaryBox;
       const watchAnchorLayout = () => {
         if (disposed) return;
         const currentAnchor = anchorRef.current;
         if (!currentAnchor) return;
-        const rect = currentAnchor.getBoundingClientRect();
-        const nextAnchorBox = {
-          top: rect.top,
-          left: rect.left,
-          width: rect.width,
-          height: rect.height,
-        };
-        if (previousAnchorBox && (
-          Math.abs(previousAnchorBox.top - nextAnchorBox.top) >= 0.5
-          || Math.abs(previousAnchorBox.left - nextAnchorBox.left) >= 0.5
-          || Math.abs(previousAnchorBox.width - nextAnchorBox.width) >= 0.5
-          || Math.abs(previousAnchorBox.height - nextAnchorBox.height) >= 0.5
-        )) schedule();
+        const nextAnchorBox = measuredBox(currentAnchor);
+        const nextBoundaryBox = measuredBox(resolveCollisionBoundary(collisionBoundary, ownerDocument));
+        if (boxChanged(previousAnchorBox, nextAnchorBox)
+          || boxChanged(previousBoundaryBox, nextBoundaryBox)) schedule();
         previousAnchorBox = nextAnchorBox;
+        previousBoundaryBox = nextBoundaryBox;
         layoutFrame = view.requestAnimationFrame(watchAnchorLayout);
       };
       layoutFrame = view.requestAnimationFrame(watchAnchorLayout);
@@ -343,6 +411,8 @@ export function useFloatingPosition({
     const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(schedule);
     observer?.observe(anchor);
     observer?.observe(panel);
+    const boundaryElement = resolveCollisionBoundary(collisionBoundary, ownerDocument);
+    if (boundaryElement && boundaryElement !== anchor && boundaryElement !== panel) observer?.observe(boundaryElement);
     return () => {
       disposed = true;
       view.cancelAnimationFrame(frame);
@@ -351,7 +421,7 @@ export function useFloatingPosition({
       view.removeEventListener('scroll', schedule, true);
       observer?.disconnect();
     };
-  }, [align, anchorRef, offset, open, panelRef, position.placement, position.shiftX, position.shiftY, requestedPlacement, strategy, viewportPadding]);
+  }, [align, anchorRef, collisionBoundary, offset, open, panelRef, position.placement, position.shiftX, position.shiftY, requestedPlacement, strategy, viewportPadding]);
 
   return position;
 }

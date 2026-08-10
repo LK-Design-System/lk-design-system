@@ -10,3 +10,5 @@
 ```jsx
 <Radio name="type" value="product" checked={t==='product'} onChange={()=>setT('product')} label="제품 문의" />
 ```
+
+- `size`를 생략하면 일반 표면에서는 기존 `md`, bounded compact component scope에서는 `sm`을 사용합니다. 시각 원과 별개로 native radio target은 두 크기 모두 최소 24×24px이며 명시한 `size`가 우선합니다.

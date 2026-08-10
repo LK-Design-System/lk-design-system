@@ -32,6 +32,6 @@ Classification: **LK Product Extension · Operations Dashboard**. 루트 `DESIGN
 
 - **LK Web Viz** — 고정 dashboard는 연결 상태와 메뉴 launcher가 중심이어서 KPI형 DashboardGrid는 not applicable입니다.
 - **LK Control Full Daedeok** — 상태·차트·표의 비대칭 운영 화면이므로 동급 요약 카드에만 DashboardGrid를 사용하고 주요 monitoring 표면은 별도 layout 조합이 소유합니다.
-- **LK Context Hub** — 프로젝트/attention landing의 Card/DataGrid 반복은 supported by composition이지만 route·query·권한과 카드 우선순위는 제품이 소유합니다.
+- **LK Portal** — 프로젝트/attention landing의 Card/DataGrid 반복은 supported by composition이지만 route·query·권한과 카드 우선순위는 제품이 소유합니다.
 
 데이터 fetching, 카드 순서 저장, drag-and-drop 개인화, 권한 판정은 제품의 책임이며 이 패턴에는 포함하지 않습니다.

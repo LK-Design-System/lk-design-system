@@ -6,6 +6,7 @@
 <ConversationMessage
   authorRole="assistant"
   author="AI Assistant"
+  density="compact"
   inlineSources
   sources={<SourceDisclosure sources={sources} />}
   messageActions={[
@@ -29,6 +30,7 @@
 - `authorRole`은 `user | assistant | human-agent | system`입니다. assistant 기본 presentation은 `document`, user와 human-agent는 `bubble`, system은 centered neutral chip입니다. user bubble은 solid primary fill, human-agent bubble은 neutral fill(`--color-semantic-fill-strong`)로 구분합니다.
 - participant는 `presentation="document" | "bubble"`로 표현 방식을 명시할 수 있습니다. presentation은 정보 위계이지 protocol, 권한, 신뢰도 또는 발신자 role을 바꾸지 않습니다.
 - `direction`은 participant 배치만 재정의합니다. user는 기본 outbound, assistant와 human-agent는 기본 inbound이며 system은 항상 system 방향입니다. 시각 정렬 때문에 DOM 순서를 뒤집지 않습니다.
+- `density`는 `comfortable | compact`이며 기본 `comfortable`은 기존 32px avatar column, bubble padding과 내부 gap을 그대로 보존합니다. `compact`는 이 공간만 작은 LDS token 단계로 줄이고 typography, color, lifecycle, DOM/ARIA와 action 크기는 바꾸지 않습니다.
 - `children`은 본문, `attachments`, `sources`, `actions`는 각각 `ReactNode` 조합 slot입니다. `messageActions`는 복사·재생성·더보기 같은 하단 quick-action을 배열로 받아 컴포넌트가 icon-only 버튼 액션바로 렌더하며 `actions` slot과 공존합니다. `error`는 실패 응답 본문을 받아 무채색 경고 glyph를 앞에 붙입니다. Message가 source schema, 파일 처리, Markdown renderer 또는 action 정책을 소유하지 않습니다.
 - 완료된 AI 응답의 canonical 제품 조합은 **응답 복사 → 응답 다시 생성 → 긍정 평가 → 부정 평가** 순서이며 provenance가 있으면 `inlineSources`의 접힌 출처 토글을 같은 footer에 형제로 둡니다. 각 icon-only action의 `label`은 대상과 동작을 함께 말해야 합니다. 선택형 평가 action은 제품이 소유한 상태를 `pressed`로 전달해 `aria-pressed`와 primary selected surface를 함께 노출합니다. 생성 중에는 아직 확정되지 않은 결과를 대상으로 하는 네 동작을 비활성화하고, 실패 시에는 불완전한 결과의 액션 대신 `error`와 `onRetry`만 제공합니다. action 실행, clipboard 결과 안내, 재생성 요청, feedback 저장과 선택 상태, transport 및 lifecycle truth는 제품이 소유합니다.
 - `sources`에는 `SourceDisclosure`, `attachments`에는 `FileUploadQueue`나 제품의 완료된 attachment 표현을 조합합니다. source 개수나 파일 상태에서 presentation을 추론하지 않습니다.
@@ -37,9 +39,11 @@
 - `onRetry`는 failed lifecycle에서만 나타나는 요청 callback이며 `refresh` 아이콘 버튼으로 액션바 앞에 자동 편입됩니다. callback 뒤 성공이나 다음 lifecycle을 추론하지 않습니다.
 - 개별 article은 live region을 만들지 않습니다. chronological announcement는 상위 `MessageFeed`의 named `role="log"` 하나가 소유합니다.
 - semantic DOM과 시각 reading order는 identity(author/timestamp) → body → response status → attachments → sources → delivery/static status → actions입니다. rich content는 document surface 안에서 자연스럽게 길어지고, compact 발화는 bubble로 묶입니다. `inlineSources`일 때 sources는 이 자리에서 빠져 마지막 footer 행에서 action group **뒤에** 형제로 배치됩니다.
-- `groupPosition`은 `single | first | middle | last`이며 grouped run은 `avatar`를 first에만 전달해도 같은 32px identity column을 예약합니다. `authorLabel`은 비문자 author의 접근 가능한 이름, `dateTime`은 `<time>`의 machine-readable 값입니다.
+- `groupPosition`은 `single | first | middle | last`이며 grouped run은 `avatar`를 first에만 전달해도 density가 선택한 32px comfortable 또는 24px compact identity column을 예약합니다. `authorLabel`은 비문자 author의 접근 가능한 이름, `dateTime`은 `<time>`의 machine-readable 값입니다.
 - `statusLabel={null}`은 기본 lifecycle 문구를 숨기고, `error`를 지정하면 중복 lifecycle status 문구가 기본 억제됩니다. failed message의 retry 아이콘 접근 이름은 `retryLabel`로 현지화합니다.
 - `roleBadgeLabel`은 이름 옆 역할 배지를 덮어씁니다. assistant 기본 `AI`, human-agent 기본 `상담원`이며 `null`은 배지를 숨깁니다. 배지는 장식이고 접근 가능한 역할명(`ROLE_LABELS`)은 항상 별도로 announce됩니다.
+- `identityVisibility="hidden"`은 작성자 행을 시각적으로만 숨기고 접근 가능한 이름(`author` + 역할명)은 유지합니다. 2자 대화에서 outbound solid primary bubble처럼 정렬과 fill이 이미 화자를 말하는 표면 전용입니다. 화자가 셋 이상이거나 bubble/fill 구분이 없는 표면에서는 쓰지 않습니다. grouped `middle | last`는 이 prop과 무관하게 이미 숨겨집니다.
+- `messageActionsVisibility="on-demand"`는 액션바를 opacity 0으로 쉬게 하고 hover 또는 focus-within에서 드러냅니다. 레이아웃 행과 접근성 트리는 그대로라 reflow가 없고 키보드 초점이 그대로 드러내므로 disclosure가 아니라 시각적 감쇠입니다. hover가 없는 coarse pointer와, 복구 경로인 실패 턴의 retry 바에는 적용되지 않고 항상 보입니다.
 
 ## 내부 LDS 비교와 visual delta
 
@@ -52,6 +56,12 @@
 | `FileUploadQueue` | 파일별 처리 상태와 action | upload lifecycle은 attachment component나 제품이 소유 |
 | `Textarea` / input tokens | 읽기 쉬운 text color와 focus 체계 | 읽기 article에는 input chrome을 도입하지 않음 |
 | `ScrollArea` / `LogViewer` | overflow와 chronological content 관례 | message 한 건은 scroll/live-region을 소유하지 않음 |
+
+### LK Portal consumer evidence와 compact 계약
+
+- [`SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md`](../../docs/SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md)에 기록된 LK Portal floating knowledge chat은 460×674px의 제한된 panel입니다. 이 consumer 근거는 optional compact spacing을 정당화하지만 panel width, chrome과 viewport inset은 각각 Portal과 `MessageFeed`가 계속 소유합니다.
+- `compact`는 avatar를 `--space-6`, bubble padding을 `--space-2 var(--space-3)`, 내부 gap을 `--space-1`로 줄입니다. 기본 `comfortable`의 기존 pixel geometry는 그대로이며, 320px에서도 document/bubble content는 wrapping 또는 자체 overflow로 reflow되어야 합니다.
+- compact의 24px avatar는 비상호작용 identity입니다. retry와 message action은 기존 32px `IconButton`을 유지해 실제 pointer target이 24×24 CSS px 아래로 줄지 않습니다.
 
 ### 선택한 reading hierarchy
 
@@ -71,17 +81,20 @@
 - [ChatGPT 오류 문제 해결](https://help.openai.com/en/articles/7996703)는 실패한 응답에서 오류 복구와 재생성을 제공하는 제품 관습을 설명합니다. LDS는 이를 실패 lifecycle의 명시적 `error`와 제품 소유 `onRetry` callback으로 표현하며, 성공 전이를 컴포넌트가 추론하지 않습니다.
 - [Ant Design X Attachments](https://x.ant.design/components/attachments/)는 file, image, audio, video와 document attachment를 composer와 message content에 조합하는 독립 anatomy로 다룹니다. LDS도 attachment를 schema가 아닌 `ReactNode` slot으로 둡니다.
 - [WAI-ARIA `log`](https://www.w3.org/TR/wai-aria/#log)는 순서대로 추가되는 chat history를 대표 사례로 정의합니다. message마다 live region을 만들지 않고 `MessageFeed` 한 곳에만 둡니다.
+- [WCAG 2.2 Understanding 1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)는 세로 scrolling content가 320 CSS px 상당 폭에서 정보·기능 손실이나 2차원 scrolling 없이 reflow되어야 한다고 설명합니다. density는 content 폭·wrapping 계약을 바꾸지 않습니다.
+- [WCAG 2.2 Understanding 2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)는 pointer target의 최소 크기를 24×24 CSS px로 정의합니다. compact도 내장 32px message action을 축소하지 않습니다.
+- [Carbon spacing](https://carbondesignsystem.com/elements/spacing/overview/)은 component density를 spacing scale의 작은 token 단계로 조정하되 관계와 hierarchy를 유지하도록 안내합니다. LDS도 shared token 값이나 typography를 바꾸지 않고 component 내부 공간만 한 단계 줄입니다.
 - [WCAG 2.2](https://www.w3.org/TR/WCAG22/)의 구조, focus, name과 contrast 요구를 최종 접근성 기준으로 사용합니다.
 
 ## secondary visual inspiration
 
 - [3 Free AI Chatbot App UI Kit](https://www.figma.com/design/ss5Fq2VKd2UDoHk7SE9dPl/3-Free-AI-Chatbot-App-UI-Kit--Community-?node-id=10301-21963)의 **왼쪽 slothGPT/general-assistant archetype**만 secondary visual inspiration으로 사용합니다.
 - 채택한 것은 long-form assistant document, compact user prompt, answer action과 하단 composer의 상대적 위계입니다. exact color, typography, avatar artwork, logo, sidebar, app shell, shadow와 asset은 복사하지 않습니다.
-- user 자신의 발화는 primary fill bubble로 화자를 표식하되, 특정 제품(slothpilot/Context Hub)의 messenger shell·palette·app chrome을 통째로 차용하지는 않습니다. 오른쪽 search/research 화면도 complete screen으로 가져오지 않고, provenance가 필요할 때 `SourceDisclosure`를 slot에 조합합니다.
+- user 자신의 발화는 primary fill bubble로 화자를 표식하되, 특정 제품(slothpilot/LK Portal)의 messenger shell·palette·app chrome을 통째로 차용하지는 않습니다. 오른쪽 search/research 화면도 complete screen으로 가져오지 않고, provenance가 필요할 때 `SourceDisclosure`를 slot에 조합합니다.
 
 ## product workflow gate
 
-- **LK Context Hub — supported by composition only.** rich answer, citation, attachment와 action slot을 조합할 수 있지만 product source의 card, color, width, API 또는 화면 anatomy를 차용하지 않습니다.
+- **LK Portal — supported by composition only.** rich answer, citation, attachment와 action slot을 조합할 수 있지만 product source의 card, color, width, API 또는 화면 anatomy를 차용하지 않습니다.
 - **LK Web Viz — not applicable.** 지도, layer, viewport와 task targeting workflow에는 chronological AI message item이 필수 surface로 확인되지 않았습니다.
 - **LK Control Full Daedeok — not applicable.** supervision, command와 manual-control state는 대화 article이 아니라 해당 domain control이 소유합니다.
 - 세 제품 repository는 필요한 component 종류와 state coverage를 확인하는 자료일 뿐 design, anatomy, public API, spacing 또는 style 권위가 아닙니다.
@@ -90,7 +103,7 @@
 ## representative review
 
 - 약 760px: long rich assistant document → compact user solid primary bubble → system 중앙 pill 칩 → optional human-agent neutral fill bubble의 reading order를 확인합니다.
-- 320px: 긴 한글·영문·URL·code와 source/attachment/action slot이 horizontal overflow 없이 wrapping 또는 자체 overflow를 갖는지 확인합니다.
+- 320px: comfortable/compact 모두 긴 한글·영문·URL·code와 source/attachment/action slot이 horizontal overflow 없이 wrapping 또는 자체 overflow를 갖고, action target이 최소 24×24 CSS px를 유지하는지 확인합니다.
 - dark: document는 배경과 불필요한 card 경계를 만들지 않고, solid primary user bubble·neutral fill human-agent bubble·system 칩·metadata가 identity와 WCAG AA 대비를 유지해야 합니다.
 - lifecycle: response status는 source/action보다 먼저 읽고, failed에서만 retry가 나타나며 complete/sent steady state는 중복 success badge를 만들지 않아야 합니다.
 

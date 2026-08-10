@@ -7,6 +7,8 @@ export interface DrawerProps {
   side?: 'left' | 'right';
   /** 패널 너비(px). @default 380 */
   width?: number;
+  /** Drawer의 chrome/body 밀도. body의 density-aware 자식은 이를 상속하며 명시적 size/padding/density가 우선합니다. @default "comfortable" */
+  density?: 'comfortable' | 'compact';
   title?: React.ReactNode;
   /** 제목 아래의 짧은 보조 설명. dialog의 `aria-describedby`와 연결됩니다. */
   subtitle?: React.ReactNode;
@@ -37,3 +39,22 @@ export interface DrawerProps {
 
 /** 네이비 스크림 위 사이드 패널 — 필터 / 상세 / 설정. */
 export function Drawer(props: DrawerProps): React.JSX.Element | null;
+
+export interface DrawerSectionProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
+  /** Drawer 본문 안의 보이는 하위 제목. */
+  title: React.ReactNode;
+  /** 제목 아래의 짧은 설명. */
+  description?: React.ReactNode;
+  /** 문서 구조에 맞는 제목 레벨. @default 3 */
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
+  /** 제목 행 우측의 보조 액션. */
+  actions?: React.ReactNode;
+  /** 앞 섹션과 구분선·상단 간격을 추가합니다. @default false */
+  divider?: boolean;
+  headerStyle?: React.CSSProperties;
+  contentStyle?: React.CSSProperties;
+  children?: React.ReactNode;
+}
+
+/** Drawer density를 상속하는 의미 있는 본문 하위 구획. */
+export function DrawerSection(props: DrawerSectionProps): React.JSX.Element;

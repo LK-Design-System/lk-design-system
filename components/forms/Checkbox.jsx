@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
+import { useResolvedControlSize } from '../internal/component-density.js';
 
 /**
  * LK ROBOTICS — Checkbox
@@ -16,7 +17,7 @@ export function Checkbox({
   indeterminate = false,
   onChange,
   variant = 'box',
-  size = 'md',
+  size,
   status = 'normal',
   state,
   bold = false,
@@ -48,7 +49,8 @@ export function Checkbox({
   const activeHover = hover || interaction === 'hovered';
   const activeFocus = focus || interaction === 'focused';
   const disabledState = disabled || disable || interaction === 'inactive';
-  const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size;
+  const resolvedSize = useResolvedControlSize(size);
+  const normalizedSize = resolvedSize === 'small' ? 'sm' : resolvedSize === 'medium' ? 'md' : resolvedSize;
   const handleChange = (event) => {
     if (disabledState) {
       event.target.checked = on;
@@ -99,7 +101,9 @@ export function Checkbox({
   });
 
   return (
-    <label data-disabled={disabledState ? "" : undefined}
+    <label
+      data-disabled={disabledState ? "" : undefined}
+      data-size={normalizedSize}
       htmlFor={id}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}

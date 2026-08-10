@@ -1,5 +1,6 @@
 import * as React from 'react';
 import type { LdsClassNames, LdsStyles, LdsVars } from '@lk-design-system/lds-core/components/internal/surface';
+import type { FloatingCollisionBoundary } from '@lk-design-system/lds-core/components/overlay/anchored-overlay';
 
 export type PopoverPart = 'root' | 'trigger' | 'panel';
 export type PopoverVariable = '--lds-popover-width' | '--lds-popover-max-height';
@@ -29,6 +30,10 @@ export interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
   withinPortal?: boolean;
   /** Explicit Portal target; defaults to provider target or owner-document body. */
   portalTarget?: HTMLElement | null;
+  /** Element/ref whose visible viewport intersection constrains flip, shift, and available size. Defaults to the viewport. */
+  collisionBoundary?: FloatingCollisionBoundary;
+  /** Inset from every collision-boundary edge in CSS pixels. @default 16 */
+  collisionPadding?: number;
   /** Explicit overlay layer override. */
   zIndex?: number;
   classNames?: LdsClassNames<PopoverPart>;

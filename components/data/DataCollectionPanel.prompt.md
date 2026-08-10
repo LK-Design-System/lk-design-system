@@ -60,7 +60,7 @@
 
 ## LK 제품 workflow 검증
 
-- **LK Context Hub** `6a46bc18ce26fce55b14bf7ffe6d9da0ca027967`: `src/components/catalog/ProjectDirectory.tsx`는 Card, embedded DataToolbar, ResourceState, desktop Table, mobile list, Pagination을 반복 조합합니다. 패널로 supported by composition이며 실제 query·행 action·권한·compact item markup은 제품 소유입니다.
+- **LK Portal** `e5ee99d5062170e26abe63d9105c2b8a024ce710`: `src/components/catalog/ProjectDirectory.tsx`는 Card, embedded DataToolbar, ResourceState, desktop Table, mobile list, Pagination을 반복 조합합니다. 패널로 supported by composition이며 실제 query·행 action·권한·compact item markup은 제품 소유입니다.
 - **LK Control Full Daedeok** `3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19`: `frontend/src/views/user/index.jsx`는 필터, loading/error/empty, MUI table, pagination을 같은 순서로 조합합니다. 패널 perimeter와 reading order는 재사용할 수 있지만 fetch·dialog·mutation·permission은 제품 소유입니다.
 - **LK Web Viz** `4701e1dcfb0d0e9163c74c227da2d6feb801cb30`: `frontend/src/screens/TaskHistoryScreen.tsx`는 작업 이력을 개별 card 목록으로 표현하고 현재 표형 resource collection workflow가 없어 not applicable입니다.
 

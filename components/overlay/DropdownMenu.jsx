@@ -39,6 +39,13 @@ function constrainedMaxHeight(requested, available) {
   return `min(${requested}, ${available}px)`;
 }
 
+function constrainedMaxWidth(requested, available) {
+  if (available == null) return requested;
+  if (requested == null) return available;
+  if (typeof requested === 'number') return Math.min(requested, available);
+  return `min(${requested}, ${available}px)`;
+}
+
 function CheckMark({ variant, checked, disabled }) {
   if (!variant || variant === "normal") return null;
   const activeColor = disabled
@@ -485,6 +492,8 @@ export const DropdownMenu = React.forwardRef(function DropdownMenu({
   onOpenChange,
   withinPortal = true,
   portalTarget,
+  collisionBoundary,
+  collisionPadding = 16,
   zIndex,
   className,
   style,
@@ -574,6 +583,8 @@ export const DropdownMenu = React.forwardRef(function DropdownMenu({
     panelRef,
     placement: requestedPosition,
     offset,
+    viewportPadding: collisionPadding,
+    collisionBoundary,
     strategy: withinPortal ? 'fixed' : 'absolute',
     align,
   });
@@ -589,6 +600,12 @@ export const DropdownMenu = React.forwardRef(function DropdownMenu({
   const panelMaxWidth = usesAdaptiveWidth
     ? "min(var(--component-menu-max-width), calc(100vw - var(--space-8)))"
     : "calc(100vw - var(--space-8))";
+  const boundaryPanelMinWidth = collisionBoundary == null
+    ? panelMinWidth
+    : constrainedMaxWidth(panelMinWidth, position.maxWidth);
+  const boundaryPanelMaxWidth = collisionBoundary == null
+    ? panelMaxWidth
+    : constrainedMaxWidth(panelMaxWidth, position.maxWidth);
   const [menuScrollable, setMenuScrollable] = React.useState(false);
 
   React.useLayoutEffect(() => {
@@ -717,8 +734,8 @@ export const DropdownMenu = React.forwardRef(function DropdownMenu({
             pointerEvents: withinPortal && (position.x == null || position.y == null) ? 'none' : 'auto',
             zIndex: resolvedZIndex,
             width: `var(--lds-dropdown-menu-width, ${typeof panelWidth === 'number' ? `${panelWidth}px` : panelWidth})`,
-            minWidth: `var(--lds-dropdown-menu-min-width, ${typeof panelMinWidth === 'number' ? `${panelMinWidth}px` : panelMinWidth})`,
-            maxWidth: panelMaxWidth,
+            minWidth: `var(--lds-dropdown-menu-min-width, ${typeof boundaryPanelMinWidth === 'number' ? `${boundaryPanelMinWidth}px` : boundaryPanelMinWidth})`,
+            maxWidth: boundaryPanelMaxWidth,
             maxHeight: panelMaxHeight == null ? 'var(--lds-dropdown-menu-max-height, none)' : `var(--lds-dropdown-menu-max-height, ${typeof panelMaxHeight === 'number' ? `${panelMaxHeight}px` : panelMaxHeight})`,
             overflow: panelMaxHeight != null ? 'hidden' : undefined,
             background: "var(--color-semantic-background-elevated-normal)",
@@ -731,6 +748,15 @@ export const DropdownMenu = React.forwardRef(function DropdownMenu({
             flexDirection: "column",
             gap: "var(--component-menu-gap)",
             ...partStyle(styles, 'panel'),
+            ...(collisionBoundary == null ? null : {
+              minWidth: typeof boundaryPanelMinWidth === 'number' ? `${boundaryPanelMinWidth}px` : boundaryPanelMinWidth,
+              maxWidth: typeof boundaryPanelMaxWidth === 'number' ? `${boundaryPanelMaxWidth}px` : boundaryPanelMaxWidth,
+              ...(panelMaxHeight == null ? null : {
+                minHeight: 0,
+                maxHeight: typeof panelMaxHeight === 'number' ? `${panelMaxHeight}px` : panelMaxHeight,
+                overflow: 'hidden',
+              }),
+            }),
           }}
         >
           <div
@@ -762,6 +788,10 @@ export const DropdownMenu = React.forwardRef(function DropdownMenu({
               overflowY: panelMaxHeight != null ? "auto" : undefined,
               scrollbarGutter: menuScrollable ? "stable" : undefined,
               ...partStyle(styles, 'menu'),
+              ...(collisionBoundary == null || panelMaxHeight == null ? null : {
+                overflowX: 'hidden',
+                overflowY: 'auto',
+              }),
             }}
           >
             {drill ? (

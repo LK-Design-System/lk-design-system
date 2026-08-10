@@ -43,7 +43,7 @@
 
 ## 제품 workflow 검토
 
-- **LK Portal** `372a826b3d7f9f11cc29b0fd7b575ca0480228e0`: `PersonalContextPage.tsx`와 `AdminWorkspace.tsx`의 연결 코드 발급 form이 기본 Input 48px + Button 40px를 같은 행에 사용합니다. `FieldAction`으로 supported by composition이며 API 요청·busy·credential 상태는 Portal 소유입니다.
+- **LK Portal** `e5ee99d5062170e26abe63d9105c2b8a024ce710`: `PersonalContextPage.tsx`와 `AdminWorkspace.tsx`의 연결 코드 발급 form이 기본 Input 48px + Button 40px를 같은 행에 사용합니다. `FieldAction`으로 supported by composition이며 API 요청·busy·credential 상태는 Portal 소유입니다.
 - **LK Control Full Daedeok** `93802fc2aa5d29f930380ae58d51dcb68322b5e7`: 로봇·사용자 검색 행과 task template 저장 행에 field + action이 확인되어 supported by composition입니다. 검색 조건·query·dialog 상태는 제품 소유입니다.
 - **LK Web Viz** `a984def117c05acd213f494cbb8a42e990595505`: 검토한 연결 설정은 full-width 하단 submit action과 `- / number / +` stepper를 사용합니다. 하나의 field + 하나의 action 계약과 다르므로 현재 적용은 not applicable입니다.
 

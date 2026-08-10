@@ -1,0 +1,1132 @@
+{
+  "kind": "lds-consumer-import-scan",
+  "scanner": "scripts/scan-package-consumer.mjs",
+  "scannerVersion": 1,
+  "repository": "LK-ROBOTICS-AX/lk_portal",
+  "commit": "e5ee99d5062170e26abe63d9105c2b8a024ce710",
+  "frontendRoot": "src",
+  "sourceTreeEntryCount": 451,
+  "sourceFileCount": 441,
+  "sourceTreeSha256": "cc65dcbbe8e73b11f11348ad727cc06aed9cf08f2117864c1900fbc832648a98",
+  "currentUsage": {
+    "dependencyDeclarations": 3,
+    "aggregateRootImports": 0,
+    "layerSubpathImports": 174,
+    "componentDeepImports": 0,
+    "stylesheetImports": 6,
+    "assetFilesystemPaths": 0,
+    "lds3dPackageImports": 0,
+    "cjsRequireOccurrences": 0
+  },
+  "matches": {
+    "dependencyDeclarations": [
+      {
+        "file": "package.json",
+        "field": "dependencies",
+        "specifier": "@lk-design-system/lds-core",
+        "version": "file:vendor/lk-design-system-lds-core-0.1.0-rc.61.tgz"
+      },
+      {
+        "file": "package.json",
+        "field": "dependencies",
+        "specifier": "@lk-design-system/lds-product",
+        "version": "file:vendor/lk-design-system-lds-product-0.1.0-rc.61.tgz"
+      },
+      {
+        "file": "package.json",
+        "field": "dependencies",
+        "specifier": "@lk-design-system/lds-theme",
+        "version": "file:vendor/lk-design-system-lds-theme-0.1.0-rc.61.tgz"
+      }
+    ],
+    "aggregateRootImports": [],
+    "layerSubpathImports": [
+      {
+        "file": "src/app/globals.css",
+        "line": 32,
+        "kind": "esm-side-effect",
+        "specifier": "@lk-design-system/lds-core/styles.css"
+      },
+      {
+        "file": "src/app/globals.css",
+        "line": 32,
+        "kind": "css-import",
+        "specifier": "@lk-design-system/lds-core/styles.css"
+      },
+      {
+        "file": "src/app/globals.css",
+        "line": 33,
+        "kind": "esm-side-effect",
+        "specifier": "@lk-design-system/lds-theme/styles.css"
+      },
+      {
+        "file": "src/app/globals.css",
+        "line": 33,
+        "kind": "css-import",
+        "specifier": "@lk-design-system/lds-theme/styles.css"
+      },
+      {
+        "file": "src/app/globals.css",
+        "line": 34,
+        "kind": "esm-side-effect",
+        "specifier": "@lk-design-system/lds-product/styles.css"
+      },
+      {
+        "file": "src/app/globals.css",
+        "line": 34,
+        "kind": "css-import",
+        "specifier": "@lk-design-system/lds-product/styles.css"
+      },
+      {
+        "file": "src/app/login/page.tsx",
+        "line": 7,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/app/sources/page.tsx",
+        "line": 2,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/app/sources/page.tsx",
+        "line": 3,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/admin/AdminWorkspace.tsx",
+        "line": 8,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/admin/AdminWorkspace.tsx",
+        "line": 9,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/admin/AdminWorkspace.tsx",
+        "line": 10,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/admin/SemanticReconciliationWorkspace.tsx",
+        "line": 22,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/admin/SemanticReconciliationWorkspace.tsx",
+        "line": 28,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/admin/SemanticReconciliationWorkspace.tsx",
+        "line": 29,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/briefings/BriefingRunDetailPage.tsx",
+        "line": 3,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/briefings/BriefingsWorkspace.tsx",
+        "line": 13,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/briefings/BriefingsWorkspace.tsx",
+        "line": 14,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/briefings/BriefingsWorkspace.tsx",
+        "line": 15,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/catalog/CatalogDetail.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/CatalogDetail.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/ConfluenceDirectory.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/ConfluenceDirectory.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/ConnectorSyncControls.tsx",
+        "line": 3,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/ConnectorSyncControls.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/DatasetDetailPage.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/DatasetDetailPage.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/DatasetDirectory.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/DatasetDirectory.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/catalog/DatasetDirectory.tsx",
+        "line": 6,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/detail/CatalogResourceDetail.tsx",
+        "line": 19,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/detail/CatalogResourceDetail.tsx",
+        "line": 20,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/DeveloperDirectory.tsx",
+        "line": 8,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/DeveloperDirectory.tsx",
+        "line": 17,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/DeveloperDirectory.tsx",
+        "line": 18,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/catalog/DocumentDirectory.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/DocumentDirectory.tsx",
+        "line": 22,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/DocumentDirectory.tsx",
+        "line": 23,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/catalog/HuggingFaceDirectory.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/HuggingFaceDirectory.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/catalog/HuggingFaceDirectory.tsx",
+        "line": 6,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/ModelDetailPage.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/ModelDetailPage.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/ModelDirectory.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/ModelDirectory.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/catalog/ModelDirectory.tsx",
+        "line": 6,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/parts.tsx",
+        "line": 8,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/ProjectDirectory.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/ProjectDirectory.tsx",
+        "line": 15,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/ProjectDirectory.tsx",
+        "line": 16,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/catalog/RepositoryDirectory.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/catalog/RepositoryDirectory.tsx",
+        "line": 21,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/catalog/RepositoryDrawer.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/chat/FloatingChat.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/chat/FloatingChat.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/connectors/ConfluenceConnections.tsx",
+        "line": 22,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/connectors/ConfluenceConnections.tsx",
+        "line": 23,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/connectors/ConfluenceWorkspace.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/connectors/ConfluenceWorkspace.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/context/PersonalContextPage.tsx",
+        "line": 3,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/context/PersonalContextPage.tsx",
+        "line": 10,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/context/PersonalContextPage.tsx",
+        "line": 11,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/developers/DeveloperIdentityDetail.tsx",
+        "line": 18,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/developers/DeveloperIdentityDetail.tsx",
+        "line": 19,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/documents/DocumentsWorkspace.tsx",
+        "line": 19,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/documents/DocumentsWorkspace.tsx",
+        "line": 20,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core/components/content/StatusBadge"
+      },
+      {
+        "file": "src/components/documents/DocumentsWorkspace.tsx",
+        "line": 40,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/documents/DocumentsWorkspace.tsx",
+        "line": 41,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/documents/GovernedDocumentsWorkspace.tsx",
+        "line": 16,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/documents/GovernedDocumentsWorkspace.tsx",
+        "line": 31,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/documents/GovernedDocumentsWorkspace.tsx",
+        "line": 32,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/documents/KnowledgeDocumentsWorkspace.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/integrations/ApiConnectionsWorkspace.tsx",
+        "line": 18,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/integrations/ApiConnectionsWorkspace.tsx",
+        "line": 24,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/integrations/ApiConnectionsWorkspace.tsx",
+        "line": 25,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/integrations/SynologyChatWorkspace.tsx",
+        "line": 11,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/integrations/SynologyChatWorkspace.tsx",
+        "line": 12,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/knowledge-graph/CompanyKnowledgeGraphPage.tsx",
+        "line": 15,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/knowledge-graph/CompanyKnowledgeGraphPage.tsx",
+        "line": 29,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/knowledge-graph/CompanyKnowledgeGraphPage.tsx",
+        "line": 30,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/knowledge-graph/KnowledgeGraphCanvas.tsx",
+        "line": 11,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/knowledge-graph/KnowledgeGraphCanvas.tsx",
+        "line": 18,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/knowledge-graph/KnowledgeGraphCanvas.tsx",
+        "line": 22,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/NetworkGraph"
+      },
+      {
+        "file": "src/components/knowledge-graph/OntologyExplorer.tsx",
+        "line": 10,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/knowledge-graph/OntologyExplorer.tsx",
+        "line": 16,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/knowledge-graph/OntologyExplorer.tsx",
+        "line": 17,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/knowledge/KnowledgeDetail.tsx",
+        "line": 21,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/knowledge/KnowledgeDetail.tsx",
+        "line": 22,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core/components/content/StatusBadge"
+      },
+      {
+        "file": "src/components/knowledge/KnowledgeDetail.tsx",
+        "line": 23,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/knowledge/KnowledgeDetail.tsx",
+        "line": 24,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/content/SourceDisclosure"
+      },
+      {
+        "file": "src/components/knowledge/KnowledgeDetail.tsx",
+        "line": 25,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/knowledge/KnowledgeDirectory.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/knowledge/KnowledgeDirectory.tsx",
+        "line": 6,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/knowledge/KnowledgeDirectory.tsx",
+        "line": 7,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/knowledge/KnowledgeSectionShell.tsx",
+        "line": 11,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/knowledge/SafeMarkdown.tsx",
+        "line": 2,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/knowledge/SemanticWikiDetailPage.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/knowledge/SemanticWikiDetailPage.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/layout/AppShell.tsx",
+        "line": 6,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/layout/AppShell.tsx",
+        "line": 7,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/layout/NavIcon.tsx",
+        "line": 18,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/layout/Sidebar.tsx",
+        "line": 19,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/layout/Sidebar.tsx",
+        "line": 20,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/layout/Sidebar.tsx",
+        "line": 21,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-theme"
+      },
+      {
+        "file": "src/components/operations/deviceops/DeviceDetailPage.tsx",
+        "line": 17,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/operations/deviceops/DeviceDetailPage.tsx",
+        "line": 18,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/operations/deviceops/DeviceInventoryWorkspace.tsx",
+        "line": 15,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/operations/deviceops/DeviceInventoryWorkspace.tsx",
+        "line": 16,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/operations/deviceops/DeviceInventoryWorkspace.tsx",
+        "line": 17,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/operations/FreshnessNote.tsx",
+        "line": 11,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/operations/FreshnessNote.tsx",
+        "line": 12,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core/components/content/StatusBadge"
+      },
+      {
+        "file": "src/components/pet/PetWorkspace.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/pet/PetWorkspace.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/pet/PetWorkspace.tsx",
+        "line": 6,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core/components/content/StatusBadge"
+      },
+      {
+        "file": "src/components/pet/PetWorkspace.tsx",
+        "line": 9,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/pet/PetWorkspace.tsx",
+        "line": 10,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/projects/ProjectRelationsPanel.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/projects/ProjectRelationsPanel.tsx",
+        "line": 6,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/projects/ProjectRelationsPanel.tsx",
+        "line": 7,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/projects/ProjectWorkspace.tsx",
+        "line": 18,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/projects/ProjectWorkspace.tsx",
+        "line": 19,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/projects/ProjectWorkspace.tsx",
+        "line": 20,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/publications/KnowledgeShareDrawer.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/publications/PublicationReviewQueue.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/publications/PublicationReviewQueue.tsx",
+        "line": 16,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/publications/PublicationReviewQueue.tsx",
+        "line": 17,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/reports/ReportReadingView.tsx",
+        "line": 2,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/reports/ReportSubmissionsWorkspace.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/reports/ReportSubmissionsWorkspace.tsx",
+        "line": 6,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core/components/content/StatusBadge"
+      },
+      {
+        "file": "src/components/reports/ReportSubmissionsWorkspace.tsx",
+        "line": 7,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/reports/ReportSubmissionsWorkspace.tsx",
+        "line": 8,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/reports/ReportsWorkspace.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/reports/ReportsWorkspace.tsx",
+        "line": 6,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/reports/ReportsWorkspace.tsx",
+        "line": 7,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/reports/ReportsWorkspace.tsx",
+        "line": 8,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core/components/content/StatusBadge"
+      },
+      {
+        "file": "src/components/research/ResearchProfileWorkspace.tsx",
+        "line": 3,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/research/ResearchProfileWorkspace.tsx",
+        "line": 10,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/research/ResearchRunDetailPage.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/research/ResearchRunDetailPage.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/research/ResearchWorkspace.tsx",
+        "line": 15,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/research/ResearchWorkspace.tsx",
+        "line": 25,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/research/ResearchWorkspace.tsx",
+        "line": 26,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/services/ServiceDetailPage.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/services/ServiceDetailPage.tsx",
+        "line": 5,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/services/serviceModel.ts",
+        "line": 1,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core/components/content/StatusBadge"
+      },
+      {
+        "file": "src/components/services/ServiceWorkspace.tsx",
+        "line": 15,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/services/ServiceWorkspace.tsx",
+        "line": 16,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/services/ServiceWorkspace.tsx",
+        "line": 17,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/shared/DetailHeader.tsx",
+        "line": 2,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/shared/DetailHeader.tsx",
+        "line": 3,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/shared/ExternalServiceLink.tsx",
+        "line": 19,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/shared/LoadState.tsx",
+        "line": 12,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/shared/LoadState.tsx",
+        "line": 13,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/shared/ManagementTableSection.tsx",
+        "line": 2,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/shared/MissingValue.tsx",
+        "line": 1,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/shared/PageHeader.tsx",
+        "line": 22,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/ui/Badge.tsx",
+        "line": 13,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/ui/Badge.tsx",
+        "line": 14,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core/components/content/StatusBadge"
+      },
+      {
+        "file": "src/components/ui/ButtonLink.tsx",
+        "line": 8,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/ui/Card.tsx",
+        "line": 11,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/ui/ConfirmDialog.tsx",
+        "line": 14,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/ui/Drawer.tsx",
+        "line": 20,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/ui/Drawer.tsx",
+        "line": 21,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/ui/EmptyState.tsx",
+        "line": 10,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/ui/LoadingSpinner.tsx",
+        "line": 13,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/vault/MemberVaultAccessDrawer.tsx",
+        "line": 7,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/vault/MemberVaultAccessDrawer.tsx",
+        "line": 8,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/vault/MemberVaultAccessDrawer.tsx",
+        "line": 9,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/vault/OrganizationVaultWorkspace.tsx",
+        "line": 17,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/vault/OrganizationVaultWorkspace.tsx",
+        "line": 18,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/vault/PrivateVaultWorkspace.tsx",
+        "line": 12,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      },
+      {
+        "file": "src/components/vault/PrivateVaultWorkspace.tsx",
+        "line": 13,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product"
+      },
+      {
+        "file": "src/components/vault/PrivateVaultWorkspace.tsx",
+        "line": 14,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-product/components/data/Table"
+      },
+      {
+        "file": "src/components/vault/VaultWorkspace.tsx",
+        "line": 4,
+        "kind": "esm-from",
+        "specifier": "@lk-design-system/lds-core"
+      }
+    ],
+    "componentDeepImports": [],
+    "stylesheetImports": [
+      {
+        "file": "src/app/globals.css",
+        "line": 32,
+        "kind": "esm-side-effect",
+        "specifier": "@lk-design-system/lds-core/styles.css"
+      },
+      {
+        "file": "src/app/globals.css",
+        "line": 32,
+        "kind": "css-import",
+        "specifier": "@lk-design-system/lds-core/styles.css"
+      },
+      {
+        "file": "src/app/globals.css",
+        "line": 33,
+        "kind": "esm-side-effect",
+        "specifier": "@lk-design-system/lds-theme/styles.css"
+      },
+      {
+        "file": "src/app/globals.css",
+        "line": 33,
+        "kind": "css-import",
+        "specifier": "@lk-design-system/lds-theme/styles.css"
+      },
+      {
+        "file": "src/app/globals.css",
+        "line": 34,
+        "kind": "esm-side-effect",
+        "specifier": "@lk-design-system/lds-product/styles.css"
+      },
+      {
+        "file": "src/app/globals.css",
+        "line": 34,
+        "kind": "css-import",
+        "specifier": "@lk-design-system/lds-product/styles.css"
+      }
+    ],
+    "assetFilesystemPaths": [],
+    "lds3dPackageImports": [],
+    "cjsRequireOccurrences": []
+  }
+}

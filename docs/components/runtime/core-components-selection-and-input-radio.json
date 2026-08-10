@@ -167,6 +167,10 @@
     },
     {
       "subject": "명시 규칙 2",
+      "rule": "size를 생략하면 일반 표면에서는 기존 md, bounded compact component scope에서는 sm을 사용합니다. 시각 원과 별개로 native radio target은 두 크기 모두 최소 24×24px이며 명시한 size가 우선합니다."
+    },
+    {
+      "subject": "명시 규칙 3",
       "rule": "Radio — 1.5px 헤어라인 원(20px, sm 16px). 선택되면 원이 시그널 잉크로 채워지고 화이트 중앙 점이 나타납니다. 그룹은 같은 name을 공유하세요."
     },
     {
@@ -176,10 +180,6 @@
     {
       "subject": "--color-semantic-background-elevated-normal",
       "rule": "light: #FFFFFF; dark: #212225"
-    },
-    {
-      "subject": "--color-semantic-fill-normal",
-      "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
     }
   ],
   "responsive": [],

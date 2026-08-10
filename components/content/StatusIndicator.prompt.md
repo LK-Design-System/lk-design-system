@@ -20,6 +20,6 @@
 - [WCAG 2.2 Use of Color](https://www.w3.org/TR/WCAG22/#use-of-color)는 색만으로 정보를 전달하지 않도록 요구합니다. 따라서 label 없는 dot API는 제공하지 않습니다.
 - `StatusBadge`, `ConnectionBadge`, `LogViewer`, `SourceDisclosure`를 sibling으로 확인했습니다. transport 품질의 다단 신호는 `ConnectionBadge`, 긴 원인과 복구 action은 Banner/Notification이 소유합니다.
 
-실제 connection state machine, freshness 임계값, polling과 announcement는 제품이 소유합니다. LK Web Viz, LK Control Full Daedeok, LK Context Hub는 이 primitive를 조합할 수 있지만 이번 분리는 제품 route나 transport 계약을 바꾸지 않으므로 세 자산 검토는 모두 **not applicable**입니다.
+실제 connection state machine, freshness 임계값, polling과 announcement는 제품이 소유합니다. LK Web Viz, LK Control Full Daedeok, LK Portal은 이 primitive를 조합할 수 있지만 이번 분리는 제품 route나 transport 계약을 바꾸지 않으므로 세 자산 검토는 모두 **not applicable**입니다.
 
 Storybook에서 steady/pulse/offline/critical, 긴 label, light/dark와 reduced motion을 확인합니다.

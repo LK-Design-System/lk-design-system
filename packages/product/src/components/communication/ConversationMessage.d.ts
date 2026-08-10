@@ -4,6 +4,7 @@ export type ConversationMessageDirection = 'inbound' | 'outbound' | 'system';
 export type ConversationMessageAuthorRole = 'user' | 'assistant' | 'human-agent' | 'system';
 export type ConversationMessagePresentation = 'document' | 'bubble';
 export type ConversationMessageGroupPosition = 'single' | 'first' | 'middle' | 'last';
+export type ConversationMessageDensity = 'comfortable' | 'compact';
 
 export interface ConversationMessageAction {
   /** Stable identifier used as the React key and the data-message-action hook. */
@@ -32,15 +33,21 @@ export type ConversationMessageLifecycle =
 interface ConversationMessageBaseProps extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
   /** Position within a visually grouped run from the same author. @default 'single' */
   groupPosition?: ConversationMessageGroupPosition;
+  /** Message-owned spatial density. Comfortable preserves the legacy 32px avatar, bubble padding, and internal gaps; compact reduces only those spaces without changing typography, semantics, or action targets. @default 'comfortable' */
+  density?: ConversationMessageDensity;
   /** Static content, outbound delivery state, or inbound response generation state. @default { kind: 'static' } */
   lifecycle?: ConversationMessageLifecycle;
   /** Visible author identity. */
   author: React.ReactNode;
   /** Accessible author name when author is not plain text. */
   authorLabel?: string;
+  /** 'hidden' keeps the author in the accessible name only, for surfaces where alignment and fill already state the speaker (e.g. the outbound bubble in a two-party chat). Grouped middle/last items are already hidden regardless. @default 'visible' */
+  identityVisibility?: 'visible' | 'hidden';
+  /** 'on-demand' rests the action bar at opacity 0 and reveals it on hover or focus-within. Layout and the accessible tree are unchanged; coarse pointers and failed-turn retry bars stay always visible. @default 'always' */
+  messageActionsVisibility?: 'always' | 'on-demand';
   /** Visible role badge next to the author name. Defaults to 'AI' for assistant and '상담원' for human-agent; `null` hides it. Decorative — the accessible role name is always announced separately. */
   roleBadgeLabel?: React.ReactNode;
-  /** Avatar shown for single/first participant messages. Grouped runs reserve the same 32px token column even when later items omit this prop. */
+  /** Avatar shown for single/first participant messages. Grouped runs reserve the density-selected 32px comfortable or 24px compact token column even when later items omit this prop. */
   avatar?: React.ReactNode;
   /** Human-readable timestamp. */
   timestamp?: React.ReactNode;

@@ -30,6 +30,7 @@
 | `inputAriaDescribedBy` | `string` | No | Helper/error element IDs applied to the actual file input. |
 | `inputAriaInvalid` | `React.AriaAttributes['aria-invalid']` | No |  |
 | `hint` | `React.ReactNode` | No | 안내 문구. |
+| `size` | `'sm' \| 'md' \| 'small' \| 'medium'` | No | drop target 크기. compact component scope에서는 기본 sm, 그 밖에서는 md. |
 | `disabled` | `boolean` | No |  |
 
 ## Behavior and interaction
@@ -41,6 +42,7 @@
 
 | Subject | Rule |
 | --- | --- |
+| 명시 규칙 1 | size를 생략하면 일반 표면은 기존 md(최소 144px), bounded compact component scope는 sm(최소 112px, 32px 아이콘 tile)을 사용합니다. 명시한 size가 우선하며 전체 label target과 native input의 키보드 접근은 유지됩니다. |
 | --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
@@ -109,6 +111,7 @@
 - `--label1-line`
 - `--label1-size`
 - `--radius-md`
+- `--space-2`
 - `--space-3`
 - `--space-4`
 - `--space-6`

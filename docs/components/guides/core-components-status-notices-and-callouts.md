@@ -41,6 +41,7 @@
 | `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative' \| 'navy'` | No |  |
 | `title` | `React.ReactNode` | No |  |
 | `headingLevel` | `2 \| 3 \| 4 \| 5 \| 6 \| false` | No | 문서 구조에 맞는 제목 레벨. 기본 false는 기존 비-heading title을 유지합니다. @default false |
+| `density` | `'comfortable' \| 'compact'` | No | 내부 여백과 본문 행간. compact component scope를 상속하며 명시값이 우선합니다. |
 | `icon` | `React.ReactElement \| null` | No | tone별 기본 아이콘을 교체합니다. 생략하거나 null을 전달해도 기본 아이콘은 유지됩니다. |
 | `children` | `React.ReactNode` | No |  |
 
@@ -107,11 +108,13 @@
 - `--color-semantic-label-normal`
 - `--font-sans`
 - `--fw-bold`
+- `--label1-line`
 - `--label1-size`
 - `--radius-lg`
 - `--space-0-5`
 - `--space-3`
 - `--space-3-5`
+- `--space-4`
 - `--space-5`
 
 ### Source contracts

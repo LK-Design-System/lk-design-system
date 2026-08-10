@@ -12,6 +12,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `DataToolbar.filters` render context: `filters={({ size }) => ...}`가 검색과 같은 `sm`/`md` field control 밀도를 전달하며 기존 ReactNode 슬롯은 호환됩니다.
 - `DashboardShell`에 계층형 좁은 화면 탐색을 위한 controlled `temporaryNavigation` Drawer 계약을 추가했습니다. 공용 modal 엔진의 스크림·focus containment·Escape·복원·scroll lock을 재사용하고 열린 동안 셸 배경을 `inert` 처리합니다.
 - `SideNav autoExpandActiveGroup={false}`로 활성 route 표시와 disclosure 자동 펼침을 분리할 수 있습니다. 기본값 `true`는 기존 동작을 보존합니다.
+- `SideNav appearance="brand"`을 추가했습니다. 브랜드 네이비(`--color-semantic-brand-surface`, `#05132B`) 평면 셸과 rest·hover·active·pressed·focus 색 역할을 컴포넌트 토큰으로 제공하며, 기존 `default` 외형과 `surface` geometry·ARIA 동작은 그대로입니다. 셸 표면에 그라데이션을 쓰지 않으므로 표면 색 변화가 상태 신호의 색 예산을 잠식하지 않고, 로고 자산이 설계된 네이비와 같은 값이라 화이트 lockup이 그대로 올라갑니다.
 - `StatusIndicator` Core 컴포넌트: 실시간 가용성·연결·freshness를 6px semantic dot과 필수 visible label로 표시하며, 실제 변화 중인 신호에만 reduced-motion-safe `pulse`를 명시합니다.
 - `RecordHeader` Product Extension for person, robot, order, and other record identity: optional visual, required record title, badge, description, details, actions, composable heading level, and 320px action reflow.
 - Scroll-surface governance: `check:scroll-surfaces` enforces the native default, standardized compact opt-in, forced-colors fallback, and explicit reasons for the only hidden-scrollbar exceptions; Storybook Axe now includes `scrollable-region-focusable`.
@@ -69,6 +70,47 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.69 - 2026-08-10
+
+### Added
+
+- `ConversationMessage`, `MessageFeed`, `MessageComposer`에 기본 렌더링을 보존하는 additive `density="compact"` 축을 추가했습니다. 좁은 대화 패널은 24px avatar slot, 16px message gap, 40px 한 줄 작성기를 사용할 수 있으며 typography, DOM/ARIA, 32px primary action은 유지됩니다.
+- `Popover`와 `DropdownMenu`에 `collisionBoundary`/`collisionPadding`을 추가했습니다. owner-document Portal은 그대로 사용하면서 viewport와 지정 container의 교집합 안에서 flip, shift, max width/height를 계산합니다.
+- 460px, 360px, 296px의 짧은 대화 열에서 추가·출처 메뉴, 읽기 전용 안내, 응답 방식 설정을 실제로 여닫는 Storybook 조합과 키보드·focus return·reflow 계약을 추가했습니다.
+
+### Fixed
+
+- compact `MessageComposer`의 32px utility·send/stop action radius를 12px로 맞춰 16px shell 안쪽 모서리 마감을 일관되게 했습니다. comfortable의 기존 8px primary radius는 변하지 않습니다.
+- 지정한 `collisionBoundary` 안에서 세로 스크롤바가 생긴 Popover·DropdownMenu의 위치 계산이 콘텐츠 폭을 외곽 폭으로 오인해 우측 여백을 침범하던 문제를 고쳤습니다. 실제 border-box와 scrollbar gutter를 포함해 padded boundary 안에 유지합니다.
+
+## 0.1.0-rc.68.2 - 2026-08-09
+
+### Added
+
+- `Select render="chip-trigger"`: 트리거 전체를 보더 없는 단일 알약(칩)으로 그리는 표시 값. 기존 `chip`(선택 값을 트리거 안 캡슐로 강조)과 달리 인풋 크롬과 캡슐이 겹치는 이중 표면을 만들지 않으며, 작성창 동작 띠처럼 폼 필드가 아닌 자리의 옵션 컨트롤용이다. 포커스 링·invalid 보더·키보드/ARIA 계약은 기존 필드와 동일하다.
+
+## 0.1.0-rc.68.1 - 2026-08-09
+
+### Added
+
+- `ConversationMessage identityVisibility="hidden"`: 정렬과 fill이 이미 화자를 말하는 표면(2자 대화의 outbound solid primary bubble 등)에서 작성자 행을 시각적으로만 숨깁니다. 접근 가능한 이름(author + 역할명)은 유지되고, grouped `middle | last`의 기존 숨김 동작은 그대로입니다.
+- `ConversationMessage messageActionsVisibility="on-demand"`: 액션바를 opacity 0으로 쉬게 하고 hover 또는 focus-within에서 드러냅니다. 레이아웃 행과 접근성 트리는 유지되어 reflow가 없고, hover가 없는 coarse pointer와 실패 턴의 retry 바에는 적용되지 않습니다.
+
+## 0.1.0-rc.68 - 2026-08-09
+
+### Added
+
+- `DrawerSection` provides a semantic Drawer-body subsection with a required title, optional description and actions, configurable heading level, optional divider, and density-aware section rhythm.
+
+### Changed
+
+- Drawer body now establishes an internal, bounded density scope. With `density="compact"`, eligible `Input`, `Select`, `Textarea`, `Checkbox`/`CheckboxGroup`, `Radio`/`RadioGroup`, `ChoiceCard`, `Callout`, `FileUpload`, and `SecretField` descendants resolve their existing compact axis when the corresponding prop is omitted; explicit `size`, `padding`, or `density` always wins, and `comfortable` output remains unchanged.
+- The scope does not reach Drawer header or footer chrome. `Button` does not consume inherited density and `LdsProvider` gains no density setting, so the close control and footer actions keep their established target and `md` sizing.
+
+### Fixed
+
+- `Radio` keeps a minimum 24×24 CSS px native pointer target at compact density without enlarging its visual glyph, matching the existing Checkbox target contract.
+
 ## 0.1.0-rc.67 - 2026-08-09
 
 ### Added
@@ -76,6 +118,16 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Card density="compact"` adds an opt-in 16px desktop information surface with tighter internal spacing while preserving `comfortable` as the default, explicit `padding` precedence, the existing mobile platform contract, typography, semantics, and interaction.
 - `FeatureCard density="compact"` adds an opt-in launcher density with 16px boxed padding, 12px group spacing, a 40px icon tile, and unchanged title/body typography.
 - `RecordHeader size="sm"` adds a compact record-identity header aligned with the existing small `PageHeader` scale while preserving heading level, description/details typography, DOM order, and actions.
+
+## 0.1.0-rc.66 - 2026-08-09
+
+### Added
+
+- `Drawer density="compact"` adds an explicit product-form density for tighter header, body, and footer chrome while keeping `comfortable` as the backward-compatible default. Child control sizes remain application-owned.
+
+### Fixed
+
+- `ChoiceCard padding` now applies to the selectable presentation as documented, and its title and description use explicit line-height utilities so overlay typography cannot inflate card geometry.
 
 ## 0.1.0-rc.65 - 2026-08-09
 

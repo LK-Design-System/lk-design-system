@@ -73,10 +73,10 @@ API key·token처럼 읽기 전용 값을 잠시 표시하고 복사한 뒤 다�
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 기본 reveal은 10초 뒤 자동으로 닫힙니다. revealed를 외부에서 제어해도 같은 timer가 동작하고 onRevealChange(false)로 닫기를 요청합니다. revealable=false, disabled, 빈 값으로 바뀌면 즉시 masked 상태로 돌아가므로 숨김 기능이 사라진 채 평문이 남지 않습니다. |
-| 명시 규칙 2 | IconButton: 32px plain trailing action과 표준 eye/copy/check/close icon을 사용합니다. copy 성공/실패 icon에만 LDS positive/negative 의미색을 적용하며 별도 action divider, nested card, 고유 shadow나 색상 surface를 추가하지 않습니다. |
+| 명시 규칙 2 | size를 생략하면 내부 Input과 동일하게 bounded compact component scope를 상속합니다. 명시한 size가 우선하고 reveal/copy IconButton은 기존 32px target을 유지합니다. |
+| 명시 규칙 3 | IconButton: 32px plain trailing action과 표준 eye/copy/check/close icon을 사용합니다. copy 성공/실패 icon에만 LDS positive/negative 의미색을 적용하며 별도 action divider, nested card, 고유 shadow나 색상 surface를 추가하지 않습니다. |
 | --color-semantic-status-negative | light: #EE5656; dark: #F16F6F |
 | --color-semantic-status-positive | light: #13BE4C; dark: #3FD270 |
-| --space-0 | 0px |
 
 ## Content and writing
 

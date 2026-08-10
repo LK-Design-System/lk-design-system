@@ -115,10 +115,10 @@ export const ChoiceCardInputContract = {
 };
 
 export const ChoiceCardNamingContract = {
-  name: '이름과 설명 계약',
+  name: '이름·설명·밀도 계약',
   tags: ['!dev'],
   parameters: storyDescription(
-    '카드의 제목이 이름을, 설명이 힌트(aria-describedby)가 되는지 확인합니다. 설명이 이름에도 설명에도 도달하지 못하면 안 됩니다.',
+    '카드의 제목이 이름을, 설명이 힌트(aria-describedby)가 되는지 확인하고 sm·기본 padding 및 고정된 본문 줄 높이를 함께 검증합니다.',
   ),
   render: function Naming() {
     const [plan, setPlan] = React.useState('standard');
@@ -131,6 +131,7 @@ export const ChoiceCardNamingContract = {
             inputValue="standard"
             title="기본 플랜"
             description="필수 설정으로 시작합니다."
+            padding="sm"
             selected={plan === 'standard'}
             onSelect={() => setPlan('standard')}
           />
@@ -152,6 +153,10 @@ export const ChoiceCardNamingContract = {
     const card = canvasElement.querySelector('[data-contract="named-card"]');
     const input = card?.querySelector('input[type="radio"]');
     if (!input) throw new Error('ChoiceCard must render a native radio.');
+    if (!input.checked) throw new Error('The initially selected ChoiceCard must preserve native checked state.');
+    if (getComputedStyle(card).paddingTop !== '12px') {
+      throw new Error('padding="sm" must compute to 12px for the choice presentation.');
+    }
     if (input.hasAttribute('aria-label')) {
       throw new Error('A string title must not be forced onto the input as aria-label.');
     }
@@ -165,13 +170,27 @@ export const ChoiceCardNamingContract = {
     if (descriptionNode?.textContent?.trim() !== '필수 설정으로 시작합니다.') {
       throw new Error('The description must reach the input as aria-describedby.');
     }
+    if (getComputedStyle(titleNode).lineHeight !== getComputedStyle(titleNode).getPropertyValue('--body2-line').trim()) {
+      throw new Error('The ChoiceCard title must use the body2 line-height token.');
+    }
+    if (getComputedStyle(descriptionNode).lineHeight !== getComputedStyle(descriptionNode).getPropertyValue('--label2-line').trim()) {
+      throw new Error('The ChoiceCard description must use the label2 line-height token.');
+    }
 
-    const explicit = canvasElement.querySelector('[data-contract="labelled-card"] input[type="radio"]');
+    const explicitCard = canvasElement.querySelector('[data-contract="labelled-card"]');
+    const explicit = explicitCard?.querySelector('input[type="radio"]');
+    if (getComputedStyle(explicitCard).paddingTop !== '16px') {
+      throw new Error('The default md padding must remain 16px for the choice presentation.');
+    }
     if (explicit?.getAttribute('aria-label') !== '검토 플랜 직접 지정' || explicit.hasAttribute('aria-labelledby')) {
       throw new Error('An explicit aria-label must win over the title element.');
     }
     if (!explicit.getAttribute('aria-describedby')) {
       throw new Error('An explicitly named card must still expose its description.');
+    }
+    await userEvent.click(explicit);
+    if (input.checked || !explicit.checked) {
+      throw new Error('Padding and typography must not change native single-selection behavior.');
     }
   },
 };

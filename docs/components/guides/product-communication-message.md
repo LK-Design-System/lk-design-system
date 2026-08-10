@@ -17,7 +17,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - participant는 presentation="document" | "bubble"로 표현 방식을 명시할 수 있습니다. presentation은 정보 위계이지 protocol, 권한, 신뢰도 또는 발신자 role을 바꾸지 않습니다.
 - direction은 participant 배치만 재정의합니다. user는 기본 outbound, assistant와 human-agent는 기본 inbound이며 system은 항상 system 방향입니다. 시각 정렬 때문에 DOM 순서를 뒤집지 않습니다.
 - Ant Design X Bubble은 role, placement, content, variant, loading과 footer action을 분리합니다. LDS도 role과 presentation을 분리하되 일반 AI 장문 응답은 borderless document, 짧은 사용자 발화는 bubble로 적응했습니다.
-- user 자신의 발화는 primary fill bubble로 화자를 표식하되, 특정 제품(slothpilot/Context Hub)의 messenger shell·palette·app chrome을 통째로 차용하지는 않습니다. 오른쪽 search/research 화면도 complete screen으로 가져오지 않고, provenance가 필요할 때 SourceDisclosure를 slot에 조합합니다.
+- 3 Free AI Chatbot App UI Kit의 왼쪽 slothGPT/general-assistant archetype만 secondary visual inspiration으로 사용합니다.
 
 ### 사용하지 않음
 
@@ -31,23 +31,26 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | Part | Contract |
 | --- | --- |
 | authorLabel | Accessible author name when author is not plain text. |
+| messageActionsVisibility | 'on-demand' rests the action bar at opacity 0 and reveals it on hover or focus-within. Layout and the accessible tree are unchanged; coarse pointers and failed-turn retry bars stay always visible. @default 'always' |
 | roleBadgeLabel | Visible role badge next to the author name. Defaults to 'AI' for assistant and '상담원' for human-agent; null hides it. Decorative — the accessible role name is always announced separately. |
-| avatar | Avatar shown for single/first participant messages. Grouped runs reserve the same 32px token column even when later items omit this prop. |
+| avatar | Avatar shown for single/first participant messages. Grouped runs reserve the density-selected 32px comfortable or 24px compact token column even when later items omit this prop. |
 | statusLabel | Optional lifecycle label override. null suppresses it; delivery sent, delivery read, and response complete are silent by default (read surfaces as a bubble-foot receipt instead). |
 | actions | Additional message-level actions rendered as a composition slot after the built-in action bar. |
 | messageActions | Primary icon action bar rendered below the body. Each entry becomes an icon-only IconButton; products own the glyph and handlers. Coexists with the actions slot. |
-| error | Failed-response body content. When set, a muted warning glyph is prefixed and the redundant lifecycle status label is suppressed by default. Not a live region — the MessageFeed log announces it. |
 
 ## Properties
 
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
 | `groupPosition` | `ConversationMessageGroupPosition` | No | Position within a visually grouped run from the same author. @default 'single' |
+| `density` | `ConversationMessageDensity` | No | Message-owned spatial density. Comfortable preserves the legacy 32px avatar, bubble padding, and internal gaps; compact reduces only those spaces without changing typography, semantics, or action targets. @default 'comfortable' |
 | `lifecycle` | `ConversationMessageLifecycle` | No | Static content, outbound delivery state, or inbound response generation state. @default { kind: 'static' } |
 | `author` | `React.ReactNode` | Yes | Visible author identity. |
 | `authorLabel` | `string` | No | Accessible author name when author is not plain text. |
+| `identityVisibility` | `'visible' \| 'hidden'` | No | 'hidden' keeps the author in the accessible name only, for surfaces where alignment and fill already state the speaker (e.g. the outbound bubble in a two-party chat). Grouped middle/last items are already hidden regardless. @default 'visible' |
+| `messageActionsVisibility` | `'always' \| 'on-demand'` | No | 'on-demand' rests the action bar at opacity 0 and reveals it on hover or focus-within. Layout and the accessible tree are unchanged; coarse pointers and failed-turn retry bars stay always visible. @default 'always' |
 | `roleBadgeLabel` | `React.ReactNode` | No | Visible role badge next to the author name. Defaults to 'AI' for assistant and '상담원' for human-agent; null hides it. Decorative — the accessible role name is always announced separately. |
-| `avatar` | `React.ReactNode` | No | Avatar shown for single/first participant messages. Grouped runs reserve the same 32px token column even when later items omit this prop. |
+| `avatar` | `React.ReactNode` | No | Avatar shown for single/first participant messages. Grouped runs reserve the density-selected 32px comfortable or 24px compact token column even when later items omit this prop. |
 | `timestamp` | `React.ReactNode` | No | Human-readable timestamp. |
 | `dateTime` | `string` | No | Machine-readable ISO date/time for the time element. |
 | `statusLabel` | `React.ReactNode` | No | Optional lifecycle label override. null suppresses it; delivery sent, delivery read, and response complete are silent by default (read surfaces as a bubble-foot receipt instead). |
@@ -65,32 +68,34 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 
 | State | Contract |
 | --- | --- |
+| identityVisibility | 'hidden' keeps the author in the accessible name only, for surfaces where alignment and fill already state the speaker (e.g. the outbound bubble in a two-party chat). Grouped middle/last items are already hidden regardless. @default 'visible' |
 | statusLabel | Optional lifecycle label override. null suppresses it; delivery sent, delivery read, and response complete are silent by default (read surfaces as a bubble-foot receipt instead). |
 | error | Failed-response body content. When set, a muted warning glyph is prefixed and the redundant lifecycle status label is suppressed by default. Not a live region — the MessageFeed log announces it. |
 
 ## Behavior and interaction
 
 - authorRole은 user | assistant | human-agent | system입니다. assistant 기본 presentation은 document, user와 human-agent는 bubble, system은 centered neutral chip입니다. user bubble은 solid primary fill, human-agent bubble은 neutral fill(--color-semantic-fill-strong)로 구분합니다.
+- WCAG 2.2의 구조, focus, name과 contrast 요구를 최종 접근성 기준으로 사용합니다.
+- 320px: comfortable/compact 모두 긴 한글·영문·URL·code와 source/attachment/action slot이 horizontal overflow 없이 wrapping 또는 자체 overflow를 갖고, action target이 최소 24×24 CSS px를 유지하는지 확인합니다.
 - feedback 저장·선택 상태, edit, branch/thread, 읽음 판정(read tracking; delivery read 상태 표시는 지원하되 읽음 여부 계산은 제품 몫), voice recorder와 tool execution. 긍정·부정 feedback과 재생성 control은 canonical messageActions 조합으로 지원하지만 해당 동작과 상태 전이는 제품이 구현합니다.
 - 전체 화면 shell, header/sidebar, sticky composer, scroll anchoring과 unread 계산.
-- 선택한 reading hierarchy.
 
 ## 정량 규칙
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | groupPosition은 single \| first \| middle \| last이며 grouped run은 avatar를 first에만 전달해도 같은 32px identity column을 예약합니다. authorLabel은 비문자 author의 접근 가능한 이름, dateTime은 의 machine-readable 값입니다. |
-| 명시 규칙 2 | WCAG 2.2의 구조, focus, name과 contrast 요구를 최종 접근성 기준으로 사용합니다. |
-| 명시 규칙 3 | 3 Free AI Chatbot App UI Kit의 왼쪽 slothGPT/general-assistant archetype만 secondary visual inspiration으로 사용합니다. |
-| 명시 규칙 4 | 약 760px: long rich assistant document → compact user solid primary bubble → system 중앙 pill 칩 → optional human-agent neutral fill bubble의 reading order를 확인합니다. |
+| 명시 규칙 1 | density는 comfortable \| compact이며 기본 comfortable은 기존 32px avatar column, bubble padding과 내부 gap을 그대로 보존합니다. compact는 이 공간만 작은 LDS token 단계로 줄이고 typography, color, lifecycle, DOM/ARIA와 action 크기는 바꾸지 않습니다. |
+| 명시 규칙 2 | groupPosition은 single \| first \| middle \| last이며 grouped run은 avatar를 first에만 전달해도 density가 선택한 32px comfortable 또는 24px compact identity column을 예약합니다. authorLabel은 비문자 author의 접근 가능한 이름, dateTime은 의 machine-readable 값입니다. |
+| 명시 규칙 3 | identityVisibility="hidden"은 작성자 행을 시각적으로만 숨기고 접근 가능한 이름(author + 역할명)은 유지합니다. 2자 대화에서 outbound solid primary bubble처럼 정렬과 fill이 이미 화자를 말하는 표면 전용입니다. 화자가 셋 이상이거나 bubble/fill 구분이 없는 표면에서는 쓰지 않습니다. grouped middle \| last는 이 prop과 무관하게 이미 숨겨집니다. |
+| 명시 규칙 4 | messageActionsVisibility="on-demand"는 액션바를 opacity 0으로 쉬게 하고 hover 또는 focus-within에서 드러냅니다. 레이아웃 행과 접근성 트리는 그대로라 reflow가 없고 키보드 초점이 그대로 드러내므로 disclosure가 아니라 시각적 감쇠입니다. hover가 없는 coarse pointer와, 복구 경로인 실패 턴의 retry 바에는 적용되지 않고 항상 보입니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
 
 - inlineSources는 sources 슬롯을 body 아래 별도 행이 아니라 action bar와 같은 footer 행에 배치합니다(ChatGPT식). 접힌 를 넣으면 resting 상태가 아이콘+출처 토글 한 줄이 되어 copy·재생성 아이콘 옆에 나란히 놓이고, 누르면 출처 목록이 SourceDisclosure의 앵커드 Popover(드롭다운)로 떠서 열려 본문 레이아웃을 밀지 않습니다.
 - semantic DOM과 시각 reading order는 identity(author/timestamp) → body → response status → attachments → sources → delivery/static status → actions입니다. rich content는 document surface 안에서 자연스럽게 길어지고, compact 발화는 bubble로 묶입니다. inlineSources일 때 sources는 이 자리에서 빠져 마지막 footer 행에서 action group 뒤에 형제로 배치됩니다.
-- 채택한 것은 long-form assistant document, compact user prompt, answer action과 하단 composer의 상대적 위계입니다. exact color, typography, avatar artwork, logo, sidebar, app shell, shadow와 asset은 복사하지 않습니다.
-- 320px: 긴 한글·영문·URL·code와 source/attachment/action slot이 horizontal overflow 없이 wrapping 또는 자체 overflow를 갖는지 확인합니다.
+- SELECTANDMESSAGEFEEDLAYOUTFOLLOWUP.md에 기록된 LK Portal floating knowledge chat은 460×674px의 제한된 panel입니다. 이 consumer 근거는 optional compact spacing을 정당화하지만 panel width, chrome과 viewport inset은 각각 Portal과 MessageFeed가 계속 소유합니다.
+- compact의 24px avatar는 비상호작용 identity입니다. retry와 message action은 기존 32px IconButton을 유지해 실제 pointer target이 24×24 CSS px 아래로 줄지 않습니다.
 
 ## Content and writing
 
@@ -103,9 +108,9 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 
 - 완료된 AI 응답의 canonical 제품 조합은 응답 복사 → 응답 다시 생성 → 긍정 평가 → 부정 평가 순서이며 provenance가 있으면 inlineSources의 접힌 출처 토글을 같은 footer에 형제로 둡니다. 각 icon-only action의 label은 대상과 동작을 함께 말해야 합니다. 선택형 평가 action은 제품이 소유한 상태를 pressed로 전달해 aria-pressed와 primary selected surface를 함께 노출합니다.
 - 개별 article은 live region을 만들지 않습니다. chronological announcement는 상위 MessageFeed의 named role="log" 하나가 소유합니다.
+- compact는 avatar를 --space-6, bubble padding을 --space-2 var(--space-3), 내부 gap을 --space-1로 줄입니다. 기본 comfortable의 기존 pixel geometry는 그대로이며, 320px에서도 document/bubble content는 wrapping 또는 자체 overflow로 reflow되어야 합니다.
 - WAI-ARIA log는 순서대로 추가되는 chat history를 대표 사례로 정의합니다. message마다 live region을 만들지 않고 MessageFeed 한 곳에만 둡니다.
-- dark: document는 배경과 불필요한 card 경계를 만들지 않고, solid primary user bubble·neutral fill human-agent bubble·system 칩·metadata가 identity와 WCAG AA 대비를 유지해야 합니다.
-- | 확인한 sibling | 계승한 규칙 | ConversationMessage 결정 | | --- | --- | --- | | Avatar | 32px small identity, text fallback | 필요한 participant identity에 조합하며 message가 avatar 로직을 복제하지 않음 | | Button / IconButton | named action, focus, disabled, small control | retry와 response action을 slot에서 조합하고 자체 button 스타일을 만들지 않음 | | Bubble…
+- WCAG 2.2 Understanding 1.4.10 Reflow는 세로 scrolling content가 320 CSS px 상당 폭에서 정보·기능 손실이나 2차원 scrolling 없이 reflow되어야 한다고 설명합니다. density는 content 폭·wrapping 계약을 바꾸지 않습니다.
 
 ## Related components
 
@@ -127,6 +132,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 <ConversationMessage
   authorRole="assistant"
   author="AI Assistant"
+  density="compact"
   inlineSources
   sources={<SourceDisclosure sources={sources} />}
   messageActions={[
@@ -168,6 +174,8 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--color-semantic-primary-surface-normal`
 - `--color-semantic-static-white`
 - `--color-semantic-status-negative`
+- `--dur-fast`
+- `--ease-out`
 - `--font-sans`
 - `--fw-medium`
 - `--fw-semibold`
@@ -180,6 +188,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--space-2`
 - `--space-3`
 - `--space-4`
+- `--space-6`
 - `--space-8`
 
 ### Source contracts

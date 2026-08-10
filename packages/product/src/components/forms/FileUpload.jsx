@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFieldMetadata } from '@lk-design-system/lds-core/components/forms/field-shared';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
+import { useResolvedControlSize } from '@lk-design-system/lds-core/components/internal/component-density';
 
 function matchesAccept(file, accept) {
   const rules = String(accept ?? '')
@@ -30,6 +31,7 @@ export function FileUpload({
   inputAriaInvalid,
   hint = '클릭하거나 파일을 끌어다 놓으세요',
   disabled = false,
+  size,
   className,
   style,
   onDragEnter,
@@ -38,6 +40,9 @@ export function FileUpload({
   onDrop,
   ...rest
 }) {
+  const resolvedSize = useResolvedControlSize(size);
+  const normalizedSize = resolvedSize === 'small' ? 'sm' : resolvedSize === 'medium' ? 'md' : resolvedSize;
+  const compact = normalizedSize === 'sm';
   // The field engine owns id derivation and normalises the caller-supplied
   // description ids. Its label/message stack does not apply: the visible
   // <label> here is the drop target itself, and the description channel is
@@ -76,6 +81,7 @@ export function FileUpload({
       {...rest}
       className={['lk-file-upload', className].filter(Boolean).join(' ')}
       aria-disabled={disabled || undefined}
+      data-size={normalizedSize}
       data-drag-active={drag ? '' : undefined}
       data-focus-visible={focused ? '' : undefined}
       onDragEnter={(event) => {
@@ -148,13 +154,13 @@ export function FileUpload({
       <label
         htmlFor={inputId}
         style={{
-          minHeight: 144,
+          minHeight: compact ? 112 : 144,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 'var(--space-3)',
-          padding: 'var(--space-6) var(--space-4)',
+          gap: compact ? 'var(--space-2)' : 'var(--space-3)',
+          padding: compact ? 'var(--space-4) var(--space-3)' : 'var(--space-6) var(--space-4)',
           boxSizing: 'border-box',
           textAlign: 'center',
           cursor: disabled ? 'not-allowed' : 'pointer',
@@ -164,8 +170,8 @@ export function FileUpload({
           aria-hidden="true"
           style={{
             display: 'inline-flex',
-            width: 40,
-            height: 40,
+            width: compact ? 32 : 40,
+            height: compact ? 32 : 40,
             borderRadius: 'var(--radius-md)',
             background: disabled ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-primary-surface-normal)',
             color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-primary-normal)',

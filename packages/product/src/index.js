@@ -98,7 +98,7 @@ export { TopBar, TopBarNavItem } from './components/navigation/TopBar.jsx';
 export { UserMenu } from './components/navigation/UserMenu.jsx';
 export { Wizard } from './components/navigation/Wizard.jsx';
 export { CommandPalette } from './components/overlay/CommandPalette.jsx';
-export { Drawer } from './components/overlay/Drawer.jsx';
+export { Drawer, DrawerSection } from './components/overlay/Drawer.jsx';
 export { HoverCard } from './components/overlay/HoverCard.jsx';
 export { Lightbox } from './components/overlay/Lightbox.jsx';
 export { Popover } from './components/overlay/Popover.jsx';

@@ -112,6 +112,13 @@
       "owner": "CalloutProps"
     },
     {
+      "name": "density",
+      "type": "'comfortable' | 'compact'",
+      "required": false,
+      "description": "내부 여백과 본문 행간. compact component scope를 상속하며 명시값이 우선합니다.",
+      "owner": "CalloutProps"
+    },
+    {
       "name": "icon",
       "type": "React.ReactElement | null",
       "required": false,
@@ -210,11 +217,13 @@
     "--color-semantic-label-normal",
     "--font-sans",
     "--fw-bold",
+    "--label1-line",
     "--label1-size",
     "--radius-lg",
     "--space-0-5",
     "--space-3",
     "--space-3-5",
+    "--space-4",
     "--space-5"
   ],
   "apiLinks": [],

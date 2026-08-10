@@ -205,25 +205,6 @@ async function expectRejected(t, configure, expectedMessage) {
   assert.match(result.output, expectedMessage);
 }
 
-test('preserves established Card and header evidence when density guide limits expand', async (t) => {
-  const workspace = await createWorkspace(t);
-  const result = await runGenerator(workspace);
-  assert.equal(result.ok, true, result.output);
-
-  const registry = await generatedRegistry(workspace);
-  const card = guideBySlug(registry, 'core-components-content-card');
-  const featureCard = guideBySlug(registry, 'product-content-feature-card');
-  const recordHeader = guideBySlug(registry, 'product-content-record-header');
-
-  assert.ok(card.properties.some(({ name }) => name === 'density'));
-  assert.ok(card.properties.some(({ name }) => name === 'bottomContent'));
-  assert.ok(card.quantitativeRules.some(({ rule }) => rule.includes('SaveButton(save)')));
-  assert.ok(card.quantitativeRules.some(({ rule }) => rule.startsWith('Card —')));
-  assert.ok(card.responsive.some((rule) => rule.startsWith('vars accepts only')));
-  assert.ok(featureCard.quantitativeRules.some(({ subject }) => subject === '--color-semantic-accent-foreground-blue'));
-  assert.ok(recordHeader.quantitativeRules.some(({ subject }) => subject === '--color-semantic-label-normal'));
-});
-
 test('emits normalized author omissions and an evidence-only section status', async (t) => {
   const workspace = await createWorkspace(t);
   await addStoryGuideFields(workspace, 'stories/Button.stories.jsx', {

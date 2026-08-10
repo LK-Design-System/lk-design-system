@@ -98,10 +98,6 @@
     {
       "subject": "--body2-size",
       "rule": "15px"
-    },
-    {
-      "subject": "--color-semantic-accent-foreground-blue",
-      "rule": "light: #336CA1; dark: #639ACE"
     }
   ],
   "responsive": [

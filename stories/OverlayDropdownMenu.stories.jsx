@@ -238,6 +238,146 @@ export const DropdownMenuTableOverflowContract = {
   },
 };
 
+function DropdownMenuCollisionBoundaryFixture() {
+  const [collisionBoundary, setCollisionBoundary] = React.useState(null);
+  return (
+    <main style={{ minHeight: 320, padding: 'var(--space-6)' }}>
+      <section
+        ref={setCollisionBoundary}
+        data-dropdown-collision-boundary=""
+        style={{
+          position: 'relative',
+          width: 280,
+          height: 240,
+          padding: 'var(--space-3)',
+          boxSizing: 'border-box',
+          overflow: 'hidden',
+          border: '1px solid var(--color-semantic-line-solid-normal)',
+          borderRadius: 'var(--radius-lg)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', width: '100%', height: '100%' }}>
+          <DropdownMenu
+            align="right"
+            position="bottom"
+            width={360}
+            collisionBoundary={collisionBoundary ?? undefined}
+            collisionPadding={8}
+            trigger={<Button size="sm">패널 경계 메뉴</Button>}
+            items={Array.from({ length: 12 }, (_, index) => ({ label: `권한 옵션 ${index + 1}` }))}
+            styles={{ panel: { minWidth: 420, minHeight: 420, overflow: 'visible' }, menu: { overflowY: 'visible' } }}
+          />
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function assertDropdownInsideBoundary(panel, boundary, padding = 8) {
+  const panelRect = panel.getBoundingClientRect();
+  const boundaryRect = boundary.getBoundingClientRect();
+  const view = boundary.ownerDocument.defaultView;
+  const effectiveBoundary = {
+    left: Math.max(0, boundaryRect.left) + padding,
+    right: Math.min(view.innerWidth, boundaryRect.right) - padding,
+    top: Math.max(0, boundaryRect.top) + padding,
+    bottom: Math.min(view.innerHeight, boundaryRect.bottom) - padding,
+  };
+  const tolerance = 1;
+  if (
+    panelRect.left < effectiveBoundary.left - tolerance
+    || panelRect.right > effectiveBoundary.right + tolerance
+    || panelRect.top < effectiveBoundary.top - tolerance
+    || panelRect.bottom > effectiveBoundary.bottom + tolerance
+  ) {
+    throw new Error(
+      `DropdownMenu must stay inside its collision boundary (panel=${panelRect.left},${panelRect.top},${panelRect.right},${panelRect.bottom}; boundary=${boundaryRect.left},${boundaryRect.top},${boundaryRect.right},${boundaryRect.bottom}).`,
+    );
+  }
+}
+
+export const DropdownMenuCollisionBoundaryContract = {
+  name: '계약 · collision boundary',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    'Portal target과 positioning 경계를 분리합니다. HTMLElement chat-panel 경계 안에서 menu가 폭·높이를 줄이고 위로 flip하며, 경계의 이동과 resize 뒤에도 다시 배치되는지 및 APG menu-button 초점 계약을 확인합니다.',
+  ),
+  render: () => <DropdownMenuCollisionBoundaryFixture />,
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const boundary = canvasElement.querySelector('[data-dropdown-collision-boundary]');
+    const trigger = [...(boundary?.querySelectorAll('button') ?? [])]
+      .find((button) => button.textContent?.trim() === '패널 경계 메뉴');
+    if (!boundary || !trigger) throw new Error('DropdownMenu collision fixture requires its boundary and trigger.');
+
+    trigger.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    const menu = await waitFor(() => {
+      const current = menuControlledBy(trigger);
+      if (!current) throw new Error('ArrowDown must open the collision-constrained DropdownMenu.');
+      if (ownerDocument.activeElement?.textContent?.trim() !== '권한 옵션 1') {
+        throw new Error('Opening a constrained DropdownMenu must focus its first item.');
+      }
+      return current;
+    });
+    const panel = menu.parentElement;
+    const portal = panel?.closest('[data-lds-overlay-portal]');
+    if (
+      !panel
+      || !portal
+      || portal.parentElement !== ownerDocument.body
+      || getComputedStyle(panel).position !== 'fixed'
+    ) {
+      throw new Error('Collision-constrained DropdownMenu must preserve its owner-document body Portal and fixed strategy.');
+    }
+    if (
+      trigger.getAttribute('aria-haspopup') !== 'menu'
+      || trigger.getAttribute('aria-expanded') !== 'true'
+      || menu.getAttribute('role') !== 'menu'
+      || menu.getAttribute('aria-labelledby') !== trigger.id
+    ) {
+      throw new Error('Collision constraints must not change the APG menu-button semantics.');
+    }
+
+    await waitFor(() => {
+      assertDropdownInsideBoundary(panel, boundary);
+      if (panel.dataset.placement !== 'top') throw new Error('A bottom-edge DropdownMenu must flip above inside its collision boundary.');
+      if (menu.scrollHeight <= menu.clientHeight) throw new Error('Collision maxHeight must make overflowing menu items scroll.');
+    });
+
+    const leftBeforeMove = panel.getBoundingClientRect().left;
+    boundary.style.transform = 'translateX(20px)';
+    await waitFor(() => {
+      assertDropdownInsideBoundary(panel, boundary);
+      if (Math.abs(panel.getBoundingClientRect().left - leftBeforeMove - 20) > 1) {
+        throw new Error('DropdownMenu must follow movement of its collision boundary and anchor.');
+      }
+    });
+
+    boundary.style.width = '244px';
+    await waitFor(() => {
+      assertDropdownInsideBoundary(panel, boundary);
+      if (panel.getBoundingClientRect().width > 228.5) {
+        throw new Error('DropdownMenu must recompute maxWidth after its collision boundary resizes.');
+      }
+    });
+
+    boundary.style.transform = 'translateX(-96px)';
+    await waitFor(() => {
+      assertDropdownInsideBoundary(panel, boundary);
+      if (panel.getBoundingClientRect().left < 7.5) {
+        throw new Error('DropdownMenu must use the visible viewport intersection of a partially clipped boundary.');
+      }
+    });
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (menuControlledBy(trigger)) throw new Error('Escape must close a collision-constrained DropdownMenu.');
+      if (ownerDocument.activeElement !== trigger) throw new Error('Escape must restore its constrained DropdownMenu trigger.');
+    });
+  },
+};
+
 function DropdownMenuKeyboardDemo() {
   return (
     <main style={{ minHeight: 320, display: 'grid', alignContent: 'start', justifyItems: 'start', gap: 'var(--space-4)', padding: 24 }}>

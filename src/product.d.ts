@@ -99,7 +99,7 @@ export { TopBar, TopBarNavItem } from '../components/navigation/TopBar';
 export { UserMenu } from '../components/navigation/UserMenu';
 export { Wizard } from '../components/navigation/Wizard';
 export { CommandPalette } from '../components/overlay/CommandPalette';
-export { Drawer } from '../components/overlay/Drawer';
+export { Drawer, DrawerSection } from '../components/overlay/Drawer';
 export { HoverCard } from '../components/overlay/HoverCard';
 export { Lightbox } from '../components/overlay/Lightbox';
 export { Popover } from '../components/overlay/Popover';

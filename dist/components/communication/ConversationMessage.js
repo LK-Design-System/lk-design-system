@@ -1,7 +1,7 @@
 "use client";
 import {
   ConversationMessage
-} from "../../chunk-ECWTENQT.js";
+} from "../../chunk-55K2SB4W.js";
 import "../../chunk-CRCBIV64.js";
 import "../../chunk-EFNOOM3R.js";
 import "../../chunk-S26PXDE3.js";

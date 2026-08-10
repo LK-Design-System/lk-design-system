@@ -10,6 +10,51 @@ const Chevron = ({ open }) => (
 
 const LIST_ITEM_STYLE = { display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', minWidth: 0 };
 
+const SIDE_NAV_APPEARANCES = {
+  default: {
+    surface: 'var(--color-semantic-background-elevated-normal)',
+    backgroundImage: undefined,
+    divider: 'var(--color-semantic-line-solid-normal)',
+    foreground: 'var(--color-semantic-label-normal)',
+    mutedForeground: 'var(--color-semantic-label-alternative)',
+    subtleForeground: 'var(--color-semantic-label-alternative)',
+    hoverForeground: 'var(--color-semantic-label-alternative)',
+    activeForeground: 'var(--color-semantic-label-normal)',
+    activeProxyForeground: 'var(--color-semantic-primary-normal)',
+    hoverSurface: 'var(--color-semantic-fill-normal)',
+    activeSurface: 'var(--color-semantic-primary-surface-strong)',
+    activeHoverSurface: 'var(--color-semantic-primary-surface-strong)',
+    pressedSurface: 'var(--color-semantic-fill-strong)',
+    badgeSurface: 'var(--color-semantic-primary-surface-strong)',
+    badgeForeground: 'var(--color-semantic-label-normal)',
+    badgeActiveSurface: 'var(--color-semantic-primary-normal)',
+    badgeActiveForeground: 'var(--color-semantic-background-elevated-normal)',
+    badgeDot: 'var(--color-semantic-primary-normal)',
+    focusIndicator: 'var(--color-semantic-focus-indicator)',
+  },
+  brand: {
+    surface: 'var(--component-side-nav-brand-surface)',
+    backgroundImage: undefined,
+    divider: 'var(--component-side-nav-brand-divider)',
+    foreground: 'var(--component-side-nav-brand-foreground)',
+    mutedForeground: 'var(--component-side-nav-brand-muted-foreground)',
+    subtleForeground: 'var(--component-side-nav-brand-subtle-foreground)',
+    hoverForeground: 'var(--component-side-nav-brand-hover-foreground)',
+    activeForeground: 'var(--component-side-nav-brand-active-foreground)',
+    activeProxyForeground: 'var(--component-side-nav-brand-active-foreground)',
+    hoverSurface: 'var(--component-side-nav-brand-hover-surface)',
+    activeSurface: 'transparent',
+    activeHoverSurface: 'var(--component-side-nav-brand-active-hover-surface)',
+    pressedSurface: 'var(--component-side-nav-brand-pressed-surface)',
+    badgeSurface: 'var(--component-side-nav-brand-badge-surface)',
+    badgeForeground: 'var(--component-side-nav-brand-badge-foreground)',
+    badgeActiveSurface: 'var(--component-side-nav-brand-badge-active-surface)',
+    badgeActiveForeground: 'var(--component-side-nav-brand-active-foreground)',
+    badgeDot: 'var(--component-side-nav-brand-active-foreground)',
+    focusIndicator: 'var(--component-side-nav-brand-focus-indicator)',
+  },
+};
+
 function cssLength(value) {
   return typeof value === 'number' ? `${value}px` : value;
 }
@@ -36,17 +81,19 @@ function RailItemTooltip({ label, collapsed, enabled = true, children }) {
  * A wide labeled dashboard sidebar: brand `header` (+ `headerCollapsed` for the
  * rail state), grouped nav `items` (icon + label + badge, `{ heading }` section
  * rows, `children` sub-menus with disclosure), optional pinned `footer`, and a
- * product-shell-owned collapse control. Active item takes the cyan wash +
- * signal ink. Collapsed = icon rail (labels become tooltips, badges become
- * dots, headings become hairlines). Controlled or uncontrolled for both
- * `value` and `collapsed`; SideNav never renders the collapse control itself.
- * Compact fixed rail → `NavRail`; mobile → `BottomNav`.
+ * product-shell-owned collapse control. The default appearance uses the
+ * semantic selection wash; the opt-in brand appearance uses accent ink on a
+ * flat brand-navy shell without a persistent selected fill. Collapsed = icon rail
+ * (labels become tooltips, badges become dots, headings become hairlines).
+ * Controlled or uncontrolled for both `value` and `collapsed`; SideNav never
+ * renders the collapse control itself. Compact fixed rail → `NavRail`; mobile
+ * → `BottomNav`.
  */
 export const SideNav = React.forwardRef(function SideNav({
   items = [], value, defaultValue, onChange,
   header, headerCollapsed, footer, width = 240,
   brandAlign = 'center', footerGap = 'var(--space-2)',
-  surface = 'floating',
+  surface = 'floating', appearance = 'default',
   collapsed, defaultCollapsed = false, onCollapsedChange, collapsedWidth = 64, overlay = false,
   autoExpandActiveGroup = true,
   multiple = true,
@@ -55,6 +102,8 @@ export const SideNav = React.forwardRef(function SideNav({
   'aria-label': ariaLabel = '사이드 탐색',
   ...rest
 }, forwardedRef) {
+  const resolvedAppearance = appearance === 'brand' ? 'brand' : 'default';
+  const appearanceTokens = SIDE_NAV_APPEARANCES[resolvedAppearance];
   const isControlled = value !== undefined;
   const flat = [];
   items.forEach((i) => { if (i && !i.heading && i.value != null) { flat.push(i); (i.children || []).forEach((c) => flat.push(c)); } });
@@ -192,16 +241,21 @@ export const SideNav = React.forwardRef(function SideNav({
     // navigation panel actually sits on, `fill-alternative` is a 5% neutral —
     // below the perception floor on a 44px row, so the largest hit targets in the
     // shell read as inert. It stays weaker than the 14% primary selection wash.
-    background: active ? 'var(--color-semantic-primary-surface-strong)' : hovered && !disabled ? 'var(--color-semantic-fill-normal)' : 'transparent', color: active ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)',
+    background: active
+      ? hovered && !disabled ? appearanceTokens.activeHoverSurface : appearanceTokens.activeSurface
+      : hovered && !disabled ? appearanceTokens.hoverSurface : 'transparent',
+    color: active
+      ? appearanceTokens.activeForeground
+      : hovered && !disabled ? appearanceTokens.hoverForeground : appearanceTokens.mutedForeground,
     transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)', ...extra, ...partStyle(styles, 'item'),
   });
   const labelSpan = (active, children) => (
     <span data-slot="label" className={partClassName(classNames, 'label') || undefined} style={{ flex: 1, minWidth: 0, fontSize: 'var(--label1-size)', fontWeight: active ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', ...partStyle(styles, 'label') }}>{children}</span>
   );
   const pill = (active, badge) => (
-    <span data-slot="badge" className={partClassName(classNames, 'badge') || undefined} style={{ flexShrink: 0, minWidth: 18, height: 18, padding: '0 6px', boxSizing: 'border-box', borderRadius: 'var(--radius-pill)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', lineHeight: '18px', textAlign: 'center', background: active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-surface-strong)', color: active ? 'var(--color-semantic-background-elevated-normal)' : 'var(--color-semantic-label-normal)', ...partStyle(styles, 'badge') }}>{badge}</span>
+    <span data-slot="badge" className={partClassName(classNames, 'badge') || undefined} style={{ flexShrink: 0, minWidth: 18, height: 18, padding: '0 6px', boxSizing: 'border-box', borderRadius: 'var(--radius-pill)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', lineHeight: '18px', textAlign: 'center', background: active ? appearanceTokens.badgeActiveSurface : appearanceTokens.badgeSurface, color: active ? appearanceTokens.badgeActiveForeground : appearanceTokens.badgeForeground, ...partStyle(styles, 'badge') }}>{badge}</span>
   );
-  const dot = <span data-slot="badge" className={partClassName(classNames, 'badge') || undefined} style={{ position: 'absolute', top: 7, right: 7, width: 7, height: 7, borderRadius: '50%', background: 'var(--color-semantic-primary-normal)', ...partStyle(styles, 'badge') }} />;
+  const dot = <span data-slot="badge" className={partClassName(classNames, 'badge') || undefined} style={{ position: 'absolute', top: 7, right: 7, width: 7, height: 7, borderRadius: '50%', background: appearanceTokens.badgeDot, ...partStyle(styles, 'badge') }} />;
 
   const renderLeafControl = (item, { active, parentValue, ariaLabel, title, content, itemStyle }) => {
     const disabled = !!item.disabled;
@@ -253,9 +307,10 @@ export const SideNav = React.forwardRef(function SideNav({
   const docked = resolvedSurface === 'docked';
   const resolvedWidth = cssLength(width);
   const resolvedCollapsedWidth = cssLength(collapsedWidth);
-  const shell = { position: 'relative', display: 'flex', flexDirection: 'column', width: col ? `var(--lds-side-nav-collapsed-width, ${resolvedCollapsedWidth})` : `var(--lds-side-nav-width, ${resolvedWidth})`, boxSizing: 'border-box', background: 'var(--color-semantic-background-elevated-normal)', border: docked ? 'none' : '1px solid var(--color-semantic-line-solid-normal)', borderInlineEnd: docked ? '1px solid var(--color-semantic-line-solid-normal)' : undefined, borderRadius: docked ? 0 : 'var(--lds-side-nav-radius, var(--radius-xl))', boxShadow: docked ? 'none' : undefined, padding: 'var(--lds-side-nav-padding, var(--space-2-5))', transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
+  const shell = { '--_lds-side-nav-pressed-surface': appearanceTokens.pressedSurface, '--_lds-side-nav-focus-indicator': appearanceTokens.focusIndicator, position: 'relative', display: 'flex', flexDirection: 'column', width: col ? `var(--lds-side-nav-collapsed-width, ${resolvedCollapsedWidth})` : `var(--lds-side-nav-width, ${resolvedWidth})`, boxSizing: 'border-box', color: resolvedAppearance === 'brand' ? appearanceTokens.foreground : undefined, backgroundColor: appearanceTokens.surface, backgroundImage: appearanceTokens.backgroundImage, border: docked ? 'none' : `1px solid ${appearanceTokens.divider}`, borderInlineEnd: docked ? `1px solid ${appearanceTokens.divider}` : undefined, borderRadius: docked ? 0 : 'var(--lds-side-nav-radius, var(--radius-xl))', boxShadow: docked ? 'none' : undefined, padding: 'var(--lds-side-nav-padding, var(--space-2-5))', transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
   const sideNavStyles = `
-    [data-sidenav-value]:active:not(:disabled){background:var(--color-semantic-fill-strong)!important}
+    [data-sidenav-value]:active:not(:disabled){background:var(--_lds-side-nav-pressed-surface)!important}
+    [data-sidenav-value]:focus-visible{outline-color:var(--_lds-side-nav-focus-indicator)!important}
     [data-collapsed="true"] .lk-sidenav__scroll::-webkit-scrollbar{display:none}
     @media(prefers-reduced-motion:reduce){.lk-sidenav__surface{transition-duration:0s!important;animation-duration:0s!important}}
   `;
@@ -271,8 +326,8 @@ export const SideNav = React.forwardRef(function SideNav({
       <ul data-slot="list" className={partClassName(classNames, 'list', 'lk-scroll-surface', 'lk-sidenav__scroll') || undefined} data-scrollbar="compact" data-scroll-gutter={col ? 'auto' : 'stable'} data-scrollbar-exception="collapsed-navigation-rail" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', flex: '1 1 auto', minHeight: 0, margin: 0, padding: 0, listStyle: 'none', overflowX: 'hidden', overflowY: 'auto', scrollbarWidth: col ? 'none' : undefined, ...partStyle(styles, 'list') }}>
         {items.map((o, i) => {
           if (o.heading) return col
-            ? <li key={'h' + i} style={LIST_ITEM_STYLE}><div data-slot="heading" className={partClassName(classNames, 'heading') || undefined} aria-hidden="true" style={{ height: 1, flexShrink: 0, background: 'var(--color-semantic-line-solid-normal)', margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px', ...partStyle(styles, 'heading') }} /></li>
-            : <li key={'h' + i} style={LIST_ITEM_STYLE}><div data-slot="heading" className={partClassName(classNames, 'heading') || undefined} style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px', ...partStyle(styles, 'heading') }}>{o.heading}</div></li>;
+            ? <li key={'h' + i} style={LIST_ITEM_STYLE}><div data-slot="heading" className={partClassName(classNames, 'heading') || undefined} aria-hidden="true" style={{ height: 1, flexShrink: 0, background: appearanceTokens.divider, margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px', ...partStyle(styles, 'heading') }} /></li>
+            : <li key={'h' + i} style={LIST_ITEM_STYLE}><div data-slot="heading" className={partClassName(classNames, 'heading') || undefined} style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: '1px', textTransform: 'uppercase', color: appearanceTokens.subtleForeground, padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px', ...partStyle(styles, 'heading') }}>{o.heading}</div></li>;
 
           const kids = o.children || [];
           const title = typeof o.label === 'string' ? o.label : undefined;
@@ -288,7 +343,7 @@ export const SideNav = React.forwardRef(function SideNav({
               <li key={o.value} style={LIST_ITEM_STYLE}>
                 <RailItemTooltip label={accessibleLabel} collapsed={col} enabled={!overlay}>
                   <button type="button" data-slot="item" data-state={childActive ? 'active-descendant' : 'inactive'} data-disabled={o.disabled ? 'true' : undefined} className={partClassName(classNames, 'item', o.className) || undefined} data-sidenav-value={o.value} aria-label={col || o.ariaLabel ? accessibleLabel : undefined} aria-expanded={col ? undefined : isOpen} disabled={o.disabled} onClick={onParent} title={col ? undefined : accessibleLabel} {...hoverProps(o.value)}
-                    style={row(collapsedActiveProxy, o.disabled, { color: collapsedActiveProxy ? 'var(--color-semantic-primary-normal)' : childActive ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)' }, hovKey === o.value)}>
+                    style={row(collapsedActiveProxy, o.disabled, { color: collapsedActiveProxy ? appearanceTokens.activeProxyForeground : childActive ? appearanceTokens.foreground : appearanceTokens.mutedForeground }, hovKey === o.value)}>
                     {o.icon != null && <span data-slot="icon" className={partClassName(classNames, 'icon') || undefined} aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex', ...partStyle(styles, 'icon') }}>{o.icon}</span>}
                     {!col && labelSpan(childActive, o.label)}
                     {!col && <Chevron open={isOpen} />}
@@ -355,7 +410,7 @@ export const SideNav = React.forwardRef(function SideNav({
       </ul>
       <div data-slot="footer" className={partClassName(classNames, 'footer') || undefined} style={{ marginTop: 'auto', paddingTop: footerGap, ...partStyle(styles, 'footer') }}>
         {resolvedFooter != null && (
-          <div style={{ paddingTop: 'var(--space-2-5)', marginLeft: 'var(--space-0-5)', marginRight: 'var(--space-0-5)', borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>{resolvedFooter}</div>
+          <div style={{ paddingTop: 'var(--space-2-5)', marginLeft: 'var(--space-0-5)', marginRight: 'var(--space-0-5)', borderTop: `1px solid ${appearanceTokens.divider}` }}>{resolvedFooter}</div>
         )}
       </div>
     </div>
@@ -378,6 +433,7 @@ export const SideNav = React.forwardRef(function SideNav({
       data-slot="root"
       data-state={col ? 'collapsed' : 'expanded'}
       data-overlay={overlay ? 'true' : undefined}
+      data-appearance={resolvedAppearance}
       className={partClassName(classNames, 'root', 'lk-sidenav', !overlay && 'lk-sidenav__surface', className) || undefined}
       style={overlay
         ? { ...componentVars(vars, '--lds-side-nav-'), position: 'relative', width: `var(--lds-side-nav-collapsed-width, ${resolvedCollapsedWidth})`, flexShrink: 0, ...partStyle(styles, 'root'), ...style }

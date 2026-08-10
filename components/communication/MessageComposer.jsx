@@ -22,10 +22,34 @@ const STATE_LABELS = {
 };
 
 const LINE_HEIGHT = 24;
-const TEXTAREA_VERTICAL_INSET = 24;
-const COMPACT_TEXTAREA_HEIGHT = 48;
-const COMPACT_TEXTAREA_HEIGHT_TOKEN = 'var(--space-12)';
 const ACTION_SLOT_SIZE_TOKEN = 'var(--component-button-height-sm)';
+
+const DENSITY_LAYOUT = {
+  comfortable: {
+    textareaHeight: 48,
+    textareaHeightToken: 'var(--space-12)',
+    textareaVerticalInset: 24,
+    formGap: 'var(--space-2)',
+    shellPadding: 'var(--space-1)',
+    attachmentsPadding: 'var(--space-2) var(--space-2) 0',
+    textareaPadding: 'var(--space-3) var(--space-2)',
+    actionGap: 'var(--space-1)',
+    actionsPadding: '0 var(--space-1) var(--space-1)',
+    statusGap: 'var(--space-3)',
+  },
+  compact: {
+    textareaHeight: 40,
+    textareaHeightToken: 'var(--space-10)',
+    textareaVerticalInset: 16,
+    formGap: 'var(--space-1)',
+    shellPadding: 'var(--space-0-5)',
+    attachmentsPadding: 'var(--space-1) var(--space-2) 0',
+    textareaPadding: 'var(--space-2)',
+    actionGap: 'var(--space-0-5)',
+    actionsPadding: '0 var(--space-0-5) var(--space-0-5)',
+    statusGap: 'var(--space-2)',
+  },
+};
 
 const useSafeLayoutEffect = typeof window === 'undefined'
   ? React.useEffect
@@ -49,6 +73,7 @@ export function MessageComposer({
   onValueChange,
   onSubmit,
   state = 'idle',
+  density = 'comfortable',
   submitMode = 'enter',
   canSubmit,
   readOnly = false,
@@ -106,15 +131,20 @@ export function MessageComposer({
   const disabledReasonId = disabled ? `${textareaId}-disabled-reason` : undefined;
   const counterId = maxLength != null ? `${textareaId}-counter` : undefined;
   const statusId = `${textareaId}-status`;
+  const normalizedDensity = density === 'compact' ? 'compact' : 'comfortable';
+  const densityLayout = DENSITY_LAYOUT[normalizedDensity];
+  const primaryActionVars = normalizedDensity === 'compact'
+    ? { '--lds-button-radius': 'var(--radius-md)' }
+    : undefined;
   const normalizedMinRows = Math.max(1, Math.floor(Number(minRows) || 1));
   const normalizedMaxRows = Math.max(normalizedMinRows, Math.floor(Number(maxRows) || 6));
   const minimumHeight = Math.max(
-    COMPACT_TEXTAREA_HEIGHT,
-    normalizedMinRows * LINE_HEIGHT + TEXTAREA_VERTICAL_INSET,
+    densityLayout.textareaHeight,
+    normalizedMinRows * LINE_HEIGHT + densityLayout.textareaVerticalInset,
   );
   const maximumHeight = Math.max(
     minimumHeight,
-    normalizedMaxRows * LINE_HEIGHT + TEXTAREA_VERTICAL_INSET,
+    normalizedMaxRows * LINE_HEIGHT + densityLayout.textareaVerticalInset,
   );
   const nonIdle = state !== 'idle';
   const previousNonIdleRef = React.useRef(nonIdle);
@@ -234,6 +264,7 @@ export function MessageComposer({
       aria-busy={nonIdle || undefined}
       aria-disabled={disabled || undefined}
       data-state={state}
+      data-density={normalizedDensity}
       data-submit-mode={submitMode}
       onSubmit={(event) => {
         event.preventDefault();
@@ -242,7 +273,7 @@ export function MessageComposer({
       style={{
         display: 'grid',
         alignContent: 'start',
-        gap: 'var(--space-2)',
+        gap: densityLayout.formGap,
         width: '100%',
         maxWidth: '100%',
         minWidth: 0,
@@ -300,7 +331,7 @@ export function MessageComposer({
           gap: 0,
           width: '100%',
           minWidth: 0,
-          padding: 'var(--space-1)',
+          padding: densityLayout.shellPadding,
           boxSizing: 'border-box',
           background: disabled
             ? 'var(--color-semantic-fill-normal)'
@@ -322,7 +353,7 @@ export function MessageComposer({
             data-composer-attachments=""
             style={{
               minWidth: 0,
-              padding: 'var(--space-2) var(--space-2) 0',
+              padding: densityLayout.attachmentsPadding,
               overflowWrap: 'anywhere',
             }}
           >
@@ -379,10 +410,10 @@ export function MessageComposer({
               display: 'block',
               width: '100%',
               minWidth: 0,
-              minHeight: normalizedMinRows === 1 ? COMPACT_TEXTAREA_HEIGHT_TOKEN : minimumHeight,
+              minHeight: normalizedMinRows === 1 ? densityLayout.textareaHeightToken : minimumHeight,
               maxHeight: maximumHeight,
-              height: normalizedMinRows === 1 ? COMPACT_TEXTAREA_HEIGHT_TOKEN : minimumHeight,
-              padding: 'var(--space-3) var(--space-2)',
+              height: normalizedMinRows === 1 ? densityLayout.textareaHeightToken : minimumHeight,
+              padding: densityLayout.textareaPadding,
               boxSizing: 'border-box',
               resize: 'none',
               overflowX: 'hidden',
@@ -410,11 +441,11 @@ export function MessageComposer({
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 'var(--space-1)',
+              gap: densityLayout.actionGap,
               width: '100%',
               minWidth: 0,
               minHeight: ACTION_SLOT_SIZE_TOKEN,
-              padding: '0 var(--space-1) var(--space-1)',
+              padding: densityLayout.actionsPadding,
               boxSizing: 'border-box',
               flexWrap: 'wrap',
             }}
@@ -427,7 +458,7 @@ export function MessageComposer({
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 'var(--space-1)',
+                  gap: densityLayout.actionGap,
                   flex: '1 1 auto',
                   minWidth: 0,
                   flexWrap: 'wrap',
@@ -447,7 +478,7 @@ export function MessageComposer({
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 'var(--space-1)',
+                  gap: densityLayout.actionGap,
                   minWidth: 0,
                   marginInlineStart: hasLeadingActions ? 'auto' : 0,
                   flexWrap: 'wrap',
@@ -476,6 +507,7 @@ export function MessageComposer({
                   size="sm"
                   variant="primary"
                   iconOnly
+                  vars={primaryActionVars}
                   aria-label={stopLabel}
                   /* `stopping` still owns a stop control, but a native disabled
                      button is blurred by the browser the instant it is disabled
@@ -496,6 +528,7 @@ export function MessageComposer({
                   size="sm"
                   variant="primary"
                   iconOnly
+                  vars={primaryActionVars}
                   aria-label={submitLabel}
                   disabled={!submitAllowed}
                 >
@@ -512,7 +545,7 @@ export function MessageComposer({
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            gap: 'var(--space-3)',
+            gap: densityLayout.statusGap,
             minWidth: 0,
             color: 'var(--color-semantic-label-alternative)',
             fontSize: 'var(--caption2-size)',

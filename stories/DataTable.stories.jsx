@@ -162,7 +162,7 @@ export const RowExtensionContract = {
   },
 };
 
-const flexibleText = 'context-hub-publication-with-a-name-that-is-intentionally-long-enough-to-exceed-the-available-column-width';
+const flexibleText = 'portal-publication-with-a-name-that-is-intentionally-long-enough-to-exceed-the-available-column-width';
 
 export const FlexibleTruncationContract = {
   name: 'Flexible truncated column',

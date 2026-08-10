@@ -196,6 +196,10 @@
   "behavior": [],
   "quantitativeRules": [
     {
+      "subject": "명시 규칙 1",
+      "rule": "size를 생략하면 일반 표면에서는 기존 md 120px 최소 높이, bounded compact component scope에서는 sm 96px 최소 높이를 사용합니다. 명시한 size와 --lds-textarea- 변수가 우선합니다."
+    },
+    {
       "subject": "--color-semantic-label-assistive",
       "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
     },

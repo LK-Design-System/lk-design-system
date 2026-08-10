@@ -16,3 +16,4 @@ References: [WAI-ARIA APG Checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/che
 ```
 
 - **options** — 문자열 또는 `{ value, label, description, disabled }`. **value / defaultValue / onChange** — 배열. **direction** `row · column`.
+- `size`는 자식 Checkbox와 행 간격을 함께 정렬합니다. 생략하면 일반 표면은 `md`, bounded compact component scope는 `sm`이며 명시값이 우선합니다.

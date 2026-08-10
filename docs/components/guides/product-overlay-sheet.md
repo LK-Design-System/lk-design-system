@@ -92,6 +92,7 @@
 | `Button` | 대표 시나리오에서 조합 |
 | `CommandPalette` | 대표 시나리오에서 조합 |
 | `Drawer` | 대표 시나리오에서 조합 |
+| `DrawerSection` | 대표 시나리오에서 조합 |
 | `Lightbox` | 대표 시나리오에서 조합 |
 
 ## Examples

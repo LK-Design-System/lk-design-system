@@ -175,7 +175,7 @@
       "adoption": "active-pilot",
       "doesNotOwn": ["freshness", "health", "operability", "authority", "command", "urgency"],
       "legacyProp": "status",
-      "requiredProductAssets": ["LK Control Full Daedeok", "LK Web Viz", "LK Context Hub"]
+      "requiredProductAssets": ["LK Control Full Daedeok", "LK Web Viz", "LK Portal"]
     },
     {
       "component": "TelemetryValue",
@@ -217,7 +217,7 @@
     { "id": "WF-02", "stage": "verified", "products": ["deviceops", "visionops", "control"], "axes": ["transport", "freshness", "health", "operability"] },
     { "id": "WF-03", "stage": "verified", "products": ["deviceops", "visionops", "control"], "axes": ["operability", "command", "urgency"] },
     { "id": "WF-09", "stage": "verified", "products": ["control"], "axes": ["transport", "freshness", "authority", "operability", "command", "urgency"] },
-    { "id": "WF-10", "stage": "verified", "products": ["context-hub"], "axes": ["evidence", "review", "operability"] },
+    { "id": "WF-10", "stage": "verified", "products": ["portal"], "axes": ["evidence", "review", "operability"] },
     { "id": "WF-15", "stage": "verified", "products": ["web-viz", "control"], "axes": ["freshness", "health", "operability"] }
   ],
   "research": [

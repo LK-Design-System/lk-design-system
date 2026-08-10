@@ -57,7 +57,6 @@
 | `caption` | `React.ReactNode` | No |  |
 | `subCaption` | `React.ReactNode` | No |  |
 | `metaCaption` | `React.ReactNode` | No | Third caption tier — smallest meta line under subCaption (WDS three-tier caption parity). |
-| `bottomContent` | `React.ReactNode` | No |  |
 
 ## States
 
@@ -77,12 +76,7 @@
 | 명시 규칙 2 | platform="mobile" keeps its existing 12px padding and 320px max-width contract even when density="compact" is present. Platform can retain its existing mobile title scale; density itself never changes type size. |
 | 명시 규칙 3 | Carbon spacing uses a spacing scale to establish relationships and control density, while Fluent 2 layout uses smaller component spacers to strengthen relationships and allows responsive spacing adjustments. Keep compact values on the LDS spacing ramp rather than introducing one-off pixels. |
 | 명시 규칙 4 | headingLevel — 구조화 모드의 title 은 기본적으로 로 렌더링됩니다(WCAG 1.3.1). 카드가 놓이는 문서의 제목 계층에 맞춰 1–6 을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false} 로 heading 의미를 끄세요. 레벨은 건너뛰지 않습니다. |
-| 명시 규칙 5 | SaveButton(save)과 toggleIcon 은 포커스 가능한 요소이므로 규칙 1과 함께 쓰지 마세요. |
-| 명시 규칙 6 | Card — 모든 것이 올라가는 중립 서피스: 화이트(또는 dark 네이비), 헤어라인 보더, 부드러운 네이비 그림자, 16px 반경. interactive는 호버 시 떠오릅니다. |
-| 명시 규칙 7 | 1. 전체 카드가 하나의 행동일 때 → interactive + onClick. 카드 루트가 role="button" · tabIndex=0 이 되고 Enter/Space 로 활성화되며 :focus-visible 링이 붙습니다(WCAG 2.1.1). 이때 카드 안에는 버튼·링크·스위치 같은 포커스 가능한 요소를 넣지 마세요. 버튼 안의 버튼(nested interactive)은 유효하지 않은 마크업이고, 스크린리더가 카드 이름으로 내부 텍스트를 전부 읽어 이름이 문단처럼 길어집니다. 2. |
 | --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
-| --body2-size | 15px |
-| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 
 ## Responsive
 
@@ -90,13 +84,16 @@
 - MUI density guidance treats density as an opt-in adjustment through component props, spacing, and size; its dense demo theme is not a recommendation to force compactness across an entire application. Adopt compact Card only where scan-heavy console context needs it.
 - titleWrap="truncate|wrap" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination.
 - Stable structured parts are root, content, header, actions, media, body, title, description, and footer. Optional parts do not render empty wrappers.
-- vars accepts only --lds-card-padding, --lds-card-radius, --lds-card-gap, and --lds-card-max-width. These cannot turn a non-interactive card into a control or bypass heading/nesting rules.
 
 ## Content and writing
 
 - save, toggleIcon(top-right toggle affordance beside save), structured slots (thumbnail, topContent, leadingContent, trailingContent, bottomContent, footer) and three text caption tiers (caption, title, description, subCaption, metaCaption) are LDS's structured Card API; do not describe them as extra axes discovered in…
 - className, style, and the default ref target the polymorphic root. The ref type follows the rendered as element.
 - classNames and styles accept only those stable part keys; product selectors do not depend on Card's internal DOM order.
+
+## Accessibility
+
+- 1. 전체 카드가 하나의 행동일 때 → interactive + onClick. 카드 루트가 role="button" · tabIndex=0 이 되고 Enter/Space 로 활성화되며 :focus-visible 링이 붙습니다(WCAG 2.1.1). 이때 카드 안에는 버튼·링크·스위치 같은 포커스 가능한 요소를 넣지 마세요. 버튼 안의 버튼(nested interactive)은 유효하지 않은 마크업이고, 스크린리더가 카드 이름으로 내부 텍스트를 전부 읽어 이름이 문단처럼 길어집니다. 2.
 
 ## Exceptions
 

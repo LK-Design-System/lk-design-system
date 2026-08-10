@@ -64,7 +64,7 @@ Classification: **LK Product Extension · Operations Dashboard**. 루트 `DESIGN
 
 - **LK Web Viz** `a984def117c05acd213f494cbb8a42e990595505` — 고정 frontend의 dashboard는 로고 TopBar, 연결 상태, 로봇 카드와 메뉴 launcher를 사용합니다. `header-first`와 Card/Status 조합은 supported by composition이며 SideNav·KPI·표·차트는 이 화면에 not applicable입니다.
 - **LK Control Full Daedeok** `93802fc2aa5d29f930380ae58d51dcb68322b5e7` — 고정 header, docked/temporary drawer, monitoring·status·chart·table은 supported by composition입니다. temporary navigation의 modal coordination은 셸 계약으로 지원하며 지도·영상·telemetry truth·위험 action lifecycle은 제품이 소유합니다.
-- **LK Context Hub** `de124084b7e50049350a46f92c4ea4476269c58c` — 실제 logo가 있는 고정 SideNav와 프로젝트/attention collection은 `side-first`와 DashboardGrid/DataGrid 조합으로 supported by composition입니다. 계층형 narrow navigation은 temporary navigation으로 지원하며 route·권한·query·저장은 제품이 소유합니다.
+- **LK Portal** `e5ee99d5062170e26abe63d9105c2b8a024ce710` — 실제 logo가 있는 고정 SideNav와 프로젝트/attention collection은 `side-first`와 DashboardGrid/DataGrid 조합으로 supported by composition입니다. 계층형 narrow navigation은 temporary navigation으로 지원하며 route·권한·query·저장은 제품이 소유합니다.
 - 세 고정 소스에서 공통 KPI 요구는 확인되지 않았습니다. DashboardShell은 MetricCard-first 화면을 규정하지 않고 제품이 중요도를 정한 실제 컴포넌트 조합만 수용합니다.
 
 의도적 제외: 라우터 인스턴스, 인증·권한 판정, drawer open state의 저장, URL 동기화, 데이터 새로고침, 사용자별 셸 저장은 제품이 소유합니다. `DashboardShell`은 슬롯 배치와 landmark, skip link, 반응형 전환, temporary Drawer의 modal coordination만 소유합니다.

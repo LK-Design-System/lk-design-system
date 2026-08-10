@@ -115,9 +115,9 @@ LDS 메뉴 토큰을 사용합니다.
   `frontend/src/views/user/index.jsx`
   (`8912b51c6eb612bd2beb2ed0206ee78ae6f03f2d`): 확인된 `MenuItem`은 form Select option이므로
   command DropdownMenu로 대체하지 않으며 `not applicable`입니다.
-- **LK Context Hub** — `de124084b7e50049350a46f92c4ea4476269c58c`,
+- **LK Portal** — `e5ee99d5062170e26abe63d9105c2b8a024ce710`,
   `src/app/confluence/page.tsx`
-  (`5d40f347f4b391510ac8ce4a60d65c18a27214cc`): 표 행의 이름 변경·동기화 제외·삭제 메뉴는
+  (`d12598d529e2f194e6b6eb0a68b47eaba8755400`): 표 행의 이름 변경·동기화 제외·삭제 메뉴는
   `normal` DropdownMenu와 danger item 조합으로 `supported by composition`입니다. 실제 rename,
   exclude, delete 상태와 확인 절차는 제품이 소유합니다.
 
@@ -132,6 +132,11 @@ LDS 메뉴 토큰을 사용합니다.
   use the shared floating-position engine's fixed strategy. This lets a command
   menu escape a `Table` or other ancestor scroll container without weakening the
   ancestor's horizontal-overflow contract.
+- `collisionBoundary`는 element 또는 ref를 받아 root panel의 positioning 경계를 viewport와
+  해당 요소의 보이는 교집합으로 좁힙니다. `collisionPadding` 기본 16px을 적용한 뒤 flip, shift,
+  `maxWidth/maxHeight`를 계산하며, 명시적 `width`·`minWidth`·style도 그 가용 크기를 넘지 못합니다.
+  생략하면 기존 viewport 경계가 byte/behavior-compatible하게 유지됩니다. 이 API는 Portal target을
+  바꾸지 않으므로 body Portal로 clipping을 탈출하면서 chat panel 안에 menu geometry를 제한합니다.
 - The trigger remains in the product DOM while `aria-controls` points to the
   portalled `role="menu"`. Opening still moves focus to the requested item;
   Escape closes the menu and restores trigger focus.
@@ -149,3 +154,5 @@ LDS 메뉴 토큰을 사용합니다.
 - [WAI-ARIA Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)
   remains the accessibility contract: `aria-haspopup`, `aria-expanded`, optional
   `aria-controls`, menu roles, and first/last-item keyboard focus are unchanged.
+- [React Aria Popover](https://react-spectrum.adobe.com/react-aria/Popover.html)의
+  `boundaryElement`처럼 Portal mount target과 positioning boundary는 서로 다른 책임입니다.

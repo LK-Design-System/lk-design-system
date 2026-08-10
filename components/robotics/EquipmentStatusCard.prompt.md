@@ -61,7 +61,7 @@
 
 - **LK Control Full Daedeok** (`93802fc2aa5d29f930380ae58d51dcb68322b5e7`): `supported by composition`. 문·엘리베이터·리프트·게이트웨이 등 장비 identity/status/facts를 이 카드와 `ConnectionBadge` 조합으로 표현할 수 있습니다. 장비 transport, command, permission, direction/connection state machine, 화면 layout은 Control 소유입니다.
 - **LK Web Viz** (`a984def117c05acd213f494cbb8a42e990595505`): `not applicable`. pinned frontend의 map/editor/viewer workflow는 독립 equipment summary card를 요구하지 않으며 geometry나 editor state를 이 카드에 흡수하지 않습니다.
-- **LK Context Hub** (`de124084b7e50049350a46f92c4ea4476269c58c`): `not applicable`. pinned frontend의 knowledge/chat workflow에는 robotics equipment identity+condition summary surface가 없습니다.
+- **LK Portal** (`e5ee99d5062170e26abe63d9105c2b8a024ce710`): `not applicable`. pinned frontend의 knowledge/chat workflow에는 robotics equipment identity+condition summary surface가 없습니다.
 
 ## Intentional exclusions and verification
 

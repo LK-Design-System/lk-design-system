@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconButton } from '../buttons/IconButton.jsx';
 import { Icon } from '../icon/Icon.jsx';
+import { ComponentDensityScope, useResolvedDensity } from '../internal/component-density.js';
 import { useDialogFocus } from './dialog-focus.js';
 import { OverlayPortal } from './overlay-platform.js';
 
@@ -14,6 +15,7 @@ export function Drawer({
   open = false,
   side = 'right',
   width = 380,
+  density = 'comfortable',
   title,
   subtitle,
   children,
@@ -57,6 +59,8 @@ export function Drawer({
   }, [open]);
   if (!open) return null;
   const isRight = side === 'right';
+  const isCompact = density === 'compact';
+  const resolvedDensity = isCompact ? 'compact' : 'comfortable';
   const hidden = isRight ? 'translateX(100%)' : 'translateX(-100%)';
   return (
     <OverlayPortal open={open} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={portalAnchorRef} portalRef={portalRef} layer="modal">
@@ -75,9 +79,10 @@ export function Drawer({
         tabIndex={-1}
         style={{ position: 'absolute', top: 0, bottom: 0, [isRight ? 'right' : 'left']: 0, width, maxWidth: '92vw', display: 'flex', flexDirection: 'column', background: 'var(--color-semantic-background-elevated-normal)', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', transform: shown ? 'none' : hidden, transition: 'transform var(--dur-slow) var(--ease-out)', ...style }}
         {...rest}
+        data-density={resolvedDensity}
       >
         {(title != null || subtitle != null || onClose) && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-5) var(--space-6)', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: isCompact ? 'var(--space-4) var(--space-5)' : 'var(--space-5) var(--space-6)', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
             <div style={{ flex: 1, minWidth: 0, display: 'grid', gap: 'var(--space-1)' }}>
               {title != null && <div id={titleId} style={{ fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>}
               {subtitle != null && <div id={subtitleId} style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-reading-line)', overflowWrap: 'anywhere' }}>{subtitle}</div>}
@@ -89,10 +94,64 @@ export function Drawer({
             )}
           </div>
         )}
-        <div className="lk-scroll-surface" data-scrollbar="auto" data-scroll-gutter="stable" style={{ flex: 1, padding: 'var(--space-5) var(--space-6)', overflow: 'auto', scrollbarGutter: 'stable', fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all', ...bodyStyle }}>{children}</div>
-        {footer != null && <div style={{ padding: 'var(--space-4) var(--space-6)', borderTop: '1px solid var(--color-semantic-line-solid-normal)', display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)' }}>{footer}</div>}
+        <div className="lk-scroll-surface" data-scrollbar="auto" data-scroll-gutter="stable" style={{ flex: 1, padding: isCompact ? 'var(--space-4) var(--space-5)' : 'var(--space-5) var(--space-6)', overflow: 'auto', scrollbarGutter: 'stable', fontSize: isCompact ? 'var(--label1-size)' : 'var(--body2-size)', lineHeight: isCompact ? 'var(--label1-line)' : 1.7, letterSpacing: isCompact ? 'var(--label1-spacing)' : undefined, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all', ...bodyStyle }}>
+          <ComponentDensityScope density={resolvedDensity}>{children}</ComponentDensityScope>
+        </div>
+        {footer != null && <div style={{ padding: isCompact ? 'var(--space-3) var(--space-5)' : 'var(--space-4) var(--space-6)', borderTop: '1px solid var(--color-semantic-line-solid-normal)', display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)' }}>{footer}</div>}
       </div>
     </div>
     </OverlayPortal>
+  );
+}
+
+/**
+ * A semantic subsection inside Drawer body content. It owns the compact title,
+ * description, divider, and section-to-content rhythm so products do not
+ * recreate that hierarchy with local heading and spacing utilities.
+ */
+export function DrawerSection({
+  title,
+  description,
+  headingLevel = 3,
+  actions,
+  divider = false,
+  children,
+  headerStyle,
+  contentStyle,
+  style,
+  ...rest
+}) {
+  const density = useResolvedDensity(undefined, 'comfortable');
+  const compact = density === 'compact';
+  const titleId = React.useId();
+  const Heading = `h${headingLevel}`;
+
+  return (
+    <section
+      {...rest}
+      aria-labelledby={titleId}
+      data-density={density}
+      style={{
+        minWidth: 0,
+        borderTop: divider ? '1px solid var(--color-semantic-line-solid-alternative)' : undefined,
+        paddingTop: divider ? (compact ? 'var(--space-4)' : 'var(--space-6)') : undefined,
+        ...style,
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--space-3)', marginBottom: compact ? 'var(--space-2)' : 'var(--space-3)', ...headerStyle }}>
+        <div style={{ minWidth: 0 }}>
+          <Heading id={titleId} style={{ margin: 0, fontSize: 'var(--body2-size)', lineHeight: 'var(--body2-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-strong)', wordBreak: 'keep-all' }}>
+            {title}
+          </Heading>
+          {description != null && (
+            <div style={{ marginTop: 'var(--space-1)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', color: 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>
+              {description}
+            </div>
+          )}
+        </div>
+        {actions != null && <div style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', flexShrink: 0 }}>{actions}</div>}
+      </div>
+      <div style={{ minWidth: 0, ...contentStyle }}>{children}</div>
+    </section>
   );
 }

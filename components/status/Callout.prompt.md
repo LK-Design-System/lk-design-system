@@ -7,6 +7,7 @@
 - **tone** 은 `signal · positive · cautionary · negative · navy`.
 - **title / children** 으로 콘텐츠를 구성하며, tone에 맞는 아이콘이 항상 표시됩니다.
 - **icon** 은 tone별 기본 아이콘을 다른 아이콘으로 교체할 때만 사용합니다. 생략하거나 `null`을 전달해도 기본 아이콘은 제거되지 않습니다.
+- `density`는 내부 여백·gap·본문 행간만 바꿉니다. 생략하면 bounded compact component scope를 상속하고, 그 밖에서는 기존 `comfortable`을 유지하며 명시값이 우선합니다. 제목과 20px 아이콘은 축소하지 않습니다.
 - 기본 `role`, live region, 액션, 닫기 기능이 없습니다. 페이지와 함께 처음부터 렌더링되는 standing guidance에 적합합니다. 비동기 상태 변화가 발표되어야 하거나 즉시 실행할 액션·닫기가 필요하면 `Banner`를 사용합니다.
 - 표면은 tone의 semantic color를 섞은 충분히 구분되는 tint와 같은 계열의 1px hairline을 사용합니다. 그림자나 별도의 왼쪽 강조선은 추가하지 않습니다.
 - 제목과 한두 문장의 구체적인 안내를 함께 제공하고 본문 콘텐츠 사이에 독립된 블록으로 배치합니다. 패널 header 바로 아래에 edge-to-edge로 붙이거나 `Banner variant="embedded"`처럼 사용하지 않습니다. 아이콘과 색은 보조 단서이며 중요한 의미는 텍스트에도 씁니다.

@@ -1501,6 +1501,47 @@
             "css": "--color-atomic-purple-100"
           }
         }
+      },
+      "navyShell": {
+        "label": "Brand Navy Shell",
+        "source": "LDS SideNav brand appearance — opaque composites of brand-on-surface ink over --color-semantic-brand-surface (#05132B), plus the primary-family selection ink",
+        "tokens": {
+          "18": {
+            "$type": "color",
+            "$value": "#1E2B40",
+            "css": "--color-atomic-navy-shell-18"
+          },
+          "20": {
+            "$type": "color",
+            "$value": "#232F44",
+            "css": "--color-atomic-navy-shell-20"
+          },
+          "24": {
+            "$type": "color",
+            "$value": "#2D394D",
+            "css": "--color-atomic-navy-shell-24"
+          },
+          "26": {
+            "$type": "color",
+            "$value": "#323D51",
+            "css": "--color-atomic-navy-shell-26"
+          },
+          "65": {
+            "$type": "color",
+            "$value": "#A0A5AE",
+            "css": "--color-atomic-navy-shell-65"
+          },
+          "68": {
+            "$type": "color",
+            "$value": "#7FB0DE",
+            "css": "--color-atomic-navy-shell-68"
+          },
+          "93": {
+            "$type": "color",
+            "$value": "#EBECEE",
+            "css": "--color-atomic-navy-shell-93"
+          }
+        }
       }
     }
   },
@@ -3708,6 +3749,107 @@
           "css": "--component-badge-negative-fg",
           "$value": "var(--color-semantic-status-negative-text)",
           "generated": true
+        }
+      }
+    },
+    "sideNav": {
+      "component": "components/navigation/SideNav.jsx",
+      "tokens": {
+        "brandSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-surface",
+          "$value": "var(--color-semantic-brand-surface)",
+          "generated": true
+        },
+        "brandHoverSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-hover-surface",
+          "$value": "var(--color-atomic-navy-shell-18)",
+          "generated": true,
+          "ref": "primitive.colorRamps.navyShell.tokens.18"
+        },
+        "brandActiveHoverSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-active-hover-surface",
+          "$value": "var(--color-atomic-navy-shell-18)",
+          "generated": true,
+          "ref": "primitive.colorRamps.navyShell.tokens.18"
+        },
+        "brandPressedSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-pressed-surface",
+          "$value": "var(--color-atomic-navy-shell-20)",
+          "generated": true,
+          "ref": "primitive.colorRamps.navyShell.tokens.20"
+        },
+        "brandForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-foreground",
+          "$value": "var(--color-semantic-static-white)",
+          "generated": true
+        },
+        "brandHoverForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-hover-foreground",
+          "$value": "var(--color-atomic-navy-shell-93)",
+          "generated": true,
+          "ref": "primitive.colorRamps.navyShell.tokens.93"
+        },
+        "brandActiveForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-active-foreground",
+          "$value": "var(--color-atomic-navy-shell-68)",
+          "generated": true,
+          "ref": "primitive.colorRamps.navyShell.tokens.68"
+        },
+        "brandMutedForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-muted-foreground",
+          "$value": "var(--color-atomic-navy-shell-65)",
+          "generated": true,
+          "ref": "primitive.colorRamps.navyShell.tokens.65"
+        },
+        "brandSubtleForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-subtle-foreground",
+          "$value": "var(--color-atomic-navy-shell-65)",
+          "generated": true,
+          "ref": "primitive.colorRamps.navyShell.tokens.65"
+        },
+        "brandDivider": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-divider",
+          "$value": "var(--color-atomic-navy-shell-26)",
+          "generated": true,
+          "ref": "primitive.colorRamps.navyShell.tokens.26"
+        },
+        "brandBadgeSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-badge-surface",
+          "$value": "var(--color-atomic-navy-shell-18)",
+          "generated": true,
+          "ref": "primitive.colorRamps.navyShell.tokens.18"
+        },
+        "brandBadgeForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-badge-foreground",
+          "$value": "var(--color-atomic-navy-shell-65)",
+          "generated": true,
+          "ref": "primitive.colorRamps.navyShell.tokens.65"
+        },
+        "brandBadgeActiveSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-badge-active-surface",
+          "$value": "var(--color-atomic-navy-shell-24)",
+          "generated": true,
+          "ref": "primitive.colorRamps.navyShell.tokens.24"
+        },
+        "brandFocusIndicator": {
+          "$type": "color",
+          "css": "--component-side-nav-brand-focus-indicator",
+          "$value": "var(--color-atomic-navy-shell-68)",
+          "generated": true,
+          "ref": "primitive.colorRamps.navyShell.tokens.68"
         }
       }
     },

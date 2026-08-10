@@ -8,16 +8,16 @@
 | Storybook | `LDS Product/Communication/Message Composer` |
 | Source | `../component-content.json#product-communication-message-composer` |
 
-사람 또는 AI와 대화하면서 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 첨부와 보조 행동은 slot으로 조합하고 Composer는 값·전송·중지만 소유합니다. 단발성 검색이나 한 칸짜리 폼에는 사용하지 말고 SearchField·Textarea를 사용하세요.
+사람 또는 AI와 대화하며 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 보조 행동은 slot으로 조합하고 Composer는 값·전송·중지만 소유합니다. 즉시 명령은 DropdownMenu, 안내·연속 설정은 Popover에 두며 Portal·dismiss·배치는 primitive가 소유합니다. 단발성 검색에는 SearchField를 사용하세요.
 
 ## 사용 판단
 
 ### 사용
 
 - light/dark 모두 LDS semantic input token을 사용하며 exact Figma color, product logo, provider selector와 custom shadow를 만들지 않습니다.
+- 좁고 짧은 대화 열에서는 body Portal로 clipping을 탈출하되, 공유 primitive가 제공하는 collisionBoundary에 visible conversation column ref를 전달해 viewport와 그 열의 교집합 안에서 panel을 배치합니다. Portal target과 geometry boundary는 같은 책임이 아닙니다.
+- Slack — Set your Enter key preference는 Enter를 보내기로 선택하면 Shift+Enter로 줄바꿈하고, Enter를 줄바꿈으로 선택하면 Mac의 Command+Enter 또는 Windows/Linux의 Ctrl+Enter로 보내는 공식 제품 관습을 설명합니다. 이를 enter와 modifier-enter 계약에 반영했고, 긴 형식 작성에는 더 명시적인 button-only도 제공합니다.
 - Slack — Use Slack with a screen reader는 conversation 진입 시 message composer에 focus가 놓이고 Tab으로 primary action toolbar에 접근하며, 입력 후 Enter로 보내는 흐름을 설명합니다. 이에 따라 form/textarea/action에 각각 명시적 accessible name을 제공하고 제출 뒤 textarea focus를 복귀시키며, slot action을 DOM reading order에 유지합니다.
-- MDN — disabled HTML attribute는 native form control의 focus·interaction·form submission 차단 semantics를 정의합니다. 내부 textarea는 실제 disabled attribute를 사용합니다.
-- 3 Free AI Chatbot App UI Kit의 왼쪽 slothGPT/general-assistant composer를 secondary visual inspiration으로 사용합니다.
 
 ### 사용하지 않음
 
@@ -46,6 +46,7 @@
 | `onValueChange` | `(value: string, event: React.ChangeEvent) = void` | Yes | Receives the next controlled value and original textarea change event. |
 | `onSubmit` | `(value: string, reason: MessageComposerSubmitReason) = void` | Yes | Receives the current value and the explicit submit trigger. |
 | `state` | `MessageComposerState` | No | Product-owned request/response lifecycle. @default "idle" |
+| `density` | `MessageComposerDensity` | No | Composer-owned spacing density. Comfortable preserves the legacy rendering; compact reduces vertical space for narrow panels without shrinking the 32px primary action. @default "comfortable" |
 | `submitMode` | `MessageComposerSubmitMode` | No | Keyboard submission rule. modifier-enter accepts Alt-free Ctrl/Meta+Enter only. @default "enter" |
 | `canSubmit` | `boolean` | No | Explicit submit eligibility. Defaults to whether the trimmed value is non-empty. |
 | `readOnly` | `boolean` | No | Keep the draft focusable but prevent editing and submission. @default false |
@@ -55,7 +56,7 @@
 | `placeholder` | `string` | No | Internal textarea placeholder. @default "메시지를 입력하세요." |
 | `description` | `React.ReactNode` | No | Supporting text announced with the textarea. |
 | `maxLength` | `number` | No | Native maximum character count and visible counter. |
-| `minRows` | `number` | No | Minimum autosize rows; one row starts at 48px. @default 1 |
+| `minRows` | `number` | No | Minimum autosize rows; one row starts at 48px in comfortable density and 40px in compact density. @default 1 |
 | `maxRows` | `number` | No | Maximum autosize rows before internal scrolling. @default 6 |
 | `attachments` | `React.ReactNode` | No | Attachment preview/list slot rendered inside the composer shell before the control row. |
 | `leadingActions` | `React.ReactNode` | No | Actions rendered at the leading edge of the action band below the textarea. |
@@ -65,7 +66,6 @@
 | `onStop` | `() = void` | No | Requests transport cancellation in submitting/streaming states. |
 | `textareaProps` | `MessageComposerTextareaProps` | No | Native textarea attributes and event hooks not owned by the controlled contract. |
 | `disabled` | `false` | No |  |
-| `disabledReason` | `never` | No |  |
 
 ## States
 
@@ -89,17 +89,17 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | composition session과 KeyboardEvent.isComposing을 함께 확인하고 legacy IME keyCode 229도 방어해 한글·일본어·중국어 확정 Enter가 submit으로 이어지지 않게 합니다. 조합 확정 직후에는 같은 keydown을 제출 동작으로 재사용하지 않습니다. |
-| 명시 규칙 2 | textarea는 compact row에서 시작해 minRows/maxRows 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다. |
+| 명시 규칙 2 | textarea는 comfortable의 48px 또는 compact의 40px 한 줄 높이에서 시작해 minRows/maxRows 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다. |
 | 명시 규칙 3 | 320px에서는 textarea가 먼저 전체 draft 폭을 확보하고 하단 action band가 wrap합니다. action을 숨기거나 action 수 때문에 입력 열을 축소하지 않으며, slot content도 자체 wrapping/overflow policy를 제공해야 합니다. |
-| 명시 규칙 4 | WCAG 2.2를 accessible name, keyboard, focus, disabled explanation, target와 contrast의 최종 기준으로 사용합니다. |
+| 명시 규칙 4 | density와 관계없이 내장 send/stop action은 32×32px을 유지합니다. slot consumer도 실제 button/link target을 최소 24×24 CSS px로 구성해야 하며, composer는 작은 target을 만들기 위해 action을 축소하지 않습니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
 
+- density는 comfortable | compact이며 기본 comfortable은 기존 렌더링의 크기와 간격을 그대로 보존합니다. 좁은 패널에서만 compact를 명시합니다.
 - submitMode="button-only": Enter를 항상 줄바꿈으로 남기고 button만 제출합니다.
-- Slack — Set your Enter key preference는 Enter를 보내기로 선택하면 Shift+Enter로 줄바꿈하고, Enter를 줄바꿈으로 선택하면 Mac의 Command+Enter 또는 Windows/Linux의 Ctrl+Enter로 보내는 공식 제품 관습을 설명합니다. 이를 enter와 modifier-enter 계약에 반영했고, 긴 형식 작성에는 더 명시적인 button-only도 제공합니다.
-- 채택한 것은 conversation column 하단의 단일 elevated shell, expanding draft와 명시적 send action입니다. exact purple, logo, provider tool, voice control, desktop/mobile frame와 shadow 값은 복사하지 않습니다.
-- 320px: 긴 attachment와 multiline draft가 전체 입력 폭을 먼저 확보하고 하단 action band만 wrap하며 horizontal overflow를 만들지 않는지 확인합니다.
+- compact는 textarea 세로 padding, shell inset, attachment 상단 inset과 action/status gap을 LDS spacing token의 작은 단계로 줄이고 primary send/stop의 radius를 shell corner에 맞춥니다. DOM/read order, focus ring, autosize, state, submit/stop과 live-region 계약은 comfortable과 같습니다.
+- Portal처럼 폭과 세로 공간이 제한된 consumer는 density="compact", 필요한 최소 minRows, 우선순위가 높은 utility만 composer 안에 조합합니다. 긴 scope/model selector를 compact가 임의로 숨기거나 재배치하지 않습니다.
 
 ## Content and writing
 
@@ -141,6 +141,7 @@
   onValueChange={setDraft}
   onSubmit={(value, reason) => send(value, reason)}
   state={requestState}
+  density="compact"
   attachments={<FileUploadQueue items={draftFiles} />}
   leadingActions={<IconButton label="파일 첨부" />}
   trailingActions={<IconButton label="음성 입력" />}
@@ -174,9 +175,12 @@
 - `--dur-base`
 - `--ease-out`
 - `--font-sans`
+- `--radius-md`
 - `--radius-xl`
 - `--shadow-sm`
+- `--space-0-5`
 - `--space-1`
+- `--space-10`
 - `--space-12`
 - `--space-2`
 - `--space-3`

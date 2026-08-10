@@ -61,8 +61,8 @@ export interface SelectProps {
   platform?: "ios" | "android" | "web";
   /** select variant evidence axis; accepted for API parity. */
   variant?: "normal";
-  /** 선택 값을 텍스트 또는 칩으로 표시. @default "text" */
-  render?: "text" | "chip";
+  /** 선택 값의 표시 방식. "chip"은 선택 값을 트리거 안의 캡슐로 강조하고, "chip-trigger"는 트리거 전체를 보더 없는 단일 알약(칩)으로 그린다 — 작성창 동작 띠처럼 폼 필드가 아닌 자리의 옵션 컨트롤용. @default "text" */
+  render?: "text" | "chip" | "chip-trigger";
   iconLeft?: React.ReactNode;
   id?: string;
   /** 접근 가능한 이름. 보이는 `label`이 없을 때 지정합니다. */

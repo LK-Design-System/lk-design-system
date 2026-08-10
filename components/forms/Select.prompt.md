@@ -30,6 +30,7 @@
 - `readOnly`는 현재 값과 포커스를 유지하지만 팝업을 열거나 값을 바꾸지 않으며, 대체 배경과 `aria-readonly`로 비활성과 구분합니다.
 - WDS 내부 `Select/Select` component-set(16215:33116)의 직접 축은 `Active`, `Disable`, `Focus`, `Negative`, `Overflow`, `Render(Chip/Text)`입니다. `Size`는 WDS 직접 축이 아니지만 열린 variant가 48px·16/24px Menu를 직접 포함하므로 `md`/`lg` 기본 option 밀도의 composition 근거로 사용합니다. 옵션별 `disabled`와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.
 - 형제 비교: `AutoComplete`와 `Combobox`가 이미 비활성 옵션을 `aria-disabled`로 노출하고 탐색·선택에서 제외합니다. Select도 같은 규칙을 사용하되, 검색과 다중 선택은 가져오지 않습니다.
+- `render` 축: WDS `Render(Chip/Text)`의 `chip`은 선택 값을 트리거 **안**의 캡슐로 강조하는 표시입니다. `chip-trigger`는 LDS 확장으로, 작성창 동작 띠처럼 폼 필드가 아닌 자리에서 트리거 **전체**를 보더 없는 단일 알약으로 그립니다 — 인풋 크롬과 값 캡슐이 겹치는 이중 표면을 만들지 않기 위한 값이며, 포커스 링·invalid 보더·키보드/ARIA 계약은 필드와 동일하게 유지합니다.
 - 시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px inset ring으로 분리합니다. check와 ring은 `--component-menu-item-check-color`/`--component-menu-item-active-ring-color`를 통해 기본 무채색(label-normal)으로 렌더링되어 DropdownMenu의 monochrome 상태 모델을 따르며, 테마가 이 토큰을 재지정해 액센트로 되돌릴 수 있습니다. 일반 option은 regular weight이며, 선택된 option이 나중에 비활성화되면 값은 보존하되 중립 비활성 채움·전경으로 바꿉니다.
 
 ## Public surface and ref
@@ -38,3 +39,4 @@
 - Stable parts are `root`, `label`, `control`, `trigger`, `value`, `indicators`, `dropdown`, `option`, and `message`. Options additionally expose real `data-active`, `data-selected`, and `data-disabled` state.
 - `vars` accepts only `--lds-select-min-width`, `--lds-select-height`, and `--lds-select-dropdown-max-height`. Consumer root width constraints still override intrinsic measurement.
 - `disable`, `negative`, and `small|medium|large` are compatibility aliases; new code uses `disabled`, `invalid`/`status`, and `sm|md|lg`.
+- `size`를 생략하면 일반 표면에서는 기존 `md`, bounded compact component scope에서는 `sm`을 사용합니다. 명시한 `size`가 우선하며 compact Select는 32px trigger와 기존 40px option target을 조합합니다.

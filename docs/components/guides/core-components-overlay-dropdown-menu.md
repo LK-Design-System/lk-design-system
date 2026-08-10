@@ -196,6 +196,7 @@
 ## Migration
 
 - TopBar와 LanguageSwitcher는 별도 padding·width 값을 복제하지 않고 공통 --component-menu- 토큰을 alias합니다. 제품별 메뉴 밀도나 고정 폭 차이는 더 이상 기본값으로 만들지 않습니다.
+- collisionBoundary는 element 또는 ref를 받아 root panel의 positioning 경계를 viewport와 해당 요소의 보이는 교집합으로 좁힙니다. collisionPadding 기본 16px을 적용한 뒤 flip, shift, maxWidth/maxHeight를 계산하며, 명시적 width·minWidth·style도 그 가용 크기를 넘지 못합니다. 생략하면 기존 viewport 경계가 byte/behavior-compatible하게 유지됩니다.
 - Classification: WDS Core with LK Theme Override. WDS의 normal/radio/checkbox와 cell-padding 축은 호환하되, 기본 shell·row 밀도는 TopBar·LanguageSwitcher와 같은 LDS 메뉴 토큰을 사용합니다.
 
 ## Sources

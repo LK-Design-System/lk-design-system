@@ -116,7 +116,7 @@ assert(rootReadme.includes('docs/README.md'), 'Root readme must link the documen
 assert(rootReadme.includes('docs/COMPONENT_WORKFLOW.md'), 'Root readme must link the canonical component workflow.');
 
 const productCoverage = await read('docs/PRODUCT_FRONTEND_COVERAGE.md');
-for (const asset of ['LK Web Viz', 'LK Control Full Daedeok', 'LK Context Hub']) {
+for (const asset of ['LK Web Viz', 'LK Control Full Daedeok', 'LK Portal']) {
   assert(productCoverage.includes(asset), `Product coverage must explicitly include ${asset}.`);
 }
 

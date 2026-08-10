@@ -52,10 +52,10 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | Related radios share name; uncontrolled radios synchronize their custom indicator with the browser's native group state. The label gap is 8px and the default selected dot is 12px. |
-| 명시 규칙 2 | Radio — 1.5px 헤어라인 원(20px, sm 16px). 선택되면 원이 시그널 잉크로 채워지고 화이트 중앙 점이 나타납니다. 그룹은 같은 name을 공유하세요. |
+| 명시 규칙 2 | size를 생략하면 일반 표면에서는 기존 md, bounded compact component scope에서는 sm을 사용합니다. 시각 원과 별개로 native radio target은 두 크기 모두 최소 24×24px이며 명시한 size가 우선합니다. |
+| 명시 규칙 3 | Radio — 1.5px 헤어라인 원(20px, sm 16px). 선택되면 원이 시그널 잉크로 채워지고 화이트 중앙 점이 나타납니다. 그룹은 같은 name을 공유하세요. |
 | --body2-size | 15px |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 
 ## Content and writing
 

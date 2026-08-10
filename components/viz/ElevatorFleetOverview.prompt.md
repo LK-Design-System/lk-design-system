@@ -149,7 +149,7 @@ DOM과 화면의 읽기 순서는 위 순서를 유지합니다. 각 위치 열�
   source는 설비 identity/status/freshness의 필요를 확인하지만 다중 건물 elevator
   telemetry는 확인하지 못했습니다. LDS는 projection을 제공하고 Control은 truth,
   alert policy, permissions와 command를 소유합니다.
-- **LK Context Hub** (`de124084b7e50049350a46f92c4ea4476269c58c`):
+- **LK Portal** (`e5ee99d5062170e26abe63d9105c2b8a024ce710`):
   `not applicable`. pinned project/chat workflow에는 물리 설비 fleet monitoring
   진입점이 없습니다.
 

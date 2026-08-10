@@ -24,7 +24,6 @@ const meta = {
   },
   parameters: {
     storyGuide: {
-      quantitativeRuleLimit: '6',
       storyId: 'lds-product-content-feature-card--feature-cards',
       eyebrow: 'Product / Feature Card',
       title: '사용자가 제품 기능의 목적과 차이를 짧은 설명으로 비교합니다',

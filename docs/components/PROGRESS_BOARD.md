@@ -141,7 +141,7 @@
 | [Dashboard Grid](guides/product-operations-dashboard-dashboard-grid.md) | Product / Operations Dashboard | `DashboardGrid` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Dashboard Shell](guides/product-operations-dashboard-dashboard-shell.md) | Product / Operations Dashboard | `DashboardShell` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 0 hidden |
 | [Command Palette](guides/product-overlay-command-palette.md) | Product / Overlay | `CommandPalette` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
-| [Drawer](guides/product-overlay-drawer.md) | Product / Overlay | `Drawer` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
+| [Drawer](guides/product-overlay-drawer.md) | Product / Overlay | `Drawer` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Hover Card](guides/product-overlay-hover-card.md) | Product / Overlay | `HoverCard` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Lightbox](guides/product-overlay-lightbox.md) | Product / Overlay | `Lightbox` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
 | [Popover](guides/product-overlay-popover.md) | Product / Overlay | `Popover` | mapped | implemented | not-tracked | not-tracked | 2 public / 2 hidden |

@@ -72,6 +72,12 @@ export interface SideNavProps extends Omit<React.HTMLAttributes<HTMLElement>, 'o
   width?: number | string;
   /** 외곽 표면. floating은 전체 outline과 radius를, docked는 논리적 끝 divider만 사용합니다. @default 'floating' */
   surface?: 'floating' | 'docked';
+  /**
+   * 색상 외형. `default`는 현재 theme semantic 색을 그대로 사용하고,
+   * `brand`는 밝은 작업면과 대비되는 평면 브랜드 네이비 셸을 사용합니다.
+   * 배치 형태는 `surface`가 별도로 소유합니다. @default 'default'
+   */
+  appearance?: 'default' | 'brand';
   /** 제어되는 접힘 상태. 접기 토글은 셸의 상단 바에 두고 이 프롭으로 패널을 구동합니다. 상태 영속화는 SideNav가 아니라 소비 제품이 소유합니다. */
   collapsed?: boolean;
   /** 비제어 시 초기 접힘. @default false */
