@@ -32,6 +32,7 @@
       "components/buttons/TextButton.d.ts#TextButtonOwnProps:tone=danger",
       "components/buttons/TextButton.d.ts#TextButtonOwnProps:tone=neutral",
       "components/cards/FeatureCard.d.ts#FeatureCardProps:tone=amber",
+      "components/cards/FeatureCard.d.ts#FeatureCardProps:tone=moss",
       "components/cards/FeatureCard.d.ts#FeatureCardProps:tone=navy",
       "components/cards/FeatureCard.d.ts#FeatureCardProps:tone=steel",
       "components/content/Bubble.d.ts#BubbleProps:tone=light",

@@ -1,7 +1,7 @@
 **Card** — 모든 것이 올라가는 중립 서피스: 화이트(또는 `dark` 네이비), 헤어라인 보더, 부드러운 네이비 그림자, 16px 반경. `interactive`는 호버 시 떠오릅니다.
 
 ```jsx
-<Card elevation="md" interactive onClick={openDetail}>…</Card>
+<Card interactive onClick={openDetail}>…</Card>
 <Card dark padding={22}>…</Card>
 ```
 
@@ -55,6 +55,7 @@
 - Use `as="article"`, `as="section"`, or `as="li"` for a non-interactive card when that native document structure is meaningful. The default remains `div`.
 - Do not combine a document-structure `as` value with `interactive`: interactive cards intentionally expose a single button role. Keep a non-interactive semantic root when the card contains links or buttons.
 - Use `surface="subtle"` for the inset surface that groups peer cards. It defaults to `elevation="none"`; nested default-surface cards own their own border, radius, and elevation. An explicit elevation is still available for exceptional compositions.
+- **Elevation ramp** — `none` · `xs`(기본, 쉬는 카드) · `sm` · `md`(들어올린 상태) · `lg`. `interactive` 카드는 hover에서 `md`로 올라갑니다. `NewsCard`·`ListingCard`가 쓰는 rest=`xs` / lift=`md` 규칙과 같습니다. `md`(`0 16px 40px`)는 Tooltip·Combobox 드롭다운·Fab처럼 **페이지 위에 떠 있는** 요소의 등급이므로 놓여 있는 카드의 평상시 값으로 쓰지 않습니다.
 - `dark` remains the inverse-card compatibility axis and takes precedence over `surface`.
 
 ```jsx

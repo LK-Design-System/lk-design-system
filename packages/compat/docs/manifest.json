@@ -151,7 +151,7 @@
       },
       {
         "path": "docs/foundations/TOKEN_REFERENCE.md",
-        "sha256": "40cba08e6ae556320b2d43c98cc41008e00c72c33867c4cdc6981abec0dc2e90"
+        "sha256": "f66bedec07df45d452539c9f9ea6a8cea97578560e07741bc7e73cf0c06618b8"
       },
       {
         "path": "docs/foundations/typography.md",
@@ -211,15 +211,15 @@
       },
       {
         "path": "tokens/source.json",
-        "sha256": "2e1bab5ca09a0e8a4a0ec1947a977142f55baf4ace5b90e96aa4c50c1f9d6430"
+        "sha256": "aaab3894651e7411de1c8f798747b9cf61df1478934216d07ed2b7b69208c154"
       }
     ]
   },
   "resources": {
     "tokens": {
       "fileCount": 12,
-      "bytes": 326847,
-      "sha256": "c91bbd141674655b60235ad3f270c960476879a400a83e58efb14410c45f06d8"
+      "bytes": 327292,
+      "sha256": "fe20bf3a4c6db1692ce6a95cd1d3f1cfd59f62f50d05948ad0c763d1ac8db352"
     },
     "assets": {
       "fileCount": 472,
@@ -470,11 +470,11 @@
     },
     {
       "path": "foundations/TOKEN_REFERENCE.md",
-      "sha256": "40cba08e6ae556320b2d43c98cc41008e00c72c33867c4cdc6981abec0dc2e90",
+      "sha256": "f66bedec07df45d452539c9f9ea6a8cea97578560e07741bc7e73cf0c06618b8",
       "sources": [
         {
           "path": "docs/foundations/TOKEN_REFERENCE.md",
-          "sha256": "40cba08e6ae556320b2d43c98cc41008e00c72c33867c4cdc6981abec0dc2e90"
+          "sha256": "f66bedec07df45d452539c9f9ea6a8cea97578560e07741bc7e73cf0c06618b8"
         }
       ]
     },
@@ -590,11 +590,11 @@
     },
     {
       "path": "token-reference.json",
-      "sha256": "2e1bab5ca09a0e8a4a0ec1947a977142f55baf4ace5b90e96aa4c50c1f9d6430",
+      "sha256": "aaab3894651e7411de1c8f798747b9cf61df1478934216d07ed2b7b69208c154",
       "sources": [
         {
           "path": "tokens/source.json",
-          "sha256": "2e1bab5ca09a0e8a4a0ec1947a977142f55baf4ace5b90e96aa4c50c1f9d6430"
+          "sha256": "aaab3894651e7411de1c8f798747b9cf61df1478934216d07ed2b7b69208c154"
         }
       ]
     }

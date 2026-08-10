@@ -59,9 +59,11 @@ export function FeatureCard({
         background: boxed ? 'var(--component-card-bg)' : 'transparent',
         border: boxed ? 'var(--component-card-border)' : 'none',
         borderRadius: boxed ? 'var(--component-card-radius)' : 0,
-        /* Card's default rest elevation (elevation="md") — same value as the
-           previous var(--shadow-md), now tracked via the card token. */
-        boxShadow: boxed ? 'var(--component-card-shadow-md)' : 'none',
+        /* Card's default rest elevation (elevation="xs"). `md` is the lifted
+           step that NewsCard/ListingCard reach for on hover, and the value
+           Tooltip/Combobox/Fab use because they float above the page — a
+           resting card must not carry it. */
+        boxShadow: boxed ? 'var(--component-card-shadow-xs)' : 'none',
         padding: boxed ? compact ? 'var(--space-4)' : 'var(--component-card-padding)' : 0,
         cursor: activatable ? 'pointer' : undefined,
         ...style,

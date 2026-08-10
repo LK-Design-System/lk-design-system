@@ -14,7 +14,7 @@ export interface CardOwnProps {
   /** Surface role. `subtle` is an inset grouping surface and defaults to no shadow. @default "default" */
   surface?: "default" | "subtle";
   /** 기본 그림자 깊이. @default "md" */
-  elevation?: "none" | "sm" | "md" | "lg";
+  elevation?: "none" | "xs" | "sm" | "md" | "lg";
   /**
    * 카드 전체가 하나의 행동일 때. 호버 리프트 + 그림자 심화에 더해
    * `role="button"`, `tabIndex=0`, Enter/Space 활성화, `:focus-visible` 링을

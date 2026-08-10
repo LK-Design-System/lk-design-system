@@ -109,6 +109,7 @@ export const Card = React.forwardRef(function Card({
   useCardStyles();
   const shadows = {
     none: 'var(--component-card-shadow-none)',
+    xs: 'var(--component-card-shadow-xs)',
     sm: 'var(--component-card-shadow-sm)',
     md: 'var(--component-card-shadow-md)',
     lg: 'var(--component-card-shadow-lg)',
@@ -116,7 +117,12 @@ export const Card = React.forwardRef(function Card({
   const [hover, setHover] = React.useState(false);
   const mobile = platform === 'mobile';
   const dense = density === 'compact' && !mobile;
-  const resolvedElevation = elevation ?? (surface === 'subtle' ? 'none' : 'md');
+  /* 평상시는 `xs`, 들어올린 상태가 `md`다 — `NewsCard`·`ListingCard`가 이미
+     쓰던 단계와 같다. 예전에는 rest가 `md`(0 16px 40px), hover가 `lg`라 카드
+     하나가 Tooltip·Combobox 드롭다운·Fab 같은 **떠 있는** 요소와 같은 그림자를
+     달고 가만히 놓여 있었다. 40px 번짐은 오버레이 등급이라 쉬는 표면에는
+     과하고, 같은 시스템 안에서 형제 카드와 규칙이 어긋났다. */
+  const resolvedElevation = elevation ?? (surface === 'subtle' ? 'none' : 'xs');
   const structured = skeleton || save || toggleIcon != null || thumbnail != null || topContent != null || leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null || bottomContent != null || footer != null;
   const defaultPadding = mobile ? 'var(--space-3)' : dense ? 'var(--space-4)' : 'var(--component-card-padding)';
   const resolvedPaddingValue = padding != null
@@ -193,7 +199,7 @@ export const Card = React.forwardRef(function Card({
         color: dark ? 'var(--component-card-fg-dark)' : 'var(--component-card-fg)',
         border: dark ? 'var(--component-card-border-dark)' : 'var(--component-card-border)',
         borderRadius: 'var(--lds-card-radius, var(--component-card-radius))',
-        boxShadow: interactive && hover ? 'var(--component-card-shadow-lg)' : shadows[resolvedElevation],
+        boxShadow: interactive && hover ? 'var(--component-card-shadow-md)' : shadows[resolvedElevation],
         transform: interactive && hover ? 'var(--component-card-hover-transform)' : 'none',
         transition: 'var(--component-card-transition)',
         cursor: interactive ? 'pointer' : undefined,

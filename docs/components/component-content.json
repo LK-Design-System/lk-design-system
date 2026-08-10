@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "7253b37a2a0bdf040def6f3f00112576f83cf50c5ad8999c4f818e745a19848c",
+  "sourceFingerprint": "586afe5599b875bde62af2cad53b35b78c7c6228e3d45b2afe38b73a743ca82c",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -1780,7 +1780,7 @@
         },
         {
           "name": "elevation",
-          "type": "\"none\" | \"sm\" | \"md\" | \"lg\"",
+          "type": "\"none\" | \"xs\" | \"sm\" | \"md\" | \"lg\"",
           "required": false,
           "description": "기본 그림자 깊이. @default \"md\"",
           "owner": "CardOwnProps"
@@ -1987,6 +1987,7 @@
         "--space-2",
         "--space-3",
         "--component-card-shadow-none",
+        "--component-card-shadow-xs",
         "--component-card-shadow-sm",
         "--component-card-shadow-md",
         "--component-card-shadow-lg",
@@ -2037,7 +2038,7 @@
           "url": "https://carbondesignsystem.com/components/data-table/usage/"
         }
       ],
-      "promptSha256": "36ecd2d56f77b75736e6453686a1faf65167817a1fc3a4784f96600cf83cd878"
+      "promptSha256": "acd1b5679e7aced72629bed51acc53b7fd7ad22a061cf1a356835757059c8594"
     },
     {
       "id": "checklist-item",
@@ -2246,8 +2247,7 @@
         "--component-card-bg",
         "--component-card-border",
         "--component-card-radius",
-        "--shadow-md",
-        "--component-card-shadow-md",
+        "--component-card-shadow-xs",
         "--component-card-padding",
         "--space-10",
         "--radius-14",
@@ -2273,7 +2273,7 @@
           "url": "https://fluent2.microsoft.design/layout"
         }
       ],
-      "promptSha256": "3369a137559cf4c0fd03fb3650983166d54271779812ddc45886caec8a6135cd"
+      "promptSha256": "8e21e29dcbc525bd561d1d9bcbdf61f04b36efab8a76aa367ba938c636c73e38"
     },
     {
       "id": "feed-card",
@@ -35318,7 +35318,7 @@
         },
         {
           "name": "elevation",
-          "type": "\"none\" | \"sm\" | \"md\" | \"lg\"",
+          "type": "\"none\" | \"xs\" | \"sm\" | \"md\" | \"lg\"",
           "required": false,
           "description": "기본 그림자 깊이. @default \"md\"",
           "owner": "CardOwnProps"
@@ -35478,7 +35478,8 @@
         }
       ],
       "behavior": [
-        "In data-heavy consoles, pair Card density deliberately with neighboring controls and tables. Carbon Data Table usage pairs toolbar/header/row sizes rather than mixing independent density decisions inside one region."
+        "In data-heavy consoles, pair Card density deliberately with neighboring controls and tables. Carbon Data Table usage pairs toolbar/header/row sizes rather than mixing independent density decisions inside one region.",
+        "Elevation ramp — none · xs(기본, 쉬는 카드) · sm · md(들어올린 상태) · lg. interactive 카드는 hover에서 md로 올라갑니다. NewsCard·ListingCard가 쓰는 rest=xs / lift=md 규칙과 같습니다. md(0 16px 40px)는 Tooltip·Combobox 드롭다운·Fab처럼 페이지 위에 떠 있는 요소의 등급이므로 놓여 있는 카드의 평상시 값으로 쓰지 않습니다."
       ],
       "quantitativeRules": [
         {
@@ -35553,7 +35554,7 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<Card elevation=\"md\" interactive onClick={openDetail}>…</Card>\n<Card dark padding={22}>…</Card>"
+          "code": "<Card interactive onClick={openDetail}>…</Card>\n<Card dark padding={22}>…</Card>"
         },
         {
           "label": "추가 조합 2",
@@ -35587,6 +35588,7 @@
         "--component-card-shadow-md",
         "--component-card-shadow-none",
         "--component-card-shadow-sm",
+        "--component-card-shadow-xs",
         "--component-card-transition",
         "--fw-medium",
         "--fw-semibold",
@@ -53775,11 +53777,10 @@
         "--component-card-border",
         "--component-card-padding",
         "--component-card-radius",
-        "--component-card-shadow-md",
+        "--component-card-shadow-xs",
         "--fw-extra",
         "--headline1-size",
         "--radius-14",
-        "--shadow-md",
         "--space-1",
         "--space-10",
         "--space-2",

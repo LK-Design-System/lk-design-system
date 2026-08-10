@@ -35,7 +35,7 @@
 | --- | --- | --- | --- |
 | `as` | `React.ElementType` | No | Root element used for non-interactive document semantics. @default "div" |
 | `surface` | `"default" \| "subtle"` | No | Surface role. subtle is an inset grouping surface and defaults to no shadow. @default "default" |
-| `elevation` | `"none" \| "sm" \| "md" \| "lg"` | No | 기본 그림자 깊이. @default "md" |
+| `elevation` | `"none" \| "xs" \| "sm" \| "md" \| "lg"` | No | 기본 그림자 깊이. @default "md" |
 | `interactive` | `boolean` | No | 카드 전체가 하나의 행동일 때. 호버 리프트 + 그림자 심화에 더해 role="button", tabIndex=0, Enter/Space 활성화, :focus-visible 링을 부여합니다. 내부에 별도의 버튼·링크를 넣지 마세요. |
 | `dark` | `boolean` | No | 다크 섹션용 네이비 서피스. @default false |
 | `headingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| false` | No | 구조화 모드 title 의 heading 레벨. false 면 heading 의미 없이 div 로 렌더링합니다(제목이 이미 바깥에 있을 때). |
@@ -67,6 +67,7 @@
 ## Behavior and interaction
 
 - In data-heavy consoles, pair Card density deliberately with neighboring controls and tables. Carbon Data Table usage pairs toolbar/header/row sizes rather than mixing independent density decisions inside one region.
+- Elevation ramp — none · xs(기본, 쉬는 카드) · sm · md(들어올린 상태) · lg. interactive 카드는 hover에서 md로 올라갑니다. NewsCard·ListingCard가 쓰는 rest=xs / lift=md 규칙과 같습니다. md(0 16px 40px)는 Tooltip·Combobox 드롭다운·Fab처럼 페이지 위에 떠 있는 요소의 등급이므로 놓여 있는 카드의 평상시 값으로 쓰지 않습니다.
 
 ## 정량 규칙
 
@@ -117,7 +118,7 @@
 ### 기본 조합
 
 ```jsx
-<Card elevation="md" interactive onClick={openDetail}>…</Card>
+<Card interactive onClick={openDetail}>…</Card>
 <Card dark padding={22}>…</Card>
 ```
 
@@ -159,6 +160,7 @@
 - `--component-card-shadow-md`
 - `--component-card-shadow-none`
 - `--component-card-shadow-sm`
+- `--component-card-shadow-xs`
 - `--component-card-transition`
 - `--fw-medium`
 - `--fw-semibold`

@@ -98,11 +98,10 @@
 - `--component-card-border`
 - `--component-card-padding`
 - `--component-card-radius`
-- `--component-card-shadow-md`
+- `--component-card-shadow-xs`
 - `--fw-extra`
 - `--headline1-size`
 - `--radius-14`
-- `--shadow-md`
 - `--space-1`
 - `--space-10`
 - `--space-2`

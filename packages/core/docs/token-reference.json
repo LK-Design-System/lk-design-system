@@ -3604,6 +3604,12 @@
           "css": "--component-card-padding",
           "ref": "primitive.space.8"
         },
+        "shadowXs": {
+          "$type": "shadow",
+          "$value": "var(--component-card-shadow-xs)",
+          "css": "--component-card-shadow-xs",
+          "ref": "primitive.effect.shadowXs"
+        },
         "shadowMd": {
           "$type": "shadow",
           "$value": "var(--component-card-shadow-md)",

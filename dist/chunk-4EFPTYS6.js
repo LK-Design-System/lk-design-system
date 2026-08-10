@@ -1,8 +1,8 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
+"use client";
 
 // components/cards/FeatureCard.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
 var ICON_TONES = {
   signal: { fg: "var(--color-semantic-primary-normal)", bg: "var(--color-semantic-primary-surface-normal)" },
   // teal tile (default)
@@ -38,12 +38,12 @@ function FeatureCard({
     }
     onKeyDown && onKeyDown(e);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ jsxs(
     "div",
     {
       "data-density": density,
-      role: _nullishCoalesce(rest.role, () => ( (activatable ? "button" : void 0))),
-      tabIndex: _nullishCoalesce(rest.tabIndex, () => ( (activatable ? 0 : void 0))),
+      role: rest.role ?? (activatable ? "button" : void 0),
+      tabIndex: rest.tabIndex ?? (activatable ? 0 : void 0),
       onClick,
       onKeyDown: handleKeyDown,
       style: {
@@ -53,26 +53,28 @@ function FeatureCard({
         background: boxed ? "var(--component-card-bg)" : "transparent",
         border: boxed ? "var(--component-card-border)" : "none",
         borderRadius: boxed ? "var(--component-card-radius)" : 0,
-        /* Card's default rest elevation (elevation="md") — same value as the
-           previous var(--shadow-md), now tracked via the card token. */
-        boxShadow: boxed ? "var(--component-card-shadow-md)" : "none",
+        /* Card's default rest elevation (elevation="xs"). `md` is the lifted
+           step that NewsCard/ListingCard reach for on hover, and the value
+           Tooltip/Combobox/Fab use because they float above the page — a
+           resting card must not carry it. */
+        boxShadow: boxed ? "var(--component-card-shadow-xs)" : "none",
         padding: boxed ? compact ? "var(--space-4)" : "var(--component-card-padding)" : 0,
         cursor: activatable ? "pointer" : void 0,
         ...style
       },
       ...rest,
       children: [
-        icon && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: compact ? "var(--space-10)" : 52, height: compact ? "var(--space-10)" : 52, borderRadius: "var(--radius-14)", color: t.fg, background: t.bg }, children: icon }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", flexDirection: "column", gap: compact ? "var(--space-1)" : "var(--space-2)" }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, HeadingTag, { style: { fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-strong)", margin: 0, wordBreak: "keep-all" }, children: title }),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { style: { fontSize: "var(--body2-size)", lineHeight: 1.7, color: "var(--color-semantic-label-alternative)", margin: 0, wordBreak: "keep-all" }, children })
+        icon && /* @__PURE__ */ jsx("span", { style: { display: "inline-flex", alignItems: "center", justifyContent: "center", width: compact ? "var(--space-10)" : 52, height: compact ? "var(--space-10)" : 52, borderRadius: "var(--radius-14)", color: t.fg, background: t.bg }, children: icon }),
+        /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: compact ? "var(--space-1)" : "var(--space-2)" }, children: [
+          /* @__PURE__ */ jsx(HeadingTag, { style: { fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: "var(--color-semantic-label-strong)", margin: 0, wordBreak: "keep-all" }, children: title }),
+          /* @__PURE__ */ jsx("p", { style: { fontSize: "var(--body2-size)", lineHeight: 1.7, color: "var(--color-semantic-label-alternative)", margin: 0, wordBreak: "keep-all" }, children })
         ] })
       ]
     }
   );
 }
 
-
-
-exports.FeatureCard = FeatureCard;
-//# sourceMappingURL=chunk-MN363AG2.cjs.map
+export {
+  FeatureCard
+};
+//# sourceMappingURL=chunk-4EFPTYS6.js.map

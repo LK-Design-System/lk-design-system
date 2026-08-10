@@ -106,6 +106,7 @@ var Card = _react2.default.forwardRef(function Card2({
   useCardStyles();
   const shadows = {
     none: "var(--component-card-shadow-none)",
+    xs: "var(--component-card-shadow-xs)",
     sm: "var(--component-card-shadow-sm)",
     md: "var(--component-card-shadow-md)",
     lg: "var(--component-card-shadow-lg)"
@@ -113,7 +114,7 @@ var Card = _react2.default.forwardRef(function Card2({
   const [hover, setHover] = _react2.default.useState(false);
   const mobile = platform === "mobile";
   const dense = density === "compact" && !mobile;
-  const resolvedElevation = _nullishCoalesce(elevation, () => ( (surface === "subtle" ? "none" : "md")));
+  const resolvedElevation = _nullishCoalesce(elevation, () => ( (surface === "subtle" ? "none" : "xs")));
   const structured = skeleton || save || toggleIcon != null || thumbnail != null || topContent != null || leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null || bottomContent != null || footer != null;
   const defaultPadding = mobile ? "var(--space-3)" : dense ? "var(--space-4)" : "var(--component-card-padding)";
   const resolvedPaddingValue = padding != null ? typeof padding === "number" ? `${padding}px` : padding : `var(--lds-card-padding, ${defaultPadding})`;
@@ -181,7 +182,7 @@ var Card = _react2.default.forwardRef(function Card2({
         color: dark ? "var(--component-card-fg-dark)" : "var(--component-card-fg)",
         border: dark ? "var(--component-card-border-dark)" : "var(--component-card-border)",
         borderRadius: "var(--lds-card-radius, var(--component-card-radius))",
-        boxShadow: interactive && hover ? "var(--component-card-shadow-lg)" : shadows[resolvedElevation],
+        boxShadow: interactive && hover ? "var(--component-card-shadow-md)" : shadows[resolvedElevation],
         transform: interactive && hover ? "var(--component-card-hover-transform)" : "none",
         transition: "var(--component-card-transition)",
         cursor: interactive ? "pointer" : void 0,
@@ -199,4 +200,4 @@ var Card = _react2.default.forwardRef(function Card2({
 
 
 exports.Card = Card;
-//# sourceMappingURL=chunk-PT47KCJK.cjs.map
+//# sourceMappingURL=chunk-JF7HNDB6.cjs.map

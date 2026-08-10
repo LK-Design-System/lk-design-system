@@ -54,6 +54,7 @@
 | `component.card.tokens.radius` | dimension | `--component-card-radius` | `var(--component-card-radius)` | — |
 | `component.card.tokens.shadowLg` | shadow | `--component-card-shadow-lg` | `var(--component-card-shadow-lg)` | — |
 | `component.card.tokens.shadowMd` | shadow | `--component-card-shadow-md` | `var(--component-card-shadow-md)` | — |
+| `component.card.tokens.shadowXs` | shadow | `--component-card-shadow-xs` | `var(--component-card-shadow-xs)` | — |
 | `component.chip.tokens.activeBorder` | border | `--component-chip-border-active` | `var(--component-chip-border-active)` | — |
 | `component.chip.tokens.activeForeground` | color | `--component-chip-fg-active` | `var(--component-chip-fg-active)` | — |
 | `component.chip.tokens.background` | color | `--component-chip-bg` | `var(--component-chip-bg)` | — |

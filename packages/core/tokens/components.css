@@ -298,6 +298,9 @@
   --component-card-radius: var(--radius-xl);
   --component-card-padding: var(--space-8);
   --component-card-shadow-none: none;
+  /* 쉬고 있는 카드의 기본 단계. `NewsCard`·`ListingCard`가 이미 평상시에 쓰던
+     `--shadow-xs`와 같은 값이며, `md`는 들어올린 상태로 예약한다. */
+  --component-card-shadow-xs: var(--shadow-xs);
   --component-card-shadow-sm: var(--shadow-sm);
   --component-card-shadow-md: var(--shadow-md);
   --component-card-shadow-lg: var(--shadow-lg);

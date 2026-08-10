@@ -1833,7 +1833,7 @@
         },
         {
           "name": "elevation",
-          "type": "\"none\" | \"sm\" | \"md\" | \"lg\"",
+          "type": "\"none\" | \"xs\" | \"sm\" | \"md\" | \"lg\"",
           "required": false,
           "description": "기본 그림자 깊이. @default \"md\"",
           "owner": "CardOwnProps"
@@ -1993,7 +1993,8 @@
         }
       ],
       "behavior": [
-        "In data-heavy consoles, pair Card density deliberately with neighboring controls and tables. Carbon Data Table usage pairs toolbar/header/row sizes rather than mixing independent density decisions inside one region."
+        "In data-heavy consoles, pair Card density deliberately with neighboring controls and tables. Carbon Data Table usage pairs toolbar/header/row sizes rather than mixing independent density decisions inside one region.",
+        "Elevation ramp — none · xs(기본, 쉬는 카드) · sm · md(들어올린 상태) · lg. interactive 카드는 hover에서 md로 올라갑니다. NewsCard·ListingCard가 쓰는 rest=xs / lift=md 규칙과 같습니다. md(0 16px 40px)는 Tooltip·Combobox 드롭다운·Fab처럼 페이지 위에 떠 있는 요소의 등급이므로 놓여 있는 카드의 평상시 값으로 쓰지 않습니다."
       ],
       "quantitativeRules": [
         {
@@ -2067,7 +2068,7 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<Card elevation=\"md\" interactive onClick={openDetail}>…</Card>\n<Card dark padding={22}>…</Card>"
+          "code": "<Card interactive onClick={openDetail}>…</Card>\n<Card dark padding={22}>…</Card>"
         },
         {
           "label": "추가 조합 2",
@@ -2101,6 +2102,7 @@
         "--component-card-shadow-md",
         "--component-card-shadow-none",
         "--component-card-shadow-sm",
+        "--component-card-shadow-xs",
         "--component-card-transition",
         "--fw-medium",
         "--fw-semibold",
@@ -18724,11 +18726,10 @@
         "--component-card-border",
         "--component-card-padding",
         "--component-card-radius",
-        "--component-card-shadow-md",
+        "--component-card-shadow-xs",
         "--fw-extra",
         "--headline1-size",
         "--radius-14",
-        "--shadow-md",
         "--space-1",
         "--space-10",
         "--space-2",
