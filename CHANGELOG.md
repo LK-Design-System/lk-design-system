@@ -2,6 +2,15 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.67.1 - 2026-08-09
+
+Interim vendor drop from branch `chat-message-identity-actions` (built on rc.67 HEAD `6fea1752`, excluding the concurrent uncommitted worktree changes). Fold into the next full rc when the release line settles.
+
+### Added
+
+- `ConversationMessage identityVisibility="hidden"`: 정렬과 fill이 이미 화자를 말하는 표면(2자 대화의 outbound solid primary bubble 등)에서 작성자 행을 시각적으로만 숨깁니다. 접근 가능한 이름(author + 역할명)은 유지되고, grouped `middle | last`의 기존 숨김 동작은 그대로입니다.
+- `ConversationMessage messageActionsVisibility="on-demand"`: 액션바를 opacity 0으로 쉬게 하고 hover 또는 focus-within에서 드러냅니다. 레이아웃 행과 접근성 트리는 유지되어 reflow가 없고, hover가 없는 coarse pointer와 실패 턴의 retry 바에는 적용되지 않습니다.
+
 ## Unreleased
 
 - 기업 표기형의 `주식회사 엘케이로보틱스`를 Noto Sans KR ExtraBold 800 v2.004-H2, 자간 0.105em, 균일 스케일로 규정했습니다. 원본 가변 TTF·라이선스 해시와 `wght=800` 글리프·배치 골든 메트릭을 생성기에서 검증하고 기업 표기형 최소 디지털 크기를 160px로 고정합니다.
