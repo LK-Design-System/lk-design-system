@@ -35,6 +35,7 @@ export { BarChart } from '../components/data/BarChart.jsx';
 export { Calendar } from '../components/data/Calendar.jsx';
 export { Carousel } from '../components/data/Carousel.jsx';
 export { ChartFrame } from '../components/data/ChartFrame.jsx';
+export { DataCollectionPanel } from '../components/data/DataCollectionPanel.jsx';
 export { DataExportAction } from '../components/data/DataExportAction.jsx';
 export { DataGrid } from '../components/data/DataGrid.jsx';
 export { DataToolbar } from '../components/data/DataToolbar.jsx';

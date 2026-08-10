@@ -82,9 +82,9 @@
 | `Calendar` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
+| `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
 | `DataToolbar` | 대표 시나리오에서 조합 |
-| `DataExportAction` | 대표 시나리오에서 조합 |
 
 ## Examples
 

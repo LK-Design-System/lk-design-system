@@ -5,8 +5,8 @@
 | Type | Stable contract |
 | Status | Current |
 | Owner | Design system owner · Core/Product component owners |
-| Last reviewed | 2026-08-02 |
-| Applies to | Public LDS React components, beginning with the 15-component refinement set |
+| Last reviewed | 2026-08-04 |
+| Applies to | Public LDS React components, beginning with the 16-component refinement set |
 
 이 문서는 LDS 컴포넌트의 public DOM surface, 스타일 대상과 ref target을 예측 가능하게
 만드는 공통 계약이다. 내부 DOM 전체를 공개하는 정책이 아니라, 제품 레이아웃과 테스트에
@@ -70,7 +70,7 @@ Mantine Styles API의 named selector와 component variable 모델을 참고하�
 ## Conformance checklist
 
 첫 적용 대상은 Button, Input, Textarea, SearchField, Select, FieldAction,
-SegmentedControl, Tabs, Card, DataToolbar, SideNav, DropdownMenu, Popover, Tooltip, Modal이다.
+SegmentedControl, Tabs, Card, DataToolbar, DataCollectionPanel, SideNav, DropdownMenu, Popover, Tooltip, Modal이다.
 각 컴포넌트는 다음을 type, prompt와 Storybook contract에서 증명한다.
 
 | Area | Required evidence |
@@ -82,7 +82,7 @@ SegmentedControl, Tabs, Card, DataToolbar, SideNav, DropdownMenu, Popover, Toolt
 | Accessibility | accessible name·role·keyboard·focus 이동/복원·ARIA state |
 | Composition | 허용 slot·sibling·금지 nesting·product-owned state |
 
-## Initial 15-component conformance register
+## Initial 16-component conformance register
 
 | Component | Root / default ref | State and accessibility | Public styling and geometry | Composition boundary |
 | --- | --- | --- | --- | --- |
@@ -96,6 +96,7 @@ SegmentedControl, Tabs, Card, DataToolbar, SideNav, DropdownMenu, Popover, Toolt
 | Tabs | tablist / tablist | controlled/uncontrolled, tab roving focus·Arrow/Home/End | 6 parts; `--lds-tabs-*` | tab panel DOM과 콘텐츠는 consumer 소유 |
 | Card | polymorphic surface / 같은 root | interactive opt-in keyboard, heading 의미 | 9 parts; `--lds-card-*` | 구조화 slot만 허용, 중첩 interactive surface 금지 |
 | DataToolbar | toolbar root / 같은 root | header·controls 조건부 행, empty면 `null` | named rows·actions; `--lds-data-toolbar-*` | query·selection·bulk policy는 제품/DataGrid 소유 |
+| DataCollectionPanel | polymorphic collection surface / 같은 root | toolbar → state/content → freshness → footer 순서, wide/compact 중 하나만 노출 | 6 parts; `--lds-data-collection-panel-*` | embedded perimeter와 slot 전환은 LDS, query·row 의미·compact markup·pagination state는 제품 소유 |
 | SideNav | native `nav` / 같은 root | selected·collapsed·disclosure, link/button 의미, overlay dismiss | 12 parts; `--lds-side-nav-*` | route·permission·외부 collapse control은 제품 shell 소유 |
 | DropdownMenu | anchor root / 같은 root | controlled/uncontrolled, menu keyboard, topmost Escape·restore | `root`·`trigger`·`panel`·`menu`·`item`·`divider`·`actionArea`; `--lds-dropdown-menu-*` | item model만 허용, nested Portal stack은 LDS 소유 |
 | Popover | anchor root / 같은 root | controlled/uncontrolled, outside press·Escape·restore | `root`·`trigger`·`panel`; `--lds-popover-*` | content slot 허용, Portal·positioning은 LDS 소유 |

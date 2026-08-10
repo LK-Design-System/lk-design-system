@@ -1,6 +1,6 @@
 {
   "name": "@lk-design-system/lds-workspace",
-  "version": "0.1.0-rc.25",
+  "version": "0.1.0-rc.26",
   "packageManager": "npm@10.9.2",
   "private": true,
   "description": "Private workspace orchestrator for the layered LK ROBOTICS design system.",
@@ -59,6 +59,7 @@
     "report:storybook-ia": "node scripts/report-storybook-information-architecture.mjs --update",
     "check:storybook-ia": "node scripts/report-storybook-information-architecture.mjs --check && node scripts/check-pattern-guides.mjs && node scripts/check-storybook-primary-description-review.mjs",
     "check:patterns": "node scripts/check-pattern-guides.mjs",
+    "storybook:dev": "storybook dev -p 6006 --host 127.0.0.1 --no-open",
     "storybook": "node scripts/generate-lk-color-system.mjs && storybook dev -p 6006 --host 127.0.0.1 --no-open",
     "build:storybook": "node scripts/generate-lk-color-system.mjs && storybook build",
     "prepack": "node scripts/run-package-scripts.mjs build",

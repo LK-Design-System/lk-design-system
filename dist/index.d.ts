@@ -60,6 +60,7 @@ export { BarChart } from '../components/data/BarChart';
 export { Calendar } from '../components/data/Calendar';
 export { Carousel } from '../components/data/Carousel';
 export { ChartFrame } from '../components/data/ChartFrame';
+export { DataCollectionPanel } from '../components/data/DataCollectionPanel';
 export { DataExportAction } from '../components/data/DataExportAction';
 export { DataGrid } from '../components/data/DataGrid';
 export { DataToolbar } from '../components/data/DataToolbar';
