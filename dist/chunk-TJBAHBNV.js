@@ -5,6 +5,7 @@ import {
 import {
   Divider,
   HistoryToolbar
+<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 } from "./chunk-6BTEW2IJ.js";
 import {
   IconButton
@@ -15,6 +16,18 @@ import {
 import {
   Toolbar
 } from "./chunk-OHFWZZX3.js";
+========
+} from "./chunk-K2BIXQOH.js";
+import {
+  Toolbar
+} from "./chunk-OHFWZZX3.js";
+import {
+  IconButton
+} from "./chunk-5ZFVLEMS.js";
+import {
+  Icon
+} from "./chunk-RUENHK23.js";
+>>>>>>>> codex/consolidate-release-check:dist/chunk-5O6AHIKS.js
 
 // components/editor/CanvasEditorCommandBar.jsx
 import React from "react";
@@ -181,4 +194,8 @@ function CanvasEditorCommandBar({
 export {
   CanvasEditorCommandBar
 };
+<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 //# sourceMappingURL=chunk-TJBAHBNV.js.map
+========
+//# sourceMappingURL=chunk-5O6AHIKS.js.map
+>>>>>>>> codex/consolidate-release-check:dist/chunk-5O6AHIKS.js

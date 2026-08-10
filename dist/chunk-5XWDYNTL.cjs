@@ -2,15 +2,26 @@
 
 
 
+<<<<<<<< HEAD:dist/chunk-5XWDYNTL.cjs
 var _chunkA76XYZFGcjs = require('./chunk-A76XYZFG.cjs');
+========
+var _chunk6TFFQJVMcjs = require('./chunk-6TFFQJVM.cjs');
+>>>>>>>> codex/consolidate-release-check:dist/chunk-GTWYPHII.cjs
 
 
 
 
+<<<<<<<< HEAD:dist/chunk-5XWDYNTL.cjs
 var _chunk2G45EBFEcjs = require('./chunk-2G45EBFE.cjs');
 
 
 var _chunk5H5GEWU5cjs = require('./chunk-5H5GEWU5.cjs');
+========
+var _chunkITKHOO7Tcjs = require('./chunk-ITKHOO7T.cjs');
+
+
+var _chunkLQ7SPTG7cjs = require('./chunk-LQ7SPTG7.cjs');
+>>>>>>>> codex/consolidate-release-check:dist/chunk-GTWYPHII.cjs
 
 // components/viz/Map2DCanvas.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -236,14 +247,22 @@ function Map2DCanvas({
   onKeyDown,
   ...rootProps
 }) {
+<<<<<<<< HEAD:dist/chunk-5XWDYNTL.cjs
   const interactionState = _chunk2G45EBFEcjs.resolveViewerState.call(void 0, {
+========
+  const interactionState = _chunkITKHOO7Tcjs.resolveViewerState.call(void 0, {
+>>>>>>>> codex/consolidate-release-check:dist/chunk-GTWYPHII.cjs
     state,
     availability,
     connection,
     freshness,
     playback
   });
+<<<<<<<< HEAD:dist/chunk-5XWDYNTL.cjs
   const interactionBlocked = _chunk2G45EBFEcjs.VIEWER_BLOCKING_STATES.includes(interactionState);
+========
+  const interactionBlocked = _chunkITKHOO7Tcjs.VIEWER_BLOCKING_STATES.includes(interactionState);
+>>>>>>>> codex/consolidate-release-check:dist/chunk-GTWYPHII.cjs
   const {
     rootRef,
     renderedViewport,
@@ -278,22 +297,37 @@ function Map2DCanvas({
   const centeredContent = contentOrigin === "center";
   const gridPosition = centeredContent ? `calc(50% + ${t.x}px) calc(50% + ${t.y}px)` : `${t.x}px ${t.y}px`;
   const viewerToolbar = controls ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+<<<<<<<< HEAD:dist/chunk-5XWDYNTL.cjs
     _chunkA76XYZFGcjs.ViewerToolbar,
+========
+    _chunk6TFFQJVMcjs.ViewerToolbar,
+>>>>>>>> codex/consolidate-release-check:dist/chunk-GTWYPHII.cjs
     {
       orientation: "vertical",
       appearance: appearance === "dark" ? "on-dark" : "minimal",
       label: "\uC9C0\uB3C4 \uBCF4\uAE30",
       "data-lk-viewport-control": "",
       children: [
+<<<<<<<< HEAD:dist/chunk-5XWDYNTL.cjs
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkA76XYZFGcjs.ViewerToolbarButton, { label: "\uD655\uB300", onClick: () => zoomAt(1.2), children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: "plus", size: 16, "aria-hidden": "true" }) }),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkA76XYZFGcjs.ViewerToolbarButton, { label: "\uCD95\uC18C", onClick: () => zoomAt(0.8), children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: "minus", size: 16, "aria-hidden": "true" }) }),
         onFit != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkA76XYZFGcjs.ViewerToolbarButton, { label: "\uC804\uCCB4 \uBCF4\uAE30", onClick: onFit, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: "full", size: 16, "aria-hidden": "true" }) }),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkA76XYZFGcjs.ViewerToolbarButton, { label: "\uBCF4\uAE30 \uCD08\uAE30\uD654", onClick: resetViewport, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: "reset", size: 16, "aria-hidden": "true" }) })
+========
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk6TFFQJVMcjs.ViewerToolbarButton, { label: "\uD655\uB300", onClick: () => zoomAt(1.2), children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: "plus", size: 16, "aria-hidden": "true" }) }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk6TFFQJVMcjs.ViewerToolbarButton, { label: "\uCD95\uC18C", onClick: () => zoomAt(0.8), children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: "minus", size: 16, "aria-hidden": "true" }) }),
+        onFit != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk6TFFQJVMcjs.ViewerToolbarButton, { label: "\uC804\uCCB4 \uBCF4\uAE30", onClick: onFit, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: "full", size: 16, "aria-hidden": "true" }) }),
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk6TFFQJVMcjs.ViewerToolbarButton, { label: "\uBCF4\uAE30 \uCD08\uAE30\uD654", onClick: resetViewport, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: "reset", size: 16, "aria-hidden": "true" }) })
+>>>>>>>> codex/consolidate-release-check:dist/chunk-GTWYPHII.cjs
       ]
     }
   ) : void 0;
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+<<<<<<<< HEAD:dist/chunk-5XWDYNTL.cjs
     _chunk2G45EBFEcjs.ViewerFrame,
+========
+    _chunkITKHOO7Tcjs.ViewerFrame,
+>>>>>>>> codex/consolidate-release-check:dist/chunk-GTWYPHII.cjs
     {
       ...rootProps,
       ref: rootRef,
@@ -360,4 +394,8 @@ function Map2DCanvas({
 
 
 exports.Map2DCanvas = Map2DCanvas;
+<<<<<<<< HEAD:dist/chunk-5XWDYNTL.cjs
 //# sourceMappingURL=chunk-5XWDYNTL.cjs.map
+========
+//# sourceMappingURL=chunk-GTWYPHII.cjs.map
+>>>>>>>> codex/consolidate-release-check:dist/chunk-GTWYPHII.cjs

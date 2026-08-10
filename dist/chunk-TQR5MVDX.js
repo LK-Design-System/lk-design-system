@@ -2,15 +2,26 @@
 import {
   ViewerToolbar,
   ViewerToolbarButton
+<<<<<<<< HEAD:dist/chunk-TQR5MVDX.js
 } from "./chunk-ZUI2IZHT.js";
+========
+} from "./chunk-V6ASCN4P.js";
+>>>>>>>> codex/consolidate-release-check:dist/chunk-GBWH7QXE.js
 import {
   VIEWER_BLOCKING_STATES,
   ViewerFrame,
   resolveViewerState
+<<<<<<<< HEAD:dist/chunk-TQR5MVDX.js
 } from "./chunk-5TPCN5QY.js";
 import {
   Icon
 } from "./chunk-UDUSXMS5.js";
+========
+} from "./chunk-J7LDEJ26.js";
+import {
+  Icon
+} from "./chunk-RUENHK23.js";
+>>>>>>>> codex/consolidate-release-check:dist/chunk-GBWH7QXE.js
 
 // components/viz/Map2DCanvas.jsx
 import React2 from "react";
@@ -360,4 +371,8 @@ function Map2DCanvas({
 export {
   Map2DCanvas
 };
+<<<<<<<< HEAD:dist/chunk-TQR5MVDX.js
 //# sourceMappingURL=chunk-TQR5MVDX.js.map
+========
+//# sourceMappingURL=chunk-GBWH7QXE.js.map
+>>>>>>>> codex/consolidate-release-check:dist/chunk-GBWH7QXE.js

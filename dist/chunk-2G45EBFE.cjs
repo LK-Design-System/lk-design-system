@@ -1,6 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
 
 
+<<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
 var _chunk4AJEXMF2cjs = require('./chunk-4AJEXMF2.cjs');
 
 
@@ -8,6 +9,15 @@ var _chunkDKANR6BIcjs = require('./chunk-DKANR6BI.cjs');
 
 
 var _chunkSO26HRBScjs = require('./chunk-SO26HRBS.cjs');
+========
+var _chunkOWXILDQPcjs = require('./chunk-OWXILDQP.cjs');
+
+
+var _chunkNKXA6KBXcjs = require('./chunk-NKXA6KBX.cjs');
+
+
+var _chunkLQ7SPTG7cjs = require('./chunk-LQ7SPTG7.cjs');
+>>>>>>>> codex/consolidate-release-check:dist/chunk-ITKHOO7T.cjs
 
 
 var _chunk5H5GEWU5cjs = require('./chunk-5H5GEWU5.cjs');
@@ -15,6 +25,87 @@ var _chunk5H5GEWU5cjs = require('./chunk-5H5GEWU5.cjs');
 // components/viz/ViewerFrame.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 
+<<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
+========
+// ../lk-design-system/packages/core/dist/chunk-FCOPBODO.js
+var LK_D = "M1938 3103 l2 -703 248 0 247 0 101 -123 c56 -67 125 -150 154 -184 l52 -63 -596 0 -596 0 0 890 0 890 193 -2 192 -3 3 -702z M3470 3795 c0 -3 -155 -212 -346 -466 -190 -253 -347 -466 -350 -473 -3 -7 152 -195 345 -420 193 -224 351 -409 351 -412 0 -2 -112 -4 -248 -4 l-248 0 -347 410 c-191 225 -347 414 -347 420 0 6 170 222 377 480 l378 470 217 0 c120 0 218 -2 218 -5z";
+var ROBO_D = "M4120 1630 c20 -5 45 -16 55 -24 19 -13 18 -15 -9 -55 -31 -45 -39 -47 -76 -26 -32 18 -71 19 -96 1 -15 -12 -17 -18 -8 -33 11 -18 27 -25 103 -44 27 -6 58 -24 78 -44 28 -28 33 -40 33 -83 0 -58 -23 -93 -81 -122 -63 -33 -185 -21 -255 25 l-25 16 31 39 31 39 42 -19 c72 -33 137 -23 137 21 0 18 -29 30 -100 44 -84 17 -120 59 -120 139 0 36 6 52 28 76 47 53 147 74 232 50z M1545 1619 c68 -17 131 -78 151 -145 44 -151 -60 -284 -220 -284 -138 1 -226 87 -226 219 0 156 134 251 295 210z M2540 1620 c49 -13 109 -66 131 -114 24 -53 24 -139 0 -192 -70 -155 -321 -165 -408 -16 -40 67 -40 157 -1 224 53 89 167 129 278 98z M3752 1598 c24 -13 43 -28 43 -33 0 -6 -12 -26 -27 -45 -24 -30 -30 -33 -45 -22 -47 33 -84 43 -119 32 -113 -38 -113 -202 0 -240 36 -12 77 -2 108 27 15 14 21 12 57 -18 22 -19 41 -37 41 -41 0 -16 -78 -58 -122 -66 -109 -21 -213 26 -261 118 -24 45 -28 64 -25 106 8 92 65 167 154 200 54 20 142 12 196 -18z M1107 1599 c58 -28 80 -72 75 -147 -1 -12 -20 -40 -42 -61 l-41 -40 34 -48 c19 -26 42 -60 52 -75 l17 -28 -63 0 -64 0 -45 70 c-38 58 -49 70 -72 70 l-28 0 0 -75 0 -75 -55 0 -55 0 0 215 0 215 122 0 c103 0 128 -3 165 -21z M2085 1605 c33 -16 55 -50 55 -86 0 -28 -26 -75 -45 -83 -13 -5 -7 -14 26 -46 40 -38 41 -42 36 -86 -3 -32 -13 -54 -31 -73 -26 -26 -29 -26 -186 -29 l-160 -3 0 210 0 211 136 0 c102 0 144 -4 169 -15z M3130 1575 l0 -44 -72 -3 -73 -3 -3 -167 -2 -168 -55 0 -55 0 0 170 0 170 -65 0 -65 0 0 45 0 45 195 0 195 0 0 -45z M3320 1405 l0 -215 -55 0 -55 0 0 215 0 215 55 0 55 0 0 -215z M1443 1533 c-12 -2 -36 -20 -53 -39 -25 -29 -30 -43 -30 -88 0 -38 6 -61 20 -78 45 -58 129 -61 174 -7 79 93 5 233 -111 212z M2399 1517 c-22 -15 -39 -38 -49 -65 -13 -37 -13 -47 0 -84 16 -45 66 -88 102 -88 35 0 88 32 103 61 8 15 15 46 15 69 0 55 -22 94 -64 114 -46 22 -67 20 -107 -7z M930 1475 l0 -55 48 0 c56 0 92 21 92 55 0 39 -25 55 -86 55 l-54 0 0 -55z M1890 1495 l0 -36 63 3 c62 3 62 3 62 33 0 30 0 30 -62 33 l-63 3 0 -36z M1890 1325 l0 -45 63 0 c49 0 68 4 80 18 41 45 13 72 -75 72 l-68 0 0 -45z";
+var ROBO_INLINE = "translate(969.35,-2590.76) scale(3.90323)";
+var LK_LOGO_VIEWBOX = {
+  mark: "144.26 112.26 213.48 200.48",
+  stacked: "68.86 109.86 364.29 289.16",
+  inline: "140.68 108.68 1609.93 207.64"
+};
+function splitSubpaths(d) {
+  return d.trim().split(/(?=M)/).map((s) => s.trim()).filter(Boolean);
+}
+var LK_LETTER_GROUPS = [[0], [1]];
+var ROBO_LETTER_GROUPS = [[4, 10], [1, 8], [5, 11, 12], [2, 9], [6], [7], [3], [0]];
+function joinLetters(parts, groups) {
+  return groups.map((g) => g.map((i) => parts[i]).join(" "));
+}
+
+// ../lk-design-system/packages/core/dist/chunk-SCVWUCHA.js
+
+var _jsxruntime = require('react/jsx-runtime');
+var LK_LETTERS = joinLetters(splitSubpaths(LK_D), LK_LETTER_GROUPS);
+var ROBO_LETTERS = joinLetters(splitSubpaths(ROBO_D), ROBO_LETTER_GROUPS);
+var BRAND_LETTER_COUNT = LK_LETTERS.length + ROBO_LETTERS.length;
+var brandDelay = (order) => (BRAND_LETTER_COUNT > 1 ? order / (BRAND_LETTER_COUNT - 1) * 0.55 : 0).toFixed(3);
+function useKeyframes(id, css) {
+  _react2.default.useEffect(() => {
+    if (typeof document === "undefined" || document.getElementById(id)) return;
+    const el = document.createElement("style");
+    el.id = id;
+    el.textContent = css;
+    document.head.appendChild(el);
+  }, [id, css]);
+}
+function Spinner({ size, thickness, color = "var(--color-semantic-primary-normal)", label, variant = "circular", style, ...rest }) {
+  useKeyframes("lk-spin-kf", "@keyframes lk-spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion: reduce){[data-lds-spinner-ring]{animation:none!important}}");
+  useKeyframes("lk-brand-wave-kf", "@keyframes lk-brand-wave-lk{0%,55%,100%{transform:translateY(0)}27%{transform:translateY(300px)}}@keyframes lk-brand-wave-robo{0%,55%,100%{transform:translateY(0)}27%{transform:translateY(77px)}}@media (prefers-reduced-motion: reduce){[data-wave]{animation:none!important}}");
+  const resolvedSize = _nullishCoalesce(size, () => ( (variant === "brand" ? 22 : 28)));
+  if (variant === "brand") {
+    const mark = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "svg", { viewBox: LK_LOGO_VIEWBOX.inline, height: resolvedSize, "aria-hidden": "true", style: { display: "block", overflow: "visible" }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { transform: "translate(0,504) scale(0.1,-0.1)", fill: "var(--color-semantic-brand-ink)", children: [
+      LK_LETTERS.map((d, i) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { "data-wave": true, d, fillRule: "evenodd", style: { animation: `lk-brand-wave-lk 1.15s ease-in-out ${brandDelay(i)}s infinite` } }, `lk${i}`)),
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { transform: ROBO_INLINE, children: ROBO_LETTERS.map((d, i) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { "data-wave": true, d, fillRule: "evenodd", style: { animation: `lk-brand-wave-robo 1.15s ease-in-out ${brandDelay(LK_LETTERS.length + i)}s infinite` } }, `ro${i}`)) })
+    ] }) });
+    const ariaLabel = typeof label === "string" && label ? label : "\uBD88\uB7EC\uC624\uB294 \uC911";
+    if (label == null) {
+      return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { role: "status", "aria-label": ariaLabel, "aria-live": "polite", style: { display: "inline-flex", ...style }, ...rest, children: mark });
+    }
+    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { role: "status", "aria-live": "polite", style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2-5)", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", color: "inherit", ...style }, ...rest, children: [
+      mark,
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: label })
+    ] });
+  }
+  const t = thickness || Math.max(2, Math.round(resolvedSize / 10));
+  const ring = /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    "span",
+    {
+      "data-lds-spinner-ring": true,
+      style: {
+        width: resolvedSize,
+        height: resolvedSize,
+        borderRadius: "50%",
+        boxSizing: "border-box",
+        border: `${t}px solid var(--color-semantic-fill-strong)`,
+        borderTopColor: color,
+        animation: "lk-spin 0.7s linear infinite",
+        flexShrink: 0
+      }
+    }
+  );
+  if (label == null) {
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { role: "status", "aria-label": "\uBD88\uB7EC\uC624\uB294 \uC911", "aria-live": "polite", style: { display: "inline-flex", ...style }, ...rest, children: ring });
+  }
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { role: "status", "aria-live": "polite", style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2-5)", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", color: "inherit", ...style }, ...rest, children: [
+    ring,
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: label })
+  ] });
+}
+
+>>>>>>>> codex/consolidate-release-check:dist/chunk-ITKHOO7T.cjs
 // components/internal/viewer-state.js
 var VIEWER_STATES = Object.freeze([
   "idle",
@@ -218,7 +309,11 @@ function StateMark({ presentation, icon, size = 22 }) {
         overflow: "hidden",
         color: _nullishCoalesce(TONE_COLOR[presentation.tone], () => ( TONE_COLOR.neutral))
       },
+<<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
       children: _nullishCoalesce(icon, () => ( /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: _nullishCoalesce(presentation.icon, () => ( "circle-info")), size })))
+========
+      children: _nullishCoalesce(icon, () => ( /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: _nullishCoalesce(presentation.icon, () => ( "circle-info")), size })))
+>>>>>>>> codex/consolidate-release-check:dist/chunk-ITKHOO7T.cjs
     }
   );
 }
@@ -476,7 +571,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
       },
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          _chunkSO26HRBScjs.VisuallyHidden,
+          _chunkOWXILDQPcjs.VisuallyHidden,
           {
             as: "div",
             "data-viewer-state-live": "",
@@ -615,7 +710,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                   },
                   children: [
                     presentation.corner && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-                      _chunkDKANR6BIcjs.StatusIndicator,
+                      _chunkNKXA6KBXcjs.StatusIndicator,
                       {
                         "data-viewer-corner-status": "",
                         "aria-hidden": "true",
@@ -927,4 +1022,8 @@ ViewerFrame.displayName = "ViewerFrame";
 
 
 exports.resolveViewerState = resolveViewerState; exports.VIEWER_BLOCKING_STATES = VIEWER_BLOCKING_STATES2; exports.VIEWER_STATES = VIEWER_STATES2; exports.ViewerFrame = ViewerFrame;
+<<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
 //# sourceMappingURL=chunk-2G45EBFE.cjs.map
+========
+//# sourceMappingURL=chunk-ITKHOO7T.cjs.map
+>>>>>>>> codex/consolidate-release-check:dist/chunk-ITKHOO7T.cjs

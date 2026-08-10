@@ -1,10 +1,18 @@
 "use client";
 import {
+<<<<<<<< HEAD:dist/chunk-JSTG5DCT.js
   ToggleIcon
 } from "./chunk-DYWB3B2C.js";
 import {
   Icon
 } from "./chunk-UDUSXMS5.js";
+========
+  IconButton
+} from "./chunk-5ZFVLEMS.js";
+import {
+  Icon
+} from "./chunk-RUENHK23.js";
+>>>>>>>> codex/consolidate-release-check:dist/chunk-BNUTETQ5.js
 import {
   normalizeStatusTone
 } from "./chunk-L2ZEGNVF.js";
@@ -483,4 +491,8 @@ function LayerPanel({
 export {
   LayerPanel
 };
+<<<<<<<< HEAD:dist/chunk-JSTG5DCT.js
 //# sourceMappingURL=chunk-JSTG5DCT.js.map
+========
+//# sourceMappingURL=chunk-BNUTETQ5.js.map
+>>>>>>>> codex/consolidate-release-check:dist/chunk-BNUTETQ5.js
