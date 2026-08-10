@@ -7,12 +7,20 @@ import {
   HistoryToolbar
 <<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 <<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
+<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 } from "./chunk-6BTEW2IJ.js";
+========
+} from "./chunk-X55S6ZMZ.js";
+import {
+  Toolbar
+} from "./chunk-OHFWZZX3.js";
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-7JQIIRLY.js
 import {
   IconButton
-} from "./chunk-TAZ6IYIO.js";
+} from "./chunk-LCWM2LTJ.js";
 import {
   Icon
+<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 } from "./chunk-UDUSXMS5.js";
 import {
   Toolbar
@@ -36,6 +44,9 @@ import {
 ========
 } from "./chunk-KRO3ULVK.js";
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-RVP43IRF.js
+========
+} from "./chunk-RUENHK23.js";
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-7JQIIRLY.js
 
 // components/editor/CanvasEditorCommandBar.jsx
 import React from "react";
@@ -204,6 +215,7 @@ export {
 };
 <<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 <<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
+<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 //# sourceMappingURL=chunk-TJBAHBNV.js.map
 ========
 //# sourceMappingURL=chunk-5O6AHIKS.js.map
@@ -211,3 +223,6 @@ export {
 ========
 //# sourceMappingURL=chunk-RVP43IRF.js.map
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-RVP43IRF.js
+========
+//# sourceMappingURL=chunk-7JQIIRLY.js.map
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-7JQIIRLY.js

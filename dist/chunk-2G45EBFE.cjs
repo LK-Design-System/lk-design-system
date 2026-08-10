@@ -3,12 +3,17 @@
 
 <<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
 <<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
+<<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
 var _chunk4AJEXMF2cjs = require('./chunk-4AJEXMF2.cjs');
+========
+var _chunkOWXILDQPcjs = require('./chunk-OWXILDQP.cjs');
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-MEHGPWKR.cjs
 
 
-var _chunkDKANR6BIcjs = require('./chunk-DKANR6BI.cjs');
+var _chunkNKXA6KBXcjs = require('./chunk-NKXA6KBX.cjs');
 
 
+<<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
 var _chunkSO26HRBScjs = require('./chunk-SO26HRBS.cjs');
 ========
 var _chunkOWXILDQPcjs = require('./chunk-OWXILDQP.cjs');
@@ -29,10 +34,14 @@ var _chunk5H5GEWU5cjs = require('./chunk-5H5GEWU5.cjs');
 ========
 var _chunk63NPKSTXcjs = require('./chunk-63NPKSTX.cjs');
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-RNGZYEXU.cjs
+========
+var _chunkLQ7SPTG7cjs = require('./chunk-LQ7SPTG7.cjs');
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-MEHGPWKR.cjs
 
 // components/viz/ViewerFrame.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 
+<<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
 <<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
 <<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
 ========
@@ -58,6 +67,75 @@ function joinLetters(parts, groups) {
 }
 
 // packages/core/dist/chunk-SCVWUCHA.js
+========
+// ../lk-design-system/packages/core/dist/chunk-LJLXZ5M6.js
+var LK_PATHS = Object.freeze([
+  {
+    d: "m 0,0 v -42.031 h 28.142 l -7.307,8.749 H 9.11 L 9.11,0 Z",
+    transform: "matrix(1.3333333 0 0 -1.3333333 346.60933 153.18987)"
+  },
+  {
+    d: "m 0,0 h -10.446 l -18.057,-22.549 16.508,-19.483 h 11.798 l -16.76,19.483 z",
+    transform: "matrix(1.3333333 0 0 -1.3333333 407.364 153.31)"
+  }
+]);
+var ROBOTICS_PATHS = Object.freeze([
+  {
+    letter: "R",
+    d: "m 0,0 v 2.562 h 2.146 c 0.676,0 1.223,-0.547 1.223,-1.222 V 1.222 C 3.369,0.547 2.822,0 2.146,0 Z m 6.548,-5.362 -2.684,3.881 c 1.272,0.498 2.161,1.622 2.161,2.918 0,1.754 -1.626,3.181 -3.627,3.181 h -4.96 V -5.456 h 2.623 v 3.622 h 1.126 l 2.325,-3.528 z",
+    transform: "matrix(1.3333333 0 0 -1.3333333 327.06413 228.30813)"
+  },
+  {
+    letter: "O",
+    d: "m 0,0 c 0,-1.5 -1.216,-2.716 -2.716,-2.716 -1.5,0 -2.716,1.216 -2.716,2.716 v 0.617 c 0,1.5 1.216,2.716 2.716,2.716 C -1.216,3.333 0,2.117 0,0.617 Z m -2.23,5.469 h -0.735 c -2.804,0 -5.077,-2.274 -5.077,-5.077 V 0.249 c 0,-2.804 2.273,-5.076 5.077,-5.076 h 0.735 c 2.804,0 5.077,2.272 5.077,5.076 v 0.143 c 0,2.803 -2.273,5.077 -5.077,5.077",
+    transform: "matrix(1.3333333 0 0 -1.3333333 347.71827 229.17827)"
+  },
+  {
+    letter: "B",
+    d: "M 0,0 H -2.686 V 2.206 H 0 C 0.61,2.206 1.103,1.712 1.103,1.104 1.103,0.494 0.61,0 0,0 m -2.686,5.955 h 2.316 c 0.477,0 0.863,-0.387 0.863,-0.864 V 5.015 C 0.493,4.538 0.107,4.151 -0.37,4.151 H -2.686 Z M 1.439,3.34 c 1.011,0.284 1.752,1.212 1.752,2.313 0,1.253 -1.017,2.27 -2.271,2.27 h -6.198 l 0.048,-9.844 h 6.268 c 1.464,0 2.651,1.187 2.651,2.651 0,1.325 -0.977,2.422 -2.25,2.61",
+    transform: "matrix(1.3333333 0 0 -1.3333333 360.86 232.7684)"
+  },
+  {
+    letter: "O",
+    d: "m 0,0 c 0,-1.5 -1.216,-2.716 -2.717,-2.716 -1.499,0 -2.715,1.216 -2.715,2.716 v 0.617 c 0,1.5 1.216,2.716 2.715,2.716 C -1.216,3.333 0,2.117 0,0.617 Z m -2.23,5.468 h -0.736 c -2.803,0 -5.076,-2.273 -5.076,-5.076 V 0.249 c 0,-2.804 2.273,-5.076 5.076,-5.076 h 0.736 c 2.803,0 5.076,2.272 5.076,5.076 v 0.143 c 0,2.803 -2.273,5.076 -5.076,5.076",
+    transform: "matrix(1.3333333 0 0 -1.3333333 378.77893 229.11493)"
+  },
+  {
+    letter: "T",
+    d: "m 0,0 h -9.205 v -2.23 h 3.227 v -7.876 h 2.561 v 7.876 l 3.417,0 z",
+    transform: "matrix(1.3333333 0 0 -1.3333333 396.27067 222.0768)"
+  },
+  {
+    letter: "I",
+    d: "m 301.805,148.159 h -2.609 v 10.058 h 2.609 z",
+    transform: "matrix(1.3333333 0 0 -1.3333333 0 433.096)"
+  },
+  {
+    letter: "C",
+    d: "m 0,0 c -1.547,0 -2.8,1.339 -2.8,2.989 0,1.651 1.253,2.989 2.8,2.989 0.952,0 1.793,-0.508 2.298,-1.284 L 4.036,6.545 C 3.024,7.525 1.61,8.137 0.047,8.137 c -3.067,0 -5.563,-2.35 -5.563,-5.237 0,-2.887 2.496,-5.237 5.563,-5.237 1.658,0 3.148,0.687 4.168,1.775 L 2.173,1.107 C 1.661,0.432 0.878,0 0,0",
+    transform: "matrix(1.3333333 0 0 -1.3333333 412.2276 232.6732)"
+  },
+  {
+    letter: "S",
+    d: "m 0,0 1.519,2.04 c 0,0 -0.962,1.281 -4.058,1.115 -3.095,-0.166 -3.926,-1.993 -3.914,-3.108 0.012,-1.115 0.403,-2.099 1.211,-2.68 0.806,-0.582 2.253,-0.711 2.253,-0.711 0,0 2.004,-0.297 1.945,-1.02 -0.059,-0.725 -0.688,-1.01 -1.305,-1.022 -0.617,-0.011 -1.85,0.286 -3.013,1.022 l -1.447,-1.828 c 0,0 0.842,-1.044 3.772,-1.446 2.93,-0.404 4.508,1.612 4.674,2.3 0.165,0.688 0.355,1.97 -0.546,2.894 -0.902,0.926 -1.732,1.186 -3.226,1.424 -1.495,0.238 -1.566,1.079 -1.329,1.4 0.238,0.32 1.163,0.782 2.23,0.284 C -0.166,0.166 0,0 0,0",
+    transform: "matrix(1.3333333 0 0 -1.3333333 427.80493 225.73027)"
+  }
+]);
+var ROBOTICS_INLINE_SCALE = 3.87834784;
+var ROBOTICS_INLINE_TRANSFORM = `translate(419.514934 181.271214) scale(${ROBOTICS_INLINE_SCALE}) translate(-323.648130 -228.744312)`;
+var LK_LOGO_VIEWBOX = Object.freeze({
+  mark: "342.6093 149.1899 68.7547 64.1628",
+  stacked: "319.6481 149.1899 114.8128 91.2631",
+  inline: "342.6093 149.1899 494.0432 64.1628"
+});
+var LK_LOGO_COLORS = Object.freeze({
+  navy: "#05132b",
+  accent: "#6bbbdd",
+  white: "#ffffff"
+});
+
+// ../lk-design-system/packages/core/dist/chunk-EU6FKGBJ.js
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-MEHGPWKR.cjs
 
 var _jsxruntime = require('react/jsx-runtime');
 var LK_LETTERS = joinLetters(splitSubpaths(LK_D), LK_LETTER_GROUPS);
@@ -323,6 +401,7 @@ function StateMark({ presentation, icon, size = 22 }) {
       },
 <<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
 <<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
+<<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
       children: _nullishCoalesce(icon, () => ( /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: _nullishCoalesce(presentation.icon, () => ( "circle-info")), size })))
 ========
       children: _nullishCoalesce(icon, () => ( /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: _nullishCoalesce(presentation.icon, () => ( "circle-info")), size })))
@@ -330,6 +409,9 @@ function StateMark({ presentation, icon, size = 22 }) {
 ========
       children: _nullishCoalesce(icon, () => ( /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: _nullishCoalesce(presentation.icon, () => ( "circle-info")), size })))
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-RNGZYEXU.cjs
+========
+      children: _nullishCoalesce(icon, () => ( /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: _nullishCoalesce(presentation.icon, () => ( "circle-info")), size })))
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-MEHGPWKR.cjs
     }
   );
 }
@@ -587,7 +669,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
       },
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          _chunkSO26HRBScjs.VisuallyHidden,
+          _chunkOWXILDQPcjs.VisuallyHidden,
           {
             as: "div",
             "data-viewer-state-live": "",
@@ -726,7 +808,7 @@ var ViewerFrame = _react2.default.forwardRef(function ViewerFrame2({
                   },
                   children: [
                     presentation.corner && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-                      _chunkDKANR6BIcjs.StatusIndicator,
+                      _chunkNKXA6KBXcjs.StatusIndicator,
                       {
                         "data-viewer-corner-status": "",
                         "aria-hidden": "true",
@@ -1040,6 +1122,7 @@ ViewerFrame.displayName = "ViewerFrame";
 exports.resolveViewerState = resolveViewerState; exports.VIEWER_BLOCKING_STATES = VIEWER_BLOCKING_STATES2; exports.VIEWER_STATES = VIEWER_STATES2; exports.ViewerFrame = ViewerFrame;
 <<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
 <<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
+<<<<<<<< HEAD:dist/chunk-2G45EBFE.cjs
 //# sourceMappingURL=chunk-2G45EBFE.cjs.map
 ========
 //# sourceMappingURL=chunk-ITKHOO7T.cjs.map
@@ -1047,3 +1130,6 @@ exports.resolveViewerState = resolveViewerState; exports.VIEWER_BLOCKING_STATES 
 ========
 //# sourceMappingURL=chunk-RNGZYEXU.cjs.map
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-RNGZYEXU.cjs
+========
+//# sourceMappingURL=chunk-MEHGPWKR.cjs.map
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-MEHGPWKR.cjs

@@ -3,6 +3,7 @@
 
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
+<<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
 var _chunkFVL575B5cjs = require('./chunk-FVL575B5.cjs');
 
 
@@ -19,6 +20,12 @@ var _chunk4DG5U4UWcjs = require('./chunk-4DG5U4UW.cjs');
 
 var _chunk63NPKSTXcjs = require('./chunk-63NPKSTX.cjs');
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-V7I4MIPY.cjs
+========
+var _chunkEEY6VLXUcjs = require('./chunk-EEY6VLXU.cjs');
+
+
+var _chunkLQ7SPTG7cjs = require('./chunk-LQ7SPTG7.cjs');
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-43XLZYOB.cjs
 
 
 var _chunkMBKOVB2Kcjs = require('./chunk-MBKOVB2K.cjs');
@@ -258,6 +265,7 @@ function LayerRow({
               style: { width: 24, height: 24, margin: -2, display: "inline-flex", alignItems: "center", justifyContent: "center", padding: 0, border: 0, borderRadius: "var(--radius-sm)", background: "transparent", color: layerDisabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)", cursor: layerDisabled ? "not-allowed" : "pointer" },
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
+<<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
               children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: expanded ? "chevron-down-small" : "chevron-right-small", size: 14, "aria-hidden": "true" })
 ========
               children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: expanded ? "chevron-down-small" : "chevron-right-small", size: 14, "aria-hidden": "true" })
@@ -265,6 +273,9 @@ function LayerRow({
 ========
               children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: expanded ? "chevron-down-small" : "chevron-right-small", size: 14, "aria-hidden": "true" })
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-V7I4MIPY.cjs
+========
+              children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: expanded ? "chevron-down-small" : "chevron-right-small", size: 14, "aria-hidden": "true" })
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-43XLZYOB.cjs
             }
           ) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { width: 20, height: 20 } }),
           /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { minWidth: 0, display: "grid", gridTemplateColumns: "var(--space-2) minmax(0, 1fr)", alignItems: "center", gap: "var(--space-2)" }, children: [
@@ -278,6 +289,7 @@ function LayerRow({
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
+<<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
             _chunkFVL575B5cjs.ToggleIcon,
 ========
             _chunkQJNQGYQBcjs.IconButton,
@@ -285,6 +297,9 @@ function LayerRow({
 ========
             _chunk4DG5U4UWcjs.IconButton,
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-V7I4MIPY.cjs
+========
+            _chunkEEY6VLXUcjs.IconButton,
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-43XLZYOB.cjs
             {
               variant: "plain",
               size: "sm",
@@ -297,6 +312,7 @@ function LayerRow({
               onClick: (event) => event.stopPropagation(),
               onChange: (next) => onToggleVisible(layer.id, next),
               onKeyDown: (event) => handleLayerActionKeyDown(event, "lock"),
+<<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
               children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: visible ? "eye" : "eye-slash", size: 16, "aria-hidden": "true" })
@@ -318,6 +334,13 @@ function LayerRow({
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             _chunk4DG5U4UWcjs.IconButton,
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-V7I4MIPY.cjs
+========
+              children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: visible ? "eye" : "eye-slash", size: 16, "aria-hidden": "true" })
+            }
+          ),
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            _chunkEEY6VLXUcjs.IconButton,
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-43XLZYOB.cjs
             {
               variant: "plain",
               size: "sm",
@@ -332,6 +355,7 @@ function LayerRow({
               onKeyDown: (event) => handleLayerActionKeyDown(event, "visibility"),
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
+<<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
               children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: locked ? "lock" : "lock-open", size: 16, "aria-hidden": "true" })
 ========
               children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: locked ? "lock" : "lock-open", size: 16, "aria-hidden": "true" })
@@ -339,6 +363,9 @@ function LayerRow({
 ========
               children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: locked ? "lock" : "lock-open", size: 16, "aria-hidden": "true" })
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-V7I4MIPY.cjs
+========
+              children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: locked ? "lock" : "lock-open", size: 16, "aria-hidden": "true" })
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-43XLZYOB.cjs
             }
           )
         ]
@@ -497,6 +524,7 @@ function LayerPanel({
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", minWidth: 0 }, children: [
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
+<<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: "layers", size: 16, "aria-hidden": "true" }),
 ========
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: "layers", size: 16, "aria-hidden": "true" }),
@@ -504,6 +532,9 @@ function LayerPanel({
 ========
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: "layers", size: 16, "aria-hidden": "true" }),
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-V7I4MIPY.cjs
+========
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: "layers", size: 16, "aria-hidden": "true" }),
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-43XLZYOB.cjs
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-strong)", letterSpacing: 0 }, children: title }),
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { marginLeft: "auto", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: layerIds.length })
         ] }),
@@ -547,6 +578,7 @@ function LayerPanel({
 exports.LayerPanel = LayerPanel;
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
 <<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
+<<<<<<<< HEAD:dist/chunk-ZKQYT57W.cjs
 //# sourceMappingURL=chunk-ZKQYT57W.cjs.map
 ========
 //# sourceMappingURL=chunk-YIYNLYSP.cjs.map
@@ -554,3 +586,6 @@ exports.LayerPanel = LayerPanel;
 ========
 //# sourceMappingURL=chunk-V7I4MIPY.cjs.map
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-V7I4MIPY.cjs
+========
+//# sourceMappingURL=chunk-43XLZYOB.cjs.map
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-43XLZYOB.cjs

@@ -3,6 +3,7 @@
 
 <<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
 <<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
+<<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
 var _chunk2G45EBFEcjs = require('./chunk-2G45EBFE.cjs');
 ========
 var _chunkITKHOO7Tcjs = require('./chunk-ITKHOO7T.cjs');
@@ -10,6 +11,9 @@ var _chunkITKHOO7Tcjs = require('./chunk-ITKHOO7T.cjs');
 ========
 var _chunkRNGZYEXUcjs = require('./chunk-RNGZYEXU.cjs');
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-VWGTKZHV.cjs
+========
+var _chunkMEHGPWKRcjs = require('./chunk-MEHGPWKR.cjs');
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-YDOI5HE4.cjs
 
 // components/viz/Scene3DFrame.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -47,6 +51,7 @@ function Scene3DFrame({
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
 <<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
 <<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
+<<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
     _chunk2G45EBFEcjs.ViewerFrame,
 ========
     _chunkITKHOO7Tcjs.ViewerFrame,
@@ -54,6 +59,9 @@ function Scene3DFrame({
 ========
     _chunkRNGZYEXUcjs.ViewerFrame,
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-VWGTKZHV.cjs
+========
+    _chunkMEHGPWKRcjs.ViewerFrame,
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-YDOI5HE4.cjs
     {
       ...rest,
       label: resolvedLabel,
@@ -86,6 +94,7 @@ function Scene3DFrame({
 exports.Scene3DFrame = Scene3DFrame;
 <<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
 <<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
+<<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
 //# sourceMappingURL=chunk-TVUMKEV7.cjs.map
 ========
 //# sourceMappingURL=chunk-TAPW3YXM.cjs.map
@@ -93,3 +102,6 @@ exports.Scene3DFrame = Scene3DFrame;
 ========
 //# sourceMappingURL=chunk-VWGTKZHV.cjs.map
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-VWGTKZHV.cjs
+========
+//# sourceMappingURL=chunk-YDOI5HE4.cjs.map
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-YDOI5HE4.cjs

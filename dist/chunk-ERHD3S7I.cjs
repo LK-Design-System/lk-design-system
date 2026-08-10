@@ -1,9 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
 
 
-var _chunkDKANR6BIcjs = require('./chunk-DKANR6BI.cjs');
+var _chunkNKXA6KBXcjs = require('./chunk-NKXA6KBX.cjs');
 
 
+<<<<<<<< HEAD:dist/chunk-ERHD3S7I.cjs
 <<<<<<<< HEAD:dist/chunk-ERHD3S7I.cjs
 <<<<<<<< HEAD:dist/chunk-ERHD3S7I.cjs
 var _chunkGW3BLGYBcjs = require('./chunk-GW3BLGYB.cjs');
@@ -22,11 +23,17 @@ var _chunkGW3BLGYBcjs = require('./chunk-GW3BLGYB.cjs');
 
 var _chunk63NPKSTXcjs = require('./chunk-63NPKSTX.cjs');
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-726SZXRR.cjs
+========
+var _chunk42UHASGCcjs = require('./chunk-42UHASGC.cjs');
+
+
+var _chunkLQ7SPTG7cjs = require('./chunk-LQ7SPTG7.cjs');
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-YCGCR2OG.cjs
 
 // components/viz/ElevatorFleetOverview.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 
-// packages/core/dist/chunk-F72DWVHV.js
+// ../lk-design-system/packages/core/dist/chunk-F72DWVHV.js
 
 var _jsxruntime = require('react/jsx-runtime');
 function ScrollArea({
@@ -283,7 +290,7 @@ function ElevatorColumn({ building, elevator }) {
                   },
                   children: [
                     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: elevator.id.toUpperCase() }),
-                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkDKANR6BIcjs.StatusIndicator, { tone: presentation.tone, children: _nullishCoalesce(elevator.statusLabel, () => ( status)) })
+                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkNKXA6KBXcjs.StatusIndicator, { tone: presentation.tone, children: _nullishCoalesce(elevator.statusLabel, () => ( status)) })
                   ]
                 }
               ),
@@ -403,6 +410,7 @@ function ElevatorColumn({ building, elevator }) {
                         },
 <<<<<<<< HEAD:dist/chunk-ERHD3S7I.cjs
 <<<<<<<< HEAD:dist/chunk-ERHD3S7I.cjs
+<<<<<<<< HEAD:dist/chunk-ERHD3S7I.cjs
                         children: directionIcon ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: directionIcon, size: 16, "aria-hidden": "true" }) : "\u2014"
 ========
                         children: directionIcon ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: directionIcon, size: 16, "aria-hidden": "true" }) : "\u2014"
@@ -410,6 +418,9 @@ function ElevatorColumn({ building, elevator }) {
 ========
                         children: directionIcon ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: directionIcon, size: 16, "aria-hidden": "true" }) : "\u2014"
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-726SZXRR.cjs
+========
+                        children: directionIcon ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: directionIcon, size: 16, "aria-hidden": "true" }) : "\u2014"
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-YCGCR2OG.cjs
                       }
                     )
                   ]
@@ -483,7 +494,7 @@ function BuildingGroup({ building, headingLevel, headingId }) {
                   children: building.name
                 }
               ),
-              attentionCount > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkGW3BLGYBcjs.StatusBadge, { tone: presentation.tone, children: _nullishCoalesce(building.statusLabel, () => ( `${attentionCount}\uB300 \uD655\uC778`)) })
+              attentionCount > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk42UHASGCcjs.StatusBadge, { tone: presentation.tone, children: _nullishCoalesce(building.statusLabel, () => ( `${attentionCount}\uB300 \uD655\uC778`)) })
             ]
           }
         ),
@@ -588,7 +599,7 @@ function ElevatorFleetOverview({
             },
             children: [
               /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--body1-size)" }, children: "\uCEA0\uD37C\uC2A4 \uC5D8\uB9AC\uBCA0\uC774\uD130 \uBAA8\uB2C8\uD130\uB9C1" }),
-              attentionCount > 0 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunkGW3BLGYBcjs.StatusBadge, { tone: "cautionary", children: [
+              attentionCount > 0 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunk42UHASGCcjs.StatusBadge, { tone: "cautionary", children: [
                 attentionCount,
                 "\uB300 \uD655\uC778"
               ] })
@@ -645,6 +656,7 @@ function ElevatorFleetOverview({
 exports.ElevatorFleetOverview = ElevatorFleetOverview;
 <<<<<<<< HEAD:dist/chunk-ERHD3S7I.cjs
 <<<<<<<< HEAD:dist/chunk-ERHD3S7I.cjs
+<<<<<<<< HEAD:dist/chunk-ERHD3S7I.cjs
 //# sourceMappingURL=chunk-ERHD3S7I.cjs.map
 ========
 //# sourceMappingURL=chunk-YCGCR2OG.cjs.map
@@ -652,3 +664,6 @@ exports.ElevatorFleetOverview = ElevatorFleetOverview;
 ========
 //# sourceMappingURL=chunk-726SZXRR.cjs.map
 >>>>>>>> codex/consolidate-release-ci:dist/chunk-726SZXRR.cjs
+========
+//# sourceMappingURL=chunk-YCGCR2OG.cjs.map
+>>>>>>>> codex/consolidate-ci-clean2:dist/chunk-YCGCR2OG.cjs
