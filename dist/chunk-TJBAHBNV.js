@@ -6,6 +6,7 @@ import {
   Divider,
   HistoryToolbar
 <<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
+<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 } from "./chunk-6BTEW2IJ.js";
 import {
   IconButton
@@ -18,16 +19,23 @@ import {
 } from "./chunk-OHFWZZX3.js";
 ========
 } from "./chunk-K2BIXQOH.js";
+========
+} from "./chunk-BHHT3GVV.js";
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-RVP43IRF.js
 import {
   Toolbar
 } from "./chunk-OHFWZZX3.js";
 import {
   IconButton
-} from "./chunk-5ZFVLEMS.js";
+} from "./chunk-6TQ4QOSW.js";
 import {
   Icon
+<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 } from "./chunk-RUENHK23.js";
 >>>>>>>> codex/consolidate-release-check:dist/chunk-5O6AHIKS.js
+========
+} from "./chunk-KRO3ULVK.js";
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-RVP43IRF.js
 
 // components/editor/CanvasEditorCommandBar.jsx
 import React from "react";
@@ -195,7 +203,11 @@ export {
   CanvasEditorCommandBar
 };
 <<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
+<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 //# sourceMappingURL=chunk-TJBAHBNV.js.map
 ========
 //# sourceMappingURL=chunk-5O6AHIKS.js.map
 >>>>>>>> codex/consolidate-release-check:dist/chunk-5O6AHIKS.js
+========
+//# sourceMappingURL=chunk-RVP43IRF.js.map
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-RVP43IRF.js

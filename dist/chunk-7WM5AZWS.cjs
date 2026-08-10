@@ -12,16 +12,16 @@ var _chunk3VE2HGTTcjs = require('./chunk-3VE2HGTT.cjs');
 <<<<<<<< HEAD:dist/chunk-7WM5AZWS.cjs
 ========
 
-var _chunkQJNQGYQBcjs = require('./chunk-QJNQGYQB.cjs');
+var _chunk4DG5U4UWcjs = require('./chunk-4DG5U4UW.cjs');
 
 
-var _chunkLQ7SPTG7cjs = require('./chunk-LQ7SPTG7.cjs');
+var _chunk63NPKSTXcjs = require('./chunk-63NPKSTX.cjs');
 
 >>>>>>>> codex/consolidate-release-check:dist/chunk-SWWCCPCO.cjs
 // components/editor/HistoryToolbar.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 
-// ../lk-design-system/packages/core/dist/chunk-UI2I2TV5.js
+// packages/core/dist/chunk-UI2I2TV5.js
 
 var _jsxruntime = require('react/jsx-runtime');
 function Divider({
@@ -130,6 +130,7 @@ function HistoryToolbar({
   const resetVisible = typeof onReset === "function";
   const actions = [
 <<<<<<<< HEAD:dist/chunk-7WM5AZWS.cjs
+<<<<<<<< HEAD:dist/chunk-7WM5AZWS.cjs
     { key: "undo", label: "\uC2E4\uD589 \uCDE8\uC18C", icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }), enabled: undoEnabled, onClick: onUndo, shortcuts: undoKeyShortcuts },
     { key: "redo", label: "\uB2E4\uC2DC \uC2E4\uD589", icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { display: "inline-flex", transform: "scaleX(-1)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }) }), enabled: redoEnabled, onClick: onRedo, shortcuts: redoKeyShortcuts },
     ...resetVisible ? [{ key: "reset", label: "\uBCC0\uACBD\uC0AC\uD56D \uCD08\uAE30\uD654", icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: "reset", size: 16, "aria-hidden": "true" }), enabled: true, onClick: onReset }] : []
@@ -138,6 +139,11 @@ function HistoryToolbar({
     { key: "redo", label: "\uB2E4\uC2DC \uC2E4\uD589", icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { display: "inline-flex", transform: "scaleX(-1)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }) }), enabled: redoEnabled, onClick: onRedo, shortcuts: redoKeyShortcuts },
     ...resetVisible ? [{ key: "reset", label: "\uBCC0\uACBD\uC0AC\uD56D \uCD08\uAE30\uD654", icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: "reset", size: 16, "aria-hidden": "true" }), enabled: true, onClick: onReset }] : []
 >>>>>>>> codex/consolidate-release-check:dist/chunk-SWWCCPCO.cjs
+========
+    { key: "undo", label: "\uC2E4\uD589 \uCDE8\uC18C", icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }), enabled: undoEnabled, onClick: onUndo, shortcuts: undoKeyShortcuts },
+    { key: "redo", label: "\uB2E4\uC2DC \uC2E4\uD589", icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { display: "inline-flex", transform: "scaleX(-1)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: "flip-backward", size: 16, "aria-hidden": "true" }) }), enabled: redoEnabled, onClick: onRedo, shortcuts: redoKeyShortcuts },
+    ...resetVisible ? [{ key: "reset", label: "\uBCC0\uACBD\uC0AC\uD56D \uCD08\uAE30\uD654", icon: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: "reset", size: 16, "aria-hidden": "true" }), enabled: true, onClick: onReset }] : []
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-YQAFCY5X.cjs
   ];
   const enabledActions = actions.filter((action) => action.enabled);
   const preferredKey = _optionalChain([enabledActions, 'access', _ => _[0], 'optionalAccess', _2 => _2.key]);
@@ -169,10 +175,14 @@ function HistoryToolbar({
         action.key === "reset" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Divider, { vertical: true, style: { minHeight: size === "md" ? 24 : 20, marginInline: "var(--space-1)", alignSelf: "center" } }),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
 <<<<<<<< HEAD:dist/chunk-7WM5AZWS.cjs
+<<<<<<<< HEAD:dist/chunk-7WM5AZWS.cjs
           _chunk3H3EZZTFcjs.IconButton,
 ========
           _chunkQJNQGYQBcjs.IconButton,
 >>>>>>>> codex/consolidate-release-check:dist/chunk-SWWCCPCO.cjs
+========
+          _chunk4DG5U4UWcjs.IconButton,
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-YQAFCY5X.cjs
           {
             "data-history-index": index,
             "data-lk-history-toolbar-item": "",
@@ -199,7 +209,11 @@ function HistoryToolbar({
 
 exports.Divider = Divider; exports.HistoryToolbar = HistoryToolbar;
 <<<<<<<< HEAD:dist/chunk-7WM5AZWS.cjs
+<<<<<<<< HEAD:dist/chunk-7WM5AZWS.cjs
 //# sourceMappingURL=chunk-7WM5AZWS.cjs.map
 ========
 //# sourceMappingURL=chunk-SWWCCPCO.cjs.map
 >>>>>>>> codex/consolidate-release-check:dist/chunk-SWWCCPCO.cjs
+========
+//# sourceMappingURL=chunk-YQAFCY5X.cjs.map
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-YQAFCY5X.cjs

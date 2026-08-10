@@ -2,10 +2,14 @@
 
 
 <<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
+<<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
 var _chunk2G45EBFEcjs = require('./chunk-2G45EBFE.cjs');
 ========
 var _chunkITKHOO7Tcjs = require('./chunk-ITKHOO7T.cjs');
 >>>>>>>> codex/consolidate-release-check:dist/chunk-5U7ADBEH.cjs
+========
+var _chunkRNGZYEXUcjs = require('./chunk-RNGZYEXU.cjs');
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-GG6LLGUE.cjs
 
 // components/viz/VideoStreamTile.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -46,10 +50,14 @@ function VideoStreamTile({
   const resolvedAriaLabel = _nullishCoalesce(ariaLabel, () => ( (typeof label === "string" && label.trim() ? `${label} \uC601\uC0C1 \uC2A4\uD2B8\uB9BC` : "\uC601\uC0C1 \uC2A4\uD2B8\uB9BC")));
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
 <<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
+<<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
     _chunk2G45EBFEcjs.ViewerFrame,
 ========
     _chunkITKHOO7Tcjs.ViewerFrame,
 >>>>>>>> codex/consolidate-release-check:dist/chunk-5U7ADBEH.cjs
+========
+    _chunkRNGZYEXUcjs.ViewerFrame,
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-GG6LLGUE.cjs
     {
       ...rest,
       label: resolvedAriaLabel,
@@ -83,7 +91,11 @@ function VideoStreamTile({
 
 exports.VideoStreamTile = VideoStreamTile;
 <<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
+<<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
 //# sourceMappingURL=chunk-XF2ASTKI.cjs.map
 ========
 //# sourceMappingURL=chunk-5U7ADBEH.cjs.map
 >>>>>>>> codex/consolidate-release-check:dist/chunk-5U7ADBEH.cjs
+========
+//# sourceMappingURL=chunk-GG6LLGUE.cjs.map
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-GG6LLGUE.cjs

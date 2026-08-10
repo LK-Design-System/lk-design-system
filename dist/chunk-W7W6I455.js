@@ -2,6 +2,7 @@
 import {
   StatusIndicator
 <<<<<<<< HEAD:dist/chunk-W7W6I455.js
+<<<<<<<< HEAD:dist/chunk-W7W6I455.js
 } from "./chunk-VSYEB7PE.js";
 import {
   StatusBadge
@@ -11,18 +12,25 @@ import {
 } from "./chunk-UDUSXMS5.js";
 ========
 } from "./chunk-NITZ4TPV.js";
+========
+} from "./chunk-VSYEB7PE.js";
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-W4L2MZ3G.js
 import {
   StatusBadge
-} from "./chunk-LACIHR4Y.js";
+} from "./chunk-YZIOOD3Y.js";
 import {
   Icon
+<<<<<<<< HEAD:dist/chunk-W7W6I455.js
 } from "./chunk-RUENHK23.js";
 >>>>>>>> codex/consolidate-release-check:dist/chunk-3FYD6T5J.js
+========
+} from "./chunk-KRO3ULVK.js";
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-W4L2MZ3G.js
 
 // components/viz/ElevatorFleetOverview.jsx
 import React2 from "react";
 
-// ../lk-design-system/packages/core/dist/chunk-F72DWVHV.js
+// packages/core/dist/chunk-F72DWVHV.js
 import React from "react";
 import { jsx } from "react/jsx-runtime";
 function ScrollArea({
@@ -632,7 +640,11 @@ export {
   ElevatorFleetOverview
 };
 <<<<<<<< HEAD:dist/chunk-W7W6I455.js
+<<<<<<<< HEAD:dist/chunk-W7W6I455.js
 //# sourceMappingURL=chunk-W7W6I455.js.map
 ========
 //# sourceMappingURL=chunk-3FYD6T5J.js.map
 >>>>>>>> codex/consolidate-release-check:dist/chunk-3FYD6T5J.js
+========
+//# sourceMappingURL=chunk-W4L2MZ3G.js.map
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-W4L2MZ3G.js

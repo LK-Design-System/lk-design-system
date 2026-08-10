@@ -1,6 +1,10 @@
 "use client";
 
+<<<<<<<< HEAD:dist/chunk-TAZ6IYIO.js
 // packages/core/dist/chunk-I4PQ63MH.js
+========
+// packages/core/dist/chunk-ILQNQHTJ.js
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-6TQ4QOSW.js
 import React from "react";
 import { jsx } from "react/jsx-runtime";
 function isDevelopmentBuild() {
@@ -141,4 +145,8 @@ function IconButton({
 export {
   IconButton
 };
+<<<<<<<< HEAD:dist/chunk-TAZ6IYIO.js
 //# sourceMappingURL=chunk-TAZ6IYIO.js.map
+========
+//# sourceMappingURL=chunk-6TQ4QOSW.js.map
+>>>>>>>> codex/consolidate-release-ci:dist/chunk-6TQ4QOSW.js
