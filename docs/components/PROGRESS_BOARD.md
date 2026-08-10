@@ -39,7 +39,7 @@
 | [Alert](guides/core-components-overlay-alert.md) | Core / Overlay | `Alert` | mapped | implemented | not-tracked | not-tracked | 3 public / 2 hidden |
 | [Confirm Dialog](guides/core-components-overlay-confirm-dialog.md) | Core / Overlay | `ConfirmDialog` | mapped | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Dimmer](guides/core-components-overlay-dimmer.md) | Core / Overlay | `Dimmer` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
-| [Dropdown Menu](guides/core-components-overlay-dropdown-menu.md) | Core / Overlay | `DropdownMenu` | mapped | implemented | not-tracked | not-tracked | 4 public / 3 hidden |
+| [Dropdown Menu](guides/core-components-overlay-dropdown-menu.md) | Core / Overlay | `DropdownMenu` | mapped | implemented | not-tracked | not-tracked | 4 public / 4 hidden |
 | [Modal](guides/core-components-overlay-modal.md) | Core / Overlay | `Modal` | mapped | implemented | not-tracked | not-tracked | 3 public / 2 hidden |
 | [Snackbar](guides/core-components-overlay-snackbar.md) | Core / Overlay | `Snackbar` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Toast](guides/core-components-overlay-toast.md) | Core / Overlay | `Toast`, `ToastStack` | mapped | implemented | not-tracked | not-tracked | 3 public / 2 hidden |
@@ -71,9 +71,9 @@
 | [Social Login](guides/product-action-social-login.md) | Product / Action | `SocialButton` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Speed Dial](guides/product-action-speed-dial.md) | Product / Action | `SpeedDial` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Split Button](guides/product-action-split-button.md) | Product / Action | `SplitButton` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Message](guides/product-communication-message.md) | Product / Communication | `ConversationMessage` | not-tracked | implemented | not-tracked | not-tracked | 8 public / 1 hidden |
-| [Message Composer](guides/product-communication-message-composer.md) | Product / Communication | `MessageComposer` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 1 hidden |
-| [Message Feed](guides/product-communication-message-feed.md) | Product / Communication | `MessageFeed` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
+| [Message](guides/product-communication-message.md) | Product / Communication | `ConversationMessage` | not-tracked | implemented | not-tracked | not-tracked | 11 public / 5 hidden |
+| [Message Composer](guides/product-communication-message-composer.md) | Product / Communication | `MessageComposer` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
+| [Message Feed](guides/product-communication-message-feed.md) | Product / Communication | `MessageFeed` | not-tracked | implemented | not-tracked | not-tracked | 8 public / 1 hidden |
 | [Bubble](guides/product-content-bubble.md) | Product / Content | `Bubble` | mapped | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Checklist Item](guides/product-content-checklist-item.md) | Product / Content | `ChecklistItem` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Connection Row](guides/product-content-connection-row.md) | Product / Content | `ConnectionRow` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
@@ -144,7 +144,7 @@
 | [Drawer](guides/product-overlay-drawer.md) | Product / Overlay | `Drawer` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Hover Card](guides/product-overlay-hover-card.md) | Product / Overlay | `HoverCard` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Lightbox](guides/product-overlay-lightbox.md) | Product / Overlay | `Lightbox` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
-| [Popover](guides/product-overlay-popover.md) | Product / Overlay | `Popover` | mapped | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
+| [Popover](guides/product-overlay-popover.md) | Product / Overlay | `Popover` | mapped | implemented | not-tracked | not-tracked | 2 public / 3 hidden |
 | [Sheet](guides/product-overlay-sheet.md) | Product / Overlay | `Sheet` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Calendar](guides/product-selection-and-input-calendar.md) | Product / Selection and Input | `Calendar` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
 | [Color Swatch](guides/product-selection-and-input-color-swatch.md) | Product / Selection and Input | `ColorSwatch` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
@@ -152,7 +152,7 @@
 | [Date Range](guides/product-selection-and-input-date-range.md) | Product / Selection and Input | `DateRangeField` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Field Action](guides/product-selection-and-input-field-action.md) | Product / Selection and Input | `FieldAction` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 4 hidden |
 | [File Upload](guides/product-selection-and-input-file-upload.md) | Product / Selection and Input | `FileUpload` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
-| [File Upload Queue](guides/product-selection-and-input-file-upload-queue.md) | Product / Selection and Input | `FileUploadQueue` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
+| [File Upload Queue](guides/product-selection-and-input-file-upload-queue.md) | Product / Selection and Input | `FileUploadQueue` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 0 hidden |
 | [Icon Picker](guides/product-selection-and-input-icon-picker.md) | Product / Selection and Input | `IconPicker` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Input Group](guides/product-selection-and-input-input-group.md) | Product / Selection and Input | `InputGroup` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Number Field](guides/product-selection-and-input-number-field.md) | Product / Selection and Input | `NumberField` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |

@@ -8,16 +8,16 @@
 | Storybook | `LDS Product/Communication/Message Composer` |
 | Source | `../component-content.json#product-communication-message-composer` |
 
-사람 또는 AI와 대화하면서 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 첨부와 보조 행동은 slot으로 조합하고 Composer는 값·전송·중지만 소유합니다. 단발성 검색이나 한 칸짜리 폼에는 사용하지 말고 SearchField·Textarea를 사용하세요.
+사람 또는 AI와 대화하며 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 보조 행동은 slot으로 조합하고 Composer는 값·전송·중지만 소유합니다. 즉시 명령은 DropdownMenu, 안내·연속 설정은 Popover에 두며 Portal·dismiss·배치는 primitive가 소유합니다. 단발성 검색에는 SearchField를 사용하세요.
 
 ## 사용 판단
 
 ### 사용
 
 - light/dark 모두 LDS semantic input token을 사용하며 exact Figma color, product logo, provider selector와 custom shadow를 만들지 않습니다.
+- 좁고 짧은 대화 열에서는 body Portal로 clipping을 탈출하되, 공유 primitive가 제공하는 collisionBoundary에 visible conversation column ref를 전달해 viewport와 그 열의 교집합 안에서 panel을 배치합니다. Portal target과 geometry boundary는 같은 책임이 아닙니다.
 - Slack — Set your Enter key preference는 Enter를 보내기로 선택하면 Shift+Enter로 줄바꿈하고, Enter를 줄바꿈으로 선택하면 Mac의 Command+Enter 또는 Windows/Linux의 Ctrl+Enter로 보내는 공식 제품 관습을 설명합니다. 이를 enter와 modifier-enter 계약에 반영했고, 긴 형식 작성에는 더 명시적인 button-only도 제공합니다.
 - Slack — Use Slack with a screen reader는 conversation 진입 시 message composer에 focus가 놓이고 Tab으로 primary action toolbar에 접근하며, 입력 후 Enter로 보내는 흐름을 설명합니다. 이에 따라 form/textarea/action에 각각 명시적 accessible name을 제공하고 제출 뒤 textarea focus를 복귀시키며, slot action을 DOM reading order에 유지합니다.
-- MDN — disabled HTML attribute는 native form control의 focus·interaction·form submission 차단 semantics를 정의합니다. 내부 textarea는 실제 disabled attribute를 사용합니다.
 
 ### 사용하지 않음
 
@@ -98,7 +98,7 @@
 
 - density는 comfortable | compact이며 기본 comfortable은 기존 렌더링의 크기와 간격을 그대로 보존합니다. 좁은 패널에서만 compact를 명시합니다.
 - submitMode="button-only": Enter를 항상 줄바꿈으로 남기고 button만 제출합니다.
-- compact는 textarea 세로 padding, shell inset, attachment 상단 inset과 action/status gap만 LDS spacing token의 작은 단계로 줄입니다. DOM/read order, focus ring, autosize, state, submit/stop과 live-region 계약은 comfortable과 같습니다.
+- compact는 textarea 세로 padding, shell inset, attachment 상단 inset과 action/status gap을 LDS spacing token의 작은 단계로 줄이고 primary send/stop의 radius를 shell corner에 맞춥니다. DOM/read order, focus ring, autosize, state, submit/stop과 live-region 계약은 comfortable과 같습니다.
 - Portal처럼 폭과 세로 공간이 제한된 consumer는 density="compact", 필요한 최소 minRows, 우선순위가 높은 utility만 composer 안에 조합합니다. 긴 scope/model selector를 compact가 임의로 숨기거나 재배치하지 않습니다.
 
 ## Content and writing
@@ -175,6 +175,7 @@
 - `--dur-base`
 - `--ease-out`
 - `--font-sans`
+- `--radius-md`
 - `--radius-xl`
 - `--shadow-sm`
 - `--space-0-5`

@@ -1,19 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
 
 
-<<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
-<<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
-<<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
 var _chunk2G45EBFEcjs = require('./chunk-2G45EBFE.cjs');
-========
-var _chunkITKHOO7Tcjs = require('./chunk-ITKHOO7T.cjs');
->>>>>>>> codex/consolidate-release-check:dist/chunk-5U7ADBEH.cjs
-========
-var _chunkRNGZYEXUcjs = require('./chunk-RNGZYEXU.cjs');
->>>>>>>> codex/consolidate-release-ci:dist/chunk-GG6LLGUE.cjs
-========
-var _chunkMEHGPWKRcjs = require('./chunk-MEHGPWKR.cjs');
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-FT5TW4IB.cjs
 
 // components/viz/VideoStreamTile.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -53,19 +41,7 @@ function VideoStreamTile({
   const resolvedState = usesExplicitAxes ? state : _nullishCoalesce(_nullishCoalesce(state, () => ( status)), () => ( "idle"));
   const resolvedAriaLabel = _nullishCoalesce(ariaLabel, () => ( (typeof label === "string" && label.trim() ? `${label} \uC601\uC0C1 \uC2A4\uD2B8\uB9BC` : "\uC601\uC0C1 \uC2A4\uD2B8\uB9BC")));
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-<<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
-<<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
-<<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
     _chunk2G45EBFEcjs.ViewerFrame,
-========
-    _chunkITKHOO7Tcjs.ViewerFrame,
->>>>>>>> codex/consolidate-release-check:dist/chunk-5U7ADBEH.cjs
-========
-    _chunkRNGZYEXUcjs.ViewerFrame,
->>>>>>>> codex/consolidate-release-ci:dist/chunk-GG6LLGUE.cjs
-========
-    _chunkMEHGPWKRcjs.ViewerFrame,
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-FT5TW4IB.cjs
     {
       ...rest,
       label: resolvedAriaLabel,
@@ -98,16 +74,4 @@ function VideoStreamTile({
 
 
 exports.VideoStreamTile = VideoStreamTile;
-<<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
-<<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
-<<<<<<<< HEAD:dist/chunk-XF2ASTKI.cjs
 //# sourceMappingURL=chunk-XF2ASTKI.cjs.map
-========
-//# sourceMappingURL=chunk-5U7ADBEH.cjs.map
->>>>>>>> codex/consolidate-release-check:dist/chunk-5U7ADBEH.cjs
-========
-//# sourceMappingURL=chunk-GG6LLGUE.cjs.map
->>>>>>>> codex/consolidate-release-ci:dist/chunk-GG6LLGUE.cjs
-========
-//# sourceMappingURL=chunk-FT5TW4IB.cjs.map
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-FT5TW4IB.cjs

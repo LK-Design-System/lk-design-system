@@ -548,14 +548,15 @@ export const DockedCollapsed = {
       || nav.querySelector('[data-sidenav-parent="missions"]')) {
       throw new Error('The collapsed visual story must retain the active parent while hiding its child rows.');
     }
-    const expectedProxyBackground = resolveCssColor(activeParent, 'backgroundColor', 'var(--color-semantic-primary-surface-strong)');
-    const expectedProxyInk = resolveCssColor(activeParent, 'color', 'var(--color-semantic-primary-normal)');
-    const collapsedProxyStyle = getComputedStyle(activeParent);
+    const expectedParentBackground = resolveCssColor(activeParent, 'backgroundColor', 'transparent');
+    const expectedParentInk = resolveCssColor(activeParent, 'color', 'var(--color-semantic-label-normal)');
+    const expectedSelectedBackground = resolveCssColor(activeParent, 'backgroundColor', 'var(--color-semantic-primary-surface-strong)');
+    const collapsedParentStyle = getComputedStyle(activeParent);
     if (activeParent.dataset.state !== 'active-descendant'
       || activeParent.hasAttribute('aria-current')
-      || collapsedProxyStyle.backgroundColor !== expectedProxyBackground
-      || collapsedProxyStyle.color !== expectedProxyInk) {
-      throw new Error('A collapsed active descendant must expose a primary visual proxy without moving aria-current to its disclosure parent.');
+      || collapsedParentStyle.backgroundColor !== expectedParentBackground
+      || collapsedParentStyle.color !== expectedParentInk) {
+      throw new Error('A collapsed active descendant must keep stronger parent ink without adding a selection surface or moving aria-current.');
     }
 
     const railItem = nav.querySelector('[data-sidenav-value="overview"]');
@@ -600,7 +601,7 @@ export const DockedCollapsed = {
         || activeParent.hasAttribute('aria-current')
         || expandedParentStyle.backgroundColor !== 'rgba(0, 0, 0, 0)'
         || expandedParentStyle.color !== expectedExpandedParentInk
-        || getComputedStyle(activeChild).backgroundColor !== expectedProxyBackground) {
+        || getComputedStyle(activeChild).backgroundColor !== expectedSelectedBackground) {
         throw new Error('Expanding the rail must transfer the selected surface to the actual current leaf while the parent returns to disclosure styling.');
       }
     });
@@ -608,7 +609,7 @@ export const DockedCollapsed = {
     await waitForWidth(nav, 64);
     await waitFor(() => {
       if (initial.control.textContent?.trim() !== '사이드바 펼치기'
-        || getComputedStyle(activeParent).backgroundColor !== expectedProxyBackground
+        || getComputedStyle(activeParent).backgroundColor !== expectedParentBackground
         || activeParent.hasAttribute('aria-current')) {
         throw new Error('The collapsed visual story must finish in its named state.');
       }

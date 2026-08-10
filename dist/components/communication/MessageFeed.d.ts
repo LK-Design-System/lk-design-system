@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 export type MessageFeedFollowingReason = 'user-scroll' | 'jump-to-latest';
+export type MessageFeedDensity = 'comfortable' | 'compact';
 export type MessageFeedViewportInset = 'compact' | 'comfortable';
 
 export interface MessageFeedProps extends Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
@@ -14,6 +15,8 @@ export interface MessageFeedProps extends Omit<React.HTMLAttributes<HTMLElement>
   maxHeight?: number | string;
   /** Optional minimum viewport height for persistent conversation panels. */
   viewportMinHeight?: number | string;
+  /** Feed-owned vertical density. Comfortable preserves the legacy message gap and block padding; compact reduces only those spaces and does not change viewportInset. @default "comfortable" */
+  density?: MessageFeedDensity;
   /** Inline viewport padding. Use comfortable for reading surfaces and compact for dense embedded panels. @default "compact" */
   viewportInset?: MessageFeedViewportInset;
   /** Mark the log as busy while its current contents are being updated. @default false */

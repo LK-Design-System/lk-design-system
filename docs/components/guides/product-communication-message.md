@@ -114,12 +114,13 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | Component | Relationship |
 | --- | --- |
 | `Avatar` | 대표 시나리오에서 조합 |
+| `Button` | 대표 시나리오에서 조합 |
 | `Chip` | 대표 시나리오에서 조합 |
+| `DropdownMenu` | 대표 시나리오에서 조합 |
 | `Icon` | 대표 시나리오에서 조합 |
 | `IconButton` | 대표 시나리오에서 조합 |
 | `MessageComposer` | 대표 시나리오에서 조합 |
 | `MessageFeed` | 대표 시나리오에서 조합 |
-| `SourceDisclosure` | 대표 시나리오에서 조합 |
 
 ## Examples
 

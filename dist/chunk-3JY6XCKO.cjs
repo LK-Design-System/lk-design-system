@@ -5,45 +5,17 @@ var _chunkFVL575B5cjs = require('./chunk-FVL575B5.cjs');
 
 
 
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
 var _chunk7WM5AZWScjs = require('./chunk-7WM5AZWS.cjs');
-========
-var _chunkHHCZO6DKcjs = require('./chunk-HHCZO6DK.cjs');
 
 
-var _chunk3VE2HGTTcjs = require('./chunk-3VE2HGTT.cjs');
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-NLBNDTSE.cjs
+var _chunk3H3EZZTFcjs = require('./chunk-3H3EZZTF.cjs');
 
 
-var _chunkEEY6VLXUcjs = require('./chunk-EEY6VLXU.cjs');
-
-
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
 var _chunk5H5GEWU5cjs = require('./chunk-5H5GEWU5.cjs');
-========
-var _chunkSWWCCPCOcjs = require('./chunk-SWWCCPCO.cjs');
->>>>>>>> codex/consolidate-release-check:dist/chunk-7TVRV3CR.cjs
-========
-var _chunkYQAFCY5Xcjs = require('./chunk-YQAFCY5X.cjs');
->>>>>>>> codex/consolidate-release-ci:dist/chunk-HR37WYG3.cjs
 
 
 var _chunk3VE2HGTTcjs = require('./chunk-3VE2HGTT.cjs');
 
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-========
-
-var _chunk4DG5U4UWcjs = require('./chunk-4DG5U4UW.cjs');
-
-
-var _chunk63NPKSTXcjs = require('./chunk-63NPKSTX.cjs');
-========
-var _chunkLQ7SPTG7cjs = require('./chunk-LQ7SPTG7.cjs');
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-NLBNDTSE.cjs
-
->>>>>>>> codex/consolidate-release-check:dist/chunk-7TVRV3CR.cjs
 // components/editor/CanvasEditorCommandBar.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 var _jsxruntime = require('react/jsx-runtime');
@@ -51,19 +23,7 @@ function actionKey(action, index) {
   return _nullishCoalesce(_nullishCoalesce(_nullishCoalesce(action.key, () => ( action.value)), () => ( action.label)), () => ( index));
 }
 function actionIcon(icon) {
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
   if (typeof icon === "string") return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk5H5GEWU5cjs.Icon, { name: icon, size: 16, "aria-hidden": "true" });
-========
-  if (typeof icon === "string") return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: icon, size: 16, "aria-hidden": "true" });
->>>>>>>> codex/consolidate-release-check:dist/chunk-7TVRV3CR.cjs
-========
-  if (typeof icon === "string") return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk63NPKSTXcjs.Icon, { name: icon, size: 16, "aria-hidden": "true" });
->>>>>>>> codex/consolidate-release-ci:dist/chunk-HR37WYG3.cjs
-========
-  if (typeof icon === "string") return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLQ7SPTG7cjs.Icon, { name: icon, size: 16, "aria-hidden": "true" });
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-NLBNDTSE.cjs
   return icon;
 }
 function CommandButton({ action, size, index, tabStopKey }) {
@@ -94,19 +54,7 @@ function CommandButton({ action, size, index, tabStopKey }) {
     );
   }
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
     _chunk3H3EZZTFcjs.IconButton,
-========
-    _chunkQJNQGYQBcjs.IconButton,
->>>>>>>> codex/consolidate-release-check:dist/chunk-7TVRV3CR.cjs
-========
-    _chunk4DG5U4UWcjs.IconButton,
->>>>>>>> codex/consolidate-release-ci:dist/chunk-HR37WYG3.cjs
-========
-    _chunkEEY6VLXUcjs.IconButton,
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-NLBNDTSE.cjs
     {
       ...commonProps,
       round: false,
@@ -182,19 +130,7 @@ function CanvasEditorCommandBar({
     groups.push({
       key: "history",
       node: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
         _chunk7WM5AZWScjs.HistoryToolbar,
-========
-        _chunkSWWCCPCOcjs.HistoryToolbar,
->>>>>>>> codex/consolidate-release-check:dist/chunk-7TVRV3CR.cjs
-========
-        _chunkYQAFCY5Xcjs.HistoryToolbar,
->>>>>>>> codex/consolidate-release-ci:dist/chunk-HR37WYG3.cjs
-========
-        _chunkHHCZO6DKcjs.HistoryToolbar,
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-NLBNDTSE.cjs
         {
           label: historyLabel,
           canUndo,
@@ -230,19 +166,7 @@ function CanvasEditorCommandBar({
       style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexShrink: 0, ...style },
       children: groups.map((group, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
         index > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
           _chunk7WM5AZWScjs.Divider,
-========
-          _chunkSWWCCPCOcjs.Divider,
->>>>>>>> codex/consolidate-release-check:dist/chunk-7TVRV3CR.cjs
-========
-          _chunkYQAFCY5Xcjs.Divider,
->>>>>>>> codex/consolidate-release-ci:dist/chunk-HR37WYG3.cjs
-========
-          _chunkHHCZO6DKcjs.Divider,
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-NLBNDTSE.cjs
           {
             vertical: true,
             style: { minHeight: size === "md" ? 24 : 20, marginInline: "var(--space-1)", alignSelf: "center" }
@@ -257,16 +181,4 @@ function CanvasEditorCommandBar({
 
 
 exports.CanvasEditorCommandBar = CanvasEditorCommandBar;
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
-<<<<<<<< HEAD:dist/chunk-3JY6XCKO.cjs
 //# sourceMappingURL=chunk-3JY6XCKO.cjs.map
-========
-//# sourceMappingURL=chunk-7TVRV3CR.cjs.map
->>>>>>>> codex/consolidate-release-check:dist/chunk-7TVRV3CR.cjs
-========
-//# sourceMappingURL=chunk-HR37WYG3.cjs.map
->>>>>>>> codex/consolidate-release-ci:dist/chunk-HR37WYG3.cjs
-========
-//# sourceMappingURL=chunk-NLBNDTSE.cjs.map
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-NLBNDTSE.cjs

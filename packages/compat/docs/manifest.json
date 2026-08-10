@@ -3,7 +3,7 @@
   "kind": "lds-package-documentation",
   "package": {
     "name": "@lk-design-system/design-system-core",
-    "version": "0.1.0-rc.62",
+    "version": "0.1.0-rc.65",
     "layer": "compatibility"
   },
   "adoption": {
@@ -63,11 +63,11 @@
   },
   "source": {
     "repository": "LK-Design-System/lk-design-system",
-    "ref": "lds-v0.1.0-rc.62",
+    "ref": "lds-v0.1.0-rc.65",
     "documents": [
       {
         "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-        "sha256": "50b2772701aeb9be51c60b22e49f3e650b068fa768bb45f4b89a7dc37fb1d187"
+        "sha256": "d4dcdadb4b259359fd782de47dc2c33174fa423ae89c053a15ddceee427aa30b"
       },
       {
         "path": "docs/COMPONENT_WORKFLOW.md",
@@ -99,7 +99,7 @@
       },
       {
         "path": "docs/foundations/foundation-content.json",
-        "sha256": "71ee7af16d54679b6a5d97dc0e37a0a76afbdb880491e6f2a034369b9f499462"
+        "sha256": "9e79a34cb57cd45625b0e895fd9737fd65e0e9f457aadbcca3ab4dadb60f4f20"
       },
       {
         "path": "docs/foundations/foundation-content.schema.json",
@@ -111,7 +111,7 @@
       },
       {
         "path": "docs/foundations/iconography.md",
-        "sha256": "86c1273da5739eb7784e1c52cdedf9249c1338d7c485b7cfe481aeebce588017"
+        "sha256": "546d83898ec10107c3bc6cee6f1f6e82caf2eaa7dd31fcd1a70f941a9430fbc7"
       },
       {
         "path": "docs/foundations/inclusive-design.md",
@@ -127,7 +127,7 @@
       },
       {
         "path": "docs/foundations/llms.txt",
-        "sha256": "0b996adc8fc283b8d5f84905097d6f8ad3ffef52c3dcc51b144397add0e784f8"
+        "sha256": "087941f920544b234a54ba465dd72165d1e0c7ea0b7338a5401af4815da54d29"
       },
       {
         "path": "docs/foundations/motion.md",
@@ -207,7 +207,7 @@
       },
       {
         "path": "packages/core/assets/icons/manifest.json",
-        "sha256": "7ebc0255a53c9a75772d3cb4d41964fd9be0ecc49e5ca13d80ef9d3478b46278"
+        "sha256": "0530d2bce2947affd03385fa56cb72d596258ff78242b49aa2c478026765f65b"
       },
       {
         "path": "tokens/source.json",
@@ -222,9 +222,9 @@
       "sha256": "247936ab3cf5f18a456649f50e5f75ffbcdad153142267f4aeaea1424460ef36"
     },
     "assets": {
-      "fileCount": 393,
-      "bytes": 6939409,
-      "sha256": "8286d313fa5224e0cacca29b67e9a8b6dbfd880228b1ad85bf903742a14dad84"
+      "fileCount": 428,
+      "bytes": 8428248,
+      "sha256": "36364a916660233d86dadf40fc4a7e139522ec32da927c32b859522e81bb0ba9"
     }
   },
   "documents": [
@@ -270,7 +270,7 @@
     },
     {
       "path": "adoption-workflow.md",
-      "sha256": "1656f8d786f867a5e0cc4776263be74f797e5dad39c949f2895ada15cc2b2c07",
+      "sha256": "e3fee21cbedc0ac3ecda47ada13baf3d7bb59cca1a6533d1b9f9f6b89a75c2d8",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
@@ -280,17 +280,17 @@
     },
     {
       "path": "assets/icons/manifest.json",
-      "sha256": "7ebc0255a53c9a75772d3cb4d41964fd9be0ecc49e5ca13d80ef9d3478b46278",
+      "sha256": "0530d2bce2947affd03385fa56cb72d596258ff78242b49aa2c478026765f65b",
       "sources": [
         {
           "path": "packages/core/assets/icons/manifest.json",
-          "sha256": "7ebc0255a53c9a75772d3cb4d41964fd9be0ecc49e5ca13d80ef9d3478b46278"
+          "sha256": "0530d2bce2947affd03385fa56cb72d596258ff78242b49aa2c478026765f65b"
         }
       ]
     },
     {
       "path": "components/README.md",
-      "sha256": "b1fc400ac7f0fcd9b65e0d35e7b8d9e5e07bd543977cde35b5d12c579393e769",
+      "sha256": "56b28cf440880f7bc8fb4c0efbd6b23c0264f3196a17b8cfea3c7017d60593d6",
       "sources": [
         {
           "path": "docs/components/README.md",
@@ -340,11 +340,11 @@
     },
     {
       "path": "foundations/foundation-content.json",
-      "sha256": "71ee7af16d54679b6a5d97dc0e37a0a76afbdb880491e6f2a034369b9f499462",
+      "sha256": "9e79a34cb57cd45625b0e895fd9737fd65e0e9f457aadbcca3ab4dadb60f4f20",
       "sources": [
         {
           "path": "docs/foundations/foundation-content.json",
-          "sha256": "71ee7af16d54679b6a5d97dc0e37a0a76afbdb880491e6f2a034369b9f499462"
+          "sha256": "9e79a34cb57cd45625b0e895fd9737fd65e0e9f457aadbcca3ab4dadb60f4f20"
         }
       ]
     },
@@ -370,11 +370,11 @@
     },
     {
       "path": "foundations/iconography.md",
-      "sha256": "86c1273da5739eb7784e1c52cdedf9249c1338d7c485b7cfe481aeebce588017",
+      "sha256": "546d83898ec10107c3bc6cee6f1f6e82caf2eaa7dd31fcd1a70f941a9430fbc7",
       "sources": [
         {
           "path": "docs/foundations/iconography.md",
-          "sha256": "86c1273da5739eb7784e1c52cdedf9249c1338d7c485b7cfe481aeebce588017"
+          "sha256": "546d83898ec10107c3bc6cee6f1f6e82caf2eaa7dd31fcd1a70f941a9430fbc7"
         }
       ]
     },
@@ -410,11 +410,11 @@
     },
     {
       "path": "foundations/llms.txt",
-      "sha256": "0b996adc8fc283b8d5f84905097d6f8ad3ffef52c3dcc51b144397add0e784f8",
+      "sha256": "087941f920544b234a54ba465dd72165d1e0c7ea0b7338a5401af4815da54d29",
       "sources": [
         {
           "path": "docs/foundations/llms.txt",
-          "sha256": "0b996adc8fc283b8d5f84905097d6f8ad3ffef52c3dcc51b144397add0e784f8"
+          "sha256": "087941f920544b234a54ba465dd72165d1e0c7ea0b7338a5401af4815da54d29"
         }
       ]
     },
@@ -520,7 +520,7 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "83e0246ae061badaa9bd9d6fe41fb24b95d8b7c9713c6401cd0610bb47347f09",
+      "sha256": "1847cd48d005aa2cf920addd3c00ea09335a7e1a29cb66f0a2eec18a49a227c4",
       "sources": [
         {
           "path": "llms.txt",
@@ -540,17 +540,17 @@
     },
     {
       "path": "policies/ACCESSIBILITY_CONTRACTS.md",
-      "sha256": "50b2772701aeb9be51c60b22e49f3e650b068fa768bb45f4b89a7dc37fb1d187",
+      "sha256": "d4dcdadb4b259359fd782de47dc2c33174fa423ae89c053a15ddceee427aa30b",
       "sources": [
         {
           "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-          "sha256": "50b2772701aeb9be51c60b22e49f3e650b068fa768bb45f4b89a7dc37fb1d187"
+          "sha256": "d4dcdadb4b259359fd782de47dc2c33174fa423ae89c053a15ddceee427aa30b"
         }
       ]
     },
     {
       "path": "policies/COMPONENT_WORKFLOW.md",
-      "sha256": "fc70d0e55cba89ca2da8de787e66451ad0276935ce4af2ed21bb3bf220d08ee8",
+      "sha256": "85d039c170b92427fdb047b395f10dda942d6cc0b349b6bca7017e8f573685df",
       "sources": [
         {
           "path": "docs/COMPONENT_WORKFLOW.md",
@@ -560,7 +560,7 @@
     },
     {
       "path": "policies/COPY_REVIEW_CONTRACT.md",
-      "sha256": "13873ed80342e84c5e3cb02d42c3688e410d9818509e4b49502974e05de9766c",
+      "sha256": "9dac4008bfd75596d5420950a9ce54089d66fde0f6dd644badf62648aaf45e81",
       "sources": [
         {
           "path": "docs/COPY_REVIEW_CONTRACT.md",

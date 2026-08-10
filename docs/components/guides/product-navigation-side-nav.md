@@ -20,10 +20,10 @@
 
 ### 사용하지 않음
 
-- 접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 행의 선택 프록시로 표시하며 별도 점이나 시작 표시선을 추가하지 않아, 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.
-- Carbon UI shell left panel style — sub-menu hover와 selected를 별도 상태로 정의합니다. LDS도 펼침·hover·현재 위치의 상태 분리는 따르되, Carbon의 4px interactive border는 내부 NavRail·TopBar 선택 문법과 맞지 않아 채택하지 않습니다. 펼친 상태는 현재 leaf에만 선택 배경을 두고, leaf가 숨겨지는 접힌 상태에서만 부모가 배경 프록시를 맡습니다.
+- 접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 아이콘의 강한 잉크로만 표시해 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.
+- Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. category 아이콘이 없을 때도 subitem을 명확히 들여쓰라는 원칙을 적용해 LDS는 자식 아이콘 유무와 무관하게 같은 라벨 시작선을 보장합니다. 축소 가능 내비게이션의 상태는 명시적 토글로 설명하고 hover peek는 선택 기능으로 제한합니다.
 - Carbon UI shell left panel accessibility — rail은 hover나 focus에서 펼쳐져도 같은 링크·서브메뉴 keyboard model을 유지합니다. 이 동작을 LDS에 적용할 때는 동일 DOM뿐 아니라 44px hit target과 세로 위치도 유지해, 포인터와 키보드 사용자가 확장 중 움직이는 목적지를 다시 추적하지 않게 합니다.
-- Android Material NavigationRailView — 아이콘 레일의 현재 목적지는 shape·color를 가진 active indicator로 지속 표시할 수 있습니다. LDS는 새 indicator API 대신 기존 primary wash와 아이콘 잉크를 재사용하고, 숨겨진 leaf의 disclosure 부모에만 이 문법을 대리 적용합니다.
+- 대시보드·관리 제품의 주 탐색으로 UserMenu를 푸터에 조합합니다. TopBar가 함께 있으면 전역 utility만 담당하게 하고 로고·경로를 중복하지 않으며, 평면형 대안인 NavRail과 동시에 주 탐색으로 사용하지 않습니다.
 
 ## Anatomy
 
@@ -56,7 +56,7 @@
 | `collapsedWidth` | `number` | No | 접힌 아이콘 레일 폭. 기본 64px에서 브랜드 마크와 목적지 아이콘을 유지합니다. @default 64 |
 | `overlay` | `boolean` | No | 오버레이 모드 — 레이아웃은 레일 폭 고정, 호버(피크)·키보드 초점·클릭으로 펼치면 패널이 콘텐츠 위로 뜹니다. 비제어 런타임 전환 시 진입은 접고 이탈은 이전 persistent 상태를 복원하며, 제어 모드는 부모가 collapsed를 갱신합니다. @default false |
 | `autoExpandActiveGroup` | `boolean` | No | 활성 자식이 속한 disclosure 그룹을 초기 선택과 값 변경 때 자동으로 펼칩니다. false이면 활성 표시는 유지하되 그룹 열림은 사용자 상호작용과 독립됩니다. @default true |
-| `multiple` | `boolean` | No | Allows multiple disclosure groups to remain open. Set to false for accordion behavior. @default true |
+| `multiple` | `boolean` | No | Allows multiple disclosure groups to remain open. When false, selecting another group or top-level destination closes the previous group. @default false |
 | `value` | `string` | No | 제어되는 활성 값. |
 | `defaultValue` | `string` | No | 비제어 시 초기 활성 값. |
 | `onChange` | `(value: string) = void` | No |  |
@@ -75,10 +75,10 @@
 ## Behavior and interaction
 
 - collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌므로 런타임 overlay 전환 때도 부모가 원하는 collapsed 값을 함께 갱신해야 합니다. 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.
-- multiple — 기본 true는 여러 disclosure 그룹을 동시에 열어 둘 수 있습니다. multiple={false}이면 한 번에 한 그룹만 열리는 accordion 동작이 되며, 다른 그룹을 열 때 기존 그룹은 닫힙니다. 활성 자식이 바뀌면 활성 그룹을 우선 유지합니다.
+- multiple — 기본 false는 한 번에 한 disclosure 그룹만 열리는 accordion 동작입니다. 다른 그룹이나 다른 최상위 목적지를 선택하면 기존에 열린 그룹을 닫고, 활성 자식이 바뀌면 해당 그룹만 엽니다. multiple={true}를 명시하면 여러 그룹을 동시에 열 수 있습니다.
 - floating은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. docked는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, fill, active marker를 공유합니다.
+- WAI-ARIA Accordion pattern — 한 패널만 허용하는 accordion은 다른 헤더를 열 때 기존 패널을 닫고 aria-expanded를 실제 노출 상태와 동기화합니다. LDS의 기본 SideNav도 이 단일 열림 규칙을 따릅니다.
 - WAI-ARIA landmark regions — landmark와 명확한 accessible name을 유지합니다. 소비자가 aria-label을 주지 않으면 기본 이름 사이드 탐색을 제공하고, 같은 문서에 탐색 landmark가 여러 개면 고유한 이름으로 덮어씁니다. 현재 목적지는 aria-current="page"로 노출하고, 키보드 focus 진입·이탈과 Esc 뒤에도 초점을 잃지 않습니다.
-- WAI Disclosure Navigation — 부모 button의 aria-expanded는 자식 노출 상태이고 leaf link의 aria-current="page"는 현재 위치입니다. LDS는 접힌 부모에 시각 프록시를 표시해도 aria-current를 옮기지 않아 두 의미를 합치지 않습니다.
 
 ## 정량 규칙
 
@@ -86,14 +86,14 @@
 | --- | --- |
 | 명시 규칙 1 | 접힘 — 접기/펼치기 수단은 상단 바 시작 부분에 두는 외부 토글 하나뿐이며, collapsed/onCollapsedChange 제어 프롭으로 패널 상태를 구동합니다. side-first 셸에서는 본문 상단 바의 시작(shadcn/ui SidebarTrigger 배치), header-first 셸에서는 전폭 상단 바의 시작(Atlassian top-nav SideNavToggleButton 배치)입니다. 접기 토글을 사이드 패널 내부에 두지 않으며, SideNav는 자체 토글을 렌더하지 않습니다. |
 | 명시 규칙 2 | header / headerCollapsed / footer — 브랜드는 Lockup 사용(inline 20px / mark 22px 권장). 푸터는 height 지정 시 바닥 고정. |
-| 명시 규칙 3 | 현재 leaf 목적지는 aria-current="page"와 LDS의 NavRail·TopBar와 같은 primary wash·굵은 label을 소유합니다. leaf가 숨겨지는 접힌 레일에서만 disclosure 부모가 같은 primary wash와 primary icon으로 시각 선택 프록시를 맡되 aria-current는 받지 않습니다. 펼치면 프록시 배경은 부모에서 사라지고 실제 leaf로 돌아갑니다. |
+| 명시 규칙 3 | 펼쳐진 childList는 논리적 시작 방향에서 --space-3(12px)만큼 들어가 하위 목적지의 hover·선택 표면 자체를 부모 행보다 안쪽에 둡니다. 자식 라벨도 아이콘 유무와 관계없이 부모 라벨보다 12px 안쪽에서 시작하고 --label2-line(18px)을 사용합니다. 44px hit target과 현재 leaf 하나만 소유하는 선택 배경은 유지하며, 별도 connector·중첩 표면·active bar는 추가하지 않습니다. |
 | 명시 규칙 4 | 내비게이션 disabled 표면은 wrapper opacity 0.45를 공통 문법으로 사용합니다. 개별 자식의 색 토큰을 다시 바꿔 이중으로 흐리게 만들지 않습니다. |
 | --caption2-size | 11px |
 
 ## Responsive
 
 - Width, rail width, padding, radius, and item geometry can be tuned only through the documented --lds-side-nav- variables. Navigation value, routing, and shell collapse controls remain product-owned.
-- 접힌 레일과 펼친 패널은 SideNav가 소유하는 브랜드 아래 패딩 18px과 44px 최상위 목적지 행 높이를 공유합니다(36px 자식 행은 레일에 존재하지 않아 이 계약의 대상이 아닙니다). header와 headerCollapsed 슬롯 자체의 intrinsic 높이는 제품이 맞추며, 레일에서는 label·badge가 사라지고 행의 가로 정렬만 바뀝니다.
+- 접힌 레일과 펼친 패널은 SideNav가 소유하는 브랜드 아래 패딩 18px과 44px 목적지 행 높이를 공유합니다. header와 headerCollapsed 슬롯 자체의 intrinsic 높이는 제품이 맞추며, 레일에서는 label·badge가 사라지고 행의 가로 정렬만 바뀝니다.
 - Carbon UI shell usage — 복잡한 제품 탐색은 header와 지속적인 left panel을 조합하고 좁은 폭에서는 탐색 표면을 전환합니다. 그래서 셸에 붙는 SideNav는 docked를, 독립 배치는 floating을 사용합니다.
 - The collapsed item rail scrolls vertically with a hidden native scrollbar. Do not reduce or remove authorized destinations merely to fit a short viewport; preserve keyboard and wheel scrolling.
 
@@ -109,8 +109,8 @@
 - renderLink — native anchor 대신 router link를 쓸 때만 제공합니다. renderLink={(item, { href, ...props }) = }처럼 DS가 만든 aria-current, disabled, style, activation 계약을 전달합니다.
 - overlay — overlay peek는 공간이 제한된 데스크톱에서만 쓰는 선택 기능입니다. 비제어 SideNav에서 overlay가 런타임에 false → true로 바뀌면 레일로 접고, true → false로 돌아오면 overlay 진입 전의 persistent 접힘 상태를 복원합니다. 접힌 overlay는 hover뿐 아니라 키보드 focus 진입에서도 펼쳐지며 포인터와 focus가 모두 이탈하면 다시 접힙니다. 바깥 클릭과 Esc도 레일로 복귀시키고, Esc로 자식 항목이 사라질 때 focus는 레일에 남는 부모 항목으로 복구됩니다.
 - autoExpandActiveGroup — 기본 true는 활성 자식의 그룹을 초기 선택과 값 변경 때 자동으로 엽니다. false이면 활성 값·부모의 현재 경로 잉크·자식을 열었을 때의 aria-current는 그대로 두고 disclosure open state만 사용자 조작과 분리합니다. 제품이 패널을 열 때 모든 그룹을 닫아 두고 싶다면 이 축을 끄되 현재 route를 지우지 않습니다.
-- 행 높이 위계: 최상위 목적지·disclosure 부모는 44px(--lds-side-nav-item-height), disclosure 자식은 36px(--lds-side-nav-child-item-height)입니다. 자식이 부모와 같은 높이면 위계가 들여쓰기와 1px 폰트 차이로만 남아 열린 그룹이 트리로 읽히지 않고, multiple={false} accordion에서는 그룹 하나가 패널 세로를 과하게 차지합니다.
-- NavRail/BottomNav와 같은 icon, caption/label scale, primary surface/ink를 사용합니다. SideNav에만 섹션 heading, badge, 자식 indent, disclosure chevron, 펼친 panel width와 접힌 active-descendant 프록시가 있습니다. aria-current="page"는 실제 leaf에만 유지되므로 프록시는 시각 연속성만 보완합니다.
+- 지속 선택 표면은 aria-current="page"인 현재 leaf 목적지만 소유합니다. 현재 목적지는 LDS의 NavRail·TopBar와 같은 primary wash와 굵은 label을 사용하며 별도 시작 표시선은 추가하지 않습니다. 펼쳐진 부모는 배경을 유지하지 않고 chevron과 활성 자손을 뜻하는 강한 label/icon만 사용하며, pointer hover는 선택 표면보다 약한 neutral fill-alternative, pressed는 fill-normal, keyboard focus는 전역 focus ring으로 분리합니다.
+- NavRail/BottomNav와 같은 icon, caption/label scale, primary surface/ink, aria-current="page"를 사용합니다. SideNav에만 섹션 heading, badge, 자식 indent, disclosure chevron, 펼친 panel width가 있습니다. 이는 계층 구조와 상태 수를 표현하기 위한 기능 차이입니다.
 
 ## Related components
 
@@ -153,8 +153,8 @@
 
 - `--caption2-size`
 - `--color-semantic-background-elevated-normal`
+- `--color-semantic-fill-alternative`
 - `--color-semantic-fill-normal`
-- `--color-semantic-fill-strong`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-solid-normal`
@@ -168,8 +168,8 @@
 - `--fw-medium`
 - `--label1-line`
 - `--label1-size`
+- `--label2-line`
 - `--label2-size`
-- `--lds-side-nav-child-item-height`
 - `--lds-side-nav-collapsed-width`
 - `--lds-side-nav-item-height`
 - `--lds-side-nav-item-radius`
@@ -185,6 +185,7 @@
 - `--space-2`
 - `--space-2-5`
 - `--space-3`
+- `--space-4`
 - `--space-4-5`
 
 ### Source contracts
@@ -205,8 +206,8 @@
 - [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/)
 - [Carbon UI shell left panel style](https://carbondesignsystem.com/components/UI-shell-left-panel/style/)
 - [Fluent Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
+- [WAI-ARIA Accordion pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)
 - [Carbon UI shell left panel accessibility](https://preview.carbondesignsystem.com/building-blocks/core/components/ui-shell-left-panel/accessibility)
 - [Atlassian navigation system layout](https://atlassian.design/components/navigation-system/layout/examples)
 - [shadcn/ui Sidebar](https://ui.shadcn.com/docs/components/base/sidebar)
 - [WAI-ARIA landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
-- [WAI Disclosure Navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/)

@@ -8,14 +8,14 @@
 | Last reviewed | 2026-08-08 |
 | Machine-readable source | `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json` |
 
-Current generated census (2026-08-08): 194개 페이지와 698개 스토리. The machine-readable audit is authoritative for public/hidden visibility and review status.
+Current generated census (2026-08-10): 194개 페이지와 710개 스토리. The machine-readable audit is authoritative for public/hidden visibility and review status.
 
-- 공개 스토리: 482개
-- 숨김 스토리: 216개
-- 숨김 visual parity: 91개
-- 숨김 internal contract: 121개
+- 공개 스토리: 488개
+- 숨김 스토리: 222개
+- 숨김 visual parity: 95개
+- 숨김 internal contract: 123개
 - 검토 완료 페이지: 194/194개
-- 검토 완료 스토리: 698/698개
+- 검토 완료 스토리: 698/710개
 
 ## Operations Dashboard pattern group
 
@@ -31,7 +31,7 @@ Current generated census (2026-08-08): 194개 페이지와 698개 스토리. The
 - 숨김 스토리: 216개
 - 숨김 visual parity: 91개
 - 숨김 internal contract: 121개
-- 검토 완료 페이지 194/194개, 스토리 698/698개다. 페이지별 source hash와 신규 스토리 검토는 감사 원장에 남기며, `check:storybook-ia`가 소유권·공개 여부·이름·설명과 함께 회귀를 막는다.
+- 검토 완료 페이지 194/194개, 스토리 698/710개다. 페이지별 source hash와 신규 스토리 검토는 감사 원장에 남기며, `check:storybook-ia`가 소유권·공개 여부·이름·설명과 함께 회귀를 막는다.
 - Component 문서 시스템은 public component entry 207개와 named export 219개를 전수 추적하고, 176개 evidence-only 결정 가이드를 `docs/components/guides/*.md`와 `llms.txt`로 생성한다. Storybook의 Docs 탭에는 사용 판단 · Properties · Accessibility · Tokens만 렌더링한다. 전체 카탈로그와 플랫폼 현황은 Storybook 운영 화면이 아니라 생성 문서 `COMPONENT_REFERENCE.md`와 `PROGRESS_BOARD.md`가 소유한다.
 - 2026-07-26 Docs와 Canvas의 책임을 분리했다. Docs는 Storybook 제목·설명과 Foundation·Component 또는 Pattern의 결정 가이드만 싣고, `<DocsStory>`·`<Primary>`·`<Stories>`·`<Controls>`를 렌더링하지 않는다. 스토리 specimen, args, controls와 play lifecycle은 각 Canvas 엔트리에만 남는다. `check:docs-surface`는 생성된 Docs 경로를 전수 감사하고, 문장 hash 원장은 190개 primary story 설명을 검증한다.
 - 시각 specimen이 없는 문서 전용 Foundation은 sidebar에서 Docs를 정식 진입점으로 사용한다. `Design Token`은 저장된 이전 Canvas URL도 Docs로 정규화하고, 첫 화면에서 `Primitive → Semantic → Component → Runtime projection` 계층과 상황별 선택 기준을 먼저 보여 준다. 숨김 CSF story는 Autodocs 생성과 검증만 담당하며 직접 iframe에서는 정식 Docs 링크를 제공한다. Storybook의 제품 온보딩 체크리스트는 LDS 탐색과 경쟁하므로 manager에서 비활성화한다. 이 결정은 Storybook의 [docs-only tag 계약](https://storybook.js.org/docs/writing-stories/tags#docs-only-stories)과 [onboarding feature 설정](https://storybook.js.org/docs/api/main-config/main-config-features)을 따른다.

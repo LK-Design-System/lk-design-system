@@ -1,30 +1,10 @@
 "use client";
 import {
-<<<<<<<< HEAD:dist/chunk-JSTG5DCT.js
-<<<<<<<< HEAD:dist/chunk-JSTG5DCT.js
   ToggleIcon
 } from "./chunk-DYWB3B2C.js";
 import {
   Icon
 } from "./chunk-UDUSXMS5.js";
-========
-  IconButton
-} from "./chunk-6TQ4QOSW.js";
-import {
-  Icon
-<<<<<<<< HEAD:dist/chunk-JSTG5DCT.js
-} from "./chunk-RUENHK23.js";
->>>>>>>> codex/consolidate-release-check:dist/chunk-BNUTETQ5.js
-========
-} from "./chunk-KRO3ULVK.js";
->>>>>>>> codex/consolidate-release-ci:dist/chunk-2PWYEJLK.js
-========
-  IconButton
-} from "./chunk-LCWM2LTJ.js";
-import {
-  Icon
-} from "./chunk-RUENHK23.js";
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-JQI5WUJ3.js
 import {
   normalizeStatusTone
 } from "./chunk-L2ZEGNVF.js";
@@ -503,16 +483,4 @@ function LayerPanel({
 export {
   LayerPanel
 };
-<<<<<<<< HEAD:dist/chunk-JSTG5DCT.js
-<<<<<<<< HEAD:dist/chunk-JSTG5DCT.js
-<<<<<<<< HEAD:dist/chunk-JSTG5DCT.js
 //# sourceMappingURL=chunk-JSTG5DCT.js.map
-========
-//# sourceMappingURL=chunk-BNUTETQ5.js.map
->>>>>>>> codex/consolidate-release-check:dist/chunk-BNUTETQ5.js
-========
-//# sourceMappingURL=chunk-2PWYEJLK.js.map
->>>>>>>> codex/consolidate-release-ci:dist/chunk-2PWYEJLK.js
-========
-//# sourceMappingURL=chunk-JQI5WUJ3.js.map
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-JQI5WUJ3.js

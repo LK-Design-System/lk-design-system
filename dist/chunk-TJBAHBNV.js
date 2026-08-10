@@ -5,48 +5,16 @@ import {
 import {
   Divider,
   HistoryToolbar
-<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
-<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
-<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 } from "./chunk-6BTEW2IJ.js";
-========
-} from "./chunk-X55S6ZMZ.js";
-import {
-  Toolbar
-} from "./chunk-OHFWZZX3.js";
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-7JQIIRLY.js
 import {
   IconButton
-} from "./chunk-LCWM2LTJ.js";
+} from "./chunk-TAZ6IYIO.js";
 import {
   Icon
-<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 } from "./chunk-UDUSXMS5.js";
 import {
   Toolbar
 } from "./chunk-OHFWZZX3.js";
-========
-} from "./chunk-K2BIXQOH.js";
-========
-} from "./chunk-BHHT3GVV.js";
->>>>>>>> codex/consolidate-release-ci:dist/chunk-RVP43IRF.js
-import {
-  Toolbar
-} from "./chunk-OHFWZZX3.js";
-import {
-  IconButton
-} from "./chunk-6TQ4QOSW.js";
-import {
-  Icon
-<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
-} from "./chunk-RUENHK23.js";
->>>>>>>> codex/consolidate-release-check:dist/chunk-5O6AHIKS.js
-========
-} from "./chunk-KRO3ULVK.js";
->>>>>>>> codex/consolidate-release-ci:dist/chunk-RVP43IRF.js
-========
-} from "./chunk-RUENHK23.js";
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-7JQIIRLY.js
 
 // components/editor/CanvasEditorCommandBar.jsx
 import React from "react";
@@ -213,16 +181,4 @@ function CanvasEditorCommandBar({
 export {
   CanvasEditorCommandBar
 };
-<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
-<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
-<<<<<<<< HEAD:dist/chunk-TJBAHBNV.js
 //# sourceMappingURL=chunk-TJBAHBNV.js.map
-========
-//# sourceMappingURL=chunk-5O6AHIKS.js.map
->>>>>>>> codex/consolidate-release-check:dist/chunk-5O6AHIKS.js
-========
-//# sourceMappingURL=chunk-RVP43IRF.js.map
->>>>>>>> codex/consolidate-release-ci:dist/chunk-RVP43IRF.js
-========
-//# sourceMappingURL=chunk-7JQIIRLY.js.map
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-7JQIIRLY.js

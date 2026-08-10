@@ -1,10 +1,6 @@
 "use client";
 
-<<<<<<<< HEAD:dist/chunk-EFNOOM3R.js
 // components/buttons/IconButton.jsx
-========
-// ../lk-design-system/packages/core/dist/chunk-ILQNQHTJ.js
->>>>>>>> codex/consolidate-release-check:dist/chunk-5ZFVLEMS.js
 import React from "react";
 import { jsx } from "react/jsx-runtime";
 function isDevelopmentBuild() {
@@ -145,8 +141,4 @@ function IconButton({
 export {
   IconButton
 };
-<<<<<<<< HEAD:dist/chunk-EFNOOM3R.js
 //# sourceMappingURL=chunk-EFNOOM3R.js.map
-========
-//# sourceMappingURL=chunk-5ZFVLEMS.js.map
->>>>>>>> codex/consolidate-release-check:dist/chunk-5ZFVLEMS.js

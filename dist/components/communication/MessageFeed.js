@@ -1,7 +1,7 @@
 "use client";
 import {
   MessageFeed
-} from "../../chunk-GPGI4FUH.js";
+} from "../../chunk-GFJHWYQG.js";
 import "../../chunk-LSN3BTKD.js";
 import "../../chunk-LXOCLLFD.js";
 import "../../chunk-I5FLPUYL.js";

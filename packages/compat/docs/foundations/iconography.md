@@ -38,6 +38,8 @@
 | Approved sizes | 16·20·24·32·40px |
 | Touch target | 아이콘 크기와 별개로 최소 24px, 주요 touch control 44px 권장 |
 | Source | manifest와 generator를 통해 추가 |
+| Stroke thickness | 외곽선 글리프는 24 그리드에서 1.5–3 (base 중위값 2.25). check:icon-drawing-style이 검사 |
+| Ink coverage | 외곽선 글리프는 36% 이하. solid는 -fill 이름을 쓰거나 SOLID_BY_DESIGN에 등록 |
 
 ## Do / Don't
 
@@ -47,6 +49,8 @@
 | Don't | 같은 기능의 inline SVG를 다시 그리지 않습니다. |
 | Do | 아이콘과 텍스트의 baseline·gap을 동일 계열에서 맞춥니다. |
 | Don't | 장식 아이콘에 중복 aria-label을 붙이지 않습니다. |
+| Do | 새 glyph는 base 외곽선 두께(24 그리드에서 2)로 그립니다. |
+| Don't | base 이름을 stroke로 그리지 않습니다. 채운 path로 그립니다. |
 
 ## 예외
 

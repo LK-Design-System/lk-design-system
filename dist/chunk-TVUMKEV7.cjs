@@ -1,19 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
 
 
-<<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
-<<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
-<<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
 var _chunk2G45EBFEcjs = require('./chunk-2G45EBFE.cjs');
-========
-var _chunkITKHOO7Tcjs = require('./chunk-ITKHOO7T.cjs');
->>>>>>>> codex/consolidate-release-check:dist/chunk-TAPW3YXM.cjs
-========
-var _chunkRNGZYEXUcjs = require('./chunk-RNGZYEXU.cjs');
->>>>>>>> codex/consolidate-release-ci:dist/chunk-VWGTKZHV.cjs
-========
-var _chunkMEHGPWKRcjs = require('./chunk-MEHGPWKR.cjs');
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-YDOI5HE4.cjs
 
 // components/viz/Scene3DFrame.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -49,19 +37,7 @@ function Scene3DFrame({
   const resolvedStateLabel = _nullishCoalesce(stateLabel, () => ( (usesLegacyEmpty ? empty : void 0)));
   const resolvedLabel = _nullishCoalesce(label, () => ( (typeof title === "string" && title.trim() ? `${title} 3D \uBDF0\uD3EC\uD2B8` : "3D \uBDF0\uD3EC\uD2B8")));
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-<<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
-<<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
-<<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
     _chunk2G45EBFEcjs.ViewerFrame,
-========
-    _chunkITKHOO7Tcjs.ViewerFrame,
->>>>>>>> codex/consolidate-release-check:dist/chunk-TAPW3YXM.cjs
-========
-    _chunkRNGZYEXUcjs.ViewerFrame,
->>>>>>>> codex/consolidate-release-ci:dist/chunk-VWGTKZHV.cjs
-========
-    _chunkMEHGPWKRcjs.ViewerFrame,
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-YDOI5HE4.cjs
     {
       ...rest,
       label: resolvedLabel,
@@ -92,16 +68,4 @@ function Scene3DFrame({
 
 
 exports.Scene3DFrame = Scene3DFrame;
-<<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
-<<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
-<<<<<<<< HEAD:dist/chunk-TVUMKEV7.cjs
 //# sourceMappingURL=chunk-TVUMKEV7.cjs.map
-========
-//# sourceMappingURL=chunk-TAPW3YXM.cjs.map
->>>>>>>> codex/consolidate-release-check:dist/chunk-TAPW3YXM.cjs
-========
-//# sourceMappingURL=chunk-VWGTKZHV.cjs.map
->>>>>>>> codex/consolidate-release-ci:dist/chunk-VWGTKZHV.cjs
-========
-//# sourceMappingURL=chunk-YDOI5HE4.cjs.map
->>>>>>>> codex/consolidate-ci-clean2:dist/chunk-YDOI5HE4.cjs

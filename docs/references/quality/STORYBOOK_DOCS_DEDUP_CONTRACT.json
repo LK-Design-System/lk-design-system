@@ -1,12 +1,12 @@
 {
   "version": 1,
   "expected": {
-    "stories": 698,
+    "stories": 710,
     "docs": 194,
-    "publicStories": 482,
-    "hiddenStories": 216,
-    "storyIdsSha256": "f9aa6a02b9742afb19d936e0919949247fc1609ff6d361f35be55cfe57f84558",
-    "visibilitySha256": "0f84cb07627ee5389dd052185fbfbb3f0e8ab5976afc42b4bdf71dca75a64219"
+    "publicStories": 488,
+    "hiddenStories": 222,
+    "storyIdsSha256": "4f571090dd70a942b7e8b6e8ded203e99a610298c3775ca96baed76d3a5d3e1c",
+    "visibilitySha256": "c338d54c2987289402b8aadcb483310f6eada85b1d485c4506a02fcc8a7ae3ae"
   },
   "allowedGuideOmissions": [],
   "canonicalDocs": [
