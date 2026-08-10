@@ -49,7 +49,7 @@ export const SideNav = React.forwardRef(function SideNav({
   surface = 'floating',
   collapsed, defaultCollapsed = false, onCollapsedChange, collapsedWidth = 64, overlay = false,
   autoExpandActiveGroup = true,
-  multiple = true,
+  multiple = false,
   renderLink, className, style, classNames, styles, vars,
   onBlur, onFocus, onClick, onMouseEnter, onMouseLeave,
   'aria-label': ariaLabel = '사이드 탐색',
@@ -156,7 +156,12 @@ export const SideNav = React.forwardRef(function SideNav({
       && !item.heading
       && item.children?.some((child) => child.value === val)
     ));
-    if (!activeParent) return;
+    if (!activeParent) {
+      if (!multiple) {
+        setOpen((current) => Object.values(current).some(Boolean) ? {} : current);
+      }
+      return;
+    }
     setOpen((current) => (
       current[activeParent.value]
         ? current
@@ -205,6 +210,9 @@ export const SideNav = React.forwardRef(function SideNav({
       if (disabled) {
         event.preventDefault();
         return;
+      }
+      if (!parentValue && !multiple) {
+        setOpen((current) => Object.values(current).some(Boolean) ? {} : current);
       }
       pick(item.value);
       item.onClick?.(event);
@@ -292,7 +300,7 @@ export const SideNav = React.forwardRef(function SideNav({
                   </button>
                 </RailItemTooltip>
                 {!col && isOpen && (
-                  <ul data-slot="childList" className={partClassName(classNames, 'childList') || undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', margin: '0 0 4px', padding: 0, listStyle: 'none', ...partStyle(styles, 'childList') }}>
+                  <ul data-slot="childList" className={partClassName(classNames, 'childList') || undefined} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)', margin: '0 0 4px', padding: 0, paddingInlineStart: 'var(--space-3)', listStyle: 'none', ...partStyle(styles, 'childList') }}>
                     {kids.map((c) => {
                       const ca = c.value === val;
                       const childTitle = typeof c.label === 'string' ? c.label : c.ariaLabel;
@@ -303,7 +311,7 @@ export const SideNav = React.forwardRef(function SideNav({
                             parentValue: o.value,
                             ariaLabel: c.ariaLabel,
                             title: childTitle,
-                            itemStyle: row(ca, c.disabled, { padding: hasChildIcons ? '8px 12px 8px 24px' : '8px 12px 8px 42px', gap: hasChildIcons ? 'var(--space-2)' : undefined }, hovKey === c.value),
+                            itemStyle: row(ca, c.disabled, { paddingBlock: 'var(--space-2)', paddingInlineStart: hasChildIcons ? 'var(--space-4)' : '42px', paddingInlineEnd: 'var(--space-3)', gap: hasChildIcons ? 'var(--space-2)' : undefined }, hovKey === c.value),
                             content: (
                               <React.Fragment>
                                 {hasChildIcons && (
@@ -311,7 +319,7 @@ export const SideNav = React.forwardRef(function SideNav({
                                     {c.icon}
                                   </span>
                                 )}
-                                <span data-slot="label" className={partClassName(classNames, 'label') || undefined} style={{ flex: 1, minWidth: 0, fontSize: 'var(--label2-size)', fontWeight: ca ? 'var(--fw-bold)' : 'var(--fw-medium)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', ...partStyle(styles, 'label') }}>{c.label}</span>
+                                <span data-slot="label" className={partClassName(classNames, 'label') || undefined} style={{ flex: 1, minWidth: 0, fontSize: 'var(--label2-size)', fontWeight: ca ? 'var(--fw-bold)' : 'var(--fw-medium)', lineHeight: 'var(--label2-line)', letterSpacing: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', ...partStyle(styles, 'label') }}>{c.label}</span>
                                 {c.badge != null && pill(ca, c.badge)}
                               </React.Fragment>
                             ),

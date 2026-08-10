@@ -60,17 +60,17 @@ export const ROBOTICS_PATHS = Object.freeze([
   },
 ]);
 
-// The source wordmark is scaled so its rendered contour matches the official
-// mark's visible height, vertically centered, then moved right with a gap equal
-// to 20% of the mark width. No source contour is edited.
-export const ROBOTICS_INLINE_SCALE = 3.87834784;
+// The source wordmark is optically scaled so the average glyph height matches
+// the official mark's visible height, vertically centered, then moved right
+// with a gap equal to 30% of the mark width. No source contour is edited.
+export const ROBOTICS_INLINE_SCALE = 4.1;
 export const ROBOTICS_INLINE_TRANSFORM =
-  `translate(419.514934 181.271214) scale(${ROBOTICS_INLINE_SCALE}) translate(-323.648130 -228.744312)`;
+  `translate(425.590401 181.271214) scale(${ROBOTICS_INLINE_SCALE}) translate(-323.648130 -228.744312)`;
 
 export const LK_LOGO_VIEWBOX = Object.freeze({
   mark: '342.6093 149.1899 68.7547 64.1628',
   stacked: '319.6481 149.1899 114.8128 91.2631',
-  inline: '342.6093 149.1899 494.0432 64.1628',
+  inline: '342.6093 149.1899 523.7309 64.1628',
 });
 
 export const LK_LOGO_COLORS = Object.freeze({

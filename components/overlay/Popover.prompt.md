@@ -2,7 +2,11 @@
 앵커드 패널입니다.
 
 ```jsx
-<Popover trigger={<Button variant="ghost">옵션</Button>} width={280}>
+<Popover
+  trigger={<Button variant="ghost">옵션</Button>}
+  width={280}
+  collisionBoundary={chatPanelRef}
+>
   <FormField label="반경"><Slider defaultValue={30} /></FormField>
 </Popover>
 ```
@@ -13,7 +17,7 @@
 - `open · defaultOpen · onOpenChange` controlled triad를 제공합니다. trigger click으로 열고,
   바깥 pointer press 또는 `Escape`로 닫습니다. Escape는 trigger로 초점을 복원하지만 비모달
   Popover 자체는 focus trap을 만들지 않아 Tab이 trigger 다음의 패널 입력으로 이동합니다.
-- 패널은 선호 정렬을 유지하되 viewport 경계에서 반대쪽으로 flip하고 좌우를 clamp하며,
+- 패널은 선호 정렬을 유지하되 collision 경계에서 반대쪽으로 flip하고 좌우를 clamp하며,
   가용 높이를 넘는 본문만 세로 스크롤합니다.
 
 ## Public surface, ref, and Portal
@@ -21,6 +25,11 @@
 - `ref`, `className`, and `style` target the anchor root. Stable parts are `root`, `trigger`, and `panel`; panel geometry is limited to `--lds-popover-width` and `--lds-popover-max-height`.
 - The panel defaults to the common owner-document Portal (`withinPortal=true`), inherits the nearest explicit theme and `dir`, and uses the shared flip/clamp/topmost-dismiss stack. Use `portalTarget` or Provider configuration before opting out with `withinPortal=false`.
 - `position`, `align`, and `offset` are canonical placement inputs. Products own the arbitrary panel content, while LDS owns trigger ARIA, Portal positioning, outside press, Escape, and focus restoration.
+- `collisionBoundary`는 element 또는 ref를 받고, 그 요소와 viewport의 보이는 교집합을 positioning
+  경계로 사용합니다. 생략하면 기존 viewport 경계입니다. `collisionPadding` 기본 16px은 모든 경계
+  가장자리에 적용됩니다. Portal은 계속 owner-document body/provider target에 남으므로 clipping 탈출과
+  chat panel 내부 geometry 제한을 동시에 충족하며, 선호 `width`와 style은 경계의 가용 폭·높이를
+  넘을 수 없습니다.
 
 ## 시각 차이와 근거
 
@@ -37,6 +46,9 @@
 - [WAI-ARIA APG Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)의 named
   dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 `aria-modal`과 trap을
   사용하지 않습니다.
+- [React Aria Popover](https://react-spectrum.adobe.com/react-aria/Popover.html)는 Portal overlay의
+  positioning boundary를 `boundaryElement`로 별도 지정하고 위치를 자동 갱신합니다. LDS의
+  `collisionBoundary`도 Portal target과 독립된 constraint라는 같은 책임 분리를 따릅니다.
 
 Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다.
 

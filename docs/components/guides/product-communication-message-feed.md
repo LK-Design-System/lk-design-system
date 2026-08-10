@@ -15,9 +15,9 @@
 ### 사용
 
 - following=false이면 children 추가나 resize가 사용자의 읽기 위치를 bottom으로 끌어내리지 않습니다.
+- WCAG 2.2를 focus order, keyboard access, status announcement, visible focus와 contrast의 최종 기준으로 사용합니다.
 - 3 Free AI Chatbot App UI Kit의 왼쪽 general-assistant conversation에서 chrome-light reading flow만 secondary inspiration으로 사용합니다.
 - LK Control Full Daedeok — not applicable. event supervision과 command history는 LogViewer 또는 domain status component가 적합하며 AI conversation log가 필수로 확인되지 않았습니다.
-- representative review.
 
 ### 사용하지 않음
 
@@ -44,6 +44,7 @@
 | `empty` | `React.ReactNode` | No | Content shown inside the log when children are empty. |
 | `maxHeight` | `number \| string` | No | Maximum viewport height in pixels or CSS units. @default 400 |
 | `viewportMinHeight` | `number \| string` | No | Optional minimum viewport height for persistent conversation panels. |
+| `density` | `MessageFeedDensity` | No | Feed-owned vertical density. Comfortable preserves the legacy message gap and block padding; compact reduces only those spaces and does not change viewportInset. @default "comfortable" |
 | `viewportInset` | `MessageFeedViewportInset` | No | Inline viewport padding. Use comfortable for reading surfaces and compact for dense embedded panels. @default "compact" |
 | `busy` | `boolean` | No | Mark the log as busy while its current contents are being updated. @default false |
 | `hasPrevious` | `boolean` | No | Show the history-loading action before the log. @default false |
@@ -69,27 +70,27 @@
 ## Behavior and interaction
 
 - following=true일 때만 append/resize를 bottom으로 따릅니다. 사용자가 위로 스크롤하면 onFollowingChange(false, "user-scroll")를 요청하고 읽던 위치를 보존합니다.
-- dark: 별도 feed fill 없이 parent background에서 focus, message identity, system 칩과 text contrast를 확인합니다.
-- history/follow: prepend anchor, 성공·무결과·실패 뒤 announcement 억제 해제, following=false 위치 보존과 latest action의 focus/callback을 확인합니다.
-- MessageFeed는 chronological message children을 담는 접근 가능한 scroll log입니다. 장문 AI 응답이 페이지의 읽기 흐름처럼 이어지도록 별도 fill, border, radius와 shadow를 만들지 않는 LK Product Extension입니다.
-- | 확인한 sibling | 계승한 규칙 | MessageFeed 결정 | | --- | --- | --- | | ScrollArea | native overflow와 scrollbar | named log, history anchor와 follow state 때문에 전용 viewport를 소유 | | LogViewer | chronological log와 latest/tail 개념 | console fill, level filter, monospace row, search와 copy toolbar는 제외 | | Button / IconButton | named…
+- WAI-ARIA APG Feed pattern은 infinite article feed의 Page Up/Page Down 계약과 keyboard help의 discoverability를 강조합니다. MessageFeed는 article focus를 이동시키는 role="feed"가 아니므로 같은 키 이름을 focusable log의 viewport scrolling에만 적용하고 aria-keyshortcuts로 노출합니다.
+- Slack screen reader guidance는 Home/End, Page Up/Page Down, first unread, 그리고 “where I left off” 시작 위치를 conversation convention으로 문서화합니다. MessageFeed는 roving message focus를 복제하지 않고 scroll 위치 보존, first-unread separator composition, viewport 단축키만 채택합니다.
+- CSS Scroll Anchoring Level 1은 viewport 위 DOM 변경 시 사용자가 읽는 위치를 안정적으로 유지하는 목적을 정의합니다. MessageFeed는 history prepend의 비동기 DOM/height 변화와 live announcement 억제를 함께 제어해야 하므로 browser heuristic에만 맡기지 않고 scrollHeight delta로 수동 복원합니다.
+- WCAG 2.2 Understanding 1.4.10 Reflow는 세로 scrolling content가 320 CSS px 상당 폭에서 정보·기능 손실이나 2차원 scrolling 없이 reflow되어야 한다고 설명합니다. density는 inline inset과 overflow 계약을 바꾸지 않습니다.
 
 ## 정량 규칙
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | viewportInset="compact \| comfortable"은 scrollbar가 붙는 named log viewport의 inline content inset만 선택합니다. 기본 compact는 좌우 8px, reading/panel composition용 comfortable은 좌우 16px이며 두 값 모두 block 12px을 유지합니다. raw viewport style이나 CSS selector hook은 공개하지 않습니다. |
-| 명시 규칙 2 | 320px에서도 history → log → latest의 DOM order와 wrapping을 유지합니다. |
-| 명시 규칙 3 | CSS Scroll Anchoring Level 1은 viewport 위 DOM 변경 시 사용자가 읽는 위치를 안정적으로 유지하는 목적을 정의합니다. MessageFeed는 history prepend의 비동기 DOM/height 변화와 live announcement 억제를 함께 제어해야 하므로 browser heuristic에만 맡기지 않고 scrollHeight delta로 수동 복원합니다. |
-| 명시 규칙 4 | WCAG 2.2를 focus order, keyboard access, status announcement, visible focus와 contrast의 최종 기준으로 사용합니다. |
+| 명시 규칙 1 | density="comfortable \| compact"은 message 사이 vertical gap과 viewport block padding만 선택합니다. 기본 comfortable은 기존 24px/12px을 보존하고 compact는 16px/8px token 단계로 줄이며 scroll, DOM/ARIA와 action 크기는 바꾸지 않습니다. |
+| 명시 규칙 2 | viewportInset="compact \| comfortable"은 scrollbar가 붙는 named log viewport의 inline content inset만 선택합니다. 기본 compact는 좌우 8px, reading/panel composition용 comfortable은 좌우 16px이며 block padding은 density가 독립적으로 소유합니다. raw viewport style이나 CSS selector hook은 공개하지 않습니다. |
+| 명시 규칙 3 | 320px에서도 history → log → latest의 DOM order와 wrapping을 유지합니다. |
+| 명시 규칙 4 | SELECTANDMESSAGEFEEDLAYOUTFOLLOWUP.md의 LK Portal floating knowledge chat은 460×674px panel에서 실제 feed를 조합합니다. density="compact"는 이처럼 세로 공간이 제한된 panel의 message rhythm만 줄이고, Portal chrome이나 viewportInset 선택을 추론하지 않습니다. |
 | --body2-line | 22px |
 
 ## Responsive
 
 - maxHeight와 viewportMinHeight는 named log viewport의 크기만 제어합니다. 고정 application panel 크기를 강제하지 않습니다.
+- density와 viewportInset은 독립 축입니다. 따라서 prop을 모두 생략하면 기존 렌더링과 같은 comfortable vertical rhythm과 compact inline inset을 사용합니다.
 - transparent feed 위에서 assistant document는 reading column을 사용하고 user/human-agent bubble만 compact surface를 가집니다.
 - viewport inset은 logical padding-inline으로 적용해 RTL에서도 start/end가 뒤집히며, outer section surface나 scrollbar 위치를 이동시키지 않습니다.
-- WAI-ARIA APG Feed pattern은 infinite article feed의 Page Up/Page Down 계약과 keyboard help의 discoverability를 강조합니다. MessageFeed는 article focus를 이동시키는 role="feed"가 아니므로 같은 키 이름을 focusable log의 viewport scrolling에만 적용하고 aria-keyshortcuts로 노출합니다.
 
 ## Content and writing
 
@@ -186,6 +187,6 @@
 - [WAI-ARIA APG Feed pattern](https://www.w3.org/WAI/ARIA/apg/patterns/feed/)
 - [Slack screen reader guidance](https://slack.com/help/articles/360000411963-Use-Slack-with-a-screen-reader)
 - [CSS Scroll Anchoring Level 1](https://www.w3.org/TR/css-scroll-anchoring-1/)
-- [WCAG 2.2](https://www.w3.org/TR/WCAG22/)
-- [Carbon AI Chat overview](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Overview.html)
-- [Carbon AI Chat server communication](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Server_communication.html)
+- [WCAG 2.2 Understanding 1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)
+- [WCAG 2.2 Understanding 2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)
+- [Carbon spacing](https://carbondesignsystem.com/elements/spacing/overview/)

@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "dbcb070a08deefcb4ec61996c1284a88e701c45b56d6feb5a7a631b703b54ecd",
+    "storybookIndexSha256": "ded97d0d5b1a22eeac2266c8e83553475bd01a9533971e853cc58d31c97254ec",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,16 +62,16 @@
   },
   "summary": {
     "pages": 192,
-    "stories": 676,
-    "publicStories": 465,
-    "hiddenStories": 211,
+    "stories": 686,
+    "publicStories": 470,
+    "hiddenStories": 216,
     "componentDescriptions": 188,
     "pagesWithVisibleCanvasIntroduction": 188,
     "pagesWithDecisionGuidance": 181,
-    "describedPublicStories": 465,
+    "describedPublicStories": 470,
     "reviewedPages": 192,
-    "reviewedStories": 676,
-    "staleReviewedPages": 0,
+    "reviewedStories": 686,
+    "staleReviewedPages": 12,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
@@ -79,10 +79,10 @@
       "usage": 36,
       "variants-states": 96,
       "interaction": 53,
-      "responsive": 67,
-      "scenario": 21,
-      "visual-parity": 90,
-      "internal-contract": 117
+      "responsive": 71,
+      "scenario": 22,
+      "visual-parity": 92,
+      "internal-contract": 120
     },
     "dispositions": {
       "keep": 192,
@@ -107,9 +107,9 @@
       },
       "Product": {
         "pages": 115,
-        "stories": 441,
-        "public": 330,
-        "hidden": 111,
+        "stories": 451,
+        "public": 335,
+        "hidden": 116,
         "guideReadyPages": 115
       },
       "Theme": {
@@ -6162,7 +6162,7 @@
       "layer": "Core",
       "family": "Status",
       "importPath": "./stories/FeedbackBadgesTags.stories.jsx",
-      "sourceSha256": "3267fa4978e9c4cf3bce662271f6063f3e1f2e7b9d2e61dc4446950260d999a6",
+      "sourceSha256": "aa1201027ce5e69623a85d60b0e6e34b737ecae5438c344a06838f9f3def4646",
       "primaryOwner": "Badge",
       "ownerComponents": [
         "Badge",
@@ -6190,8 +6190,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "3267fa4978e9c4cf3bce662271f6063f3e1f2e7b9d2e61dc4446950260d999a6",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "aa1201027ce5e69623a85d60b0e6e34b737ecae5438c344a06838f9f3def4646",
       "stories": [
         {
           "id": "lds-core-components-status-badges-and-tags--badge-tag-patterns",
@@ -6293,7 +6293,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Core/Components/Status/Empty State",
@@ -6386,7 +6386,7 @@
       "layer": "Core",
       "family": "Status",
       "importPath": "./stories/StatusFeedback.stories.jsx",
-      "sourceSha256": "4596ef07307ac3f3f643591e90bb1b4c04b1e0d76728dd215fbfcec9f4475323",
+      "sourceSha256": "f5bcb3a7928c83fbda1a2795da5cd6a1715584a4c34a727c164342eabcacb424",
       "primaryOwner": "Banner",
       "ownerComponents": [
         "Banner",
@@ -6412,8 +6412,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-01",
-      "reviewedSourceSha256": "4596ef07307ac3f3f643591e90bb1b4c04b1e0d76728dd215fbfcec9f4475323",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "467e9d619d80a6b1bf6ff0ccffff620522c0fb006d01d2126526d65737fb8345",
       "stories": [
         {
           "id": "lds-core-components-status-notices-and-callouts--notices-and-callouts",
@@ -6492,7 +6492,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Core/Components/Status/Notification",
@@ -8821,7 +8821,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "259bd6e46ea50c239bdff1718ac9d519f0a6ec186a0fa2245231793ee446e884",
+      "sourceSha256": "6da6d58cf6cb0bc2b027bcd25fc9142f8ca6ad4260638084a54fd1fe326bd1c1",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
@@ -8836,13 +8836,13 @@
         "SourceDisclosure"
       ],
       "visibility": {
-        "public": 8,
-        "hidden": 1
+        "public": 10,
+        "hidden": 3
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-message--message-overview",
-        "describedPublicStories": 8,
+        "describedPublicStories": 10,
         "publicStoriesWithCanvasGuidance": 4,
         "decisionGuidance": true
       },
@@ -8852,8 +8852,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "259bd6e46ea50c239bdff1718ac9d519f0a6ec186a0fa2245231793ee446e884",
+      "reviewedAt": "2026-08-09",
+      "reviewedSourceSha256": "6da6d58cf6cb0bc2b027bcd25fc9142f8ca6ad4260638084a54fd1fe326bd1c1",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -9075,6 +9075,120 @@
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         },
         {
+          "id": "lds-product-communication-message--compact-density",
+          "name": "밀도 · compact",
+          "exportName": "CompactDensity",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton"
+          ],
+          "reviewNote": "2026-08-09 compact conversation density review confirmed owner, role, visibility, Korean description, 460/360/296px geometry, play assertions, and targeted Axe results."
+        },
+        {
+          "id": "lds-product-communication-message--compact-conversation-column",
+          "name": "밀도 · compact 대화 열",
+          "exportName": "CompactConversationColumn",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton",
+            "MessageComposer",
+            "MessageFeed"
+          ],
+          "reviewNote": "2026-08-09 compact conversation density review confirmed owner, role, visibility, Korean description, 460/360/296px geometry, play assertions, and targeted Axe results."
+        },
+        {
+          "id": "lds-product-communication-message--compact-conversation-column-contract",
+          "name": "조밀한 대화 열 296px 계약",
+          "exportName": "CompactConversationColumnContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton",
+            "MessageComposer",
+            "MessageFeed"
+          ],
+          "reviewNote": "2026-08-09 compact conversation density review confirmed owner, role, visibility, Korean description, 460/360/296px geometry, play assertions, and targeted Axe results."
+        },
+        {
+          "id": "lds-product-communication-message--compact-conversation-column-wide-contract",
+          "name": "조밀한 대화 열 460px 계약",
+          "exportName": "CompactConversationColumnWideContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConversationMessage"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton",
+            "MessageComposer",
+            "MessageFeed"
+          ],
+          "reviewNote": "2026-08-09 compact conversation density review confirmed owner, role, visibility, Korean description, 460/360/296px geometry, play assertions, and targeted Axe results."
+        },
+        {
           "id": "lds-product-communication-message--message-family-visual-parity",
           "name": "Conversation message family visual parity",
           "exportName": "MessageFamilyVisualParity",
@@ -9105,7 +9219,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageComposer.stories.jsx",
-      "sourceSha256": "7e58046cae187cf25c74bcaa89087e376c9e6342dd23f31290bbcdaab98aebab",
+      "sourceSha256": "eed98a4b73f39b108a5812dc3aa597c302ac0321d715ac53a9959e4a0a2b919e",
       "primaryOwner": "MessageComposer",
       "ownerComponents": [
         "MessageComposer"
@@ -9117,13 +9231,13 @@
         "IconButton"
       ],
       "visibility": {
-        "public": 6,
+        "public": 7,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-message-composer--message-composer-overview",
-        "describedPublicStories": 6,
+        "describedPublicStories": 7,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -9133,8 +9247,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "7e58046cae187cf25c74bcaa89087e376c9e6342dd23f31290bbcdaab98aebab",
+      "reviewedAt": "2026-08-09",
+      "reviewedSourceSha256": "eed98a4b73f39b108a5812dc3aa597c302ac0321d715ac53a9959e4a0a2b919e",
       "stories": [
         {
           "id": "lds-product-communication-message-composer--message-composer-overview",
@@ -9298,6 +9412,33 @@
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
+          "id": "lds-product-communication-message-composer--compact-density",
+          "name": "밀도 · compact",
+          "exportName": "CompactDensity",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "MessageComposer"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton"
+          ],
+          "reviewNote": "2026-08-09 compact conversation density review confirmed owner, role, visibility, Korean description, 460/360/296px geometry, play assertions, and targeted Axe results."
+        },
+        {
           "id": "lds-product-communication-message-composer--lifecycle-status-and-focus-contract",
           "name": "상태 알림과 중지 초점 계약",
           "exportName": "LifecycleStatusAndFocusContract",
@@ -9328,7 +9469,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageFeed.stories.jsx",
-      "sourceSha256": "75fbb94c12c91824e275726fe0df1679a128780a6670ac3d9581ac36f738870f",
+      "sourceSha256": "09ac2b2a7656993ea4e7fc6c7f58f2250ccd562c62fbe3c0e1b4282fb22edd5d",
       "primaryOwner": "MessageFeed",
       "ownerComponents": [
         "MessageFeed"
@@ -9340,13 +9481,13 @@
         "Spinner"
       ],
       "visibility": {
-        "public": 7,
+        "public": 8,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-message-feed--overview",
-        "describedPublicStories": 7,
+        "describedPublicStories": 8,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -9356,8 +9497,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "75fbb94c12c91824e275726fe0df1679a128780a6670ac3d9581ac36f738870f",
+      "reviewedAt": "2026-08-09",
+      "reviewedSourceSha256": "09ac2b2a7656993ea4e7fc6c7f58f2250ccd562c62fbe3c0e1b4282fb22edd5d",
       "stories": [
         {
           "id": "lds-product-communication-message-feed--overview",
@@ -9543,6 +9684,32 @@
             "ConversationMessage"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-product-communication-message-feed--compact-density",
+          "name": "밀도 · compact",
+          "exportName": "CompactDensity",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "MessageFeed"
+          ],
+          "supportingComponents": [
+            "ConversationMessage"
+          ],
+          "reviewNote": "2026-08-09 compact conversation density review confirmed owner, role, visibility, Korean description, 460/360/296px geometry, play assertions, and targeted Axe results."
         },
         {
           "id": "lds-product-communication-message-feed--viewport-inset-contract",
@@ -9863,7 +10030,7 @@
       "layer": "Product",
       "family": "Content",
       "importPath": "./stories/CardInfo.stories.jsx",
-      "sourceSha256": "dbb0e38023fd651850015f0653a842d00ee43d87069bd61975cad86f140073c4",
+      "sourceSha256": "58d129de1a78b2beb15673c35e5b7da39fa847db0c18799eb756c3b6d3779b78",
       "primaryOwner": "FeatureCard",
       "ownerComponents": [
         "FeatureCard"
@@ -9888,8 +10055,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "dbb0e38023fd651850015f0653a842d00ee43d87069bd61975cad86f140073c4",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "58d129de1a78b2beb15673c35e5b7da39fa847db0c18799eb756c3b6d3779b78",
       "stories": [
         {
           "id": "lds-product-content-feature-card--feature-cards",
@@ -9966,7 +10133,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
+      "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Content/Feed Card",
@@ -11469,7 +11636,7 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataCollectionPanel.stories.jsx",
-      "sourceSha256": "e8551e18ef901502d4d0d2468f49dae60ac7ae2413bd56dae3bb7d85eeb22b1e",
+      "sourceSha256": "62467dd81c8ec32a7d465d2d3b5930ed952b8fc4838204738e1bf78d3260f2f2",
       "primaryOwner": "DataCollectionPanel",
       "ownerComponents": [
         "DataCollectionPanel"
@@ -11483,7 +11650,7 @@
       ],
       "visibility": {
         "public": 3,
-        "hidden": 3
+        "hidden": 6
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -11498,8 +11665,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-04",
-      "reviewedSourceSha256": "e8551e18ef901502d4d0d2468f49dae60ac7ae2413bd56dae3bb7d85eeb22b1e",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "62467dd81c8ec32a7d465d2d3b5930ed952b8fc4838204738e1bf78d3260f2f2",
       "stories": [
         {
           "id": "lds-product-data-collections-data-collection-panel--overview",
@@ -11621,6 +11788,35 @@
           "reviewNote": "2026-08-04 hidden native Table overflow fallback contract reviewed."
         },
         {
+          "id": "lds-product-data-collections-data-collection-panel--auto-container-boundary",
+          "name": "Auto container boundary",
+          "exportName": "AutoContainerBoundary",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataCollectionPanel"
+          ],
+          "supportingComponents": [
+            "ContentBadge",
+            "Pagination",
+            "Select",
+            "StatusBadge",
+            "Table"
+          ],
+          "reviewNote": "2026-08-05 hidden implementation-contract review confirmed the Data Collection Panel runtime boundary, null-footer suppression, and state-policy assertions remain test-only and correctly hidden."
+        },
+        {
           "id": "lds-product-data-collections-data-collection-panel--data-collection-panel-visual-parity",
           "name": "DataCollectionPanel visual parity",
           "exportName": "DataCollectionPanelVisualParity",
@@ -11650,6 +11846,58 @@
           "reviewNote": "2026-08-04 hidden visual-regression specimen reviewed."
         },
         {
+          "id": "lds-product-data-collections-data-collection-panel--rendered-null-footer-suppression",
+          "name": "Rendered-null footer suppression",
+          "exportName": "RenderedNullFooterSuppression",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataCollectionPanel"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-05 hidden implementation-contract review confirmed the Data Collection Panel runtime boundary, null-footer suppression, and state-policy assertions remain test-only and correctly hidden."
+        },
+        {
+          "id": "lds-product-data-collections-data-collection-panel--state-policy-contract",
+          "name": "State policy contract",
+          "exportName": "StatePolicyContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataCollectionPanel"
+          ],
+          "supportingComponents": [
+            "ContentBadge",
+            "Pagination",
+            "Select",
+            "StatusBadge",
+            "Table"
+          ],
+          "reviewNote": "2026-08-05 hidden implementation-contract review confirmed the Data Collection Panel runtime boundary, null-footer suppression, and state-policy assertions remain test-only and correctly hidden."
+        },
+        {
           "id": "lds-product-data-collections-data-collection-panel--surface-and-ref-contract",
           "name": "Surface and ref contract",
           "exportName": "SurfaceAndRefContract",
@@ -11673,7 +11921,7 @@
           "reviewNote": "2026-08-04 polymorphic ref, named parts, styles, and component-variable contract reviewed."
         }
       ],
-      "reviewNote": "2026-08-04 source, Product ownership, use/avoid guidance, public roles, responsive composition, resource states, and hidden contract evidence reviewed."
+      "reviewNote": "2026-08-04 source, Product ownership, use/avoid guidance, public roles, responsive composition, resource states, and hidden contract evidence reviewed.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Data/Collections/Data Grid",
@@ -14362,8 +14610,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "89c46764e7d7294fbe325f59162c45a5c6f9405ac4b6328990ba8f03a6768ad4",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "1122cf5f21b413731ce3705eb32eb3c4295fc9da90eb33f342457b12880e5ddc",
       "stories": [
         {
           "id": "lds-product-editor-canvas-shell--basic",
@@ -14482,7 +14730,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Editor/Command Bar",
@@ -14514,8 +14762,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "3f8bfec4d2f65ab81cfea46f09ed497f65bc9d01d7f8c028f47e318fba8bb886",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "76568d4e56a516b536e643dcf9029db8a7af93747360047029e0e80310a60046",
       "stories": [
         {
           "id": "lds-product-editor-command-bar--document-commands",
@@ -14618,7 +14866,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Editor/Editor Toolbar",
@@ -14648,8 +14896,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "825f8797a47221bf2ef89d755e16c81b2925275deaa75adff201b4d0b962f6d6",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "b50b4ed67ee1ba6f792d53d5610731e9d176d32ce62685f19d3d629b49923222",
       "stories": [
         {
           "id": "lds-product-editor-editor-toolbar--vertical",
@@ -14748,7 +14996,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Editor/History Toolbar",
@@ -14778,8 +15026,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "86cad64e960dea00050faf1b73f6d3dbbdbf7a22b878779b7c652d3d78aa096b",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "2d17e35298860618f5e4279a644f3b41d0c0e9d20e17576f19d1a0b95777ff7b",
       "stories": [
         {
           "id": "lds-product-editor-history-toolbar--available-history",
@@ -14852,7 +15100,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Editor/Layer Panel",
@@ -14882,8 +15130,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "2e3021aa30512296a60baeaef444180d4f0ea129cb4d5d15e13978df02f4b680",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "33709be805e06c742d8c7afa8f1205ae062ff39b098479937e53276afdac8c01",
       "stories": [
         {
           "id": "lds-product-editor-layer-panel--interactive",
@@ -15024,7 +15272,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Editor/Selection Inspector",
@@ -15057,8 +15305,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "69a5b798127ff0a2cfa57639fe170f88df92f8e5e1cac75bc2e57535a86740f9",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "460cd8697687dc0b7aa5198dcb07a7e895dbfed8c9282b39ab77a2cd8f26625e",
       "stories": [
         {
           "id": "lds-product-editor-selection-inspector--selected-object",
@@ -15226,7 +15474,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-08-02 source and built-index re-review confirmed the action footer is usage guidance under the required public prefix; its destructive-action separation, confirmation flow, ownership, and visibility are unchanged."
+      "reviewNote": "2026-08-02 source and built-index re-review confirmed the action footer is usage guidance under the required public prefix; its destructive-action separation, confirmation flow, ownership, and visibility are unchanged.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Editor/Viewport Status Bar",
@@ -16678,7 +16926,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationSideNav.stories.jsx",
-      "sourceSha256": "9a9d26e5af531d7f914debecc2bb0e9ae6f65c2a9479ab49342c93252caf40b4",
+      "sourceSha256": "87775ba33b9cf0c38d3f74b7fa119fd2f5cee20d54fb9d7b932a2e11371ae44e",
       "primaryOwner": "SideNav",
       "ownerComponents": [
         "SideNav"
@@ -16689,13 +16937,13 @@
         "UserMenu"
       ],
       "visibility": {
-        "public": 8,
+        "public": 9,
         "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-navigation-side-nav--link-destinations",
-        "describedPublicStories": 8,
+        "describedPublicStories": 9,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -16705,8 +16953,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "9a9d26e5af531d7f914debecc2bb0e9ae6f65c2a9479ab49342c93252caf40b4",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "42d8a989ec6884cac9ded893b24e7b44fe77f3900800adfe68f736fc658f7b83",
       "stories": [
         {
           "id": "lds-product-navigation-side-nav--link-destinations",
@@ -16920,6 +17168,30 @@
           "reviewNote": "2026-08-02 source and built-browser review confirmed autoExpandActiveGroup=false preserves a closed active group until the user opens it, then exposes the active child with aria-current."
         },
         {
+          "id": "lds-product-navigation-side-nav--single-open-groups",
+          "name": "시나리오 · 한 번에 하나만 여는 그룹",
+          "exportName": "SingleOpenGroups",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SideNav"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-05 Storybook interaction review confirmed the default SideNav accordion closes the previous group and closes open groups when a top-level destination is selected."
+        },
+        {
           "id": "lds-product-navigation-side-nav--side-nav-user-menu-card",
           "name": "SideNav and UserMenu card parity",
           "exportName": "SideNavUserMenuCard",
@@ -16966,7 +17238,7 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "2026-08-02 source, built-index, and browser re-review confirmed manual active-group ownership, child icon alignment, runtime overlay synchronization, 18px brand padding, and 44px navigation row geometry; the public name now uses audience-facing Korean."
+      "reviewNote": "2026-08-02 source, built-index, and browser re-review confirmed manual active-group ownership, child icon alignment, runtime overlay synchronization, 18px brand padding, and 44px navigation row geometry; the public name now uses audience-facing Korean.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation.\n\n2026-08-05 Storybook naming re-review confirmed the new public scenario entry uses the required Korean role prefix."
     },
     {
       "title": "LDS Product/Navigation/Steps",
@@ -17054,7 +17326,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/Navigation.stories.jsx",
-      "sourceSha256": "eba25e65d6f5d1a35c9004966c9e2f0d71929609366506c6650495b425774652",
+      "sourceSha256": "88e9cc61f3e7348098886ba5ffe1de616ed600bfc155fb1fc51c62b045b64604",
       "primaryOwner": "TopBar",
       "ownerComponents": [
         "TopBar"
@@ -17087,8 +17359,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "eba25e65d6f5d1a35c9004966c9e2f0d71929609366506c6650495b425774652",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "88e9cc61f3e7348098886ba5ffe1de616ed600bfc155fb1fc51c62b045b64604",
       "stories": [
         {
           "id": "lds-product-navigation-top-bar--top-bar-default",
@@ -17320,7 +17592,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-08-02 source and built-index re-review aligned the audience entry with the exact `개요` name and replaced the public DashboardShell term with audience-facing Korean. Responsive shell composition, ownership, visibility, and play assertions are unchanged."
+      "reviewNote": "2026-08-02 source and built-index re-review aligned the audience entry with the exact `개요` name and replaced the public DashboardShell term with audience-facing Korean. Responsive shell composition, ownership, visibility, and play assertions are unchanged.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Navigation/User Menu",
@@ -21390,8 +21662,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "bf8f9347e90fdaebb6cb950eec7c5ef4c2b954e3d3018a3d573a5a1227ac9ba8",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "40a4662f5f2349c55eab58c263b0d35a7b605162220f6e5d795714895aa9ff08",
       "stories": [
         {
           "id": "lds-product-status-battery-gauge--battery-levels",
@@ -21417,7 +21689,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Status/Connection Badge",
@@ -21447,8 +21719,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "ce9d4847c0730c61d1f459ba264a2400914bd670c180f782cd3e61c6108f36a3",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "dd04b69e0f15db05c4ab6c1579081967fa562b5b179fa6e584fe10473e0533b0",
       "stories": [
         {
           "id": "lds-product-status-connection-badge--connection-badges",
@@ -21498,7 +21770,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Status/Equipment State",
@@ -21532,8 +21804,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "afd0747fe0d2c2bcc3ba12fcf6af6acab72d2e383b8296ab8f29908f4e926a26",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "510f1f048c0b363bf9f16686083af52d6d1f1bae8d2290670a486b2227023073",
       "stories": [
         {
           "id": "lds-product-status-equipment-state--equipment-state",
@@ -21613,7 +21885,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Status/Meter",
@@ -22026,8 +22298,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-27",
-      "reviewedSourceSha256": "b44fadc3efa9e5cef50b38dafc2318f471b47107c4486e6b2efe898c3b17a7d4",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "a88dcae0bc60ee4e837210e9e117ed9f644a190b30e4024a600c6df245507cfd",
       "stories": [
         {
           "id": "lds-product-status-telemetry-value--compact-readouts",
@@ -22102,7 +22374,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together."
+      "reviewNote": "2026-07-27 main LDS migration review: Product ownership, overview guidance, public role order, hidden parity/contract fixtures, and Autodocs placement were reviewed together.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Product/Viewer/2D Map",
@@ -23325,7 +23597,7 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/Brand.stories.jsx",
-      "sourceSha256": "56aa4b24fc84cfa88f231e9507dec332c6ca458b111276a3d69f24be2404e7e7",
+      "sourceSha256": "210915dfae82a0d0e809ea346a2bd126a3914e124b2426ecf6b5528ed1e4290d",
       "primaryOwner": "Lockup",
       "ownerComponents": [
         "Lockup"
@@ -23348,8 +23620,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Theme override or brand surface; keep this page and document allowed and disallowed use.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "56aa4b24fc84cfa88f231e9507dec332c6ca458b111276a3d69f24be2404e7e7",
+      "reviewedAt": "2026-08-05",
+      "reviewedSourceSha256": "210915dfae82a0d0e809ea346a2bd126a3914e124b2426ecf6b5528ed1e4290d",
       "stories": [
         {
           "id": "lds-theme-brand-lk-robotics-logo--lk-robotics-logo",
@@ -23398,7 +23670,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
     },
     {
       "title": "LDS Theme/Controls/Theme Toggle",

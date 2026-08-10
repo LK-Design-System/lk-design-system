@@ -49,7 +49,7 @@ var SideNav = React.forwardRef(function SideNav2({
   collapsedWidth = 64,
   overlay = false,
   autoExpandActiveGroup = true,
-  multiple = true,
+  multiple = false,
   renderLink,
   className,
   style,
@@ -153,7 +153,12 @@ var SideNav = React.forwardRef(function SideNav2({
   React.useEffect(() => {
     if (!autoExpandActiveGroup) return;
     const activeParent = items.find((item) => item && !item.heading && item.children?.some((child) => child.value === val));
-    if (!activeParent) return;
+    if (!activeParent) {
+      if (!multiple) {
+        setOpen((current) => Object.values(current).some(Boolean) ? {} : current);
+      }
+      return;
+    }
     setOpen((current) => current[activeParent.value] ? current : multiple ? { ...current, [activeParent.value]: true } : { [activeParent.value]: true });
   }, [autoExpandActiveGroup, items, multiple, val]);
   React.useEffect(() => {
@@ -204,6 +209,9 @@ var SideNav = React.forwardRef(function SideNav2({
       if (disabled) {
         event.preventDefault();
         return;
+      }
+      if (!parentValue && !multiple) {
+        setOpen((current) => Object.values(current).some(Boolean) ? {} : current);
       }
       pick(item.value);
       item.onClick?.(event);
@@ -293,7 +301,7 @@ var SideNav = React.forwardRef(function SideNav2({
               ]
             }
           ) }),
-          !col && isOpen && /* @__PURE__ */ jsx("ul", { "data-slot": "childList", className: partClassName(classNames, "childList") || void 0, style: { display: "flex", flexDirection: "column", gap: "var(--space-0-5)", margin: "0 0 4px", padding: 0, listStyle: "none", ...partStyle(styles, "childList") }, children: kids.map((c) => {
+          !col && isOpen && /* @__PURE__ */ jsx("ul", { "data-slot": "childList", className: partClassName(classNames, "childList") || void 0, style: { display: "flex", flexDirection: "column", gap: "var(--space-0-5)", margin: "0 0 4px", padding: 0, paddingInlineStart: "var(--space-3)", listStyle: "none", ...partStyle(styles, "childList") }, children: kids.map((c) => {
             const ca = c.value === val;
             const childTitle = typeof c.label === "string" ? c.label : c.ariaLabel;
             return /* @__PURE__ */ jsx("li", { style: LIST_ITEM_STYLE, children: renderLeafControl(c, {
@@ -301,10 +309,10 @@ var SideNav = React.forwardRef(function SideNav2({
               parentValue: o.value,
               ariaLabel: c.ariaLabel,
               title: childTitle,
-              itemStyle: row(ca, c.disabled, { padding: hasChildIcons ? "8px 12px 8px 24px" : "8px 12px 8px 42px", gap: hasChildIcons ? "var(--space-2)" : void 0 }, hovKey === c.value),
+              itemStyle: row(ca, c.disabled, { paddingBlock: "var(--space-2)", paddingInlineStart: hasChildIcons ? "var(--space-4)" : "42px", paddingInlineEnd: "var(--space-3)", gap: hasChildIcons ? "var(--space-2)" : void 0 }, hovKey === c.value),
               content: /* @__PURE__ */ jsxs(React.Fragment, { children: [
                 hasChildIcons && /* @__PURE__ */ jsx("span", { "data-slot": "icon", className: partClassName(classNames, "icon") || void 0, "data-sidenav-child-icon": true, "aria-hidden": "true", style: { width: "var(--space-4-5)", flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", ...partStyle(styles, "icon") }, children: c.icon }),
-                /* @__PURE__ */ jsx("span", { "data-slot": "label", className: partClassName(classNames, "label") || void 0, style: { flex: 1, minWidth: 0, fontSize: "var(--label2-size)", fontWeight: ca ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", ...partStyle(styles, "label") }, children: c.label }),
+                /* @__PURE__ */ jsx("span", { "data-slot": "label", className: partClassName(classNames, "label") || void 0, style: { flex: 1, minWidth: 0, fontSize: "var(--label2-size)", fontWeight: ca ? "var(--fw-bold)" : "var(--fw-medium)", lineHeight: "var(--label2-line)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", ...partStyle(styles, "label") }, children: c.label }),
                 c.badge != null && pill(ca, c.badge)
               ] })
             }) }, c.value);
@@ -380,4 +388,4 @@ var SideNav = React.forwardRef(function SideNav2({
 export {
   SideNav
 };
-//# sourceMappingURL=chunk-TSS7IR2I.js.map
+//# sourceMappingURL=chunk-ZJ4ZW2EP.js.map

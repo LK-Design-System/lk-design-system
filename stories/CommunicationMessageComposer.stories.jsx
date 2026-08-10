@@ -29,6 +29,12 @@ const meta = {
       control: { type: 'select' },
       table: { category: 'Submission', type: { summary: 'idle | submitting | streaming | stopping' }, defaultValue: { summary: 'idle' } },
     },
+    density: {
+      description: '작성 영역의 세로 여백을 조절합니다. comfortable은 기존 48px 한 줄 입력을 유지하고 compact는 40px로 줄이되 32px 동작 target은 유지합니다.',
+      options: ['comfortable', 'compact'],
+      control: { type: 'inline-radio' },
+      table: { category: 'Layout', type: { summary: "'comfortable' | 'compact'" }, defaultValue: { summary: 'comfortable' } },
+    },
     submitMode: {
       description: '키보드 제출 규칙입니다. enter는 Enter, modifier-enter는 Alt 없이 Ctrl/Meta+Enter, button-only는 명시적 버튼만 사용합니다. IME 조합 확정 Enter와 Shift+Enter는 제출하지 않습니다.',
       options: ['enter', 'modifier-enter', 'button-only'],
@@ -86,7 +92,7 @@ const meta = {
       table: { category: 'Draft', type: { summary: 'number' } },
     },
     minRows: {
-      description: '자동 높이 조절의 최소 행 수입니다. 1행은 compact 48px 높이에서 시작합니다.',
+      description: '자동 높이 조절의 최소 행 수입니다. 1행은 comfortable 48px, compact 40px 높이에서 시작합니다.',
       control: { type: 'number', min: 1, step: 1 },
       table: { category: 'Layout', type: { summary: 'number' }, defaultValue: { summary: '1' } },
     },
@@ -148,12 +154,12 @@ const meta = {
       eyebrow: 'Product / Communication',
       title: '초안과 전송 행동을 하나의 입력 영역에 모읍니다',
       description:
-        '사람 또는 AI와 대화하면서 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 첨부와 보조 행동은 slot으로 조합하고 Composer는 값·전송·중지만 소유합니다. 단발성 검색이나 한 칸짜리 폼에는 사용하지 말고 SearchField·Textarea를 사용하세요.',
+        '사람 또는 AI와 대화하며 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 보조 행동은 slot으로 조합하고 Composer는 값·전송·중지만 소유합니다. 즉시 명령은 DropdownMenu, 안내·연속 설정은 Popover에 두며 Portal·dismiss·배치는 primitive가 소유합니다. 단발성 검색에는 SearchField를 사용하세요.',
     },
     docs: {
       description: {
         component:
-          'controlled autosize textarea, leading/trailing action slot, 명시적 키보드 제출 모드와 IME 보호를 제공하는 LK Product Extension입니다. Enter 모드는 Enter 제출·Shift+Enter 줄바꿈, modifier-enter 모드는 Alt 없는 Ctrl/Meta+Enter 제출, button-only 모드는 버튼 제출만 허용합니다. submitting/streaming에서는 이름 있는 중지 버튼을 제공하며, readOnly는 읽기·포커스를 유지하고 disabled는 보이는 disabledReason과 함께 전체 shell을 이용 불가로 만듭니다.',
+          'controlled autosize textarea, leading/trailing action slot, 명시적 키보드 제출 모드와 IME 보호를 제공하는 LK Product Extension입니다. Enter 모드는 Enter 제출·Shift+Enter 줄바꿈, modifier-enter 모드는 Alt 없는 Ctrl/Meta+Enter 제출, button-only 모드는 버튼 제출만 허용합니다. submitting/streaming에서는 이름 있는 중지 버튼을 제공하며, readOnly는 읽기·포커스를 유지하고 disabled는 보이는 disabledReason과 함께 전체 shell을 이용 불가로 만듭니다. slot에는 즉시 실행 명령용 DropdownMenu와 안내·RadioGroup·Slider 같은 연속 설정용 Popover를 조합할 수 있지만, Composer 자체 API는 provider·Portal·overlay dismiss 상태를 소유하지 않습니다.',
       },
     },
   },
@@ -323,6 +329,121 @@ export const MessageComposerOverview = {
     });
     const send = primary.querySelector('button[type="submit"]');
     if (!send || send.disabled) throw new Error('A non-empty controlled draft must enable the send action.');
+  },
+};
+
+export const CompactDensity = {
+  name: '밀도 · compact',
+  parameters: storyDescription(
+    '360px의 좁은 대화 열에서 compact 작성기를 확인합니다. 텍스트 입력 영역, 보조 동작, 기본 보내기 동작의 읽기 순서와 최소 조작 영역은 유지하고 동작은 겹치지 않아야 합니다.',
+  ),
+  render: () => (
+    <main data-compact-composer style={{ width: 360, maxWidth: '100%', minWidth: 0 }}>
+      <ComposerFixture
+        density="compact"
+        initialValue="간단한 초안"
+        formLabel="조밀한 메시지 작성"
+        inputLabel="메시지"
+        placeholder="메시지를 작성하세요"
+        minRows={1}
+        maxRows={2}
+        leadingActions={<AddFileAction />}
+        trailingActions={<MoreOptionsAction />}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const fixture = canvasElement.querySelector('[data-compact-composer]');
+    const composer = fixture?.querySelector('.lk-message-composer');
+    const shell = composer?.querySelector('[data-composer-shell]');
+    const row = composer?.querySelector('[data-composer-control-row]');
+    const input = composer?.querySelector('[data-composer-input]');
+    const leading = composer?.querySelector('[data-composer-leading-actions]');
+    const trailing = composer?.querySelector('[data-composer-trailing-actions]');
+    const primary = composer?.querySelector('[data-composer-primary-action]');
+    const actions = row ? Array.from(row.querySelectorAll('button')) : [];
+    const send = primary?.querySelector('button[type="submit"]');
+    if (!fixture || !composer || !shell || !row || !input || !leading || !trailing || !primary || !send || actions.length !== 3) {
+      throw new Error('The compact composer fixture is incomplete.');
+    }
+    const host = fixture.parentElement;
+    const hostStyle = host ? getComputedStyle(host) : null;
+    const availableWidth = host
+      ? host.clientWidth - (Number.parseFloat(hostStyle.paddingLeft) || 0) - (Number.parseFloat(hostStyle.paddingRight) || 0)
+      : 360;
+    if (Math.abs(fixture.getBoundingClientRect().width - Math.min(360, availableWidth)) > 1) {
+      throw new Error('The compact composer fixture must fill the available container up to 360px.');
+    }
+    if (composer.dataset.density !== 'compact') {
+      throw new Error('MessageComposer must expose data-density="compact".');
+    }
+    const hasRadius = (element, expected) => {
+      const style = getComputedStyle(element);
+      return [
+        style.borderTopLeftRadius,
+        style.borderTopRightRadius,
+        style.borderBottomRightRadius,
+        style.borderBottomLeftRadius,
+      ].every((radius) => Math.abs(Number.parseFloat(radius) - expected) <= 0.5);
+    };
+    if (!hasRadius(shell, 16)) {
+      throw new Error('Compact MessageComposer must retain a 16px shell radius.');
+    }
+    if (Math.abs(input.getBoundingClientRect().height - 40) > 1) {
+      throw new Error('Compact MessageComposer must resolve its one-row textarea to 40px.');
+    }
+    if (fixture.scrollWidth > fixture.clientWidth + 1 || composer.scrollWidth > composer.clientWidth + 1) {
+      throw new Error('Compact MessageComposer must not create horizontal overflow.');
+    }
+    if (!(input.compareDocumentPosition(leading) & Node.DOCUMENT_POSITION_FOLLOWING)
+      || !(leading.compareDocumentPosition(trailing) & Node.DOCUMENT_POSITION_FOLLOWING)
+      || !(trailing.compareDocumentPosition(primary) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+      throw new Error('Compact composer controls must preserve input, utilities, and primary action DOM order.');
+    }
+    for (let index = 0; index < actions.length; index += 1) {
+      const current = actions[index].getBoundingClientRect();
+      if (current.width < 24 || current.height < 24) {
+        throw new Error('Compact MessageComposer actions must retain a minimum 24px target.');
+      }
+      if (Math.abs(current.width - 32) > 1 || Math.abs(current.height - 32) > 1 || !hasRadius(actions[index], 12)) {
+        throw new Error('Compact MessageComposer utility and primary actions must keep 32px targets with a 12px radius.');
+      }
+      for (const candidate of actions.slice(index + 1)) {
+        const next = candidate.getBoundingClientRect();
+        const overlaps = current.left < next.right - 0.5
+          && current.right > next.left + 0.5
+          && current.top < next.bottom - 0.5
+          && current.bottom > next.top + 0.5;
+        if (overlaps) throw new Error('Compact MessageComposer actions must not overlap.');
+      }
+    }
+    input.focus();
+    await userEvent.tab();
+    await userEvent.tab();
+    await userEvent.tab();
+    await waitFor(() => {
+      if (document.activeElement !== send || !send.matches(':focus-visible')) {
+        throw new Error('The compact send action must receive the keyboard focus ring.');
+      }
+    });
+    const shellRect = shell.getBoundingClientRect();
+    const sendRect = send.getBoundingClientRect();
+    const sendStyle = getComputedStyle(send);
+    const outlineWidth = Number.parseFloat(sendStyle.outlineWidth) || 0;
+    const outlineOffset = Math.max(0, Number.parseFloat(sendStyle.outlineOffset) || 0);
+    const focusOutset = outlineWidth + outlineOffset;
+    const rightInset = shellRect.right - sendRect.right;
+    const bottomInset = shellRect.bottom - sendRect.bottom;
+    if (outlineWidth < 2 || sendStyle.outlineStyle === 'none') {
+      throw new Error('The compact send action must keep its visible focus outline.');
+    }
+    if (rightInset <= 0 || bottomInset <= 0) {
+      throw new Error('The compact send action must retain positive right and bottom shell insets.');
+    }
+    if (sendRect.right + focusOutset > shellRect.right + 0.5
+      || sendRect.bottom + focusOutset > shellRect.bottom + 0.5) {
+      throw new Error('The compact send focus outline must clear the shell edge without clipping or overlap.');
+    }
   },
 };
 

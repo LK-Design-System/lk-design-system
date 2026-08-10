@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }"use client";
 
 
-var _chunkVIZELXEFcjs = require('./chunk-VIZELXEF.cjs');
+var _chunkSDI7JUXFcjs = require('./chunk-SDI7JUXF.cjs');
 
 // components/data/ChartFrame.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -62,7 +62,7 @@ function ChartFrame({
           description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { id: descriptionId, style: { margin: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", overflowWrap: "anywhere" }, children: description })
         ] }),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          _chunkVIZELXEFcjs.ResourceState,
+          _chunkSDI7JUXFcjs.ResourceState,
           {
             state: resourceState,
             title: stateTitle,
@@ -86,4 +86,4 @@ function ChartFrame({
 
 
 exports.ChartFrame = ChartFrame;
-//# sourceMappingURL=chunk-XQY7KXC3.cjs.map
+//# sourceMappingURL=chunk-RHUI6T4R.cjs.map

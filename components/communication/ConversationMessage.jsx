@@ -59,6 +59,21 @@ const VISUALLY_HIDDEN_STYLE = {
   border: 0,
 };
 
+const DENSITY_LAYOUT = {
+  comfortable: {
+    avatarSize: 'var(--space-8)',
+    bubblePadding: 'var(--space-3) var(--space-4)',
+    internalGap: 'var(--space-2)',
+    systemPadding: 'var(--space-1) var(--space-4)',
+  },
+  compact: {
+    avatarSize: 'var(--space-6)',
+    bubblePadding: 'var(--space-2) var(--space-3)',
+    internalGap: 'var(--space-1)',
+    systemPadding: 'var(--space-1) var(--space-3)',
+  },
+};
+
 function normalizeLifecycle(lifecycle) {
   if (lifecycle?.kind === 'delivery' && LIFECYCLE_LABELS.delivery[lifecycle.state]) {
     return lifecycle;
@@ -107,6 +122,7 @@ export function ConversationMessage({
   authorRole = 'assistant',
   presentation,
   groupPosition = 'single',
+  density = 'comfortable',
   lifecycle = { kind: 'static' },
   author,
   authorLabel,
@@ -149,6 +165,8 @@ export function ConversationMessage({
   const resolvedLifecycle = normalizeLifecycle(lifecycle);
   const lifecycleKind = resolvedLifecycle.kind;
   const lifecycleState = lifecycleKind === 'static' ? undefined : resolvedLifecycle.state;
+  const normalizedDensity = density === 'compact' ? 'compact' : 'comfortable';
+  const densityLayout = DENSITY_LAYOUT[normalizedDensity];
   const identityVisible = !systemMessage && (groupPosition === 'single' || groupPosition === 'first');
   // A grouped run keeps one stable content column even when consumers only
   // provide the avatar on the first item. Standalone messages without an
@@ -158,8 +176,8 @@ export function ConversationMessage({
   const gridTemplateColumns = systemMessage || !reserveAvatarSlot
     ? 'minmax(0, 1fr)'
     : outbound
-      ? 'minmax(0, 1fr) var(--space-8)'
-      : 'var(--space-8) minmax(0, 1fr)';
+      ? `minmax(0, 1fr) ${densityLayout.avatarSize}`
+      : `${densityLayout.avatarSize} minmax(0, 1fr)`;
   const contentColumn = systemMessage || !reserveAvatarSlot ? '1' : outbound ? '1' : '2';
   const busy = lifecycleKind === 'response'
     && ['pending', 'streaming', 'stopping'].includes(lifecycleState);
@@ -202,7 +220,7 @@ export function ConversationMessage({
   const clusterStyle = {
     gridColumn: contentColumn,
     display: 'grid',
-    gap: 'var(--space-2)',
+    gap: densityLayout.internalGap,
     justifyItems: systemMessage ? 'stretch' : outbound ? 'end' : 'start',
     width: '100%',
     minWidth: 0,
@@ -243,7 +261,7 @@ export function ConversationMessage({
             width: 'fit-content',
             maxWidth: 'min(34rem, 100%)',
             minWidth: 0,
-            padding: 'var(--space-3) var(--space-4)',
+            padding: densityLayout.bubblePadding,
             boxSizing: 'border-box',
             whiteSpace: 'pre-wrap',
             overflowWrap: 'anywhere',
@@ -262,7 +280,7 @@ export function ConversationMessage({
             width: 'fit-content',
             maxWidth: 'min(34rem, 100%)',
             minWidth: 0,
-            padding: 'var(--space-3) var(--space-4)',
+            padding: densityLayout.bubblePadding,
             boxSizing: 'border-box',
             whiteSpace: 'pre-wrap',
             overflowWrap: 'anywhere',
@@ -418,13 +436,14 @@ export function ConversationMessage({
       data-author-role={authorRole}
       data-message-presentation={resolvedPresentation}
       data-group-position={groupPosition}
+      data-density={normalizedDensity}
       data-lifecycle-kind={lifecycleKind}
       data-lifecycle-state={lifecycleState}
       style={{
         display: 'grid',
         gridTemplateColumns,
-        columnGap: systemMessage ? 0 : 'var(--space-2)',
-        rowGap: 'var(--space-2)',
+        columnGap: systemMessage ? 0 : densityLayout.internalGap,
+        rowGap: densityLayout.internalGap,
         width: '100%',
         maxWidth: '100%',
         minWidth: 0,
@@ -442,7 +461,7 @@ export function ConversationMessage({
               gridColumn: '1 / -1',
               display: 'grid',
               gridTemplateColumns,
-              columnGap: 'var(--space-2)',
+              columnGap: densityLayout.internalGap,
               alignItems: 'center',
               minWidth: 0,
             }
@@ -457,8 +476,8 @@ export function ConversationMessage({
               gridRow: 1,
               display: 'grid',
               placeItems: 'center',
-              width: 'var(--space-8)',
-              height: 'var(--space-8)',
+              width: densityLayout.avatarSize,
+              height: densityLayout.avatarSize,
               overflow: 'hidden',
               borderRadius: 'var(--radius-pill)',
             }}
@@ -474,7 +493,7 @@ export function ConversationMessage({
                 display: 'flex',
                 alignItems: 'baseline',
                 justifyContent: outbound ? 'flex-end' : 'flex-start',
-                gap: 'var(--space-2)',
+                gap: densityLayout.internalGap,
                 minWidth: 0,
                 textAlign: outbound ? 'right' : 'left',
               }
@@ -541,7 +560,7 @@ export function ConversationMessage({
               style={{
                 minWidth: 0,
                 maxWidth: 'min(42rem, 100%)',
-                padding: 'var(--space-1) var(--space-4)',
+                padding: densityLayout.systemPadding,
                 boxSizing: 'border-box',
                 borderRadius: 'var(--radius-pill)',
                 // Neutral fill (not the blue tint) so an impersonal system event
@@ -561,7 +580,7 @@ export function ConversationMessage({
             {error != null && (
               <span
                 data-message-error
-                style={{ display: 'inline-flex', alignItems: 'flex-start', gap: 'var(--space-2)' }}
+                style={{ display: 'inline-flex', alignItems: 'flex-start', gap: densityLayout.internalGap }}
               >
                 <Icon
                   name="triangle-exclamation"
@@ -615,7 +634,7 @@ export function ConversationMessage({
               display: 'flex',
               alignItems: 'center',
               justifyContent: systemMessage ? 'center' : outbound ? 'flex-end' : 'flex-start',
-              gap: 'var(--space-2)',
+              gap: densityLayout.internalGap,
               width: '100%',
               minWidth: 0,
               flexWrap: 'wrap',
@@ -629,7 +648,7 @@ export function ConversationMessage({
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 'var(--space-2)',
+                  gap: densityLayout.internalGap,
                   minWidth: 0,
                   flexWrap: 'wrap',
                 }}
@@ -650,7 +669,7 @@ export function ConversationMessage({
               display: 'flex',
               alignItems: 'center',
               justifyContent: systemMessage ? 'center' : outbound ? 'flex-end' : 'flex-start',
-              gap: 'var(--space-2)',
+              gap: densityLayout.internalGap,
               width: '100%',
               minWidth: 0,
               flexWrap: 'wrap',

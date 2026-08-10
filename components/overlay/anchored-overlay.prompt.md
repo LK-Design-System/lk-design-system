@@ -2,7 +2,8 @@
 DropdownMenu, Menubar, SplitButton, UserMenu)가 공유하는 **headless 상태·dismiss·배치 엔진**입니다.
 `useControllableOpen`(열림 상태 triad), `useLightDismiss`(light dismiss + Escape 래치),
 `useFloatingPosition`(측정·flip·클램프)을 내보냅니다. 새 앵커드 표면은 이 엔진을 사용하고 바깥
-클릭·Escape·뷰포트 배치를 손으로 재구현하지 않습니다(`npm run check:engine-reuse`가 감시).
+클릭·Escape·viewport/명시적 collision boundary 배치를 손으로 재구현하지 않습니다
+(`npm run check:engine-reuse`가 감시).
 
 ```jsx
 const [open, setOpen] = useControllableOpen({ open: openProp, defaultOpen, onOpenChange });
@@ -12,7 +13,13 @@ useLightDismiss({
   getTrigger: () => triggerRef.current,
   onDismiss: () => setOpen(false),
 });
-const position = useFloatingPosition({ open, anchorRef: rootRef, panelRef, placement: 'bottom' });
+const position = useFloatingPosition({
+  open,
+  anchorRef: rootRef,
+  panelRef,
+  placement: 'bottom',
+  collisionBoundary: chatPanelRef,
+});
 ```
 
 ## useLightDismiss가 소유하는 것
@@ -35,7 +42,11 @@ const position = useFloatingPosition({ open, anchorRef: rootRef, panelRef, place
 ## useFloatingPosition이 소유하는 것
 
 - 앵커·패널 측정(rAF 스케줄, resize/scroll/ResizeObserver 추적), 공간이 부족하면 여유가 더 큰
-  반대편으로 flip, 뷰포트 안으로 `shiftX/shiftY` 되밀기, 배치 방향의 `maxHeight` 계산.
+  반대편으로 flip, collision rect 안으로 `shiftX/shiftY` 되밀기, 가용 `maxWidth/maxHeight` 계산.
+- `collisionBoundary`를 생략하면 기존처럼 padding이 적용된 viewport가 경계입니다. element 또는 ref를
+  주면 그 요소와 viewport의 **보이는 교집합**이 경계가 됩니다. 경계의 이동·resize도 다시 측정하며,
+  Portal target은 바꾸지 않습니다. 따라서 panel/body Portal로 clipping을 탈출하면서도 좁은 chat panel
+  같은 제품 표면의 안쪽에 geometry를 제한할 수 있습니다.
 - 시각 chrome, 정렬(align), 애니메이션은 소비자가 소유합니다.
 
 ## 소비자 규약
@@ -58,4 +69,7 @@ const position = useFloatingPosition({ open, anchorRef: rootRef, panelRef, place
   트리거 초점 유지, 비초점 콘텐츠.
 - [WAI-ARIA APG Dialog (Modal) pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)과의
   경계: 이 엔진은 초점을 가두지 않는 표면 전용입니다.
+- [React Aria Popover](https://react-spectrum.adobe.com/react-aria/Popover.html)의
+  `boundaryElement`는 Portal 위치와 positioning boundary를 분리하고 overlay가 자동으로 위치를
+  갱신하는 공식 비교 기준입니다. LDS는 같은 책임을 `collisionBoundary`와 공통 측정 engine으로 둡니다.
 - 전용 계약 테스트: `scripts/check-engine-contracts.mjs`(`npm run check:engine-contracts`).

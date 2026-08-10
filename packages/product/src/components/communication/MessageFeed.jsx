@@ -9,6 +9,17 @@ const useIsomorphicLayoutEffect = typeof window === 'undefined'
   : React.useLayoutEffect;
 const BOTTOM_THRESHOLD = 8;
 
+const DENSITY_LAYOUT = {
+  comfortable: {
+    messageGap: 'var(--space-6)',
+    viewportBlockPadding: 'var(--space-3)',
+  },
+  compact: {
+    messageGap: 'var(--space-4)',
+    viewportBlockPadding: 'var(--space-2)',
+  },
+};
+
 function isAtBottom(viewport) {
   return viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight <= BOTTOM_THRESHOLD;
 }
@@ -43,6 +54,7 @@ export function MessageFeed({
   empty,
   maxHeight = 400,
   viewportMinHeight,
+  density = 'comfortable',
   viewportInset = 'compact',
   busy = false,
   hasPrevious = false,
@@ -73,6 +85,8 @@ export function MessageFeed({
   const lastRequestedFollowingRef = React.useRef(following);
   const [retainJumpFocus, setRetainJumpFocus] = React.useState(false);
   const [historyLiveSuppressed, setHistoryLiveSuppressed] = React.useState(false);
+  const normalizedDensity = density === 'compact' ? 'compact' : 'comfortable';
+  const densityLayout = DENSITY_LAYOUT[normalizedDensity];
   const normalizedViewportInset = viewportInset === 'comfortable' ? 'comfortable' : 'compact';
 
   if (followingRef.current !== following) {
@@ -172,7 +186,7 @@ export function MessageFeed({
     }
 
     if (following) scrollToBottom();
-  }, [children, finishHistoryRequest, following, loadingPrevious, maxHeight, scrollToBottom, viewportMinHeight]);
+  }, [children, finishHistoryRequest, following, loadingPrevious, maxHeight, normalizedDensity, scrollToBottom, viewportMinHeight]);
 
   React.useEffect(() => {
     const content = contentRef.current;
@@ -286,6 +300,7 @@ export function MessageFeed({
       {...rest}
       data-message-feed
       data-following={following ? 'true' : 'false'}
+      data-density={normalizedDensity}
       style={{
         display: 'grid',
         gap: 'var(--space-2)',
@@ -346,7 +361,7 @@ export function MessageFeed({
           overflowY: 'auto',
           overscrollBehavior: 'contain',
           scrollbarGutter: 'stable',
-          paddingBlock: 'var(--space-3)',
+          paddingBlock: densityLayout.viewportBlockPadding,
           paddingInline: normalizedViewportInset === 'comfortable' ? 'var(--space-4)' : 'var(--space-2)',
           border: 0,
           borderRadius: 0,
@@ -361,7 +376,7 @@ export function MessageFeed({
           data-message-feed-content
           style={{
             display: 'grid',
-            gap: 'var(--space-6)',
+            gap: densityLayout.messageGap,
             width: 'min(48rem, 100%)',
             minWidth: 0,
             marginInline: 'auto',

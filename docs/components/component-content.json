@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "44dcbea5ca65e89933299e765af8c575ab3d533d152193657fff4cb622c318d4",
+  "sourceFingerprint": "a82b62505f2b41f38fded6d7ffc5d5be703e04f7b61c620ba0cd1c217623ca38",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -3329,6 +3329,13 @@
           "owner": "ConversationMessageBaseProps"
         },
         {
+          "name": "density",
+          "type": "ConversationMessageDensity",
+          "required": false,
+          "description": "Message-owned spatial density. Comfortable preserves the legacy 32px avatar, bubble padding, and internal gaps; compact reduces only those spaces without changing typography, semantics, or action targets. @default 'comfortable'",
+          "owner": "ConversationMessageBaseProps"
+        },
+        {
           "name": "lifecycle",
           "type": "ConversationMessageLifecycle",
           "required": false,
@@ -3360,7 +3367,7 @@
           "name": "avatar",
           "type": "React.ReactNode",
           "required": false,
-          "description": "Avatar shown for single/first participant messages. Grouped runs reserve the same 32px token column even when later items omit this prop.",
+          "description": "Avatar shown for single/first participant messages. Grouped runs reserve the density-selected 32px comfortable or 24px compact token column even when later items omit this prop.",
           "owner": "ConversationMessageBaseProps"
         },
         {
@@ -3449,21 +3456,22 @@
         }
       ],
       "tokens": [
+        "--space-8",
+        "--space-3",
+        "--space-4",
+        "--space-2",
+        "--space-1",
+        "--space-6",
         "--radius-xl",
         "--radius-sm",
         "--color-semantic-status-negative",
         "--color-semantic-primary-normal",
         "--color-semantic-label-alternative",
-        "--space-8",
-        "--space-2",
         "--caption1-size",
         "--caption1-line",
-        "--space-1",
         "--color-semantic-label-normal",
         "--body1-size",
         "--body1-line",
-        "--space-3",
-        "--space-4",
         "--color-semantic-static-white",
         "--color-semantic-primary-heavy",
         "--body2-size",
@@ -3519,6 +3527,18 @@
           "url": "https://www.w3.org/TR/wai-aria/#log"
         },
         {
+          "label": "WCAG 2.2 Understanding 1.4.10 Reflow",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
+        },
+        {
+          "label": "WCAG 2.2 Understanding 2.5.8 Target Size (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum"
+        },
+        {
+          "label": "Carbon spacing",
+          "url": "https://carbondesignsystem.com/elements/spacing/overview/"
+        },
+        {
           "label": "WCAG 2.2",
           "url": "https://www.w3.org/TR/WCAG22/"
         },
@@ -3527,7 +3547,7 @@
           "url": "https://www.figma.com/design/ss5Fq2VKd2UDoHk7SE9dPl/3-Free-AI-Chatbot-App-UI-Kit--Community-?node-id=10301-21963"
         }
       ],
-      "promptSha256": "22d0e1009f0e98a5f9d22fc014eaed7240b17c132c3ca94e66ca22dc6847353a"
+      "promptSha256": "c0cea53f290d3cb21b9225834896b0e68fb72fcaa591f3fc1d1754ca78d0db67"
     },
     {
       "id": "message-composer",
@@ -3583,6 +3603,13 @@
           "type": "MessageComposerState",
           "required": false,
           "description": "Product-owned request/response lifecycle. @default \"idle\"",
+          "owner": "MessageComposerBaseProps"
+        },
+        {
+          "name": "density",
+          "type": "MessageComposerDensity",
+          "required": false,
+          "description": "Composer-owned spacing density. Comfortable preserves the legacy rendering; compact reduces vertical space for narrow panels without shrinking the 32px primary action. @default \"comfortable\"",
           "owner": "MessageComposerBaseProps"
         },
         {
@@ -3652,7 +3679,7 @@
           "name": "minRows",
           "type": "number",
           "required": false,
-          "description": "Minimum autosize rows; one row starts at 48px. @default 1",
+          "description": "Minimum autosize rows; one row starts at 48px in comfortable density and 40px in compact density. @default 1",
           "owner": "MessageComposerBaseProps"
         },
         {
@@ -3741,15 +3768,18 @@
         }
       ],
       "tokens": [
-        "--space-12",
         "--component-button-height-sm",
+        "--space-12",
         "--space-2",
+        "--space-1",
+        "--space-3",
+        "--space-10",
+        "--space-0-5",
         "--color-semantic-label-normal",
         "--font-sans",
         "--color-semantic-label-neutral",
         "--caption1-size",
         "--caption1-line",
-        "--space-1",
         "--color-semantic-fill-normal",
         "--color-semantic-background-normal-alternative",
         "--color-semantic-background-elevated-normal",
@@ -3761,7 +3791,6 @@
         "--shadow-sm",
         "--dur-base",
         "--ease-out",
-        "--space-3",
         "--color-semantic-label-disable",
         "--component-input-font-size",
         "--body1-line",
@@ -3812,15 +3841,19 @@
           "url": "https://www.w3.org/TR/wai-aria/#log"
         },
         {
-          "label": "WCAG 2.2",
-          "url": "https://www.w3.org/TR/WCAG22/"
+          "label": "WCAG 2.2 Understanding 1.4.10 Reflow",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
+        },
+        {
+          "label": "WCAG 2.2 Understanding 2.5.8 Target Size (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum"
         },
         {
           "label": "3 Free AI Chatbot App UI Kit",
           "url": "https://www.figma.com/design/ss5Fq2VKd2UDoHk7SE9dPl/3-Free-AI-Chatbot-App-UI-Kit--Community-?node-id=10301-21963"
         }
       ],
-      "promptSha256": "a1beef891930a604d4aa75d66e891baa5e38bcfb1b5d0b897684c0e721df54e4"
+      "promptSha256": "5833f4c8aaa7f1f2b7a379c374fdbab0656eb85ed637fb14a23fa38c535ba854"
     },
     {
       "id": "message-feed",
@@ -3883,6 +3916,13 @@
           "type": "number | string",
           "required": false,
           "description": "Optional minimum viewport height for persistent conversation panels.",
+          "owner": "MessageFeedProps"
+        },
+        {
+          "name": "density",
+          "type": "MessageFeedDensity",
+          "required": false,
+          "description": "Feed-owned vertical density. Comfortable preserves the legacy message gap and block padding; compact reduces only those spaces and does not change viewportInset. @default \"comfortable\"",
           "owner": "MessageFeedProps"
         },
         {
@@ -3971,13 +4011,13 @@
         }
       ],
       "tokens": [
-        "--space-2",
-        "--font-sans",
+        "--space-6",
         "--space-3",
         "--space-4",
+        "--space-2",
+        "--font-sans",
         "--color-semantic-label-normal",
         "--space-1",
-        "--space-6",
         "--space-20",
         "--color-semantic-label-alternative",
         "--body2-size",
@@ -4012,6 +4052,18 @@
           "url": "https://www.w3.org/TR/css-scroll-anchoring-1/"
         },
         {
+          "label": "WCAG 2.2 Understanding 1.4.10 Reflow",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
+        },
+        {
+          "label": "WCAG 2.2 Understanding 2.5.8 Target Size (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum"
+        },
+        {
+          "label": "Carbon spacing",
+          "url": "https://carbondesignsystem.com/elements/spacing/overview/"
+        },
+        {
           "label": "WCAG 2.2",
           "url": "https://www.w3.org/TR/WCAG22/"
         },
@@ -4040,7 +4092,7 @@
           "url": "https://www.figma.com/design/ss5Fq2VKd2UDoHk7SE9dPl/3-Free-AI-Chatbot-App-UI-Kit--Community-?node-id=10301-21963"
         }
       ],
-      "promptSha256": "ed7d044e34c33b452f870c93a064940883790edb17aedc3315fae9dc0e5033bb"
+      "promptSha256": "913014a15aac883c9a63964c52277e774d065172c4104ef446a4bfb93e466f81"
     },
     {
       "id": "accordion",
@@ -24234,7 +24286,7 @@
           "name": "multiple",
           "type": "boolean",
           "required": false,
-          "description": "Allows multiple disclosure groups to remain open. Set to false for accordion behavior. @default true",
+          "description": "Allows multiple disclosure groups to remain open. When false, selecting another group or top-level destination closes the previous group. @default false",
           "owner": "SideNavProps"
         },
         {
@@ -24319,8 +24371,10 @@
         "--dur-base",
         "--color-semantic-fill-normal",
         "--space-1-5",
+        "--space-4",
         "--space-4-5",
         "--label2-size",
+        "--label2-line",
         "--shadow-lg"
       ],
       "externalReferences": [
@@ -24335,6 +24389,10 @@
         {
           "label": "Fluent Nav usage",
           "url": "https://fluent2.microsoft.design/components/web/react/core/nav/usage"
+        },
+        {
+          "label": "WAI-ARIA Accordion pattern",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/accordion/"
         },
         {
           "label": "Carbon UI shell left panel accessibility",
@@ -24357,7 +24415,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/"
         }
       ],
-      "promptSha256": "c133d8861669a2f22984712f469eab09b52eaad2aea413a0f266bf3b87d78cbd"
+      "promptSha256": "0aa0d937489ad7207858f2e5779bc3407f8591474736f6189644dc8ecaf4f84e"
     },
     {
       "id": "steps",
@@ -29784,7 +29842,7 @@
           "name": "tone",
           "type": "'signal' | 'positive' | 'cautionary' | 'negative' | 'info' | 'success' | 'warning' | 'error'",
           "required": false,
-          "description": "톤. @default \"info\"",
+          "description": "톤. canonical은 signal · positive · cautionary · negative이며 info · success · warning · error는 canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다). 기본값은 canonical 표기입니다 — 이전 기본값 \"info\"는 같은 표면으로 정규화되던 별칭 표기였습니다.",
           "owner": "BannerProps"
         },
         {
@@ -29860,7 +29918,7 @@
           "url": "https://carbondesignsystem.com/components/notification/usage/"
         }
       ],
-      "promptSha256": "616ca34faaea16639a886caceaf5a02f1c0ba92d230220a3aa51fc638366a108"
+      "promptSha256": "e3bd2976d7a976a987a49bab87328570a8e7665c3a60fafaf7353459df5fb549"
     },
     {
       "id": "callout",
@@ -29934,14 +29992,18 @@
         "--color-semantic-brand-on-surface",
         "--color-semantic-brand-surface",
         "--color-semantic-brand-on-surface-border",
-        "--space-3-5",
-        "--radius-lg",
+        "--space-4",
+        "--space-5",
+        "--space-6",
+        "--radius-xl",
         "--font-sans",
-        "--space-0-5",
-        "--body2-size",
+        "--body1-size",
+        "--body1-line",
         "--fw-bold",
         "--color-semantic-label-normal",
+        "--space-1-5",
         "--label1-size",
+        "--label1-reading-line",
         "--color-semantic-brand-on-surface-subtle",
         "--color-semantic-label-neutral"
       ],
@@ -29963,7 +30025,7 @@
           "url": "https://developer.gnome.org/hig/patterns/feedback/banners.html"
         }
       ],
-      "promptSha256": "159ae97d3147294b444bccd3db09d8468defeb8e689c52a22d9b7f75423ad322"
+      "promptSha256": "1738a9809b5ecdbcb98ecada590d081e2f4933fc1d7fc204bf12b013e49cbc73"
     },
     {
       "id": "circular-progress",
@@ -47113,7 +47175,7 @@
       "anatomy": [
         {
           "part": "tone",
-          "rule": "톤. @default \"info\""
+          "rule": "톤. canonical은 signal · positive · cautionary · negative이며 info · success · warning · error는 canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다). 기본값은 canonical 표기입니다 — 이전 기본값 \"info\"는 같은 표면으로 정규화되던 별칭 표기였습니다."
         },
         {
           "part": "title",
@@ -47137,7 +47199,7 @@
           "name": "tone",
           "type": "'signal' | 'positive' | 'cautionary' | 'negative' | 'info' | 'success' | 'warning' | 'error'",
           "required": false,
-          "description": "톤. @default \"info\"",
+          "description": "톤. canonical은 signal · positive · cautionary · negative이며 info · success · warning · error는 canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다). 기본값은 canonical 표기입니다 — 이전 기본값 \"info\"는 같은 표면으로 정규화되던 별칭 표기였습니다.",
           "owner": "BannerProps"
         },
         {
@@ -47221,7 +47283,7 @@
       "states": [
         {
           "state": "tone",
-          "rule": "톤. @default \"info\""
+          "rule": "톤. canonical은 signal · positive · cautionary · negative이며 info · success · warning · error는 canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다). 기본값은 canonical 표기입니다 — 이전 기본값 \"info\"는 같은 표면으로 정규화되던 별칭 표기였습니다."
         },
         {
           "state": "variant",
@@ -47243,22 +47305,22 @@
           "rule": "Fluent 2 MessageBar의 card-level 배치 원칙을 따라 패널 상태 Banner는 header 바로 아래, 제어 본문보다 먼저 읽히게 합니다. 상태·설명·액션의 순서도 DOM 순서와 일치시킵니다."
         },
         {
+          "subject": "--body1-line",
+          "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+        },
+        {
+          "subject": "--body1-size",
+          "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+        },
+        {
           "subject": "--body2-size",
           "rule": "15px"
-        },
-        {
-          "subject": "--color-semantic-brand-on-surface-border",
-          "rule": "light: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)"
-        },
-        {
-          "subject": "--color-semantic-brand-on-surface-subtle",
-          "rule": "light: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent)"
         }
       ],
       "responsive": [],
       "contentGuidance": [
         "선택 기준 — 비동기 작업, 연결, 권한, 검증 결과처럼 상태가 바뀌며 사용자가 알아야 하는 정보에는 Banner를 사용합니다. 상태와 함께 다음 행동이 필요하면 action, 사용자가 숨겨도 되는 비차단 알림이면 onClose를 제공합니다. Banner는 기본적으로 live status이며 negative tone은 alert이므로, 처음부터 본문에 남아 있는 설명을 단지 색으로 강조하려는 용도로 사용하지 않습니다.",
-        "tone — canonical signal · positive · cautionary · negative를 받으며, 기존 info · success · warning · error도 별칭으로 계속 동작합니다. variant — standalone(기본) 또는 embedded. title / children — 헤드라인 + 선택적 보충 설명. action — 끝의 노드. onClose — 닫기 버튼 표시. 떠 있는 일시 메시지에는 Toast를 쓰세요.",
+        "tone — canonical signal · positive · cautionary · negative를 받으며 기본값은 signal입니다. 기존 info · success · warning · error도 별칭으로 계속 동작하지만 동결된 어휘라 새 코드에서는 쓰지 않습니다(check:api-grammar가 ledger에 없는 별칭 신규 도입을 차단합니다). 기본값이 한동안 \"info\"로 표기돼 있었는데, 별칭 정규화를 거쳐 signal과 같은 표면으로 렌더되던 같은 값이라 canonical 표기로 통일했습니다 — 렌더 결과는 바뀌지 않습니다.",
         "패널 전체의 현재 gate/state를 짧게 알릴 때는 header 바로 아래에 variant=\"embedded\"를 사용합니다. 정상·잠금처럼 설명이 없어도 이해되는 상태는 제목 한 줄로 유지하고, 오류 원인이나 복구 방법이 필요한 경우에만 본문을 추가합니다. 부모 표면 안에서 style로 border와 radius를 임의 덮어쓰지 않습니다.",
         "독립된 동적 알림에는 standalone, 떠 있는 일시 메시지에는 Toast, 본문에 계속 남는 절차·주의·맥락 설명에는 Callout을 사용합니다. 액션이나 닫기가 필요하다는 이유만으로 정적 설명을 Banner로 바꾸지 말고, 실제로 상태가 변하는지 먼저 판단합니다."
       ],
@@ -47289,10 +47351,12 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<Banner tone=\"info\" title=\"문서 업데이트\" onClose={dismiss}>디자인 시스템 문서가 업데이트되었습니다.</Banner>\n<Banner tone=\"warning\">일부 항목에 검토가 필요합니다.</Banner>\n<Banner variant=\"embedded\" tone=\"warning\" title=\"제어 대기\">상위 패널의 상태를 설명합니다.</Banner>"
+          "code": "<Banner tone=\"signal\" title=\"문서 업데이트\" onClose={dismiss}>디자인 시스템 문서가 업데이트되었습니다.</Banner>\n<Banner tone=\"cautionary\">일부 항목에 검토가 필요합니다.</Banner>\n<Banner variant=\"embedded\" tone=\"cautionary\" title=\"제어 대기\">상위 패널의 상태를 설명합니다.</Banner>"
         }
       ],
       "tokens": [
+        "--body1-line",
+        "--body1-size",
         "--body2-size",
         "--color-semantic-brand-on-surface",
         "--color-semantic-brand-on-surface-border",
@@ -47302,12 +47366,16 @@
         "--color-semantic-label-normal",
         "--font-sans",
         "--fw-bold",
+        "--label1-reading-line",
         "--label1-size",
         "--radius-lg",
+        "--radius-xl",
         "--space-0-5",
+        "--space-1-5",
         "--space-3",
-        "--space-3-5",
-        "--space-5"
+        "--space-4",
+        "--space-5",
+        "--space-6"
       ],
       "apiLinks": [
         "components/status/Banner.jsx",
@@ -50244,7 +50312,7 @@
         "participant는 presentation=\"document\" | \"bubble\"로 표현 방식을 명시할 수 있습니다. presentation은 정보 위계이지 protocol, 권한, 신뢰도 또는 발신자 role을 바꾸지 않습니다.",
         "direction은 participant 배치만 재정의합니다. user는 기본 outbound, assistant와 human-agent는 기본 inbound이며 system은 항상 system 방향입니다. 시각 정렬 때문에 DOM 순서를 뒤집지 않습니다.",
         "Ant Design X Bubble은 role, placement, content, variant, loading과 footer action을 분리합니다. LDS도 role과 presentation을 분리하되 일반 AI 장문 응답은 borderless document, 짧은 사용자 발화는 bubble로 적응했습니다.",
-        "user 자신의 발화는 primary fill bubble로 화자를 표식하되, 특정 제품(slothpilot/Context Hub)의 messenger shell·palette·app chrome을 통째로 차용하지는 않습니다. 오른쪽 search/research 화면도 complete screen으로 가져오지 않고, provenance가 필요할 때 SourceDisclosure를 slot에 조합합니다."
+        "3 Free AI Chatbot App UI Kit의 왼쪽 slothGPT/general-assistant archetype만 secondary visual inspiration으로 사용합니다."
       ],
       "avoidWhen": [
         "sources에는 SourceDisclosure, attachments에는 FileUploadQueue나 제품의 완료된 attachment 표현을 조합합니다. source 개수나 파일 상태에서 presentation을 추론하지 않습니다.",
@@ -50263,7 +50331,7 @@
         },
         {
           "part": "avatar",
-          "rule": "Avatar shown for single/first participant messages. Grouped runs reserve the same 32px token column even when later items omit this prop."
+          "rule": "Avatar shown for single/first participant messages. Grouped runs reserve the density-selected 32px comfortable or 24px compact token column even when later items omit this prop."
         },
         {
           "part": "statusLabel",
@@ -50288,6 +50356,13 @@
           "type": "ConversationMessageGroupPosition",
           "required": false,
           "description": "Position within a visually grouped run from the same author. @default 'single'",
+          "owner": "ConversationMessageBaseProps"
+        },
+        {
+          "name": "density",
+          "type": "ConversationMessageDensity",
+          "required": false,
+          "description": "Message-owned spatial density. Comfortable preserves the legacy 32px avatar, bubble padding, and internal gaps; compact reduces only those spaces without changing typography, semantics, or action targets. @default 'comfortable'",
           "owner": "ConversationMessageBaseProps"
         },
         {
@@ -50322,7 +50397,7 @@
           "name": "avatar",
           "type": "React.ReactNode",
           "required": false,
-          "description": "Avatar shown for single/first participant messages. Grouped runs reserve the same 32px token column even when later items omit this prop.",
+          "description": "Avatar shown for single/first participant messages. Grouped runs reserve the density-selected 32px comfortable or 24px compact token column even when later items omit this prop.",
           "owner": "ConversationMessageBaseProps"
         },
         {
@@ -50422,26 +50497,27 @@
       ],
       "behavior": [
         "authorRole은 user | assistant | human-agent | system입니다. assistant 기본 presentation은 document, user와 human-agent는 bubble, system은 centered neutral chip입니다. user bubble은 solid primary fill, human-agent bubble은 neutral fill(--color-semantic-fill-strong)로 구분합니다.",
+        "320px: comfortable/compact 모두 긴 한글·영문·URL·code와 source/attachment/action slot이 horizontal overflow 없이 wrapping 또는 자체 overflow를 갖고, action target이 최소 24×24 CSS px를 유지하는지 확인합니다.",
         "feedback 저장·선택 상태, edit, branch/thread, 읽음 판정(read tracking; delivery read 상태 표시는 지원하되 읽음 여부 계산은 제품 몫), voice recorder와 tool execution. 긍정·부정 feedback과 재생성 control은 canonical messageActions 조합으로 지원하지만 해당 동작과 상태 전이는 제품이 구현합니다.",
         "전체 화면 shell, header/sidebar, sticky composer, scroll anchoring과 unread 계산.",
-        "선택한 reading hierarchy."
+        "| 확인한 sibling | 계승한 규칙 | ConversationMessage 결정 | | --- | --- | --- | | Avatar | 32px small identity, text fallback | 필요한 participant identity에 조합하며 message가 avatar 로직을 복제하지 않음 | | Button / IconButton | named action, focus, disabled, small control | retry와 response action을 slot에서 조합하고 자체 button 스타일을 만들지 않음 | | Bubble…"
       ],
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "groupPosition은 single | first | middle | last이며 grouped run은 avatar를 first에만 전달해도 같은 32px identity column을 예약합니다. authorLabel은 비문자 author의 접근 가능한 이름, dateTime은 의 machine-readable 값입니다."
+          "rule": "density는 comfortable | compact이며 기본 comfortable은 기존 32px avatar column, bubble padding과 내부 gap을 그대로 보존합니다. compact는 이 공간만 작은 LDS token 단계로 줄이고 typography, color, lifecycle, DOM/ARIA와 action 크기는 바꾸지 않습니다."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "WCAG 2.2의 구조, focus, name과 contrast 요구를 최종 접근성 기준으로 사용합니다."
+          "rule": "groupPosition은 single | first | middle | last이며 grouped run은 avatar를 first에만 전달해도 density가 선택한 32px comfortable 또는 24px compact identity column을 예약합니다. authorLabel은 비문자 author의 접근 가능한 이름, dateTime은 의 machine-readable 값입니다."
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "3 Free AI Chatbot App UI Kit의 왼쪽 slothGPT/general-assistant archetype만 secondary visual inspiration으로 사용합니다."
+          "rule": "SELECTANDMESSAGEFEEDLAYOUTFOLLOWUP.md에 기록된 LK Portal floating knowledge chat은 460×674px의 제한된 panel입니다. 이 consumer 근거는 optional compact spacing을 정당화하지만 panel width, chrome과 viewport inset은 각각 Portal과 MessageFeed가 계속 소유합니다."
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "약 760px: long rich assistant document → compact user solid primary bubble → system 중앙 pill 칩 → optional human-agent neutral fill bubble의 reading order를 확인합니다."
+          "rule": "compact는 avatar를 --space-6, bubble padding을 --space-2 var(--space-3), 내부 gap을 --space-1로 줄입니다. 기본 comfortable의 기존 pixel geometry는 그대로이며, 320px에서도 document/bubble content는 wrapping 또는 자체 overflow로 reflow되어야 합니다."
         },
         {
           "subject": "--body1-line",
@@ -50451,8 +50527,8 @@
       "responsive": [
         "inlineSources는 sources 슬롯을 body 아래 별도 행이 아니라 action bar와 같은 footer 행에 배치합니다(ChatGPT식). 접힌 를 넣으면 resting 상태가 아이콘+출처 토글 한 줄이 되어 copy·재생성 아이콘 옆에 나란히 놓이고, 누르면 출처 목록이 SourceDisclosure의 앵커드 Popover(드롭다운)로 떠서 열려 본문 레이아웃을 밀지 않습니다.",
         "semantic DOM과 시각 reading order는 identity(author/timestamp) → body → response status → attachments → sources → delivery/static status → actions입니다. rich content는 document surface 안에서 자연스럽게 길어지고, compact 발화는 bubble로 묶입니다. inlineSources일 때 sources는 이 자리에서 빠져 마지막 footer 행에서 action group 뒤에 형제로 배치됩니다.",
-        "채택한 것은 long-form assistant document, compact user prompt, answer action과 하단 composer의 상대적 위계입니다. exact color, typography, avatar artwork, logo, sidebar, app shell, shadow와 asset은 복사하지 않습니다.",
-        "320px: 긴 한글·영문·URL·code와 source/attachment/action slot이 horizontal overflow 없이 wrapping 또는 자체 overflow를 갖는지 확인합니다."
+        "compact의 24px avatar는 비상호작용 identity입니다. retry와 message action은 기존 32px IconButton을 유지해 실제 pointer target이 24×24 CSS px 아래로 줄지 않습니다.",
+        "채택한 것은 long-form assistant document, compact user prompt, answer action과 하단 composer의 상대적 위계입니다. exact color, typography, avatar artwork, logo, sidebar, app shell, shadow와 asset은 복사하지 않습니다."
       ],
       "contentGuidance": [
         "children은 본문, attachments, sources, actions는 각각 ReactNode 조합 slot입니다. messageActions는 복사·재생성·더보기 같은 하단 quick-action을 배열로 받아 컴포넌트가 icon-only 버튼 액션바로 렌더하며 actions slot과 공존합니다. error는 실패 응답 본문을 받아 무채색 경고 glyph를 앞에 붙입니다. Message가 source schema, 파일 처리, Markdown renderer 또는 action 정책을 소유하지 않습니다.",
@@ -50464,8 +50540,8 @@
         "완료된 AI 응답의 canonical 제품 조합은 응답 복사 → 응답 다시 생성 → 긍정 평가 → 부정 평가 순서이며 provenance가 있으면 inlineSources의 접힌 출처 토글을 같은 footer에 형제로 둡니다. 각 icon-only action의 label은 대상과 동작을 함께 말해야 합니다. 선택형 평가 action은 제품이 소유한 상태를 pressed로 전달해 aria-pressed와 primary selected surface를 함께 노출합니다.",
         "개별 article은 live region을 만들지 않습니다. chronological announcement는 상위 MessageFeed의 named role=\"log\" 하나가 소유합니다.",
         "WAI-ARIA log는 순서대로 추가되는 chat history를 대표 사례로 정의합니다. message마다 live region을 만들지 않고 MessageFeed 한 곳에만 둡니다.",
-        "dark: document는 배경과 불필요한 card 경계를 만들지 않고, solid primary user bubble·neutral fill human-agent bubble·system 칩·metadata가 identity와 WCAG AA 대비를 유지해야 합니다.",
-        "| 확인한 sibling | 계승한 규칙 | ConversationMessage 결정 | | --- | --- | --- | | Avatar | 32px small identity, text fallback | 필요한 participant identity에 조합하며 message가 avatar 로직을 복제하지 않음 | | Button / IconButton | named action, focus, disabled, small control | retry와 response action을 slot에서 조합하고 자체 button 스타일을 만들지 않음 | | Bubble…"
+        "WCAG 2.2 Understanding 1.4.10 Reflow는 세로 scrolling content가 320 CSS px 상당 폭에서 정보·기능 손실이나 2차원 scrolling 없이 reflow되어야 한다고 설명합니다. density는 content 폭·wrapping 계약을 바꾸지 않습니다.",
+        "WCAG 2.2 Understanding 2.5.8 Target Size (Minimum)는 pointer target의 최소 크기를 24×24 CSS px로 정의합니다. compact도 내장 32px message action을 축소하지 않습니다."
       ],
       "exceptions": [],
       "related": [
@@ -50501,7 +50577,7 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<ConversationMessage\n  authorRole=\"assistant\"\n  author=\"AI Assistant\"\n  inlineSources\n  sources={<SourceDisclosure sources={sources} />}\n  messageActions={[\n    { key: 'copy', icon: <Icon name=\"copy\" size={16} />, label: '응답 복사' },\n    { key: 'regenerate', icon: <Icon name=\"refresh\" size={16} />, label: '응답 다시 생성' },\n    { key: 'positive-feedback', icon: <Icon name=\"like\" size={16} />, label: '좋은 응답으로 평가', pressed: feedback === 'positive' },\n    { key: 'negative-feedback', icon: <Icon name=\"dislike\" size={16} />, label: '좋지 않은 응답으로 평가', pressed: feedback === 'negative' },\n  ]}\n>\n  <AssistantAnswer />\n</ConversationMessage>\n\n<ConversationMessage authorRole=\"user\" author=\"김서윤\">\n  핵심만 세 문장으로 요약해 주세요.\n</ConversationMessage>"
+          "code": "<ConversationMessage\n  authorRole=\"assistant\"\n  author=\"AI Assistant\"\n  density=\"compact\"\n  inlineSources\n  sources={<SourceDisclosure sources={sources} />}\n  messageActions={[\n    { key: 'copy', icon: <Icon name=\"copy\" size={16} />, label: '응답 복사' },\n    { key: 'regenerate', icon: <Icon name=\"refresh\" size={16} />, label: '응답 다시 생성' },\n    { key: 'positive-feedback', icon: <Icon name=\"like\" size={16} />, label: '좋은 응답으로 평가', pressed: feedback === 'positive' },\n    { key: 'negative-feedback', icon: <Icon name=\"dislike\" size={16} />, label: '좋지 않은 응답으로 평가', pressed: feedback === 'negative' },\n  ]}\n>\n  <AssistantAnswer />\n</ConversationMessage>\n\n<ConversationMessage authorRole=\"user\" author=\"김서윤\">\n  핵심만 세 문장으로 요약해 주세요.\n</ConversationMessage>"
         }
       ],
       "tokens": [
@@ -50539,6 +50615,7 @@
         "--space-2",
         "--space-3",
         "--space-4",
+        "--space-6",
         "--space-8"
       ],
       "apiLinks": [
@@ -50684,9 +50761,9 @@
       "purpose": "사람 또는 AI와 대화하면서 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 첨부와 보조 행동은 slot으로 조합하고 Composer는 값·전송·중지만 소유합니다. 단발성 검색이나 한 칸짜리 폼에는 사용하지 말고 SearchField·Textarea를 사용하세요.",
       "useWhen": [
         "light/dark 모두 LDS semantic input token을 사용하며 exact Figma color, product logo, provider selector와 custom shadow를 만들지 않습니다.",
+        "Slack — Set your Enter key preference는 Enter를 보내기로 선택하면 Shift+Enter로 줄바꿈하고, Enter를 줄바꿈으로 선택하면 Mac의 Command+Enter 또는 Windows/Linux의 Ctrl+Enter로 보내는 공식 제품 관습을 설명합니다. 이를 enter와 modifier-enter 계약에 반영했고, 긴 형식 작성에는 더 명시적인 button-only도 제공합니다.",
         "Slack — Use Slack with a screen reader는 conversation 진입 시 message composer에 focus가 놓이고 Tab으로 primary action toolbar에 접근하며, 입력 후 Enter로 보내는 흐름을 설명합니다. 이에 따라 form/textarea/action에 각각 명시적 accessible name을 제공하고 제출 뒤 textarea focus를 복귀시키며, slot action을 DOM reading order에 유지합니다.",
-        "MDN — disabled HTML attribute는 native form control의 focus·interaction·form submission 차단 semantics를 정의합니다. 내부 textarea는 실제 disabled attribute를 사용합니다.",
-        "3 Free AI Chatbot App UI Kit의 왼쪽 slothGPT/general-assistant composer를 secondary visual inspiration으로 사용합니다."
+        "MDN — disabled HTML attribute는 native form control의 focus·interaction·form submission 차단 semantics를 정의합니다. 내부 textarea는 실제 disabled attribute를 사용합니다."
       ],
       "avoidWhen": [
         "분류는 LK Product Extension이며 WDS Core parity를 주장하지 않습니다.",
@@ -50751,6 +50828,13 @@
           "type": "MessageComposerState",
           "required": false,
           "description": "Product-owned request/response lifecycle. @default \"idle\"",
+          "owner": "MessageComposerBaseProps"
+        },
+        {
+          "name": "density",
+          "type": "MessageComposerDensity",
+          "required": false,
+          "description": "Composer-owned spacing density. Comfortable preserves the legacy rendering; compact reduces vertical space for narrow panels without shrinking the 32px primary action. @default \"comfortable\"",
           "owner": "MessageComposerBaseProps"
         },
         {
@@ -50820,7 +50904,7 @@
           "name": "minRows",
           "type": "number",
           "required": false,
-          "description": "Minimum autosize rows; one row starts at 48px. @default 1",
+          "description": "Minimum autosize rows; one row starts at 48px in comfortable density and 40px in compact density. @default 1",
           "owner": "MessageComposerBaseProps"
         },
         {
@@ -50885,13 +50969,6 @@
           "required": false,
           "description": "",
           "owner": "MessageComposerEnabledProps"
-        },
-        {
-          "name": "disabledReason",
-          "type": "never",
-          "required": false,
-          "description": "",
-          "owner": "MessageComposerEnabledProps"
         }
       ],
       "states": [
@@ -50926,7 +51003,7 @@
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "textarea는 compact row에서 시작해 minRows/maxRows 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다."
+          "rule": "textarea는 comfortable의 48px 또는 compact의 40px 한 줄 높이에서 시작해 minRows/maxRows 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다."
         },
         {
           "subject": "명시 규칙 3",
@@ -50934,7 +51011,7 @@
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "WCAG 2.2를 accessible name, keyboard, focus, disabled explanation, target와 contrast의 최종 기준으로 사용합니다."
+          "rule": "density와 관계없이 내장 send/stop action은 32×32px을 유지합니다. slot consumer도 실제 button/link target을 최소 24×24 CSS px로 구성해야 하며, composer는 작은 target을 만들기 위해 action을 축소하지 않습니다."
         },
         {
           "subject": "--body1-line",
@@ -50942,10 +51019,10 @@
         }
       ],
       "responsive": [
+        "density는 comfortable | compact이며 기본 comfortable은 기존 렌더링의 크기와 간격을 그대로 보존합니다. 좁은 패널에서만 compact를 명시합니다.",
         "submitMode=\"button-only\": Enter를 항상 줄바꿈으로 남기고 button만 제출합니다.",
-        "Slack — Set your Enter key preference는 Enter를 보내기로 선택하면 Shift+Enter로 줄바꿈하고, Enter를 줄바꿈으로 선택하면 Mac의 Command+Enter 또는 Windows/Linux의 Ctrl+Enter로 보내는 공식 제품 관습을 설명합니다. 이를 enter와 modifier-enter 계약에 반영했고, 긴 형식 작성에는 더 명시적인 button-only도 제공합니다.",
-        "채택한 것은 conversation column 하단의 단일 elevated shell, expanding draft와 명시적 send action입니다. exact purple, logo, provider tool, voice control, desktop/mobile frame와 shadow 값은 복사하지 않습니다.",
-        "320px: 긴 attachment와 multiline draft가 전체 입력 폭을 먼저 확보하고 하단 action band만 wrap하며 horizontal overflow를 만들지 않는지 확인합니다."
+        "compact는 textarea 세로 padding, shell inset, attachment 상단 inset과 action/status gap만 LDS spacing token의 작은 단계로 줄입니다. DOM/read order, focus ring, autosize, state, submit/stop과 live-region 계약은 comfortable과 같습니다.",
+        "Portal처럼 폭과 세로 공간이 제한된 consumer는 density=\"compact\", 필요한 최소 minRows, 우선순위가 높은 utility만 composer 안에 조합합니다. 긴 scope/model selector를 compact가 임의로 숨기거나 재배치하지 않습니다."
       ],
       "contentGuidance": [
         "reading order는 description/disabled reason → shell의 attachments → textarea → 하단 leading actions → trailing actions → primary send/stop → status/counter입니다.",
@@ -50992,7 +51069,7 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<MessageComposer\n  value={draft}\n  onValueChange={setDraft}\n  onSubmit={(value, reason) => send(value, reason)}\n  state={requestState}\n  attachments={<FileUploadQueue items={draftFiles} />}\n  leadingActions={<IconButton label=\"파일 첨부\" />}\n  trailingActions={<IconButton label=\"음성 입력\" />}\n  onStop={stopResponse}\n/>"
+          "code": "<MessageComposer\n  value={draft}\n  onValueChange={setDraft}\n  onSubmit={(value, reason) => send(value, reason)}\n  state={requestState}\n  density=\"compact\"\n  attachments={<FileUploadQueue items={draftFiles} />}\n  leadingActions={<IconButton label=\"파일 첨부\" />}\n  trailingActions={<IconButton label=\"음성 입력\" />}\n  onStop={stopResponse}\n/>"
         }
       ],
       "tokens": [
@@ -51020,7 +51097,9 @@
         "--font-sans",
         "--radius-xl",
         "--shadow-sm",
+        "--space-0-5",
         "--space-1",
+        "--space-10",
         "--space-12",
         "--space-2",
         "--space-3"
@@ -51158,9 +51237,9 @@
       "purpose": "시간순 대화를 읽고 이전 기록을 이어 불러올 때 사용합니다. Feed는 접근 가능한 log, 이전 기록 위치 유지와 새 메시지 따라가기를 맡습니다. 정적 목록이나 시간순이 아닌 정보에는 사용하지 말고 List·Table을 사용하세요.",
       "useWhen": [
         "following=false이면 children 추가나 resize가 사용자의 읽기 위치를 bottom으로 끌어내리지 않습니다.",
+        "WCAG 2.2를 focus order, keyboard access, status announcement, visible focus와 contrast의 최종 기준으로 사용합니다.",
         "3 Free AI Chatbot App UI Kit의 왼쪽 general-assistant conversation에서 chrome-light reading flow만 secondary inspiration으로 사용합니다.",
-        "LK Control Full Daedeok — not applicable. event supervision과 command history는 LogViewer 또는 domain status component가 적합하며 AI conversation log가 필수로 확인되지 않았습니다.",
-        "representative review."
+        "LK Control Full Daedeok — not applicable. event supervision과 command history는 LogViewer 또는 domain status component가 적합하며 AI conversation log가 필수로 확인되지 않았습니다."
       ],
       "avoidWhen": [
         "분류는 LK Product Extension이며 WDS Core parity를 주장하지 않습니다.",
@@ -51220,6 +51299,13 @@
           "type": "number | string",
           "required": false,
           "description": "Optional minimum viewport height for persistent conversation panels.",
+          "owner": "MessageFeedProps"
+        },
+        {
+          "name": "density",
+          "type": "MessageFeedDensity",
+          "required": false,
+          "description": "Feed-owned vertical density. Comfortable preserves the legacy message gap and block padding; compact reduces only those spaces and does not change viewportInset. @default \"comfortable\"",
           "owner": "MessageFeedProps"
         },
         {
@@ -51327,27 +51413,27 @@
       ],
       "behavior": [
         "following=true일 때만 append/resize를 bottom으로 따릅니다. 사용자가 위로 스크롤하면 onFollowingChange(false, \"user-scroll\")를 요청하고 읽던 위치를 보존합니다.",
-        "dark: 별도 feed fill 없이 parent background에서 focus, message identity, system 칩과 text contrast를 확인합니다.",
-        "history/follow: prepend anchor, 성공·무결과·실패 뒤 announcement 억제 해제, following=false 위치 보존과 latest action의 focus/callback을 확인합니다.",
-        "MessageFeed는 chronological message children을 담는 접근 가능한 scroll log입니다. 장문 AI 응답이 페이지의 읽기 흐름처럼 이어지도록 별도 fill, border, radius와 shadow를 만들지 않는 LK Product Extension입니다.",
-        "| 확인한 sibling | 계승한 규칙 | MessageFeed 결정 | | --- | --- | --- | | ScrollArea | native overflow와 scrollbar | named log, history anchor와 follow state 때문에 전용 viewport를 소유 | | LogViewer | chronological log와 latest/tail 개념 | console fill, level filter, monospace row, search와 copy toolbar는 제외 | | Button / IconButton | named…"
+        "WAI-ARIA APG Feed pattern은 infinite article feed의 Page Up/Page Down 계약과 keyboard help의 discoverability를 강조합니다. MessageFeed는 article focus를 이동시키는 role=\"feed\"가 아니므로 같은 키 이름을 focusable log의 viewport scrolling에만 적용하고 aria-keyshortcuts로 노출합니다.",
+        "Slack screen reader guidance는 Home/End, Page Up/Page Down, first unread, 그리고 “where I left off” 시작 위치를 conversation convention으로 문서화합니다. MessageFeed는 roving message focus를 복제하지 않고 scroll 위치 보존, first-unread separator composition, viewport 단축키만 채택합니다.",
+        "CSS Scroll Anchoring Level 1은 viewport 위 DOM 변경 시 사용자가 읽는 위치를 안정적으로 유지하는 목적을 정의합니다. MessageFeed는 history prepend의 비동기 DOM/height 변화와 live announcement 억제를 함께 제어해야 하므로 browser heuristic에만 맡기지 않고 scrollHeight delta로 수동 복원합니다.",
+        "WCAG 2.2 Understanding 1.4.10 Reflow는 세로 scrolling content가 320 CSS px 상당 폭에서 정보·기능 손실이나 2차원 scrolling 없이 reflow되어야 한다고 설명합니다. density는 inline inset과 overflow 계약을 바꾸지 않습니다."
       ],
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "viewportInset=\"compact | comfortable\"은 scrollbar가 붙는 named log viewport의 inline content inset만 선택합니다. 기본 compact는 좌우 8px, reading/panel composition용 comfortable은 좌우 16px이며 두 값 모두 block 12px을 유지합니다. raw viewport style이나 CSS selector hook은 공개하지 않습니다."
+          "rule": "density=\"comfortable | compact\"은 message 사이 vertical gap과 viewport block padding만 선택합니다. 기본 comfortable은 기존 24px/12px을 보존하고 compact는 16px/8px token 단계로 줄이며 scroll, DOM/ARIA와 action 크기는 바꾸지 않습니다."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "320px에서도 history → log → latest의 DOM order와 wrapping을 유지합니다."
+          "rule": "viewportInset=\"compact | comfortable\"은 scrollbar가 붙는 named log viewport의 inline content inset만 선택합니다. 기본 compact는 좌우 8px, reading/panel composition용 comfortable은 좌우 16px이며 block padding은 density가 독립적으로 소유합니다. raw viewport style이나 CSS selector hook은 공개하지 않습니다."
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "CSS Scroll Anchoring Level 1은 viewport 위 DOM 변경 시 사용자가 읽는 위치를 안정적으로 유지하는 목적을 정의합니다. MessageFeed는 history prepend의 비동기 DOM/height 변화와 live announcement 억제를 함께 제어해야 하므로 browser heuristic에만 맡기지 않고 scrollHeight delta로 수동 복원합니다."
+          "rule": "320px에서도 history → log → latest의 DOM order와 wrapping을 유지합니다."
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "WCAG 2.2를 focus order, keyboard access, status announcement, visible focus와 contrast의 최종 기준으로 사용합니다."
+          "rule": "SELECTANDMESSAGEFEEDLAYOUTFOLLOWUP.md의 LK Portal floating knowledge chat은 460×674px panel에서 실제 feed를 조합합니다. density=\"compact\"는 이처럼 세로 공간이 제한된 panel의 message rhythm만 줄이고, Portal chrome이나 viewportInset 선택을 추론하지 않습니다."
         },
         {
           "subject": "--body2-line",
@@ -51356,9 +51442,9 @@
       ],
       "responsive": [
         "maxHeight와 viewportMinHeight는 named log viewport의 크기만 제어합니다. 고정 application panel 크기를 강제하지 않습니다.",
+        "density와 viewportInset은 독립 축입니다. 따라서 prop을 모두 생략하면 기존 렌더링과 같은 comfortable vertical rhythm과 compact inline inset을 사용합니다.",
         "transparent feed 위에서 assistant document는 reading column을 사용하고 user/human-agent bubble만 compact surface를 가집니다.",
-        "viewport inset은 logical padding-inline으로 적용해 RTL에서도 start/end가 뒤집히며, outer section surface나 scrollbar 위치를 이동시키지 않습니다.",
-        "WAI-ARIA APG Feed pattern은 infinite article feed의 Page Up/Page Down 계약과 keyboard help의 discoverability를 강조합니다. MessageFeed는 article focus를 이동시키는 role=\"feed\"가 아니므로 같은 키 이름을 focusable log의 viewport scrolling에만 적용하고 aria-keyshortcuts로 노출합니다."
+        "viewport inset은 logical padding-inline으로 적용해 RTL에서도 start/end가 뒤집히며, outer section surface나 scrollbar 위치를 이동시키지 않습니다."
       ],
       "contentGuidance": [
         "children을 시간순 DOM 순서로 받습니다. 자체 message schema, renderer, participant truth, provider 또는 transport를 만들지 않습니다.",
@@ -51509,16 +51595,16 @@
           "url": "https://www.w3.org/TR/css-scroll-anchoring-1/"
         },
         {
-          "label": "WCAG 2.2",
-          "url": "https://www.w3.org/TR/WCAG22/"
+          "label": "WCAG 2.2 Understanding 1.4.10 Reflow",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
         },
         {
-          "label": "Carbon AI Chat overview",
-          "url": "https://chat.carbondesignsystem.com/tag/latest/docs/documents/Overview.html"
+          "label": "WCAG 2.2 Understanding 2.5.8 Target Size (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum"
         },
         {
-          "label": "Carbon AI Chat server communication",
-          "url": "https://chat.carbondesignsystem.com/tag/latest/docs/documents/Server_communication.html"
+          "label": "Carbon spacing",
+          "url": "https://carbondesignsystem.com/elements/spacing/overview/"
         }
       ],
       "canonicalGuide": null,
@@ -56258,7 +56344,7 @@
             "role": "responsive"
           }
         ],
-        "hiddenEvidence": 3
+        "hiddenEvidence": 6
       },
       "sources": [
         {
@@ -68030,7 +68116,7 @@
       ],
       "avoidWhen": [
         "접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 아이콘의 강한 잉크로만 표시해 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.",
-        "Carbon UI shell left panel style — sub-menu hover와 sub-menu item selected를 별도 상태로 정의합니다. LDS도 펼침·hover·현재 위치의 상태 분리는 따르되, Carbon의 4px interactive border는 내부 NavRail·TopBar 선택 문법과 맞지 않아 채택하지 않고 현재 leaf의 선택 배경만 유지합니다.",
+        "Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. category 아이콘이 없을 때도 subitem을 명확히 들여쓰라는 원칙을 적용해 LDS는 자식 아이콘 유무와 무관하게 같은 라벨 시작선을 보장합니다. 축소 가능 내비게이션의 상태는 명시적 토글로 설명하고 hover peek는 선택 기능으로 제한합니다.",
         "Carbon UI shell left panel accessibility — rail은 hover나 focus에서 펼쳐져도 같은 링크·서브메뉴 keyboard model을 유지합니다. 이 동작을 LDS에 적용할 때는 동일 DOM뿐 아니라 44px hit target과 세로 위치도 유지해, 포인터와 키보드 사용자가 확장 중 움직이는 목적지를 다시 추적하지 않게 합니다.",
         "대시보드·관리 제품의 주 탐색으로 UserMenu를 푸터에 조합합니다. TopBar가 함께 있으면 전역 utility만 담당하게 하고 로고·경로를 중복하지 않으며, 평면형 대안인 NavRail과 동시에 주 탐색으로 사용하지 않습니다."
       ],
@@ -68174,7 +68260,7 @@
           "name": "multiple",
           "type": "boolean",
           "required": false,
-          "description": "Allows multiple disclosure groups to remain open. Set to false for accordion behavior. @default true",
+          "description": "Allows multiple disclosure groups to remain open. When false, selecting another group or top-level destination closes the previous group. @default false",
           "owner": "SideNavProps"
         },
         {
@@ -68239,10 +68325,10 @@
       ],
       "behavior": [
         "collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌므로 런타임 overlay 전환 때도 부모가 원하는 collapsed 값을 함께 갱신해야 합니다. 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.",
-        "multiple — 기본 true는 여러 disclosure 그룹을 동시에 열어 둘 수 있습니다. multiple={false}이면 한 번에 한 그룹만 열리는 accordion 동작이 되며, 다른 그룹을 열 때 기존 그룹은 닫힙니다. 활성 자식이 바뀌면 활성 그룹을 우선 유지합니다.",
+        "multiple — 기본 false는 한 번에 한 disclosure 그룹만 열리는 accordion 동작입니다. 다른 그룹이나 다른 최상위 목적지를 선택하면 기존에 열린 그룹을 닫고, 활성 자식이 바뀌면 해당 그룹만 엽니다. multiple={true}를 명시하면 여러 그룹을 동시에 열 수 있습니다.",
         "floating은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. docked는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, fill, active marker를 공유합니다.",
-        "WAI Disclosure Navigation — 부모 button의 aria-expanded는 자식 노출 상태이고 leaf link의 aria-current=\"page\"는 현재 위치입니다. LDS는 두 상태를 같은 persistent highlight로 합치지 않습니다.",
-        "brandAlign=\"center|start\" controls the expanded brand region. The collapsed mark remains centered so the 64px rail stays balanced."
+        "WAI-ARIA Accordion pattern — 한 패널만 허용하는 accordion은 다른 헤더를 열 때 기존 패널을 닫고 aria-expanded를 실제 노출 상태와 동기화합니다. LDS의 기본 SideNav도 이 단일 열림 규칙을 따릅니다.",
+        "WAI-ARIA landmark regions — landmark와 명확한 accessible name을 유지합니다. 소비자가 aria-label을 주지 않으면 기본 이름 사이드 탐색을 제공하고, 같은 문서에 탐색 landmark가 여러 개면 고유한 이름으로 덮어씁니다. 현재 목적지는 aria-current=\"page\"로 노출하고, 키보드 focus 진입·이탈과 Esc 뒤에도 초점을 잃지 않습니다."
       ],
       "quantitativeRules": [
         {
@@ -68255,11 +68341,11 @@
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "내비게이션 disabled 표면은 wrapper opacity 0.45를 공통 문법으로 사용합니다. 개별 자식의 색 토큰을 다시 바꿔 이중으로 흐리게 만들지 않습니다."
+          "rule": "펼쳐진 childList는 논리적 시작 방향에서 --space-3(12px)만큼 들어가 하위 목적지의 hover·선택 표면 자체를 부모 행보다 안쪽에 둡니다. 자식 라벨도 아이콘 유무와 관계없이 부모 라벨보다 12px 안쪽에서 시작하고 --label2-line(18px)을 사용합니다. 44px hit target과 현재 leaf 하나만 소유하는 선택 배경은 유지하며, 별도 connector·중첩 표면·active bar는 추가하지 않습니다."
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "타입 스케일 정합: 섹션 헤딩 10.5px → --caption2-size(11px, 스케일 하한; 대문자 letterSpacing 1px 유지), 자식 항목 13.5px → --label2-size(13px)로 스냅했습니다. 14px 부모 항목보다 1px 아래 위계는 그대로 유지됩니다."
+          "rule": "내비게이션 disabled 표면은 wrapper opacity 0.45를 공통 문법으로 사용합니다. 개별 자식의 색 토큰을 다시 바꿔 이중으로 흐리게 만들지 않습니다."
         },
         {
           "subject": "--caption2-size",
@@ -68276,7 +68362,7 @@
         "ref, className, and style target the native nav landmark.",
         "Stable parts are root, overlaySurface, panel, brand, list, heading, item, icon, label, badge, childList, and footer. Root and items expose stable collapsed/active state attributes.",
         "items — { value, label, ariaLabel?, icon, badge?, href?, disabled?, children? } + { heading } 섹션 헤딩. 자식도 icon?: ReactNode를 받을 수 있으며, 한 그룹에 아이콘이 하나라도 있으면 모든 자식에 고정 슬롯을 예약해 라벨 시작선을 맞춥니다. 항목 전체는 native ul/li 리스트(그룹 자식은 중첩 ul)로 렌더되어 보조기술이 항목 수와 계층을 읽을 수 있고, 시각은 기존과 동일합니다(list-style 없음).",
-        "Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. 축소 가능 내비게이션도 상태를 설명하는 명시적인 제어를 제공하므로 LDS는 명시적 토글을 정식 수단으로 두고 hover peek를 선택 기능으로 제한합니다."
+        "타입 스케일 정합: 섹션 헤딩 10.5px → --caption2-size(11px, 스케일 하한; 대문자 letterSpacing 1px 유지), 자식 항목 13.5px → --label2-size(13px)로 스냅했습니다. 14px 부모 항목보다 1px 아래 위계는 그대로 유지됩니다."
       ],
       "accessibility": [
         "renderLink — native anchor 대신 router link를 쓸 때만 제공합니다. renderLink={(item, { href, ...props }) = }처럼 DS가 만든 aria-current, disabled, style, activation 계약을 전달합니다.",
@@ -68344,6 +68430,7 @@
         "--fw-medium",
         "--label1-line",
         "--label1-size",
+        "--label2-line",
         "--label2-size",
         "--lds-side-nav-collapsed-width",
         "--lds-side-nav-item-height",
@@ -68360,6 +68447,7 @@
         "--space-2",
         "--space-2-5",
         "--space-3",
+        "--space-4",
         "--space-4-5"
       ],
       "apiLinks": [
@@ -68420,6 +68508,11 @@
             "id": "lds-product-navigation-side-nav--manual-active-group-expansion",
             "name": "상호작용 · 활성 표시와 그룹 열림 분리",
             "role": "interaction"
+          },
+          {
+            "id": "lds-product-navigation-side-nav--single-open-groups",
+            "name": "시나리오 · 한 번에 하나만 여는 그룹",
+            "role": "scenario"
           }
         ],
         "hiddenEvidence": 2
@@ -68446,6 +68539,10 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/nav/usage"
         },
         {
+          "label": "WAI-ARIA Accordion pattern",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/accordion/"
+        },
+        {
           "label": "Carbon UI shell left panel accessibility",
           "url": "https://preview.carbondesignsystem.com/building-blocks/core/components/ui-shell-left-panel/accessibility"
         },
@@ -68460,10 +68557,6 @@
         {
           "label": "WAI-ARIA landmark regions",
           "url": "https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/"
-        },
-        {
-          "label": "WAI Disclosure Navigation",
-          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/"
         }
       ],
       "canonicalGuide": null,

@@ -1,6 +1,7 @@
 import * as React from "react";
 
 export type MessageComposerState = "idle" | "submitting" | "streaming" | "stopping";
+export type MessageComposerDensity = "comfortable" | "compact";
 export type MessageComposerSubmitMode = "enter" | "modifier-enter" | "button-only";
 export type MessageComposerSubmitReason = "enter" | "modifier-enter" | "button";
 
@@ -27,6 +28,8 @@ interface MessageComposerBaseProps extends Omit<
   onSubmit: (value: string, reason: MessageComposerSubmitReason) => void;
   /** Product-owned request/response lifecycle. @default "idle" */
   state?: MessageComposerState;
+  /** Composer-owned spacing density. Comfortable preserves the legacy rendering; compact reduces vertical space for narrow panels without shrinking the 32px primary action. @default "comfortable" */
+  density?: MessageComposerDensity;
   /** Keyboard submission rule. modifier-enter accepts Alt-free Ctrl/Meta+Enter only. @default "enter" */
   submitMode?: MessageComposerSubmitMode;
   /** Explicit submit eligibility. Defaults to whether the trimmed value is non-empty. */
@@ -45,7 +48,7 @@ interface MessageComposerBaseProps extends Omit<
   description?: React.ReactNode;
   /** Native maximum character count and visible counter. */
   maxLength?: number;
-  /** Minimum autosize rows; one row starts at 48px. @default 1 */
+  /** Minimum autosize rows; one row starts at 48px in comfortable density and 40px in compact density. @default 1 */
   minRows?: number;
   /** Maximum autosize rows before internal scrolling. @default 6 */
   maxRows?: number;

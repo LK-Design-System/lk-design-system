@@ -1,19 +1,19 @@
-"use client";
-import {
-  DataToolbar
-} from "./chunk-RGMLFFTD.js";
-import {
-  ResourceState
-} from "./chunk-TZU3AXAI.js";
-import {
-  componentVars,
-  partClassName,
-  partStyle
-} from "./chunk-A2U7YIGP.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
+
+
+var _chunk6W5JWREUcjs = require('./chunk-6W5JWREU.cjs');
+
+
+var _chunkSDI7JUXFcjs = require('./chunk-SDI7JUXF.cjs');
+
+
+
+
+var _chunkGWMGPLNWcjs = require('./chunk-GWMGPLNW.cjs');
 
 // components/data/DataCollectionPanel.jsx
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 var DATA_COLLECTION_PANEL_STYLES = `
 .lk-data-collection-panel__compact-content{display:none}
 .lk-data-collection-panel__footer:empty{display:none!important}
@@ -26,7 +26,7 @@ var DATA_COLLECTION_PANEL_STYLES = `
 `;
 var RESOURCE_STATES = /* @__PURE__ */ new Set(["ready", "loading", "refreshing", "empty", "error", "stale", "offline", "restricted"]);
 var BLOCKING_STATES = /* @__PURE__ */ new Set(["empty", "restricted"]);
-var DataCollectionPanel = React.forwardRef(function DataCollectionPanel2({
+var DataCollectionPanel = _react2.default.forwardRef(function DataCollectionPanel2({
   as = "section",
   toolbar,
   resourceState,
@@ -44,14 +44,14 @@ var DataCollectionPanel = React.forwardRef(function DataCollectionPanel2({
   const Component = as;
   const resolvedLayout = ["auto", "wide", "narrow"].includes(layout) ? layout : "auto";
   const hasCompactContent = compactContent != null;
-  const resolvedResourceState = resourceState ?? {};
-  const hasWideContent = React.Children.toArray(children).length > 0;
+  const resolvedResourceState = _nullishCoalesce(resourceState, () => ( {}));
+  const hasWideContent = _react2.default.Children.toArray(children).length > 0;
   const hasContent = hasWideContent || hasCompactContent;
   const state = RESOURCE_STATES.has(resolvedResourceState.state) ? resolvedResourceState.state : "ready";
   const isLoading = state === "loading" || state === "refreshing" && !hasContent;
   const isBlocking = BLOCKING_STATES.has(state) || !hasContent && !isLoading && state !== "ready";
   const showFooter = footer != null && !isLoading && !isBlocking;
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     Component,
     {
       ...rest,
@@ -61,9 +61,9 @@ var DataCollectionPanel = React.forwardRef(function DataCollectionPanel2({
       "data-layout": resolvedLayout,
       "data-has-compact-content": hasCompactContent ? "true" : "false",
       "data-state": state,
-      className: partClassName(classNames, "root", "lk-data-collection-panel", className) || void 0,
+      className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "root", "lk-data-collection-panel", className) || void 0,
       style: {
-        ...componentVars(vars, "--lds-data-collection-panel-"),
+        ..._chunkGWMGPLNWcjs.componentVars.call(void 0, vars, "--lds-data-collection-panel-"),
         width: "100%",
         maxWidth: "100%",
         minWidth: 0,
@@ -78,55 +78,55 @@ var DataCollectionPanel = React.forwardRef(function DataCollectionPanel2({
         color: "var(--component-card-fg)",
         fontFamily: "var(--font-sans)",
         boxSizing: "border-box",
-        ...partStyle(styles, "root"),
+        ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "root"),
         ...style
       },
       children: [
-        /* @__PURE__ */ jsx("style", { children: DATA_COLLECTION_PANEL_STYLES }),
-        toolbar != null && /* @__PURE__ */ jsx(
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: DATA_COLLECTION_PANEL_STYLES }),
+        toolbar != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             "data-slot": "toolbar",
-            className: partClassName(classNames, "toolbar") || void 0,
-            style: { minWidth: 0, ...partStyle(styles, "toolbar") },
-            children: /* @__PURE__ */ jsx(DataToolbar, { ...toolbar, variant: "embedded" })
+            className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "toolbar") || void 0,
+            style: { minWidth: 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "toolbar") },
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk6W5JWREUcjs.DataToolbar, { ...toolbar, variant: "embedded" })
           }
         ),
-        /* @__PURE__ */ jsx(
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             "data-slot": "state",
-            className: partClassName(classNames, "state", "lk-data-collection-panel__state") || void 0,
-            style: { minWidth: 0, ...partStyle(styles, "state") },
-            children: /* @__PURE__ */ jsxs(ResourceState, { ...resolvedResourceState, state, messageVariant: "embedded", children: [
-              hasWideContent && /* @__PURE__ */ jsx(
+            className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "state", "lk-data-collection-panel__state") || void 0,
+            style: { minWidth: 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "state") },
+            children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunkSDI7JUXFcjs.ResourceState, { ...resolvedResourceState, state, messageVariant: "embedded", children: [
+              hasWideContent && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "div",
                 {
                   "data-slot": "wideContent",
                   "data-collection-content": "wide",
-                  className: partClassName(classNames, "wideContent", "lk-data-collection-panel__wide-content") || void 0,
-                  style: { minWidth: 0, ...partStyle(styles, "wideContent") },
+                  className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "wideContent", "lk-data-collection-panel__wide-content") || void 0,
+                  style: { minWidth: 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "wideContent") },
                   children
                 }
               ),
-              hasCompactContent && /* @__PURE__ */ jsx(
+              hasCompactContent && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "div",
                 {
                   "data-slot": "compactContent",
                   "data-collection-content": "compact",
-                  className: partClassName(classNames, "compactContent", "lk-data-collection-panel__compact-content") || void 0,
-                  style: { minWidth: 0, ...partStyle(styles, "compactContent") },
+                  className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "compactContent", "lk-data-collection-panel__compact-content") || void 0,
+                  style: { minWidth: 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "compactContent") },
                   children: compactContent
                 }
               )
             ] })
           }
         ),
-        showFooter && /* @__PURE__ */ jsx(
+        showFooter && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "div",
           {
             "data-slot": "footer",
-            className: partClassName(classNames, "footer", "lk-data-collection-panel__footer") || void 0,
+            className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "footer", "lk-data-collection-panel__footer") || void 0,
             style: {
               display: "flex",
               alignItems: "center",
@@ -134,7 +134,7 @@ var DataCollectionPanel = React.forwardRef(function DataCollectionPanel2({
               minWidth: 0,
               padding: "var(--lds-data-collection-panel-footer-padding, var(--space-3) var(--space-4))",
               borderTop: "1px solid var(--color-semantic-line-normal-normal)",
-              ...partStyle(styles, "footer")
+              ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "footer")
             },
             children: footer
           }
@@ -144,7 +144,7 @@ var DataCollectionPanel = React.forwardRef(function DataCollectionPanel2({
   );
 });
 
-export {
-  DataCollectionPanel
-};
-//# sourceMappingURL=chunk-YA7LF7BG.js.map
+
+
+exports.DataCollectionPanel = DataCollectionPanel;
+//# sourceMappingURL=chunk-C5747XRU.cjs.map

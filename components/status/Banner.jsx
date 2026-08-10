@@ -27,7 +27,7 @@ function variantStyle(variant, palette) {
  * optional trailing action / close. Calm, hairline-bordered. For a floating
  * transient message use Toast.
  */
-export function Banner({ tone = 'info', variant = 'standalone', title, children, action, onClose, closeLabel = '닫기', style, ...rest }) {
+export function Banner({ tone = 'signal', variant = 'standalone', title, children, action, onClose, closeLabel = '닫기', style, ...rest }) {
   const normalizedTone = normalizeStatusTone(tone);
   const t = statusToneStyle(normalizedTone);
   const urgent = normalizedTone === 'negative';

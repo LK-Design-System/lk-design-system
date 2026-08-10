@@ -3532,16 +3532,16 @@
       "importPath": "./stories/Brand.stories.jsx",
       "storyId": "lds-theme-brand-lk-robotics-logo--lk-robotics-logo",
       "exportName": "LKRoboticsLogo",
-      "descriptionHash": "1ec7a6138173419e9bb8c4f53e8f205e52a7a7e007f2928acbad6bbda63fe3f9",
+      "descriptionHash": "ae86630c8d4c9766b96e49a4fd9a6d8d5d1fb060c38b437c84d229724ccbe014",
       "sentences": [
         {
-          "hash": "2e7734155d87ed6420f27f261362b8752fb851f437349fa925a7db5745970915",
-          "text": "공식 LK ROBOTICS logo lockup의 형태와 주변 여백을 확인합니다.",
+          "hash": "fa574170eb2f461320aa6e57c87f89b88dad6b37dedd136ce708b5c607c910c6",
+          "text": "공식 LK ROBOTICS SVG의 기업 표기형·기본형과 같은 원본 path를 사용하는 제품 UI 파생형을 확인합니다.",
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "f3d80b4a3689777d32cf13cf5268e026c71719a75d534aa572a38eea4d1d737d",
-          "text": "실제 적용에서는 배경 대비와 최소 크기를 지키고, 늘이기·회전·부분 분리 없이 승인된 조합을 그대로 사용하세요.",
+          "hash": "4b2c1a14648752d4fbb3cabdc0a57a37596c9b7a9ed7436ab7f45ddbcdfa0604",
+          "text": "실제 적용에서는 배경 대비와 최소 크기를 지키고, 늘이기·회전·재채색 없이 제공된 조합을 사용하세요.",
           "decision": "retained-in-canvas"
         }
       ]

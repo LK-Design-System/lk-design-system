@@ -49,7 +49,7 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
   collapsedWidth = 64,
   overlay = false,
   autoExpandActiveGroup = true,
-  multiple = true,
+  multiple = false,
   renderLink,
   className,
   style,
@@ -153,7 +153,12 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
   _react2.default.useEffect(() => {
     if (!autoExpandActiveGroup) return;
     const activeParent = items.find((item) => item && !item.heading && _optionalChain([item, 'access', _24 => _24.children, 'optionalAccess', _25 => _25.some, 'call', _26 => _26((child) => child.value === val)]));
-    if (!activeParent) return;
+    if (!activeParent) {
+      if (!multiple) {
+        setOpen((current) => Object.values(current).some(Boolean) ? {} : current);
+      }
+      return;
+    }
     setOpen((current) => current[activeParent.value] ? current : multiple ? { ...current, [activeParent.value]: true } : { [activeParent.value]: true });
   }, [autoExpandActiveGroup, items, multiple, val]);
   _react2.default.useEffect(() => {
@@ -204,6 +209,9 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
       if (disabled) {
         event.preventDefault();
         return;
+      }
+      if (!parentValue && !multiple) {
+        setOpen((current) => Object.values(current).some(Boolean) ? {} : current);
       }
       pick(item.value);
       _optionalChain([item, 'access', _30 => _30.onClick, 'optionalCall', _31 => _31(event)]);
@@ -293,7 +301,7 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
               ]
             }
           ) }),
-          !col && isOpen && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { "data-slot": "childList", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "childList") || void 0, style: { display: "flex", flexDirection: "column", gap: "var(--space-0-5)", margin: "0 0 4px", padding: 0, listStyle: "none", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "childList") }, children: kids.map((c) => {
+          !col && isOpen && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { "data-slot": "childList", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "childList") || void 0, style: { display: "flex", flexDirection: "column", gap: "var(--space-0-5)", margin: "0 0 4px", padding: 0, paddingInlineStart: "var(--space-3)", listStyle: "none", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "childList") }, children: kids.map((c) => {
             const ca = c.value === val;
             const childTitle = typeof c.label === "string" ? c.label : c.ariaLabel;
             return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: LIST_ITEM_STYLE, children: renderLeafControl(c, {
@@ -301,10 +309,10 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
               parentValue: o.value,
               ariaLabel: c.ariaLabel,
               title: childTitle,
-              itemStyle: row(ca, c.disabled, { padding: hasChildIcons ? "8px 12px 8px 24px" : "8px 12px 8px 42px", gap: hasChildIcons ? "var(--space-2)" : void 0 }, hovKey === c.value),
+              itemStyle: row(ca, c.disabled, { paddingBlock: "var(--space-2)", paddingInlineStart: hasChildIcons ? "var(--space-4)" : "42px", paddingInlineEnd: "var(--space-3)", gap: hasChildIcons ? "var(--space-2)" : void 0 }, hovKey === c.value),
               content: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
                 hasChildIcons && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "icon", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "icon") || void 0, "data-sidenav-child-icon": true, "aria-hidden": "true", style: { width: "var(--space-4-5)", flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "icon") }, children: c.icon }),
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "label", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "label") || void 0, style: { flex: 1, minWidth: 0, fontSize: "var(--label2-size)", fontWeight: ca ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "label") }, children: c.label }),
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "label", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "label") || void 0, style: { flex: 1, minWidth: 0, fontSize: "var(--label2-size)", fontWeight: ca ? "var(--fw-bold)" : "var(--fw-medium)", lineHeight: "var(--label2-line)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "label") }, children: c.label }),
                 c.badge != null && pill(ca, c.badge)
               ] })
             }) }, c.value);
@@ -380,4 +388,4 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
 
 
 exports.SideNav = SideNav;
-//# sourceMappingURL=chunk-HFYIWPE3.cjs.map
+//# sourceMappingURL=chunk-PSNL7Y4Y.cjs.map
