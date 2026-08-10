@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "recordType": "lk-logo-governance",
+  "standard": {
+    "id": "lk-robotics-logo",
+    "version": "1.0.0",
+    "status": "current-repository-standard",
+    "effectiveDate": "2026-08-10",
+    "scope": "repository brand assets, LK Design System runtime, and documented distribution workflow",
+    "doesNotAssert": [
+      "trademark-registration-status",
+      "territorial-trademark-rights",
+      "external-use-permission",
+      "named-person-approval"
+    ]
+  },
+  "authority": {
+    "precedence": [
+      "scripts/brand/lk-logo-source.mjs",
+      "assets/brand/lk-logo-construction.json",
+      "scripts/generate-brand-assets.mjs",
+      "assets/brand/lk-logo-master.svg",
+      "assets/brand/lk-*.svg",
+      "components/brand/Lockup.jsx"
+    ],
+    "visualReference": "assets/brand/lk-logo-master.svg",
+    "placementAssetRoot": "assets/brand",
+    "policy": "docs/brand/LK_LOGO_STANDARD.md",
+    "platformAssetContract": "assets/brand/platforms/manifest.json",
+    "productAdoptionAudit": "docs/references/brand/PRODUCT_BRAND_ASSET_AUDIT.json",
+    "verificationCommands": [
+      "npm run check:brand",
+      "npm run check:docs",
+      "npm run check:brand-products"
+    ]
+  },
+  "approvalRoles": {
+    "brandOwner": {
+      "requiredFor": [
+        "visible geometry or proportion changes",
+        "wordmark or corporate-name changes",
+        "brand color changes",
+        "new variants",
+        "external distribution",
+        "co-branding",
+        "monochrome exceptions",
+        "motion, 3D, signage, apparel, engraving, or embroidery"
+      ]
+    },
+    "designSystemOwner": {
+      "requiredFor": [
+        "generator or manifest changes",
+        "runtime Lockup changes",
+        "asset generation and checksum verification",
+        "small-use and visual-regression evidence",
+        "package and documentation release"
+      ]
+    },
+    "legalOrTrademarkReviewer": {
+      "requiredWhenApplicableFor": [
+        "registration claims or legal marks",
+        "territorial rights questions",
+        "partner or sponsorship implications",
+        "license or third-party mark questions"
+      ]
+    },
+    "printProofApprover": {
+      "requiredFor": [
+        "official CMYK values",
+        "official Pantone values",
+        "substrate-specific or process-specific color standards"
+      ]
+    }
+  },
+  "minimumSizeStatus": {
+    "status": "repository-policy-pending-human-optical-approval",
+    "policySource": "assets/brand/lk-logo-construction.json",
+    "evidenceRequired": [
+      "16-20-24-28-32-48-64-css-pixel-captures",
+      "1x-and-2x-rasterization",
+      "positive-and-reverse-backgrounds",
+      "browser-favicon-at-16px",
+      "named-human-optical-verdict"
+    ],
+    "approvalRecord": null
+  },
+  "constructionContract": {
+    "constructionVersion": 3,
+    "geometryVersion": "1.0",
+    "visibleMarkWidthToX": 1.0817599905987594,
+    "clearSpace": {
+      "transparentMinimumToX": 0.5,
+      "coBrandMinimumToX": 1
+    },
+    "minimumRenderedLogicalUnits": {
+      "markHeight": 20,
+      "markVisibleArtworkHeight": 16,
+      "inlineHeight": 20,
+      "stackedHeight": 64,
+      "bannerHeight": 28,
+      "officialSquareEdge": 64,
+      "corporateSquareEdge": 160,
+      "corporateSquareRecommendedEdge": 192,
+      "faviconSquareEdge": 16
+    },
+    "minimumSlotLogicalUnits": {
+      "markWidth": 21.431318,
+      "stackedWidth": 82.61299,
+      "inlineWidth": 156.324048,
+      "bannerWidth": 137.019722
+    }
+  },
+  "printColorStatus": {
+    "digitalSource": {
+      "navy": {
+        "hex": "#05132B",
+        "rgb": [5, 19, 43]
+      },
+      "accent": {
+        "hex": "#6BBBDD",
+        "rgb": [107, 187, 221]
+      },
+      "white": {
+        "hex": "#FFFFFF",
+        "rgb": [255, 255, 255]
+      }
+    },
+    "cmyk": null,
+    "pantone": null,
+    "status": "unapproved-pending-physical-proof",
+    "requiredProofFields": [
+      "process",
+      "iccProfile",
+      "substrate",
+      "coating",
+      "ink",
+      "proofId",
+      "viewingCondition",
+      "supplier",
+      "proofDate",
+      "approver"
+    ]
+  },
+  "externalApprovalRequestFields": [
+    "requestId",
+    "requester",
+    "purpose",
+    "ownerOrganization",
+    "channelOrMedium",
+    "territory",
+    "startDate",
+    "endDate",
+    "assetFile",
+    "standardVersion",
+    "assetChecksum",
+    "renderedSize",
+    "background",
+    "clearSpace",
+    "artworkOrProof",
+    "supplier",
+    "partnerPermission",
+    "decision",
+    "decidedBy",
+    "decisionDate",
+    "conditions"
+  ],
+  "approvalRecords": []
+}

@@ -1,9 +1,13 @@
 import { createHash } from 'node:crypto';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import * as fontkit from 'fontkit';
 import opentype from 'opentype.js';
-import { LK_MARK_PATHS, LOGO_GEOMETRY } from './brand/lk-logo-source.mjs';
+import {
+  LK_MARK_GEOMETRY_VERSION,
+  LK_MARK_PATHS,
+  LOGO_GEOMETRY,
+} from './brand/lk-logo-source.mjs';
 
 const root = process.cwd();
 const checkOnly = process.argv.includes('--check');
@@ -16,6 +20,7 @@ const corporateLicenseBuffer = await readFile(path.join(root, manifest.corporate
 
 assertEqual(manifest.schemaVersion, 1, 'manifest schema version');
 assertEqual(manifest.constructionVersion, 3, 'logo construction version');
+assertEqual(manifest.symbol.geometryVersion, LK_MARK_GEOMETRY_VERSION, 'LK symbol geometry version');
 assertEqual(
   geometrySha256({ paths: LK_MARK_PATHS, bounds: LOGO_GEOMETRY.markBounds }),
   manifest.symbol.geometrySha256,
@@ -182,6 +187,21 @@ const layout = manifest.layout;
 const markBounds = LOGO_GEOMETRY.markBounds;
 const lockupGap = markBounds.width * layout.stacked.gapToMarkWidth;
 
+assertEqual(layout.xDefinition, 'visible height of the custom LK symbol', 'X measurement rule');
+assertEqual(layout.safeArea.measurement, 'visible-artwork-bounds', 'safe-area measurement');
+assertEqual(layout.safeArea.application, 'external-around-visible-bounds', 'safe-area application');
+assertEqual(layout.safeArea.minimumClearSpaceToX, 0.5, 'minimum clear space');
+assertEqual(layout.safeArea.coBrandClearSpaceToX, 1, 'co-brand clear space');
+assertArrayEqual(layout.safeArea.appliesTo, ['mark', 'stacked', 'inline'], 'safe-area variants');
+assertEqual(layout.banner.clearSpaceToX, layout.safeArea.minimumClearSpaceToX, 'banner embedded clear space');
+assertEqual(layout.mark.minimumVisibleArtworkHeightPx, 16, 'mark minimum visible-artwork height');
+assertEqual(layout.mark.minimumRenderedHeightPx, 20, 'mark minimum rendered height');
+assertEqual(layout.stacked.minimumRenderedHeightPx, 64, 'stacked minimum digital height');
+assertEqual(layout.inline.minimumRenderedHeightPx, 20, 'inline minimum digital height');
+assertEqual(layout.banner.minimumRenderedHeightPx, 28, 'banner minimum digital height');
+assertEqual(layout.officialSquare.minimumRenderedSquarePx, 64, 'official-square minimum digital size');
+assertEqual(layout.officialSquare.recommendedRenderedSquarePx, 96, 'official-square recommended digital size');
+
 const stackedScale = (markBounds.height * layout.stacked.nominalCapHeightToX) / capHeight;
 const stackedBounds = Object.freeze({
   x: markBounds.x + (markBounds.width - sourceBounds.width * stackedScale) / 2,
@@ -214,6 +234,66 @@ const stackedViewBox = padBounds(unionBounds(markBounds, stackedBounds), layout.
 const inlineViewBox = padBounds(unionBounds(markBounds, inlineBounds), layout.tightPaddingSourceUnits);
 const bannerClearSpace = markBounds.height * layout.banner.clearSpaceToX;
 const bannerViewBox = padBounds(unionBounds(markBounds, inlineBounds), bannerClearSpace);
+const minimumRequiredSlotWidthPx = Object.freeze({
+  mark: minimumSlotWidth(layout.mark.minimumRenderedHeightPx, markViewBox),
+  stacked: minimumSlotWidth(layout.stacked.minimumRenderedHeightPx, stackedViewBox),
+  inline: minimumSlotWidth(layout.inline.minimumRenderedHeightPx, inlineViewBox),
+  banner: minimumSlotWidth(layout.banner.minimumRenderedHeightPx, bannerViewBox),
+});
+assertNumberClose(minimumRequiredSlotWidthPx.mark, 21.431318, 'mark minimum required slot width');
+assertNumberClose(minimumRequiredSlotWidthPx.stacked, 82.61299, 'stacked minimum required slot width');
+assertNumberClose(minimumRequiredSlotWidthPx.inline, 156.324048, 'inline minimum required slot width');
+assertNumberClose(minimumRequiredSlotWidthPx.banner, 137.019722, 'banner minimum required slot width');
+const visibleMarkHeightAtMinimumRenderedHeight =
+  layout.mark.minimumRenderedHeightPx * markBounds.height / markViewBox.height;
+if (visibleMarkHeightAtMinimumRenderedHeight < layout.mark.minimumVisibleArtworkHeightPx) {
+  throw new Error(
+    `Mark rendered-height minimum exposes only ${formatNumber(visibleMarkHeightAtMinimumRenderedHeight)}px of visible artwork; `
+      + `${layout.mark.minimumVisibleArtworkHeightPx}px is required.`,
+  );
+}
+const faviconViewBox = Object.freeze({
+  x: 0,
+  y: 0,
+  width: layout.favicon.referenceCanvasSizePx,
+  height: layout.favicon.referenceCanvasSizePx,
+});
+const faviconMarkCenter = layout.favicon.markCenterSourceUnits;
+const faviconTransform = [
+  `translate(${formatNumber(layout.favicon.referenceCanvasSizePx / 2)} ${formatNumber(layout.favicon.referenceCanvasSizePx / 2)})`,
+  `scale(${formatNumber(layout.favicon.markScale, 8)})`,
+  `translate(${-faviconMarkCenter.x} ${-faviconMarkCenter.y})`,
+].join(' ');
+const faviconMarkBounds = Object.freeze({
+  x: layout.favicon.referenceCanvasSizePx / 2
+    + (markBounds.x - faviconMarkCenter.x) * layout.favicon.markScale,
+  y: layout.favicon.referenceCanvasSizePx / 2
+    + (markBounds.y - faviconMarkCenter.y) * layout.favicon.markScale,
+  width: markBounds.width * layout.favicon.markScale,
+  height: markBounds.height * layout.favicon.markScale,
+});
+
+assertEqual(layout.favicon.referenceCanvasSizePx, 512, 'favicon reference canvas size');
+assertEqual(layout.favicon.minimumRenderedSquarePx, 16, 'favicon minimum rendered size');
+assertEqual(layout.favicon.cornerRadiusPx, 112, 'favicon corner radius');
+assertEqual(layout.favicon.markScale, 5.30600371, 'favicon mark scale');
+assertNumberClose(
+  faviconMarkCenter.x,
+  markBounds.x + markBounds.width / 2,
+  'favicon horizontal mark center',
+  0.00001,
+);
+assertNumberClose(
+  faviconMarkCenter.y,
+  markBounds.y + markBounds.height / 2,
+  'favicon vertical mark center',
+  0.00001,
+);
+assertEqual(
+  formatViewBox({ x: 1.23456789, y: 2.34567891, width: 3.45678912, height: 4.56789123 }),
+  '1.234568 2.345679 3.456789 4.567891',
+  'viewBox fixed-precision serialization',
+);
 
 const generatedWordmarkPaths = glyphRows.map((row) => ({
   letter: row.letter,
@@ -241,6 +321,10 @@ const corporateTargetBounds = Object.freeze({
   width: corporateTargetWidth,
   height: corporateSourceBounds.height * corporateScale,
 });
+const stackedArtworkBounds = unionBounds(markBounds, stackedBounds);
+const inlineArtworkBounds = unionBounds(markBounds, inlineBounds);
+const corporateArtworkBounds = unionBounds(corporateLockupBounds, corporateTargetBounds);
+const masterArtworkBounds = unionBounds(stackedArtworkBounds, corporateArtworkBounds);
 const corporateTransform = matrix(
   corporateScale,
   corporateTargetBounds.x - corporateSourceBounds.x * corporateScale,
@@ -275,7 +359,26 @@ outputs.set('components/brand/lk-logo-paths.js', renderRuntimeModule({
   markViewBox,
   stackedViewBox,
   inlineViewBox,
+  minimumRequiredSlotWidthPx,
   colors,
+}));
+
+outputs.set('assets/brand/lk-mark-navy.svg', renderSvg({
+  title: 'LK ROBOTICS mark',
+  viewBox: markViewBox,
+  body: renderMark(colors.navy),
+}));
+outputs.set('assets/brand/lk-mark-white.svg', renderSvg({
+  title: 'LK ROBOTICS mark',
+  viewBox: markViewBox,
+  body: renderMark(colors.white),
+}));
+outputs.set('assets/brand/lk-favicon.svg', renderFavicon({
+  viewBox: faviconViewBox,
+  cornerRadius: layout.favicon.cornerRadiusPx,
+  background: colors.navy,
+  foreground: colors.white,
+  markTransform: faviconTransform,
 }));
 
 outputs.set('assets/brand/lk-logo-navy.svg', renderSvg({
@@ -352,7 +455,7 @@ outputs.set('assets/brand/lk-logo-tile-light.svg', renderSvg({
   }),
 }));
 outputs.set('assets/brand/lk-logo-official-corporate.svg', renderSvg({
-  title: 'LK ROBOTICS corporate logo',
+  title: 'LK ROBOTICS corporate logo — 주식회사 엘케이로보틱스',
   viewBox: LOGO_GEOMETRY.corporateSquare,
   body: renderSquare({
     square: LOGO_GEOMETRY.corporateSquare,
@@ -362,7 +465,7 @@ outputs.set('assets/brand/lk-logo-official-corporate.svg', renderSvg({
   }),
 }));
 outputs.set('assets/brand/lk-logo-official-corporate-light.svg', renderSvg({
-  title: 'LK ROBOTICS corporate logo on light background',
+  title: 'LK ROBOTICS corporate logo on light background — 주식회사 엘케이로보틱스',
   viewBox: LOGO_GEOMETRY.corporateSquare,
   body: renderSquare({
     square: LOGO_GEOMETRY.corporateSquare,
@@ -389,9 +492,48 @@ outputs.set('assets/brand/lk-logo-master.svg', renderSvg({
   ].join('\n'),
 }));
 
-for (const [relativePath, content] of outputs) validateProductionOutput(relativePath, content);
+const outputContracts = new Map([
+  ['components/brand/lk-logo-paths.js', { kind: 'runtime', markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-mark-navy.svg', { kind: 'svg', viewBox: markViewBox, pathBounds: markBounds, markInstances: 1, wordmarkInstances: 0, corporateInstances: 0 }],
+  ['assets/brand/lk-mark-white.svg', { kind: 'svg', viewBox: markViewBox, pathBounds: markBounds, markInstances: 1, wordmarkInstances: 0, corporateInstances: 0 }],
+  ['assets/brand/lk-favicon.svg', { kind: 'svg', viewBox: faviconViewBox, pathBounds: faviconMarkBounds, markInstances: 1, wordmarkInstances: 0, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-navy.svg', { kind: 'svg', viewBox: stackedViewBox, pathBounds: stackedArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-white.svg', { kind: 'svg', viewBox: stackedViewBox, pathBounds: stackedArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-inline-navy.svg', { kind: 'svg', viewBox: inlineViewBox, pathBounds: inlineArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-inline-white.svg', { kind: 'svg', viewBox: inlineViewBox, pathBounds: inlineArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-banner-navy.svg', { kind: 'svg', viewBox: bannerViewBox, pathBounds: inlineArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-banner-light.svg', { kind: 'svg', viewBox: bannerViewBox, pathBounds: inlineArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-official.svg', { kind: 'svg', viewBox: LOGO_GEOMETRY.standardSquare, pathBounds: stackedArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-official-light.svg', { kind: 'svg', viewBox: LOGO_GEOMETRY.standardSquare, pathBounds: stackedArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-tile-navy.svg', { kind: 'svg', viewBox: LOGO_GEOMETRY.standardSquare, pathBounds: stackedArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-tile-light.svg', { kind: 'svg', viewBox: LOGO_GEOMETRY.standardSquare, pathBounds: stackedArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-official-corporate.svg', { kind: 'svg', viewBox: LOGO_GEOMETRY.corporateSquare, pathBounds: corporateArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 1 }],
+  ['assets/brand/lk-logo-official-corporate-light.svg', { kind: 'svg', viewBox: LOGO_GEOMETRY.corporateSquare, pathBounds: corporateArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 1 }],
+  ['assets/brand/lk-logo-master.svg', { kind: 'svg', viewBox: { x: 77.0213, y: 114.3693, width: 379.148, height: 158.74 }, pathBounds: masterArtworkBounds, markInstances: 2, wordmarkInstances: 2, corporateInstances: 1 }],
+]);
+
+assertArrayEqual([...outputs.keys()], [...outputContracts.keys()], 'generated brand output inventory');
+const repositoryBrandSvgPaths = (await readdir(path.join(root, 'assets/brand')))
+  .filter((name) => name.endsWith('.svg'))
+  .map((name) => `assets/brand/${name}`)
+  .sort();
+const generatedBrandSvgPaths = [...outputContracts.entries()]
+  .filter(([, contract]) => contract.kind === 'svg')
+  .map(([relativePath]) => relativePath)
+  .sort();
+assertArrayEqual(repositoryBrandSvgPaths, generatedBrandSvgPaths, 'repository brand SVG inventory');
+for (const [relativePath, content] of outputs) {
+  validateProductionOutput(relativePath, content, outputContracts.get(relativePath));
+}
 
 if (checkOnly) {
+  const [lockupPrompt, brandStandard, governanceText] = await Promise.all([
+    readFile(path.join(root, 'components/brand/Lockup.prompt.md'), 'utf8'),
+    readFile(path.join(root, 'docs/brand/LK_LOGO_STANDARD.md'), 'utf8'),
+    readFile(path.join(root, 'docs/brand/lk-logo-governance.json'), 'utf8'),
+  ]);
+  validateMinimumSlotWidthDocumentation(lockupPrompt, minimumRequiredSlotWidthPx);
+  validateBrandPolicyDocumentation(brandStandard, JSON.parse(governanceText), minimumRequiredSlotWidthPx);
   const stale = [];
   for (const [relativePath, expected] of outputs) {
     let actual;
@@ -418,6 +560,7 @@ function renderRuntimeModule({
   markViewBox: markBox,
   stackedViewBox: stackedBox,
   inlineViewBox: inlineBox,
+  minimumRequiredSlotWidthPx: minimumSlotWidth,
   colors: logoColors,
 }) {
   const markRows = LK_MARK_PATHS.map((row) => [
@@ -461,6 +604,44 @@ export const LK_LOGO_VIEWBOX = Object.freeze({
   inline: ${JSON.stringify(formatViewBox(inlineBox))},
 });
 
+export const LK_LOGO_USAGE = Object.freeze({
+  geometryVersion: ${JSON.stringify(manifest.symbol.geometryVersion)},
+  minimumVisibleArtworkHeightPx: Object.freeze({
+    mark: ${layout.mark.minimumVisibleArtworkHeightPx},
+  }),
+  minimumRenderedHeightPx: Object.freeze({
+    mark: ${layout.mark.minimumRenderedHeightPx},
+    stacked: ${layout.stacked.minimumRenderedHeightPx},
+    inline: ${layout.inline.minimumRenderedHeightPx},
+    banner: ${layout.banner.minimumRenderedHeightPx},
+  }),
+  minimumRequiredSlotWidthPx: Object.freeze({
+    mark: ${formatNumber(minimumSlotWidth.mark)},
+    stacked: ${formatNumber(minimumSlotWidth.stacked)},
+    inline: ${formatNumber(minimumSlotWidth.inline)},
+    banner: ${formatNumber(minimumSlotWidth.banner)},
+  }),
+  officialSquare: Object.freeze({
+    minimumRenderedSquarePx: ${layout.officialSquare.minimumRenderedSquarePx},
+    recommendedRenderedSquarePx: ${layout.officialSquare.recommendedRenderedSquarePx},
+  }),
+  favicon: Object.freeze({
+    minimumRenderedSquarePx: ${layout.favicon.minimumRenderedSquarePx},
+  }),
+  corporateSquare: Object.freeze({
+    minimumRenderedSquarePx: ${layout.corporate.minimumRenderedSquarePx},
+    recommendedRenderedSquarePx: ${layout.corporate.recommendedRenderedSquarePx},
+    minimumPrintedSquareMm: ${layout.corporate.minimumPrintedSquareMm},
+  }),
+  clearSpace: Object.freeze({
+    measurement: ${JSON.stringify(layout.safeArea.measurement)},
+    application: ${JSON.stringify(layout.safeArea.application)},
+    minimumToX: ${layout.safeArea.minimumClearSpaceToX},
+    coBrandToX: ${layout.safeArea.coBrandClearSpaceToX},
+    appliesTo: Object.freeze(${JSON.stringify(layout.safeArea.appliesTo)}),
+  }),
+});
+
 export const LK_LOGO_COLORS = Object.freeze({
   navy: ${JSON.stringify(logoColors.navy)},
   accent: ${JSON.stringify(logoColors.accent)},
@@ -475,6 +656,20 @@ function renderSvg({ title, viewBox, body }) {
 ${body}
 </svg>
 `;
+}
+
+function renderFavicon({ viewBox, cornerRadius, background, foreground, markTransform }) {
+  const size = normalizeBox(viewBox).width;
+  return renderSvg({
+    title: 'LK ROBOTICS favicon tile',
+    viewBox,
+    body: [
+      `  <rect width="${formatNumber(size)}" height="${formatNumber(size)}" rx="${formatNumber(cornerRadius)}" fill="${background}" />`,
+      `  <g transform="${markTransform}">`,
+      renderMark(foreground, 2),
+      '  </g>',
+    ].join('\n'),
+  });
 }
 
 function renderMark(fill, indent = 1) {
@@ -573,12 +768,21 @@ function matrix(scale, translateX, translateY, precision = 6) {
 
 function formatViewBox(box) {
   const normalized = normalizeBox(box);
-  return [normalized.x, normalized.y, normalized.width, normalized.height].map(formatNumber).join(' ');
+  return [normalized.x, normalized.y, normalized.width, normalized.height]
+    .map((value) => formatNumber(value))
+    .join(' ');
 }
 
 function formatNumber(value, precision = 6) {
   const rounded = Number(value.toFixed(precision));
   return Object.is(rounded, -0) ? '0' : String(rounded);
+}
+
+function minimumSlotWidth(minimumRenderedHeight, viewBox) {
+  const serialized = normalizeBox(viewBox);
+  const width = Number(formatNumber(serialized.width));
+  const height = Number(formatNumber(serialized.height));
+  return Number((minimumRenderedHeight * width / height).toFixed(6));
 }
 
 function serializeFontkitPath(value, precision = 3) {
@@ -588,27 +792,161 @@ function serializeFontkitPath(value, precision = 3) {
   );
 }
 
-function validateProductionOutput(relativePath, content) {
-  if (relativePath.endsWith('.svg')) {
-    if (/<text\b/i.test(content)) throw new Error(`${relativePath} contains a text element.`);
-    if (/font-(?:family|weight|style)|@font-face/i.test(content)) throw new Error(`${relativePath} contains a runtime font dependency.`);
-    const wordmarkPathCount = generatedWordmarkPaths.filter((row) => content.includes(`d="${row.d}"`)).length;
-    if (wordmarkPathCount !== generatedWordmarkPaths.length) {
-      throw new Error(`${relativePath} does not contain all ${generatedWordmarkPaths.length} outlined wordmark glyphs.`);
+function validateProductionOutput(relativePath, content, contract) {
+  if (!contract) throw new Error(`${relativePath} has no generated-output contract.`);
+  assertNoRuntimeFontDependency(relativePath, content);
+  assertPathInstances(relativePath, content, LK_MARK_PATHS, contract.markInstances, 'LK mark');
+  assertPathInstances(relativePath, content, generatedWordmarkPaths, contract.wordmarkInstances, 'wordmark');
+  assertPathInstances(relativePath, content, generatedCorporatePaths, contract.corporateInstances, 'corporate name');
+
+  if (contract.kind === 'runtime') {
+    if (!content.includes('export const LK_LOGO_USAGE = Object.freeze({')) {
+      throw new Error(`${relativePath} does not export logo usage metadata.`);
     }
-    const expectsCorporateName = [
-      'assets/brand/lk-logo-master.svg',
-      'assets/brand/lk-logo-official-corporate.svg',
-      'assets/brand/lk-logo-official-corporate-light.svg',
-    ].includes(relativePath);
-    const corporatePathCount = generatedCorporatePaths.filter((row) => content.includes(`d="${row.d}"`)).length;
-    if (expectsCorporateName && corporatePathCount !== generatedCorporatePaths.length) {
-      throw new Error(`${relativePath} does not contain all ${generatedCorporatePaths.length} outlined corporate-name glyphs.`);
-    }
-    if (!expectsCorporateName && corporatePathCount !== 0) {
-      throw new Error(`${relativePath} unexpectedly contains corporate-name glyphs.`);
+    return;
+  }
+
+  if (contract.kind !== 'svg') throw new Error(`${relativePath} has unsupported output kind ${contract.kind}.`);
+  if (/<text\b/i.test(content)) throw new Error(`${relativePath} contains a text element.`);
+  const viewBoxMatch = /<svg\b[^>]*\bviewBox="([^"]+)"/i.exec(content);
+  if (!viewBoxMatch) throw new Error(`${relativePath} has no SVG viewBox.`);
+  assertEqual(viewBoxMatch[1], formatViewBox(contract.viewBox), `${relativePath} viewBox`);
+  assertBoundsContained(contract.pathBounds, contract.viewBox, `${relativePath} transformed path bounds`, 0.001);
+
+  const actualPathCount = content.match(/<path\b/g)?.length ?? 0;
+  const expectedPathCount =
+    LK_MARK_PATHS.length * contract.markInstances
+    + generatedWordmarkPaths.length * contract.wordmarkInstances
+    + generatedCorporatePaths.length * contract.corporateInstances;
+  assertEqual(actualPathCount, expectedPathCount, `${relativePath} path count`);
+}
+
+function assertBoundsContained(inner, outer, label, tolerance = 0.000001) {
+  const content = normalizeBox(inner);
+  const canvas = normalizeBox(outer);
+  const contentRight = content.x + content.width;
+  const contentBottom = content.y + content.height;
+  const canvasRight = canvas.x + canvas.width;
+  const canvasBottom = canvas.y + canvas.height;
+  if (
+    content.x < canvas.x - tolerance
+    || content.y < canvas.y - tolerance
+    || contentRight > canvasRight + tolerance
+    || contentBottom > canvasBottom + tolerance
+  ) {
+    throw new Error(`${label} escape viewBox: content=${formatViewBox(content)}, viewBox=${formatViewBox(canvas)}.`);
+  }
+}
+
+function validateMinimumSlotWidthDocumentation(content, minimumSlotWidth) {
+  for (const [variant, value] of Object.entries(minimumSlotWidth)) {
+    const renderedValue = value.toFixed(6);
+    if (!content.includes(`${renderedValue}px`)) {
+      throw new Error(
+        `components/brand/Lockup.prompt.md must document the derived ${variant} minimum slot width ${renderedValue}px.`,
+      );
     }
   }
+}
+
+function validateBrandPolicyDocumentation(content, governance, minimumSlotWidth) {
+  const expectedConstructionContract = {
+    constructionVersion: manifest.constructionVersion,
+    geometryVersion: manifest.symbol.geometryVersion,
+    visibleMarkWidthToX: markBounds.width / markBounds.height,
+    clearSpace: {
+      transparentMinimumToX: layout.safeArea.minimumClearSpaceToX,
+      coBrandMinimumToX: layout.safeArea.coBrandClearSpaceToX,
+    },
+    minimumRenderedLogicalUnits: {
+      markHeight: layout.mark.minimumRenderedHeightPx,
+      markVisibleArtworkHeight: layout.mark.minimumVisibleArtworkHeightPx,
+      inlineHeight: layout.inline.minimumRenderedHeightPx,
+      stackedHeight: layout.stacked.minimumRenderedHeightPx,
+      bannerHeight: layout.banner.minimumRenderedHeightPx,
+      officialSquareEdge: layout.officialSquare.minimumRenderedSquarePx,
+      corporateSquareEdge: layout.corporate.minimumRenderedSquarePx,
+      corporateSquareRecommendedEdge: layout.corporate.recommendedRenderedSquarePx,
+      faviconSquareEdge: layout.favicon.minimumRenderedSquarePx,
+    },
+    minimumSlotLogicalUnits: {
+      markWidth: minimumSlotWidth.mark,
+      stackedWidth: minimumSlotWidth.stacked,
+      inlineWidth: minimumSlotWidth.inline,
+      bannerWidth: minimumSlotWidth.banner,
+    },
+  };
+  assertEqual(
+    JSON.stringify(governance.constructionContract),
+    JSON.stringify(expectedConstructionContract),
+    'brand governance construction contract',
+  );
+  assertEqual(governance.minimumSizeStatus?.status, 'repository-policy-pending-human-optical-approval', 'minimum-size approval status');
+  assertEqual(governance.minimumSizeStatus?.approvalRecord, null, 'minimum-size approval record');
+  assertEqual(governance.authority?.precedence?.[0], 'scripts/brand/lk-logo-source.mjs', 'brand authority geometry source');
+  assertEqual(governance.authority?.precedence?.[1], 'assets/brand/lk-logo-construction.json', 'brand authority construction source');
+  assertEqual(governance.authority?.precedence?.[2], 'scripts/generate-brand-assets.mjs', 'brand authority generator');
+
+  const expectedColors = {
+    navy: manifest.colors.navy.toUpperCase(),
+    accent: manifest.colors.accent.toUpperCase(),
+    white: manifest.colors.white.toUpperCase(),
+  };
+  for (const [name, expectedHex] of Object.entries(expectedColors)) {
+    assertEqual(governance.printColorStatus?.digitalSource?.[name]?.hex, expectedHex, `brand governance ${name} color`);
+  }
+
+  const requiredFragments = [
+    `\`${formatNumber(expectedConstructionContract.visibleMarkWidthToX, 16)}X : 1X\``,
+    `${manifest.wordmark.family} ${manifest.wordmark.style} ${manifest.wordmark.weight} v${manifest.wordmark.fontVersion}`,
+    `${manifest.corporateName.family} ${manifest.corporateName.style} \`wght=${manifest.corporateName.weight}\` v${manifest.corporateName.releaseVersion}`,
+    `최소 \`${layout.safeArea.minimumClearSpaceToX}X\``,
+    `최소 \`${layout.safeArea.coBrandClearSpaceToX}X\``,
+    `| mark | \`${layout.mark.minimumRenderedHeightPx}px\``,
+    `| inline | \`${layout.inline.minimumRenderedHeightPx}px\``,
+    `| stacked | \`${layout.stacked.minimumRenderedHeightPx}px\``,
+    `| banner | \`${layout.banner.minimumRenderedHeightPx}px\``,
+    `| official square / tile | \`${layout.officialSquare.minimumRenderedSquarePx}px\``,
+    `| corporate square | \`${layout.corporate.minimumRenderedSquarePx}px\` | \`${layout.corporate.recommendedRenderedSquarePx}px\` 이상`,
+    `| favicon tile | \`${layout.favicon.minimumRenderedSquarePx}px\``,
+    `mark \`${minimumSlotWidth.mark.toFixed(6)}\``,
+    `inline \`${minimumSlotWidth.inline.toFixed(6)}\``,
+    `stacked \`${minimumSlotWidth.stacked.toFixed(6)}\``,
+    `banner \`${minimumSlotWidth.banner.toFixed(6)}\``,
+    'repository-root-only',
+    'resolvableInPackage: false',
+    '저장소 정책 최소값',
+  ];
+  for (const fragment of requiredFragments) {
+    if (!content.includes(fragment)) {
+      throw new Error(`docs/brand/LK_LOGO_STANDARD.md is missing generated-contract evidence: ${fragment}`);
+    }
+  }
+}
+
+function assertNoRuntimeFontDependency(relativePath, content) {
+  if (/@font-face|\bfont(?:-family|-weight|-style)?\s*[:=]|\.(?:otf|ttf|woff2?)\b|url\([^)]*\.(?:otf|ttf|woff2?)/i.test(content)) {
+    throw new Error(`${relativePath} contains a runtime font dependency.`);
+  }
+  if (/\b(?:import|require)\b[^\n]*(?:fontkit|opentype)/i.test(content)) {
+    throw new Error(`${relativePath} imports a font serialization dependency at runtime.`);
+  }
+}
+
+function assertPathInstances(relativePath, content, rows, expectedInstances, label) {
+  for (const row of rows) {
+    const actualInstances = countOccurrences(content, row.d);
+    if (actualInstances !== expectedInstances) {
+      throw new Error(
+        `${relativePath} ${label} path instances: expected ${expectedInstances}, received ${actualInstances}.`,
+      );
+    }
+  }
+}
+
+function countOccurrences(value, search) {
+  if (!search) return 0;
+  return value.split(search).length - 1;
 }
 
 function fileSha256(buffer) {

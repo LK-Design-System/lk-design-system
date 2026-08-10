@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
-  <title>LK ROBOTICS app icon</title>
+  <title>LK ROBOTICS favicon tile</title>
   <rect width="512" height="512" rx="112" fill="#05132b" />
   <g transform="translate(256 256) scale(5.30600371) translate(-376.986665 -181.271268)">
-    <path d="m 0,0 v -42.031 h 28.142 l -7.307,8.749 H 9.11 L 9.11,0 Z" transform="matrix(1.3333333,0,0,-1.3333333,346.60933,153.18987)" fill="#ffffff" />
-    <path d="m 0,0 h -10.446 l -18.057,-22.549 16.508,-19.483 h 11.798 l -16.76,19.483 z" transform="matrix(1.3333333,0,0,-1.3333333,407.364,153.31)" fill="#ffffff" />
+    <path d="m 0,0 v -42.031 h 28.142 l -7.307,8.749 H 9.11 L 9.11,0 Z" transform="matrix(1.3333333 0 0 -1.3333333 346.60933 153.18987)" fill="#ffffff" />
+    <path d="m 0,0 h -10.446 l -18.057,-22.549 16.508,-19.483 h 11.798 l -16.76,19.483 z" transform="matrix(1.3333333 0 0 -1.3333333 407.364 153.31)" fill="#ffffff" />
   </g>
 </svg>

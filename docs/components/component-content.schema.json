@@ -25,10 +25,18 @@
     "platformStatusDefinitions": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["mapped", "implemented", "not-tracked"],
+      "required": [
+        "mapped",
+        "import-contract",
+        "implemented",
+        "asset-contract",
+        "not-tracked"
+      ],
       "properties": {
         "mapped": { "type": "string" },
+        "import-contract": { "type": "string" },
         "implemented": { "type": "string" },
+        "asset-contract": { "type": "string" },
         "not-tracked": { "type": "string" }
       }
     },
@@ -288,10 +296,10 @@
           "additionalProperties": false,
           "required": ["figma", "react", "ios", "android"],
           "properties": {
-            "figma": { "enum": ["mapped", "not-tracked"] },
+            "figma": { "enum": ["mapped", "import-contract", "not-tracked"] },
             "react": { "const": "implemented" },
-            "ios": { "const": "not-tracked" },
-            "android": { "const": "not-tracked" }
+            "ios": { "enum": ["asset-contract", "not-tracked"] },
+            "android": { "enum": ["asset-contract", "not-tracked"] }
           }
         },
         "storybook": {

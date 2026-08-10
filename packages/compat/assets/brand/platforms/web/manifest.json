@@ -1,0 +1,408 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": 1,
+  "generatedBy": "scripts/generate-brand-platform-assets.mjs",
+  "brandStandard": {
+    "version": "1.0.0",
+    "status": "current-repository-standard",
+    "governanceSha256": "108b9208ad9d16a833f63cf120ccc21110032dd0658ab0115c398d3d18985ac0",
+    "minimumSizePolicy": {
+      "status": "repository-policy-pending-human-optical-approval",
+      "humanOpticalApproval": false,
+      "approvalRecord": null
+    }
+  },
+  "sourceAssetSetSha256": "f7bc6532ba993b0fda69bf77c322099703aa37006b094051b34d5d3cf3644f5f",
+  "sourceConstructionVersion": 3,
+  "sourceConstructionManifestSha256": "b8d9881ba0a8c3f8d7ebffe0825ed19f112935dc94a0c705a90ac8248c296160",
+  "cacheKey": "lk-brand-c3-f7bc6532ba993b0f",
+  "delivery": {
+    "type": "canonical-repository-svg",
+    "assetsCopied": false,
+    "mimeType": "image/svg+xml",
+    "note": "Use the canonical sourcePath directly; integrity values are provided for build-time verification."
+  },
+  "measurementUnit": "css-px",
+  "clearSpace": {
+    "definition": "Clear-space application is family-specific; transparent lockups require external space, banners embed it, and contained assets preserve their complete canvas.",
+    "unit": "X",
+    "xDefinition": "visible height of the custom LK symbol",
+    "measurement": "visible-artwork-bounds",
+    "application": "family-specific",
+    "transparentAssetApplication": "external-around-visible-bounds",
+    "externalMinimumAppliesTo": [
+      "mark",
+      "stacked",
+      "inline"
+    ],
+    "minimumToX": 0.5,
+    "coBrandMinimumToX": 1,
+    "applicationByFamily": {
+      "mark": "external-required-from-visible-artwork-bounds",
+      "inline": "external-required-from-visible-artwork-bounds",
+      "stacked": "external-required-from-visible-artwork-bounds",
+      "banner": "embedded-in-source-asset",
+      "square": "preserve-complete-containment-canvas",
+      "corporateSquare": "preserve-complete-containment-canvas",
+      "favicon": "preserve-complete-containment-canvas"
+    }
+  },
+  "assets": [
+    {
+      "id": "mark-navy",
+      "family": "mark",
+      "tone": "navy",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-mark-navy.svg",
+      "sha256": "1e636ea31a1a9a82bc6e01bccde9a85315479d86da99ce394510e1fa1ec146e3",
+      "integrity": "sha256-HmNuoxoamoK8bgG8zemoUxVHnYbamc45RRDh+h7BRuM=",
+      "byteLength": 484,
+      "viewBox": {
+        "x": 342.60933,
+        "y": 149.18987,
+        "width": 68.75467,
+        "height": 64.1628
+      },
+      "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 20,
+        "unit": "css-px"
+      },
+      "minimumVisibleArtworkHeight": {
+        "axis": "visible-artwork-height",
+        "value": 16,
+        "unit": "css-px"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 21.431318,
+        "unit": "css-px"
+      }
+    },
+    {
+      "id": "mark-white",
+      "family": "mark",
+      "tone": "white",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-mark-white.svg",
+      "sha256": "78ed59f51baf98d035242d7de5e6fde05b21d5708e12018ded697c765db7be36",
+      "integrity": "sha256-eO1Z9RuvmNA1JC195eb94Fsh1XCOEgGN7Wl8dl23vjY=",
+      "byteLength": 484,
+      "viewBox": {
+        "x": 342.60933,
+        "y": 149.18987,
+        "width": 68.75467,
+        "height": 64.1628
+      },
+      "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 20,
+        "unit": "css-px"
+      },
+      "minimumVisibleArtworkHeight": {
+        "axis": "visible-artwork-height",
+        "value": 16,
+        "unit": "css-px"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 21.431318,
+        "unit": "css-px"
+      }
+    },
+    {
+      "id": "logo-inline-navy",
+      "family": "inline",
+      "tone": "navy",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-inline-navy.svg",
+      "sha256": "1789fa9df782cf1fbc93f57167b174672741c515b9936696c6ce59f2cc87c287",
+      "integrity": "sha256-F4n6nfeCzx+8k/VxZ7F0ZydBxRW5k2aWxs5Z8syHwoc=",
+      "byteLength": 4367,
+      "viewBox": {
+        "x": 342.60933,
+        "y": 149.18987,
+        "width": 501.50943,
+        "height": 64.1628
+      },
+      "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 20,
+        "unit": "css-px"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 156.324048,
+        "unit": "css-px"
+      }
+    },
+    {
+      "id": "logo-inline-white",
+      "family": "inline",
+      "tone": "white",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-inline-white.svg",
+      "sha256": "2584a5ac9b27cc603a19f66bef631e0059ab5c219314310371710fae42df10a0",
+      "integrity": "sha256-JYSlrJsnzGA6GfZr72MeAFmrXCGTFDEDcXEPrkLfEKA=",
+      "byteLength": 4367,
+      "viewBox": {
+        "x": 342.60933,
+        "y": 149.18987,
+        "width": 501.50943,
+        "height": 64.1628
+      },
+      "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 20,
+        "unit": "css-px"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 156.324048,
+        "unit": "css-px"
+      }
+    },
+    {
+      "id": "logo-stacked-navy",
+      "family": "stacked",
+      "tone": "navy",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-navy.svg",
+      "sha256": "8c920d45563187d5cad9ea4dd5f05eff27e3bacf3e41dd4525262ef9f4a5d5b7",
+      "integrity": "sha256-jJINRVYxh9XK2epN1fBe/yfjus8+Qd1FJSYu+fSl1bc=",
+      "byteLength": 4277,
+      "viewBox": {
+        "x": 318.308168,
+        "y": 149.18987,
+        "width": 117.356995,
+        "height": 90.916062
+      },
+      "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 64,
+        "unit": "css-px"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 82.61299,
+        "unit": "css-px"
+      }
+    },
+    {
+      "id": "logo-stacked-white",
+      "family": "stacked",
+      "tone": "white",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-white.svg",
+      "sha256": "9637f8e642b95f38cfa0ed4270ff4a4d9af1b23d950295e634cdb82856cc04ce",
+      "integrity": "sha256-ljf45kK5XzjPoO1CcP9KTZrxsj2VApXmNM24KFbMBM4=",
+      "byteLength": 4277,
+      "viewBox": {
+        "x": 318.308168,
+        "y": 149.18987,
+        "width": 117.356995,
+        "height": 90.916062
+      },
+      "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 64,
+        "unit": "css-px"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 82.61299,
+        "unit": "css-px"
+      }
+    },
+    {
+      "id": "logo-banner-navy",
+      "family": "banner",
+      "tone": "navy",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-banner-navy.svg",
+      "sha256": "e56b1830065ec9ac6d5079493aef43a32a7287c350c2da7e60967ce9f78f0f1e",
+      "integrity": "sha256-5WsYMAZeyaxtUHlJOu9Doypyh8NQwtp+YJZ86fePDx4=",
+      "byteLength": 4463,
+      "viewBox": {
+        "x": 318.52793,
+        "y": 125.10847,
+        "width": 549.67223,
+        "height": 112.3256
+      },
+      "clearSpaceApplication": "embedded-in-source-asset",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 28,
+        "unit": "css-px"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 137.019722,
+        "unit": "css-px"
+      }
+    },
+    {
+      "id": "logo-banner-light",
+      "family": "banner",
+      "tone": "light",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-banner-light.svg",
+      "sha256": "2e4b1ecdc20803653fb75c227aae2036c6d811820fb157dceb20a447e55f06b3",
+      "integrity": "sha256-LksezcIIA2U/t1wieq4gNsbYEYIPsVfc6yCkR+VfBrM=",
+      "byteLength": 4464,
+      "viewBox": {
+        "x": 318.52793,
+        "y": 125.10847,
+        "width": 549.67223,
+        "height": 112.3256
+      },
+      "clearSpaceApplication": "embedded-in-source-asset",
+      "minimumRendered": {
+        "axis": "rendered-height",
+        "value": 28,
+        "unit": "css-px"
+      },
+      "minimumRequiredSlotWidth": {
+        "axis": "slot-width",
+        "value": 137.019722,
+        "unit": "css-px"
+      }
+    },
+    {
+      "id": "logo-square-navy",
+      "family": "square",
+      "tone": "navy",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-official.svg",
+      "sha256": "5f7e84b108fc915be8a911c4f994d63126fd7ff631e227973696de65293eaf91",
+      "integrity": "sha256-X36EsQj8kVvoqRHE+ZTWMSb9f/Yx4ieXNpbeZSk+r5E=",
+      "byteLength": 4342,
+      "viewBox": {
+        "x": 297.4293,
+        "y": 114.3693,
+        "width": 158.74,
+        "height": 158.74
+      },
+      "clearSpaceApplication": "preserve-complete-containment-canvas",
+      "minimumRendered": {
+        "axis": "edge",
+        "value": 64,
+        "unit": "css-px"
+      },
+      "recommendedRendered": {
+        "axis": "edge",
+        "value": 96,
+        "unit": "css-px"
+      }
+    },
+    {
+      "id": "logo-square-light",
+      "family": "square",
+      "tone": "light",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-official-light.svg",
+      "sha256": "83c12ab87c31a25d660a2a88d774642388ee4e46a75624025e32f649becc07df",
+      "integrity": "sha256-g8EquHwxol1mCiqI13RkI4juTkanViQCXjL2Sb7MB98=",
+      "byteLength": 4362,
+      "viewBox": {
+        "x": 297.4293,
+        "y": 114.3693,
+        "width": 158.74,
+        "height": 158.74
+      },
+      "clearSpaceApplication": "preserve-complete-containment-canvas",
+      "minimumRendered": {
+        "axis": "edge",
+        "value": 64,
+        "unit": "css-px"
+      },
+      "recommendedRendered": {
+        "axis": "edge",
+        "value": 96,
+        "unit": "css-px"
+      }
+    },
+    {
+      "id": "logo-corporate-square-navy",
+      "family": "corporateSquare",
+      "tone": "navy",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-official-corporate.svg",
+      "sha256": "4f79ce7fddb226d8e360a2eeabf4b8b7f7a6a607a75efcf24179d570a4099cef",
+      "integrity": "sha256-T3nOf92yJtjjYKLuq/S4t/empgenXvzyQXnVcKQJnO8=",
+      "byteLength": 11110,
+      "viewBox": {
+        "x": 77.0213,
+        "y": 114.3693,
+        "width": 158.74,
+        "height": 158.74
+      },
+      "clearSpaceApplication": "preserve-complete-containment-canvas",
+      "minimumRendered": {
+        "axis": "edge",
+        "value": 160,
+        "unit": "css-px"
+      },
+      "recommendedRendered": {
+        "axis": "edge",
+        "value": 192,
+        "unit": "css-px"
+      }
+    },
+    {
+      "id": "logo-corporate-square-light",
+      "family": "corporateSquare",
+      "tone": "light",
+      "usage": "general-brand-asset",
+      "sourcePath": "assets/brand/lk-logo-official-corporate-light.svg",
+      "sha256": "990bcb6d3acb5686d54e85877fd93332f8a5515214b6640529ac1bf5c78e3749",
+      "integrity": "sha256-mQvLbTrLVobVToWHf9kzMvilUVIUtmQFKawb9ceON0k=",
+      "byteLength": 11130,
+      "viewBox": {
+        "x": 77.0213,
+        "y": 114.3693,
+        "width": 158.74,
+        "height": 158.74
+      },
+      "clearSpaceApplication": "preserve-complete-containment-canvas",
+      "minimumRendered": {
+        "axis": "edge",
+        "value": 160,
+        "unit": "css-px"
+      },
+      "recommendedRendered": {
+        "axis": "edge",
+        "value": 192,
+        "unit": "css-px"
+      }
+    },
+    {
+      "id": "favicon",
+      "family": "favicon",
+      "tone": "navy",
+      "usage": "browser-favicon-only",
+      "sourcePath": "assets/brand/lk-favicon.svg",
+      "sha256": "ef11cef7f3495ed039330c4b472b26fa97b14d0d8b71d20b5e6b32ca6163d949",
+      "integrity": "sha256-7xHO9/NJXtA5MwxLRysm+pexTQ2LcdILXmsyymFj2Uk=",
+      "byteLength": 628,
+      "viewBox": {
+        "x": 0,
+        "y": 0,
+        "width": 512,
+        "height": 512
+      },
+      "clearSpaceApplication": "preserve-complete-containment-canvas",
+      "minimumRendered": {
+        "axis": "edge",
+        "value": 16,
+        "unit": "css-px"
+      }
+    }
+  ]
+}

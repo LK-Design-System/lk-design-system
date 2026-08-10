@@ -66,9 +66,47 @@ export const ROBOTICS_INLINE_SCALE = 3.846154;
 export const ROBOTICS_INLINE_TRANSFORM = "matrix(3.846154 0 0 3.846154 -820.131864 -698.747068)";
 
 export const LK_LOGO_VIEWBOX = Object.freeze({
-  mark: "343 149.2 68.75 64.163",
-  stacked: "318 149.2 117.36 90.916",
-  inline: "343 149.2 501.51 64.163",
+  mark: "342.60933 149.18987 68.75467 64.1628",
+  stacked: "318.308168 149.18987 117.356995 90.916062",
+  inline: "342.60933 149.18987 501.50943 64.1628",
+});
+
+export const LK_LOGO_USAGE = Object.freeze({
+  geometryVersion: "1.0",
+  minimumVisibleArtworkHeightPx: Object.freeze({
+    mark: 16,
+  }),
+  minimumRenderedHeightPx: Object.freeze({
+    mark: 20,
+    stacked: 64,
+    inline: 20,
+    banner: 28,
+  }),
+  minimumRequiredSlotWidthPx: Object.freeze({
+    mark: 21.431318,
+    stacked: 82.61299,
+    inline: 156.324048,
+    banner: 137.019722,
+  }),
+  officialSquare: Object.freeze({
+    minimumRenderedSquarePx: 64,
+    recommendedRenderedSquarePx: 96,
+  }),
+  favicon: Object.freeze({
+    minimumRenderedSquarePx: 16,
+  }),
+  corporateSquare: Object.freeze({
+    minimumRenderedSquarePx: 160,
+    recommendedRenderedSquarePx: 192,
+    minimumPrintedSquareMm: 32,
+  }),
+  clearSpace: Object.freeze({
+    measurement: "visible-artwork-bounds",
+    application: "external-around-visible-bounds",
+    minimumToX: 0.5,
+    coBrandToX: 1,
+    appliesTo: Object.freeze(["mark","stacked","inline"]),
+  }),
 });
 
 export const LK_LOGO_COLORS = Object.freeze({

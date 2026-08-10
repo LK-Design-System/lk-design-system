@@ -10,7 +10,10 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 ### Added
 
-- 재현 가능한 LK ROBOTICS 로고 제작 규정을 추가했습니다. `ROBOTICS`는 해시로 고정한 Montserrat ExtraBold 800 v7.222와 기본 커닝·자간 0·균일 스케일에서 path로 생성하며, `check:brand`가 글꼴·라이선스·13개 승인 SVG·런타임 윤곽의 드리프트를 차단합니다.
+- 재현 가능한 LK ROBOTICS 로고 제작 규정을 추가했습니다. `ROBOTICS`는 해시로 고정한 Montserrat ExtraBold 800 v7.222와 기본 커닝·자간 0·균일 스케일에서 path로 생성하며, `check:brand`가 글꼴·라이선스·15개 배치용 SVG와 1개 시각 기준판(총 16개 생성 SVG)·런타임 윤곽의 드리프트를 차단합니다. 시각 기준판과 construction manifest는 package에 배포하지 않습니다.
+- LK 심볼 geometry v1.0의 정규화 비율, 보호 여백, variant 선택, 최소 크기, 배경·단색·금지 사용, 공동 브랜딩, 인쇄 proof와 변경 승인 절차를 `docs/brand`의 브랜드 표준과 기계 판독 governance record로 고정했습니다. 별도 small-use redraw와 공식 CMYK/Pantone은 근거가 생기기 전까지 미승인 상태로 유지합니다.
+- 같은 정본 SVG와 SHA-256에서 Figma 수동 import 명세, iOS vector imageset, Android fixed-color VectorDrawable, Web integrity manifest를 만드는 결정적 플랫폼 자산 계약을 추가했습니다. 이 계약은 live sync, 실제 제품 채택 또는 스토어 승인을 주장하지 않습니다.
+- LK Web Viz, LK Control Full Daedeok, LK Context Hub의 실제 로고 소비 source를 commit·blob SHA로 고정하는 `check:brand-products`를 추가했습니다. Web Viz와 Control은 migration required, Context Hub의 `Lockup` 20px 합성은 contract-compatible이지만 최신 package upgrade가 필요합니다.
 - `AutoComplete startIcon`으로 컨트롤 앞에 아이콘을 놓을 수 있습니다. `SearchField`가 이미 쓰는 `startIcon` 슬롯과 같은 자리이며, 값이 채워져 `placeholder`가 사라진 뒤에도 그 칸이 목록을 뒤진다는 사실을 남깁니다. 기본값은 없으므로 기존 화면은 그대로입니다.
 - `DataToolbar.filters` render context: `filters={({ size }) => ...}`가 검색과 같은 `sm`/`md` field control 밀도를 전달하며 기존 ReactNode 슬롯은 호환됩니다.
 - `DashboardShell`에 계층형 좁은 화면 탐색을 위한 controlled `temporaryNavigation` Drawer 계약을 추가했습니다. 공용 modal 엔진의 스크림·focus containment·Escape·복원·scroll lock을 재사용하고 열린 동안 셸 배경을 `inert` 처리합니다.
@@ -34,6 +37,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - 44 hidden contract stories pinning the keyboard/ARIA/live-region contracts above; inventory grew to 481 implementation stories (public surface unchanged at 335).
 ### Fixed
 
+- 브랜드 SVG `viewBox` 직렬화가 `Array.map`의 index를 소수점 정밀도로 잘못 전달해 일부 좌표를 반올림하던 문제를 고쳤습니다. mark·favicon까지 단일 생성기 inventory에 포함하고 모든 path가 viewBox 안에 있는지 검증해 inline 로크업의 잘림·overflow 회귀를 차단합니다.
 - `SideNav`의 접힌 레일 행이 38px, 펼친 행이 44px이고 브랜드 아래 패딩도 10/18px로 달라 overlay peek 때 목적지가 세로로 이동하던 문제를 고쳤습니다. 두 상태는 44px 행과 같은 브랜드 아래 패딩을 공유합니다.
 - `DataToolbar size="md"`가 48px field형 필터 옆 검색만 40px로 축소하던 문제를 고쳤습니다. 기본 검색은 다시 48px field 척도를 사용하고 `filters` render context로 같은 밀도를 전달합니다.
 - `Calendar` could not leave the selected month: the view snapped back on every render, disabling previous/next, PageUp/PageDown, and month-boundary arrows (also through `DatePicker`). The displayed month is now owned by user navigation, and the header buttons keep focus so they can be pressed repeatedly.
@@ -51,6 +55,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 ### Changed
 
 - LK 심볼은 기존 커스텀 벡터를 유지하고 `ROBOTICS`는 규정된 Montserrat ExtraBold 800 아웃라인으로 교체했습니다. 모든 사각·stacked·inline·banner 자산과 React `Lockup`/`Spinner`가 같은 생성 원본을 공유하며, UI 본문 글꼴은 Pretendard로 유지합니다.
+- `Lockup`은 공개 `tone="mono"`를 추가하고 variant별 정책 최소 높이, 실제 `viewBox` 기반 intrinsic width, 비율을 유지하는 반응형 축소를 적용합니다. 좁은 슬롯에서는 overflow 대신 함께 축소되므로, 생성된 최소 슬롯 폭 계약을 확보하거나 `inline`/`stacked`에서 `mark`로 전환해야 합니다. 유효하지 않은 variant fallback은 진단 metadata로 노출됩니다.
 - `StatusBadge`는 dot과 pulse를 제거하고 20px soft semantic pill + 명시적 상태 라벨로 재설계했습니다. 진행·마감·게시·검토 같은 lifecycle/result 상태는 StatusBadge가, 실시간 연결 신호는 StatusIndicator가 소유합니다.
 - `PageHeader` is now limited to page context and task actions; record/profile identity moved to `RecordHeader` and the former `avatar` prop was removed.
 - `ScrollArea` now preserves the OS/browser scrollbar by default, exposes `scrollbar="compact"` only for constrained surfaces, reserves a stable gutter by default, and no longer injects a hard-coded 7px WebKit scrollbar. Shared scroll consumers use the same contract; SideNav, Tabs, and Category no longer hide overflow indicators.

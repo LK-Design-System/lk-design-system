@@ -67,11 +67,11 @@
     "hiddenStories": 222,
     "componentDescriptions": 190,
     "pagesWithVisibleCanvasIntroduction": 190,
-    "pagesWithDecisionGuidance": 181,
+    "pagesWithDecisionGuidance": 182,
     "describedPublicStories": 488,
     "reviewedPages": 194,
     "reviewedStories": 698,
-    "staleReviewedPages": 9,
+    "staleReviewedPages": 10,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
@@ -117,7 +117,7 @@
         "stories": 6,
         "public": 3,
         "hidden": 3,
-        "guideReadyPages": 2
+        "guideReadyPages": 3
       },
       "Other": {
         "pages": 1,
@@ -24275,7 +24275,13 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/Brand.stories.jsx",
-      "sourceSha256": "562b404bf348915b3776af66dc256972786d328827e901f8f32a855585cb914b",
+      "sourceSha256": "0583cc9d5f3c2971f90328612490aaa407fb6e45b5ca3c2f399ca857ad27c3fd",
+      "sourceDependencies": [
+        {
+          "path": "stories/Brand.shared.jsx",
+          "sha256": "d75f403596202570633a6d63ffb1159a227090b48117704b45e7f9bafddd36fd"
+        }
+      ],
       "primaryOwner": "Lockup",
       "ownerComponents": [
         "Lockup"
@@ -24290,11 +24296,9 @@
         "storyGuideId": "lds-theme-brand-lk-robotics-logo--lk-robotics-logo",
         "describedPublicStories": 1,
         "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": false
+        "decisionGuidance": true
       },
-      "missingGuidance": [
-        "when-to-use-and-avoid"
-      ],
+      "missingGuidance": [],
       "guidePriority": "low",
       "disposition": "keep",
       "dispositionReason": "Human layer review confirmed a distinct Theme override or brand surface; keep this page and document allowed and disallowed use.",

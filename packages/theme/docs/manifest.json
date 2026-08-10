@@ -101,9 +101,9 @@
       "sha256": "1294e23af47298ff2c367cd4d57c521407dc269079cdd3932af8c6c181e47962"
     },
     "assets": {
-      "fileCount": 22,
-      "bytes": 4001777,
-      "sha256": "f88f651224399bb16863b14e83f38a1c2cb14082a26a431851be8d926189d00d"
+      "fileCount": 64,
+      "bytes": 4220733,
+      "sha256": "4256d24fcc80e8f03a0fc31f300923a92d61895f599480831ebaf9b679bafc0f"
     }
   },
   "documents": [

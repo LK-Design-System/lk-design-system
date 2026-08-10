@@ -1030,3 +1030,15 @@ WF-16은 세 필수 제품의 pinned shell/navigation source와 독립 anatomy�
 - VCS cleanliness를 보는 `check:entry`와 `check:generated`는 현재 변경을 아직 commit하지 않았으므로 HEAD 차이를 의도대로 보고한다. 생성기를 반복 실행한 결과는 동일하다.
 
 기계 판정의 source of truth는 `docs/references/product-frontends/COVERAGE_AUDIT.json`이며, `npm run check:product-frontends`가 source pin, stage evidence, component disposition, 제거·교체 경계를 검증한다.
+
+## LK 브랜드 자산 적용 감사
+
+로고 규격화는 LDS 저장소 안에서 SVG를 생성하는 것으로 끝나지 않는다. 실제 제품이 같은 정본을 소비하는지 확인하기 위해 `web-viz`, `control`, `context-hub`의 현재 소스를 별도로 고정했다. 기계 판정 원본은 `docs/references/brand/PRODUCT_BRAND_ASSET_AUDIT.json`이며 `npm run check:brand-products`는 세 제품의 필수 pin, revision·blob SHA 형식, 문서 인용, 최소 크기와 LDS/제품 소유권 경계를 검증한다. 외부 저장소의 Git object 자체는 감사 시점에 직접 대조해 pin했으며 이 명령이 원격 저장소를 다시 조회한다고 주장하지 않는다.
+
+| 제품 | 고정 revision | 판정 | 다음 적용 |
+| --- | --- | --- | --- |
+| `web-viz` | `a984def117c05acd213f494cbb8a42e990595505` | migration required | 헤더의 제품 로컬 gradient `logo.png`는 `inline` 32px로, 로그인은 `mark` 80px로 교체한다. `LK Web Viz` 제품명과 route는 제품이 소유한다. |
+| `control` | `3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19` | migration required | 독립 보관된 `logo-light.svg`/`favicon.ico`를 정본으로 교체한다. 55px 내비게이션 슬롯은 64px official square보다 작으므로 `mark`를 쓰거나 슬롯을 64px 이상으로 키운다. 100px 로그인 슬롯은 official square를 쓸 수 있다. |
+| `context-hub` | `546f11e4640b5a9ec81fc210a5085581b9d277bc` | contract compatible, package upgrade required | `Lockup variant="mark" height={20}` 합성은 전체 렌더 높이 20px과 보이는 LK 도형 높이 16px 이상이라는 두 정책 최소값을 충족한다. 다만 rc.23 패키지를 constructionVersion 3 포함 릴리스로 올려야 한다. `Portal` 제품명은 계속 제품이 소유한다. |
+
+LDS는 LK 심볼·ROBOTICS 워드마크·승인 variant·색·최소 크기·clear space·플랫폼 export를 소유한다. 각 제품은 제품명, 링크 동작, 반응형 배치와 배포 시점을 소유하지만, path를 다시 그리거나 로컬 색/효과를 추가해서는 안 된다. 현재 두 migration gap은 정본 자체의 완성을 막는 항목이 아니라 소비 제품의 후속 채택 항목이며, 해결 전까지 감사 파일에서 `current`로 올리지 않는다.

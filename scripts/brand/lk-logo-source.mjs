@@ -6,6 +6,8 @@
  * constructs both from the pinned fonts in lk-logo-construction.json.
  */
 
+export const LK_MARK_GEOMETRY_VERSION = '1.0';
+
 export const LK_MARK_PATHS = Object.freeze([
   {
     d: 'm 0,0 v -42.031 h 28.142 l -7.307,8.749 H 9.11 L 9.11,0 Z',

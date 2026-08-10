@@ -564,9 +564,19 @@ function guideFromPage(page, entriesByExport, sourceDetails, tokenMap) {
     label: index === 0 ? '기본 조합' : `추가 조합 ${index + 1}`,
     code,
   }));
+  const hasBrandPlatformContracts = page.primaryOwner === 'Lockup';
+  const brandPlatformSources = hasBrandPlatformContracts
+    ? [
+        { label: 'Figma vector import contract', path: 'assets/brand/platforms/figma/import-manifest.json' },
+        { label: 'iOS vector asset contract', path: 'assets/brand/platforms/ios/manifest.json' },
+        { label: 'Android VectorDrawable contract', path: 'assets/brand/platforms/android/manifest.json' },
+        { label: 'Web canonical SVG contract', path: 'assets/brand/platforms/web/manifest.json' },
+      ]
+    : [];
   const sources = unique([
     JSON.stringify({ label: `${page.primaryOwner} prompt contract`, path: primary?.prompt || page.importPath }),
     JSON.stringify({ label: 'Storybook implementation evidence', path: page.importPath.replace(/^\.\//, '') }),
+    ...brandPlatformSources.map((source) => JSON.stringify(source)),
     ...prompt.links.map((link) => JSON.stringify(link)),
   ]).map((source) => JSON.parse(source)).slice(0, 10);
 
@@ -601,10 +611,10 @@ function guideFromPage(page, entriesByExport, sourceDetails, tokenMap) {
     ]),
     migration,
     platformStatus: {
-      figma: primary?.wdsFamily ? 'mapped' : 'not-tracked',
+      figma: hasBrandPlatformContracts ? 'import-contract' : primary?.wdsFamily ? 'mapped' : 'not-tracked',
       react: 'implemented',
-      ios: 'not-tracked',
-      android: 'not-tracked',
+      ios: hasBrandPlatformContracts ? 'asset-contract' : 'not-tracked',
+      android: hasBrandPlatformContracts ? 'asset-contract' : 'not-tracked',
     },
     storybook: {
       importPath: page.importPath,
@@ -891,7 +901,9 @@ const compiled = {
   ],
   platformStatusDefinitions: {
     mapped: 'Accepted design-source family mapping exists.',
+    'import-contract': 'A deterministic, import-ready design-source contract exists; this does not claim a live upload or approval.',
     implemented: 'A public React implementation, type contract, prompt contract, and Storybook evidence exist.',
+    'asset-contract': 'Deterministic native vector assets and a machine-readable delivery contract exist; this does not claim product adoption.',
     'not-tracked': 'This repository does not own or assert that platform implementation status.',
   },
   summary: {

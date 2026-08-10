@@ -13,6 +13,9 @@ const contractPath = 'docs/STORYBOOK_INFORMATION_ARCHITECTURE.md';
 const update = process.argv.includes('--update');
 const check = process.argv.includes('--check');
 const REVIEW_METHOD = 'source-ast+layer-human-review';
+const REVIEW_SOURCE_DEPENDENCIES = Object.freeze({
+  './stories/Brand.stories.jsx': Object.freeze(['stories/Brand.shared.jsx']),
+});
 
 const PUBLIC_STORY_NAME_PREFIXES = {
   'foundation-reference': '참조 · ',
@@ -381,7 +384,8 @@ function hasCanvasGuidance(text) {
 }
 
 function hasDecisionGuidance(source) {
-  return /(when to use|when not to use|use when|avoid when|사용할 때|사용하지|피해야|적합|선택 기준|구분 기준)/i.test(source);
+  const structuredDecisionGuidance = /\buseWhen\s*:/.test(source) && /\bavoidWhen\s*:/.test(source);
+  return structuredDecisionGuidance || /(when to use|when not to use|use when|avoid when|사용할 때|사용하지|피해야|적합|선택 기준|구분 기준)/i.test(source);
 }
 
 function defaultDisposition(page) {
@@ -446,6 +450,24 @@ async function buildAudit(previous) {
   for (const [importPath, fileStories] of [...byImport].sort(([a], [b]) => a.localeCompare(b))) {
     const rel = importPath.replace(/^\.\//, '');
     const source = await read(rel);
+    const sourceDependencies = await Promise.all(
+      (REVIEW_SOURCE_DEPENDENCIES[importPath] || []).map(async (dependencyPath) => ({
+        path: dependencyPath,
+        sha256: sha256(await read(dependencyPath)),
+      })),
+    );
+    if (importPath === './stories/Brand.stories.jsx') {
+      assert(
+        source.includes("from './Brand.shared.jsx'"),
+        'Brand Storybook review dependency must remain an explicit Brand.shared.jsx import.',
+      );
+    }
+    const sourceSha256 = sourceDependencies.length
+      ? sha256(JSON.stringify({
+          source: { path: rel, sha256: sha256(source) },
+          dependencies: sourceDependencies,
+        }))
+      : sha256(source);
     const sourceFile = ts.createSourceFile(rel, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.JSX);
     const topLevel = collectTopLevelNodes(sourceFile);
     const imported = importedComponents(sourceFile, exportNames);
@@ -516,7 +538,8 @@ async function buildAudit(previous) {
       layer,
       family: fileStories[0].title.split('/').slice(0, -1).at(-1),
       importPath,
-      sourceSha256: sha256(source),
+      sourceSha256,
+      ...(sourceDependencies.length ? { sourceDependencies } : {}),
       primaryOwner: primaryOwnerOverride || metaOwner || [...subjectOwners][0] || null,
       ownerComponents: [...subjectOwners].sort(),
       supportingComponents: [...renderedPageComponents].filter((owner) => !subjectOwners.has(owner)).sort(),
@@ -648,6 +671,14 @@ if (update) {
     assert(page.ownerComponents.length > 0, `Missing ownerComponents for ${page.title}.`);
     assert(page.reviewStatus === 'reviewed', `Pending page review for ${page.title}.`);
     assert(page.reviewMethod === REVIEW_METHOD, `Unexpected reviewMethod for ${page.title}.`);
+    if (page.importPath === './stories/Brand.stories.jsx') {
+      assert(
+        page.sourceDependencies?.length === 1
+          && page.sourceDependencies[0].path === 'stories/Brand.shared.jsx'
+          && /^[0-9a-f]{64}$/.test(page.sourceDependencies[0].sha256),
+        'LK Brand page review must include the explicit Brand.shared.jsx source dependency.',
+      );
+    }
     assert(page.reviewedSourceSha256 === page.sourceSha256, `Stale page review for ${page.title}.`);
     assert(['keep', 'merge', 'split', 'hide'].includes(page.disposition), `Invalid disposition for ${page.title}.`);
     const publicStories = page.stories.filter((story) => story.visibility === 'public');
