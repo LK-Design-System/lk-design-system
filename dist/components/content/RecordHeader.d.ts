@@ -15,6 +15,8 @@ export interface RecordHeaderProps extends Omit<React.HTMLAttributes<HTMLElement
   actions?: React.ReactNode;
   /** 제목의 문서 heading 단계. @default 1 */
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  /** 제목 scale과 내부/행 gap을 조정하는 헤더 크기. description·details typography는 유지합니다. @default "md" */
+  size?: 'sm' | 'md';
 }
 
 /** 대상의 시각 식별자, 이름, 배지, 세부 정보와 액션을 묶는 레코드 정체성 헤더. */

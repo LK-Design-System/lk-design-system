@@ -9,6 +9,7 @@ import {
   mergeIds,
 } from './field-shared.js';
 import { componentVars, partClassName, partStyle } from '../internal/surface.js';
+import { useResolvedControlSize } from '../internal/component-density.js';
 
 function usePlaceholderStyle() {
   React.useEffect(() => {
@@ -38,7 +39,7 @@ export const Input = React.forwardRef(function Input({
   invalid = false,
   required = false,
   status = 'normal',
-  size = 'md',
+  size,
   height,
   interaction,
   active = false,
@@ -65,7 +66,8 @@ export const Input = React.forwardRef(function Input({
   const messageId = message != null ? `${inputId}-message` : undefined;
   const [focused, setFocused] = React.useState(false);
   const [hover, setHover] = React.useState(false);
-  const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size === 'large' ? 'lg' : size;
+  const resolvedSize = useResolvedControlSize(size);
+  const normalizedSize = resolvedSize === 'small' ? 'sm' : resolvedSize === 'medium' ? 'md' : resolvedSize === 'large' ? 'lg' : resolvedSize;
   const disabled = !!rest.disabled || disable || interaction === 'inactive';
   const readOnly = !!rest.readOnly;
   const activeFocus = focused || focus || interaction === 'focused' || interaction === 'active-focused';

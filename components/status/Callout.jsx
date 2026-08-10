@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
+import { useResolvedDensity } from '../internal/component-density.js';
 import { normalizeStatusTone, statusToneStyle } from './status-presentation.js';
 
 // Status surface colors come straight from the semantic status tier via
@@ -27,7 +28,9 @@ function normalizeIcon(icon, fallbackIcon) {
  * reading column. The two used to differ by 2px, which made them look
  * interchangeable — the rank is now asserted in StatusFeedback.stories.jsx.
  */
-export function Callout({ tone = 'signal', title, headingLevel = false, children, icon, style, ...rest }) {
+export function Callout({ tone = 'signal', title, headingLevel = false, children, icon, density, style, ...rest }) {
+  const resolvedDensity = useResolvedDensity(density, 'comfortable');
+  const compact = resolvedDensity === 'compact';
   const navy = tone === 'navy';
   const normalizedTone = navy ? 'offline' : normalizeStatusTone(tone);
   const palette = navy
@@ -44,10 +47,11 @@ export function Callout({ tone = 'signal', title, headingLevel = false, children
   const Heading = headingLevel ? `h${headingLevel}` : 'div';
   return (
     <div
+      data-density={resolvedDensity}
       style={{
         display: 'flex',
-        gap: 'var(--space-4)',
-        padding: 'var(--space-5) var(--space-6)',
+        gap: compact ? 'var(--space-3)' : 'var(--space-4)',
+        padding: compact ? 'var(--space-3) var(--space-4)' : 'var(--space-5) var(--space-6)',
         boxSizing: 'border-box',
         background: palette.surface,
         border: `1px solid ${palette.border}`,
@@ -75,7 +79,7 @@ export function Callout({ tone = 'signal', title, headingLevel = false, children
       </span>
       <div style={{ flex: 1, minWidth: 0 }}>
         {title != null && <Heading style={{ margin: 0, fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: navy ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-label-normal)', marginBottom: children != null ? 'var(--space-1-5)' : 0 }}>{title}</Heading>}
-        {children != null && <div style={{ fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-reading-line)', color: navy ? 'var(--color-semantic-brand-on-surface-subtle)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
+        {children != null && <div style={{ fontSize: 'var(--label1-size)', lineHeight: compact ? 'var(--label1-line)' : 'var(--label1-reading-line)', color: navy ? 'var(--color-semantic-brand-on-surface-subtle)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
       </div>
     </div>
   );

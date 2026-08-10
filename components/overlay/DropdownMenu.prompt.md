@@ -115,9 +115,9 @@ LDS 메뉴 토큰을 사용합니다.
   `frontend/src/views/user/index.jsx`
   (`8912b51c6eb612bd2beb2ed0206ee78ae6f03f2d`): 확인된 `MenuItem`은 form Select option이므로
   command DropdownMenu로 대체하지 않으며 `not applicable`입니다.
-- **LK Context Hub** — `de124084b7e50049350a46f92c4ea4476269c58c`,
+- **LK Portal** — `e5ee99d5062170e26abe63d9105c2b8a024ce710`,
   `src/app/confluence/page.tsx`
-  (`5d40f347f4b391510ac8ce4a60d65c18a27214cc`): 표 행의 이름 변경·동기화 제외·삭제 메뉴는
+  (`d12598d529e2f194e6b6eb0a68b47eaba8755400`): 표 행의 이름 변경·동기화 제외·삭제 메뉴는
   `normal` DropdownMenu와 danger item 조합으로 `supported by composition`입니다. 실제 rename,
   exclude, delete 상태와 확인 절차는 제품이 소유합니다.
 

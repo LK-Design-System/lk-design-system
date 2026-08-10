@@ -590,6 +590,7 @@
       "exports": [
         "CommandPalette",
         "Drawer",
+        "DrawerSection",
         "Lightbox",
         "Sheet"
       ]
@@ -839,6 +840,10 @@
   "internalModules": [
     {
       "path": "components/internal/bounded-value.js",
+      "ownerLayer": "core"
+    },
+    {
+      "path": "components/internal/component-density.js",
       "ownerLayer": "core"
     },
     {

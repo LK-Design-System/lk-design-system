@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "c8b416aa9e75eb463451ebb79a0ed6f3c38b84942f9c512e622100313490b165",
+  "sourceFingerprint": "a90638eafe225794a328882635e5e400c98f6323b5dd87477db26c37a16ace3f",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -27,7 +27,7 @@
   },
   "summary": {
     "componentEntries": 207,
-    "publicExports": 219,
+    "publicExports": 220,
     "guides": 176,
     "entriesWithoutOwnedPage": [
       "Stat",
@@ -134,9 +134,9 @@
         },
         {
           "name": "tone",
-          "type": "'ink' | 'white' | 'brand' | 'mono' | 'current'",
+          "type": "'ink' | 'white' | 'brand' | 'current'",
           "required": false,
-          "description": "채움 프리셋 — 공식 네이비, 반전 화이트, 제약된 흑백 mono, 호환용 currentColor. @default \"ink\"",
+          "description": "채움 프리셋 — 공식 네이비, 반전 화이트, 호환용 currentColor. 제약된 검정 단색 출력은 color=\"#000000\"을 명시합니다. @default \"ink\"",
           "owner": "LockupProps"
         },
         {
@@ -179,7 +179,7 @@
           "url": "https://github.com/google/fonts/tree/4efc2774c63917927efe769ca845def6bd6debae/ofl/notosanskr"
         }
       ],
-      "promptSha256": "5e11ea3868f64176cb79e24ac6aa038cd2f5680b2189427d5171188bb1aa2a5c"
+      "promptSha256": "4de2e61951c3c970ed6edcb20b5195f5c9d13d0035099d79c424ba6100b70806"
     },
     {
       "id": "action-area",
@@ -1118,7 +1118,7 @@
           "name": "tone",
           "type": "'outline' | 'brand'",
           "required": false,
-          "description": "'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2). @default \"outline\"",
+          "description": "'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 #1877F2). @default \"outline\"",
           "owner": "SocialButtonProps"
         },
         {
@@ -1810,7 +1810,7 @@
           "name": "padding",
           "type": "number | string",
           "required": false,
-          "description": "기본 32px 패딩을 재정의.",
+          "description": "기본 패딩을 재정의합니다. 지정하면 platform·density 기본값과 --lds-card-padding보다 우선합니다.",
           "owner": "CardOwnProps"
         },
         {
@@ -1818,6 +1818,13 @@
           "type": "\"desktop\" | \"mobile\"",
           "required": false,
           "description": "platform axis. @default \"desktop\"",
+          "owner": "CardOwnProps"
+        },
+        {
+          "name": "density",
+          "type": "\"comfortable\" | \"compact\"",
+          "required": false,
+          "description": "데스크톱 Card의 opt-in 공간 밀도. typography 크기는 바꾸지 않습니다. @default \"comfortable\"",
           "owner": "CardOwnProps"
         },
         {
@@ -1976,11 +1983,18 @@
         "--color-semantic-primary-normal",
         "--color-semantic-label-alternative",
         "--color-semantic-focus-indicator",
+        "--space-2-5",
+        "--space-2",
+        "--space-3",
         "--component-card-shadow-none",
         "--component-card-shadow-sm",
         "--component-card-shadow-md",
         "--component-card-shadow-lg",
+        "--space-4",
         "--component-card-padding",
+        "--lds-card-padding",
+        "--space-1-5",
+        "--space-1",
         "--lds-card-gap",
         "--label2-size",
         "--label2-line",
@@ -2003,11 +2017,27 @@
         "--component-card-radius",
         "--component-card-hover-transform",
         "--component-card-transition",
-        "--lds-card-padding",
         "--lds-card-max-width"
       ],
-      "externalReferences": [],
-      "promptSha256": "ccdad7b6ff38905ca7634424d193363f6d14a1073eeb2c2496bfcb2f6e171ab3"
+      "externalReferences": [
+        {
+          "label": "MUI density guidance",
+          "url": "https://mui.com/material-ui/customization/density/"
+        },
+        {
+          "label": "Carbon spacing",
+          "url": "https://carbondesignsystem.com/elements/spacing/overview/"
+        },
+        {
+          "label": "Fluent 2 layout",
+          "url": "https://fluent2.microsoft.design/layout"
+        },
+        {
+          "label": "Carbon Data Table usage",
+          "url": "https://carbondesignsystem.com/components/data-table/usage/"
+        }
+      ],
+      "promptSha256": "36ecd2d56f77b75736e6453686a1faf65167817a1fc3a4784f96600cf83cd878"
     },
     {
       "id": "checklist-item",
@@ -2189,6 +2219,13 @@
           "owner": "FeatureCardProps"
         },
         {
+          "name": "density",
+          "type": "'comfortable' | 'compact'",
+          "required": false,
+          "description": "spacing과 icon 크기만 조정하는 opt-in 밀도. typography는 유지합니다. @default \"comfortable\"",
+          "owner": "FeatureCardProps"
+        },
+        {
           "name": "headingLevel",
           "type": "1 | 2 | 3 | 4 | 5 | 6 | false",
           "required": false,
@@ -2203,21 +2240,39 @@
         "--color-semantic-accent-foreground-orange",
         "--color-semantic-brand-on-surface",
         "--color-semantic-brand-surface",
+        "--space-3",
+        "--space-4",
         "--component-card-bg",
         "--component-card-border",
         "--component-card-radius",
         "--shadow-md",
         "--component-card-shadow-md",
         "--component-card-padding",
+        "--space-10",
         "--radius-14",
+        "--space-1",
+        "--space-2",
         "--headline1-size",
         "--fw-extra",
         "--color-semantic-label-strong",
         "--body2-size",
         "--color-semantic-label-alternative"
       ],
-      "externalReferences": [],
-      "promptSha256": "a6b8cbb952811eac6af6577ece262cfa4b625f180707b8f552bc757595d6e1a0"
+      "externalReferences": [
+        {
+          "label": "MUI density guidance",
+          "url": "https://mui.com/material-ui/customization/density/"
+        },
+        {
+          "label": "Carbon spacing",
+          "url": "https://carbondesignsystem.com/elements/spacing/overview/"
+        },
+        {
+          "label": "Fluent 2 layout",
+          "url": "https://fluent2.microsoft.design/layout"
+        }
+      ],
+      "promptSha256": "99f8c8a3f051812af8d3a530af36d0d4d96e632a7bf509f84292943d714c132a"
     },
     {
       "id": "feed-card",
@@ -2500,7 +2555,7 @@
           "name": "href",
           "type": "string",
           "required": false,
-          "description": "항목 링크. @default \"\"",
+          "description": "항목 링크. @default \"#\"",
           "owner": "ListingCardProps"
         }
       ],
@@ -2894,7 +2949,7 @@
           "name": "href",
           "type": "string",
           "required": false,
-          "description": "기사 링크. @default \"\"",
+          "description": "기사 링크. @default \"#\"",
           "owner": "NewsCardProps"
         },
         {
@@ -3041,7 +3096,7 @@
           "name": "href",
           "type": "string",
           "required": false,
-          "description": "링크 대상. @default \"\"",
+          "description": "링크 대상. @default \"#\"",
           "owner": "ProductCardProps"
         },
         {
@@ -3368,6 +3423,20 @@
           "owner": "ConversationMessageBaseProps"
         },
         {
+          "name": "identityVisibility",
+          "type": "'visible' | 'hidden'",
+          "required": false,
+          "description": "'hidden' keeps the author in the accessible name only, for surfaces where alignment and fill already state the speaker (e.g. the outbound bubble in a two-party chat). Grouped middle/last items are already hidden regardless. @default 'visible'",
+          "owner": "ConversationMessageBaseProps"
+        },
+        {
+          "name": "messageActionsVisibility",
+          "type": "'always' | 'on-demand'",
+          "required": false,
+          "description": "'on-demand' rests the action bar at opacity 0 and reveals it on hover or focus-within. Layout and the accessible tree are unchanged; coarse pointers and failed-turn retry bars stay always visible. @default 'always'",
+          "owner": "ConversationMessageBaseProps"
+        },
+        {
           "name": "roleBadgeLabel",
           "type": "React.ReactNode",
           "required": false,
@@ -3478,6 +3547,8 @@
         "--color-semantic-status-negative",
         "--color-semantic-primary-normal",
         "--color-semantic-label-alternative",
+        "--dur-fast",
+        "--ease-out",
         "--caption1-size",
         "--caption1-line",
         "--color-semantic-label-normal",
@@ -3556,7 +3627,7 @@
           "url": "https://www.figma.com/design/ss5Fq2VKd2UDoHk7SE9dPl/3-Free-AI-Chatbot-App-UI-Kit--Community-?node-id=10301-21963"
         }
       ],
-      "promptSha256": "c0cea53f290d3cb21b9225834896b0e68fb72fcaa591f3fc1d1754ca78d0db67"
+      "promptSha256": "36cf3c9be790fa02137b13f05ec8c526129ff9b68e753ce525df004380fe3b14"
     },
     {
       "id": "message-composer",
@@ -4034,7 +4105,6 @@
       ],
       "tokens": [
         "--space-6",
-        "--space-3",
         "--space-4",
         "--space-2",
         "--font-sans",
@@ -4114,7 +4184,7 @@
           "url": "https://www.figma.com/design/ss5Fq2VKd2UDoHk7SE9dPl/3-Free-AI-Chatbot-App-UI-Kit--Community-?node-id=10301-21963"
         }
       ],
-      "promptSha256": "913014a15aac883c9a63964c52277e774d065172c4104ef446a4bfb93e466f81"
+      "promptSha256": "581d42e80543ab6942f3492135bed0aaedaa85041f9f616ca1888c8d472555b2"
     },
     {
       "id": "accordion",
@@ -6200,7 +6270,7 @@
           "url": "https://fluent2.microsoft.design/accessibility"
         }
       ],
-      "promptSha256": "929c56400fe511e3cb594c5a5a3d1bbf29f4624a8a6d108ac819214725ba9f33"
+      "promptSha256": "1aad0e0c08d557cb4688dbc876b516809e59b0f3c8284b5ca0b016040c15f495"
     },
     {
       "id": "prose",
@@ -6521,17 +6591,29 @@
           "required": false,
           "description": "제목의 문서 heading 단계. @default 1",
           "owner": "RecordHeaderProps"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md'",
+          "required": false,
+          "description": "제목 scale과 내부/행 gap을 조정하는 헤더 크기. description·details typography는 유지합니다. @default \"md\"",
+          "owner": "RecordHeaderProps"
         }
       ],
       "tokens": [
         "--color-semantic-label-normal",
         "--font-sans",
+        "--space-3",
         "--space-4",
+        "--space-1",
         "--space-2",
         "--color-semantic-label-strong",
+        "--heading2-size",
         "--heading1-size",
+        "--heading2-line",
         "--heading1-line",
         "--fw-extra",
+        "--heading2-spacing",
         "--heading1-spacing",
         "--color-semantic-label-neutral",
         "--label1-size",
@@ -6565,9 +6647,25 @@
         {
           "label": "WCAG 2.2 Reflow",
           "url": "https://www.w3.org/TR/WCAG22/#reflow"
+        },
+        {
+          "label": "MUI density guidance",
+          "url": "https://mui.com/material-ui/customization/density/"
+        },
+        {
+          "label": "Carbon Data Table usage",
+          "url": "https://carbondesignsystem.com/components/data-table/usage/"
+        },
+        {
+          "label": "Carbon spacing",
+          "url": "https://carbondesignsystem.com/elements/spacing/overview/"
+        },
+        {
+          "label": "Fluent 2 layout",
+          "url": "https://fluent2.microsoft.design/layout"
         }
       ],
-      "promptSha256": "8963d24e0a6b81cff934f4cb9a4da80a00a1a1d79de24c91ea2585a219f19bdd"
+      "promptSha256": "7278219c08ad65b13ae21e6ddc772a465ba309cca2c19bd7aa6416c99d1ff587"
     },
     {
       "id": "reorder-list",
@@ -7184,7 +7282,7 @@
           "url": "https://carbondesignsystem.com/components/tag/usage/"
         }
       ],
-      "promptSha256": "4a1fccc74d9b8cb87f63dff1618552385a2efd731efc8b27bb8698289c1efae5"
+      "promptSha256": "764870746c223adc34c7a8ee736acce547d5cbf8ac4552fff9eab2ee52874c2b"
     },
     {
       "id": "status-indicator",
@@ -7291,7 +7389,7 @@
           "url": "https://www.w3.org/TR/WCAG22/#use-of-color"
         }
       ],
-      "promptSha256": "44021dafdd409f8497e34b7b3566510fb057b7043a17b9235b88a12105512b5a"
+      "promptSha256": "356c32b9bc24d920101576643c6148918e71d2810870e226015b7ab12209f224"
     },
     {
       "id": "step-list",
@@ -7903,7 +8001,7 @@
           "url": "https://floating-ui.com/docs/floatingarrow"
         }
       ],
-      "promptSha256": "810ac454ee703f15943071102d3c4e878d1f8dae1535d9a0235312656bd7d4b0"
+      "promptSha256": "b096ba4a5fe565981c20432df0523bbf71919afe244ef537876fa1ade68390c6"
     },
     {
       "id": "annotated-image",
@@ -9135,7 +9233,7 @@
           "url": "https://www.w3.org/WAI/tutorials/tables/tips/"
         }
       ],
-      "promptSha256": "aa8914cc9d6a58e52fa9bceefcb1082efd7ebb46de096147d19935446bba8c94"
+      "promptSha256": "c6ac51cb8579ce761db0e4dcf7ba7f56dc7cc5f245910291b215e955182428e8"
     },
     {
       "id": "data-export-action",
@@ -15954,7 +16052,7 @@
           "url": "https://design-system.service.gov.uk/components/checkboxes/"
         }
       ],
-      "promptSha256": "4f83a0e38892647116f060ec1839ef23d2498756dea217d140f54973be504308"
+      "promptSha256": "cb5cabf6b08324910ea220cd5e49502a30e71e173e7fe15993ffd6be16dcb6fd"
     },
     {
       "id": "checkbox-group",
@@ -16034,10 +16132,20 @@
           "required": false,
           "description": "레이아웃. @default \"column\"",
           "owner": "CheckboxGroupProps"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md' | 'small' | 'medium'",
+          "required": false,
+          "description": "컨트롤과 옵션 행의 크기. compact component scope에서는 기본 sm, 그 밖에서는 md.",
+          "owner": "CheckboxGroupProps"
         }
       ],
       "tokens": [
+        "--label1-size",
         "--body2-size",
+        "--label1-line",
+        "--body2-line",
         "--fw-semibold",
         "--color-semantic-label-normal",
         "--space-0-5",
@@ -16054,7 +16162,7 @@
           "url": "https://www.w3.org/WAI/tutorials/forms/grouping/"
         }
       ],
-      "promptSha256": "ab867e9702de084fa43a76c74a96dc258d4c615574ca1de4be8cebdf950ee24d"
+      "promptSha256": "1562698a65c7936fb3b72d4ffe51082831637f40b23139b4b82f0700aff8f5df"
     },
     {
       "id": "color-swatch",
@@ -16957,7 +17065,7 @@
           "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
         }
       ],
-      "promptSha256": "f41d9f9cbcea5277412946eaa63b1d6c10e00223d65310197a95ec1b6bbcf85e"
+      "promptSha256": "bc025dd78f91d55d9fdbe0879438fd3ab6da8f48bff71330de88e583ecaa0827"
     },
     {
       "id": "file-upload",
@@ -17092,6 +17200,13 @@
           "owner": "FileUploadProps"
         },
         {
+          "name": "size",
+          "type": "'sm' | 'md' | 'small' | 'medium'",
+          "required": false,
+          "description": "drop target 크기. compact component scope에서는 기본 sm, 그 밖에서는 md.",
+          "owner": "FileUploadProps"
+        },
+        {
           "name": "disabled",
           "type": "boolean",
           "required": false,
@@ -17112,9 +17227,10 @@
         "--font-sans",
         "--dur-fast",
         "--ease-out",
+        "--space-2",
         "--space-3",
-        "--space-6",
         "--space-4",
+        "--space-6",
         "--radius-md",
         "--color-semantic-fill-strong",
         "--color-semantic-primary-normal",
@@ -17140,7 +17256,7 @@
           "url": "https://design-system.service.gov.uk/components/file-upload/"
         }
       ],
-      "promptSha256": "daabdc9c526983227d82f51cb45b6d08fe4afb9746fc380547439aba3d619c4b"
+      "promptSha256": "389096b84fb48460db8a4ddf1ddae5e275b7d30537fb5bb78a6cc5de8bc73079"
     },
     {
       "id": "file-upload-queue",
@@ -17724,7 +17840,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
         }
       ],
-      "promptSha256": "77b78b3f823f152250a8fa866c194e6ab49cbc8dcdedeed13ad55e70abe81aba"
+      "promptSha256": "825b7fdf17de82dcdb4bba3d6a220da80539ff0e5b0ca171610b73243f9be8d9"
     },
     {
       "id": "input-group",
@@ -18854,7 +18970,7 @@
           "url": "https://design-system.service.gov.uk/components/radios/"
         }
       ],
-      "promptSha256": "29c6fd0fbf98b274033585b47866000a14e62f6554c1f9af5c4b1cfe235a3de3"
+      "promptSha256": "266a8f16a51b6f3f3c8c745aa11d5eaa9c9eb86cb868771bc244ff6e4f486d99"
     },
     {
       "id": "radio-group",
@@ -18941,10 +19057,20 @@
           "required": false,
           "description": "레이아웃. @default \"column\"",
           "owner": "RadioGroupProps"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md' | 'small' | 'medium'",
+          "required": false,
+          "description": "컨트롤과 옵션 행의 크기. compact component scope에서는 기본 sm, 그 밖에서는 md.",
+          "owner": "RadioGroupProps"
         }
       ],
       "tokens": [
+        "--label1-size",
         "--body2-size",
+        "--label1-line",
+        "--body2-line",
         "--fw-semibold",
         "--color-semantic-label-normal",
         "--space-0-5",
@@ -18961,7 +19087,7 @@
           "url": "https://www.w3.org/WAI/tutorials/forms/grouping/"
         }
       ],
-      "promptSha256": "f37fa2c951655a360738db22a37a7cc2629610c6b48c8eb86a11ac5a75e4529b"
+      "promptSha256": "4d191cf394570b6417bf278113376185e834fd0547a38801a15c6a14cddbd5e7"
     },
     {
       "id": "range-slider",
@@ -19873,7 +19999,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/"
         }
       ],
-      "promptSha256": "c1c2e2e6ff87bbbb3d3b3c11ff7501371854f8fa5693e8d3470b3141153fd6de"
+      "promptSha256": "3a53b17c5637549154a215a409dfec07f36680e711831e9ce985f7ba4270895c"
     },
     {
       "id": "select",
@@ -20077,9 +20203,9 @@
         },
         {
           "name": "render",
-          "type": "\"text\" | \"chip\"",
+          "type": "\"text\" | \"chip\" | \"chip-trigger\"",
           "required": false,
-          "description": "선택 값을 텍스트 또는 칩으로 표시. @default \"text\"",
+          "description": "선택 값의 표시 방식. \"chip\"은 선택 값을 트리거 안의 캡슐로 강조하고, \"chip-trigger\"는 트리거 전체를 보더 없는 단일 알약(칩)으로 그린다 — 작성창 동작 띠처럼 폼 필드가 아닌 자리의 옵션 컨트롤용. @default \"text\"",
           "owner": "SelectProps"
         },
         {
@@ -20263,11 +20389,13 @@
         "--component-input-radius",
         "--component-input-focus-shadow",
         "--component-button-transition",
-        "--color-semantic-label-assistive",
         "--radius-pill",
+        "--color-semantic-fill-alternative",
+        "--color-semantic-fill-normal",
+        "--fw-semibold",
+        "--color-semantic-label-assistive",
         "--color-semantic-primary-surface-strong",
         "--label2-size",
-        "--fw-semibold",
         "--lds-select-dropdown-max-height",
         "--color-semantic-background-elevated-normal",
         "--color-semantic-line-solid-normal",
@@ -20312,7 +20440,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/menu/usage"
         }
       ],
-      "promptSha256": "9bc8d5e118d060f8fec41ceae01d3f7fe939cd6f74e8eed581ac239e1567ec07"
+      "promptSha256": "413a26360c0e0fbd5534352c7a8d7e9d4c86b7e0740127f6f88ad1d99519ad7a"
     },
     {
       "id": "slider",
@@ -20759,7 +20887,7 @@
           "url": "https://carbondesignsystem.com/components/text-area/usage/"
         }
       ],
-      "promptSha256": "2891d8e02c4901000d44a958de9995e2238a096f5f8339bf3e999f4775796077"
+      "promptSha256": "b352ae0ed9d9e870a1ad601718e0103a042d3d9d77532d0f9517a84b67337fde"
     },
     {
       "id": "time-picker",
@@ -21090,7 +21218,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/alert/"
         }
       ],
-      "promptSha256": "fc9c3cf30a5d553a3642cd84b3dcb42f6918184182a3340a2a7062c73ad6f096"
+      "promptSha256": "49a47da8afed84c4e153d43c27bc75497835fd5bc2194e6c90ef23c595b8a62c"
     },
     {
       "id": "virtual-keypad",
@@ -21898,7 +22026,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/nav/usage"
         }
       ],
-      "promptSha256": "447f8c8885912ea20ccd33260aebc83f2cdb7fb82bf7a7d00a9ee81084815775"
+      "promptSha256": "2497705f36c8f88b41d0c98a2ac38c5372b83151c4463d0c61af029d13d341f6"
     },
     {
       "id": "dashboard-shell",
@@ -22136,7 +22264,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/"
         }
       ],
-      "promptSha256": "e2108f93c8d74c5d9b41050160250c83ebb261b7ad11e3df771cb19f195e6ec2"
+      "promptSha256": "5c63cd94771fe792cf2e4014a7c52c392b087641a6a52a8b32e065c25269dbb5"
     },
     {
       "id": "dock-panel",
@@ -24146,7 +24274,7 @@
           "url": "https://design-system.dwp.gov.uk/components/language-toggle/how-it-works"
         }
       ],
-      "promptSha256": "d6c956613670d550d6b94840489cf208371c6fcb797248bf73087511f502ba2a"
+      "promptSha256": "cf14dc99888a6756e591e41b0116702268dae5306c0342659284efac88e58716"
     },
     {
       "id": "menubar",
@@ -24840,6 +24968,13 @@
           "owner": "SideNavProps"
         },
         {
+          "name": "appearance",
+          "type": "'default' | 'brand'",
+          "required": false,
+          "description": "색상 외형. default는 현재 theme semantic 색을 그대로 사용하고, brand는 밝은 작업면과 대비되는 평면 브랜드 네이비 셸을 사용합니다. 배치 형태는 surface가 별도로 소유합니다. @default 'default'",
+          "owner": "SideNavProps"
+        },
+        {
           "name": "collapsed",
           "type": "boolean",
           "required": false,
@@ -24942,6 +25077,29 @@
         "--dur-fast",
         "--ease-out",
         "--space-0-5",
+        "--color-semantic-background-elevated-normal",
+        "--color-semantic-line-solid-normal",
+        "--color-semantic-label-normal",
+        "--color-semantic-label-alternative",
+        "--color-semantic-primary-normal",
+        "--color-semantic-fill-normal",
+        "--color-semantic-primary-surface-strong",
+        "--color-semantic-fill-strong",
+        "--color-semantic-focus-indicator",
+        "--component-side-nav-brand-surface",
+        "--component-side-nav-brand-divider",
+        "--component-side-nav-brand-foreground",
+        "--component-side-nav-brand-muted-foreground",
+        "--component-side-nav-brand-subtle-foreground",
+        "--component-side-nav-brand-hover-foreground",
+        "--component-side-nav-brand-active-foreground",
+        "--component-side-nav-brand-hover-surface",
+        "--component-side-nav-brand-active-hover-surface",
+        "--component-side-nav-brand-pressed-surface",
+        "--component-side-nav-brand-badge-surface",
+        "--component-side-nav-brand-badge-foreground",
+        "--component-side-nav-brand-badge-active-surface",
+        "--component-side-nav-brand-focus-indicator",
         "--space-2",
         "--space-3",
         "--lds-side-nav-item-height",
@@ -24950,30 +25108,23 @@
         "--font-sans",
         "--label1-size",
         "--label1-line",
-        "--color-semantic-primary-surface-strong",
-        "--color-semantic-fill-alternative",
-        "--color-semantic-label-normal",
-        "--color-semantic-label-alternative",
         "--fw-bold",
         "--fw-medium",
         "--radius-pill",
         "--caption2-size",
-        "--color-semantic-primary-normal",
-        "--color-semantic-background-elevated-normal",
         "--lds-side-nav-collapsed-width",
         "--lds-side-nav-width",
-        "--color-semantic-line-solid-normal",
         "--lds-side-nav-radius",
         "--radius-xl",
         "--lds-side-nav-padding",
         "--space-2-5",
         "--dur-base",
-        "--color-semantic-fill-normal",
+        "--_lds-side-nav-pressed-surface",
+        "--_lds-side-nav-focus-indicator",
         "--space-1-5",
-        "--space-4",
+        "--lds-side-nav-child-item-height",
         "--space-4-5",
         "--label2-size",
-        "--label2-line",
         "--shadow-lg"
       ],
       "externalReferences": [
@@ -25012,9 +25163,25 @@
         {
           "label": "WAI Disclosure Navigation",
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/"
+        },
+        {
+          "label": "Linear's 2026 interface refresh",
+          "url": "https://linear.app/now/behind-the-latest-design-refresh"
+        },
+        {
+          "label": "Linear's 2024 redesign",
+          "url": "https://linear.app/now/how-we-redesigned-the-linear-ui"
+        },
+        {
+          "label": "Primer color usage",
+          "url": "https://primer.style/product/getting-started/foundations/color-usage/"
+        },
+        {
+          "label": "Grafana navigation",
+          "url": "https://grafana.com/developers/saga/patterns/navigation/"
         }
       ],
-      "promptSha256": "0aa0d937489ad7207858f2e5779bc3407f8591474736f6189644dc8ecaf4f84e"
+      "promptSha256": "2c197168313a5984af4260c6dff8626cca6179a4d0038412adbe47d4383fa04f"
     },
     {
       "id": "steps",
@@ -26107,6 +26274,7 @@
       ],
       "classificationSiblings": [
         "Drawer",
+        "DrawerSection",
         "Lightbox",
         "Sheet"
       ],
@@ -26550,7 +26718,8 @@
       "id": "drawer",
       "title": "Drawer",
       "exports": [
-        "Drawer"
+        "Drawer",
+        "DrawerSection"
       ],
       "source": "components/overlay/Drawer.jsx",
       "typeContract": "components/overlay/Drawer.d.ts",
@@ -26596,6 +26765,13 @@
           "type": "number",
           "required": false,
           "description": "패널 너비(px). @default 380",
+          "owner": "DrawerProps"
+        },
+        {
+          "name": "density",
+          "type": "'comfortable' | 'compact'",
+          "required": false,
+          "description": "Drawer의 chrome/body 밀도. body의 density-aware 자식은 이를 상속하며 명시적 size/padding/density가 우선합니다. @default \"comfortable\"",
           "owner": "DrawerProps"
         },
         {
@@ -26709,6 +26885,62 @@
           "required": false,
           "description": "",
           "owner": "DrawerProps"
+        },
+        {
+          "name": "title",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "Drawer 본문 안의 보이는 하위 제목.",
+          "owner": "DrawerSectionProps"
+        },
+        {
+          "name": "description",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "제목 아래의 짧은 설명.",
+          "owner": "DrawerSectionProps"
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3 | 4 | 5 | 6",
+          "required": false,
+          "description": "문서 구조에 맞는 제목 레벨. @default 3",
+          "owner": "DrawerSectionProps"
+        },
+        {
+          "name": "actions",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "제목 행 우측의 보조 액션.",
+          "owner": "DrawerSectionProps"
+        },
+        {
+          "name": "divider",
+          "type": "boolean",
+          "required": false,
+          "description": "앞 섹션과 구분선·상단 간격을 추가합니다. @default false",
+          "owner": "DrawerSectionProps"
+        },
+        {
+          "name": "headerStyle",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "",
+          "owner": "DrawerSectionProps"
+        },
+        {
+          "name": "contentStyle",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "",
+          "owner": "DrawerSectionProps"
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "DrawerSectionProps"
         }
       ],
       "tokens": [
@@ -26732,7 +26964,17 @@
         "--label1-size",
         "--label1-reading-line",
         "--body2-size",
-        "--space-2"
+        "--label1-line",
+        "--label1-spacing",
+        "--space-3",
+        "--space-2",
+        "--color-semantic-line-solid-alternative",
+        "--body2-line",
+        "--fw-bold",
+        "--color-semantic-label-strong",
+        "--caption1-size",
+        "--caption1-line",
+        "--color-semantic-label-alternative"
       ],
       "externalReferences": [
         {
@@ -26744,11 +26986,15 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/drawer/usage"
         },
         {
+          "label": "WCAG 2.2 Target Size (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum"
+        },
+        {
           "label": "Fluent 2 Dialog",
           "url": "https://fluent2.microsoft.design/components/web/react/core/dialog/usage"
         }
       ],
-      "promptSha256": "1894be907ac02da1a3f9450c9e0972c0e47caafbe04f1fbdd089ba148ea4075d"
+      "promptSha256": "03730ae254f2190eeaf1c3ff18d30e96504233cdf4e0b95a456326b61091b4dd"
     },
     {
       "id": "dropdown-menu",
@@ -27100,7 +27346,7 @@
           "url": "https://react-spectrum.adobe.com/react-aria/Popover.html"
         }
       ],
-      "promptSha256": "25b6132ba34da849570e4f272d7c224475bf4436f04ea643a1aa67ba202ea6c8"
+      "promptSha256": "a84409e31d501e6923390848db8bce4a3a060f6c47b2889fbeeace95a31f8165"
     },
     {
       "id": "hover-card",
@@ -27244,6 +27490,7 @@
       "classificationSiblings": [
         "CommandPalette",
         "Drawer",
+        "DrawerSection",
         "Sheet"
       ],
       "storybookPages": [
@@ -27804,6 +28051,7 @@
       "classificationSiblings": [
         "CommandPalette",
         "Drawer",
+        "DrawerSection",
         "Lightbox"
       ],
       "storybookPages": [
@@ -28512,7 +28760,7 @@
           "url": "https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA19"
         }
       ],
-      "promptSha256": "3529baf471f972a59984dd8308a95b4f0e745ba35d9de459d287fbac5887f11b"
+      "promptSha256": "265656c7ca97519f845098bb4b7255b2f5f751cd532cdf75aabd2d5ac450254d"
     },
     {
       "id": "equipment-status-card",
@@ -28647,7 +28895,7 @@
           "url": "https://design-system.service.gov.uk/components/summary-list/"
         }
       ],
-      "promptSha256": "112a52d88940829ea0e311e129e8018adda7433712fabd57ee36495aab26b444"
+      "promptSha256": "441ac203950cb249b1299bdfa398ebef99d4e9686782c76fd3b17f3686fbca58"
     },
     {
       "id": "choice-card",
@@ -28778,7 +29026,7 @@
           "name": "padding",
           "type": "'sm' | 'md' | 'lg' | 'xl'",
           "required": false,
-          "description": "",
+          "description": "Tokenized inner padding for both presentations. compact component scope에서는 기본 sm(12px), 그 밖에서는 md(16px)이며 명시값이 우선합니다.",
           "owner": "ChoiceCardProps"
         },
         {
@@ -28833,10 +29081,12 @@
         "--color-semantic-primary-surface-normal",
         "--color-semantic-label-neutral",
         "--body2-size",
+        "--body2-line",
         "--fw-bold",
         "--color-semantic-label-strong",
         "--space-1",
         "--label2-size",
+        "--label2-line",
         "--radius-sm",
         "--color-semantic-static-white"
       ],
@@ -28854,7 +29104,7 @@
           "url": "https://carbondesignsystem.com/components/tile/accessibility/"
         }
       ],
-      "promptSha256": "82d42e19f88a9b9d2ce3bf816935ce6fce60c3c869dddf0c4058d6c18469de8a"
+      "promptSha256": "06f37b9e268f0e85edbe96a9a61c91037b64670d895ba040ba6b564f5c77e87e"
     },
     {
       "id": "filter-chip",
@@ -30608,6 +30858,13 @@
           "owner": "CalloutProps"
         },
         {
+          "name": "density",
+          "type": "'comfortable' | 'compact'",
+          "required": false,
+          "description": "내부 여백과 본문 행간. compact component scope를 상속하며 명시값이 우선합니다.",
+          "owner": "CalloutProps"
+        },
+        {
           "name": "icon",
           "type": "React.ReactElement | null",
           "required": false,
@@ -30626,6 +30883,7 @@
         "--color-semantic-brand-on-surface",
         "--color-semantic-brand-surface",
         "--color-semantic-brand-on-surface-border",
+        "--space-3",
         "--space-4",
         "--space-5",
         "--space-6",
@@ -30637,6 +30895,7 @@
         "--color-semantic-label-normal",
         "--space-1-5",
         "--label1-size",
+        "--label1-line",
         "--label1-reading-line",
         "--color-semantic-brand-on-surface-subtle",
         "--color-semantic-label-neutral"
@@ -30659,7 +30918,7 @@
           "url": "https://developer.gnome.org/hig/patterns/feedback/banners.html"
         }
       ],
-      "promptSha256": "1738a9809b5ecdbcb98ecada590d081e2f4933fc1d7fc204bf12b013e49cbc73"
+      "promptSha256": "37571a4f24b0274a310a6988d79d6ee8976f70b2ded99ee25da58c7959387b83"
     },
     {
       "id": "circular-progress",
@@ -31461,7 +31720,7 @@
           "url": "https://www.w3.org/TR/WCAG22/#use-of-color"
         }
       ],
-      "promptSha256": "e444a3b9480951d3ef4f23fc42e28738b575effaa6b51ea6fe56eedda954f1d3"
+      "promptSha256": "be3df77c53d70e1e829bf82562440440b9d895ce4d27c1de3bbf01a83dd0a5cf"
     },
     {
       "id": "map2-dcanvas",
@@ -32835,7 +33094,7 @@
           "url": "https://developers.google.com/maps/documentation/javascript/controls"
         },
         {
-          "label": "Mapbox GL JS — MapaddControl",
+          "label": "Mapbox GL JS — Map#addControl",
           "url": "https://docs.mapbox.com/mapbox-gl-js/api/map/"
         },
         {
@@ -32899,7 +33158,7 @@
           "url": "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html"
         }
       ],
-      "promptSha256": "9b88f0a964ea18e1a2f3798b4d6864ca4aa6eef22ef99d3d36353577821c6378"
+      "promptSha256": "cf9efa172388fc4e4fc5f2b543785bf4a6f3bd213853a04c7d7c255bf2d1ce15"
     },
     {
       "id": "viewer-toolbar",
@@ -35080,7 +35339,7 @@
           "name": "padding",
           "type": "number | string",
           "required": false,
-          "description": "기본 32px 패딩을 재정의.",
+          "description": "기본 패딩을 재정의합니다. 지정하면 platform·density 기본값과 --lds-card-padding보다 우선합니다.",
           "owner": "CardOwnProps"
         },
         {
@@ -35088,6 +35347,13 @@
           "type": "\"desktop\" | \"mobile\"",
           "required": false,
           "description": "platform axis. @default \"desktop\"",
+          "owner": "CardOwnProps"
+        },
+        {
+          "name": "density",
+          "type": "\"comfortable\" | \"compact\"",
+          "required": false,
+          "description": "데스크톱 Card의 opt-in 공간 밀도. typography 크기는 바꾸지 않습니다. @default \"comfortable\"",
           "owner": "CardOwnProps"
         },
         {
@@ -35194,13 +35460,6 @@
           "required": false,
           "description": "Third caption tier — smallest meta line under subCaption (WDS three-tier caption parity).",
           "owner": "CardOwnProps"
-        },
-        {
-          "name": "bottomContent",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "",
-          "owner": "CardOwnProps"
         }
       ],
       "states": [
@@ -35209,23 +35468,25 @@
           "rule": "카드 전체가 하나의 행동일 때. 호버 리프트 + 그림자 심화에 더해 role=\"button\", tabIndex=0, Enter/Space 활성화, :focus-visible 링을 부여합니다. 내부에 별도의 버튼·링크를 넣지 마세요."
         }
       ],
-      "behavior": [],
+      "behavior": [
+        "In data-heavy consoles, pair Card density deliberately with neighboring controls and tables. Carbon Data Table usage pairs toolbar/header/row sizes rather than mixing independent density decisions inside one region."
+      ],
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "headingLevel — 구조화 모드의 title 은 기본적으로 로 렌더링됩니다(WCAG 1.3.1). 카드가 놓이는 문서의 제목 계층에 맞춰 1–6 을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false} 로 heading 의미를 끄세요. 레벨은 건너뛰지 않습니다."
+          "rule": "density=\"comfortable|compact\" is opt-in and defaults to comfortable. On desktop, comfortable keeps the component Card padding (currently 32px) and compact uses --space-4 (16px), then tightens related content/header/body/action gaps with the LDS spacing scale. It does not reduce Card typography."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "SaveButton(save)과 toggleIcon 은 포커스 가능한 요소이므로 규칙 1과 함께 쓰지 마세요."
+          "rule": "platform=\"mobile\" keeps its existing 12px padding and 320px max-width contract even when density=\"compact\" is present. Platform can retain its existing mobile title scale; density itself never changes type size."
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "Card — 모든 것이 올라가는 중립 서피스: 화이트(또는 dark 네이비), 헤어라인 보더, 부드러운 네이비 그림자, 16px 반경. interactive는 호버 시 떠오릅니다."
+          "rule": "Carbon spacing uses a spacing scale to establish relationships and control density, while Fluent 2 layout uses smaller component spacers to strengthen relationships and allows responsive spacing adjustments. Keep compact values on the LDS spacing ramp rather than introducing one-off pixels."
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "1. 전체 카드가 하나의 행동일 때 → interactive + onClick. 카드 루트가 role=\"button\" · tabIndex=0 이 되고 Enter/Space 로 활성화되며 :focus-visible 링이 붙습니다(WCAG 2.1.1). 이때 카드 안에는 버튼·링크·스위치 같은 포커스 가능한 요소를 넣지 마세요. 버튼 안의 버튼(nested interactive)은 유효하지 않은 마크업이고, 스크린리더가 카드 이름으로 내부 텍스트를 전부 읽어 이름이 문단처럼 길어집니다. 2."
+          "rule": "headingLevel — 구조화 모드의 title 은 기본적으로 로 렌더링됩니다(WCAG 1.3.1). 카드가 놓이는 문서의 제목 계층에 맞춰 1–6 을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false} 로 heading 의미를 끄세요. 레벨은 건너뛰지 않습니다."
         },
         {
           "subject": "--body1-size",
@@ -35233,17 +35494,21 @@
         }
       ],
       "responsive": [
-        "WDS axes: platform=\"desktop|mobile\", skeleton, save, toggleIcon (top-right toggle affordance beside save), structured slots (thumbnail, topContent, leadingContent, trailingContent, bottomContent, footer) and three text caption tiers (caption, title, description, subCaption, metaCaption).",
+        "실제 .fig의 Card/Card component set을 검사한 결과, 확인되는 축은 Platform=Desktop|Mobile과 Skeleton=False|True뿐입니다. density는 WDS parity 축이 아니라 명시적인 LDS Core compatibility extension입니다.",
+        "MUI density guidance treats density as an opt-in adjustment through component props, spacing, and size; its dense demo theme is not a recommendation to force compactness across an entire application. Adopt compact Card only where scan-heavy console context needs it.",
         "titleWrap=\"truncate|wrap\" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination.",
-        "Stable structured parts are root, content, header, actions, media, body, title, description, and footer. Optional parts do not render empty wrappers.",
-        "vars accepts only --lds-card-padding, --lds-card-radius, --lds-card-gap, and --lds-card-max-width. These cannot turn a non-interactive card into a control or bypass heading/nesting rules."
+        "Stable structured parts are root, content, header, actions, media, body, title, description, and footer. Optional parts do not render empty wrappers."
       ],
       "contentGuidance": [
+        "save, toggleIcon(top-right toggle affordance beside save), structured slots (thumbnail, topContent, leadingContent, trailingContent, bottomContent, footer) and three text caption tiers (caption, title, description, subCaption, metaCaption) are LDS's structured Card API; do not describe them as extra axes discovered in…",
         "className, style, and the default ref target the polymorphic root. The ref type follows the rendered as element.",
         "classNames and styles accept only those stable part keys; product selectors do not depend on Card's internal DOM order."
       ],
-      "accessibility": [],
+      "accessibility": [
+        "1. 전체 카드가 하나의 행동일 때 → interactive + onClick. 카드 루트가 role=\"button\" · tabIndex=0 이 되고 Enter/Space 로 활성화되며 :focus-visible 링이 붙습니다(WCAG 2.1.1). 이때 카드 안에는 버튼·링크·스위치 같은 포커스 가능한 요소를 넣지 마세요. 버튼 안의 버튼(nested interactive)은 유효하지 않은 마크업이고, 스크린리더가 카드 이름으로 내부 텍스트를 전부 읽어 이름이 문단처럼 길어집니다. 2."
+      ],
       "exceptions": [
+        "An explicit padding prop wins over platform/density defaults and --lds-card-padding. Use vars for the default padding only when the prop is absent. The root mirrors the resolved API choice as data-density.",
         "Use surface=\"subtle\" for the inset surface that groups peer cards. It defaults to elevation=\"none\"; nested default-surface cards own their own border, radius, and elevation. An explicit elevation is still available for exceptional compositions."
       ],
       "related": [
@@ -35283,7 +35548,7 @@
         },
         {
           "label": "추가 조합 2",
-          "code": "<Card platform=\"mobile\" save title=\"Title\" description=\"Description\" />\n<Card platform=\"desktop\" skeleton headingLevel={2} />"
+          "code": "<Card platform=\"mobile\" save title=\"Title\" description=\"Description\" />\n<Card platform=\"desktop\" skeleton headingLevel={2} />\n<Card density=\"compact\" title=\"Dense console card\" description=\"Typography stays unchanged.\" />"
         }
       ],
       "tokens": [
@@ -35322,7 +35587,13 @@
         "--lds-card-max-width",
         "--lds-card-padding",
         "--lds-card-radius",
-        "--radius-md"
+        "--radius-md",
+        "--space-1",
+        "--space-1-5",
+        "--space-2",
+        "--space-2-5",
+        "--space-3",
+        "--space-4"
       ],
       "apiLinks": [
         "components/cards/Card.jsx",
@@ -35331,7 +35602,8 @@
         "stories/Card.stories.jsx"
       ],
       "migration": [
-        "dark remains the inverse-card compatibility axis and takes precedence over surface."
+        "dark remains the inverse-card compatibility axis and takes precedence over surface.",
+        "Density compatibility extension."
       ],
       "platformStatus": {
         "figma": "mapped",
@@ -35372,6 +35644,11 @@
             "id": "lds-core-components-content-card--interactive-and-dark",
             "name": "변형·상태 · 상호작용과 어두운 표면",
             "role": "variants-states"
+          },
+          {
+            "id": "lds-core-components-content-card--density-compatibility",
+            "name": "반응형 · 기본형과 조밀형 밀도",
+            "role": "responsive"
           }
         ],
         "hiddenEvidence": 2
@@ -35384,6 +35661,22 @@
         {
           "label": "Storybook implementation evidence",
           "path": "stories/Card.stories.jsx"
+        },
+        {
+          "label": "MUI density guidance",
+          "url": "https://mui.com/material-ui/customization/density/"
+        },
+        {
+          "label": "Carbon spacing",
+          "url": "https://carbondesignsystem.com/elements/spacing/overview/"
+        },
+        {
+          "label": "Fluent 2 layout",
+          "url": "https://fluent2.microsoft.design/layout"
+        },
+        {
+          "label": "Carbon Data Table usage",
+          "url": "https://carbondesignsystem.com/components/data-table/usage/"
         }
       ],
       "canonicalGuide": null,
@@ -35395,11 +35688,11 @@
         "anatomy": "evidence",
         "properties": "evidence",
         "states": "evidence",
-        "behavior": "omitted-no-evidence",
+        "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
         "contentGuidance": "evidence",
-        "accessibility": "omitted-no-evidence",
+        "accessibility": "evidence",
         "exceptions": "evidence",
         "related": "evidence",
         "examples": "evidence",
@@ -35537,7 +35830,7 @@
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive 13BE4C ≈ 2.5:1, -cautionary EB9C33 ≈ 2.3:1, -negative EE5656 ≈ 3.2:1. accent(3878B3 ≈ 4.7:1)만 통과합니다."
+          "rule": "원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive #13BE4C ≈ 2.5:1, -cautionary #EB9C33 ≈ 2.3:1, -negative #EE5656 ≈ 3.2:1. accent(#3878B3 ≈ 4.7:1)만 통과합니다."
         },
         {
           "subject": "명시 규칙 3",
@@ -37790,7 +38083,8 @@
         "가까운 sibling인 Bubble은 지속형 callout이라 더 큰 padding/radius를 사용하고, Popover는 상호작용 본문을 담는 밝은 panel이라 Tooltip 형상에 합치지 않습니다. Tooltip은 기존 r8, padX12/padY8, inverse fill, shadow-md 계층을 그대로 유지합니다."
       ],
       "avoidWhen": [
-        "Floating UI arrow middleware는 최종 placement/shift 이후 포인터의 한 축 좌표를 계산하고, 둥근 모서리와 충돌하지 않도록 padding을 두도록 안내합니다. FloatingArrow troubleshooting는 별도 화살표와 본체 사이의 틈이 브라우저 줌·OS 환경에서 발생할 수 있음을 명시합니다. LDS는 좌표·corner clamp 원칙은 따르되, 불투명 단색 surface를 단일 path로 합쳐 이음새 자체를 제거합니다."
+        "Floating UI arrow middleware는 최종 placement/shift 이후 포인터의 한 축 좌표를 계산하고, 둥근 모서리와 충돌하지 않도록 padding을 두도록 안내합니다. FloatingArrow troubleshooting는 별도 화살표와 본체 사이의 틈이 브라우저 줌·OS 환경에서 발생할 수 있음을 명시합니다. LDS는 좌표·corner clamp 원칙은 따르되, 불투명 단색 surface를 단일 path로 합쳐 이음새 자체를 제거합니다.",
+        "제품 workflow 검토: LK Web Viz, LK Control Full Daedeok, LK Portal 모두 not applicable. 이번 변경은 Tooltip의 내부 배경 geometry만 보정하며, 제품 route·데이터·상태·action·공개 API나 조합 seam을 바꾸지 않으므로 제품 frontend 지원 여부를 새로 주장하지 않습니다."
       ],
       "anatomy": [],
       "properties": [
@@ -37969,9 +38263,7 @@
         "The bubble defaults to the common owner-document Portal, inherits the nearest explicit theme and dir, flips/clamps at viewport edges, and is removed from the DOM while closed. placement is deprecated; use position.",
         "둥근 본체와 포인터는 하나의 SVG path로 그립니다. 별도 clip-path 삼각형을 본체에 1px 겹치는 방식은 브라우저 줌·DPR·fractional transform에서 이음새가 드러나므로 사용하지 않습니다. Medium 포인터는 12×6px, Small은 10×5px로 유지해 36px 안팎의 Tooltip 높이와 비례시킵니다."
       ],
-      "contentGuidance": [
-        "제품 workflow 검토: LK Web Viz, LK Control Full Daedeok, LK Context Hub 모두 not applicable. 이번 변경은 Tooltip의 내부 배경 geometry만 보정하며, 제품 route·데이터·상태·action·공개 API나 조합 seam을 바꾸지 않으므로 제품 frontend 지원 여부를 새로 주장하지 않습니다."
-      ],
+      "contentGuidance": [],
       "accessibility": [
         "콘텐츠는 짧은 보조 설명으로 제한하고, 지속되는 주석에는 Bubble, 서식·동작이 있는 본문에는 Popover를 사용합니다. focusable한 단일 trigger가 ARIA prop을 DOM에 전달해야 합니다.",
         "hover와 focus가 같은 Tooltip을 열고 aria-describedby로 연결합니다. 포인터를 Tooltip 위로 옮겨도 유지되며, Escape는 trigger focus를 보존한 채 닫습니다. open · defaultOpen · onOpenChange로 상태를 제어할 수 있습니다.",
@@ -38119,7 +38411,7 @@
         "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
-        "contentGuidance": "evidence",
+        "contentGuidance": "omitted-no-evidence",
         "accessibility": "evidence",
         "exceptions": "evidence",
         "related": "evidence",
@@ -43076,7 +43368,7 @@
           "name": "padding",
           "type": "'sm' | 'md' | 'lg' | 'xl'",
           "required": false,
-          "description": "",
+          "description": "Tokenized inner padding for both presentations. compact component scope에서는 기본 sm(12px), 그 밖에서는 md(16px)이며 명시값이 우선합니다.",
           "owner": "ChoiceCardProps"
         },
         {
@@ -43108,23 +43400,23 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "이름과 설명 분리 — 내부 input은 더 이상 aria-label={title}로 감싼 을 덮어쓰지 않습니다. title 요소가 aria-labelledby로 이름을 제공하고, description은 aria-describedby 힌트로 연결됩니다(GOV.UK hint 관례). 이전에는 aria-label={title}이 전체 텍스트를 덮어써 description이 이름에도 설명에도 도달하지 못했고, title이 문자열이 아니면 이름 자체가 사라졌습니다. 지금은 요소 id를 참조하므로 title이 ReactNode여도 동작합니다."
+          "rule": "밀도 계약 — padding은 choice와 frame 표현에 동일하게 적용됩니다. 일반 표면의 기본 md는 --space-4(16px), bounded compact component scope의 기본 sm은 --space-3(12px)이며 명시값이 우선합니다. 표준 제목과 설명은 각각 --body2-line과 --label2-line을 명시해 Drawer 같은 상위 컨테이너의 큰 line-height를 상속하지 않습니다."
         },
         {
           "subject": "명시 규칙 2",
+          "rule": "이름과 설명 분리 — 내부 input은 더 이상 aria-label={title}로 감싼 을 덮어쓰지 않습니다. title 요소가 aria-labelledby로 이름을 제공하고, description은 aria-describedby 힌트로 연결됩니다(GOV.UK hint 관례). 이전에는 aria-label={title}이 전체 텍스트를 덮어써 description이 이름에도 설명에도 도달하지 못했고, title이 문자열이 아니면 이름 자체가 사라졌습니다. 지금은 요소 id를 참조하므로 title이 ReactNode여도 동작합니다."
+        },
+        {
+          "subject": "명시 규칙 3",
           "rule": "WDS 내부 Framed Style/Framed Style component-set(16736:173366)은 Selected, Disabled, Status를 직접 교차합니다. presentation=\"frame\"은 이 축을 소유하고, 일반 choice presentation은 같은 disabled+selected 문법을 native Radio/Checkbox indicator에 적용합니다."
+        },
+        {
+          "subject": "--body2-line",
+          "rule": "22px"
         },
         {
           "subject": "--body2-size",
           "rule": "15px"
-        },
-        {
-          "subject": "--color-semantic-background-elevated-normal",
-          "rule": "light: #FFFFFF; dark: #212225"
-        },
-        {
-          "subject": "--color-semantic-fill-normal",
-          "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
         }
       ],
       "responsive": [
@@ -43160,6 +43452,7 @@
         }
       ],
       "tokens": [
+        "--body2-line",
         "--body2-size",
         "--color-semantic-background-elevated-normal",
         "--color-semantic-fill-normal",
@@ -43179,6 +43472,7 @@
         "--dur-fast",
         "--ease-out",
         "--fw-bold",
+        "--label2-line",
         "--label2-size",
         "--radius-frame-lg",
         "--radius-frame-md",
@@ -43502,16 +43796,16 @@
           "rule": "타깃 크기: 시각 박스는 md 18px · sm 16px 그대로 두고, 그 위에 놓인 투명한 네이티브 input만 24×24px로 확장해 WCAG 2.5.8 (Target Size, Minimum)을 만족시킵니다. 픽셀 출력은 변하지 않습니다."
         },
         {
+          "subject": "명시 규칙 3",
+          "rule": "size를 생략하면 일반 표면에서는 기존 md, bounded compact component scope에서는 sm 시각 glyph를 사용합니다. 두 크기 모두 투명 native input target은 최소 24×24px이며 명시한 size가 상속값보다 우선합니다."
+        },
+        {
           "subject": "--color-semantic-background-elevated-normal",
           "rule": "light: #FFFFFF; dark: #212225"
         },
         {
           "subject": "--color-semantic-fill-normal",
           "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
-        },
-        {
-          "subject": "--color-semantic-fill-strong",
-          "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
         }
       ],
       "responsive": [],
@@ -44274,7 +44568,8 @@
       ],
       "responsive": [
         "Stable parts are root, label, control, startIcon, input, endIcon, statusIcon, action, and message; conditionally absent content does not leave a slot wrapper.",
-        "vars accepts only --lds-input-height, --lds-input-padding-inline, --lds-input-radius, and --lds-input-gap. Visible label, helper/error association and native input semantics remain component-owned."
+        "vars accepts only --lds-input-height, --lds-input-padding-inline, --lds-input-radius, and --lds-input-gap. Visible label, helper/error association and native input semantics remain component-owned.",
+        "size를 생략하면 일반 표면에서는 기존 md, bounded compact component scope(예: compact Drawer body)에서는 sm을 사용합니다. 명시한 size, height, vars가 상속값보다 우선합니다."
       ],
       "contentGuidance": [
         "Reference basis: GOV.UK Text input for visible labels, hints and error association; Carbon Text input for label/helper/error/read-only anatomy.",
@@ -44593,6 +44888,10 @@
         },
         {
           "subject": "명시 규칙 2",
+          "rule": "size를 생략하면 일반 표면에서는 기존 md, bounded compact component scope에서는 sm을 사용합니다. 시각 원과 별개로 native radio target은 두 크기 모두 최소 24×24px이며 명시한 size가 우선합니다."
+        },
+        {
+          "subject": "명시 규칙 3",
           "rule": "Radio — 1.5px 헤어라인 원(20px, sm 16px). 선택되면 원이 시그널 잉크로 채워지고 화이트 중앙 점이 나타납니다. 그룹은 같은 name을 공유하세요."
         },
         {
@@ -44602,10 +44901,6 @@
         {
           "subject": "--color-semantic-background-elevated-normal",
           "rule": "light: #FFFFFF; dark: #212225"
-        },
-        {
-          "subject": "--color-semantic-fill-normal",
-          "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
         }
       ],
       "responsive": [],
@@ -45513,7 +45808,7 @@
         },
         {
           "part": "render",
-          "rule": "선택 값을 텍스트 또는 칩으로 표시. @default \"text\""
+          "rule": "선택 값의 표시 방식. \"chip\"은 선택 값을 트리거 안의 캡슐로 강조하고, \"chip-trigger\"는 트리거 전체를 보더 없는 단일 알약(칩)으로 그린다 — 작성창 동작 띠처럼 폼 필드가 아닌 자리의 옵션 컨트롤용. @default \"text\""
         },
         {
           "part": "aria-label",
@@ -45696,9 +45991,9 @@
         },
         {
           "name": "render",
-          "type": "\"text\" | \"chip\"",
+          "type": "\"text\" | \"chip\" | \"chip-trigger\"",
           "required": false,
-          "description": "선택 값을 텍스트 또는 칩으로 표시. @default \"text\"",
+          "description": "선택 값의 표시 방식. \"chip\"은 선택 값을 트리거 안의 캡슐로 강조하고, \"chip-trigger\"는 트리거 전체를 보더 없는 단일 알약(칩)으로 그린다 — 작성창 동작 띠처럼 폼 필드가 아닌 자리의 옵션 컨트롤용. @default \"text\"",
           "owner": "SelectProps"
         }
       ],
@@ -45754,6 +46049,7 @@
         "vars accepts only --lds-select-min-width, --lds-select-height, and --lds-select-dropdown-max-height. Consumer root width constraints still override intrinsic measurement."
       ],
       "contentGuidance": [
+        "render 축: WDS Render(Chip/Text)의 chip은 선택 값을 트리거 안의 캡슐로 강조하는 표시입니다. chip-trigger는 LDS 확장으로, 작성창 동작 띠처럼 폼 필드가 아닌 자리에서 트리거 전체를 보더 없는 단일 알약으로 그립니다 — 인풋 크롬과 값 캡슐이 겹치는 이중 표면을 만들지 않기 위한 값이며, 포커스 링·invalid 보더·키보드/ARIA 계약은 필드와 동일하게 유지합니다.",
         "className/style and rootRef target the public field-stack root. The default ref, triggerClassName, and triggerStyle target the native combobox trigger.",
         "Stable parts are root, label, control, trigger, value, indicators, dropdown, option, and message. Options additionally expose real data-active, data-selected, and data-disabled state.",
         "커스텀 단일 선택 드롭다운(스타일된 트리거 + 플로팅 패널, 시그널 포커스) — 네이티브 가 아닙니다. 옵션은 options(string[] 또는 {value,label}[]) 또는 자식으로 지정합니다. onChange는 선택된 value를 받습니다."
@@ -45810,6 +46106,8 @@
         "--body1-line",
         "--body1-size",
         "--color-semantic-background-elevated-normal",
+        "--color-semantic-fill-alternative",
+        "--color-semantic-fill-normal",
         "--color-semantic-fill-strong",
         "--color-semantic-label-alternative",
         "--color-semantic-label-assistive",
@@ -47097,6 +47395,10 @@
       "behavior": [],
       "quantitativeRules": [
         {
+          "subject": "명시 규칙 1",
+          "rule": "size를 생략하면 일반 표면에서는 기존 md 120px 최소 높이, bounded compact component scope에서는 sm 96px 최소 높이를 사용합니다. 명시한 size와 --lds-textarea- 변수가 우선합니다."
+        },
+        {
           "subject": "--color-semantic-label-assistive",
           "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
         },
@@ -47915,6 +48217,13 @@
           "owner": "CalloutProps"
         },
         {
+          "name": "density",
+          "type": "'comfortable' | 'compact'",
+          "required": false,
+          "description": "내부 여백과 본문 행간. compact component scope를 상속하며 명시값이 우선합니다.",
+          "owner": "CalloutProps"
+        },
+        {
           "name": "icon",
           "type": "React.ReactElement | null",
           "required": false,
@@ -48015,6 +48324,7 @@
         "--color-semantic-label-normal",
         "--font-sans",
         "--fw-bold",
+        "--label1-line",
         "--label1-reading-line",
         "--label1-size",
         "--radius-lg",
@@ -48986,7 +49296,7 @@
       "behavior": [
         "Runtime owner는 Core, provenance는 최신 WDS 상태 배지 시각 증거와 LDS semantic status 문법을 결합한 WDS-adjacent redesign입니다.",
         "StatusBadge는 진행·마감·게시·검토처럼 현재 대상의 명시적인 상태를 짧은 라벨로 보여주는 비대화형 Core 컴포넌트입니다.",
-        "상태 계산, 허용된 상태 전이, 시간 임계값, action과 live announcement는 제품이 소유합니다. LK Web Viz, LK Control Full Daedeok, LK Context Hub는 공통 status label을 소비할 수 있지만 이 시각 재설계가 route·workflow·transport 계약을 바꾸지 않으므로 세 제품 자산 검토는 모두 not applicable입니다."
+        "상태 계산, 허용된 상태 전이, 시간 임계값, action과 live announcement는 제품이 소유합니다. LK Web Viz, LK Control Full Daedeok, LK Portal은 공통 status label을 소비할 수 있지만 이 시각 재설계가 route·workflow·transport 계약을 바꾸지 않으므로 세 제품 자산 검토는 모두 not applicable입니다."
       ],
       "quantitativeRules": [
         {
@@ -49223,7 +49533,7 @@
         "현재 결과나 수명주기 상태를 채움 라벨로 표시할 때는 StatusBadge를 사용합니다. StatusIndicator는 연결·가용성·freshness처럼 계속 관찰되는 신호에만 사용합니다.",
         "pulse는 연결 중·재연결 중처럼 실제 변화 중인 신호에만 명시합니다. prefers-reduced-motion에서는 멈추고 라벨만으로 의미가 유지됩니다. critical은 정적 이중 링을 보조 단서로 제공하지만 자동 pulse하지 않습니다.",
         "StatusIndicator는 실시간 가용성·연결·freshness를 컬러 점과 명시적 라벨로 보여주는 조용한 Core 신호입니다.",
-        "실제 connection state machine, freshness 임계값, polling과 announcement는 제품이 소유합니다. LK Web Viz, LK Control Full Daedeok, LK Context Hub는 이 primitive를 조합할 수 있지만 이번 분리는 제품 route나 transport 계약을 바꾸지 않으므로 세 자산 검토는 모두 not applicable입니다."
+        "Storybook에서 steady/pulse/offline/critical, 긴 label, light/dark와 reduced motion을 확인합니다."
       ],
       "accessibility": [
         "dot은 aria-hidden이며 visible label이 접근 가능한 상태 이름을 제공합니다. 컴포넌트는 자동 live region을 만들지 않습니다."
@@ -50212,7 +50522,7 @@
           "name": "tone",
           "type": "'outline' | 'brand'",
           "required": false,
-          "description": "'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2). @default \"outline\"",
+          "description": "'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 #1877F2). @default \"outline\"",
           "owner": "SocialButtonProps"
         },
         {
@@ -50261,7 +50571,7 @@
       "states": [
         {
           "state": "tone",
-          "rule": "'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2). @default \"outline\""
+          "rule": "'outline' = DS 네이티브(서피스 + 헤어라인 + 풀컬러 마크, 다크 테마 대응) · 'brand' = 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 #1877F2). @default \"outline\""
         },
         {
           "state": "disabled",
@@ -50276,11 +50586,11 @@
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "페이스북 브랜드 필은 흰 텍스트 AA(4.5:1)를 위해 공식 1877F2를 1465D8로 어둡게 조정한 의도적 이탈입니다. tone=\"brand\"의 원색 필과 킷 섀도는 다크 테마 자동 대응 대상이 아니며, 테마 대응이 필요하면 기본 tone=\"outline\"을 쓰세요."
+          "rule": "페이스북 브랜드 필은 흰 텍스트 AA(4.5:1)를 위해 공식 #1877F2를 #1465D8로 어둡게 조정한 의도적 이탈입니다. tone=\"brand\"의 원색 필과 킷 섀도는 다크 테마 자동 대응 대상이 아니며, 테마 대응이 필요하면 기본 tone=\"outline\"을 쓰세요."
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "\"…로 계속하기\" 소셜 로그인 버튼. 소셜 로그인 킷의 6개 심볼(Continue with Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로 통합. 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법(52px 높이 · radius-md · 16px 볼드 · 토큰 모션)을 따르고, 기본 tone=\"outline\"은 DS 네이티브(서피스+헤어라인+풀컬러 마크, 다크 테마 자동 대응), tone=\"brand\"는 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 1877F2)을…"
+          "rule": "\"…로 계속하기\" 소셜 로그인 버튼. 소셜 로그인 킷의 6개 심볼(Continue with Google/Apple/Facebook × Centre/Left Aligned)을 provider × align prop으로 통합. 지오메트리·타이포는 킷이 아니라 LK 컨트롤 문법(52px 높이 · radius-md · 16px 볼드 · 토큰 모션)을 따르고, 기본 tone=\"outline\"은 DS 네이티브(서피스+헤어라인+풀컬러 마크, 다크 테마 자동 대응), tone=\"brand\"는 킷의 플랫폼 원색 필(구글 화이트+섀도 · 애플 블랙 · 페이스북 #1877F2)을…"
         },
         {
           "subject": "--body1-size",
@@ -50980,6 +51290,10 @@
           "rule": "Accessible author name when author is not plain text."
         },
         {
+          "part": "messageActionsVisibility",
+          "rule": "'on-demand' rests the action bar at opacity 0 and reveals it on hover or focus-within. Layout and the accessible tree are unchanged; coarse pointers and failed-turn retry bars stay always visible. @default 'always'"
+        },
+        {
           "part": "roleBadgeLabel",
           "rule": "Visible role badge next to the author name. Defaults to 'AI' for assistant and '상담원' for human-agent; null hides it. Decorative — the accessible role name is always announced separately."
         },
@@ -50998,10 +51312,6 @@
         {
           "part": "messageActions",
           "rule": "Primary icon action bar rendered below the body. Each entry becomes an icon-only IconButton; products own the glyph and handlers. Coexists with the actions slot."
-        },
-        {
-          "part": "error",
-          "rule": "Failed-response body content. When set, a muted warning glyph is prefixed and the redundant lifecycle status label is suppressed by default. Not a live region — the MessageFeed log announces it."
         }
       ],
       "properties": [
@@ -51038,6 +51348,20 @@
           "type": "string",
           "required": false,
           "description": "Accessible author name when author is not plain text.",
+          "owner": "ConversationMessageBaseProps"
+        },
+        {
+          "name": "identityVisibility",
+          "type": "'visible' | 'hidden'",
+          "required": false,
+          "description": "'hidden' keeps the author in the accessible name only, for surfaces where alignment and fill already state the speaker (e.g. the outbound bubble in a two-party chat). Grouped middle/last items are already hidden regardless. @default 'visible'",
+          "owner": "ConversationMessageBaseProps"
+        },
+        {
+          "name": "messageActionsVisibility",
+          "type": "'always' | 'on-demand'",
+          "required": false,
+          "description": "'on-demand' rests the action bar at opacity 0 and reveals it on hover or focus-within. Layout and the accessible tree are unchanged; coarse pointers and failed-turn retry bars stay always visible. @default 'always'",
           "owner": "ConversationMessageBaseProps"
         },
         {
@@ -51141,6 +51465,10 @@
       ],
       "states": [
         {
+          "state": "identityVisibility",
+          "rule": "'hidden' keeps the author in the accessible name only, for surfaces where alignment and fill already state the speaker (e.g. the outbound bubble in a two-party chat). Grouped middle/last items are already hidden regardless. @default 'visible'"
+        },
+        {
           "state": "statusLabel",
           "rule": "Optional lifecycle label override. null suppresses it; delivery sent, delivery read, and response complete are silent by default (read surfaces as a bubble-foot receipt instead)."
         },
@@ -51151,10 +51479,10 @@
       ],
       "behavior": [
         "authorRole은 user | assistant | human-agent | system입니다. assistant 기본 presentation은 document, user와 human-agent는 bubble, system은 centered neutral chip입니다. user bubble은 solid primary fill, human-agent bubble은 neutral fill(--color-semantic-fill-strong)로 구분합니다.",
+        "WCAG 2.2의 구조, focus, name과 contrast 요구를 최종 접근성 기준으로 사용합니다.",
         "320px: comfortable/compact 모두 긴 한글·영문·URL·code와 source/attachment/action slot이 horizontal overflow 없이 wrapping 또는 자체 overflow를 갖고, action target이 최소 24×24 CSS px를 유지하는지 확인합니다.",
         "feedback 저장·선택 상태, edit, branch/thread, 읽음 판정(read tracking; delivery read 상태 표시는 지원하되 읽음 여부 계산은 제품 몫), voice recorder와 tool execution. 긍정·부정 feedback과 재생성 control은 canonical messageActions 조합으로 지원하지만 해당 동작과 상태 전이는 제품이 구현합니다.",
-        "전체 화면 shell, header/sidebar, sticky composer, scroll anchoring과 unread 계산.",
-        "| 확인한 sibling | 계승한 규칙 | ConversationMessage 결정 | | --- | --- | --- | | Avatar | 32px small identity, text fallback | 필요한 participant identity에 조합하며 message가 avatar 로직을 복제하지 않음 | | Button / IconButton | named action, focus, disabled, small control | retry와 response action을 slot에서 조합하고 자체 button 스타일을 만들지 않음 | | Bubble…"
+        "전체 화면 shell, header/sidebar, sticky composer, scroll anchoring과 unread 계산."
       ],
       "quantitativeRules": [
         {
@@ -51167,11 +51495,11 @@
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "SELECTANDMESSAGEFEEDLAYOUTFOLLOWUP.md에 기록된 LK Portal floating knowledge chat은 460×674px의 제한된 panel입니다. 이 consumer 근거는 optional compact spacing을 정당화하지만 panel width, chrome과 viewport inset은 각각 Portal과 MessageFeed가 계속 소유합니다."
+          "rule": "identityVisibility=\"hidden\"은 작성자 행을 시각적으로만 숨기고 접근 가능한 이름(author + 역할명)은 유지합니다. 2자 대화에서 outbound solid primary bubble처럼 정렬과 fill이 이미 화자를 말하는 표면 전용입니다. 화자가 셋 이상이거나 bubble/fill 구분이 없는 표면에서는 쓰지 않습니다. grouped middle | last는 이 prop과 무관하게 이미 숨겨집니다."
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "compact는 avatar를 --space-6, bubble padding을 --space-2 var(--space-3), 내부 gap을 --space-1로 줄입니다. 기본 comfortable의 기존 pixel geometry는 그대로이며, 320px에서도 document/bubble content는 wrapping 또는 자체 overflow로 reflow되어야 합니다."
+          "rule": "messageActionsVisibility=\"on-demand\"는 액션바를 opacity 0으로 쉬게 하고 hover 또는 focus-within에서 드러냅니다. 레이아웃 행과 접근성 트리는 그대로라 reflow가 없고 키보드 초점이 그대로 드러내므로 disclosure가 아니라 시각적 감쇠입니다. hover가 없는 coarse pointer와, 복구 경로인 실패 턴의 retry 바에는 적용되지 않고 항상 보입니다."
         },
         {
           "subject": "--body1-line",
@@ -51181,8 +51509,8 @@
       "responsive": [
         "inlineSources는 sources 슬롯을 body 아래 별도 행이 아니라 action bar와 같은 footer 행에 배치합니다(ChatGPT식). 접힌 를 넣으면 resting 상태가 아이콘+출처 토글 한 줄이 되어 copy·재생성 아이콘 옆에 나란히 놓이고, 누르면 출처 목록이 SourceDisclosure의 앵커드 Popover(드롭다운)로 떠서 열려 본문 레이아웃을 밀지 않습니다.",
         "semantic DOM과 시각 reading order는 identity(author/timestamp) → body → response status → attachments → sources → delivery/static status → actions입니다. rich content는 document surface 안에서 자연스럽게 길어지고, compact 발화는 bubble로 묶입니다. inlineSources일 때 sources는 이 자리에서 빠져 마지막 footer 행에서 action group 뒤에 형제로 배치됩니다.",
-        "compact의 24px avatar는 비상호작용 identity입니다. retry와 message action은 기존 32px IconButton을 유지해 실제 pointer target이 24×24 CSS px 아래로 줄지 않습니다.",
-        "채택한 것은 long-form assistant document, compact user prompt, answer action과 하단 composer의 상대적 위계입니다. exact color, typography, avatar artwork, logo, sidebar, app shell, shadow와 asset은 복사하지 않습니다."
+        "SELECTANDMESSAGEFEEDLAYOUTFOLLOWUP.md에 기록된 LK Portal floating knowledge chat은 460×674px의 제한된 panel입니다. 이 consumer 근거는 optional compact spacing을 정당화하지만 panel width, chrome과 viewport inset은 각각 Portal과 MessageFeed가 계속 소유합니다.",
+        "compact의 24px avatar는 비상호작용 identity입니다. retry와 message action은 기존 32px IconButton을 유지해 실제 pointer target이 24×24 CSS px 아래로 줄지 않습니다."
       ],
       "contentGuidance": [
         "children은 본문, attachments, sources, actions는 각각 ReactNode 조합 slot입니다. messageActions는 복사·재생성·더보기 같은 하단 quick-action을 배열로 받아 컴포넌트가 icon-only 버튼 액션바로 렌더하며 actions slot과 공존합니다. error는 실패 응답 본문을 받아 무채색 경고 glyph를 앞에 붙입니다. Message가 source schema, 파일 처리, Markdown renderer 또는 action 정책을 소유하지 않습니다.",
@@ -51193,9 +51521,9 @@
       "accessibility": [
         "완료된 AI 응답의 canonical 제품 조합은 응답 복사 → 응답 다시 생성 → 긍정 평가 → 부정 평가 순서이며 provenance가 있으면 inlineSources의 접힌 출처 토글을 같은 footer에 형제로 둡니다. 각 icon-only action의 label은 대상과 동작을 함께 말해야 합니다. 선택형 평가 action은 제품이 소유한 상태를 pressed로 전달해 aria-pressed와 primary selected surface를 함께 노출합니다.",
         "개별 article은 live region을 만들지 않습니다. chronological announcement는 상위 MessageFeed의 named role=\"log\" 하나가 소유합니다.",
+        "compact는 avatar를 --space-6, bubble padding을 --space-2 var(--space-3), 내부 gap을 --space-1로 줄입니다. 기본 comfortable의 기존 pixel geometry는 그대로이며, 320px에서도 document/bubble content는 wrapping 또는 자체 overflow로 reflow되어야 합니다.",
         "WAI-ARIA log는 순서대로 추가되는 chat history를 대표 사례로 정의합니다. message마다 live region을 만들지 않고 MessageFeed 한 곳에만 둡니다.",
-        "WCAG 2.2 Understanding 1.4.10 Reflow는 세로 scrolling content가 320 CSS px 상당 폭에서 정보·기능 손실이나 2차원 scrolling 없이 reflow되어야 한다고 설명합니다. density는 content 폭·wrapping 계약을 바꾸지 않습니다.",
-        "WCAG 2.2 Understanding 2.5.8 Target Size (Minimum)는 pointer target의 최소 크기를 24×24 CSS px로 정의합니다. compact도 내장 32px message action을 축소하지 않습니다."
+        "WCAG 2.2 Understanding 1.4.10 Reflow는 세로 scrolling content가 320 CSS px 상당 폭에서 정보·기능 손실이나 2차원 scrolling 없이 reflow되어야 한다고 설명합니다. density는 content 폭·wrapping 계약을 바꾸지 않습니다."
       ],
       "exceptions": [],
       "related": [
@@ -51259,6 +51587,8 @@
         "--color-semantic-primary-surface-normal",
         "--color-semantic-static-white",
         "--color-semantic-status-negative",
+        "--dur-fast",
+        "--ease-out",
         "--font-sans",
         "--fw-medium",
         "--fw-semibold",
@@ -51314,6 +51644,11 @@
           {
             "id": "lds-product-communication-message--conversation-composition",
             "name": "사용법 · 피드·메시지·작성기 구성",
+            "role": "usage"
+          },
+          {
+            "id": "lds-product-communication-message--identity-and-action-visibility",
+            "name": "사용법 · 화자 표기와 액션 노출 조절",
             "role": "usage"
           },
           {
@@ -51429,7 +51764,7 @@
         "Icon",
         "IconButton"
       ],
-      "purpose": "사람 또는 AI와 대화하며 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 보조 행동은 slot으로 조합하고 Composer는 값·전송·중지만 소유합니다. 즉시 명령은 DropdownMenu, 안내·연속 설정은 Popover에 두며 Portal·dismiss·배치는 primitive가 소유합니다. 단발성 검색에는 SearchField를 사용하세요.",
+      "purpose": "사람 또는 AI와 대화하며 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 보조 행동은 slot으로 조합하고 작성기는 값·전송·중지만 소유합니다. 즉시 명령은 열고 닫는 명령 메뉴에, 안내·연속 설정은 비모달 팝오버에 두며 외부 렌더·닫기·배치는 각 기반 요소가 소유합니다. 단발성 검색에는 독립 검색 입력을 사용하세요.",
       "useWhen": [
         "light/dark 모두 LDS semantic input token을 사용하며 exact Figma color, product logo, provider selector와 custom shadow를 만들지 않습니다.",
         "좁고 짧은 대화 열에서는 body Portal로 clipping을 탈출하되, 공유 primitive가 제공하는 collisionBoundary에 visible conversation column ref를 전달해 viewport와 그 열의 교집합 안에서 panel을 배치합니다. Portal target과 geometry boundary는 같은 책임이 아닙니다.",
@@ -52183,7 +52518,6 @@
         "--space-1",
         "--space-2",
         "--space-20",
-        "--space-3",
         "--space-4",
         "--space-6"
       ],
@@ -53317,6 +53651,13 @@
           "owner": "FeatureCardProps"
         },
         {
+          "name": "density",
+          "type": "'comfortable' | 'compact'",
+          "required": false,
+          "description": "spacing과 icon 크기만 조정하는 opt-in 밀도. typography는 유지합니다. @default \"comfortable\"",
+          "owner": "FeatureCardProps"
+        },
+        {
           "name": "headingLevel",
           "type": "1 | 2 | 3 | 4 | 5 | 6 | false",
           "required": false,
@@ -53334,26 +53675,29 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "headingLevel — title은 실제 heading으로 렌더되며 기본 레벨은 h4입니다(Core Card의 구조화 title은 h3). 카드가 놓인 문서의 제목 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false}로 heading 의미를 끄세요. 레벨은 건너뛰지 않습니다(WCAG 1.3.1)."
+          "rule": "density — comfortable(기본) · compact. Compact는 boxed padding을 --space-4(16px), icon-to-content gap을 --space-3(12px), icon tile을 --space-10(40px), title-to-description gap을 --space-1(4px)로 조정합니다. 제목과 본문 typography는 바꾸지 않으며 루트에 data-density를 노출합니다."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "카드 전체 클릭 — onClick을 주면 카드 루트가 role=\"button\" · tabIndex=0이 되고 Enter/Space로 활성화됩니다(WCAG 2.1.1). 포커스 링은 토큰 레이어(tokens/focus.css)의 전역 :focus-visible 규칙이 담당하므로 카드가 따로 그리지 않습니다. 이때 카드 안에 버튼·링크 같은 포커스 가능한 요소를 넣지 마세요 — 중첩 인터랙티브는 유효하지 않은 마크업이고 카드 이름이 본문 전체로 길어집니다. 행동이 여러 개면 onClick 없이 각 액션을 카드 안에 두세요."
+          "rule": "headingLevel — title은 실제 heading으로 렌더되며 기본 레벨은 h4입니다(Core Card의 구조화 title은 h3). 카드가 놓인 문서의 제목 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false}로 heading 의미를 끄세요. 레벨은 건너뛰지 않습니다(WCAG 1.3.1)."
         },
         {
           "subject": "명시 규칙 3",
+          "rule": "카드 전체 클릭 — onClick을 주면 카드 루트가 role=\"button\" · tabIndex=0이 되고 Enter/Space로 활성화됩니다(WCAG 2.1.1). 포커스 링은 토큰 레이어(tokens/focus.css)의 전역 :focus-visible 규칙이 담당하므로 카드가 따로 그리지 않습니다. 이때 카드 안에 버튼·링크 같은 포커스 가능한 요소를 넣지 마세요 — 중첩 인터랙티브는 유효하지 않은 마크업이고 카드 이름이 본문 전체로 길어집니다. 행동이 여러 개면 onClick 없이 각 액션을 카드 안에 두세요."
+        },
+        {
+          "subject": "명시 규칙 4",
           "rule": "타입 스케일 정합: 제목 19px → --headline1-size(18px, −1px 의도된 변경), 본문 15.5px → --body2-size(15px)로 스냅했습니다. NewsCard 제목(headline1)과 같은 카드 제목 단계로 정렬합니다."
         },
         {
           "subject": "--body2-size",
           "rule": "15px"
-        },
-        {
-          "subject": "--color-semantic-accent-foreground-blue",
-          "rule": "light: #336CA1; dark: #639ACE"
         }
       ],
-      "responsive": [],
+      "responsive": [
+        "MUI density guidance처럼 density는 필요한 컴포넌트에 prop으로 선택하며, 예제용 global dense theme를 제품 전체 규칙으로 강제하지 않습니다.",
+        "Carbon spacing과 Fluent 2 layout의 원칙에 따라 한 단계 작은 LDS spacing token으로 요소 관계를 강화합니다. 좁은 레이아웃에서도 같은 ramp 안에서 조정하고 typography 축으로 밀도를 대신하지 않습니다."
+      ],
       "contentGuidance": [
         "FeatureCard — 틴트된 아이콘 타일 + 제목 + 설명(기능 셀). boxed는 Card 서피스로 감쌉니다."
       ],
@@ -53396,7 +53740,7 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<FeatureCard tone=\"signal\" icon={compassIcon} title=\"자율주행\">사전 지정 경로와 실시간 장애물 회피로 이동합니다.</FeatureCard>\n\n// 섹션 제목이 h2일 때 카드 제목을 h3로 내림\n<FeatureCard headingLevel={3} tone=\"steel\" icon={mapIcon} title=\"맵 편집\">현장 지도를 직접 수정합니다.</FeatureCard>"
+          "code": "<FeatureCard tone=\"signal\" icon={compassIcon} title=\"자율주행\">사전 지정 경로와 실시간 장애물 회피로 이동합니다.</FeatureCard>\n\n// 섹션 제목이 h2일 때 카드 제목을 h3로 내림\n<FeatureCard headingLevel={3} tone=\"steel\" icon={mapIcon} title=\"맵 편집\">현장 지도를 직접 수정합니다.</FeatureCard>\n\n<FeatureCard boxed density=\"compact\" icon={robotIcon} title=\"장비 상태\">한 화면에서 더 많은 기능을 훑습니다.</FeatureCard>"
         }
       ],
       "tokens": [
@@ -53417,7 +53761,12 @@
         "--fw-extra",
         "--headline1-size",
         "--radius-14",
-        "--shadow-md"
+        "--shadow-md",
+        "--space-1",
+        "--space-10",
+        "--space-2",
+        "--space-3",
+        "--space-4"
       ],
       "apiLinks": [
         "components/cards/FeatureCard.jsx",
@@ -53425,7 +53774,9 @@
         "components/cards/FeatureCard.prompt.md",
         "stories/CardInfo.stories.jsx"
       ],
-      "migration": [],
+      "migration": [
+        "실제 .fig 검사에서 FeatureCard component set은 확인되지 않았습니다. 따라서 이 API는 WDS parity가 아니라 LDS Product의 opt-in compatibility extension입니다."
+      ],
       "platformStatus": {
         "figma": "not-tracked",
         "react": "implemented",
@@ -53440,6 +53791,11 @@
             "id": "lds-product-content-feature-card--feature-cards",
             "name": "개요",
             "role": "overview"
+          },
+          {
+            "id": "lds-product-content-feature-card--density-compatibility",
+            "name": "반응형 · 기본형과 조밀형 밀도",
+            "role": "responsive"
           }
         ],
         "hiddenEvidence": 2
@@ -53452,6 +53808,18 @@
         {
           "label": "Storybook implementation evidence",
           "path": "stories/CardInfo.stories.jsx"
+        },
+        {
+          "label": "MUI density guidance",
+          "url": "https://mui.com/material-ui/customization/density/"
+        },
+        {
+          "label": "Carbon spacing",
+          "url": "https://carbondesignsystem.com/elements/spacing/overview/"
+        },
+        {
+          "label": "Fluent 2 layout",
+          "url": "https://fluent2.microsoft.design/layout"
         }
       ],
       "canonicalGuide": null,
@@ -53465,7 +53833,7 @@
         "states": "evidence",
         "behavior": "omitted-no-evidence",
         "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
+        "responsive": "evidence",
         "contentGuidance": "evidence",
         "accessibility": "omitted-no-evidence",
         "exceptions": "omitted-no-evidence",
@@ -53473,7 +53841,7 @@
         "examples": "evidence",
         "tokens": "evidence",
         "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
+        "migration": "evidence"
       }
     },
     {
@@ -53870,7 +54238,7 @@
           "name": "href",
           "type": "string",
           "required": false,
-          "description": "항목 링크. @default \"\"",
+          "description": "항목 링크. @default \"#\"",
           "owner": "ListingCardProps"
         }
       ],
@@ -54483,7 +54851,7 @@
           "name": "href",
           "type": "string",
           "required": false,
-          "description": "기사 링크. @default \"\"",
+          "description": "기사 링크. @default \"#\"",
           "owner": "NewsCardProps"
         },
         {
@@ -54879,7 +55247,7 @@
           "name": "href",
           "type": "string",
           "required": false,
-          "description": "링크 대상. @default \"\"",
+          "description": "링크 대상. @default \"#\"",
           "owner": "ProductCardProps"
         },
         {
@@ -55352,7 +55720,8 @@
       ],
       "purpose": "사람·로봇·주문처럼 대상 자체가 화면의 주인공일 때 사용합니다. 시각 식별자, 이름, 배지, 설명, 세부 정보와 대상 액션을 안정된 읽기 순서로 묶으며, 화면의 위치·업무만 설명할 때는 사용하지 않습니다.",
       "useWhen": [
-        "visual은 Avatar·Thumbnail 같은 대상 식별자입니다. 장식 이미지면 대체 텍스트를 비우고, 식별에 필요한 이미지면 슬롯 컴포넌트가 대상 이름을 제공합니다."
+        "visual은 Avatar·Thumbnail 같은 대상 식별자입니다. 장식 이미지면 대체 텍스트를 비우고, 식별에 필요한 이미지면 슬롯 컴포넌트가 대상 이름을 제공합니다.",
+        "size=\"md|sm\"은 기본 md인 opt-in 크기 축입니다. sm은 PageHeader와 같은 --heading2- 제목 scale을 사용하고 내부/행 gap을 한 단계 조밀화합니다. description의 --label1-와 details의 --label2- typography는 그대로 유지하며 루트에 data-size를 노출합니다."
       ],
       "avoidWhen": [
         "LK Control Full Daedeok — not applicable. 고정된 MainLayout과 Robot Dashboard는 셸·탐색·감시 화면을 조합하며 일반화 가능한 레코드 정체성 헤더를 제공하지 않습니다.",
@@ -55421,6 +55790,13 @@
           "required": false,
           "description": "제목의 문서 heading 단계. @default 1",
           "owner": "RecordHeaderProps"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md'",
+          "required": false,
+          "description": "제목 scale과 내부/행 gap을 조정하는 헤더 크기. description·details typography는 유지합니다. @default \"md\"",
+          "owner": "RecordHeaderProps"
         }
       ],
       "states": [],
@@ -55445,15 +55821,17 @@
           "rule": "WCAG 2.2 Reflow에 맞춰 320 CSS px 상당의 폭에서 양방향 스크롤 없이 재배치합니다."
         },
         {
-          "subject": "--color-semantic-label-neutral",
-          "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+          "subject": "명시 규칙 4",
+          "rule": "Carbon Data Table usage가 toolbar·header·row size를 함께 pairing하듯, scan-heavy 화면에서는 RecordHeader size=\"sm\"을 인접한 compact Card/Table/toolbar와 일관되게 조합합니다. Carbon spacing과 Fluent 2 layout에 따라 작은 spacing token은 관련성을 강화하되, 좁은 폭에서는 reflow와 touch target을 함께 보존합니다."
         },
         {
-          "subject": "--color-semantic-label-normal",
-          "rule": "light: #171718; dark: #F7F7F7"
+          "subject": "--color-semantic-label-neutral",
+          "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
         }
       ],
-      "responsive": [],
+      "responsive": [
+        "실제 .fig 검사에서 RecordHeader component set은 확인되지 않았으므로 size는 WDS parity가 아니라 LDS Product compatibility extension입니다. MUI density guidance처럼 필요한 헤더에서만 명시적으로 선택하고 global dense theme로 강제하지 않습니다."
+      ],
       "contentGuidance": [
         "PageHeader는 breadcrumb·eyebrow·페이지 제목·페이지 상태·메타·주요 액션으로 현재 화면의 맥락과 업무를 설명합니다. RecordHeader는 visual·대상 이름·인증/상태 배지·세부 정보·대상 액션으로 현재 보고 있는 대상을 식별합니다.",
         "StatList는 라벨-값 목록만 소유합니다. 레코드 제목, 시각 식별자, 설명, 액션을 소유하지 않으며 필요할 때 details에 조합합니다.",
@@ -55501,7 +55879,7 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<RecordHeader\n  visual={<Avatar name=\"장진혁\" size=\"xlarge\" />}\n  title=\"장진혁\"\n  badge={<StatusBadge tone=\"positive\">인증됨</StatusBadge>}\n  description=\"Physical AI Engineer · 신입 · 개발\"\n  details={<StatList items={profileStats} />}\n  actions={<Button variant=\"outlined\">설정</Button>}\n/>"
+          "code": "<RecordHeader\n  size=\"sm\"\n  visual={<Avatar name=\"장진혁\" size=\"xlarge\" />}\n  title=\"장진혁\"\n  badge={<StatusBadge tone=\"positive\">인증됨</StatusBadge>}\n  description=\"Physical AI Engineer · 신입 · 개발\"\n  details={<StatList items={profileStats} />}\n  actions={<Button variant=\"outlined\">설정</Button>}\n/>"
         }
       ],
       "tokens": [
@@ -55513,13 +55891,18 @@
         "--heading1-line",
         "--heading1-size",
         "--heading1-spacing",
+        "--heading2-line",
+        "--heading2-size",
+        "--heading2-spacing",
         "--label1-reading-line",
         "--label1-size",
         "--label1-spacing",
         "--label2-line",
         "--label2-size",
         "--label2-spacing",
+        "--space-1",
         "--space-2",
+        "--space-3",
         "--space-4"
       ],
       "apiLinks": [
@@ -55543,6 +55926,11 @@
             "id": "lds-product-content-record-header--record-header-overview",
             "name": "개요",
             "role": "overview"
+          },
+          {
+            "id": "lds-product-content-record-header--size-compatibility",
+            "name": "변형·상태 · 기본형과 작은 크기",
+            "role": "variants-states"
           },
           {
             "id": "lds-product-content-record-header--dark-theme",
@@ -55589,6 +55977,14 @@
         {
           "label": "WCAG 2.2 Reflow",
           "url": "https://www.w3.org/TR/WCAG22/#reflow"
+        },
+        {
+          "label": "MUI density guidance",
+          "url": "https://mui.com/material-ui/customization/density/"
+        },
+        {
+          "label": "Carbon Data Table usage",
+          "url": "https://carbondesignsystem.com/components/data-table/usage/"
         }
       ],
       "canonicalGuide": null,
@@ -55602,7 +55998,7 @@
         "states": "omitted-no-evidence",
         "behavior": "evidence",
         "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
+        "responsive": "evidence",
         "contentGuidance": "evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
@@ -68855,7 +69251,7 @@
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "서피스는 --color-semantic-inverse-background(라이트에서 1B1C1E, 다크에선 페이지와 반전되는 인버스 서피스), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다."
+          "rule": "서피스는 --color-semantic-inverse-background(라이트에서 #1B1C1E, 다크에선 페이지와 반전되는 인버스 서피스), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다."
         },
         {
           "subject": "--body2-size",
@@ -68871,7 +69267,7 @@
         "타입 스케일 정합: 저작권·법적 링크 12.5px → --caption1-size(12px), 컬럼 링크 13.5px → --label2-size(13px)로 스냅했습니다. 파인 프린트는 한 단계 아래로, 컬럼 링크는 15px 헤딩(body2)과의 위계를 유지합니다."
       ],
       "accessibility": [
-        "접근성 — 컬럼 제목은 role=\"heading\" + aria-level=3으로 헤딩 시맨틱을 갖고, 링크 그룹(컬럼·정책 링크)은 ul/li로 렌더됩니다. href가 없는 링크 항목은 href=\"\" 폴백 없이 일반 텍스트로 렌더됩니다."
+        "접근성 — 컬럼 제목은 role=\"heading\" + aria-level=3으로 헤딩 시맨틱을 갖고, 링크 그룹(컬럼·정책 링크)은 ul/li로 렌더됩니다. href가 없는 링크 항목은 href=\"#\" 폴백 없이 일반 텍스트로 렌더됩니다."
       ],
       "exceptions": [],
       "related": [
@@ -69582,13 +69978,14 @@
       "useWhen": [
         "Atlassian navigation system layout — 접기 토글(SideNavToggleButton)은 top nav 항목이며 사이드 패널 내부에 두지 않습니다. shadcn/ui Sidebar의 SidebarTrigger(본문 상단 바 시작)와 IBM Carbon UI shell 헤더 햄버거도 같은 원칙입니다. LDS는 이 원칙을 따라 셸의 접기 토글을 상단 바 시작 부분에 두며, side-first에서는 shadcn 배치를, header-first에서는 Atlassian 배치를 사용합니다.",
         "footer accepts either a node or a render function receiving { collapsed, expanded, overlay }. Use the render form when the account/footer composition must change before an overlay peek or rail collapse exposes it.",
-        "Child destinations accept icon; when any child in a group has one, SideNav reserves the same decorative slot for every sibling."
+        "Child destinations accept icon; when any child in a group has one, SideNav reserves the same decorative slot for every sibling.",
+        "appearance=\"default\"는 data-theme=\"dark\" 또는 .theme-dark 안에서 기존 dark semantic surface를 그대로 사용합니다. appearance=\"brand\"는 generic dark theme와 별개인 명시적이고 theme-stable한 제품 셸 팔레트입니다."
       ],
       "avoidWhen": [
         "접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 아이콘의 강한 잉크로만 표시해 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.",
         "Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. category 아이콘이 없을 때도 subitem을 명확히 들여쓰라는 원칙을 적용해 LDS는 자식 아이콘 유무와 무관하게 같은 라벨 시작선을 보장합니다. 축소 가능 내비게이션의 상태는 명시적 토글로 설명하고 hover peek는 선택 기능으로 제한합니다.",
         "Carbon UI shell left panel accessibility — rail은 hover나 focus에서 펼쳐져도 같은 링크·서브메뉴 keyboard model을 유지합니다. 이 동작을 LDS에 적용할 때는 동일 DOM뿐 아니라 44px hit target과 세로 위치도 유지해, 포인터와 키보드 사용자가 확장 중 움직이는 목적지를 다시 추적하지 않게 합니다.",
-        "대시보드·관리 제품의 주 탐색으로 UserMenu를 푸터에 조합합니다. TopBar가 함께 있으면 전역 utility만 담당하게 하고 로고·경로를 중복하지 않으며, 평면형 대안인 NavRail과 동시에 주 탐색으로 사용하지 않습니다."
+        "전경과 상태 표면은 navy-shell atomic ramp를 참조합니다. 이 ramp는 brand-on-surface 잉크를 브랜드 네이비 위에 합성한 불투명 값입니다: hover·badge surface -18(white 10% 합성), pressed -20(12%), badge active -24(16%), divider -26(18%), muted·section·badge ink -65(62%), hover ink -93(92%). 활성 label은 static-white를 그대로 씁니다."
       ],
       "anatomy": [
         {
@@ -69682,6 +70079,13 @@
           "type": "'floating' | 'docked'",
           "required": false,
           "description": "외곽 표면. floating은 전체 outline과 radius를, docked는 논리적 끝 divider만 사용합니다. @default 'floating'",
+          "owner": "SideNavProps"
+        },
+        {
+          "name": "appearance",
+          "type": "'default' | 'brand'",
+          "required": false,
+          "description": "색상 외형. default는 현재 theme semantic 색을 그대로 사용하고, brand는 밝은 작업면과 대비되는 평면 브랜드 네이비 셸을 사용합니다. 배치 형태는 surface가 별도로 소유합니다. @default 'default'",
           "owner": "SideNavProps"
         },
         {
@@ -69794,11 +70198,11 @@
         }
       ],
       "behavior": [
+        "appearance — default(기본)는 기존 semantic color와 현재 theme를 픽셀 그대로 따릅니다. brand는 평면 브랜드 네이비 셸과 상태 잉크를 사용하는 theme-stable 컴포넌트 외형입니다. surface가 배치 geometry를, appearance가 SideNav 내부 색 역할만 소유하므로 두 축은 독립입니다. 알 수 없는 런타임 값은 default로 안전하게 돌아갑니다.",
         "collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌므로 런타임 overlay 전환 때도 부모가 원하는 collapsed 값을 함께 갱신해야 합니다. 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.",
         "multiple — 기본 false는 한 번에 한 disclosure 그룹만 열리는 accordion 동작입니다. 다른 그룹이나 다른 최상위 목적지를 선택하면 기존에 열린 그룹을 닫고, 활성 자식이 바뀌면 해당 그룹만 엽니다. multiple={true}를 명시하면 여러 그룹을 동시에 열 수 있습니다.",
         "floating은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. docked는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, fill, active marker를 공유합니다.",
-        "WAI-ARIA Accordion pattern — 한 패널만 허용하는 accordion은 다른 헤더를 열 때 기존 패널을 닫고 aria-expanded를 실제 노출 상태와 동기화합니다. LDS의 기본 SideNav도 이 단일 열림 규칙을 따릅니다.",
-        "WAI-ARIA landmark regions — landmark와 명확한 accessible name을 유지합니다. 소비자가 aria-label을 주지 않으면 기본 이름 사이드 탐색을 제공하고, 같은 문서에 탐색 landmark가 여러 개면 고유한 이름으로 덮어씁니다. 현재 목적지는 aria-current=\"page\"로 노출하고, 키보드 focus 진입·이탈과 Esc 뒤에도 초점을 잃지 않습니다."
+        "WAI-ARIA Accordion pattern — 한 패널만 허용하는 accordion은 다른 헤더를 열 때 기존 패널을 닫고 aria-expanded를 실제 노출 상태와 동기화합니다. LDS의 기본 SideNav도 이 단일 열림 규칙을 따릅니다."
       ],
       "quantitativeRules": [
         {
@@ -69883,15 +70287,32 @@
         }
       ],
       "tokens": [
+        "--_lds-side-nav-focus-indicator",
+        "--_lds-side-nav-pressed-surface",
         "--caption2-size",
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-fill-alternative",
         "--color-semantic-fill-normal",
+        "--color-semantic-fill-strong",
+        "--color-semantic-focus-indicator",
         "--color-semantic-label-alternative",
         "--color-semantic-label-normal",
         "--color-semantic-line-solid-normal",
         "--color-semantic-primary-normal",
         "--color-semantic-primary-surface-strong",
+        "--component-side-nav-brand-active-foreground",
+        "--component-side-nav-brand-active-hover-surface",
+        "--component-side-nav-brand-badge-active-surface",
+        "--component-side-nav-brand-badge-foreground",
+        "--component-side-nav-brand-badge-surface",
+        "--component-side-nav-brand-divider",
+        "--component-side-nav-brand-focus-indicator",
+        "--component-side-nav-brand-foreground",
+        "--component-side-nav-brand-hover-foreground",
+        "--component-side-nav-brand-hover-surface",
+        "--component-side-nav-brand-muted-foreground",
+        "--component-side-nav-brand-pressed-surface",
+        "--component-side-nav-brand-subtle-foreground",
+        "--component-side-nav-brand-surface",
         "--dur-base",
         "--dur-fast",
         "--ease-out",
@@ -69900,8 +70321,8 @@
         "--fw-medium",
         "--label1-line",
         "--label1-size",
-        "--label2-line",
         "--label2-size",
+        "--lds-side-nav-child-item-height",
         "--lds-side-nav-collapsed-width",
         "--lds-side-nav-item-height",
         "--lds-side-nav-item-radius",
@@ -69917,7 +70338,6 @@
         "--space-2",
         "--space-2-5",
         "--space-3",
-        "--space-4",
         "--space-4-5"
       ],
       "apiLinks": [
@@ -69943,6 +70363,11 @@
             "id": "lds-product-navigation-side-nav--link-destinations",
             "name": "개요",
             "role": "overview"
+          },
+          {
+            "id": "lds-product-navigation-side-nav--navy-docked-surface",
+            "name": "변형·상태 · 브랜드 네이비 외형",
+            "role": "variants-states"
           },
           {
             "id": "lds-product-navigation-side-nav--docked-surface",
@@ -71171,9 +71596,7 @@
         "fillLastRow를 켠 경우에만 wrap 배치로 전환해 마지막 행의 잔여 카드가 남은 폭을 채웁니다. 표면·간격·typography 계약은 동일하며 기본값은 기존 grid 동작 그대로입니다.",
         "Carbon UI shell usage — 셸과 본문을 분리하고 좁은 폭에서 탐색 구조를 전환합니다. DashboardGrid는 셸이 제공한 본문 폭 안에서만 반응합니다."
       ],
-      "contentGuidance": [
-        "LK Context Hub — 프로젝트/attention landing의 Card/DataGrid 반복은 supported by composition이지만 route·query·권한과 카드 우선순위는 제품이 소유합니다."
-      ],
+      "contentGuidance": [],
       "accessibility": [
         "카드의 typography, fill, divider, active/focus/disabled 표현은 카드 컴포넌트의 계약이며 DashboardGrid가 재정의하지 않습니다."
       ],
@@ -71269,7 +71692,7 @@
         "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
-        "contentGuidance": "evidence",
+        "contentGuidance": "omitted-no-evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
         "related": "evidence",
@@ -71569,6 +71992,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "DrawerSection",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "Lightbox",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -71691,11 +72118,20 @@
       ],
       "supportingComponents": [
         "Button",
-        "Sheet"
+        "Callout",
+        "CheckboxGroup",
+        "ChoiceCard",
+        "DrawerSection",
+        "FileUpload",
+        "Input",
+        "Select",
+        "Sheet",
+        "Textarea"
       ],
       "purpose": "넓은 화면에서 필터·속성·상세처럼 주 콘텐츠를 보조하는 작업을 옆 패널에 유지할 때 적합합니다. 작은 화면의 짧은 선택에는 Drawer 대신 Sheet를, 집중이 필요한 확인에는 Dialog를 사용하세요.",
       "useWhen": [
-        "기본 withinPortal=true이며 LdsProvider.portalTarget 또는 명시적 portalTarget에 렌더링됩니다. 가까운 theme scope와 dir을 상속하고 clipping ancestor를 벗어납니다."
+        "기본 withinPortal=true이며 LdsProvider.portalTarget 또는 명시적 portalTarget에 렌더링됩니다. 가까운 theme scope와 dir을 상속하고 clipping ancestor를 벗어납니다.",
+        "Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. LDS의 두 density도 anatomy와 sticky region 순서는 공유하고 spacing/type만 바꾸며, 여러 overlay Drawer 동시 노출은 제외했습니다."
       ],
       "avoidWhen": [
         "테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.",
@@ -71719,6 +72155,18 @@
         {
           "part": "bodyStyle",
           "rule": "스크롤 body의 padding·layout을 조합별로 조정합니다."
+        },
+        {
+          "part": "title",
+          "rule": "Drawer 본문 안의 보이는 하위 제목."
+        },
+        {
+          "part": "description",
+          "rule": "제목 아래의 짧은 설명."
+        },
+        {
+          "part": "actions",
+          "rule": "제목 행 우측의 보조 액션."
         }
       ],
       "properties": [
@@ -71741,6 +72189,13 @@
           "type": "number",
           "required": false,
           "description": "패널 너비(px). @default 380",
+          "owner": "DrawerProps"
+        },
+        {
+          "name": "density",
+          "type": "'comfortable' | 'compact'",
+          "required": false,
+          "description": "Drawer의 chrome/body 밀도. body의 density-aware 자식은 이를 상속하며 명시적 size/padding/density가 우선합니다. @default \"comfortable\"",
           "owner": "DrawerProps"
         },
         {
@@ -71854,6 +72309,34 @@
           "required": false,
           "description": "",
           "owner": "DrawerProps"
+        },
+        {
+          "name": "title",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "Drawer 본문 안의 보이는 하위 제목.",
+          "owner": "DrawerSectionProps"
+        },
+        {
+          "name": "description",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "제목 아래의 짧은 설명.",
+          "owner": "DrawerSectionProps"
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3 | 4 | 5 | 6",
+          "required": false,
+          "description": "문서 구조에 맞는 제목 레벨. @default 3",
+          "owner": "DrawerSectionProps"
+        },
+        {
+          "name": "actions",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "제목 행 우측의 보조 액션.",
+          "owner": "DrawerSectionProps"
         }
       ],
       "states": [
@@ -71863,7 +72346,11 @@
         }
       ],
       "behavior": [
-        "overlay Drawer를 여러 개 겹치지 않습니다. Drawer 위에 확인 Modal이 불가피할 때는 Modal만 활성화되고, 닫힌 뒤 Drawer 내부 trigger로 돌아갑니다."
+        "density=\"comfortable\"이 기본값이며 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다.",
+        "자식의 명시적 size, padding, density가 항상 상속값보다 우선합니다. Drawer 밖과 comfortable Drawer의 기존 기본 출력은 유지됩니다.",
+        "닫히면 trigger로 복원하며 returnFocusRef로 논리적 다음 지점을 지정할 수 있습니다. restoreFocus 기본값은 true입니다.",
+        "overlay Drawer를 여러 개 겹치지 않습니다. Drawer 위에 확인 Modal이 불가피할 때는 Modal만 활성화되고, 닫힌 뒤 Drawer 내부 trigger로 돌아갑니다.",
+        "필터 query 직렬화, 변경 유실 경고 조건, route 상태와 반응형으로 inline surface로 전환하는 정책은 제품 레이어가 소유합니다."
       ],
       "quantitativeRules": [
         {
@@ -71872,7 +72359,7 @@
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "시각 delta inventory: headline/body typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. header/body는 space-5 space-6, footer는 space-4 space-6, action gap은 space-2로 Modal과 맞춥니다. radius와 선택/활성 marker는 추가하지 않고 side 방향만 기존 public axis로 유지합니다."
+          "rule": "시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. comfortable은 기존과 동일하게 header/body space-5 space-6, footer space-4 space-6, body body2/1.7을 사용합니다."
         },
         {
           "subject": "명시 규칙 3",
@@ -71880,29 +72367,31 @@
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. 여러 overlay Drawer 동시 노출은 제외했습니다."
+          "rule": "header 닫기와 footer는 scope 밖에 있습니다. footer CTA와 보조 액션은 기존 md 40px를 유지하며 body 안의 행 단위 액션도 의미상 필요할 때만 명시적으로 size=\"sm\"을 선택합니다."
         },
         {
-          "subject": "--body2-size",
-          "rule": "15px"
+          "subject": "--body2-line",
+          "rule": "22px"
         }
       ],
       "responsive": [
-        "데스크톱 Drawer footer는 버튼 수와 관계없이 inline end 정렬합니다. 단독 확정 CTA도 full을 쓰지 않으며, 취소·보조 액션은 variant=\"outlined\" color=\"assistive\"로 Modal과 같은 WDS 문법을 씁니다. full-width 액션은 작은 화면의 Sheet에 한정합니다.",
-        "필터 query 직렬화, 변경 유실 경고 조건, route 상태와 반응형으로 inline surface로 전환하는 정책은 제품 레이어가 소유합니다."
+        "density=\"compact\"은 데스크톱의 짧고 반복적인 필터·설정 폼에서 Drawer가 소유하는 header/body/footer chrome과 body typography만 조밀하게 만듭니다. 제목 단계, 닫기 target, footer action 크기는 바꾸지 않습니다.",
+        "body의 bounded component-density scope는 Input, Select, Textarea, Checkbox/CheckboxGroup, Radio/RadioGroup, ChoiceCard, Callout, FileUpload처럼 밀도 상속 계약을 가진 자식에 compact를 전달합니다. 중첩 깊이나 DrawerField 같은 직접 자식 복제에 의존하지 않습니다.",
+        "DrawerSection은 본문 하위 제목, 설명, 선택적 divider와 간격을 소유합니다. 제품은 type-headline1, pt-6, 직접 구분선으로 같은 해부학을 다시 만들지 않습니다. compact에서는 divider 상단 16px, 제목·설명 다음 8px을 사용하고 comfortable에서는 기존 읽기 여유를 유지합니다.",
+        "데스크톱 Drawer footer는 버튼 수와 관계없이 inline end 정렬합니다. 단독 확정 CTA도 full을 쓰지 않으며, 취소·보조 액션은 variant=\"outlined\" color=\"assistive\"로 Modal과 같은 WDS 문법을 씁니다. full-width 액션은 작은 화면의 Sheet에 한정합니다."
       ],
       "contentGuidance": [
         "제품 맥락에 맞는 닫기 명령은 closeLabel로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.",
-        "WAI-ARIA APG Modal Dialog Pattern: modal Drawer에도 내부 focus trap, Escape, 복원, 이름 있는 dialog 계약을 적용했습니다.",
-        "Subtitle contract.",
-        "Use subtitle for one short, visible sentence that clarifies the scope or consequence of the Drawer. When present it is rendered directly below title and associated with the dialog through aria-describedby."
+        "조밀화는 정보 위계나 상호작용 의미를 바꾸지 않습니다. Checkbox와 Radio의 실제 target은 시각 glyph보다 넓은 최소 24×24px이며, ChoiceCard와 FileUpload의 전체 label target도 유지됩니다.",
+        "WAI-ARIA APG Modal Dialog Pattern: modal Drawer에도 내부 focus trap, Escape, 복원, 이름 있는 dialog 계약을 적용했습니다. 밀도는 이 interaction/semantic 계약을 변경하지 않습니다.",
+        "Subtitle contract."
       ],
       "accessibility": [
         "Modal, Sheet, ConfirmDialog를 sibling으로 확인했습니다. focus/keyboard 계약은 ConfirmDialog와 공유하되 표면은 기존 Drawer 그대로입니다.",
         "제목이 있으면 aria-labelledby, 없으면 ariaLabel을 사용합니다.",
+        "DrawerSection.headingLevel은 실제 문서 계층에 맞춰 26을 선택하고 기본값은 3입니다. 짧은 보조 명령은 actions에 두며, headerStyle과 contentStyle은 고유한 레이아웃 조합에만 사용합니다. 이 style escape hatch로 제목 크기·밀도·divider 간격을 다시 정의하지 않습니다.",
         "zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다.",
-        "initialFocusRef → 첫 tabbable 요소 → dialog 표면 순으로 초기 초점을 선택합니다.",
-        "최상위 Drawer만 Tab/Shift+Tab 순환, 외부 focus containment, Escape dismiss를 소유합니다."
+        "initialFocusRef → 첫 tabbable 요소 → dialog 표면 순으로 초기 초점을 선택합니다."
       ],
       "exceptions": [],
       "related": [
@@ -71911,29 +72400,51 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Sheet",
+          "component": "Callout",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "CommandPalette",
+          "component": "CheckboxGroup",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Lightbox",
+          "component": "ChoiceCard",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DrawerSection",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "FileUpload",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "Input",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "Select",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
       "examples": [
         {
           "label": "기본 조합",
-          "code": "const firstFilterRef = useRef(null);\n\n<Drawer\n  open={open}\n  side=\"right\"\n  title=\"필터\"\n  initialFocusRef={firstFilterRef}\n  onClose={close}\n  footer={<Button variant=\"signal\">적용</Button>}\n>\n  <input ref={firstFilterRef} aria-label=\"현장 검색\" />\n</Drawer>"
+          "code": "const firstFilterRef = useRef(null);\n\n<Drawer\n  open={open}\n  side=\"right\"\n  density=\"compact\"\n  title=\"필터\"\n  initialFocusRef={firstFilterRef}\n  onClose={close}\n  footer={<Button variant=\"signal\">적용</Button>}\n>\n  <Input ref={firstFilterRef} aria-label=\"현장 검색\" />\n  <DrawerSection\n    divider\n    title=\"활동 기록 (선택)\"\n    description=\"선택하지 않으면 입력 내용과 맞는 기록을 자동으로 찾습니다.\"\n  >\n    <CheckboxGroup options={activityOptions} />\n  </DrawerSection>\n</Drawer>"
         }
       ],
       "tokens": [
+        "--body2-line",
         "--body2-size",
+        "--caption1-line",
+        "--caption1-size",
         "--color-semantic-background-elevated-normal",
+        "--color-semantic-label-alternative",
         "--color-semantic-label-neutral",
         "--color-semantic-label-normal",
+        "--color-semantic-label-strong",
+        "--color-semantic-line-solid-alternative",
         "--color-semantic-line-solid-normal",
         "--component-dialog-scrim",
         "--component-dialog-scrim-blur",
@@ -71941,13 +72452,17 @@
         "--dur-slow",
         "--ease-out",
         "--font-sans",
+        "--fw-bold",
         "--fw-extra",
         "--headline1-size",
+        "--label1-line",
         "--label1-reading-line",
         "--label1-size",
+        "--label1-spacing",
         "--shadow-xl",
         "--space-1",
         "--space-2",
+        "--space-3",
         "--space-4",
         "--space-5",
         "--space-6"
@@ -71978,6 +72493,11 @@
             "id": "lds-product-overlay-drawer--drawer-sheet-focus-contract",
             "name": "상호작용 · 초점 순환과 복원",
             "role": "interaction"
+          },
+          {
+            "id": "lds-product-overlay-drawer--compact-density",
+            "name": "반응형 · 조밀한 폼",
+            "role": "responsive"
           }
         ],
         "hiddenEvidence": 1
@@ -71998,6 +72518,10 @@
         {
           "label": "Fluent 2 Drawer",
           "url": "https://fluent2.microsoft.design/components/web/react/core/drawer/usage"
+        },
+        {
+          "label": "WCAG 2.2 Target Size (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum"
         },
         {
           "label": "Fluent 2 Dialog",
@@ -72458,6 +72982,10 @@
         },
         {
           "component": "Drawer",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DrawerSection",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -73052,6 +73580,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "DrawerSection",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "Lightbox",
           "relationship": "대표 시나리오에서 조합"
         }
@@ -73492,7 +74024,7 @@
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "항목의 접근 가능 이름은 label입니다. 한국어 색 이름을 항상 제공하세요. CF6360이나 var(--color-…) 같은 원시 CSS 값은 이름으로 쓰지 않으며, label이 없으면 위치 기반 한국어 이름(색상 1, 색상 2 …)으로 대체합니다."
+          "rule": "항목의 접근 가능 이름은 label입니다. 한국어 색 이름을 항상 제공하세요. #CF6360이나 var(--color-…) 같은 원시 CSS 값은 이름으로 쓰지 않으며, label이 없으면 위치 기반 한국어 이름(색상 1, 색상 2 …)으로 대체합니다."
         },
         {
           "subject": "명시 규칙 3",
@@ -74604,6 +75136,13 @@
           "owner": "FileUploadProps"
         },
         {
+          "name": "size",
+          "type": "'sm' | 'md' | 'small' | 'medium'",
+          "required": false,
+          "description": "drop target 크기. compact component scope에서는 기본 sm, 그 밖에서는 md.",
+          "owner": "FileUploadProps"
+        },
+        {
           "name": "disabled",
           "type": "boolean",
           "required": false,
@@ -74617,6 +75156,10 @@
         "선택 이후 upload/processing/retry 상태는 FileUploadQueue가 소유합니다. parser, storage, virus scan, retry policy는 제품 계층 책임입니다."
       ],
       "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "size를 생략하면 일반 표면은 기존 md(최소 144px), bounded compact component scope는 sm(최소 112px, 32px 아이콘 tile)을 사용합니다. 명시한 size가 우선하며 전체 label target과 native input의 키보드 접근은 유지됩니다."
+        },
         {
           "subject": "--caption1-line",
           "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
@@ -74711,6 +75254,7 @@
         "--label1-line",
         "--label1-size",
         "--radius-md",
+        "--space-2",
         "--space-3",
         "--space-4",
         "--space-6"
@@ -77376,6 +77920,10 @@
         },
         {
           "subject": "명시 규칙 2",
+          "rule": "size를 생략하면 내부 Input과 동일하게 bounded compact component scope를 상속합니다. 명시한 size가 우선하고 reveal/copy IconButton은 기존 32px target을 유지합니다."
+        },
+        {
+          "subject": "명시 규칙 3",
           "rule": "IconButton: 32px plain trailing action과 표준 eye/copy/check/close icon을 사용합니다. copy 성공/실패 icon에만 LDS positive/negative 의미색을 적용하며 별도 action divider, nested card, 고유 shadow나 색상 surface를 추가하지 않습니다."
         },
         {
@@ -77385,10 +77933,6 @@
         {
           "subject": "--color-semantic-status-positive",
           "rule": "light: #13BE4C; dark: #3FD270"
-        },
-        {
-          "subject": "--space-0",
-          "rule": "0px"
         }
       ],
       "responsive": [],
@@ -83606,7 +84150,7 @@
           "url": "https://developers.google.com/maps/documentation/javascript/controls"
         },
         {
-          "label": "Mapbox GL JS — MapaddControl",
+          "label": "Mapbox GL JS — Map#addControl",
           "url": "https://docs.mapbox.com/mapbox-gl-js/api/map/"
         },
         {
@@ -83694,9 +84238,9 @@
         },
         {
           "name": "tone",
-          "type": "'ink' | 'white' | 'brand' | 'mono' | 'current'",
+          "type": "'ink' | 'white' | 'brand' | 'current'",
           "required": false,
-          "description": "채움 프리셋 — 공식 네이비, 반전 화이트, 제약된 흑백 mono, 호환용 currentColor. @default \"ink\"",
+          "description": "채움 프리셋 — 공식 네이비, 반전 화이트, 호환용 currentColor. 제약된 검정 단색 출력은 color=\"#000000\"을 명시합니다. @default \"ink\"",
           "owner": "LockupProps"
         },
         {
@@ -83735,7 +84279,7 @@
         },
         {
           "state": "tone",
-          "rule": "채움 프리셋 — 공식 네이비, 반전 화이트, 제약된 흑백 mono, 호환용 currentColor. @default \"ink\""
+          "rule": "채움 프리셋 — 공식 네이비, 반전 화이트, 호환용 currentColor. 제약된 검정 단색 출력은 color=\"#000000\"을 명시합니다. @default \"ink\""
         }
       ],
       "behavior": [
@@ -83774,13 +84318,13 @@
         "호환용 color와 tone=\"current\"는 기존 제품 통합을 위한 escape hatch이며, 임의 색을 공식 브랜드 색으로 승인하지 않습니다."
       ],
       "exceptions": [
-        "Mono: 단색 출력 제약이 확인된 경우에만 검정 tone=\"mono\" 또는 흰색 반전을 사용합니다. 기업 표기형의 포인트 색을 임의 회색으로 바꾸지 않습니다."
+        "Mono: 단색 출력 제약이 확인된 경우에만 검정 tone=\"current\" color=\"#000000\" 또는 흰색 반전을 사용합니다. 기업 표기형의 포인트 색을 임의 회색으로 바꾸지 않습니다."
       ],
       "related": [],
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<Lockup variant=\"inline\" tone=\"ink\" height={28} />\n<Lockup variant=\"mark\" tone=\"white\" height={32} decorative />\n<Lockup variant=\"stacked\" tone=\"mono\" height={64} />"
+          "code": "<Lockup variant=\"inline\" tone=\"ink\" height={28} />\n<Lockup variant=\"mark\" tone=\"white\" height={32} decorative />\n<Lockup variant=\"stacked\" tone=\"current\" color=\"#000000\" height={64} />"
         }
       ],
       "tokens": [],

@@ -14,7 +14,7 @@
 
 ## 문제
 
-`PRODUCT_FRONTEND_COVERAGE.md`가 고정 커밋 `de124084`에서 관찰한 LK Context Hub는
+`PRODUCT_FRONTEND_COVERAGE.md`가 고정 커밋 `e5ee99d5062170e26abe63d9105c2b8a024ce710`에서 관찰한 LK Portal은
 어시스턴트 대화에 **rich response**(형식화된 마크다운 본문)를 렌더한다. 커버리지 판정은
 "user/assistant turn, rich response, source link를 LDS message/feed/composer/source
 primitive로 조합할 수 있다"이지만 — 정작 그 **형식화된 본문 한 덩어리에 타이포그래피를 입히는
@@ -78,8 +78,8 @@ primitive로 조합할 수 있다"이지만 — 정작 그 **형식화된 본문
 
 `COMPONENT_WORKFLOW.md` 절차를 따르며, 아래는 구현 착수 전 반드시 채운다.
 
-- **Context Hub 실제 출력** — 저장소가 로컬에 체크아웃돼 있지 않아 마크다운 컴포넌트를 직접
-  읽지 못했다. 고정 커밋 `de124084`의 `src/components/chat/PortalChatPanel.tsx`를 확인해 실제
+- **LK Portal 실제 출력** — 저장소가 로컬에 체크아웃돼 있지 않아 마크다운 컴포넌트를 직접
+  읽지 못했다. 고정 커밋 `e5ee99d5062170e26abe63d9105c2b8a024ce710`의 `src/components/chat/FloatingChat.tsx`를 확인해 실제
   요소 집합(표·체크리스트·이미지 포함 여부)과 sanitize 경계를 근거로 삼는다.
 - **외부 근거 2개 이상**(아직 비교 전, 후보): GitHub의 마크다운 스타일시트, Tailwind Typography
   (`prose`) 플러그인의 요소 계약과 주요 디자인 시스템의 Article/Prose 표면.

@@ -6,6 +6,7 @@
 
 - **onFiles(File[])** 로 허용된 선택을 받고, **onRejectedFiles(File[])** 로 `accept` 또는 단일 선택 제한에서 제외된 파일을 받습니다.
 - **accept / multiple / capture** 는 picker와 drag/drop에 적용됩니다. 이 컴포넌트는 즉시 업로드 흐름을 위한 event-based picker이며 native form submission용 `name/required` 필드를 소유하지 않습니다.
+- `size`를 생략하면 일반 표면은 기존 `md`(최소 144px), bounded compact component scope는 `sm`(최소 112px, 32px 아이콘 tile)을 사용합니다. 명시한 `size`가 우선하며 전체 label target과 native input의 키보드 접근은 유지됩니다.
 - native `<input type="file">`은 접근성 트리와 Tab 순서에 남습니다. 연결된 label이 picker를 열고 focus는 LDS input ring으로 표시합니다.
 - control name은 선택 후에도 바뀌지 않습니다. 선택 파일명은 별도 status로 알리며 helper/error는 **inputAriaDescribedBy / inputAriaInvalid** 로 실제 input에 연결합니다.
 - 같은 polite status가 거부된 파일도 함께 읽습니다(`{파일명}, 허용되지 않는 파일이라 제외됨`). `accept` 불일치와 단일 선택 초과는 callback으로만 흘리지 않고 보조 기술에도 전달합니다(USWDS File input 요구). 사용자에게 보이는 오류 문구와 복구 안내는 제품이 소유합니다.

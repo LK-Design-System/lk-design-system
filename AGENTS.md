@@ -45,7 +45,7 @@
 
 ## LK Product Asset Workflow Coverage (MANDATORY)
 
-- Complete the product-workflow gate in `docs/COMPONENT_WORKFLOW.md` for every new component, substantial redesign, and domain-component review. At minimum, explicitly consider **LK Web Viz**, **LK Control Full Daedeok**, and **LK Context Hub**; record `not applicable` with a concrete reason instead of silently omitting an asset.
+- Complete the product-workflow gate in `docs/COMPONENT_WORKFLOW.md` for every new component, substantial redesign, and domain-component review. At minimum, explicitly consider **LK Web Viz**, **LK Control Full Daedeok**, and **LK Portal**; record `not applicable` with a concrete reason instead of silently omitting an asset.
 - Inspect and pin the actual repository revision and relevant frontend source before claiming `supported` or `supported by composition`. Missing source evidence means `unverified`, never assumed coverage; store pins and detailed results in `docs/references/product-frontends/COVERAGE_AUDIT.json` and `docs/PRODUCT_FRONTEND_COVERAGE.md`.
 - Keep product routes, backend/transport policy, domain state machines, and complete screens outside LDS. Final notes must identify the workflow seam, coverage classification, gaps, and LDS-versus-product ownership; automated component checks do not replace this review.
 

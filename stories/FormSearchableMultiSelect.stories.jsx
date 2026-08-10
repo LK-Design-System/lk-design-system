@@ -29,7 +29,7 @@ const options = [
   { value: 'deviceops', label: 'lk_deviceops', description: '보드와 서비스 운영' },
   { value: 'visionops', label: 'lk_visionops', description: '비전 모듈 운영' },
   { value: 'mlops', label: 'lk_mlops', description: '데이터와 모델 실행' },
-  { value: 'context', label: 'lk_context_hub', description: '개발 컨텍스트' },
+  { value: 'context', label: 'lk_portal', description: '개발 컨텍스트' },
 ];
 
 const longOptions = [

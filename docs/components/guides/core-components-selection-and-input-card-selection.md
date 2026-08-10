@@ -34,7 +34,7 @@
 | `status` | `'normal' \| 'negative'` | No |  |
 | `interaction` | `'normal' \| 'hovered' \| 'focused'` | No |  |
 | `radius` | `'sm' \| 'md' \| 'lg' \| 'xl'` | No |  |
-| `padding` | `'sm' \| 'md' \| 'lg' \| 'xl'` | No |  |
+| `padding` | `'sm' \| 'md' \| 'lg' \| 'xl'` | No | Tokenized inner padding for both presentations. compact component scope에서는 기본 sm(12px), 그 밖에서는 md(16px)이며 명시값이 우선합니다. |
 | `shadow` | `'none' \| 'xs' \| 'sm' \| 'md' \| 'lg'` | No |  |
 | `showIndicator` | `boolean` | No |  |
 | `children` | `React.ReactNode` | No |  |
@@ -47,11 +47,11 @@
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | 이름과 설명 분리 — 내부 input은 더 이상 aria-label={title}로 감싼 을 덮어쓰지 않습니다. title 요소가 aria-labelledby로 이름을 제공하고, description은 aria-describedby 힌트로 연결됩니다(GOV.UK hint 관례). 이전에는 aria-label={title}이 전체 텍스트를 덮어써 description이 이름에도 설명에도 도달하지 못했고, title이 문자열이 아니면 이름 자체가 사라졌습니다. 지금은 요소 id를 참조하므로 title이 ReactNode여도 동작합니다. |
-| 명시 규칙 2 | WDS 내부 Framed Style/Framed Style component-set(16736:173366)은 Selected, Disabled, Status를 직접 교차합니다. presentation="frame"은 이 축을 소유하고, 일반 choice presentation은 같은 disabled+selected 문법을 native Radio/Checkbox indicator에 적용합니다. |
+| 명시 규칙 1 | 밀도 계약 — padding은 choice와 frame 표현에 동일하게 적용됩니다. 일반 표면의 기본 md는 --space-4(16px), bounded compact component scope의 기본 sm은 --space-3(12px)이며 명시값이 우선합니다. 표준 제목과 설명은 각각 --body2-line과 --label2-line을 명시해 Drawer 같은 상위 컨테이너의 큰 line-height를 상속하지 않습니다. |
+| 명시 규칙 2 | 이름과 설명 분리 — 내부 input은 더 이상 aria-label={title}로 감싼 을 덮어쓰지 않습니다. title 요소가 aria-labelledby로 이름을 제공하고, description은 aria-describedby 힌트로 연결됩니다(GOV.UK hint 관례). 이전에는 aria-label={title}이 전체 텍스트를 덮어써 description이 이름에도 설명에도 도달하지 못했고, title이 문자열이 아니면 이름 자체가 사라졌습니다. 지금은 요소 id를 참조하므로 title이 ReactNode여도 동작합니다. |
+| 명시 규칙 3 | WDS 내부 Framed Style/Framed Style component-set(16736:173366)은 Selected, Disabled, Status를 직접 교차합니다. presentation="frame"은 이 축을 소유하고, 일반 choice presentation은 같은 disabled+selected 문법을 native Radio/Checkbox indicator에 적용합니다. |
+| --body2-line | 22px |
 | --body2-size | 15px |
-| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 
 ## Responsive
 
@@ -92,6 +92,7 @@
 
 ### Tokens
 
+- `--body2-line`
 - `--body2-size`
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-fill-normal`
@@ -111,6 +112,7 @@
 - `--dur-fast`
 - `--ease-out`
 - `--fw-bold`
+- `--label2-line`
 - `--label2-size`
 - `--radius-frame-lg`
 - `--radius-frame-md`

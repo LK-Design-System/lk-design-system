@@ -146,7 +146,7 @@ menu, 자체 focus trap, document 수준 outside-dismiss listener, 조건부 마
 
 ### 3. LK 제품 자산과 실제 워크플로우
 
-신규·재설계 component가 회사 자산의 실제 workflow와 기존 frontend를 지원할 수 있는지 코드 근거로 확인한다. 최소 검토 대상은 **LK Web Viz**, **LK Control Full Daedeok**, **LK Context Hub**이며, 관련이 없으면 생략하지 말고 `not applicable`과 이유를 기록한다.
+신규·재설계 component가 회사 자산의 실제 workflow와 기존 frontend를 지원할 수 있는지 코드 근거로 확인한다. 최소 검토 대상은 **LK Web Viz**, **LK Control Full Daedeok**, **LK Portal**이며, 관련이 없으면 생략하지 말고 `not applicable`과 이유를 기록한다.
 
 1. repository, commit, frontend root, route/page/container와 핵심 source file을 고정한다.
 2. 사용자 진입점, 판단 정보, action, 데이터·권한 전제조건, 완료 조건을 추출한다.

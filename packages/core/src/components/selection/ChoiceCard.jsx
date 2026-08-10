@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
+import { useResolvedDensity } from '../internal/component-density.js';
 
 const radiusMap = {
   sm: 'var(--radius-frame-sm)',
@@ -53,7 +54,7 @@ export function ChoiceCard({
   status = 'normal',
   interaction,
   radius = 'md',
-  padding = 'md',
+  padding,
   shadow,
   showIndicator = true,
   style,
@@ -87,6 +88,8 @@ export function ChoiceCard({
   const titleId = showsText && title != null ? `${inputId}-title` : undefined;
   const descriptionId = showsText && description != null ? `${inputId}-description` : undefined;
   const explicitName = ariaLabel ?? inputProps['aria-label'];
+  const inheritedDensity = useResolvedDensity(undefined, 'comfortable');
+  const resolvedPadding = padding ?? (inheritedDensity === 'compact' ? 'sm' : 'md');
 
   const choiceBorder = disabled
     ? 'var(--color-semantic-line-normal-neutral)'
@@ -138,7 +141,7 @@ export function ChoiceCard({
   const frameStyle = {
     position: 'relative',
     display: 'block',
-    padding: paddingMap[padding] ?? paddingMap.md,
+    padding: paddingMap[resolvedPadding] ?? paddingMap.md,
     borderRadius: radiusMap[radius] ?? radiusMap.md,
     background: disabled
       ? 'var(--color-semantic-fill-normal)'
@@ -158,7 +161,7 @@ export function ChoiceCard({
     display: 'flex',
     alignItems: 'flex-start',
     gap: 12,
-    padding: 16,
+    padding: paddingMap[resolvedPadding] ?? paddingMap.md,
     borderRadius: 'var(--radius-xl)',
     background: disabled
       ? 'var(--color-semantic-fill-normal)'
@@ -189,6 +192,7 @@ export function ChoiceCard({
         ? joinIds(rootProps['aria-describedby'], descriptionId)
         : rootProps['aria-describedby']}
       data-presentation={presentation}
+      data-padding={resolvedPadding}
       data-selected={selected ? '' : undefined}
       data-disabled={disabled ? '' : undefined}
       data-status={isFrame ? status : undefined}
@@ -267,12 +271,12 @@ export function ChoiceCard({
       )}
       <div style={isFrame ? undefined : { flex: 1, minWidth: 0 }}>
         {!isFrame && title != null && (
-          <div id={titleId} style={{ fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-strong)', wordBreak: 'keep-all' }}>
+          <div id={titleId} style={{ fontSize: 'var(--body2-size)', lineHeight: 'var(--body2-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-strong)', wordBreak: 'keep-all' }}>
             {title}
           </div>
         )}
         {!isFrame && description != null && (
-          <div id={descriptionId} style={{ marginTop: 'var(--space-1)', fontSize: 'var(--label2-size)', lineHeight: 1.55, color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>
+          <div id={descriptionId} style={{ marginTop: 'var(--space-1)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>
             {description}
           </div>
         )}

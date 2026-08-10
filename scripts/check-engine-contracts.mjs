@@ -240,6 +240,29 @@ async function testFloatingPosition(page) {
   assert(anchorBox && panelBox && panelBox.y >= anchorBox.y + anchorBox.height,
     'a roomy fixed panel opens below its anchor');
   await page.getByTestId('float-fixed-anchor').click();
+
+  await page.getByTestId('float-scrollbar-anchor').click();
+  await settleFrames(page, 8);
+  const scrollbarBoundary = page.getByTestId('float-scrollbar-boundary');
+  const scrollbarPanel = page.getByTestId('float-scrollbar-panel');
+  const [boundaryBox, scrollbarPanelBox, scrollbarMetrics] = await Promise.all([
+    scrollbarBoundary.boundingBox(),
+    scrollbarPanel.boundingBox(),
+    scrollbarPanel.evaluate((element) => ({
+      clientWidth: element.clientWidth,
+      scrollWidth: element.scrollWidth,
+      clientHeight: element.clientHeight,
+      scrollHeight: element.scrollHeight,
+    })),
+  ]);
+  assert(scrollbarMetrics.scrollHeight > scrollbarMetrics.clientHeight,
+    'the boundary fixture has a vertical scrollbar');
+  assert(scrollbarPanelBox && scrollbarMetrics.scrollWidth < scrollbarPanelBox.width,
+    'the scrollbar fixture exposes scrollWidth as smaller than its rendered border-box');
+  assert(boundaryBox && scrollbarPanelBox
+    && scrollbarPanelBox.x + scrollbarPanelBox.width <= boundaryBox.x + boundaryBox.width - 8 + 0.5,
+    'a fixed scrollbar panel keeps its rendered border-box inside the padded collision boundary');
+  await page.getByTestId('float-scrollbar-anchor').click();
 }
 
 async function testDialogFocus(page) {

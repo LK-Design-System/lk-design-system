@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkHVLAOJEMcjs = require('../../chunk-HVLAOJEM.cjs');
+var _chunkVPTRSVEPcjs = require('../../chunk-VPTRSVEP.cjs');
 require('../../chunk-677EM4M2.cjs');
 require('../../chunk-CGXJ22O4.cjs');
 require('../../chunk-7KJXJDQM.cjs');
@@ -11,5 +11,5 @@ require('../../chunk-F72KSGF7.cjs');
 require('../../chunk-DDFGJXVM.cjs');
 
 
-exports.MessageFeed = _chunkHVLAOJEMcjs.MessageFeed;
+exports.MessageFeed = _chunkVPTRSVEPcjs.MessageFeed;
 //# sourceMappingURL=MessageFeed.cjs.map

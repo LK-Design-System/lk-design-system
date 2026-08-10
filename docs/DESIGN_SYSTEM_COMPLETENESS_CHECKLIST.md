@@ -136,7 +136,7 @@ finding은 닫혔다. 다만 여섯 pinned product는 LDS를 아직 소비하지
 
 | ID | 점검 항목 | 완료 기준 | 증거·명령 | 현재 |
 | --- | --- | --- | --- | --- |
-| G-01 | 제품 source pin | DeviceOps, VisionOps, LK Web Viz, Context Hub, Control, MLOps의 revision과 핵심 source가 고정된다. | `references/product-frontends/COVERAGE_AUDIT.json`, `check:product-frontends` | 완료 |
+| G-01 | 제품 source pin | DeviceOps, VisionOps, LK Web Viz, LK Portal, Control, MLOps의 revision과 핵심 source가 고정된다. | `references/product-frontends/COVERAGE_AUDIT.json`, `check:product-frontends` | 완료 |
 | G-02 | canonical workflow | 발견된 workflow마다 진입점, 판단 정보, action, edge state, 완료 조건, 제품 seam이 기록된다. | [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md) | 완료: 16/16 verified |
 | G-03 | WF-15 지도 authoring | `forbidden` line과 stair/stair-slope 의미를 위장하지 않고 LDS renderer 책임 여부를 독립 도메인·LDS 근거로 판정하고 제품 source로 coverage를 확인한다. | WF-15 section, external Robotics audit | 완료: hazard/region surface와 product-owned line authoring 경계 확정 |
 | G-04 | component disposition | keep/redesign/split/remove 결정이 제품 coverage와 분리된 LDS/WDS·외부 근거·design-owner 결정에 연결되고, product audit은 workflow mapping만 제공한다. | product audit JSON, component prompt/decision record | 부분: 기존 product coverage guard가 lifecycle 결정을 함께 강제해 R-04 분리 필요 |

@@ -19,7 +19,7 @@ export default meta;
 const toneLabels = [
   ['ink', 'Positive · 공식 네이비'],
   ['white', 'Reverse · 반전 화이트'],
-  ['mono', 'Mono · 단색 검정'],
+  ['current', 'Mono · 단색 검정', '#000000'],
 ];
 
 const OFFICIAL_LOGO_NAVY = '#05132b';
@@ -686,27 +686,28 @@ export const LKRoboticsLogo = {
           </p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)' }}>
-          {toneLabels.map(([tone, label]) => {
+          {toneLabels.map(([tone, label, color]) => {
             const isDark = tone === 'white';
+            const isFixedLight = Boolean(color);
             return (
               <div
-                key={tone}
+                key={`${tone}-${color || 'preset'}`}
                 style={{
                   display: 'grid',
                   alignContent: 'center',
                   gap: 'var(--space-4)',
                   minHeight: 132,
                   padding: 'var(--space-5)',
-                  border: isDark ? `1px solid ${OFFICIAL_LOGO_NAVY}` : '1px solid var(--color-semantic-line-normal-normal)',
+                  border: isDark ? `1px solid ${OFFICIAL_LOGO_NAVY}` : isFixedLight ? '1px solid rgba(5, 19, 43, 0.16)' : '1px solid var(--color-semantic-line-normal-normal)',
                   borderRadius: 'var(--radius-lg)',
-                  background: isDark ? OFFICIAL_LOGO_NAVY : 'var(--color-semantic-background-elevated-normal)',
+                  background: isDark ? OFFICIAL_LOGO_NAVY : isFixedLight ? OFFICIAL_LOGO_WHITE : 'var(--color-semantic-background-elevated-normal)',
                 }}
               >
-                <Lockup variant="inline" tone={tone} height={28} />
+                <Lockup variant="inline" tone={tone} color={color} height={28} />
                 <div style={{ display: 'grid', gap: 4 }}>
-                  <strong style={{ color: isDark ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-label-normal)' }}>{label}</strong>
-                  <code style={{ color: isDark ? 'var(--color-semantic-brand-on-surface-subtle)' : 'var(--color-semantic-label-alternative)', fontSize: 12 }}>
-                    tone="{tone}"
+                  <strong style={{ color: isDark ? 'var(--color-semantic-brand-on-surface)' : isFixedLight ? OFFICIAL_LOGO_NAVY : 'var(--color-semantic-label-normal)' }}>{label}</strong>
+                  <code style={{ color: isDark ? 'var(--color-semantic-brand-on-surface-subtle)' : isFixedLight ? 'rgba(5, 19, 43, 0.72)' : 'var(--color-semantic-label-alternative)', fontSize: 12 }}>
+                    {color ? `tone="${tone}" color="${color}"` : `tone="${tone}"`}
                   </code>
                 </div>
               </div>

@@ -35,7 +35,7 @@ LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 8
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
 | `variant` | `'mark' \| 'stacked' \| 'inline'` | No | 'mark'(심볼만) · 'stacked'(기본) · 'inline'(가로). @default "inline" |
-| `tone` | `'ink' \| 'white' \| 'brand' \| 'mono' \| 'current'` | No | 채움 프리셋 — 공식 네이비, 반전 화이트, 제약된 흑백 mono, 호환용 currentColor. @default "ink" |
+| `tone` | `'ink' \| 'white' \| 'brand' \| 'current'` | No | 채움 프리셋 — 공식 네이비, 반전 화이트, 호환용 currentColor. 제약된 검정 단색 출력은 color="#000000"을 명시합니다. @default "ink" |
 | `color` | `string` | No | 호환용 명시 채움. 임의 색을 공식 로고 사용으로 승인하지 않으며 신규 사용은 tone을 우선합니다. |
 | `height` | `number` | No | 요청 자연 높이. 최소 20 mark / 64 stacked / 20 inline으로 보정됩니다. 기본 responsive style의 축소는 실제 표시 최소를 보장하지 않습니다. @default 32 / 64 / 28 |
 | `title` | `string` | No | 접근성 이름. @default "LK ROBOTICS" |
@@ -46,7 +46,7 @@ LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 8
 | State | Contract |
 | --- | --- |
 | variant | 'mark'(심볼만) · 'stacked'(기본) · 'inline'(가로). @default "inline" |
-| tone | 채움 프리셋 — 공식 네이비, 반전 화이트, 제약된 흑백 mono, 호환용 currentColor. @default "ink" |
+| tone | 채움 프리셋 — 공식 네이비, 반전 화이트, 호환용 currentColor. 제약된 검정 단색 출력은 color="#000000"을 명시합니다. @default "ink" |
 
 ## Behavior and interaction
 
@@ -80,7 +80,7 @@ LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 8
 
 ## Exceptions
 
-- Mono: 단색 출력 제약이 확인된 경우에만 검정 tone="mono" 또는 흰색 반전을 사용합니다. 기업 표기형의 포인트 색을 임의 회색으로 바꾸지 않습니다.
+- Mono: 단색 출력 제약이 확인된 경우에만 검정 tone="current" color="#000000" 또는 흰색 반전을 사용합니다. 기업 표기형의 포인트 색을 임의 회색으로 바꾸지 않습니다.
 
 ## Examples
 
@@ -89,7 +89,7 @@ LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 8
 ```jsx
 <Lockup variant="inline" tone="ink" height={28} />
 <Lockup variant="mark" tone="white" height={32} decorative />
-<Lockup variant="stacked" tone="mono" height={64} />
+<Lockup variant="stacked" tone="current" color="#000000" height={64} />
 ```
 
 ## Tokens and API

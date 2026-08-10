@@ -390,7 +390,7 @@ Wave 4 추출로 외부 저장소로 이동했다. 현재 manifest 버전은 네
 - [x] GitHub Packages에 immutable `0.1.0-rc.0` release set을 배포하고 integrity를 기록했다.
 - [x] package별 immutable RC와 release-set ID·integrity·shasum을
       `references/package-split/releases/WAVE2_RC_0.1.0-rc.0.json`에 기록했다.
-- [ ] DeviceOps, VisionOps, Context Hub, MLOps에서 Core/Theme/Product를 먼저 검증한다.
+- [ ] DeviceOps, VisionOps, LK Portal, MLOps에서 Core/Theme/Product를 먼저 검증한다.
 - [ ] Web Viz와 Control에서 Robotics UI를 검증한다.
 - [x] LDS3D `apps/docs`의 sibling `link:`를 versioned LDS artifact로 교체하고
       cross-repository conformance와 external-surface evidence를 기록했다.
@@ -405,7 +405,7 @@ Wave 4 추출로 외부 저장소로 이동했다. 현재 manifest 버전은 네
 현재 제한:
 
 - `WAVE2_PRODUCT_RESCAN.json`의 여섯 pinned product는 모두 `ldsUsageTotal: 0`이다.
-  따라서 DeviceOps/VisionOps/Context Hub/MLOps/Web Viz/Control migration checkbox는
+  따라서 DeviceOps/VisionOps/LK Portal/MLOps/Web Viz/Control migration checkbox는
   미완료로 남기며, “legacy import 0”을 adoption 성공으로 해석하지 않는다.
 
 완료 gate:

@@ -41,6 +41,10 @@ interface ConversationMessageBaseProps extends Omit<React.HTMLAttributes<HTMLEle
   author: React.ReactNode;
   /** Accessible author name when author is not plain text. */
   authorLabel?: string;
+  /** 'hidden' keeps the author in the accessible name only, for surfaces where alignment and fill already state the speaker (e.g. the outbound bubble in a two-party chat). Grouped middle/last items are already hidden regardless. @default 'visible' */
+  identityVisibility?: 'visible' | 'hidden';
+  /** 'on-demand' rests the action bar at opacity 0 and reveals it on hover or focus-within. Layout and the accessible tree are unchanged; coarse pointers and failed-turn retry bars stay always visible. @default 'always' */
+  messageActionsVisibility?: 'always' | 'on-demand';
   /** Visible role badge next to the author name. Defaults to 'AI' for assistant and '상담원' for human-agent; `null` hides it. Decorative — the accessible role name is always announced separately. */
   roleBadgeLabel?: React.ReactNode;
   /** Avatar shown for single/first participant messages. Grouped runs reserve the density-selected 32px comfortable or 24px compact token column even when later items omit this prop. */

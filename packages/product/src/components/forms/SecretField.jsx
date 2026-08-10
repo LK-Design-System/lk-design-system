@@ -84,7 +84,7 @@ export function SecretField({
   copiedLabel = '복사됨',
   copyErrorLabel = '복사 실패',
   disabled = false,
-  size = 'md',
+  size,
   id,
   style,
   ...rest

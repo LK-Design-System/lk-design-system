@@ -69,9 +69,9 @@
 | --- | --- |
 | 명시 규칙 1 | Checkbox, Radio, and Switch use the same 8px control-to-label gap. Checkbox remains independently toggleable and uses mixed only for a true aggregate indeterminate state. |
 | 명시 규칙 2 | 타깃 크기: 시각 박스는 md 18px · sm 16px 그대로 두고, 그 위에 놓인 투명한 네이티브 input만 24×24px로 확장해 WCAG 2.5.8 (Target Size, Minimum)을 만족시킵니다. 픽셀 출력은 변하지 않습니다. |
+| 명시 규칙 3 | size를 생략하면 일반 표면에서는 기존 md, bounded compact component scope에서는 sm 시각 glyph를 사용합니다. 두 크기 모두 투명 native input target은 최소 24×24px이며 명시한 size가 상속값보다 우선합니다. |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
 | --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
-| --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
 
 ## Accessibility
 

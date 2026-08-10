@@ -12,7 +12,7 @@ LDS 컴포넌트 문서는 구현 예시 모음이 아니라 선택·상태·상
 ## Coverage
 
 - Public component entries: **207**
-- Named exports: **219**
+- Named exports: **220**
 - Component and Theme/Product decision guides: **176**
 - Entries without an owned Storybook page: **9** — reference registry에서 source·type·prompt 계약을 계속 추적합니다.
 
@@ -36,12 +36,12 @@ LDS 컴포넌트 문서는 구현 예시 모음이 아니라 선택·상태·상
 
 ## Generated surfaces
 
-- [Component reference](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.65/docs/components/COMPONENT_REFERENCE.md)
-- [Progress board](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.65/docs/components/PROGRESS_BOARD.md)
-- [LLM bundle](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.65/docs/components/llms.txt)
-- [JSON Schema](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.65/docs/components/component-content.schema.json)
-- [Compiled registry](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.65/docs/components/component-content.json)
-- [Decision guides](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.65/docs/components/guides)
+- [Component reference](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.1/docs/components/COMPONENT_REFERENCE.md)
+- [Progress board](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.1/docs/components/PROGRESS_BOARD.md)
+- [LLM bundle](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.1/docs/components/llms.txt)
+- [JSON Schema](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.1/docs/components/component-content.schema.json)
+- [Compiled registry](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.1/docs/components/component-content.json)
+- [Decision guides](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.1/docs/components/guides)
 
 ## Authoring workflow
 

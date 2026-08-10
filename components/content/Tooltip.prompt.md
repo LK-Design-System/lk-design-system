@@ -58,6 +58,6 @@
 - 가까운 sibling인 `Bubble`은 지속형 callout이라 더 큰 padding/radius를 사용하고, `Popover`는
   상호작용 본문을 담는 밝은 panel이라 Tooltip 형상에 합치지 않습니다. Tooltip은 기존 r8,
   padX12/padY8, inverse fill, `shadow-md` 계층을 그대로 유지합니다.
-- 제품 workflow 검토: **LK Web Viz, LK Control Full Daedeok, LK Context Hub 모두 not applicable**.
+- 제품 workflow 검토: **LK Web Viz, LK Control Full Daedeok, LK Portal 모두 not applicable**.
   이번 변경은 Tooltip의 내부 배경 geometry만 보정하며, 제품 route·데이터·상태·action·공개 API나
   조합 seam을 바꾸지 않으므로 제품 frontend 지원 여부를 새로 주장하지 않습니다.

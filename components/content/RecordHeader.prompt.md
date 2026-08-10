@@ -2,6 +2,7 @@
 
 ```jsx
 <RecordHeader
+  size="sm"
   visual={<Avatar name="장진혁" size="xlarge" />}
   title="장진혁"
   badge={<StatusBadge tone="positive">인증됨</StatusBadge>}
@@ -27,6 +28,7 @@
 - **details**는 `StatList`나 짧은 속성 묶음처럼 한 번에 훑을 정보만 둡니다. 설명형 표, 편집 폼, 탭, 활동 내역은 본문으로 내립니다.
 - **actions**는 대상에 직접 적용되는 설정·공유·팔로우 같은 짧은 액션만 둡니다. route, 권한, mutation, 확인 절차와 완료/실패 상태는 제품이 소유합니다.
 - 기본 `headingLevel={1}`입니다. 상위 `PageHeader`나 문서 제목이 이미 있으면 실제 heading 계층에 맞춰 2–6을 명시합니다.
+- `size="md|sm"`은 기본 `md`인 opt-in 크기 축입니다. `sm`은 PageHeader와 같은 `--heading2-*` 제목 scale을 사용하고 내부/행 gap을 한 단계 조밀화합니다. description의 `--label1-*`와 details의 `--label2-*` typography는 그대로 유지하며 루트에 `data-size`를 노출합니다.
 - 좁은 폭에서는 visual과 내용이 먼저 읽히고 actions가 다음 flex line으로 내려갑니다. 긴 이름과 설명은 320 CSS px에서도 가로 스크롤을 만들지 않습니다.
 - cover image, 탭, breadcrumb, 전역 navigation, fetch/loading 상태 머신은 이 컴포넌트에 넣지 않습니다.
 
@@ -36,11 +38,13 @@
 - [Shopify Page](https://shopify.dev/docs/api/app-home/web-components/layout-and-structure/page)와 [Atlassian Page Header](https://atlassian.design/components/page-header/)도 페이지 제목, breadcrumb와 page-wide action을 화면 헤더의 중심 책임으로 둡니다.
 - [PatternFly Page Header](https://www.patternfly.org/component-groups/content-containers/page-header/)는 title·subtitle·label·action의 로컬 콘텐츠 헤더이고, [PatternFly Masthead](https://www.patternfly.org/components/masthead/design-guidelines/)는 logo·global navigation·utility가 있는 전역 셸입니다. 따라서 프로필 전용 공개 이름으로 `Masthead`를 쓰지 않습니다.
 - [WCAG 2.2 Reflow](https://www.w3.org/TR/WCAG22/#reflow)에 맞춰 320 CSS px 상당의 폭에서 양방향 스크롤 없이 재배치합니다.
+- 실제 `.fig` 검사에서 `RecordHeader` component set은 확인되지 않았으므로 `size`는 WDS parity가 아니라 LDS Product compatibility extension입니다. [MUI density guidance](https://mui.com/material-ui/customization/density/)처럼 필요한 헤더에서만 명시적으로 선택하고 global dense theme로 강제하지 않습니다.
+- [Carbon Data Table usage](https://carbondesignsystem.com/components/data-table/usage/)가 toolbar·header·row size를 함께 pairing하듯, scan-heavy 화면에서는 `RecordHeader size="sm"`을 인접한 compact Card/Table/toolbar와 일관되게 조합합니다. [Carbon spacing](https://carbondesignsystem.com/elements/spacing/overview/)과 [Fluent 2 layout](https://fluent2.microsoft.design/layout)에 따라 작은 spacing token은 관련성을 강화하되, 좁은 폭에서는 reflow와 touch target을 함께 보존합니다.
 
 ## 필수 제품 자산 판정
 
 - **LK Web Viz** — `not applicable`. 고정된 Dashboard 화면에는 선택 로봇과 연결 상태가 있지만, 이름·식별 이미지·세부 통계·대상 액션을 함께 가진 재사용 레코드 헤더가 없습니다.
 - **LK Control Full Daedeok** — `not applicable`. 고정된 MainLayout과 Robot Dashboard는 셸·탐색·감시 화면을 조합하며 일반화 가능한 레코드 정체성 헤더를 제공하지 않습니다.
-- **LK Context Hub** — `not applicable`. 고정된 AuthShell과 홈 화면에는 계정/제품 identity가 있지만 레코드 상세용 visual·이름·details·actions 묶음은 없습니다.
+- **LK Portal** — `supported by composition`. `src/components/shared/DetailHeader.tsx`가 `RecordHeader`를 조합하며, Dataset·Model·Catalog 상세 adapter는 scan-heavy 콘솔 문맥에 맞춰 `size="sm"`을 채택합니다.
 
 대상 데이터 fetch, 실제 팔로우·설정·공유 결과, 권한, route, 통계 계산과 포맷은 제품이 소유합니다. 새 icon이나 이미지 자산을 추가하지 않고 기존 `Avatar`, `Thumbnail`, `Icon`, `StatusBadge`를 슬롯으로 조합합니다.

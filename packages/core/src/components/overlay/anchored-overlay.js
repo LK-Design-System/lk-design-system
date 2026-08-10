@@ -59,6 +59,17 @@ function measuredBox(element) {
   return { top: rect.top, left: rect.left, width: rect.width, height: rect.height };
 }
 
+function naturalBorderBoxWidth(element, renderedWidth) {
+  if (!(element.scrollWidth > 0) || !(element.clientWidth > 0)) return renderedWidth;
+  // scrollWidth describes the scroll area, not the rendered border-box. In
+  // particular, a vertical scrollbar (including a stable gutter) and panel
+  // borders are absent from it. Add that non-client chrome back before using
+  // the measurement for fixed-position clamping, and never report less than
+  // the border-box already on screen.
+  const nonClientChrome = Math.max(0, renderedWidth - element.clientWidth);
+  return Math.max(renderedWidth, element.scrollWidth + nonClientChrome);
+}
+
 function boxChanged(previous, next) {
   if (!previous || !next) return previous !== next;
   return Math.abs(previous.top - next.top) >= 0.5
@@ -255,7 +266,7 @@ export function useFloatingPosition({
       const boundaryElement = resolveCollisionBoundary(collisionBoundary, ownerDocument);
       const boundaryRect = insetCollisionRect(view, boundaryElement, padding);
       const naturalWidth = Math.min(
-        currentPanel.scrollWidth || panelRect.width,
+        naturalBorderBoxWidth(currentPanel, panelRect.width),
         boundaryRect.width,
       );
       const naturalHeight = currentPanel.scrollHeight || panelRect.height;

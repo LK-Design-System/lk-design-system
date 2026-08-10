@@ -121,7 +121,7 @@ export const ProvenanceList = {
         id: 'ops-log',
         label: 'OPS / robot-07 inspection log',
         kind: 'log',
-        location: 'Context Hub',
+        location: 'LK Portal',
         observedAt: '2026-07-10 09:14',
         excerpt: 'thermal sensor response timeout',
         metadata: [{ label: 'commit', value: '8f31b2a' }],

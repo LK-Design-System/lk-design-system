@@ -79,7 +79,7 @@ N6 semantic mirror가 route 전체 이름만이 아니라 각 `segmentId`, statu
 
 - LK Web Viz `a984def117c05acd213f494cbb8a42e990595505`: observed trajectory와 robot pose는 분리되어 있지만 `RouteOverlay`가 요구하는 segment geometry·fraction feed는 확인되지 않아 planned Route는 `gap`입니다.
 - LK Control Full Daedeok `93802fc2aa5d29f930380ae58d51dcb68322b5e7`: pinned supervision workflow에는 planned Route feed가 없어 `not applicable`입니다.
-- LK Context Hub `de124084b7e50049350a46f92c4ea4476269c58c`: map/floor/navigation 진입점이 없어 `not applicable`입니다. 상세 source blob과 seam은 `docs/references/product-frontends/COVERAGE_AUDIT.json`이 소유합니다.
+- LK Portal `e5ee99d5062170e26abe63d9105c2b8a024ce710`: map/floor/navigation 진입점이 없어 `not applicable`입니다. 상세 source blob과 seam은 `docs/references/product-frontends/COVERAGE_AUDIT.json`이 소유합니다.
 
 ## Intentional exclusions
 

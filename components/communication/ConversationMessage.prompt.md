@@ -42,6 +42,8 @@
 - `groupPosition`은 `single | first | middle | last`이며 grouped run은 `avatar`를 first에만 전달해도 density가 선택한 32px comfortable 또는 24px compact identity column을 예약합니다. `authorLabel`은 비문자 author의 접근 가능한 이름, `dateTime`은 `<time>`의 machine-readable 값입니다.
 - `statusLabel={null}`은 기본 lifecycle 문구를 숨기고, `error`를 지정하면 중복 lifecycle status 문구가 기본 억제됩니다. failed message의 retry 아이콘 접근 이름은 `retryLabel`로 현지화합니다.
 - `roleBadgeLabel`은 이름 옆 역할 배지를 덮어씁니다. assistant 기본 `AI`, human-agent 기본 `상담원`이며 `null`은 배지를 숨깁니다. 배지는 장식이고 접근 가능한 역할명(`ROLE_LABELS`)은 항상 별도로 announce됩니다.
+- `identityVisibility="hidden"`은 작성자 행을 시각적으로만 숨기고 접근 가능한 이름(`author` + 역할명)은 유지합니다. 2자 대화에서 outbound solid primary bubble처럼 정렬과 fill이 이미 화자를 말하는 표면 전용입니다. 화자가 셋 이상이거나 bubble/fill 구분이 없는 표면에서는 쓰지 않습니다. grouped `middle | last`는 이 prop과 무관하게 이미 숨겨집니다.
+- `messageActionsVisibility="on-demand"`는 액션바를 opacity 0으로 쉬게 하고 hover 또는 focus-within에서 드러냅니다. 레이아웃 행과 접근성 트리는 그대로라 reflow가 없고 키보드 초점이 그대로 드러내므로 disclosure가 아니라 시각적 감쇠입니다. hover가 없는 coarse pointer와, 복구 경로인 실패 턴의 retry 바에는 적용되지 않고 항상 보입니다.
 
 ## 내부 LDS 비교와 visual delta
 
@@ -88,11 +90,11 @@
 
 - [3 Free AI Chatbot App UI Kit](https://www.figma.com/design/ss5Fq2VKd2UDoHk7SE9dPl/3-Free-AI-Chatbot-App-UI-Kit--Community-?node-id=10301-21963)의 **왼쪽 slothGPT/general-assistant archetype**만 secondary visual inspiration으로 사용합니다.
 - 채택한 것은 long-form assistant document, compact user prompt, answer action과 하단 composer의 상대적 위계입니다. exact color, typography, avatar artwork, logo, sidebar, app shell, shadow와 asset은 복사하지 않습니다.
-- user 자신의 발화는 primary fill bubble로 화자를 표식하되, 특정 제품(slothpilot/Context Hub)의 messenger shell·palette·app chrome을 통째로 차용하지는 않습니다. 오른쪽 search/research 화면도 complete screen으로 가져오지 않고, provenance가 필요할 때 `SourceDisclosure`를 slot에 조합합니다.
+- user 자신의 발화는 primary fill bubble로 화자를 표식하되, 특정 제품(slothpilot/LK Portal)의 messenger shell·palette·app chrome을 통째로 차용하지는 않습니다. 오른쪽 search/research 화면도 complete screen으로 가져오지 않고, provenance가 필요할 때 `SourceDisclosure`를 slot에 조합합니다.
 
 ## product workflow gate
 
-- **LK Context Hub — supported by composition only.** rich answer, citation, attachment와 action slot을 조합할 수 있지만 product source의 card, color, width, API 또는 화면 anatomy를 차용하지 않습니다.
+- **LK Portal — supported by composition only.** rich answer, citation, attachment와 action slot을 조합할 수 있지만 product source의 card, color, width, API 또는 화면 anatomy를 차용하지 않습니다.
 - **LK Web Viz — not applicable.** 지도, layer, viewport와 task targeting workflow에는 chronological AI message item이 필수 surface로 확인되지 않았습니다.
 - **LK Control Full Daedeok — not applicable.** supervision, command와 manual-control state는 대화 article이 아니라 해당 domain control이 소유합니다.
 - 세 제품 repository는 필요한 component 종류와 state coverage를 확인하는 자료일 뿐 design, anatomy, public API, spacing 또는 style 권위가 아닙니다.

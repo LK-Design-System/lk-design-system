@@ -15,6 +15,7 @@
 - reveal/copy action은 현재 field label을 accessible name에 포함합니다. 예를 들어 `Access token 보기`, `Access token 복사`가 되어 같은 화면의 여러 secret action을 구분할 수 있습니다. 복합 ReactNode label에는 구분 가능한 문자열 `actionContext`를 반드시 제공합니다. action label props에 이미 완성된 accessible name을 전달한다면 `actionContext={false}`로 자동 prefix를 끌 수 있습니다.
 - reveal action은 현재 동작을 `보기/숨기기`라는 이름으로 직접 설명하므로 별도의 `aria-pressed` 상태를 중복하지 않습니다. copy action은 `copyLabel`, `copiedLabel`, `copyErrorLabel`을 실제 button name과 live feedback에 함께 사용합니다.
 - `helper`, `error`, `invalid`, `size`, unique `id`, focus/disabled styling은 LDS `Input` 계약을 그대로 사용합니다. disabled input과 action은 Tab 순서에서 빠지고, 활성 상태의 read-only input은 focus와 text selection을 유지합니다.
+- `size`를 생략하면 내부 Input과 동일하게 bounded compact component scope를 상속합니다. 명시한 `size`가 우선하고 reveal/copy IconButton은 기존 32px target을 유지합니다.
 - 실제 재인증, 권한 검사, clipboard 허용 안내, audit log, token rotation은 앱이 처리하며 design-system layer에 포함하지 않습니다.
 
 ## Internal LDS comparison

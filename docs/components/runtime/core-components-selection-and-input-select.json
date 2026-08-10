@@ -26,7 +26,7 @@
     },
     {
       "part": "render",
-      "rule": "선택 값을 텍스트 또는 칩으로 표시. @default \"text\""
+      "rule": "선택 값의 표시 방식. \"chip\"은 선택 값을 트리거 안의 캡슐로 강조하고, \"chip-trigger\"는 트리거 전체를 보더 없는 단일 알약(칩)으로 그린다 — 작성창 동작 띠처럼 폼 필드가 아닌 자리의 옵션 컨트롤용. @default \"text\""
     },
     {
       "part": "aria-label",
@@ -209,9 +209,9 @@
     },
     {
       "name": "render",
-      "type": "\"text\" | \"chip\"",
+      "type": "\"text\" | \"chip\" | \"chip-trigger\"",
       "required": false,
-      "description": "선택 값을 텍스트 또는 칩으로 표시. @default \"text\"",
+      "description": "선택 값의 표시 방식. \"chip\"은 선택 값을 트리거 안의 캡슐로 강조하고, \"chip-trigger\"는 트리거 전체를 보더 없는 단일 알약(칩)으로 그린다 — 작성창 동작 띠처럼 폼 필드가 아닌 자리의 옵션 컨트롤용. @default \"text\"",
       "owner": "SelectProps"
     }
   ],
@@ -313,6 +313,8 @@
     "--body1-line",
     "--body1-size",
     "--color-semantic-background-elevated-normal",
+    "--color-semantic-fill-alternative",
+    "--color-semantic-fill-normal",
     "--color-semantic-fill-strong",
     "--color-semantic-label-alternative",
     "--color-semantic-label-assistive",

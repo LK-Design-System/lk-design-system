@@ -119,7 +119,7 @@
     },
     {
       "subject": "명시 규칙 4",
-      "rule": "서피스는 --color-semantic-inverse-background(라이트에서 1B1C1E, 다크에선 페이지와 반전되는 인버스 서피스), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다."
+      "rule": "서피스는 --color-semantic-inverse-background(라이트에서 #1B1C1E, 다크에선 페이지와 반전되는 인버스 서피스), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다."
     },
     {
       "subject": "--body2-size",
@@ -135,7 +135,7 @@
     "타입 스케일 정합: 저작권·법적 링크 12.5px → --caption1-size(12px), 컬럼 링크 13.5px → --label2-size(13px)로 스냅했습니다. 파인 프린트는 한 단계 아래로, 컬럼 링크는 15px 헤딩(body2)과의 위계를 유지합니다."
   ],
   "accessibility": [
-    "접근성 — 컬럼 제목은 role=\"heading\" + aria-level=3으로 헤딩 시맨틱을 갖고, 링크 그룹(컬럼·정책 링크)은 ul/li로 렌더됩니다. href가 없는 링크 항목은 href=\"\" 폴백 없이 일반 텍스트로 렌더됩니다."
+    "접근성 — 컬럼 제목은 role=\"heading\" + aria-level=3으로 헤딩 시맨틱을 갖고, 링크 그룹(컬럼·정책 링크)은 ul/li로 렌더됩니다. href가 없는 링크 항목은 href=\"#\" 폴백 없이 일반 텍스트로 렌더됩니다."
   ],
   "exceptions": [],
   "related": [

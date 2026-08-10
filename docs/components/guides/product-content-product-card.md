@@ -39,7 +39,7 @@
 | `imagePosition` | `string` | No | 사진 초점(object-position). cover crop에서 피사체 위치를 튜닝합니다. @default "50% 30%" |
 | `imageSrcSet` | `string` | No | 반응형 이미지 후보. 으로 전달됩니다. |
 | `imageSizes` | `string` | No | imageSrcSet 후보의 예상 표시 폭. 로 전달됩니다. |
-| `href` | `string` | No | 링크 대상. @default "" |
+| `href` | `string` | No | 링크 대상. @default "#" |
 | `cta` | `string` | No | 우하단 소형 라벨(12.5px). 기본은 없음 — 균질한 제품 그리드에선 카드=링크 관례가 어포던스이고, 행동 유도는 섹션 헤더로 승격. 개별 유도가 필요한 맥락에서만 지정. |
 | `headingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| false` | No | 제품 코드(id)의 heading 레벨. 카탈로그가 놓인 문서 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 false로 끕니다. @default 3 |
 

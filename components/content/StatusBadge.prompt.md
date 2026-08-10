@@ -24,6 +24,6 @@
 
 ## Product boundary and verification
 
-상태 계산, 허용된 상태 전이, 시간 임계값, action과 live announcement는 제품이 소유합니다. LK Web Viz, LK Control Full Daedeok, LK Context Hub는 공통 status label을 소비할 수 있지만 이 시각 재설계가 route·workflow·transport 계약을 바꾸지 않으므로 세 제품 자산 검토는 모두 **not applicable**입니다.
+상태 계산, 허용된 상태 전이, 시간 임계값, action과 live announcement는 제품이 소유합니다. LK Web Viz, LK Control Full Daedeok, LK Portal은 공통 status label을 소비할 수 있지만 이 시각 재설계가 route·workflow·transport 계약을 바꾸지 않으므로 세 제품 자산 검토는 모두 **not applicable**입니다.
 
 Storybook에서 모든 tone, Tag 인라인 조합, 긴 라벨, light/dark를 확인합니다. 텍스트 대비 4.5:1, 색 외 visible label, 320px reflow와 20px 인라인 중심을 검증합니다.

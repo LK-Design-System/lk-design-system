@@ -3,7 +3,7 @@
   "kind": "lds-package-documentation",
   "package": {
     "name": "@lk-design-system/lds-core",
-    "version": "0.1.0-rc.65",
+    "version": "0.1.0-rc.69.1",
     "layer": "core"
   },
   "adoption": {
@@ -61,19 +61,19 @@
   },
   "source": {
     "repository": "LK-Design-System/lk-design-system",
-    "ref": "lds-v0.1.0-rc.65",
+    "ref": "lds-v0.1.0-rc.69.1",
     "documents": [
       {
         "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-        "sha256": "d4dcdadb4b259359fd782de47dc2c33174fa423ae89c053a15ddceee427aa30b"
+        "sha256": "daadee6f8c8df0b88b01442d6cc74d841c0f159a7291b0015d9297efcd9b4347"
       },
       {
         "path": "docs/COMPONENT_WORKFLOW.md",
-        "sha256": "ac45fc7a65c747ea0f0005592f5d0a97c76e2116a3edc8d296434ecdf1424126"
+        "sha256": "73ce07ebe9a03d49efa7382d4ebd4953170db1a1cfc055a17c52ca27a20254c9"
       },
       {
         "path": "docs/components/README.md",
-        "sha256": "c1d537e2004d21a17d30b5eb9e0177f60adcbbb1173624219a9bd1050452c216"
+        "sha256": "0f5c953f866c13c732032465812eeedf4b379518d0470f6183916c0d76dc87e4"
       },
       {
         "path": "docs/COPY_REVIEW_CONTRACT.md",
@@ -149,7 +149,7 @@
       },
       {
         "path": "docs/foundations/TOKEN_REFERENCE.md",
-        "sha256": "e1b7c69a5677adbe231b4d78d266c2b6e0f26eb5befbba98750fe7458a5f53cf"
+        "sha256": "40cba08e6ae556320b2d43c98cc41008e00c72c33867c4cdc6981abec0dc2e90"
       },
       {
         "path": "docs/foundations/typography.md",
@@ -209,7 +209,7 @@
       },
       {
         "path": "tokens/source.json",
-        "sha256": "b47a2940492a14f3aa4b1d482946790e5c956fec554e92ef614ab0b659c75431"
+        "sha256": "2e1bab5ca09a0e8a4a0ec1947a977142f55baf4ace5b90e96aa4c50c1f9d6430"
       }
     ]
   },
@@ -268,7 +268,7 @@
     },
     {
       "path": "adoption-workflow.md",
-      "sha256": "e3fee21cbedc0ac3ecda47ada13baf3d7bb59cca1a6533d1b9f9f6b89a75c2d8",
+      "sha256": "488b9f1c452b81e704db2074bba2c6be23138e76699e6ad80a99afcc2f9cef20",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
@@ -288,11 +288,11 @@
     },
     {
       "path": "components/README.md",
-      "sha256": "56b28cf440880f7bc8fb4c0efbd6b23c0264f3196a17b8cfea3c7017d60593d6",
+      "sha256": "ff2d0b734adb27be78bb66f587f1b604f751c85e4afb1d208b76de9a59e904c8",
       "sources": [
         {
           "path": "docs/components/README.md",
-          "sha256": "c1d537e2004d21a17d30b5eb9e0177f60adcbbb1173624219a9bd1050452c216"
+          "sha256": "0f5c953f866c13c732032465812eeedf4b379518d0470f6183916c0d76dc87e4"
         }
       ]
     },
@@ -468,11 +468,11 @@
     },
     {
       "path": "foundations/TOKEN_REFERENCE.md",
-      "sha256": "e1b7c69a5677adbe231b4d78d266c2b6e0f26eb5befbba98750fe7458a5f53cf",
+      "sha256": "40cba08e6ae556320b2d43c98cc41008e00c72c33867c4cdc6981abec0dc2e90",
       "sources": [
         {
           "path": "docs/foundations/TOKEN_REFERENCE.md",
-          "sha256": "e1b7c69a5677adbe231b4d78d266c2b6e0f26eb5befbba98750fe7458a5f53cf"
+          "sha256": "40cba08e6ae556320b2d43c98cc41008e00c72c33867c4cdc6981abec0dc2e90"
         }
       ]
     },
@@ -518,7 +518,7 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "1847cd48d005aa2cf920addd3c00ea09335a7e1a29cb66f0a2eec18a49a227c4",
+      "sha256": "2dfbe63d0a2fb99d69dbf2fb5ab007e0e63b099281253c7ef82249bc04626e28",
       "sources": [
         {
           "path": "llms.txt",
@@ -538,27 +538,27 @@
     },
     {
       "path": "policies/ACCESSIBILITY_CONTRACTS.md",
-      "sha256": "d4dcdadb4b259359fd782de47dc2c33174fa423ae89c053a15ddceee427aa30b",
+      "sha256": "daadee6f8c8df0b88b01442d6cc74d841c0f159a7291b0015d9297efcd9b4347",
       "sources": [
         {
           "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-          "sha256": "d4dcdadb4b259359fd782de47dc2c33174fa423ae89c053a15ddceee427aa30b"
+          "sha256": "daadee6f8c8df0b88b01442d6cc74d841c0f159a7291b0015d9297efcd9b4347"
         }
       ]
     },
     {
       "path": "policies/COMPONENT_WORKFLOW.md",
-      "sha256": "85d039c170b92427fdb047b395f10dda942d6cc0b349b6bca7017e8f573685df",
+      "sha256": "7f54c8772db3e86323287381392992a46453d943c41b0efd25de299adc06f6a9",
       "sources": [
         {
           "path": "docs/COMPONENT_WORKFLOW.md",
-          "sha256": "ac45fc7a65c747ea0f0005592f5d0a97c76e2116a3edc8d296434ecdf1424126"
+          "sha256": "73ce07ebe9a03d49efa7382d4ebd4953170db1a1cfc055a17c52ca27a20254c9"
         }
       ]
     },
     {
       "path": "policies/COPY_REVIEW_CONTRACT.md",
-      "sha256": "9dac4008bfd75596d5420950a9ce54089d66fde0f6dd644badf62648aaf45e81",
+      "sha256": "cc54a3ecceeee67352e8099c923a3699bd2737b49f840d3a6912f58adafa128b",
       "sources": [
         {
           "path": "docs/COPY_REVIEW_CONTRACT.md",
@@ -588,11 +588,11 @@
     },
     {
       "path": "token-reference.json",
-      "sha256": "b47a2940492a14f3aa4b1d482946790e5c956fec554e92ef614ab0b659c75431",
+      "sha256": "2e1bab5ca09a0e8a4a0ec1947a977142f55baf4ace5b90e96aa4c50c1f9d6430",
       "sources": [
         {
           "path": "tokens/source.json",
-          "sha256": "b47a2940492a14f3aa4b1d482946790e5c956fec554e92ef614ab0b659c75431"
+          "sha256": "2e1bab5ca09a0e8a4a0ec1947a977142f55baf4ace5b90e96aa4c50c1f9d6430"
         }
       ]
     }

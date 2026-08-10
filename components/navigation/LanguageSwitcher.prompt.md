@@ -66,6 +66,6 @@ Classification: **LK Product Extension** (`product-extension`). WDS 원본 compo
 
 - LK Web Viz — `a984def117c05acd213f494cbb8a42e990595505`, `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`): product logo와 utility header는 확인되지만 locale state/translation route가 없습니다.
 - LK Control Full Daedeok — `93802fc2aa5d29f930380ae58d51dcb68322b5e7`, `frontend/src/layout/MainLayout/index.jsx` (`2436725e49f6364fdb99f2047907f300ca367865`): fixed header와 responsive SideNav는 확인되지만 locale control이 없습니다.
-- LK Context Hub — `de124084b7e50049350a46f92c4ea4476269c58c`, `src/components/layout/Sidebar.tsx` (`6f8be361287aada76ff3b2e4f6ca4022706b3b87`)와 `AuthShell.tsx` (`b525cdd54dfbf73eeec9d8867cd23a3d07c1630b`): 제품 identity shell은 확인되지만 locale control이 없습니다.
+- LK Portal — `e5ee99d5062170e26abe63d9105c2b8a024ce710`, `src/components/layout/Sidebar.tsx` (`3b5d05b472b5e6346401ee673936c29211595a8c`)와 `AuthShell.tsx` (`bd252534bcf44be11e2afa35bc2e6ed3f4e6edab`): 제품 identity shell은 확인되지만 locale control이 없습니다.
 
 따라서 제품 route, 번역 readiness, persistence와 mobile relocation은 검증되지 않은 product-owned integration seam으로 남깁니다. 이 컴포넌트는 그 정책을 추측하지 않는 bounded UI contract입니다.

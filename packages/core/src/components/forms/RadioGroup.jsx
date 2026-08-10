@@ -1,12 +1,15 @@
 import React from 'react';
 import { Radio } from './Radio.jsx';
+import { useResolvedControlSize } from '../internal/component-density.js';
 
 /**
  * LK ROBOTICS — RadioGroup
  * A set of single-select radios (signal-ink dot when on). `options` are strings
  * or `{ value, label, description }`. Controlled (`value`) or uncontrolled.
  */
-export function RadioGroup({ options = [], value, defaultValue, onChange, name, direction = 'column', style, ...rest }) {
+export function RadioGroup({ options = [], value, defaultValue, onChange, name, direction = 'column', size, style, ...rest }) {
+  const resolvedSize = useResolvedControlSize(size);
+  const compact = resolvedSize === 'sm' || resolvedSize === 'small';
   const norm = options.map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
   const isControlled = value !== undefined;
   const [internal, setInternal] = React.useState(defaultValue);
@@ -15,7 +18,7 @@ export function RadioGroup({ options = [], value, defaultValue, onChange, name, 
   const autoId = React.useId();
   const gname = name || autoId;
   return (
-    <div role="radiogroup" style={{ display: 'flex', flexDirection: direction === 'row' ? 'row' : 'column', gap: direction === 'row' ? 20 : 14, flexWrap: 'wrap', ...style }} {...rest}>
+    <div role="radiogroup" data-size={compact ? 'sm' : 'md'} style={{ display: 'flex', flexDirection: direction === 'row' ? 'row' : 'column', gap: direction === 'row' ? (compact ? 16 : 20) : (compact ? 12 : 14), flexWrap: 'wrap', ...style }} {...rest}>
       {norm.map((o) => {
         const on = o.value === val;
         return (
@@ -25,11 +28,12 @@ export function RadioGroup({ options = [], value, defaultValue, onChange, name, 
             value={o.value}
             checked={on}
             disabled={o.disabled}
+            size={resolvedSize}
             onChange={() => pick(o.value)}
             style={{ alignItems: 'flex-start' }}
             label={(
               <span>
-              <span style={{ fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-semibold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{o.label}</span>
+              <span style={{ fontSize: compact ? 'var(--label1-size)' : 'var(--body2-size)', lineHeight: compact ? 'var(--label1-line)' : 'var(--body2-line)', fontWeight: 'var(--fw-semibold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{o.label}</span>
               {o.description != null && <span style={{ display: 'block', marginTop: 'var(--space-0-5)', fontSize: 'var(--label2-size)', color: 'var(--color-semantic-label-alternative)' }}>{o.description}</span>}
               </span>
             )}

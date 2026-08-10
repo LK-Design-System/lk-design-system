@@ -27,7 +27,7 @@
 | `status` | `React.ReactNode` | No | 수명주기 상태. 문자열이면 ContentBadge로 렌더되고 링크 접근 이름 끝에 합성되어 낭독됩니다(진행중·신청 마감처럼 열림/닫힘이 클릭 결정을 바꾸므로). 직접 만든 배지 노드를 넘기면 그대로 렌더하되 접근 이름 합성은 하지 않습니다. |
 | `statusTone` | `'signal' \| 'accent' \| 'navy' \| 'neutral' \| 'positive' \| 'cautionary' \| 'warning' \| 'negative'` | No | 문자열 status의 배지 톤. @default "neutral" |
 | `headingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| false` | No | 제목의 heading 레벨. 목록이 놓인 문서 계층에 맞춰 1–6을 주고, 제목이 이미 카드 바깥에 있으면 false로 끕니다. @default 3 |
-| `href` | `string` | No | 항목 링크. @default "" |
+| `href` | `string` | No | 항목 링크. @default "#" |
 
 ## States
 

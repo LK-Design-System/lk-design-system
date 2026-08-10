@@ -40,14 +40,14 @@ favicon tile은 iOS AppIcon이나 Android adaptive icon이 아닙니다. 두 앱
 ```jsx
 <Lockup variant="inline" tone="ink" height={28} />
 <Lockup variant="mark" tone="white" height={32} decorative />
-<Lockup variant="stacked" tone="mono" height={64} />
+<Lockup variant="stacked" tone="current" color="#000000" height={64} />
 ```
 
 ## 색상과 배경
 
 - **Positive:** 흰색 또는 밝고 단순한 단색 배경에는 공식 네이비 `tone="ink"`를 사용합니다.
 - **Reverse:** 공식 네이비 또는 충분히 어둡고 단순한 배경에는 `tone="white"`를 사용합니다.
-- **Mono:** 단색 출력 제약이 확인된 경우에만 검정 `tone="mono"` 또는 흰색 반전을 사용합니다. 기업 표기형의 포인트 색을 임의 회색으로 바꾸지 않습니다.
+- **Mono:** 단색 출력 제약이 확인된 경우에만 검정 `tone="current" color="#000000"` 또는 흰색 반전을 사용합니다. 기업 표기형의 포인트 색을 임의 회색으로 바꾸지 않습니다.
 - **사진 배경:** 로고와 clear space 전체에 안정적인 대비가 없으면 사진 위에 직접 놓지 않고 공식 단색 보호면을 사용합니다.
 - 공식 사각형 자산은 전경과 배경이 함께 고정된 조합입니다. `tone`, `currentColor`나 UI semantic token으로 다시 칠하지 않습니다.
 - 호환용 `color`와 `tone="current"`는 기존 제품 통합을 위한 escape hatch이며, 임의 색을 공식 브랜드 색으로 승인하지 않습니다.

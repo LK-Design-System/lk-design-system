@@ -5,17 +5,17 @@
 | Type | Stable contract and current audit summary |
 | Status | Current |
 | Owner | Storybook information-architecture owner |
-| Last reviewed | 2026-08-08 |
+| Last reviewed | 2026-08-09 |
 | Machine-readable source | `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json` |
 
-Current generated census (2026-08-10): 194개 페이지와 710개 스토리. The machine-readable audit is authoritative for public/hidden visibility and review status.
+Current generated census (2026-08-10): 194개 페이지와 716개 스토리. The machine-readable audit is authoritative for public/hidden visibility and review status.
 
-- 공개 스토리: 488개
+- 공개 스토리: 494개
 - 숨김 스토리: 222개
 - 숨김 visual parity: 95개
 - 숨김 internal contract: 123개
 - 검토 완료 페이지: 194/194개
-- 검토 완료 스토리: 698/710개
+- 검토 완료 스토리: 703/716개
 
 ## Operations Dashboard pattern group
 
@@ -25,27 +25,27 @@ Current generated census (2026-08-10): 194개 페이지와 710개 스토리. The
 
 ## 현재 기준선
 
-2026-08-08 현재 소스에서 재생성한 정적 빌드 기준으로 194개 페이지와 698개 스토리가 있다. census 판정은 모두 `keep`다.
+2026-08-10 현재 소스에서 재생성한 정적 빌드 기준으로 194개 페이지와 716개 스토리가 있다. census 판정은 모두 `keep`다.
 
-- 공개 스토리: 482개
-- 숨김 스토리: 216개
-- 숨김 visual parity: 91개
-- 숨김 internal contract: 121개
-- 검토 완료 페이지 194/194개, 스토리 698/710개다. 페이지별 source hash와 신규 스토리 검토는 감사 원장에 남기며, `check:storybook-ia`가 소유권·공개 여부·이름·설명과 함께 회귀를 막는다.
+- 공개 스토리: 494개
+- 숨김 스토리: 222개
+- 숨김 visual parity: 95개
+- 숨김 internal contract: 123개
+- 검토 완료 페이지 194/194개, 스토리 703/716개다. 페이지별 source hash와 신규 스토리 검토는 감사 원장에 남기며, `check:storybook-ia`가 소유권·공개 여부·이름·설명과 함께 회귀를 막는다.
 - Component 문서 시스템은 public component entry 207개와 named export 219개를 전수 추적하고, 176개 evidence-only 결정 가이드를 `docs/components/guides/*.md`와 `llms.txt`로 생성한다. Storybook의 Docs 탭에는 사용 판단 · Properties · Accessibility · Tokens만 렌더링한다. 전체 카탈로그와 플랫폼 현황은 Storybook 운영 화면이 아니라 생성 문서 `COMPONENT_REFERENCE.md`와 `PROGRESS_BOARD.md`가 소유한다.
 - 2026-07-26 Docs와 Canvas의 책임을 분리했다. Docs는 Storybook 제목·설명과 Foundation·Component 또는 Pattern의 결정 가이드만 싣고, `<DocsStory>`·`<Primary>`·`<Stories>`·`<Controls>`를 렌더링하지 않는다. 스토리 specimen, args, controls와 play lifecycle은 각 Canvas 엔트리에만 남는다. `check:docs-surface`는 생성된 Docs 경로를 전수 감사하고, 문장 hash 원장은 190개 primary story 설명을 검증한다.
 - 시각 specimen이 없는 문서 전용 Foundation은 sidebar에서 Docs를 정식 진입점으로 사용한다. `Design Token`은 저장된 이전 Canvas URL도 Docs로 정규화하고, 첫 화면에서 `Primitive → Semantic → Component → Runtime projection` 계층과 상황별 선택 기준을 먼저 보여 준다. 숨김 CSF story는 Autodocs 생성과 검증만 담당하며 직접 iframe에서는 정식 Docs 링크를 제공한다. Storybook의 제품 온보딩 체크리스트는 LDS 탐색과 경쟁하므로 manager에서 비활성화한다. 이 결정은 Storybook의 [docs-only tag 계약](https://storybook.js.org/docs/writing-stories/tags#docs-only-stories)과 [onboarding feature 설정](https://storybook.js.org/docs/api/main-config/main-config-features)을 따른다.
 - 생성기의 generic fallback을 삭제하고 누락된 근거를 `omitted-no-evidence`로 드러냈다. 현재 176개 가이드의 평균 중복 prose는 3%, 60% 초과 페이지는 0개이며 `STORYBOOK_GUIDE_DEDUP_BASELINE.json`이 이 값을 lowering-only ratchet으로 고정한다. 토큰 값·API·property 설명은 prose 지표에서 제외하고 실제 정량 규칙은 포함한다. 같은 소유자의 별도 페이지는 문구를 복사하지 않고 Dashboard Shell → Dashboard Navigation, Brand Spinner → Core Spinner처럼 한 단계 canonical reference와 근거가 있는 local delta만 기록한다. Foundation 16페이지의 손으로 쓴 가이드는 페이지별 고유 원리·제약을 그대로 유지한다.
 
-2026-07-26 검토에서는 운영용 `Overview`·`Progress Board`를 정적 문서로 옮기고 Loading을 교차 컴포넌트 패턴 Docs로 연결했다. 이후 현재 194개 페이지와 698개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
+2026-07-26 검토에서는 운영용 `Overview`·`Progress Board`를 정적 문서로 옮기고 Loading을 교차 컴포넌트 패턴 Docs로 연결했다. 이후 현재 194개 페이지와 716개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
 
 - 컴포넌트 설명이 있는 페이지: 190개
 - Canvas에서 안내 서문을 직접 보여 주는 페이지: 190개
 - 사용/비사용 판단 기준이 확인되는 페이지: 183개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
-- 목적 설명이 있는 공개 스토리: 482개
+- 목적 설명이 있는 공개 스토리: 494개
 - Foundation: 16페이지, 22스토리(공개 17·숨김 5)
-- Core: 57페이지, 207스토리(공개 115·숨김 92)
-- Product: 117페이지, 462스토리(공개 346·숨김 116)
+- Core: 57페이지, 209스토리(공개 116·숨김 93)
+- Product: 117페이지, 478스토리(공개 357·숨김 121)
 - Theme: 3페이지, 6스토리(공개 3·숨김 3)
 - Other: 1페이지, 1스토리(공개 1·숨김 0)
 - 공개 스토리 표시명 계약은 감사 원장의 권고 변경과 함께 추적한다.
@@ -60,7 +60,7 @@ Current generated census (2026-08-10): 194개 페이지와 710개 스토리. The
 - 13개 구조 분리 실행: `Effects and Interaction`, `Action Controls`, `Annotations`, `Anchored Overlay`, `Menu`, `Segmented and Toggle`, `Selection Groups`, `Text Input`, `Loading State`, `Progress`, `Utility Actions`, `File Upload Queue`, `Telemetry`
 - 5개 분리 기각·keep 정정: `Scroll and Accessibility`, `Disclosure`, `Search and Autocomplete`, `Toast`, `Manual Control Session`
 - 1개 병합 기각·keep 정정: `History Toolbar`
-- 공개 내부 계약을 `!dev`로 전환하고 Communication·VirtualKeypad의 실제 컴포넌트 회귀 표면을 정리해 현재 visual parity는 91개다.
+- 공개 내부 계약을 `!dev`로 전환하고 Communication·VirtualKeypad의 실제 컴포넌트 회귀 표면을 정리해 현재 visual parity는 95개다.
 
 최종 구조에서는 분리된 각 페이지와 후속 확장 페이지가 독립 소유자를 가지므로 현재 census 판정은 `keep` 194개, `split` 0개, `merge` 0개, `hide` 0개다. 검토 완료 수와 stale source hash는 감사 원장의 현재 summary를 기준으로 하며, `check:storybook-ia`가 이 상태를 회귀 방지한다.
 

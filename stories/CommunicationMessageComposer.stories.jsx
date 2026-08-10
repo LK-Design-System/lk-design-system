@@ -154,12 +154,12 @@ const meta = {
       eyebrow: 'Product / Communication',
       title: '초안과 전송 행동을 하나의 입력 영역에 모읍니다',
       description:
-        '사람 또는 AI와 대화하며 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 보조 행동은 slot으로 조합하고 Composer는 값·전송·중지만 소유합니다. 즉시 명령은 DropdownMenu, 안내·연속 설정은 Popover에 두며 Portal·dismiss·배치는 primitive가 소유합니다. 단발성 검색에는 SearchField를 사용하세요.',
+        '사람 또는 AI와 대화하며 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 보조 행동은 slot으로 조합하고 작성기는 값·전송·중지만 소유합니다. 즉시 명령은 열고 닫는 명령 메뉴에, 안내·연속 설정은 비모달 팝오버에 두며 외부 렌더·닫기·배치는 각 기반 요소가 소유합니다. 단발성 검색에는 독립 검색 입력을 사용하세요.',
     },
     docs: {
       description: {
         component:
-          'controlled autosize textarea, leading/trailing action slot, 명시적 키보드 제출 모드와 IME 보호를 제공하는 LK Product Extension입니다. Enter 모드는 Enter 제출·Shift+Enter 줄바꿈, modifier-enter 모드는 Alt 없는 Ctrl/Meta+Enter 제출, button-only 모드는 버튼 제출만 허용합니다. submitting/streaming에서는 이름 있는 중지 버튼을 제공하며, readOnly는 읽기·포커스를 유지하고 disabled는 보이는 disabledReason과 함께 전체 shell을 이용 불가로 만듭니다. slot에는 즉시 실행 명령용 DropdownMenu와 안내·RadioGroup·Slider 같은 연속 설정용 Popover를 조합할 수 있지만, Composer 자체 API는 provider·Portal·overlay dismiss 상태를 소유하지 않습니다.',
+          'controlled autosize textarea, leading/trailing action slot, 명시적 키보드 제출 모드와 IME 보호를 제공하는 LK Product Extension입니다. Enter 모드는 Enter 제출·Shift+Enter 줄바꿈, modifier-enter 모드는 Alt 없는 Ctrl/Meta+Enter 제출, button-only 모드는 버튼 제출만 허용합니다. submitting/streaming에서는 이름 있는 중지 버튼을 제공하며, readOnly는 읽기·포커스를 유지하고 disabled는 보이는 disabledReason과 함께 전체 shell을 이용 불가로 만듭니다. slot에는 즉시 실행 명령 메뉴와 안내·단일 선택·범위 조절 같은 연속 설정 패널을 조합할 수 있지만, 작성기 자체 API는 provider·외부 렌더·overlay dismiss 상태를 소유하지 않습니다.',
       },
     },
   },

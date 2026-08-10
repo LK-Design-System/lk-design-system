@@ -73,7 +73,7 @@ candidate 단계에서도 반드시 새 version을 사용한다.
 - 기존 style/token/component pattern을 먼저 사용했다.
 - 새 icon을 만들기 전에 `Icon` registry를 확인했다.
 - 신규·변경 icon/asset/map symbol은 일반 관례, geometry, zoom·collision, 실제 제품 문맥을 검토했다.
-- LK Web Viz, LK Control Full Daedeok, LK Context Hub의 실제 workflow coverage를 판정하거나 `not applicable` 이유를 남겼다.
+- LK Web Viz, LK Control Full Daedeok, LK Portal의 실제 workflow coverage를 판정하거나 `not applicable` 이유를 남겼다.
 - component prompt 문서를 갱신했다.
 - Storybook public surface가 너무 넓어지지 않도록 페이지를 분리했다.
 - accessibility contract와 keyboard behavior를 확인했다.

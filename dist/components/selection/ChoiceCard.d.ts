@@ -19,6 +19,7 @@ export interface ChoiceCardProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   status?: 'normal' | 'negative';
   interaction?: 'normal' | 'hovered' | 'focused';
   radius?: 'sm' | 'md' | 'lg' | 'xl';
+  /** Tokenized inner padding for both presentations. compact component scope에서는 기본 `sm`(12px), 그 밖에서는 `md`(16px)이며 명시값이 우선합니다. */
   padding?: 'sm' | 'md' | 'lg' | 'xl';
   shadow?: 'none' | 'xs' | 'sm' | 'md' | 'lg';
   showIndicator?: boolean;

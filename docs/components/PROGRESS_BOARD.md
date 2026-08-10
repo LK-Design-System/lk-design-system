@@ -15,7 +15,7 @@
 | [Text Button](guides/core-components-action-text-button.md) | Core / Action | `TextButton` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Toggle Icon](guides/core-components-action-toggle-icon.md) | Core / Action | `ToggleIcon` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Avatar](guides/core-components-content-avatar.md) | Core / Content | `Avatar` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
-| [Card](guides/core-components-content-card.md) | Core / Content | `Card` | mapped | implemented | not-tracked | not-tracked | 6 public / 2 hidden |
+| [Card](guides/core-components-content-card.md) | Core / Content | `Card` | mapped | implemented | not-tracked | not-tracked | 7 public / 2 hidden |
 | [Content Badge](guides/core-components-content-content-badge.md) | Core / Content | `ContentBadge` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Disclosure](guides/core-components-content-disclosure.md) | Core / Content | `Accordion`, `Collapsible` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Lists](guides/core-components-content-lists.md) | Core / Content | `Accordion`, `ListCell` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
@@ -71,14 +71,14 @@
 | [Social Login](guides/product-action-social-login.md) | Product / Action | `SocialButton` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Speed Dial](guides/product-action-speed-dial.md) | Product / Action | `SpeedDial` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Split Button](guides/product-action-split-button.md) | Product / Action | `SplitButton` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Message](guides/product-communication-message.md) | Product / Communication | `ConversationMessage` | not-tracked | implemented | not-tracked | not-tracked | 11 public / 5 hidden |
+| [Message](guides/product-communication-message.md) | Product / Communication | `ConversationMessage` | not-tracked | implemented | not-tracked | not-tracked | 12 public / 5 hidden |
 | [Message Composer](guides/product-communication-message-composer.md) | Product / Communication | `MessageComposer` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
 | [Message Feed](guides/product-communication-message-feed.md) | Product / Communication | `MessageFeed` | not-tracked | implemented | not-tracked | not-tracked | 8 public / 1 hidden |
 | [Bubble](guides/product-content-bubble.md) | Product / Content | `Bubble` | mapped | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Checklist Item](guides/product-content-checklist-item.md) | Product / Content | `ChecklistItem` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Connection Row](guides/product-content-connection-row.md) | Product / Content | `ConnectionRow` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
 | [Expandable Text](guides/product-content-expandable-text.md) | Product / Content | `ExpandableText` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
-| [Feature Card](guides/product-content-feature-card.md) | Product / Content | `FeatureCard` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
+| [Feature Card](guides/product-content-feature-card.md) | Product / Content | `FeatureCard` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
 | [Feed Card](guides/product-content-feed-card.md) | Product / Content | `FeedCard` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Listing Card](guides/product-content-listing-card.md) | Product / Content | `ListingCard` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Log Viewer](guides/product-content-log-viewer.md) | Product / Content | `LogViewer` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
@@ -86,7 +86,7 @@
 | [Platform Logos](guides/product-content-platform-logos.md) | Product / Content | `BrandLogo` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Product Card](guides/product-content-product-card.md) | Product / Content | `ProductCard` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Reaction Bar](guides/product-content-reaction-bar.md) | Product / Content | `ReactionBar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
-| [Record Header](guides/product-content-record-header.md) | Product / Content | `RecordHeader` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
+| [Record Header](guides/product-content-record-header.md) | Product / Content | `RecordHeader` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Reorder List](guides/product-content-reorder-list.md) | Product / Content | `ReorderList` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Source Disclosure](guides/product-content-source-disclosure.md) | Product / Content | `SourceDisclosure` | not-tracked | implemented | not-tracked | not-tracked | 10 public / 0 hidden |
 | [Spec Row](guides/product-content-spec-row.md) | Product / Content | `SpecRow` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
@@ -133,7 +133,7 @@
 | [Footer](guides/product-navigation-footer.md) | Product / Navigation | `Footer` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Language Switcher](guides/product-navigation-language-switcher.md) | Product / Navigation | `LanguageSwitcher` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Menubar](guides/product-navigation-menubar.md) | Product / Navigation | `Menubar` | mapped | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
-| [Side Nav](guides/product-navigation-side-nav.md) | Product / Navigation | `SideNav` | not-tracked | implemented | not-tracked | not-tracked | 9 public / 2 hidden |
+| [Side Nav](guides/product-navigation-side-nav.md) | Product / Navigation | `SideNav` | not-tracked | implemented | not-tracked | not-tracked | 10 public / 2 hidden |
 | [Steps](guides/product-navigation-steps.md) | Product / Navigation | `Steps` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Top Bar](guides/product-navigation-top-bar.md) | Product / Navigation | `TopBar` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
 | [User Menu](guides/product-navigation-user-menu.md) | Product / Navigation | `UserMenu` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
@@ -141,7 +141,7 @@
 | [Dashboard Grid](guides/product-operations-dashboard-dashboard-grid.md) | Product / Operations Dashboard | `DashboardGrid` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Dashboard Shell](guides/product-operations-dashboard-dashboard-shell.md) | Product / Operations Dashboard | `DashboardShell` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 0 hidden |
 | [Command Palette](guides/product-overlay-command-palette.md) | Product / Overlay | `CommandPalette` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
-| [Drawer](guides/product-overlay-drawer.md) | Product / Overlay | `Drawer` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
+| [Drawer](guides/product-overlay-drawer.md) | Product / Overlay | `Drawer` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Hover Card](guides/product-overlay-hover-card.md) | Product / Overlay | `HoverCard` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Lightbox](guides/product-overlay-lightbox.md) | Product / Overlay | `Lightbox` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
 | [Popover](guides/product-overlay-popover.md) | Product / Overlay | `Popover` | mapped | implemented | not-tracked | not-tracked | 2 public / 3 hidden |

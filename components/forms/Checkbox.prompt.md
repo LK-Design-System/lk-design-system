@@ -19,3 +19,5 @@
 <Checkbox checked={agreed} onChange={setAgreed} label="개인정보 수집·이용에 동의합니다." />
 <Checkbox name="channels" value="email" defaultChecked label="이메일 알림" />
 ```
+
+- `size`를 생략하면 일반 표면에서는 기존 `md`, bounded compact component scope에서는 `sm` 시각 glyph를 사용합니다. 두 크기 모두 투명 native input target은 최소 24×24px이며 명시한 `size`가 상속값보다 우선합니다.

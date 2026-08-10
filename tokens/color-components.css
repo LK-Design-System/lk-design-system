@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Component color contracts — 22 tokens (GENERATED — do not hand-edit)
+   LK ROBOTICS — Component color contracts — 36 tokens (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -26,6 +26,20 @@
   --component-badge-cautionary-fg: var(--color-semantic-status-cautionary-text);
   --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
   --component-badge-negative-fg: var(--color-semantic-status-negative-text);
+  --component-side-nav-brand-surface: var(--color-semantic-brand-surface);
+  --component-side-nav-brand-hover-surface: var(--color-atomic-navy-shell-18);
+  --component-side-nav-brand-active-hover-surface: var(--color-atomic-navy-shell-18);
+  --component-side-nav-brand-pressed-surface: var(--color-atomic-navy-shell-20);
+  --component-side-nav-brand-foreground: var(--color-semantic-static-white);
+  --component-side-nav-brand-hover-foreground: var(--color-atomic-navy-shell-93);
+  --component-side-nav-brand-active-foreground: var(--color-atomic-navy-shell-68);
+  --component-side-nav-brand-muted-foreground: var(--color-atomic-navy-shell-65);
+  --component-side-nav-brand-subtle-foreground: var(--color-atomic-navy-shell-65);
+  --component-side-nav-brand-divider: var(--color-atomic-navy-shell-26);
+  --component-side-nav-brand-badge-surface: var(--color-atomic-navy-shell-18);
+  --component-side-nav-brand-badge-foreground: var(--color-atomic-navy-shell-65);
+  --component-side-nav-brand-badge-active-surface: var(--color-atomic-navy-shell-24);
+  --component-side-nav-brand-focus-indicator: var(--color-atomic-navy-shell-68);
   --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
 }
 
@@ -51,6 +65,20 @@
   --component-badge-cautionary-fg: var(--color-semantic-status-cautionary-text);
   --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
   --component-badge-negative-fg: var(--color-semantic-status-negative-text);
+  --component-side-nav-brand-surface: var(--color-semantic-brand-surface);
+  --component-side-nav-brand-hover-surface: var(--color-atomic-navy-shell-18);
+  --component-side-nav-brand-active-hover-surface: var(--color-atomic-navy-shell-18);
+  --component-side-nav-brand-pressed-surface: var(--color-atomic-navy-shell-20);
+  --component-side-nav-brand-foreground: var(--color-semantic-static-white);
+  --component-side-nav-brand-hover-foreground: var(--color-atomic-navy-shell-93);
+  --component-side-nav-brand-active-foreground: var(--color-atomic-navy-shell-68);
+  --component-side-nav-brand-muted-foreground: var(--color-atomic-navy-shell-65);
+  --component-side-nav-brand-subtle-foreground: var(--color-atomic-navy-shell-65);
+  --component-side-nav-brand-divider: var(--color-atomic-navy-shell-26);
+  --component-side-nav-brand-badge-surface: var(--color-atomic-navy-shell-18);
+  --component-side-nav-brand-badge-foreground: var(--color-atomic-navy-shell-65);
+  --component-side-nav-brand-badge-active-surface: var(--color-atomic-navy-shell-24);
+  --component-side-nav-brand-focus-indicator: var(--color-atomic-navy-shell-68);
   --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
 }
 
@@ -77,6 +105,20 @@
     --component-badge-cautionary-fg: var(--color-semantic-status-cautionary-text);
     --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
     --component-badge-negative-fg: var(--color-semantic-status-negative-text);
+    --component-side-nav-brand-surface: var(--color-semantic-brand-surface);
+    --component-side-nav-brand-hover-surface: var(--color-atomic-navy-shell-18);
+    --component-side-nav-brand-active-hover-surface: var(--color-atomic-navy-shell-18);
+    --component-side-nav-brand-pressed-surface: var(--color-atomic-navy-shell-20);
+    --component-side-nav-brand-foreground: var(--color-semantic-static-white);
+    --component-side-nav-brand-hover-foreground: var(--color-atomic-navy-shell-93);
+    --component-side-nav-brand-active-foreground: var(--color-atomic-navy-shell-68);
+    --component-side-nav-brand-muted-foreground: var(--color-atomic-navy-shell-65);
+    --component-side-nav-brand-subtle-foreground: var(--color-atomic-navy-shell-65);
+    --component-side-nav-brand-divider: var(--color-atomic-navy-shell-26);
+    --component-side-nav-brand-badge-surface: var(--color-atomic-navy-shell-18);
+    --component-side-nav-brand-badge-foreground: var(--color-atomic-navy-shell-65);
+    --component-side-nav-brand-badge-active-surface: var(--color-atomic-navy-shell-24);
+    --component-side-nav-brand-focus-indicator: var(--color-atomic-navy-shell-68);
     --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
   }
 }

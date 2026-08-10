@@ -17,13 +17,14 @@
   "useWhen": [
     "Atlassian navigation system layout — 접기 토글(SideNavToggleButton)은 top nav 항목이며 사이드 패널 내부에 두지 않습니다. shadcn/ui Sidebar의 SidebarTrigger(본문 상단 바 시작)와 IBM Carbon UI shell 헤더 햄버거도 같은 원칙입니다. LDS는 이 원칙을 따라 셸의 접기 토글을 상단 바 시작 부분에 두며, side-first에서는 shadcn 배치를, header-first에서는 Atlassian 배치를 사용합니다.",
     "footer accepts either a node or a render function receiving { collapsed, expanded, overlay }. Use the render form when the account/footer composition must change before an overlay peek or rail collapse exposes it.",
-    "Child destinations accept icon; when any child in a group has one, SideNav reserves the same decorative slot for every sibling."
+    "Child destinations accept icon; when any child in a group has one, SideNav reserves the same decorative slot for every sibling.",
+    "appearance=\"default\"는 data-theme=\"dark\" 또는 .theme-dark 안에서 기존 dark semantic surface를 그대로 사용합니다. appearance=\"brand\"는 generic dark theme와 별개인 명시적이고 theme-stable한 제품 셸 팔레트입니다."
   ],
   "avoidWhen": [
     "접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 아이콘의 강한 잉크로만 표시해 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.",
     "Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. category 아이콘이 없을 때도 subitem을 명확히 들여쓰라는 원칙을 적용해 LDS는 자식 아이콘 유무와 무관하게 같은 라벨 시작선을 보장합니다. 축소 가능 내비게이션의 상태는 명시적 토글로 설명하고 hover peek는 선택 기능으로 제한합니다.",
     "Carbon UI shell left panel accessibility — rail은 hover나 focus에서 펼쳐져도 같은 링크·서브메뉴 keyboard model을 유지합니다. 이 동작을 LDS에 적용할 때는 동일 DOM뿐 아니라 44px hit target과 세로 위치도 유지해, 포인터와 키보드 사용자가 확장 중 움직이는 목적지를 다시 추적하지 않게 합니다.",
-    "대시보드·관리 제품의 주 탐색으로 UserMenu를 푸터에 조합합니다. TopBar가 함께 있으면 전역 utility만 담당하게 하고 로고·경로를 중복하지 않으며, 평면형 대안인 NavRail과 동시에 주 탐색으로 사용하지 않습니다."
+    "전경과 상태 표면은 navy-shell atomic ramp를 참조합니다. 이 ramp는 brand-on-surface 잉크를 브랜드 네이비 위에 합성한 불투명 값입니다: hover·badge surface -18(white 10% 합성), pressed -20(12%), badge active -24(16%), divider -26(18%), muted·section·badge ink -65(62%), hover ink -93(92%). 활성 label은 static-white를 그대로 씁니다."
   ],
   "anatomy": [
     {
@@ -117,6 +118,13 @@
       "type": "'floating' | 'docked'",
       "required": false,
       "description": "외곽 표면. floating은 전체 outline과 radius를, docked는 논리적 끝 divider만 사용합니다. @default 'floating'",
+      "owner": "SideNavProps"
+    },
+    {
+      "name": "appearance",
+      "type": "'default' | 'brand'",
+      "required": false,
+      "description": "색상 외형. default는 현재 theme semantic 색을 그대로 사용하고, brand는 밝은 작업면과 대비되는 평면 브랜드 네이비 셸을 사용합니다. 배치 형태는 surface가 별도로 소유합니다. @default 'default'",
       "owner": "SideNavProps"
     },
     {
@@ -229,11 +237,11 @@
     }
   ],
   "behavior": [
+    "appearance — default(기본)는 기존 semantic color와 현재 theme를 픽셀 그대로 따릅니다. brand는 평면 브랜드 네이비 셸과 상태 잉크를 사용하는 theme-stable 컴포넌트 외형입니다. surface가 배치 geometry를, appearance가 SideNav 내부 색 역할만 소유하므로 두 축은 독립입니다. 알 수 없는 런타임 값은 default로 안전하게 돌아갑니다.",
     "collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌므로 런타임 overlay 전환 때도 부모가 원하는 collapsed 값을 함께 갱신해야 합니다. 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.",
     "multiple — 기본 false는 한 번에 한 disclosure 그룹만 열리는 accordion 동작입니다. 다른 그룹이나 다른 최상위 목적지를 선택하면 기존에 열린 그룹을 닫고, 활성 자식이 바뀌면 해당 그룹만 엽니다. multiple={true}를 명시하면 여러 그룹을 동시에 열 수 있습니다.",
     "floating은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. docked는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, fill, active marker를 공유합니다.",
-    "WAI-ARIA Accordion pattern — 한 패널만 허용하는 accordion은 다른 헤더를 열 때 기존 패널을 닫고 aria-expanded를 실제 노출 상태와 동기화합니다. LDS의 기본 SideNav도 이 단일 열림 규칙을 따릅니다.",
-    "WAI-ARIA landmark regions — landmark와 명확한 accessible name을 유지합니다. 소비자가 aria-label을 주지 않으면 기본 이름 사이드 탐색을 제공하고, 같은 문서에 탐색 landmark가 여러 개면 고유한 이름으로 덮어씁니다. 현재 목적지는 aria-current=\"page\"로 노출하고, 키보드 focus 진입·이탈과 Esc 뒤에도 초점을 잃지 않습니다."
+    "WAI-ARIA Accordion pattern — 한 패널만 허용하는 accordion은 다른 헤더를 열 때 기존 패널을 닫고 aria-expanded를 실제 노출 상태와 동기화합니다. LDS의 기본 SideNav도 이 단일 열림 규칙을 따릅니다."
   ],
   "quantitativeRules": [
     {
@@ -318,15 +326,32 @@
     }
   ],
   "tokens": [
+    "--_lds-side-nav-focus-indicator",
+    "--_lds-side-nav-pressed-surface",
     "--caption2-size",
     "--color-semantic-background-elevated-normal",
-    "--color-semantic-fill-alternative",
     "--color-semantic-fill-normal",
+    "--color-semantic-fill-strong",
+    "--color-semantic-focus-indicator",
     "--color-semantic-label-alternative",
     "--color-semantic-label-normal",
     "--color-semantic-line-solid-normal",
     "--color-semantic-primary-normal",
     "--color-semantic-primary-surface-strong",
+    "--component-side-nav-brand-active-foreground",
+    "--component-side-nav-brand-active-hover-surface",
+    "--component-side-nav-brand-badge-active-surface",
+    "--component-side-nav-brand-badge-foreground",
+    "--component-side-nav-brand-badge-surface",
+    "--component-side-nav-brand-divider",
+    "--component-side-nav-brand-focus-indicator",
+    "--component-side-nav-brand-foreground",
+    "--component-side-nav-brand-hover-foreground",
+    "--component-side-nav-brand-hover-surface",
+    "--component-side-nav-brand-muted-foreground",
+    "--component-side-nav-brand-pressed-surface",
+    "--component-side-nav-brand-subtle-foreground",
+    "--component-side-nav-brand-surface",
     "--dur-base",
     "--dur-fast",
     "--ease-out",
@@ -335,8 +360,8 @@
     "--fw-medium",
     "--label1-line",
     "--label1-size",
-    "--label2-line",
     "--label2-size",
+    "--lds-side-nav-child-item-height",
     "--lds-side-nav-collapsed-width",
     "--lds-side-nav-item-height",
     "--lds-side-nav-item-radius",
@@ -352,7 +377,6 @@
     "--space-2",
     "--space-2-5",
     "--space-3",
-    "--space-4",
     "--space-4-5"
   ],
   "apiLinks": [],
@@ -373,6 +397,11 @@
         "id": "lds-product-navigation-side-nav--link-destinations",
         "name": "개요",
         "role": "overview"
+      },
+      {
+        "id": "lds-product-navigation-side-nav--navy-docked-surface",
+        "name": "변형·상태 · 브랜드 네이비 외형",
+        "role": "variants-states"
       },
       {
         "id": "lds-product-navigation-side-nav--docked-surface",

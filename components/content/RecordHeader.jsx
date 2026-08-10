@@ -14,14 +14,17 @@ export function RecordHeader({
   details,
   actions,
   headingLevel = 1,
+  size = 'md',
   style,
   ...rest
 }) {
   const resolvedHeadingLevel = Math.min(6, Math.max(1, headingLevel));
   const Heading = `h${resolvedHeadingLevel}`;
+  const compact = size === 'sm';
 
   return (
     <header
+      data-size={size}
       style={{
         width: '100%',
         minWidth: 0,
@@ -36,8 +39,8 @@ export function RecordHeader({
           display: 'flex',
           flexWrap: 'wrap',
           alignItems: 'flex-start',
-          columnGap: 'var(--space-4)',
-          rowGap: 'var(--space-4)',
+          columnGap: compact ? 'var(--space-3)' : 'var(--space-4)',
+          rowGap: compact ? 'var(--space-3)' : 'var(--space-4)',
           minWidth: 0,
         }}
       >
@@ -50,7 +53,7 @@ export function RecordHeader({
           data-record-header-content
           style={{
             display: 'grid',
-            gap: 'var(--space-2)',
+            gap: compact ? 'var(--space-1)' : 'var(--space-2)',
             flex: '1 1 12rem',
             minWidth: 0,
           }}
@@ -60,7 +63,7 @@ export function RecordHeader({
               display: 'flex',
               alignItems: 'center',
               flexWrap: 'wrap',
-              gap: 'var(--space-2)',
+              gap: compact ? 'var(--space-1)' : 'var(--space-2)',
               minWidth: 0,
             }}
           >
@@ -69,10 +72,10 @@ export function RecordHeader({
                 margin: 0,
                 minWidth: 0,
                 color: 'var(--color-semantic-label-strong)',
-                fontSize: 'var(--heading1-size)',
-                lineHeight: 'var(--heading1-line)',
+                fontSize: compact ? 'var(--heading2-size)' : 'var(--heading1-size)',
+                lineHeight: compact ? 'var(--heading2-line)' : 'var(--heading1-line)',
                 fontWeight: 'var(--fw-extra)',
-                letterSpacing: 'var(--heading1-spacing)',
+                letterSpacing: compact ? 'var(--heading2-spacing)' : 'var(--heading1-spacing)',
                 wordBreak: 'keep-all',
                 overflowWrap: 'anywhere',
               }}
@@ -125,7 +128,7 @@ export function RecordHeader({
               justifyContent: 'flex-end',
               flex: '0 1 auto',
               flexWrap: 'wrap',
-              gap: 'var(--space-2)',
+              gap: compact ? 'var(--space-1)' : 'var(--space-2)',
               minWidth: 0,
               maxWidth: '100%',
               marginInlineStart: 'auto',

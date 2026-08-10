@@ -81,7 +81,7 @@
       "name": "href",
       "type": "string",
       "required": false,
-      "description": "기사 링크. @default \"\"",
+      "description": "기사 링크. @default \"#\"",
       "owner": "NewsCardProps"
     },
     {

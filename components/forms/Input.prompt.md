@@ -24,3 +24,4 @@ References: [Fluent 2 Field](https://fluent2.microsoft.design/components/web/rea
 - Root state is mirrored through `data-disabled`, `data-readonly`, `data-invalid`, and `data-size`.
 - `vars` accepts only `--lds-input-height`, `--lds-input-padding-inline`, `--lds-input-radius`, and `--lds-input-gap`. Visible label, helper/error association and native input semantics remain component-owned.
 - `disable`, legacy icon/action names and `small|medium|large` are compatibility aliases; new code uses native `disabled`, canonical slot names and `sm|md|lg`.
+- `size`를 생략하면 일반 표면에서는 기존 `md`, bounded compact component scope(예: compact Drawer body)에서는 `sm`을 사용합니다. 명시한 `size`, `height`, `vars`가 상속값보다 우선합니다.

@@ -90,7 +90,7 @@
       "name": "href",
       "type": "string",
       "required": false,
-      "description": "링크 대상. @default \"\"",
+      "description": "링크 대상. @default \"#\"",
       "owner": "ProductCardProps"
     },
     {

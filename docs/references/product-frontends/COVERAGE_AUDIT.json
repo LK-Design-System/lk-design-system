@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "auditedAt": "2026-08-04",
-  "purpose": "Track source-backed product workflows through discovery, independent wireframing, LDS implementation, and interaction verification without treating current screens or component files as coverage proof.",
+  "auditedAt": "2026-08-09",
+  "purpose": "Track source-backed product workflows through discovery, independent wireframing, LDS implementation, and interaction verification without treating current screens or component files as coverage proof or design-system authority over product information architecture.",
   "evidenceHierarchy": [
     "product goals and invariants",
     "domain and state-transition contracts",
@@ -22,13 +22,173 @@
     "verified": 16
   },
   "componentDispositionSummary": {
-    "keep": 19,
+    "keep": 22,
     "redesign": 7,
     "split": 8,
     "remove": 22,
     "separate-audit": 6
   },
   "componentDisposition": [
+    {
+      "name": "Card",
+      "path": "components/cards/Card.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-16"
+      ],
+      "reason": "Keeps the backward-compatible comfortable surface and adds an explicit compact density for information-rich product consoles. Explicit padding and the WDS mobile platform contract retain precedence; typography, semantics, interaction, surface, and elevation do not change with density.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "a984def117c05acd213f494cbb8a42e990595505",
+          "classification": "not applicable",
+          "reason": "The pinned flat dashboard uses comfortable destination and status surfaces and does not establish a repeated dense desktop record-detail card stack. The existing Card default remains unchanged.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "93802fc2aa5d29f930380ae58d51dcb68322b5e7",
+          "classification": "supported by composition",
+          "reason": "The pinned supervision dashboard combines multiple monitoring regions in one desktop viewport. Optional compact Card spacing can support those information groups while Control retains telemetry truth, commands, layout breakpoints, and screen composition.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "4b462cae4840c5f554366298bc75392df667e3af",
+          "classification": "supported by composition",
+          "reason": "Pinned Portal dataset and model detail sources use exactly one compact Card as the top-level surface of each active tab panel, with no nested Card and semantic sections inside. General catalog detail sources also consume compact Card. This is observed consumption evidence, not product information-architecture authority; Portal retains record data, routes, permissions, tab and section selection, reading-view exceptions, and future Card adoption decisions.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/catalog/DatasetDetailPage.tsx",
+              "blobSha": "04035df094eff76b16c6f0f2318cafb798b64552"
+            },
+            {
+              "path": "src/components/catalog/ModelDetailPage.tsx",
+              "blobSha": "d25129db12f0f1d286138d666daa0dcabc612d37"
+            },
+            {
+              "path": "src/components/catalog/detail/CatalogResourceDetail.tsx",
+              "blobSha": "f45a916f8fda239ba64fc00bb8f6d170a4840029"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FeatureCard",
+      "path": "components/cards/FeatureCard.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-16"
+      ],
+      "reason": "Keeps the comfortable feature-introduction surface and adds an explicit compact density for product launchers. Density changes spacing and icon-tile size only; title hierarchy, copy typography, tone, and activation semantics remain stable.",
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "a984def117c05acd213f494cbb8a42e990595505",
+          "classification": "not applicable",
+          "reason": "The pinned dashboard has a flat launcher, but it does not require the Portal-specific five-destination compact feature grid and the existing comfortable Card composition remains available.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "93802fc2aa5d29f930380ae58d51dcb68322b5e7",
+          "classification": "not applicable",
+          "reason": "The pinned supervision screen is a monitoring workspace rather than a feature-introduction launcher grid.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "4b462cae4840c5f554366298bc75392df667e3af",
+          "classification": "supported by composition",
+          "reason": "The pinned sources page renders five service and document destinations with FeatureCard. Compact density lets those destinations form one coherent console launcher without changing routes, provider vocabulary, permissions, or destination copy.",
+          "sourceEvidence": [
+            {
+              "path": "src/app/sources/page.tsx",
+              "blobSha": "7907f949fe8ef9c96c527a93208f77f752c3b14e"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Drawer",
+      "path": "components/overlay/Drawer.jsx",
+      "decision": "keep",
+      "workflowIds": [],
+      "reason": "Keeps the established modal Drawer and backward-compatible comfortable default while adding compact chrome/body typography, a body-only bounded density scope for eligible Input, Select, Textarea, Checkbox and Radio groups, ChoiceCard, Callout, FileUpload, and SecretField descendants, plus DrawerSection. Explicit child size, padding, or density props retain precedence; header, close, footer Button sizing, LdsProvider, focus semantics, and product workflow ownership remain unchanged.",
+      "assetReviews": [
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "4b462cae4840c5f554366298bc75392df667e3af",
+          "classification": "supported by composition",
+          "reason": "The pinned shared adapter and report-creation Drawer establish a repeated, constrained desktop form surface. LDS may provide compact chrome, body type, a bounded body-only compact default for eligible descendants, and semantic DrawerSection rhythm. Portal retains explicit child overrides, field spacing, validation, mutations, copy, and footer action meaning.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/ui/Drawer.tsx",
+              "blobSha": "3ab04513b73f8ade528bfc43657dde6c7f6d8a97"
+            },
+            {
+              "path": "src/components/reports/ReportsWorkspace.tsx",
+              "blobSha": "65d76daaf751605a4ccf3d196e7790b8fdec6c0e"
+            }
+          ]
+        },
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "a984def117c05acd213f494cbb8a42e990595505",
+          "classification": "not applicable",
+          "reason": "The pinned connection settings are a full-page form rather than a constrained overlay form, so they do not justify opting into compact Drawer density.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/ConnectionSettingsScreen.tsx",
+              "blobSha": "b04f91a96fc49b399dddfd89b5c23b785f8349b0"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "93802fc2aa5d29f930380ae58d51dcb68322b5e7",
+          "classification": "not applicable",
+          "reason": "The pinned narrow Drawer is hierarchical navigation rather than a short form Drawer, so it retains the comfortable/navigation composition while Control owns destinations, breakpoints, routes, and supervision state.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/layout/MainLayout/index.jsx",
+              "blobSha": "2436725e49f6364fdb99f2047907f300ca367865"
+            }
+          ]
+        }
+      ]
+    },
     {
       "name": "ConnectionRow",
       "path": "components/content/ConnectionRow.jsx",
@@ -37,19 +197,19 @@
       "reason": "Provides one reusable account or resource connection surface with decorative identity, visible connection state, detail, state-aware action emphasis, and 320px reflow without owning permissions, mutations, confirmation, routing, copy, or account selection.",
       "assetReviews": [
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "repository": "LK-ROBOTICS-AX/lk_portal",
-          "sourceRevision": "372a826b3d7f9f11cc29b0fd7b575ca0480228e0",
+          "sourceRevision": "e5ee99d5062170e26abe63d9105c2b8a024ce710",
           "classification": "supported by composition",
           "reason": "The issue inventory identifies six Portal connection consumers that repeat the same identity, status, detail, and action anatomy with inconsistent visual and destructive emphasis. ConnectionRow closes only that shared presentation while Portal retains provider metadata, account cardinality, permissions, mutations, confirmation, routing, and state copy.",
           "sourceEvidence": [
             {
               "path": "src/components/context/PersonalContextPage.tsx",
-              "blobSha": "cfa798d769e5c7ae0e48e9f236fdd730d60f4271"
+              "blobSha": "285d02aa17fb626ccddaf2cbb22d6b24331bcacc"
             },
             {
               "path": "src/components/admin/AdminWorkspace.tsx",
-              "blobSha": "0a7421a3732a3467c9e564de84f3697f874d6651"
+              "blobSha": "8b0800cc7f5446f0a27cc1f1bae41ace222afa31"
             }
           ]
         }
@@ -89,19 +249,19 @@
           ]
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "repository": "LK-ROBOTICS-AX/lk_portal",
-          "sourceRevision": "372a826b3d7f9f11cc29b0fd7b575ca0480228e0",
+          "sourceRevision": "e5ee99d5062170e26abe63d9105c2b8a024ce710",
           "classification": "supported by composition",
           "reason": "Pinned LK Portal personal-context and administration sources each place a default Input beside a credential-issuance Button. FieldAction resolves their shared height and narrow layout while Portal retains credential naming, authorization, busy state, API calls, token display, and revocation.",
           "sourceEvidence": [
             {
               "path": "src/components/context/PersonalContextPage.tsx",
-              "blobSha": "cfa798d769e5c7ae0e48e9f236fdd730d60f4271"
+              "blobSha": "285d02aa17fb626ccddaf2cbb22d6b24331bcacc"
             },
             {
               "path": "src/components/admin/AdminWorkspace.tsx",
-              "blobSha": "0a7421a3732a3467c9e564de84f3697f874d6651"
+              "blobSha": "8b0800cc7f5446f0a27cc1f1bae41ace222afa31"
             }
           ]
         }
@@ -143,15 +303,15 @@
           ]
         },
         {
-          "repo": "context-hub",
-          "repository": "LK-ROBOTICS/lk_context_hub",
-          "sourceRevision": "6a46bc18ce26fce55b14bf7ffe6d9da0ca027967",
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "e5ee99d5062170e26abe63d9105c2b8a024ce710",
           "classification": "supported by composition",
-          "reason": "The pinned project directory already repeats Card, embedded DataToolbar, ResourceState, desktop Table, product-authored mobile list, and Pagination. DataCollectionPanel removes the repeated perimeter and responsive slot plumbing while Context Hub retains query state, permissions, row meaning and actions, domain counts, compact item markup, and pagination state.",
+          "reason": "The pinned project directory already repeats Card, embedded DataToolbar, ResourceState, desktop Table, product-authored mobile list, and Pagination. DataCollectionPanel removes the repeated perimeter and responsive slot plumbing while LK Portal retains query state, permissions, row meaning and actions, domain counts, compact item markup, and pagination state.",
           "sourceEvidence": [
             {
               "path": "src/components/catalog/ProjectDirectory.tsx",
-              "blobSha": "cf7ab1ccb7d805bd4599ef206a9b2b2bcb82a02d"
+              "blobSha": "36d8244ec33a50a07d3e71716d899354185fd74c"
             }
           ]
         }
@@ -189,13 +349,13 @@
           ]
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "classification": "not applicable",
           "reason": "The pinned project and assistant workflow has no physical-equipment fleet monitoring entry point.",
           "sourceEvidence": [
             {
-              "path": "src/components/chat/PortalChatPanel.tsx",
-              "blobSha": "b3a8a2eb0d33ff46c30413994de874d456d8"
+              "path": "src/components/chat/FloatingChat.tsx",
+              "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
             }
           ]
         }
@@ -235,17 +395,15 @@
           ]
         },
         {
-          "repo": "context-hub",
-          "classification": "not applicable",
-          "reason": "The pinned shell and home route expose account or product identity and destination cards but no record-detail visual, name, details, and actions composition.",
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "e5ee99d5062170e26abe63d9105c2b8a024ce710",
+          "classification": "supported by composition",
+          "reason": "The pinned shared DetailHeader already composes RecordHeader across dataset, model, catalog, project, service, and developer detail routes. The small size aligns repeated record identity with compact console pages while Portal retains back navigation, route, permissions, data, and actions.",
           "sourceEvidence": [
             {
-              "path": "src/components/layout/AuthShell.tsx",
-              "blobSha": "b525cdd54dfbf73eeec9d8867cd23a3d07c1630b"
-            },
-            {
-              "path": "src/app/page.tsx",
-              "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+              "path": "src/components/shared/DetailHeader.tsx",
+              "blobSha": "18ed116e3b0f7a9fb0f1a16737f88d7018ae320d"
             }
           ]
         }
@@ -281,13 +439,13 @@
           ]
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "classification": "not applicable",
           "reason": "The pinned home route contains destination metadata but no shared live availability indicator workflow; the generic Core split introduces no product route or state contract.",
           "sourceEvidence": [
             {
               "path": "src/app/page.tsx",
-              "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+              "blobSha": "719f69413e2e06c4d887d044696ba98cd90686f4"
             }
           ]
         }
@@ -323,13 +481,13 @@
           ]
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "classification": "supported by composition",
           "reason": "The pinned frontend uses raw overflow utilities and already reserves a stable gutter in one editor. LDS can unify native presentation and keyboard reachability while markdown, table, editor, and chat overflow boundaries remain product-owned.",
           "sourceEvidence": [
             {
               "path": "src/app/globals.css",
-              "blobSha": "5f82644ed126d4d8c484d49b86c73835cec680fc"
+              "blobSha": "d3a78576e61697b6524619d20ae506ae004dc022"
             }
           ]
         }
@@ -365,13 +523,13 @@
           ]
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "classification": "not applicable",
           "reason": "The pinned home route presents destination cards and project chips without an ordered media sequence or slide picker.",
           "sourceEvidence": [
             {
               "path": "src/app/page.tsx",
-              "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+              "blobSha": "719f69413e2e06c4d887d044696ba98cd90686f4"
             }
           ]
         }
@@ -409,17 +567,17 @@
           ]
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "classification": "not applicable",
           "reason": "The pinned product-identity shell exposes no locale control or translation-readiness state.",
           "sourceEvidence": [
             {
               "path": "src/components/layout/Sidebar.tsx",
-              "blobSha": "6f8be361287aada76ff3b2e4f6ca4022706b3b87"
+              "blobSha": "3b5d05b472b5e6346401ee673936c29211595a8c"
             },
             {
-              "path": "src/components/layout/AuthShell.tsx",
-              "blobSha": "b525cdd54dfbf73eeec9d8867cd23a3d07c1630b"
+              "path": "src/components/layout/AppShell.tsx",
+              "blobSha": "bd252534bcf44be11e2afa35bc2e6ed3f4e6edab"
             }
           ]
         }
@@ -455,13 +613,13 @@
           ]
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "classification": "supported by composition",
           "reason": "The Confluence source table exposes a three-item row action menu with rename, exclusion, and danger delete actions; normal DropdownMenu plus a danger item covers the reusable interaction while the product owns mutations and confirmation.",
           "sourceEvidence": [
             {
               "path": "src/app/confluence/page.tsx",
-              "blobSha": "5d40f347f4b391510ac8ce4a60d65c18a27214cc"
+              "blobSha": "d12598d529e2f194e6b6eb0a68b47eaba8755400"
             }
           ]
         }
@@ -497,32 +655,21 @@
           ]
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "classification": "supported by composition",
-          "reason": "The pinned chat panel exposes a constrained controlled project selector with dynamic options and a loading-disabled state. LDS Select supports the input contract while Context Hub retains project options, scope resolution, session policy, provider and retrieval transport, persistence, and narrow chat-header reflow.",
-          "sourceEvidence": [
-            {
-              "path": "src/components/chat/PortalChatPanel.tsx",
-              "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
-            }
-          ]
-        },
-        {
-          "repo": "context-hub",
-          "repository": "LK-ROBOTICS-AX/lk_portal",
-          "sourceRevision": "372a826b3d7f9f11cc29b0fd7b575ca0480228e0",
-          "classification": "supported by composition",
-          "reason": "Supplemental LK Portal consumer evidence directly uses LDS Select for chat-context-scope. Its two-column wrapper grid and native select CSS assume a different DOM shape, so the answer-scope placement defect is a Portal wrapper seam and must not be repaired through global LDS Select anatomy or popup styling.",
+          "reason": "Pinned LK Portal chat evidence exposes a constrained project selector with dynamic options and a loading-disabled state. LDS Select supports that input contract; the related two-column wrapper grid and native select CSS remain a product layout seam, so Portal retains project options, scope resolution, session policy, provider and retrieval transport, persistence, and narrow chat-header reflow.",
           "sourceEvidence": [
             {
               "path": "src/components/chat/FloatingChat.tsx",
-              "blobSha": "6e2840f52850af8c25f49b6635b2bdcce780c737"
+              "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
             },
             {
               "path": "src/app/globals.css",
-              "blobSha": "3d00cf6be709733ea4c42f8d009f70663dce9621"
+              "blobSha": "d3a78576e61697b6524619d20ae506ae004dc022"
             }
-          ]
+          ],
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "e5ee99d5062170e26abe63d9105c2b8a024ce710"
         }
       ]
     },
@@ -966,7 +1113,7 @@
       "workflowIds": [
         "WF-10"
       ],
-      "reason": "Freezes a Context Hub message-array renderer as a public component although semantic list, error, retry, and source primitives are sufficient."
+      "reason": "Freezes a LK Portal message-array renderer as a public component although semantic list, error, retry, and source primitives are sufficient."
     },
     {
       "name": "ConversationComposer",
@@ -1083,21 +1230,21 @@
           ]
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "classification": "not applicable",
           "reason": "The pinned frontend owns project, evidence, and chat workflows and exposes no map, 3D, or video viewport-local navigation contract.",
           "sourceEvidence": [
             {
               "path": "src/app/page.tsx",
-              "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+              "blobSha": "719f69413e2e06c4d887d044696ba98cd90686f4"
             },
             {
               "path": "src/app/projects/page.tsx",
-              "blobSha": "e1539973aebffb3566983f27e8845ed8384dba59"
+              "blobSha": "5b6f87f24029276f1657d6617ada449715b3f282"
             },
             {
-              "path": "src/components/chat/PortalChatPanel.tsx",
-              "blobSha": "b3a8a2eb0d33ff46c30413994de874d456d8"
+              "path": "src/components/chat/FloatingChat.tsx",
+              "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
             }
           ]
         }
@@ -1127,9 +1274,9 @@
       "framework": "Vite 6, React 19, react-konva"
     },
     {
-      "id": "context-hub",
-      "repository": "LK-ROBOTICS/lk_context_hub",
-      "commit": "6a46bc18ce26fce55b14bf7ffe6d9da0ca027967",
+      "id": "portal",
+      "repository": "LK-ROBOTICS-AX/lk_portal",
+      "commit": "e5ee99d5062170e26abe63d9105c2b8a024ce710",
       "frontendRoot": "src",
       "framework": "Next.js 16, React 19"
     },
@@ -1157,7 +1304,7 @@
       "consumers": [
         "deviceops",
         "visionops",
-        "context-hub",
+        "portal",
         "control",
         "mlops"
       ],
@@ -1195,9 +1342,9 @@
           "blobSha": "cf7edfd481336499c64361a169ac79bb8998085e"
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "path": "src/app/projects/page.tsx",
-          "blobSha": "e1539973aebffb3566983f27e8845ed8384dba59"
+          "blobSha": "5b6f87f24029276f1657d6617ada449715b3f282"
         },
         {
           "repo": "control",
@@ -1269,13 +1416,13 @@
           ]
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "classification": "not applicable",
           "reason": "Pinned assistant source owns project/evidence scope and conversation and has no physical-equipment identity, condition, or telemetry surface.",
           "sourceEvidence": [
             {
-              "path": "src/components/chat/PortalChatPanel.tsx",
-              "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
+              "path": "src/components/chat/FloatingChat.tsx",
+              "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
             }
           ]
         }
@@ -1448,7 +1595,7 @@
       "consumers": [
         "deviceops",
         "visionops",
-        "context-hub",
+        "portal",
         "mlops"
       ],
       "states": [
@@ -1487,9 +1634,9 @@
           "blobSha": "826ee64b3c626ec1661c82fd5fd113ab3a3f325d"
         },
         {
-          "repo": "context-hub",
-          "path": "src/components/scopes/ScopeManager.tsx",
-          "blobSha": "082684c6443346ca6f6a91cd011fe7a5bf0b5a3e"
+          "repo": "portal",
+          "path": "src/components/projects/ProjectWorkspace.tsx",
+          "blobSha": "2ede39335314a7e289cbc5630e2dcd2b590ff0a2"
         },
         {
           "repo": "mlops",
@@ -1596,7 +1743,7 @@
       "userGoal": "Validate a costly operation, distinguish queueing from rejection, monitor honest result semantics, and decide how to recover.",
       "trigger": "The user requests training, evaluation, export, materialization, upload, conversion, or synchronization.",
       "consumers": [
-        "context-hub",
+        "portal",
         "mlops"
       ],
       "states": [
@@ -1627,9 +1774,9 @@
       "designQuestion": "How should one operation contract scale from a file queue to a long-running ML job without flattening their differences?",
       "sourceEvidence": [
         {
-          "repo": "context-hub",
-          "path": "src/components/docs/FileDropZone.tsx",
-          "blobSha": "91d2752b33ad9a5a19db274d2e01254ab18dae17"
+          "repo": "portal",
+          "path": "src/components/documents/DocumentsWorkspace.tsx",
+          "blobSha": "99e2f1e069dede31ba16cfed4e40e5152158264f"
         },
         {
           "repo": "mlops",
@@ -1673,7 +1820,7 @@
       "userGoal": "Inspect evidence and persist an accountable accept, reject, or skip decision without treating review as an automated job.",
       "trigger": "A candidate, anomaly, or patch requires human judgment.",
       "consumers": [
-        "context-hub",
+        "portal",
         "mlops"
       ],
       "states": [
@@ -1700,9 +1847,9 @@
       "designQuestion": "Which small review controls are shared while evidence layout and approval transition remain separate?",
       "sourceEvidence": [
         {
-          "repo": "context-hub",
-          "path": "src/components/reports/StructuredReportWithPatches.tsx",
-          "blobSha": "ea7c94db6c48d6c8d226c2783e53d78bf187d6be"
+          "repo": "portal",
+          "path": "src/components/reports/ReportReadingView.tsx",
+          "blobSha": "1ebb36eba72e5608fb253c8e68566d00c5db47ff"
         },
         {
           "repo": "mlops",
@@ -1749,7 +1896,7 @@
       "consumers": [
         "deviceops",
         "visionops",
-        "context-hub",
+        "portal",
         "mlops"
       ],
       "states": [
@@ -1791,9 +1938,9 @@
           "blobSha": "744c47acb9c9b343ea06c25677d641d614815c70"
         },
         {
-          "repo": "context-hub",
-          "path": "src/components/reports/StructuredReportWithPatches.tsx",
-          "blobSha": "ea7c94db6c48d6c8d226c2783e53d78bf187d6be"
+          "repo": "portal",
+          "path": "src/components/reports/ReportReadingView.tsx",
+          "blobSha": "1ebb36eba72e5608fb253c8e68566d00c5db47ff"
         },
         {
           "repo": "mlops",
@@ -1894,21 +2041,21 @@
       "userGoal": "Ask within a known evidence scope, understand provider availability, and verify the sources used in the answer.",
       "trigger": "The user starts or resumes an evidence-backed assistant conversation.",
       "consumers": [
-        "context-hub"
+        "portal"
       ],
       "assetReviews": [
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "classification": "supported by composition",
           "reason": "Pinned chat sources confirm the need for user/assistant turns, rich responses, loading/error handling, source links, and provider/project scope. LDS message, feed, composer, source, tree, and confirmation primitives cover those component types by composition; the product's current bubble geometry, color, citation disclosure, local prop names, transport, retrieval/RAG, persistence, participant-role truth, session policy, and citation truth are not LDS design authority.",
           "sourceEvidence": [
             {
-              "path": "src/components/chat/PortalChatPanel.tsx",
-              "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
+              "path": "src/components/chat/FloatingChat.tsx",
+              "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
             },
             {
-              "path": "docs/chat.md",
-              "blobSha": "183d5ff54b546c9973e12370b1b2c9c027d09def"
+              "path": "src/modules/chat/context.ts",
+              "blobSha": "b84c9fb2ffad66bd40e7bddfb72420edc43b2782"
             }
           ]
         },
@@ -1965,14 +2112,14 @@
       "designQuestion": "Which general assistant conversation primitives are justified by LDS siblings, official AI-chat design-system references, and accessibility standards, and do the pinned products require those component types without defining their design?",
       "sourceEvidence": [
         {
-          "repo": "context-hub",
-          "path": "src/components/chat/PortalChatPanel.tsx",
-          "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
+          "repo": "portal",
+          "path": "src/components/chat/FloatingChat.tsx",
+          "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
         },
         {
-          "repo": "context-hub",
-          "path": "docs/chat.md",
-          "blobSha": "183d5ff54b546c9973e12370b1b2c9c027d09def"
+          "repo": "portal",
+          "path": "src/modules/chat/context.ts",
+          "blobSha": "b84c9fb2ffad66bd40e7bddfb72420edc43b2782"
         }
       ],
       "stage": "verified",
@@ -2018,7 +2165,7 @@
       "userGoal": "Use or update a secret with minimal disclosure and a clear audit boundary.",
       "trigger": "The user reveals, copies, creates, updates, or selects a credential.",
       "consumers": [
-        "context-hub",
+        "portal",
         "mlops"
       ],
       "states": [
@@ -2046,9 +2193,9 @@
       "designQuestion": "Can secret display remain a narrow field/action contract without absorbing credential CRUD or external publish?",
       "sourceEvidence": [
         {
-          "repo": "context-hub",
-          "path": "src/components/credentials/CredentialTable.tsx",
-          "blobSha": "a83d688dbe7b617023d5c187e0069a32e456e29a"
+          "repo": "portal",
+          "path": "src/components/integrations/ApiConnectionsWorkspace.tsx",
+          "blobSha": "4a0487e8347ce74756d49dd9baece3dbcaefc1f0"
         },
         {
           "repo": "mlops",
@@ -2351,21 +2498,21 @@
           ]
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "classification": "not applicable",
           "reason": "Pinned frontend evidence owns project and evidence scope, document intake, assistance, and credential workflows; it has no map, floor, robot-navigation, or geometry-authoring entry point.",
           "sourceEvidence": [
             {
               "path": "src/app/projects/page.tsx",
-              "blobSha": "e1539973aebffb3566983f27e8845ed8384dba59"
+              "blobSha": "5b6f87f24029276f1657d6617ada449715b3f282"
             },
             {
-              "path": "src/components/scopes/ScopeManager.tsx",
-              "blobSha": "082684c6443346ca6f6a91cd011fe7a5bf0b5a3e"
+              "path": "src/components/projects/ProjectWorkspace.tsx",
+              "blobSha": "2ede39335314a7e289cbc5630e2dcd2b590ff0a2"
             },
             {
-              "path": "src/components/chat/PortalChatPanel.tsx",
-              "blobSha": "b3a8a2eb0d33ff46be46c30413994de874d456d8"
+              "path": "src/components/chat/FloatingChat.tsx",
+              "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
             }
           ]
         }
@@ -2465,7 +2612,7 @@
       "consumers": [
         "web-viz",
         "control",
-        "context-hub"
+        "portal"
       ],
       "assetReviews": [
         {
@@ -2499,21 +2646,21 @@
           ]
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "classification": "supported by composition",
           "reason": "Pinned Sidebar and AuthShell establish a full-height 256px product-identity navigation beside an offset main region; the home source composes destination cards and a project collection. DashboardShell, docked SideNav, DashboardGrid, Card, and collection primitives support this side-first workspace by composition. The pinned source has no adaptive narrow navigation, so collapse/drawer behavior remains a product-integration gap; project ranking, attention truth, routes, permissions, chat placement, queries, and data-source policy remain product-owned.",
           "sourceEvidence": [
             {
               "path": "src/components/layout/Sidebar.tsx",
-              "blobSha": "6f8be361287aada76ff3b2e4f6ca4022706b3b87"
+              "blobSha": "3b5d05b472b5e6346401ee673936c29211595a8c"
             },
             {
-              "path": "src/components/layout/AuthShell.tsx",
-              "blobSha": "b525cdd54dfbf73eeec9d8867cd23a3d07c1630b"
+              "path": "src/components/layout/AppShell.tsx",
+              "blobSha": "bd252534bcf44be11e2afa35bc2e6ed3f4e6edab"
             },
             {
               "path": "src/app/page.tsx",
-              "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+              "blobSha": "719f69413e2e06c4d887d044696ba98cd90686f4"
             }
           ]
         }
@@ -2542,7 +2689,7 @@
         "Represent loading, empty, error, stale, and restricted data inside the owning content surface instead of turning the shell into a workflow state machine."
       ],
       "dsBoundary": "LDS may own shell landmarks and skip navigation, wide/narrow navigation slot handoff, docked versus floating SideNav presentation, explicit collapse and overlay focus behavior, brand/utility composition rules, responsive grid containment, and reusable status/chart/table surfaces. Products own brand copy and assets, destination hierarchy, routes, permissions, queries, KPI formulas and thresholds, telemetry and freshness truth, map/video renderers, commands, side effects, and complete dashboard screens. The three pinned products provide no shared requirement for a KPI row, so MetricCard remains an optional composition rather than DashboardShell anatomy.",
-      "designQuestion": "Can Web Viz, Control, and Context Hub compose coherent dashboard-like workspaces without copying one product screen, forcing SideNav on a flat launcher, or making KPI cards mandatory?",
+      "designQuestion": "Can Web Viz, Control, and LK Portal compose coherent dashboard-like workspaces without copying one product screen, forcing SideNav on a flat launcher, or making KPI cards mandatory?",
       "sourceEvidence": [
         {
           "repo": "web-viz",
@@ -2565,19 +2712,19 @@
           "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "path": "src/components/layout/Sidebar.tsx",
-          "blobSha": "6f8be361287aada76ff3b2e4f6ca4022706b3b87"
+          "blobSha": "3b5d05b472b5e6346401ee673936c29211595a8c"
         },
         {
-          "repo": "context-hub",
-          "path": "src/components/layout/AuthShell.tsx",
-          "blobSha": "b525cdd54dfbf73eeec9d8867cd23a3d07c1630b"
+          "repo": "portal",
+          "path": "src/components/layout/AppShell.tsx",
+          "blobSha": "bd252534bcf44be11e2afa35bc2e6ed3f4e6edab"
         },
         {
-          "repo": "context-hub",
+          "repo": "portal",
           "path": "src/app/page.tsx",
-          "blobSha": "e5fde4ba50eb52a826c6df8016196d410f2d1d99"
+          "blobSha": "719f69413e2e06c4d887d044696ba98cd90686f4"
         }
       ],
       "stage": "verified",

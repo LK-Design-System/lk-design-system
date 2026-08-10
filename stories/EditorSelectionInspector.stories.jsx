@@ -117,6 +117,9 @@ export const ActionFooter = {
       const item = Array.from(ownerDocument.querySelectorAll('[role="menuitem"]'))
         .find((node) => (node.textContent || '').includes('객체 삭제'));
       if (!item) throw new Error('Overflow menu must expose the destructive object action.');
+      if (ownerDocument.defaultView?.getComputedStyle(item).pointerEvents === 'none') {
+        throw new Error('Overflow menu must finish anchored positioning before interaction.');
+      }
       return item;
     });
     await userEvent.click(deleteItem);

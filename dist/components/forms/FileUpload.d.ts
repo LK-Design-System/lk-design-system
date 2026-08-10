@@ -16,6 +16,8 @@ export interface FileUploadProps extends React.HTMLAttributes<HTMLDivElement> {
   inputAriaInvalid?: React.AriaAttributes['aria-invalid'];
   /** 안내 문구. */
   hint?: React.ReactNode;
+  /** drop target 크기. compact component scope에서는 기본 `sm`, 그 밖에서는 `md`. */
+  size?: 'sm' | 'md' | 'small' | 'medium';
   disabled?: boolean;
 }
 

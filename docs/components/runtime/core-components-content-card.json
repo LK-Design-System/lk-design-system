@@ -77,7 +77,7 @@
       "name": "padding",
       "type": "number | string",
       "required": false,
-      "description": "기본 32px 패딩을 재정의.",
+      "description": "기본 패딩을 재정의합니다. 지정하면 platform·density 기본값과 --lds-card-padding보다 우선합니다.",
       "owner": "CardOwnProps"
     },
     {
@@ -85,6 +85,13 @@
       "type": "\"desktop\" | \"mobile\"",
       "required": false,
       "description": "platform axis. @default \"desktop\"",
+      "owner": "CardOwnProps"
+    },
+    {
+      "name": "density",
+      "type": "\"comfortable\" | \"compact\"",
+      "required": false,
+      "description": "데스크톱 Card의 opt-in 공간 밀도. typography 크기는 바꾸지 않습니다. @default \"comfortable\"",
       "owner": "CardOwnProps"
     },
     {
@@ -191,13 +198,6 @@
       "required": false,
       "description": "",
       "owner": "CardOwnProps"
-    },
-    {
-      "name": "bottomContent",
-      "type": "React.ReactNode",
-      "required": false,
-      "description": "",
-      "owner": "CardOwnProps"
     }
   ],
   "states": [
@@ -206,23 +206,25 @@
       "rule": "카드 전체가 하나의 행동일 때. 호버 리프트 + 그림자 심화에 더해 role=\"button\", tabIndex=0, Enter/Space 활성화, :focus-visible 링을 부여합니다. 내부에 별도의 버튼·링크를 넣지 마세요."
     }
   ],
-  "behavior": [],
+  "behavior": [
+    "In data-heavy consoles, pair Card density deliberately with neighboring controls and tables. Carbon Data Table usage pairs toolbar/header/row sizes rather than mixing independent density decisions inside one region."
+  ],
   "quantitativeRules": [
     {
       "subject": "명시 규칙 1",
-      "rule": "headingLevel — 구조화 모드의 title 은 기본적으로 로 렌더링됩니다(WCAG 1.3.1). 카드가 놓이는 문서의 제목 계층에 맞춰 1–6 을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false} 로 heading 의미를 끄세요. 레벨은 건너뛰지 않습니다."
+      "rule": "density=\"comfortable|compact\" is opt-in and defaults to comfortable. On desktop, comfortable keeps the component Card padding (currently 32px) and compact uses --space-4 (16px), then tightens related content/header/body/action gaps with the LDS spacing scale. It does not reduce Card typography."
     },
     {
       "subject": "명시 규칙 2",
-      "rule": "SaveButton(save)과 toggleIcon 은 포커스 가능한 요소이므로 규칙 1과 함께 쓰지 마세요."
+      "rule": "platform=\"mobile\" keeps its existing 12px padding and 320px max-width contract even when density=\"compact\" is present. Platform can retain its existing mobile title scale; density itself never changes type size."
     },
     {
       "subject": "명시 규칙 3",
-      "rule": "Card — 모든 것이 올라가는 중립 서피스: 화이트(또는 dark 네이비), 헤어라인 보더, 부드러운 네이비 그림자, 16px 반경. interactive는 호버 시 떠오릅니다."
+      "rule": "Carbon spacing uses a spacing scale to establish relationships and control density, while Fluent 2 layout uses smaller component spacers to strengthen relationships and allows responsive spacing adjustments. Keep compact values on the LDS spacing ramp rather than introducing one-off pixels."
     },
     {
       "subject": "명시 규칙 4",
-      "rule": "1. 전체 카드가 하나의 행동일 때 → interactive + onClick. 카드 루트가 role=\"button\" · tabIndex=0 이 되고 Enter/Space 로 활성화되며 :focus-visible 링이 붙습니다(WCAG 2.1.1). 이때 카드 안에는 버튼·링크·스위치 같은 포커스 가능한 요소를 넣지 마세요. 버튼 안의 버튼(nested interactive)은 유효하지 않은 마크업이고, 스크린리더가 카드 이름으로 내부 텍스트를 전부 읽어 이름이 문단처럼 길어집니다. 2."
+      "rule": "headingLevel — 구조화 모드의 title 은 기본적으로 로 렌더링됩니다(WCAG 1.3.1). 카드가 놓이는 문서의 제목 계층에 맞춰 1–6 을 주고, 제목이 이미 카드 바깥에 있으면 headingLevel={false} 로 heading 의미를 끄세요. 레벨은 건너뛰지 않습니다."
     },
     {
       "subject": "--body1-size",
@@ -230,16 +232,20 @@
     }
   ],
   "responsive": [
+    "MUI density guidance treats density as an opt-in adjustment through component props, spacing, and size; its dense demo theme is not a recommendation to force compactness across an entire application. Adopt compact Card only where scan-heavy console context needs it.",
     "titleWrap=\"truncate|wrap\" controls structured-title overflow. The default truncate keeps dense card grids to one line; use wrap when the full document, report, or publication title is necessary to distinguish the destination.",
-    "Stable structured parts are root, content, header, actions, media, body, title, description, and footer. Optional parts do not render empty wrappers.",
-    "vars accepts only --lds-card-padding, --lds-card-radius, --lds-card-gap, and --lds-card-max-width. These cannot turn a non-interactive card into a control or bypass heading/nesting rules."
+    "Stable structured parts are root, content, header, actions, media, body, title, description, and footer. Optional parts do not render empty wrappers."
   ],
   "contentGuidance": [
+    "save, toggleIcon(top-right toggle affordance beside save), structured slots (thumbnail, topContent, leadingContent, trailingContent, bottomContent, footer) and three text caption tiers (caption, title, description, subCaption, metaCaption) are LDS's structured Card API; do not describe them as extra axes discovered in…",
     "className, style, and the default ref target the polymorphic root. The ref type follows the rendered as element.",
     "classNames and styles accept only those stable part keys; product selectors do not depend on Card's internal DOM order."
   ],
-  "accessibility": [],
+  "accessibility": [
+    "1. 전체 카드가 하나의 행동일 때 → interactive + onClick. 카드 루트가 role=\"button\" · tabIndex=0 이 되고 Enter/Space 로 활성화되며 :focus-visible 링이 붙습니다(WCAG 2.1.1). 이때 카드 안에는 버튼·링크·스위치 같은 포커스 가능한 요소를 넣지 마세요. 버튼 안의 버튼(nested interactive)은 유효하지 않은 마크업이고, 스크린리더가 카드 이름으로 내부 텍스트를 전부 읽어 이름이 문단처럼 길어집니다. 2."
+  ],
   "exceptions": [
+    "An explicit padding prop wins over platform/density defaults and --lds-card-padding. Use vars for the default padding only when the prop is absent. The root mirrors the resolved API choice as data-density.",
     "Use surface=\"subtle\" for the inset surface that groups peer cards. It defaults to elevation=\"none\"; nested default-surface cards own their own border, radius, and elevation. An explicit elevation is still available for exceptional compositions."
   ],
   "related": [
@@ -279,7 +285,7 @@
     },
     {
       "label": "추가 조합 2",
-      "code": "<Card platform=\"mobile\" save title=\"Title\" description=\"Description\" />\n<Card platform=\"desktop\" skeleton headingLevel={2} />"
+      "code": "<Card platform=\"mobile\" save title=\"Title\" description=\"Description\" />\n<Card platform=\"desktop\" skeleton headingLevel={2} />\n<Card density=\"compact\" title=\"Dense console card\" description=\"Typography stays unchanged.\" />"
     }
   ],
   "tokens": [
@@ -318,11 +324,18 @@
     "--lds-card-max-width",
     "--lds-card-padding",
     "--lds-card-radius",
-    "--radius-md"
+    "--radius-md",
+    "--space-1",
+    "--space-1-5",
+    "--space-2",
+    "--space-2-5",
+    "--space-3",
+    "--space-4"
   ],
   "apiLinks": [],
   "migration": [
-    "dark remains the inverse-card compatibility axis and takes precedence over surface."
+    "dark remains the inverse-card compatibility axis and takes precedence over surface.",
+    "Density compatibility extension."
   ],
   "platformStatus": {
     "figma": "mapped",
@@ -363,6 +376,11 @@
         "id": "lds-core-components-content-card--interactive-and-dark",
         "name": "변형·상태 · 상호작용과 어두운 표면",
         "role": "variants-states"
+      },
+      {
+        "id": "lds-core-components-content-card--density-compatibility",
+        "name": "반응형 · 기본형과 조밀형 밀도",
+        "role": "responsive"
       }
     ],
     "hiddenEvidence": 2
@@ -377,11 +395,11 @@
     "anatomy": "evidence",
     "properties": "evidence",
     "states": "evidence",
-    "behavior": "omitted-no-evidence",
+    "behavior": "evidence",
     "quantitativeRules": "evidence",
     "responsive": "evidence",
     "contentGuidance": "evidence",
-    "accessibility": "omitted-no-evidence",
+    "accessibility": "evidence",
     "exceptions": "evidence",
     "related": "evidence",
     "examples": "evidence",

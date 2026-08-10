@@ -14,3 +14,5 @@
 ```jsx
 <Textarea label="문의 내용" required rows={5} placeholder="문의하실 내용을 입력해 주세요." />
 ```
+
+- `size`를 생략하면 일반 표면에서는 기존 `md` 120px 최소 높이, bounded compact component scope에서는 `sm` 96px 최소 높이를 사용합니다. 명시한 `size`와 `--lds-textarea-*` 변수가 우선합니다.

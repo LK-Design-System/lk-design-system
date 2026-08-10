@@ -142,6 +142,63 @@ function FloatingScenario({ id, anchorStyle, placement = 'bottom', panelHeight =
   );
 }
 
+function ScrollbarBoundaryScenario() {
+  const boundaryRef = React.useRef(null);
+  const anchorRef = React.useRef(null);
+  const panelRef = React.useRef(null);
+  const [open, setOpen] = React.useState(false);
+  const position = useFloatingPosition({
+    open,
+    anchorRef,
+    panelRef,
+    placement: 'top',
+    strategy: 'fixed',
+    align: 'right',
+    collisionBoundary: boundaryRef,
+    viewportPadding: 8,
+  });
+  return (
+    <section
+      ref={boundaryRef}
+      data-testid="float-scrollbar-boundary"
+      style={{ position: 'fixed', top: 560, left: 20, width: 300, height: 300, border: '1px solid #777777' }}
+    >
+      <button
+        ref={anchorRef}
+        data-testid="float-scrollbar-anchor"
+        onClick={() => setOpen((value) => !value)}
+        style={{ position: 'absolute', right: 8, bottom: 8 }}
+      >
+        scrollbar boundary anchor
+      </button>
+      {open && (
+        <div
+          ref={panelRef}
+          data-testid="float-scrollbar-panel"
+          style={{
+            position: 'fixed',
+            top: position.y ?? -9999,
+            left: position.x ?? -9999,
+            width: 300,
+            maxWidth: position.maxWidth == null ? 'none' : position.maxWidth,
+            maxHeight: position.maxHeight == null ? 'none' : position.maxHeight,
+            boxSizing: 'border-box',
+            border: '1px solid #777777',
+            padding: 12,
+            overflowY: 'auto',
+            scrollbarGutter: 'stable',
+            background: '#dddddd',
+          }}
+        >
+          {Array.from({ length: 30 }, (_, index) => (
+            <div key={index}>scrolling line {index + 1}</div>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 function DialogSurface({ id, onDismiss, lockScroll = true, initialFocus = false, children }) {
   const initialFocusRef = React.useRef(null);
   const { dialogRef, zIndex } = useDialogFocus({
@@ -252,6 +309,7 @@ function App() {
       <FloatingScenario id="float-bottom" anchorStyle={{ top: 100, left: 100 }} />
       <FloatingScenario id="float-flip" anchorStyle={{ bottom: 8, left: 100 }} />
       <FloatingScenario id="float-fixed" anchorStyle={{ top: 120, left: 420 }} strategy="fixed" align="right" panelHeight={120} />
+      <ScrollbarBoundaryScenario />
       <div style={{ height: '150vh' }} data-testid="page-filler">스크롤 확보용</div>
     </main>
   );

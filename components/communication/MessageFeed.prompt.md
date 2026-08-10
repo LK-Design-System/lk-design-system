@@ -98,7 +98,7 @@
 
 ## product workflow gate
 
-- **LK Context Hub — supported by composition only.** product가 retrieval 결과와 session을 제공하면 feed와 message를 조합할 수 있지만 product panel의 width, background, border와 scroll behavior를 설계 근거로 사용하지 않습니다.
+- **LK Portal — supported by composition only.** product가 retrieval 결과와 session을 제공하면 feed와 message를 조합할 수 있지만 product panel의 width, background, border와 scroll behavior를 설계 근거로 사용하지 않습니다.
 - **LK Web Viz — not applicable.** 지도 viewport history는 chronological conversation log가 아니며 map interaction component가 소유합니다.
 - **LK Control Full Daedeok — not applicable.** event supervision과 command history는 `LogViewer` 또는 domain status component가 적합하며 AI conversation log가 필수로 확인되지 않았습니다.
 - product repository는 필요한 component/state coverage만 확인하며 design, anatomy, API와 style의 권위가 아닙니다.

@@ -59,6 +59,7 @@ export const tabsLengthPaddingContract: React.ReactElement = (
 export const sideNavChildIconContract: React.ReactElement = (
   <SideNav
     aria-label="제품 탐색"
+    appearance="brand"
     overlay
     autoExpandActiveGroup={false}
     items={[{
@@ -68,6 +69,8 @@ export const sideNavChildIconContract: React.ReactElement = (
     }]}
   />
 );
+// @ts-expect-error SideNav appearance only accepts the default or steel palette bundle.
+export const invalidSideNavAppearanceContract: React.ReactElement = <SideNav aria-label="잘못된 외형" items={[]} appearance="midnight" />;
 const temporaryNavigationTriggerRef = React.createRef<HTMLButtonElement>();
 export const dashboardTemporaryNavigationContract: React.ReactElement = (
   <DashboardShell

@@ -5,8 +5,45 @@
 | Type | Product workflow coverage contract and audit summary |
 | Status | Current · all 16 shared-responsibility workflow traces verified |
 | Owner | Product design/engineering · Design system owner |
-| Last reviewed | 2026-08-04 |
+| Last reviewed | 2026-08-09 |
 | Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
+| Current Portal baseline | `LK-ROBOTICS-AX/lk_portal@4b462cae4840c5f554366298bc75392df667e3af` · `references/package-split/consumers/portal.json` |
+
+> **Current identity policy.** This contract identifies the product as **LK Portal** (`portal`, `LK-ROBOTICS-AX/lk_portal`) and pins its current source separately from the package-split release history. Files below `docs/references/package-split/` retain their original identifiers and hashes as immutable 2026-07 migration evidence; they are not a current consumer-policy input.
+
+> **Coverage is observation, not product IA authority.** 이 문서와 audit JSON은 고정 source에서 실제로 확인한 LDS 지원·소비 현황을 기록한다. 특정 제품 화면에 Card, grid, section surface 또는 완성 page anatomy를 강제하는 규격이 아니다. 제품이 정보구조를 바꾸면 해당 화면의 소비자 판정과 source evidence를 갱신하되, LDS가 제품의 section 경계나 시각적 표면을 대신 결정하지 않는다.
+
+## Card · FeatureCard · RecordHeader console density · 2026-08-09
+
+정보가 많은 데스크톱 콘솔이 한 화면에서 더 많은 비교 대상을 보여 주되, 읽기 화면과 기존 소비자의 출력은 바꾸지 않도록 명시적인 opt-in 축을 추가한다. Core `Card`와 Product `FeatureCard`는 `density="comfortable|compact"`를, Product `RecordHeader`는 기존 `PageHeader` 문법과 같은 `size="sm|md"`를 제공한다. 기본값은 각각 `comfortable`, `md`이며 `Card`의 명시적 `padding`과 WDS `platform="mobile"` 계약이 우선한다. 밀도는 공간과 아이콘 타일 크기만 바꾸고 본문 타이포, DOM/읽기 순서, heading, interactive 의미, 색과 elevation은 바꾸지 않는다.
+
+이 축은 WDS parity가 아닌 명시적 LDS 확장이다. 로컬 `.fig`의 `Card/Card` component set에는 `Platform=Desktop|Mobile`, `Skeleton=False|True`만 있고 density는 없으며, `FeatureCard`와 `RecordHeader` component set도 없다. [Material UI Density](https://mui.com/material-ui/customization/density/)의 component-level opt-in과 전역 강제 회피, [Carbon Data table](https://carbondesignsystem.com/components/data-table/usage/)의 toolbar/header/row size pairing, [Carbon Spacing](https://carbondesignsystem.com/elements/spacing/overview/)과 [Fluent Layout](https://fluent2.microsoft.design/layout)의 일관된 spacing ramp·근접성 원칙을 적용하되 외부 시스템의 시각값은 복제하지 않는다.
+
+| 제품 자산 | 고정 source | 판정 | LDS와 제품의 책임 경계 |
+| --- | --- | --- | --- |
+| LK Portal | `LK-ROBOTICS-AX/lk_portal` · `4b462cae4840c5f554366298bc75392df667e3af` · `src/components/catalog/DatasetDetailPage.tsx` (`04035df094eff76b16c6f0f2318cafb798b64552`) · `src/components/catalog/ModelDetailPage.tsx` (`d25129db12f0f1d286138d666daa0dcabc612d37`) · `src/components/catalog/detail/CatalogResourceDetail.tsx` (`f45a916f8fda239ba64fc00bb8f6d170a4840029`) · `src/app/sources/page.tsx` (`7907f949fe8ef9c96c527a93208f77f752c3b14e`) · `src/components/shared/DetailHeader.tsx` (`18ed116e3b0f7a9fb0f1a16737f88d7018ae320d`) | supported by composition | 데이터셋·모델 상세는 각 활성 탭 패널의 최상위 정보 표면으로 `compact` Card 하나를 사용하고 내부 Card는 중첩하지 않는다. 일반 카탈로그 상세의 정보 Card, 다섯 destination FeatureCard와 공용 record identity도 compact 축을 실제로 소비한다. route, 권한, provider 어휘, record 데이터·action, 탭·section 선택과 보고서 읽기 화면의 comfortable 예외는 Portal이 소유한다. |
+| LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | not applicable to compact adoption | 고정 source는 편안한 destination/status surface를 쓰는 flat dashboard이며 반복되는 dense record-detail stack이나 RecordHeader가 없다. 기존 comfortable 기본값을 유지한다. |
+| LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` (`b0fd86a6b4c735aca390cd6dd179f766fa071f08`) | Card supported by composition · FeatureCard/RecordHeader not applicable | 한 viewport의 여러 감시 영역은 optional compact Card로 조합할 수 있다. telemetry truth, command, breakpoint와 완성 화면은 Control이 소유하며 feature launcher와 record identity 계약은 현재 source가 요구하지 않는다. |
+
+LK Portal의 `DatasetDetailPage`와 `ModelDetailPage`는 각 활성 탭 패널에 `density="compact"`, `elevation="sm"`인 Card를 정확히 하나 사용하고 Card 안에는 Card를 중첩하지 않는 실제 소비자다. 내부 의미 계층은 native semantic section 또는 제품 `DetailSection`과 `Divider`·`DescriptionList`·`Table` 같은 primitive를 조합한다. 이는 현재 고정 source에서 관찰한 소비 증거이지 제품 IA 규격이 아니다. 탭 수, section 경계·간격·강조, 데이터와 액션, 이후 Card 채택 여부는 계속 Portal이 소유한다.
+
+Storybook은 Card/FeatureCard comfortable 대 compact, RecordHeader md 대 sm을 normal/narrow에서 함께 렌더하고, spacing만 변하며 heading·설명 typography와 읽기 순서가 유지되는지 검증한다. 새 icon이나 asset은 추가하지 않는다.
+
+## Drawer · compact product-form density · 2026-08-09
+
+`Drawer`는 기존 `comfortable` 출력을 기본값으로 유지하면서, 짧고 반복적인 데스크톱 폼이 페이지의 14/20px·32px control 밀도와 이어지도록 명시적인 `compact` chrome/body-type 축을 추가한다. Drawer는 **body에만** 내부 `ComponentDensityScope`를 두며, `compact`일 때 그 안의 `Input`·`Select`·`Textarea`·`Checkbox`/`CheckboxGroup`·`Radio`/`RadioGroup`·`ChoiceCard`·`Callout`·`FileUpload`·`SecretField`가 각자의 기존 유한 축에서 implicit compact 값을 해석한다. `comfortable`은 기존 자식 기본값을 그대로 해석하고, 자식이 명시한 `size`·`padding`·`density`는 항상 상속값보다 우선한다. 이 범위는 전역 density나 `LdsProvider` 설정이 아니며 header의 제목·닫기 control과 footer는 scope 밖에 있다. `Button`은 inherited density를 소비하지 않으므로 body 안에서도 기존 크기를 유지하고 footer CTA도 `md` 그대로다.
+
+`DrawerSection`은 body 안의 의미 있는 하위 구획을 위해 제목, 짧은 설명, actions, 선택적 divider와 section rhythm을 소유하고 같은 bounded density를 상속한다. 폼의 field 간격, validation, mutation, 제출 정책, 문구와 어떤 자식에 명시적 크기 override가 필요한지는 계속 제품이 소유한다.
+
+이 경계는 [Fluent 2 Drawer](https://fluent2.microsoft.design/components/web/react/core/drawer/usage)의 header/body/footer anatomy와 보조적이고 빠른 작업 범위, [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)의 inert·focus containment·Escape·focus restore 계약, [WCAG 2.2 SC 2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)의 24×24 CSS px 최소 target을 근거로 한다. 밀도는 anatomy나 상호작용 순서를 바꾸지 않고 body의 공간·타입과 eligible 자식의 기존 compact 축만 조정한다.
+
+| 제품 자산 | 고정 source | 판정 | LDS와 제품의 책임 경계 |
+| --- | --- | --- | --- |
+| LK Portal | `LK-ROBOTICS-AX/lk_portal` · `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/components/ui/Drawer.tsx` (`3ab04513b73f8ade528bfc43657dde6c7f6d8a97`) · `src/components/reports/ReportsWorkspace.tsx` (`65d76daaf751605a4ccf3d196e7790b8fdec6c0e`) | supported by shared contract | 공용 adapter와 보고서 작성 Drawer가 반복형 제한 폭 폼을 증명한다. LDS compact body scope와 `DrawerSection`을 조합할 수 있으며 명시적 child override, field 간격, validation, mutation과 footer action 의미는 Portal이 소유한다. |
+| LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/ConnectionSettingsScreen.tsx` (`b04f91a96fc49b399dddfd89b5c23b785f8349b0`) | not applicable | 고정 source는 full-page 연결 설정이며 제한 폭 overlay form이 아니다. 현재 Drawer compact opt-in 근거로 사용하지 않고 기존 full-page field density는 제품 composition으로 유지한다. |
+| LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/layout/MainLayout/index.jsx` (`2436725e49f6364fdb99f2047907f300ca367865`) | not applicable | 고정 source의 narrow Drawer는 계층형 navigation이며 짧은 form Drawer가 아니다. 기존 comfortable Drawer/navigation composition을 유지하고 destination hierarchy, breakpoint와 route는 Control이 소유한다. |
+
+Storybook의 compact Drawer contract는 header/body 16×20px, footer 12×20px, 14/20px body와 함께 implicit 32px `Input`/`Select`/`Textarea`, `sm` ChoiceCard·FileUpload·CheckboxGroup, compact Callout·`DrawerSection`, 최소 24×24px Checkbox target을 검증한다. 명시적 `size="md"` Input은 48px로 상속을 이기고 footer CTA는 40px `md`를 유지한다. Radio는 같은 WCAG 근거의 24×24px native target을 컴포넌트 계약으로 유지한다. focus trap, Escape, accessible name/description, focus restore와 narrow overflow 계약은 density와 무관하게 기존 Drawer 계약을 공유한다.
 
 ## ConnectionRow · connected account/resource surface · 2026-08-08
 
@@ -22,7 +59,7 @@ Storybook은 connected/pending/disconnected 상태, 320px action reflow, 장식 
 | --- | --- | --- | --- |
 | LK Web Viz | `4701e1dcfb0d0e9163c74c227da2d6feb801cb30` · `frontend/src/screens/TaskHistoryScreen.tsx` (`a529eb93bfdd51d77298f18c13e78bbc2a1b9631`) | not applicable | 현재 작업 이력은 실행별 command와 event log를 포함한 card feed이며 공통 table-shaped collection perimeter가 없다. |
 | LK Control Full Daedeok | `3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19` · `frontend/src/views/user/index.jsx` (`1c6c8446e723207a9bd5f4daa991a0b266ccc279`) | supported by composition | filter, loading/error/empty, table, pagination 순서를 조합할 수 있다. fetch, permission, dialog, mutation, row action과 route는 Control 소유다. |
-| LK Context Hub | `6a46bc18ce26fce55b14bf7ffe6d9da0ca027967` · `src/components/catalog/ProjectDirectory.tsx` (`cf7ab1ccb7d805bd4599ef206a9b2b2bcb82a02d`) | supported by composition | 반복되는 Card, embedded toolbar, resource state, desktop Table, mobile list, Pagination plumbing을 패널로 대체할 수 있다. query, domain count, 행 action과 compact markup은 Context Hub 소유다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/components/catalog/ProjectDirectory.tsx` (`36d8244ec33a50a07d3e71716d899354185fd74c`) | supported by composition | 반복되는 Card, embedded toolbar, resource state, desktop Table, mobile list, Pagination plumbing을 패널로 대체할 수 있다. query, domain count, 행 action과 compact markup은 LK Portal 소유다. |
 
 Storybook은 실제형 긴 프로젝트명·설명·상태·연결 수를 사용해 normal/320px, native Table overflow fallback, loading/empty/stale, DOM 순서와 숨겨진 중복 focus target 제거를 검증한다. 신규 아이콘이나 제품 asset은 추가하지 않는다.
 
@@ -34,7 +71,7 @@ Storybook은 실제형 긴 프로젝트명·설명·상태·연결 수를 사용
 | --- | --- | --- | --- |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/ConnectionSettingsScreen.tsx` (`b04f91a96fc49b399dddfd89b5c23b785f8349b0`) | not applicable | 검토 surface는 full-width 하단 submit action과 `- / input / +` stepper를 사용한다. 하나의 field + 하나의 인접 action 계약이 아니며 연결·저장 상태는 제품 소유다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/facility/robotmanager/robot/index.jsx` (`fbb06c5b01b92926ff2f1b3e994c032fcda32f73`) · `frontend/src/views/user/index.jsx` (`8912b51c6eb612bd2beb2ed0206ee78ae6f03f2d`) | supported by composition | 검색 TextField와 Button의 밀도·reflow는 FieldAction이 지원한다. filter 값, query, pagination과 등록 action은 Control 소유다. |
-| LK Portal | `372a826b3d7f9f11cc29b0fd7b575ca0480228e0` · `src/components/context/PersonalContextPage.tsx` (`cfa798d769e5c7ae0e48e9f236fdd730d60f4271`) · `src/components/admin/AdminWorkspace.tsx` (`0a7421a3732a3467c9e564de84f3697f874d6651`) | supported by composition | 연결 코드 발급 Input+Button 두 곳을 지원한다. 이름 검증, 권한, busy, API 호출, token 표시·폐기는 Portal 소유다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/components/context/PersonalContextPage.tsx` (`285d02aa17fb626ccddaf2cbb22d6b24331bcacc`) · `src/components/admin/AdminWorkspace.tsx` (`8b0800cc7f5446f0a27cc1f1bae41ace222afa31`) | supported by composition | 연결 코드 발급 Input+Button 두 곳을 지원한다. 이름 검증, 권한, busy, API 호출, token 표시·폐기는 Portal 소유다. |
 
 아이콘·asset은 추가하지 않는다. Storybook의 기본/disabled/loading/긴 문구·오류/320px/native Enter 제출/Tab 순서가 조합 계약의 검증 근거다.
 
@@ -46,10 +83,9 @@ Storybook은 실제형 긴 프로젝트명·설명·상태·연결 수를 사용
 | --- | --- | --- | --- |
 | LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/ConnectionSettingsScreen.tsx` (`b04f91a96fc49b399dddfd89b5c23b785f8349b0`) | supported by composition | full-width controlled robot-type 선택을 size-aware Select로 조합할 수 있다. robot-type vocabulary, config hydration·저장, connect/disconnect와 transport 상태는 Web Viz가 소유한다. |
 | LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/user/index.jsx` (`8912b51c6eb612bd2beb2ed0206ee78ae6f03f2d`) | supported by composition | `small` 120px role/status filter와 `medium` full-width required form field를 각각 `sm/default`와 `md/comfortable`로 조합할 수 있다. filter 적용·query·pagination, validation과 user mutation은 Control이 소유한다. |
-| LK Context Hub | `LK-ROBOTICS/lk_context_hub` · `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/chat/PortalChatPanel.tsx` (`b3a8a2eb0d33ff46be46c30413994de874d456d8`) | supported by composition | 제한 폭의 동적 project selector와 loading disabled 상태를 지원한다. project option·scope resolution·session policy, provider/RAG·persistence와 chat-header reflow는 Context Hub가 소유한다. |
-| LK Portal · 보조 consumer evidence | `LK-ROBOTICS-AX/lk_portal` · `372a826b3d7f9f11cc29b0fd7b575ca0480228e0` · `src/components/chat/FloatingChat.tsx` (`6e2840f52850af8c25f49b6635b2bdcce780c737`) · `src/app/globals.css` (`3d00cf6be709733ea4c42f8d009f70663dce9621`) | supported by composition | `chat-context-scope`가 LDS `Select size="sm"`을 직접 사용한다. 그러나 wrapper의 2열 grid, `small { grid-column: 2 }`, native `.chat-context-picker select` selector는 LDS root+button anatomy와 맞지 않는다. 답변 범위의 배치 수정은 Portal wrapper/grid 책임이며 LDS 전역 anatomy나 popup token으로 보정하지 않는다. |
+| LK Portal | `LK-ROBOTICS-AX/lk_portal` · `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/components/chat/FloatingChat.tsx` (`ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4`) | supported by composition | 제한 폭의 동적 project selector와 loading disabled 상태를 지원한다. project option·scope resolution·session policy, provider/RAG·persistence와 chat-header reflow는 LK Portal이 소유한다. |
 
-필수 세 제품의 판정은 모두 `supported by composition`이다. LK Portal 행은 필수 Context Hub 판정을 대체하지 않는 실제 consumer 보조 evidence다. 제품 source는 component 필요성, 크기·폭 제약, 상태와 ownership seam만 증명하며 LDS anatomy·색·token 값의 설계 authority로 사용하지 않는다.
+필수 세 제품의 판정은 모두 `supported by composition`이다. LK Portal의 현재 source pin은 선택기·채팅 범위 배치와 그 ownership seam을 함께 증명한다. 제품 source는 component 필요성, 크기·폭 제약, 상태와 ownership seam만 증명하며 LDS anatomy·색·token 값의 설계 authority로 사용하지 않는다.
 
 ## 필수 LK 제품 자산 교차 검토
 
@@ -61,15 +97,15 @@ Storybook은 실제형 긴 프로젝트명·설명·상태·연결 수를 사용
 | --- | --- | --- |
 | LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `a984def117c05acd213f494cbb8a42e990595505` · `frontend` | WF-15 navigation과 WF-16 flat header-first dashboard composition 확인 · `DashboardScreen.tsx`의 live connection truth를 WF-02에 반영 |
 | LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend` | WF-16 fixed header + wide/temporary SideNav + supervision composition 확인 · hierarchical narrow navigation은 제품 소유 Drawer composition으로 경계 확정 |
-| LK Context Hub | `LK-ROBOTICS/lk_context_hub` · `de124084b7e50049350a46f92c4ea4476269c58c` · `src` | WF-16 full-height SideNav + offset main + card/collection composition 확인 · LDS narrow anatomy는 flat BottomNav로 한정 |
+| LK Portal | `LK-ROBOTICS-AX/lk_portal` · `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src` | WF-16 full-height SideNav + offset main + card/collection composition 확인 · LDS narrow anatomy는 flat BottomNav로 한정 |
 
-### Context Hub LDS 요청 감사 · 2026-08-01
+### LK Portal LDS 요청 감사 · 2026-08-01
 
-Context Hub의 작업 중 parity ledger(`docs/working/product-ui-parity-ledger-20260726.md`)에 모인 요청을 commit `f644678393cc29b0f88be16bb0bc168b5816cbe6`의 제품 source와 기존 WF-16 경계에 대조했다. ledger와 `Sidebar.tsx`는 검토 시점에 수정 중이므로 화면 구조를 복제하는 canonical source가 아니라 gap intake로만 사용했다.
+LK Portal의 작업 중 parity ledger(`docs/working/product-ui-parity-ledger-20260726.md`)에 모인 요청을 commit `e5ee99d5062170e26abe63d9105c2b8a024ce710`의 제품 source와 기존 WF-16 경계에 대조했다. ledger와 `Sidebar.tsx`는 검토 시점에 수정 중이므로 화면 구조를 복제하는 canonical source가 아니라 gap intake로만 사용했다.
 
 | 제품 자산 | 판정 | 이번 LDS 계약 | 제품이 계속 소유하는 것 |
 | --- | --- | --- | --- |
-| LK Context Hub | supported by shared contract | `SideNav`의 expanded brand 정렬·footer render state/gap·collapsed rail scroll·자식 아이콘·비제어 runtime overlay 동기화·활성 그룹 자동 펼침 분리·레일/패널 세로 치수 안정화, `DashboardShell`의 계층형 temporary navigation modal coordination, `DataToolbar`의 검색/field 필터 밀도 전달, `Tabs`의 안쪽 2px 지표·길이형 padding, `Drawer` subtitle, `Table` row metadata/style helper, `Card` title wrap, `Callout` heading, polymorphic action type, reading line utility | 제품명·브랜드 조합, route·권한, footer 내용, controlled open/collapse 정책, 실제 filter 값/query, table row 의미, 출처 분쟁/권위 판정, 실제 페이지 padding |
+| LK Portal | supported by shared contract | `SideNav`의 expanded brand 정렬·footer render state/gap·collapsed rail scroll·자식 아이콘·비제어 runtime overlay 동기화·활성 그룹 자동 펼침 분리·레일/패널 세로 치수 안정화, `DashboardShell`의 계층형 temporary navigation modal coordination, `DataToolbar`의 검색/field 필터 밀도 전달, `Tabs`의 안쪽 2px 지표·길이형 padding, `Drawer` subtitle, `Table` row metadata/style helper, `Card` title wrap, `Callout` heading, polymorphic action type, reading line utility | 제품명·브랜드 조합, route·권한, footer 내용, controlled open/collapse 정책, 실제 filter 값/query, table row 의미, 출처 분쟁/권위 판정, 실제 페이지 padding |
 | LK Web Viz | not applicable to the request source | 기존 다크 theme scope, `Fab`, table/card/callout 계약을 필요할 때 조합 가능 | viewer/map shell, telemetry truth, route와 command |
 | LK Control Full Daedeok | not applicable to the request source | 기존 SideNav/Drawer/Table 계약과 DashboardShell temporary navigation을 필요할 때 조합 가능 | fixed shell breakpoint, destination hierarchy·route, supervision state와 command |
 
@@ -79,15 +115,15 @@ Context Hub의 작업 중 parity ledger(`docs/working/product-ui-parity-ledger-2
 
 페이지의 위치와 업무를 설명하는 `PageHeader`에서 사람·로봇·주문 같은 대상 정체성
 구조를 분리했습니다. `RecordHeader`는 visual, 대상 이름, badge, description, details와
-대상 actions의 안정된 읽기 순서만 소유하는 Product Extension입니다. 세 필수 제품의
-고정 source에는 이 전체 해부학을 재사용할 현재 workflow가 없어 adoption 판정은 모두
-`not applicable`입니다.
+대상 actions의 안정된 읽기 순서만 소유하는 Product Extension입니다. Web Viz와
+Control에는 이 전체 해부학을 재사용할 현재 workflow가 없고, LK Portal은 공용
+`DetailHeader`를 통해 여러 record 상세 화면에서 이미 조합합니다.
 
 | 제품 자산 | 고정 source | 판정 | 이유 |
 | --- | --- | --- | --- |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | not applicable | 선택 로봇과 연결 상태는 있지만 이름·식별 visual·세부 통계·대상 actions를 함께 가진 재사용 레코드 헤더는 없습니다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/layout/MainLayout/index.jsx` (`2436725e49f6364fdb99f2047907f300ca367865`) · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` (`b0fd86a6b4c735aca390cd6dd179f766fa071f08`) | not applicable | 셸·탐색·로봇 감시 화면을 조합하지만 일반화 가능한 레코드 정체성 헤더 해부학은 없습니다. |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/layout/AuthShell.tsx` (`b525cdd54dfbf73eeec9d8867cd23a3d07c1630b`) · `src/app/page.tsx` (`e5fde4ba50eb52a826c6df8016196d410f2d1d99`) | not applicable | 계정·제품 identity와 destination card는 있지만 레코드 상세용 visual·이름·details·actions 묶음은 없습니다. |
+| LK Portal | `4b462cae4840c5f554366298bc75392df667e3af` · `src/components/shared/DetailHeader.tsx` (`18ed116e3b0f7a9fb0f1a16737f88d7018ae320d`) | supported by composition | 데이터셋·모델·카탈로그·프로젝트·서비스·개발자 상세가 공용 adapter에서 RecordHeader를 조합합니다. compact `size="sm"`만 LDS가 소유하고 뒤로가기, route, 권한, 데이터와 action은 Portal이 소유합니다. |
 
 대상 데이터 fetch, route, 권한, 실제 설정·공유·팔로우 mutation, 통계 계산과 포맷은
 제품이 소유합니다. 이 분리는 제품 화면을 복제하거나 새 workflow를 주장하지 않고,
@@ -104,7 +140,7 @@ Context Hub의 작업 중 parity ledger(`docs/working/product-ui-parity-ledger-2
 | --- | --- | --- | --- |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | not applicable | live connection truth는 존재하지만 transport state, polling, route와 recovery는 그대로 제품이 소유하며 이번 변경은 generic 표현 분리입니다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` (`b0fd86a6b4c735aca390cd6dd179f766fa071f08`) | not applicable | 설비·연결 상태를 소비하지만 telemetry truth, diagnosis와 recovery workflow는 제품 소유이며 공통 badge anatomy의 설계 근거가 아닙니다. |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/app/page.tsx` (`e5fde4ba50eb52a826c6df8016196d410f2d1d99`) | not applicable | destination metadata는 있지만 공통 live availability indicator workflow는 없고 route·상태 계약을 새로 만들지 않습니다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/app/page.tsx` (`719f69413e2e06c4d887d044696ba98cd90686f4`) | not applicable | destination metadata는 있지만 공통 live availability indicator workflow는 없고 route·상태 계약을 새로 만들지 않습니다. |
 
 제품은 canonical tone과 visible label을 제공하고, 실시간 여부와 pulse 필요성을
 판단합니다. LDS는 상태를 계산하거나 badge를 live region으로 자동 승격하지 않습니다.
@@ -122,7 +158,7 @@ Wheel Picker 선택면처럼 별도 이동 수단이 있는 패턴만 저장소 
 | --- | --- | --- | --- |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/index.css` (`f8d004ed0fdb625fd72b068a6396bfbca5417859`) | supported by composition | 전역 6px WebKit 스크롤바와 숨김 유틸리티가 섞여 있습니다. LDS의 표준 속성 기반 native/compact 계약으로 교체할 수 있으며 화면별 overflow 위치와 지도·목록 상태는 제품이 소유합니다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/assets/scss/style.scss` (`d676ba495386f45ca7b8bbf309df92409327e5c1`) | supported by composition | `react-perfect-scrollbar`의 5px rail/thumb을 여러 셸에 적용합니다. LDS는 네이티브 스크롤 표면과 접근성 계약을 제공하고 JS scrollbar 제거 여부와 단계적 migration은 제품이 결정합니다. |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/app/globals.css` (`5f82644ed126d4d8c484d49b86c73835cec680fc`) | supported by composition | Tailwind overflow 표면과 일부 `scrollbar-gutter: stable` 사용이 확인됩니다. LDS class/ScrollArea로 표현과 키보드 도달성을 통일할 수 있고 markdown·table·editor의 실제 overflow 경계는 제품이 소유합니다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/app/globals.css` (`5f82644ed126d4d8c484d49b86c73835cec680fc`) | supported by composition | Tailwind overflow 표면과 일부 `scrollbar-gutter: stable` 사용이 확인됩니다. LDS class/ScrollArea로 표현과 키보드 도달성을 통일할 수 있고 markdown·table·editor의 실제 overflow 경계는 제품이 소유합니다. |
 
 W3C CSS Scrollbars Level 1의 표준 속성만 사용하며, `compact`도 폭만 `thin`으로
 줄이고 색은 사용자 에이전트에 맡깁니다. forced-colors에서는 폭도 기본값으로 돌아가고,
@@ -141,7 +177,7 @@ frontend에는 순차 미디어나 slide-picker workflow가 없어 adoption은 �
 | --- | --- | --- | --- |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | not applicable | 선택 로봇, 연결 상태, destination card와 지도 진입점은 있지만 ordered media나 slide picker가 없습니다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/layout/MainLayout/index.jsx` (`2436725e49f6364fdb99f2047907f300ca367865`) | not applicable | fixed header, responsive SideNav, breadcrumb, route outlet과 footer를 조합하며 순차 미디어나 page indicator 동작이 없습니다. |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/app/page.tsx` (`e5fde4ba50eb52a826c6df8016196d410f2d1d99`) | not applicable | destination card와 project chip collection을 제공하지만 ordered media sequence나 slide picker가 없습니다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/app/page.tsx` (`719f69413e2e06c4d887d044696ba98cd90686f4`) | not applicable | destination card와 project chip collection을 제공하지만 ordered media sequence나 slide picker가 없습니다. |
 
 이 판정은 Carousel을 제품 workflow로 확장하지 않는 근거입니다. 미디어 fetch,
 analytics, slide 내용, 권한, CTA 결과와 자동 회전 사용 여부는 계속 제품이 소유합니다.
@@ -154,7 +190,7 @@ analytics, slide 내용, 권한, CTA 결과와 자동 회전 사용 여부는 �
 | --- | --- | --- | --- |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | not applicable | 제품 logo와 utility header는 있지만 locale state, translation route, 언어 선택 action은 없습니다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/layout/MainLayout/index.jsx` (`2436725e49f6364fdb99f2047907f300ca367865`) | not applicable | fixed header와 responsive SideNav는 있지만 locale control이나 언어별 route evidence가 없습니다. |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/layout/Sidebar.tsx` (`6f8be361287aada76ff3b2e4f6ca4022706b3b87`) · `src/components/layout/AuthShell.tsx` (`b525cdd54dfbf73eeec9d8867cd23a3d07c1630b`) | not applicable | 제품 identity shell은 있지만 locale control이나 번역 readiness state가 없습니다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/components/layout/Sidebar.tsx` (`3b5d05b472b5e6346401ee673936c29211595a8c`) · `src/components/layout/AppShell.tsx` (`bd252534bcf44be11e2afa35bc2e6ed3f4e6edab`) | not applicable | 제품 identity shell은 있지만 locale control이나 번역 readiness state가 없습니다. |
 
 이 판정은 컴포넌트가 route나 i18n provider를 소유해야 한다는 뜻이 아닙니다. LDS 공개 계약은 현재 언어 표시, native-name radio menu, keyboard/focus와 controlled `onChange`까지만 제공하고 실제 언어 변경 결과는 소비 제품이 책임집니다.
 
@@ -170,7 +206,7 @@ persistence를 공용 컴포넌트로 끌어오지 않습니다.
 | --- | --- | --- | --- |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | not applicable | 검토한 dashboard에는 연결 로봇 전환과 navigation은 있지만 trigger-bound command menu가 없습니다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/user/index.jsx` (`8912b51c6eb612bd2beb2ed0206ee78ae6f03f2d`) | not applicable | 확인된 `MenuItem`은 form Select option이므로 command DropdownMenu로 대체하지 않습니다. |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/app/confluence/page.tsx` (`5d40f347f4b391510ac8ce4a60d65c18a27214cc`) | supported by composition | 표 행의 이름 변경·동기화 제외·삭제 메뉴는 normal DropdownMenu와 danger item으로 구성할 수 있습니다. 실제 mutation과 확인 절차는 제품 소유입니다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/app/confluence/page.tsx` (`d12598d529e2f194e6b6eb0a68b47eaba8755400`) | supported by composition | 표 행의 이름 변경·동기화 제외·삭제 메뉴는 normal DropdownMenu와 danger item으로 구성할 수 있습니다. 실제 mutation과 확인 절차는 제품 소유입니다. |
 
 각 컴포넌트 리뷰에는 아래 내용을 남긴다.
 
@@ -227,7 +263,7 @@ persistence를 공용 컴포넌트로 끌어오지 않습니다.
 | DeviceOps | `41c319eb0ad863f67d73facc64f7dd2a13ab9585` | 운영자가 보드의 실제 상태를 믿고 원격 변경의 적용 여부까지 확인할 수 있는가? |
 | VisionOps | `308da0c0624024ba2497cf05cda2841e4411b522` | 입력·처리·판정 evidence를 혼동하지 않고 원인과 안전한 조치를 찾을 수 있는가? |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` | 지도 point·line·region·facility와 층별 target을 의미·상태·zoom에 맞게 구분하고 편집할 수 있는가? |
-| Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` | 어떤 범위와 근거가 사용됐는지 확인하면서 관계·문서·질의를 관리할 수 있는가? |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` | 어떤 범위와 근거가 사용됐는지 확인하면서 관계·문서·질의를 관리할 수 있는가? |
 | Control | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` | 로봇을 선택하고 계획·감시·직접 제어할 때 위험한 상태 전이를 안전하게 다룰 수 있는가? |
 | MLOps | `0e9f3b03fccd60ab0575b55c18035cc9f9e91521` | 선택 버전의 blocker, 다음 안전한 행동, evidence, 실제 외부 반영 범위를 판단할 수 있는가? |
 
@@ -258,7 +294,7 @@ persistence를 공용 컴포넌트로 끌어오지 않습니다.
 - floor-aware task targeting: 건물·층·map identity를 유지하면서 landmark 또는 좌표를 task step에 연결한다.
 - product boundary: persistence, editor command, floor topology, task schema, device control은 제품이 소유하고 LDS는 renderer-neutral feature·state·selection·accessible mirror 계약만 공유한다.
 
-### Context Hub
+### LK Portal
 
 - workspace orientation: full-height 제품 identity SideNav에서 현재 목적지를 확인하고 home의 destination card와 project collection으로 이동한다. pinned source에는 narrow navigation 전환이 없다.
 - scope configuration: workspace/system/domain과 repo/space/HF/board 관계를 검색·선택하고 dirty change를 저장하거나 폐기한다.
@@ -365,7 +401,7 @@ narrow
 | --- | --- | --- | --- |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | supported by composition | 실제 logo + TopBar utility + current robot Card + ROS Bridge/관제서버/MQTT Status + destination Card launcher를 조합한다. 계층형 SideNav, KPI, table, chart는 이 pinned 화면에 없으므로 not applicable이다. robot switching, poll/reconnect, map launch와 route는 제품 소유다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/layout/MainLayout/index.jsx` (`2436725e49f6364fdb99f2047907f300ca367865`) · `MainLayout/Sidebar/index.jsx` (`749805a966552f957a61359c1b892a44f06af0a4`) · `RobotDashboard/pages/Dashboard.jsx` (`b0fd86a6b4c735aca390cd6dd179f766fa071f08`) | supported by composition | fixed TopBar, permanent/persistent/temporary SideNav, status·chart·table-like collection을 LDS 조합으로 지원한다. narrow Drawer의 focus/Escape/restore/background inert는 DashboardShell 계약으로 검증하며 map/video renderer, telemetry truth, facility state machine, command와 action eligibility는 제품 소유다. |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/layout/Sidebar.tsx` (`6f8be361287aada76ff3b2e4f6ca4022706b3b87`) · `AuthShell.tsx` (`b525cdd54dfbf73eeec9d8867cd23a3d07c1630b`) · `src/app/page.tsx` (`e5fde4ba50eb52a826c6df8016196d410f2d1d99`) | supported by composition | full-height product SideNav, offset main, destination Card와 project collection을 조합한다. pinned source에는 narrow navigation이 없어 adaptive collapse/drawer가 gap이다. project ranking, attention truth, routes, permissions, chat 위치와 query는 제품 소유다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/components/layout/Sidebar.tsx` (`3b5d05b472b5e6346401ee673936c29211595a8c`) · `AuthShell.tsx` (`bd252534bcf44be11e2afa35bc2e6ed3f4e6edab`) · `src/app/page.tsx` (`719f69413e2e06c4d887d044696ba98cd90686f4`) | supported by composition | full-height product SideNav, offset main, destination Card와 project collection을 조합한다. pinned source에는 narrow navigation이 없어 adaptive collapse/drawer가 gap이다. project ranking, attention truth, routes, permissions, chat 위치와 query는 제품 소유다. |
 
 ### WF-03 Guarded remote action
 
@@ -433,7 +469,7 @@ narrow
 - `current`, `draft`, `saved`, `applied`, `verified`를 별도 truth로 다룬다.
 - sticky action은 긴 폼을 위한 layout 선택이며 domain schema를 소유하지 않는다.
 - 오류는 field, section, global mutation 중 실제 소유 범위에 남긴다.
-- Context Hub 관계 편집, DeviceOps profile rollout, VisionOps config, MLOps run configuration은 같은 change grammar를 쓰되 같은 form layout을 강제하지 않는다.
+- LK Portal 관계 편집, DeviceOps profile rollout, VisionOps config, MLOps run configuration은 같은 change grammar를 쓰되 같은 form layout을 강제하지 않는다.
 
 이 구조에서 우선 검토할 최소 LDS 단위는 change summary, dirty-leave guard, persistent action bar다. `SchemaConfigEditor` 같은 전체 화면형 컴포넌트는 구현 근거로 인정하지 않는다.
 
@@ -472,7 +508,7 @@ narrow
 - `success`는 process 종료일 뿐 external publish 완료를 의미하지 않는다.
 - partial result는 성공 badge 옆의 작은 경고가 아니라 outcome의 핵심 상태다.
 - log와 raw progress는 운영 판단에 필요한 outcome, impact, recovery보다 뒤에 둔다.
-- Context Hub 파일 처리와 MLOps 장기 job은 같은 상태 어휘를 일부 공유하지만 같은 layout component를 사용하지 않는다.
+- LK Portal 파일 처리와 MLOps 장기 job은 같은 상태 어휘를 일부 공유하지만 같은 layout component를 사용하지 않는다.
 
 따라서 전체 preflight+execution 화면을 `RunAction` 하나로 소유하지 않는다. 검토 후보는 preflight evidence list, operation admission state, outcome summary처럼 독립 책임을 가진 단위다.
 
@@ -508,7 +544,7 @@ narrow
 
 - review decision과 approval transition을 하나의 표면으로 합치지 않는다.
 - decision 저장이 확인되기 전에 자동으로 다음 candidate로 이동하지 않는다.
-- evidence layout은 MLOps anomaly와 Context Hub report patch가 서로 달라도 된다.
+- evidence layout은 MLOps anomaly와 LK Portal report patch가 서로 달라도 된다.
 - 공유 가능한 것은 decision controls, required reason, progress, actor 기록 같은 작은 계약이다.
 - `approved`를 completion success처럼, `released`를 approval badge처럼 표현하지 않는다.
 
@@ -579,7 +615,7 @@ narrow
 | --- | --- | --- | --- |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` | supported by composition | 설비 identity, primary condition, motion·connection 같은 supporting facts의 필요는 확인된다. LDS는 독립적으로 설계한 status label + labeled facts anatomy를 제공하고, telemetry truth·health 판정·recovery와 설비별 state machine은 Control이 소유한다. |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` | supported by composition | 선택 로봇과 ROS Bridge·관제서버·MQTT의 개별 truth, last-updated, connect/disconnect recovery가 실제로 존재한다. LDS status/freshness/labeled facts/action 조합을 사용하되 polling, endpoint 설정, health 판정, reconnect와 authoritative resync는 Web Viz가 소유한다. |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/chat/PortalChatPanel.tsx` | not applicable | 고정 source는 project/evidence scope와 assistant conversation을 소유하며 물리 설비 identity·condition·telemetry surface가 없다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/components/chat/FloatingChat.tsx` | not applicable | 고정 source는 project/evidence scope와 assistant conversation을 소유하며 물리 설비 identity·condition·telemetry surface가 없다. |
 
 ### WF-05 Procedure authoring
 
@@ -680,7 +716,7 @@ narrow
 
 | 제품 자산 | 고정 revision과 관련 source | 판정 | workflow seam |
 | --- | --- | --- | --- |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/chat/PortalChatPanel.tsx` · `docs/chat.md` | supported by composition | 관찰된 user/assistant turn, rich response, loading/error, source link, provider/project scope는 LDS message/feed/composer/source primitive로 조합할 수 있다. route·retrieval·provider transport·citation truth와 session policy는 Context Hub가 소유하며, 제품의 bubble 색·폭·citation disclosure와 local prop은 LDS 설계 근거가 아니다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/components/chat/FloatingChat.tsx` · `src/modules/chat/context.ts` | supported by composition | 관찰된 user/assistant turn, rich response, loading/error, source link, provider/project scope는 LDS message/feed/composer/source primitive로 조합할 수 있다. route·retrieval·provider transport·citation truth와 session policy는 LK Portal이 소유하며, 제품의 bubble 색·폭·citation disclosure와 local prop은 LDS 설계 근거가 아니다. |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/MapEditScreen.tsx` · `frontend/src/screens/TaskCreateScreen.tsx` | not applicable | 현재 고정 frontend는 map/floor geometry 편집과 task target authoring을 소유하며 evidence-backed conversation 진입점이 없다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` · `frontend/src/views/dashboard/RobotDashboard/components/TaskCommandModal/index.jsx` | not applicable | 현재 고정 frontend는 supervision·task command·manual control workflow를 소유하며 scoped-knowledge chat 또는 citation UI가 없다. |
 
@@ -710,9 +746,9 @@ narrow
 - retrieval, citation truth, persistence, provider bridge는 앱 소유다.
 - 제품 source는 위 capability의 필요성만 확인한다. message anatomy와 시각은 Ant Design X Bubble/Sender/Attachments, Carbon AI Chat, WAI-ARIA `log`, LDS `Avatar`·`Button`·input·source sibling에서 독립적으로 다시 도출한다.
 - AI assistant 기본은 긴 assistant 응답을 borderless document로 보여 준다. 짧은 발화는 화자별로 구분해 user는 solid primary bubble(`--color-semantic-primary-heavy` + `--color-semantic-static-white`), human-agent는 neutral fill bubble(`--color-semantic-fill-strong`), system은 중앙 neutral 칩(`--color-semantic-fill-normal`)으로 렌더한다. 역할 구분은 색·정렬만이 아니라 이름 옆 role 배지(AI/상담원)로도 전달하며, `presentation="document|bubble"`은 content hierarchy override로 유지한다.
-- `ConversationMessage`, `MessageFeed`, `MessageComposer`의 `density="compact"`는 typography나 workflow를 축소하지 않고 avatar/bubble, message gap, textarea/action-band의 spacing만 줄이는 공통 패널 밀도다. 기본 `comfortable`은 기존 reading-column 출력을 그대로 유지한다. `MessageFeed`는 named log·history/follow만 소유하는 투명하고 chrome-free한 영역이며 `viewportInset`은 density와 독립된 가로 여백 축이다. app header/sidebar와 outer surface는 제품이 제공한다. `MessageComposer`는 attachments → full-width textarea → 하단 leading/trailing action과 send-or-stop의 elevated one-shell을 제공하되 sticky 위치, virtual-keyboard inset과 transport policy는 제품 shell이 소유한다.
-- source는 `ConversationMessage`의 generic React slot에 `SourceDisclosure`를 명시적으로 조합한다. Context Hub의 `근거 N개` 접힘 UI를 공용 `sourcePresentation` API로 승격하지 않는다.
-- 대표 검토는 약 760px comfortable reading column, 320px 단품 narrow, 460/360/296px compact conversation column에서 수행하며 dark, 긴 rich assistant document, multiline user solid primary bubble, human-agent neutral fill bubble, streaming/error message, disabled composer를 포함한다. identity·content·source·action이 겹치거나 card-within-card로 읽히지 않고 320 CSS px reflow와 24px action target 하한을 지켜야 한다.
+- `MessageFeed`는 named log·history/follow만 소유하는 투명하고 chrome-free한 영역이다. app header/sidebar와 outer surface는 제품이 제공한다. `MessageComposer`는 attachments → full-width textarea → 하단 leading/trailing action과 send-or-stop의 elevated one-shell을 제공하되 sticky 위치, virtual-keyboard inset과 transport policy는 제품 shell이 소유한다.
+- source는 `ConversationMessage`의 generic React slot에 `SourceDisclosure`를 명시적으로 조합한다. LK Portal의 `근거 N개` 접힘 UI를 공용 `sourcePresentation` API로 승격하지 않는다.
+- 대표 검토는 약 760px reading column과 320px narrow에서 수행하며 dark, 긴 rich assistant document, multiline user solid primary bubble, human-agent neutral fill bubble, streaming/error message, disabled composer를 포함한다. identity·content·source·action이 겹치거나 card-within-card로 읽히지 않아야 한다.
 
 [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md)의 Track C 후속 gate는 완료했다.
 `ConversationMessage`, `MessageFeed`, `MessageComposer`가 각각 canonical AI source/action anatomy·history/follow와 날짜/첫 미읽음 경계·IME-safe compose의
@@ -843,14 +879,14 @@ participant role·provider/stream transport·route·retrieval·RAG·persistence�
 | --- | --- | --- | --- |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/MapEditScreen.tsx` · `frontend/src/screens/TaskRunScreen.tsx` · `frontend/src/components/Map2DViewer.tsx` | supported by composition | authoring point/line/region/facility와 runtime observed trajectory가 LDS 조합으로 지원된다. runtime은 history line과 robot pose를 분리하므로 progress head는 pose를 대체하지 않는다. planned Route segment geometry·fraction feed, `forbidden` line, stair/stair-slope는 gap이다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/routes/MainRoutes.jsx` · `frontend/src/views/dashboard/RobotDashboard/components/LiveMonitoring/index.jsx` · `frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap/index.jsx` | supported by composition | observed path history와 current robot+heading이 분리되어 Trajectory progress head 조합이 닫혔다. pinned workflow에는 planned Route feed가 없어 Route는 not applicable이며 나머지 Navigation renderer mapping은 계속 unverified다. |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/app/projects/page.tsx` · `src/components/scopes/ScopeManager.tsx` · `src/components/chat/PortalChatPanel.tsx` | not applicable | 현재 고정 frontend는 project/evidence scope, document intake, assistance, credential workflow를 소유하며 map·floor·robot navigation 진입점이나 geometry authoring 책임이 없다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/app/projects/page.tsx` · `src/components/projects/ProjectWorkspace.tsx` · `src/components/chat/FloatingChat.tsx` | not applicable | 현재 고정 frontend는 project/evidence scope, document intake, assistance, credential workflow를 소유하며 map·floor·robot navigation 진입점이나 geometry authoring 책임이 없다. |
 
 라벨 조정은 같은 제품 판정을 바꾸지 않는다. Web Viz의 authoring/runtime 지도와
 Control의 live monitoring 지도는 `NavigationAnnotationLayer`의 명시적
 `overview`/`standard`/`detail` 밀도, 8px screen-space obstacle buffer, 우선순위
 숨김을 조합할 수 있다. 제품은 화면 목적에 맞는 밀도 단계, feature selection,
 alarm/focus truth, map chrome과 semantic mirror를 소유하고 LDS는 라벨 배치만
-소유한다. Context Hub에는 지도 진입점이 없으므로 계속 `not applicable`이다.
+소유한다. LK Portal에는 지도 진입점이 없으므로 계속 `not applicable`이다.
 
 독립 low-fi의 읽기·키보드 순서는 다음과 같다.
 
@@ -952,7 +988,7 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 | `ServiceControlRow` | systemd-like status/action 기본값과 confirm flow를 행 안에 결합한다. status + command primitives를 제품에서 조합한다. |
 | `TopologyInspector` | node/edge layout과 inspector를 고정해 VisionOps/MLOps renderer 책임을 침범한다. LDS는 evidence/selection chrome만 제공한다. |
 | `CommandAction` | `Button`에 eligibility와 request 문구를 붙인 domain wrapper다. 가능 여부와 request error는 제품 상태로 두고 `Button`, `ActionArea`, `Callout`을 조합한다. |
-| `ConversationMessages` | Context Hub의 message 배열과 streaming/retry 표현을 public component로 고정한다. 제품이 semantic message list와 `Callout`, `SourceDisclosure`를 조합한다. |
+| `ConversationMessages` | LK Portal의 message 배열과 streaming/retry 표현을 public component로 고정한다. 제품이 semantic message list와 `Callout`, `SourceDisclosure`를 조합한다. |
 | `ConversationComposer` | `form`, `Textarea`, `Button`의 단순 조합이며 별도 interaction contract가 없다. draft와 submit policy는 제품이 소유한다. |
 | `ApprovalTransition` | 한 MLOps transition의 eligibility와 submit 가능 여부를 내부에서 판단해 제품 policy를 침범한다. evidence/form/action primitives로 조합한다. |
 | `TerminalFrame` | 실제 interactive terminal 소비자는 DeviceOps 하나뿐이며 renderer와 transport를 제외하면 session header와 overlay 조합이다. DeviceOps가 `ConnectionBadge`, `DescriptionList`, `Callout`, `Button`으로 구성한다. |
@@ -972,7 +1008,7 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 
 `CanvasEditorShell`, `CanvasEditorCommandBar`, `LayerPanel`, `SelectionInspector`, `ViewportStatusBar`는 LDS sibling과 공식 editor·accessibility reference를 기준으로 별도 감사하고, `lk_web_viz`는 workflow coverage만 확인한다. `ViewerFrame`도 같은 원칙으로 map·3D·video sibling과 공식 viewer·map·accessibility reference를 기준으로 별도 감사한다. 제품 source는 renderer truth와 LDS/product seam만 확인하며 현재 화면의 anatomy나 style을 복제하는 근거가 아니다.
 
-ViewerFrame 교차 판정은 LK Web Viz revision `a984def117c05acd213f494cbb8a42e990595505`의 `Map2DViewer.tsx`·`MapPreview.tsx`·`PcdMap3DPanel.tsx`, LK Control Full Daedeok revision `93802fc2aa5d29f930380ae58d51dcb68322b5e7`의 `InteractiveMap3D/index.jsx`·`manual-control/index.jsx`, LK Context Hub revision `de124084b7e50049350a46f92c4ea4476269c58c`의 project/chat entry를 pin했다. Web Viz와 Control은 renderer-owned pan/zoom·source/transport·robot authority를 제품에 남기는 `supported by composition`, Context Hub는 viewport-local navigation contract가 없어 `not applicable`이다. ViewerFrame은 소스 식별, 로컬 명령 배치, 차단/가용자리 상태 표현만 소유한다.
+ViewerFrame 교차 판정은 LK Web Viz revision `a984def117c05acd213f494cbb8a42e990595505`의 `Map2DViewer.tsx`·`MapPreview.tsx`·`PcdMap3DPanel.tsx`, LK Control Full Daedeok revision `93802fc2aa5d29f930380ae58d51dcb68322b5e7`의 `InteractiveMap3D/index.jsx`·`manual-control/index.jsx`, LK Portal revision `e5ee99d5062170e26abe63d9105c2b8a024ce710`의 project/chat entry를 pin했다. Web Viz와 Control은 renderer-owned pan/zoom·source/transport·robot authority를 제품에 남기는 `supported by composition`, LK Portal은 viewport-local navigation contract가 없어 `not applicable`이다. ViewerFrame은 소스 식별, 로컬 명령 배치, 차단/가용자리 상태 표현만 소유한다.
 
 ## Elevator fleet overview coverage
 
@@ -986,7 +1022,7 @@ position/direction/status anatomy를 LDS `ScrollArea`, card surface,
 | --- | --- | --- | --- |
 | LK Web Viz | `a984def117c05acd213f494cbb8a42e990595505` · `frontend/src/screens/DashboardScreen.tsx` (`3c45fd6e109b169f5ea860a9e84180a7ebbe7a26`) | not applicable | pinned dashboard에는 selected robot과 connection truth는 있지만 다중 건물 elevator fleet가 없다. 향후 조합 시 polling, stale 판정, grouping과 detail navigation은 Web Viz가 소유한다. |
 | LK Control Full Daedeok | `93802fc2aa5d29f930380ae58d51dcb68322b5e7` · `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx` (`b0fd86a6b4c735aca390cd6dd179f766fa071f08`) | supported by composition | equipment identity, condition, direction-like facts와 freshness 필요를 확인했다. LDS는 독립적으로 설계한 위치 projection을 제공하고 Control은 telemetry truth, alert policy, permission, route와 command를 소유한다. |
-| LK Context Hub | `de124084b7e50049350a46f92c4ea4476269c58c` · `src/components/chat/PortalChatPanel.tsx` (`b3a8a2eb0d33ff46be46c30413994de874d456d8`) | not applicable | pinned project/chat workflow에는 물리 설비 fleet monitoring 진입점이 없다. |
+| LK Portal | `e5ee99d5062170e26abe63d9105c2b8a024ce710` · `src/components/chat/FloatingChat.tsx` (`ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4`) | not applicable | pinned project/chat workflow에는 물리 설비 fleet monitoring 진입점이 없다. |
 
 대표 Storybook 검토는 `통합 현황`의 정상·점검·고장·연결 끊김 compound state,
 `좁은 화면`의 390px horizontal overflow, `다크 테마`, `빈 현황`, 읽기 전용
@@ -1033,12 +1069,12 @@ WF-16은 세 필수 제품의 pinned shell/navigation source와 독립 anatomy�
 
 ## LK 브랜드 자산 적용 감사
 
-로고 규격화는 LDS 저장소 안에서 SVG를 생성하는 것으로 끝나지 않는다. 실제 제품이 같은 정본을 소비하는지 확인하기 위해 `web-viz`, `control`, `context-hub`의 현재 소스를 별도로 고정했다. 기계 판정 원본은 `docs/references/brand/PRODUCT_BRAND_ASSET_AUDIT.json`이며 `npm run check:brand-products`는 세 제품의 필수 pin, revision·blob SHA 형식, 문서 인용, 최소 크기와 LDS/제품 소유권 경계를 검증한다. 외부 저장소의 Git object 자체는 감사 시점에 직접 대조해 pin했으며 이 명령이 원격 저장소를 다시 조회한다고 주장하지 않는다.
+로고 규격화는 LDS 저장소 안에서 SVG를 생성하는 것으로 끝나지 않는다. 실제 제품이 같은 정본을 소비하는지 확인하기 위해 `web-viz`, `control`, `portal`의 현재 소스를 별도로 고정했다. 기계 판정 원본은 `docs/references/brand/PRODUCT_BRAND_ASSET_AUDIT.json`이며 `npm run check:brand-products`는 세 제품의 필수 pin, revision·blob SHA 형식, 문서 인용, 최소 크기와 LDS/제품 소유권 경계를 검증한다. 외부 저장소의 Git object 자체는 감사 시점에 직접 대조해 pin했으며 이 명령이 원격 저장소를 다시 조회한다고 주장하지 않는다.
 
 | 제품 | 고정 revision | 판정 | 다음 적용 |
 | --- | --- | --- | --- |
 | `web-viz` | `a984def117c05acd213f494cbb8a42e990595505` | migration required | 헤더의 제품 로컬 gradient `logo.png`는 `inline` 32px로, 로그인은 `mark` 80px로 교체한다. `LK Web Viz` 제품명과 route는 제품이 소유한다. |
 | `control` | `3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19` | migration required | 독립 보관된 `logo-light.svg`/`favicon.ico`를 정본으로 교체한다. 55px 내비게이션 슬롯은 64px official square보다 작으므로 `mark`를 쓰거나 슬롯을 64px 이상으로 키운다. 100px 로그인 슬롯은 official square를 쓸 수 있다. |
-| `context-hub` | `546f11e4640b5a9ec81fc210a5085581b9d277bc` | contract compatible, package upgrade required | `Lockup variant="mark" height={20}` 합성은 전체 렌더 높이 20px과 보이는 LK 도형 높이 16px 이상이라는 두 정책 최소값을 충족한다. 다만 rc.23 패키지를 constructionVersion 3 포함 릴리스로 올려야 한다. `Portal` 제품명은 계속 제품이 소유한다. |
+| `portal` | `546f11e4640b5a9ec81fc210a5085581b9d277bc` | contract compatible, package upgrade required | `Lockup variant="mark" height={20}` 합성은 전체 렌더 높이 20px과 보이는 LK 도형 높이 16px 이상이라는 두 정책 최소값을 충족한다. 다만 rc.23 패키지를 constructionVersion 3 포함 릴리스로 올려야 한다. `LK Portal` 제품 정체성과 보이는 `Portal` 라벨은 계속 제품이 소유한다. |
 
 LDS는 LK 심볼·ROBOTICS 워드마크·승인 variant·색·최소 크기·clear space·플랫폼 export를 소유한다. 각 제품은 제품명, 링크 동작, 반응형 배치와 배포 시점을 소유하지만, path를 다시 그리거나 로컬 색/효과를 추가해서는 안 된다. 현재 두 migration gap은 정본 자체의 완성을 막는 항목이 아니라 소비 제품의 후속 채택 항목이며, 해결 전까지 감사 파일에서 `current`로 올리지 않는다.

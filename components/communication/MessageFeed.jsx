@@ -12,7 +12,11 @@ const BOTTOM_THRESHOLD = 8;
 const DENSITY_LAYOUT = {
   comfortable: {
     messageGap: 'var(--space-6)',
-    viewportBlockPadding: 'var(--space-3)',
+    // Full-height reading surfaces sit the first turn against the window edge
+    // when the block inset stays at the embedded-panel value. Comfortable is
+    // the reading density, so its block inset matches a reading rhythm (24px);
+    // compact keeps the dense embedded-panel inset.
+    viewportBlockPadding: 'var(--space-6)',
   },
   compact: {
     messageGap: 'var(--space-4)',

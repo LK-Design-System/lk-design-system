@@ -1,6 +1,18 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
-import { Button, Drawer, Sheet } from '../src/index.js';
+import {
+  Button,
+  Callout,
+  CheckboxGroup,
+  ChoiceCard,
+  Drawer,
+  DrawerSection,
+  FileUpload,
+  Input,
+  Select,
+  Sheet,
+  Textarea,
+} from '../src/index.js';
 import {
   DrawerCard as DrawerCardStory,
   DrawerOpen as DrawerOpenStory,
@@ -45,6 +57,75 @@ function DrawerOpenExample() {
         footer={<Button variant="solid" color="primary" onClick={() => setOpen(false)}>적용</Button>}
       >
         그룹, 상태, 유형을 좁히는 사이드 패널입니다.
+      </Drawer>
+    </main>
+  );
+}
+
+function CompactDrawerExample() {
+  const [open, setOpen] = React.useState(true);
+  const titleInputRef = React.useRef(null);
+
+  return (
+    <main style={{ minHeight: 180 }}>
+      <Button onClick={() => setOpen(true)}>보고서 설정 열기</Button>
+      <Drawer
+        open={open}
+        density="compact"
+        title="보고서 만들기"
+        subtitle="선택한 활동 기록을 바탕으로 보고서를 만듭니다."
+        initialFocusRef={titleInputRef}
+        onClose={() => setOpen(false)}
+        footer={(
+          <>
+            <Button variant="outlined" color="assistive" onClick={() => setOpen(false)}>취소</Button>
+            <Button data-testid="compact-drawer-action" variant="solid" color="primary" onClick={() => setOpen(false)}>만들기</Button>
+          </>
+        )}
+      >
+        <div style={{ display: 'grid', gap: 'var(--space-4)' }}>
+          <Input
+            ref={titleInputRef}
+            data-testid="compact-drawer-input"
+            label="보고서 제목"
+            placeholder="비우면 자동으로 짓습니다"
+          />
+          <Select
+            data-testid="compact-drawer-select"
+            label="보고서 종류"
+            options={['일간 보고서', '주간 보고서']}
+            defaultValue="일간 보고서"
+          />
+          <Textarea data-testid="compact-drawer-textarea" label="포함할 내용" rows={3} />
+          <ChoiceCard
+            data-testid="compact-drawer-choice"
+            name="drawer-output"
+            title="문서로 만들기"
+            description="선택한 기록을 문서 형식으로 정리합니다."
+            selected
+            onSelect={() => {}}
+          />
+          <Callout data-testid="compact-drawer-callout" title="확인">
+            선택한 기록만 보고서에 반영됩니다.
+          </Callout>
+          <FileUpload data-testid="compact-drawer-upload" inputAriaLabel="추가 자료 선택" />
+          <DrawerSection
+            data-testid="compact-drawer-section"
+            divider
+            title="활동 기록 (선택)"
+            description="선택하지 않으면 입력 내용과 맞는 기록을 자동으로 찾습니다."
+          >
+            <CheckboxGroup
+              aria-label="활동 기록"
+              options={[
+                { value: 'design', label: '탐색 구조와 카드 레이아웃 검토' },
+                { value: 'reid', label: 'Re-ID 검증 항목 등록' },
+              ]}
+              defaultValue={['design']}
+            />
+          </DrawerSection>
+          <Input data-testid="compact-drawer-explicit-md" size="md" aria-label="명시적 기본 크기" />
+        </div>
       </Drawer>
     </main>
   );
@@ -135,6 +216,76 @@ export const DrawerOpen = {
     ),
   },
   render: () => <DrawerOpenExample />,
+};
+
+export const CompactDensity = {
+  name: '반응형 · 조밀한 폼',
+  parameters: storyDescription(
+    '짧고 반복적인 데스크톱 폼에서 compact Drawer body가 필드·선택·안내·업로드·하위 구획에 밀도를 전파하고, 명시적 크기와 footer CTA는 유지하는 조합입니다.',
+  ),
+  render: () => <CompactDrawerExample />,
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const drawer = ownerDocument.querySelector('[role="dialog"][data-density="compact"]');
+    const body = drawer?.querySelector('.lk-scroll-surface');
+    const header = drawer?.firstElementChild;
+    const footer = drawer?.lastElementChild;
+    const input = drawer?.querySelector('[data-testid="compact-drawer-input"]');
+    const inputControl = input?.closest('[data-slot="root"]')?.querySelector('[data-slot="control"]');
+    const select = drawer?.querySelector('[data-testid="compact-drawer-select"]');
+    const selectTrigger = select?.matches('[data-slot="trigger"]') ? select : select?.querySelector('[data-slot="trigger"]');
+    const textarea = drawer?.querySelector('[data-testid="compact-drawer-textarea"]');
+    const textareaControl = textarea?.matches('textarea') ? textarea : textarea?.querySelector('textarea');
+    const choice = drawer?.querySelector('[data-testid="compact-drawer-choice"]');
+    const callout = drawer?.querySelector('[data-testid="compact-drawer-callout"]');
+    const upload = drawer?.querySelector('[data-testid="compact-drawer-upload"]');
+    const uploadTarget = upload?.querySelector('label');
+    const section = drawer?.querySelector('[data-testid="compact-drawer-section"]');
+    const checkboxGroup = section?.querySelector('[role="group"]');
+    const checkbox = checkboxGroup?.querySelector('input[type="checkbox"]');
+    const explicitMd = drawer?.querySelector('[data-testid="compact-drawer-explicit-md"]');
+    const explicitMdControl = explicitMd?.closest('[data-slot="root"]')?.querySelector('[data-slot="control"]');
+    const action = drawer?.querySelector('[data-testid="compact-drawer-action"]');
+
+    if (!drawer || !header || !body || !footer || !inputControl || !selectTrigger || !textareaControl
+      || !choice || !callout || !uploadTarget || !section || !checkboxGroup || !checkbox
+      || !explicitMdControl || !action) {
+      throw new Error('Compact Drawer requires complete chrome and every density-aware descendant fixture.');
+    }
+
+    const headerStyle = getComputedStyle(header);
+    const bodyStyle = getComputedStyle(body);
+    const footerStyle = getComputedStyle(footer);
+    if (headerStyle.paddingTop !== '16px' || headerStyle.paddingRight !== '20px'
+      || bodyStyle.paddingTop !== '16px' || bodyStyle.paddingRight !== '20px'
+      || bodyStyle.fontSize !== '14px' || bodyStyle.lineHeight !== '20px'
+      || footerStyle.paddingTop !== '12px' || footerStyle.paddingRight !== '20px') {
+      throw new Error('Compact Drawer must use the documented compact chrome and 14/20px body typography.');
+    }
+
+    const checkboxRect = checkbox.getBoundingClientRect();
+    if (inputControl.closest('[data-size]')?.getAttribute('data-size') !== 'sm'
+      || getComputedStyle(inputControl).height !== '32px'
+      || select.closest('[data-size]')?.getAttribute('data-size') !== 'sm'
+      || getComputedStyle(selectTrigger).height !== '32px'
+      || textarea.closest('[data-size]')?.getAttribute('data-size') !== 'sm'
+      || getComputedStyle(textareaControl).minHeight !== '96px'
+      || choice.getAttribute('data-padding') !== 'sm'
+      || getComputedStyle(choice).paddingTop !== '12px'
+      || callout.getAttribute('data-density') !== 'compact'
+      || getComputedStyle(callout).paddingTop !== '12px'
+      || upload.getAttribute('data-size') !== 'sm'
+      || getComputedStyle(uploadTarget).minHeight !== '112px'
+      || section.getAttribute('data-density') !== 'compact'
+      || getComputedStyle(section).paddingTop !== '16px'
+      || checkboxGroup.getAttribute('data-size') !== 'sm'
+      || checkboxRect.width < 24 || checkboxRect.height < 24
+      || explicitMdControl.closest('[data-size]')?.getAttribute('data-size') !== 'md'
+      || getComputedStyle(explicitMdControl).height !== '48px'
+      || getComputedStyle(action).height !== '40px') {
+      throw new Error('Compact Drawer must cascade bounded density, preserve explicit md, 24px targets, and the md footer CTA.');
+    }
+  },
 };
 
 export const DrawerSheetFocusContract = {

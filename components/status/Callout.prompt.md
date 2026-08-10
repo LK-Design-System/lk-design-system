@@ -7,6 +7,7 @@
 - **tone** 은 `signal · positive · cautionary · negative · navy`.
 - **title / children** 으로 콘텐츠를 구성하며, tone에 맞는 아이콘이 항상 표시됩니다.
 - **icon** 은 tone별 기본 아이콘을 다른 아이콘으로 교체할 때만 사용합니다. 생략하거나 `null`을 전달해도 기본 아이콘은 제거되지 않습니다.
+- `density`는 내부 여백·gap·본문 행간만 바꿉니다. 생략하면 bounded compact component scope를 상속하고, 그 밖에서는 기존 `comfortable`을 유지하며 명시값이 우선합니다. 제목과 20px 아이콘은 축소하지 않습니다.
 - 기본 `role`, live region, 액션, 닫기 기능이 없습니다. 페이지와 함께 처음부터 렌더링되는 standing guidance에 적합합니다. 비동기 상태 변화가 발표되어야 하거나 즉시 실행할 액션·닫기가 필요하면 `Banner`를 사용합니다.
 - 표면은 tone의 semantic color를 섞은 충분히 구분되는 tint와 같은 계열의 1px hairline을 사용합니다. 그림자나 별도의 왼쪽 강조선은 추가하지 않습니다.
 - **`Banner`와의 시각 위계는 값으로 정의됩니다.** Callout은 `--space-5 --space-6` 블록 패딩, `--radius-xl` 패널 라운드, 24px 톤 아이콘, `--body1-size` 제목, `--label1-reading-line` 본문을 씁니다. Banner는 바 패딩(`14px 16px`), `--radius-lg`, 20px 아이콘, `--body2-size` 제목을 씁니다. Banner는 한 번 읽고 지나가는 메시지 바, Callout은 읽기 열의 일부를 차지하는 제목 붙은 블록입니다. 한동안 두 표면의 실제 차이가 패딩 2px뿐이어서 서로 교체 가능해 보였고, 지금은 `stories/StatusFeedback.stories.jsx`의 play 단언이 Callout의 패딩과 라운드가 Banner를 넘는지 검사합니다. 이 값을 Banner 수준으로 낮추지 마세요.

@@ -167,7 +167,6 @@
 - `--space-1`
 - `--space-2`
 - `--space-20`
-- `--space-3`
 - `--space-4`
 - `--space-6`
 

@@ -12,6 +12,7 @@ import {
   mergeIds,
 } from './field-shared.js';
 import { componentVars, partClassName, partStyle, useMergedRefs } from '../internal/surface.js';
+import { useResolvedControlSize } from '../internal/component-density.js';
 
 function normalizeOption(option) {
   return typeof option === 'string'
@@ -85,7 +86,7 @@ export const Select = React.forwardRef(function Select({
   readOnly = false,
   disable = false,
   negative = false,
-  size = 'md',
+  size,
   defaultOpen = false,
   interaction,
   active = false,
@@ -170,7 +171,8 @@ export const Select = React.forwardRef(function Select({
   });
   const curr = norm.find((x) => x.value === sel);
   const selectedIndex = norm.findIndex((x) => x.value === sel);
-  const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size === 'large' ? 'lg' : size;
+  const resolvedSize = useResolvedControlSize(size);
+  const normalizedSize = resolvedSize === 'small' ? 'sm' : resolvedSize === 'medium' ? 'md' : resolvedSize === 'large' ? 'lg' : resolvedSize;
   const h = normalizedSize === 'sm' ? 'var(--control-h-sm)' : normalizedSize === 'lg' ? 'var(--control-h-lg)' : 'var(--control-h-md)';
   const optionMetrics = selectOptionMetrics(normalizedSize);
   const isInvalid = invalid || negative || status === 'negative' || error != null;
@@ -473,6 +475,16 @@ export const Select = React.forwardRef(function Select({
             cursor: disabledState ? 'not-allowed' : readOnly ? 'default' : 'pointer',
             fontFamily: 'var(--font-sans)', ...fieldTypography(normalizedSize), textAlign: 'left',
             transition: 'var(--component-button-transition)',
+            // chip-trigger: 트리거 전체가 보더 없는 단일 알약이다. 값-캡슐(chip)과
+            // 달리 인풋 크롬을 겹쳐 그리지 않는다. 포커스 링과 invalid 보더는
+            // 필드 계약 그대로 유지한다.
+            ...(render === 'chip-trigger' ? {
+              padding: '0 var(--space-3)',
+              border: `var(--component-input-border-width) solid ${isInvalid || activeFocus ? ring : 'transparent'}`,
+              borderRadius: 'var(--radius-pill)',
+              background: disabledState ? 'var(--color-semantic-fill-alternative)' : 'var(--color-semantic-fill-normal)',
+              fontWeight: 'var(--fw-semibold)',
+            } : null),
             ...partStyle(styles, 'trigger'),
             ...triggerStyle,
           }}

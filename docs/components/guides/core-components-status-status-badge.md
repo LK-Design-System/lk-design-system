@@ -33,7 +33,7 @@
 
 - Runtime owner는 Core, provenance는 최신 WDS 상태 배지 시각 증거와 LDS semantic status 문법을 결합한 WDS-adjacent redesign입니다.
 - StatusBadge는 진행·마감·게시·검토처럼 현재 대상의 명시적인 상태를 짧은 라벨로 보여주는 비대화형 Core 컴포넌트입니다.
-- 상태 계산, 허용된 상태 전이, 시간 임계값, action과 live announcement는 제품이 소유합니다. LK Web Viz, LK Control Full Daedeok, LK Context Hub는 공통 status label을 소비할 수 있지만 이 시각 재설계가 route·workflow·transport 계약을 바꾸지 않으므로 세 제품 자산 검토는 모두 not applicable입니다.
+- 상태 계산, 허용된 상태 전이, 시간 임계값, action과 live announcement는 제품이 소유합니다. LK Web Viz, LK Control Full Daedeok, LK Portal은 공통 status label을 소비할 수 있지만 이 시각 재설계가 route·workflow·transport 계약을 바꾸지 않으므로 세 제품 자산 검토는 모두 not applicable입니다.
 
 ## 정량 규칙
 

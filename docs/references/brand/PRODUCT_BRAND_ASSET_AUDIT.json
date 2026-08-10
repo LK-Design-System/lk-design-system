@@ -30,7 +30,7 @@
   "requiredProducts": [
     "web-viz",
     "control",
-    "context-hub"
+    "portal"
   ],
   "reviews": [
     {
@@ -117,16 +117,16 @@
       ]
     },
     {
-      "id": "context-hub",
+      "id": "portal",
       "repository": "LK-ROBOTICS-AX/lk_portal",
       "sourceRevision": "546f11e4640b5a9ec81fc210a5085581b9d277bc",
       "classification": "contract-compatible-upgrade-required",
-      "finding": "Sidebar composition already uses the LDS Lockup mark at a 20px rendered SVG height and keeps Portal as product-owned adjacent copy. Under the current viewBox this exposes at least the required 16px visible LK artwork height, but the pinned rc.23 package predates the current construction contract and must be upgraded to receive the standardized outputs.",
+      "finding": "LK Portal's sidebar composition already uses the LDS Lockup mark at a 20px rendered SVG height and keeps the visible Portal label as product-owned adjacent copy. Under the current viewBox this exposes at least the required 16px visible LK artwork height, but the pinned rc.23 package predates the current construction contract and must be upgraded to receive the standardized outputs.",
       "replacement": {
         "variant": "mark",
         "renderedHeightPx": 20,
         "packageAction": "Upgrade @lk-design-system/lds-theme from the pinned rc.23 artifact to a release containing constructionVersion 3 and geometryVersion 1.0.",
-        "productNameComposition": "Portal remains product-owned adjacent copy."
+        "productNameComposition": "LK Portal remains the product identity; its visible Portal label remains product-owned adjacent copy."
       },
       "sourceEvidence": [
         {

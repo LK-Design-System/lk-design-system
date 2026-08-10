@@ -14,7 +14,7 @@
     "Icon",
     "IconButton"
   ],
-  "purpose": "사람 또는 AI와 대화하며 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 보조 행동은 slot으로 조합하고 Composer는 값·전송·중지만 소유합니다. 즉시 명령은 DropdownMenu, 안내·연속 설정은 Popover에 두며 Portal·dismiss·배치는 primitive가 소유합니다. 단발성 검색에는 SearchField를 사용하세요.",
+  "purpose": "사람 또는 AI와 대화하며 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 보조 행동은 slot으로 조합하고 작성기는 값·전송·중지만 소유합니다. 즉시 명령은 열고 닫는 명령 메뉴에, 안내·연속 설정은 비모달 팝오버에 두며 외부 렌더·닫기·배치는 각 기반 요소가 소유합니다. 단발성 검색에는 독립 검색 입력을 사용하세요.",
   "useWhen": [
     "light/dark 모두 LDS semantic input token을 사용하며 exact Figma color, product logo, provider selector와 custom shadow를 만들지 않습니다.",
     "좁고 짧은 대화 열에서는 body Portal로 clipping을 탈출하되, 공유 primitive가 제공하는 collisionBoundary에 visible conversation column ref를 전달해 viewport와 그 열의 교집합 안에서 panel을 배치합니다. Portal target과 geometry boundary는 같은 책임이 아닙니다.",

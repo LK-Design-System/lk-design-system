@@ -210,7 +210,7 @@
 - ViewerFrame prompt contract: `components/viz/ViewerFrame.prompt.md`
 - Storybook implementation evidence: `stories/ViewerFrame.stories.jsx`
 - [Google Maps JavaScript API — Controls](https://developers.google.com/maps/documentation/javascript/controls)
-- [Mapbox GL JS — MapaddControl](https://docs.mapbox.com/mapbox-gl-js/api/map/)
+- [Mapbox GL JS — Map#addControl](https://docs.mapbox.com/mapbox-gl-js/api/map/)
 - [Miro — Toolbars](https://help.miro.com/hc/en-us/articles/360017730553-Toolbars)
 - [NVIDIA Omniverse viewport controls](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/controls.html)
 - [viewport navigation](https://docs.omniverse.nvidia.com/extensions/latest/ext_core/ext_viewport/navigation.html)

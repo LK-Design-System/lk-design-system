@@ -14,7 +14,7 @@
 | [`LK_LOGO_STANDARD.md`](LK_LOGO_STANDARD.md) | v1.0 정본, 작도 검증, 변형, 최소 크기, 여백, 색상, 오용, 인쇄, 공동 브랜딩, 승인·변경 절차 |
 | [`lk-logo-governance.json`](lk-logo-governance.json) | 정본 우선순위, 승인 역할, 미승인 인쇄 색상 상태를 기록하는 기계 판독용 운영 레코드 |
 | [`../components/guides/theme-brand-lk-robotics-logo.md`](../components/guides/theme-brand-lk-robotics-logo.md) | 제품 UI용 `Lockup` 선택과 API 참조 |
-| [`../references/brand/PRODUCT_BRAND_ASSET_AUDIT.json`](../references/brand/PRODUCT_BRAND_ASSET_AUDIT.json) | Web Viz·Control·Context Hub의 source pin, LDS/제품 소유 경계와 migration 판정 |
+| [`../references/brand/PRODUCT_BRAND_ASSET_AUDIT.json`](../references/brand/PRODUCT_BRAND_ASSET_AUDIT.json) | Web Viz·Control·LK Portal의 source pin, LDS/제품 소유 경계와 migration 판정 |
 
 ## 빠른 원칙
 

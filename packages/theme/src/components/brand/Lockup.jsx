@@ -21,13 +21,14 @@ const VIEWBOX_METRICS = Object.freeze(Object.fromEntries(
  * Self-contained SVG generated from the regulated brand construction. LK is
  * custom vector geometry; ROBOTICS is outlined from the pinned Montserrat
  * ExtraBold 800 v7.222 font. No runtime font is required.
- * `tone`: 'ink'/'brand' = official #05132B · 'white' · constrained mono/current.
+ * `tone`: 'ink'/'brand' = official #05132B · 'white' · compatibility currentColor.
+ * Constrained black-only output uses the existing explicit `color="#000000"` escape hatch.
  * `height` is the requested natural height; narrow parents scale both axes down
  * together instead of clipping or distorting. Decorative instances get aria-hidden.
  */
 export function Lockup({ variant = 'inline', tone = 'ink', color, height, title = 'LK ROBOTICS', decorative = false, style, ...rest }) {
   const resolvedVariant = Object.prototype.hasOwnProperty.call(VIEWBOX, variant) ? variant : 'inline';
-  const fill = color || (tone === 'white' ? LK_LOGO_COLORS.white : tone === 'mono' ? '#000000' : tone === 'current' ? 'currentColor' : LK_LOGO_COLORS.navy);
+  const fill = color || (tone === 'white' ? LK_LOGO_COLORS.white : tone === 'current' ? 'currentColor' : LK_LOGO_COLORS.navy);
   const vb = VIEWBOX[resolvedVariant];
   const minimumHeight = LK_LOGO_USAGE.minimumRenderedHeightPx[resolvedVariant];
   const requestedHeight = Number.isFinite(height) ? height : DEFAULT_HEIGHT[resolvedVariant];

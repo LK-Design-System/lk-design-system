@@ -52,7 +52,7 @@
 
 - **LK Control Full Daedeok** — `supported by composition`. revision `93802fc2aa5d29f930380ae58d51dcb68322b5e7`, `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx`와 `frontend/src/views/manual-control/index.jsx`에서 live truth와 manual-control connection prerequisite를 확인했다. Control이 freshness, health, authority, recovery와 transport를 소유한다.
 - **LK Web Viz** — `not applicable`. revision `a984def117c05acd213f494cbb8a42e990595505`, `frontend/src/screens/MapEditScreen.tsx`는 map/floor authoring 근거이며 live transport badge 소비 근거가 없다.
-- **LK Context Hub** — `not applicable`. revision `de124084b7e50049350a46f92c4ea4476269c58c`, `src/components/chat/PortalChatPanel.tsx`의 provider availability는 MQTT/rosbridge transport truth가 아니므로 ConnectionBadge로 표현하지 않는다.
+- **LK Portal** — `not applicable`. revision `e5ee99d5062170e26abe63d9105c2b8a024ce710`, `src/components/chat/FloatingChat.tsx`의 provider availability는 MQTT/rosbridge transport truth가 아니므로 ConnectionBadge로 표현하지 않는다.
 
 ## Accessibility and exclusions
 

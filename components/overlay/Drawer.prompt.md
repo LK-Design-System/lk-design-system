@@ -6,12 +6,20 @@ const firstFilterRef = useRef(null);
 <Drawer
   open={open}
   side="right"
+  density="compact"
   title="필터"
   initialFocusRef={firstFilterRef}
   onClose={close}
   footer={<Button variant="signal">적용</Button>}
 >
-  <input ref={firstFilterRef} aria-label="현장 검색" />
+  <Input ref={firstFilterRef} aria-label="현장 검색" />
+  <DrawerSection
+    divider
+    title="활동 기록 (선택)"
+    description="선택하지 않으면 입력 내용과 맞는 기록을 자동으로 찾습니다."
+  >
+    <CheckboxGroup options={activityOptions} />
+  </DrawerSection>
 </Drawer>
 ```
 
@@ -19,10 +27,21 @@ const firstFilterRef = useRef(null);
 
 - `Modal`, `Sheet`, `ConfirmDialog`를 sibling으로 확인했습니다. focus/keyboard 계약은 `ConfirmDialog`와 공유하되 표면은 기존 Drawer 그대로입니다.
 - Modal과 달리 좌/우 edge에 붙고, `side`, 380px 기본 폭, 92vw 상한, slide transition을 유지합니다. 이 차이는 본문 맥락과 나란히 연결되는 보조 작업이라는 기능으로 정당화됩니다.
-- 시각 delta inventory: headline/body typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. header/body는 `space-5 space-6`, footer는 `space-4 space-6`, action gap은 `space-2`로 Modal과 맞춥니다. radius와 선택/활성 marker는 추가하지 않고 `side` 방향만 기존 public axis로 유지합니다.
+- 시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. `comfortable`은 기존과 동일하게 header/body `space-5 space-6`, footer `space-4 space-6`, body `body2`/1.7을 사용합니다. `compact`은 같은 anatomy를 유지하며 header/body `space-4 space-5`, footer `space-3 space-5`, body `label1` 14/20px로 좁힙니다. action gap은 두 밀도 모두 `space-2`입니다. radius와 선택/활성 marker는 추가하지 않습니다.
 - 제목이 있으면 `aria-labelledby`, 없으면 `ariaLabel`을 사용합니다.
 - 제품 맥락에 맞는 닫기 명령은 `closeLabel`로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.
 - `bodyStyle`은 기본 body padding과 scroll contract를 유지하되, `DashboardShell temporaryNavigation`처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 `padding: 0` 같은 layout override를 전달합니다.
+
+## Density contract
+
+- `density="comfortable"`이 기본값이며 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다.
+- `density="compact"`은 데스크톱의 짧고 반복적인 필터·설정 폼에서 Drawer가 소유하는 header/body/footer chrome과 body typography만 조밀하게 만듭니다. 제목 단계, 닫기 target, footer action 크기는 바꾸지 않습니다.
+- body의 bounded component-density scope는 `Input`, `Select`, `Textarea`, `Checkbox`/`CheckboxGroup`, `Radio`/`RadioGroup`, `ChoiceCard`, `Callout`, `FileUpload`처럼 밀도 상속 계약을 가진 자식에 `compact`를 전달합니다. 중첩 깊이나 `DrawerField` 같은 직접 자식 복제에 의존하지 않습니다.
+- 자식의 명시적 `size`, `padding`, `density`가 항상 상속값보다 우선합니다. Drawer 밖과 `comfortable` Drawer의 기존 기본 출력은 유지됩니다.
+- header 닫기와 footer는 scope 밖에 있습니다. footer CTA와 보조 액션은 기존 `md` 40px를 유지하며 body 안의 행 단위 액션도 의미상 필요할 때만 명시적으로 `size="sm"`을 선택합니다.
+- `DrawerSection`은 본문 하위 제목, 설명, 선택적 divider와 간격을 소유합니다. 제품은 `type-headline1`, `pt-6`, 직접 구분선으로 같은 해부학을 다시 만들지 않습니다. compact에서는 divider 상단 16px, 제목·설명 다음 8px을 사용하고 comfortable에서는 기존 읽기 여유를 유지합니다.
+- `DrawerSection.headingLevel`은 실제 문서 계층에 맞춰 2~6을 선택하고 기본값은 3입니다. 짧은 보조 명령은 `actions`에 두며, `headerStyle`과 `contentStyle`은 고유한 레이아웃 조합에만 사용합니다. 이 style escape hatch로 제목 크기·밀도·divider 간격을 다시 정의하지 않습니다.
+- 조밀화는 정보 위계나 상호작용 의미를 바꾸지 않습니다. Checkbox와 Radio의 실제 target은 시각 glyph보다 넓은 최소 24×24px이며, ChoiceCard와 FileUpload의 전체 label target도 유지됩니다.
 
 ## 공통 Portal·stack 계약
 
@@ -43,8 +62,9 @@ const firstFilterRef = useRef(null);
 
 ## 공식 근거
 
-- [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/): modal Drawer에도 내부 focus trap, Escape, 복원, 이름 있는 `dialog` 계약을 적용했습니다.
-- [Fluent 2 Drawer](https://fluent2.microsoft.design/components/web/react/core/drawer/usage): overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. 여러 overlay Drawer 동시 노출은 제외했습니다.
+- [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/): modal Drawer에도 내부 focus trap, Escape, 복원, 이름 있는 `dialog` 계약을 적용했습니다. 밀도는 이 interaction/semantic 계약을 변경하지 않습니다.
+- [Fluent 2 Drawer](https://fluent2.microsoft.design/components/web/react/core/drawer/usage): overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. LDS의 두 density도 anatomy와 sticky region 순서는 공유하고 spacing/type만 바꾸며, 여러 overlay Drawer 동시 노출은 제외했습니다.
+- [WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum): compact scope에서도 Checkbox/Radio의 실제 target을 최소 24×24px로 유지하고 footer action을 축소하지 않는 근거입니다.
 - [Fluent 2 Dialog](https://fluent2.microsoft.design/components/web/react/core/dialog/usage): 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다.
 
 필터 query 직렬화, 변경 유실 경고 조건, route 상태와 반응형으로 inline surface로 전환하는 정책은 제품 레이어가 소유합니다.

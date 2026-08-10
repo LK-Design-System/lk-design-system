@@ -1,7 +1,7 @@
 "use client";
 import {
   Lockup
-} from "../../chunk-UNPEYVXM.js";
+} from "../../chunk-7JLONU26.js";
 import "../../chunk-F35F4DHT.js";
 export {
   Lockup

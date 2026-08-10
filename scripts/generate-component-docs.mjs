@@ -32,10 +32,16 @@ function compactText(value) {
     .replace(/!\[[^\]]*]\([^)]*\)/g, '')
     .replace(/\[([^\]]+)]\(([^)]+)\)/g, '$1')
     .replace(/<[^>]+>/g, '')
-    .replace(/[*_~`>#]/g, '')
+    .replace(/(^|\n)\s*#{1,6}\s+/g, '$1')
+    .replace(/[*_~`>]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
+
+assert(
+  compactText('## Color `#000000`') === 'Color #000000',
+  'compactText must remove Markdown heading syntax without stripping hex color literals.',
+);
 
 function sentence(value) {
   const normalized = compactText(value);

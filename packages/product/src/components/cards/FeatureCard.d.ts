@@ -11,6 +11,8 @@ export interface FeatureCardProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   tone?: 'signal' | 'steel' | 'amber' | 'navy';
   /** 화이트 Card 서피스로 감싸기. @default false */
   boxed?: boolean;
+  /** spacing과 icon 크기만 조정하는 opt-in 밀도. typography는 유지합니다. @default "comfortable" */
+  density?: 'comfortable' | 'compact';
   /**
    * `title`의 heading 레벨. 카드가 놓인 문서의 제목 계층에 맞춰 `1`–`6`을 주고,
    * 제목이 이미 카드 바깥에 있으면 `false`로 heading 의미를 끕니다. 레벨은

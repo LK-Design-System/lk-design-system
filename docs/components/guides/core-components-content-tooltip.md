@@ -19,6 +19,7 @@
 ### 사용하지 않음
 
 - Floating UI arrow middleware는 최종 placement/shift 이후 포인터의 한 축 좌표를 계산하고, 둥근 모서리와 충돌하지 않도록 padding을 두도록 안내합니다. FloatingArrow troubleshooting는 별도 화살표와 본체 사이의 틈이 브라우저 줌·OS 환경에서 발생할 수 있음을 명시합니다. LDS는 좌표·corner clamp 원칙은 따르되, 불투명 단색 surface를 단일 path로 합쳐 이음새 자체를 제거합니다.
+- 제품 workflow 검토: LK Web Viz, LK Control Full Daedeok, LK Portal 모두 not applicable. 이번 변경은 Tooltip의 내부 배경 geometry만 보정하며, 제품 route·데이터·상태·action·공개 API나 조합 seam을 바꾸지 않으므로 제품 frontend 지원 여부를 새로 주장하지 않습니다.
 
 ## Properties
 
@@ -71,10 +72,6 @@
 - ref, className, and style target the trigger wrapper. Stable parts are root, bubble, surface, content, and shortcut; geometry is limited to --lds-tooltip-padding and --lds-tooltip-max-width.
 - The bubble defaults to the common owner-document Portal, inherits the nearest explicit theme and dir, flips/clamps at viewport edges, and is removed from the DOM while closed. placement is deprecated; use position.
 - 둥근 본체와 포인터는 하나의 SVG path로 그립니다. 별도 clip-path 삼각형을 본체에 1px 겹치는 방식은 브라우저 줌·DPR·fractional transform에서 이음새가 드러나므로 사용하지 않습니다. Medium 포인터는 12×6px, Small은 10×5px로 유지해 36px 안팎의 Tooltip 높이와 비례시킵니다.
-
-## Content and writing
-
-- 제품 workflow 검토: LK Web Viz, LK Control Full Daedeok, LK Context Hub 모두 not applicable. 이번 변경은 Tooltip의 내부 배경 geometry만 보정하며, 제품 route·데이터·상태·action·공개 API나 조합 seam을 바꾸지 않으므로 제품 frontend 지원 여부를 새로 주장하지 않습니다.
 
 ## Accessibility
 

@@ -30,10 +30,12 @@ export interface CardOwnProps {
    * @default 3
    */
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6 | false;
-  /** 기본 32px 패딩을 재정의. */
+  /** 기본 패딩을 재정의합니다. 지정하면 platform·density 기본값과 `--lds-card-padding`보다 우선합니다. */
   padding?: number | string;
   /** platform axis. @default "desktop" */
   platform?: "desktop" | "mobile";
+  /** 데스크톱 Card의 opt-in 공간 밀도. typography 크기는 바꾸지 않습니다. @default "comfortable" */
+  density?: "comfortable" | "compact";
   /** skeleton axis. @default false */
   skeleton?: boolean;
   /** save action axis. @default false */

@@ -41,7 +41,7 @@
 | 명시 규칙 1 | contact / locations — { label, value }[]. 라벨은 흰색 62%·700, 값은 45%. EN 페이지는 { label: 'Tel', value: '02-3159-2865' }처럼 번역해 전달. |
 | 명시 규칙 2 | copyright — 기본 Copyright ⓒ 2024 - 2026 LK ROBOTICS Inc. All rights reserved. |
 | 명시 규칙 3 | backToTop — 푸터와 함께 렌더하는 플로팅 버튼(스크롤 600px 후 표시, 부드러운 상단 이동). |
-| 명시 규칙 4 | 서피스는 --color-semantic-inverse-background(라이트에서 1B1C1E, 다크에선 페이지와 반전되는 인버스 서피스), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다. |
+| 명시 규칙 4 | 서피스는 --color-semantic-inverse-background(라이트에서 #1B1C1E, 다크에선 페이지와 반전되는 인버스 서피스), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다. |
 | --body2-size | 15px |
 
 ## Responsive
@@ -56,7 +56,7 @@
 
 ## Accessibility
 
-- 접근성 — 컬럼 제목은 role="heading" + aria-level=3으로 헤딩 시맨틱을 갖고, 링크 그룹(컬럼·정책 링크)은 ul/li로 렌더됩니다. href가 없는 링크 항목은 href="" 폴백 없이 일반 텍스트로 렌더됩니다.
+- 접근성 — 컬럼 제목은 role="heading" + aria-level=3으로 헤딩 시맨틱을 갖고, 링크 그룹(컬럼·정책 링크)은 ul/li로 렌더됩니다. href가 없는 링크 항목은 href="#" 폴백 없이 일반 텍스트로 렌더됩니다.
 
 ## Related components
 

@@ -172,7 +172,7 @@ const VIEWPORT_INLINE_INSET = {
 
 - LDS sibling: `ScrollArea`, `LogViewer`, `ConversationMessage`, `Container`의 scroll,
   reading column과 inset 소유권을 비교한다.
-- LK Context Hub: panel형 대화에서 `comfortable` 필요성을 실제 source와 정상/좁은 폭으로
+- LK Portal: panel형 대화에서 `comfortable` 필요성을 실제 source와 정상/좁은 폭으로
   다시 확인한다.
 - LK Web Viz와 LK Control Full Daedeok: 대화 feed 사용 근거가 없으면 구체적 이유와 함께
   `not applicable`을 기록한다.

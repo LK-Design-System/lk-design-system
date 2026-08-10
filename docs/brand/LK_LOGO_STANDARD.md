@@ -259,7 +259,7 @@ construction manifest, governance 원문과 build-time 글꼴은 저장소 루�
 | --- | --- | --- |
 | LK Web Viz | `migration-required` | 제품 로컬 gradient PNG를 승인 mark/inline 자산으로 교체하고 `LK Web Viz`는 제품 소유 인접 문구로 유지 |
 | LK Control Full Daedeok | `migration-required` | 독립 `logo-light.svg`·`favicon.ico`를 승인 자산으로 교체; 관찰된 `55px` slot에서는 mark를 쓰거나 official square slot을 최소 `64px`로 확대 |
-| LK Context Hub / Portal | `contract-compatible-upgrade-required` | `Lockup` mark `20px`와 인접 `Portal` 구성은 계약에 맞지만, current construction을 포함하도록 rc.23 package를 upgrade |
+| LK Portal | `contract-compatible-upgrade-required` | `Lockup` mark `20px`와 인접 `Portal` 구성은 계약에 맞지만, current construction을 포함하도록 rc.23 package를 upgrade |
 
 이 판정은 audit에 pin된 revision의 증거입니다. 제품의 최신 상태를 자동으로 보증하지 않으므로 migration 완료를 주장하려면 source pin과 asset checksum을 다시 갱신합니다.
 

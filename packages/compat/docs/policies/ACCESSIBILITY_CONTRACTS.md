@@ -5,7 +5,7 @@
 | Type | Stable contract |
 | Status | Current |
 | Owner | Design system owner · Accessibility reviewer |
-| Last reviewed | 2026-07-27 |
+| Last reviewed | 2026-08-09 |
 
 LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제품 팀이 매번 새로 판단하지 않도록 하는 계약입니다. 모든 interactive 컴포넌트는 아래 항목을 Storybook 예시, 코드, 또는 테스트 근거로 증명해야 합니다.
 
@@ -31,14 +31,14 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | Tabs, SegmentedControl | Arrow key로 인접 항목 이동, Home/End는 첫/마지막 항목. 스크롤 가능한 Tabs의 2px 활성 지표는 tablist 경계 안에 온전히 남고 자체 세로 스크롤을 만들지 않는다. |
 | PageIndicator, Carousel | interactive dots는 이름 있는 native button group이며 standalone은 `aria-current="page"`와 24×24px target, media는 slide label·position, `aria-current="true"` + focusable `aria-disabled="true"`, 32×44px target을 제공한다. Carousel 자동 회전 control은 첫 Tab 대상이고 focus 진입·명시적 navigation 시 멈추며 reduced-motion에서 track/pill transition을 제거한다. |
 | LanguageSwitcher, DropdownMenu | 아이콘 전용 trigger는 주변 UI 언어로 번역된 이름을 가지며 Enter/Space/Arrow Down으로 첫 항목, Arrow Up으로 마지막 항목을 연다. menu는 Up/Down·Home/End·typeahead·Escape focus 복원을 지원한다. LanguageSwitcher의 native-name label은 각 `lang`을 가지며 현재 locale은 inline-end visible check와 `menuitemradio`의 `aria-checked`로 함께 노출한다. |
-| PageHeader, RecordHeader | 자체 키보드 상태는 만들지 않는다. DOM과 읽기 순서는 context/visual→제목·상태→설명·세부 정보→actions를 유지하고 CSS reflow로 바꾸지 않는다. heading 단계는 주변 문서 구조와 연결하며 icon-only action은 이름을 가져야 한다. |
+| PageHeader, RecordHeader | 자체 키보드 상태는 만들지 않는다. DOM과 읽기 순서는 context/visual→제목·상태→설명·세부 정보→actions를 유지하고 CSS reflow로 바꾸지 않는다. heading 단계는 주변 문서 구조와 연결하며 icon-only action은 이름을 가져야 한다. `size`는 제목·간격의 시각 밀도만 바꾸며 heading 단계, description/details 본문 크기, DOM·focus 순서를 바꾸지 않는다. |
 | ConnectionRow | DOM과 읽기 순서는 visual→name→visible status→detail→actions를 유지한다. name과 중복되는 visual은 `aria-hidden`으로 제외하고 interactive content를 넣지 않는다. 상태는 색만으로 전달하지 않으며 action target은 최소 24×24 CSS px, 320px에서는 actions를 다음 line으로 내려 가로 scroll을 만들지 않는다. |
-| Modal, Drawer, Sheet, Alert, ConfirmDialog | Escape 닫기, 내부 focus trap, 닫힌 뒤 trigger로 focus restore. Drawer의 짧은 visible subtitle은 `aria-describedby`로 연결하고 복잡한 지시는 body에 둔다. |
+| Modal, Drawer, Sheet, Alert, ConfirmDialog | Escape 닫기, 내부 focus trap, 닫힌 뒤 trigger로 focus restore. Drawer의 짧은 visible subtitle은 `aria-describedby`로 연결하고 복잡한 지시는 body에 둔다. Drawer는 **body에만** bounded density scope를 제공하고 compact일 때 eligible form/selection/status 자식의 omitted 크기를 줄이며, 명시적 `size`/`padding`/`density`는 항상 우선한다. header의 닫기 control과 footer는 scope 밖에 있고 `Button`은 inherited density를 소비하지 않으며, 전역 `LdsProvider`에도 density를 추가하지 않는다. 따라서 target과 순서는 바뀌지 않고 footer Button은 기존 `md` 크기를 유지한다. compact Checkbox/Radio의 시각 glyph가 작아져도 실제 native pointer target은 [WCAG 2.2 SC 2.5.8](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)에 따라 최소 24×24 CSS px를 유지한다. |
 | Toast, Notification, Banner, Callout | 자동 소멸 정보는 live region 정책을 명시, 중요한 알림은 수동 dismiss 제공. standing Callout은 기본 live region이 아니며 실제 하위 절을 시작할 때만 주변 문서 계층에 맞는 `headingLevel`을 쓴다. |
 | OverlayStatusChip | `role="status"` polite live region으로 표면 상태를 알리고, 설명 대상 컨트롤이 `inert`여도 읽히도록 호출부가 그 서브트리 밖에 배치한다. `pointer-events: none`으로 재활성화 입력을 가로채지 않으며, 상태는 색만이 아니라 톤 글리프와 필수 텍스트 라벨로 전달한다 |
 | DataGrid, Table, Tree, TopicTree | row/cell/treeitem focus 기준, 확장/축소 키, 선택 상태를 명시. 정적 Table의 `getRowProps`는 native `<tr>` 메타데이터만 확장하고 자동으로 focus·selection·grid role을 만들지 않는다. |
 | DataCollectionPanel | toolbar → resource message → 현재 표시 content → freshness → footer의 DOM/읽기 순서를 유지한다. compact content가 있으면 wide/compact 중 하나만 display와 접근성 트리에 참여하고, 없으면 native Table 구조와 가로 overflow를 유지한다. root section을 landmark로 사용할 때는 `aria-label` 또는 `aria-labelledby`로 이름을 제공한다. |
-| SideNav | native `nav` 이름, `ul`/`li` 계층, disclosure의 `aria-expanded`, 현재 leaf의 `aria-current="page"`를 유지한다. 접힌 레일에서 현재 leaf가 숨겨지면 부모가 시각 선택 프록시를 표시하지만 `aria-current`는 부모로 옮기지 않는다. 접기 토글은 제품 셸이 소유하고 SideNav id를 `aria-controls`로 참조하며, 접힌 레일의 스크롤은 wheel·keyboard 도달성을 보존한다. 자식 아이콘 슬롯은 장식으로 숨기고 라벨 이름을 유지하며, 비제어 런타임 overlay 전환은 진입 시 접고 이탈 시 이전 persistent 상태를 복원한다. |
+| SideNav | native `nav` 이름, `ul`/`li` 계층, disclosure의 `aria-expanded`, 현재 leaf의 `aria-current="page"`를 유지한다. 접힌 레일에서 현재 leaf가 숨겨지면 부모가 시각 선택 프록시를 표시하지만 `aria-current`는 부모로 옮기지 않는다. 접기 토글은 제품 셸이 소유하고 SideNav id를 `aria-controls`로 참조하며, 접힌 레일의 스크롤은 wheel·keyboard 도달성을 보존한다. 자식 아이콘 슬롯은 장식으로 숨기고 라벨 이름을 유지하며, 비제어 런타임 overlay 전환은 진입 시 접고 이탈 시 이전 persistent 상태를 복원한다. `appearance="brand"`는 평면 브랜드 네이비 표면에서 section text와 muted destination 7.48:1, active ink 8.08:1을 유지하고 선택색과 별도의 2px focus indicator(8.08:1)를 사용한다. |
 | SearchableMultiSelect, DataGrid, FileBrowser | stable item name/ID, listbox 또는 row activation, 선택 상태, bulk action 진입 순서, 빈/loading/error announcement를 명시 |
 | Button, ActionArea, ConfirmDialog | product-owned disabled reason과 blocker를 action보다 먼저 읽을 수 있고 pending 중 중복 실행이 차단되어야 함 |
 | StatusBadge, StatusIndicator, Timeline, ProgressBar, ConnectionBadge, EquipmentStatusCard | StatusBadge는 색과 무관하게 읽히는 lifecycle/result 라벨을 제공하고 자동 live region을 만들지 않는다. StatusIndicator의 dot은 장식으로 숨기고 live availability/freshness 라벨을 반드시 표시하며 pulse는 reduced motion에서 정지한다. 설비 카드는 heading → visible status → labeled facts → actions 순서를 유지하고 live region이 과도하게 반복되지 않아야 함 |
@@ -46,7 +46,7 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | Tree, ReorderList | treeitem/listitem은 키보드로 탐색 가능하고 expand/collapse 또는 move action에 accessible name이 있어야 함 |
 | ValidationSummary | 하나 이상의 차단 오류를 텍스트로 식별하고 모든 항목을 required native `href`로 실제 field/step에 연결한다. SPA activation은 anchor fallback을 보존하면서 focus·scroll을 옮기고, action name은 field label과 동일 inline message를 함께 포함한다. 원래 field는 같은 message를 `aria-describedby`로 연결하고 오류일 때 `aria-invalid="true"`를 가진다. submit 뒤 summary focus와 opt-in live count는 기본적으로 중복하지 않으며 warning-only·valid 결과는 별도 Callout/Notification을 사용한다. |
 | FieldAction | field와 action은 별도 native control과 별도 Tab stop을 유지하며 DOM·읽기·focus 순서는 field → action이다. 제출 조합은 `as="form"`과 `Button type="submit"`을 사용해 field의 Enter가 native submit 경로를 따른다. shared label은 `htmlFor`로 field에 연결하고 helper/error는 FormField 계약을 사용한다. 360px 이하에서는 기능 손실 없이 한 열로 reflow하며 action을 field와 같은 너비로 확장한다. |
-| Card | 비대화형 문서 표면은 `as="article|section|li"`로 native 구조를 보존할 수 있다. `interactive`는 루트를 button role로 바꾸므로 문서 구조용 `as`와 함께 사용하지 않고, 내부에 별도 링크·버튼이 있으면 비대화형 루트를 유지한다. |
+| Card, FeatureCard | 비대화형 문서 표면은 `as="article|section|li"`로 native 구조를 보존할 수 있다. `interactive`/`onClick`은 루트를 button role로 바꾸므로 문서 구조용 root와 함께 사용하지 않고, 내부에 별도 링크·버튼이 있으면 비대화형 루트를 유지한다. `density`는 spacing과 FeatureCard icon tile만 바꾸며 heading, 본문 타이포, 접근 이름, target, DOM·focus 순서를 바꾸지 않는다. |
 | AnnotatedImage, SourceDisclosure | 시각 overlay와 source provenance에는 텍스트 요약, availability, 원본으로 돌아가는 경로가 있어야 함 |
 | Product-owned conversation composition, SourceDisclosure, TreePicker, ConfirmDialog | message role과 streaming/error 상태를 semantic list에서 텍스트로 제공하고 unavailable composer는 이유를 연결하며 scope reset은 확인 가능해야 함 |
 | ContentEditor | 제목 input, 본문 textarea, toolbar button, 상태 live region 순서가 자연스러워야 함 |

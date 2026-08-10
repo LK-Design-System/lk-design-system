@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Atomic color ramps — 13 families / 176 tokens (GENERATED — do not hand-edit)
+   LK ROBOTICS — Atomic color ramps — 14 families / 183 tokens (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -181,4 +181,11 @@
   --color-atomic-purple-95: #F8EEFD;
   --color-atomic-purple-99: #FEFBFF;
   --color-atomic-purple-100: #FFFFFF;
+  --color-atomic-navy-shell-18: #1E2B40;
+  --color-atomic-navy-shell-20: #232F44;
+  --color-atomic-navy-shell-24: #2D394D;
+  --color-atomic-navy-shell-26: #323D51;
+  --color-atomic-navy-shell-65: #A0A5AE;
+  --color-atomic-navy-shell-68: #7FB0DE;
+  --color-atomic-navy-shell-93: #EBECEE;
 }

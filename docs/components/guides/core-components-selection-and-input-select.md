@@ -22,7 +22,7 @@
 | Part | Contract |
 | --- | --- |
 | label | 컨트롤 위의 필드 라벨. |
-| render | 선택 값을 텍스트 또는 칩으로 표시. @default "text" |
+| render | 선택 값의 표시 방식. "chip"은 선택 값을 트리거 안의 캡슐로 강조하고, "chip-trigger"는 트리거 전체를 보더 없는 단일 알약(칩)으로 그린다 — 작성창 동작 띠처럼 폼 필드가 아닌 자리의 옵션 컨트롤용. @default "text" |
 | aria-label | 접근 가능한 이름. 보이는 label이 없을 때 지정합니다. |
 | aria-labelledby | 외부 라벨 요소의 id. |
 | children | 자식(하위 호환) — options가 없을 때 사용. |
@@ -55,7 +55,7 @@
 | `overflow` | `boolean` | No | overflow evidence axis; accepted for API parity. |
 | `platform` | `"ios" \| "android" \| "web"` | No | platform evidence axis; accepted for API parity. |
 | `variant` | `"normal"` | No | select variant evidence axis; accepted for API parity. |
-| `render` | `"text" \| "chip"` | No | 선택 값을 텍스트 또는 칩으로 표시. @default "text" |
+| `render` | `"text" \| "chip" \| "chip-trigger"` | No | 선택 값의 표시 방식. "chip"은 선택 값을 트리거 안의 캡슐로 강조하고, "chip-trigger"는 트리거 전체를 보더 없는 단일 알약(칩)으로 그린다 — 작성창 동작 띠처럼 폼 필드가 아닌 자리의 옵션 컨트롤용. @default "text" |
 
 ## States
 
@@ -91,6 +91,7 @@
 
 ## Content and writing
 
+- render 축: WDS Render(Chip/Text)의 chip은 선택 값을 트리거 안의 캡슐로 강조하는 표시입니다. chip-trigger는 LDS 확장으로, 작성창 동작 띠처럼 폼 필드가 아닌 자리에서 트리거 전체를 보더 없는 단일 알약으로 그립니다 — 인풋 크롬과 값 캡슐이 겹치는 이중 표면을 만들지 않기 위한 값이며, 포커스 링·invalid 보더·키보드/ARIA 계약은 필드와 동일하게 유지합니다.
 - className/style and rootRef target the public field-stack root. The default ref, triggerClassName, and triggerStyle target the native combobox trigger.
 - Stable parts are root, label, control, trigger, value, indicators, dropdown, option, and message. Options additionally expose real data-active, data-selected, and data-disabled state.
 - 커스텀 단일 선택 드롭다운(스타일된 트리거 + 플로팅 패널, 시그널 포커스) — 네이티브 가 아닙니다. 옵션은 options(string[] 또는 {value,label}[]) 또는 자식으로 지정합니다. onChange는 선택된 value를 받습니다.
@@ -134,6 +135,8 @@
 - `--body1-line`
 - `--body1-size`
 - `--color-semantic-background-elevated-normal`
+- `--color-semantic-fill-alternative`
+- `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-assistive`

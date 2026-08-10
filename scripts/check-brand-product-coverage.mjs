@@ -5,11 +5,11 @@ const root = process.cwd();
 const auditPath = 'docs/references/brand/PRODUCT_BRAND_ASSET_AUDIT.json';
 const documentationPath = 'docs/PRODUCT_FRONTEND_COVERAGE.md';
 const constructionPath = 'assets/brand/lk-logo-construction.json';
-const requiredProducts = ['web-viz', 'control', 'context-hub'];
+const requiredProducts = ['web-viz', 'control', 'portal'];
 const expectedRepositories = new Map([
   ['web-viz', 'LK-ROBOTICS/lk_web_viz'],
   ['control', 'LK-ROBOTICS/lkrobotics-control-full-daedeok'],
-  ['context-hub', 'LK-ROBOTICS-AX/lk_portal'],
+  ['portal', 'LK-ROBOTICS-AX/lk_portal'],
 ]);
 const classifications = new Set([
   'migration-required',
@@ -93,8 +93,8 @@ for (const requiredProduct of requiredProducts) {
 assert(audit.reviews.find((review) => review.id === 'web-viz')?.classification === 'migration-required', 'Web Viz gradient PNG must remain an explicit migration gap until replaced.');
 assert(audit.reviews.find((review) => review.id === 'control')?.classification === 'migration-required', 'Control local logo assets must remain an explicit migration gap until replaced.');
 assert(
-  audit.reviews.find((review) => review.id === 'context-hub')?.classification === 'contract-compatible-upgrade-required',
-  'Context Hub must retain the compatible-composition/package-upgrade distinction.',
+  audit.reviews.find((review) => review.id === 'portal')?.classification === 'contract-compatible-upgrade-required',
+  'LK Portal must retain the compatible-composition/package-upgrade distinction.',
 );
 const webVizReplacement = audit.reviews.find((review) => review.id === 'web-viz').replacement;
 assert(webVizReplacement.headerRenderedHeightPx >= construction.layout.inline.minimumRenderedHeightPx, 'Web Viz header replacement must meet the inline minimum.');
@@ -102,8 +102,8 @@ assert(webVizReplacement.loginRenderedHeightPx >= construction.layout.mark.minim
 const controlReplacement = audit.reviews.find((review) => review.id === 'control').replacement;
 assert(controlReplacement.navigationRenderedSquarePx < construction.layout.officialSquare.minimumRenderedSquarePx, 'Control navigation must preserve the documented official-square gap until migrated.');
 assert(controlReplacement.loginRenderedSquarePx >= construction.layout.officialSquare.minimumRenderedSquarePx, 'Control login replacement must meet the official-square minimum.');
-const contextHubReplacement = audit.reviews.find((review) => review.id === 'context-hub').replacement;
-assert(contextHubReplacement.renderedHeightPx >= construction.layout.mark.minimumRenderedHeightPx, 'Context Hub mark usage must meet the rendered mark minimum.');
+const portalReplacement = audit.reviews.find((review) => review.id === 'portal').replacement;
+assert(portalReplacement.renderedHeightPx >= construction.layout.mark.minimumRenderedHeightPx, 'LK Portal mark usage must meet the rendered mark minimum.');
 assert(documentation.includes('npm run check:brand-products'), `${documentationPath} must document the brand product audit check.`);
 
 console.log(`Validated product brand asset audit: ${audit.reviews.length} products, geometry v${audit.standard.geometryVersion}.`);

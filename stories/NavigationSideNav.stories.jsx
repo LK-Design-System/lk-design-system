@@ -276,6 +276,126 @@ function DockedSideNavFixture({ defaultCollapsed = false, initialValue = 'overvi
   );
 }
 
+function NavySideNavAccount({ collapsed }) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: collapsed ? 'center' : 'flex-start',
+        gap: 'var(--space-2-5)',
+        minHeight: 44,
+        color: 'var(--component-side-nav-brand-foreground)',
+      }}
+    >
+      <span
+        aria-hidden="true"
+        style={{
+          display: 'grid',
+          placeItems: 'center',
+          flexShrink: 0,
+          width: 34,
+          height: 34,
+          borderRadius: 'var(--radius-pill)',
+          background: 'var(--component-side-nav-brand-badge-surface)',
+          color: 'var(--component-side-nav-brand-badge-foreground)',
+          fontSize: 'var(--label2-size)',
+          fontWeight: 'var(--fw-bold)',
+        }}
+      >
+        LK
+      </span>
+      {!collapsed && (
+        <span style={{ display: 'grid', gap: 'var(--space-0-5)', minWidth: 0 }}>
+          <strong style={{ fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)' }}>운영자</strong>
+          <span style={{ color: 'var(--component-side-nav-brand-muted-foreground)', fontSize: 'var(--caption2-size)' }}>
+            로봇 관리자
+          </span>
+        </span>
+      )}
+    </div>
+  );
+}
+
+function NavyDockedSideNavFixture() {
+  const [value, setValue] = React.useState('overview');
+  const [collapsed, setCollapsed] = React.useState(false);
+
+  return (
+    <div style={{ display: 'grid', width: 'min(100%, 1020px)', gap: 'var(--space-3)' }}>
+      <main
+        data-testid="navy-demo-shell"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: collapsed ? '68px minmax(0, 1fr)' : '268px minmax(0, 1fr)',
+          width: '100%',
+          height: 560,
+          overflow: 'hidden',
+          border: '1px solid var(--color-semantic-line-solid-normal)',
+          borderRadius: 'var(--radius-xl)',
+          background: 'var(--color-semantic-background-elevated-normal)',
+          boxShadow: 'var(--shadow-lg)',
+          transition: 'grid-template-columns var(--dur-base) var(--ease-out)',
+        }}
+      >
+        <SideNav
+          id="navy-docked-side-nav-panel"
+          data-testid="navy-docked-side-nav"
+          aria-label="브랜드 네이비 운영 탐색"
+          items={navigationItems}
+          value={value}
+          onChange={setValue}
+          surface="docked"
+          appearance="brand"
+          collapsed={collapsed}
+          onCollapsedChange={setCollapsed}
+          width={268}
+          collapsedWidth={68}
+          brandAlign="start"
+          header={<Lockup variant="inline" tone="white" height={22} />}
+          headerCollapsed={<Lockup variant="mark" tone="white" height={22} />}
+          footerGap="var(--space-3)"
+          footer={({ collapsed: footerCollapsed }) => <NavySideNavAccount collapsed={footerCollapsed} />}
+          style={{ height: '100%' }}
+        />
+        <section
+          aria-label="SideNav 외형 작업면"
+          style={{
+            minWidth: 0,
+            overflow: 'hidden',
+            background: 'var(--color-semantic-background-normal-normal)',
+          }}
+        >
+          <header
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              minHeight: 64,
+              padding: '0 var(--space-6)',
+              borderBottom: '1px solid var(--color-semantic-line-solid-normal)',
+              background: 'var(--color-semantic-background-elevated-normal)',
+            }}
+          >
+            <Button
+              data-testid="navy-collapse-toggle"
+              variant="secondary"
+              aria-expanded={!collapsed}
+              aria-controls="navy-docked-side-nav-panel"
+              onClick={() => setCollapsed((current) => !current)}
+            >
+              {collapsed ? '사이드바 펼치기' : '사이드바 접기'}
+            </Button>
+            <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)' }}>
+              LDS · Brand navy
+            </span>
+          </header>
+        </section>
+      </main>
+    </div>
+  );
+}
+
 function ControlledCollapseFixture() {
   const [collapsed, setCollapsed] = React.useState(false);
   const [requests, setRequests] = React.useState(0);
@@ -526,6 +646,80 @@ export const DockedSurface = {
     await waitForWidth(nav, 252);
     if (control.textContent?.trim() !== '사이드바 접기') {
       throw new Error('The expanded visual story must finish in its named state.');
+    }
+    control.blur();
+  },
+};
+
+export const NavyDockedSurface = {
+  name: '변형·상태 · 브랜드 네이비 외형',
+  parameters: storyDescription(
+    '브랜드 표면 토큰을 실제 appearance="brand" API로 적용한 SideNav입니다. 기존 구조·간격·타이포그래피·접힘 동작은 유지하고, 평면 네이비 셸과 hover·active·focus 상태색만 바꿉니다.',
+  ),
+  render: () => <NavyDockedSideNavFixture />,
+  play: async ({ canvasElement }) => {
+    const nav = canvasElement.querySelector('[data-testid="navy-docked-side-nav"]');
+    const activeItem = nav?.querySelector('[data-sidenav-value="overview"]');
+    const activeIcon = activeItem?.querySelector('[data-slot="icon"]');
+    const inactiveItem = nav?.querySelector('[data-sidenav-value="robots"]');
+    const control = canvasElement.querySelector('[data-testid="navy-collapse-toggle"]');
+    if (!nav || !activeItem || !activeIcon || !inactiveItem || !control) {
+      throw new Error('The navy shell demo must render its SideNav, destinations, and external collapse control.');
+    }
+
+    const expectedNavy = resolveCssColor(activeItem, 'backgroundColor', 'var(--component-side-nav-brand-surface)');
+    const expectedActive = resolveCssColor(activeItem, 'backgroundColor', 'transparent');
+    const expectedActiveHover = resolveCssColor(activeItem, 'backgroundColor', 'var(--component-side-nav-brand-active-hover-surface)');
+    const expectedText = resolveCssColor(activeItem, 'color', 'var(--component-side-nav-brand-active-foreground)');
+    const expectedMuted = resolveCssColor(inactiveItem, 'color', 'var(--component-side-nav-brand-muted-foreground)');
+    const activeBackground = getComputedStyle(activeItem).backgroundColor;
+    const navStyle = getComputedStyle(nav);
+    if (nav.dataset.appearance !== 'brand'
+      || nav.querySelectorAll('[aria-current="page"]').length !== 1
+      || navStyle.backgroundColor !== expectedNavy
+      || navStyle.backgroundImage !== 'none'
+      || activeBackground !== expectedActive
+      || getComputedStyle(activeItem).color !== expectedText
+      || getComputedStyle(activeIcon).color !== expectedText
+      || activeItem.getAttribute('aria-current') !== 'page'
+      || getComputedStyle(inactiveItem).color !== expectedMuted) {
+      throw new Error('The brand appearance must resolve a flat brand surface with no gradient, muted destinations, and accent-ink selection without changing SideNav semantics.');
+    }
+
+    const inactiveBackground = getComputedStyle(inactiveItem).backgroundColor;
+    const expectedHover = resolveCssColor(inactiveItem, 'backgroundColor', 'var(--component-side-nav-brand-hover-surface)');
+    const expectedHoverText = resolveCssColor(inactiveItem, 'color', 'var(--component-side-nav-brand-hover-foreground)');
+    if (expectedHover === inactiveBackground) {
+      throw new Error('The brand appearance must keep the inactive and hover surfaces distinct.');
+    }
+
+    await userEvent.hover(inactiveItem);
+    await waitFor(() => {
+      if (getComputedStyle(inactiveItem).backgroundColor !== expectedHover
+        || getComputedStyle(inactiveItem).color !== expectedHoverText) {
+        throw new Error('Hover must raise an inactive destination with the governed brand surface and foreground.');
+      }
+    });
+    await userEvent.unhover(inactiveItem);
+
+    await userEvent.hover(activeItem);
+    await waitFor(() => {
+      if (getComputedStyle(activeItem).backgroundColor !== expectedActiveHover
+        || getComputedStyle(activeItem).color !== expectedText) {
+        throw new Error('Hover must add a surface behind the active accent ink without changing its selected foreground.');
+      }
+    });
+    await userEvent.unhover(activeItem);
+
+    await userEvent.click(control);
+    await waitForWidth(nav, 68);
+    if (control.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('The external shell control must announce the collapsed navy rail.');
+    }
+    await userEvent.click(control);
+    await waitForWidth(nav, 268);
+    if (nav.dataset.appearance !== 'brand') {
+      throw new Error('The brand appearance must persist across collapse and expansion.');
     }
     control.blur();
   },

@@ -127,7 +127,7 @@
     },
     {
       "subject": "명시 규칙 2",
-      "rule": "원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive 13BE4C ≈ 2.5:1, -cautionary EB9C33 ≈ 2.3:1, -negative EE5656 ≈ 3.2:1. accent(3878B3 ≈ 4.7:1)만 통과합니다."
+      "rule": "원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive #13BE4C ≈ 2.5:1, -cautionary #EB9C33 ≈ 2.3:1, -negative #EE5656 ≈ 3.2:1. accent(#3878B3 ≈ 4.7:1)만 통과합니다."
     },
     {
       "subject": "명시 규칙 3",

@@ -127,6 +127,8 @@ export function ConversationMessage({
   lifecycle = { kind: 'static' },
   author,
   authorLabel,
+  identityVisibility = 'visible',
+  messageActionsVisibility = 'always',
   roleBadgeLabel,
   avatar,
   timestamp,
@@ -168,7 +170,13 @@ export function ConversationMessage({
   const lifecycleState = lifecycleKind === 'static' ? undefined : resolvedLifecycle.state;
   const normalizedDensity = density === 'compact' ? 'compact' : 'comfortable';
   const densityLayout = DENSITY_LAYOUT[normalizedDensity];
-  const identityVisible = !systemMessage && (groupPosition === 'single' || groupPosition === 'first');
+  // identityVisibility="hidden" keeps the identity in the accessible name only.
+  // It exists for surfaces where the presentation already states the speaker —
+  // e.g. a two-party chat whose outbound solid-primary bubble can only be "me" —
+  // so the visible label row would repeat what alignment and fill already say.
+  const identityVisible = !systemMessage
+    && identityVisibility !== 'hidden'
+    && (groupPosition === 'single' || groupPosition === 'first');
   // A grouped run keeps one stable content column even when consumers only
   // provide the avatar on the first item. Standalone messages without an
   // avatar do not pay for an empty identity column.
@@ -199,6 +207,41 @@ export function ConversationMessage({
       : defaultStatusLabel;
   const hasMessageActions = Array.isArray(messageActions) && messageActions.length > 0;
   const hasActions = actions != null || canRetry || hasMessageActions;
+  // messageActionsVisibility="on-demand" rests the action bar at opacity 0 and
+  // reveals it on hover or focus-within. The bar keeps its layout row (no
+  // reflow), its buttons stay in the accessible tree, and keyboard focus
+  // reveals it — so this is a visual de-emphasis, not a disclosure. It never
+  // applies where hover cannot (coarse pointers) or where the bar carries the
+  // failed-turn retry control, which must stay visible as a recovery path.
+  const [actionsRevealed, setActionsRevealed] = React.useState(false);
+  const [hoverCapable, setHoverCapable] = React.useState(() => (
+    typeof window === 'undefined' ? false : window.matchMedia('(hover: hover)').matches
+  ));
+  React.useEffect(() => {
+    if (messageActionsVisibility !== 'on-demand') return undefined;
+    const query = window.matchMedia('(hover: hover)');
+    const sync = () => setHoverCapable(query.matches);
+    sync();
+    query.addEventListener('change', sync);
+    return () => query.removeEventListener('change', sync);
+  }, [messageActionsVisibility]);
+  const onDemandActions = messageActionsVisibility === 'on-demand' && hoverCapable && !canRetry;
+  const dimActions = onDemandActions && !actionsRevealed;
+  const actionRevealHandlers = onDemandActions
+    ? {
+        onMouseEnter: (event) => { rest.onMouseEnter?.(event); setActionsRevealed(true); },
+        onMouseLeave: (event) => { rest.onMouseLeave?.(event); setActionsRevealed(false); },
+        onFocusCapture: (event) => { rest.onFocusCapture?.(event); setActionsRevealed(true); },
+        onBlurCapture: (event) => {
+          rest.onBlurCapture?.(event);
+          if (!event.currentTarget.contains(event.relatedTarget)) setActionsRevealed(false);
+        },
+      }
+    : undefined;
+  const actionBarVisibilityStyle = {
+    opacity: dimActions ? 0 : 1,
+    transition: 'opacity var(--dur-fast) var(--ease-out)',
+  };
   // inlineSources drops the (typically collapsed) provenance onto the same
   // footer row as the action icons — ChatGPT-style — but keeps it a sibling of,
   // not a member of, the "메시지 동작" group so it still announces as provenance
@@ -444,6 +487,7 @@ export function ConversationMessage({
       aria-labelledby={resolvedAriaLabelledby}
       aria-busy={busy || undefined}
       className={['lk-conversation-message', className].filter(Boolean).join(' ')}
+      {...actionRevealHandlers}
       data-direction={resolvedDirection}
       data-author-role={authorRole}
       data-message-presentation={resolvedPresentation}
@@ -451,6 +495,8 @@ export function ConversationMessage({
       data-density={normalizedDensity}
       data-lifecycle-kind={lifecycleKind}
       data-lifecycle-state={lifecycleState}
+      data-identity-visibility={identityVisibility === 'hidden' ? 'hidden' : undefined}
+      data-message-actions-visibility={messageActionsVisibility === 'on-demand' ? 'on-demand' : undefined}
       style={{
         display: 'grid',
         gridTemplateColumns,
@@ -663,6 +709,7 @@ export function ConversationMessage({
                   gap: densityLayout.internalGap,
                   minWidth: 0,
                   flexWrap: 'wrap',
+                  ...actionBarVisibilityStyle,
                 }}
               >
                 {actionButtons}
@@ -685,6 +732,7 @@ export function ConversationMessage({
               width: '100%',
               minWidth: 0,
               flexWrap: 'wrap',
+              ...actionBarVisibilityStyle,
             }}
           >
             {actionButtons}
