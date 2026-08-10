@@ -89,6 +89,16 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
 
+## 0.1.0-rc.69.5 - 2026-08-10
+
+### Changed
+
+- 쉬는 카드의 그림자를 오버레이 등급에서 내렸다. `Card`의 기본 rest를 `md`(`0 16px 40px`)에서 새 `xs`(`0 2px 4px`)로, `interactive` hover를 `lg`에서 `md`로 옮기고 `FeatureCard`의 하드코딩 값도 `xs`로 맞췄다. `NewsCard`·`ListingCard`가 이미 쓰던 rest=`xs` / lift=`md` 규칙과 같아진다. `md`는 Tooltip·Combobox 드롭다운·Fab이 쓰는 부유 요소 등급이라 놓여 있는 표면의 평상시 값으로 부적합했다. 토큰 값 자체는 바꾸지 않았으므로 오버레이 계열은 그대로다.
+
+### Added
+
+- `--component-card-shadow-xs`(= `--shadow-xs`)와 `Card`의 `elevation="xs"`.
+
 ## 0.1.0-rc.69.4 - 2026-08-10
 
 ### Added
