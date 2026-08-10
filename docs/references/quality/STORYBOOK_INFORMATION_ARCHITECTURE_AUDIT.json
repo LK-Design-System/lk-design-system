@@ -23937,7 +23937,7 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/Brand.stories.jsx",
-      "sourceSha256": "210915dfae82a0d0e809ea346a2bd126a3914e124b2426ecf6b5528ed1e4290d",
+      "sourceSha256": "562b404bf348915b3776af66dc256972786d328827e901f8f32a855585cb914b",
       "primaryOwner": "Lockup",
       "ownerComponents": [
         "Lockup"
@@ -23960,8 +23960,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Theme override or brand surface; keep this page and document allowed and disallowed use.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-05",
-      "reviewedSourceSha256": "210915dfae82a0d0e809ea346a2bd126a3914e124b2426ecf6b5528ed1e4290d",
+      "reviewedAt": "2026-08-10",
+      "reviewedSourceSha256": "562b404bf348915b3776af66dc256972786d328827e901f8f32a855585cb914b",
       "stories": [
         {
           "id": "lds-theme-brand-lk-robotics-logo--lk-robotics-logo",
@@ -24010,7 +24010,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation.\\n\\n2026-08-10 reviewed the logo page after replacing AI-original wording with pinned Montserrat and Noto Sans KR construction rules. Public purpose, canvas guidance, ownership, role, visibility, and the hidden visual specimen remain correct. The corporate descriptor was visually checked at the documented 160 px minimum in the regenerated Storybook baseline; story IDs and visibility are unchanged."
     },
     {
       "title": "LDS Theme/Controls/Theme Toggle",

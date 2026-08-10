@@ -35,3 +35,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+## Montserrat
+
+The outlined `ROBOTICS` wordmark geometry in this package was generated from
+Montserrat ExtraBold 800, Version 7.222 (Copyright 2011 The Montserrat Project
+Authors), licensed under the SIL Open Font License 1.1. No font binary or
+runtime font dependency is included. Source and license provenance are kept in
+the root LK Design System repository.

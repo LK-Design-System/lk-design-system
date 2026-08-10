@@ -30,3 +30,26 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Montserrat
+
+The outlined `ROBOTICS` wordmark assets in this package were generated from
+Montserrat ExtraBold 800, Version 7.222 (Copyright 2011 The Montserrat Project
+Authors), licensed under the SIL Open Font License 1.1. No font binary or
+runtime font dependency is included. Source and license provenance are kept in
+the root LK Design System repository.
+
+## Pretendard
+
+This package includes unmodified Pretendard v1.3.9 webfonts for UI typography.
+Pretendard is Copyright (c) 2021, Kil Hyung-jin and is licensed under the SIL
+Open Font License 1.1. The full license is included at
+`assets/fonts/Pretendard-LICENSE.txt`.
+
+## Noto Sans KR
+
+The corporate-logo outlines in this package were generated from Noto Sans KR
+Version 2.004-H2 at the ExtraBold `wght=800` instance (Copyright 2014-2021
+Adobe), licensed under the SIL Open Font License 1.1. No Noto font binary or
+runtime dependency is included; pinned source and license provenance are kept
+in the root LK Design System repository.

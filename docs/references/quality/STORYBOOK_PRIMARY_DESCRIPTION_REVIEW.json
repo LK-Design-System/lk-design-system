@@ -3570,16 +3570,16 @@
       "importPath": "./stories/Brand.stories.jsx",
       "storyId": "lds-theme-brand-lk-robotics-logo--lk-robotics-logo",
       "exportName": "LKRoboticsLogo",
-      "descriptionHash": "ae86630c8d4c9766b96e49a4fd9a6d8d5d1fb060c38b437c84d229724ccbe014",
+      "descriptionHash": "40976d241b9d8e0949a6de99bed9a1659c7e5642f72c675c079e4833deff97eb",
       "sentences": [
         {
-          "hash": "fa574170eb2f461320aa6e57c87f89b88dad6b37dedd136ce708b5c607c910c6",
-          "text": "공식 LK ROBOTICS SVG의 기업 표기형·기본형과 같은 원본 path를 사용하는 제품 UI 파생형을 확인합니다.",
+          "hash": "efed3ab427ff431881c75e7c16e71de45d640c2421af00fe5c1431ba0e4c44b9",
+          "text": "규정된 LK ROBOTICS 기업 표기형·기본형과 같은 생성 원본을 사용하는 제품 UI 파생형을 확인합니다.",
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "4b2c1a14648752d4fbb3cabdc0a57a37596c9b7a9ed7436ab7f45ddbcdfa0604",
-          "text": "실제 적용에서는 배경 대비와 최소 크기를 지키고, 늘이기·회전·재채색 없이 제공된 조합을 사용하세요.",
+          "hash": "955879609a713ddf090c8c9f1dd4bba85cb650c1b0513f82f44b74d781deebcd",
+          "text": "실제 적용에서는 배경 대비와 최소 크기를 지키고, 다시 조판하거나 늘이기·회전·재채색하지 말고 제공된 조합을 사용하세요.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -3652,6 +3652,22 @@
       "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
       "hash": "ffaa898526f8c3452582de372f147320a5e2adc83a714873b0644b00dd8277c1",
       "text": "각 상태와 관측 시점, 세부 근거, 원본 이동 경로가 과장 없이 구분되는지 확인하세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Theme/Brand/LK ROBOTICS Logo",
+      "importPath": "./stories/Brand.stories.jsx",
+      "hash": "fa574170eb2f461320aa6e57c87f89b88dad6b37dedd136ce708b5c607c910c6",
+      "text": "공식 LK ROBOTICS SVG의 기업 표기형·기본형과 같은 원본 path를 사용하는 제품 UI 파생형을 확인합니다.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Theme/Brand/LK ROBOTICS Logo",
+      "importPath": "./stories/Brand.stories.jsx",
+      "hash": "4b2c1a14648752d4fbb3cabdc0a57a37596c9b7a9ed7436ab7f45ddbcdfa0604",
+      "text": "실제 적용에서는 배경 대비와 최소 크기를 지키고, 늘이기·회전·재채색 없이 제공된 조합을 사용하세요.",
       "previousDecision": "retained-in-canvas"
     }
   ],
