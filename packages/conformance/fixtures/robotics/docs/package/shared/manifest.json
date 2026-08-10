@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "kind": "fixture-upstream-documentation-snapshot",
+  "source": {
+    "repository": "LK-Design-System/lk-design-system",
+    "ref": "lds-v0.1.0-rc.62"
+  }
+}

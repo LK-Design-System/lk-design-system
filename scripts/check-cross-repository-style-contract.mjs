@@ -1,4 +1,5 @@
-import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { access, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
@@ -7,6 +8,34 @@ const root = process.cwd();
 
 async function load(relativePath) {
   return JSON.parse(await readFile(path.join(root, relativePath), 'utf8'));
+}
+
+function sha256(bytes) {
+  return createHash('sha256').update(bytes).digest('hex');
+}
+
+function descendant(directory, relativePath) {
+  if (typeof relativePath !== 'string' || !relativePath || relativePath.includes('\\')) return null;
+  const absolute = path.resolve(directory, relativePath);
+  const relative = path.relative(directory, absolute);
+  return relative && !relative.startsWith('..') && !path.isAbsolute(relative) ? absolute : null;
+}
+
+async function walk(directory, output = []) {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const absolute = path.join(directory, entry.name);
+    if (entry.isDirectory()) await walk(absolute, output);
+    else if (entry.isFile()) output.push(absolute);
+  }
+  return output;
+}
+
+function contractWithoutProjectedReferences(contract) {
+  return {
+    ...contract,
+    facets: (contract.facets ?? []).map((facet) => ({ ...facet, references: [] })),
+    componentMapping: { ...contract.componentMapping, references: [] },
+  };
 }
 
 function formatErrors(errors = []) {
@@ -83,12 +112,192 @@ function assertSameStrings(label, left, right) {
 
 function checkRoboticsProfile(styleContract, externalSurface, label) {
   const profile = styleContract.profiles['robotics-ui'];
+  if (externalSurface.package.name !== profile.package.name
+    || externalSurface.package.version !== profile.package.version
+    || externalSurface.package.repository !== profile.repository) {
+    throw new Error(`${label} package identity differs between the style contract and external-surface manifest.`);
+  }
   assertSameStrings(`${label} local token definitions`, profile.localTokenDefinitions.names, externalSurface.localTokenDefinitions);
   assertSameStrings(
     `${label} inherited runtime custom properties`,
     profile.inheritedRuntimeCustomProperties.map((entry) => entry.name),
     externalSurface.inheritedRuntimeCustomProperties,
   );
+}
+
+async function checkRoboticsDocumentation(externalSurface, packageRoot, ldsSourceRoot, label) {
+  const docs = externalSurface.documentation;
+  const packageJson = JSON.parse(await readFile(path.join(packageRoot, 'package.json'), 'utf8'));
+  const bundleRoot = path.posix.dirname(docs.files.manifest.path);
+  const canonicalPath = descendant(ldsSourceRoot, docs.canonicalContract.source.path);
+  if (!canonicalPath) throw new Error(`${label} canonical adoption source escapes the LDS root.`);
+  const canonicalBytes = await readFile(canonicalPath);
+  if (sha256(canonicalBytes) !== docs.canonicalContract.source.sha256) {
+    throw new Error(`${label} canonical adoption contract hash drift.`);
+  }
+  const canonicalContract = JSON.parse(canonicalBytes);
+  if (canonicalContract.kind !== docs.canonicalContract.kind
+    || canonicalContract.contractVersion !== docs.canonicalContract.contractVersion) {
+    throw new Error(`${label} canonical adoption contract identity or version drift.`);
+  }
+
+  const declared = [...Object.values(docs.files), ...docs.domainDocuments];
+  const paths = declared.map((entry) => entry.path);
+  if (new Set(paths).size !== paths.length) throw new Error(`${label} documentation paths are not unique.`);
+  for (const record of declared) {
+    const target = descendant(packageRoot, record.path);
+    if (!target) throw new Error(`${label} documentation path escapes its package: ${record.path}.`);
+    const bytes = await readFile(target);
+    if (sha256(bytes) !== record.sha256) throw new Error(`${label} documentation hash drift: ${record.path}.`);
+  }
+
+  const manifest = JSON.parse(await readFile(path.join(packageRoot, docs.files.manifest.path), 'utf8'));
+  const expectedIdentity = { name: externalSurface.package.name, version: externalSurface.package.version, layer: 'robotics' };
+  if (manifest.schemaVersion !== 1
+    || manifest.kind !== 'lds-package-documentation'
+    || JSON.stringify(manifest.package) !== JSON.stringify(expectedIdentity)) {
+    throw new Error(`${label} packaged documentation manifest identity drift.`);
+  }
+  if (manifest.adoption?.contractKind !== docs.canonicalContract.kind
+    || manifest.adoption?.contractVersion !== docs.canonicalContract.contractVersion) {
+    throw new Error(`${label} packaged adoption identity or version drift.`);
+  }
+  if (JSON.stringify(manifest.publicDocs) !== JSON.stringify(docs.publicDocs)) {
+    throw new Error(`${label} packaged and external-surface public documentation URLs differ.`);
+  }
+  const expectedCanonicalSource = {
+    kind: docs.canonicalContract.kind,
+    version: docs.canonicalContract.contractVersion,
+    source: docs.canonicalContract.source,
+    snapshotManifestSha256: docs.canonicalContract.snapshotManifestSha256,
+  };
+  if (JSON.stringify(manifest.source?.canonicalAdoption) !== JSON.stringify(expectedCanonicalSource)) {
+    throw new Error(`${label} packaged canonical adoption source differs from the external surface.`);
+  }
+  if (JSON.stringify(manifest.source?.robotics) !== JSON.stringify({
+    repository: externalSurface.package.repository,
+    ref: `v${externalSurface.package.version}`,
+    refStatus: externalSurface.package.refStatus,
+  })) {
+    throw new Error(`${label} packaged Robotics source identity or version drift.`);
+  }
+  const expectedEntrypoints = {
+    llms: `./${path.posix.relative(bundleRoot, docs.files.llms.path)}`,
+    adoptionChecklist: `./${path.posix.relative(bundleRoot, docs.files.checklist.path)}`,
+    adoptionReportSchema: `./${path.posix.relative(bundleRoot, docs.files.reportSchema.path)}`,
+    adoptionReportExample: `./${path.posix.relative(bundleRoot, docs.files.reportExample.path)}`,
+    adoptionConfigSchema: `./${path.posix.relative(bundleRoot, docs.files.configSchema.path)}`,
+    adoptionWorkflow: `./${path.posix.relative(bundleRoot, docs.files.workflow.path)}`,
+    domainIndex: `./${path.posix.relative(bundleRoot, docs.files.domainIndex.path)}`,
+    tokenManifest: `./${path.posix.relative(bundleRoot, docs.files.tokenManifest.path)}`,
+    domainSymbolRegistry: `./${path.posix.relative(bundleRoot, docs.files.domainSymbolRegistry.path)}`,
+  };
+  if (JSON.stringify(manifest.entrypoints) !== JSON.stringify(expectedEntrypoints)) {
+    throw new Error(`${label} packaged documentation entrypoint drift.`);
+  }
+  const expectedResources = {
+    tokens: {
+      path: `./${path.posix.relative(bundleRoot, docs.files.tokenManifest.path)}`,
+      sha256: docs.files.tokenManifest.sha256,
+    },
+    domainSymbols: {
+      path: `./${path.posix.relative(bundleRoot, docs.files.domainSymbolRegistry.path)}`,
+      sha256: docs.files.domainSymbolRegistry.sha256,
+    },
+  };
+  if (JSON.stringify(manifest.resources) !== JSON.stringify(expectedResources)) {
+    throw new Error(`${label} packaged documentation resource records differ from the external surface.`);
+  }
+
+  const docsRoot = path.join(packageRoot, ...bundleRoot.split('/'));
+  const actualFiles = (await walk(docsRoot))
+    .map((file) => path.relative(docsRoot, file).replaceAll('\\', '/'))
+    .filter((file) => file !== 'manifest.json')
+    .sort();
+  const records = Array.isArray(manifest.documents) ? manifest.documents : [];
+  const recordPaths = records.map((record) => record.path).sort();
+  if (JSON.stringify(actualFiles) !== JSON.stringify(recordPaths)) {
+    throw new Error(`${label} documentation manifest does not cover the complete docs directory.`);
+  }
+  const recordByPath = new Map();
+  for (const record of records) {
+    if (recordByPath.has(record.path)) throw new Error(`${label} duplicate documentation manifest record: ${record.path}.`);
+    recordByPath.set(record.path, record);
+    const target = descendant(docsRoot, record.path);
+    if (!target || sha256(await readFile(target)) !== record.sha256) {
+      throw new Error(`${label} documentation manifest hash drift: ${record.path}.`);
+    }
+  }
+  for (const record of declared.filter((entry) => entry.path !== docs.files.manifest.path)) {
+    const relative = path.posix.relative(bundleRoot, record.path);
+    if (recordByPath.get(relative)?.sha256 !== record.sha256) {
+      throw new Error(`${label} external-surface and manifest records differ: ${record.path}.`);
+    }
+  }
+  const expectedDomainRecords = docs.domainDocuments.map((record) => ({
+    path: path.posix.relative(bundleRoot, record.path),
+    sha256: record.sha256,
+  }));
+  const actualDomainRecords = Array.isArray(manifest.domain?.documents)
+    ? manifest.domain.documents.map((record) => ({ path: record.path, sha256: record.sha256 }))
+    : [];
+  if (JSON.stringify(actualDomainRecords) !== JSON.stringify(expectedDomainRecords)) {
+    throw new Error(`${label} packaged domain document records differ from the external surface.`);
+  }
+  for (const record of manifest.domain?.documents ?? []) {
+    if (typeof record.sourcePath !== 'string' || !/^[0-9a-f]{64}$/.test(record.sourceSha256 ?? '')) {
+      throw new Error(`${label} packaged domain document source provenance is incomplete: ${record.path}.`);
+    }
+  }
+
+  const checklist = JSON.parse(await readFile(path.join(packageRoot, docs.files.checklist.path), 'utf8'));
+  if (JSON.stringify(contractWithoutProjectedReferences(checklist))
+    !== JSON.stringify(contractWithoutProjectedReferences(canonicalContract))) {
+    throw new Error(`${label} packaged checklist decisions differ from the canonical adoption contract.`);
+  }
+  const checklistFile = path.join(packageRoot, docs.files.checklist.path);
+  const references = [
+    ...(checklist.facets ?? []).flatMap((facet) => facet.references ?? []),
+    ...(checklist.componentMapping?.references ?? []),
+  ];
+  for (const reference of references) {
+    if (typeof reference !== 'string' || /^https?:/.test(reference) || reference.startsWith('@')) {
+      throw new Error(`${label} checklist is not self-contained: ${reference}.`);
+    }
+    const target = path.resolve(path.dirname(checklistFile), reference);
+    const relative = path.relative(packageRoot, target);
+    if (!relative || relative.startsWith('..') || path.isAbsolute(relative)) {
+      throw new Error(`${label} checklist reference escapes the package: ${reference}.`);
+    }
+    await access(target).catch(() => {
+      throw new Error(`${label} checklist reference does not resolve: ${reference}.`);
+    });
+  }
+
+  const expectedExports = {
+    './package.json': './package.json',
+    './design-system.json': `./${docs.files.manifest.path}`,
+    './llms.txt': `./${docs.files.llms.path}`,
+    './adoption-checklist.json': `./${docs.files.checklist.path}`,
+    './docs/*': `./${bundleRoot}/*`,
+  };
+  for (const [subpath, target] of Object.entries(expectedExports)) {
+    if (packageJson.exports?.[subpath] !== target) throw new Error(`${label} package export ${subpath} must target ${target}.`);
+  }
+  const bundlePublished = packageJson.files?.some((entry) => entry === bundleRoot || bundleRoot.startsWith(`${entry.replace(/\/$/, '')}/`));
+  const packageInstructions = ['README.md', 'AGENTS.md', 'CLAUDE.md', 'llms.txt'];
+  if (!packageInstructions.every((file) => packageJson.files?.includes(file)) || !bundlePublished) {
+    throw new Error(`${label} package files must include ${packageInstructions.join(', ')} and cover ${bundleRoot}.`);
+  }
+  if (packageJson.lds?.layer !== 'robotics'
+    || packageJson.lds?.manifest !== `./${docs.files.manifest.path}`
+    || packageJson.lds?.llms !== `./${docs.files.llms.path}`
+    || packageJson.lds?.adoptionChecklist !== `./${docs.files.checklist.path}`
+    || packageJson.lds?.adoptionReportSchema !== `./${docs.files.reportSchema.path}`
+    || packageJson.lds?.storybook !== docs.publicDocs.storybook
+    || packageJson.homepage !== docs.publicDocs.storybook) {
+    throw new Error(`${label} package LDS metadata or live documentation URL drift.`);
+  }
 }
 
 function checkLds3dProfile(styleContract, externalSurface, label) {
@@ -139,6 +348,18 @@ checkRoboticsProfile(fixtureContract, fixtureSurface, 'Fixture Robotics');
 checkLds3dProfile(fixtureContract, fixtureLds3dSurface, 'Fixture LDS3D');
 checkProfileDependencyPins(contract, 'Production contract');
 checkProfileDependencyPins(fixtureContract, 'Fixture contract');
+await checkRoboticsDocumentation(
+  surface,
+  path.join(root, 'node_modules', '@lk-design-system', 'lds-robotics-ui'),
+  root,
+  'Robotics',
+);
+await checkRoboticsDocumentation(
+  fixtureSurface,
+  path.join(root, 'packages', 'conformance', 'fixtures', 'robotics'),
+  path.join(root, 'packages', 'conformance', 'fixtures', 'lds'),
+  'Fixture Robotics',
+);
 
 if (contract.profiles['robotics-ui'].policyContracts.length !== 1
   || contract.profiles['robotics-ui'].policyContracts[0] !== roboticsPolicyPath

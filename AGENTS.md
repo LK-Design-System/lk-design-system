@@ -17,6 +17,15 @@
 - After temporary-branch cleanup, fetch with pruning and verify the current branch, local branch list, remote branch list, worktree status, and local/remote commit parity. Do not hand off as complete while an agent-created temporary branch remains unless the user explicitly asks to keep it or cleanup is externally blocked.
 - Do not delete a pre-existing or unrelated branch merely because this startup check found it. Warn the user, state whether it is already merged, and obtain explicit approval before deleting it.
 
+## LDS UI Adoption And Migration (MANDATORY)
+
+- Treat requests to create, adopt, migrate, convert, restyle, or "LDS로 전환" a product UI as an LDS UI adoption task.
+- Before editing, read the canonical [`LDS UI adoption workflow`](docs/LDS_UI_ADOPTION_WORKFLOW.md) and review its machine contract and report schema under `docs/references/adoption/`.
+- 컴포넌트 교체만으로 LDS 전환은 완료되지 않는다. Review every required non-component facet and `componentMapping`; record a typed-evidence verdict, and never omit a facet silently. `not-applicable` requires a concrete reason, while `blocked` prevents completion.
+- Use `full-surface` for an existing UI adoption, migration, conversion, restyle, parity implementation, or material redesign so unchanged legacy code is audited too. Use `changed-ui` only for an explicitly bounded incremental adoption and document the untouched boundary.
+- If adoption reveals a needed shared component, token, asset, or pattern change, treat it as separately scoped LDS authoring. Follow `docs/COMPONENT_WORKFLOW.md`, `docs/TOKEN_GOVERNANCE.md`, and the Scope Escalation Gate before expanding the implementation.
+- For a Robotics UI consumer, also read `@lk-design-system/lds-robotics-ui/llms.txt` and `@lk-design-system/lds-robotics-ui/design-system.json`, then use the [Robotics Storybook](https://lk-design-system.github.io/lk-design-system-robotics/?path=/docs/lds-robotics-foundation-viewer-tokens--docs) as the owner documentation. Do not assume that the main LDS Storybook copies the Robotics non-component bundle.
+
 ## Storybook Scope
 
 - Storybook is reserved for actual design-system components, patterns, variants, states, and visual parity examples.

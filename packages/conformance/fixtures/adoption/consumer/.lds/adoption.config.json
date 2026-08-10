@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "kind": "lds-ui-adoption-config",
+  "repository": "fixture-consumer",
+  "uiRoots": ["src/**/*", "admin/**/*"],
+  "styleEntry": "src/styles.css",
+  "requiredStyleImports": [
+    "@lk-design-system/lds-core/styles.css",
+    "@lk-design-system/lds-theme/styles.css"
+  ],
+  "excludedPaths": ["src/styles.css"],
+  "reportDirectory": ".lds"
+}

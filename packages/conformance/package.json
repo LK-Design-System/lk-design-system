@@ -8,12 +8,14 @@
     "lds-conformance": "./src/cli.mjs"
   },
   "scripts": {
-    "check": "node ./src/cli.mjs verify-fixtures"
+    "check": "node ./src/cli.mjs verify-fixtures && node ./src/cli.mjs verify-adoption-contract && node ./src/cli.mjs verify-adoption-fixtures"
   },
   "engines": {
     "node": ">=22"
   },
   "dependencies": {
-    "typescript": "^5.9.3"
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "typescript": "5.9.3"
   }
 }

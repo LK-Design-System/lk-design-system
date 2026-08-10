@@ -38,13 +38,13 @@ jobs:
       # consumer repositories, for the same reason: the masthead audit parses
       # TSX with the TypeScript compiler, so a bare `node cli.mjs` dies with
       # ERR_MODULE_NOT_FOUND before running a single check. Installing only the
-      # conformance package's own dependencies keeps this job cheap — no
-      # workspace install, no lockfile, no registry credentials.
+      # conformance package's own locked dependencies keeps this job cheap and
+      # reproducible without a workspace install or registry credentials.
       - name: Install pinned contract dependencies
-        run: npm install --omit=dev --no-audit --no-fund --prefix packages/conformance
+        run: npm ci --ignore-scripts --omit=dev --no-audit --no-fund --prefix packages/conformance
 
-      - name: Verify portable Robotics and LDS3D style diagnostics
-        run: node packages/conformance/src/cli.mjs verify-fixtures
+      - name: Verify portable conformance diagnostics
+        run: npm run check --prefix packages/conformance
 
   export-canonical-dist:
     name: Export canonical Windows artifacts
@@ -83,18 +83,26 @@ jobs:
             packages/core/src
             packages/core/tokens
             packages/core/assets
+            packages/core/docs
+            packages/core/README.md
             packages/core/styles.css
             packages/theme/src
             packages/theme/tokens
             packages/theme/assets
+            packages/theme/docs
+            packages/theme/README.md
             packages/theme/styles.css
             packages/product/src
             packages/product/tokens
             packages/product/assets
+            packages/product/docs
+            packages/product/README.md
             packages/product/styles.css
             packages/compat/src
             packages/compat/tokens
             packages/compat/assets
+            packages/compat/docs
+            packages/compat/README.md
             packages/compat/styles.css
           if-no-files-found: error
 

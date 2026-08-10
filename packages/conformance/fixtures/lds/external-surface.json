@@ -1,11 +1,51 @@
 {
   "$schema": "./ROBOTICS_EXTERNAL_SURFACE.schema.json",
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "kind": "lds-robotics-external-public-surface",
   "package": {
     "name": "@lk-design-system/lds-robotics-ui",
-    "version": "0.1.0-rc.4",
-    "repository": "LK-Design-System/lk-design-system-robotics"
+    "version": "0.1.0-rc.5",
+    "repository": "LK-Design-System/lk-design-system-robotics",
+    "refStatus": "release-candidate"
+  },
+  "documentation": {
+    "canonicalContract": {
+      "kind": "lds-ui-adoption-contract",
+      "contractVersion": "1",
+      "snapshotManifestSha256": "98f9e4930eb5d89cab0e86042be2ba06d5f5b22f9b819df192b6bee558869977",
+      "source": {
+        "repository": "LK-Design-System/lk-design-system",
+        "ref": "lds-v0.1.0-rc.62",
+        "refStatus": "release-candidate",
+        "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
+        "sha256": "94769c5a2da621be49298281343e54c880af853a8e15e10130f2824e081aa2d8"
+      }
+    },
+    "files": {
+      "manifest": { "path": "docs/package/manifest.json", "sha256": "1b346432a3e4eeaa02a1bde8da19c27e2667a82af786b991462249d53bbe7390" },
+      "checklist": { "path": "docs/package/adoption-checklist.json", "sha256": "900aba6614881280d4c3e2a271fea00f6f5087174f5b38fc866e1c228c67e5c2" },
+      "contractSchema": { "path": "docs/package/LDS_UI_ADOPTION_CONTRACT.schema.json", "sha256": "67aa871ad7b5ef957f4cbaffb34216ce814eb92bdc4bb3ae5544eb231b5ddd89" },
+      "reportSchema": { "path": "docs/package/adoption-report.schema.json", "sha256": "1eeda945b898987559ea52482d6528c08ed478e1459b70ff7c5bb49d91ea3476" },
+      "reportExample": { "path": "docs/package/adoption-report.example.json", "sha256": "e65c5a1f75ab11c74434acfbaa6445712b6ce55e8c2b9b5c65fe02f72980b35b" },
+      "configSchema": { "path": "docs/package/adoption-config.schema.json", "sha256": "3efb53268226353bfae3b810a7c9a7091cd84b0c2c75f488a4e0ccdb2e864e35" },
+      "workflow": { "path": "docs/package/adoption-workflow.md", "sha256": "a455617c62acc0776294ebeabd644316aa3b4b9a40f2b5077edaed7b1ad2b75b" },
+      "llms": { "path": "docs/package/llms.txt", "sha256": "e22d7093096a8b8fc6895f904ad695d924fee4f26718e9b8b78bf9f9637df7b4" },
+      "domainIndex": { "path": "docs/package/domain/README.md", "sha256": "fb5f099dc5b1d97b62c4b6cef537dd5161700a0d40b4e5cd6ec9e1e14c14b8b6" },
+      "tokenManifest": { "path": "docs/package/tokens/manifest.json", "sha256": "e0d9a34680abdb1d0ad0c351acf794cef4318ef8eb4c831c71620b0fe89297fe" },
+      "domainSymbolRegistry": { "path": "docs/package/domain-symbol-registry.json", "sha256": "b0dab980d97c6eeda04e701d8ec31f24d5af4701287f7f19d2199ded53f14686" }
+    },
+    "domainDocuments": [
+      { "path": "docs/package/domain/ROBOTICS_UI_ADOPTION.md", "sha256": "8b68ff70b7cdaf16a49bb2a26a286f8066248b98cdace89ba10bdea3d3d87918" }
+    ],
+    "publicDocs": {
+      "storybook": "https://lk-design-system.github.io/lk-design-system-robotics/?path=/docs/fixture-robotics--docs",
+      "llms": "https://lk-design-system.github.io/lk-design-system-robotics/llms.txt",
+      "designSystem": "https://lk-design-system.github.io/lk-design-system-robotics/design-system.json",
+      "adoptionChecklist": "https://lk-design-system.github.io/lk-design-system-robotics/adoption-checklist.json",
+      "adoptionReportSchema": "https://lk-design-system.github.io/lk-design-system-robotics/adoption-report.schema.json",
+      "adoptionReportExample": "https://lk-design-system.github.io/lk-design-system-robotics/adoption-report.example.json",
+      "adoptionWorkflow": "https://lk-design-system.github.io/lk-design-system-robotics/adoption-workflow.md"
+    }
   },
   "upstreamTokenDependencies": ["--color-semantic-primary-normal"],
   "localTokenDefinitions": ["--component-viewer-surface"],

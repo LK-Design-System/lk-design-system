@@ -3,19 +3,99 @@
   "$id": "https://lk-robotics.github.io/schemas/lds-robotics-external-surface.schema.json",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "schemaVersion", "kind", "package", "upstreamTokenDependencies", "localTokenDefinitions", "inheritedRuntimeCustomProperties", "entries"],
+  "required": ["$schema", "schemaVersion", "kind", "package", "documentation", "upstreamTokenDependencies", "localTokenDefinitions", "inheritedRuntimeCustomProperties", "entries"],
   "properties": {
     "$schema": { "const": "./ROBOTICS_EXTERNAL_SURFACE.schema.json" },
-    "schemaVersion": { "const": 2 },
+    "schemaVersion": { "const": 3 },
     "kind": { "const": "lds-robotics-external-public-surface" },
     "package": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name", "version", "repository"],
+      "required": ["name", "version", "repository", "refStatus"],
       "properties": {
         "name": { "const": "@lk-design-system/lds-robotics-ui" },
-        "version": { "const": "0.1.0-rc.4" },
-        "repository": { "const": "LK-Design-System/lk-design-system-robotics" }
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$" },
+        "repository": { "const": "LK-Design-System/lk-design-system-robotics" },
+        "refStatus": { "$ref": "#/$defs/refStatus" }
+      }
+    },
+    "vendoredArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^vendor/lk-design-system-lds-robotics-ui-[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?\\.tgz$"
+        },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "documentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonicalContract", "files", "domainDocuments", "publicDocs"],
+      "properties": {
+        "canonicalContract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "contractVersion", "source", "snapshotManifestSha256"],
+          "properties": {
+            "kind": { "const": "lds-ui-adoption-contract" },
+            "contractVersion": { "type": "string", "minLength": 1 },
+            "snapshotManifestSha256": { "$ref": "#/$defs/sha256" },
+            "source": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["repository", "ref", "refStatus", "path", "sha256"],
+              "properties": {
+                "repository": { "const": "LK-Design-System/lk-design-system" },
+                "ref": { "type": "string", "pattern": "^lds-v[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$" },
+                "refStatus": { "$ref": "#/$defs/refStatus" },
+                "path": { "const": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json" },
+                "sha256": { "$ref": "#/$defs/sha256" }
+              }
+            }
+          }
+        },
+        "files": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["manifest", "checklist", "contractSchema", "reportSchema", "reportExample", "configSchema", "workflow", "llms", "domainIndex", "tokenManifest", "domainSymbolRegistry"],
+          "properties": {
+            "manifest": { "$ref": "#/$defs/documentFile" },
+            "checklist": { "$ref": "#/$defs/documentFile" },
+            "contractSchema": { "$ref": "#/$defs/documentFile" },
+            "reportSchema": { "$ref": "#/$defs/documentFile" },
+            "reportExample": { "$ref": "#/$defs/documentFile" },
+            "configSchema": { "$ref": "#/$defs/documentFile" },
+            "workflow": { "$ref": "#/$defs/documentFile" },
+            "llms": { "$ref": "#/$defs/documentFile" },
+            "domainIndex": { "$ref": "#/$defs/documentFile" },
+            "tokenManifest": { "$ref": "#/$defs/documentFile" },
+            "domainSymbolRegistry": { "$ref": "#/$defs/documentFile" }
+          }
+        },
+        "domainDocuments": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/documentFile" }
+        },
+        "publicDocs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["storybook", "llms", "designSystem", "adoptionChecklist", "adoptionReportSchema", "adoptionReportExample", "adoptionWorkflow"],
+          "properties": {
+            "storybook": { "$ref": "#/$defs/publicUrl" },
+            "llms": { "$ref": "#/$defs/publicUrl" },
+            "designSystem": { "$ref": "#/$defs/publicUrl" },
+            "adoptionChecklist": { "$ref": "#/$defs/publicUrl" },
+            "adoptionReportSchema": { "$ref": "#/$defs/publicUrl" },
+            "adoptionReportExample": { "$ref": "#/$defs/publicUrl" },
+            "adoptionWorkflow": { "$ref": "#/$defs/publicUrl" }
+          }
+        }
       }
     },
     "upstreamTokenDependencies": {
@@ -45,6 +125,27 @@
           "exports": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$" } }
         }
       }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "refStatus": { "enum": ["release-candidate", "published"] },
+    "documentFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$"
+        },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "publicUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://lk-design-system\\.github\\.io/lk-design-system-robotics/"
     }
   }
 }
