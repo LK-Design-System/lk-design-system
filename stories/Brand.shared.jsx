@@ -515,6 +515,7 @@ export const LKRoboticsLogo = {
                 display: 'grid',
                 alignContent: 'center',
                 gap: 'var(--space-4)',
+                minWidth: 0,
                 minHeight: 148,
                 padding: 'var(--space-5)',
                 border: '1px solid var(--color-semantic-line-normal-normal)',
@@ -522,7 +523,7 @@ export const LKRoboticsLogo = {
                 background: 'var(--color-semantic-background-elevated-normal)',
               }}
             >
-              <Lockup variant={variant} tone="ink" height={height} />
+              <Lockup variant={variant} tone="ink" height={height} style={{ width: 'auto', maxWidth: '100%' }} />
               <div style={{ display: 'grid', gap: 4 }}>
                 <strong style={{ color: 'var(--color-semantic-label-normal)' }}>{label}</strong>
                 <code style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 12 }}>
