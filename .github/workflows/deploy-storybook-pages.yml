@@ -42,11 +42,17 @@ jobs:
       - name: Generate workspace package sources
         run: npm run generate:workspace-sources
 
+      - name: Verify canonical adoption documentation
+        run: npm run check:adoption
+
       - name: Build Storybook workspace dependencies
         run: node scripts/build-workspace-packages.mjs --implementation-only
 
       - name: Build Storybook
         run: npm run build:storybook
+
+      - name: Verify published adoption entrypoints
+        run: npm run check:storybook-adoption
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4

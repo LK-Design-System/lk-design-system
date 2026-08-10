@@ -5,9 +5,17 @@
 | Type | Implementation guide |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-12 |
+| Last reviewed | 2026-08-09 |
 
-AI 도구에게 LK ROBOTICS UI 설계나 구현을 맡길 때 가장 먼저 제공할 문서입니다. 목적은 디자인 시스템을 CSS 값 모음이 아니라 디자이너, 엔지니어, AI가 함께 쓰는 공통 언어로 만드는 것입니다.
+AI 도구에게 LK ROBOTICS UI 설계나 구현을 맡길 때 canonical adoption workflow와 함께 제공하는 구현 가이드입니다. 목적은 디자인 시스템을 CSS 값 모음이 아니라 디자이너, 엔지니어, AI가 함께 쓰는 공통 언어로 만드는 것입니다.
+
+## Mandatory LDS UI adoption entry
+
+컴포넌트 교체만으로 LDS 전환은 완료되지 않는다.
+
+제품 UI 신규 구현, LDS 적용·전환·migration·conversion·restyle·parity 구현은 먼저 generated canonical [`LDS UI 적용·전환 워크플로`](LDS_UI_ADOPTION_WORKFLOW.md)를 따릅니다. 판정의 machine-readable 정본과 검증 가능한 report 형식은 각각 [`LDS_UI_ADOPTION_CONTRACT.json`](references/adoption/LDS_UI_ADOPTION_CONTRACT.json), [`LDS_UI_ADOPTION_REPORT.schema.json`](references/adoption/LDS_UI_ADOPTION_REPORT.schema.json)입니다.
+
+워크플로가 6개 비컴포넌트 facet, `componentMapping`, typed evidence, 완료와 예외 계약을 소유합니다. 이 문서는 그 목록을 복제하지 않고 copy, data display, token, severity와 운영 composition의 구현 규칙만 보충합니다. AI용 단일 탐색 진입점은 root [`llms.txt`](../llms.txt)입니다.
 
 ## UI copy conventions
 
@@ -42,6 +50,7 @@ AI 도구에게 LK ROBOTICS UI 설계나 구현을 맡길 때 가장 먼저 제�
 
 ## 기준 소스
 
+- LDS UI 적용·전환 절차: `docs/LDS_UI_ADOPTION_WORKFLOW.md`
 - 런타임 CSS 진입점: `styles.css`
 - 기계가 읽을 수 있는 토큰 소스: `tokens/source.json`
 - 컴포넌트 토큰 런타임 레이어: `tokens/components.css`
@@ -68,8 +77,8 @@ label 계열은 대비 기준으로 용도가 나뉩니다. `label-strong`·`lab
 
 UI 코드를 생성할 때:
 
-- 앱 진입점에서 `@lk-design-system/design-system-core/styles.css`를 한 번 import합니다.
-- 공통 UI를 새로 만들기 전에 패키지가 export하는 React 컴포넌트를 먼저 사용합니다.
+- 앱 진입점에서 사용하는 layer의 owner-package CSS를 `@lk-design-system/lds-core/styles.css` → `@lk-design-system/lds-theme/styles.css` → `@lk-design-system/lds-product/styles.css` 순서로 한 번씩 import하고, Robotics surface가 있을 때만 `@lk-design-system/lds-robotics-ui/styles.css`를 이어서 import합니다.
+- 공통 UI를 새로 만들기 전에 `@lk-design-system/lds-core`, `@lk-design-system/lds-theme`, `@lk-design-system/lds-product`, `@lk-design-system/lds-robotics-ui` 중 실제 owner package가 export하는 React 컴포넌트를 먼저 사용합니다.
 - Button/Input/Card 내부 동작과 시각 값은 component 토큰을 사용합니다.
 - 제품 레이아웃, 카피, 상태, surface는 semantic 토큰을 사용합니다.
 - 디자인 시스템을 확장하는 작업이 아니라면 새 hex 색상, 임의 그림자, 일회성 spacing을 만들지 않습니다.
@@ -206,11 +215,16 @@ AI 도구에 요청할 때 아래 구조를 사용하세요.
 
 ```text
 You are designing with the LK ROBOTICS design system.
-Read docs/AI_DESIGN_SYSTEM_GUIDE.md and tokens/source.json first.
-Import @lk-design-system/design-system-core/styles.css.
-Prefer exported components from @lk-design-system/design-system-core.
+Read docs/LDS_UI_ADOPTION_WORKFLOW.md before editing.
+Review all six non-component facets and componentMapping for every target surface.
+Use reviewed, not-applicable with a concrete reason, or blocked with typed evidence exactly as the workflow requires.
+Component replacement alone is not completion.
+Use owner-package imports and the CSS order defined in docs/PACKAGE_MIGRATION_GUIDE.md.
+Read the relevant Foundation guide and search tokens/source.json before choosing visual values.
+Prefer exported components from their LDS owner package.
 Use semantic tokens for product UI and component tokens for Button/Input/Card behavior.
 Do not invent colors, spacing, shadows, or control dimensions unless adding a reviewed token.
+Report the facet verdicts, component mapping, verification evidence, exceptions, and product-owned seams.
 Output production React code.
 ```
 

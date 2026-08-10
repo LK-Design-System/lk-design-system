@@ -5,30 +5,33 @@
 | Type | Documentation index |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-24 |
+| Last reviewed | 2026-08-09 |
 
 이 문서는 `docs/`의 공식 탐색 진입점이다. 문서가 충돌하면 아래 source-of-truth 순서와 각 문서의 `Type`·`Status`를 기준으로 판단한다.
 
 ## Start here
 
-1. 신규 컴포넌트·재설계·icon/asset/map symbol: [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)
-2. 기여·소유권·릴리즈: [`OPERATING_MODEL.md`](OPERATING_MODEL.md)
-3. API와 상태: [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md)
-4. 접근성: [`ACCESSIBILITY_CONTRACTS.md`](ACCESSIBILITY_CONTRACTS.md)
-5. 현재 저장소 상태와 최신 handoff: [`HANDOFF.md`](HANDOFF.md)
-6. Foundation 원리·선택 기준·토큰 참조: [`foundations/README.md`](foundations/README.md)
-7. 컴포넌트 선택·Anatomy·상태·접근성·API 참조: [`components/README.md`](components/README.md)
+1. 제품 UI 신규 구현·LDS 적용·전환·재스타일링: [`LDS_UI_ADOPTION_WORKFLOW.md`](LDS_UI_ADOPTION_WORKFLOW.md)
+2. 신규 LDS 컴포넌트·재설계·icon/asset/map symbol 저작: [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)
+3. token 추가·변경: [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md)
+4. 기여·소유권·릴리즈: [`OPERATING_MODEL.md`](OPERATING_MODEL.md)
+5. API와 상태: [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md)
+6. 접근성: [`ACCESSIBILITY_CONTRACTS.md`](ACCESSIBILITY_CONTRACTS.md)
+7. 현재 저장소 상태와 최신 handoff: [`HANDOFF.md`](HANDOFF.md)
+8. Foundation 원리·선택 기준·토큰 참조: [`foundations/README.md`](foundations/README.md)
+9. 컴포넌트 선택·Anatomy·상태·접근성·API 참조: [`components/README.md`](components/README.md)
 
 ## Stable policies and contracts
 
 | Document | Role |
 | --- | --- |
+| [`LDS_UI_ADOPTION_WORKFLOW.md`](LDS_UI_ADOPTION_WORKFLOW.md) | 제품 UI 신규 구현·LDS 전환의 generated canonical workflow와 완료 계약 |
 | [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md) | 신규·재설계 검토의 canonical workflow와 완료 gate |
 | [`OPERATING_MODEL.md`](OPERATING_MODEL.md) | ownership, change category, release와 migration 운영 |
 | [`PACKAGE_MIGRATION_GUIDE.md`](PACKAGE_MIGRATION_GUIDE.md) | Wave 2 consumer import, CSS, artifact-pin, and rollback guidance |
 | [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md) | token source of truth와 변경 정책 |
-| [`foundations/README.md`](foundations/README.md) | 15개 Foundation의 canonical guide, machine-readable content와 LLM bundle |
-| [`components/README.md`](components/README.md) | 179개 public entry와 148개 컴포넌트 의사결정 가이드, 정적 reference·platform register, machine-readable registry와 LLM bundle |
+| [`foundations/README.md`](foundations/README.md) | 전체 Foundation의 canonical guide, machine-readable content와 LLM bundle |
+| [`components/README.md`](components/README.md) | public component 의사결정 가이드, 정적 reference·platform register, machine-readable registry와 LLM bundle |
 | [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | public API grammar와 컴포넌트별 상태 증거 |
 | [`API_OPENNESS_POLICY.md`](API_OPENNESS_POLICY.md) | 공개 API를 언제·어떤 형태로 여는지의 계약(구조는 열되 조합은 닫음) |
 | [`COMPONENT_SURFACE_CONTRACT.md`](COMPONENT_SURFACE_CONTRACT.md) | public root·named part·component vars·data state와 ref target 계약 |
@@ -39,9 +42,26 @@
 | [`COPY_REVIEW_CONTRACT.md`](COPY_REVIEW_CONTRACT.md) | UI 문구의 copy set·의미 보존·AI 판정·위험도·승인·제품 adapter 계약 |
 | [`ROBOTICS_PATTERNS.md`](ROBOTICS_PATTERNS.md) | LK Robotics/Product 도메인 컴포넌트 경계와 상태 의미 |
 | [`EDITORIAL_METHODOLOGY.md`](EDITORIAL_METHODOLOGY.md) | 데이터로 주장을 만드는 절차(질문→주장→형태→강조→검증)와 집행 등급 |
-| [`AI_DESIGN_SYSTEM_GUIDE.md`](AI_DESIGN_SYSTEM_GUIDE.md) | AI가 사용하는 token·composition·copy 규칙 |
+| [`AI_DESIGN_SYSTEM_GUIDE.md`](AI_DESIGN_SYSTEM_GUIDE.md) | canonical adoption workflow에서 연결되는 AI 구현·token·composition·copy 규칙 |
 | [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md) | editor/viewer layout의 독립 설계 근거와 제품 coverage mapping |
 | [`LOADING_PATTERN.md`](LOADING_PATTERN.md) | 로딩 요소 6종 사이의 선택·시간 기준·단계별 피드백을 중재하는 수평 패턴 가이드 |
+
+## AI and machine-readable entry points
+
+컴포넌트 교체만으로 LDS 전환은 완료되지 않는다. 사람이 수행하는 작업은 [LDS UI 적용·전환 워크플로](LDS_UI_ADOPTION_WORKFLOW.md), AI context는 root [`llms.txt`](../llms.txt)에서 시작합니다.
+
+| Need | Entry |
+| --- | --- |
+| Robotics direct adoption | `@lk-design-system/lds-robotics-ui/llms.txt` · `@lk-design-system/lds-robotics-ui/design-system.json` · [Robotics Storybook](https://lk-design-system.github.io/lk-design-system-robotics/?path=/docs/lds-robotics-foundation-viewer-tokens--docs) · [public llms.txt](https://lk-design-system.github.io/lk-design-system-robotics/llms.txt) · [public manifest](https://lk-design-system.github.io/lk-design-system-robotics/design-system.json) |
+| Machine-readable adoption source | [Adoption contract](references/adoption/LDS_UI_ADOPTION_CONTRACT.json) · [contract schema](references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json) · [report schema](references/adoption/LDS_UI_ADOPTION_REPORT.schema.json) · [schema-valid report template](references/adoption/LDS_UI_ADOPTION_REPORT.example.json) |
+| Consumer enforcement | [config schema](../packages/conformance/schemas/lds-ui-adoption-config.schema.json) · [CLI](../packages/conformance/src/cli.mjs) · [GitHub composite action](../.github/actions/lds-adoption/action.yml) |
+| Foundation 탐색 | [Foundation index](foundations/README.md) 또는 단일 context용 [Foundation LLM bundle](foundations/llms.txt) |
+| Token 이름·의미·runtime coverage | [Structured token source](../tokens/source.json) |
+| Component 선택 | [Component index](components/README.md)와 targeted guide; [component LLM bundle](components/llms.txt)은 retrieval용 |
+| Icon inventory | [Iconography guide](foundations/iconography.md) · [icon manifest](../packages/core/assets/icons/manifest.json) |
+| Cross-component loading | [Loading pattern](LOADING_PATTERN.md) |
+
+Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 index와 다른 agent entrypoint에는 그 상세 목록을 복제하지 않습니다.
 
 ## Current registers and coverage
 

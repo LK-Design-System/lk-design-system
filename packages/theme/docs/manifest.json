@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "kind": "lds-package-documentation",
+  "package": {
+    "name": "@lk-design-system/lds-theme",
+    "version": "0.1.0-rc.62",
+    "layer": "theme"
+  },
+  "adoption": {
+    "contractKind": "lds-ui-adoption-contract",
+    "contractVersion": "1",
+    "invariant": "컴포넌트 교체만으로 LDS 전환은 완료되지 않는다.",
+    "facetIds": [
+      "tokensAndTheme",
+      "layoutAndVisualFoundations",
+      "statePatternsAndMotion",
+      "assetsIconographyAndBrand",
+      "contentAndInternationalization",
+      "accessibility"
+    ],
+    "componentMappingRequired": true,
+    "verdicts": [
+      "reviewed",
+      "not-applicable",
+      "blocked"
+    ]
+  },
+  "entrypoints": {
+    "llms": "./llms.txt",
+    "adoptionChecklist": "./adoption-checklist.json",
+    "adoptionReportSchema": "./adoption-report.schema.json",
+    "adoptionReportExample": "./adoption-report.example.json",
+    "adoptionWorkflow": "./adoption-workflow.md"
+  },
+  "foundations": [
+    "color",
+    "typography",
+    "elevation",
+    "gradient",
+    "motion"
+  ],
+  "patterns": [],
+  "publicDocs": {
+    "storybook": "https://lk-design-system.github.io/lk-design-system/?path=/docs/lds-theme-brand-lk-robotics-logo--docs",
+    "llms": "https://lk-design-system.github.io/lk-design-system/packages/theme/llms.txt",
+    "designSystem": "https://lk-design-system.github.io/lk-design-system/packages/theme/manifest.json",
+    "adoptionChecklist": "https://lk-design-system.github.io/lk-design-system/packages/theme/adoption-checklist.json",
+    "adoptionReportSchema": "https://lk-design-system.github.io/lk-design-system/packages/theme/adoption-report.schema.json",
+    "adoptionReportExample": "https://lk-design-system.github.io/lk-design-system/packages/theme/adoption-report.example.json"
+  },
+  "source": {
+    "repository": "LK-Design-System/lk-design-system",
+    "ref": "lds-v0.1.0-rc.62",
+    "documents": [
+      {
+        "path": "docs/foundations/color.md",
+        "sha256": "069ab8d7583a27c3edd0e5a4dc4da59dfe0177cd980e71cbf2abfd063683b9d8"
+      },
+      {
+        "path": "docs/foundations/elevation.md",
+        "sha256": "dfa5f9eb4ffa7ae09a002e07ede7f932c8b259d965e4fd74d40b80fd72073598"
+      },
+      {
+        "path": "docs/foundations/gradient.md",
+        "sha256": "99e2ae8681847258e090ec1695d45d28106588385f979bfeaaa3e45491331ec6"
+      },
+      {
+        "path": "docs/foundations/motion.md",
+        "sha256": "c6a909e23814fc6a6a8b6f2b112181d8b1a3ae2bb310487bb672aa15c7061a10"
+      },
+      {
+        "path": "docs/foundations/typography.md",
+        "sha256": "b1f275cb86688f536f2d7b766d9cf35bc7a08835f2a34b116649d6cb726a677f"
+      },
+      {
+        "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
+        "sha256": "2fa043205cbe313398cd3b5cf7dbcb4b48869dcab7332ad8e8c1d49e765ccddf"
+      },
+      {
+        "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
+        "sha256": "f4c4f71cff9f9108246a5f7cc5520d6095d599027adb75d0b61e385c5b7fef80"
+      },
+      {
+        "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json",
+        "sha256": "93a5e8f73cc18f26946e71bfbb8ed9235f4fd58dbdb9fc55547141529cae0039"
+      },
+      {
+        "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.example.json",
+        "sha256": "2bae3fdcfcfcd5efce6d07678e7e418d2d5e680b8df5ef654ce5c27136bf97c5"
+      },
+      {
+        "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.schema.json",
+        "sha256": "4ce25e058235e6b124d127321a4549c49da4efbdf1dcda22c79d4c83d3645a2f"
+      }
+    ]
+  },
+  "resources": {
+    "tokens": {
+      "fileCount": 7,
+      "bytes": 58127,
+      "sha256": "1294e23af47298ff2c367cd4d57c521407dc269079cdd3932af8c6c181e47962"
+    },
+    "assets": {
+      "fileCount": 21,
+      "bytes": 3986411,
+      "sha256": "b14965db3666f13bef869f42aab11aefe61138d38841576aa595bc1507a21b97"
+    }
+  },
+  "documents": [
+    {
+      "path": "adoption-checklist.json",
+      "sha256": "2fe1118905d91ae15a930d2244cbb5a7873de9222a0a00a4047df5b46a401310",
+      "sources": [
+        {
+          "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
+          "sha256": "f4c4f71cff9f9108246a5f7cc5520d6095d599027adb75d0b61e385c5b7fef80"
+        }
+      ]
+    },
+    {
+      "path": "adoption-report.example.json",
+      "sha256": "9a7948b02727a527f3da188bfbf2725283720ef36a427872fbfb9cc0b0dd92d9",
+      "sources": [
+        {
+          "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.example.json",
+          "sha256": "2bae3fdcfcfcd5efce6d07678e7e418d2d5e680b8df5ef654ce5c27136bf97c5"
+        }
+      ]
+    },
+    {
+      "path": "adoption-report.schema.json",
+      "sha256": "4ce25e058235e6b124d127321a4549c49da4efbdf1dcda22c79d4c83d3645a2f",
+      "sources": [
+        {
+          "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.schema.json",
+          "sha256": "4ce25e058235e6b124d127321a4549c49da4efbdf1dcda22c79d4c83d3645a2f"
+        }
+      ]
+    },
+    {
+      "path": "adoption-workflow.md",
+      "sha256": "c13c6cdc9e6872118ca2752b79100fe2d859feebf1373a455e2a70095d17ca56",
+      "sources": [
+        {
+          "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
+          "sha256": "2fa043205cbe313398cd3b5cf7dbcb4b48869dcab7332ad8e8c1d49e765ccddf"
+        }
+      ]
+    },
+    {
+      "path": "foundations/color.md",
+      "sha256": "069ab8d7583a27c3edd0e5a4dc4da59dfe0177cd980e71cbf2abfd063683b9d8",
+      "sources": [
+        {
+          "path": "docs/foundations/color.md",
+          "sha256": "069ab8d7583a27c3edd0e5a4dc4da59dfe0177cd980e71cbf2abfd063683b9d8"
+        }
+      ]
+    },
+    {
+      "path": "foundations/elevation.md",
+      "sha256": "dfa5f9eb4ffa7ae09a002e07ede7f932c8b259d965e4fd74d40b80fd72073598",
+      "sources": [
+        {
+          "path": "docs/foundations/elevation.md",
+          "sha256": "dfa5f9eb4ffa7ae09a002e07ede7f932c8b259d965e4fd74d40b80fd72073598"
+        }
+      ]
+    },
+    {
+      "path": "foundations/gradient.md",
+      "sha256": "99e2ae8681847258e090ec1695d45d28106588385f979bfeaaa3e45491331ec6",
+      "sources": [
+        {
+          "path": "docs/foundations/gradient.md",
+          "sha256": "99e2ae8681847258e090ec1695d45d28106588385f979bfeaaa3e45491331ec6"
+        }
+      ]
+    },
+    {
+      "path": "foundations/motion.md",
+      "sha256": "c6a909e23814fc6a6a8b6f2b112181d8b1a3ae2bb310487bb672aa15c7061a10",
+      "sources": [
+        {
+          "path": "docs/foundations/motion.md",
+          "sha256": "c6a909e23814fc6a6a8b6f2b112181d8b1a3ae2bb310487bb672aa15c7061a10"
+        }
+      ]
+    },
+    {
+      "path": "foundations/typography.md",
+      "sha256": "b1f275cb86688f536f2d7b766d9cf35bc7a08835f2a34b116649d6cb726a677f",
+      "sources": [
+        {
+          "path": "docs/foundations/typography.md",
+          "sha256": "b1f275cb86688f536f2d7b766d9cf35bc7a08835f2a34b116649d6cb726a677f"
+        }
+      ]
+    },
+    {
+      "path": "LDS_UI_ADOPTION_CONTRACT.schema.json",
+      "sha256": "93a5e8f73cc18f26946e71bfbb8ed9235f4fd58dbdb9fc55547141529cae0039",
+      "sources": [
+        {
+          "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json",
+          "sha256": "93a5e8f73cc18f26946e71bfbb8ed9235f4fd58dbdb9fc55547141529cae0039"
+        }
+      ]
+    },
+    {
+      "path": "llms.txt",
+      "sha256": "109c4de56ed3e3b145fe9d94508cdd0d91b230da80b9a891fdd4488cd0467555",
+      "sources": [
+        {
+          "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
+          "sha256": "2fa043205cbe313398cd3b5cf7dbcb4b48869dcab7332ad8e8c1d49e765ccddf"
+        },
+        {
+          "path": "docs/foundations/color.md",
+          "sha256": "069ab8d7583a27c3edd0e5a4dc4da59dfe0177cd980e71cbf2abfd063683b9d8"
+        },
+        {
+          "path": "docs/foundations/typography.md",
+          "sha256": "b1f275cb86688f536f2d7b766d9cf35bc7a08835f2a34b116649d6cb726a677f"
+        },
+        {
+          "path": "docs/foundations/elevation.md",
+          "sha256": "dfa5f9eb4ffa7ae09a002e07ede7f932c8b259d965e4fd74d40b80fd72073598"
+        },
+        {
+          "path": "docs/foundations/gradient.md",
+          "sha256": "99e2ae8681847258e090ec1695d45d28106588385f979bfeaaa3e45491331ec6"
+        },
+        {
+          "path": "docs/foundations/motion.md",
+          "sha256": "c6a909e23814fc6a6a8b6f2b112181d8b1a3ae2bb310487bb672aa15c7061a10"
+        }
+      ]
+    }
+  ]
+}

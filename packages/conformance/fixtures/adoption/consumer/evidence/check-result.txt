@@ -1,0 +1,1 @@
+LDS adoption, accessibility, and token checks passed for the fixture surface.

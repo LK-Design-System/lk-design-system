@@ -1,0 +1,5 @@
+{
+  "$schema": "./adoption-report.schema.json",
+  "schemaVersion": 1,
+  "kind": "fixture-adoption-report"
+}

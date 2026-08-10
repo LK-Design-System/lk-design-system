@@ -7,6 +7,8 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
+    "README.md",
+    "docs",
     "dist",
     "storybook",
     "styles.css",
@@ -44,14 +46,28 @@
     },
     "./styles.css": "./styles.css",
     "./tokens/*": "./tokens/*",
-    "./assets/*": "./assets/*"
+    "./assets/*": "./assets/*",
+    "./package.json": "./package.json",
+    "./design-system.json": "./docs/manifest.json",
+    "./llms.txt": "./docs/llms.txt",
+    "./adoption-checklist.json": "./docs/adoption-checklist.json",
+    "./docs/*": "./docs/*"
+  },
+  "lds": {
+    "schemaVersion": 1,
+    "layer": "product",
+    "manifest": "./docs/manifest.json",
+    "llms": "./docs/llms.txt",
+    "adoptionChecklist": "./docs/adoption-checklist.json",
+    "adoptionReportSchema": "./docs/adoption-report.schema.json",
+    "storybook": "https://lk-design-system.github.io/lk-design-system/?path=/docs/lds-product-operations-dashboard-dashboard-shell--docs"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LK-Design-System/lk-design-system.git",
     "directory": "packages/product"
   },
-  "homepage": "https://github.com/LK-Design-System/lk-design-system#readme",
+  "homepage": "https://lk-design-system.github.io/lk-design-system/?path=/docs/lds-product-operations-dashboard-dashboard-shell--docs",
   "bugs": {
     "url": "https://github.com/LK-Design-System/lk-design-system/issues"
   }

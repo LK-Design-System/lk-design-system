@@ -1,9 +1,16 @@
 #!/usr/bin/env node
 
 import { cp, mkdtemp, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+  printAdoptionDiagnostics,
+  runAdoptionCheck,
+  verifyAdoptionContract,
+  verifyAdoptionFixtures,
+} from './adoption.mjs';
 import { auditStorybookMastheadCopy } from './storybook-masthead-copy.mjs';
 
 const cliDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -168,16 +175,272 @@ function validateContractShape(contract, profileName) {
 }
 
 function validateSurfaceShape(surface) {
-  if (surface?.schemaVersion !== 2
+  const documentationFileKeys = [
+    'manifest',
+    'checklist',
+    'contractSchema',
+    'reportSchema',
+    'reportExample',
+    'configSchema',
+    'workflow',
+    'llms',
+    'domainIndex',
+    'tokenManifest',
+    'domainSymbolRegistry',
+  ];
+  const publicDocKeys = [
+    'storybook',
+    'llms',
+    'designSystem',
+    'adoptionChecklist',
+    'adoptionReportSchema',
+    'adoptionReportExample',
+    'adoptionWorkflow',
+  ];
+  if (surface?.schemaVersion !== 3
     || surface?.kind !== 'lds-robotics-external-public-surface'
     || !surface?.package?.name
+    || !['release-candidate', 'published'].includes(surface?.package?.refStatus)
+    || surface?.documentation?.canonicalContract?.kind !== 'lds-ui-adoption-contract'
+    || typeof surface?.documentation?.canonicalContract?.contractVersion !== 'string'
+    || !surface?.documentation?.canonicalContract?.source
+    || !['release-candidate', 'published'].includes(surface?.documentation?.canonicalContract?.source?.refStatus)
+    || !/^[0-9a-f]{64}$/.test(surface?.documentation?.canonicalContract?.snapshotManifestSha256 ?? '')
+    || !documentationFileKeys.every((key) => surface?.documentation?.files?.[key]?.path && surface.documentation.files[key].sha256)
+    || !Array.isArray(surface?.documentation?.domainDocuments)
+    || surface.documentation.domainDocuments.length === 0
+    || !publicDocKeys.every((key) => typeof surface?.documentation?.publicDocs?.[key] === 'string')
     || !Array.isArray(surface?.upstreamTokenDependencies)
     || !Array.isArray(surface?.localTokenDefinitions)
     || !Array.isArray(surface?.inheritedRuntimeCustomProperties)
     || !Array.isArray(surface?.entries)) {
-    throw new Error('Robotics external surface does not match the supported v2 shape.');
+    throw new Error('Robotics external surface does not match the supported v3 documentation shape.');
   }
   return surface;
+}
+
+function sha256(bytes) {
+  return createHash('sha256').update(bytes).digest('hex');
+}
+
+function packageDescendant(root, relativePath) {
+  if (typeof relativePath !== 'string' || !relativePath || relativePath.includes('\\')) return null;
+  const absolute = path.resolve(root, relativePath);
+  const relative = path.relative(root, absolute);
+  return relative && !relative.startsWith('..') && !path.isAbsolute(relative) ? absolute : null;
+}
+
+async function collectAllFiles(directory, output = []) {
+  if (!await exists(directory)) return output;
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const absolute = path.join(directory, entry.name);
+    if (entry.isDirectory()) await collectAllFiles(absolute, output);
+    else if (entry.isFile()) output.push(absolute);
+  }
+  return output;
+}
+
+async function roboticsDocumentationDiagnostics(surface, root, ldsRoot, packageJson) {
+  const diagnostics = [];
+  const owner = 'ROBOTICS_EXTERNAL_SURFACE.json';
+  const docs = surface.documentation;
+  const bundleRoot = path.posix.dirname(docs.files.manifest.path);
+  const publishedBundle = packageJson.files?.some((entry) => (
+    entry === bundleRoot || bundleRoot.startsWith(`${entry.replace(/\/$/, '')}/`)
+  ));
+  const packageInstructions = ['README.md', 'AGENTS.md', 'CLAUDE.md', 'llms.txt'];
+  const expectedExports = {
+    './package.json': './package.json',
+    './design-system.json': `./${docs.files.manifest.path}`,
+    './llms.txt': `./${docs.files.llms.path}`,
+    './adoption-checklist.json': `./${docs.files.checklist.path}`,
+    './docs/*': `./${bundleRoot}/*`,
+  };
+  if (!packageInstructions.every((file) => packageJson.files?.includes(file)) || !publishedBundle) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', 'package.json', `files must include ${packageInstructions.join(', ')} and cover ${bundleRoot}.`));
+  }
+  for (const [subpath, target] of Object.entries(expectedExports)) {
+    if (packageJson.exports?.[subpath] !== target) {
+      diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', 'package.json', `${subpath} must export ${target}.`));
+    }
+  }
+  const expectedMetadata = {
+    schemaVersion: 1,
+    layer: 'robotics',
+    manifest: `./${docs.files.manifest.path}`,
+    llms: `./${docs.files.llms.path}`,
+    adoptionChecklist: `./${docs.files.checklist.path}`,
+    adoptionReportSchema: `./${docs.files.reportSchema.path}`,
+    storybook: docs.publicDocs.storybook,
+  };
+  if (JSON.stringify(packageJson.lds) !== JSON.stringify(expectedMetadata)) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', 'package.json', 'lds metadata does not match the Robotics documentation contract.'));
+  }
+  if (packageJson.homepage !== docs.publicDocs.storybook) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', 'package.json', 'homepage must match documentation.publicDocs.storybook.'));
+  }
+
+  const declared = [
+    ...Object.values(docs.files),
+    ...docs.domainDocuments,
+  ];
+  const declaredPaths = declared.map(({ path: file }) => file);
+  if (new Set(declaredPaths).size !== declaredPaths.length) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', owner, 'Documentation file paths must be unique.'));
+  }
+  for (const record of declared) {
+    const absolute = packageDescendant(root, record.path);
+    if (!absolute) {
+      diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', owner, `Unsafe documentation path: ${record.path}.`));
+      continue;
+    }
+    const contents = await readFile(absolute).catch(() => null);
+    if (!contents) {
+      diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', record.path, 'Declared documentation file is missing.'));
+    } else if (sha256(contents) !== record.sha256) {
+      diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', record.path, 'Declared documentation SHA-256 does not match the package file.'));
+    }
+  }
+
+  const canonical = docs.canonicalContract;
+  const canonicalPath = packageDescendant(ldsRoot, canonical.source.path);
+  const canonicalBytes = canonicalPath ? await readFile(canonicalPath).catch(() => null) : null;
+  if (!canonicalBytes || sha256(canonicalBytes) !== canonical.source.sha256) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', canonical.source.path, 'Canonical adoption contract SHA-256 does not match the LDS source.'));
+  } else {
+    const value = JSON.parse(canonicalBytes.toString('utf8'));
+    if (value.kind !== canonical.kind || value.contractVersion !== canonical.contractVersion) {
+      diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', canonical.source.path, 'Canonical adoption contract identity or version drift.'));
+    }
+  }
+
+  const manifestPath = packageDescendant(root, docs.files.manifest.path);
+  const manifest = manifestPath ? await readJson(manifestPath).catch(() => null) : null;
+  if (!manifest) return [...diagnostics, diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, 'Documentation manifest is not valid JSON.')];
+  if (manifest.schemaVersion !== 1 || manifest.kind !== 'lds-package-documentation') {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, 'Documentation manifest identity is invalid.'));
+  }
+  const expectedIdentity = { name: surface.package.name, version: surface.package.version, layer: 'robotics' };
+  if (JSON.stringify(manifest.package) !== JSON.stringify(expectedIdentity)) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, 'Documentation manifest package identity or version drift.'));
+  }
+  if (manifest.adoption?.contractKind !== canonical.kind || manifest.adoption?.contractVersion !== canonical.contractVersion) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, 'Documentation manifest adoption contract identity or version drift.'));
+  }
+  const expectedEntrypoints = {
+    llms: `./${path.posix.relative(bundleRoot, docs.files.llms.path)}`,
+    adoptionChecklist: `./${path.posix.relative(bundleRoot, docs.files.checklist.path)}`,
+    adoptionReportSchema: `./${path.posix.relative(bundleRoot, docs.files.reportSchema.path)}`,
+    adoptionReportExample: `./${path.posix.relative(bundleRoot, docs.files.reportExample.path)}`,
+    adoptionConfigSchema: `./${path.posix.relative(bundleRoot, docs.files.configSchema.path)}`,
+    adoptionWorkflow: `./${path.posix.relative(bundleRoot, docs.files.workflow.path)}`,
+    domainIndex: `./${path.posix.relative(bundleRoot, docs.files.domainIndex.path)}`,
+    tokenManifest: `./${path.posix.relative(bundleRoot, docs.files.tokenManifest.path)}`,
+    domainSymbolRegistry: `./${path.posix.relative(bundleRoot, docs.files.domainSymbolRegistry.path)}`,
+  };
+  if (JSON.stringify(manifest.entrypoints) !== JSON.stringify(expectedEntrypoints)) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, 'Documentation manifest entrypoints drift.'));
+  }
+  if (JSON.stringify(manifest.publicDocs) !== JSON.stringify(docs.publicDocs)) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, 'Documentation manifest public URLs drift from the external surface.'));
+  }
+  const expectedCanonicalSource = {
+    kind: canonical.kind,
+    version: canonical.contractVersion,
+    source: canonical.source,
+    snapshotManifestSha256: canonical.snapshotManifestSha256,
+  };
+  if (JSON.stringify(manifest.source?.canonicalAdoption) !== JSON.stringify(expectedCanonicalSource)) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, 'Documentation manifest canonical adoption source drift.'));
+  }
+  const expectedRoboticsSource = {
+    repository: surface.package.repository,
+    ref: `v${surface.package.version}`,
+    refStatus: surface.package.refStatus,
+  };
+  if (JSON.stringify(manifest.source?.robotics) !== JSON.stringify(expectedRoboticsSource)) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, 'Documentation manifest Robotics source identity or version drift.'));
+  }
+  const expectedResources = {
+    tokens: {
+      path: `./${path.posix.relative(bundleRoot, docs.files.tokenManifest.path)}`,
+      sha256: docs.files.tokenManifest.sha256,
+    },
+    domainSymbols: {
+      path: `./${path.posix.relative(bundleRoot, docs.files.domainSymbolRegistry.path)}`,
+      sha256: docs.files.domainSymbolRegistry.sha256,
+    },
+  };
+  if (JSON.stringify(manifest.resources) !== JSON.stringify(expectedResources)) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, 'Documentation manifest resource records drift from the external surface.'));
+  }
+
+  const docsRoot = path.join(root, ...bundleRoot.split('/'));
+  const actualDocPaths = (await collectAllFiles(docsRoot))
+    .map((file) => slash(path.relative(docsRoot, file)))
+    .filter((file) => file !== 'manifest.json')
+    .sort();
+  const records = Array.isArray(manifest.documents) ? manifest.documents : [];
+  const recordPaths = records.map(({ path: file }) => file).sort();
+  if (JSON.stringify(actualDocPaths) !== JSON.stringify(recordPaths)) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, 'Documentation manifest file set differs from the package docs directory.'));
+  }
+  const recordByPath = new Map(records.map((record) => [record.path, record]));
+  for (const record of records) {
+    const absolute = packageDescendant(docsRoot, record.path);
+    const contents = absolute ? await readFile(absolute).catch(() => null) : null;
+    if (!contents || sha256(contents) !== record.sha256) {
+      diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', `docs/${record.path}`, 'Documentation manifest SHA-256 record drift.'));
+    }
+  }
+  for (const record of declared.filter(({ path: file }) => file !== docs.files.manifest.path)) {
+    const relative = path.posix.relative(bundleRoot, record.path);
+    if (recordByPath.get(relative)?.sha256 !== record.sha256) {
+      diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', record.path, 'External surface and documentation manifest hashes differ.'));
+    }
+  }
+  const expectedDomainRecords = docs.domainDocuments.map((record) => ({
+    path: path.posix.relative(bundleRoot, record.path),
+    sha256: record.sha256,
+  }));
+  const actualDomainRecords = Array.isArray(manifest.domain?.documents)
+    ? manifest.domain.documents.map((record) => ({ path: record.path, sha256: record.sha256 }))
+    : [];
+  if (JSON.stringify(actualDomainRecords) !== JSON.stringify(expectedDomainRecords)) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, 'Documentation manifest domain document records drift from the external surface.'));
+  }
+  for (const record of manifest.domain?.documents ?? []) {
+    if (typeof record.sourcePath !== 'string' || !/^[0-9a-f]{64}$/.test(record.sourceSha256 ?? '')) {
+      diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, `Domain document source provenance is incomplete: ${record.path}.`));
+    }
+  }
+
+  const checklist = await readJson(path.join(root, docs.files.checklist.path)).catch(() => null);
+  if (!checklist || checklist.kind !== canonical.kind || checklist.contractVersion !== canonical.contractVersion) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.checklist.path, 'Packaged checklist identity or version drift.'));
+  } else {
+    const checklistFile = path.join(root, docs.files.checklist.path);
+    const references = [
+      ...(checklist.facets ?? []).flatMap((facet) => facet.references ?? []),
+      ...(checklist.componentMapping?.references ?? []),
+    ];
+    for (const reference of references) {
+      if (typeof reference !== 'string' || reference.startsWith('@') || /^https?:/.test(reference)) {
+        diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.checklist.path, `Robotics checklist reference must be self-contained: ${reference}.`));
+        continue;
+      }
+      const target = packageDescendant(root, slash(path.relative(root, path.resolve(path.dirname(checklistFile), reference))));
+      if (!target || !await exists(target)) {
+        diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.checklist.path, `Unresolved Robotics checklist reference: ${reference}.`));
+      }
+    }
+  }
+  const reportExample = await readJson(path.join(root, docs.files.reportExample.path)).catch(() => null);
+  const reportSchemaRelative = `./${path.posix.basename(docs.files.reportSchema.path)}`;
+  if (!reportExample || reportExample.$schema !== reportSchemaRelative) {
+    diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.reportExample.path, 'Report example schema link is not package-relative.'));
+  }
+  return diagnostics;
 }
 
 function validatePolicyContractShape(policy, profileName) {
@@ -230,11 +493,13 @@ function contractDependencyDiagnostics(contract, profile, contractFile) {
     canonicalVersions.set(roboticsPackage.name, roboticsPackage.version);
   }
   const diagnostics = [];
+  const consumerReleasePins = profile === contract.profiles?.['robotics-ui'];
   for (const dependency of profile.packageDependencies) {
     const expectedVersion = canonicalVersions.get(dependency.name);
     if (!expectedVersion) {
       diagnostics.push(diagnostic('CONTRACT_DEPENDENCY_DRIFT', contractFile, `${dependency.name} has no canonical LDS package identity.`));
-    } else if (dependency.version !== expectedVersion) {
+    } else if (dependency.version !== expectedVersion
+      && !(consumerReleasePins && /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(dependency.version))) {
       diagnostics.push(diagnostic('CONTRACT_DEPENDENCY_DRIFT', contractFile, `${dependency.name} must pin canonical version ${expectedVersion}; received ${dependency.version}.`));
     }
   }
@@ -536,6 +801,7 @@ async function runRoboticsCheck(options) {
   if (surface.package.name !== profile.package.name || surface.package.version !== profile.package.version || surface.package.repository !== profile.repository) {
     diagnostics.push(diagnostic('PUBLIC_SURFACE_MISMATCH', slash(path.relative(ldsRoot, surfacePath)), 'External-surface package identity does not match the profile.'));
   }
+  diagnostics.push(...await roboticsDocumentationDiagnostics(surface, root, ldsRoot, packageJson));
   if (JSON.stringify([...surface.localTokenDefinitions].sort()) !== JSON.stringify([...localNames].sort())) {
     diagnostics.push(diagnostic('PUBLIC_SURFACE_MISMATCH', slash(path.relative(ldsRoot, surfacePath)), 'External-surface local token list does not match the style contract.'));
   }
@@ -961,6 +1227,55 @@ async function verifyFixtures() {
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const command = args.positional[0];
+  if (command === 'verify-adoption-contract') {
+    const result = await verifyAdoptionContract({
+      ldsRoot: path.resolve(args['lds-root'] || workspaceRoot),
+      contractPath: args.contract,
+      contractSchemaPath: args['contract-schema'],
+      reportSchemaPath: args['report-schema'],
+    });
+    if (result.diagnostics.length > 0) {
+      printAdoptionDiagnostics(result.diagnostics);
+      process.exitCode = 1;
+      return;
+    }
+    console.log(`LDS adoption contract ${result.contract.kind}@${result.contract.contractVersion} is coherent.`);
+    return;
+  }
+  if (command === 'verify-adoption-fixtures') {
+    await verifyAdoptionFixtures({ ldsRoot: path.resolve(args['lds-root'] || workspaceRoot) });
+    return;
+  }
+  if (command === 'check-adoption') {
+    const root = path.resolve(args.root || process.cwd());
+    const result = await runAdoptionCheck({
+      root,
+      ldsRoot: path.resolve(args['lds-root'] || workspaceRoot),
+      configPath: args.config || '.lds/adoption.config.json',
+      reportPath: args.report,
+      contractPath: args.contract,
+      contractSchemaPath: args['contract-schema'],
+      reportSchemaPath: args['report-schema'],
+      base: args.base,
+      head: args.head || 'HEAD',
+      styleEntry: args['style-entry'],
+      requiredStyleImports: args['required-style-imports']
+        ? args['required-style-imports'].split(',').map((entry) => entry.trim()).filter(Boolean)
+        : undefined,
+      exclusions: args.exclusions
+        ? args.exclusions.split(',').map((entry) => entry.trim()).filter(Boolean)
+        : [],
+      storybookIndex: args['storybook-index'] || null,
+      outputPath: args.output,
+    });
+    if (!result.passed) {
+      printAdoptionDiagnostics(result.diagnostics);
+      process.exitCode = 1;
+      return;
+    }
+    console.log(`LDS UI adoption passed for ${slash(root)} (${result.changedFiles.length} analyzed UI file(s), contract v${result.contract.version}).`);
+    return;
+  }
   if (command === 'verify-fixtures') {
     await verifyFixtures();
     return;
@@ -980,6 +1295,9 @@ async function main() {
       '  lds-conformance check --profile <robotics-ui|lds3d-ui> --root <repo> [--lds-root <repo>] [--storybook-index <path>] [--require-built-stories]',
       '  lds-conformance verify-contract [--profile <robotics-ui|lds3d-ui>] [--contract <path>]',
       '  lds-conformance verify-fixtures',
+      '  lds-conformance check-adoption --root <repo> --config <path> --base <git-ref> [--head <git-ref>] [--report <path>] [--output <path>]',
+      '  lds-conformance verify-adoption-contract [--lds-root <repo>]',
+      '  lds-conformance verify-adoption-fixtures [--lds-root <repo>]',
     ].join('\n'));
   }
   const profile = args.profile || 'robotics-ui';

@@ -16,7 +16,7 @@
   "profiles": {
     "robotics-ui": {
       "repository": "LK-Design-System/lk-design-system-robotics",
-      "package": { "name": "@lk-design-system/lds-robotics-ui", "version": "0.1.0-rc.4" },
+      "package": { "name": "@lk-design-system/lds-robotics-ui", "version": "0.1.0-rc.5" },
       "externalSurface": "external-surface.json",
       "configFile": ".lds-conformance.json",
       "policyContracts": ["robotics-policy.json"],
@@ -81,7 +81,7 @@
         { "manifest": "apps/docs/package.json", "name": "@lk-design-system/lds-core", "section": "dependencies", "version": "0.1.0-rc.1" },
         { "manifest": "apps/docs/package.json", "name": "@lk-design-system/lds-theme", "section": "dependencies", "version": "0.1.0-rc.1" },
         { "manifest": "apps/docs/package.json", "name": "@lk-design-system/lds-product", "section": "dependencies", "version": "0.1.0-rc.1" },
-        { "manifest": "apps/docs/package.json", "name": "@lk-design-system/lds-robotics-ui", "section": "dependencies", "version": "0.1.0-rc.4" }
+        { "manifest": "apps/docs/package.json", "name": "@lk-design-system/lds-robotics-ui", "section": "dependencies", "version": "0.1.0-rc.5" }
       ],
       "scanRoots": ["apps/docs/.storybook", "apps/docs/src", "packages"],
       "rawColorScanRoots": ["apps/docs/.storybook/preview.ts", "apps/docs/src/styles.css", "apps/docs/src/visual-alpha-ui.tsx"],
