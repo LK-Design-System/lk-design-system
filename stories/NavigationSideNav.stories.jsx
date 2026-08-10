@@ -95,6 +95,25 @@ async function waitForWidth(element, expectedWidth, timeoutMs = 5000) {
   throw new Error(`Timed out waiting for the SideNav width to become ${expectedWidth}px.`);
 }
 
+async function waitForMotion(element) {
+  const animations = element?.getAnimations?.({ subtree: true }) ?? [];
+  await Promise.allSettled(animations.map((animation) => animation.finished));
+}
+
+function childMotion(nav, groupValue) {
+  return nav?.querySelector(`[data-sidenav-motion="children"][data-sidenav-group="${groupValue}"]`);
+}
+
+function isClosedChildMotion(nav, groupValue) {
+  const motion = childMotion(nav, groupValue);
+  const child = nav?.querySelector(`[data-sidenav-parent="${groupValue}"]`);
+  return !!motion
+    && motion.dataset.state === 'closed'
+    && motion.getAttribute('aria-hidden') === 'true'
+    && motion.hasAttribute('inert')
+    && child?.tabIndex === -1;
+}
+
 function externalCollapseContract(canvasElement, nav) {
   const control = canvasElement.querySelector('[data-testid="docked-collapse-toggle"]');
   const panel = nav?.querySelector('.lk-sidenav__panel-content');
@@ -472,6 +491,7 @@ function SingleOpenGroupsFixture() {
       aria-label="Single-open navigation"
       items={singleOpenNavigationItems}
       defaultValue="overview"
+      multiple={false}
       width={252}
       style={{ height: 420 }}
     />
@@ -496,7 +516,7 @@ function ManualActiveGroupFixture() {
 export const LinkDestinations = {
   name: '개요',
   parameters: storyDescription(
-    '직접 이동하는 link, 하위 항목을 여는 disclosure, 사용할 수 없는 목적지를 함께 검증합니다. 지속 선택 배경은 현재 목적지만 소유하고, 펼쳐진 부모와 hover는 선택 상태보다 약하게 읽혀야 합니다.',
+    '직접 이동하는 link, 하위 항목을 여는 disclosure, 사용할 수 없는 목적지를 함께 검증합니다. 현재 목적지는 상시 배경 없이 text-safe blue accent label·icon과 굵기로 표시하고, hover·pressed에서만 표면을 사용합니다.',
   ),
   render: () => <SideNavLinkFixture />,
   play: async ({ canvasElement }) => {
@@ -514,10 +534,21 @@ export const LinkDestinations = {
       || overview.closest('ul') !== list) {
       throw new Error('SideNav items must render inside a native unstyled ul/li list.');
     }
+    const queuedBeforeOpen = nav.querySelector('a[href="#missions-queued"]');
+    const nestedMotion = childMotion(nav, 'missions');
+    if (!queuedBeforeOpen || !nestedMotion || !isClosedChildMotion(nav, 'missions')) {
+      throw new Error('A closed SideNav disclosure must keep its motion surface mounted while removing every child from interaction and current-page semantics.');
+    }
     await userEvent.click(group);
     const queued = nav.querySelector('a[href="#missions-queued"]');
+    await waitForMotion(nestedMotion);
     const nestedList = queued?.closest('ul');
-    if (!nestedList || nestedList === list || nestedList.closest('li')?.closest('ul') !== list) {
+    if (queued !== queuedBeforeOpen
+      || nestedMotion.dataset.state !== 'open'
+      || nestedMotion.hasAttribute('inert')
+      || !nestedList
+      || nestedList === list
+      || nestedList.closest('li')?.closest('ul') !== list) {
       throw new Error('SideNav group children must render as a nested list inside the parent list item.');
     }
     const childIcon = queued?.querySelector('[data-sidenav-child-icon]');
@@ -551,21 +582,37 @@ export const LinkDestinations = {
     if (!canvasElement.querySelector('[data-testid="sidenav-linked-value"]')?.textContent?.includes('missions-queued') || queued.getAttribute('aria-current') !== 'page') {
       throw new Error('Keyboard link activation must update SideNav selection and aria-current.');
     }
-    const currentDestinations = nav.querySelectorAll('[aria-current="page"]');
-    const currentStyle = getComputedStyle(queued);
-    if (
-      currentDestinations.length !== 1
-      || group.hasAttribute('aria-current')
-      || currentStyle.backgroundColor === 'rgba(0, 0, 0, 0)'
-    ) {
-      throw new Error('Only the current SideNav destination may own the persistent selection surface.');
-    }
-    const selectedBackground = currentStyle.backgroundColor;
+    const expectedActiveInk = resolveCssColor(queued, 'color', 'var(--color-semantic-accent-blue-text)');
+    await waitFor(() => {
+      const currentDestinations = nav.querySelectorAll('[aria-current="page"]');
+      const currentStyle = getComputedStyle(queued);
+      if (
+        currentDestinations.length !== 1
+        || group.hasAttribute('aria-current')
+        || currentStyle.backgroundColor !== 'rgba(0, 0, 0, 0)'
+        || currentStyle.color !== expectedActiveInk
+        || getComputedStyle(childIcon).color !== expectedActiveInk
+        || Number.parseInt(getComputedStyle(queuedLabel).fontWeight, 10) < 600
+      ) {
+        throw new Error('Only the current SideNav destination may own text-safe accent ink and bold emphasis without a persistent fill.');
+      }
+    });
+    const selectedRestBackground = getComputedStyle(queued).backgroundColor;
+    const expectedActiveHover = resolveCssColor(queued, 'backgroundColor', 'var(--color-semantic-fill-normal)');
+    await userEvent.hover(queued);
+    await waitFor(() => {
+      const activeHoverStyle = getComputedStyle(queued);
+      if (activeHoverStyle.backgroundColor !== expectedActiveHover
+        || activeHoverStyle.color !== expectedActiveInk) {
+        throw new Error('The current destination must retain text-safe accent ink while active-hover adds only the neutral interaction fill.');
+      }
+    });
+    await userEvent.unhover(queued);
     await userEvent.hover(group);
     await waitFor(() => {
       const hoverBackground = getComputedStyle(group).backgroundColor;
-      if (hoverBackground === 'rgba(0, 0, 0, 0)' || hoverBackground === selectedBackground) {
-        throw new Error('Parent hover must remain visible but weaker than the selected destination.');
+      if (hoverBackground === 'rgba(0, 0, 0, 0)' || hoverBackground === selectedRestBackground) {
+        throw new Error('Parent hover must remain visible while the current destination stays fill-free at rest.');
       }
     });
     await userEvent.unhover(group);
@@ -596,9 +643,19 @@ export const DockedSurface = {
       throw new Error('Expanded SideNav must honor start-aligned branding and receive expanded footer render state.');
     }
     const overview = nav.querySelector('[data-sidenav-value="overview"]');
+    const overviewIcon = overview?.querySelector('[data-slot="icon"]');
+    const overviewContent = overview?.querySelector('[data-sidenav-motion="content"]');
+    const brandMotion = brand?.querySelector('[data-sidenav-motion="swap"]');
+    const motionStyles = [...(nav.querySelectorAll('style') ?? [])].map((node) => node.textContent).join('\n');
+    if (!overviewIcon || !overviewContent || !brandMotion
+      || !motionStyles.includes('prefers-reduced-motion:reduce')
+      || !motionStyles.includes('[data-sidenav-motion]')) {
+      throw new Error('SideNav collapse motion must expose stable content/brand hooks and a reduced-motion guard for every coordinated transition.');
+    }
     const expandedGeometry = {
       brandPaddingBottom: Number.parseFloat(getComputedStyle(brand).paddingBottom),
       rowHeight: overview?.getBoundingClientRect().height,
+      iconInlineOffset: overviewIcon.getBoundingClientRect().left - nav.getBoundingClientRect().left,
     };
 
     const activateChild = canvasElement.querySelector('[data-testid="activate-docked-child"]');
@@ -629,24 +686,43 @@ export const DockedSurface = {
       || control.getAttribute('aria-expanded') !== 'false'
       || panel.dataset.collapsed !== 'true'
       || footerState?.textContent !== '접힌 계정 영역'
+      || overview.querySelector('[data-sidenav-motion="content"]') !== overviewContent
+      || overviewContent.dataset.state !== 'hidden'
+      || overviewContent.getAttribute('aria-hidden') !== 'true'
       || canvasElement.ownerDocument.activeElement !== control) {
       throw new Error('Collapsing from the shell toggle must keep focus on the toggle and flip its announced state.');
     }
     const collapsedGeometry = {
       brandPaddingBottom: Number.parseFloat(getComputedStyle(brand).paddingBottom),
       rowHeight: overview?.getBoundingClientRect().height,
+      iconInlineOffset: overviewIcon.getBoundingClientRect().left - nav.getBoundingClientRect().left,
     };
     if (expandedGeometry.brandPaddingBottom !== 18
       || collapsedGeometry.brandPaddingBottom !== 18
       || Math.abs(collapsedGeometry.rowHeight - expandedGeometry.rowHeight) >= 1
+      || Math.abs(collapsedGeometry.iconInlineOffset - expandedGeometry.iconInlineOffset) >= 1
       || Math.round(collapsedGeometry.rowHeight) !== 44) {
-      throw new Error('Collapsed and expanded SideNav states must preserve 18px brand bottom padding and a 44px row height.');
+      throw new Error('Collapsed and expanded SideNav states must preserve brand spacing, a 44px row, and the icon anchor during motion.');
     }
     await userEvent.click(control);
     await waitForWidth(nav, 252);
-    if (control.textContent?.trim() !== '사이드바 접기') {
+    if (control.textContent?.trim() !== '사이드바 접기'
+      || overview.querySelector('[data-sidenav-motion="content"]') !== overviewContent
+      || overviewContent.dataset.state !== 'visible'
+      || overviewContent.hasAttribute('aria-hidden')) {
       throw new Error('The expanded visual story must finish in its named state.');
     }
+    await userEvent.click(control);
+    await userEvent.click(control);
+    await userEvent.click(control);
+    await waitForWidth(nav, 64);
+    if (overview.querySelector('[data-sidenav-motion="content"]') !== overviewContent
+      || overviewContent.dataset.state !== 'hidden'
+      || overviewContent.getAttribute('aria-hidden') !== 'true') {
+      throw new Error('Rapid repeated collapse toggles must settle on the requested state without replacing the item content DOM.');
+    }
+    await userEvent.click(control);
+    await waitForWidth(nav, 252);
     control.blur();
   },
 };
@@ -728,7 +804,7 @@ export const NavyDockedSurface = {
 export const DockedCollapsed = {
   name: '변형·상태 · 접힌 아이콘 레일',
   parameters: storyDescription(
-    '64px 레일에서 숨겨진 현재 목적지의 부모가 primary wash 선택 프록시를 맡고, 펼치면 실제 leaf로 강조가 이동합니다. 브랜드 마크와 목적지 아이콘은 충돌 없이 남고 셸 상단 바의 외부 토글이 상태를 제어합니다.',
+    '64px 레일에서 숨겨진 현재 목적지의 부모가 text-safe blue accent 선택 프록시를 맡고, 펼치면 실제 leaf로 강조가 이동합니다. 상시 선택 배경은 만들지 않으며 셸 상단 바의 외부 토글이 상태를 제어합니다.',
   ),
   render: () => <DockedSideNavFixture defaultCollapsed initialValue="missions-queued" />,
   play: async ({ canvasElement }) => {
@@ -736,15 +812,18 @@ export const DockedCollapsed = {
     await waitForWidth(nav, 64);
     const initial = externalCollapseContract(canvasElement, nav);
     const activeParent = nav.querySelector('[data-sidenav-value="missions"]');
+    const hiddenActiveChild = nav.querySelector('[data-sidenav-parent="missions"][data-state="active"]');
     if (initial.control.textContent?.trim() !== '사이드바 펼치기'
       || initial.panel.dataset.collapsed !== 'true'
       || !activeParent
-      || nav.querySelector('[data-sidenav-parent="missions"]')) {
+      || !hiddenActiveChild
+      || !isClosedChildMotion(nav, 'missions')) {
       throw new Error('The collapsed visual story must retain the active parent while hiding its child rows.');
     }
     const expectedParentBackground = resolveCssColor(activeParent, 'backgroundColor', 'transparent');
-    const expectedParentInk = resolveCssColor(activeParent, 'color', 'var(--color-semantic-label-normal)');
-    const expectedSelectedBackground = resolveCssColor(activeParent, 'backgroundColor', 'var(--color-semantic-primary-surface-strong)');
+    const expectedParentInk = resolveCssColor(activeParent, 'color', 'var(--color-semantic-accent-blue-text)');
+    const expectedSelectedBackground = resolveCssColor(activeParent, 'backgroundColor', 'transparent');
+    const expectedSelectedInk = resolveCssColor(activeParent, 'color', 'var(--color-semantic-accent-blue-text)');
     const collapsedParentStyle = getComputedStyle(activeParent);
     if (activeParent.dataset.state !== 'active-descendant'
       || activeParent.hasAttribute('aria-current')
@@ -795,8 +874,9 @@ export const DockedCollapsed = {
         || activeParent.hasAttribute('aria-current')
         || expandedParentStyle.backgroundColor !== 'rgba(0, 0, 0, 0)'
         || expandedParentStyle.color !== expectedExpandedParentInk
-        || getComputedStyle(activeChild).backgroundColor !== expectedSelectedBackground) {
-        throw new Error('Expanding the rail must transfer the selected surface to the actual current leaf while the parent returns to disclosure styling.');
+        || getComputedStyle(activeChild).backgroundColor !== expectedSelectedBackground
+        || getComputedStyle(activeChild).color !== expectedSelectedInk) {
+        throw new Error('Expanding the rail must transfer text-safe accent selection ink to the actual current leaf while the parent returns to disclosure styling.');
       }
     });
     await userEvent.click(initial.control);
@@ -864,7 +944,7 @@ export const CollapsedParentExpansion = {
     await waitForWidth(nav, 252);
     if (parent.getAttribute('aria-expanded') !== 'true'
       || canvasElement.ownerDocument.activeElement !== parent
-      || !nav.querySelector('[data-sidenav-parent="missions"]')
+      || childMotion(nav, 'missions')?.dataset.state !== 'open'
       || !output.textContent.includes('overview')) {
       throw new Error('A rail parent must expand and reveal its group without selecting a leaf or moving focus.');
     }
@@ -874,12 +954,13 @@ export const CollapsedParentExpansion = {
         throw new Error('Entering overlay mode at runtime must collapse an uncontrolled SideNav.');
       }
     });
-    if (nav.querySelector('[data-sidenav-parent="missions"]')) {
+    if (!isClosedChildMotion(nav, 'missions')) {
       throw new Error('Collapsed overlay mode must hide expanded child rows.');
     }
     await userEvent.click(overlayToggle);
     await waitForWidth(nav, 252);
-    if (nav.querySelector('.lk-sidenav__panel-content')?.dataset.collapsed !== 'false' || !nav.querySelector('[data-sidenav-parent="missions"]')) {
+    if (nav.querySelector('.lk-sidenav__panel-content')?.dataset.collapsed !== 'false'
+      || childMotion(nav, 'missions')?.dataset.state !== 'open') {
       throw new Error('Leaving overlay mode must restore the previous persistent expanded state and open group.');
     }
   },
@@ -888,14 +969,16 @@ export const CollapsedParentExpansion = {
 export const ManualActiveGroupExpansion = {
   name: '상호작용 · 활성 표시와 그룹 열림 분리',
   parameters: storyDescription(
-    'autoExpandActiveGroup=false이면 활성 자식 값과 부모의 현재 경로 문맥을 유지하면서 disclosure 그룹은 닫힌 상태로 시작합니다. 사용자가 그룹을 열면 그때 활성 자식이 aria-current와 선택 표면을 소유합니다.',
+    'autoExpandActiveGroup=false이면 활성 자식 값과 부모의 현재 경로 문맥을 유지하면서 disclosure 그룹은 닫힌 상태로 시작합니다. 사용자가 그룹을 열면 그때 활성 자식이 aria-current와 text-safe accent 선택 잉크를 소유합니다.',
   ),
   render: () => <ManualActiveGroupFixture />,
   play: async ({ canvasElement }) => {
     const nav = canvasElement.querySelector('[data-testid="manual-active-group-side-nav"]');
     const parent = nav?.querySelector('[data-sidenav-value="missions"]');
+    const hiddenActiveChild = nav?.querySelector('[data-sidenav-parent="missions"][data-state="active"]');
     if (!nav || !parent || parent.getAttribute('aria-expanded') !== 'false'
-      || nav.querySelector('[data-sidenav-parent="missions"]')) {
+      || !hiddenActiveChild
+      || !isClosedChildMotion(nav, 'missions')) {
       throw new Error('Disabling active-group auto expansion must keep the active disclosure closed initially.');
     }
 
@@ -911,7 +994,7 @@ export const ManualActiveGroupExpansion = {
 export const SingleOpenGroups = {
   name: '시나리오 · 한 번에 하나만 여는 그룹',
   parameters: storyDescription(
-    'The default SideNav accordion keeps the disclosure hierarchy compact: selecting another group or top-level destination closes the previously open group.',
+    'With multiple={false}, SideNav keeps the disclosure hierarchy compact: selecting another group or top-level destination closes the previously open group.',
   ),
   render: () => <SingleOpenGroupsFixture />,
   play: async ({ canvasElement }) => {
@@ -927,7 +1010,7 @@ export const SingleOpenGroups = {
     if (groups[0].getAttribute('aria-expanded') !== 'false'
       || groups[1].getAttribute('aria-expanded') !== 'true'
       || groups.filter((group) => group.getAttribute('aria-expanded') === 'true').length !== 1) {
-      throw new Error('The default SideNav accordion must close the previous group before opening the next group.');
+      throw new Error('A single-open SideNav accordion must close the previous group before opening the next group.');
     }
     await userEvent.click(nav.querySelector('[data-sidenav-value="overview"]'));
     if (groups.some((group) => group.getAttribute('aria-expanded') === 'true')) {
@@ -1012,8 +1095,7 @@ export const OverlayPeek = {
     const initialActive = nav.querySelector('button[aria-current="page"]');
     const disabled = nav.querySelector('button[title="권한 관리"]');
     const longItem = nav.querySelector('button[title="다중 로봇 장비 상태와 원격 점검 로그"]');
-    const longLabel = Array.from(longItem?.querySelectorAll('span') ?? [])
-      .find((span) => span.textContent?.includes('다중 로봇 장비 상태와 원격 점검 로그'));
+    const longLabel = longItem?.querySelector('[data-slot="label"]');
     if (!missions || missions.getAttribute('aria-expanded') !== 'true' || !initialActive?.textContent?.includes('실행 중') || !disabled?.disabled) {
       throw new Error('The expanded overlay must expose its hierarchy, active child, and disabled item.');
     }

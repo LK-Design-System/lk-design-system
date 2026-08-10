@@ -210,7 +210,7 @@ const targets = [
     match: { importPath: './stories/NavigationSideNav.stories.jsx', exportName: 'DockedCollapsed' },
     viewport: { width: 900, height: 620 },
     reducedMotion: 'reduce',
-    reducedMotionSelectors: ['.lk-sidenav__surface'],
+    reducedMotionSelectors: ['.lk-sidenav__surface', '.lk-sidenav__surface [data-sidenav-motion]'],
   },
   {
     name: 'product-dashboard-shell-normal',

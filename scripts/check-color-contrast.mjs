@@ -23,6 +23,9 @@ const pairs = [
   ['side nav brand muted foreground', '--component-side-nav-brand-muted-foreground', '--component-side-nav-brand-surface', 4.5],
   ['side nav brand active foreground', '--component-side-nav-brand-active-foreground', '--component-side-nav-brand-surface', 4.5],
   ['side nav brand focus indicator', '--component-side-nav-brand-focus-indicator', '--component-side-nav-brand-surface', 3],
+  ['side nav default active foreground', '--color-semantic-accent-blue-text', '--color-semantic-background-elevated-normal', 4.5],
+  ['side nav default active-hover foreground', '--color-semantic-accent-blue-text', '--color-semantic-fill-normal', 4.5, '--color-semantic-background-elevated-normal'],
+  ['side nav default pressed foreground', '--color-semantic-accent-blue-text', '--color-semantic-fill-strong', 4.5, '--color-semantic-background-elevated-normal'],
   ['brand foreground', '--color-semantic-brand-on-surface', '--color-semantic-brand-surface', 4.5],
   ['brand muted foreground', '--color-semantic-brand-on-surface-muted', '--color-semantic-brand-surface', 4.5],
   ['brand subtle foreground', '--color-semantic-brand-on-surface-subtle', '--color-semantic-brand-surface', 4.5],
@@ -84,23 +87,27 @@ for (const theme of ['light', 'dark']) {
     canvas.className = `theme-${theme}`;
     canvas.style.background = 'var(--color-semantic-background-normal-normal)';
     canvas.innerHTML = '';
-    for (const [name, foreground, background] of pairs) {
+    for (const [name, foreground, background, , baseBackground] of pairs) {
+      const sample = document.createElement('div');
+      sample.dataset.name = name;
+      sample.style.background = baseBackground ? `var(${baseBackground})` : 'transparent';
       const item = document.createElement('div');
-      item.dataset.name = name;
       item.style.color = `var(${foreground})`;
       item.style.background = `var(${background})`;
       item.textContent = 'Contrast specimen';
-      canvas.appendChild(item);
+      sample.appendChild(item);
+      canvas.appendChild(sample);
     }
   }, { theme, pairs });
 
   const computed = await page.evaluate(() => {
     const canvas = document.getElementById('canvas');
     const canvasBackground = getComputedStyle(canvas).backgroundColor;
-    return [...canvas.children].map((item) => ({
-      name: item.dataset.name,
-      foreground: getComputedStyle(item).color,
-      background: getComputedStyle(item).backgroundColor,
+    return [...canvas.children].map((sample) => ({
+      name: sample.dataset.name,
+      foreground: getComputedStyle(sample.firstElementChild).color,
+      background: getComputedStyle(sample.firstElementChild).backgroundColor,
+      baseBackground: getComputedStyle(sample).backgroundColor,
       canvasBackground,
     }));
   });
@@ -109,7 +116,8 @@ for (const theme of ['light', 'dark']) {
     const definition = pairs.find(([name]) => name === sample.name);
     const threshold = definition[3];
     const canvasColor = parseColor(sample.canvasBackground);
-    const background = composite(parseColor(sample.background), canvasColor);
+    const baseBackground = composite(parseColor(sample.baseBackground), canvasColor);
+    const background = composite(parseColor(sample.background), baseBackground);
     const foreground = composite(parseColor(sample.foreground), background);
     const contrast = ratio(foreground, background);
     results.push(`${theme} ${sample.name}: ${contrast.toFixed(2)}:1`);
