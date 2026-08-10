@@ -1,0 +1,128 @@
+{
+  "$schema": "LDS_UI_ADOPTION_REPORT.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-ui-adoption-report",
+  "contractVersion": "1",
+  "id": "control-device-list-lds",
+  "scope": {
+    "mode": "changed-ui",
+    "paths": ["src/**/*"]
+  },
+  "surfaces": [
+    {
+      "id": "device-list",
+      "paths": ["src/**/*"],
+      "facets": {
+        "tokensAndTheme": {
+          "verdict": "reviewed",
+          "detail": "The LDS runtime, theme boundary, and token ownership were reviewed for this surface.",
+          "decisions": [
+            { "decisionId": "owner-package-css-order", "outcome": "Core styles load before the theme styles in the application entry.", "evidence": [{ "kind": "source", "ref": "src/styles.css" }] },
+            { "decisionId": "font-theme-scope", "outcome": "The application root owns the font and automatic theme provider scope.", "evidence": [{ "kind": "source", "ref": "src/styles.css" }] },
+            { "decisionId": "color-scheme-behavior", "outcome": "The surface inherits light, dark, and automatic theme behavior from the root.", "evidence": [{ "kind": "visual", "ref": "evidence/device-list.visual.txt" }] },
+            { "decisionId": "token-mapping", "outcome": "Text and spacing values resolve through LDS semantic tokens.", "evidence": [{ "kind": "token", "ref": "--color-semantic-label-strong" }] },
+            { "decisionId": "raw-visual-literals", "outcome": "No unapproved raw visual literal remains in the changed source.", "evidence": [{ "kind": "check", "ref": "evidence/check-result.txt" }] }
+          ],
+          "evidence": [
+            { "kind": "source", "ref": "src/DeviceList.jsx" },
+            { "kind": "token", "ref": "--color-semantic-label-strong" },
+            { "kind": "check", "ref": "evidence/check-result.txt" }
+          ]
+        },
+        "layoutAndVisualFoundations": {
+          "verdict": "reviewed",
+          "detail": "Responsive layout and all applicable visual foundations were reviewed with representative content.",
+          "decisions": [
+            { "decisionId": "semantic-reading-order", "outcome": "The section heading precedes status and refresh controls in reading order.", "evidence": [{ "kind": "source", "ref": "src/DeviceList.jsx" }] },
+            { "decisionId": "grid-container-mapping", "outcome": "A single-column grid preserves the device-list information hierarchy.", "evidence": [{ "kind": "visual", "ref": "evidence/device-list.visual.txt" }] },
+            { "decisionId": "responsive-overflow-ownership", "outcome": "The product container owns narrow wrapping and overflow behavior.", "evidence": [{ "kind": "visual", "ref": "evidence/device-list.visual.txt" }] },
+            { "decisionId": "typography-data-formatting", "outcome": "The heading and device count retain a clear semantic hierarchy.", "evidence": [{ "kind": "visual", "ref": "evidence/device-list.visual.txt" }] },
+            { "decisionId": "visual-foundation-mapping", "outcome": "Spacing uses LDS tokens and the other visual scales are not introduced here.", "evidence": [{ "kind": "token", "ref": "--color-semantic-label-strong" }] }
+          ],
+          "evidence": [
+            { "kind": "source", "ref": "src/DeviceList.jsx" },
+            { "kind": "visual", "ref": "evidence/device-list.visual.txt" }
+          ]
+        },
+        "statePatternsAndMotion": {
+          "verdict": "reviewed",
+          "detail": "Ready and loading states, retained content, and motion disposition were reviewed for the region.",
+          "decisions": [
+            { "decisionId": "async-state-model", "outcome": "Ready and loading are rendered here; other states remain owned by the parent workflow.", "evidence": [{ "kind": "story", "ref": "device-list--states" }] },
+            { "decisionId": "loading-pattern-scope", "outcome": "An LDS Skeleton communicates loading within the device-list region.", "evidence": [{ "kind": "story", "ref": "device-list--states" }] },
+            { "decisionId": "retained-content-refresh", "outcome": "Refresh keeps orchestration in product code and replaces only the list region.", "evidence": [{ "kind": "source", "ref": "src/DeviceList.jsx" }] },
+            { "decisionId": "motion-reduced-motion", "outcome": "This change introduces no product-owned motion or transition.", "evidence": [{ "kind": "check", "ref": "evidence/check-result.txt" }] }
+          ],
+          "evidence": [
+            { "kind": "source", "ref": "src/DeviceList.jsx" },
+            { "kind": "story", "ref": "device-list--states" },
+            { "kind": "decision", "ref": "loading-region-uses-skeleton" }
+          ]
+        },
+        "assetsIconographyAndBrand": {
+          "verdict": "not-applicable",
+          "reasonCode": "no-asset-change",
+          "detail": "The device-list change introduces no icon, image, font, or brand asset.",
+          "evidence": []
+        },
+        "contentAndInternationalization": {
+          "verdict": "reviewed",
+          "detail": "Visible copy, product voice, locale ownership, formatting, and truncation were reviewed.",
+          "decisions": [
+            { "decisionId": "copy-product-truth", "outcome": "The copy catalog records the heading, loading label, and refresh action.", "evidence": [{ "kind": "copy-catalog", "ref": "copy/device-list.json" }] },
+            { "decisionId": "writing-voice", "outcome": "Action-oriented labels follow the product writing and voice guidance.", "evidence": [{ "kind": "copy-catalog", "ref": "copy/device-list.json" }] },
+            { "decisionId": "locale-language-boundary", "outcome": "The application shell remains the owner of document language and locale.", "evidence": [{ "kind": "source", "ref": "src/DeviceList.jsx" }] },
+            { "decisionId": "data-formatting", "outcome": "Only an integer count is displayed and no new locale-sensitive unit is added.", "evidence": [{ "kind": "source", "ref": "src/DeviceList.jsx" }] },
+            { "decisionId": "translation-truncation", "outcome": "The narrow viewport evidence covers expansion and wrapping of translated labels.", "evidence": [{ "kind": "visual", "ref": "evidence/device-list.visual.txt" }] }
+          ],
+          "evidence": [
+            { "kind": "source", "ref": "src/DeviceList.jsx" },
+            { "kind": "copy-catalog", "ref": "copy/device-list.json" }
+          ]
+        },
+        "accessibility": {
+          "verdict": "reviewed",
+          "detail": "Semantic order, keyboard behavior, accessible state, targets, contrast, and motion were reviewed.",
+          "decisions": [
+            { "decisionId": "landmarks-dom-order", "outcome": "The section heading and controls preserve a logical semantic DOM order.", "evidence": [{ "kind": "source", "ref": "src/DeviceList.jsx" }] },
+            { "decisionId": "keyboard-focus-restoration", "outcome": "The LDS Button remains keyboard reachable and refresh does not move focus.", "evidence": [{ "kind": "check", "ref": "evidence/check-result.txt" }] },
+            { "decisionId": "accessible-name-role-state", "outcome": "The skeleton exposes a loading name and the button retains its accessible role.", "evidence": [{ "kind": "story", "ref": "device-list--states" }] },
+            { "decisionId": "target-pointer-alternatives", "outcome": "The LDS Button supplies its owned target size and keyboard activation.", "evidence": [{ "kind": "check", "ref": "evidence/check-result.txt" }] },
+            { "decisionId": "contrast-non-color-cues", "outcome": "LDS tokens preserve contrast and loading is communicated without color alone.", "evidence": [{ "kind": "visual", "ref": "evidence/device-list.visual.txt" }] },
+            { "decisionId": "reduced-motion", "outcome": "No new motion is introduced, so reduced-motion behavior does not regress.", "evidence": [{ "kind": "check", "ref": "evidence/check-result.txt" }] }
+          ],
+          "evidence": [
+            { "kind": "source", "ref": "src/DeviceList.jsx" },
+            { "kind": "story", "ref": "device-list--states" },
+            { "kind": "check", "ref": "evidence/check-result.txt" }
+          ]
+        }
+      },
+      "componentMapping": {
+        "verdict": "reviewed",
+        "detail": "Owner-package reuse and the remaining product orchestration boundary were explicitly reviewed.",
+        "decisions": [
+          { "decisionId": "owner-public-export", "outcome": "Button and Skeleton come from the LDS core public export.", "evidence": [{ "kind": "source", "ref": "src/DeviceList.jsx" }] },
+          { "decisionId": "reuse-composition-choice", "outcome": "Existing LDS Button and Skeleton components are reused without a local clone.", "evidence": [{ "kind": "source", "ref": "src/DeviceList.jsx" }] },
+          { "decisionId": "product-orchestration-boundary", "outcome": "The product surface continues to own device data and refresh orchestration.", "evidence": [{ "kind": "source", "ref": "src/DeviceList.jsx" }] },
+          { "decisionId": "exception-shared-authoring", "outcome": "No shared LDS authoring request or component exception remains.", "evidence": [{ "kind": "check", "ref": "evidence/check-result.txt" }] }
+        ],
+        "evidence": [
+          { "kind": "decision", "ref": "lds-button-and-skeleton-with-product-orchestration" }
+        ]
+      },
+      "verification": {
+        "viewports": ["1280x800", "360x800"],
+        "viewportDisposition": "Normal and narrow layouts preserve hierarchy without clipped content.",
+        "themes": ["light", "dark"],
+        "themeDisposition": "Both supported color schemes preserve token ownership and contrast.",
+        "states": ["ready", "loading"],
+        "stateDisposition": "Ready and loading states remain distinguishable and keep the refresh path clear.",
+        "evidence": [
+          { "kind": "visual", "ref": "evidence/device-list.visual.txt" }
+        ]
+      }
+    }
+  ],
+  "exceptions": []
+}

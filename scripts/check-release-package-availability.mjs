@@ -28,6 +28,29 @@ function registryProbe(name, version) {
 }
 
 const rootPackage = await readJson('package.json');
+const roboticsExternalSurface = await readJson('docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json');
+const roboticsPackage = roboticsExternalSurface.package;
+assert(
+  roboticsPackage.refStatus === 'published',
+  `${roboticsPackage.name}@${roboticsPackage.version} is still marked ${roboticsPackage.refStatus}; verify its immutable tag and registry release, then promote the external surface to published before releasing the LDS compatibility package.`,
+);
+const roboticsProbe = registryProbe(roboticsPackage.name, roboticsPackage.version);
+if (roboticsProbe.status !== 0) {
+  throw new Error(
+    `${roboticsPackage.name}@${roboticsPackage.version} must be published by its owning repository before the LDS compatibility package can be released.\n`
+    + roboticsProbe.output,
+  );
+}
+let publishedRoboticsVersion;
+try {
+  publishedRoboticsVersion = JSON.parse(roboticsProbe.output.split(/\r?\n/)[0]);
+} catch {
+  publishedRoboticsVersion = roboticsProbe.output.replace(/^"|"$/g, '');
+}
+assert(
+  publishedRoboticsVersion === roboticsPackage.version,
+  `${roboticsPackage.name} registry identity drift: expected ${roboticsPackage.version}, received ${publishedRoboticsVersion}.`,
+);
 for (const packageId of packageIds) {
   const manifest = await readJson(`packages/${packageId}/package.json`);
   assert(
@@ -46,4 +69,6 @@ for (const packageId of packageIds) {
   }
 }
 
-console.log(`Validated that the ${rootPackage.version} package set is absent from ${registry}.`);
+console.log(
+  `Validated external Robotics prerequisite ${roboticsPackage.version} and confirmed that the ${rootPackage.version} LDS package set is absent from ${registry}.`,
+);

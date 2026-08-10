@@ -1,0 +1,3 @@
+# Fixture Robotics UI package documentation
+
+Canonical contract: ./adoption-checklist.json

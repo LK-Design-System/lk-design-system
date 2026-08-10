@@ -236,7 +236,7 @@ function BrandColorReference() {
       <div style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <h3 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 16 }}>1. 공식 SVG 고정 색상</h3>
         <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7, fontSize: 14 }}>
-          아래 세 값은 <code>logo_LKR.svg</code>에서 직접 확인한 값입니다. 테마나 UI 상태에 따라 바꾸지 않습니다.
+          아래 세 값은 <code>assets/brand/lk-logo-construction.json</code>에 고정된 승인 색상입니다. 테마나 UI 상태에 따라 바꾸지 않습니다.
           투명 배경 파생형만 밝은 면에서는 <code>tone="ink"</code>, 어두운 면에서는 <code>tone="white"</code>를 고릅니다.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-3)' }}>
@@ -410,17 +410,41 @@ export const LKRoboticsLogo = {
           LK ROBOTICS 로고
         </h2>
         <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          <code>logo_LKR.svg</code>의 실제 벡터 path를 기준으로 다시 정리했습니다. 공식 사각 조합은 색·비율·배치를
-          고정한 네이비·화이트 바탕 자산 중 하나를 사용하고, 제품 UI용 mark·stacked·inline은 같은 원본 윤곽을 재사용합니다.
+          커스텀 LK 심볼, Montserrat ExtraBold 800 워드마크, Noto Sans KR ExtraBold 800 한글 법인명을 하나의 제작 규정으로 정리했습니다. 공식 사각 조합은
+          색·비율·배치를 고정한 네이비·화이트 바탕 자산 중 하나를 사용하고, 제품 UI용 mark·stacked·inline도 같은 생성 원본을 사용합니다.
         </p>
       </header>
 
       <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
         <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
-          <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>공식 원본 SVG</h2>
+          <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>워드마크 · 법인명 제작 규정</h2>
           <p style={{ margin: 0, maxWidth: 760, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-            네이비 바탕 두 조합은 원본 AI 내보내기 파일의 path와 색을 그대로 보존합니다. 화이트 바탕 반전은 같은 path와
-            포인트 색을 유지하고 네이비·화이트 역할만 맞바꿉니다. 정리된 전체 원본은 <code>assets/brand/lk-logo-master.svg</code>입니다.
+            <strong>ROBOTICS는 Montserrat ExtraBold 800, Version 7.222로 고정합니다.</strong> 대문자, 글꼴 기본 커닝,
+            추가 자간 0, 가로·세로 동일 비율을 사용하며 글리프 윤곽을 임의로 수정하지 않습니다. 승인 결과물은 모두 path라
+            서비스에서 Montserrat를 로드하지 않습니다.
+          </p>
+          <p style={{ margin: 0, maxWidth: 760, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+            <strong>주식회사 엘케이로보틱스는 Noto Sans KR ExtraBold 800, Version 2.004-H2로 고정합니다.</strong> NFC 텍스트,
+            글꼴 기본 커닝, 글자 사이 0.105em 자간, 가로·세로 동일 비율을 사용합니다. 법인명 보이는 폭은 1.90X,
+            상단 로크업과의 간격은 0.21X이며 보이는 중심축을 맞춥니다.
+          </p>
+        </div>
+        <ul style={{ margin: 0, paddingInlineStart: '1.2em', maxWidth: 800, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.8 }}>
+          <li><strong>LK:</strong> 기존 커스텀 벡터 심볼을 정본으로 유지</li>
+          <li><strong>ROBOTICS:</strong> 고정 TTF의 SHA-256을 검증한 뒤 아웃라인 생성</li>
+          <li><strong>한글 법인명:</strong> 고정 가변 TTF의 SHA-256과 <code>wght=800</code> 인스턴스를 검증한 뒤 0.105em 자간으로 아웃라인 생성</li>
+          <li><strong>배치:</strong> inline은 심볼과 워드마크의 보이는 높이를 같게 하고, 간격은 심볼 보이는 폭의 20%</li>
+          <li><strong>사용:</strong> 승인 SVG 또는 <code>Lockup</code>만 사용하고 텍스트로 재조판하지 않음</li>
+          <li><strong>정본:</strong> <code>assets/brand/lk-logo-construction.json</code> · 생성: <code>npm run generate:brand</code></li>
+        </ul>
+      </section>
+
+      <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
+        <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
+          <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>승인 SVG 자산</h2>
+          <p style={{ margin: 0, maxWidth: 760, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
+            LK 심볼은 커스텀 벡터 윤곽을 유지하고 ROBOTICS와 한글 법인명은 각각 규정된 글꼴에서 다시 생성합니다. 화이트 바탕 반전은 같은 path와
+            포인트 색을 유지하고 네이비·화이트 역할만 맞바꿉니다. 승인 조합 전체는 <code>assets/brand/lk-logo-master.svg</code>에서 확인합니다.
           </p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--space-4)' }}>
@@ -491,6 +515,7 @@ export const LKRoboticsLogo = {
                 display: 'grid',
                 alignContent: 'center',
                 gap: 'var(--space-4)',
+                minWidth: 0,
                 minHeight: 148,
                 padding: 'var(--space-5)',
                 border: '1px solid var(--color-semantic-line-normal-normal)',
@@ -498,7 +523,7 @@ export const LKRoboticsLogo = {
                 background: 'var(--color-semantic-background-elevated-normal)',
               }}
             >
-              <Lockup variant={variant} tone="ink" height={height} />
+              <Lockup variant={variant} tone="ink" height={height} style={{ width: 'auto', maxWidth: '100%' }} />
               <div style={{ display: 'grid', gap: 4 }}>
                 <strong style={{ color: 'var(--color-semantic-label-normal)' }}>{label}</strong>
                 <code style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 12 }}>
@@ -547,7 +572,7 @@ export const LKRoboticsLogo = {
       <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
         <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>여백 (Clear space)</h2>
         <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          로고 주변에는 최소 여백을 확보합니다. 상·하·좌·우 모두 <strong>로크업 높이의 0.5배(½X)</strong> 이상을 비워
+          <strong>X는 LK 심볼의 보이는 높이</strong>입니다. 로고 주변 상·하·좌·우 모두 <strong>0.5X</strong> 이상을 비워
           다른 요소·텍스트·경계와 붙지 않게 합니다. 제품 UI용 inline 로크업의 <strong>최소 높이는 20px</strong>이며, 그보다 작게
           쓰지 않습니다.
         </p>
@@ -556,7 +581,7 @@ export const LKRoboticsLogo = {
             <div style={{ display: 'inline-flex', padding: 14, border: '1px dashed var(--color-semantic-line-normal-neutral)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)' }}>
               <Lockup variant="inline" height={28} />
             </div>
-            <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>여백 = ½ × 높이 (28px → 14px)</code>
+            <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>예시 여백 14px (최소 0.5X 충족)</code>
           </div>
           <div style={{ display: 'inline-grid', gap: 6, justifyItems: 'center' }}>
             <div style={{ display: 'inline-flex', padding: 10, border: '1px dashed var(--color-semantic-line-normal-neutral)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)' }}>
@@ -587,9 +612,9 @@ export const LKRoboticsLogo = {
       <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
         <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>공식 사각 로고 · 크기별 확인</h2>
         <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          소셜 프로필·문서 썸네일처럼 정사각 슬롯이 고정된 자리에서 원본 조합을 그대로 축소합니다. 법인명 가독성이
-          필요한지에 따라 기업 표기형과 기본형 중 하나를 고르고, 표면에 맞춰 네이비 바탕 또는 화이트 바탕 반전을
-          사용합니다.
+          소셜 프로필·문서 썸네일처럼 정사각 슬롯이 고정된 자리에서 원본 조합을 그대로 축소합니다. 기업 표기형은 디지털
+          160px 이상, 권장 192px 이상, 인쇄 32mm 이상에서만 사용합니다. 그보다 작으면 법인명 없는 기본형을 사용하고,
+          표면에 맞춰 네이비 바탕 또는 화이트 바탕 반전을 고릅니다.
         </p>
         <div style={{ display: 'grid', gap: 'var(--space-5)', padding: 'var(--space-5)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-background-elevated-normal)' }}>
           {OFFICIAL_LOGO_VARIANTS.map((variant) => (
@@ -598,7 +623,7 @@ export const LKRoboticsLogo = {
                 {variant.logoLabel} · {variant.label}
               </strong>
               <div style={{ display: 'flex', gap: 'var(--space-6)', flexWrap: 'wrap', alignItems: 'flex-end' }}>
-              {[160, 96, 64, 48].map((size) => (
+              {(variant.file.includes('corporate') ? [320, 192, 160] : [160, 96, 64, 48]).map((size) => (
                 <div key={size} style={{ display: 'grid', gap: 8, justifyItems: 'center' }}>
                   <img
                     src={`./assets/brand/${variant.file}`}
@@ -619,7 +644,7 @@ export const LKRoboticsLogo = {
       <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
         <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>가로형 배너</h2>
         <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          공식 심볼과 워드마크 path로 만든 inline 파생형에 여백 규정(½X)을 포함한 배너입니다. 서명·헤더 이미지처럼 가로
+          공식 심볼과 워드마크 path로 만든 inline 파생형에 사방 여백 규정(0.5X, X=LK 심볼 보이는 높이)을 포함한 배너입니다. 서명·헤더 이미지처럼 가로
           슬롯이 고정된 자리에 쓰며, 공식 네이비 바탕과 화이트 바탕 두 벌을 제공합니다. 원본:{' '}
           <code style={{ fontSize: 12, color: 'var(--color-semantic-label-alternative)' }}>assets/brand/lk-logo-banner-navy.svg · lk-logo-banner-light.svg</code>
         </p>
@@ -644,7 +669,7 @@ export const LockupOverlineCard = {
   name: 'Lockup · Overline card parity',
   tags: ['!dev', 'visual-parity'],
   render: () => (
-    <div style={{ background: 'var(--color-semantic-background-normal-normal)', padding: '22px 24px', fontFamily: 'var(--font-sans)' }}>
+    <div data-visual-crop-root style={{ width: 820, minHeight: 650, boxSizing: 'border-box', background: 'var(--color-semantic-background-normal-normal)', padding: '22px 24px', fontFamily: 'var(--font-sans)' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         <div>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', marginBottom: 10 }}>
@@ -654,11 +679,27 @@ export const LockupOverlineCard = {
             <Lockup variant="mark" tone="ink" height={46} />
             <Lockup variant="stacked" tone="ink" height={66} />
             <Lockup variant="inline" tone="ink" height={30} />
+            <Lockup variant="inline" tone="ink" height={20} />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-8)', flexWrap: 'wrap', padding: '20px 24px', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-brand-surface)', marginTop: 12 }}>
             <Lockup variant="mark" tone="white" height={46} />
             <Lockup variant="stacked" tone="white" height={66} />
             <Lockup variant="inline" tone="white" height={30} />
+            <Lockup variant="inline" tone="white" height={20} />
+          </div>
+        </div>
+        <div>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.4, textTransform: 'uppercase', color: 'var(--color-semantic-label-alternative)', marginBottom: 10 }}>
+            Corporate descriptor — 160px minimum
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '18px 24px', borderRadius: 'var(--radius-xl)', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-solid-normal)' }}>
+            <img src="./assets/brand/lk-logo-official-corporate.svg" alt="LK ROBOTICS 기업 표기형 네이비" width={160} height={160} style={{ display: 'block' }} />
+            <img src="./assets/brand/lk-logo-official-corporate-light.svg" alt="LK ROBOTICS 기업 표기형 화이트" width={160} height={160} style={{ display: 'block', border: '1px solid var(--color-semantic-line-solid-neutral)' }} />
+            <div style={{ display: 'grid', gap: 6, maxWidth: 250, color: 'var(--color-semantic-label-neutral)', fontSize: 12, lineHeight: 1.55 }}>
+              <strong style={{ color: 'var(--color-semantic-label-normal)' }}>Noto Sans KR ExtraBold 800</strong>
+              <span>자간 0.105em · 폭 1.90X · 간격 0.21X</span>
+              <span>160px 미만에서는 기본형 사용</span>
+            </div>
           </div>
         </div>
         <div>

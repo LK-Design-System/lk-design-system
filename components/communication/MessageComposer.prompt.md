@@ -109,12 +109,12 @@
 
 - [3 Free AI Chatbot App UI Kit](https://www.figma.com/design/ss5Fq2VKd2UDoHk7SE9dPl/3-Free-AI-Chatbot-App-UI-Kit--Community-?node-id=10301-21963)의 왼쪽 slothGPT/general-assistant composer를 secondary visual inspiration으로 사용합니다.
 - 채택한 것은 conversation column 하단의 단일 elevated shell, expanding draft와 명시적 send action입니다. exact purple, logo, provider tool, voice control, desktop/mobile frame와 shadow 값은 복사하지 않습니다.
-- 중앙 slothpilot/LK Portal composer는 design authority가 아니며 product-specific tool row를 public API에 고정하지 않습니다.
+- 중앙 slothpilot/Context Hub composer는 design authority가 아니며 product-specific tool row를 public API에 고정하지 않습니다.
 - 사용자가 제공한 추가/플러그인 menu, 읽기 전용·안전 Popover, 모델·자세함 Popover 스크린샷도 secondary inspiration으로만 검토했습니다. compact panel을 작성기 위에 앵커링하고 긴 항목은 내부 scroll로 읽는 단서만 취했으며, 제품명·모델명·권한 정책·색·아이콘 조합·완성 화면 chrome은 복제하지 않습니다.
 
 ## product workflow gate
 
-- **LK Portal — supported by composition only.** attachment, retrieval scope 또는 provider control을 leading/trailing slot에 조합할 수 있지만 현재 product composer의 anatomy, order, color와 API를 그대로 가져오지 않습니다.
+- **LK Context Hub — supported by composition only.** attachment, retrieval scope 또는 provider control을 leading/trailing slot에 조합할 수 있지만 현재 product composer의 anatomy, order, color와 API를 그대로 가져오지 않습니다.
 - **LK Web Viz — not applicable.** map command entry와 viewport selection은 AI conversation draft가 아니며 해당 editor/control이 소유합니다.
 - **LK Control Full Daedeok — not applicable.** safety-critical manual control과 task command는 chat submit으로 모델링하지 않습니다.
 - product repository는 필요한 component/state coverage만 확인하고 design, anatomy, public API와 style 근거로 사용하지 않습니다.

@@ -3,6 +3,7 @@ import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import process from 'node:process';
+import { isDeepStrictEqual } from 'node:util';
 import { fileURLToPath } from 'node:url';
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -14,18 +15,58 @@ const npmPrefixArguments = process.platform === 'win32'
   : [];
 
 const workspaces = [
-  { id: 'core', name: '@lk-design-system/lds-core', implementation: true },
-  { id: 'theme', name: '@lk-design-system/lds-theme', implementation: true },
-  { id: 'product', name: '@lk-design-system/lds-product', implementation: true },
-  { id: 'compat', name: '@lk-design-system/design-system-core', implementation: false },
+  { id: 'core', name: '@lk-design-system/lds-core', layer: 'core', implementation: true, docsOrigin: 'https://lk-design-system.github.io/lk-design-system/' },
+  { id: 'theme', name: '@lk-design-system/lds-theme', layer: 'theme', implementation: true, docsOrigin: 'https://lk-design-system.github.io/lk-design-system/' },
+  { id: 'product', name: '@lk-design-system/lds-product', layer: 'product', implementation: true, docsOrigin: 'https://lk-design-system.github.io/lk-design-system/' },
+  { id: 'compat', name: '@lk-design-system/design-system-core', layer: 'compatibility', implementation: false, docsOrigin: 'https://lk-design-system.github.io/lk-design-system/' },
   {
     id: 'robotics',
     name: '@lk-design-system/lds-robotics-ui',
+    layer: 'robotics',
     implementation: true,
     external: true,
+    docsOrigin: 'https://lk-design-system.github.io/lk-design-system-robotics/',
   },
 ];
 const selectOnly = process.argv.includes('--select-only');
+const documentationExports = {
+  './package.json': './package.json',
+  './design-system.json': './docs/manifest.json',
+  './llms.txt': './docs/llms.txt',
+  './adoption-checklist.json': './docs/adoption-checklist.json',
+  './docs/*': './docs/*',
+};
+const requiredDocumentationFiles = [
+  'README.md',
+  'docs/manifest.json',
+  'docs/llms.txt',
+  'docs/adoption-checklist.json',
+  'docs/adoption-report.schema.json',
+  'docs/LDS_UI_ADOPTION_CONTRACT.schema.json',
+];
+const roboticsExternalSurface = await readJson(path.join(
+  repositoryRoot,
+  'docs',
+  'references',
+  'package-split',
+  'ROBOTICS_EXTERNAL_SURFACE.json',
+));
+const canonicalAdoptionContract = await readJson(path.join(
+  repositoryRoot,
+  'docs',
+  'references',
+  'adoption',
+  'LDS_UI_ADOPTION_CONTRACT.json',
+));
+const workspaceRootManifest = await readJson(path.join(repositoryRoot, 'package.json'));
+
+function withoutReferenceProjection(contract) {
+  return {
+    ...contract,
+    facets: (contract.facets ?? []).map((facet) => ({ ...facet, references: [] })),
+    componentMapping: { ...contract.componentMapping, references: [] },
+  };
+}
 
 function invariant(condition, message) {
   if (!condition) throw new Error(message);
@@ -90,6 +131,33 @@ function run(command, args, options = {}) {
 
 async function readJson(file) {
   return JSON.parse(await readFile(file, 'utf8'));
+}
+
+async function walkFiles(directory) {
+  const files = [];
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const full = path.join(directory, entry.name);
+    if (entry.isDirectory()) files.push(...await walkFiles(full));
+    else files.push(full);
+  }
+  return files;
+}
+
+async function inventory(directory) {
+  const files = await walkFiles(directory);
+  const rows = [];
+  let bytes = 0;
+  for (const file of files.sort((left, right) => left.localeCompare(right))) {
+    const contents = await readFile(file);
+    const relative = path.relative(directory, file).replaceAll('\\', '/');
+    bytes += contents.byteLength;
+    rows.push(`${relative}|${contents.byteLength}|${createHash('sha256').update(contents).digest('hex')}`);
+  }
+  return {
+    fileCount: files.length,
+    bytes,
+    sha256: createHash('sha256').update(rows.join('\n')).digest('hex'),
+  };
 }
 
 async function sourceCommit() {
@@ -163,6 +231,51 @@ function assertCompatContract(manifest, files) {
   }
 }
 
+function assertDocumentationContract(workspace, manifest, files) {
+  const externalDocs = workspace.external ? roboticsExternalSurface.documentation : null;
+  const requiredFiles = workspace.external
+    ? ['README.md', 'AGENTS.md', 'CLAUDE.md', 'llms.txt', ...Object.values(externalDocs.files).map(({ path: file }) => file), ...externalDocs.domainDocuments.map(({ path: file }) => file)]
+    : requiredDocumentationFiles;
+  for (const file of requiredFiles) {
+    invariant(files.has(file), `${workspace.id}: generated package documentation is missing ${file}.`);
+  }
+  const documentationTargets = workspace.external ? {
+    './package.json': './package.json',
+    './design-system.json': `./${externalDocs.files.manifest.path}`,
+    './llms.txt': `./${externalDocs.files.llms.path}`,
+    './adoption-checklist.json': `./${externalDocs.files.checklist.path}`,
+    './docs/*': `./${path.posix.dirname(externalDocs.files.manifest.path)}/*`,
+  } : documentationExports;
+  const packageInstructions = workspace.external ? ['README.md', 'AGENTS.md', 'CLAUDE.md', 'llms.txt'] : ['README.md'];
+  for (const file of packageInstructions) {
+    invariant(manifest.files?.includes(file), `${workspace.id}: files must include ${file}.`);
+  }
+  const bundleRoot = workspace.external ? path.posix.dirname(externalDocs.files.manifest.path) : 'docs';
+  invariant(
+    manifest.files?.some((entry) => entry === bundleRoot || bundleRoot.startsWith(`${entry.replace(/\/$/, '')}/`)),
+    `${workspace.id}: files must cover ${bundleRoot}.`,
+  );
+  for (const [subpath, target] of Object.entries(documentationTargets)) {
+    invariant(manifest.exports?.[subpath] === target, `${workspace.id}: ${subpath} must export ${target}.`);
+  }
+  invariant(manifest.lds?.schemaVersion === 1, `${workspace.id}: lds.schemaVersion must be 1.`);
+  invariant(manifest.lds?.layer === workspace.layer, `${workspace.id}: lds.layer must be ${workspace.layer}.`);
+  for (const [field, target] of Object.entries({
+    manifest: workspace.external ? `./${externalDocs.files.manifest.path}` : './docs/manifest.json',
+    llms: workspace.external ? `./${externalDocs.files.llms.path}` : './docs/llms.txt',
+    adoptionChecklist: workspace.external ? `./${externalDocs.files.checklist.path}` : './docs/adoption-checklist.json',
+    adoptionReportSchema: workspace.external ? `./${externalDocs.files.reportSchema.path}` : './docs/adoption-report.schema.json',
+  })) {
+    invariant(manifest.lds?.[field] === target, `${workspace.id}: lds.${field} must target ${target}.`);
+    invariant(files.has(target.replace(/^\.\//, '')), `${workspace.id}: lds.${field} target is absent from the tarball.`);
+  }
+  invariant(
+    manifest.lds?.storybook?.startsWith(workspace.docsOrigin),
+    `${workspace.id}: lds.storybook must expose the live documentation.`,
+  );
+  invariant(manifest.homepage === manifest.lds.storybook, `${workspace.id}: homepage must match lds.storybook.`);
+}
+
 function firstStaticSubpath(files, directory) {
   const prefix = `${directory}/`;
   const file = [...files].find((candidate) => candidate.startsWith(prefix) && !candidate.endsWith('/'));
@@ -204,6 +317,7 @@ async function packWorkspace(workspace, destination) {
   assertExportFiles(workspace, manifest, files);
   if (workspace.implementation) assertImplementationContract(workspace, manifest, files);
   else assertCompatContract(manifest, files);
+  assertDocumentationContract(workspace, manifest, files);
 
   return {
     ...workspace,
@@ -344,13 +458,227 @@ async function installPackedDependencies(packed, consumerDirectory) {
   await linkRuntimePeer(consumerDirectory, 'react-dom');
 }
 
+async function assertInstalledDocumentation(packed, consumerDirectory) {
+  for (const workspace of packed) {
+    const installedRoot = path.join(consumerDirectory, 'node_modules', ...workspace.name.split('/'));
+    const installedManifest = await readJson(path.join(installedRoot, 'package.json'));
+    const bundleRoot = workspace.external
+      ? path.posix.dirname(roboticsExternalSurface.documentation.files.manifest.path)
+      : 'docs';
+    const docsRoot = path.join(installedRoot, ...bundleRoot.split('/'));
+    const docsManifest = await readJson(path.join(docsRoot, 'manifest.json'));
+    invariant(
+      isDeepStrictEqual(docsManifest.package, {
+        name: workspace.name,
+        version: installedManifest.version,
+        layer: workspace.layer,
+      }),
+      `${workspace.id}: installed documentation identity or version drift.`,
+    );
+
+    const documentFiles = (await walkFiles(docsRoot))
+      .map((file) => path.relative(docsRoot, file).replaceAll('\\', '/'))
+      .filter((file) => file !== 'manifest.json')
+      .sort();
+    const records = docsManifest.documents ?? [];
+    invariant(
+      isDeepStrictEqual(documentFiles, records.map(({ path: file }) => file).sort()),
+      `${workspace.id}: installed documentation manifest file set drift.`,
+    );
+    for (const record of records) {
+      const contents = await readFile(path.join(docsRoot, record.path));
+      invariant(
+        createHash('sha256').update(contents).digest('hex') === record.sha256,
+        `${workspace.id}: installed docs/${record.path} hash drift.`,
+      );
+    }
+
+    if (!workspace.external) {
+      for (const [resource, expectedInventory] of Object.entries(docsManifest.resources ?? {})) {
+        invariant(
+          isDeepStrictEqual(expectedInventory, await inventory(path.join(installedRoot, resource))),
+          `${workspace.id}: installed ${resource} inventory does not match docs/manifest.json.`,
+        );
+      }
+    }
+    const checklistPath = workspace.external
+      ? path.join(installedRoot, roboticsExternalSurface.documentation.files.checklist.path)
+      : path.join(docsRoot, 'adoption-checklist.json');
+    const adoptionContract = await readJson(checklistPath);
+    invariant(
+      adoptionContract.$schema === './LDS_UI_ADOPTION_CONTRACT.schema.json',
+      `${workspace.id}: installed adoption contract has a non-resolvable schema link.`,
+    );
+    await access(path.resolve(path.dirname(checklistPath), adoptionContract.$schema));
+
+    if (workspace.external) {
+      invariant(
+        roboticsExternalSurface.schemaVersion === 3
+          && roboticsExternalSurface.package?.name === workspace.name
+          && roboticsExternalSurface.package?.version === installedManifest.version,
+        'robotics: installed package identity differs from the v3 external surface.',
+      );
+      const documentation = roboticsExternalSurface.documentation;
+      invariant(
+        documentation.canonicalContract.source.ref === `lds-v${workspaceRootManifest.version}`,
+        'robotics: canonical adoption source ref must match the current LDS package-set version.',
+      );
+      const declared = [
+        ...Object.values(documentation.files),
+        ...documentation.domainDocuments,
+      ];
+      for (const record of declared) {
+        const target = path.resolve(installedRoot, record.path);
+        const relative = path.relative(installedRoot, target);
+        invariant(relative && !relative.startsWith('..') && !path.isAbsolute(relative), `robotics: unsafe declared documentation path ${record.path}.`);
+        const bytes = await readFile(target);
+        invariant(createHash('sha256').update(bytes).digest('hex') === record.sha256, `robotics: external-surface hash drift for ${record.path}.`);
+      }
+      invariant(
+        isDeepStrictEqual(docsManifest.publicDocs, documentation.publicDocs),
+        'robotics: documentation manifest public URLs differ from the external surface.',
+      );
+      invariant(
+        isDeepStrictEqual(docsManifest.source?.canonicalAdoption, {
+          kind: documentation.canonicalContract.kind,
+          version: documentation.canonicalContract.contractVersion,
+          source: documentation.canonicalContract.source,
+          snapshotManifestSha256: documentation.canonicalContract.snapshotManifestSha256,
+        }),
+        'robotics: documentation manifest canonical source differs from the external surface.',
+      );
+      invariant(
+        isDeepStrictEqual(docsManifest.source?.robotics, {
+          repository: roboticsExternalSurface.package.repository,
+          ref: `v${roboticsExternalSurface.package.version}`,
+          refStatus: roboticsExternalSurface.package.refStatus,
+        }),
+        'robotics: documentation manifest Robotics source differs from the external surface.',
+      );
+      invariant(
+        isDeepStrictEqual(docsManifest.resources, {
+          tokens: {
+            path: `./${path.posix.relative(bundleRoot, documentation.files.tokenManifest.path)}`,
+            sha256: documentation.files.tokenManifest.sha256,
+          },
+          domainSymbols: {
+            path: `./${path.posix.relative(bundleRoot, documentation.files.domainSymbolRegistry.path)}`,
+            sha256: documentation.files.domainSymbolRegistry.sha256,
+          },
+        }),
+        'robotics: documentation resource records differ from the external surface.',
+      );
+      const expectedDomainDocuments = documentation.domainDocuments.map((record) => ({
+        path: path.posix.relative(bundleRoot, record.path),
+        sha256: record.sha256,
+      }));
+      const actualDomainDocuments = (docsManifest.domain?.documents ?? []).map((record) => ({
+        path: record.path,
+        sha256: record.sha256,
+      }));
+      invariant(
+        isDeepStrictEqual(actualDomainDocuments, expectedDomainDocuments),
+        'robotics: documentation domain records differ from the external surface.',
+      );
+      invariant(
+        records.find(({ path: file }) => file === 'shared/manifest.json')?.sha256
+          === documentation.canonicalContract.snapshotManifestSha256,
+        'robotics: upstream snapshot manifest hash differs from the canonical documentation source.',
+      );
+      invariant(
+        isDeepStrictEqual(
+          withoutReferenceProjection(adoptionContract),
+          withoutReferenceProjection(canonicalAdoptionContract),
+        ),
+        'robotics: installed adoption checklist decisions differ from the canonical contract.',
+      );
+      const references = [
+        ...(adoptionContract.facets ?? []).flatMap((facet) => facet.references ?? []),
+        ...(adoptionContract.componentMapping?.references ?? []),
+      ];
+      for (const reference of references) {
+        invariant(
+          typeof reference === 'string' && !reference.startsWith('@') && !/^https?:/.test(reference),
+          `robotics: adoption checklist must be self-contained (${reference}).`,
+        );
+        const target = path.resolve(docsRoot, reference);
+        const relative = path.relative(installedRoot, target);
+        invariant(relative && !relative.startsWith('..') && !path.isAbsolute(relative), `robotics: checklist reference escapes the package (${reference}).`);
+        await access(target);
+      }
+      const reportExample = await readJson(path.join(installedRoot, documentation.files.reportExample.path));
+      invariant(reportExample.$schema === './adoption-report.schema.json', 'robotics: report example schema link must be package-relative.');
+      const canonicalBytes = await readFile(path.join(repositoryRoot, documentation.canonicalContract.source.path));
+      invariant(
+        createHash('sha256').update(canonicalBytes).digest('hex') === documentation.canonicalContract.source.sha256,
+        'robotics: canonical adoption source hash differs from the external surface.',
+      );
+    }
+  }
+  console.log('Validated installed package documentation hashes, relative schema links, and computed token/asset inventories.');
+}
+
+async function smokeDocumentationResolution(packed, consumerDirectory) {
+  const packageNames = packed.map(({ name }) => name);
+const smoke = `
+import { access, readFile } from 'node:fs/promises';
+
+const packageNames = ${JSON.stringify(packageNames)};
+const entrypoints = [
+  ['package.json', true],
+  ['design-system.json', true],
+  ['llms.txt', false],
+  ['adoption-checklist.json', true],
+  ['docs/adoption-report.schema.json', true],
+  ['docs/adoption-report.example.json', true],
+];
+for (const packageName of packageNames) {
+  const packageEntrypoints = packageName === '@lk-design-system/lds-robotics-ui'
+    ? [...entrypoints,
+      ['docs/adoption-config.schema.json', true],
+      ['docs/tokens/manifest.json', true],
+      ['docs/domain-symbol-registry.json', true]]
+    : entrypoints;
+  for (const [subpath, json] of packageEntrypoints) {
+    const url = new URL(import.meta.resolve(\`${'${packageName}'}/\${subpath}\`));
+    await access(url);
+    const contents = await readFile(url, 'utf8');
+    if (json) JSON.parse(contents);
+    else if (!contents.trim()) throw new Error(\`${'${packageName}'}/\${subpath} is empty.\`);
+  }
+  const checklistUrl = new URL(import.meta.resolve(\`${'${packageName}'}/adoption-checklist.json\`));
+  const checklist = JSON.parse(await readFile(checklistUrl, 'utf8'));
+  const references = [
+    ...checklist.facets.flatMap((facet) => facet.references),
+    ...checklist.componentMapping.references,
+  ];
+  for (const reference of references) {
+    if (/^https:\\/\\//.test(reference)) continue;
+    const referenceUrl = reference.startsWith('@')
+      ? new URL(import.meta.resolve(reference))
+      : new URL(reference, checklistUrl);
+    await access(referenceUrl);
+  }
+}
+console.log('package documentation resolution smoke passed');
+`;
+  const smokeFile = path.join(consumerDirectory, 'documentation-smoke.mjs');
+  await writeFile(smokeFile, smoke.trimStart());
+  const { stdout } = await run(process.execPath, [smokeFile], { cwd: consumerDirectory });
+  invariant(stdout.includes('package documentation resolution smoke passed'), 'Documentation resolution smoke did not reach its success marker.');
+}
+
 async function smokePackedSelect(packed, consumerDirectory) {
   await installPackedDependencies(packed, consumerDirectory);
+  await assertInstalledDocumentation(packed, consumerDirectory);
+  await smokeDocumentationResolution(packed, consumerDirectory);
   await assertPackedSelectTokenContract(packed, consumerDirectory);
 }
 
 async function smokeConsumer(packed, consumerDirectory) {
   await installPackedDependencies(packed, consumerDirectory);
+  await assertInstalledDocumentation(packed, consumerDirectory);
+  await smokeDocumentationResolution(packed, consumerDirectory);
   await assertPackedSelectTokenContract(packed, consumerDirectory);
 
   const compat = packed.find(({ id }) => id === 'compat');
@@ -410,7 +738,7 @@ async function main() {
     if (selectOnly) {
       await smokePackedSelect(packed, consumerDirectory);
       completed = true;
-      console.log('Packed Select token smoke passed: the Core + Theme tarballs install together and cover every fallback-free Select CSS variable.');
+      console.log('Packed Core + Theme smoke passed: tarballs install together, documentation exports resolve with verified hashes, and Select token coverage is complete.');
       return;
     }
     await smokeConsumer(packed, consumerDirectory);
@@ -444,7 +772,7 @@ async function main() {
       console.log(`Preserved verified LDS workspace package set: ${path.relative(repositoryRoot, runDirectory).replaceAll('\\', '/')}`);
     }
     completed = true;
-    console.log('LDS package set verified: Core/Theme/Product ESM+types, compat ESM+CJS, the locked external Robotics tarball, and isolated consumer smoke passed.');
+    console.log('LDS package set verified: Core/Theme/Product ESM+types, compat ESM+CJS, generated adoption documentation, the locked external Robotics tarball, and isolated consumer smoke passed.');
   } finally {
     if (!persistent || !completed) {
       const relative = path.relative(artifactRoot, runDirectory);

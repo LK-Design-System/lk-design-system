@@ -1,0 +1,544 @@
+{
+  "now": "2026-08-09T00:00:00.000Z",
+  "commonMutations": [
+    {
+      "file": "src/DeviceList.jsx",
+      "copyFrom": "head/DeviceList.jsx"
+    }
+  ],
+  "cases": [
+    {
+      "name": "valid-adoption",
+      "exerciseCli": true,
+      "expectedCodes": []
+    },
+    {
+      "name": "valid-full-surface-adoption",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"mode\": \"changed-ui\"",
+          "with": "\"mode\": \"full-surface\""
+        },
+        {
+          "file": "src/LegacyPanel.jsx",
+          "replace": "color: '#fff'",
+          "with": "color: 'var(--color-semantic-label-strong)'"
+        }
+      ],
+      "expectedCodes": []
+    },
+    {
+      "name": "full-surface-inspects-unchanged-legacy-ui",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"mode\": \"changed-ui\"",
+          "with": "\"mode\": \"full-surface\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_RAW_VISUAL_LITERAL"]
+    },
+    {
+      "name": "first-config-only-bootstrap-is-safe",
+      "bootstrapConfig": true,
+      "applyCommon": false,
+      "expectedCodes": []
+    },
+    {
+      "name": "first-config-cannot-land-with-ui",
+      "bootstrapConfig": true,
+      "expectedCodes": ["ADOPTION_CONFIG_BOOTSTRAP_UI"]
+    },
+    {
+      "name": "report-schema-copy-must-exist",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"$schema\": \"LDS_UI_ADOPTION_REPORT.schema.json\"",
+          "with": "\"$schema\": \"missing-report.schema.json\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_REPORT_SCHEMA_PIN"]
+    },
+    {
+      "name": "report-schema-copy-must-match-pinned-schema",
+      "mutations": [
+        {
+          "file": ".lds/LDS_UI_ADOPTION_REPORT.schema.json",
+          "append": " "
+        }
+      ],
+      "expectedCodes": ["ADOPTION_REPORT_SCHEMA_PIN"]
+    },
+    {
+      "name": "source-evidence-must-resolve",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "{ \"kind\": \"source\", \"ref\": \"src/styles.css\" }",
+          "with": "{ \"kind\": \"source\", \"ref\": \"proof\" }"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_EVIDENCE_REFERENCE"]
+    },
+    {
+      "name": "token-evidence-must-exist-in-canonical-inventory",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"ref\": \"--color-semantic-label-strong\"",
+          "with": "\"ref\": \"--not-a-canonical-token\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_TOKEN_MISSING"]
+    },
+    {
+      "name": "story-evidence-must-exist-in-index",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"ref\": \"device-list--states\"",
+          "with": "\"ref\": \"device-list--missing\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_STORY_MISSING"]
+    },
+    {
+      "name": "story-evidence-requires-index",
+      "omitStorybookIndex": true,
+      "expectedCodes": ["ADOPTION_STORYBOOK_INDEX_REQUIRED"]
+    },
+    {
+      "name": "check-evidence-must-resolve",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "{ \"kind\": \"check\", \"ref\": \"evidence/check-result.txt\" }",
+          "with": "{ \"kind\": \"check\", \"ref\": \"proof\" }"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_EVIDENCE_REFERENCE"]
+    },
+    {
+      "name": "noninteractive-lds-import-allows-accessibility-na",
+      "applyCommon": false,
+      "mutations": [
+        {
+          "file": "src/DeviceList.jsx",
+          "copyFrom": "head/DeviceListNonInteractive.jsx"
+        },
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"accessibility\": {\n          \"verdict\": \"reviewed\",",
+          "with": "\"accessibility\": {\n          \"verdict\": \"not-applicable\",\n          \"reasonCode\": \"no-interaction-change\","
+        }
+      ],
+      "expectedCodes": []
+    },
+    {
+      "name": "hard-trigger-rejects-not-applicable",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"statePatternsAndMotion\": {\n          \"verdict\": \"reviewed\",",
+          "with": "\"statePatternsAndMotion\": {\n          \"verdict\": \"not-applicable\",\n          \"reasonCode\": \"claimed-no-state-change\","
+        }
+      ],
+      "expectedCodes": ["ADOPTION_ILLEGAL_NOT_APPLICABLE"]
+    },
+    {
+      "name": "token-trigger-rejects-not-applicable",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"tokensAndTheme\": {\n          \"verdict\": \"reviewed\",",
+          "with": "\"tokensAndTheme\": {\n          \"verdict\": \"not-applicable\",\n          \"reasonCode\": \"claimed-no-token-change\","
+        }
+      ],
+      "expectedCodes": ["ADOPTION_ILLEGAL_NOT_APPLICABLE"]
+    },
+    {
+      "name": "layout-trigger-rejects-not-applicable",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"layoutAndVisualFoundations\": {\n          \"verdict\": \"reviewed\",",
+          "with": "\"layoutAndVisualFoundations\": {\n          \"verdict\": \"not-applicable\",\n          \"reasonCode\": \"claimed-no-layout-change\","
+        }
+      ],
+      "expectedCodes": ["ADOPTION_ILLEGAL_NOT_APPLICABLE"]
+    },
+    {
+      "name": "content-trigger-rejects-not-applicable",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"contentAndInternationalization\": {\n          \"verdict\": \"reviewed\",",
+          "with": "\"contentAndInternationalization\": {\n          \"verdict\": \"not-applicable\",\n          \"reasonCode\": \"claimed-no-content-change\","
+        }
+      ],
+      "expectedCodes": ["ADOPTION_ILLEGAL_NOT_APPLICABLE"]
+    },
+    {
+      "name": "accessibility-trigger-rejects-not-applicable",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"accessibility\": {\n          \"verdict\": \"reviewed\",",
+          "with": "\"accessibility\": {\n          \"verdict\": \"not-applicable\",\n          \"reasonCode\": \"claimed-no-interaction-change\","
+        }
+      ],
+      "expectedCodes": ["ADOPTION_ILLEGAL_NOT_APPLICABLE"]
+    },
+    {
+      "name": "raw-visual-literal",
+      "mutations": [
+        {
+          "file": "src/DeviceList.jsx",
+          "replace": "color: 'var(--color-semantic-label-strong)'",
+          "with": "color: '#fff'"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_RAW_VISUAL_LITERAL"]
+    },
+    {
+      "name": "uncovered-changed-ui-file",
+      "mutations": [
+        {
+          "file": "admin/NewPanel.jsx",
+          "write": "export const NewPanel = ({ onOpen }) => <button onClick={onOpen}>Open panel</button>;\n"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_CHANGED_FILE_COVERAGE", "ADOPTION_SCOPE_COVERAGE"]
+    },
+    {
+      "name": "full-surface-cannot-hide-out-of-scope-changes",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"mode\": \"changed-ui\"",
+          "with": "\"mode\": \"full-surface\""
+        },
+        {
+          "file": "src/LegacyPanel.jsx",
+          "replace": "color: '#fff'",
+          "with": "color: 'var(--color-semantic-label-strong)'"
+        },
+        {
+          "file": "admin/NewPanel.jsx",
+          "write": "export const NewPanel = ({ onOpen }) => <button onClick={onOpen}>Open panel</button>;\n"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_CHANGED_FILE_COVERAGE", "ADOPTION_SCOPE_COVERAGE"]
+    },
+    {
+      "name": "surface-and-exclusion-cannot-overlap",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"paths\": [\"src/**/*\"]\n  },",
+          "with": "\"paths\": [\"src/**/*\"],\n    \"excluded\": [{\"path\":\"src/DeviceList.jsx\",\"reasonCode\":\"temporary-omission\",\"detail\":\"This deliberately overlaps the declared surface for a negative fixture\"}]\n  },"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_CHANGED_FILE_AMBIGUOUS"]
+    },
+    {
+      "name": "config-schema-is-strict",
+      "mutations": [
+        {
+          "file": ".lds/adoption.config.json",
+          "replace": "\"kind\": \"lds-ui-adoption-config\"",
+          "with": "\"kind\": \"untyped-config\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_CONFIG_SCHEMA"]
+    },
+    {
+      "name": "config-ui-roots-cannot-self-bypass",
+      "mutations": [
+        {
+          "file": ".lds/adoption.config.json",
+          "replace": "\"uiRoots\": [\"src/**/*\", \"admin/**/*\"]",
+          "with": "\"uiRoots\": [\"admin/**/*\"]"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_CONFIG_CHANGED"]
+    },
+    {
+      "name": "config-exclusions-cannot-self-bypass",
+      "mutations": [
+        {
+          "file": ".lds/adoption.config.json",
+          "replace": "\"excludedPaths\": [\"src/styles.css\"]",
+          "with": "\"excludedPaths\": [\"src/styles.css\", \"src/DeviceList.jsx\"]"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_CONFIG_CHANGED"]
+    },
+    {
+      "name": "trigger-evidence-kind-required",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": ",\n            { \"kind\": \"check\", \"ref\": \"evidence/check-result.txt\" }",
+          "with": ""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_TRIGGER_EVIDENCE"]
+    },
+    {
+      "name": "facet-required-decision-missing",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "            { \"decisionId\": \"owner-package-css-order\", \"outcome\": \"Core styles load before the theme styles in the application entry.\", \"evidence\": [{ \"kind\": \"source\", \"ref\": \"src/styles.css\" }] },\n",
+          "with": ""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_DECISION_MISSING", "ADOPTION_REPORT_SCHEMA"]
+    },
+    {
+      "name": "facet-required-decision-duplicate",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "            { \"decisionId\": \"owner-package-css-order\", \"outcome\": \"Core styles load before the theme styles in the application entry.\", \"evidence\": [{ \"kind\": \"source\", \"ref\": \"src/styles.css\" }] },\n",
+          "with": "            { \"decisionId\": \"owner-package-css-order\", \"outcome\": \"Core styles load before the theme styles in the application entry.\", \"evidence\": [{ \"kind\": \"source\", \"ref\": \"src/styles.css\" }] },\n            { \"decisionId\": \"owner-package-css-order\", \"outcome\": \"The duplicate proves runtime exact-once enforcement remains active.\", \"evidence\": [{ \"kind\": \"source\", \"ref\": \"src/styles.css\" }] },\n"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_DECISION_DUPLICATE", "ADOPTION_REPORT_SCHEMA"]
+    },
+    {
+      "name": "component-required-decision-missing",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "          { \"decisionId\": \"owner-public-export\", \"outcome\": \"Button and Skeleton come from the LDS core public export.\", \"evidence\": [{ \"kind\": \"source\", \"ref\": \"src/DeviceList.jsx\" }] },\n",
+          "with": ""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_DECISION_MISSING", "ADOPTION_REPORT_SCHEMA"]
+    },
+    {
+      "name": "decision-outcome-must-be-concrete",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "Core styles load before the theme styles in the application entry.",
+          "with": "short"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_DECISION_OUTCOME", "ADOPTION_REPORT_SCHEMA"]
+    },
+    {
+      "name": "decision-evidence-is-required",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"evidence\": [{ \"kind\": \"source\", \"ref\": \"src/styles.css\" }]",
+          "with": "\"evidence\": []"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_DECISION_EVIDENCE", "ADOPTION_REPORT_SCHEMA"]
+    },
+    {
+      "name": "nested-decision-evidence-is-verified",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "{ \"kind\": \"source\", \"ref\": \"src/styles.css\" }",
+          "with": "{ \"kind\": \"source\", \"ref\": \"src/missing-token-runtime.ts\" }"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_EVIDENCE_MISSING"]
+    },
+    {
+      "name": "generated-placeholder-attestation-rejected",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "Core styles load before the theme styles in the application entry.",
+          "with": "Replace with the concrete owner package and CSS import ordering outcome."
+        }
+      ],
+      "expectedCodes": ["ADOPTION_PLACEHOLDER_ATTESTATION"]
+    },
+    {
+      "name": "normal-and-narrow-widths-required",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"viewports\": [\"1280x800\", \"360x800\"]",
+          "with": "\"viewports\": [\"1x1\", \"1x2\"]"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_VIEWPORT_EVIDENCE"]
+    },
+    {
+      "name": "verification-disposition-is-concrete",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "Normal and narrow layouts preserve hierarchy without clipped content.",
+          "with": "short"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_REPORT_SCHEMA", "ADOPTION_VERIFICATION_DISPOSITION"]
+    },
+    {
+      "name": "theme-na-must-be-exclusive",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"themes\": [\"light\", \"dark\"]",
+          "with": "\"themes\": [\"light\", \"not-applicable\"]"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_REPORT_SCHEMA", "ADOPTION_THEME_EVIDENCE"]
+    },
+    {
+      "name": "ready-and-non-ready-states-required",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"states\": [\"ready\", \"loading\"]",
+          "with": "\"states\": [\"loading\", \"error\"]"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_REPORT_SCHEMA", "ADOPTION_STATE_EVIDENCE"]
+    },
+    {
+      "name": "generic-ok-is-not-a-non-ready-state",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"states\": [\"ready\", \"loading\"]",
+          "with": "\"states\": [\"ready\", \"ok\"]"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_REPORT_SCHEMA", "ADOPTION_STATE_EVIDENCE"]
+    },
+    {
+      "name": "verification-needs-observable-evidence",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"stateDisposition\": \"Ready and loading states remain distinguishable and keep the refresh path clear.\",\n        \"evidence\": [\n          { \"kind\": \"visual\", \"ref\": \"evidence/device-list.visual.txt\" }",
+          "with": "\"stateDisposition\": \"Ready and loading states remain distinguishable and keep the refresh path clear.\",\n        \"evidence\": [\n          { \"kind\": \"decision\", \"ref\": \"generic-verification-claim\" }"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_REPORT_SCHEMA", "ADOPTION_VERIFICATION_EVIDENCE"]
+    },
+    {
+      "name": "style-import-order-required",
+      "mutations": [
+        {
+          "file": "src/styles.css",
+          "replace": "@import \"@lk-design-system/lds-theme/styles.css\";\n",
+          "with": ""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_STYLE_IMPORT"]
+    },
+    {
+      "name": "component-mapping-cannot-be-na",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"componentMapping\": {\n        \"verdict\": \"reviewed\"",
+          "with": "\"componentMapping\": {\n        \"verdict\": \"not-applicable\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_REPORT_SCHEMA"]
+    },
+    {
+      "name": "blocked-component-mapping-fails",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"componentMapping\": {\n        \"verdict\": \"reviewed\",",
+          "with": "\"componentMapping\": {\n        \"verdict\": \"blocked\","
+        }
+      ],
+      "expectedCodes": ["ADOPTION_BLOCKED"]
+    },
+    {
+      "name": "exception-expired-today",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"exceptions\": []",
+          "with": "\"exceptions\": [{\"rule\":\"ADOPTION_RAW_VISUAL_LITERAL\",\"path\":\"src/DeviceList.jsx\",\"signature\":\"AUTO_SHA256:src/DeviceList.jsx\",\"owner\":\"ui-platform\",\"reason\":\"Temporary compatibility seam under active migration\",\"expiresAt\":\"2026-08-09\"}]"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_EXCEPTION_EXPIRED"]
+    },
+    {
+      "name": "exception-cannot-exceed-90-days",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"exceptions\": []",
+          "with": "\"exceptions\": [{\"rule\":\"ADOPTION_RAW_VISUAL_LITERAL\",\"path\":\"src/DeviceList.jsx\",\"signature\":\"AUTO_SHA256:src/DeviceList.jsx\",\"owner\":\"ui-platform\",\"reason\":\"Temporary compatibility seam under active migration\",\"expiresAt\":\"2099-01-01\"}]"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_EXCEPTION_EXPIRY_RANGE"]
+    },
+    {
+      "name": "exception-signature-drift",
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"exceptions\": []",
+          "with": "\"exceptions\": [{\"rule\":\"ADOPTION_RAW_VISUAL_LITERAL\",\"path\":\"src/DeviceList.jsx\",\"signature\":\"0000000000000000000000000000000000000000000000000000000000000000\",\"owner\":\"ui-platform\",\"reason\":\"Temporary compatibility seam under active migration\",\"expiresAt\":\"2026-09-01\"}]"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_EXCEPTION_STALE"]
+    },
+    {
+      "name": "active-exception-is-signature-bound",
+      "mutations": [
+        {
+          "file": "src/DeviceList.jsx",
+          "replace": "color: 'var(--color-semantic-label-strong)'",
+          "with": "color: '#fff'"
+        },
+        {
+          "file": ".lds/adoption-report.json",
+          "replace": "\"exceptions\": []",
+          "with": "\"exceptions\": [{\"rule\":\"ADOPTION_RAW_VISUAL_LITERAL\",\"path\":\"src/DeviceList.jsx\",\"signature\":\"AUTO_SHA256:src/DeviceList.jsx\",\"owner\":\"ui-platform\",\"reason\":\"Temporary compatibility seam under active migration\",\"expiresAt\":\"2026-09-01\"}]"
+        }
+      ],
+      "expectedCodes": []
+    },
+    {
+      "name": "comments-tests-generated-ignored",
+      "mutations": [
+        {
+          "file": "src/CommentOnly.jsx",
+          "write": "// style={{ color: '#fff', gap: '13px' }}\n"
+        },
+        {
+          "file": "src/DeviceList.test.jsx",
+          "write": "export const rawTestOnly = { color: '#fff', gap: '13px' };\n"
+        },
+        {
+          "file": "src/generated/Generated.jsx",
+          "write": "export const generatedOnly = { color: '#fff', gap: '13px' };\n"
+        }
+      ],
+      "expectedCodes": []
+    },
+    {
+      "name": "asset-hard-trigger-rejects-na",
+      "mutations": [
+        {
+          "file": "src/new-device.png",
+          "write": "fixture asset bytes\n"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_ILLEGAL_NOT_APPLICABLE"]
+    }
+  ]
+}

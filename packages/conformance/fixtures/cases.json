@@ -130,5 +130,26 @@
     "mutations": [
       { "file": "storybook-static/index.json", "replace": "fixture-widget--overview", "with": "fixture-widget--missing" }
     ]
+  },
+  {
+    "name": "robotics-documentation-content-drift",
+    "expectedCodes": ["DOCUMENTATION_SURFACE_MISMATCH"],
+    "mutations": [
+      { "file": "docs/package/llms.txt", "append": "stale documentation\n" }
+    ]
+  },
+  {
+    "name": "robotics-documentation-export-drift",
+    "expectedCodes": ["DOCUMENTATION_SURFACE_MISMATCH"],
+    "mutations": [
+      { "file": "package.json", "replace": "\"./design-system.json\": \"./docs/package/manifest.json\"", "with": "\"./design-system.json\": \"./docs/package/missing.json\"" }
+    ]
+  },
+  {
+    "name": "robotics-documentation-manifest-drift",
+    "expectedCodes": ["DOCUMENTATION_SURFACE_MISMATCH"],
+    "mutations": [
+      { "file": "docs/package/manifest.json", "replace": "\"tokenManifest\": \"./tokens/manifest.json\"", "with": "\"tokenManifest\": \"./tokens/missing.json\"" }
+    ]
   }
 ]

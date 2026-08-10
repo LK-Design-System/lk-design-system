@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process';
 import { access, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -54,6 +55,8 @@ const markdownFiles = [
   ...await listMarkdown(docsRoot),
   path.join(root, 'readme.md'),
   path.join(root, 'AGENTS.md'),
+  path.join(root, 'CLAUDE.md'),
+  path.join(root, 'llms.txt'),
 ];
 
 for (const file of markdownFiles) {
@@ -114,6 +117,133 @@ assert(handoff.includes('[`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)'), 'HA
 const rootReadme = await read('readme.md');
 assert(rootReadme.includes('docs/README.md'), 'Root readme must link the documentation index.');
 assert(rootReadme.includes('docs/COMPONENT_WORKFLOW.md'), 'Root readme must link the canonical component workflow.');
+
+const adoptionContract = JSON.parse(await read('docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json'));
+const adoptionWorkflow = await read('docs/LDS_UI_ADOPTION_WORKFLOW.md');
+const rootLlms = await read('llms.txt');
+const agents = await read('AGENTS.md');
+const claude = await read('CLAUDE.md');
+const aiGuide = await read('docs/AI_DESIGN_SYSTEM_GUIDE.md');
+const migrationGuide = await read('docs/PACKAGE_MIGRATION_GUIDE.md');
+const adoptionEntrypoints = [
+  ['readme.md', rootReadme],
+  ['AGENTS.md', agents],
+  ['docs/README.md', index],
+  ['docs/AI_DESIGN_SYSTEM_GUIDE.md', aiGuide],
+];
+
+for (const [file, source] of adoptionEntrypoints) {
+  assert(source.includes(adoptionContract.invariant), `${file} must state the LDS adoption invariant.`);
+  assert(source.includes('LDS_UI_ADOPTION_WORKFLOW.md'), `${file} must link the canonical LDS adoption workflow.`);
+}
+assert(rootReadme.includes('llms.txt'), 'Root readme must link the root AI entry.');
+assert(index.includes('../llms.txt'), 'Documentation index must link the root AI entry.');
+assert(aiGuide.includes('../llms.txt'), 'AI guide must link the root AI entry.');
+for (const roboticsEntry of [
+  '@lk-design-system/lds-robotics-ui/llms.txt',
+  '@lk-design-system/lds-robotics-ui/design-system.json',
+  'https://lk-design-system.github.io/lk-design-system-robotics/?path=/docs/lds-robotics-foundation-viewer-tokens--docs',
+]) {
+  assert(rootReadme.includes(roboticsEntry), `Root readme must expose Robotics documentation entry ${roboticsEntry}.`);
+  assert(index.includes(roboticsEntry), `Documentation index must expose Robotics documentation entry ${roboticsEntry}.`);
+}
+for (const roboticsAgentEntry of [
+  '@lk-design-system/lds-robotics-ui/llms.txt',
+  '@lk-design-system/lds-robotics-ui/design-system.json',
+  'https://lk-design-system.github.io/lk-design-system-robotics/?path=/docs/lds-robotics-foundation-viewer-tokens--docs',
+]) {
+  assert(agents.includes(roboticsAgentEntry), `AGENTS.md must route Robotics consumers to ${roboticsAgentEntry}.`);
+}
+for (const migrationEntry of [
+  'ROBOTICS_EXTERNAL_SURFACE.json',
+  '@lk-design-system/lds-robotics-ui/llms.txt',
+  '@lk-design-system/lds-robotics-ui/design-system.json',
+  '@lk-design-system/lds-robotics-ui/docs/*',
+]) {
+  assert(migrationGuide.includes(migrationEntry), `Package migration guide must expose current Robotics entry ${migrationEntry}.`);
+}
+assert(
+  migrationGuide.includes('immutable historical attestation, not the current release pointer'),
+  'Package migration guide must distinguish the historical Wave 2 attestation from current package manifests.',
+);
+assert(
+  claude.includes('@AGENTS.md'),
+  'CLAUDE.md must import AGENTS.md instead of duplicating repository instructions.',
+);
+assert(
+  adoptionWorkflow.includes('직접 수정하지 않습니다.'),
+  'Generated LDS adoption workflow must declare that its machine contract is the editable source.',
+);
+assert(
+  rootLlms.includes('docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json'),
+  'Root llms.txt must identify the canonical machine adoption contract.',
+);
+assert(rootLlms.includes(adoptionContract.invariant), 'Root llms.txt must include the LDS adoption invariant.');
+assert(
+  adoptionContract.scopeModes?.default === 'full-surface',
+  'The canonical adoption scope must fail safe to full-surface.',
+);
+assert(
+  adoptionWorkflow.includes('`full-surface`') && adoptionWorkflow.includes('`changed-ui`'),
+  'Generated adoption workflow must explain the full-surface default and bounded changed-ui exception.',
+);
+assert(
+  agents.includes('Use `full-surface`') && agents.includes('Use `changed-ui` only'),
+  'AGENTS.md must route existing-surface migration to full-surface review.',
+);
+for (const requiredConsumerEntry of [
+  '.lds/adoption.config.json',
+  'LDS_UI_ADOPTION_REPORT.example.json',
+  'check-adoption',
+  '.github/actions/lds-adoption/action.yml',
+  'fetch-depth: 0',
+]) {
+  assert(
+    adoptionWorkflow.includes(requiredConsumerEntry),
+    `Generated adoption workflow must expose consumer enforcement entry ${requiredConsumerEntry}.`,
+  );
+}
+
+for (const { id } of adoptionContract.facets) {
+  for (const [file, source] of adoptionEntrypoints) {
+    assert(
+      !source.includes(`\`${id}\``),
+      `${file} duplicates adoption facet ${id}; detailed facet ids belong only in generated adoption surfaces.`,
+    );
+  }
+}
+
+assert(
+  !aiGuide.includes('@lk-design-system/design-system-core'),
+  'AI guide must not direct new code to the legacy compatibility facade.',
+);
+for (const ownerPackage of [
+  '@lk-design-system/lds-core',
+  '@lk-design-system/lds-theme',
+  '@lk-design-system/lds-product',
+  '@lk-design-system/lds-robotics-ui',
+]) {
+  assert(aiGuide.includes(ownerPackage), `AI guide must name owner package ${ownerPackage}.`);
+}
+
+const generatedAdoptionCheck = spawnSync(
+  process.execPath,
+  ['scripts/generate-lds-adoption-docs.mjs', '--check'],
+  { cwd: root, encoding: 'utf8' },
+);
+assert(
+  generatedAdoptionCheck.status === 0,
+  `Generated LDS adoption docs are stale or invalid:\n${generatedAdoptionCheck.stderr || generatedAdoptionCheck.stdout}`,
+);
+
+assert(
+  !/\b\d+개(?:의)? React 컴포넌트|\b\d+개 story|\b\d+개 public entry/.test(rootReadme),
+  'Root readme must not hard-code volatile component or Storybook counts.',
+);
+assert(
+  !/\b\d+개 Foundation|\b\d+개 public entry|\b\d+개 컴포넌트 의사결정/.test(index),
+  'Documentation index must not hard-code volatile Foundation or component counts.',
+);
 
 const productCoverage = await read('docs/PRODUCT_FRONTEND_COVERAGE.md');
 for (const asset of ['LK Web Viz', 'LK Control Full Daedeok', 'LK Portal']) {

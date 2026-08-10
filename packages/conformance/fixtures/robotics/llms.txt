@@ -1,0 +1,3 @@
+# Fixture Robotics UI
+
+Resolve the package documentation through `@lk-design-system/lds-robotics-ui/llms.txt`.

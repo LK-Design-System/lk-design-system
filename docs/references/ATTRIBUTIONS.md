@@ -18,6 +18,46 @@ LDS is an independent derivative. It is not affiliated with or endorsed by
 Wantedlab, and it does not grant rights to Wanted logos, wordmarks, or other
 Wanted brand assets.
 
+## Montserrat (The Montserrat Project Authors)
+
+The approved `ROBOTICS` wordmark outline is generated from the static
+Montserrat ExtraBold 800 font in the official Version 7.222 release.
+
+- Source: https://github.com/JulietaUla/Montserrat/releases/tag/v7.222
+- License: SIL Open Font License 1.1
+- Copyright: Copyright 2011 The Montserrat Project Authors
+- Pinned font and license: `vendor/montserrat-v7.222/`
+- Full notice: [`../../THIRD_PARTY_NOTICES.md`](../../THIRD_PARTY_NOTICES.md)
+
+The pinned TTF is a build-time brand source. Production logos contain outlined
+SVG paths and do not load Montserrat at runtime; LDS interface typography
+continues to use Pretendard.
+
+## Pretendard (Kil Hyung-jin)
+
+LDS interface typography uses unmodified Pretendard v1.3.9 webfonts.
+
+- Source: https://github.com/orioncactus/pretendard/releases/tag/v1.3.9
+- License: SIL Open Font License 1.1
+- Copyright: Copyright (c) 2021, Kil Hyung-jin
+- Full license: `assets/fonts/Pretendard-LICENSE.txt`
+- Full notice: [`../../THIRD_PARTY_NOTICES.md`](../../THIRD_PARTY_NOTICES.md)
+
+## Noto Sans KR (Adobe and the Noto project)
+
+The approved Korean corporate descriptor outline is generated from the
+unmodified Noto Sans KR Version 2.004-H2 variable TTF at the named ExtraBold
+`wght=800` instance, with `0.105em` tracking and uniform scaling.
+
+- Source: https://raw.githubusercontent.com/google/fonts/4efc2774c63917927efe769ca845def6bd6debae/ofl/notosanskr/NotoSansKR%5Bwght%5D.ttf
+- License: SIL Open Font License 1.1
+- Copyright: Copyright 2014-2021 Adobe, with Reserved Font Name `Source`
+- Pinned font and license: `vendor/noto-sans-kr-v2.004-h2/`
+- Full notice: [`../../THIRD_PARTY_NOTICES.md`](../../THIRD_PARTY_NOTICES.md)
+
+The variable TTF is a build-time brand source. Corporate logo SVGs contain
+outlined paths and have no runtime font dependency.
+
 ## Material Symbols (Google)
 
 The LK Robotics navigation marker badge glyphs and LDS `Icon` `unlink` and

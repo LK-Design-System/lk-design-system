@@ -15,5 +15,5 @@ export interface LockupProps extends Omit<React.SVGProps<SVGSVGElement>, 'color'
   decorative?: boolean;
 }
 
-/** 공식 원본 path 기반 LK ROBOTICS 로고 — mark / stacked / inline SVG. */
+/** 규정된 커스텀 LK 심볼과 Montserrat ExtraBold 800 아웃라인 기반 로고. */
 export function Lockup(props: LockupProps): React.JSX.Element;

@@ -21,7 +21,7 @@
 
 | Part | Contract |
 | --- | --- |
-| tone | 톤. @default "info" |
+| tone | 톤. canonical은 signal · positive · cautionary · negative이며 info · success · warning · error는 canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다). 기본값은 canonical 표기입니다 — 이전 기본값 "info"는 같은 표면으로 정규화되던 별칭 표기였습니다. |
 | title | 굵은 헤드라인 줄. |
 | action | 끝의 액션 노드(예: 텍스트 Button). |
 | closeLabel | 닫기 버튼의 접근성 레이블. @default "닫기" |
@@ -31,7 +31,7 @@
 
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
-| `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative' \| 'info' \| 'success' \| 'warning' \| 'error'` | No | 톤. @default "info" |
+| `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative' \| 'info' \| 'success' \| 'warning' \| 'error'` | No | 톤. canonical은 signal · positive · cautionary · negative이며 info · success · warning · error는 canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다). 기본값은 canonical 표기입니다 — 이전 기본값 "info"는 같은 표면으로 정규화되던 별칭 표기였습니다. |
 | `variant` | `'standalone' \| 'embedded'` | No | 표면 배치. embedded는 부모 패널 내부의 edge-to-edge 상태 띠입니다. @default "standalone" |
 | `title` | `React.ReactNode` | No | 굵은 헤드라인 줄. |
 | `children` | `React.ReactNode` | No | 본문 메시지. |
@@ -49,7 +49,7 @@
 
 | State | Contract |
 | --- | --- |
-| tone | 톤. @default "info" |
+| tone | 톤. canonical은 signal · positive · cautionary · negative이며 info · success · warning · error는 canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다). 기본값은 canonical 표기입니다 — 이전 기본값 "info"는 같은 표면으로 정규화되던 별칭 표기였습니다. |
 | variant | 표면 배치. embedded는 부모 패널 내부의 edge-to-edge 상태 띠입니다. @default "standalone" |
 
 ## Behavior and interaction
@@ -64,14 +64,14 @@
 | --- | --- |
 | 명시 규칙 1 | 타입 스케일 정합: 제목 14.5px → --body2-size(15px), 본문 13.5px → --label1-size(14px)로 스냅했습니다. Toast 메시지(body2)·Snackbar 메시지(label1)와 같은 단계로 정렬됩니다. |
 | 명시 규칙 2 | Fluent 2 MessageBar의 card-level 배치 원칙을 따라 패널 상태 Banner는 header 바로 아래, 제어 본문보다 먼저 읽히게 합니다. 상태·설명·액션의 순서도 DOM 순서와 일치시킵니다. |
+| --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
+| --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 | --body2-size | 15px |
-| --color-semantic-brand-on-surface-border | light: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent) |
-| --color-semantic-brand-on-surface-subtle | light: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent) |
 
 ## Content and writing
 
 - 선택 기준 — 비동기 작업, 연결, 권한, 검증 결과처럼 상태가 바뀌며 사용자가 알아야 하는 정보에는 Banner를 사용합니다. 상태와 함께 다음 행동이 필요하면 action, 사용자가 숨겨도 되는 비차단 알림이면 onClose를 제공합니다. Banner는 기본적으로 live status이며 negative tone은 alert이므로, 처음부터 본문에 남아 있는 설명을 단지 색으로 강조하려는 용도로 사용하지 않습니다.
-- tone — canonical signal · positive · cautionary · negative를 받으며, 기존 info · success · warning · error도 별칭으로 계속 동작합니다. variant — standalone(기본) 또는 embedded. title / children — 헤드라인 + 선택적 보충 설명. action — 끝의 노드. onClose — 닫기 버튼 표시. 떠 있는 일시 메시지에는 Toast를 쓰세요.
+- tone — canonical signal · positive · cautionary · negative를 받으며 기본값은 signal입니다. 기존 info · success · warning · error도 별칭으로 계속 동작하지만 동결된 어휘라 새 코드에서는 쓰지 않습니다(check:api-grammar가 ledger에 없는 별칭 신규 도입을 차단합니다). 기본값이 한동안 "info"로 표기돼 있었는데, 별칭 정규화를 거쳐 signal과 같은 표면으로 렌더되던 같은 값이라 canonical 표기로 통일했습니다 — 렌더 결과는 바뀌지 않습니다.
 - 패널 전체의 현재 gate/state를 짧게 알릴 때는 header 바로 아래에 variant="embedded"를 사용합니다. 정상·잠금처럼 설명이 없어도 이해되는 상태는 제목 한 줄로 유지하고, 오류 원인이나 복구 방법이 필요한 경우에만 본문을 추가합니다. 부모 표면 안에서 style로 border와 radius를 임의 덮어쓰지 않습니다.
 - 독립된 동적 알림에는 standalone, 떠 있는 일시 메시지에는 Toast, 본문에 계속 남는 절차·주의·맥락 설명에는 Callout을 사용합니다. 액션이나 닫기가 필요하다는 이유만으로 정적 설명을 Banner로 바꾸지 말고, 실제로 상태가 변하는지 먼저 판단합니다.
 
@@ -90,15 +90,17 @@
 ### 기본 조합
 
 ```jsx
-<Banner tone="info" title="문서 업데이트" onClose={dismiss}>디자인 시스템 문서가 업데이트되었습니다.</Banner>
-<Banner tone="warning">일부 항목에 검토가 필요합니다.</Banner>
-<Banner variant="embedded" tone="warning" title="제어 대기">상위 패널의 상태를 설명합니다.</Banner>
+<Banner tone="signal" title="문서 업데이트" onClose={dismiss}>디자인 시스템 문서가 업데이트되었습니다.</Banner>
+<Banner tone="cautionary">일부 항목에 검토가 필요합니다.</Banner>
+<Banner variant="embedded" tone="cautionary" title="제어 대기">상위 패널의 상태를 설명합니다.</Banner>
 ```
 
 ## Tokens and API
 
 ### Tokens
 
+- `--body1-line`
+- `--body1-size`
 - `--body2-size`
 - `--color-semantic-brand-on-surface`
 - `--color-semantic-brand-on-surface-border`
@@ -109,13 +111,16 @@
 - `--font-sans`
 - `--fw-bold`
 - `--label1-line`
+- `--label1-reading-line`
 - `--label1-size`
 - `--radius-lg`
+- `--radius-xl`
 - `--space-0-5`
+- `--space-1-5`
 - `--space-3`
-- `--space-3-5`
 - `--space-4`
 - `--space-5`
+- `--space-6`
 
 ### Source contracts
 

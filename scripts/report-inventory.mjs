@@ -90,9 +90,10 @@ async function getCounts() {
 async function checkDocs(counts) {
   assert(counts.storybook, 'storybook-static/index.json is required. Run build:storybook before check:inventory.');
 
+  // Keep volatile inventory totals in generated/audited registers. The root
+  // README is a stable discovery surface and must not drift every time a story
+  // or component entry is added.
   const expectations = [
-    ['readme.md', `${counts.storybook.public}개 story`],
-    ['readme.md', `${counts.componentEntryExports}개의 React 컴포넌트 소스 파일`],
     ['docs/REPOSITORY_INVENTORY.md', `React 컴포넌트 소스 파일: ${counts.componentImplementations}개`],
     ['docs/REPOSITORY_INVENTORY.md', `공개 named export: ${counts.namedPublicExports}개`],
     ['docs/REPOSITORY_INVENTORY.md', `Storybook 전체 story: ${counts.storybook.total}개`],

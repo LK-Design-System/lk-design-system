@@ -4,10 +4,13 @@ All notable package-facing changes are recorded here. The package follows semant
 
 ## Unreleased
 
+- 기업 표기형의 `주식회사 엘케이로보틱스`를 Noto Sans KR ExtraBold 800 v2.004-H2, 자간 0.105em, 균일 스케일로 규정했습니다. 원본 가변 TTF·라이선스 해시와 `wght=800` 글리프·배치 골든 메트릭을 생성기에서 검증하고 기업 표기형 최소 디지털 크기를 160px로 고정합니다.
+
 Repository-wide accessibility and convention sweep across the Core (55 areas) and Product (69 areas) layers, audited against WAI-ARIA APG, WCAG 2.2, and current industry systems, with every fix pinned by a hidden contract story. 481 stories are Axe-clean with 262 play contracts.
 
 ### Added
 
+- 재현 가능한 LK ROBOTICS 로고 제작 규정을 추가했습니다. `ROBOTICS`는 해시로 고정한 Montserrat ExtraBold 800 v7.222와 기본 커닝·자간 0·균일 스케일에서 path로 생성하며, `check:brand`가 글꼴·라이선스·13개 승인 SVG·런타임 윤곽의 드리프트를 차단합니다.
 - `AutoComplete startIcon`으로 컨트롤 앞에 아이콘을 놓을 수 있습니다. `SearchField`가 이미 쓰는 `startIcon` 슬롯과 같은 자리이며, 값이 채워져 `placeholder`가 사라진 뒤에도 그 칸이 목록을 뒤진다는 사실을 남깁니다. 기본값은 없으므로 기존 화면은 그대로입니다.
 - `DataToolbar.filters` render context: `filters={({ size }) => ...}`가 검색과 같은 `sm`/`md` field control 밀도를 전달하며 기존 ReactNode 슬롯은 호환됩니다.
 - `DashboardShell`에 계층형 좁은 화면 탐색을 위한 controlled `temporaryNavigation` Drawer 계약을 추가했습니다. 공용 modal 엔진의 스크림·focus containment·Escape·복원·scroll lock을 재사용하고 열린 동안 셸 배경을 `inert` 처리합니다.
@@ -48,6 +51,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 ### Changed
 
+- LK 심볼은 기존 커스텀 벡터를 유지하고 `ROBOTICS`는 규정된 Montserrat ExtraBold 800 아웃라인으로 교체했습니다. 모든 사각·stacked·inline·banner 자산과 React `Lockup`/`Spinner`가 같은 생성 원본을 공유하며, UI 본문 글꼴은 Pretendard로 유지합니다.
 - `StatusBadge`는 dot과 pulse를 제거하고 20px soft semantic pill + 명시적 상태 라벨로 재설계했습니다. 진행·마감·게시·검토 같은 lifecycle/result 상태는 StatusBadge가, 실시간 연결 신호는 StatusIndicator가 소유합니다.
 - `PageHeader` is now limited to page context and task actions; record/profile identity moved to `RecordHeader` and the former `avatar` prop was removed.
 - `ScrollArea` now preserves the OS/browser scrollbar by default, exposes `scrollbar="compact"` only for constrained surfaces, reserves a stable gutter by default, and no longer injects a hard-coded 7px WebKit scrollbar. Shared scroll consumers use the same contract; SideNav, Tabs, and Category no longer hide overflow indicators.
@@ -69,6 +73,12 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 - `Meter` consumers targeting `role="progressbar"` should target `role="meter"`; `aria-valuenow` is now in caller units rather than a 0–100 projection.
 - `Rating` interactive usages render a slider control; keyboard and announcement behavior is new, `value` semantics are unchanged, and half-star rendering was never real — floor fill is now explicit.
 - `Bubble` chat usages should move to `ConversationMessage`/`MessageFeed`.
+
+## 0.1.0-rc.69.1 - 2026-08-10
+
+### Changed
+
+- `MessageFeed` comfortable 밀도의 세로 viewport 패딩을 12px에서 24px(`--space-6`)로 올렸다. comfortable은 읽기 밀도인데 세로 인셋만 임베드 패널 값에 머물러, 전체 높이 표면에서 첫 턴이 창 상단에 붙었다. compact(8px)는 그대로다.
 
 ## 0.1.0-rc.69 - 2026-08-10
 

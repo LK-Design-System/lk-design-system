@@ -1,12 +1,42 @@
 {
   "name": "@lk-design-system/lds-robotics-ui",
-  "version": "0.1.0-rc.4",
+  "version": "0.1.0-rc.5",
   "type": "module",
+  "files": [
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "llms.txt",
+    "docs/package",
+    "src",
+    "styles.css",
+    "tokens"
+  ],
   "dependencies": {
     "@lk-design-system/lds-core": "0.1.0-rc.1",
     "@lk-design-system/lds-product": "0.1.0-rc.1"
   },
   "devDependencies": {
     "@lk-design-system/lds-theme": "0.1.0-rc.1"
-  }
+  },
+  "exports": {
+    ".": "./src/index.js",
+    "./styles.css": "./styles.css",
+    "./tokens/*": "./tokens/*",
+    "./package.json": "./package.json",
+    "./design-system.json": "./docs/package/manifest.json",
+    "./llms.txt": "./docs/package/llms.txt",
+    "./adoption-checklist.json": "./docs/package/adoption-checklist.json",
+    "./docs/*": "./docs/package/*"
+  },
+  "lds": {
+    "schemaVersion": 1,
+    "layer": "robotics",
+    "manifest": "./docs/package/manifest.json",
+    "llms": "./docs/package/llms.txt",
+    "adoptionChecklist": "./docs/package/adoption-checklist.json",
+    "adoptionReportSchema": "./docs/package/adoption-report.schema.json",
+    "storybook": "https://lk-design-system.github.io/lk-design-system-robotics/?path=/docs/fixture-robotics--docs"
+  },
+  "homepage": "https://lk-design-system.github.io/lk-design-system-robotics/?path=/docs/fixture-robotics--docs"
 }

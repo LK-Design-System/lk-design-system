@@ -5,7 +5,7 @@ import { normalizeStatusTone, statusToneStyle } from './status-presentation.js';
 
 // Status surface colors come straight from the semantic status tier via
 // statusToneStyle (the former --component-callout-* aliases were removed).
-const ICON_SIZE = 20;
+const ICON_SIZE = 24;
 
 function normalizeIcon(icon, fallbackIcon) {
   if (!React.isValidElement(icon)) return fallbackIcon;
@@ -20,8 +20,13 @@ function normalizeIcon(icon, fallbackIcon) {
 /**
  * LK ROBOTICS — Callout
  * An emphasized note block with a tonal icon, soft surface, and tonal hairline.
- * Heavier than Banner — for guidance, tips, and important standing notes in body
- * content.
+ * For guidance, tips, and important standing notes in body content.
+ *
+ * Deliberately outranks Banner in the same tone: block padding instead of bar
+ * padding, the panel corner radius, a 24px tonal icon, and a body1 title. Banner
+ * is a message bar read once; Callout is a titled block that holds a share of the
+ * reading column. The two used to differ by 2px, which made them look
+ * interchangeable — the rank is now asserted in StatusFeedback.stories.jsx.
  */
 export function Callout({ tone = 'signal', title, headingLevel = false, children, icon, density, style, ...rest }) {
   const resolvedDensity = useResolvedDensity(density, 'comfortable');
@@ -45,12 +50,12 @@ export function Callout({ tone = 'signal', title, headingLevel = false, children
       data-density={resolvedDensity}
       style={{
         display: 'flex',
-        gap: compact ? 'var(--space-3)' : 'var(--space-3-5)',
-        padding: compact ? 'var(--space-3) var(--space-4)' : '16px 18px',
+        gap: compact ? 'var(--space-3)' : 'var(--space-4)',
+        padding: compact ? 'var(--space-3) var(--space-4)' : 'var(--space-5) var(--space-6)',
         boxSizing: 'border-box',
         background: palette.surface,
         border: `1px solid ${palette.border}`,
-        borderRadius: 'var(--radius-lg)',
+        borderRadius: 'var(--radius-xl)',
         boxShadow: 'none',
         fontFamily: 'var(--font-sans)',
         ...style,
@@ -68,14 +73,13 @@ export function Callout({ tone = 'signal', title, headingLevel = false, children
           color: c,
           lineHeight: 0,
           flexShrink: 0,
-          marginTop: 'var(--space-0-5)',
         }}
       >
         {normalizedIcon}
       </span>
       <div style={{ flex: 1, minWidth: 0 }}>
-        {title != null && <Heading style={{ margin: 0, fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: navy ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-label-normal)', marginBottom: children != null ? 4 : 0 }}>{title}</Heading>}
-        {children != null && <div style={{ fontSize: 'var(--label1-size)', lineHeight: compact ? 'var(--label1-line)' : 1.65, color: navy ? 'var(--color-semantic-brand-on-surface-subtle)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
+        {title != null && <Heading style={{ margin: 0, fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: navy ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-label-normal)', marginBottom: children != null ? 'var(--space-1-5)' : 0 }}>{title}</Heading>}
+        {children != null && <div style={{ fontSize: 'var(--label1-size)', lineHeight: compact ? 'var(--label1-line)' : 'var(--label1-reading-line)', color: navy ? 'var(--color-semantic-brand-on-surface-subtle)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkUMVFIUFVcjs = require('../../chunk-UMVFIUFV.cjs');
-require('../../chunk-UOF2MNMP.cjs');
+var _chunkRTZKUMKTcjs = require('../../chunk-RTZKUMKT.cjs');
+require('../../chunk-CLUXE6YL.cjs');
 
 
-exports.Spinner = _chunkUMVFIUFVcjs.Spinner;
+exports.Spinner = _chunkRTZKUMKTcjs.Spinner;
 //# sourceMappingURL=Spinner.cjs.map

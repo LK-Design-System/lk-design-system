@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "kind": "lds-robotics-token-manifest",
+  "package": {
+    "name": "@lk-design-system/lds-robotics-ui",
+    "version": "0.1.0-rc.5"
+  },
+  "sources": []
+}

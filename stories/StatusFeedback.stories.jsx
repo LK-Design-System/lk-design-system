@@ -126,6 +126,14 @@ export const BannerSurfaceVariants = {
     if (standingCallout.hasAttribute('role') || standingCallout.hasAttribute('aria-live') || standingCallout.querySelector('button')) {
       throw new Error('A standing Callout must not introduce live status, action, or dismiss semantics by default.');
     }
+    // The two surfaces once differed by 2px of padding, so the documented rank
+    // ("Callout is heavier than Banner") was prose the render never delivered and
+    // the pair read as interchangeable. Rank is geometry, so assert it as geometry.
+    const bannerBox = getComputedStyle(standalone);
+    const calloutBox = getComputedStyle(standingCallout);
+    if (!['paddingTop', 'paddingLeft', 'borderTopLeftRadius'].every((property) => parseFloat(calloutBox[property]) > parseFloat(bannerBox[property]))) {
+      throw new Error('A standing Callout must outrank Banner in the same tone — block padding and the wider panel radius — so a static guide is never mistaken for a dynamic notice.');
+    }
     if (!standalone.querySelector(':scope > svg[aria-hidden="true"]') || !embedded.querySelector(':scope > svg[aria-hidden="true"]') || !standalone.querySelector('button[aria-label="닫기"] svg[aria-hidden="true"]')) {
       throw new Error('Banner tone and close actions must use decorative registry icons with an accessible control label.');
     }

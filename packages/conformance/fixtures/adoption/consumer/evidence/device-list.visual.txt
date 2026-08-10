@@ -1,0 +1,1 @@
+Reviewed at normal and narrow viewports in light and dark themes.

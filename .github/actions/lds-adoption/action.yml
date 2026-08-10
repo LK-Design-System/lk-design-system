@@ -1,0 +1,214 @@
+name: LDS UI adoption contract
+description: Enforce the six-facet LDS adoption attestation in changed-ui or full-surface mode.
+
+inputs:
+  root:
+    description: Consumer repository root relative to the caller workspace.
+    required: false
+    default: .
+  config:
+    description: Adoption config path relative to the consumer root.
+    required: false
+    default: .lds/adoption.config.json
+  report:
+    description: Optional report path override relative to the consumer root.
+    required: false
+    default: ""
+  base:
+    description: Base git ref or SHA used to identify changed UI lines.
+    required: true
+  head:
+    description: Head git ref or SHA.
+    required: false
+    default: HEAD
+  storybook-index:
+    description: Optional built Storybook index used to validate story evidence.
+    required: false
+    default: ""
+  output:
+    description: Machine-readable check result path relative to the consumer root.
+    required: false
+    default: visual-artifacts/adoption/check-result.json
+  artifact-name:
+    description: Optional uploaded result artifact name; set this explicitly for matrix or repeated invocations.
+    required: false
+    default: ""
+
+outputs:
+  cli:
+    description: Absolute path of the pinned conformance CLI.
+    value: ${{ steps.paths.outputs.cli }}
+  lds_root:
+    description: Absolute path of the pinned LDS checkout.
+    value: ${{ steps.paths.outputs.lds_root }}
+  contract_sha256:
+    description: SHA-256 of the adoption contract executed by this action.
+    value: ${{ steps.paths.outputs.contract_sha256 }}
+  result:
+    description: Absolute path of the machine-readable check result.
+    value: ${{ steps.paths.outputs.result }}
+
+runs:
+  using: composite
+  steps:
+    - name: Setup adoption contract runtime
+      uses: actions/setup-node@v6.4.0
+      with:
+        node-version: 22.17.1
+
+    - name: Install pinned conformance dependencies
+      shell: pwsh
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: |
+        $conformance = (Resolve-Path (Join-Path $env:ACTION_PATH "../../../packages/conformance")).Path
+        npm ci --ignore-scripts --omit=dev --no-audit --no-fund --prefix $conformance
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+    - name: Resolve pinned adoption paths
+      id: paths
+      shell: pwsh
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+        CONSUMER_ROOT: ${{ inputs.root }}
+        OUTPUT_PATH: ${{ inputs.output }}
+        ARTIFACT_NAME: ${{ inputs.artifact-name }}
+        CONFIG_PATH: ${{ inputs.config }}
+        REPORT_PATH: ${{ inputs.report }}
+        BASE_REF: ${{ inputs.base }}
+        HEAD_REF: ${{ inputs.head }}
+        STORYBOOK_INDEX: ${{ inputs.storybook-index }}
+      run: |
+        function Assert-SafeInput([string] $value, [string] $label) {
+          if ($null -ne $value -and (
+            $value.IndexOf("`r") -ge 0 -or
+            $value.IndexOf("`n") -ge 0 -or
+            $value.IndexOf([char] 0) -ge 0
+          )) {
+            throw "$label must not contain CR, LF, or NUL characters."
+          }
+        }
+        $untrustedInputs = @{
+          "root" = $env:CONSUMER_ROOT
+          "output" = $env:OUTPUT_PATH
+          "artifact-name" = $env:ARTIFACT_NAME
+          "config" = $env:CONFIG_PATH
+          "report" = $env:REPORT_PATH
+          "base" = $env:BASE_REF
+          "head" = $env:HEAD_REF
+          "storybook-index" = $env:STORYBOOK_INDEX
+        }
+        foreach ($inputEntry in $untrustedInputs.GetEnumerator()) {
+          Assert-SafeInput $inputEntry.Value $inputEntry.Key
+        }
+        $ldsRoot = (Resolve-Path (Join-Path $env:ACTION_PATH "../../..")).Path
+        $workspaceRoot = (Resolve-Path $env:GITHUB_WORKSPACE).Path
+        $consumerRoot = (Resolve-Path (Join-Path $workspaceRoot $env:CONSUMER_ROOT)).Path
+        $comparison = if ($IsWindows) {
+          [System.StringComparison]::OrdinalIgnoreCase
+        } else {
+          [System.StringComparison]::Ordinal
+        }
+        function Assert-Contained([string] $parent, [string] $candidate, [string] $label) {
+          $prefix = $parent.TrimEnd(
+            [System.IO.Path]::DirectorySeparatorChar,
+            [System.IO.Path]::AltDirectorySeparatorChar
+          ) + [System.IO.Path]::DirectorySeparatorChar
+          if (-not $candidate.Equals($parent, $comparison) -and -not $candidate.StartsWith($prefix, $comparison)) {
+            throw "$label escapes its allowed root: $candidate"
+          }
+        }
+        function Assert-NoLinkTraversal([string] $parent, [string] $candidate, [string] $label) {
+          $relative = [System.IO.Path]::GetRelativePath($parent, $candidate)
+          if ($relative -eq ".") { return }
+          $cursor = $parent
+          foreach ($segment in ($relative -split '[\\/]')) {
+            if ([string]::IsNullOrWhiteSpace($segment)) { continue }
+            $cursor = Join-Path $cursor $segment
+            $item = Get-Item -Force -LiteralPath $cursor -ErrorAction SilentlyContinue
+            if ($null -eq $item) { break }
+            $isReparsePoint = ($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0
+            $linkTypeProperty = $item.PSObject.Properties['LinkType']
+            $hasLinkType = $null -ne $linkTypeProperty -and $null -ne $linkTypeProperty.Value
+            if ($isReparsePoint -or $hasLinkType) {
+              throw "$label traverses a symbolic link or reparse point: $cursor"
+            }
+          }
+        }
+        Assert-Contained $workspaceRoot $consumerRoot "Consumer root"
+        Assert-NoLinkTraversal $workspaceRoot $consumerRoot "Consumer root"
+        $cli = Join-Path $ldsRoot "packages/conformance/src/cli.mjs"
+        $contract = Join-Path $ldsRoot "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json"
+        $result = [System.IO.Path]::GetFullPath((Join-Path $consumerRoot $env:OUTPUT_PATH))
+        Assert-Contained $consumerRoot $result "Adoption result"
+        Assert-NoLinkTraversal $consumerRoot $result "Adoption result"
+        $resultItem = Get-Item -Force -LiteralPath $result -ErrorAction SilentlyContinue
+        if ($null -ne $resultItem -and $resultItem.PSIsContainer) {
+          throw "Adoption result path must not be a directory: $result"
+        }
+        $artifactName = if ([string]::IsNullOrWhiteSpace($env:ARTIFACT_NAME)) {
+          "lds-adoption-$env:GITHUB_JOB-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+        } else {
+          $env:ARTIFACT_NAME
+        }
+        if ($artifactName -notmatch '^[A-Za-z0-9._-]{1,120}$') {
+          throw "artifact-name must match ^[A-Za-z0-9._-]{1,120}$."
+        }
+        foreach ($resolvedOutput in @($ldsRoot, $consumerRoot, $cli, $result, $artifactName)) {
+          Assert-SafeInput $resolvedOutput "Resolved action output"
+        }
+        "cli=$cli" >> $env:GITHUB_OUTPUT
+        "lds_root=$ldsRoot" >> $env:GITHUB_OUTPUT
+        "consumer_root=$consumerRoot" >> $env:GITHUB_OUTPUT
+        "contract_sha256=$((Get-FileHash -Algorithm SHA256 $contract).Hash.ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+        "result=$result" >> $env:GITHUB_OUTPUT
+        "artifact_name=$artifactName" >> $env:GITHUB_OUTPUT
+
+    - name: Verify pinned adoption contract
+      shell: pwsh
+      env:
+        CONFORMANCE_CLI: ${{ steps.paths.outputs.cli }}
+        CONFORMANCE_LDS_ROOT: ${{ steps.paths.outputs.lds_root }}
+      run: |
+        & node $env:CONFORMANCE_CLI verify-adoption-contract --lds-root $env:CONFORMANCE_LDS_ROOT
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+    - name: Check LDS UI adoption
+      shell: pwsh
+      env:
+        CONFORMANCE_CLI: ${{ steps.paths.outputs.cli }}
+        CONFORMANCE_LDS_ROOT: ${{ steps.paths.outputs.lds_root }}
+        CONSUMER_ROOT_ABSOLUTE: ${{ steps.paths.outputs.consumer_root }}
+        CONFIG_PATH: ${{ inputs.config }}
+        REPORT_PATH: ${{ inputs.report }}
+        BASE_REF: ${{ inputs.base }}
+        HEAD_REF: ${{ inputs.head }}
+        STORYBOOK_INDEX: ${{ inputs.storybook-index }}
+        OUTPUT_PATH: ${{ inputs.output }}
+      run: |
+        $arguments = @(
+          $env:CONFORMANCE_CLI,
+          "check-adoption",
+          "--root", $env:CONSUMER_ROOT_ABSOLUTE,
+          "--lds-root", $env:CONFORMANCE_LDS_ROOT,
+          "--config", $env:CONFIG_PATH,
+          "--base", $env:BASE_REF,
+          "--head", $env:HEAD_REF,
+          "--output", $env:OUTPUT_PATH
+        )
+        if (-not [string]::IsNullOrWhiteSpace($env:REPORT_PATH)) {
+          $arguments += @("--report", $env:REPORT_PATH)
+        }
+        if (-not [string]::IsNullOrWhiteSpace($env:STORYBOOK_INDEX)) {
+          $arguments += @("--storybook-index", $env:STORYBOOK_INDEX)
+        }
+        & node @arguments
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+    - name: Upload LDS adoption evidence
+      if: always()
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        name: ${{ steps.paths.outputs.artifact_name }}
+        path: ${{ steps.paths.outputs.result }}
+        if-no-files-found: error

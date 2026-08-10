@@ -13602,7 +13602,7 @@
       "anatomy": [
         {
           "part": "tone",
-          "rule": "톤. @default \"info\""
+          "rule": "톤. canonical은 signal · positive · cautionary · negative이며 info · success · warning · error는 canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다). 기본값은 canonical 표기입니다 — 이전 기본값 \"info\"는 같은 표면으로 정규화되던 별칭 표기였습니다."
         },
         {
           "part": "title",
@@ -13626,7 +13626,7 @@
           "name": "tone",
           "type": "'signal' | 'positive' | 'cautionary' | 'negative' | 'info' | 'success' | 'warning' | 'error'",
           "required": false,
-          "description": "톤. @default \"info\"",
+          "description": "톤. canonical은 signal · positive · cautionary · negative이며 info · success · warning · error는 canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다). 기본값은 canonical 표기입니다 — 이전 기본값 \"info\"는 같은 표면으로 정규화되던 별칭 표기였습니다.",
           "owner": "BannerProps"
         },
         {
@@ -13717,7 +13717,7 @@
       "states": [
         {
           "state": "tone",
-          "rule": "톤. @default \"info\""
+          "rule": "톤. canonical은 signal · positive · cautionary · negative이며 info · success · warning · error는 canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다). 기본값은 canonical 표기입니다 — 이전 기본값 \"info\"는 같은 표면으로 정규화되던 별칭 표기였습니다."
         },
         {
           "state": "variant",
@@ -13739,22 +13739,22 @@
           "rule": "Fluent 2 MessageBar의 card-level 배치 원칙을 따라 패널 상태 Banner는 header 바로 아래, 제어 본문보다 먼저 읽히게 합니다. 상태·설명·액션의 순서도 DOM 순서와 일치시킵니다."
         },
         {
+          "subject": "--body1-line",
+          "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+        },
+        {
+          "subject": "--body1-size",
+          "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+        },
+        {
           "subject": "--body2-size",
           "rule": "15px"
-        },
-        {
-          "subject": "--color-semantic-brand-on-surface-border",
-          "rule": "light: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)"
-        },
-        {
-          "subject": "--color-semantic-brand-on-surface-subtle",
-          "rule": "light: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent)"
         }
       ],
       "responsive": [],
       "contentGuidance": [
         "선택 기준 — 비동기 작업, 연결, 권한, 검증 결과처럼 상태가 바뀌며 사용자가 알아야 하는 정보에는 Banner를 사용합니다. 상태와 함께 다음 행동이 필요하면 action, 사용자가 숨겨도 되는 비차단 알림이면 onClose를 제공합니다. Banner는 기본적으로 live status이며 negative tone은 alert이므로, 처음부터 본문에 남아 있는 설명을 단지 색으로 강조하려는 용도로 사용하지 않습니다.",
-        "tone — canonical signal · positive · cautionary · negative를 받으며, 기존 info · success · warning · error도 별칭으로 계속 동작합니다. variant — standalone(기본) 또는 embedded. title / children — 헤드라인 + 선택적 보충 설명. action — 끝의 노드. onClose — 닫기 버튼 표시. 떠 있는 일시 메시지에는 Toast를 쓰세요.",
+        "tone — canonical signal · positive · cautionary · negative를 받으며 기본값은 signal입니다. 기존 info · success · warning · error도 별칭으로 계속 동작하지만 동결된 어휘라 새 코드에서는 쓰지 않습니다(check:api-grammar가 ledger에 없는 별칭 신규 도입을 차단합니다). 기본값이 한동안 \"info\"로 표기돼 있었는데, 별칭 정규화를 거쳐 signal과 같은 표면으로 렌더되던 같은 값이라 canonical 표기로 통일했습니다 — 렌더 결과는 바뀌지 않습니다.",
         "패널 전체의 현재 gate/state를 짧게 알릴 때는 header 바로 아래에 variant=\"embedded\"를 사용합니다. 정상·잠금처럼 설명이 없어도 이해되는 상태는 제목 한 줄로 유지하고, 오류 원인이나 복구 방법이 필요한 경우에만 본문을 추가합니다. 부모 표면 안에서 style로 border와 radius를 임의 덮어쓰지 않습니다.",
         "독립된 동적 알림에는 standalone, 떠 있는 일시 메시지에는 Toast, 본문에 계속 남는 절차·주의·맥락 설명에는 Callout을 사용합니다. 액션이나 닫기가 필요하다는 이유만으로 정적 설명을 Banner로 바꾸지 말고, 실제로 상태가 변하는지 먼저 판단합니다."
       ],
@@ -13785,10 +13785,12 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<Banner tone=\"info\" title=\"문서 업데이트\" onClose={dismiss}>디자인 시스템 문서가 업데이트되었습니다.</Banner>\n<Banner tone=\"warning\">일부 항목에 검토가 필요합니다.</Banner>\n<Banner variant=\"embedded\" tone=\"warning\" title=\"제어 대기\">상위 패널의 상태를 설명합니다.</Banner>"
+          "code": "<Banner tone=\"signal\" title=\"문서 업데이트\" onClose={dismiss}>디자인 시스템 문서가 업데이트되었습니다.</Banner>\n<Banner tone=\"cautionary\">일부 항목에 검토가 필요합니다.</Banner>\n<Banner variant=\"embedded\" tone=\"cautionary\" title=\"제어 대기\">상위 패널의 상태를 설명합니다.</Banner>"
         }
       ],
       "tokens": [
+        "--body1-line",
+        "--body1-size",
         "--body2-size",
         "--color-semantic-brand-on-surface",
         "--color-semantic-brand-on-surface-border",
@@ -13799,13 +13801,16 @@
         "--font-sans",
         "--fw-bold",
         "--label1-line",
+        "--label1-reading-line",
         "--label1-size",
         "--radius-lg",
+        "--radius-xl",
         "--space-0-5",
+        "--space-1-5",
         "--space-3",
-        "--space-3-5",
         "--space-4",
-        "--space-5"
+        "--space-5",
+        "--space-6"
       ],
       "apiLinks": [],
       "migration": [
@@ -17573,7 +17578,6 @@
         "--space-1",
         "--space-2",
         "--space-20",
-        "--space-3",
         "--space-4",
         "--space-6"
       ],
@@ -33451,10 +33455,10 @@
         "appearance=\"default\"는 data-theme=\"dark\" 또는 .theme-dark 안에서 기존 dark semantic surface를 그대로 사용합니다. appearance=\"brand\"는 generic dark theme와 별개인 명시적이고 theme-stable한 제품 셸 팔레트입니다."
       ],
       "avoidWhen": [
-        "접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 행의 선택 프록시로 표시하며 별도 점이나 시작 표시선을 추가하지 않아, 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.",
-        "Carbon UI shell left panel style — sub-menu hover와 selected를 별도 상태로 정의합니다. LDS도 펼침·hover·현재 위치의 상태 분리는 따르되, Carbon의 4px interactive border는 내부 NavRail·TopBar 선택 문법과 맞지 않아 채택하지 않습니다. 펼친 상태는 현재 leaf에만 선택 배경을 두고, leaf가 숨겨지는 접힌 상태에서만 부모가 배경 프록시를 맡습니다.",
+        "접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 아이콘의 강한 잉크로만 표시해 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.",
+        "Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. category 아이콘이 없을 때도 subitem을 명확히 들여쓰라는 원칙을 적용해 LDS는 자식 아이콘 유무와 무관하게 같은 라벨 시작선을 보장합니다. 축소 가능 내비게이션의 상태는 명시적 토글로 설명하고 hover peek는 선택 기능으로 제한합니다.",
         "Carbon UI shell left panel accessibility — rail은 hover나 focus에서 펼쳐져도 같은 링크·서브메뉴 keyboard model을 유지합니다. 이 동작을 LDS에 적용할 때는 동일 DOM뿐 아니라 44px hit target과 세로 위치도 유지해, 포인터와 키보드 사용자가 확장 중 움직이는 목적지를 다시 추적하지 않게 합니다.",
-        "Android Material NavigationRailView — 아이콘 레일의 현재 목적지는 shape·color를 가진 active indicator로 지속 표시할 수 있습니다. LDS는 새 indicator API 대신 기존 primary wash와 아이콘 잉크를 재사용하고, 숨겨진 leaf의 disclosure 부모에만 이 문법을 대리 적용합니다."
+        "전경과 상태 표면은 navy-shell atomic ramp를 참조합니다. 이 ramp는 brand-on-surface 잉크를 브랜드 네이비 위에 합성한 불투명 값입니다: hover·badge surface -18(white 10% 합성), pressed -20(12%), badge active -24(16%), divider -26(18%), muted·section·badge ink -65(62%), hover ink -93(92%). 활성 label은 static-white를 그대로 씁니다."
       ],
       "anatomy": [
         {
@@ -33603,7 +33607,7 @@
           "name": "multiple",
           "type": "boolean",
           "required": false,
-          "description": "Allows multiple disclosure groups to remain open. Set to false for accordion behavior. @default true",
+          "description": "Allows multiple disclosure groups to remain open. When false, selecting another group or top-level destination closes the previous group. @default false",
           "owner": "SideNavProps"
         },
         {
@@ -33669,9 +33673,9 @@
       "behavior": [
         "appearance — default(기본)는 기존 semantic color와 현재 theme를 픽셀 그대로 따릅니다. brand는 평면 브랜드 네이비 셸과 상태 잉크를 사용하는 theme-stable 컴포넌트 외형입니다. surface가 배치 geometry를, appearance가 SideNav 내부 색 역할만 소유하므로 두 축은 독립입니다. 알 수 없는 런타임 값은 default로 안전하게 돌아갑니다.",
         "collapsed / defaultCollapsed / onCollapsedChange — 제품이 접힘 상태를 소유하면 collapsed와 onCollapsedChange를 함께 사용하고, 비제어 초기값만 필요하면 defaultCollapsed를 사용합니다. controlled 상태는 부모가 prop을 갱신할 때만 시각적으로 바뀌므로 런타임 overlay 전환 때도 부모가 원하는 collapsed 값을 함께 갱신해야 합니다. 사용자별 영속화는 제품이 소유하고 SideNav는 브라우저 저장소를 읽거나 쓰지 않습니다.",
-        "multiple — 기본 true는 여러 disclosure 그룹을 동시에 열어 둘 수 있습니다. multiple={false}이면 한 번에 한 그룹만 열리는 accordion 동작이 되며, 다른 그룹을 열 때 기존 그룹은 닫힙니다. 활성 자식이 바뀌면 활성 그룹을 우선 유지합니다.",
+        "multiple — 기본 false는 한 번에 한 disclosure 그룹만 열리는 accordion 동작입니다. 다른 그룹이나 다른 최상위 목적지를 선택하면 기존에 열린 그룹을 닫고, 활성 자식이 바뀌면 해당 그룹만 엽니다. multiple={true}를 명시하면 여러 그룹을 동시에 열 수 있습니다.",
         "floating은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. docked는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, fill, active marker를 공유합니다.",
-        "WAI-ARIA landmark regions — landmark와 명확한 accessible name을 유지합니다. 소비자가 aria-label을 주지 않으면 기본 이름 사이드 탐색을 제공하고, 같은 문서에 탐색 landmark가 여러 개면 고유한 이름으로 덮어씁니다. 현재 목적지는 aria-current=\"page\"로 노출하고, 키보드 focus 진입·이탈과 Esc 뒤에도 초점을 잃지 않습니다."
+        "WAI-ARIA Accordion pattern — 한 패널만 허용하는 accordion은 다른 헤더를 열 때 기존 패널을 닫고 aria-expanded를 실제 노출 상태와 동기화합니다. LDS의 기본 SideNav도 이 단일 열림 규칙을 따릅니다."
       ],
       "quantitativeRules": [
         {
@@ -33684,7 +33688,7 @@
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "현재 leaf 목적지는 aria-current=\"page\"와 LDS의 NavRail·TopBar와 같은 primary wash·굵은 label을 소유합니다. leaf가 숨겨지는 접힌 레일에서만 disclosure 부모가 같은 primary wash와 primary icon으로 시각 선택 프록시를 맡되 aria-current는 받지 않습니다. 펼치면 프록시 배경은 부모에서 사라지고 실제 leaf로 돌아갑니다."
+          "rule": "펼쳐진 childList는 논리적 시작 방향에서 --space-3(12px)만큼 들어가 하위 목적지의 hover·선택 표면 자체를 부모 행보다 안쪽에 둡니다. 자식 라벨도 아이콘 유무와 관계없이 부모 라벨보다 12px 안쪽에서 시작하고 --label2-line(18px)을 사용합니다. 44px hit target과 현재 leaf 하나만 소유하는 선택 배경은 유지하며, 별도 connector·중첩 표면·active bar는 추가하지 않습니다."
         },
         {
           "subject": "명시 규칙 4",
@@ -33697,7 +33701,7 @@
       ],
       "responsive": [
         "Width, rail width, padding, radius, and item geometry can be tuned only through the documented --lds-side-nav- variables. Navigation value, routing, and shell collapse controls remain product-owned.",
-        "접힌 레일과 펼친 패널은 SideNav가 소유하는 브랜드 아래 패딩 18px과 44px 최상위 목적지 행 높이를 공유합니다(36px 자식 행은 레일에 존재하지 않아 이 계약의 대상이 아닙니다). header와 headerCollapsed 슬롯 자체의 intrinsic 높이는 제품이 맞추며, 레일에서는 label·badge가 사라지고 행의 가로 정렬만 바뀝니다.",
+        "접힌 레일과 펼친 패널은 SideNav가 소유하는 브랜드 아래 패딩 18px과 44px 목적지 행 높이를 공유합니다. header와 headerCollapsed 슬롯 자체의 intrinsic 높이는 제품이 맞추며, 레일에서는 label·badge가 사라지고 행의 가로 정렬만 바뀝니다.",
         "Carbon UI shell usage — 복잡한 제품 탐색은 header와 지속적인 left panel을 조합하고 좁은 폭에서는 탐색 표면을 전환합니다. 그래서 셸에 붙는 SideNav는 docked를, 독립 배치는 floating을 사용합니다.",
         "The collapsed item rail scrolls vertically with a hidden native scrollbar. Do not reduce or remove authorized destinations merely to fit a short viewport; preserve keyboard and wheel scrolling."
       ],
@@ -33711,8 +33715,8 @@
         "renderLink — native anchor 대신 router link를 쓸 때만 제공합니다. renderLink={(item, { href, ...props }) = }처럼 DS가 만든 aria-current, disabled, style, activation 계약을 전달합니다.",
         "overlay — overlay peek는 공간이 제한된 데스크톱에서만 쓰는 선택 기능입니다. 비제어 SideNav에서 overlay가 런타임에 false → true로 바뀌면 레일로 접고, true → false로 돌아오면 overlay 진입 전의 persistent 접힘 상태를 복원합니다. 접힌 overlay는 hover뿐 아니라 키보드 focus 진입에서도 펼쳐지며 포인터와 focus가 모두 이탈하면 다시 접힙니다. 바깥 클릭과 Esc도 레일로 복귀시키고, Esc로 자식 항목이 사라질 때 focus는 레일에 남는 부모 항목으로 복구됩니다.",
         "autoExpandActiveGroup — 기본 true는 활성 자식의 그룹을 초기 선택과 값 변경 때 자동으로 엽니다. false이면 활성 값·부모의 현재 경로 잉크·자식을 열었을 때의 aria-current는 그대로 두고 disclosure open state만 사용자 조작과 분리합니다. 제품이 패널을 열 때 모든 그룹을 닫아 두고 싶다면 이 축을 끄되 현재 route를 지우지 않습니다.",
-        "행 높이 위계: 최상위 목적지·disclosure 부모는 44px(--lds-side-nav-item-height), disclosure 자식은 36px(--lds-side-nav-child-item-height)입니다. 자식이 부모와 같은 높이면 위계가 들여쓰기와 1px 폰트 차이로만 남아 열린 그룹이 트리로 읽히지 않고, multiple={false} accordion에서는 그룹 하나가 패널 세로를 과하게 차지합니다.",
-        "NavRail/BottomNav와 같은 icon, caption/label scale, primary surface/ink를 사용합니다. SideNav에만 섹션 heading, badge, 자식 indent, disclosure chevron, 펼친 panel width와 접힌 active-descendant 프록시가 있습니다. aria-current=\"page\"는 실제 leaf에만 유지되므로 프록시는 시각 연속성만 보완합니다."
+        "지속 선택 표면은 aria-current=\"page\"인 현재 leaf 목적지만 소유합니다. 현재 목적지는 LDS의 NavRail·TopBar와 같은 primary wash와 굵은 label을 사용하며 별도 시작 표시선은 추가하지 않습니다. 펼쳐진 부모는 배경을 유지하지 않고 chevron과 활성 자손을 뜻하는 강한 label/icon만 사용하며, pointer hover는 선택 표면보다 약한 neutral fill-alternative, pressed는 fill-normal, keyboard focus는 전역 focus ring으로 분리합니다.",
+        "NavRail/BottomNav와 같은 icon, caption/label scale, primary surface/ink, aria-current=\"page\"를 사용합니다. SideNav에만 섹션 heading, badge, 자식 indent, disclosure chevron, 펼친 panel width가 있습니다. 이는 계층 구조와 상태 수를 표현하기 위한 기능 차이입니다."
       ],
       "exceptions": [],
       "related": [
@@ -46282,7 +46286,7 @@
         "Lockup"
       ],
       "supportingComponents": [],
-      "purpose": "기업 표기형과 기본형은 원본 조합을 그대로 사용하고, 제품 UI 파생형은 같은 벡터 윤곽만 재사용합니다. 기능 아이콘이나 장식처럼 반복 사용하지 않으며 비율·색상·자간을 임의로 바꾸지 않습니다.",
+      "purpose": "LK는 승인된 커스텀 벡터를 유지하고 ROBOTICS는 Montserrat ExtraBold 800 v7.222, 한글 법인명은 Noto Sans KR ExtraBold 800 v2.004-H2에서 아웃라인으로 생성합니다. 승인 SVG 또는 Lockup만 사용하며 기능 아이콘처럼 반복하거나 비율·색상·자간을 임의로 바꾸지 않습니다.",
       "useWhen": [],
       "avoidWhen": [],
       "anatomy": [
@@ -46346,11 +46350,31 @@
         }
       ],
       "behavior": [],
-      "quantitativeRules": [],
-      "responsive": [
-        "LK ROBOTICS 로고. 제공된 공식 원본 SVG의 실제 path를 사용하는 자체 완결형 SVG입니다. stacked는 공식 원본의 배경 없는 조합이고, mark와 inline은 공식 윤곽을 그대로 사용하는 제품 UI 파생형입니다. tone은 ink/white/brand/current, 크기는 height로 지정합니다. 워드마크를 임의로 확대·재배치하거나 로고 색을 UI 토큰으로 바꾸지 마세요."
+      "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "ROBOTICS: 대문자, Montserrat ExtraBold 정적 weight 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지"
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "주식회사 엘케이로보틱스: NFC 텍스트, Noto Sans KR 가변 TTF의 명명된 ExtraBold wght=800 Version 2.004-H2, 글꼴 기본 커닝, 글자 사이 자간 0.105em, 마지막 글자 뒤 자간 없음, 가로·세로 비율 1:1, 글리프 수동 수정 금지"
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "배치: 법인명 보이는 폭 1.90X, 상단 로크업과의 간격 0.21X, 상단 로크업의 보이는 중심축에 가운데 정렬"
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "최소 크기: 디지털 160px, 권장 192px 이상, 인쇄 32mm. 이보다 작으면 법인명 없는 기본형 사용"
+        }
       ],
-      "contentGuidance": [],
+      "responsive": [
+        "X는 커스텀 LK 심볼의 보이는 높이입니다. stacked는 워드마크 명목 cap height를 0.25X로 하고 심볼 보이는 폭의 0.2배만큼 띄워 가운데 정렬합니다. inline은 워드마크의 보이는 높이를 1X로 하고 같은 0.2배 간격을 둡니다. 배너 최소 여백은 사방 0.5X, 제품 UI용 inline 최소 렌더 높이는 20px입니다."
+      ],
+      "contentGuidance": [
+        "LK ROBOTICS의 승인 로고 컴포넌트입니다. LK는 커스텀 벡터 심볼이고, ROBOTICS는 고정된 Montserrat ExtraBold 800 v7.222 글꼴에서 생성한 아웃라인입니다. 기업 표기형의 주식회사 엘케이로보틱스는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 승인 SVG 또는 Lockup만 사용하며 워드마크나 법인명을 텍스트로 다시 조판하지 않습니다.",
+        "승인 SVG와 Lockup은 동일한 생성 원본을 사용합니다. 개별 SVG path를 직접 편집하거나 텍스트로 다시 만들지 않습니다."
+      ],
       "accessibility": [],
       "exceptions": [],
       "related": [],
@@ -46392,9 +46416,9 @@
         "properties": "evidence",
         "states": "evidence",
         "behavior": "omitted-no-evidence",
-        "quantitativeRules": "omitted-no-evidence",
+        "quantitativeRules": "evidence",
         "responsive": "evidence",
-        "contentGuidance": "omitted-no-evidence",
+        "contentGuidance": "evidence",
         "accessibility": "omitted-no-evidence",
         "exceptions": "omitted-no-evidence",
         "related": "omitted-no-evidence",
