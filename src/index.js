@@ -3,6 +3,7 @@
 
 export { BRAND_LOGO_NAMES, BrandLogo } from '../components/brand/BrandLogo.jsx';
 export { Lockup } from '../components/brand/Lockup.jsx';
+export { ProductLockup } from '../components/brand/ProductLockup.jsx';
 export { ActionArea } from '../components/buttons/ActionArea.jsx';
 export { Button } from '../components/buttons/Button.jsx';
 export { ButtonGroup } from '../components/buttons/ButtonGroup.jsx';

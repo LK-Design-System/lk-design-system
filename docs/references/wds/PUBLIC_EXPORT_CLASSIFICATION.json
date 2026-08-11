@@ -19,10 +19,12 @@
       "ownerLayer": "theme",
       "provenance": "theme-override",
       "storyEvidence": [
-        "stories/Brand.stories.jsx"
+        "stories/Brand.stories.jsx",
+        "stories/BrandProductLockup.stories.jsx"
       ],
       "exports": [
-        "Lockup"
+        "Lockup",
+        "ProductLockup"
       ]
     },
     {
@@ -852,6 +854,10 @@
     },
     {
       "path": "components/brand/lk-portal-lockup-paths.js",
+      "ownerLayer": "theme"
+    },
+    {
+      "path": "components/brand/lk-product-lockup-paths.js",
       "ownerLayer": "theme"
     },
     {

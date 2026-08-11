@@ -1,6 +1,6 @@
 # Lockup
 
-LK ROBOTICS의 공식 로고 컴포넌트입니다. `LK`는 geometry v1.0으로 동결한 커스텀 벡터 심볼이고, `ROBOTICS`는 Montserrat ExtraBold 800 v7.222에서 생성한 아웃라인입니다. 기업 표기형의 `주식회사 엘케이로보틱스`는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 공식 SVG 또는 `Lockup`만 사용하며 워드마크나 법인명을 텍스트로 다시 조판하지 않습니다.
+LK ROBOTICS의 공식 로고 컴포넌트입니다. `LK`는 geometry v1.0으로 동결한 커스텀 벡터 심볼이고, `ROBOTICS`는 Montserrat ExtraBold 800 v7.222에서 생성한 아웃라인입니다. 기업 표기형의 `주식회사 엘케이로보틱스`는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 공식 SVG, `Lockup` 또는 승인 registry의 `ProductLockup`만 사용하며 워드마크·제품명·법인명을 텍스트로 다시 조판하지 않습니다.
 
 ## 정본과 작도 검증
 
@@ -13,7 +13,7 @@ LK ROBOTICS의 공식 로고 컴포넌트입니다. `LK`는 geometry v1.0으로 
 ## 워드마크와 법인명
 
 - `ROBOTICS`: 대문자, Montserrat ExtraBold 정적 weight 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지
-- `PORTAL`(승인 제품 워드마크): 같은 글꼴·같은 제작 규정. 회사 워드마크와 대소문자 문법을 맞춥니다. 배치는 보이는 높이 `1X`에 심볼 보이는 폭의 `0.35X` 간격이며, `inline`의 `0.2X`보다 넓은 이유는 20px 렌더에서 `0.2X`(약 3.8px)일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다.
+- `PORTAL`(승인 제품 워드마크): 같은 글꼴·같은 제작 규정. 회사 워드마크와 대소문자 문법을 맞춥니다. 배치는 보이는 높이 `1X`에 **심볼 보이는 폭의 `0.35배`** 간격이며, `inline`의 심볼 보이는 폭 `0.2배`보다 넓은 이유는 20px 렌더에서 더 좁은 간격일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다. 이 값은 `0.35X`가 아닙니다.
 - `주식회사 엘케이로보틱스`: NFC, Noto Sans KR ExtraBold `wght=800` Version 2.004-H2, 글꼴 기본 커닝, 글자 사이 `0.105em`, 마지막 글자 뒤 자간 없음, 가로·세로 비율 1:1, 글리프 수동 수정 금지
 - 법인명 배치: 보이는 폭 `1.90X`, 상단 로크업과 간격 `0.21X`, 상단 로크업의 보이는 중심축에 가운데 정렬
 - 배포 결과는 `<text>`와 런타임 폰트가 없는 SVG path입니다. Montserrat와 Noto Sans KR은 build-time 생성 재료이며 UI 본문 글꼴이 아닙니다.
@@ -49,9 +49,13 @@ favicon tile은 iOS AppIcon이나 Android adaptive icon이 아닙니다. 두 앱
 ## LK Portal 제품형
 
 - `variant="portal"`은 자유 텍스트 슬롯이 아니라 승인된 `LK Portal` 고정 조합입니다. 다른 제품명을 전달하거나 `PORTAL`만 별도 폰트 텍스트로 조판하지 않습니다.
-- 가장 가까운 회사 변형은 `inline`입니다. 차이는 `ROBOTICS` 대신 `PORTAL` 아웃라인을 쓰고 간격이 `0.35X`라는 점뿐이며, LK 심볼·`1X` 높이·최소 크기 보정·색상·접근성 규칙은 모두 같습니다.
+- 가장 가까운 회사 변형은 `inline`입니다. 차이는 `ROBOTICS` 대신 `PORTAL` 아웃라인을 쓰고 간격이 LK 심볼 보이는 폭의 `0.35배`라는 점뿐이며, LK 심볼·`1X` 높이·최소 크기 보정·색상·접근성 규칙은 모두 같습니다. LK 심볼 폭은 `1.08176X`이므로 이 간격은 약 `0.378616X`이고 `0.35X`가 아닙니다.
 - 접근성 이름의 기본값은 `LK Portal`입니다(회사 변형은 `LK ROBOTICS`). 이미 `aria-label="LK Portal"`이 있는 링크 안에서는 `decorative`로 중복 이름을 만들지 않습니다.
-- 적용 범위는 LK Portal을 식별하는 화면입니다. Web Viz와 Control은 그 대상이 아니므로 회사 변형을 사용합니다.
+- 적용 범위는 LK Portal을 식별하는 화면입니다. Console은 `ProductLockup`, Web Viz와 Control은 승인 registry가 생기기 전까지 회사 `Lockup`과 별도 제품 제목을 사용하며 Portal path를 재사용하지 않습니다.
+
+## Product Lockup과의 경계
+
+`variant="portal"`은 승인된 고정 outline 자산이자 기존 통합을 위한 호환 API입니다. 신규 제품 셸의 LK Portal형 식별은 승인 outline registry인 `ProductLockup`을 사용하며 현재 `product` key `console | portal`만 지원합니다. 두 컴포넌트 모두 일반 제품명 slot이 아니므로 mark 옆에 live text를 직접 조판하거나 registry에 없는 이름을 우회 렌더링하지 않습니다. Web Viz와 Control은 canonical name과 outline 승인 전까지 미지원입니다. 자세한 기준은 [`LK_PRODUCT_LOCKUP_STANDARD.md`](../../docs/brand/LK_PRODUCT_LOCKUP_STANDARD.md)를 따릅니다.
 
 ## 색상과 배경
 

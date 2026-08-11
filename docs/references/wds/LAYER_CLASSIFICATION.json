@@ -58,6 +58,7 @@
     "stories/ActionTextButton.stories.jsx": "LDS Core/Components/Action/Text Button",
     "stories/ActionToggleIcon.stories.jsx": "LDS Core/Components/Action/Toggle Icon",
     "stories/Brand.stories.jsx": "LDS Theme/Brand/LK ROBOTICS Logo",
+    "stories/BrandProductLockup.stories.jsx": "LDS Theme/Brand/Product Lockup",
     "stories/BrandPlatform.stories.jsx": "LDS Product/Content/Platform Logos",
     "stories/Button.stories.jsx": "LDS Core/Components/Action/Button",
     "stories/Card.stories.jsx": "LDS Core/Components/Content/Card",

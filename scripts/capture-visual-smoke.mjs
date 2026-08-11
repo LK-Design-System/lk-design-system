@@ -39,6 +39,11 @@ const targets = [
     viewport: { width: 860, height: 700 },
   },
   {
+    name: 'theme-product-lockup',
+    match: { importPath: './stories/BrandProductLockup.stories.jsx', exportName: 'ProductLockupStandard' },
+    viewport: { width: 820, height: 620 },
+  },
+  {
     name: 'theme-brand-spinner-reduced-motion',
     match: { importPath: './stories/ThemeBrandSpinner.stories.jsx', exportName: 'BrandLoading' },
     viewport: { width: 520, height: 220 },

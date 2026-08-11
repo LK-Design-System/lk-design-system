@@ -5,7 +5,7 @@
 | Type | Stable contract and component register |
 | Status | Current |
 | Owner | Component owners · Design system owner |
-| Last reviewed | 2026-08-09 |
+| Last reviewed | 2026-08-11 |
 
 ## Canonical public API grammar
 
@@ -78,8 +78,8 @@ overlay에서 우선하며, Provider 상태가 바뀌면 열린 custom-target Po
 | 맥락 | 기본 조합 | 경계 |
 | --- | --- | --- |
 | 랜딩·콘텐츠 사이트 | `TopBar` + 전체형 `Footer` | TopBar가 전역 탐색을 맡고 Footer는 정보·정책 링크를 제공한다. |
-| 계층형 운영 대시보드 | `DashboardShell` + `SideNav surface="docked"` + `UserMenu` | SideNav가 제품 identity와 목적지를 소유하면 TopBar에는 utility만 두고 로고·제품 경로를 중복하지 않는다. `surface="floating"`은 독립 panel/secondary navigation에서 명시적으로 선택한다. |
-| 평면형 운영 런처 | `DashboardShell` + `TopBar` + `Card`/status composition | 계층형 SideNav나 KPI row를 강제하지 않는다. 제품 identity는 TopBar가 한 번만 소유하고 destination card는 route·permission을 판단하지 않는다. |
+| 계층형 운영 대시보드 | `DashboardShell` + `SideNav surface="docked"` + `UserMenu` | SideNav가 제품 로크업과 목적지를 소유하면 TopBar에는 utility만 두고 로고·제품 경로를 중복하지 않는다. `surface="floating"`은 독립 panel/secondary navigation에서 명시적으로 선택한다. |
+| 평면형 운영 런처 | `DashboardShell` + `TopBar` + `Card`/status composition | 계층형 SideNav나 KPI row를 강제하지 않는다. 제품 로크업은 TopBar가 한 번만 소유하고 destination card는 route·permission을 판단하지 않는다. |
 | 평면형 반응형 앱 | 데스크톱 `NavRail` ↔ 모바일 `BottomNav` | 동일한 주요 목적지 3–5개를 공유하며 `SideNav`와 동시에 쓰지 않는다. |
 | 현재 위치와 페이지 목차 | `Breadcrumb` + 필요 시 `Anchor` | 각각 로컬 경로와 페이지 내 섹션을 보조하며 주 탐색을 대신하지 않는다. |
 | 순서형 워크플로 | 표시 전용 `Steps` 또는 제어 포함 `Wizard` | 사이트·제품 탐색과 분리한다. |
@@ -103,9 +103,10 @@ Operations Dashboard의 기준은 루트 `DESIGN.md`다. Dashboard shell은 land
 | Card | polymorphic `as` root, default/subtle surface tone, elevation, interactive/dark, structured slots, semantic heading, `titleWrap="truncate|wrap"`, WDS platform axis, explicit LDS `density="comfortable|compact"` with comfortable default and `padding`/mobile precedence, skeleton/save/toggle affordances | native section/list-item roots, light/dark inset-group ownership, heading and nested-interactive guards, long-title wrap assertion, desktop/mobile structured-card stories plus normal/narrow comfortable-versus-compact geometry |
 | FeatureCard | tone, boxed surface, semantic heading, optional whole-card activation, explicit LDS `density="comfortable|compact"` with comfortable default; density changes spacing and icon tile only | normal/narrow comfortable-versus-compact story, stable title/body typography, Enter/Space activation and nested-interactive guard |
 | Table | native static table, size/hover, caption or ARIA name, row header, stable row id, `getRowProps`, public header/data cell-style helpers | `<th scope>` semantics, row metadata without grid/focus semantics, public style-helper composition story |
+| ProductLockup | required approved `product: "console" | "portal"`, `tone: "ink" | "white"`, default 28/minimum 20 `height`, explicit `compact`, canonical `aria-label`, decorative host composition | fixed SVG outlines generated from Montserrat ExtraBold 800 v7.222 uppercase with default kerning; visible name height `1X`; visual gap `0.35 ×` visible mark width (not `0.35X`); no runtime font/raw-name fallback; full/compact accessible-name parity; Web Viz/Control pending unsupported registry names |
 | TopBar | non-shrinking brand, optional named horizontal navigation (`navigationLabel`), utility actions, long/overflowing destinations, dropdown open/close | navigation yields or scrolls between brand/actions; repeated landmarks have unique names; dropdown uses a viewport-clamped top layer and cannot be clipped by header/nav overflow; keyboard name/focus/Escape and narrow story |
 | LanguageSwitcher | required controlled `value`, native-name locale options, per-locale disabled, adaptive intrinsic menu width with TopBar minimum, 36px icon-only globe trigger with light/inverse foreground, whole-control disabled | TopBar utility placement at normal/360px widths, translated trigger name/title, `lang` metadata, inline-end visible check plus `menuitemradio` checked state, Enter/Space/Arrow open, selection callback, close and trigger-focus restoration; translation, URL, persistence, formatting, and document `lang` are app-owned |
-| DashboardShell | `topology="header-first|side-first"` (`header-first` compatibility default), skip link, header/nav/main landmarks, wide/narrow/auto navigation slots, omitted-narrow fallback, safe-area, single main, 320px no-overflow; docked or floating navigation is an explicit child composition | both desktop topologies, narrow single-column convergence, auto fallback, docked SideNav composition, one product-identity owner, one `main`/banner and 320px shell stories |
+| DashboardShell | `topology="header-first|side-first"` (`header-first` compatibility default), skip link, header/nav/main landmarks, wide/narrow/auto navigation slots, omitted-narrow fallback, safe-area, single main, 320px no-overflow; docked or floating navigation is an explicit child composition | both desktop topologies, narrow single-column convergence, auto fallback, docked SideNav composition, one product-lockup owner, one `main`/banner and 320px shell stories |
 | DashboardGrid | auto-fit repeated peer cards, configurable minimum width/gap, min-width containment, one-column narrow flow; no built-in KPI, priority, query, or card-surface semantics | actual component subjects at normal and 320px; unequal hierarchy uses explicit section/span composition instead of DashboardGrid inference |
 | SideNav/NavRail/BottomNav links | legacy button/onChange, native href anchors, aria-current, disabled destinations, renderLink router hook, long-label containment | native destination and router-renderer stories |
 | Pagination | controlled page, synchronized page-jump, page size/counter, extended/compact/minimize, localized landmark/previous/next/page-size names | pagination patterns and synchronized page-jump story |

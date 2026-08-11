@@ -84,7 +84,7 @@ import {
   Toast,
 } from '@lk-design-system/design-system-core/core';
 import {
-  Lockup,
+  ProductLockup,
   ThemeToggle,
 } from '@lk-design-system/design-system-core/theme';
 import {
@@ -109,7 +109,7 @@ function App() {
   return (
     <main data-testid="consumer-smoke" style={{ minHeight: '100vh', background: 'var(--surface-page)', color: 'var(--label-normal)' }}>
       <TopBar
-        brand={<Lockup />}
+        brand={<ProductLockup product="console" />}
         actions={<ThemeToggle target={null} persist={false} defaultValue="light" />}
       >
         <TopBarNavItem active>관제</TopBarNavItem>

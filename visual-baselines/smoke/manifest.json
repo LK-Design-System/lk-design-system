@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "count": 40,
+  "count": 42,
   "maxDiffRatio": 0.01,
   "captures": [
     {
@@ -492,6 +492,18 @@
       "reducedMotion": "no-preference",
       "bytes": 19069,
       "sha256": "943bebdeeb9cd8097ac23b64018d2ac45f09420afcb483f83d2ece2273893e99"
+    },
+    {
+      "name": "theme-product-lockup",
+      "id": "lds-theme-brand-product-lockup--product-lockup-standard",
+      "query": {},
+      "viewport": {
+        "width": 820,
+        "height": 620
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 53685,
+      "sha256": "2cf3566434e3985b041646a98f52b9e8f22ae7bda98ec3b08cf5b368ea7ba4e3"
     }
   ]
 }

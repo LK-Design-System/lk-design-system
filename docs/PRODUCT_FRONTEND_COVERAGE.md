@@ -5,7 +5,7 @@
 | Type | Product workflow coverage contract and audit summary |
 | Status | Current · all 16 shared-responsibility workflow traces verified |
 | Owner | Product design/engineering · Design system owner |
-| Last reviewed | 2026-08-09 |
+| Last reviewed | 2026-08-11 |
 | Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
 | Current Portal baseline | `LK-ROBOTICS-AX/lk_portal@4b462cae4840c5f554366298bc75392df667e3af` · `references/package-split/consumers/portal.json` |
 
@@ -388,6 +388,7 @@ narrow
 설계 결정:
 
 - 제품 identity는 TopBar 또는 SideNav 중 한 곳만 소유한다. SideNav가 로고·제품명을 가지면 TopBar에는 workspace, search, notification, help, account 같은 utility만 둔다.
+- 제품 identity의 full 시각 자산은 `ProductLockup` 승인 레지스트리가 소유한다. 초기 key는 `console`, `portal`뿐이며 둘 다 Portal과 같은 fixed outlined path다. 자유 문자열로 LK+제품명을 합성하지 않고, collapsed rail은 승인 `Lockup` mark-only로 명시 전환한다. 제품은 canonical short lockup name의 제안·승인, identity 소유 region, home route·click과 breakpoint를 소유한다.
 - `DashboardShell topology="header-first"`는 전폭 header 아래에 navigation/main을 두는 호환 기본값이고, `topology="side-first"`는 wide 화면에서 full-height navigation 옆에 utility header/main을 둔다. 두 topology는 narrow에서 동일한 단일 열 navigation handoff로 수렴한다.
 - 계층형 desktop navigation은 `SideNav surface="docked"`를 기본 조합으로 삼고, 기존 카드형 표면은 명시적인 `surface="floating"`으로 보존한다. persistent 접기/펼치기는 브랜드와 분리되어 논리적 끝 divider 안쪽 같은 위치를 유지하는 36px control이 정식 진입점이다. 64px rail에서도 control·브랜드·현재 부모 맥락을 유지하고, hover overlay와 overlay inline control은 별도 보조 기능으로 다룬다. 접힘 영속화는 제품이 controlled state로 소유한다.
 - 작은 화면에서는 wide SideNav를 그대로 축소하지 않는다. 계층형 temporary navigation은 DashboardShell의 modal Drawer 계약으로 전환하고, dismiss 때 persistent trigger로 focus를 복구하며 route 선택 뒤 main 이동은 제품이 소유한다.
@@ -1050,11 +1051,11 @@ alert threshold, filtering, drawer, route와 원격 명령은 제품 소유다.
 | WF-13 | `DatePicker`, `TimePicker`, `CheckboxGroup`, `ValidationSummary`, `SearchableMultiSelect`, `Button`/`ActionArea` 조합 | recurrence schema, eligibility, conflict calculation, task lookup, persistence, occurrence execution |
 | WF-14 | `DataGrid`, `SourceDisclosure`, `ValidationSummary`, `DescriptionList`, `Textarea`, `ActionArea` 조합으로 eligibility/approval/release를 구분 | metric verdict policy, authorization, persistence, external release evidence |
 | WF-15 | 외부 Robotics 패키지의 point/lane/route/trajectory/region/facility/hazard renderer와 named semantic mirror 계약 | projection, floor topology, editor commands, persistence, robot pose, product-only forbidden-line geometry |
-| WF-16 | `DashboardShell`, `SideNav`, `TopBar`, `BottomNav`의 landmark, wide/narrow/temporary slot, collapse, modal focus/Escape/restore/inert 계약 | destination hierarchy, route, permission, query, Drawer open state |
+| WF-16 | `ProductLockup`의 승인 key·fixed path·layout·tone·접근성 계약과 `DashboardShell`, `SideNav`, `TopBar`, `BottomNav`의 landmark, wide/narrow/temporary slot, collapse, modal focus/Escape/restore/inert 계약 | canonical short lockup name 제안·승인, identity 배치, route/click, breakpoint, destination hierarchy, permission, query, Drawer open state |
 
 WF-15는 외부 Robotics 패키지 revision `0ae058d`의 navigation/hazard/terrain renderer와 normal/narrow stories로 닫혔다. `forbidden` authoring line은 제품 geometry로 남겨 `LaneOverlay`로 위장하지 않는다.
 
-WF-16은 세 필수 제품의 pinned shell/navigation source와 독립 anatomy를 연결하고, `SideNav`의 docked/floating, controlled collapse, active-group auto expansion 분리, reduced motion, keyboard overlay open/close/Escape/focus restore, `DashboardShell` normal/narrow reflow와 hierarchical temporary Drawer의 focus/Escape/restore/inert, TopBar overflow, landmark 계약을 interaction stories로 검증했다. 네 개 이하 flat destination은 `BottomNav`, 계층형 destination은 `temporaryNavigation`에 전달한 `SideNav`를 사용하며 route·permission·open state는 제품이 소유한다.
+WF-16은 세 필수 제품의 pinned shell/navigation source와 독립 anatomy를 연결하고, `ProductLockup` story에서 초기 승인 key인 `console`·`portal`의 fixed outlined output을 검증한다. 세 필수 제품 중 Portal만 full lockup 사용이 승인되었고 Web Viz·Control은 canonical short name 승인과 registry 등록이 남은 migration gap이다. `SideNav`의 docked/floating, controlled collapse, active-group auto expansion 분리, reduced motion, keyboard overlay open/close/Escape/focus restore, `DashboardShell` normal/narrow reflow와 hierarchical temporary Drawer의 focus/Escape/restore/inert, TopBar overflow, landmark 계약은 interaction stories로 검증했다. 네 개 이하 flat destination은 `BottomNav`, 계층형 destination은 `temporaryNavigation`에 전달한 `SideNav`를 사용하며 route·permission·open state는 제품이 소유한다.
 
 검증 범위는 2026-07-14 기준 다음과 같다.
 
@@ -1073,8 +1074,8 @@ WF-16은 세 필수 제품의 pinned shell/navigation source와 독립 anatomy�
 
 | 제품 | 고정 revision | 판정 | 다음 적용 |
 | --- | --- | --- | --- |
-| `web-viz` | `a984def117c05acd213f494cbb8a42e990595505` | migration required | 헤더의 제품 로컬 gradient `logo.png`는 `inline` 32px로, 로그인은 `mark` 80px로 교체한다. `LK Web Viz` 제품명과 route는 제품이 소유한다. |
-| `control` | `3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19` | migration required | 독립 보관된 `logo-light.svg`/`favicon.ico`를 정본으로 교체한다. 55px 내비게이션 슬롯은 64px official square보다 작으므로 `mark`를 쓰거나 슬롯을 64px 이상으로 키운다. 100px 로그인 슬롯은 official square를 쓸 수 있다. |
-| `portal` | `546f11e4640b5a9ec81fc210a5085581b9d277bc` | contract compatible, package upgrade required | `Lockup variant="mark" height={20}` 합성은 전체 렌더 높이 20px과 보이는 LK 도형 높이 16px 이상이라는 두 정책 최소값을 충족한다. 다만 rc.23 패키지를 constructionVersion 3 포함 릴리스로 올려야 한다. `LK Portal` 제품 정체성과 보이는 `Portal` 라벨은 계속 제품이 소유한다. |
+| `web-viz` | `a984def117c05acd213f494cbb8a42e990595505` | migration required · registry-name-approval pending | 로컬 gradient `logo.png`는 즉시 승인 `Lockup` mark로 교체할 수 있지만 full 제품 lockup은 지원되지 않는다. 제품이 canonical short lockup name을 제안·승인한 뒤 LDS가 outlined path와 key를 등록해야 한다. 로그인은 승인 mark 80px를 쓴다. |
+| `control` | `3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19` | migration required · registry-name-approval pending | `로봇 관제 시스템`을 자유 텍스트 lockup으로 합성하지 않는다. 제품이 canonical short lockup name을 제안·승인한 뒤 LDS 등록을 요청하며, 그 전 collapsed rail은 승인 mark를 쓴다. 100px 로그인은 approved official square를 사용할 수 있고 기존 55px standalone square는 64px 최소보다 작다. |
+| `portal` | `546f11e4640b5a9ec81fc210a5085581b9d277bc` | contract compatible, package upgrade required | 기존 mark+Portal 결과는 승인 fixed outlined asset과 호환된다. rc.23을 `ProductLockup product="portal"`와 constructionVersion 4 포함 릴리스로 올리고, collapsed rail은 `compact`의 승인 mark로 전환한다. |
 
-LDS는 LK 심볼·ROBOTICS 워드마크·승인 variant·색·최소 크기·clear space·플랫폼 export를 소유한다. 각 제품은 제품명, 링크 동작, 반응형 배치와 배포 시점을 소유하지만, path를 다시 그리거나 로컬 색/효과를 추가해서는 안 된다. 현재 두 migration gap은 정본 자체의 완성을 막는 항목이 아니라 소비 제품의 후속 채택 항목이며, 해결 전까지 감사 파일에서 `current`로 올리지 않는다.
+LDS는 LK 심볼·ROBOTICS 워드마크·승인 variant·색·최소 크기·clear space·플랫폼 export와 `ProductLockup`의 승인 key registry, fixed outlined path, layout, `ink`/`white` tone, 최소 크기와 접근성 계약을 소유한다. 각 제품은 canonical short lockup name의 제안·승인, identity를 한 번 소유할 TopBar/SideNav, route·click, full-to-mark breakpoint와 배포 시점을 소유한다. 승인 전 이름을 free-form prop으로 넘기거나 제품에서 path·색·효과·간격을 다시 만들 수 없다. 현재 Web Viz·Control의 두 migration gap은 name approval과 registry 등록 전까지 `current`나 `supported`로 올리지 않는다.

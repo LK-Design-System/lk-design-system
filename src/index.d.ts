@@ -3,6 +3,7 @@
 
 export { BRAND_LOGO_NAMES, BrandLogo } from '../components/brand/BrandLogo';
 export { Lockup } from '../components/brand/Lockup';
+export { ProductLockup } from '../components/brand/ProductLockup';
 export { ActionArea } from '../components/buttons/ActionArea';
 export { Button } from '../components/buttons/Button';
 export { ButtonGroup } from '../components/buttons/ButtonGroup';

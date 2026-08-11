@@ -8,6 +8,7 @@ import {
   Icon,
   IconButton,
   Lockup,
+  ProductLockup,
   SideNav,
   TopBar,
   TopBarNavItem,
@@ -532,12 +533,12 @@ function TopBarDisclosureContractFixture() {
         brand={(
           <a
             data-top-bar-home
-            href="#portal-home"
-            aria-label="LK Portal"
+            href="#console-home"
+            aria-label="LK Console 홈"
             onClick={(event) => event.preventDefault()}
             style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}
           >
-            <Lockup variant="portal" tone="ink" height={20} decorative />
+            <ProductLockup product="console" height={20} decorative />
           </a>
         )}
       >
@@ -584,13 +585,16 @@ export const DisclosureNavigationContract = {
     const outside = fixture?.querySelector('[data-top-bar-outside]');
     const output = fixture?.querySelector('[data-top-bar-events]');
     const brandHome = fixture?.querySelector('[data-top-bar-home]');
-    const brandLockup = brandHome?.querySelector('[data-lockup-variant="portal"]');
+    const brandLockup = brandHome?.querySelector('[data-product-lockup]');
     const items = panel ? Array.from(panel.querySelectorAll('a, button')) : [];
     if (!fixture || !wrapper || !primary || !trigger || !panel || !outside || !output || items.length !== 3
-      || brandHome?.getAttribute('aria-label') !== 'LK Portal'
-      || brandHome?.getAttribute('href') !== '#portal-home'
+      || brandHome?.getAttribute('aria-label') !== 'LK Console 홈'
+      || brandHome?.getAttribute('href') !== '#console-home'
       || !brandLockup
-      || brandLockup.getAttribute('aria-hidden') !== 'true') {
+      || brandLockup.getAttribute('aria-hidden') !== 'true'
+      || brandLockup.getAttribute('data-product-lockup-product') !== 'console'
+      || brandLockup.getAttribute('data-product-lockup-wordmark') !== 'CONSOLE'
+      || brandLockup.getAttribute('height') !== '20') {
       throw new Error('TopBar disclosure contract fixture is incomplete.');
     }
     if (primary.tagName !== 'A' || primary.getAttribute('href') !== '#topbar-destination' || primary.hasAttribute('aria-expanded')) {

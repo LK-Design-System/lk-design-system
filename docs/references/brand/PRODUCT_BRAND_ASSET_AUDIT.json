@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "auditedAt": "2026-08-10",
-  "purpose": "Pin how the three required LK product frontends currently consume company identity assets, separate the LDS-owned brand contract from product-owned composition, and make downstream migration gaps explicit.",
+  "auditedAt": "2026-08-11",
+  "purpose": "Pin how the three required LK product frontends consume official company assets and product-shell identity, keep Portal-style ProductLockup output on an LDS-approved outlined registry instead of a free-form text API, and make name-approval and downstream migration gaps explicit.",
   "evidenceVerification": {
     "sourceObjects": "manually-verified-against-local-git-objects-at-audit-date",
     "automatedCheck": "validates-required-product-coverage-pin-format-documentation-and-brand-size-contracts-without-fetching-product-repositories"
@@ -9,6 +9,13 @@
   "standard": {
     "constructionManifest": "assets/brand/lk-logo-construction.json",
     "runtimeComponent": "components/brand/Lockup.jsx",
+    "runtimeProductLockupComponent": "components/brand/ProductLockup.jsx",
+    "productLockupRegistry": "components/brand/lk-product-lockup-paths.js",
+    "productLockupStandard": "docs/brand/LK_PRODUCT_LOCKUP_STANDARD.md",
+    "approvedProductKeys": [
+      "console",
+      "portal"
+    ],
     "constructionVersion": 4,
     "geometryVersion": "1.0",
     "smallUseVariantApproved": false
@@ -18,12 +25,15 @@
       "LK symbol and wordmark geometry",
       "approved positive, reverse, monochrome, square, inline, stacked, banner, and corporate outputs",
       "brand colors, clear space, and minimum rendered sizes",
+      "the approved ProductLockup key registry and its frozen outlined LK-plus-product paths",
+      "ProductLockup layout, ink and white tone mapping, minimum size, and accessible-name structure",
       "deterministic source hashes and platform export contracts"
     ],
     "productOwns": [
-      "product name adjacent to the company mark",
+      "proposal and approval of the canonical short product lockup name before LDS registration",
+      "whether TopBar or SideNav is the single product-lockup owner",
       "route and click behavior",
-      "responsive placement that preserves the LDS clear-space and minimum-size contract",
+      "the explicit full-lockup-to-mark breakpoint and optional tooltip composition",
       "migration timing and package-version rollout"
     ]
   },
@@ -38,13 +48,17 @@
       "repository": "LK-ROBOTICS/lk_web_viz",
       "sourceRevision": "a984def117c05acd213f494cbb8a42e990595505",
       "classification": "migration-required",
-      "finding": "The product repeats a product-local 264 by 233 gradient PNG rather than the canonical outlined LK assets. The four call sites meet or exceed the intended rendered-size floor but the artwork, color treatment, and source provenance are outside the brand contract.",
+      "finding": "The product repeats a product-local 264 by 233 gradient PNG rather than the canonical outlined LK assets. The four call sites meet or exceed the intended rendered-size floor but the artwork, color treatment, and source provenance are outside the brand contract. No Web Viz ProductLockup key is approved, so the migration cannot substitute arbitrary live text.",
       "replacement": {
-        "headerVariant": "inline",
-        "headerRenderedHeightPx": 32,
+        "identityComponent": "ProductLockup",
+        "registryStatus": "registry-name-approval-pending",
+        "approvedProductKey": null,
+        "requiredProductAction": "Propose and approve a canonical short lockup name, then request an LDS outlined-path registry entry before using a full product lockup.",
+        "interimHeaderVariant": "mark",
+        "interimHeaderRenderedHeightPx": 20,
         "loginVariant": "mark",
         "loginRenderedHeightPx": 80,
-        "productNameComposition": "LK Web Viz remains product-owned adjacent copy; it is not added to the company logo paths."
+        "lockupNameDecision": "Web Viz is not an approved ProductLockup key. It may remain ordinary product-owned UI copy beside an interim mark, but LDS must not outline or register it until the product naming decision is approved."
       },
       "sourceEvidence": [
         {
@@ -79,14 +93,20 @@
       "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
       "sourceRevision": "3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19",
       "classification": "migration-required",
-      "finding": "Navigation uses an independently stored square logo-light.svg and authentication uses favicon.ico. Both are large enough for the intended slots, but neither is tied to the current construction manifest or generator, so product and LDS geometry can drift.",
+      "finding": "Navigation uses an independently stored square logo-light.svg and authentication uses favicon.ico. Both are large enough for the intended slots, but neither is tied to the current construction manifest or generator, so product and LDS geometry can drift. No Control ProductLockup key or canonical short lockup name is approved.",
       "replacement": {
+        "identityComponent": "ProductLockup",
+        "registryStatus": "registry-name-approval-pending",
+        "approvedProductKey": null,
+        "requiredProductAction": "Propose and approve a canonical short lockup name, then request an LDS outlined-path registry entry before using a full product lockup.",
+        "collapsedVariant": "mark",
+        "collapsedRenderedHeightPx": 20,
         "navigationVariant": "official-square",
         "navigationRenderedSquarePx": 55,
-        "navigationDecision": "The observed 55px slot is below the new 64px basic-square minimum; use mark at 55px or increase the official-square slot to at least 64px.",
+        "navigationDecision": "Until a Control key is registered, use the approved LK mark for a collapsed rail and do not synthesize a full LK-plus-name lockup. If the product intentionally retains a standalone official-square asset, the observed 55px slot remains below its 64px minimum.",
         "loginVariant": "official-square",
         "loginRenderedSquarePx": 100,
-        "productNameComposition": "로봇 관제 시스템 remains product-owned adjacent copy."
+        "lockupNameDecision": "로봇 관제 시스템 remains product-owned UI copy, not an approved outlined lockup name. The product must approve a canonical short lockup name before LDS can register its paths."
       },
       "sourceEvidence": [
         {
@@ -121,12 +141,17 @@
       "repository": "LK-ROBOTICS-AX/lk_portal",
       "sourceRevision": "546f11e4640b5a9ec81fc210a5085581b9d277bc",
       "classification": "contract-compatible-upgrade-required",
-      "finding": "LK Portal's sidebar composition already uses the LDS Lockup mark at a 20px rendered SVG height and keeps the visible Portal label as product-owned adjacent copy. Under the current viewBox this exposes at least the required 16px visible LK artwork height, but the pinned rc.23 package predates the current construction contract and must be upgraded to receive the standardized outputs.",
+      "finding": "LK Portal's pinned sidebar already composes the LDS Lockup mark at a 20px rendered SVG height with a visible Portal label, and Portal already has an approved fixed outlined asset. Its visual result is therefore contract-compatible; the pinned rc.23 package still requires an upgrade to consume the registered ProductLockup entry and current construction contract.",
       "replacement": {
-        "variant": "mark",
+        "identityComponent": "ProductLockup",
+        "registryStatus": "approved",
+        "approvedProductKey": "portal",
+        "assetKind": "fixed-outlined-lockup",
+        "collapsedMode": "compact",
+        "collapsedVariant": "mark",
         "renderedHeightPx": 20,
-        "packageAction": "Upgrade @lk-design-system/lds-theme from the pinned rc.23 artifact to a release containing constructionVersion 3 and geometryVersion 1.0.",
-        "productNameComposition": "LK Portal remains the product identity; its visible Portal label remains product-owned adjacent copy."
+        "packageAction": "Upgrade @lk-design-system/lds-theme from the pinned rc.23 artifact to a release containing the approved ProductLockup portal registry entry, constructionVersion 4, and geometryVersion 1.0.",
+        "lockupNameDecision": "The portal key resolves only to the approved fixed LK Portal outlined paths. It does not accept or construct arbitrary product-name text."
       },
       "sourceEvidence": [
         {

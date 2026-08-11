@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "auditedAt": "2026-08-09",
+  "auditedAt": "2026-08-11",
   "purpose": "Track source-backed product workflows through discovery, independent wireframing, LDS implementation, and interaction verification without treating current screens or component files as coverage proof or design-system authority over product information architecture.",
   "evidenceHierarchy": [
     "product goals and invariants",
@@ -22,7 +22,7 @@
     "verified": 16
   },
   "componentDispositionSummary": {
-    "keep": 22,
+    "keep": 23,
     "redesign": 7,
     "split": 8,
     "remove": 22,
@@ -132,6 +132,68 @@
             {
               "path": "src/app/sources/page.tsx",
               "blobSha": "7907f949fe8ef9c96c527a93208f77f752c3b14e"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ProductLockup",
+      "path": "components/brand/ProductLockup.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-16"
+      ],
+      "reason": "Renders only LDS-approved fixed outlined LK-plus-product assets from the initial console and portal registry keys. It does not accept arbitrary product-name text. LDS owns the registry, paths, layout, ink or white tone, minimum size, and accessible-name contract; products own canonical short-name proposal and approval, placement, route or click behavior, and the full-lockup-to-mark breakpoint.",
+      "approvedProductKeys": [
+        "console",
+        "portal"
+      ],
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "a984def117c05acd213f494cbb8a42e990595505",
+          "classification": "registry-name-approval-pending",
+          "reason": "The pinned flat header exposes a product-local logo and utilities, but web-viz is not an approved ProductLockup key. This remains a migration gap until the product proposes and approves a canonical short lockup name and LDS registers its fixed outlined paths. The product retains placement, home route, click behavior, breakpoint, robot switching, connection actions, and map launch.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "93802fc2aa5d29f930380ae58d51dcb68322b5e7",
+          "classification": "registry-name-approval-pending",
+          "reason": "The pinned fixed header and persistent or temporary navigation require a stable full lockup and mark-only rail representation, but control is not an approved ProductLockup key. This remains a migration gap until the product proposes and approves a canonical short lockup name and LDS registers its fixed outlined paths. The product retains placement, routes, breakpoint, permissions, telemetry, and commands.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/layout/MainLayout/index.jsx",
+              "blobSha": "2436725e49f6364fdb99f2047907f300ca367865"
+            },
+            {
+              "path": "frontend/src/layout/MainLayout/Sidebar/index.jsx",
+              "blobSha": "749805a966552f957a61359c1b892a44f06af0a4"
+            }
+          ]
+        },
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "e5ee99d5062170e26abe63d9105c2b8a024ce710",
+          "classification": "supported by approved fixed asset",
+          "reason": "The pinned full-height product-identity SideNav already proves a mark-plus-name shell seam, and portal resolves to an approved fixed outlined ProductLockup asset compatible with that result. Portal retains SideNav placement, home route and click behavior, full-lockup-to-mark breakpoint, permissions, and destination hierarchy.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/layout/Sidebar.tsx",
+              "blobSha": "3b5d05b472b5e6346401ee673936c29211595a8c"
+            },
+            {
+              "path": "src/components/layout/AppShell.tsx",
+              "blobSha": "bd252534bcf44be11e2afa35bc2e6ed3f4e6edab"
             }
           ]
         }
@@ -2617,8 +2679,8 @@
       "assetReviews": [
         {
           "repo": "web-viz",
-          "classification": "supported by composition",
-          "reason": "Pinned DashboardScreen uses a real product logo, header utilities, a current-robot card, three connection-status surfaces, and a card launcher. TopBar, Card, status/freshness, and action primitives cover this flat header-first composition. SideNav, KPI/MetricCard, DataGrid, and chart composition are not applicable to this source because it exposes neither hierarchical side navigation nor KPI, table, or chart decisions; routes, robot switching, connection execution, status refresh, and map launch remain product-owned.",
+          "classification": "registry-name-approval-pending",
+          "reason": "Pinned DashboardScreen uses a product-local logo, header utilities, a current-robot card, three connection-status surfaces, and a card launcher. TopBar, Card, status or freshness, and action primitives cover the flat header-first shell, but ProductLockup adoption remains a migration gap because web-viz has no approved registry key. The product must propose and approve its canonical short lockup name and retains placement, routes or click behavior, breakpoint, robot switching, connection execution, status refresh, and map launch. SideNav, KPI or MetricCard, DataGrid, and chart composition are not applicable to this source.",
           "sourceEvidence": [
             {
               "path": "frontend/src/screens/DashboardScreen.tsx",
@@ -2628,8 +2690,8 @@
         },
         {
           "repo": "control",
-          "classification": "supported by composition",
-          "reason": "Pinned MainLayout and Sidebar establish a fixed header plus permanent/persistent/temporary left navigation, while RobotDashboard composes live monitoring, robot collection, equipment status, charts, and table-like collections. DashboardShell, SideNav, TopBar, ResourceState, ChartFrame, and DataGrid can support the reusable shell and data surfaces by composition. A fully verified narrow drawer handoff remains a gap until overlay focus, Escape, and focus restoration are tested; map/video renderers, telemetry truth, facility state machines, commands, queries, routes, and authorization remain product-owned.",
+          "classification": "registry-name-approval-pending",
+          "reason": "Pinned MainLayout and Sidebar establish a fixed header plus permanent, persistent, or temporary left navigation, while RobotDashboard composes live monitoring, robot collection, equipment status, charts, and table-like collections. DashboardShell, SideNav, TopBar, ResourceState, ChartFrame, and DataGrid support the reusable shell and data surfaces, but ProductLockup adoption remains a migration gap because control has no approved registry key. The product must propose and approve its canonical short lockup name and retains placement, routes or click behavior, breakpoint, permissions, telemetry, and commands. A fully verified narrow drawer handoff also remains a gap until overlay focus, Escape, and focus restoration are tested.",
           "sourceEvidence": [
             {
               "path": "frontend/src/layout/MainLayout/index.jsx",
@@ -2647,8 +2709,8 @@
         },
         {
           "repo": "portal",
-          "classification": "supported by composition",
-          "reason": "Pinned Sidebar and AuthShell establish a full-height 256px product-identity navigation beside an offset main region; the home source composes destination cards and a project collection. DashboardShell, docked SideNav, DashboardGrid, Card, and collection primitives support this side-first workspace by composition. The pinned source has no adaptive narrow navigation, so collapse/drawer behavior remains a product-integration gap; project ranking, attention truth, routes, permissions, chat placement, queries, and data-source policy remain product-owned.",
+          "classification": "supported by approved fixed asset",
+          "reason": "Pinned Sidebar and AuthShell establish a full-height 256px product-identity navigation beside an offset main region; the home source composes destination cards and a project collection. The approved fixed outlined portal ProductLockup, DashboardShell, docked SideNav, DashboardGrid, Card, and collection primitives support this side-first workspace. Portal retains placement, home route or click behavior, breakpoint, permissions, and destination hierarchy. The pinned source has no adaptive narrow navigation, so collapse or drawer behavior remains a product-integration gap; project ranking, attention truth, chat placement, queries, and data-source policy remain product-owned.",
           "sourceEvidence": [
             {
               "path": "src/components/layout/Sidebar.tsx",
@@ -2688,7 +2750,7 @@
         "Restore focus to a persistent navigation control when Escape or outside interaction closes an overlay.",
         "Represent loading, empty, error, stale, and restricted data inside the owning content surface instead of turning the shell into a workflow state machine."
       ],
-      "dsBoundary": "LDS may own shell landmarks and skip navigation, wide/narrow navigation slot handoff, docked versus floating SideNav presentation, explicit collapse and overlay focus behavior, brand/utility composition rules, responsive grid containment, and reusable status/chart/table surfaces. Products own brand copy and assets, destination hierarchy, routes, permissions, queries, KPI formulas and thresholds, telemetry and freshness truth, map/video renderers, commands, side effects, and complete dashboard screens. The three pinned products provide no shared requirement for a KPI row, so MetricCard remains an optional composition rather than DashboardShell anatomy.",
+      "dsBoundary": "LDS may own shell landmarks and skip navigation, the ProductLockup approved-key registry, fixed outlined paths, layout, ink or white tone, minimum size and accessible-name contract, wide or narrow navigation slot handoff, docked versus floating SideNav presentation, explicit collapse and overlay focus behavior, brand or utility composition rules, responsive grid containment, and reusable status, chart, or table surfaces. Products own canonical short lockup-name proposal and approval, the single TopBar or SideNav placement, home route or click behavior, full-lockup-to-mark breakpoint, destination hierarchy, permissions, queries, KPI formulas and thresholds, telemetry and freshness truth, map or video renderers, commands, side effects, and complete dashboard screens. Web Viz and Control remain registry-name-approval migration gaps; the three pinned products provide no shared requirement for a KPI row, so MetricCard remains an optional composition rather than DashboardShell anatomy.",
       "designQuestion": "Can Web Viz, Control, and LK Portal compose coherent dashboard-like workspaces without copying one product screen, forcing SideNav on a flat launcher, or making KPI cards mandatory?",
       "sourceEvidence": [
         {
@@ -2732,6 +2794,7 @@
         "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-16-dashboard-shell-and-navigation-composition"
       ],
       "implementationEvidence": [
+        "components/brand/ProductLockup.jsx",
         "components/layout/DashboardShell.jsx",
         "components/layout/DashboardGrid.jsx",
         "components/navigation/TopBar.jsx",
@@ -2743,6 +2806,7 @@
         "components/data/ResourceState.jsx"
       ],
       "storyEvidence": [
+        "stories/BrandProductLockup.stories.jsx",
         "stories/LayoutDashboardShell.stories.jsx",
         "stories/LayoutDashboardGrid.stories.jsx",
         "stories/Navigation.stories.jsx",
@@ -2758,7 +2822,7 @@
         "scripts/check-storybook-accessibility.mjs",
         "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification"
       ],
-      "closureDecision": "LDS v1 uses BottomNav only for four or fewer flat narrow destinations. Hierarchical narrow navigation is a product-owned temporary Drawer composition, not DashboardShell anatomy. Existing DashboardShell and SideNav stories verify landmarks, narrow reflow, controlled collapse, reduced motion, Escape, and focus restoration."
+      "closureDecision": "ProductLockup verifies only the approved console and portal fixed outlined registry entries; it does not make Web Viz or Control supported before canonical short-name approval and LDS path registration. LDS v1 uses BottomNav only for four or fewer flat narrow destinations. Hierarchical narrow navigation is a product-owned temporary Drawer composition, not DashboardShell anatomy. ProductLockup, DashboardShell, TopBar, and SideNav stories verify registered output, landmarks, narrow reflow, controlled collapse, reduced motion, Escape, and focus restoration while route, click behavior, placement, and breakpoints remain product-owned."
     }
   ]
 }

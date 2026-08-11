@@ -3585,6 +3585,20 @@
       ]
     },
     {
+      "pageTitle": "LDS Theme/Brand/Product Lockup",
+      "importPath": "./stories/BrandProductLockup.stories.jsx",
+      "storyId": "lds-theme-brand-product-lockup--product-lockup-standard",
+      "exportName": "ProductLockupStandard",
+      "descriptionHash": "32139d4ec0f4877fd8158c337967ff1c0ef429c1183bdb135d82a685f8be91e5",
+      "sentences": [
+        {
+          "hash": "32139d4ec0f4877fd8158c337967ff1c0ef429c1183bdb135d82a685f8be91e5",
+          "text": "고정 LK Portal 자산과 registry Portal이 완전히 같은지 비교하고, 같은 1X·0.35 mark-width 규칙의 LK Console, reverse, compact 조합을 확인합니다.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Theme/Controls/Theme Toggle",
       "importPath": "./stories/SelectionThemeToggle.stories.jsx",
       "storyId": "lds-theme-controls-theme-toggle--theme-toggle-pattern",

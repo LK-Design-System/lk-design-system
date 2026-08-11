@@ -5,12 +5,12 @@
 | Type | Brand policy and construction standard |
 | Status | Current |
 | Owner | Brand owner · Design system owner |
-| Last reviewed | 2026-08-10 |
+| Last reviewed | 2026-08-11 |
 | Standard version | 1.0.0 |
 | Construction source | [`../../assets/brand/lk-logo-construction.json`](../../assets/brand/lk-logo-construction.json) |
 | Governance record | [`lk-logo-governance.json`](lk-logo-governance.json) |
 
-이 표준은 현재 저장소에서 LK ROBOTICS 로고를 선택·배치·검수·배포하는 기준입니다. 로고의 법적 등록 여부를 주장하거나 외부 사용 권한을 자동으로 부여하지는 않습니다. 법인·상표·파트너 맥락의 공개 사용은 [외부 사용과 승인](#외부-사용과-승인)을 별도로 통과해야 합니다.
+이 표준은 현재 저장소에서 LK ROBOTICS 로고를 선택·배치·검수·배포하는 기준입니다. 로고의 법적 등록 여부를 주장하거나 외부 사용 권한을 자동으로 부여하지는 않습니다. 법인·상표·파트너 맥락의 공개 사용은 [외부 사용과 승인](#외부-사용과-승인)을 별도로 통과해야 합니다. 제품 UI 셸의 Portal형 `LK mark + 제품명` outline은 별도 [`LK 제품 로크업 표준`](LK_PRODUCT_LOCKUP_STANDARD.md)의 승인 registry를 따르며, 임의 문자열을 runtime font로 조판하지 않습니다.
 
 ## 1. v1.0 정본과 권위
 
@@ -58,8 +58,9 @@ v1.0은 현재 커스텀 LK 심볼을 승인 geometry로 동결합니다. 심볼
 | 요소 | 규칙 |
 | --- | --- |
 | `ROBOTICS` | 대문자 `ROBOTICS`; Montserrat ExtraBold 800 v7.222; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
+| 승인 제품명 | 현재 `CONSOLE`·`PORTAL`; Montserrat ExtraBold 800 v7.222; 대문자; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지; registry 밖 이름 금지 |
 | 법인명 | NFC `주식회사 엘케이로보틱스`; Noto Sans KR ExtraBold `wght=800` v2.004-H2; 기본 kerning; 글자 사이 `0.105em`; 마지막 글자 뒤 tracking 없음; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
-| 배포 | 두 문자열 모두 SVG outline path; `<text>` 금지; 런타임 글꼴 의존성 없음 |
+| 배포 | 모든 wordmark·제품명·법인명은 SVG outline path; `<text>` 금지; 런타임 글꼴 의존성 없음 |
 
 폰트 파일·라이선스·SHA-256은 construction manifest에 고정되어 있습니다. Montserrat와 Noto Sans KR은 로고를 생성하기 위한 build-time 재료이며, 제품 본문 글꼴을 이들로 바꾸라는 의미가 아닙니다.
 
@@ -69,6 +70,7 @@ v1.0은 현재 커스텀 LK 심볼을 승인 geometry로 동결합니다. 심볼
 | --- | --- |
 | stacked | `ROBOTICS` 명목 cap height `0.25X`; 심볼 보이는 폭의 `0.2배` 간격; 가로 중앙 정렬 |
 | inline | `ROBOTICS` 보이는 높이 `1X`; 심볼 보이는 폭의 `0.2배` 간격; 보이는 bounds 기준 세로 정렬 |
+| ProductLockup | 승인 제품명 보이는 높이 `1X`; 심볼 보이는 폭의 `0.35배` 간격(약 `0.378616X`, **`0.35X`가 아님**); 보이는 bounds 기준 세로 정렬 |
 | corporate | 법인명 보이는 폭 `1.9X`; 상단 로크업과 `0.21X` 간격; 상단 로크업 보이는 중심축에 중앙 정렬 |
 | banner | inline 조합을 사용하고 사방 `0.5X` 보호 여백을 자산 안에 포함 |
 
@@ -78,6 +80,8 @@ v1.0은 현재 커스텀 LK 심볼을 승인 geometry로 동결합니다. 심볼
 | --- | --- | --- | --- |
 | mark | 이미 LK 브랜드임이 명확한 매우 작은 UI, 향후 플랫폼 icon의 핵심 도형 후보 | 법인 식별이 처음 필요한 문서, 파트너십 서명, 기능 아이콘 대체, 승인 없이 만든 iOS/Android app icon | `lk-mark-navy.svg`, `lk-mark-white.svg`, `Lockup variant="mark"` |
 | inline | Top bar, Side navigation, 가로 헤더, 제한된 세로 공간 | 정사각형 중심 구성, 법인명 필수 문서 | `lk-logo-inline-navy.svg`, `lk-logo-inline-white.svg`, `Lockup variant="inline"` |
+| portal fixed lockup | 기존 통합 호환 또는 승인된 `LK Portal` 고정 자산이 필요한 표면 | 다른 제품명, 신규 registry 확장, 자유 텍스트 slot | `Lockup variant="portal"` |
+| registered product lockup | Console·Portal의 TopBar·SideNav 제품 식별 | Web Viz·Control(승인 대기), 임의 제품명, 고객·환경·상태 문자열 | `ProductLockup product="console"` / `product="portal"` |
 | stacked | 세로 중심 구성, 정사각형에 가까운 브랜드 영역 | 낮은 높이의 탐색 바 | `lk-logo-navy.svg`, `lk-logo-white.svg`, `Lockup variant="stacked"` |
 | official square | 프로필, 일반 회사 식별, 고정된 정사각형 표면 | 법인명 표기가 필요한 공식 서류 | `lk-logo-official.svg`, `lk-logo-official-light.svg` |
 | corporate square | 회사 소개, 법인 식별, 대외 문서에서 법인명이 필요한 경우 | 최소 크기를 확보할 수 없는 UI | `lk-logo-official-corporate.svg`, `lk-logo-official-corporate-light.svg` |
@@ -90,10 +94,10 @@ v1.0은 현재 커스텀 LK 심볼을 승인 geometry로 동결합니다. 심볼
 
 ## 4. 보호 여백
 
-- 투명 mark·inline·stacked: 전체 보이는 로고 bounds의 상·하·좌·우에 최소 `0.5X`
+- 투명 mark·inline·stacked·portal fixed lockup·registered product lockup: 전체 보이는 로고 bounds의 상·하·좌·우에 최소 `0.5X`
 - 공동 브랜딩: LK 로고의 보이는 bounds와 파트너 로고·구분선·문자 사이에 최소 `1X`
 - banner: 생성 자산이 사방 `0.5X`를 포함합니다. 자산을 crop하면 보호 여백도 제거되므로 금지합니다.
-- 투명 mark·inline·stacked: SVG의 tight `viewBox` padding은 렌더링 안전 여유일 뿐 브랜드 보호 여백이 아닙니다. 배치 컨테이너에서 별도로 확보합니다.
+- 투명 mark·inline·stacked·portal fixed lockup·registered product lockup: SVG의 tight `viewBox` padding은 렌더링 안전 여유일 뿐 브랜드 보호 여백이 아닙니다. 배치 컨테이너에서 별도로 확보합니다.
 - official·corporate·tile·favicon: 배경 사각형과 내부 padding을 그대로 유지하고 crop하지 않습니다. 내부 심볼을 기준으로 `0.5X`를 다시 더하는 계약은 아니며, 주변 콘텐츠와의 외부 간격은 완성된 containment canvas 경계부터 사용 매체의 레이아웃 규칙을 적용합니다.
 
 여백 안에는 제목, 버튼, 테두리, 사진의 강한 모서리, 다른 로고, 워터마크를 넣지 않습니다. 배경색 자체와 전체 표면을 채우는 균일한 색상은 여백 침범으로 보지 않습니다.
@@ -108,13 +112,15 @@ v1.0은 현재 커스텀 LK 심볼을 승인 geometry로 동결합니다. 심볼
 | --- | ---: | ---: | --- |
 | mark | `20px` | `Lockup` 기본값 `32px` | 전체 SVG/`Lockup` 렌더 높이; 이때 보이는 LK 도형은 최소 `16px` |
 | inline | `20px` | 기본 `28px` 이상 | 전체 SVG 렌더 높이 |
+| portal fixed lockup | `20px` | 기본 `28px` 이상 | 승인된 전체 `LK Portal` SVG 렌더 높이 |
+| registered product lockup | `20px` | `ProductLockup` 기본값 `28px` | 전체 SVG 렌더 높이; 좁은 rail은 `compact`로 명시 전환 |
 | stacked | `64px` | 기본 `64px` 이상 | 전체 SVG 렌더 높이 |
 | banner | `28px` | 사용 표면에 맞춰 확대 | 전체 banner SVG 렌더 높이; crop 금지 |
 | official square / tile | `64px` | `96px` 이상 | 정사각형 한 변 |
 | corporate square | `160px` | `192px` 이상 | 정사각형 한 변 |
 | favicon tile | `16px` | 환경이 지원하는 더 큰 크기 | 정사각형 한 변; 일반 mark와 별도 계약 |
 
-최소 높이를 유지하려면 반응형 슬롯 너비도 mark `21.431318`, inline `156.324048`, stacked `82.612990`, banner `137.019722` 이상의 같은 플랫폼 논리 단위로 확보합니다. 슬롯이 더 좁으면 비균일 축소하거나 overflow시키지 말고, inline·stacked에서 mark로 전환하거나 레이아웃을 넓힙니다.
+최소 높이를 유지하려면 반응형 슬롯 너비도 mark `21.431318`, inline `156.324048`, stacked `82.612990`, banner `137.019722` 이상의 같은 플랫폼 논리 단위로 확보합니다. ProductLockup은 선택 registry 결과의 intrinsic width를 그대로 확보합니다. 슬롯이 더 좁으면 비균일 축소하거나 overflow시키지 말고, inline·stacked는 mark로, ProductLockup은 `compact`로 전환하거나 레이아웃을 넓힙니다.
 
 corporate square의 인쇄 최소 한 변은 `32mm`입니다. 이보다 작으면 법인명을 축소하지 말고 법인명 없는 official 또는 매체에 맞는 기본 조합으로 바꿉니다. mark·inline·stacked·banner·official의 인쇄 최소 크기는 현재 물리 교정으로 승인된 값이 없으므로 디지털 px 값을 mm로 환산해 공식 인쇄 최소치라고 주장하지 않습니다.
 
@@ -232,6 +238,7 @@ CMYK/Pantone을 추가하려면 최소한 출력 공정, ICC profile, 용지·�
 | --- | --- | --- |
 | SVG | 공식 원본 형식 | outline path와 `preserveAspectRatio` 유지; path 직접 편집 금지 |
 | React `Lockup` | 제품 UI 공식 runtime | 승인 variant와 색상 정책 사용; `height`가 최소 크기 이상인지 확인 |
+| React `ProductLockup` | 제품 UI 로크업 runtime | `console`·`portal` registry의 승인 SVG outline만 렌더; 기본 28px·최소 20px, `ink`·`white`, full/compact; raw text·runtime font 금지 |
 | PNG | 필요 시 파생 export | 승인 SVG에서 최종 픽셀 크기와 `1x/2x`로 내보내고 재압축·재확대 체인을 만들지 않음 |
 | PDF / EPS | 현재 공식 생성물 없음 | 인쇄업체가 요구하면 승인 SVG에서 곡선을 보존해 제작하고 proof 승인 전에는 새 정본으로 취급하지 않음 |
 | 폰트 포함 파일 | 배포 불필요 | wordmark와 법인명은 outline이므로 logo 사용을 위해 폰트를 설치·동봉하지 않음 |
@@ -253,13 +260,13 @@ construction manifest, governance 원문과 build-time 글꼴은 저장소 루�
 
 ## 13. 제품 적용 감사 경계
 
-현재 제품별 근거와 source revision은 [`PRODUCT_BRAND_ASSET_AUDIT.json`](../references/brand/PRODUCT_BRAND_ASSET_AUDIT.json)이 소유합니다. 이 표준은 회사 심볼·워드마크·색상·여백·최소 크기와 생성 자산을 소유하고, 각 제품은 인접 제품명, route/click 동작, 표준을 보존하는 responsive 배치와 package upgrade 시점을 소유합니다.
+현재 제품별 근거와 source revision은 [`PRODUCT_BRAND_ASSET_AUDIT.json`](../references/brand/PRODUCT_BRAND_ASSET_AUDIT.json)이 소유합니다. 이 표준은 회사 심볼·워드마크·색상·여백·최소 크기와 생성 자산을 소유합니다. [`ProductLockup`](../../components/brand/ProductLockup.jsx)은 승인 제품 registry, mark+wordmark outline, canonical 접근성 이름과 full/compact 계약을 소유하고, 각 제품은 TopBar/SideNav 소유 위치, route/click, breakpoint와 package upgrade 시점을 소유합니다.
 
 | 제품 | 현재 판정 | 필요한 조치 |
 | --- | --- | --- |
-| LK Web Viz | `migration-required` | 제품 로컬 gradient PNG를 승인 mark/inline 자산으로 교체하고 `LK Web Viz`는 제품 소유 인접 문구로 유지 |
-| LK Control Full Daedeok | `migration-required` | 독립 `logo-light.svg`·`favicon.ico`를 승인 자산으로 교체; 관찰된 `55px` slot에서는 mark를 쓰거나 official square slot을 최소 `64px`로 확대 |
-| LK Portal | `contract-compatible-upgrade-required` | `Lockup` mark `20px`와 인접 `Portal` 구성은 계약에 맞지만, current construction을 포함하도록 rc.23 package를 upgrade |
+| LK Web Viz | `migration-required` | registry는 `registry-name-approval-pending`이므로 `ProductLockup` 미지원; 로컬 gradient PNG migration과 회사 `Lockup` 적용은 별도 수행 |
+| LK Control Full Daedeok | `migration-required` | registry는 `registry-name-approval-pending`이므로 `ProductLockup` 미지원; 로그인 로컬 asset은 승인 회사 `Lockup` 자산으로 교체 |
+| LK Portal | `contract-compatible-upgrade-required` | 신규 셸은 `ProductLockup product="portal"`로 표준화; `Lockup variant="portal"`은 기존 호환·공식 고정 자산으로 유지 |
 
 이 판정은 audit에 pin된 revision의 증거입니다. 제품의 최신 상태를 자동으로 보증하지 않으므로 migration 완료를 주장하려면 source pin과 asset checksum을 다시 갱신합니다.
 
@@ -321,6 +328,8 @@ construction manifest, governance 원문과 build-time 글꼴은 저장소 루�
 - 제품 runtime 구현: [`../../components/brand/Lockup.jsx`](../../components/brand/Lockup.jsx)
 - 컴포넌트 제작 규정: [`../../components/brand/Lockup.prompt.md`](../../components/brand/Lockup.prompt.md)
 - 제품 사용 가이드: [`../components/guides/theme-brand-lk-robotics-logo.md`](../components/guides/theme-brand-lk-robotics-logo.md)
+- 제품 로크업 표준: [`LK_PRODUCT_LOCKUP_STANDARD.md`](LK_PRODUCT_LOCKUP_STANDARD.md)
+- 제품 로크업 runtime: [`../../components/brand/ProductLockup.jsx`](../../components/brand/ProductLockup.jsx)
 - 디지털 색상 원천: [`../../tokens/source.json`](../../tokens/source.json)
 - 제품 적용 감사: [`../references/brand/PRODUCT_BRAND_ASSET_AUDIT.json`](../references/brand/PRODUCT_BRAND_ASSET_AUDIT.json)
 - 플랫폼 자산 계약: [`../../assets/brand/platforms/manifest.json`](../../assets/brand/platforms/manifest.json)
