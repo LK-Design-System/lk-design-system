@@ -4,7 +4,7 @@
   "kind": "lds-robotics-external-public-surface",
   "package": {
     "name": "@lk-design-system/lds-robotics-ui",
-    "version": "0.1.0-rc.5",
+    "version": "0.1.0-rc.6",
     "repository": "LK-Design-System/lk-design-system-robotics",
     "refStatus": "published"
   },
