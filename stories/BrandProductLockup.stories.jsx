@@ -20,7 +20,7 @@ const meta = {
     },
     docs: {
       description: {
-        component: 'ProductLockup은 LK mark를 모브랜드로 우선하고 승인 제품명을 SemiBold outline으로 조합하는 단일 SVG 컴포넌트입니다. 기존 ExtraBold LK Portal 고정 자산은 호환·비교 계약으로 별도 유지합니다.',
+        component: 'ProductLockup은 LK mark를 모브랜드로 우선하고 승인 제품명을 SemiBold outline으로 조합하는 단일 SVG 컴포넌트입니다. 고정 LK Portal 정본도 같은 SemiBold 조형으로 동기화됩니다.',
       },
     },
   },
@@ -37,7 +37,7 @@ const ExampleLabel = ({ children }) => (
 export const ProductLockupStandard = {
   name: '표준 · 모브랜드 우선',
   parameters: storyDescription(
-    '기존 ExtraBold 800 LK Portal과 새 SemiBold 600 ProductLockup Portal을 직접 비교하고, LK가 먼저 읽히는 Console·reverse·compact 조합을 확인합니다.',
+    '고정 Lockup과 registry ProductLockup의 Portal 정본이 같은지 확인하고, LK가 먼저 읽히는 Console·reverse·compact 조합을 검증합니다.',
   ),
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--space-5)', width: 'min(760px, 100%)', fontFamily: 'var(--font-sans)' }}>
@@ -50,12 +50,12 @@ export const ProductLockupStandard = {
       </section>
 
       <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
-        <ExampleLabel>Portal 위계 비교 · legacy 800 / 제안 600</ExampleLabel>
+        <ExampleLabel>Portal 정본 동기화 · Lockup / ProductLockup</ExampleLabel>
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(100px, auto) 1fr', alignItems: 'center', columnGap: 'var(--space-4)', rowGap: 'var(--space-3)', padding: 'var(--space-4)', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-lg)' }}>
-          <ExampleLabel>legacy 800</ExampleLabel>
+          <ExampleLabel>Lockup canonical</ExampleLabel>
           <Lockup data-testid="lockup-portal-fixed" variant="portal" height={20} />
-          <ExampleLabel>parent-first 600</ExampleLabel>
-          <ProductLockup data-testid="lockup-portal-proposal" product="portal" height={20} />
+          <ExampleLabel>ProductLockup registry</ExampleLabel>
+          <ProductLockup data-testid="lockup-portal-canonical" product="portal" height={20} />
         </div>
       </section>
 
@@ -81,12 +81,12 @@ export const ProductLockupStandard = {
     const consoleLockup = canvasElement.querySelector('[data-testid="lockup-console"]');
     const portal = canvasElement.querySelector('[data-testid="lockup-portal"]');
     const fixedPortal = canvasElement.querySelector('[data-testid="lockup-portal-fixed"]');
-    const proposedPortal = canvasElement.querySelector('[data-testid="lockup-portal-proposal"]');
+    const canonicalPortal = canvasElement.querySelector('[data-testid="lockup-portal-canonical"]');
     const reverse = canvasElement.querySelector('[data-testid="lockup-reverse"]');
     const compact = canvasElement.querySelector('[data-testid="lockup-compact"]');
     const home = canvasElement.querySelector('[data-testid="lockup-home"]');
     const linkedLockup = canvasElement.querySelector('[data-testid="lockup-link-child"]');
-    if (!consoleLockup || !portal || !fixedPortal || !proposedPortal || !reverse || !compact || !home || !linkedLockup) {
+    if (!consoleLockup || !portal || !fixedPortal || !canonicalPortal || !reverse || !compact || !home || !linkedLockup) {
       throw new Error('ProductLockup standard fixture is incomplete.');
     }
 
@@ -104,11 +104,25 @@ export const ProductLockupStandard = {
     }
 
     const fixedPaths = [...fixedPortal.querySelectorAll('g[transform] path')].map((path) => path.getAttribute('d'));
-    const registryPaths = [...proposedPortal.querySelectorAll('[data-product-lockup-wordmark-paths] path')].map((path) => path.getAttribute('d'));
-    if (proposedPortal.getAttribute('viewBox') !== '342.60933 149.18987 409.912753 64.1628'
-      || proposedPortal.querySelector('[data-product-lockup-wordmark-paths]')?.getAttribute('transform') !== 'matrix(0.078004 0 0 0.078004 421.295769 208.572631)'
-      || JSON.stringify(registryPaths) === JSON.stringify(fixedPaths)) {
-      throw new Error('The registry Portal must use the approved parent-first SemiBold outlines while the fixed legacy Portal stays unchanged.');
+    const registryPaths = [...canonicalPortal.querySelectorAll('[data-product-lockup-wordmark-paths] path')].map((path) => path.getAttribute('d'));
+    const expectedPortalViewBox = '342.60933 149.18987 409.912753 64.1628';
+    const expectedPortalTransform = 'matrix(0.078004 0 0 0.078004 421.295769 208.572631)';
+    if (fixedPortal.getAttribute('viewBox') !== expectedPortalViewBox
+      || canonicalPortal.getAttribute('viewBox') !== expectedPortalViewBox
+      || fixedPortal.querySelector('g[transform]')?.getAttribute('transform') !== expectedPortalTransform
+      || canonicalPortal.querySelector('[data-product-lockup-wordmark-paths]')?.getAttribute('transform') !== expectedPortalTransform
+      || fixedPortal.getAttribute('width') !== '127.772713'
+      || canonicalPortal.getAttribute('width') !== '127.772713'
+      || fixedPortal.getAttribute('height') !== '20'
+      || canonicalPortal.getAttribute('height') !== '20'
+      || fixedPortal.getAttribute('role') !== 'img'
+      || canonicalPortal.getAttribute('role') !== 'img'
+      || fixedPortal.getAttribute('aria-label') !== 'LK Portal'
+      || canonicalPortal.getAttribute('aria-label') !== 'LK Portal'
+      || fixedPaths.length !== 6
+      || registryPaths.length !== 6
+      || JSON.stringify(registryPaths) !== JSON.stringify(fixedPaths)) {
+      throw new Error('The fixed and registry Portal lockups must share the approved canonical SemiBold geometry and accessible name.');
     }
 
     if (compact.getAttribute('data-lockup-variant') !== 'mark' || compact.getAttribute('aria-label') !== 'LK Console' || compact.getAttribute('height') !== '20') {

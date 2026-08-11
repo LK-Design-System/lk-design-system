@@ -3,9 +3,9 @@
   "recordType": "lk-logo-governance",
   "standard": {
     "id": "lk-robotics-logo",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "status": "current-repository-standard",
-    "effectiveDate": "2026-08-10",
+    "effectiveDate": "2026-08-11",
     "scope": "repository brand assets, LK Design System runtime, and documented distribution workflow",
     "doesNotAssert": [
       "trademark-registration-status",
@@ -85,7 +85,7 @@
     "approvalRecord": null
   },
   "constructionContract": {
-    "constructionVersion": 4,
+    "constructionVersion": 5,
     "geometryVersion": "1.0",
     "visibleMarkWidthToX": 1.0817599905987594,
     "clearSpace": {

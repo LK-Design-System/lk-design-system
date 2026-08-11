@@ -5,7 +5,7 @@ TopBar·SideNav에서 `LK + 제품명`을 **LK 모브랜드 우선 로고 문법
 ## 선택
 
 - expanded TopBar·SideNav의 단일 제품 식별자에는 `ProductLockup`을 사용합니다.
-- 회사 식별 `LK ROBOTICS`와 고정 `LK Portal` 호환 자산은 `Lockup`을 유지합니다.
+- 회사 식별 `LK ROBOTICS`와 고정 `LK Portal` 정본은 `Lockup`을 유지합니다. 고정 Portal은 registry Portal과 같은 조형입니다.
 - `product`는 현재 `console`과 `portal`만 승인되어 있습니다. Web Viz·Control은 공식 짧은 제품명 승인과 registry 등록 전까지 임의 조판하지 않습니다.
 - 법인·파트너·마케팅용 새로운 공식 자산 export는 별도 브랜드 승인 절차가 필요합니다.
 
@@ -39,7 +39,7 @@ full lockup을 줄바꿈·말줄임·비균등 축소하지 않습니다. 폭이
 
 ## Registry와 승인
 
-새 제품은 `assets/brand/lk-product-lockups.json`에 승인 key·canonical label·대문자 wordmark·golden glyph metric을 등록하고 `node scripts/generate-product-lockups.mjs`로 path를 생성합니다. 생성기는 pinned font와 license hash, glyph IDs, kerning origins, ink bounds를 검증합니다. `product="portal"`도 새 모브랜드 우선 SemiBold 규격을 따르며, ExtraBold 800인 기존 `Lockup variant="portal"`은 비교·호환용 고정 자산으로 별도 보존합니다.
+새 제품은 `assets/brand/lk-product-lockups.json`에 승인 key·canonical label·대문자 wordmark·golden glyph metric을 등록하고 `node scripts/generate-product-lockups.mjs`로 path를 생성합니다. 생성기는 pinned font와 license hash, glyph IDs, kerning origins, ink bounds를 검증합니다. `product="portal"`과 고정 `Lockup variant="portal"`은 같은 SemiBold 600 path·transform·viewBox를 사용하며 생성 단계에서 동등성을 검증합니다.
 
 제품별 화면에서 문자열, 폰트, 간격을 직접 바꾸거나 미등록 key를 우회하지 않습니다. 표시용 한국어 설명, 환경·버전·workspace·상태·tagline은 lockup 밖의 UI text로 둡니다.
 

@@ -1,4 +1,4 @@
-# LK ROBOTICS 로고 브랜드 표준 v1.0
+# LK ROBOTICS 로고 브랜드 표준 v2.0
 
 | Field | Value |
 | --- | --- |
@@ -6,15 +6,15 @@
 | Status | Current |
 | Owner | Brand owner · Design system owner |
 | Last reviewed | 2026-08-11 |
-| Standard version | 1.0.0 |
+| Standard version | 2.0.0 |
 | Construction source | [`../../assets/brand/lk-logo-construction.json`](../../assets/brand/lk-logo-construction.json) |
 | Governance record | [`lk-logo-governance.json`](lk-logo-governance.json) |
 
 이 표준은 현재 저장소에서 LK ROBOTICS 로고를 선택·배치·검수·배포하는 기준입니다. 로고의 법적 등록 여부를 주장하거나 외부 사용 권한을 자동으로 부여하지는 않습니다. 법인·상표·파트너 맥락의 공개 사용은 [외부 사용과 승인](#외부-사용과-승인)을 별도로 통과해야 합니다. 제품 UI 셸의 모브랜드 우선 `LK mark + 제품명` outline은 별도 [`LK 제품 로크업 표준`](LK_PRODUCT_LOCKUP_STANDARD.md)의 승인 registry를 따르며, 임의 문자열을 runtime font로 조판하지 않습니다.
 
-## 1. v1.0 정본과 권위
+## 1. v2.0 정본과 권위
 
-로고를 직접 편집할 수 있는 단일 그림 파일은 없습니다. v1.0의 정본은 다음 소스가 결합된 생성 체계입니다.
+로고를 직접 편집할 수 있는 단일 그림 파일은 없습니다. v2.0의 정본은 다음 소스가 결합된 생성 체계입니다.
 
 1. LK 심볼 geometry: [`../../scripts/brand/lk-logo-source.mjs`](../../scripts/brand/lk-logo-source.mjs)의 `LK_MARK_PATHS`와 `LOGO_GEOMETRY.markBounds`
 2. 글꼴·문자열·비율·색상·출력 규칙: [`../../assets/brand/lk-logo-construction.json`](../../assets/brand/lk-logo-construction.json)
@@ -24,7 +24,7 @@
 
 충돌할 때는 위 순서를 따릅니다. `lk-logo-master.svg`는 공식형과 기업 표기형을 함께 확인하는 기준판이며, 두 로고가 나란히 있는 파일 자체를 한 개의 배치용 로고로 사용하지 않습니다. 생성된 SVG와 런타임 path 모듈은 결과물입니다. 직접 수정하지 않고 생성기를 통해 갱신합니다.
 
-v1.0은 현재 커스텀 LK 심볼을 승인 geometry로 동결합니다. 심볼 hash, path, transform 또는 보이는 bounds 중 하나라도 바뀌면 같은 v1.0으로 취급하지 않습니다. 현재 기하 hash와 construction version은 construction manifest가 소유하며 `npm run check:brand`가 소스와 생성 결과의 일치를 검사합니다.
+v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 Portal 워드마크를 모브랜드 우선 SemiBold 600으로 갱신합니다. 심볼 hash, path, transform 또는 보이는 bounds 중 하나라도 바뀌면 같은 geometry v1.0으로 취급하지 않습니다. 현재 기하 hash와 construction version은 construction manifest가 소유하며 `npm run check:brand`가 소스와 생성 결과의 일치를 검사합니다.
 
 ## 2. 심볼 작도와 검증 프레임
 
@@ -58,7 +58,7 @@ v1.0은 현재 커스텀 LK 심볼을 승인 geometry로 동결합니다. 심볼
 | 요소 | 규칙 |
 | --- | --- |
 | `ROBOTICS` | 대문자 `ROBOTICS`; Montserrat ExtraBold 800 v7.222; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
-| 승인 제품명 | 현재 `CONSOLE`·`PORTAL`; Montserrat SemiBold 600 v7.222; 대문자; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지; registry 밖 이름 금지. 기존 고정 Portal만 ExtraBold 800 호환 자산으로 유지 |
+| 승인 제품명 | 현재 `CONSOLE`·`PORTAL`; Montserrat SemiBold 600 v7.222; 대문자; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지; registry 밖 이름 금지. 고정 Portal과 registry Portal은 같은 정본 path 사용 |
 | 법인명 | NFC `주식회사 엘케이로보틱스`; Noto Sans KR ExtraBold `wght=800` v2.004-H2; 기본 kerning; 글자 사이 `0.105em`; 마지막 글자 뒤 tracking 없음; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
 | 배포 | 모든 wordmark·제품명·법인명은 SVG outline path; `<text>` 금지; 런타임 글꼴 의존성 없음 |
 
@@ -66,7 +66,7 @@ v1.0은 현재 커스텀 LK 심볼을 승인 geometry로 동결합니다. 심볼
 
 ### 2.4 조합 비율
 
-| 조합 | v1.0 규칙 |
+| 조합 | v2.0 규칙 |
 | --- | --- |
 | stacked | `ROBOTICS` 명목 cap height `0.25X`; 심볼 보이는 폭의 `0.2배` 간격; 가로 중앙 정렬 |
 | inline | `ROBOTICS` 보이는 높이 `1X`; 심볼 보이는 폭의 `0.2배` 간격; 보이는 bounds 기준 세로 정렬 |
@@ -80,7 +80,7 @@ v1.0은 현재 커스텀 LK 심볼을 승인 geometry로 동결합니다. 심볼
 | --- | --- | --- | --- |
 | mark | 이미 LK 브랜드임이 명확한 매우 작은 UI, 향후 플랫폼 icon의 핵심 도형 후보 | 법인 식별이 처음 필요한 문서, 파트너십 서명, 기능 아이콘 대체, 승인 없이 만든 iOS/Android app icon | `lk-mark-navy.svg`, `lk-mark-white.svg`, `Lockup variant="mark"` |
 | inline | Top bar, Side navigation, 가로 헤더, 제한된 세로 공간 | 정사각형 중심 구성, 법인명 필수 문서 | `lk-logo-inline-navy.svg`, `lk-logo-inline-white.svg`, `Lockup variant="inline"` |
-| portal fixed lockup | 기존 ExtraBold 800 통합 호환 또는 Portal 정본 변경 비교가 필요한 표면 | 다른 제품명, 신규 registry 확장, 자유 텍스트 slot | `Lockup variant="portal"` |
+| portal fixed lockup | 기존 Portal 통합 또는 고정 Portal 정본이 필요한 표면 | 다른 제품명, 신규 registry 확장, 자유 텍스트 slot | `Lockup variant="portal"` |
 | registered product lockup | Console·Portal의 TopBar·SideNav 제품 식별 | Web Viz·Control(승인 대기), 임의 제품명, 고객·환경·상태 문자열 | `ProductLockup product="console"` / `product="portal"` |
 | stacked | 세로 중심 구성, 정사각형에 가까운 브랜드 영역 | 낮은 높이의 탐색 바 | `lk-logo-navy.svg`, `lk-logo-white.svg`, `Lockup variant="stacked"` |
 | official square | 프로필, 일반 회사 식별, 고정된 정사각형 표면 | 법인명 표기가 필요한 공식 서류 | `lk-logo-official.svg`, `lk-logo-official-light.svg` |
@@ -266,7 +266,7 @@ construction manifest, governance 원문과 build-time 글꼴은 저장소 루�
 | --- | --- | --- |
 | LK Web Viz | `migration-required` | registry는 `registry-name-approval-pending`이므로 `ProductLockup` 미지원; 로컬 gradient PNG migration과 회사 `Lockup` 적용은 별도 수행 |
 | LK Control Full Daedeok | `migration-required` | registry는 `registry-name-approval-pending`이므로 `ProductLockup` 미지원; 로그인 로컬 asset은 승인 회사 `Lockup` 자산으로 교체 |
-| LK Portal | `contract-compatible-upgrade-required` | 신규 셸 제안은 SemiBold 600 `ProductLockup product="portal"`; ExtraBold 800 `Lockup variant="portal"`은 호환·비교 자산으로 유지하고 정본 변경은 별도 승인 |
+| LK Portal | `contract-compatible-upgrade-required` | 고정 `Lockup variant="portal"`과 `ProductLockup product="portal"`은 같은 SemiBold 600 정본; 제품은 이를 포함한 LDS release로 upgrade |
 
 이 판정은 audit에 pin된 revision의 증거입니다. 제품의 최신 상태를 자동으로 보증하지 않으므로 migration 완료를 주장하려면 source pin과 asset checksum을 다시 갱신합니다.
 

@@ -750,8 +750,8 @@ export const LKRoboticsLogo = {
       <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
         <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>LK Portal 제품 로크업</h2>
         <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          승인된 제품 워드마크 <strong>PORTAL</strong>은 회사 워드마크와 같은 고정 글꼴·제작 규정·대문자 문법을 씁니다.
-          마크와의 간격만 <strong>0.35X</strong>로, <code>inline</code>의 0.2X보다 넓습니다 — 20px 렌더에서 0.2X면
+          승인된 제품 워드마크 <strong>PORTAL</strong>은 모브랜드 우선 SemiBold 600 정본과 대문자 문법을 쓰며 registry Portal과 같은 path입니다.
+          마크와의 간격은 <strong>마크 보이는 폭의 0.35배</strong>로, <code>inline</code>의 0.2배보다 넓습니다 — 20px 렌더에서 더 좁으면
           K의 사선과 P가 붙어 한 단어로 읽힙니다. 접근성 이름의 기본값은 <code>LK Portal</code>입니다.
         </p>
         <div style={{ display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap', alignItems: 'center' }}>

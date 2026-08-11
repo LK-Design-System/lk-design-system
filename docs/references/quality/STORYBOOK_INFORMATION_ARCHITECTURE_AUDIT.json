@@ -71,7 +71,7 @@
     "describedPublicStories": 496,
     "reviewedPages": 195,
     "reviewedStories": 705,
-    "staleReviewedPages": 10,
+    "staleReviewedPages": 9,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
@@ -24449,11 +24449,11 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/Brand.stories.jsx",
-      "sourceSha256": "6ebf9e706d211c97a0e6d9b0a13344a6372f75409ad029bf99d8c4293d196612",
+      "sourceSha256": "0fbdd8dda0e0d5246bfc610f84345e7ee390e41f8ab37dcdbe6f31defcf197b4",
       "sourceDependencies": [
         {
           "path": "stories/Brand.shared.jsx",
-          "sha256": "04ef2e3fd166a849d8a04cc81e159c05b054c5daa137470725ed4aed3c911b18"
+          "sha256": "4af4d3f3fadccc9415d86ae3de3916b079139584b41c1a52dc58d3fa998dba22"
         }
       ],
       "primaryOwner": "Lockup",
@@ -24477,9 +24477,9 @@
       "disposition": "keep",
       "dispositionReason": "Human layer review confirmed a distinct Theme override or brand surface; keep this page and document allowed and disallowed use.",
       "reviewStatus": "reviewed",
-      "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-05",
-      "reviewedSourceSha256": "210915dfae82a0d0e809ea346a2bd126a3914e124b2426ecf6b5528ed1e4290d",
+      "reviewMethod": "source-ast+rendered-story+visual-regression",
+      "reviewedAt": "2026-08-11",
+      "reviewedSourceSha256": "0fbdd8dda0e0d5246bfc610f84345e7ee390e41f8ab37dcdbe6f31defcf197b4",
       "stories": [
         {
           "id": "lds-theme-brand-lk-robotics-logo--lk-robotics-logo",
@@ -24528,14 +24528,14 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation.\\n\\n2026-08-11 source and rendered visual re-review confirmed the fixed Portal examples use the parent-brand-first SemiBold 600 canonical without changing LK geometry, role, story visibility, or public API. The page-wide Axe run still reports the pre-existing 12px red misuse-label contrast defect outside the Portal examples; ProductLockup's focused Axe contract is clean."
     },
     {
       "title": "LDS Theme/Brand/Product Lockup",
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/BrandProductLockup.stories.jsx",
-      "sourceSha256": "4931ba405f0e13dbf0a13ba1bd47dc76dcc796211bfc388242d887d668680b5e",
+      "sourceSha256": "067c60d2fe4134c4cd1020b489af9f54fc1c9d6c2e7055e74dd3cbed97c944e8",
       "primaryOwner": "ProductLockup",
       "ownerComponents": [
         "ProductLockup"
@@ -24561,7 +24561,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+rendered-story+a11y+visual-regression",
       "reviewedAt": "2026-08-11",
-      "reviewedSourceSha256": "4931ba405f0e13dbf0a13ba1bd47dc76dcc796211bfc388242d887d668680b5e",
+      "reviewedSourceSha256": "067c60d2fe4134c4cd1020b489af9f54fc1c9d6c2e7055e74dd3cbed97c944e8",
       "stories": [
         {
           "id": "lds-theme-brand-product-lockup--narrow-compact",
@@ -24611,7 +24611,7 @@
           ]
         }
       ],
-      "reviewNote": "2026-08-11 re-reviewed the parent-brand-first ProductLockup source and rendered story: approved console/portal SemiBold 600 outlines preserve the 1X height and 0.35 mark-width gap, the legacy ExtraBold 800 Portal remains a visibly distinct comparison asset, positive/reverse/compact specimens and accessible names pass the focused Axe guard, and the targeted visual baseline was inspected and refreshed."
+      "reviewNote": "2026-08-11 re-reviewed the canonical-convergence source and rendered story: fixed `Lockup variant=portal` and registry `ProductLockup product=portal` share all six SemiBold 600 paths, transform, viewBox, 20px width, role, and accessible name. Console, positive/reverse, full/compact specimens pass the focused Axe and play guards, and the targeted visual baseline was inspected and refreshed."
     },
     {
       "title": "LDS Theme/Controls/Theme Toggle",

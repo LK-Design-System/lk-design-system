@@ -40,7 +40,7 @@ assert(
   constructionManifest.output?.constructionManifestDistribution === 'repository-root-only',
   `${constructionManifestPath} distribution must remain repository-root-only.`,
 );
-assert(governance.standard?.version === '1.0.0', `${governancePath} standard version drifted.`);
+assert(governance.standard?.version === '2.0.0', `${governancePath} standard version drifted.`);
 assert(governance.standard?.status === 'current-repository-standard', `${governancePath} standard status drifted.`);
 assert(
   governance.minimumSizeStatus?.status === 'repository-policy-pending-human-optical-approval',

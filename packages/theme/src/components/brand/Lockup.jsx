@@ -14,9 +14,9 @@ import {
   PORTAL_MINIMUM_RENDERED_HEIGHT_PX,
 } from './lk-portal-lockup-paths.js';
 
-/* Legacy `portal` 호환·비교 자산도 회사 variant와 같은 렌더 계약(최소 높이
-   보정, intrinsic width, viewBox 검증)을 유지한다. 신규 제품 셸은
-   ProductLockup을 사용한다. 생성 모듈만 다르므로 렌더 로직은 한 표로 둔다. */
+/* 고정 `portal` 정본도 회사 variant와 같은 렌더 계약(최소 높이 보정,
+   intrinsic width, viewBox 검증)을 유지한다. ProductLockup의 portal registry와
+   생성 경로를 동기화하며, 생성 모듈만 다르므로 렌더 로직은 한 표로 둔다. */
 const VARIANT_VIEWBOX = Object.freeze({ ...VIEWBOX, portal: PORTAL_LOCKUP_VIEWBOX });
 const MINIMUM_HEIGHT = Object.freeze({
   ...LK_LOGO_USAGE.minimumRenderedHeightPx,
@@ -33,15 +33,15 @@ const VIEWBOX_METRICS = Object.freeze(Object.fromEntries(
 /**
  * LK ROBOTICS — Lockup
  * Self-contained SVG generated from the regulated brand construction. LK is
- * custom vector geometry; ROBOTICS and the legacy fixed PORTAL compatibility
- * wordmark are outlined from the pinned Montserrat ExtraBold 800 v7.222 font.
- * New product shells use ProductLockup. No runtime font is required.
+ * custom vector geometry; ROBOTICS is outlined from pinned Montserrat ExtraBold
+ * 800 and the canonical fixed PORTAL from pinned Montserrat SemiBold 600 v7.222.
+ * ProductLockup's Portal registry entry uses the same paths. No runtime font is required.
  * `tone`: 'ink'/'brand' = official #05132B · 'white' · compatibility currentColor.
  * Constrained black-only output uses the existing explicit `color="#000000"` escape hatch.
  * `height` is the requested natural height; narrow parents scale both axes down
  * together instead of clipping or distorting. Decorative instances get aria-hidden.
  *
- * `title` defaults per variant: the legacy Portal asset names itself `LK Portal`,
+ * `title` defaults per variant: the canonical Portal asset names itself `LK Portal`,
  * every company variant names itself `LK ROBOTICS`.
  */
 export function Lockup({ variant = 'inline', tone = 'ink', color, height, title, decorative = false, style, ...rest }) {

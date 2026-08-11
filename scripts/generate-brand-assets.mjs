@@ -14,13 +14,16 @@ const checkOnly = process.argv.includes('--check');
 const manifestPath = path.join(root, 'assets/brand/lk-logo-construction.json');
 const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
 const portalWordmark = manifest.productWordmarks.portal;
+const productLockupWordmark = manifest.productLockupWordmark;
 const fontBuffer = await readFile(path.join(root, manifest.wordmark.fontFile));
+const portalFontBuffer = await readFile(path.join(root, portalWordmark.fontFile));
 const corporateFontBuffer = await readFile(path.join(root, manifest.corporateName.fontFile));
 const licenseBuffer = await readFile(path.join(root, manifest.wordmark.licenseFile));
+const portalLicenseBuffer = await readFile(path.join(root, portalWordmark.licenseFile));
 const corporateLicenseBuffer = await readFile(path.join(root, manifest.corporateName.licenseFile));
 
 assertEqual(manifest.schemaVersion, 1, 'manifest schema version');
-assertEqual(manifest.constructionVersion, 4, 'logo construction version');
+assertEqual(manifest.constructionVersion, 5, 'logo construction version');
 assertEqual(manifest.symbol.geometryVersion, LK_MARK_GEOMETRY_VERSION, 'LK symbol geometry version');
 assertEqual(
   geometrySha256({ paths: LK_MARK_PATHS, bounds: LOGO_GEOMETRY.markBounds }),
@@ -29,7 +32,9 @@ assertEqual(
 );
 validateMarkBounds(LK_MARK_PATHS, LOGO_GEOMETRY.markBounds);
 assertEqual(fileSha256(fontBuffer), manifest.wordmark.fontSha256, 'wordmark font SHA-256');
+assertEqual(fileSha256(portalFontBuffer), portalWordmark.fontSha256, 'portal wordmark font SHA-256');
 assertEqual(fileSha256(licenseBuffer), manifest.wordmark.licenseSha256, 'wordmark license SHA-256');
+assertEqual(fileSha256(portalLicenseBuffer), portalWordmark.licenseSha256, 'portal wordmark license SHA-256');
 assertEqual(fileSha256(corporateFontBuffer), manifest.corporateName.fontSha256, 'corporate-name font SHA-256');
 assertEqual(fileSha256(corporateLicenseBuffer), manifest.corporateName.licenseSha256, 'corporate-name license SHA-256');
 assertEqual(manifest.wordmark.case, 'uppercase', 'wordmark case');
@@ -39,18 +44,21 @@ assertEqual(manifest.wordmark.letterSpacing, 0, 'letter spacing');
 assertEqual(manifest.wordmark.horizontalScale, 1, 'horizontal scale');
 assertEqual(manifest.wordmark.verticalScale, 1, 'vertical scale');
 assertEqual(manifest.wordmark.manualGlyphEdits, false, 'manual glyph edits');
-/* 승인 제품 워드마크. `ROBOTICS`와 같은 고정 글꼴·같은 제작 규정을 쓰되 별도
-   글리프 세트라 자체 핀을 갖는다. 대소문자 규칙도 회사 워드마크와 같다. */
+/* 승인 Portal 워드마크. 회사 ROBOTICS의 800 조형과 분리하고, 제품 로크업
+   registry와 같은 600 제작 규칙에 고정한다. */
 assertEqual(portalWordmark.text, 'PORTAL', 'portal wordmark text');
 assertEqual(portalWordmark.case, 'uppercase', 'portal wordmark case');
 assertEqual(portalWordmark.text, portalWordmark.text.toUpperCase(), 'uppercase portal wordmark text');
-assertEqual(portalWordmark.family, manifest.wordmark.family, 'portal wordmark font family');
-assertEqual(portalWordmark.style, manifest.wordmark.style, 'portal wordmark font style');
-assertEqual(portalWordmark.weight, manifest.wordmark.weight, 'portal wordmark font weight');
-assertEqual(portalWordmark.fontVersion, manifest.wordmark.fontVersion, 'portal wordmark font version');
-assertEqual(portalWordmark.fontFile, manifest.wordmark.fontFile, 'portal wordmark font file');
-assertEqual(portalWordmark.fontSha256, manifest.wordmark.fontSha256, 'portal wordmark font SHA-256');
-assertEqual(portalWordmark.licenseSha256, manifest.wordmark.licenseSha256, 'portal wordmark license SHA-256');
+assertEqual(portalWordmark.family, productLockupWordmark.family, 'portal wordmark font family');
+assertEqual(portalWordmark.style, productLockupWordmark.style, 'portal wordmark font style');
+assertEqual(portalWordmark.weight, productLockupWordmark.weight, 'portal wordmark font weight');
+assertEqual(portalWordmark.fontVersion, productLockupWordmark.fontVersion, 'portal wordmark font version');
+assertEqual(portalWordmark.fontFile, productLockupWordmark.fontFile, 'portal wordmark font file');
+assertEqual(portalWordmark.fontSha256, productLockupWordmark.fontSha256, 'portal wordmark font SHA-256');
+assertEqual(portalWordmark.fontSource, productLockupWordmark.fontSource, 'portal wordmark font source');
+assertEqual(portalWordmark.license, productLockupWordmark.license, 'portal wordmark license');
+assertEqual(portalWordmark.licenseFile, productLockupWordmark.licenseFile, 'portal wordmark license file');
+assertEqual(portalWordmark.licenseSha256, productLockupWordmark.licenseSha256, 'portal wordmark license SHA-256');
 assertEqual(portalWordmark.kerning, 'font-default', 'portal wordmark kerning rule');
 assertEqual(portalWordmark.letterSpacing, 0, 'portal wordmark letter spacing');
 assertEqual(portalWordmark.horizontalScale, 1, 'portal wordmark horizontal scale');
@@ -77,6 +85,11 @@ assertEqual(fontkitPackage.version, '2.0.4', 'fontkit variable-font engine versi
 
 const fontArrayBuffer = fontBuffer.buffer.slice(fontBuffer.byteOffset, fontBuffer.byteOffset + fontBuffer.byteLength);
 const font = opentype.parse(fontArrayBuffer);
+const portalFontArrayBuffer = portalFontBuffer.buffer.slice(
+  portalFontBuffer.byteOffset,
+  portalFontBuffer.byteOffset + portalFontBuffer.byteLength,
+);
+const portalFont = opentype.parse(portalFontArrayBuffer);
 const fontFamily = font.names.fontFamily?.en;
 const fontFullName = font.names.fullName?.en;
 const fontVersion = font.names.version?.en?.replace(/^Version\s+/i, '');
@@ -88,6 +101,11 @@ assertEqual(fontFullName, `${manifest.wordmark.family} ${manifest.wordmark.style
 assertEqual(fontVersion, manifest.wordmark.fontVersion, 'font version metadata');
 assertEqual(weightClass, manifest.wordmark.weight, 'font weight metadata');
 if (!Number.isFinite(capHeight) || capHeight <= 0) throw new Error('Pinned font has no usable OS/2 cap height.');
+
+assertEqual(portalFont.names.fontFamily?.en, `${portalWordmark.family} ${portalWordmark.style}`, 'portal font family metadata');
+assertEqual(portalFont.names.fullName?.en, `${portalWordmark.family} ${portalWordmark.style}`, 'portal font full-name metadata');
+assertEqual(portalFont.names.version?.en?.replace(/^Version\s+/i, ''), portalWordmark.fontVersion, 'portal font version metadata');
+assertEqual(portalFont.tables.os2?.usWeightClass, portalWordmark.weight, 'portal font weight metadata');
 
 assertEqual(manifest.corporateName.fontFormat, 'variable-ttf', 'corporate-name font format');
 assertEqual(manifest.corporateName.variation.wght, manifest.corporateName.weight, 'corporate-name weight variation');
@@ -150,11 +168,11 @@ assertArrayEqual(
 const portalText = portalWordmark.text;
 const portalLetters = [...portalText];
 const portalGlyphRows = [];
-const portalFinalAdvance = font.forEachGlyph(
+const portalFinalAdvance = portalFont.forEachGlyph(
   portalText,
   0,
   0,
-  font.unitsPerEm,
+  portalFont.unitsPerEm,
   { kerning: true },
   (glyph, x, y, fontSize) => {
     portalGlyphRows.push({
@@ -169,10 +187,10 @@ const portalFinalAdvance = font.forEachGlyph(
 assertEqual(portalGlyphRows.length, portalLetters.length, 'portal glyph count');
 assertArrayEqual(portalGlyphRows.map((row) => row.letter), portalLetters, 'portal glyph sequence');
 assertArrayEqual(portalGlyphRows.map((row) => row.glyphId), [169, 134, 172, 194, 4, 110], 'portal glyph IDs');
-assertArrayEqual(portalGlyphRows.map((row) => row.origin), [0, 737, 1583, 2313, 2913, 3699], 'portal kerning-aware glyph origins');
-assertEqual(portalFinalAdvance, 4309, 'portal kerning-aware word advance');
+assertArrayEqual(portalGlyphRows.map((row) => row.origin), [0, 726, 1568, 2289, 2856, 3605], 'portal kerning-aware glyph origins');
+assertEqual(portalFinalAdvance, 4204, 'portal kerning-aware word advance');
 
-const portalPath = font.getPath(portalText, 0, 0, font.unitsPerEm, { kerning: true });
+const portalPath = portalFont.getPath(portalText, 0, 0, portalFont.unitsPerEm, { kerning: true });
 const portalSourceBoundsRaw = portalPath.getBoundingBox();
 const portalSourceBounds = Object.freeze({
   x: portalSourceBoundsRaw.x1,
@@ -182,7 +200,7 @@ const portalSourceBounds = Object.freeze({
 });
 assertArrayEqual(
   [portalSourceBoundsRaw.x1, portalSourceBoundsRaw.y1, portalSourceBoundsRaw.x2, portalSourceBoundsRaw.y2],
-  [70, -714, 4301, 14],
+  [94, -710, 4195, 10],
   'portal wordmark ink bounds',
 );
 
@@ -294,6 +312,10 @@ assertEqual(layout.portal.visibleWordmarkHeightToX, 1, 'portal visible wordmark 
 assertEqual(layout.portal.gapToMarkWidth, 0.35, 'portal wordmark gap');
 assertEqual(layout.portal.verticalAlignment, 'visible-bounds', 'portal wordmark alignment');
 assertEqual(layout.portal.minimumRenderedHeightPx, 20, 'portal minimum digital height');
+assertEqual(layout.portal.visibleWordmarkHeightToX, layout.productLockup.visibleWordmarkHeightToX, 'portal/product lockup visible height parity');
+assertEqual(layout.portal.gapToMarkWidth, layout.productLockup.gapToMarkWidth, 'portal/product lockup gap parity');
+assertEqual(layout.portal.verticalAlignment, layout.productLockup.verticalAlignment, 'portal/product lockup alignment parity');
+assertEqual(layout.portal.minimumRenderedHeightPx, layout.productLockup.minimumRenderedHeightPx, 'portal/product lockup minimum height parity');
 const portalScale = (markBounds.height * layout.portal.visibleWordmarkHeightToX) / portalSourceBounds.height;
 const portalBounds = Object.freeze({
   x: markBounds.x + markBounds.width + markBounds.width * layout.portal.gapToMarkWidth,
@@ -323,6 +345,7 @@ const minimumRequiredSlotWidthPx = Object.freeze({
 assertNumberClose(minimumRequiredSlotWidthPx.mark, 21.431318, 'mark minimum required slot width');
 assertNumberClose(minimumRequiredSlotWidthPx.stacked, 82.61299, 'stacked minimum required slot width');
 assertNumberClose(minimumRequiredSlotWidthPx.inline, 156.324048, 'inline minimum required slot width');
+assertNumberClose(minimumRequiredSlotWidthPx.portal, 127.772713, 'portal minimum required slot width');
 assertNumberClose(minimumRequiredSlotWidthPx.banner, 137.019722, 'banner minimum required slot width');
 const visibleMarkHeightAtMinimumRenderedHeight =
   layout.mark.minimumRenderedHeightPx * markBounds.height / markViewBox.height;
@@ -650,10 +673,10 @@ if (checkOnly) {
   if (stale.length) {
     throw new Error(`Brand outputs are stale. Run npm run generate:brand.\n${stale.map((file) => `- ${file}`).join('\n')}`);
   }
-  console.log(`Brand assets match ${manifest.wordmark.family} ${manifest.wordmark.style} ${manifest.wordmark.weight} v${manifest.wordmark.fontVersion} and ${manifest.corporateName.family} ${manifest.corporateName.style} ${manifest.corporateName.weight} v${manifest.corporateName.releaseVersion}.`);
+  console.log(`Brand assets match ${manifest.wordmark.family} ${manifest.wordmark.style} ${manifest.wordmark.weight} v${manifest.wordmark.fontVersion}, Portal ${portalWordmark.style} ${portalWordmark.weight}, and ${manifest.corporateName.family} ${manifest.corporateName.style} ${manifest.corporateName.weight} v${manifest.corporateName.releaseVersion}.`);
 } else {
   for (const [relativePath, content] of outputs) await writeFile(path.join(root, relativePath), content);
-  console.log(`Generated ${outputs.size} brand outputs from ${manifest.wordmark.family} ${manifest.wordmark.style} ${manifest.wordmark.weight} v${manifest.wordmark.fontVersion} and ${manifest.corporateName.family} ${manifest.corporateName.style} ${manifest.corporateName.weight} v${manifest.corporateName.releaseVersion}.`);
+  console.log(`Generated ${outputs.size} brand outputs from ${manifest.wordmark.family} ${manifest.wordmark.style} ${manifest.wordmark.weight} v${manifest.wordmark.fontVersion}, Portal ${portalWordmark.style} ${portalWordmark.weight}, and ${manifest.corporateName.family} ${manifest.corporateName.style} ${manifest.corporateName.weight} v${manifest.corporateName.releaseVersion}.`);
 }
 
 function renderPortalRuntimeModule({
@@ -671,10 +694,10 @@ function renderPortalRuntimeModule({
   return `/**
  * Generated by scripts/generate-brand-assets.mjs. Do not edit by hand.
  *
- * PORTAL is outlined from the pinned static Montserrat ExtraBold 800
- * v${manifest.wordmark.fontVersion} font with default kerning, zero added letter spacing,
+ * PORTAL is outlined from the pinned static ${portalWordmark.family} ${portalWordmark.style} ${portalWordmark.weight}
+ * v${portalWordmark.fontVersion} font with default kerning, zero added letter spacing,
  * uniform scaling, and no glyph edits. No runtime font is required.
- * Font SHA-256: ${manifest.wordmark.fontSha256}
+ * Font SHA-256: ${portalWordmark.fontSha256}
  */
 export const PORTAL_PATHS = Object.freeze([
 ${portalRows}
@@ -856,7 +879,8 @@ function renderSquare({ square, background, foreground, corporate = false }) {
 
 function renderPath(row, fill, indent) {
   const spaces = '  '.repeat(indent);
-  return `${spaces}<path d="${row.d}" transform="${row.transform}" fill="${fill}" />`;
+  const transform = row.transform ? ` transform="${row.transform}"` : '';
+  return `${spaces}<path d="${row.d}"${transform} fill="${fill}" />`;
 }
 
 function renderRect(box, fill, indent) {
@@ -939,6 +963,9 @@ function serializeFontkitPath(value, precision = 3) {
 
 function validateProductionOutput(relativePath, content, contract) {
   if (!contract) throw new Error(`${relativePath} has no generated-output contract.`);
+  if (/transform=["']undefined["']/.test(content)) {
+    throw new Error(`${relativePath} contains an undefined transform attribute.`);
+  }
   assertNoRuntimeFontDependency(relativePath, content);
   assertPathInstances(relativePath, content, LK_MARK_PATHS, contract.markInstances, 'LK mark');
   assertPathInstances(relativePath, content, generatedWordmarkPaths, contract.wordmarkInstances, 'wordmark');

@@ -121,9 +121,7 @@
   ],
   "tokens": [],
   "apiLinks": [],
-  "migration": [
-    "회사 식별 LK ROBOTICS와 고정 LK Portal 호환 자산은 Lockup을 유지합니다."
-  ],
+  "migration": [],
   "platformStatus": {
     "figma": "not-tracked",
     "react": "implemented",
@@ -167,6 +165,6 @@
     "examples": "evidence",
     "tokens": "omitted-no-evidence",
     "apiLinks": "evidence",
-    "migration": "evidence"
+    "migration": "omitted-no-evidence"
   }
 }

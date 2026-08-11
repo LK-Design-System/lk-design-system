@@ -184,8 +184,8 @@
           "repo": "portal",
           "repository": "LK-ROBOTICS-AX/lk_portal",
           "sourceRevision": "e5ee99d5062170e26abe63d9105c2b8a024ce710",
-          "classification": "supported by approved outlined proposal",
-          "reason": "The pinned full-height product-identity SideNav already proves a mark-plus-name shell seam, and portal resolves to an approved parent-brand-first SemiBold ProductLockup proposal. The legacy ExtraBold fixed asset remains available for comparison until Portal approves the new visual hierarchy. Portal retains SideNav placement, home route and click behavior, full-lockup-to-mark breakpoint, permissions, and destination hierarchy.",
+          "classification": "supported by approved canonical lockup",
+          "reason": "The pinned full-height product-identity SideNav already proves a mark-plus-name shell seam, and portal resolves to the approved parent-brand-first SemiBold canonical shared by ProductLockup and the fixed Lockup variant. Portal retains SideNav placement, home route and click behavior, full-lockup-to-mark breakpoint, permissions, destination hierarchy, and the package-upgrade timing.",
           "sourceEvidence": [
             {
               "path": "src/components/layout/Sidebar.tsx",
@@ -2709,8 +2709,8 @@
         },
         {
           "repo": "portal",
-          "classification": "supported by approved outlined proposal",
-          "reason": "Pinned Sidebar and AuthShell establish a full-height 256px product-identity navigation beside an offset main region; the home source composes destination cards and a project collection. The parent-brand-first SemiBold portal ProductLockup proposal, DashboardShell, docked SideNav, DashboardGrid, Card, and collection primitives support this side-first workspace. The legacy ExtraBold Portal remains a comparison asset until visual approval. Portal retains placement, home route or click behavior, breakpoint, permissions, and destination hierarchy. The pinned source has no adaptive narrow navigation, so collapse or drawer behavior remains a product-integration gap; project ranking, attention truth, chat placement, queries, and data-source policy remain product-owned.",
+          "classification": "supported by approved canonical lockup",
+          "reason": "Pinned Sidebar and AuthShell establish a full-height 256px product-identity navigation beside an offset main region; the home source composes destination cards and a project collection. The approved parent-brand-first SemiBold Portal canonical, DashboardShell, docked SideNav, DashboardGrid, Card, and collection primitives support this side-first workspace. The fixed Lockup and ProductLockup registry now share that canonical geometry; the product still owns package adoption. Portal retains placement, home route or click behavior, breakpoint, permissions, and destination hierarchy. The pinned source has no adaptive narrow navigation, so collapse or drawer behavior remains a product-integration gap; project ranking, attention truth, chat placement, queries, and data-source policy remain product-owned.",
           "sourceEvidence": [
             {
               "path": "src/components/layout/Sidebar.tsx",
@@ -2822,7 +2822,7 @@
         "scripts/check-storybook-accessibility.mjs",
         "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification"
       ],
-      "closureDecision": "ProductLockup verifies only the approved console and portal parent-brand-first SemiBold outlined registry entries; it does not make Web Viz or Control supported before canonical short-name approval and LDS path registration. The legacy ExtraBold Portal remains a comparison asset pending Portal visual approval. LDS v1 uses BottomNav only for four or fewer flat narrow destinations. Hierarchical narrow navigation is a product-owned temporary Drawer composition, not DashboardShell anatomy. ProductLockup, DashboardShell, TopBar, and SideNav stories verify registered output, landmarks, narrow reflow, controlled collapse, reduced motion, Escape, and focus restoration while route, click behavior, placement, and breakpoints remain product-owned."
+      "closureDecision": "ProductLockup verifies only the approved console and portal parent-brand-first SemiBold outlined registry entries; it does not make Web Viz or Control supported before canonical short-name approval and LDS path registration. The fixed Portal and registry Portal share one approved canonical, while product package adoption remains product-owned. LDS v1 uses BottomNav only for four or fewer flat narrow destinations. Hierarchical narrow navigation is a product-owned temporary Drawer composition, not DashboardShell anatomy. ProductLockup, DashboardShell, TopBar, and SideNav stories verify registered output, landmarks, narrow reflow, controlled collapse, reduced motion, Escape, and focus restoration while route, click behavior, placement, and breakpoints remain product-owned."
     }
   ]
 }

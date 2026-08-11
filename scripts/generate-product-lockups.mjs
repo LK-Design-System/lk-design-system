@@ -3,6 +3,15 @@ import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import opentype from 'opentype.js';
 import { LOGO_GEOMETRY } from './brand/lk-logo-source.mjs';
+import {
+  PORTAL_INLINE_TRANSFORM,
+  PORTAL_LOCKUP_VIEWBOX,
+  PORTAL_MINIMUM_RENDERED_HEIGHT_PX,
+  PORTAL_PATHS,
+} from '../components/brand/lk-portal-lockup-paths.js';
+
+// `npm run generate:brand` regenerates the fixed Portal module first. Importing
+// it here makes a stale or independently changed canonical fail registry generation.
 
 const root = process.cwd();
 const checkOnly = process.argv.includes('--check');
@@ -41,7 +50,12 @@ assertEqual(layout.verticalAlignment, 'visible-bounds', 'vertical alignment');
 assertEqual(layout.minimumRenderedHeightPx, 20, 'minimum rendered height');
 
 const rows = Object.entries(registry.products).map(([key, product]) => buildProduct(key, product));
-if (!rows.some((row) => row.key === 'portal')) throw new Error('The approved registry must retain the Portal product entry.');
+const portal = rows.find((row) => row.key === 'portal');
+if (!portal) throw new Error('The approved registry must retain the Portal product entry.');
+assertEqual(JSON.stringify(portal.paths), JSON.stringify(PORTAL_PATHS), 'registry Portal paths match canonical fixed Portal');
+assertEqual(portal.transform, PORTAL_INLINE_TRANSFORM, 'registry Portal transform matches canonical fixed Portal');
+assertEqual(portal.viewBox, PORTAL_LOCKUP_VIEWBOX, 'registry Portal viewBox matches canonical fixed Portal');
+assertEqual(portal.minimumRenderedHeightPx, PORTAL_MINIMUM_RENDERED_HEIGHT_PX, 'registry Portal minimum height matches canonical fixed Portal');
 
 const output = renderModule(rows);
 if (/<text\s/i.test(output)) throw new Error('ProductLockup runtime output must not contain SVG text elements.');

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "constructionVersion": 2,
-  "description": "Approved parent-brand-first LK product-shell lockup registry. Typography comes from lk-logo-construction.json#productLockupWordmark and geometry from layout.productLockup; the legacy fixed Portal asset remains unchanged.",
+  "description": "Approved parent-brand-first LK product-shell lockup registry. Typography comes from lk-logo-construction.json#productLockupWordmark and geometry from layout.productLockup; the Portal entry is synchronized with the canonical fixed Portal asset.",
   "products": {
     "console": {
       "label": "Console",

@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkE4A4MY4Tcjs = require('../../chunk-E4A4MY4T.cjs');
-require('../../chunk-WBPXVYCJ.cjs');
+var _chunkK4XZ5VYOcjs = require('../../chunk-K4XZ5VYO.cjs');
+require('../../chunk-7ZOUXL3A.cjs');
 require('../../chunk-DDFGJXVM.cjs');
 
 
-exports.ProductLockup = _chunkE4A4MY4Tcjs.ProductLockup;
+exports.ProductLockup = _chunkK4XZ5VYOcjs.ProductLockup;
 //# sourceMappingURL=ProductLockup.cjs.map

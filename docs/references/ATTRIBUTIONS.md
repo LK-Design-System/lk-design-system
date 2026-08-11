@@ -20,8 +20,8 @@ Wanted brand assets.
 
 ## Montserrat (The Montserrat Project Authors)
 
-The approved `ROBOTICS` wordmark and legacy fixed `PORTAL` outline are
-generated from Montserrat ExtraBold 800. Parent-brand-first `ProductLockup`
+The approved `ROBOTICS` wordmark is generated from Montserrat ExtraBold 800.
+The canonical fixed `PORTAL` outline and parent-brand-first `ProductLockup`
 product names are generated from Montserrat SemiBold 600. Both static fonts
 come from the official Version 7.222 release.
 

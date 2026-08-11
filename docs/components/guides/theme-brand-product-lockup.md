@@ -96,10 +96,6 @@ LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 �
 - `components/brand/ProductLockup.prompt.md`
 - `stories/BrandProductLockup.stories.jsx`
 
-## Migration
-
-- 회사 식별 LK ROBOTICS와 고정 LK Portal 호환 자산은 Lockup을 유지합니다.
-
 ## Sources
 
 - ProductLockup prompt contract: `components/brand/ProductLockup.prompt.md`

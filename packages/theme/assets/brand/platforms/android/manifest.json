@@ -3,9 +3,9 @@
   "contractVersion": 1,
   "generatedBy": "scripts/generate-brand-platform-assets.mjs",
   "brandStandard": {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "status": "current-repository-standard",
-    "governanceSha256": "84b087515ec89a24fd94e95a7264f3111fb0d4041329be4032bb902eb3b28281",
+    "governanceSha256": "e0fb546e42a43fd53a5f8532f9de71fb6a98dd88e3c9d78a81527e6d2b79108f",
     "minimumSizePolicy": {
       "status": "repository-policy-pending-human-optical-approval",
       "humanOpticalApproval": false,
@@ -13,8 +13,8 @@
     }
   },
   "sourceAssetSetSha256": "f7bc6532ba993b0fda69bf77c322099703aa37006b094051b34d5d3cf3644f5f",
-  "sourceConstructionVersion": 4,
-  "sourceConstructionManifestSha256": "82b96e1cb987cb70317d06d74dbd8c7b23b042281143240b9da736f5a9ea995c",
+  "sourceConstructionVersion": 5,
+  "sourceConstructionManifestSha256": "476ad9ef3804d67c3bc082a76ec19a8e9481216d246a189b5c1ecf316c77488b",
   "delivery": {
     "type": "android-resources",
     "vectorFormat": "VectorDrawable",

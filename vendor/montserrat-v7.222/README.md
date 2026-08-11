@@ -1,7 +1,7 @@
 # Montserrat ExtraBold 800 and SemiBold 600 (v7.222)
 
 This directory pins the exact static fonts used to construct the outlined
-`ROBOTICS` and legacy fixed `PORTAL` wordmarks (ExtraBold 800) and the
+`ROBOTICS` wordmark (ExtraBold 800), plus the canonical fixed `PORTAL` and
 parent-brand-first `ProductLockup` product names (SemiBold 600). They are
 build-time brand sources only; the LDS runtime and UI typography continue to
 use Pretendard and do not load these TTF files.

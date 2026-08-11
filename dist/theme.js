@@ -13,10 +13,10 @@ import "./chunk-7MEK4Y6F.js";
 import "./chunk-S26PXDE3.js";
 import {
   ProductLockup
-} from "./chunk-JESJGZUK.js";
+} from "./chunk-U6CEHY3Y.js";
 import {
   Lockup
-} from "./chunk-GFYBTTGY.js";
+} from "./chunk-3BOPGD6X.js";
 import "./chunk-F35F4DHT.js";
 export {
   LdsColorSchemeScript,

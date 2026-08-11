@@ -2658,7 +2658,7 @@
       "importPath": "./stories/NavigationSideNav.stories.jsx",
       "storyId": "lds-product-navigation-side-nav--link-destinations",
       "exportName": "LinkDestinations",
-      "descriptionHash": "f8388301328007c909cbfc0feccdc3dff3f437a3e11268911dd53db8a7d90310",
+      "descriptionHash": "312125298e49eb94b985c9df01506d63b5af7813dd3a0b7ad49960fa3de804db",
       "sentences": [
         {
           "hash": "b84d8543d689cc222b8c0d20c9837bd165ccbfcbbf40cafb547d434837e34b89",
@@ -2666,9 +2666,9 @@
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "3b3e31ebe69233fb46d20e2d5c4cc915d238644d59febc4bd316534309065dfb",
-          "text": "지속 선택 배경은 현재 목적지만 소유하고, 펼쳐진 부모와 hover는 선택 상태보다 약하게 읽혀야 합니다.",
-          "decision": "retained-in-canvas"
+          "hash": "6b984459d3b04772a22ce6d477a7124c5ca19120d02557a4805bfa68bfadd98f",
+          "text": "현재 목적지는 상시 배경 없이 text-safe blue accent label·icon과 굵기로 표시하고, hover·pressed에서만 표면을 사용합니다.",
+          "decision": "unreviewed"
         }
       ]
     },
@@ -3570,16 +3570,16 @@
       "importPath": "./stories/Brand.stories.jsx",
       "storyId": "lds-theme-brand-lk-robotics-logo--lk-robotics-logo",
       "exportName": "LKRoboticsLogo",
-      "descriptionHash": "40976d241b9d8e0949a6de99bed9a1659c7e5642f72c675c079e4833deff97eb",
+      "descriptionHash": "c026927db0302721385ac5da4a08ab8ae77e1c5b4a7dd93305f3c52ca43b3903",
       "sentences": [
         {
-          "hash": "efed3ab427ff431881c75e7c16e71de45d640c2421af00fe5c1431ba0e4c44b9",
-          "text": "규정된 LK ROBOTICS 기업 표기형·기본형과 같은 생성 원본을 사용하는 제품 UI 파생형을 확인합니다.",
+          "hash": "621d738c3d1a3f340fe6e49ba7903de14d59805155f6a069ea8fcac21d4e0a04",
+          "text": "geometry v1.0 construction, 변형 선택, 정확한 최소 크기와 슬롯 폭, clear space, positive/reverse/mono 배경, 금지 사용과 플랫폼 manifest 상태를 확인합니다.",
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "955879609a713ddf090c8c9f1dd4bba85cb650c1b0513f82f44b74d781deebcd",
-          "text": "실제 적용에서는 배경 대비와 최소 크기를 지키고, 다시 조판하거나 늘이기·회전·재채색하지 말고 제공된 조합을 사용하세요.",
+          "hash": "ceaa8f98e80d3fc47a7643f0abe50e515a3076681e9f87e8198602ee59aaa9d9",
+          "text": "favicon tile은 앱 아이콘이 아니며 Figma manifest도 live sync나 승인 증거가 아닙니다.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -3589,11 +3589,11 @@
       "importPath": "./stories/BrandProductLockup.stories.jsx",
       "storyId": "lds-theme-brand-product-lockup--product-lockup-standard",
       "exportName": "ProductLockupStandard",
-      "descriptionHash": "c311b13a7049ad2ea93a434c3b59ab04a62c9f37773137701261887f579168c7",
+      "descriptionHash": "8640c34aca5cea6eb7385e7b618062a4cef8d04b1055bf0ccb490a4abff16c3a",
       "sentences": [
         {
-          "hash": "c311b13a7049ad2ea93a434c3b59ab04a62c9f37773137701261887f579168c7",
-          "text": "기존 ExtraBold 800 LK Portal과 새 SemiBold 600 ProductLockup Portal을 직접 비교하고, LK가 먼저 읽히는 Console·reverse·compact 조합을 확인합니다.",
+          "hash": "8640c34aca5cea6eb7385e7b618062a4cef8d04b1055bf0ccb490a4abff16c3a",
+          "text": "고정 Lockup과 registry ProductLockup의 Portal 정본이 같은지 확인하고, LK가 먼저 읽히는 Console·reverse·compact 조합을 검증합니다.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -3691,7 +3691,40 @@
       "hash": "32139d4ec0f4877fd8158c337967ff1c0ef429c1183bdb135d82a685f8be91e5",
       "text": "고정 LK Portal 자산과 registry Portal이 완전히 같은지 비교하고, 같은 1X·0.35 mark-width 규칙의 LK Console, reverse, compact 조합을 확인합니다.",
       "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Theme/Brand/LK ROBOTICS Logo",
+      "importPath": "./stories/Brand.stories.jsx",
+      "hash": "efed3ab427ff431881c75e7c16e71de45d640c2421af00fe5c1431ba0e4c44b9",
+      "text": "규정된 LK ROBOTICS 기업 표기형·기본형과 같은 생성 원본을 사용하는 제품 UI 파생형을 확인합니다.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Theme/Brand/LK ROBOTICS Logo",
+      "importPath": "./stories/Brand.stories.jsx",
+      "hash": "955879609a713ddf090c8c9f1dd4bba85cb650c1b0513f82f44b74d781deebcd",
+      "text": "실제 적용에서는 배경 대비와 최소 크기를 지키고, 다시 조판하거나 늘이기·회전·재채색하지 말고 제공된 조합을 사용하세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Theme/Brand/Product Lockup",
+      "importPath": "./stories/BrandProductLockup.stories.jsx",
+      "hash": "c311b13a7049ad2ea93a434c3b59ab04a62c9f37773137701261887f579168c7",
+      "text": "기존 ExtraBold 800 LK Portal과 새 SemiBold 600 ProductLockup Portal을 직접 비교하고, LK가 먼저 읽히는 Console·reverse·compact 조합을 확인합니다.",
+      "previousDecision": "retained-in-canvas"
     }
   ],
-  "migrations": []
+  "migrations": [
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Product/Navigation/Side Nav",
+      "importPath": "./stories/NavigationSideNav.stories.jsx",
+      "hash": "3b3e31ebe69233fb46d20e2d5c4cc915d238644d59febc4bd316534309065dfb",
+      "text": "지속 선택 배경은 현재 목적지만 소유하고, 펼쳐진 부모와 hover는 선택 상태보다 약하게 읽혀야 합니다.",
+      "previousDecision": "retained-in-canvas"
+    }
+  ]
 }

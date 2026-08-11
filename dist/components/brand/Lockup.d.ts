@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export interface LockupProps extends Omit<React.SVGProps<SVGSVGElement>, 'color'> {
-  /** 'mark'(심볼만) · 'stacked' · 'inline'(가로) · 'portal'(legacy ExtraBold 800 LK Portal 호환·비교 자산). 신규 제품 셸은 ProductLockup을 사용합니다. @default "inline" */
+  /** 'mark'(심볼만) · 'stacked' · 'inline'(가로) · 'portal'(SemiBold 600 LK Portal 고정 정본; ProductLockup의 portal과 동일 조형). @default "inline" */
   variant?: 'mark' | 'stacked' | 'inline' | 'portal';
   /** 채움 프리셋 — 공식 네이비, 반전 화이트, 호환용 currentColor. 제약된 검정 단색 출력은 color="#000000"을 명시합니다. @default "ink" */
   tone?: 'ink' | 'white' | 'brand' | 'current';
@@ -15,5 +15,5 @@ export interface LockupProps extends Omit<React.SVGProps<SVGSVGElement>, 'color'
   decorative?: boolean;
 }
 
-/** 규정된 커스텀 LK 심볼과 Montserrat ExtraBold 800 아웃라인 기반 기업 로고 및 legacy Portal 호환 자산. 신규 제품 셸은 ProductLockup을 사용합니다. width/viewBox/style override는 호환용이며 브랜드 규격 사용에서는 금지합니다. */
+/** 규정된 커스텀 LK 심볼, Montserrat ExtraBold 800 기업 워드마크, SemiBold 600 Portal 정본. 일반 제품 셸은 ProductLockup을 사용합니다. width/viewBox/style override는 호환용이며 브랜드 규격 사용에서는 금지합니다. */
 export function Lockup(props: LockupProps): React.JSX.Element;

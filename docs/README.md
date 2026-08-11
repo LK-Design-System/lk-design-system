@@ -31,7 +31,7 @@
 | [`OPERATING_MODEL.md`](OPERATING_MODEL.md) | ownership, change category, release와 migration 운영 |
 | [`PACKAGE_MIGRATION_GUIDE.md`](PACKAGE_MIGRATION_GUIDE.md) | Wave 2 consumer import, CSS, artifact-pin, and rollback guidance |
 | [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md) | token source of truth와 변경 정책 |
-| [`brand/LK_LOGO_STANDARD.md`](brand/LK_LOGO_STANDARD.md) | LK ROBOTICS 로고 v1.0 정본, 작도 검증, 변형·여백·최소 크기, 색상·인쇄·공동 브랜딩·승인 정책 |
+| [`brand/LK_LOGO_STANDARD.md`](brand/LK_LOGO_STANDARD.md) | LK ROBOTICS 로고 v2.0 표준 · geometry v1.0 정본, 작도 검증, 변형·여백·최소 크기, 색상·인쇄·공동 브랜딩·승인 정책 |
 | [`foundations/README.md`](foundations/README.md) | 전체 Foundation의 canonical guide, machine-readable content와 LLM bundle |
 | [`components/README.md`](components/README.md) | public component 의사결정 가이드, 정적 reference·platform register, machine-readable registry와 LLM bundle |
 | [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md) | public API grammar와 컴포넌트별 상태 증거 |

@@ -13,7 +13,7 @@ LK ROBOTICS의 공식 로고 컴포넌트입니다. `LK`는 geometry v1.0으로 
 ## 워드마크와 법인명
 
 - `ROBOTICS`: 대문자, Montserrat ExtraBold 정적 weight 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지
-- `PORTAL`(기존 고정 제품 워드마크): ExtraBold 800인 호환·비교 자산입니다. 배치는 보이는 높이 `1X`에 **심볼 보이는 폭의 `0.35배`** 간격이며, `inline`의 심볼 보이는 폭 `0.2배`보다 넓은 이유는 20px 렌더에서 더 좁은 간격일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다. 이 값은 `0.35X`가 아닙니다. 신규 `ProductLockup`의 승인 제품명은 동일한 높이·간격에서 SemiBold 600을 사용합니다.
+- `PORTAL`(고정 제품 워드마크): Montserrat SemiBold 600이며 `ProductLockup product="portal"`과 동일한 정본 path를 사용합니다. 배치는 보이는 높이 `1X`에 **심볼 보이는 폭의 `0.35배`** 간격이며, `inline`의 심볼 보이는 폭 `0.2배`보다 넓은 이유는 20px 렌더에서 더 좁은 간격일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다. 이 값은 `0.35X`가 아닙니다.
 - `주식회사 엘케이로보틱스`: NFC, Noto Sans KR ExtraBold `wght=800` Version 2.004-H2, 글꼴 기본 커닝, 글자 사이 `0.105em`, 마지막 글자 뒤 자간 없음, 가로·세로 비율 1:1, 글리프 수동 수정 금지
 - 법인명 배치: 보이는 폭 `1.90X`, 상단 로크업과 간격 `0.21X`, 상단 로크업의 보이는 중심축에 가운데 정렬
 - 배포 결과는 `<text>`와 런타임 폰트가 없는 SVG path입니다. Montserrat와 Noto Sans KR은 build-time 생성 재료이며 UI 본문 글꼴이 아닙니다.
@@ -25,7 +25,7 @@ LK ROBOTICS의 공식 로고 컴포넌트입니다. `LK`는 geometry v1.0으로 
 | `mark` | 브랜드가 이미 식별되는 좁은 제품 UI | 렌더 높이 20px. 이때 보이는 심볼은 16px 이상. 최소 슬롯 폭 21.431318px |
 | `stacked` | 세로형·정사각형에 가까운 독립 로크업 | 렌더 높이 64px. 최소 슬롯 폭 82.612990px |
 | `inline` | TopBar·SideNav·가로 헤더 | 렌더 높이 20px. 최소 슬롯 폭 156.324048px |
-| `portal` | legacy LK Portal 통합의 호환·800 비교 자산. 신규 셸은 `ProductLockup product="portal"` 사용 | 렌더 높이 20px. 최소 슬롯 폭 129.803096px |
+| `portal` | LK Portal 고정 정본. 일반 제품 셸의 `ProductLockup product="portal"`과 동일 조형 | 렌더 높이 20px. 최소 슬롯 폭 127.772713px |
 | banner SVG | 서명·고정 가로 슬롯 | 렌더 높이 28px. 최소 슬롯 폭 137.019722px |
 | 기본 사각형 SVG | 프로필·브랜드 타일 | 64px 정사각형, 96px 이상 권장 |
 | 기업 표기형 SVG | 회사 소개·대외 문서·법인 식별 | 160px 정사각형, 192px 이상 권장, 인쇄 32mm 이상 |
@@ -35,7 +35,7 @@ favicon tile은 iOS AppIcon이나 Android adaptive icon이 아닙니다. 두 앱
 
 ## 반응형 크기
 
-`height`는 요청하는 자연 렌더 높이이며 variant별 최소값 아래에서는 최소값으로 보정됩니다. 기본 출력은 실제 variant `viewBox` 비율로 intrinsic width를 계산하고 `max-width: 100%; height: auto`를 적용해, 스타일을 재정의하지 않은 좁은 부모에서는 두 축을 같은 비율로 축소합니다. 이 반응형 축소는 overflow를 피하지만 실제 표시 높이도 낮추므로 저장소 정책 최소 크기를 대신 보장하지 않습니다. 최소 규격을 유지하려면 mark 21.431318px, stacked 82.612990px, inline 156.324048px, portal 129.803096px, banner 137.019722px 이상의 슬롯 폭을 확보합니다. 더 좁으면 `inline`·`portal`에서 `mark`로 전환하거나 슬롯을 넓힙니다.
+`height`는 요청하는 자연 렌더 높이이며 variant별 최소값 아래에서는 최소값으로 보정됩니다. 기본 출력은 실제 variant `viewBox` 비율로 intrinsic width를 계산하고 `max-width: 100%; height: auto`를 적용해, 스타일을 재정의하지 않은 좁은 부모에서는 두 축을 같은 비율로 축소합니다. 이 반응형 축소는 overflow를 피하지만 실제 표시 높이도 낮추므로 저장소 정책 최소 크기를 대신 보장하지 않습니다. 최소 규격을 유지하려면 mark 21.431318px, stacked 82.612990px, inline 156.324048px, portal 127.772713px, banner 137.019722px 이상의 슬롯 폭을 확보합니다. 더 좁으면 `inline`·`portal`에서 `mark`로 전환하거나 슬롯을 넓힙니다.
 
 기존 SVG API 호환을 위해 `width`, `viewBox`, `preserveAspectRatio` prop override는 전달되지만 브랜드 사용에서는 미승인입니다. `style.width`/`style.height`를 함께 덮어 최소 규격이나 비율 보호를 우회하지 않습니다.
 
@@ -55,7 +55,7 @@ favicon tile은 iOS AppIcon이나 Android adaptive icon이 아닙니다. 두 앱
 
 ## Product Lockup과의 경계
 
-`variant="portal"`은 ExtraBold 800 고정 outline 자산이자 기존 통합을 위한 호환 API입니다. 신규 제품 셸은 LK가 먼저 읽히도록 승인 제품명을 SemiBold 600으로 낮춘 `ProductLockup`을 사용하며 현재 `product` key `console | portal`만 지원합니다. Storybook은 Portal 800과 600을 나란히 비교하고, Portal 정본 자체를 바꿀지는 별도 브랜드 승인으로 남깁니다. 두 컴포넌트 모두 일반 제품명 slot이 아니므로 mark 옆에 live text를 직접 조판하거나 registry에 없는 이름을 우회 렌더링하지 않습니다. Web Viz와 Control은 canonical name과 outline 승인 전까지 미지원입니다. 자세한 기준은 [`LK_PRODUCT_LOCKUP_STANDARD.md`](../../docs/brand/LK_PRODUCT_LOCKUP_STANDARD.md)를 따릅니다.
+`variant="portal"`은 SemiBold 600으로 갱신한 LK Portal 고정 정본이며 `ProductLockup product="portal"`과 path·transform·viewBox가 같습니다. 기존 통합은 공개 `Lockup` API를 유지하고, 일반 제품 셸은 승인 registry의 `ProductLockup`을 사용합니다. 현재 `product` key는 `console | portal`만 지원합니다. 두 컴포넌트 모두 일반 제품명 slot이 아니므로 mark 옆에 live text를 직접 조판하거나 registry에 없는 이름을 우회 렌더링하지 않습니다. Web Viz와 Control은 canonical name과 outline 승인 전까지 미지원입니다. 자세한 기준은 [`LK_PRODUCT_LOCKUP_STANDARD.md`](../../docs/brand/LK_PRODUCT_LOCKUP_STANDARD.md)를 따릅니다.
 
 ## 색상과 배경
 

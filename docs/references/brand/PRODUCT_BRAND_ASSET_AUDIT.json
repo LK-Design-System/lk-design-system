@@ -16,7 +16,7 @@
       "console",
       "portal"
     ],
-    "constructionVersion": 4,
+    "constructionVersion": 5,
     "productLockupConstructionVersion": 2,
     "geometryVersion": "1.0",
     "smallUseVariantApproved": false
@@ -142,7 +142,7 @@
       "repository": "LK-ROBOTICS-AX/lk_portal",
       "sourceRevision": "546f11e4640b5a9ec81fc210a5085581b9d277bc",
       "classification": "contract-compatible-upgrade-required",
-      "finding": "LK Portal's pinned sidebar already composes the LDS Lockup mark at a 20px rendered SVG height with a visible Portal label. Its composition is compatible, but the new ProductLockup proposal changes the product outline from the legacy ExtraBold 800 asset to parent-brand-first SemiBold 600, so Portal requires an explicit visual review as part of the package upgrade.",
+      "finding": "LK Portal's pinned sidebar already composes the LDS Lockup mark at a 20px rendered SVG height with a visible Portal label. Its composition is compatible, and LDS now provides one approved parent-brand-first SemiBold 600 Portal canonical across the fixed Lockup and ProductLockup registry APIs. The pinned product package still predates that release.",
       "replacement": {
         "identityComponent": "ProductLockup",
         "registryStatus": "approved",
@@ -151,8 +151,8 @@
         "collapsedMode": "compact",
         "collapsedVariant": "mark",
         "renderedHeightPx": 20,
-        "packageAction": "Review the SemiBold 600 Portal proposal, then upgrade @lk-design-system/lds-theme from the pinned rc.23 artifact to a release containing ProductLockup constructionVersion 2, brand constructionVersion 4, and geometryVersion 1.0.",
-        "lockupNameDecision": "The portal key resolves only to the approved parent-brand-first SemiBold outlined paths. The legacy ExtraBold 800 Lockup variant remains a separate compatibility and comparison asset; neither API accepts arbitrary product-name text."
+        "packageAction": "Upgrade @lk-design-system/lds-theme from the pinned rc.23 artifact to a release containing ProductLockup constructionVersion 2, brand constructionVersion 5, and geometryVersion 1.0.",
+        "lockupNameDecision": "The portal key and fixed Portal variant resolve to the same approved parent-brand-first SemiBold outlined paths; neither API accepts arbitrary product-name text."
       },
       "sourceEvidence": [
         {
