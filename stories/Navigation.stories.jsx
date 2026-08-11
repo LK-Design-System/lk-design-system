@@ -527,7 +527,20 @@ function TopBarDisclosureContractFixture() {
 
   return (
     <div data-top-bar-contract style={{ display: 'grid', gap: 24, width: 'min(720px, 100%)' }}>
-      <TopBar navigationLabel="제품 탐색" brand={<strong>LK Console</strong>}>
+      <TopBar
+        navigationLabel="제품 탐색"
+        brand={(
+          <a
+            data-top-bar-home
+            href="#portal-home"
+            aria-label="LK Portal"
+            onClick={(event) => event.preventDefault()}
+            style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}
+          >
+            <Lockup variant="portal" tone="ink" height={20} decorative />
+          </a>
+        )}
+      >
         <TopBarNavItem
           active
           href="#topbar-destination"
@@ -570,8 +583,14 @@ export const DisclosureNavigationContract = {
     const panel = wrapper?.querySelector('[data-top-bar-menu]');
     const outside = fixture?.querySelector('[data-top-bar-outside]');
     const output = fixture?.querySelector('[data-top-bar-events]');
+    const brandHome = fixture?.querySelector('[data-top-bar-home]');
+    const brandLockup = brandHome?.querySelector('[data-lockup-variant="portal"]');
     const items = panel ? Array.from(panel.querySelectorAll('a, button')) : [];
-    if (!fixture || !wrapper || !primary || !trigger || !panel || !outside || !output || items.length !== 3) {
+    if (!fixture || !wrapper || !primary || !trigger || !panel || !outside || !output || items.length !== 3
+      || brandHome?.getAttribute('aria-label') !== 'LK Portal'
+      || brandHome?.getAttribute('href') !== '#portal-home'
+      || !brandLockup
+      || brandLockup.getAttribute('aria-hidden') !== 'true') {
       throw new Error('TopBar disclosure contract fixture is incomplete.');
     }
     if (primary.tagName !== 'A' || primary.getAttribute('href') !== '#topbar-destination' || primary.hasAttribute('aria-expanded')) {
