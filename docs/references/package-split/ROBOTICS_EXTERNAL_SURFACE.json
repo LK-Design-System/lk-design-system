@@ -9,8 +9,8 @@
     "refStatus": "published"
   },
   "vendoredArtifact": {
-    "path": "vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.5.tgz",
-    "sha256": "8cd4639f47dbecdd3e1fc88869d7c3343c446cb95f5244098972dffcae41017c"
+    "path": "vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.6.tgz",
+    "sha256": "6323a545a937db54b9e1ae1edde866313f94d9287fbc3e7f12c8ed2fe21b16f8"
   },
   "documentation": {
     "canonicalContract": {

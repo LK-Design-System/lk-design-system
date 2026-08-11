@@ -20,9 +20,9 @@
   ],
   "dependencies": {
     "@lk-design-system/lds-core": "0.1.0-rc.69.6",
-    "@lk-design-system/lds-theme": "0.1.0-rc.69.6",
     "@lk-design-system/lds-product": "0.1.0-rc.69.6",
-    "@lk-design-system/lds-robotics-ui": "0.1.0-rc.5"
+    "@lk-design-system/lds-theme": "0.1.0-rc.69.6",
+    "@lk-design-system/lds-robotics-ui": "0.1.0-rc.6"
   },
   "peerDependencies": {
     "react": ">=18 <20",
