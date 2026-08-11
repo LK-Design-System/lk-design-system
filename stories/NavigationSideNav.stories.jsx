@@ -287,7 +287,15 @@ function DockedSideNavFixture({ defaultCollapsed = false, initialValue = 'overvi
         headerCollapsed={<Lockup variant="mark" height={22} />}
         footerGap="var(--space-3)"
         footer={({ collapsed: footerCollapsed }) => (
-          <output data-testid="docked-footer-state">{footerCollapsed ? '접힌 계정 영역' : '펼친 계정 영역'}</output>
+          <UserMenu
+            data-testid="docked-footer-state"
+            data-state={footerCollapsed ? 'collapsed' : 'expanded'}
+            name="운영자"
+            detail="로봇 관리자"
+            status="online"
+            collapsed={footerCollapsed}
+            items={accountItems}
+          />
         )}
         style={{ height: 420 }}
       />
@@ -639,7 +647,11 @@ export const DockedSurface = {
       || styles.boxShadow !== 'none') {
       throw new Error('Docked SideNav must remove the floating outline, radius, and shadow while retaining one logical end divider.');
     }
-    if (getComputedStyle(brand).justifyContent !== 'flex-start' || footerState?.textContent !== '펼친 계정 영역') {
+    const footerTrigger = footerState?.querySelector('button[aria-haspopup="menu"]');
+    if (getComputedStyle(brand).justifyContent !== 'flex-start'
+      || footerState?.dataset.state !== 'expanded'
+      || !footerTrigger?.textContent?.includes('운영자')
+      || !footerTrigger?.textContent?.includes('로봇 관리자')) {
       throw new Error('Expanded SideNav must honor start-aligned branding and receive expanded footer render state.');
     }
     const overview = nav.querySelector('[data-sidenav-value="overview"]');
@@ -685,7 +697,10 @@ export const DockedSurface = {
     if (control.textContent?.trim() !== '사이드바 펼치기'
       || control.getAttribute('aria-expanded') !== 'false'
       || panel.dataset.collapsed !== 'true'
-      || footerState?.textContent !== '접힌 계정 영역'
+      || footerState?.dataset.state !== 'collapsed'
+      || footerTrigger?.getAttribute('title') !== '운영자'
+      || footerTrigger?.children.length !== 1
+      || !footerTrigger?.querySelector('[data-variant="person"]')
       || overview.querySelector('[data-sidenav-motion="content"]') !== overviewContent
       || overviewContent.dataset.state !== 'hidden'
       || overviewContent.getAttribute('aria-hidden') !== 'true'

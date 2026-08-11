@@ -380,8 +380,8 @@
         "height": 620
       },
       "reducedMotion": "no-preference",
-      "bytes": 23837,
-      "sha256": "0c6eddaf976c125d07b2843d547bcf59d73e177335e04953b2d650f3d0de030c"
+      "bytes": 24673,
+      "sha256": "7241e99a53462f976f8bafe2e749483ff9b1dc4a8e84da5e3cbec906765f02df"
     },
     {
       "name": "product-sidenav-docked-collapsed",
@@ -392,8 +392,8 @@
         "height": 620
       },
       "reducedMotion": "no-preference",
-      "bytes": 13478,
-      "sha256": "241a7ef2ec0d89ccecc2d555f5750bf3b78cc7650059fb65c6289a7b872451bc"
+      "bytes": 12598,
+      "sha256": "3865aa73b4f86d86da13328a0ea11f9aa018d1d77cf88d7c20b5d4273b740158"
     },
     {
       "name": "product-sidenav-docked-collapsed-dark",
@@ -406,8 +406,8 @@
         "height": 620
       },
       "reducedMotion": "no-preference",
-      "bytes": 13585,
-      "sha256": "3fae94cf448e7d9a5220adc156420b495d0209aa5c0fc111d94d1867d5ae2e7d"
+      "bytes": 12592,
+      "sha256": "90ab9bfae121a6c4d31a9bd8880eb57b2cfcf9a00f9edd9606882f17370e4b04"
     },
     {
       "name": "product-sidenav-docked-collapsed-narrow",
@@ -418,8 +418,8 @@
         "height": 620
       },
       "reducedMotion": "no-preference",
-      "bytes": 12030,
-      "sha256": "94116cb4bd0f74f66faef74cf59813681648426018066061beb58463d929ddb6"
+      "bytes": 11239,
+      "sha256": "dbe12b5ee023b915d68a745c5addd44c7d26877fcf32cea2c3e689ef3b4818b3"
     },
     {
       "name": "product-sidenav-docked-reduced-motion",
@@ -430,8 +430,8 @@
         "height": 620
       },
       "reducedMotion": "reduce",
-      "bytes": 13478,
-      "sha256": "241a7ef2ec0d89ccecc2d555f5750bf3b78cc7650059fb65c6289a7b872451bc"
+      "bytes": 12598,
+      "sha256": "3865aa73b4f86d86da13328a0ea11f9aa018d1d77cf88d7c20b5d4273b740158"
     },
     {
       "name": "product-dashboard-shell-normal",
