@@ -267,6 +267,7 @@ async function roboticsDocumentationDiagnostics(surface, root, ldsRoot, packageJ
   const expectedMetadata = {
     schemaVersion: 1,
     layer: 'robotics',
+    ...(packageJson.lds?.refStatus ? { refStatus: packageJson.lds.refStatus } : {}),
     manifest: `./${docs.files.manifest.path}`,
     llms: `./${docs.files.llms.path}`,
     adoptionChecklist: `./${docs.files.checklist.path}`,

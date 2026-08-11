@@ -6,20 +6,20 @@
     "name": "@lk-design-system/lds-robotics-ui",
     "version": "0.1.0-rc.5",
     "repository": "LK-Design-System/lk-design-system-robotics",
-    "refStatus": "release-candidate"
+    "refStatus": "published"
   },
   "vendoredArtifact": {
     "path": "vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.5.tgz",
-    "sha256": "298e29e4ea86110d717b8add9cded20fb5c03368513f6922eed0aea904eafe41"
+    "sha256": "8cd4639f47dbecdd3e1fc88869d7c3343c446cb95f5244098972dffcae41017c"
   },
   "documentation": {
     "canonicalContract": {
       "kind": "lds-ui-adoption-contract",
       "contractVersion": "1",
-      "snapshotManifestSha256": "34d86d44dbd2c9fbbc234f0cdf2f44117df75609f7d166e13bd0d83400a99f33",
+      "snapshotManifestSha256": "a6b0ebaf1d3d12a2fdd236a148b94ffe2c2129704c09e836446022d3183a50b4",
       "source": {
         "repository": "LK-Design-System/lk-design-system",
-        "ref": "lds-v0.1.0-rc.62",
+        "ref": "lds-v0.1.0-rc.69.5",
         "refStatus": "release-candidate",
         "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
         "sha256": "f4c4f71cff9f9108246a5f7cc5520d6095d599027adb75d0b61e385c5b7fef80"
@@ -28,7 +28,7 @@
     "files": {
       "manifest": {
         "path": "docs/package/manifest.json",
-        "sha256": "fecf4561277ec3c0bbba5fcb55d151503a7b7561c5b7d557244133cc12086afc"
+        "sha256": "a2b3343f635f0553774bc39598e405b5b9b6462303572ba4fc8a14ac1170f338"
       },
       "checklist": {
         "path": "docs/package/adoption-checklist.json",
@@ -52,11 +52,11 @@
       },
       "workflow": {
         "path": "docs/package/adoption-workflow.md",
-        "sha256": "519c3cb0da42d0b995b2161143e5629157cd0959f5d42594f5477cde298df8bc"
+        "sha256": "a15ae380af6c2b5f4d254dc9790a3a508b7d4f342f110bdb3ff73c901038e8c7"
       },
       "llms": {
         "path": "docs/package/llms.txt",
-        "sha256": "8cae785e7798f12f65ed1166fd52e0f339bbf755ae80757ebf88ba3fd551f5d2"
+        "sha256": "196f80397daa87975748f73d7a1d6d0c8e60de8871664674cd022f2859d13c5b"
       },
       "domainIndex": {
         "path": "docs/package/domain/README.md",
@@ -64,11 +64,11 @@
       },
       "tokenManifest": {
         "path": "docs/package/tokens/manifest.json",
-        "sha256": "138dda973019172dbb71ad63cd174a6750fb21f0b2db8ca37e0b09c29a273f19"
+        "sha256": "30e04076d27a27ffd3f6348e4e05e8cb5aa6495e82afbb80b05eab4a11e373fb"
       },
       "domainSymbolRegistry": {
         "path": "docs/package/domain-symbol-registry.json",
-        "sha256": "949d7db1acf86c5e76654e99f70e11f0982795e8873962f2d48739dcc046ed55"
+        "sha256": "864693636d689055551778e6268c749313dcee0baa6e3557126fde049c261c63"
       }
     },
     "domainDocuments": [
@@ -78,7 +78,7 @@
       },
       {
         "path": "docs/package/domain/FLEET_UI_REFERENCE_PLAN.md",
-        "sha256": "9bb20197e06737639e5d7b529b0fdbbf2331f602bacfd1eff0a5d61a9b9a2633"
+        "sha256": "48b98075f2c0bb3106d8c537e9989b57368cb2af3f07fddf263c76b7286b847f"
       },
       {
         "path": "docs/package/domain/NAVIGATION_COORDINATE_CONTRACT.md",
@@ -86,7 +86,7 @@
       },
       {
         "path": "docs/package/domain/NAVIGATION_EXPRESSION_CONVENTIONS.md",
-        "sha256": "4eec8a0a857f7575936e0616cf6e8d81b846190a5d988d988323c479775f085b"
+        "sha256": "84b020fbdeb3fa1c318fa1d6e7322683d441edc40068ea83e49dbfd85caa75c2"
       },
       {
         "path": "docs/package/domain/OCCUPANCY_MAP_CONVENTIONS.md",
@@ -94,19 +94,19 @@
       },
       {
         "path": "docs/package/domain/OVERLAY_STATUS_CHIP.md",
-        "sha256": "eefa9f1c070b2a6e7f0b19c993f97c4d589fd3462d38c99054f47c40c9c5225a"
+        "sha256": "eeb8d47501c394e9f0fbacc46bf7efb9fa6293729f2ee4b55ebb014da809f409"
       },
       {
         "path": "docs/package/domain/SELECTION_FOCUS_AUDIT.md",
-        "sha256": "1fac23ff91980dc24fc71014aad1786317a5fa8e18ab0222de29b0ba4b99de33"
+        "sha256": "4b8eb90f942f8381f063297cde965dc9563ddd2eebfb8027fe7cc5153f1cbbe8"
       },
       {
         "path": "docs/package/domain/STRUCTURE_ASSESSMENT.md",
-        "sha256": "2bcaad66fc7bd5e5469994dc8e4cf085d7e611be0bd954baafe1d4a9c3c8ecb2"
+        "sha256": "8404cc863e567a7452ac10a30e08d86e97bfc420a614ef892fe639dcbc68a4bc"
       },
       {
         "path": "docs/package/domain/ATTRIBUTIONS.md",
-        "sha256": "f44856738fd576c95be0ba735cacec61c87a82fbd5f06435ecd4c1450829734e"
+        "sha256": "6ba6c5b00841659c322dc95f950d58fe9a61c9125521053407ba74ca5f01556a"
       }
     ],
     "publicDocs": {
