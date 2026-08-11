@@ -388,7 +388,17 @@ export const SideNav = React.forwardRef(function SideNav({
       <style>{sideNavStyles}</style>
       {brand != null && (
         <div data-slot="brand" className={partClassName(classNames, 'brand', 'lk-sidenav__brand') || undefined} style={{ ...brandRegionStyle, ...partStyle(styles, 'brand') }}>
-          <div data-sidenav-motion="swap" data-state={col ? 'compact' : 'expanded'} style={{ display: 'flex', minWidth: 0, animation: swapAnimation }}>
+          <div
+            data-sidenav-motion="swap"
+            data-state={col ? 'compact' : 'expanded'}
+            style={{
+              display: 'flex',
+              justifyContent: col || brandAlign === 'center' ? 'center' : 'flex-start',
+              width: '100%',
+              minWidth: 0,
+              animation: swapAnimation,
+            }}
+          >
             {brand}
           </div>
         </div>

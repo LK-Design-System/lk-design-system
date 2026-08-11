@@ -664,6 +664,13 @@ export const DockedSurface = {
       || !motionStyles.includes('[data-sidenav-motion]')) {
       throw new Error('SideNav collapse motion must expose stable content/brand hooks and a reduced-motion guard for every coordinated transition.');
     }
+    const brandStyles = getComputedStyle(brand);
+    const brandContentWidth = brand.clientWidth
+      - Number.parseFloat(brandStyles.paddingLeft)
+      - Number.parseFloat(brandStyles.paddingRight);
+    if (Math.abs(brandMotion.getBoundingClientRect().width - brandContentWidth) >= 1) {
+      throw new Error('The animated brand swap wrapper must preserve the full header-slot width.');
+    }
     const expandedGeometry = {
       brandPaddingBottom: Number.parseFloat(getComputedStyle(brand).paddingBottom),
       rowHeight: overview?.getBoundingClientRect().height,
