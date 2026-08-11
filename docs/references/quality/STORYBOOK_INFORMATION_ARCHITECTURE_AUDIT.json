@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "361ea8b57d1e91cb4540b8e87480879a9290bbbd48239c018bf12dfda2dc3d52",
+    "storybookIndexSha256": "efd2f5b5239ecfe3e86cd33c3f50424460b1c4db30ef38c09c819dd5136312ec",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -71,7 +71,7 @@
     "describedPublicStories": 496,
     "reviewedPages": 195,
     "reviewedStories": 705,
-    "staleReviewedPages": 11,
+    "staleReviewedPages": 10,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
@@ -24535,7 +24535,7 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/BrandProductLockup.stories.jsx",
-      "sourceSha256": "8734140326a40312ddc5534b1ac630acdeb35a47b7ac7c412899b114ba339060",
+      "sourceSha256": "4931ba405f0e13dbf0a13ba1bd47dc76dcc796211bfc388242d887d668680b5e",
       "primaryOwner": "ProductLockup",
       "ownerComponents": [
         "ProductLockup"
@@ -24561,7 +24561,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+rendered-story+a11y+visual-regression",
       "reviewedAt": "2026-08-11",
-      "reviewedSourceSha256": "8734140326a40312ddc5534b1ac630acdeb35a47b7ac7c412899b114ba339060",
+      "reviewedSourceSha256": "4931ba405f0e13dbf0a13ba1bd47dc76dcc796211bfc388242d887d668680b5e",
       "stories": [
         {
           "id": "lds-theme-brand-product-lockup--narrow-compact",
@@ -24587,7 +24587,7 @@
         },
         {
           "id": "lds-theme-brand-product-lockup--product-lockup-standard",
-          "name": "표준 · LK Portal 조형",
+          "name": "표준 · 모브랜드 우선",
           "exportName": "ProductLockupStandard",
           "visibility": "public",
           "tags": [
@@ -24611,7 +24611,7 @@
           ]
         }
       ],
-      "reviewNote": "2026-08-11 reviewed the Portal-style ProductLockup source, approved console/portal registry, exact fixed-Portal path/transform/viewBox parity assertion, positive/reverse/compact specimens, appearance API grammar, TopBar ownership boundary, Axe result, and targeted visual baseline."
+      "reviewNote": "2026-08-11 re-reviewed the parent-brand-first ProductLockup source and rendered story: approved console/portal SemiBold 600 outlines preserve the 1X height and 0.35 mark-width gap, the legacy ExtraBold 800 Portal remains a visibly distinct comparison asset, positive/reverse/compact specimens and accessible names pass the focused Axe guard, and the targeted visual baseline was inspected and refreshed."
     },
     {
       "title": "LDS Theme/Controls/Theme Toggle",

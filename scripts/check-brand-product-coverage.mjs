@@ -6,6 +6,7 @@ const root = process.cwd();
 const auditPath = 'docs/references/brand/PRODUCT_BRAND_ASSET_AUDIT.json';
 const documentationPath = 'docs/PRODUCT_FRONTEND_COVERAGE.md';
 const constructionPath = 'assets/brand/lk-logo-construction.json';
+const productLockupConstructionPath = 'assets/brand/lk-product-lockups.json';
 const requiredProducts = ['web-viz', 'control', 'portal'];
 const expectedRepositories = new Map([
   ['web-viz', 'LK-ROBOTICS/lk_web_viz'],
@@ -35,6 +36,7 @@ async function assertLocalReference(reference, label) {
 const audit = JSON.parse(await readFile(path.join(root, auditPath), 'utf8'));
 const documentation = await readFile(path.join(root, documentationPath), 'utf8');
 const construction = JSON.parse(await readFile(path.join(root, constructionPath), 'utf8'));
+const productLockupConstruction = JSON.parse(await readFile(path.join(root, productLockupConstructionPath), 'utf8'));
 
 assert(audit.schemaVersion === 1, 'Brand product audit schemaVersion must be 1.');
 assert(/^\d{4}-\d{2}-\d{2}$/.test(audit.auditedAt), 'Brand product audit date must use YYYY-MM-DD.');
@@ -45,6 +47,7 @@ assert(
   'Audit must state the bounded automated-check scope.',
 );
 assert(audit.standard?.constructionVersion === construction.constructionVersion, 'Audit construction version must match the construction manifest.');
+assert(audit.standard?.productLockupConstructionVersion === productLockupConstruction.constructionVersion, 'Audit ProductLockup construction version must match the product registry manifest.');
 assert(audit.standard?.geometryVersion === construction.symbol.geometryVersion, 'Audit geometry version must match the construction manifest.');
 assert(audit.standard?.smallUseVariantApproved === false, 'No unapproved small-use LK redraw may be claimed.');
 await assertLocalReference(audit.standard.constructionManifest, 'standard.constructionManifest');
@@ -136,7 +139,7 @@ assert(controlReplacement.loginRenderedSquarePx >= construction.layout.officialS
 const portalReplacement = audit.reviews.find((review) => review.id === 'portal').replacement;
 assert(portalReplacement.registryStatus === 'approved', 'LK Portal must remain an approved ProductLockup registry entry.');
 assert(portalReplacement.approvedProductKey === 'portal', 'LK Portal must resolve through the approved portal ProductLockup key.');
-assert(portalReplacement.assetKind === 'fixed-outlined-lockup', 'LK Portal must use a fixed outlined asset, not live product-name text.');
+assert(portalReplacement.assetKind === 'parent-brand-first-outlined-lockup', 'LK Portal must use the approved parent-brand-first outlined asset, not live product-name text.');
 assert(portalReplacement.collapsedMode === 'compact', 'LK Portal must use ProductLockup compact mode in collapsed navigation.');
 assert(portalReplacement.collapsedVariant === 'mark', 'LK Portal collapsed navigation must use the approved mark.');
 assert(portalReplacement.renderedHeightPx >= construction.layout.mark.minimumRenderedHeightPx, 'LK Portal mark usage must meet the rendered mark minimum.');

@@ -1,6 +1,6 @@
 # ProductLockup
 
-TopBar·SideNav에서 `LK + 제품명`을 **LK Portal과 같은 로고 문법**으로 표시하는 제품 셸 lockup입니다. 자유 텍스트를 옆에 붙이는 컴포넌트가 아니라, 브랜드 승인을 거쳐 registry에 등록된 제품 워드마크만 outline SVG로 렌더합니다.
+TopBar·SideNav에서 `LK + 제품명`을 **LK 모브랜드 우선 로고 문법**으로 표시하는 제품 셸 lockup입니다. 기존 LK Portal의 대문자·1X·간격 리듬을 계승하되 제품명은 SemiBold 600으로 낮춰 LK가 먼저 읽힙니다. 자유 텍스트를 옆에 붙이는 컴포넌트가 아니라, 브랜드 승인을 거쳐 registry에 등록된 제품 워드마크만 outline SVG로 렌더합니다.
 
 ## 선택
 
@@ -9,9 +9,9 @@ TopBar·SideNav에서 `LK + 제품명`을 **LK Portal과 같은 로고 문법**�
 - `product`는 현재 `console`과 `portal`만 승인되어 있습니다. Web Viz·Control은 공식 짧은 제품명 승인과 registry 등록 전까지 임의 조판하지 않습니다.
 - 법인·파트너·마케팅용 새로운 공식 자산 export는 별도 브랜드 승인 절차가 필요합니다.
 
-## Portal 기준 작도
+## 모브랜드 우선 작도
 
-- 제품 워드마크: Montserrat ExtraBold 800 v7.222의 outline path
+- 제품 워드마크: Montserrat SemiBold 600 v7.222의 outline path
 - 표기: 대문자, 기본 kerning, 추가 자간 `0`, 가로·세로 변형과 수동 glyph 수정 없음
 - 제품명 visible ink 높이: LK mark visible 높이 `1X`
 - visible gap: LK mark **visible 폭의 `0.35`**. 이는 `0.35X`가 아니며, mark 폭이 `1.08176X`라 실제 간격은 `0.378616X`입니다.
@@ -39,7 +39,7 @@ full lockup을 줄바꿈·말줄임·비균등 축소하지 않습니다. 폭이
 
 ## Registry와 승인
 
-새 제품은 `assets/brand/lk-product-lockups.json`에 승인 key·canonical label·대문자 wordmark·golden glyph metric을 등록하고 `node scripts/generate-product-lockups.mjs`로 path를 생성합니다. 생성기는 pinned font와 license hash, glyph IDs, kerning origins, ink bounds를 검증합니다. `product="portal"`은 기존 `Lockup variant="portal"`의 path·transform·viewBox와 정확히 같아야 합니다.
+새 제품은 `assets/brand/lk-product-lockups.json`에 승인 key·canonical label·대문자 wordmark·golden glyph metric을 등록하고 `node scripts/generate-product-lockups.mjs`로 path를 생성합니다. 생성기는 pinned font와 license hash, glyph IDs, kerning origins, ink bounds를 검증합니다. `product="portal"`도 새 모브랜드 우선 SemiBold 규격을 따르며, ExtraBold 800인 기존 `Lockup variant="portal"`은 비교·호환용 고정 자산으로 별도 보존합니다.
 
 제품별 화면에서 문자열, 폰트, 간격을 직접 바꾸거나 미등록 key를 우회하지 않습니다. 표시용 한국어 설명, 환경·버전·workspace·상태·tagline은 lockup 밖의 UI text로 둡니다.
 

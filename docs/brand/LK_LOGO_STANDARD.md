@@ -10,7 +10,7 @@
 | Construction source | [`../../assets/brand/lk-logo-construction.json`](../../assets/brand/lk-logo-construction.json) |
 | Governance record | [`lk-logo-governance.json`](lk-logo-governance.json) |
 
-이 표준은 현재 저장소에서 LK ROBOTICS 로고를 선택·배치·검수·배포하는 기준입니다. 로고의 법적 등록 여부를 주장하거나 외부 사용 권한을 자동으로 부여하지는 않습니다. 법인·상표·파트너 맥락의 공개 사용은 [외부 사용과 승인](#외부-사용과-승인)을 별도로 통과해야 합니다. 제품 UI 셸의 Portal형 `LK mark + 제품명` outline은 별도 [`LK 제품 로크업 표준`](LK_PRODUCT_LOCKUP_STANDARD.md)의 승인 registry를 따르며, 임의 문자열을 runtime font로 조판하지 않습니다.
+이 표준은 현재 저장소에서 LK ROBOTICS 로고를 선택·배치·검수·배포하는 기준입니다. 로고의 법적 등록 여부를 주장하거나 외부 사용 권한을 자동으로 부여하지는 않습니다. 법인·상표·파트너 맥락의 공개 사용은 [외부 사용과 승인](#외부-사용과-승인)을 별도로 통과해야 합니다. 제품 UI 셸의 모브랜드 우선 `LK mark + 제품명` outline은 별도 [`LK 제품 로크업 표준`](LK_PRODUCT_LOCKUP_STANDARD.md)의 승인 registry를 따르며, 임의 문자열을 runtime font로 조판하지 않습니다.
 
 ## 1. v1.0 정본과 권위
 
@@ -58,7 +58,7 @@ v1.0은 현재 커스텀 LK 심볼을 승인 geometry로 동결합니다. 심볼
 | 요소 | 규칙 |
 | --- | --- |
 | `ROBOTICS` | 대문자 `ROBOTICS`; Montserrat ExtraBold 800 v7.222; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
-| 승인 제품명 | 현재 `CONSOLE`·`PORTAL`; Montserrat ExtraBold 800 v7.222; 대문자; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지; registry 밖 이름 금지 |
+| 승인 제품명 | 현재 `CONSOLE`·`PORTAL`; Montserrat SemiBold 600 v7.222; 대문자; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지; registry 밖 이름 금지. 기존 고정 Portal만 ExtraBold 800 호환 자산으로 유지 |
 | 법인명 | NFC `주식회사 엘케이로보틱스`; Noto Sans KR ExtraBold `wght=800` v2.004-H2; 기본 kerning; 글자 사이 `0.105em`; 마지막 글자 뒤 tracking 없음; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
 | 배포 | 모든 wordmark·제품명·법인명은 SVG outline path; `<text>` 금지; 런타임 글꼴 의존성 없음 |
 
@@ -80,7 +80,7 @@ v1.0은 현재 커스텀 LK 심볼을 승인 geometry로 동결합니다. 심볼
 | --- | --- | --- | --- |
 | mark | 이미 LK 브랜드임이 명확한 매우 작은 UI, 향후 플랫폼 icon의 핵심 도형 후보 | 법인 식별이 처음 필요한 문서, 파트너십 서명, 기능 아이콘 대체, 승인 없이 만든 iOS/Android app icon | `lk-mark-navy.svg`, `lk-mark-white.svg`, `Lockup variant="mark"` |
 | inline | Top bar, Side navigation, 가로 헤더, 제한된 세로 공간 | 정사각형 중심 구성, 법인명 필수 문서 | `lk-logo-inline-navy.svg`, `lk-logo-inline-white.svg`, `Lockup variant="inline"` |
-| portal fixed lockup | 기존 통합 호환 또는 승인된 `LK Portal` 고정 자산이 필요한 표면 | 다른 제품명, 신규 registry 확장, 자유 텍스트 slot | `Lockup variant="portal"` |
+| portal fixed lockup | 기존 ExtraBold 800 통합 호환 또는 Portal 정본 변경 비교가 필요한 표면 | 다른 제품명, 신규 registry 확장, 자유 텍스트 slot | `Lockup variant="portal"` |
 | registered product lockup | Console·Portal의 TopBar·SideNav 제품 식별 | Web Viz·Control(승인 대기), 임의 제품명, 고객·환경·상태 문자열 | `ProductLockup product="console"` / `product="portal"` |
 | stacked | 세로 중심 구성, 정사각형에 가까운 브랜드 영역 | 낮은 높이의 탐색 바 | `lk-logo-navy.svg`, `lk-logo-white.svg`, `Lockup variant="stacked"` |
 | official square | 프로필, 일반 회사 식별, 고정된 정사각형 표면 | 법인명 표기가 필요한 공식 서류 | `lk-logo-official.svg`, `lk-logo-official-light.svg` |
@@ -238,7 +238,7 @@ CMYK/Pantone을 추가하려면 최소한 출력 공정, ICC profile, 용지·�
 | --- | --- | --- |
 | SVG | 공식 원본 형식 | outline path와 `preserveAspectRatio` 유지; path 직접 편집 금지 |
 | React `Lockup` | 제품 UI 공식 runtime | 승인 variant와 색상 정책 사용; `height`가 최소 크기 이상인지 확인 |
-| React `ProductLockup` | 제품 UI 로크업 runtime | `console`·`portal` registry의 승인 SVG outline만 렌더; 기본 28px·최소 20px, `ink`·`white`, full/compact; raw text·runtime font 금지 |
+| React `ProductLockup` | 제품 UI 로크업 runtime | `console`·`portal` registry의 SemiBold 600 승인 SVG outline만 렌더; 기본 28px·최소 20px, positive/reverse, full/compact; raw text·runtime font 금지 |
 | PNG | 필요 시 파생 export | 승인 SVG에서 최종 픽셀 크기와 `1x/2x`로 내보내고 재압축·재확대 체인을 만들지 않음 |
 | PDF / EPS | 현재 공식 생성물 없음 | 인쇄업체가 요구하면 승인 SVG에서 곡선을 보존해 제작하고 proof 승인 전에는 새 정본으로 취급하지 않음 |
 | 폰트 포함 파일 | 배포 불필요 | wordmark와 법인명은 outline이므로 logo 사용을 위해 폰트를 설치·동봉하지 않음 |
@@ -266,7 +266,7 @@ construction manifest, governance 원문과 build-time 글꼴은 저장소 루�
 | --- | --- | --- |
 | LK Web Viz | `migration-required` | registry는 `registry-name-approval-pending`이므로 `ProductLockup` 미지원; 로컬 gradient PNG migration과 회사 `Lockup` 적용은 별도 수행 |
 | LK Control Full Daedeok | `migration-required` | registry는 `registry-name-approval-pending`이므로 `ProductLockup` 미지원; 로그인 로컬 asset은 승인 회사 `Lockup` 자산으로 교체 |
-| LK Portal | `contract-compatible-upgrade-required` | 신규 셸은 `ProductLockup product="portal"`로 표준화; `Lockup variant="portal"`은 기존 호환·공식 고정 자산으로 유지 |
+| LK Portal | `contract-compatible-upgrade-required` | 신규 셸 제안은 SemiBold 600 `ProductLockup product="portal"`; ExtraBold 800 `Lockup variant="portal"`은 호환·비교 자산으로 유지하고 정본 변경은 별도 승인 |
 
 이 판정은 audit에 pin된 revision의 증거입니다. 제품의 최신 상태를 자동으로 보증하지 않으므로 migration 완료를 주장하려면 source pin과 asset checksum을 다시 갱신합니다.
 

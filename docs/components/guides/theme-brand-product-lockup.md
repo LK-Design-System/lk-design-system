@@ -8,7 +8,7 @@
 | Storybook | `LDS Theme/Brand/Product Lockup` |
 | Source | `../component-content.json#theme-brand-product-lockup` |
 
-Montserrat ExtraBold 800 outline, 대문자, 제품명 visible height 1X, mark visible 폭의 0.35 간격을 승인 registry 전체에 적용합니다. Console과 Portal은 동일한 조형이며 런타임 font와 SVG text를 사용하지 않습니다.
+LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 낮춥니다. 제품명 visible height 1X와 mark visible 폭의 0.35 간격은 유지해 Portal의 리듬을 계승하면서 LK가 먼저 읽히게 합니다.
 
 ## 사용 판단
 
@@ -42,7 +42,7 @@ Montserrat ExtraBold 800 outline, 대문자, 제품명 visible height 1X, mark v
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | 제품 워드마크: Montserrat ExtraBold 800 v7.222의 outline path |
+| 명시 규칙 1 | 제품 워드마크: Montserrat SemiBold 600 v7.222의 outline path |
 | 명시 규칙 2 | 표기: 대문자, 기본 kerning, 추가 자간 0, 가로·세로 변형과 수동 glyph 수정 없음 |
 | 명시 규칙 3 | visible gap: LK mark visible 폭의 0.35. 이는 0.35X가 아니며, mark 폭이 1.08176X라 실제 간격은 0.378616X입니다. |
 | 명시 규칙 4 | 전체 SVG 최소 높이 20px, 기본 높이 28px |
@@ -55,7 +55,7 @@ Montserrat ExtraBold 800 outline, 대문자, 제품명 visible height 1X, mark v
 
 ## Content and writing
 
-- TopBar·SideNav에서 LK + 제품명을 LK Portal과 같은 로고 문법으로 표시하는 제품 셸 lockup입니다. 자유 텍스트를 옆에 붙이는 컴포넌트가 아니라, 브랜드 승인을 거쳐 registry에 등록된 제품 워드마크만 outline SVG로 렌더합니다.
+- TopBar·SideNav에서 LK + 제품명을 LK 모브랜드 우선 로고 문법으로 표시하는 제품 셸 lockup입니다. 기존 LK Portal의 대문자·1X·간격 리듬을 계승하되 제품명은 SemiBold 600으로 낮춰 LK가 먼저 읽힙니다. 자유 텍스트를 옆에 붙이는 컴포넌트가 아니라, 브랜드 승인을 거쳐 registry에 등록된 제품 워드마크만 outline SVG로 렌더합니다.
 - 새 제품은 assets/brand/lk-product-lockups.json에 승인 key·canonical label·대문자 wordmark·golden glyph metric을 등록하고 node scripts/generate-product-lockups.mjs로 path를 생성합니다. 생성기는 pinned font와 license hash, glyph IDs, kerning origins, ink bounds를 검증합니다.
 - 제품별 화면에서 문자열, 폰트, 간격을 직접 바꾸거나 미등록 key를 우회하지 않습니다. 표시용 한국어 설명, 환경·버전·workspace·상태·tagline은 lockup 밖의 UI text로 둡니다.
 

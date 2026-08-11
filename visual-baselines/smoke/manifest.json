@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "count": 42,
+  "count": 41,
   "maxDiffRatio": 0.01,
   "captures": [
     {
@@ -502,8 +502,8 @@
         "height": 620
       },
       "reducedMotion": "no-preference",
-      "bytes": 53685,
-      "sha256": "2cf3566434e3985b041646a98f52b9e8f22ae7bda98ec3b08cf5b368ea7ba4e3"
+      "bytes": 54258,
+      "sha256": "8f4598f288b95e5e21d9efec6662839393c5cc9e1df3d8800538764ad7bd9605"
     }
   ]
 }

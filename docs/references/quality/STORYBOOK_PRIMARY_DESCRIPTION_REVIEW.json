@@ -3589,11 +3589,11 @@
       "importPath": "./stories/BrandProductLockup.stories.jsx",
       "storyId": "lds-theme-brand-product-lockup--product-lockup-standard",
       "exportName": "ProductLockupStandard",
-      "descriptionHash": "32139d4ec0f4877fd8158c337967ff1c0ef429c1183bdb135d82a685f8be91e5",
+      "descriptionHash": "c311b13a7049ad2ea93a434c3b59ab04a62c9f37773137701261887f579168c7",
       "sentences": [
         {
-          "hash": "32139d4ec0f4877fd8158c337967ff1c0ef429c1183bdb135d82a685f8be91e5",
-          "text": "고정 LK Portal 자산과 registry Portal이 완전히 같은지 비교하고, 같은 1X·0.35 mark-width 규칙의 LK Console, reverse, compact 조합을 확인합니다.",
+          "hash": "c311b13a7049ad2ea93a434c3b59ab04a62c9f37773137701261887f579168c7",
+          "text": "기존 ExtraBold 800 LK Portal과 새 SemiBold 600 ProductLockup Portal을 직접 비교하고, LK가 먼저 읽히는 Console·reverse·compact 조합을 확인합니다.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -3682,6 +3682,14 @@
       "importPath": "./stories/Brand.stories.jsx",
       "hash": "4b2c1a14648752d4fbb3cabdc0a57a37596c9b7a9ed7436ab7f45ddbcdfa0604",
       "text": "실제 적용에서는 배경 대비와 최소 크기를 지키고, 늘이기·회전·재채색 없이 제공된 조합을 사용하세요.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Theme/Brand/Product Lockup",
+      "importPath": "./stories/BrandProductLockup.stories.jsx",
+      "hash": "32139d4ec0f4877fd8158c337967ff1c0ef429c1183bdb135d82a685f8be91e5",
+      "text": "고정 LK Portal 자산과 registry Portal이 완전히 같은지 비교하고, 같은 1X·0.35 mark-width 규칙의 LK Console, reverse, compact 조합을 확인합니다.",
       "previousDecision": "retained-in-canvas"
     }
   ],

@@ -1,4 +1,4 @@
-# LK 제품 로크업 표준 v1.0
+# LK 제품 로크업 표준 v1.1
 
 | Field | Value |
 | --- | --- |
@@ -6,28 +6,28 @@
 | Status | Current |
 | Owner | Brand owner · Design system owner · Product naming owner |
 | Last reviewed | 2026-08-11 |
-| Standard version | 1.0.0 |
+| Standard version | 1.1.0 |
 | Registry source | [`../../assets/brand/lk-product-lockups.json`](../../assets/brand/lk-product-lockups.json) |
 | Runtime | [`../../components/brand/ProductLockup.jsx`](../../components/brand/ProductLockup.jsx) |
 
-이 표준은 LK Portal에서 사용하던 **LK + 제품명**의 시각 문법을 다른 승인 제품에도 일관되게 적용합니다. `ProductLockup`은 임의 문자열을 조판하는 컴포넌트가 아니라, 제품별로 검증된 SVG outline만 제공하는 승인 registry입니다. 따라서 제품 UI가 Montserrat를 설치하거나 제품명을 runtime `<text>`로 그리지 않습니다.
+이 표준은 LK Portal에서 사용하던 **대문자·1X·간격 리듬**을 계승하면서, LK mark가 제품명보다 먼저 읽히는 모브랜드 우선 위계를 적용합니다. `ProductLockup`은 임의 문자열을 조판하는 컴포넌트가 아니라, 제품별로 검증된 SVG outline만 제공하는 승인 registry입니다. 따라서 제품 UI가 Montserrat를 설치하거나 제품명을 runtime `<text>`로 그리지 않습니다.
 
 ## 1. `Lockup`과 `ProductLockup`의 경계
 
 | 체계 | 구성 | 사용 | 변경 권한 |
 | --- | --- | --- | --- |
 | 회사 `Lockup` | 승인된 LK mark·`LK ROBOTICS`·법인명 SVG/path | 회사·법인 식별, 마케팅, 파트너, 외부 배포 | 회사 logo construction·version·hash·승인 절차 |
-| `Lockup variant="portal"` | 기존 승인 `LK Portal` 고정 SVG/path | 기존 통합 호환과 공식 Portal 자산 | 기존 public API와 Portal 정본 유지 |
-| `ProductLockup` | LK mark + registry에 승인된 제품명 outline | TopBar·SideNav 등 제품 셸의 LK Portal형 식별 | 제품 lockup registry·outline·hash·승인 절차 |
+| `Lockup variant="portal"` | 기존 ExtraBold 800 `LK Portal` 고정 SVG/path | 기존 통합 호환과 Portal 변경 판단의 비교 기준 | 기존 public API와 Portal 정본 유지 |
+| `ProductLockup` | LK mark + registry에 승인된 SemiBold 600 제품명 outline | TopBar·SideNav 등 제품 셸의 모브랜드 우선 식별 | 제품 lockup registry·outline·hash·승인 절차 |
 
-신규 제품 셸은 `ProductLockup`을 사용합니다. 기존 `Lockup variant="portal"`은 제거하거나 재조판하지 않으며, Portal의 호환 API이자 공식 고정 자산으로 유지합니다. 두 API 모두 font text를 LK mark 옆에 즉석으로 붙이는 자유 조합이 아닙니다.
+신규 제품 셸은 `ProductLockup`을 사용합니다. 기존 `Lockup variant="portal"`은 이번 변경에서 제거하거나 재조판하지 않고 Portal의 호환 API와 800 비교 자산으로 유지합니다. 향후 Portal 정본도 600으로 바꿀지는 별도 브랜드 승인으로 결정합니다. 두 API 모두 font text를 LK mark 옆에 즉석으로 붙이는 자유 조합이 아닙니다.
 
 ## 2. 승인 registry
 
 | Registry key | Canonical name | 보이는 outline | 상태 |
 | --- | --- | --- | --- |
 | `console` | `Console` | `CONSOLE` | 지원 |
-| `portal` | `Portal` | `PORTAL` | 지원; 기존 `Lockup variant="portal"`과 같은 승인 시각 문법 |
+| `portal` | `Portal` | `PORTAL` | 지원; 새 SemiBold 600 모브랜드 우선 규격. 기존 800 고정 자산은 별도 유지 |
 | — (`Web Viz` 후보) | 미확정 | 미확정 | 승인 이름·outline이 없어 지원하지 않음 |
 | — (`Control` 후보) | 미확정 | 미확정 | 승인 이름·outline이 없어 지원하지 않음 |
 
@@ -40,7 +40,7 @@ public API는 `product: "console" | "portal"`의 닫힌 union만 허용합니다
 | 항목 | 표준 |
 | --- | --- |
 | LK mark | 회사 `Lockup`과 같은 geometry v1.0 path |
-| 제품명 원본 | Montserrat ExtraBold 800 v7.222, 대문자, 기본 kerning, 추가 자간 `0` |
+| 제품명 원본 | Montserrat SemiBold 600 v7.222, 대문자, 기본 kerning, 추가 자간 `0` |
 | 제품명 크기 | 제품명 outline의 보이는 높이 `1X` |
 | 내부 visual gap | `0.35 × LK mark의 보이는 폭` = 약 `0.378616X` |
 | 정렬 | mark와 제품명 outline의 보이는 bounds를 기준으로 세로 정렬 |
@@ -50,7 +50,7 @@ public API는 `product: "console" | "portal"`의 닫힌 union만 허용합니다
 
 내부 간격은 **`0.35X`가 아닙니다.** mark의 보이는 폭에 `0.35`를 곱합니다. LK mark 폭이 `1.08176X`이므로 높이 기준으로 환산한 간격은 약 `0.378616X`입니다.
 
-제품명은 한 줄의 완성된 outline입니다. 줄바꿈, 말줄임, crop, 글자별 이동, 별도 letter spacing, 비균일 scale로 폭을 맞추지 않습니다. registry 결과의 path·transform·visible bounds·viewBox·hash를 생성 결과로 검증합니다.
+제품명은 한 줄의 완성된 SemiBold outline입니다. LK mark 도형은 바꾸지 않고 제품명 획만 낮춰 모브랜드가 먼저 읽히게 합니다. 줄바꿈, 말줄임, crop, 글자별 이동, 별도 letter spacing, 비균일 scale로 폭을 맞추지 않습니다. registry 결과의 path·transform·visible bounds·viewBox·hash를 생성 결과로 검증합니다.
 
 ## 4. Runtime API
 
@@ -110,7 +110,7 @@ compact가 홈 링크라면 hover/focus 사용자가 제품명을 확인해야 �
 - LK mark 옆에 Montserrat 또는 UI font의 live text를 붙여 새 제품 로크업 만들기
 - registry에 없는 `Web Viz`, `Control`, 고객명, 지점명, 환경명 등을 우회 렌더링하기
 - `LK | CONSOLE`, slash, dot, badge로 로크업 내부를 분할하기
-- 제품마다 mark·gap·font·weight·case·appearance를 바꾸기
+- 제품마다 mark·gap·font·weight·case·appearance를 바꾸거나 제품명만 ExtraBold 800으로 되돌리기
 - full을 좁은 슬롯에서 찌그러뜨리거나 crop·wrap·ellipsis하기
 - 페이지 제목, workspace, 버전, `DEV`·`STG`, beta, 상태, 슬로건을 제품명 outline에 합치기
 - ProductLockup을 기능 icon, 반복 pattern, watermark로 사용하기
@@ -123,14 +123,14 @@ LDS는 registry key, canonical name, mark+wordmark geometry, outline path, appea
 | 제품 | 현재 적용 기준 |
 | --- | --- |
 | LK Console | `ProductLockup product="console"`; expanded shell은 full, collapsed rail은 compact |
-| LK Portal | 신규 셸은 `ProductLockup product="portal"`; 기존 `Lockup variant="portal"`은 호환·공식 고정 자산으로 유지 |
+| LK Portal | 신규 셸의 제안안은 `ProductLockup product="portal"` SemiBold 600; 기존 `Lockup variant="portal"` ExtraBold 800은 호환·비교 자산으로 유지하며 정본 변경은 별도 승인 |
 | LK Web Viz | registry 이름과 outline 승인 전까지 `ProductLockup` 미지원; raw text fallback 금지 |
 | LK Control Full Daedeok | registry 이름과 outline 승인 전까지 `ProductLockup` 미지원; raw text fallback 금지 |
 
 새 제품을 registry에 추가할 때는 다음을 한 변경으로 검토합니다.
 
 1. 제품 naming owner가 canonical name과 보이는 대문자 문자열을 승인합니다.
-2. Montserrat ExtraBold 800 v7.222의 고정 font hash와 기본 kerning으로 [`generate-product-lockups.mjs`](../../scripts/generate-product-lockups.mjs)에서 outline을 생성합니다.
+2. Montserrat SemiBold 600 v7.222의 고정 font hash와 기본 kerning으로 [`generate-product-lockups.mjs`](../../scripts/generate-product-lockups.mjs)에서 outline을 생성합니다.
 3. 보이는 높이 `1X`, mark 보이는 폭의 `0.35배` gap, 세로 정렬, viewBox와 path hash를 검증합니다.
 4. `20px`·`28px`, positive·reverse, full·compact를 시각 검수합니다.
 5. 접근성 이름, Storybook, visual regression, 제품 적용 audit와 문서를 함께 갱신합니다.
@@ -139,11 +139,11 @@ Web Viz와 Control은 1단계가 완료되지 않았으므로 이름이나 대�
 
 ## 10. 근거와 의도적 적용
 
-- [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)는 pinned build-time wordmark source입니다. 배포 결과는 outline이므로 소비자 runtime에 글꼴을 요구하지 않습니다.
+- [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)는 pinned build-time wordmark source입니다. ProductLockup은 SemiBold 600을, 회사 `ROBOTICS`와 기존 고정 Portal은 ExtraBold 800을 사용합니다. 배포 결과는 outline이므로 소비자 runtime에 글꼴을 요구하지 않습니다.
 - [Atlassian logos](https://atlassian.design/foundations/logos)는 제품 식별과 고정 attribution 자산을 구분하고 승인 로고의 임의 합성을 금지합니다. LDS는 자유 조합 대신 닫힌 outline registry를 선택했습니다.
 - [W3C functional images](https://www.w3.org/WAI/tutorials/images/functional/)와 [WCAG Technique H2](https://www.w3.org/WAI/WCAG22/Techniques/html/H2)는 이미지 링크의 목적 이름과 중복 대체 텍스트 회피 근거입니다.
 
-일반 UI shell이 native text 제품명을 사용하는 사례와 달리, LK는 기존 Portal과의 시각 일관성을 위해 같은 무게·높이의 outlined wordmark를 채택합니다. 대신 raw string API를 열지 않고 승인 registry, deterministic outline과 hash로 오용 범위를 제한합니다. 외부 자료의 geometry나 수치는 LK에 복사하지 않습니다.
+일반 UI shell이 native text 제품명을 사용하는 사례와 달리, LK는 기존 Portal의 대문자·높이·간격 리듬을 유지하되 제품명만 SemiBold로 낮춰 모브랜드 우선 위계를 채택합니다. raw string API를 열지 않고 승인 registry, deterministic outline과 hash로 오용 범위를 제한합니다. 외부 자료의 geometry나 수치는 LK에 복사하지 않습니다.
 
 ## 11. 변경 절차
 

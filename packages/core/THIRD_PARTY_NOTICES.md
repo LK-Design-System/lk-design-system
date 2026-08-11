@@ -37,8 +37,10 @@ SOFTWARE.
 
 ## Montserrat
 
-The outlined `ROBOTICS` wordmark geometry in this package was generated from
-Montserrat ExtraBold 800, Version 7.222 (Copyright 2011 The Montserrat Project
-Authors), licensed under the SIL Open Font License 1.1. No font binary or
-runtime font dependency is included. Source and license provenance are kept in
-the root LK Design System repository.
+The outlined `ROBOTICS` wordmark and legacy fixed `PORTAL` geometry in this
+package were generated from Montserrat ExtraBold 800. Parent-brand-first
+`ProductLockup` product names were generated from Montserrat SemiBold 600.
+Both are Version 7.222 (Copyright 2011 The Montserrat Project Authors), licensed
+under the SIL Open Font License 1.1. No font binary or runtime font dependency
+is included. Source and license provenance are kept in the root LK Design
+System repository.

@@ -20,8 +20,10 @@ Wanted brand assets.
 
 ## Montserrat (The Montserrat Project Authors)
 
-The approved `ROBOTICS` wordmark outline is generated from the static
-Montserrat ExtraBold 800 font in the official Version 7.222 release.
+The approved `ROBOTICS` wordmark and legacy fixed `PORTAL` outline are
+generated from Montserrat ExtraBold 800. Parent-brand-first `ProductLockup`
+product names are generated from Montserrat SemiBold 600. Both static fonts
+come from the official Version 7.222 release.
 
 - Source: https://github.com/JulietaUla/Montserrat/releases/tag/v7.222
 - License: SIL Open Font License 1.1

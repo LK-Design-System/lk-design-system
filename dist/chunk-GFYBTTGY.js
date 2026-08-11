@@ -89,10 +89,6 @@ function Lockup({ variant = "inline", tone = "ink", color, height, title, decora
 }
 
 export {
-  PORTAL_PATHS,
-  PORTAL_INLINE_TRANSFORM,
-  PORTAL_LOCKUP_VIEWBOX,
-  PORTAL_MINIMUM_RENDERED_HEIGHT_PX,
   Lockup
 };
-//# sourceMappingURL=chunk-GE2W2SBV.js.map
+//# sourceMappingURL=chunk-GFYBTTGY.js.map

@@ -75,6 +75,24 @@
       "manualGlyphEdits": false
     }
   },
+  "productLockupWordmark": {
+    "case": "uppercase",
+    "family": "Montserrat",
+    "style": "SemiBold",
+    "weight": 600,
+    "fontVersion": "7.222",
+    "fontFile": "vendor/montserrat-v7.222/Montserrat-SemiBold.ttf",
+    "fontSha256": "49FBFCE003AD1692D7C9A6502791577088C12C50088D4CAA27DBBFE540AD9D13",
+    "fontSource": "https://raw.githubusercontent.com/JulietaUla/Montserrat/5dae7a4ef9c0bf9fe48dc54fd1076eefaa0a8c7e/fonts/ttf/Montserrat-SemiBold.ttf",
+    "license": "SIL Open Font License 1.1",
+    "licenseFile": "vendor/montserrat-v7.222/OFL.txt",
+    "licenseSha256": "41F82BB4D24B304F30F7136BC47ABDD083782E4265C984160F5649D1E78EA49C",
+    "kerning": "font-default",
+    "letterSpacing": 0,
+    "horizontalScale": 1,
+    "verticalScale": 1,
+    "manualGlyphEdits": false
+  },
   "layout": {
     "xDefinition": "visible height of the custom LK symbol",
     "tightPaddingSourceUnits": 4,
@@ -106,6 +124,12 @@
       "minimumRenderedHeightPx": 20
     },
     "portal": {
+      "visibleWordmarkHeightToX": 1,
+      "gapToMarkWidth": 0.35,
+      "verticalAlignment": "visible-bounds",
+      "minimumRenderedHeightPx": 20
+    },
+    "productLockup": {
       "visibleWordmarkHeightToX": 1,
       "gapToMarkWidth": 0.35,
       "verticalAlignment": "visible-bounds",

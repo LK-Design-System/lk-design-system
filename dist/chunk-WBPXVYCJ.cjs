@@ -90,9 +90,5 @@ function Lockup({ variant = "inline", tone = "ink", color, height, title, decora
 
 
 
-
-
-
-
-exports.PORTAL_PATHS = PORTAL_PATHS; exports.PORTAL_INLINE_TRANSFORM = PORTAL_INLINE_TRANSFORM; exports.PORTAL_LOCKUP_VIEWBOX = PORTAL_LOCKUP_VIEWBOX; exports.PORTAL_MINIMUM_RENDERED_HEIGHT_PX = PORTAL_MINIMUM_RENDERED_HEIGHT_PX; exports.Lockup = Lockup;
-//# sourceMappingURL=chunk-EMF5W2XW.cjs.map
+exports.Lockup = Lockup;
+//# sourceMappingURL=chunk-WBPXVYCJ.cjs.map

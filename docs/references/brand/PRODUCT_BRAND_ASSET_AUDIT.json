@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "auditedAt": "2026-08-11",
-  "purpose": "Pin how the three required LK product frontends consume official company assets and product-shell identity, keep Portal-style ProductLockup output on an LDS-approved outlined registry instead of a free-form text API, and make name-approval and downstream migration gaps explicit.",
+  "purpose": "Pin how the three required LK product frontends consume official company assets and product-shell identity, keep parent-brand-first ProductLockup output on an LDS-approved outlined registry instead of a free-form text API, and make name-approval and downstream migration gaps explicit.",
   "evidenceVerification": {
     "sourceObjects": "manually-verified-against-local-git-objects-at-audit-date",
     "automatedCheck": "validates-required-product-coverage-pin-format-documentation-and-brand-size-contracts-without-fetching-product-repositories"
@@ -17,6 +17,7 @@
       "portal"
     ],
     "constructionVersion": 4,
+    "productLockupConstructionVersion": 2,
     "geometryVersion": "1.0",
     "smallUseVariantApproved": false
   },
@@ -25,8 +26,8 @@
       "LK symbol and wordmark geometry",
       "approved positive, reverse, monochrome, square, inline, stacked, banner, and corporate outputs",
       "brand colors, clear space, and minimum rendered sizes",
-      "the approved ProductLockup key registry and its frozen outlined LK-plus-product paths",
-      "ProductLockup layout, positive and reverse appearance mapping, minimum size, and accessible-name structure",
+      "the approved ProductLockup key registry and its frozen SemiBold 600 outlined LK-plus-product paths",
+      "ProductLockup parent-brand-first hierarchy, layout, positive and reverse appearance mapping, minimum size, and accessible-name structure",
       "deterministic source hashes and platform export contracts"
     ],
     "productOwns": [
@@ -141,17 +142,17 @@
       "repository": "LK-ROBOTICS-AX/lk_portal",
       "sourceRevision": "546f11e4640b5a9ec81fc210a5085581b9d277bc",
       "classification": "contract-compatible-upgrade-required",
-      "finding": "LK Portal's pinned sidebar already composes the LDS Lockup mark at a 20px rendered SVG height with a visible Portal label, and Portal already has an approved fixed outlined asset. Its visual result is therefore contract-compatible; the pinned rc.23 package still requires an upgrade to consume the registered ProductLockup entry and current construction contract.",
+      "finding": "LK Portal's pinned sidebar already composes the LDS Lockup mark at a 20px rendered SVG height with a visible Portal label. Its composition is compatible, but the new ProductLockup proposal changes the product outline from the legacy ExtraBold 800 asset to parent-brand-first SemiBold 600, so Portal requires an explicit visual review as part of the package upgrade.",
       "replacement": {
         "identityComponent": "ProductLockup",
         "registryStatus": "approved",
         "approvedProductKey": "portal",
-        "assetKind": "fixed-outlined-lockup",
+        "assetKind": "parent-brand-first-outlined-lockup",
         "collapsedMode": "compact",
         "collapsedVariant": "mark",
         "renderedHeightPx": 20,
-        "packageAction": "Upgrade @lk-design-system/lds-theme from the pinned rc.23 artifact to a release containing the approved ProductLockup portal registry entry, constructionVersion 4, and geometryVersion 1.0.",
-        "lockupNameDecision": "The portal key resolves only to the approved fixed LK Portal outlined paths. It does not accept or construct arbitrary product-name text."
+        "packageAction": "Review the SemiBold 600 Portal proposal, then upgrade @lk-design-system/lds-theme from the pinned rc.23 artifact to a release containing ProductLockup constructionVersion 2, brand constructionVersion 4, and geometryVersion 1.0.",
+        "lockupNameDecision": "The portal key resolves only to the approved parent-brand-first SemiBold outlined paths. The legacy ExtraBold 800 Lockup variant remains a separate compatibility and comparison asset; neither API accepts arbitrary product-name text."
       },
       "sourceEvidence": [
         {

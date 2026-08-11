@@ -14,7 +14,7 @@
   },
   "sourceAssetSetSha256": "f7bc6532ba993b0fda69bf77c322099703aa37006b094051b34d5d3cf3644f5f",
   "sourceConstructionVersion": 4,
-  "sourceConstructionManifestSha256": "9f4712f7e1b67dccb3b9463413155046805918c39aa6a275aa16dd915c408e56",
+  "sourceConstructionManifestSha256": "82b96e1cb987cb70317d06d74dbd8c7b23b042281143240b9da736f5a9ea995c",
   "integration": {
     "mode": "manual-import-contract",
     "sourceAuthority": "canonical-generated-repository-assets",

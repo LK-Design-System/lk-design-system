@@ -13,7 +13,7 @@ LK ROBOTICS의 공식 로고 컴포넌트입니다. `LK`는 geometry v1.0으로 
 ## 워드마크와 법인명
 
 - `ROBOTICS`: 대문자, Montserrat ExtraBold 정적 weight 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지
-- `PORTAL`(승인 제품 워드마크): 같은 글꼴·같은 제작 규정. 회사 워드마크와 대소문자 문법을 맞춥니다. 배치는 보이는 높이 `1X`에 **심볼 보이는 폭의 `0.35배`** 간격이며, `inline`의 심볼 보이는 폭 `0.2배`보다 넓은 이유는 20px 렌더에서 더 좁은 간격일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다. 이 값은 `0.35X`가 아닙니다.
+- `PORTAL`(기존 고정 제품 워드마크): ExtraBold 800인 호환·비교 자산입니다. 배치는 보이는 높이 `1X`에 **심볼 보이는 폭의 `0.35배`** 간격이며, `inline`의 심볼 보이는 폭 `0.2배`보다 넓은 이유는 20px 렌더에서 더 좁은 간격일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다. 이 값은 `0.35X`가 아닙니다. 신규 `ProductLockup`의 승인 제품명은 동일한 높이·간격에서 SemiBold 600을 사용합니다.
 - `주식회사 엘케이로보틱스`: NFC, Noto Sans KR ExtraBold `wght=800` Version 2.004-H2, 글꼴 기본 커닝, 글자 사이 `0.105em`, 마지막 글자 뒤 자간 없음, 가로·세로 비율 1:1, 글리프 수동 수정 금지
 - 법인명 배치: 보이는 폭 `1.90X`, 상단 로크업과 간격 `0.21X`, 상단 로크업의 보이는 중심축에 가운데 정렬
 - 배포 결과는 `<text>`와 런타임 폰트가 없는 SVG path입니다. Montserrat와 Noto Sans KR은 build-time 생성 재료이며 UI 본문 글꼴이 아닙니다.
@@ -25,7 +25,7 @@ LK ROBOTICS의 공식 로고 컴포넌트입니다. `LK`는 geometry v1.0으로 
 | `mark` | 브랜드가 이미 식별되는 좁은 제품 UI | 렌더 높이 20px. 이때 보이는 심볼은 16px 이상. 최소 슬롯 폭 21.431318px |
 | `stacked` | 세로형·정사각형에 가까운 독립 로크업 | 렌더 높이 64px. 최소 슬롯 폭 82.612990px |
 | `inline` | TopBar·SideNav·가로 헤더 | 렌더 높이 20px. 최소 슬롯 폭 156.324048px |
-| `portal` | LK Portal 제품 셸의 SideNav·헤더 | 렌더 높이 20px. 최소 슬롯 폭 129.803096px |
+| `portal` | legacy LK Portal 통합의 호환·800 비교 자산. 신규 셸은 `ProductLockup product="portal"` 사용 | 렌더 높이 20px. 최소 슬롯 폭 129.803096px |
 | banner SVG | 서명·고정 가로 슬롯 | 렌더 높이 28px. 최소 슬롯 폭 137.019722px |
 | 기본 사각형 SVG | 프로필·브랜드 타일 | 64px 정사각형, 96px 이상 권장 |
 | 기업 표기형 SVG | 회사 소개·대외 문서·법인 식별 | 160px 정사각형, 192px 이상 권장, 인쇄 32mm 이상 |
@@ -55,7 +55,7 @@ favicon tile은 iOS AppIcon이나 Android adaptive icon이 아닙니다. 두 앱
 
 ## Product Lockup과의 경계
 
-`variant="portal"`은 승인된 고정 outline 자산이자 기존 통합을 위한 호환 API입니다. 신규 제품 셸의 LK Portal형 식별은 승인 outline registry인 `ProductLockup`을 사용하며 현재 `product` key `console | portal`만 지원합니다. 두 컴포넌트 모두 일반 제품명 slot이 아니므로 mark 옆에 live text를 직접 조판하거나 registry에 없는 이름을 우회 렌더링하지 않습니다. Web Viz와 Control은 canonical name과 outline 승인 전까지 미지원입니다. 자세한 기준은 [`LK_PRODUCT_LOCKUP_STANDARD.md`](../../docs/brand/LK_PRODUCT_LOCKUP_STANDARD.md)를 따릅니다.
+`variant="portal"`은 ExtraBold 800 고정 outline 자산이자 기존 통합을 위한 호환 API입니다. 신규 제품 셸은 LK가 먼저 읽히도록 승인 제품명을 SemiBold 600으로 낮춘 `ProductLockup`을 사용하며 현재 `product` key `console | portal`만 지원합니다. Storybook은 Portal 800과 600을 나란히 비교하고, Portal 정본 자체를 바꿀지는 별도 브랜드 승인으로 남깁니다. 두 컴포넌트 모두 일반 제품명 slot이 아니므로 mark 옆에 live text를 직접 조판하거나 registry에 없는 이름을 우회 렌더링하지 않습니다. Web Viz와 Control은 canonical name과 outline 승인 전까지 미지원입니다. 자세한 기준은 [`LK_PRODUCT_LOCKUP_STANDARD.md`](../../docs/brand/LK_PRODUCT_LOCKUP_STANDARD.md)를 따릅니다.
 
 ## 색상과 배경
 

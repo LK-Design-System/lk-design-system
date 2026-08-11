@@ -8,9 +8,10 @@ const DEFAULT_HEIGHT = 28;
 /**
  * Approved LK product-shell lockup.
  *
- * Product wordmarks are registered, uppercase Montserrat ExtraBold outlines.
- * They use the same 1X visible height and 0.35 mark-width gap as LK Portal,
- * without a runtime font or SVG text dependency.
+ * Product wordmarks are registered, uppercase Montserrat SemiBold outlines.
+ * They keep the Portal-inspired 1X visible height and 0.35 mark-width gap while
+ * making the invariant LK mark the stronger parent-brand signal. Runtime output
+ * has no font or SVG text dependency.
  */
 export function ProductLockup({
   product,

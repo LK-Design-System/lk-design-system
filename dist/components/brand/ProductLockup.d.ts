@@ -17,5 +17,5 @@ export interface ProductLockupProps extends Omit<React.SVGAttributes<SVGSVGEleme
   decorative?: boolean;
 }
 
-/** LK Portal과 같은 outline 조형을 승인 제품 registry에 적용하는 제품 셸 lockup. */
+/** LK mark를 모브랜드로 우선하고 승인 제품명을 SemiBold outline으로 조합하는 제품 셸 lockup. */
 export function ProductLockup(props: ProductLockupProps): React.JSX.Element;

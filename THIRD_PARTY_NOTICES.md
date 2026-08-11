@@ -45,10 +45,12 @@ SOFTWARE.
 
 ## Montserrat
 
-The outlined `ROBOTICS` wordmark and approved `Portal` product name are generated from Montserrat ExtraBold 800,
-Version 7.222, obtained from the official Montserrat v7.222 release. The exact
-static TTF is retained as a build-time source only; it is not loaded by the LDS
-runtime and does not replace Pretendard as the UI typeface.
+The outlined `ROBOTICS` wordmark and legacy fixed `PORTAL` product name are
+generated from Montserrat ExtraBold 800. Parent-brand-first `ProductLockup`
+product names are generated from Montserrat SemiBold 600. Both are Version
+7.222 static fonts obtained from the official Montserrat v7.222 release. The
+exact TTF files are retained as build-time sources only; they are not loaded by
+the LDS runtime and do not replace Pretendard as the UI typeface.
 
 - Upstream project: https://github.com/JulietaUla/Montserrat
 - Pinned release: https://github.com/JulietaUla/Montserrat/releases/tag/v7.222

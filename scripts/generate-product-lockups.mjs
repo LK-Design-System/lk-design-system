@@ -2,56 +2,46 @@ import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import opentype from 'opentype.js';
-import {
-  PORTAL_INLINE_TRANSFORM,
-  PORTAL_LOCKUP_VIEWBOX,
-  PORTAL_MINIMUM_RENDERED_HEIGHT_PX,
-  PORTAL_PATHS,
-} from '../components/brand/lk-portal-lockup-paths.js';
 import { LOGO_GEOMETRY } from './brand/lk-logo-source.mjs';
 
 const root = process.cwd();
 const checkOnly = process.argv.includes('--check');
 const construction = JSON.parse(await readFile(path.join(root, 'assets/brand/lk-logo-construction.json'), 'utf8'));
 const registry = JSON.parse(await readFile(path.join(root, 'assets/brand/lk-product-lockups.json'), 'utf8'));
-const fontBuffer = await readFile(path.join(root, construction.wordmark.fontFile));
-const licenseBuffer = await readFile(path.join(root, construction.wordmark.licenseFile));
+const productWordmark = construction.productLockupWordmark;
+const fontBuffer = await readFile(path.join(root, productWordmark.fontFile));
+const licenseBuffer = await readFile(path.join(root, productWordmark.licenseFile));
 const fontArrayBuffer = fontBuffer.buffer.slice(fontBuffer.byteOffset, fontBuffer.byteOffset + fontBuffer.byteLength);
 const font = opentype.parse(fontArrayBuffer);
 const outputPath = 'components/brand/lk-product-lockup-paths.js';
 
 assertEqual(registry.schemaVersion, 1, 'registry schema version');
-assertEqual(registry.constructionVersion, 1, 'registry construction version');
-assertEqual(construction.wordmark.family, 'Montserrat', 'wordmark family');
-assertEqual(construction.wordmark.style, 'ExtraBold', 'wordmark style');
-assertEqual(construction.wordmark.weight, 800, 'wordmark weight');
-assertEqual(construction.wordmark.kerning, 'font-default', 'wordmark kerning');
-assertEqual(construction.wordmark.letterSpacing, 0, 'wordmark letter spacing');
-assertEqual(construction.wordmark.horizontalScale, 1, 'wordmark horizontal scale');
-assertEqual(construction.wordmark.verticalScale, 1, 'wordmark vertical scale');
-assertEqual(construction.wordmark.manualGlyphEdits, false, 'wordmark manual glyph edits');
+assertEqual(registry.constructionVersion, 2, 'registry construction version');
+assertEqual(productWordmark.family, 'Montserrat', 'product-lockup wordmark family');
+assertEqual(productWordmark.style, 'SemiBold', 'product-lockup wordmark style');
+assertEqual(productWordmark.weight, 600, 'product-lockup wordmark weight');
+assertEqual(productWordmark.kerning, 'font-default', 'product-lockup wordmark kerning');
+assertEqual(productWordmark.letterSpacing, 0, 'product-lockup wordmark letter spacing');
+assertEqual(productWordmark.horizontalScale, 1, 'product-lockup wordmark horizontal scale');
+assertEqual(productWordmark.verticalScale, 1, 'product-lockup wordmark vertical scale');
+assertEqual(productWordmark.manualGlyphEdits, false, 'product-lockup wordmark manual glyph edits');
 assertEqual(construction.output.productWordmarksAsOutlines, true, 'product outline output');
 assertEqual(construction.output.textElementsAllowed, false, 'text element policy');
 assertEqual(construction.output.runtimeFontDependency, false, 'runtime font policy');
-assertEqual(fileSha256(fontBuffer), construction.wordmark.fontSha256, 'wordmark font SHA-256');
-assertEqual(fileSha256(licenseBuffer), construction.wordmark.licenseSha256, 'wordmark license SHA-256');
-assertEqual(font.names.fontFamily?.en, `${construction.wordmark.family} ${construction.wordmark.style}`, 'font family metadata');
-assertEqual(font.names.version?.en?.replace(/^Version\s+/i, ''), construction.wordmark.fontVersion, 'font version metadata');
-assertEqual(font.tables.os2?.usWeightClass, construction.wordmark.weight, 'font weight metadata');
+assertEqual(fileSha256(fontBuffer), productWordmark.fontSha256, 'product-lockup font SHA-256');
+assertEqual(fileSha256(licenseBuffer), productWordmark.licenseSha256, 'product-lockup license SHA-256');
+assertEqual(font.names.fontFamily?.en, `${productWordmark.family} ${productWordmark.style}`, 'product-lockup font family metadata');
+assertEqual(font.names.version?.en?.replace(/^Version\s+/i, ''), productWordmark.fontVersion, 'product-lockup font version metadata');
+assertEqual(font.tables.os2?.usWeightClass, productWordmark.weight, 'product-lockup font weight metadata');
 
-const layout = construction.layout.portal;
+const layout = construction.layout.productLockup;
 assertEqual(layout.visibleWordmarkHeightToX, 1, 'visible wordmark height');
 assertEqual(layout.gapToMarkWidth, 0.35, 'visible mark-width gap');
 assertEqual(layout.verticalAlignment, 'visible-bounds', 'vertical alignment');
 assertEqual(layout.minimumRenderedHeightPx, 20, 'minimum rendered height');
 
 const rows = Object.entries(registry.products).map(([key, product]) => buildProduct(key, product));
-const portal = rows.find((row) => row.key === 'portal');
-if (!portal) throw new Error('The approved registry must retain the Portal compatibility entry.');
-assertEqual(JSON.stringify(portal.paths), JSON.stringify(PORTAL_PATHS), 'Portal path parity');
-assertEqual(portal.transform, PORTAL_INLINE_TRANSFORM, 'Portal transform parity');
-assertEqual(portal.viewBox, PORTAL_LOCKUP_VIEWBOX, 'Portal viewBox parity');
-assertEqual(portal.minimumRenderedHeightPx, PORTAL_MINIMUM_RENDERED_HEIGHT_PX, 'Portal minimum-height parity');
+if (!rows.some((row) => row.key === 'portal')) throw new Error('The approved registry must retain the Portal product entry.');
 
 const output = renderModule(rows);
 if (/<text\s/i.test(output)) throw new Error('ProductLockup runtime output must not contain SVG text elements.');
@@ -59,10 +49,10 @@ if (/<text\s/i.test(output)) throw new Error('ProductLockup runtime output must 
 if (checkOnly) {
   const current = await readFile(path.join(root, outputPath), 'utf8').catch(() => '');
   if (current !== output) throw new Error(`${outputPath} is stale. Run node scripts/generate-product-lockups.mjs.`);
-  console.log(`Validated ${rows.length} approved outlined product lockups with exact Portal parity.`);
+  console.log(`Validated ${rows.length} approved outlined product lockups with parent-brand-first SemiBold hierarchy.`);
 } else {
   await writeFile(path.join(root, outputPath), output);
-  console.log(`Generated ${rows.length} approved outlined product lockups with exact Portal parity.`);
+  console.log(`Generated ${rows.length} approved outlined product lockups with parent-brand-first SemiBold hierarchy.`);
 }
 
 function buildProduct(key, product) {
@@ -124,7 +114,6 @@ function buildProduct(key, product) {
     key,
     label: product.label,
     wordmark: product.wordmark,
-    compatibilityVariant: product.compatibilityVariant,
     paths,
     transform,
     viewBox,
@@ -134,9 +123,7 @@ function buildProduct(key, product) {
 }
 
 function renderModule(products) {
-  const importsPortal = products.some((product) => product.key === 'portal');
   const localPathBlocks = products
-    .filter((product) => product.key !== 'portal')
     .map((product) => {
       const constant = `${product.key.toUpperCase().replace(/-/g, '_')}_PATHS`;
       const paths = product.paths.map((row) => `  Object.freeze({ letter: ${JSON.stringify(row.letter)}, d: ${JSON.stringify(row.d)} }),`).join('\n');
@@ -144,31 +131,27 @@ function renderModule(products) {
     })
     .join('\n\n');
   const registryRows = products.map((product) => {
-    const paths = product.key === 'portal' ? 'PORTAL_PATHS' : `${product.key.toUpperCase().replace(/-/g, '_')}_PATHS`;
+    const paths = `${product.key.toUpperCase().replace(/-/g, '_')}_PATHS`;
     return [
       `  ${JSON.stringify(product.key)}: Object.freeze({`,
       `    label: ${JSON.stringify(product.label)},`,
       `    wordmark: ${JSON.stringify(product.wordmark)},`,
       `    paths: ${paths},`,
-      `    transform: ${product.key === 'portal' ? 'PORTAL_INLINE_TRANSFORM' : JSON.stringify(product.transform)},`,
-      `    viewBox: ${product.key === 'portal' ? 'PORTAL_LOCKUP_VIEWBOX' : JSON.stringify(product.viewBox)},`,
-      `    minimumRenderedHeightPx: ${product.key === 'portal' ? 'PORTAL_MINIMUM_RENDERED_HEIGHT_PX' : product.minimumRenderedHeightPx},`,
+      `    transform: ${JSON.stringify(product.transform)},`,
+      `    viewBox: ${JSON.stringify(product.viewBox)},`,
+      `    minimumRenderedHeightPx: ${product.minimumRenderedHeightPx},`,
       `    minimumRequiredSlotWidthPx: ${product.minimumRequiredSlotWidthPx},`,
       '  }),',
     ].join('\n');
   }).join('\n');
-  const portalImport = importsPortal
-    ? `import {\n  PORTAL_INLINE_TRANSFORM,\n  PORTAL_LOCKUP_VIEWBOX,\n  PORTAL_MINIMUM_RENDERED_HEIGHT_PX,\n  PORTAL_PATHS,\n} from './lk-portal-lockup-paths.js';\n\n`
-    : '';
-
   return `/**
  * Generated by scripts/generate-product-lockups.mjs. Do not edit by hand.
  *
- * Approved product wordmarks are outlined from pinned Montserrat ExtraBold 800
- * v${construction.wordmark.fontVersion}. Runtime output has no font or SVG text dependency.
- * Font SHA-256: ${construction.wordmark.fontSha256}
+ * Approved product wordmarks are outlined from pinned Montserrat SemiBold 600
+ * v${productWordmark.fontVersion}. Runtime output has no font or SVG text dependency.
+ * Font SHA-256: ${productWordmark.fontSha256}
  */
-${portalImport}${localPathBlocks}
+${localPathBlocks}
 
 export const PRODUCT_LOCKUP_REGISTRY = Object.freeze({
 ${registryRows}

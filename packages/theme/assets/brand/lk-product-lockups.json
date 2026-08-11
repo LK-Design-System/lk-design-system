@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "constructionVersion": 1,
-  "description": "Approved LK product-shell lockup registry. Typography is inherited from lk-logo-construction.json#wordmark and geometry from its portal layout.",
+  "constructionVersion": 2,
+  "description": "Approved parent-brand-first LK product-shell lockup registry. Typography comes from lk-logo-construction.json#productLockupWordmark and geometry from layout.productLockup; the legacy fixed Portal asset remains unchanged.",
   "products": {
     "console": {
       "label": "Console",
@@ -9,21 +9,20 @@
       "status": "approved",
       "expected": {
         "glyphIds": [33, 134, 122, 180, 134, 110, 48],
-        "origins": [0, 723, 1569, 2375, 3022, 3868, 4478],
-        "sourceBounds": [34, -714, 5110, 14],
-        "finalAdvance": 5150
+        "origins": [0, 712, 1554, 2364, 2993, 3835, 4434],
+        "sourceBounds": [44, -710, 5053, 10],
+        "finalAdvance": 5104
       }
     },
     "portal": {
       "label": "Portal",
       "wordmark": "PORTAL",
       "status": "approved",
-      "compatibilityVariant": "portal",
       "expected": {
         "glyphIds": [169, 134, 172, 194, 4, 110],
-        "origins": [0, 737, 1583, 2313, 2913, 3699],
-        "sourceBounds": [70, -714, 4301, 14],
-        "finalAdvance": 4309
+        "origins": [0, 726, 1568, 2289, 2856, 3605],
+        "sourceBounds": [94, -710, 4195, 10],
+        "finalAdvance": 4204
       }
     }
   }
