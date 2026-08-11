@@ -67,7 +67,7 @@
     "documents": [
       {
         "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-        "sha256": "daadee6f8c8df0b88b01442d6cc74d841c0f159a7291b0015d9297efcd9b4347"
+        "sha256": "add36a76b095f6e8d41db37b1e16935fa633558b16c2409f1bd2f55d0abbdc04"
       },
       {
         "path": "docs/COMPONENT_WORKFLOW.md",
@@ -75,7 +75,7 @@
       },
       {
         "path": "docs/components/README.md",
-        "sha256": "0f5c953f866c13c732032465812eeedf4b379518d0470f6183916c0d76dc87e4"
+        "sha256": "6187c3b8ae8f3f16e39920694d6b6b79639468cba4a328a1b51a77a19f267e8c"
       },
       {
         "path": "docs/COPY_REVIEW_CONTRACT.md",
@@ -222,9 +222,9 @@
       "sha256": "fe20bf3a4c6db1692ce6a95cd1d3f1cfd59f62f50d05948ad0c763d1ac8db352"
     },
     "assets": {
-      "fileCount": 472,
-      "bytes": 8651798,
-      "sha256": "67efa62db1ea5fbdec031d94808d24f255d4bc27c9d49e6b6ef26d55ac2d5a40"
+      "fileCount": 473,
+      "bytes": 8652709,
+      "sha256": "3a46fbe86e0651dc2ed1a11518c2e4016d3df0e73e06ada946d66c0f85cfabde"
     }
   },
   "documents": [
@@ -290,11 +290,11 @@
     },
     {
       "path": "components/README.md",
-      "sha256": "8867749a99ae425167137b9e8930c6c0036eff9287f66b5e441213fba2ea640f",
+      "sha256": "d3ce93fc0df8da25bc57f18505d61338f19f49f1947360a2d70a59be654f42ef",
       "sources": [
         {
           "path": "docs/components/README.md",
-          "sha256": "0f5c953f866c13c732032465812eeedf4b379518d0470f6183916c0d76dc87e4"
+          "sha256": "6187c3b8ae8f3f16e39920694d6b6b79639468cba4a328a1b51a77a19f267e8c"
         }
       ]
     },
@@ -540,11 +540,11 @@
     },
     {
       "path": "policies/ACCESSIBILITY_CONTRACTS.md",
-      "sha256": "daadee6f8c8df0b88b01442d6cc74d841c0f159a7291b0015d9297efcd9b4347",
+      "sha256": "add36a76b095f6e8d41db37b1e16935fa633558b16c2409f1bd2f55d0abbdc04",
       "sources": [
         {
           "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-          "sha256": "daadee6f8c8df0b88b01442d6cc74d841c0f159a7291b0015d9297efcd9b4347"
+          "sha256": "add36a76b095f6e8d41db37b1e16935fa633558b16c2409f1bd2f55d0abbdc04"
         }
       ]
     },

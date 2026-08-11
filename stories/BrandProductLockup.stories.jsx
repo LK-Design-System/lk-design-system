@@ -62,7 +62,7 @@ export const ProductLockupStandard = {
       <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <ExampleLabel>브랜드 네이비 · reverse</ExampleLabel>
         <div style={{ padding: 'var(--space-4)', borderRadius: 'var(--radius-lg)', background: 'var(--color-semantic-brand-surface)' }}>
-          <ProductLockup data-testid="lockup-reverse" product="console" tone="white" height={20} />
+          <ProductLockup data-testid="lockup-reverse" product="console" appearance="reverse" height={20} />
         </div>
       </section>
 

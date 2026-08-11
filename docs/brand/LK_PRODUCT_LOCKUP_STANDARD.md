@@ -55,13 +55,13 @@ public API는 `product: "console" | "portal"`의 닫힌 union만 허용합니다
 ## 4. Runtime API
 
 ```jsx
-<ProductLockup product="console" tone="ink" />
-<ProductLockup product="portal" tone="white" height={20} />
+<ProductLockup product="console" appearance="positive" />
+<ProductLockup product="portal" appearance="reverse" height={20} />
 <ProductLockup product="console" compact />
 ```
 
 - `product`: 필수 registry key. 현재 `console | portal`만 지원합니다.
-- `tone`: `ink | white`. 밝은 단색 배경에는 `ink`, 공식 네이비나 충분히 어두운 단색 배경에는 `white`를 사용합니다.
+- `appearance`: `positive | reverse`. 밝은 단색 배경에는 `positive`, 공식 네이비나 충분히 어두운 단색 배경에는 `reverse`를 사용합니다.
 - `height`: 전체 SVG의 자연 렌더 높이입니다. 기본 `28`, 최소 `20`이며 더 작은 값은 최소값으로 보정합니다.
 - `compact`: 제품명 outline을 시각적으로 생략하고 LK mark만 표시합니다. 접근성 이름은 full과 같습니다.
 - `decorative`: 이름을 소유한 링크·컨트롤 안에서 중복 낭독을 막습니다.
@@ -83,9 +83,9 @@ compact가 홈 링크라면 hover/focus 사용자가 제품명을 확인해야 �
 
 ## 6. 색과 배경
 
-- `tone="ink"`: 흰색 또는 밝고 단순한 단색 배경의 LK Navy `#05132B`
-- `tone="white"`: LK Navy 또는 충분히 어둡고 단순한 단색 배경의 White `#FFFFFF`
-- mark와 제품명은 항상 같은 tone
+- `appearance="positive"`: 흰색 또는 밝고 단순한 단색 배경의 LK Navy `#05132B`
+- `appearance="reverse"`: LK Navy 또는 충분히 어둡고 단순한 단색 배경의 White `#FFFFFF`
+- mark와 제품명은 항상 같은 appearance
 - 사진·영상·데이터 시각화·복잡한 gradient 위에는 직접 배치하지 않고 단색 containment 사용
 - 임의 제품색, semantic primary color, gradient, shadow, glow, outline, opacity 차등 금지
 
@@ -110,7 +110,7 @@ compact가 홈 링크라면 hover/focus 사용자가 제품명을 확인해야 �
 - LK mark 옆에 Montserrat 또는 UI font의 live text를 붙여 새 제품 로크업 만들기
 - registry에 없는 `Web Viz`, `Control`, 고객명, 지점명, 환경명 등을 우회 렌더링하기
 - `LK | CONSOLE`, slash, dot, badge로 로크업 내부를 분할하기
-- 제품마다 mark·gap·font·weight·case·tone을 바꾸기
+- 제품마다 mark·gap·font·weight·case·appearance를 바꾸기
 - full을 좁은 슬롯에서 찌그러뜨리거나 crop·wrap·ellipsis하기
 - 페이지 제목, workspace, 버전, `DEV`·`STG`, beta, 상태, 슬로건을 제품명 outline에 합치기
 - ProductLockup을 기능 icon, 반복 pattern, watermark로 사용하기
@@ -118,7 +118,7 @@ compact가 홈 링크라면 hover/focus 사용자가 제품명을 확인해야 �
 
 ## 9. Registry 변경과 제품 적용
 
-LDS는 registry key, canonical name, mark+wordmark geometry, outline path, tone, height, compact와 접근성 계약을 소유합니다. 제품은 TopBar/SideNav 중 소유 위치, home route와 클릭, breakpoint, tooltip, 배포 시점을 소유합니다.
+LDS는 registry key, canonical name, mark+wordmark geometry, outline path, appearance, height, compact와 접근성 계약을 소유합니다. 제품은 TopBar/SideNav 중 소유 위치, home route와 클릭, breakpoint, tooltip, 배포 시점을 소유합니다.
 
 | 제품 | 현재 적용 기준 |
 | --- | --- |
@@ -132,7 +132,7 @@ LDS는 registry key, canonical name, mark+wordmark geometry, outline path, tone,
 1. 제품 naming owner가 canonical name과 보이는 대문자 문자열을 승인합니다.
 2. Montserrat ExtraBold 800 v7.222의 고정 font hash와 기본 kerning으로 [`generate-product-lockups.mjs`](../../scripts/generate-product-lockups.mjs)에서 outline을 생성합니다.
 3. 보이는 높이 `1X`, mark 보이는 폭의 `0.35배` gap, 세로 정렬, viewBox와 path hash를 검증합니다.
-4. `20px`·`28px`, `ink`·`white`, full·compact를 시각 검수합니다.
+4. `20px`·`28px`, positive·reverse, full·compact를 시각 검수합니다.
 5. 접근성 이름, Storybook, visual regression, 제품 적용 audit와 문서를 함께 갱신합니다.
 
 Web Viz와 Control은 1단계가 완료되지 않았으므로 이름이나 대문자 표기를 추정해 먼저 구현하지 않습니다. 기계 판정 source pin은 [`PRODUCT_BRAND_ASSET_AUDIT.json`](../references/brand/PRODUCT_BRAND_ASSET_AUDIT.json)이 소유합니다.
@@ -148,7 +148,7 @@ Web Viz와 Control은 1단계가 완료되지 않았으므로 이름이나 대�
 ## 11. 변경 절차
 
 - canonical name 또는 보이는 문자열 변경: product naming owner와 brand owner 승인, 새 outline/hash, 접근성·제품 migration 검토
-- geometry·font version·gap·tone·height 변경: brand/design-system owner 검토, standard version과 construction/hash 갱신, `20px`·`28px` 시각 회귀
+- geometry·font version·gap·appearance·height 변경: brand/design-system owner 검토, standard version과 construction/hash 갱신, `20px`·`28px` 시각 회귀
 - registry key 추가: 지원 제품 union, generated paths, 문서, Storybook, 타입, 제품 audit를 같은 변경에서 갱신
 - 기존 key 제거·이름 변경: public API migration과 폐기 일정을 먼저 제공하고 조용히 덮어쓰지 않음
 - 변경 후 최소 `npm run check:product-lockups`, brand product coverage, product frontend coverage, type/layer, Storybook accessibility와 visual 검사를 기록

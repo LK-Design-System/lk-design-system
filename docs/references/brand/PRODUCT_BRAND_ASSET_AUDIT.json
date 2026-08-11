@@ -26,7 +26,7 @@
       "approved positive, reverse, monochrome, square, inline, stacked, banner, and corporate outputs",
       "brand colors, clear space, and minimum rendered sizes",
       "the approved ProductLockup key registry and its frozen outlined LK-plus-product paths",
-      "ProductLockup layout, ink and white tone mapping, minimum size, and accessible-name structure",
+      "ProductLockup layout, positive and reverse appearance mapping, minimum size, and accessible-name structure",
       "deterministic source hashes and platform export contracts"
     ],
     "productOwns": [

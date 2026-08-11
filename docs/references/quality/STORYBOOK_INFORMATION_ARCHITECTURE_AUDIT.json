@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "0bb263c06342fd9b0f9da01fe87eb05f8d06e18f75d41ff7740004b54d3a4c5f",
+    "storybookIndexSha256": "361ea8b57d1e91cb4540b8e87480879a9290bbbd48239c018bf12dfda2dc3d52",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -61,31 +61,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 194,
-    "stories": 716,
-    "publicStories": 494,
+    "pages": 195,
+    "stories": 718,
+    "publicStories": 496,
     "hiddenStories": 222,
-    "componentDescriptions": 190,
-    "pagesWithVisibleCanvasIntroduction": 190,
-    "pagesWithDecisionGuidance": 182,
-    "describedPublicStories": 494,
-    "reviewedPages": 194,
-    "reviewedStories": 703,
-    "staleReviewedPages": 9,
+    "componentDescriptions": 191,
+    "pagesWithVisibleCanvasIntroduction": 191,
+    "pagesWithDecisionGuidance": 183,
+    "describedPublicStories": 496,
+    "reviewedPages": 195,
+    "reviewedStories": 705,
+    "staleReviewedPages": 11,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
-      "overview": 178,
+      "overview": 179,
       "usage": 39,
       "variants-states": 106,
       "interaction": 54,
-      "responsive": 75,
+      "responsive": 76,
       "scenario": 26,
       "visual-parity": 95,
       "internal-contract": 123
     },
     "dispositions": {
-      "keep": 194,
+      "keep": 195,
       "merge": 0,
       "split": 0,
       "hide": 0
@@ -113,11 +113,11 @@
         "guideReadyPages": 116
       },
       "Theme": {
-        "pages": 3,
-        "stories": 6,
-        "public": 3,
+        "pages": 4,
+        "stories": 8,
+        "public": 5,
         "hidden": 3,
-        "guideReadyPages": 3
+        "guideReadyPages": 4
       },
       "Other": {
         "pages": 1,
@@ -10421,7 +10421,7 @@
       "layer": "Product",
       "family": "Content",
       "importPath": "./stories/CardInfo.stories.jsx",
-      "sourceSha256": "a9d33e1f688a61f3a2679c11745b9f03b33266d3272dc94443c5faab6dbe4359",
+      "sourceSha256": "a67b8cd5858e36b72ae24030146e2366adb04958a977703714736f8e497f483e",
       "primaryOwner": "FeatureCard",
       "ownerComponents": [
         "FeatureCard"
@@ -17658,7 +17658,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationSideNav.stories.jsx",
-      "sourceSha256": "c411bc967031f2d8e7109e858cba2e08c9a4b9e3cc1ba8117d3d8065cb9f3521",
+      "sourceSha256": "19be20cba44ff39ddcf99ca3ff078f3b9e07ead6fe92cd0c1e34057fd11faeee",
       "primaryOwner": "SideNav",
       "ownerComponents": [
         "SideNav"
@@ -17761,7 +17761,8 @@
           ],
           "supportingComponents": [
             "Button",
-            "Lockup"
+            "Lockup",
+            "UserMenu"
           ],
           "reviewNote": "2026-07-22 verified the docked 252px/64px collapse contract, boundary control geometry, focus retention, and accessible state linkage."
         },
@@ -17788,7 +17789,8 @@
           ],
           "supportingComponents": [
             "Button",
-            "Lockup"
+            "Lockup",
+            "UserMenu"
           ],
           "reviewNote": "2026-07-22 verified the static 64px icon rail, selected parent state, and fully contained collapse control."
         },
@@ -18084,7 +18086,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/Navigation.stories.jsx",
-      "sourceSha256": "88e9cc61f3e7348098886ba5ffe1de616ed600bfc155fb1fc51c62b045b64604",
+      "sourceSha256": "813842369743560ec81e2134b7d60e0218b1035b01f3dd60a401d4d1fedcf8c6",
       "primaryOwner": "TopBar",
       "ownerComponents": [
         "TopBar"
@@ -18097,6 +18099,7 @@
         "Icon",
         "IconButton",
         "Lockup",
+        "ProductLockup",
         "SideNav",
         "TopBarNavItem"
       ],
@@ -18117,8 +18120,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-05",
-      "reviewedSourceSha256": "88e9cc61f3e7348098886ba5ffe1de616ed600bfc155fb1fc51c62b045b64604",
+      "reviewedAt": "2026-08-11",
+      "reviewedSourceSha256": "813842369743560ec81e2134b7d60e0218b1035b01f3dd60a401d4d1fedcf8c6",
       "stories": [
         {
           "id": "lds-product-navigation-top-bar--top-bar-default",
@@ -18173,9 +18176,10 @@
             "TopBar"
           ],
           "supportingComponents": [
+            "ProductLockup",
             "TopBarNavItem"
           ],
-          "reviewNote": "2026-07-21 source, role, ownership, interaction, and visibility review complete."
+          "reviewNote": "2026-08-11 re-reviewed the destination/disclosure interaction and named-home-link ProductLockup composition; approved outline registry, ownership, accessible naming, interaction, and visibility remain correct."
         },
         {
           "id": "lds-product-navigation-top-bar--active-destination-transition",
@@ -24445,11 +24449,11 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/Brand.stories.jsx",
-      "sourceSha256": "b0682ed56b89168988384039f41be106f528c1ccf3d925f710a3b8f093317c30",
+      "sourceSha256": "6ebf9e706d211c97a0e6d9b0a13344a6372f75409ad029bf99d8c4293d196612",
       "sourceDependencies": [
         {
           "path": "stories/Brand.shared.jsx",
-          "sha256": "6ec0e8f6c9a78728f6dec7efede562f45446541220be3d1a4e8baaec3ce1e5ef"
+          "sha256": "04ef2e3fd166a849d8a04cc81e159c05b054c5daa137470725ed4aed3c911b18"
         }
       ],
       "primaryOwner": "Lockup",
@@ -24525,6 +24529,89 @@
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
+    },
+    {
+      "title": "LDS Theme/Brand/Product Lockup",
+      "layer": "Theme",
+      "family": "Brand",
+      "importPath": "./stories/BrandProductLockup.stories.jsx",
+      "sourceSha256": "8734140326a40312ddc5534b1ac630acdeb35a47b7ac7c412899b114ba339060",
+      "primaryOwner": "ProductLockup",
+      "ownerComponents": [
+        "ProductLockup"
+      ],
+      "supportingComponents": [
+        "Lockup"
+      ],
+      "visibility": {
+        "public": 2,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-theme-brand-product-lockup--product-lockup-standard",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "low",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+rendered-story+a11y+visual-regression",
+      "reviewedAt": "2026-08-11",
+      "reviewedSourceSha256": "8734140326a40312ddc5534b1ac630acdeb35a47b7ac7c412899b114ba339060",
+      "stories": [
+        {
+          "id": "lds-theme-brand-product-lockup--narrow-compact",
+          "name": "좁은 영역 · compact 전환",
+          "exportName": "NarrowCompact",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+rendered-story+a11y+visual-regression",
+          "ownerComponents": [
+            "ProductLockup"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-theme-brand-product-lockup--product-lockup-standard",
+          "name": "표준 · LK Portal 조형",
+          "exportName": "ProductLockupStandard",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+rendered-story+a11y+visual-regression",
+          "ownerComponents": [
+            "ProductLockup"
+          ],
+          "supportingComponents": [
+            "Lockup"
+          ]
+        }
+      ],
+      "reviewNote": "2026-08-11 reviewed the Portal-style ProductLockup source, approved console/portal registry, exact fixed-Portal path/transform/viewBox parity assertion, positive/reverse/compact specimens, appearance API grammar, TopBar ownership boundary, Axe result, and targeted visual baseline."
     },
     {
       "title": "LDS Theme/Controls/Theme Toggle",

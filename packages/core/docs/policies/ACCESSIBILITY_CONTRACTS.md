@@ -5,7 +5,7 @@
 | Type | Stable contract |
 | Status | Current |
 | Owner | Design system owner · Accessibility reviewer |
-| Last reviewed | 2026-08-09 |
+| Last reviewed | 2026-08-11 |
 
 LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제품 팀이 매번 새로 판단하지 않도록 하는 계약입니다. 모든 interactive 컴포넌트는 아래 항목을 Storybook 예시, 코드, 또는 테스트 근거로 증명해야 합니다.
 
@@ -38,6 +38,7 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 | OverlayStatusChip | `role="status"` polite live region으로 표면 상태를 알리고, 설명 대상 컨트롤이 `inert`여도 읽히도록 호출부가 그 서브트리 밖에 배치한다. `pointer-events: none`으로 재활성화 입력을 가로채지 않으며, 상태는 색만이 아니라 톤 글리프와 필수 텍스트 라벨로 전달한다 |
 | DataGrid, Table, Tree, TopicTree | row/cell/treeitem focus 기준, 확장/축소 키, 선택 상태를 명시. 정적 Table의 `getRowProps`는 native `<tr>` 메타데이터만 확장하고 자동으로 focus·selection·grid role을 만들지 않는다. |
 | DataCollectionPanel | toolbar → resource message → 현재 표시 content → freshness → footer의 DOM/읽기 순서를 유지한다. compact content가 있으면 wide/compact 중 하나만 display와 접근성 트리에 참여하고, 없으면 native Table 구조와 가로 overflow를 유지한다. root section을 landmark로 사용할 때는 `aria-label` 또는 `aria-labelledby`로 이름을 제공한다. |
+| ProductLockup | 독립 사용은 하나의 `role="img"`와 registry canonical name에서 만든 `LK {canonical name}` 이름을 제공하고 내부 SVG path의 중복 낭독을 막는다. `compact`는 제품명 outline을 시각적으로만 생략하며 같은 접근성 이름을 유지한다. 홈 링크·버튼이 `LK Console 홈`처럼 동작 이름을 소유하면 자식 로크업은 `decorative`/`aria-hidden`으로 둔다. 보이는 대문자 outline을 접근성 이름에 그대로 복제하거나 registry 밖 이름을 호출부에서 합성하지 않는다. |
 | SideNav | native `nav` 이름, `ul`/`li` 계층, disclosure의 `aria-expanded`, 현재 leaf의 `aria-current="page"`를 유지한다. 접힌 레일에서 현재 leaf가 숨겨지면 부모가 시각 선택 프록시를 표시하지만 `aria-current`는 부모로 옮기지 않는다. 접기 토글은 제품 셸이 소유하고 SideNav id를 `aria-controls`로 참조하며, 접힌 레일의 스크롤은 wheel·keyboard 도달성을 보존한다. 자식 아이콘 슬롯은 장식으로 숨기고 라벨 이름을 유지하며, 비제어 런타임 overlay 전환은 진입 시 접고 이탈 시 이전 persistent 상태를 복원한다. `appearance="brand"`는 평면 브랜드 네이비 표면에서 section text와 muted destination 7.48:1, active ink 8.08:1을 유지하고 선택색과 별도의 2px focus indicator(8.08:1)를 사용한다. |
 | SearchableMultiSelect, DataGrid, FileBrowser | stable item name/ID, listbox 또는 row activation, 선택 상태, bulk action 진입 순서, 빈/loading/error announcement를 명시 |
 | Button, ActionArea, ConfirmDialog | product-owned disabled reason과 blocker를 action보다 먼저 읽을 수 있고 pending 중 중복 실행이 차단되어야 함 |

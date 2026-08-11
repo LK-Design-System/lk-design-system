@@ -182,5 +182,6 @@
 | [Video Stream](guides/product-viewer-video-stream.md) | Product / Viewer | `VideoStreamTile` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
 | [Viewer Frame](guides/product-viewer-viewer-frame.md) | Product / Viewer | `ViewerFrame` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 0 hidden |
 | [LK ROBOTICS Logo](guides/theme-brand-lk-robotics-logo.md) | Theme / Brand | `Lockup` | import-contract | implemented | asset-contract | asset-contract | 1 public / 1 hidden |
+| [Product Lockup](guides/theme-brand-product-lockup.md) | Theme / Brand | `ProductLockup` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Theme Toggle](guides/theme-controls-theme-toggle.md) | Theme / Controls | `ThemeToggle` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Brand Spinner](guides/theme-status-brand-spinner.md) | Theme / Status | `Theme:Brand Spinner` | mapped | implemented | not-tracked | not-tracked | 1 public / 0 hidden |

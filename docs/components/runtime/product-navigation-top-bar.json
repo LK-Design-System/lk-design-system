@@ -16,6 +16,7 @@
     "Icon",
     "IconButton",
     "Lockup",
+    "ProductLockup",
     "SideNav",
     "TopBarNavItem"
   ],
@@ -231,7 +232,7 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "SideNav",
+      "component": "ProductLockup",
       "relationship": "대표 시나리오에서 조합"
     }
   ],

@@ -87,7 +87,7 @@
 | `Icon` | 대표 시나리오에서 조합 |
 | `IconButton` | 대표 시나리오에서 조합 |
 | `Lockup` | 대표 시나리오에서 조합 |
-| `SideNav` | 대표 시나리오에서 조합 |
+| `ProductLockup` | 대표 시나리오에서 조합 |
 
 ## Examples
 

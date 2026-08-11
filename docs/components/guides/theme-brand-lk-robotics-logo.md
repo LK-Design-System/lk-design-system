@@ -14,7 +14,6 @@ LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 8
 
 ### 사용
 
-- 적용 범위는 LK Portal을 식별하는 화면입니다. Web Viz와 Control은 그 대상이 아니므로 회사 변형을 사용합니다.
 - Positive: 흰색 또는 밝고 단순한 단색 배경에는 공식 네이비 tone="ink"를 사용합니다.
 - Reverse: 공식 네이비 또는 충분히 어둡고 단순한 배경에는 tone="white"를 사용합니다.
 
@@ -65,19 +64,20 @@ LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 8
 ## Responsive
 
 - X는 패딩이나 SVG viewBox가 아니라 LK 심볼 path의 보이는 높이입니다.
-- PORTAL(승인 제품 워드마크): 같은 글꼴·같은 제작 규정. 회사 워드마크와 대소문자 문법을 맞춥니다. 배치는 보이는 높이 1X에 심볼 보이는 폭의 0.35X 간격이며, inline의 0.2X보다 넓은 이유는 20px 렌더에서 0.2X(약 3.8px)일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다.
+- PORTAL(승인 제품 워드마크): 같은 글꼴·같은 제작 규정. 회사 워드마크와 대소문자 문법을 맞춥니다. 배치는 보이는 높이 1X에 심볼 보이는 폭의 0.35배 간격이며, inline의 심볼 보이는 폭 0.2배보다 넓은 이유는 20px 렌더에서 더 좁은 간격일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다. 이 값은 0.35X가 아닙니다.
 - | 변형 | 사용 | 최소 크기 | | --- | --- | --- | | mark | 브랜드가 이미 식별되는 좁은 제품 UI | 렌더 높이 20px. 이때 보이는 심볼은 16px 이상. 최소 슬롯 폭 21.431318px | | stacked | 세로형·정사각형에 가까운 독립 로크업 | 렌더 높이 64px. 최소 슬롯 폭 82.612990px | | inline | TopBar·SideNav·가로 헤더 | 렌더 높이 20px. 최소 슬롯 폭 156.324048px | | portal | LK Portal 제품 셸의 SideNav·헤더 | 렌더 높이 20px.
 - height는 요청하는 자연 렌더 높이이며 variant별 최소값 아래에서는 최소값으로 보정됩니다. 기본 출력은 실제 variant viewBox 비율로 intrinsic width를 계산하고 max-width: 100%; height: auto를 적용해, 스타일을 재정의하지 않은 좁은 부모에서는 두 축을 같은 비율로 축소합니다. 이 반응형 축소는 overflow를 피하지만 실제 표시 높이도 낮추므로 저장소 정책 최소 크기를 대신 보장하지 않습니다.
 
 ## Content and writing
 
 - variant="portal"은 자유 텍스트 슬롯이 아니라 승인된 LK Portal 고정 조합입니다. 다른 제품명을 전달하거나 PORTAL만 별도 폰트 텍스트로 조판하지 않습니다.
-- LK ROBOTICS의 공식 로고 컴포넌트입니다. LK는 geometry v1.0으로 동결한 커스텀 벡터 심볼이고, ROBOTICS는 Montserrat ExtraBold 800 v7.222에서 생성한 아웃라인입니다. 기업 표기형의 주식회사 엘케이로보틱스는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 공식 SVG 또는 Lockup만 사용하며 워드마크나 법인명을 텍스트로 다시 조판하지 않습니다.
-- 늘임·찌그러뜨림, 회전, 임의 색, 텍스트 재조판, 그림자·외곽선·그라디언트, path 크롭과 LK/ROBOTICS 재배치는 금지합니다.
+- 적용 범위는 LK Portal을 식별하는 화면입니다. Console은 ProductLockup, Web Viz와 Control은 승인 registry가 생기기 전까지 회사 Lockup과 별도 제품 제목을 사용하며 Portal path를 재사용하지 않습니다.
+- LK ROBOTICS의 공식 로고 컴포넌트입니다. LK는 geometry v1.0으로 동결한 커스텀 벡터 심볼이고, ROBOTICS는 Montserrat ExtraBold 800 v7.222에서 생성한 아웃라인입니다. 기업 표기형의 주식회사 엘케이로보틱스는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 공식 SVG, Lockup 또는 승인 registry의 ProductLockup만 사용하며 워드마크·제품명·법인명을 텍스트로 다시 조판하지 않습니다.
+- variant="portal"은 승인된 고정 outline 자산이자 기존 통합을 위한 호환 API입니다. 신규 제품 셸의 LK Portal형 식별은 승인 outline registry인 ProductLockup을 사용하며 현재 product key console | portal만 지원합니다. 두 컴포넌트 모두 일반 제품명 slot이 아니므로 mark 옆에 live text를 직접 조판하거나 registry에 없는 이름을 우회 렌더링하지 않습니다. Web Viz와 Control은 canonical name과 outline 승인 전까지 미지원입니다.
 
 ## Accessibility
 
-- 가장 가까운 회사 변형은 inline입니다. 차이는 ROBOTICS 대신 PORTAL 아웃라인을 쓰고 간격이 0.35X라는 점뿐이며, LK 심볼·1X 높이·최소 크기 보정·색상·접근성 규칙은 모두 같습니다.
+- 가장 가까운 회사 변형은 inline입니다. 차이는 ROBOTICS 대신 PORTAL 아웃라인을 쓰고 간격이 LK 심볼 보이는 폭의 0.35배라는 점뿐이며, LK 심볼·1X 높이·최소 크기 보정·색상·접근성 규칙은 모두 같습니다. LK 심볼 폭은 1.08176X이므로 이 간격은 약 0.378616X이고 0.35X가 아닙니다.
 - 접근성 이름의 기본값은 LK Portal입니다(회사 변형은 LK ROBOTICS). 이미 aria-label="LK Portal"이 있는 링크 안에서는 decorative로 중복 이름을 만들지 않습니다.
 - 사진 배경: 로고와 clear space 전체에 안정적인 대비가 없으면 사진 위에 직접 놓지 않고 공식 단색 보호면을 사용합니다.
 - 호환용 color와 tone="current"는 기존 제품 통합을 위한 escape hatch이며, 임의 색을 공식 브랜드 색으로 승인하지 않습니다.
@@ -85,6 +85,12 @@ LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 8
 ## Exceptions
 
 - Mono: 단색 출력 제약이 확인된 경우에만 검정 tone="current" color="#000000" 또는 흰색 반전을 사용합니다. 기업 표기형의 포인트 색을 임의 회색으로 바꾸지 않습니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `ProductLockup` | 대표 시나리오에서 조합 |
 
 ## Examples
 

@@ -144,7 +144,7 @@
       "workflowIds": [
         "WF-16"
       ],
-      "reason": "Renders only LDS-approved fixed outlined LK-plus-product assets from the initial console and portal registry keys. It does not accept arbitrary product-name text. LDS owns the registry, paths, layout, ink or white tone, minimum size, and accessible-name contract; products own canonical short-name proposal and approval, placement, route or click behavior, and the full-lockup-to-mark breakpoint.",
+      "reason": "Renders only LDS-approved fixed outlined LK-plus-product assets from the initial console and portal registry keys. It does not accept arbitrary product-name text. LDS owns the registry, paths, layout, positive or reverse appearance, minimum size, and accessible-name contract; products own canonical short-name proposal and approval, placement, route or click behavior, and the full-lockup-to-mark breakpoint.",
       "approvedProductKeys": [
         "console",
         "portal"
@@ -2750,7 +2750,7 @@
         "Restore focus to a persistent navigation control when Escape or outside interaction closes an overlay.",
         "Represent loading, empty, error, stale, and restricted data inside the owning content surface instead of turning the shell into a workflow state machine."
       ],
-      "dsBoundary": "LDS may own shell landmarks and skip navigation, the ProductLockup approved-key registry, fixed outlined paths, layout, ink or white tone, minimum size and accessible-name contract, wide or narrow navigation slot handoff, docked versus floating SideNav presentation, explicit collapse and overlay focus behavior, brand or utility composition rules, responsive grid containment, and reusable status, chart, or table surfaces. Products own canonical short lockup-name proposal and approval, the single TopBar or SideNav placement, home route or click behavior, full-lockup-to-mark breakpoint, destination hierarchy, permissions, queries, KPI formulas and thresholds, telemetry and freshness truth, map or video renderers, commands, side effects, and complete dashboard screens. Web Viz and Control remain registry-name-approval migration gaps; the three pinned products provide no shared requirement for a KPI row, so MetricCard remains an optional composition rather than DashboardShell anatomy.",
+      "dsBoundary": "LDS may own shell landmarks and skip navigation, the ProductLockup approved-key registry, fixed outlined paths, layout, positive or reverse appearance, minimum size and accessible-name contract, wide or narrow navigation slot handoff, docked versus floating SideNav presentation, explicit collapse and overlay focus behavior, brand or utility composition rules, responsive grid containment, and reusable status, chart, or table surfaces. Products own canonical short lockup-name proposal and approval, the single TopBar or SideNav placement, home route or click behavior, full-lockup-to-mark breakpoint, destination hierarchy, permissions, queries, KPI formulas and thresholds, telemetry and freshness truth, map or video renderers, commands, side effects, and complete dashboard screens. Web Viz and Control remain registry-name-approval migration gaps; the three pinned products provide no shared requirement for a KPI row, so MetricCard remains an optional composition rather than DashboardShell anatomy.",
       "designQuestion": "Can Web Viz, Control, and LK Portal compose coherent dashboard-like workspaces without copying one product screen, forcing SideNav on a flat launcher, or making KPI cards mandatory?",
       "sourceEvidence": [
         {

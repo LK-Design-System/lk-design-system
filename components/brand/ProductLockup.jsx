@@ -14,7 +14,7 @@ const DEFAULT_HEIGHT = 28;
  */
 export function ProductLockup({
   product,
-  tone = 'ink',
+  appearance = 'positive',
   height,
   compact = false,
   decorative = false,
@@ -27,7 +27,7 @@ export function ProductLockup({
     throw new TypeError(`Unsupported ProductLockup product ${JSON.stringify(product)}. Use an approved registry key.`);
   }
 
-  const resolvedTone = tone === 'white' ? 'white' : 'ink';
+  const resolvedTone = appearance === 'reverse' ? 'white' : 'ink';
   const requestedHeight = Number.isFinite(height) ? height : DEFAULT_HEIGHT;
   const renderedHeight = Math.max(requestedHeight, entry.minimumRenderedHeightPx);
   const accessibleName = ariaLabel ?? `LK ${entry.label}`;

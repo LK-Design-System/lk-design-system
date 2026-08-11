@@ -1,8 +1,8 @@
 {
   "summary": {
-    "componentEntries": 207,
-    "publicExports": 220,
-    "guides": 176,
+    "componentEntries": 208,
+    "publicExports": 221,
+    "guides": 177,
     "entriesWithoutOwnedPage": [
       "Stat",
       "AvatarGroup",
@@ -34129,6 +34129,7 @@
         "Icon",
         "IconButton",
         "Lockup",
+        "ProductLockup",
         "SideNav",
         "TopBarNavItem"
       ],
@@ -34344,7 +34345,7 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "SideNav",
+          "component": "ProductLockup",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -46361,7 +46362,6 @@
       "supportingComponents": [],
       "purpose": "LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 800 v7.222, 한글 법인명은 Noto Sans KR ExtraBold 800 v2.004-H2에서 아웃라인으로 생성합니다. construction grid, variant 저장소 정책 최소 크기, 0.5X/1X 여백, 배경·오용·플랫폼 전달 규칙을 함께 확인합니다.",
       "useWhen": [
-        "적용 범위는 LK Portal을 식별하는 화면입니다. Web Viz와 Control은 그 대상이 아니므로 회사 변형을 사용합니다.",
         "Positive: 흰색 또는 밝고 단순한 단색 배경에는 공식 네이비 tone=\"ink\"를 사용합니다.",
         "Reverse: 공식 네이비 또는 충분히 어둡고 단순한 배경에는 tone=\"white\"를 사용합니다."
       ],
@@ -46454,17 +46454,18 @@
       ],
       "responsive": [
         "X는 패딩이나 SVG viewBox가 아니라 LK 심볼 path의 보이는 높이입니다.",
-        "PORTAL(승인 제품 워드마크): 같은 글꼴·같은 제작 규정. 회사 워드마크와 대소문자 문법을 맞춥니다. 배치는 보이는 높이 1X에 심볼 보이는 폭의 0.35X 간격이며, inline의 0.2X보다 넓은 이유는 20px 렌더에서 0.2X(약 3.8px)일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다.",
+        "PORTAL(승인 제품 워드마크): 같은 글꼴·같은 제작 규정. 회사 워드마크와 대소문자 문법을 맞춥니다. 배치는 보이는 높이 1X에 심볼 보이는 폭의 0.35배 간격이며, inline의 심볼 보이는 폭 0.2배보다 넓은 이유는 20px 렌더에서 더 좁은 간격일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다. 이 값은 0.35X가 아닙니다.",
         "| 변형 | 사용 | 최소 크기 | | --- | --- | --- | | mark | 브랜드가 이미 식별되는 좁은 제품 UI | 렌더 높이 20px. 이때 보이는 심볼은 16px 이상. 최소 슬롯 폭 21.431318px | | stacked | 세로형·정사각형에 가까운 독립 로크업 | 렌더 높이 64px. 최소 슬롯 폭 82.612990px | | inline | TopBar·SideNav·가로 헤더 | 렌더 높이 20px. 최소 슬롯 폭 156.324048px | | portal | LK Portal 제품 셸의 SideNav·헤더 | 렌더 높이 20px.",
         "height는 요청하는 자연 렌더 높이이며 variant별 최소값 아래에서는 최소값으로 보정됩니다. 기본 출력은 실제 variant viewBox 비율로 intrinsic width를 계산하고 max-width: 100%; height: auto를 적용해, 스타일을 재정의하지 않은 좁은 부모에서는 두 축을 같은 비율로 축소합니다. 이 반응형 축소는 overflow를 피하지만 실제 표시 높이도 낮추므로 저장소 정책 최소 크기를 대신 보장하지 않습니다."
       ],
       "contentGuidance": [
         "variant=\"portal\"은 자유 텍스트 슬롯이 아니라 승인된 LK Portal 고정 조합입니다. 다른 제품명을 전달하거나 PORTAL만 별도 폰트 텍스트로 조판하지 않습니다.",
-        "LK ROBOTICS의 공식 로고 컴포넌트입니다. LK는 geometry v1.0으로 동결한 커스텀 벡터 심볼이고, ROBOTICS는 Montserrat ExtraBold 800 v7.222에서 생성한 아웃라인입니다. 기업 표기형의 주식회사 엘케이로보틱스는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 공식 SVG 또는 Lockup만 사용하며 워드마크나 법인명을 텍스트로 다시 조판하지 않습니다.",
-        "늘임·찌그러뜨림, 회전, 임의 색, 텍스트 재조판, 그림자·외곽선·그라디언트, path 크롭과 LK/ROBOTICS 재배치는 금지합니다."
+        "적용 범위는 LK Portal을 식별하는 화면입니다. Console은 ProductLockup, Web Viz와 Control은 승인 registry가 생기기 전까지 회사 Lockup과 별도 제품 제목을 사용하며 Portal path를 재사용하지 않습니다.",
+        "LK ROBOTICS의 공식 로고 컴포넌트입니다. LK는 geometry v1.0으로 동결한 커스텀 벡터 심볼이고, ROBOTICS는 Montserrat ExtraBold 800 v7.222에서 생성한 아웃라인입니다. 기업 표기형의 주식회사 엘케이로보틱스는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 공식 SVG, Lockup 또는 승인 registry의 ProductLockup만 사용하며 워드마크·제품명·법인명을 텍스트로 다시 조판하지 않습니다.",
+        "variant=\"portal\"은 승인된 고정 outline 자산이자 기존 통합을 위한 호환 API입니다. 신규 제품 셸의 LK Portal형 식별은 승인 outline registry인 ProductLockup을 사용하며 현재 product key console | portal만 지원합니다. 두 컴포넌트 모두 일반 제품명 slot이 아니므로 mark 옆에 live text를 직접 조판하거나 registry에 없는 이름을 우회 렌더링하지 않습니다. Web Viz와 Control은 canonical name과 outline 승인 전까지 미지원입니다."
       ],
       "accessibility": [
-        "가장 가까운 회사 변형은 inline입니다. 차이는 ROBOTICS 대신 PORTAL 아웃라인을 쓰고 간격이 0.35X라는 점뿐이며, LK 심볼·1X 높이·최소 크기 보정·색상·접근성 규칙은 모두 같습니다.",
+        "가장 가까운 회사 변형은 inline입니다. 차이는 ROBOTICS 대신 PORTAL 아웃라인을 쓰고 간격이 LK 심볼 보이는 폭의 0.35배라는 점뿐이며, LK 심볼·1X 높이·최소 크기 보정·색상·접근성 규칙은 모두 같습니다. LK 심볼 폭은 1.08176X이므로 이 간격은 약 0.378616X이고 0.35X가 아닙니다.",
         "접근성 이름의 기본값은 LK Portal입니다(회사 변형은 LK ROBOTICS). 이미 aria-label=\"LK Portal\"이 있는 링크 안에서는 decorative로 중복 이름을 만들지 않습니다.",
         "사진 배경: 로고와 clear space 전체에 안정적인 대비가 없으면 사진 위에 직접 놓지 않고 공식 단색 보호면을 사용합니다.",
         "호환용 color와 tone=\"current\"는 기존 제품 통합을 위한 escape hatch이며, 임의 색을 공식 브랜드 색으로 승인하지 않습니다."
@@ -46472,7 +46473,12 @@
       "exceptions": [
         "Mono: 단색 출력 제약이 확인된 경우에만 검정 tone=\"current\" color=\"#000000\" 또는 흰색 반전을 사용합니다. 기업 표기형의 포인트 색을 임의 회색으로 바꾸지 않습니다."
       ],
-      "related": [],
+      "related": [
+        {
+          "component": "ProductLockup",
+          "relationship": "대표 시나리오에서 조합"
+        }
+      ],
       "examples": [
         {
           "label": "기본 조합",
@@ -46516,11 +46522,183 @@
         "contentGuidance": "evidence",
         "accessibility": "evidence",
         "exceptions": "evidence",
-        "related": "omitted-no-evidence",
+        "related": "evidence",
         "examples": "evidence",
         "tokens": "omitted-no-evidence",
         "apiLinks": "evidence",
         "migration": "omitted-no-evidence"
+      }
+    },
+    {
+      "slug": "theme-brand-product-lockup",
+      "title": "Product Lockup",
+      "storybookTitle": "LDS Theme/Brand/Product Lockup",
+      "layer": "Theme",
+      "family": "Brand",
+      "primaryOwner": "ProductLockup",
+      "ownerComponents": [
+        "ProductLockup"
+      ],
+      "supportingComponents": [
+        "Lockup"
+      ],
+      "purpose": "Montserrat ExtraBold 800 outline, 대문자, 제품명 visible height 1X, mark visible 폭의 0.35 간격을 승인 registry 전체에 적용합니다. Console과 Portal은 동일한 조형이며 런타임 font와 SVG text를 사용하지 않습니다.",
+      "useWhen": [
+        "expanded TopBar·SideNav의 단일 제품 식별자에는 ProductLockup을 사용합니다.",
+        "출력은 하나의 SVG와 outline path만 사용하며 나 런타임 Montserrat 의존성이 없습니다."
+      ],
+      "avoidWhen": [
+        "product는 현재 console과 portal만 승인되어 있습니다. Web Viz·Control은 공식 짧은 제품명 승인과 registry 등록 전까지 임의 조판하지 않습니다."
+      ],
+      "anatomy": [
+        {
+          "part": "aria-label",
+          "rule": "독립 사용 시 기본 이름 LK {registered label}을 문맥에 맞게 덮습니다."
+        }
+      ],
+      "properties": [
+        {
+          "name": "product",
+          "type": "ProductLockupProduct",
+          "required": true,
+          "description": "브랜드 승인을 거쳐 outline registry에 등록된 제품 key.",
+          "owner": "ProductLockupProps"
+        },
+        {
+          "name": "appearance",
+          "type": "'positive' | 'reverse'",
+          "required": false,
+          "description": "밝은 단색 배경의 공식 네이비 또는 어두운 단색 배경의 반전 화이트. @default \"positive\"",
+          "owner": "ProductLockupProps"
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false,
+          "description": "전체 SVG의 자연 높이. 20px 미만은 20px로 보정됩니다. @default 28",
+          "owner": "ProductLockupProps"
+        },
+        {
+          "name": "compact",
+          "type": "boolean",
+          "required": false,
+          "description": "제품 워드마크를 생략하고 LK mark만 표시합니다. 접근성 이름은 유지됩니다. @default false",
+          "owner": "ProductLockupProps"
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "description": "독립 사용 시 기본 이름 LK {registered label}을 문맥에 맞게 덮습니다.",
+          "owner": "ProductLockupProps"
+        },
+        {
+          "name": "decorative",
+          "type": "boolean",
+          "required": false,
+          "description": "이름을 소유한 링크·컨트롤 안에서 중복 낭독을 막습니다. @default false",
+          "owner": "ProductLockupProps"
+        }
+      ],
+      "states": [],
+      "behavior": [],
+      "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "제품 워드마크: Montserrat ExtraBold 800 v7.222의 outline path"
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "표기: 대문자, 기본 kerning, 추가 자간 0, 가로·세로 변형과 수동 glyph 수정 없음"
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "visible gap: LK mark visible 폭의 0.35. 이는 0.35X가 아니며, mark 폭이 1.08176X라 실제 간격은 0.378616X입니다."
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "전체 SVG 최소 높이 20px, 기본 높이 28px"
+        }
+      ],
+      "responsive": [
+        "제품명 visible ink 높이: LK mark visible 높이 1X.",
+        "height={20}에서 visible X 약 17.506px, mark 폭 약 18.938px, visual gap 약 6.628px.",
+        "full lockup을 줄바꿈·말줄임·비균등 축소하지 않습니다. 폭이 부족하면 제품 셸이 자신의 breakpoint에서 compact로 전환합니다. SideNav rail은 compact, expanded SideNav와 일반 TopBar는 full이 기본입니다. 링크·route·click·breakpoint·tooltip은 제품 셸이 소유합니다."
+      ],
+      "contentGuidance": [
+        "TopBar·SideNav에서 LK + 제품명을 LK Portal과 같은 로고 문법으로 표시하는 제품 셸 lockup입니다. 자유 텍스트를 옆에 붙이는 컴포넌트가 아니라, 브랜드 승인을 거쳐 registry에 등록된 제품 워드마크만 outline SVG로 렌더합니다.",
+        "새 제품은 assets/brand/lk-product-lockups.json에 승인 key·canonical label·대문자 wordmark·golden glyph metric을 등록하고 node scripts/generate-product-lockups.mjs로 path를 생성합니다. 생성기는 pinned font와 license hash, glyph IDs, kerning origins, ink bounds를 검증합니다.",
+        "제품별 화면에서 문자열, 폰트, 간격을 직접 바꾸거나 미등록 key를 우회하지 않습니다. 표시용 한국어 설명, 환경·버전·workspace·상태·tagline은 lockup 밖의 UI text로 둡니다."
+      ],
+      "accessibility": [
+        "독립 사용은 하나의 role=\"img\"와 registry label 기반 이름 LK Console 또는 LK Portal을 제공합니다. compact도 같은 이름을 유지합니다. 이름을 소유한 링크·버튼 안에서는 decorative로 중복 낭독을 막습니다."
+      ],
+      "exceptions": [],
+      "related": [
+        {
+          "component": "Lockup",
+          "relationship": "대표 시나리오에서 조합"
+        }
+      ],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<ProductLockup product=\"console\" />\n<ProductLockup product=\"portal\" appearance=\"reverse\" height={20} />\n<ProductLockup product=\"console\" compact />"
+        },
+        {
+          "label": "추가 조합 2",
+          "code": "<a href=\"/\" aria-label=\"LK Console 홈\">\n  <ProductLockup product=\"console\" decorative />\n</a>"
+        }
+      ],
+      "tokens": [],
+      "apiLinks": [],
+      "migration": [
+        "회사 식별 LK ROBOTICS와 고정 LK Portal 호환 자산은 Lockup을 유지합니다."
+      ],
+      "platformStatus": {
+        "figma": "not-tracked",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/BrandProductLockup.stories.jsx",
+        "entryStoryId": "lds-theme-brand-product-lockup--product-lockup-standard",
+        "publicStories": [
+          {
+            "id": "lds-theme-brand-product-lockup--narrow-compact",
+            "name": "좁은 영역 · compact 전환",
+            "role": "responsive"
+          },
+          {
+            "id": "lds-theme-brand-product-lockup--product-lockup-standard",
+            "name": "표준 · LK Portal 조형",
+            "role": "overview"
+          }
+        ],
+        "hiddenEvidence": 0
+      },
+      "sources": [],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "evidence",
+        "avoidWhen": "evidence",
+        "anatomy": "evidence",
+        "properties": "evidence",
+        "states": "omitted-no-evidence",
+        "behavior": "omitted-no-evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "evidence",
+        "contentGuidance": "evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "evidence",
+        "examples": "evidence",
+        "tokens": "omitted-no-evidence",
+        "apiLinks": "evidence",
+        "migration": "evidence"
       }
     },
     {

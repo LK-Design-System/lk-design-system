@@ -21,7 +21,7 @@ TopBar·SideNav에서 `LK + 제품명`을 **LK Portal과 같은 로고 문법**�
 
 ```jsx
 <ProductLockup product="console" />
-<ProductLockup product="portal" tone="white" height={20} />
+<ProductLockup product="portal" appearance="reverse" height={20} />
 <ProductLockup product="console" compact />
 ```
 

@@ -696,6 +696,10 @@
     "slug": "theme-brand-lk-robotics-logo"
   },
   {
+    "storybookTitle": "LDS Theme/Brand/Product Lockup",
+    "slug": "theme-brand-product-lockup"
+  },
+  {
     "storybookTitle": "LDS Theme/Controls/Theme Toggle",
     "slug": "theme-controls-theme-toggle"
   },
