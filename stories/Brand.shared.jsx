@@ -1,6 +1,6 @@
 import React from 'react';
 import { BRAND_LOGO_NAMES, BrandLogo, Lockup, Overline } from '../src/index.js';
-import { LK_LOGO_USAGE, LK_PATHS } from '../components/brand/lk-logo-paths.js';
+import { LK_LOGO_USAGE, LK_LOGO_VIEWBOX, LK_MARK_CONSTRUCTION, LK_PATHS } from '../components/brand/lk-logo-paths.js';
 
 const meta = {
   component: Lockup,
@@ -27,7 +27,56 @@ const OFFICIAL_LOGO_ACCENT = '#6bbbdd';
 const OFFICIAL_LOGO_WHITE = '#ffffff';
 const MARK_VISIBLE_BOUNDS = Object.freeze({ x: 346.60933, y: 153.18987, width: 60.75467, height: 56.1628 });
 const MARK_WIDTH_TO_X = Number((MARK_VISIBLE_BOUNDS.width / MARK_VISIBLE_BOUNDS.height).toFixed(5));
+const MARK_CLEAR_SPACE_TO_X = LK_LOGO_USAGE.clearSpace.minimumToX;
+const MARK_CLEAR_SPACE_BOUNDS = Object.freeze({
+  x: -MARK_CLEAR_SPACE_TO_X,
+  y: -MARK_CLEAR_SPACE_TO_X,
+  width: MARK_WIDTH_TO_X + (MARK_CLEAR_SPACE_TO_X * 2),
+  height: 1 + (MARK_CLEAR_SPACE_TO_X * 2),
+});
+const CONSTRUCTION_LABEL_STYLE = Object.freeze({
+  direction: 'ltr',
+  letterSpacing: '0px',
+  wordSpacing: '0px',
+  unicodeBidi: 'isolate',
+  fontVariantNumeric: 'tabular-nums',
+});
+const LOGO_VIEWBOX_HEIGHT = Object.freeze(Object.fromEntries(
+  Object.entries(LK_LOGO_VIEWBOX).map(([variant, viewBox]) => [variant, Number(viewBox.split(/\s+/)[3])]),
+));
 const MINIMUM_REQUIRED_SLOT_WIDTH = LK_LOGO_USAGE.minimumRequiredSlotWidthPx;
+
+function logoClearSpacePx(variant, height) {
+  const requestedHeight = Number.isFinite(height) ? height : LK_LOGO_USAGE.minimumRenderedHeightPx[variant];
+  const renderedHeight = Math.max(requestedHeight, LK_LOGO_USAGE.minimumRenderedHeightPx[variant]);
+  const visibleSymbolHeight = renderedHeight * MARK_VISIBLE_BOUNDS.height / LOGO_VIEWBOX_HEIGHT[variant];
+  return visibleSymbolHeight * MARK_CLEAR_SPACE_TO_X;
+}
+
+function ClearSpaceLockup({ variant = 'inline', height, tone = 'ink', color, title, decorative = false, showBoundary = false }) {
+  const clearSpace = logoClearSpacePx(variant, height);
+  return (
+    <span
+      data-logo-clear-space={variant}
+      data-clear-space-px={clearSpace.toFixed(6)}
+      data-clear-space-to-x={MARK_CLEAR_SPACE_TO_X}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxSizing: 'border-box',
+        width: 'fit-content',
+        maxWidth: '100%',
+        padding: clearSpace,
+        border: showBoundary ? '1px dashed var(--color-semantic-line-normal-neutral)' : 0,
+        borderRadius: showBoundary ? 'var(--radius-md)' : 0,
+        background: showBoundary ? 'var(--color-semantic-background-elevated-normal)' : 'transparent',
+      }}
+    >
+      <Lockup variant={variant} tone={tone} color={color} height={height} title={title} decorative={decorative} />
+    </span>
+  );
+}
 
 const LOGO_VARIANT_GUIDANCE = [
   ['mark', '브랜드가 이미 식별되는 좁은 제품 UI', `렌더 높이 ${LK_LOGO_USAGE.minimumRenderedHeightPx.mark}px · 보이는 심볼 ${LK_LOGO_USAGE.minimumVisibleArtworkHeightPx.mark}px 이상 · 슬롯 폭 ${MINIMUM_REQUIRED_SLOT_WIDTH.mark.toFixed(6)}px 이상`],
@@ -305,7 +354,7 @@ function BrandColorReference() {
                   background: `var(${surface.token})`,
                 }}
               >
-                <Lockup variant="inline" tone="white" height={22} />
+                <ClearSpaceLockup variant="inline" tone="white" height={22} />
               </div>
               <div style={{ display: 'grid', gap: 4 }}>
                 <strong style={{ color: 'var(--color-semantic-label-normal)' }}>{surface.label}</strong>
@@ -417,20 +466,64 @@ function BrandColorReference() {
 }
 
 function ConstructionVerificationGrid() {
+  const visibleRight = MARK_WIDTH_TO_X;
+  const clearSpaceRight = visibleRight + MARK_CLEAR_SPACE_TO_X;
+  const construction = LK_MARK_CONSTRUCTION;
+  const vertex = construction.innerVertex;
+  const angleRadius = 0.13;
+  const upperAngleRadians = construction.innerDiagonalAngleDeg.upper * Math.PI / 180;
+  const lowerAngleRadians = construction.innerDiagonalAngleDeg.lower * Math.PI / 180;
+  const upperAnglePoint = {
+    x: vertex.xToX + (Math.cos(upperAngleRadians) * angleRadius),
+    y: vertex.yToX - (Math.sin(upperAngleRadians) * angleRadius),
+  };
+  const lowerAnglePoint = {
+    x: vertex.xToX + (Math.cos(lowerAngleRadians) * angleRadius),
+    y: vertex.yToX + (Math.sin(lowerAngleRadians) * angleRadius),
+  };
+  const [upperGap, lowerGap] = construction.diagonalGapSegments;
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 'var(--space-5)', alignItems: 'center' }}>
+    <div style={{ display: 'grid', gap: 'var(--space-6)', minWidth: 0 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 'var(--space-5)', alignItems: 'center' }}>
       <svg
-        viewBox="-0.72 -0.82 2.55 2.18"
+        data-construction-diagram
+        viewBox="-0.9 -0.94 2.88 2.82"
         role="img"
-        aria-label={`LK 심볼 geometry v1.0 검증 도표. 보이는 너비 ${MARK_WIDTH_TO_X}X, 높이 1X, 사방 최소 여백 0.5X`}
+        aria-label={`LK 심볼 geometry v1.0 검증 도표. 외곽 ${MARK_WIDTH_TO_X}X 곱하기 1X, 내부 획·절점·사선 각도·네거티브 스페이스, 사방 최소 여백 0.5X`}
+        shapeRendering="geometricPrecision"
         style={{ display: 'block', width: '100%', maxWidth: 420, height: 'auto' }}
       >
+        <title>LK 심볼 geometry v1.0</title>
+        <desc>외곽 비율과 함께 L 세로획·하단획, K 안쪽 절점과 상하 사선 각도, 두 글자 사이의 대각선 네거티브 스페이스, 사방 최소 보호 여백을 검증하는 도표</desc>
         <defs>
           <pattern id="lk-construction-grid" width="0.25" height="0.25" patternUnits="userSpaceOnUse">
-            <path d="M 0.25 0 L 0 0 0 0.25" fill="none" stroke="var(--color-semantic-line-normal-neutral)" strokeWidth="0.012" />
+            <path d="M 0.25 0 H 0 V 0.25" fill="none" stroke="var(--color-semantic-line-normal-neutral)" strokeWidth="0.006" />
           </pattern>
         </defs>
-        <rect x="-0.5" y="-0.5" width={MARK_WIDTH_TO_X + 1} height="2" rx="0.04" fill="url(#lk-construction-grid)" stroke="var(--color-semantic-primary-normal)" strokeWidth="0.018" strokeDasharray="0.06 0.04" />
+        <rect
+          data-construction-clear-space
+          x={MARK_CLEAR_SPACE_BOUNDS.x}
+          y={MARK_CLEAR_SPACE_BOUNDS.y}
+          width={MARK_CLEAR_SPACE_BOUNDS.width}
+          height={MARK_CLEAR_SPACE_BOUNDS.height}
+          rx="0.035"
+          fill="var(--color-semantic-primary-normal)"
+          fillOpacity="0.055"
+          stroke="var(--color-semantic-primary-normal)"
+          strokeWidth="0.012"
+          strokeDasharray="0.045 0.035"
+        />
+        <rect
+          data-construction-visible-bounds
+          x="0"
+          y="0"
+          width={MARK_WIDTH_TO_X}
+          height="1"
+          fill="var(--color-semantic-background-elevated-normal)"
+          stroke="var(--color-semantic-label-alternative)"
+          strokeWidth="0.008"
+        />
+        <rect x="0" y="0" width={MARK_WIDTH_TO_X} height="1" fill="url(#lk-construction-grid)" opacity="0.42" />
         <svg
           x="0"
           y="0"
@@ -443,28 +536,241 @@ function ConstructionVerificationGrid() {
             {LK_PATHS.map((path, index) => <path key={`construction-${index}`} d={path.d} transform={path.transform} />)}
           </g>
         </svg>
-        <g fill="none" stroke="var(--color-semantic-label-alternative)" strokeWidth="0.018">
-          <path d={`M 0 -0.62 H ${MARK_WIDTH_TO_X}`} />
-          <path d="M 0 -0.67 V -0.57" />
-          <path d={`M ${MARK_WIDTH_TO_X} -0.67 V -0.57`} />
-          <path d="M -0.62 0 V 1" />
-          <path d="M -0.67 0 H -0.57" />
-          <path d="M -0.67 1 H -0.57" />
+        <g fill="none" stroke="var(--color-semantic-label-alternative)" strokeWidth="0.009">
+          <g opacity="0.52" strokeDasharray="0.025 0.02">
+            <path d="M 0 -0.61 V -0.02" />
+            <path d={`M ${visibleRight} -0.61 V -0.02`} />
+            <path d="M -0.61 0 H -0.02" />
+            <path d="M -0.61 1 H -0.02" />
+            <path d={`M ${visibleRight} 1.5 V 1.64`} />
+            <path d={`M ${clearSpaceRight} 1.5 V 1.64`} />
+          </g>
+          <path d={`M 0 -0.66 H ${visibleRight}`} />
+          <path d="M 0 -0.71 V -0.61" />
+          <path d={`M ${visibleRight} -0.71 V -0.61`} />
+          <path d="M -0.66 0 V 1" />
+          <path d="M -0.71 0 H -0.61" />
+          <path d="M -0.71 1 H -0.61" />
+          <path d={`M ${visibleRight} 1.64 H ${clearSpaceRight}`} />
+          <path d={`M ${visibleRight} 1.59 V 1.69`} />
+          <path d={`M ${clearSpaceRight} 1.59 V 1.69`} />
         </g>
-        <g fill="var(--color-semantic-label-normal)" fontFamily="var(--font-sans)" fontSize="0.11" fontWeight="700">
-          <text x={MARK_WIDTH_TO_X / 2} y="-0.68" textAnchor="middle">W = {MARK_WIDTH_TO_X}X</text>
-          <text x="-0.68" y="0.5" textAnchor="middle" transform="rotate(-90 -0.68 0.5)">H = 1X</text>
-          <text x={MARK_WIDTH_TO_X + 0.45} y="1.18" textAnchor="end">clear space 0.5X</text>
+        <g
+          data-construction-internal-guides
+          fill="none"
+          stroke="var(--color-semantic-primary-normal)"
+          strokeWidth="0.007"
+        >
+          <path d={`M 0 -0.2 H ${construction.stemWidthToX}`} />
+          <path d="M 0 -0.235 V -0.165" />
+          <path d={`M ${construction.stemWidthToX} -0.235 V -0.165`} />
+          <path d={`M -0.2 ${upperGap.from.y} V ${lowerGap.from.y}`} />
+          <path d={`M -0.235 ${upperGap.from.y} H -0.165`} />
+          <path d={`M -0.235 ${lowerGap.from.y} H -0.165`} />
+          <path d={`M 0 1.1 H ${construction.footReachToX}`} />
+          <path d="M 0 1.065 V 1.135" />
+          <path d={`M ${construction.footReachToX} 1.065 V 1.135`} />
+          <g opacity="0.62" strokeDasharray="0.018 0.018">
+            <path d={`M 0 ${vertex.yToX} H ${vertex.xToX}`} />
+            <path d={`M ${vertex.xToX} 0 V ${vertex.yToX}`} />
+            <path d={`M ${vertex.xToX} ${vertex.yToX} H 1.13`} />
+          </g>
+          <circle cx={vertex.xToX} cy={vertex.yToX} r="0.018" fill="var(--color-semantic-primary-normal)" stroke="none" />
+          <path d={`M ${vertex.xToX + angleRadius} ${vertex.yToX} A ${angleRadius} ${angleRadius} 0 0 0 ${upperAnglePoint.x} ${upperAnglePoint.y}`} />
+          <path d={`M ${vertex.xToX + angleRadius} ${vertex.yToX} A ${angleRadius} ${angleRadius} 0 0 1 ${lowerAnglePoint.x} ${lowerAnglePoint.y}`} />
+          <path data-construction-gap-segment d={`M ${upperGap.from.x} ${upperGap.from.y} L ${upperGap.to.x} ${upperGap.to.y}`} strokeWidth="0.012" />
+          <path data-construction-gap-segment d={`M ${lowerGap.from.x} ${lowerGap.from.y} L ${lowerGap.to.x} ${lowerGap.to.y}`} strokeWidth="0.012" />
+        </g>
+        <g
+          data-construction-internal-labels
+          fill="var(--color-semantic-primary-normal)"
+          fontFamily="var(--font-sans)"
+          fontSize="0.052"
+          fontWeight="800"
+        >
+          <text data-construction-internal-label x={construction.stemWidthToX / 2} y="-0.27" textAnchor="middle" style={CONSTRUCTION_LABEL_STYLE}>A · {construction.stemWidthToX.toFixed(4)}X</text>
+          <text data-construction-internal-label x="-0.29" y={(upperGap.from.y + lowerGap.from.y) / 2} textAnchor="middle" style={CONSTRUCTION_LABEL_STYLE}>B · {construction.footThicknessToX.toFixed(4)}X</text>
+          <text data-construction-internal-label x={construction.footReachToX / 2} y="1.19" textAnchor="middle" style={CONSTRUCTION_LABEL_STYLE}>C · {construction.footReachToX.toFixed(4)}X</text>
+          <text data-construction-internal-label x="1.15" y={vertex.yToX - 0.025} textAnchor="start" style={CONSTRUCTION_LABEL_STYLE}>
+            <tspan x="1.15">P · x {vertex.xToX.toFixed(4)}X</tspan>
+            <tspan x="1.15" dy="0.064">y {vertex.yToX.toFixed(4)}X</tspan>
+          </text>
+          <text data-construction-internal-label x={vertex.xToX + 0.18} y={vertex.yToX - 0.105} textAnchor="middle" style={CONSTRUCTION_LABEL_STYLE}>α {construction.innerDiagonalAngleDeg.upper.toFixed(2)}°</text>
+          <text data-construction-internal-label x={vertex.xToX + 0.18} y={vertex.yToX + 0.14} textAnchor="middle" style={CONSTRUCTION_LABEL_STYLE}>β {construction.innerDiagonalAngleDeg.lower.toFixed(2)}°</text>
+          <text data-construction-internal-label x="0.73" y="1.36" textAnchor="middle" style={CONSTRUCTION_LABEL_STYLE}>G⊥ · {construction.diagonalGapToX.minimum.toFixed(4)}–{construction.diagonalGapToX.maximum.toFixed(4)}X</text>
+        </g>
+        <g
+          data-construction-labels
+          fill="var(--color-semantic-label-normal)"
+          fontFamily="var(--font-sans)"
+          fontSize="0.095"
+          fontWeight="700"
+        >
+          <text data-construction-label x={visibleRight / 2} y="-0.77" textAnchor="middle" style={CONSTRUCTION_LABEL_STYLE}>W · {MARK_WIDTH_TO_X}X</text>
+          <text data-construction-label x="-0.77" y="0.5" textAnchor="middle" transform="rotate(-90 -0.77 0.5)" style={CONSTRUCTION_LABEL_STYLE}>H · 1X</text>
+          <text data-construction-label x={visibleRight + (MARK_CLEAR_SPACE_TO_X / 2)} y="1.8" textAnchor="middle" fontSize="0.078" style={CONSTRUCTION_LABEL_STYLE}>CLEAR SPACE · {MARK_CLEAR_SPACE_TO_X}X</text>
         </g>
       </svg>
       <div style={{ display: 'grid', gap: 'var(--space-3)', minWidth: 0, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
         <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: 16 }}>geometry v1.0 검증 기준</strong>
         <span><strong>X</strong>는 SVG의 패딩 포함 높이가 아니라 심볼 path의 보이는 높이입니다. 정규화된 심볼은 <strong>W={MARK_WIDTH_TO_X}X · H=1X</strong>입니다.</span>
+        <div
+          data-construction-metric-legend
+          style={{ display: 'grid', gridTemplateColumns: 'max-content minmax(0, 1fr)', gap: '6px 10px', padding: 'var(--space-3)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-fill-alternative)', fontSize: 12, lineHeight: 1.5 }}
+        >
+          <code>A</code><span>L 세로획 너비 <strong>{construction.stemWidthToX.toFixed(4)}X</strong></span>
+          <code>B</code><span>L 하단획 두께 <strong>{construction.footThicknessToX.toFixed(4)}X</strong></span>
+          <code>C</code><span>L 하단획 도달거리 <strong>{construction.footReachToX.toFixed(4)}X</strong></span>
+          <code>P</code><span>K 안쪽 절점 <strong>({vertex.xToX.toFixed(4)}X, {vertex.yToX.toFixed(4)}X)</strong></span>
+          <code>α·β</code><span>안쪽 상·하 사선 <strong>{construction.innerDiagonalAngleDeg.upper.toFixed(2)}° · {construction.innerDiagonalAngleDeg.lower.toFixed(2)}°</strong></span>
+          <code>G⊥</code><span>대각선 네거티브 스페이스 <strong>{construction.diagonalGapToX.minimum.toFixed(4)}–{construction.diagonalGapToX.maximum.toFixed(4)}X</strong></span>
+        </div>
         <span>투명 mark·stacked·inline은 보이는 bounds부터 사방 <strong>0.5X</strong>, 다른 회사와 나란히 쓰는 공동 브랜딩은 <strong>1X</strong>를 확보합니다.</span>
         <span>banner는 0.5X를 배경 안에 포함하고, 기본/기업 사각형과 favicon tile은 생성된 전체 캔버스가 보호면입니다.</span>
         <span>이 도표는 고정 path를 검증하기 위한 것입니다. 별도 small-use redraw는 아직 승인되지 않았으므로 모든 크기에서 v1.0을 유지합니다.</span>
       </div>
+      </div>
+      <MarkReconstructionSpecification construction={construction} />
     </div>
+  );
+}
+
+function MarkReconstructionSpecification({ construction }) {
+  const labelOffsets = {
+    L1: { dx: 0.03, dy: 0.065, anchor: 'start' },
+    L2: { dx: 0.03, dy: -0.025, anchor: 'start' },
+    L3: { dx: -0.025, dy: -0.025, anchor: 'end' },
+    L4: { dx: -0.025, dy: -0.025, anchor: 'end' },
+    L5: { dx: 0.025, dy: -0.025, anchor: 'start' },
+    L6: { dx: 0.025, dy: 0.065, anchor: 'start' },
+    K1: { dx: -0.03, dy: 0.065, anchor: 'end' },
+    K2: { dx: -0.03, dy: 0.065, anchor: 'end' },
+    K3: { dx: -0.03, dy: -0.03, anchor: 'end' },
+    K4: { dx: -0.03, dy: -0.025, anchor: 'end' },
+    K5: { dx: -0.03, dy: -0.025, anchor: 'end' },
+    K6: { dx: 0.03, dy: -0.03, anchor: 'start' },
+  };
+  const precision = construction.coordinateSystem.precisionToX;
+  const decimals = Math.max(0, Math.round(-Math.log10(precision)));
+  const formatCoordinate = (value) => value.toFixed(decimals);
+  const reconstructionSvgRecipe = [
+    `<svg viewBox="0 0 ${MARK_WIDTH_TO_X} 1" xmlns="http://www.w3.org/2000/svg">`,
+    `  <g fill="${OFFICIAL_LOGO_NAVY}" fill-rule="nonzero">`,
+    ...construction.contours.map((contour) => `    <path d="${contour.normalizedPath}"/>`),
+    '  </g>',
+    '</svg>',
+  ].join('\n');
+
+  return (
+    <section
+      data-reconstruction-specification
+      aria-labelledby="lk-reconstruction-title"
+      style={{ display: 'grid', gap: 'var(--space-4)', minWidth: 0, paddingTop: 'var(--space-5)', borderTop: '1px solid var(--color-semantic-line-normal-normal)' }}
+    >
+      <div style={{ display: 'grid', gap: 6 }}>
+        <h3 id="lk-reconstruction-title" style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 18 }}>독립 재작도 좌표</h3>
+        <p style={{ margin: 0, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.65 }}>
+          아래 두 폐곡선의 절점을 순서대로 직선 연결하고 각각 닫으면 정본과 같은 LK 심볼을 재현할 수 있습니다.
+          원점은 보이는 bounds의 왼쪽 위, +x는 오른쪽, +y는 아래이며 모든 값은 <strong>X</strong>에 대한 비율입니다.
+        </p>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))', gap: 'var(--space-5)', alignItems: 'start', minWidth: 0 }}>
+        <svg
+          data-reconstruction-diagram
+          viewBox={`-0.14 -0.14 ${MARK_WIDTH_TO_X + 0.28} 1.28`}
+          role="img"
+          aria-label="LK 심볼 재작도 절점 도면. L1부터 L6, K1부터 K6까지 두 개의 반시계 방향 폐곡선"
+          shapeRendering="geometricPrecision"
+          style={{ display: 'block', width: '100%', maxWidth: 520, height: 'auto', marginInline: 'auto' }}
+        >
+          <title>LK 심볼 독립 재작도 절점</title>
+          <desc>보이는 높이 X를 1로 정규화한 두 폐곡선의 열두 절점과 연결 순서</desc>
+          <defs>
+            <pattern id="lk-reconstruction-grid" width="0.1" height="0.1" patternUnits="userSpaceOnUse">
+              <path d="M 0.1 0 H 0 V 0.1" fill="none" stroke="var(--color-semantic-line-normal-neutral)" strokeWidth="0.0035" />
+            </pattern>
+          </defs>
+          <rect x="0" y="0" width={MARK_WIDTH_TO_X} height="1" fill="var(--color-semantic-background-elevated-normal)" stroke="var(--color-semantic-label-alternative)" strokeWidth="0.006" />
+          <rect x="0" y="0" width={MARK_WIDTH_TO_X} height="1" fill="url(#lk-reconstruction-grid)" opacity="0.55" />
+          <g data-reconstruction-contours fill={OFFICIAL_LOGO_NAVY} fillOpacity="0.16" stroke={OFFICIAL_LOGO_NAVY} strokeWidth="0.009" strokeLinejoin="miter">
+            {construction.contours.map((contour) => <path key={contour.id} data-reconstruction-contour={contour.id} d={contour.normalizedPath} />)}
+          </g>
+          <g fontFamily="var(--font-sans)" fontSize="0.041" fontWeight="800" fill="var(--color-semantic-primary-normal)">
+            {construction.contours.flatMap((contour) => contour.vertices.map((vertex) => {
+              const offset = labelOffsets[vertex.id];
+              return (
+                <g key={vertex.id} data-reconstruction-vertex={vertex.id}>
+                  <circle cx={vertex.xToX} cy={vertex.yToX} r="0.014" fill="var(--color-semantic-primary-normal)" stroke="var(--color-semantic-background-elevated-normal)" strokeWidth="0.005" />
+                  <text
+                    data-reconstruction-vertex-label
+                    x={vertex.xToX + offset.dx}
+                    y={vertex.yToX + offset.dy}
+                    textAnchor={offset.anchor}
+                    style={CONSTRUCTION_LABEL_STYLE}
+                  >
+                    {vertex.id}
+                  </text>
+                </g>
+              );
+            }))}
+          </g>
+          <g fill="var(--color-semantic-label-normal)" fontFamily="var(--font-sans)" fontSize="0.035" fontWeight="700">
+            <text x="0" y="-0.055" style={CONSTRUCTION_LABEL_STYLE}>0,0 · 원점</text>
+            <text x={MARK_WIDTH_TO_X} y="1.075" textAnchor="end" style={CONSTRUCTION_LABEL_STYLE}>viewBox · {MARK_WIDTH_TO_X} × 1X</text>
+          </g>
+        </svg>
+        <div style={{ display: 'grid', gap: 'var(--space-4)', minWidth: 0 }}>
+          {construction.contours.map((contour) => (
+            <div key={contour.id} data-reconstruction-coordinate-table={contour.id} style={{ display: 'grid', gap: 8, minWidth: 0 }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', justifyContent: 'space-between', gap: 8 }}>
+                <strong style={{ color: 'var(--color-semantic-label-strong)' }}>{contour.id} 폐곡선</strong>
+                <code style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 11 }}>{contour.winding === 'counter-clockwise' ? '반시계' : '시계'} · M→L→Z</code>
+              </div>
+              <div role="region" aria-label={`${contour.id} 폐곡선 절점 좌표`} tabIndex={0} style={{ maxWidth: '100%', overflowX: 'auto', border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)' }}>
+                <table style={{ width: '100%', minWidth: 330, borderCollapse: 'collapse', color: 'var(--color-semantic-label-neutral)', fontSize: 12, fontVariantNumeric: 'tabular-nums' }}>
+                  <thead>
+                    <tr style={{ background: 'var(--color-semantic-fill-alternative)', color: 'var(--color-semantic-label-normal)', textAlign: 'left' }}>
+                      {['절점', 'x / X', 'y / X', '다음 선분'].map((label) => <th key={label} style={{ padding: '7px 9px', borderBottom: '1px solid var(--color-semantic-line-normal-normal)' }}>{label}</th>)}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {contour.vertices.map((vertex, index) => {
+                      const next = contour.vertices[(index + 1) % contour.vertices.length];
+                      return (
+                        <tr key={vertex.id}>
+                          <th scope="row" style={{ padding: '6px 9px', textAlign: 'left', color: 'var(--color-semantic-label-strong)' }}>{vertex.id}</th>
+                          <td style={{ padding: '6px 9px' }}>{formatCoordinate(vertex.xToX)}</td>
+                          <td style={{ padding: '6px 9px' }}>{formatCoordinate(vertex.yToX)}</td>
+                          <td style={{ padding: '6px 9px' }}>{index === contour.vertices.length - 1 ? `${next.id} · close` : next.id}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <code data-reconstruction-path={contour.id} style={{ display: 'block', maxWidth: '100%', padding: '8px 10px', overflowWrap: 'anywhere', borderRadius: 'var(--radius-sm)', background: 'var(--color-semantic-fill-alternative)', color: 'var(--color-semantic-label-neutral)', fontSize: 11, lineHeight: 1.5 }}>
+                {contour.normalizedPath}
+              </code>
+            </div>
+          ))}
+        </div>
+      </div>
+      <ol style={{ margin: 0, paddingInlineStart: 20, color: 'var(--color-semantic-label-neutral)', fontSize: 13, lineHeight: 1.65 }}>
+        <li><code>viewBox=&quot;0 0 {MARK_WIDTH_TO_X} 1&quot;</code>을 만들고 L과 K를 별도 폐곡선으로 유지합니다.</li>
+        <li>각 표의 순서대로 <code>M</code>과 직선 <code>L</code>을 사용한 뒤 <code>Z</code>로 닫습니다. 곡선·라운딩·불리언 합치기를 추가하지 않습니다.</li>
+        <li><code>fill-rule=&quot;nonzero&quot;</code>, 획 없음, 가로·세로 동일 배율을 사용합니다. 좌표 반올림 단위는 <strong>{formatCoordinate(precision)}X</strong>입니다.</li>
+        <li>L은 위쪽 <code>0</code>에서 아래쪽 <code>0.997837X</code>, K는 위쪽 <code>0.002139X</code>에서 아래쪽 <code>1X</code>까지 내려오는 미세한 optical offset을 그대로 유지합니다.</li>
+      </ol>
+      <div style={{ display: 'grid', gap: 8, minWidth: 0 }}>
+        <strong style={{ color: 'var(--color-semantic-label-strong)', fontSize: 13 }}>완전한 정규화 SVG 식</strong>
+        <pre
+          data-reconstruction-svg-recipe
+          tabIndex={0}
+          aria-label="LK 심볼 독립 재작도용 정규화 SVG 코드"
+          style={{ margin: 0, maxWidth: '100%', padding: 'var(--space-3)', overflowX: 'auto', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-fill-alternative)', color: 'var(--color-semantic-label-neutral)', fontSize: 11, lineHeight: 1.55 }}
+        ><code>{reconstructionSvgRecipe}</code></pre>
+      </div>
+    </section>
   );
 }
 
@@ -649,7 +955,7 @@ export const LKRoboticsLogo = {
                 background: 'var(--color-semantic-background-elevated-normal)',
               }}
             >
-              <Lockup variant={variant} tone="ink" height={height} />
+              <ClearSpaceLockup variant={variant} tone="ink" height={height} />
               <div style={{ display: 'grid', gap: 4 }}>
                 <strong style={{ color: 'var(--color-semantic-label-normal)' }}>{label}</strong>
                 <code style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 12 }}>
@@ -703,7 +1009,7 @@ export const LKRoboticsLogo = {
                   background: isDark ? OFFICIAL_LOGO_NAVY : isFixedLight ? OFFICIAL_LOGO_WHITE : 'var(--color-semantic-background-elevated-normal)',
                 }}
               >
-                <Lockup variant="inline" tone={tone} color={color} height={28} />
+                <ClearSpaceLockup variant="inline" tone={tone} color={color} height={28} />
                 <div style={{ display: 'grid', gap: 4 }}>
                   <strong style={{ color: isDark ? 'var(--color-semantic-brand-on-surface)' : isFixedLight ? OFFICIAL_LOGO_NAVY : 'var(--color-semantic-label-normal)' }}>{label}</strong>
                   <code style={{ color: isDark ? 'var(--color-semantic-brand-on-surface-subtle)' : isFixedLight ? 'rgba(5, 19, 43, 0.72)' : 'var(--color-semantic-label-alternative)', fontSize: 12 }}>
@@ -716,7 +1022,7 @@ export const LKRoboticsLogo = {
         </div>
         <div style={{ minHeight: 132, display: 'grid', placeItems: 'center', padding: 'var(--space-5)', borderRadius: 'var(--radius-lg)', background: 'linear-gradient(125deg, #b8dff0 0 24%, #3b576a 24% 48%, #d6a55a 48% 72%, #18314f 72%)' }}>
           <div style={{ display: 'grid', gap: 8, padding: 18, borderRadius: 'var(--radius-md)', background: OFFICIAL_LOGO_NAVY }}>
-            <Lockup variant="inline" tone="white" height={28} />
+            <ClearSpaceLockup variant="inline" tone="white" height={28} />
             <span style={{ color: OFFICIAL_LOGO_WHITE, fontSize: 11 }}>복잡한 배경에서는 공식 단색 보호면 사용</span>
           </div>
         </div>
@@ -730,36 +1036,16 @@ export const LKRoboticsLogo = {
           <strong>X는 LK 심볼의 보이는 높이</strong>입니다. 투명 mark·stacked·inline 주변은 상·하·좌·우 모두 <strong>0.5X</strong>,
           공동 브랜딩에서는 <strong>1X</strong>를 확보합니다. 이 외부 여백은 SVG의 타이트한 viewBox 패딩과 별개입니다.
           banner는 0.5X를 배경 안에 포함하며 사각형·기업형·favicon tile은 생성된 전체 캔버스가 보호면입니다.
+          이 페이지의 정상 사용 예시는 variant별 viewBox와 렌더 높이에서 0.5X를 계산하며, 어느 한쪽이라도 부족하면 자동 검증이 실패합니다.
         </p>
         <div style={{ display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap', alignItems: 'center' }}>
           <div style={{ display: 'inline-grid', gap: 6, justifyItems: 'center' }}>
-            <div style={{ display: 'inline-flex', padding: 14, border: '1px dashed var(--color-semantic-line-normal-neutral)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)' }}>
-              <Lockup variant="inline" height={28} />
-            </div>
-            <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>예시 여백 14px (최소 0.5X 충족)</code>
+            <ClearSpaceLockup variant="inline" height={28} showBoundary />
+            <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>사방 {logoClearSpacePx('inline', 28).toFixed(2)}px (=0.5X)</code>
           </div>
           <div style={{ display: 'inline-grid', gap: 6, justifyItems: 'center' }}>
-            <div style={{ display: 'inline-flex', padding: 10, border: '1px dashed var(--color-semantic-line-normal-neutral)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)' }}>
-              <Lockup variant="inline" height={LK_LOGO_USAGE.minimumRenderedHeightPx.inline} />
-            </div>
-            <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>최소 크기 (height={LK_LOGO_USAGE.minimumRenderedHeightPx.inline}px)</code>
-          </div>
-        </div>
-      </section>
-
-      <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
-        <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>LK Portal 제품 로크업</h2>
-        <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          승인된 제품 워드마크 <strong>PORTAL</strong>은 모브랜드 우선 SemiBold 600 정본과 대문자 문법을 쓰며 registry Portal과 같은 path입니다.
-          마크와의 간격은 <strong>마크 보이는 폭의 0.35배</strong>로, <code>inline</code>의 0.2배보다 넓습니다 — 20px 렌더에서 더 좁으면
-          K의 사선과 P가 붙어 한 단어로 읽힙니다. 접근성 이름의 기본값은 <code>LK Portal</code>입니다.
-        </p>
-        <div style={{ display: 'flex', gap: 'var(--space-5)', flexWrap: 'wrap', alignItems: 'center' }}>
-          <div style={{ display: 'inline-flex', padding: 14, borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-brand-surface)' }}>
-            <Lockup variant="portal" tone="white" height={20} />
-          </div>
-          <div style={{ display: 'inline-flex', padding: 14, border: '1px dashed var(--color-semantic-line-normal-neutral)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)' }}>
-            <Lockup variant="portal" tone="ink" height={28} />
+            <ClearSpaceLockup variant="inline" height={LK_LOGO_USAGE.minimumRenderedHeightPx.inline} showBoundary />
+            <code style={{ fontSize: 11, color: 'var(--color-semantic-label-alternative)' }}>최소 크기 · 사방 {logoClearSpacePx('inline', LK_LOGO_USAGE.minimumRenderedHeightPx.inline).toFixed(2)}px</code>
           </div>
         </div>
       </section>
@@ -894,6 +1180,87 @@ export const LKRoboticsLogo = {
       </section>
     </main>
   ),
+  play: ({ canvasElement }) => {
+    const diagram = canvasElement.querySelector('[data-construction-diagram]');
+    const clearSpaceBounds = diagram?.querySelector('[data-construction-clear-space]');
+    const labels = [...(diagram?.querySelectorAll('[data-construction-label]') ?? [])];
+    const internalLabels = [...(diagram?.querySelectorAll('[data-construction-internal-label]') ?? [])];
+    const gapSegments = [...(diagram?.querySelectorAll('[data-construction-gap-segment]') ?? [])];
+    const metricLegend = canvasElement.querySelector('[data-construction-metric-legend]');
+    const reconstruction = canvasElement.querySelector('[data-reconstruction-specification]');
+    const reconstructionDiagram = reconstruction?.querySelector('[data-reconstruction-diagram]');
+    const reconstructionContours = [...(reconstructionDiagram?.querySelectorAll('[data-reconstruction-contour]') ?? [])];
+    const reconstructionVertices = [...(reconstructionDiagram?.querySelectorAll('[data-reconstruction-vertex]') ?? [])];
+    const reconstructionLabels = [...(reconstructionDiagram?.querySelectorAll('[data-reconstruction-vertex-label]') ?? [])];
+    const reconstructionTables = [...(reconstruction?.querySelectorAll('[data-reconstruction-coordinate-table]') ?? [])];
+    const reconstructionPaths = [...(reconstruction?.querySelectorAll('[data-reconstruction-path]') ?? [])];
+    const reconstructionSvgRecipe = reconstruction?.querySelector('[data-reconstruction-svg-recipe]');
+    if (!diagram || !clearSpaceBounds || labels.length !== 3) {
+      throw new Error('Construction verification diagram must expose its clear-space bounds and three dimension labels.');
+    }
+    if (internalLabels.length !== 7 || gapSegments.length !== 2 || !metricLegend) {
+      throw new Error('Construction verification must expose seven internal ratio labels, two measured gap segments, and its metric legend.');
+    }
+    if (!reconstruction || !reconstructionDiagram || reconstructionContours.length !== 2 || reconstructionVertices.length !== 12 || reconstructionLabels.length !== 12 || reconstructionTables.length !== 2 || reconstructionPaths.length !== 2 || !reconstructionSvgRecipe) {
+      throw new Error('Independent reconstruction must expose two closed contours, twelve labeled vertices, two coordinate tables, two normalized paths, and a complete SVG recipe.');
+    }
+    LK_MARK_CONSTRUCTION.contours.forEach((contour, index) => {
+      if (reconstructionContours[index]?.getAttribute('d') !== contour.normalizedPath) {
+        throw new Error(`Reconstruction contour ${contour.id} must render the generated normalized path without edits.`);
+      }
+      const rows = reconstructionTables[index]?.querySelectorAll('tbody tr') ?? [];
+      if (rows.length !== contour.vertices.length || reconstructionPaths[index]?.textContent.trim() !== contour.normalizedPath) {
+        throw new Error(`Reconstruction contour ${contour.id} must expose every generated vertex and its exact path recipe.`);
+      }
+      if (!reconstructionSvgRecipe.textContent.includes(contour.normalizedPath)) {
+        throw new Error(`Complete reconstruction SVG must include contour ${contour.id} without edits.`);
+      }
+    });
+    const diagramRect = diagram.getBoundingClientRect();
+    const renderedNodes = [clearSpaceBounds, ...labels, ...internalLabels];
+    for (const node of renderedNodes) {
+      const rect = node.getBoundingClientRect();
+      if (rect.left < diagramRect.left - 1 || rect.top < diagramRect.top - 1 || rect.right > diagramRect.right + 1 || rect.bottom > diagramRect.bottom + 1) {
+        throw new Error('Construction verification geometry and labels must remain inside the SVG viewBox.');
+      }
+    }
+    const view = diagram.ownerDocument.defaultView;
+    for (const label of [...labels, ...internalLabels]) {
+      const letterSpacing = view.getComputedStyle(label).letterSpacing;
+      if (letterSpacing !== 'normal' && Number.parseFloat(letterSpacing) !== 0) {
+        throw new Error('Construction dimension labels must not inherit page letter spacing.');
+      }
+    }
+    const reconstructionRect = reconstructionDiagram.getBoundingClientRect();
+    for (const label of reconstructionLabels) {
+      const rect = label.getBoundingClientRect();
+      if (rect.left < reconstructionRect.left - 1 || rect.top < reconstructionRect.top - 1 || rect.right > reconstructionRect.right + 1 || rect.bottom > reconstructionRect.bottom + 1) {
+        throw new Error('Reconstruction vertex labels must remain inside the reconstruction SVG viewBox.');
+      }
+    }
+    const clearSpaceExamples = [...canvasElement.querySelectorAll('[data-logo-clear-space]')];
+    if (clearSpaceExamples.length < 8) {
+      throw new Error('Approved transparent logo examples must use the calculated 0.5X clear-space wrapper.');
+    }
+    for (const wrapper of clearSpaceExamples) {
+      const logo = wrapper.querySelector('[data-lockup-variant]');
+      const required = Number(wrapper.dataset.clearSpacePx);
+      if (!logo || !Number.isFinite(required)) {
+        throw new Error('Each clear-space wrapper must expose its logo and calculated distance.');
+      }
+      const wrapperRect = wrapper.getBoundingClientRect();
+      const logoRect = logo.getBoundingClientRect();
+      const actual = [
+        logoRect.left - wrapperRect.left,
+        wrapperRect.right - logoRect.right,
+        logoRect.top - wrapperRect.top,
+        wrapperRect.bottom - logoRect.bottom,
+      ];
+      if (actual.some((distance) => distance < required - 0.05)) {
+        throw new Error('Approved logo examples must reserve at least 0.5X on every side.');
+      }
+    }
+  },
 };
 
 export const LockupOverlineCard = {

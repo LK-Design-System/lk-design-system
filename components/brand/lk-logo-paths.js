@@ -17,6 +17,65 @@ export const LK_PATHS = Object.freeze([
   },
 ]);
 
+export const LK_MARK_CONSTRUCTION = Object.freeze({
+  coordinateSystem: Object.freeze({
+    origin: "visible-bounds-top-left",
+    xAxis: "right",
+    yAxis: "down",
+    unit: "X-visible-artwork-height",
+    precisionToX: 0.000001,
+  }),
+  contours: Object.freeze([
+    Object.freeze({
+      id: "L",
+      closed: true,
+      winding: "counter-clockwise",
+      normalizedPath: "M 0 0 L 0 0.997837 L 0.668105 0.997837 L 0.494633 0.790132 L 0.216276 0.790132 L 0.216276 0 Z",
+      vertices: Object.freeze([
+        Object.freeze({ id: "L1", xToX: 0, yToX: 0 }),
+        Object.freeze({ id: "L2", xToX: 0, yToX: 0.997837 }),
+        Object.freeze({ id: "L3", xToX: 0.668105, yToX: 0.997837 }),
+        Object.freeze({ id: "L4", xToX: 0.494633, yToX: 0.790132 }),
+        Object.freeze({ id: "L5", xToX: 0.216276, yToX: 0.790132 }),
+        Object.freeze({ id: "L6", xToX: 0.216276, yToX: 0 }),
+      ]),
+    }),
+    Object.freeze({
+      id: "K",
+      closed: true,
+      winding: "counter-clockwise",
+      normalizedPath: "M 1.08176 0.002139 L 0.833767 0.002139 L 0.405084 0.537464 L 0.796993 1 L 1.077083 1 L 0.679192 0.537464 Z",
+      vertices: Object.freeze([
+        Object.freeze({ id: "K1", xToX: 1.08176, yToX: 0.002139 }),
+        Object.freeze({ id: "K2", xToX: 0.833767, yToX: 0.002139 }),
+        Object.freeze({ id: "K3", xToX: 0.405084, yToX: 0.537464 }),
+        Object.freeze({ id: "K4", xToX: 0.796993, yToX: 1 }),
+        Object.freeze({ id: "K5", xToX: 1.077083, yToX: 1 }),
+        Object.freeze({ id: "K6", xToX: 0.679192, yToX: 0.537464 }),
+      ]),
+    }),
+  ]),
+  stemWidthToX: 0.216276,
+  footReachToX: 0.668105,
+  footThicknessToX: 0.207706,
+  innerVertex: Object.freeze({
+    xToX: 0.405084,
+    yToX: 0.537464,
+  }),
+  innerDiagonalAngleDeg: Object.freeze({
+    upper: 51.312624,
+    lower: 49.725301,
+  }),
+  diagonalGapToX: Object.freeze({
+    minimum: 0.095016,
+    maximum: 0.096937,
+  }),
+  diagonalGapSegments: Object.freeze([
+    Object.freeze({ from: Object.freeze({"x":0.494633,"y":0.790132}), to: Object.freeze({"x":0.567126,"y":0.728708}) }),
+    Object.freeze({ from: Object.freeze({"x":0.668105,"y":0.997837}), to: Object.freeze({"x":0.742064,"y":0.935172}) }),
+  ]),
+});
+
 export const ROBOTICS_PATHS = Object.freeze([
   {
     letter: "R",
