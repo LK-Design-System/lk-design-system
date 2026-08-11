@@ -2,6 +2,10 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.6 - 2026-08-11
+
+Release candidate for the LDS package set after refreshing generated package surfaces and the canonical ProductLockup/SideNav documentation. The release includes the externally published Robotics UI prerequisite at `0.1.0-rc.5` and is identified by the immutable tag `lds-v0.1.0-rc.69.6`.
+
 ## 0.1.0-rc.67.1 - 2026-08-09
 
 Interim vendor drop from branch `chat-message-identity-actions` (built on rc.67 HEAD `6fea1752`, excluding the concurrent uncommitted worktree changes). Fold into the next full rc when the release line settles.

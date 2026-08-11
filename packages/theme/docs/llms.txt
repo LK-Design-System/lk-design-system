@@ -34,7 +34,7 @@ Read `@lk-design-system/lds-theme/adoption-checklist.json` before implementation
 
 제품의 실제 동작·데이터·권한·route·backend orchestration은 제품이 소유합니다. LDS adoption은 그 위에 component뿐 아니라 token/theme, layout과 시각 foundation, state/pattern/motion, asset/iconography/brand, content/internationalization, accessibility 계약을 함께 적용합니다.
 
-전환 중 shared component, token, asset, pattern의 변경 필요가 발견되어도 제품 전환 요청이 그 변경 권한을 자동으로 부여하지 않습니다. 해당 변경은 [컴포넌트 워크플로](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/COMPONENT_WORKFLOW.md), [토큰 거버넌스](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/TOKEN_GOVERNANCE.md), 저장소의 scope escalation gate를 따로 적용합니다.
+전환 중 shared component, token, asset, pattern의 변경 필요가 발견되어도 제품 전환 요청이 그 변경 권한을 자동으로 부여하지 않습니다. 해당 변경은 [컴포넌트 워크플로](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/COMPONENT_WORKFLOW.md), [토큰 거버넌스](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/TOKEN_GOVERNANCE.md), 저장소의 scope escalation gate를 따로 적용합니다.
 
 ## 판정과 typed evidence
 
@@ -60,9 +60,9 @@ Read `@lk-design-system/lds-theme/adoption-checklist.json` before implementation
 ## 작업 전 탐색 순서
 
 1. 대상 route·surface·source file과 실제 ready/non-ready 상태, 사용자 문구, asset을 inventory합니다.
-2. [Foundation index](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/README.md)에서 관련 원리와 선택 기준을 읽습니다. 단일 AI context가 필요하면 [Foundation LLM bundle](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/llms.txt)을 대신 사용합니다.
-3. 관련 CSS 이름과 설명을 [token source](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/tokens/source.json)에서 확인합니다. generated CSS 값만 보고 의미를 추론하지 않습니다.
-4. 후보 component를 정한 뒤 [component index](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/components/README.md)와 해당 targeted guide를 읽습니다. 전체 [component LLM bundle](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/components/llms.txt)은 retrieval/indexing 용도이며 매 작업에서 통째로 읽는 필수 입력이 아닙니다.
+2. [Foundation index](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/README.md)에서 관련 원리와 선택 기준을 읽습니다. 단일 AI context가 필요하면 [Foundation LLM bundle](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/llms.txt)을 대신 사용합니다.
+3. 관련 CSS 이름과 설명을 [token source](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/tokens/source.json)에서 확인합니다. generated CSS 값만 보고 의미를 추론하지 않습니다.
+4. 후보 component를 정한 뒤 [component index](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/components/README.md)와 해당 targeted guide를 읽습니다. 전체 [component LLM bundle](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/components/llms.txt)은 retrieval/indexing 용도이며 매 작업에서 통째로 읽는 필수 입력이 아닙니다.
 5. hard trigger가 있으면 해당 facet이 요구하는 evidence kind와 전문 계약을 반드시 확인합니다.
 6. 아래 report schema에 surface별 판정을 기록한 뒤에 component mapping을 확정합니다.
 
@@ -90,11 +90,11 @@ Hard trigger:
 
 참조:
 
-- [docs/TOKEN_GOVERNANCE.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/TOKEN_GOVERNANCE.md)
-- [docs/PACKAGE_MIGRATION_GUIDE.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/PACKAGE_MIGRATION_GUIDE.md)
-- [docs/foundations/design-token.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/design-token.md)
+- [docs/TOKEN_GOVERNANCE.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/TOKEN_GOVERNANCE.md)
+- [docs/PACKAGE_MIGRATION_GUIDE.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/PACKAGE_MIGRATION_GUIDE.md)
+- [docs/foundations/design-token.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/design-token.md)
 - [docs/foundations/color.md](./foundations/color.md)
-- [tokens/source.json](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/tokens/source.json)
+- [tokens/source.json](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/tokens/source.json)
 
 ### Layout and visual foundations (`layoutAndVisualFoundations`)
 
@@ -119,12 +119,12 @@ Hard trigger:
 참조:
 
 - [docs/foundations/typography.md](./foundations/typography.md)
-- [docs/foundations/layout.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/layout.md)
-- [docs/foundations/spacing.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/spacing.md)
-- [docs/foundations/radius.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/radius.md)
+- [docs/foundations/layout.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/layout.md)
+- [docs/foundations/spacing.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/spacing.md)
+- [docs/foundations/radius.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/radius.md)
 - [docs/foundations/elevation.md](./foundations/elevation.md)
 - [docs/foundations/gradient.md](./foundations/gradient.md)
-- [docs/foundations/aspect-ratio.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/aspect-ratio.md)
+- [docs/foundations/aspect-ratio.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/aspect-ratio.md)
 
 ### State, cross-component patterns, and motion (`statePatternsAndMotion`)
 
@@ -148,9 +148,9 @@ Hard trigger:
 
 참조:
 
-- [docs/foundations/state.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/state.md)
+- [docs/foundations/state.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/state.md)
 - [docs/foundations/motion.md](./foundations/motion.md)
-- [docs/LOADING_PATTERN.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/LOADING_PATTERN.md)
+- [docs/LOADING_PATTERN.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/LOADING_PATTERN.md)
 
 ### Assets, iconography, and brand (`assetsIconographyAndBrand`)
 
@@ -174,8 +174,8 @@ Hard trigger:
 
 참조:
 
-- [docs/foundations/iconography.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/iconography.md)
-- [packages/core/assets/icons/manifest.json](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/packages/core/assets/icons/manifest.json)
+- [docs/foundations/iconography.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/iconography.md)
+- [packages/core/assets/icons/manifest.json](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/packages/core/assets/icons/manifest.json)
 
 ### Content and internationalization (`contentAndInternationalization`)
 
@@ -199,10 +199,10 @@ Hard trigger:
 
 참조:
 
-- [docs/foundations/writing.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/writing.md)
-- [docs/foundations/voice-and-tone.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/voice-and-tone.md)
-- [docs/foundations/international-design.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/international-design.md)
-- [docs/COPY_REVIEW_CONTRACT.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/COPY_REVIEW_CONTRACT.md)
+- [docs/foundations/writing.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/writing.md)
+- [docs/foundations/voice-and-tone.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/voice-and-tone.md)
+- [docs/foundations/international-design.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/international-design.md)
+- [docs/COPY_REVIEW_CONTRACT.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/COPY_REVIEW_CONTRACT.md)
 
 ### Accessibility and inclusive interaction (`accessibility`)
 
@@ -227,8 +227,8 @@ Hard trigger:
 
 참조:
 
-- [docs/foundations/inclusive-design.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/foundations/inclusive-design.md)
-- [docs/ACCESSIBILITY_CONTRACTS.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/ACCESSIBILITY_CONTRACTS.md)
+- [docs/foundations/inclusive-design.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/foundations/inclusive-design.md)
+- [docs/ACCESSIBILITY_CONTRACTS.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/ACCESSIBILITY_CONTRACTS.md)
 
 ## Component and composition mapping (`componentMapping`)
 
@@ -243,9 +243,9 @@ Choose owner-package components only after the applicable non-component decision
 
 참조:
 
-- [docs/components/README.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/components/README.md)
-- [docs/PACKAGE_MIGRATION_GUIDE.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/PACKAGE_MIGRATION_GUIDE.md)
-- [docs/COMPONENT_WORKFLOW.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/docs/COMPONENT_WORKFLOW.md)
+- [docs/components/README.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/components/README.md)
+- [docs/PACKAGE_MIGRATION_GUIDE.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/PACKAGE_MIGRATION_GUIDE.md)
+- [docs/COMPONENT_WORKFLOW.md](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/docs/COMPONENT_WORKFLOW.md)
 
 component mapping은 6개 비컴포넌트 facet을 대신하지 않습니다. 기존 component를 재사용했더라도 surrounding layout, theme runtime, copy, state, asset과 accessibility 판정은 별도로 남깁니다.
 
@@ -272,7 +272,7 @@ Report의 기본 `scope.mode`는 `full-surface`입니다. Required for adoption,
 
 `adoption-checklist.json`은 읽기 전용 계약입니다. 이 파일을 수정하지 않습니다. [Schema-valid report template](./adoption-report.example.json)을 소비 저장소의 `.lds/adoption-report.json`으로 복사할 때, template의 상대 `$schema`가 가리키는 [report schema](./adoption-report.schema.json)도 같은 디렉터리에 그 basename 그대로 함께 복사합니다. Placeholder를 실제 outcome과 evidence로 모두 교체하며, copied schema는 pinned LDS revision에서 온 read-only 입력으로 관리합니다.
 
-소비 저장소에 [config schema](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/packages/conformance/schemas/lds-ui-adoption-config.schema.json)를 따르는 `.lds/adoption.config.json`을 둡니다. 기본 report 경로는 `.lds/adoption-report.json`이며 config의 `reportDirectory`와 CLI `--report`로 명시적으로 바꿀 수 있습니다.
+소비 저장소에 [config schema](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/packages/conformance/schemas/lds-ui-adoption-config.schema.json)를 따르는 `.lds/adoption.config.json`을 둡니다. 기본 report 경로는 `.lds/adoption-report.json`이며 config의 `reportDirectory`와 CLI `--report`로 명시적으로 바꿀 수 있습니다.
 
 ```json
 {
@@ -297,7 +297,7 @@ Report의 기본 `scope.mode`는 `full-surface`입니다. Required for adoption,
 node <pinned-lds>/packages/conformance/src/cli.mjs check-adoption --root . --lds-root <pinned-lds> --config .lds/adoption.config.json --report .lds/adoption-report.json --base <base-sha> --head <head-sha> --output visual-artifacts/adoption/check-result.json
 ```
 
-GitHub Actions에서는 [composite action](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.5/.github/actions/lds-adoption/action.yml)을 immutable LDS commit SHA로 pin합니다. diff base를 읽을 수 있게 caller의 `actions/checkout`에 `fetch-depth: 0`을 설정합니다.
+GitHub Actions에서는 [composite action](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.1.0-rc.69.6/.github/actions/lds-adoption/action.yml)을 immutable LDS commit SHA로 pin합니다. diff base를 읽을 수 있게 caller의 `actions/checkout`에 `fetch-depth: 0`을 설정합니다.
 
 ```yaml
 - uses: actions/checkout@<immutable-sha>

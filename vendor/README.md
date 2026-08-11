@@ -11,15 +11,13 @@ its GitHub Pages deployment remain the canonical Robotics documentation source.
 The tarball is retained so clean installs and CI resolve one immutable package
 artifact without a registry dependency.
 
-The v3 external surface records both source refs as `release-candidate`. Local
-vendoring verifies candidate bytes; it does not claim that the corresponding
-remote tags or registry package already exist. Main-package publication remains
-blocked until the Robotics owner completes that immutable release and the
-surface is promoted to `published`.
+The v3 external surface records the immutable Robotics release as `published`.
+Local vendoring verifies the exact registry artifact bytes as well as the
+workspace lock entry, so clean installs do not depend on a mutable tag.
 
 - Package: `@lk-design-system/lds-robotics-ui@0.1.0-rc.5`
 - File: `lk-design-system-lds-robotics-ui-0.1.0-rc.5.tgz`
-- SHA-256: `298e29e4ea86110d717b8add9cded20fb5c03368513f6922eed0aea904eafe41`
+- SHA-256: `8cd4639f47dbecdd3e1fc88869d7c3343c446cb95f5244098972dffcae41017c`
 - Contents: ESM/types runtime, styles and tokens, licensing, AI entry points,
   and the self-contained `docs/package/*` documentation bundle; no source tree
 

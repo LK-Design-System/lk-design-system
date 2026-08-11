@@ -16,10 +16,10 @@
     "canonicalContract": {
       "kind": "lds-ui-adoption-contract",
       "contractVersion": "1",
-      "snapshotManifestSha256": "a6b0ebaf1d3d12a2fdd236a148b94ffe2c2129704c09e836446022d3183a50b4",
+      "snapshotManifestSha256": "6080e8a7306e2efa768bfb6148c8c56602816838e9b505bb2d11c3dcade132e6",
       "source": {
         "repository": "LK-Design-System/lk-design-system",
-        "ref": "lds-v0.1.0-rc.69.5",
+        "ref": "lds-v0.1.0-rc.69.6",
         "refStatus": "release-candidate",
         "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
         "sha256": "f4c4f71cff9f9108246a5f7cc5520d6095d599027adb75d0b61e385c5b7fef80"
