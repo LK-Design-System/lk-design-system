@@ -6,7 +6,7 @@
 | Status | Current |
 | Owner | Brand owner · Design system owner · Product naming owner |
 | Last reviewed | 2026-08-11 |
-| Standard version | 1.2.0 |
+| Standard version | 1.3.0 |
 | Registry source | [`../../assets/brand/lk-product-lockups.json`](../../assets/brand/lk-product-lockups.json) |
 | Runtime | [`../../components/brand/ProductLockup.jsx`](../../components/brand/ProductLockup.jsx) |
 
@@ -63,7 +63,7 @@ public API는 `product: "console" | "portal"`의 닫힌 union만 허용합니다
 - `product`: 필수 registry key. 현재 `console | portal`만 지원합니다.
 - `appearance`: `positive | reverse`. 밝은 단색 배경에는 `positive`, 공식 네이비나 충분히 어두운 단색 배경에는 `reverse`를 사용합니다.
 - `height`: 전체 SVG의 자연 렌더 높이입니다. 기본 `28`, 최소 `20`이며 더 작은 값은 최소값으로 보정합니다.
-- `compact`: 제품명 outline을 시각적으로 생략하고 LK mark만 표시합니다. 접근성 이름은 full과 같습니다.
+- `compact`: 같은 SVG의 viewport를 LK mark 폭으로 접어 제품명 outline을 시각적으로 가립니다. 접근성 이름은 full과 같습니다.
 - `decorative`: 이름을 소유한 링크·컨트롤 안에서 중복 낭독을 막습니다.
 - `aria-label`: 독립 instance의 기본 `LK {canonical name}`을 문맥상 더 구체적으로 써야 할 때만 덮습니다.
 
@@ -71,13 +71,14 @@ public API는 `product: "console" | "portal"`의 닫힌 union만 허용합니다
 
 ## 5. Full과 compact
 
-full은 LK mark와 승인 제품명 outline을 모두 표시하는 기본형입니다. compact는 물리적으로 좁은 rail에서 LK mark만 시각적으로 남깁니다.
+full은 LK mark와 승인 제품명 outline을 모두 표시하는 기본형입니다. compact는 물리적으로 좁은 rail에서 LK mark만 시각적으로 남깁니다. 두 모드는 별도 로고나 React tree를 교체하지 않고 같은 SVG·같은 LK path를 유지합니다. 왼쪽에 고정한 viewport의 폭만 바뀌므로 LK mark의 위치·크기·DOM identity는 고정되고 제품명만 오른쪽으로 reveal/conceal 됩니다.
 
 - TopBar와 expanded SideNav: full
 - collapsed SideNav rail: compact
 - 같은 셸에서 TopBar와 SideNav 중 한 곳만 제품 로크업을 소유
 - 컴포넌트는 부모 폭을 추측해 자동 전환하지 않음; breakpoint와 전환 시점은 제품 셸 소유
-- full의 최소 높이와 intrinsic width를 확보하지 못하면 축소·wrap·crop하지 않고 compact로 명시 전환
+- full의 최소 높이와 intrinsic width를 확보하지 못하면 축소·wrap·임의 crop하지 않고 compact로 명시 전환
+- 전환은 `--dur-base`와 `--ease-out`을 사용하고 `prefers-reduced-motion: reduce`에서는 즉시 완료
 
 compact가 홈 링크라면 hover/focus 사용자가 제품명을 확인해야 하는 문맥에서 셸이 `Tooltip`을 조합할 수 있습니다. tooltip은 canonical name이나 route의 source가 아닙니다.
 
@@ -111,7 +112,7 @@ compact가 홈 링크라면 hover/focus 사용자가 제품명을 확인해야 �
 - registry에 없는 `Web Viz`, `Control`, 고객명, 지점명, 환경명 등을 우회 렌더링하기
 - `LK | CONSOLE`, slash, dot, badge로 로크업 내부를 분할하기
 - 제품마다 mark·gap·font·weight·case·appearance를 바꾸거나 제품명만 ExtraBold 800으로 되돌리기
-- full을 좁은 슬롯에서 찌그러뜨리거나 crop·wrap·ellipsis하기
+- full을 좁은 슬롯에서 찌그러뜨리거나 compact 계약 밖에서 임의 crop·wrap·ellipsis하기
 - 페이지 제목, workspace, 버전, `DEV`·`STG`, beta, 상태, 슬로건을 제품명 outline에 합치기
 - ProductLockup을 기능 icon, 반복 pattern, watermark로 사용하기
 - repository에 runtime 컴포넌트가 있다는 이유만으로 외부 상표 사용 승인을 추정하기
@@ -142,6 +143,9 @@ Web Viz와 Control은 1단계가 완료되지 않았으므로 이름이나 대�
 - [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)는 pinned build-time wordmark source입니다. 회사 `ROBOTICS`는 ExtraBold 800을, 고정 Portal과 ProductLockup 승인 제품명은 SemiBold 600을 사용합니다. 배포 결과는 outline이므로 소비자 runtime에 글꼴을 요구하지 않습니다.
 - [Atlassian logos](https://atlassian.design/foundations/logos)는 제품 식별과 고정 attribution 자산을 구분하고 승인 로고의 임의 합성을 금지합니다. LDS는 자유 조합 대신 닫힌 outline registry를 선택했습니다.
 - [W3C functional images](https://www.w3.org/WAI/tutorials/images/functional/)와 [WCAG Technique H2](https://www.w3.org/WAI/WCAG22/Techniques/html/H2)는 이미지 링크의 목적 이름과 중복 대체 텍스트 회피 근거입니다.
+- [Apple HIG Design principles](https://developer.apple.com/design/human-interface-guidelines/design-principles)는 맥락을 보존하고 콘텐츠·컨트롤을 일관되고 예측 가능한 위치에 두며 자연스러운 애니메이션으로 전환을 이해시키라고 설명합니다. LDS는 LK mark를 고정하고 제품명 영역만 reveal하는 방식으로 적용합니다.
+- [Apple HIG Tab bars](https://developer.apple.com/design/human-interface-guidelines/tab-bars)는 compact 상태에서도 symbol을 유지하고 expanded 상태에서 label을 드러내는 패턴을 제공합니다. LDS는 이 구조를 제품 lockup에 적용하되 Apple의 수치나 조형은 복사하지 않습니다.
+- [WCAG Technique C39](https://www.w3.org/WAI/WCAG22/Techniques/css/C39)는 interaction-triggered motion을 `prefers-reduced-motion`으로 비활성화하는 근거입니다.
 
 일반 UI shell이 native text 제품명을 사용하는 사례와 달리, LK는 기존 Portal의 대문자·높이·간격 리듬을 유지하되 제품명만 SemiBold로 낮춰 모브랜드 우선 위계를 채택합니다. raw string API를 열지 않고 승인 registry, deterministic outline과 hash로 오용 범위를 제한합니다. 외부 자료의 geometry나 수치는 LK에 복사하지 않습니다.
 

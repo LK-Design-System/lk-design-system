@@ -1,5 +1,6 @@
-import React from 'react';
-import { Lockup, ProductLockup } from '../src/index.js';
+import React, { useState } from 'react';
+import { userEvent } from 'storybook/test';
+import { Button, Lockup, ProductLockup } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -33,6 +34,32 @@ const ExampleLabel = ({ children }) => (
     {children}
   </span>
 );
+
+function CompactRevealFixture() {
+  const [compact, setCompact] = useState(true);
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: compact ? '64px 1fr' : '180px 1fr',
+        minHeight: 160,
+        border: '1px solid var(--color-semantic-line-normal-normal)',
+        background: 'var(--color-semantic-background-normal-normal)',
+        transition: 'grid-template-columns var(--dur-base) var(--ease-out)',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'flex-start', paddingBlock: 'var(--space-4)', paddingInlineStart: 22, overflow: 'hidden', borderInlineEnd: '1px solid var(--color-semantic-line-normal-normal)' }}>
+        <ProductLockup data-testid="lockup-reveal" product="console" compact={compact} height={20} />
+      </div>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)', padding: 'var(--space-4)', color: 'var(--color-semantic-label-normal)', fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)' }}>
+        <Button data-testid="lockup-reveal-toggle" size="small" onClick={() => setCompact((value) => !value)}>
+          {compact ? '펼치기' : '접기'}
+        </Button>
+        <span>LK mark는 그대로 두고, 승인된 CONSOLE 영역만 오른쪽으로 드러냅니다.</span>
+      </div>
+    </div>
+  );
+}
 
 export const ProductLockupStandard = {
   name: '표준 · 모브랜드 우선',
@@ -125,8 +152,14 @@ export const ProductLockupStandard = {
       throw new Error('The fixed and registry Portal lockups must share the approved canonical SemiBold geometry and accessible name.');
     }
 
-    if (compact.getAttribute('data-lockup-variant') !== 'mark' || compact.getAttribute('aria-label') !== 'LK Console' || compact.getAttribute('height') !== '20') {
-      throw new Error('Compact mode must use the approved mark and preserve the complete product name.');
+    if (compact.getAttribute('data-product-lockup-mode') !== 'compact'
+      || compact.getAttribute('aria-label') !== 'LK Console'
+      || compact.getAttribute('height') !== '20'
+      || compact.getAttribute('width') !== '21.431318'
+      || compact.getAttribute('viewBox') !== '342.60933 149.18987 480.740284 64.1628'
+      || compact.getAttribute('preserveAspectRatio') !== 'xMinYMid slice'
+      || !compact.querySelector('[data-product-lockup-wordmark-paths]')) {
+      throw new Error('Compact mode must retain the full SVG tree, clip to the approved mark width, and preserve the complete product name.');
     }
     if (home.getAttribute('aria-label') !== 'LK Console 홈' || linkedLockup.getAttribute('aria-hidden') !== 'true' || linkedLockup.hasAttribute('role')) {
       throw new Error('A home link must own the action name while its ProductLockup child remains decorative.');
@@ -140,16 +173,38 @@ export const ProductLockupStandard = {
 export const NarrowCompact = {
   name: '좁은 영역 · compact 전환',
   parameters: storyDescription(
-    '제품 셸이 자신의 breakpoint에서 full을 compact로 바꾸는 예입니다. full SVG를 찌그러뜨리거나 제품명을 줄바꿈·말줄임하지 않습니다.',
+    '제품 셸이 자신의 breakpoint에서 같은 SVG의 viewport 폭만 바꾸는 예입니다. LK mark는 고정되고 제품명 영역만 오른쪽으로 reveal/conceal 됩니다.',
   ),
-  render: () => (
-    <div style={{ display: 'grid', gridTemplateColumns: '64px 1fr', minHeight: 160, border: '1px solid var(--color-semantic-line-normal-normal)', background: 'var(--color-semantic-background-normal-normal)' }}>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', paddingBlock: 'var(--space-4)', borderInlineEnd: '1px solid var(--color-semantic-line-normal-normal)' }}>
-        <ProductLockup product="console" compact height={20} />
-      </div>
-      <div style={{ padding: 'var(--space-4)', color: 'var(--color-semantic-label-normal)', fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)' }}>
-        20px mark는 유지하고, 충분한 폭에서만 승인된 full LK CONSOLE lockup을 표시합니다.
-      </div>
-    </div>
-  ),
+  render: () => <CompactRevealFixture />,
+  play: async ({ canvasElement }) => {
+    const lockup = canvasElement.querySelector('[data-testid="lockup-reveal"]');
+    const toggle = canvasElement.querySelector('[data-testid="lockup-reveal-toggle"]');
+    if (!lockup || !toggle) throw new Error('Compact reveal fixture is incomplete.');
+
+    const markPath = lockup.querySelector('g > path');
+    const wordmarkPaths = lockup.querySelector('[data-product-lockup-wordmark-paths]');
+    if (!markPath || !wordmarkPaths || lockup.getAttribute('data-product-lockup-mode') !== 'compact' || lockup.getAttribute('width') !== '21.431318') {
+      throw new Error('Compact reveal must start with one complete SVG clipped to the mark width.');
+    }
+
+    await userEvent.click(toggle);
+    const expandedLockup = canvasElement.querySelector('[data-testid="lockup-reveal"]');
+    if (expandedLockup !== lockup
+      || expandedLockup.querySelector('g > path') !== markPath
+      || expandedLockup.querySelector('[data-product-lockup-wordmark-paths]') !== wordmarkPaths
+      || expandedLockup.getAttribute('data-product-lockup-mode') !== 'full'
+      || expandedLockup.getAttribute('width') !== '149.850157') {
+      throw new Error('Expansion must preserve the SVG and LK path identities while revealing the product wordmark to the right.');
+    }
+
+    await userEvent.click(toggle);
+    const collapsedLockup = canvasElement.querySelector('[data-testid="lockup-reveal"]');
+    if (collapsedLockup !== lockup
+      || collapsedLockup.querySelector('g > path') !== markPath
+      || collapsedLockup.getAttribute('data-product-lockup-mode') !== 'compact'
+      || collapsedLockup.getAttribute('width') !== '21.431318'
+      || !collapsedLockup.querySelector('style')?.textContent?.includes('prefers-reduced-motion:reduce')) {
+      throw new Error('Collapse must preserve identity, restore the mark viewport, and expose the reduced-motion contract.');
+    }
+  },
 };

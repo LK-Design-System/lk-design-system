@@ -29,6 +29,8 @@ TopBar·SideNav에서 `LK + 제품명`을 **LK 모브랜드 우선 로고 문법
 
 full lockup을 줄바꿈·말줄임·비균등 축소하지 않습니다. 폭이 부족하면 제품 셸이 자신의 breakpoint에서 `compact`로 전환합니다. SideNav rail은 compact, expanded SideNav와 일반 TopBar는 full이 기본입니다. 링크·route·click·breakpoint·tooltip은 제품 셸이 소유합니다.
 
+`compact`와 full은 서로 다른 로고를 교체하지 않습니다. 같은 SVG·같은 LK path를 유지하고 왼쪽에 고정한 viewport 폭만 전환해, 접힐 때는 제품명 영역을 가리고 펼칠 때는 오른쪽으로 다시 드러냅니다. 그래서 LK mark의 위치·크기·DOM identity가 전환 중에도 바뀌지 않습니다. 폭 전환은 `--dur-base`와 `--ease-out`을 사용하며 `prefers-reduced-motion: reduce`에서는 즉시 완료합니다.
+
 ```jsx
 <a href="/" aria-label="LK Console 홈">
   <ProductLockup product="console" decorative />
@@ -44,3 +46,5 @@ full lockup을 줄바꿈·말줄임·비균등 축소하지 않습니다. 폭이
 제품별 화면에서 문자열, 폰트, 간격을 직접 바꾸거나 미등록 key를 우회하지 않습니다. 표시용 한국어 설명, 환경·버전·workspace·상태·tagline은 lockup 밖의 UI text로 둡니다.
 
 전체 운영 규정은 `docs/brand/LK_PRODUCT_LOCKUP_STANDARD.md`를 따릅니다.
+
+동작 근거는 [Apple HIG Design principles](https://developer.apple.com/design/human-interface-guidelines/design-principles)의 일관되고 예측 가능한 위치·자연스러운 전환 원칙과 [Apple HIG Tab bars](https://developer.apple.com/design/human-interface-guidelines/tab-bars)의 symbol 유지·label reveal 패턴을 따릅니다. 모션 비활성화는 [WCAG Technique C39](https://www.w3.org/WAI/WCAG22/Techniques/css/C39)의 `prefers-reduced-motion` 계약을 적용합니다.

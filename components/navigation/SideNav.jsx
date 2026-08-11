@@ -373,6 +373,7 @@ export const SideNav = React.forwardRef(function SideNav({
   const swapAnimation = collapseMotionStarted
     ? `${col ? 'lk-sidenav-compact-content-enter' : 'lk-sidenav-expanded-content-enter'} var(--dur-fast) var(--ease-out)`
     : undefined;
+  const brandSwapAnimation = headerCollapsed != null ? swapAnimation : undefined;
   const sideNavStyles = `
     @keyframes lk-sidenav-expanded-content-enter{from{opacity:0;transform:translateX(var(--_lds-side-nav-motion-offset))}to{opacity:1;transform:translateX(0)}}
     @keyframes lk-sidenav-compact-content-enter{from{opacity:0}to{opacity:1}}
@@ -396,7 +397,7 @@ export const SideNav = React.forwardRef(function SideNav({
               justifyContent: col || brandAlign === 'center' ? 'center' : 'flex-start',
               width: '100%',
               minWidth: 0,
-              animation: swapAnimation,
+              animation: brandSwapAnimation,
             }}
           >
             {brand}

@@ -1,9 +1,12 @@
 import React from 'react';
-import { Lockup } from './Lockup.jsx';
-import { LK_LOGO_COLORS, LK_PATHS } from './lk-logo-paths.js';
+import { LK_LOGO_COLORS, LK_LOGO_VIEWBOX, LK_PATHS } from './lk-logo-paths.js';
 import { PRODUCT_LOCKUP_REGISTRY } from './lk-product-lockup-paths.js';
 
 const DEFAULT_HEIGHT = 28;
+const [, , MARK_VIEWBOX_WIDTH, MARK_VIEWBOX_HEIGHT] = LK_LOGO_VIEWBOX.mark.split(/\s+/).map(Number);
+const PRODUCT_LOCKUP_MOTION_STYLES = `
+  @media(prefers-reduced-motion:reduce){[data-product-lockup-motion="reveal"]{transition:none!important}}
+`;
 
 /**
  * Approved LK product-shell lockup.
@@ -33,28 +36,10 @@ export function ProductLockup({
   const renderedHeight = Math.max(requestedHeight, entry.minimumRenderedHeightPx);
   const accessibleName = ariaLabel ?? `LK ${entry.label}`;
 
-  if (compact) {
-    return (
-      <Lockup
-        {...rest}
-        role={decorative ? undefined : 'img'}
-        aria-label={decorative ? undefined : accessibleName}
-        aria-hidden={decorative ? true : undefined}
-        data-product-lockup=""
-        data-product-lockup-product={product}
-        data-product-lockup-mode="compact"
-        variant="mark"
-        tone={resolvedTone}
-        height={renderedHeight}
-        title={accessibleName}
-        decorative={decorative}
-        style={style}
-      />
-    );
-  }
-
   const [, , viewBoxWidth, viewBoxHeight] = entry.viewBox.split(/\s+/).map(Number);
-  const intrinsicWidth = Number((renderedHeight * viewBoxWidth / viewBoxHeight).toFixed(6));
+  const fullWidth = Number((renderedHeight * viewBoxWidth / viewBoxHeight).toFixed(6));
+  const compactWidth = Number((renderedHeight * MARK_VIEWBOX_WIDTH / MARK_VIEWBOX_HEIGHT).toFixed(6));
+  const intrinsicWidth = compact ? compactWidth : fullWidth;
   const fill = resolvedTone === 'white' ? LK_LOGO_COLORS.white : LK_LOGO_COLORS.navy;
   const a11y = decorative
     ? { 'aria-hidden': true }
@@ -66,14 +51,23 @@ export function ProductLockup({
       viewBox={entry.viewBox}
       width={intrinsicWidth}
       height={renderedHeight}
-      preserveAspectRatio="xMidYMid meet"
+      preserveAspectRatio="xMinYMid slice"
       data-product-lockup=""
       data-product-lockup-product={product}
-      data-product-lockup-mode="full"
+      data-product-lockup-mode={compact ? 'compact' : 'full'}
+      data-product-lockup-motion="reveal"
       data-product-lockup-wordmark={entry.wordmark}
       {...a11y}
-      style={{ display: 'block', maxWidth: '100%', height: 'auto', ...style }}
+      style={{
+        display: 'block',
+        flex: '0 0 auto',
+        maxWidth: '100%',
+        overflow: 'hidden',
+        transition: 'width var(--dur-base, 200ms) var(--ease-out)',
+        ...style,
+      }}
     >
+      <style>{PRODUCT_LOCKUP_MOTION_STYLES}</style>
       <g fill={fill} fillRule="nonzero">
         {LK_PATHS.map((path, index) => (
           <path key={`lk-${index}`} d={path.d} transform={path.transform} />
