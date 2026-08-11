@@ -28,7 +28,7 @@
     "files": {
       "manifest": {
         "path": "docs/package/manifest.json",
-        "sha256": "a2b3343f635f0553774bc39598e405b5b9b6462303572ba4fc8a14ac1170f338"
+        "sha256": "9fb5576891caf43d6fdd235d1522d4f6f9e2ae7964731aa76ecbb4d0a8f59c5c"
       },
       "checklist": {
         "path": "docs/package/adoption-checklist.json",
@@ -52,11 +52,11 @@
       },
       "workflow": {
         "path": "docs/package/adoption-workflow.md",
-        "sha256": "a15ae380af6c2b5f4d254dc9790a3a508b7d4f342f110bdb3ff73c901038e8c7"
+        "sha256": "c81a881ad86315355a5c0c916095f84c1f102da1552793089d26ae584a1627e7"
       },
       "llms": {
         "path": "docs/package/llms.txt",
-        "sha256": "196f80397daa87975748f73d7a1d6d0c8e60de8871664674cd022f2859d13c5b"
+        "sha256": "6604394ac5036b90e37f51c0be456389fa3296ceeb601ea43abac2bf90c188f9"
       },
       "domainIndex": {
         "path": "docs/package/domain/README.md",
@@ -64,11 +64,11 @@
       },
       "tokenManifest": {
         "path": "docs/package/tokens/manifest.json",
-        "sha256": "30e04076d27a27ffd3f6348e4e05e8cb5aa6495e82afbb80b05eab4a11e373fb"
+        "sha256": "96863a4ea175d0a0af8cc2c93d845a3156cf1cbfa474cbcb7fb13641adbd75c2"
       },
       "domainSymbolRegistry": {
         "path": "docs/package/domain-symbol-registry.json",
-        "sha256": "864693636d689055551778e6268c749313dcee0baa6e3557126fde049c261c63"
+        "sha256": "207610914c1f2a8144807c0699d7ac02a1ee9626c6597c90ed4c49c1e83ac2c8"
       }
     },
     "domainDocuments": [
