@@ -34,7 +34,7 @@ LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 �
 | `product` | `ProductLockupProduct` | Yes | 브랜드 승인을 거쳐 outline registry에 등록된 제품 key. |
 | `appearance` | `'positive' \| 'reverse'` | No | 밝은 단색 배경의 공식 네이비 또는 어두운 단색 배경의 반전 화이트. @default "positive" |
 | `height` | `number` | No | 전체 SVG의 자연 높이. 20px 미만은 20px로 보정됩니다. @default 28 |
-| `compact` | `boolean` | No | 제품 워드마크를 생략하고 LK mark만 표시합니다. 접근성 이름은 유지됩니다. @default false |
+| `compact` | `boolean` | No | 같은 SVG에서 제품 워드마크 영역을 접어 LK mark만 표시합니다. 접근성 이름은 유지됩니다. @default false |
 | `aria-label` | `string` | No | 독립 사용 시 기본 이름 LK {registered label}을 문맥에 맞게 덮습니다. |
 | `decorative` | `boolean` | No | 이름을 소유한 링크·컨트롤 안에서 중복 낭독을 막습니다. @default false |
 
@@ -52,6 +52,7 @@ LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 �
 - 제품명 visible ink 높이: LK mark visible 높이 1X.
 - height={20}에서 visible X 약 17.506px, mark 폭 약 18.938px, visual gap 약 6.628px.
 - full lockup을 줄바꿈·말줄임·비균등 축소하지 않습니다. 폭이 부족하면 제품 셸이 자신의 breakpoint에서 compact로 전환합니다. SideNav rail은 compact, expanded SideNav와 일반 TopBar는 full이 기본입니다. 링크·route·click·breakpoint·tooltip은 제품 셸이 소유합니다.
+- compact와 full은 서로 다른 로고를 교체하지 않습니다. 같은 SVG·같은 LK path를 유지하고 왼쪽에 고정한 viewport 폭만 전환해, 접힐 때는 제품명 영역을 가리고 펼칠 때는 오른쪽으로 다시 드러냅니다. 그래서 LK mark의 위치·크기·DOM identity가 전환 중에도 바뀌지 않습니다. 폭 전환은 --dur-base와 --ease-out을 사용하며 prefers-reduced-motion: reduce에서는 즉시 완료합니다.
 
 ## Content and writing
 
@@ -62,6 +63,7 @@ LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 �
 ## Accessibility
 
 - 독립 사용은 하나의 role="img"와 registry label 기반 이름 LK Console 또는 LK Portal을 제공합니다. compact도 같은 이름을 유지합니다. 이름을 소유한 링크·버튼 안에서는 decorative로 중복 낭독을 막습니다.
+- 동작 근거는 Apple HIG Design principles의 일관되고 예측 가능한 위치·자연스러운 전환 원칙과 Apple HIG Tab bars의 symbol 유지·label reveal 패턴을 따릅니다. 모션 비활성화는 WCAG Technique C39의 prefers-reduced-motion 계약을 적용합니다.
 
 ## Related components
 
@@ -89,6 +91,11 @@ LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 �
 
 ## Tokens and API
 
+### Tokens
+
+- `--dur-base`
+- `--ease-out`
+
 ### Source contracts
 
 - `components/brand/ProductLockup.jsx`
@@ -100,3 +107,6 @@ LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 �
 
 - ProductLockup prompt contract: `components/brand/ProductLockup.prompt.md`
 - Storybook implementation evidence: `stories/BrandProductLockup.stories.jsx`
+- [Apple HIG Design principles](https://developer.apple.com/design/human-interface-guidelines/design-principles)
+- [Apple HIG Tab bars](https://developer.apple.com/design/human-interface-guidelines/tab-bars)
+- [WCAG Technique C39](https://www.w3.org/WAI/WCAG22/Techniques/css/C39)

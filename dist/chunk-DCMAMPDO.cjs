@@ -1,14 +1,12 @@
-"use client";
-import {
-  Lockup
-} from "./chunk-3BOPGD6X.js";
-import {
-  LK_LOGO_COLORS,
-  LK_PATHS
-} from "./chunk-F35F4DHT.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
+
+
+
+
+var _chunkDDFGJXVMcjs = require('./chunk-DDFGJXVM.cjs');
 
 // components/brand/ProductLockup.jsx
-import React from "react";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 
 // components/brand/lk-product-lockup-paths.js
 var CONSOLE_PATHS = Object.freeze([
@@ -51,8 +49,12 @@ var PRODUCT_LOCKUP_REGISTRY = Object.freeze({
 var PRODUCT_LOCKUP_KEYS = Object.freeze(Object.keys(PRODUCT_LOCKUP_REGISTRY));
 
 // components/brand/ProductLockup.jsx
-import { jsx, jsxs } from "react/jsx-runtime";
+var _jsxruntime = require('react/jsx-runtime');
 var DEFAULT_HEIGHT = 28;
+var [, , MARK_VIEWBOX_WIDTH, MARK_VIEWBOX_HEIGHT] = _chunkDDFGJXVMcjs.LK_LOGO_VIEWBOX.mark.split(/\s+/).map(Number);
+var PRODUCT_LOCKUP_MOTION_STYLES = `
+  @media(prefers-reduced-motion:reduce){[data-product-lockup-motion="reveal"]{transition:none!important}}
+`;
 function ProductLockup({
   product,
   appearance = "positive",
@@ -70,54 +72,47 @@ function ProductLockup({
   const resolvedTone = appearance === "reverse" ? "white" : "ink";
   const requestedHeight = Number.isFinite(height) ? height : DEFAULT_HEIGHT;
   const renderedHeight = Math.max(requestedHeight, entry.minimumRenderedHeightPx);
-  const accessibleName = ariaLabel ?? `LK ${entry.label}`;
-  if (compact) {
-    return /* @__PURE__ */ jsx(
-      Lockup,
-      {
-        ...rest,
-        role: decorative ? void 0 : "img",
-        "aria-label": decorative ? void 0 : accessibleName,
-        "aria-hidden": decorative ? true : void 0,
-        "data-product-lockup": "",
-        "data-product-lockup-product": product,
-        "data-product-lockup-mode": "compact",
-        variant: "mark",
-        tone: resolvedTone,
-        height: renderedHeight,
-        title: accessibleName,
-        decorative,
-        style
-      }
-    );
-  }
+  const accessibleName = _nullishCoalesce(ariaLabel, () => ( `LK ${entry.label}`));
   const [, , viewBoxWidth, viewBoxHeight] = entry.viewBox.split(/\s+/).map(Number);
-  const intrinsicWidth = Number((renderedHeight * viewBoxWidth / viewBoxHeight).toFixed(6));
-  const fill = resolvedTone === "white" ? LK_LOGO_COLORS.white : LK_LOGO_COLORS.navy;
+  const fullWidth = Number((renderedHeight * viewBoxWidth / viewBoxHeight).toFixed(6));
+  const compactWidth = Number((renderedHeight * MARK_VIEWBOX_WIDTH / MARK_VIEWBOX_HEIGHT).toFixed(6));
+  const intrinsicWidth = compact ? compactWidth : fullWidth;
+  const fill = resolvedTone === "white" ? _chunkDDFGJXVMcjs.LK_LOGO_COLORS.white : _chunkDDFGJXVMcjs.LK_LOGO_COLORS.navy;
   const a11y = decorative ? { "aria-hidden": true } : { role: "img", "aria-label": accessibleName };
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "svg",
     {
       ...rest,
       viewBox: entry.viewBox,
       width: intrinsicWidth,
       height: renderedHeight,
-      preserveAspectRatio: "xMidYMid meet",
+      preserveAspectRatio: "xMinYMid slice",
       "data-product-lockup": "",
       "data-product-lockup-product": product,
-      "data-product-lockup-mode": "full",
+      "data-product-lockup-mode": compact ? "compact" : "full",
+      "data-product-lockup-motion": "reveal",
       "data-product-lockup-wordmark": entry.wordmark,
       ...a11y,
-      style: { display: "block", maxWidth: "100%", height: "auto", ...style },
-      children: /* @__PURE__ */ jsxs("g", { fill, fillRule: "nonzero", children: [
-        LK_PATHS.map((path, index) => /* @__PURE__ */ jsx("path", { d: path.d, transform: path.transform }, `lk-${index}`)),
-        /* @__PURE__ */ jsx("g", { transform: entry.transform, "data-product-lockup-wordmark-paths": "", children: entry.paths.map((path, index) => /* @__PURE__ */ jsx("path", { d: path.d }, `${path.letter}-${index}`)) })
-      ] })
+      style: {
+        display: "block",
+        flex: "0 0 auto",
+        maxWidth: "100%",
+        overflow: "hidden",
+        transition: "width var(--dur-base, 200ms) var(--ease-out)",
+        ...style
+      },
+      children: [
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: PRODUCT_LOCKUP_MOTION_STYLES }),
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { fill, fillRule: "nonzero", children: [
+          _chunkDDFGJXVMcjs.LK_PATHS.map((path, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: path.d, transform: path.transform }, `lk-${index}`)),
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { transform: entry.transform, "data-product-lockup-wordmark-paths": "", children: entry.paths.map((path, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: path.d }, `${path.letter}-${index}`)) })
+        ] })
+      ]
     }
   );
 }
 
-export {
-  ProductLockup
-};
-//# sourceMappingURL=chunk-U6CEHY3Y.js.map
+
+
+exports.ProductLockup = ProductLockup;
+//# sourceMappingURL=chunk-DCMAMPDO.cjs.map

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "20abe1687fddb6c10c71d9153a3ca13123c51101f2fc1c01fe12b6819e15cd26",
+  "sourceFingerprint": "4ae2d7774cb41c5244c6d2af4fca7d1f03799eda65c256bebcc55779df839a4d",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -235,7 +235,7 @@
           "name": "compact",
           "type": "boolean",
           "required": false,
-          "description": "제품 워드마크를 생략하고 LK mark만 표시합니다. 접근성 이름은 유지됩니다. @default false",
+          "description": "같은 SVG에서 제품 워드마크 영역을 접어 LK mark만 표시합니다. 접근성 이름은 유지됩니다. @default false",
           "owner": "ProductLockupProps"
         },
         {
@@ -253,9 +253,25 @@
           "owner": "ProductLockupProps"
         }
       ],
-      "tokens": [],
-      "externalReferences": [],
-      "promptSha256": "39f64bf663404c34252e0c6bbf861b2e1dbada0ca1c8704cfb6988290e4ef169"
+      "tokens": [
+        "--dur-base",
+        "--ease-out"
+      ],
+      "externalReferences": [
+        {
+          "label": "Apple HIG Design principles",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/design-principles"
+        },
+        {
+          "label": "Apple HIG Tab bars",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/tab-bars"
+        },
+        {
+          "label": "WCAG Technique C39",
+          "url": "https://www.w3.org/WAI/WCAG22/Techniques/css/C39"
+        }
+      ],
+      "promptSha256": "f9e803e47d71b281b99c912d0fa096fd77e056c11daf6766a8b20056692b172f"
     },
     {
       "id": "action-area",
@@ -84593,7 +84609,7 @@
           "name": "compact",
           "type": "boolean",
           "required": false,
-          "description": "제품 워드마크를 생략하고 LK mark만 표시합니다. 접근성 이름은 유지됩니다. @default false",
+          "description": "같은 SVG에서 제품 워드마크 영역을 접어 LK mark만 표시합니다. 접근성 이름은 유지됩니다. @default false",
           "owner": "ProductLockupProps"
         },
         {
@@ -84634,7 +84650,8 @@
       "responsive": [
         "제품명 visible ink 높이: LK mark visible 높이 1X.",
         "height={20}에서 visible X 약 17.506px, mark 폭 약 18.938px, visual gap 약 6.628px.",
-        "full lockup을 줄바꿈·말줄임·비균등 축소하지 않습니다. 폭이 부족하면 제품 셸이 자신의 breakpoint에서 compact로 전환합니다. SideNav rail은 compact, expanded SideNav와 일반 TopBar는 full이 기본입니다. 링크·route·click·breakpoint·tooltip은 제품 셸이 소유합니다."
+        "full lockup을 줄바꿈·말줄임·비균등 축소하지 않습니다. 폭이 부족하면 제품 셸이 자신의 breakpoint에서 compact로 전환합니다. SideNav rail은 compact, expanded SideNav와 일반 TopBar는 full이 기본입니다. 링크·route·click·breakpoint·tooltip은 제품 셸이 소유합니다.",
+        "compact와 full은 서로 다른 로고를 교체하지 않습니다. 같은 SVG·같은 LK path를 유지하고 왼쪽에 고정한 viewport 폭만 전환해, 접힐 때는 제품명 영역을 가리고 펼칠 때는 오른쪽으로 다시 드러냅니다. 그래서 LK mark의 위치·크기·DOM identity가 전환 중에도 바뀌지 않습니다. 폭 전환은 --dur-base와 --ease-out을 사용하며 prefers-reduced-motion: reduce에서는 즉시 완료합니다."
       ],
       "contentGuidance": [
         "TopBar·SideNav에서 LK + 제품명을 LK 모브랜드 우선 로고 문법으로 표시하는 제품 셸 lockup입니다. 기존 LK Portal의 대문자·1X·간격 리듬을 계승하되 제품명은 SemiBold 600으로 낮춰 LK가 먼저 읽힙니다. 자유 텍스트를 옆에 붙이는 컴포넌트가 아니라, 브랜드 승인을 거쳐 registry에 등록된 제품 워드마크만 outline SVG로 렌더합니다.",
@@ -84642,7 +84659,8 @@
         "제품별 화면에서 문자열, 폰트, 간격을 직접 바꾸거나 미등록 key를 우회하지 않습니다. 표시용 한국어 설명, 환경·버전·workspace·상태·tagline은 lockup 밖의 UI text로 둡니다."
       ],
       "accessibility": [
-        "독립 사용은 하나의 role=\"img\"와 registry label 기반 이름 LK Console 또는 LK Portal을 제공합니다. compact도 같은 이름을 유지합니다. 이름을 소유한 링크·버튼 안에서는 decorative로 중복 낭독을 막습니다."
+        "독립 사용은 하나의 role=\"img\"와 registry label 기반 이름 LK Console 또는 LK Portal을 제공합니다. compact도 같은 이름을 유지합니다. 이름을 소유한 링크·버튼 안에서는 decorative로 중복 낭독을 막습니다.",
+        "동작 근거는 Apple HIG Design principles의 일관되고 예측 가능한 위치·자연스러운 전환 원칙과 Apple HIG Tab bars의 symbol 유지·label reveal 패턴을 따릅니다. 모션 비활성화는 WCAG Technique C39의 prefers-reduced-motion 계약을 적용합니다."
       ],
       "exceptions": [],
       "related": [
@@ -84661,7 +84679,10 @@
           "code": "<a href=\"/\" aria-label=\"LK Console 홈\">\n  <ProductLockup product=\"console\" decorative />\n</a>"
         }
       ],
-      "tokens": [],
+      "tokens": [
+        "--dur-base",
+        "--ease-out"
+      ],
       "apiLinks": [
         "components/brand/ProductLockup.jsx",
         "components/brand/ProductLockup.d.ts",
@@ -84700,6 +84721,18 @@
         {
           "label": "Storybook implementation evidence",
           "path": "stories/BrandProductLockup.stories.jsx"
+        },
+        {
+          "label": "Apple HIG Design principles",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/design-principles"
+        },
+        {
+          "label": "Apple HIG Tab bars",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/tab-bars"
+        },
+        {
+          "label": "WCAG Technique C39",
+          "url": "https://www.w3.org/WAI/WCAG22/Techniques/css/C39"
         }
       ],
       "canonicalGuide": null,
@@ -84719,7 +84752,7 @@
         "exceptions": "omitted-no-evidence",
         "related": "evidence",
         "examples": "evidence",
-        "tokens": "omitted-no-evidence",
+        "tokens": "evidence",
         "apiLinks": "evidence",
         "migration": "omitted-no-evidence"
       }

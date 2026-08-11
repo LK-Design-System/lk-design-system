@@ -1,8 +1,7 @@
 "use client";
 import {
   ProductLockup
-} from "../../chunk-U6CEHY3Y.js";
-import "../../chunk-3BOPGD6X.js";
+} from "../../chunk-E3OWCNWO.js";
 import "../../chunk-F35F4DHT.js";
 export {
   ProductLockup

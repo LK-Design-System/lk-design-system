@@ -1,24 +1,24 @@
-"use client";
-import {
-  Tooltip
-} from "./chunk-TZ2M4GIM.js";
-import {
-  useLightDismiss
-} from "./chunk-ZAPKTAQH.js";
-import {
-  componentVars,
-  partClassName,
-  partStyle,
-  useMergedRefs
-} from "./chunk-A2U7YIGP.js";
-import {
-  Icon
-} from "./chunk-S26PXDE3.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+var _chunkKG22LKYWcjs = require('./chunk-KG22LKYW.cjs');
+
+
+var _chunkGJS3WBHUcjs = require('./chunk-GJS3WBHU.cjs');
+
+
+
+
+
+var _chunkGWMGPLNWcjs = require('./chunk-GWMGPLNW.cjs');
+
+
+var _chunkF72KSGF7cjs = require('./chunk-F72KSGF7.cjs');
 
 // components/navigation/SideNav.jsx
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
-var Chevron = ({ open }) => /* @__PURE__ */ jsx(Icon, { "data-sidenav-motion": "chevron", name: "chevron-down-small", size: 14, "aria-hidden": "true", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" } });
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
+var Chevron = ({ open }) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkF72KSGF7cjs.Icon, { "data-sidenav-motion": "chevron", name: "chevron-down-small", size: 14, "aria-hidden": "true", style: { flexShrink: 0, transform: open ? "rotate(180deg)" : "none", transition: "transform var(--dur-fast) var(--ease-out)" } });
 var LIST_ITEM_STYLE = { display: "flex", flexDirection: "column", gap: "var(--space-0-5)", minWidth: 0 };
 var SIDE_NAV_APPEARANCES = {
   default: {
@@ -68,14 +68,14 @@ function cssLength(value) {
   return typeof value === "number" ? `${value}px` : value;
 }
 function RailItemTooltip({ label, collapsed, enabled = true, children }) {
-  const [open, setOpen] = React.useState(false);
-  React.useEffect(() => {
+  const [open, setOpen] = _react2.default.useState(false);
+  _react2.default.useEffect(() => {
     if (!enabled || !collapsed) setOpen(false);
   }, [collapsed, enabled]);
   if (!enabled || label == null) return children;
-  return /* @__PURE__ */ jsx(Tooltip, { content: label, placement: "right", size: "small", open: collapsed ? open : false, onOpenChange: setOpen, style: { width: "100%" }, children });
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkKG22LKYWcjs.Tooltip, { content: label, placement: "right", size: "small", open: collapsed ? open : false, onOpenChange: setOpen, style: { width: "100%" }, children });
 }
-var SideNav = React.forwardRef(function SideNav2({
+var SideNav = _react2.default.forwardRef(function SideNav2({
   items = [],
   value,
   defaultValue,
@@ -119,20 +119,20 @@ var SideNav = React.forwardRef(function SideNav2({
       (i.children || []).forEach((c) => flat.push(c));
     }
   });
-  const [internal, setInternal] = React.useState(defaultValue != null ? defaultValue : flat[0] && flat[0].value);
+  const [internal, setInternal] = _react2.default.useState(defaultValue != null ? defaultValue : flat[0] && flat[0].value);
   const val = isControlled ? value : internal;
   const pick = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
   const colControlled = collapsed !== void 0;
-  const persistentCollapsedRef = React.useRef(defaultCollapsed);
-  const previousOverlayRef = React.useRef(overlay);
-  const [colInternal, setColInternal] = React.useState(defaultCollapsed || overlay);
+  const persistentCollapsedRef = _react2.default.useRef(defaultCollapsed);
+  const previousOverlayRef = _react2.default.useRef(overlay);
+  const [colInternal, setColInternal] = _react2.default.useState(defaultCollapsed || overlay);
   const col = colControlled ? collapsed : colInternal;
-  const previousMotionCollapsedRef = React.useRef(col);
-  const [collapseMotionStarted, setCollapseMotionStarted] = React.useState(false);
-  React.useLayoutEffect(() => {
+  const previousMotionCollapsedRef = _react2.default.useRef(col);
+  const [collapseMotionStarted, setCollapseMotionStarted] = _react2.default.useState(false);
+  _react2.default.useLayoutEffect(() => {
     if (previousMotionCollapsedRef.current === col) return;
     previousMotionCollapsedRef.current = col;
     setCollapseMotionStarted(true);
@@ -144,15 +144,15 @@ var SideNav = React.forwardRef(function SideNav2({
     }
     onCollapsedChange && onCollapsedChange(c);
   };
-  const generatedPanelId = React.useId().replace(/:/g, "");
+  const generatedPanelId = _react2.default.useId().replace(/:/g, "");
   const panelId = `lk-sidenav-panel-${generatedPanelId}`;
-  const navRef = React.useRef(null);
-  const mergedNavRef = useMergedRefs(navRef, forwardedRef);
+  const navRef = _react2.default.useRef(null);
+  const mergedNavRef = _chunkGWMGPLNWcjs.useMergedRefs.call(void 0, navRef, forwardedRef);
   const hasPopover = () => !!(navRef.current && navRef.current.querySelector('[role="menu"]'));
-  const peekT = React.useRef(null);
-  const pointerInside = React.useRef(false);
-  const restoringFocus = React.useRef(false);
-  React.useEffect(() => {
+  const peekT = _react2.default.useRef(null);
+  const pointerInside = _react2.default.useRef(false);
+  const restoringFocus = _react2.default.useRef(false);
+  _react2.default.useEffect(() => {
     const previousOverlay = previousOverlayRef.current;
     previousOverlayRef.current = overlay;
     if (colControlled || previousOverlay === overlay) return;
@@ -162,16 +162,16 @@ var SideNav = React.forwardRef(function SideNav2({
   const collapseAndRestoreFocus = () => {
     clearTimeout(peekT.current);
     const activeElement = document.activeElement;
-    const activeControl = navRef.current?.contains(activeElement) ? activeElement?.closest?.("[data-sidenav-value]") : null;
-    const restoreValue = activeControl?.dataset.sidenavParent || activeControl?.dataset.sidenavValue;
+    const activeControl = _optionalChain([navRef, 'access', _ => _.current, 'optionalAccess', _2 => _2.contains, 'call', _3 => _3(activeElement)]) ? _optionalChain([activeElement, 'optionalAccess', _4 => _4.closest, 'optionalCall', _5 => _5("[data-sidenav-value]")]) : null;
+    const restoreValue = _optionalChain([activeControl, 'optionalAccess', _6 => _6.dataset, 'access', _7 => _7.sidenavParent]) || _optionalChain([activeControl, 'optionalAccess', _8 => _8.dataset, 'access', _9 => _9.sidenavValue]);
     restoringFocus.current = !!activeControl;
     setCol(true);
     if (!activeControl) return;
     requestAnimationFrame(() => {
-      const candidates = Array.from(navRef.current?.querySelectorAll("[data-sidenav-value]") || []);
+      const candidates = Array.from(_optionalChain([navRef, 'access', _10 => _10.current, 'optionalAccess', _11 => _11.querySelectorAll, 'call', _12 => _12("[data-sidenav-value]")]) || []);
       const matchingButton = restoreValue ? candidates.find((button) => button.dataset.sidenavValue === restoreValue) : null;
-      const target = matchingButton || (activeControl.isConnected ? activeControl : null) || navRef.current?.querySelector('.lk-sidenav__scroll [data-sidenav-value]:not(:disabled):not([aria-disabled="true"])');
-      target?.focus();
+      const target = matchingButton || (activeControl.isConnected ? activeControl : null) || _optionalChain([navRef, 'access', _13 => _13.current, 'optionalAccess', _14 => _14.querySelector, 'call', _15 => _15('.lk-sidenav__scroll [data-sidenav-value]:not(:disabled):not([aria-disabled="true"])')]);
+      _optionalChain([target, 'optionalAccess', _16 => _16.focus, 'call', _17 => _17()]);
       requestAnimationFrame(() => {
         restoringFocus.current = false;
       });
@@ -180,12 +180,12 @@ var SideNav = React.forwardRef(function SideNav2({
   const peek = (expand) => {
     clearTimeout(peekT.current);
     peekT.current = setTimeout(() => {
-      if (!expand && (hasPopover() || navRef.current?.contains(document.activeElement))) return;
+      if (!expand && (hasPopover() || _optionalChain([navRef, 'access', _18 => _18.current, 'optionalAccess', _19 => _19.contains, 'call', _20 => _20(document.activeElement)]))) return;
       setCol(!expand);
     }, expand ? 160 : 480);
   };
-  React.useEffect(() => () => clearTimeout(peekT.current), []);
-  useLightDismiss({
+  _react2.default.useEffect(() => () => clearTimeout(peekT.current), []);
+  _chunkGJS3WBHUcjs.useLightDismiss.call(void 0, {
     open: overlay && !col,
     rootRef: navRef,
     shouldDismiss: () => !hasPopover(),
@@ -194,9 +194,9 @@ var SideNav = React.forwardRef(function SideNav2({
       else setCol(true);
     }
   });
-  const [open, setOpen] = React.useState(() => {
+  const [open, setOpen] = _react2.default.useState(() => {
     if (!autoExpandActiveGroup) return {};
-    const activeParent = items.find((item) => item && !item.heading && item.children?.some((child) => child.value === val));
+    const activeParent = items.find((item) => item && !item.heading && _optionalChain([item, 'access', _21 => _21.children, 'optionalAccess', _22 => _22.some, 'call', _23 => _23((child) => child.value === val)]));
     return activeParent ? { [activeParent.value]: true } : {};
   });
   const openGroup = (groupValue) => setOpen((current) => multiple ? { ...current, [groupValue]: true } : { [groupValue]: true });
@@ -204,32 +204,32 @@ var SideNav = React.forwardRef(function SideNav2({
     if (current[groupValue]) return { ...current, [groupValue]: false };
     return multiple ? { ...current, [groupValue]: true } : { [groupValue]: true };
   });
-  React.useEffect(() => {
+  _react2.default.useEffect(() => {
     if (!autoExpandActiveGroup) return;
-    const activeParent = items.find((item) => item && !item.heading && item.children?.some((child) => child.value === val));
+    const activeParent = items.find((item) => item && !item.heading && _optionalChain([item, 'access', _24 => _24.children, 'optionalAccess', _25 => _25.some, 'call', _26 => _26((child) => child.value === val)]));
     if (!activeParent) return;
     setOpen((current) => current[activeParent.value] ? current : multiple ? { ...current, [activeParent.value]: true } : { [activeParent.value]: true });
   }, [autoExpandActiveGroup, items, multiple, val]);
-  React.useEffect(() => {
+  _react2.default.useEffect(() => {
     if (multiple) return;
     setOpen((current) => {
       const opened = Object.keys(current).filter((key) => current[key]);
       if (opened.length <= 1) return current;
-      const activeParent = items.find((item) => item && !item.heading && item.children?.some((child) => child.value === val));
+      const activeParent = items.find((item) => item && !item.heading && _optionalChain([item, 'access', _27 => _27.children, 'optionalAccess', _28 => _28.some, 'call', _29 => _29((child) => child.value === val)]));
       const keep = activeParent && current[activeParent.value] ? activeParent.value : opened[0];
       return keep ? { [keep]: true } : {};
     });
   }, [items, multiple, val]);
-  React.useLayoutEffect(() => {
+  _react2.default.useLayoutEffect(() => {
     if (typeof document === "undefined") return;
     const activeElement = document.activeElement;
-    const activeChild = navRef.current?.contains(activeElement) ? activeElement?.closest?.("[data-sidenav-parent]") : null;
-    const parentValue = activeChild?.dataset.sidenavParent;
+    const activeChild = _optionalChain([navRef, 'access', _30 => _30.current, 'optionalAccess', _31 => _31.contains, 'call', _32 => _32(activeElement)]) ? _optionalChain([activeElement, 'optionalAccess', _33 => _33.closest, 'optionalCall', _34 => _34("[data-sidenav-parent]")]) : null;
+    const parentValue = _optionalChain([activeChild, 'optionalAccess', _35 => _35.dataset, 'access', _36 => _36.sidenavParent]);
     if (!parentValue || !col && open[parentValue]) return;
-    const parentControl = Array.from(navRef.current?.querySelectorAll("[data-sidenav-value]") || []).find((candidate) => candidate.dataset.sidenavValue === parentValue && !candidate.dataset.sidenavParent);
-    parentControl?.focus();
+    const parentControl = Array.from(_optionalChain([navRef, 'access', _37 => _37.current, 'optionalAccess', _38 => _38.querySelectorAll, 'call', _39 => _39("[data-sidenav-value]")]) || []).find((candidate) => candidate.dataset.sidenavValue === parentValue && !candidate.dataset.sidenavParent);
+    _optionalChain([parentControl, 'optionalAccess', _40 => _40.focus, 'call', _41 => _41()]);
   }, [col, open]);
-  const [hovKey, setHovKey] = React.useState(null);
+  const [hovKey, setHovKey] = _react2.default.useState(null);
   const hoverProps = (k) => ({ onMouseEnter: () => setHovKey(k), onMouseLeave: () => setHovKey(null) });
   const row = (active, disabled, extra, hovered) => ({
     position: "relative",
@@ -260,11 +260,11 @@ var SideNav = React.forwardRef(function SideNav2({
     color: active ? appearanceTokens.activeForeground : hovered && !disabled ? appearanceTokens.hoverForeground : appearanceTokens.mutedForeground,
     transition: "background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), column-gap var(--dur-base) var(--ease-out)",
     ...extra,
-    ...partStyle(styles, "item")
+    ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "item")
   });
-  const labelSpan = (active, children) => /* @__PURE__ */ jsx("span", { "data-slot": "label", className: partClassName(classNames, "label") || void 0, style: { flex: 1, minWidth: 0, fontSize: "var(--label1-size)", fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", ...partStyle(styles, "label") }, children });
-  const pill = (active, badge) => /* @__PURE__ */ jsx("span", { "data-slot": "badge", className: partClassName(classNames, "badge") || void 0, style: { flexShrink: 0, minWidth: 18, height: 18, padding: "0 6px", boxSizing: "border-box", borderRadius: "var(--radius-pill)", fontSize: "var(--caption2-size)", fontWeight: "var(--fw-bold)", lineHeight: "18px", textAlign: "center", background: active ? appearanceTokens.badgeActiveSurface : appearanceTokens.badgeSurface, color: active ? appearanceTokens.badgeActiveForeground : appearanceTokens.badgeForeground, ...partStyle(styles, "badge") }, children: badge });
-  const expandedContent = (children) => /* @__PURE__ */ jsx(
+  const labelSpan = (active, children) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "label", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "label") || void 0, style: { flex: 1, minWidth: 0, fontSize: "var(--label1-size)", fontWeight: active ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "label") }, children });
+  const pill = (active, badge) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "badge", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "badge") || void 0, style: { flexShrink: 0, minWidth: 18, height: 18, padding: "0 6px", boxSizing: "border-box", borderRadius: "var(--radius-pill)", fontSize: "var(--caption2-size)", fontWeight: "var(--fw-bold)", lineHeight: "18px", textAlign: "center", background: active ? appearanceTokens.badgeActiveSurface : appearanceTokens.badgeSurface, color: active ? appearanceTokens.badgeActiveForeground : appearanceTokens.badgeForeground, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "badge") }, children: badge });
+  const expandedContent = (children) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "span",
     {
       "data-sidenav-motion": "content",
@@ -287,13 +287,13 @@ var SideNav = React.forwardRef(function SideNav2({
       children
     }
   );
-  const badgeDot = () => /* @__PURE__ */ jsx(
+  const badgeDot = () => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "span",
     {
       "data-slot": "badge",
       "data-sidenav-motion": "badge-dot",
       "data-state": col ? "visible" : "hidden",
-      className: partClassName(classNames, "badge") || void 0,
+      className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "badge") || void 0,
       "aria-hidden": "true",
       style: {
         position: "absolute",
@@ -306,7 +306,7 @@ var SideNav = React.forwardRef(function SideNav2({
         opacity: col ? 1 : 0,
         visibility: col ? "visible" : "hidden",
         transition: col ? "opacity var(--dur-fast) var(--ease-out), visibility 0s linear" : "opacity var(--dur-fast) var(--ease-out), visibility 0s linear var(--dur-fast)",
-        ...partStyle(styles, "badge")
+        ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "badge")
       }
     }
   );
@@ -319,7 +319,7 @@ var SideNav = React.forwardRef(function SideNav2({
       }
       pick(item.value);
       if (!parentValue && !multiple) setOpen({});
-      item.onClick?.(event);
+      _optionalChain([item, 'access', _42 => _42.onClick, 'optionalCall', _43 => _43(event)]);
     };
     const commonProps = {
       "data-slot": "item",
@@ -334,7 +334,7 @@ var SideNav = React.forwardRef(function SideNav2({
       tabIndex: hiddenFromInteraction ? -1 : void 0,
       onClick: activate,
       ...hoverProps(item.value),
-      className: partClassName(classNames, "item", item.className) || void 0,
+      className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "item", item.className) || void 0,
       style: itemStyle,
       children: content
     };
@@ -347,9 +347,9 @@ var SideNav = React.forwardRef(function SideNav2({
         "aria-disabled": disabled || void 0,
         tabIndex: disabled || hiddenFromInteraction ? -1 : void 0
       };
-      return renderLink ? renderLink(item, linkProps) : /* @__PURE__ */ jsx("a", { ...linkProps });
+      return renderLink ? renderLink(item, linkProps) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "a", { ...linkProps });
     }
-    return /* @__PURE__ */ jsx("button", { type: "button", disabled, ...commonProps });
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "button", { type: "button", disabled, ...commonProps });
   };
   const brand = col ? headerCollapsed != null ? headerCollapsed : header : header;
   const resolvedFooter = typeof footer === "function" ? footer({ collapsed: col, expanded: !col, overlay }) : footer;
@@ -359,6 +359,7 @@ var SideNav = React.forwardRef(function SideNav2({
   const resolvedCollapsedWidth = cssLength(collapsedWidth);
   const shell = { "--_lds-side-nav-pressed-surface": appearanceTokens.pressedSurface, "--_lds-side-nav-focus-indicator": appearanceTokens.focusIndicator, "--_lds-side-nav-motion-offset": "calc(-1 * var(--space-1))", position: "relative", display: "flex", flexDirection: "column", width: col ? `var(--lds-side-nav-collapsed-width, ${resolvedCollapsedWidth})` : `var(--lds-side-nav-width, ${resolvedWidth})`, boxSizing: "border-box", color: resolvedAppearance === "brand" ? appearanceTokens.foreground : void 0, backgroundColor: appearanceTokens.surface, backgroundImage: appearanceTokens.backgroundImage, border: docked ? "none" : `1px solid ${appearanceTokens.divider}`, borderInlineEnd: docked ? `1px solid ${appearanceTokens.divider}` : void 0, borderRadius: docked ? 0 : "var(--lds-side-nav-radius, var(--radius-xl))", boxShadow: docked ? "none" : void 0, padding: "var(--lds-side-nav-padding, var(--space-2-5))", transition: "width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)" };
   const swapAnimation = collapseMotionStarted ? `${col ? "lk-sidenav-compact-content-enter" : "lk-sidenav-expanded-content-enter"} var(--dur-fast) var(--ease-out)` : void 0;
+  const brandSwapAnimation = headerCollapsed != null ? swapAnimation : void 0;
   const sideNavStyles = `
     @keyframes lk-sidenav-expanded-content-enter{from{opacity:0;transform:translateX(var(--_lds-side-nav-motion-offset))}to{opacity:1;transform:translateX(0)}}
     @keyframes lk-sidenav-compact-content-enter{from{opacity:0}to{opacity:1}}
@@ -369,11 +370,25 @@ var SideNav = React.forwardRef(function SideNav2({
     @media(prefers-reduced-motion:reduce){.lk-sidenav__surface,.lk-sidenav__surface [data-sidenav-motion]{transition-duration:0s!important;transition-delay:0s!important;animation-duration:0s!important;animation-delay:0s!important}}
   `;
   const brandRegionStyle = { position: "relative", display: "flex", flexDirection: col ? "column" : "row", alignItems: "center", justifyContent: col || brandAlign === "center" ? "center" : "flex-start", gap: "var(--space-1-5)", minHeight: 24, padding: "14px 10px 18px", overflow: "hidden" };
-  const panelContent = /* @__PURE__ */ jsxs("div", { id: panelId, "data-slot": "panel", className: partClassName(classNames, "panel", "lk-sidenav__panel-content") || void 0, "data-collapsed": col ? "true" : "false", style: { display: "flex", flexDirection: "column", flex: "1 1 auto", minHeight: 0, ...partStyle(styles, "panel") }, children: [
-    /* @__PURE__ */ jsx("style", { children: sideNavStyles }),
-    brand != null && /* @__PURE__ */ jsx("div", { "data-slot": "brand", className: partClassName(classNames, "brand", "lk-sidenav__brand") || void 0, style: { ...brandRegionStyle, ...partStyle(styles, "brand") }, children: /* @__PURE__ */ jsx("div", { "data-sidenav-motion": "swap", "data-state": col ? "compact" : "expanded", style: { display: "flex", minWidth: 0, animation: swapAnimation }, children: brand }) }),
-    /* @__PURE__ */ jsx("ul", { "data-slot": "list", className: partClassName(classNames, "list", "lk-scroll-surface", "lk-sidenav__scroll") || void 0, "data-scrollbar": "compact", "data-scroll-gutter": col ? "auto" : "stable", "data-scrollbar-exception": "collapsed-navigation-rail", style: { display: "flex", flexDirection: "column", gap: "var(--space-0-5)", flex: "1 1 auto", minHeight: 0, margin: 0, padding: 0, listStyle: "none", overflowX: "hidden", overflowY: "auto", scrollbarWidth: col ? "none" : void 0, ...partStyle(styles, "list") }, children: items.map((o, i) => {
-      if (o.heading) return /* @__PURE__ */ jsx("li", { style: LIST_ITEM_STYLE, children: /* @__PURE__ */ jsx("div", { "data-sidenav-motion": "swap", "data-state": col ? "compact" : "expanded", style: { animation: swapAnimation }, children: col ? /* @__PURE__ */ jsx("div", { "data-slot": "heading", className: partClassName(classNames, "heading") || void 0, "aria-hidden": "true", style: { height: 1, flexShrink: 0, background: appearanceTokens.divider, margin: i === 0 ? "2px 12px 6px" : "10px 12px 6px", ...partStyle(styles, "heading") } }) : /* @__PURE__ */ jsx("div", { "data-slot": "heading", className: partClassName(classNames, "heading") || void 0, style: { fontFamily: "var(--font-sans)", fontSize: "var(--caption2-size)", fontWeight: "var(--fw-bold)", letterSpacing: "1px", textTransform: "uppercase", color: appearanceTokens.subtleForeground, padding: i === 0 ? "4px 12px 6px" : "14px 12px 6px", ...partStyle(styles, "heading") }, children: o.heading }) }) }, "h" + i);
+  const panelContent = /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { id: panelId, "data-slot": "panel", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "panel", "lk-sidenav__panel-content") || void 0, "data-collapsed": col ? "true" : "false", style: { display: "flex", flexDirection: "column", flex: "1 1 auto", minHeight: 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "panel") }, children: [
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: sideNavStyles }),
+    brand != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-slot": "brand", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "brand", "lk-sidenav__brand") || void 0, style: { ...brandRegionStyle, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "brand") }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      "div",
+      {
+        "data-sidenav-motion": "swap",
+        "data-state": col ? "compact" : "expanded",
+        style: {
+          display: "flex",
+          justifyContent: col || brandAlign === "center" ? "center" : "flex-start",
+          width: "100%",
+          minWidth: 0,
+          animation: brandSwapAnimation
+        },
+        children: brand
+      }
+    ) }),
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { "data-slot": "list", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "list", "lk-scroll-surface", "lk-sidenav__scroll") || void 0, "data-scrollbar": "compact", "data-scroll-gutter": col ? "auto" : "stable", "data-scrollbar-exception": "collapsed-navigation-rail", style: { display: "flex", flexDirection: "column", gap: "var(--space-0-5)", flex: "1 1 auto", minHeight: 0, margin: 0, padding: 0, listStyle: "none", overflowX: "hidden", overflowY: "auto", scrollbarWidth: col ? "none" : void 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "list") }, children: items.map((o, i) => {
+      if (o.heading) return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: LIST_ITEM_STYLE, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-sidenav-motion": "swap", "data-state": col ? "compact" : "expanded", style: { animation: swapAnimation }, children: col ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-slot": "heading", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "heading") || void 0, "aria-hidden": "true", style: { height: 1, flexShrink: 0, background: appearanceTokens.divider, margin: i === 0 ? "2px 12px 6px" : "10px 12px 6px", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "heading") } }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-slot": "heading", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "heading") || void 0, style: { fontFamily: "var(--font-sans)", fontSize: "var(--caption2-size)", fontWeight: "var(--fw-bold)", letterSpacing: "1px", textTransform: "uppercase", color: appearanceTokens.subtleForeground, padding: i === 0 ? "4px 12px 6px" : "14px 12px 6px", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "heading") }, children: o.heading }) }) }, "h" + i);
       const kids = o.children || [];
       const title = typeof o.label === "string" ? o.label : void 0;
       const accessibleLabel = o.ariaLabel || title;
@@ -391,8 +406,8 @@ var SideNav = React.forwardRef(function SideNav2({
             toggleGroup(o.value);
           }
         };
-        return /* @__PURE__ */ jsxs("li", { style: LIST_ITEM_STYLE, children: [
-          /* @__PURE__ */ jsx(RailItemTooltip, { label: accessibleLabel, collapsed: col, enabled: !overlay, children: /* @__PURE__ */ jsxs(
+        return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { style: LIST_ITEM_STYLE, children: [
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, RailItemTooltip, { label: accessibleLabel, collapsed: col, enabled: !overlay, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
             "button",
             {
               type: "button",
@@ -400,7 +415,7 @@ var SideNav = React.forwardRef(function SideNav2({
               "data-sidenav-motion": "item",
               "data-state": childActive ? "active-descendant" : "inactive",
               "data-disabled": o.disabled ? "true" : void 0,
-              className: partClassName(classNames, "item", o.className) || void 0,
+              className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "item", o.className) || void 0,
               "data-sidenav-value": o.value,
               "aria-label": col || o.ariaLabel ? accessibleLabel : void 0,
               "aria-expanded": col ? void 0 : isOpen,
@@ -410,17 +425,17 @@ var SideNav = React.forwardRef(function SideNav2({
               ...hoverProps(o.value),
               style: row(false, o.disabled, { color: collapsedActiveProxy ? appearanceTokens.activeProxyForeground : childActive ? appearanceTokens.foreground : appearanceTokens.mutedForeground }, hovKey === o.value),
               children: [
-                o.icon != null && /* @__PURE__ */ jsx("span", { "data-slot": "icon", className: partClassName(classNames, "icon") || void 0, "aria-hidden": "true", style: { flexShrink: 0, display: "inline-flex", ...partStyle(styles, "icon") }, children: o.icon }),
+                o.icon != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "icon", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "icon") || void 0, "aria-hidden": "true", style: { flexShrink: 0, display: "inline-flex", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "icon") }, children: o.icon }),
                 expandedContent(
-                  /* @__PURE__ */ jsxs(React.Fragment, { children: [
+                  /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
                     labelSpan(childActive, o.label),
-                    /* @__PURE__ */ jsx(Chevron, { open: isOpen })
+                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Chevron, { open: isOpen })
                   ] })
                 )
               ]
             }
           ) }),
-          /* @__PURE__ */ jsx(
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "div",
             {
               "data-sidenav-motion": "children",
@@ -437,19 +452,19 @@ var SideNav = React.forwardRef(function SideNav2({
                 pointerEvents: childrenExposed ? void 0 : "none",
                 transition: "grid-template-rows var(--dur-base) var(--ease-out), opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out)"
               },
-              children: /* @__PURE__ */ jsx("div", { style: { minHeight: 0, overflow: "hidden" }, children: /* @__PURE__ */ jsx("ul", { "data-slot": "childList", className: partClassName(classNames, "childList") || void 0, style: { display: "flex", flexDirection: "column", gap: "var(--space-0-5)", margin: "0 0 4px", padding: 0, paddingInlineStart: "var(--space-3)", boxSizing: "border-box", listStyle: "none", ...partStyle(styles, "childList") }, children: kids.map((c) => {
+              children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { minHeight: 0, overflow: "hidden" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { "data-slot": "childList", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "childList") || void 0, style: { display: "flex", flexDirection: "column", gap: "var(--space-0-5)", margin: "0 0 4px", padding: 0, paddingInlineStart: "var(--space-3)", boxSizing: "border-box", listStyle: "none", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "childList") }, children: kids.map((c) => {
                 const ca = c.value === val;
                 const childTitle = typeof c.label === "string" ? c.label : c.ariaLabel;
-                return /* @__PURE__ */ jsx("li", { style: LIST_ITEM_STYLE, children: renderLeafControl(c, {
+                return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: LIST_ITEM_STYLE, children: renderLeafControl(c, {
                   active: ca,
                   parentValue: o.value,
                   ariaLabel: c.ariaLabel,
                   title: childTitle,
                   hiddenFromInteraction: !childrenExposed,
                   itemStyle: row(ca, c.disabled, { minHeight: "var(--lds-side-nav-child-item-height, 36px)", padding: hasChildIcons ? "8px 12px 8px 16px" : "8px 12px 8px 42px", gap: hasChildIcons ? "var(--space-2)" : void 0 }, hovKey === c.value),
-                  content: /* @__PURE__ */ jsxs(React.Fragment, { children: [
-                    hasChildIcons && /* @__PURE__ */ jsx("span", { "data-slot": "icon", className: partClassName(classNames, "icon") || void 0, "data-sidenav-child-icon": true, "aria-hidden": "true", style: { width: "var(--space-4-5)", flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", ...partStyle(styles, "icon") }, children: c.icon }),
-                    /* @__PURE__ */ jsx("span", { "data-slot": "label", className: partClassName(classNames, "label") || void 0, style: { flex: 1, minWidth: 0, fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: ca ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", ...partStyle(styles, "label") }, children: c.label }),
+                  content: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
+                    hasChildIcons && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "icon", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "icon") || void 0, "data-sidenav-child-icon": true, "aria-hidden": "true", style: { width: "var(--space-4-5)", flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "icon") }, children: c.icon }),
+                    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "label", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "label") || void 0, style: { flex: 1, minWidth: 0, fontSize: "var(--label2-size)", lineHeight: "var(--label2-line)", fontWeight: ca ? "var(--fw-bold)" : "var(--fw-medium)", letterSpacing: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "label") }, children: c.label }),
                     c.badge != null && pill(ca, c.badge)
                   ] })
                 }) }, c.value);
@@ -459,15 +474,15 @@ var SideNav = React.forwardRef(function SideNav2({
         ] }, o.value);
       }
       const active = o.value === val;
-      return /* @__PURE__ */ jsx("li", { style: LIST_ITEM_STYLE, children: /* @__PURE__ */ jsx(RailItemTooltip, { label: accessibleLabel, collapsed: col, enabled: !overlay, children: renderLeafControl(o, {
+      return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: LIST_ITEM_STYLE, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, RailItemTooltip, { label: accessibleLabel, collapsed: col, enabled: !overlay, children: renderLeafControl(o, {
         active,
         ariaLabel: col || o.ariaLabel ? accessibleLabel : void 0,
         title: col ? void 0 : accessibleLabel,
         itemStyle: row(active, o.disabled, null, hovKey === o.value),
-        content: /* @__PURE__ */ jsxs(React.Fragment, { children: [
-          o.icon != null && /* @__PURE__ */ jsx("span", { "data-slot": "icon", className: partClassName(classNames, "icon") || void 0, "aria-hidden": "true", style: { flexShrink: 0, display: "inline-flex", ...partStyle(styles, "icon") }, children: o.icon }),
+        content: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
+          o.icon != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "icon", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "icon") || void 0, "aria-hidden": "true", style: { flexShrink: 0, display: "inline-flex", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "icon") }, children: o.icon }),
           expandedContent(
-            /* @__PURE__ */ jsxs(React.Fragment, { children: [
+            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
               labelSpan(active, o.label),
               o.badge != null && pill(active, o.badge)
             ] })
@@ -476,60 +491,60 @@ var SideNav = React.forwardRef(function SideNav2({
         ] })
       }) }) }, o.value);
     }) }),
-    /* @__PURE__ */ jsx("div", { "data-slot": "footer", className: partClassName(classNames, "footer") || void 0, style: { marginTop: "auto", paddingTop: footerGap, ...partStyle(styles, "footer") }, children: resolvedFooter != null && /* @__PURE__ */ jsx("div", { style: { paddingTop: "var(--space-2-5)", marginLeft: "var(--space-0-5)", marginRight: "var(--space-0-5)", borderTop: `1px solid ${appearanceTokens.divider}` }, children: /* @__PURE__ */ jsx("div", { "data-sidenav-motion": "swap", "data-state": col ? "compact" : "expanded", style: { minWidth: 0, animation: swapAnimation }, children: resolvedFooter }) }) })
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-slot": "footer", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "footer") || void 0, style: { marginTop: "auto", paddingTop: footerGap, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "footer") }, children: resolvedFooter != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { paddingTop: "var(--space-2-5)", marginLeft: "var(--space-0-5)", marginRight: "var(--space-0-5)", borderTop: `1px solid ${appearanceTokens.divider}` }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-sidenav-motion": "swap", "data-state": col ? "compact" : "expanded", style: { minWidth: 0, animation: swapAnimation }, children: resolvedFooter }) }) })
   ] });
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "nav",
     {
       ref: mergedNavRef,
       ...rest,
       "aria-label": ariaLabel,
       onClick: onClick || overlay && col ? (e) => {
-        onClick?.(e);
+        _optionalChain([onClick, 'optionalCall', _44 => _44(e)]);
         if (!e.defaultPrevented && overlay && col && !e.target.closest("[data-sidenav-value], button")) setCol(false);
       } : void 0,
       onMouseEnter: onMouseEnter || overlay ? (e) => {
-        onMouseEnter?.(e);
+        _optionalChain([onMouseEnter, 'optionalCall', _45 => _45(e)]);
         if (!e.defaultPrevented && overlay) {
           pointerInside.current = true;
           peek(true);
         }
       } : void 0,
       onMouseLeave: onMouseLeave || overlay ? (e) => {
-        onMouseLeave?.(e);
+        _optionalChain([onMouseLeave, 'optionalCall', _46 => _46(e)]);
         if (!e.defaultPrevented && overlay) {
           pointerInside.current = false;
           peek(false);
         }
       } : void 0,
       onFocus: overlay ? (e) => {
-        onFocus?.(e);
+        _optionalChain([onFocus, 'optionalCall', _47 => _47(e)]);
         if (col && !restoringFocus.current && !e.currentTarget.contains(e.relatedTarget)) {
           clearTimeout(peekT.current);
           setCol(false);
         }
       } : onFocus,
       onBlur: overlay ? (e) => {
-        onBlur?.(e);
+        _optionalChain([onBlur, 'optionalCall', _48 => _48(e)]);
         if (!pointerInside.current && !e.currentTarget.contains(e.relatedTarget)) peek(false);
       } : onBlur,
       "data-slot": "root",
       "data-state": col ? "collapsed" : "expanded",
       "data-overlay": overlay ? "true" : void 0,
       "data-appearance": resolvedAppearance,
-      className: partClassName(classNames, "root", "lk-sidenav", !overlay && "lk-sidenav__surface", className) || void 0,
-      style: overlay ? { ...componentVars(vars, "--lds-side-nav-"), position: "relative", width: `var(--lds-side-nav-collapsed-width, ${resolvedCollapsedWidth})`, flexShrink: 0, ...partStyle(styles, "root"), ...style } : { ...componentVars(vars, "--lds-side-nav-"), ...shell, ...partStyle(styles, "root"), ...style },
+      className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "root", "lk-sidenav", !overlay && "lk-sidenav__surface", className) || void 0,
+      style: overlay ? { ..._chunkGWMGPLNWcjs.componentVars.call(void 0, vars, "--lds-side-nav-"), position: "relative", width: `var(--lds-side-nav-collapsed-width, ${resolvedCollapsedWidth})`, flexShrink: 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "root"), ...style } : { ..._chunkGWMGPLNWcjs.componentVars.call(void 0, vars, "--lds-side-nav-"), ...shell, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "root"), ...style },
       "data-surface": resolvedSurface,
       children: overlay ? (
         /* The elevation shadow only makes sense where the expanded panel actually covers content,
            so clip it to the inline-end overhang on both surfaces instead of blooming on all sides. */
-        /* @__PURE__ */ jsx("div", { "data-slot": "overlaySurface", className: partClassName(classNames, "overlaySurface", "lk-sidenav__surface") || void 0, style: { ...shell, position: "absolute", top: 0, left: 0, height: "100%", zIndex: col ? 1 : 40, boxShadow: col ? "none" : "var(--shadow-lg)", clipPath: col ? void 0 : "inset(0 -120px 0 0)", ...partStyle(styles, "overlaySurface") }, children: panelContent })
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-slot": "overlaySurface", className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "overlaySurface", "lk-sidenav__surface") || void 0, style: { ...shell, position: "absolute", top: 0, left: 0, height: "100%", zIndex: col ? 1 : 40, boxShadow: col ? "none" : "var(--shadow-lg)", clipPath: col ? void 0 : "inset(0 -120px 0 0)", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "overlaySurface") }, children: panelContent })
       ) : panelContent
     }
   );
 });
 
-export {
-  SideNav
-};
-//# sourceMappingURL=chunk-27C6JQHY.js.map
+
+
+exports.SideNav = SideNav;
+//# sourceMappingURL=chunk-GTD7X7JY.cjs.map
