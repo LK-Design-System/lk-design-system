@@ -65,6 +65,7 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 ### Changed
 
+- `ProductLockup compact`와 full이 서로 다른 SVG를 교체하지 않고 같은 LK path를 유지한 채 viewport 폭만 전환합니다. SideNav가 단일 브랜드 tree를 받으면 브랜드 전체 swap animation을 생략해, LK는 고정되고 제품명만 오른쪽으로 reveal/conceal 됩니다. 전환은 `prefers-reduced-motion`에서 즉시 완료됩니다.
 - 고정 `Lockup variant="portal"` 정본을 모브랜드 우선 Montserrat SemiBold 600으로 갱신하고 `ProductLockup product="portal"`과 path·transform·viewBox를 동기화했습니다. 공개 API와 LK 심볼 geometry v1.0은 유지되며 브랜드 construction은 v5, 로고 표준은 v2.0.0으로 올라갑니다.
 - LK 심볼은 기존 커스텀 벡터를 유지하고 `ROBOTICS`는 규정된 Montserrat ExtraBold 800 아웃라인으로 교체했습니다. 모든 사각·stacked·inline·banner 자산과 React `Lockup`/`Spinner`가 같은 생성 원본을 공유하며, UI 본문 글꼴은 Pretendard로 유지합니다.
 - `Lockup`은 variant별 정책 최소 높이, 실제 `viewBox` 기반 intrinsic width, 비율을 유지하는 반응형 축소를 적용합니다. 제약된 검정 단색 출력은 기존 `tone="current"`와 명시적 `color="#000000"` 조합으로 표현합니다. 좁은 슬롯에서는 overflow 대신 함께 축소되므로, 생성된 최소 슬롯 폭 계약을 확보하거나 `inline`/`stacked`에서 `mark`로 전환해야 합니다. 유효하지 않은 variant fallback은 진단 metadata로 노출됩니다.
