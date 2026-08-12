@@ -26,7 +26,7 @@ export function Steps({ steps = [], current = 0, style, ...rest }) {
         const last = i === steps.length - 1;
         const bg = done ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)';
         const bd = done || active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)';
-        const fg = done ? 'var(--color-semantic-static-white)' : active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-assistive)';
+        const fg = done ? 'var(--color-semantic-static-white)' : active ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)';
         return (
           <li key={i} aria-current={active ? 'step' : undefined} style={{ display: 'flex', alignItems: 'flex-start', flex: last ? '0 0 auto' : '1 1 auto' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, flexShrink: 0 }}>

@@ -49,6 +49,10 @@ export const StepProgress = {
         throw new Error(`Step ${i} must expose the visually-hidden state text "${stateTexts[i]}".`);
       }
     });
+    const upcomingNumber = items[2]?.querySelector('span');
+    if (upcomingNumber?.style.color !== 'var(--color-semantic-label-alternative)') {
+      throw new Error('Upcoming step numerals must use the readable alternative-label foreground.');
+    }
   },
 };
 
