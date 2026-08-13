@@ -31,6 +31,7 @@ assertEqual(
   'LK symbol geometry SHA-256',
 );
 validateMarkBounds(LK_MARK_PATHS, LOGO_GEOMETRY.markBounds);
+const markConstructionMetrics = deriveMarkConstructionMetrics(LK_MARK_PATHS, LOGO_GEOMETRY.markBounds);
 assertEqual(fileSha256(fontBuffer), manifest.wordmark.fontSha256, 'wordmark font SHA-256');
 assertEqual(fileSha256(portalFontBuffer), portalWordmark.fontSha256, 'portal wordmark font SHA-256');
 assertEqual(fileSha256(licenseBuffer), manifest.wordmark.licenseSha256, 'wordmark license SHA-256');
@@ -747,6 +748,46 @@ export const LK_PATHS = Object.freeze([
 ${markRows}
 ]);
 
+export const LK_MARK_CONSTRUCTION = Object.freeze({
+  coordinateSystem: Object.freeze({
+    origin: ${JSON.stringify(markConstructionMetrics.coordinateSystem.origin)},
+    xAxis: ${JSON.stringify(markConstructionMetrics.coordinateSystem.xAxis)},
+    yAxis: ${JSON.stringify(markConstructionMetrics.coordinateSystem.yAxis)},
+    unit: ${JSON.stringify(markConstructionMetrics.coordinateSystem.unit)},
+    precisionToX: ${formatNumber(markConstructionMetrics.coordinateSystem.precisionToX)},
+  }),
+  contours: Object.freeze([
+${markConstructionMetrics.contours.map((contour) => `    Object.freeze({
+      id: ${JSON.stringify(contour.id)},
+      closed: true,
+      winding: ${JSON.stringify(contour.winding)},
+      normalizedPath: ${JSON.stringify(contour.normalizedPath)},
+      vertices: Object.freeze([
+${contour.vertices.map((vertex) => `        Object.freeze({ id: ${JSON.stringify(vertex.id)}, xToX: ${formatNumber(vertex.xToX)}, yToX: ${formatNumber(vertex.yToX)} }),`).join('\n')}
+      ]),
+    }),`).join('\n')}
+  ]),
+  stemWidthToX: ${formatNumber(markConstructionMetrics.stemWidthToX)},
+  footReachToX: ${formatNumber(markConstructionMetrics.footReachToX)},
+  footThicknessToX: ${formatNumber(markConstructionMetrics.footThicknessToX)},
+  innerVertex: Object.freeze({
+    xToX: ${formatNumber(markConstructionMetrics.innerVertex.xToX)},
+    yToX: ${formatNumber(markConstructionMetrics.innerVertex.yToX)},
+  }),
+  innerDiagonalAngleDeg: Object.freeze({
+    upper: ${formatNumber(markConstructionMetrics.innerDiagonalAngleDeg.upper)},
+    lower: ${formatNumber(markConstructionMetrics.innerDiagonalAngleDeg.lower)},
+  }),
+  diagonalGapToX: Object.freeze({
+    minimum: ${formatNumber(markConstructionMetrics.diagonalGapToX.minimum)},
+    maximum: ${formatNumber(markConstructionMetrics.diagonalGapToX.maximum)},
+  }),
+  diagonalGapSegments: Object.freeze([
+    Object.freeze({ from: Object.freeze(${JSON.stringify(markConstructionMetrics.diagonalGapSegments[0].from)}), to: Object.freeze(${JSON.stringify(markConstructionMetrics.diagonalGapSegments[0].to)}) }),
+    Object.freeze({ from: Object.freeze(${JSON.stringify(markConstructionMetrics.diagonalGapSegments[1].from)}), to: Object.freeze(${JSON.stringify(markConstructionMetrics.diagonalGapSegments[1].to)}) }),
+  ]),
+});
+
 export const ROBOTICS_PATHS = Object.freeze([
 ${wordmarkRows}
 ]);
@@ -973,6 +1014,9 @@ function validateProductionOutput(relativePath, content, contract) {
   assertPathInstances(relativePath, content, generatedPortalPaths, contract.portalInstances ?? 0, 'portal wordmark');
 
   if (contract.kind === 'runtime') {
+    if (!content.includes('export const LK_MARK_CONSTRUCTION = Object.freeze({')) {
+      throw new Error(`${relativePath} does not export LK internal construction metrics.`);
+    }
     if (!content.includes('export const LK_LOGO_USAGE = Object.freeze({')) {
       throw new Error(`${relativePath} does not export logo usage metadata.`);
     }
@@ -1163,6 +1207,91 @@ function validateMarkBounds(rows, expectedBounds) {
       );
     }
   }
+}
+
+function deriveMarkConstructionMetrics(rows, bounds) {
+  if (rows.length !== 2) throw new Error(`LK symbol construction expects 2 paths, received ${rows.length}.`);
+  const transformedRows = rows.map((row) => {
+    const matrixValues = parseSvgMatrix(row.transform);
+    return parseLinearPathVertices(row.d).map((point) => transformPoint(point, matrixValues));
+  });
+  const [lVertices, kVertices] = transformedRows;
+  if (lVertices.length !== 6 || kVertices.length !== 6) {
+    throw new Error(`LK symbol construction expects 6 vertices per path, received ${lVertices.length} and ${kVertices.length}.`);
+  }
+
+  const x = bounds.height;
+  const normalize = (point) => ({
+    x: Number(formatNumber((point.x - bounds.x) / x)),
+    y: Number(formatNumber((point.y - bounds.y) / x)),
+  });
+  const angleDeg = (from, to) => Math.atan2(Math.abs(to.y - from.y), Math.abs(to.x - from.x)) * 180 / Math.PI;
+  const projectToLine = (point, from, to) => {
+    const vx = to.x - from.x;
+    const vy = to.y - from.y;
+    const scalar = ((point.x - from.x) * vx + (point.y - from.y) * vy) / ((vx * vx) + (vy * vy));
+    return { x: from.x + (scalar * vx), y: from.y + (scalar * vy) };
+  };
+  const distance = (from, to) => Math.hypot(to.x - from.x, to.y - from.y);
+  const signedArea = (vertices) => vertices.reduce((sum, point, index) => {
+    const next = vertices[(index + 1) % vertices.length];
+    return sum + ((point.x * next.y) - (next.x * point.y));
+  }, 0) / 2;
+  const makeContour = (id, vertices) => {
+    const normalizedVertices = vertices.map((point, index) => {
+      const normalized = normalize(point);
+      return { id: `${id}${index + 1}`, xToX: normalized.x, yToX: normalized.y };
+    });
+    const normalizedPath = normalizedVertices
+      .map((point, index) => `${index === 0 ? 'M' : 'L'} ${formatNumber(point.xToX)} ${formatNumber(point.yToX)}`)
+      .join(' ')
+      .concat(' Z');
+    return {
+      id,
+      closed: true,
+      winding: signedArea(normalizedVertices.map(({ xToX, yToX }) => ({ x: xToX, y: yToX }))) > 0
+        ? 'clockwise'
+        : 'counter-clockwise',
+      normalizedPath,
+      vertices: normalizedVertices,
+    };
+  };
+
+  const gapFromUpper = lVertices[3];
+  const gapFromLower = lVertices[2];
+  const gapToUpper = projectToLine(gapFromUpper, kVertices[2], kVertices[3]);
+  const gapToLower = projectToLine(gapFromLower, kVertices[2], kVertices[3]);
+  const gapValues = [distance(gapFromUpper, gapToUpper) / x, distance(gapFromLower, gapToLower) / x];
+
+  return {
+    coordinateSystem: {
+      origin: 'visible-bounds-top-left',
+      xAxis: 'right',
+      yAxis: 'down',
+      unit: 'X-visible-artwork-height',
+      precisionToX: 0.000001,
+    },
+    contours: [makeContour('L', lVertices), makeContour('K', kVertices)],
+    stemWidthToX: (lVertices[5].x - lVertices[0].x) / x,
+    footReachToX: (lVertices[2].x - lVertices[1].x) / x,
+    footThicknessToX: (lVertices[2].y - lVertices[3].y) / x,
+    innerVertex: {
+      xToX: (kVertices[2].x - bounds.x) / x,
+      yToX: (kVertices[2].y - bounds.y) / x,
+    },
+    innerDiagonalAngleDeg: {
+      upper: angleDeg(kVertices[2], kVertices[1]),
+      lower: angleDeg(kVertices[2], kVertices[3]),
+    },
+    diagonalGapToX: {
+      minimum: Math.min(...gapValues),
+      maximum: Math.max(...gapValues),
+    },
+    diagonalGapSegments: [
+      { from: normalize(gapFromUpper), to: normalize(gapToUpper) },
+      { from: normalize(gapFromLower), to: normalize(gapToLower) },
+    ],
+  };
 }
 
 function parseSvgMatrix(value) {
