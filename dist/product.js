@@ -60,7 +60,7 @@ import {
 import "./chunk-BVUTMUVR.js";
 import {
   Wizard
-} from "./chunk-GX2O3F7X.js";
+} from "./chunk-TPXSUHUP.js";
 import {
   CommandPalette
 } from "./chunk-O35KY2KR.js";

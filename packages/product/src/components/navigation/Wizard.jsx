@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
 import { Steps } from './Steps.jsx';
 
 /**
@@ -84,9 +85,9 @@ export function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, 
       <Steps steps={steps} current={cur} labelPolicy={labelPolicy} style={{ marginBottom: 'var(--space-8)' }} />
       <div ref={contentRef} tabIndex={-1} aria-live="polite" aria-busy={pending || undefined} style={{ outline: 'none' }}>{typeof children === 'function' ? children(cur) : children}</div>
       {footer === null ? null : typeof footer === 'function' ? footer(footerContext) : footer !== undefined ? footer : (
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
-          <button type="button" onClick={footerContext.back} disabled={cur === 0 || pending} style={{ height: 44, padding: '0 18px', border: '1px solid var(--color-semantic-line-solid-normal)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)', color: 'var(--color-semantic-label-normal)', cursor: cur === 0 || pending ? 'not-allowed' : 'pointer', opacity: cur === 0 || pending ? 0.5 : 1, fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)' }}>이전</button>
-          <button type="button" onClick={footerContext.next} disabled={nextDisabled} style={{ height: 44, padding: '0 20px', border: 'none', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-primary-normal)', color: 'var(--color-semantic-static-white)', cursor: nextDisabled ? 'not-allowed' : 'pointer', opacity: nextDisabled ? 0.5 : 1, fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)' }}>{nextIsComplete ? completeLabel : '다음'}</button>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 'var(--space-6)' }}>
+          <Button variant="outlined" color="assistive" onClick={footerContext.back} disabled={cur === 0 || pending}>이전</Button>
+          <Button variant="solid" color="primary" onClick={footerContext.next} disabled={nextDisabled}>{nextIsComplete ? completeLabel : '다음'}</Button>
         </div>
       )}
     </div>

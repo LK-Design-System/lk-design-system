@@ -3,6 +3,9 @@
 
 var _chunkAKURDD2Zcjs = require('./chunk-AKURDD2Z.cjs');
 
+
+var _chunkWLLFCVBNcjs = require('./chunk-WLLFCVBN.cjs');
+
 // components/navigation/Wizard.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 var _jsxruntime = require('react/jsx-runtime');
@@ -86,9 +89,9 @@ function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, onBefor
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkAKURDD2Zcjs.Steps, { steps, current: cur, labelPolicy, style: { marginBottom: "var(--space-8)" } }),
     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { ref: contentRef, tabIndex: -1, "aria-live": "polite", "aria-busy": pending || void 0, style: { outline: "none" }, children: typeof children === "function" ? children(cur) : children }),
-    footer === null ? null : typeof footer === "function" ? footer(footerContext) : footer !== void 0 ? footer : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", justifyContent: "space-between", marginTop: 24 }, children: [
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "button", { type: "button", onClick: footerContext.back, disabled: cur === 0 || pending, style: { height: 44, padding: "0 18px", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-label-normal)", cursor: cur === 0 || pending ? "not-allowed" : "pointer", opacity: cur === 0 || pending ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", fontWeight: "var(--fw-bold)" }, children: "\uC774\uC804" }),
-      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "button", { type: "button", onClick: footerContext.next, disabled: nextDisabled, style: { height: 44, padding: "0 20px", border: "none", borderRadius: "var(--radius-md)", background: "var(--color-semantic-primary-normal)", color: "var(--color-semantic-static-white)", cursor: nextDisabled ? "not-allowed" : "pointer", opacity: nextDisabled ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", fontWeight: "var(--fw-bold)" }, children: nextIsComplete ? completeLabel : "\uB2E4\uC74C" })
+    footer === null ? null : typeof footer === "function" ? footer(footerContext) : footer !== void 0 ? footer : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", justifyContent: "space-between", marginTop: "var(--space-6)" }, children: [
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkWLLFCVBNcjs.Button, { variant: "outlined", color: "assistive", onClick: footerContext.back, disabled: cur === 0 || pending, children: "\uC774\uC804" }),
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkWLLFCVBNcjs.Button, { variant: "solid", color: "primary", onClick: footerContext.next, disabled: nextDisabled, children: nextIsComplete ? completeLabel : "\uB2E4\uC74C" })
     ] })
   ] });
 }
@@ -96,4 +99,4 @@ function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, onBefor
 
 
 exports.Wizard = Wizard;
-//# sourceMappingURL=chunk-A4BMRMOR.cjs.map
+//# sourceMappingURL=chunk-3MBYGUI4.cjs.map

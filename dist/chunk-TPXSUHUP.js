@@ -2,6 +2,9 @@
 import {
   Steps
 } from "./chunk-NWTLUOKD.js";
+import {
+  Button
+} from "./chunk-VZAZ4QYP.js";
 
 // components/navigation/Wizard.jsx
 import React from "react";
@@ -86,9 +89,9 @@ function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, onBefor
   return /* @__PURE__ */ jsxs("div", { style: { fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     /* @__PURE__ */ jsx(Steps, { steps, current: cur, labelPolicy, style: { marginBottom: "var(--space-8)" } }),
     /* @__PURE__ */ jsx("div", { ref: contentRef, tabIndex: -1, "aria-live": "polite", "aria-busy": pending || void 0, style: { outline: "none" }, children: typeof children === "function" ? children(cur) : children }),
-    footer === null ? null : typeof footer === "function" ? footer(footerContext) : footer !== void 0 ? footer : /* @__PURE__ */ jsxs("div", { style: { display: "flex", justifyContent: "space-between", marginTop: 24 }, children: [
-      /* @__PURE__ */ jsx("button", { type: "button", onClick: footerContext.back, disabled: cur === 0 || pending, style: { height: 44, padding: "0 18px", border: "1px solid var(--color-semantic-line-solid-normal)", borderRadius: "var(--radius-md)", background: "var(--color-semantic-background-elevated-normal)", color: "var(--color-semantic-label-normal)", cursor: cur === 0 || pending ? "not-allowed" : "pointer", opacity: cur === 0 || pending ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", fontWeight: "var(--fw-bold)" }, children: "\uC774\uC804" }),
-      /* @__PURE__ */ jsx("button", { type: "button", onClick: footerContext.next, disabled: nextDisabled, style: { height: 44, padding: "0 20px", border: "none", borderRadius: "var(--radius-md)", background: "var(--color-semantic-primary-normal)", color: "var(--color-semantic-static-white)", cursor: nextDisabled ? "not-allowed" : "pointer", opacity: nextDisabled ? 0.5 : 1, fontFamily: "var(--font-sans)", fontSize: "var(--body2-size)", fontWeight: "var(--fw-bold)" }, children: nextIsComplete ? completeLabel : "\uB2E4\uC74C" })
+    footer === null ? null : typeof footer === "function" ? footer(footerContext) : footer !== void 0 ? footer : /* @__PURE__ */ jsxs("div", { style: { display: "flex", justifyContent: "space-between", marginTop: "var(--space-6)" }, children: [
+      /* @__PURE__ */ jsx(Button, { variant: "outlined", color: "assistive", onClick: footerContext.back, disabled: cur === 0 || pending, children: "\uC774\uC804" }),
+      /* @__PURE__ */ jsx(Button, { variant: "solid", color: "primary", onClick: footerContext.next, disabled: nextDisabled, children: nextIsComplete ? completeLabel : "\uB2E4\uC74C" })
     ] })
   ] });
 }
@@ -96,4 +99,4 @@ function Wizard({ steps = [], current, defaultCurrent = 0, onStepChange, onBefor
 export {
   Wizard
 };
-//# sourceMappingURL=chunk-GX2O3F7X.js.map
+//# sourceMappingURL=chunk-TPXSUHUP.js.map
