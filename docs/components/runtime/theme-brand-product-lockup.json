@@ -9,6 +9,7 @@
     "ProductLockup"
   ],
   "supportingComponents": [
+    "Button",
     "Lockup"
   ],
   "purpose": "LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 낮춥니다. 제품명 visible height 1X와 mark visible 폭의 0.35 간격은 유지해 Portal의 리듬을 계승하면서 LK가 먼저 읽히게 합니다.",
@@ -106,6 +107,10 @@
   ],
   "exceptions": [],
   "related": [
+    {
+      "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
     {
       "component": "Lockup",
       "relationship": "대표 시나리오에서 조합"

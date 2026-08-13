@@ -69,6 +69,7 @@ LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 �
 
 | Component | Relationship |
 | --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
 | `Lockup` | 대표 시나리오에서 조합 |
 
 ## Examples

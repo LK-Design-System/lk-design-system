@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "4ae2d7774cb41c5244c6d2af4fca7d1f03799eda65c256bebcc55779df839a4d",
+  "sourceFingerprint": "50976989104390f53edd4af0c2c1a06423b4386ac2723d05d9f380bd5eecb22b",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -25369,6 +25369,13 @@
           "required": false,
           "description": "활성 단계 인덱스(0부터). @default 0",
           "owner": "StepsProps"
+        },
+        {
+          "name": "labelPolicy",
+          "type": "StepsLabelPolicy",
+          "required": false,
+          "description": "좁은 화면에서의 라벨 표시 정책 — 'always': 모든 라벨 표시 · 'current-only': 현재 단계 라벨만 표시 · 'none': 라벨 전부 숨김. 시각적으로 숨긴 라벨도 sr-only로 렌더되어 접근 가능한 이름과 상태 텍스트(완료 · 현재 단계 · 예정)는 정책과 무관하게 유지됩니다.",
+          "owner": "StepsProps"
         }
       ],
       "tokens": [
@@ -25376,18 +25383,34 @@
         "--color-semantic-background-elevated-normal",
         "--color-semantic-line-solid-normal",
         "--color-semantic-static-white",
-        "--color-semantic-label-assistive",
+        "--color-semantic-label-alternative",
         "--font-sans",
         "--label1-size",
         "--fw-bold",
         "--label2-size",
         "--fw-medium",
         "--color-semantic-label-normal",
-        "--color-semantic-label-alternative",
         "--space-4"
       ],
-      "externalReferences": [],
-      "promptSha256": "b5c869ecf9e675fc0c6fb3b655038817103a3b0e1496e6f89093abc5c32f77bf"
+      "externalReferences": [
+        {
+          "label": "WCAG 2.2 1.4.3",
+          "url": "https://www.w3.org/TR/WCAG22/#contrast-minimum"
+        },
+        {
+          "label": "W3C WAI 다단계 폼",
+          "url": "https://www.w3.org/WAI/tutorials/forms/multi-page/"
+        },
+        {
+          "label": "Carbon Progress indicator",
+          "url": "https://carbondesignsystem.com/components/progress-indicator/style/"
+        },
+        {
+          "label": "USWDS Step indicator",
+          "url": "https://designsystem.digital.gov/components/step-indicator/"
+        }
+      ],
+      "promptSha256": "72e169c168a2f64562cb9384a34634ace5f26371cceb06496b62695474526f1b"
     },
     {
       "id": "tabs",
@@ -26103,10 +26126,17 @@
           "owner": "WizardProps"
         },
         {
-          "name": "onComplete",
-          "type": "() = void",
+          "name": "onBeforeStepChange",
+          "type": "(nextIndex: number, currentIndex: number) = boolean | void | Promise",
           "required": false,
-          "description": "마지막 단계에서 완료 액션. 제공하면 마지막 단계의 다음 버튼이 completeLabel을 단 primary 완료 버튼이 되어 클릭 시 호출됩니다. 제공하지 않으면 기존처럼 마지막 단계에서 다음 버튼이 비활성화됩니다.",
+          "description": "단계 전환 guard. 전환이 확정되기 전에 (nextIndex, currentIndex)로 호출되며, false를 반환하거나 promise가 false로 resolve되거나 reject되면 현재 단계와 입력값을 유지합니다. promise를 반환하면 settle될 때까지 pending이 되어 이전/다음/완료가 중복 실행되지 않습니다. guard 통과 후에만 onStepChange가 호출됩니다.",
+          "owner": "WizardProps"
+        },
+        {
+          "name": "onComplete",
+          "type": "() = void | Promise",
+          "required": false,
+          "description": "마지막 단계에서 완료 액션. 제공하면 마지막 단계의 다음 버튼이 completeLabel을 단 primary 완료 버튼이 되어 클릭 시 호출됩니다. promise를 반환하면 settle될 때까지 pending으로 중복 실행이 차단됩니다. 제공하지 않으면 기존처럼 마지막 단계에서 다음 버튼이 비활성화됩니다.",
           "owner": "WizardProps"
         },
         {
@@ -26117,34 +26147,55 @@
           "owner": "WizardProps"
         },
         {
+          "name": "labelPolicy",
+          "type": "StepsLabelPolicy",
+          "required": false,
+          "description": "인디케이터(Steps)로 전달되는 좁은 화면 라벨 정책. @default 'always'",
+          "owner": "WizardProps"
+        },
+        {
           "name": "children",
           "type": "React.ReactNode | ((current: number) = React.ReactNode)",
           "required": false,
-          "description": "노드, 또는 렌더 함수 (current) = ReactNode. 콘텐츠 영역은 aria-live=\"polite\"로 감싸져 단계 전환이 스크린 리더에 알림됩니다.",
+          "description": "노드, 또는 렌더 함수 (current) = ReactNode. 콘텐츠 영역은 aria-live=\"polite\"로 감싸져 단계 전환이 스크린 리더에 알림되고, 위저드가 시작한 전환 후에는 이 영역으로 focus가 이동합니다.",
           "owner": "WizardProps"
         },
         {
           "name": "footer",
-          "type": "React.ReactNode | null",
+          "type": "React.ReactNode | null | ((context: WizardFooterContext) = React.ReactNode)",
           "required": false,
-          "description": "푸터 제어 — null: 내장 이전/다음 컨트롤 숨김 · 노드: 기본 컨트롤 대신 해당 노드를 렌더 · undefined(기본): 내장 이전/다음 컨트롤.",
+          "description": "푸터 제어 — null: 내장 이전/다음 컨트롤 숨김 · 노드: 기본 컨트롤 대신 해당 노드를 렌더 · 함수: WizardFooterContext를 받아 커스텀 푸터를 렌더(기본 이전/다음/완료 의미와 guard·pending 계약을 유지한 채 표현만 교체) · undefined(기본): 내장 이전/다음 컨트롤.",
           "owner": "WizardProps"
         }
       ],
       "tokens": [
         "--font-sans",
         "--space-8",
-        "--color-semantic-line-solid-normal",
-        "--radius-md",
-        "--color-semantic-background-elevated-normal",
-        "--color-semantic-label-normal",
-        "--body2-size",
-        "--fw-bold",
-        "--color-semantic-primary-normal",
-        "--color-semantic-static-white"
+        "--space-6"
       ],
-      "externalReferences": [],
-      "promptSha256": "b6eb38d2d0be0b37a59d7f7e3d6948abc4a3a7ac0a73b46dcdc0bd170b9dded7"
+      "externalReferences": [
+        {
+          "label": "GOV.UK patterns",
+          "url": "https://design-system.service.gov.uk/patterns/"
+        },
+        {
+          "label": "USWDS Step indicator",
+          "url": "https://designsystem.digital.gov/components/step-indicator/"
+        },
+        {
+          "label": "PatternFly Wizard",
+          "url": "https://www.patternfly.org/components/wizard/"
+        },
+        {
+          "label": "AWS Cloudscape wizard",
+          "url": "https://cloudscape.design/components/wizard/"
+        },
+        {
+          "label": "검증 철학",
+          "url": "https://github.com/cloudscape-design/components/issues/564"
+        }
+      ],
+      "promptSha256": "626dec8d00ef7da4972894605f93c01c112c5163419c5917f1ba1f4d87f75fdf"
     },
     {
       "id": "alert",
@@ -70629,7 +70680,12 @@
       "avoidWhen": [
         "Classification: LK Product Extension. 순서가 있는 워크플로의 진행 상태를 표시하며, 사이트·제품·페이지 내 탐색으로 사용하지 않습니다. 콘텐츠와 이전/다음 제어까지 필요하면 Wizard를 사용합니다."
       ],
-      "anatomy": [],
+      "anatomy": [
+        {
+          "part": "labelPolicy",
+          "rule": "좁은 화면에서의 라벨 표시 정책 — 'always': 모든 라벨 표시 · 'current-only': 현재 단계 라벨만 표시 · 'none': 라벨 전부 숨김. 시각적으로 숨긴 라벨도 sr-only로 렌더되어 접근 가능한 이름과 상태 텍스트(완료 · 현재 단계 · 예정)는 정책과 무관하게 유지됩니다."
+        }
+      ],
       "properties": [
         {
           "name": "steps",
@@ -70644,11 +70700,26 @@
           "required": false,
           "description": "활성 단계 인덱스(0부터). @default 0",
           "owner": "StepsProps"
+        },
+        {
+          "name": "labelPolicy",
+          "type": "StepsLabelPolicy",
+          "required": false,
+          "description": "좁은 화면에서의 라벨 표시 정책 — 'always': 모든 라벨 표시 · 'current-only': 현재 단계 라벨만 표시 · 'none': 라벨 전부 숨김. 시각적으로 숨긴 라벨도 sr-only로 렌더되어 접근 가능한 이름과 상태 텍스트(완료 · 현재 단계 · 예정)는 정책과 무관하게 유지됩니다.",
+          "owner": "StepsProps"
         }
       ],
       "states": [],
       "behavior": [],
       "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "labelPolicy — 좁은 화면 라벨 정책. 'always'(기본): 모든 라벨 표시 · 'current-only': 현재 단계 라벨만 표시 · 'none': 라벨 전부 숨김. 라벨은 white-space: nowrap으로 줄바꿈하지 않으므로, 긴 한국어 단계명이 320px에 맞지 않으면 라벨을 줄이는 대신 이 정책으로 표시 범위를 줄입니다. 어떤 정책에서도 라벨과 상태 텍스트는 sr-only로 유지되어 스크린 리더가 읽는 이름은 변하지 않습니다."
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "전경 대비 — 예정 단계의 숫자와 라벨은 비활성 컨트롤이 아니라 사용자가 읽어야 하는 진행 정보입니다. 따라서 숫자와 라벨 모두 label-alternative를 사용합니다. LDS light/dark elevated surface에서 계산된 대비는 각각 5.27:1, 4.67:1이며, 14px 텍스트에 WCAG 2.2 1.4.3의 4.5:1 기준을 적용합니다. label-assistive는 같은 표면에서 1.69:1, 1.79:1이므로 이 용도에 사용하지 않습니다."
+        },
         {
           "subject": "--color-semantic-background-elevated-normal",
           "rule": "light: #FFFFFF; dark: #212225"
@@ -70656,10 +70727,6 @@
         {
           "subject": "--color-semantic-label-alternative",
           "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
-        },
-        {
-          "subject": "--color-semantic-label-assistive",
-          "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
         },
         {
           "subject": "--color-semantic-label-normal",
@@ -70671,7 +70738,8 @@
         "steps — 문자열 또는 { label }. current — 활성 인덱스. 완료된 단계는 시그널 잉크 + 체크로 채워지고, 현재는 링으로 표시됩니다."
       ],
       "accessibility": [
-        "접근성 — 순서 있는 리스트(/)로 렌더되고, 현재 단계 에 aria-current=\"step\"이 붙습니다. 각 라벨 뒤에는 화면에 보이지 않는 상태 텍스트(완료 · 현재 단계 · 예정)가 붙어 스크린 리더가 색상 없이도 상태를 구분합니다. 체크 아이콘은 장식(aria-hidden)입니다."
+        "접근성 — 순서 있는 리스트(/)로 렌더되고, 현재 단계 에 aria-current=\"step\"이 붙습니다. 각 라벨 뒤에는 화면에 보이지 않는 상태 텍스트(완료 · 현재 단계 · 예정)가 붙어 스크린 리더가 색상 없이도 상태를 구분합니다. 체크 아이콘은 장식(aria-hidden)입니다.",
+        "외부 근거는 W3C WAI 다단계 폼의 순서 목록·시각적으로 숨긴 상태 텍스트 권고와 Carbon Progress indicator의 미시작 아이콘 icon-primary·라벨 text-primary 역할 구분을 확인했습니다. LDS는 기존 ol/숨김 상태/aria-current 구조를 유지하고, 시각 스타일은 외부 시스템을 복제하지 않고 LDS semantic foreground만 교정합니다."
       ],
       "exceptions": [],
       "related": [
@@ -70717,7 +70785,6 @@
       "tokens": [
         "--color-semantic-background-elevated-normal",
         "--color-semantic-label-alternative",
-        "--color-semantic-label-assistive",
         "--color-semantic-label-normal",
         "--color-semantic-line-solid-normal",
         "--color-semantic-primary-normal",
@@ -70752,7 +70819,7 @@
             "role": "overview"
           }
         ],
-        "hiddenEvidence": 1
+        "hiddenEvidence": 2
       },
       "sources": [
         {
@@ -70762,6 +70829,22 @@
         {
           "label": "Storybook implementation evidence",
           "path": "stories/NavigationSteps.stories.jsx"
+        },
+        {
+          "label": "WCAG 2.2 1.4.3",
+          "url": "https://www.w3.org/TR/WCAG22/#contrast-minimum"
+        },
+        {
+          "label": "W3C WAI 다단계 폼",
+          "url": "https://www.w3.org/WAI/tutorials/forms/multi-page/"
+        },
+        {
+          "label": "Carbon Progress indicator",
+          "url": "https://carbondesignsystem.com/components/progress-indicator/style/"
+        },
+        {
+          "label": "USWDS Step indicator",
+          "url": "https://designsystem.digital.gov/components/step-indicator/"
         }
       ],
       "canonicalGuide": null,
@@ -70770,7 +70853,7 @@
         "purpose": "evidence",
         "useWhen": "omitted-no-evidence",
         "avoidWhen": "evidence",
-        "anatomy": "omitted-no-evidence",
+        "anatomy": "evidence",
         "properties": "evidence",
         "states": "omitted-no-evidence",
         "behavior": "omitted-no-evidence",
@@ -71431,11 +71514,17 @@
       "ownerComponents": [
         "Wizard"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "Button",
+        "DescriptionList",
+        "FormField",
+        "Input"
+      ],
       "purpose": "입력과 검토가 순서대로 이어지고 이전·다음 동작을 패턴이 소유할 때 적합합니다. 현재 단계만 읽히면 충분한 화면에는 Wizard 대신 Steps를 사용하세요.",
-      "useWhen": [],
+      "useWhen": [
+        "onBeforeStepChange — 전환 guard. (nextIndex, currentIndex)로 호출되며 false 반환·false resolve·reject는 전환을 차단하고 현재 단계와 입력값을 유지합니다. promise를 반환하면 settle까지 pending이 되어 이전/다음/완료의 중복 실행이 차단되고 내장 버튼이 비활성화됩니다. guard 통과 후에만 onStepChange가 호출됩니다. 검증 실패의 표현(ValidationSummary, field error)은 소비자가 소유합니다."
+      ],
       "avoidWhen": [
-        "footer — null: 내장 이전/다음 컨트롤 숨김 · 노드: 기본 컨트롤 대신 그 노드를 렌더 · 미지정: 내장 이전/다음 컨트롤.",
         "Classification: LK Product Extension. 순서가 있는 다단계 워크플로를 제어하며, 사이트나 제품의 주 탐색으로 사용하지 않습니다. 경로 표시에는 Breadcrumb, 진행 표시만 필요할 때는 Steps를 사용합니다."
       ],
       "anatomy": [
@@ -71444,12 +71533,16 @@
           "rule": "완료 버튼 라벨(onComplete 제공 시). @default '완료'"
         },
         {
+          "part": "labelPolicy",
+          "rule": "인디케이터(Steps)로 전달되는 좁은 화면 라벨 정책. @default 'always'"
+        },
+        {
           "part": "children",
-          "rule": "노드, 또는 렌더 함수 (current) = ReactNode. 콘텐츠 영역은 aria-live=\"polite\"로 감싸져 단계 전환이 스크린 리더에 알림됩니다."
+          "rule": "노드, 또는 렌더 함수 (current) = ReactNode. 콘텐츠 영역은 aria-live=\"polite\"로 감싸져 단계 전환이 스크린 리더에 알림되고, 위저드가 시작한 전환 후에는 이 영역으로 focus가 이동합니다."
         },
         {
           "part": "footer",
-          "rule": "푸터 제어 — null: 내장 이전/다음 컨트롤 숨김 · 노드: 기본 컨트롤 대신 해당 노드를 렌더 · undefined(기본): 내장 이전/다음 컨트롤."
+          "rule": "푸터 제어 — null: 내장 이전/다음 컨트롤 숨김 · 노드: 기본 컨트롤 대신 해당 노드를 렌더 · 함수: WizardFooterContext를 받아 커스텀 푸터를 렌더(기본 이전/다음/완료 의미와 guard·pending 계약을 유지한 채 표현만 교체) · undefined(기본): 내장 이전/다음 컨트롤."
         }
       ],
       "properties": [
@@ -71482,10 +71575,17 @@
           "owner": "WizardProps"
         },
         {
-          "name": "onComplete",
-          "type": "() = void",
+          "name": "onBeforeStepChange",
+          "type": "(nextIndex: number, currentIndex: number) = boolean | void | Promise",
           "required": false,
-          "description": "마지막 단계에서 완료 액션. 제공하면 마지막 단계의 다음 버튼이 completeLabel을 단 primary 완료 버튼이 되어 클릭 시 호출됩니다. 제공하지 않으면 기존처럼 마지막 단계에서 다음 버튼이 비활성화됩니다.",
+          "description": "단계 전환 guard. 전환이 확정되기 전에 (nextIndex, currentIndex)로 호출되며, false를 반환하거나 promise가 false로 resolve되거나 reject되면 현재 단계와 입력값을 유지합니다. promise를 반환하면 settle될 때까지 pending이 되어 이전/다음/완료가 중복 실행되지 않습니다. guard 통과 후에만 onStepChange가 호출됩니다.",
+          "owner": "WizardProps"
+        },
+        {
+          "name": "onComplete",
+          "type": "() = void | Promise",
+          "required": false,
+          "description": "마지막 단계에서 완료 액션. 제공하면 마지막 단계의 다음 버튼이 completeLabel을 단 primary 완료 버튼이 되어 클릭 시 호출됩니다. promise를 반환하면 settle될 때까지 pending으로 중복 실행이 차단됩니다. 제공하지 않으면 기존처럼 마지막 단계에서 다음 버튼이 비활성화됩니다.",
           "owner": "WizardProps"
         },
         {
@@ -71496,17 +71596,24 @@
           "owner": "WizardProps"
         },
         {
+          "name": "labelPolicy",
+          "type": "StepsLabelPolicy",
+          "required": false,
+          "description": "인디케이터(Steps)로 전달되는 좁은 화면 라벨 정책. @default 'always'",
+          "owner": "WizardProps"
+        },
+        {
           "name": "children",
           "type": "React.ReactNode | ((current: number) = React.ReactNode)",
           "required": false,
-          "description": "노드, 또는 렌더 함수 (current) = ReactNode. 콘텐츠 영역은 aria-live=\"polite\"로 감싸져 단계 전환이 스크린 리더에 알림됩니다.",
+          "description": "노드, 또는 렌더 함수 (current) = ReactNode. 콘텐츠 영역은 aria-live=\"polite\"로 감싸져 단계 전환이 스크린 리더에 알림되고, 위저드가 시작한 전환 후에는 이 영역으로 focus가 이동합니다.",
           "owner": "WizardProps"
         },
         {
           "name": "footer",
-          "type": "React.ReactNode | null",
+          "type": "React.ReactNode | null | ((context: WizardFooterContext) = React.ReactNode)",
           "required": false,
-          "description": "푸터 제어 — null: 내장 이전/다음 컨트롤 숨김 · 노드: 기본 컨트롤 대신 해당 노드를 렌더 · undefined(기본): 내장 이전/다음 컨트롤.",
+          "description": "푸터 제어 — null: 내장 이전/다음 컨트롤 숨김 · 노드: 기본 컨트롤 대신 해당 노드를 렌더 · 함수: WizardFooterContext를 받아 커스텀 푸터를 렌더(기본 이전/다음/완료 의미와 guard·pending 계약을 유지한 채 표현만 교체) · undefined(기본): 내장 이전/다음 컨트롤.",
           "owner": "WizardProps"
         }
       ],
@@ -71514,32 +71621,55 @@
       "behavior": [],
       "quantitativeRules": [
         {
-          "subject": "--body2-size",
-          "rule": "15px"
+          "subject": "명시 규칙 1",
+          "rule": "레이아웃 계약 — 세로 읽기 순서는 인디케이터 → 단계 heading → 단계 본문 → 푸터로 고정입니다. 간격은 위저드가 소유합니다: 인디케이터 아래 --space-8(32px), 푸터 위 --space-6(24px). 단계 본문은 그 단계의 결과를 말하는 heading으로 시작해야 합니다 — 전환 후 focus가 콘텐츠 영역으로 이동하므로 heading이 첫 낭독 대상이 됩니다(PatternFly의 step title, USWDS의 단계 heading 관례)."
         },
         {
-          "subject": "--color-semantic-background-elevated-normal",
-          "rule": "light: #FFFFFF; dark: #212225"
+          "subject": "명시 규칙 2",
+          "rule": "기본 푸터의 표현 — 손으로 그린 버튼이 아니라 LDS Button을 그대로 사용합니다: 이전은 variant=\"outlined\" color=\"assistive\", 다음/완료는 variant=\"solid\" color=\"primary\", 높이는 Button md 계약(--component-button-height-md)을 따릅니다."
         },
         {
-          "subject": "--color-semantic-label-normal",
-          "rule": "light: #171718; dark: #F7F7F7"
+          "subject": "명시 규칙 3",
+          "rule": "접근성 — 인디케이터는 Steps 컴포넌트를 재사용해 / 구조, aria-current=\"step\", 숨김 상태 텍스트를 그대로 제공합니다. 단계 콘텐츠 영역은 aria-live=\"polite\" 래퍼(tabIndex={-1})로 감싸져 단계 전환이 낭독되고, 위저드가 시작한 전환(내장 버튼·footer context) 후에는 이 영역으로 focus가 이동해 키보드·스크린 리더 사용자가 새 단계 시작점에 놓입니다. 부모가 current를 직접 바꾸는 전환에는 focus를 옮기지 않습니다. pending 동안 콘텐츠 영역은 aria-busy입니다."
         },
         {
-          "subject": "--color-semantic-line-solid-normal",
-          "rule": "light: #E1E2E4; dark: #37383C"
+          "subject": "--space-6",
+          "rule": "24px"
+        },
+        {
+          "subject": "--space-8",
+          "rule": "32px"
         }
       ],
-      "responsive": [],
+      "responsive": [
+        "labelPolicy — 인디케이터 Steps로 전달하는 좁은 화면 라벨 정책('always'·'current-only'·'none'). 정책과 무관하게 라벨·상태 텍스트는 sr-only로 유지됩니다."
+      ],
       "contentGuidance": [
         "steps — 라벨. current / defaultCurrent / onStepChange — 제어/비제어. children — 노드 또는 (current) = node. 인디케이터만 필요하면 Steps를 쓰세요.",
-        "onComplete / completeLabel — onComplete를 주면 마지막 단계의 다음 버튼이 primary 완료 버튼(completeLabel, 기본 '완료')이 되어 클릭 시 호출됩니다. 없으면 기존처럼 마지막 단계에서 다음이 비활성화됩니다(하위 호환)."
+        "footer — null: 내장 이전/다음 컨트롤 숨김 · 노드: 기본 컨트롤 대신 그 노드를 렌더 · 함수: WizardFooterContext(current·count·isFirst·isLast·pending·nextIsComplete·back()·next()·complete())를 받아 커스텀 푸터를 렌더 — 표현만 바꾸고 guard·pending·완료 의미는 위저드가 계속 소유합니다 · 미지정: 내장 이전/다음 컨트롤. 커스텀 푸터도 DOM 순서는 이전 → 다음/완료를 유지하세요.",
+        "onComplete / completeLabel — onComplete를 주면 마지막 단계의 다음 버튼이 primary 완료 버튼(completeLabel, 기본 '완료')이 되어 클릭 시 호출됩니다. promise를 반환하면 settle까지 pending으로 중복 제출이 차단됩니다. 없으면 기존처럼 마지막 단계에서 다음이 비활성화됩니다(하위 호환)."
       ],
       "accessibility": [
-        "접근성 — 인디케이터는 Steps 컴포넌트를 재사용해 / 구조, aria-current=\"step\", 숨김 상태 텍스트를 그대로 제공합니다. 단계 콘텐츠 영역은 가벼운 aria-live=\"polite\" 래퍼로 감싸 단계 전환 시 새 콘텐츠가 스크린 리더에 알림됩니다(별도 role/label 없이 라이브 영역만 사용)."
+        "다단계 폼 조합(검증·복귀 focus·ActionArea·dirty exit)의 규칙은 docs/GUIDEDCREATIONPATTERN.md가 소유합니다. 외부 근거: GOV.UK patterns는 task 단위 조합 지침을 component와 분리하고, USWDS Step indicator는 step indicator가 back/next 탐색을 대체하지 않는다고 명시합니다."
       ],
       "exceptions": [],
       "related": [
+        {
+          "component": "Button",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DescriptionList",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "FormField",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "Input",
+          "relationship": "대표 시나리오에서 조합"
+        },
         {
           "component": "Anchor",
           "relationship": "대표 시나리오에서 조합"
@@ -71555,40 +71685,17 @@
         {
           "component": "Footer",
           "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "LanguageSwitcher",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "NavRail",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "SideNav",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Steps",
-          "relationship": "대표 시나리오에서 조합"
         }
       ],
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<Wizard steps={['문의 정보', '현장 정보', '확인']} onStepChange={setStep}>\n  {(step) => <StepForm index={step} />}\n</Wizard>"
+          "code": "<Wizard\n  steps={['문의 정보', '현장 정보', '확인']}\n  onBeforeStepChange={(next, current) => next < current || validateStep(current)}\n  onComplete={submit}\n>\n  {(step) => <StepForm index={step} />}\n</Wizard>"
         }
       ],
       "tokens": [
-        "--body2-size",
-        "--color-semantic-background-elevated-normal",
-        "--color-semantic-label-normal",
-        "--color-semantic-line-solid-normal",
-        "--color-semantic-primary-normal",
-        "--color-semantic-static-white",
         "--font-sans",
-        "--fw-bold",
-        "--radius-md",
+        "--space-6",
         "--space-8"
       ],
       "apiLinks": [
@@ -71614,7 +71721,7 @@
             "role": "overview"
           }
         ],
-        "hiddenEvidence": 1
+        "hiddenEvidence": 2
       },
       "sources": [
         {
@@ -71624,20 +71731,40 @@
         {
           "label": "Storybook implementation evidence",
           "path": "stories/NavigationWizard.stories.jsx"
+        },
+        {
+          "label": "GOV.UK patterns",
+          "url": "https://design-system.service.gov.uk/patterns/"
+        },
+        {
+          "label": "USWDS Step indicator",
+          "url": "https://designsystem.digital.gov/components/step-indicator/"
+        },
+        {
+          "label": "PatternFly Wizard",
+          "url": "https://www.patternfly.org/components/wizard/"
+        },
+        {
+          "label": "AWS Cloudscape wizard",
+          "url": "https://cloudscape.design/components/wizard/"
+        },
+        {
+          "label": "검증 철학",
+          "url": "https://github.com/cloudscape-design/components/issues/564"
         }
       ],
       "canonicalGuide": null,
       "guideDeltaFields": [],
       "sectionStatus": {
         "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
+        "useWhen": "evidence",
         "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
         "states": "omitted-no-evidence",
         "behavior": "omitted-no-evidence",
         "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
+        "responsive": "evidence",
         "contentGuidance": "evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
@@ -84567,6 +84694,7 @@
         "ProductLockup"
       ],
       "supportingComponents": [
+        "Button",
         "Lockup"
       ],
       "purpose": "LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 낮춥니다. 제품명 visible height 1X와 mark visible 폭의 0.35 간격은 유지해 Portal의 리듬을 계승하면서 LK가 먼저 읽히게 합니다.",
@@ -84664,6 +84792,10 @@
       ],
       "exceptions": [],
       "related": [
+        {
+          "component": "Button",
+          "relationship": "대표 시나리오에서 조합"
+        },
         {
           "component": "Lockup",
           "relationship": "대표 시나리오에서 조합"
