@@ -1,4 +1,4 @@
-import { Wizard } from '../src/index.js';
+import { Button, Wizard } from '../src/index.js';
 import { userEvent } from 'storybook/test';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -87,19 +87,19 @@ export const GuardedTransition = {
           steps={['작성', '검토', '게시']}
           onBeforeStepChange={() => new Promise((resolve) => { approveAsyncGuard = resolve; })}
         />
-        <button type="button" data-testid="approve-transition" style={{ minHeight: 44, padding: '0 16px', marginTop: 'var(--space-3)' }} onClick={() => approveAsyncGuard && approveAsyncGuard(true)}>전환 승인</button>
+        <Button variant="outlined" color="assistive" data-testid="approve-transition" style={{ marginTop: 'var(--space-3)' }} onClick={() => approveAsyncGuard && approveAsyncGuard(true)}>전환 승인</Button>
       </section>
       <section data-testid="wizard-context-footer">
         <Wizard
           steps={['작성', '검토', '게시']}
           onComplete={() => {}}
           footer={(ctx) => (
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24 }}>
-              <button type="button" data-testid="ctx-back" style={{ minHeight: 44, padding: '0 16px' }} onClick={ctx.back} disabled={ctx.isFirst || ctx.pending}>뒤로</button>
-              <span data-testid="ctx-position" style={{ alignSelf: 'center' }}>{ctx.current + 1}/{ctx.count}</span>
-              <button type="button" data-testid="ctx-next" style={{ minHeight: 44, padding: '0 16px' }} onClick={ctx.next} disabled={ctx.pending}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'var(--space-6)' }}>
+              <Button variant="outlined" color="assistive" data-testid="ctx-back" onClick={ctx.back} disabled={ctx.isFirst || ctx.pending}>뒤로</Button>
+              <span data-testid="ctx-position" style={{ fontSize: 'var(--label1-size)', color: 'var(--color-semantic-label-alternative)' }}>{ctx.current + 1}/{ctx.count}</span>
+              <Button variant="solid" color="primary" data-testid="ctx-next" onClick={ctx.next} disabled={ctx.pending}>
                 {ctx.nextIsComplete ? '제출' : '계속'}
-              </button>
+              </Button>
             </div>
           )}
         />
@@ -166,7 +166,7 @@ export const GuardedTransition = {
     if (!currentLabel(ctxSection).includes('게시')) {
       throw new Error('footer context next() must drive the same guarded navigation.');
     }
-    if (ctxNext.textContent !== '제출') {
+    if (!ctxNext.textContent.includes('제출')) {
       throw new Error('The footer context must expose nextIsComplete on the last step.');
     }
     if (ctxSection.querySelector('[data-testid="ctx-position"]')?.textContent !== '3/3') {

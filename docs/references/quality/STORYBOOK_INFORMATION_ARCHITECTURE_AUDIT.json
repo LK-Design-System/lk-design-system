@@ -18468,12 +18468,14 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationWizard.stories.jsx",
-      "sourceSha256": "a183f2d8608222d0fa1f7c0978d40d4edddd3e10f9e78cf6d3af6dcb57f16dfc",
+      "sourceSha256": "cd439bda6ec498722f5e3c3d44ca6af3b5e002a4c7d4410fbd4b9d334e555676",
       "primaryOwner": "Wizard",
       "ownerComponents": [
         "Wizard"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "Button"
+      ],
       "visibility": {
         "public": 1,
         "hidden": 2
@@ -18492,7 +18494,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-08-13",
-      "reviewedSourceSha256": "a183f2d8608222d0fa1f7c0978d40d4edddd3e10f9e78cf6d3af6dcb57f16dfc",
+      "reviewedSourceSha256": "cd439bda6ec498722f5e3c3d44ca6af3b5e002a4c7d4410fbd4b9d334e555676",
       "stories": [
         {
           "id": "lds-product-navigation-wizard--multi-step-flow",
@@ -18561,7 +18563,9 @@
           "ownerComponents": [
             "Wizard"
           ],
-          "supportingComponents": []
+          "supportingComponents": [
+            "Button"
+          ]
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
