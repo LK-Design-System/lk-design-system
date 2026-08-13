@@ -1,7 +1,7 @@
 "use client";
 import {
   Spinner
-} from "../../chunk-XMHEZ4UN.js";
+} from "../../chunk-BPSZEXJR.js";
 import "../../chunk-SDMZSZV3.js";
 export {
   Spinner
