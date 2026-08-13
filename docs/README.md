@@ -46,6 +46,7 @@
 | [`EDITORIAL_METHODOLOGY.md`](EDITORIAL_METHODOLOGY.md) | 데이터로 주장을 만드는 절차(질문→주장→형태→강조→검증)와 집행 등급 |
 | [`AI_DESIGN_SYSTEM_GUIDE.md`](AI_DESIGN_SYSTEM_GUIDE.md) | canonical adoption workflow에서 연결되는 AI 구현·token·composition·copy 규칙 |
 | [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md) | editor/viewer layout의 독립 설계 근거와 제품 coverage mapping |
+| [`BENCHMARK_SEED_DESIGN.md`](BENCHMARK_SEED_DESIGN.md) | seed-design 정면 비교(2026-07-24)와 원리 단위 채택 결정 기록 |
 | [`LOADING_PATTERN.md`](LOADING_PATTERN.md) | 로딩 요소 6종 사이의 선택·시간 기준·단계별 피드백을 중재하는 수평 패턴 가이드 |
 | [`GUIDED_CREATION_PATTERN.md`](GUIDED_CREATION_PATTERN.md) | 다단계 생성 플로우의 단계 이동 guard·pending·focus·검증 복귀·이탈 확인 합성 계약 |
 | [`SELECTABLE_COLLECTION_PATTERN.md`](SELECTABLE_COLLECTION_PATTERN.md) | 수십~100건 다중 선택 field의 selection model·scope·wide/narrow·상태 fixture 합성 계약 |

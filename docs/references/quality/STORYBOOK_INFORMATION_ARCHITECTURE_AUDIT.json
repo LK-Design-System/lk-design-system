@@ -18468,13 +18468,16 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationWizard.stories.jsx",
-      "sourceSha256": "cd439bda6ec498722f5e3c3d44ca6af3b5e002a4c7d4410fbd4b9d334e555676",
+      "sourceSha256": "ece031e783c8ad86056882888f2015b4cda9d1bd589ef662509a9504d1ea562a",
       "primaryOwner": "Wizard",
       "ownerComponents": [
         "Wizard"
       ],
       "supportingComponents": [
-        "Button"
+        "Button",
+        "DescriptionList",
+        "FormField",
+        "Input"
       ],
       "visibility": {
         "public": 1,
@@ -18494,7 +18497,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-08-13",
-      "reviewedSourceSha256": "cd439bda6ec498722f5e3c3d44ca6af3b5e002a4c7d4410fbd4b9d334e555676",
+      "reviewedSourceSha256": "ece031e783c8ad86056882888f2015b4cda9d1bd589ef662509a9504d1ea562a",
       "stories": [
         {
           "id": "lds-product-navigation-wizard--multi-step-flow",
@@ -18517,7 +18520,11 @@
           "ownerComponents": [
             "Wizard"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "DescriptionList",
+            "FormField",
+            "Input"
+          ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {

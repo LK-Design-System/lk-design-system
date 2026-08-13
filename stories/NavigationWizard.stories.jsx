@@ -1,4 +1,4 @@
-import { Button, Wizard } from '../src/index.js';
+import { Button, DescriptionList, FormField, Input, Wizard } from '../src/index.js';
 import { userEvent } from 'storybook/test';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -27,11 +27,50 @@ export default meta;
 export const MultiStepFlow = {
   name: '개요',
   parameters: storyDescription(
-    '작성·검토·게시 흐름에서 이전·다음 제어로 현재 단계를 바꿉니다. 마지막 단계에서 다음이 비활성화되고 이전 이동 후 다시 활성화되는지 확인하세요.',
+    '작성·검토·게시 흐름의 읽기 순서는 인디케이터 → 단계 heading → 본문 → 푸터입니다. 각 단계 본문은 그 단계의 결과를 말하는 heading으로 시작하고, 이전·다음 제어로 현재 단계를 바꾸면 마지막 단계에서 다음이 비활성화됩니다.',
   ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 760 }}>
-      <Wizard steps={['작성', '검토', '게시']} defaultCurrent={1} />
+      <Wizard steps={['작성', '검토', '게시']} defaultCurrent={1}>
+        {(step) => {
+          const bodies = [
+            {
+              heading: '보고서 작성',
+              body: (
+                <FormField label="제목">
+                  <Input placeholder="입력해 주세요." defaultValue="8월 정기 보고서" />
+                </FormField>
+              ),
+            },
+            {
+              heading: '내용 검토',
+              body: (
+                <DescriptionList
+                  items={[
+                    { term: '제목', description: '8월 정기 보고서' },
+                    { term: '기간', description: '2026-08-01 ~ 2026-08-13' },
+                  ]}
+                />
+              ),
+            },
+            {
+              heading: '게시',
+              body: (
+                <p style={{ margin: 0, fontSize: 'var(--body2-size)', color: 'var(--color-semantic-label-normal)' }}>
+                  게시하면 구성원에게 공유됩니다.
+                </p>
+              ),
+            },
+          ];
+          const { heading, body } = bodies[step];
+          return (
+            <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
+              <h2 style={{ margin: 0, fontSize: 'var(--heading1-size)', lineHeight: 'var(--heading1-line)', letterSpacing: 'var(--heading1-spacing)', color: 'var(--color-semantic-label-normal)' }}>{heading}</h2>
+              {body}
+            </section>
+          );
+        }}
+      </Wizard>
     </main>
   ),
   play: async ({ canvasElement }) => {
@@ -41,12 +80,22 @@ export const MultiStepFlow = {
     if (!currentStep || !currentStep.textContent.includes('검토')) {
       throw new Error('The wizard indicator must mark the current step with aria-current="step".');
     }
+    const content = canvasElement.querySelector('[aria-live="polite"]');
+    const heading = content?.querySelector('h2');
+    if (!heading || heading.textContent !== '내용 검토') {
+      throw new Error('Step content must begin with the step heading inside the live content region.');
+    }
+    const footer = canvasElement.querySelector('button')?.closest('div');
+    if (!(indicator.compareDocumentPosition(content) & Node.DOCUMENT_POSITION_FOLLOWING)
+      || !(content.compareDocumentPosition(footer) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+      throw new Error('Reading order must stay indicator → step content → footer.');
+    }
     const [previous, next] = canvasElement.querySelectorAll('button');
     next?.focus();
     await userEvent.keyboard('{Enter}');
     if (!next?.disabled) throw new Error('Next must advance to the final step and become disabled.');
-    if (indicator.querySelector('li[aria-current="step"]')?.textContent.includes('검토')) {
-      throw new Error('aria-current="step" must follow the active step.');
+    if (content.querySelector('h2')?.textContent !== '게시') {
+      throw new Error('The step heading must follow the active step.');
     }
     previous?.focus();
     await userEvent.keyboard('{Enter}');

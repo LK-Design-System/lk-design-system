@@ -112,21 +112,21 @@
  you need — each falls back to the smaller one, then to a full-width span. */
 .lk-col {
   min-width: 0;
-  grid-column: span var(--col-span, var(--grid-columns));
+  grid-column: span min(var(--col-span, var(--grid-columns)), var(--grid-columns));
 }
 @media (min-width: 768px) {
   .lk-col {
-    grid-column: span var(--col-span-sm, var(--col-span, var(--grid-columns)));
+    grid-column: span min(var(--col-span-sm, var(--col-span, var(--grid-columns))), var(--grid-columns));
   }
 }
 @media (min-width: 992px) {
   .lk-col {
-    grid-column: span var(--col-span-md, var(--col-span-sm, var(--col-span, var(--grid-columns))));
+    grid-column: span min(var(--col-span-md, var(--col-span-sm, var(--col-span, var(--grid-columns)))), var(--grid-columns));
   }
 }
 @media (min-width: 1200px) {
   .lk-col {
-    grid-column: span var(--col-span-lg, var(--col-span-md, var(--col-span-sm, var(--col-span, var(--grid-columns)))));
+    grid-column: span min(var(--col-span-lg, var(--col-span-md, var(--col-span-sm, var(--col-span, var(--grid-columns))))), var(--grid-columns));
   }
 }
 
