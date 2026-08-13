@@ -56,4 +56,53 @@ export const StepProgress = {
   },
 };
 
+export const LabelPolicy = {
+  name: '좁은 화면 label 정책',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    '긴 한국어 단계명이 320px에 맞지 않을 때 라벨을 줄이는 대신 labelPolicy로 표시 범위를 줄입니다. current-only는 현재 단계 라벨만, none은 라벨 전부를 시각적으로 숨기며, 어떤 정책에서도 sr-only 라벨과 상태 텍스트는 유지됩니다.',
+  ),
+  render: () => {
+    const longSteps = ['보고서 유형 선택', '활동 기록 다중 선택', '선택 내용 확인'];
+    return (
+      <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 320 }}>
+        <section data-testid="steps-current-only">
+          <Steps steps={longSteps} current={1} labelPolicy="current-only" />
+        </section>
+        <section data-testid="steps-none">
+          <Steps steps={longSteps} current={1} labelPolicy="none" />
+        </section>
+      </main>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const currentOnly = canvasElement.querySelector('[data-testid="steps-current-only"]');
+    const items = currentOnly.querySelectorAll('li');
+    const labelSpan = (item) => item.querySelector('span > span:last-of-type')?.parentElement;
+    if (labelSpan(items[1])?.style.position === 'absolute') {
+      throw new Error('current-only must keep the current step label visible.');
+    }
+    for (const index of [0, 2]) {
+      if (labelSpan(items[index])?.style.position !== 'absolute') {
+        throw new Error('current-only must visually hide non-current step labels.');
+      }
+      if (!items[index].textContent.includes('선택')) {
+        throw new Error('A hidden label must stay in the accessibility tree as sr-only text.');
+      }
+    }
+    if (!currentOnly.querySelector('li[aria-current="step"]')) {
+      throw new Error('labelPolicy must not change the aria-current contract.');
+    }
+    const none = canvasElement.querySelector('[data-testid="steps-none"]');
+    none.querySelectorAll('li').forEach((item, index) => {
+      if (labelSpan(item)?.style.position !== 'absolute') {
+        throw new Error(`labelPolicy="none" must visually hide the label of step ${index}.`);
+      }
+      if (!item.textContent.trim()) {
+        throw new Error('Hidden labels must keep sr-only text for assistive tech.');
+      }
+    });
+  },
+};
+
 export const StepsCard = { ...StepsCardStory, name: 'Steps card parity', tags: ['!dev', 'visual-parity'] };

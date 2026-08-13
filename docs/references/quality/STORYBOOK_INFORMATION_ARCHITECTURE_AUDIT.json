@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "efd2f5b5239ecfe3e86cd33c3f50424460b1c4db30ef38c09c819dd5136312ec",
+    "storybookIndexSha256": "9e4a57f7fa45fbbf446a5dbc48eb5e67077473852369657ae042e20cf2ef27aa",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,16 +62,16 @@
   },
   "summary": {
     "pages": 195,
-    "stories": 718,
+    "stories": 720,
     "publicStories": 496,
-    "hiddenStories": 222,
+    "hiddenStories": 224,
     "componentDescriptions": 191,
     "pagesWithVisibleCanvasIntroduction": 191,
     "pagesWithDecisionGuidance": 183,
     "describedPublicStories": 496,
     "reviewedPages": 195,
-    "reviewedStories": 705,
-    "staleReviewedPages": 9,
+    "reviewedStories": 707,
+    "staleReviewedPages": 20,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
@@ -82,7 +82,7 @@
       "responsive": 76,
       "scenario": 26,
       "visual-parity": 95,
-      "internal-contract": 123
+      "internal-contract": 125
     },
     "dispositions": {
       "keep": 195,
@@ -107,9 +107,9 @@
       },
       "Product": {
         "pages": 117,
-        "stories": 478,
+        "stories": 480,
         "public": 357,
-        "hidden": 121,
+        "hidden": 123,
         "guideReadyPages": 116
       },
       "Theme": {
@@ -15319,7 +15319,7 @@
       "layer": "Product",
       "family": "Editor",
       "importPath": "./stories/EditorShell.stories.jsx",
-      "sourceSha256": "1122cf5f21b413731ce3705eb32eb3c4295fc9da90eb33f342457b12880e5ddc",
+      "sourceSha256": "89c46764e7d7294fbe325f59162c45a5c6f9405ac4b6328990ba8f03a6768ad4",
       "primaryOwner": "CanvasEditorShell",
       "ownerComponents": [
         "CanvasEditorShell"
@@ -15469,7 +15469,7 @@
       "layer": "Product",
       "family": "Editor",
       "importPath": "./stories/EditorCommandBar.stories.jsx",
-      "sourceSha256": "76568d4e56a516b536e643dcf9029db8a7af93747360047029e0e80310a60046",
+      "sourceSha256": "3f8bfec4d2f65ab81cfea46f09ed497f65bc9d01d7f8c028f47e318fba8bb886",
       "primaryOwner": "CanvasEditorCommandBar",
       "ownerComponents": [
         "CanvasEditorCommandBar"
@@ -15605,7 +15605,7 @@
       "layer": "Product",
       "family": "Editor",
       "importPath": "./stories/EditorToolbar.stories.jsx",
-      "sourceSha256": "b50b4ed67ee1ba6f792d53d5610731e9d176d32ce62685f19d3d629b49923222",
+      "sourceSha256": "825f8797a47221bf2ef89d755e16c81b2925275deaa75adff201b4d0b962f6d6",
       "primaryOwner": "EditorToolbar",
       "ownerComponents": [
         "EditorToolbar"
@@ -15735,7 +15735,7 @@
       "layer": "Product",
       "family": "Editor",
       "importPath": "./stories/EditorHistoryToolbar.stories.jsx",
-      "sourceSha256": "2d17e35298860618f5e4279a644f3b41d0c0e9d20e17576f19d1a0b95777ff7b",
+      "sourceSha256": "86cad64e960dea00050faf1b73f6d3dbbdbf7a22b878779b7c652d3d78aa096b",
       "primaryOwner": "HistoryToolbar",
       "ownerComponents": [
         "HistoryToolbar"
@@ -15839,7 +15839,7 @@
       "layer": "Product",
       "family": "Editor",
       "importPath": "./stories/EditorLayerPanel.stories.jsx",
-      "sourceSha256": "33709be805e06c742d8c7afa8f1205ae062ff39b098479937e53276afdac8c01",
+      "sourceSha256": "2e3021aa30512296a60baeaef444180d4f0ea129cb4d5d15e13978df02f4b680",
       "primaryOwner": "LayerPanel",
       "ownerComponents": [
         "LayerPanel"
@@ -17658,7 +17658,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationSideNav.stories.jsx",
-      "sourceSha256": "19be20cba44ff39ddcf99ca3ff078f3b9e07ead6fe92cd0c1e34057fd11faeee",
+      "sourceSha256": "d93bc3677c9d7f97b1ce1faa457b9fbc765f18da72d5d2126967fe442df29632",
       "primaryOwner": "SideNav",
       "ownerComponents": [
         "SideNav"
@@ -18005,7 +18005,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationSteps.stories.jsx",
-      "sourceSha256": "fd91e0fbf058e365fbd910301ee0d9b8c9c68ad2dd32ef5b892fb7642001027d",
+      "sourceSha256": "5cc1a064bdfe5fa8164cbc9cbee36107a803661ed33749eeecee7fb233e92589",
       "primaryOwner": "Steps",
       "ownerComponents": [
         "Steps"
@@ -18013,7 +18013,7 @@
       "supportingComponents": [],
       "visibility": {
         "public": 1,
-        "hidden": 1
+        "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -18028,8 +18028,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "fd91e0fbf058e365fbd910301ee0d9b8c9c68ad2dd32ef5b892fb7642001027d",
+      "reviewedAt": "2026-08-13",
+      "reviewedSourceSha256": "5cc1a064bdfe5fa8164cbc9cbee36107a803661ed33749eeecee7fb233e92589",
       "stories": [
         {
           "id": "lds-product-navigation-steps--step-progress",
@@ -18054,6 +18054,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-navigation-steps--label-policy",
+          "name": "좁은 화면 label 정책",
+          "exportName": "LabelPolicy",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Steps"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-product-navigation-steps--steps-card",
@@ -18446,7 +18468,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationWizard.stories.jsx",
-      "sourceSha256": "a34f5fba2e1a352862c0d324abd331e350a25e9719c938887a659350b3cede75",
+      "sourceSha256": "a183f2d8608222d0fa1f7c0978d40d4edddd3e10f9e78cf6d3af6dcb57f16dfc",
       "primaryOwner": "Wizard",
       "ownerComponents": [
         "Wizard"
@@ -18454,7 +18476,7 @@
       "supportingComponents": [],
       "visibility": {
         "public": 1,
-        "hidden": 1
+        "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -18469,8 +18491,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "a34f5fba2e1a352862c0d324abd331e350a25e9719c938887a659350b3cede75",
+      "reviewedAt": "2026-08-13",
+      "reviewedSourceSha256": "a183f2d8608222d0fa1f7c0978d40d4edddd3e10f9e78cf6d3af6dcb57f16dfc",
       "stories": [
         {
           "id": "lds-product-navigation-wizard--multi-step-flow",
@@ -18518,6 +18540,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+        },
+        {
+          "id": "lds-product-navigation-wizard--guarded-transition",
+          "name": "전환 guard와 pending",
+          "exportName": "GuardedTransition",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Wizard"
+          ],
+          "supportingComponents": []
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
@@ -22491,7 +22535,7 @@
       "layer": "Product",
       "family": "Status",
       "importPath": "./stories/RoboticsBatteryGauge.stories.jsx",
-      "sourceSha256": "40a4662f5f2349c55eab58c263b0d35a7b605162220f6e5d795714895aa9ff08",
+      "sourceSha256": "bf8f9347e90fdaebb6cb950eec7c5ef4c2b954e3d3018a3d573a5a1227ac9ba8",
       "primaryOwner": "BatteryGauge",
       "ownerComponents": [
         "BatteryGauge"
@@ -22548,7 +22592,7 @@
       "layer": "Product",
       "family": "Status",
       "importPath": "./stories/RoboticsConnectionBadge.stories.jsx",
-      "sourceSha256": "dd04b69e0f15db05c4ab6c1579081967fa562b5b179fa6e584fe10473e0533b0",
+      "sourceSha256": "ce9d4847c0730c61d1f459ba264a2400914bd670c180f782cd3e61c6108f36a3",
       "primaryOwner": "ConnectionBadge",
       "ownerComponents": [
         "ConnectionBadge"
@@ -22629,7 +22673,7 @@
       "layer": "Product",
       "family": "Status",
       "importPath": "./stories/RoboticsEquipment.stories.jsx",
-      "sourceSha256": "510f1f048c0b363bf9f16686083af52d6d1f1bae8d2290670a486b2227023073",
+      "sourceSha256": "afd0747fe0d2c2bcc3ba12fcf6af6acab72d2e383b8296ab8f29908f4e926a26",
       "primaryOwner": "EquipmentStatusCard",
       "ownerComponents": [
         "EquipmentStatusCard"
@@ -23127,7 +23171,7 @@
       "layer": "Product",
       "family": "Status",
       "importPath": "./stories/RoboticsTelemetryValue.stories.jsx",
-      "sourceSha256": "a88dcae0bc60ee4e837210e9e117ed9f644a190b30e4024a600c6df245507cfd",
+      "sourceSha256": "b44fadc3efa9e5cef50b38dafc2318f471b47107c4486e6b2efe898c3b17a7d4",
       "primaryOwner": "TelemetryValue",
       "ownerComponents": [
         "TelemetryValue"
@@ -24449,11 +24493,11 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/Brand.stories.jsx",
-      "sourceSha256": "0fbdd8dda0e0d5246bfc610f84345e7ee390e41f8ab37dcdbe6f31defcf197b4",
+      "sourceSha256": "48f8849c7d9953272af18d0644d61eb1815a77ce81376270d2d982b5fa01096a",
       "sourceDependencies": [
         {
           "path": "stories/Brand.shared.jsx",
-          "sha256": "4af4d3f3fadccc9415d86ae3de3916b079139584b41c1a52dc58d3fa998dba22"
+          "sha256": "0a991ef3ed519804ba756428b767018fd2ca3e2293ba7fa1615c721669139b5b"
         }
       ],
       "primaryOwner": "Lockup",
@@ -24535,12 +24579,13 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/BrandProductLockup.stories.jsx",
-      "sourceSha256": "067c60d2fe4134c4cd1020b489af9f54fc1c9d6c2e7055e74dd3cbed97c944e8",
+      "sourceSha256": "bcb1a793bdc0be4e04a6880806dbfd045f27d9a2024f6c2f305c44585f661ffd",
       "primaryOwner": "ProductLockup",
       "ownerComponents": [
         "ProductLockup"
       ],
       "supportingComponents": [
+        "Button",
         "Lockup"
       ],
       "visibility": {
@@ -24572,6 +24617,7 @@
             "autodocs",
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "responsive",
@@ -24583,7 +24629,9 @@
           "ownerComponents": [
             "ProductLockup"
           ],
-          "supportingComponents": []
+          "supportingComponents": [
+            "Button"
+          ]
         },
         {
           "id": "lds-theme-brand-product-lockup--product-lockup-standard",

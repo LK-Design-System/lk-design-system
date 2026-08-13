@@ -2,10 +2,20 @@ import * as React from 'react';
 
 export type Step = string | { label: React.ReactNode };
 
+export type StepsLabelPolicy = 'always' | 'current-only' | 'none';
+
 export interface StepsProps extends React.OlHTMLAttributes<HTMLOListElement> {
   steps: Step[];
   /** 활성 단계 인덱스(0부터). @default 0 */
   current?: number;
+  /**
+   * 좁은 화면에서의 라벨 표시 정책 — `'always'`: 모든 라벨 표시 ·
+   * `'current-only'`: 현재 단계 라벨만 표시 · `'none'`: 라벨 전부 숨김.
+   * 시각적으로 숨긴 라벨도 sr-only로 렌더되어 접근 가능한 이름과
+   * 상태 텍스트(완료 · 현재 단계 · 예정)는 정책과 무관하게 유지됩니다.
+   * @default 'always'
+   */
+  labelPolicy?: StepsLabelPolicy;
 }
 
 /**

@@ -82,7 +82,7 @@ overlay에서 우선하며, Provider 상태가 바뀌면 열린 custom-target Po
 | 평면형 운영 런처 | `DashboardShell` + `TopBar` + `Card`/status composition | 계층형 SideNav나 KPI row를 강제하지 않는다. 제품 로크업은 TopBar가 한 번만 소유하고 destination card는 route·permission을 판단하지 않는다. |
 | 평면형 반응형 앱 | 데스크톱 `NavRail` ↔ 모바일 `BottomNav` | 동일한 주요 목적지 3–5개를 공유하며 `SideNav`와 동시에 쓰지 않는다. |
 | 현재 위치와 페이지 목차 | `Breadcrumb` + 필요 시 `Anchor` | 각각 로컬 경로와 페이지 내 섹션을 보조하며 주 탐색을 대신하지 않는다. |
-| 순서형 워크플로 | 표시 전용 `Steps` 또는 제어 포함 `Wizard` | 사이트·제품 탐색과 분리한다. |
+| 순서형 워크플로 | 표시 전용 `Steps` 또는 제어 포함 `Wizard` | 사이트·제품 탐색과 분리한다. 다단계 폼의 guard·검증 복귀·하단 액션·이탈 확인 조합은 `GUIDED_CREATION_PATTERN.md`가 소유한다. |
 
 Operations Dashboard의 기준은 루트 `DESIGN.md`다. Dashboard shell은 landmark, responsive navigation handoff와 layout containment만 소유한다. `MetricCard`, `ChartFrame`, `DataGrid`, `ResourceState`는 필요할 때 조합하는 독립 표면이며, 세 필수 LK 제품에서 공통 KPI row 요구는 확인되지 않았다. destination hierarchy, route, permission, query, KPI 수식·threshold, telemetry/freshness truth, map/video renderer와 side effect는 제품이 소유한다.
 
@@ -126,6 +126,8 @@ Operations Dashboard의 기준은 루트 `DESIGN.md`다. Dashboard shell은 land
 | FileBrowser | product-provided path and entries, explicit directory navigation versus file/folder selection, up action, selected ID, loading/error/empty, disabled navigation | file browser action-separation stories |
 | DataToolbar | independent optional header (`title`, `description`, result `count`, page-level `actions`) and controls rows; optional search (`searchable=false`), filters, compact density; returns `null` when both rows are empty; selected count and bulk actions remain DataGrid-owned | toolbar with grid, searchless embedded-list, header-only, controls-only and all-empty contracts |
 | DataCollectionPanel | embedded DataToolbar props, embedded ResourceState props, wide children, optional product-authored compact content, footer, auto/wide/narrow layout; one perimeter and toolbar → state/content → freshness → footer order | Portal-shaped long-content overview, 320px semantic-list swap, native Table overflow fallback, loading/empty/stale, surface/ref stories |
+| Steps | 완료/현재/예정 단계, `aria-current="step"`과 sr-only 상태 텍스트, `labelPolicy` always/current-only/none(숨긴 라벨은 sr-only 유지) | 개요 스토리의 순서·상태 텍스트·예정 단계 전경, label 정책 320px 스토리 |
+| Wizard | controlled/uncontrolled 단계, sync/async `onBeforeStepChange` guard와 pending(중복 실행 차단·`aria-busy`), 위저드 시작 전환 후 콘텐츠 focus 이동, `footer` 노드/null/`WizardFooterContext` 함수, `onComplete` promise pending, `labelPolicy` 전달 | 개요·완료/커스텀 푸터 스토리, 전환 guard·pending·context footer·focus 스토리 |
 | DataExportAction | controlled/uncontrolled valid format/scope, disappearing-selection fallback, selected/all-matching counts, processing progress, success/error, allowed disabled/hidden reason, narrow wrapping | callback, scope fallback and 320px permission/progress stories |
 | FilterBar | controls, removable or read-only applied filters, clear all, result status, saved-view slot, embedded/standalone, narrow wrapping | interactive/read-only normal and 320px stories |
 | ResourceState | ready, loading, refreshing, empty, error, stale, offline, restricted; preserved last-good data and freshness | normal and 320px composed resource-state stories |

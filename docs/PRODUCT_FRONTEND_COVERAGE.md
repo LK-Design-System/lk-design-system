@@ -45,6 +45,23 @@ Storybook은 Card/FeatureCard comfortable 대 compact, RecordHeader md 대 sm을
 
 Storybook의 compact Drawer contract는 header/body 16×20px, footer 12×20px, 14/20px body와 함께 implicit 32px `Input`/`Select`/`Textarea`, `sm` ChoiceCard·FileUpload·CheckboxGroup, compact Callout·`DrawerSection`, 최소 24×24px Checkbox target을 검증한다. 명시적 `size="md"` Input은 48px로 상속을 이기고 footer CTA는 40px `md`를 유지한다. Radio는 같은 WCAG 근거의 24×24px native target을 컴포넌트 계약으로 유지한다. focus trap, Escape, accessible name/description, focus restore와 narrow overflow 계약은 density와 무관하게 기존 Drawer 계약을 공유한다.
 
+## Guided creation · 단계 이동·대량 선택·최종 확인 합성 계약 · 2026-08-13
+
+LK Portal `/work/reports/new`(`@lk-design-system/lds-*@0.1.0-rc.69.6` 소비) 감사(issue #49)의
+판정이다. 보고서 전용 컴포넌트 공백이 아니라 task pattern 문서와 좁은 API 계약의 연결 공백으로
+판정했고, 새 public workflow component(`CreationFlow`·`CollectionPicker`·`ReviewSummary`·
+`JobTracker`) 대신 composition 가이드 3개로 닫는다 — [`GUIDED_CREATION_PATTERN.md`](GUIDED_CREATION_PATTERN.md) ·
+[`SELECTABLE_COLLECTION_PATTERN.md`](SELECTABLE_COLLECTION_PATTERN.md) ·
+[`CHECK_ANSWERS_PATTERN.md`](CHECK_ANSWERS_PATTERN.md).
+
+| 영역 | 판정 | 경계 |
+| --- | --- | --- |
+| 표지·표면·하단 액션 (`PageHeader`·`Card`·`ActionArea`) | supported | 기존 계약으로 충분하다. |
+| 단계 이동 (`Wizard`·`Steps`) | supported by narrow extension | guard(`onBeforeStepChange`)·pending·footer context·focus handoff·`labelPolicy`를 좁은 API로 보강했다. 검증 문구, business validation, route, 초안 persistence는 제품이 소유한다. |
+| 수십~100건 선택 (`DataGrid`·`DataCollectionPanel`) | supported by composition | stable ID·explicit/allMatching·scope 구분·live count는 기존 계약이다. group-level required/invalid 연결과 selected-only 필터는 제품이 소유하고, 반복 소비자 증거가 생기면 좁은 보강을 검토한다. |
+| 최종 확인 (`DescriptionList`+`TextButton`) | supported by composition | 값+변경 액션은 `description` ReactNode로 조합한다. 복귀 focus 연결은 제품이 소유한다. |
+| 생성 후 background job | supported by composition | `Button.loading`·`ProgressBar`·`StatusBadge`·`Timeline`. polling/backoff/idempotency/retry/cancel은 제품 소유다. |
+
 ## ConnectionRow · connected account/resource surface · 2026-08-08
 
 `ConnectionRow`는 LK Portal의 `SynologyChatWorkspace`, `PetWorkspace`, `ConfluenceConnections`, `CatalogResourceDetail`, `RepositoryDrawer`, `ProjectWorkspace`에서 반복되는 계정·자원 연결 행을 하나의 LK Product Extension으로 묶는다. LDS는 `visual → name/status → detail → actions` 순서, visible 상태, 보조 액션 강조와 320px reflow만 소유한다. 계정 cardinality, 연결·해제 mutation, 권한, 확인, route와 문구는 Portal이 소유한다.

@@ -47,6 +47,9 @@
 | [`AI_DESIGN_SYSTEM_GUIDE.md`](AI_DESIGN_SYSTEM_GUIDE.md) | canonical adoption workflow에서 연결되는 AI 구현·token·composition·copy 규칙 |
 | [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](EDITOR_LAYOUT_REFERENCE_MATRIX.md) | editor/viewer layout의 독립 설계 근거와 제품 coverage mapping |
 | [`LOADING_PATTERN.md`](LOADING_PATTERN.md) | 로딩 요소 6종 사이의 선택·시간 기준·단계별 피드백을 중재하는 수평 패턴 가이드 |
+| [`GUIDED_CREATION_PATTERN.md`](GUIDED_CREATION_PATTERN.md) | 다단계 생성 플로우의 단계 이동 guard·pending·focus·검증 복귀·이탈 확인 합성 계약 |
+| [`SELECTABLE_COLLECTION_PATTERN.md`](SELECTABLE_COLLECTION_PATTERN.md) | 수십~100건 다중 선택 field의 selection model·scope·wide/narrow·상태 fixture 합성 계약 |
+| [`CHECK_ANSWERS_PATTERN.md`](CHECK_ANSWERS_PATTERN.md) | 제출 전 확인의 dl/dt/dd·contextual change action·복귀 focus 합성 계약 |
 
 ## AI and machine-readable entry points
 
@@ -62,6 +65,7 @@
 | Component 선택 | [Component index](components/README.md)와 targeted guide; [component LLM bundle](components/llms.txt)은 retrieval용 |
 | Icon inventory | [Iconography guide](foundations/iconography.md) · [icon manifest](../packages/core/assets/icons/manifest.json) |
 | Cross-component loading | [Loading pattern](LOADING_PATTERN.md) |
+| Guided creation·selection·review | [Guided creation](GUIDED_CREATION_PATTERN.md) · [Selectable collection](SELECTABLE_COLLECTION_PATTERN.md) · [Check answers](CHECK_ANSWERS_PATTERN.md) |
 | Logo master, usage, and approval | [LK ROBOTICS logo standard](brand/LK_LOGO_STANDARD.md) · [governance record](brand/lk-logo-governance.json) |
 
 Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 index와 다른 agent entrypoint에는 그 상세 목록을 복제하지 않습니다.

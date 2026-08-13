@@ -209,6 +209,10 @@ Operations Dashboard는 별도 디자인 시스템이나 화면형 컴포넌트�
 
 외부 비교 기준은 [PatternFly dashboard](https://www.patternfly.org/patterns/dashboard/design-guidelines/), [Carbon UI shell](https://carbondesignsystem.com/components/UI-shell-header/usage/), [Carbon data table](https://carbondesignsystem.com/components/data-table/usage/), [Fluent Nav](https://fluent2.microsoft.design/components/web/react/core/nav/usage)입니다. 세부 결론과 의도적 차이는 각 컴포넌트의 `.prompt.md`에 기록합니다.
 
+## 가이드형 생성 조합 계약
+
+다단계 생성 플로우(유형 선택 → 대량 선택 → 확인 → 생성 요청)도 화면형 컴포넌트가 아니라 조합 패턴군입니다. 단계 이동 guard·pending·focus·이탈 확인은 [`GUIDED_CREATION_PATTERN.md`](GUIDED_CREATION_PATTERN.md), 수십~100건 다중 선택 field는 [`SELECTABLE_COLLECTION_PATTERN.md`](SELECTABLE_COLLECTION_PATTERN.md), 제출 전 확인은 [`CHECK_ANSWERS_PATTERN.md`](CHECK_ANSWERS_PATTERN.md)를 따릅니다. `CreationFlow`·`CollectionPicker`·`ReviewSummary`·`JobTracker` 같은 화면형 컴포넌트를 새로 만들지 않고, 검증 문구·business validation·route·persistence·polling은 제품이 소유합니다.
+
 ## 프롬프트 템플릿
 
 AI 도구에 요청할 때 아래 구조를 사용하세요.
