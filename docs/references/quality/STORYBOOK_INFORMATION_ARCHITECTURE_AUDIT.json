@@ -12151,12 +12151,13 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataCollectionPanel.stories.jsx",
-      "sourceSha256": "72f660213a3a2b456a7f38e6da6fa66dc714d99db10bd42d903870c8b3e17ea4",
+      "sourceSha256": "327b240ebf545282eb36b89e28473a6947d2b0578d4be9192382325a75645f8d",
       "primaryOwner": "DataCollectionPanel",
       "ownerComponents": [
         "DataCollectionPanel"
       ],
       "supportingComponents": [
+        "Checkbox",
         "ContentBadge",
         "DataGrid",
         "Pagination",
@@ -12182,7 +12183,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-08-15",
-      "reviewedSourceSha256": "72f660213a3a2b456a7f38e6da6fa66dc714d99db10bd42d903870c8b3e17ea4",
+      "reviewedSourceSha256": "327b240ebf545282eb36b89e28473a6947d2b0578d4be9192382325a75645f8d",
       "stories": [
         {
           "id": "lds-product-data-collections-data-collection-panel--overview",
@@ -12265,6 +12266,7 @@
             "DataCollectionPanel"
           ],
           "supportingComponents": [
+            "Checkbox",
             "DataGrid"
           ]
         },

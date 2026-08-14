@@ -1,6 +1,7 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
 import {
+  Checkbox,
   ContentBadge,
   DataCollectionPanel,
   DataGrid,
@@ -449,13 +450,12 @@ function CompactSelectableList({ rows, selectedIds, onToggle }) {
               borderBottom: index < rows.length - 1 ? '1px solid var(--color-semantic-line-normal-normal)' : 'none',
             }}
           >
-            <input
-              type="checkbox"
+            <Checkbox
               aria-label={`프로젝트 ${project.name} 선택`}
               data-compact-checkbox={project.id}
               checked={selectedIds.includes(project.id)}
               onChange={() => onToggle(project.id)}
-              style={{ width: 24, height: 24, flexShrink: 0 }}
+              style={{ flexShrink: 0 }}
             />
             <span style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
               <span style={{ color: 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflowWrap: 'anywhere' }}>

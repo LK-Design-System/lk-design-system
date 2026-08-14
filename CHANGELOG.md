@@ -2,6 +2,10 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.10 - 2026-08-15
+
+- Story fix: the narrow list in the shared-selection story used a bare native checkbox, which rendered in the browser's default accent instead of the LDS treatment. It now uses `Checkbox`, so both representations in that story read as one system.
+
 ## 0.1.0-rc.69.9 - 2026-08-15
 
 Closes the last two issue #49 verification gaps with existing public APIs. No new component or API surface.

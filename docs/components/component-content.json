@@ -57756,6 +57756,7 @@
         "DataCollectionPanel"
       ],
       "supportingComponents": [
+        "Checkbox",
         "ContentBadge",
         "DataGrid",
         "Pagination",
@@ -57912,6 +57913,10 @@
       "exceptions": [],
       "related": [
         {
+          "component": "Checkbox",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "ContentBadge",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -57937,10 +57942,6 @@
         },
         {
           "component": "AnnotatedImage",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "BarChart",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
