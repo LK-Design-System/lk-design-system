@@ -11,8 +11,9 @@
 컴포넌트로 조합하는 공식 규칙이다. `SearchableMultiSelect`의 chip 누적이나 화면별 bespoke
 card grid는 이 규모의 권장 경로가 아니며, 새 `CollectionPicker` public component도 만들지
 않는다 — `DataGrid`가 stable identity, lossless selection model, page/all-matching scope,
-bulk band, 선택 수 live announcement를 이미 소유한다. field-level invalid/focus나 compact
-live-count 공백이 여러 소비자에서 반복 확인될 때만 해당 API를 좁게 보강한다.
+bulk band, 선택 수 live announcement를 이미 소유한다. compact 표현의 live count는 제품이
+소유하며(아래 조합 근거 참조), field-level invalid/focus 공백이 여러 소비자에서 반복
+확인될 때만 해당 API를 좁게 보강한다.
 
 ## 기본 조합
 
@@ -56,16 +57,23 @@ announcement로 남아야 한다 — `DataGrid`를 쓰지 않는 narrow 표현�
 | --- | --- | --- |
 | 0건 | 전체 없음 · 검색 0건 · selected-only 0건을 `ResourceState`로 구분 | `DataGrid` 상호작용 스토리와 `DataCollectionPanel` 변형·상태 스토리가 loading/빈 결과/오래된 데이터를 덮는다. selected-only 0건은 제품 필터라 미포함 |
 | 3건 | 기본 선택/해제와 상세 정보 표시 | `DataGrid` 개요 스토리(3행 fixture) |
-| 30건 | 검색·필터·페이지를 오가며 선택 보존 | **없음.** 페이지 이동 자체는 `DataGrid` 상호작용 스토리가 덮지만, 이동 뒤 선택 보존은 증명되지 않았다 |
+| 30건 | 검색·필터·페이지를 오가며 선택 보존 | `DataGrid` 검색과 페이지 이동 후 선택 보존 스토리 — 서로 다른 페이지의 두 항목을 선택하고, 검색으로 둘 다 화면에서 지운 뒤에도 model이 ID를 유지하며, 검색을 지우면 체크 상태로 되살아난다 |
 | 100건 | 선택 한도, 마지막 항목, 전체 선택/해제, 장문 데이터 | 부분. `DataToolbar` 개요 스토리가 `totalCount` 128로 page↔allMatching 전환, indeterminate, `N개 선택됨` live count, entity label을 증명한다. 선택 한도는 제품 소유(`getRowCanSelect`) |
 | 공통 | 320px/desktop, keyboard, screen reader, loading/error+retry, 긴 한국어 summary와 날짜의 비교 가능성 | `DataGrid` 반응형(320px 고정 열) 스토리와 위 상태 스토리 |
 
-**wide/narrow 동일 selection 모델은 아직 증명되지 않았다.** `DataCollectionPanel`은 layout만
-소유하고 selection을 소유하지 않으므로(패널 API에 selection prop이 없다), wide `DataGrid`와
-narrow compact 콘텐츠가 하나의 controlled `selectionModel`을 공유하는 경로는 현재 제품이
-조립하고 검증해야 한다. 두 번째 소비자에서 같은 조립이 반복 확인되면 그때 이 경로를 덮는
-좁은 스토리 또는 API 보강을 검토한다 — 그 전에는 `CollectionPicker`를 만들지 않는다는 위
-결정을 유지한다.
+### wide/narrow 동일 selection 모델
+
+`DataCollectionPanel`은 layout만 소유하고 selection을 소유하지 않는다(패널 API에 selection
+prop이 없다). 따라서 두 표현은 **패널이 아니라 제품 상태를 통해** 하나의 controlled
+`selectionModel`을 공유한다. 이 조립은 `DataCollectionPanel`의 넓은 표와 좁은 목록의 선택
+공유 스토리가 증명한다 — 한쪽에서 선택·해제하면 다른 쪽이 같은 ID로 따라오고, 두 표현이
+같은 `getRowId`를 쓴다.
+
+compact 표현에는 `DataGrid`의 상시 live region이 없으므로 **선택 수 알림은 제품이 소유한다**.
+같은 스토리가 compact 쪽 `role="status"` 영역이 선택이 없을 때 침묵하고, 선택 수가 바뀔 때
+`N개 선택됨`으로 갱신되는 것까지 고정한다. 패널에 selection API를 추가하는 것은 두 번째
+소비자에서 같은 조립이 반복 확인될 때만 검토하며, 그 전에는 `CollectionPicker`를 만들지
+않는다는 위 결정을 유지한다.
 
 ## 외부 근거
 

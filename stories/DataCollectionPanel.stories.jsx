@@ -3,6 +3,7 @@ import { userEvent, waitFor } from 'storybook/test';
 import {
   ContentBadge,
   DataCollectionPanel,
+  DataGrid,
   Pagination,
   Select,
   StatusBadge,
@@ -417,4 +418,155 @@ export const DataCollectionPanelVisualParity = {
   name: 'DataCollectionPanel visual parity',
   tags: ['!dev', 'visual-parity'],
   render: () => <ProjectCollection layout="wide" />,
+};
+
+/* wide DataGrid와 narrow 제품 목록이 하나의 controlled selection model을 공유하는
+   조립. 패널은 layout만 소유하고 selection API가 없으므로, 두 표현이 같은 상태와
+   같은 getRowId를 쓰는 것과 compact 쪽 live count를 제품이 소유하는 것이 계약이다.
+   규칙은 docs/SELECTABLE_COLLECTION_PATTERN.md가 소유한다. */
+const selectableColumns = [
+  { key: 'name', label: '프로젝트' },
+  {
+    key: 'status',
+    label: '상태',
+    width: 112,
+    render: (project) => <StatusBadge tone={project.status === '진행 중' ? 'positive' : 'cautionary'}>{project.status}</StatusBadge>,
+  },
+];
+
+function CompactSelectableList({ rows, selectedIds, onToggle }) {
+  return (
+    <div>
+      <ul aria-label="좁은 화면 프로젝트 선택" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+        {rows.map((project, index) => (
+          <li
+            key={project.id}
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: 'var(--space-3)',
+              padding: 'var(--space-4)',
+              borderBottom: index < rows.length - 1 ? '1px solid var(--color-semantic-line-normal-normal)' : 'none',
+            }}
+          >
+            <input
+              type="checkbox"
+              aria-label={`프로젝트 ${project.name} 선택`}
+              data-compact-checkbox={project.id}
+              checked={selectedIds.includes(project.id)}
+              onChange={() => onToggle(project.id)}
+              style={{ width: 24, height: 24, flexShrink: 0 }}
+            />
+            <span style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
+              <span style={{ color: 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflowWrap: 'anywhere' }}>
+                {project.name}
+              </span>
+              <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', fontFamily: 'var(--font-mono)' }}>
+                {project.key}
+              </span>
+            </span>
+          </li>
+        ))}
+      </ul>
+      {/* compact 표현에는 DataGrid의 상시 live region이 없으므로 제품이 소유한다. */}
+      <span
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        data-compact-selection-count=""
+        style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap' }}
+      >
+        {selectedIds.length > 0 ? `${selectedIds.length}개 선택됨` : ''}
+      </span>
+    </div>
+  );
+}
+
+function SharedSelectionDemo() {
+  const [selectionModel, setSelectionModel] = React.useState({ mode: 'explicit', selectedIds: [] });
+  const selectedIds = selectionModel.selectedIds ?? [];
+  const getRowId = (project) => project.id;
+  const toggle = (id) => setSelectionModel((previous) => {
+    const ids = previous.selectedIds ?? [];
+    return { mode: 'explicit', selectedIds: ids.includes(id) ? ids.filter((value) => value !== id) : [...ids, id] };
+  });
+
+  const panelProps = {
+    toolbar: { size: 'sm', searchable: false, count: projects.length },
+    style: { maxWidth: 880 },
+  };
+
+  return (
+    <main style={{ display: 'grid', gap: 'var(--space-6)' }}>
+      <section data-testid="shared-wide">
+        <DataCollectionPanel aria-label="넓은 표현 프로젝트 선택" layout="wide" {...panelProps}>
+          <DataGrid
+            columns={selectableColumns}
+            rows={projects}
+            getRowId={getRowId}
+            selectable
+            selectionEntityLabel="프로젝트"
+            getRowSelectionLabel={(project) => `프로젝트 ${project.name}`}
+            selectionModel={selectionModel}
+            onSelectionModelChange={setSelectionModel}
+          />
+        </DataCollectionPanel>
+      </section>
+      <section data-testid="shared-narrow">
+        <DataCollectionPanel
+          aria-label="좁은 표현 프로젝트 선택"
+          layout="narrow"
+          {...panelProps}
+          compactContent={<CompactSelectableList rows={projects} selectedIds={selectedIds} onToggle={toggle} />}
+        />
+      </section>
+    </main>
+  );
+}
+
+export const SharedSelectionAcrossWideAndNarrow = {
+  name: '상호작용 · 넓은 표와 좁은 목록의 선택 공유',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    '같은 controlled selection model이 넓은 데이터 그리드와 좁은 의미 목록을 동시에 구동합니다. 한쪽에서 선택하면 다른 쪽 체크 상태가 같은 ID로 따라오고, 좁은 표현에서도 선택 수가 보조기술에 알림되는지 확인하세요.',
+  ),
+  render: () => <SharedSelectionDemo />,
+  play: async ({ canvasElement }) => {
+    const wide = canvasElement.querySelector('[data-testid="shared-wide"]');
+    const narrow = canvasElement.querySelector('[data-testid="shared-narrow"]');
+    const wideCheckbox = (name) => wide.querySelector(`input[aria-label^="프로젝트 ${name} 선택"]`);
+    const narrowCheckbox = (id) => narrow.querySelector(`input[data-compact-checkbox="${id}"]`);
+    const liveCount = () => narrow.querySelector('[data-compact-selection-count]');
+    const waitFor = async (predicate, message) => {
+      const deadline = Date.now() + 3000;
+      while (!predicate()) {
+        if (Date.now() > deadline) throw new Error(message);
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
+    };
+
+    const live = liveCount();
+    if (!live || live.getAttribute('role') !== 'status' || live.getAttribute('aria-live') !== 'polite') {
+      throw new Error('The compact representation must own a polite status region for its selection count.');
+    }
+    if (live.textContent.trim() !== '') throw new Error('The compact count must stay silent while nothing is selected.');
+
+    /* 넓은 표현에서 선택하면 좁은 표현이 같은 ID로 따라온다. */
+    await userEvent.click(wideCheckbox('LK Portal v3'));
+    await waitFor(() => narrowCheckbox('portal-v3')?.checked, 'A wide selection must appear in the narrow representation.');
+    await waitFor(() => liveCount().textContent.trim() === '1개 선택됨', 'The compact live count must announce the shared selection.');
+
+    /* 좁은 표현에서 선택하면 넓은 표현이 따라온다. */
+    await userEvent.click(narrowCheckbox('vision-automation'));
+    await waitFor(
+      () => wideCheckbox('Vision Automation')?.checked,
+      'A narrow selection must appear in the wide representation through the same model.',
+    );
+    await waitFor(() => liveCount().textContent.trim() === '2개 선택됨', 'The compact live count must follow both representations.');
+
+    /* 해제도 같은 모델을 지난다. */
+    await userEvent.click(narrowCheckbox('portal-v3'));
+    await waitFor(() => wideCheckbox('LK Portal v3')?.checked === false, 'Clearing in the narrow list must clear the wide row.');
+    await waitFor(() => liveCount().textContent.trim() === '1개 선택됨', 'The compact live count must fall back after a clear.');
+  },
 };

@@ -2,6 +2,14 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.9 - 2026-08-15
+
+Closes the last two issue #49 verification gaps with existing public APIs. No new component or API surface.
+
+- `DataGrid`: hidden story proving that a controlled `selectionModel` survives search and paging at 30-row scale — two rows selected on different pages stay in the model after a query hides both, and render checked again when the query clears.
+- `DataCollectionPanel`: hidden story proving that one controlled `selectionModel` drives a wide `DataGrid` and a narrow product-authored list through the same `getRowId`, in both directions, and that the compact representation owns its own `role="status"` selection count (silent at zero, `N개 선택됨` thereafter). The panel keeps owning layout only — no selection API was added to it.
+- `SELECTABLE_COLLECTION_PATTERN.md`: replaced the two recorded gaps with the stories that now cover them, and restated compact live-count ownership as a product responsibility rather than a missing contract.
+
 ## 0.1.0-rc.69.8 - 2026-08-15
 
 Closes the verification gaps left open by the issue #49 acceptance criteria. No component or public API change — evidence and documentation only.

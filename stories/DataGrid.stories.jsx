@@ -565,3 +565,118 @@ export const NarrowPinnedColumns = {
     grid.scrollLeft = 0;
   },
 };
+
+/* 30건 규모에서 검색·페이지를 오가도 선택이 ID로 보존되는지 고정한다. 화면에서
+   사라진 행의 선택까지 유지되는 것이 lossless selection model의 요점이므로,
+   보이는 체크박스 상태가 아니라 controlled model의 ID 집합으로 단언한다.
+   규칙은 docs/SELECTABLE_COLLECTION_PATTERN.md가 소유한다. */
+const preservationRows = Array.from({ length: 30 }, (_, index) => {
+  const group = ['문서', '컴포넌트', '토큰'][index % 3];
+  return {
+    id: `ITEM-${String(index + 1).padStart(3, '0')}`,
+    group,
+    status: ['진행 중', '검토 중', '중지'][index % 3],
+    progress: (index * 7) % 100,
+  };
+});
+
+const PAGE_SIZE = 10;
+
+function SelectionPreservationDemo() {
+  const [selectionModel, setSelectionModel] = React.useState({ mode: 'explicit', selectedIds: [] });
+  const [query, setQuery] = React.useState('');
+  const [page, setPage] = React.useState(1);
+
+  const matching = preservationRows.filter((row) => `${row.id} ${row.group}`.includes(query));
+  const pageCount = Math.max(1, Math.ceil(matching.length / PAGE_SIZE));
+  const safePage = Math.min(page, pageCount);
+  const visible = matching.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+  const selectedIds = selectionModel.selectedIds ?? [];
+
+  return (
+    <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 960 }}>
+      <DataToolbar
+        size="sm"
+        searchValue={query}
+        onSearchChange={(value) => { setQuery(value); setPage(1); }}
+        searchPlaceholder="항목 또는 그룹 검색"
+        count={matching.length}
+      />
+      <DataGrid
+        columns={columns}
+        rows={visible}
+        getRowId={(row) => row.id}
+        selectable
+        selectionEntityLabel="항목"
+        getRowSelectionLabel={(row) => `항목 ${row.id}`}
+        selectionModel={selectionModel}
+        onSelectionModelChange={setSelectionModel}
+        totalCount={matching.length}
+      />
+      <Pagination
+        page={safePage}
+        count={pageCount}
+        variant="compact"
+        navigationLabel="항목 페이지"
+        previousPageLabel="이전 항목 페이지"
+        nextPageLabel="다음 항목 페이지"
+        onChange={setPage}
+        showCounter
+      />
+      <output data-testid="selected-ids" style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--caption1-size)' }}>
+        {selectedIds.join(',')}
+      </output>
+    </main>
+  );
+}
+
+export const SelectionSurvivesSearchAndPaging = {
+  name: '상호작용 · 검색과 페이지 이동 후 선택 보존',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    '30건 규모에서 서로 다른 페이지의 항목을 선택한 뒤 검색으로 목록을 좁히고 페이지를 오갑니다. 화면에서 사라진 행의 선택까지 ID로 유지되고, 돌아왔을 때 체크 상태가 그대로인지 확인하세요.',
+  ),
+  render: () => <SelectionPreservationDemo />,
+  play: async ({ canvasElement }) => {
+    const selected = () => (canvasElement.querySelector('[data-testid="selected-ids"]').textContent || '')
+      .split(',').filter(Boolean);
+    const rowCheckbox = (id) => canvasElement.querySelector(`input[aria-label^="항목 ${id} 선택"]`);
+    const waitFor = async (predicate, message) => {
+      const deadline = Date.now() + 3000;
+      while (!predicate()) {
+        if (Date.now() > deadline) throw new Error(message);
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
+    };
+
+    await userEvent.click(rowCheckbox('ITEM-001'));
+    await waitFor(() => selected().includes('ITEM-001'), 'A row checkbox must write into the controlled selection model.');
+
+    /* 2페이지의 항목을 하나 더 선택한다. */
+    await userEvent.click(canvasElement.querySelector('button[aria-label="다음 항목 페이지"]'));
+    await waitFor(() => !!rowCheckbox('ITEM-011'), 'Paging must render the next page of rows.');
+    if (rowCheckbox('ITEM-001')) throw new Error('The first page rows must leave the viewport after paging.');
+    await userEvent.click(rowCheckbox('ITEM-011'));
+    await waitFor(
+      () => selected().includes('ITEM-001') && selected().includes('ITEM-011'),
+      'Selecting on a second page must keep the off-screen selection from the first page.',
+    );
+
+    /* 검색으로 두 선택 항목이 모두 사라지게 좁힌다. */
+    const search = canvasElement.querySelector('input[type="search"], input[role="searchbox"]')
+      ?? canvasElement.querySelector('input');
+    await userEvent.type(search, 'ITEM-02');
+    await waitFor(() => !rowCheckbox('ITEM-001') && !rowCheckbox('ITEM-011'), 'The query must hide both selected rows.');
+    if (selected().length !== 2) {
+      throw new Error('Filtering rows out of view must not drop their IDs from the selection model.');
+    }
+
+    /* 검색을 지우면 선택이 그대로 화면에 되살아난다. */
+    await userEvent.clear(search);
+    await waitFor(() => !!rowCheckbox('ITEM-001'), 'Clearing the query must restore the first page.');
+    if (!rowCheckbox('ITEM-001').checked) {
+      throw new Error('A preserved selection must render as checked when its row returns to view.');
+    }
+    if (selected().length !== 2) throw new Error('Clearing the query must not change the selection model.');
+  },
+};

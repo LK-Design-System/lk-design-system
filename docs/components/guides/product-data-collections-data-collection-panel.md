@@ -93,13 +93,13 @@
 | Component | Relationship |
 | --- | --- |
 | `ContentBadge` | 대표 시나리오에서 조합 |
+| `DataGrid` | 대표 시나리오에서 조합 |
 | `Pagination` | 대표 시나리오에서 조합 |
 | `Select` | 대표 시나리오에서 조합 |
 | `StatusBadge` | 대표 시나리오에서 조합 |
 | `Table` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 
 ## Examples
 

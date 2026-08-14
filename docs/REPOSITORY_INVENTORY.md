@@ -8,7 +8,7 @@
 | Last reviewed | 2026-08-11 |
 | Update | `npm run report:inventory` · `npm run check:inventory` |
 
-Storybook의 722개 스토리 역할·공개 여부·소유 컴포넌트와 195개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
+Storybook의 724개 스토리 역할·공개 여부·소유 컴포넌트와 195개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
 
 이 레포는 패키지 중심의 LK ROBOTICS 핵심 디자인 시스템입니다.
 
@@ -48,12 +48,12 @@ WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`
 
 - 현재 React component entry export: 208개
 - 공개 named export: 221개
-- Storybook 전체 story: 722개
+- Storybook 전체 story: 724개
 - Storybook public story: 496개
-- Storybook hidden story: 226개
+- Storybook hidden story: 228개
 - 숨김 visual parity story: 95개
-- visual inventory React story: 722개
-- 접근성 guard 검사 대상 implementation story: 722개
+- visual inventory React story: 724개
+- 접근성 guard 검사 대상 implementation story: 724개
 
 ## 생성 영역
 

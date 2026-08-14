@@ -92,8 +92,8 @@
 | [Spec Row](guides/product-content-spec-row.md) | Product / Content | `SpecRow` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Stat List](guides/product-content-stat-list.md) | Product / Content | `StatList` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Writing Editor](guides/product-content-writing-editor.md) | Product / Content | `Button`, `ContentEditor`, `Icon`, `StatusBadge` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Data Collection Panel](guides/product-data-collections-data-collection-panel.md) | Product / Collections | `DataCollectionPanel` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 6 hidden |
-| [Data Grid](guides/product-data-collections-data-grid.md) | Product / Collections | `DataGrid` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 0 hidden |
+| [Data Collection Panel](guides/product-data-collections-data-collection-panel.md) | Product / Collections | `DataCollectionPanel` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 7 hidden |
+| [Data Grid](guides/product-data-collections-data-grid.md) | Product / Collections | `DataGrid` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 1 hidden |
 | [File Browser](guides/product-data-collections-file-browser.md) | Product / Collections | `FileBrowser` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Table](guides/product-data-collections-table.md) | Product / Collections | `Table` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 4 hidden |
 | [Tree](guides/product-data-collections-tree.md) | Product / Collections | `Tree` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
