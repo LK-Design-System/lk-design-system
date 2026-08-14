@@ -2,6 +2,20 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.7 - 2026-08-15
+
+Release candidate that closes issue #49 (guided-creation composition contracts), fixes two long-standing generator/runtime bugs recovered from the preserved `codex/local-main-preservation-20260812` line, and refreshes the vendored Robotics prerequisite.
+
+- `Wizard`: `onBeforeStepChange` sync/async transition guard with `pending` state, `footer` render-function form (`WizardFooterContext`), post-transition focus handoff to the step content region, and a documented layout contract (indicator → step heading → content → footer). Default footer buttons now render as LDS `Button` instead of hand-styled 44px controls.
+- `Steps`: `labelPolicy` (`'always' | 'current-only' | 'none'`) for narrow layouts, keeping sr-only labels regardless of policy.
+- Added `docs/GUIDED_CREATION_PATTERN.md`, `docs/SELECTABLE_COLLECTION_PATTERN.md`, `docs/CHECK_ANSWERS_PATTERN.md`.
+- Fixed `Spinner` (Brand): the ROBOTICS wave amplitude ignored per-glyph matrix scale and moved the ROBOTICS letters by ~0.05px instead of the intended 3.2px, reading as frozen.
+- Fixed `scripts/generate-brand-assets.mjs`: taught the generator to emit `LK_MARK_CONSTRUCTION`, so `npm run generate:brand` no longer deletes the block that `components/brand/lk-logo-paths.js` carries.
+- Fixed `tokens/grid.css`: `.lk-col` spans now clamp to `min(--col-span*, --grid-columns)` so an oversized span can no longer overflow the grid.
+- Added `docs/BENCHMARK_SEED_DESIGN.md`.
+- Absorbed `codex/local-main-preservation-20260812` (337 commits, no common ancestor) with a tree-preserving `-s ours` merge after a full audit found its remaining substance already superseded on `main`.
+- The release includes the externally published Robotics UI prerequisite at `0.1.0-rc.7` (docs-snapshot-only promotion; no component/story code changed) and is identified by the immutable tag `lds-v0.1.0-rc.69.7`.
+
 ## 0.1.0-rc.69.6 - 2026-08-11
 
 Release candidate for the LDS package set after refreshing generated package surfaces and the canonical ProductLockup/SideNav documentation. The release includes the externally published Robotics UI prerequisite at `0.1.0-rc.5` and is identified by the immutable tag `lds-v0.1.0-rc.69.6`.

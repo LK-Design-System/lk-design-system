@@ -17,7 +17,7 @@ workspace lock entry, so clean installs do not depend on a mutable tag.
 
 - Package: `@lk-design-system/lds-robotics-ui@0.1.0-rc.7`
 - File: `lk-design-system-lds-robotics-ui-0.1.0-rc.7.tgz`
-- SHA-256: `219d2272248d01f146157daa332642a254323f8fdd3d0eecbd5b58c86b647f9f`
+- SHA-256: `c0d306735ff97c455dd5bf01ecabb2439bdad3c9ba21db68bac788e1f5fe959a`
 - Contents: ESM/types runtime, styles and tokens, licensing, AI entry points,
   and the self-contained `docs/package/*` documentation bundle; no source tree
 
