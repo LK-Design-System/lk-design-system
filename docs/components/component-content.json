@@ -59726,7 +59726,9 @@
       "ownerComponents": [
         "DescriptionList"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "TextButton"
+      ],
       "purpose": "한 객체의 제원·담당자·점검일처럼 소수의 용어와 값을 설명할 때 적합합니다. 많은 행을 정렬·탐색하거나 여러 객체를 비교해야 하면 Description List 대신 Table 또는 Data Grid를 사용하세요.",
       "useWhen": [],
       "avoidWhen": [],
@@ -59794,6 +59796,10 @@
       "exceptions": [],
       "related": [
         {
+          "component": "TextButton",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "AnnotatedImage",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -59819,10 +59825,6 @@
         },
         {
           "component": "DataExportAction",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -59869,7 +59871,7 @@
             "role": "overview"
           }
         ],
-        "hiddenEvidence": 0
+        "hiddenEvidence": 1
       },
       "sources": [
         {
@@ -71518,7 +71520,8 @@
         "Button",
         "DescriptionList",
         "FormField",
-        "Input"
+        "Input",
+        "TextButton"
       ],
       "purpose": "입력과 검토가 순서대로 이어지고 이전·다음 동작을 패턴이 소유할 때 적합합니다. 현재 단계만 읽히면 충분한 화면에는 Wizard 대신 Steps를 사용하세요.",
       "useWhen": [
@@ -71671,6 +71674,10 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
+          "component": "TextButton",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "Anchor",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -71680,10 +71687,6 @@
         },
         {
           "component": "Breadcrumb",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Footer",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -71721,7 +71724,7 @@
             "role": "overview"
           }
         ],
-        "hiddenEvidence": 2
+        "hiddenEvidence": 3
       },
       "sources": [
         {

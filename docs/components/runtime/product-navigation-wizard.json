@@ -12,7 +12,8 @@
     "Button",
     "DescriptionList",
     "FormField",
-    "Input"
+    "Input",
+    "TextButton"
   ],
   "purpose": "입력과 검토가 순서대로 이어지고 이전·다음 동작을 패턴이 소유할 때 적합합니다. 현재 단계만 읽히면 충분한 화면에는 Wizard 대신 Steps를 사용하세요.",
   "useWhen": [
@@ -165,6 +166,10 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
+      "component": "TextButton",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "Anchor",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -174,10 +179,6 @@
     },
     {
       "component": "Breadcrumb",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "Footer",
       "relationship": "대표 시나리오에서 조합"
     }
   ],
@@ -210,7 +211,7 @@
         "role": "overview"
       }
     ],
-    "hiddenEvidence": 2
+    "hiddenEvidence": 3
   },
   "sources": [],
   "canonicalGuide": null,

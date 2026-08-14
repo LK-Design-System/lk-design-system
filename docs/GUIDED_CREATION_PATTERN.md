@@ -56,6 +56,20 @@ PageHeader → Wizard(Steps 인디케이터 + 단계 콘텐츠) → ValidationSu
 - 200% 확대에서는 세로 공간이 줄어드는 효과이므로 `ActionArea sticky`가 콘텐츠를 가리지
   않는지 확인하고, 단계 콘텐츠가 자체 스크롤을 만들지 않게 한다.
 
+### Acceptance matrix
+
+각 축을 어떻게 확인하는지까지 고정한다. 브라우저 확대는 Storybook play로 재현할 수 없으므로
+**뷰포트 폭을 절반으로 줄여 등가 검증**한다 — 1280px에서의 200% 확대는 레이아웃상 640 CSS px과
+같다.
+
+| 축 | 확인 방법 | 현재 근거 |
+| --- | --- | --- |
+| 320px | 320px 폭 스토리 | `Steps` 좁은 화면 label 정책 스토리 |
+| 200% 확대 | 640×400 뷰포트(1280 기준 등가)에서 가로 스크롤·겹침·오버플로 없음 | `Wizard` 개요와 확인 복귀 스토리에서 확인(페이지 가로 스크롤 없음, 인디케이터 미오버플로, 푸터 버튼 미겹침) |
+| keyboard | play에서 Enter 활성화와 DOM 순서(이전 → 다음/완료) 단언 | `Wizard` 개요·전환 guard 스토리 |
+| screen reader | `aria-current="step"`, sr-only 상태 텍스트, 콘텐츠 영역 `aria-live`/`aria-busy` 단언 | `Steps`·`Wizard` play |
+| 긴 한국어 카피 | 실제 길이의 한국어 단계명·값으로 렌더 | `Steps` label 정책, 확인 복귀 스토리 |
+
 ## 이탈과 초안
 
 - dirty 상태에서 떠나기 전 확인은 `ConfirmDialog`로 표현한다. dirty 판정, 라우트 차단, 저장

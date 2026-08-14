@@ -12679,6 +12679,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 | Component | Relationship |
 | --- | --- |
+| `TextButton` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
 | `Calendar` | 대표 시나리오에서 조합 |
@@ -12686,7 +12687,6 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
-| `DataGrid` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -18407,10 +18407,10 @@ const [col, setCol] = React.useState(false);
 | `DescriptionList` | 대표 시나리오에서 조합 |
 | `FormField` | 대표 시나리오에서 조합 |
 | `Input` | 대표 시나리오에서 조합 |
+| `TextButton` | 대표 시나리오에서 조합 |
 | `Anchor` | 대표 시나리오에서 조합 |
 | `BottomNav` | 대표 시나리오에서 조합 |
 | `Breadcrumb` | 대표 시나리오에서 조합 |
-| `Footer` | 대표 시나리오에서 조합 |
 
 ## Examples
 

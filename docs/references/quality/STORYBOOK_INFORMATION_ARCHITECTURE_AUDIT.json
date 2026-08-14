@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "9e4a57f7fa45fbbf446a5dbc48eb5e67077473852369657ae042e20cf2ef27aa",
+    "storybookIndexSha256": "27cbad2c3a3581e4d94eb42f4920abb8710957dd17dbf2407ae628efe9872397",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,15 +62,15 @@
   },
   "summary": {
     "pages": 195,
-    "stories": 720,
+    "stories": 722,
     "publicStories": 496,
-    "hiddenStories": 224,
+    "hiddenStories": 226,
     "componentDescriptions": 191,
     "pagesWithVisibleCanvasIntroduction": 191,
     "pagesWithDecisionGuidance": 183,
     "describedPublicStories": 496,
     "reviewedPages": 195,
-    "reviewedStories": 707,
+    "reviewedStories": 709,
     "staleReviewedPages": 20,
     "recommendedVisibilityChanges": 0,
     "roles": {
@@ -82,7 +82,7 @@
       "responsive": 76,
       "scenario": 26,
       "visual-parity": 95,
-      "internal-contract": 125
+      "internal-contract": 127
     },
     "dispositions": {
       "keep": 195,
@@ -107,9 +107,9 @@
       },
       "Product": {
         "pages": 117,
-        "stories": 480,
+        "stories": 482,
         "public": 357,
-        "hidden": 123,
+        "hidden": 125,
         "guideReadyPages": 116
       },
       "Theme": {
@@ -13153,15 +13153,17 @@
       "layer": "Product",
       "family": "Display",
       "importPath": "./stories/DataDescriptionList.stories.jsx",
-      "sourceSha256": "cbaac0754e3fe276545caa1d978d75532227c73b002373828f02119f3c50d69b",
+      "sourceSha256": "47d6b4453a353b1e0622b96e4335454159565d151dcca2ba23832a3d71cabe61",
       "primaryOwner": "DescriptionList",
       "ownerComponents": [
         "DescriptionList"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "TextButton"
+      ],
       "visibility": {
         "public": 1,
-        "hidden": 0
+        "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -13176,8 +13178,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "cbaac0754e3fe276545caa1d978d75532227c73b002373828f02119f3c50d69b",
+      "reviewedAt": "2026-08-15",
+      "reviewedSourceSha256": "47d6b4453a353b1e0622b96e4335454159565d151dcca2ba23832a3d71cabe61",
       "stories": [
         {
           "id": "lds-product-data-display-description-list--description-list-patterns",
@@ -13201,6 +13203,30 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-data-display-description-list--review-values-with-change-actions",
+          "name": "사용법 · 제출 전 확인의 값과 변경 액션",
+          "exportName": "ReviewValuesWithChangeActions",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DescriptionList"
+          ],
+          "supportingComponents": [
+            "TextButton"
+          ]
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
@@ -18468,7 +18494,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationWizard.stories.jsx",
-      "sourceSha256": "ece031e783c8ad86056882888f2015b4cda9d1bd589ef662509a9504d1ea562a",
+      "sourceSha256": "cfc6302bbcc7dba1a905dce38040efd50bd80b1c4232e3f0d2a6e1533236afc0",
       "primaryOwner": "Wizard",
       "ownerComponents": [
         "Wizard"
@@ -18477,11 +18503,12 @@
         "Button",
         "DescriptionList",
         "FormField",
-        "Input"
+        "Input",
+        "TextButton"
       ],
       "visibility": {
         "public": 1,
-        "hidden": 2
+        "hidden": 3
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -18496,8 +18523,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-13",
-      "reviewedSourceSha256": "ece031e783c8ad86056882888f2015b4cda9d1bd589ef662509a9504d1ea562a",
+      "reviewedAt": "2026-08-15",
+      "reviewedSourceSha256": "cfc6302bbcc7dba1a905dce38040efd50bd80b1c4232e3f0d2a6e1533236afc0",
       "stories": [
         {
           "id": "lds-product-navigation-wizard--multi-step-flow",
@@ -18572,6 +18599,34 @@
           ],
           "supportingComponents": [
             "Button"
+          ]
+        },
+        {
+          "id": "lds-product-navigation-wizard--review-change-return",
+          "name": "확인 단계에서 원래 단계로 복귀",
+          "exportName": "ReviewChangeReturn",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Wizard"
+          ],
+          "supportingComponents": [
+            "Button",
+            "DescriptionList",
+            "FormField",
+            "Input",
+            "TextButton"
           ]
         }
       ],

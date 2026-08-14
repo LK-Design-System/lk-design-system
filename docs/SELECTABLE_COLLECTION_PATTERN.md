@@ -49,18 +49,23 @@ announcement로 남아야 한다 — `DataGrid`를 쓰지 않는 narrow 표현�
 
 ## 상태 fixture 기준
 
-검증 스토리와 제품 QA는 최소 다음 규모를 포함한다.
+검증 스토리와 제품 QA는 최소 다음 규모를 포함한다. LDS가 이미 증명한 경로와, 제품이
+자기 데이터로 덮어야 하는 경로를 구분한다.
 
-| 규모 | 검증 내용 |
-| --- | --- |
-| 0건 | 전체 없음 · 검색 0건 · selected-only 0건을 `ResourceState`로 구분 |
-| 3건 | 기본 선택/해제와 상세 정보 표시 |
-| 30건 | 검색·필터·3개 페이지를 오가며 선택 보존 |
-| 100건 | 선택 한도, 마지막 항목, 전체 선택/해제, 장문 데이터 |
-| 공통 | 320px/desktop, keyboard, screen reader, loading/error+retry, 긴 한국어 summary와 날짜의 비교 가능성 |
+| 규모 | 검증 내용 | 현재 LDS 근거 |
+| --- | --- | --- |
+| 0건 | 전체 없음 · 검색 0건 · selected-only 0건을 `ResourceState`로 구분 | `DataGrid` 상호작용 스토리와 `DataCollectionPanel` 변형·상태 스토리가 loading/빈 결과/오래된 데이터를 덮는다. selected-only 0건은 제품 필터라 미포함 |
+| 3건 | 기본 선택/해제와 상세 정보 표시 | `DataGrid` 개요 스토리(3행 fixture) |
+| 30건 | 검색·필터·페이지를 오가며 선택 보존 | **없음.** 페이지 이동 자체는 `DataGrid` 상호작용 스토리가 덮지만, 이동 뒤 선택 보존은 증명되지 않았다 |
+| 100건 | 선택 한도, 마지막 항목, 전체 선택/해제, 장문 데이터 | 부분. `DataToolbar` 개요 스토리가 `totalCount` 128로 page↔allMatching 전환, indeterminate, `N개 선택됨` live count, entity label을 증명한다. 선택 한도는 제품 소유(`getRowCanSelect`) |
+| 공통 | 320px/desktop, keyboard, screen reader, loading/error+retry, 긴 한국어 summary와 날짜의 비교 가능성 | `DataGrid` 반응형(320px 고정 열) 스토리와 위 상태 스토리 |
 
-기존 `DataGrid` 128-result selection 스토리와 `DataCollectionPanel`의 normal/320px·
-loading/empty/stale 스토리가 이 경로의 검증 근거다.
+**wide/narrow 동일 selection 모델은 아직 증명되지 않았다.** `DataCollectionPanel`은 layout만
+소유하고 selection을 소유하지 않으므로(패널 API에 selection prop이 없다), wide `DataGrid`와
+narrow compact 콘텐츠가 하나의 controlled `selectionModel`을 공유하는 경로는 현재 제품이
+조립하고 검증해야 한다. 두 번째 소비자에서 같은 조립이 반복 확인되면 그때 이 경로를 덮는
+좁은 스토리 또는 API 보강을 검토한다 — 그 전에는 `CollectionPicker`를 만들지 않는다는 위
+결정을 유지한다.
 
 ## 외부 근거
 

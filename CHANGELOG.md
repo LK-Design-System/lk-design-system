@@ -2,6 +2,15 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.8 - 2026-08-15
+
+Closes the verification gaps left open by the issue #49 acceptance criteria. No component or public API change — evidence and documentation only.
+
+- `DescriptionList`: added a hidden check-answers story proving the value contract — `dl/dt/dd` reading order, a unique accessible name per change action (`보고서 유형 변경`, not a bare `변경`), omission of conditional rows with no placeholder, and long Korean values wrapping instead of colliding with their action at 320px.
+- `Wizard`: added a hidden story proving the review-return contract — a change action returns to the step that owns the answer, focus lands on that step heading, the entered value survives the round trip, and the edited value shows on the review step. Recorded that the wizard only moves focus for wizard-initiated transitions, so product-driven jumps own their own focus. The 개요 story now also asserts footer DOM/tab order.
+- Verified 200% zoom via the 640×400 viewport equivalent (1280 at 200%) and recorded the method in the acceptance matrix; previously the docs claimed the axis without a verification path.
+- Corrected `SELECTABLE_COLLECTION_PATTERN.md`: the 128-result selection evidence lives in the `DataToolbar` overview story, not `DataGrid`, and the 30-item selection-preservation and wide/narrow shared-selection paths are now recorded as genuine gaps rather than implied coverage.
+
 ## 0.1.0-rc.69.7 - 2026-08-15
 
 Release candidate that closes issue #49 (guided-creation composition contracts), fixes two long-standing generator/runtime bugs recovered from the preserved `codex/local-main-preservation-20260812` line, and refreshes the vendored Robotics prerequisite.

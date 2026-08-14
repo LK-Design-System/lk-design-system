@@ -46,6 +46,20 @@ section heading → DescriptionList(term + description: 값 + contextual TextBut
 [`LOADING_PATTERN.md`](LOADING_PATTERN.md)와 [`GUIDED_CREATION_PATTERN.md`](GUIDED_CREATION_PATTERN.md)의
 생성 이후 절을 따른다.
 
+## 검증 근거
+
+이 패턴은 두 컴포넌트에 나뉘어 증명된다. 완성된 보고서 화면은 Storybook에 두지 않는다.
+
+| 계약 | 소유 | 근거 스토리 |
+| --- | --- | --- |
+| `dl/dt/dd` 읽기 순서, 항목별 고유한 변경 액션 이름, 해당 없는 행의 생략(placeholder 금지), 320px 장문 값 줄바꿈 | `DescriptionList` | `LDS Product/Data/Display/Description List` — 사용법 · 제출 전 확인의 값과 변경 액션 |
+| 변경 액션 → 해당 단계 복귀, 그 단계 heading으로 focus, 복귀 후 입력값 보존, 수정값의 확인 단계 반영 | `Wizard` + 제품 | `LDS Product/Navigation/Wizard` — 확인 단계에서 원래 단계로 복귀 |
+| 200% 확대(640 CSS px 등가)에서 값과 변경 액션이 겹치지 않음 | 조합 | 위 복귀 스토리를 640×400에서 확인 |
+
+위저드는 **자기가 시작한 전환**에만 focus를 옮긴다. 확인 단계의 변경 액션처럼 제품이 `current`를
+직접 바꾸는 전환에서는 위저드가 focus를 옮기지 않으므로, 복귀 focus는 제품이 소유한다(근거
+스토리가 그 조립 방식을 보여 준다).
+
 ## 외부 근거
 
 - [GOV.UK Check answers](https://design-system.service.gov.uk/patterns/check-answers/) — 제출 전

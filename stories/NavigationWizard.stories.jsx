@@ -1,5 +1,6 @@
-import { Button, DescriptionList, FormField, Input, Wizard } from '../src/index.js';
-import { userEvent } from 'storybook/test';
+import React from 'react';
+import { Button, DescriptionList, FormField, Input, TextButton, Wizard } from '../src/index.js';
+import { fireEvent, userEvent } from 'storybook/test';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -91,6 +92,13 @@ export const MultiStepFlow = {
       throw new Error('Reading order must stay indicator → step content → footer.');
     }
     const [previous, next] = canvasElement.querySelectorAll('button');
+    if (!(previous.compareDocumentPosition(next) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+      throw new Error('Tab order must reach 이전 before 다음/완료.');
+    }
+    const field = content.querySelector('input');
+    if (field && !(field.compareDocumentPosition(previous) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+      throw new Error('Tab order must reach the step content before the footer controls.');
+    }
     next?.focus();
     await userEvent.keyboard('{Enter}');
     if (!next?.disabled) throw new Error('Next must advance to the final step and become disabled.');
@@ -274,6 +282,137 @@ export const CompletionContract = {
     const bareSection = canvasElement.querySelector('[data-testid="wizard-no-footer"]');
     if (bareSection.querySelector('button')) {
       throw new Error('footer={null} must hide the built-in controls.');
+    }
+  },
+};
+
+/* 제출 전 확인 단계에서 특정 답을 고치러 원래 단계로 돌아가는 경로. 위저드가
+   시작하지 않은 전환(제품이 `current`를 직접 바꾸는 변경 액션)에는 위저드가
+   focus를 옮기지 않으므로, 복귀 focus는 제품이 소유한다는 계약을 고정한다.
+   값 표현 계약은 DescriptionList 쪽 스토리가, 규칙은
+   docs/CHECK_ANSWERS_PATTERN.md가 소유한다. */
+function ReviewReturnDemo() {
+  const steps = ['유형', '기간', '확인'];
+  const [current, setCurrent] = React.useState(2);
+  const [type, setType] = React.useState('주간 운영 보고서');
+  const headingRef = React.useRef(null);
+  const [pendingFocus, setPendingFocus] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!pendingFocus) return;
+    setPendingFocus(false);
+    headingRef.current?.focus();
+  }, [current, pendingFocus]);
+
+  const changeAnswer = (index) => {
+    setCurrent(index);
+    setPendingFocus(true);
+  };
+
+  return (
+    <Wizard
+      steps={steps}
+      current={current}
+      onStepChange={setCurrent}
+      footer={(ctx) => (ctx.isLast ? null : (
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--space-6)' }}>
+          <Button variant="solid" color="primary" data-testid="back-to-review" onClick={() => changeAnswer(2)}>
+            확인으로 돌아가기
+          </Button>
+        </div>
+      ))}
+    >
+      {(step) => (
+        <section style={{ display: 'grid', gap: 'var(--space-4)' }}>
+          <h2
+            ref={headingRef}
+            tabIndex={-1}
+            data-step-heading={step}
+            style={{ margin: 0, fontSize: 'var(--heading1-size)', lineHeight: 'var(--heading1-line)', outline: 'none' }}
+          >
+            {['보고서 유형 선택', '대상 기간 선택', '선택 내용 확인'][step]}
+          </h2>
+          {step === 0 && (
+            <FormField label="보고서 유형">
+              <Input data-testid="type-input" value={type} onChange={(event) => setType(event.target.value)} />
+            </FormField>
+          )}
+          {step === 1 && <p style={{ margin: 0 }}>2026-08-01 ~ 2026-08-13</p>}
+          {step === 2 && (
+            <DescriptionList
+              items={[
+                {
+                  term: '보고서 유형',
+                  description: (
+                    <span style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)' }}>
+                      <span data-testid="review-type">{type}</span>
+                      <TextButton size="sm" data-testid="change-type" onClick={() => changeAnswer(0)}>보고서 유형 변경</TextButton>
+                    </span>
+                  ),
+                },
+                {
+                  term: '대상 기간',
+                  description: (
+                    <span style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)' }}>
+                      <span>2026-08-01 ~ 2026-08-13</span>
+                      <TextButton size="sm" data-testid="change-period" onClick={() => changeAnswer(1)}>대상 기간 변경</TextButton>
+                    </span>
+                  ),
+                },
+              ]}
+            />
+          )}
+        </section>
+      )}
+    </Wizard>
+  );
+}
+
+export const ReviewChangeReturn = {
+  name: '확인 단계에서 원래 단계로 복귀',
+  tags: ['!dev'],
+  parameters: storyDescription(
+    '확인 단계의 변경 액션이 해당 답을 입력한 단계로 돌아가고, 그 단계의 heading으로 focus가 이어집니다. 되돌아온 뒤에도 입력값이 유지되고, 수정한 값이 확인 단계에 반영되는지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 720 }}>
+      <ReviewReturnDemo />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const waitFor = async (predicate, message) => {
+      const deadline = Date.now() + 3000;
+      while (!predicate()) {
+        if (Date.now() > deadline) throw new Error(message);
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
+    };
+    const currentLabel = () => canvasElement.querySelector('li[aria-current="step"]')?.textContent || '';
+
+    if (!currentLabel().includes('확인')) throw new Error('The demo must start on the review step.');
+    const original = canvasElement.querySelector('[data-testid="review-type"]')?.textContent;
+
+    await userEvent.click(canvasElement.querySelector('[data-testid="change-type"]'));
+    await waitFor(() => currentLabel().includes('유형'), 'A change action must return to the step that owns the answer.');
+    await waitFor(
+      () => document.activeElement === canvasElement.querySelector('[data-step-heading="0"]'),
+      'After a change action the product must move focus to that step heading.',
+    );
+
+    const input = canvasElement.querySelector('[data-testid="type-input"]');
+    if (input?.value !== original) throw new Error('Returning to a step must preserve the value already entered.');
+    /* 한글은 userEvent.type의 조합 입력을 거치지 않으므로 값 변경만 직접 발생시킨다. */
+    fireEvent.change(input, { target: { value: '월간 운영 보고서' } });
+    await waitFor(() => input.value === '월간 운영 보고서', 'The edited answer must land in the controlled input.');
+
+    await userEvent.click(canvasElement.querySelector('[data-testid="back-to-review"]'));
+    await waitFor(() => currentLabel().includes('확인'), 'Finishing an edit must return to the review step.');
+    await waitFor(
+      () => document.activeElement === canvasElement.querySelector('[data-step-heading="2"]'),
+      'Returning to review must move focus to the review heading.',
+    );
+    if (canvasElement.querySelector('[data-testid="review-type"]')?.textContent !== '월간 운영 보고서') {
+      throw new Error('The review step must show the edited answer.');
     }
   },
 };
