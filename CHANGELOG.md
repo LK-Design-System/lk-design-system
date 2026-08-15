@@ -2,6 +2,11 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.14 - 2026-08-15
+
+- Collection panel fixture: the project table stacked the updated-at timestamp under the project name even though the toolbar sorts by 최근 변경순 — the sort key was not visible as a column, so the sort result could not be verified by eye, and the stacked line was also what pushed the row to 76.9px. The timestamp now has its own right-hand column with per-project values that actually match the sort; the key stays under the name because it identifies the same subject rather than comparing rows. The narrow compact list keeps stacking, which is correct there.
+- `Table` prompt: sharpened the existing one-attribute-per-column rule with the criterion behind this fix — identifiers may stack under the name, comparable/sortable attributes get their own column, toolbar sort keys must be visible as columns, narrow lists are exempt, and header-click sorting means choosing DataGrid instead.
+
 ## 0.1.0-rc.69.13 - 2026-08-15
 
 - `DataCollectionPanel`: added a public density comparison in panel context. The Table-level story added in rc.69.12 shows the two densities in isolation; this one shows what they do inside the real composition, where the toolbar and pagination stay put and only the rows tighten. The play pins that boundary: chrome height is unchanged, the column header shrinks with the body because it shares the same cell padding, and the whole panel therefore differs by (header + rows) x 8px.

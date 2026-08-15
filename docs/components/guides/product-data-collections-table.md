@@ -43,7 +43,6 @@
 
 ## Behavior and interaction
 
-- 한 컬럼에는 가능한 하나의 데이터 속성만 담으세요. 값, 상태, 수집 시각, 액션은 각각 독립 컬럼으로 분리하고, 비교/정렬해야 하는 표 셀 안에 값+시간처럼 서로 다른 데이터를 묶지 마세요.
 - 열 헤더는 항상 입니다. 별도 prop이 필요 없으며 끌 수 없습니다.
 - Reference: SAP Fiori data table usage recommends content-dependent alignment and right alignment for comparable numeric values.
 - Table — 대문자 캡션 헤더, tabular 행, 부드러운 호버 워시가 있는 차분한 데이터 표.
@@ -64,11 +63,12 @@
 - Prefer one truncate column per table. It uses the remaining width and ignores that column's width; other columns keep their explicit widths.
 - Horizontal scrolling remains the default overflow policy for tables whose intentionally fixed columns cannot fit. Truncation is not applied globally.
 - columns — { key, label, align, width, render }. rows — 데이터 객체. size sm · md. hover — 행 워시. 상태 점·링크·액션에는 render를 쓰세요.
-- getTableHeaderCellStyle({ padding, align, width }) and getTableDataCellStyle({ padding, align, width }) expose the LDS static-table cell presentation for product-owned table compositions that cannot use the full Table renderer. Preserve native and elements when using them.
+- 한 컬럼에는 가능한 하나의 데이터 속성만 담으세요. 값, 상태, 수집 시각, 액션은 각각 독립 컬럼으로 분리하고, 비교/정렬해야 하는 표 셀 안에 값+시간처럼 서로 다른 데이터를 묶지 마세요. 구분 기준은 식별자인가, 비교·정렬하는 속성인가입니다 — 키·슬러그·코드처럼 같은 대상을 가리키는 식별자는 이름 아래 보조 텍스트로 쌓아도 되지만, 시각·수치처럼 행 사이를 비교하거나 정렬 기준이 되는 속성은 자기 컬럼을 가져야 값이 세로로 정렬되어 비교와 정렬 결과 확인이 가능합니다.
 
 ## Content and writing
 
 - caption — 표 위에 보이는 이며 동시에 표의 접근 가능한 이름입니다. 표 제목이 표 자체에 속할 때 첫 번째 선택지입니다.
+- Classification: LDS Product extension. truncate: true is an opt-in column layout contract for one long, plain-text field that should consume the table's remaining width without pushing fixed metadata or action columns outside the container.
 - Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope="col", tableLabel)을 씁니다.
 
 ## Accessibility

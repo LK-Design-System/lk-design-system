@@ -39,6 +39,7 @@ export default meta;
 const projects = [
   {
     id: 'portal-v3',
+    updatedAt: '2026-08-13 17:24',
     name: 'LK Portal v3',
     key: 'portal-v3',
     status: '진행 중',
@@ -47,6 +48,7 @@ const projects = [
   },
   {
     id: 'pet-edge-collector',
+    updatedAt: '2026-08-11 09:03',
     name: 'PET Edge Collector',
     key: 'pet-edge-collector',
     status: '진행 중',
@@ -55,6 +57,7 @@ const projects = [
   },
   {
     id: 'vision-automation',
+    updatedAt: '2026-08-05 14:47',
     name: 'Vision Automation',
     key: 'vision-automation',
     status: '진행 중',
@@ -63,6 +66,7 @@ const projects = [
   },
   {
     id: 'semantic-reconciliation',
+    updatedAt: '2026-07-29 08:12',
     name: 'Semantic Reconciliation Workspace',
     key: 'semantic-reconciliation',
     status: '검토 중',
@@ -91,8 +95,11 @@ const columns = [
         <a href={`#${project.id}`} style={{ color: 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', textDecoration: 'none' }}>
           {project.name}
         </a>
+        {/* 키는 같은 대상의 식별자라 이름 아래 보조 텍스트로 남긴다. 비교·정렬
+            속성인 시각은 자기 컬럼을 갖는다 — components/data/Table.prompt.md의
+            컬럼 구성 기준. */}
         <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', fontFamily: 'var(--font-mono)' }}>
-          {project.key} · 2026-08-01 21:52
+          {project.key}
         </span>
       </span>
     ),
@@ -109,6 +116,16 @@ const columns = [
     label: '연결된 항목',
     width: 360,
     render: (project) => <CountBadges counts={project.counts} />,
+  },
+  {
+    key: 'updatedAt',
+    label: '최근 변경',
+    width: 150,
+    render: (project) => (
+      <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap' }}>
+        {project.updatedAt}
+      </span>
+    ),
   },
 ];
 
@@ -131,8 +148,9 @@ function CompactProjectList({ rows }) {
             </a>
             <StatusBadge tone={project.status === '진행 중' ? 'positive' : 'cautionary'}>{project.status}</StatusBadge>
           </span>
+          {/* 좁은 목록은 컬럼 비교가 목적이 아니므로 식별자와 시각을 쌓아 보여도 된다. */}
           <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', fontFamily: 'var(--font-mono)', overflowWrap: 'anywhere' }}>
-            {project.key} · 2026-08-01 21:52
+            {project.key} · {project.updatedAt}
           </span>
           <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', wordBreak: 'keep-all' }}>
             {project.description}
@@ -149,7 +167,9 @@ function ProjectCollection({ layout = 'auto', state = 'ready', style, compact = 
   const [sort, setSort] = React.useState('recent');
   const [page, setPage] = React.useState(1);
   const filtered = projects.filter((project) => `${project.name} ${project.key} ${project.description}`.toLowerCase().includes(query.toLowerCase()));
-  const rows = sort === 'name' ? [...filtered].sort((a, b) => a.name.localeCompare(b.name)) : filtered;
+  const rows = sort === 'name'
+    ? [...filtered].sort((a, b) => a.name.localeCompare(b.name))
+    : [...filtered].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 
   return (
     <DataCollectionPanel

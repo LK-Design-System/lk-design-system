@@ -12151,7 +12151,7 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataCollectionPanel.stories.jsx",
-      "sourceSha256": "434e9af3960b447cbccd1c5ba59624a0727cb71378a0db3171bf901c64ce1c15",
+      "sourceSha256": "2891bcd3e15da4c899ef5fbc064492a324a9988e12b7415b4f31179455661620",
       "primaryOwner": "DataCollectionPanel",
       "ownerComponents": [
         "DataCollectionPanel"
@@ -12183,7 +12183,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-08-15",
-      "reviewedSourceSha256": "434e9af3960b447cbccd1c5ba59624a0727cb71378a0db3171bf901c64ce1c15",
+      "reviewedSourceSha256": "2891bcd3e15da4c899ef5fbc064492a324a9988e12b7415b4f31179455661620",
       "stories": [
         {
           "id": "lds-product-data-collections-data-collection-panel--overview",
