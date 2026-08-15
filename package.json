@@ -131,6 +131,7 @@
     "report:deprecations": "node scripts/report-deprecations.mjs",
     "check:deprecations": "node scripts/report-deprecations.mjs --check",
     "check:consumer": "node scripts/check-consumer-smoke.mjs",
+    "check:consumer-toolchain": "node scripts/check-consumer-toolchain.mjs",
     "check:a11y": "node scripts/check-storybook-accessibility.mjs",
     "check:docs-surface": "node scripts/audit-docs-surface-system.mjs --manager --dedup-contract",
     "update:target-size-baseline": "node scripts/check-storybook-accessibility.mjs --update-target-baseline",

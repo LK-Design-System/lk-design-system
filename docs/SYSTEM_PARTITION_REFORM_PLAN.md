@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Architecture reform proposal |
-| Status | Proposed plan — 승인 전 실행 금지. R1은 기존 분리 계획 Wave 5의 실행안을 겸한다. |
+| Status | Phase 0 완료 · Phase 1 완료(2026-08-15). Phase 2 이후는 승인 전 실행 금지. R1은 기존 분리 계획 Wave 5의 실행안을 겸한다. |
 | Owner | Design system owner · Frontend platform |
 | Last reviewed | 2026-08-15 |
 | 근거 소비자 | [`lk-design-system-motion`](https://github.com/LK-Design-System/lk-design-system-motion) — 2026-08-15 신규 위성이 LDS를 외부 런타임(헤드리스 영상 렌더러)에서 소비하며 수집한 실측 증거 |
@@ -132,7 +132,7 @@ Theme Override / LK Product Extension / LK Robotics Extension)는 이 시스템�
 | R2-2 | 모든 퍼블리시 패키지는 `.d.ts`를 출하한다. JSDoc→tsc 생성으로 시작해도 된다. lds-motion이 작성한 slides-ui 앰비언트 선언을 시드로 이관한다 | T2 |
 | R2-3 | 퍼블리시 패키지의 dependencies에 `file:` 참조 금지. 위성 간 의존은 퍼블리시된 버전 범위로 선언하고, 오프라인 설치가 필요한 소비자가 자기 쪽에서 vendor+overrides를 택한다 | T3 |
 | R2-4 | 런타임 측정(ResizeObserver, layout effect 측정)으로 시각 결과가 달라지는 컴포넌트는 opt-out prop을 계약에 포함한다. 우선 대상: SlideSurface `scale` prop (`'auto' \| 'none'`) | T4 |
-| R2-5 | **`check:consumer-cold` 신설**: CI가 빈 임시 프로젝트에서 packed tgz만으로 `npm install` → Vite와 웹팩 각각 빌드 → tsc 통과를 검증한다. 캐시·워크스페이스 링크 금지. lds-motion의 콜드 클론 CI가 참조 구현이다 | T1–T3 재발 방지 |
+| R2-5 | **소비자 검증의 미검증 축을 닫는다.** → Phase 1에서 `check:consumer-toolchain`으로 구현 완료. 범위는 §4.1의 실측에 따라 좁혔다 | T1–T3 재발 방지 |
 
 R2-5가 이 개편의 핵심 가드다. 1.2의 함정들은 전부 "우리 환경에서만 검증"이
 원인이므로, 검증 환경 자체를 소비자 환경으로 바꾼다.
@@ -167,11 +167,12 @@ R2-5가 이 개편의 핵심 가드다. 1.2의 함정들은 전부 "우리 환�
 의존성이 얇은 것부터. 각 단계는 독립 커밋·독립 롤백.
 
 ```text
-Phase 0 (즉시, 파괴 없음)     R1-1 소비 스캔 · R3-2a editorial 소비자 확인
-                              → 결과를 이 문서 부록으로 커밋
-Phase 1 (2026-09 릴리스까지)  R1-2 facade 이관 · R3-1 infographics 아카이브
-                              R2-5 check:consumer-cold를 core/theme/product에 먼저 적용
+Phase 0 ✅ 완료 (2026-08-15)  R1-1 소비 스캔 · R3-2a editorial 소비자 확인 → 부록 A
+Phase 1 ✅ 완료 (2026-08-15)  R1-2 대상 없음 · R3-1 아카이브 대상 없음(전제 오류)
+                              R2-5 → check:consumer-toolchain 신설·CI 배선 → 부록 B
 Phase 2 (2026-10 릴리스까지)  R1-3·R1-4 compat 삭제 (파괴 지점 ①)
+                              ※ 선행: check:consumer-smoke·workspace-consumer-matrix의
+                                 compat 참조 제거 (부록 B.4)
                               R2-1·R2-2 dist·d.ts 출하 (파괴 지점 ②: deep import 경로 변경 가능)
 Phase 3 (2026-Q4)             R3-2 editorial 흡수 (파괴 지점 ③) · R2-3 file: 금지
                               R2-4 SlideSurface scale prop · R4 계약 문서화·레시피 반영
@@ -233,3 +234,84 @@ Phase 3 (2026-Q4)             R3-2 editorial 흡수 (파괴 지점 ③) · R2-3 
 
 **판정: R3-2a 게이트 통과 — 확인된 소비자는 slides-ui 하나뿐이므로 흡수
 진행 가능하다.**
+
+---
+
+## 부록 B. Phase 1 실행 기록 (2026-08-15)
+
+### B.1 R1-2 (facade 이관) — 대상 없음
+
+부록 A.1에서 소비 0으로 확인됐으므로 이관할 코드가 없다. R1은 Phase 2의
+R1-3(삭제)에서 재개한다.
+
+### B.2 R3-1 infographics — 계획의 전제가 틀렸다
+
+계획은 이를 "GitHub 위성 저장소 아카이브 + 로컬 체크아웃 제거"로 적었으나,
+실제 상태는 다르다:
+
+| 확인 항목 | 실제 |
+| --- | --- |
+| GitHub 저장소 | **존재하지 않음** (`gh repo view` → Could not resolve to a Repository) |
+| 로컬 remote | 없음 |
+| 커밋 수 | 0 |
+| 내용물 | 빈 `.claude/` 디렉터리 하나, 총 0KB |
+
+즉 위성으로 **생성된 적이 없다.** 아카이브할 대상이 없으므로 R3-1의
+GitHub 조치는 무효(no-op)이고, 위성 목록에서 제외하는 것으로 종결한다.
+§1.3 표의 "빈 스텁" 기술은 유효하나 "위성"으로 세지 않는다 — 활성 위성은
+5개(robotics, editorial, slides, 3d, motion)다.
+
+`lds_ws/lk-design-system-infographics` 로컬 디렉터리는 이 저장소의 소유가
+아니고 사용자가 만든 작업 공간이므로 이 작업에서 삭제하지 않았다. 정리는
+소유자 판단에 맡긴다.
+
+### B.3 R2-5 — 범위를 실측에 맞춰 좁혔다
+
+계획 초안은 "빈 프로젝트에서 tgz만으로 설치 → Vite·webpack 빌드 → tsc"를
+전부 신설하는 것으로 적었다. 구현 전 기존 가드를 조사한 결과, 런타임 축은
+이미 `check:workspace-consumer`(check-workspace-consumer-matrix.mjs)가
+소유하고 있었다:
+
+- sha256으로 봉인된 tarball 세트에서 설치
+- React 18 / React 19 두 fixture
+- ESM · CJS · SSR(renderToStaticMarkup) · Vite 빌드 · Playwright 브라우저
+- core/theme/product/compat/robotics 전부
+
+초안대로 만들었다면 상당 부분이 중복 구축이었다. 실제 공백은 두 축이었다
+(해당 스크립트 내 언급 0건으로 확인):
+
+| 공백 | 왜 신호가 되는가 |
+| --- | --- |
+| **TypeScript 해석** | 우리 `.d.ts`는 `export {X} from './X.jsx'`로 재수출한다. TS 확장자 매핑에 의존하므로 소비자 `moduleResolution` 설정에 따라 갈린다. 타입이 안 잡히면 소비자가 앰비언트 선언을 손으로 쓰게 된다(T2의 실제 경로) |
+| **제2 번들러 계열** | 매트릭스는 Vite·esbuild(동일 계열)만 쓴다. webpack은 확장자·조건부 exports 해석 관습이 달라 독립 신호다 |
+
+그래서 **`check:consumer-toolchain`** (scripts/check-consumer-toolchain.mjs)로
+이름과 범위를 좁혀 신설했다. 하는 일:
+
+1. 정적 계약 — 퍼블리시 패키지의 `file:` 의존 금지(T3 구조적 차단), 타입
+   진입점 선언, dist 존재
+2. 저장소 **밖**(`os.tmpdir()`)에 소비자 프로젝트 생성 — 저장소 안에 두면
+   Node가 상위 워크스페이스 `node_modules`를 주워 검증이 무효가 된다
+3. tarball + 레지스트리만으로 캐시 격리 설치, 타입 진입점이 tarball에
+   실제로 담겼는지 확인
+4. **축 1** `tsc --noEmit` (`skipLibCheck: false`, `strict`,
+   `moduleResolution: bundler`) — 켜면 우리 `.d.ts` 결함이 숨으므로 끈다
+5. **축 2** webpack 프로덕션 빌드
+
+**결과: core/theme/product 전부 통과 (로컬 실행 61초).** 타입 해석과 webpack
+번들(317KB) 모두 우회 코드 없이 성공했다 — 워크스페이스 패키지는 이미 R2-1
+(dist 출하)·R2-2(.d.ts 출하) 요건을 충족하고 있음이 확인됐다. 함정 T1·T2는
+**위성 패키지에 한정된 문제**이며, Phase 3에서 위성으로 확장할 때 이
+스크립트를 재사용한다.
+
+CI 배선: `ci.yml`의 `design-system` 잡에 `check:workspace-consumer:windows`
+바로 다음 스텝으로 추가했다. `check:fast`에 넣지 않은 이유는 네트워크 설치가
+필요한 무거운 검사이고, 기존의 무거운 소비자 검증(`check:workspace-consumer`)도
+동일하게 CI 잡 스텝으로만 배선돼 있기 때문이다.
+
+### B.4 부수 발견 — compat 삭제 시 함께 고쳐야 하는 것
+
+`check:consumer`(check-consumer-smoke.mjs)는 `@lk-design-system/design-system-core`
+(compat facade)에서 import한다. `check-workspace-consumer-matrix.mjs`도
+`compat`을 기대 패키지 목록에 포함한다. **R1-3(compat 삭제)은 이 두 스크립트의
+수정을 반드시 동반한다.** Phase 2 착수 시 첫 단계로 처리한다.
