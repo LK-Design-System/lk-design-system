@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, DescriptionList, FormField, Input, TextButton, Wizard } from '../src/index.js';
+import { Button, Checkbox, DescriptionList, FormField, Input, TextButton, Wizard } from '../src/index.js';
 import { fireEvent, userEvent } from 'storybook/test';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -133,9 +133,7 @@ export const GuardedTransition = {
           }}
         >
           {(step) => (
-            <label style={{ display: 'inline-flex', gap: 'var(--space-2)', fontSize: 'var(--body2-size)' }}>
-              <input type="checkbox" data-testid="agree" /> {step}단계 입력을 확인했습니다
-            </label>
+            <Checkbox data-testid="agree" label={`${step + 1}단계 입력을 확인했습니다`} />
           )}
         </Wizard>
       </section>

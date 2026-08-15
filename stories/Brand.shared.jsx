@@ -809,7 +809,9 @@ function MisuseExample({ label, children }) {
         {children}
         <span aria-hidden style={{ position: 'absolute', insetInlineEnd: 6, insetBlockStart: 3, color: 'var(--color-semantic-status-negative)', fontSize: 18, fontWeight: 900 }}>×</span>
       </div>
-      <strong style={{ color: 'var(--color-semantic-status-negative)', fontSize: 12 }}>{label}</strong>
+      {/* 12px 굵은 글씨는 surface 계열 status 색으로는 4.5:1을 넘지 못한다.
+          텍스트 전용 토큰을 쓴다. */}
+      <strong style={{ color: 'var(--color-semantic-status-negative-text)', fontSize: 12 }}>{label}</strong>
     </div>
   );
 }

@@ -779,9 +779,16 @@ export const ViewportInsetContract = {
     if (comfortableStyle.paddingLeft !== '16px' || comfortableStyle.paddingRight !== '16px') {
       throw new Error(`Comfortable MessageFeed inline inset must resolve to 16px (received ${comfortableStyle.paddingLeft}/${comfortableStyle.paddingRight}).`);
     }
+    /* viewportInset은 inline inset만 소유한다. block inset은 density가 소유하며
+       기본 density(comfortable)는 읽기 리듬인 24px를 쓴다. 두 fixture가 같은
+       block inset을 갖는 것이 이 스토리가 지키는 경계다. */
+    if (compactStyle.paddingTop !== comfortableStyle.paddingTop
+      || compactStyle.paddingBottom !== comfortableStyle.paddingBottom) {
+      throw new Error('viewportInset must not change the block inset; density owns it.');
+    }
     [compactStyle, comfortableStyle].forEach((computed) => {
-      if (computed.paddingTop !== '12px' || computed.paddingBottom !== '12px') {
-        throw new Error(`MessageFeed block inset must remain 12px (received ${computed.paddingTop}/${computed.paddingBottom}).`);
+      if (computed.paddingTop !== '24px' || computed.paddingBottom !== '24px') {
+        throw new Error(`Comfortable-density MessageFeed block inset must resolve to 24px (received ${computed.paddingTop}/${computed.paddingBottom}).`);
       }
     });
   },
