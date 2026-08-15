@@ -2,6 +2,10 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.11 - 2026-08-15
+
+- Story fix: the selection-preservation play typed its query with `userEvent.type`, which does not land reliably on a controlled `SearchField`, so the story shipped red in rc.69.9. It now drives the query with `fireEvent.change`, the same approach the repo already uses for controlled inputs. The demo also clamps its page index to at least 1 so a pagination callback cannot select an empty slice.
+
 ## 0.1.0-rc.69.10 - 2026-08-15
 
 - Story fix: the narrow list in the shared-selection story used a bare native checkbox, which rendered in the browser's default accent instead of the LDS treatment. It now uses `Checkbox`, so both representations in that story read as one system.

@@ -1,5 +1,5 @@
 import React from 'react';
-import { userEvent } from 'storybook/test';
+import { fireEvent, userEvent } from 'storybook/test';
 import {
   Button,
   DataGrid,
@@ -589,7 +589,7 @@ function SelectionPreservationDemo() {
 
   const matching = preservationRows.filter((row) => `${row.id} ${row.group}`.includes(query));
   const pageCount = Math.max(1, Math.ceil(matching.length / PAGE_SIZE));
-  const safePage = Math.min(page, pageCount);
+  const safePage = Math.min(Math.max(page, 1), pageCount);
   const visible = matching.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
   const selectedIds = selectionModel.selectedIds ?? [];
 
@@ -662,17 +662,18 @@ export const SelectionSurvivesSearchAndPaging = {
       'Selecting on a second page must keep the off-screen selection from the first page.',
     );
 
-    /* 검색으로 두 선택 항목이 모두 사라지게 좁힌다. */
+    /* 검색으로 두 선택 항목이 모두 사라지게 좁힌다. controlled 검색 필드에는
+       문자 단위 타이핑 대신 값 변경을 한 번에 발생시킨다. */
     const search = canvasElement.querySelector('input[type="search"], input[role="searchbox"]')
       ?? canvasElement.querySelector('input');
-    await userEvent.type(search, 'ITEM-02');
+    fireEvent.change(search, { target: { value: 'ITEM-02' } });
     await waitFor(() => !rowCheckbox('ITEM-001') && !rowCheckbox('ITEM-011'), 'The query must hide both selected rows.');
     if (selected().length !== 2) {
       throw new Error('Filtering rows out of view must not drop their IDs from the selection model.');
     }
 
     /* 검색을 지우면 선택이 그대로 화면에 되살아난다. */
-    await userEvent.clear(search);
+    fireEvent.change(search, { target: { value: '' } });
     await waitFor(() => !!rowCheckbox('ITEM-001'), 'Clearing the query must restore the first page.');
     if (!rowCheckbox('ITEM-001').checked) {
       throw new Error('A preserved selection must render as checked when its row returns to view.');
