@@ -224,6 +224,11 @@
         "id": "lds-product-data-collections-table--static-table",
         "name": "개요",
         "role": "overview"
+      },
+      {
+        "id": "lds-product-data-collections-table--density-comparison",
+        "name": "변형·상태 · 기본 밀도와 좁은 밀도",
+        "role": "responsive"
       }
     ],
     "hiddenEvidence": 4

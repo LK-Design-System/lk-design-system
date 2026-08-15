@@ -84,6 +84,66 @@ export const StaticTable = {
   },
 };
 
+/* `size`가 바꾸는 것은 셀 패딩뿐이다(14/16 → 10/12). 글자 크기와 행간은 그대로이므로
+   행 높이는 위아래 4px씩, 정확히 8px만 줄어든다. 두 밀도를 같은 데이터로 나란히 놓아
+   그 차이와 선택 기준을 눈으로 확인할 수 있게 한다. */
+export const DensityComparison = {
+  name: '변형·상태 · 기본 밀도와 좁은 밀도',
+  parameters: storyDescription(
+    '같은 데이터를 기본 밀도와 좁은 밀도로 나란히 비교하는 상황입니다. 좁은 밀도는 셀 여백만 줄이므로 글자 크기와 읽기 순서는 그대로이고, 한 화면에 더 많은 행을 담아야 하는 운영 화면에 적합합니다. 읽기가 목적인 화면에는 기본 밀도를 유지하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 1040, minWidth: 0 }}>
+      <section data-testid="density-md" style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        <div>
+          <h2 id="density-md-title" style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>기본 밀도</h2>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>셀 여백 위아래 14px. 목록을 읽고 비교하는 것이 목적인 화면의 기본값입니다.</p>
+        </div>
+        <Table columns={columns} rows={rows} tableLabelledBy="density-md-title" style={{ minWidth: 0 }} />
+      </section>
+      <section data-testid="density-sm" style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        <div>
+          <h2 id="density-sm-title" style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>좁은 밀도</h2>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>셀 여백 위아래 10px. 한 화면에 더 많은 행을 담아야 하는 운영 화면에 사용합니다.</p>
+        </div>
+        <Table size="sm" columns={columns} rows={rows} tableLabelledBy="density-sm-title" style={{ minWidth: 0 }} />
+      </section>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const rowOf = (testId) => canvasElement
+      .querySelector(`[data-testid="${testId}"] tbody tr`)
+      .getBoundingClientRect().height;
+    const cellPadding = (testId) => {
+      const cell = canvasElement.querySelector(`[data-testid="${testId}"] tbody tr`).children[0];
+      const computed = getComputedStyle(cell);
+      return { top: computed.paddingTop, bottom: computed.paddingBottom, inline: computed.paddingLeft };
+    };
+
+    const md = cellPadding('density-md');
+    const sm = cellPadding('density-sm');
+    if (md.top !== '14px' || md.bottom !== '14px' || md.inline !== '16px') {
+      throw new Error(`기본 밀도의 셀 여백은 14px/16px이어야 합니다(현재 ${md.top}/${md.inline}).`);
+    }
+    if (sm.top !== '10px' || sm.bottom !== '10px' || sm.inline !== '12px') {
+      throw new Error(`좁은 밀도의 셀 여백은 10px/12px이어야 합니다(현재 ${sm.top}/${sm.inline}).`);
+    }
+
+    const saving = rowOf('density-md') - rowOf('density-sm');
+    if (Math.abs(saving - 8) > 0.5) {
+      throw new Error(`좁은 밀도는 행마다 정확히 8px만 줄어야 합니다(현재 ${saving.toFixed(1)}px).`);
+    }
+
+    /* 밀도는 여백만 바꾼다. 글자 크기가 함께 줄면 가독성 계약이 깨진다. */
+    const fontOf = (testId) => getComputedStyle(
+      canvasElement.querySelector(`[data-testid="${testId}"] tbody tr`).children[0],
+    ).fontSize;
+    if (fontOf('density-md') !== fontOf('density-sm')) {
+      throw new Error('밀도는 셀 여백만 조정해야 하며 본문 글자 크기를 바꾸지 않습니다.');
+    }
+  },
+};
+
 export const TableSemanticsContract = {
   name: '캡션과 행 헤더 계약',
   tags: ['!dev'],

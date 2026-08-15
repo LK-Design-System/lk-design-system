@@ -73,13 +73,13 @@
 | Component | Relationship |
 | --- | --- |
 | `Button` | 대표 시나리오에서 조합 |
+| `Checkbox` | 대표 시나리오에서 조합 |
 | `DescriptionList` | 대표 시나리오에서 조합 |
 | `FormField` | 대표 시나리오에서 조합 |
 | `Input` | 대표 시나리오에서 조합 |
 | `TextButton` | 대표 시나리오에서 조합 |
 | `Anchor` | 대표 시나리오에서 조합 |
 | `BottomNav` | 대표 시나리오에서 조합 |
-| `Breadcrumb` | 대표 시나리오에서 조합 |
 
 ## Examples
 

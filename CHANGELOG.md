@@ -2,6 +2,10 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.12 - 2026-08-15
+
+- `Table`: added a public density comparison story. The `size` prop already offered `sm` and `md`, but nothing in Storybook rendered `sm`, so consumers had to read the source to learn the option existed. The story places both densities side by side and pins the contract: `sm` trims only cell padding (14/16px to 10/12px), which is exactly 8px per row, and never changes the body font size.
+
 ## 0.1.0-rc.69.11 - 2026-08-15
 
 - Story fix: the selection-preservation play typed its query with `userEvent.type`, which does not land reliably on a controlled `SearchField`, so the story shipped red in rc.69.9. It now drives the query with `fireEvent.change`, the same approach the repo already uses for controlled inputs. The demo also clamps its page index to at least 1 so a pagination callback cannot select an empty slice.

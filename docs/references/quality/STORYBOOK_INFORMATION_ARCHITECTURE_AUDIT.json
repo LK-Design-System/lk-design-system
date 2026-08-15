@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "df7a54531d150343c57e0d72e9ebeae6d64c2df74f8787535a311ad06072a769",
+    "storybookIndexSha256": "f539d46201ec6a624156dcd4d141de304bcec542788d0cc0e5638add0de25afd",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,16 +62,16 @@
   },
   "summary": {
     "pages": 195,
-    "stories": 724,
-    "publicStories": 496,
+    "stories": 725,
+    "publicStories": 497,
     "hiddenStories": 228,
     "componentDescriptions": 191,
     "pagesWithVisibleCanvasIntroduction": 191,
     "pagesWithDecisionGuidance": 183,
-    "describedPublicStories": 496,
+    "describedPublicStories": 497,
     "reviewedPages": 195,
-    "reviewedStories": 711,
-    "staleReviewedPages": 20,
+    "reviewedStories": 712,
+    "staleReviewedPages": 22,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
@@ -79,7 +79,7 @@
       "usage": 39,
       "variants-states": 106,
       "interaction": 54,
-      "responsive": 76,
+      "responsive": 77,
       "scenario": 26,
       "visual-parity": 95,
       "internal-contract": 129
@@ -107,8 +107,8 @@
       },
       "Product": {
         "pages": 117,
-        "stories": 484,
-        "public": 357,
+        "stories": 485,
+        "public": 358,
         "hidden": 127,
         "guideReadyPages": 116
       },
@@ -9670,7 +9670,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageFeed.stories.jsx",
-      "sourceSha256": "09ac2b2a7656993ea4e7fc6c7f58f2250ccd562c62fbe3c0e1b4282fb22edd5d",
+      "sourceSha256": "56b5a240aced01444ad898c7113cec40ba4467615a21ea192506c99e866c56ec",
       "primaryOwner": "MessageFeed",
       "ownerComponents": [
         "MessageFeed"
@@ -12470,7 +12470,7 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataGrid.stories.jsx",
-      "sourceSha256": "e16093da041d97e09cc5a1ea76746139d83a69a1fd50c06ac1260dd3e9b8ed56",
+      "sourceSha256": "40052d846be2179a50269052144067be3701bcbb768573c41807decd2253cb51",
       "primaryOwner": "DataGrid",
       "ownerComponents": [
         "DataGrid"
@@ -12773,21 +12773,21 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataTable.stories.jsx",
-      "sourceSha256": "3d2a45b2bd3842f3b7d80823d8dc03e63083501c7303e9c44b7079dd6bdd211b",
+      "sourceSha256": "245463354cf925cb7f6de7b79aad767e30a0008af965d5abd456058052bfaac4",
       "primaryOwner": "Table",
       "ownerComponents": [
         "Table"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 4
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-collections-table--static-table",
-        "describedPublicStories": 1,
-        "publicStoriesWithCanvasGuidance": 1,
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 2,
         "decisionGuidance": true
       },
       "missingGuidance": [],
@@ -12796,8 +12796,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-09",
-      "reviewedSourceSha256": "3d2a45b2bd3842f3b7d80823d8dc03e63083501c7303e9c44b7079dd6bdd211b",
+      "reviewedAt": "2026-08-15",
+      "reviewedSourceSha256": "245463354cf925cb7f6de7b79aad767e30a0008af965d5abd456058052bfaac4",
       "stories": [
         {
           "id": "lds-product-data-collections-table--static-table",
@@ -12845,6 +12845,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-08-01 review confirmed owner, role, visibility, description, native semantics, and play assertions for the new LDS request contract."
+        },
+        {
+          "id": "lds-product-data-collections-table--density-comparison",
+          "name": "변형·상태 · 기본 밀도와 좁은 밀도",
+          "exportName": "DensityComparison",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Table"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-product-data-collections-table--table-semantics-contract",
@@ -18546,13 +18569,14 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationWizard.stories.jsx",
-      "sourceSha256": "cfc6302bbcc7dba1a905dce38040efd50bd80b1c4232e3f0d2a6e1533236afc0",
+      "sourceSha256": "314c74510c62c7f1233053658273e449a1bc66ebc9db1032a809d29f5ea5ce30",
       "primaryOwner": "Wizard",
       "ownerComponents": [
         "Wizard"
       ],
       "supportingComponents": [
         "Button",
+        "Checkbox",
         "DescriptionList",
         "FormField",
         "Input",
@@ -18650,7 +18674,8 @@
             "Wizard"
           ],
           "supportingComponents": [
-            "Button"
+            "Button",
+            "Checkbox"
           ]
         },
         {
@@ -24611,11 +24636,11 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/Brand.stories.jsx",
-      "sourceSha256": "48f8849c7d9953272af18d0644d61eb1815a77ce81376270d2d982b5fa01096a",
+      "sourceSha256": "4264a71072f72b6572fa7903ab1154d944465f6f602f780d38f9e8dfc7929e1c",
       "sourceDependencies": [
         {
           "path": "stories/Brand.shared.jsx",
-          "sha256": "0a991ef3ed519804ba756428b767018fd2ca3e2293ba7fa1615c721669139b5b"
+          "sha256": "1f2eaf211fc502500bee9b41984c7a7cb057434bf4c0da3027eddf707ce5367c"
         }
       ],
       "primaryOwner": "Lockup",
