@@ -2,6 +2,10 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.13 - 2026-08-15
+
+- `DataCollectionPanel`: added a public density comparison in panel context. The Table-level story added in rc.69.12 shows the two densities in isolation; this one shows what they do inside the real composition, where the toolbar and pagination stay put and only the rows tighten. The play pins that boundary: chrome height is unchanged, the column header shrinks with the body because it shares the same cell padding, and the whole panel therefore differs by (header + rows) x 8px.
+
 ## 0.1.0-rc.69.12 - 2026-08-15
 
 - `Table`: added a public density comparison story. The `size` prop already offered `sm` and `md`, but nothing in Storybook rendered `sm`, so consumers had to read the source to learn the option existed. The story places both densities side by side and pins the contract: `sm` trims only cell padding (14/16px to 10/12px), which is exactly 8px per row, and never changes the body font size.

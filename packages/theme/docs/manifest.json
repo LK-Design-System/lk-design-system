@@ -3,7 +3,7 @@
   "kind": "lds-package-documentation",
   "package": {
     "name": "@lk-design-system/lds-theme",
-    "version": "0.1.0-rc.69.12",
+    "version": "0.1.0-rc.69.13",
     "layer": "theme"
   },
   "adoption": {
@@ -50,7 +50,7 @@
   },
   "source": {
     "repository": "LK-Design-System/lk-design-system",
-    "ref": "lds-v0.1.0-rc.69.12",
+    "ref": "lds-v0.1.0-rc.69.13",
     "documents": [
       {
         "path": "docs/foundations/color.md",
@@ -139,7 +139,7 @@
     },
     {
       "path": "adoption-workflow.md",
-      "sha256": "4556fd46bb40e1000d77df24886ca0026a65db9baadf891094bbf0d614b5b77f",
+      "sha256": "2822e6d45fff5c9d79236cecd4705410e59d9c19b296fdcc7c8521de43465113",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
@@ -209,7 +209,7 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "912611077ae683b1dbf01d48c09ab1ffdd0b50d327eabccb522e378fcaa26880",
+      "sha256": "02a6f50f96c579bdd28d4a022728f9d4e1aa6c8dd5e681cbb0fede3daa80ba4a",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",

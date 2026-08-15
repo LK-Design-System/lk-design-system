@@ -22466,6 +22466,11 @@
             "role": "overview"
           },
           {
+            "id": "lds-product-data-collections-data-collection-panel--density-comparison",
+            "name": "변형·상태 · 기본 밀도와 좁은 밀도",
+            "role": "responsive"
+          },
+          {
             "id": "lds-product-data-collections-data-collection-panel--resource-states",
             "name": "변형·상태 · 불러오기, 빈 결과, 오래된 데이터",
             "role": "variants-states"

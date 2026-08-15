@@ -144,7 +144,7 @@ function CompactProjectList({ rows }) {
   );
 }
 
-function ProjectCollection({ layout = 'auto', state = 'ready', style, compact = true, content = true, label = '프로젝트 목록' }) {
+function ProjectCollection({ layout = 'auto', state = 'ready', style, compact = true, content = true, label = '프로젝트 목록', tableSize }) {
   const [query, setQuery] = React.useState('');
   const [sort, setSort] = React.useState('recent');
   const [page, setPage] = React.useState(1);
@@ -194,7 +194,7 @@ function ProjectCollection({ layout = 'auto', state = 'ready', style, compact = 
         />
       )}
     >
-      {content ? <Table tableLabel="프로젝트" columns={columns} rows={rows} rowHeaderKey="name" /> : null}
+      {content ? <Table size={tableSize} tableLabel="프로젝트" columns={columns} rows={rows} rowHeaderKey="name" /> : null}
     </DataCollectionPanel>
   );
 }
@@ -236,6 +236,79 @@ export const Overview = {
       new Set([...group.children].map((badge) => Math.round(badge.getBoundingClientRect().top))).size > 1
     ))) {
       throw new Error('Connected-item badges must remain on one row in the wide table layout.');
+    }
+  },
+};
+
+/* 패널은 밀도를 소유하지 않는다. 본문 표의 `size`를 제품이 정하고, 패널의 도구막대·
+   페이지네이션 높이는 그대로 유지된다. 그래서 두 패널의 전체 높이 차이는 행 수 × 8px로
+   정확히 떨어진다 — 밀도 선택이 실제 화면에서 얼마나 이득인지 이 문맥에서만 보인다. */
+export const DensityComparison = {
+  name: '변형·상태 · 기본 밀도와 좁은 밀도',
+  parameters: storyDescription(
+    '같은 프로젝트 목록을 기본 밀도와 좁은 밀도로 비교하는 상황입니다. 밀도는 본문 표가 소유하므로 도구막대와 페이지 이동 영역은 그대로이고 행만 촘촘해집니다. 목록을 읽고 비교하는 화면에는 기본 밀도를, 한 화면에 더 많은 행을 담아야 하는 운영 화면에는 좁은 밀도를 사용하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)' }}>
+      <section data-testid="panel-density-md" style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        <div>
+          <h2 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>기본 밀도</h2>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>표의 셀 여백이 위아래 14px입니다. 프로젝트 목록처럼 읽고 비교하는 화면의 기본값입니다.</p>
+        </div>
+        <ProjectCollection label="기본 밀도 프로젝트 목록" />
+      </section>
+      <section data-testid="panel-density-sm" style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        <div>
+          <h2 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>좁은 밀도</h2>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>표의 셀 여백이 위아래 10px입니다. 도구막대와 페이지 이동은 그대로이고 행만 촘촘해집니다.</p>
+        </div>
+        <ProjectCollection tableSize="sm" label="좁은 밀도 프로젝트 목록" />
+      </section>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const panel = (testId) => canvasElement.querySelector(`[data-testid="${testId}"] [data-lds-data-collection-panel]`);
+    const rowsOf = (testId) => [...panel(testId).querySelectorAll('tbody tr')].filter((row) => row.getBoundingClientRect().height > 0);
+    const cellPadding = (testId) => {
+      const computed = getComputedStyle(rowsOf(testId)[0].children[0]);
+      return { block: computed.paddingTop, inline: computed.paddingLeft };
+    };
+
+    const md = cellPadding('panel-density-md');
+    const sm = cellPadding('panel-density-sm');
+    if (md.block !== '14px' || md.inline !== '16px') {
+      throw new Error(`기본 밀도 패널의 셀 여백은 14px/16px이어야 합니다(현재 ${md.block}/${md.inline}).`);
+    }
+    if (sm.block !== '10px' || sm.inline !== '12px') {
+      throw new Error(`좁은 밀도 패널의 셀 여백은 10px/12px이어야 합니다(현재 ${sm.block}/${sm.inline}).`);
+    }
+
+    const mdRows = rowsOf('panel-density-md');
+    const smRows = rowsOf('panel-density-sm');
+    if (mdRows.length !== smRows.length) throw new Error('두 밀도는 같은 행 수를 보여야 비교가 성립합니다.');
+    const perRow = mdRows[0].getBoundingClientRect().height - smRows[0].getBoundingClientRect().height;
+    if (Math.abs(perRow - 8) > 0.5) {
+      throw new Error(`좁은 밀도는 행마다 8px만 줄어야 합니다(현재 ${perRow.toFixed(1)}px).`);
+    }
+
+    /* 패널이 소유한 도구막대와 푸터는 밀도와 무관하다. 열 헤더는 본문과 같은 셀
+       여백을 쓰므로 함께 줄어든다 — 따라서 전체 차이는 (헤더 1 + 본문 N) × 8px다. */
+    const chromeHeight = (testId, slot) => panel(testId).querySelector(`[data-slot="${slot}"]`).getBoundingClientRect().height;
+    for (const slot of ['toolbar', 'footer']) {
+      if (Math.abs(chromeHeight('panel-density-md', slot) - chromeHeight('panel-density-sm', slot)) > 0.5) {
+        throw new Error(`본문 밀도는 패널 ${slot} 높이를 바꾸지 않아야 합니다.`);
+      }
+    }
+    const headerDelta = panel('panel-density-md').querySelector('thead tr').getBoundingClientRect().height
+      - panel('panel-density-sm').querySelector('thead tr').getBoundingClientRect().height;
+    if (Math.abs(headerDelta - perRow) > 0.5) {
+      throw new Error(`열 헤더도 본문과 같은 여백을 쓰므로 같은 폭(${perRow.toFixed(1)}px)만큼 줄어야 합니다(현재 ${headerDelta.toFixed(1)}px).`);
+    }
+    const panelDelta = panel('panel-density-md').getBoundingClientRect().height
+      - panel('panel-density-sm').getBoundingClientRect().height;
+    const expected = perRow * (mdRows.length + 1);
+    if (Math.abs(panelDelta - expected) > 1) {
+      throw new Error(`패널 전체 높이 차이는 헤더 포함 행 차이의 합(${expected.toFixed(1)}px)이어야 합니다(현재 ${panelDelta.toFixed(1)}px).`);
     }
   },
 };
