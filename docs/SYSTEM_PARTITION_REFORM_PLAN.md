@@ -309,7 +309,37 @@ CI 배선: `ci.yml`의 `design-system` 잡에 `check:workspace-consumer:windows`
 필요한 무거운 검사이고, 기존의 무거운 소비자 검증(`check:workspace-consumer`)도
 동일하게 CI 잡 스텝으로만 배선돼 있기 때문이다.
 
-### B.4 부수 발견 — compat 삭제 시 함께 고쳐야 하는 것
+### B.4 CI 검증 상태 — 새 가드는 아직 CI에서 실행되지 못한다
+
+`main`의 CI는 이 작업 **이전부터** 연속 실패 상태다. 확인 결과 최근 14회
+런이 모두 failure이고, 여기에는 릴리스 태그가 붙은 커밋들
+(rc.69.7~rc.69.14)도 포함된다. 태그 커밋의 실패 원인은
+`check:storybook-public` — "Public Storybook copy exposes internal
+maintenance information"이며 이 작업과 무관하다.
+
+추가로, 태그 이후의 모든 커밋은 구조적으로 `check:release-immutability`에
+걸린다. 이 가드는 `lds-v<version>` 태그가 존재하는데 HEAD가 그 커밋이 아니면
+실패하므로, 다음 버전 범프 전까지 릴리스 사이의 모든 커밋이 빨간불이다.
+이 문서의 두 커밋도 같은 이유로 이 항목에 걸린다.
+
+결과적으로 `check:consumer-toolchain` 스텝은 같은 잡에서 `check:ci`가 먼저
+실패해 **아직 CI에서 한 번도 실행되지 않았다.** 스텝 순서를 앞당겨
+우회하지 않았다 — 이 검사는 `dist`를 요구하고 그 빌드는 `check:fast` 안에서
+일어나므로, 순서는 의존성상 옳다.
+
+CI에서 신호를 받지 못하는 동안의 대체 검증:
+
+| 축 | 확인 |
+| --- | --- |
+| 기능 | 로컬 Windows에서 전 단계 통과 (61초). CI 잡도 windows-latest다 |
+| npm 버전 차이 | CI는 npm 10.9.2, 로컬은 11.16.0. 위험 지점인 `npm pack --json`을 `npx npm@10.9.2`로 직접 확인 — stdout이 순수 JSON이라 `JSON.parse(stdout)`가 그대로 동작한다. 나머지 플래그(`--ignore-scripts`, `--pack-destination`, `--no-audit`, `--no-fund`, `--cache`)는 npm 10 지원 범위다 |
+| Node 버전 차이 | CI는 22.17.1, 로컬은 24.18.0. 스크립트는 `mkdtempSync`/`execFileSync`/`execSync`만 쓰며 22에서 전부 안정 API다 |
+
+**후속(이 계획 범위 밖):** `check:storybook-public` 실패는 Storybook 카피
+소유 영역의 문제로 별도 처리가 필요하다. 그것이 해소돼야
+`check:consumer-toolchain`이 CI에서 처음 실행된다.
+
+### B.5 부수 발견 — compat 삭제 시 함께 고쳐야 하는 것
 
 `check:consumer`(check-consumer-smoke.mjs)는 `@lk-design-system/design-system-core`
 (compat facade)에서 import한다. `check-workspace-consumer-matrix.mjs`도
