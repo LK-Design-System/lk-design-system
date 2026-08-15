@@ -2,6 +2,11 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.15 - 2026-08-15
+
+- Public Storybook copy: the Wizard accessibility guide named `docs/GUIDED_CREATION_PATTERN.md` as the owner of the multi-step form composition rules, which `check:storybook-public` rejects under both its repository-path and repository-filename rules. This had been failing on `main` since at least rc.69.7, and because it sits in `check:storybook-ci` it also hid `check:a11y` and `check:visual-regression` — neither had run for days. Fixed at the publication boundary in `publicGuideText()`, matching the existing substitutions for `PROSESURFACEPROPOSAL.md`, `tokens/focus.css`, and `TOKENGOVERNANCE.md`, so the prompt keeps the exact path for maintainers and only the public sentence loses it. The two hidden checks pass: a11y clean, and all 41 visual smoke screenshots within tolerance (max 0.054%).
+- `check:consumer-toolchain` (new): verifies the two consumer axes `check:workspace-consumer` does not cover — TypeScript resolution against the shipped `.d.ts` with `skipLibCheck` off, and a webpack build, whose resolution conventions differ from the Vite/esbuild family. It also statically forbids `file:` dependencies in publishable packages, since `npm pack` strips `*.tgz` and such a reference is guaranteed to break a consumer install. The consumer project is created outside the repository so Node cannot resolve up into the workspace. Wired into the `design-system` CI job; core, theme, and product all pass.
+
 ## 0.1.0-rc.69.14 - 2026-08-15
 
 - Collection panel fixture: the project table stacked the updated-at timestamp under the project name even though the toolbar sorts by 최근 변경순 — the sort key was not visible as a column, so the sort result could not be verified by eye, and the stacked line was also what pushed the row to 76.9px. The timestamp now has its own right-hand column with per-project values that actually match the sort; the key stays under the name because it identifies the same subject rather than comparing rows. The narrow compact list keeps stacking, which is correct there.
