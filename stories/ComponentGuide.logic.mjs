@@ -39,7 +39,8 @@ export function publicGuideText(value) {
       /Button\.jsx의 loading focusable-disabled 선례, 아래 Fluent Button 지침/gu,
       '다른 비동기 버튼과 같은 focusable-disabled 규칙',
     )
-    .replace(/TOKENGOVERNANCE\.md의 elevation 규칙/gu, 'elevation 규칙');
+    .replace(/TOKENGOVERNANCE\.md의 elevation 규칙/gu, 'elevation 규칙')
+    .replace(/docs\/GUIDEDCREATIONPATTERN\.md가 소유합니다/gu, '별도의 조합 패턴 가이드가 소유합니다');
 }
 
 export function storybookManagerHref(storybookDocsId, pathname = globalThis.location?.pathname ?? '/iframe.html') {
