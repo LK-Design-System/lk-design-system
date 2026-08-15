@@ -84,17 +84,6 @@ const packageDefinitions = [
     includeLoadingPattern: true,
     storybookPath: '?path=/docs/lds-product-operations-dashboard-dashboard-shell--docs',
   },
-  {
-    id: 'compat',
-    name: '@lk-design-system/design-system-core',
-    layer: 'compatibility',
-    title: 'LDS compatibility facade',
-    summary: 'Migration-only aggregate facade for the Core, Theme, Product, and Robotics packages.',
-    foundations: 'all',
-    includeRootLlms: true,
-    includeLoadingPattern: true,
-    storybookPath: '?path=/docs/lds-core-foundation-design-token--docs',
-  },
 ];
 
 function invariant(condition, message) {
@@ -223,9 +212,7 @@ function generatedReadme(definition) {
   const liveDocs = `${storybookUrl}${definition.storybookPath}`;
   const dependencyNote = definition.id === 'core'
     ? 'This package carries the complete 16-Foundation adoption context.'
-    : definition.id === 'compat'
-      ? 'New code should migrate each import to its Core, Theme, Product, or Robotics owner package.'
-      : 'The complete 16-Foundation context is available from the installed `@lk-design-system/lds-core` dependency.';
+    : 'The complete 16-Foundation context is available from the installed `@lk-design-system/lds-core` dependency.';
   return `${generatedMarker}
 # ${definition.title}
 
@@ -307,7 +294,7 @@ async function makePackageProjection(definition, canonicalInputs) {
     ]) selectedFoundationNames.add(name);
   }
 
-  if (['core', 'compat'].includes(definition.id)) {
+  if (definition.id === 'core') {
     for (const [sourcePath, targetPath] of sharedReferenceTargets) {
       sourceToTarget.set(sourcePath, targetPath);
     }
@@ -365,7 +352,7 @@ async function makePackageProjection(definition, canonicalInputs) {
     sources: [{ path: canonical.adoptionReportExample, sha256: sha256(canonicalExampleSource) }],
   });
 
-  if (['core', 'compat'].includes(definition.id)) {
+  if (definition.id === 'core') {
     for (const [sourcePath, targetPath] of sharedReferenceTargets) {
       if (!outputs.has(targetPath)) await projectFile(sourcePath, targetPath);
     }
@@ -544,7 +531,7 @@ async function main() {
     if (check) await compareProjection(packageRoot, outputs);
     else await writeProjection(packageRoot, outputs);
   }
-  console.log(`${check ? 'Validated' : 'Projected'} generated package documentation for Core, Theme, Product, and compatibility packages.`);
+  console.log(`${check ? 'Validated' : 'Projected'} generated package documentation for Core, Theme, and Product packages.`);
 }
 
 main().catch((error) => {

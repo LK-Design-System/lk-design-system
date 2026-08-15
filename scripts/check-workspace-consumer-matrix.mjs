@@ -18,10 +18,8 @@ const expectedPackages = [
   { id: 'core', name: '@lk-design-system/lds-core' },
   { id: 'theme', name: '@lk-design-system/lds-theme' },
   { id: 'product', name: '@lk-design-system/lds-product' },
-  { id: 'compat', name: '@lk-design-system/design-system-core' },
   { id: 'robotics', name: '@lk-design-system/lds-robotics-ui', external: true },
 ];
-const compatName = '@lk-design-system/design-system-core';
 const versions = [
   { id: 'React 18', fixture: 'react18', react: '18.3.1', reactDom: '18.3.1' },
   { id: 'React 19', fixture: 'react19', react: '19.2.3', reactDom: '19.2.3' },
@@ -139,11 +137,17 @@ async function loadPackageSet(value) {
     const packaged = tarballs.find((item) => item.id === expected.id);
     invariant(workspaceManifest.name === packaged.name && workspaceManifest.version === packaged.version, `${expected.name} package-set identity does not match the current checkout.`);
   }
-  const compatManifest = JSON.parse(await readFile(path.join(repositoryRoot, 'packages', 'compat', 'package.json'), 'utf8'));
+  // The compatibility facade used to be the workspace's only declared consumer
+  // of the Robotics package, so its dependency range was the reference here.
+  // With it gone the external surface contract is the remaining source of truth.
+  const roboticsSurface = JSON.parse(await readFile(
+    path.join(repositoryRoot, 'docs', 'references', 'package-split', 'ROBOTICS_EXTERNAL_SURFACE.json'),
+    'utf8',
+  ));
   const robotics = tarballs.find((item) => item.id === 'robotics');
   invariant(
-    robotics.version === compatManifest.dependencies?.[robotics.name],
-    'The locked external Robotics tarball must match the compatibility package dependency.',
+    robotics.version === roboticsSurface.package?.version,
+    'The locked external Robotics tarball must match the version pinned by ROBOTICS_EXTERNAL_SURFACE.json.',
   );
   const diskTarballs = (await readdir(path.join(packageSetDirectory, 'tarballs'))).sort();
   const declaredTarballs = tarballs.map((item) => path.basename(item.tarball)).sort();
@@ -199,28 +203,25 @@ import * as Core from '@lk-design-system/lds-core';
 import * as Theme from '@lk-design-system/lds-theme';
 import * as Product from '@lk-design-system/lds-product';
 import * as Robotics from '@lk-design-system/lds-robotics-ui';
-import * as Compat from '@lk-design-system/design-system-core';
-import * as CompatCore from '@lk-design-system/design-system-core/core';
-import * as CompatTheme from '@lk-design-system/design-system-core/theme';
-import * as CompatProduct from '@lk-design-system/design-system-core/product';
-import * as CompatRobotics from '@lk-design-system/design-system-core/robotics';
 import { Button as CoreDeepButton } from '@lk-design-system/lds-core/components/buttons/Button';
-import { Button as CompatDeepButton } from '@lk-design-system/design-system-core/components/buttons/Button';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { createElement } from 'react';
 const isReactComponent = (value) => typeof value === 'function'
   || Boolean(value && typeof value === 'object' && value.$$typeof);
 if (!isReactComponent(Core.Button)) throw new Error('Core Button ESM export is missing.');
 if (!isReactComponent(Theme.ThemeToggle)) throw new Error('ThemeToggle ESM export is missing.');
 if (!isReactComponent(Product.Table)) throw new Error('Product Table ESM export is missing.');
 if (!isReactComponent(Robotics.RobotStatusCard)) throw new Error('Robotics ESM export is missing.');
-if (Compat.Button !== Core.Button || CompatCore.Button !== Core.Button) throw new Error('Core ESM facade identity drift.');
-if (Compat.ThemeToggle !== Theme.ThemeToggle || CompatTheme.ThemeToggle !== Theme.ThemeToggle) throw new Error('Theme ESM facade identity drift.');
-if (Compat.Table !== Product.Table || CompatProduct.Table !== Product.Table) throw new Error('Product ESM facade identity drift.');
-if (Compat.RobotStatusCard !== Robotics.RobotStatusCard || CompatRobotics.RobotStatusCard !== Robotics.RobotStatusCard) throw new Error('Robotics ESM facade identity drift.');
-if (CompatDeepButton !== CoreDeepButton || CompatDeepButton !== Core.Button) throw new Error('Deep ESM facade identity drift.');
-console.log('workspace ESM facade identity passed');
+// A deep import must resolve to the same component object as the package entry,
+// otherwise a consumer mixing the two import styles gets two component
+// identities and loses state across them.
+if (CoreDeepButton !== Core.Button) throw new Error('Core deep import identity drift.');
+const markup = renderToStaticMarkup(createElement(Core.Button, null, 'SSR'));
+if (!markup.includes('<button') || !markup.includes('SSR')) throw new Error('SSR render failed: ' + markup);
+console.log('workspace ESM identity and SSR passed');
 `.trimStart(), 'utf8');
   const stdout = run(process.execPath, [smokeFile], appDirectory, { quiet: true });
-  invariant(stdout.includes('workspace ESM facade identity passed'), 'Workspace ESM identity smoke did not reach its success marker.');
+  invariant(stdout.includes('workspace ESM identity and SSR passed'), 'Workspace ESM identity smoke did not reach its success marker.');
 }
 
 async function bundleMetrics(appDirectory) {
@@ -241,8 +242,8 @@ async function bundleMetrics(appDirectory) {
       inputCount: inputs.size,
     };
   };
-  const selected = await bundle(`import { Button } from '${compatName}'; console.log(Button);`);
-  const namespace = await bundle(`import * as LDS from '${compatName}'; const key = globalThis.__workspaceUnknownExport; console.log(LDS[key]);`);
+  const selected = await bundle("import { Button } from '@lk-design-system/lds-core'; console.log(Button);");
+  const namespace = await bundle("import * as LDS from '@lk-design-system/lds-core'; const key = globalThis.__workspaceUnknownExport; console.log(LDS[key]);");
   invariant(namespace.bytes > selected.bytes, 'Namespace import must be larger than the selected Button import.');
   invariant(namespace.inputCount > selected.inputCount, 'Namespace import must include more source inputs than the selected Button import.');
   return { selected, namespace };
@@ -292,46 +293,24 @@ function startStaticServer(directory) {
 
 async function verifyConsumer(appDirectory, version, packageSet, requireBrowser) {
   await verifyEsmImports(appDirectory);
+  // The workspace packages are ESM-only; there is no CommonJS entry to require
+  // since the compatibility facade was removed. Resolution isolation is still
+  // worth asserting, so it runs through createRequire on the package manifests.
   const consumerRequire = createRequire(path.join(appDirectory, 'consumer.cjs'));
   const nodeModules = path.join(appDirectory, 'node_modules');
-  for (const packageName of [compatName, 'react', 'react-dom']) {
-    const resolution = consumerRequire.resolve(packageName);
+  for (const packageName of ['@lk-design-system/lds-core', '@lk-design-system/lds-theme', '@lk-design-system/lds-product', '@lk-design-system/lds-robotics-ui', 'react', 'react-dom']) {
+    const resolution = consumerRequire.resolve(`${packageName}/package.json`);
     const relative = path.relative(nodeModules, resolution);
     invariant(relative && !relative.startsWith('..') && !path.isAbsolute(relative), `${packageName} resolved outside the isolated consumer.`);
   }
-
-  const React = consumerRequire('react');
-  const { renderToStaticMarkup } = consumerRequire('react-dom/server');
-  const rootEntry = consumerRequire(compatName);
-  const coreEntry = consumerRequire(`${compatName}/core`);
-  const themeEntry = consumerRequire(`${compatName}/theme`);
-  const productEntry = consumerRequire(`${compatName}/product`);
-  const roboticsEntry = consumerRequire(`${compatName}/robotics`);
-  const deepButton = consumerRequire(`${compatName}/components/buttons/Button`);
-  const deepButtonExport = deepButton.Button || deepButton.default;
-  invariant(isReactComponent(rootEntry.Button), 'Compat root Button CJS export is missing.');
-  invariant(isReactComponent(coreEntry.Button), 'Compat Core layer CJS export is missing.');
-  invariant(isReactComponent(themeEntry.ThemeToggle), 'Compat Theme layer CJS export is missing.');
-  invariant(isReactComponent(productEntry.Table), 'Compat Product layer CJS export is missing.');
-  invariant(isReactComponent(roboticsEntry.RobotStatusCard), 'Compat Robotics layer CJS export is missing.');
-  invariant(isReactComponent(deepButtonExport), 'Compat deep Button CJS export is missing.');
-  invariant(rootEntry.Button === coreEntry.Button, 'Compat root and Core Button references differ.');
-  invariant(rootEntry.Button === deepButtonExport, 'Compat root and deep Button references differ.');
-  invariant(rootEntry.ThemeToggle === themeEntry.ThemeToggle, 'Compat root and Theme references differ.');
-  invariant(rootEntry.Table === productEntry.Table, 'Compat root and Product references differ.');
-  invariant(rootEntry.RobotStatusCard === roboticsEntry.RobotStatusCard, 'Compat root and Robotics references differ.');
-  const rootMarkup = renderToStaticMarkup(React.createElement(rootEntry.Button, null, `SSR ${version.id}`));
-  const layerMarkup = renderToStaticMarkup(React.createElement(coreEntry.Button, null, `SSR ${version.id}`));
-  invariant(rootMarkup.includes('<button') && rootMarkup.includes(`SSR ${version.id}`), `${version.id} SSR failed.`);
-  invariant(layerMarkup === rootMarkup, `${version.id} CJS root and Core render output differ.`);
 
   const appSource = `import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Button } from '@lk-design-system/lds-core';
 import { ThemeToggle } from '@lk-design-system/lds-theme';
 import { Table } from '@lk-design-system/lds-product';
-import { RobotStatusCard } from '${compatName}/robotics';
-import '${compatName}/styles.css';
+import { RobotStatusCard } from '@lk-design-system/lds-robotics-ui';
+import '@lk-design-system/lds-core/styles.css';
 const imports = [ThemeToggle, Table, RobotStatusCard].filter(Boolean).length;
 function App() { return <main data-testid="workspace-consumer"><h1>Workspace ${version.id} consumer</h1><Button>Root button</Button><span data-testid="layer-count">{imports}</span></main>; }
 createRoot(document.getElementById('root')).render(<App />);
@@ -372,11 +351,11 @@ createRoot(document.getElementById('root')).render(<App />);
     const installed = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', ...item.name.split('/'), 'package.json'), 'utf8'));
     invariant(installed.name === item.name && installed.version === item.version, `${item.name} installed package identity drift.`);
   }
-  const compatManifest = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', '@lk-design-system', 'design-system-core', 'package.json'), 'utf8'));
   const roboticsManifest = JSON.parse(await readFile(path.join(appDirectory, 'node_modules', '@lk-design-system', 'lds-robotics-ui', 'package.json'), 'utf8'));
+  const installedRobotics = packageSet.tarballs.find((item) => item.id === 'robotics');
   invariant(
-    roboticsManifest.name === '@lk-design-system/lds-robotics-ui' && roboticsManifest.version === compatManifest.dependencies?.['@lk-design-system/lds-robotics-ui'],
-    'Packaged Robotics dependency does not match the compat package contract.',
+    roboticsManifest.name === '@lk-design-system/lds-robotics-ui' && roboticsManifest.version === installedRobotics?.version,
+    'Installed Robotics package does not match the version locked in the package set.',
   );
   invariant(consumerRequire('react/package.json').version === version.react, `${version.id} React version drift.`);
   invariant(consumerRequire('react-dom/package.json').version === version.reactDom, `${version.id} React DOM version drift.`);
@@ -385,7 +364,7 @@ createRoot(document.getElementById('root')).render(<App />);
     reactVersion: version.react,
     reactDomVersion: version.reactDom,
     status: 'passed',
-    checks: { esm: 'passed', cjs: 'passed', ssr: 'passed', viteBuild: 'passed', browser },
+    checks: { esm: 'passed', ssr: 'passed', viteBuild: 'passed', browser },
     bundles: { ...bundles, consumerJavaScriptBytes: javaScriptBytes },
   };
 }
@@ -440,7 +419,7 @@ async function main() {
       npm: runNpm(['--version'], repositoryRoot, { quiet: true }),
       status: 'passed',
       packageSet: packageSet.tarballs.map(({ id, name, version, file, size, sha256: digest }) => ({ id, name, version, file, size, sha256: digest })),
-      checks: { packageSetIntegrity: 'passed', packageInstall: 'passed', esm: 'passed', cjs: 'passed', ssr: 'passed', treeShaking: 'passed', viteBuild: 'passed', browser: requireBrowser ? 'passed' : 'not-run' },
+      checks: { packageSetIntegrity: 'passed', packageInstall: 'passed', esm: 'passed', ssr: 'passed', treeShaking: 'passed', viteBuild: 'passed', browser: requireBrowser ? 'passed' : 'not-run' },
       consumers,
     };
     await writeFile(reportPath, `${JSON.stringify(report, null, 2)}\n`, 'utf8');

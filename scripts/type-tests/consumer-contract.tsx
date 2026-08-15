@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { Button as RootButton } from '@lk-design-system/design-system-core';
-import { Button as CompatibilityDeepButton } from '@lk-design-system/design-system-core/components/buttons/Button';
 import {
   Button,
   Card,
@@ -14,8 +12,8 @@ import {
   Textarea,
   TextButton,
   Tooltip,
-} from '@lk-design-system/design-system-core/core';
-import { LdsProvider, ThemeToggle } from '@lk-design-system/design-system-core/theme';
+} from '@lk-design-system/lds-core';
+import { LdsProvider, ThemeToggle } from '@lk-design-system/lds-theme';
 import {
   ConversationMessage,
   MessageFeed,
@@ -28,7 +26,7 @@ import {
   FieldAction,
   Popover,
   SideNav,
-} from '@lk-design-system/design-system-core/product';
+} from '@lk-design-system/lds-product';
 import {
   WaypointMarker,
   LaneOverlay,
@@ -36,14 +34,14 @@ import {
   TrajectoryOverlay,
   SpatialRegion,
   FacilityTransition,
-} from '@lk-design-system/design-system-core/robotics';
+} from '@lk-design-system/lds-robotics-ui';
 import { Button as CoreDeepButton } from '@lk-design-system/lds-core/components/buttons/Button';
 import { ThemeToggle as ThemeDeepToggle } from '@lk-design-system/lds-theme/components/selection/ThemeToggle';
 import { Table as ProductDeepTable } from '@lk-design-system/lds-product/components/data/Table';
 import { ViewerFrame as ProductDeepViewerFrame } from '@lk-design-system/lds-product/components/viz/ViewerFrame';
 
 // @ts-expect-error Robotics exports must not leak into the Core entrypoint.
-import { RobotStatusCard as InvalidCoreRobotStatusCard } from '@lk-design-system/design-system-core/core';
+import { RobotStatusCard as InvalidCoreRobotStatusCard } from '@lk-design-system/lds-core';
 
 export const consumerContract: React.ReactElement = <Button variant="primary">확인</Button>;
 export const polymorphicButtonContract: React.ReactElement = <Button as="a" href="/reports">보고서</Button>;
@@ -248,10 +246,8 @@ export const providerRuntimeContract: React.ReactElement = (
 );
 
 // Robotics navigation extension — renderer-neutral SVG feature contracts.
-export const rootCompatibilityContract: React.ReactElement = <RootButton>Root compatibility</RootButton>;
 export const deepImportContract: React.ReactElement = (
   <>
-    <CompatibilityDeepButton>Compatibility deep import</CompatibilityDeepButton>
     <CoreDeepButton>Core deep import</CoreDeepButton>
     <ThemeDeepToggle target={null} persist={false} />
     <ProductDeepTable columns={[]} rows={[]} />

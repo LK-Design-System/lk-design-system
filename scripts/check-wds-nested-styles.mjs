@@ -41,8 +41,9 @@ const indexHtml = `<!doctype html><html><head><meta charset="UTF-8"/></head><bod
 const imports = 'Checkbox, Radio, Tooltip, Alert, ListCell';
 const appSource = `import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { ${imports} } from '@lk-design-system/design-system-core';
-import '@lk-design-system/design-system-core/styles.css';
+import { ${imports} } from '@lk-design-system/lds-core';
+import '@lk-design-system/lds-core/styles.css';
+import '@lk-design-system/lds-theme/styles.css';
 function App(){ return (<div style={{padding:60,display:'grid',gap:60,alignItems:'start',justifyItems:'start'}}>
 ${TARGETS.map((t) => `  <div data-measure="${t.name}">${t.jsx}</div>`).join('\n')}
 </div>); }

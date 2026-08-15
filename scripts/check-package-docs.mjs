@@ -41,13 +41,6 @@ const packageDefinitions = [
     foundations: [],
     storybookPath: '?path=/docs/lds-product-operations-dashboard-dashboard-shell--docs',
   },
-  {
-    id: 'compat',
-    name: '@lk-design-system/design-system-core',
-    layer: 'compatibility',
-    foundations: 'all',
-    storybookPath: '?path=/docs/lds-core-foundation-design-token--docs',
-  },
 ];
 const requiredExports = {
   './package.json': './package.json',
@@ -73,7 +66,6 @@ const publicProjection = [
   ['../packages/core/docs/adoption-config.schema.json', '/schemas/lds-ui-adoption-config.schema.json'],
   ['../packages/theme/docs', '/packages/theme'],
   ['../packages/product/docs', '/packages/product'],
-  ['../packages/compat/docs', '/packages/compat'],
 ];
 
 function invariant(condition, message) {
@@ -397,7 +389,7 @@ async function main() {
     );
   }
   await validateStorybookProjection();
-  console.log('Validated generated package docs: canonical adoption/schema projection, full Core and compat context, Theme/Product deltas, exports, inventories, hashes, links, and Storybook public endpoints.');
+  console.log('Validated generated package docs: canonical adoption/schema projection, full Core context, Theme/Product deltas, exports, inventories, hashes, links, and Storybook public endpoints.');
 }
 
 main().catch((error) => {

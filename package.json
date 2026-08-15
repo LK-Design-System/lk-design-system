@@ -18,7 +18,7 @@
     "generate:components": "node scripts/generate-component-docs.mjs",
     "generate:token-coverage": "node scripts/check-token-source-coverage.mjs --update",
     "generate:entry": "node scripts/generate-entry.mjs",
-    "generate:workspace-sources": "node scripts/generate-workspace-sources.mjs && node scripts/generate-compat-facade.mjs && node scripts/project-workspace-styles-and-assets.mjs && node scripts/project-package-docs.mjs",
+    "generate:workspace-sources": "node scripts/generate-workspace-sources.mjs && node scripts/project-workspace-styles-and-assets.mjs && node scripts/project-package-docs.mjs",
     "generate:sources": "node scripts/generate-lk-color-system.mjs && node scripts/generate-entry.mjs",
     "build:legacy": "npm run generate:sources && tsup && node scripts/copy-types.mjs && node scripts/normalize-sourcemaps.mjs",
     "build:workspaces": "npm run generate:workspace-sources && node scripts/build-workspace-packages.mjs && node scripts/copy-workspace-types.mjs",
@@ -57,9 +57,6 @@
     "check:workspace-consumer:matrix": "node scripts/check-workspace-consumer-matrix.mjs",
     "check:workspace-consumer:windows": "node scripts/check-workspace-consumer-matrix.mjs --platform=windows --package-set=visual-artifacts/workspace-package-set --require-browser",
     "check:workspace-consumer:linux": "node scripts/check-workspace-consumer-matrix.mjs --platform=linux --package-set=visual-artifacts/workspace-package-set",
-    "capture:pack:baseline": "npm ci && node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --capture-baseline",
-    "check:pack:baseline": "npm ci && node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --verify-baseline",
-    "check:pack:baseline-if-present": "node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --verify-baseline-if-present",
     "check": "node scripts/run-package-scripts.mjs check:fast check:storybook check:pack",
     "check:storybook-ci": "node scripts/run-package-scripts.mjs build:storybook check:storybook-adoption check:component-styles-rendered check:nested-styles check:inventory check:tooltip-alignment check:storybook-public check:a11y check:visual-regression",
     "check:ci": "node scripts/run-package-scripts.mjs check:fast check:storybook-ci",
@@ -139,7 +136,10 @@
     "check:storybook-public": "node scripts/check-storybook-public-surface.mjs && node scripts/check-storybook-public-copy.mjs",
     "check:tooltip-alignment": "node scripts/check-tooltip-alignment.mjs",
     "check:surface-ownership": "node scripts/check-surface-ownership.mjs",
-    "check:icon-drawing-style": "node scripts/check-icon-drawing-style.mjs"
+    "check:icon-drawing-style": "node scripts/check-icon-drawing-style.mjs",
+    "capture:pack:baseline": "npm ci && node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --capture-baseline",
+    "check:pack:baseline": "npm ci && node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --verify-baseline",
+    "check:pack:baseline-if-present": "node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --verify-baseline-if-present"
   },
   "peerDependencies": {
     "react": ">=18 <20",

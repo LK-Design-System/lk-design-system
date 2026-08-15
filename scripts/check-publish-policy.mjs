@@ -11,15 +11,6 @@ const workspacePackages = [
   // That is not the semantic tier: Core and Theme still own `--color-`,
   // `--space-`, `--radius-`, and `--font-`, and product only composes them.
   { id: 'product', layer: 'product', name: '@lk-design-system/lds-product', dependencies: ['@lk-design-system/lds-core'], resources: ['tokens', 'assets'] },
-  {
-    id: 'compat',
-    layer: 'compatibility',
-    name: '@lk-design-system/design-system-core',
-    dependencies: ['@lk-design-system/lds-core', '@lk-design-system/lds-theme', '@lk-design-system/lds-product'],
-    externalDependencies: ['@lk-design-system/lds-robotics-ui'],
-    resources: ['tokens', 'assets'],
-    compatibility: true,
-  },
 ];
 
 function assert(condition, message) {
@@ -106,25 +97,10 @@ function assertEntry(manifest, packageInfo) {
     assert(entry?.types && entry?.import, `${packageName}: ${label} must expose ESM and types.`);
     assert(entry.types.startsWith('./dist/'), `${packageName}: ${label} types must resolve under dist.`);
     assert(entry.import.startsWith('./dist/'), `${packageName}: ${label} ESM must resolve under dist.`);
-    if (packageInfo.compatibility) {
-      assert(entry.require?.startsWith('./dist/'), `${packageName}: ${label} must preserve its CJS compatibility export.`);
-    } else {
-      assert(!entry.require, `${packageName}: implementation packages must not expose CJS.`);
-    }
+    assert(!entry.require, `${packageName}: implementation packages must not expose CJS.`);
   }
 
-  if (!packageInfo.compatibility) {
-    assert(manifest.main === './dist/index.js' && manifest.module === './dist/index.js', `${packageName}: implementation entrypoints must be ESM.`);
-    return;
-  }
-
-  assert(manifest.main === './dist/index.cjs' && manifest.module === './dist/index.js', `${packageName}: compatibility entrypoints must retain ESM and CJS.`);
-  for (const layer of ['core', 'theme', 'product', 'robotics']) {
-    const entry = manifest.exports?.[`./${layer}`];
-    assert(entry?.types === `./dist/${layer}.d.ts`, `${packageName}: ${layer} types must resolve under dist.`);
-    assert(entry?.import === `./dist/${layer}.js`, `${packageName}: ${layer} ESM must resolve under dist.`);
-    assert(entry?.require === `./dist/${layer}.cjs`, `${packageName}: ${layer} CJS must resolve under dist.`);
-  }
+  assert(manifest.main === './dist/index.js' && manifest.module === './dist/index.js', `${packageName}: implementation entrypoints must be ESM.`);
 }
 
 const rootPackage = JSON.parse(await read('package.json'));
@@ -243,4 +219,4 @@ for (const expected of [
   assert(policyText.includes(expected), `Docs must state publish or workspace package policy phrase: ${expected}`);
 }
 
-console.log('Validated workspace publish policy: publishable GitHub Packages release set, approved dependency DAG, ESM/types implementation entries, CJS compatibility facade, resource ownership, generated adoption docs, changelog, deprecations, and package-consumer documentation.');
+console.log('Validated workspace publish policy: publishable GitHub Packages release set, approved dependency DAG, ESM/types implementation entries, resource ownership, generated adoption docs, changelog, deprecations, and package-consumer documentation.');

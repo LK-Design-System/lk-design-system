@@ -18,7 +18,6 @@ const workspaces = [
   { id: 'core', name: '@lk-design-system/lds-core', layer: 'core', implementation: true, docsOrigin: 'https://lk-design-system.github.io/lk-design-system/' },
   { id: 'theme', name: '@lk-design-system/lds-theme', layer: 'theme', implementation: true, docsOrigin: 'https://lk-design-system.github.io/lk-design-system/' },
   { id: 'product', name: '@lk-design-system/lds-product', layer: 'product', implementation: true, docsOrigin: 'https://lk-design-system.github.io/lk-design-system/' },
-  { id: 'compat', name: '@lk-design-system/design-system-core', layer: 'compatibility', implementation: false, docsOrigin: 'https://lk-design-system.github.io/lk-design-system/' },
   {
     id: 'robotics',
     name: '@lk-design-system/lds-robotics-ui',
@@ -218,19 +217,6 @@ function assertImplementationContract(workspace, manifest, files) {
   );
 }
 
-function assertCompatContract(manifest, files) {
-  for (const subpath of ['.', './core', './theme', './product', './robotics', './components/*']) {
-    const entry = manifest.exports?.[subpath];
-    invariant(entry?.import && entry?.require && entry?.types, `compat: ${subpath} must expose import, require, and types.`);
-  }
-  for (const extension of ['.js', '.cjs', '.d.ts']) {
-    invariant(
-      [...files].some((file) => file.startsWith('dist/components/') && file.endsWith(extension)),
-      `compat: deep component ${extension} output is missing.`,
-    );
-  }
-}
-
 function assertDocumentationContract(workspace, manifest, files) {
   const externalDocs = workspace.external ? roboticsExternalSurface.documentation : null;
   const requiredFiles = workspace.external
@@ -279,7 +265,7 @@ function assertDocumentationContract(workspace, manifest, files) {
 function firstStaticSubpath(files, directory) {
   const prefix = `${directory}/`;
   const file = [...files].find((candidate) => candidate.startsWith(prefix) && !candidate.endsWith('/'));
-  invariant(file, `compat: no ${directory} file was packed for legacy path smoke testing.`);
+  invariant(file, `core: no ${directory} file was packed for static path smoke testing.`);
   return file;
 }
 
@@ -315,8 +301,7 @@ async function packWorkspace(workspace, destination) {
   invariant(files.size > 0, `${workspace.id}: npm pack reported an empty tarball.`);
   invariant(![...files].some((file) => file === 'src' || file.startsWith('src/')), `${workspace.id}: raw src files leaked into the tarball.`);
   assertExportFiles(workspace, manifest, files);
-  if (workspace.implementation) assertImplementationContract(workspace, manifest, files);
-  else assertCompatContract(manifest, files);
+  assertImplementationContract(workspace, manifest, files);
   assertDocumentationContract(workspace, manifest, files);
 
   return {
@@ -681,12 +666,14 @@ async function smokeConsumer(packed, consumerDirectory) {
   await smokeDocumentationResolution(packed, consumerDirectory);
   await assertPackedSelectTokenContract(packed, consumerDirectory);
 
-  const compat = packed.find(({ id }) => id === 'compat');
-  const tokenFile = firstStaticSubpath(compat.files, 'tokens');
-  const assetFile = firstStaticSubpath(compat.files, 'assets');
+  // Static subpath resolution used to be exercised through the compatibility
+  // facade because it packed every resource. Core carries the same three
+  // resource kinds, so it is the reference now.
+  const core = packed.find(({ id }) => id === 'core');
+  const tokenFile = firstStaticSubpath(core.files, 'tokens');
+  const assetFile = firstStaticSubpath(core.files, 'assets');
   const smoke = `
 import { access } from 'node:fs/promises';
-import { createRequire } from 'node:module';
 
 const packages = ${JSON.stringify(packed.map(({ name, deepSubpath }) => ({ name, deepSubpath })))};
 for (const item of packages) {
@@ -694,14 +681,9 @@ for (const item of packages) {
   await import(\`${'${item.name}'}/\${item.deepSubpath}\`);
 }
 
-const require = createRequire(import.meta.url);
-const legacy = ${JSON.stringify(compat.name)};
-require(legacy);
-for (const layer of ['core', 'theme', 'product', 'robotics']) require(\`${'${legacy}'}/\${layer}\`);
-require(\`${'${legacy}'}/${compat.deepSubpath}\`);
-
+const core = ${JSON.stringify(core.name)};
 for (const subpath of ${JSON.stringify(['styles.css', tokenFile, assetFile])}) {
-  const resolved = import.meta.resolve(\`${'${legacy}'}/\${subpath}\`);
+  const resolved = import.meta.resolve(\`${'${core}'}/\${subpath}\`);
   await access(new URL(resolved));
 }
 console.log('workspace artifact consumer smoke passed');
@@ -772,7 +754,7 @@ async function main() {
       console.log(`Preserved verified LDS workspace package set: ${path.relative(repositoryRoot, runDirectory).replaceAll('\\', '/')}`);
     }
     completed = true;
-    console.log('LDS package set verified: Core/Theme/Product ESM+types, compat ESM+CJS, generated adoption documentation, the locked external Robotics tarball, and isolated consumer smoke passed.');
+    console.log('LDS package set verified: Core/Theme/Product ESM+types, generated adoption documentation, the locked external Robotics tarball, and isolated consumer smoke passed.');
   } finally {
     if (!persistent || !completed) {
       const relative = path.relative(artifactRoot, runDirectory);

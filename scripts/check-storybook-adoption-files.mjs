@@ -16,7 +16,6 @@ const bundles = [
   { packageId: 'core', deployedPrefix: '' },
   { packageId: 'theme', deployedPrefix: 'packages/theme' },
   { packageId: 'product', deployedPrefix: 'packages/product' },
-  { packageId: 'compat', deployedPrefix: 'packages/compat' },
 ];
 const pairs = [];
 let projectedFileCount = 0;

@@ -59,22 +59,9 @@ const packages = [
     external: true,
     docsOrigin: 'https://lk-design-system.github.io/lk-design-system-robotics/',
   },
-  {
-    id: 'compat',
-    layer: 'compatibility',
-    name: '@lk-design-system/design-system-core',
-    dependencies: [
-      '@lk-design-system/lds-core',
-      '@lk-design-system/lds-theme',
-      '@lk-design-system/lds-product',
-      '@lk-design-system/lds-robotics-ui',
-    ],
-    resources: ['styles.css', 'tokens', 'assets'],
-    docsOrigin: 'https://lk-design-system.github.io/lk-design-system/',
-  },
 ];
 
-const implementationPackages = packages.filter(({ id }) => id !== 'compat');
+const implementationPackages = packages;
 const implementationNames = new Set(implementationPackages.map(({ name }) => name));
 const documentationExports = {
   './package.json': './package.json',
@@ -176,7 +163,7 @@ function validateImplementationExports(manifest, packageInfo) {
       continue;
     }
     if (!target.types || !target.import) fail(`${packageInfo.name}: ${key} must provide types and import targets.`);
-    if ('require' in target) fail(`${packageInfo.name}: ${key} must not expose CommonJS; CJS belongs only to compat.`);
+    if ('require' in target) fail(`${packageInfo.name}: ${key} must not expose CommonJS.`);
   }
 
   if (stringsIn(manifest.exports).some((target) => target.endsWith('.cjs')) || manifest.main?.endsWith('.cjs')) {
@@ -411,23 +398,6 @@ async function validateExternalDocumentation(packageInfo) {
   }
 }
 
-function validateCompatExports(manifest) {
-  const conditional = ['.', './core', './theme', './product', './robotics', './components/*'];
-  for (const key of conditional) {
-    const target = manifest.exports?.[key];
-    if (!target || typeof target !== 'object') {
-      fail(`@lk-design-system/design-system-core: exports is missing conditional entry ${key}.`);
-      continue;
-    }
-    for (const condition of ['types', 'import', 'require']) {
-      if (!target[condition]) fail(`@lk-design-system/design-system-core: ${key} is missing ${condition}.`);
-    }
-  }
-  for (const key of ['./styles.css', './tokens/*', './assets/*']) {
-    if (!(key in (manifest.exports ?? {}))) fail(`@lk-design-system/design-system-core: exports is missing ${key}.`);
-  }
-}
-
 async function walkFiles(directory) {
   if (!(await exists(directory))) return [];
   const files = [];
@@ -451,21 +421,14 @@ async function validateBuild(packageInfo, publicRows) {
     return;
   }
 
-  const expected = packageInfo.id === 'compat'
-    ? (await walkFiles(path.join(packageRoot, 'src')))
-      .filter((file) => file.endsWith('.js'))
-      .flatMap((file) => {
-        const relative = path.relative(path.join(packageRoot, 'src'), file).replace(/\.js$/, '');
-        return [`${relative}.js`, `${relative}.cjs`, `${relative}.d.ts`];
-      })
-    : [
-      'index.js',
-      'index.d.ts',
-      ...publicRows.flatMap(({ source }) => {
-        const relative = source.replace(/^\.\//, '').replace(/\.jsx$/, '');
-        return [`${relative}.js`, `${relative}.d.ts`];
-      }),
-    ];
+  const expected = [
+    'index.js',
+    'index.d.ts',
+    ...publicRows.flatMap(({ source }) => {
+      const relative = source.replace(/^\.\//, '').replace(/\.jsx$/, '');
+      return [`${relative}.js`, `${relative}.d.ts`];
+    }),
+  ];
 
   const missing = [];
   for (const relative of new Set(expected)) {
@@ -477,68 +440,8 @@ async function validateBuild(packageInfo, publicRows) {
     fail(`${packageInfo.name}: ${missing.length} built artifact(s) are missing (${sample}${remainder}); run npm run build:workspaces.`);
   }
 
-  if (packageInfo.id !== 'compat') {
-    const cjsFiles = (await walkFiles(dist)).filter((file) => file.endsWith('.cjs'));
-    if (cjsFiles.length > 0) fail(`${packageInfo.name}: implementation dist contains CommonJS files (${cjsFiles.length}).`);
-  }
-}
-
-async function validateFacade(ownershipRows) {
-  const compatRoot = path.join(root, 'packages', 'compat', 'src');
-  const files = (await walkFiles(compatRoot)).filter((file) => /\.(?:js|d\.ts)$/.test(file));
-  if (files.length === 0) {
-    fail('Compatibility facade has no source files; run npm run generate:compat-facade.');
-    return;
-  }
-
-  const expectedDeepSpecifiers = new Set(
-    ownershipRows.map(({ packageName, source }) => `${packageName}/${source.replace(/^\.\//, '').replace(/\.jsx$/, '')}`),
-  );
-  const expectedFacades = new Map([
-    ['index', implementationPackages.map(({ name }) => name)],
-    ...implementationPackages.map(({ layer, name }) => [layer, [name]]),
-    ...ownershipRows.map(({ packageName, source }) => [
-      source.replace(/^\.\//, '').replace(/\.jsx$/, ''),
-      [`${packageName}/${source.replace(/^\.\//, '').replace(/\.jsx$/, '')}`],
-    ]),
-  ]);
-  const seenDeepSpecifiers = new Set();
-
-  for (const file of files) {
-    const source = await readFile(file, 'utf8');
-    const statements = source.split(/\r?\n/)
-      .map((line) => line.trim())
-      .filter((line) => line && !line.startsWith('//'));
-    if (statements.length === 0) fail(`${path.relative(root, file)}: facade file has no re-export.`);
-    const actualSpecifiers = [];
-    for (const statement of statements) {
-      const match = statement.match(/^export \* from ['"]((?:@lk-design-system|@lk-robotics)\/lds-(?:core|theme|product|robotics-ui)(?:\/components\/[^'"]+)?)['"];$/);
-      if (!match) {
-        fail(`${path.relative(root, file)}: facade source may contain only implementation-package re-exports (${statement}).`);
-        continue;
-      }
-      actualSpecifiers.push(match[1]);
-      if (match[1].includes('/components/')) seenDeepSpecifiers.add(match[1]);
-    }
-    const relative = path.relative(compatRoot, file).replaceAll('\\', '/').replace(/(?:\.d\.ts|\.js)$/, '');
-    const expectedSpecifiers = expectedFacades.get(relative);
-    if (!expectedSpecifiers) fail(`${path.relative(root, file)}: unexpected compatibility facade file.`);
-    else if (JSON.stringify([...actualSpecifiers].sort()) !== JSON.stringify([...expectedSpecifiers].sort())) {
-      fail(`${path.relative(root, file)}: re-exports ${actualSpecifiers.join(', ') || '(none)'}; expected ${expectedSpecifiers.join(', ')}.`);
-    }
-  }
-
-  for (const specifier of expectedDeepSpecifiers) {
-    if (!seenDeepSpecifiers.has(specifier)) fail(`Compatibility facade is missing deep re-export ${specifier}.`);
-  }
-  for (const specifier of seenDeepSpecifiers) {
-    if (!expectedDeepSpecifiers.has(specifier)) fail(`Compatibility facade has unexpected deep re-export ${specifier}.`);
-  }
-
-  const jsFiles = new Set(files.filter((file) => file.endsWith('.js')).map((file) => file.replace(/\.js$/, '')));
-  const declarationFiles = new Set(files.filter((file) => file.endsWith('.d.ts')).map((file) => file.replace(/\.d\.ts$/, '')));
-  for (const stem of jsFiles) if (!declarationFiles.has(stem)) fail(`${path.relative(root, stem)} is missing its .d.ts facade pair.`);
-  for (const stem of declarationFiles) if (!jsFiles.has(stem)) fail(`${path.relative(root, stem)} is missing its .js facade pair.`);
+  const cjsFiles = (await walkFiles(dist)).filter((file) => file.endsWith('.cjs'));
+  if (cjsFiles.length > 0) fail(`${packageInfo.name}: implementation dist contains CommonJS files (${cjsFiles.length}).`);
 }
 
 const classification = await readJson(
@@ -588,8 +491,7 @@ for (const packageInfo of packages) {
     if (manifest.dependencies?.[dependency] !== expectedVersion) fail(`${packageInfo.name}: ${dependency} must use release version ${expectedVersion}.`);
   }
 
-  if (packageInfo.id === 'compat') validateCompatExports(manifest);
-  else validateImplementationExports(manifest, packageInfo);
+  validateImplementationExports(manifest, packageInfo);
   if (packageInfo.id === 'product') await validateStorybookSurface(manifest);
   await validateDocumentationSurface(manifest, packageInfo);
 
@@ -600,11 +502,9 @@ for (const packageInfo of packages) {
     if (!(exportKey in (manifest.exports ?? {}))) fail(`${packageInfo.name}: exports is missing ${exportKey}.`);
   }
 
-  if (packageInfo.id !== 'compat') {
-    const publicRows = await readPublicEntry(path.join(packageRoot, 'src', 'index.js'), `${packageInfo.name} public entry`);
-    for (const row of publicRows) ownershipRows.push({ ...row, owner: packageInfo.layer, packageName: packageInfo.name });
-    await validateBuild(packageInfo, publicRows);
-  }
+  const publicRows = await readPublicEntry(path.join(packageRoot, 'src', 'index.js'), `${packageInfo.name} public entry`);
+  for (const row of publicRows) ownershipRows.push({ ...row, owner: packageInfo.layer, packageName: packageInfo.name });
+  await validateBuild(packageInfo, publicRows);
 }
 
 if (classification) {
@@ -633,10 +533,6 @@ if (classification) {
   }
 }
 
-await validateFacade(ownershipRows);
-const compat = packages.find(({ id }) => id === 'compat');
-await validateBuild(compat, []);
-
 for (const note of notes) console.log(`NOTE: ${note}`);
 if (errors.length > 0) {
   console.error(`Workspace package check failed with ${errors.length} issue(s):`);
@@ -644,5 +540,5 @@ if (errors.length > 0) {
   process.exitCode = 1;
 } else {
   const checkedSurface = sourceOnly ? 'source contracts' : 'source contracts and available build outputs';
-  console.log(`Workspace package check passed: ${packages.length} manifests, ${ownershipRows.reduce((count, row) => count + row.names.length, 0)} owned exports, generated adoption documentation, compatibility facade, and ${checkedSurface}.`);
+  console.log(`Workspace package check passed: ${packages.length} manifests, ${ownershipRows.reduce((count, row) => count + row.names.length, 0)} owned exports, generated adoption documentation, and ${checkedSurface}.`);
 }

@@ -75,25 +75,26 @@ const indexHtml = `<!doctype html>
 
 const appSource = `import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Button as RootButton } from '@lk-design-system/design-system-core';
 import {
   Badge,
   Button,
   Card,
   EmptyState,
   Toast,
-} from '@lk-design-system/design-system-core/core';
+} from '@lk-design-system/lds-core';
 import {
   ProductLockup,
   ThemeToggle,
-} from '@lk-design-system/design-system-core/theme';
+} from '@lk-design-system/lds-theme';
 import {
   Table,
   TopBar,
   TopBarNavItem,
-} from '@lk-design-system/design-system-core/product';
-import { RobotStatusCard } from '@lk-design-system/design-system-core/robotics';
-import '@lk-design-system/design-system-core/styles.css';
+} from '@lk-design-system/lds-product';
+import { RobotStatusCard } from '@lk-design-system/lds-robotics-ui';
+import '@lk-design-system/lds-core/styles.css';
+import '@lk-design-system/lds-theme/styles.css';
+import '@lk-design-system/lds-product/styles.css';
 
 const rows = [
   { id: 'RB-01', status: '정상', battery: '82%' },
@@ -120,7 +121,7 @@ function App() {
           <h1 style={{ marginTop: 0 }}>LK 디자인 시스템 소비 앱 스모크</h1>
           <p>패키지명 import, styles.css export, React 컴포넌트 조합이 소비 앱 번들에서 동작해야 합니다.</p>
           <Button>운영 화면 열기</Button>
-          <RootButton variant="secondary">Root compatibility</RootButton>
+          <Button variant="secondary">보조 동작</Button>
         </Card>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 16 }}>
           <RobotStatusCard name="RB-01" status="online" battery={82} mode="순찰" selected />
@@ -176,7 +177,7 @@ async function main() {
 
   const uniqueConsoleErrors = [...new Set(consoleErrors)].filter((message) => !/ResizeObserver loop/.test(message));
   assert(uniqueConsoleErrors.length === 0, `Consumer smoke emitted console/page errors:\n${uniqueConsoleErrors.join('\n')}`);
-  console.log('Validated consumer smoke: aggregate compatibility plus Core/Theme/Product/Robotics imports, styles.css, Vite production build, and rendered operational page passed.');
+  console.log('Validated consumer smoke: Core/Theme/Product/Robotics imports, styles.css, Vite production build, and rendered operational page passed.');
 }
 
 main().catch((error) => {

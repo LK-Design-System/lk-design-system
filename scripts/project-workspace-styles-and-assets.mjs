@@ -158,19 +158,9 @@ await writeFile(path.join(root, 'packages', 'product', 'styles.css'), [
   '',
 ].join('\n'));
 
-await recreateDirectory(path.join(root, 'packages', 'compat', 'tokens'));
-await recreateDirectory(path.join(root, 'packages', 'compat', 'assets'));
-await cp(tokensRoot, path.join(root, 'packages', 'compat', 'tokens'), { recursive: true });
-await cp(assetsRoot, path.join(root, 'packages', 'compat', 'assets'), {
-  recursive: true,
-  filter: shouldProjectAsset,
-});
-await cp(path.join(root, 'styles.css'), path.join(root, 'packages', 'compat', 'styles.css'));
-
 await copyAssetDirectories('core', ['icons', 'source']);
 await copyAssetDirectories('theme', ['brand', 'fonts']);
 await copyAssetDirectories('product', ['industry', 'products', 'tech']);
 await assertPackageBrandProjection('theme');
-await assertPackageBrandProjection('compat');
 
-console.log('Projected Core, Theme, Product, and compatibility CSS/assets; Robotics UI owns its assets in the external repository.');
+console.log('Projected Core, Theme, and Product CSS/assets; Robotics UI owns its assets in the external repository.');

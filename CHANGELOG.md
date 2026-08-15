@@ -2,6 +2,26 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## Unreleased — ships as 0.1.0-rc.69.16
+
+Cutting this release also requires a paired `lds-robotics-ui` rc.16, because the
+vendored rc.15 embeds `lds-v0.1.0-rc.69.15` as the LDS release it was validated
+against and `check:type-surface` compares that against the workspace version.
+
+### Breaking
+
+- **`@lk-design-system/design-system-core` (compatibility facade) is removed.** This closes Wave 5 of the package separation plan, which had been open since the Wave 1 split. The facade re-exported Core, Theme, Product, and Robotics under one package name so the pre-split import paths kept working; every consumer has since moved to the owner packages. A scan of lk_portal, lk_vision (and its jetson/nxp/pi variants), lk_deviceops, lk_mlops, lk-chat-bot-gateway, and pet found zero references, run once on 2026-08-15 and again immediately before deletion. Anything still importing it should map the root and layer subpaths to the owner package and `components/*` to the same path on that owner.
+- Workspace packages are now ESM-only across the board. CommonJS output existed solely for the facade, so `tsup.workspace.config.ts` no longer builds a second format, and the consumer matrix no longer reports a `cjs` check — it verifies ESM, deep-import identity, and SSR against the real packages instead.
+
+### Changed
+
+- Checks that were written around the facade now target the owner packages directly: the consumer smoke app, the packed-artifact static subpath smoke (now anchored on Core, which packs the same resource kinds), the two WDS rendered-style measurements, and the React 18/19 consumer type contract. The type contract lost its facade-only cases; deep-import coverage survives through `@lk-design-system/lds-core/components/buttons/Button`.
+- The consumer matrix took the Robotics version from the facade's dependency range. That range is gone, so it now reads `ROBOTICS_EXTERNAL_SURFACE.json` for the repository-side check and the locked package set for the installed-package check.
+
+### Note
+
+`scripts/check-package-artifact.mjs` and the three `*:pack:baseline` scripts only ever verified the aggregate package, so they are now dead. They are deliberately left in place: `check:package-migration` asserts their presence as part of the Wave 0 provenance chain, and retiring them means changing that historical evidence model, which is a separate decision.
+
 ## 0.1.0-rc.69.15 - 2026-08-15
 
 - Public Storybook copy: the Wizard accessibility guide named `docs/GUIDED_CREATION_PATTERN.md` as the owner of the multi-step form composition rules, which `check:storybook-public` rejects under both its repository-path and repository-filename rules. This had been failing on `main` since at least rc.69.7, and because it sits in `check:storybook-ci` it also hid `check:a11y` and `check:visual-regression` — neither had run for days. Fixed at the publication boundary in `publicGuideText()`, matching the existing substitutions for `PROSESURFACEPROPOSAL.md`, `tokens/focus.css`, and `TOKENGOVERNANCE.md`, so the prompt keeps the exact path for maintainers and only the public sentence loses it. The two hidden checks pass: a11y clean, and all 41 visual smoke screenshots within tolerance (max 0.054%).

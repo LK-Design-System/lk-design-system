@@ -4,7 +4,7 @@ import path from 'node:path';
 
 const root = process.cwd();
 const registry = 'https://npm.pkg.github.com';
-const packageIds = ['core', 'theme', 'product', 'compat'];
+const packageIds = ['core', 'theme', 'product'];
 const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
 function assert(condition, message) {

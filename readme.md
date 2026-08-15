@@ -109,15 +109,16 @@ import '@lk-design-system/lds-robotics-ui/styles.css';
 
 새 코드는 `@lk-design-system/lds-core`, `@lk-design-system/lds-theme`,
 `@lk-design-system/lds-product`, `@lk-design-system/lds-robotics-ui`의 public export를
-사용합니다. 기존 `@lk-design-system/design-system-core` root, layer subpath,
-`components/*`, CSS, token, asset 경로는 migration support window 동안
-compatibility facade로 유지합니다.
+사용합니다. 과거의 `@lk-design-system/design-system-core` compatibility facade는
+migration support window가 끝나 2026-08-16에 제거됐습니다. 아직 그 패키지를 참조하는
+코드가 있다면 root와 layer subpath는 해당 owner 패키지로, `components/*`는 같은 경로의
+owner 패키지 deep import로 바꾸면 됩니다.
 
 패키지 메타데이터:
 
 - workspace root: `@lk-design-system/lds-workspace` (`private: true`; 현재 버전은 root `package.json`이 소유)
 - current packages: `@lk-design-system/lds-core`, `@lk-design-system/lds-theme`,
-  `@lk-design-system/lds-product`, `@lk-design-system/design-system-core` compatibility facade
+  `@lk-design-system/lds-product`
   (각 현재 버전은 package manifest가 소유)
 - external Robotics: `@lk-design-system/lds-robotics-ui`,
   `LK-Design-System/lk-design-system-robotics`

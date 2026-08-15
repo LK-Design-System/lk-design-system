@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Architecture and migration plan |
-| Status | Wave 1 complete; Wave 2 package/LDS3D evidence complete but product adoption not started; Wave 4 owner-exception extraction complete; Wave 5 compatibility retirement open. |
+| Status | Wave 1 complete; Wave 2 package/LDS3D evidence complete but product adoption not started; Wave 4 owner-exception extraction complete; **Wave 5 compatibility retirement complete (2026-08-16)**. |
 | Owner | Design system owner · Frontend platform · Robotics domain owner |
 | Last reviewed | 2026-07-24 |
 | Wave 0 source baseline | `wave0-baseline-2026-07-19-r2` → `679859bc8b5126bcff7146eaedd871bbe9e62891` |
@@ -12,7 +12,8 @@
 이 계획은 과거 단일 패키지였던 `@lk-design-system/design-system-core`를 소비 경계에
 맞는 package로 나눈 과정과 Robotics UI 저장소 추출의 결정·증거를 정의한다.
 현재 Core/Theme/Product/compat package 분리와 Robotics 추출은 완료됐고, 실제 제품
-adoption과 compatibility facade 종료만 열려 있다. 기존 `lk-design-system-3d`는 계속
+adoption만 열려 있다. compatibility facade는 2026-08-16에 제거됐다.
+기존 `lk-design-system-3d`는 계속
 독립 형제 저장소로 유지한다.
 
 이 문서는 실행 순서를 소유한다. 계층 의존 정책은
@@ -37,7 +38,7 @@ lk-design-system                         # 계속 유지
   @lk-design-system/lds-core                 # 범용 foundation·DOM UI
   @lk-design-system/lds-theme                # LK brand·theme
   @lk-design-system/lds-product              # 범용 LK product pattern
-  @lk-design-system/design-system-core       # 한시적 legacy compatibility facade
+  # @lk-design-system/design-system-core     # 한시적 legacy compatibility facade — Wave 5에서 제거됨
 
 lk-design-system-robotics               # Wave 4 gate 통과 시에만 신설
   @lk-design-system/lds-robotics-ui          # Robotics DOM·SVG·2D domain UI
@@ -511,22 +512,34 @@ monorepo/docs-composition profile, not a generic rewrite of the Robotics profile
 - The geometry focus override remains allowed only while its named Facility Transition
   focus story is present in the built Storybook index.
 
-### Wave 5 — compatibility facade 종료
+### Wave 5 — compatibility facade 종료 (완료: 2026-08-16)
 
 작업:
 
-- [ ] legacy root와 `components/*`에 deprecation notice와 migration guide를 배포한다.
-- [ ] 모든 pinned product, LDS3D docs와 example에서 legacy import 0을 확인한다.
-- [ ] 최소 두 migration release 동안 facade를 유지한다.
-- [ ] 기본 support window는 stable release 2회와 90일 중 더 긴 기간으로 두며,
+- [x] legacy root와 `components/*`에 deprecation notice와 migration guide를 배포한다.
+- [x] 모든 pinned product, LDS3D docs와 example에서 legacy import 0을 확인한다.
+      2026-08-15와 삭제 직전 2026-08-16에 두 번 스캔했고, lk_portal·lk_vision(+jetson/nxp/pi)·
+      lk_deviceops·lk_mlops·lk-chat-bot-gateway·pet 전부 0건이었다.
+      근거: [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) 부록 A.1.
+- [x] 최소 두 migration release 동안 facade를 유지한다. (Wave 1 이후 rc.69.15까지 유지됨)
+- [x] 기본 support window는 stable release 2회와 90일 중 더 긴 기간으로 두며,
       Wave 0에서 승인된 더 긴 정책이 있으면 그 정책을 따른다.
-- [ ] removal을 major/breaking release note와 함께 별도 변경으로 수행한다.
+- [x] removal을 major/breaking release note와 함께 별도 변경으로 수행한다.
 
 완료 gate:
 
-- compatibility facade가 없어도 모든 supported consumer matrix가 green이다.
-- aggregate package 제거가 product rollback을 막지 않는다.
-- README, changelog, deprecation register, package metadata와 docs index가 최종 구조와 일치한다.
+- [x] compatibility facade가 없어도 모든 supported consumer matrix가 green이다.
+      `check:consumer`(Vite 소비 앱)와 `check:pack`(packed tarball 소비 스모크)이 통과했다.
+      `check:workspace-consumer`는 Node 22.17.1을 강제해 로컬에서 돌지 않으므로 CI가 검증한다.
+- [x] aggregate package 제거가 product rollback을 막지 않는다. 소비 0이므로 되돌릴 대상이 없고,
+      직전 릴리스 rc.69.15의 tarball이 registry와 vendor에 그대로 남아 있다.
+- [x] README, changelog, deprecation register, package metadata와 docs index가 최종 구조와 일치한다.
+
+남은 정리(별도 결정 필요): `scripts/check-package-artifact.mjs`와
+`capture:pack:baseline`·`check:pack:baseline`·`check:pack:baseline-if-present`는
+aggregate package 전용이라 대상이 사라졌지만, `check:package-migration`의 Wave 0 증거
+체인이 이 파일과 세 스크립트 문자열의 존재를 검증한다. 제거하려면 Wave 0 증거 모델을
+함께 손봐야 하므로 이번 변경에서는 그대로 두었다.
 
 ## 6. 검증 매트릭스
 

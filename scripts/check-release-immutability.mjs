@@ -3,7 +3,7 @@ import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 
 const root = process.cwd();
-const releasePackages = ['core', 'theme', 'product', 'compat'];
+const releasePackages = ['core', 'theme', 'product'];
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);

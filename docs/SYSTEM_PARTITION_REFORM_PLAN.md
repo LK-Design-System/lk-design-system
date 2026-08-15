@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Architecture reform proposal |
-| Status | Phase 0 완료 · Phase 1 완료(2026-08-15). Phase 2 이후는 승인 전 실행 금지. R1은 기존 분리 계획 Wave 5의 실행안을 겸한다. |
+| Status | Phase 0·1 완료(2026-08-15) · **Phase 2의 R1-3 완료(2026-08-16, compat 삭제)**. R1-4(퍼블리시 중단)는 rc.69.16 릴리스에서 확정되며 robotics rc.16 짝맞춤이 선행돼야 한다. R2-1·R2-2는 Phase 1에서 워크스페이스가 이미 충족함을 확인했고 위성 확장은 Phase 3. |
 | Owner | Design system owner · Frontend platform |
 | Last reviewed | 2026-08-15 |
 | 근거 소비자 | [`lk-design-system-motion`](https://github.com/LK-Design-System/lk-design-system-motion) — 2026-08-15 신규 위성이 LDS를 외부 런타임(헤드리스 영상 렌더러)에서 소비하며 수집한 실측 증거 |
@@ -350,6 +350,59 @@ B.4에 기록했던 대체 검증은 이제 실측으로 대체됐다.
 상호 참조 6, 스타일 계약 4, robotics tarball·참조 3, 외부 표면 파생값 10,
 vendor README 3, CHANGELOG 1), 자동 생성 스크립트는 없다. 이는 R4-2(핀 정렬
 캐덴스)에 **릴리스 파생값 재계산 스크립트**를 후속 항목으로 추가할 근거다.
+
+---
+
+## 부록 C. Phase 2 실행 기록 (2026-08-16) — R1-3 compat 삭제
+
+부록 A.1의 소비 0 판정을 삭제 직전에 재확인하고(제품 9곳 전부 0건) 진행했다.
+
+**접근 전환.** 처음에는 compat 참조를 파일마다 찾아 고치려 했으나, 조사 결과
+21개 파일에 남아 있었고 그중 다수가 **과거 상태를 서술하는 기록**(Wave 0 증거
+조립·검증, 레거시 소비자 스캐너, 마이그레이션 감사)이었다. 그런 파일을 고치면
+기록이 틀려진다. 그래서 **패키지를 먼저 삭제하고 실제로 깨지는 것만 고치는**
+방식으로 바꿨다. 결과적으로 손대야 했던 것은 아래 뿐이고, 역사 기록 계열은
+하나도 건드리지 않았다.
+
+| 대상 | 처리 |
+| --- | --- |
+| `packages/compat` (2,689 파일) · `scripts/generate-compat-facade.mjs` | 삭제 |
+| `tsup.workspace.config.ts` | ESM/CJS 이중 빌드, 조건부 splitting·clean, 번들 예외 로직 제거 — 설정이 절반으로 줄었다 |
+| 빌드·프로젝션 4종 | compat 대상 제거 (`build-workspace-packages`, `copy-workspace-types`, `project-workspace-styles-and-assets`, `project-package-docs`) |
+| 검사 6종 | compat 서술자·분기·전용 함수 제거 (`check-workspace-packages`의 `validateFacade`/`validateCompatExports` 59줄 포함) |
+| 소비 검증 4종 | facade 경유 import를 owner 패키지로 재작성 (`check-consumer-smoke`, `check-workspace-consumer-matrix`, WDS 렌더 스타일 2종) |
+| 타입 계약 | React 18/19 소비자 계약에서 facade 전용 케이스 제거; deep import 검증은 `lds-core/components/...`로 유지 |
+
+**설계 판단 3건**
+
+1. **CJS 검증 제거.** CommonJS는 facade만의 산출물이었다. 워크스페이스가 ESM
+   전용이 되었으므로 소비자 매트릭스의 `cjs` 항목을 지웠다 — 하지 않은 검증을
+   `passed`로 보고하지 않기 위해서다. 대신 ESM 경로에 SSR과 deep-import 동일성
+   검증을 옮겨 커버리지를 유지했다.
+2. **robotics 버전 대조의 근거 이동.** facade가 워크스페이스에서 유일하게
+   robotics를 의존 선언했기 때문에 그 범위가 대조 기준이었다. 이제
+   `ROBOTICS_EXTERNAL_SURFACE.json`(저장소 측)과 잠긴 package set(설치 측)이
+   기준이다.
+3. **정적 경로 스모크의 기준 패키지.** facade가 모든 리소스를 담았기에 기준이
+   었으나, Core가 같은 세 종류(styles/tokens/assets)를 담으므로 Core로 옮겼다.
+
+**되돌린 것 1건.** `scripts/check-package-artifact.mjs`와 세 개의
+`*:pack:baseline` 스크립트는 aggregate 패키지 전용이라 함께 지웠으나,
+`check:package-migration`이 **Wave 0 증거 체인으로 이 파일과 세 스크립트 문자열의
+존재를 검증**하고 있었다. 역사 증거 모델을 손대는 것은 R1-3 범위 밖이라 복원했다.
+지금은 대상이 없어 동작할 수 없는 죽은 코드이며, 정리하려면 Wave 0 증거 모델
+변경을 별도로 결정해야 한다.
+
+**검증**: `check:fast`가 `check:release-immutability`(태그 이후 커밋의 구조적
+실패)까지 도달, `check:pack`·`check:consumer`·`check:type-consumer`·
+`check:package-migration` 통과. `check:workspace-consumer`는 Node 22.17.1을
+강제해 로컬에서 실행되지 않으므로 CI가 검증한다.
+
+**R1-4 잔여**: 퍼블리시 중단은 rc.69.16 릴리스로 확정된다. 그런데 vendored
+robotics rc.15가 `lds-v0.1.0-rc.69.15`를 박고 있어, 버전을 올리는 순간
+`check:type-surface`가 실패한다 — **LDS 릴리스가 robotics 릴리스를 강제하는
+구조**다. R4-2가 지적한 위성 결합이 릴리스마다 재현되는 지점이고, 이번에는
+버전을 올리지 않고 코드 변경만 커밋했다.
 
 ### B.5 부수 발견 — compat 삭제 시 함께 고쳐야 하는 것
 
