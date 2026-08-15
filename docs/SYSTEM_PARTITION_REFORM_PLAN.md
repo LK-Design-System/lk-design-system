@@ -156,7 +156,7 @@ R2-5가 이 개편의 핵심 가드다. 1.2의 함정들은 전부 "우리 환�
 | 계약 | 내용 |
 | --- | --- |
 | R4-1 승격 (alpha→rc) | 조건 3개 전부: ① 소비자(제품 또는 다른 위성) 1개 이상 ② 콜드 클론 CI 존재 ③ 코어 핀이 현행 릴리스 라인 기준 2 rc 이내 |
-| R4-2 핀 정렬 캐덴스 | LDS rc 릴리스 레시피에 "활성 위성 핀 범프 또는 스킵 사유 기록" 단계를 추가한다. 스킵은 가능하되 침묵은 불가. 분기마다 전 위성 핀 리포트를 `docs/references/`에 갱신 |
+| R4-2 핀 정렬 캐덴스 | LDS rc 릴리스 레시피에 "활성 위성 핀 범프 또는 스킵 사유 기록" 단계를 추가한다. 스킵은 가능하되 침묵은 불가. 분기마다 전 위성 핀 리포트를 `docs/references/`에 갱신. **추가(rc.69.15 실측): 릴리스 파생값 재계산 스크립트(`update:release-pins` 가칭)를 만든다.** 지금은 버전 하나를 올릴 때 32곳을 손으로 고쳐야 하고 그중 다수가 sha256이라, 자동 계산이 가능한데도 사람이 옮겨 적고 있다. 대상: 워크스페이스 상호 참조, `ROBOTICS_EXTERNAL_SURFACE.json` 파생값, `CROSS_REPOSITORY_STYLE_CONTRACT.json` 위성 버전, `vendor/README.md` |
 | R4-3 아카이브 | 릴리스 사이클 2회(약 2분기) 연속으로 소비자 0 && 커밋 0이면 아카이브를 기본값으로 심사한다. infographics가 첫 적용 사례 |
 | R4-4 core 잔류 조건의 데이터화 | `COVERAGE_AUDIT.json`을 근거로 "core 컴포넌트는 소비 제품 2개 이상, 미달이면 product행"을 기계 검사로 제안한다. 기존 사람 순찰(COMPONENT_WORKFLOW 게이트)을 대체하지 않고, 순찰 대상을 미달 컴포넌트로 좁히는 필터로 도입한다 |
 
@@ -335,9 +335,21 @@ CI에서 신호를 받지 못하는 동안의 대체 검증:
 | npm 버전 차이 | CI는 npm 10.9.2, 로컬은 11.16.0. 위험 지점인 `npm pack --json`을 `npx npm@10.9.2`로 직접 확인 — stdout이 순수 JSON이라 `JSON.parse(stdout)`가 그대로 동작한다. 나머지 플래그(`--ignore-scripts`, `--pack-destination`, `--no-audit`, `--no-fund`, `--cache`)는 npm 10 지원 범위다 |
 | Node 버전 차이 | CI는 22.17.1, 로컬은 24.18.0. 스크립트는 `mkdtempSync`/`execFileSync`/`execSync`만 쓰며 22에서 전부 안정 API다 |
 
-**후속(이 계획 범위 밖):** `check:storybook-public` 실패는 Storybook 카피
-소유 영역의 문제로 별도 처리가 필요하다. 그것이 해소돼야
-`check:consumer-toolchain`이 CI에서 처음 실행된다.
+**해소됨(2026-08-15, rc.69.15).** `check:storybook-public` 실패는 Wizard
+접근성 가이드가 내부 문서 경로를 공개 문구로 노출한 것이었고,
+`publicGuideText()`의 기존 치환 관례를 따라 공개 경계에서 걸러 해결했다.
+이어서 rc.69.15 릴리스로 `check:release-immutability`까지 해소돼
+**CI가 초록으로 전환됐다**(`69e6035e`). 최근 14회 연속 실패 이후 첫 성공이다.
+
+`check:consumer-toolchain`은 이 런에서 **CI에서 처음 실행되어 통과**했다
+(Design system checks 잡, 약 86초: 콜드 설치 67초 + tsc 5초 + webpack 7초).
+B.4에 기록했던 대체 검증은 이제 실측으로 대체됐다.
+
+같은 릴리스에서 위성 짝맞춤의 실제 비용이 드러났다 — 버전 하나를 올리는 데
+손으로 유지되는 기록 32곳을 갱신해야 했고(package.json 5, 워크스페이스
+상호 참조 6, 스타일 계약 4, robotics tarball·참조 3, 외부 표면 파생값 10,
+vendor README 3, CHANGELOG 1), 자동 생성 스크립트는 없다. 이는 R4-2(핀 정렬
+캐덴스)에 **릴리스 파생값 재계산 스크립트**를 후속 항목으로 추가할 근거다.
 
 ### B.5 부수 발견 — compat 삭제 시 함께 고쳐야 하는 것
 
