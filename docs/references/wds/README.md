@@ -1,14 +1,29 @@
-# WDS Reference
+# WDS Reference (역사 아카이브 — 2026-08-16 재앵커링)
 
-This folder stores Wanted Design System reference material used by the LK
+> **이 폴더는 2026-08-16부로 역사 기록이다.** 치수·해부학·파운데이션 값의
+> 살아있는 권위는 [`../lds-baseline/`](../lds-baseline/README.md)의 LDS 소유
+> 기준선으로 이동했다 (재앵커링 결정:
+> [`OPERATING_MODEL.md`](../../OPERATING_MODEL.md) "Reference authority").
+> 채택 시점에 기준선은 이 아카이브의 추출본과 바이트 단위로 같았다 —
+> 재앵커링은 값이 아니라 근거를 바꿨다.
+>
+> 이 아카이브가 계속 답하는 질문은 **"이 값은 어디서 왔나"**(출처)이지,
+> **"이 값이 맞나"**(권위)가 아니다. provenance 분류 4종(`WDS Core` /
+> `LK Theme Override` / `LK Product Extension` / `LK Robotics Extension`)은
+> 설계 근거의 역사로 유지된다. `check:wds-local-fig`는 이 아카이브의 내부
+> 정합성(기록 무결성)을 지키는 검사이지, 현행 토큰의 정오를 판정하지 않는다.
+
+This folder stores Wanted Design System reference material that seeded the LK
 ROBOTICS design system.
 
-## Relationship
+## Relationship (historical)
 
-LDS, the LK Design System, uses WDS Community as the baseline for structure,
-generic component families, token hierarchy, and documentation conventions.
-LDS then applies LK ROBOTICS brand decisions and separates additional product or
-robotics work into explicit extension layers.
+LDS, the LK Design System, used WDS Community as the bootstrap baseline for
+structure, generic component families, token hierarchy, and documentation
+conventions. LDS then applied LK ROBOTICS brand decisions and separated
+additional product or robotics work into explicit extension layers. Since the
+2026-08-16 re-anchoring, LDS is its own reference; this relationship describes
+origin, not current authority.
 
 Runtime ownership (`core`, `theme`, `product`, `robotics`) and design provenance
 are independent axes. `PUBLIC_EXPORT_CLASSIFICATION.json` is authoritative for

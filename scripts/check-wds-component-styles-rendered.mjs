@@ -1,13 +1,14 @@
 /**
- * Rendered WDS↔LDS component STYLE parity (reliable measurement harness).
+ * Rendered LDS component dimension baseline check (measurement harness).
  *
  * Builds a tiny consumer app that renders each target component at its default,
  * each wrapped in <div data-measure="Name">, Vite-builds it, serves it, and uses
  * Playwright (Chromium) to read the real computed style of the component root —
- * then diffs radius/padX/height/font against the authoritative WDS styles from
- * the .fig (docs/references/wds/COMPONENT_STYLES.json). Reliable because the
- * wrapper is controlled and the component is its direct child (no ad-hoc
- * selectors). Colors are an intentional LK rebrand and are not diffed.
+ * then diffs radius/padX/height/font against the LDS-owned dimension baseline
+ * (docs/references/lds-baseline/COMPONENT_DIMENSIONS.json, adopted 2026-08-16
+ * from the WDS parity extraction). Reliable because the wrapper is controlled
+ * and the component is its direct child (no ad-hoc selectors). Colors were
+ * already LK-owned and are not diffed.
  *
  *   node scripts/check-wds-component-styles-rendered.mjs [--check]
  */
@@ -25,7 +26,7 @@ const root = process.cwd();
 const appDir = path.join(root, 'visual-artifacts', 'style-measure');
 const srcDir = path.join(appDir, 'src');
 const outDir = path.join(appDir, 'dist');
-const wds = JSON.parse(readFileSync('docs/references/wds/COMPONENT_STYLES.json', 'utf8'));
+const wds = JSON.parse(readFileSync('docs/references/lds-baseline/COMPONENT_DIMENSIONS.json', 'utf8')).sets;
 
 // name -> { wds set, JSX render, what to measure (root|innerBoxSelector), which dims to diff }
 const TARGETS = [
@@ -117,8 +118,8 @@ s.close();
 
 const near = (a, b, tol) => a != null && b != null && Math.abs(a - b) <= tol;
 let drift = 0;
-console.log('Rendered WDS↔LDS style parity (measured via Playwright)\n');
-console.log('component'.padEnd(18), 'field'.padEnd(9), 'WDS'.padEnd(6), 'LDS'.padEnd(6), 'verdict');
+console.log('Rendered LDS dimension baseline (measured via Playwright)\n');
+console.log('component'.padEnd(18), 'field'.padEnd(9), 'base'.padEnd(6), 'LDS'.padEnd(6), 'verdict');
 for (const t of TARGETS) {
   const w = wds[t.set]; const l = measured[t.name];
   if (!w || !l) { console.log(t.name.padEnd(18), '(no data)'); continue; }

@@ -80,8 +80,8 @@ for (const m of MAP) {
     rows.push([`${m.wds.split('/')[0]} ${key}`, wv, lv, ok ? '✅' : '❌']);
   }
 }
-console.log('WDS ↔ LDS component style (dimensions; colors excluded — LK rebrand)\n');
-console.log('field'.padEnd(28), 'WDS'.padEnd(8), 'LDS'.padEnd(8), 'verdict');
+console.log('LDS component dimension baseline (token layer; colors were already LK-owned)\n');
+console.log('field'.padEnd(28), 'base'.padEnd(8), 'LDS'.padEnd(8), 'verdict');
 for (const [f, w, l, v] of rows) console.log(String(f).padEnd(28), String(w).padEnd(8), String(l).padEnd(8), v || '');
 console.log(`\n${drift} dimensional drift(s).`);
 if (CHECK && drift) process.exit(1);

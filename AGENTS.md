@@ -49,11 +49,13 @@
 - Inspect and pin the actual repository revision and relevant frontend source before claiming `supported` or `supported by composition`. Missing source evidence means `unverified`, never assumed coverage; store pins and detailed results in `docs/references/product-frontends/COVERAGE_AUDIT.json` and `docs/PRODUCT_FRONTEND_COVERAGE.md`.
 - Keep product routes, backend/transport policy, domain state machines, and complete screens outside LDS. Final notes must identify the workflow seam, coverage classification, gaps, and LDS-versus-product ownership; automated component checks do not replace this review.
 
-## WDS Evidence Handling
+## Design Evidence Handling (WDS provenance is historical)
 
-- Reflect WDS source evidence in the existing LDS component/story that owns that component. Do not create a new Storybook page just to show comparison or audit data.
-- Do not present inferred behavior as WDS behavior. If the source PDF, screenshot, resource folder, or Figma node does not show it, label it as LDS compatibility or leave it out of the WDS-facing story.
-- Keep source evidence traceable in `docs/references/wds/` and guard important claims with scripts where practical.
+- **Since 2026-08-16, LDS is its own reference** (`docs/OPERATING_MODEL.md` "Reference authority"). The live authority for dimensions, anatomy, and foundation values is `docs/references/lds-baseline/`; `docs/references/wds/` is a historical archive that answers "where did this value come from", not "is this value correct".
+- Do not justify a new design decision with "WDS does it this way" — cite the LDS baseline, an existing LDS convention, or an authoritative external reference instead. WDS evidence remains valid as *provenance* when documenting why an existing surface looks the way it does.
+- Reflect historical WDS evidence in the existing LDS component/story that owns that component. Do not create a new Storybook page just to show comparison or audit data.
+- Do not present inferred behavior as WDS behavior. If the archived source PDF, screenshot, resource folder, or Figma node does not show it, label it as an LDS decision instead.
+- Keep archived source evidence traceable in `docs/references/wds/` and guard important claims with scripts where practical. Changing a baseline *value* in `docs/references/lds-baseline/` is a design-owner decision under the Scope Escalation Gate, recorded in that folder's README.
 
 ## New Component / Redesign Fit
 
@@ -89,12 +91,13 @@
 - Review geometry, asset provenance/accessibility, and the combined map hierarchy across representative zoom, width, appearance, collision, label, and interaction states. Compare the current and candidate treatments in real LK product density.
 - A visual difference without established LDS, product, accessibility, or authoritative external evidence is `provisional`, not finished. Record the evidence and decision in the component prompt or nearest stable contract.
 
-## Component Variant/Axis Parity — authoritative source (MANDATORY)
+## Component Variant/Axis Authority (MANDATORY)
 
-- A component's variant axes MUST be read from the `.fig` **internal component-set definition**: decode `docs/references/wds/Wanted Design System (Community).fig`, locate that one component's COMPONENT_SET (variant container), and read ONLY its own direct variant children / component-property definitions. Scope strictly to that component set.
-- Do NOT derive variant axes from `docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json` `variantAxes`. That extraction aggregates at the SECTION level and **bleeds adjacent components' axis values**, producing phantom axes. It is unreliable for per-component variant analysis (it is fine for foundations: typography, grid, color).
+- **A component's variant axes are owned by its LDS contract**: the component's props/state surface, its `.prompt.md`, and its Storybook stories. Since the 2026-08-16 re-anchoring, adding or removing an axis is an LDS design decision justified by LDS conventions, product need, or authoritative external references — not by matching WDS.
+- The `.fig` archive remains the authority **for historical questions only** ("did this axis exist in the source we adopted from"). When answering such a question, decode `docs/references/wds/Wanted Design System (Community).fig`, locate that one component's COMPONENT_SET (variant container), and read ONLY its own direct variant children / component-property definitions. Scope strictly to that component set.
+- Do NOT derive historical variant axes from `docs/references/wds/FIGMA_LOCAL_CONTENT_AUDIT.json` `variantAxes`. That extraction aggregates at the SECTION level and **bleeds adjacent components' axis values**, producing phantom axes. It is unreliable for per-component variant analysis (it is fine for foundations: typography, grid, color).
 - Do NOT treat rendered screenshots or PDF exports (`source-pdfs/`, `source-screenshots/`) as authoritative for axis completeness. They are rendered pictures of example pages, not the component's own variant definition — use them only as a secondary visual cross-check.
-- Before implementing a "missing variant/axis", confirm the value exists in that component set's own variant definition. If it cannot be confirmed there, it is NOT WDS parity: treat it as absent, or ship it only as an explicit, labeled LDS extension.
+- Do not label new work "WDS parity". A new axis ships as an LDS decision with its rationale in the component `.prompt.md`; the historical provenance label stays on surfaces that actually came from the archive.
 
 ## Duplicate And Coverage Checks
 

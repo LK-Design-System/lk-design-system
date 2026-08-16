@@ -1,15 +1,16 @@
 /**
- * Rendered WDS↔LDS parity for NESTED inner elements (checkbox box, radio ring,
- * tooltip bubble, alert modal, list-cell interaction) — the elements the shallow
- * top-level extractor could not see. The authoritative WDS values come from
- * docs/references/wds/COMPONENT_STYLES_DEEP.json, reconstructed by
- * extract-wds-styles-deep.mjs (which resolves INSTANCE → master symbol). This
- * harness renders each LDS component, measures the real computed style of the
- * *named inner element* (via an explicit selector), and diffs.
+ * Rendered LDS dimension baseline for NESTED inner elements (checkbox box,
+ * radio ring, tooltip bubble, alert modal, list-cell interaction) — the elements
+ * a shallow top-level measurement cannot see. The baseline values come from
+ * docs/references/lds-baseline/COMPONENT_DIMENSIONS_DEEP.json (adopted
+ * 2026-08-16 from the deep WDS reconstruction — re-anchoring, OPERATING_MODEL.md
+ * "Reference authority"). This harness renders each LDS component, measures the
+ * real computed style of the *named inner element* (via an explicit selector),
+ * and diffs.
  *
  *   node scripts/check-wds-nested-styles.mjs [--check]
  *
- * Colors are an intentional LK rebrand and are not diffed; only dimensions are.
+ * Colors were already LK-owned and are not diffed; only dimensions are.
  */
 import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { readFileSync, createReadStream } from 'node:fs';
@@ -24,7 +25,7 @@ const root = process.cwd();
 const appDir = path.join(root, 'visual-artifacts', 'nested-style-measure');
 const srcDir = path.join(appDir, 'src');
 const outDir = path.join(appDir, 'dist');
-const deep = JSON.parse(readFileSync('docs/references/wds/COMPONENT_STYLES_DEEP.json', 'utf8'));
+const deep = JSON.parse(readFileSync('docs/references/lds-baseline/COMPONENT_DIMENSIONS_DEEP.json', 'utf8')).sets;
 
 // name -> { deepKey, JSX, inner selector (scoped to the wrapper), dims to diff }
 const TARGETS = [
@@ -80,8 +81,8 @@ s.close();
 
 const near = (a, b, tol) => a != null && b != null && Math.abs(a - b) <= tol;
 let drift = 0;
-console.log('Rendered WDS↔LDS NESTED inner-element parity (deep-reconstructed WDS reference)\n');
-console.log('component'.padEnd(12), 'element'.padEnd(14), 'field'.padEnd(8), 'WDS'.padEnd(7), 'LDS'.padEnd(7), 'verdict');
+console.log('Rendered LDS NESTED inner-element dimension baseline\n');
+console.log('component'.padEnd(12), 'element'.padEnd(14), 'field'.padEnd(8), 'base'.padEnd(7), 'LDS'.padEnd(7), 'verdict');
 for (const t of TARGETS) {
   const w = deep[t.deepKey]; const l = measured[t.name];
   if (!w) { console.log(t.name.padEnd(12), '(no WDS deep ref)'); continue; }
