@@ -49,18 +49,23 @@ LDS는 robotics의 배포본(tgz)을 vendor에 넣어 쓰고, robotics는 그 �
 # 1. robotics를 먼저 릴리스하고 그 tgz를 가져온다.
 #    vendor/에는 robotics tgz가 정확히 하나만 있어야 한다 — 옛것은 지운다.
 
-# 2. 파생값 31곳을 재계산한다. 손으로 고치지 않는다.
+# 2. 새 tgz를 실제로 설치한다. 이 순서가 중요하다 — 다음 단계가 문서 해시를
+#    "설치된" robotics에서 계산하므로, 설치를 건너뛰면 옛 버전의 해시가
+#    새 버전 기록에 들어간다. (스크립트가 설치본 버전을 확인해 막는다.)
+npm install
+
+# 3. 파생값 31곳을 재계산한다. 손으로 고치지 않는다.
 npm run update:release-pins -- --lds <새 LDS 버전> --robotics <새 robotics 버전>
 
-# 3. 락파일을 새 버전으로 맞춘다.
+# 4. 락파일을 새 버전으로 맞춘다.
 npm install --package-lock-only
 
-# 4. CHANGELOG를 쓴다. 이 스크립트가 다루지 않는 유일한 릴리스 기록이다.
+# 5. CHANGELOG를 쓴다. 이 스크립트가 다루지 않는 유일한 릴리스 기록이다.
 
-# 5. 위성 핀 리포트를 갱신한다. 격차를 좁힐 필요는 없다 — 기록만 하면 된다.
+# 6. 위성 핀 리포트를 갱신한다. 격차를 좁힐 필요는 없다 — 기록만 하면 된다.
 npm run report:satellite-pins
 
-# 6. 검사 통과를 확인하고 커밋·태그·푸시한다.
+# 7. 검사 통과를 확인하고 커밋·태그·푸시한다.
 npm run check:fast
 git tag lds-v<새 LDS 버전> && git push --tags
 ```

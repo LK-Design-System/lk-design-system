@@ -136,6 +136,18 @@ for (const id of workspacePackages) {
   const surface = await readJson(file);
   const packageRoot = path.join(root, 'node_modules', ...roboticsName.split('/'));
 
+  // 문서 해시는 **설치된** robotics에서 계산한다. vendor에 새 tgz를 넣고
+  // `npm install` 없이 이 스크립트를 돌리면 옛 버전의 해시를 새 버전 기록에
+  // 써넣게 되는데, 그러면 계약이 조용히 거짓이 된다 — 검사도 같은 옛 파일을
+  // 읽으므로 통과해버린다. 그래서 설치본과 요청 버전이 다르면 즉시 멈춘다.
+  const installed = JSON.parse(await readFile(path.join(packageRoot, 'package.json'), 'utf8'));
+  if (installed.version !== roboticsVersion) {
+    throw new Error(
+      `설치된 ${roboticsName}는 ${installed.version}인데 ${roboticsVersion}의 파생값을 쓰려 한다. `
+      + '`npm install`을 먼저 돌려 vendor의 tgz를 실제로 설치한 뒤 다시 실행한다.',
+    );
+  }
+
   const artifactHash = await sha256(vendoredPath);
   const canonicalPath = surface.documentation?.canonicalContract?.source?.path;
   const canonicalHash = canonicalPath ? await sha256(canonicalPath) : undefined;

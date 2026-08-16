@@ -107,12 +107,14 @@ for (const satellite of satellites) {
     .filter((range) => !range.startsWith('file:'));
   const distinct = [...new Set(pinned)];
   const hasVendored = Object.values(pins).flat().some(({ range }) => range.startsWith('file:'));
-  // `vendored-only`와 `no-lds-pin`을 구분한다. 전자는 LDS를 쓰지만 버전을
-  // 주장하지 않는 상태로, 퍼블리시하는 순간 깨진다 — npm pack이 vendor의
-  // tgz를 제외하므로 소비자 설치에서 `file:` 참조가 해소되지 않는다(T3).
-  // 후자는 LDS를 아직 쓰지 않는 상태다. 둘은 필요한 조치가 다르다.
+  // `private: true`면 퍼블리시되지 않으므로 vendored `file:` 의존이 옳다 —
+  // clone 소비에서 인증 없이 설치되는 이점이 있고, 퍼블리시하지 않으니 T3가
+  // 발동할 수 없다. 퍼블리시하는 위성이 같은 모양이면 그때는 함정이다:
+  // npm pack이 vendor의 tgz를 제외해 소비자 설치가 반드시 깨진다.
+  // 그래서 같은 `file:` 의존이라도 private 여부로 판정이 갈린다.
+  const isPrivate = manifest.private === true;
   const status = pinned.length === 0
-    ? (hasVendored ? 'vendored-only' : 'no-lds-pin')
+    ? (hasVendored ? (isPrivate ? 'vendored-app' : 'vendored-only') : 'no-lds-pin')
     : distinct.every((range) => range === releaseVersion)
       ? 'current'
       : 'behind';
@@ -134,7 +136,8 @@ await writeFile(path.join(root, reportJson), `${JSON.stringify(report, null, 2)}
 const statusLabel = {
   current: '현행',
   behind: '뒤처짐',
-  'vendored-only': 'vendored 전용 (버전 주장 없음)',
+  'vendored-only': '⚠ vendored 전용 — 퍼블리시하면 깨진다 (T3)',
+  'vendored-app': 'vendored 앱 (private, 퍼블리시 안 함)',
   'no-lds-pin': 'LDS 미사용',
   unreachable: '읽기 실패',
 };
