@@ -2,6 +2,27 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.26 - 2026-08-17
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.27.
+
+### Added
+
+- `Table` gained `banded` — every data row on the quietest fill so a wide
+  table's label and measures read as one row; never alternating, since a
+  stripe over few rows reads as emphasis (Carbon zebra / USWDS striped as
+  external grounds, adoption case in `docs/TABLE_MEDIUM_CONTRACT_PROPOSAL.md`).
+  Cell padding and type now resolve through `--lk-table-*` re-point hooks
+  whose fallbacks are the former literals — product surfaces render
+  byte-identically, media that read farther re-point in scope.
+- The type ramp gained `display0` (112px/144px) with `.type-display0` —
+  the projection rung above the product scale, so projection media resolve
+  their hero tier through the ramp instead of deriving it with calc
+  (`docs/TYPE_RAMP_DISPLAY0_PROPOSAL.md`).
+- `Timeline` gained `orientation="horizontal"` — equal `minmax(0, 1fr)`
+  columns, the rail bridging each gap and stopping before the last node;
+  `ol`/`time` semantics unchanged (`docs/TIMELINE_ORIENTATION_PROPOSAL.md`).
+
 ## 0.1.0-rc.69.25 - 2026-08-16
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.26.

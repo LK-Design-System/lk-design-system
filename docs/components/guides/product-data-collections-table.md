@@ -15,6 +15,7 @@
 ### 사용하지 않음
 
 - getRowId — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 row.id, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.
+- 외부 근거: Carbon Data table의 zebra 옵션 — "행을 따라가는 시선이 옆 행으로 이탈하는 것을 막는" 넓은 표 장치이며, Carbon은 줄무늬를 끄면 행 구분선을 요구합니다(LDS 기본형이 그 형태). USWDS Table의 striped 변형도 같은 계열입니다. LDS는 두 시스템의 교차 줄무늬 대신 전 행 밴드를 채택합니다(강조 오독 근거는 위).
 - Header and body cells use font-variant-numeric: tabular-nums so values do not jitter between rows. Set align: 'right' on comparable numeric columns; nominal identifiers such as postal codes or equipment IDs remain left aligned.
 
 ## Anatomy
@@ -34,6 +35,7 @@
 | `rows` | `Row[]` | Yes |  |
 | `size` | `'sm' \| 'md'` | No | 행 밀도. @default "md" |
 | `hover` | `boolean` | No | 행 호버 워시. @default true |
+| `banded` | `boolean` | No | 모든 데이터 행에 가장 조용한 fill 밴드를 깝니다. 라벨과 측정값 사이가 먼 넓은 표에서 헤어라인 대신 밴드가 행의 시선을 잇습니다. 교차(지브라)가 아니라 전 행 밴드입니다 — 행이 적을 때 줄무늬는 강조로 오독됩니다. |
 | `caption` | `React.ReactNode` | No | 표 위에 보이는 . 표의 접근 가능한 이름이 됩니다. |
 | `tableLabel` | `string` | No | 보이는 캡션이 없을 때 에 붙는 aria-label. |
 | `tableLabelledBy` | `string` | No | 표 밖의 제목 요소 id. 보이는 캡션이 없을 때 의 aria-labelledby가 됩니다. |
@@ -44,6 +46,7 @@
 ## Behavior and interaction
 
 - 열 헤더는 항상 입니다. 별도 prop이 필요 없으며 끌 수 없습니다.
+- 교차(지브라)가 아니라 전 행 밴드입니다. 행이 적은 표에서 교차 줄무늬는 특정 행의 강조로 오독됩니다 — 강조는 상태 표현(배지·톤)의 몫이고 기하의 몫이 아닙니다. 이 판정은 투영 매체(Slides)에서 실측으로 확정됐습니다(docs/TABLEMEDIUMCONTRACTPROPOSAL.md).
 - Reference: SAP Fiori data table usage recommends content-dependent alignment and right alignment for comparable numeric values.
 - Table — 대문자 캡션 헤더, tabular 행, 부드러운 호버 워시가 있는 차분한 데이터 표.
 - 읽기 전용 표라도 헤더와 데이터의 관계는 보조기술에 전달되어야 합니다. Table은 DataGrid와 같은 native table 시맨틱 기준을 따릅니다.
@@ -68,6 +71,7 @@
 ## Content and writing
 
 - caption — 표 위에 보이는 이며 동시에 표의 접근 가능한 이름입니다. 표 제목이 표 자체에 속할 때 첫 번째 선택지입니다.
+- banded — 모든 데이터 행에 --color-semantic-fill-alternative 밴드를 깝니다. 라벨 열과 측정 열 사이가 먼 넓은 표에서 헤어라인만으로는 행의 시선이 이어지지 않을 때 쓰세요. 호버 워시는 밴드 위에서 한 단 위 fill(fill-normal)로 올라가 여전히 보입니다.
 - Classification: LDS Product extension. truncate: true is an opt-in column layout contract for one long, plain-text field that should consume the table's remaining width without pushing fixed metadata or action columns outside the container.
 - Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope="col", tableLabel)을 씁니다.
 
@@ -78,6 +82,10 @@
 - tableLabel — 보이는 캡션이 없을 때 에 직접 붙는 aria-label입니다. 래퍼 div가 아니라 표에 이름이 필요하므로, 밖에서 넘긴 aria-label(래퍼로 전달됨) 대신 이 prop을 쓰세요.
 - tableLabelledBy — 표 밖에 이미 보이는 제목(heading 등)의 id를 연결해 의 aria-labelledby로 사용합니다. 보이는 제목이 있는 페이지에서는 이름을 중복 작성하지 말고 이 연결을 쓰세요.
 - getRowProps(row, index) merges native attributes such as data-, className, style, and pointer handlers. It does not add selection, focus, or grid semantics. Use DataGrid when rows must be selected, sorted, or navigated with the keyboard.
+
+## Exceptions
+
+- 셀 패딩과 타입은 --lk-table-cell-pad-sm/md, --lk-table-head-size/line/spacing, --lk-table-cell-size/line 훅을 경유하며, 폴백이 곧 기존 리터럴이라 제품 매체는 바이트 동일하게 렌더됩니다. 투영·전시처럼 읽기 거리가 다른 매체가 자기 스코프에서 재지정합니다. 훅은 의도적으로 기본 미정의입니다 — 토큰으로 정의하면 폴백이 죽은 코드가 되고, 제품 기본값의 단일 출처가 리터럴에서 토큰으로 흩어지기 때문입니다(TOKENGOVERNANCE의 컴포넌트 토큰 규칙에 대한 문서화된 예외).
 
 ## Related components
 
@@ -128,6 +136,7 @@
 ### Tokens
 
 - `--color-semantic-fill-alternative`
+- `--color-semantic-fill-normal`
 - `--color-semantic-label-strong`
 - `--dur-fast`
 - `--ease-out`
@@ -135,6 +144,8 @@
 - `--fw-semibold`
 - `--label1-line`
 - `--label1-size`
+- `--lk-table-cell-pad-md`
+- `--lk-table-cell-pad-sm`
 - `--space-2`
 
 ### Source contracts
@@ -153,3 +164,5 @@
 - [MUI X column dimensions](https://mui.com/x/react-data-grid/column-dimensions/)
 - [Carbon data table guidance](https://v10.carbondesignsystem.com/components/data-table/usage/)
 - [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns/table/)
+- [Carbon Data table](https://carbondesignsystem.com/components/data-table/usage/)
+- [USWDS Table](https://designsystem.digital.gov/components/table/)

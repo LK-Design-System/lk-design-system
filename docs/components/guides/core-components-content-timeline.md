@@ -10,6 +10,12 @@
 
 검토 이력, 배포 기록, 장비 이벤트처럼 발생 시각과 순서가 중요한 읽기 전용 기록에 적합합니다. 사용자가 완료해야 할 절차는 Step List나 Stepper를, 단순 알림 목록은 List를 사용하고 상태 색만으로 사건의 의미를 구분하지 마세요.
 
+## 사용 판단
+
+### 사용
+
+- 표현 축일 뿐입니다: ol/li 순서, , 톤 어휘는 세로와 동일합니다.
+
 ## Anatomy
 
 | Part | Contract |
@@ -22,6 +28,7 @@
 | --- | --- | --- | --- |
 | `items` | `TimelineItem[]` | Yes |  |
 | `label` | `string` | No | 내부 ol 의 접근 가능한 이름(한 화면에 기록이 여럿일 때 구분용). |
+| `orientation` | `'vertical' \| 'horizontal'` | No | 'vertical'(기본)은 로그를 위→아래로, 'horizontal'은 연대기를 좌→우로 읽습니다. 가로에서 각 사건은 등분 컬럼(minmax(0, 1fr))이라 사건이 적을수록 한 칸이 넓어지고, 레일은 마지막 노드 앞에서 멈춥니다. 표현 축일 뿐 ol/time 시맨틱은 동일합니다. |
 
 ## 정량 규칙
 
@@ -30,8 +37,8 @@
 | 명시 규칙 1 | 타입 스케일 정합: 제목 15.5px → --body2-size(15px, −0.5px), 설명 13.5px → --label2-size(13px, −0.5px)로 스냅했습니다. time(caption1)과 함께 전 사이트가 토큰 스케일 위에 있으며, 설명 lineHeight 1.6은 유지했습니다. |
 | 명시 규칙 2 | 시간순 기록은 ol li 로 렌더링합니다. div 나열은 순서·개수·현재 위치를 보조 기술에 전혀 전달하지 못합니다(WCAG 1.3.1). |
 | 명시 규칙 3 | 시각 표기는 로 감쌉니다. dateTime 을 주면 그 값이, 없으면 문자열 time 이 기계 판독 값이 됩니다 — "09:12", "2026-07-03" 처럼 유효한 형식을 쓰고, "2026.07.03" 같은 표기를 쓸 때는 dateTime 을 따로 주세요. |
+| 명시 규칙 4 | orientation vertical(기본) · horizontal — 세로는 로그(변경 이력, 활동 기록)의 문법이고, 가로는 단계가 적은 연대기(로드맵, 마일스톤)의 문법입니다. 가로에서 각 사건은 등분 컬럼(minmax(0, 1fr))이라 사건이 적을수록 한 칸이 넓어집니다. |
 | --body2-size | 15px |
-| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 
 ## Content and writing
 
@@ -84,7 +91,9 @@
 - `--fw-bold`
 - `--label2-size`
 - `--space-1`
+- `--space-2`
 - `--space-3-5`
+- `--space-6`
 
 ### Source contracts
 
