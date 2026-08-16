@@ -28,29 +28,25 @@ function registryProbe(name, version) {
 }
 
 const rootPackage = await readJson('package.json');
+
+// The Robotics package used to be a registry prerequisite because the
+// compatibility facade declared it as a runtime dependency: publishing the
+// facade without it would have produced an uninstallable package. That facade
+// was removed in Wave 5, and none of the packages published here depend on
+// Robotics, so the prerequisite no longer has anything to protect.
+//
+// It was also unsatisfiable. The Robotics repository has no publish workflow —
+// it ships as the vendored tarball pinned in ROBOTICS_EXTERNAL_SURFACE.json —
+// so the probe returned 403 and every tagged release run failed at this gate.
+// The vendored artifact is verified by sha256 in check:publish-policy and
+// check:pack, which is the check that matches how the package is actually
+// distributed.
 const roboticsExternalSurface = await readJson('docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json');
-const roboticsPackage = roboticsExternalSurface.package;
 assert(
-  roboticsPackage.refStatus === 'published',
-  `${roboticsPackage.name}@${roboticsPackage.version} is still marked ${roboticsPackage.refStatus}; verify its immutable tag and registry release, then promote the external surface to published before releasing the LDS compatibility package.`,
+  roboticsExternalSurface.vendoredArtifact?.path && roboticsExternalSurface.vendoredArtifact?.sha256,
+  'The external surface must pin the vendored Robotics tarball path and SHA-256.',
 );
-const roboticsProbe = registryProbe(roboticsPackage.name, roboticsPackage.version);
-if (roboticsProbe.status !== 0) {
-  throw new Error(
-    `${roboticsPackage.name}@${roboticsPackage.version} must be published by its owning repository before the LDS compatibility package can be released.\n`
-    + roboticsProbe.output,
-  );
-}
-let publishedRoboticsVersion;
-try {
-  publishedRoboticsVersion = JSON.parse(roboticsProbe.output.split(/\r?\n/)[0]);
-} catch {
-  publishedRoboticsVersion = roboticsProbe.output.replace(/^"|"$/g, '');
-}
-assert(
-  publishedRoboticsVersion === roboticsPackage.version,
-  `${roboticsPackage.name} registry identity drift: expected ${roboticsPackage.version}, received ${publishedRoboticsVersion}.`,
-);
+
 for (const packageId of packageIds) {
   const manifest = await readJson(`packages/${packageId}/package.json`);
   assert(
@@ -70,5 +66,5 @@ for (const packageId of packageIds) {
 }
 
 console.log(
-  `Validated external Robotics prerequisite ${roboticsPackage.version} and confirmed that the ${rootPackage.version} LDS package set is absent from ${registry}.`,
+  `Confirmed that the ${rootPackage.version} LDS package set is absent from ${registry}; Robotics ships as the vendored tarball pinned by the external surface.`,
 );

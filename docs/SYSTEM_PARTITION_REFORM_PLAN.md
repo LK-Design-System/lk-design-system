@@ -398,11 +398,41 @@ vendor README 3, CHANGELOG 1), 자동 생성 스크립트는 없다. 이는 R4-2
 `check:package-migration` 통과. `check:workspace-consumer`는 Node 22.17.1을
 강제해 로컬에서 실행되지 않으므로 CI가 검증한다.
 
-**R1-4 잔여**: 퍼블리시 중단은 rc.69.16 릴리스로 확정된다. 그런데 vendored
-robotics rc.15가 `lds-v0.1.0-rc.69.15`를 박고 있어, 버전을 올리는 순간
-`check:type-surface`가 실패한다 — **LDS 릴리스가 robotics 릴리스를 강제하는
-구조**다. R4-2가 지적한 위성 결합이 릴리스마다 재현되는 지점이고, 이번에는
-버전을 올리지 않고 코드 변경만 커밋했다.
+**R1-4 완료 (rc.69.17, 2026-08-16).** 퍼블리시 중단의 실체는
+`release-packages.yml`의 `npm publish ./packages/compat` 한 줄이었고, 이는 코드
+검사가 읽지 않는 자리에 있었다. 함께 발견된 잔재:
+
+| 위치 | 내용 | 어떻게 드러났나 |
+| --- | --- | --- |
+| `.storybook/main.js` | `staticDirs`가 `packages/compat/docs` 참조 | CI의 `build:storybook` 실패 (`check:fast`는 Storybook을 빌드하지 않는다) |
+| `.github/workflows/ci.yml` | 아티팩트 업로드 경로 6줄 | 위 추적 중 발견 |
+| `.github/workflows/release-packages.yml` | `npm publish ./packages/compat` | 위 추적 중 발견 |
+| `scripts/check-release-package-availability.mjs` | robotics 레지스트리 선행 조건 | 릴리스 워크플로 실패 조사 중 발견 |
+
+마지막 항목이 특히 시사적이다. 그 게이트는 **compat이 robotics를 런타임
+의존으로 선언했기 때문에** 존재했다 — robotics 없이 facade를 퍼블리시하면
+설치 불가능한 패키지가 되므로. compat이 사라진 지금 퍼블리시 대상
+(core/theme/product) 중 robotics를 의존하는 것은 없고, 게이트의 존재 이유가
+함께 사라졌다. 게다가 그 조건은 애초에 **충족 불가능**했다: Robotics 저장소에는
+퍼블리시 워크플로가 없고 vendored tarball로만 배포되므로, 레지스트리 조회는
+403으로 실패했고 **태그가 찍힌 모든 릴리스 실행이 이 지점에서 죽었다**(rc.69.15,
+rc.69.16 확인). vendored 아티팩트의 무결성은 `check:publish-policy`와
+`check:pack`이 sha256으로 이미 검증하고 있었다 — 실제 배포 방식에 맞는 검사는
+따로 있었던 셈이다.
+
+**릴리스 연쇄 비용(측정)**: rc.69.16은 태그 후 Storybook 잔재가 드러나
+퍼블리시 없이 폐기됐고, rc.69.17로 대체했다. 태그를 옮기는 대신 버전을 올린
+것은 `check:release-immutability`가 명시적으로 그렇게 요구하기 때문이다.
+그 결과 **3줄짜리 워크플로 수정에 robotics 릴리스가 한 번 더 필요했다**
+(rc.16 → rc.17). 위성이 LDS 버전 문자열을 자기 산출물에 박는 한 이 비용은
+릴리스마다 발생한다. R4-2의 재계산 스크립트와 함께, **위성이 LDS 버전을
+런타임에 읽도록 계약을 바꾸는 안**도 Phase 3 검토 대상으로 추가한다.
+
+**최종 상태 (rc.69.17)**: CI 전 잡 통과 — Design system checks, Conformance
+fixtures (Linux), Linux workspace package consumers. Phase 1의
+`check:consumer-toolchain`과 Phase 2에서 25곳을 재작성한
+`check:workspace-consumer`가 Windows·Linux 양쪽에서 React 18/19로 실행되어
+통과했다.
 
 ### B.5 부수 발견 — compat 삭제 시 함께 고쳐야 하는 것
 
