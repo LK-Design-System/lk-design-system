@@ -2,6 +2,21 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.23 - 2026-08-16
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.24.
+
+### Added
+
+- The `lds-ui` skill now routes slides/editorial work to
+  `@lk-design-system/lds-slides-ui/docs/AGENT_SKILL_REFERENCE.md`, which the
+  slides repository ships from its next release (mirroring the robotics
+  pattern), and the `check-adoption` satellite advisory generalizes to one
+  table covering robotics and slides. `AGENT_SKILL_STALE` and the
+  reference-missing advisories from the same series also land here. `lds-3d`
+  and `lds-motion` stay unrouted deliberately: both are private packages no
+  consumer can install.
+
 ## 0.1.0-rc.69.22 - 2026-08-16
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.23.
