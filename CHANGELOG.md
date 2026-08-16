@@ -2,11 +2,10 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
-## Unreleased — ships as 0.1.0-rc.69.16
+## 0.1.0-rc.69.16 - 2026-08-16
 
-Cutting this release also requires a paired `lds-robotics-ui` rc.16, because the
-vendored rc.15 embeds `lds-v0.1.0-rc.69.15` as the LDS release it was validated
-against and `check:type-surface` compares that against the workspace version.
+Paired with `@lk-design-system/lds-robotics-ui` rc.16, which re-snapshots this
+release's Core documentation manifest.
 
 ### Breaking
 
