@@ -11,7 +11,6 @@ const config = {
     { from: '../packages/core/docs/adoption-config.schema.json', to: '/schemas/lds-ui-adoption-config.schema.json' },
     { from: '../packages/theme/docs', to: '/packages/theme' },
     { from: '../packages/product/docs', to: '/packages/product' },
-    { from: '../packages/compat/docs', to: '/packages/compat' },
   ],
   addons: ['@storybook/addon-docs', '@storybook/addon-a11y'],
   framework: {

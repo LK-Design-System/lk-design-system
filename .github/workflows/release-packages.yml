@@ -56,4 +56,3 @@ jobs:
           npm publish ./packages/core --ignore-scripts
           npm publish ./packages/theme --ignore-scripts
           npm publish ./packages/product --ignore-scripts
-          npm publish ./packages/compat --ignore-scripts

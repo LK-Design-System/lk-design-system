@@ -98,12 +98,6 @@ jobs:
             packages/product/docs
             packages/product/README.md
             packages/product/styles.css
-            packages/compat/src
-            packages/compat/tokens
-            packages/compat/assets
-            packages/compat/docs
-            packages/compat/README.md
-            packages/compat/styles.css
           if-no-files-found: error
 
       - name: Capture visual baselines on the canonical platform
