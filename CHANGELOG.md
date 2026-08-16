@@ -2,6 +2,15 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.20 - 2026-08-16
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.21.
+
+### Added
+
+- The `lds-core` package now ships a consumer agent skill at `docs/agent-skills/lds-ui/` (SKILL.md plus copy and anti-pattern references). Component appearance already travels with the packages, but the design contracts only lived in pull-channel docs, so adopters copied looks without rules. The skill loads the decision rules at UI-assembly time: Claude Code copies the directory into `.claude/skills/lds-ui/`, and AGENTS.md-based agents (Codex and others) add the routing block from the skill's install section. The projection, hash, and entrypoint gates own its drift; the manifest exposes it as `entrypoints.agentSkill`.
+- The robotics domain rules are owned by the satellite: the skill routes to `@lk-design-system/lds-robotics-ui/docs/domain/AGENT_SKILL_REFERENCE.md` (new in robotics rc.21) instead of embedding a copy that would go stale across satellite releases.
+
 ## 0.1.0-rc.69.19 - 2026-08-16
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.20.

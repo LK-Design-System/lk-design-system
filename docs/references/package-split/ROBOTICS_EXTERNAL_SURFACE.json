@@ -4,22 +4,22 @@
   "kind": "lds-robotics-external-public-surface",
   "package": {
     "name": "@lk-design-system/lds-robotics-ui",
-    "version": "0.1.0-rc.20",
+    "version": "0.1.0-rc.21",
     "repository": "LK-Design-System/lk-design-system-robotics",
     "refStatus": "published"
   },
   "vendoredArtifact": {
-    "path": "vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.20.tgz",
-    "sha256": "68716ed7c38529ca7d88458f0e7460b80854df2e4bc9b9b5c539be1a158bcef5"
+    "path": "vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.21.tgz",
+    "sha256": "08faf4aa96c02e7233628248c766a8f9ba7e47facc52fbf30d291ef3f0fcd6a5"
   },
   "documentation": {
     "canonicalContract": {
       "kind": "lds-ui-adoption-contract",
       "contractVersion": "1",
-      "snapshotManifestSha256": "1a50f87f8ad5ecb1ff7f8741dc29b66f3cec6505f8d2afcce4b9830c854a3701",
+      "snapshotManifestSha256": "0c71ed9acfd231f7797e716cea66574b0d09dfacf5620cc0eac4fa145e76a2e3",
       "source": {
         "repository": "LK-Design-System/lk-design-system",
-        "ref": "lds-v0.1.0-rc.69.19",
+        "ref": "lds-v0.1.0-rc.69.20",
         "refStatus": "release-candidate",
         "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
         "sha256": "f4c4f71cff9f9108246a5f7cc5520d6095d599027adb75d0b61e385c5b7fef80"
@@ -28,7 +28,7 @@
     "files": {
       "manifest": {
         "path": "docs/package/manifest.json",
-        "sha256": "b913ec156e67b307257b3b912b1414978f0a4f42258f973f2ac4bbdf979edad7"
+        "sha256": "01e45c1b05238e0cba86ad5278d459ffa94c20c3289d5f2304c09a261a8cf79b"
       },
       "checklist": {
         "path": "docs/package/adoption-checklist.json",
@@ -52,29 +52,33 @@
       },
       "workflow": {
         "path": "docs/package/adoption-workflow.md",
-        "sha256": "1ca4c502e445d493c4290c7a3fbd843e4f09b8108cef80eebc1982361fde0410"
+        "sha256": "ccfac30ff41709728eb6aa097eaba53c0b5d3a4e8d7c22c44df67a8bbc2fe859"
       },
       "llms": {
         "path": "docs/package/llms.txt",
-        "sha256": "29eb5106abe494f11b7c1e7ea93d39ccdfcd7dd5e2ddbdd2515a65523d92f6fe"
+        "sha256": "d6c2901f8748da9f7fad6fc6a8cd5e68ddb233ae33336ddcba2fd301d0407634"
       },
       "domainIndex": {
         "path": "docs/package/domain/README.md",
-        "sha256": "b5f0a4a3441ef88f2a8fc89e628aedb09a6b36663f787f2668e607e675c60d63"
+        "sha256": "c13adc4025d29caba3c10d74548bc1a11a85bced4f753ed3e0668b7365341bb4"
       },
       "tokenManifest": {
         "path": "docs/package/tokens/manifest.json",
-        "sha256": "bf3e8c57625430b027d4e2a9537874b5370b085c767819ce4cd1069e81a6f5c1"
+        "sha256": "b5efc448d771fbddc140a1b924020922790b96b0031e61bfeb6e2e397fd32324"
       },
       "domainSymbolRegistry": {
         "path": "docs/package/domain-symbol-registry.json",
-        "sha256": "2290784399d38b2a2afd14662c8b9e76f8eee80603dfbe8a4997e9d8eb16c6c1"
+        "sha256": "2c5377176b72d3f1f396b599fae50aa793290237b0da49cec5a5775df077d00a"
       }
     },
     "domainDocuments": [
       {
         "path": "docs/package/domain/ROBOTICS_UI_ADOPTION.md",
         "sha256": "dc2666277cd69b100b5a656982538141bb49f31be30db786562c255c53a9347f"
+      },
+      {
+        "path": "docs/package/domain/AGENT_SKILL_REFERENCE.md",
+        "sha256": "2cdd6f290a5457acddeb464613faaf8a49830e51b7479e97c4cf3e9f0dfaa5de"
       },
       {
         "path": "docs/package/domain/FLEET_UI_REFERENCE_PLAN.md",
@@ -86,7 +90,7 @@
       },
       {
         "path": "docs/package/domain/NAVIGATION_EXPRESSION_CONVENTIONS.md",
-        "sha256": "84b020fbdeb3fa1c318fa1d6e7322683d441edc40068ea83e49dbfd85caa75c2"
+        "sha256": "cb56317f592c21027d26d6f3a40dd0e2ab1464a720be0b8fd08acbc384c065a1"
       },
       {
         "path": "docs/package/domain/OCCUPANCY_MAP_CONVENTIONS.md",
