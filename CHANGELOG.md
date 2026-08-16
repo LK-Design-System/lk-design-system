@@ -2,10 +2,21 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
-## 0.1.0-rc.69.16 - 2026-08-16
+## 0.1.0-rc.69.17 - 2026-08-16
 
-Paired with `@lk-design-system/lds-robotics-ui` rc.16, which re-snapshots this
+Paired with `@lk-design-system/lds-robotics-ui` rc.17, which re-snapshots this
 release's Core documentation manifest.
+
+rc.69.16 was tagged but never published: its release run stopped at the package
+availability gate, and its commit still carried Storybook and workflow paths
+pointing at the deleted compatibility package. Rather than move a tag, this
+version supersedes it — `check:release-immutability` requires a bump instead of
+reuse, and pairing means the Robotics package re-releases with it.
+
+### Fixed
+
+- `.storybook/main.js` mapped `../packages/compat/docs` in `staticDirs`, so the Storybook build aborted on a missing directory. `check:fast` never builds Storybook, which is why this surfaced only in CI.
+- `ci.yml` uploaded six `packages/compat/*` artifact paths, and `release-packages.yml` still ran `npm publish ./packages/compat`. That publish line is what R1-4 actually reduces to, and it sat outside everything the code checks read.
 
 ### Breaking
 
