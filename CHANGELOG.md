@@ -2,6 +2,31 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.19 - 2026-08-16
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.20.
+
+### Fixed
+
+- Robotics declared the LDS layers as regular dependencies pinned at `0.1.0-rc.4`, so npm installed a second copy of core and product — 65 versions old, fetched from the registry — nested underneath it, alongside the workspace copies. The pin had been stuck because rc.4 was the newest version the registry held; the rc.69 line only became publishable in rc.69.18, which is what made this alignment possible at all. Nothing was incompatible about the gap: the satellite QA suites pass and the motion render is byte-identical across the jump.
+- Pinning a peer to an exact version was itself the deeper fault, and moving Robotics to peer declarations at an exact version would have reproduced it. An exact peer makes npm nest a second copy the moment the host moves one release ahead, and a satellite can never name the release being cut, because it installs LDS from the registry and that version is not published yet — so an exact peer is structurally always one release behind, and being behind is what triggers the nesting. The contract now carries two values instead of one: `version` records what was verified, and `declaredRange` records what the satellite declares. Only peers may widen, and the range must cover the verified version.
+
+### Added
+
+- `semver` is a direct dependency of the conformance package, which now validates `declaredRange` on both sides of the cross-repository contract.
+
+### Added
+
+- `update:release-pins` recalculates the 31 derived release records from two inputs — this repository's version and the Robotics version — and `check:release-pins` runs the same computation read-only, so hand-drift fails a check instead of sitting silent. Previously every release rewrote those records by hand, sha256 values included.
+- `report:satellite-pins` records what each satellite pins the LDS layers to. Gaps stay allowed; a report older than the current release version fails `check:satellite-pins`. The contract was already "skipping is fine, silence is not" — this is the part that enforces it.
+- `docs/OPERATIONS.md` is the single entry point for running this repository: release recipe, satellite lifecycle, what a red CI means, and how to triage a failing check.
+
+### Changed
+
+- The tag-identity assertion in `check:release-immutability` now runs only under `--tag`. It was in `check:fast`, so every commit after a tag failed by construction and main sat red between releases — which taught readers to skim past red. The release workflow already runs the script as a dedicated `--tag` step, so nothing is less protected; the version-consistency assertions, which are always satisfiable, stay in `check:fast`.
+- Two handover tests run by readers with no context found 9 gaps in the motion repository's documentation and 12 gaps plus 11 contradictions in this one. The largest: the release recipe never said where the Robotics repository was or what to do in it, and `HANDOFF.md` claimed "Status: Current" while carrying a month-old picture that `docs/README.md` pointed at as the authority on current state. Current-state authority is now one table in `docs/README.md`, and hand-maintained counts defer to script output.
+- `check:docs` asserted that `HANDOFF.md` remain a current-state pointer, which is what had been holding the stale document in its authoritative position — a check enforcing the defect. It now asserts the opposite: that the file declares itself superseded and redirects to `docs/OPERATIONS.md`.
+
 ## 0.1.0-rc.69.18 - 2026-08-16
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.18.

@@ -575,12 +575,17 @@ lds-motion 쪽 후속으로 기록한다.
 
 ### F.1 현재 위성 (4개)
 
-| 위성 | 축 | 버전 | 소비자 | 상태 |
-| --- | --- | --- | --- | --- |
-| lds-robotics-ui | 도메인 팩 | rc.17 | LDS 워크스페이스(문서 대조), 제품 | **rc** — LDS와 짝 릴리스 |
-| lds-slides-ui | 도메인 팩 | alpha.3 | lds-motion | alpha — 2027-01 존속 재심사 |
-| lds-motion | 능력 레이어 | alpha.3 | (없음 — 파일럿 대기) | alpha |
-| lds-3d | 능력 레이어 | alpha.1 | (미확인) | alpha |
+> **버전은 여기서 읽지 말 것.** 이 표는 Phase 3 실행 시점(2026-08-16 오전)의
+> 기록이며 이미 낡았다. 현재 버전과 LDS 핀의 정본은 스크립트가 생성하는
+> [`references/SATELLITE_PIN_REPORT.md`](references/SATELLITE_PIN_REPORT.md)다.
+> 손으로 유지하는 버전 표는 반드시 낡는다는 것이 이 문서가 배운 것이다.
+
+| 위성 | 축 | 소비자 | 상태 |
+| --- | --- | --- | --- |
+| lds-robotics-ui | 도메인 팩 | LDS 워크스페이스(문서 대조), 제품 | **rc** — LDS와 짝 릴리스 |
+| lds-slides-ui | 도메인 팩 | lds-motion | alpha — 2027-01 존속 재심사 |
+| lds-motion | 능력 레이어 | (clone 소비. `private: true`) | alpha |
+| lds-3d | 능력 레이어 | (없음 — 소유자 선언 선행 구축) | alpha |
 
 `lk-design-system-editorial`은 R3-2로 흡수·아카이브, `lk-design-system-infographics`는
 생성된 적 없음(Phase 1 확인).

@@ -2,13 +2,22 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Current-state pointer |
-| Status | Current |
+| Type | Historical handoff pointer |
+| Status | **Superseded (2026-08-16)** — 현재 상태의 권위가 아니다 |
 | Owner | Design system owner |
 | Last reviewed | 2026-07-24 |
 | Branch | `main` |
 | Canonical runtime | Node `22.17.1` · npm `10.9.2` |
 | Remote | `origin` · `LK-Design-System/lk-design-system` |
+
+> **이 문서를 현재 상태의 근거로 쓰지 말 것.** 2026-07-24 기준이며 이후
+> 크게 어긋났다 — 여기 적힌 robotics 버전·소스 엔트리 수·스토리 수는 전부
+> 낡았고, 살아 있는 것으로 서술된 `design-system-core` compat facade는
+> 2026-08-16에 삭제됐다. 아래 "Remaining release work"의 절차도 폐기됐다.
+>
+> 운영과 릴리스는 [`OPERATIONS.md`](OPERATIONS.md)가 소유한다. 현재 상태의
+> 권위 목록은 [`README.md`](README.md)에 있다. 이 문서는 그 시점의 기록으로만
+> 남긴다.
 
 이 문서는 현재 상태와 상세 원장을 연결하는 짧은 포인터다. 날짜별 handoff의 HEAD,
 dirty count, push 여부는 해당 시점의 historical snapshot이며 현재 상태로 해석하지 않는다.

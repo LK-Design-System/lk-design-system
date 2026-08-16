@@ -1,25 +1,25 @@
 {
   "kind": "lds-satellite-pin-report",
   "generatedBy": "npm run report:satellite-pins",
-  "releaseVersion": "0.1.0-rc.69.18",
+  "releaseVersion": "0.1.0-rc.69.19",
   "satellites": [
     {
       "id": "robotics-ui",
       "repository": "LK-Design-System/lk-design-system-robotics",
       "axis": "domain-pack",
       "branch": "main",
-      "version": "0.1.0-rc.19",
+      "version": "0.1.0-rc.20",
       "pins": {
         "@lk-design-system/lds-core": [
           {
             "section": "peerDependencies",
-            "range": "0.1.0-rc.69.18"
+            "range": ">=0.1.0-rc.69.18 <0.2.0"
           }
         ],
         "@lk-design-system/lds-product": [
           {
             "section": "peerDependencies",
-            "range": "0.1.0-rc.69.18"
+            "range": ">=0.1.0-rc.69.18 <0.2.0"
           }
         ],
         "@lk-design-system/lds-theme": [
@@ -36,12 +36,12 @@
       "repository": "LK-Design-System/lk-design-system-slides",
       "axis": "domain-pack",
       "branch": "main",
-      "version": "0.1.0-alpha.4",
+      "version": "0.1.0-alpha.5",
       "pins": {
         "@lk-design-system/lds-core": [
           {
             "section": "peerDependencies",
-            "range": "0.1.0-rc.69.18"
+            "range": ">=0.1.0-rc.69.18 <0.2.0"
           },
           {
             "section": "devDependencies",
@@ -51,7 +51,7 @@
         "@lk-design-system/lds-product": [
           {
             "section": "peerDependencies",
-            "range": "0.1.0-rc.69.18"
+            "range": ">=0.1.0-rc.69.18 <0.2.0"
           },
           {
             "section": "devDependencies",
@@ -61,7 +61,7 @@
         "@lk-design-system/lds-theme": [
           {
             "section": "peerDependencies",
-            "range": "0.1.0-rc.69.18"
+            "range": ">=0.1.0-rc.69.18 <0.2.0"
           },
           {
             "section": "devDependencies",
@@ -76,7 +76,7 @@
       "repository": "LK-Design-System/lk-design-system-motion",
       "axis": "capability-layer",
       "branch": "main",
-      "version": "0.1.0-alpha.4",
+      "version": "0.1.0-alpha.5",
       "pins": {
         "@lk-design-system/lds-core": [
           {

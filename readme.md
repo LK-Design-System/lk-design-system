@@ -173,11 +173,12 @@ npm run check
 npm run check:audit
 ```
 
-릴리스 직전 운영 품질 게이트는 아래를 사용합니다.
+**릴리스 게이트는 `npm run check:fast`입니다** — CI의 릴리스 워크플로가 실제로
+돌리는 것이 그것이고, 그것이 정의입니다. 릴리스 절차 전문은
+[`docs/OPERATIONS.md`](docs/OPERATIONS.md)가 소유합니다.
 
-```powershell
-npm run check:ops-release
-```
+`npm run check:ops-release`는 더 넓게 훑고 싶을 때 쓰는 선택 사항이며, 통과
+여부가 릴리스 조건은 아닙니다.
 
 패키지 진입 파일은 현재 React 컴포넌트 소스 파일(`components/**/*.jsx`) 기준으로 생성됩니다. 최신 수치는 `npm run report:inventory`가 소유합니다.
 

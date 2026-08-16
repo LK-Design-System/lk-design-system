@@ -83,7 +83,11 @@ candidate 단계에서도 반드시 새 version을 사용한다.
 
 ## Release checklist
 
-- `pnpm run check` 또는 동등한 release gate가 통과한다.
+> 릴리스 **절차**(순서·명령·robotics 짝맞춤)는 이 문서가 아니라
+> [`OPERATIONS.md`](OPERATIONS.md)가 소유한다. 아래는 변경이 갖춰야 할
+> 품질 조건 목록이다.
+
+- `npm run check:fast`(릴리스 게이트)가 통과한다.
 - aggregate root가 네 계층 entrypoint의 정확한 합집합이고 실제 pack에서 ESM/CJS/type subpath가 확인된다.
 - Storybook build 산출물이 생성된다.
 - public story 수와 hidden parity story 수가 의도와 맞다.

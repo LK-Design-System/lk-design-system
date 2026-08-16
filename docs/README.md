@@ -11,13 +11,14 @@
 
 ## Start here
 
+0. **릴리스·위성 관리·CI 판단(운영 전반): [`OPERATIONS.md`](OPERATIONS.md)** — 저장소를 굴리는 방법의 단일 진입점
 1. 제품 UI 신규 구현·LDS 적용·전환·재스타일링: [`LDS_UI_ADOPTION_WORKFLOW.md`](LDS_UI_ADOPTION_WORKFLOW.md)
 2. 신규 LDS 컴포넌트·재설계·icon/asset/map symbol 저작: [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)
 3. token 추가·변경: [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md)
-4. 기여·소유권·릴리즈: [`OPERATING_MODEL.md`](OPERATING_MODEL.md)
+4. 기여·소유권·변경 분류: [`OPERATING_MODEL.md`](OPERATING_MODEL.md) — 릴리스 **절차**는 위 0번이 소유한다
 5. API와 상태: [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md)
 6. 접근성: [`ACCESSIBILITY_CONTRACTS.md`](ACCESSIBILITY_CONTRACTS.md)
-7. 현재 저장소 상태와 최신 handoff: [`HANDOFF.md`](HANDOFF.md)
+7. 과거 handoff 포인터: [`HANDOFF.md`](HANDOFF.md) — **현재 상태의 권위가 아니다**(아래 참고)
 8. Foundation 원리·선택 기준·토큰 참조: [`foundations/README.md`](foundations/README.md)
 9. 컴포넌트 선택·Anatomy·상태·접근성·API 참조: [`components/README.md`](components/README.md)
 10. LK ROBOTICS 로고 제작·배포·승인 규정: [`brand/README.md`](brand/README.md)
@@ -105,7 +106,20 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 | [`EDITOR_LAYOUT_AUDIT.md`](EDITOR_LAYOUT_AUDIT.md) | Completed focused audit; stable decisions are in the reference matrix |
 | [`handoff/`](handoff/) | 날짜·commit 기준 immutable historical snapshots |
 
-과거 plan과 handoff의 HEAD, dirty count, test result는 작성 당시 snapshot이다. 현재 상태 판단에는 `HANDOFF.md`, Git, 현재 audit JSON과 검사 결과를 사용한다.
+과거 plan과 handoff의 HEAD, dirty count, test result는 작성 당시 snapshot이다.
+
+**현재 상태 판단에 `HANDOFF.md`를 쓰지 않는다.** 그 문서는 손으로 갱신되는
+숫자를 담고 있어 반드시 낡는다 — 2026-08-16 이관 시험에서 robotics 버전
+(rc.2 기록 / 실제 rc.19), 소스 엔트리 수, 스토리 수, 이미 삭제된 compat
+facade까지 전부 어긋난 것이 확인됐다. 현재 상태는 아래에서 본다:
+
+| 알고 싶은 것 | 권위 |
+| --- | --- |
+| 릴리스 절차·정상 상태·위성 규칙 | [`OPERATIONS.md`](OPERATIONS.md) |
+| 위성 버전과 LDS 핀 | [`references/SATELLITE_PIN_REPORT.md`](references/SATELLITE_PIN_REPORT.md) (스크립트 생성) |
+| 릴리스 버전·짝 robotics 버전 | `CHANGELOG.md`, `package.json`, `vendor/` 실물 |
+| 컴포넌트·스토리 수 | `npm run report:inventory` |
+| 저장소가 지금 건강한가 | `npm run check:fast` |
 
 ## Evidence and generated data
 

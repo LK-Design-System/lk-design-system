@@ -109,8 +109,18 @@ const domainPlan = await read('docs/DOMAIN_COMPONENT_EXPANSION_PLAN.md');
 assert(!/implementation not started/i.test(domainPlan), 'Completed domain expansion plan still claims implementation not started.');
 assert(domainPlan.includes('| Status | Completed · follow-up review active |'), 'Domain expansion plan must declare its completed status.');
 
+// HANDOFF.md는 2026-08-16에 현재 상태 권위에서 내려왔다. 손으로 갱신하는
+// 숫자(robotics 버전·소스 엔트리 수·스토리 수)를 담고 있어 반드시 낡는데,
+// "Current"를 달고 있으면 새 문서를 무력화한다 — 이관 시험에서 실제로
+// 그렇게 작동하는 것이 확인됐다. 현재 상태의 권위는 docs/README.md의 표이고,
+// 그 표는 전부 스크립트 산출물이나 실물 파일을 가리킨다.
+//
+// 이 검사는 이제 반대를 강제한다: HANDOFF.md는 스스로 폐기됨을 밝히고
+// 대체 문서로 안내해야 한다.
 const handoff = await read('docs/HANDOFF.md');
-assert(handoff.includes('| Type | Current-state pointer |'), 'HANDOFF.md must remain a current-state pointer.');
+assert(handoff.includes('| Type | Historical handoff pointer |'), 'HANDOFF.md must declare itself a historical pointer, not the current-state authority.');
+assert(/Status \| \*\*Superseded/.test(handoff), 'HANDOFF.md must carry a superseded status.');
+assert(handoff.includes('[`OPERATIONS.md`](OPERATIONS.md)'), 'HANDOFF.md must redirect to the operations entry point.');
 assert(handoff.includes('[`README.md`](README.md)'), 'HANDOFF.md must link the documentation index.');
 assert(handoff.includes('[`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)'), 'HANDOFF.md must link the canonical component workflow.');
 

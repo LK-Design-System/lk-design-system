@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import semver from 'semver';
 import {
   printAdoptionDiagnostics,
   runAdoptionCheck,
@@ -485,6 +486,27 @@ function validateLds3dSurfaceShape(surface) {
   return surface;
 }
 
+/**
+ * 위성이 package.json에 실제로 선언해야 하는 문자열.
+ *
+ * `version`은 **검증한 정확한 버전**이고, `declaredRange`는 **선언하는 범위**다.
+ * 둘은 다른 질문에 답한다 — 전자는 "무엇으로 확인했나"(재현성), 후자는
+ * "무엇과 함께 쓸 수 있나"(호환성).
+ *
+ * peerDependencies를 정확한 버전으로 선언하면 두 가지가 동시에 깨진다.
+ * ① 호스트가 한 버전만 올라가도 npm이 위성 밑에 별도 사본을 중첩 설치해
+ *    디자인 시스템이 두 벌이 된다(실측: robotics가 rc.4를 핀한 동안
+ *    워크스페이스 rc.69.18 옆에 rc.4가 나란히 설치돼 있었다).
+ * ② 위성은 레지스트리에서 LDS를 설치하므로 아직 퍼블리시되지 않은 버전을
+ *    핀할 수 없다 — 정확한 핀은 구조적으로 항상 한 릴리스 뒤처지고,
+ *    뒤처지는 순간 ①이 발동한다.
+ *
+ * dependencies에는 `declaredRange`를 쓰지 않는다. 거기서는 재현성이 목적이다.
+ */
+function expectedSpecifier(dependency) {
+  return dependency.declaredRange ?? dependency.version;
+}
+
 function contractDependencyDiagnostics(contract, profile, contractFile) {
   const canonicalVersions = new Map(
     contract.lds.packages.map((entry) => [entry.name, entry.version]),
@@ -502,6 +524,12 @@ function contractDependencyDiagnostics(contract, profile, contractFile) {
     } else if (dependency.version !== expectedVersion
       && !(consumerReleasePins && /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(dependency.version))) {
       diagnostics.push(diagnostic('CONTRACT_DEPENDENCY_DRIFT', contractFile, `${dependency.name} must pin canonical version ${expectedVersion}; received ${dependency.version}.`));
+    }
+    // 범위를 선언한다면 그 범위가 검증한 버전을 포함해야 한다. 아니면 계약이
+    // "확인한 적 없는 조합"을 호환된다고 주장하는 셈이다.
+    if (dependency.declaredRange
+      && !semver.satisfies(dependency.version, dependency.declaredRange, { includePrerelease: true })) {
+      diagnostics.push(diagnostic('CONTRACT_DEPENDENCY_DRIFT', contractFile, `${dependency.name} declaredRange ${dependency.declaredRange} does not cover the verified version ${dependency.version}.`));
     }
   }
   return diagnostics;
@@ -590,8 +618,9 @@ async function runRoboticsCheck(options) {
   }
   for (const expected of profile.packageDependencies) {
     const actual = packageJson[expected.section]?.[expected.name];
-    if (!localDependencyNames.has(expected.name) && actual !== expected.version) {
-      diagnostics.push(diagnostic('DEPENDENCY_VERSION', 'package.json', `${expected.name} must be exactly ${expected.version} in ${expected.section}; received ${actual ?? 'missing'}.`));
+    const required = expectedSpecifier(expected);
+    if (!localDependencyNames.has(expected.name) && actual !== required) {
+      diagnostics.push(diagnostic('DEPENDENCY_VERSION', 'package.json', `${expected.name} must be exactly ${required} in ${expected.section}; received ${actual ?? 'missing'}.`));
     }
   }
 

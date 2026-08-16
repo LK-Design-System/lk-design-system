@@ -1,5 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import semver from 'semver';
 
 /**
  * 위성 핀 리포트 — "스킵은 가능하되 침묵은 불가"(R4-2)의 강제 장치.
@@ -99,12 +100,31 @@ for (const satellite of satellites) {
       if (ldsLayerPattern.test(name)) (pins[name] ??= []).push({ section, range });
     }
   }
-  // 격차 판정은 버전을 실제로 주장하는 선언만 본다. `file:` 참조는 tgz
-  // 경로일 뿐 버전 주장이 아니므로 제외한다.
-  const pinned = Object.values(pins)
-    .flat()
+  // 격차 판정은 **소비자에게 하는 호환성 주장**만 본다.
+  //
+  // - `file:` 참조는 tgz 경로일 뿐 버전 주장이 아니다.
+  // - `devDependencies`는 위성이 자기 개발·테스트에 쓰는 것이지 소비자에게
+  //   하는 약속이 아니다. 게다가 아직 퍼블리시되지 않은 버전은 설치할 수
+  //   없으므로 devDependency는 구조적으로 항상 한 릴리스 뒤처진다 — 그걸
+  //   격차로 세면 영원히 `behind`가 되어 신호가 죽는다.
+  const pinned = Object.entries(pins)
+    .flatMap(([, declarations]) => declarations)
+    .filter(({ section }) => section !== 'devDependencies')
     .map(({ range }) => range)
     .filter((range) => !range.startsWith('file:'));
+  // 정확한 버전이 아니라 **범위**로 선언하는 것이 peerDependencies의 정상
+  // 형태다. 정확히 핀하면 호스트가 한 버전만 올라가도 npm이 별도 사본을
+  // 중첩 설치해 디자인 시스템이 두 벌이 된다. 게다가 위성은 아직 퍼블리시되지
+  // 않은 버전을 핀할 수 없으므로(레지스트리에서 설치한다), 정확한 핀은
+  // 구조적으로 항상 한 릴리스 뒤처진다. 범위면 두 문제가 동시에 사라진다.
+  const satisfiesRelease = (range) => {
+    if (range === releaseVersion) return true;
+    try {
+      return semver.satisfies(releaseVersion, range, {includePrerelease: true});
+    } catch {
+      return false;
+    }
+  };
   const distinct = [...new Set(pinned)];
   const hasVendored = Object.values(pins).flat().some(({ range }) => range.startsWith('file:'));
   // `private: true`면 퍼블리시되지 않으므로 vendored `file:` 의존이 옳다 —
@@ -115,7 +135,7 @@ for (const satellite of satellites) {
   const isPrivate = manifest.private === true;
   const status = pinned.length === 0
     ? (hasVendored ? (isPrivate ? 'vendored-app' : 'vendored-only') : 'no-lds-pin')
-    : distinct.every((range) => range === releaseVersion)
+    : distinct.every(satisfiesRelease)
       ? 'current'
       : 'behind';
   rows.push({ ...satellite, branch, version: manifest.version ?? null, pins, status });

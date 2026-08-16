@@ -28,6 +28,8 @@ const roboticsName = '@lk-design-system/lds-robotics-ui';
 
 const diffs = [];
 const writes = new Map();
+let writesNeedSecondPass = false;
+let installedRoboticsVersion = null;
 
 function argValue(flag) {
   const index = process.argv.indexOf(flag);
@@ -137,15 +139,29 @@ for (const id of workspacePackages) {
   const packageRoot = path.join(root, 'node_modules', ...roboticsName.split('/'));
 
   // 문서 해시는 **설치된** robotics에서 계산한다. vendor에 새 tgz를 넣고
-  // `npm install` 없이 이 스크립트를 돌리면 옛 버전의 해시를 새 버전 기록에
-  // 써넣게 되는데, 그러면 계약이 조용히 거짓이 된다 — 검사도 같은 옛 파일을
-  // 읽으므로 통과해버린다. 그래서 설치본과 요청 버전이 다르면 즉시 멈춘다.
-  const installed = JSON.parse(await readFile(path.join(packageRoot, 'package.json'), 'utf8'));
-  if (installed.version !== roboticsVersion) {
-    throw new Error(
-      `설치된 ${roboticsName}는 ${installed.version}인데 ${roboticsVersion}의 파생값을 쓰려 한다. `
-      + '`npm install`을 먼저 돌려 vendor의 tgz를 실제로 설치한 뒤 다시 실행한다.',
-    );
+  // `npm install` 없이 해시를 쓰면 옛 버전의 해시가 새 버전 기록에 들어가고,
+  // 검사도 같은 옛 파일을 읽으므로 조용히 통과해버린다.
+  //
+  // 그런데 설치를 먼저 할 수도 없다 — `npm install`은 루트 package.json의
+  // devDependency가 새 tgz 경로를 가리켜야 하고, 그 경로를 쓰는 것이 바로 이
+  // 스크립트다. 순환이다.
+  //
+  // 그래서 두 번 돌린다. 1차는 경로·버전만 쓰고 해시는 건드리지 않은 채
+  // 멈춘다. `npm install` 후 2차에서 해시까지 완성한다. 어느 쪽이든 마지막에
+  // `check:release-pins`가 전부 대조하므로, 2차를 잊으면 CI가 막는다.
+  // 아직 설치조차 안 된 경우도 1차 실행이다 (node_modules를 지우고 시작하는 것이
+  // 흔한 릴리스 절차다).
+  const installed = await readFile(path.join(packageRoot, 'package.json'), 'utf8')
+    .then(JSON.parse)
+    .catch(() => ({version: '(설치 안 됨)'}));
+  const installedMatches = installed.version === roboticsVersion;
+  if (!installedMatches && checkOnly) {
+    diffs.push({
+      file: '(설치본)',
+      field: `${roboticsName} 설치 버전`,
+      actual: installed.version,
+      expected: roboticsVersion,
+    });
   }
 
   const artifactHash = await sha256(vendoredPath);
@@ -170,11 +186,13 @@ for (const id of workspacePackages) {
     return installedHashes.get(relative);
   };
 
-  for (const [key, entry] of Object.entries(surface.documentation?.files ?? {})) {
-    record(file, `documentation.files.${key}.sha256`, entry.sha256, await hashInstalled(entry.path));
-  }
-  for (const entry of surface.documentation?.domainDocuments ?? []) {
-    record(file, `domainDocuments["${entry.path}"].sha256`, entry.sha256, await hashInstalled(entry.path));
+  if (installedMatches) {
+    for (const [key, entry] of Object.entries(surface.documentation?.files ?? {})) {
+      record(file, `documentation.files.${key}.sha256`, entry.sha256, await hashInstalled(entry.path));
+    }
+    for (const entry of surface.documentation?.domainDocuments ?? []) {
+      record(file, `domainDocuments["${entry.path}"].sha256`, entry.sha256, await hashInstalled(entry.path));
+    }
   }
 
   queueJsonWrite(file, async (draft) => {
@@ -185,6 +203,7 @@ for (const id of workspacePackages) {
     canonical.source.ref = `lds-v${ldsVersion}`;
     if (canonicalHash) canonical.source.sha256 = canonicalHash;
     canonical.snapshotManifestSha256 = snapshotHash;
+    if (!installedMatches) return;   // 해시는 2차 실행에서 쓴다
     for (const entry of Object.values(draft.documentation.files ?? {})) {
       entry.sha256 = await hashInstalled(entry.path);
     }
@@ -192,6 +211,8 @@ for (const id of workspacePackages) {
       entry.sha256 = await hashInstalled(entry.path);
     }
   });
+  writesNeedSecondPass = !installedMatches;
+  installedRoboticsVersion = installed.version;
 }
 
 // ── 5. vendor/README.md — 파일명·패키지 버전·SHA-256
@@ -239,7 +260,15 @@ if (checkOnly) {
     `Recalculated release pins: LDS ${ldsVersion}, Robotics ${roboticsVersion}; `
     + `${diffs.length} record(s) updated across ${writes.size} files.`,
   );
-  if (diffs.length > 0) {
+  if (writesNeedSecondPass) {
+    console.log(
+      `\n⚠ 1차만 끝났다 — 설치된 robotics는 아직 ${installedRoboticsVersion}다.\n`
+      + '  경로와 버전은 썼고 **문서 해시는 쓰지 않았다.** 이어서:\n'
+      + '    npm install\n'
+      + `    npm run update:release-pins -- --lds ${ldsVersion} --robotics ${roboticsVersion}\n`
+      + '  2차를 잊어도 check:release-pins가 CI에서 막는다.',
+    );
+  } else if (diffs.length > 0) {
     console.log('CHANGELOG.md는 사람이 쓴다 — 이 스크립트가 다루지 않는 유일한 릴리스 기록이다.');
   }
 }

@@ -3,6 +3,7 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
+import semver from 'semver';
 
 const root = process.cwd();
 
@@ -337,6 +338,25 @@ function checkProfileDependencyPins(styleContract, label) {
       // immutable release to remain pinned until that consumer is upgraded.
       if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(dependency.version)) {
         throw new Error(`${label} ${profileName} dependency ${dependency.name} must use an exact immutable version; received ${dependency.version}.`);
+      }
+      // `declaredRange` is what the satellite writes in package.json, and it
+      // answers a different question than `version`: not "what did we verify"
+      // but "what will this install against". A peer declared as an exact
+      // version makes npm nest a second copy of the design system the moment
+      // the host moves one release ahead — and a satellite can never name the
+      // release being cut, because it installs LDS from the registry and that
+      // version is not published yet. Only peers may widen this way, and the
+      // range must still cover the verified version.
+      if (dependency.declaredRange !== undefined) {
+        if (dependency.section !== 'peerDependencies') {
+          throw new Error(`${label} ${profileName} dependency ${dependency.name} declares a range in ${dependency.section}; only peerDependencies may widen.`);
+        }
+        if (!semver.validRange(dependency.declaredRange)) {
+          throw new Error(`${label} ${profileName} dependency ${dependency.name} declaredRange is not a valid semver range; received ${dependency.declaredRange}.`);
+        }
+        if (!semver.satisfies(dependency.version, dependency.declaredRange, { includePrerelease: true })) {
+          throw new Error(`${label} ${profileName} dependency ${dependency.name} declaredRange ${dependency.declaredRange} does not cover the verified version ${dependency.version}.`);
+        }
       }
     }
   }
