@@ -189,6 +189,9 @@ Phase 3은 계획한 2026-Q4보다 앞당겨 2026-08-16에 완료했다.
   deprecation 로그를 남긴 뒤 제거한다.
 - ③ editorial 흡수 — 흡수 커밋 전 마지막 alpha tgz를 slides-ui vendor에
   보존한다. 저장소는 삭제가 아니라 archive.
+  **후기(2026-08-16): 소유자 결정으로 archive에서 삭제로 격상.** 커밋 이력은
+  소실됐고, 코드·tgz는 slides-ui에 남아 있다. 이 롤백 경로 중 "archive 해제"는
+  더 이상 유효하지 않다.
 
 ## 5. 리스크
 
