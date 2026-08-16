@@ -53,17 +53,35 @@ async function warnAboutAgentSkillGaps(root) {
       );
     }
   }
-  // The skill routes robotics work to the reference owned by lds-robotics-ui;
-  // packages older than rc.22 do not ship it, leaving that routing dangling.
-  const roboticsRoot = path.join(root, 'node_modules', '@lk-design-system', 'lds-robotics-ui');
-  const hasRobotics = await stat(roboticsRoot).then((entry) => entry.isDirectory(), () => false);
-  if (hasRobotics && !(await isFile(path.join(roboticsRoot, 'docs', 'package', 'domain', 'AGENT_SKILL_REFERENCE.md')))) {
-    console.warn(
-      '[AGENT_SKILL_ROBOTICS_REFERENCE_MISSING] @lk-design-system/lds-robotics-ui is installed '
-      + 'but ships no docs/domain/AGENT_SKILL_REFERENCE.md, so the lds-ui skill\'s robotics '
-      + 'routing resolves to nothing. Upgrade lds-robotics-ui to a release that ships the '
-      + 'reference (rc.22 or later). Advisory only — this does not fail the check.',
-    );
+  // The skill routes domain work to a reference owned by each satellite;
+  // installed satellite versions that predate their reference leave that
+  // routing dangling (robotics shipped it in rc.22, slides ships it from its
+  // first published release carrying docs/).
+  const satelliteReferences = [
+    {
+      name: 'lds-robotics-ui',
+      reference: ['docs', 'package', 'domain', 'AGENT_SKILL_REFERENCE.md'],
+      specifier: 'docs/domain/AGENT_SKILL_REFERENCE.md',
+      code: 'AGENT_SKILL_ROBOTICS_REFERENCE_MISSING',
+    },
+    {
+      name: 'lds-slides-ui',
+      reference: ['docs', 'AGENT_SKILL_REFERENCE.md'],
+      specifier: 'docs/AGENT_SKILL_REFERENCE.md',
+      code: 'AGENT_SKILL_SLIDES_REFERENCE_MISSING',
+    },
+  ];
+  for (const satellite of satelliteReferences) {
+    const satelliteRoot = path.join(root, 'node_modules', '@lk-design-system', satellite.name);
+    const installed = await stat(satelliteRoot).then((entry) => entry.isDirectory(), () => false);
+    if (installed && !(await isFile(path.join(satelliteRoot, ...satellite.reference)))) {
+      console.warn(
+        `[${satellite.code}] @lk-design-system/${satellite.name} is installed but ships no `
+        + `${satellite.specifier}, so the lds-ui skill's domain routing resolves to nothing. `
+        + 'Upgrade the package to a release that ships the reference. '
+        + 'Advisory only — this does not fail the check.',
+      );
+    }
   }
 }
 
