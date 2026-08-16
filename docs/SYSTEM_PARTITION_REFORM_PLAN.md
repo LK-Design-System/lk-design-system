@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Architecture reform proposal |
-| Status | Phase 0·1 완료(2026-08-15) · **Phase 2의 R1-3 완료(2026-08-16, compat 삭제)**. R1-4(퍼블리시 중단)는 rc.69.16 릴리스에서 확정되며 robotics rc.16 짝맞춤이 선행돼야 한다. R2-1·R2-2는 Phase 1에서 워크스페이스가 이미 충족함을 확인했고 위성 확장은 Phase 3. |
+| Status | Phase 0·1 완료(2026-08-15) · **Phase 2 완료(2026-08-16, rc.69.17)** · **Phase 3의 R3-2 완료(2026-08-16, editorial 흡수)**. Phase 3의 잔여는 R2-3·R2-4(위성 소비 계약)와 R4(수명주기 계약). |
 | Owner | Design system owner · Frontend platform |
 | Last reviewed | 2026-08-15 |
 | 근거 소비자 | [`lk-design-system-motion`](https://github.com/LK-Design-System/lk-design-system-motion) — 2026-08-15 신규 위성이 LDS를 외부 런타임(헤드리스 영상 렌더러)에서 소비하며 수집한 실측 증거 |
@@ -178,6 +178,8 @@ Phase 3 (2026-Q4)             R3-2 editorial 흡수 (파괴 지점 ③) · R2-3 
                               R2-4 SlideSurface scale prop · R4 계약 문서화·레시피 반영
 2027-01                       R3-3 slides-ui 존속 재심사 · R4-3 첫 정기 심사
 ```
+
+Phase 3의 R3-2는 2026-08-16에 선행 완료했다 — 부록 D 참고.
 
 파괴 지점 3개의 롤백:
 
@@ -440,3 +442,71 @@ fixtures (Linux), Linux workspace package consumers. Phase 1의
 (compat facade)에서 import한다. `check-workspace-consumer-matrix.mjs`도
 `compat`을 기대 패키지 목록에 포함한다. **R1-3(compat 삭제)은 이 두 스크립트의
 수정을 반드시 동반한다.** Phase 2 착수 시 첫 단계로 처리한다.
+
+---
+
+## 부록 D. R3-2 실행 기록 (2026-08-16) — editorial-ui 흡수
+
+### D.1 게이트 재확인
+
+부록 A.2의 판정을 파괴 직전에 다시 확인했다. 처음 `lds_ws` 전체를 한 번에
+스캔했을 때 **slides-ui의 참조를 놓치는** 결과가 나와 그 결과를 버리고 저장소별로
+다시 확인했다. 파괴적 작업 전의 스캔은 결과가 "0건"일 때 특히 도구가 실제로
+동작했는지부터 의심해야 한다.
+
+| 대상 | 결과 |
+| --- | --- |
+| lk_portal | 0건 |
+| lk-design-system (workspace) | 0건 |
+| lds-robotics-ui · lds-3d | 0건 |
+| lds-slides-ui | 컴포넌트 5종 import + 의존 선언 — 유일한 실소비자 |
+| lds-motion | overrides·optimizeDeps 참조 — slides-ui 경유 전이 의존에 대한 우회 |
+
+### D.2 흡수 내역 (slides-ui alpha.2)
+
+| 항목 | 수량 |
+| --- | --- |
+| 컴포넌트 | 8 (`src/components/editorial/`) |
+| 스토리 | 16 |
+| 토큰 | `tokens/editorial.css` → `styles.css`에 연결 |
+| 진입점 export | 8 추가 |
+
+슬라이드 5종(Assessment·Compare·Figure·Roadmap·Stat)의 import를 패키지 경로에서
+로컬 상대 경로로 바꿨다.
+
+**의존성 산술이 분할의 근거가 얇았음을 보여준다.** 흡수한 컴포넌트가 필요로 하는
+외부 의존은 `lds-core`·`lds-product`·`react`로, slides-ui가 이미 갖고 있던 것과
+정확히 같다. 새로 들어온 의존이 없고 매니페스트의 의존 수는 오히려 하나 줄었다.
+즉 이 패키지 경계는 의존 격리를 제공하지 않으면서 릴리스·vendor·Storybook·CI
+비용만 지고 있었다.
+
+### D.3 깨진 것 하나 — 예상과 다른 곳이었다
+
+`.storybook/preview.jsx`가 editorial 스타일시트를 직접 import하고 있었다.
+빌드는 실패를 **`preview.jsx` 자체의 resolve 실패**로 보고해서 처음에는 옮긴
+스토리를 의심했으나(스토리의 패키지 참조는 0건), 원인은 그 파일이 import하는
+대상이었다. 그 줄을 지우는 것으로 끝났다 — 바로 아래 `import '../styles.css'`가
+이미 흡수된 editorial 토큰을 싣기 때문이다.
+
+검증: `check:storybook` 전 단계 통과 — style-ownership, catalogue, Storybook
+빌드, story play 63개, slide-overflow, deck-content.
+
+### D.4 하류 효과 — 우회 코드가 사라졌다
+
+lds-motion은 slides-ui의 내부 `file:` 참조를 자기 vendor로 돌리는 `overrides`
+항목과 Vite `optimizeDeps` 항목을 editorial 때문에 갖고 있었다. 패키지 경계가
+사라지자 **둘 다 불필요해져 제거**했다. 클린 설치 후 타입 통과, DeckDemo 렌더
+정상(StatSlide가 흡수된 KeyFigure로 그려지며 강조 카드 유지), 전환 프레임
+결정론 유지.
+
+위성을 줄이는 것이 하류 소비자를 단순하게 만든 사례다. R3의 "능력 축" 논거를
+지지한다.
+
+### D.5 아카이브
+
+`lk-design-system-editorial`은 README 상단에 이관 안내(마이그레이션 방법·흡수
+사유·근거 문서 링크)를 남기고 GitHub archive 처리했다. 롤백 대비로 alpha.3
+tarball은 slides-ui `vendor/`에 보존한다.
+
+**위성 현황: 5 → 4** (robotics-ui, slides-ui, 3d, motion). infographics는 애초에
+생성되지 않았음이 Phase 1에서 확인됐다.
