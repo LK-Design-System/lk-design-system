@@ -2,6 +2,18 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.18 - 2026-08-16
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.18.
+
+### Fixed
+
+- The release gate required `@lk-design-system/lds-robotics-ui` to be present in the registry before this package set could publish, and every tagged release run had been dying there on a 403. It reads as a permissions problem and is not one: the Robotics repository has no publish workflow, so that package has only ever shipped as the vendored tarball pinned by the external surface, and the probe was asking for something that has never existed. The prerequisite came from the compatibility facade declaring Robotics as a runtime dependency — its error text named the compatibility package — and none of core, theme, or product depends on Robotics, so removing the facade removed the thing the gate protected. The vendored artifact is still verified by sha256 in `check:publish-policy` and `check:pack`. This release is the first to exercise the change.
+
+### Changed
+
+- `docs/SYSTEM_PARTITION_REFORM_PLAN.md` records Phases 0 through 3 as complete, including the R4 satellite lifecycle contract. Outside this repository, Phase 3 absorbed `lds-editorial-ui` into `lds-slides-ui` (satellites go from six to four), gave `SlideSurface` a `scale` prop so a caller can own the fit, and took the LDS layers off `file:` dependencies in favour of peer declarations.
+
 ## 0.1.0-rc.69.17 - 2026-08-16
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.17, which re-snapshots this
