@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Architecture reform proposal |
-| Status | Phase 0·1 완료(2026-08-15) · **Phase 2 완료(2026-08-16, rc.69.17)** · **Phase 3의 R3-2 완료(2026-08-16, editorial 흡수)**. Phase 3의 잔여는 R2-3·R2-4(위성 소비 계약)와 R4(수명주기 계약). |
+| Status | **Phase 0–3 완료 (2026-08-15 ~ 08-16).** R1 compat 일몰(rc.69.17) · R2 소비 산출물 계약 · R3 위성 재편(editorial 흡수, 위성 6→4) · R4 수명주기 계약 확정. 잔여는 2027-01 정기 심사(R3-3 slides-ui 존속, R4-3 첫 아카이브 심사)와 R4-4(core 잔류 조건 데이터화). 실행 기록은 부록 A–F. |
 | Owner | Design system owner · Frontend platform |
 | Last reviewed | 2026-08-15 |
 | 근거 소비자 | [`lk-design-system-motion`](https://github.com/LK-Design-System/lk-design-system-motion) — 2026-08-15 신규 위성이 LDS를 외부 런타임(헤드리스 영상 렌더러)에서 소비하며 수집한 실측 증거 |
@@ -174,12 +174,13 @@ Phase 2 (2026-10 릴리스까지)  R1-3·R1-4 compat 삭제 (파괴 지점 ①)
                               ※ 선행: check:consumer-smoke·workspace-consumer-matrix의
                                  compat 참조 제거 (부록 B.4)
                               R2-1·R2-2 dist·d.ts 출하 (파괴 지점 ②: deep import 경로 변경 가능)
-Phase 3 (2026-Q4)             R3-2 editorial 흡수 (파괴 지점 ③) · R2-3 file: 금지
-                              R2-4 SlideSurface scale prop · R4 계약 문서화·레시피 반영
+Phase 3 ✅ 완료 (2026-08-16)  R3-2 editorial 흡수 → 부록 D
+                              R2-3 file: 금지 · R2-4 SlideSurface scale prop → 부록 E
+                              R4 수명주기 계약 확정 → 부록 F
 2027-01                       R3-3 slides-ui 존속 재심사 · R4-3 첫 정기 심사
 ```
 
-Phase 3의 R3-2는 2026-08-16에 선행 완료했다 — 부록 D 참고.
+Phase 3은 계획한 2026-Q4보다 앞당겨 2026-08-16에 완료했다.
 
 파괴 지점 3개의 롤백:
 
