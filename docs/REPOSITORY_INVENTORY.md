@@ -14,8 +14,7 @@ Storybook의 726개 스토리 역할·공개 여부·소유 컴포넌트와 195�
 
 ## 패키지 범위
 
-- 패키지: `@lk-design-system/lds-core` · `@lk-design-system/lds-theme` · `@lk-design-system/lds-product`
-  (2026-08-16까지는 이 셋을 하나로 묶은 `@lk-design-system/design-system-core` facade가 함께 있었으나 Wave 5에서 제거됨)
+- 패키지명: `@lk-design-system/design-system-core`
 - React 컴포넌트 소스 파일: 208개
 - 공개 named export: 221개
 - 루트 aggregate export: Core 85개 · Theme 8개 · Product 128개 = 221개
@@ -50,8 +49,8 @@ WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`
 - 현재 React component entry export: 208개
 - 공개 named export: 221개
 - Storybook 전체 story: 726개
-- Storybook public story: 498개
-- Storybook hidden story: 228개
+- Storybook public story: 499개
+- Storybook hidden story: 227개
 - 숨김 visual parity story: 95개
 - visual inventory React story: 726개
 - 접근성 guard 검사 대상 implementation story: 726개

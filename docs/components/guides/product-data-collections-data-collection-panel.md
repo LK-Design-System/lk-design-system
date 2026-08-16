@@ -92,8 +92,8 @@
 
 | Component | Relationship |
 | --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
 | `Checkbox` | 대표 시나리오에서 조합 |
-| `ContentBadge` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
 | `Pagination` | 대표 시나리오에서 조합 |
 | `Select` | 대표 시나리오에서 조합 |

@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "c3c82afd33e358cf8ea5f9d7c4e79794a162118e1487ac1417cc56bd2fd368ca",
+    "storybookIndexSha256": "52f894cd909d25f7db41cba18c35e86c44c0360f834e79baa5b95198ed5b16d3",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -63,26 +63,26 @@
   "summary": {
     "pages": 195,
     "stories": 726,
-    "publicStories": 498,
-    "hiddenStories": 228,
+    "publicStories": 499,
+    "hiddenStories": 227,
     "componentDescriptions": 191,
     "pagesWithVisibleCanvasIntroduction": 191,
     "pagesWithDecisionGuidance": 183,
-    "describedPublicStories": 498,
+    "describedPublicStories": 499,
     "reviewedPages": 195,
     "reviewedStories": 713,
-    "staleReviewedPages": 22,
+    "staleReviewedPages": 23,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
       "overview": 179,
       "usage": 39,
       "variants-states": 106,
-      "interaction": 54,
+      "interaction": 55,
       "responsive": 78,
       "scenario": 26,
       "visual-parity": 95,
-      "internal-contract": 129
+      "internal-contract": 128
     },
     "dispositions": {
       "keep": 195,
@@ -108,8 +108,8 @@
       "Product": {
         "pages": 117,
         "stories": 486,
-        "public": 359,
-        "hidden": 127,
+        "public": 360,
+        "hidden": 126,
         "guideReadyPages": 116
       },
       "Theme": {
@@ -12151,14 +12151,14 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataCollectionPanel.stories.jsx",
-      "sourceSha256": "2891bcd3e15da4c899ef5fbc064492a324a9988e12b7415b4f31179455661620",
+      "sourceSha256": "00500867f583d09e39c3613f83a3bd946626191a436281f4a76a7daa39fbceb3",
       "primaryOwner": "DataCollectionPanel",
       "ownerComponents": [
         "DataCollectionPanel"
       ],
       "supportingComponents": [
+        "Button",
         "Checkbox",
-        "ContentBadge",
         "DataGrid",
         "Pagination",
         "Select",
@@ -12166,13 +12166,13 @@
         "Table"
       ],
       "visibility": {
-        "public": 4,
-        "hidden": 7
+        "public": 5,
+        "hidden": 6
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-collections-data-collection-panel--overview",
-        "describedPublicStories": 4,
+        "describedPublicStories": 5,
         "publicStoriesWithCanvasGuidance": 2,
         "decisionGuidance": true
       },
@@ -12183,7 +12183,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-08-15",
-      "reviewedSourceSha256": "2891bcd3e15da4c899ef5fbc064492a324a9988e12b7415b4f31179455661620",
+      "reviewedSourceSha256": "517ecdf16291c4bed6a8f9b86cedf5eeea4c2f0af23e014fb716da19b7942317",
       "stories": [
         {
           "id": "lds-product-data-collections-data-collection-panel--overview",
@@ -12207,7 +12207,7 @@
             "DataCollectionPanel"
           ],
           "supportingComponents": [
-            "ContentBadge",
+            "Button",
             "Pagination",
             "Select",
             "StatusBadge",
@@ -12237,7 +12237,7 @@
             "DataCollectionPanel"
           ],
           "supportingComponents": [
-            "ContentBadge",
+            "Button",
             "Pagination",
             "Select",
             "StatusBadge",
@@ -12266,7 +12266,7 @@
             "DataCollectionPanel"
           ],
           "supportingComponents": [
-            "ContentBadge",
+            "Button",
             "Pagination",
             "Select",
             "StatusBadge",
@@ -12278,17 +12278,18 @@
           "id": "lds-product-data-collections-data-collection-panel--shared-selection-across-wide-and-narrow",
           "name": "상호작용 · 넓은 표와 좁은 목록의 선택 공유",
           "exportName": "SharedSelectionAcrossWideAndNarrow",
-          "visibility": "hidden",
+          "visibility": "public",
           "tags": [
             "autodocs",
+            "dev",
             "manifest",
             "play-fn",
             "test"
           ],
-          "role": "internal-contract",
+          "role": "interaction",
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
+          "recommendedVisibility": "public",
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
@@ -12321,7 +12322,7 @@
             "DataCollectionPanel"
           ],
           "supportingComponents": [
-            "ContentBadge",
+            "Button",
             "Pagination",
             "Select",
             "StatusBadge",
@@ -12350,7 +12351,7 @@
             "DataCollectionPanel"
           ],
           "supportingComponents": [
-            "ContentBadge",
+            "Button",
             "Pagination",
             "Select",
             "StatusBadge",
@@ -12379,7 +12380,7 @@
             "DataCollectionPanel"
           ],
           "supportingComponents": [
-            "ContentBadge",
+            "Button",
             "Pagination",
             "Select",
             "StatusBadge",
@@ -12408,7 +12409,7 @@
             "DataCollectionPanel"
           ],
           "supportingComponents": [
-            "ContentBadge",
+            "Button",
             "Pagination",
             "Select",
             "StatusBadge",
@@ -12460,7 +12461,7 @@
             "DataCollectionPanel"
           ],
           "supportingComponents": [
-            "ContentBadge",
+            "Button",
             "Pagination",
             "Select",
             "StatusBadge",

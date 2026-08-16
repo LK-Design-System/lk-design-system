@@ -22240,8 +22240,8 @@
         "DataCollectionPanel"
       ],
       "supportingComponents": [
+        "Button",
         "Checkbox",
-        "ContentBadge",
         "DataGrid",
         "Pagination",
         "Select",
@@ -22397,11 +22397,11 @@
       "exceptions": [],
       "related": [
         {
-          "component": "Checkbox",
+          "component": "Button",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ContentBadge",
+          "component": "Checkbox",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -22476,12 +22476,17 @@
             "role": "variants-states"
           },
           {
+            "id": "lds-product-data-collections-data-collection-panel--shared-selection-across-wide-and-narrow",
+            "name": "상호작용 · 넓은 표와 좁은 목록의 선택 공유",
+            "role": "interaction"
+          },
+          {
             "id": "lds-product-data-collections-data-collection-panel--narrow-collection",
             "name": "반응형 · 좁은 의미 목록",
             "role": "responsive"
           }
         ],
-        "hiddenEvidence": 7
+        "hiddenEvidence": 6
       },
       "sources": [],
       "canonicalGuide": null,

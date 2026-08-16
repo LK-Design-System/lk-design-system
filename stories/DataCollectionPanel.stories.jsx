@@ -1,8 +1,8 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
 import {
+  Button,
   Checkbox,
-  ContentBadge,
   DataCollectionPanel,
   DataGrid,
   Pagination,
@@ -36,105 +36,74 @@ const meta = {
 
 export default meta;
 
-const projects = [
-  {
-    id: 'portal-v3',
-    updatedAt: '2026-08-13 17:24',
-    name: 'LK Portal v3',
-    key: 'portal-v3',
-    status: '진행 중',
-    description: '근거 기반 Context, Wiki, 보고서와 연동 서비스를 한곳에서 탐색하는 지식 허브입니다.',
-    counts: { sources: 0, people: 1, documents: 0, development: 0 },
-  },
-  {
-    id: 'pet-edge-collector',
-    updatedAt: '2026-08-11 09:03',
-    name: 'PET Edge Collector',
-    key: 'pet-edge-collector',
-    status: '진행 중',
-    description: '개인 업무 활동을 요약 근거로 안전하게 수집하는 Edge Collector입니다.',
-    counts: { sources: 0, people: 0, documents: 0, development: 0 },
-  },
-  {
-    id: 'vision-automation',
-    updatedAt: '2026-08-05 14:47',
-    name: 'Vision Automation',
-    key: 'vision-automation',
-    status: '진행 중',
-    description: '산업 현장 비전 데이터와 로봇 자동화 워크플로를 연결하는 프로젝트입니다.',
-    counts: { sources: 0, people: 1, documents: 0, development: 0 },
-  },
-  {
-    id: 'semantic-reconciliation',
-    updatedAt: '2026-07-29 08:12',
-    name: 'Semantic Reconciliation Workspace',
-    key: 'semantic-reconciliation',
-    status: '검토 중',
-    description: '긴 이름과 복합 상태가 좁은 화면에서도 손실 없이 읽히는지 확인하는 실제형 데이터입니다.',
-    counts: { sources: 12, people: 4, documents: 38, development: 7 },
-  },
+/* 데모는 특정 제품 화면을 복제하지 않고, 컬렉션 화면의 업계 표준 anatomy를 LDS
+   하우스 도메인(현장 장비 목록 — components/data/Table.prompt.md의 예시 도메인)으로
+   보여준다.
+   - 도구막대: 제목·개수 → 주 생성 액션 → 검색 → 필터. Carbon Data Table은 toolbar를
+     primary button·search·filtering의 자리로 정의하고 PatternFly Toolbar도 데이터셋
+     제어를 같은 상단 막대에 모은다 — 근거 링크는 DataCollectionPanel.prompt.md의
+     비교 근거 절이 소유한다.
+   - 컬럼: 이름(행 헤더) → 텍스트 속성 → 상태 배지 → 비교 수치(우측 정렬,
+     tabular-nums) → 도구막대 정렬 기준 시각. 한 컬럼 = 한 속성 규칙과 수치 우측
+     정렬 규칙은 Table.prompt.md가 소유한다. 긴 서술 텍스트는 목록의 스캔·비교
+     대상이 아니므로 컬럼을 갖지 않는다.
+   - 행 액션 컬럼(마지막 컬럼의 overflow 메뉴)은 의도적으로 제외한다: 이 페이지의
+     계약은 패널 조립이고, 액션 컬럼 규칙은 Table.prompt.md의 예시가 이미 소유한다. */
+const equipment = [
+  { id: 'lkr-t1-03', name: 'LKR-T1 3호기', site: '판교 물류센터', status: '가동 중', missions: 132, updatedAt: '2026-08-15 08:40' },
+  { id: 'lkr-t1-07', name: 'LKR-T1 7호기', site: '판교 물류센터', status: '점검 중', missions: 0, updatedAt: '2026-08-14 17:05' },
+  { id: 'lkr-s2-01', name: 'LKR-S2 1호기', site: '대덕 제조동', status: '가동 중', missions: 96, updatedAt: '2026-08-15 07:58' },
+  { id: 'lkr-s2-04', name: 'LKR-S2 4호기', site: '대덕 제조동', status: '대기', missions: 12, updatedAt: '2026-08-13 11:21' },
+  { id: 'lkr-h1-02', name: 'LKR-H1 2호기', site: '세종 물류센터', status: '가동 중', missions: 87, updatedAt: '2026-08-15 06:30' },
 ];
 
-function CountBadges({ counts }) {
-  return (
-    <span data-count-badges="" style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', flexWrap: 'nowrap', whiteSpace: 'nowrap' }}>
-      <ContentBadge size="xsmall">자료 {counts.sources}</ContentBadge>
-      <ContentBadge size="xsmall">사람 {counts.people}</ContentBadge>
-      <ContentBadge size="xsmall">문서 {counts.documents}</ContentBadge>
-      <ContentBadge size="xsmall">개발 현황 {counts.development}</ContentBadge>
-    </span>
-  );
-}
+const STATUS_TONE = { '가동 중': 'positive', '점검 중': 'cautionary', '대기': 'neutral' };
+
+const STATUS_OPTIONS = [
+  { value: 'all', label: '전체 상태' },
+  { value: '가동 중', label: '가동 중' },
+  { value: '점검 중', label: '점검 중' },
+  { value: '대기', label: '대기' },
+];
 
 const columns = [
   {
     key: 'name',
-    label: '프로젝트',
-    render: (project) => (
-      <span style={{ display: 'grid', gap: 'var(--space-1)' }}>
-        <a href={`#${project.id}`} style={{ color: 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', textDecoration: 'none' }}>
-          {project.name}
-        </a>
-        {/* 키는 같은 대상의 식별자라 이름 아래 보조 텍스트로 남긴다. 비교·정렬
-            속성인 시각은 자기 컬럼을 갖는다 — components/data/Table.prompt.md의
-            컬럼 구성 기준. */}
-        <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', fontFamily: 'var(--font-mono)' }}>
-          {project.key}
-        </span>
-      </span>
+    label: '장비',
+    render: (unit) => (
+      <a href={`#${unit.id}`} style={{ color: 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', textDecoration: 'none' }}>
+        {unit.name}
+      </a>
     ),
   },
+  { key: 'site', label: '현장', width: 140 },
   {
     key: 'status',
     label: '상태',
-    width: 112,
-    render: (project) => <StatusBadge tone={project.status === '진행 중' ? 'positive' : 'cautionary'}>{project.status}</StatusBadge>,
+    width: 96,
+    render: (unit) => <StatusBadge tone={STATUS_TONE[unit.status]}>{unit.status}</StatusBadge>,
   },
-  { key: 'description', label: '설명', truncate: true },
-  {
-    key: 'counts',
-    label: '연결된 항목',
-    width: 360,
-    render: (project) => <CountBadges counts={project.counts} />,
-  },
+  /* 비교 수치 컬럼은 우측 정렬 — Table의 tabular-nums와 함께 값이 자릿수 기준으로
+     세로 정렬된다. 점검 중 장비의 0은 결측이 아니라 실제 값이다. */
+  { key: 'missions', label: '오늘 임무', width: 104, align: 'right' },
   {
     key: 'updatedAt',
-    label: '최근 변경',
+    label: '최근 점검',
     width: 150,
-    render: (project) => (
+    render: (unit) => (
       <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap' }}>
-        {project.updatedAt}
+        {unit.updatedAt}
       </span>
     ),
   },
 ];
 
-function CompactProjectList({ rows }) {
+function CompactEquipmentList({ rows }) {
   return (
-    <ul aria-label="좁은 화면 프로젝트" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-      {rows.map((project, index) => (
+    <ul aria-label="좁은 화면 장비" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+      {rows.map((unit, index) => (
         <li
-          key={project.id}
+          key={unit.id}
           style={{
             display: 'grid',
             gap: 'var(--space-2)',
@@ -143,30 +112,31 @@ function CompactProjectList({ rows }) {
           }}
         >
           <span style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--space-3)' }}>
-            <a href={`#compact-${project.id}`} style={{ minWidth: 0, color: 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflowWrap: 'anywhere' }}>
-              {project.name}
+            <a href={`#compact-${unit.id}`} style={{ minWidth: 0, color: 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflowWrap: 'anywhere' }}>
+              {unit.name}
             </a>
-            <StatusBadge tone={project.status === '진행 중' ? 'positive' : 'cautionary'}>{project.status}</StatusBadge>
+            <StatusBadge tone={STATUS_TONE[unit.status]}>{unit.status}</StatusBadge>
           </span>
-          {/* 좁은 목록은 컬럼 비교가 목적이 아니므로 식별자와 시각을 쌓아 보여도 된다. */}
-          <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', fontFamily: 'var(--font-mono)', overflowWrap: 'anywhere' }}>
-            {project.key} · {project.updatedAt}
-          </span>
+          {/* 좁은 목록은 컬럼 비교가 목적이 아니므로 속성을 본문에 쌓는다 — Table.prompt.md. */}
           <span style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', wordBreak: 'keep-all' }}>
-            {project.description}
+            {unit.site} · 오늘 임무 {unit.missions}
           </span>
-          <CountBadges counts={project.counts} />
+          <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', fontFamily: 'var(--font-mono)', overflowWrap: 'anywhere' }}>
+            최근 점검 {unit.updatedAt}
+          </span>
         </li>
       ))}
     </ul>
   );
 }
 
-function ProjectCollection({ layout = 'auto', state = 'ready', style, compact = true, content = true, label = '프로젝트 목록', tableSize }) {
+function EquipmentCollection({ layout = 'auto', state = 'ready', style, compact = true, content = true, label = '장비 목록', tableSize }) {
   const [query, setQuery] = React.useState('');
+  const [status, setStatus] = React.useState('all');
   const [sort, setSort] = React.useState('recent');
   const [page, setPage] = React.useState(1);
-  const filtered = projects.filter((project) => `${project.name} ${project.key} ${project.description}`.toLowerCase().includes(query.toLowerCase()));
+  const filtered = equipment.filter((unit) => (status === 'all' || unit.status === status)
+    && `${unit.name} ${unit.site}`.toLowerCase().includes(query.toLowerCase()));
   const rows = sort === 'name'
     ? [...filtered].sort((a, b) => a.name.localeCompare(b.name))
     : [...filtered].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
@@ -178,43 +148,58 @@ function ProjectCollection({ layout = 'auto', state = 'ready', style, compact = 
       style={{ maxWidth: 1120, ...style }}
       toolbar={{
         size: 'sm',
+        /* 이 스토리에서는 패널이 화면 전체이므로 제목·개수·주 생성 액션을 도구막대가
+           소유한다. 상위 제목이 이미 컬렉션을 설명하는 화면이라면 title/count를
+           생략한다 — DataCollectionPanel.prompt.md. */
+        title: '장비',
+        count: rows.length,
+        actions: <Button size="sm" variant="solid" color="primary">장비 등록</Button>,
         searchValue: query,
         onSearchChange: setQuery,
-        searchPlaceholder: '프로젝트 이름, 키, 설명 검색',
+        searchPlaceholder: '장비 이름, 현장 검색',
         filters: ({ size }) => (
-          <Select
-            size={size}
-            aria-label="프로젝트 정렬"
-            value={sort}
-            onChange={setSort}
-            options={[
-              { value: 'recent', label: '최근 변경순' },
-              { value: 'name', label: '이름순' },
-            ]}
-          />
+          <>
+            <Select
+              size={size}
+              aria-label="상태 필터"
+              value={status}
+              onChange={setStatus}
+              options={STATUS_OPTIONS}
+            />
+            <Select
+              size={size}
+              aria-label="장비 정렬"
+              value={sort}
+              onChange={setSort}
+              options={[
+                { value: 'recent', label: '최근 점검순' },
+                { value: 'name', label: '이름순' },
+              ]}
+            />
+          </>
         ),
       }}
       resourceState={{
         state,
         title: state === 'empty' ? '검색 결과가 없습니다' : undefined,
-        description: state === 'empty' ? '다른 검색어나 정렬 조건을 사용해 보세요.' : undefined,
+        description: state === 'empty' ? '다른 검색어나 필터 조건을 사용해 보세요.' : undefined,
         lastUpdated: state === 'stale' ? '2026-08-04 09:30' : undefined,
       }}
-      compactContent={content && compact ? <CompactProjectList rows={rows} /> : undefined}
+      compactContent={content && compact ? <CompactEquipmentList rows={rows} /> : undefined}
       footer={(
         <Pagination
           page={page}
           count={4}
           variant="compact"
-          navigationLabel="프로젝트 페이지"
-          previousPageLabel="이전 프로젝트 페이지"
-          nextPageLabel="다음 프로젝트 페이지"
+          navigationLabel="장비 페이지"
+          previousPageLabel="이전 장비 페이지"
+          nextPageLabel="다음 장비 페이지"
           onChange={setPage}
           showCounter
         />
       )}
     >
-      {content ? <Table size={tableSize} tableLabel="프로젝트" columns={columns} rows={rows} rowHeaderKey="name" /> : null}
+      {content ? <Table size={tableSize} tableLabel="장비" columns={columns} rows={rows} rowHeaderKey="name" /> : null}
     </DataCollectionPanel>
   );
 }
@@ -222,9 +207,9 @@ function ProjectCollection({ layout = 'auto', state = 'ready', style, compact = 
 export const Overview = {
   name: '개요',
   parameters: storyDescription(
-    'Portal 프로젝트 디렉터리와 같은 실제형 긴 콘텐츠에서 toolbar, ready content와 footer가 하나의 perimeter와 DOM 순서를 공유합니다.',
+    '제목·개수·주 생성 액션·검색·필터를 한 도구막대에 두고, 이름 → 속성 → 상태 → 우측 정렬 수치 → 정렬 기준 시각 순의 컬럼으로 구성한 표준 컬렉션 화면입니다. toolbar, ready content와 footer가 하나의 perimeter와 DOM 순서를 공유합니다.',
   ),
-  render: () => <ProjectCollection />,
+  render: () => <EquipmentCollection />,
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('[data-lds-data-collection-panel]');
     const toolbarSlot = root?.querySelector(':scope > [data-slot="toolbar"]');
@@ -236,27 +221,42 @@ export const Overview = {
       throw new Error('Panel DOM order must remain toolbar, state/content, footer.');
     }
     if (toolbarSlot.querySelector('[data-variant="embedded"]') == null) throw new Error('Panel must force the embedded DataToolbar perimeter.');
+
+    /* 업계 표준 도구막대 anatomy: 주 생성 액션과 결과 개수가 검색·필터와 같은
+       도구막대에 있다. */
+    const primaryAction = [...toolbarSlot.querySelectorAll('[data-slot="actions"] button')]
+      .find((button) => button.textContent.includes('장비 등록'));
+    if (!primaryAction) throw new Error('The collection toolbar must expose the primary create action.');
+    const filterSlot = toolbarSlot.querySelector('[data-slot="filters"]');
+    if (!filterSlot?.querySelector('[aria-label="상태 필터"]') || !filterSlot.querySelector('[aria-label="장비 정렬"]')) {
+      throw new Error('The toolbar filters slot must keep the status filter and the sort control.');
+    }
+
+    /* 비교 수치 컬럼은 우측 정렬로 세로 비교가 가능해야 한다. */
+    const headers = [...root.querySelectorAll('thead th')];
+    const missionsIndex = headers.findIndex((header) => header.textContent.trim() === '오늘 임무');
+    const firstRow = root.querySelector('tbody tr');
+    if (missionsIndex < 0 || getComputedStyle(firstRow.children[missionsIndex]).textAlign !== 'right') {
+      throw new Error('The comparable numeric column must be right aligned.');
+    }
+
     const input = root.querySelector('input[type="search"]');
     await userEvent.clear(input);
-    await userEvent.type(input, 'Vision');
+    await userEvent.type(input, '세종');
     await waitFor(() => {
-      if (root.querySelectorAll('tbody tr').length !== 1 || !root.textContent.includes('Vision Automation')) {
+      if (root.querySelectorAll('tbody tr').length !== 1 || !root.textContent.includes('LKR-H1 2호기')) {
         throw new Error('Product-owned controlled search must update collection content through toolbar props.');
+      }
+      if (toolbarSlot.querySelector('[data-slot="count"]')?.textContent !== '1개') {
+        throw new Error('The toolbar result count must follow the filtered collection.');
       }
     });
     await userEvent.clear(input);
     await waitFor(() => {
-      if (root.querySelectorAll('tbody tr').length !== projects.length) {
+      if (root.querySelectorAll('tbody tr').length !== equipment.length) {
         throw new Error('Overview must restore the full collection after its search interaction check.');
       }
     });
-    const visibleCountGroups = [...root.querySelectorAll('[data-count-badges]')]
-      .filter((group) => group.getClientRects().length > 0);
-    if (visibleCountGroups.length === 0 || visibleCountGroups.some((group) => (
-      new Set([...group.children].map((badge) => Math.round(badge.getBoundingClientRect().top))).size > 1
-    ))) {
-      throw new Error('Connected-item badges must remain on one row in the wide table layout.');
-    }
   },
 };
 
@@ -266,23 +266,23 @@ export const Overview = {
 export const DensityComparison = {
   name: '변형·상태 · 기본 밀도와 좁은 밀도',
   parameters: storyDescription(
-    '같은 프로젝트 목록을 기본 밀도와 좁은 밀도로 비교하는 상황입니다. 밀도는 본문 표가 소유하므로 도구막대와 페이지 이동 영역은 그대로이고 행만 촘촘해집니다. 목록을 읽고 비교하는 화면에는 기본 밀도를, 한 화면에 더 많은 행을 담아야 하는 운영 화면에는 좁은 밀도를 사용하세요.',
+    '같은 장비 목록을 기본 밀도와 좁은 밀도로 비교하는 상황입니다. 밀도는 본문 표가 소유하므로 도구막대와 페이지 이동 영역은 그대로이고 행만 촘촘해집니다. 목록을 읽고 비교하는 화면에는 기본 밀도를, 한 화면에 더 많은 행을 담아야 하는 운영 화면에는 좁은 밀도를 사용하세요.',
   ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)' }}>
       <section data-testid="panel-density-md" style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <div>
           <h2 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>기본 밀도</h2>
-          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>표의 셀 여백이 위아래 14px입니다. 프로젝트 목록처럼 읽고 비교하는 화면의 기본값입니다.</p>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>표의 셀 여백이 위아래 14px입니다. 장비 목록처럼 읽고 비교하는 화면의 기본값입니다.</p>
         </div>
-        <ProjectCollection label="기본 밀도 프로젝트 목록" />
+        <EquipmentCollection label="기본 밀도 장비 목록" />
       </section>
       <section data-testid="panel-density-sm" style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <div>
           <h2 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>좁은 밀도</h2>
           <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>표의 셀 여백이 위아래 10px입니다. 도구막대와 페이지 이동은 그대로이고 행만 촘촘해집니다.</p>
         </div>
-        <ProjectCollection tableSize="sm" label="좁은 밀도 프로젝트 목록" />
+        <EquipmentCollection tableSize="sm" label="좁은 밀도 장비 목록" />
       </section>
     </main>
   ),
@@ -333,12 +333,24 @@ export const DensityComparison = {
   },
 };
 
+/* 데모 구성(selectableColumns · CompactSelectableList · SharedSelectionDemo ·
+   sharedSelectionPlay)은 파일 하단에 있다. 공개 스토리 정렬 규칙상 상호작용
+   역할은 변형·상태 뒤에 와야 해서 export만 이 위치에 둔다. */
+export const SharedSelectionAcrossWideAndNarrow = {
+  name: '상호작용 · 넓은 표와 좁은 목록의 선택 공유',
+  parameters: storyDescription(
+    '넓은 표와 좁은 목록이 하나의 선택 상태를 함께 씁니다. 한쪽에서 선택하거나 해제하면 다른 쪽의 같은 항목이 즉시 따라오고, 좁은 목록에서도 선택 수 변화가 스크린 리더에 알림되는지 확인하세요. 선택 상태와 좁은 목록의 마크업은 제품이 소유합니다.',
+  ),
+  render: () => <SharedSelectionDemo />,
+  play: sharedSelectionPlay,
+};
+
 export const NarrowCollection = {
   name: '반응형 · 좁은 의미 목록',
   parameters: storyDescription(
-    '320px에서는 제품이 제공한 의미 목록만 표시합니다. 긴 프로젝트명, 상태, 설명과 연결 수를 유지하며 숨겨진 넓은 표의 링크는 Tab 순서에서 제외됩니다.',
+    '320px에서는 제품이 제공한 의미 목록만 표시합니다. 장비 이름, 상태, 현장·임무 수와 최근 점검 시각을 유지하며 숨겨진 넓은 표의 링크는 Tab 순서에서 제외됩니다.',
   ),
-  render: () => <ProjectCollection layout="narrow" style={{ width: 320 }} />,
+  render: () => <EquipmentCollection layout="narrow" style={{ width: 320 }} />,
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('[data-lds-data-collection-panel]');
     const wide = root?.querySelector('[data-collection-content="wide"]');
@@ -346,7 +358,7 @@ export const NarrowCollection = {
     if (getComputedStyle(wide).display !== 'none' || getComputedStyle(compact).display === 'none') {
       throw new Error('Narrow layout must expose only the product-authored compact content.');
     }
-    if (!compact.querySelector('ul[aria-label="좁은 화면 프로젝트"]') || compact.querySelectorAll('li').length !== projects.length) {
+    if (!compact.querySelector('ul[aria-label="좁은 화면 장비"]') || compact.querySelectorAll('li').length !== equipment.length) {
       throw new Error('Compact content must preserve a named semantic list and every item.');
     }
     if ([...wide.querySelectorAll('a')].some((link) => link.getClientRects().length > 0)) {
@@ -358,14 +370,14 @@ export const NarrowCollection = {
 export const WideFallbackWithoutCompactContent = {
   name: '좁은 화면 · Table overflow 보존',
   tags: ['!dev'],
-  render: () => <ProjectCollection layout="narrow" compact={false} style={{ width: 320 }} />,
+  render: () => <EquipmentCollection layout="narrow" compact={false} style={{ width: 320 }} />,
   play: async ({ canvasElement }) => {
     const root = canvasElement.querySelector('[data-lds-data-collection-panel]');
     const wide = root?.querySelector('[data-collection-content="wide"]');
     if (root.dataset.hasCompactContent !== 'false' || getComputedStyle(wide).display === 'none') {
       throw new Error('Without compactContent, narrow layout must preserve the native Table content.');
     }
-    if (!wide.querySelector('table[aria-label="프로젝트"]')) throw new Error('Table semantics must remain intact in the fallback path.');
+    if (!wide.querySelector('table[aria-label="장비"]')) throw new Error('Table semantics must remain intact in the fallback path.');
   },
 };
 
@@ -376,9 +388,9 @@ export const ResourceStates = {
   ),
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 920 }}>
-      <ProjectCollection state="loading" label="불러오는 프로젝트 목록" />
-      <ProjectCollection state="empty" label="빈 프로젝트 목록" />
-      <ProjectCollection state="stale" label="오래된 프로젝트 목록" />
+      <EquipmentCollection state="loading" label="불러오는 장비 목록" />
+      <EquipmentCollection state="empty" label="빈 장비 목록" />
+      <EquipmentCollection state="stale" label="오래된 장비 목록" />
     </div>
   ),
   play: async ({ canvasElement }) => {
@@ -398,8 +410,8 @@ export const AutoContainerBoundary = {
   tags: ['!dev'],
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--space-5)', width: '100%' }}>
-      <ProjectCollection label="자동 좁은 패널" style={{ width: 760 }} />
-      <ProjectCollection label="자동 넓은 패널" style={{ width: 800 }} />
+      <EquipmentCollection label="자동 좁은 패널" style={{ width: 760 }} />
+      <EquipmentCollection label="자동 넓은 패널" style={{ width: 800 }} />
     </div>
   ),
   play: async ({ canvasElement }) => {
@@ -423,20 +435,20 @@ export const StatePolicyContract = {
   tags: ['!dev'],
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--space-5)', width: '100%', maxWidth: 920 }}>
-      <ProjectCollection state="error" content={false} label="초기 오류 프로젝트 목록" />
-      <ProjectCollection state="error" label="보존 오류 프로젝트 목록" />
-      <ProjectCollection state="refreshing" label="새로 고침 프로젝트 목록" />
-      <ProjectCollection state="offline" label="오프라인 프로젝트 목록" />
-      <ProjectCollection state="restricted" label="권한 제한 프로젝트 목록" />
+      <EquipmentCollection state="error" content={false} label="초기 오류 장비 목록" />
+      <EquipmentCollection state="error" label="보존 오류 장비 목록" />
+      <EquipmentCollection state="refreshing" label="새로 고침 장비 목록" />
+      <EquipmentCollection state="offline" label="오프라인 장비 목록" />
+      <EquipmentCollection state="restricted" label="권한 제한 장비 목록" />
     </div>
   ),
   play: async ({ canvasElement }) => {
     const panel = (label) => canvasElement.querySelector(`[data-lds-data-collection-panel][aria-label="${label}"]`);
-    const initialError = panel('초기 오류 프로젝트 목록');
-    const preservedError = panel('보존 오류 프로젝트 목록');
-    const refreshing = panel('새로 고침 프로젝트 목록');
-    const offline = panel('오프라인 프로젝트 목록');
-    const restricted = panel('권한 제한 프로젝트 목록');
+    const initialError = panel('초기 오류 장비 목록');
+    const preservedError = panel('보존 오류 장비 목록');
+    const refreshing = panel('새로 고침 장비 목록');
+    const offline = panel('오프라인 장비 목록');
+    const restricted = panel('권한 제한 장비 목록');
     if (initialError?.querySelector('table') || initialError?.querySelector('[data-slot="footer"]')) {
       throw new Error('An initial error without last-good content must block content and pagination.');
     }
@@ -511,7 +523,7 @@ export const SurfaceAndRefContract = {
 export const DataCollectionPanelVisualParity = {
   name: 'DataCollectionPanel visual parity',
   tags: ['!dev', 'visual-parity'],
-  render: () => <ProjectCollection layout="wide" />,
+  render: () => <EquipmentCollection layout="wide" />,
 };
 
 /* wide DataGrid와 narrow 제품 목록이 하나의 controlled selection model을 공유하는
@@ -519,22 +531,22 @@ export const DataCollectionPanelVisualParity = {
    같은 getRowId를 쓰는 것과 compact 쪽 live count를 제품이 소유하는 것이 계약이다.
    규칙은 docs/SELECTABLE_COLLECTION_PATTERN.md가 소유한다. */
 const selectableColumns = [
-  { key: 'name', label: '프로젝트' },
+  { key: 'name', label: '장비' },
   {
     key: 'status',
     label: '상태',
-    width: 112,
-    render: (project) => <StatusBadge tone={project.status === '진행 중' ? 'positive' : 'cautionary'}>{project.status}</StatusBadge>,
+    width: 96,
+    render: (unit) => <StatusBadge tone={STATUS_TONE[unit.status]}>{unit.status}</StatusBadge>,
   },
 ];
 
 function CompactSelectableList({ rows, selectedIds, onToggle }) {
   return (
     <div>
-      <ul aria-label="좁은 화면 프로젝트 선택" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-        {rows.map((project, index) => (
+      <ul aria-label="좁은 화면 장비 선택" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+        {rows.map((unit, index) => (
           <li
-            key={project.id}
+            key={unit.id}
             style={{
               display: 'flex',
               alignItems: 'flex-start',
@@ -544,19 +556,14 @@ function CompactSelectableList({ rows, selectedIds, onToggle }) {
             }}
           >
             <Checkbox
-              aria-label={`프로젝트 ${project.name} 선택`}
-              data-compact-checkbox={project.id}
-              checked={selectedIds.includes(project.id)}
-              onChange={() => onToggle(project.id)}
+              aria-label={`장비 ${unit.name} 선택`}
+              data-compact-checkbox={unit.id}
+              checked={selectedIds.includes(unit.id)}
+              onChange={() => onToggle(unit.id)}
               style={{ flexShrink: 0 }}
             />
-            <span style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
-              <span style={{ color: 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflowWrap: 'anywhere' }}>
-                {project.name}
-              </span>
-              <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', fontFamily: 'var(--font-mono)' }}>
-                {project.key}
-              </span>
+            <span style={{ minWidth: 0, color: 'var(--color-semantic-label-strong)', fontWeight: 'var(--fw-semibold)', overflowWrap: 'anywhere' }}>
+              {unit.name}
             </span>
           </li>
         ))}
@@ -578,28 +585,28 @@ function CompactSelectableList({ rows, selectedIds, onToggle }) {
 function SharedSelectionDemo() {
   const [selectionModel, setSelectionModel] = React.useState({ mode: 'explicit', selectedIds: [] });
   const selectedIds = selectionModel.selectedIds ?? [];
-  const getRowId = (project) => project.id;
+  const getRowId = (unit) => unit.id;
   const toggle = (id) => setSelectionModel((previous) => {
     const ids = previous.selectedIds ?? [];
     return { mode: 'explicit', selectedIds: ids.includes(id) ? ids.filter((value) => value !== id) : [...ids, id] };
   });
 
   const panelProps = {
-    toolbar: { size: 'sm', searchable: false, count: projects.length },
+    toolbar: { size: 'sm', searchable: false, count: equipment.length },
     style: { maxWidth: 880 },
   };
 
   return (
     <main style={{ display: 'grid', gap: 'var(--space-6)' }}>
       <section data-testid="shared-wide">
-        <DataCollectionPanel aria-label="넓은 표현 프로젝트 선택" layout="wide" {...panelProps}>
+        <DataCollectionPanel aria-label="넓은 표현 장비 선택" layout="wide" {...panelProps}>
           <DataGrid
             columns={selectableColumns}
-            rows={projects}
+            rows={equipment}
             getRowId={getRowId}
             selectable
-            selectionEntityLabel="프로젝트"
-            getRowSelectionLabel={(project) => `프로젝트 ${project.name}`}
+            selectionEntityLabel="장비"
+            getRowSelectionLabel={(unit) => `장비 ${unit.name}`}
             selectionModel={selectionModel}
             onSelectionModelChange={setSelectionModel}
           />
@@ -607,27 +614,20 @@ function SharedSelectionDemo() {
       </section>
       <section data-testid="shared-narrow">
         <DataCollectionPanel
-          aria-label="좁은 표현 프로젝트 선택"
+          aria-label="좁은 표현 장비 선택"
           layout="narrow"
           {...panelProps}
-          compactContent={<CompactSelectableList rows={projects} selectedIds={selectedIds} onToggle={toggle} />}
+          compactContent={<CompactSelectableList rows={equipment} selectedIds={selectedIds} onToggle={toggle} />}
         />
       </section>
     </main>
   );
 }
 
-export const SharedSelectionAcrossWideAndNarrow = {
-  name: '상호작용 · 넓은 표와 좁은 목록의 선택 공유',
-  tags: ['!dev'],
-  parameters: storyDescription(
-    '같은 controlled selection model이 넓은 데이터 그리드와 좁은 의미 목록을 동시에 구동합니다. 한쪽에서 선택하면 다른 쪽 체크 상태가 같은 ID로 따라오고, 좁은 표현에서도 선택 수가 보조기술에 알림되는지 확인하세요.',
-  ),
-  render: () => <SharedSelectionDemo />,
-  play: async ({ canvasElement }) => {
+async function sharedSelectionPlay({ canvasElement }) {
     const wide = canvasElement.querySelector('[data-testid="shared-wide"]');
     const narrow = canvasElement.querySelector('[data-testid="shared-narrow"]');
-    const wideCheckbox = (name) => wide.querySelector(`input[aria-label^="프로젝트 ${name} 선택"]`);
+    const wideCheckbox = (name) => wide.querySelector(`input[aria-label^="장비 ${name} 선택"]`);
     const narrowCheckbox = (id) => narrow.querySelector(`input[data-compact-checkbox="${id}"]`);
     const liveCount = () => narrow.querySelector('[data-compact-selection-count]');
     const waitFor = async (predicate, message) => {
@@ -645,21 +645,20 @@ export const SharedSelectionAcrossWideAndNarrow = {
     if (live.textContent.trim() !== '') throw new Error('The compact count must stay silent while nothing is selected.');
 
     /* 넓은 표현에서 선택하면 좁은 표현이 같은 ID로 따라온다. */
-    await userEvent.click(wideCheckbox('LK Portal v3'));
-    await waitFor(() => narrowCheckbox('portal-v3')?.checked, 'A wide selection must appear in the narrow representation.');
+    await userEvent.click(wideCheckbox('LKR-T1 3호기'));
+    await waitFor(() => narrowCheckbox('lkr-t1-03')?.checked, 'A wide selection must appear in the narrow representation.');
     await waitFor(() => liveCount().textContent.trim() === '1개 선택됨', 'The compact live count must announce the shared selection.');
 
     /* 좁은 표현에서 선택하면 넓은 표현이 따라온다. */
-    await userEvent.click(narrowCheckbox('vision-automation'));
+    await userEvent.click(narrowCheckbox('lkr-s2-01'));
     await waitFor(
-      () => wideCheckbox('Vision Automation')?.checked,
+      () => wideCheckbox('LKR-S2 1호기')?.checked,
       'A narrow selection must appear in the wide representation through the same model.',
     );
     await waitFor(() => liveCount().textContent.trim() === '2개 선택됨', 'The compact live count must follow both representations.');
 
     /* 해제도 같은 모델을 지난다. */
-    await userEvent.click(narrowCheckbox('portal-v3'));
-    await waitFor(() => wideCheckbox('LK Portal v3')?.checked === false, 'Clearing in the narrow list must clear the wide row.');
+    await userEvent.click(narrowCheckbox('lkr-t1-03'));
+    await waitFor(() => wideCheckbox('LKR-T1 3호기')?.checked === false, 'Clearing in the narrow list must clear the wide row.');
     await waitFor(() => liveCount().textContent.trim() === '1개 선택됨', 'The compact live count must fall back after a clear.');
-  },
-};
+}

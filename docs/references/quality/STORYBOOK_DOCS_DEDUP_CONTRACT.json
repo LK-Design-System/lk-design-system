@@ -3,10 +3,10 @@
   "expected": {
     "stories": 726,
     "docs": 195,
-    "publicStories": 498,
-    "hiddenStories": 228,
+    "publicStories": 499,
+    "hiddenStories": 227,
     "storyIdsSha256": "e4fc829209377d7315bc77015d4f11eb2c065cf79b1ec85c5cb15f7085cbb8ae",
-    "visibilitySha256": "9202dbddd6aa3fd31e7da0eb2517f246d1e240a850190d7692d76080316a36d2"
+    "visibilitySha256": "9bcbf5867c94bdc3e567169697f07ac982c1f9704e2265fc2adcc17e5243ce79"
   },
   "allowedGuideOmissions": [],
   "canonicalDocs": [
