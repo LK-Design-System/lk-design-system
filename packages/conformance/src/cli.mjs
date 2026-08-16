@@ -70,6 +70,12 @@ async function warnAboutAgentSkillGaps(root) {
       specifier: 'docs/AGENT_SKILL_REFERENCE.md',
       code: 'AGENT_SKILL_SLIDES_REFERENCE_MISSING',
     },
+    {
+      name: 'lds-3d-core',
+      reference: ['docs', 'AGENT_SKILL_REFERENCE.md'],
+      specifier: 'docs/AGENT_SKILL_REFERENCE.md',
+      code: 'AGENT_SKILL_3D_REFERENCE_MISSING',
+    },
   ];
   for (const satellite of satelliteReferences) {
     const satelliteRoot = path.join(root, 'node_modules', '@lk-design-system', satellite.name);

@@ -78,7 +78,7 @@
       },
       {
         "path": "docs/agent-skills/lds-ui/SKILL.md",
-        "sha256": "ab20f56b76a5be6af9fd597b524df0c8d086eede285fcddc6378e89b5984f361"
+        "sha256": "ca858cffa2a155a42ddca9b76ec15a4a28e4277219856785d8606ca9952b908b"
       },
       {
         "path": "docs/COMPONENT_WORKFLOW.md",
@@ -311,11 +311,11 @@
     },
     {
       "path": "agent-skills/lds-ui/SKILL.md",
-      "sha256": "d46fcb4acba9b147b285a4532e86b552d0bf4fc219f8455dc2eee76cdd22af8b",
+      "sha256": "9a4e6d392090f3285b8fc0b2d991791e4087257e293b1dd02d51e4fd2ee734c9",
       "sources": [
         {
           "path": "docs/agent-skills/lds-ui/SKILL.md",
-          "sha256": "ab20f56b76a5be6af9fd597b524df0c8d086eede285fcddc6378e89b5984f361"
+          "sha256": "ca858cffa2a155a42ddca9b76ec15a4a28e4277219856785d8606ca9952b908b"
         }
       ]
     },
