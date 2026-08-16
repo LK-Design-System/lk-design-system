@@ -150,9 +150,15 @@ npm run check:fast
 
 # 8. 커밋·태그·푸시. 브랜치와 태그를 둘 다 민다 —
 #    태그만 밀면 원격에 없는 커밋을 가리킨다.
+#
+#    `--tags`를 쓰지 않는다. 그것은 로컬의 **모든** 태그를 밀기 때문에,
+#    원격에 없던 옛 태그까지 함께 올라가 릴리스 워크플로를 여러 개 띄운다
+#    (2026-08-16에 실제로 rc.62가 딸려 올라가 실패 런을 하나 만들었다).
+#    이번에 만든 태그 하나만 이름으로 민다.
 git commit -m "release: <새 LDS 버전>"
 git tag lds-v<새 LDS 버전>
-git push && git push --tags
+git push
+git push origin lds-v<새 LDS 버전>
 ```
 
 ### 2.5 릴리스 이후
