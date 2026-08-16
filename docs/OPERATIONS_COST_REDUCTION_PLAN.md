@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Operations reform proposal |
-| Status | **Proposed** (2026-08-16) |
+| Status | **O-A·O-B·O-C 실행 완료 (2026-08-16).** O4는 문서(`OPERATIONS.md`) 완료, 이관 시험만 사람 축으로 남음. 실행 기록은 §7. |
 | Owner | Design system owner · Frontend platform |
 | 선행 문서 | [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) — 구조 개편(Phase 0–3)은 완료됐고, 이 문서는 그 개편이 드러낸 **운영 비용** 4건을 다룬다 |
 | 근거 | 전부 실측: rc.69.15 릴리스에서 측정한 수동 기록 32곳(선행 문서 부록 F), slides-ui 핀 격차(rc.4 vs rc.69.18), check:fast의 검사 50개 중 설계상 빨간불 1개, 유지보수자 1인 |
@@ -146,3 +146,82 @@ Phase O-C  O2 핀 리포트           O1의 계산 로직 일부를 재사용
 - 계약: R1–R4의 내용 (O2·O3는 계약의 **강제 장치**만 추가)
 - 판단의 소재: 핀 스킵·아카이브·승격 결정은 계속 사람이 한다
 - R4-4(core 잔류 데이터화): 2027-01 재평가로 이연된 상태 유지
+
+---
+
+## 7. 실행 기록 (2026-08-16)
+
+### 7.1 O-A — 태그 동일성 검사의 배선 이동
+
+계획은 "check:fast에서 `check:release-immutability`를 뺀다"였으나, 실행
+중에 그 스크립트가 **성격이 다른 두 가지**를 하고 있음이 드러났다:
+
+| 검사 | 성격 | 처리 |
+| --- | --- | --- |
+| 버전 일관성 (락파일·CHANGELOG·패키지 버전 일치) | 상시 유효, 언제나 만족 가능 | check:fast에 **남김** |
+| 태그 동일성 (태그 == HEAD) | 태그 이후 커밋에서 구조적으로 실패 | `--tag`로만 실행 |
+
+그래서 스크립트를 통째로 빼지 않고 후자만 `--tag` 안으로 옮겼다. 계획보다
+보호력이 더 남는다 — 버전 일관성은 계속 매 커밋 검사된다.
+
+**게이트 결과**(§3이 요구한 드라이런): 저장소가 마침 "태그 이후 미범프"
+상태였으므로 그대로 시험이 됐다.
+
+- 상시 모드 → 통과 (`0.1.0-rc.69.18 -> lds-v0.1.0-rc.69.18 -> HEAD`)
+- `--tag` 모드 → **정확히 실패**: `lds-v0.1.0-rc.69.18 already identifies
+  4a19cf26…; HEAD b359d36c… must bump the package-set version`
+- `check:fast` 50개 전체 → **exit 0** (main 초록 회복 실측)
+
+### 7.2 O-B — `update:release-pins` / `check:release-pins`
+
+`scripts/update-release-pins.mjs` 하나가 쓰기와 검산을 겸한다(`--check`).
+입력은 LDS 버전과 robotics 버전 둘뿐이고, 파생 31곳을 계산한다.
+
+**자동화하지 않기로 한 것**: `CROSS_REPOSITORY_STYLE_CONTRACT.json`의
+`profiles.*.packageDependencies`. 실행 중 확인한 바, 이 값들은 우리가
+정하는 값이 아니라 **위성 저장소를 관측한 사실**이다. 덮어쓰면 계약이 실제와
+달라진다. 이 축은 O-C가 맡는다.
+
+검증 3종:
+
+- 양성 — 현재 상태에서 `--check` 통과 (31곳 일치)
+- 음성 — `--check --lds 0.1.0-rc.69.99`로 LDS 파생 **10건 드리프트 탐지**
+- 멱등 — 쓰기 모드 실행 후 `git status` 변경 0건 (JSON 서식도 보존)
+
+### 7.3 O-C — 위성 핀 리포트
+
+`scripts/report-satellite-pins.mjs`가 위성 4개의 package.json을 읽어
+`docs/references/SATELLITE_PIN_REPORT.{json,md}`를 생성한다. `--check`는
+네트워크 없이 **신선도만** 본다(리포트의 releaseVersion ≠ 현재 버전이면 실패).
+음성 시험으로 낡은 리포트가 실제로 차단되는 것을 확인했다.
+
+첫 실행이 곧바로 사실 3건을 드러냈다 — 리포트를 만든 이유 그 자체다:
+
+| 발견 | 내용 |
+| --- | --- |
+| **robotics-ui도 rc.4에 핀** | 뒤처진 것이 slides-ui만이라는 기존 인식은 틀렸다. 가장 성숙한 위성도 65버전 뒤에 있다. 릴리스 동반은 *LDS가 robotics를 vendoring하는 방향*이지 robotics가 LDS를 따라가는 것이 아니었다 |
+| **slides-ui는 theme만 peer 선언 누락** | core·product는 Phase 3 계약대로 `peerDependencies`인데 theme만 vendored tgz뿐이다. 소비자에게 theme 필요가 고지되지 않는다 |
+| **motion은 `dependencies`에 `file:`** | T3 함정 상태. 지금은 clone 소비라 동작하지만 퍼블리시하는 순간 깨진다 |
+
+이 3건은 **기록만 하고 고치지 않는다.** 핀 정렬 실행은 §2 O2가 명시한 대로
+이 계획의 범위 밖이며, 리포트가 생겼으므로 시점은 데이터를 보고 정한다.
+
+스크립트 자체에서 버그 1건을 잡았다: LDS 레이어를 이름으로만 모아 뒤 섹션이
+앞을 덮어써서, slides-ui의 `peerDependencies` 선언이 리포트에서 사라졌다.
+섹션별로 모으도록 고쳤다. 같은 이유로 `vendored-only`와 `no-lds-pin`을
+분리했다 — 전자는 T3 함정, 후자는 LDS 미사용으로 필요한 조치가 다르다.
+
+### 7.4 O4 — 운영 가이드
+
+[`OPERATIONS.md`](OPERATIONS.md)를 신설했다. 릴리스 레시피(O-B 이후 기준),
+위성 생멸 규칙, 정상 상태의 정의, 자주 쓰는 명령. **이관 시험은 사람 축이라
+미실시**이며, 문서 §6이 그 사실을 스스로 밝히고 있다.
+
+### 7.5 달성
+
+| 항목 | 계획 | 실측 |
+| --- | --- | --- |
+| 릴리스 수동 지점 | 32 → 2 | **31곳 자동 계산 확인**, 남은 것은 버전 결정·CHANGELOG |
+| main CI | 상시 초록 | **check:fast exit 0** |
+| 핀 격차 가시성 | 리포트 + 침묵 시 실패 | **리포트 생성·신선도 게이트 음성 시험 통과** |
+| 이관 시험 | 질문 0으로 완주 | 미실시 (사람 축) |

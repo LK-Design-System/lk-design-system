@@ -1,0 +1,108 @@
+{
+  "kind": "lds-satellite-pin-report",
+  "generatedBy": "npm run report:satellite-pins",
+  "releaseVersion": "0.1.0-rc.69.18",
+  "satellites": [
+    {
+      "id": "robotics-ui",
+      "repository": "LK-Design-System/lk-design-system-robotics",
+      "axis": "domain-pack",
+      "branch": "main",
+      "version": "0.1.0-rc.18",
+      "pins": {
+        "@lk-design-system/lds-core": [
+          {
+            "section": "dependencies",
+            "range": "0.1.0-rc.4"
+          }
+        ],
+        "@lk-design-system/lds-product": [
+          {
+            "section": "dependencies",
+            "range": "0.1.0-rc.4"
+          }
+        ],
+        "@lk-design-system/lds-theme": [
+          {
+            "section": "devDependencies",
+            "range": "0.1.0-rc.4"
+          }
+        ]
+      },
+      "status": "behind"
+    },
+    {
+      "id": "slides-ui",
+      "repository": "LK-Design-System/lk-design-system-slides",
+      "axis": "domain-pack",
+      "branch": "main",
+      "version": "0.1.0-alpha.3",
+      "pins": {
+        "@lk-design-system/lds-core": [
+          {
+            "section": "peerDependencies",
+            "range": "0.1.0-rc.4"
+          },
+          {
+            "section": "devDependencies",
+            "range": "file:vendor/lk-design-system-lds-core-0.1.0-rc.4.tgz"
+          }
+        ],
+        "@lk-design-system/lds-product": [
+          {
+            "section": "peerDependencies",
+            "range": "0.1.0-rc.4"
+          },
+          {
+            "section": "devDependencies",
+            "range": "file:vendor/lk-design-system-lds-product-0.1.0-rc.4.tgz"
+          }
+        ],
+        "@lk-design-system/lds-theme": [
+          {
+            "section": "devDependencies",
+            "range": "file:vendor/lk-design-system-lds-theme-0.1.0-rc.4.tgz"
+          }
+        ]
+      },
+      "status": "behind"
+    },
+    {
+      "id": "motion",
+      "repository": "LK-Design-System/lk-design-system-motion",
+      "axis": "capability-layer",
+      "branch": "main",
+      "version": "0.1.0-alpha.3",
+      "pins": {
+        "@lk-design-system/lds-core": [
+          {
+            "section": "dependencies",
+            "range": "file:vendor/lk-design-system-lds-core-0.1.0-rc.4.tgz"
+          }
+        ],
+        "@lk-design-system/lds-theme": [
+          {
+            "section": "dependencies",
+            "range": "file:vendor/lk-design-system-lds-theme-0.1.0-rc.4.tgz"
+          }
+        ],
+        "@lk-design-system/lds-product": [
+          {
+            "section": "dependencies",
+            "range": "file:vendor/lk-design-system-lds-product-0.1.0-rc.4.tgz"
+          }
+        ]
+      },
+      "status": "vendored-only"
+    },
+    {
+      "id": "3d",
+      "repository": "LK-Design-System/lk-design-system-3d",
+      "axis": "capability-layer",
+      "branch": "main",
+      "version": "0.1.0-alpha.1",
+      "pins": {},
+      "status": "no-lds-pin"
+    }
+  ]
+}
