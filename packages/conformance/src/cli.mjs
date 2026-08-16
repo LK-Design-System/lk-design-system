@@ -15,23 +15,56 @@ import {
 import { auditStorybookMastheadCopy } from './storybook-masthead-copy.mjs';
 
 // Advisory only: the lds-ui agent skill is the push channel that loads the
-// design contracts at UI-assembly time. Its absence never fails the check —
-// adoption evidence does that — but a consumer that runs agents without it
-// should hear about it once per run.
-async function warnWhenAgentSkillMissing(root) {
+// design contracts at UI-assembly time. None of these warnings fail the check —
+// adoption evidence does that — but a consumer whose skill is missing, frozen at
+// an old copy, or routing to a robotics reference that is not installed should
+// hear about it once per run.
+async function warnAboutAgentSkillGaps(root) {
+  const isFile = (file) => stat(file).then((entry) => entry.isFile(), () => false);
   const skillCopy = path.join(root, '.claude', 'skills', 'lds-ui', 'SKILL.md');
-  const hasSkillCopy = await stat(skillCopy).then((entry) => entry.isFile(), () => false);
-  if (hasSkillCopy) return;
-  const agentsFile = path.join(root, 'AGENTS.md');
-  const agentsSource = await readFile(agentsFile, 'utf8').catch(() => '');
-  if (agentsSource.includes('agent-skills/lds-ui')) return;
-  console.warn(
-    '[AGENT_SKILL_MISSING] No lds-ui agent skill detected: neither .claude/skills/lds-ui/SKILL.md '
-    + 'nor an AGENTS.md routing block referencing agent-skills/lds-ui exists. Agent-assembled UI '
-    + 'will not load the LDS decision rules. Install it from '
-    + '@lk-design-system/lds-core/docs/agent-skills/lds-ui/ (see its SKILL.md install section). '
-    + 'Advisory only — this does not fail the check.',
-  );
+  const hasSkillCopy = await isFile(skillCopy);
+  const agentsSource = await readFile(path.join(root, 'AGENTS.md'), 'utf8').catch(() => '');
+  const hasAgentsRouting = agentsSource.includes('agent-skills/lds-ui');
+  if (!hasSkillCopy && !hasAgentsRouting) {
+    console.warn(
+      '[AGENT_SKILL_MISSING] No lds-ui agent skill detected: neither .claude/skills/lds-ui/SKILL.md '
+      + 'nor an AGENTS.md routing block referencing agent-skills/lds-ui exists. Agent-assembled UI '
+      + 'will not load the LDS decision rules. Install it from '
+      + '@lk-design-system/lds-core/docs/agent-skills/lds-ui/ (see its SKILL.md install section). '
+      + 'Advisory only — this does not fail the check.',
+    );
+    return;
+  }
+  // Staleness only affects the copy track; AGENTS.md routing reads node_modules live.
+  if (hasSkillCopy) {
+    const installedSkill = path.join(
+      root, 'node_modules', '@lk-design-system', 'lds-core', 'docs', 'agent-skills', 'lds-ui', 'SKILL.md',
+    );
+    const [copied, installed] = await Promise.all([
+      readFile(skillCopy).catch(() => null),
+      readFile(installedSkill).catch(() => null),
+    ]);
+    if (copied && installed && !copied.equals(installed)) {
+      console.warn(
+        '[AGENT_SKILL_STALE] .claude/skills/lds-ui/SKILL.md differs from the installed '
+        + '@lk-design-system/lds-core copy. The skill copy is frozen at copy time — re-copy '
+        + 'docs/agent-skills/lds-ui/ from the installed package (or keep an intentional fork '
+        + 'knowingly). Advisory only — this does not fail the check.',
+      );
+    }
+  }
+  // The skill routes robotics work to the reference owned by lds-robotics-ui;
+  // packages older than rc.22 do not ship it, leaving that routing dangling.
+  const roboticsRoot = path.join(root, 'node_modules', '@lk-design-system', 'lds-robotics-ui');
+  const hasRobotics = await stat(roboticsRoot).then((entry) => entry.isDirectory(), () => false);
+  if (hasRobotics && !(await isFile(path.join(roboticsRoot, 'docs', 'package', 'domain', 'AGENT_SKILL_REFERENCE.md')))) {
+    console.warn(
+      '[AGENT_SKILL_ROBOTICS_REFERENCE_MISSING] @lk-design-system/lds-robotics-ui is installed '
+      + 'but ships no docs/domain/AGENT_SKILL_REFERENCE.md, so the lds-ui skill\'s robotics '
+      + 'routing resolves to nothing. Upgrade lds-robotics-ui to a release that ships the '
+      + 'reference (rc.22 or later). Advisory only — this does not fail the check.',
+    );
+  }
 }
 
 const cliDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -1298,7 +1331,7 @@ async function main() {
   }
   if (command === 'check-adoption') {
     const root = path.resolve(args.root || process.cwd());
-    await warnWhenAgentSkillMissing(root);
+    await warnAboutAgentSkillGaps(root);
     const result = await runAdoptionCheck({
       root,
       ldsRoot: path.resolve(args['lds-root'] || workspaceRoot),
