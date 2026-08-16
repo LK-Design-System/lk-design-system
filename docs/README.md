@@ -5,7 +5,7 @@
 | Type | Documentation index |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-08-10 |
+| Last reviewed | 2026-08-16 |
 
 이 문서는 `docs/`의 공식 탐색 진입점이다. 문서가 충돌하면 아래 source-of-truth 순서와 각 문서의 `Type`·`Status`를 기준으로 판단한다.
 
@@ -59,6 +59,7 @@
 
 | Need | Entry |
 | --- | --- |
+| Consumer agent skill | [lds-ui skill](agent-skills/lds-ui/SKILL.md) — 소비 레포의 `.claude/skills/lds-ui/`로 복사해 UI 조립 시점에 LDS 결정 규칙을 로드; `lds-core` 패키지 `docs/agent-skills/lds-ui/`로 배포됨 |
 | Robotics direct adoption | `@lk-design-system/lds-robotics-ui/llms.txt` · `@lk-design-system/lds-robotics-ui/design-system.json` · [Robotics Storybook](https://lk-design-system.github.io/lk-design-system-robotics/?path=/docs/lds-robotics-foundation-viewer-tokens--docs) · [public llms.txt](https://lk-design-system.github.io/lk-design-system-robotics/llms.txt) · [public manifest](https://lk-design-system.github.io/lk-design-system-robotics/design-system.json) |
 | Machine-readable adoption source | [Adoption contract](references/adoption/LDS_UI_ADOPTION_CONTRACT.json) · [contract schema](references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json) · [report schema](references/adoption/LDS_UI_ADOPTION_REPORT.schema.json) · [schema-valid report template](references/adoption/LDS_UI_ADOPTION_REPORT.example.json) |
 | Consumer enforcement | [config schema](../packages/conformance/schemas/lds-ui-adoption-config.schema.json) · [CLI](../packages/conformance/src/cli.mjs) · [GitHub composite action](../.github/actions/lds-adoption/action.yml) |

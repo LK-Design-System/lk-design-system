@@ -293,6 +293,7 @@ async function validatePackage(
       adoptionReportSchema: './adoption-report.schema.json',
       adoptionReportExample: './adoption-report.example.json',
       adoptionWorkflow: './adoption-workflow.md',
+      ...(definition.id === 'core' ? { agentSkill: './agent-skills/lds-ui/SKILL.md' } : {}),
     }),
     `${definition.name}: documentation entrypoints drift.`,
   );

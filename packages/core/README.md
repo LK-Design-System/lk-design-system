@@ -28,6 +28,7 @@ Import owner styles in dependency order: Core, Theme, Product, then Robotics whe
 
 - [Packaged manifest](./docs/manifest.json)
 - [Adoption workflow](./docs/adoption-workflow.md)
+- [Consumer agent skill](./docs/agent-skills/lds-ui/SKILL.md) — copy `docs/agent-skills/lds-ui/` into your repository's `.claude/skills/lds-ui/`
 - [Live Storybook documentation](https://lk-design-system.github.io/lk-design-system/?path=/docs/lds-core-foundation-design-token--docs)
 - [Source repository](https://github.com/LK-Design-System/lk-design-system)
 

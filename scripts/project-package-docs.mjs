@@ -33,6 +33,15 @@ const canonical = {
   loadingPattern: 'docs/LOADING_PATTERN.md',
 };
 
+// The consumer agent skill ships with Core only; a consumer copies the
+// projected docs/agent-skills/lds-ui directory into .claude/skills/lds-ui.
+const agentSkillFiles = [
+  'docs/agent-skills/lds-ui/SKILL.md',
+  'docs/agent-skills/lds-ui/references/anti-patterns.md',
+  'docs/agent-skills/lds-ui/references/copy.md',
+  'docs/agent-skills/lds-ui/references/robotics.md',
+];
+
 // These documents are part of the cross-layer adoption contract rather than a
 // single visual component. Core and Compat carry an offline projection; the
 // thinner Theme/Product bundles point to the installed Core package for any
@@ -242,7 +251,8 @@ Import owner styles in dependency order: Core, Theme, Product, then Robotics whe
 ## Documentation
 
 - [Packaged manifest](./docs/manifest.json)
-- [Adoption workflow](./docs/adoption-workflow.md)
+- [Adoption workflow](./docs/adoption-workflow.md)${definition.id === 'core' ? `
+- [Consumer agent skill](./docs/agent-skills/lds-ui/SKILL.md) — copy \`docs/agent-skills/lds-ui/\` into your repository's \`.claude/skills/lds-ui/\`` : ''}
 - [Live Storybook documentation](${liveDocs})
 - [Source repository](${repositoryUrl})
 
@@ -298,6 +308,7 @@ async function makePackageProjection(definition, canonicalInputs) {
     for (const [sourcePath, targetPath] of sharedReferenceTargets) {
       sourceToTarget.set(sourcePath, targetPath);
     }
+    for (const sourcePath of agentSkillFiles) sourceToTarget.set(sourcePath, sourcePath);
   }
 
   for (const sourcePath of foundationFiles) {
@@ -356,6 +367,7 @@ async function makePackageProjection(definition, canonicalInputs) {
     for (const [sourcePath, targetPath] of sharedReferenceTargets) {
       if (!outputs.has(targetPath)) await projectFile(sourcePath, targetPath);
     }
+    for (const sourcePath of agentSkillFiles) await projectFile(sourcePath, sourcePath);
   }
 
   const selectedFoundationTexts = [];
@@ -431,6 +443,7 @@ async function makePackageProjection(definition, canonicalInputs) {
       adoptionReportSchema: './adoption-report.schema.json',
       adoptionReportExample: './adoption-report.example.json',
       adoptionWorkflow: './adoption-workflow.md',
+      ...(definition.id === 'core' ? { agentSkill: './agent-skills/lds-ui/SKILL.md' } : {}),
     },
     foundations: selectedFoundationSlugs,
     patterns: definition.includeLoadingPattern ? ['loading'] : [],
@@ -462,6 +475,9 @@ async function makePackageProjection(definition, canonicalInputs) {
 async function assertCanonicalInputs() {
   for (const sourcePath of Object.values(canonical)) {
     invariant(await exists(path.join(root, sourcePath)), `Canonical package-documentation source is missing: ${sourcePath}`);
+  }
+  for (const sourcePath of agentSkillFiles) {
+    invariant(await exists(path.join(root, sourcePath)), `Canonical agent-skill source is missing: ${sourcePath}`);
   }
   const adoptionContract = await readJson(canonical.adoptionContract);
   invariant(adoptionContract.schemaVersion === 1, 'Adoption contract schemaVersion must be 1.');

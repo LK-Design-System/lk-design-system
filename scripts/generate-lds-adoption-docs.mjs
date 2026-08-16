@@ -364,6 +364,7 @@ ${bullets(contract.completion.verification)}
 
 Detailed non-component guidance:
 
+- ${rootLink('docs/agent-skills/lds-ui/SKILL.md')} — consumer agent skill; copy docs/agent-skills/lds-ui into the consuming repository's .claude/skills/lds-ui
 - ${rootLink('docs/foundations/README.md')} — human Foundation index
 - ${rootLink('docs/foundations/llms.txt')} — complete generated Foundation context
 - ${rootLink('tokens/source.json')} — structured token source of truth
