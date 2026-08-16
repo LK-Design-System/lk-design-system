@@ -1,14 +1,14 @@
 {
   "kind": "lds-satellite-pin-report",
   "generatedBy": "npm run report:satellite-pins",
-  "releaseVersion": "0.1.0-rc.69.20",
+  "releaseVersion": "0.1.0-rc.69.21",
   "satellites": [
     {
       "id": "robotics-ui",
       "repository": "LK-Design-System/lk-design-system-robotics",
       "axis": "domain-pack",
       "branch": "main",
-      "version": "0.1.0-rc.21",
+      "version": "0.1.0-rc.22",
       "pins": {
         "@lk-design-system/lds-core": [
           {

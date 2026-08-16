@@ -2,9 +2,14 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
-## 0.1.0-rc.69.20 - 2026-08-16
+## 0.1.0-rc.69.21 - 2026-08-16
 
-Paired with `@lk-design-system/lds-robotics-ui` rc.21.
+Paired with `@lk-design-system/lds-robotics-ui` rc.22.
+
+The `lds-v0.1.0-rc.69.20` tag failed its release gate — a concurrently
+authored proposal document entered the tag without its documentation-index
+link — and was never published. Per the immutability rule the tag was not
+moved; this version re-cuts the same content with the index link in place.
 
 ### Added
 

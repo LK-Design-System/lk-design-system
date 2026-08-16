@@ -99,6 +99,7 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 | [`NAVIGATION_ATOMIZATION_PLAN.md`](NAVIGATION_ATOMIZATION_PLAN.md) | Proposed plan — Navigation 선·상태 어휘의 단일 소스화와 Encoding 문서화 |
 | [`NAVIGATION_PAGE_DECOMPOSITION_PLAN.md`](NAVIGATION_PAGE_DECOMPOSITION_PLAN.md) | Proposed plan — Navigation 스토리 페이지 재분해(Route 메가페이지 해체·Viewer 합성 페이지 신설) |
 | [`PROSE_SURFACE_PROPOSAL.md`](PROSE_SURFACE_PROPOSAL.md) | Proposed plan — 마크다운 렌더 결과의 타이포그래피 표면(Prose): 엔진은 제품, 조판·접근성 계약은 DS |
+| [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | Proposed plan — 소비자(Portal)·관제(Control/Viz) 두 표면을 Theme 레이어의 표현 프로파일 축(default/ops)으로 흡수; WDS 재앵커링 완료가 선행 조건 |
 | [`OVERLAY_STATUS_CHIP_PROPOSAL.md`](OVERLAY_STATUS_CHIP_PROPOSAL.md) | Proposed plan — 표면 앵커 비차단 상태 칩: Robotics 내부 구현(ManualControlSession 2개 소비처)이 근거, 코어 Status 가족 편입 심사 대기 |
 | [`LISTING_CARD_PROPOSAL.md`](LISTING_CARD_PROPOSAL.md) | Proposed plan(보류) — 모집·이벤트 리스팅 카드: NewsCard와 의미가 다른 별개 컴포넌트이나 제품 근거 확인 전까지 착수 보류 |
 | [`KOREAN_UI_COPY_REFORM_PLAN.md`](KOREAN_UI_COPY_REFORM_PLAN.md) | Completed implementation record — Portal에서 검증한 카피 운영 방식을 제품 독립 LDS 계약으로 이관하고 schema·fixture·제품 adapter·회귀 gate까지 연결한 기록 |
