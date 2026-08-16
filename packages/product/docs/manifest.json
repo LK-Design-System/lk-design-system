@@ -3,7 +3,7 @@
   "kind": "lds-package-documentation",
   "package": {
     "name": "@lk-design-system/lds-product",
-    "version": "0.1.0-rc.69.23",
+    "version": "0.1.0-rc.69.24",
     "layer": "product"
   },
   "adoption": {
@@ -46,7 +46,7 @@
   },
   "source": {
     "repository": "LK-Design-System/lk-design-system",
-    "ref": "lds-v0.1.0-rc.69.23",
+    "ref": "lds-v0.1.0-rc.69.24",
     "documents": [
       {
         "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
@@ -119,7 +119,7 @@
     },
     {
       "path": "adoption-workflow.md",
-      "sha256": "1a78a2515157984ba865e14c657d54a8b59c177f0041985317577e046200ae29",
+      "sha256": "df12edc776f52124318bad1bc36b0884836a306909c4919e5cb58648803d91bc",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
@@ -139,7 +139,7 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "28a9b0885e1912cbc7b195bfbdaa72ffde66bfb58ef42ea050771a4d583c086a",
+      "sha256": "ad76339b4cc864da8f14d08f8e779f54c78f271dacd2a9f01ac9754c02032fd1",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",

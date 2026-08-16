@@ -2,6 +2,20 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.24 - 2026-08-16
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.25.
+
+### Added
+
+- The lds-3d workspace published its package set to GitHub Packages
+  (eight packages at 0.1.0-alpha.2, the first published versions), and
+  `lds-3d-core` ships `docs/AGENT_SKILL_REFERENCE.md` — the 3D-view rule
+  summary. The `lds-ui` skill now routes 3D work there, and the
+  `check-adoption` satellite advisory table gains
+  `AGENT_SKILL_3D_REFERENCE_MISSING`. Every publishable satellite now
+  owns and ships its own skill reference: robotics, slides, and 3d.
+
 ## 0.1.0-rc.69.23 - 2026-08-16
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.24.
