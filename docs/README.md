@@ -100,7 +100,7 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 | [`NAVIGATION_PAGE_DECOMPOSITION_PLAN.md`](NAVIGATION_PAGE_DECOMPOSITION_PLAN.md) | Proposed plan — Navigation 스토리 페이지 재분해(Route 메가페이지 해체·Viewer 합성 페이지 신설) |
 | [`PROSE_SURFACE_PROPOSAL.md`](PROSE_SURFACE_PROPOSAL.md) | Proposed plan — 마크다운 렌더 결과의 타이포그래피 표면(Prose): 엔진은 제품, 조판·접근성 계약은 DS |
 | [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | Proposed plan — 소비자(Portal)·관제(Control/Viz) 두 표면을 Theme 레이어의 표현 프로파일 축(default/ops)으로 흡수; WDS 재앵커링 완료가 선행 조건 |
-| [`TYPE_RAMP_DISPLAY0_PROPOSAL.md`](TYPE_RAMP_DISPLAY0_PROPOSAL.md) | Adopted — 투영 매체(Slides·Motion)용 램프 최상단 `display0`; rc.69.26에서 main 반영, 위성 재지정 대기 |
+| [`TYPE_RAMP_DISPLAY0_PROPOSAL.md`](TYPE_RAMP_DISPLAY0_PROPOSAL.md) | Adopted — 투영 매체(Slides·Motion)용 램프 최상단 `display0`; rc.69.26 릴리스, Slides 재지정 완료 |
 | [`TIMELINE_ORIENTATION_PROPOSAL.md`](TIMELINE_ORIENTATION_PROPOSAL.md) | Adopted — Timeline 가로 방향(`orientation`); rc.69.26에서 main 반영, 위성 row 분기 철거는 타입 재지정 훅 후속 필요 |
 | [`TABLE_MEDIUM_CONTRACT_PROPOSAL.md`](TABLE_MEDIUM_CONTRACT_PROPOSAL.md) | Adopted — Table `banded` + `--lk-table-*` 재지정 훅; rc.69.26에서 main 반영, 위성 손말이 철거는 그룹 행 후속 필요 |
 | [`OVERLAY_STATUS_CHIP_PROPOSAL.md`](OVERLAY_STATUS_CHIP_PROPOSAL.md) | Proposed plan — 표면 앵커 비차단 상태 칩: Robotics 내부 구현(ManualControlSession 2개 소비처)이 근거, 코어 Status 가족 편입 심사 대기 |
