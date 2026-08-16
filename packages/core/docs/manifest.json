@@ -77,12 +77,8 @@
         "sha256": "6a0a66757d742bd120914636d796c5ae5ffb5086acd7c59ad65076d18cab01b6"
       },
       {
-        "path": "docs/agent-skills/lds-ui/references/robotics.md",
-        "sha256": "4e3812d10feb2aa503dea543170318d3604709564fa47d1161ec97588392d63b"
-      },
-      {
         "path": "docs/agent-skills/lds-ui/SKILL.md",
-        "sha256": "488d617080c5c550dbda4970a9cfaf5499d3af91850d656c641767695393812f"
+        "sha256": "fb26912adc2fee78d2405e64a649aadfa3b6e16cf36c3c2a3364b66dd08cc4e2"
       },
       {
         "path": "docs/COMPONENT_WORKFLOW.md",
@@ -314,22 +310,12 @@
       ]
     },
     {
-      "path": "agent-skills/lds-ui/references/robotics.md",
-      "sha256": "4e3812d10feb2aa503dea543170318d3604709564fa47d1161ec97588392d63b",
-      "sources": [
-        {
-          "path": "docs/agent-skills/lds-ui/references/robotics.md",
-          "sha256": "4e3812d10feb2aa503dea543170318d3604709564fa47d1161ec97588392d63b"
-        }
-      ]
-    },
-    {
       "path": "agent-skills/lds-ui/SKILL.md",
-      "sha256": "ed998e47218ff35277a05f102eb93d42d56bcb8aac7fd25ed06c474178ff1323",
+      "sha256": "16d3334d2aafc83c32531b6bab882e3b534d1277e91305f4ad7dc74f07333fc3",
       "sources": [
         {
           "path": "docs/agent-skills/lds-ui/SKILL.md",
-          "sha256": "488d617080c5c550dbda4970a9cfaf5499d3af91850d656c641767695393812f"
+          "sha256": "fb26912adc2fee78d2405e64a649aadfa3b6e16cf36c3c2a3364b66dd08cc4e2"
         }
       ]
     },

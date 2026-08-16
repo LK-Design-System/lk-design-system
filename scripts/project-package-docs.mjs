@@ -35,11 +35,12 @@ const canonical = {
 
 // The consumer agent skill ships with Core only; a consumer copies the
 // projected docs/agent-skills/lds-ui directory into .claude/skills/lds-ui.
+// The robotics domain reference is owned by lds-robotics-ui and ships there
+// (docs/domain/AGENT_SKILL_REFERENCE.md); the skill routes to it by specifier.
 const agentSkillFiles = [
   'docs/agent-skills/lds-ui/SKILL.md',
   'docs/agent-skills/lds-ui/references/anti-patterns.md',
   'docs/agent-skills/lds-ui/references/copy.md',
-  'docs/agent-skills/lds-ui/references/robotics.md',
 ];
 
 // These documents are part of the cross-layer adoption contract rather than a
