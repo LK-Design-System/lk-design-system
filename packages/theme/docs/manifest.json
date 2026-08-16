@@ -74,7 +74,7 @@
       },
       {
         "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
-        "sha256": "2fa043205cbe313398cd3b5cf7dbcb4b48869dcab7332ad8e8c1d49e765ccddf"
+        "sha256": "09e78eb2ce03206120aa2ce2822d02c49a2ac16b0fac18fc4d68ff28d2a156e7"
       },
       {
         "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
@@ -139,11 +139,11 @@
     },
     {
       "path": "adoption-workflow.md",
-      "sha256": "df69db46a15019d01d49183dc07c007233188c84d9f5729d82037905e147fb4b",
+      "sha256": "20b589615a971a7770cceee284e7ad662599bab2a2d5c280c35ab1c55890cc0d",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
-          "sha256": "2fa043205cbe313398cd3b5cf7dbcb4b48869dcab7332ad8e8c1d49e765ccddf"
+          "sha256": "09e78eb2ce03206120aa2ce2822d02c49a2ac16b0fac18fc4d68ff28d2a156e7"
         }
       ]
     },
@@ -209,11 +209,11 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "7e4ed6edd5014901e196ee429244d53571c137c6c040f8a7ec906c9d97812748",
+      "sha256": "3baf99c018535c8609f665ef4ab65ad1e2a6e469ffbdcb75521302527fb11928",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
-          "sha256": "2fa043205cbe313398cd3b5cf7dbcb4b48869dcab7332ad8e8c1d49e765ccddf"
+          "sha256": "09e78eb2ce03206120aa2ce2822d02c49a2ac16b0fac18fc4d68ff28d2a156e7"
         },
         {
           "path": "docs/foundations/color.md",

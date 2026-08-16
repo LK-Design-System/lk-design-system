@@ -266,6 +266,8 @@ Report의 기본 `scope.mode`는 `full-surface`입니다. Required for adoption,
 
 소비 저장소에 [config schema](../packages/conformance/schemas/lds-ui-adoption-config.schema.json)를 따르는 `.lds/adoption.config.json`을 둡니다. 기본 report 경로는 `.lds/adoption-report.json`이며 config의 `reportDirectory`와 CLI `--report`로 명시적으로 바꿀 수 있습니다.
 
+에이전트로 UI를 조립하는 소비 저장소는 셋업 단계에서 [consumer agent skill](agent-skills/lds-ui/SKILL.md)도 함께 설치합니다 — 규칙이 조립 시점에 push 로드되는 채널입니다. Claude Code는 설치된 `@lk-design-system/lds-core/docs/agent-skills/lds-ui/`를 `.claude/skills/lds-ui/`로 복사하고, AGENTS.md 기반 에이전트(Codex 등)는 SKILL.md 설치 섹션의 라우팅 블록을 저장소 AGENTS.md에 추가합니다. `check-adoption`은 둘 다 없으면 `AGENT_SKILL_MISSING` 경고를 출력합니다(advisory — 판정을 차단하지는 않습니다).
+
 ```json
 {
   "schemaVersion": 1,

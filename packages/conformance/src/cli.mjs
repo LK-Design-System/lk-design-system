@@ -14,6 +14,26 @@ import {
 } from './adoption.mjs';
 import { auditStorybookMastheadCopy } from './storybook-masthead-copy.mjs';
 
+// Advisory only: the lds-ui agent skill is the push channel that loads the
+// design contracts at UI-assembly time. Its absence never fails the check —
+// adoption evidence does that — but a consumer that runs agents without it
+// should hear about it once per run.
+async function warnWhenAgentSkillMissing(root) {
+  const skillCopy = path.join(root, '.claude', 'skills', 'lds-ui', 'SKILL.md');
+  const hasSkillCopy = await stat(skillCopy).then((entry) => entry.isFile(), () => false);
+  if (hasSkillCopy) return;
+  const agentsFile = path.join(root, 'AGENTS.md');
+  const agentsSource = await readFile(agentsFile, 'utf8').catch(() => '');
+  if (agentsSource.includes('agent-skills/lds-ui')) return;
+  console.warn(
+    '[AGENT_SKILL_MISSING] No lds-ui agent skill detected: neither .claude/skills/lds-ui/SKILL.md '
+    + 'nor an AGENTS.md routing block referencing agent-skills/lds-ui exists. Agent-assembled UI '
+    + 'will not load the LDS decision rules. Install it from '
+    + '@lk-design-system/lds-core/docs/agent-skills/lds-ui/ (see its SKILL.md install section). '
+    + 'Advisory only — this does not fail the check.',
+  );
+}
+
 const cliDirectory = path.dirname(fileURLToPath(import.meta.url));
 const packageDirectory = path.resolve(cliDirectory, '..');
 const workspaceRoot = path.resolve(packageDirectory, '..', '..');
@@ -1278,6 +1298,7 @@ async function main() {
   }
   if (command === 'check-adoption') {
     const root = path.resolve(args.root || process.cwd());
+    await warnWhenAgentSkillMissing(root);
     const result = await runAdoptionCheck({
       root,
       ldsRoot: path.resolve(args['lds-root'] || workspaceRoot),
