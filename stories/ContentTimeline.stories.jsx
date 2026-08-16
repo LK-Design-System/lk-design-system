@@ -50,3 +50,46 @@ export const TimelineEvents = {
     }
   },
 };
+
+/* 가로 방향은 표현 축이다 — ol/time 시맨틱은 세로와 동일하고, 사건이 등분
+   컬럼을 나눠 가지며 레일 세그먼트가 그리드 gap을 건너 다음 노드까지 잇는다.
+   마지막 노드 뒤에는 레일이 없다: 연대기가 거기서 끝난다
+   (Timeline.prompt.md의 orientation 절). */
+export const HorizontalChronology = {
+  name: '변형·상태 · 가로 연대기',
+  parameters: storyDescription(
+    '단계가 적은 연대기(로드맵, 마일스톤)를 좌→우로 읽는 상황입니다. 사건들이 폭을 등분해 나눠 갖는지, 레일이 노드 사이에서 끊기지 않고 마지막 노드에서 멈추는지, 세로와 같은 순서·시맨틱이 유지되는지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 960 }}>
+      <Timeline
+        orientation="horizontal"
+        label="분기 마일스톤"
+        items={[
+          { time: '2026-08', title: '파일럿 착수', description: '지연 민감 구간 우선', tone: 'signal' },
+          { time: '2026-10', title: '운영 검증', description: '지연·비용 이중 추적' },
+          { time: '2026-11', title: '확대 결정', description: '4주 지표 검토 후' },
+        ]}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const list = canvasElement.querySelector('ol');
+    const items = list ? [...list.querySelectorAll(':scope > li')] : [];
+    if (items.length !== 3) {
+      throw new Error('가로 방향도 ol/li 시맨틱이어야 순서와 개수가 전달됩니다(WCAG 1.3.1).');
+    }
+    const stamps = [...list.querySelectorAll('time')];
+    if (stamps.length !== 3 || !stamps.every((t) => t.getAttribute('datetime'))) {
+      throw new Error('각 시각 표기는 dateTime을 가진 <time> 요소여야 합니다.');
+    }
+    const widths = items.map((li) => li.getBoundingClientRect().width);
+    if (Math.max(...widths) - Math.min(...widths) > 1) {
+      throw new Error('가로 사건은 등분 컬럼이어야 합니다 — 사건이 적을수록 한 칸이 넓어지는 공간 적응.');
+    }
+    const rails = items.map((li) => li.querySelectorAll('[aria-hidden] span').length);
+    if (rails[items.length - 1] !== 1) {
+      throw new Error('마지막 노드 뒤에는 레일 세그먼트가 없어야 합니다 — 연대기는 거기서 끝납니다.');
+    }
+  },
+};

@@ -2,7 +2,7 @@
 import {
   tdStyle,
   thStyle
-} from "./chunk-IGVXI6D7.js";
+} from "./chunk-QNMDUXYO.js";
 
 // components/data/Table.jsx
 import React from "react";
@@ -10,10 +10,10 @@ import { jsx, jsxs } from "react/jsx-runtime";
 function getColumnSizingStyle({ width, truncate = false }) {
   return truncate ? { width: "100%", maxWidth: 0, overflow: "hidden", textOverflow: "ellipsis" } : { width };
 }
-function getTableHeaderCellStyle({ padding = "14px 16px", align = "left", width, truncate = false } = {}) {
+function getTableHeaderCellStyle({ padding = "var(--lk-table-cell-pad-md, 14px 16px)", align = "left", width, truncate = false } = {}) {
   return { ...thStyle(padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
-function getTableDataCellStyle({ padding = "14px 16px", align = "left", width, truncate = false } = {}) {
+function getTableDataCellStyle({ padding = "var(--lk-table-cell-pad-md, 14px 16px)", align = "left", width, truncate = false } = {}) {
   return { ...tdStyle(padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 function TableCellContent({ truncate, children }) {
@@ -27,7 +27,7 @@ function TableCellContent({ truncate, children }) {
     }
   );
 }
-function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProps }) {
+function TableRow({ columns, row, rowIndex, pad, hover, banded, rowHeaderKey, getRowProps }) {
   const [h, setH] = React.useState(false);
   const rowProps = getRowProps?.(row, rowIndex) ?? {};
   const {
@@ -37,11 +37,14 @@ function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProp
     onMouseLeave,
     ...restRowProps
   } = rowProps;
+  const restBackground = banded ? "var(--color-semantic-fill-alternative)" : "transparent";
+  const hoverBackground = banded ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-fill-alternative)";
   return /* @__PURE__ */ jsx(
     "tr",
     {
       ...restRowProps,
       className,
+      "data-banded": banded || void 0,
       onMouseEnter: (event) => {
         setH(true);
         onMouseEnter?.(event);
@@ -50,7 +53,7 @@ function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProp
         setH(false);
         onMouseLeave?.(event);
       },
-      style: { background: hover && h ? "var(--color-semantic-fill-alternative)" : "transparent", transition: "background var(--dur-fast) var(--ease-out)", ...style },
+      style: { background: hover && h ? hoverBackground : restBackground, transition: "background var(--dur-fast) var(--ease-out)", ...style },
       children: columns.map((c) => {
         const content = typeof c.render === "function" ? c.render(row) : row[c.key];
         const cellStyle = getTableDataCellStyle({ padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate });
@@ -68,6 +71,7 @@ function Table({
   rows = [],
   size = "md",
   hover = true,
+  banded = false,
   caption,
   tableLabel,
   tableLabelledBy,
@@ -78,7 +82,7 @@ function Table({
   style,
   ...rest
 }) {
-  const pad = size === "sm" ? "10px 12px" : "14px 16px";
+  const pad = size === "sm" ? "var(--lk-table-cell-pad-sm, 10px 12px)" : "var(--lk-table-cell-pad-md, 14px 16px)";
   const nameFromAria = caption == null;
   return /* @__PURE__ */ jsx(
     "div",
@@ -119,6 +123,7 @@ function Table({
                 rowIndex: ri,
                 pad,
                 hover,
+                banded,
                 rowHeaderKey,
                 getRowProps
               },
@@ -136,4 +141,4 @@ export {
   getTableDataCellStyle,
   Table
 };
-//# sourceMappingURL=chunk-M6SM5S4A.js.map
+//# sourceMappingURL=chunk-ZUVCKRPF.js.map

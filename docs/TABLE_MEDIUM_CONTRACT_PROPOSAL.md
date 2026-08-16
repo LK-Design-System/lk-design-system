@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Plan |
-| Status | Proposed — Slides의 StatusAssessment가 표 시각을 자체 렌더로 운영 중, 채택되면 위성 복제 철거 |
+| Status | Adopted — 2026-08-17 main 반영(banded + --lk-table-* 재지정 훅, 제품 기본 바이트 동일). 릴리스 후 위성 손말이 철거 |
 | Owner | Design system owner |
 | Last reviewed | 2026-08-17 |
 | Source | 소비처: `lk-design-system-slides/src/components/editorial/StatusAssessment.jsx` · 대상: `components/data/Table`(+`table-cell-styles`) |

@@ -2,7 +2,7 @@
 
 
 
-var _chunkGB2NOCK7cjs = require('./chunk-GB2NOCK7.cjs');
+var _chunkNU3MH6RFcjs = require('./chunk-NU3MH6RF.cjs');
 
 // components/data/Table.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -10,11 +10,11 @@ var _jsxruntime = require('react/jsx-runtime');
 function getColumnSizingStyle({ width, truncate = false }) {
   return truncate ? { width: "100%", maxWidth: 0, overflow: "hidden", textOverflow: "ellipsis" } : { width };
 }
-function getTableHeaderCellStyle({ padding = "14px 16px", align = "left", width, truncate = false } = {}) {
-  return { ..._chunkGB2NOCK7cjs.thStyle.call(void 0, padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+function getTableHeaderCellStyle({ padding = "var(--lk-table-cell-pad-md, 14px 16px)", align = "left", width, truncate = false } = {}) {
+  return { ..._chunkNU3MH6RFcjs.thStyle.call(void 0, padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
-function getTableDataCellStyle({ padding = "14px 16px", align = "left", width, truncate = false } = {}) {
-  return { ..._chunkGB2NOCK7cjs.tdStyle.call(void 0, padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+function getTableDataCellStyle({ padding = "var(--lk-table-cell-pad-md, 14px 16px)", align = "left", width, truncate = false } = {}) {
+  return { ..._chunkNU3MH6RFcjs.tdStyle.call(void 0, padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 function TableCellContent({ truncate, children }) {
   if (!truncate) return children;
@@ -27,7 +27,7 @@ function TableCellContent({ truncate, children }) {
     }
   );
 }
-function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProps }) {
+function TableRow({ columns, row, rowIndex, pad, hover, banded, rowHeaderKey, getRowProps }) {
   const [h, setH] = _react2.default.useState(false);
   const rowProps = _nullishCoalesce(_optionalChain([getRowProps, 'optionalCall', _ => _(row, rowIndex)]), () => ( {}));
   const {
@@ -37,11 +37,14 @@ function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProp
     onMouseLeave,
     ...restRowProps
   } = rowProps;
+  const restBackground = banded ? "var(--color-semantic-fill-alternative)" : "transparent";
+  const hoverBackground = banded ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-fill-alternative)";
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "tr",
     {
       ...restRowProps,
       className,
+      "data-banded": banded || void 0,
       onMouseEnter: (event) => {
         setH(true);
         _optionalChain([onMouseEnter, 'optionalCall', _2 => _2(event)]);
@@ -50,7 +53,7 @@ function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProp
         setH(false);
         _optionalChain([onMouseLeave, 'optionalCall', _3 => _3(event)]);
       },
-      style: { background: hover && h ? "var(--color-semantic-fill-alternative)" : "transparent", transition: "background var(--dur-fast) var(--ease-out)", ...style },
+      style: { background: hover && h ? hoverBackground : restBackground, transition: "background var(--dur-fast) var(--ease-out)", ...style },
       children: columns.map((c) => {
         const content = typeof c.render === "function" ? c.render(row) : row[c.key];
         const cellStyle = getTableDataCellStyle({ padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate });
@@ -68,6 +71,7 @@ function Table({
   rows = [],
   size = "md",
   hover = true,
+  banded = false,
   caption,
   tableLabel,
   tableLabelledBy,
@@ -78,7 +82,7 @@ function Table({
   style,
   ...rest
 }) {
-  const pad = size === "sm" ? "10px 12px" : "14px 16px";
+  const pad = size === "sm" ? "var(--lk-table-cell-pad-sm, 10px 12px)" : "var(--lk-table-cell-pad-md, 14px 16px)";
   const nameFromAria = caption == null;
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
@@ -119,6 +123,7 @@ function Table({
                 rowIndex: ri,
                 pad,
                 hover,
+                banded,
                 rowHeaderKey,
                 getRowProps
               },
@@ -136,4 +141,4 @@ function Table({
 
 
 exports.getTableHeaderCellStyle = getTableHeaderCellStyle; exports.getTableDataCellStyle = getTableDataCellStyle; exports.Table = Table;
-//# sourceMappingURL=chunk-7X4JNFV2.cjs.map
+//# sourceMappingURL=chunk-SGW3CUMZ.cjs.map

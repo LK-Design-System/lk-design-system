@@ -16,13 +16,64 @@ function machineTime(item) {
 
 /**
  * LK ROBOTICS — Timeline
- * A vertical event timeline (변경 이력, 활동 로그). Each item is a tonal node on a
+ * An event timeline (변경 이력, 활동 로그). Each item is a tonal node on a
  * hairline rail, with a time, title and optional description.
+ *
+ * `orientation` — 'vertical' (default) reads a log top-down; 'horizontal'
+ * reads a chronology left-to-right, each event an equal column
+ * (`minmax(0, 1fr)`: fewer events, wider columns). The rail segment stops
+ * before the last node — the chronology ends there, and a line running on
+ * claims otherwise. Requested by the slide medium, where a vertical rail is
+ * a document idiom (docs/TIMELINE_ORIENTATION_PROPOSAL.md); dashboards with
+ * few milestones read the same way.
  *
  * Accessibility — the chronology is an `ol`/`li` so order and item count survive
  * without sight (WCAG 1.3.1), and each stamp is a `<time dateTime>` element.
+ * Orientation is presentation only: the list semantics are identical.
  */
-export function Timeline({ items = [], label, style, ...rest }) {
+export function Timeline({ items = [], label, orientation = 'vertical', style, ...rest }) {
+  if (orientation === 'horizontal') {
+    return (
+      <div style={{ fontFamily: 'var(--font-sans)', ...style }} data-orientation="horizontal" {...rest}>
+        <ol
+          aria-label={label}
+          style={{
+            listStyle: 'none',
+            margin: 0,
+            padding: 0,
+            display: 'grid',
+            gridAutoFlow: 'column',
+            gridAutoColumns: 'minmax(0, 1fr)',
+            gap: 'var(--space-6)',
+          }}
+        >
+          {items.map((it, i) => {
+            const last = i === items.length - 1;
+            const c = DOT[it.tone] || DOT.signal;
+            const dt = machineTime(it);
+            const timeStyle = { fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-bold)', letterSpacing: '0.2px', color: 'var(--color-semantic-label-alternative)', margin: 'var(--space-2) 0 var(--space-1)', display: 'block' };
+            return (
+              <li key={it.id != null ? it.id : i} style={{ minWidth: 0 }}>
+                <div aria-hidden="true" style={{ display: 'flex', alignItems: 'center' }}>
+                  <span style={{ width: 12, height: 12, borderRadius: '50%', background: c, border: '2px solid var(--color-semantic-background-elevated-normal)', boxShadow: `0 0 0 1px ${c}`, flexShrink: 0 }} />
+                  {/* The segment bridges the grid gap to the next node — a
+                      rail interrupted at every gap reads as many timelines. */}
+                  {!last && <span style={{ flex: 1, height: 2, background: 'var(--color-semantic-line-solid-normal)', marginLeft: 4, marginRight: 'calc(var(--space-6) * -1)' }} />}
+                </div>
+                {it.time != null && (
+                  dt != null
+                    ? <time dateTime={dt} style={timeStyle}>{it.time}</time>
+                    : <div style={timeStyle}>{it.time}</div>
+                )}
+                <div style={{ fontSize: 'var(--body2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)' }}>{it.title}</div>
+                {it.description != null && <div style={{ marginTop: 'var(--space-1)', fontSize: 'var(--label2-size)', lineHeight: 1.6, color: 'var(--color-semantic-label-alternative)', wordBreak: 'keep-all' }}>{it.description}</div>}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    );
+  }
   return (
     <div style={{ fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       <ol aria-label={label} style={{ listStyle: 'none', margin: 0, padding: 0 }}>

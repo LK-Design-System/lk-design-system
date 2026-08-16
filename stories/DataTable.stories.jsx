@@ -84,6 +84,40 @@ export const StaticTable = {
   },
 };
 
+/* 넓은 표에서 라벨과 측정값 사이가 멀면 헤어라인만으로는 행의 시선이 이어지지
+   않는다. banded는 모든 데이터 행에 가장 조용한 fill을 깔아 밴드가 행을 잇게
+   한다 — 교차(지브라)가 아니라 전 행이다: 행이 적은 표에서 줄무늬는 특정 행의
+   강조로 오독된다(Table.prompt.md의 밴딩 절, Carbon zebra 근거 포함). */
+export const BandedRows = {
+  name: '변형·상태 · 밴드 행',
+  parameters: storyDescription(
+    '라벨 열과 측정 열 사이가 먼 넓은 표에서 행의 시선을 밴드로 잇는 상황입니다. 모든 데이터 행이 같은 밴드를 입는지(교차 줄무늬가 아님), 호버 워시가 밴드 위에서도 보이는지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-3)', width: '100%', maxWidth: 1040, minWidth: 0 }}>
+      <Table columns={columns} rows={rows} banded tableLabel="밴드 행 표" style={{ minWidth: 0 }} />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const bodyRows = [...canvasElement.querySelectorAll('tbody tr')];
+    if (bodyRows.length === 0) throw new Error('Banded story must render data rows.');
+    if (!bodyRows.every((row) => row.hasAttribute('data-banded'))) {
+      throw new Error('banded는 전 행 밴드다 — 교차가 아니라 모든 데이터 행이 data-banded를 가져야 한다.');
+    }
+    // A custom property's declared text never string-matches a computed
+    // background, so resolve the expected fill through a probe first.
+    const probe = document.createElement('div');
+    probe.style.background = 'var(--color-semantic-fill-alternative)';
+    canvasElement.append(probe);
+    const expected = getComputedStyle(probe).backgroundColor;
+    probe.remove();
+    const first = getComputedStyle(bodyRows[0]).backgroundColor;
+    if (first !== expected) {
+      throw new Error(`밴드는 fill-alternative를 입어야 한다 — got ${first}, expected ${expected}.`);
+    }
+  },
+};
+
 /* `size`가 바꾸는 것은 셀 패딩뿐이다(14/16 → 10/12). 글자 크기와 행간은 그대로이므로
    행 높이는 위아래 4px씩, 정확히 8px만 줄어든다. 두 밀도를 같은 데이터로 나란히 놓아
    그 차이와 선택 기준을 눈으로 확인할 수 있게 한다. */

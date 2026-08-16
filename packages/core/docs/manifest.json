@@ -222,7 +222,7 @@
       },
       {
         "path": "tokens/source.json",
-        "sha256": "aaab3894651e7411de1c8f798747b9cf61df1478934216d07ed2b7b69208c154"
+        "sha256": "d9cf06efc1956c546a92c7b3f4ee5d205f2cc9459be0e554802d6735e0500508"
       }
     ]
   },
@@ -631,11 +631,11 @@
     },
     {
       "path": "token-reference.json",
-      "sha256": "aaab3894651e7411de1c8f798747b9cf61df1478934216d07ed2b7b69208c154",
+      "sha256": "d9cf06efc1956c546a92c7b3f4ee5d205f2cc9459be0e554802d6735e0500508",
       "sources": [
         {
           "path": "tokens/source.json",
-          "sha256": "aaab3894651e7411de1c8f798747b9cf61df1478934216d07ed2b7b69208c154"
+          "sha256": "d9cf06efc1956c546a92c7b3f4ee5d205f2cc9459be0e554802d6735e0500508"
         }
       ]
     }

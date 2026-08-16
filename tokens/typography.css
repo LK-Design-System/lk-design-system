@@ -56,7 +56,16 @@
 
   /* ---- 7-tier type scale (Display/Title/Heading/Headline/Body/Label/
      Caption) provided alongside the LK fs/lh/ls token families so
-     consumers can use this vocabulary directly. ---------------------- */
+     consumers can use this vocabulary directly.
+
+     display0 sits ABOVE the product scale: a projection/exhibition rung
+     (one statement or one number carrying a whole surface, read from
+     meters away). Product UI must not consume it directly — it exists so
+     projection media (Slides and downstream) resolve their hero tier
+     through the ramp instead of deriving it with calc
+     (docs/TYPE_RAMP_DISPLAY0_PROPOSAL.md). Value equals the calc it
+     replaces (display1 ×2), so adoption changes no rendered surface. -- */
+  --display0-size: 112px; --display0-line: 144px; --display0-spacing: -0.034em;
   --display1-size: 56px;  --display1-line: 72px;  --display1-spacing: -0.0319em;
   --display2-size: 40px;  --display2-line: 52px;  --display2-spacing: -0.0282em;
   --display3-size: 36px;  --display3-line: 48px;  --display3-spacing: -0.027em;
@@ -88,6 +97,7 @@
 /* Type-scale utility classes — apply a complete type style in one shot. Headings
    Bold/SemiBold with negative tracking; body Medium with slight positive
    tracking for Hangul legibility. */
+.type-display0 { font-family: var(--font-sans); font-weight: 700; font-size: var(--display0-size); line-height: var(--display0-line); letter-spacing: var(--display0-spacing); }
 .type-display1 { font-family: var(--font-sans); font-weight: 700; font-size: var(--display1-size); line-height: var(--display1-line); letter-spacing: var(--display1-spacing); }
 .type-display2 { font-family: var(--font-sans); font-weight: 700; font-size: var(--display2-size); line-height: var(--display2-line); letter-spacing: var(--display2-spacing); }
 .type-display3 { font-family: var(--font-sans); font-weight: 700; font-size: var(--display3-size); line-height: var(--display3-line); letter-spacing: var(--display3-spacing); }

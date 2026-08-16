@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Plan |
-| Status | Proposed — Slides가 calc 조합으로 자립 운영 중, 승격되면 한 줄 마이그레이션 |
+| Status | Adopted — 2026-08-17 main 반영(display0 112/144, .type-display0). 릴리스·위성 재지정 대기 |
 | Owner | Foundation owner |
 | Last reviewed | 2026-08-16 |
 | Source | 소비처: `lk-design-system-slides/tokens/slides.css`(`--slides-hero-*`) · 근거: `lk-design-system-slides/docs/references/SLIDE_SYSTEMS_COMPARISON.md` · 대상: `tokens/source.json` 타입 램프 |

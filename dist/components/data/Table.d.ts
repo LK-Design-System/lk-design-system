@@ -19,6 +19,13 @@ export interface TableProps<Row extends Record<string, unknown> = Record<string,
   size?: 'sm' | 'md';
   /** 행 호버 워시. @default true */
   hover?: boolean;
+  /**
+   * 모든 데이터 행에 가장 조용한 fill 밴드를 깝니다. 라벨과 측정값 사이가
+   * 먼 넓은 표에서 헤어라인 대신 밴드가 행의 시선을 잇습니다. 교차(지브라)가
+   * 아니라 전 행 밴드입니다 — 행이 적을 때 줄무늬는 강조로 오독됩니다.
+   * @default false
+   */
+  banded?: boolean;
   /** 표 위에 보이는 `<caption>`. 표의 접근 가능한 이름이 됩니다. */
   caption?: React.ReactNode;
   /** 보이는 캡션이 없을 때 `<table>`에 붙는 aria-label. */

@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Plan |
-| Status | Proposed — Slides의 NarrativeTimeline이 row 레일을 자체 렌더로 자립 운영 중, 승격되면 위성 분기 삭제 |
+| Status | Adopted — 2026-08-17 main 반영(orientation=horizontal, 등분·레일 연속·마지막 정지). 릴리스 후 위성 row 분기 철거 |
 | Owner | Design system owner |
 | Last reviewed | 2026-08-16 |
 | Source | 소비처: `lk-design-system-slides/src/components/editorial/NarrativeTimeline.jsx`(direction='row' 분기) · 대상: `components/content/Timeline` |

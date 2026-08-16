@@ -81,3 +81,13 @@ Reference: [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns
 
 - `getRowProps(row, index)` merges native `<tr>` attributes such as `data-*`, `className`, `style`, and pointer handlers. It does not add selection, focus, or grid semantics. Use `DataGrid` when rows must be selected, sorted, or navigated with the keyboard.
 - `getTableHeaderCellStyle({ padding, align, width })` and `getTableDataCellStyle({ padding, align, width })` expose the LDS static-table cell presentation for product-owned table compositions that cannot use the full `Table` renderer. Preserve native `<th scope="col|row">` and `<td>` elements when using them.
+
+## Banded rows (`banded`) — 넓은 표의 행 결속
+
+- **banded** — 모든 데이터 행에 `--color-semantic-fill-alternative` 밴드를 깝니다. 라벨 열과 측정 열 사이가 먼 넓은 표에서 헤어라인만으로는 행의 시선이 이어지지 않을 때 쓰세요. 호버 워시는 밴드 위에서 한 단 위 fill(`fill-normal`)로 올라가 여전히 보입니다.
+- **교차(지브라)가 아니라 전 행 밴드입니다.** 행이 적은 표에서 교차 줄무늬는 특정 행의 강조로 오독됩니다 — 강조는 상태 표현(배지·톤)의 몫이고 기하의 몫이 아닙니다. 이 판정은 투영 매체(Slides)에서 실측으로 확정됐습니다(`docs/TABLE_MEDIUM_CONTRACT_PROPOSAL.md`).
+- 외부 근거: [Carbon Data table](https://carbondesignsystem.com/components/data-table/usage/)의 zebra 옵션 — "행을 따라가는 시선이 옆 행으로 이탈하는 것을 막는" 넓은 표 장치이며, Carbon은 줄무늬를 끄면 행 구분선을 요구합니다(LDS 기본형이 그 형태). [USWDS Table](https://designsystem.digital.gov/components/table/)의 striped 변형도 같은 계열입니다. LDS는 두 시스템의 교차 줄무늬 대신 전 행 밴드를 채택합니다(강조 오독 근거는 위).
+
+## 매체 재지정 훅 (`--lk-table-*`)
+
+셀 패딩과 타입은 `--lk-table-cell-pad-sm/md`, `--lk-table-head-size/line/spacing`, `--lk-table-cell-size/line` 훅을 경유하며, **폴백이 곧 기존 리터럴**이라 제품 매체는 바이트 동일하게 렌더됩니다. 투영·전시처럼 읽기 거리가 다른 매체가 자기 스코프에서 재지정합니다. 훅은 의도적으로 기본 미정의입니다 — 토큰으로 정의하면 폴백이 죽은 코드가 되고, 제품 기본값의 단일 출처가 리터럴에서 토큰으로 흩어지기 때문입니다(TOKEN_GOVERNANCE의 컴포넌트 토큰 규칙에 대한 문서화된 예외).

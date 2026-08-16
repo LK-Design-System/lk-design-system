@@ -2,7 +2,7 @@
 
 
 
-var _chunkGB2NOCK7cjs = require('./chunk-GB2NOCK7.cjs');
+var _chunkNU3MH6RFcjs = require('./chunk-NU3MH6RF.cjs');
 
 
 var _chunkI6NJHF3Lcjs = require('./chunk-I6NJHF3L.cjs');
@@ -555,7 +555,7 @@ function DataGrid({
                         "data-column-key": column.key,
                         "data-pinned": column.pinSide || void 0,
                         style: {
-                          ..._chunkGB2NOCK7cjs.thStyle.call(void 0, pad),
+                          ..._chunkNU3MH6RFcjs.thStyle.call(void 0, pad),
                           textAlign: column.align || "left",
                           userSelect: "none",
                           ...columnPositionStyle(column, { header: true, stickyHeader, stickyHeaderOffset })
@@ -670,7 +670,7 @@ function DataGrid({
                                 "data-editing": cellEditing || void 0,
                                 "data-pinned": column.pinSide || void 0,
                                 style: {
-                                  ..._chunkGB2NOCK7cjs.tdStyle.call(void 0, pad),
+                                  ..._chunkNU3MH6RFcjs.tdStyle.call(void 0, pad),
                                   textAlign: column.align || "left",
                                   ...columnPositionStyle(column, { selected })
                                 },
@@ -697,4 +697,4 @@ function DataGrid({
 
 
 exports.DataGrid = DataGrid;
-//# sourceMappingURL=chunk-X5WESQB7.cjs.map
+//# sourceMappingURL=chunk-CYZMLDQM.cjs.map

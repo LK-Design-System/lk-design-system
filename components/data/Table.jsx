@@ -8,11 +8,11 @@ function getColumnSizingStyle({ width, truncate = false }) {
 }
 
 /** Public style helpers for product-owned native tables that must match LDS Table cells. */
-export function getTableHeaderCellStyle({ padding = '14px 16px', align = 'left', width, truncate = false } = {}) {
+export function getTableHeaderCellStyle({ padding = 'var(--lk-table-cell-pad-md, 14px 16px)', align = 'left', width, truncate = false } = {}) {
   return { ...thStyle(padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 
-export function getTableDataCellStyle({ padding = '14px 16px', align = 'left', width, truncate = false } = {}) {
+export function getTableDataCellStyle({ padding = 'var(--lk-table-cell-pad-md, 14px 16px)', align = 'left', width, truncate = false } = {}) {
   return { ...tdStyle(padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 
@@ -28,7 +28,7 @@ function TableCellContent({ truncate, children }) {
   );
 }
 
-function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProps }) {
+function TableRow({ columns, row, rowIndex, pad, hover, banded, rowHeaderKey, getRowProps }) {
   const [h, setH] = React.useState(false);
   const rowProps = getRowProps?.(row, rowIndex) ?? {};
   const {
@@ -38,13 +38,18 @@ function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProp
     onMouseLeave,
     ...restRowProps
   } = rowProps;
+  // Banded rows already sit on the quietest fill, so their hover wash steps
+  // one fill up — the wash must stay visible on top of the band.
+  const restBackground = banded ? 'var(--color-semantic-fill-alternative)' : 'transparent';
+  const hoverBackground = banded ? 'var(--color-semantic-fill-normal)' : 'var(--color-semantic-fill-alternative)';
   return (
     <tr
       {...restRowProps}
       className={className}
+      data-banded={banded || undefined}
       onMouseEnter={(event) => { setH(true); onMouseEnter?.(event); }}
       onMouseLeave={(event) => { setH(false); onMouseLeave?.(event); }}
-      style={{ background: hover && h ? 'var(--color-semantic-fill-alternative)' : 'transparent', transition: 'background var(--dur-fast) var(--ease-out)', ...style }}
+      style={{ background: hover && h ? hoverBackground : restBackground, transition: 'background var(--dur-fast) var(--ease-out)', ...style }}
     >
       {columns.map((c) => {
         const content = typeof c.render === 'function' ? c.render(row) : row[c.key];
@@ -74,12 +79,21 @@ function TableRow({ columns, row, rowIndex, pad, hover, rowHeaderKey, getRowProp
  * association survives linearised reading (WCAG 1.3.1, APG Table pattern). The
  * table itself is named by a visible `<caption>`, or by `tableLabel` /
  * `tableLabelledBy` when the title already lives outside the table.
+ *
+ * `banded` lays every data row on the quietest fill. Use it when a wide table
+ * puts real distance between the row's label and its measures — a hairline
+ * alone cannot carry the eye across that gutter (Carbon's zebra rationale;
+ * grammar pressure-tested on the slide medium, see
+ * docs/TABLE_MEDIUM_CONTRACT_PROPOSAL.md). All rows band, never alternate:
+ * with few rows a stripe reads as emphasis, and emphasis belongs to status
+ * treatments, not geometry.
  */
 export function Table({
   columns = [],
   rows = [],
   size = 'md',
   hover = true,
+  banded = false,
   caption,
   tableLabel,
   tableLabelledBy,
@@ -90,7 +104,11 @@ export function Table({
   style,
   ...rest
 }) {
-  const pad = size === 'sm' ? '10px 12px' : '14px 16px';
+  // Fallbacks are the former literals — the product medium is byte-identical,
+  // a medium that reads farther away re-points the hook (see table-cell-styles).
+  const pad = size === 'sm'
+    ? 'var(--lk-table-cell-pad-sm, 10px 12px)'
+    : 'var(--lk-table-cell-pad-md, 14px 16px)';
   // A visible <caption> already names the table. An aria-label on top of it
   // would silently replace that visible name and risk a name/visible-text
   // mismatch (WCAG 2.5.3), so the ARIA names only apply without a caption.
@@ -141,6 +159,7 @@ export function Table({
               rowIndex={ri}
               pad={pad}
               hover={hover}
+              banded={banded}
               rowHeaderKey={rowHeaderKey}
               getRowProps={getRowProps}
             />
