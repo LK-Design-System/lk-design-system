@@ -1,8 +1,11 @@
 /**
- * WDS Foundation Parity Differ
+ * LDS Foundation Baseline Differ
  * ----------------------------------------------------------------------------
- * Extracts the *value-diffable* foundation layers directly from the local WDS
- * `.fig` (fig-kiwi decode) and diffs them field-by-field against tokens/*.css.
+ * Diffs the value-diffable foundation layers of tokens/*.css against the
+ * LDS-owned baseline (docs/references/lds-baseline/FOUNDATION_VALUES.json).
+ * The baseline was adopted from the WDS `.fig` extraction on 2026-08-16
+ * (re-anchoring — OPERATING_MODEL.md "Reference authority"); since then the
+ * `.fig` is a historical archive, not the live comparison target.
  *
  * Scope — only the layers where value equality is meaningful:
  *   • Typography  — 16 named text styles (size / line / letter-spacing / weight)
@@ -15,7 +18,12 @@
  *     variables without a clean 1:1 token mapping; left to STYLE_PARITY_AUDIT.
  *
  * Usage:  node scripts/report-wds-foundation-parity.mjs [--check]
- *   --check  exit 1 if any value-diffable field drifts (for CI).
+ *   --check            exit 1 if any value-diffable field drifts (for CI).
+ *   --from-fig         decode the historical .fig live instead of the baseline
+ *                      (archival cross-check only; needs the 45MB .fig).
+ *   --freeze-baseline  decode the .fig once and (re)write the baseline JSON.
+ *                      Recovery-only — changing a baseline VALUE is a design
+ *                      decision recorded in lds-baseline/README.md, not a freeze.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -24,8 +32,11 @@ import { compileSchema, decodeBinarySchema } from 'kiwi-schema';
 
 const { inflateRawSync } = zlib;
 const FIG = 'docs/references/wds/Wanted Design System (Community).fig';
-const REPORT = 'docs/references/wds/FOUNDATION_PARITY_REPORT.md';
+const BASELINE = 'docs/references/lds-baseline/FOUNDATION_VALUES.json';
+const REPORT = 'docs/references/lds-baseline/FOUNDATION_BASELINE_REPORT.md';
 const CHECK = process.argv.includes('--check');
+const FROM_FIG = process.argv.includes('--from-fig');
+const FREEZE = process.argv.includes('--freeze-baseline');
 
 // ---- fig-kiwi / zip decode -------------------------------------------------
 const rU16 = (b, o) => b.readUInt16LE(o);
@@ -50,13 +61,18 @@ function decompressZstd(buffer) {
 function figKiwi(b) { let o = 12; const ch = []; while (o + 4 < b.length) { const s = rU32(b, o); o += 4; ch.push(b.subarray(o, o + s)); o += s; } const schema = decodeBinarySchema(inflateRawSync(ch[0])); const dc = ch[1]; const data = dc[0] === 0x28 && dc[1] === 0xb5 ? decompressZstd(dc) : inflateRawSync(dc); return compileSchema(schema).decodeMessage(data); }
 const gid = (g) => (g ? `${g.sessionID}:${g.localID}` : undefined);
 
-const buf = readFileSync(FIG);
-const entries = zipEntries(buf);
-const message = figKiwi(zipRead(buf, entries, 'canvas.fig'));
-const nodes = message.nodeChanges || [];
-const childrenByParent = new Map();
-for (const n of nodes) { const p = gid(n.parentIndex?.guid); if (!p) continue; if (!childrenByParent.has(p)) childrenByParent.set(p, []); childrenByParent.get(p).push(n); }
-const pages = nodes.filter((n) => n.type === 'CANVAS' && gid(n.parentIndex?.guid) === '0:0');
+let nodes = [];
+let childrenByParent = new Map();
+let pages = [];
+function loadFig() {
+  const buf = readFileSync(FIG);
+  const entries = zipEntries(buf);
+  const message = figKiwi(zipRead(buf, entries, 'canvas.fig'));
+  nodes = message.nodeChanges || [];
+  childrenByParent = new Map();
+  for (const n of nodes) { const p = gid(n.parentIndex?.guid); if (!p) continue; if (!childrenByParent.has(p)) childrenByParent.set(p, []); childrenByParent.get(p).push(n); }
+  pages = nodes.filter((n) => n.type === 'CANVAS' && gid(n.parentIndex?.guid) === '0:0');
+}
 function descendants(rootId) { const out = []; const st = [...(childrenByParent.get(rootId) || [])]; while (st.length) { const n = st.shift(); out.push(n); const ch = childrenByParent.get(gid(n.guid)); if (ch) st.push(...ch); } return out; }
 const round = (v, p = 100) => Math.round(v * p) / p;
 
@@ -160,14 +176,39 @@ const p = (s = '') => lines.push(s);
 let driftCount = 0;
 const near = (a, b, tol) => a != null && b != null && Math.abs(a - b) <= tol;
 
-const wdsType = extractTypography();
-const wdsGrid = extractGrid();
-const wdsOpacity = extractOpacity();
+let wdsType;
+let wdsGrid;
+let wdsOpacity;
+if (FROM_FIG || FREEZE) {
+  loadFig();
+  wdsType = extractTypography();
+  wdsGrid = extractGrid();
+  wdsOpacity = extractOpacity();
+  if (FREEZE) {
+    const frozen = {
+      authority: 'lds',
+      adoptedFrom: `fig extraction (${FIG}); values byte-matched at adoption`,
+      adoptedAt: '2026-08-16',
+      decision: 'docs/OPERATING_MODEL.md — Reference authority',
+      typography: wdsType,
+      grid: wdsGrid,
+      opacity: wdsOpacity,
+    };
+    writeFileSync(BASELINE, `${JSON.stringify(frozen, null, 2)}\n`);
+    console.log(`Froze foundation baseline -> ${BASELINE}`);
+  }
+} else {
+  const baseline = JSON.parse(readFileSync(BASELINE, 'utf8'));
+  wdsType = baseline.typography;
+  wdsGrid = baseline.grid;
+  wdsOpacity = baseline.opacity;
+}
 
-p('# WDS Foundation Parity Report');
+p('# LDS Foundation Baseline Report');
 p('');
-p('Auto-generated by `scripts/report-wds-foundation-parity.mjs` — extracts value-diffable');
-p('foundations from the local `.fig` and diffs field-by-field against `tokens/*.css`.');
+p('Auto-generated by `scripts/report-wds-foundation-parity.mjs` — diffs `tokens/*.css`');
+p('field-by-field against the LDS-owned baseline (`lds-baseline/FOUNDATION_VALUES.json`,');
+p('adopted from the WDS `.fig` extraction on 2026-08-16).');
 p('');
 p('Legend: ✅ match · ❌ drift · ⚠️ note');
 p('');
@@ -243,9 +284,10 @@ p('- **Context margins** — WDS `Margin/Action|Content|Navigation/*` step 16/20
 p('- **Effects/shadows** — LK substitutes blur materials with shadows (documented override).');
 p('');
 
+const source = FROM_FIG || FREEZE ? 'the local .fig' : 'the LDS foundation baseline';
 const summary = driftCount === 0
-  ? `All value-diffable foundation fields match the local .fig. (typography 16, grid + breakpoints, opacity ${covered.length}/${wdsOpacity.length})`
-  : `${driftCount} field(s) drift from the local .fig — see ❌ rows above.`;
+  ? `All value-diffable foundation fields match ${source}. (typography 16, grid + breakpoints, opacity ${covered.length}/${wdsOpacity.length})`
+  : `${driftCount} field(s) drift from ${source} — see ❌ rows above.`;
 p('---');
 p('');
 p(summary);

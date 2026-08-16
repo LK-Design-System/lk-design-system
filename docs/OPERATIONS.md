@@ -19,8 +19,10 @@
 ```
 코어 워크스페이스 (이 저장소)          위성 (독립 저장소)
   packages/core     토큰·기초           robotics-ui   도메인 팩 · 유일하게 성숙
-  packages/theme    LK 테마             slides-ui     도메인 팩 · 슬라이드 16종
+  packages/theme    LK 테마             slides-ui     도메인 팩 · 슬라이드 14종
   packages/product  제품 공통 확장       motion        능력 레이어 · 영상 렌더
+                                        (slides-ui의 슬라이드는 14종이다 —
+                                         DeckViewer 등 상영 런타임은 별도)
                                         3d            능력 레이어 · 선행 구축
 ```
 
@@ -38,15 +40,20 @@
 ### 2.1 왜 robotics가 딸려오나
 
 LDS는 robotics의 배포본(tgz)을 vendor에 넣어 쓰고, robotics는 그 안에
-"내가 맞춘 LDS 버전"을 기록해 둔다. 그래서 LDS 버전을 올리면 그 기록과
-어긋나 `check:type-surface`가 실패한다(이름에 robotics가 없지만 실제로
-대조하는 것은 `scripts/check-workspace-packages.mjs`의 robotics 문서 매니페스트
-비교다). **LDS rc 릴리스에는 robotics rc 릴리스가 반드시 따라온다.** 코드
-변경만 커밋하고 릴리스는 나중에 하는 것은 가능하다.
+"내가 맞춘 LDS 버전"을 기록해 둔다. 그래서 LDS 버전을 올리면 — 그리고
+**버전을 올리지 않아도 Core 패키지 문서 표면(`packages/core/docs/*`로
+투영되는 것)을 바꾸면** — 그 기록과 어긋나 `check:type-surface`가
+실패한다(이름에 robotics가 없지만 실제로 대조하는 것은
+`scripts/check-workspace-packages.mjs`의 robotics 문서 매니페스트 비교다).
+**LDS rc 릴리스에는 robotics rc 릴리스가 반드시 따라온다.** 코드
+변경만 커밋하고 릴리스는 나중에 하는 것은 가능하다 — 단, Core 문서
+표면을 바꾼 커밋은 다음 짝 릴리스 전까지 main을 빨갛게 만드므로,
+그런 변경은 짝 릴리스와 가까운 시점에 묶는다 (§4.1의 베이스라인 갈래).
 
 **순서에 함정이 있다.** robotics 산출물 안에 LDS 버전이 구워지므로
-(`ROBOTICS_EXTERNAL_SURFACE.json`의 `canonicalContract.source.ref` =
-`lds-v<LDS 버전>`), **새 LDS 버전을 먼저 정한 뒤에** robotics를 릴리스해야
+(이 저장소의 `docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json`,
+필드 `documentation.canonicalContract.source.ref` = `lds-v<LDS 버전>`),
+**새 LDS 버전을 먼저 정한 뒤에** robotics를 릴리스해야
 한다. "robotics가 먼저"는 tgz를 만드는 순서일 뿐, 버전을 정하는 순서가
 아니다.
 
@@ -92,10 +99,29 @@ robotics는 레지스트리에 퍼블리시하지 않는다 — **LDS로 전달�
 vendored tgz 하나뿐이다.** 그래서 "릴리스"는 버전을 올리고 pack해서 LDS의
 `vendor/`에 넣는 것까지다.
 
+**선행조건 — 시작 전에 넷을 확인한다:**
+
+1. LDS main CI가 초록이고 `npm run check:release-pins`가 통과한다. 릴리스
+   사이에 Core 문서 표면이 바뀌었다면 여기서 이미 드리프트가 보인다(§2.1) —
+   그 드리프트의 정식 해소가 바로 지금 하려는 짝 릴리스이므로 진행하면 된다.
+   다른 종류의 빨간불이면 먼저 고친다.
+2. robotics 체크아웃이 `main`이고 origin과 동기이며 작업트리가 깨끗하다.
+   다른 작업자의 미푸시 커밋·작업트리 변경이 있으면 릴리스 전에 조율한다.
+3. `NODE_AUTH_TOKEN`이 설정돼 있다 — GitHub Packages 읽기용. `gh` 로그인이
+   있으면 `gh auth token`으로 얻는 것이 가장 빠르고, 없으면 `read:packages`
+   스코프 PAT를 만든다. PowerShell은 `$env:NODE_AUTH_TOKEN = ...`,
+   또는 `~/.npmrc`에 설정.
+4. Node 22 (CI가 검증하는 버전은 22.17.1이다. 로컬 24에서도 대부분
+   동작하지만 판정 기준은 CI다).
+
 ```bash
 cd <robotics 체크아웃>
 
-# ① LDS 레이어 핀이 새 LDS 버전을 가리키게 한다.
+# ① LDS 레이어 핀을 갱신한다. "새 LDS 버전"이 아니라 **직전 퍼블리시된
+#    LDS 버전**을 적는다 — 지금 만드는 버전은 아직 레지스트리에 없어 설치
+#    자체가 안 된다(§2.1). 예: rc.69.20을 내는 릴리스에서 peer
+#    declaredRange의 하한·계약의 version·theme dev핀은 전부 rc.69.19다.
+#    한 릴리스 뒤처지는 것이 정상이다.
 #    robotics는 자체 conformance 규칙이 file: 의존을 금지하므로
 #    레지스트리 버전을 쓴다(peerDependencies의 core·product, devDependencies의 theme).
 #    LDS 쪽 docs/references/package-split/CROSS_REPOSITORY_STYLE_CONTRACT.json의
@@ -106,6 +132,8 @@ npm version <새 robotics 버전> --no-git-tag-version
 npm install                    # NODE_AUTH_TOKEN 필요 (GitHub Packages)
 
 # ② 검사. 형제 LDS 체크아웃이 낡았으면 릴리스 라인을 명시적으로 가리킨다.
+#    DOCUMENTATION_SURFACE_MISMATCH로 실패하면 생성 문서가 낡은 것이다 —
+#    ③의 generate:docs를 먼저 돌리고 ②를 다시 돌린 뒤 pack으로 넘어간다.
 LDS_CONFORMANCE_CLI=<LDS 체크아웃>/packages/conformance/src/cli.mjs npm run check:lds-style
 npm run check:local
 
@@ -128,6 +156,8 @@ npm pack --pack-destination <LDS 체크아웃>/vendor
 npm install
 
 # 2. 파생값 31곳을 재계산한다. 손으로 고치지 않는다.
+#    root와 워크스페이스 package.json의 version 필드도 이 스크립트가 올린다 —
+#    별도의 npm version 단계는 없다.
 npm run update:release-pins -- --lds <새 LDS 버전> --robotics <새 robotics 버전>
 
 # 3. 락파일을 새 버전으로 맞춘다.
@@ -184,7 +214,7 @@ npm view @lk-design-system/lds-core@<새 LDS 버전> version   # NODE_AUTH_TOKEN
 `update:release-pins`가 계산한다. 손으로 고쳤다가 어긋나면
 `check:release-pins`가 CI에서 막는다.
 
-### 2.4 태그를 찍은 뒤 실수를 발견하면
+### 2.7 태그를 찍은 뒤 실수를 발견하면
 
 태그를 옮기지 않는다. **버전을 올려 새로 릴리스한다.** 같은 버전이 서로
 다른 커밋을 가리키는 상태를 막는 것이 `check:release-immutability --tag`의
@@ -261,7 +291,7 @@ npm run <실패한 검사 이름>
 | 갈래 | 신호 | 대처 |
 | --- | --- | --- |
 | **환경** | pull 직후, 또는 `node_modules`가 낡음 | `npm install`부터. 설치된 패키지를 읽는 검사(`check:conformance`, `check:type-surface`)가 엉뚱하게 실패하는 원인 1위다 |
-| **베이스라인** | "drift", "baseline", "snapshot" 문구 | 변경이 의도된 것이면 짝이 되는 `update:*`/`generate:*`를 돌려 갱신하고 **그 갱신 자체를 커밋에 포함**한다. 의도치 않았다면 진짜 회귀다 |
+| **베이스라인** | "drift", "baseline", "snapshot" 문구 | 변경이 의도된 것이면 짝이 되는 `update:*`/`generate:*`를 돌려 갱신하고 **그 갱신 자체를 커밋에 포함**한다. 의도치 않았다면 진짜 회귀다. 특수 사례: 릴리스 사이에 Core 문서 표면을 바꾼 커밋은 `check:type-surface`·`check:release-pins`를 함께 깨뜨린다(robotics 스냅샷 핀과 어긋남 — §2.1). 이 빨간불의 정식 해소는 다음 짝 릴리스이고, 그때까지 main이 빨갛게 남으므로 그런 커밋은 짝 릴리스에 붙여서 낸다 |
 | **진짜 회귀** | 위 둘이 아님 | 고친다 |
 
 베이스라인 갱신은 자동 통과 수단이 아니다. **무엇이 왜 바뀌었는지 설명할 수
@@ -321,6 +351,19 @@ registry 엔트리 예시, Node 버전).
 위험하다.** 낡은 문서가 "Status: Current"를 달고 있으면 새 문서를 무력화한다.
 그래서 현재 상태의 권위는 [`README.md`](README.md)의 표 하나로 모았고,
 손으로 갱신하는 숫자는 스크립트 산출물로 대체했다.
+
+**재시험 (2026-08-16, 메운 문서로 2회차)** — 문맥 없는 새 독자 둘로 반복했다.
+
+- 신입 시험: 완주, 질문 3건(전 회차 9건). 문서가 지목한 소스 2개 외에는
+  탐색 0. 남은 3건은 motion README 한 파일 수준이라 즉시 메웠다.
+- 인계자 시험: **절차 재구성 완주** — 전 회차를 1단계에서 멈춰 세운
+  "robotics가 어디 있나"가 메워졌음이 확인됐다. 질문 9건이 나와 §1·§2.1·
+  §2.3·§2.4·§4.1에 반영했다(선행조건 블록, NODE_AUTH_TOKEN 취득법,
+  핀 값 예시, 버전 범프 위치, 문서 표면 함정, 절 번호 결함).
+  이 시험은 실고장도 하나 잡았다 — 릴리스 사이의 Core 문서 표면 변경이
+  main을 빨갛게 만드는 §2.1의 함정이 시험 당일 실제로 재현 중이었다.
+
+"질문 0으로 완주"는 아직 미달성이다. 다음 재시험은 이번 반영분으로 돌린다.
 
 **아직 확인되지 않은 것**: 다른 사람의 실제 PC(다른 OS·Node)에서의 동작.
 이것만은 문서로 메울 수 없다.

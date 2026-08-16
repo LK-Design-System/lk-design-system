@@ -1,11 +1,12 @@
 /**
- * WDS ↔ LDS component STYLE parity check (real dimensions, not axis names).
+ * LDS component dimension baseline check (token layer).
  *
  * Resolves LDS component dimension tokens from tokens/*.css (var() chains ->
- * concrete px) and diffs them against the authoritative WDS styles extracted from
- * the .fig (docs/references/wds/COMPONENT_STYLES.json, via
- * scripts/extract-wds-component-styles.mjs). Colors are an intentional LK rebrand
- * and are NOT diffed here — only radius / padding / height / gap / font size.
+ * concrete px) and diffs them against the LDS-owned dimension baseline
+ * (docs/references/lds-baseline/COMPONENT_DIMENSIONS.json, adopted 2026-08-16
+ * from the WDS parity extraction — re-anchoring, OPERATING_MODEL.md "Reference
+ * authority"). Colors were already LK-owned and are NOT diffed here — only
+ * radius / padding / height / gap / font size.
  *
  *   node scripts/check-wds-component-styles.mjs          # report
  *   node scripts/check-wds-component-styles.mjs --check   # exit 1 on drift
@@ -13,7 +14,7 @@
 import { readFileSync } from 'node:fs';
 
 const CHECK = process.argv.includes('--check');
-const wds = JSON.parse(readFileSync('docs/references/wds/COMPONENT_STYLES.json', 'utf8'));
+const wds = JSON.parse(readFileSync('docs/references/lds-baseline/COMPONENT_DIMENSIONS.json', 'utf8')).sets;
 
 // ---- resolve all CSS custom properties across the token files ----
 const files = ['colors', 'color-atomic', 'color-semantic', 'spacing', 'grid', 'typography', 'fonts', 'effects', 'components', 'base', 'focus'];

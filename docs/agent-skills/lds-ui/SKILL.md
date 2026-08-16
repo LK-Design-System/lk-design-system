@@ -7,7 +7,19 @@ description: LK Design System(@lk-design-system 패키지)으로 제품 UI를 �
 
 LDS는 컴포넌트 카탈로그가 아니라 **결정 체계**다. 컴포넌트를 가져다 쓰면 생김새는 따라오지만, 아래 계약들은 따라오지 않는다 — 이 스킬은 그 나머지 절반을 로드한다.
 
-설치: 이 디렉터리(`docs/agent-skills/lds-ui/`)를 소비 레포의 `.claude/skills/lds-ui/`로 통째로 복사한다.
+설치는 에이전트에 따라 두 가지다. 내용은 도구 중립 마크다운이므로 어느 쪽이든 같은 규칙이 로드된다.
+
+- **Claude Code**: 이 디렉터리(`docs/agent-skills/lds-ui/`)를 소비 레포의 `.claude/skills/lds-ui/`로 통째로 복사한다. 이후 LDS UI 작업에서 스킬로 자동 트리거된다.
+- **AGENTS.md 기반 에이전트 (Codex 등)**: 소비 레포의 `AGENTS.md`에 아래 라우팅 블록을 추가한다. 전문을 복사하지 않고 라우팅만 하므로, 규칙 본문은 설치된 패키지에서 항상 최신으로 읽힌다.
+
+```markdown
+## LDS UI 작업 규칙
+
+@lk-design-system 컴포넌트로 UI를 만들거나 고칠 때는, 코드를 쓰기 전에
+node_modules/@lk-design-system/lds-core/docs/agent-skills/lds-ui/SKILL.md
+와 그 references/ 문서를 읽고 따른다. 컴포넌트 교체만으로 LDS 적용은
+완료되지 않는다.
+```
 
 **정본 우선순위**: 이 스킬의 규칙 ≒ 배포된 `docs/` 문서 < **배포 Storybook의 play 단언**. 산문과 실제 컴포넌트 동작이 충돌하면 동작(play 단언)이 정본이고, 이 스킬을 갱신해야 한다.
 
