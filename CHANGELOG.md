@@ -2,6 +2,19 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.22 - 2026-08-16
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.23.
+
+### Added
+
+- Agent-skill installation is now an official consumer-setup step in the
+  adoption workflow (both install tracks: the `.claude/skills/lds-ui` copy for
+  Claude Code and the AGENTS.md routing block for Codex-style agents), and
+  `check-adoption` prints an advisory `AGENT_SKILL_MISSING` warning when a
+  consumer repository has neither. The warning never fails the check —
+  adoption evidence still owns pass/fail.
+
 ## 0.1.0-rc.69.21 - 2026-08-16
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.22.
