@@ -186,12 +186,34 @@ for (const id of workspacePackages) {
     return installedHashes.get(relative);
   };
 
+  // 도메인 문서는 **목록 자체가 파생값**이다. robotics가 새 도메인 문서를
+  // 추가하면(예: 2026-08-16 AGENT_SKILL_REFERENCE.md) 해시만 갱신해서는
+  // 계약이 실물과 어긋난 채로 남는다. 설치본의 문서 매니페스트를 단일
+  // 출처로 삼아 목록과 해시를 함께 만든다.
+  const bundleRoot = path.posix.dirname(surface.documentation.files.manifest.path);
+  let derivedDomainDocuments = null;
   if (installedMatches) {
     for (const [key, entry] of Object.entries(surface.documentation?.files ?? {})) {
       record(file, `documentation.files.${key}.sha256`, entry.sha256, await hashInstalled(entry.path));
     }
-    for (const entry of surface.documentation?.domainDocuments ?? []) {
-      record(file, `domainDocuments["${entry.path}"].sha256`, entry.sha256, await hashInstalled(entry.path));
+
+    const installedDocsManifest = JSON.parse(
+      await readFile(path.join(packageRoot, ...surface.documentation.files.manifest.path.split('/')), 'utf8'),
+    );
+    derivedDomainDocuments = [];
+    for (const entry of installedDocsManifest.domain?.documents ?? []) {
+      const surfacePath = path.posix.join(bundleRoot, entry.path);
+      derivedDomainDocuments.push({path: surfacePath, sha256: await hashInstalled(surfacePath)});
+    }
+
+    const listed = (surface.documentation?.domainDocuments ?? []).map((entry) => entry.path);
+    const derived = derivedDomainDocuments.map((entry) => entry.path);
+    if (JSON.stringify(listed) !== JSON.stringify(derived)) {
+      record(file, 'domainDocuments (목록)', `${listed.length}건`, `${derived.length}건`);
+    }
+    for (const entry of derivedDomainDocuments) {
+      const existing = (surface.documentation?.domainDocuments ?? []).find((item) => item.path === entry.path);
+      if (existing) record(file, `domainDocuments["${entry.path}"].sha256`, existing.sha256, entry.sha256);
     }
   }
 
@@ -207,9 +229,7 @@ for (const id of workspacePackages) {
     for (const entry of Object.values(draft.documentation.files ?? {})) {
       entry.sha256 = await hashInstalled(entry.path);
     }
-    for (const entry of draft.documentation.domainDocuments ?? []) {
-      entry.sha256 = await hashInstalled(entry.path);
-    }
+    draft.documentation.domainDocuments = derivedDomainDocuments;
   });
   writesNeedSecondPass = !installedMatches;
   installedRoboticsVersion = installed.version;
