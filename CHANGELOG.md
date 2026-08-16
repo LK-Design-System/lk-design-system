@@ -2,6 +2,19 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.25 - 2026-08-16
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.26.
+
+### Added
+
+- lk-design-system-motion gained an agent-neutral AGENTS.md entrypoint
+  routing to its lds-motion authoring skill, and the `lds-ui` skill's
+  out-of-scope section now names that channel for slide video and
+  motion-graphics rendering. Motion stays a vendored application — it is
+  an authoring repo, not an installable package, so its push channel
+  lives in the repository rather than in a published reference.
+
 ## 0.1.0-rc.69.24 - 2026-08-16
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.25.
