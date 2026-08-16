@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Architecture reform proposal |
-| Status | **Phase 0–3 완료 (2026-08-15 ~ 08-16).** R1 compat 일몰(rc.69.17) · R2 소비 산출물 계약 · R3 위성 재편(editorial 흡수, 위성 6→4) · R4 수명주기 계약 확정. 잔여는 2027-01 정기 심사(R3-3 slides-ui 존속, R4-3 첫 아카이브 심사, R4-4 core 잔류 조건 데이터화 필요성 재평가 — 현 규모(소비 제품 4·단일 유지보수자)에서는 순찰 누락이 발생하지 않아 이연). 실행 기록은 부록 A–F. |
+| Status | **Phase 0–3 완료 (2026-08-15 ~ 08-16).** R1 compat 일몰(rc.69.17) · R2 소비 산출물 계약 · R3 위성 재편(editorial 흡수, 위성 6→4) · R4 수명주기 계약 확정. 잔여는 2027-01 정기 심사(R3-3 slides-ui 존속, R4-3 첫 아카이브 심사, R4-4 core 잔류 조건 데이터화 필요성 재평가 — 현 규모(소비 제품 4·단일 유지보수자)에서는 순찰 누락이 발생하지 않아 이연). 실행 기록은 부록 A–F. 이 개편이 드러낸 운영 비용 4건(릴리스 수동 32곳·핀 침묵·상시 빨간불·버스 팩터 1)의 해소는 [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md)가 잇는다. |
 | Owner | Design system owner · Frontend platform |
 | Last reviewed | 2026-08-15 |
 | 근거 소비자 | [`lk-design-system-motion`](https://github.com/LK-Design-System/lk-design-system-motion) — 2026-08-15 신규 위성이 LDS를 외부 런타임(헤드리스 영상 렌더러)에서 소비하며 수집한 실측 증거 |

@@ -90,7 +90,8 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 | --- | --- |
 | [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | Current implementation record — 이슈·문서·rc.16 근거를 통합한 핵심 UI 컴포넌트 계약, Styles/Slots, ref, overlay와 검증 결과; LK Portal 채택 검증 대기 |
 | [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | Wave 1 artifacts and Wave 4 Robotics extraction complete; product adoption and Wave 5 compatibility retirement remain open |
-| [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) | Proposed plan — 세부 구분 개편(compat 일몰=Wave 5 실행안, 소비 산출물 계약, 위성 축 재편·수명주기); lds-motion 이식 실측이 근거 |
+| [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) | Phase 0–3 완료 (2026-08-16) — 세부 구분 개편(compat 일몰, 소비 산출물 계약, 위성 축 재편·수명주기); 잔여는 2027-01 정기 심사 |
+| [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) | Proposed plan — 구조 개편이 드러낸 운영 비용 4건 해소(릴리스 파생값 자동화, 핀 침묵 불가의 기계화, main 상시 초록, 이관 시험) |
 | [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md) | Completed implementation plan; 결과 handoff로 연결 |
 | [`NAVIGATION_ATOMIZATION_PLAN.md`](NAVIGATION_ATOMIZATION_PLAN.md) | Proposed plan — Navigation 선·상태 어휘의 단일 소스화와 Encoding 문서화 |
 | [`NAVIGATION_PAGE_DECOMPOSITION_PLAN.md`](NAVIGATION_PAGE_DECOMPOSITION_PLAN.md) | Proposed plan — Navigation 스토리 페이지 재분해(Route 메가페이지 해체·Viewer 합성 페이지 신설) |
