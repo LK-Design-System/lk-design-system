@@ -8,24 +8,24 @@
       "repository": "LK-Design-System/lk-design-system-robotics",
       "axis": "domain-pack",
       "branch": "main",
-      "version": "0.1.0-rc.28",
+      "version": "0.1.0-rc.29",
       "pins": {
         "@lk-design-system/lds-core": [
           {
             "section": "peerDependencies",
-            "range": ">=0.1.0-rc.69.26 <0.2.0"
+            "range": ">=0.1.0-rc.69.27 <0.2.0"
           }
         ],
         "@lk-design-system/lds-product": [
           {
             "section": "peerDependencies",
-            "range": ">=0.1.0-rc.69.26 <0.2.0"
+            "range": ">=0.1.0-rc.69.27 <0.2.0"
           }
         ],
         "@lk-design-system/lds-theme": [
           {
             "section": "devDependencies",
-            "range": "0.1.0-rc.69.26"
+            "range": "0.1.0-rc.69.27"
           }
         ]
       },
@@ -36,36 +36,36 @@
       "repository": "LK-Design-System/lk-design-system-slides",
       "axis": "domain-pack",
       "branch": "main",
-      "version": "0.1.0-alpha.9",
+      "version": "0.1.0-alpha.11",
       "pins": {
         "@lk-design-system/lds-core": [
           {
             "section": "peerDependencies",
-            "range": ">=0.1.0-rc.69.27 <0.2.0"
+            "range": ">=0.1.0-rc.69.28 <0.2.0"
           },
           {
             "section": "devDependencies",
-            "range": "file:vendor/lk-design-system-lds-core-0.1.0-rc.69.27.tgz"
+            "range": "file:vendor/lk-design-system-lds-core-0.1.0-rc.69.28.tgz"
           }
         ],
         "@lk-design-system/lds-product": [
           {
             "section": "peerDependencies",
-            "range": ">=0.1.0-rc.69.27 <0.2.0"
+            "range": ">=0.1.0-rc.69.28 <0.2.0"
           },
           {
             "section": "devDependencies",
-            "range": "file:vendor/lk-design-system-lds-product-0.1.0-rc.69.27.tgz"
+            "range": "file:vendor/lk-design-system-lds-product-0.1.0-rc.69.28.tgz"
           }
         ],
         "@lk-design-system/lds-theme": [
           {
             "section": "peerDependencies",
-            "range": ">=0.1.0-rc.69.27 <0.2.0"
+            "range": ">=0.1.0-rc.69.28 <0.2.0"
           },
           {
             "section": "devDependencies",
-            "range": "file:vendor/lk-design-system-lds-theme-0.1.0-rc.69.27.tgz"
+            "range": "file:vendor/lk-design-system-lds-theme-0.1.0-rc.69.28.tgz"
           }
         ]
       },
@@ -81,19 +81,19 @@
         "@lk-design-system/lds-core": [
           {
             "section": "dependencies",
-            "range": "file:vendor/lk-design-system-lds-core-0.1.0-rc.69.27.tgz"
+            "range": "file:vendor/lk-design-system-lds-core-0.1.0-rc.69.28.tgz"
           }
         ],
         "@lk-design-system/lds-theme": [
           {
             "section": "dependencies",
-            "range": "file:vendor/lk-design-system-lds-theme-0.1.0-rc.69.27.tgz"
+            "range": "file:vendor/lk-design-system-lds-theme-0.1.0-rc.69.28.tgz"
           }
         ],
         "@lk-design-system/lds-product": [
           {
             "section": "dependencies",
-            "range": "file:vendor/lk-design-system-lds-product-0.1.0-rc.69.27.tgz"
+            "range": "file:vendor/lk-design-system-lds-product-0.1.0-rc.69.28.tgz"
           }
         ]
       },
@@ -105,8 +105,30 @@
       "axis": "capability-layer",
       "branch": "main",
       "version": "0.1.0-alpha.2",
-      "pins": {},
-      "status": "no-lds-pin"
+      "pins": {
+        "@lk-design-system/lds-core": [
+          {
+            "section": "dependencies",
+            "range": "0.1.0-rc.4",
+            "workspace": "apps/docs"
+          }
+        ],
+        "@lk-design-system/lds-product": [
+          {
+            "section": "dependencies",
+            "range": "0.1.0-rc.4",
+            "workspace": "apps/docs"
+          }
+        ],
+        "@lk-design-system/lds-theme": [
+          {
+            "section": "dependencies",
+            "range": "0.1.0-rc.4",
+            "workspace": "apps/docs"
+          }
+        ]
+      },
+      "status": "behind"
     }
   ]
 }

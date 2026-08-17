@@ -81,6 +81,52 @@ async function fetchManifest(repository) {
   return null;
 }
 
+/*
+ * A monorepo satellite declares nothing at its root.
+ *
+ * Reading only the root manifest reported lds-3d as `no-lds-pin` — "LDS 미사용" —
+ * while its `apps/docs` package pinned core/theme/product at rc.4, sixty-five
+ * versions behind the line. That is worse than a stale record: the report
+ * asserted there was nothing to record, so the drift could not be seen even by
+ * someone reading carefully. A report whose blind spot looks like a clean bill
+ * is the one failure mode this file exists to prevent (R4-2: 스킵은 가능하되
+ * 침묵은 불가).
+ *
+ * So when the root declares a workspace, its members are fetched and their
+ * declarations fold into the satellite's. `git/trees?recursive=1` costs one
+ * request and needs no per-directory guessing; a satellite whose tree is not
+ * readable falls back to the root manifest alone, which is exactly today's
+ * behaviour.
+ */
+function declaresWorkspace(manifest) {
+  return Array.isArray(manifest.workspaces)
+    || typeof manifest.workspaces === 'object'
+    || typeof manifest.packageManager === 'string';
+}
+
+async function fetchWorkspaceManifests(repository, branch) {
+  const treeUrl = `https://api.github.com/repos/${repository}/git/trees/${branch}?recursive=1`;
+  const headers = { accept: 'application/vnd.github+json' };
+  if (process.env.GITHUB_TOKEN || process.env.NODE_AUTH_TOKEN) {
+    headers.authorization = `Bearer ${process.env.GITHUB_TOKEN ?? process.env.NODE_AUTH_TOKEN}`;
+  }
+  const response = await fetch(treeUrl, { headers });
+  if (!response.ok) return [];
+  const { tree } = await response.json();
+  // One level under a workspace root — deeper nesting is not a shape any
+  // satellite uses, and walking arbitrarily deep would pull in fixtures.
+  const paths = (tree ?? [])
+    .filter((entry) => entry.type === 'blob' && /^[^/]+\/[^/]+\/package\.json$/.test(entry.path))
+    .map((entry) => entry.path);
+  const manifests = await Promise.all(paths.map(async (relative) => {
+    const url = `https://raw.githubusercontent.com/${repository}/${branch}/${relative}`;
+    const member = await fetch(url);
+    if (!member.ok) return null;
+    return { path: relative, manifest: await member.json() };
+  }));
+  return manifests.filter(Boolean);
+}
+
 const rows = [];
 for (const satellite of satellites) {
   const fetched = await fetchManifest(satellite.repository);
@@ -95,11 +141,17 @@ for (const satellite of satellites) {
   // devDependencies에 vendored tgz로 둔다. 섹션별로 모으지 않고 이름으로
   // 덮어쓰면 그 peer 선언이 리포트에서 사라진다.
   const pins = {};
-  for (const section of ['dependencies', 'peerDependencies', 'devDependencies']) {
-    for (const [name, range] of Object.entries(manifest[section] ?? {})) {
-      if (ldsLayerPattern.test(name)) (pins[name] ??= []).push({ section, range });
+  const collect = (source, workspace) => {
+    for (const section of ['dependencies', 'peerDependencies', 'devDependencies']) {
+      for (const [name, range] of Object.entries(source[section] ?? {})) {
+        if (ldsLayerPattern.test(name)) (pins[name] ??= []).push({ section, range, ...(workspace ? { workspace } : {}) });
+      }
     }
-  }
+  };
+  collect(manifest, null);
+  // A monorepo satellite declares its LDS layers in members, not at the root.
+  const members = declaresWorkspace(manifest) ? await fetchWorkspaceManifests(satellite.repository, branch) : [];
+  for (const member of members) collect(member.manifest, member.path.replace(/\/package\.json$/, ''));
   // 격차 판정은 **소비자에게 하는 호환성 주장**만 본다.
   //
   // - `file:` 참조는 tgz 경로일 뿐 버전 주장이 아니다.
@@ -175,9 +227,14 @@ const lines = [
 ];
 for (const row of rows) {
   const pins = Object.entries(row.pins)
-    .flatMap(([name, declarations]) => declarations.map(({ section, range }) => {
+    .flatMap(([name, declarations]) => declarations.map(({ section, range, workspace }) => {
       const label = range.startsWith('file:') ? '(vendored tgz)' : range;
-      return `\`${name.replace('@lk-design-system/', '')}\` ${label} — ${section}`;
+      // Where the pin lives matters as much as its value: a root declaration is
+      // the satellite's promise to consumers, one inside a workspace member is
+      // that member's own. Without the path a monorepo row reads as if the
+      // repository itself declared it.
+      const site = workspace ? ` (\`${workspace}\`)` : '';
+      return `\`${name.replace('@lk-design-system/', '')}\` ${label} — ${section}${site}`;
     }))
     .join('<br>') || '—';
   lines.push(`| \`${row.id}\` | ${row.axis} | ${row.version ?? '—'} | ${pins} | ${statusLabel[row.status]} |`);
