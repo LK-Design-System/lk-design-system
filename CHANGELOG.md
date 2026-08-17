@@ -2,6 +2,25 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.28 - 2026-08-17
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.29.
+
+### Changed
+
+- `LineChart` sizes its axis furniture through `--lk-chart-*` hooks instead of
+  literals: `--lk-chart-tick-size`, `--lk-chart-axis-title-size`,
+  `--lk-chart-reference-label-size`, `--lk-chart-empty-label-size`,
+  `--lk-chart-series-stroke`, `--lk-chart-reference-stroke`. Every fallback IS
+  the literal it replaces (10px / 10px / 10px / 12px / 2 / 1.5), so product
+  screens render byte-identically; a medium with a different reading distance
+  re-points them in its own scope. Fifth instance of the medium re-point
+  pattern, after Table, table cells, Timeline and Stat.
+
+  The hooks resolve through `style`, not presentation attributes — `var()` is
+  substituted in style declarations only, so a presentation attribute carrying
+  it would silently keep the initial value.
+
 ## 0.1.0-rc.69.27 - 2026-08-17
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.28.
