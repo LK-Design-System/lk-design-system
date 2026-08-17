@@ -16,6 +16,12 @@ var PALETTE = [
   "var(--color-semantic-data-viz-series-4)",
   "var(--color-semantic-data-viz-series-5)"
 ];
+var AXIS_TICK_SIZE = "var(--lk-chart-tick-size, 10px)";
+var AXIS_TITLE_SIZE = "var(--lk-chart-axis-title-size, 10px)";
+var REFERENCE_LABEL_SIZE = "var(--lk-chart-reference-label-size, 10px)";
+var EMPTY_LABEL_SIZE = "var(--lk-chart-empty-label-size, 12px)";
+var SERIES_STROKE = "var(--lk-chart-series-stroke, 2)";
+var REFERENCE_STROKE = "var(--lk-chart-reference-stroke, 1.5)";
 function isFiniteNumber(value) {
   return Number.isFinite(Number(value));
 }
@@ -224,9 +230,8 @@ function LineChart({
                   x: pad.left - 8,
                   y: sy(tick) + 3,
                   textAnchor: "end",
-                  fontSize: "10",
                   fill: "var(--color-semantic-label-assistive)",
-                  style: { fontVariantNumeric: "tabular-nums" },
+                  style: { fontSize: AXIS_TICK_SIZE, fontVariantNumeric: "tabular-nums" },
                   children: fy(tick)
                 },
                 `y-${tick}`
@@ -237,9 +242,8 @@ function LineChart({
                   x: sx(tick),
                   y: pad.top + innerHeight + 16,
                   textAnchor: index === 0 ? "start" : index === xTickValues.length - 1 ? "end" : "middle",
-                  fontSize: "10",
                   fill: "var(--color-semantic-label-assistive)",
-                  style: { fontVariantNumeric: "tabular-nums" },
+                  style: { fontSize: AXIS_TICK_SIZE, fontVariantNumeric: "tabular-nums" },
                   children: fx(tick)
                 },
                 `x-${tick}`
@@ -251,9 +255,9 @@ function LineChart({
                   y: pad.top + innerHeight / 2,
                   transform: `rotate(-90 14 ${pad.top + innerHeight / 2})`,
                   textAnchor: "middle",
-                  fontSize: "10",
                   fontWeight: "var(--fw-semibold)",
                   fill: "var(--color-semantic-label-alternative)",
+                  style: { fontSize: AXIS_TITLE_SIZE },
                   children: yLabel
                 }
               ),
@@ -269,7 +273,7 @@ function LineChart({
                       x2: pad.left + innerWidth,
                       y2: y,
                       stroke: color,
-                      strokeWidth: "1.5",
+                      style: { strokeWidth: REFERENCE_STROKE },
                       strokeDasharray: line.dashed === false ? void 0 : "4 4"
                     }
                   ),
@@ -279,9 +283,9 @@ function LineChart({
                       x: pad.left + innerWidth - 4,
                       y: y - 5,
                       textAnchor: "end",
-                      fontSize: "10",
                       fontWeight: "var(--fw-semibold)",
                       fill: color,
+                      style: { fontSize: REFERENCE_LABEL_SIZE },
                       children: line.label
                     }
                   )
@@ -297,7 +301,7 @@ function LineChart({
                       d: path,
                       fill: "none",
                       stroke: color,
-                      strokeWidth: "2",
+                      style: { strokeWidth: SERIES_STROKE },
                       strokeLinejoin: "round",
                       strokeLinecap: "round",
                       strokeDasharray: item.dashed ? "5 4" : void 0
@@ -311,7 +315,7 @@ function LineChart({
                       r: "3",
                       fill: "var(--color-semantic-background-elevated-normal)",
                       stroke: color,
-                      strokeWidth: "2"
+                      style: { strokeWidth: SERIES_STROKE }
                     },
                     `${item.id}-${pointIndex}`
                   ))
@@ -325,9 +329,9 @@ function LineChart({
                   y: pad.top + innerHeight / 2,
                   textAnchor: "middle",
                   dominantBaseline: "middle",
-                  fontSize: "12",
                   fontWeight: "var(--fw-medium)",
                   fill: "var(--color-semantic-label-assistive)",
+                  style: { fontSize: EMPTY_LABEL_SIZE },
                   children: emptyLabel
                 }
               )
@@ -363,4 +367,4 @@ function LineChart({
 
 
 exports.LineChart = LineChart;
-//# sourceMappingURL=chunk-RM5AKGOW.cjs.map
+//# sourceMappingURL=chunk-X2PVQAUY.cjs.map

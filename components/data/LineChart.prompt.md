@@ -22,6 +22,21 @@
 - 기본은 responsive SVG입니다. `width`/`height`는 viewBox 기준 크기이며, 실제 렌더는 부모 너비 안에서 줄어듭니다.
 - `Legend`를 재사용합니다. 범례용 선 swatch는 `shape="line"`과 `dashed`로 표현하고, point marker는 데이터 밀도가 낮거나 샘플 강조가 필요할 때만 켭니다.
 - 색상은 semantic token 또는 series `color`로만 지정합니다. raw hex/rgb를 story source of truth로 올리지 않습니다.
+
+## 매체 재지정 훅 (`--lk-chart-*`)
+
+축 눈금·축 제목·기준선 라벨·빈 상태 문구의 크기와 시리즈·기준선의 선 굵기는
+`--lk-chart-tick-size`, `--lk-chart-axis-title-size`,
+`--lk-chart-reference-label-size`, `--lk-chart-empty-label-size`,
+`--lk-chart-series-stroke`, `--lk-chart-reference-stroke` 훅을 경유하며
+**폴백이 곧 기존 리터럴**(10px / 10px / 10px / 12px / 2 / 1.5)이라 제품 화면은
+바이트 동일하게 렌더됩니다. Table 셀·Timeline·Stat과 같은 계약의 다섯 번째
+사례이고, 기본을 정의하지 않는 이유도 같습니다(TOKEN_GOVERNANCE 예외).
+
+유래: 차트를 슬라이드에 얹으면 축이 사라집니다. 10px는 책상에서 맞고 강당
+뒷줄에서는 없는 크기인데, 리터럴에는 이음매가 없어 매체가 손댈 방법이 없었습니다
+(lk-design-system-slides `COMPLETENESS_AUDIT.md` B1). 매체는 자기 램프의 단으로
+옮기며, 컴포넌트는 자기가 옮겨졌다는 것을 끝까지 모릅니다.
 - 데이터가 없으면 축과 보이는 `emptyLabel`을 유지하며 같은 문구를 텍스트 요약으로 제공합니다. loading/error/zoom/tooltip/crosshair가 필요한 분석용 차트는 별도 composed product pattern으로 둡니다.
 
 ## Internal LDS comparison and retained deltas

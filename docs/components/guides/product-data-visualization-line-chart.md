@@ -57,10 +57,10 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 다중 시리즈를 색상만으로 구분하지 않습니다(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 dashed(선 패턴)나 showPoints(마커)를 함께 켜서 색 외 단서를 남기세요. |
+| 명시 규칙 2 | 축 눈금·축 제목·기준선 라벨·빈 상태 문구의 크기와 시리즈·기준선의 선 굵기는 --lk-chart-tick-size, --lk-chart-axis-title-size, --lk-chart-reference-label-size, --lk-chart-empty-label-size, --lk-chart-series-stroke, --lk-chart-reference-stroke 훅을 경유하며 폴백이 곧 기존 리터럴(10px / 10px / 10px / 12px / 2 / 1.5)이라 제품 화면은 바이트 동일하게 렌더됩니다. |
+| 명시 규칙 3 | 유래: 차트를 슬라이드에 얹으면 축이 사라집니다. 10px는 책상에서 맞고 강당 뒷줄에서는 없는 크기인데, 리터럴에는 이음매가 없어 매체가 손댈 방법이 없었습니다 (lk-design-system-slides COMPLETENESSAUDIT.md B1). 매체는 자기 램프의 단으로 옮기며, 컴포넌트는 자기가 옮겨졌다는 것을 끝까지 모릅니다. - 데이터가 없으면 축과 보이는 emptyLabel을 유지하며 같은 문구를 텍스트 요약으로 제공합니다. |
 | --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
 
 ## Responsive
 
@@ -128,6 +128,12 @@
 - `--font-sans`
 - `--fw-medium`
 - `--fw-semibold`
+- `--lk-chart-axis-title-size`
+- `--lk-chart-empty-label-size`
+- `--lk-chart-reference-label-size`
+- `--lk-chart-reference-stroke`
+- `--lk-chart-series-stroke`
+- `--lk-chart-tick-size`
 - `--space-3`
 
 ### Source contracts

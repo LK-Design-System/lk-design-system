@@ -10,6 +10,28 @@ const PALETTE = [
   'var(--color-semantic-data-viz-series-5)',
 ];
 
+/*
+ * Medium re-point hooks — the fifth instance of the pattern (Table, Timeline,
+ * Stat, table cells came first). A chart's furniture was sized in literals:
+ * `fontSize="10"` on every axis tick and axis title. Ten pixels is right at a
+ * desk and gone from the back of a room, so a chart placed on a slide arrives
+ * with its axis unreadable and nothing the medium can do about it — a literal
+ * has no seam.
+ *
+ * Each fallback IS the literal it replaces, so every existing product screen
+ * renders byte-identically; a medium that knows its reading distance re-points
+ * these in its own scope and the component never learns it moved.
+ */
+const AXIS_TICK_SIZE = 'var(--lk-chart-tick-size, 10px)';
+const AXIS_TITLE_SIZE = 'var(--lk-chart-axis-title-size, 10px)';
+const REFERENCE_LABEL_SIZE = 'var(--lk-chart-reference-label-size, 10px)';
+const EMPTY_LABEL_SIZE = 'var(--lk-chart-empty-label-size, 12px)';
+// Stroke weight is the same argument as type size: a 2px line reads as a hair
+// at projection distance. Series and reference lines keep their own knobs
+// because they carry different weight in the argument.
+const SERIES_STROKE = 'var(--lk-chart-series-stroke, 2)';
+const REFERENCE_STROKE = 'var(--lk-chart-reference-stroke, 1.5)';
+
 function isFiniteNumber(value) {
   return Number.isFinite(Number(value));
 }
@@ -250,9 +272,8 @@ export function LineChart({
             x={pad.left - 8}
             y={sy(tick) + 3}
             textAnchor="end"
-            fontSize="10"
             fill="var(--color-semantic-label-assistive)"
-            style={{ fontVariantNumeric: 'tabular-nums' }}
+            style={{ fontSize: AXIS_TICK_SIZE, fontVariantNumeric: 'tabular-nums' }}
           >
             {fy(tick)}
           </text>
@@ -264,9 +285,8 @@ export function LineChart({
             x={sx(tick)}
             y={pad.top + innerHeight + 16}
             textAnchor={index === 0 ? 'start' : index === xTickValues.length - 1 ? 'end' : 'middle'}
-            fontSize="10"
             fill="var(--color-semantic-label-assistive)"
-            style={{ fontVariantNumeric: 'tabular-nums' }}
+            style={{ fontSize: AXIS_TICK_SIZE, fontVariantNumeric: 'tabular-nums' }}
           >
             {fx(tick)}
           </text>
@@ -278,9 +298,9 @@ export function LineChart({
             y={pad.top + innerHeight / 2}
             transform={`rotate(-90 14 ${pad.top + innerHeight / 2})`}
             textAnchor="middle"
-            fontSize="10"
             fontWeight="var(--fw-semibold)"
             fill="var(--color-semantic-label-alternative)"
+            style={{ fontSize: AXIS_TITLE_SIZE }}
           >
             {yLabel}
           </text>
@@ -298,7 +318,7 @@ export function LineChart({
                   x2={pad.left + innerWidth}
                   y2={y}
                   stroke={color}
-                  strokeWidth="1.5"
+                  style={{ strokeWidth: REFERENCE_STROKE }}
                   strokeDasharray={line.dashed === false ? undefined : '4 4'}
                 />
                 {line.label != null && (
@@ -306,9 +326,9 @@ export function LineChart({
                     x={pad.left + innerWidth - 4}
                     y={y - 5}
                     textAnchor="end"
-                    fontSize="10"
                     fontWeight="var(--fw-semibold)"
                     fill={color}
+                    style={{ fontSize: REFERENCE_LABEL_SIZE }}
                   >
                     {line.label}
                   </text>
@@ -329,7 +349,7 @@ export function LineChart({
                     d={path}
                     fill="none"
                     stroke={color}
-                    strokeWidth="2"
+                    style={{ strokeWidth: SERIES_STROKE }}
                     strokeLinejoin="round"
                     strokeLinecap="round"
                     strokeDasharray={item.dashed ? '5 4' : undefined}
@@ -344,7 +364,7 @@ export function LineChart({
                       r="3"
                       fill="var(--color-semantic-background-elevated-normal)"
                       stroke={color}
-                      strokeWidth="2"
+                      style={{ strokeWidth: SERIES_STROKE }}
                     />
                   ))}
               </g>
@@ -359,9 +379,9 @@ export function LineChart({
             y={pad.top + innerHeight / 2}
             textAnchor="middle"
             dominantBaseline="middle"
-            fontSize="12"
             fontWeight="var(--fw-medium)"
             fill="var(--color-semantic-label-assistive)"
+            style={{ fontSize: EMPTY_LABEL_SIZE }}
           >
             {emptyLabel}
           </text>
