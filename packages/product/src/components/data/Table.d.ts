@@ -34,6 +34,13 @@ export interface TableProps<Row extends Record<string, unknown> = Record<string,
   tableLabelledBy?: string;
   /** 행을 식별하는 컬럼 key. 지정하면 해당 셀이 `<th scope="row">`로 렌더링됩니다. */
   rowHeaderKey?: keyof Row & string;
+  /**
+   * 행을 묶는 필드 key. 같은 값의 **연속 구간**마다 표 전체를 가로지르는
+   * `<th scope="colgroup">` 그룹 헤더가 한 번 열립니다. 흩어진 같은 값은
+   * 모으지 않고 두 번째 구간을 엽니다 — 호출자의 행 순서가 곧 보고의
+   * 순서이기 때문입니다. 그룹 행은 밴드를 입지 않습니다.
+   */
+  groupKey?: keyof Row & string;
   /** React key로 쓸 안정적인 행 식별자. 생략하면 `row.id`, 그다음 배열 index를 씁니다. */
   getRowId?: (row: Row, index: number) => React.Key;
   /** 행별 className, style, data attribute와 이벤트를 `<tr>`에 전달합니다. */

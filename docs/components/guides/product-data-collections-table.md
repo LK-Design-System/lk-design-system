@@ -12,6 +12,10 @@
 
 ## 사용 판단
 
+### 사용
+
+- Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope="col", tableLabel)을 씁니다.
+
 ### 사용하지 않음
 
 - getRowId — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 row.id, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.
@@ -40,6 +44,7 @@
 | `tableLabel` | `string` | No | 보이는 캡션이 없을 때 에 붙는 aria-label. |
 | `tableLabelledBy` | `string` | No | 표 밖의 제목 요소 id. 보이는 캡션이 없을 때 의 aria-labelledby가 됩니다. |
 | `rowHeaderKey` | `keyof Row & string` | No | 행을 식별하는 컬럼 key. 지정하면 해당 셀이 로 렌더링됩니다. |
+| `groupKey` | `keyof Row & string` | No | 행을 묶는 필드 key. 같은 값의 연속 구간마다 표 전체를 가로지르는 그룹 헤더가 한 번 열립니다. 흩어진 같은 값은 모으지 않고 두 번째 구간을 엽니다 — 호출자의 행 순서가 곧 보고의 순서이기 때문입니다. 그룹 행은 밴드를 입지 않습니다. |
 | `getRowId` | `(row: Row, index: number) = React.Key` | No | React key로 쓸 안정적인 행 식별자. 생략하면 row.id, 그다음 배열 index를 씁니다. |
 | `getRowProps` | `(row: Row, index: number) = React.HTMLAttributes` | No | 행별 className, style, data attribute와 이벤트를 에 전달합니다. |
 
@@ -47,9 +52,9 @@
 
 - 열 헤더는 항상 입니다. 별도 prop이 필요 없으며 끌 수 없습니다.
 - 교차(지브라)가 아니라 전 행 밴드입니다. 행이 적은 표에서 교차 줄무늬는 특정 행의 강조로 오독됩니다 — 강조는 상태 표현(배지·톤)의 몫이고 기하의 몫이 아닙니다. 이 판정은 투영 매체(Slides)에서 실측으로 확정됐습니다(docs/TABLEMEDIUMCONTRACTPROPOSAL.md).
+- 유래: 위성(Slides)의 StatusAssessment가 손말이 을 유지한 세 번째 이유가 그룹 행 부재였습니다(docs/TABLEMEDIUMCONTRACTPROPOSAL.md).
 - Reference: SAP Fiori data table usage recommends content-dependent alignment and right alignment for comparable numeric values.
 - Table — 대문자 캡션 헤더, tabular 행, 부드러운 호버 워시가 있는 차분한 데이터 표.
-- 읽기 전용 표라도 헤더와 데이터의 관계는 보조기술에 전달되어야 합니다. Table은 DataGrid와 같은 native table 시맨틱 기준을 따릅니다.
 
 ## 정량 규칙
 
@@ -72,8 +77,8 @@
 
 - caption — 표 위에 보이는 이며 동시에 표의 접근 가능한 이름입니다. 표 제목이 표 자체에 속할 때 첫 번째 선택지입니다.
 - banded — 모든 데이터 행에 --color-semantic-fill-alternative 밴드를 깝니다. 라벨 열과 측정 열 사이가 먼 넓은 표에서 헤어라인만으로는 행의 시선이 이어지지 않을 때 쓰세요. 호버 워시는 밴드 위에서 한 단 위 fill(fill-normal)로 올라가 여전히 보입니다.
-- Classification: LDS Product extension. truncate: true is an opt-in column layout contract for one long, plain-text field that should consume the table's remaining width without pushing fixed metadata or action columns outside the container.
-- Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope="col", tableLabel)을 씁니다.
+- groupKey — 행을 묶는 필드 이름입니다. 같은 값을 가진 연속 구간마다 표 전체를 가로지르는 그룹 헤더가 한 번 열립니다.
+- 그룹 행은 밴드를 입지 않습니다: 밴드가 "데이터 행"을 말하는데 라벨은 데이터 행이 아닙니다. 열 헤더의 조용한 대문자 레지스터를 빌리되 헤어라인은 버립니다 — 열 헤더 아래 선은 헤더와 데이터를 가르지만, 그룹 라벨은 자기가 여는 행들과 함께 있습니다.
 
 ## Accessibility
 

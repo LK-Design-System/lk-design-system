@@ -1,8 +1,9 @@
 "use client";
 import {
+  groupThStyle,
   tdStyle,
   thStyle
-} from "./chunk-QNMDUXYO.js";
+} from "./chunk-IDN35SJV.js";
 
 // components/data/Table.jsx
 import React from "react";
@@ -76,6 +77,7 @@ function Table({
   tableLabel,
   tableLabelledBy,
   rowHeaderKey,
+  groupKey,
   getRowId,
   getRowProps,
   className,
@@ -115,20 +117,29 @@ function Table({
               }
             ),
             /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsx("tr", { children: columns.map((c) => /* @__PURE__ */ jsx("th", { scope: "col", style: getTableHeaderCellStyle({ padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate }), children: /* @__PURE__ */ jsx(TableCellContent, { truncate: c.truncate, children: c.label }) }, c.key)) }) }),
-            /* @__PURE__ */ jsx("tbody", { children: rows.map((r, ri) => /* @__PURE__ */ jsx(
-              TableRow,
-              {
-                columns,
-                row: r,
-                rowIndex: ri,
-                pad,
-                hover,
-                banded,
-                rowHeaderKey,
-                getRowProps
-              },
-              getRowId ? getRowId(r, ri) : r?.id ?? ri
-            )) })
+            /* @__PURE__ */ jsx("tbody", { children: rows.map((r, ri) => {
+              const group = groupKey == null ? void 0 : r?.[groupKey];
+              const opensGroup = group != null && group !== (groupKey == null ? void 0 : rows[ri - 1]?.[groupKey]);
+              const row = /* @__PURE__ */ jsx(
+                TableRow,
+                {
+                  columns,
+                  row: r,
+                  rowIndex: ri,
+                  pad,
+                  hover,
+                  banded,
+                  rowHeaderKey,
+                  getRowProps
+                },
+                getRowId ? getRowId(r, ri) : r?.id ?? ri
+              );
+              if (!opensGroup) return row;
+              return /* @__PURE__ */ jsxs(React.Fragment, { children: [
+                /* @__PURE__ */ jsx("tr", { "data-table-group": true, children: /* @__PURE__ */ jsx("th", { scope: "colgroup", colSpan: columns.length, style: groupThStyle(pad), children: group }) }),
+                row
+              ] }, `group-${group}-${ri}`);
+            }) })
           ]
         }
       )
@@ -141,4 +152,4 @@ export {
   getTableDataCellStyle,
   Table
 };
-//# sourceMappingURL=chunk-ZUVCKRPF.js.map
+//# sourceMappingURL=chunk-53NVFMQJ.js.map

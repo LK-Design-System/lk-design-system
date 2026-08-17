@@ -1,5 +1,5 @@
 import React from 'react';
-import { thStyle, tdStyle } from './table-cell-styles.js';
+import { thStyle, tdStyle, groupThStyle } from './table-cell-styles.js';
 
 function getColumnSizingStyle({ width, truncate = false }) {
   return truncate
@@ -87,6 +87,13 @@ function TableRow({ columns, row, rowIndex, pad, hover, banded, rowHeaderKey, ge
  * docs/TABLE_MEDIUM_CONTRACT_PROPOSAL.md). All rows band, never alternate:
  * with few rows a stripe reads as emphasis, and emphasis belongs to status
  * treatments, not geometry.
+ *
+ * `groupKey` names the field that groups rows. Each CONTIGUOUS run of rows
+ * sharing a value opens with a `<th scope="colgroup">` spanning the table —
+ * the caller's row order is the report's order, so a value that reappears
+ * later opens a second run rather than being silently gathered (reordering
+ * rows would rewrite a claim the caller made). The group row carries no band:
+ * the bands say "data row", and a label is not one.
  */
 export function Table({
   columns = [],
@@ -98,6 +105,7 @@ export function Table({
   tableLabel,
   tableLabelledBy,
   rowHeaderKey,
+  groupKey,
   getRowId,
   getRowProps,
   className,
@@ -151,19 +159,32 @@ export function Table({
           </tr>
         </thead>
         <tbody>
-          {rows.map((r, ri) => (
-            <TableRow
-              key={getRowId ? getRowId(r, ri) : (r?.id ?? ri)}
-              columns={columns}
-              row={r}
-              rowIndex={ri}
-              pad={pad}
-              hover={hover}
-              banded={banded}
-              rowHeaderKey={rowHeaderKey}
-              getRowProps={getRowProps}
-            />
-          ))}
+          {rows.map((r, ri) => {
+            const group = groupKey == null ? undefined : r?.[groupKey];
+            const opensGroup = group != null && group !== (groupKey == null ? undefined : rows[ri - 1]?.[groupKey]);
+            const row = (
+              <TableRow
+                key={getRowId ? getRowId(r, ri) : (r?.id ?? ri)}
+                columns={columns}
+                row={r}
+                rowIndex={ri}
+                pad={pad}
+                hover={hover}
+                banded={banded}
+                rowHeaderKey={rowHeaderKey}
+                getRowProps={getRowProps}
+              />
+            );
+            if (!opensGroup) return row;
+            return (
+              <React.Fragment key={`group-${group}-${ri}`}>
+                <tr data-table-group>
+                  <th scope="colgroup" colSpan={columns.length} style={groupThStyle(pad)}>{group}</th>
+                </tr>
+                {row}
+              </React.Fragment>
+            );
+          })}
         </tbody>
       </table>
     </div>

@@ -24,7 +24,7 @@
 | [Prose](guides/core-components-content-prose.md) | Core / Content | `Prose` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Step List](guides/core-components-content-step-list.md) | Core / Content | `StepList` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Text Primitives](guides/core-components-content-text-primitives.md) | Core / Content | `Blockquote`, `Code`, `Kbd`, `SourceTag` | mapped | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
-| [Timeline](guides/core-components-content-timeline.md) | Core / Content | `Timeline` | mapped | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
+| [Timeline](guides/core-components-content-timeline.md) | Core / Content | `Timeline` | mapped | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Tooltip](guides/core-components-content-tooltip.md) | Core / Content | `Tooltip` | mapped | implemented | not-tracked | not-tracked | 3 public / 2 hidden |
 | [Divider](guides/core-components-layout-divider.md) | Core / Layout | `Divider` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Grid and Columns](guides/core-components-layout-grid-and-columns.md) | Core / Layout | `Col`, `Columns`, `Grid` | mapped | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
@@ -95,7 +95,7 @@
 | [Data Collection Panel](guides/product-data-collections-data-collection-panel.md) | Product / Collections | `DataCollectionPanel` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 6 hidden |
 | [Data Grid](guides/product-data-collections-data-grid.md) | Product / Collections | `DataGrid` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 1 hidden |
 | [File Browser](guides/product-data-collections-file-browser.md) | Product / Collections | `FileBrowser` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
-| [Table](guides/product-data-collections-table.md) | Product / Collections | `Table` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 4 hidden |
+| [Table](guides/product-data-collections-table.md) | Product / Collections | `Table` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 4 hidden |
 | [Tree](guides/product-data-collections-tree.md) | Product / Collections | `Tree` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Carousel](guides/product-data-display-carousel.md) | Product / Display | `Carousel` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
 | [Description List](guides/product-data-display-description-list.md) | Product / Display | `DescriptionList` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |

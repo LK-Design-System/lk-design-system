@@ -43,6 +43,8 @@
 ## Content and writing
 
 - items — { id, time, dateTime, title, description, tone }. tone은 노드 색을 지정(signal · positive · cautionary · negative · neutral). label — ol 의 접근 가능한 이름.
+- 시각·제목·설명의 타입은 --lk-timeline-time-size/line/spacing, --lk-timeline-title-, --lk-timeline-desc- 훅을 경유하며 폴백이 곧 기존 제품 램프 값이라 제품 화면은 바이트 동일하게 렌더됩니다. Table 셀과 같은 계약이며, 훅이 기본 미정의인 이유도 같습니다(TOKENGOVERNANCE 예외).
+- 재지정하는 것은 크기가 아니라 단(rank) 입니다 — 어느 매체에서든 시각 표기는 제목보다 조용해야 하므로, 매체는 세 훅을 자기 램프의 연속한 단으로 함께 옮기지 하나만 끌어올리지 않습니다.
 
 ## Accessibility
 
@@ -90,6 +92,15 @@
 - `--font-sans`
 - `--fw-bold`
 - `--label2-size`
+- `--lk-timeline-desc-line`
+- `--lk-timeline-desc-size`
+- `--lk-timeline-desc-spacing`
+- `--lk-timeline-time-line`
+- `--lk-timeline-time-size`
+- `--lk-timeline-time-spacing`
+- `--lk-timeline-title-line`
+- `--lk-timeline-title-size`
+- `--lk-timeline-title-spacing`
 - `--space-1`
 - `--space-2`
 - `--space-3-5`

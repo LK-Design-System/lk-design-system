@@ -2,6 +2,32 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.27 - 2026-08-17
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.28.
+
+### Added
+
+- `Table` gained `groupKey` — each CONTIGUOUS run of rows sharing the
+  value opens with a `<th scope="colgroup">` spanning the table. Scattered
+  repeats open a second run instead of being gathered: the caller's row
+  order is the report's order, and reordering would rewrite their claim.
+  Group rows carry no band — the bands say "data row", and a label is not
+  one (`docs/TABLE_MEDIUM_CONTRACT_PROPOSAL.md`).
+
+### Changed
+
+- `Timeline` type now resolves through `--lk-timeline-time/title/desc-*`
+  re-point hooks whose fallbacks ARE the product ramp values, so product
+  surfaces render byte-identically while a medium that reads farther away
+  re-points in its own scope. What a medium moves is rank, not size: the
+  stamp stays quieter than the title on both sides of a re-point
+  (`docs/TIMELINE_ORIENTATION_PROPOSAL.md`).
+
+Together with rc.69.26's banded Table and horizontal Timeline, these close
+the last two upstream gaps that kept the slide satellite hand-rolling its own
+table and rail.
+
 ## 0.1.0-rc.69.26 - 2026-08-17
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.27.

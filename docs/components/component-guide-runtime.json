@@ -4285,7 +4285,9 @@
       ],
       "responsive": [],
       "contentGuidance": [
-        "items — { id, time, dateTime, title, description, tone }. tone은 노드 색을 지정(signal · positive · cautionary · negative · neutral). label — ol 의 접근 가능한 이름."
+        "items — { id, time, dateTime, title, description, tone }. tone은 노드 색을 지정(signal · positive · cautionary · negative · neutral). label — ol 의 접근 가능한 이름.",
+        "시각·제목·설명의 타입은 --lk-timeline-time-size/line/spacing, --lk-timeline-title-, --lk-timeline-desc- 훅을 경유하며 폴백이 곧 기존 제품 램프 값이라 제품 화면은 바이트 동일하게 렌더됩니다. Table 셀과 같은 계약이며, 훅이 기본 미정의인 이유도 같습니다(TOKENGOVERNANCE 예외).",
+        "재지정하는 것은 크기가 아니라 단(rank) 입니다 — 어느 매체에서든 시각 표기는 제목보다 조용해야 하므로, 매체는 세 훅을 자기 램프의 연속한 단으로 함께 옮기지 하나만 끌어올리지 않습니다."
       ],
       "accessibility": [
         "점·레일은 장식이므로 aria-hidden 입니다. tone 색만으로 사건의 의미를 구분하지 말고 title·description 텍스트에도 담으세요."
@@ -4346,6 +4348,15 @@
         "--font-sans",
         "--fw-bold",
         "--label2-size",
+        "--lk-timeline-desc-line",
+        "--lk-timeline-desc-size",
+        "--lk-timeline-desc-spacing",
+        "--lk-timeline-time-line",
+        "--lk-timeline-time-size",
+        "--lk-timeline-time-spacing",
+        "--lk-timeline-title-line",
+        "--lk-timeline-title-size",
+        "--lk-timeline-title-spacing",
         "--space-1",
         "--space-2",
         "--space-3-5",
@@ -4367,6 +4378,16 @@
             "id": "lds-core-components-content-timeline--timeline-events",
             "name": "개요",
             "role": "overview"
+          },
+          {
+            "id": "lds-core-components-content-timeline--horizontal-chronology",
+            "name": "변형·상태 · 가로 연대기",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-core-components-content-timeline--medium-repoint",
+            "name": "변형·상태 · 매체 재지정",
+            "role": "variants-states"
           }
         ],
         "hiddenEvidence": 0
@@ -23262,7 +23283,9 @@
       ],
       "supportingComponents": [],
       "purpose": "정렬이나 선택 없이 구조화된 레코드를 같은 열 기준으로 읽을 때 적합합니다. 사용자가 정렬·선택·페이지 이동이나 행 작업을 해야 하면 Table 대신 Data Grid를 사용하세요.",
-      "useWhen": [],
+      "useWhen": [
+        "Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope=\"col\", tableLabel)을 씁니다."
+      ],
       "avoidWhen": [
         "getRowId — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 row.id, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.",
         "외부 근거: Carbon Data table의 zebra 옵션 — \"행을 따라가는 시선이 옆 행으로 이탈하는 것을 막는\" 넓은 표 장치이며, Carbon은 줄무늬를 끄면 행 구분선을 요구합니다(LDS 기본형이 그 형태). USWDS Table의 striped 변형도 같은 계열입니다. LDS는 두 시스템의 교차 줄무늬 대신 전 행 밴드를 채택합니다(강조 오독 근거는 위).",
@@ -23351,6 +23374,13 @@
           "owner": "TableProps"
         },
         {
+          "name": "groupKey",
+          "type": "keyof Row & string",
+          "required": false,
+          "description": "행을 묶는 필드 key. 같은 값의 연속 구간마다 표 전체를 가로지르는 그룹 헤더가 한 번 열립니다. 흩어진 같은 값은 모으지 않고 두 번째 구간을 엽니다 — 호출자의 행 순서가 곧 보고의 순서이기 때문입니다. 그룹 행은 밴드를 입지 않습니다.",
+          "owner": "TableProps"
+        },
+        {
           "name": "getRowId",
           "type": "(row: Row, index: number) = React.Key",
           "required": false,
@@ -23369,9 +23399,9 @@
       "behavior": [
         "열 헤더는 항상 입니다. 별도 prop이 필요 없으며 끌 수 없습니다.",
         "교차(지브라)가 아니라 전 행 밴드입니다. 행이 적은 표에서 교차 줄무늬는 특정 행의 강조로 오독됩니다 — 강조는 상태 표현(배지·톤)의 몫이고 기하의 몫이 아닙니다. 이 판정은 투영 매체(Slides)에서 실측으로 확정됐습니다(docs/TABLEMEDIUMCONTRACTPROPOSAL.md).",
+        "유래: 위성(Slides)의 StatusAssessment가 손말이 을 유지한 세 번째 이유가 그룹 행 부재였습니다(docs/TABLEMEDIUMCONTRACTPROPOSAL.md).",
         "Reference: SAP Fiori data table usage recommends content-dependent alignment and right alignment for comparable numeric values.",
-        "Table — 대문자 캡션 헤더, tabular 행, 부드러운 호버 워시가 있는 차분한 데이터 표.",
-        "읽기 전용 표라도 헤더와 데이터의 관계는 보조기술에 전달되어야 합니다. Table은 DataGrid와 같은 native table 시맨틱 기준을 따릅니다."
+        "Table — 대문자 캡션 헤더, tabular 행, 부드러운 호버 워시가 있는 차분한 데이터 표."
       ],
       "quantitativeRules": [
         {
@@ -23404,8 +23434,8 @@
       "contentGuidance": [
         "caption — 표 위에 보이는 이며 동시에 표의 접근 가능한 이름입니다. 표 제목이 표 자체에 속할 때 첫 번째 선택지입니다.",
         "banded — 모든 데이터 행에 --color-semantic-fill-alternative 밴드를 깝니다. 라벨 열과 측정 열 사이가 먼 넓은 표에서 헤어라인만으로는 행의 시선이 이어지지 않을 때 쓰세요. 호버 워시는 밴드 위에서 한 단 위 fill(fill-normal)로 올라가 여전히 보입니다.",
-        "Classification: LDS Product extension. truncate: true is an opt-in column layout contract for one long, plain-text field that should consume the table's remaining width without pushing fixed metadata or action columns outside the container.",
-        "Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope=\"col\", tableLabel)을 씁니다."
+        "groupKey — 행을 묶는 필드 이름입니다. 같은 값을 가진 연속 구간마다 표 전체를 가로지르는 그룹 헤더가 한 번 열립니다.",
+        "그룹 행은 밴드를 입지 않습니다: 밴드가 \"데이터 행\"을 말하는데 라벨은 데이터 행이 아닙니다. 열 헤더의 조용한 대문자 레지스터를 빌리되 헤어라인은 버립니다 — 열 헤더 아래 선은 헤더와 데이터를 가르지만, 그룹 라벨은 자기가 여는 행들과 함께 있습니다."
       ],
       "accessibility": [
         "The complete text remains in the DOM while the visible line uses an ellipsis. Do not add a duplicate accessible label just because text is visually clipped.",
@@ -23493,9 +23523,19 @@
             "role": "overview"
           },
           {
+            "id": "lds-product-data-collections-table--grouped-rows",
+            "name": "변형·상태 · 그룹 행",
+            "role": "variants-states"
+          },
+          {
             "id": "lds-product-data-collections-table--density-comparison",
             "name": "변형·상태 · 기본 밀도와 좁은 밀도",
             "role": "responsive"
+          },
+          {
+            "id": "lds-product-data-collections-table--banded-rows",
+            "name": "변형·상태 · 밴드 행",
+            "role": "variants-states"
           }
         ],
         "hiddenEvidence": 4
@@ -23505,7 +23545,7 @@
       "guideDeltaFields": [],
       "sectionStatus": {
         "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
+        "useWhen": "evidence",
         "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",

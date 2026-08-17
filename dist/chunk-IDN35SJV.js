@@ -1,4 +1,4 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
+"use client";
 
 // components/data/table-cell-styles.js
 function thStyle(pad) {
@@ -15,6 +15,20 @@ function thStyle(pad) {
     fontVariantNumeric: "tabular-nums"
   };
 }
+function groupThStyle(pad) {
+  return {
+    padding: pad,
+    paddingTop: "var(--lk-table-group-pad-top, var(--space-4))",
+    fontSize: "var(--lk-table-group-size, var(--lk-table-head-size, 12px))",
+    lineHeight: "var(--lk-table-group-line, normal)",
+    fontWeight: "var(--fw-bold)",
+    letterSpacing: "var(--lk-table-group-spacing, 0.4px)",
+    textTransform: "uppercase",
+    color: "var(--color-semantic-label-alternative)",
+    textAlign: "left",
+    whiteSpace: "nowrap"
+  };
+}
 function tdStyle(pad) {
   return {
     padding: pad,
@@ -27,8 +41,9 @@ function tdStyle(pad) {
   };
 }
 
-
-
-
-exports.thStyle = thStyle; exports.tdStyle = tdStyle;
-//# sourceMappingURL=chunk-NU3MH6RF.cjs.map
+export {
+  thStyle,
+  groupThStyle,
+  tdStyle
+};
+//# sourceMappingURL=chunk-IDN35SJV.js.map

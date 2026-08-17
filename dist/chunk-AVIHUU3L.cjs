@@ -2,7 +2,8 @@
 
 
 
-var _chunkNU3MH6RFcjs = require('./chunk-NU3MH6RF.cjs');
+
+var _chunkNAMYBONJcjs = require('./chunk-NAMYBONJ.cjs');
 
 // components/data/Table.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -11,10 +12,10 @@ function getColumnSizingStyle({ width, truncate = false }) {
   return truncate ? { width: "100%", maxWidth: 0, overflow: "hidden", textOverflow: "ellipsis" } : { width };
 }
 function getTableHeaderCellStyle({ padding = "var(--lk-table-cell-pad-md, 14px 16px)", align = "left", width, truncate = false } = {}) {
-  return { ..._chunkNU3MH6RFcjs.thStyle.call(void 0, padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+  return { ..._chunkNAMYBONJcjs.thStyle.call(void 0, padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 function getTableDataCellStyle({ padding = "var(--lk-table-cell-pad-md, 14px 16px)", align = "left", width, truncate = false } = {}) {
-  return { ..._chunkNU3MH6RFcjs.tdStyle.call(void 0, padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+  return { ..._chunkNAMYBONJcjs.tdStyle.call(void 0, padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 function TableCellContent({ truncate, children }) {
   if (!truncate) return children;
@@ -76,6 +77,7 @@ function Table({
   tableLabel,
   tableLabelledBy,
   rowHeaderKey,
+  groupKey,
   getRowId,
   getRowProps,
   className,
@@ -115,20 +117,29 @@ function Table({
               }
             ),
             /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "thead", { children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tr", { children: columns.map((c) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "th", { scope: "col", style: getTableHeaderCellStyle({ padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate }), children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, TableCellContent, { truncate: c.truncate, children: c.label }) }, c.key)) }) }),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tbody", { children: rows.map((r, ri) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-              TableRow,
-              {
-                columns,
-                row: r,
-                rowIndex: ri,
-                pad,
-                hover,
-                banded,
-                rowHeaderKey,
-                getRowProps
-              },
-              getRowId ? getRowId(r, ri) : _nullishCoalesce(_optionalChain([r, 'optionalAccess', _4 => _4.id]), () => ( ri))
-            )) })
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tbody", { children: rows.map((r, ri) => {
+              const group = groupKey == null ? void 0 : _optionalChain([r, 'optionalAccess', _4 => _4[groupKey]]);
+              const opensGroup = group != null && group !== (groupKey == null ? void 0 : _optionalChain([rows, 'access', _5 => _5[ri - 1], 'optionalAccess', _6 => _6[groupKey]]));
+              const row = /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                TableRow,
+                {
+                  columns,
+                  row: r,
+                  rowIndex: ri,
+                  pad,
+                  hover,
+                  banded,
+                  rowHeaderKey,
+                  getRowProps
+                },
+                getRowId ? getRowId(r, ri) : _nullishCoalesce(_optionalChain([r, 'optionalAccess', _7 => _7.id]), () => ( ri))
+              );
+              if (!opensGroup) return row;
+              return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tr", { "data-table-group": true, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "th", { scope: "colgroup", colSpan: columns.length, style: _chunkNAMYBONJcjs.groupThStyle.call(void 0, pad), children: group }) }),
+                row
+              ] }, `group-${group}-${ri}`);
+            }) })
           ]
         }
       )
@@ -141,4 +152,4 @@ function Table({
 
 
 exports.getTableHeaderCellStyle = getTableHeaderCellStyle; exports.getTableDataCellStyle = getTableDataCellStyle; exports.Table = Table;
-//# sourceMappingURL=chunk-SGW3CUMZ.cjs.map
+//# sourceMappingURL=chunk-AVIHUU3L.cjs.map

@@ -26,6 +26,27 @@ export function thStyle(pad) {
   };
 }
 
+/**
+ * A group header row: the quiet label that opens a contiguous run of rows.
+ * It borrows the column header's register (uppercase, alternative label) but
+ * drops the hairline — the rule under a column header separates headers from
+ * data, while a group label belongs WITH the rows it opens.
+ */
+export function groupThStyle(pad) {
+  return {
+    padding: pad,
+    paddingTop: 'var(--lk-table-group-pad-top, var(--space-4))',
+    fontSize: 'var(--lk-table-group-size, var(--lk-table-head-size, 12px))',
+    lineHeight: 'var(--lk-table-group-line, normal)',
+    fontWeight: 'var(--fw-bold)',
+    letterSpacing: 'var(--lk-table-group-spacing, 0.4px)',
+    textTransform: 'uppercase',
+    color: 'var(--color-semantic-label-alternative)',
+    textAlign: 'left',
+    whiteSpace: 'nowrap',
+  };
+}
+
 export function tdStyle(pad) {
   return {
     padding: pad,
