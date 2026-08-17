@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "52f894cd909d25f7db41cba18c35e86c44c0360f834e79baa5b95198ed5b16d3",
+    "storybookIndexSha256": "95b702ef369c569080f6ddef7d96d110f28b0edb7684cce0d149c1a6abf1a89d",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,22 +62,22 @@
   },
   "summary": {
     "pages": 195,
-    "stories": 726,
-    "publicStories": 499,
+    "stories": 730,
+    "publicStories": 503,
     "hiddenStories": 227,
     "componentDescriptions": 191,
     "pagesWithVisibleCanvasIntroduction": 191,
     "pagesWithDecisionGuidance": 183,
-    "describedPublicStories": 499,
+    "describedPublicStories": 503,
     "reviewedPages": 195,
-    "reviewedStories": 713,
-    "staleReviewedPages": 23,
+    "reviewedStories": 717,
+    "staleReviewedPages": 25,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
       "overview": 179,
       "usage": 39,
-      "variants-states": 106,
+      "variants-states": 110,
       "interaction": 55,
       "responsive": 78,
       "scenario": 26,
@@ -93,8 +93,8 @@
     "layers": {
       "Core": {
         "pages": 57,
-        "stories": 209,
-        "public": 116,
+        "stories": 211,
+        "public": 118,
         "hidden": 93,
         "guideReadyPages": 57
       },
@@ -107,8 +107,8 @@
       },
       "Product": {
         "pages": 117,
-        "stories": 486,
-        "public": 360,
+        "stories": 488,
+        "public": 362,
         "hidden": 126,
         "guideReadyPages": 116
       },
@@ -2026,20 +2026,20 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/ContentTimeline.stories.jsx",
-      "sourceSha256": "7caca996173518e12612ad59da2201c1e0e40d21a7edd961b2311810901d150c",
+      "sourceSha256": "67a743cb8ec4c8f7043e0e8b51438da046d270160859fc4ac0b6f98ad49d2068",
       "primaryOwner": "Timeline",
       "ownerComponents": [
         "Timeline"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 1,
+        "public": 3,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-content-timeline--timeline-events",
-        "describedPublicStories": 1,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -2075,6 +2075,54 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-content-timeline--horizontal-chronology",
+          "name": "변형·상태 · 가로 연대기",
+          "exportName": "HorizontalChronology",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Timeline"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-17 리뷰 완료: 가로 연대기의 등분 컬럼과 마지막 노드 뒤 레일 부재를 렌더로 확인(채택 커밋 당시 미표기분 소급)."
+        },
+        {
+          "id": "lds-core-components-content-timeline--medium-repoint",
+          "name": "변형·상태 · 매체 재지정",
+          "exportName": "MediumRepoint",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Timeline"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-17 위성 주도 계약 리뷰: 매체 재지정 훅(--lk-timeline-*)이 세 단을 함께 옮기고, 재지정 후에도 시각 표기가 제목보다 조용한지 렌더로 확인. 제품 기본 렌더는 폴백으로 바이트 동일."
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
@@ -12803,20 +12851,20 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataTable.stories.jsx",
-      "sourceSha256": "245463354cf925cb7f6de7b79aad767e30a0008af965d5abd456058052bfaac4",
+      "sourceSha256": "dfa39b303d6ac1303066e9c4783405773292c95a5f7e7158ee2aabed78fbda14",
       "primaryOwner": "Table",
       "ownerComponents": [
         "Table"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 2,
+        "public": 4,
         "hidden": 4
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-collections-table--static-table",
-        "describedPublicStories": 2,
+        "describedPublicStories": 4,
         "publicStoriesWithCanvasGuidance": 2,
         "decisionGuidance": true
       },
@@ -12877,6 +12925,30 @@
           "reviewNote": "2026-08-01 review confirmed owner, role, visibility, description, native semantics, and play assertions for the new LDS request contract."
         },
         {
+          "id": "lds-product-data-collections-table--grouped-rows",
+          "name": "변형·상태 · 그룹 행",
+          "exportName": "GroupedRows",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Table"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-17 위성 주도 계약 리뷰: 연속 구간마다 그룹 헤더 1회, colgroup 스팬, 그룹 행 무밴드를 렌더로 확인. 데모는 그룹 열을 빼 헤더와 정보가 중복되지 않게 했다."
+        },
+        {
           "id": "lds-product-data-collections-table--density-comparison",
           "name": "변형·상태 · 기본 밀도와 좁은 밀도",
           "exportName": "DensityComparison",
@@ -12898,6 +12970,30 @@
             "Table"
           ],
           "supportingComponents": []
+        },
+        {
+          "id": "lds-product-data-collections-table--banded-rows",
+          "name": "변형·상태 · 밴드 행",
+          "exportName": "BandedRows",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Table"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-17 리뷰 완료: 전 행 밴드와 밴드 위 호버 워시를 렌더로 확인(채택 커밋 당시 미표기분 소급)."
         },
         {
           "id": "lds-product-data-collections-table--table-semantics-contract",

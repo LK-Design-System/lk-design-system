@@ -51,6 +51,9 @@ const columns = [
   { key: 'progress', label: '진행률', align: 'right', render: (row) => <ProgressCell value={row.progress} /> },
 ];
 
+// 그룹 헤더가 구간을 말하므로 그룹 열은 같은 사실을 두 번 적는 셈이다.
+const columnsWithoutGroup = columns.filter((column) => column.key !== 'group');
+
 export const StaticTable = {
   name: '개요',
   parameters: storyDescription(
@@ -115,6 +118,53 @@ export const BandedRows = {
     if (first !== expected) {
       throw new Error(`밴드는 fill-alternative를 입어야 한다 — got ${first}, expected ${expected}.`);
     }
+  },
+};
+
+/* 그룹 행은 같은 값을 가진 **연속 구간**마다 한 번 열린다 — 흩어진 같은 값을
+   모으지 않는 것은 호출자의 행 순서가 곧 보고의 순서이기 때문이다. 그룹 헤더는
+   표를 가로지르는 th[scope=colgroup]이고 밴드를 입지 않는다: 밴드가 "데이터 행"을
+   말하는데 라벨은 데이터 행이 아니다 (Table.prompt.md의 그룹 행 절). */
+export const GroupedRows = {
+  name: '변형·상태 · 그룹 행',
+  parameters: storyDescription(
+    '지표를 영역별로 묶어 읽는 상황입니다. 같은 그룹의 연속 구간마다 헤더가 한 번만 열리는지, 그룹 헤더가 표 전체를 가로지르며 데이터 행의 밴드를 입지 않는지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-3)', width: '100%', maxWidth: 1040, minWidth: 0 }}>
+      <Table
+        columns={columnsWithoutGroup}
+        rows={[
+          { id: 'ITEM-104', group: '문서', status: '진행 중', progress: 86 },
+          { id: 'ITEM-119', group: '문서', status: '검토 중', progress: 62 },
+          { id: 'ITEM-212', group: '컴포넌트', status: '검토 중', progress: 47 },
+          { id: 'ITEM-318', group: '토큰', status: '중지', progress: 12 },
+        ]}
+        groupKey="group"
+        banded
+        rowHeaderKey="id"
+        tableLabel="그룹 행 표"
+        style={{ minWidth: 0 }}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const groups = [...canvasElement.querySelectorAll('tbody [data-table-group]')];
+    if (groups.length !== 3) {
+      throw new Error(`연속 구간마다 그룹 헤더가 하나씩 열려야 한다 — 문서·컴포넌트·토큰 3개, got ${groups.length}.`);
+    }
+    const header = groups[0].querySelector('th');
+    if (!header || header.getAttribute('scope') !== 'colgroup') {
+      throw new Error('그룹 헤더는 th[scope=colgroup]이어야 구간 라벨이 보조 기술에 전달된다.');
+    }
+    if (Number(header.getAttribute('colspan')) !== columnsWithoutGroup.length) {
+      throw new Error('그룹 헤더는 표 전체를 가로질러야 한다.');
+    }
+    if (groups.some((row) => row.hasAttribute('data-banded'))) {
+      throw new Error('그룹 행은 밴드를 입지 않는다 — 밴드는 데이터 행의 표식이다.');
+    }
+    const dataRows = [...canvasElement.querySelectorAll('tbody tr:not([data-table-group])')];
+    if (dataRows.length !== 4) throw new Error('그룹 행이 데이터 행을 대체해서는 안 된다.');
   },
 };
 

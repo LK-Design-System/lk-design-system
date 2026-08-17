@@ -93,3 +93,64 @@ export const HorizontalChronology = {
     }
   },
 };
+
+/* 매체 재지정 훅: 타입은 --lk-timeline-* 를 경유하고 폴백이 곧 제품 램프
+   값이라 제품 화면은 바이트 동일하다. 이 스토리는 읽기 거리가 먼 매체가 자기
+   스코프에서 세 단을 함께 옮기는 모습을 보인다 — 옮기는 것은 크기가 아니라
+   단(rank)이라, 재지정 후에도 시각 표기는 제목보다 조용하다
+   (Timeline.prompt.md의 재지정 훅 절). */
+export const MediumRepoint = {
+  name: '변형·상태 · 매체 재지정',
+  parameters: storyDescription(
+    '투영·전시처럼 읽기 거리가 먼 매체가 타임라인의 타입 단을 자기 스코프에서 올린 상황입니다. 세 단이 함께 올라가 시각 표기가 여전히 제목보다 조용한지, 시맨틱과 레일은 그대로인지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 960 }}>
+      <Timeline
+        orientation="horizontal"
+        label="제품 기본"
+        items={[
+          { time: '2026-08', title: '파일럿 착수', description: '지연 민감 구간 우선', tone: 'signal' },
+          { time: '2026-10', title: '운영 검증', description: '지연·비용 이중 추적' },
+        ]}
+      />
+      <div
+        data-medium-scope
+        style={{
+          '--lk-timeline-time-size': 'var(--label1-size)',
+          '--lk-timeline-title-size': 'var(--heading2-size)',
+          '--lk-timeline-desc-size': 'var(--body1-size)',
+        }}
+      >
+        <Timeline
+          orientation="horizontal"
+          label="재지정된 매체"
+          items={[
+            { time: '2026-08', title: '파일럿 착수', description: '지연 민감 구간 우선', tone: 'signal' },
+            { time: '2026-10', title: '운영 검증', description: '지연·비용 이중 추적' },
+          ]}
+        />
+      </div>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const [productList, mediumList] = [...canvasElement.querySelectorAll('ol')];
+    const scope = canvasElement.querySelector('[data-medium-scope]');
+    if (!productList || !mediumList || !scope) throw new Error('두 매체를 나란히 렌더해야 비교가 성립합니다.');
+    const sizeOf = (list, selector) => parseFloat(getComputedStyle(list.querySelector(selector)).fontSize);
+    const titleSelector = 'li > div:not([aria-hidden])';
+    const productTitle = sizeOf(productList, titleSelector);
+    const mediumTitle = sizeOf(mediumList, titleSelector);
+    if (!(mediumTitle > productTitle)) {
+      throw new Error('매체가 훅을 재지정하면 타입 단이 따라 올라가야 합니다 — 재지정이 닿지 않았습니다.');
+    }
+    // 재지정해도 단의 순서는 유지된다: 시각 표기는 제목보다 조용하다.
+    for (const list of [productList, mediumList]) {
+      const stamp = parseFloat(getComputedStyle(list.querySelector('time')).fontSize);
+      const title = sizeOf(list, titleSelector);
+      if (!(stamp < title)) {
+        throw new Error('어느 매체에서든 시각 표기는 제목보다 작아야 합니다 — 매체가 옮기는 것은 크기가 아니라 단입니다.');
+      }
+    }
+  },
+};

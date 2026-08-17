@@ -22,3 +22,18 @@
 - 레일 세그먼트는 그리드 gap을 건너 다음 노드까지 이어지고, **마지막 노드 앞에서 멈춥니다** — 연대기가 끝나는 지점에서 선이 계속되면 거짓말입니다.
 - 표현 축일 뿐입니다: `ol`/`li` 순서, `<time dateTime>`, 톤 어휘는 세로와 동일합니다.
 - 유래: 투영 매체(Slides)의 실측 — 고정 캔버스에서 세로 레일은 좌측 뭉침 + 우측 공백을 만듭니다(`docs/TIMELINE_ORIENTATION_PROPOSAL.md`). 채택으로 위성의 자체 가로 레일 복제가 철거 대상이 됩니다.
+
+## 매체 재지정 훅 (`--lk-timeline-*`)
+
+시각·제목·설명의 타입은 `--lk-timeline-time-size/line/spacing`,
+`--lk-timeline-title-*`, `--lk-timeline-desc-*` 훅을 경유하며 **폴백이 곧
+기존 제품 램프 값**이라 제품 화면은 바이트 동일하게 렌더됩니다. Table 셀과
+같은 계약이며, 훅이 기본 미정의인 이유도 같습니다(TOKEN_GOVERNANCE 예외).
+
+재지정하는 것은 **크기가 아니라 단(rank)** 입니다 — 어느 매체에서든 시각
+표기는 제목보다 조용해야 하므로, 매체는 세 훅을 자기 램프의 연속한 단으로
+함께 옮기지 하나만 끌어올리지 않습니다.
+
+유래: 위성(Slides)의 NarrativeTimeline이 가로 레일을 자체 렌더한 두 번째
+이유가 타입 고정이었습니다 — `orientation`만으로는 복제를 지울 수 없어
+이 훅이 함께 필요했습니다(`docs/TIMELINE_ORIENTATION_PROPOSAL.md`).
