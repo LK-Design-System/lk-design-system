@@ -35,10 +35,10 @@ function Stat({
       ...rest,
       children: [
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "inline-flex", alignItems: "baseline", gap: attachedUnit ? 0 : "0.25em", color: valColor }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontSize: "var(--display2-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, lineHeight: 1, fontVariantNumeric: "tabular-nums" }, children: value }),
-          displayUnit != null && displayUnit !== "" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontSize: "var(--body2-size)", lineHeight: "var(--body2-line)", fontWeight: "var(--fw-semibold)" }, children: displayUnit })
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontSize: "var(--lk-stat-value-size, var(--display2-size))", fontWeight: "var(--fw-extra)", letterSpacing: "var(--lk-stat-value-spacing, 0)", lineHeight: "var(--lk-stat-value-line, 1)", fontVariantNumeric: "tabular-nums" }, children: value }),
+          displayUnit != null && displayUnit !== "" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontSize: "var(--lk-stat-unit-size, var(--body2-size))", lineHeight: "var(--body2-line)", fontWeight: "var(--fw-semibold)" }, children: displayUnit })
         ] }),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontSize: "var(--body2-size)", lineHeight: 1.5, maxWidth: stacked ? "none" : 160, color: labColor, wordBreak: "keep-all" }, children: label })
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontSize: "var(--lk-stat-label-size, var(--body2-size))", lineHeight: 1.5, maxWidth: stacked ? "none" : 160, color: labColor, wordBreak: "keep-all" }, children: label })
       ]
     }
   );
@@ -47,4 +47,4 @@ function Stat({
 
 
 exports.Stat = Stat;
-//# sourceMappingURL=chunk-A2AYIKJT.cjs.map
+//# sourceMappingURL=chunk-5CFSNLUS.cjs.map

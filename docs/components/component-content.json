@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "8dd814d28e4c2dd5240e51913a4a0e26b4aaa3bb3eb06dcd98859e609dcbc20b",
+  "sourceFingerprint": "0b6f9c928026ccebb9f5d1a00d2d3fded0e2ad0f06f674874847fc3ea69ad142",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -3443,14 +3443,19 @@
         "--color-semantic-static-white",
         "--color-semantic-inverse-label-neutral-soft",
         "--color-semantic-label-alternative",
+        "--lk-stat-value-size",
         "--display2-size",
         "--fw-extra",
+        "--lk-stat-value-spacing",
+        "--lk-stat-value-line",
+        "--lk-stat-unit-size",
         "--body2-size",
         "--body2-line",
-        "--fw-semibold"
+        "--fw-semibold",
+        "--lk-stat-label-size"
       ],
       "externalReferences": [],
-      "promptSha256": "0f7c6c18f29eff34a09beb056c3aeb95b82983070cd3527c5f7d3ebbf7702f8d"
+      "promptSha256": "48857296c6009b1214c1a470dd51216d79b47da807a8258cda9d11acfe378ad4"
     },
     {
       "id": "conversation-message",
