@@ -126,12 +126,16 @@ Theme (lds-theme)        표정의 집. 갈라지는 유일한 지점
 | 증거 | 현재 결과 |
 | --- | --- |
 | Theme runtime | `LdsProvider`가 `default|ops`를 선택하고 `data-lds-profile`을 설정한다. |
-| 대표 소비자 | Portal은 `default`, Web Viz는 `ops`를 명시하고 Core·Theme·Product fixed release set을 소비한다. |
+| 대표 소비자 | Portal/default `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`와 Web Viz/ops `542639f2fea109e78f052e730ac30072cad79a6c`가 Core·Theme·Product `0.1.0-rc.69.30`을 소비한다. |
 | 시각 회귀 | [`EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json)이 `default|ops × light|dark × normal|320px × 2 stories` 16개 capture를 보존한다. |
-| 소비자 registry | [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json)이 package pin, artifact checksum, repo SHA와 build evidence를 보존한다. |
+| 소비자 registry | [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json)이 package pin, artifact checksum, repo SHA, 기술 5 gate와 clean-clone evidence를 보존한다. |
 | active legacy guard | `check:legacy-active`가 aggregate·Editorial·console-pastel의 활성 소스 참조를 0으로 확인한다. |
 
-현재 registry stage는 두 소비자 모두 `build-verified`다. production deployment, product-owner 승인과 workflow/accessibility evidence는 제품 release evidence가 추가될 때에만 `workflow-verified` 또는 `deployed`로 승격한다. 이는 LDS가 제품 배포를 추정하지 않게 하기 위한 의도적 경계다.
+현재 registry stage는 두 소비자 모두 `build-verified`다. workflow/accessibility를 포함한
+기술 5 gate와 clean-clone 재현은 current지만 필수 product/design-system owner 승인이 아직
+없으므로 `workflow-verified`로 올리지 않는다. production deployment도 별도 product-owner
+evidence가 없어 `not-attested`다. 이는 기술 검증, 승인과 실제 배포를 서로 추정하지 않게
+하기 위한 의도적 경계다.
 
 ## 5. 프로파일로 풀 수 없는 것 — 행동 트랙
 
@@ -152,7 +156,7 @@ Theme (lds-theme)        표정의 집. 갈라지는 유일한 지점
 | 1 | 표현 프로파일 원칙을 이 문서에서 확정, `OPERATING_MODEL.md` 소유권 표에 프로파일 행 추가 | 완료 — runtime contract와 machine contract 반영 |
 | 2 | ops 토큰 오버라이드 작성 + 화이트리스트·필수 항목 게이트 | 완료 — `tokens/profiles.css`, `check:expression-profile` |
 | 3 | Storybook 프로파일 토글과 profile/theme/viewport 회귀 matrix 연결 | 완료 — 16 capture, `check:expression-profile-visual` |
-| 4 | Portal/default·Web Viz/ops 대표 소비자 wiring과 package evidence | 완료 — [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) |
+| 4 | Portal/default·Web Viz/ops 대표 소비자 wiring과 technical adoption evidence | 기술 완료 — owner approval 전까지 registry `build-verified` 유지 |
 | 5 | 행동 트랙(§5) 착수 판단 — 각각 독립 제안으로 | 진행 중 — O1/O2 readiness record 연결; O3/O4는 지원 주장하지 않음 |
 
 ## 7. 비범위 (명시적으로 하지 않는 것)

@@ -132,7 +132,12 @@ v2는 기존 의미를 조용히 바꾸지 않는다. Registry와 attestation �
 - consumer stage와 분리된 mandatory `deployment.status`
 - registry와 분리된 attestation schema
 
-2026-08-22 current register에서 Portal/default와 Web Viz/ops는 계속 `build-verified`다.
-Package는 `release-candidate`, availability와 두 제품 deployment는 product-owner evidence가
-없으므로 `not-attested`다. Portal accessibility가 `not-run`이고 Web Viz의 수집 worktree가
-`dirty`인 현재 사실을 `workflow-verified`로 과장하지 않는다.
+2026-08-22 current register에서 package `0.1.0-rc.69.30`은 `release-candidate`이며
+availability가 `verified`다. Portal/default
+`c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`와 Web Viz/ops
+`542639f2fea109e78f052e730ac30072cad79a6c`는 각각 install·source contract·production
+build·대표 workflow·accessibility와 exact source의 clean-clone 재현을 통과했다. 다만
+필수 product/design-system owner 승인이 아직 없으므로 두 consumer stage는
+`build-verified`를 유지한다. 두 제품 deployment도 별도 owner evidence가 없어
+`not-attested`다. 기술 evidence 완료를 `workflow-verified` 또는 실제 배포로 과장하지
+않는다.

@@ -5,16 +5,45 @@
   "consumerId": "portal",
   "generatedAt": "2026-08-22",
   "profile": "default",
+  "sourceCommit": "c2e39f3c9f89a52cdb0c5a58727050afe20a82b9",
   "checks": [
-    { "id": "install", "status": "passed", "command": "npm.cmd install --ignore-scripts --no-audit --no-fund" },
-    { "id": "typecheck", "status": "passed", "command": "npx.cmd tsc --noEmit" },
-    { "id": "production-build", "status": "passed", "command": "npx.cmd next build" },
-    { "id": "source-contract", "status": "passed", "command": "LdsRuntimeBoundary + data-lds-profile=default" },
-    { "id": "production-smoke", "status": "passed", "command": "standalone server + Playwright /login smoke" }
+    {
+      "id": "install",
+      "status": "passed",
+      "command": "npm ci && npm --prefix mcp ci",
+      "note": "Root and MCP lockfile installs completed with zero reported vulnerabilities."
+    },
+    {
+      "id": "source-contract",
+      "status": "passed",
+      "command": "npm run lds:r2:source:verify",
+      "note": "The rc.69.30 package, default-profile, semantic-default, real chat composition, and canonical validation contracts passed."
+    },
+    {
+      "id": "production-build",
+      "status": "passed",
+      "command": "npm run build && git diff --exit-code -- next-env.d.ts",
+      "note": "The production build generated 117 of 117 static pages and left the tracked production type entry unchanged."
+    },
+    {
+      "id": "workflow-smoke",
+      "status": "passed",
+      "command": "npm run research-ui:storybook:verify",
+      "note": "Twelve built lifecycle and real Portal chat composition stories passed at the supported light-only widths."
+    },
+    {
+      "id": "accessibility",
+      "status": "passed",
+      "command": "npm run research-ui:storybook:verify",
+      "note": "Axe serious/critical zero, visible targets at least 24px, keyboard operation, and focus movement/restoration passed."
+    }
   ],
   "evidence": [
-    "ops/lk-portal/src/app/layout.tsx",
-    "ops/lk-portal/src/components/layout/LdsRuntimeBoundary.tsx",
-    "ops/lk-portal/src/app/globals.css"
+    "ops/lk-portal/.lds/evidence/lds-r2-workflow-verification-20260822.json",
+    "ops/lk-portal/stories/ResearchSupportRunV2Page.stories.jsx",
+    "ops/lk-portal/stories/PortalChatCompositions.stories.jsx",
+    "ops/lk-portal/scripts/verify-research-run-storybook.mjs",
+    "ops/lk-portal/.github/workflows/validation.yml",
+    "ops/lk-portal/docs/operations/lds-package-rollback.md"
   ]
 }

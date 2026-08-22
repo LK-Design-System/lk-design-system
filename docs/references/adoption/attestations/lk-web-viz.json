@@ -5,16 +5,42 @@
   "consumerId": "web-viz",
   "generatedAt": "2026-08-22",
   "profile": "ops",
+  "sourceCommit": "542639f2fea109e78f052e730ac30072cad79a6c",
   "checks": [
-    { "id": "install", "status": "passed", "command": "npm.cmd ci --ignore-scripts --no-audit --no-fund" },
-    { "id": "source-contract", "status": "passed", "command": "python scripts/verify_lds_organization_adoption.py" },
-    { "id": "production-build", "status": "passed", "command": "npm.cmd run build" },
-    { "id": "workflow-smoke", "status": "passed", "command": "npm.cmd run test -- --run (42 tests)" },
-    { "id": "profile-browser", "status": "passed", "command": "npm.cmd exec -- playwright test e2e/lds-all-routes.spec.ts --grep lds-organization --workers=1 (4 tests)" }
+    {
+      "id": "install",
+      "status": "passed",
+      "command": "npm ci --ignore-scripts --no-audit --no-fund"
+    },
+    {
+      "id": "source-contract",
+      "status": "passed",
+      "command": "npm run lds:r2:source",
+      "note": "6 source revisions, 13 active artifacts, 29 route patterns, and 27 runtime routes aligned."
+    },
+    {
+      "id": "production-build",
+      "status": "passed",
+      "command": "npm run build"
+    },
+    {
+      "id": "workflow-smoke",
+      "status": "passed",
+      "command": "npm run lds:r2:workflow",
+      "note": "4 of 4 production-preview Operations combinations passed."
+    },
+    {
+      "id": "accessibility",
+      "status": "passed",
+      "command": "npm run lds:r2:workflow",
+      "note": "Keyboard navigation, visible focus, names and labels, non-color offline state, pageerror zero, and horizontal overflow zero passed."
+    }
   ],
   "evidence": [
-    "ops/lk_web_viz/frontend/src/contexts/ThemeContext.tsx",
-    "ops/lk_web_viz/frontend/src/index.css",
-    "ops/lk_web_viz/frontend/src/screens/LdsOrganizationScreen.tsx"
+    "ops/lk_web_viz/.lds/evidence/lds-r2-workflow-verification-20260822.json",
+    "ops/lk_web_viz/frontend/e2e/lds-operations-workflow.spec.ts",
+    "ops/lk_web_viz/frontend/playwright.lds-r2.config.ts",
+    "ops/lk_web_viz/.github/workflows/lds-r2.yml",
+    "ops/lk_web_viz/docs/RELEASING.md"
   ]
 }

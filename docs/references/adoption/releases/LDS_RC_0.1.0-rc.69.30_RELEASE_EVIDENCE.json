@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "kind": "lds-package-release-evidence",
+  "generatedAt": "2026-08-22",
+  "release": {
+    "channel": "release-candidate",
+    "version": "0.1.0-rc.69.30",
+    "tag": "lds-v0.1.0-rc.69.30",
+    "sourceCommit": "ae8f7db92b84a8de2c861e2b653dc490f473117f",
+    "repository": "LK-Design-System/lk-design-system"
+  },
+  "immutableTagVerification": {
+    "status": "passed",
+    "command": "git ls-remote --tags origin refs/tags/lds-v0.1.0-rc.69.30",
+    "resolvedCommit": "ae8f7db92b84a8de2c861e2b653dc490f473117f"
+  },
+  "automation": [
+    {
+      "workflow": "CI",
+      "runId": 32559187551,
+      "status": "passed",
+      "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/32559187551"
+    },
+    {
+      "workflow": "Deploy Storybook to GitHub Pages",
+      "runId": 32559187526,
+      "status": "passed",
+      "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/32559187526"
+    },
+    {
+      "workflow": "Release immutable package set",
+      "runId": 32560143623,
+      "status": "passed",
+      "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/32560143623"
+    }
+  ],
+  "packages": [
+    {
+      "name": "@lk-design-system/lds-core",
+      "version": "0.1.0-rc.69.30",
+      "publishedAt": "2026-08-22T07:42:25Z",
+      "distShasum": "e2b0129d3b2c57475e564c0e479aabe58a31b6aa",
+      "distIntegrity": "sha512-LBFaxriuXWVJvcpS6z2/wjyim2h41xr/E2/zxwFDBleHQJZuaT205wjZDuihL6PvxIt9djsV+5yVL/PT+jTPWQ=="
+    },
+    {
+      "name": "@lk-design-system/lds-theme",
+      "version": "0.1.0-rc.69.30",
+      "publishedAt": "2026-08-22T07:42:28Z",
+      "distShasum": "203e708676e7ae7fc31c274804339bea01d14fd4",
+      "distIntegrity": "sha512-LDrgRlDV2oRm4UnA2ZN8OkW1Gy0XlLvfWWvXMNIgAMMWEYgz9X6rztlsF3eVngQJMMZP6nBwwowzuIttmmXylw=="
+    },
+    {
+      "name": "@lk-design-system/lds-product",
+      "version": "0.1.0-rc.69.30",
+      "publishedAt": "2026-08-22T07:42:30Z",
+      "distShasum": "3b349c3b980c1284ba3adf8fd320f123be8395ee",
+      "distIntegrity": "sha512-ukPhNXljGS+7l5r+8nwRB3fdRnD9jmmOHmvsYaFUDQnKSaxjg7FulPOug2vRk3/uBQVXl7t2DH1QMEO4ufdGQA=="
+    }
+  ],
+  "availabilityVerification": {
+    "status": "passed",
+    "command": "npm view @lk-design-system/<package>@0.1.0-rc.69.30 version dist.shasum dist.integrity",
+    "registry": "https://npm.pkg.github.com"
+  },
+  "notes": "Package availability is independent from consumer adoption stage and product deployment. No GitHub Release object is claimed; the immutable Git tag, successful release workflow, and registry metadata are the release evidence."
+}

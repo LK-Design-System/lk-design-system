@@ -44,8 +44,10 @@ source와 machine-readable evidence가, 정책은 [`OPERATING_MODEL.md`](OPERATI
   유지한다.
 - Product public surface는 `Application | Operations | Workspace` family를 정확히 하나씩
   가진다.
-- Portal은 `default`, Web Viz는 `ops` profile의 current package set을 설치하고 production
-  build와 대표 smoke를 통과한 `build-verified` consumer다.
+- Portal/default `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`와 Web Viz/ops
+  `542639f2fea109e78f052e730ac30072cad79a6c`는 current package set의 기술 5 gate와
+  clean-clone 재현을 통과했다. 필수 owner 승인이 없어 둘 다 technical-ready
+  `build-verified`를 유지한다.
 - Robotics readiness는 O1 Monitoring과 O2 Operational control을 `ready`, O3 Alarm
   lifecycle을 `unverified`, O4 Safety-certified HMI를 `unsupported`로 제한한다.
 - active aggregate·Editorial·console-pastel legacy reference는 0이며, Core·Theme·Product
@@ -57,7 +59,7 @@ source와 machine-readable evidence가, 정책은 [`OPERATING_MODEL.md`](OPERATI
 
 | 열린 문제 | 2026-08-22 기준 근거 | 처리 위치 |
 | --- | --- | --- |
-| 제품 소유 증거가 불완전함 | Portal accessibility `not-run`; Web Viz attestation은 dirty worktree; product-owner 승인·deployment/rollback evidence 미등록 | R2 |
+| 제품 승인이 열려 있음 | Portal/Web Viz의 기술 5 gate와 clean evidence는 current지만 product/design-system owner 승인이 미등록이다. deployment는 두 제품 모두 별도 `not-attested`다. | R2 |
 | `ops` 밀도 coverage가 부분적임 | profile override는 control/card 중심이며 Table·DataGrid·List·Tree·Menu·Navigation·Drawer 전체 계약은 아님 | R3A |
 | component 이동·잔류 후보의 결정이 열려 있음 | 현재 owner는 하나로 강제되지만 Product→Core, Product↔Robotics 후보의 `move now | stay | defer` 심사는 아직 미실행 | R3B |
 
@@ -197,31 +199,41 @@ R1–R4가 소유한다.
 
 | Field | Value |
 | --- | --- |
-| Status | `Now` — evidence collection과 stage promotion |
+| Status | `Now` — 기술 evidence 완료, owner approval과 stage promotion 대기 |
 | DRI | Portal/Web Viz product owner |
 | Required approvers | 해당 product owner · Design system owner |
 | Dependency | evidence 수집은 R0부터 가능; registry stage 승격은 R1 |
 | Goal | 현재 `build-verified` 소비자를 product-owned `workflow-verified` evidence로 승격한다. |
 
+2026-08-22 technical checkpoint에서 Portal
+`c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`와 Web Viz
+`542639f2fea109e78f052e730ac30072cad79a6c`는 `0.1.0-rc.69.30` package set으로 install,
+source contract, production build, representative workflow, accessibility와 clean-clone
+재현을 통과했다. 이 결과는 승인 가능한 technical evidence를 만들었을 뿐이며, 필수
+product/design-system owner 승인이 없으므로 registry는 두 consumer를 계속
+`build-verified`로 기록한다. deployment는 두 제품 모두 별도 `not-attested`다.
+
 ### Portal/default
 
-- current fixed package set을 clean clone에서 설치하고 production build를 재현한다.
-- 로그인만이 아니라 대표 Application workflow와 floating/full-page chat composition을
-  product owner가 선택해 smoke로 고정한다.
-- Portal accessibility를 실행하고, current light-only 결정·지원 범위·known finding을
-  attestation에 기록한다.
-- Portal 전체 contract 진입점을 막는 current semantic-schema validator mismatch는 product
-  owner finding으로 닫고, LDS 관련 test만 우회 실행한 결과로 제품 승격을 주장하지 않는다.
-- 실제 rollout 또는 rollout-ready 판단과 rollback 절차를 product owner evidence로 남긴다.
+- exact source에서 current fixed package set의 clean install과 production build를
+  재현했다.
+- 로그인 health check가 아니라 대표 Application workflow와 실제 floating/full-page chat
+  composition을 smoke evidence로 고정했다.
+- light-only 지원 범위에서 targeted accessibility, keyboard/focus와 narrow viewport를
+  통과하고 attestation에 기록했다.
+- source contract와 semantic schema validator 경로를 우회 없이 통과했다.
+- product/design-system owner 승인은 대기 중이다. rollout 또는 rollout-ready 판단은
+  별도 product-owner evidence가 없어 `not-attested`다.
 
 ### Web Viz/ops
 
-- clean worktree/source commit에서 current Core·Theme·Product·Robotics set을 재검증한다.
-- representative Operations workflow, light/dark, normal/narrow, keyboard/focus와 targeted
-  accessibility를 product owner가 승인한다.
-- full-route known flakes는 LDS 성공으로 숨기지 않고 owner·재현·영향·해결 trigger를 가진
-  product finding으로 분리한다.
-- 실제 rollout 또는 rollout-ready 판단과 rollback 절차를 product owner evidence로 남긴다.
+- exact clean source에서 current Core·Theme·Product·Robotics set을 재검증했다.
+- representative Operations workflow의 light/dark, normal/narrow, keyboard/focus와 targeted
+  accessibility가 deterministic production-preview evidence로 통과했다.
+- full-product quality의 기존 backend finding과 broad route diagnostic은 R2 frontend
+  workflow 성공으로 숨기지 않고 제품 finding으로 분리했다.
+- product/design-system owner 승인은 대기 중이다. main integration, rollout 또는
+  rollout-ready 판단은 별도 evidence가 없어 `not-attested`다.
 
 ### 종료 gate
 
@@ -253,6 +265,11 @@ R1–R4가 소유한다.
   checkbox 계열이라 우선 데이터군에서 기존 debt를 함께 다뤄야 한다.
 - 현재 16-capture expression matrix는 두 대표 story의 token geometry와 semantic color
   invariance를 보지만 data/navigation/overlay keyboard·focus를 직접 검증하지 않는다.
+- Web Viz R2에서 Theme의 zero-specificity
+  `:where([data-lds-profile='ops'], .lds-profile-ops)`를 `html`에 적용하면 같은 element의
+  Core `:root` default가 specificity로 이기는 것을 확인했다. Web Viz는 임시로 app root인
+  `body`에 profile을 적용하고 computed button 36px·duration 160ms를 검증했지만, Theme
+  selector 우선순위 자체의 정합화와 consumer workaround 제거는 LDS owner follow-up이다.
 
 Theme profile과 bounded local density는 서로 다른 축이다. 전역 provider에 product density를
 추가하지 않는다. 우선순위는 다음처럼 고정한다.
@@ -418,6 +435,11 @@ maintenance cost로 재평가한다. 그 전에는 taxonomy 정리만을 이유�
 - 수동 문서에 source entry/story/version 숫자를 복제하지 않고 generated report에 연결한다.
 - [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md)의 O4는 보완된
   문서로 **질문 0 이관 시험 1회**를 다시 실행한 뒤에만 완결로 기록한다.
+- full-surface conformance의 hard trigger는 현재 async/interactive UI의 `story` evidence를
+  built Storybook index의 exact story ID로만 받는다. Storybook consumer가 아닌 Web Viz는
+  fake index나 waiver 대신 deterministic production-preview Playwright를 blocking evidence로
+  사용했다. 비-Storybook deterministic workflow evidence를 공식 adapter로 수용할지, 아니면
+  제품 Storybook을 필수로 할지 conformance 계약 결정을 남긴다.
 - plan이 완료되면 implementation record로 바꾸고 active roadmap에서 제거한다.
 - follow-up은 owner·entry trigger·종료 gate·roadmap ID가 없으면 무기한 active로 두지 않는다.
 
