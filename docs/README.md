@@ -5,23 +5,24 @@
 | Type | Documentation index |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-08-16 |
+| Last reviewed | 2026-08-22 |
 
 이 문서는 `docs/`의 공식 탐색 진입점이다. 문서가 충돌하면 아래 source-of-truth 순서와 각 문서의 `Type`·`Status`를 기준으로 판단한다.
 
 ## Start here
 
 0. **릴리스·위성 관리·CI 판단(운영 전반): [`OPERATIONS.md`](OPERATIONS.md)** — 저장소를 굴리는 방법의 단일 진입점
-1. 제품 UI 신규 구현·LDS 적용·전환·재스타일링: [`LDS_UI_ADOPTION_WORKFLOW.md`](LDS_UI_ADOPTION_WORKFLOW.md)
-2. 신규 LDS 컴포넌트·재설계·icon/asset/map symbol 저작: [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)
-3. token 추가·변경: [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md)
-4. 기여·소유권·변경 분류: [`OPERATING_MODEL.md`](OPERATING_MODEL.md) — 릴리스 **절차**는 위 0번이 소유한다
-5. API와 상태: [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md)
-6. 접근성: [`ACCESSIBILITY_CONTRACTS.md`](ACCESSIBILITY_CONTRACTS.md)
-7. 과거 handoff 포인터: [`HANDOFF.md`](HANDOFF.md) — **현재 상태의 권위가 아니다**(아래 참고)
-8. Foundation 원리·선택 기준·토큰 참조: [`foundations/README.md`](foundations/README.md)
-9. 컴포넌트 선택·Anatomy·상태·접근성·API 참조: [`components/README.md`](components/README.md)
-10. LK ROBOTICS 로고 제작·배포·승인 규정: [`brand/README.md`](brand/README.md)
+1. **고도화 우선순위·실행 순서: [`LDS_ROADMAP.md`](LDS_ROADMAP.md)** — 현재 backlog와 완료 gate의 단일 진입점
+2. 제품 UI 신규 구현·LDS 적용·전환·재스타일링: [`LDS_UI_ADOPTION_WORKFLOW.md`](LDS_UI_ADOPTION_WORKFLOW.md)
+3. 신규 LDS 컴포넌트·재설계·icon/asset/map symbol 저작: [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md)
+4. token 추가·변경: [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md)
+5. 기여·소유권·변경 분류: [`OPERATING_MODEL.md`](OPERATING_MODEL.md) — 릴리스 **절차**는 위 0번이 소유한다
+6. API와 상태: [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md)
+7. 접근성: [`ACCESSIBILITY_CONTRACTS.md`](ACCESSIBILITY_CONTRACTS.md)
+8. 과거 handoff 포인터: [`HANDOFF.md`](HANDOFF.md) — **현재 상태의 권위가 아니다**(아래 참고)
+9. Foundation 원리·선택 기준·토큰 참조: [`foundations/README.md`](foundations/README.md)
+10. 컴포넌트 선택·Anatomy·상태·접근성·API 참조: [`components/README.md`](components/README.md)
+11. LK ROBOTICS 로고 제작·배포·승인 규정: [`brand/README.md`](brand/README.md)
 
 ## Stable policies and contracts
 
@@ -30,6 +31,8 @@
 | [`LDS_UI_ADOPTION_WORKFLOW.md`](LDS_UI_ADOPTION_WORKFLOW.md) | 제품 UI 신규 구현·LDS 전환의 generated canonical workflow와 완료 계약 |
 | [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md) | 신규·재설계 검토의 canonical workflow와 완료 gate |
 | [`OPERATING_MODEL.md`](OPERATING_MODEL.md) | ownership, change category, release와 migration 운영 |
+| [`references/architecture/OWNER_AUTHORITY_CONTRACT.json`](references/architecture/OWNER_AUTHORITY_CONTRACT.json) | Core·Theme·Product·Robotics의 live package/token/Storybook owner와 cross-domain 경계 |
+| [`references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md`](references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md) | package release·consumer stage·product deployment를 분리한 승격 계약 |
 | [`PACKAGE_MIGRATION_GUIDE.md`](PACKAGE_MIGRATION_GUIDE.md) | Wave 2 consumer import, CSS, artifact-pin, and rollback guidance |
 | [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md) | token source of truth와 변경 정책 |
 | [`brand/LK_LOGO_STANDARD.md`](brand/LK_LOGO_STANDARD.md) | LK ROBOTICS 로고 v2.0 표준 · geometry v1.0 정본, 작도 검증, 변형·여백·최소 크기, 색상·인쇄·공동 브랜딩·승인 정책 |
@@ -62,6 +65,7 @@
 | Consumer agent skill | [lds-ui skill](agent-skills/lds-ui/SKILL.md) — UI 조립 시점에 LDS 결정 규칙을 push 로드; Claude Code는 `.claude/skills/lds-ui/`로 복사, AGENTS.md 기반 에이전트(Codex 등)는 스킬의 라우팅 블록을 AGENTS.md에 추가; `lds-core` 패키지 `docs/agent-skills/lds-ui/`로 배포됨 |
 | Robotics direct adoption | `@lk-design-system/lds-robotics-ui/llms.txt` · `@lk-design-system/lds-robotics-ui/design-system.json` · [Robotics Storybook](https://lk-design-system.github.io/lk-design-system-robotics/?path=/docs/lds-robotics-foundation-viewer-tokens--docs) · [public llms.txt](https://lk-design-system.github.io/lk-design-system-robotics/llms.txt) · [public manifest](https://lk-design-system.github.io/lk-design-system-robotics/design-system.json) |
 | Machine-readable adoption source | [Adoption contract](references/adoption/LDS_UI_ADOPTION_CONTRACT.json) · [contract schema](references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json) · [report schema](references/adoption/LDS_UI_ADOPTION_REPORT.schema.json) · [schema-valid report template](references/adoption/LDS_UI_ADOPTION_REPORT.example.json) |
+| Consumer promotion evidence | [promotion contract](references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md) · [registry schema](references/adoption/LDS_CONSUMER_REGISTRY.schema.json) · [attestation schema](references/adoption/LDS_CONSUMER_ATTESTATION.schema.json) |
 | Consumer enforcement | [config schema](../packages/conformance/schemas/lds-ui-adoption-config.schema.json) · [CLI](../packages/conformance/src/cli.mjs) · [GitHub composite action](../.github/actions/lds-adoption/action.yml) |
 | Foundation 탐색 | [Foundation index](foundations/README.md) 또는 단일 context용 [Foundation LLM bundle](foundations/llms.txt) |
 | Token 이름·의미·runtime coverage | [Structured token source](../tokens/source.json) |
@@ -77,42 +81,57 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 
 | Document | Update source |
 | --- | --- |
+| [`LDS_ROADMAP.md`](LDS_ROADMAP.md) | 현재 고도화 우선순위, 의존 순서, owner와 종료 gate; release/consumer evidence 변경 시 검토 |
 | [`REPOSITORY_INVENTORY.md`](REPOSITORY_INVENTORY.md) | `npm run report:inventory`, `npm run check:inventory` |
-| [`DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md`](DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md) | 현재 완성도 판정, 영역별 gate, 남은 검토 원장 |
 | [`VISUAL_PARITY_LEDGER.md`](VISUAL_PARITY_LEDGER.md) | WDS evidence와 visual parity guards |
 | [`DEPRECATIONS.md`](DEPRECATIONS.md) | generated: `npm run report:deprecations` |
 | [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md) | product source pins와 `check:product-frontends` |
-| [`references/adoption/LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) | current Portal/Web Viz package pins, profile, checksum, build evidence와 freshness; `npm run check:adoption-registry` |
+| [`references/adoption/LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) | current Portal/Web Viz package pins와 package release·consumer stage·deployment의 독립 판정, evidence freshness; `npm run check:adoption-registry` |
 | [`references/visual/EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json) | `default|ops × light|dark × normal|320px` 16-capture visual evidence; `npm run check:expression-profile-visual` |
 | [`references/robotics/READINESS.json`](references/robotics/READINESS.json) | O1/O2 readiness와 O3/O4 claim boundary; `npm run check:robotics-readiness` |
-| [`HANDOFF.md`](HANDOFF.md) | 현재 HEAD, 작업 상태, 최신 날짜별 handoff 포인터 |
-| [`HANDOFF_STORYBOOK_DOCS_SURFACE.md`](HANDOFF_STORYBOOK_DOCS_SURFACE.md) | Storybook Docs 표면 작업의 인계 문서 — 구현·검증 상태, evidence-only 가이드와 3% 중복 ratchet, 다시 깨기 쉬운 지점 |
-| [`SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md`](SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md) | LK Portal에서 확인한 Select intrinsic-width 레이아웃 결함과 MessageFeed viewport inset 계약 부족의 재현·수정·검증·릴리스 인계 |
 
-## Plans, audits, and historical decisions
+## Roadmap, follow-ups, and historical decisions
 
-| Document | Status |
+현재 실행 순서와 backlog는 [`LDS_ROADMAP.md`](LDS_ROADMAP.md)만 소유한다. 아래 문서는
+로드맵 항목의 세부 근거나 완료 기록이며, 같은 우선순위를 별도로 복제하지 않는다.
+
+### Active follow-through
+
+| Document | Disposition |
 | --- | --- |
-| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | Implementation record — Product family·Theme profile·대표 consumer evidence·O1/O2 readiness·legacy guard 구현; 제품 workflow/deployment 승격 gate는 evidence 대기 |
-| [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | Current implementation record — 이슈·문서·rc.16 근거를 통합한 핵심 UI 컴포넌트 계약, Styles/Slots, ref, overlay와 검증 결과; LK Portal 채택 검증 대기 |
-| [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | Wave 1 package split, Wave 4 Robotics extraction, Wave 5 compatibility retirement complete; current-product adoption evidence remains open |
-| [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) | Phase 0–3 완료 (2026-08-16) — 세부 구분 개편(compat 일몰, 소비 산출물 계약, 위성 축 재편·수명주기); 잔여는 2027-01 정기 심사 |
-| [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) | O-A~O-C 실행 완료 (2026-08-16) — 릴리스 파생값 자동화, 핀 침묵 불가의 기계화, main 상시 초록; 잔여는 이관 시험(사람 축) |
-| [`OPERATIONS.md`](OPERATIONS.md) | 운영 단일 진입점 — 릴리스 레시피, 위성 생멸 규칙, 정상 상태의 정의, 자주 쓰는 명령 |
-| [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md) | Completed implementation plan; 결과 handoff로 연결 |
-| [`NAVIGATION_ATOMIZATION_PLAN.md`](NAVIGATION_ATOMIZATION_PLAN.md) | Proposed plan — Navigation 선·상태 어휘의 단일 소스화와 Encoding 문서화 |
-| [`NAVIGATION_PAGE_DECOMPOSITION_PLAN.md`](NAVIGATION_PAGE_DECOMPOSITION_PLAN.md) | Proposed plan — Navigation 스토리 페이지 재분해(Route 메가페이지 해체·Viewer 합성 페이지 신설) |
-| [`PROSE_SURFACE_PROPOSAL.md`](PROSE_SURFACE_PROPOSAL.md) | Proposed plan — 마크다운 렌더 결과의 타이포그래피 표면(Prose): 엔진은 제품, 조판·접근성 계약은 DS |
-| [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | Adopted — Portal/default·Web Viz/ops wiring, Theme runtime/token contract와 16-capture matrix 완료; O1/O2 행동 readiness는 별도 record |
-| [`TYPE_RAMP_DISPLAY0_PROPOSAL.md`](TYPE_RAMP_DISPLAY0_PROPOSAL.md) | Adopted — 투영 매체(Slides·Motion)용 램프 최상단 `display0`; rc.69.26 릴리스, Slides 재지정 완료 |
-| [`TIMELINE_ORIENTATION_PROPOSAL.md`](TIMELINE_ORIENTATION_PROPOSAL.md) | Adopted — Timeline 가로 방향(`orientation`); rc.69.26에서 main 반영, 위성 row 분기 철거는 타입 재지정 훅 후속 필요 |
-| [`TABLE_MEDIUM_CONTRACT_PROPOSAL.md`](TABLE_MEDIUM_CONTRACT_PROPOSAL.md) | Adopted — Table `banded` + `--lk-table-*` 재지정 훅; rc.69.26에서 main 반영, 위성 손말이 철거는 그룹 행 후속 필요 |
-| [`OVERLAY_STATUS_CHIP_PROPOSAL.md`](OVERLAY_STATUS_CHIP_PROPOSAL.md) | Proposed plan — 표면 앵커 비차단 상태 칩: Robotics 내부 구현(ManualControlSession 2개 소비처)이 근거, 코어 Status 가족 편입 심사 대기 |
-| [`LISTING_CARD_PROPOSAL.md`](LISTING_CARD_PROPOSAL.md) | Proposed plan(보류) — 모집·이벤트 리스팅 카드: NewsCard와 의미가 다른 별개 컴포넌트이나 제품 근거 확인 전까지 착수 보류 |
-| [`KOREAN_UI_COPY_REFORM_PLAN.md`](KOREAN_UI_COPY_REFORM_PLAN.md) | Completed implementation record — Portal에서 검증한 카피 운영 방식을 제품 독립 LDS 계약으로 이관하고 schema·fixture·제품 adapter·회귀 gate까지 연결한 기록 |
-| [`NAVIGATION_EXPRESSION_CONVENTIONS.md`](NAVIGATION_EXPRESSION_CONVENTIONS.md) | Convention — Navigation 표현/상태/라벨 규약과 DS↔제품 경계(semantic mirror·선택 리스트는 제품 몫) |
-| [`QUALITY_AUDIT_PLAN.md`](QUALITY_AUDIT_PLAN.md) | Executed baseline with residual follow-up findings |
-| [`EDITOR_LAYOUT_AUDIT.md`](EDITOR_LAYOUT_AUDIT.md) | Completed focused audit; stable decisions are in the reference matrix |
+| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | 1차 구현과 R1 authority/promotion contract 구현 완료; paired release sync는 R1, 남은 consumer·compatibility·stable gate는 R2·R3B·R4 |
+| [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) | O-A/B/C와 O4 문서·1차 시험 완료; 보완 문서 기준 질문 0 재시험은 R7 |
+
+### Adopted or completed implementation records
+
+| Document | Disposition |
+| --- | --- |
+| [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | `default | ops` runtime/token/visual matrix의 adopted 기록; 다음 밀도 범위는 R3A |
+| [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | component API·Styles/Slots·ref·overlay 구현 기록; current consumer evidence는 registry가 소유 |
+| [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | package split·Robotics extraction·compatibility retirement 기록 |
+| [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) | Phase 0–3 완료; 2027-01 review는 R6 |
+| [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md) | 도메인 component 확장 완료 기록 |
+| [`NAVIGATION_ATOMIZATION_PLAN.md`](NAVIGATION_ATOMIZATION_PLAN.md) | Navigation 원자화 완료 기록 |
+| [`SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md`](SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md) | Select/MessageFeed 수정과 Portal current composition 반영을 닫은 follow-up 기록 |
+| [`PROSE_SURFACE_PROPOSAL.md`](PROSE_SURFACE_PROPOSAL.md) | Core Prose로 채택·구현된 제안 기록 |
+| [`TYPE_RAMP_DISPLAY0_PROPOSAL.md`](TYPE_RAMP_DISPLAY0_PROPOSAL.md) | `display0` 채택·릴리스 완료 기록 |
+| [`TIMELINE_ORIENTATION_PROPOSAL.md`](TIMELINE_ORIENTATION_PROPOSAL.md) | horizontal Timeline 채택·릴리스 완료 기록 |
+| [`TABLE_MEDIUM_CONTRACT_PROPOSAL.md`](TABLE_MEDIUM_CONTRACT_PROPOSAL.md) | Table `banded`·density override hook과 Slides 위임 완료; R3A의 배경 기록 |
+| [`OVERLAY_STATUS_CHIP_PROPOSAL.md`](OVERLAY_STATUS_CHIP_PROPOSAL.md) | Core Status family 채택·구현 완료 기록 |
+| [`LISTING_CARD_PROPOSAL.md`](LISTING_CARD_PROPOSAL.md) | ListingCard 채택·구현 완료 기록 |
+| [`KOREAN_UI_COPY_REFORM_PLAN.md`](KOREAN_UI_COPY_REFORM_PLAN.md) | copy contract·schema·adapter·regression gate 구현 기록 |
+
+### Stable convention and historical audit material
+
+| Document | Disposition |
+| --- | --- |
+| [`NAVIGATION_EXPRESSION_CONVENTIONS.md`](NAVIGATION_EXPRESSION_CONVENTIONS.md) | Navigation 표현·상태·라벨의 stable convention |
+| [`DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md`](DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md) | 2026-07-24 gate model과 baseline; 현재 수치·adoption 판단에는 사용하지 않음 |
+| [`QUALITY_AUDIT_PLAN.md`](QUALITY_AUDIT_PLAN.md) | confirmed 47건이 resolved/accepted로 종결된 historical quality baseline |
+| [`EDITOR_LAYOUT_AUDIT.md`](EDITOR_LAYOUT_AUDIT.md) | 완료된 focused audit; stable 결정은 reference matrix가 소유 |
+| [`NAVIGATION_PAGE_DECOMPOSITION_PLAN.md`](NAVIGATION_PAGE_DECOMPOSITION_PLAN.md) | current Robotics Path System·Navigation Viewer IA로 대체된 pre-extraction plan |
+| [`HANDOFF.md`](HANDOFF.md) | 2026-07-24 historical handoff pointer; 현재 상태의 권위가 아님 |
+| [`HANDOFF_STORYBOOK_DOCS_SURFACE.md`](HANDOFF_STORYBOOK_DOCS_SURFACE.md) | 2026-07-26 Storybook Docs 작업 snapshot; 현재 상태의 권위가 아님 |
 | [`handoff/`](handoff/) | 날짜·commit 기준 immutable historical snapshots |
 
 과거 plan과 handoff의 HEAD, dirty count, test result는 작성 당시 snapshot이다.
@@ -124,6 +143,7 @@ facade까지 전부 어긋난 것이 확인됐다. 현재 상태는 아래에서
 
 | 알고 싶은 것 | 권위 |
 | --- | --- |
+| 다음 고도화 우선순위와 완료 gate | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) |
 | 릴리스 절차·정상 상태·위성 규칙 | [`OPERATIONS.md`](OPERATIONS.md) |
 | 위성 버전과 LDS 핀 | [`references/SATELLITE_PIN_REPORT.md`](references/SATELLITE_PIN_REPORT.md) (스크립트 생성) |
 | 릴리스 버전·짝 robotics 버전 | `CHANGELOG.md`, `package.json`, `vendor/` 실물 |
@@ -143,7 +163,7 @@ Markdown 요약보다 machine-readable audit JSON이 상세 row와 hash의 sourc
 1. 현재 source code, public declarations, tokens, built Storybook index
 2. machine-readable audit/baseline JSON과 해당 verifier
 3. stable policy/contract documents
-4. current register와 `HANDOFF.md`
+4. current roadmap/register와 `HANDOFF.md`
 5. completed plans와 날짜별 handoff snapshots
 
 과거 plan·handoff·screenshot을 현재 구현의 근거로 단독 사용하지 않는다.
@@ -154,8 +174,8 @@ Markdown 요약보다 machine-readable audit JSON이 상세 row와 hash의 sourc
 
 | Field | Meaning |
 | --- | --- |
-| Type | Policy, Contract, Workflow, Register, Plan, Audit, Snapshot, Guide |
-| Status | Current, Generated, Completed, Historical, Superseded, Follow-up |
+| Type | Policy, Contract, Workflow, Roadmap, Register, Plan/Proposal, Implementation record, Audit, Handoff/Snapshot, Guide |
+| Status | Current, Generated, Active, Adopted, Completed, Historical, Superseded, Follow-up |
 | Owner | 갱신 책임 역할 |
 | Last reviewed | 사람이 마지막으로 현재성을 확인한 날짜 |
 | Source | machine-readable source 또는 완료 결과 문서 |

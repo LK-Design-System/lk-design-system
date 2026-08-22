@@ -2,13 +2,14 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Architecture reform plan |
-| Status | Implementation record — Core·Theme·Product taxonomy/profile와 대표 consumer evidence 구현; O1/O2 readiness 연결; O3/O4는 미지원 경계 유지 |
+| Type | Active architecture implementation record |
+| Status | Active follow-through — 1차 taxonomy/profile·owner authority·O1/O2와 R1 계약 구현 완료; paired release sync 및 §14의 consumer·compatibility·stable gate는 roadmap으로 계속 추적 |
 | Owner | Design system owner · Frontend platform |
 | Required approvers | Design system owner · Frontend platform · Robotics domain owner(해당 변경) · consumer product owner(해당 migration) |
 | Last reviewed | 2026-08-22 |
 | Scope | Core·Theme·Product·Robotics 계층, 표현 프로파일, 패키지 계약, 소비 증거, legacy 정리 |
 | Related | [`DESIGN.md`](../DESIGN.md) · [`OPERATING_MODEL.md`](OPERATING_MODEL.md) · [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md) · [`ROBOTICS_PATTERNS.md`](ROBOTICS_PATTERNS.md) |
+| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) — R0 기준선과 R1 계약 구현 완료; 미완료 gate는 R1 paired release sync·R2·R3B·R4 |
 
 이 문서는 LDS가 **LK Portal 같은 일반 B2B 제품 표면**과 **LK Web Viz·Control 같은
 산업 운영 표면**을 하나의 시스템으로 지원하기 위한 목표 계층과 이행 순서를
@@ -16,7 +17,10 @@
 이미 존재하는 Core·Theme·Product·Robotics 경계를 실제 코드·토큰·문서·릴리스
 증거가 같은 방식으로 설명하게 만드는 것이다.
 
-이 문서는 implementation record를 겸한다. 기존 public export와 Core 기준선을
+이 문서는 1차 구현과 아직 닫히지 않은 완료 gate를 함께 보존하는 implementation
+record다. 현재 우선순위와 후속 실행 순서는 [`LDS_ROADMAP.md`](LDS_ROADMAP.md)가
+소유하며, §14의 체크가 실제 evidence로 모두 닫히기 전에는 `Completed`로 승격하지 않는다.
+기존 public export와 Core 기준선을
 유지하면서 Product family contract, Theme `default|ops` profile contract,
 Storybook profile toolbar, 대표 consumer pin/evidence, Robotics O1/O2 readiness와
 legacy active-reference guard를 실제 코드·토큰·검사에 연결했다. O3 alarm lifecycle과
@@ -491,38 +495,49 @@ workflow evidence를 승인한 뒤 기존 Core/Product/Robotics 조합으로 해
 | 증거 | 답하는 질문 | 정본 |
 | --- | --- | --- |
 | Design coverage | 제품 workflow 요구를 LDS가 어떻게 지원하거나 제외하는가? | `references/product-frontends/COVERAGE_AUDIT.json` |
-| Package adoption | 어떤 제품 SHA가 어떤 LDS package/version을 설치했는가? | 새 consumer registry |
-| Workflow verification | 실제 대표 workflow가 build/runtime에서 동작하는가? | 소비 제품 `.lds/adoption-report.json`과 evidence |
-| Production status | 배포·rollback 가능한가? | 제품 release evidence; LDS 추정 금지 |
+| Package release | 고정 LDS package set이 RC/stable인지, artifact/tag를 실제 사용할 수 있는가? | consumer registry의 `packageRelease`와 LDS release evidence |
+| Consumer adoption | 어떤 제품 SHA가 어떤 LDS package/version을 설치·build·workflow 검증했는가? | consumer registry entry와 product-owner attestation |
+| Production deployment | 어느 환경에 rollout 준비·배포·rollback했는가? | 제품 release evidence; LDS 추정 금지 |
 
 ### 9.2 중앙 consumer registry
 
 `docs/references/adoption/LDS_CONSUMER_REGISTRY.json`과 schema가 현재 consumer
-evidence register다. 각 row는
-최소 다음을 포함한다.
+evidence register다. 승격 의미와 갱신 절차는
+[`CONSUMER_ADOPTION_PROMOTION_CONTRACT.md`](references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md)가
+소유한다. Registry는 다음 세 판정을 독립된 축으로 기록하며 어느 하나도 다른 축을
+자동 승격하지 않는다.
+
+- package release: `release-candidate | stable` channel과 `not-attested | verified` availability
+- consumer adoption: `wired | build-verified | workflow-verified` stage
+- product deployment: `not-attested | rollout-ready | deployed | rolled-back` status
+
+각 consumer row는 최소 다음을 포함한다.
 
 - product ID, repository, commit SHA, frontend root
 - 사용 package별 version·artifact checksum
 - profile과 theme 지원 범위
 - 적용 surface와 제외 surface
 - install, production build, workflow smoke, accessibility/viewport evidence
-- production deployment 여부와 rollback source
-- captured/reviewed timestamp와 evidence path
-- stage: `observed | installed | built | workflow-verified | deployed`
+- 별도 production deployment 상태와 product-owner rollback source
+- captured/reviewed timestamp, attestation과 evidence path
+- stage: `wired | build-verified | workflow-verified`
 - evidence freshness: `current | stale`과 stale reason
 
 design coverage의 `verified`를 adoption의 `workflow-verified`로 자동 승격하지 않는다.
-registry는 consumer manifest·lockfile·repository SHA·adoption report·evidence checksum을
-읽는 단일 generator에서 생성하고 schema/check로 검증한다. package version, product
-commit 또는 evidence checksum이 달라지면 기존 stage를 보존한 채 freshness만
-`stale`로 바꾼다. 소비 제품 owner가 source report와 build/workflow truth를 소유하고,
-LDS는 그 evidence를 임의로 재작성하지 않는다.
+`workflow-verified`는 current v2 attestation, install·source·production build·대표
+workflow·accessibility 통과, exact source commit의 clean-clone 재현과 product-owner 승인을
+모두 요구한다. Package version, product commit 또는 evidence checksum이 달라지면 기존
+evidence를 current로 재사용할 수 있는지 product owner가 다시 판정하며, `stale` evidence는
+checker를 통과하지 못한다. 소비 제품 owner가 source report와 build/workflow/deployment
+truth를 소유하고 LDS는 그 evidence를 임의로 재작성하지 않는다.
 
 clean LDS clone은 외부 working tree에 의존하지 않는다. consumer CI가 발행한 immutable
 attestation snapshot 또는 승인된 dispatch artifact를 LDS에 입력하고, workspace의
 canonical active-consumer inventory와 대조한다. `check:adoption-registry`는 clean clone에서
-schema, signature/checksum, package/version/SHA 일치와 freshness를 검증하며, active
-inventory에 있으면서 registry에 없는 LDS dependency consumer를 실패로 처리한다.
+schema, RC/stable identity, stage별 필수 evidence, package/version/SHA 일치와 freshness를
+검증한다. `--workspace-root` 검증은 실제 consumer artifact checksum·source wiring·evidence
+파일까지 대조하며, active inventory에 있으면서 registry에 없는 LDS dependency consumer를
+실패로 처리한다.
 
 ### 9.3 대표 소비자 gate
 
@@ -765,7 +780,7 @@ durable 결정 승격 후 archive/delete할지 문서 수명주기 정책에 따
 이 개편은 다음 조건을 모두 실제 artifact로 증명해야 완료다.
 
 - [x] Core·Theme·Product는 한 저장소의 별도 package로 유지된다.
-- [ ] 모든 public export, internal module, token group, canonical Storybook page가
+- [x] 모든 public export, internal module, token group, canonical Storybook page가
       현재 owner authority에서 정확히 하나의 owner를 갖는다.
 - [ ] Product/Application·Operations·Workspace family와 Robotics·LDS3D 경계가
       owner metadata·문서·코드·Storybook에서 일치하며 Product 미분류 export가 0이다.

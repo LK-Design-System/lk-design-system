@@ -11,7 +11,7 @@
   "supportingComponents": [],
   "purpose": "운영자가 중첩된 지도·경로·로봇 레이어를 탐색하며 선택과 가용성을 제어할 때 적합합니다. 계층이 없는 단순 옵션이나 일회성 필터에는 Layer Panel 대신 List 또는 Checkbox Group을 사용하세요.",
   "useWhen": [
-    "LayerPanel — reusable scene/layer hierarchy for LK Robotics editor shells."
+    "LayerPanel — reusable scene/layer hierarchy for Product editor shells."
   ],
   "avoidWhen": [
     "Visibility and lock follow the same controlled/uncontrolled pattern: visibleLayerIds/defaultVisibleLayerIds and lockedLayerIds/defaultLockedLayerIds."
@@ -181,8 +181,7 @@
     "Visibility and lock are named IconButton actions. From a focused row, F2 enters its two-action mode, Left/Right moves between actions, and Escape returns to the row. Do not assign single-letter V/L shortcuts at the component layer; those collide with editor tools and text entry."
   ],
   "exceptions": [
-    "Expansion is controlled with expandedLayerIds or uncontrolled with defaultExpandedLayerIds. With neither prop, groups are expanded unless their layer data sets expanded: false.",
-    "Classification: LK Robotics Extension. Use it only when a workflow has a real hierarchy whose nodes own display, visibility, lock, count, or status state. Selected-object properties belong in SelectionInspector; workflow steps do not belong here."
+    "Expansion is controlled with expandedLayerIds or uncontrolled with defaultExpandedLayerIds. With neither prop, groups are expanded unless their layer data sets expanded: false."
   ],
   "related": [
     {

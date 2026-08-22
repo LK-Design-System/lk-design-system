@@ -39,6 +39,7 @@
 ## Behavior and interaction
 
 - canUndo/canRedo express history state, while a real handler guarantees operability. A missing handler always disables the corresponding command.
+- Owner: LDS Product / Workspace. Its WDS provenance is product-extension. Application-specific history timelines, branching histories, autosave, and conflict recovery stay outside the LDS component contract.
 
 ## 정량 규칙
 

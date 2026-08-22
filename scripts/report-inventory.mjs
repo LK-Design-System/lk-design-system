@@ -31,12 +31,20 @@ async function collect(dirRel, predicate, out = []) {
   return out.sort();
 }
 
-function exportedNamesFromEntry(source) {
+function entryStatsFromSource(source) {
+  const entryExports = source
+    .split('\n')
+    .filter((line) => line.startsWith('export {'));
   const names = [];
-  for (const match of source.matchAll(/^export\s+\{\s*([^}]+?)\s*\}\s+from\s+'\.\.\/components\/([^']+?)\.jsx';$/gm)) {
+  for (const line of entryExports) {
+    const match = line.match(/^export\s+\{\s*([^}]+?)\s*\}\s+from\s+['"][^'"]+['"];$/);
+    assert(match, `Unsupported generated entry syntax: ${line}`);
     names.push(...match[1].split(',').map((item) => item.trim().split(/\s+as\s+/)[0]));
   }
-  return names;
+  return {
+    sourceEntries: entryExports.length,
+    namedExports: new Set(names).size,
+  };
 }
 
 async function getStorybookCounts() {
@@ -59,6 +67,10 @@ async function getStorybookCounts() {
 
 async function getCounts() {
   const classification = JSON.parse(await read('docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json'));
+  const workspaceManifest = JSON.parse(await read('package.json'));
+  const roboticsExternalSurface = JSON.parse(
+    await read('docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json'),
+  );
   // Internal engine modules (components/internal/*, overlay/forms shared engines)
   // carry their own .d.ts contracts but are not public components, so exclude
   // them by stem: the classification lists both .js and .jsx internal modules.
@@ -73,15 +85,44 @@ async function getCounts() {
   );
   const groups = await readdir(path.join(root, 'components'), { withFileTypes: true });
   const srcIndex = await read('src/index.js');
-  const entryExports = srcIndex.split('\n').filter((line) => line.startsWith('export {'));
-  const namedPublicExports = new Set(exportedNamesFromEntry(srcIndex));
+  const workspaceEntry = entryStatsFromSource(srcIndex);
+  const packages = {};
+  for (const layer of ['core', 'theme', 'product']) {
+    const manifest = JSON.parse(await read(`packages/${layer}/package.json`));
+    const entry = entryStatsFromSource(await read(`packages/${layer}/src/index.js`));
+    packages[layer] = {
+      name: manifest.name,
+      version: manifest.version,
+      private: manifest.private === true,
+      registry: manifest.publishConfig?.registry ?? null,
+      access: manifest.publishConfig?.access ?? null,
+      ...entry,
+    };
+  }
+  const roboticsEntries = roboticsExternalSurface.entries ?? [];
+  const roboticsNamedExports = new Set(roboticsEntries.flatMap((entry) => entry.exports ?? []));
   const storybook = await getStorybookCounts();
 
   return {
+    workspace: {
+      name: workspaceManifest.name,
+      version: workspaceManifest.version,
+      private: workspaceManifest.private === true,
+      exportedSubpaths: Object.keys(workspaceManifest.exports ?? {}),
+    },
+    packages,
+    robotics: {
+      name: roboticsExternalSurface.package?.name,
+      version: roboticsExternalSurface.package?.version,
+      repository: roboticsExternalSurface.package?.repository,
+      refStatus: roboticsExternalSurface.package?.refStatus,
+      sourceEntries: roboticsEntries.length,
+      namedExports: roboticsNamedExports.size,
+    },
     componentImplementations: componentJsx.length,
     componentTypeContracts: componentDts.length,
-    componentEntryExports: entryExports.length,
-    namedPublicExports: namedPublicExports.size,
+    componentEntryExports: workspaceEntry.sourceEntries,
+    namedPublicExports: workspaceEntry.namedExports,
     componentGroups: groups.filter((entry) => entry.isDirectory()).length,
     storybook,
   };
@@ -94,8 +135,12 @@ async function checkDocs(counts) {
   // README is a stable discovery surface and must not drift every time a story
   // or component entry is added.
   const expectations = [
-    ['docs/REPOSITORY_INVENTORY.md', `React 컴포넌트 소스 파일: ${counts.componentImplementations}개`],
-    ['docs/REPOSITORY_INVENTORY.md', `공개 named export: ${counts.namedPublicExports}개`],
+    ['docs/REPOSITORY_INVENTORY.md', `워크스페이스 orchestrator: \`${counts.workspace.name}@${counts.workspace.version}\` · \`private: true\``],
+    ['docs/REPOSITORY_INVENTORY.md', `Core: \`${counts.packages.core.name}@${counts.packages.core.version}\` · source entry ${counts.packages.core.sourceEntries}개 · named export ${counts.packages.core.namedExports}개`],
+    ['docs/REPOSITORY_INVENTORY.md', `Theme: \`${counts.packages.theme.name}@${counts.packages.theme.version}\` · source entry ${counts.packages.theme.sourceEntries}개 · named export ${counts.packages.theme.namedExports}개`],
+    ['docs/REPOSITORY_INVENTORY.md', `Product: \`${counts.packages.product.name}@${counts.packages.product.version}\` · source entry ${counts.packages.product.sourceEntries}개 · named export ${counts.packages.product.namedExports}개`],
+    ['docs/REPOSITORY_INVENTORY.md', `로컬 owner-package 합계: source entry ${counts.componentEntryExports}개 · named export ${counts.namedPublicExports}개`],
+    ['docs/REPOSITORY_INVENTORY.md', `외부 Robotics: \`${counts.robotics.name}@${counts.robotics.version}\` · source entry ${counts.robotics.sourceEntries}개 · named export ${counts.robotics.namedExports}개`],
     ['docs/REPOSITORY_INVENTORY.md', `Storybook 전체 story: ${counts.storybook.total}개`],
     ['docs/REPOSITORY_INVENTORY.md', `Storybook public story: ${counts.storybook.public}개`],
     ['docs/REPOSITORY_INVENTORY.md', `숨김 visual parity story: ${counts.storybook.visualParity}개`],
@@ -118,6 +163,21 @@ async function checkDocs(counts) {
     if (!source.includes(snippet)) missing.push(`${file}: missing ${snippet}`);
   }
 
+  const inventory = await read('docs/REPOSITORY_INVENTORY.md');
+  for (const staleSnippet of [
+    '@lk-design-system/design-system-core',
+    '루트 aggregate export:',
+    'Robotics compatibility entry:',
+    'Robotics compatibility shim',
+    './robotics',
+    'dist/robotics',
+    '배포 정책은 현재 `private: true`이며 내부 Git 소비',
+  ]) {
+    if (inventory.includes(staleSnippet)) {
+      missing.push(`docs/REPOSITORY_INVENTORY.md: stale ${staleSnippet}`);
+    }
+  }
+
   assert(missing.length === 0, `Inventory documentation is stale:\n${missing.join('\n')}`);
 }
 
@@ -128,6 +188,14 @@ function printTable(counts) {
     ['Component entry exports', counts.componentEntryExports],
     ['Named public exports', counts.namedPublicExports],
     ['Component groups', counts.componentGroups],
+    ['Core source entries', counts.packages.core.sourceEntries],
+    ['Core named exports', counts.packages.core.namedExports],
+    ['Theme source entries', counts.packages.theme.sourceEntries],
+    ['Theme named exports', counts.packages.theme.namedExports],
+    ['Product source entries', counts.packages.product.sourceEntries],
+    ['Product named exports', counts.packages.product.namedExports],
+    ['External Robotics source entries', counts.robotics.sourceEntries],
+    ['External Robotics named exports', counts.robotics.namedExports],
   ];
 
   if (counts.storybook) {
@@ -150,6 +218,31 @@ assert(
   counts.componentImplementations === counts.componentTypeContracts &&
     counts.componentImplementations === counts.componentEntryExports,
   `Component implementation/type/export counts differ: ${counts.componentImplementations}/${counts.componentTypeContracts}/${counts.componentEntryExports}`
+);
+assert(
+  counts.workspace.private && counts.workspace.exportedSubpaths.length === 0,
+  'The workspace root must remain a private orchestrator without consumer export subpaths.',
+);
+assert(
+  Object.values(counts.packages).every(
+    (ownerPackage) =>
+      !ownerPackage.private &&
+      ownerPackage.version === counts.workspace.version &&
+      ownerPackage.registry === 'https://npm.pkg.github.com' &&
+      ownerPackage.access === 'restricted',
+  ),
+  'Core, Theme, and Product must remain publishable restricted GitHub Packages at the workspace version.',
+);
+assert(
+  Object.values(counts.packages).reduce((total, ownerPackage) => total + ownerPackage.sourceEntries, 0) ===
+    counts.componentEntryExports &&
+    Object.values(counts.packages).reduce((total, ownerPackage) => total + ownerPackage.namedExports, 0) ===
+      counts.namedPublicExports,
+  'Generated owner-package entries must partition the generated local workspace entry.',
+);
+assert(
+  counts.robotics.name === '@lk-design-system/lds-robotics-ui' && counts.robotics.refStatus === 'published',
+  'The Robotics inventory must come from the published external surface contract.',
 );
 
 if (args.has('--check-docs')) await checkDocs(counts);

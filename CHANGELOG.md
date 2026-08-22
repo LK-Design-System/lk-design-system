@@ -2,6 +2,29 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.30 - 2026-08-22
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.30.
+
+### Added
+
+- Added a live machine-readable owner authority contract covering package
+  exports, internal modules, token groups, Storybook pages, and Product/Robotics
+  domain boundaries.
+- Added the v2 consumer adoption promotion contract, separate attestation schema,
+  stable-capable package release metadata, and positive/negative promotion tests.
+- Added the canonical LDS roadmap and documentation lifecycle mapping.
+
+### Changed
+
+- Clarified that Product owns renderer-neutral telemetry, equipment, viewer, and
+  editor chrome; Robotics owns robot-specific control, status, and spatial
+  navigation semantics; consuming applications retain domain truth and side effects.
+- Re-reviewed all 195 Storybook pages and 730 stories, refreshed public story
+  taxonomy and descriptions, and regenerated the package documentation inventory.
+- Rebaked the paired Robotics documentation snapshot against this LDS release;
+  Robotics runtime APIs are unchanged.
+
 ## 0.1.0-rc.69.29 - 2026-08-22
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.29.

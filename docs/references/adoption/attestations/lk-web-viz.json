@@ -1,6 +1,6 @@
 {
-  "$schema": "../LDS_CONSUMER_REGISTRY.schema.json",
-  "schemaVersion": 1,
+  "$schema": "../LDS_CONSUMER_ATTESTATION.schema.json",
+  "schemaVersion": 2,
   "kind": "lds-consumer-attestation",
   "consumerId": "web-viz",
   "generatedAt": "2026-08-22",

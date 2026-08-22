@@ -14,7 +14,7 @@
 
 ### 사용
 
-- LayerPanel — reusable scene/layer hierarchy for LK Robotics editor shells.
+- LayerPanel — reusable scene/layer hierarchy for Product editor shells.
 
 ### 사용하지 않음
 
@@ -78,7 +78,7 @@
 ## Exceptions
 
 - Expansion is controlled with expandedLayerIds or uncontrolled with defaultExpandedLayerIds. With neither prop, groups are expanded unless their layer data sets expanded: false.
-- Classification: LK Robotics Extension. Use it only when a workflow has a real hierarchy whose nodes own display, visibility, lock, count, or status state. Selected-object properties belong in SelectionInspector; workflow steps do not belong here.
+- Owner: LDS Product / Workspace. Its WDS provenance is product-extension. Use it only when a workflow has a real hierarchy whose nodes own display, visibility, lock, count, or status state. Selected-object properties belong in SelectionInspector; workflow steps do not belong here.
 
 ## Related components
 

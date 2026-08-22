@@ -415,7 +415,7 @@ export const MessageOverview = {
 };
 
 export const CompactDensity = {
-  name: '밀도 · compact',
+  name: '반응형 · 조밀한 밀도',
   parameters: storyDescription(
     '460px 대화 열에서 compact 밀도의 단일 메시지를 확인합니다. 정보 순서와 동작 대상은 유지하면서 짧은 문장·시간·동작이 한 메시지 안에서 겹치지 않아야 합니다.',
   ),
@@ -878,7 +878,7 @@ function assertCompactConversationColumn(canvasElement, fixtureId, expectedWidth
 }
 
 export const CompactConversationColumn = {
-  name: '밀도 · compact 대화 열',
+  name: '반응형 · 조밀한 대화 열',
   parameters: storyDescription(
     '360px의 짧은 일반 대화 열입니다. 완성 제품 화면·포털·고정 패널을 복제하지 않고, compact MessageFeed·ConversationMessage·MessageComposer를 하나의 재사용 가능한 흐름으로 조합합니다.',
   ),

@@ -5,17 +5,17 @@
 | Type | Stable contract and current audit summary |
 | Status | Current |
 | Owner | Storybook information-architecture owner |
-| Last reviewed | 2026-08-11 |
+| Last reviewed | 2026-08-22 |
 | Machine-readable source | `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json` |
 
-Current generated census (2026-08-17): 195개 페이지와 730개 스토리. The machine-readable audit is authoritative for public/hidden visibility and review status.
+Current generated census (2026-08-22): 195개 페이지와 730개 스토리. The machine-readable audit is authoritative for public/hidden visibility and review status.
 
 - 공개 스토리: 503개
 - 숨김 스토리: 227개
 - 숨김 visual parity: 95개
 - 숨김 internal contract: 128개
 - 검토 완료 페이지: 195/195개
-- 검토 완료 스토리: 713/726개
+- 검토 완료 스토리: 730/730개
 
 ## Operations Dashboard pattern group
 
@@ -25,13 +25,13 @@ Current generated census (2026-08-17): 195개 페이지와 730개 스토리. The
 
 ## 현재 기준선
 
-2026-08-17 현재 소스에서 재생성한 정적 빌드 기준으로 195개 페이지와 730개 스토리가 있다. census 판정은 모두 `keep`다.
+2026-08-22 현재 소스에서 재생성한 정적 빌드 기준으로 195개 페이지와 730개 스토리가 있다. census 판정은 모두 `keep`다.
 
 - 공개 스토리: 503개
 - 숨김 스토리: 227개
 - 숨김 visual parity: 95개
 - 숨김 internal contract: 128개
-- 검토 완료 페이지 195/195개, 스토리 717/730개다. 페이지별 source hash와 신규 스토리 검토는 감사 원장에 남기며, `check:storybook-ia`가 소유권·공개 여부·이름·설명과 함께 회귀를 막는다.
+- 검토 완료 페이지 195/195개, 스토리 730/730개다. 페이지별 source hash와 신규 스토리 검토는 감사 원장에 남기며, `check:storybook-ia`가 소유권·공개 여부·이름·설명과 함께 회귀를 막는다.
 - Component 문서 시스템은 public component entry 208개와 named export 221개를 전수 추적하고, 177개 evidence-only 결정 가이드를 `docs/components/guides/*.md`와 `llms.txt`로 생성한다. Storybook의 Docs 탭에는 사용 판단 · Properties · Accessibility · Tokens만 렌더링한다. 전체 카탈로그와 플랫폼 현황은 Storybook 운영 화면이 아니라 생성 문서 `COMPONENT_REFERENCE.md`와 `PROGRESS_BOARD.md`가 소유한다.
 - 2026-07-26 Docs와 Canvas의 책임을 분리했다. Docs는 Storybook 제목·설명과 Foundation·Component 또는 Pattern의 결정 가이드만 싣고, `<DocsStory>`·`<Primary>`·`<Stories>`·`<Controls>`를 렌더링하지 않는다. 스토리 specimen, args, controls와 play lifecycle은 각 Canvas 엔트리에만 남는다. `check:docs-surface`는 생성된 Docs 경로를 전수 감사하고, 문장 hash 원장은 191개 primary story 설명을 검증한다.
 - 시각 specimen이 없는 문서 전용 Foundation은 sidebar에서 Docs를 정식 진입점으로 사용한다. `Design Token`은 저장된 이전 Canvas URL도 Docs로 정규화하고, 첫 화면에서 `Primitive → Semantic → Component → Runtime projection` 계층과 상황별 선택 기준을 먼저 보여 준다. 숨김 CSF story는 Autodocs 생성과 검증만 담당하며 직접 iframe에서는 정식 Docs 링크를 제공한다. Storybook의 제품 온보딩 체크리스트는 LDS 탐색과 경쟁하므로 manager에서 비활성화한다. 이 결정은 Storybook의 [docs-only tag 계약](https://storybook.js.org/docs/writing-stories/tags#docs-only-stories)과 [onboarding feature 설정](https://storybook.js.org/docs/api/main-config/main-config-features)을 따른다.
@@ -41,15 +41,17 @@ Current generated census (2026-08-17): 195개 페이지와 730개 스토리. The
 
 - 컴포넌트 설명이 있는 페이지: 191개
 - Canvas에서 안내 서문을 직접 보여 주는 페이지: 191개
-- 사용/비사용 판단 기준이 확인되는 페이지: 183개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
+- 사용/비사용 판단 기준이 확인되는 페이지: 184개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
 - 목적 설명이 있는 공개 스토리: 503개
 - Foundation: 16페이지, 22스토리(공개 17·숨김 5)
-- Core: 57페이지, 209스토리(공개 116·숨김 93)
-- Product: 117페이지, 478스토리(공개 357·숨김 121)
-- Theme: 3페이지, 6스토리(공개 3·숨김 3)
+- Core: 57페이지, 211스토리(공개 118·숨김 93)
+- Product: 117페이지, 488스토리(공개 362·숨김 126)
+- Theme: 4페이지, 8스토리(공개 5·숨김 3)
 - Other: 1페이지, 1스토리(공개 1·숨김 0)
 - 공개 스토리 표시명 계약은 감사 원장의 권고 변경과 함께 추적한다.
 - 이름을 바꾼 페이지의 기존 story id 보존: 4/4페이지
+
+이 census는 이 저장소의 LDS Storybook만 센다. Robotics 페이지와 story는 외부 `@lk-design-system/lds-robotics-ui` 저장소와 [Robotics Storybook](https://lk-design-system.github.io/lk-design-system-robotics/)이 소유하므로 위 레이어 합계에 포함하지 않는다.
 
 모든 페이지는 첫 공개 스토리 `개요`의 Canvas에서 `오버라인 → 제목 → 사용 기준 또는 Foundation 제약`을 읽고, 역할 접두어로 정렬된 나머지 공개 스토리를 사이드바에서 하나씩 열어 상황과 확인 지점을 본다. Docs 탭은 스토리나 Controls를 다시 인쇄하지 않는다. 사이드바와 Canvas가 specimen·interaction을 소유하고, Docs는 제목·설명·결정 가이드만 소유한다. Canvas 헤더의 설명 강도와 상세 근거를 Docs로 분리하는 기준은 [`STORYBOOK_MASTHEAD_COPY_CONTRACT.md`](STORYBOOK_MASTHEAD_COPY_CONTRACT.md)를 따른다.
 

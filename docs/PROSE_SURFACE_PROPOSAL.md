@@ -2,15 +2,19 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Plan |
-| Status | Proposed |
+| Type | Adopted implementation record |
+| Status | Adopted and implemented — Core `Prose` source·type·prompt·Storybook·generated guide 완료 |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-24 |
-| Source | 착수 전 스코프 게이트. 구현은 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md) 절차를 밟는다. |
+| Last reviewed | 2026-08-22 |
+| Source | [`Prose.jsx`](../components/content/Prose.jsx) · [`Prose.prompt.md`](../components/content/Prose.prompt.md) · [`ContentProse.stories.jsx`](../stories/ContentProse.stories.jsx) |
+| Current roadmap | 종결 — 새 backlog 없음 |
+
+이 문서의 제안은 채택되어 Core `Prose`로 구현됐다. 아래 문제·경계·API 스케치는 구현 전
+결정 기록으로 보존하며, 현재 public 계약은 source, type, prompt와 generated component
+guide를 우선한다.
 
 형식화된 글(마크다운 렌더 결과, 문서 본문, 어시스턴트 rich response)에 DS 타이포그래피
-계약을 입히는 **Prose(잠정명)** 표면의 스코프를 정의한다. 이 문서는 만들지 말지를 결정하는
-게이트이며, 코드를 추가하지 않는다.
+계약을 입히는 **Prose** 표면의 착수 전 스코프를 정의한 기록이다.
 
 ## 문제
 

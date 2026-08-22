@@ -103,7 +103,7 @@
     "Activating the already selected mode re-emits that value through onChange; it never toggles a required editor mode off.",
     "Adobe Spectrum Action Group reinforced keeping one density, size, selection model, and complete interaction-state grammar across related tool groups.",
     "Figma: Navigating UI3 reinforced keeping high-frequency editing controls stable while panels remain secondary and collapsible.",
-    "EditorToolbar — single-select, high-frequency canvas tool group for LK Robotics editors."
+    "EditorToolbar — single-select, high-frequency canvas tool group for reusable Product editors."
   ],
   "quantitativeRules": [
     {
@@ -127,9 +127,7 @@
       "rule": "light: rgba(255, 255, 255, 0.50); dark: rgba(255, 255, 255, 0.50)"
     }
   ],
-  "responsive": [
-    "Classification: LK Robotics Extension. Use it for mutually exclusive editing modes such as select, route, region, marker, erase, or pan. Document commands belong in CanvasEditorCommandBar; viewport navigation and zoom controls belong in ViewerToolbar inside the viewport."
-  ],
+  "responsive": [],
   "contentGuidance": [
     "items accept { value, icon, label, shortcut, ariaKeyShortcuts, disabled, disabledReason }; selection is controlled with value or uncontrolled with defaultValue.",
     "Apple HIG: Toolbars reinforced stable logical grouping and consistent placement while keeping contextual tools distinct from navigation and document commands."

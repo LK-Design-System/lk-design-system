@@ -16,7 +16,6 @@
 
 - ConnectionBadge: 연결이 실제 보조 사실일 때 details[].value로 조합합니다. 카드가 connection prop이나 연결 상태 machine을 재정의하지 않습니다.
 - GOV.UK Summary list: key와 value가 있는 핵심 사실은 summary list로 표현하고, 단순 목록이나 표 데이터에는 남용하지 않습니다. 이를 details의 라벨→값 스캔 구조와 semantic markup에 반영했습니다.
-- EquipmentStatusCard는 장비의 정체성 → 대표 상태 → 라벨이 있는 보조 사실 → 메타데이터/동작을 한 번에 읽게 하는 LK Robotics Extension입니다. 특정 제품의 설비 행이나 대시보드를 재현하지 않으며, 제품이 가진 장비 종류와 상태 범위만 LDS coverage 요구로 사용합니다.
 
 ## Anatomy
 
@@ -159,6 +158,10 @@
 - `components/robotics/EquipmentStatusCard.d.ts`
 - `components/robotics/EquipmentStatusCard.prompt.md`
 - `stories/RoboticsEquipment.stories.jsx`
+
+## Migration
+
+- EquipmentStatusCard는 장비의 정체성 → 대표 상태 → 라벨이 있는 보조 사실 → 메타데이터/동작을 한 번에 읽게 하는 LDS Product / Operations 패턴입니다. WDS provenance는 product-extension이며, components/robotics 경로는 호환 표면일 뿐 현재 owner를 결정하지 않습니다. 특정 제품의 설비 행이나 대시보드를 재현하지 않으며, 제품이 가진 장비 종류와 상태 범위만 LDS coverage 요구로 사용합니다.
 
 ## Sources
 

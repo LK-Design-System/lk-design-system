@@ -42,6 +42,10 @@
 | messageTone | Semantic tone for the transient message. @default "default" |
 | messageToneLabel | Visible semantic text paired with messageTone. |
 
+## Behavior and interaction
+
+- Owner: LDS Product / Workspace. Its WDS provenance is product-extension, not WDS parity. Interactive scrubbers, transport controls, global connection health, and application workflow progress are intentionally outside this primitive.
+
 ## 정량 규칙
 
 | Subject | Rule |

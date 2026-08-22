@@ -2,11 +2,15 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Plan |
-| Status | Adopted — 2026-08-17 main 반영(orientation=horizontal, 등분·레일 연속·마지막 정지). 릴리스 후 위성 row 분기 철거 |
+| Type | Adopted implementation record |
+| Status | Adopted and completed — Core horizontal Timeline 반영, Slides NarrativeTimeline의 hand-rolled row 분기 철거·위임 완료 |
 | Owner | Design system owner |
-| Last reviewed | 2026-08-16 |
-| Source | 소비처: `lk-design-system-slides/src/components/editorial/NarrativeTimeline.jsx`(direction='row' 분기) · 대상: `components/content/Timeline` |
+| Last reviewed | 2026-08-22 |
+| Source | 소비처: `lk-design-system-slides/src/components/editorial/NarrativeTimeline.jsx`(Core Timeline 위임) · 대상: `components/content/Timeline` |
+| Current roadmap | 종결 — 새 backlog 없음 |
+
+이 제안은 채택되어 Core와 Slides 소비처까지 구현을 마쳤다. 아래 문제·API·마이그레이션
+서술은 구현 전 결정 근거로 보존하며 현재 public 계약은 source와 generated guide를 우선한다.
 
 `Timeline`에 `orientation: 'vertical' | 'horizontal'`(기본 vertical)을 추가하자는
 제안이다. 현재 Timeline은 세로 전용이고(".d.ts 자체가 '세로 이벤트 타임라인'"),

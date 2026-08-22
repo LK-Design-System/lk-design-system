@@ -1,4 +1,4 @@
-**TelemetryValue** — 값, 단위, 의미 상태, freshness, timestamp를 함께 읽는 compact telemetry readout입니다. `LK Robotics Extension`이며 표 셀, viewport HUD 주변, 좁은 진단 패널에 사용합니다.
+**TelemetryValue** — 값, 단위, 의미 상태, freshness, timestamp를 함께 읽는 compact telemetry readout입니다. Owner는 **LDS Product / Operations**이고 WDS provenance는 `product-extension`이며, 표 셀, viewport HUD 주변, 좁은 진단 패널에 사용합니다.
 
 ```jsx
 <TelemetryValue

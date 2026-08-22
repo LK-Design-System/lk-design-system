@@ -49,7 +49,7 @@
 - Activating the already selected mode re-emits that value through onChange; it never toggles a required editor mode off.
 - Adobe Spectrum Action Group reinforced keeping one density, size, selection model, and complete interaction-state grammar across related tool groups.
 - Figma: Navigating UI3 reinforced keeping high-frequency editing controls stable while panels remain secondary and collapsible.
-- EditorToolbar — single-select, high-frequency canvas tool group for LK Robotics editors.
+- EditorToolbar — single-select, high-frequency canvas tool group for reusable Product editors.
 
 ## 정량 규칙
 
@@ -63,7 +63,7 @@
 
 ## Responsive
 
-- Classification: LK Robotics Extension. Use it for mutually exclusive editing modes such as select, route, region, marker, erase, or pan. Document commands belong in CanvasEditorCommandBar; viewport navigation and zoom controls belong in ViewerToolbar inside the viewport.
+- Owner: LDS Product / Workspace. Its WDS provenance is product-extension. Use it for mutually exclusive editing modes such as select, route, region, marker, erase, or pan. Document commands belong in CanvasEditorCommandBar; viewport navigation and zoom controls belong in ViewerToolbar inside the viewport.
 
 ## Content and writing
 

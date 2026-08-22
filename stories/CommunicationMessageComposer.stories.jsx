@@ -155,6 +155,10 @@ const meta = {
       title: '초안과 전송 행동을 하나의 입력 영역에 모읍니다',
       description:
         '사람 또는 AI와 대화하며 짧은 요청과 여러 줄 초안을 작성할 때 사용합니다. 보조 행동은 slot으로 조합하고 작성기는 값·전송·중지만 소유합니다. 즉시 명령은 열고 닫는 명령 메뉴에, 안내·연속 설정은 비모달 팝오버에 두며 외부 렌더·닫기·배치는 각 기반 요소가 소유합니다. 단발성 검색에는 독립 검색 입력을 사용하세요.',
+      decisionGuidance: {
+        useWhen: '사람 또는 AI와 대화하며 짧은 요청과 여러 줄 초안을 작성하고 전송·중지 상태를 한 입력 영역에서 보여 줄 때 사용합니다.',
+        avoidWhen: '대화 맥락이 없는 단발성 검색, 일반 폼 입력, 제품 전용 명령 실행에는 사용하지 않습니다.',
+      },
     },
     docs: {
       description: {
@@ -333,7 +337,7 @@ export const MessageComposerOverview = {
 };
 
 export const CompactDensity = {
-  name: '밀도 · compact',
+  name: '반응형 · 조밀한 밀도',
   parameters: storyDescription(
     '360px의 좁은 대화 열에서 compact 작성기를 확인합니다. 텍스트 입력 영역, 보조 동작, 기본 보내기 동작의 읽기 순서와 최소 조작 영역은 유지하고 동작은 겹치지 않아야 합니다.',
   ),

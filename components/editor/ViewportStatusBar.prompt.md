@@ -27,4 +27,4 @@
 - [Blender Manual: Status Bar](https://docs.blender.org/manual/fi/5.0/interface/window_system/status_bar.html) places contextual shortcuts, messages, and scene statistics in a compact bottom region. LDS separates a transient message from persistent telemetry while keeping both local to the viewport.
 - [Unity Manual: Learning the Interface](https://docs.unity3d.com/kr/530/Manual/LearningtheInterface.html) establishes a dominant scene viewport with stable surrounding editor chrome. LDS therefore omits document actions from the status surface and keeps view-specific readouts subordinate to the viewport.
 
-This is an **LK Robotics Extension**, not WDS parity. Interactive scrubbers, transport controls, global connection health, and application workflow progress are intentionally outside this primitive.
+Owner: **LDS Product / Workspace**. Its WDS provenance is `product-extension`, not WDS parity. Interactive scrubbers, transport controls, global connection health, and application workflow progress are intentionally outside this primitive.

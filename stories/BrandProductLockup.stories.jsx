@@ -62,7 +62,7 @@ function CompactRevealFixture() {
 }
 
 export const ProductLockupStandard = {
-  name: '표준 · 모브랜드 우선',
+  name: '개요',
   parameters: storyDescription(
     '고정 Lockup과 registry ProductLockup의 Portal 정본이 같은지 확인하고, LK가 먼저 읽히는 Console·reverse·compact 조합을 검증합니다.',
   ),
@@ -171,7 +171,7 @@ export const ProductLockupStandard = {
 };
 
 export const NarrowCompact = {
-  name: '좁은 영역 · compact 전환',
+  name: '반응형 · 좁은 영역의 제품명 전환',
   parameters: storyDescription(
     '제품 셸이 자신의 breakpoint에서 같은 SVG의 viewport 폭만 바꾸는 예입니다. LK mark는 고정되고 제품명 영역만 오른쪽으로 reveal/conceal 됩니다.',
   ),

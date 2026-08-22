@@ -2,13 +2,15 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Implementation follow-up |
-| Status | Follow-up |
+| Type | Completed implementation follow-up |
+| Status | Completed — LDS 수정, Portal current package pin·responsive viewport 적용·내부 selector workaround 부재와 static chat contract 확인 |
 | Owner | LDS Core owner (`Select`) · LDS Product owner (`MessageFeed`) |
-| Last reviewed | 2026-08-03 |
-| Consumer evidence | LK Portal floating knowledge chat, `@lk-design-system/*@0.1.0-rc.13` |
+| Last reviewed | 2026-08-22 |
+| Consumer evidence | 원 발견: LK Portal floating knowledge chat, `rc.13`; current package set: consumer registry의 `0.1.0-rc.69.29` |
 | Completion source | Changed component source, focused Storybook contracts, generated workspace packages, verified local package candidate |
-| Implementation state | LDS source·story·generated rc.21 candidate 완료 · LK Portal pin·workaround 제거·workflow 검증 대기 |
+| Implementation state | LDS source·story와 Portal composition 반영 완료; Portal `ui-parity`가 floating chat density·responsive viewport 계약을 고정 |
+| Completion evidence | LDS `0.1.0-rc.69.29` · Portal `0d1eb48bd76f50ca889c2ab979ca9c4af70f4e2a` |
+| Current roadmap | 종결 — 제품 전체 adoption 승격은 [`LDS_ROADMAP.md`](LDS_ROADMAP.md) R2가 별도로 소유 |
 
 이 문서는 LK Portal의 플로팅 지식 대화에서 확인한 두 LDS 레이아웃 finding을
 나중에 동일한 근거와 범위로 수정하기 위한 실행 기록이다. 화면별 CSS 보정 목록이
@@ -278,5 +280,7 @@ Windows canonical artifact를 사용하고 필요하면 동일 package set을 Li
 - [x] 정상·460px·320px 시각 검수
 - [x] 전체 repository gate와 package/consumer 검증 통과
 - [x] 새 미발행 rc.21 local LDS package candidate set 생성 및 검증
-- [ ] LK Portal이 새 package set을 pin하고 내부 workaround를 제거
-- [ ] 이 문서의 Status를 `Completed`로 바꾸고 완료 revision/release를 기록
+- [x] LK Portal이 current Core·Theme·Product package set을 pin
+- [x] LK Portal 내부 LDS selector workaround가 없고 `viewportInset` responsive composition을 사용
+- [x] Portal static `ui-parity` contract가 floating chat density·responsive viewport를 검증
+- [x] 이 문서의 Status를 `Completed`로 바꾸고 완료 revision/release를 기록

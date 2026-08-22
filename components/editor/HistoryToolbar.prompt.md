@@ -26,4 +26,4 @@
 - [Adobe Spectrum Action Group](https://spectrum.adobe.com/page/action-group/) supports one density and directional focus grammar for a related action group while preserving disabled commands for layout continuity.
 - [Figma: Navigating UI3](https://help.figma.com/hc/en-us/articles/23954856027159-Navigating-UI3) supports keeping global edit history in the stable editor chrome while contextual view and selection controls remain local.
 
-This is an **LK Robotics Extension**. Application-specific history timelines, branching histories, autosave, and conflict recovery stay outside the LDS component contract.
+Owner: **LDS Product / Workspace**. Its WDS provenance is `product-extension`. Application-specific history timelines, branching histories, autosave, and conflict recovery stay outside the LDS component contract.

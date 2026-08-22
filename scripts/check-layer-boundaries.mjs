@@ -4,20 +4,20 @@ import ts from 'typescript';
 
 const root = process.cwd();
 const componentsRoot = 'components';
-const classificationPath = 'docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json';
-const publicEntryPath = 'src/index.js';
-const roboticsEntryPath = 'src/robotics.js';
-const roboticsExternalSurfacePath = 'docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json';
-const roboticsExternalPackage = '@lk-design-system/lds-robotics-ui';
-
-const layers = ['core', 'theme', 'product', 'robotics'];
+const ownerAuthorityPath = 'docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json';
+const ownerAuthority = JSON.parse(await readFile(path.join(root, ownerAuthorityPath), 'utf8'));
+const authorityLayers = Array.isArray(ownerAuthority.layers) ? ownerAuthority.layers : [];
+const layers = authorityLayers.map((layer) => layer.id);
 const layerSet = new Set(layers);
-const allowedDependencies = {
-  core: new Set(['core']),
-  theme: new Set(['core', 'theme']),
-  product: new Set(['core', 'product']),
-  robotics: new Set(['core', 'product', 'robotics']),
-};
+const allowedDependencies = Object.fromEntries(
+  authorityLayers.map((layer) => [layer.id, new Set(layer.allowedDependencies ?? [])]),
+);
+const classificationPath = ownerAuthority.compatibilityProjections?.historicalProvenanceRegistry;
+const publicEntryPath = ownerAuthority.compatibilityProjections?.aggregateEntry;
+const roboticsAuthority = authorityLayers.find((layer) => layer.id === 'robotics');
+const roboticsEntryPath = 'src/robotics.js';
+const roboticsExternalSurfacePath = roboticsAuthority?.externalSurface;
+const roboticsExternalPackage = roboticsAuthority?.package;
 
 const assetExtensions = new Set([
   '.avif',
@@ -108,6 +108,19 @@ async function collectModules(directoryRelative, output = []) {
     if (entry.isDirectory()) {
       await collectModules(relative, output);
     } else if (entry.isFile() && isJavaScriptModule(relative)) {
+      output.push(relative);
+    }
+  }
+  return output.sort((a, b) => a.localeCompare(b));
+}
+
+async function collectFiles(directoryRelative, predicate, output = []) {
+  const directory = path.join(root, directoryRelative);
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const relative = toPosix(path.join(directoryRelative, entry.name));
+    if (entry.isDirectory()) {
+      await collectFiles(relative, predicate, output);
+    } else if (entry.isFile() && predicate(relative)) {
       output.push(relative);
     }
   }
@@ -248,6 +261,228 @@ async function readSource(relativePath) {
   return readFile(path.join(root, relativePath), 'utf8');
 }
 
+function extractStoryTitle(source, storyPath) {
+  const match = source.match(
+    /(?:^|\r?\n)\s*(?:const\s+meta\s*=\s*|export\s+default\s*)\{\s*(?:id:\s*(?:'[^']*'|"[^"]*"),\s*)?title:\s*(['"])(.*?)\1/,
+  );
+  return match ? match[2] : null;
+}
+
+async function validateLiveOwnerAuthority(componentModules) {
+  const failures = [];
+  const packageModuleOwnerRows = new Map();
+  const requiredLayers = ['core', 'theme', 'product', 'robotics'];
+
+  if (
+    ownerAuthority.schemaVersion !== 1
+    || ownerAuthority.kind !== 'lds-owner-authority-contract'
+    || ownerAuthority.status !== 'active'
+    || ownerAuthority.authority !== 'live'
+  ) {
+    failures.push(`${ownerAuthorityPath} must be the active schemaVersion 1 live owner authority.`);
+  }
+  if (new Set(layers).size !== layers.length || layers.some((layer) => typeof layer !== 'string')) {
+    failures.push(`${ownerAuthorityPath} layer ids must be unique non-empty strings.`);
+  }
+  if (JSON.stringify([...layers].sort()) !== JSON.stringify([...requiredLayers].sort())) {
+    failures.push(`${ownerAuthorityPath} layers must be ${requiredLayers.join(', ')}.`);
+  }
+  if (!classificationPath || !publicEntryPath || !roboticsExternalSurfacePath || !roboticsExternalPackage) {
+    failures.push(`${ownerAuthorityPath} must name the compatibility projection and Robotics external surface.`);
+  }
+
+  const storyPrefixes = new Map();
+  for (const layer of authorityLayers) {
+    if (!Array.isArray(layer.allowedDependencies) || layer.allowedDependencies.length === 0) {
+      failures.push(`${layer.id || '<missing layer>'}: allowedDependencies must be a non-empty array.`);
+    }
+    for (const dependency of layer.allowedDependencies ?? []) {
+      if (!layerSet.has(dependency)) {
+        failures.push(`${layer.id}: unknown allowed dependency ${JSON.stringify(dependency)}.`);
+      }
+    }
+    if (typeof layer.storybookPrefix !== 'string' || layer.storybookPrefix.trim() === '') {
+      failures.push(`${layer.id}: storybookPrefix must be a non-empty string.`);
+    } else {
+      const rows = storyPrefixes.get(layer.storybookPrefix) ?? [];
+      rows.push(layer.id);
+      storyPrefixes.set(layer.storybookPrefix, rows);
+    }
+
+    if (layer.externalSurface) {
+      if (layer.id !== 'robotics' || layer.packageRoot || layer.moduleRoot || layer.tokenRoot) {
+        failures.push(`${layer.id}: only Robotics may use an externalSurface instead of local package roots.`);
+      }
+      continue;
+    }
+
+    const requiredPaths = ['packageRoot', 'moduleRoot', 'publicEntry', 'tokenRoot', 'styleEntry'];
+    for (const field of requiredPaths) {
+      if (!normalizeManifestPath(layer[field])) failures.push(`${layer.id}: ${field} must be a repository-relative path.`);
+    }
+    if (requiredPaths.some((field) => !normalizeManifestPath(layer[field]))) continue;
+
+    const packageManifestPath = `${normalizeManifestPath(layer.packageRoot)}/package.json`;
+    const packageManifest = await readJson(packageManifestPath);
+    if (packageManifest.name !== layer.package || packageManifest.lds?.layer !== layer.id) {
+      failures.push(`${packageManifestPath} must declare ${layer.package} with lds.layer ${layer.id}.`);
+    }
+
+    const moduleRoot = normalizeManifestPath(layer.moduleRoot);
+    const packageModules = await collectModules(moduleRoot);
+    if (packageModules.length === 0) failures.push(`${layer.id}: ${moduleRoot} contains no JavaScript modules.`);
+    for (const packageModule of packageModules) {
+      const relative = packageModule.slice(`${moduleRoot}/`.length);
+      const compatibilityPath = `${componentsRoot}/${relative}`;
+      const rows = packageModuleOwnerRows.get(compatibilityPath) ?? [];
+      rows.push({ ownerLayer: layer.id, packageModule });
+      packageModuleOwnerRows.set(compatibilityPath, rows);
+    }
+  }
+
+  for (const [prefix, owners] of storyPrefixes) {
+    if (owners.length !== 1) failures.push(`Storybook prefix ${JSON.stringify(prefix)} has ${owners.length} owners.`);
+  }
+  for (const modulePath of componentModules) {
+    const rows = packageModuleOwnerRows.get(modulePath) ?? [];
+    if (rows.length !== 1) {
+      failures.push(`${modulePath}: live package projection must assign exactly one owner; found ${rows.map((row) => row.ownerLayer).join(', ') || 'none'}.`);
+    }
+  }
+  for (const [modulePath, rows] of packageModuleOwnerRows) {
+    if (!componentModules.includes(modulePath)) {
+      failures.push(`${modulePath}: live package projection is stale (${rows.map((row) => row.packageModule).join(', ')}).`);
+    }
+  }
+
+  const tokenRows = new Map();
+  const tokenGroupIds = new Set();
+  for (const group of ownerAuthority.tokenGroups ?? []) {
+    if (typeof group?.id !== 'string' || group.id.trim() === '' || tokenGroupIds.has(group.id)) {
+      failures.push(`Token group id must be unique and non-empty: ${JSON.stringify(group?.id)}.`);
+    } else {
+      tokenGroupIds.add(group.id);
+    }
+    if (!layerSet.has(group?.ownerLayer)) failures.push(`${group?.id || '<token group>'}: unknown ownerLayer ${JSON.stringify(group?.ownerLayer)}.`);
+    if (!Array.isArray(group?.sources) || group.sources.length === 0) {
+      failures.push(`${group?.id || '<token group>'}: sources must be a non-empty array.`);
+      continue;
+    }
+    for (const source of group.sources) {
+      const normalized = normalizeManifestPath(source);
+      if (!normalized || !normalized.endsWith('.css')) {
+        failures.push(`${group.id}: invalid token source ${JSON.stringify(source)}.`);
+        continue;
+      }
+      const rows = tokenRows.get(normalized) ?? [];
+      rows.push({ group: group.id, ownerLayer: group.ownerLayer });
+      tokenRows.set(normalized, rows);
+    }
+    if (group.profileContract) {
+      const profileContractPath = normalizeManifestPath(group.profileContract);
+      if (!profileContractPath) {
+        failures.push(`${group.id}: profileContract must be a repository-relative path.`);
+      } else {
+        const profileContract = await readJson(profileContractPath);
+        if (profileContract.ownerLayer !== group.ownerLayer) {
+          failures.push(`${group.id}: ${profileContractPath} ownerLayer must be ${group.ownerLayer}.`);
+        }
+      }
+    }
+  }
+
+  let tokenSourceCount = 0;
+  for (const layer of authorityLayers.filter((entry) => entry.tokenRoot)) {
+    const tokenRoot = normalizeManifestPath(layer.tokenRoot);
+    const actualSources = await collectFiles(tokenRoot, (file) => file.endsWith('.css'));
+    tokenSourceCount += actualSources.length;
+    const actualSet = new Set(actualSources);
+    for (const source of actualSources) {
+      const rows = tokenRows.get(source) ?? [];
+      if (rows.length !== 1 || rows[0]?.ownerLayer !== layer.id) {
+        failures.push(`${source}: token source must have exactly one ${layer.id} owner group; found ${rows.map((row) => `${row.group}=${row.ownerLayer}`).join(', ') || 'none'}.`);
+      }
+    }
+    for (const [source, rows] of tokenRows) {
+      if (rows.some((row) => row.ownerLayer === layer.id) && !actualSet.has(source)) {
+        failures.push(`${source}: ${layer.id} token group source is stale or outside ${tokenRoot}.`);
+      }
+    }
+
+    const styleEntry = normalizeManifestPath(layer.styleEntry);
+    const styleSource = await readSource(styleEntry);
+    const imports = [...styleSource.matchAll(/@import\s+['"]([^'"]+)['"]\s*;/g)]
+      .map((match) => path.posix.normalize(path.posix.join(path.posix.dirname(styleEntry), match[1])));
+    const duplicateImports = imports.filter((source, index) => imports.indexOf(source) !== index);
+    if (duplicateImports.length > 0) {
+      failures.push(`${styleEntry}: duplicate token imports ${[...new Set(duplicateImports)].join(', ')}.`);
+    }
+    const missingImports = actualSources.filter((source) => !imports.includes(source));
+    const staleImports = imports.filter((source) => !actualSet.has(source));
+    if (missingImports.length > 0 || staleImports.length > 0) {
+      failures.push(`${styleEntry}: token imports must equal the ${layer.id} token group (missing ${missingImports.join(', ') || 'none'}; stale ${staleImports.join(', ') || 'none'}).`);
+    }
+  }
+  for (const [source, rows] of tokenRows) {
+    if (rows.length !== 1) failures.push(`${source}: token source is assigned to ${rows.length} groups.`);
+  }
+
+  const storyRoot = normalizeManifestPath(ownerAuthority.storybook?.sourceRoot);
+  const storyFiles = storyRoot
+    ? await collectFiles(storyRoot, (file) => file.endsWith('.stories.jsx'))
+    : [];
+  if (!storyRoot || storyFiles.length === 0) failures.push(`${ownerAuthorityPath} must identify local Storybook sources.`);
+  const exceptionRows = new Map();
+  for (const exception of ownerAuthority.storybook?.ownerExceptions ?? []) {
+    const source = normalizeManifestPath(exception?.source);
+    if (!source) {
+      failures.push(`Storybook owner exception has an invalid source: ${JSON.stringify(exception?.source)}.`);
+      continue;
+    }
+    const rows = exceptionRows.get(source) ?? [];
+    rows.push(exception);
+    exceptionRows.set(source, rows);
+  }
+  for (const storyFile of storyFiles) {
+    const title = extractStoryTitle(await readSource(storyFile), storyFile);
+    if (!title) {
+      failures.push(`${storyFile}: canonical Storybook page is missing a literal meta title.`);
+      continue;
+    }
+    const matchedOwners = authorityLayers
+      .filter((layer) => title.startsWith(`${layer.storybookPrefix}/`))
+      .map((layer) => layer.id);
+    const exceptions = exceptionRows.get(storyFile) ?? [];
+    if (matchedOwners.length === 1 && exceptions.length === 0) continue;
+    if (
+      matchedOwners.length === 0
+      && exceptions.length === 1
+      && exceptions[0].title === title
+      && layerSet.has(exceptions[0].ownerLayer)
+      && typeof exceptions[0].reason === 'string'
+      && exceptions[0].reason.trim().length >= 24
+    ) {
+      continue;
+    }
+    failures.push(`${storyFile}: canonical Storybook page must have exactly one owner; title ${JSON.stringify(title)} maps to ${matchedOwners.join(', ') || 'none'} and has ${exceptions.length} exception rows.`);
+  }
+  for (const [source, rows] of exceptionRows) {
+    if (rows.length !== 1) failures.push(`${source}: Storybook owner exception is registered ${rows.length} times.`);
+    if (!storyFiles.includes(source)) failures.push(`${source}: Storybook owner exception references a missing local story.`);
+  }
+
+  return {
+    failures,
+    packageModuleOwners: new Map(
+      [...packageModuleOwnerRows]
+        .filter(([, rows]) => rows.length === 1)
+        .map(([modulePath, rows]) => [modulePath, rows[0].ownerLayer]),
+    ),
+    storyCount: storyFiles.length,
+    tokenSourceCount,
+  };
+}
+
 async function readPublicExports() {
   const source = await readSource(publicEntryPath);
   const { sourceFile, failures: parseFailures } = parseJavaScript(publicEntryPath, source);
@@ -375,6 +610,8 @@ async function main() {
   const componentModules = await collectModules(componentsRoot);
   const componentModuleSet = new Set(componentModules);
   const ownershipFailures = [];
+  const liveAuthority = await validateLiveOwnerAuthority(componentModules);
+  ownershipFailures.push(...liveAuthority.failures);
 
   if (!Array.isArray(manifest.groups)) {
     throw new Error(`${classificationPath} must define groups[].`);
@@ -415,10 +652,6 @@ async function main() {
   ownershipFailures.push(...publicEntryFailures);
   for (const entry of externalRoboticsExports) {
     for (const name of entry.exports) {
-      const classifications = classifiedExports.get(name) || [];
-      if (classifications.length === 1 && classifications[0].ownerLayer !== 'robotics') {
-        continue;
-      }
       publicExports.push({
         name,
         source: entry.source,
@@ -447,6 +680,18 @@ async function main() {
       ownershipFailures.push(
         `${exportName}: public export is classified ${classifications.length} times (${classifications.map((row) => row.group).join(', ')})`,
       );
+    } else {
+      const physicalOwners = rows.map((row) => (
+        row.external ? 'robotics' : liveAuthority.packageModuleOwners.get(row.source)
+      )).filter(Boolean);
+      const uniquePhysicalOwners = [...new Set(physicalOwners)];
+      if (uniquePhysicalOwners.length !== 1) {
+        ownershipFailures.push(`${exportName}: live package surface must resolve exactly one owner; found ${uniquePhysicalOwners.join(', ') || 'none'}.`);
+      } else if (classifications[0].ownerLayer !== uniquePhysicalOwners[0]) {
+        ownershipFailures.push(
+          `${exportName}: historical provenance projection says ${classifications[0].ownerLayer}, but live package owner is ${uniquePhysicalOwners[0]}.`,
+        );
+      }
     }
   }
   for (const [exportName, rows] of classifiedExports) {
@@ -477,6 +722,11 @@ async function main() {
       ownershipFailures.push(
         `${source}: public exports assign multiple owners (${rows.map((row) => `${row.exportName}=${row.ownerLayer}`).join(', ')})`,
       );
+      continue;
+    }
+    const liveOwner = liveAuthority.packageModuleOwners.get(source);
+    if (liveOwner !== owners[0]) {
+      ownershipFailures.push(`${source}: historical provenance projection says ${owners[0]}, but live package owner is ${liveOwner || 'missing'}.`);
       continue;
     }
     moduleOwners.set(source, owners[0]);
@@ -514,6 +764,11 @@ async function main() {
       ownershipFailures.push(`${modulePath}: module is classified as both public and internal.`);
       continue;
     }
+    const liveOwner = liveAuthority.packageModuleOwners.get(modulePath);
+    if (liveOwner !== rows[0].ownerLayer) {
+      ownershipFailures.push(`${modulePath}: historical internal projection says ${rows[0].ownerLayer}, but live package owner is ${liveOwner || 'missing'}.`);
+      continue;
+    }
     if (layerSet.has(rows[0].ownerLayer)) moduleOwners.set(modulePath, rows[0].ownerLayer);
   }
 
@@ -526,6 +781,57 @@ async function main() {
     if (!componentModuleSet.has(modulePath)) {
       ownershipFailures.push(`${modulePath}: owner classification is stale; component module does not exist.`);
     }
+  }
+
+  const liveExportOwners = new Map();
+  for (const [exportName, rows] of indexedExports) {
+    const owners = [...new Set(rows.map((row) => (
+      row.external ? 'robotics' : liveAuthority.packageModuleOwners.get(row.source)
+    )).filter(Boolean))];
+    if (owners.length === 1) liveExportOwners.set(exportName, owners[0]);
+  }
+  const requiredDomainDecisions = [
+    'generic-command-primitives',
+    'application-navigation',
+    'workspace-command-chrome',
+    'renderer-neutral-telemetry',
+    'renderer-neutral-equipment',
+    'renderer-neutral-viewer',
+    'robotics-command-and-status',
+    'robotics-spatial-navigation',
+  ];
+  const domainDecisionIds = new Set();
+  for (const decision of ownerAuthority.domainDecisions ?? []) {
+    if (typeof decision?.id !== 'string' || decision.id.trim() === '' || domainDecisionIds.has(decision.id)) {
+      ownershipFailures.push(`Domain decision id must be unique and non-empty: ${JSON.stringify(decision?.id)}.`);
+      continue;
+    }
+    domainDecisionIds.add(decision.id);
+    if (!layerSet.has(decision.ownerLayer)) {
+      ownershipFailures.push(`${decision.id}: unknown ownerLayer ${JSON.stringify(decision.ownerLayer)}.`);
+    }
+    if (!Array.isArray(decision.representativePublicExports) || decision.representativePublicExports.length === 0) {
+      ownershipFailures.push(`${decision.id}: representativePublicExports must be a non-empty array.`);
+      continue;
+    }
+    const seenExports = new Set();
+    for (const exportName of decision.representativePublicExports) {
+      if (seenExports.has(exportName)) ownershipFailures.push(`${decision.id}: duplicate representative export ${exportName}.`);
+      seenExports.add(exportName);
+      const liveOwner = liveExportOwners.get(exportName);
+      if (liveOwner !== decision.ownerLayer) {
+        ownershipFailures.push(`${decision.id}: ${exportName} must be owned by ${decision.ownerLayer}; live package owner is ${liveOwner || 'missing'}.`);
+      }
+    }
+    if (typeof decision.owns !== 'string' || decision.owns.trim().length < 24) {
+      ownershipFailures.push(`${decision.id}: owns must state the owned responsibility.`);
+    }
+    if (typeof decision.excludes !== 'string' || decision.excludes.trim().length < 24) {
+      ownershipFailures.push(`${decision.id}: excludes must state the non-owned responsibility.`);
+    }
+  }
+  for (const decisionId of requiredDomainDecisions) {
+    if (!domainDecisionIds.has(decisionId)) ownershipFailures.push(`${ownerAuthorityPath} is missing required domain decision ${decisionId}.`);
   }
 
   if (ownershipFailures.length > 0) {
@@ -614,6 +920,9 @@ async function main() {
   const totalEdges = [...moduleEdges.values()].reduce((sum, targets) => sum + targets.size, 0);
   console.log(
     `LDS layer boundary check passed: ${componentModules.length} modules and ${totalEdges} internal JavaScript edges are classified and valid.`,
+  );
+  console.log(
+    `Validated live owner authority: ${liveAuthority.tokenSourceCount} token sources, ${liveAuthority.storyCount} canonical Storybook pages and ${domainDecisionIds.size} domain boundaries have exactly one owner.`,
   );
 }
 

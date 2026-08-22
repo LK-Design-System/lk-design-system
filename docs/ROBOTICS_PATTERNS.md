@@ -5,9 +5,23 @@
 | Type | Stable domain contract |
 | Status | Current |
 | Owner | Product and Robotics component owners |
-| Last reviewed | 2026-07-14 |
+| Last reviewed | 2026-08-22 |
 
 이 문서는 완성된 화면이나 서비스 절차 예시를 정의하지 않는다. LK 디자인 시스템 안의 도메인 컴포넌트가 공통으로 지켜야 하는 상태 의미, 안전 문구, 단위 표기, 접근성 계약만 기록한다.
+
+이 문서에 함께 등장한다고 해서 모든 컴포넌트가 Robotics owner인 것은 아니다.
+현재 owner의 machine authority는
+[`OWNER_AUTHORITY_CONTRACT.json`](./references/architecture/OWNER_AUTHORITY_CONTRACT.json)이다.
+renderer-neutral telemetry·equipment·viewer와 editor chrome은 Product가 소유하고,
+robot-specific control·status·spatial navigation semantics는 Robotics가 소유한다.
+제품 애플리케이션은 양쪽을 조합하되 domain truth와 side effect를 계속 소유한다.
+
+| 책임 | Owner layer | 이 문서에서의 예 |
+| --- | --- | --- |
+| generic action/status primitive | Core | `Button`, `ActionArea`, `StatusBadge`, `Timeline`, `ConfirmDialog` |
+| renderer-neutral operations/workspace presentation | Product | `TelemetryValue`, `EquipmentStatusCard`, `ViewerFrame`, `CanvasEditorShell` |
+| robot-specific command/status/spatial semantics | Robotics | `ManualControlSession`, `RobotStatusCard`, `WaypointMarker`, `RouteOverlay` |
+| route, threshold, freshness calculation, command execution, transport | consuming product application | LDS component 입력과 workflow 조합 |
 
 Waypoint·lane·route/trajectory·공간 구역·lift 전환의 Open-RMF/Nav2 근거, renderer 결정, 실행 순서는
 [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md)에서 관리한다. 아래 Navigation
@@ -22,7 +36,7 @@ reference renderer는 **LK Robotics Extension**으로 승인됐으며 WDS parity
 
 ## Status semantics and operational truth
 
-로보틱스 상태는 하나의 포괄적인 `status`로 합치지 않는다. 사람이 “지금 이 장비를 믿고 조작할 수 있는가?”를 판단할 수 있도록 아래 의미 축을 독립적으로 전달한다. 허용 상태와 컴포넌트 소유권의 기계 판독 가능한 기준은 [`SEMANTIC_CONTRACTS.json`](./references/robotics/SEMANTIC_CONTRACTS.json)에 유지한다.
+로보틱스 상태는 하나의 포괄적인 `status`로 합치지 않는다. 사람이 “지금 이 장비를 믿고 조작할 수 있는가?”를 판단할 수 있도록 아래 의미 축을 독립적으로 전달한다. 허용 상태와 component-to-axis mapping은 [`SEMANTIC_CONTRACTS.json`](./references/robotics/SEMANTIC_CONTRACTS.json), layer owner는 [`OWNER_AUTHORITY_CONTRACT.json`](./references/architecture/OWNER_AUTHORITY_CONTRACT.json)에 유지한다.
 
 | 의미 축 | 답해야 하는 질문 | LDS 표현 책임 |
 | --- | --- | --- |
@@ -49,7 +63,7 @@ reference renderer는 **LK Robotics Extension**으로 승인됐으며 WDS parity
 
 ## Editor and map contracts
 
-Editor 컴포넌트는 **LK Robotics Extension**이며 WDS parity로 주장하지 않는다. 공식 Figma, Unity, Blender, NVIDIA Omniverse, WAI-ARIA, WCAG 자료와 내부 LDS 형제 컴포넌트를 함께 검토한 근거와 의도적 제외 항목은 [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](./EDITOR_LAYOUT_REFERENCE_MATRIX.md)에 유지한다.
+Editor 컴포넌트는 renderer-neutral **LDS Product/Workspace** 계약이며 WDS parity로 주장하지 않는다. Robotics 제품은 이 chrome 안에 robot-specific navigation과 control을 조합하지만 owner가 Robotics로 이동하지 않는다. 공식 Figma, Unity, Blender, NVIDIA Omniverse, WAI-ARIA, WCAG 자료와 내부 LDS 형제 컴포넌트를 함께 검토한 근거와 의도적 제외 항목은 [`EDITOR_LAYOUT_REFERENCE_MATRIX.md`](./EDITOR_LAYOUT_REFERENCE_MATRIX.md)에 유지한다.
 
 | 컴포넌트 | 계약 |
 | --- | --- |
@@ -81,7 +95,7 @@ Editor/Viewer control family rules:
 
 ## Viewer contracts
 
-Viewer 컴포넌트는 **LK Robotics Extension**이며 Editor의 축소판이나 제품 화면 템플릿이 아니다. 장면·지도·영상이 시각적 위계를 지배하고, 해당 viewport에만 영향을 주는 조작과 상태만 가장자리에 둔다.
+`ViewerFrame`, `Map2DCanvas`, `Scene3DFrame`, `VideoStreamTile`, `ViewerToolbar`와 telemetry readout은 renderer-neutral **LDS Product/Operations** 계약이며 Editor의 축소판이나 제품 화면 템플릿이 아니다. 장면·지도·영상이 시각적 위계를 지배하고, 해당 viewport에만 영향을 주는 조작과 상태만 가장자리에 둔다. `WaypointMarker`, `LaneOverlay`, `RouteOverlay`, `TrajectoryOverlay`, `SpatialRegion`, `FacilityTransition`, robot pose와 navigation coordinate/graph adapter는 **LK Robotics Extension**으로 유지되며 Product viewer를 합성한다.
 
 | 컴포넌트 | 계약 |
 | --- | --- |
@@ -90,13 +104,18 @@ Viewer 컴포넌트는 **LK Robotics Extension**이며 Editor의 축소판이나
 | `Scene3DFrame` | renderer-independent 3D viewport preset이다. orbit, pan, zoom, focus, home, orientation 같은 view 조작만 허용하며 scene hierarchy, inspector, transform gizmo는 Editor가 소유한다. |
 | `VideoStreamTile` | source identity와 `connecting`, `live`, `degraded`, `stale`, `paused`, `no-signal`, `error` 표현을 소유한다. user pause와 source freeze를 구분하고 WebRTC/ROS transport, reconnect 알고리즘, recording/seek session은 앱에 남긴다. |
 | `ViewerToolbar` | command와 toggle을 명시적으로 구분하고 기존 icon control의 32px, hover, focus, disabled 계약을 합성한다. 장면 위에서는 card-in-card surface 대신 최소 chrome 또는 on-dark presentation을 사용한다. |
-| `TelemetryGauge` / `TelemetryValue` | 원래 numeric precision과 unit/freshness를 보존한다. 수치와 단위는 scalar/string 계약으로 받고 주변 공백을 정규화해 보이는 lockup과 접근 가능한 값 텍스트를 동일하게 만든다. severity와 threshold policy는 제품이 계산해 전달하며, gauge는 meter semantics와 formatter만 소유한다. 빠른 수치 갱신마다 live announcement를 만들지 않는다. |
+| `TelemetryGauge` / `TelemetryValue` | Product/Operations가 원래 numeric precision과 unit/freshness 표현을 보존한다. 수치와 단위는 scalar/string 계약으로 받고 주변 공백을 정규화해 보이는 lockup과 접근 가능한 값 텍스트를 동일하게 만든다. severity와 threshold policy는 제품 애플리케이션 또는 Robotics domain이 계산해 전달하며, gauge는 meter semantics와 formatter만 소유한다. 빠른 수치 갱신마다 live announcement를 만들지 않는다. |
 
 Viewer appearance는 컴포넌트 종류를 구분하는 별도 시각 언어가 아니다. `ViewerFrame`, `Scene3DFrame`, `Map2DCanvas`는 모두 `light | dark` 축을 공유하고 3D는 dark, 2D map은 light를 기본값으로만 사용한다. 두 variant는 동일한 상태·slot·조작 계약을 유지하며 renderer children은 `--viewer-*` scoped role을 사용한다.
 
 Viewer DS 범위에서 scene tree, property editing, free docking, robot command/E-stop, transport/retry policy, product threshold schema, recording archive와 renderer-specific diagnostics는 제외한다.
 
 ## Control contracts
+
+이 절의 generic action/status primitive는 Core, equipment·viewer composition은
+Product/Operations, robot authority·dead-man·safety release semantics는 Robotics가
+소유한다. 어느 layer도 실제 command eligibility, dispatch, transport, 적용·확인
+truth를 소유하지 않으며 이는 consuming product application/runtime 경계다.
 
 | 컴포넌트 | 계약 |
 | --- | --- |
@@ -106,7 +125,7 @@ Viewer DS 범위에서 scene tree, property editing, free docking, robot command
 | `Timeline` / `StatusBadge` / `DescriptionList` | 제품이 제공한 phase order를 그대로 표시하고 accepted, applied, confirmed, failure, timed-out, superseded와 late evidence의 의미는 제품 계약으로 유지한다. |
 | `ConfirmDialog` / `Input` | typed phrase, blockers, affected resources, irreversible/external write 정책은 제품에서 조합한다. 즉시 안전 동작인 e-stop에는 confirmation을 사용하지 않는다. |
 | `ConnectionBadge` / `DescriptionList` | transport 연결과 data freshness를 분리하고 stale 값을 현재값처럼 표시하지 않는다. freshness와 health 판정은 제품이 제공한다. |
-| `EquipmentStatusCard` / `StatusBadge` / `ConnectionBadge` | 주변 설비의 identity → 보이는 대표 상태 → labeled facts → meta/action 순서를 제공한다. 연결·방향은 필요한 fact value로 조합하며 설비별 state machine, telemetry truth, command와 transport는 제품에 남긴다. 제품 저장소는 coverage inventory일 뿐 카드 anatomy·geometry·API 근거가 아니다. |
+| `EquipmentStatusCard` / `StatusBadge` / `ConnectionBadge` | Product/Operations가 주변 설비의 identity → 보이는 대표 상태 → labeled facts → meta/action 순서를 제공한다. 연결·방향은 필요한 fact value로 조합하며 설비별 state machine, telemetry truth, command와 transport는 제품 애플리케이션에 남긴다. 제품 저장소는 coverage inventory일 뿐 카드 anatomy·geometry·API 근거가 아니다. |
 | `ViewerToolbar` | viewer control은 icon-only button으로 두고 tooltip 또는 label을 제공한다. |
 | `Callout` | 작업 전에 항상 읽어야 하는 고정 안내에만 사용한다. 실시간 연결·권한·command eligibility 상태에는 `Banner`를 사용한다. |
 | `ConfirmDialog` | 파괴적 또는 되돌릴 수 없는 action은 cancel과 confirm label을 명시한다. |

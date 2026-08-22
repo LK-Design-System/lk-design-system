@@ -1,6 +1,6 @@
-**EditorToolbar** — single-select, high-frequency canvas tool group for LK Robotics editors.
+**EditorToolbar** — single-select, high-frequency canvas tool group for reusable Product editors.
 
-Classification: **LK Robotics Extension**. Use it for mutually exclusive editing modes such as select, route, region, marker, erase, or pan. Document commands belong in `CanvasEditorCommandBar`; viewport navigation and zoom controls belong in `ViewerToolbar` inside the viewport.
+Owner: **LDS Product / Workspace**. Its WDS provenance is `product-extension`. Use it for mutually exclusive editing modes such as select, route, region, marker, erase, or pan. Document commands belong in `CanvasEditorCommandBar`; viewport navigation and zoom controls belong in `ViewerToolbar` inside the viewport.
 
 ```jsx
 <EditorToolbar

@@ -74,7 +74,10 @@ const index = JSON.parse(await readFile(indexPath, 'utf8'));
 const stories = Object.values(index.entries || {}).filter((entry) => entry.type === 'story');
 const publicStories = stories.filter(isPublicStory);
 const hiddenStories = stories.filter((entry) => !isPublicStory(entry));
-const parityStories = stories.filter((entry) => /card parity/i.test(entry.name || ''));
+const visualParityStories = stories.filter(
+  (entry) => Array.isArray(entry.tags) && entry.tags.includes('visual-parity'),
+);
+const namedParityStories = stories.filter((entry) => /card parity/i.test(entry.name || ''));
 
 const failures = [];
 
@@ -132,10 +135,15 @@ for (const story of stories) {
   }
 }
 
-for (const story of parityStories) {
+for (const story of namedParityStories) {
   const tags = story.tags || [];
   if (tags.includes('dev')) failures.push(`visual parity story must be hidden from sidebar with !dev: ${storyLabel(story)}`);
   if (!tags.includes('visual-parity')) failures.push(`visual parity story is missing visual-parity tag: ${storyLabel(story)}`);
+}
+for (const story of visualParityStories) {
+  if ((story.tags || []).includes('dev')) {
+    failures.push(`visual-parity tagged story must be hidden from sidebar with !dev: ${storyLabel(story)}`);
+  }
 }
 
 const forbiddenPublicExports = new Set([
@@ -156,10 +164,10 @@ for (const story of publicStories) {
 }
 
 assert(publicStories.length > 0, 'No public Storybook stories found.');
-assert(parityStories.length > 0, 'No visual parity stories found; visual diff coverage may have been removed.');
+assert(visualParityStories.length > 0, 'No visual parity stories found; visual diff coverage may have been removed.');
 
 assert(failures.length === 0, `Storybook public surface cleanup guard failed:\n${failures.join('\n')}`);
 
 console.log(
-  `Validated Storybook public surface: ${publicStories.length} public stories, ${hiddenStories.length} hidden stories, ${parityStories.length} hidden visual parity stories, 0 duplicate public cleanup violations.`
+  `Validated Storybook public surface: ${publicStories.length} public stories, ${hiddenStories.length} hidden stories, ${visualParityStories.length} hidden visual parity stories, 0 duplicate public cleanup violations.`
 );

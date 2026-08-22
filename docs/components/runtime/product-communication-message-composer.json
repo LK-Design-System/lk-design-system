@@ -404,7 +404,7 @@
       },
       {
         "id": "lds-product-communication-message-composer--compact-density",
-        "name": "밀도 · compact",
+        "name": "반응형 · 조밀한 밀도",
         "role": "responsive"
       }
     ],

@@ -2,9 +2,11 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Operations reform proposal |
-| Status | **O-A·O-B·O-C 실행 완료 (2026-08-16).** O4는 문서(`OPERATIONS.md`) 완료, 이관 시험만 사람 축으로 남음. 실행 기록은 §7. |
+| Type | Implemented operations reform and follow-up record |
+| Status | O-A·O-B·O-C와 O4 문서·1차 이관 시험 완료; 보완 문서 기준 `질문 0` 재시험 1회가 남음 |
 | Owner | Design system owner · Frontend platform |
+| Last reviewed | 2026-08-22 |
+| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) R7 — zero-question handoff rerun |
 | 선행 문서 | [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) — 구조 개편(Phase 0–3)은 완료됐고, 이 문서는 그 개편이 드러낸 **운영 비용** 4건을 다룬다 |
 | 근거 | 전부 실측: rc.69.15 릴리스에서 측정한 수동 기록 32곳(선행 문서 부록 F), slides-ui 핀 격차(rc.4 vs rc.69.18), check:fast의 검사 50개 중 설계상 빨간불 1개, 유지보수자 1인 |
 
@@ -219,8 +221,8 @@ Phase O-C  O2 핀 리포트           O1의 계산 로직 일부를 재사용
 ### 7.4 O4 — 운영 가이드
 
 [`OPERATIONS.md`](OPERATIONS.md)를 신설했다. 릴리스 레시피(O-B 이후 기준),
-위성 생멸 규칙, 정상 상태의 정의, 자주 쓰는 명령. **이관 시험은 사람 축이라
-미실시**이며, 문서 §6이 그 사실을 스스로 밝히고 있다.
+위성 생멸 규칙, 정상 상태의 정의, 자주 쓰는 명령. 최초 작성 당시 이관 시험은
+미실시였으나 이후 §7.7에서 1차 시험을 수행하고 발견한 문서 구멍을 보완했다.
 
 ### 7.5 달성
 

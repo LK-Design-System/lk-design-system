@@ -52,6 +52,7 @@
 ## Behavior and interaction
 
 - CanvasEditorCommandBar - Stable document-level command group for CanvasEditorShell.
+- Owner: LDS Product / Workspace. Its WDS provenance is product-extension, not a WDS parity claim. Arbitrary docking, application menus, collaboration presence, and file-workflow state remain product responsibilities.
 
 ## 정량 규칙
 

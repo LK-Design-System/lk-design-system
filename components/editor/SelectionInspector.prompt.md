@@ -30,7 +30,7 @@ Use it for a selected canvas or scene object such as a waypoint, route segment, 
 - 숫자 `0`, boolean `false`, 빈 문자열은 누락으로 취급하지 않습니다. boolean은 문자열로, 빈 문자열은 `—`로 표시하며 `valueNode`에도 같은 원칙을 적용합니다.
 - Field and object status use the canonical `signal / positive / cautionary / negative` vocabulary. `warning` and `danger` are compatibility aliases, not names for new usage.
 
-Research basis (LK Robotics extension, not WDS parity):
+Research basis (LDS Product / Workspace pattern with `product-extension` provenance, not WDS parity):
 
 - [Figma right properties panel](https://help.figma.com/hc/en-us/articles/360039832014-Design-prototype-and-inspect-right-sidebar-) and [selection guidance](https://help.figma.com/hc/en-us/articles/360040449873-Select-layers-and-objects) support a selection-bound right panel and one shared canvas/tree selection model.
 - [Unity Inspector](https://docs.unity3d.com/es/current/Manual/UsingTheInspector.html) supports a contextual property surface that follows the selected object.

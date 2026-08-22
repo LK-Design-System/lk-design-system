@@ -72,7 +72,7 @@
 ## Responsive
 
 - NIST Guide to the SI, 7.2: SI·복합 단위와 °C는 값과 공백으로 분리하고 평면각 °만 붙입니다. LDS는 compact UI에서도 이 구분을 유지하며 %와 ‰는 제품 표기 관례 예외로 붙입니다.
-- TelemetryValue — 값, 단위, 의미 상태, freshness, timestamp를 함께 읽는 compact telemetry readout입니다. LK Robotics Extension이며 표 셀, viewport HUD 주변, 좁은 진단 패널에 사용합니다.
+- TelemetryValue — 값, 단위, 의미 상태, freshness, timestamp를 함께 읽는 compact telemetry readout입니다. Owner는 LDS Product / Operations이고 WDS provenance는 product-extension이며, 표 셀, viewport HUD 주변, 좁은 진단 패널에 사용합니다.
 
 ## Content and writing
 

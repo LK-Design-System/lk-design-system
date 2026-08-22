@@ -169,8 +169,7 @@
     }
   ],
   "responsive": [
-    "NIST Guide to the SI, 7.2: SI·복합 단위와 °C는 값과 공백으로 분리하고 평면각 °만 붙입니다. LDS는 compact UI에서도 이 구분을 유지하며 %와 ‰는 제품 표기 관례 예외로 붙입니다.",
-    "TelemetryValue — 값, 단위, 의미 상태, freshness, timestamp를 함께 읽는 compact telemetry readout입니다. LK Robotics Extension이며 표 셀, viewport HUD 주변, 좁은 진단 패널에 사용합니다."
+    "NIST Guide to the SI, 7.2: SI·복합 단위와 °C는 값과 공백으로 분리하고 평면각 °만 붙입니다. LDS는 compact UI에서도 이 구분을 유지하며 %와 ‰는 제품 표기 관례 예외로 붙입니다."
   ],
   "contentGuidance": [
     "value는 string | number, unit은 문자열 계약입니다. 두 값의 앞뒤 공백을 제거한 뒤 %, ‰, 평면각 °는 값에 붙이고, °C, °F, ms, Hz, m/s, N·m, dBm 같은 SI·복합 단위는 한 칸 띄웁니다. 표시 DOM과 보조기술이 읽는 텍스트는 같은 literal separator를 공유합니다.",

@@ -2,11 +2,12 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Plan |
-| Status | Adopted — 0.1.0-rc.2에서 코어 Status 가족으로 편입 완료, Robotics는 rc.3 핀에서 소비 중 |
+| Type | Adopted implementation record |
+| Status | Adopted and completed — `0.1.0-rc.2`에서 Core Status family 편입, current Robotics rc.29에서 소비 |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-30 |
+| Last reviewed | 2026-08-22 |
 | Source | 구현: `components/status/OverlayStatusChip.jsx` (편입 완료) · 소비 규약: `lk-design-system-robotics/docs/OVERLAY_STATUS_CHIP.md`. 근거였던 Robotics 내부 모듈은 편입과 함께 삭제됨 |
+| Current roadmap | 종결 — 새 backlog 없음 |
 
 상호작용 표면(캔버스, 뷰어, 제어 영역)이 떠 있는 채로 비활성이거나 배경
 작업 상태를 알려야 할 때, **레이아웃에 참여하지 않고 표면 위에 앵커되는**

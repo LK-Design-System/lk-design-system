@@ -255,14 +255,14 @@
         "role": "variants-states"
       },
       {
-        "id": "lds-product-data-collections-table--density-comparison",
-        "name": "변형·상태 · 기본 밀도와 좁은 밀도",
-        "role": "responsive"
-      },
-      {
         "id": "lds-product-data-collections-table--banded-rows",
         "name": "변형·상태 · 밴드 행",
         "role": "variants-states"
+      },
+      {
+        "id": "lds-product-data-collections-table--density-comparison",
+        "name": "반응형 · 기본 밀도와 좁은 밀도",
+        "role": "responsive"
       }
     ],
     "hiddenEvidence": 4

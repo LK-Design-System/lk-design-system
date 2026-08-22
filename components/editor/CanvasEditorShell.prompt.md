@@ -40,7 +40,7 @@ The shell owns stable regions only: document header, optional mode tabs, edit-to
 - `status` is optional and passive. Do not move undo/redo or save into it.
 - 좁은 화면에서는 `mobileActiveRegion="canvas" | "layers" | "panel"`로 주 영역 하나만 노출합니다. 제품은 `responsiveNavigation`에 LDS Tabs/SegmentedControl을 조합합니다. 기본값은 캔버스입니다.
 
-Research basis (LK Robotics extension, not WDS parity):
+Research basis (LDS Product / Workspace pattern with `product-extension` provenance, not WDS parity):
 
 - [Figma UI3 navigation](https://help.figma.com/hc/en-us/articles/23954856027159-Navigating-UI3), [Figma Layers panel](https://help.figma.com/hc/en-us/articles/360039831974-View-layers-and-assets-in-the-Layers-Panel), and [Unity interface](https://docs.unity3d.com/kr/530/Manual/LearningtheInterface.html) converge on a dominant center viewport, structural hierarchy at left, and contextual properties at right.
 - [Blender regions](https://docs.blender.org/manual/en/4.0/interface/window_system/regions.html) supports keeping high-frequency viewport regions local to the main editor area.

@@ -2,7 +2,7 @@
 
 ## Classification and problem
 
-**LK Robotics Extension.** MQTT, rosbridge, WebSocket 같은 transport 연결 사실을 신호 막대와 짧은 라벨로 표시한다. 연결 상태만 소유하며 데이터 freshness, 장비 health, operability, command eligibility, control authority를 추론하지 않는다.
+**Owner: LDS Product / Operations.** WDS provenance는 `product-extension`이며, `components/robotics` 경로는 호환 표면일 뿐 현재 owner를 결정하지 않는다. MQTT, rosbridge, WebSocket 같은 transport 연결 사실을 신호 막대와 짧은 라벨로 표시한다. 연결 상태만 소유하며 데이터 freshness, 장비 health, operability, command eligibility, control authority를 추론하지 않는다.
 
 ```jsx
 <ConnectionBadge connectionState="connected" />
@@ -63,4 +63,4 @@
 
 ## Representative verification
 
-`LDS Robotics/Status/Connection Badge`의 `개요` story를 960px normal viewport와 360px viewport의 내부 320px pattern에서 확인한다. 7개 canonical state, wrapping, overflow, hidden-label accessible name을 검토하고 `StatusBadge` sibling과 typography·semantic token 위계를 비교한다. legacy parity story는 `status` 호환 표면을 계속 검증한다.
+`LDS Product/Status/Connection Badge`의 `개요` story를 960px normal viewport와 360px viewport의 내부 320px pattern에서 확인한다. 7개 canonical state, wrapping, overflow, hidden-label accessible name을 검토하고 `StatusBadge` sibling과 typography·semantic token 위계를 비교한다. legacy parity story는 `status` 호환 표면을 계속 검증한다.

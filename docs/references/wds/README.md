@@ -26,15 +26,20 @@ additional product or robotics work into explicit extension layers. Since the
 origin, not current authority.
 
 Runtime ownership (`core`, `theme`, `product`, `robotics`) and design provenance
-are independent axes. `PUBLIC_EXPORT_CLASSIFICATION.json` is authoritative for
-both; WDS provenance does not automatically place an export in the Core package
-or Storybook layer.
+are independent axes. Current runtime ownership comes from
+[`OWNER_AUTHORITY_CONTRACT.json`](../architecture/OWNER_AUTHORITY_CONTRACT.json)
+and the physical package/token/Storybook surfaces it identifies.
+`PUBLIC_EXPORT_CLASSIFICATION.json` retains WDS/LK provenance plus a checked
+compatibility owner projection; it does not decide the live package or
+Storybook layer. WDS provenance does not automatically place an export in Core.
 
 The rule is:
 - `WDS Core` is the inherited baseline.
 - `LK Theme Override` is LK's visual identity applied over WDS.
 - `LK Product Extension` is reusable LK product UI beyond direct WDS coverage.
-- `LK Robotics Extension` is domain-specific robotics/viewer/editor UI.
+- `LK Robotics Extension` is robot-specific control, status, spatial navigation,
+  and safety-domain UI. Renderer-neutral viewer/editor/telemetry/equipment
+  surfaces are Product under the current owner authority.
 - Evidence, governance, and audit material lives in `docs/`, not in
   Storybook.
 
@@ -67,9 +72,11 @@ contract separate so action styling stays consistent across stories:
   visual samples for queued WDS nodes
 - `TOKEN_MAP.json`: machine-readable WDS variable to LK token/CSS mapping
   and family-level crosswalk. Its component-family rows map source families to LDS
-  surfaces; export-level owner/provenance remains authoritative only in
-  `PUBLIC_EXPORT_CLASSIFICATION.json`.
-- `LAYER_CLASSIFICATION.json`: Storybook owner layer, explicit cross-layer evidence exceptions, and story title source of truth
+  surfaces; export-level provenance and the compatibility owner projection remain
+  recorded in `PUBLIC_EXPORT_CLASSIFICATION.json`.
+- `LAYER_CLASSIFICATION.json`: historical Storybook title/evidence projection and
+  explicit cross-layer evidence exceptions, checked against actual story sources
+  and the live owner authority
 - `VISUAL_TOKEN_EXCEPTIONS.json`: documented exceptions for provider-owned
   visual values that must not be tokenized
 - `COVERAGE_AUDIT.json`: machine-readable WDS page/section coverage matrix
@@ -86,8 +93,9 @@ contract separate so action styling stays consistent across stories:
   token files, Storybook pages, and LK theme overrides
 - `FIGMA_NODE_AUDIT_QUEUE.json`: exact WDS source nodes, closure criteria, and
   next Figma reads required before `partial` rows can become parity claims
-- `PUBLIC_EXPORT_CLASSIFICATION.json`: every public LDS export assigned one
-  runtime owner layer and one independent WDS/LK provenance
+- `PUBLIC_EXPORT_CLASSIFICATION.json`: every public LDS export's independent
+  WDS/LK provenance plus a compatibility runtime-owner projection; live owner is
+  determined outside this archive
 - `VARIANT_AUDIT_CHECKLIST.json`: family-level WDS variant/state/slot checks
   with Storybook evidence refs for the next Figma parity pass
 - `COVERAGE_GAPS.md`: WDS concepts found in Figma that need LDS coverage or
@@ -128,8 +136,10 @@ Operating rules:
    typography, status tone, radius, and effects.
 3. Keep reusable LK product UI outside direct WDS coverage under LK Product
    Extension.
-4. Keep robotics, viewer, map, telemetry, and editor UI under LK Robotics
-   Extension.
+4. Reserve LK Robotics Extension for robot-specific control, status, navigation
+   coordinates/graphs, spatial overlays, and safety semantics. Record generic
+   viewer/editor/telemetry/equipment presentation as Product Extension when it
+   is outside direct WDS coverage.
 5. Treat PDFs as local evidence and keep detailed mappings in
    `FOUNDATION_SOURCE_PDFS.json` and `COMPONENT_SOURCE_PDFS.json`.
 
@@ -205,8 +215,8 @@ legacy references.
 Use this folder to:
 - compare WDS tokens, components, and documentation conventions with LK
 - track where LK color and brand overrides preserve or diverge from WDS
-- keep the boundary clear between WDS core, LK theme overrides, and LK Robotics
-  extensions
+- keep the boundary clear between WDS core, LK theme overrides, LK Product
+  extensions, and LK Robotics extensions
 
 Notes:
 - The `.fig` file is a reference artifact.

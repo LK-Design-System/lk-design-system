@@ -2,10 +2,17 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Implementation plan |
-| Status | Proposed — 검토 대기 (2026-07-17) |
+| Type | Superseded historical plan |
+| Status | Superseded — current Robotics의 Navigation Path System·Route/Trajectory·Navigation Viewer IA가 이 추출 전 계획을 대체 |
 | Owner | Design system owner · Robotics domain engineering |
 | Date | 2026-07-17 |
+| Last reviewed | 2026-08-22 |
+| Current roadmap | 없음 — 현재 backlog로 실행하지 않음 |
+
+이 계획은 Robotics 저장소 추출 전 작성됐다. 현재 external Robotics `main`과 rc.29에는
+`LDS Robotics/Navigation/Path System`, 분리된 Route/Trajectory, `LDS Robotics/Viewer/Navigation
+Viewer`가 이미 존재한다. 따라서 아래 단계와 당시 수치는 역사적 진단으로만 보존하며
+현재 IA backlog로 재실행하지 않는다. 새 gap은 current source에서 별도 evidence로 열어야 한다.
 
 `LDS Robotics/Navigation` 그룹의 8개 렌더러 페이지(Waypoint · Lane · Route · Trajectory · Regions · Facility Transition · Hazard Marker · Annotation Layer)를 대상으로, **공개 API를 동결한 채 스토리/태그/이름/IA만** 재분해한다. 8개 페이지를 병렬 감사한 결과를 종합했다. 렌더러 컴포넌트(RouteOverlay 등)의 props·동작은 일절 바뀌지 않는다.
 

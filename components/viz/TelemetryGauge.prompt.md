@@ -1,4 +1,4 @@
-**TelemetryGauge** — 알려진 최소·최대 범위 안의 텔레메트리 값을 표시하는 270° radial meter입니다. `LK Robotics Extension`으로 분류하며, 작업 진행률이나 로딩에는 사용하지 않습니다.
+**TelemetryGauge** — 알려진 최소·최대 범위 안의 텔레메트리 값을 표시하는 270° radial meter입니다. Owner는 **LDS Product / Operations**이고 WDS provenance는 `product-extension`이며, 작업 진행률이나 로딩에는 사용하지 않습니다.
 
 ```jsx
 <TelemetryGauge value={1.4} max={2} unit="m/s" label="속도" tone="signal" />

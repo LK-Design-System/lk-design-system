@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": 1,
+  "kind": "lds-owner-authority-contract",
+  "status": "active",
+  "authority": "live",
+  "purpose": "Define layer ownership from current package, token and Storybook surfaces without treating historical WDS provenance as live authority.",
+  "layers": [
+    {
+      "id": "core",
+      "package": "@lk-design-system/lds-core",
+      "packageRoot": "packages/core",
+      "moduleRoot": "packages/core/src/components",
+      "publicEntry": "packages/core/src/index.js",
+      "tokenRoot": "packages/core/tokens",
+      "styleEntry": "packages/core/styles.css",
+      "storybookPrefix": "LDS Core",
+      "allowedDependencies": ["core"]
+    },
+    {
+      "id": "theme",
+      "package": "@lk-design-system/lds-theme",
+      "packageRoot": "packages/theme",
+      "moduleRoot": "packages/theme/src/components",
+      "publicEntry": "packages/theme/src/index.js",
+      "tokenRoot": "packages/theme/tokens",
+      "styleEntry": "packages/theme/styles.css",
+      "storybookPrefix": "LDS Theme",
+      "allowedDependencies": ["core", "theme"]
+    },
+    {
+      "id": "product",
+      "package": "@lk-design-system/lds-product",
+      "packageRoot": "packages/product",
+      "moduleRoot": "packages/product/src/components",
+      "publicEntry": "packages/product/src/index.js",
+      "tokenRoot": "packages/product/tokens",
+      "styleEntry": "packages/product/styles.css",
+      "storybookPrefix": "LDS Product",
+      "allowedDependencies": ["core", "product"]
+    },
+    {
+      "id": "robotics",
+      "package": "@lk-design-system/lds-robotics-ui",
+      "externalSurface": "docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json",
+      "storybookPrefix": "LDS Robotics",
+      "allowedDependencies": ["core", "product", "robotics"]
+    }
+  ],
+  "compatibilityProjections": {
+    "componentRoot": "components",
+    "aggregateEntry": "src/index.js",
+    "historicalProvenanceRegistry": "docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json",
+    "historicalStoryTitleRegistry": "docs/references/wds/LAYER_CLASSIFICATION.json",
+    "note": "ownerLayer fields under references/wds are checked projections retained beside provenance; they do not decide current ownership."
+  },
+  "tokenGroups": [
+    {
+      "id": "core-runtime-contract",
+      "ownerLayer": "core",
+      "sources": [
+        "packages/core/tokens/base.css",
+        "packages/core/tokens/components.css",
+        "packages/core/tokens/focus.css",
+        "packages/core/tokens/grid.css",
+        "packages/core/tokens/spacing.css"
+      ]
+    },
+    {
+      "id": "theme-runtime-values",
+      "ownerLayer": "theme",
+      "sources": [
+        "packages/theme/tokens/base.css",
+        "packages/theme/tokens/color-atomic.css",
+        "packages/theme/tokens/color-components.css",
+        "packages/theme/tokens/color-semantic.css",
+        "packages/theme/tokens/effects.css",
+        "packages/theme/tokens/fonts.css",
+        "packages/theme/tokens/profiles.css",
+        "packages/theme/tokens/typography.css"
+      ],
+      "profileContract": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json"
+    },
+    {
+      "id": "product-viewer-roles",
+      "ownerLayer": "product",
+      "sources": [
+        "packages/product/tokens/components.css"
+      ]
+    }
+  ],
+  "storybook": {
+    "sourceRoot": "stories",
+    "ownerExceptions": [
+      {
+        "source": "stories/DesignSystemDirectory.stories.jsx",
+        "title": "LDS/Directory",
+        "ownerLayer": "core",
+        "kind": "cross-layer-directory",
+        "reason": "The directory is global navigation maintained with Core documentation infrastructure, not a second runtime layer."
+      }
+    ]
+  },
+  "domainDecisions": [
+    {
+      "id": "generic-command-primitives",
+      "ownerLayer": "core",
+      "representativePublicExports": ["ActionArea", "Banner", "Button", "ConfirmDialog", "StatusBadge", "Timeline"],
+      "owns": "Generic action, confirmation and lifecycle-presentation primitives.",
+      "excludes": "Command eligibility, approval, execution, transport and completion truth remain in the product application."
+    },
+    {
+      "id": "application-navigation",
+      "ownerLayer": "product",
+      "productFamily": "application",
+      "representativePublicExports": ["BottomNav", "Breadcrumb", "Menubar", "NavRail", "SideNav", "TopBar", "UserMenu"],
+      "owns": "Reusable product identity and destination-navigation composition.",
+      "excludes": "Routes, permissions, current destination and product information architecture remain in the product application."
+    },
+    {
+      "id": "workspace-command-chrome",
+      "ownerLayer": "product",
+      "productFamily": "workspace",
+      "representativePublicExports": ["CanvasEditorCommandBar", "CanvasEditorShell", "EditorToolbar", "HistoryToolbar", "LayerPanel", "SelectionInspector", "ViewportStatusBar"],
+      "owns": "Renderer-neutral editor and document-workspace chrome.",
+      "excludes": "Document commands, persistence, renderer lifecycle and product workflow remain in the product application or specialist renderer."
+    },
+    {
+      "id": "renderer-neutral-telemetry",
+      "ownerLayer": "product",
+      "productFamily": "operations",
+      "representativePublicExports": ["BatteryGauge", "ConnectionBadge", "TelemetryGauge", "TelemetryValue"],
+      "owns": "Renderer-neutral numeric, unit, connection and freshness presentation.",
+      "excludes": "Telemetry truth, thresholds, freshness calculation, transport and robot semantics remain in the product application or Robotics layer."
+    },
+    {
+      "id": "renderer-neutral-equipment",
+      "ownerLayer": "product",
+      "productFamily": "operations",
+      "representativePublicExports": ["EquipmentStatusCard"],
+      "owns": "Reusable equipment identity, state-fact and action-slot anatomy.",
+      "excludes": "Equipment state machines, direction, command and transport truth remain in the product application."
+    },
+    {
+      "id": "renderer-neutral-viewer",
+      "ownerLayer": "product",
+      "productFamily": "operations",
+      "representativePublicExports": ["Map2DCanvas", "Scene3DFrame", "VideoStreamTile", "ViewerFrame", "ViewerToolbar"],
+      "owns": "Renderer-neutral viewport frame, state placement and viewport-local controls.",
+      "excludes": "Navigation graph meaning, robot pose, spatial safety semantics, renderer lifecycle and transport remain outside this Product family."
+    },
+    {
+      "id": "robotics-command-and-status",
+      "ownerLayer": "robotics",
+      "representativePublicExports": ["DirectionalPad", "Joystick", "ManualControlSession", "RobotStatusCard"],
+      "owns": "Robot-specific authority, arm, dead-man, safety release and robot operational-state presentation.",
+      "excludes": "Actual robot command execution, transport, policy and outcome truth remain in the product application and runtime."
+    },
+    {
+      "id": "robotics-spatial-navigation",
+      "ownerLayer": "robotics",
+      "representativePublicExports": ["FacilityTransition", "LaneOverlay", "NavigationCoordinateBoundary", "OccupancyMapLayer", "RobotPoseMarker", "RouteOverlay", "SpatialRegion", "TrajectoryOverlay", "WaypointMarker"],
+      "owns": "Robot navigation coordinates, graph adapters, pose, route, trajectory, facility and spatial-domain presentation semantics.",
+      "excludes": "Generic application navigation and renderer-neutral viewer chrome remain Product-owned; planning and transport remain in the application/runtime."
+    }
+  ]
+}

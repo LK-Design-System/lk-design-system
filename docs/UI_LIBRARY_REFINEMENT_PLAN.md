@@ -2,13 +2,14 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Implementation plan and completion record |
-| Status | Current |
+| Type | Completed implementation record |
+| Status | Completed — source·type·prompt·Storybook·overlay 계약 구현; current consumer evidence는 registry가 소유 |
 | Owner | Design system owner · Core/Product component owners · Frontend platform |
-| Last reviewed | 2026-08-03 |
+| Last reviewed | 2026-08-22 |
 | Scope | `@lk-design-system/lds-core`, `@lk-design-system/lds-product`의 공용 UI 라이브러리 계약 |
-| Evidence | 현재 문서 계약, 미발행 `0.1.0-rc.21` local package candidate, 이슈 #6~#30, [`SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md`](SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md) |
-| Implementation state | LDS source·type·prompt·Storybook·generated package candidate 완료 · LK Portal 채택과 실제 workflow 검증 대기 |
+| Evidence | 현재 component contracts · 이슈 #6~#30 · [`SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md`](SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md) · [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) |
+| Implementation state | LDS source·type·prompt·Storybook 완료 · Portal은 current package set `build-verified`; 제품 전체 승격 evidence는 roadmap이 소유 |
+| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) R2 — product adoption promotion |
 
 이 계획의 목표는 컴포넌트 수를 늘리는 것이 아니라, 자주 사용하는 LDS 컴포넌트가
 제품과 레이아웃이 달라져도 같은 API·DOM·상태·접근성·스타일·overlay 계약으로
@@ -18,6 +19,9 @@
 반면 실제 이슈는 개별 컴포넌트의 상태·크기·구조·레이아웃 책임이 공통 라이브러리
 계약으로 충분히 승격되지 않아 반복됐다. 따라서 이 계획은 기존 정책을 대체하지 않고,
 아래 문서를 실제 컴포넌트 표면에 일관되게 적용하는 실행 계획이다.
+
+> 아래 rc.21 수치와 구현 단계는 2026-08-02 당시 snapshot이다. 현재 package version과
+> consumer 단계는 package manifest와 consumer registry를 사용한다.
 
 - [`COMPONENT_API_STATE_MATRIX.md`](COMPONENT_API_STATE_MATRIX.md): API grammar와 상태 증거
 - [`API_OPENNESS_POLICY.md`](API_OPENNESS_POLICY.md): 구조 개방과 조합 보호

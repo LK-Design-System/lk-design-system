@@ -108,14 +108,13 @@
   "contentGuidance": [
     "Open-RMF RobotState: robot mode, battery, location과 message sequence를 독립 필드로 제공한다. 연결만으로 telemetry freshness나 robot health를 추론하지 않는다.",
     "Kubernetes Pod Conditions: Unknown, transition time, reason, message를 condition evidence로 분리한다. connected를 복합 ready로 승격하지 않고 freshness/reason을 별도 evidence로 둔다.",
-    "보이는 라벨이 기본이며 bar 수나 색만으로 상태를 전달하지 않는다.",
-    "LK Robotics Extension. MQTT, rosbridge, WebSocket 같은 transport 연결 사실을 신호 막대와 짧은 라벨로 표시한다. 연결 상태만 소유하며 데이터 freshness, 장비 health, operability, command eligibility, control authority를 추론하지 않는다."
+    "보이는 라벨이 기본이며 bar 수나 색만으로 상태를 전달하지 않는다."
   ],
   "accessibility": [
     "focus/disabled: 비대화형 상태 표시이므로 자체 focus 또는 disabled 축을 추가하지 않는다.",
     "showLabel={false}이면 기본 문자열 라벨이 role=\"img\"의 accessible name으로 남는다. 비문자 custom label을 숨기면 aria-label을 제공한다.",
     "Accessibility and exclusions.",
-    "LDS Robotics/Status/Connection Badge의 개요 story를 960px normal viewport와 360px viewport의 내부 320px pattern에서 확인한다. 7개 canonical state, wrapping, overflow, hidden-label accessible name을 검토하고 StatusBadge sibling과 typography·semantic token 위계를 비교한다. legacy parity story는 status 호환 표면을 계속 검증한다."
+    "LDS Product/Status/Connection Badge의 개요 story를 960px normal viewport와 360px viewport의 내부 320px pattern에서 확인한다. 7개 canonical state, wrapping, overflow, hidden-label accessible name을 검토하고 StatusBadge sibling과 typography·semantic token 위계를 비교한다. legacy parity story는 status 호환 표면을 계속 검증한다."
   ],
   "exceptions": [],
   "related": [

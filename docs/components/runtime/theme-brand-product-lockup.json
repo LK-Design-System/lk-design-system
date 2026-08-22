@@ -143,14 +143,14 @@
     "entryStoryId": "lds-theme-brand-product-lockup--product-lockup-standard",
     "publicStories": [
       {
-        "id": "lds-theme-brand-product-lockup--narrow-compact",
-        "name": "좁은 영역 · compact 전환",
-        "role": "responsive"
+        "id": "lds-theme-brand-product-lockup--product-lockup-standard",
+        "name": "개요",
+        "role": "overview"
       },
       {
-        "id": "lds-theme-brand-product-lockup--product-lockup-standard",
-        "name": "표준 · 모브랜드 우선",
-        "role": "overview"
+        "id": "lds-theme-brand-product-lockup--narrow-compact",
+        "name": "반응형 · 좁은 영역의 제품명 전환",
+        "role": "responsive"
       }
     ],
     "hiddenEvidence": 0

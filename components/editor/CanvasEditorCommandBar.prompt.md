@@ -34,4 +34,4 @@ Use it in the shell `toolbar` slot for history and document-lifecycle commands. 
 - [Apple HIG: Toolbars](https://developer.apple.com/design/human-interface-guidelines/toolbars) informed the leading history/document grouping and keeping viewport actions in their own contextual region.
 - [Adobe Spectrum Action Group](https://spectrum.adobe.com/page/action-group/) informed consistent small-control density and logical grouping without inventing command-specific chrome.
 
-This is an **LK Robotics Extension**, not a WDS parity claim. Arbitrary docking, application menus, collaboration presence, and file-workflow state remain product responsibilities.
+Owner: **LDS Product / Workspace**. Its WDS provenance is `product-extension`, not a WDS parity claim. Arbitrary docking, application menus, collaboration presence, and file-workflow state remain product responsibilities.

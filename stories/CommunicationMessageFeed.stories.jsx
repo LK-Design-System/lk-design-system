@@ -243,7 +243,7 @@ export const Overview = {
 };
 
 export const CompactDensity = {
-  name: '밀도 · compact',
+  name: '반응형 · 조밀한 밀도',
   parameters: storyDescription(
     '460px의 짧은 대화 기록에서 compact 피드 안쪽 여백과 조밀한 메시지 하나를 확인합니다. 이전 기록과 최신 메시지 동작은 기록 영역 앞뒤의 읽기 순서를 유지하고, 피드는 제품 표면을 추가하지 않습니다.',
   ),

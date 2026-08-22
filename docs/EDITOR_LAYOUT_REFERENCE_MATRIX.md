@@ -4,13 +4,13 @@
 | --- | --- |
 | Type | Stable domain reference contract |
 | Status | Current |
-| Owner | Robotics component owner · Product engineering |
-| Last reviewed | 2026-07-14 |
+| Owner | Product / Workspace component owner · Product engineering |
+| Last reviewed | 2026-08-22 |
 | Coverage source | `LK-ROBOTICS/lk_web_viz` at the revision recorded below |
 
-이 문서는 `CanvasEditorShell`과 로보틱스 편집 패턴을 변경할 때 적용할 설계 근거와 영역 소유권을 정의한다. LK 제품 source는 필요한 workflow·region·state와 조합 가능성을 확인하는 coverage 자료이며 editor anatomy, 시각 위계, 치수나 public API의 설계 authority가 아니다.
+이 문서는 `CanvasEditorShell`과 renderer-neutral Product 편집 패턴을 변경할 때 적용할 설계 근거와 영역 소유권을 정의한다. LK 제품 source는 필요한 workflow·region·state와 조합 가능성을 확인하는 coverage 자료이며 editor anatomy, 시각 위계, 치수나 public API의 설계 authority가 아니다.
 
-이 편집기 패턴은 **LK Robotics Extension**이다. 아래 외부 자료는 에디터 카테고리의 해부 구조, 상호작용, 접근성 기대치를 확인하기 위한 근거이며 WDS parity 증거가 아니다. 외부 제품의 스타일이나 완성 화면을 복제하지 않고 LDS 토큰과 기존 컴포넌트 계약으로 번역한다.
+이 편집기 패턴의 현재 owner는 [`OWNER_AUTHORITY_CONTRACT.json`](references/architecture/OWNER_AUTHORITY_CONTRACT.json)이 정한 **LDS Product / Workspace**이며, WDS provenance는 `product-extension`이다. 아래 외부 자료는 에디터 카테고리의 해부 구조, 상호작용, 접근성 기대치를 확인하기 위한 근거이며 WDS parity 증거가 아니다. 외부 제품의 스타일이나 완성 화면을 복제하지 않고 LDS 토큰과 기존 컴포넌트 계약으로 번역한다.
 
 ## Evidence priority
 

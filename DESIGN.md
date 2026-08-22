@@ -3,9 +3,9 @@
 ## Source of truth
 
 - Status: Current — all 16 workflow responsibility traces are verified.
-- Last refreshed: 2026-08-08
+- Last refreshed: 2026-08-22
 - Primary product surfaces: LK operations dashboards, product application shells, data-heavy monitoring and investigation surfaces, and the shared component layers that support them.
-- Evidence reviewed: `readme.md`, `docs/OPERATING_MODEL.md`, `docs/PRODUCT_FRONTEND_COVERAGE.md`, `docs/AI_DESIGN_SYSTEM_GUIDE.md`, `docs/COMPONENT_API_STATE_MATRIX.md`, `docs/STORYBOOK_INFORMATION_ARCHITECTURE.md`, `components/layout/DashboardShell.*`, `components/layout/DashboardGrid.*`, and their Storybook stories.
+- Evidence reviewed: `readme.md`, `docs/OPERATING_MODEL.md`, `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json`, `docs/references/architecture/PRODUCT_FAMILY_CONTRACT.json`, `docs/PRODUCT_FRONTEND_COVERAGE.md`, `docs/AI_DESIGN_SYSTEM_GUIDE.md`, `docs/COMPONENT_API_STATE_MATRIX.md`, `docs/STORYBOOK_INFORMATION_ARCHITECTURE.md`, `components/layout/DashboardShell.*`, `components/layout/DashboardGrid.*`, and their Storybook stories.
 - Decision: Operations Dashboard is an **LDS Product pattern family**, not a separate design system, repository, theme, or complete screen template.
 - Governance: this file is the design decision contract for LDS UI work. Component prompts and detailed audit documents may add evidence, but they must not contradict the ownership boundaries here.
 
@@ -95,9 +95,21 @@
 - Token/component ownership:
   - Core owns generic primitives, layout mechanics, accessibility behavior, and foundation tokens.
   - Theme owns LK brand, typography, semantic color values, and brand assets.
-  - Product owns reusable Operations Dashboard composition and state-presentation patterns.
-  - Robotics owns reusable robot, telemetry, map, viewer, and safety-domain presentation semantics.
-  - Product applications own routes, domain truth, permissions, policy, persistence, commands, and final screen composition.
+  - Product owns reusable Application, Operations, and Workspace composition. This includes renderer-neutral telemetry readouts, equipment anatomy, viewer chrome, editor chrome, and Operations Dashboard patterns.
+  - Robotics owns robot-specific status and control semantics, navigation coordinates and graph adapters, spatial overlays, and safety-domain presentation semantics. It composes Product viewer chrome instead of owning a second generic viewer.
+  - Product applications own routes, domain truth, thresholds, freshness calculation, permissions, policy, persistence, command execution, and final screen composition.
+
+The live boundary is machine-readable in
+[`OWNER_AUTHORITY_CONTRACT.json`](docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json).
+Names that are easy to over-generalize resolve as follows:
+
+| Term | LDS owner | Boundary |
+| --- | --- | --- |
+| telemetry | Product/Operations | numeric, unit, connection, and freshness presentation only; the application or Robotics domain supplies truth and policy |
+| viewer | Product/Operations | renderer-neutral frame, state placement, and viewport-local controls; Robotics owns navigation overlays and spatial meaning |
+| equipment | Product/Operations | reusable identity, fact, state, and action-slot anatomy; the application owns equipment state machines and commands |
+| command | Core primitives + Product workspace chrome + Robotics control semantics | the consuming application always owns eligibility, execution, transport, and completion truth |
+| navigation | Product/Application for destinations; Robotics for spatial navigation | app routes and information architecture stay in the consuming product; robot graph/pose/route meaning stays in Robotics |
 
 ## Accessibility
 

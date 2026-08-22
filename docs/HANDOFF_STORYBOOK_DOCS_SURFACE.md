@@ -2,10 +2,10 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Work handoff |
-| Status | Implemented · uncommitted work verified |
+| Type | Historical work handoff |
+| Status | Superseded snapshot — 2026-07-26 Storybook Docs 작업 기록; 현재 source·branch·검사 상태의 권위가 아님 |
 | Owner | Design system owner |
-| Last reviewed | 2026-07-26 |
+| Last reviewed | 2026-08-22 |
 | Branch | `storybook-follows-lds` |
 | Remote | `origin` · `LK-Design-System/lk-design-system` |
 

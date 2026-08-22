@@ -1,9 +1,14 @@
 {
   "$schema": "./LDS_CONSUMER_REGISTRY.schema.json",
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "kind": "lds-consumer-registry",
   "generatedAt": "2026-08-22",
   "ldsVersion": "0.1.0-rc.69.29",
+  "packageRelease": {
+    "channel": "release-candidate",
+    "availability": "not-attested",
+    "note": "The registry records the pinned RC package identity but does not infer registry availability from consumer vendor artifacts."
+  },
   "entries": [
     {
       "id": "portal",
@@ -51,6 +56,7 @@
         "ops/lk-portal/package-lock.json"
       ],
       "attestation": "attestations/lk-portal.json",
+      "deployment": { "status": "not-attested" },
       "legacyActiveReferences": 0,
       "notes": "Portal uses the default application expression profile and remains light-only by product decision."
     },
@@ -108,6 +114,7 @@
         "ops/lk_web_viz/scripts/verify_lds_organization_adoption.py"
       ],
       "attestation": "attestations/lk-web-viz.json",
+      "deployment": { "status": "not-attested" },
       "legacyActiveReferences": 0,
       "notes": "Web Viz uses the operations profile, light/dark themes, and keeps the historical Editorial artifact only in provenance/vendor history."
     }

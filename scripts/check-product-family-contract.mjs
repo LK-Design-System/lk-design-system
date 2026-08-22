@@ -6,6 +6,8 @@ const contractPath = 'docs/references/architecture/PRODUCT_FAMILY_CONTRACT.json'
 const entryPath = 'packages/product/src/index.js';
 const packagePath = 'packages/product/package.json';
 const packagedContractPath = 'packages/product/docs/product-family-contract.json';
+const ownerAuthorityPath = 'docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json';
+const ownerAuthorityRef = `${ownerAuthorityPath}#domainDecisions`;
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -31,12 +33,14 @@ function parsePublicSources(source) {
 const contract = JSON.parse(await readFile(path.join(root, contractPath), 'utf8'));
 const packageManifest = JSON.parse(await readFile(path.join(root, packagePath), 'utf8'));
 const packagedContract = JSON.parse(await readFile(path.join(root, packagedContractPath), 'utf8'));
+const ownerAuthority = JSON.parse(await readFile(path.join(root, ownerAuthorityPath), 'utf8'));
 const entry = await readFile(path.join(root, entryPath), 'utf8');
 
 assert(contract.schemaVersion === 1, `${contractPath} must use schemaVersion 1.`);
 assert(contract.status === 'active' && contract.authority === 'live', `${contractPath} must be the active live contract.`);
 assert(contract.package === packageManifest.name, `${contractPath} package must match ${packagePath}.`);
 assert(contract.layer === packageManifest.lds?.layer, `${contractPath} layer must match package metadata.`);
+assert(contract.ownerBoundaryAuthority === ownerAuthorityRef, `${contractPath} must delegate cross-layer boundaries to ${ownerAuthorityRef}.`);
 assert(packageManifest.lds?.familyContract === './docs/product-family-contract.json', `${packagePath} must point to its packaged family contract.`);
 assert(JSON.stringify(packagedContract) === JSON.stringify(contract), `${packagedContractPath} must match ${contractPath}.`);
 assert(Array.isArray(contract.families) && contract.families.length === 3, `${contractPath} must define Application, Operations and Workspace.`);
@@ -60,6 +64,7 @@ const rows = parsePublicSources(entry);
 assert(rows.length > 0, `${entryPath} has no public exports.`);
 const seenNames = new Set();
 const familyCounts = new Map(familyIds.map((id) => [id, 0]));
+const familyByExport = new Map();
 const failures = [];
 for (const row of rows) {
   for (const name of row.names) {
@@ -74,10 +79,31 @@ for (const row of rows) {
     continue;
   }
   familyCounts.set(matchedFamilies[0], familyCounts.get(matchedFamilies[0]) + 1);
+  for (const name of row.names) familyByExport.set(name, matchedFamilies[0]);
 }
 for (const [family, count] of familyCounts) {
   assert(count > 0, `${contractPath}: ${family} has no public Product source modules.`);
 }
 if (failures.length > 0) throw new Error(`Product family contract failed:\n${failures.sort().map((failure) => `- ${failure}`).join('\n')}`);
 
-console.log(`Validated Product family contract: ${rows.length} public source modules, ${seenNames.size} exports, families ${familyIds.join(', ')}.`);
+const boundaryFailures = [];
+const productBoundaryDecisions = (ownerAuthority.domainDecisions ?? [])
+  .filter((decision) => decision.ownerLayer === 'product');
+assert(productBoundaryDecisions.length > 0, `${ownerAuthorityPath} must define Product boundary decisions.`);
+for (const decision of productBoundaryDecisions) {
+  if (!familyIds.includes(decision.productFamily)) {
+    boundaryFailures.push(`${decision.id}: Product boundary must name one of ${familyIds.join(', ')}; found ${JSON.stringify(decision.productFamily)}.`);
+    continue;
+  }
+  for (const exportName of decision.representativePublicExports ?? []) {
+    const family = familyByExport.get(exportName);
+    if (family !== decision.productFamily) {
+      boundaryFailures.push(`${decision.id}: ${exportName} must belong to Product/${decision.productFamily}; found ${family || 'missing'}.`);
+    }
+  }
+}
+if (boundaryFailures.length > 0) {
+  throw new Error(`Product owner boundary contract failed:\n${boundaryFailures.sort().map((failure) => `- ${failure}`).join('\n')}`);
+}
+
+console.log(`Validated Product family contract: ${rows.length} public source modules, ${seenNames.size} exports, families ${familyIds.join(', ')}, ${productBoundaryDecisions.length} cross-layer boundary decisions.`);

@@ -26,6 +26,7 @@ or another appropriate attribution surface.
 
 | 작업 | 필수 진입점 |
 | --- | --- |
+| LDS 고도화 우선순위·실행 순서 판단 | [`LDS 고도화 로드맵`](docs/LDS_ROADMAP.md) |
 | 제품 UI 신규 구현·LDS 적용·전환·재스타일링 | [`LDS UI 적용·전환 워크플로`](docs/LDS_UI_ADOPTION_WORKFLOW.md) |
 | LDS component·reusable pattern·icon·asset 저작 | [`컴포넌트 워크플로`](docs/COMPONENT_WORKFLOW.md) |
 | shared token 추가·변경 | [`Token Governance`](docs/TOKEN_GOVERNANCE.md) |

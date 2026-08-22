@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "58553be79a65b5dcbb1270d9a829897f490df6e7641cc079bddcec5cf17a5fd2",
+  "sourceFingerprint": "1ab891a2ed9f3ceca24d467a27aa30498b1f7c6cd5861e3d90e5aba61ae75b4a",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -13681,7 +13681,7 @@
           "url": "https://spectrum.adobe.com/page/action-group/"
         }
       ],
-      "promptSha256": "076c1ccde8152d23a9734c36395d6e35baeed9a8b3594f22ea31963b0a2d76a8"
+      "promptSha256": "067a6bc9fcf6a74d831573a6ef67f4e20458dc2d46e98b17ba990c02ed12f1d8"
     },
     {
       "id": "canvas-editor-shell",
@@ -14001,7 +14001,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/"
         }
       ],
-      "promptSha256": "18d4ff8311285088d0dfad0e65268368b6c9babbf696213e85cb1389ed16f589"
+      "promptSha256": "8897013ed3b91585f6ee47cb010993a9cb54d6c344fb20db21b399af549ba169"
     },
     {
       "id": "editor-toolbar",
@@ -14134,7 +14134,7 @@
           "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum"
         }
       ],
-      "promptSha256": "5b9be1a4d86cff5425e03427e8d53dbe497f4daa73d7a4ea2ec20e8fb8a8276a"
+      "promptSha256": "b9d81ac26e08ea9277e3b2e0c3fdffa6bbb70dd51aea707371b2958cb867b47b"
     },
     {
       "id": "history-toolbar",
@@ -14258,7 +14258,7 @@
           "url": "https://help.figma.com/hc/en-us/articles/23954856027159-Navigating-UI3"
         }
       ],
-      "promptSha256": "325331d80e218dcea1b7797c5099390ff7273b23aed98b44abdd240f845bdca3"
+      "promptSha256": "cd4b1550a64ca6b22a3f84e34d3ba98b3d3e0db1de1577d44f1f71cb5528430b"
     },
     {
       "id": "layer-panel",
@@ -14463,7 +14463,7 @@
           "url": "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html"
         }
       ],
-      "promptSha256": "2d0f31e8f4eff08c2b9057c2650fd243d3d54c6124b6bb42a716d4033510e834"
+      "promptSha256": "ee0fd03db74f2f43edbb1d96d74429e8074f73dedb54c05d049733f9281453c9"
     },
     {
       "id": "selection-inspector",
@@ -14641,7 +14641,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
         }
       ],
-      "promptSha256": "8b421a2d937ff0092ba440656403525bd8ef2633f85a80a698e1c24de49e3ff5"
+      "promptSha256": "e911e000b69073c4e63f5748463556a40c4babfe946b39c8de14592068e4faf6"
     },
     {
       "id": "viewport-status-bar",
@@ -14750,7 +14750,7 @@
           "url": "https://docs.unity3d.com/kr/530/Manual/LearningtheInterface.html"
         }
       ],
-      "promptSha256": "40b2987f2e1800601693f149ae6fc7b67f226713d4f14cbb664e65b72869b7a3"
+      "promptSha256": "45775e5269ba2d4ab648049ec4971e5079293db9442724249f30f9b47acbc09c"
     },
     {
       "id": "avatar",
@@ -28986,7 +28986,7 @@
           "url": "https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA19"
         }
       ],
-      "promptSha256": "265656c7ca97519f845098bb4b7255b2f5f751cd532cdf75aabd2d5ac450254d"
+      "promptSha256": "8d95e33ff84a82cc17f4135d891dd453113f22e270034d0924c1f6a0f5a18dc2"
     },
     {
       "id": "equipment-status-card",
@@ -29121,7 +29121,7 @@
           "url": "https://design-system.service.gov.uk/components/summary-list/"
         }
       ],
-      "promptSha256": "441ac203950cb249b1299bdfa398ebef99d4e9686782c76fd3b17f3686fbca58"
+      "promptSha256": "9591ac466986a8df32daa2898e58ef1989f19e4b661ac303a3e2948cdb8bce2c"
     },
     {
       "id": "choice-card",
@@ -32664,7 +32664,7 @@
           "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-chapter-7-rules-and-style-conventions-expressing-values"
         }
       ],
-      "promptSha256": "71a380fe312e48411151ff80e8d800d5bffa8ef569dd9949e2b6e0efb0d2c2a1"
+      "promptSha256": "7a517e75b8b1e8a0266da4bc135895d6724aef7129f9bc0baf8a27780d93f856"
     },
     {
       "id": "telemetry-value",
@@ -32821,7 +32821,7 @@
           "url": "https://www.nist.gov/pml/special-publication-811/nist-guide-si-chapter-7-rules-and-style-conventions-expressing-values"
         }
       ],
-      "promptSha256": "cbe6994d389ad536e963ecfb5814e493d22b381954a728f9ef4042803eb999d2"
+      "promptSha256": "2d87a058b580edd237952688c69615017686e44ea04b34e3f0ec9f9392901071"
     },
     {
       "id": "video-stream-tile",
@@ -51960,13 +51960,13 @@
             "role": "responsive"
           },
           {
-            "id": "lds-product-communication-message--compact-density",
-            "name": "밀도 · compact",
+            "id": "lds-product-communication-message--compact-conversation-column",
+            "name": "반응형 · 조밀한 대화 열",
             "role": "responsive"
           },
           {
-            "id": "lds-product-communication-message--compact-conversation-column",
-            "name": "밀도 · compact 대화 열",
+            "id": "lds-product-communication-message--compact-density",
+            "name": "반응형 · 조밀한 밀도",
             "role": "responsive"
           }
         ],
@@ -52448,7 +52448,7 @@
           },
           {
             "id": "lds-product-communication-message-composer--compact-density",
-            "name": "밀도 · compact",
+            "name": "반응형 · 조밀한 밀도",
             "role": "responsive"
           }
         ],
@@ -52863,7 +52863,7 @@
           },
           {
             "id": "lds-product-communication-message-feed--compact-density",
-            "name": "밀도 · compact",
+            "name": "반응형 · 조밀한 밀도",
             "role": "responsive"
           }
         ],
@@ -58094,11 +58094,6 @@
             "role": "overview"
           },
           {
-            "id": "lds-product-data-collections-data-collection-panel--density-comparison",
-            "name": "변형·상태 · 기본 밀도와 좁은 밀도",
-            "role": "responsive"
-          },
-          {
             "id": "lds-product-data-collections-data-collection-panel--resource-states",
             "name": "변형·상태 · 불러오기, 빈 결과, 오래된 데이터",
             "role": "variants-states"
@@ -58107,6 +58102,11 @@
             "id": "lds-product-data-collections-data-collection-panel--shared-selection-across-wide-and-narrow",
             "name": "상호작용 · 넓은 표와 좁은 목록의 선택 공유",
             "role": "interaction"
+          },
+          {
+            "id": "lds-product-data-collections-data-collection-panel--density-comparison",
+            "name": "반응형 · 기본 밀도와 좁은 밀도",
+            "role": "responsive"
           },
           {
             "id": "lds-product-data-collections-data-collection-panel--narrow-collection",
@@ -59214,14 +59214,14 @@
             "role": "variants-states"
           },
           {
-            "id": "lds-product-data-collections-table--density-comparison",
-            "name": "변형·상태 · 기본 밀도와 좁은 밀도",
-            "role": "responsive"
-          },
-          {
             "id": "lds-product-data-collections-table--banded-rows",
             "name": "변형·상태 · 밴드 행",
             "role": "variants-states"
+          },
+          {
+            "id": "lds-product-data-collections-table--density-comparison",
+            "name": "반응형 · 기본 밀도와 좁은 밀도",
+            "role": "responsive"
           }
         ],
         "hiddenEvidence": 4
@@ -65702,7 +65702,8 @@
       ],
       "states": [],
       "behavior": [
-        "CanvasEditorCommandBar - Stable document-level command group for CanvasEditorShell."
+        "CanvasEditorCommandBar - Stable document-level command group for CanvasEditorShell.",
+        "Owner: LDS Product / Workspace. Its WDS provenance is product-extension, not a WDS parity claim. Arbitrary docking, application menus, collaboration presence, and file-workflow state remain product responsibilities."
       ],
       "quantitativeRules": [
         {
@@ -65969,7 +65970,7 @@
         "Activating the already selected mode re-emits that value through onChange; it never toggles a required editor mode off.",
         "Adobe Spectrum Action Group reinforced keeping one density, size, selection model, and complete interaction-state grammar across related tool groups.",
         "Figma: Navigating UI3 reinforced keeping high-frequency editing controls stable while panels remain secondary and collapsible.",
-        "EditorToolbar — single-select, high-frequency canvas tool group for LK Robotics editors."
+        "EditorToolbar — single-select, high-frequency canvas tool group for reusable Product editors."
       ],
       "quantitativeRules": [
         {
@@ -65994,7 +65995,7 @@
         }
       ],
       "responsive": [
-        "Classification: LK Robotics Extension. Use it for mutually exclusive editing modes such as select, route, region, marker, erase, or pan. Document commands belong in CanvasEditorCommandBar; viewport navigation and zoom controls belong in ViewerToolbar inside the viewport."
+        "Owner: LDS Product / Workspace. Its WDS provenance is product-extension. Use it for mutually exclusive editing modes such as select, route, region, marker, erase, or pan. Document commands belong in CanvasEditorCommandBar; viewport navigation and zoom controls belong in ViewerToolbar inside the viewport."
       ],
       "contentGuidance": [
         "items accept { value, icon, label, shortcut, ariaKeyShortcuts, disabled, disabledReason }; selection is controlled with value or uncontrolled with defaultValue.",
@@ -66228,7 +66229,8 @@
       ],
       "states": [],
       "behavior": [
-        "canUndo/canRedo express history state, while a real handler guarantees operability. A missing handler always disables the corresponding command."
+        "canUndo/canRedo express history state, while a real handler guarantees operability. A missing handler always disables the corresponding command.",
+        "Owner: LDS Product / Workspace. Its WDS provenance is product-extension. Application-specific history timelines, branching histories, autosave, and conflict recovery stay outside the LDS component contract."
       ],
       "quantitativeRules": [
         {
@@ -66384,7 +66386,7 @@
       "supportingComponents": [],
       "purpose": "운영자가 중첩된 지도·경로·로봇 레이어를 탐색하며 선택과 가용성을 제어할 때 적합합니다. 계층이 없는 단순 옵션이나 일회성 필터에는 Layer Panel 대신 List 또는 Checkbox Group을 사용하세요.",
       "useWhen": [
-        "LayerPanel — reusable scene/layer hierarchy for LK Robotics editor shells."
+        "LayerPanel — reusable scene/layer hierarchy for Product editor shells."
       ],
       "avoidWhen": [
         "Visibility and lock follow the same controlled/uncontrolled pattern: visibleLayerIds/defaultVisibleLayerIds and lockedLayerIds/defaultLockedLayerIds."
@@ -66555,7 +66557,7 @@
       ],
       "exceptions": [
         "Expansion is controlled with expandedLayerIds or uncontrolled with defaultExpandedLayerIds. With neither prop, groups are expanded unless their layer data sets expanded: false.",
-        "Classification: LK Robotics Extension. Use it only when a workflow has a real hierarchy whose nodes own display, visibility, lock, count, or status state. Selected-object properties belong in SelectionInspector; workflow steps do not belong here."
+        "Owner: LDS Product / Workspace. Its WDS provenance is product-extension. Use it only when a workflow has a real hierarchy whose nodes own display, visibility, lock, count, or status state. Selected-object properties belong in SelectionInspector; workflow steps do not belong here."
       ],
       "related": [
         {
@@ -67133,7 +67135,9 @@
           "rule": "Visible semantic text paired with messageTone."
         }
       ],
-      "behavior": [],
+      "behavior": [
+        "Owner: LDS Product / Workspace. Its WDS provenance is product-extension, not WDS parity. Interactive scrubbers, transport controls, global connection health, and application workflow progress are intentionally outside this primitive."
+      ],
       "quantitativeRules": [
         {
           "subject": "--caption1-line",
@@ -67282,7 +67286,7 @@
         "anatomy": "evidence",
         "properties": "evidence",
         "states": "evidence",
-        "behavior": "omitted-no-evidence",
+        "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
         "contentGuidance": "evidence",
@@ -80646,13 +80650,13 @@
         "Open-RMF RobotState: robot mode, battery, location과 message sequence를 독립 필드로 제공한다. 연결만으로 telemetry freshness나 robot health를 추론하지 않는다.",
         "Kubernetes Pod Conditions: Unknown, transition time, reason, message를 condition evidence로 분리한다. connected를 복합 ready로 승격하지 않고 freshness/reason을 별도 evidence로 둔다.",
         "보이는 라벨이 기본이며 bar 수나 색만으로 상태를 전달하지 않는다.",
-        "LK Robotics Extension. MQTT, rosbridge, WebSocket 같은 transport 연결 사실을 신호 막대와 짧은 라벨로 표시한다. 연결 상태만 소유하며 데이터 freshness, 장비 health, operability, command eligibility, control authority를 추론하지 않는다."
+        "Owner: LDS Product / Operations. WDS provenance는 product-extension이며, components/robotics 경로는 호환 표면일 뿐 현재 owner를 결정하지 않는다. MQTT, rosbridge, WebSocket 같은 transport 연결 사실을 신호 막대와 짧은 라벨로 표시한다. 연결 상태만 소유하며 데이터 freshness, 장비 health, operability, command eligibility, control authority를 추론하지 않는다."
       ],
       "accessibility": [
         "focus/disabled: 비대화형 상태 표시이므로 자체 focus 또는 disabled 축을 추가하지 않는다.",
         "showLabel={false}이면 기본 문자열 라벨이 role=\"img\"의 accessible name으로 남는다. 비문자 custom label을 숨기면 aria-label을 제공한다.",
         "Accessibility and exclusions.",
-        "LDS Robotics/Status/Connection Badge의 개요 story를 960px normal viewport와 360px viewport의 내부 320px pattern에서 확인한다. 7개 canonical state, wrapping, overflow, hidden-label accessible name을 검토하고 StatusBadge sibling과 typography·semantic token 위계를 비교한다. legacy parity story는 status 호환 표면을 계속 검증한다."
+        "LDS Product/Status/Connection Badge의 개요 story를 960px normal viewport와 360px viewport의 내부 320px pattern에서 확인한다. 7개 canonical state, wrapping, overflow, hidden-label accessible name을 검토하고 StatusBadge sibling과 typography·semantic token 위계를 비교한다. legacy parity story는 status 호환 표면을 계속 검증한다."
       ],
       "exceptions": [],
       "related": [
@@ -80787,8 +80791,7 @@
       "useWhen": [],
       "avoidWhen": [
         "ConnectionBadge: 연결이 실제 보조 사실일 때 details[].value로 조합합니다. 카드가 connection prop이나 연결 상태 machine을 재정의하지 않습니다.",
-        "GOV.UK Summary list: key와 value가 있는 핵심 사실은 summary list로 표현하고, 단순 목록이나 표 데이터에는 남용하지 않습니다. 이를 details의 라벨→값 스캔 구조와 semantic markup에 반영했습니다.",
-        "EquipmentStatusCard는 장비의 정체성 → 대표 상태 → 라벨이 있는 보조 사실 → 메타데이터/동작을 한 번에 읽게 하는 LK Robotics Extension입니다. 특정 제품의 설비 행이나 대시보드를 재현하지 않으며, 제품이 가진 장비 종류와 상태 범위만 LDS coverage 요구로 사용합니다."
+        "GOV.UK Summary list: key와 value가 있는 핵심 사실은 summary list로 표현하고, 단순 목록이나 표 데이터에는 남용하지 않습니다. 이를 details의 라벨→값 스캔 구조와 semantic markup에 반영했습니다."
       ],
       "anatomy": [
         {
@@ -80994,7 +80997,9 @@
         "components/robotics/EquipmentStatusCard.prompt.md",
         "stories/RoboticsEquipment.stories.jsx"
       ],
-      "migration": [],
+      "migration": [
+        "EquipmentStatusCard는 장비의 정체성 → 대표 상태 → 라벨이 있는 보조 사실 → 메타데이터/동작을 한 번에 읽게 하는 LDS Product / Operations 패턴입니다. WDS provenance는 product-extension이며, components/robotics 경로는 호환 표면일 뿐 현재 owner를 결정하지 않습니다. 특정 제품의 설비 행이나 대시보드를 재현하지 않으며, 제품이 가진 장비 종류와 상태 범위만 LDS coverage 요구로 사용합니다."
+      ],
       "platformStatus": {
         "figma": "not-tracked",
         "react": "implemented",
@@ -81055,7 +81060,7 @@
         "examples": "evidence",
         "tokens": "evidence",
         "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
+        "migration": "evidence"
       }
     },
     {
@@ -81540,7 +81545,7 @@
         "HTML meter element: 의미 있는 유한 범위의 scalar 값에만 meter를 사용하고 값은 범위 안으로 제한합니다."
       ],
       "avoidWhen": [
-        "TelemetryGauge — 알려진 최소·최대 범위 안의 텔레메트리 값을 표시하는 270° radial meter입니다. LK Robotics Extension으로 분류하며, 작업 진행률이나 로딩에는 사용하지 않습니다."
+        "TelemetryGauge — 알려진 최소·최대 범위 안의 텔레메트리 값을 표시하는 270° radial meter입니다. Owner는 LDS Product / Operations이고 WDS provenance는 product-extension이며, 작업 진행률이나 로딩에는 사용하지 않습니다."
       ],
       "anatomy": [
         {
@@ -82004,7 +82009,7 @@
       ],
       "responsive": [
         "NIST Guide to the SI, 7.2: SI·복합 단위와 °C는 값과 공백으로 분리하고 평면각 °만 붙입니다. LDS는 compact UI에서도 이 구분을 유지하며 %와 ‰는 제품 표기 관례 예외로 붙입니다.",
-        "TelemetryValue — 값, 단위, 의미 상태, freshness, timestamp를 함께 읽는 compact telemetry readout입니다. LK Robotics Extension이며 표 셀, viewport HUD 주변, 좁은 진단 패널에 사용합니다."
+        "TelemetryValue — 값, 단위, 의미 상태, freshness, timestamp를 함께 읽는 compact telemetry readout입니다. Owner는 LDS Product / Operations이고 WDS provenance는 product-extension이며, 표 셀, viewport HUD 주변, 좁은 진단 패널에 사용합니다."
       ],
       "contentGuidance": [
         "value는 string | number, unit은 문자열 계약입니다. 두 값의 앞뒤 공백을 제거한 뒤 %, ‰, 평면각 °는 값에 붙이고, °C, °F, ms, Hz, m/s, N·m, dBm 같은 SI·복합 단위는 한 칸 띄웁니다. 표시 DOM과 보조기술이 읽는 텍스트는 같은 literal separator를 공유합니다.",
@@ -85009,14 +85014,14 @@
         "entryStoryId": "lds-theme-brand-product-lockup--product-lockup-standard",
         "publicStories": [
           {
-            "id": "lds-theme-brand-product-lockup--narrow-compact",
-            "name": "좁은 영역 · compact 전환",
-            "role": "responsive"
+            "id": "lds-theme-brand-product-lockup--product-lockup-standard",
+            "name": "개요",
+            "role": "overview"
           },
           {
-            "id": "lds-theme-brand-product-lockup--product-lockup-standard",
-            "name": "표준 · 모브랜드 우선",
-            "role": "overview"
+            "id": "lds-theme-brand-product-lockup--narrow-compact",
+            "name": "반응형 · 좁은 영역의 제품명 전환",
+            "role": "responsive"
           }
         ],
         "hiddenEvidence": 0

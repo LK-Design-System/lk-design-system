@@ -1,6 +1,6 @@
 # EquipmentStatusCard
 
-`EquipmentStatusCard`는 장비의 **정체성 → 대표 상태 → 라벨이 있는 보조 사실 → 메타데이터/동작**을 한 번에 읽게 하는 `LK Robotics Extension`입니다. 특정 제품의 설비 행이나 대시보드를 재현하지 않으며, 제품이 가진 장비 종류와 상태 범위만 LDS coverage 요구로 사용합니다.
+`EquipmentStatusCard`는 장비의 **정체성 → 대표 상태 → 라벨이 있는 보조 사실 → 메타데이터/동작**을 한 번에 읽게 하는 **LDS Product / Operations** 패턴입니다. WDS provenance는 `product-extension`이며, `components/robotics` 경로는 호환 표면일 뿐 현재 owner를 결정하지 않습니다. 특정 제품의 설비 행이나 대시보드를 재현하지 않으며, 제품이 가진 장비 종류와 상태 범위만 LDS coverage 요구로 사용합니다.
 
 ```jsx
 <EquipmentStatusCard

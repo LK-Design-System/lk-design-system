@@ -14,9 +14,7 @@
     "Meter와 마찬가지로 알려진 범위의 현재량만 표현합니다. 로딩·완료 진행은 ProgressBar, 제품별 임계값 schema와 알람 정책은 애플리케이션 책임으로 남깁니다.",
     "HTML meter element: 의미 있는 유한 범위의 scalar 값에만 meter를 사용하고 값은 범위 안으로 제한합니다."
   ],
-  "avoidWhen": [
-    "TelemetryGauge — 알려진 최소·최대 범위 안의 텔레메트리 값을 표시하는 270° radial meter입니다. LK Robotics Extension으로 분류하며, 작업 진행률이나 로딩에는 사용하지 않습니다."
-  ],
+  "avoidWhen": [],
   "anatomy": [
     {
       "part": "label",

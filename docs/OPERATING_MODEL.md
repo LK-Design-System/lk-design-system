@@ -27,6 +27,15 @@
 `product-extension`, `robotics-extension` provenance는 설계 근거입니다. WDS
 근거가 있다는 사실만으로 Core 소유가 되지 않습니다.
 
+현재 owner의 machine authority는
+[`OWNER_AUTHORITY_CONTRACT.json`](references/architecture/OWNER_AUTHORITY_CONTRACT.json)과
+그 계약이 가리키는 실제 package source/token/Storybook surface입니다. `core`,
+`theme`, `product`는 각 `packages/*` 물리 경계가 owner를 결정하고 Robotics는
+발행된 external surface가 결정합니다. `references/wds/` 아래의
+`PUBLIC_EXPORT_CLASSIFICATION.json`과 `LAYER_CLASSIFICATION.json`은 provenance와
+호환 projection을 보존할 뿐 현재 owner를 결정하지 않습니다. projection이 실제
+package owner와 달라지면 `npm run check:layers`가 실패합니다.
+
 허용 의존 방향은 다음과 같습니다.
 
 - Core → Core
@@ -34,14 +43,22 @@
 - Product → Core, Product
 - Robotics → Core, Product, Robotics
 
-`PUBLIC_EXPORT_CLASSIFICATION.json`은 기존 export·내부 모듈 projection과 WDS
-provenance를 보존합니다. Product family의 live taxonomy는
+Product family의 live taxonomy는
 [`PRODUCT_FAMILY_CONTRACT.json`](references/architecture/PRODUCT_FAMILY_CONTRACT.json)이
 소유하고, Theme 표현 축은
 [`EXPRESSION_PROFILE_CONTRACT.json`](references/architecture/EXPRESSION_PROFILE_CONTRACT.json)이
-소유합니다. `npm run check:layers`는 계층 경계와 Product family 누락·중복을
-함께 차단하고, `npm run check:expression-profile`은 Theme provider와 profile
-축의 정합성을 검사합니다. 새 코드는
+소유합니다. `npm run check:layers`는 다음 one-owner 불변 조건을 한 번에
+차단합니다.
+
+- 모든 aggregate public export와 compatibility 내부 모듈은 정확히 한 물리 package owner를 갖습니다.
+- 모든 canonical package token CSS source는 정확히 한 token group과 owner를 갖고 해당 package style entry에서 정확히 한 번 import됩니다.
+- 모든 local canonical Storybook page는 정확히 한 layer title prefix를 갖습니다. 전역 directory처럼 prefix가 없는 page는 이유가 있는 단일 예외로만 허용됩니다.
+- telemetry, viewer, equipment, command, application navigation, robotics spatial navigation의 대표 export는 machine boundary decision과 같은 owner를 갖습니다.
+- WDS archive의 owner projection은 위 live surface와 정확히 일치해야 하지만 역으로 live owner의 입력이 되지 않습니다.
+
+같은 명령은 Product family 누락·중복도 함께 차단하고,
+`npm run check:expression-profile`은 Theme provider와 profile 축의 정합성을
+검사합니다. 새 코드는
 `/core`, `/theme`, `/product`, `/robotics` subpath를 사용하며 기존 aggregate
 root와 `components/*`는 호환 표면으로 유지합니다.
 

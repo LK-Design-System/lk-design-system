@@ -2,25 +2,29 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Architecture and migration plan |
-| Status | Wave 1 complete; Wave 2 package/LDS3D evidence complete but product adoption not started; Wave 4 owner-exception extraction complete; **Wave 5 compatibility retirement complete (2026-08-16)**. |
+| Type | Completed architecture and migration record |
+| Status | Completed — Core·Theme·Product split, Robotics extraction, LDS3D evidence와 compatibility retirement 완료; Portal/Web Viz current package set은 build-verified |
 | Owner | Design system owner · Frontend platform · Robotics domain owner |
-| Last reviewed | 2026-07-24 |
+| Last reviewed | 2026-08-22 |
 | Wave 0 source baseline | `wave0-baseline-2026-07-19-r2` → `679859bc8b5126bcff7146eaedd871bbe9e62891` |
 | Wave 0 attestation | `wave0-attested-2026-07-19` → `f8dd678f32c92798b05d7f97d84449dec916d3a4` |
+| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) R2·R3B·R6 |
 
 이 계획은 과거 단일 패키지였던 `@lk-design-system/design-system-core`를 소비 경계에
 맞는 package로 나눈 과정과 Robotics UI 저장소 추출의 결정·증거를 정의한다.
-현재 Core/Theme/Product/compat package 분리와 Robotics 추출은 완료됐고, 실제 제품
-adoption만 열려 있다. compatibility facade는 2026-08-16에 제거됐다.
+현재 Core/Theme/Product package 분리와 Robotics 추출은 완료됐고 compatibility facade는
+2026-08-16에 제거됐다. Portal/default와 Web Viz/ops의 current package adoption은 consumer
+registry에서 `build-verified`이며, product-owner workflow/deployment 승인과 stable 승격은
+roadmap R2가 소유한다.
 기존 `lk-design-system-3d`는 계속
 독립 형제 저장소로 유지한다.
 
-이 문서는 실행 순서를 소유한다. 계층 의존 정책은
+이 문서는 당시 migration 실행 순서와 증거를 보존한다. 현재 실행 순서는
+[`LDS_ROADMAP.md`](LDS_ROADMAP.md)가 소유한다. 계층 의존 정책은
 [`OPERATING_MODEL.md`](OPERATING_MODEL.md), 컴포넌트 재분류와 제품 검토는
 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md), 실제 소비자 pin과 workflow
-증거는 [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md)를
-각각 우선한다.
+증거는 [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json)을
+각각 우선한다. 아래 미완료 checkbox는 당시 wave snapshot이며 현재 adoption 판정표가 아니다.
 
 ## 1. 목표 상태와 핵심 결정
 

@@ -2,16 +2,21 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Structure proposal |
+| Type | Adopted implementation record |
 | Status | Adopted — Theme runtime/provider·token contract·Storybook matrix·대표 소비자 profile wiring 완료; 행동 readiness는 별도 단계로 판정 |
 | Owner | Design system owner |
 | Last reviewed | 2026-08-22 |
 | 선행 문서 | [`OPERATING_MODEL.md`](OPERATING_MODEL.md)(레이어 소유권) · [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md)(토큰 변경 정책) · [`ROBOTICS_PATTERNS.md`](ROBOTICS_PATTERNS.md)(도메인 상태 의미) |
 | 근거 | 전부 실측 — 본문 §1의 토큰 값과 컴포넌트 인용은 2026-08-16 HEAD 기준 |
+| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) R3A — density coverage v2 |
 
 이 문서의 명제는 하나다 — **LK 제품은 소비자 표면(Portal)과 관제 표면(Control·Web
 Viz)을 동시에 가지며, 이 차이는 컴포넌트 이중화가 아니라 Theme 레이어의 표현
 프로파일 축으로 흡수한다.**
+
+이 제안의 1차 구현은 완료됐다. 앞으로의 component별 밀도 coverage, local density
+우선순위와 touch/desktop target 정책은 이 문서에 backlog로 중복하지 않고 roadmap R3A가
+소유한다.
 
 ---
 

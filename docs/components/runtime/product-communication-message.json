@@ -418,13 +418,13 @@
         "role": "responsive"
       },
       {
-        "id": "lds-product-communication-message--compact-density",
-        "name": "밀도 · compact",
+        "id": "lds-product-communication-message--compact-conversation-column",
+        "name": "반응형 · 조밀한 대화 열",
         "role": "responsive"
       },
       {
-        "id": "lds-product-communication-message--compact-conversation-column",
-        "name": "밀도 · compact 대화 열",
+        "id": "lds-product-communication-message--compact-density",
+        "name": "반응형 · 조밀한 밀도",
         "role": "responsive"
       }
     ],

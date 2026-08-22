@@ -15410,6 +15410,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 ## Behavior and interaction
 
 - CanvasEditorCommandBar - Stable document-level command group for CanvasEditorShell.
+- Owner: LDS Product / Workspace. Its WDS provenance is product-extension, not a WDS parity claim. Arbitrary docking, application menus, collaboration presence, and file-workflow state remain product responsibilities.
 
 ## 정량 규칙
 
@@ -15546,7 +15547,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - Activating the already selected mode re-emits that value through onChange; it never toggles a required editor mode off.
 - Adobe Spectrum Action Group reinforced keeping one density, size, selection model, and complete interaction-state grammar across related tool groups.
 - Figma: Navigating UI3 reinforced keeping high-frequency editing controls stable while panels remain secondary and collapsible.
-- EditorToolbar — single-select, high-frequency canvas tool group for LK Robotics editors.
+- EditorToolbar — single-select, high-frequency canvas tool group for reusable Product editors.
 
 ## 정량 규칙
 
@@ -15560,7 +15561,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 ## Responsive
 
-- Classification: LK Robotics Extension. Use it for mutually exclusive editing modes such as select, route, region, marker, erase, or pan. Document commands belong in CanvasEditorCommandBar; viewport navigation and zoom controls belong in ViewerToolbar inside the viewport.
+- Owner: LDS Product / Workspace. Its WDS provenance is product-extension. Use it for mutually exclusive editing modes such as select, route, region, marker, erase, or pan. Document commands belong in CanvasEditorCommandBar; viewport navigation and zoom controls belong in ViewerToolbar inside the viewport.
 
 ## Content and writing
 
@@ -15675,6 +15676,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 ## Behavior and interaction
 
 - canUndo/canRedo express history state, while a real handler guarantees operability. A missing handler always disables the corresponding command.
+- Owner: LDS Product / Workspace. Its WDS provenance is product-extension. Application-specific history timelines, branching histories, autosave, and conflict recovery stay outside the LDS component contract.
 
 ## 정량 규칙
 
@@ -15770,7 +15772,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 ### 사용
 
-- LayerPanel — reusable scene/layer hierarchy for LK Robotics editor shells.
+- LayerPanel — reusable scene/layer hierarchy for Product editor shells.
 
 ### 사용하지 않음
 
@@ -15834,7 +15836,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 ## Exceptions
 
 - Expansion is controlled with expandedLayerIds or uncontrolled with defaultExpandedLayerIds. With neither prop, groups are expanded unless their layer data sets expanded: false.
-- Classification: LK Robotics Extension. Use it only when a workflow has a real hierarchy whose nodes own display, visibility, lock, count, or status state. Selected-object properties belong in SelectionInspector; workflow steps do not belong here.
+- Owner: LDS Product / Workspace. Its WDS provenance is product-extension. Use it only when a workflow has a real hierarchy whose nodes own display, visibility, lock, count, or status state. Selected-object properties belong in SelectionInspector; workflow steps do not belong here.
 
 ## Related components
 
@@ -16125,6 +16127,10 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | items | Persistent, non-live viewport readouts. |
 | messageTone | Semantic tone for the transient message. @default "default" |
 | messageToneLabel | Visible semantic text paired with messageTone. |
+
+## Behavior and interaction
+
+- Owner: LDS Product / Workspace. Its WDS provenance is product-extension, not WDS parity. Interactive scrubbers, transport controls, global connection health, and application workflow progress are intentionally outside this primitive.
 
 ## 정량 규칙
 
@@ -22529,14 +22535,14 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 - Open-RMF RobotState: robot mode, battery, location과 message sequence를 독립 필드로 제공한다. 연결만으로 telemetry freshness나 robot health를 추론하지 않는다.
 - Kubernetes Pod Conditions: Unknown, transition time, reason, message를 condition evidence로 분리한다. connected를 복합 ready로 승격하지 않고 freshness/reason을 별도 evidence로 둔다.
 - 보이는 라벨이 기본이며 bar 수나 색만으로 상태를 전달하지 않는다.
-- LK Robotics Extension. MQTT, rosbridge, WebSocket 같은 transport 연결 사실을 신호 막대와 짧은 라벨로 표시한다. 연결 상태만 소유하며 데이터 freshness, 장비 health, operability, command eligibility, control authority를 추론하지 않는다.
+- Owner: LDS Product / Operations. WDS provenance는 product-extension이며, components/robotics 경로는 호환 표면일 뿐 현재 owner를 결정하지 않는다. MQTT, rosbridge, WebSocket 같은 transport 연결 사실을 신호 막대와 짧은 라벨로 표시한다. 연결 상태만 소유하며 데이터 freshness, 장비 health, operability, command eligibility, control authority를 추론하지 않는다.
 
 ## Accessibility
 
 - focus/disabled: 비대화형 상태 표시이므로 자체 focus 또는 disabled 축을 추가하지 않는다.
 - showLabel={false}이면 기본 문자열 라벨이 role="img"의 accessible name으로 남는다. 비문자 custom label을 숨기면 aria-label을 제공한다.
 - Accessibility and exclusions.
-- LDS Robotics/Status/Connection Badge의 개요 story를 960px normal viewport와 360px viewport의 내부 320px pattern에서 확인한다. 7개 canonical state, wrapping, overflow, hidden-label accessible name을 검토하고 StatusBadge sibling과 typography·semantic token 위계를 비교한다. legacy parity story는 status 호환 표면을 계속 검증한다.
+- LDS Product/Status/Connection Badge의 개요 story를 960px normal viewport와 360px viewport의 내부 320px pattern에서 확인한다. 7개 canonical state, wrapping, overflow, hidden-label accessible name을 검토하고 StatusBadge sibling과 typography·semantic token 위계를 비교한다. legacy parity story는 status 호환 표면을 계속 검증한다.
 
 ## Related components
 
@@ -22616,7 +22622,6 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 
 - ConnectionBadge: 연결이 실제 보조 사실일 때 details[].value로 조합합니다. 카드가 connection prop이나 연결 상태 machine을 재정의하지 않습니다.
 - GOV.UK Summary list: key와 value가 있는 핵심 사실은 summary list로 표현하고, 단순 목록이나 표 데이터에는 남용하지 않습니다. 이를 details의 라벨→값 스캔 구조와 semantic markup에 반영했습니다.
-- EquipmentStatusCard는 장비의 정체성 → 대표 상태 → 라벨이 있는 보조 사실 → 메타데이터/동작을 한 번에 읽게 하는 LK Robotics Extension입니다. 특정 제품의 설비 행이나 대시보드를 재현하지 않으며, 제품이 가진 장비 종류와 상태 범위만 LDS coverage 요구로 사용합니다.
 
 ## Anatomy
 
@@ -22759,6 +22764,10 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 - `components/robotics/EquipmentStatusCard.d.ts`
 - `components/robotics/EquipmentStatusCard.prompt.md`
 - `stories/RoboticsEquipment.stories.jsx`
+
+## Migration
+
+- EquipmentStatusCard는 장비의 정체성 → 대표 상태 → 라벨이 있는 보조 사실 → 메타데이터/동작을 한 번에 읽게 하는 LDS Product / Operations 패턴입니다. WDS provenance는 product-extension이며, components/robotics 경로는 호환 표면일 뿐 현재 owner를 결정하지 않습니다. 특정 제품의 설비 행이나 대시보드를 재현하지 않으며, 제품이 가진 장비 종류와 상태 범위만 LDS coverage 요구로 사용합니다.
 
 ## Sources
 
@@ -23010,7 +23019,7 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 
 ### 사용하지 않음
 
-- TelemetryGauge — 알려진 최소·최대 범위 안의 텔레메트리 값을 표시하는 270° radial meter입니다. LK Robotics Extension으로 분류하며, 작업 진행률이나 로딩에는 사용하지 않습니다.
+- TelemetryGauge — 알려진 최소·최대 범위 안의 텔레메트리 값을 표시하는 270° radial meter입니다. Owner는 LDS Product / Operations이고 WDS provenance는 product-extension이며, 작업 진행률이나 로딩에는 사용하지 않습니다.
 
 ## Anatomy
 
@@ -23207,7 +23216,7 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 ## Responsive
 
 - NIST Guide to the SI, 7.2: SI·복합 단위와 °C는 값과 공백으로 분리하고 평면각 °만 붙입니다. LDS는 compact UI에서도 이 구분을 유지하며 %와 ‰는 제품 표기 관례 예외로 붙입니다.
-- TelemetryValue — 값, 단위, 의미 상태, freshness, timestamp를 함께 읽는 compact telemetry readout입니다. LK Robotics Extension이며 표 셀, viewport HUD 주변, 좁은 진단 패널에 사용합니다.
+- TelemetryValue — 값, 단위, 의미 상태, freshness, timestamp를 함께 읽는 compact telemetry readout입니다. Owner는 LDS Product / Operations이고 WDS provenance는 product-extension이며, 표 셀, viewport HUD 주변, 좁은 진단 패널에 사용합니다.
 
 ## Content and writing
 

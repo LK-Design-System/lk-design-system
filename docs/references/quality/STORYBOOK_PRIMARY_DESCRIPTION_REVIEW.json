@@ -1879,11 +1879,16 @@
       "importPath": "./stories/DataCollectionPanel.stories.jsx",
       "storyId": "lds-product-data-collections-data-collection-panel--overview",
       "exportName": "Overview",
-      "descriptionHash": "f5f9561f5973398fdc294d419a7f27621c208be5a75e2bdb8e72e97f6ff9a974",
+      "descriptionHash": "39e4c286bcfd075f8e2c06294d601746dcdf888c5971a3d75b51c0c98e9bef0f",
       "sentences": [
         {
-          "hash": "f5f9561f5973398fdc294d419a7f27621c208be5a75e2bdb8e72e97f6ff9a974",
-          "text": "Portal 프로젝트 디렉터리와 같은 실제형 긴 콘텐츠에서 toolbar, ready content와 footer가 하나의 perimeter와 DOM 순서를 공유합니다.",
+          "hash": "1e87aa64aa69d211e00fe218828b387b244e945bb166a7905027abb14c783381",
+          "text": "제목·개수·주 생성 액션·검색·필터를 한 도구막대에 두고, 이름 → 속성 → 상태 → 우측 정렬 수치 → 정렬 기준 시각 순의 컬럼으로 구성한 표준 컬렉션 화면입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "f1864ee2df67588961dfdcde6ac18657ac290722d78762973bf5db6c76fe004b",
+          "text": "toolbar, ready content와 footer가 하나의 perimeter와 DOM 순서를 공유합니다.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -2668,7 +2673,7 @@
         {
           "hash": "6b984459d3b04772a22ce6d477a7124c5ca19120d02557a4805bfa68bfadd98f",
           "text": "현재 목적지는 상시 배경 없이 text-safe blue accent label·icon과 굵기로 표시하고, hover·pressed에서만 표면을 사용합니다.",
-          "decision": "unreviewed"
+          "decision": "retained-in-canvas"
         }
       ]
     },
@@ -2734,16 +2739,16 @@
       "importPath": "./stories/NavigationWizard.stories.jsx",
       "storyId": "lds-product-navigation-wizard--multi-step-flow",
       "exportName": "MultiStepFlow",
-      "descriptionHash": "0eda431691e6e3534be42b6f3d44004c844f9b338ce991046e412356f1c1789f",
+      "descriptionHash": "7a5dca4ea1e297dca949a89652ef75a83c2602f639e3e68633fe1872d5c5c133",
       "sentences": [
         {
-          "hash": "5fa2e38c4ec8c7358e34cd241013b92c58fde6038e56bd9d0d645085aa50c841",
-          "text": "작성·검토·게시 흐름에서 이전·다음 제어로 현재 단계를 바꿉니다.",
+          "hash": "57ea5780083bb2a668958bc5de3ef82c51818c25ae4421bd60bf79139b37e870",
+          "text": "작성·검토·게시 흐름의 읽기 순서는 인디케이터 → 단계 heading → 본문 → 푸터입니다.",
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "f03faa8d691ddb7c6c63d114e3721fe24f95834c3e8d456f66019e98d7fbbb14",
-          "text": "마지막 단계에서 다음이 비활성화되고 이전 이동 후 다시 활성화되는지 확인하세요.",
+          "hash": "5fe1c627778967cb0fa9d99068a6a6efa8aaa89b0c2a5c84261e9a1714ed87b1",
+          "text": "각 단계 본문은 그 단계의 결과를 말하는 heading으로 시작하고, 이전·다음 제어로 현재 단계를 바꾸면 마지막 단계에서 다음이 비활성화됩니다.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -3715,9 +3720,15 @@
       "hash": "c311b13a7049ad2ea93a434c3b59ab04a62c9f37773137701261887f579168c7",
       "text": "기존 ExtraBold 800 LK Portal과 새 SemiBold 600 ProductLockup Portal을 직접 비교하고, LK가 먼저 읽히는 Console·reverse·compact 조합을 확인합니다.",
       "previousDecision": "retained-in-canvas"
-    }
-  ],
-  "migrations": [
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Product/Data/Collections/Data Collection Panel",
+      "importPath": "./stories/DataCollectionPanel.stories.jsx",
+      "hash": "f5f9561f5973398fdc294d419a7f27621c208be5a75e2bdb8e72e97f6ff9a974",
+      "text": "Portal 프로젝트 디렉터리와 같은 실제형 긴 콘텐츠에서 toolbar, ready content와 footer가 하나의 perimeter와 DOM 순서를 공유합니다.",
+      "previousDecision": "retained-in-canvas"
+    },
     {
       "reason": "deleted-sentence",
       "pageTitle": "LDS Product/Navigation/Side Nav",
@@ -3725,6 +3736,23 @@
       "hash": "3b3e31ebe69233fb46d20e2d5c4cc915d238644d59febc4bd316534309065dfb",
       "text": "지속 선택 배경은 현재 목적지만 소유하고, 펼쳐진 부모와 hover는 선택 상태보다 약하게 읽혀야 합니다.",
       "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Product/Navigation/Wizard",
+      "importPath": "./stories/NavigationWizard.stories.jsx",
+      "hash": "5fa2e38c4ec8c7358e34cd241013b92c58fde6038e56bd9d0d645085aa50c841",
+      "text": "작성·검토·게시 흐름에서 이전·다음 제어로 현재 단계를 바꿉니다.",
+      "previousDecision": "retained-in-canvas"
+    },
+    {
+      "reason": "deleted-sentence",
+      "pageTitle": "LDS Product/Navigation/Wizard",
+      "importPath": "./stories/NavigationWizard.stories.jsx",
+      "hash": "f03faa8d691ddb7c6c63d114e3721fe24f95834c3e8d456f66019e98d7fbbb14",
+      "text": "마지막 단계에서 다음이 비활성화되고 이전 이동 후 다시 활성화되는지 확인하세요.",
+      "previousDecision": "retained-in-canvas"
     }
-  ]
+  ],
+  "migrations": []
 }

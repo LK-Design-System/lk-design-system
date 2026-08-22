@@ -2,11 +2,15 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Plan |
-| Status | Adopted — 2026-08-17 main 반영(banded + --lk-table-* 재지정 훅, 제품 기본 바이트 동일). 릴리스 후 위성 손말이 철거 |
+| Type | Adopted implementation record |
+| Status | Adopted and completed — Product Table `banded`·`--lk-table-*` 계약 반영, Slides StatusAssessment 위임 완료 |
 | Owner | Design system owner |
-| Last reviewed | 2026-08-17 |
-| Source | 소비처: `lk-design-system-slides/src/components/editorial/StatusAssessment.jsx` · 대상: `components/data/Table`(+`table-cell-styles`) |
+| Last reviewed | 2026-08-22 |
+| Source | 소비처: `lk-design-system-slides/src/components/editorial/StatusAssessment.jsx`(Product Table 위임) · 대상: `components/data/Table`(+`table-cell-styles`) |
+| Current roadmap | 구현 종결 — density 문법 감사의 배경은 [`LDS_ROADMAP.md`](LDS_ROADMAP.md) R3A |
+
+이 제안은 채택되어 Product Table과 Slides 소비처까지 구현을 마쳤다. 아래 문제·계약·검증
+서술은 구현 전 결정 근거로 보존하며 현재 public 계약은 source와 generated guide를 우선한다.
 
 Product `Table`에 두 가지를 더하자는 제안이다: **행 밴딩**과 **매체가 재지정
 가능한 밀도·타입**. 목적은 위성이 표를 손으로 마는 일을 끝내는 것이다.

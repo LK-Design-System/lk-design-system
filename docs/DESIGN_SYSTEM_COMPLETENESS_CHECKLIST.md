@@ -2,18 +2,20 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Current audit checklist and readiness register |
-| Status | Current |
+| Type | Historical audit checklist and readiness baseline |
+| Status | Historical baseline — 판정 모델은 참고하되 point-in-time 수치와 adoption 결론은 현재 상태가 아님 |
 | Owner | Design system owner · Frontend platform · Component owners |
-| Last reviewed | 2026-07-24 |
-| Reviewed revision | current `main`; final release evidence is the same-revision GitHub Actions CI |
+| Last reviewed | 2026-08-22 |
+| Reviewed revision | 2026-07-24 baseline snapshot; current `main` 아님 |
 | Refresh | release 후보, public contract 변경, product source pin 변경 시 |
-| Source | 현재 코드, verifier, current register, machine-readable audit JSON |
+| Source | 당시 코드·verifier·machine-readable audit JSON |
+| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md); 현재 수치는 source와 generated register를 우선 |
 
-이 문서는 LK Design System의 현재 완성도를 같은 기준으로 반복 판정하기 위한 실행용
-점검표다. 개별 컴포넌트의 신규·재설계 절차는
+이 문서는 2026-07-24에 LK Design System의 완성도를 판정한 기준선과 판정 방식을 보존한다.
+현재 우선순위는 roadmap, package/consumer/readiness 상태는 해당 machine register를 사용한다.
+개별 컴포넌트의 신규·재설계 절차는
 [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md), 릴리스 절차는
-[`OPERATING_MODEL.md`](OPERATING_MODEL.md), 상세 row와 hash는 각 audit JSON을 우선한다.
+[`OPERATIONS.md`](OPERATIONS.md), 상세 row와 hash는 각 current audit JSON을 우선한다.
 
 완성도를 하나의 백분율로 합산하지 않는다. 자동화된 코어가 안정적이어도 제품 workflow,
 사람이 보는 디자인 품질, 원격 반영이 열려 있을 수 있기 때문이다.
