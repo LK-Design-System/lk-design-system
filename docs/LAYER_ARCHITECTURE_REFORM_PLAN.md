@@ -116,7 +116,7 @@ registry stage를 올린다.
 | A-01 | [`DESIGN.md`](../DESIGN.md)는 Product를 Operations 중심, Robotics를 telemetry·map·viewer owner로 설명하지만 package 계획과 machine registry는 Product를 generic application pattern owner로 사용한다. | 사람 문서와 검사기가 서로 다른 위치로 변경을 유도한다. |
 | A-02 | Core source가 참조하지만 Core가 정의하지 않고 Theme가 제공하는 CSS custom property가 2026-08-22 정적 스캔에서 136개다. | Theme provider 요구가 암묵적이고 CSS 의존은 현행 layer 검사 밖에 있다. |
 | A-03 | Product가 `@lk-design-system/lds-core/components/internal/*`와 overlay helper를 직접 import하고 Core export wildcard가 이를 노출한다. | `internal` 변경이 실제 public breaking change가 된다. |
-| A-04 | Core·Theme·Product가 모두 `0.1.0-rc.69.28`이고 Theme/Product가 Core exact version을 의존한다. 기존 계획은 non-lockstep과 workspace lockstep을 각각 선언한다. | 실제 fixed version group과 문서상 release policy가 일치하지 않는다. |
+| A-04 | Core·Theme·Product가 모두 `0.1.0-rc.69.29`이고 Theme/Product가 Core exact version을 의존한다. 기존 계획은 non-lockstep과 workspace lockstep을 각각 선언한다. | 실제 fixed version group과 문서상 release policy가 일치하지 않는다. |
 | A-05 | `data-lds-profile`은 [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md)에만 있으며 runtime source와 CSS에는 없다. LDS 재앵커링 선행 조건은 rc.69.19에서 완료됐다. | 제품별 local density·motion·depth override가 새 스타일 계열로 굳을 수 있다. |
 | A-06 | Product는 Core보다 큰 공개 표면을 가지며 일반 control, app composition, editor/viewer, telemetry/equipment를 함께 노출한다. | `Product = Core가 아닌 모든 것`이 되어 탐색·변경·릴리스 범위가 불명확하다. |
 | A-07 | `ConnectionBadge`, `EquipmentStatusCard`, `TelemetryGauge` 등의 machine owner는 Product지만 prompt 분류는 Robotics다. | 중복 API, 잘못된 package 변경, compatibility re-export 장기화 위험이 있다. |
@@ -749,8 +749,8 @@ durable 결정 승격 후 archive/delete할지 문서 수명주기 정책에 따
 | 영역 | 결과 | 검증 |
 | --- | --- | --- |
 | Theme profile | `default|ops` runtime/provider, token whitelist와 required assertions | `check:expression-profile`, `check:expression-profile-visual` — 16 captures |
-| Application consumer | Portal `default`, Core·Theme·Product `0.1.0-rc.69.28`, direct TypeScript/Next production build | [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) |
-| Operations consumer | Web Viz `ops`, Core·Theme·Product `0.1.0-rc.69.28`, Robotics `0.1.0-rc.29`, Vite production build | registry + Web Viz adoption verifier |
+| Application consumer | Portal `default`, Core·Theme·Product `0.1.0-rc.69.29`, direct TypeScript/Next production build | [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) |
+| Operations consumer | Web Viz `ops`, Core·Theme·Product `0.1.0-rc.69.29`, Robotics `0.1.0-rc.29`, Vite production build | registry + Web Viz adoption verifier |
 | Robotics readiness | O1 Monitoring/O2 Operational control ready; representative Storybook browser gate 8 stories/0 serious Axe; O3 unverified; O4 unsupported | [`robotics/READINESS.json`](references/robotics/READINESS.json), `check:robotics-readiness` |
 | Legacy active references | aggregate, retired Editorial, console-pastel active source/config reference 0 | `check:legacy-active --workspace-root=...` |
 | Remaining promotion gate | product workflow/accessibility/deployment evidence와 owner approval | consumer-owned release evidence가 추가될 때 registry stage 승격 |

@@ -2,6 +2,23 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.29 - 2026-08-22
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.29.
+
+### Added
+
+- Runtime `default` and `ops` expression profiles through `LdsProvider` and the
+  Theme profile contract.
+- Product-family, consumer-adoption, visual-matrix, Robotics-readiness, and
+  retired-reference verification contracts.
+
+### Changed
+
+- Formalized the Core, Theme, and Product package boundaries while keeping the
+  release set lockstep and preserving the external Robotics package boundary.
+- Promoted Portal and Web Viz consumer evidence to the current LDS package set.
+
 ## 0.1.0-rc.69.28 - 2026-08-17
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.29.

@@ -1,7 +1,7 @@
 {
   "kind": "lds-satellite-pin-report",
   "generatedBy": "npm run report:satellite-pins",
-  "releaseVersion": "0.1.0-rc.69.28",
+  "releaseVersion": "0.1.0-rc.69.29",
   "satellites": [
     {
       "id": "robotics-ui",

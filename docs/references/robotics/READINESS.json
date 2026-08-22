@@ -9,7 +9,7 @@
     "stories": 8,
     "seriousAxeViolations": 0,
     "command": "node scripts/check-robotics-storybook-browser.mjs --root <built Robotics checkout>",
-    "note": "Robotics Storybook representative browser gate passed against the rc.69.28 Core/Theme/Product candidate set."
+    "note": "Robotics Storybook representative browser gate passed against the rc.69.29 Core/Theme/Product candidate set."
   },
   "stages": [
     {

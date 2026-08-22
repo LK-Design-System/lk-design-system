@@ -3,34 +3,34 @@
   "schemaVersion": 1,
   "kind": "lds-consumer-registry",
   "generatedAt": "2026-08-22",
-  "ldsVersion": "0.1.0-rc.69.28",
+  "ldsVersion": "0.1.0-rc.69.29",
   "entries": [
     {
       "id": "portal",
       "repository": "LK-ROBOTICS-AX/lk_portal",
-      "sourceCommit": "50af5a4a890494dfc02a21ad729df0bfc46bfc91",
-      "worktree": "dirty",
+      "sourceCommit": "0d1eb48bd76f50ca889c2ab979ca9c4af70f4e2a",
+      "worktree": "clean",
       "frontendRoot": "src",
       "profile": "default",
       "themeModes": ["light"],
       "packages": [
         {
           "name": "@lk-design-system/lds-core",
-          "version": "0.1.0-rc.69.28",
-          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-core-0.1.0-rc.69.28.tgz",
-          "sha256": "3a13954a5bd121566fe0bbff39586516c0a563563fd689b6668ae99d5e3fc42e"
+          "version": "0.1.0-rc.69.29",
+          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-core-0.1.0-rc.69.29.tgz",
+          "sha256": "0c5c3a48d3e4236341fe6221dd1ba2deacc66f7a824b5426d8b1a58ce5088aea"
         },
         {
           "name": "@lk-design-system/lds-theme",
-          "version": "0.1.0-rc.69.28",
-          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-theme-0.1.0-rc.69.28.tgz",
-          "sha256": "399b82dd091726c95d4a4dfccda5bc4ef55bddaf6ed434bc01a9fd27647621cc"
+          "version": "0.1.0-rc.69.29",
+          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-theme-0.1.0-rc.69.29.tgz",
+          "sha256": "06ac7d0e2771ae6c8aa21ece30df2aff91a9c83f3c356b8598884eb2db379f22"
         },
         {
           "name": "@lk-design-system/lds-product",
-          "version": "0.1.0-rc.69.28",
-          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-product-0.1.0-rc.69.28.tgz",
-          "sha256": "069f59a6eca68a325b6c62b5c4ace59fe81f1b266bf2c0e828909f4d04350cc6"
+          "version": "0.1.0-rc.69.29",
+          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-product-0.1.0-rc.69.29.tgz",
+          "sha256": "8a51e55b1a9bdff59ac35e5f878ab47a77be674b3e53b6c57425aa55f10ebb6c"
         }
       ],
       "stage": "build-verified",
@@ -57,7 +57,7 @@
     {
       "id": "web-viz",
       "repository": "LK-ROBOTICS/lk_web_viz",
-      "sourceCommit": "d0ae64923ab282bae9ae2638c838cb0bb183f302",
+      "sourceCommit": "5f4b627493e0631a460f3cee6df479ea8e7053d0",
       "worktree": "dirty",
       "frontendRoot": "frontend",
       "profile": "ops",
@@ -65,27 +65,27 @@
       "packages": [
         {
           "name": "@lk-design-system/lds-core",
-          "version": "0.1.0-rc.69.28",
-          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-core-0.1.0-rc.69.28.tgz",
-          "sha256": "3a13954a5bd121566fe0bbff39586516c0a563563fd689b6668ae99d5e3fc42e"
+          "version": "0.1.0-rc.69.29",
+          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-core-0.1.0-rc.69.29.tgz",
+          "sha256": "0c5c3a48d3e4236341fe6221dd1ba2deacc66f7a824b5426d8b1a58ce5088aea"
         },
         {
           "name": "@lk-design-system/lds-theme",
-          "version": "0.1.0-rc.69.28",
-          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-theme-0.1.0-rc.69.28.tgz",
-          "sha256": "399b82dd091726c95d4a4dfccda5bc4ef55bddaf6ed434bc01a9fd27647621cc"
+          "version": "0.1.0-rc.69.29",
+          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-theme-0.1.0-rc.69.29.tgz",
+          "sha256": "06ac7d0e2771ae6c8aa21ece30df2aff91a9c83f3c356b8598884eb2db379f22"
         },
         {
           "name": "@lk-design-system/lds-product",
-          "version": "0.1.0-rc.69.28",
-          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-product-0.1.0-rc.69.28.tgz",
-          "sha256": "069f59a6eca68a325b6c62b5c4ace59fe81f1b266bf2c0e828909f4d04350cc6"
+          "version": "0.1.0-rc.69.29",
+          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-product-0.1.0-rc.69.29.tgz",
+          "sha256": "8a51e55b1a9bdff59ac35e5f878ab47a77be674b3e53b6c57425aa55f10ebb6c"
         },
         {
           "name": "@lk-design-system/lds-robotics-ui",
           "version": "0.1.0-rc.29",
           "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-robotics-ui-0.1.0-rc.29.tgz",
-          "sha256": "a9a38cbf1f428a4eff64b5382961148d6bc75ee6f4436ca3242cd8053db61572"
+          "sha256": "1d20ec0726b10f7b6b5fa0cd112b4bdc56ac1cc5570c0931266fa67ee256713a"
         }
       ],
       "stage": "build-verified",

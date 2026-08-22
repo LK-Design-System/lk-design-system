@@ -10,16 +10,16 @@
   },
   "vendoredArtifact": {
     "path": "vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.29.tgz",
-    "sha256": "a9a38cbf1f428a4eff64b5382961148d6bc75ee6f4436ca3242cd8053db61572"
+    "sha256": "1d20ec0726b10f7b6b5fa0cd112b4bdc56ac1cc5570c0931266fa67ee256713a"
   },
   "documentation": {
     "canonicalContract": {
       "kind": "lds-ui-adoption-contract",
       "contractVersion": "1",
-      "snapshotManifestSha256": "0c5b328d876281e6f5fcd3f620249499c435c10bbec839eaefecad69068579c4",
+      "snapshotManifestSha256": "cd8b432276d2135ad0216503863a197350ecb2a1734d459a5b29b8a96902dd7b",
       "source": {
         "repository": "LK-Design-System/lk-design-system",
-        "ref": "lds-v0.1.0-rc.69.28",
+        "ref": "lds-v0.1.0-rc.69.29",
         "refStatus": "release-candidate",
         "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
         "sha256": "f4c4f71cff9f9108246a5f7cc5520d6095d599027adb75d0b61e385c5b7fef80"
@@ -28,7 +28,7 @@
     "files": {
       "manifest": {
         "path": "docs/package/manifest.json",
-        "sha256": "c37e906e71f862c4d02ee179855ca335827be8685cbe442497e3b3249d1b2c12"
+        "sha256": "612c784106ac576c84a6520741b1112f289e2cc64cfa37630d086993d114b59c"
       },
       "checklist": {
         "path": "docs/package/adoption-checklist.json",
@@ -52,11 +52,11 @@
       },
       "workflow": {
         "path": "docs/package/adoption-workflow.md",
-        "sha256": "4d0f2a54da8fb05cc637977d8ba8246d686d12142e8d613b39ceeb937ca64318"
+        "sha256": "7103094c4952685196ca8821211a1160b722f66e510f62928aea0f3470ff11a7"
       },
       "llms": {
         "path": "docs/package/llms.txt",
-        "sha256": "0b8862d273b7833e35e43f991f0b97cb58f696377f793aee435616edf1c25eb3"
+        "sha256": "12dca77c8ef6ead928818c75d3613b1937115340883b2c3a88eb98ddcb70dde0"
       },
       "domainIndex": {
         "path": "docs/package/domain/README.md",
