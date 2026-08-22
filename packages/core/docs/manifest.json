@@ -206,7 +206,7 @@
       },
       {
         "path": "docs/TOKEN_GOVERNANCE.md",
-        "sha256": "829219b6b777bd25e95ed6a564400a4898c9ab19d205b8f02c7ed873f41169d6"
+        "sha256": "1976a37c279918a897914b704dd557e59fda045a1312e166e301359fd638290c"
       },
       {
         "path": "llms.txt",
@@ -621,11 +621,11 @@
     },
     {
       "path": "policies/TOKEN_GOVERNANCE.md",
-      "sha256": "829219b6b777bd25e95ed6a564400a4898c9ab19d205b8f02c7ed873f41169d6",
+      "sha256": "dabb307f624075acfe1d60189da8724a357a62dd755b1f206923c54c8e0d2c51",
       "sources": [
         {
           "path": "docs/TOKEN_GOVERNANCE.md",
-          "sha256": "829219b6b777bd25e95ed6a564400a4898c9ab19d205b8f02c7ed873f41169d6"
+          "sha256": "1976a37c279918a897914b704dd557e59fda045a1312e166e301359fd638290c"
         }
       ]
     },

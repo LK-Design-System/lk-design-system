@@ -2,11 +2,14 @@ import React from 'react';
 import { OverlayRuntimeProvider } from '@lk-design-system/lds-core/components/overlay/overlay-platform';
 
 const MODES = new Set(['light', 'dark', 'auto']);
+const PROFILES = new Set(['default', 'ops']);
 const useSafeLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 
 export const LdsRuntimeContext = React.createContext({
   colorScheme: 'light',
   setColorScheme: () => {},
+  profile: 'default',
+  setProfile: () => {},
   direction: 'ltr',
   locale: undefined,
 });
@@ -51,6 +54,9 @@ export function LdsProvider({
   colorScheme,
   defaultColorScheme = 'light',
   onColorSchemeChange,
+  profile,
+  defaultProfile = 'default',
+  onProfileChange,
   storageManager,
   storageKey = 'lk-theme',
   persist = true,
@@ -69,6 +75,11 @@ export function LdsProvider({
     persist ? manager.get(defaultColorScheme) : defaultColorScheme
   ));
   const resolvedColorScheme = MODES.has(colorScheme) ? colorScheme : internalColorScheme;
+  const controlledProfile = profile !== undefined;
+  const [internalProfile, setInternalProfile] = React.useState(() => (
+    PROFILES.has(defaultProfile) ? defaultProfile : 'default'
+  ));
+  const resolvedProfile = PROFILES.has(profile) ? profile : internalProfile;
   const runtimeTarget = resolveTarget(target);
 
   const setColorScheme = React.useCallback((nextValue) => {
@@ -78,6 +89,13 @@ export function LdsProvider({
     if (persist) manager.set(next);
     onColorSchemeChange?.(next);
   }, [controlled, manager, onColorSchemeChange, persist, resolvedColorScheme]);
+
+  const setProfile = React.useCallback((nextValue) => {
+    const next = typeof nextValue === 'function' ? nextValue(resolvedProfile) : nextValue;
+    if (!PROFILES.has(next) || next === resolvedProfile) return;
+    if (!controlledProfile) setInternalProfile(next);
+    onProfileChange?.(next);
+  }, [controlledProfile, onProfileChange, resolvedProfile]);
 
   React.useEffect(() => {
     if (!persist || !manager.subscribe) return undefined;
@@ -92,15 +110,19 @@ export function LdsProvider({
     if (!element) return undefined;
     const previous = {
       theme: element.getAttribute('data-theme'),
+      profile: element.getAttribute('data-lds-profile'),
       direction: element.getAttribute('dir'),
       locale: element.getAttribute('lang'),
     };
     element.setAttribute('data-theme', resolvedColorScheme);
+    element.setAttribute('data-lds-profile', resolvedProfile);
     element.setAttribute('dir', direction);
     if (locale) element.setAttribute('lang', locale);
     return () => {
       if (previous.theme == null) element.removeAttribute('data-theme');
       else element.setAttribute('data-theme', previous.theme);
+      if (previous.profile == null) element.removeAttribute('data-lds-profile');
+      else element.setAttribute('data-lds-profile', previous.profile);
       if (previous.direction == null) element.removeAttribute('dir');
       else element.setAttribute('dir', previous.direction);
       if (locale) {
@@ -108,14 +130,16 @@ export function LdsProvider({
         else element.setAttribute('lang', previous.locale);
       }
     };
-  }, [direction, locale, resolvedColorScheme, target]);
+  }, [direction, locale, resolvedColorScheme, resolvedProfile, target]);
 
   const value = React.useMemo(() => ({
     colorScheme: resolvedColorScheme,
     setColorScheme,
+    profile: resolvedProfile,
+    setProfile,
     direction,
     locale,
-  }), [direction, locale, resolvedColorScheme, setColorScheme]);
+  }), [direction, locale, resolvedColorScheme, resolvedProfile, setColorScheme, setProfile]);
 
   return (
     <LdsRuntimeContext.Provider value={value}>

@@ -3,8 +3,9 @@
 | Field | Value |
 | --- | --- |
 | Type | Structure proposal |
-| Status | Proposed plan — WDS 재앵커링(default 값의 자기 기준 동결) 완료가 선행 조건 |
+| Status | Adopted — Theme runtime/provider·token contract·Storybook matrix·대표 소비자 profile wiring 완료; 행동 readiness는 별도 단계로 판정 |
 | Owner | Design system owner |
+| Last reviewed | 2026-08-22 |
 | 선행 문서 | [`OPERATING_MODEL.md`](OPERATING_MODEL.md)(레이어 소유권) · [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md)(토큰 변경 정책) · [`ROBOTICS_PATTERNS.md`](ROBOTICS_PATTERNS.md)(도메인 상태 의미) |
 | 근거 | 전부 실측 — 본문 §1의 토큰 값과 컴포넌트 인용은 2026-08-16 HEAD 기준 |
 
@@ -113,7 +114,21 @@ Theme (lds-theme)        표정의 집. 갈라지는 유일한 지점
 기존 치수 baseline 기계는 default 프로파일에만 적용한다. 재앵커링이 동결하는
 값이 곧 default이므로 추가 장치가 필요 없다.
 
-## 4. 프로파일로 풀 수 없는 것 — 행동 트랙 (이 계획 범위 밖)
+## 4. 현재 구현 증거와 지원 경계
+
+프로파일 축은 이제 문서 제안이 아니라 실제 소비·검증 경로다.
+
+| 증거 | 현재 결과 |
+| --- | --- |
+| Theme runtime | `LdsProvider`가 `default|ops`를 선택하고 `data-lds-profile`을 설정한다. |
+| 대표 소비자 | Portal은 `default`, Web Viz는 `ops`를 명시하고 Core·Theme·Product fixed release set을 소비한다. |
+| 시각 회귀 | [`EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json)이 `default|ops × light|dark × normal|320px × 2 stories` 16개 capture를 보존한다. |
+| 소비자 registry | [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json)이 package pin, artifact checksum, repo SHA와 build evidence를 보존한다. |
+| active legacy guard | `check:legacy-active`가 aggregate·Editorial·console-pastel의 활성 소스 참조를 0으로 확인한다. |
+
+현재 registry stage는 두 소비자 모두 `build-verified`다. production deployment, product-owner 승인과 workflow/accessibility evidence는 제품 release evidence가 추가될 때에만 `workflow-verified` 또는 `deployed`로 승격한다. 이는 LDS가 제품 배포를 추정하지 않게 하기 위한 의도적 경계다.
+
+## 5. 프로파일로 풀 수 없는 것 — 행동 트랙
 
 아래는 스킨이 아니라 **행동**이라 토큰 오버라이드로 해결되지 않는다. 별도
 후속 트랙으로 명시하고 이 문서는 범위에서 제외한다:
@@ -124,17 +139,18 @@ Theme (lds-theme)        표정의 집. 갈라지는 유일한 지점
    ManualControlSession의 비상정지 개념)
 3. **알람 워크플로(ack/shelve/홍수 억제)** — 현재 부재, 신규 컴포넌트 트랙
 
-## 5. 실행 순서
+## 6. 실행 순서
 
 | 단계 | 내용 | 선행 조건 |
 | --- | --- | --- |
-| 0 | WDS 재앵커링 — default 값의 자기 기준 동결 | 진행 중 (별도 작업) |
-| 1 | 표현 프로파일 원칙을 이 문서에서 확정, `OPERATING_MODEL.md` 소유권 표에 프로파일 행 추가 | 0 완료 |
-| 2 | ops 토큰 오버라이드 작성 + 화이트리스트·필수 항목 게이트 | 1 |
-| 3 | Storybook 프로파일 토글, robotics 스토리를 ops 문맥에서 렌더 | 2 |
-| 4 | 행동 트랙(§4) 착수 판단 — 각각 독립 제안으로 | 2 이후 언제든 |
+| 0 | LDS 재앵커링 — default 값의 자기 기준 동결 | 완료 (`0.1.0-rc.69.19`) |
+| 1 | 표현 프로파일 원칙을 이 문서에서 확정, `OPERATING_MODEL.md` 소유권 표에 프로파일 행 추가 | 완료 — runtime contract와 machine contract 반영 |
+| 2 | ops 토큰 오버라이드 작성 + 화이트리스트·필수 항목 게이트 | 완료 — `tokens/profiles.css`, `check:expression-profile` |
+| 3 | Storybook 프로파일 토글과 profile/theme/viewport 회귀 matrix 연결 | 완료 — 16 capture, `check:expression-profile-visual` |
+| 4 | Portal/default·Web Viz/ops 대표 소비자 wiring과 package evidence | 완료 — [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) |
+| 5 | 행동 트랙(§5) 착수 판단 — 각각 독립 제안으로 | 진행 중 — O1/O2 readiness record 연결; O3/O4는 지원 주장하지 않음 |
 
-## 6. 비범위 (명시적으로 하지 않는 것)
+## 7. 비범위 (명시적으로 하지 않는 것)
 
 - 컴포넌트 이중화 — Core는 한 벌이다. "ops용 Button" 같은 분기는 이 제안의
   실패 조건이다.

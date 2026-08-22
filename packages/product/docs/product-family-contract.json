@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": 1,
+  "kind": "lds-product-family-contract",
+  "status": "active",
+  "authority": "live",
+  "package": "@lk-design-system/lds-product",
+  "layer": "product",
+  "purpose": "Classify reusable Product exports without creating a second design-system package or repository.",
+  "families": [
+    {
+      "id": "application",
+      "label": "Application",
+      "purpose": "Generic product identity, navigation, action, communication, content and form composition.",
+      "sourcePrefixes": [
+        "components/brand/",
+        "components/buttons/",
+        "components/cards/",
+        "components/communication/",
+        "components/feedback/",
+        "components/forms/",
+        "components/navigation/",
+        "components/selection/"
+      ]
+    },
+    {
+      "id": "operations",
+      "label": "Operations",
+      "purpose": "Renderer-neutral data, status, telemetry, equipment, viewer and operational shell composition.",
+      "sourcePrefixes": [
+        "components/data/",
+        "components/layout/",
+        "components/overlay/",
+        "components/robotics/",
+        "components/status/",
+        "components/viz/"
+      ]
+    },
+    {
+      "id": "workspace",
+      "label": "Workspace",
+      "purpose": "Reusable authoring, editor, inspector, activity and document-workspace composition.",
+      "sourcePrefixes": [
+        "components/content/",
+        "components/editor/"
+      ]
+    }
+  ],
+  "rules": [
+    "Every public Product source module must match exactly one family.",
+    "Family is a discovery and ownership taxonomy; it is not a new package boundary.",
+    "Complete product screens, routes, transport policy, command execution and domain truth remain product-owned.",
+    "Robot control, navigation, spatial and safety semantics belong to the external Robotics package even when Product supplies a renderer-neutral composition."
+  ]
+}

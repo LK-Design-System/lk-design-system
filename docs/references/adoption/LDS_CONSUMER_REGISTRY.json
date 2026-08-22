@@ -1,0 +1,115 @@
+{
+  "$schema": "./LDS_CONSUMER_REGISTRY.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-consumer-registry",
+  "generatedAt": "2026-08-22",
+  "ldsVersion": "0.1.0-rc.69.28",
+  "entries": [
+    {
+      "id": "portal",
+      "repository": "LK-ROBOTICS-AX/lk_portal",
+      "sourceCommit": "50af5a4a890494dfc02a21ad729df0bfc46bfc91",
+      "worktree": "dirty",
+      "frontendRoot": "src",
+      "profile": "default",
+      "themeModes": ["light"],
+      "packages": [
+        {
+          "name": "@lk-design-system/lds-core",
+          "version": "0.1.0-rc.69.28",
+          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-core-0.1.0-rc.69.28.tgz",
+          "sha256": "3a13954a5bd121566fe0bbff39586516c0a563563fd689b6668ae99d5e3fc42e"
+        },
+        {
+          "name": "@lk-design-system/lds-theme",
+          "version": "0.1.0-rc.69.28",
+          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-theme-0.1.0-rc.69.28.tgz",
+          "sha256": "399b82dd091726c95d4a4dfccda5bc4ef55bddaf6ed434bc01a9fd27647621cc"
+        },
+        {
+          "name": "@lk-design-system/lds-product",
+          "version": "0.1.0-rc.69.28",
+          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-product-0.1.0-rc.69.28.tgz",
+          "sha256": "069f59a6eca68a325b6c62b5c4ace59fe81f1b266bf2c0e828909f4d04350cc6"
+        }
+      ],
+      "stage": "build-verified",
+      "checks": {
+        "install": { "status": "passed", "command": "npm.cmd install --ignore-scripts --no-audit --no-fund" },
+        "sourceContract": { "status": "passed", "command": "LdsRuntimeBoundary + default profile + Core/Theme/Product CSS" },
+        "productionBuild": { "status": "passed", "command": "npx.cmd next build", "note": "Prisma client generated before the direct production build; the repository prebuild semantic guard still reports its pre-existing contract mismatch." },
+        "workflowSmoke": { "status": "passed", "command": "standalone server + Playwright /login smoke", "note": "Built artifact served successfully: /login 200, / redirects to /login, /api/auth/session 200, default profile and login action present. Docker-backed npm run test:smoke remains unavailable because Docker CLI is not installed." },
+        "accessibility": { "status": "not-run", "command": "Portal Storybook accessibility suite" }
+      },
+      "viewports": ["1280x820", "320x900"],
+      "evidenceFreshness": "current",
+      "evidence": [
+        "ops/lk-portal/src/app/layout.tsx",
+        "ops/lk-portal/src/components/layout/LdsRuntimeBoundary.tsx",
+        "ops/lk-portal/src/app/globals.css",
+        "ops/lk-portal/package.json",
+        "ops/lk-portal/package-lock.json"
+      ],
+      "attestation": "attestations/lk-portal.json",
+      "legacyActiveReferences": 0,
+      "notes": "Portal uses the default application expression profile and remains light-only by product decision."
+    },
+    {
+      "id": "web-viz",
+      "repository": "LK-ROBOTICS/lk_web_viz",
+      "sourceCommit": "d0ae64923ab282bae9ae2638c838cb0bb183f302",
+      "worktree": "dirty",
+      "frontendRoot": "frontend",
+      "profile": "ops",
+      "themeModes": ["light", "dark"],
+      "packages": [
+        {
+          "name": "@lk-design-system/lds-core",
+          "version": "0.1.0-rc.69.28",
+          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-core-0.1.0-rc.69.28.tgz",
+          "sha256": "3a13954a5bd121566fe0bbff39586516c0a563563fd689b6668ae99d5e3fc42e"
+        },
+        {
+          "name": "@lk-design-system/lds-theme",
+          "version": "0.1.0-rc.69.28",
+          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-theme-0.1.0-rc.69.28.tgz",
+          "sha256": "399b82dd091726c95d4a4dfccda5bc4ef55bddaf6ed434bc01a9fd27647621cc"
+        },
+        {
+          "name": "@lk-design-system/lds-product",
+          "version": "0.1.0-rc.69.28",
+          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-product-0.1.0-rc.69.28.tgz",
+          "sha256": "069f59a6eca68a325b6c62b5c4ace59fe81f1b266bf2c0e828909f4d04350cc6"
+        },
+        {
+          "name": "@lk-design-system/lds-robotics-ui",
+          "version": "0.1.0-rc.29",
+          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-robotics-ui-0.1.0-rc.29.tgz",
+          "sha256": "a9a38cbf1f428a4eff64b5382961148d6bc75ee6f4436ca3242cd8053db61572"
+        }
+      ],
+      "stage": "build-verified",
+      "checks": {
+        "install": { "status": "passed", "command": "npm.cmd ci --ignore-scripts --no-audit --no-fund" },
+        "sourceContract": { "status": "passed", "command": "python scripts/verify_lds_organization_adoption.py" },
+        "productionBuild": { "status": "passed", "command": "npm.cmd run build" },
+        "workflowSmoke": { "status": "passed", "command": "npm.cmd run test -- --run", "note": "42 tests passed." },
+        "accessibility": { "status": "passed", "command": "npm.cmd exec -- playwright test e2e/lds-all-routes.spec.ts --grep lds-organization --workers=1", "note": "4 profile/theme/viewport organization checks passed; full 109-route run had 106 passed and 3 pre-existing fixture/resource flakes." }
+      },
+      "viewports": ["1280x820", "767x900", "320x900"],
+      "evidenceFreshness": "current",
+      "evidence": [
+        "ops/lk_web_viz/frontend/src/contexts/ThemeContext.tsx",
+        "ops/lk_web_viz/frontend/src/index.css",
+        "ops/lk_web_viz/frontend/src/screens/LdsOrganizationScreen.tsx",
+        "ops/lk_web_viz/frontend/index.html",
+        "ops/lk_web_viz/frontend/package.json",
+        "ops/lk_web_viz/frontend/package-lock.json",
+        "ops/lk_web_viz/scripts/verify_lds_organization_adoption.py"
+      ],
+      "attestation": "attestations/lk-web-viz.json",
+      "legacyActiveReferences": 0,
+      "notes": "Web Viz uses the operations profile, light/dark themes, and keeps the historical Editorial artifact only in provenance/vendor history."
+    }
+  ]
+}

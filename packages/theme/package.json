@@ -55,6 +55,11 @@
     "llms": "./docs/llms.txt",
     "adoptionChecklist": "./docs/adoption-checklist.json",
     "adoptionReportSchema": "./docs/adoption-report.schema.json",
+    "profileContract": "./docs/profile-contract.json",
+    "profiles": [
+      "default",
+      "ops"
+    ],
     "storybook": "https://lk-design-system.github.io/lk-design-system/?path=/docs/lds-theme-brand-lk-robotics-logo--docs"
   },
   "repository": {

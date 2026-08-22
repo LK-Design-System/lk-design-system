@@ -34,27 +34,31 @@ or another appropriate attribution surface.
 
 AI context의 루트 진입점은 [`llms.txt`](llms.txt)입니다. LDS 전환을 시작하기 전에 human workflow 또는 이 generated bundle을 읽고, 모든 필수 비컴포넌트 facet과 `componentMapping`을 검토합니다.
 
-## WDS and LDS relationship
+## WDS provenance and current LDS ownership
 
-LDS means **LK Design System**. This package is based on **Wanted Design
-System (WDS) Community** as its source model, but it is not a one-to-one copy
-or an unrelated custom system.
+LDS means **LK Design System**. Wanted Design System Community was the bootstrap
+source model, but since `0.1.0-rc.69.19` the live authority for dimensions,
+anatomy and foundation values is the LDS-owned baseline. `docs/references/wds/`
+records historical provenance; it does not decide new owner, API or visual
+changes. The current authority policy is
+[`OPERATING_MODEL.md`](docs/OPERATING_MODEL.md).
 
-The intended relationship is:
+Current layer roles are:
 
-- **WDS Core**: keep WDS foundations, generic component structure, interaction
-  expectations, and documentation conventions as the baseline.
-- **LK Theme Override**: replace WDS visual identity with LK ROBOTICS color,
-  brand, typography, status, radius, and effect decisions.
-- **LK Product Extension**: add generic LK product components only when they are
-  reusable beyond a single robotics screen.
-- **LK Robotics Extension**: keep robotics, viewer, map, telemetry, joystick,
-  topic tree, and editor components separate from WDS core.
-- **Documents**: document contracts, audits, operating rules, and WDS alignment
-  evidence without treating them as product UI components.
+- **LDS Core**: generic DOM primitives, layout mechanics, interaction and
+  accessibility contracts, and the semantic token interface.
+- **LDS Theme**: LK ROBOTICS color, brand, typography, effect values and theme
+  mapping.
+- **LDS Product**: reusable application composition, including renderer-neutral
+  editor/viewer chrome and generic connection, telemetry and equipment
+  presentation when those meanings are not robot-specific.
+- **LDS Robotics**: robot control authority, navigation/spatial overlays, safety
+  meaning, joystick and other robot-domain contracts.
+- **Documents**: current contracts and operating rules point to LDS authority;
+  WDS alignment files remain provenance evidence only.
 
-In short: **LDS should read as WDS structure recolored and extended for LK, not
-as arbitrary screens designed beside WDS.**
+New work follows current LDS contracts and operational evidence. WDS can explain
+where an adopted value came from, but it is not a permanent parity target.
 
 ### Reference models and graduation
 
@@ -79,7 +83,17 @@ domain and a reference model conflict, the operational domain wins.**
 Authoritative references:
 
 - `DESIGN.md` — LK Operations Dashboard scope, design principles, and layer ownership
+- `docs/OPERATING_MODEL.md` — live layer ownership and dependency policy
+- `docs/TOKEN_GOVERNANCE.md` — token source and Theme profile governance
+- `docs/references/architecture/PRODUCT_FAMILY_CONTRACT.json`
+- `docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json`
+- `docs/references/adoption/LDS_CONSUMER_REGISTRY.json` — current Portal/default·Web Viz/ops package and build evidence
+- `docs/references/visual/EXPRESSION_PROFILE_MATRIX.json` — profile/theme/viewport visual regression evidence
+- `docs/references/robotics/READINESS.json` — Robotics O1/O2 readiness and explicit O3/O4 boundaries
 - `docs/references/quality/BENCHMARK_SHADCN.md` — shadcn/ui selective-mirror benchmark
+
+Historical WDS provenance:
+
 - `docs/references/wds/TOKEN_MAP.json`
 - `docs/references/wds/LAYER_CLASSIFICATION.json`
 - `docs/references/wds/CONFLICT_AUDIT.md`
@@ -97,7 +111,7 @@ LK ROBOTICS 핵심 디자인 시스템 패키지입니다. 토큰, React 컴포�
 
 ```tsx
 import { Button } from '@lk-design-system/lds-core';
-import { ThemeToggle } from '@lk-design-system/lds-theme';
+import { LdsProvider, ThemeToggle } from '@lk-design-system/lds-theme';
 import { ProductCard, TopBar } from '@lk-design-system/lds-product';
 import { RobotStatusCard } from '@lk-design-system/lds-robotics-ui';
 
@@ -105,6 +119,16 @@ import '@lk-design-system/lds-core/styles.css';
 import '@lk-design-system/lds-theme/styles.css';
 import '@lk-design-system/lds-product/styles.css';
 import '@lk-design-system/lds-robotics-ui/styles.css';
+```
+
+일반 제품은 profile을 생략하거나 `default`를 사용하고, 운영 표면은 Theme
+provider에서 명시적으로 `ops`를 선택합니다. 두 profile은 같은 Core API와 DOM,
+접근성 계약을 공유합니다.
+
+```tsx
+<LdsProvider profile="ops">
+  <OperationsSurface />
+</LdsProvider>
 ```
 
 새 코드는 `@lk-design-system/lds-core`, `@lk-design-system/lds-theme`,
@@ -120,6 +144,7 @@ owner 패키지 deep import로 바꾸면 됩니다.
 - current packages: `@lk-design-system/lds-core`, `@lk-design-system/lds-theme`,
   `@lk-design-system/lds-product`
   (각 현재 버전은 package manifest가 소유)
+- Product family contract: `Application`, `Operations`, `Workspace`
 - external Robotics: `@lk-design-system/lds-robotics-ui`,
   `LK-Design-System/lk-design-system-robotics`
   - direct package AI entry: `@lk-design-system/lds-robotics-ui/llms.txt`
@@ -131,8 +156,9 @@ owner 패키지 deep import로 바꾸면 됩니다.
 - 배포 정책: publishable package는 restricted GitHub Packages를 사용하며 root workspace만
   private입니다. 실제 제품 adoption과 stable promotion은 release evidence와 별도로 승인합니다.
 - 런타임 peer dependency: `react`; 선택 peer dependency: `react-dom`
-- legacy aggregate 진입점은 compatibility window 동안 유지하지만 신규 코드는 owner package
-  public export를 사용합니다.
+- private workspace의 aggregate build는 내부 Storybook·migration fixture용으로만
+  유지합니다. 제거된 compatibility package는 consumer entry가 아니며 신규 코드와
+  제품 소비자는 owner package public export를 사용합니다.
 
 ## 레포 구조
 
@@ -164,6 +190,9 @@ npm run check:layers
 npm run check:contracts
 npm run check:publish-policy
 npm run check:consumer
+npm run check:adoption-registry
+npm run check:expression-profile-visual
+npm run check:legacy-active
 npm run report:inventory
 npm run check:inventory
 npm run check:fast

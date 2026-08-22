@@ -1,12 +1,13 @@
 # LdsProvider
 
-`LdsProvider` is the additive React runtime for theme choice, direction, locale metadata,
-and the shared Portal layer. Existing CSS-only `[data-theme]` and `.theme-*` consumers remain
-supported and do not need a provider.
+`LdsProvider` is the additive React runtime for theme choice, expression profile, direction,
+locale metadata, and the shared Portal layer. Existing CSS-only `[data-theme]`,
+`[data-lds-profile]` and `.theme-*` consumers remain supported and do not need a provider.
 
 ```jsx
 <LdsProvider
   defaultColorScheme="auto"
+  profile="ops"
   direction="ltr"
   portalTarget={document.getElementById('overlay-root')}
 >
@@ -15,6 +16,14 @@ supported and do not need a provider.
 ```
 
 - `colorScheme` + `onColorSchemeChange` is controlled; `defaultColorScheme` is uncontrolled.
+- `profile` + `onProfileChange` is controlled; `defaultProfile` is uncontrolled. The finite
+  values are `default` and opt-in `ops`; omitting the profile preserves the baseline expression.
+- The profile is Theme-owned token projection only: it may change operational density, motion
+  timing and decorative depth, but never public API/DOM anatomy, semantic status meaning,
+  contrast requirements, route/permission/freshness/command policy or Robotics truth.
+- The Provider projects the selected profile to `data-lds-profile` on the same `target`; CSS-only
+  consumers can set that attribute or `.lds-profile-ops` directly when React runtime context is
+  not needed.
 - The default `storageManager` uses `localStorage`; `storageKey` defaults to `lk-theme`. Pass
   `persist={false}` or a custom `{ get, set, subscribe }` manager for server/cookie/application
   storage ownership. `LdsColorSchemeScript` accepts the same `storageKey` so first paint and the

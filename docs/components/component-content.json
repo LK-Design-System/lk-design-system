@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "76e4e054559d6541fa3f4e256abe4cccefa37e9c6c5ac8932b85d002c94f68d2",
+  "sourceFingerprint": "58553be79a65b5dcbb1270d9a829897f490df6e7641cc079bddcec5cf17a5fd2",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -29679,6 +29679,27 @@
           "owner": "LdsProviderProps"
         },
         {
+          "name": "profile",
+          "type": "LdsProfile",
+          "required": false,
+          "description": "Runtime expression profile. default preserves the baseline; ops opts into operational density/motion/depth tokens.",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "defaultProfile",
+          "type": "LdsProfile",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
+          "name": "onProfileChange",
+          "type": "(value: LdsProfile) = void",
+          "required": false,
+          "description": "",
+          "owner": "LdsProviderProps"
+        },
+        {
           "name": "storageManager",
           "type": "LdsStorageManager",
           "required": false,
@@ -29758,7 +29779,7 @@
       ],
       "tokens": [],
       "externalReferences": [],
-      "promptSha256": "b4b1069c4231aceb8e561734e8769bd5e13b17cd348b8ea4276dc275c19f55b6"
+      "promptSha256": "f9ae31dc5c18b2d5856e932749c333dac650c82dd0086ebaf643084dd20b5a41"
     },
     {
       "id": "multi-select-chip",

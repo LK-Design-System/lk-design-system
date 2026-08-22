@@ -82,6 +82,9 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 | [`VISUAL_PARITY_LEDGER.md`](VISUAL_PARITY_LEDGER.md) | WDS evidence와 visual parity guards |
 | [`DEPRECATIONS.md`](DEPRECATIONS.md) | generated: `npm run report:deprecations` |
 | [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md) | product source pins와 `check:product-frontends` |
+| [`references/adoption/LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) | current Portal/Web Viz package pins, profile, checksum, build evidence와 freshness; `npm run check:adoption-registry` |
+| [`references/visual/EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json) | `default|ops × light|dark × normal|320px` 16-capture visual evidence; `npm run check:expression-profile-visual` |
+| [`references/robotics/READINESS.json`](references/robotics/READINESS.json) | O1/O2 readiness와 O3/O4 claim boundary; `npm run check:robotics-readiness` |
 | [`HANDOFF.md`](HANDOFF.md) | 현재 HEAD, 작업 상태, 최신 날짜별 handoff 포인터 |
 | [`HANDOFF_STORYBOOK_DOCS_SURFACE.md`](HANDOFF_STORYBOOK_DOCS_SURFACE.md) | Storybook Docs 표면 작업의 인계 문서 — 구현·검증 상태, evidence-only 가이드와 3% 중복 ratchet, 다시 깨기 쉬운 지점 |
 | [`SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md`](SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md) | LK Portal에서 확인한 Select intrinsic-width 레이아웃 결함과 MessageFeed viewport inset 계약 부족의 재현·수정·검증·릴리스 인계 |
@@ -90,8 +93,9 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 
 | Document | Status |
 | --- | --- |
+| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | Implementation record — Product family·Theme profile·대표 consumer evidence·O1/O2 readiness·legacy guard 구현; 제품 workflow/deployment 승격 gate는 evidence 대기 |
 | [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | Current implementation record — 이슈·문서·rc.16 근거를 통합한 핵심 UI 컴포넌트 계약, Styles/Slots, ref, overlay와 검증 결과; LK Portal 채택 검증 대기 |
-| [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | Wave 1 artifacts and Wave 4 Robotics extraction complete; product adoption and Wave 5 compatibility retirement remain open |
+| [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | Wave 1 package split, Wave 4 Robotics extraction, Wave 5 compatibility retirement complete; current-product adoption evidence remains open |
 | [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) | Phase 0–3 완료 (2026-08-16) — 세부 구분 개편(compat 일몰, 소비 산출물 계약, 위성 축 재편·수명주기); 잔여는 2027-01 정기 심사 |
 | [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) | O-A~O-C 실행 완료 (2026-08-16) — 릴리스 파생값 자동화, 핀 침묵 불가의 기계화, main 상시 초록; 잔여는 이관 시험(사람 축) |
 | [`OPERATIONS.md`](OPERATIONS.md) | 운영 단일 진입점 — 릴리스 레시피, 위성 생멸 규칙, 정상 상태의 정의, 자주 쓰는 명령 |
@@ -99,7 +103,7 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 | [`NAVIGATION_ATOMIZATION_PLAN.md`](NAVIGATION_ATOMIZATION_PLAN.md) | Proposed plan — Navigation 선·상태 어휘의 단일 소스화와 Encoding 문서화 |
 | [`NAVIGATION_PAGE_DECOMPOSITION_PLAN.md`](NAVIGATION_PAGE_DECOMPOSITION_PLAN.md) | Proposed plan — Navigation 스토리 페이지 재분해(Route 메가페이지 해체·Viewer 합성 페이지 신설) |
 | [`PROSE_SURFACE_PROPOSAL.md`](PROSE_SURFACE_PROPOSAL.md) | Proposed plan — 마크다운 렌더 결과의 타이포그래피 표면(Prose): 엔진은 제품, 조판·접근성 계약은 DS |
-| [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | Proposed plan — 소비자(Portal)·관제(Control/Viz) 두 표면을 Theme 레이어의 표현 프로파일 축(default/ops)으로 흡수; WDS 재앵커링 완료가 선행 조건 |
+| [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | Adopted — Portal/default·Web Viz/ops wiring, Theme runtime/token contract와 16-capture matrix 완료; O1/O2 행동 readiness는 별도 record |
 | [`TYPE_RAMP_DISPLAY0_PROPOSAL.md`](TYPE_RAMP_DISPLAY0_PROPOSAL.md) | Adopted — 투영 매체(Slides·Motion)용 램프 최상단 `display0`; rc.69.26 릴리스, Slides 재지정 완료 |
 | [`TIMELINE_ORIENTATION_PROPOSAL.md`](TIMELINE_ORIENTATION_PROPOSAL.md) | Adopted — Timeline 가로 방향(`orientation`); rc.69.26에서 main 반영, 위성 row 분기 철거는 타입 재지정 훅 후속 필요 |
 | [`TABLE_MEDIUM_CONTRACT_PROPOSAL.md`](TABLE_MEDIUM_CONTRACT_PROPOSAL.md) | Adopted — Table `banded` + `--lk-table-*` 재지정 훅; rc.69.26에서 main 반영, 위성 손말이 철거는 그룹 행 후속 필요 |

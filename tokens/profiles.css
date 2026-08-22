@@ -1,0 +1,46 @@
+/* ==========================================================================
+   LDS expression profiles
+   --------------------------------------------------------------------------
+   Profiles are Theme-owned value overrides. They do not create a second
+   component set, change semantic status meaning, or alter public API/DOM.
+   `default` is the implicit baseline; `ops` is opt-in for dense operational
+   surfaces such as monitoring, investigation and recovery workspaces.
+   ========================================================================== */
+
+:where([data-lds-profile='ops'], .lds-profile-ops) {
+  /* Density: compact controls and repeated data rows. */
+  --component-button-height-sm: 28px;
+  --component-button-height-md: 36px;
+  --component-button-height-lg: 44px;
+  --component-icon-button-size-sm: 28px;
+  --component-icon-button-size-md: 36px;
+  --component-chip-height-sm: 28px;
+  --component-chip-height-md: 32px;
+  --component-chip-height-lg: 36px;
+  --component-input-height: 40px;
+  --component-card-padding: var(--space-5);
+  --component-action-area-padding-x: var(--space-4);
+  --component-action-area-padding-y: var(--space-4);
+  --component-action-area-gap: var(--space-3);
+
+  /* Operational motion/depth: calm and legible under repeated updates. */
+  --dur-fast: 80ms;
+  --dur-base: 160ms;
+  --dur-slow: 240ms;
+  --duration-fast: 80ms;
+  --duration-normal: 160ms;
+  --duration-slow: 240ms;
+  --shadow-sm: var(--shadow-xs);
+  --shadow-md: var(--shadow-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-lds-profile='ops'], .lds-profile-ops) {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+  }
+}

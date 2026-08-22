@@ -1,0 +1,20 @@
+{
+  "$schema": "../LDS_CONSUMER_REGISTRY.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-consumer-attestation",
+  "consumerId": "web-viz",
+  "generatedAt": "2026-08-22",
+  "profile": "ops",
+  "checks": [
+    { "id": "install", "status": "passed", "command": "npm.cmd ci --ignore-scripts --no-audit --no-fund" },
+    { "id": "source-contract", "status": "passed", "command": "python scripts/verify_lds_organization_adoption.py" },
+    { "id": "production-build", "status": "passed", "command": "npm.cmd run build" },
+    { "id": "workflow-smoke", "status": "passed", "command": "npm.cmd run test -- --run (42 tests)" },
+    { "id": "profile-browser", "status": "passed", "command": "npm.cmd exec -- playwright test e2e/lds-all-routes.spec.ts --grep lds-organization --workers=1 (4 tests)" }
+  ],
+  "evidence": [
+    "ops/lk_web_viz/frontend/src/contexts/ThemeContext.tsx",
+    "ops/lk_web_viz/frontend/src/index.css",
+    "ops/lk_web_viz/frontend/src/screens/LdsOrganizationScreen.tsx"
+  ]
+}

@@ -1,5 +1,64 @@
 {
   "schemaVersion": 1,
   "description": "Known contract drift between this repository’s editor/viz/robotics prompt.md contracts and their implementations in the Robotics repository. The guard rejects only newly introduced drift; shrink this file by fixing entries, refresh it with check:robotics-contract-drift -- --update-baseline.",
-  "findings": {}
+  "findings": {
+    "robotics/DirectionalPad": {
+      "undocumentedProps": [
+        "appearance"
+      ]
+    },
+    "robotics/FleetHealthSummary": {
+      "missingPrompt": true
+    },
+    "robotics/FleetRobotRow": {
+      "missingPrompt": true
+    },
+    "robotics/Joystick": {
+      "undocumentedProps": [
+        "appearance"
+      ]
+    },
+    "robotics/NavigationAnnotationLayer": {
+      "undocumentedProps": [
+        "detailVisibility",
+        "labelVisibility"
+      ]
+    },
+    "robotics/NavigationCoordinateBoundary": {
+      "missingPrompt": true
+    },
+    "robotics/RobotPoseMarker": {
+      "undocumentedProps": [
+        "context",
+        "highlighted"
+      ]
+    },
+    "robotics/RobotStatusCard": {
+      "undocumentedProps": [
+        "accessibleDescription",
+        "connectionState",
+        "density",
+        "disabled",
+        "interaction",
+        "modeTone"
+      ]
+    },
+    "robotics/RouteOverlay": {
+      "undocumentedProps": [
+        "showTransitions"
+      ]
+    },
+    "robotics/TrajectoryOverlay": {
+      "undocumentedProps": [
+        "playbackTimeMs",
+        "showTimeCursor"
+      ]
+    },
+    "robotics/WaypointMarker": {
+      "undocumentedProps": [
+        "detailVisibility",
+        "labelVisibility"
+      ]
+    }
+  }
 }

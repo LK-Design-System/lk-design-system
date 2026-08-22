@@ -5,7 +5,7 @@
 
 
 
-var _chunkLWW6ADECcjs = require('../../chunk-LWW6ADEC.cjs');
+var _chunkHU6B2EBFcjs = require('../../chunk-HU6B2EBF.cjs');
 require('../../chunk-F4O2CAUI.cjs');
 
 
@@ -13,5 +13,5 @@ require('../../chunk-F4O2CAUI.cjs');
 
 
 
-exports.LdsColorSchemeScript = _chunkLWW6ADECcjs.LdsColorSchemeScript; exports.LdsProvider = _chunkLWW6ADECcjs.LdsProvider; exports.LdsRuntimeContext = _chunkLWW6ADECcjs.LdsRuntimeContext; exports.createLocalStorageManager = _chunkLWW6ADECcjs.createLocalStorageManager; exports.useLdsRuntime = _chunkLWW6ADECcjs.useLdsRuntime;
+exports.LdsColorSchemeScript = _chunkHU6B2EBFcjs.LdsColorSchemeScript; exports.LdsProvider = _chunkHU6B2EBFcjs.LdsProvider; exports.LdsRuntimeContext = _chunkHU6B2EBFcjs.LdsRuntimeContext; exports.createLocalStorageManager = _chunkHU6B2EBFcjs.createLocalStorageManager; exports.useLdsRuntime = _chunkHU6B2EBFcjs.useLdsRuntime;
 //# sourceMappingURL=LdsProvider.cjs.map

@@ -99,7 +99,7 @@ await writeFile(path.join(root, 'packages', 'core', 'styles.css'), [
   '',
 ].join('\n'));
 
-await copyFiles('theme', ['fonts.css', 'color-atomic.css', 'color-semantic.css', 'color-components.css', 'typography.css', 'effects.css']);
+await copyFiles('theme', ['fonts.css', 'color-atomic.css', 'color-semantic.css', 'color-components.css', 'typography.css', 'effects.css', 'profiles.css']);
 await writeFile(path.join(root, 'packages', 'theme', 'tokens', 'base.css'), [
   '/* Theme and brand slice from tokens/base.css. */',
   'html { color-scheme: light; }',
@@ -140,6 +140,7 @@ await writeFile(path.join(root, 'packages', 'theme', 'styles.css'), [
   '@import "./tokens/typography.css";',
   '@import "./tokens/effects.css";',
   '@import "./tokens/base.css";',
+  '@import "./tokens/profiles.css";',
   '',
 ].join('\n'));
 

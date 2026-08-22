@@ -30,7 +30,8 @@
     "adoptionChecklist": "./adoption-checklist.json",
     "adoptionReportSchema": "./adoption-report.schema.json",
     "adoptionReportExample": "./adoption-report.example.json",
-    "adoptionWorkflow": "./adoption-workflow.md"
+    "adoptionWorkflow": "./adoption-workflow.md",
+    "profileContract": "./profile-contract.json"
   },
   "foundations": [
     "color",
@@ -91,14 +92,18 @@
       {
         "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.schema.json",
         "sha256": "4ce25e058235e6b124d127321a4549c49da4efbdf1dcda22c79d4c83d3645a2f"
+      },
+      {
+        "path": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
+        "sha256": "d5694ee38257fd40902ede5248f1ef5d102c305a9d2934a0fa4a9740d5baf7c1"
       }
     ]
   },
   "resources": {
     "tokens": {
-      "fileCount": 7,
-      "bytes": 62551,
-      "sha256": "59d453ce6038f930518a5ebef1fac33d6d90696abb80e462243a6019c364fbf9"
+      "fileCount": 8,
+      "bytes": 64290,
+      "sha256": "4304bad00718433cc464998948976cc04bffbe8cb09e8aa507e1466549c79b83"
     },
     "assets": {
       "fileCount": 67,
@@ -234,6 +239,16 @@
         {
           "path": "docs/foundations/motion.md",
           "sha256": "c6a909e23814fc6a6a8b6f2b112181d8b1a3ae2bb310487bb672aa15c7061a10"
+        }
+      ]
+    },
+    {
+      "path": "profile-contract.json",
+      "sha256": "d5694ee38257fd40902ede5248f1ef5d102c305a9d2934a0fa4a9740d5baf7c1",
+      "sources": [
+        {
+          "path": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
+          "sha256": "d5694ee38257fd40902ede5248f1ef5d102c305a9d2934a0fa4a9740d5baf7c1"
         }
       ]
     }

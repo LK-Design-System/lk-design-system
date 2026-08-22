@@ -5,7 +5,7 @@
 | Type | Governance policy |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-08-16 |
+| Last reviewed | 2026-08-22 |
 
 디자인 시스템은 컴포넌트 묶음이 아니라 변경을 안전하게 반복하는 운영 체계입니다. 이 문서는 LK 디자인 시스템의 기여, 릴리즈, 마이그레이션 기준을 정의합니다.
 
@@ -34,9 +34,14 @@
 - Product → Core, Product
 - Robotics → Core, Product, Robotics
 
-`PUBLIC_EXPORT_CLASSIFICATION.json`이 export와 내부 모듈 소유권의 단일
-machine-readable authority입니다. `npm run check:layers`는 누락·중복·stale
-분류, 금지된 역방향 의존, 계층 순환을 차단합니다. 새 코드는
+`PUBLIC_EXPORT_CLASSIFICATION.json`은 기존 export·내부 모듈 projection과 WDS
+provenance를 보존합니다. Product family의 live taxonomy는
+[`PRODUCT_FAMILY_CONTRACT.json`](references/architecture/PRODUCT_FAMILY_CONTRACT.json)이
+소유하고, Theme 표현 축은
+[`EXPRESSION_PROFILE_CONTRACT.json`](references/architecture/EXPRESSION_PROFILE_CONTRACT.json)이
+소유합니다. `npm run check:layers`는 계층 경계와 Product family 누락·중복을
+함께 차단하고, `npm run check:expression-profile`은 Theme provider와 profile
+축의 정합성을 검사합니다. 새 코드는
 `/core`, `/theme`, `/product`, `/robotics` subpath를 사용하며 기존 aggregate
 root와 `components/*`는 호환 표면으로 유지합니다.
 

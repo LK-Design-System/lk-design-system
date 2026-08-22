@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": 1,
+  "kind": "lds-robotics-readiness",
+  "lastReviewed": "2026-08-22",
+  "claimBoundary": "This is a shared UI and interaction readiness record. It is not a robot safety case, operating procedure, or certification evidence.",
+  "browserGate": {
+    "status": "passed",
+    "stories": 8,
+    "seriousAxeViolations": 0,
+    "command": "node scripts/check-robotics-storybook-browser.mjs --root <built Robotics checkout>",
+    "note": "Robotics Storybook representative browser gate passed against the rc.69.28 Core/Theme/Product candidate set."
+  },
+  "stages": [
+    {
+      "id": "O1",
+      "name": "Monitoring",
+      "status": "ready",
+      "supportedClaim": true,
+      "workflowIds": ["WF-02"],
+      "evidence": [
+        "stories/RoboticsFleetOverview.stories.jsx",
+        "src/components/robotics/FleetHealthSummary.jsx",
+        "src/components/robotics/FleetRobotRow.jsx",
+        "lds:scripts/check-robotics-semantic-contracts.mjs",
+        "lds:scripts/check-robotics-storybook-browser.mjs"
+      ],
+      "invariants": [
+        "transport, freshness, operability, urgency, and identity remain separate axes",
+        "list and map selection share one target identity",
+        "stale or unavailable truth is not presented as healthy"
+      ]
+    },
+    {
+      "id": "O2",
+      "name": "Operational control",
+      "status": "ready",
+      "supportedClaim": true,
+      "workflowIds": ["WF-09"],
+      "evidence": [
+        "stories/RoboticsManualControlSession.stories.jsx",
+        "src/components/robotics/ManualControlSession.jsx",
+        "stories/RoboticsDirectionalPad.stories.jsx",
+        "stories/RoboticsJoystick.stories.jsx"
+      ],
+      "invariants": [
+        "authority and UI arm are distinct gates",
+        "deadman or continuous intent is required before movement",
+        "release, focus loss, unmount, link loss, and stop request converge on safe release",
+        "accepted, stopped, failed, and pending stop states remain distinct"
+      ]
+    },
+    {
+      "id": "O3",
+      "name": "Alarm lifecycle",
+      "status": "unverified",
+      "supportedClaim": false,
+      "workflowIds": [],
+      "evidence": [],
+      "reason": "LDS has status and alert presentation primitives, but no verified product-owned alarm acknowledgement, escalation, suppression, or audit lifecycle is attached to this readiness record."
+    },
+    {
+      "id": "O4",
+      "name": "Safety-certified HMI",
+      "status": "unsupported",
+      "supportedClaim": false,
+      "workflowIds": [],
+      "evidence": [],
+      "reason": "Safety certification, risk assessment, controller validation, and site operating procedures are outside LDS ownership and are not implied by the UI contracts."
+    }
+  ]
+}

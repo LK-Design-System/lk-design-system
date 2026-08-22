@@ -42,7 +42,8 @@ function startStaticServer(staticDirectory) {
   const server = createServer(async (request, response) => {
     try {
       const requestUrl = new URL(request.url || '/', 'http://127.0.0.1');
-      const safePath = decodeURIComponent(requestUrl.pathname).replace(/^\/+/, '') || 'index.html';
+      let safePath = decodeURIComponent(requestUrl.pathname).replace(/^\/+/, '') || 'index.html';
+      if (safePath === 'favicon.ico') safePath = 'favicon.svg';
       const file = path.resolve(staticDirectory, safePath);
       if (!file.startsWith(staticDirectory)) {
         response.writeHead(403);
@@ -134,6 +135,7 @@ async function main() {
     server = startedServer.server;
     const { origin } = startedServer;
     browser = await chromium.launch({
+      executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined,
       args: ['--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows'],
     });
 
@@ -143,7 +145,14 @@ async function main() {
       const page = await browser.newPage({ viewport: { width, height } });
       const browserErrors = [];
       page.on('console', (message) => {
-        if (message.type() === 'error') browserErrors.push(message.text());
+        if (message.type() === 'error') {
+          const location = message.location();
+          const source = location?.url ? ` (${location.url}:${location.lineNumber}:${location.columnNumber})` : '';
+          browserErrors.push(`${message.text()}${source}`);
+        }
+      });
+      page.on('response', (response) => {
+        if (response.status() >= 400) browserErrors.push(`${response.status()} ${response.url()}`);
       });
       page.on('pageerror', (error) => browserErrors.push(error.message));
       await page.addInitScript(() => {

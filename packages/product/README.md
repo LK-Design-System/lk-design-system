@@ -21,6 +21,7 @@ The complete 16-Foundation context is available from the installed `@lk-design-s
 - Styles: `@lk-design-system/lds-product/styles.css`
 - Machine-readable documentation index: `@lk-design-system/lds-product/design-system.json`
 - Full packaged documentation: `@lk-design-system/lds-product/docs/*`
+- Product family contract: `@lk-design-system/lds-product/docs/product-family-contract.json`
 
 Import owner styles in dependency order: Core, Theme, Product, then Robotics when used.
 

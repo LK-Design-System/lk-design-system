@@ -32,6 +32,8 @@ const packageDefinitions = [
     name: '@lk-design-system/lds-theme',
     layer: 'theme',
     foundations: ['color', 'typography', 'elevation', 'gradient', 'motion'],
+    profileContract: './docs/profile-contract.json',
+    profiles: ['default', 'ops'],
     storybookPath: '?path=/docs/lds-theme-brand-lk-robotics-logo--docs',
   },
   {
@@ -39,6 +41,8 @@ const packageDefinitions = [
     name: '@lk-design-system/lds-product',
     layer: 'product',
     foundations: [],
+    familyContract: './docs/product-family-contract.json',
+    families: ['application', 'operations', 'workspace'],
     storybookPath: '?path=/docs/lds-product-operations-dashboard-dashboard-shell--docs',
   },
 ];
@@ -145,7 +149,7 @@ function formatAjvErrors(errors) {
 }
 
 function expectedLdsMetadata(definition) {
-  return {
+  const metadata = {
     schemaVersion: 1,
     layer: definition.layer,
     manifest: './docs/manifest.json',
@@ -154,6 +158,15 @@ function expectedLdsMetadata(definition) {
     adoptionReportSchema: './docs/adoption-report.schema.json',
     storybook: `${publicRoot}${definition.storybookPath}`,
   };
+  if (definition.profileContract) {
+    metadata.profileContract = definition.profileContract;
+    metadata.profiles = definition.profiles;
+  }
+  if (definition.familyContract) {
+    metadata.familyContract = definition.familyContract;
+    metadata.families = definition.families;
+  }
+  return metadata;
 }
 
 function checkRelativeLinks(contents, file, packageRoot) {
@@ -293,6 +306,8 @@ async function validatePackage(
       adoptionReportSchema: './adoption-report.schema.json',
       adoptionReportExample: './adoption-report.example.json',
       adoptionWorkflow: './adoption-workflow.md',
+      ...(definition.profileContract ? { profileContract: './profile-contract.json' } : {}),
+      ...(definition.familyContract ? { familyContract: './product-family-contract.json' } : {}),
       ...(definition.id === 'core' ? { agentSkill: './agent-skills/lds-ui/SKILL.md' } : {}),
     }),
     `${definition.name}: documentation entrypoints drift.`,

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": 1,
+  "kind": "lds-expression-profile-contract",
+  "status": "active",
+  "authority": "live",
+  "ownerLayer": "theme",
+  "package": "@lk-design-system/lds-theme",
+  "axis": "data-lds-profile",
+  "values": ["default", "ops"],
+  "default": "default",
+  "overrideSource": "tokens/profiles.css",
+  "allowedOverrides": [
+    "--component-button-height-sm",
+    "--component-button-height-md",
+    "--component-button-height-lg",
+    "--component-icon-button-size-sm",
+    "--component-icon-button-size-md",
+    "--component-chip-height-sm",
+    "--component-chip-height-md",
+    "--component-chip-height-lg",
+    "--component-input-height",
+    "--component-card-padding",
+    "--component-action-area-padding-x",
+    "--component-action-area-padding-y",
+    "--component-action-area-gap",
+    "--dur-fast",
+    "--dur-base",
+    "--dur-slow",
+    "--duration-fast",
+    "--duration-normal",
+    "--duration-slow",
+    "--shadow-sm",
+    "--shadow-md"
+  ],
+  "invariants": [
+    "Profiles do not change public component API or DOM anatomy.",
+    "Profiles do not change semantic status names, status meaning, brand color or contrast requirements.",
+    "Profiles do not own route, permission, threshold, freshness, transport, command or Robotics domain truth.",
+    "ops is an opt-in operational expression profile; default remains the baseline when the attribute is omitted."
+  ],
+  "matrix": [
+    "default|light",
+    "default|dark",
+    "ops|light",
+    "ops|dark"
+  ]
+}

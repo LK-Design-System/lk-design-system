@@ -1,0 +1,20 @@
+{
+  "$schema": "../LDS_CONSUMER_REGISTRY.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-consumer-attestation",
+  "consumerId": "portal",
+  "generatedAt": "2026-08-22",
+  "profile": "default",
+  "checks": [
+    { "id": "install", "status": "passed", "command": "npm.cmd install --ignore-scripts --no-audit --no-fund" },
+    { "id": "typecheck", "status": "passed", "command": "npx.cmd tsc --noEmit" },
+    { "id": "production-build", "status": "passed", "command": "npx.cmd next build" },
+    { "id": "source-contract", "status": "passed", "command": "LdsRuntimeBoundary + data-lds-profile=default" },
+    { "id": "production-smoke", "status": "passed", "command": "standalone server + Playwright /login smoke" }
+  ],
+  "evidence": [
+    "ops/lk-portal/src/app/layout.tsx",
+    "ops/lk-portal/src/components/layout/LdsRuntimeBoundary.tsx",
+    "ops/lk-portal/src/app/globals.css"
+  ]
+}

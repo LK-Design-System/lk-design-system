@@ -31,6 +31,8 @@ const canonical = {
   rootLlms: 'llms.txt',
   foundationRoot: 'docs/foundations',
   loadingPattern: 'docs/LOADING_PATTERN.md',
+  productFamilyContract: 'docs/references/architecture/PRODUCT_FAMILY_CONTRACT.json',
+  expressionProfileContract: 'docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json',
 };
 
 // The consumer agent skill ships with Core only; a consumer copies the
@@ -82,6 +84,9 @@ const packageDefinitions = [
     includeRootLlms: false,
     includeLoadingPattern: false,
     storybookPath: '?path=/docs/lds-theme-brand-lk-robotics-logo--docs',
+    profileContract: './docs/profile-contract.json',
+    profileSource: canonical.expressionProfileContract,
+    profileTarget: 'docs/profile-contract.json',
   },
   {
     id: 'product',
@@ -93,6 +98,9 @@ const packageDefinitions = [
     includeRootLlms: false,
     includeLoadingPattern: true,
     storybookPath: '?path=/docs/lds-product-operations-dashboard-dashboard-shell--docs',
+    familyContract: './docs/product-family-contract.json',
+    familySource: canonical.productFamilyContract,
+    familyTarget: 'docs/product-family-contract.json',
   },
 ];
 
@@ -223,6 +231,11 @@ function generatedReadme(definition) {
   const dependencyNote = definition.id === 'core'
     ? 'This package carries the complete 16-Foundation adoption context.'
     : 'The complete 16-Foundation context is available from the installed `@lk-design-system/lds-core` dependency.';
+  const packageContractLine = definition.profileContract
+    ? `- Expression profile contract: \`${definition.name}/${definition.profileContract.replace(/^\.\//, '')}\``
+    : definition.familyContract
+      ? `- Product family contract: \`${definition.name}/${definition.familyContract.replace(/^\.\//, '')}\``
+      : '';
   return `${generatedMarker}
 # ${definition.title}
 
@@ -246,7 +259,7 @@ ${dependencyNote}
 - Styles: \`${definition.name}/styles.css\`
 - Machine-readable documentation index: \`${definition.name}/design-system.json\`
 - Full packaged documentation: \`${definition.name}/docs/*\`
-
+${packageContractLine ? `${packageContractLine}\n` : ''}
 Import owner styles in dependency order: Core, Theme, Product, then Robotics when used.
 
 ## Documentation
@@ -287,6 +300,12 @@ async function makePackageProjection(definition, canonicalInputs) {
     [canonical.adoptionReportSchema, 'docs/adoption-report.schema.json'],
     [canonical.adoptionReportExample, 'docs/adoption-report.example.json'],
   ]);
+  for (const [sourcePath, targetPath] of [
+    [definition.profileSource, definition.profileTarget],
+    [definition.familySource, definition.familyTarget],
+  ]) {
+    if (sourcePath && targetPath) sourceToTarget.set(sourcePath, targetPath);
+  }
 
   const foundationFiles = canonicalInputs.foundationFiles;
   const selectedFoundationSlugs = definition.foundations === 'all'
@@ -336,6 +355,13 @@ async function makePackageProjection(definition, canonicalInputs) {
       sources: [{ path: sourcePath, sha256: sha256(source) }],
     });
     return contents.toString('utf8');
+  }
+
+  for (const [sourcePath, targetPath] of [
+    [definition.profileSource, definition.profileTarget],
+    [definition.familySource, definition.familyTarget],
+  ]) {
+    if (sourcePath && targetPath) await projectFile(sourcePath, targetPath);
   }
 
   const workflow = await projectFile(canonical.adoptionWorkflow, 'docs/adoption-workflow.md');
@@ -444,6 +470,8 @@ async function makePackageProjection(definition, canonicalInputs) {
       adoptionReportSchema: './adoption-report.schema.json',
       adoptionReportExample: './adoption-report.example.json',
       adoptionWorkflow: './adoption-workflow.md',
+      ...(definition.profileContract ? { profileContract: './profile-contract.json' } : {}),
+      ...(definition.familyContract ? { familyContract: './product-family-contract.json' } : {}),
       ...(definition.id === 'core' ? { agentSkill: './agent-skills/lds-ui/SKILL.md' } : {}),
     },
     foundations: selectedFoundationSlugs,

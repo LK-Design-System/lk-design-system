@@ -30,7 +30,8 @@
     "adoptionChecklist": "./adoption-checklist.json",
     "adoptionReportSchema": "./adoption-report.schema.json",
     "adoptionReportExample": "./adoption-report.example.json",
-    "adoptionWorkflow": "./adoption-workflow.md"
+    "adoptionWorkflow": "./adoption-workflow.md",
+    "familyContract": "./product-family-contract.json"
   },
   "foundations": [],
   "patterns": [
@@ -71,6 +72,10 @@
       {
         "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.schema.json",
         "sha256": "4ce25e058235e6b124d127321a4549c49da4efbdf1dcda22c79d4c83d3645a2f"
+      },
+      {
+        "path": "docs/references/architecture/PRODUCT_FAMILY_CONTRACT.json",
+        "sha256": "70fbb6f55abdf74f82a4af492a27a11b1921c71296c7a7ac49c6e4a63a0643db"
       }
     ]
   },
@@ -158,6 +163,16 @@
         {
           "path": "docs/LOADING_PATTERN.md",
           "sha256": "170450777f0428baff270ca86c4c331ca094110915615e1fd9c5bfc9d166a174"
+        }
+      ]
+    },
+    {
+      "path": "product-family-contract.json",
+      "sha256": "70fbb6f55abdf74f82a4af492a27a11b1921c71296c7a7ac49c6e4a63a0643db",
+      "sources": [
+        {
+          "path": "docs/references/architecture/PRODUCT_FAMILY_CONTRACT.json",
+          "sha256": "70fbb6f55abdf74f82a4af492a27a11b1921c71296c7a7ac49c6e4a63a0643db"
         }
       ]
     }

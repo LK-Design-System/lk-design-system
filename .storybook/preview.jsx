@@ -29,6 +29,17 @@ if (typeof document !== 'undefined' && !document.querySelector('link[data-lk-ds-
   document.head.appendChild(link);
 }
 
+// The compatibility stylesheet is intentionally an aggregate foundation entry. Profiles are
+// Theme-owned, so Storybook loads the profile slice explicitly to keep the toolbar and browser
+// matrix exercising the same runtime contract as package consumers.
+if (typeof document !== 'undefined' && !document.querySelector('link[data-lds-profile-styles]')) {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = './tokens/profiles.css';
+  link.dataset.ldsProfileStyles = 'true';
+  document.head.appendChild(link);
+}
+
 /**
  * The shell every story renders inside.
  *
@@ -57,6 +68,22 @@ const foundationGuideByTitle = new Map(
 const patternGuideByTitle = new Map(
   patternGuides.map((pattern) => [pattern.storybookTitle, pattern]),
 );
+
+export const globalTypes = {
+  profile: {
+    name: 'Expression profile',
+    description: 'Theme-owned density, motion and depth expression; component API and semantics stay unchanged.',
+    defaultValue: 'default',
+    toolbar: {
+      icon: 'dashboard',
+      items: [
+        { value: 'default', title: 'Default' },
+        { value: 'ops', title: 'Operations' },
+      ],
+    },
+  },
+};
+
 function normalizeBackground(value) {
   if (value == null) return '';
   if (typeof value === 'object' && 'value' in value) return normalizeBackground(value.value);
@@ -165,6 +192,7 @@ function GuideDocsPage() {
 export const decorators = [
   (Story, context) => {
     const theme = isDarkBackground(getBackgroundValue(context)) ? 'dark' : 'light';
+    const profile = context.globals?.profile === 'ops' ? 'ops' : 'default';
     const guide = context.parameters?.storyGuide;
     // The canvas header is the Canvas view's page title. A Docs page already renders its own
     // title and description, so carrying the header into an embedded story preview would
@@ -174,7 +202,12 @@ export const decorators = [
       && context.viewMode !== 'docs';
 
     return (
-      <div data-theme={theme} className={`theme-${theme}`} style={canvasShell(context.viewMode)}>
+      <div
+        data-theme={theme}
+        data-lds-profile={profile}
+        className={`theme-${theme} lds-profile-${profile}`}
+        style={canvasShell(context.viewMode)}
+      >
         {showGuide ? (
           <div data-story-guide-layout style={{ display: 'grid', gap: 'var(--space-6)', minWidth: 0 }}>
             <StoryGuide

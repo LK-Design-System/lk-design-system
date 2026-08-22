@@ -180,7 +180,7 @@ import {
   LdsRuntimeContext,
   createLocalStorageManager,
   useLdsRuntime
-} from "./chunk-RTEVIKVA.js";
+} from "./chunk-BIJ2SEAI.js";
 import {
   Scene3DFrame
 } from "./chunk-2C2U25IL.js";

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 export type LdsColorScheme = 'light' | 'dark' | 'auto';
+export type LdsProfile = 'default' | 'ops';
 export type LdsDirection = 'ltr' | 'rtl';
 
 export interface LdsStorageManager {
@@ -14,6 +15,8 @@ export function createLocalStorageManager(options?: { key?: string }): LdsStorag
 export interface LdsRuntimeValue {
   colorScheme: LdsColorScheme;
   setColorScheme: React.Dispatch<React.SetStateAction<LdsColorScheme>>;
+  profile: LdsProfile;
+  setProfile: React.Dispatch<React.SetStateAction<LdsProfile>>;
   direction: LdsDirection;
   locale?: string;
 }
@@ -26,6 +29,10 @@ export interface LdsProviderProps {
   colorScheme?: LdsColorScheme;
   defaultColorScheme?: LdsColorScheme;
   onColorSchemeChange?: (value: LdsColorScheme) => void;
+  /** Runtime expression profile. `default` preserves the baseline; `ops` opts into operational density/motion/depth tokens. */
+  profile?: LdsProfile;
+  defaultProfile?: LdsProfile;
+  onProfileChange?: (value: LdsProfile) => void;
   storageManager?: LdsStorageManager;
   storageKey?: string;
   persist?: boolean;

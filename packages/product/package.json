@@ -60,6 +60,12 @@
     "llms": "./docs/llms.txt",
     "adoptionChecklist": "./docs/adoption-checklist.json",
     "adoptionReportSchema": "./docs/adoption-report.schema.json",
+    "familyContract": "./docs/product-family-contract.json",
+    "families": [
+      "application",
+      "operations",
+      "workspace"
+    ],
     "storybook": "https://lk-design-system.github.io/lk-design-system/?path=/docs/lds-product-operations-dashboard-dashboard-shell--docs"
   },
   "repository": {

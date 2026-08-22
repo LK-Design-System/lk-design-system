@@ -7,10 +7,14 @@ var _chunkF4O2CAUIcjs = require('./chunk-F4O2CAUI.cjs');
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 var _jsxruntime = require('react/jsx-runtime');
 var MODES = /* @__PURE__ */ new Set(["light", "dark", "auto"]);
+var PROFILES = /* @__PURE__ */ new Set(["default", "ops"]);
 var useSafeLayoutEffect = typeof window === "undefined" ? _react2.default.useEffect : _react2.default.useLayoutEffect;
 var LdsRuntimeContext = _react2.default.createContext({
   colorScheme: "light",
   setColorScheme: () => {
+  },
+  profile: "default",
+  setProfile: () => {
   },
   direction: "ltr",
   locale: void 0
@@ -56,6 +60,9 @@ function LdsProvider({
   colorScheme,
   defaultColorScheme = "light",
   onColorSchemeChange,
+  profile,
+  defaultProfile = "default",
+  onProfileChange,
   storageManager,
   storageKey = "lk-theme",
   persist = true,
@@ -72,6 +79,9 @@ function LdsProvider({
   const controlled = colorScheme !== void 0;
   const [internalColorScheme, setInternalColorScheme] = _react2.default.useState(() => persist ? manager.get(defaultColorScheme) : defaultColorScheme);
   const resolvedColorScheme = MODES.has(colorScheme) ? colorScheme : internalColorScheme;
+  const controlledProfile = profile !== void 0;
+  const [internalProfile, setInternalProfile] = _react2.default.useState(() => PROFILES.has(defaultProfile) ? defaultProfile : "default");
+  const resolvedProfile = PROFILES.has(profile) ? profile : internalProfile;
   const runtimeTarget = resolveTarget(target);
   const setColorScheme = _react2.default.useCallback((nextValue) => {
     const next = typeof nextValue === "function" ? nextValue(resolvedColorScheme) : nextValue;
@@ -80,11 +90,17 @@ function LdsProvider({
     if (persist) manager.set(next);
     _optionalChain([onColorSchemeChange, 'optionalCall', _2 => _2(next)]);
   }, [controlled, manager, onColorSchemeChange, persist, resolvedColorScheme]);
+  const setProfile = _react2.default.useCallback((nextValue) => {
+    const next = typeof nextValue === "function" ? nextValue(resolvedProfile) : nextValue;
+    if (!PROFILES.has(next) || next === resolvedProfile) return;
+    if (!controlledProfile) setInternalProfile(next);
+    _optionalChain([onProfileChange, 'optionalCall', _3 => _3(next)]);
+  }, [controlledProfile, onProfileChange, resolvedProfile]);
   _react2.default.useEffect(() => {
     if (!persist || !manager.subscribe) return void 0;
     return manager.subscribe((next) => {
       if (!controlled) setInternalColorScheme(next);
-      _optionalChain([onColorSchemeChange, 'optionalCall', _3 => _3(next)]);
+      _optionalChain([onColorSchemeChange, 'optionalCall', _4 => _4(next)]);
     });
   }, [controlled, manager, onColorSchemeChange, persist]);
   useSafeLayoutEffect(() => {
@@ -92,15 +108,19 @@ function LdsProvider({
     if (!element) return void 0;
     const previous = {
       theme: element.getAttribute("data-theme"),
+      profile: element.getAttribute("data-lds-profile"),
       direction: element.getAttribute("dir"),
       locale: element.getAttribute("lang")
     };
     element.setAttribute("data-theme", resolvedColorScheme);
+    element.setAttribute("data-lds-profile", resolvedProfile);
     element.setAttribute("dir", direction);
     if (locale) element.setAttribute("lang", locale);
     return () => {
       if (previous.theme == null) element.removeAttribute("data-theme");
       else element.setAttribute("data-theme", previous.theme);
+      if (previous.profile == null) element.removeAttribute("data-lds-profile");
+      else element.setAttribute("data-lds-profile", previous.profile);
       if (previous.direction == null) element.removeAttribute("dir");
       else element.setAttribute("dir", previous.direction);
       if (locale) {
@@ -108,13 +128,15 @@ function LdsProvider({
         else element.setAttribute("lang", previous.locale);
       }
     };
-  }, [direction, locale, resolvedColorScheme, target]);
+  }, [direction, locale, resolvedColorScheme, resolvedProfile, target]);
   const value = _react2.default.useMemo(() => ({
     colorScheme: resolvedColorScheme,
     setColorScheme,
+    profile: resolvedProfile,
+    setProfile,
     direction,
     locale
-  }), [direction, locale, resolvedColorScheme, setColorScheme]);
+  }), [direction, locale, resolvedColorScheme, resolvedProfile, setColorScheme, setProfile]);
   return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, LdsRuntimeContext.Provider, { value, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     _chunkF4O2CAUIcjs.OverlayRuntimeProvider,
     {
@@ -145,4 +167,4 @@ function LdsColorSchemeScript({
 
 
 exports.LdsRuntimeContext = LdsRuntimeContext; exports.createLocalStorageManager = createLocalStorageManager; exports.useLdsRuntime = useLdsRuntime; exports.LdsProvider = LdsProvider; exports.LdsColorSchemeScript = LdsColorSchemeScript;
-//# sourceMappingURL=chunk-LWW6ADEC.cjs.map
+//# sourceMappingURL=chunk-HU6B2EBF.cjs.map
