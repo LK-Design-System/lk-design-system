@@ -1,5 +1,10 @@
 **ListCell** — WDS List Cell. 선택 가능한 목록 행, 설정 행, 리소스 행의 기본 단위입니다.
 
+`verticalPadding="small | medium | large"` 공개 문법은 유지하면서 각 값은 profile-aware
+component token을 읽습니다. `default`는 기존 8/12/16px이고 `ops`는 6/8/12px이다.
+명시적 `paddingY` escape hatch가 token보다 우선하며 selection·keyboard·list semantics는
+profile과 무관합니다. 정본은 `docs/DENSITY_AND_EXPRESSION_PROFILE_CONTRACT.md`입니다.
+
 ```jsx
 <ListCell leading={<Icon name="document" />} title="문서 제목" description="설명" trailing={<ContentBadge>검토</ContentBadge>} divider />
 <ListCell title="선택 항목" selected chevron onClick={open} />

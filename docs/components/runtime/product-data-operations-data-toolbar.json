@@ -195,7 +195,7 @@
     "className, style, and the default ref target the root collection toolbar surface.",
     "Stable parts are root, header, heading, title, count, description, actions, controls, search, and filters. Header and controls slots exist only when their content exists.",
     "DataToolbar — DataGrid/Table 위에서 제목, 결과 수, 검색, 필터, page-level action을 정렬하는 표면.",
-    "The header row is independent: title, description, count, or page-level actions keeps it present even when controls are omitted. If neither header content nor controls exist, DataToolbar returns null instead of leaving an empty bordered strip."
+    "size=\"sm | md\"는 profile-aware gap/padding token을 선택합니다. 명시적 size가 유지되는 상태에서 ops는 chrome만 조밀화하며 제목·검색·필터·action의 읽기 순서와 query ownership은 바뀌지 않습니다. --lds-data-toolbar- consumer override가 profile token보다 우선합니다."
   ],
   "accessibility": [
     "WAI-ARIA APG Table pattern에 따라 DataToolbar가 표의 native semantics나 keyboard model을 대신하지 않습니다. 검색과 action은 각 native control의 정상 Tab 순서를 유지합니다."
@@ -254,6 +254,10 @@
     "--color-semantic-label-alternative",
     "--color-semantic-label-strong",
     "--color-semantic-line-solid-normal",
+    "--component-data-toolbar-gap-md",
+    "--component-data-toolbar-gap-sm",
+    "--component-data-toolbar-padding-md",
+    "--component-data-toolbar-padding-sm",
     "--font-sans",
     "--fw-medium",
     "--fw-semibold",

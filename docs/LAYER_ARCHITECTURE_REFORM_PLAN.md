@@ -766,7 +766,7 @@ durable 결정 승격 후 archive/delete할지 문서 수명주기 정책에 따
 
 | 영역 | 결과 | 검증 |
 | --- | --- | --- |
-| Theme profile | `default|ops` runtime/provider, token whitelist와 required assertions | `check:expression-profile`, `check:expression-profile-visual` — 16 captures |
+| Theme profile | `default|ops` runtime/provider, token whitelist와 required assertions | `check:expression-profile`, `check:expression-profile-visual` — 32 captures |
 | Application consumer | Portal `default` source `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`, Core·Theme·Product `0.1.0-rc.69.30`; 기술 5 gate·clean-clone·product/design-system owner 승인 통과, approval evidence commit `50c2d9b`, `workflow-verified` | [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) |
 | Operations consumer | Web Viz `ops` source `542639f2fea109e78f052e730ac30072cad79a6c`, Core·Theme·Product `0.1.0-rc.69.30`, Robotics `0.1.0-rc.30`; 기술 5 gate·clean-clone·product/design-system owner 승인 통과, approval evidence commit `4dad154`, `workflow-verified` | registry + Web Viz adoption verifier |
 | Robotics readiness | O1 Monitoring/O2 Operational control ready; representative Storybook browser gate 8 stories/0 serious Axe; O3 unverified; O4 unsupported | [`robotics/READINESS.json`](references/robotics/READINESS.json), `check:robotics-readiness` |

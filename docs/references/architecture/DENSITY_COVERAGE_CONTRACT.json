@@ -1,0 +1,3034 @@
+{
+  "$schema": "./DENSITY_COVERAGE_CONTRACT.schema.json",
+  "schemaVersion": 1,
+  "status": "active",
+  "authority": {
+    "decisionMode": "curated-id-register",
+    "newEntryPolicy": "fail-until-owner-classified",
+    "evidenceUpdatePolicy": "regenerate-source-facts-only"
+  },
+  "source": {
+    "componentRegistry": "docs/components/component-content.json",
+    "componentRegistryFingerprint": "b729ede82b945a2fc7193638dc5d744c542b6f0f10851d3a0bbd375514172f0d",
+    "expressionProfileContract": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
+    "expressionProfileContractFingerprint": "a03ba9dfca89707917b27ea9609b7bb3541239ec7850afb360f2fab0c8ff6d17"
+  },
+  "summary": {
+    "entryCount": 208,
+    "categoryCounts": {
+      "profile-token-automatic": 7,
+      "explicit-size-density": 93,
+      "fixed": 93,
+      "not-applicable": 15
+    },
+    "profileAwareEntries": 96
+  },
+  "entries": [
+    {
+      "id": "brand-logo",
+      "title": "BrandLogo",
+      "source": "components/brand/BrandLogo.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "lockup",
+      "title": "Lockup",
+      "source": "components/brand/Lockup.jsx",
+      "ownerLayer": "theme",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Theme owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "product-lockup",
+      "title": "ProductLockup",
+      "source": "components/brand/ProductLockup.jsx",
+      "ownerLayer": "theme",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "compact"
+      ],
+      "profileTokens": [
+        "--dur-base"
+      ]
+    },
+    {
+      "id": "action-area",
+      "title": "ActionArea",
+      "source": "components/buttons/ActionArea.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "compact"
+      ],
+      "profileTokens": [
+        "--component-action-area-gap",
+        "--component-action-area-padding-x",
+        "--component-action-area-padding-y"
+      ]
+    },
+    {
+      "id": "button",
+      "title": "Button",
+      "source": "components/buttons/Button.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-button-height-lg",
+        "--component-button-height-md",
+        "--component-button-height-sm"
+      ]
+    },
+    {
+      "id": "button-group",
+      "title": "ButtonGroup",
+      "source": "components/buttons/ButtonGroup.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-button-height-lg",
+        "--component-button-height-md",
+        "--component-button-height-sm"
+      ]
+    },
+    {
+      "id": "copy-button",
+      "title": "CopyButton",
+      "source": "components/buttons/CopyButton.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "fab",
+      "title": "Fab",
+      "source": "components/buttons/Fab.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--shadow-md"
+      ]
+    },
+    {
+      "id": "icon-button",
+      "title": "IconButton",
+      "source": "components/buttons/IconButton.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-icon-button-size-md",
+        "--component-icon-button-size-sm"
+      ]
+    },
+    {
+      "id": "link",
+      "title": "Link",
+      "source": "components/buttons/Link.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "social-button",
+      "title": "SocialButton",
+      "source": "components/buttons/SocialButton.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "speed-dial",
+      "title": "SpeedDial",
+      "source": "components/buttons/SpeedDial.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast",
+        "--shadow-md",
+        "--shadow-sm"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "split-button",
+      "title": "SplitButton",
+      "source": "components/buttons/SplitButton.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-button-height-lg",
+        "--component-button-height-md",
+        "--component-button-height-sm",
+        "--component-menu-padding-x",
+        "--component-menu-padding-y",
+        "--shadow-md"
+      ]
+    },
+    {
+      "id": "text-button",
+      "title": "TextButton",
+      "source": "components/buttons/TextButton.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "toggle-icon",
+      "title": "ToggleIcon",
+      "source": "components/buttons/ToggleIcon.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "card",
+      "title": "Card",
+      "source": "components/cards/Card.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "padding",
+        "density"
+      ],
+      "profileTokens": [
+        "--component-card-padding",
+        "--shadow-md",
+        "--shadow-sm"
+      ]
+    },
+    {
+      "id": "checklist-item",
+      "title": "ChecklistItem",
+      "source": "components/cards/ChecklistItem.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "feature-card",
+      "title": "FeatureCard",
+      "source": "components/cards/FeatureCard.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "density"
+      ],
+      "profileTokens": [
+        "--component-card-padding"
+      ]
+    },
+    {
+      "id": "feed-card",
+      "title": "FeedCard",
+      "source": "components/cards/FeedCard.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "listing-card",
+      "title": "ListingCard",
+      "source": "components/cards/ListingCard.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-base",
+        "--shadow-md"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "metric-card",
+      "title": "MetricCard",
+      "source": "components/cards/MetricCard.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "news-card",
+      "title": "NewsCard",
+      "source": "components/cards/NewsCard.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-base",
+        "--shadow-md"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "product-card",
+      "title": "ProductCard",
+      "source": "components/cards/ProductCard.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-base",
+        "--dur-fast",
+        "--shadow-sm"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "spec-row",
+      "title": "SpecRow",
+      "source": "components/cards/SpecRow.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "stat",
+      "title": "Stat",
+      "source": "components/cards/Stat.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "conversation-message",
+      "title": "ConversationMessage",
+      "source": "components/communication/ConversationMessage.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "density"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "message-composer",
+      "title": "MessageComposer",
+      "source": "components/communication/MessageComposer.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "density"
+      ],
+      "profileTokens": [
+        "--component-button-height-sm",
+        "--dur-base",
+        "--shadow-sm"
+      ]
+    },
+    {
+      "id": "message-feed",
+      "title": "MessageFeed",
+      "source": "components/communication/MessageFeed.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "density"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "accordion",
+      "title": "Accordion",
+      "source": "components/content/Accordion.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-base",
+        "--dur-fast"
+      ],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "blockquote",
+      "title": "Blockquote",
+      "source": "components/content/Blockquote.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "bookmark",
+      "title": "Bookmark",
+      "source": "components/content/Bookmark.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "bubble",
+      "title": "Bubble",
+      "source": "components/content/Bubble.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--shadow-md"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "code",
+      "title": "Code",
+      "source": "components/content/Code.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "collapsible",
+      "title": "Collapsible",
+      "source": "components/content/Collapsible.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "density"
+      ],
+      "profileTokens": [
+        "--dur-base"
+      ]
+    },
+    {
+      "id": "connection-row",
+      "title": "ConnectionRow",
+      "source": "components/content/ConnectionRow.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "content-badge",
+      "title": "ContentBadge",
+      "source": "components/content/ContentBadge.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "content-editor",
+      "title": "ContentEditor",
+      "source": "components/content/ContentEditor.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-base",
+        "--dur-fast"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "divider",
+      "title": "Divider",
+      "source": "components/content/Divider.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "expandable-text",
+      "title": "ExpandableText",
+      "source": "components/content/ExpandableText.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "kbd",
+      "title": "Kbd",
+      "source": "components/content/Kbd.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "list-cell",
+      "title": "ListCell",
+      "source": "components/content/ListCell.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "verticalPadding"
+      ],
+      "profileTokens": [
+        "--component-list-cell-padding-y-lg",
+        "--component-list-cell-padding-y-md",
+        "--component-list-cell-padding-y-sm",
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "log-viewer",
+      "title": "LogViewer",
+      "source": "components/content/LogViewer.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "density"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "overline",
+      "title": "Overline",
+      "source": "components/content/Overline.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "prose",
+      "title": "Prose",
+      "source": "components/content/Prose.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "reaction-bar",
+      "title": "ReactionBar",
+      "source": "components/content/ReactionBar.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "record-header",
+      "title": "RecordHeader",
+      "source": "components/content/RecordHeader.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "reorder-list",
+      "title": "ReorderList",
+      "source": "components/content/ReorderList.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "density"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "source-disclosure",
+      "title": "SourceDisclosure",
+      "source": "components/content/SourceDisclosure.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-base",
+        "--dur-fast"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "source-tag",
+      "title": "SourceTag",
+      "source": "components/content/SourceTag.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast"
+      ],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "stat-list",
+      "title": "StatList",
+      "source": "components/content/StatList.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "status-badge",
+      "title": "StatusBadge",
+      "source": "components/content/StatusBadge.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "status-indicator",
+      "title": "StatusIndicator",
+      "source": "components/content/StatusIndicator.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "step-list",
+      "title": "StepList",
+      "source": "components/content/StepList.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "thumbnail",
+      "title": "Thumbnail",
+      "source": "components/content/Thumbnail.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "timeline",
+      "title": "Timeline",
+      "source": "components/content/Timeline.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "tooltip",
+      "title": "Tooltip",
+      "source": "components/content/Tooltip.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast",
+        "--shadow-md"
+      ]
+    },
+    {
+      "id": "annotated-image",
+      "title": "AnnotatedImage",
+      "source": "components/data/AnnotatedImage.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--shadow-md"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "bar-chart",
+      "title": "BarChart",
+      "source": "components/data/BarChart.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-slow"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "calendar",
+      "title": "Calendar",
+      "source": "components/data/Calendar.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast"
+      ],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "carousel",
+      "title": "Carousel",
+      "source": "components/data/Carousel.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-slow"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "chart-frame",
+      "title": "ChartFrame",
+      "source": "components/data/ChartFrame.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--shadow-sm"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "data-collection-panel",
+      "title": "DataCollectionPanel",
+      "source": "components/data/DataCollectionPanel.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--shadow-sm"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "data-export-action",
+      "title": "DataExportAction",
+      "source": "components/data/DataExportAction.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "data-grid",
+      "title": "DataGrid",
+      "source": "components/data/DataGrid.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-data-grid-cell-padding-md",
+        "--component-data-grid-cell-padding-sm",
+        "--component-data-grid-detail-padding-md",
+        "--component-data-grid-detail-padding-sm",
+        "--component-data-grid-header-height-md",
+        "--component-data-grid-header-height-sm"
+      ]
+    },
+    {
+      "id": "data-toolbar",
+      "title": "DataToolbar",
+      "source": "components/data/DataToolbar.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-data-toolbar-gap-md",
+        "--component-data-toolbar-gap-sm",
+        "--component-data-toolbar-padding-md",
+        "--component-data-toolbar-padding-sm"
+      ]
+    },
+    {
+      "id": "description-list",
+      "title": "DescriptionList",
+      "source": "components/data/DescriptionList.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "donut-chart",
+      "title": "DonutChart",
+      "source": "components/data/DonutChart.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "file-browser",
+      "title": "FileBrowser",
+      "source": "components/data/FileBrowser.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "filter-bar",
+      "title": "FilterBar",
+      "source": "components/data/FilterBar.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-filter-bar-gap-md",
+        "--component-filter-bar-gap-sm",
+        "--component-filter-bar-padding-md",
+        "--component-filter-bar-padding-sm"
+      ]
+    },
+    {
+      "id": "legend",
+      "title": "Legend",
+      "source": "components/data/Legend.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "line-chart",
+      "title": "LineChart",
+      "source": "components/data/LineChart.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "network-graph",
+      "title": "NetworkGraph",
+      "source": "components/data/NetworkGraph.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "refresh-control",
+      "title": "RefreshControl",
+      "source": "components/data/RefreshControl.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "resource-state",
+      "title": "ResourceState",
+      "source": "components/data/ResourceState.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "saved-view-control",
+      "title": "SavedViewControl",
+      "source": "components/data/SavedViewControl.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "sparkline",
+      "title": "Sparkline",
+      "source": "components/data/Sparkline.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "get-table-data-cell-style",
+      "title": "getTableDataCellStyle",
+      "source": "components/data/Table.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-table-cell-padding-md",
+        "--component-table-cell-padding-sm",
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "tree",
+      "title": "Tree",
+      "source": "components/data/Tree.jsx",
+      "ownerLayer": "product",
+      "category": "profile-token-automatic",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--component-tree-indent",
+        "--component-tree-row-gap",
+        "--component-tree-row-min-height",
+        "--component-tree-row-padding-x",
+        "--component-tree-row-padding-y",
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "tree-picker",
+      "title": "TreePicker",
+      "source": "components/data/TreePicker.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "visibility-manager",
+      "title": "VisibilityManager",
+      "source": "components/data/VisibilityManager.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "density"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "canvas-editor-command-bar",
+      "title": "CanvasEditorCommandBar",
+      "source": "components/editor/CanvasEditorCommandBar.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "canvas-editor-shell",
+      "title": "CanvasEditorShell",
+      "source": "components/editor/CanvasEditorShell.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "editor-toolbar",
+      "title": "EditorToolbar",
+      "source": "components/editor/EditorToolbar.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "history-toolbar",
+      "title": "HistoryToolbar",
+      "source": "components/editor/HistoryToolbar.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "layer-panel",
+      "title": "LayerPanel",
+      "source": "components/editor/LayerPanel.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "selection-inspector",
+      "title": "SelectionInspector",
+      "source": "components/editor/SelectionInspector.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "viewport-status-bar",
+      "title": "ViewportStatusBar",
+      "source": "components/editor/ViewportStatusBar.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "avatar",
+      "title": "Avatar",
+      "source": "components/feedback/Avatar.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "avatar-group",
+      "title": "AvatarGroup",
+      "source": "components/feedback/AvatarGroup.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "badge",
+      "title": "Badge",
+      "source": "components/feedback/Badge.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "chip",
+      "title": "Chip",
+      "source": "components/feedback/Chip.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-chip-height-lg",
+        "--component-chip-height-md",
+        "--component-chip-height-sm",
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "notification",
+      "title": "Notification",
+      "source": "components/feedback/Notification.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "push-badge",
+      "title": "PushBadge",
+      "source": "components/feedback/PushBadge.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "rating",
+      "title": "Rating",
+      "source": "components/feedback/Rating.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "tag",
+      "title": "Tag",
+      "source": "components/feedback/Tag.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "auto-complete",
+      "title": "AutoComplete",
+      "source": "components/forms/AutoComplete.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-input-height",
+        "--dur-base",
+        "--shadow-md"
+      ]
+    },
+    {
+      "id": "checkbox",
+      "title": "Checkbox",
+      "source": "components/forms/Checkbox.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "checkbox-group",
+      "title": "CheckboxGroup",
+      "source": "components/forms/CheckboxGroup.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "color-swatch",
+      "title": "ColorSwatch",
+      "source": "components/forms/ColorSwatch.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "combobox",
+      "title": "Combobox",
+      "source": "components/forms/Combobox.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-input-height",
+        "--dur-base",
+        "--shadow-md"
+      ]
+    },
+    {
+      "id": "date-picker",
+      "title": "DatePicker",
+      "source": "components/forms/DatePicker.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-input-height",
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "date-range-field",
+      "title": "DateRangeField",
+      "source": "components/forms/DateRangeField.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "field-action",
+      "title": "FieldAction",
+      "source": "components/forms/FieldAction.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "file-upload",
+      "title": "FileUpload",
+      "source": "components/forms/FileUpload.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "file-upload-queue",
+      "title": "FileUploadQueue",
+      "source": "components/forms/FileUploadQueue.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--shadow-md"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "form-field",
+      "title": "FormField",
+      "source": "components/forms/FormField.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "input",
+      "title": "Input",
+      "source": "components/forms/Input.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-input-height",
+        "--dur-base"
+      ]
+    },
+    {
+      "id": "input-group",
+      "title": "InputGroup",
+      "source": "components/forms/InputGroup.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-input-height",
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "number-field",
+      "title": "NumberField",
+      "source": "components/forms/NumberField.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-input-height",
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "password-input",
+      "title": "PasswordInput",
+      "source": "components/forms/PasswordInput.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-input-height",
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "pin-input",
+      "title": "PinInput",
+      "source": "components/forms/PinInput.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "property-field",
+      "title": "PropertyField",
+      "source": "components/forms/PropertyField.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "radio",
+      "title": "Radio",
+      "source": "components/forms/Radio.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "radio-group",
+      "title": "RadioGroup",
+      "source": "components/forms/RadioGroup.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "range-slider",
+      "title": "RangeSlider",
+      "source": "components/forms/RangeSlider.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "searchable-multi-select",
+      "title": "SearchableMultiSelect",
+      "source": "components/forms/SearchableMultiSelect.jsx",
+      "ownerLayer": "product",
+      "category": "profile-token-automatic",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--component-input-height",
+        "--shadow-md"
+      ]
+    },
+    {
+      "id": "search-field",
+      "title": "SearchField",
+      "source": "components/forms/SearchField.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-input-height",
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "secret-field",
+      "title": "SecretField",
+      "source": "components/forms/SecretField.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "select",
+      "title": "Select",
+      "source": "components/forms/Select.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-menu-gap",
+        "--component-menu-item-min-height",
+        "--component-menu-item-padding-x",
+        "--component-menu-item-padding-y",
+        "--component-menu-padding-x",
+        "--component-menu-padding-y",
+        "--shadow-md"
+      ]
+    },
+    {
+      "id": "slider",
+      "title": "Slider",
+      "source": "components/forms/Slider.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "tag-input",
+      "title": "TagInput",
+      "source": "components/forms/TagInput.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "textarea",
+      "title": "Textarea",
+      "source": "components/forms/Textarea.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-base"
+      ]
+    },
+    {
+      "id": "time-picker",
+      "title": "TimePicker",
+      "source": "components/forms/TimePicker.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-input-height",
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "validation-summary",
+      "title": "ValidationSummary",
+      "source": "components/forms/ValidationSummary.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "virtual-keypad",
+      "title": "VirtualKeypad",
+      "source": "components/forms/VirtualKeypad.jsx",
+      "ownerLayer": "product",
+      "category": "profile-token-automatic",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--component-button-height-lg"
+      ]
+    },
+    {
+      "id": "icon",
+      "title": "Icon",
+      "source": "components/icon/Icon.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "aspect-ratio",
+      "title": "AspectRatio",
+      "source": "components/layout/AspectRatio.jsx",
+      "ownerLayer": "core",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "center",
+      "title": "Center",
+      "source": "components/layout/Center.jsx",
+      "ownerLayer": "core",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "cluster",
+      "title": "Cluster",
+      "source": "components/layout/Cluster.jsx",
+      "ownerLayer": "core",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "col",
+      "title": "Col",
+      "source": "components/layout/Col.jsx",
+      "ownerLayer": "core",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "columns",
+      "title": "Columns",
+      "source": "components/layout/Columns.jsx",
+      "ownerLayer": "core",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "container",
+      "title": "Container",
+      "source": "components/layout/Container.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "dashboard-grid",
+      "title": "DashboardGrid",
+      "source": "components/layout/DashboardGrid.jsx",
+      "ownerLayer": "product",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "dashboard-shell",
+      "title": "DashboardShell",
+      "source": "components/layout/DashboardShell.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast",
+        "--shadow-md"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "dock-panel",
+      "title": "DockPanel",
+      "source": "components/layout/DockPanel.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast",
+        "--shadow-md",
+        "--shadow-sm"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "grid",
+      "title": "Grid",
+      "source": "components/layout/Grid.jsx",
+      "ownerLayer": "core",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "mobile-system-bars",
+      "title": "MobileSystemBars",
+      "source": "components/layout/MobileSystemBars.jsx",
+      "ownerLayer": "core",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "page-header",
+      "title": "PageHeader",
+      "source": "components/layout/PageHeader.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "primary-detail",
+      "title": "PrimaryDetail",
+      "source": "components/layout/PrimaryDetail.jsx",
+      "ownerLayer": "product",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "scroll-area",
+      "title": "ScrollArea",
+      "source": "components/layout/ScrollArea.jsx",
+      "ownerLayer": "core",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "section",
+      "title": "Section",
+      "source": "components/layout/Section.jsx",
+      "ownerLayer": "core",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "spacer",
+      "title": "Spacer",
+      "source": "components/layout/Spacer.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "split",
+      "title": "Split",
+      "source": "components/layout/Split.jsx",
+      "ownerLayer": "core",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "stack",
+      "title": "Stack",
+      "source": "components/layout/Stack.jsx",
+      "ownerLayer": "core",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
+      "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "visually-hidden",
+      "title": "VisuallyHidden",
+      "source": "components/layout/VisuallyHidden.jsx",
+      "ownerLayer": "core",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "접근성 전용 비시각 utility에는 visual density가 적용되지 않는다.",
+      "reviewTrigger": "이 entry가 사용자에게 보이는 geometry를 직접 렌더링하도록 공개 계약이 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "anchor",
+      "title": "Anchor",
+      "source": "components/navigation/Anchor.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "bottom-nav",
+      "title": "BottomNav",
+      "source": "components/navigation/BottomNav.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "breadcrumb",
+      "title": "Breadcrumb",
+      "source": "components/navigation/Breadcrumb.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "category",
+      "title": "Category",
+      "source": "components/navigation/Category.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size",
+        "padding",
+        "verticalPadding"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "floor-selector",
+      "title": "FloorSelector",
+      "source": "components/navigation/FloorSelector.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "footer",
+      "title": "Footer",
+      "source": "components/navigation/Footer.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "compact"
+      ],
+      "profileTokens": [
+        "--shadow-md"
+      ]
+    },
+    {
+      "id": "language-switcher",
+      "title": "LanguageSwitcher",
+      "source": "components/navigation/LanguageSwitcher.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "menubar",
+      "title": "Menubar",
+      "source": "components/navigation/Menubar.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--shadow-md"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "nav-rail",
+      "title": "NavRail",
+      "source": "components/navigation/NavRail.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "page-indicator",
+      "title": "PageIndicator",
+      "source": "components/navigation/PageIndicator.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-base"
+      ]
+    },
+    {
+      "id": "pagination",
+      "title": "Pagination",
+      "source": "components/navigation/Pagination.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "side-nav",
+      "title": "SideNav",
+      "source": "components/navigation/SideNav.jsx",
+      "ownerLayer": "product",
+      "category": "profile-token-automatic",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--component-side-nav-child-item-height",
+        "--component-side-nav-child-item-padding-y",
+        "--component-side-nav-item-height",
+        "--component-side-nav-item-padding-x",
+        "--component-side-nav-item-padding-y",
+        "--component-side-nav-padding",
+        "--dur-base",
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "steps",
+      "title": "Steps",
+      "source": "components/navigation/Steps.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "tabs",
+      "title": "Tabs",
+      "source": "components/navigation/Tabs.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size",
+        "padding"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "toolbar",
+      "title": "Toolbar",
+      "source": "components/navigation/Toolbar.jsx",
+      "ownerLayer": "product",
+      "category": "profile-token-automatic",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--component-toolbar-gap",
+        "--component-toolbar-padding"
+      ]
+    },
+    {
+      "id": "top-bar",
+      "title": "TopBar",
+      "source": "components/navigation/TopBar.jsx",
+      "ownerLayer": "product",
+      "category": "profile-token-automatic",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--component-menu-gap",
+        "--component-menu-item-min-height",
+        "--component-menu-item-padding-x",
+        "--component-menu-item-padding-y",
+        "--component-menu-padding-y",
+        "--dur-base",
+        "--dur-fast",
+        "--shadow-md"
+      ]
+    },
+    {
+      "id": "user-menu",
+      "title": "UserMenu",
+      "source": "components/navigation/UserMenu.jsx",
+      "ownerLayer": "product",
+      "category": "profile-token-automatic",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--component-menu-padding-x",
+        "--component-menu-padding-y",
+        "--dur-fast",
+        "--shadow-md"
+      ]
+    },
+    {
+      "id": "wizard",
+      "title": "Wizard",
+      "source": "components/navigation/Wizard.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "alert",
+      "title": "Alert",
+      "source": "components/overlay/Alert.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "command-palette",
+      "title": "CommandPalette",
+      "source": "components/overlay/CommandPalette.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "confirm-dialog",
+      "title": "ConfirmDialog",
+      "source": "components/overlay/ConfirmDialog.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "dimmer",
+      "title": "Dimmer",
+      "source": "components/overlay/Dimmer.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--shadow-sm"
+      ],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "drawer",
+      "title": "Drawer",
+      "source": "components/overlay/Drawer.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "density"
+      ],
+      "profileTokens": [
+        "--component-drawer-body-padding-comfortable",
+        "--component-drawer-body-padding-compact",
+        "--component-drawer-footer-padding-comfortable",
+        "--component-drawer-footer-padding-compact",
+        "--component-drawer-header-padding-comfortable",
+        "--component-drawer-header-padding-compact",
+        "--dur-base",
+        "--dur-slow"
+      ]
+    },
+    {
+      "id": "dropdown-menu",
+      "title": "DropdownMenu",
+      "source": "components/overlay/DropdownMenu.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "density",
+        "cellPadding",
+        "verticalPadding"
+      ],
+      "profileTokens": [
+        "--component-menu-gap",
+        "--component-menu-item-min-height",
+        "--component-menu-item-padding-x",
+        "--component-menu-item-padding-y",
+        "--component-menu-padding-x",
+        "--component-menu-padding-y",
+        "--shadow-md"
+      ]
+    },
+    {
+      "id": "hover-card",
+      "title": "HoverCard",
+      "source": "components/overlay/HoverCard.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "lightbox",
+      "title": "Lightbox",
+      "source": "components/overlay/Lightbox.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "modal",
+      "title": "Modal",
+      "source": "components/overlay/Modal.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "popover",
+      "title": "Popover",
+      "source": "components/overlay/Popover.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "sheet",
+      "title": "Sheet",
+      "source": "components/overlay/Sheet.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-base",
+        "--dur-slow"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "snackbar",
+      "title": "Snackbar",
+      "source": "components/overlay/Snackbar.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "toast",
+      "title": "Toast",
+      "source": "components/overlay/Toast.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "toast-stack",
+      "title": "ToastStack",
+      "source": "components/overlay/ToastStack.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "battery-gauge",
+      "title": "BatteryGauge",
+      "source": "components/robotics/BatteryGauge.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "connection-badge",
+      "title": "ConnectionBadge",
+      "source": "components/robotics/ConnectionBadge.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "equipment-status-card",
+      "title": "EquipmentStatusCard",
+      "source": "components/robotics/EquipmentStatusCard.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "choice-card",
+      "title": "ChoiceCard",
+      "source": "components/selection/ChoiceCard.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "padding"
+      ],
+      "profileTokens": [
+        "--dur-fast",
+        "--shadow-md",
+        "--shadow-sm"
+      ]
+    },
+    {
+      "id": "filter-chip",
+      "title": "FilterChip",
+      "source": "components/selection/FilterChip.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "icon-picker",
+      "title": "IconPicker",
+      "source": "components/selection/IconPicker.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "create-local-storage-manager",
+      "title": "createLocalStorageManager",
+      "source": "components/selection/LdsProvider.jsx",
+      "ownerLayer": "theme",
+      "category": "not-applicable",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Theme owner",
+      "rationale": "Theme runtime/provider entry는 profile 상태를 전달하지만 component-level visual density를 직접 렌더링하지 않는다.",
+      "reviewTrigger": "runtime entry가 사용자에게 보이는 component geometry 또는 interactive target을 직접 소유하게 될 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "multi-select-chip",
+      "title": "MultiSelectChip",
+      "source": "components/selection/MultiSelectChip.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "segmented-control",
+      "title": "SegmentedControl",
+      "source": "components/selection/SegmentedControl.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "stepper",
+      "title": "Stepper",
+      "source": "components/selection/Stepper.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-fast"
+      ]
+    },
+    {
+      "id": "switch",
+      "title": "Switch",
+      "source": "components/selection/Switch.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-base",
+        "--dur-fast",
+        "--shadow-sm"
+      ]
+    },
+    {
+      "id": "theme-toggle",
+      "title": "ThemeToggle",
+      "source": "components/selection/ThemeToggle.jsx",
+      "ownerLayer": "theme",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "toggle-button",
+      "title": "ToggleButton",
+      "source": "components/selection/ToggleButton.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--component-button-height-lg",
+        "--component-button-height-md",
+        "--component-button-height-sm"
+      ]
+    },
+    {
+      "id": "wheel-picker",
+      "title": "WheelPicker",
+      "source": "components/selection/WheelPicker.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "banner",
+      "title": "Banner",
+      "source": "components/status/Banner.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "callout",
+      "title": "Callout",
+      "source": "components/status/Callout.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "density"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "circular-progress",
+      "title": "CircularProgress",
+      "source": "components/status/CircularProgress.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-base"
+      ]
+    },
+    {
+      "id": "empty-state",
+      "title": "EmptyState",
+      "source": "components/status/EmptyState.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "meter",
+      "title": "Meter",
+      "source": "components/status/Meter.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-base"
+      ]
+    },
+    {
+      "id": "overlay-status-chip",
+      "title": "OverlayStatusChip",
+      "source": "components/status/OverlayStatusChip.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--shadow-sm"
+      ],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "progress-bar",
+      "title": "ProgressBar",
+      "source": "components/status/ProgressBar.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-base"
+      ]
+    },
+    {
+      "id": "skeleton",
+      "title": "Skeleton",
+      "source": "components/status/Skeleton.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "spinner",
+      "title": "Spinner",
+      "source": "components/status/Spinner.jsx",
+      "ownerLayer": "core",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "elevator-fleet-overview",
+      "title": "ElevatorFleetOverview",
+      "source": "components/viz/ElevatorFleetOverview.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-slow"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "map2-dcanvas",
+      "title": "Map2DCanvas",
+      "source": "components/viz/Map2DCanvas.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "scene3-dframe",
+      "title": "Scene3DFrame",
+      "source": "components/viz/Scene3DFrame.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "telemetry-gauge",
+      "title": "TelemetryGauge",
+      "source": "components/viz/TelemetryGauge.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": true,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": [
+        "--dur-base",
+        "--dur-slow"
+      ]
+    },
+    {
+      "id": "telemetry-value",
+      "title": "TelemetryValue",
+      "source": "components/viz/TelemetryValue.jsx",
+      "ownerLayer": "product",
+      "category": "explicit-size-density",
+      "profileAware": false,
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
+    },
+    {
+      "id": "video-stream-tile",
+      "title": "VideoStreamTile",
+      "source": "components/viz/VideoStreamTile.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "viewer-frame",
+      "title": "ViewerFrame",
+      "source": "components/viz/ViewerFrame.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--shadow-sm"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "viewer-toolbar",
+      "title": "ViewerToolbar",
+      "source": "components/viz/ViewerToolbar.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--shadow-sm"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    }
+  ]
+}

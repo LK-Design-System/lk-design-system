@@ -131,7 +131,7 @@ function checkboxStyle(checked, indeterminate = false, disabled = false) {
   };
 }
 
-function SelectionCheckbox({ checked, indeterminate = false, disabled = false, ...rest }) {
+function SelectionCheckbox({ checked, indeterminate = false, disabled = false, className, style, ...rest }) {
   const inputRef = React.useRef(null);
 
   React.useLayoutEffect(() => {
@@ -139,14 +139,21 @@ function SelectionCheckbox({ checked, indeterminate = false, disabled = false, .
   }, [indeterminate]);
 
   return (
-    <input
-      {...rest}
-      ref={inputRef}
-      type="checkbox"
-      checked={checked}
-      disabled={disabled}
-      style={checkboxStyle(checked, indeterminate, disabled)}
-    />
+    <label
+      data-lds-target="selection-checkbox"
+      style={{ position: 'relative', display: 'inline-flex', width: 'var(--component-data-grid-selection-target-size, 24px)', height: 'var(--component-data-grid-selection-target-size, 24px)', alignItems: 'center', justifyContent: 'center', cursor: disabled ? 'not-allowed' : 'pointer', verticalAlign: 'middle' }}
+    >
+      <input
+        {...rest}
+        ref={inputRef}
+        className={['lk-data-grid__selection-checkbox', className].filter(Boolean).join(' ')}
+        type="checkbox"
+        checked={checked}
+        disabled={disabled}
+        style={{ position: 'absolute', inset: 0, width: 'var(--component-data-grid-selection-target-size, 24px)', height: 'var(--component-data-grid-selection-target-size, 24px)', margin: 0, opacity: 0, cursor: disabled ? 'not-allowed' : 'pointer', ...style }}
+      />
+      <span data-selection-glyph aria-hidden="true" style={{ ...checkboxStyle(checked, indeterminate, disabled), pointerEvents: 'none' }} />
+    </label>
   );
 }
 
@@ -197,6 +204,7 @@ const ROW_INTERACTIVE_SELECTOR = [
   'input',
   'select',
   'textarea',
+  'label',
   '[role="button"]',
   '[role="link"]',
   '[role="checkbox"]',
@@ -336,8 +344,12 @@ export function DataGrid({
   const expandedIdSet = new Set(resolvedExpandedRowIds);
   const expandable = typeof renderExpandedRow === 'function';
 
-  const pad = size === 'sm' ? '10px 12px' : '13px 16px';
-  const headerH = size === 'sm' ? 50 : 58;
+  const pad = size === 'sm'
+    ? 'var(--component-data-grid-cell-padding-sm, 10px 12px)'
+    : 'var(--component-data-grid-cell-padding-md, 13px 16px)';
+  const headerH = size === 'sm'
+    ? 'var(--component-data-grid-header-height-sm, 50px)'
+    : 'var(--component-data-grid-header-height-md, 58px)';
   const utilityCount = (expandable ? 1 : 0) + (selectable ? 1 : 0);
   const utilityWidth = utilityCount * 44;
   const orderedColumns = orderColumns(columns, columnOrder);
@@ -544,7 +556,7 @@ export function DataGrid({
                 <td
                   aria-colindex={selectionColumnIndex}
                   style={{
-                    padding: pad,
+                    padding: 'var(--component-data-grid-selection-cell-padding, 10px)',
                     width: 44,
                     textAlign: 'left',
                     borderBottom: '1px solid var(--color-semantic-line-solid-normal)',
@@ -597,7 +609,7 @@ export function DataGrid({
                   scope="col"
                   aria-colindex={selectionColumnIndex}
                   style={{
-                    padding: pad,
+                    padding: 'var(--component-data-grid-selection-cell-padding, 10px)',
                     width: 44,
                     textAlign: 'left',
                     borderBottom: '1px solid var(--color-semantic-line-solid-normal)',
@@ -726,7 +738,7 @@ export function DataGrid({
                     <td
                       aria-colindex={selectionColumnIndex}
                       style={{
-                        padding: pad,
+                        padding: 'var(--component-data-grid-selection-cell-padding, 10px)',
                         width: 44,
                         borderBottom: '1px solid var(--color-semantic-line-solid-normal)',
                         ...utilityCellStyle({ offset: selectionOffset, background: selected ? 'var(--color-semantic-primary-surface-normal)' : headerBackground }),
@@ -770,7 +782,7 @@ export function DataGrid({
                 {expanded && (
                   <tr data-expanded-row-for={String(id)}>
                     <td colSpan={colSpan} style={{ padding: 0, borderBottom: '1px solid var(--color-semantic-line-solid-normal)', background: 'var(--color-semantic-background-elevated-normal)' }}>
-                      <div id={detailId} role="region" aria-label={`${rowLabel} 세부 정보`} style={{ padding: size === 'sm' ? 'var(--space-3) var(--space-4)' : 'var(--space-4)' }}>
+                      <div id={detailId} role="region" aria-label={`${rowLabel} 세부 정보`} style={{ padding: size === 'sm' ? 'var(--component-data-grid-detail-padding-sm, var(--space-3) var(--space-4))' : 'var(--component-data-grid-detail-padding-md, var(--space-4))' }}>
                         {renderExpandedRow(row, id)}
                       </div>
                     </td>

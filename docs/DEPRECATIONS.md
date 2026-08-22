@@ -5,10 +5,10 @@
 | Type | Generated register |
 | Status | Generated · do not edit rows by hand |
 | Owner | Component owners |
-| Source | public declarations marked `@deprecated` |
+| Source | public declarations marked `@deprecated` and active package compatibility projections |
 | Generator | `npm run report:deprecations` |
 
-This generated register is the release-facing inventory of public compatibility contracts marked with `@deprecated`. Update the declaration comment first, then run `npm run report:deprecations`.
+This generated register is the release-facing inventory of public compatibility contracts marked with `@deprecated` or declared by the live owner authority. Update the declaration or compatibility projection first, then run `npm run report:deprecations`.
 
 | Declaration | Source | Migration |
 | --- | --- | --- |
@@ -31,3 +31,13 @@ This generated register is the release-facing inventory of public compatibility 
 | `empty?: React.ReactNode;` | `components/viz/Scene3DFrame.d.ts` | Use state="no-source" and stateLabel. |
 | `loading?: boolean;` | `components/viz/Scene3DFrame.d.ts` | Use state="loading". |
 | `active?: boolean;` | `components/viz/ViewerToolbar.d.ts` | `kind="toggle" pressed={...}`를 사용하세요. 이전 active 사용은 호환을 위해 toggle로 해석됩니다. |
+| `Calendar Product compatibility re-export` | `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json` | Import from @lk-design-system/lds-core. Product root/deep compatibility remains through all-0.1.x-releases and may be removed in 0.2.0. |
+| `CircularProgress Product compatibility re-export` | `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json` | Import from @lk-design-system/lds-core. Product root/deep compatibility remains through all-0.1.x-releases and may be removed in 0.2.0. |
+| `DatePicker Product compatibility re-export` | `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json` | Import from @lk-design-system/lds-core. Product root/deep compatibility remains through all-0.1.x-releases and may be removed in 0.2.0. |
+| `Link Product compatibility re-export` | `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json` | Import from @lk-design-system/lds-core. Product root/deep compatibility remains through all-0.1.x-releases and may be removed in 0.2.0. |
+| `Meter Product compatibility re-export` | `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json` | Import from @lk-design-system/lds-core. Product root/deep compatibility remains through all-0.1.x-releases and may be removed in 0.2.0. |
+| `NumberField Product compatibility re-export` | `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json` | Import from @lk-design-system/lds-core. Product root/deep compatibility remains through all-0.1.x-releases and may be removed in 0.2.0. |
+| `overlay/anchored-panel-style Product compatibility re-export` | `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json` | Import from @lk-design-system/lds-core. Product root/deep compatibility remains through all-0.1.x-releases and may be removed in 0.2.0. |
+| `PasswordInput Product compatibility re-export` | `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json` | Import from @lk-design-system/lds-core. Product root/deep compatibility remains through all-0.1.x-releases and may be removed in 0.2.0. |
+| `Popover Product compatibility re-export` | `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json` | Import from @lk-design-system/lds-core. Product root/deep compatibility remains through all-0.1.x-releases and may be removed in 0.2.0. |
+| `ProgressBar Product compatibility re-export` | `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json` | Import from @lk-design-system/lds-core. Product root/deep compatibility remains through all-0.1.x-releases and may be removed in 0.2.0. |

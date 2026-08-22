@@ -90,7 +90,7 @@ Reference: [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns
 
 ## 매체 재지정 훅 (`--lk-table-*`)
 
-셀 패딩과 타입은 `--lk-table-cell-pad-sm/md`, `--lk-table-head-size/line/spacing`, `--lk-table-cell-size/line` 훅을 경유하며, **폴백이 곧 기존 리터럴**이라 제품 매체는 바이트 동일하게 렌더됩니다. 투영·전시처럼 읽기 거리가 다른 매체가 자기 스코프에서 재지정합니다. 훅은 의도적으로 기본 미정의입니다 — 토큰으로 정의하면 폴백이 죽은 코드가 되고, 제품 기본값의 단일 출처가 리터럴에서 토큰으로 흩어지기 때문입니다(TOKEN_GOVERNANCE의 컴포넌트 토큰 규칙에 대한 문서화된 예외).
+셀 패딩과 타입은 `--lk-table-cell-pad-sm/md`, `--lk-table-head-size/line/spacing`, `--lk-table-cell-size/line` 훅을 경유합니다. 매체 훅이 없으면 `--component-table-cell-padding-sm/md`를 읽고, 그 token의 `default` 값은 기존 리터럴과 같습니다. 투영·전시처럼 읽기 거리가 다른 매체의 명시적 `--lk-table-*`가 profile token보다 우선합니다. `ops` 안의 명시적 `size="md"`도 API 의미는 유지한 채 ops-md token 값을 사용합니다. 전체 precedence와 측정 게이트는 `docs/DENSITY_AND_EXPRESSION_PROFILE_CONTRACT.md`가 정본입니다.
 
 ## 그룹 행 (`groupKey`)
 

@@ -8,11 +8,11 @@ function getColumnSizingStyle({ width, truncate = false }) {
 }
 
 /** Public style helpers for product-owned native tables that must match LDS Table cells. */
-export function getTableHeaderCellStyle({ padding = 'var(--lk-table-cell-pad-md, 14px 16px)', align = 'left', width, truncate = false } = {}) {
+export function getTableHeaderCellStyle({ padding = 'var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 14px 16px))', align = 'left', width, truncate = false } = {}) {
   return { ...thStyle(padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 
-export function getTableDataCellStyle({ padding = 'var(--lk-table-cell-pad-md, 14px 16px)', align = 'left', width, truncate = false } = {}) {
+export function getTableDataCellStyle({ padding = 'var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 14px 16px))', align = 'left', width, truncate = false } = {}) {
   return { ...tdStyle(padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 
@@ -115,8 +115,8 @@ export function Table({
   // Fallbacks are the former literals — the product medium is byte-identical,
   // a medium that reads farther away re-points the hook (see table-cell-styles).
   const pad = size === 'sm'
-    ? 'var(--lk-table-cell-pad-sm, 10px 12px)'
-    : 'var(--lk-table-cell-pad-md, 14px 16px)';
+    ? 'var(--lk-table-cell-pad-sm, var(--component-table-cell-padding-sm, 10px 12px))'
+    : 'var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 14px 16px))';
   // A visible <caption> already names the table. An aria-label on top of it
   // would silently replace that visible name and risk a name/visible-text
   // mismatch (WCAG 2.5.3), so the ARIA names only apply without a caption.

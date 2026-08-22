@@ -5,12 +5,12 @@ import { CalendarCard as CalendarCardStory } from './DataDisplay.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Product/Selection and Input/Calendar',
+  title: 'LDS Core/Components/Selection and Input/Calendar',
   tags: ['autodocs'],
   parameters: {
     storyGuide: {
-      storyId: 'lds-product-selection-and-input-calendar--calendar-pattern',
-      eyebrow: 'Product / Calendar',
+      storyId: 'lds-core-components-selection-and-input-calendar--calendar-pattern',
+      eyebrow: 'Core / Calendar',
       title: '캘린더는 한 달의 맥락 안에서 날짜를 탐색하고 선택하게 합니다',
       description:
         '예약 가능일이나 로그 기준일처럼 주변 날짜를 함께 보며 고를 때 적합합니다. 폼 안에서 단일 날짜만 간결하게 입력하면 Calendar 대신 Date Picker를 사용하세요.',

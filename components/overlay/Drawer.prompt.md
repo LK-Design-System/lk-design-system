@@ -27,14 +27,14 @@ const firstFilterRef = useRef(null);
 
 - `Modal`, `Sheet`, `ConfirmDialog`를 sibling으로 확인했습니다. focus/keyboard 계약은 `ConfirmDialog`와 공유하되 표면은 기존 Drawer 그대로입니다.
 - Modal과 달리 좌/우 edge에 붙고, `side`, 380px 기본 폭, 92vw 상한, slide transition을 유지합니다. 이 차이는 본문 맥락과 나란히 연결되는 보조 작업이라는 기능으로 정당화됩니다.
-- 시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. `comfortable`은 기존과 동일하게 header/body `space-5 space-6`, footer `space-4 space-6`, body `body2`/1.7을 사용합니다. `compact`은 같은 anatomy를 유지하며 header/body `space-4 space-5`, footer `space-3 space-5`, body `label1` 14/20px로 좁힙니다. action gap은 두 밀도 모두 `space-2`입니다. radius와 선택/활성 marker는 추가하지 않습니다.
+- 시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. `default` profile의 `comfortable`은 기존과 동일하게 header/body `space-5 space-6`, footer `space-4 space-6`, body `body2`/1.7을 사용합니다. `compact`은 같은 anatomy를 유지하며 header/body `space-4 space-5`, footer `space-3 space-5`, body `label1` 14/20px로 좁힙니다. `ops` profile은 선택된 density의 header/body/footer token만 한 단계 좁히며 type와 action target은 유지합니다. action gap은 두 밀도 모두 `space-2`입니다. radius와 선택/활성 marker는 추가하지 않습니다.
 - 제목이 있으면 `aria-labelledby`, 없으면 `ariaLabel`을 사용합니다.
 - 제품 맥락에 맞는 닫기 명령은 `closeLabel`로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.
 - `bodyStyle`은 기본 body padding과 scroll contract를 유지하되, `DashboardShell temporaryNavigation`처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 `padding: 0` 같은 layout override를 전달합니다.
 
 ## Density contract
 
-- `density="comfortable"`이 기본값이며 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다.
+- `density="comfortable"`이 기본값이며 `default` profile의 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다. `ops`에서는 같은 density API가 profile-aware chrome token을 읽습니다.
 - `density="compact"`은 데스크톱의 짧고 반복적인 필터·설정 폼에서 Drawer가 소유하는 header/body/footer chrome과 body typography만 조밀하게 만듭니다. 제목 단계, 닫기 target, footer action 크기는 바꾸지 않습니다.
 - body의 bounded component-density scope는 `Input`, `Select`, `Textarea`, `Checkbox`/`CheckboxGroup`, `Radio`/`RadioGroup`, `ChoiceCard`, `Callout`, `FileUpload`처럼 밀도 상속 계약을 가진 자식에 `compact`를 전달합니다. 중첩 깊이나 `DrawerField` 같은 직접 자식 복제에 의존하지 않습니다.
 - 자식의 명시적 `size`, `padding`, `density`가 항상 상속값보다 우선합니다. Drawer 밖과 `comfortable` Drawer의 기존 기본 출력은 유지됩니다.

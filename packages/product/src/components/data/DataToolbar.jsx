@@ -56,8 +56,8 @@ export const DataToolbar = React.forwardRef(function DataToolbar({
       style={{
         ...componentVars(vars, '--lds-data-toolbar-'),
         display: 'grid',
-        gap: `var(--lds-data-toolbar-gap, ${compact ? 'var(--space-2)' : 'var(--space-3)'})`,
-        padding: `var(--lds-data-toolbar-padding, ${compact ? '10px 12px' : '14px 16px'})`,
+        gap: `var(--lds-data-toolbar-gap, ${compact ? 'var(--component-data-toolbar-gap-sm, var(--space-2))' : 'var(--component-data-toolbar-gap-md, var(--space-3))'})`,
+        padding: `var(--lds-data-toolbar-padding, ${compact ? 'var(--component-data-toolbar-padding-sm, 10px 12px)' : 'var(--component-data-toolbar-padding-md, 14px 16px)'})`,
         // variant="embedded" bonds the toolbar as a header inside a parent
         // surface: it drops its own outer border/radius and keeps only a bottom
         // divider to the content below (e.g. a DataGrid in the same collection

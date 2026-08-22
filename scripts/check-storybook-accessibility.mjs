@@ -413,8 +413,17 @@ async function main() {
         return [...root.querySelectorAll(selector)].flatMap((element) => {
           if (element.matches(':disabled, [aria-disabled="true"]') || element.closest('[aria-hidden="true"]')) return [];
           const style = getComputedStyle(element);
-          const rect = element.getBoundingClientRect();
-          if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0 || rect.width === 0 || rect.height === 0) return [];
+          // A visually hidden native input may delegate its pointer area to an
+          // enclosing label. Measure that declared target instead of silently
+          // dropping the control from the WCAG 2.5.8 inventory.
+          const declaredTarget = element.closest('[data-lds-target]');
+          const measuredTarget = declaredTarget || element;
+          const targetStyle = getComputedStyle(measuredTarget);
+          const rect = measuredTarget.getBoundingClientRect();
+          if (style.display === 'none' || style.visibility === 'hidden'
+            || targetStyle.display === 'none' || targetStyle.visibility === 'hidden'
+            || (!declaredTarget && Number(style.opacity) === 0)
+            || rect.width === 0 || rect.height === 0) return [];
           if (rect.width >= 24 && rect.height >= 24) return [];
           const name = (element.getAttribute('aria-label') || element.getAttribute('title') || element.textContent || '')
             .replace(/\s+/g, ' ').trim().slice(0, 80);

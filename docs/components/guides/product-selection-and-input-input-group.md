@@ -55,12 +55,6 @@
 - readOnly remains focusable and selectable. Consumer and generated description ids are merged on the input.
 - prefix / suffix — 애드온 노드. value / defaultValue / onChange — 텍스트. inputProps — 네이티브 input 패스스루. inputProps.onChange/onFocus/onBlur는 폐기되지 않고 컴포넌트 내부 처리보다 먼저 호출됩니다(값 커밋은 그대로 이어집니다). inputProps['aria-describedby']는 생성된 설명 id와 병합됩니다.
 
-## Related components
-
-| Component | Relationship |
-| --- | --- |
-| `PasswordInput` | 대표 시나리오에서 조합 |
-
 ## Examples
 
 ### 기본 조합

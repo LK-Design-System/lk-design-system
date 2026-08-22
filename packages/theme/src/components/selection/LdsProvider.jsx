@@ -149,6 +149,7 @@ export function LdsProvider({
         zIndexBase={zIndexBase}
         direction={direction}
         colorScheme={resolvedColorScheme}
+        profile={resolvedProfile}
       >
         {children}
       </OverlayRuntimeProvider>

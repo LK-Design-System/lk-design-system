@@ -7,20 +7,20 @@ import {
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Product/Selection and Input/Number Field',
+  title: 'LDS Core/Components/Selection and Input/Number Field',
   tags: ['autodocs'],
   component: NumberField,
   parameters: {
     storyGuide: {
-      storyId: 'lds-product-selection-and-input-number-field--number-input',
-      eyebrow: 'Product / Number Field',
+      storyId: 'lds-core-components-selection-and-input-number-field--number-input',
+      eyebrow: 'Core / Number Field',
       title: '숫자 필드는 허용 범위와 증감 단위를 함께 제어합니다',
       description:
         '수량·속도처럼 최소·최대와 일정한 step이 있는 값을 입력할 때 적합합니다. 범위가 없거나 숫자 외 형식을 함께 받는 값에는 Number Field 대신 Input을 사용하세요.',
     },
     docs: {
       description: {
-        component: '증감 스텝과 범위를 가진 숫자 입력 NumberField 제품 확장 컴포넌트입니다.',
+        component: '증감 스텝과 범위를 가진 범용 숫자 입력 NumberField 컴포넌트입니다.',
       },
     },
   },

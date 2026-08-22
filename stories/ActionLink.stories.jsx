@@ -2,13 +2,13 @@ import { Link } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Product/Action/Link',
+  title: 'LDS Core/Components/Action/Link',
   tags: ['autodocs'],
   component: Link,
   parameters: {
     storyGuide: {
-      storyId: 'lds-product-action-link--links',
-      eyebrow: 'Product / Link',
+      storyId: 'lds-core-components-action-link--links',
+      eyebrow: 'Core / Link',
       title: '사용자가 관련 목적지와 외부 자료로 이동할 수 있음을 문장 안에서 이해합니다',
       description:
         '현재 콘텐츠와 관련된 내부 목적지나 외부 문서를 앵커 탐색으로 연결할 때 적합합니다. 저장·삭제처럼 현재 상태를 변경하거나 로딩 상태가 필요한 작업에는 Link 대신 Button 또는 Text Button을 사용하세요.',

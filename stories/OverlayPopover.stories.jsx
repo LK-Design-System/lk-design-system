@@ -5,20 +5,20 @@ import { PopoverCard as PopoverCardStory } from './Overlay.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Product/Overlay/Popover',
+  title: 'LDS Core/Components/Overlay/Popover',
   tags: ['autodocs'],
   component: Popover,
   parameters: {
     storyGuide: {
-      storyId: 'lds-product-overlay-popover--popover-overview',
-      eyebrow: 'Product / Popover',
+      storyId: 'lds-core-components-overlay-popover--popover-overview',
+      eyebrow: 'Core / Popover',
       title: '사용자가 현재 대상의 보조 정보와 작은 설정을 제자리에서 확인합니다',
       description:
         '클릭한 trigger 주변에서 설명·미니 폼·피커처럼 자유로운 콘텐츠를 잠시 다룰 때 적합합니다. 명령 목록이나 작업을 막는 복잡한 흐름에는 Popover 대신 Dropdown Menu 또는 Modal을 사용하세요.',
     },
     docs: {
       description: {
-        component: '클릭 trigger에 임의의 보조 콘텐츠를 정렬해 여는 LK Product Popover입니다.',
+        component: '클릭 trigger에 임의의 보조 콘텐츠를 정렬해 여는 범용 Core Popover입니다.',
       },
     },
   },

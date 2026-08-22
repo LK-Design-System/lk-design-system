@@ -73,6 +73,7 @@
 
 - 적용 chip은 제거 버튼이지 토글이 아닙니다. 눌린 상태(aria-pressed)를 부여하지 않고, 선택된 chip 표면은 chip 토큰으로만 표현합니다. "…필터 제거"라는 이름의 액션 버튼이 눌린 토글로 낭독되면 안 되기 때문입니다(WAI-ARIA APG Button).
 - 좁은 폭에서는 control, action, 적용 chip이 DOM 순서를 유지한 채 줄바꿈됩니다. toolbar가 아니므로 arrow-key roving focus를 강제하지 않고 각 native control의 Tab 순서를 유지합니다.
+- size="sm | md"는 profile-aware surface gap/padding token을 선택합니다. ops는 같은 filter semantics와 focus-recovery 계약을 더 조밀한 chrome으로 표현할 뿐 query state, chip 제거 의미, live result 공지를 바꾸지 않습니다.
 - 내부 DataToolbar, FilterChip, Chip, DateRangeField, TextButton의 높이·radius·focus 동작을 비교해 그대로 조합했습니다. PatternFly Filters의 persistent applied-filter summary와 clear-all, Carbon Data table의 global toolbar와 batch-action 분리, WAI-ARIA Toolbar pattern의 복합 위젯 keyboard 기준을 비교했습니다.
 - LDS에서는 필터가 서로 다른 팝업·날짜 field를 포함하므로 하나의 roving toolbar로 만들지 않았습니다. 이는 일반 Tab 순서를 보존하기 위한 의도적 차이입니다.
 
@@ -86,8 +87,8 @@
 | `Select` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
+| `ChartFrame` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -114,6 +115,10 @@
 - `--color-semantic-line-solid-normal`
 - `--component-chip-bg-selected`
 - `--component-chip-border-active`
+- `--component-filter-bar-gap-md`
+- `--component-filter-bar-gap-sm`
+- `--component-filter-bar-padding-md`
+- `--component-filter-bar-padding-sm`
 - `--font-sans`
 - `--fw-medium`
 - `--fw-semibold`

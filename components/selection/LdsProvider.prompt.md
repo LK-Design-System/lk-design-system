@@ -29,8 +29,8 @@ locale metadata, and the shared Portal layer. Existing CSS-only `[data-theme]`,
   storage ownership. `LdsColorSchemeScript` accepts the same `storageKey` so first paint and the
   hydrated Provider read one preference.
 - `target` defaults to `document.documentElement`; `null` updates context without mutating DOM.
-- `direction` and optional `locale` set `dir`/`lang` on the same target and are inherited by
-  portalled overlays. Translation resources, date/number formatting and router locale remain
+- `profile`, `direction` and optional `locale` are inherited by portalled overlays, including
+  nested CSS-only profile scopes. Translation resources, date/number formatting and router locale remain
   product responsibilities.
 - `portalTarget` and `zIndexBase` configure the common overlay platform; individual overlays can
   still use their explicit limited overrides.

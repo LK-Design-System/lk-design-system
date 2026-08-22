@@ -57,6 +57,7 @@
 
 | Subject | Rule |
 | --- | --- |
+| 명시 규칙 1 | Tree row의 min-height, block/inline padding, gap과 indent는 expression-profile token을 사용합니다. ops는 반복 탐색 행을 조밀하게 만들지만 24px target floor, roving focus, selection과 level semantics를 변경하지 않습니다. 전역 density prop은 추가하지 않습니다. |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --caption2-size | 11px |
 | --color-semantic-background-normal-alternative | light: #F7F7F8; dark: #0F0F10 |
@@ -82,10 +83,10 @@
 | `StatusBadge` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
+| `DataExportAction` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -111,6 +112,11 @@
 - `--color-semantic-label-strong`
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-strong`
+- `--component-tree-indent`
+- `--component-tree-row-gap`
+- `--component-tree-row-min-height`
+- `--component-tree-row-padding-x`
+- `--component-tree-row-padding-y`
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`
@@ -119,7 +125,7 @@
 - `--label1-size`
 - `--radius-md`
 - `--space-0-5`
-- `--space-2-5`
+- `--space-2`
 
 ### Source contracts
 

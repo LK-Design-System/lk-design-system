@@ -365,9 +365,11 @@ const nonComponentDecisionPages = new Set([
   'LDS Core/Patterns/Loading',
 ]);
 // Mirrors generate-component-docs.mjs: Foundation pages and the IA audit's
-// "Other" meta layer are not component pages, so no guide is expected for them.
+// "Other" meta layer and reviewed hidden-only machine fixtures are not component pages, so no
+// audience decision guide is expected for them.
 const expectedPages = audit.pages.filter((page) => page.layer !== 'Foundation'
   && page.layer !== 'Other'
+  && page.disposition !== 'hide'
   && !nonComponentDecisionPages.has(page.title));
 const guideTitles = new Set();
 const guideSlugs = new Set();

@@ -52,6 +52,58 @@
     "aggregateEntry": "src/index.js",
     "historicalProvenanceRegistry": "docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json",
     "historicalStoryTitleRegistry": "docs/references/wds/LAYER_CLASSIFICATION.json",
+    "ownerApiDecisionRegister": "docs/references/architecture/R3B_OWNER_API_DECISIONS.json",
+    "deprecatedPackageReexports": {
+      "id": "r3b-product-to-core-0.1",
+      "status": "active",
+      "sourceLayer": "product",
+      "targetLayer": "core",
+      "supportWindow": "all-0.1.x-releases",
+      "earliestRemoval": "0.2.0",
+      "removalGate": "Registered consumer scans report zero Product-root and Product-deep use for every moved export, followed by owner approval and a breaking release note.",
+      "entries": [
+        {
+          "module": "components/buttons/Link.jsx",
+          "exports": ["Link"]
+        },
+        {
+          "module": "components/data/Calendar.jsx",
+          "exports": ["Calendar"]
+        },
+        {
+          "module": "components/forms/DatePicker.jsx",
+          "exports": ["DatePicker"]
+        },
+        {
+          "module": "components/forms/NumberField.jsx",
+          "exports": ["NumberField"]
+        },
+        {
+          "module": "components/forms/PasswordInput.jsx",
+          "exports": ["PasswordInput"]
+        },
+        {
+          "module": "components/overlay/Popover.jsx",
+          "exports": ["Popover"]
+        },
+        {
+          "module": "components/overlay/anchored-panel-style.js",
+          "exports": []
+        },
+        {
+          "module": "components/status/CircularProgress.jsx",
+          "exports": ["CircularProgress"]
+        },
+        {
+          "module": "components/status/Meter.jsx",
+          "exports": ["Meter"]
+        },
+        {
+          "module": "components/status/ProgressBar.jsx",
+          "exports": ["ProgressBar"]
+        }
+      ]
+    },
     "note": "ownerLayer fields under references/wds are checked projections retained beside provenance; they do not decide current ownership."
   },
   "tokenGroups": [
@@ -108,6 +160,20 @@
       "representativePublicExports": ["ActionArea", "Banner", "Button", "ConfirmDialog", "StatusBadge", "Timeline"],
       "owns": "Generic action, confirmation and lifecycle-presentation primitives.",
       "excludes": "Command eligibility, approval, execution, transport and completion truth remain in the product application."
+    },
+    {
+      "id": "generic-navigation-input-and-overlay-primitives",
+      "ownerLayer": "core",
+      "representativePublicExports": ["Calendar", "DatePicker", "Link", "NumberField", "PasswordInput", "Popover"],
+      "owns": "Generic DOM navigation, single-value input and non-modal anchored-overlay behavior.",
+      "excludes": "Routes, coupled date-range workflows, product commands, domain validation and application persistence remain outside Core."
+    },
+    {
+      "id": "generic-progress-and-measurement-primitives",
+      "ownerLayer": "core",
+      "representativePublicExports": ["CircularProgress", "Meter", "ProgressBar"],
+      "owns": "Generic progressbar and meter semantics, accessible values, presentation states and status tones.",
+      "excludes": "Job lifecycle truth, telemetry thresholds, alert policy, transport and completion authority remain in applications or specialist layers."
     },
     {
       "id": "application-navigation",

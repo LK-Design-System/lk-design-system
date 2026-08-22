@@ -295,7 +295,8 @@
   "contentGuidance": [
     "getRowCanSelect(row, rowId)가 false인 보이는 행은 이름이 있는 disabled checkbox를 렌더하고 page select-all 수량·토글·callback ID에서 제외합니다. 이미 all-matching이라도 DataGrid가 현재 보는 선택 불가 ID를 excludedIds에 합친 안전한 model만 bulk slot·다음 callback에 넘깁니다.",
     "editingCell={{ rowId, columnKey }}가 column의 editor(row, rowId) slot을 선택합니다. DataGrid는 edit mode를 시작하거나 저장하지 않습니다. Editor는 제품이 controlled value, label, validation, commit/cancel을 제공해야 합니다.",
-    "loading, error, emptyLabel, stateActions는 현재 page surface 상태입니다. 이전 데이터 보존·refreshing·stale 계약은 상위 resource state가 담당합니다."
+    "loading, error, emptyLabel, stateActions는 현재 page surface 상태입니다. 이전 데이터 보존·refreshing·stale 계약은 상위 resource state가 담당합니다.",
+    "size=\"sm | md\"는 공개 문법을 유지하면서 profile-aware cell/header/detail token을 선택합니다. ops는 선택된 크기의 spacing만 조밀하게 만들고 열 의미·정렬·선택 model·DOM anatomy를 바꾸지 않습니다. 선택 checkbox는 16px glyph 안에 의미를 압축하지 않고, label이 소유하는 실제 native input target을 24×24px로 유지합니다."
   ],
   "accessibility": [
     "loading/error/empty surface와 bulk band의 접근성·시각 계층.",
@@ -331,11 +332,11 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "Calendar",
+      "component": "Carousel",
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "Carousel",
+      "component": "ChartFrame",
       "relationship": "대표 시나리오에서 조합"
     }
   ],
@@ -354,6 +355,14 @@
     "--color-semantic-primary-surface-normal",
     "--color-semantic-primary-surface-strong",
     "--color-semantic-status-negative-text",
+    "--component-data-grid-cell-padding-md",
+    "--component-data-grid-cell-padding-sm",
+    "--component-data-grid-detail-padding-md",
+    "--component-data-grid-detail-padding-sm",
+    "--component-data-grid-header-height-md",
+    "--component-data-grid-header-height-sm",
+    "--component-data-grid-selection-cell-padding",
+    "--component-data-grid-selection-target-size",
     "--font-sans",
     "--fw-semibold",
     "--label1-line",

@@ -1,0 +1,155 @@
+{
+  "$schema": "./R3B_OWNER_API_DECISIONS.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-r3b-owner-api-decisions",
+  "status": "closed",
+  "closedAt": "2026-08-22",
+  "owner": "Design system owner",
+  "supportWindow": {
+    "compatibilityPackage": "@lk-design-system/lds-product",
+    "policy": "all-0.1.x-releases",
+    "earliestRemoval": "0.2.0",
+    "removalGate": "Remove only after Portal and every registered consumer report zero Product-root and Product-deep use for the moved exports, with a breaking release note and owner approval.",
+    "rollback": "During 0.1.x, restore consumers to the Product compatibility root or deep path without changing component behavior; after removal, roll back to the last immutable 0.1.x package set."
+  },
+  "decisions": [
+    {
+      "id": "generic-link",
+      "subjects": ["Link"],
+      "decision": "move-now",
+      "ownerLayer": "core",
+      "reason": "Native anchor navigation, external-link disclosure and accessible naming are generic DOM contracts with no Product workflow semantics.",
+      "evidence": [
+        "Portal candidate 50c2d9b306145805455885201ababf91c8ee6339 already installs Core and Product and uses link navigation across shared UI.",
+        "components/buttons/Link.jsx and components/buttons/Link.d.ts expose no application route or domain state contract."
+      ]
+    },
+    {
+      "id": "generic-popover",
+      "subjects": ["Popover", "anchored-panel-style"],
+      "decision": "move-now",
+      "ownerLayer": "core",
+      "reason": "Anchored disclosure positioning, light dismiss, focus return and panel chrome are generic overlay mechanics already built on Core-owned anchored-overlay.",
+      "evidence": [
+        "Portal candidate 50c2d9b306145805455885201ababf91c8ee6339 uses Popover in src/components/chat/ChatComposerMenus.tsx and src/components/chat/FloatingChat.tsx.",
+        "components/overlay/Popover.jsx composes components/overlay/anchored-overlay.js, which is already Core-owned."
+      ]
+    },
+    {
+      "id": "generic-calendar-and-date-picker",
+      "subjects": ["Calendar", "DatePicker"],
+      "decision": "move-now",
+      "ownerLayer": "core",
+      "reason": "Single-date navigation, parsing, disabled-date state and accessible grid interaction are reusable input contracts independent of a Product workflow.",
+      "evidence": [
+        "Portal candidate 50c2d9b306145805455885201ababf91c8ee6339 uses DatePicker in src/components/research/ResearchProfileWorkspace.tsx.",
+        "DateRangeField remains a separate Product composition because it owns coupled start/end validation and range workflow anatomy."
+      ]
+    },
+    {
+      "id": "generic-number-and-password-inputs",
+      "subjects": ["NumberField", "PasswordInput"],
+      "decision": "move-now",
+      "ownerLayer": "core",
+      "reason": "Native numeric bounds and password reveal semantics extend Core form primitives without introducing application, operations or workspace domain truth.",
+      "evidence": [
+        "components/forms/NumberField.jsx and components/forms/PasswordInput.jsx depend only on reusable input, icon and field behavior.",
+        "Their Storybook contracts describe generic form entry, validation and accessibility rather than a Product route or workflow."
+      ]
+    },
+    {
+      "id": "generic-progress-and-meter",
+      "subjects": ["ProgressBar", "CircularProgress", "Meter"],
+      "decision": "move-now",
+      "ownerLayer": "core",
+      "reason": "Progressbar and meter roles, determinate state, accessible values and generic status tones are reusable semantic primitives.",
+      "evidence": [
+        "Portal candidate 50c2d9b306145805455885201ababf91c8ee6339 uses CircularProgress through src/components/ui/LoadingSpinner.tsx.",
+        "components/status/ProgressBar.jsx, CircularProgress.jsx and Meter.jsx contain no telemetry transport or job lifecycle truth."
+      ]
+    },
+    {
+      "id": "date-range-product-composition",
+      "subjects": ["DateRangeField"],
+      "decision": "stay",
+      "ownerLayer": "product",
+      "reason": "Coupled start/end entry, ordering validation and range-level error presentation form a Product composition over Core date primitives.",
+      "evidence": [
+        "components/forms/DateRangeField.jsx composes two date inputs and owns cross-field range behavior.",
+        "stories/FormDateRange.stories.jsx documents range-level product scenarios independently from DatePicker."
+      ]
+    },
+    {
+      "id": "renderer-neutral-operations",
+      "subjects": ["BatteryGauge", "ConnectionBadge", "EquipmentStatusCard", "TelemetryGauge", "TelemetryValue"],
+      "decision": "stay",
+      "ownerLayer": "product",
+      "reason": "Renderer-neutral operational presentation is reusable across equipment types but is a richer Product composition than a Core DOM primitive.",
+      "evidence": [
+        "docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json#domainDecisions keeps telemetry truth, thresholds and robot semantics outside Product presentation.",
+        "The Product operations family supplies reusable equipment and telemetry anatomy without owning runtime state machines."
+      ]
+    },
+    {
+      "id": "renderer-neutral-viewer",
+      "subjects": ["Map2DCanvas", "Scene3DFrame", "VideoStreamTile", "ViewerFrame", "ViewerToolbar"],
+      "decision": "stay",
+      "ownerLayer": "product",
+      "reason": "Viewport frames and renderer-neutral controls are Operations-family compositions while spatial navigation and robot safety meaning remain external.",
+      "evidence": [
+        "Web Viz candidate 4dad154883cd452072734587790509b1f857e75f uses Scene3DFrame and ViewerToolbar in frontend/src/components/3d/PointCloudViewer.tsx.",
+        "docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json#domainDecisions excludes navigation graph meaning, pose, planning and transport."
+      ]
+    },
+    {
+      "id": "robotics-domain-surface",
+      "subjects": ["robot control", "robot operational status", "spatial navigation"],
+      "decision": "stay",
+      "ownerLayer": "robotics",
+      "reason": "Authority, dead-man behavior, safety release, robot state and navigation coordinates require the independent Robotics owner and release surface.",
+      "evidence": [
+        "lk-design-system-robotics@ab5446b1db76777deb94ec75308a4133cc49d2b1 owns RobotStatusCard, Joystick and navigation transforms.",
+        "Web Viz candidate 4dad154883cd452072734587790509b1f857e75f consumes Robotics controls separately from Product viewer chrome."
+      ]
+    },
+    {
+      "id": "adjacent-composite-review",
+      "subjects": ["HoverCard", "InputGroup", "TimePicker", "PinInput"],
+      "decision": "defer",
+      "ownerLayer": "product",
+      "reason": "These surfaces remain valid Product compositions today, but their generic mechanics may justify Core ownership when independent consumer demand appears.",
+      "evidence": [
+        "No second registered consumer currently demonstrates an owner or bundle boundary that requires moving these four components before stable.",
+        "Their current Product stories and package projections remain internally consistent."
+      ],
+      "reviewTrigger": "Re-open when two registered consumers import a subject directly, or when a Core component requires it without a Product dependency.",
+      "nextReview": "0.2 planning"
+    },
+    {
+      "id": "family-subpaths",
+      "subjects": ["Product/Application subpath", "Product/Operations subpath", "Product/Workspace subpath"],
+      "decision": "defer",
+      "ownerLayer": "product",
+      "reason": "Families improve discovery but current consumers do not show independent bundle, owner or release requirements for public family subpaths.",
+      "evidence": [
+        "Portal and Web Viz candidate imports use package roots and component deep paths rather than family subpaths.",
+        "docs/references/architecture/PRODUCT_FAMILY_CONTRACT.json explicitly keeps family taxonomy inside one Product package."
+      ],
+      "reviewTrigger": "Re-open when at least two consumers request the same family subpath or bundle analysis shows a material independent-loading benefit.",
+      "nextReview": "0.2 planning"
+    },
+    {
+      "id": "private-helper-wildcard",
+      "subjects": ["components/* private helper exposure"],
+      "decision": "defer",
+      "ownerLayer": "core",
+      "reason": "Narrowing the existing wildcard export would be a package-wide breaking change unrelated to assigning the helper's correct owner.",
+      "evidence": [
+        "Both Core and Product currently expose ./components/* through package export maps.",
+        "anchored-panel-style receives a deprecated Product deep compatibility projection for the complete 0.1.x window."
+      ],
+      "reviewTrigger": "Replace wildcard exports only in a breaking release after a registry-wide private deep-import scan and explicit allowlist design.",
+      "nextReview": "0.2 breaking-surface review"
+    }
+  ]
+}

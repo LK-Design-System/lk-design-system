@@ -3,6 +3,7 @@ import path from 'node:path';
 
 const root = process.cwd();
 const outputPath = path.join(root, 'docs', 'DEPRECATIONS.md');
+const ownerAuthorityPath = 'docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json';
 const checkOnly = process.argv.includes('--check');
 
 async function collectDeclarations(dir) {
@@ -29,6 +30,22 @@ for (const file of await collectDeclarations(path.join(root, 'components'))) {
     rows.push({ file: path.relative(root, file).replaceAll('\\', '/'), declaration, reason: reason.replace(/\|/g, '\\|') });
   }
 }
+const ownerAuthority = JSON.parse(await readFile(path.join(root, ownerAuthorityPath), 'utf8'));
+const packageProjection = ownerAuthority.compatibilityProjections?.deprecatedPackageReexports;
+if (packageProjection?.status === 'active') {
+  const targetLayer = (ownerAuthority.layers ?? []).find((layer) => layer.id === packageProjection.targetLayer);
+  const targetPackage = targetLayer?.package ?? `@lk-design-system/lds-${packageProjection.targetLayer}`;
+  for (const entry of packageProjection.entries ?? []) {
+    const subjects = entry.exports?.length ? entry.exports : [entry.module.replace(/^components\//, '').replace(/\.(jsx|js)$/, '')];
+    for (const subject of subjects) {
+      rows.push({
+        file: ownerAuthorityPath,
+        declaration: `${subject} Product compatibility re-export`,
+        reason: `Import from ${targetPackage}. Product root/deep compatibility remains through ${packageProjection.supportWindow} and may be removed in ${packageProjection.earliestRemoval}.`,
+      });
+    }
+  }
+}
 rows.sort((a, b) => a.file.localeCompare(b.file) || a.declaration.localeCompare(b.declaration));
 
 const markdown = `# Deprecations
@@ -38,10 +55,10 @@ const markdown = `# Deprecations
 | Type | Generated register |
 | Status | Generated · do not edit rows by hand |
 | Owner | Component owners |
-| Source | public declarations marked \`@deprecated\` |
+| Source | public declarations marked \`@deprecated\` and active package compatibility projections |
 | Generator | \`npm run report:deprecations\` |
 
-This generated register is the release-facing inventory of public compatibility contracts marked with \`@deprecated\`. Update the declaration comment first, then run \`npm run report:deprecations\`.
+This generated register is the release-facing inventory of public compatibility contracts marked with \`@deprecated\` or declared by the live owner authority. Update the declaration or compatibility projection first, then run \`npm run report:deprecations\`.
 
 | Declaration | Source | Migration |
 | --- | --- | --- |

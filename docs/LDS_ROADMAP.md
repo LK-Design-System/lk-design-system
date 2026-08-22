@@ -290,7 +290,9 @@ Theme profile과 bounded local density는 서로 다른 축이다. 전역 provid
 ### M0. coverage와 우선순위 계약
 
 - 모든 public component를 `profile token 자동 반영`, `명시적 size/density`, `고정`,
-  `not-applicable` 중 하나로 분류하는 coverage register를 만든다.
+  `not-applicable` 중 하나로 분류하는 coverage register를 만든다. 정본은
+  [`DENSITY_COVERAGE_CONTRACT.json`](references/architecture/DENSITY_COVERAGE_CONTRACT.json)이며
+  `npm run check:density`가 208개 public entry와의 exact-set 계약을 검증한다.
 - `고정`/`not-applicable`도 유효한 결론으로 허용하되 owner와 재검토 trigger를 기록한다.
 - 전수 register 작성은 stable 전 inventory gate지만 208개 component 전부의 density 구현을
   stable 차단 조건으로 삼지 않는다.

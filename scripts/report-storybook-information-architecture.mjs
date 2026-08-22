@@ -690,14 +690,17 @@ if (update) {
     /*
      * A page normally enters through a public story. A documentation-only page has no canvas
      * to enter through — its subject resolves to no renderable specimen — so its audience
-     * entry is the Docs tab instead, and the canvas assertions below do not apply to it.
+     * entry is the Docs tab instead. A reviewed `hide` page is the inverse: it exists only as
+     * machine visual/behavior evidence and intentionally exposes neither an audience story nor
+     * a Docs route. Audience-entry and decision-guide assertions do not apply to either case.
      */
     const documentationOnly = page.documentationOnly === true;
+    const internalOnly = page.disposition === 'hide' && publicStories.length === 0;
     assert(
-      documentationOnly || publicStories.length > 0,
+      documentationOnly || internalOnly || publicStories.length > 0,
       `${page.title} must retain a public audience entry story.`,
     );
-    if (!documentationOnly) {
+    if (!documentationOnly && !internalOnly) {
       assert(
         ['overview', 'foundation-reference'].includes(publicStories[0].role),
         `${page.title} must begin with an overview or foundation reference.`,
@@ -707,7 +710,7 @@ if (update) {
         `${page.title} must show a canvas introduction on its audience entry story.`,
       );
     }
-    if (page.layer !== 'Foundation') {
+    if (page.layer !== 'Foundation' && !internalOnly) {
       assert(page.descriptionEvidence.decisionGuidance, `${page.title} must explain when to use and when not to use the pattern.`);
     }
     if (page.title.startsWith(PATTERN_TITLE_PREFIX)) {

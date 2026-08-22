@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lk-design-system.dev/schemas/r3b-owner-api-decisions.schema.json",
+  "title": "LDS R3B owner and API decision register",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "kind",
+    "status",
+    "closedAt",
+    "owner",
+    "supportWindow",
+    "decisions"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "kind": { "const": "lds-r3b-owner-api-decisions" },
+    "status": { "const": "closed" },
+    "closedAt": { "type": "string", "format": "date" },
+    "owner": { "type": "string", "minLength": 3 },
+    "supportWindow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["compatibilityPackage", "policy", "earliestRemoval", "removalGate", "rollback"],
+      "properties": {
+        "compatibilityPackage": { "const": "@lk-design-system/lds-product" },
+        "policy": { "const": "all-0.1.x-releases" },
+        "earliestRemoval": { "const": "0.2.0" },
+        "removalGate": { "type": "string", "minLength": 24 },
+        "rollback": { "type": "string", "minLength": 24 }
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "subjects", "decision", "ownerLayer", "reason", "evidence"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "subjects": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "decision": { "enum": ["move-now", "stay", "defer"] },
+          "ownerLayer": { "enum": ["core", "product", "robotics"] },
+          "reason": { "type": "string", "minLength": 24 },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 8 }
+          },
+          "reviewTrigger": { "type": "string", "minLength": 24 },
+          "nextReview": { "type": "string", "minLength": 8 }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "decision": { "const": "defer" } } },
+            "then": {
+              "required": ["reviewTrigger", "nextReview"],
+              "properties": {
+                "reviewTrigger": true,
+                "nextReview": true
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

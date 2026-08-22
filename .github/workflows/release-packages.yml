@@ -18,6 +18,8 @@ permissions:
 jobs:
   publish:
     runs-on: windows-latest
+    outputs:
+      npm_tag: ${{ steps.release_channel.outputs.npm_tag }}
     env:
       NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}
 
@@ -44,15 +46,53 @@ jobs:
       - name: Verify tag and package-set identity
         run: npm run check:release-immutability -- --tag
 
-      - name: Verify that every package version is available
+      - name: Verify package versions are unpublished
         run: node scripts/check-release-package-availability.mjs
 
       - name: Run release gate
         run: npm run check:fast
 
+      - name: Select npm release channel
+        id: release_channel
+        shell: pwsh
+        run: |
+          $version = node -p "require('./package.json').version"
+          $releaseNpmTag = if ($version.Contains('-')) { 'rc' } else { 'latest' }
+          "RELEASE_NPM_TAG=$releaseNpmTag" >> $env:GITHUB_ENV
+          "npm_tag=$releaseNpmTag" >> $env:GITHUB_OUTPUT
+          Write-Output "Publishing $version with npm dist-tag $releaseNpmTag."
+
       - name: Publish package set in dependency order
         shell: pwsh
         run: |
-          npm publish ./packages/core --ignore-scripts
-          npm publish ./packages/theme --ignore-scripts
-          npm publish ./packages/product --ignore-scripts
+          npm publish ./packages/core --tag $env:RELEASE_NPM_TAG --ignore-scripts
+          npm publish ./packages/theme --tag $env:RELEASE_NPM_TAG --ignore-scripts
+          npm publish ./packages/product --tag $env:RELEASE_NPM_TAG --ignore-scripts
+
+  verify-published:
+    needs: publish
+    runs-on: windows-latest
+    permissions:
+      contents: read
+      packages: read
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}
+      RELEASE_NPM_TAG: ${{ needs.publish.outputs.npm_tag }}
+      LDS_PUBLISHED_RELEASE_ATTEMPTS: 30
+      LDS_PUBLISHED_RELEASE_RETRY_DELAY_MS: 5000
+
+    steps:
+      - name: Checkout tagged source
+        uses: actions/checkout@v7.0.0
+        with:
+          ref: ${{ inputs.release_tag || github.ref }}
+
+      - name: Setup canonical Node and GitHub Packages
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 22.17.1
+          registry-url: https://npm.pkg.github.com
+          scope: '@lk-design-system'
+
+      - name: Verify published package availability and identity
+        run: npm run check:published-release

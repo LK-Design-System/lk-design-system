@@ -258,7 +258,7 @@ export const SideNav = React.forwardRef(function SideNav({
     position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: col ? 0 : 'var(--space-3)',
     // Width may animate between rail and panel, but vertical hit targets stay
     // fixed so pointer/focus positions do not drift during an overlay peek.
-    width: '100%', minHeight: 'var(--lds-side-nav-item-height, 44px)', padding: 'var(--space-2-5) var(--space-3)', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--lds-side-nav-item-radius, var(--radius-lg))',
+    width: '100%', minHeight: 'var(--lds-side-nav-item-height, var(--component-side-nav-item-height, 44px))', padding: 'var(--component-side-nav-item-padding-y, var(--space-2-5)) var(--component-side-nav-item-padding-x, var(--space-3))', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--lds-side-nav-item-radius, var(--radius-lg))',
     cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, textAlign: 'left', textDecoration: 'none', fontFamily: 'var(--font-sans)',
     fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)',
     // Hover is `fill-normal`, not `fill-alternative`. On the elevated surface a
@@ -369,7 +369,7 @@ export const SideNav = React.forwardRef(function SideNav({
   const docked = resolvedSurface === 'docked';
   const resolvedWidth = cssLength(width);
   const resolvedCollapsedWidth = cssLength(collapsedWidth);
-  const shell = { '--_lds-side-nav-pressed-surface': appearanceTokens.pressedSurface, '--_lds-side-nav-focus-indicator': appearanceTokens.focusIndicator, '--_lds-side-nav-motion-offset': 'calc(-1 * var(--space-1))', position: 'relative', display: 'flex', flexDirection: 'column', width: col ? `var(--lds-side-nav-collapsed-width, ${resolvedCollapsedWidth})` : `var(--lds-side-nav-width, ${resolvedWidth})`, boxSizing: 'border-box', color: resolvedAppearance === 'brand' ? appearanceTokens.foreground : undefined, backgroundColor: appearanceTokens.surface, backgroundImage: appearanceTokens.backgroundImage, border: docked ? 'none' : `1px solid ${appearanceTokens.divider}`, borderInlineEnd: docked ? `1px solid ${appearanceTokens.divider}` : undefined, borderRadius: docked ? 0 : 'var(--lds-side-nav-radius, var(--radius-xl))', boxShadow: docked ? 'none' : undefined, padding: 'var(--lds-side-nav-padding, var(--space-2-5))', transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
+  const shell = { '--_lds-side-nav-pressed-surface': appearanceTokens.pressedSurface, '--_lds-side-nav-focus-indicator': appearanceTokens.focusIndicator, '--_lds-side-nav-motion-offset': 'calc(-1 * var(--space-1))', position: 'relative', display: 'flex', flexDirection: 'column', width: col ? `var(--lds-side-nav-collapsed-width, ${resolvedCollapsedWidth})` : `var(--lds-side-nav-width, ${resolvedWidth})`, boxSizing: 'border-box', color: resolvedAppearance === 'brand' ? appearanceTokens.foreground : undefined, backgroundColor: appearanceTokens.surface, backgroundImage: appearanceTokens.backgroundImage, border: docked ? 'none' : `1px solid ${appearanceTokens.divider}`, borderInlineEnd: docked ? `1px solid ${appearanceTokens.divider}` : undefined, borderRadius: docked ? 0 : 'var(--lds-side-nav-radius, var(--radius-xl))', boxShadow: docked ? 'none' : undefined, padding: 'var(--lds-side-nav-padding, var(--component-side-nav-padding, var(--space-2-5)))', transition: 'width var(--dur-base, 200ms) var(--ease-out), box-shadow var(--dur-base, 200ms) var(--ease-out)' };
   const swapAnimation = collapseMotionStarted
     ? `${col ? 'lk-sidenav-compact-content-enter' : 'lk-sidenav-expanded-content-enter'} var(--dur-fast) var(--ease-out)`
     : undefined;
@@ -470,7 +470,7 @@ export const SideNav = React.forwardRef(function SideNav({
                               ariaLabel: c.ariaLabel,
                               title: childTitle,
                               hiddenFromInteraction: !childrenExposed,
-                              itemStyle: row(ca, c.disabled, { minHeight: 'var(--lds-side-nav-child-item-height, 36px)', padding: hasChildIcons ? '8px 12px 8px 16px' : '8px 12px 8px 42px', gap: hasChildIcons ? 'var(--space-2)' : undefined }, hovKey === c.value),
+                              itemStyle: row(ca, c.disabled, { minHeight: 'var(--lds-side-nav-child-item-height, var(--component-side-nav-child-item-height, 36px))', padding: hasChildIcons ? 'var(--component-side-nav-child-item-padding-y, var(--space-2)) 12px var(--component-side-nav-child-item-padding-y, var(--space-2)) 16px' : 'var(--component-side-nav-child-item-padding-y, var(--space-2)) 12px var(--component-side-nav-child-item-padding-y, var(--space-2)) 42px', gap: hasChildIcons ? 'var(--space-2)' : undefined }, hovKey === c.value),
                               content: (
                                 <React.Fragment>
                                   {hasChildIcons && (

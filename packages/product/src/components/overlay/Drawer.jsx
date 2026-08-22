@@ -82,7 +82,7 @@ export function Drawer({
         data-density={resolvedDensity}
       >
         {(title != null || subtitle != null || onClose) && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: isCompact ? 'var(--space-4) var(--space-5)' : 'var(--space-5) var(--space-6)', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: isCompact ? 'var(--component-drawer-header-padding-compact, var(--space-4) var(--space-5))' : 'var(--component-drawer-header-padding-comfortable, var(--space-5) var(--space-6))', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
             <div style={{ flex: 1, minWidth: 0, display: 'grid', gap: 'var(--space-1)' }}>
               {title != null && <div id={titleId} style={{ fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>}
               {subtitle != null && <div id={subtitleId} style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-reading-line)', overflowWrap: 'anywhere' }}>{subtitle}</div>}
@@ -94,10 +94,10 @@ export function Drawer({
             )}
           </div>
         )}
-        <div className="lk-scroll-surface" data-scrollbar="auto" data-scroll-gutter="stable" style={{ flex: 1, padding: isCompact ? 'var(--space-4) var(--space-5)' : 'var(--space-5) var(--space-6)', overflow: 'auto', scrollbarGutter: 'stable', fontSize: isCompact ? 'var(--label1-size)' : 'var(--body2-size)', lineHeight: isCompact ? 'var(--label1-line)' : 1.7, letterSpacing: isCompact ? 'var(--label1-spacing)' : undefined, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all', ...bodyStyle }}>
+        <div className="lk-scroll-surface" data-scrollbar="auto" data-scroll-gutter="stable" style={{ flex: 1, padding: isCompact ? 'var(--component-drawer-body-padding-compact, var(--space-4) var(--space-5))' : 'var(--component-drawer-body-padding-comfortable, var(--space-5) var(--space-6))', overflow: 'auto', scrollbarGutter: 'stable', fontSize: isCompact ? 'var(--label1-size)' : 'var(--body2-size)', lineHeight: isCompact ? 'var(--label1-line)' : 1.7, letterSpacing: isCompact ? 'var(--label1-spacing)' : undefined, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all', ...bodyStyle }}>
           <ComponentDensityScope density={resolvedDensity}>{children}</ComponentDensityScope>
         </div>
-        {footer != null && <div style={{ padding: isCompact ? 'var(--space-3) var(--space-5)' : 'var(--space-4) var(--space-6)', borderTop: '1px solid var(--color-semantic-line-solid-normal)', display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)' }}>{footer}</div>}
+        {footer != null && <div style={{ padding: isCompact ? 'var(--component-drawer-footer-padding-compact, var(--space-3) var(--space-5))' : 'var(--component-drawer-footer-padding-comfortable, var(--space-4) var(--space-6))', borderTop: '1px solid var(--color-semantic-line-solid-normal)', display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)' }}>{footer}</div>}
       </div>
     </div>
     </OverlayPortal>

@@ -66,7 +66,6 @@
 | Component | Relationship |
 | --- | --- |
 | `CopyButton` | 대표 시나리오에서 조합 |
-| `Link` | 대표 시나리오에서 조합 |
 | `SpeedDial` | 대표 시나리오에서 조합 |
 | `SplitButton` | 대표 시나리오에서 조합 |
 | `SocialButton` | 대표 시나리오에서 조합 |

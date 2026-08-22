@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "2092c973c91d6ad3a2e39c8b0d53598cdc67e665e688cc4ca73f889cf24d4ecd",
+    "storybookIndexSha256": "6fc9e1c303c874d38d66e20eff2e5da8b5a2c048b71f7dc080d8fbec8fb8e7b3",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -61,16 +61,16 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 195,
-    "stories": 730,
+    "pages": 196,
+    "stories": 732,
     "publicStories": 503,
-    "hiddenStories": 227,
+    "hiddenStories": 229,
     "componentDescriptions": 191,
     "pagesWithVisibleCanvasIntroduction": 191,
     "pagesWithDecisionGuidance": 184,
     "describedPublicStories": 503,
-    "reviewedPages": 195,
-    "reviewedStories": 730,
+    "reviewedPages": 196,
+    "reviewedStories": 732,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
@@ -81,22 +81,22 @@
       "interaction": 55,
       "responsive": 78,
       "scenario": 26,
-      "visual-parity": 95,
+      "visual-parity": 97,
       "internal-contract": 128
     },
     "dispositions": {
       "keep": 195,
       "merge": 0,
       "split": 0,
-      "hide": 0
+      "hide": 1
     },
     "layers": {
       "Core": {
-        "pages": 57,
-        "stories": 211,
-        "public": 118,
-        "hidden": 93,
-        "guideReadyPages": 57
+        "pages": 65,
+        "stories": 236,
+        "public": 129,
+        "hidden": 107,
+        "guideReadyPages": 65
       },
       "Foundation": {
         "pages": 16,
@@ -106,11 +106,11 @@
         "guideReadyPages": 12
       },
       "Product": {
-        "pages": 117,
-        "stories": 488,
-        "public": 362,
-        "hidden": 126,
-        "guideReadyPages": 117
+        "pages": 110,
+        "stories": 465,
+        "public": 351,
+        "hidden": 114,
+        "guideReadyPages": 109
       },
       "Theme": {
         "pages": 4,
@@ -644,6 +644,63 @@
         }
       ],
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+    },
+    {
+      "title": "LDS Core/Components/Action/Link",
+      "layer": "Core",
+      "family": "Action",
+      "importPath": "./stories/ActionLink.stories.jsx",
+      "sourceSha256": "0286029617165926dc0b56f4bc26441cc6acffc7f8d762c654b227e31bb6cc26",
+      "primaryOwner": "Link",
+      "ownerComponents": [
+        "Link"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-components-action-link--links",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-08-22",
+      "reviewedSourceSha256": "0286029617165926dc0b56f4bc26441cc6acffc7f8d762c654b227e31bb6cc26",
+      "stories": [
+        {
+          "id": "lds-core-components-action-link--links",
+          "name": "개요",
+          "exportName": "Links",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Link"
+          ],
+          "supportingComponents": []
+        }
+      ],
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
     },
     {
       "title": "LDS Core/Components/Action/Text Button",
@@ -4008,6 +4065,161 @@
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
+      "title": "LDS Core/Components/Overlay/Popover",
+      "layer": "Core",
+      "family": "Overlay",
+      "importPath": "./stories/OverlayPopover.stories.jsx",
+      "sourceSha256": "eb2120322f959d61ca4919ba2c2180619ba94e00127ed3030387702ec8289454",
+      "primaryOwner": "Popover",
+      "ownerComponents": [
+        "Popover"
+      ],
+      "supportingComponents": [
+        "Button"
+      ],
+      "visibility": {
+        "public": 2,
+        "hidden": 3
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-components-overlay-popover--popover-overview",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-08-22",
+      "reviewedSourceSha256": "eb2120322f959d61ca4919ba2c2180619ba94e00127ed3030387702ec8289454",
+      "stories": [
+        {
+          "id": "lds-core-components-overlay-popover--popover-overview",
+          "name": "개요",
+          "exportName": "PopoverOverview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Popover"
+          ],
+          "supportingComponents": [
+            "Button"
+          ]
+        },
+        {
+          "id": "lds-core-components-overlay-popover--popover-interaction-contract",
+          "name": "상호작용 · 초점·Escape·화면 경계",
+          "exportName": "PopoverInteractionContract",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Popover"
+          ],
+          "supportingComponents": [
+            "Button"
+          ]
+        },
+        {
+          "id": "lds-core-components-overlay-popover--collision-boundary-contract",
+          "name": "계약 · collision boundary",
+          "exportName": "CollisionBoundaryContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Popover"
+          ],
+          "supportingComponents": [
+            "Button"
+          ]
+        },
+        {
+          "id": "lds-core-components-overlay-popover--popover-card",
+          "name": "Popover card parity",
+          "exportName": "PopoverCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Popover"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-overlay-popover--surface-ref-portal-contract",
+          "name": "Surface, ref, and Portal contract",
+          "exportName": "SurfaceRefPortalContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Popover"
+          ],
+          "supportingComponents": [
+            "Button"
+          ]
+        }
+      ],
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
       "title": "LDS Core/Components/Overlay/Snackbar",
       "layer": "Core",
       "family": "Overlay",
@@ -4244,6 +4456,129 @@
         }
       ],
       "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
+    },
+    {
+      "title": "LDS Core/Components/Selection and Input/Calendar",
+      "layer": "Core",
+      "family": "Selection and Input",
+      "importPath": "./stories/DataCalendar.stories.jsx",
+      "sourceSha256": "9d1447cbda7c54d171e8f38f814cf89e5b3123a2b52e666b00edcdcf88ff9929",
+      "primaryOwner": "Calendar",
+      "ownerComponents": [
+        "Calendar"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 2,
+        "hidden": 2
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-components-selection-and-input-calendar--calendar-pattern",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-08-22",
+      "reviewedSourceSha256": "9d1447cbda7c54d171e8f38f814cf89e5b3123a2b52e666b00edcdcf88ff9929",
+      "stories": [
+        {
+          "id": "lds-core-components-selection-and-input-calendar--calendar-pattern",
+          "name": "개요",
+          "exportName": "CalendarPattern",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Calendar"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-selection-and-input-calendar--blocked-dates",
+          "name": "변형·상태 · 예약 불가일",
+          "exportName": "BlockedDates",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Calendar"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-selection-and-input-calendar--keyboard-month-navigation-contract",
+          "name": "키보드 월 탐색 계약",
+          "exportName": "KeyboardMonthNavigationContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Calendar"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-selection-and-input-calendar--calendar-card",
+          "name": "Calendar card parity",
+          "exportName": "CalendarCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Calendar"
+          ],
+          "supportingComponents": []
+        }
+      ],
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Card Selection",
@@ -4733,6 +5068,113 @@
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
     },
     {
+      "title": "LDS Core/Components/Selection and Input/Date Picker",
+      "layer": "Core",
+      "family": "Selection and Input",
+      "importPath": "./stories/FormDateTime.stories.jsx",
+      "sourceSha256": "ac728f34b3a5abfa079663c2e438377567bdde49880ea7a9ae30ef905311adf5",
+      "primaryOwner": "DatePicker",
+      "ownerComponents": [
+        "DatePicker"
+      ],
+      "supportingComponents": [
+        "FormField"
+      ],
+      "visibility": {
+        "public": 2,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-components-selection-and-input-date-picker--date-input",
+        "describedPublicStories": 2,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-08-22",
+      "reviewedSourceSha256": "ac728f34b3a5abfa079663c2e438377567bdde49880ea7a9ae30ef905311adf5",
+      "stories": [
+        {
+          "id": "lds-core-components-selection-and-input-date-picker--date-input",
+          "name": "개요",
+          "exportName": "DateInput",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DatePicker"
+          ],
+          "supportingComponents": [
+            "FormField"
+          ]
+        },
+        {
+          "id": "lds-core-components-selection-and-input-date-picker--blocked-dates",
+          "name": "변형·상태 · 예약 불가일",
+          "exportName": "BlockedDates",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DatePicker"
+          ],
+          "supportingComponents": [
+            "FormField"
+          ]
+        },
+        {
+          "id": "lds-core-components-selection-and-input-date-picker--date-picker-card",
+          "name": "DatePicker card parity",
+          "exportName": "DatePickerCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DatePicker"
+          ],
+          "supportingComponents": []
+        }
+      ],
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
       "title": "LDS Core/Components/Selection and Input/Input",
       "layer": "Core",
       "family": "Selection and Input",
@@ -4908,6 +5350,209 @@
         }
       ],
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+    },
+    {
+      "title": "LDS Core/Components/Selection and Input/Number Field",
+      "layer": "Core",
+      "family": "Selection and Input",
+      "importPath": "./stories/FormAdvancedInputs.stories.jsx",
+      "sourceSha256": "37a293aa653715900f404066010bd11b9ca26dc5fe76b03264f43a076c79b7b9",
+      "primaryOwner": "NumberField",
+      "ownerComponents": [
+        "NumberField"
+      ],
+      "supportingComponents": [
+        "FormField"
+      ],
+      "visibility": {
+        "public": 1,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-components-selection-and-input-number-field--number-input",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-08-22",
+      "reviewedSourceSha256": "37a293aa653715900f404066010bd11b9ca26dc5fe76b03264f43a076c79b7b9",
+      "stories": [
+        {
+          "id": "lds-core-components-selection-and-input-number-field--number-input",
+          "name": "개요",
+          "exportName": "NumberInput",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "NumberField"
+          ],
+          "supportingComponents": [
+            "FormField"
+          ]
+        },
+        {
+          "id": "lds-core-components-selection-and-input-number-field--number-field-contract",
+          "name": "스핀버튼·클램프 계약",
+          "exportName": "NumberFieldContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "NumberField"
+          ],
+          "supportingComponents": []
+        }
+      ],
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
+      "title": "LDS Core/Components/Selection and Input/Password Input",
+      "layer": "Core",
+      "family": "Selection and Input",
+      "importPath": "./stories/FormPasswordInput.stories.jsx",
+      "sourceSha256": "5dc0e20b629b7059ba86366a9acce7d9117d603261d712792a1e3e8db20aec28",
+      "primaryOwner": "PasswordInput",
+      "ownerComponents": [
+        "PasswordInput"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 3
+      },
+      "descriptionEvidence": {
+        "componentDescription": false,
+        "storyGuideId": "lds-core-components-selection-and-input-password-input--password-input-overview",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-08-22",
+      "reviewedSourceSha256": "5dc0e20b629b7059ba86366a9acce7d9117d603261d712792a1e3e8db20aec28",
+      "stories": [
+        {
+          "id": "lds-core-components-selection-and-input-password-input--password-input-overview",
+          "name": "개요",
+          "exportName": "PasswordInputOverview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "PasswordInput"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-selection-and-input-password-input--password-reveal-contract",
+          "name": "보기 버튼 계약",
+          "exportName": "PasswordRevealContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "PasswordInput"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-selection-and-input-password-input--password-input-states",
+          "name": "상태와 좁은 너비",
+          "exportName": "PasswordInputStates",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "PasswordInput"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-selection-and-input-password-input--password-autofill-contract",
+          "name": "자동완성·평문 보호 계약",
+          "exportName": "PasswordAutofillContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "PasswordInput"
+          ],
+          "supportingComponents": []
+        }
+      ],
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Radio",
@@ -6505,6 +7150,84 @@
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
+      "title": "LDS Core/Components/Status/Meter",
+      "layer": "Core",
+      "family": "Status",
+      "importPath": "./stories/ProductMeter.stories.jsx",
+      "sourceSha256": "1776a557aebcb9aa86892990a18f9e71ac3b0679c4bf6ab9baa160d837744eca",
+      "primaryOwner": "Meter",
+      "ownerComponents": [
+        "Meter"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-components-status-meter--bounded-measurements",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-08-22",
+      "reviewedSourceSha256": "1776a557aebcb9aa86892990a18f9e71ac3b0679c4bf6ab9baa160d837744eca",
+      "stories": [
+        {
+          "id": "lds-core-components-status-meter--bounded-measurements",
+          "name": "개요",
+          "exportName": "BoundedMeasurements",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Meter"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-status-meter--meter-semantics-contract",
+          "name": "측정값 의미와 임계 전달 계약",
+          "exportName": "MeterSemanticsContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Meter"
+          ],
+          "supportingComponents": []
+        }
+      ],
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
       "title": "LDS Core/Components/Status/Notices and Callouts",
       "layer": "Core",
       "family": "Status",
@@ -6762,6 +7485,131 @@
         }
       ],
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+    },
+    {
+      "title": "LDS Core/Components/Status/Progress",
+      "layer": "Core",
+      "family": "Status",
+      "importPath": "./stories/ProductProgress.stories.jsx",
+      "sourceSha256": "32d6ea4c5c336837b91b66756c93669d9221407885d057cb0120443811ca1ab5",
+      "primaryOwner": "CircularProgress",
+      "ownerComponents": [
+        "CircularProgress",
+        "ProgressBar"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 1,
+        "hidden": 3
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-components-status-progress--progress-indicators",
+        "describedPublicStories": 1,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-08-22",
+      "reviewedSourceSha256": "32d6ea4c5c336837b91b66756c93669d9221407885d057cb0120443811ca1ab5",
+      "stories": [
+        {
+          "id": "lds-core-components-status-progress--progress-indicators",
+          "name": "개요",
+          "exportName": "ProgressIndicators",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "CircularProgress",
+            "ProgressBar"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-status-progress--progress-aria-and-motion-contract",
+          "name": "진행 표시 ARIA와 모션 계약",
+          "exportName": "ProgressAriaAndMotionContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "CircularProgress",
+            "ProgressBar"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-status-progress--circular-progress-card",
+          "name": "CircularProgress card parity",
+          "exportName": "CircularProgressCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "CircularProgress"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-status-progress--progress-bar-card",
+          "name": "ProgressBar card parity",
+          "exportName": "ProgressBarCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ProgressBar"
+          ],
+          "supportingComponents": []
+        }
+      ],
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
     },
     {
       "title": "LDS Core/Components/Status/Skeleton",
@@ -8626,64 +9474,6 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
-        }
-      ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
-    },
-    {
-      "title": "LDS Product/Action/Link",
-      "layer": "Product",
-      "family": "Action",
-      "importPath": "./stories/ActionLink.stories.jsx",
-      "sourceSha256": "7ef6de7bb48a62f467fecba313a19d85189b532f3ddcdcde431d3b13553be12b",
-      "primaryOwner": "Link",
-      "ownerComponents": [
-        "Link"
-      ],
-      "supportingComponents": [],
-      "visibility": {
-        "public": 1,
-        "hidden": 0
-      },
-      "descriptionEvidence": {
-        "componentDescription": true,
-        "storyGuideId": "lds-product-action-link--links",
-        "describedPublicStories": 1,
-        "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
-      },
-      "missingGuidance": [],
-      "guidePriority": "high",
-      "disposition": "keep",
-      "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
-      "reviewStatus": "reviewed",
-      "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "7ef6de7bb48a62f467fecba313a19d85189b532f3ddcdcde431d3b13553be12b",
-      "stories": [
-        {
-          "id": "lds-product-action-link--links",
-          "name": "개요",
-          "exportName": "Links",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "overview",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Link"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
@@ -18333,7 +19123,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/Navigation.stories.jsx",
-      "sourceSha256": "813842369743560ec81e2134b7d60e0218b1035b01f3dd60a401d4d1fedcf8c6",
+      "sourceSha256": "42954e80776a95b4c67a95b67791ae865cac01c78430671020fbd2a31fd86071",
       "primaryOwner": "TopBar",
       "ownerComponents": [
         "TopBar"
@@ -18367,8 +19157,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-11",
-      "reviewedSourceSha256": "813842369743560ec81e2134b7d60e0218b1035b01f3dd60a401d4d1fedcf8c6",
+      "reviewedAt": "2026-08-23",
+      "reviewedSourceSha256": "42954e80776a95b4c67a95b67791ae865cac01c78430671020fbd2a31fd86071",
       "stories": [
         {
           "id": "lds-product-navigation-top-bar--top-bar-default",
@@ -18601,7 +19391,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-08-02 source and built-index re-review aligned the audience entry with the exact `개요` name and replaced the public DashboardShell term with audience-facing Korean. Responsive shell composition, ownership, visibility, and play assertions are unchanged.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
+      "reviewNote": "2026-08-02 source and built-index re-review aligned the audience entry with the exact `개요` name and replaced the public DashboardShell term with audience-facing Korean. Responsive shell composition, ownership, visibility, and play assertions are unchanged.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation.\\n\\n2026-08-23 re-review confirms the third dropdown reopen now waits for the existing two-frame layout and focus settlement before comparing current and keyboard-focus states. Story IDs, roles, ownership, visibility, descriptions, and rendered structure are unchanged."
     },
     {
       "title": "LDS Product/Navigation/User Menu",
@@ -19705,164 +20495,6 @@
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
     },
     {
-      "title": "LDS Product/Overlay/Popover",
-      "layer": "Product",
-      "family": "Overlay",
-      "importPath": "./stories/OverlayPopover.stories.jsx",
-      "sourceSha256": "21e8fa19e5bfd7989a475fffc6fd8581bc5a2b4be110b88c9bc285403242ab03",
-      "primaryOwner": "Popover",
-      "ownerComponents": [
-        "Popover"
-      ],
-      "supportingComponents": [
-        "Button"
-      ],
-      "visibility": {
-        "public": 2,
-        "hidden": 3
-      },
-      "descriptionEvidence": {
-        "componentDescription": true,
-        "storyGuideId": "lds-product-overlay-popover--popover-overview",
-        "describedPublicStories": 2,
-        "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
-      },
-      "missingGuidance": [],
-      "guidePriority": "high",
-      "disposition": "keep",
-      "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
-      "reviewStatus": "reviewed",
-      "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-22",
-      "reviewedSourceSha256": "21e8fa19e5bfd7989a475fffc6fd8581bc5a2b4be110b88c9bc285403242ab03",
-      "stories": [
-        {
-          "id": "lds-product-overlay-popover--popover-overview",
-          "name": "개요",
-          "exportName": "PopoverOverview",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "test"
-          ],
-          "role": "overview",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Popover"
-          ],
-          "supportingComponents": [
-            "Button"
-          ],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
-        },
-        {
-          "id": "lds-product-overlay-popover--popover-interaction-contract",
-          "name": "상호작용 · 초점·Escape·화면 경계",
-          "exportName": "PopoverInteractionContract",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "interaction",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Popover"
-          ],
-          "supportingComponents": [
-            "Button"
-          ]
-        },
-        {
-          "id": "lds-product-overlay-popover--collision-boundary-contract",
-          "name": "계약 · collision boundary",
-          "exportName": "CollisionBoundaryContract",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "internal-contract",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Popover"
-          ],
-          "supportingComponents": [
-            "Button"
-          ]
-        },
-        {
-          "id": "lds-product-overlay-popover--popover-card",
-          "name": "Popover card parity",
-          "exportName": "PopoverCard",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "test",
-            "visual-parity"
-          ],
-          "role": "visual-parity",
-          "hasStoryDescription": false,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Popover"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
-        },
-        {
-          "id": "lds-product-overlay-popover--surface-ref-portal-contract",
-          "name": "Surface, ref, and Portal contract",
-          "exportName": "SurfaceRefPortalContract",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "internal-contract",
-          "hasStoryDescription": false,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Popover"
-          ],
-          "supportingComponents": [
-            "Button"
-          ],
-          "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
-        }
-      ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
-    },
-    {
       "title": "LDS Product/Overlay/Sheet",
       "layer": "Product",
       "family": "Overlay",
@@ -19973,114 +20605,58 @@
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
-      "title": "LDS Product/Selection and Input/Calendar",
+      "title": "LDS Product/Patterns/Expression Profile Density",
       "layer": "Product",
-      "family": "Selection and Input",
-      "importPath": "./stories/DataCalendar.stories.jsx",
-      "sourceSha256": "ab4f4b4973ecd33a5f2bd48fe013f4aa4448b21aec00b86b995b20cccb5e60ba",
-      "primaryOwner": "Calendar",
+      "family": "Patterns",
+      "importPath": "./stories/ExpressionProfileDensity.stories.jsx",
+      "sourceSha256": "e9a9138df59674df1997bc2a4f336ecd00ae3352c5f93653524b8aa89f5c437d",
+      "primaryOwner": "DataToolbar",
       "ownerComponents": [
-        "Calendar"
+        "Button",
+        "DataGrid",
+        "DataToolbar",
+        "Drawer",
+        "DropdownMenu",
+        "FilterBar",
+        "ListCell",
+        "SideNav",
+        "Table",
+        "Toolbar",
+        "Tree"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 2,
+        "public": 0,
         "hidden": 2
       },
       "descriptionEvidence": {
-        "componentDescription": true,
-        "storyGuideId": "lds-product-selection-and-input-calendar--calendar-pattern",
-        "describedPublicStories": 2,
-        "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
+        "componentDescription": false,
+        "storyGuideId": null,
+        "describedPublicStories": 0,
+        "publicStoriesWithCanvasGuidance": 0,
+        "decisionGuidance": false
       },
-      "missingGuidance": [],
+      "missingGuidance": [
+        "audience-entry-overview",
+        "visible-canvas-introduction",
+        "when-to-use-and-avoid"
+      ],
       "guidePriority": "high",
-      "disposition": "keep",
-      "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
+      "disposition": "hide",
+      "dispositionReason": "No audience-facing story remains on this page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "ab4f4b4973ecd33a5f2bd48fe013f4aa4448b21aec00b86b995b20cccb5e60ba",
+      "reviewedAt": "2026-08-23",
+      "reviewedSourceSha256": "e9a9138df59674df1997bc2a4f336ecd00ae3352c5f93653524b8aa89f5c437d",
       "stories": [
         {
-          "id": "lds-product-selection-and-input-calendar--calendar-pattern",
-          "name": "개요",
-          "exportName": "CalendarPattern",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "test"
-          ],
-          "role": "overview",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Calendar"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
-        },
-        {
-          "id": "lds-product-selection-and-input-calendar--blocked-dates",
-          "name": "변형·상태 · 예약 불가일",
-          "exportName": "BlockedDates",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "variants-states",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Calendar"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). Closes the benchmark-flagged disabled-dates gap. Play asserts minDate and isDateDisabled cells expose aria-disabled=\"true\" while remaining focus-traversable, and that clicking a disabled cell does not change the selection."
-        },
-        {
-          "id": "lds-product-selection-and-input-calendar--keyboard-month-navigation-contract",
-          "name": "키보드 월 탐색 계약",
-          "exportName": "KeyboardMonthNavigationContract",
+          "id": "lds-product-patterns-expression-profile-density--data-dense",
+          "name": "Data Dense",
+          "exportName": "DataDense",
           "visibility": "hidden",
           "tags": [
-            "autodocs",
             "manifest",
             "play-fn",
-            "test"
-          ],
-          "role": "internal-contract",
-          "hasStoryDescription": false,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Calendar"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
-        },
-        {
-          "id": "lds-product-selection-and-input-calendar--calendar-card",
-          "name": "Calendar card parity",
-          "exportName": "CalendarCard",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
             "test",
             "visual-parity"
           ],
@@ -20091,13 +20667,45 @@
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
-            "Calendar"
+            "Button",
+            "DataGrid",
+            "DataToolbar",
+            "FilterBar",
+            "ListCell",
+            "Table",
+            "Tree"
           ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-patterns-expression-profile-density--navigation-overlay",
+          "name": "Navigation Overlay",
+          "exportName": "NavigationOverlay",
+          "visibility": "hidden",
+          "tags": [
+            "manifest",
+            "play-fn",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Button",
+            "Drawer",
+            "DropdownMenu",
+            "ListCell",
+            "SideNav",
+            "Toolbar"
+          ],
+          "supportingComponents": []
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "2026-08-23 re-review confirmed the two hidden visual-parity fixtures retain their Product ownership and hidden role after adding meaningful play coverage. The complete 732-story accessibility sweep and the 32-capture expression-profile matrix passed with no violations or profile regressions."
     },
     {
       "title": "LDS Product/Selection and Input/Color Swatch",
@@ -20222,116 +20830,6 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
-        }
-      ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
-    },
-    {
-      "title": "LDS Product/Selection and Input/Date Picker",
-      "layer": "Product",
-      "family": "Selection and Input",
-      "importPath": "./stories/FormDateTime.stories.jsx",
-      "sourceSha256": "b570e052b6a69c089241930b704cf0c357e7edec5192cdfe18268cba03454af9",
-      "primaryOwner": "DatePicker",
-      "ownerComponents": [
-        "DatePicker"
-      ],
-      "supportingComponents": [
-        "FormField"
-      ],
-      "visibility": {
-        "public": 2,
-        "hidden": 1
-      },
-      "descriptionEvidence": {
-        "componentDescription": true,
-        "storyGuideId": "lds-product-selection-and-input-date-picker--date-input",
-        "describedPublicStories": 2,
-        "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
-      },
-      "missingGuidance": [],
-      "guidePriority": "high",
-      "disposition": "keep",
-      "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
-      "reviewStatus": "reviewed",
-      "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "b570e052b6a69c089241930b704cf0c357e7edec5192cdfe18268cba03454af9",
-      "stories": [
-        {
-          "id": "lds-product-selection-and-input-date-picker--date-input",
-          "name": "개요",
-          "exportName": "DateInput",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "test"
-          ],
-          "role": "overview",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "DatePicker"
-          ],
-          "supportingComponents": [
-            "FormField"
-          ],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
-        },
-        {
-          "id": "lds-product-selection-and-input-date-picker--blocked-dates",
-          "name": "변형·상태 · 예약 불가일",
-          "exportName": "BlockedDates",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "variants-states",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "DatePicker"
-          ],
-          "supportingComponents": [
-            "FormField"
-          ],
-          "reviewNote": "2026-07-22 owner-delegated review (performed by Claude on the design-system owner's instruction). DatePicker passes minDate/isDateDisabled through to the popover Calendar; the story verifies disabled dates render dimmed and cannot be selected, consistent with the Calendar story contract."
-        },
-        {
-          "id": "lds-product-selection-and-input-date-picker--date-picker-card",
-          "name": "DatePicker card parity",
-          "exportName": "DatePickerCard",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "test",
-            "visual-parity"
-          ],
-          "role": "visual-parity",
-          "hasStoryDescription": false,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "DatePicker"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
@@ -21126,213 +21624,6 @@
           "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "InputGroup"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
-        }
-      ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
-    },
-    {
-      "title": "LDS Product/Selection and Input/Number Field",
-      "layer": "Product",
-      "family": "Selection and Input",
-      "importPath": "./stories/FormAdvancedInputs.stories.jsx",
-      "sourceSha256": "c8cb9c0fdce62a793f9c6326b67655644d0da5689028edf5675eb91748c3fdf1",
-      "primaryOwner": "NumberField",
-      "ownerComponents": [
-        "NumberField"
-      ],
-      "supportingComponents": [
-        "FormField"
-      ],
-      "visibility": {
-        "public": 1,
-        "hidden": 1
-      },
-      "descriptionEvidence": {
-        "componentDescription": true,
-        "storyGuideId": "lds-product-selection-and-input-number-field--number-input",
-        "describedPublicStories": 1,
-        "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
-      },
-      "missingGuidance": [],
-      "guidePriority": "high",
-      "disposition": "keep",
-      "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
-      "reviewStatus": "reviewed",
-      "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "c8cb9c0fdce62a793f9c6326b67655644d0da5689028edf5675eb91748c3fdf1",
-      "stories": [
-        {
-          "id": "lds-product-selection-and-input-number-field--number-input",
-          "name": "개요",
-          "exportName": "NumberInput",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "test"
-          ],
-          "role": "overview",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "NumberField"
-          ],
-          "supportingComponents": [
-            "FormField"
-          ],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
-        },
-        {
-          "id": "lds-product-selection-and-input-number-field--number-field-contract",
-          "name": "스핀버튼·클램프 계약",
-          "exportName": "NumberFieldContract",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "internal-contract",
-          "hasStoryDescription": false,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "NumberField"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
-        }
-      ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
-    },
-    {
-      "title": "LDS Product/Selection and Input/Password Input",
-      "layer": "Product",
-      "family": "Selection and Input",
-      "importPath": "./stories/FormPasswordInput.stories.jsx",
-      "sourceSha256": "d556c544bd001ae09534152135687961bbc10985511a86a0dc66ba12c20dfaa4",
-      "primaryOwner": "PasswordInput",
-      "ownerComponents": [
-        "PasswordInput"
-      ],
-      "supportingComponents": [],
-      "visibility": {
-        "public": 1,
-        "hidden": 3
-      },
-      "descriptionEvidence": {
-        "componentDescription": false,
-        "storyGuideId": "lds-product-selection-and-input-password-input--password-input-overview",
-        "describedPublicStories": 1,
-        "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
-      },
-      "missingGuidance": [],
-      "guidePriority": "high",
-      "disposition": "keep",
-      "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
-      "reviewStatus": "reviewed",
-      "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "d556c544bd001ae09534152135687961bbc10985511a86a0dc66ba12c20dfaa4",
-      "stories": [
-        {
-          "id": "lds-product-selection-and-input-password-input--password-input-overview",
-          "name": "개요",
-          "exportName": "PasswordInputOverview",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "test"
-          ],
-          "role": "overview",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "PasswordInput"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
-        },
-        {
-          "id": "lds-product-selection-and-input-password-input--password-reveal-contract",
-          "name": "보기 버튼 계약",
-          "exportName": "PasswordRevealContract",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "internal-contract",
-          "hasStoryDescription": false,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "PasswordInput"
-          ],
-          "supportingComponents": []
-        },
-        {
-          "id": "lds-product-selection-and-input-password-input--password-input-states",
-          "name": "상태와 좁은 너비",
-          "exportName": "PasswordInputStates",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "test"
-          ],
-          "role": "internal-contract",
-          "hasStoryDescription": false,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "PasswordInput"
-          ],
-          "supportingComponents": []
-        },
-        {
-          "id": "lds-product-selection-and-input-password-input--password-autofill-contract",
-          "name": "자동완성·평문 보호 계약",
-          "exportName": "PasswordAutofillContract",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "internal-contract",
-          "hasStoryDescription": false,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "PasswordInput"
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
@@ -23049,215 +23340,6 @@
         }
       ],
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
-    },
-    {
-      "title": "LDS Product/Status/Meter",
-      "layer": "Product",
-      "family": "Status",
-      "importPath": "./stories/ProductMeter.stories.jsx",
-      "sourceSha256": "14550d5b602b8078d48ab0a25af873a592ab7f5562a9f385d60615ff041a5a84",
-      "primaryOwner": "Meter",
-      "ownerComponents": [
-        "Meter"
-      ],
-      "supportingComponents": [],
-      "visibility": {
-        "public": 1,
-        "hidden": 1
-      },
-      "descriptionEvidence": {
-        "componentDescription": true,
-        "storyGuideId": "lds-product-status-meter--bounded-measurements",
-        "describedPublicStories": 1,
-        "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
-      },
-      "missingGuidance": [],
-      "guidePriority": "high",
-      "disposition": "keep",
-      "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
-      "reviewStatus": "reviewed",
-      "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "14550d5b602b8078d48ab0a25af873a592ab7f5562a9f385d60615ff041a5a84",
-      "stories": [
-        {
-          "id": "lds-product-status-meter--bounded-measurements",
-          "name": "개요",
-          "exportName": "BoundedMeasurements",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "test"
-          ],
-          "role": "overview",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Meter"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
-        },
-        {
-          "id": "lds-product-status-meter--meter-semantics-contract",
-          "name": "측정값 의미와 임계 전달 계약",
-          "exportName": "MeterSemanticsContract",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "internal-contract",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Meter"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
-        }
-      ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
-    },
-    {
-      "title": "LDS Product/Status/Progress",
-      "layer": "Product",
-      "family": "Status",
-      "importPath": "./stories/ProductProgress.stories.jsx",
-      "sourceSha256": "57e8bcc4f6ceab807d653a5c976c846ed0f8cd1df3cb24630e7c0e4f62ee0484",
-      "primaryOwner": "CircularProgress",
-      "ownerComponents": [
-        "CircularProgress",
-        "ProgressBar"
-      ],
-      "supportingComponents": [],
-      "visibility": {
-        "public": 1,
-        "hidden": 3
-      },
-      "descriptionEvidence": {
-        "componentDescription": true,
-        "storyGuideId": "lds-product-status-progress--progress-indicators",
-        "describedPublicStories": 1,
-        "publicStoriesWithCanvasGuidance": 1,
-        "decisionGuidance": true
-      },
-      "missingGuidance": [],
-      "guidePriority": "high",
-      "disposition": "keep",
-      "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
-      "reviewStatus": "reviewed",
-      "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "57e8bcc4f6ceab807d653a5c976c846ed0f8cd1df3cb24630e7c0e4f62ee0484",
-      "stories": [
-        {
-          "id": "lds-product-status-progress--progress-indicators",
-          "name": "개요",
-          "exportName": "ProgressIndicators",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "test"
-          ],
-          "role": "overview",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": true,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "CircularProgress",
-            "ProgressBar"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
-        },
-        {
-          "id": "lds-product-status-progress--progress-aria-and-motion-contract",
-          "name": "진행 표시 ARIA와 모션 계약",
-          "exportName": "ProgressAriaAndMotionContract",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "internal-contract",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "CircularProgress",
-            "ProgressBar"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
-        },
-        {
-          "id": "lds-product-status-progress--circular-progress-card",
-          "name": "CircularProgress card parity",
-          "exportName": "CircularProgressCard",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "test",
-            "visual-parity"
-          ],
-          "role": "visual-parity",
-          "hasStoryDescription": false,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "CircularProgress"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
-        },
-        {
-          "id": "lds-product-status-progress--progress-bar-card",
-          "name": "ProgressBar card parity",
-          "exportName": "ProgressBarCard",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "test",
-            "visual-parity"
-          ],
-          "role": "visual-parity",
-          "hasStoryDescription": false,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "ProgressBar"
-          ],
-          "supportingComponents": [],
-          "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
-        }
-      ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
     },
     {
       "title": "LDS Product/Status/Telemetry Gauge",

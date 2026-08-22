@@ -213,10 +213,6 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "Calendar",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
       "component": "Carousel",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -234,6 +230,10 @@
     },
     {
       "component": "DataGrid",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DataToolbar",
       "relationship": "대표 시나리오에서 조합"
     }
   ],

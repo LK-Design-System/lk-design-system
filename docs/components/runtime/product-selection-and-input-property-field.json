@@ -153,10 +153,6 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "DatePicker",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
       "component": "DateRangeField",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -177,7 +173,11 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "NumberField",
+      "component": "PinInput",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "SearchableMultiSelect",
       "relationship": "대표 시나리오에서 조합"
     }
   ],

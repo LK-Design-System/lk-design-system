@@ -593,6 +593,97 @@ Compiled source: docs/components/component-content.json
 
 ---
 
+# Link
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Core / Action |
+| Owner | `Link` |
+| Storybook | `LDS Core/Components/Action/Link` |
+| Source | `../component-content.json#core-components-action-link` |
+
+현재 콘텐츠와 관련된 내부 목적지나 외부 문서를 앵커 탐색으로 연결할 때 적합합니다. 저장·삭제처럼 현재 상태를 변경하거나 로딩 상태가 필요한 작업에는 Link 대신 Button 또는 Text Button을 사용하세요.
+
+## 사용 판단
+
+### 사용하지 않음
+
+- href가 없으면 링크 역할도 포인터 커서도 주지 않습니다. 클릭 가능해 보이는 빈 앵커를 만들지 마세요.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| externalLabel | external일 때 접근 이름에 덧붙는 시각적 숨김 문구. @default "새 창에서 열림" |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `tone` | `'signal' \| 'neutral' \| 'inherit'` | No | 잉크. @default "signal" |
+| `underline` | `'none' \| 'hover' \| 'always'` | No | 밑줄 동작. @default "hover" |
+| `external` | `boolean` | No | 새 탭 + 외부 링크 화살표 + 안전한 rel + 접근 이름에 붙는 새 창 안내. @default false |
+| `externalLabel` | `string` | No | external일 때 접근 이름에 덧붙는 시각적 숨김 문구. @default "새 창에서 열림" |
+| `children` | `React.ReactNode` | No |  |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| tone | 잉크. @default "signal" |
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
+| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+| --fw-semibold | 600 |
+| --space-1 | 4px |
+
+## Content and writing
+
+- Link는 밑줄 제어가 있는 앵커/내비게이션 전용입니다. 사이즈·로딩 상태가 필요한 버튼형 액션(독립형 텍스트 CTA)에는 TextButton을 쓰세요.
+
+## Accessibility
+
+- externalLabel — external일 때 접근 이름에 붙는 시각적 숨김 문구(기본 새 창에서 열림). 화살표 글리프는 aria-hidden이라 그것만으로는 새 창 이동이 보조기술에 전달되지 않습니다(WCAG G201 / H33). 문구를 바꿀 때만 지정하세요.
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Link href="/products">제품 보기</Link>
+<Link href="https://example.com" external>외부 문서</Link>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-label-neutral`
+- `--color-semantic-primary-normal`
+- `--font-sans`
+- `--fw-semibold`
+- `--space-1`
+
+### Source contracts
+
+- `components/buttons/Link.jsx`
+- `components/buttons/Link.d.ts`
+- `components/buttons/Link.prompt.md`
+- `stories/ActionLink.stories.jsx`
+
+## Sources
+
+- Link prompt contract: `components/buttons/Link.prompt.md`
+- Storybook implementation evidence: `stories/ActionLink.stories.jsx`
+
+
+---
+
 # Text Button
 
 | Field | Value |
@@ -1529,11 +1620,11 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | 반복되는 행은 반드시 리스트로 감싸세요. 감싸지 않으면 스크린리더가 "3개 중 2번째"를 읽지 못해 항목 수와 현재 위치가 사라집니다(WCAG 1.3.1). |
+| 명시 규칙 1 | verticalPadding="small \| medium \| large" 공개 문법은 유지하면서 각 값은 profile-aware component token을 읽습니다. default는 기존 8/12/16px이고 ops는 6/8/12px이다. 명시적 paddingY escape hatch가 token보다 우선하며 selection·keyboard·list semantics는 profile과 무관합니다. 정본은 docs/DENSITYANDEXPRESSIONPROFILECONTRACT.md입니다. |
+| 명시 규칙 2 | 반복되는 행은 반드시 리스트로 감싸세요. 감싸지 않으면 스크린리더가 "3개 중 2번째"를 읽지 못해 항목 수와 현재 위치가 사라집니다(WCAG 1.3.1). |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 | --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 | --body2-size | 15px |
-| --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 
 ## Content and writing
 
@@ -1600,6 +1691,9 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-normal`
+- `--component-list-cell-padding-y-lg`
+- `--component-list-cell-padding-y-md`
+- `--component-list-cell-padding-y-sm`
 - `--dur-base`
 - `--dur-fast`
 - `--ease-out`
@@ -4176,25 +4270,25 @@ iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포�
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | 기본 밀도 규약 — 모든 DropdownMenu·TopBar menu·LanguageSwitcher는 panel padding 8px, item gap 4px, panel radius 12px, 기본 item 14/20px·최소 높이 40px, item padding 10px 16px, item radius 10px를 공유합니다. 설명이 있는 item은 이 최소 높이를 유지한 채 콘텐츠 높이에 따라 자연스럽게 늘어납니다. |
-| 명시 규칙 2 | 스크롤이 필요한 메뉴는 scrollbar-gutter: stable로 폭 변화를 막고, 항목 배경과 scrollbar 사이에 --component-menu-scrollbar-gap 4px을 유지합니다. |
-| 명시 규칙 3 | compact는 pointer 중심의 13/18px·32px item과 6px 12px padding, comfortable은 touch 중심의 16/24px·48px item과 12px 16px padding을 사용합니다. cellPadding·verticalPadding은 WDS/기존 소비자 호환용이며 새 사용처의 밀도 선택 수단으로 권장하지 않습니다. |
-| 명시 규칙 4 | 텍스트 menu button trigger는 16px trailing chevron-down-small로 펼침 가능성을 명시합니다. 이미 범주가 명확한 overflow·utility icon trigger에는 chevron을 중복하지 않습니다. |
+| 명시 규칙 1 | 기본 밀도 규약 — 모든 DropdownMenu·TopBar menu·LanguageSwitcher는 default profile에서 panel padding 8px, item gap 4px, panel radius 12px, 기본 item 14/20px·최소 높이 40px, item padding 10px 16px, item radius 10px를 공유합니다. 설명이 있는 item은 이 최소 높이를 유지한 채 콘텐츠 높이에 따라 자연스럽게 늘어납니다. |
+| 명시 규칙 2 | ops profile의 density="default"는 같은 menu token을 32px row와 6px 12px padding으로 조밀화합니다. 명시적 compact \| comfortable가 profile 기본값보다 우선하며, semantic role, checked/current 의미와 keyboard focus 순서는 어느 profile에서도 동일합니다. |
+| 명시 규칙 3 | 스크롤이 필요한 메뉴는 scrollbar-gutter: stable로 폭 변화를 막고, 항목 배경과 scrollbar 사이에 --component-menu-scrollbar-gap 4px을 유지합니다. |
+| 명시 규칙 4 | compact는 pointer 중심의 13/18px·32px item과 6px 12px padding, comfortable은 touch 중심의 16/24px·48px item과 12px 16px padding을 사용합니다. cellPadding·verticalPadding은 WDS/기존 소비자 호환용이며 새 사용처의 밀도 선택 수단으로 권장하지 않습니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
 
 - WDS axes: variant (normal, radio, checkbox)과 기존 cellPadding. LDS의 새 코드는 raw padding 대신 density="compact | default | comfortable"를 사용합니다. 긴 목록은 maxHeight로 scroll 영역을 제한합니다.
+- 텍스트 menu button trigger는 16px trailing chevron-down-small로 펼침 가능성을 명시합니다. 이미 범주가 명확한 overflow·utility icon trigger에는 chevron을 중복하지 않습니다.
 - 뒤로 행은 16px leading chevron, 14/20px semibold label, default 40px 높이를 사용합니다. 하위 명령과는 1px low-contrast divider와 공통 4px item gap만으로 구분하며 별도 여백을 중복하지 않습니다.
 - 문자 탐색(typeahead) — 연속으로 입력한 문자는 하나의 검색어로 누적되고 500ms 동안 입력이 없으면 버퍼가 비워집니다. 한 글자만 입력하면 현재 항목 다음부터 찾아 같은 초성 항목을 순환하고, 두 글자 이상이면 현재 항목부터 다시 좁혀 찾습니다(APG typeahead). Space는 검색어가 진행 중일 때만 검색어에 포함되고, 그렇지 않으면 focus된 항목을 활성화합니다. 이 엔진은 SplitButton·Menubar와 공유합니다.
-- 기본 너비 규약 — width를 생략하면 normal·radio·checkbox·flyout·drill 모두 가장 긴 item·shortcut·action 영역에 맞춰 max-content로 늘어나되 --component-menu-min-width 176px과 --component-menu-max-width 320px 사이에서만 변합니다. viewport 양쪽 16px 여백보다 넓어지지 않으며, 최대 폭에 도달한 긴 label·description은 줄바꿈합니다.
 
 ## Content and writing
 
 - menuActionArea는 서버 반영 비용이 크거나 여러 설정을 원자적으로 확정해야 하는 명시적인 staged workflow에서만 onCancel·onApply 중 제공된 실제 동작을 Cancel/Apply 버튼으로 만듭니다. 단순한 다중 선택이나 열기·복제·삭제처럼 선택 즉시 실행되는 메뉴에는 사용하지 않습니다. 기본 문구는 cancelLabel="취소", applyLabel="적용"이며 제품 문맥에 맞게 바꿀 수 있습니다. 콜백이나 custom action이 없으면 무동작 버튼을 만들지 않습니다.
+- Fluent 2 Menu — normal·checkbox·radio를 같은 menu family로 다루고 300px 최대 폭에서 긴 label을 줄바꿈합니다. LDS도 variant마다 다른 기본 padding을 두지 않고 320px token 상한을 사용합니다.
 - Carbon Menu와 Menu Button — menu item 높이를 24/32/40/48px size 축으로 관리하고, 짧은 메뉴는 최소 160px에서 시작해 긴 label에 따라 최대 288px까지 확장합니다. LDS는 14/20px·40px을 desktop default로 두고 32/48px을 compact/comfortable density로 분리하며, 기존 LDS 리듬에 맞춰 적응형 폭을 176–320px로 조정합니다.
 - ref, className, and style target the anchor root. Stable parts are root, trigger, panel, menu, item, divider, and actionArea; per-item class/style composes after the shared item part.
-- React createPortal documents portals as the escape hatch for clipping ancestors while retaining React-tree context and event propagation.
 
 ## Accessibility
 
@@ -4487,6 +4581,132 @@ const firstFieldRef = useRef(null);
 
 ---
 
+# Popover
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Core / Overlay |
+| Owner | `Popover` |
+| Storybook | `LDS Core/Components/Overlay/Popover` |
+| Source | `../component-content.json#core-components-overlay-popover` |
+
+클릭한 trigger 주변에서 설명·미니 폼·피커처럼 자유로운 콘텐츠를 잠시 다룰 때 적합합니다. 명령 목록이나 작업을 막는 복잡한 흐름에는 Popover 대신 Dropdown Menu 또는 Modal을 사용하세요.
+
+## 사용 판단
+
+### 사용
+
+- The panel defaults to the common owner-document Portal (withinPortal=true), inherits the nearest explicit theme and dir, and uses the shared flip/clamp/topmost-dismiss stack. Use portalTarget or Provider configuration before opting out with withinPortal=false.
+
+### 사용하지 않음
+
+- Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| trigger | 패널을 토글하는 요소. |
+| ariaLabel | 비모달 dialog 표면의 접근 가능한 이름. @default "팝오버" |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `trigger` | `React.ReactNode` | Yes | 패널을 토글하는 요소. |
+| `children` | `React.ReactNode` | Yes | 패널 콘텐츠. |
+| `align` | `'left' \| 'right'` | No | 앵커 방향. @default "left" |
+| `position` | `'top' \| 'bottom' \| 'left' \| 'right'` | No | Preferred side; flips when space is insufficient. @default "bottom" |
+| `offset` | `number` | No | Trigger-to-panel gap in pixels. @default 8 |
+| `width` | `number \| string` | No | 패널 너비(px). @default 260 |
+| `open` | `boolean` | No | 제어된 열림 상태. |
+| `defaultOpen` | `boolean` | No | 비제어 초기 열림 상태. @default false |
+| `onOpenChange` | `(open: boolean) = void` | No | 열림 상태 변경 알림. |
+| `ariaLabel` | `string` | No | 비모달 dialog 표면의 접근 가능한 이름. @default "팝오버" |
+| `withinPortal` | `boolean` | No | Render in the owner-document Portal so clipping ancestors cannot cut the panel. @default true |
+| `portalTarget` | `HTMLElement \| null` | No | Explicit Portal target; defaults to provider target or owner-document body. |
+| `collisionBoundary` | `FloatingCollisionBoundary` | No | Element/ref whose visible viewport intersection constrains flip, shift, and available size. Defaults to the viewport. |
+| `collisionPadding` | `number` | No | Inset from every collision-boundary edge in CSS pixels. @default 16 |
+| `zIndex` | `number` | No | Explicit overlay layer override. |
+| `classNames` | `LdsClassNames` | No |  |
+| `styles` | `LdsStyles` | No |  |
+| `vars` | `LdsVars` | No |  |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| open | 제어된 열림 상태. |
+| defaultOpen | 비제어 초기 열림 상태. @default false |
+| onOpenChange | 열림 상태 변경 알림. |
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | collisionBoundary는 element 또는 ref를 받고, 그 요소와 viewport의 보이는 교집합을 positioning 경계로 사용합니다. 생략하면 기존 viewport 경계입니다. collisionPadding 기본 16px은 모든 경계 가장자리에 적용됩니다. Portal은 계속 owner-document body/provider target에 남으므로 clipping 탈출과 chat panel 내부 geometry 제한을 동시에 충족하며, 선호 width와 style은 경계의 가용 폭·높이를 넘을 수 없습니다. |
+| 명시 규칙 2 | Popover와 HoverCard는 anchoredPanelStyle의 elevated surface, 1px line, WDS Popover r12, shadow-md, 16px padding을 공유합니다. Dropdown Menu의 WDS r16·8×20px menu shell과는 역할과 원본 컴포넌트가 달라 radius/padding을 억지로 합치지 않습니다. |
+| 명시 규칙 3 | Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다. |
+
+## Responsive
+
+- 패널은 선호 정렬을 유지하되 collision 경계에서 반대쪽으로 flip하고 좌우를 clamp하며, 가용 높이를 넘는 본문만 세로 스크롤합니다.
+- ref, className, and style target the anchor root. Stable parts are root, trigger, and panel; panel geometry is limited to --lds-popover-width and --lds-popover-max-height.
+
+## Accessibility
+
+- trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup="dialog"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요.
+- open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는 trigger로 초점을 복원하지만 비모달 Popover 자체는 focus trap을 만들지 않아 Tab이 trigger 다음의 패널 입력으로 이동합니다.
+- position, align, and offset are canonical placement inputs. Products own the arbitrary panel content, while LDS owns trigger ARIA, Portal positioning, outside press, Escape, and focus restoration.
+- WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다.
+- React Aria Popover는 Portal overlay의 positioning boundary를 boundaryElement로 별도 지정하고 위치를 자동 갱신합니다. LDS의 collisionBoundary도 Portal target과 독립된 constraint라는 같은 책임 분리를 따릅니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Popover
+  trigger={<Button variant="ghost">옵션</Button>}
+  width={280}
+  collisionBoundary={chatPanelRef}
+>
+  <FormField label="반경"><Slider defaultValue={30} /></FormField>
+</Popover>
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--lds-popover-max-height`
+- `--lds-popover-width`
+
+### Source contracts
+
+- `components/overlay/Popover.jsx`
+- `components/overlay/Popover.d.ts`
+- `components/overlay/Popover.prompt.md`
+- `stories/OverlayPopover.stories.jsx`
+
+## Sources
+
+- Popover prompt contract: `components/overlay/Popover.prompt.md`
+- Storybook implementation evidence: `stories/OverlayPopover.stories.jsx`
+- [Fluent 2 Popover](https://fluent2.microsoft.design/components/web/react/core/popover/usage)
+- [WAI-ARIA APG Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
+- [React Aria Popover](https://react-spectrum.adobe.com/react-aria/Popover.html)
+
+
+---
+
 # Snackbar
 
 | Field | Value |
@@ -4761,6 +4981,113 @@ const firstFieldRef = useRef(null);
 - Toast prompt contract: `components/overlay/Toast.prompt.md`
 - Storybook implementation evidence: `stories/OverlayToast.stories.jsx`
 - [Fluent 2 Toast](https://fluent2.microsoft.design/components/web/react/core/toast/usage)
+
+
+---
+
+# Calendar
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Core / Selection and Input |
+| Owner | `Calendar` |
+| Storybook | `LDS Core/Components/Selection and Input/Calendar` |
+| Source | `../component-content.json#core-components-selection-and-input-calendar` |
+
+예약 가능일이나 로그 기준일처럼 주변 날짜를 함께 보며 고를 때 적합합니다. 폼 안에서 단일 날짜만 간결하게 입력하면 Calendar 대신 Date Picker를 사용하세요.
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `value` | `Date \| string` | No | 제어되는 선택 날짜(Date 또는 ISO 문자열). |
+| `defaultValue` | `Date \| string` | No | 비제어 초기 날짜. |
+| `onChange` | `(date: Date) = void` | No |  |
+| `isDateDisabled` | `(date: Date) = boolean` | No | 개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). 포커스 이동은 허용되고 선택만 차단됩니다. |
+| `minDate` | `Date \| string` | No | 이 날짜 이전(당일 제외)은 모두 선택 불가. Date 또는 ISO 문자열. |
+| `maxDate` | `Date \| string` | No | 이 날짜 이후(당일 제외)는 모두 선택 불가. Date 또는 ISO 문자열. |
+| `autoFocus` | `boolean` | No | Focus the selected/today day when embedded in an opened picker dialog. |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| isDateDisabled | 개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). 포커스 이동은 허용되고 선택만 차단됩니다. |
+
+## Behavior and interaction
+
+- standalone Calendar와 DatePicker popup이 같은 keyboard·selection 계약을 공유합니다.
+- WAI-ARIA Date Picker Dialog example의 grid roving focus와 날짜 이동 키를 따릅니다.
+- Calendar — 날짜 선택용 월 그리드(현장 실사 일정). 일요일 레드 / 토요일 시그널 헤더; 선택된 날짜는 시그널 잉크로 채워지고, 오늘은 링을 두릅니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
+| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| --color-semantic-accent-foreground-blue | light: #336CA1; dark: #639ACE |
+| --color-semantic-accent-foreground-red | light: #D63D3D; dark: #F16F6F |
+
+## Accessibility
+
+- value / defaultValue / onChange(date) — 제어/비제어(Date 또는 ISO 문자열 허용). autoFocus는 DatePicker dialog가 열릴 때 선택 날짜 또는 오늘로 focus를 옮깁니다.
+- isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. isDateDisabled는 임의 조건(콜백)을, minDate/maxDate는 경계를 담당하며 함께 쓸 수 있습니다. 비활성 날짜는 흐리게·취소선으로 표시되고 aria-disabled가 붙으며, 예약 가능일 흐름에서 특정 날짜를 막는 용도입니다.
+- 날짜 grid는 하나의 roving Tab stop을 사용합니다. Arrow 키는 일/주 단위, Home/End는 주의 시작/끝, PageUp/PageDown은 월 단위, Shift+PageUp/Shift+PageDown은 연 단위로 이동합니다. 비활성 날짜도 포커스로 지나갈 수는 있으나(이유를 인지할 수 있도록) 선택만 차단되어 WAI-ARIA date 패턴을 따릅니다.
+- 표시 중인 달은 사용자 탐색이 소유합니다. 선택 값이 있어도 이전/다음 달 버튼·PageUp/PageDown·월 경계를 넘는 Arrow 이동이 선택된 달로 되돌려지지 않습니다. 값이 실제로 바뀔 때(제어 컴포넌트의 새 value 포함)만 표시 달과 roving 초점이 선택 날짜로 따라갑니다.
+- 이전/다음 달 버튼은 초점을 그대로 유지해 여러 달을 연속으로 넘길 수 있습니다. 다만 grid 안에서 키보드로 탐색 중이었다면 초점이 새 달의 날짜 셀로 따라갑니다. 월 표시는 aria-live="polite"로 읽힙니다.
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Calendar defaultValue="2026-07-03" onChange={setDate} />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--body1-size`
+- `--caption1-size`
+- `--color-semantic-accent-foreground-blue`
+- `--color-semantic-accent-foreground-red`
+- `--color-semantic-background-elevated-normal`
+- `--color-semantic-fill-normal`
+- `--color-semantic-label-disable`
+- `--color-semantic-label-neutral`
+- `--color-semantic-label-normal`
+- `--color-semantic-line-solid-normal`
+- `--color-semantic-primary-normal`
+- `--color-semantic-static-white`
+- `--component-input-focus-shadow`
+- `--dur-fast`
+- `--ease-out`
+- `--font-sans`
+- `--fw-bold`
+- `--fw-medium`
+- `--fw-semibold`
+- `--label1-size`
+- `--radius-md`
+- `--radius-xl`
+- `--space-0-5`
+- `--space-1-5`
+- `--space-3-5`
+
+### Source contracts
+
+- `components/data/Calendar.jsx`
+- `components/data/Calendar.d.ts`
+- `components/data/Calendar.prompt.md`
+- `stories/DataCalendar.stories.jsx`
+
+## Sources
+
+- Calendar prompt contract: `components/data/Calendar.prompt.md`
+- Storybook implementation evidence: `stories/DataCalendar.stories.jsx`
+- [WAI-ARIA Date Picker Dialog example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/)
 
 
 ---
@@ -5252,6 +5579,120 @@ const firstFieldRef = useRef(null);
 
 ---
 
+# Date Picker
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Core / Selection and Input |
+| Owner | `DatePicker` |
+| Storybook | `LDS Core/Components/Selection and Input/Date Picker` |
+| Source | `../component-content.json#core-components-selection-and-input-date-picker` |
+
+예약일·마감일처럼 한 날짜를 필드 맥락에서 입력할 때 적합합니다. 시작과 종료가 함께 필요하면 Date Range를, 월 전체를 탐색해야 하면 Calendar를 사용하세요.
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `value` | `Date \| string \| null` | No |  |
+| `defaultValue` | `Date \| string \| null` | No |  |
+| `onChange` | `(date: Date) = void` | No |  |
+| `isDateDisabled` | `(date: Date) = boolean` | No | 개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). Calendar 팝오버로 전달됩니다. |
+| `minDate` | `Date \| string` | No | 이 날짜 이전(당일 제외)은 선택 불가. Date 또는 ISO 문자열. |
+| `maxDate` | `Date \| string` | No | 이 날짜 이후(당일 제외)는 선택 불가. Date 또는 ISO 문자열. |
+| `placeholder` | `string` | No |  |
+| `size` | `'sm' \| 'md'` | No |  |
+| `disabled` | `boolean` | No |  |
+| `invalid` | `boolean` | No | 검증 실패 상태. trigger에 aria-invalid와 negative border를 적용합니다. @default false |
+| `full` | `boolean` | No | 부모 폭을 채우고 고정 최소 폭을 제거합니다. @default false |
+| `style` | `React.CSSProperties` | No |  |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| isDateDisabled | 개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). Calendar 팝오버로 전달됩니다. |
+| invalid | 검증 실패 상태. trigger에 aria-invalid와 negative border를 적용합니다. @default false |
+
+## Behavior and interaction
+
+- isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. Calendar 팝오버로 그대로 전달되어 비활성 날짜는 흐리게·취소선으로 표시되고 선택만 차단됩니다(포커스 이동은 허용). 실사 희망일·예약 가능일 흐름에서 특정 날짜를 막는 용도입니다.
+- Calendar popup의 월 탐색은 Calendar 계약을 그대로 상속합니다. 값이 있어도 이전/다음 달, PageUp/PageDown, Shift+PageUp/PageDown이 정상 동작합니다.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | full — 날짜 범위나 툴바처럼 부모 폭에 맞춰야 하는 조합에서 trigger의 고정 최소 폭을 제거하고 가용 폭을 채웁니다. |
+| 명시 규칙 2 | invalid — 상위 폼이나 DateRangeField가 판정한 검증 실패를 trigger에 싣습니다. Input·Select·Textarea와 같은 우선순위로 negative border를 적용하고 aria-invalid를 trigger button(=초점 요소)에 붙입니다. 오류 문구 자체는 소유하지 않으므로 상위가 aria-describedby로 메시지 id를 전달하면 그대로 trigger에 연결됩니다. role="group"은 ARIA 1.2에서 aria-invalid를 지원하지 않으므로 group이 아니라 이 필드가 오류를 전달합니다. |
+| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
+| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
+| --color-semantic-label-disable | light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52) |
+
+## Accessibility
+
+- value / defaultValue / onChange(date) — 제어/비제어(Date, ISO 문자열 또는 빈 값). disabled / aria-label — trigger 상태와 accessible name. 선택 값은 trigger 이름에도 포함됩니다. 바깥 클릭·선택·Escape 시 닫히며 선택 뒤 trigger로 focus가 돌아옵니다.
+- trigger는 aria-haspopup="dialog", aria-expanded, aria-controls로 Calendar popup과 연결하고 LDS Input focus ring을 사용합니다.
+- calendar affordance는 공통 Icon registry를 사용하며 trigger의 accessible name과 중복되지 않도록 장식적으로 숨깁니다.
+- WAI-ARIA Date Picker Dialog example의 popup naming, 초기 날짜 focus, Escape, 선택 후 focus return 계약을 따릅니다.
+- WAI-ARIA Dialog pattern을 기준으로 Calendar popup을 이름 있는 dialog로 노출합니다. 완전한 modal focus trap은 사용하지 않는 non-modal field popup이며, 대신 초점이 필드 밖으로 나가면 popup을 닫아 열린 dialog가 잔류하지 않게 합니다(창 전환처럼 relatedTarget이 없는 blur는 제외).
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `FormField` | 대표 시나리오에서 조합 |
+| `NumberField` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<DatePicker placeholder="실사 희망일" onChange={setDate} />
+<DatePicker defaultValue="2026-07-03" />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-fill-normal`
+- `--color-semantic-label-alternative`
+- `--color-semantic-label-disable`
+- `--color-semantic-label-normal`
+- `--component-input-bg`
+- `--component-input-border-color`
+- `--component-input-border-color-focus`
+- `--component-input-border-color-invalid`
+- `--component-input-focus-shadow`
+- `--component-input-gap`
+- `--component-input-height`
+- `--component-input-padding-x`
+- `--component-input-radius`
+- `--control-h-sm`
+- `--dur-fast`
+- `--ease-out`
+- `--font-sans`
+
+### Source contracts
+
+- `components/forms/DatePicker.jsx`
+- `components/forms/DatePicker.d.ts`
+- `components/forms/DatePicker.prompt.md`
+- `stories/FormDateTime.stories.jsx`
+
+## Sources
+
+- DatePicker prompt contract: `components/forms/DatePicker.prompt.md`
+- Storybook implementation evidence: `stories/FormDateTime.stories.jsx`
+- [WAI-ARIA Date Picker Dialog example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/)
+- [WAI-ARIA Dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
+
+
+---
+
 # Input
 
 | Field | Value |
@@ -5404,6 +5845,226 @@ const firstFieldRef = useRef(null);
 - [GOV.UK Text input](https://design-system.service.gov.uk/components/text-input/)
 - [Carbon Text input](https://carbondesignsystem.com/components/text-input/usage/)
 - [Fluent 2 Field](https://fluent2.microsoft.design/components/web/react/core/field/usage)
+
+
+---
+
+# Number Field
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Core / Selection and Input |
+| Owner | `NumberField` |
+| Storybook | `LDS Core/Components/Selection and Input/Number Field` |
+| Source | `../component-content.json#core-components-selection-and-input-number-field` |
+
+수량·속도처럼 최소·최대와 일정한 step이 있는 값을 입력할 때 적합합니다. 범위가 없거나 숫자 외 형식을 함께 받는 값에는 Number Field 대신 Input을 사용하세요.
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `value` | `number` | No |  |
+| `defaultValue` | `number` | No |  |
+| `min` | `number` | No |  |
+| `max` | `number` | No |  |
+| `step` | `number` | No |  |
+| `onChange` | `(value: number) = void` | No | 편집 중에는 파싱된 중간값이 그대로 전달되고, blur / Enter / 스테퍼로 값이 확정될 때 [min, max]로 클램프된 값이 다시 전달됩니다. |
+| `label` | `React.ReactNode` | No |  |
+| `helper` | `React.ReactNode` | No |  |
+| `error` | `React.ReactNode` | No |  |
+| `invalid` | `boolean` | No |  |
+| `size` | `'sm' \| 'md'` | No |  |
+| `disabled` | `boolean` | No |  |
+| `style` | `React.CSSProperties` | No | 스테퍼를 포함한 입력 셸의 스타일. |
+| `fieldStyle` | `React.CSSProperties` | No | label/helper/error를 포함한 전체 필드 스타일. |
+
+## Behavior and interaction
+
+- value / defaultValue / onChange — 제어/비제어. min / max / step — 범위. 콤팩트한 ± 전용 컨트롤에는 Stepper를 쓰세요.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | 클램프는 값이 확정될 때만 일어납니다. 편집 중에는 max=20에서 25를 타이핑하거나 필드를 비워 둘 수 있고, blur·Enter·스테퍼로 확정하는 순간 [min, max]로 클램프됩니다. 빈 채로 blur하면 마지막 확정값으로 되돌아갑니다. onChange는 편집 중에는 파싱된 중간값을, 확정 시점에는 클램프된 값을 전달합니다. |
+| 명시 규칙 2 | WCAG 2.2 Focus Appearance에 맞춰 field 전체에 LDS focus ring을 표시합니다. |
+| --color-semantic-label-disable | light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52) |
+| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
+| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
+
+## Accessibility
+
+- label / helper / error / invalid — label을 주면 htmlFor로 연결된 필드 레이블·메시지 스택을 함께 렌더링하고, 그렇지 않으면 셸만 렌더링해 FormField 같은 상위 표면에 맡깁니다. error나 invalid는 aria-invalid와 오류 테두리를 함께 켭니다. fieldStyle은 label/helper/error를 포함한 바깥 스택, style은 스테퍼가 붙은 입력 셸을 스타일링합니다.
+- native number input이 spinbutton semantics를 소유하고 inline step action은 보조 조작입니다. 보조 action 이름에는 field 이름을 포함합니다. focus/disabled/readOnly는 Input과 같은 component token(fieldBackground·fieldBorderColor)을 사용하며 type="number"는 consumer가 덮어쓰지 못합니다.
+- WAI-ARIA Spinbutton pattern의 native editing·Arrow key 기대를 보존합니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `FormField` | 대표 시나리오에서 조합 |
+| `DatePicker` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<NumberField label="투입 대수" helper="최대 20대" defaultValue={3} min={0} max={20} onChange={setQty} />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-label-disable`
+- `--color-semantic-label-neutral`
+- `--color-semantic-label-normal`
+- `--color-semantic-line-solid-normal`
+- `--component-input-focus-shadow`
+- `--component-input-height`
+- `--component-input-padding-x`
+- `--component-input-radius`
+- `--control-h-sm`
+- `--dur-fast`
+- `--ease-out`
+- `--font-sans`
+- `--fw-semibold`
+
+### Source contracts
+
+- `components/forms/NumberField.jsx`
+- `components/forms/NumberField.d.ts`
+- `components/forms/NumberField.prompt.md`
+- `stories/FormAdvancedInputs.stories.jsx`
+
+## Sources
+
+- NumberField prompt contract: `components/forms/NumberField.prompt.md`
+- Storybook implementation evidence: `stories/FormAdvancedInputs.stories.jsx`
+- [WAI-ARIA Spinbutton pattern](https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/)
+- [WCAG 2.2 Focus Appearance](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html)
+- [Carbon Number input](https://carbondesignsystem.com/components/number-input/usage/)
+- [Spectrum NumberField](https://spectrum.adobe.com/page/number-field/)
+
+
+---
+
+# Password Input
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Core / Selection and Input |
+| Owner | `PasswordInput` |
+| Storybook | `LDS Core/Components/Selection and Input/Password Input` |
+| Source | `../component-content.json#core-components-selection-and-input-password-input` |
+
+사용자가 직접 비밀번호를 작성하는 로그인과 계정 설정에 사용하세요. 이미 발급된 비밀값을 읽거나 복사하는 화면은 Secret Field가 더 적합합니다.
+
+## 사용 판단
+
+### 사용하지 않음
+
+- autoComplete — 브라우저 비밀번호 관리자에 전달하는 입력 목적. 기본값은 로그인 맥락의 current-password입니다. 회원가입·비밀번호 변경처럼 새 비밀번호를 만드는 폼에서는 new-password를 넘겨 관리자가 저장된 값 대신 생성 값을 제안하게 하세요. off를 넘기면 자동 채우기를 끌 수 있지만 권장하지 않습니다.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| capsLockLabel | Caps Lock warning shown while the field has focus. Pass '' to suppress the warning entirely. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `value` | `string` | No |  |
+| `defaultValue` | `string` | No |  |
+| `onChange` | `(value: string) = void` | No |  |
+| `label` | `React.ReactNode` | No |  |
+| `helper` | `React.ReactNode` | No |  |
+| `error` | `React.ReactNode` | No |  |
+| `invalid` | `boolean` | No |  |
+| `status` | `'normal' \| 'positive' \| 'negative'` | No |  |
+| `size` | `'sm' \| 'md' \| 'small' \| 'medium'` | No |  |
+| `revealLabel` | `string` | No |  |
+| `hideLabel` | `string` | No |  |
+| `autoComplete` | `string` | No | Browser autofill hint for the password field. Keep the default on sign-in forms; pass "new-password" on sign-up / change-password forms so the password manager offers a generated value instead of the stored one. |
+| `capsLockLabel` | `string` | No | Caps Lock warning shown while the field has focus. Pass '' to suppress the warning entirely. |
+| `fieldStyle` | `React.CSSProperties` | No | Styles for the label/control/message stack. |
+| `style` | `React.CSSProperties` | No | Styles for the input control shell. |
+
+## Behavior and interaction
+
+- 필드가 소속된 이 제출되면 표시 상태를 자동으로 마스킹으로 되돌립니다. 토글을 누른 뒤 그대로 제출해도 평문이 화면에 남지 않습니다.
+- value / defaultValue / onChange — 제어/비제어. size sm · md.
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | The reveal button is a real 32px icon button with a contextual name (비밀번호 보기 / 비밀번호 숨기기) and aria-controls; its icon describes the next action. A disabled field disables the trailing action as well. |
+| 명시 규칙 2 | Reference basis: Carbon Text input, GOV.UK Text input, GOV.UK Password input, WCAG 2.2 Identify Input Purpose. |
+| --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| --color-semantic-label-disable | light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52) |
+
+## Content and writing
+
+- Label, helper/error, read-only, positive, and negative states use the same field anatomy and tokens as Input.
+- 필드·상태 prop: label(필드 레이블) · status(normal/positive/negative) · invalid(오류 강조 토글) · fieldStyle(전체 필드 컨테이너 스타일) · revealLabel/hideLabel(비밀번호 표시·숨김 토글 버튼의 스크린리더 레이블).
+
+## Accessibility
+
+- Caps Lock이 켜진 채로 입력하면 focus 중에만 주의 문구가 나타나고, 상시 마운트된 polite live region이 같은 문구를 읽습니다.
+- capsLockLabel — Caps Lock이 켜진 상태에서 focus 중에 노출되는 주의 문구이자 live region 문장. 기본값은 Caps Lock이 켜져 있습니다.이고, 빈 문자열을 넘기면 경고를 끕니다. 값이 비어 있지 않은 한 문구는 필드가 focus를 잃으면 사라집니다.
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<PasswordInput onChange={setPw} />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--caption1-line`
+- `--caption1-size`
+- `--color-semantic-label-disable`
+- `--color-semantic-status-cautionary-text`
+- `--component-input-border-width`
+- `--component-input-focus-shadow`
+- `--component-input-gap`
+- `--component-input-height`
+- `--component-input-padding-x`
+- `--component-input-radius`
+- `--component-input-text-color`
+- `--control-h-sm`
+- `--dur-fast`
+- `--ease-out`
+- `--font-sans`
+- `--fw-medium`
+
+### Source contracts
+
+- `components/forms/PasswordInput.jsx`
+- `components/forms/PasswordInput.d.ts`
+- `components/forms/PasswordInput.prompt.md`
+- `stories/FormPasswordInput.stories.jsx`
+
+## Sources
+
+- PasswordInput prompt contract: `components/forms/PasswordInput.prompt.md`
+- Storybook implementation evidence: `stories/FormPasswordInput.stories.jsx`
+- [Carbon Text input](https://carbondesignsystem.com/components/text-input/usage/)
+- [GOV.UK Text input](https://design-system.service.gov.uk/components/text-input/)
+- [GOV.UK Password input](https://design-system.service.gov.uk/components/password-input/)
+- [WCAG 2.2 Identify Input Purpose](https://www.w3.org/WAI/WCAG22/Understanding/identify-input-purpose.html)
 
 
 ---
@@ -6889,6 +7550,108 @@ const firstFieldRef = useRef(null);
 
 ---
 
+# Meter
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Core / Status |
+| Owner | `Meter` |
+| Storybook | `LDS Core/Components/Status/Meter` |
+| Source | `../component-content.json#core-components-status-meter` |
+
+수위·품질·위험 점수처럼 최소·최대 경계가 있는 현재 측정값을 비교할 때 적합합니다. 업로드나 처리 작업의 완료율에는 Meter 대신 ProgressBar 또는 CircularProgress를 사용하세요.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| thresholdLabels | 임계 구간을 색 대신 전달하는 문구를 재정의합니다(WCAG 1.4.1). |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `value` | `number` | No |  |
+| `max` | `number` | No |  |
+| `label` | `React.ReactNode` | No |  |
+| `thresholds` | `{ low: number; high: number }` | No | 퍼센트 임계값: ≤low 레드, ≤high 앰버, 그 외 그린. |
+| `thresholdLabels` | `MeterThresholdLabels` | No | 임계 구간을 색 대신 전달하는 문구를 재정의합니다(WCAG 1.4.1). |
+| `size` | `'sm' \| 'md'` | No |  |
+| `showValue` | `boolean` | No | "value/max" 표시. @default true |
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | 접근성 role — 알려진 범위 안의 측정값이므로 role="meter"로 노출됩니다. role="progressbar"는 작업의 진척도를 뜻하므로 쓰지 않습니다. 이 때문에 Meter는 ProgressBar를 합성하지 않고 같은 트랙 형상(sm 6px / md 10px)을 직접 렌더합니다. |
+| 명시 규칙 2 | 값 발화 — aria-valuenow / aria-valuemin / aria-valuemax는 caller의 value·max 단위를 그대로 씁니다(퍼센트로 환산하지 않음). 기본 aria-valuetext는 보이는 캡션과 같은 value/max 문자열이라 max !== 100에서도 표기와 발화가 어긋나지 않습니다. aria-valuetext를 직접 넘기면 그대로 우선합니다. |
+| 명시 규칙 3 | thresholdLabels — 임계 구간은 색상만으로 전달하지 않습니다(WCAG 1.4.1). 구간에 해당하는 낱말이 값 옆에 함께 렌더되고 aria-valuetext에도 붙습니다. 기본값은 { negative: '위험', cautionary: '주의', positive: '양호' }이며, 수위·품질처럼 도메인 어휘가 다르면 필요한 키만 덮어씁니다. showValue={false}여도 임계 구간이 있으면 캡션 줄은 유지됩니다. |
+| --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
+| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
+
+## Content and writing
+
+- value / max — 레벨. thresholds — { low, high } 퍼센트 → 레드 / 앰버 / 스틸그린. label / showValue. 작업 진행에는 ProgressBar를 쓰세요.
+- Meter — 임계값(옵션)이 있는 라벨 값 바(완료율, 품질 점수).
+
+## Accessibility
+
+- 이름 — 문자열이 아닌 label(ReactNode)도 보이는 라벨에 aria-labelledby로 연결되므로 무명 meter가 생기지 않습니다. label도 aria-label도 없으면 측정값이 기본 이름입니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `CircularProgress` | 대표 시나리오에서 조합 |
+| `ProgressBar` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<Meter label="완료율" value={82} thresholds={{ low: 20, high: 50 }} />
+<Meter label="냉각수 수위" value={12} max={40} thresholds={{ low: 20, high: 50 }} thresholdLabels={{ negative: '부족' }} />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-fill-strong`
+- `--color-semantic-label-alternative`
+- `--color-semantic-label-neutral`
+- `--color-semantic-primary-normal`
+- `--color-semantic-status-cautionary`
+- `--color-semantic-status-cautionary-text`
+- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-text`
+- `--color-semantic-status-positive`
+- `--color-semantic-status-positive-text`
+- `--dur-base`
+- `--ease-out`
+- `--font-sans`
+- `--fw-semibold`
+- `--label2-size`
+- `--radius-pill`
+- `--space-1-5`
+
+### Source contracts
+
+- `components/status/Meter.jsx`
+- `components/status/Meter.d.ts`
+- `components/status/Meter.prompt.md`
+- `stories/ProductMeter.stories.jsx`
+
+## Sources
+
+- Meter prompt contract: `components/status/Meter.prompt.md`
+- Storybook implementation evidence: `stories/ProductMeter.stories.jsx`
+
+
+---
+
 # Notices and Callouts
 
 | Field | Value |
@@ -7275,6 +8038,123 @@ const firstFieldRef = useRef(null);
 - Storybook implementation evidence: `stories/StatusOverlayChip.stories.jsx`
 - [WAI-ARIA status role](https://www.w3.org/TR/wai-aria-1.2/#status)
 - [Material 3 Snackbar](https://m3.material.io/components/snackbar/guidelines)
+
+
+---
+
+# Progress
+
+| Field | Value |
+| --- | --- |
+| Type | Component decision guide |
+| Layer | Core / Status |
+| Owner | `CircularProgress` |
+| Storybook | `LDS Core/Components/Status/Progress` |
+| Source | `../component-content.json#core-components-status-progress` |
+
+업로드·분석·생성처럼 시작과 완료가 있는 작업의 진행률이나 대기 상태를 전달할 때 적합합니다. 작업이 아닌 현재 측정값을 알려진 범위 안에서 비교하려면 Progress 대신 Meter를 사용하세요.
+
+## Anatomy
+
+| Part | Contract |
+| --- | --- |
+| label | Optional visible label. |
+
+## Properties
+
+| Name | Type | Required | Contract |
+| --- | --- | --- | --- |
+| `value` | `number` | No | Current value for determinate progress. @default 0 |
+| `max` | `number` | No | Maximum value for determinate progress. @default 100 |
+| `size` | `number` | No | Diameter in px. @default 48 |
+| `thickness` | `number` | No | Ring thickness in px. @default 5 |
+| `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative'` | No | Arc tone. @default "signal" |
+| `indeterminate` | `boolean` | No | Shows an unknown-duration rotating arc. @default false |
+| `label` | `React.ReactNode` | No | Accessible label for the progress indicator. |
+| `showValue` | `boolean` | No | Shows the computed percentage in the center for determinate progress. @default false |
+| `value` | `number` | No | Current value. @default 0 |
+| `max` | `number` | No | Maximum value. @default 100 |
+| `indeterminate` | `boolean` | No | Shows an unknown-duration moving segment instead of a fixed percentage. @default false |
+| `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative'` | No | Fill tone. @default "signal" |
+| `color` | `string` | No | Custom fill color (CSS color value or token, e.g. "var(--color-semantic-status-positive)"). Overrides tone when set. |
+| `size` | `'sm' \| 'md' \| 'lg'` | No | Track height. @default "md" |
+| `label` | `React.ReactNode` | No | Optional visible label. |
+| `showValue` | `boolean` | No | Shows the computed percentage beside the label. @default false |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| tone | Arc tone. @default "signal" |
+| tone | Fill tone. @default "signal" |
+
+## 정량 규칙
+
+| Subject | Rule |
+| --- | --- |
+| 명시 규칙 1 | Motion respects prefers-reduced-motion. The rotating ring gets its animation from an inline style, so the injected @media (prefers-reduced-motion: reduce) rule declares animation:none!important — dropping !important silently disables the guard (WCAG 2.3.3). Same mechanism as Skeleton/Spinner. |
+| --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
+| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
+| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
+| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+
+## Accessibility
+
+- indeterminate renders an unknown-duration rotating arc and omits aria-valuenow.
+- label / showValue provide accessible and visible progress context.
+- Indeterminate aria-valuetext는 ProgressBar와 같은 한국어 문구 진행 중입니다.
+
+## Related components
+
+| Component | Relationship |
+| --- | --- |
+| `ProgressBar` | 같은 페이지가 소유 |
+| `Meter` | 대표 시나리오에서 조합 |
+
+## Examples
+
+### 기본 조합
+
+```jsx
+<CircularProgress value={72} label="Report progress" showValue />
+<CircularProgress indeterminate label="Processing" />
+<CircularProgress value={4} max={5} tone="positive" size={40} />
+```
+
+## Tokens and API
+
+### Tokens
+
+- `--color-semantic-fill-strong`
+- `--color-semantic-label-neutral`
+- `--color-semantic-label-normal`
+- `--color-semantic-primary-normal`
+- `--color-semantic-status-cautionary`
+- `--color-semantic-status-negative`
+- `--color-semantic-status-positive`
+- `--dur-base`
+- `--ease-in-out`
+- `--ease-out`
+- `--font-sans`
+- `--fw-bold`
+- `--fw-semibold`
+- `--label2-size`
+- `--radius-pill`
+
+### Source contracts
+
+- `components/status/CircularProgress.jsx`
+- `components/status/CircularProgress.d.ts`
+- `components/status/CircularProgress.prompt.md`
+- `components/status/ProgressBar.jsx`
+- `components/status/ProgressBar.d.ts`
+- `components/status/ProgressBar.prompt.md`
+- `stories/ProductProgress.stories.jsx`
+
+## Sources
+
+- CircularProgress prompt contract: `components/status/CircularProgress.prompt.md`
+- Storybook implementation evidence: `stories/ProductProgress.stories.jsx`
 
 
 ---
@@ -7887,7 +8767,6 @@ const firstFieldRef = useRef(null);
 | Component | Relationship |
 | --- | --- |
 | `CopyButton` | 대표 시나리오에서 조합 |
-| `Link` | 대표 시나리오에서 조합 |
 | `SpeedDial` | 대표 시나리오에서 조합 |
 | `SplitButton` | 대표 시나리오에서 조합 |
 | `SocialButton` | 대표 시나리오에서 조합 |
@@ -8034,7 +8913,6 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 | Component | Relationship |
 | --- | --- |
 | `ButtonGroup` | 대표 시나리오에서 조합 |
-| `Link` | 대표 시나리오에서 조합 |
 | `SpeedDial` | 대표 시나리오에서 조합 |
 | `SplitButton` | 대표 시나리오에서 조합 |
 | `SocialButton` | 대표 시나리오에서 조합 |
@@ -8073,107 +8951,6 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 
 - CopyButton prompt contract: `components/buttons/CopyButton.prompt.md`
 - Storybook implementation evidence: `stories/ActionCopyButton.stories.jsx`
-
-
----
-
-# Link
-
-| Field | Value |
-| --- | --- |
-| Type | Component decision guide |
-| Layer | Product / Action |
-| Owner | `Link` |
-| Storybook | `LDS Product/Action/Link` |
-| Source | `../component-content.json#product-action-link` |
-
-현재 콘텐츠와 관련된 내부 목적지나 외부 문서를 앵커 탐색으로 연결할 때 적합합니다. 저장·삭제처럼 현재 상태를 변경하거나 로딩 상태가 필요한 작업에는 Link 대신 Button 또는 Text Button을 사용하세요.
-
-## 사용 판단
-
-### 사용하지 않음
-
-- href가 없으면 링크 역할도 포인터 커서도 주지 않습니다. 클릭 가능해 보이는 빈 앵커를 만들지 마세요.
-
-## Anatomy
-
-| Part | Contract |
-| --- | --- |
-| externalLabel | external일 때 접근 이름에 덧붙는 시각적 숨김 문구. @default "새 창에서 열림" |
-
-## Properties
-
-| Name | Type | Required | Contract |
-| --- | --- | --- | --- |
-| `tone` | `'signal' \| 'neutral' \| 'inherit'` | No | 잉크. @default "signal" |
-| `underline` | `'none' \| 'hover' \| 'always'` | No | 밑줄 동작. @default "hover" |
-| `external` | `boolean` | No | 새 탭 + 외부 링크 화살표 + 안전한 rel + 접근 이름에 붙는 새 창 안내. @default false |
-| `externalLabel` | `string` | No | external일 때 접근 이름에 덧붙는 시각적 숨김 문구. @default "새 창에서 열림" |
-| `children` | `React.ReactNode` | No |  |
-
-## States
-
-| State | Contract |
-| --- | --- |
-| tone | 잉크. @default "signal" |
-
-## 정량 규칙
-
-| Subject | Rule |
-| --- | --- |
-| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
-| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
-| --fw-semibold | 600 |
-| --space-1 | 4px |
-
-## Content and writing
-
-- Link는 밑줄 제어가 있는 앵커/내비게이션 전용입니다. 사이즈·로딩 상태가 필요한 버튼형 액션(독립형 텍스트 CTA)에는 TextButton을 쓰세요.
-
-## Accessibility
-
-- externalLabel — external일 때 접근 이름에 붙는 시각적 숨김 문구(기본 새 창에서 열림). 화살표 글리프는 aria-hidden이라 그것만으로는 새 창 이동이 보조기술에 전달되지 않습니다(WCAG G201 / H33). 문구를 바꿀 때만 지정하세요.
-
-## Related components
-
-| Component | Relationship |
-| --- | --- |
-| `ButtonGroup` | 대표 시나리오에서 조합 |
-| `CopyButton` | 대표 시나리오에서 조합 |
-| `SpeedDial` | 대표 시나리오에서 조합 |
-| `SplitButton` | 대표 시나리오에서 조합 |
-| `SocialButton` | 대표 시나리오에서 조합 |
-
-## Examples
-
-### 기본 조합
-
-```jsx
-<Link href="/products">제품 보기</Link>
-<Link href="https://example.com" external>외부 문서</Link>
-```
-
-## Tokens and API
-
-### Tokens
-
-- `--color-semantic-label-neutral`
-- `--color-semantic-primary-normal`
-- `--font-sans`
-- `--fw-semibold`
-- `--space-1`
-
-### Source contracts
-
-- `components/buttons/Link.jsx`
-- `components/buttons/Link.d.ts`
-- `components/buttons/Link.prompt.md`
-- `stories/ActionLink.stories.jsx`
-
-## Sources
-
-- Link prompt contract: `components/buttons/Link.prompt.md`
-- Storybook implementation evidence: `stories/ActionLink.stories.jsx`
 
 
 ---
@@ -8241,7 +9018,6 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 | --- | --- |
 | `ButtonGroup` | 대표 시나리오에서 조합 |
 | `CopyButton` | 대표 시나리오에서 조합 |
-| `Link` | 대표 시나리오에서 조합 |
 | `SpeedDial` | 대표 시나리오에서 조합 |
 | `SplitButton` | 대표 시나리오에서 조합 |
 
@@ -8350,7 +9126,6 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 | `Icon` | 대표 시나리오에서 조합 |
 | `ButtonGroup` | 대표 시나리오에서 조합 |
 | `CopyButton` | 대표 시나리오에서 조합 |
-| `Link` | 대표 시나리오에서 조합 |
 | `SplitButton` | 대표 시나리오에서 조합 |
 | `SocialButton` | 대표 시나리오에서 조합 |
 
@@ -8484,7 +9259,6 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 | `Icon` | 대표 시나리오에서 조합 |
 | `ButtonGroup` | 대표 시나리오에서 조합 |
 | `CopyButton` | 대표 시나리오에서 조합 |
-| `Link` | 대표 시나리오에서 조합 |
 | `SpeedDial` | 대표 시나리오에서 조합 |
 | `SocialButton` | 대표 시나리오에서 조합 |
 
@@ -11957,6 +12731,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - getRowCanSelect(row, rowId)가 false인 보이는 행은 이름이 있는 disabled checkbox를 렌더하고 page select-all 수량·토글·callback ID에서 제외합니다. 이미 all-matching이라도 DataGrid가 현재 보는 선택 불가 ID를 excludedIds에 합친 안전한 model만 bulk slot·다음 callback에 넘깁니다.
 - editingCell={{ rowId, columnKey }}가 column의 editor(row, rowId) slot을 선택합니다. DataGrid는 edit mode를 시작하거나 저장하지 않습니다. Editor는 제품이 controlled value, label, validation, commit/cancel을 제공해야 합니다.
 - loading, error, emptyLabel, stateActions는 현재 page surface 상태입니다. 이전 데이터 보존·refreshing·stale 계약은 상위 resource state가 담당합니다.
+- size="sm | md"는 공개 문법을 유지하면서 profile-aware cell/header/detail token을 선택합니다. ops는 선택된 크기의 spacing만 조밀하게 만들고 열 의미·정렬·선택 model·DOM anatomy를 바꾸지 않습니다. 선택 checkbox는 16px glyph 안에 의미를 압축하지 않고, label이 소유하는 실제 native input target을 24×24px로 유지합니다.
 
 ## Accessibility
 
@@ -11976,8 +12751,8 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | `StatusBadge` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
+| `ChartFrame` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -12033,6 +12808,14 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - `--color-semantic-primary-surface-normal`
 - `--color-semantic-primary-surface-strong`
 - `--color-semantic-status-negative-text`
+- `--component-data-grid-cell-padding-md`
+- `--component-data-grid-cell-padding-sm`
+- `--component-data-grid-detail-padding-md`
+- `--component-data-grid-detail-padding-sm`
+- `--component-data-grid-header-height-md`
+- `--component-data-grid-header-height-sm`
+- `--component-data-grid-selection-cell-padding`
+- `--component-data-grid-selection-target-size`
 - `--font-sans`
 - `--fw-semibold`
 - `--label1-line`
@@ -12146,12 +12929,12 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
+| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -12233,6 +13016,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - getRowId — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 row.id, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.
 - 외부 근거: Carbon Data table의 zebra 옵션 — "행을 따라가는 시선이 옆 행으로 이탈하는 것을 막는" 넓은 표 장치이며, Carbon은 줄무늬를 끄면 행 구분선을 요구합니다(LDS 기본형이 그 형태). USWDS Table의 striped 변형도 같은 계열입니다. LDS는 두 시스템의 교차 줄무늬 대신 전 행 밴드를 채택합니다(강조 오독 근거는 위).
 - Header and body cells use font-variant-numeric: tabular-nums so values do not jitter between rows. Set align: 'right' on comparable numeric columns; nominal identifiers such as postal codes or equipment IDs remain left aligned.
+- 셀 패딩과 타입은 --lk-table-cell-pad-sm/md, --lk-table-head-size/line/spacing, --lk-table-cell-size/line 훅을 경유합니다. 매체 훅이 없으면 --component-table-cell-padding-sm/md를 읽고, 그 token의 default 값은 기존 리터럴과 같습니다. 투영·전시처럼 읽기 거리가 다른 매체의 명시적 --lk-table-가 profile token보다 우선합니다. ops 안의 명시적 size="md"도 API 의미는 유지한 채 ops-md token 값을 사용합니다.
 
 ## Anatomy
 
@@ -12300,22 +13084,18 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - tableLabelledBy — 표 밖에 이미 보이는 제목(heading 등)의 id를 연결해 의 aria-labelledby로 사용합니다. 보이는 제목이 있는 페이지에서는 이름을 중복 작성하지 말고 이 연결을 쓰세요.
 - getRowProps(row, index) merges native attributes such as data-, className, style, and pointer handlers. It does not add selection, focus, or grid semantics. Use DataGrid when rows must be selected, sorted, or navigated with the keyboard.
 
-## Exceptions
-
-- 셀 패딩과 타입은 --lk-table-cell-pad-sm/md, --lk-table-head-size/line/spacing, --lk-table-cell-size/line 훅을 경유하며, 폴백이 곧 기존 리터럴이라 제품 매체는 바이트 동일하게 렌더됩니다. 투영·전시처럼 읽기 거리가 다른 매체가 자기 스코프에서 재지정합니다. 훅은 의도적으로 기본 미정의입니다 — 토큰으로 정의하면 폴백이 죽은 코드가 되고, 제품 기본값의 단일 출처가 리터럴에서 토큰으로 흩어지기 때문입니다(TOKENGOVERNANCE의 컴포넌트 토큰 규칙에 대한 문서화된 예외).
-
 ## Related components
 
 | Component | Relationship |
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
+| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -12355,6 +13135,8 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - `--color-semantic-fill-alternative`
 - `--color-semantic-fill-normal`
 - `--color-semantic-label-strong`
+- `--component-table-cell-padding-md`
+- `--component-table-cell-padding-sm`
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`
@@ -12446,6 +13228,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 | Subject | Rule |
 | --- | --- |
+| 명시 규칙 1 | Tree row의 min-height, block/inline padding, gap과 indent는 expression-profile token을 사용합니다. ops는 반복 탐색 행을 조밀하게 만들지만 24px target floor, roving focus, selection과 level semantics를 변경하지 않습니다. 전역 density prop은 추가하지 않습니다. |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --caption2-size | 11px |
 | --color-semantic-background-normal-alternative | light: #F7F7F8; dark: #0F0F10 |
@@ -12471,10 +13254,10 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | `StatusBadge` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
+| `DataExportAction` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -12500,6 +13283,11 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - `--color-semantic-label-strong`
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-strong`
+- `--component-tree-indent`
+- `--component-tree-row-gap`
+- `--component-tree-row-min-height`
+- `--component-tree-row-padding-x`
+- `--component-tree-row-padding-y`
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`
@@ -12508,7 +13296,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - `--label1-size`
 - `--radius-md`
 - `--space-0-5`
-- `--space-2-5`
+- `--space-2`
 
 ### Source contracts
 
@@ -12617,9 +13405,9 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | `Thumbnail` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
+| `DataExportAction` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -12720,11 +13508,11 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | `TextButton` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
+| `DataGrid` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -13053,10 +13841,10 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | `StatusBadge` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
+| `DataExportAction` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -13193,7 +13981,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - className, style, and the default ref target the root collection toolbar surface.
 - Stable parts are root, header, heading, title, count, description, actions, controls, search, and filters. Header and controls slots exist only when their content exists.
 - DataToolbar — DataGrid/Table 위에서 제목, 결과 수, 검색, 필터, page-level action을 정렬하는 표면.
-- The header row is independent: title, description, count, or page-level actions keeps it present even when controls are omitted. If neither header content nor controls exist, DataToolbar returns null instead of leaving an empty bordered strip.
+- size="sm | md"는 profile-aware gap/padding token을 선택합니다. 명시적 size가 유지되는 상태에서 ops는 chrome만 조밀화하며 제목·검색·필터·action의 읽기 순서와 query ownership은 바뀌지 않습니다. --lds-data-toolbar- consumer override가 profile token보다 우선합니다.
 
 ## Accessibility
 
@@ -13258,6 +14046,10 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-strong`
 - `--color-semantic-line-solid-normal`
+- `--component-data-toolbar-gap-md`
+- `--component-data-toolbar-gap-sm`
+- `--component-data-toolbar-padding-md`
+- `--component-data-toolbar-padding-sm`
 - `--font-sans`
 - `--fw-medium`
 - `--fw-semibold`
@@ -13382,12 +14174,12 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
 | `DataToolbar` | 대표 시나리오에서 조합 |
+| `DescriptionList` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -13517,6 +14309,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 - 적용 chip은 제거 버튼이지 토글이 아닙니다. 눌린 상태(aria-pressed)를 부여하지 않고, 선택된 chip 표면은 chip 토큰으로만 표현합니다. "…필터 제거"라는 이름의 액션 버튼이 눌린 토글로 낭독되면 안 되기 때문입니다(WAI-ARIA APG Button).
 - 좁은 폭에서는 control, action, 적용 chip이 DOM 순서를 유지한 채 줄바꿈됩니다. toolbar가 아니므로 arrow-key roving focus를 강제하지 않고 각 native control의 Tab 순서를 유지합니다.
+- size="sm | md"는 profile-aware surface gap/padding token을 선택합니다. ops는 같은 filter semantics와 focus-recovery 계약을 더 조밀한 chrome으로 표현할 뿐 query state, chip 제거 의미, live result 공지를 바꾸지 않습니다.
 - 내부 DataToolbar, FilterChip, Chip, DateRangeField, TextButton의 높이·radius·focus 동작을 비교해 그대로 조합했습니다. PatternFly Filters의 persistent applied-filter summary와 clear-all, Carbon Data table의 global toolbar와 batch-action 분리, WAI-ARIA Toolbar pattern의 복합 위젯 keyboard 기준을 비교했습니다.
 - LDS에서는 필터가 서로 다른 팝업·날짜 field를 포함하므로 하나의 roving toolbar로 만들지 않았습니다. 이는 일반 Tab 순서를 보존하기 위한 의도적 차이입니다.
 
@@ -13530,8 +14323,8 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | `Select` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
+| `ChartFrame` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -13558,6 +14351,10 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - `--color-semantic-line-solid-normal`
 - `--component-chip-bg-selected`
 - `--component-chip-border-active`
+- `--component-filter-bar-gap-md`
+- `--component-filter-bar-gap-sm`
+- `--component-filter-bar-padding-md`
+- `--component-filter-bar-padding-sm`
 - `--font-sans`
 - `--fw-medium`
 - `--fw-semibold`
@@ -13661,12 +14458,12 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
+| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -13807,12 +14604,12 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
+| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -13958,12 +14755,12 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
+| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -14110,13 +14907,13 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | Component | Relationship |
 | --- | --- |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
 | `DataToolbar` | 대표 시나리오에서 조합 |
+| `DescriptionList` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -14262,13 +15059,13 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | Component | Relationship |
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
 | `DataToolbar` | 대표 시나리오에서 조합 |
+| `DescriptionList` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -14397,8 +15194,8 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | `Legend` | 대표 시나리오에서 조합 |
 | `RefreshControl` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
+| `DataCollectionPanel` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -14545,12 +15342,12 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
+| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -14666,12 +15463,12 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
+| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -14806,12 +15603,12 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
+| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -14968,12 +15765,12 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
+| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -15115,12 +15912,12 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
+| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -17648,7 +18445,6 @@ css
 | Component | Relationship |
 | --- | --- |
 | `HoverCard` | 대표 시나리오에서 조합 |
-| `Popover` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -17897,6 +18693,12 @@ css
 - `--component-side-nav-brand-pressed-surface`
 - `--component-side-nav-brand-subtle-foreground`
 - `--component-side-nav-brand-surface`
+- `--component-side-nav-child-item-height`
+- `--component-side-nav-child-item-padding-y`
+- `--component-side-nav-item-height`
+- `--component-side-nav-item-padding-x`
+- `--component-side-nav-item-padding-y`
+- `--component-side-nav-padding`
 - `--dur-base`
 - `--dur-fast`
 - `--ease-out`
@@ -18837,7 +19639,7 @@ side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓
 
 ## Behavior and interaction
 
-- density="comfortable"이 기본값이며 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다.
+- density="comfortable"이 기본값이며 default profile의 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다. ops에서는 같은 density API가 profile-aware chrome token을 읽습니다.
 - 자식의 명시적 size, padding, density가 항상 상속값보다 우선합니다. Drawer 밖과 comfortable Drawer의 기존 기본 출력은 유지됩니다.
 - 닫히면 trigger로 복원하며 returnFocusRef로 논리적 다음 지점을 지정할 수 있습니다. restoreFocus 기본값은 true입니다.
 - overlay Drawer를 여러 개 겹치지 않습니다. Drawer 위에 확인 Modal이 불가피할 때는 Modal만 활성화되고, 닫힌 뒤 Drawer 내부 trigger로 돌아갑니다.
@@ -18848,7 +19650,7 @@ side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | Modal과 달리 좌/우 edge에 붙고, side, 380px 기본 폭, 92vw 상한, slide transition을 유지합니다. 이 차이는 본문 맥락과 나란히 연결되는 보조 작업이라는 기능으로 정당화됩니다. |
-| 명시 규칙 2 | 시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. comfortable은 기존과 동일하게 header/body space-5 space-6, footer space-4 space-6, body body2/1.7을 사용합니다. |
+| 명시 규칙 2 | 시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. default profile의 comfortable은 기존과 동일하게 header/body space-5 space-6, footer space-4 space-6, body body2/1.7을 사용합니다. |
 | 명시 규칙 3 | bodyStyle은 기본 body padding과 scroll contract를 유지하되, DashboardShell temporaryNavigation처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 padding: 0 같은 layout override를 전달합니다. |
 | 명시 규칙 4 | header 닫기와 footer는 scope 밖에 있습니다. footer CTA와 보조 액션은 기존 md 40px를 유지하며 body 안의 행 단위 액션도 의미상 필요할 때만 명시적으로 size="sm"을 선택합니다. |
 | --body2-line | 22px |
@@ -18932,6 +19734,12 @@ const firstFilterRef = useRef(null);
 - `--color-semantic-line-solid-normal`
 - `--component-dialog-scrim`
 - `--component-dialog-scrim-blur`
+- `--component-drawer-body-padding-comfortable`
+- `--component-drawer-body-padding-compact`
+- `--component-drawer-footer-padding-comfortable`
+- `--component-drawer-footer-padding-compact`
+- `--component-drawer-header-padding-comfortable`
+- `--component-drawer-header-padding-compact`
 - `--dur-base`
 - `--dur-slow`
 - `--ease-out`
@@ -19049,7 +19857,6 @@ const firstFilterRef = useRef(null);
 | --- | --- |
 | `Button` | 대표 시나리오에서 조합 |
 | `Menubar` | 대표 시나리오에서 조합 |
-| `Popover` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -19202,134 +20009,6 @@ const firstFilterRef = useRef(null);
 - [WAI-ARIA Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [WAI-ARIA Carousel Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/)
 - [React Aria Modal](https://react-aria.adobe.com/Modal)
-
-
----
-
-# Popover
-
-| Field | Value |
-| --- | --- |
-| Type | Component decision guide |
-| Layer | Product / Overlay |
-| Owner | `Popover` |
-| Storybook | `LDS Product/Overlay/Popover` |
-| Source | `../component-content.json#product-overlay-popover` |
-
-클릭한 trigger 주변에서 설명·미니 폼·피커처럼 자유로운 콘텐츠를 잠시 다룰 때 적합합니다. 명령 목록이나 작업을 막는 복잡한 흐름에는 Popover 대신 Dropdown Menu 또는 Modal을 사용하세요.
-
-## 사용 판단
-
-### 사용
-
-- The panel defaults to the common owner-document Portal (withinPortal=true), inherits the nearest explicit theme and dir, and uses the shared flip/clamp/topmost-dismiss stack. Use portalTarget or Provider configuration before opting out with withinPortal=false.
-
-### 사용하지 않음
-
-- Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다.
-
-## Anatomy
-
-| Part | Contract |
-| --- | --- |
-| trigger | 패널을 토글하는 요소. |
-| ariaLabel | 비모달 dialog 표면의 접근 가능한 이름. @default "팝오버" |
-
-## Properties
-
-| Name | Type | Required | Contract |
-| --- | --- | --- | --- |
-| `trigger` | `React.ReactNode` | Yes | 패널을 토글하는 요소. |
-| `children` | `React.ReactNode` | Yes | 패널 콘텐츠. |
-| `align` | `'left' \| 'right'` | No | 앵커 방향. @default "left" |
-| `position` | `'top' \| 'bottom' \| 'left' \| 'right'` | No | Preferred side; flips when space is insufficient. @default "bottom" |
-| `offset` | `number` | No | Trigger-to-panel gap in pixels. @default 8 |
-| `width` | `number \| string` | No | 패널 너비(px). @default 260 |
-| `open` | `boolean` | No | 제어된 열림 상태. |
-| `defaultOpen` | `boolean` | No | 비제어 초기 열림 상태. @default false |
-| `onOpenChange` | `(open: boolean) = void` | No | 열림 상태 변경 알림. |
-| `ariaLabel` | `string` | No | 비모달 dialog 표면의 접근 가능한 이름. @default "팝오버" |
-| `withinPortal` | `boolean` | No | Render in the owner-document Portal so clipping ancestors cannot cut the panel. @default true |
-| `portalTarget` | `HTMLElement \| null` | No | Explicit Portal target; defaults to provider target or owner-document body. |
-| `collisionBoundary` | `FloatingCollisionBoundary` | No | Element/ref whose visible viewport intersection constrains flip, shift, and available size. Defaults to the viewport. |
-| `collisionPadding` | `number` | No | Inset from every collision-boundary edge in CSS pixels. @default 16 |
-| `zIndex` | `number` | No | Explicit overlay layer override. |
-| `classNames` | `LdsClassNames` | No |  |
-| `styles` | `LdsStyles` | No |  |
-| `vars` | `LdsVars` | No |  |
-
-## States
-
-| State | Contract |
-| --- | --- |
-| open | 제어된 열림 상태. |
-| defaultOpen | 비제어 초기 열림 상태. @default false |
-| onOpenChange | 열림 상태 변경 알림. |
-
-## 정량 규칙
-
-| Subject | Rule |
-| --- | --- |
-| 명시 규칙 1 | collisionBoundary는 element 또는 ref를 받고, 그 요소와 viewport의 보이는 교집합을 positioning 경계로 사용합니다. 생략하면 기존 viewport 경계입니다. collisionPadding 기본 16px은 모든 경계 가장자리에 적용됩니다. Portal은 계속 owner-document body/provider target에 남으므로 clipping 탈출과 chat panel 내부 geometry 제한을 동시에 충족하며, 선호 width와 style은 경계의 가용 폭·높이를 넘을 수 없습니다. |
-| 명시 규칙 2 | Popover와 HoverCard는 anchoredPanelStyle의 elevated surface, 1px line, WDS Popover r12, shadow-md, 16px padding을 공유합니다. Dropdown Menu의 WDS r16·8×20px menu shell과는 역할과 원본 컴포넌트가 달라 radius/padding을 억지로 합치지 않습니다. |
-| 명시 규칙 3 | Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다. |
-
-## Responsive
-
-- 패널은 선호 정렬을 유지하되 collision 경계에서 반대쪽으로 flip하고 좌우를 clamp하며, 가용 높이를 넘는 본문만 세로 스크롤합니다.
-- ref, className, and style target the anchor root. Stable parts are root, trigger, and panel; panel geometry is limited to --lds-popover-width and --lds-popover-max-height.
-
-## Accessibility
-
-- trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup="dialog"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요.
-- open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는 trigger로 초점을 복원하지만 비모달 Popover 자체는 focus trap을 만들지 않아 Tab이 trigger 다음의 패널 입력으로 이동합니다.
-- position, align, and offset are canonical placement inputs. Products own the arbitrary panel content, while LDS owns trigger ARIA, Portal positioning, outside press, Escape, and focus restoration.
-- WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다.
-- React Aria Popover는 Portal overlay의 positioning boundary를 boundaryElement로 별도 지정하고 위치를 자동 갱신합니다. LDS의 collisionBoundary도 Portal target과 독립된 constraint라는 같은 책임 분리를 따릅니다.
-
-## Related components
-
-| Component | Relationship |
-| --- | --- |
-| `Button` | 대표 시나리오에서 조합 |
-| `HoverCard` | 대표 시나리오에서 조합 |
-| `Menubar` | 대표 시나리오에서 조합 |
-
-## Examples
-
-### 기본 조합
-
-```jsx
-<Popover
-  trigger={<Button variant="ghost">옵션</Button>}
-  width={280}
-  collisionBoundary={chatPanelRef}
->
-  <FormField label="반경"><Slider defaultValue={30} /></FormField>
-</Popover>
-```
-
-## Tokens and API
-
-### Tokens
-
-- `--lds-popover-max-height`
-- `--lds-popover-width`
-
-### Source contracts
-
-- `components/overlay/Popover.jsx`
-- `components/overlay/Popover.d.ts`
-- `components/overlay/Popover.prompt.md`
-- `stories/OverlayPopover.stories.jsx`
-
-## Sources
-
-- Popover prompt contract: `components/overlay/Popover.prompt.md`
-- Storybook implementation evidence: `stories/OverlayPopover.stories.jsx`
-- [Fluent 2 Popover](https://fluent2.microsoft.design/components/web/react/core/popover/usage)
-- [WAI-ARIA APG Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
-- [React Aria Popover](https://react-spectrum.adobe.com/react-aria/Popover.html)
 
 
 ---
@@ -19490,126 +20169,6 @@ const firstOptionRef = useRef(null);
 
 ---
 
-# Calendar
-
-| Field | Value |
-| --- | --- |
-| Type | Component decision guide |
-| Layer | Product / Selection and Input |
-| Owner | `Calendar` |
-| Storybook | `LDS Product/Selection and Input/Calendar` |
-| Source | `../component-content.json#product-selection-and-input-calendar` |
-
-예약 가능일이나 로그 기준일처럼 주변 날짜를 함께 보며 고를 때 적합합니다. 폼 안에서 단일 날짜만 간결하게 입력하면 Calendar 대신 Date Picker를 사용하세요.
-
-## Properties
-
-| Name | Type | Required | Contract |
-| --- | --- | --- | --- |
-| `value` | `Date \| string` | No | 제어되는 선택 날짜(Date 또는 ISO 문자열). |
-| `defaultValue` | `Date \| string` | No | 비제어 초기 날짜. |
-| `onChange` | `(date: Date) = void` | No |  |
-| `isDateDisabled` | `(date: Date) = boolean` | No | 개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). 포커스 이동은 허용되고 선택만 차단됩니다. |
-| `minDate` | `Date \| string` | No | 이 날짜 이전(당일 제외)은 모두 선택 불가. Date 또는 ISO 문자열. |
-| `maxDate` | `Date \| string` | No | 이 날짜 이후(당일 제외)는 모두 선택 불가. Date 또는 ISO 문자열. |
-| `autoFocus` | `boolean` | No | Focus the selected/today day when embedded in an opened picker dialog. |
-
-## States
-
-| State | Contract |
-| --- | --- |
-| isDateDisabled | 개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). 포커스 이동은 허용되고 선택만 차단됩니다. |
-
-## Behavior and interaction
-
-- standalone Calendar와 DatePicker popup이 같은 keyboard·selection 계약을 공유합니다.
-- WAI-ARIA Date Picker Dialog example의 grid roving focus와 날짜 이동 키를 따릅니다.
-- Calendar — 날짜 선택용 월 그리드(현장 실사 일정). 일요일 레드 / 토요일 시그널 헤더; 선택된 날짜는 시그널 잉크로 채워지고, 오늘은 링을 두릅니다.
-
-## 정량 규칙
-
-| Subject | Rule |
-| --- | --- |
-| --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
-| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --color-semantic-accent-foreground-blue | light: #336CA1; dark: #639ACE |
-| --color-semantic-accent-foreground-red | light: #D63D3D; dark: #F16F6F |
-
-## Accessibility
-
-- value / defaultValue / onChange(date) — 제어/비제어(Date 또는 ISO 문자열 허용). autoFocus는 DatePicker dialog가 열릴 때 선택 날짜 또는 오늘로 focus를 옮깁니다.
-- isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. isDateDisabled는 임의 조건(콜백)을, minDate/maxDate는 경계를 담당하며 함께 쓸 수 있습니다. 비활성 날짜는 흐리게·취소선으로 표시되고 aria-disabled가 붙으며, 예약 가능일 흐름에서 특정 날짜를 막는 용도입니다.
-- 날짜 grid는 하나의 roving Tab stop을 사용합니다. Arrow 키는 일/주 단위, Home/End는 주의 시작/끝, PageUp/PageDown은 월 단위, Shift+PageUp/Shift+PageDown은 연 단위로 이동합니다. 비활성 날짜도 포커스로 지나갈 수는 있으나(이유를 인지할 수 있도록) 선택만 차단되어 WAI-ARIA date 패턴을 따릅니다.
-- 표시 중인 달은 사용자 탐색이 소유합니다. 선택 값이 있어도 이전/다음 달 버튼·PageUp/PageDown·월 경계를 넘는 Arrow 이동이 선택된 달로 되돌려지지 않습니다. 값이 실제로 바뀔 때(제어 컴포넌트의 새 value 포함)만 표시 달과 roving 초점이 선택 날짜로 따라갑니다.
-- 이전/다음 달 버튼은 초점을 그대로 유지해 여러 달을 연속으로 넘길 수 있습니다. 다만 grid 안에서 키보드로 탐색 중이었다면 초점이 새 달의 날짜 셀로 따라갑니다. 월 표시는 aria-live="polite"로 읽힙니다.
-
-## Related components
-
-| Component | Relationship |
-| --- | --- |
-| `AnnotatedImage` | 대표 시나리오에서 조합 |
-| `BarChart` | 대표 시나리오에서 조합 |
-| `Carousel` | 대표 시나리오에서 조합 |
-| `ChartFrame` | 대표 시나리오에서 조합 |
-| `DataCollectionPanel` | 대표 시나리오에서 조합 |
-| `DataExportAction` | 대표 시나리오에서 조합 |
-| `DataGrid` | 대표 시나리오에서 조합 |
-| `DataToolbar` | 대표 시나리오에서 조합 |
-
-## Examples
-
-### 기본 조합
-
-```jsx
-<Calendar defaultValue="2026-07-03" onChange={setDate} />
-```
-
-## Tokens and API
-
-### Tokens
-
-- `--body1-size`
-- `--caption1-size`
-- `--color-semantic-accent-foreground-blue`
-- `--color-semantic-accent-foreground-red`
-- `--color-semantic-background-elevated-normal`
-- `--color-semantic-fill-normal`
-- `--color-semantic-label-disable`
-- `--color-semantic-label-neutral`
-- `--color-semantic-label-normal`
-- `--color-semantic-line-solid-normal`
-- `--color-semantic-primary-normal`
-- `--color-semantic-static-white`
-- `--component-input-focus-shadow`
-- `--dur-fast`
-- `--ease-out`
-- `--font-sans`
-- `--fw-bold`
-- `--fw-medium`
-- `--fw-semibold`
-- `--label1-size`
-- `--radius-md`
-- `--radius-xl`
-- `--space-0-5`
-- `--space-1-5`
-- `--space-3-5`
-
-### Source contracts
-
-- `components/data/Calendar.jsx`
-- `components/data/Calendar.d.ts`
-- `components/data/Calendar.prompt.md`
-- `stories/DataCalendar.stories.jsx`
-
-## Sources
-
-- Calendar prompt contract: `components/data/Calendar.prompt.md`
-- Storybook implementation evidence: `stories/DataCalendar.stories.jsx`
-- [WAI-ARIA Date Picker Dialog example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/)
-
-
----
-
 # Color Swatch
 
 | Field | Value |
@@ -19685,14 +20244,14 @@ const firstOptionRef = useRef(null);
 
 | Component | Relationship |
 | --- | --- |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
-| `NumberField` | 대표 시나리오에서 조합 |
 | `PinInput` | 대표 시나리오에서 조합 |
+| `PropertyField` | 대표 시나리오에서 조합 |
+| `SearchableMultiSelect` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -19738,126 +20297,6 @@ const firstOptionRef = useRef(null);
 - Storybook implementation evidence: `stories/SelectionColorSwatch.stories.jsx`
 - [WAI-ARIA Radio Group pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)
 - [WCAG 2.2 Use of Color (1.4.1)](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html)
-
-
----
-
-# Date Picker
-
-| Field | Value |
-| --- | --- |
-| Type | Component decision guide |
-| Layer | Product / Selection and Input |
-| Owner | `DatePicker` |
-| Storybook | `LDS Product/Selection and Input/Date Picker` |
-| Source | `../component-content.json#product-selection-and-input-date-picker` |
-
-예약일·마감일처럼 한 날짜를 필드 맥락에서 입력할 때 적합합니다. 시작과 종료가 함께 필요하면 Date Range를, 월 전체를 탐색해야 하면 Calendar를 사용하세요.
-
-## Properties
-
-| Name | Type | Required | Contract |
-| --- | --- | --- | --- |
-| `value` | `Date \| string \| null` | No |  |
-| `defaultValue` | `Date \| string \| null` | No |  |
-| `onChange` | `(date: Date) = void` | No |  |
-| `isDateDisabled` | `(date: Date) = boolean` | No | 개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). Calendar 팝오버로 전달됩니다. |
-| `minDate` | `Date \| string` | No | 이 날짜 이전(당일 제외)은 선택 불가. Date 또는 ISO 문자열. |
-| `maxDate` | `Date \| string` | No | 이 날짜 이후(당일 제외)는 선택 불가. Date 또는 ISO 문자열. |
-| `placeholder` | `string` | No |  |
-| `size` | `'sm' \| 'md'` | No |  |
-| `disabled` | `boolean` | No |  |
-| `invalid` | `boolean` | No | 검증 실패 상태. trigger에 aria-invalid와 negative border를 적용합니다. @default false |
-| `full` | `boolean` | No | 부모 폭을 채우고 고정 최소 폭을 제거합니다. @default false |
-| `style` | `React.CSSProperties` | No |  |
-
-## States
-
-| State | Contract |
-| --- | --- |
-| isDateDisabled | 개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). Calendar 팝오버로 전달됩니다. |
-| invalid | 검증 실패 상태. trigger에 aria-invalid와 negative border를 적용합니다. @default false |
-
-## Behavior and interaction
-
-- isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. Calendar 팝오버로 그대로 전달되어 비활성 날짜는 흐리게·취소선으로 표시되고 선택만 차단됩니다(포커스 이동은 허용). 실사 희망일·예약 가능일 흐름에서 특정 날짜를 막는 용도입니다.
-- Calendar popup의 월 탐색은 Calendar 계약을 그대로 상속합니다. 값이 있어도 이전/다음 달, PageUp/PageDown, Shift+PageUp/PageDown이 정상 동작합니다.
-
-## 정량 규칙
-
-| Subject | Rule |
-| --- | --- |
-| 명시 규칙 1 | full — 날짜 범위나 툴바처럼 부모 폭에 맞춰야 하는 조합에서 trigger의 고정 최소 폭을 제거하고 가용 폭을 채웁니다. |
-| 명시 규칙 2 | invalid — 상위 폼이나 DateRangeField가 판정한 검증 실패를 trigger에 싣습니다. Input·Select·Textarea와 같은 우선순위로 negative border를 적용하고 aria-invalid를 trigger button(=초점 요소)에 붙입니다. 오류 문구 자체는 소유하지 않으므로 상위가 aria-describedby로 메시지 id를 전달하면 그대로 trigger에 연결됩니다. role="group"은 ARIA 1.2에서 aria-invalid를 지원하지 않으므로 group이 아니라 이 필드가 오류를 전달합니다. |
-| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
-| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
-| --color-semantic-label-disable | light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52) |
-
-## Accessibility
-
-- value / defaultValue / onChange(date) — 제어/비제어(Date, ISO 문자열 또는 빈 값). disabled / aria-label — trigger 상태와 accessible name. 선택 값은 trigger 이름에도 포함됩니다. 바깥 클릭·선택·Escape 시 닫히며 선택 뒤 trigger로 focus가 돌아옵니다.
-- trigger는 aria-haspopup="dialog", aria-expanded, aria-controls로 Calendar popup과 연결하고 LDS Input focus ring을 사용합니다.
-- calendar affordance는 공통 Icon registry를 사용하며 trigger의 accessible name과 중복되지 않도록 장식적으로 숨깁니다.
-- WAI-ARIA Date Picker Dialog example의 popup naming, 초기 날짜 focus, Escape, 선택 후 focus return 계약을 따릅니다.
-- WAI-ARIA Dialog pattern을 기준으로 Calendar popup을 이름 있는 dialog로 노출합니다. 완전한 modal focus trap은 사용하지 않는 non-modal field popup이며, 대신 초점이 필드 밖으로 나가면 popup을 닫아 열린 dialog가 잔류하지 않게 합니다(창 전환처럼 relatedTarget이 없는 blur는 제외).
-
-## Related components
-
-| Component | Relationship |
-| --- | --- |
-| `FormField` | 대표 시나리오에서 조합 |
-| `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DateRangeField` | 대표 시나리오에서 조합 |
-| `FieldAction` | 대표 시나리오에서 조합 |
-| `FileUpload` | 대표 시나리오에서 조합 |
-| `FileUploadQueue` | 대표 시나리오에서 조합 |
-| `IconPicker` | 대표 시나리오에서 조합 |
-| `NumberField` | 대표 시나리오에서 조합 |
-
-## Examples
-
-### 기본 조합
-
-```jsx
-<DatePicker placeholder="실사 희망일" onChange={setDate} />
-<DatePicker defaultValue="2026-07-03" />
-```
-
-## Tokens and API
-
-### Tokens
-
-- `--color-semantic-fill-normal`
-- `--color-semantic-label-alternative`
-- `--color-semantic-label-disable`
-- `--color-semantic-label-normal`
-- `--component-input-bg`
-- `--component-input-border-color`
-- `--component-input-border-color-focus`
-- `--component-input-border-color-invalid`
-- `--component-input-focus-shadow`
-- `--component-input-gap`
-- `--component-input-height`
-- `--component-input-padding-x`
-- `--component-input-radius`
-- `--control-h-sm`
-- `--dur-fast`
-- `--ease-out`
-- `--font-sans`
-
-### Source contracts
-
-- `components/forms/DatePicker.jsx`
-- `components/forms/DatePicker.d.ts`
-- `components/forms/DatePicker.prompt.md`
-- `stories/FormDateTime.stories.jsx`
-
-## Sources
-
-- DatePicker prompt contract: `components/forms/DatePicker.prompt.md`
-- Storybook implementation evidence: `stories/FormDateTime.stories.jsx`
-- [WAI-ARIA Date Picker Dialog example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/)
-- [WAI-ARIA Dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 
 
 ---
@@ -19944,12 +20383,12 @@ const firstOptionRef = useRef(null);
 | --- | --- |
 | `FilterChip` | 대표 시나리오에서 조합 |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
-| `NumberField` | 대표 시나리오에서 조합 |
+| `PinInput` | 대표 시나리오에서 조합 |
+| `PropertyField` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -20082,10 +20521,10 @@ const firstOptionRef = useRef(null);
 | `Input` | 대표 시나리오에서 조합 |
 | `InputGroup` | 대표 시나리오에서 조합 |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
+| `IconPicker` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -20199,13 +20638,13 @@ const firstOptionRef = useRef(null);
 | Component | Relationship |
 | --- | --- |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
-| `NumberField` | 대표 시나리오에서 조합 |
 | `PinInput` | 대표 시나리오에서 조합 |
+| `PropertyField` | 대표 시나리오에서 조합 |
+| `SearchableMultiSelect` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -20357,11 +20796,11 @@ const firstOptionRef = useRef(null);
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `Icon` | 대표 시나리오에서 조합 |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
-| `NumberField` | 대표 시나리오에서 조합 |
+| `PinInput` | 대표 시나리오에서 조합 |
+| `PropertyField` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -20505,13 +20944,13 @@ const firstOptionRef = useRef(null);
 | Component | Relationship |
 | --- | --- |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
-| `NumberField` | 대표 시나리오에서 조합 |
 | `PinInput` | 대표 시나리오에서 조합 |
+| `PropertyField` | 대표 시나리오에서 조합 |
+| `SearchableMultiSelect` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -20628,12 +21067,6 @@ const firstOptionRef = useRef(null);
 - readOnly remains focusable and selectable. Consumer and generated description ids are merged on the input.
 - prefix / suffix — 애드온 노드. value / defaultValue / onChange — 텍스트. inputProps — 네이티브 input 패스스루. inputProps.onChange/onFocus/onBlur는 폐기되지 않고 컴포넌트 내부 처리보다 먼저 호출됩니다(값 커밋은 그대로 이어집니다). inputProps['aria-describedby']는 생성된 설명 id와 병합됩니다.
 
-## Related components
-
-| Component | Relationship |
-| --- | --- |
-| `PasswordInput` | 대표 시나리오에서 조합 |
-
 ## Examples
 
 ### 기본 조합
@@ -20677,238 +21110,6 @@ const firstOptionRef = useRef(null);
 - Storybook implementation evidence: `stories/FormInputGroup.stories.jsx`
 - [GOV.UK Text input prefixes and suffixes](https://design-system.service.gov.uk/components/text-input/#prefixes-and-suffixes)
 - [Carbon Text input](https://carbondesignsystem.com/components/text-input/usage/)
-
-
----
-
-# Number Field
-
-| Field | Value |
-| --- | --- |
-| Type | Component decision guide |
-| Layer | Product / Selection and Input |
-| Owner | `NumberField` |
-| Storybook | `LDS Product/Selection and Input/Number Field` |
-| Source | `../component-content.json#product-selection-and-input-number-field` |
-
-수량·속도처럼 최소·최대와 일정한 step이 있는 값을 입력할 때 적합합니다. 범위가 없거나 숫자 외 형식을 함께 받는 값에는 Number Field 대신 Input을 사용하세요.
-
-## Properties
-
-| Name | Type | Required | Contract |
-| --- | --- | --- | --- |
-| `value` | `number` | No |  |
-| `defaultValue` | `number` | No |  |
-| `min` | `number` | No |  |
-| `max` | `number` | No |  |
-| `step` | `number` | No |  |
-| `onChange` | `(value: number) = void` | No | 편집 중에는 파싱된 중간값이 그대로 전달되고, blur / Enter / 스테퍼로 값이 확정될 때 [min, max]로 클램프된 값이 다시 전달됩니다. |
-| `label` | `React.ReactNode` | No |  |
-| `helper` | `React.ReactNode` | No |  |
-| `error` | `React.ReactNode` | No |  |
-| `invalid` | `boolean` | No |  |
-| `size` | `'sm' \| 'md'` | No |  |
-| `disabled` | `boolean` | No |  |
-| `style` | `React.CSSProperties` | No | 스테퍼를 포함한 입력 셸의 스타일. |
-| `fieldStyle` | `React.CSSProperties` | No | label/helper/error를 포함한 전체 필드 스타일. |
-
-## Behavior and interaction
-
-- value / defaultValue / onChange — 제어/비제어. min / max / step — 범위. 콤팩트한 ± 전용 컨트롤에는 Stepper를 쓰세요.
-
-## 정량 규칙
-
-| Subject | Rule |
-| --- | --- |
-| 명시 규칙 1 | 클램프는 값이 확정될 때만 일어납니다. 편집 중에는 max=20에서 25를 타이핑하거나 필드를 비워 둘 수 있고, blur·Enter·스테퍼로 확정하는 순간 [min, max]로 클램프됩니다. 빈 채로 blur하면 마지막 확정값으로 되돌아갑니다. onChange는 편집 중에는 파싱된 중간값을, 확정 시점에는 클램프된 값을 전달합니다. |
-| 명시 규칙 2 | WCAG 2.2 Focus Appearance에 맞춰 field 전체에 LDS focus ring을 표시합니다. |
-| --color-semantic-label-disable | light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52) |
-| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
-| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
-
-## Accessibility
-
-- label / helper / error / invalid — label을 주면 htmlFor로 연결된 필드 레이블·메시지 스택을 함께 렌더링하고, 그렇지 않으면 셸만 렌더링해 FormField 같은 상위 표면에 맡깁니다. error나 invalid는 aria-invalid와 오류 테두리를 함께 켭니다. fieldStyle은 label/helper/error를 포함한 바깥 스택, style은 스테퍼가 붙은 입력 셸을 스타일링합니다.
-- native number input이 spinbutton semantics를 소유하고 inline step action은 보조 조작입니다. 보조 action 이름에는 field 이름을 포함합니다. focus/disabled/readOnly는 Input과 같은 component token(fieldBackground·fieldBorderColor)을 사용하며 type="number"는 consumer가 덮어쓰지 못합니다.
-- WAI-ARIA Spinbutton pattern의 native editing·Arrow key 기대를 보존합니다.
-
-## Related components
-
-| Component | Relationship |
-| --- | --- |
-| `FormField` | 대표 시나리오에서 조합 |
-| `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
-| `DateRangeField` | 대표 시나리오에서 조합 |
-| `FieldAction` | 대표 시나리오에서 조합 |
-| `FileUpload` | 대표 시나리오에서 조합 |
-| `FileUploadQueue` | 대표 시나리오에서 조합 |
-| `IconPicker` | 대표 시나리오에서 조합 |
-
-## Examples
-
-### 기본 조합
-
-```jsx
-<NumberField label="투입 대수" helper="최대 20대" defaultValue={3} min={0} max={20} onChange={setQty} />
-```
-
-## Tokens and API
-
-### Tokens
-
-- `--color-semantic-label-disable`
-- `--color-semantic-label-neutral`
-- `--color-semantic-label-normal`
-- `--color-semantic-line-solid-normal`
-- `--component-input-focus-shadow`
-- `--component-input-height`
-- `--component-input-padding-x`
-- `--component-input-radius`
-- `--control-h-sm`
-- `--dur-fast`
-- `--ease-out`
-- `--font-sans`
-- `--fw-semibold`
-
-### Source contracts
-
-- `components/forms/NumberField.jsx`
-- `components/forms/NumberField.d.ts`
-- `components/forms/NumberField.prompt.md`
-- `stories/FormAdvancedInputs.stories.jsx`
-
-## Sources
-
-- NumberField prompt contract: `components/forms/NumberField.prompt.md`
-- Storybook implementation evidence: `stories/FormAdvancedInputs.stories.jsx`
-- [WAI-ARIA Spinbutton pattern](https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/)
-- [WCAG 2.2 Focus Appearance](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html)
-- [Carbon Number input](https://carbondesignsystem.com/components/number-input/usage/)
-- [Spectrum NumberField](https://spectrum.adobe.com/page/number-field/)
-
-
----
-
-# Password Input
-
-| Field | Value |
-| --- | --- |
-| Type | Component decision guide |
-| Layer | Product / Selection and Input |
-| Owner | `PasswordInput` |
-| Storybook | `LDS Product/Selection and Input/Password Input` |
-| Source | `../component-content.json#product-selection-and-input-password-input` |
-
-사용자가 직접 비밀번호를 작성하는 로그인과 계정 설정에 사용하세요. 이미 발급된 비밀값을 읽거나 복사하는 화면은 Secret Field가 더 적합합니다.
-
-## 사용 판단
-
-### 사용하지 않음
-
-- autoComplete — 브라우저 비밀번호 관리자에 전달하는 입력 목적. 기본값은 로그인 맥락의 current-password입니다. 회원가입·비밀번호 변경처럼 새 비밀번호를 만드는 폼에서는 new-password를 넘겨 관리자가 저장된 값 대신 생성 값을 제안하게 하세요. off를 넘기면 자동 채우기를 끌 수 있지만 권장하지 않습니다.
-
-## Anatomy
-
-| Part | Contract |
-| --- | --- |
-| capsLockLabel | Caps Lock warning shown while the field has focus. Pass '' to suppress the warning entirely. |
-
-## Properties
-
-| Name | Type | Required | Contract |
-| --- | --- | --- | --- |
-| `value` | `string` | No |  |
-| `defaultValue` | `string` | No |  |
-| `onChange` | `(value: string) = void` | No |  |
-| `label` | `React.ReactNode` | No |  |
-| `helper` | `React.ReactNode` | No |  |
-| `error` | `React.ReactNode` | No |  |
-| `invalid` | `boolean` | No |  |
-| `status` | `'normal' \| 'positive' \| 'negative'` | No |  |
-| `size` | `'sm' \| 'md' \| 'small' \| 'medium'` | No |  |
-| `revealLabel` | `string` | No |  |
-| `hideLabel` | `string` | No |  |
-| `autoComplete` | `string` | No | Browser autofill hint for the password field. Keep the default on sign-in forms; pass "new-password" on sign-up / change-password forms so the password manager offers a generated value instead of the stored one. |
-| `capsLockLabel` | `string` | No | Caps Lock warning shown while the field has focus. Pass '' to suppress the warning entirely. |
-| `fieldStyle` | `React.CSSProperties` | No | Styles for the label/control/message stack. |
-| `style` | `React.CSSProperties` | No | Styles for the input control shell. |
-
-## Behavior and interaction
-
-- 필드가 소속된 이 제출되면 표시 상태를 자동으로 마스킹으로 되돌립니다. 토글을 누른 뒤 그대로 제출해도 평문이 화면에 남지 않습니다.
-- value / defaultValue / onChange — 제어/비제어. size sm · md.
-
-## 정량 규칙
-
-| Subject | Rule |
-| --- | --- |
-| 명시 규칙 1 | The reveal button is a real 32px icon button with a contextual name (비밀번호 보기 / 비밀번호 숨기기) and aria-controls; its icon describes the next action. A disabled field disables the trailing action as well. |
-| 명시 규칙 2 | Reference basis: Carbon Text input, GOV.UK Text input, GOV.UK Password input, WCAG 2.2 Identify Input Purpose. |
-| --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --color-semantic-label-disable | light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52) |
-
-## Content and writing
-
-- Label, helper/error, read-only, positive, and negative states use the same field anatomy and tokens as Input.
-- 필드·상태 prop: label(필드 레이블) · status(normal/positive/negative) · invalid(오류 강조 토글) · fieldStyle(전체 필드 컨테이너 스타일) · revealLabel/hideLabel(비밀번호 표시·숨김 토글 버튼의 스크린리더 레이블).
-
-## Accessibility
-
-- Caps Lock이 켜진 채로 입력하면 focus 중에만 주의 문구가 나타나고, 상시 마운트된 polite live region이 같은 문구를 읽습니다.
-- capsLockLabel — Caps Lock이 켜진 상태에서 focus 중에 노출되는 주의 문구이자 live region 문장. 기본값은 Caps Lock이 켜져 있습니다.이고, 빈 문자열을 넘기면 경고를 끕니다. 값이 비어 있지 않은 한 문구는 필드가 focus를 잃으면 사라집니다.
-
-## Related components
-
-| Component | Relationship |
-| --- | --- |
-| `InputGroup` | 대표 시나리오에서 조합 |
-
-## Examples
-
-### 기본 조합
-
-```jsx
-<PasswordInput onChange={setPw} />
-```
-
-## Tokens and API
-
-### Tokens
-
-- `--caption1-line`
-- `--caption1-size`
-- `--color-semantic-label-disable`
-- `--color-semantic-status-cautionary-text`
-- `--component-input-border-width`
-- `--component-input-focus-shadow`
-- `--component-input-gap`
-- `--component-input-height`
-- `--component-input-padding-x`
-- `--component-input-radius`
-- `--component-input-text-color`
-- `--control-h-sm`
-- `--dur-fast`
-- `--ease-out`
-- `--font-sans`
-- `--fw-medium`
-
-### Source contracts
-
-- `components/forms/PasswordInput.jsx`
-- `components/forms/PasswordInput.d.ts`
-- `components/forms/PasswordInput.prompt.md`
-- `stories/FormPasswordInput.stories.jsx`
-
-## Sources
-
-- PasswordInput prompt contract: `components/forms/PasswordInput.prompt.md`
-- Storybook implementation evidence: `stories/FormPasswordInput.stories.jsx`
-- [Carbon Text input](https://carbondesignsystem.com/components/text-input/usage/)
-- [GOV.UK Text input](https://design-system.service.gov.uk/components/text-input/)
-- [GOV.UK Password input](https://design-system.service.gov.uk/components/password-input/)
-- [WCAG 2.2 Identify Input Purpose](https://www.w3.org/WAI/WCAG22/Understanding/identify-input-purpose.html)
 
 
 ---
@@ -20979,12 +21180,12 @@ const firstOptionRef = useRef(null);
 | --- | --- |
 | `FormField` | 대표 시나리오에서 조합 |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
+| `PropertyField` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -21097,13 +21298,13 @@ const firstOptionRef = useRef(null);
 | Component | Relationship |
 | --- | --- |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
-| `NumberField` | 대표 시나리오에서 조합 |
+| `PinInput` | 대표 시나리오에서 조합 |
+| `SearchableMultiSelect` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -21251,13 +21452,13 @@ const firstOptionRef = useRef(null);
 | Component | Relationship |
 | --- | --- |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
-| `NumberField` | 대표 시나리오에서 조합 |
+| `PinInput` | 대표 시나리오에서 조합 |
+| `PropertyField` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -21440,12 +21641,12 @@ API key·token처럼 읽기 전용 값을 잠시 표시하고 복사한 뒤 다�
 | --- | --- |
 | `Button` | 대표 시나리오에서 조합 |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
+| `PinInput` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -21543,12 +21744,12 @@ API key·token처럼 읽기 전용 값을 잠시 표시하고 복사한 뒤 다�
 | --- | --- |
 | `FormField` | 대표 시나리오에서 조합 |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
+| `PinInput` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -21673,12 +21874,12 @@ API key·token처럼 읽기 전용 값을 잠시 표시하고 복사한 뒤 다�
 | --- | --- |
 | `Icon` | 대표 시나리오에서 조합 |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
+| `PinInput` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -21838,12 +22039,12 @@ API key·token처럼 읽기 전용 값을 잠시 표시하고 복사한 뒤 다�
 | --- | --- |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
 | `DataGrid` | 대표 시나리오에서 조합 |
+| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -21988,12 +22189,12 @@ API key·token처럼 읽기 전용 값을 잠시 표시하고 복사한 뒤 다�
 | --- | --- |
 | `Input` | 대표 시나리오에서 조합 |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
+| `PinInput` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -22152,12 +22353,12 @@ API key·token처럼 읽기 전용 값을 잠시 표시하고 복사한 뒤 다�
 | --- | --- |
 | `Input` | 대표 시나리오에서 조합 |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
+| `PinInput` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -22302,13 +22503,13 @@ const [value, setValue] = useState('0.');
 | Component | Relationship |
 | --- | --- |
 | `ColorSwatch` | 대표 시나리오에서 조합 |
-| `DatePicker` | 대표 시나리오에서 조합 |
 | `DateRangeField` | 대표 시나리오에서 조합 |
 | `FieldAction` | 대표 시나리오에서 조합 |
 | `FileUpload` | 대표 시나리오에서 조합 |
 | `FileUploadQueue` | 대표 시나리오에서 조합 |
 | `IconPicker` | 대표 시나리오에서 조합 |
-| `NumberField` | 대표 시나리오에서 조합 |
+| `PinInput` | 대표 시나리오에서 조합 |
+| `PropertyField` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -22775,225 +22976,6 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 - Storybook implementation evidence: `stories/RoboticsEquipment.stories.jsx`
 - [Adobe Spectrum Status light](https://spectrum.adobe.com/page/status-light/)
 - [GOV.UK Summary list](https://design-system.service.gov.uk/components/summary-list/)
-
-
----
-
-# Meter
-
-| Field | Value |
-| --- | --- |
-| Type | Component decision guide |
-| Layer | Product / Status |
-| Owner | `Meter` |
-| Storybook | `LDS Product/Status/Meter` |
-| Source | `../component-content.json#product-status-meter` |
-
-수위·품질·위험 점수처럼 최소·최대 경계가 있는 현재 측정값을 비교할 때 적합합니다. 업로드나 처리 작업의 완료율에는 Meter 대신 ProgressBar 또는 CircularProgress를 사용하세요.
-
-## Anatomy
-
-| Part | Contract |
-| --- | --- |
-| thresholdLabels | 임계 구간을 색 대신 전달하는 문구를 재정의합니다(WCAG 1.4.1). |
-
-## Properties
-
-| Name | Type | Required | Contract |
-| --- | --- | --- | --- |
-| `value` | `number` | No |  |
-| `max` | `number` | No |  |
-| `label` | `React.ReactNode` | No |  |
-| `thresholds` | `{ low: number; high: number }` | No | 퍼센트 임계값: ≤low 레드, ≤high 앰버, 그 외 그린. |
-| `thresholdLabels` | `MeterThresholdLabels` | No | 임계 구간을 색 대신 전달하는 문구를 재정의합니다(WCAG 1.4.1). |
-| `size` | `'sm' \| 'md'` | No |  |
-| `showValue` | `boolean` | No | "value/max" 표시. @default true |
-
-## 정량 규칙
-
-| Subject | Rule |
-| --- | --- |
-| 명시 규칙 1 | 접근성 role — 알려진 범위 안의 측정값이므로 role="meter"로 노출됩니다. role="progressbar"는 작업의 진척도를 뜻하므로 쓰지 않습니다. 이 때문에 Meter는 ProgressBar를 합성하지 않고 같은 트랙 형상(sm 6px / md 10px)을 직접 렌더합니다. |
-| 명시 규칙 2 | 값 발화 — aria-valuenow / aria-valuemin / aria-valuemax는 caller의 value·max 단위를 그대로 씁니다(퍼센트로 환산하지 않음). 기본 aria-valuetext는 보이는 캡션과 같은 value/max 문자열이라 max !== 100에서도 표기와 발화가 어긋나지 않습니다. aria-valuetext를 직접 넘기면 그대로 우선합니다. |
-| 명시 규칙 3 | thresholdLabels — 임계 구간은 색상만으로 전달하지 않습니다(WCAG 1.4.1). 구간에 해당하는 낱말이 값 옆에 함께 렌더되고 aria-valuetext에도 붙습니다. 기본값은 { negative: '위험', cautionary: '주의', positive: '양호' }이며, 수위·품질처럼 도메인 어휘가 다르면 필요한 키만 덮어씁니다. showValue={false}여도 임계 구간이 있으면 캡션 줄은 유지됩니다. |
-| --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
-| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
-
-## Content and writing
-
-- value / max — 레벨. thresholds — { low, high } 퍼센트 → 레드 / 앰버 / 스틸그린. label / showValue. 작업 진행에는 ProgressBar를 쓰세요.
-- Meter — 임계값(옵션)이 있는 라벨 값 바(완료율, 품질 점수).
-
-## Accessibility
-
-- 이름 — 문자열이 아닌 label(ReactNode)도 보이는 라벨에 aria-labelledby로 연결되므로 무명 meter가 생기지 않습니다. label도 aria-label도 없으면 측정값이 기본 이름입니다.
-
-## Related components
-
-| Component | Relationship |
-| --- | --- |
-| `CircularProgress` | 대표 시나리오에서 조합 |
-| `ProgressBar` | 대표 시나리오에서 조합 |
-
-## Examples
-
-### 기본 조합
-
-```jsx
-<Meter label="완료율" value={82} thresholds={{ low: 20, high: 50 }} />
-<Meter label="냉각수 수위" value={12} max={40} thresholds={{ low: 20, high: 50 }} thresholdLabels={{ negative: '부족' }} />
-```
-
-## Tokens and API
-
-### Tokens
-
-- `--color-semantic-fill-strong`
-- `--color-semantic-label-alternative`
-- `--color-semantic-label-neutral`
-- `--color-semantic-primary-normal`
-- `--color-semantic-status-cautionary`
-- `--color-semantic-status-cautionary-text`
-- `--color-semantic-status-negative`
-- `--color-semantic-status-negative-text`
-- `--color-semantic-status-positive`
-- `--color-semantic-status-positive-text`
-- `--dur-base`
-- `--ease-out`
-- `--font-sans`
-- `--fw-semibold`
-- `--label2-size`
-- `--radius-pill`
-- `--space-1-5`
-
-### Source contracts
-
-- `components/status/Meter.jsx`
-- `components/status/Meter.d.ts`
-- `components/status/Meter.prompt.md`
-- `stories/ProductMeter.stories.jsx`
-
-## Sources
-
-- Meter prompt contract: `components/status/Meter.prompt.md`
-- Storybook implementation evidence: `stories/ProductMeter.stories.jsx`
-
-
----
-
-# Progress
-
-| Field | Value |
-| --- | --- |
-| Type | Component decision guide |
-| Layer | Product / Status |
-| Owner | `CircularProgress` |
-| Storybook | `LDS Product/Status/Progress` |
-| Source | `../component-content.json#product-status-progress` |
-
-업로드·분석·생성처럼 시작과 완료가 있는 작업의 진행률이나 대기 상태를 전달할 때 적합합니다. 작업이 아닌 현재 측정값을 알려진 범위 안에서 비교하려면 Progress 대신 Meter를 사용하세요.
-
-## Anatomy
-
-| Part | Contract |
-| --- | --- |
-| label | Optional visible label. |
-
-## Properties
-
-| Name | Type | Required | Contract |
-| --- | --- | --- | --- |
-| `value` | `number` | No | Current value for determinate progress. @default 0 |
-| `max` | `number` | No | Maximum value for determinate progress. @default 100 |
-| `size` | `number` | No | Diameter in px. @default 48 |
-| `thickness` | `number` | No | Ring thickness in px. @default 5 |
-| `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative'` | No | Arc tone. @default "signal" |
-| `indeterminate` | `boolean` | No | Shows an unknown-duration rotating arc. @default false |
-| `label` | `React.ReactNode` | No | Accessible label for the progress indicator. |
-| `showValue` | `boolean` | No | Shows the computed percentage in the center for determinate progress. @default false |
-| `value` | `number` | No | Current value. @default 0 |
-| `max` | `number` | No | Maximum value. @default 100 |
-| `indeterminate` | `boolean` | No | Shows an unknown-duration moving segment instead of a fixed percentage. @default false |
-| `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative'` | No | Fill tone. @default "signal" |
-| `color` | `string` | No | Custom fill color (CSS color value or token, e.g. "var(--color-semantic-status-positive)"). Overrides tone when set. |
-| `size` | `'sm' \| 'md' \| 'lg'` | No | Track height. @default "md" |
-| `label` | `React.ReactNode` | No | Optional visible label. |
-| `showValue` | `boolean` | No | Shows the computed percentage beside the label. @default false |
-
-## States
-
-| State | Contract |
-| --- | --- |
-| tone | Arc tone. @default "signal" |
-| tone | Fill tone. @default "signal" |
-
-## 정량 규칙
-
-| Subject | Rule |
-| --- | --- |
-| 명시 규칙 1 | Motion respects prefers-reduced-motion. The rotating ring gets its animation from an inline style, so the injected @media (prefers-reduced-motion: reduce) rule declares animation:none!important — dropping !important silently disables the guard (WCAG 2.3.3). Same mechanism as Skeleton/Spinner. |
-| --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
-| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
-| --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
-| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
-
-## Accessibility
-
-- indeterminate renders an unknown-duration rotating arc and omits aria-valuenow.
-- label / showValue provide accessible and visible progress context.
-- Indeterminate aria-valuetext는 ProgressBar와 같은 한국어 문구 진행 중입니다.
-
-## Related components
-
-| Component | Relationship |
-| --- | --- |
-| `ProgressBar` | 같은 페이지가 소유 |
-| `Meter` | 대표 시나리오에서 조합 |
-
-## Examples
-
-### 기본 조합
-
-```jsx
-<CircularProgress value={72} label="Report progress" showValue />
-<CircularProgress indeterminate label="Processing" />
-<CircularProgress value={4} max={5} tone="positive" size={40} />
-```
-
-## Tokens and API
-
-### Tokens
-
-- `--color-semantic-fill-strong`
-- `--color-semantic-label-neutral`
-- `--color-semantic-label-normal`
-- `--color-semantic-primary-normal`
-- `--color-semantic-status-cautionary`
-- `--color-semantic-status-negative`
-- `--color-semantic-status-positive`
-- `--dur-base`
-- `--ease-in-out`
-- `--ease-out`
-- `--font-sans`
-- `--fw-bold`
-- `--fw-semibold`
-- `--label2-size`
-- `--radius-pill`
-
-### Source contracts
-
-- `components/status/CircularProgress.jsx`
-- `components/status/CircularProgress.d.ts`
-- `components/status/CircularProgress.prompt.md`
-- `components/status/ProgressBar.jsx`
-- `components/status/ProgressBar.d.ts`
-- `components/status/ProgressBar.prompt.md`
-- `stories/ProductProgress.stories.jsx`
-
-## Sources
-
-- CircularProgress prompt contract: `components/status/CircularProgress.prompt.md`
-- Storybook implementation evidence: `stories/ProductProgress.stories.jsx`
 
 
 ---

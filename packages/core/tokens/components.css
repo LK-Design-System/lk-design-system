@@ -213,6 +213,52 @@
   --component-topbar-menu-item-hover-bg: var(--component-menu-item-hover-bg);
   --component-topbar-menu-item-selected-bg: var(--component-menu-item-selected-bg);
 
+  /* ---- Repeated data density -------------------------------------------- */
+  --component-table-cell-padding-sm: 10px 12px;
+  --component-table-cell-padding-md: 14px 16px;
+  --component-data-grid-cell-padding-sm: 10px 12px;
+  --component-data-grid-cell-padding-md: 13px 16px;
+  --component-data-grid-header-height-sm: 50px;
+  --component-data-grid-header-height-md: 58px;
+  --component-data-grid-detail-padding-sm: var(--space-3) var(--space-4);
+  --component-data-grid-detail-padding-md: var(--space-4);
+  --component-list-cell-padding-y-sm: 8px;
+  --component-list-cell-padding-y-md: 12px;
+  --component-list-cell-padding-y-lg: 16px;
+  --component-tree-row-min-height: 36px;
+  --component-tree-row-padding-y: 8px;
+  --component-tree-row-padding-x: 10px;
+  --component-tree-row-gap: var(--space-2);
+  --component-tree-indent: 20px;
+
+  /* ---- Navigation and overlay density ---------------------------------- */
+  --component-side-nav-padding: var(--space-2-5);
+  --component-side-nav-item-height: 44px;
+  --component-side-nav-item-padding-y: var(--space-2-5);
+  --component-side-nav-item-padding-x: var(--space-3);
+  --component-side-nav-child-item-height: 36px;
+  --component-side-nav-child-item-padding-y: var(--space-2);
+  --component-toolbar-gap: var(--space-1-5);
+  --component-toolbar-padding: var(--space-1-5);
+  --component-drawer-header-padding-comfortable: var(--space-5) var(--space-6);
+  --component-drawer-header-padding-compact: var(--space-4) var(--space-5);
+  --component-drawer-body-padding-comfortable: var(--space-5) var(--space-6);
+  --component-drawer-body-padding-compact: var(--space-4) var(--space-5);
+  --component-drawer-footer-padding-comfortable: var(--space-4) var(--space-6);
+  --component-drawer-footer-padding-compact: var(--space-3) var(--space-5);
+
+  /* Selection checkboxes keep a 16px glyph inside a measured 24px target. */
+  --component-data-grid-selection-target-size: 24px;
+  --component-data-grid-selection-cell-padding: 10px;
+  --component-data-toolbar-gap-sm: var(--space-2);
+  --component-data-toolbar-gap-md: var(--space-3);
+  --component-data-toolbar-padding-sm: 10px 12px;
+  --component-data-toolbar-padding-md: 14px 16px;
+  --component-filter-bar-gap-sm: var(--space-2);
+  --component-filter-bar-gap-md: var(--space-3);
+  --component-filter-bar-padding-sm: var(--space-3);
+  --component-filter-bar-padding-md: var(--space-4);
+
   /* ---- Dialog ------------------------------------------------------------ */
   --component-dialog-radius: var(--radius-3xl);
   --component-dialog-scrim: var(--color-semantic-material-dimmer);
@@ -306,6 +352,11 @@
   --component-card-shadow-lg: var(--shadow-lg);
   --component-card-hover-transform: translateY(-4px);
   --component-card-transition: var(--transition-base);
+}
+
+.lk-data-grid__selection-checkbox:focus-visible + [data-selection-glyph] {
+  outline: 2px solid var(--color-semantic-focus-indicator);
+  outline-offset: 2px;
 }
 
 

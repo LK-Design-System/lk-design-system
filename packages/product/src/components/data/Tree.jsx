@@ -11,6 +11,11 @@ function focusTreeItem(item, setFocusKey) {
   item.focus();
 }
 
+function treePaddingInlineStart(level) {
+  if (level === 0) return 'var(--component-tree-row-padding-x, 10px)';
+  return `calc(var(--component-tree-row-padding-x, 10px) + ${Array.from({ length: level }, () => 'var(--component-tree-indent, 20px)').join(' + ')})`;
+}
+
 function nodeId(node) {
   return node.id == null ? null : String(node.id);
 }
@@ -195,10 +200,10 @@ function TreeNode({
           width: '100%',
           display: 'flex',
           alignItems: 'center',
-          gap: 8,
-          minHeight: 36,
-          padding: '8px 10px',
-          paddingLeft: `calc(var(--space-2-5) + ${level * 20}px)`,
+          gap: 'var(--component-tree-row-gap, var(--space-2))',
+          minHeight: 'var(--component-tree-row-min-height, 36px)',
+          padding: 'var(--component-tree-row-padding-y, 8px) var(--component-tree-row-padding-x, 10px)',
+          paddingInlineStart: treePaddingInlineStart(level),
           boxSizing: 'border-box',
           border: selected ? '1px solid var(--color-semantic-primary-normal)' : '1px solid transparent',
           background: selected ? 'var(--color-semantic-primary-surface-strong)' : hovered ? 'var(--color-semantic-background-normal-alternative)' : 'transparent',

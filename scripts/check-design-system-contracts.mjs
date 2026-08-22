@@ -130,7 +130,7 @@ try {
 
 try {
   const overlayPlatform = await readProjectFile('components/overlay/overlay-platform.js');
-  for (const phrase of ['createPortal', 'OverlayRuntimeProvider', 'useOverlayLayer', 'data-lds-overlay-portal', 'inheritedPortalScope']) {
+  for (const phrase of ['createPortal', 'OverlayRuntimeProvider', 'useOverlayLayer', 'data-lds-overlay-portal', 'data-lds-profile', 'PROFILE_SCOPE_CLASSES', 'inheritedPortalScope']) {
     if (!overlayPlatform.includes(phrase)) failures.push(`components/overlay/overlay-platform.js is missing platform behavior: ${phrase}`);
   }
 } catch (error) {

@@ -1,4 +1,4 @@
-**Popover** — 임의의 콘텐츠(정보, 미니 폼, 피커)를 담는 **LK Product Extension** 비모달
+**Popover** — 임의의 콘텐츠(정보, 미니 폼, 피커)를 담는 **LDS Core** 비모달
 앵커드 패널입니다.
 
 ```jsx

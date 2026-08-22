@@ -40,6 +40,10 @@ assert(provider.includes("const PROFILES = new Set(['default', 'ops']);"), `${so
 assert(provider.includes("data-lds-profile"), `${sourcePath} must project data-lds-profile.`);
 assert(declaration.includes("export type LdsProfile = 'default' | 'ops';"), `${declarationPath} must expose LdsProfile.`);
 assert(profileCss.includes("[data-lds-profile='ops']"), `${stylePath} must define the ops profile selector.`);
+assert(
+  profileCss.includes(":root:where([data-lds-profile='ops'], .lds-profile-ops)"),
+  `${stylePath} must override Core :root defaults on the LdsProvider documentElement target.`,
+);
 assert(stylesEntry.includes('@import "./tokens/profiles.css";'), `${stylesEntryPath} must import ${stylePath}.`);
 assert(storybookPreview.includes('export const globalTypes = {'), `${storybookPreviewPath} must expose a profile toolbar.`);
 assert(storybookPreview.includes("value: 'ops'"), `${storybookPreviewPath} must expose the ops profile option.`);

@@ -6,6 +6,12 @@ Shared header/body cell styles enable tabular numerals by default. Comparable nu
 
 Classification: **LK Product Extension**. WDS Core 축을 추정하지 않으며, `Table`의 셀·divider·density 위에 dashboard/server collection 계약을 추가합니다.
 
+`size="sm | md"`는 공개 문법을 유지하면서 profile-aware cell/header/detail token을 선택합니다.
+`ops`는 선택된 크기의 spacing만 조밀하게 만들고 열 의미·정렬·선택 model·DOM anatomy를 바꾸지
+않습니다. 선택 checkbox는 16px glyph 안에 의미를 압축하지 않고, label이 소유하는 실제 native
+input target을 24×24px로 유지합니다. 이 target은 spacing exception이 아니라 실측 대상이며
+`docs/DENSITY_AND_EXPRESSION_PROFILE_CONTRACT.md`의 composite gate가 검증합니다.
+
 ```jsx
 const [selectionModel, setSelectionModel] = React.useState({
   mode: 'explicit',

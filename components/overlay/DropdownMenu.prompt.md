@@ -17,10 +17,13 @@ LDS 메뉴 토큰을 사용합니다.
 - WDS axes: `variant` (`normal`, `radio`, `checkbox`)과 기존 `cellPadding`. LDS의 새 코드는
   raw padding 대신 `density="compact | default | comfortable"`를 사용합니다. 긴 목록은
   `maxHeight`로 scroll 영역을 제한합니다.
-- **기본 밀도 규약** — 모든 DropdownMenu·TopBar menu·LanguageSwitcher는 panel
+- **기본 밀도 규약** — 모든 DropdownMenu·TopBar menu·LanguageSwitcher는 `default` profile에서 panel
   padding 8px, item gap 4px, panel radius 12px, 기본 item 14/20px·최소 높이 40px,
   item padding 10px 16px, item radius 10px를 공유합니다. 설명이 있는 item은 이
   최소 높이를 유지한 채 콘텐츠 높이에 따라 자연스럽게 늘어납니다.
+- `ops` profile의 `density="default"`는 같은 menu token을 32px row와 6px 12px padding으로
+  조밀화합니다. 명시적 `compact | comfortable`가 profile 기본값보다 우선하며, semantic role,
+  checked/current 의미와 keyboard focus 순서는 어느 profile에서도 동일합니다.
 - 스크롤이 필요한 메뉴는 `scrollbar-gutter: stable`로 폭 변화를 막고, 항목 배경과
   scrollbar 사이에 `--component-menu-scrollbar-gap` 4px을 유지합니다.
 - `compact`는 pointer 중심의 13/18px·32px item과 6px 12px padding,

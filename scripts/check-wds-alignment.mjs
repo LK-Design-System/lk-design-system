@@ -635,11 +635,6 @@ assert(
 );
 
 const exportClassificationFailures = [];
-const extensionProvenanceOwners = {
-  'theme-override': 'theme',
-  'product-extension': 'product',
-  'robotics-extension': 'robotics',
-};
 for (const group of exportGroups) {
   if (!group.name) exportClassificationFailures.push('Export classification group is missing a name.');
   if (Object.hasOwn(group, 'layer') || Object.hasOwn(group, 'classification')) {
@@ -651,12 +646,10 @@ for (const group of exportGroups) {
   if (!expectedProvenances.has(group.provenance)) {
     exportClassificationFailures.push(`${group.name}: unknown provenance "${group.provenance}"`);
   }
-  const requiredOwner = extensionProvenanceOwners[group.provenance];
-  if (requiredOwner && group.ownerLayer !== requiredOwner) {
-    exportClassificationFailures.push(
-      `${group.name}: provenance "${group.provenance}" requires ownerLayer "${requiredOwner}", found "${group.ownerLayer}"`,
-    );
-  }
+  // Historical provenance and live package ownership are intentionally
+  // independent axes. A component can originate as an LK Product extension
+  // and later become a domain-neutral Core primitive without rewriting its
+  // provenance record.
   if (!Array.isArray(group.exports) || group.exports.length === 0) {
     exportClassificationFailures.push(`${group.name}: no exports listed`);
   }

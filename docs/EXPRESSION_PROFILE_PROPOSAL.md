@@ -127,7 +127,7 @@ Theme (lds-theme)        표정의 집. 갈라지는 유일한 지점
 | --- | --- |
 | Theme runtime | `LdsProvider`가 `default|ops`를 선택하고 `data-lds-profile`을 설정한다. |
 | 대표 소비자 | Portal/default `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`와 Web Viz/ops `542639f2fea109e78f052e730ac30072cad79a6c`가 Core·Theme·Product `0.1.0-rc.69.30`을 소비한다. |
-| 시각 회귀 | [`EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json)이 `default|ops × light|dark × normal|320px × 2 stories` 16개 capture를 보존한다. |
+| 시각 회귀 | [`EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json)이 `default|ops × light|dark × normal|320px × 4 stories` 32개 capture를 보존한다. |
 | 소비자 registry | [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json)이 package pin, artifact checksum, repo SHA, 기술 5 gate와 clean-clone evidence를 보존한다. |
 | active legacy guard | `check:legacy-active`가 aggregate·Editorial·console-pastel의 활성 소스 참조를 0으로 확인한다. |
 
@@ -161,7 +161,7 @@ default가 이기는 우선순위 finding을 `body` profile 적용으로 우회�
 | 0 | LDS 재앵커링 — default 값의 자기 기준 동결 | 완료 (`0.1.0-rc.69.19`) |
 | 1 | 표현 프로파일 원칙을 이 문서에서 확정, `OPERATING_MODEL.md` 소유권 표에 프로파일 행 추가 | 완료 — runtime contract와 machine contract 반영 |
 | 2 | ops 토큰 오버라이드 작성 + 화이트리스트·필수 항목 게이트 | 완료 — `tokens/profiles.css`, `check:expression-profile` |
-| 3 | Storybook 프로파일 토글과 profile/theme/viewport 회귀 matrix 연결 | 완료 — 16 capture, `check:expression-profile-visual` |
+| 3 | Storybook 프로파일 토글과 profile/theme/viewport 회귀 matrix 연결 | 완료 — 32 capture, `check:expression-profile-visual` |
 | 4 | Portal/default·Web Viz/ops 대표 소비자 wiring과 adoption promotion | 완료 — owner approval evidence 연결, registry `workflow-verified`; deployment `not-attested` |
 | 5 | 행동 트랙(§5) 착수 판단 — 각각 독립 제안으로 | 진행 중 — O1/O2 readiness record 연결; O3/O4는 지원 주장하지 않음 |
 

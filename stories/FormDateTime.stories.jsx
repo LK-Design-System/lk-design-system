@@ -7,13 +7,13 @@ import { DatePickerCard as DatePickerCardStory } from './FormsFull.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Product/Selection and Input/Date Picker',
+  title: 'LDS Core/Components/Selection and Input/Date Picker',
   tags: ['autodocs'],
   component: DatePicker,
   parameters: {
     storyGuide: {
-      storyId: 'lds-product-selection-and-input-date-picker--date-input',
-      eyebrow: 'Product / Date Picker',
+      storyId: 'lds-core-components-selection-and-input-date-picker--date-input',
+      eyebrow: 'Core / Date Picker',
       title: '날짜 선택기는 폼에서 단일 날짜 값을 간결하게 입력합니다',
       description:
         '예약일·마감일처럼 한 날짜를 필드 맥락에서 입력할 때 적합합니다. 시작과 종료가 함께 필요하면 Date Range를, 월 전체를 탐색해야 하면 Calendar를 사용하세요.',

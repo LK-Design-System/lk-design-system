@@ -1,6 +1,6 @@
 {
   "name": "@lk-design-system/lds-theme",
-  "version": "0.1.0-rc.69.30",
+  "version": "0.1.0-rc.69.31",
   "description": "LK brand, color, typography, and theme layer.",
   "type": "module",
   "main": "./dist/index.js",
@@ -20,7 +20,7 @@
     "tokens/*.css"
   ],
   "dependencies": {
-    "@lk-design-system/lds-core": "0.1.0-rc.69.30"
+    "@lk-design-system/lds-core": "0.1.0-rc.69.31"
   },
   "peerDependencies": {
     "react": ">=18 <20",

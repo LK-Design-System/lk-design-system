@@ -177,12 +177,7 @@
     "prefix / suffix — 애드온 노드. value / defaultValue / onChange — 텍스트. inputProps — 네이티브 input 패스스루. inputProps.onChange/onFocus/onBlur는 폐기되지 않고 컴포넌트 내부 처리보다 먼저 호출됩니다(값 커밋은 그대로 이어집니다). inputProps['aria-describedby']는 생성된 설명 id와 병합됩니다."
   ],
   "exceptions": [],
-  "related": [
-    {
-      "component": "PasswordInput",
-      "relationship": "대표 시나리오에서 조합"
-    }
-  ],
+  "related": [],
   "examples": [
     {
       "label": "기본 조합",
@@ -243,7 +238,7 @@
     "contentGuidance": "evidence",
     "accessibility": "evidence",
     "exceptions": "omitted-no-evidence",
-    "related": "evidence",
+    "related": "omitted-no-evidence",
     "examples": "evidence",
     "tokens": "evidence",
     "apiLinks": "evidence",

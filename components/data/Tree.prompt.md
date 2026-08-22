@@ -1,5 +1,9 @@
 ## Keyboard and semantics
 
+Tree row의 min-height, block/inline padding, gap과 indent는 expression-profile token을
+사용합니다. `ops`는 반복 탐색 행을 조밀하게 만들지만 24px target floor, roving focus,
+selection과 level semantics를 변경하지 않습니다. 전역 density prop은 추가하지 않습니다.
+
 - The root uses `role="tree"` and `ariaLabel`; every visible node uses a single roving `tabIndex` with `role="treeitem"`.
 - Up/Down move through visible nodes, Home/End jump to the boundary, Right opens or enters a branch, Left closes or moves to the parent, and Enter/Space activates the focused node.
 - Roving keyboard focus and single selection are independent. Use `selectedId` for controlled selection, `defaultSelectedId` for uncontrolled selection, and `onSelectedIdChange(id)` to observe activation.

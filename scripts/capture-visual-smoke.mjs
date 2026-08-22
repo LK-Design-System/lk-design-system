@@ -435,6 +435,10 @@ async function main() {
       const id = findStoryId(index.entries, target);
       await page.setViewportSize(target.viewport);
       await page.emulateMedia({ reducedMotion: target.reducedMotion || 'no-preference' });
+      // The page is reused across captures, and Chromium preserves the physical
+      // pointer across navigation. Keep it outside the viewport so a later
+      // story cannot begin with an unrelated element already matching :hover.
+      await page.mouse.move(-1, -1);
       const url = storyUrl(origin, id, target.query);
       await loadStoryReady(page, url, target.name, runtimeErrors);
 

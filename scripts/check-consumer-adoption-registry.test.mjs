@@ -1,7 +1,14 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import {
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
-import test from 'node:test';
+import test, { after } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 import { validateConsumerAdoptionRegistry } from './check-consumer-adoption-registry.mjs';
@@ -13,6 +20,13 @@ const ldsPackageNames = new Set([
   '@lk-design-system/lds-theme',
   '@lk-design-system/lds-product',
 ]);
+const stableVersion = '0.1.0';
+const stableTag = `lds-v${stableVersion}`;
+const stableEvidenceRelativePath = 'docs/references/adoption/releases/LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json';
+const stableSupportPolicyRelativePath = 'docs/STABLE_SUPPORT_POLICY.md';
+const stableSupportMatrixRelativePath = 'docs/STABLE_SUPPORT_MATRIX.md';
+const stableRollbackRelativePath = 'docs/STABLE_0.1.0_ROLLBACK.md';
+const temporaryRoots = new Set();
 const workflowChecks = {
   install: { attestationIds: ['install'], command: 'npm.cmd ci --ignore-scripts' },
   sourceContract: { attestationIds: ['source-contract'], command: 'npm.cmd run check:source-contract' },
@@ -29,6 +43,138 @@ const workflowChecks = {
 
 function readJson(relativePath) {
   return JSON.parse(readFileSync(path.join(adoptionRoot, relativePath), 'utf8'));
+}
+
+const registrySchema = readJson('LDS_CONSUMER_REGISTRY.schema.json');
+const attestationSchema = readJson('LDS_CONSUMER_ATTESTATION.schema.json');
+const stableReleaseEvidenceSchema = readJson(
+  'releases/LDS_STABLE_RELEASE_EVIDENCE.schema.json',
+);
+
+after(() => {
+  for (const temporaryRoot of temporaryRoots) {
+    rmSync(temporaryRoot, { recursive: true, force: true });
+  }
+});
+
+function stablePackageSet(version = stableVersion) {
+  return [...ldsPackageNames].map((name) => ({ name, version }));
+}
+
+function stableContractIdentity(contract, overrides = {}) {
+  return {
+    schemaVersion: 1,
+    kind: 'lds-stable-contract-identity',
+    contract,
+    status: 'published-verified',
+    ldsVersion: stableVersion,
+    releaseTag: stableTag,
+    packages: stablePackageSet(),
+    ...overrides,
+  };
+}
+
+function writeStableContract(filePath, identity) {
+  writeFileSync(
+    filePath,
+    `# Stable fixture\n\n<!-- lds-stable-identity:start\n${JSON.stringify(identity, null, 2)}\nlds-stable-identity:end -->\n`,
+    'utf8',
+  );
+}
+
+function stableReleaseEvidence(overrides = {}) {
+  const sourceCommit = 'b'.repeat(40);
+  return {
+    $schema: './LDS_STABLE_RELEASE_EVIDENCE.schema.json',
+    schemaVersion: 1,
+    kind: 'lds-stable-package-release-evidence',
+    generatedAt: '2026-08-22',
+    release: {
+      channel: 'stable',
+      version: stableVersion,
+      tag: stableTag,
+      sourceCommit,
+      repository: 'LK-Design-System/lk-design-system',
+    },
+    immutableTagVerification: {
+      status: 'passed',
+      command: `git ls-remote --tags origin refs/tags/${stableTag}`,
+      resolvedCommit: sourceCommit,
+    },
+    automation: [{
+      workflow: 'Release immutable package set',
+      runId: 123456789,
+      status: 'passed',
+      url: 'https://github.com/LK-Design-System/lk-design-system/actions/runs/123456789',
+    }],
+    packages: [...ldsPackageNames].map((name, index) => ({
+      name,
+      version: stableVersion,
+      publishedAt: '2026-08-22T12:00:00Z',
+      distShasum: String.fromCharCode(97 + index).repeat(40),
+      distIntegrity: 'sha512-QUJDRA==',
+    })),
+    availabilityVerification: {
+      status: 'passed',
+      command: `npm view @lk-design-system/<package>@${stableVersion} version dist.shasum dist.integrity`,
+      registry: 'https://npm.pkg.github.com',
+    },
+    contracts: {
+      supportPolicy: stableSupportPolicyRelativePath,
+      supportMatrix: stableSupportMatrixRelativePath,
+      rollbackArtifact: stableRollbackRelativePath,
+    },
+    ...overrides,
+  };
+}
+
+function createStableRepository() {
+  const temporaryRoot = mkdtempSync(path.join(tmpdir(), 'lds-stable-contract-'));
+  temporaryRoots.add(temporaryRoot);
+  const resolve = (relativePath) => path.join(temporaryRoot, ...relativePath.split('/'));
+  mkdirSync(resolve('docs/references/adoption/releases'), { recursive: true });
+
+  writeStableContract(
+    resolve(stableSupportPolicyRelativePath),
+    stableContractIdentity('support-policy', {
+      supportMatrix: stableSupportMatrixRelativePath,
+    }),
+  );
+  writeStableContract(
+    resolve(stableSupportMatrixRelativePath),
+    stableContractIdentity('support-matrix'),
+  );
+  writeStableContract(
+    resolve(stableRollbackRelativePath),
+    stableContractIdentity('rollback', {
+      fallbackVersion: '0.1.0-rc.69.30',
+      fallbackTag: 'lds-v0.1.0-rc.69.30',
+    }),
+  );
+  writeFileSync(
+    resolve(stableEvidenceRelativePath),
+    `${JSON.stringify(stableReleaseEvidence(), null, 2)}\n`,
+    'utf8',
+  );
+
+  return {
+    rootDir: temporaryRoot,
+    resolve,
+    files: {
+      supportPolicy: resolve(stableSupportPolicyRelativePath),
+      supportMatrix: resolve(stableSupportMatrixRelativePath),
+      rollbackArtifact: resolve(stableRollbackRelativePath),
+      releaseEvidence: resolve(stableEvidenceRelativePath),
+    },
+  };
+}
+
+function readFixtureJson(filePath) {
+  return JSON.parse(readFileSync(filePath, 'utf8'));
+}
+
+function writeFixtureJson(filePath, value) {
+  writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
 }
 
 function currentFixture() {
@@ -116,34 +262,40 @@ function workflowFixture() {
 
 function stableFixture() {
   const fixture = currentFixture();
+  const stableRepository = createStableRepository();
   const previousVersion = fixture.registry.ldsVersion;
-  fixture.registry.ldsVersion = '1.0.0';
+  fixture.registry.ldsVersion = stableVersion;
   fixture.registry.packageRelease = {
     channel: 'stable',
     availability: 'verified',
-    releaseTag: 'lds-v1.0.0',
-    evidence: ['package.json', 'docs/references/SATELLITE_PIN_REPORT.md'],
-    supportPolicy: 'docs/OPERATING_MODEL.md',
-    rollbackArtifact: 'docs/PACKAGE_MIGRATION_GUIDE.md',
+    releaseTag: stableTag,
+    evidence: [stableEvidenceRelativePath],
+    supportPolicy: stableSupportPolicyRelativePath,
+    rollbackArtifact: stableRollbackRelativePath,
   };
   for (const entry of fixture.registry.entries) {
     for (const item of entry.packages) {
       if (ldsPackageNames.has(item.name)) {
-        item.version = '1.0.0';
+        item.version = stableVersion;
         item.artifactPath = item.artifactPath.replace(
           `-${previousVersion}.tgz`,
-          '-1.0.0.tgz',
+          `-${stableVersion}.tgz`,
         );
       }
     }
   }
+  fixture.rootDir = stableRepository.rootDir;
+  fixture.stableRepository = stableRepository;
   return fixture;
 }
 
 function validate(fixture) {
   return validateConsumerAdoptionRegistry({
-    rootDir,
+    rootDir: fixture.rootDir ?? rootDir,
     registry: fixture.registry,
+    schema: registrySchema,
+    attestationSchema,
+    stableReleaseEvidenceSchema,
     attestations: fixture.attestations,
   });
 }
@@ -332,7 +484,7 @@ test('release and deployment decisions reject unsupported claims', async (t) => 
 
   await t.test('verified release evidence paths must exist in the LDS repository', () => {
     const fixture = stableFixture();
-    fixture.registry.packageRelease.evidence[1] = 'docs/references/missing-release-evidence.json';
+    fixture.registry.packageRelease.evidence[0] = 'docs/references/missing-release-evidence.json';
     assert.throws(() => validate(fixture), /verified package release evidence is missing/);
   });
 
@@ -358,5 +510,111 @@ test('release and deployment decisions reject unsupported claims', async (t) => 
     const fixture = currentFixture();
     consumerEntry(fixture).deployment = { status: 'deployed' };
     assert.throws(() => validate(fixture), /owner|verifiedAt|environment|evidence|rollbackPlan|required property/);
+  });
+});
+
+test('stable release contracts reject version, tag, and package-set identity drift', async (t) => {
+  await t.test('structured release evidence version must match the registry', () => {
+    const fixture = stableFixture();
+    const evidence = readFixtureJson(fixture.stableRepository.files.releaseEvidence);
+    evidence.release.version = '0.1.1';
+    writeFixtureJson(fixture.stableRepository.files.releaseEvidence, evidence);
+    assert.throws(() => validate(fixture), /stable release evidence version must be 0\.1\.0/);
+  });
+
+  await t.test('structured release evidence tag must match the registry', () => {
+    const fixture = stableFixture();
+    const evidence = readFixtureJson(fixture.stableRepository.files.releaseEvidence);
+    evidence.release.tag = 'lds-v0.1.1';
+    writeFixtureJson(fixture.stableRepository.files.releaseEvidence, evidence);
+    assert.throws(() => validate(fixture), /stable release evidence tag must be lds-v0\.1\.0/);
+  });
+
+  await t.test('tag resolution must pin the release source commit', () => {
+    const fixture = stableFixture();
+    const evidence = readFixtureJson(fixture.stableRepository.files.releaseEvidence);
+    evidence.immutableTagVerification.resolvedCommit = 'c'.repeat(40);
+    writeFixtureJson(fixture.stableRepository.files.releaseEvidence, evidence);
+    assert.throws(() => validate(fixture), /tag resolution must match release sourceCommit/);
+  });
+
+  await t.test('all evidence packages must use the registry version', () => {
+    const fixture = stableFixture();
+    const evidence = readFixtureJson(fixture.stableRepository.files.releaseEvidence);
+    evidence.packages[0].version = '0.1.1';
+    writeFixtureJson(fixture.stableRepository.files.releaseEvidence, evidence);
+    assert.throws(
+      () => validate(fixture),
+      /stable release evidence @lk-design-system\/lds-core must use 0\.1\.0/,
+    );
+  });
+
+  await t.test('the release evidence package set cannot duplicate an owner', () => {
+    const fixture = stableFixture();
+    const evidence = readFixtureJson(fixture.stableRepository.files.releaseEvidence);
+    evidence.packages[1].name = evidence.packages[0].name;
+    writeFixtureJson(fixture.stableRepository.files.releaseEvidence, evidence);
+    assert.throws(
+      () => validate(fixture),
+      /stable release evidence duplicates package @lk-design-system\/lds-core/,
+    );
+  });
+
+  await t.test('support policy identity must match the stable version', () => {
+    const fixture = stableFixture();
+    writeStableContract(
+      fixture.stableRepository.files.supportPolicy,
+      stableContractIdentity('support-policy', {
+        ldsVersion: '0.1.1',
+        releaseTag: 'lds-v0.1.1',
+        packages: stablePackageSet('0.1.1'),
+        supportMatrix: stableSupportMatrixRelativePath,
+      }),
+    );
+    assert.throws(() => validate(fixture), /supportPolicy identity ldsVersion must be 0\.1\.0/);
+  });
+
+  await t.test('rollback identity must match the stable tag', () => {
+    const fixture = stableFixture();
+    writeStableContract(
+      fixture.stableRepository.files.rollbackArtifact,
+      stableContractIdentity('rollback', { releaseTag: 'lds-v0.1.1' }),
+    );
+    assert.throws(() => validate(fixture), /rollbackArtifact identity releaseTag must be lds-v0\.1\.0/);
+  });
+
+  await t.test('support matrix must be published-verified before stable promotion', () => {
+    const fixture = stableFixture();
+    writeStableContract(
+      fixture.stableRepository.files.supportMatrix,
+      stableContractIdentity('support-matrix', { status: 'candidate-not-published' }),
+    );
+    assert.throws(
+      () => validate(fixture),
+      /supportMatrix identity status must be published-verified/,
+    );
+  });
+
+  await t.test('release evidence must reference the registry support and rollback contracts', () => {
+    const fixture = stableFixture();
+    const evidence = readFixtureJson(fixture.stableRepository.files.releaseEvidence);
+    evidence.contracts.supportPolicy = 'docs/OTHER_SUPPORT_POLICY.md';
+    writeFixtureJson(fixture.stableRepository.files.releaseEvidence, evidence);
+    assert.throws(
+      () => validate(fixture),
+      /release evidence supportPolicy must match packageRelease\.supportPolicy/,
+    );
+  });
+
+  await t.test('candidate contracts cannot substantiate a published stable claim', () => {
+    const fixture = stableFixture();
+    writeStableContract(
+      fixture.stableRepository.files.rollbackArtifact,
+      stableContractIdentity('rollback', { status: 'candidate-not-published' }),
+    );
+    assert.throws(
+      () => validate(fixture),
+      /rollbackArtifact identity status must be published-verified \(found candidate-not-published\)/,
+    );
   });
 });

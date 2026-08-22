@@ -812,9 +812,13 @@ for (const entry of entries) {
   ]);
   const storyGuidesByImport = new Map();
   const ownedAuditStories = audit.pages
-    .filter((page) =>
-      entry.exports.includes(page.primaryOwner)
-      || page.ownerComponents?.some((owner) => entry.exports.includes(owner)))
+    .filter((page) => (
+      page.disposition !== 'hide'
+      && (
+        entry.exports.includes(page.primaryOwner)
+        || page.ownerComponents?.some((owner) => entry.exports.includes(owner))
+      )
+    ))
     .map((page) => page.importPath.replace(/^\.\//, ''));
   for (const storyPath of unique([...entry.storyEvidence, ...ownedAuditStories])) {
     const importPath = `./${storyPath}`;
@@ -842,6 +846,7 @@ for (const entry of entries) {
   entry.storybookPages = audit.pages
     .filter((page) =>
       page.layer !== 'Foundation'
+      && page.disposition !== 'hide'
       && (
         page.ownerComponents.some((owner) => entry.exports.includes(owner))
         || entry.storyEvidence.includes(page.importPath.replace(/^\.\//, ''))
@@ -867,6 +872,7 @@ const nonComponentDecisionPages = new Set([
 const nonFoundationPages = audit.pages.filter(
   (page) => page.layer !== 'Foundation'
     && page.layer !== 'Other'
+    && page.disposition !== 'hide'
     && !nonComponentDecisionPages.has(page.title),
 );
 const tokenMap = tokenValueMap(tokenSource);

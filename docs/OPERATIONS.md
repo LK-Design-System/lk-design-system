@@ -97,7 +97,8 @@ robotics 저장소: **`LK-Design-System/lk-design-system-robotics`**
 
 robotics는 레지스트리에 퍼블리시하지 않는다 — **LDS로 전달되는 경로는
 vendored tgz 하나뿐이다.** 그래서 "릴리스"는 버전을 올리고 pack해서 LDS의
-`vendor/`에 넣는 것까지다.
+`vendor/`에 넣는 것까지다. 생성 문서가 `packages/core/docs/*`를 스냅샷으로
+가져가므로, Core 문서 표면이 바뀐 릴리스는 아래 두 저장소 순환을 생략할 수 없다.
 
 **선행조건 — 시작 전에 넷을 확인한다:**
 
@@ -115,6 +116,12 @@ vendored tgz 하나뿐이다.** 그래서 "릴리스"는 버전을 올리고 pac
    동작하지만 판정 기준은 CI다).
 
 ```bash
+# ⓪ LDS 체크아웃에서 새 LDS identity를 먼저 부트스트랩한다. 이때는 아직
+#    현재 Robotics tgz와 설치본을 유지한다. 커밋·태그·푸시는 하지 않는다.
+cd <LDS 체크아웃>
+npm run update:release-pins -- --lds <새 LDS 버전> --robotics <현재 robotics 버전>
+npm run generate:workspace-sources
+
 cd <robotics 체크아웃>
 
 # ① LDS 레이어 핀을 갱신한다. "새 LDS 버전"이 아니라 **직전 퍼블리시된
@@ -131,54 +138,71 @@ cd <robotics 체크아웃>
 npm version <새 robotics 버전> --no-git-tag-version
 npm install                    # NODE_AUTH_TOKEN 필요 (GitHub Packages)
 
-# ② 검사. 형제 LDS 체크아웃이 낡았으면 릴리스 라인을 명시적으로 가리킨다.
-#    DOCUMENTATION_SURFACE_MISMATCH로 실패하면 생성 문서가 낡은 것이다 —
-#    ③의 generate:docs를 먼저 돌리고 ②를 다시 돌린 뒤 pack으로 넘어간다.
-LDS_CONFORMANCE_CLI=<LDS 체크아웃>/packages/conformance/src/cli.mjs npm run check:lds-style
+# ② 새 LDS Core 문서 표면을 명시적으로 투영하고 Robotics 자체 계약을 검사한다.
+npm run generate:docs -- --upstream-root <LDS 체크아웃>/packages/core/docs
 npm run check:local
+npm run check:storybook:local
 
-# ③ 문서를 재생성하고 빌드한 뒤 LDS의 vendor/로 pack한다.
-npm run generate:docs && npm run build
+# ③ 빌드·pack 파일 집합을 확인한 뒤 LDS의 vendor/로 candidate를 pack한다.
+npm run build
+npm pack --dry-run --ignore-scripts
 npm pack --pack-destination <LDS 체크아웃>/vendor
-
-# ④ 커밋·푸시.
 ```
 
+이 시점에는 아직 Robotics를 커밋·태그하지 않는다. LDS external surface가 옛
+tgz를 가리키므로 cross-repository 검사는 의도적으로 실패한다. §2.4의 2차 해시
+완성 뒤 `check:lds-style`까지 통과한 같은 bytes만 immutable release로 확정한다.
+
 그리고 LDS의 `vendor/`에서 **옛 robotics tgz를 지운다** — 정확히 하나만
-있어야 한다(`update:release-pins`가 두 개 이상이면 멈춘다).
+있어야 한다(`update:release-pins`가 두 개 이상이면 멈춘다). 태그는 이미 존재하는
+release identity를 옮기지 않는다. 실패를 고쳤다면 Robotics 버전을 올려 새 tag/tgz를 만든다.
 
 ### 2.4 LDS 릴리스 레시피
 
 ```bash
-# 1. 새 tgz를 실제로 설치한다. 이 순서가 중요하다 — 다음 단계가 문서 해시를
-#    "설치된" robotics에서 계산하므로, 설치를 건너뛰면 옛 버전의 해시가
-#    새 버전 기록에 들어간다. (스크립트가 설치본 버전을 확인해 막는다.)
-npm install
-
-# 2. 파생값 31곳을 재계산한다. 손으로 고치지 않는다.
-#    root와 워크스페이스 package.json의 version 필드도 이 스크립트가 올린다 —
-#    별도의 npm version 단계는 없다.
+# 1. 새 tgz를 vendor/에 넣고 옛 tgz를 제거한 뒤 1차를 돌린다. 이 1차는
+#    package.json 경로와 version identity만 새 tgz로 바꾼다. 설치본이 아직
+#    이전 버전인 동안 문서 해시는 의도적으로 쓰지 않는다.
 npm run update:release-pins -- --lds <새 LDS 버전> --robotics <새 robotics 버전>
 
-# 3. 락파일을 새 버전으로 맞춘다.
+# 2. 새 tgz를 실제로 설치한 뒤 같은 명령을 2차로 돌린다. 이 순서가 중요하다 —
+#    2차가 설치된 robotics 문서 bytes의 해시까지 완성한다.
+npm install
+npm run update:release-pins -- --lds <새 LDS 버전> --robotics <새 robotics 버전>
+
+# 3. 파생값 31곳을 재계산하는 위 명령을 손으로 대체하지 않는다.
+#    root와 워크스페이스 package.json의 version 필드도 이 스크립트가 올린다 —
+#    별도의 npm version 단계는 없다.
 npm install --package-lock-only
 
-# 4. CHANGELOG를 쓴다. 이 스크립트가 다루지 않는 유일한 릴리스 기록이다.
+# 4. 이제 LDS external surface와 설치본이 같은 candidate를 가리킨다.
+#    Robotics에서 cross-repository 검사를 통과한 뒤 그 commit/tag를 확정한다.
+cd <robotics 체크아웃>
+LDS_CONFORMANCE_ROOT=<LDS 체크아웃> \
+LDS_CONFORMANCE_CLI=<LDS 체크아웃>/packages/conformance/src/cli.mjs \
+npm run check:lds-style
+git commit -m "release: <새 robotics 버전>"
+git push origin main
+git tag v<새 robotics 버전>
+git push origin v<새 robotics 버전>
+cd <LDS 체크아웃>
+
+# 5. CHANGELOG를 쓴다. 이 스크립트가 다루지 않는 유일한 릴리스 기록이다.
 #    형식이 기계 검사 대상이다 — 반드시 날짜를 붙인 이 형태여야 한다:
 #      ## <새 LDS 버전> - YYYY-MM-DD
 #    짝 robotics 버전도 여기 적는다.
 
-# 5. 위성 핀 리포트를 갱신한다. 격차를 좁힐 필요는 없다 — 기록만 하면 된다.
+# 6. 위성 핀 리포트를 갱신한다. 격차를 좁힐 필요는 없다 — 기록만 하면 된다.
 npm run report:satellite-pins
 
-# 6. 스테이징을 먼저 한다. check:generated가 `git diff -- src dist packages`라서
+# 7. 스테이징을 먼저 한다. check:generated가 `git diff -- src dist packages`라서
 #    2단계가 고친 packages/*/package.json이 스테이징되지 않으면 실패한다.
 git add -A
 
-# 7. 검사.
+# 8. 검사.
 npm run check:fast
 
-# 8. 커밋·태그·푸시. 브랜치와 태그를 둘 다 민다 —
+# 9. 커밋·태그·푸시. 브랜치와 태그를 둘 다 민다 —
 #    태그만 밀면 원격에 없는 커밋을 가리킨다.
 #
 #    `--tags`를 쓰지 않는다. 그것은 로컬의 **모든** 태그를 밀기 때문에,
@@ -193,19 +217,25 @@ git push origin lds-v<새 LDS 버전>
 
 ### 2.5 릴리스 이후
 
-태그를 밀면 `release-packages.yml`이 게이트(`check:release-immutability --tag`
-→ 패키지 부재 확인 → `check:fast`)를 돌고 core/theme/product를 GitHub
-Packages에 퍼블리시한다.
+태그를 밀면 `release-packages.yml`의 `publish` job이 게이트
+(`check:release-immutability --tag` → 패키지 부재 확인 → `check:fast`)를
+돌고 core/theme/product를 GitHub Packages에 퍼블리시한다. 이어지는
+`verify-published` job은 레지스트리 전파를 별도로 재시도하며 세 패키지의
+정확한 버전·integrity·선택된 dist-tag를 확인한다. 발행은 성공하고 이 검증
+job만 일시 실패했다면 GitHub의 **Re-run failed jobs**로 검증만 다시 실행한다.
 
 확인:
 
 ```bash
 gh run list --workflow=release-packages.yml --limit 1
 npm view @lk-design-system/lds-core@<새 LDS 버전> version   # NODE_AUTH_TOKEN 필요
+npm run check:published-release                            # 정확한 tag checkout에서 실행
 ```
 
 **실패하면 태그를 옮기지 않는다.** 고친 뒤 버전을 올려 다시 릴리스한다 —
 같은 버전이 서로 다른 커밋을 가리키는 것을 막는 것이 이 게이트의 목적이다.
+패키지가 하나라도 이미 발행된 상태에서는 전체 workflow를 다시 실행하지 말고,
+세 패키지의 실제 상태와 dist-tag를 먼저 감사한다.
 
 ### 2.6 손으로 하는 일은 두 가지뿐
 

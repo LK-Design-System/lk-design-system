@@ -4,13 +4,13 @@ import { storyDescription } from './StoryGuide.shared.jsx';
 import { DemoCard } from './StatusProgress.shared.jsx';
 
 const meta = {
-  title: 'LDS Product/Status/Meter',
+  title: 'LDS Core/Components/Status/Meter',
   tags: ['autodocs'],
   component: Meter,
   parameters: {
     storyGuide: {
-      storyId: 'lds-product-status-meter--bounded-measurements',
-      eyebrow: 'Product / Meter',
+      storyId: 'lds-core-components-status-meter--bounded-measurements',
+      eyebrow: 'Core / Meter',
       title: '미터는 알려진 범위 안에서 현재 측정값의 수준을 보여줍니다',
       description:
         '수위·품질·위험 점수처럼 최소·최대 경계가 있는 현재 측정값을 비교할 때 적합합니다. 업로드나 처리 작업의 완료율에는 Meter 대신 ProgressBar 또는 CircularProgress를 사용하세요.',
@@ -18,7 +18,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Meter는 알려진 범위 안의 현재 측정값과 선택적 임계 상태를 표시하는 LDS Product 확장입니다. 접근성 트리에는 진행률이 아니라 측정값을 뜻하는 role="meter"로 노출되고, aria-valuenow/min/max는 화면에 보이는 value/max 단위를 그대로 씁니다. 임계 구간은 색상만이 아니라 값 옆의 낱말과 aria-valuetext로도 전달됩니다.',
+          'Meter는 알려진 범위 안의 현재 측정값과 선택적 임계 상태를 표시하는 LDS Core 컴포넌트입니다. 접근성 트리에는 진행률이 아니라 측정값을 뜻하는 role="meter"로 노출되고, aria-valuenow/min/max는 화면에 보이는 value/max 단위를 그대로 씁니다. 임계 구간은 색상만이 아니라 값 옆의 낱말과 aria-valuetext로도 전달됩니다.',
       },
     },
   },

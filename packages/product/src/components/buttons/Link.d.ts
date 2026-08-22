@@ -1,16 +1,2 @@
-import * as React from 'react';
-
-export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  /** 잉크. @default "signal" */
-  tone?: 'signal' | 'neutral' | 'inherit';
-  /** 밑줄 동작. @default "hover" */
-  underline?: 'none' | 'hover' | 'always';
-  /** 새 탭 + 외부 링크 화살표 + 안전한 rel + 접근 이름에 붙는 새 창 안내. @default false */
-  external?: boolean;
-  /** `external`일 때 접근 이름에 덧붙는 시각적 숨김 문구. @default "새 창에서 열림" */
-  externalLabel?: string;
-  children?: React.ReactNode;
-}
-
-/** 스타일된 인라인 앵커 — 시그널 잉크, 호버 밑줄, 선택적 외부 화살표와 새 창 안내. */
-export function Link(props: LinkProps): React.JSX.Element;
+/** @deprecated Import from @lk-design-system/lds-core. This product compatibility re-export is supported through 0.1.x and may be removed in 0.2.0. */
+export { Link } from '@lk-design-system/lds-core/components/buttons/Link';

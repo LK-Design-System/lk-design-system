@@ -88,9 +88,9 @@
 | `Thumbnail` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
+| `DataExportAction` | 대표 시나리오에서 조합 |
 
 ## Examples
 

@@ -73,7 +73,7 @@
 
 ## Behavior and interaction
 
-- density="comfortable"이 기본값이며 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다.
+- density="comfortable"이 기본값이며 default profile의 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다. ops에서는 같은 density API가 profile-aware chrome token을 읽습니다.
 - 자식의 명시적 size, padding, density가 항상 상속값보다 우선합니다. Drawer 밖과 comfortable Drawer의 기존 기본 출력은 유지됩니다.
 - 닫히면 trigger로 복원하며 returnFocusRef로 논리적 다음 지점을 지정할 수 있습니다. restoreFocus 기본값은 true입니다.
 - overlay Drawer를 여러 개 겹치지 않습니다. Drawer 위에 확인 Modal이 불가피할 때는 Modal만 활성화되고, 닫힌 뒤 Drawer 내부 trigger로 돌아갑니다.
@@ -84,7 +84,7 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | Modal과 달리 좌/우 edge에 붙고, side, 380px 기본 폭, 92vw 상한, slide transition을 유지합니다. 이 차이는 본문 맥락과 나란히 연결되는 보조 작업이라는 기능으로 정당화됩니다. |
-| 명시 규칙 2 | 시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. comfortable은 기존과 동일하게 header/body space-5 space-6, footer space-4 space-6, body body2/1.7을 사용합니다. |
+| 명시 규칙 2 | 시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. default profile의 comfortable은 기존과 동일하게 header/body space-5 space-6, footer space-4 space-6, body body2/1.7을 사용합니다. |
 | 명시 규칙 3 | bodyStyle은 기본 body padding과 scroll contract를 유지하되, DashboardShell temporaryNavigation처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 padding: 0 같은 layout override를 전달합니다. |
 | 명시 규칙 4 | header 닫기와 footer는 scope 밖에 있습니다. footer CTA와 보조 액션은 기존 md 40px를 유지하며 body 안의 행 단위 액션도 의미상 필요할 때만 명시적으로 size="sm"을 선택합니다. |
 | --body2-line | 22px |
@@ -168,6 +168,12 @@ const firstFilterRef = useRef(null);
 - `--color-semantic-line-solid-normal`
 - `--component-dialog-scrim`
 - `--component-dialog-scrim-blur`
+- `--component-drawer-body-padding-comfortable`
+- `--component-drawer-body-padding-compact`
+- `--component-drawer-footer-padding-comfortable`
+- `--component-drawer-footer-padding-compact`
+- `--component-drawer-header-padding-comfortable`
+- `--component-drawer-header-padding-compact`
 - `--dur-base`
 - `--dur-slow`
 - `--ease-out`

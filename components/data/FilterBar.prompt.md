@@ -2,6 +2,10 @@
 
 `FilterBar`는 대시보드의 facet control, 적용된 조건, 개별 제거·전체 초기화, 결과 수, saved-view control을 한 읽기 순서로 정렬하는 **LK Product Extension**입니다. 검색과 page-level action을 소유하는 `DataToolbar`, row 선택 bulk band를 소유하는 `DataGrid`와 역할을 중복하지 않습니다.
 
+`size="sm | md"`는 profile-aware surface gap/padding token을 선택합니다. `ops`는 같은
+filter semantics와 focus-recovery 계약을 더 조밀한 chrome으로 표현할 뿐 query state,
+chip 제거 의미, live result 공지를 바꾸지 않습니다.
+
 ```jsx
 <FilterBar
   controls={<DateRangeField value={range} onChange={setRange} />}

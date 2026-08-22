@@ -118,10 +118,6 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "Link",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
       "component": "SplitButton",
       "relationship": "대표 시나리오에서 조합"
     },

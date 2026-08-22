@@ -120,10 +120,6 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "Link",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
       "component": "SpeedDial",
       "relationship": "대표 시나리오에서 조합"
     },

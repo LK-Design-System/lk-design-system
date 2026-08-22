@@ -6,12 +6,12 @@ import { storyDescription } from './StoryGuide.shared.jsx';
 import { DemoCard } from './StatusProgress.shared.jsx';
 
 const meta = {
-  title: 'LDS Product/Status/Progress',
+  title: 'LDS Core/Components/Status/Progress',
   tags: ['autodocs'],
   parameters: {
     storyGuide: {
-      storyId: 'lds-product-status-progress--progress-indicators',
-      eyebrow: 'Product / Progress',
+      storyId: 'lds-core-components-status-progress--progress-indicators',
+      eyebrow: 'Core / Progress',
       title: '진행 표시는 작업이 얼마나 완료됐거나 아직 처리 중인지 알려줍니다',
       description:
         '업로드·분석·생성처럼 시작과 완료가 있는 작업의 진행률이나 대기 상태를 전달할 때 적합합니다. 작업이 아닌 현재 측정값을 알려진 범위 안에서 비교하려면 Progress 대신 Meter를 사용하세요.',
@@ -19,7 +19,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'CircularProgress와 ProgressBar로 determinate·indeterminate 작업 진행, 크기와 상태 tone을 표현하는 LDS Product 진행 표시 패턴입니다.',
+          'CircularProgress와 ProgressBar로 determinate·indeterminate 작업 진행, 크기와 상태 tone을 표현하는 LDS Core 진행 표시 패턴입니다.',
       },
     },
   },

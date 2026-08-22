@@ -2,6 +2,10 @@
 
 Classification: **LK Product Extension**. 선택 상태와 bulk action은 `DataGrid`가 소유하며 DataToolbar API에 중복하지 않습니다.
 
+`size="sm | md"`는 profile-aware gap/padding token을 선택합니다. 명시적 size가 유지되는
+상태에서 `ops`는 chrome만 조밀화하며 제목·검색·필터·action의 읽기 순서와 query ownership은
+바뀌지 않습니다. `--lds-data-toolbar-*` consumer override가 profile token보다 우선합니다.
+
 ```jsx
 <DataToolbar
   title="사용자 목록"

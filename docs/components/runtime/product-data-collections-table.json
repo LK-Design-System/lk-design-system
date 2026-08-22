@@ -16,7 +16,8 @@
   "avoidWhen": [
     "getRowId — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 row.id, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.",
     "외부 근거: Carbon Data table의 zebra 옵션 — \"행을 따라가는 시선이 옆 행으로 이탈하는 것을 막는\" 넓은 표 장치이며, Carbon은 줄무늬를 끄면 행 구분선을 요구합니다(LDS 기본형이 그 형태). USWDS Table의 striped 변형도 같은 계열입니다. LDS는 두 시스템의 교차 줄무늬 대신 전 행 밴드를 채택합니다(강조 오독 근거는 위).",
-    "Header and body cells use font-variant-numeric: tabular-nums so values do not jitter between rows. Set align: 'right' on comparable numeric columns; nominal identifiers such as postal codes or equipment IDs remain left aligned."
+    "Header and body cells use font-variant-numeric: tabular-nums so values do not jitter between rows. Set align: 'right' on comparable numeric columns; nominal identifiers such as postal codes or equipment IDs remain left aligned.",
+    "셀 패딩과 타입은 --lk-table-cell-pad-sm/md, --lk-table-head-size/line/spacing, --lk-table-cell-size/line 훅을 경유합니다. 매체 훅이 없으면 --component-table-cell-padding-sm/md를 읽고, 그 token의 default 값은 기존 리터럴과 같습니다. 투영·전시처럼 읽기 거리가 다른 매체의 명시적 --lk-table-가 profile token보다 우선합니다. ops 안의 명시적 size=\"md\"도 API 의미는 유지한 채 ops-md token 값을 사용합니다."
   ],
   "anatomy": [
     {
@@ -171,9 +172,7 @@
     "tableLabelledBy — 표 밖에 이미 보이는 제목(heading 등)의 id를 연결해 의 aria-labelledby로 사용합니다. 보이는 제목이 있는 페이지에서는 이름을 중복 작성하지 말고 이 연결을 쓰세요.",
     "getRowProps(row, index) merges native attributes such as data-, className, style, and pointer handlers. It does not add selection, focus, or grid semantics. Use DataGrid when rows must be selected, sorted, or navigated with the keyboard."
   ],
-  "exceptions": [
-    "셀 패딩과 타입은 --lk-table-cell-pad-sm/md, --lk-table-head-size/line/spacing, --lk-table-cell-size/line 훅을 경유하며, 폴백이 곧 기존 리터럴이라 제품 매체는 바이트 동일하게 렌더됩니다. 투영·전시처럼 읽기 거리가 다른 매체가 자기 스코프에서 재지정합니다. 훅은 의도적으로 기본 미정의입니다 — 토큰으로 정의하면 폴백이 죽은 코드가 되고, 제품 기본값의 단일 출처가 리터럴에서 토큰으로 흩어지기 때문입니다(TOKENGOVERNANCE의 컴포넌트 토큰 규칙에 대한 문서화된 예외)."
-  ],
+  "exceptions": [],
   "related": [
     {
       "component": "AnnotatedImage",
@@ -181,10 +180,6 @@
     },
     {
       "component": "BarChart",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "Calendar",
       "relationship": "대표 시나리오에서 조합"
     },
     {
@@ -206,6 +201,10 @@
     {
       "component": "DataGrid",
       "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DataToolbar",
+      "relationship": "대표 시나리오에서 조합"
     }
   ],
   "examples": [
@@ -222,6 +221,8 @@
     "--color-semantic-fill-alternative",
     "--color-semantic-fill-normal",
     "--color-semantic-label-strong",
+    "--component-table-cell-padding-md",
+    "--component-table-cell-padding-sm",
     "--dur-fast",
     "--ease-out",
     "--font-sans",
@@ -282,7 +283,7 @@
     "responsive": "evidence",
     "contentGuidance": "evidence",
     "accessibility": "evidence",
-    "exceptions": "evidence",
+    "exceptions": "omitted-no-evidence",
     "related": "evidence",
     "examples": "evidence",
     "tokens": "evidence",

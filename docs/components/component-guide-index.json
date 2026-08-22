@@ -16,6 +16,10 @@
     "slug": "core-components-action-icon-button"
   },
   {
+    "storybookTitle": "LDS Core/Components/Action/Link",
+    "slug": "core-components-action-link"
+  },
+  {
     "storybookTitle": "LDS Core/Components/Action/Text Button",
     "slug": "core-components-action-text-button"
   },
@@ -132,12 +136,20 @@
     "slug": "core-components-overlay-modal"
   },
   {
+    "storybookTitle": "LDS Core/Components/Overlay/Popover",
+    "slug": "core-components-overlay-popover"
+  },
+  {
     "storybookTitle": "LDS Core/Components/Overlay/Snackbar",
     "slug": "core-components-overlay-snackbar"
   },
   {
     "storybookTitle": "LDS Core/Components/Overlay/Toast",
     "slug": "core-components-overlay-toast"
+  },
+  {
+    "storybookTitle": "LDS Core/Components/Selection and Input/Calendar",
+    "slug": "core-components-selection-and-input-calendar"
   },
   {
     "storybookTitle": "LDS Core/Components/Selection and Input/Card Selection",
@@ -152,8 +164,20 @@
     "slug": "core-components-selection-and-input-chip"
   },
   {
+    "storybookTitle": "LDS Core/Components/Selection and Input/Date Picker",
+    "slug": "core-components-selection-and-input-date-picker"
+  },
+  {
     "storybookTitle": "LDS Core/Components/Selection and Input/Input",
     "slug": "core-components-selection-and-input-input"
+  },
+  {
+    "storybookTitle": "LDS Core/Components/Selection and Input/Number Field",
+    "slug": "core-components-selection-and-input-number-field"
+  },
+  {
+    "storybookTitle": "LDS Core/Components/Selection and Input/Password Input",
+    "slug": "core-components-selection-and-input-password-input"
   },
   {
     "storybookTitle": "LDS Core/Components/Selection and Input/Radio",
@@ -196,6 +220,10 @@
     "slug": "core-components-status-empty-state"
   },
   {
+    "storybookTitle": "LDS Core/Components/Status/Meter",
+    "slug": "core-components-status-meter"
+  },
+  {
     "storybookTitle": "LDS Core/Components/Status/Notices and Callouts",
     "slug": "core-components-status-notices-and-callouts"
   },
@@ -206,6 +234,10 @@
   {
     "storybookTitle": "LDS Core/Components/Status/Overlay Status Chip",
     "slug": "core-components-status-overlay-status-chip"
+  },
+  {
+    "storybookTitle": "LDS Core/Components/Status/Progress",
+    "slug": "core-components-status-progress"
   },
   {
     "storybookTitle": "LDS Core/Components/Status/Skeleton",
@@ -234,10 +266,6 @@
   {
     "storybookTitle": "LDS Product/Action/Copy Button",
     "slug": "product-action-copy-button"
-  },
-  {
-    "storybookTitle": "LDS Product/Action/Link",
-    "slug": "product-action-link"
   },
   {
     "storybookTitle": "LDS Product/Action/Social Login",
@@ -544,24 +572,12 @@
     "slug": "product-overlay-lightbox"
   },
   {
-    "storybookTitle": "LDS Product/Overlay/Popover",
-    "slug": "product-overlay-popover"
-  },
-  {
     "storybookTitle": "LDS Product/Overlay/Sheet",
     "slug": "product-overlay-sheet"
   },
   {
-    "storybookTitle": "LDS Product/Selection and Input/Calendar",
-    "slug": "product-selection-and-input-calendar"
-  },
-  {
     "storybookTitle": "LDS Product/Selection and Input/Color Swatch",
     "slug": "product-selection-and-input-color-swatch"
-  },
-  {
-    "storybookTitle": "LDS Product/Selection and Input/Date Picker",
-    "slug": "product-selection-and-input-date-picker"
   },
   {
     "storybookTitle": "LDS Product/Selection and Input/Date Range",
@@ -586,14 +602,6 @@
   {
     "storybookTitle": "LDS Product/Selection and Input/Input Group",
     "slug": "product-selection-and-input-input-group"
-  },
-  {
-    "storybookTitle": "LDS Product/Selection and Input/Number Field",
-    "slug": "product-selection-and-input-number-field"
-  },
-  {
-    "storybookTitle": "LDS Product/Selection and Input/Password Input",
-    "slug": "product-selection-and-input-password-input"
   },
   {
     "storybookTitle": "LDS Product/Selection and Input/Pin Input",
@@ -646,14 +654,6 @@
   {
     "storybookTitle": "LDS Product/Status/Equipment State",
     "slug": "product-status-equipment-state"
-  },
-  {
-    "storybookTitle": "LDS Product/Status/Meter",
-    "slug": "product-status-meter"
-  },
-  {
-    "storybookTitle": "LDS Product/Status/Progress",
-    "slug": "product-status-progress"
   },
   {
     "storybookTitle": "LDS Product/Status/Telemetry Gauge",

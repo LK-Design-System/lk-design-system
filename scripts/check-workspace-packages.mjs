@@ -448,6 +448,20 @@ const classification = await readJson(
   path.join(root, 'docs', 'references', 'wds', 'PUBLIC_EXPORT_CLASSIFICATION.json'),
   'PUBLIC_EXPORT_CLASSIFICATION.json',
 );
+const ownerAuthority = await readJson(
+  path.join(root, 'docs', 'references', 'architecture', 'OWNER_AUTHORITY_CONTRACT.json'),
+  'OWNER_AUTHORITY_CONTRACT.json',
+);
+const deprecatedReexports = ownerAuthority?.compatibilityProjections?.deprecatedPackageReexports;
+const compatibilitySourceLayer = deprecatedReexports?.sourceLayer;
+const compatibilityRowsBySource = new Map(
+  (deprecatedReexports?.entries ?? [])
+    .filter((entry) => (entry.exports ?? []).length > 0)
+    .map((entry) => [
+      `./${entry.module}`.replace(/\.(jsx|js)$/, '.jsx'),
+      new Set(entry.exports),
+    ]),
+);
 const classifiedOwnerByExport = new Map(
   (classification?.groups ?? []).flatMap((group) =>
     (group.exports ?? []).map((name) => [name, group.ownerLayer])),
@@ -503,7 +517,31 @@ for (const packageInfo of packages) {
   }
 
   const publicRows = await readPublicEntry(path.join(packageRoot, 'src', 'index.js'), `${packageInfo.name} public entry`);
-  for (const row of publicRows) ownershipRows.push({ ...row, owner: packageInfo.layer, packageName: packageInfo.name });
+  const seenCompatibilitySources = new Set();
+  for (const row of publicRows) {
+    const ownedNames = row.names.filter((name) => classifiedOwnerByExport.get(name) === packageInfo.layer);
+    const compatibilityNames = row.names.filter((name) => classifiedOwnerByExport.get(name) !== packageInfo.layer);
+    if (ownedNames.length > 0) {
+      ownershipRows.push({ ...row, names: ownedNames, owner: packageInfo.layer, packageName: packageInfo.name });
+    }
+    if (compatibilityNames.length > 0) {
+      const expectedNames = compatibilityRowsBySource.get(row.source);
+      const validCompatibility = packageInfo.id === compatibilitySourceLayer
+        && expectedNames
+        && compatibilityNames.every((name) => expectedNames.has(name))
+        && expectedNames.size === compatibilityNames.length;
+      if (!validCompatibility) {
+        fail(`${packageInfo.name}: ${row.source} exports non-owned names without an exact deprecated compatibility contract (${compatibilityNames.join(', ')}).`);
+      } else {
+        seenCompatibilitySources.add(row.source);
+      }
+    }
+  }
+  if (packageInfo.id === compatibilitySourceLayer) {
+    for (const source of compatibilityRowsBySource.keys()) {
+      if (!seenCompatibilitySources.has(source)) fail(`${packageInfo.name}: missing deprecated compatibility root re-export ${source}.`);
+    }
+  }
   await validateBuild(packageInfo, publicRows);
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DatePicker } from './DatePicker.jsx';
+import { DatePicker } from '@lk-design-system/lds-core/components/forms/DatePicker';
 
 const ORDER_ERROR_MESSAGE = '종료일은 시작일보다 빠를 수 없습니다.';
 const GENERIC_ERROR_MESSAGE = '기간 값을 확인해 주세요.';

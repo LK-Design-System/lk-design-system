@@ -10,7 +10,7 @@
     "direct-wds": "A public export that directly supports a WDS core family or foundation role.",
     "wds-adjacent": "A generic export that supports a WDS section but still needs Figma node-level confirmation before being treated as direct WDS parity.",
     "theme-override": "A public export that applies LK ROBOTICS brand/theme decisions over WDS structure.",
-    "product-extension": "A reusable LK product export beyond direct WDS coverage.",
+    "product-extension": "A reusable LK surface that originated beyond direct WDS coverage in the Product layer; live owner may later change without rewriting provenance.",
     "robotics-extension": "A robotics, viewer, telemetry, map, or editor export beyond WDS core."
   },
   "groups": [
@@ -78,6 +78,17 @@
       ]
     },
     {
+      "name": "Generic link navigation",
+      "ownerLayer": "core",
+      "provenance": "product-extension",
+      "storyEvidence": [
+        "stories/ActionLink.stories.jsx"
+      ],
+      "exports": [
+        "Link"
+      ]
+    },
+    {
       "name": "Action product extensions",
       "ownerLayer": "product",
       "provenance": "product-extension",
@@ -86,13 +97,11 @@
         "stories/ActionSplitButton.stories.jsx",
         "stories/ActionSpeedDial.stories.jsx",
         "stories/ActionCopyButton.stories.jsx",
-        "stories/ActionLink.stories.jsx",
         "stories/SocialButtons.stories.jsx"
       ],
       "exports": [
         "ButtonGroup",
         "CopyButton",
-        "Link",
         "SpeedDial",
         "SplitButton",
         "SocialButton"
@@ -218,13 +227,23 @@
       ]
     },
     {
+      "name": "Generic calendar input",
+      "ownerLayer": "core",
+      "provenance": "product-extension",
+      "storyEvidence": [
+        "stories/DataCalendar.stories.jsx"
+      ],
+      "exports": [
+        "Calendar"
+      ]
+    },
+    {
       "name": "Data visualization and data workflows",
       "ownerLayer": "product",
       "provenance": "product-extension",
       "storyEvidence": [
         "stories/ContentCarousel.stories.jsx",
         "stories/DataAnnotatedImage.stories.jsx",
-        "stories/DataCalendar.stories.jsx",
         "stories/DataChartFrame.stories.jsx",
         "stories/DataCollectionPanel.stories.jsx",
         "stories/DataDescriptionList.stories.jsx",
@@ -250,7 +269,6 @@
       "exports": [
         "AnnotatedImage",
         "BarChart",
-        "Calendar",
         "Carousel",
         "ChartFrame",
         "DataCollectionPanel",
@@ -332,17 +350,40 @@
       ]
     },
     {
+      "name": "Generic password input",
+      "ownerLayer": "core",
+      "provenance": "direct-wds",
+      "wdsFamily": "Textinput/Textfield",
+      "storyEvidence": [
+        "stories/FormPasswordInput.stories.jsx"
+      ],
+      "exports": [
+        "PasswordInput"
+      ]
+    },
+    {
       "name": "WDS-derived product input composites",
       "ownerLayer": "product",
       "provenance": "direct-wds",
       "wdsFamily": "Textinput/Textfield",
       "storyEvidence": [
-        "stories/FormInputGroup.stories.jsx",
-        "stories/FormPasswordInput.stories.jsx"
+        "stories/FormInputGroup.stories.jsx"
       ],
       "exports": [
-        "InputGroup",
-        "PasswordInput"
+        "InputGroup"
+      ]
+    },
+    {
+      "name": "Generic date and number inputs",
+      "ownerLayer": "core",
+      "provenance": "product-extension",
+      "storyEvidence": [
+        "stories/FormAdvancedInputs.stories.jsx",
+        "stories/FormDateTime.stories.jsx"
+      ],
+      "exports": [
+        "DatePicker",
+        "NumberField"
       ]
     },
     {
@@ -350,9 +391,7 @@
       "ownerLayer": "product",
       "provenance": "product-extension",
       "storyEvidence": [
-        "stories/FormAdvancedInputs.stories.jsx",
         "stories/FormDateRange.stories.jsx",
-        "stories/FormDateTime.stories.jsx",
         "stories/FormFieldAction.stories.jsx",
         "stories/FormFileUploadQueue.stories.jsx",
         "stories/FormPinInput.stories.jsx",
@@ -369,13 +408,11 @@
       ],
       "exports": [
         "ColorSwatch",
-        "DatePicker",
         "DateRangeField",
         "FieldAction",
         "FileUpload",
         "FileUploadQueue",
         "IconPicker",
-        "NumberField",
         "PinInput",
         "PropertyField",
         "SearchableMultiSelect",
@@ -564,19 +601,29 @@
       ]
     },
     {
+      "name": "Generic anchored popover",
+      "ownerLayer": "core",
+      "provenance": "wds-adjacent",
+      "wdsFamily": "Tooltip/Tooltip, Menu/Menu",
+      "storyEvidence": [
+        "stories/OverlayPopover.stories.jsx"
+      ],
+      "exports": [
+        "Popover"
+      ]
+    },
+    {
       "name": "WDS-adjacent product overlays",
       "ownerLayer": "product",
       "provenance": "wds-adjacent",
       "wdsFamily": "Tooltip/Tooltip, Menu/Menu",
       "storyEvidence": [
         "stories/NavigationMenubar.stories.jsx",
-        "stories/OverlayHoverCard.stories.jsx",
-        "stories/OverlayPopover.stories.jsx"
+        "stories/OverlayHoverCard.stories.jsx"
       ],
       "exports": [
         "HoverCard",
-        "Menubar",
-        "Popover"
+        "Menubar"
       ]
     },
     {
@@ -628,8 +675,8 @@
       ]
     },
     {
-      "name": "WDS-derived product status indicators",
-      "ownerLayer": "product",
+      "name": "Generic progress and measurement indicators",
+      "ownerLayer": "core",
       "provenance": "direct-wds",
       "wdsFamily": "Skeleton, Circular",
       "storyEvidence": [
@@ -910,7 +957,7 @@
     },
     {
       "path": "components/overlay/anchored-panel-style.js",
-      "ownerLayer": "product"
+      "ownerLayer": "core"
     },
     {
       "path": "components/overlay/dialog-focus.js",

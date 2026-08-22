@@ -4,22 +4,22 @@
   "kind": "lds-robotics-external-public-surface",
   "package": {
     "name": "@lk-design-system/lds-robotics-ui",
-    "version": "0.1.0-rc.30",
+    "version": "0.1.0-rc.32",
     "repository": "LK-Design-System/lk-design-system-robotics",
     "refStatus": "published"
   },
   "vendoredArtifact": {
-    "path": "vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.30.tgz",
-    "sha256": "2f9fe8ce8c78608eb23872d7c06224d14f5961137d409c7e82e726037628e1d7"
+    "path": "vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.32.tgz",
+    "sha256": "c6a2f5b904cfa1a4151c3c488aff3932d7e82fed4a7d67fa68e955bcedf9be8f"
   },
   "documentation": {
     "canonicalContract": {
       "kind": "lds-ui-adoption-contract",
       "contractVersion": "1",
-      "snapshotManifestSha256": "07530a3b5ba9bed2d5ade013c8132b8df91c6bb23b95a9df0d2f052726cf806d",
+      "snapshotManifestSha256": "126fdd2242ace05a32255792634bfde1ba111285bd67aa48c3820b94df3a9f33",
       "source": {
         "repository": "LK-Design-System/lk-design-system",
-        "ref": "lds-v0.1.0-rc.69.30",
+        "ref": "lds-v0.1.0-rc.69.31",
         "refStatus": "release-candidate",
         "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
         "sha256": "f4c4f71cff9f9108246a5f7cc5520d6095d599027adb75d0b61e385c5b7fef80"
@@ -28,7 +28,7 @@
     "files": {
       "manifest": {
         "path": "docs/package/manifest.json",
-        "sha256": "96a2982474083c8e9b4cf9dd6a9ce5b5f55330aa575abe33e1fa50c278c58ed6"
+        "sha256": "c2c426c7fe292ec404877cd4ff6f73c015f4dbaf695e0e2ad0b0ac7e1a467004"
       },
       "checklist": {
         "path": "docs/package/adoption-checklist.json",
@@ -52,11 +52,11 @@
       },
       "workflow": {
         "path": "docs/package/adoption-workflow.md",
-        "sha256": "d23240ce3a697ead9f7614f5f80e1d747b6808381a6d646555a6157a4d5c0754"
+        "sha256": "aa613a773cc39d795c5ed3cdf70d218f461c842c078e2c9405d8ef6adde81494"
       },
       "llms": {
         "path": "docs/package/llms.txt",
-        "sha256": "a8f3fdd470e30b6f11aefd93d94b2407824809eba70060e14ee6d9e041cfc329"
+        "sha256": "60de63e526df993fd51d5fb73dd2e81248e044ca24abcde151333087c0486478"
       },
       "domainIndex": {
         "path": "docs/package/domain/README.md",
@@ -64,11 +64,11 @@
       },
       "tokenManifest": {
         "path": "docs/package/tokens/manifest.json",
-        "sha256": "7cca7ce0dfaa0a0aed3e733793586e91ec07ddaed1b47f04d4bc9864ebbf3ea2"
+        "sha256": "8fa40df3aeae21829b9a46357b1701f6feed18962badf245e64f3a9e4c16a9cf"
       },
       "domainSymbolRegistry": {
         "path": "docs/package/domain-symbol-registry.json",
-        "sha256": "6a81893b8e21b47f888ec46f8eae2a0406c5ea4740f0c3f72cf46fcd987894a5"
+        "sha256": "678e4f19f7028978600ae27eea9160de344ef288f0b7f6b705cea9d74ae4b504"
       }
     },
     "domainDocuments": [

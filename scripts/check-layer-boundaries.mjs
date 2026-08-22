@@ -1,11 +1,17 @@
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import ts from 'typescript';
+import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
 
 const root = process.cwd();
 const componentsRoot = 'components';
 const ownerAuthorityPath = 'docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json';
 const ownerAuthority = JSON.parse(await readFile(path.join(root, ownerAuthorityPath), 'utf8'));
+const deprecatedReexports = ownerAuthority.compatibilityProjections?.deprecatedPackageReexports;
+const compatibilitySourceModules = new Set(
+  (deprecatedReexports?.entries ?? []).map((entry) => entry.module?.replaceAll('\\', '/')).filter(Boolean),
+);
 const authorityLayers = Array.isArray(ownerAuthority.layers) ? ownerAuthority.layers : [];
 const layers = authorityLayers.map((layer) => layer.id);
 const layerSet = new Set(layers);
@@ -334,6 +340,9 @@ async function validateLiveOwnerAuthority(componentModules) {
     for (const packageModule of packageModules) {
       const relative = packageModule.slice(`${moduleRoot}/`.length);
       const compatibilityPath = `${componentsRoot}/${relative}`;
+      if (layer.id === deprecatedReexports?.sourceLayer && compatibilitySourceModules.has(compatibilityPath)) {
+        continue;
+      }
       const rows = packageModuleOwnerRows.get(compatibilityPath) ?? [];
       rows.push({ ownerLayer: layer.id, packageModule });
       packageModuleOwnerRows.set(compatibilityPath, rows);
@@ -596,6 +605,122 @@ function findLayerCycles(layerGraph) {
   return cycles.sort((a, b) => a.localeCompare(b));
 }
 
+async function validateDeprecatedPackageReexports(manifest, liveAuthority) {
+  const failures = [];
+  const projection = deprecatedReexports;
+  const decisionPath = normalizeManifestPath(ownerAuthority.compatibilityProjections?.ownerApiDecisionRegister);
+  if (!projection || !decisionPath) {
+    return [`${ownerAuthorityPath} must define the R3B decision register and deprecated package re-exports.`];
+  }
+
+  const layerById = new Map(authorityLayers.map((layer) => [layer.id, layer]));
+  const sourceLayer = layerById.get(projection.sourceLayer);
+  const targetLayer = layerById.get(projection.targetLayer);
+  if (!sourceLayer?.packageRoot || !targetLayer?.packageRoot || sourceLayer.id === targetLayer.id) {
+    failures.push(`${projection.id || '<compatibility projection>'}: sourceLayer and targetLayer must name distinct local packages.`);
+    return failures;
+  }
+  if (projection.status !== 'active' || projection.supportWindow !== 'all-0.1.x-releases' || projection.earliestRemoval !== '0.2.0') {
+    failures.push(`${projection.id}: compatibility must remain active for every 0.1.x release and cannot be removed before 0.2.0.`);
+  }
+  if (typeof projection.removalGate !== 'string' || projection.removalGate.trim().length < 24) {
+    failures.push(`${projection.id}: removalGate must name the consumer and release evidence required for removal.`);
+  }
+  if (!allowedDependencies[sourceLayer.id]?.has(targetLayer.id)) {
+    failures.push(`${projection.id}: ${sourceLayer.id} must allow a dependency on ${targetLayer.id}.`);
+  }
+
+  const sourceEntry = await readSource(normalizeManifestPath(sourceLayer.publicEntry));
+  const classifiedOwnerByExport = new Map(
+    (manifest.groups ?? []).flatMap((group) => (group.exports ?? []).map((name) => [name, group.ownerLayer])),
+  );
+  const seenModules = new Set();
+  const movedSubjects = new Set();
+  for (const [index, entry] of (projection.entries ?? []).entries()) {
+    const modulePath = normalizeManifestPath(entry?.module);
+    if (!modulePath || !modulePath.startsWith('components/') || !/\.(jsx|js)$/.test(modulePath)) {
+      failures.push(`${projection.id}.entries[${index}]: module must name a canonical components/ JavaScript module.`);
+      continue;
+    }
+    if (seenModules.has(modulePath)) failures.push(`${projection.id}: duplicate compatibility module ${modulePath}.`);
+    seenModules.add(modulePath);
+    if (!liveAuthority.packageModuleOwners.has(modulePath) || liveAuthority.packageModuleOwners.get(modulePath) !== targetLayer.id) {
+      failures.push(`${modulePath}: compatibility target must be live-owned by ${targetLayer.id}.`);
+    }
+    const wrapperPath = `${normalizeManifestPath(sourceLayer.moduleRoot)}/${modulePath.slice('components/'.length)}`;
+    const declarationPath = wrapperPath.replace(/\.(jsx|js)$/, '.d.ts');
+    const wrapper = await readSource(wrapperPath).catch(() => null);
+    const declaration = await readSource(declarationPath).catch(() => null);
+    const targetSpecifier = `${targetLayer.package}/${modulePath.replace(/\.(jsx|js)$/, '')}`;
+    if (!wrapper || !wrapper.includes('@deprecated') || !wrapper.includes(targetSpecifier)) {
+      failures.push(`${wrapperPath}: generated compatibility wrapper must be deprecated and re-export ${targetSpecifier}.`);
+    }
+    if (!declaration || !declaration.includes('@deprecated') || !declaration.includes(targetSpecifier)) {
+      failures.push(`${declarationPath}: generated compatibility declaration must be deprecated and re-export ${targetSpecifier}.`);
+    }
+    if (!Array.isArray(entry.exports)) {
+      failures.push(`${modulePath}: compatibility exports must be an array.`);
+      continue;
+    }
+    for (const exportName of entry.exports) {
+      movedSubjects.add(exportName);
+      if (classifiedOwnerByExport.get(exportName) !== targetLayer.id) {
+        failures.push(`${exportName}: compatibility export must be classified to ${targetLayer.id}.`);
+      }
+      if (!sourceEntry.includes(`export { ${entry.exports.join(', ')} } from './${modulePath}';`)) {
+        failures.push(`${sourceLayer.publicEntry}: missing deprecated root compatibility re-export for ${entry.exports.join(', ')}.`);
+        break;
+      }
+    }
+    if (entry.exports.length === 0) movedSubjects.add(path.posix.basename(modulePath).replace(/\.(jsx|js)$/, ''));
+  }
+  if (seenModules.size === 0) failures.push(`${projection.id}: compatibility entries cannot be empty.`);
+
+  const decisionRegister = await readJson(decisionPath).catch(() => null);
+  const schemaPath = decisionRegister?.$schema?.startsWith('./')
+    ? path.posix.join(path.posix.dirname(decisionPath), decisionRegister.$schema.slice(2))
+    : null;
+  const decisionSchema = schemaPath ? await readJson(schemaPath).catch(() => null) : null;
+  if (!decisionRegister || !decisionSchema) {
+    failures.push(`${decisionPath}: decision register and its relative schema must be readable.`);
+    return failures;
+  }
+  try {
+    const ajv = new Ajv2020({ allErrors: true, strict: true });
+    addFormats(ajv);
+    const validate = ajv.compile(decisionSchema);
+    if (!validate(decisionRegister)) {
+      failures.push(`${decisionPath}: schema validation failed (${(validate.errors ?? []).map((error) => `${error.instancePath || '/'} ${error.message}`).join('; ')}).`);
+    }
+  } catch (error) {
+    failures.push(`${decisionPath}: schema could not be compiled (${error.message}).`);
+  }
+  if (decisionRegister.supportWindow?.policy !== projection.supportWindow || decisionRegister.supportWindow?.earliestRemoval !== projection.earliestRemoval) {
+    failures.push(`${decisionPath}: support window must match ${ownerAuthorityPath}.`);
+  }
+  const decisions = decisionRegister.decisions ?? [];
+  const decisionIds = decisions.map((decision) => decision.id);
+  if (new Set(decisionIds).size !== decisionIds.length) failures.push(`${decisionPath}: decision ids must be unique.`);
+  const moveNowSubjects = new Set(
+    decisions.filter((decision) => decision.decision === 'move-now').flatMap((decision) => decision.subjects ?? []),
+  );
+  for (const subject of movedSubjects) {
+    if (!moveNowSubjects.has(subject)) failures.push(`${decisionPath}: moved compatibility subject ${subject} lacks a move-now decision.`);
+  }
+  for (const decision of decisions) {
+    if (decision.decision === 'defer' && (!decision.reviewTrigger || !decision.nextReview)) {
+      failures.push(`${decision.id}: deferred decisions require a reviewTrigger and nextReview.`);
+    }
+    for (const subject of decision.subjects ?? []) {
+      const classifiedOwner = classifiedOwnerByExport.get(subject);
+      if (classifiedOwner && classifiedOwner !== decision.ownerLayer) {
+        failures.push(`${decision.id}: ${subject} decision owner ${decision.ownerLayer} differs from classified owner ${classifiedOwner}.`);
+      }
+    }
+  }
+  return failures;
+}
+
 async function main() {
   const manifest = await readJson(classificationPath);
   const roboticsExternalSurface = await readJson(roboticsExternalSurfacePath);
@@ -612,6 +737,7 @@ async function main() {
   const ownershipFailures = [];
   const liveAuthority = await validateLiveOwnerAuthority(componentModules);
   ownershipFailures.push(...liveAuthority.failures);
+  ownershipFailures.push(...await validateDeprecatedPackageReexports(manifest, liveAuthority));
 
   if (!Array.isArray(manifest.groups)) {
     throw new Error(`${classificationPath} must define groups[].`);
@@ -792,6 +918,8 @@ async function main() {
   }
   const requiredDomainDecisions = [
     'generic-command-primitives',
+    'generic-navigation-input-and-overlay-primitives',
+    'generic-progress-and-measurement-primitives',
     'application-navigation',
     'workspace-command-chrome',
     'renderer-neutral-telemetry',

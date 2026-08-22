@@ -3,7 +3,6 @@
 export { BRAND_LOGO_NAMES, BrandLogo } from './components/brand/BrandLogo.jsx';
 export { ButtonGroup } from './components/buttons/ButtonGroup.jsx';
 export { CopyButton } from './components/buttons/CopyButton.jsx';
-export { Link } from './components/buttons/Link.jsx';
 export { SocialButton } from './components/buttons/SocialButton.jsx';
 export { SpeedDial } from './components/buttons/SpeedDial.jsx';
 export { SplitButton } from './components/buttons/SplitButton.jsx';
@@ -32,7 +31,6 @@ export { SourceDisclosure } from './components/content/SourceDisclosure.jsx';
 export { StatList } from './components/content/StatList.jsx';
 export { AnnotatedImage } from './components/data/AnnotatedImage.jsx';
 export { BarChart } from './components/data/BarChart.jsx';
-export { Calendar } from './components/data/Calendar.jsx';
 export { Carousel } from './components/data/Carousel.jsx';
 export { ChartFrame } from './components/data/ChartFrame.jsx';
 export { DataCollectionPanel } from './components/data/DataCollectionPanel.jsx';
@@ -63,14 +61,11 @@ export { SelectionInspector } from './components/editor/SelectionInspector.jsx';
 export { ViewportStatusBar } from './components/editor/ViewportStatusBar.jsx';
 export { Rating } from './components/feedback/Rating.jsx';
 export { ColorSwatch } from './components/forms/ColorSwatch.jsx';
-export { DatePicker } from './components/forms/DatePicker.jsx';
 export { DateRangeField } from './components/forms/DateRangeField.jsx';
 export { FieldAction } from './components/forms/FieldAction.jsx';
 export { FileUpload } from './components/forms/FileUpload.jsx';
 export { FileUploadQueue } from './components/forms/FileUploadQueue.jsx';
 export { InputGroup } from './components/forms/InputGroup.jsx';
-export { NumberField } from './components/forms/NumberField.jsx';
-export { PasswordInput } from './components/forms/PasswordInput.jsx';
 export { PinInput } from './components/forms/PinInput.jsx';
 export { PropertyField } from './components/forms/PropertyField.jsx';
 export { SearchableMultiSelect } from './components/forms/SearchableMultiSelect.jsx';
@@ -101,7 +96,6 @@ export { CommandPalette } from './components/overlay/CommandPalette.jsx';
 export { Drawer, DrawerSection } from './components/overlay/Drawer.jsx';
 export { HoverCard } from './components/overlay/HoverCard.jsx';
 export { Lightbox } from './components/overlay/Lightbox.jsx';
-export { Popover } from './components/overlay/Popover.jsx';
 export { Sheet } from './components/overlay/Sheet.jsx';
 export { BatteryGauge } from './components/robotics/BatteryGauge.jsx';
 export { ConnectionBadge } from './components/robotics/ConnectionBadge.jsx';
@@ -109,9 +103,6 @@ export { EquipmentStatusCard } from './components/robotics/EquipmentStatusCard.j
 export { IconPicker } from './components/selection/IconPicker.jsx';
 export { ToggleButton } from './components/selection/ToggleButton.jsx';
 export { WheelPicker } from './components/selection/WheelPicker.jsx';
-export { CircularProgress } from './components/status/CircularProgress.jsx';
-export { Meter } from './components/status/Meter.jsx';
-export { ProgressBar } from './components/status/ProgressBar.jsx';
 export { ElevatorFleetOverview } from './components/viz/ElevatorFleetOverview.jsx';
 export { Map2DCanvas } from './components/viz/Map2DCanvas.jsx';
 export { Scene3DFrame } from './components/viz/Scene3DFrame.jsx';
@@ -120,3 +111,21 @@ export { TelemetryValue } from './components/viz/TelemetryValue.jsx';
 export { VideoStreamTile } from './components/viz/VideoStreamTile.jsx';
 export { VIEWER_BLOCKING_STATES, VIEWER_STATES, ViewerFrame } from './components/viz/ViewerFrame.jsx';
 export { ViewerToolbar, ViewerToolbarButton } from './components/viz/ViewerToolbar.jsx';
+/** @deprecated Import from @lk-design-system/lds-core. This product compatibility re-export is supported through 0.1.x and may be removed in 0.2.0. */
+export { Link } from './components/buttons/Link.jsx';
+/** @deprecated Import from @lk-design-system/lds-core. This product compatibility re-export is supported through 0.1.x and may be removed in 0.2.0. */
+export { Calendar } from './components/data/Calendar.jsx';
+/** @deprecated Import from @lk-design-system/lds-core. This product compatibility re-export is supported through 0.1.x and may be removed in 0.2.0. */
+export { DatePicker } from './components/forms/DatePicker.jsx';
+/** @deprecated Import from @lk-design-system/lds-core. This product compatibility re-export is supported through 0.1.x and may be removed in 0.2.0. */
+export { NumberField } from './components/forms/NumberField.jsx';
+/** @deprecated Import from @lk-design-system/lds-core. This product compatibility re-export is supported through 0.1.x and may be removed in 0.2.0. */
+export { PasswordInput } from './components/forms/PasswordInput.jsx';
+/** @deprecated Import from @lk-design-system/lds-core. This product compatibility re-export is supported through 0.1.x and may be removed in 0.2.0. */
+export { Popover } from './components/overlay/Popover.jsx';
+/** @deprecated Import from @lk-design-system/lds-core. This product compatibility re-export is supported through 0.1.x and may be removed in 0.2.0. */
+export { CircularProgress } from './components/status/CircularProgress.jsx';
+/** @deprecated Import from @lk-design-system/lds-core. This product compatibility re-export is supported through 0.1.x and may be removed in 0.2.0. */
+export { Meter } from './components/status/Meter.jsx';
+/** @deprecated Import from @lk-design-system/lds-core. This product compatibility re-export is supported through 0.1.x and may be removed in 0.2.0. */
+export { ProgressBar } from './components/status/ProgressBar.jsx';

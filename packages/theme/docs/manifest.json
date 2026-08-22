@@ -3,7 +3,7 @@
   "kind": "lds-package-documentation",
   "package": {
     "name": "@lk-design-system/lds-theme",
-    "version": "0.1.0-rc.69.30",
+    "version": "0.1.0-rc.69.31",
     "layer": "theme"
   },
   "adoption": {
@@ -51,7 +51,7 @@
   },
   "source": {
     "repository": "LK-Design-System/lk-design-system",
-    "ref": "lds-v0.1.0-rc.69.30",
+    "ref": "lds-v0.1.0-rc.69.31",
     "documents": [
       {
         "path": "docs/foundations/color.md",
@@ -95,15 +95,15 @@
       },
       {
         "path": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
-        "sha256": "d5694ee38257fd40902ede5248f1ef5d102c305a9d2934a0fa4a9740d5baf7c1"
+        "sha256": "2316cc6be2c14a463b9e8080e696a51b14d9ace448d11ee61e16f9d5dec390fc"
       }
     ]
   },
   "resources": {
     "tokens": {
       "fileCount": 8,
-      "bytes": 64290,
-      "sha256": "4304bad00718433cc464998948976cc04bffbe8cb09e8aa507e1466549c79b83"
+      "bytes": 66976,
+      "sha256": "0100416aa20fde811719ca5a109463d4e24e2a8eed21584a9333d083de985796"
     },
     "assets": {
       "fileCount": 67,
@@ -144,7 +144,7 @@
     },
     {
       "path": "adoption-workflow.md",
-      "sha256": "559f5b57b323c7d8c4bd51920cdfbdcbfbca48bcda4cf2c77d3468691ad7b1f9",
+      "sha256": "54a828f48dd719cd17778ae900a30923fbcbd71e7157ea10f086c5043c0d9491",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
@@ -214,7 +214,7 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "114e8a8ab9a16df4880c0fa0760572addb67fa3564d84f04241b87ce3b3d8462",
+      "sha256": "82abb363b7b0a1500a49ac61219eb3450371aabb521758079a6dcc77d99f7114",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
@@ -244,11 +244,11 @@
     },
     {
       "path": "profile-contract.json",
-      "sha256": "d5694ee38257fd40902ede5248f1ef5d102c305a9d2934a0fa4a9740d5baf7c1",
+      "sha256": "2316cc6be2c14a463b9e8080e696a51b14d9ace448d11ee61e16f9d5dec390fc",
       "sources": [
         {
           "path": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
-          "sha256": "d5694ee38257fd40902ede5248f1ef5d102c305a9d2934a0fa4a9740d5baf7c1"
+          "sha256": "2316cc6be2c14a463b9e8080e696a51b14d9ace448d11ee61e16f9d5dec390fc"
         }
       ]
     }

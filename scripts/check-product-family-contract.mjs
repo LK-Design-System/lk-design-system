@@ -35,12 +35,19 @@ const packageManifest = JSON.parse(await readFile(path.join(root, packagePath), 
 const packagedContract = JSON.parse(await readFile(path.join(root, packagedContractPath), 'utf8'));
 const ownerAuthority = JSON.parse(await readFile(path.join(root, ownerAuthorityPath), 'utf8'));
 const entry = await readFile(path.join(root, entryPath), 'utf8');
+const deprecatedReexports = ownerAuthority.compatibilityProjections?.deprecatedPackageReexports;
+const compatibilitySources = new Set(
+  (deprecatedReexports?.entries ?? [])
+    .filter((entry) => (entry.exports ?? []).length > 0)
+    .map((entry) => normalize(`./${entry.module}`)),
+);
 
 assert(contract.schemaVersion === 1, `${contractPath} must use schemaVersion 1.`);
 assert(contract.status === 'active' && contract.authority === 'live', `${contractPath} must be the active live contract.`);
 assert(contract.package === packageManifest.name, `${contractPath} package must match ${packagePath}.`);
 assert(contract.layer === packageManifest.lds?.layer, `${contractPath} layer must match package metadata.`);
 assert(contract.ownerBoundaryAuthority === ownerAuthorityRef, `${contractPath} must delegate cross-layer boundaries to ${ownerAuthorityRef}.`);
+assert(contract.ownerApiDecisionRegister === ownerAuthority.compatibilityProjections?.ownerApiDecisionRegister, `${contractPath} must reference the live R3B owner/API decision register.`);
 assert(packageManifest.lds?.familyContract === './docs/product-family-contract.json', `${packagePath} must point to its packaged family contract.`);
 assert(JSON.stringify(packagedContract) === JSON.stringify(contract), `${packagedContractPath} must match ${contractPath}.`);
 assert(Array.isArray(contract.families) && contract.families.length === 3, `${contractPath} must define Application, Operations and Workspace.`);
@@ -60,8 +67,11 @@ for (let index = 0; index < prefixRows.length; index += 1) {
   }
 }
 
-const rows = parsePublicSources(entry);
+const allRows = parsePublicSources(entry);
+const compatibilityRows = allRows.filter((row) => compatibilitySources.has(row.source));
+const rows = allRows.filter((row) => !compatibilitySources.has(row.source));
 assert(rows.length > 0, `${entryPath} has no public exports.`);
+assert(compatibilityRows.length === compatibilitySources.size, `${entryPath} must expose every contracted Product compatibility re-export exactly once.`);
 const seenNames = new Set();
 const familyCounts = new Map(familyIds.map((id) => [id, 0]));
 const familyByExport = new Map();
@@ -106,4 +116,4 @@ if (boundaryFailures.length > 0) {
   throw new Error(`Product owner boundary contract failed:\n${boundaryFailures.sort().map((failure) => `- ${failure}`).join('\n')}`);
 }
 
-console.log(`Validated Product family contract: ${rows.length} public source modules, ${seenNames.size} exports, families ${familyIds.join(', ')}, ${productBoundaryDecisions.length} cross-layer boundary decisions.`);
+console.log(`Validated Product family contract: ${rows.length} owned public source modules, ${seenNames.size} owned exports, ${compatibilityRows.length} deprecated Core compatibility modules, families ${familyIds.join(', ')}, ${productBoundaryDecisions.length} cross-layer boundary decisions.`);

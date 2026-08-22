@@ -1,5 +1,8 @@
 **Toolbar** — 그룹화된 컨트롤(아이콘 버튼, 토글)을 위한 가로 컨테이너.
 
+container gap/padding은 expression-profile token을 사용합니다. `ops`는 chrome만 좁히고
+자식 control의 명시적 size, roving Tab stop, 방향키 축과 semantic role은 바꾸지 않습니다.
+
 ```jsx
 <Toolbar>
   <IconButton variant="ghost" label="undo"><Icon name="arrow-left" /></IconButton>

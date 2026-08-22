@@ -83,7 +83,6 @@
 | Component | Relationship |
 | --- | --- |
 | `HoverCard` | 대표 시나리오에서 조합 |
-| `Popover` | 대표 시나리오에서 조합 |
 
 ## Examples
 

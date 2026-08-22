@@ -1,6 +1,6 @@
 {
   "name": "@lk-design-system/lds-workspace",
-  "version": "0.1.0-rc.69.30",
+  "version": "0.1.0-rc.69.31",
   "packageManager": "npm@10.9.2",
   "private": true,
   "description": "Private workspace orchestrator for the layered LK ROBOTICS design system.",
@@ -38,12 +38,14 @@
     "check:audit": "node scripts/run-package-command.mjs audit-runtime",
     "check:types": "tsc --noEmit",
     "check:type-consumer": "tsc -p tsconfig.consumer-react19.json && tsc -p tsconfig.consumer-react18.json",
-    "check:layers": "node scripts/check-layer-boundaries.mjs && node scripts/check-product-family-contract.mjs",
+    "check:layers": "node scripts/check-layer-boundaries.mjs && node scripts/check-product-family-contract.mjs && node --test scripts/check-owner-api-compatibility.test.mjs",
     "check:product-families": "node scripts/check-product-family-contract.mjs",
     "check:expression-profile": "node scripts/check-expression-profile-contract.mjs",
+    "check:density": "node scripts/check-density-coverage.mjs && node --test scripts/check-density-coverage.test.mjs",
+    "update:density-coverage": "node scripts/check-density-coverage.mjs --update",
     "check:expression-profile-visual": "node scripts/check-expression-profile-visual-matrix.mjs --check",
     "update:expression-profile-visual": "node scripts/check-expression-profile-visual-matrix.mjs --update",
-    "check:adoption-registry": "node scripts/check-consumer-adoption-registry.mjs",
+    "check:adoption-registry": "node scripts/check-consumer-adoption-registry.mjs && node --test scripts/check-consumer-adoption-registry.test.mjs",
     "check:legacy-active": "node scripts/check-legacy-active-references.mjs",
     "check:robotics-readiness": "node scripts/check-robotics-readiness.mjs",
     "check:workspace-packages": "node scripts/check-workspace-packages.mjs",
@@ -54,7 +56,7 @@
     "check:consumer:matrix": "node scripts/check-wave0-consumer-matrix.mjs",
     "capture:consumer:matrix": "node scripts/check-wave0-consumer-matrix.mjs --capture",
     "assemble:consumer:matrix": "node scripts/assemble-wave0-consumer-matrix.mjs",
-    "check:fast": "node scripts/run-package-scripts.mjs build check:packed-select check:table-scroll-gutter check:tokens check:spacing-scale check:story-tokens check:guide-surfaces check:storybook-copy check:korean-ui-copy check:foundations check:adoption check:patterns check:components check:conformance check:token-hygiene check:scroll-surfaces check:surface-ownership check:colors check:type-surface check:type-consumer check:layers check:expression-profile check:package-migration check:api-drift check:api-grammar check:dimension-literals check:motion-hygiene check:prompt-contracts check:story-coverage check:engine-reuse check:engine-contracts check:parity check:foundation-parity check:component-styles check:contracts check:docs check:product-frontends check:icon-drawing-style check:wds-alignment check:wds-local-fig check:avatar-duplicates check:story-subjects check:visual-token-drift check:release-immutability check:release-pins check:satellite-pins check:publish-policy check:deprecations check:types check:entry check:brand check:brand-products check:generated check:consumer check:adoption-registry check:legacy-active",
+    "check:fast": "node scripts/run-package-scripts.mjs build check:packed-select check:table-scroll-gutter check:tokens check:spacing-scale check:story-tokens check:guide-surfaces check:storybook-copy check:korean-ui-copy check:foundations check:adoption check:patterns check:components check:conformance check:token-hygiene check:scroll-surfaces check:surface-ownership check:colors check:type-surface check:type-consumer check:layers check:expression-profile check:density check:package-migration check:api-drift check:api-grammar check:dimension-literals check:motion-hygiene check:prompt-contracts check:story-coverage check:engine-reuse check:engine-contracts check:parity check:foundation-parity check:component-styles check:contracts check:docs check:product-frontends check:icon-drawing-style check:wds-alignment check:wds-local-fig check:avatar-duplicates check:story-subjects check:visual-token-drift check:release-immutability check:release-infrastructure check:release-pins check:satellite-pins check:publish-policy check:deprecations check:types check:entry check:brand check:brand-products check:generated check:consumer check:adoption-registry check:legacy-active",
     "check:inventory": "node scripts/report-inventory.mjs --check-docs",
     "check:storybook": "node scripts/run-package-scripts.mjs build:storybook check:storybook-adoption check:component-styles-rendered check:nested-styles check:inventory check:storybook-ia check:tooltip-alignment check:storybook-public check:a11y check:visual-regression check:expression-profile-visual",
     "check:pack": "node scripts/check-workspace-artifacts.mjs",
@@ -132,6 +134,8 @@
     "check:visual-token-drift": "node scripts/check-visual-token-drift.mjs",
     "check:publish-policy": "node scripts/check-publish-policy.mjs",
     "check:release-immutability": "node scripts/check-release-immutability.mjs",
+    "check:release-infrastructure": "node --test scripts/check-release-immutability.test.mjs scripts/check-published-release.test.mjs",
+    "check:published-release": "node scripts/check-published-release.mjs",
     "update:release-pins": "node scripts/update-release-pins.mjs",
     "check:release-pins": "node scripts/update-release-pins.mjs --check",
     "report:satellite-pins": "node scripts/report-satellite-pins.mjs",
@@ -162,7 +166,7 @@
     }
   },
   "devDependencies": {
-    "@lk-design-system/lds-robotics-ui": "file:vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.30.tgz",
+    "@lk-design-system/lds-robotics-ui": "file:vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.32.tgz",
     "@playwright/test": "^1.61.1",
     "@storybook/addon-a11y": "10.4.6",
     "@storybook/addon-docs": "10.4.6",
@@ -188,7 +192,7 @@
     "vite": "8.1.3"
   },
   "overrides": {
-    "brace-expansion": "5.0.8",
+    "brace-expansion": "5.0.9",
     "esbuild": "^0.28.1",
     "fast-uri": "3.1.5",
     "postcss": "8.5.23"

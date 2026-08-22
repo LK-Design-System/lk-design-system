@@ -124,12 +124,170 @@ function assertRepositoryFile(rootDir, relativePath, label) {
   );
   assert(existsSync(resolvedPath), `${label} is missing: ${relativePath}`);
   assert(statSync(resolvedPath).isFile(), `${label} must be a regular file: ${relativePath}`);
+  return resolvedPath;
 }
 
 function assertRepositoryFiles(rootDir, relativePaths, label) {
   for (const relativePath of relativePaths || []) {
     assertRepositoryFile(rootDir, relativePath, `${label} evidence`);
   }
+}
+
+function assertStablePackageSet(packages, expectedVersion, label) {
+  assert(Array.isArray(packages), `${label} packages must be an array`);
+  assert(
+    packages.length === LDS_PACKAGE_NAMES.length,
+    `${label} must contain exactly Core, Theme, and Product`,
+  );
+
+  const names = new Set();
+  for (const item of packages) {
+    assert(item && typeof item === 'object', `${label} package entries must be objects`);
+    assert(!names.has(item.name), `${label} duplicates package ${item.name}`);
+    names.add(item.name);
+    assert(
+      LDS_PACKAGE_NAMES.includes(item.name),
+      `${label} contains unexpected package ${item.name}`,
+    );
+    assert(
+      item.version === expectedVersion,
+      `${label} ${item.name} must use ${expectedVersion}`,
+    );
+  }
+
+  for (const packageName of LDS_PACKAGE_NAMES) {
+    assert(names.has(packageName), `${label} is missing ${packageName}`);
+  }
+}
+
+function readStableContractIdentity({
+  rootDir,
+  relativePath,
+  label,
+  contract,
+  ldsVersion,
+  releaseTag,
+}) {
+  const filePath = assertRepositoryFile(rootDir, relativePath, label);
+  const source = readFileSync(filePath, 'utf8');
+  const match = source.match(
+    /<!--\s*lds-stable-identity:start\s*([\s\S]*?)\s*lds-stable-identity:end\s*-->/,
+  );
+  assert(match, `${label} is missing the lds-stable-identity block`);
+
+  let identity;
+  try {
+    identity = JSON.parse(match[1]);
+  } catch (error) {
+    fail(`${label} lds-stable-identity is not valid JSON (${error.message})`);
+  }
+
+  assert(identity.schemaVersion === 1, `${label} identity schemaVersion must be 1`);
+  assert(
+    identity.kind === 'lds-stable-contract-identity',
+    `${label} identity kind must be lds-stable-contract-identity`,
+  );
+  assert(identity.contract === contract, `${label} identity contract must be ${contract}`);
+  assert(
+    identity.status === 'published-verified',
+    `${label} identity status must be published-verified (found ${identity.status})`,
+  );
+  assert(
+    identity.ldsVersion === ldsVersion,
+    `${label} identity ldsVersion must be ${ldsVersion}`,
+  );
+  assert(
+    identity.releaseTag === releaseTag,
+    `${label} identity releaseTag must be ${releaseTag}`,
+  );
+  assertStablePackageSet(identity.packages, ldsVersion, `${label} identity`);
+  return identity;
+}
+
+function validateStableReleaseContracts({
+  rootDir,
+  registry,
+  stableReleaseEvidenceSchema,
+}) {
+  const { packageRelease, ldsVersion } = registry;
+  assert(
+    packageRelease.evidence.length === 1,
+    'stable package release needs exactly one structured release evidence file',
+  );
+
+  const releaseEvidencePath = assertRepositoryFile(
+    rootDir,
+    packageRelease.evidence[0],
+    'stable release evidence',
+  );
+  const releaseEvidence = readJson(releaseEvidencePath, 'stable release evidence');
+  const validateReleaseEvidence = compile(stableReleaseEvidenceSchema);
+  assert(
+    validateReleaseEvidence(releaseEvidence),
+    `stable release evidence schema: ${formatValidationErrors(validateReleaseEvidence.errors)}`,
+  );
+
+  assertValidDateNotAfterRegistry(
+    releaseEvidence.generatedAt,
+    registry.generatedAt,
+    'stable release evidence generatedAt',
+  );
+  assert(
+    releaseEvidence.release.version === ldsVersion,
+    `stable release evidence version must be ${ldsVersion}`,
+  );
+  assert(
+    releaseEvidence.release.tag === packageRelease.releaseTag,
+    `stable release evidence tag must be ${packageRelease.releaseTag}`,
+  );
+  assert(
+    releaseEvidence.immutableTagVerification.resolvedCommit
+      === releaseEvidence.release.sourceCommit,
+    'stable release evidence tag resolution must match release sourceCommit',
+  );
+  assertStablePackageSet(
+    releaseEvidence.packages,
+    ldsVersion,
+    'stable release evidence',
+  );
+
+  assert(
+    releaseEvidence.contracts.supportPolicy === packageRelease.supportPolicy,
+    'stable release evidence supportPolicy must match packageRelease.supportPolicy',
+  );
+  assert(
+    releaseEvidence.contracts.rollbackArtifact === packageRelease.rollbackArtifact,
+    'stable release evidence rollbackArtifact must match packageRelease.rollbackArtifact',
+  );
+
+  const supportIdentity = readStableContractIdentity({
+    rootDir,
+    relativePath: packageRelease.supportPolicy,
+    label: 'stable supportPolicy',
+    contract: 'support-policy',
+    ldsVersion,
+    releaseTag: packageRelease.releaseTag,
+  });
+  assert(
+    supportIdentity.supportMatrix === releaseEvidence.contracts.supportMatrix,
+    'stable supportPolicy supportMatrix must match release evidence contracts.supportMatrix',
+  );
+  readStableContractIdentity({
+    rootDir,
+    relativePath: supportIdentity.supportMatrix,
+    label: 'stable supportMatrix',
+    contract: 'support-matrix',
+    ldsVersion,
+    releaseTag: packageRelease.releaseTag,
+  });
+  readStableContractIdentity({
+    rootDir,
+    relativePath: packageRelease.rollbackArtifact,
+    label: 'stable rollbackArtifact',
+    contract: 'rollback',
+    ldsVersion,
+    releaseTag: packageRelease.releaseTag,
+  });
 }
 
 /**
@@ -143,6 +301,7 @@ export function validateConsumerAdoptionRegistry({
   registry: injectedRegistry = null,
   schema: injectedSchema = null,
   attestationSchema: injectedAttestationSchema = null,
+  stableReleaseEvidenceSchema: injectedStableReleaseEvidenceSchema = null,
   attestations = null,
   expectedRepositories = DEFAULT_EXPECTED_REPOSITORIES,
 } = {}) {
@@ -177,6 +336,12 @@ export function validateConsumerAdoptionRegistry({
     assert(registry.packageRelease.rollbackArtifact, 'stable package release needs a rollbackArtifact');
     assertRepositoryFile(rootDir, registry.packageRelease.supportPolicy, 'stable supportPolicy');
     assertRepositoryFile(rootDir, registry.packageRelease.rollbackArtifact, 'stable rollbackArtifact');
+    const stableReleaseEvidenceSchema = injectedStableReleaseEvidenceSchema
+      ?? readJson(
+        path.join(adoptionRoot, 'releases/LDS_STABLE_RELEASE_EVIDENCE.schema.json'),
+        'LDS_STABLE_RELEASE_EVIDENCE.schema.json',
+      );
+    validateStableReleaseContracts({ rootDir, registry, stableReleaseEvidenceSchema });
   }
 
   const expectedIds = new Set(Object.keys(expectedRepositories));

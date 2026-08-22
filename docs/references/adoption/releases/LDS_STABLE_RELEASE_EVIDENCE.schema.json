@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lk-design-system.github.io/lk-design-system/schemas/lds-stable-release-evidence.schema.json",
+  "title": "LDS stable package release evidence",
+  "description": "Immutable stable release evidence for the atomic Core, Theme, and Product package set. Consumer adoption and product deployment are intentionally out of scope.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "kind",
+    "generatedAt",
+    "release",
+    "immutableTagVerification",
+    "automation",
+    "packages",
+    "availabilityVerification",
+    "contracts"
+  ],
+  "properties": {
+    "$schema": { "const": "./LDS_STABLE_RELEASE_EVIDENCE.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "kind": { "const": "lds-stable-package-release-evidence" },
+    "generatedAt": { "type": "string", "format": "date" },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channel", "version", "tag", "sourceCommit", "repository"],
+      "properties": {
+        "channel": { "const": "stable" },
+        "version": { "$ref": "#/$defs/stableVersion" },
+        "tag": { "$ref": "#/$defs/stableTag" },
+        "sourceCommit": { "$ref": "#/$defs/commit" },
+        "repository": { "const": "LK-Design-System/lk-design-system" }
+      }
+    },
+    "immutableTagVerification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "command", "resolvedCommit"],
+      "properties": {
+        "status": { "const": "passed" },
+        "command": { "type": "string", "minLength": 3 },
+        "resolvedCommit": { "$ref": "#/$defs/commit" }
+      }
+    },
+    "automation": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["workflow", "runId", "status", "url"],
+        "properties": {
+          "workflow": { "type": "string", "minLength": 2 },
+          "runId": { "type": "integer", "minimum": 1 },
+          "status": { "const": "passed" },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "packages": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "version", "publishedAt", "distShasum", "distIntegrity"],
+        "properties": {
+          "name": {
+            "enum": [
+              "@lk-design-system/lds-core",
+              "@lk-design-system/lds-theme",
+              "@lk-design-system/lds-product"
+            ]
+          },
+          "version": { "$ref": "#/$defs/stableVersion" },
+          "publishedAt": { "type": "string", "format": "date-time" },
+          "distShasum": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+          "distIntegrity": { "type": "string", "pattern": "^sha512-[A-Za-z0-9+/]+={0,2}$" }
+        }
+      }
+    },
+    "availabilityVerification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "command", "registry"],
+      "properties": {
+        "status": { "const": "passed" },
+        "command": { "type": "string", "minLength": 3 },
+        "registry": { "type": "string", "format": "uri" }
+      }
+    },
+    "contracts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["supportPolicy", "supportMatrix", "rollbackArtifact"],
+      "properties": {
+        "supportPolicy": { "type": "string", "minLength": 3 },
+        "supportMatrix": { "type": "string", "minLength": 3 },
+        "rollbackArtifact": { "type": "string", "minLength": 3 }
+      }
+    },
+    "notes": { "type": "string", "minLength": 3 }
+  },
+  "$defs": {
+    "stableVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "stableTag": {
+      "type": "string",
+      "pattern": "^lds-v[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    }
+  }
+}

@@ -2,6 +2,11 @@
 
 Classification: **LK Product Extension**. WDS Navigation의 Category, Tab, Page Indicator, Pagination과 별개이며 데스크톱 제품 셸에서만 사용합니다.
 
+SideNav의 shell padding, top-level/child row height와 row padding은 profile-aware token을
+사용합니다. `ops`에서도 목적지 계층, active/current 의미, disclosure와 keyboard focus는
+동일하고 모든 row는 24px target floor를 넘습니다. 기존 `--lds-side-nav-*` vars가 profile
+token보다 우선합니다.
+
 대시보드·관리 제품의 주 탐색으로 `UserMenu`를 푸터에 조합합니다. TopBar가 함께 있으면 전역 utility만 담당하게 하고 로고·경로를 중복하지 않으며, 평면형 대안인 `NavRail`과 동시에 주 탐색으로 사용하지 않습니다.
 
 ```jsx

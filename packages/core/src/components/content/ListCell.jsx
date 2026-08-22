@@ -3,12 +3,12 @@ import { Icon } from "../icon/Icon.jsx";
 
 const PADDING_Y = {
   none: 0,
-  small: 8,
-  sm: 8,
-  medium: 12,
-  md: 12,
-  large: 16,
-  lg: 16,
+  small: "var(--component-list-cell-padding-y-sm, 8px)",
+  sm: "var(--component-list-cell-padding-y-sm, 8px)",
+  medium: "var(--component-list-cell-padding-y-md, 12px)",
+  md: "var(--component-list-cell-padding-y-md, 12px)",
+  large: "var(--component-list-cell-padding-y-lg, 16px)",
+  lg: "var(--component-list-cell-padding-y-lg, 16px)",
 };
 
 function isPressed(interaction) {
@@ -85,6 +85,7 @@ export function ListCell({
   const activeFocus = focus || interaction === "focused";
   const activePressed = isPressed(interaction);
   const y = paddingY ?? PADDING_Y[verticalPadding] ?? PADDING_Y.medium;
+  const yCss = typeof y === "number" ? `${y}px` : y;
   const alignItems = verticalAlign === "top" ? "flex-start" : "center";
   const dividerLeft = resolvedLeading != null ? paddingX + 44 : paddingX;
   const dividerRight =
@@ -168,7 +169,7 @@ export function ListCell({
         gap: 8,
         width: fillWidth ? "100%" : "fit-content",
         minHeight: y === 0 ? 40 : undefined,
-        padding: `${y}px ${typeof paddingX === "number" ? paddingX + "px" : paddingX}`,
+        padding: `${yCss} ${typeof paddingX === "number" ? paddingX + "px" : paddingX}`,
         boxSizing: "border-box",
         cursor: disabledState
           ? "not-allowed"

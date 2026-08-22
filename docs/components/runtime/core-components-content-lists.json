@@ -224,6 +224,10 @@
   "quantitativeRules": [
     {
       "subject": "명시 규칙 1",
+      "rule": "verticalPadding=\"small | medium | large\" 공개 문법은 유지하면서 각 값은 profile-aware component token을 읽습니다. default는 기존 8/12/16px이고 ops는 6/8/12px이다. 명시적 paddingY escape hatch가 token보다 우선하며 selection·keyboard·list semantics는 profile과 무관합니다. 정본은 docs/DENSITYANDEXPRESSIONPROFILECONTRACT.md입니다."
+    },
+    {
+      "subject": "명시 규칙 2",
       "rule": "반복되는 행은 반드시 리스트로 감싸세요. 감싸지 않으면 스크린리더가 \"3개 중 2번째\"를 읽지 못해 항목 수와 현재 위치가 사라집니다(WCAG 1.3.1)."
     },
     {
@@ -237,10 +241,6 @@
     {
       "subject": "--body2-size",
       "rule": "15px"
-    },
-    {
-      "subject": "--caption1-line",
-      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
     }
   ],
   "responsive": [],
@@ -314,6 +314,9 @@
     "--color-semantic-line-solid-normal",
     "--color-semantic-primary-normal",
     "--color-semantic-primary-surface-normal",
+    "--component-list-cell-padding-y-lg",
+    "--component-list-cell-padding-y-md",
+    "--component-list-cell-padding-y-sm",
     "--dur-base",
     "--dur-fast",
     "--ease-out",

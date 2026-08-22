@@ -283,6 +283,7 @@ export const TopBarDefault = {
     await waitFor(() => {
       if (trigger.getAttribute('aria-expanded') !== 'true') throw new Error('The disclosure must reopen for visual contract checks.');
     });
+    await waitForLayout(canvasElement);
     const menuItems = Array.from(menu.querySelectorAll('[data-top-bar-menu-item]'));
     if (menuItems.length !== 3 || menuItems[0].getAttribute('aria-current') !== 'page') {
       throw new Error('The current TopBar dropdown destination must expose aria-current.');

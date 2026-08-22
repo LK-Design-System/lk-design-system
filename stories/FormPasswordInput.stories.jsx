@@ -3,13 +3,13 @@ import { PasswordInput } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
-  title: 'LDS Product/Selection and Input/Password Input',
+  title: 'LDS Core/Components/Selection and Input/Password Input',
   tags: ['autodocs'],
   component: PasswordInput,
   parameters: {
     storyGuide: {
-      storyId: 'lds-product-selection-and-input-password-input--password-input-overview',
-      eyebrow: 'Product / Password Input',
+      storyId: 'lds-core-components-selection-and-input-password-input--password-input-overview',
+      eyebrow: 'Core / Password Input',
       title: '비밀번호 입력은 민감한 값을 기본적으로 가리고 필요할 때만 확인하게 합니다',
       description:
         '사용자가 직접 비밀번호를 작성하는 로그인과 계정 설정에 사용하세요. 이미 발급된 비밀값을 읽거나 복사하는 화면은 Secret Field가 더 적합합니다.',

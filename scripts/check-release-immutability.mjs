@@ -26,6 +26,7 @@ const packageLock = await readJson('package-lock.json');
 const changelog = await readFile(path.join(root, 'CHANGELOG.md'), 'utf8');
 const version = rootPackage.version;
 const releaseTag = `lds-v${version}`;
+const enforceTagIdentity = process.argv.includes('--tag');
 
 assert(/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(version), `Invalid release version: ${version}.`);
 assert(packageLock.version === version && packageLock.packages?.['']?.version === version, 'Root lockfile version must match the workspace release version.');
@@ -53,7 +54,7 @@ const matchingTag = git(['tag', '--list', releaseTag]).stdout;
 //
 // 위쪽 버전 일관성 검사(lockfile·CHANGELOG·패키지 버전)는 상시 유효하고
 // 언제나 만족 가능하므로 check:fast에 그대로 남는다.
-if (process.argv.includes('--tag')) {
+if (enforceTagIdentity) {
   const pushedTag = process.env.GITHUB_REF_NAME || matchingTag;
   assert(pushedTag === releaseTag, `Release tag ${pushedTag || '(missing)'} must equal ${releaseTag}.`);
   assert(matchingTag === releaseTag, `${releaseTag} must exist and resolve to the release source commit.`);
@@ -66,4 +67,10 @@ if (process.argv.includes('--tag')) {
   );
 }
 
-console.log(`Validated immutable release identity: ${version} -> ${releaseTag}${matchingTag ? ' -> HEAD' : ' (unpublished candidate)'}.`);
+const identityStatus = enforceTagIdentity
+  ? ' -> HEAD'
+  : matchingTag
+    ? ' (tag exists; pass --tag to verify its HEAD identity)'
+    : ' (unpublished candidate)';
+
+console.log(`Validated immutable release identity: ${version} -> ${releaseTag}${identityStatus}.`);

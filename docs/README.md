@@ -32,6 +32,11 @@
 | [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md) | 신규·재설계 검토의 canonical workflow와 완료 gate |
 | [`OPERATING_MODEL.md`](OPERATING_MODEL.md) | ownership, change category, release와 migration 운영 |
 | [`references/architecture/OWNER_AUTHORITY_CONTRACT.json`](references/architecture/OWNER_AUTHORITY_CONTRACT.json) | Core·Theme·Product·Robotics의 live package/token/Storybook owner와 cross-domain 경계 |
+| [`DENSITY_AND_EXPRESSION_PROFILE_CONTRACT.md`](DENSITY_AND_EXPRESSION_PROFILE_CONTRACT.md) | `default | ops` 표현 profile, component density 우선순위, target과 visual/behavior gate |
+| [`R3B_OWNER_API_MIGRATION.md`](R3B_OWNER_API_MIGRATION.md) | Product→Core owner 이동, `0.1.x` deprecated re-export, rollback과 removal gate |
+| [`STABLE_SUPPORT_POLICY.md`](STABLE_SUPPORT_POLICY.md) | 첫 stable `0.1.x` 지원 범위, atomic package set, R3B compatibility와 promotion gate |
+| [`STABLE_SUPPORT_MATRIX.md`](STABLE_SUPPORT_MATRIX.md) | Core·Theme·Product 지원 조합과 package/consumer/deployment 독립 판정 |
+| [`STABLE_0.1.0_ROLLBACK.md`](STABLE_0.1.0_ROLLBACK.md) | `0.1.0` publish 전후 실패·consumer 회귀의 immutable rollback 절차 |
 | [`references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md`](references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md) | package release·consumer stage·product deployment를 분리한 승격 계약 |
 | [`PACKAGE_MIGRATION_GUIDE.md`](PACKAGE_MIGRATION_GUIDE.md) | Wave 2 consumer import, CSS, artifact-pin, and rollback guidance |
 | [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md) | token source of truth와 변경 정책 |
@@ -66,6 +71,7 @@
 | Robotics direct adoption | `@lk-design-system/lds-robotics-ui/llms.txt` · `@lk-design-system/lds-robotics-ui/design-system.json` · [Robotics Storybook](https://lk-design-system.github.io/lk-design-system-robotics/?path=/docs/lds-robotics-foundation-viewer-tokens--docs) · [public llms.txt](https://lk-design-system.github.io/lk-design-system-robotics/llms.txt) · [public manifest](https://lk-design-system.github.io/lk-design-system-robotics/design-system.json) |
 | Machine-readable adoption source | [Adoption contract](references/adoption/LDS_UI_ADOPTION_CONTRACT.json) · [contract schema](references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json) · [report schema](references/adoption/LDS_UI_ADOPTION_REPORT.schema.json) · [schema-valid report template](references/adoption/LDS_UI_ADOPTION_REPORT.example.json) |
 | Consumer promotion evidence | [promotion contract](references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md) · [registry schema](references/adoption/LDS_CONSUMER_REGISTRY.schema.json) · [attestation schema](references/adoption/LDS_CONSUMER_ATTESTATION.schema.json) |
+| Stable release evidence | [stable evidence schema](references/adoption/releases/LDS_STABLE_RELEASE_EVIDENCE.schema.json) · [support policy](STABLE_SUPPORT_POLICY.md) · [support matrix](STABLE_SUPPORT_MATRIX.md) · [rollback contract](STABLE_0.1.0_ROLLBACK.md) |
 | Consumer enforcement | [config schema](../packages/conformance/schemas/lds-ui-adoption-config.schema.json) · [CLI](../packages/conformance/src/cli.mjs) · [GitHub composite action](../.github/actions/lds-adoption/action.yml) |
 | Foundation 탐색 | [Foundation index](foundations/README.md) 또는 단일 context용 [Foundation LLM bundle](foundations/llms.txt) |
 | Token 이름·의미·runtime coverage | [Structured token source](../tokens/source.json) |
@@ -87,7 +93,9 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 | [`DEPRECATIONS.md`](DEPRECATIONS.md) | generated: `npm run report:deprecations` |
 | [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md) | product source pins와 `check:product-frontends` |
 | [`references/adoption/LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) | current Portal/Web Viz package pins와 package release·consumer stage·deployment의 독립 판정, evidence freshness; `npm run check:adoption-registry` |
-| [`references/visual/EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json) | `default|ops × light|dark × normal|320px` 16-capture visual evidence; `npm run check:expression-profile-visual` |
+| [`references/architecture/DENSITY_COVERAGE_CONTRACT.json`](references/architecture/DENSITY_COVERAGE_CONTRACT.json) | 모든 public component의 density 분류와 profile-aware coverage; `npm run check:density` |
+| [`references/architecture/R3B_OWNER_API_DECISIONS.json`](references/architecture/R3B_OWNER_API_DECISIONS.json) | R3B `move-now | stay | defer` owner/API 결정과 `0.1.x` compatibility window; `npm run check:layers` |
+| [`references/visual/EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json) | `default|ops × light|dark × normal|320px × 4 stories` 32-capture visual evidence; `npm run check:expression-profile-visual` |
 | [`references/robotics/READINESS.json`](references/robotics/READINESS.json) | O1/O2 readiness와 O3/O4 claim boundary; `npm run check:robotics-readiness` |
 
 ## Roadmap, follow-ups, and historical decisions

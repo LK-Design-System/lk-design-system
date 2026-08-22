@@ -35,6 +35,16 @@ const stories = [
     importPath: './stories/FormInput.stories.jsx',
     exportNameByWidth: { normal: 'InputOverview', '320': 'InputOverview' },
   },
+  {
+    id: 'data-dense',
+    importPath: './stories/ExpressionProfileDensity.stories.jsx',
+    exportNameByWidth: { normal: 'DataDense', '320': 'DataDense' },
+  },
+  {
+    id: 'navigation-overlay',
+    importPath: './stories/ExpressionProfileDensity.stories.jsx',
+    exportNameByWidth: { normal: 'NavigationOverlay', '320': 'NavigationOverlay' },
+  },
 ];
 
 function assert(condition, message) {
@@ -116,6 +126,76 @@ async function compare(name, actualPath) {
   return { differentPixels, diffRatio };
 }
 
+async function verifyBehavior(page, story, name) {
+  if (story.id === 'data-dense') {
+    const checkbox = page.locator('[data-expression-fixture="data-dense"] input[type="checkbox"]').first();
+    assert(await checkbox.count() === 1, `${name} has no selection checkbox`);
+    await checkbox.focus();
+    await page.keyboard.press('Space');
+    assert(await checkbox.isChecked(), `${name} selection checkbox did not toggle from the keyboard`);
+
+    const treeItems = page.locator('[data-expression-fixture="data-dense"] [role="treeitem"]');
+    assert(await treeItems.count() >= 2, `${name} has no navigable tree`);
+    await treeItems.first().focus();
+    const firstKey = await treeItems.first().getAttribute('data-tree-key');
+    await page.keyboard.press('ArrowDown');
+    const activeKey = await page.evaluate(() => document.activeElement?.getAttribute('data-tree-key'));
+    assert(activeKey && activeKey !== firstKey, `${name} tree ArrowDown did not move focus`);
+  }
+
+  if (story.id === 'navigation-overlay') {
+    const menuTrigger = page.getByRole('button', { name: '보기', exact: true }).first();
+    assert(await menuTrigger.count() === 1, `${name} has no DropdownMenu trigger`);
+    if (await menuTrigger.getAttribute('aria-expanded') === 'true') {
+      await menuTrigger.click();
+      await page.waitForFunction(() => [...document.querySelectorAll('button')]
+        .some((button) => button.textContent?.trim() === '보기' && button.getAttribute('aria-expanded') === 'false'));
+    }
+
+    const trigger = page.getByRole('button', { name: '필터', exact: true }).first();
+    assert(await trigger.count() === 1, `${name} has no Drawer trigger`);
+    await trigger.click();
+    await page.locator('[role="dialog"]').waitFor({ state: 'visible' });
+    await page.waitForFunction(() => document.querySelector('[role="dialog"]')?.contains(document.activeElement));
+    const focusEntered = await page.evaluate(() => Boolean(document.querySelector('[role="dialog"]')?.contains(document.activeElement)));
+    assert(focusEntered, `${name} Drawer did not acquire focus`);
+    await page.keyboard.press('Escape');
+    await page.locator('[role="dialog"]').waitFor({ state: 'detached' });
+    await page.waitForFunction(() => document.activeElement?.textContent?.trim() === '필터');
+
+    await menuTrigger.focus();
+    await page.keyboard.press('ArrowDown');
+    await page.waitForFunction(() => [...document.querySelectorAll('button')]
+      .some((button) => button.textContent?.trim() === '보기' && button.getAttribute('aria-expanded') === 'true'));
+    await page.waitForFunction(() => document.activeElement?.getAttribute('role')?.startsWith('menuitem')
+      && document.activeElement?.closest('[role="menu"]'));
+  }
+}
+
+async function settleCaptureState(page, story, name) {
+  if (story.id !== 'navigation-overlay') return;
+
+  const menuTrigger = page.getByRole('button', { name: '보기', exact: true }).first();
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    if (await menuTrigger.getAttribute('aria-expanded') !== 'true') {
+      await menuTrigger.focus();
+      await page.keyboard.press('ArrowDown');
+    }
+    await page.waitForFunction(() => {
+      const trigger = [...document.querySelectorAll('button')]
+        .find((button) => button.textContent?.trim() === '보기');
+      const menu = document.querySelector('[role="menu"]');
+      return trigger?.getAttribute('aria-expanded') === 'true'
+        && menu?.getBoundingClientRect().height > 0;
+    });
+    await page.evaluate(() => new Promise((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(resolve));
+    }));
+    if (await menuTrigger.getAttribute('aria-expanded') === 'true') return;
+  }
+  throw new Error(`${name} DropdownMenu did not remain open through capture settlement`);
+}
+
 async function main() {
   const index = JSON.parse(await readFile(path.join(staticDir, 'index.json'), 'utf8'));
   const { server, origin } = await startStaticServer();
@@ -137,6 +217,7 @@ async function main() {
             errors.length = 0;
             await page.setViewportSize({ width: width.width, height: width.height });
             await page.emulateMedia({ reducedMotion: 'no-preference' });
+            await page.mouse.move(-1, -1);
             await page.goto(storyUrl(origin, id, profile, theme), { waitUntil: 'networkidle' });
             await page.waitForFunction(({ expectedProfile, expectedTheme }) => {
               const root = document.querySelector('#storybook-root');
@@ -152,6 +233,30 @@ async function main() {
               const style = getComputedStyle(scope);
               const focusable = scope.querySelector('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
               focusable?.focus();
+              const root = document.documentElement;
+              const previousRootProfile = root.getAttribute('data-lds-profile');
+              root.removeAttribute('data-lds-profile');
+              const rootDefaultButtonHeight = getComputedStyle(root).getPropertyValue('--component-button-height-md').trim();
+              root.setAttribute('data-lds-profile', 'ops');
+              const rootOpsStyle = getComputedStyle(root);
+              const rootOpsButtonHeight = rootOpsStyle.getPropertyValue('--component-button-height-md').trim();
+              const rootOpsTablePadding = rootOpsStyle.getPropertyValue('--component-table-cell-padding-md').trim();
+              if (previousRootProfile == null) root.removeAttribute('data-lds-profile');
+              else root.setAttribute('data-lds-profile', previousRootProfile);
+
+              const targetRects = [...document.querySelectorAll('[data-lds-target]')].map((target) => {
+                const rect = target.getBoundingClientRect();
+                return { width: rect.width, height: rect.height };
+              });
+              const tableCell = document.querySelector('[data-density-surface="table"] tbody :is(td, th)');
+              const gridHeaderRow = [...document.querySelectorAll('[data-density-surface="data-grid"] thead tr')]
+                .find((row) => row.getBoundingClientRect().height > 1);
+              const treeRow = document.querySelector('[data-density-surface="tree"] [role="treeitem"] > div');
+              const dataToolbar = document.querySelector('[data-density-surface="data-toolbar"]');
+              const filterBar = document.querySelector('[data-density-surface="filter-bar"]');
+              const sideNavItem = document.querySelector('[data-expression-fixture="navigation-overlay"] [data-sidenav-value]');
+              const menuItem = document.querySelector('[role^="menuitem"]');
+              const px = (node, property) => node ? getComputedStyle(node)[property] : null;
               return {
                 profile: scope.getAttribute('data-lds-profile'),
                 theme: scope.getAttribute('data-theme'),
@@ -161,16 +266,41 @@ async function main() {
                 duration: style.getPropertyValue('--dur-fast').trim(),
                 semanticLabel: style.getPropertyValue('--color-semantic-label-normal').trim(),
                 focusable: document.activeElement === focusable,
+                rootDefaultButtonHeight,
+                rootOpsButtonHeight,
+                rootOpsTablePadding,
+                targetRects,
+                geometry: {
+                  tablePaddingTop: px(tableCell, 'paddingTop'),
+                  gridHeaderHeight: gridHeaderRow?.getBoundingClientRect().height ?? null,
+                  treeRowHeight: treeRow?.getBoundingClientRect().height ?? null,
+                  dataToolbarPaddingTop: px(dataToolbar, 'paddingTop'),
+                  filterBarPaddingTop: px(filterBar, 'paddingTop'),
+                  sideNavItemHeight: sideNavItem?.getBoundingClientRect().height ?? null,
+                  menuItemHeight: menuItem?.getBoundingClientRect().height ?? null,
+                },
               };
             });
             assert(expression.profile === profile && expression.theme === theme, `${name} profile/theme wrapper mismatch`);
             assert(!expression.overflow, `${name} has horizontal overflow`);
             assert(expression.focusable, `${name} has no keyboard-focusable control`);
+            assert(expression.rootDefaultButtonHeight === '40px', `${name} root default profile drifted: ${expression.rootDefaultButtonHeight}`);
+            assert(expression.rootOpsButtonHeight === '36px', `${name} html[data-lds-profile=ops] did not override Core :root: ${expression.rootOpsButtonHeight}`);
+            assert(expression.rootOpsTablePadding === '10px 12px', `${name} root ops data density did not resolve: ${expression.rootOpsTablePadding}`);
+            if (story.id === 'data-dense') {
+              assert(expression.targetRects.length > 0, `${name} has no measured dense targets`);
+              for (const target of expression.targetRects) {
+                assert(target.width >= 24 && target.height >= 24, `${name} has a ${target.width}x${target.height} target below 24px`);
+              }
+            }
+
+            await verifyBehavior(page, story, name);
 
             await page.emulateMedia({ reducedMotion: 'reduce' });
             const reducedDuration = await page.evaluate(() => getComputedStyle(document.querySelector('[data-lds-profile]')).getPropertyValue('--dur-fast').trim());
             if (profile === 'ops') assert(reducedDuration === '0ms', `${name} did not zero --dur-fast under reduced motion`);
             await page.emulateMedia({ reducedMotion: 'no-preference' });
+            await settleCaptureState(page, story, name);
 
             const outputPath = path.join(artifactDir, `${name}.png`);
             await mkdir(artifactDir, { recursive: true });
@@ -189,6 +319,11 @@ async function main() {
                 cardPadding: expression.cardPadding,
                 duration: expression.duration,
                 semanticLabel: expression.semanticLabel,
+                rootDefaultButtonHeight: expression.rootDefaultButtonHeight,
+                rootOpsButtonHeight: expression.rootOpsButtonHeight,
+                rootOpsTablePadding: expression.rootOpsTablePadding,
+                targetRects: expression.targetRects,
+                geometry: expression.geometry,
               },
               path: path.relative(root, outputPath).replaceAll('\\', '/'),
               sha256: await hash(outputPath),
@@ -222,6 +357,17 @@ async function main() {
         assert(defaultCapture.expression.buttonHeight !== opsCapture.expression.buttonHeight, `button height did not express a profile delta for ${story.id}/${theme}/${width.id}`);
         assert(defaultCapture.expression.cardPadding !== opsCapture.expression.cardPadding, `card padding did not express a profile delta for ${story.id}/${theme}/${width.id}`);
         assert(defaultCapture.expression.semanticLabel === opsCapture.expression.semanticLabel, `semantic label changed with profile for ${story.id}/${theme}/${width.id}`);
+        if (story.id === 'data-dense') {
+          assert(defaultCapture.expression.geometry.tablePaddingTop !== opsCapture.expression.geometry.tablePaddingTop, `Table density did not change for ${story.id}/${theme}/${width.id}`);
+          assert(defaultCapture.expression.geometry.gridHeaderHeight > opsCapture.expression.geometry.gridHeaderHeight, `DataGrid header did not become denser for ${story.id}/${theme}/${width.id}`);
+          assert(defaultCapture.expression.geometry.treeRowHeight > opsCapture.expression.geometry.treeRowHeight, `Tree row did not become denser for ${story.id}/${theme}/${width.id}`);
+          assert(defaultCapture.expression.geometry.dataToolbarPaddingTop !== opsCapture.expression.geometry.dataToolbarPaddingTop, `DataToolbar chrome did not become denser for ${story.id}/${theme}/${width.id}`);
+          assert(defaultCapture.expression.geometry.filterBarPaddingTop !== opsCapture.expression.geometry.filterBarPaddingTop, `FilterBar chrome did not become denser for ${story.id}/${theme}/${width.id}`);
+        }
+        if (story.id === 'navigation-overlay') {
+          assert(defaultCapture.expression.geometry.sideNavItemHeight > opsCapture.expression.geometry.sideNavItemHeight, `SideNav row did not become denser for ${story.id}/${theme}/${width.id}`);
+          assert(defaultCapture.expression.geometry.menuItemHeight > opsCapture.expression.geometry.menuItemHeight, `Menu item did not become denser for ${story.id}/${theme}/${width.id}`);
+        }
       }
     }
   }

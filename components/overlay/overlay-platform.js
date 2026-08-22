@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 const useSafeLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 const overlayLayers = [];
 const THEME_SCOPE_CLASSES = ['theme-light', 'theme-dark', 'theme-auto'];
+const PROFILE_SCOPE_CLASSES = ['lds-profile-default', 'lds-profile-ops'];
 
 function assignRef(ref, value) {
   if (typeof ref === 'function') ref(value);
@@ -16,6 +17,7 @@ export const OverlayRuntimeContext = React.createContext({
   zIndexBase: 100,
   direction: undefined,
   colorScheme: undefined,
+  profile: undefined,
 });
 
 export function OverlayRuntimeProvider({
@@ -25,10 +27,11 @@ export function OverlayRuntimeProvider({
   zIndexBase = 100,
   direction,
   colorScheme,
+  profile,
 }) {
   const value = React.useMemo(
-    () => ({ portalTarget, scopeTarget, zIndexBase, direction, colorScheme }),
-    [colorScheme, direction, portalTarget, scopeTarget, zIndexBase],
+    () => ({ portalTarget, scopeTarget, zIndexBase, direction, colorScheme, profile }),
+    [colorScheme, direction, portalTarget, profile, scopeTarget, zIndexBase],
   );
   return React.createElement(OverlayRuntimeContext.Provider, { value }, children);
 }
@@ -74,17 +77,28 @@ export function useOverlayLayer({ open, zIndex } = {}) {
 
 function inheritedPortalScope(anchor, runtime) {
   const themeHost = anchor?.closest?.('[data-theme], .theme-light, .theme-dark, .theme-auto');
+  const profileHost = anchor?.closest?.('[data-lds-profile], .lds-profile-default, .lds-profile-ops');
   const directionHost = anchor?.closest?.('[dir]');
   const hostTheme = themeHost?.getAttribute?.('data-theme');
+  const hostProfile = profileHost?.getAttribute?.('data-lds-profile')
+    ?? PROFILE_SCOPE_CLASSES.find((name) => profileHost?.classList?.contains(name))?.replace('lds-profile-', '');
   const explicitTheme = themeHost && themeHost !== runtime.scopeTarget
     ? hostTheme
     : runtime.colorScheme ?? hostTheme;
+  const explicitProfile = profileHost && profileHost !== runtime.scopeTarget
+    ? hostProfile
+    : runtime.profile ?? hostProfile;
   const themeClass = themeHost && themeHost !== runtime.scopeTarget
     ? THEME_SCOPE_CLASSES.find((name) => themeHost.classList?.contains(name))
+    : undefined;
+  const profileClass = profileHost && profileHost !== runtime.scopeTarget
+    ? PROFILE_SCOPE_CLASSES.find((name) => profileHost.classList?.contains(name))
     : undefined;
   return {
     theme: explicitTheme || undefined,
     themeClass,
+    profile: explicitProfile || undefined,
+    profileClass,
     direction: directionHost && directionHost !== runtime.scopeTarget
       ? directionHost.getAttribute?.('dir')
       : runtime.direction ?? directionHost?.getAttribute?.('dir'),
@@ -118,6 +132,10 @@ export function OverlayPortal({
     else node.removeAttribute('data-theme');
     THEME_SCOPE_CLASSES.forEach((name) => node.classList.remove(name));
     if (committedScope.themeClass) node.classList.add(committedScope.themeClass);
+    if (committedScope.profile) node.setAttribute('data-lds-profile', committedScope.profile);
+    else node.removeAttribute('data-lds-profile');
+    PROFILE_SCOPE_CLASSES.forEach((name) => node.classList.remove(name));
+    if (committedScope.profileClass) node.classList.add(committedScope.profileClass);
     if (committedScope.direction) node.setAttribute('dir', committedScope.direction);
     else node.removeAttribute('dir');
   }, [
@@ -127,6 +145,7 @@ export function OverlayPortal({
     runtime.colorScheme,
     runtime.direction,
     runtime.portalTarget,
+    runtime.profile,
     runtime.scopeTarget,
     withinPortal,
   ]);
@@ -145,7 +164,8 @@ export function OverlayPortal({
       'data-lds-overlay-portal': '',
       'data-overlay-layer': layer,
       'data-theme': scope.theme,
-      className: scope.themeClass,
+      'data-lds-profile': scope.profile,
+      className: [scope.themeClass, scope.profileClass].filter(Boolean).join(' ') || undefined,
       dir: scope.direction,
       style: { display: 'contents' },
     }, children),

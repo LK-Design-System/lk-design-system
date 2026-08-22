@@ -7,7 +7,8 @@
    surfaces such as monitoring, investigation and recovery workspaces.
    ========================================================================== */
 
-:where([data-lds-profile='ops'], .lds-profile-ops) {
+:where([data-lds-profile='ops'], .lds-profile-ops),
+:root:where([data-lds-profile='ops'], .lds-profile-ops) {
   /* Density: compact controls and repeated data rows. */
   --component-button-height-sm: 28px;
   --component-button-height-md: 36px;
@@ -23,6 +24,56 @@
   --component-action-area-padding-y: var(--space-4);
   --component-action-area-gap: var(--space-3);
 
+  /* Repeated data: each explicit size keeps its API meaning while the profile
+     selects the denser value for that size. Pointer targets remain >= 24px. */
+  --component-table-cell-padding-sm: 8px 10px;
+  --component-table-cell-padding-md: 10px 12px;
+  --component-data-grid-cell-padding-sm: 8px 10px;
+  --component-data-grid-cell-padding-md: 10px 12px;
+  --component-data-grid-header-height-sm: 44px;
+  --component-data-grid-header-height-md: 50px;
+  --component-data-grid-detail-padding-sm: var(--space-3);
+  --component-data-grid-detail-padding-md: var(--space-3) var(--space-4);
+  --component-data-toolbar-gap-sm: var(--space-1-5);
+  --component-data-toolbar-gap-md: var(--space-2);
+  --component-data-toolbar-padding-sm: 8px 10px;
+  --component-data-toolbar-padding-md: 10px 12px;
+  --component-filter-bar-gap-sm: var(--space-1-5);
+  --component-filter-bar-gap-md: var(--space-2);
+  --component-filter-bar-padding-sm: var(--space-2);
+  --component-filter-bar-padding-md: var(--space-3);
+  --component-list-cell-padding-y-sm: 6px;
+  --component-list-cell-padding-y-md: 8px;
+  --component-list-cell-padding-y-lg: 12px;
+  --component-tree-row-min-height: 32px;
+  --component-tree-row-padding-y: 6px;
+  --component-tree-row-padding-x: 8px;
+  --component-tree-row-gap: 6px;
+  --component-tree-indent: 18px;
+
+  /* Operational navigation and overlay chrome. Explicit component density
+     still wins; these values only tune the selected density under ops. */
+  --component-menu-padding-y: var(--space-1);
+  --component-menu-padding-x: var(--space-1);
+  --component-menu-gap: var(--space-0-5);
+  --component-menu-item-min-height: 32px;
+  --component-menu-item-padding-y: 6px;
+  --component-menu-item-padding-x: var(--space-3);
+  --component-side-nav-padding: var(--space-2);
+  --component-side-nav-item-height: 36px;
+  --component-side-nav-item-padding-y: 6px;
+  --component-side-nav-item-padding-x: var(--space-3);
+  --component-side-nav-child-item-height: 32px;
+  --component-side-nav-child-item-padding-y: 6px;
+  --component-toolbar-gap: var(--space-1);
+  --component-toolbar-padding: var(--space-1);
+  --component-drawer-header-padding-comfortable: var(--space-4) var(--space-5);
+  --component-drawer-header-padding-compact: var(--space-3) var(--space-4);
+  --component-drawer-body-padding-comfortable: var(--space-4) var(--space-5);
+  --component-drawer-body-padding-compact: var(--space-3) var(--space-4);
+  --component-drawer-footer-padding-comfortable: var(--space-3) var(--space-5);
+  --component-drawer-footer-padding-compact: var(--space-2) var(--space-4);
+
   /* Operational motion/depth: calm and legible under repeated updates. */
   --dur-fast: 80ms;
   --dur-base: 160ms;
@@ -35,7 +86,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where([data-lds-profile='ops'], .lds-profile-ops) {
+  :where([data-lds-profile='ops'], .lds-profile-ops),
+  :root:where([data-lds-profile='ops'], .lds-profile-ops) {
     --dur-fast: 0ms;
     --dur-base: 0ms;
     --dur-slow: 0ms;

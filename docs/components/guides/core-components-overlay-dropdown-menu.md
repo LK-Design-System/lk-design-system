@@ -79,25 +79,25 @@
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | 기본 밀도 규약 — 모든 DropdownMenu·TopBar menu·LanguageSwitcher는 panel padding 8px, item gap 4px, panel radius 12px, 기본 item 14/20px·최소 높이 40px, item padding 10px 16px, item radius 10px를 공유합니다. 설명이 있는 item은 이 최소 높이를 유지한 채 콘텐츠 높이에 따라 자연스럽게 늘어납니다. |
-| 명시 규칙 2 | 스크롤이 필요한 메뉴는 scrollbar-gutter: stable로 폭 변화를 막고, 항목 배경과 scrollbar 사이에 --component-menu-scrollbar-gap 4px을 유지합니다. |
-| 명시 규칙 3 | compact는 pointer 중심의 13/18px·32px item과 6px 12px padding, comfortable은 touch 중심의 16/24px·48px item과 12px 16px padding을 사용합니다. cellPadding·verticalPadding은 WDS/기존 소비자 호환용이며 새 사용처의 밀도 선택 수단으로 권장하지 않습니다. |
-| 명시 규칙 4 | 텍스트 menu button trigger는 16px trailing chevron-down-small로 펼침 가능성을 명시합니다. 이미 범주가 명확한 overflow·utility icon trigger에는 chevron을 중복하지 않습니다. |
+| 명시 규칙 1 | 기본 밀도 규약 — 모든 DropdownMenu·TopBar menu·LanguageSwitcher는 default profile에서 panel padding 8px, item gap 4px, panel radius 12px, 기본 item 14/20px·최소 높이 40px, item padding 10px 16px, item radius 10px를 공유합니다. 설명이 있는 item은 이 최소 높이를 유지한 채 콘텐츠 높이에 따라 자연스럽게 늘어납니다. |
+| 명시 규칙 2 | ops profile의 density="default"는 같은 menu token을 32px row와 6px 12px padding으로 조밀화합니다. 명시적 compact \| comfortable가 profile 기본값보다 우선하며, semantic role, checked/current 의미와 keyboard focus 순서는 어느 profile에서도 동일합니다. |
+| 명시 규칙 3 | 스크롤이 필요한 메뉴는 scrollbar-gutter: stable로 폭 변화를 막고, 항목 배경과 scrollbar 사이에 --component-menu-scrollbar-gap 4px을 유지합니다. |
+| 명시 규칙 4 | compact는 pointer 중심의 13/18px·32px item과 6px 12px padding, comfortable은 touch 중심의 16/24px·48px item과 12px 16px padding을 사용합니다. cellPadding·verticalPadding은 WDS/기존 소비자 호환용이며 새 사용처의 밀도 선택 수단으로 권장하지 않습니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
 
 - WDS axes: variant (normal, radio, checkbox)과 기존 cellPadding. LDS의 새 코드는 raw padding 대신 density="compact | default | comfortable"를 사용합니다. 긴 목록은 maxHeight로 scroll 영역을 제한합니다.
+- 텍스트 menu button trigger는 16px trailing chevron-down-small로 펼침 가능성을 명시합니다. 이미 범주가 명확한 overflow·utility icon trigger에는 chevron을 중복하지 않습니다.
 - 뒤로 행은 16px leading chevron, 14/20px semibold label, default 40px 높이를 사용합니다. 하위 명령과는 1px low-contrast divider와 공통 4px item gap만으로 구분하며 별도 여백을 중복하지 않습니다.
 - 문자 탐색(typeahead) — 연속으로 입력한 문자는 하나의 검색어로 누적되고 500ms 동안 입력이 없으면 버퍼가 비워집니다. 한 글자만 입력하면 현재 항목 다음부터 찾아 같은 초성 항목을 순환하고, 두 글자 이상이면 현재 항목부터 다시 좁혀 찾습니다(APG typeahead). Space는 검색어가 진행 중일 때만 검색어에 포함되고, 그렇지 않으면 focus된 항목을 활성화합니다. 이 엔진은 SplitButton·Menubar와 공유합니다.
-- 기본 너비 규약 — width를 생략하면 normal·radio·checkbox·flyout·drill 모두 가장 긴 item·shortcut·action 영역에 맞춰 max-content로 늘어나되 --component-menu-min-width 176px과 --component-menu-max-width 320px 사이에서만 변합니다. viewport 양쪽 16px 여백보다 넓어지지 않으며, 최대 폭에 도달한 긴 label·description은 줄바꿈합니다.
 
 ## Content and writing
 
 - menuActionArea는 서버 반영 비용이 크거나 여러 설정을 원자적으로 확정해야 하는 명시적인 staged workflow에서만 onCancel·onApply 중 제공된 실제 동작을 Cancel/Apply 버튼으로 만듭니다. 단순한 다중 선택이나 열기·복제·삭제처럼 선택 즉시 실행되는 메뉴에는 사용하지 않습니다. 기본 문구는 cancelLabel="취소", applyLabel="적용"이며 제품 문맥에 맞게 바꿀 수 있습니다. 콜백이나 custom action이 없으면 무동작 버튼을 만들지 않습니다.
+- Fluent 2 Menu — normal·checkbox·radio를 같은 menu family로 다루고 300px 최대 폭에서 긴 label을 줄바꿈합니다. LDS도 variant마다 다른 기본 padding을 두지 않고 320px token 상한을 사용합니다.
 - Carbon Menu와 Menu Button — menu item 높이를 24/32/40/48px size 축으로 관리하고, 짧은 메뉴는 최소 160px에서 시작해 긴 label에 따라 최대 288px까지 확장합니다. LDS는 14/20px·40px을 desktop default로 두고 32/48px을 compact/comfortable density로 분리하며, 기존 LDS 리듬에 맞춰 적응형 폭을 176–320px로 조정합니다.
 - ref, className, and style target the anchor root. Stable parts are root, trigger, panel, menu, item, divider, and actionArea; per-item class/style composes after the shared item part.
-- React createPortal documents portals as the escape hatch for clipping ancestors while retaining React-tree context and event propagation.
 
 ## Accessibility
 

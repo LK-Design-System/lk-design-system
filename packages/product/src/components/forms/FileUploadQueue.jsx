@@ -4,7 +4,7 @@ import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconBu
 import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
-import { ProgressBar } from '../status/ProgressBar.jsx';
+import { ProgressBar } from '@lk-design-system/lds-core/components/status/ProgressBar';
 
 const STATUS_META = {
   queued: { label: '대기', tone: 'offline' },

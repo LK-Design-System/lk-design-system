@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lk-robotics.dev/schemas/density-coverage-contract.schema.json",
+  "title": "LK Design System density coverage contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "status",
+    "authority",
+    "source",
+    "summary",
+    "entries"
+  ],
+  "properties": {
+    "$schema": { "const": "./DENSITY_COVERAGE_CONTRACT.schema.json" },
+    "schemaVersion": { "const": 1 },
+    "status": { "const": "active" },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decisionMode", "newEntryPolicy", "evidenceUpdatePolicy"],
+      "properties": {
+        "decisionMode": { "const": "curated-id-register" },
+        "newEntryPolicy": { "const": "fail-until-owner-classified" },
+        "evidenceUpdatePolicy": { "const": "regenerate-source-facts-only" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "componentRegistry",
+        "componentRegistryFingerprint",
+        "expressionProfileContract",
+        "expressionProfileContractFingerprint"
+      ],
+      "properties": {
+        "componentRegistry": { "const": "docs/components/component-content.json" },
+        "componentRegistryFingerprint": { "$ref": "#/$defs/sha256" },
+        "expressionProfileContract": { "const": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json" },
+        "expressionProfileContractFingerprint": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entryCount", "categoryCounts", "profileAwareEntries"],
+      "properties": {
+        "entryCount": { "const": 208 },
+        "categoryCounts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "profile-token-automatic",
+            "explicit-size-density",
+            "fixed",
+            "not-applicable"
+          ],
+          "properties": {
+            "profile-token-automatic": { "type": "integer", "minimum": 0 },
+            "explicit-size-density": { "type": "integer", "minimum": 0 },
+            "fixed": { "type": "integer", "minimum": 0 },
+            "not-applicable": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "profileAwareEntries": { "type": "integer", "minimum": 0, "maximum": 208 }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 208,
+      "maxItems": 208,
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "category": {
+      "enum": [
+        "profile-token-automatic",
+        "explicit-size-density",
+        "fixed",
+        "not-applicable"
+      ]
+    },
+    "governanceString": {
+      "type": "string",
+      "minLength": 8
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "source",
+        "ownerLayer",
+        "category",
+        "profileAware",
+        "explicitAxes",
+        "profileTokens"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9가-힣-]+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "source": { "type": "string", "pattern": "^components/.+\\.jsx$" },
+        "ownerLayer": { "enum": ["core", "product", "theme"] },
+        "category": { "$ref": "#/$defs/category" },
+        "profileAware": { "type": "boolean" },
+        "explicitAxes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": ["size", "density", "compact", "padding", "verticalPadding", "cellPadding"]
+          }
+        },
+        "profileTokens": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^--[a-zA-Z0-9_-]+$" }
+        },
+        "owner": { "$ref": "#/$defs/governanceString" },
+        "rationale": { "$ref": "#/$defs/governanceString" },
+        "reviewTrigger": { "$ref": "#/$defs/governanceString" },
+        "nextReview": { "type": "string", "format": "date" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "category": { "enum": ["fixed", "not-applicable"] }
+            },
+            "required": ["category"]
+          },
+          "then": {
+            "properties": {
+              "owner": { "$ref": "#/$defs/governanceString" },
+              "rationale": { "$ref": "#/$defs/governanceString" },
+              "reviewTrigger": { "$ref": "#/$defs/governanceString" },
+              "nextReview": { "type": "string", "format": "date" }
+            },
+            "required": ["owner", "rationale", "reviewTrigger", "nextReview"]
+          },
+          "else": {
+            "properties": {
+              "owner": false,
+              "rationale": false,
+              "reviewTrigger": false,
+              "nextReview": false
+            }
+          }
+        }
+      ]
+    }
+  }
+}

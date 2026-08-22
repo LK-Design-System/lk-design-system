@@ -191,15 +191,15 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "Calendar",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
       "component": "ChartFrame",
       "relationship": "대표 시나리오에서 조합"
     },
     {
       "component": "DataCollectionPanel",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "DataExportAction",
       "relationship": "대표 시나리오에서 조합"
     }
   ],

@@ -2,6 +2,29 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0-rc.69.31 - 2026-08-23
+
+Paired with `@lk-design-system/lds-robotics-ui` rc.32.
+
+### Added
+
+- Added the durable density and expression-profile contract, exact machine-readable
+  coverage for all 208 canonical components, and a 32-capture default/ops visual matrix.
+- Added the R3B owner/API decision register, compatibility tests, and stable `0.1.0`
+  support, rollback, evidence-schema, and published-release verification contracts.
+
+### Changed
+
+- Made data, navigation, and overlay density profile-aware while preserving default
+  product behavior; portalized overlays now inherit the active expression profile.
+- Moved nine generic primitives from Product to Core and retained deprecated Product
+  root/deep compatibility re-exports for the full `0.1.x` line.
+- Reduced automated target-size debt from 56 to 14 signatures, including 24px DataGrid
+  checkbox targets, and expanded deterministic accessibility and visual fixtures.
+- Made RC/stable package publication select the correct `rc`/`latest` dist-tag and split
+  fail-closed post-publish checks into a retryable job for all three packages.
+- Updated the existing `brace-expansion` security override from `5.0.8` to `5.0.9`.
+
 ## 0.1.0-rc.69.30 - 2026-08-22
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.30.
@@ -1076,7 +1099,10 @@ Repository-wide accessibility and convention sweep across the Core (55 areas) an
 
 - Published-package manifests for Core, Theme, Product, Robotics UI, and the legacy compatibility facade. All internal dependencies are pinned to this immutable release-set version.
 
-## 0.1.0 - 2026-07-11
+## 0.1.0 internal milestone (unpublished) - 2026-07-11
+
+This historical workspace milestone predates package publication and is not the
+canonical stable `0.1.0` release record.
 
 ### Added
 

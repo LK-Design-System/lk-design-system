@@ -117,9 +117,9 @@ export function FilterBar({
       data-filter-bar-variant={resolvedVariant}
       style={{
         display: 'grid',
-        gap: compact ? 'var(--space-2)' : 'var(--space-3)',
+        gap: compact ? 'var(--component-filter-bar-gap-sm, var(--space-2))' : 'var(--component-filter-bar-gap-md, var(--space-3))',
         minWidth: 0,
-        padding: compact ? 'var(--space-3)' : 'var(--space-4)',
+        padding: compact ? 'var(--component-filter-bar-padding-sm, var(--space-3))' : 'var(--component-filter-bar-padding-md, var(--space-4))',
         background: 'var(--color-semantic-background-elevated-normal)',
         fontFamily: 'var(--font-sans)',
         ...VARIANT_STYLE[resolvedVariant],

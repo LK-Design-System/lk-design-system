@@ -1,5 +1,5 @@
 import React from 'react';
-import { anchoredPanelStyle } from './anchored-panel-style.js';
+import { anchoredPanelStyle } from '@lk-design-system/lds-core/components/overlay/anchored-panel-style';
 import {
   appendAriaReference,
   findOverlayTrigger,

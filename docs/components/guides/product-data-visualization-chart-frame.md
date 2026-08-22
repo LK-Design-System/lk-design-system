@@ -74,8 +74,8 @@
 | `Legend` | 대표 시나리오에서 조합 |
 | `RefreshControl` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
-| `Calendar` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
+| `DataCollectionPanel` | 대표 시나리오에서 조합 |
 
 ## Examples
 

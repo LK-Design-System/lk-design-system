@@ -7,6 +7,7 @@
   "package": "@lk-design-system/lds-product",
   "layer": "product",
   "ownerBoundaryAuthority": "docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json#domainDecisions",
+  "ownerApiDecisionRegister": "docs/references/architecture/R3B_OWNER_API_DECISIONS.json",
   "purpose": "Classify reusable Product exports without creating a second design-system package or repository.",
   "families": [
     {
@@ -49,6 +50,7 @@
   ],
   "rules": [
     "Every public Product source module must match exactly one family.",
+    "Deprecated Product compatibility re-exports are not Product-owned modules and are excluded from family counts until the 0.1.x support window closes.",
     "Family is a discovery and ownership taxonomy; it is not a new package boundary.",
     "Complete product screens, routes, transport policy, command execution and domain truth remain owned by consuming product applications, not the LDS Product layer.",
     "Renderer-neutral telemetry, equipment, viewer and editor chrome belong to Product; robot control, spatial navigation and safety semantics belong to the external Robotics package."

@@ -3,7 +3,9 @@ import path from 'node:path';
 
 const root = process.cwd();
 const classification = JSON.parse(await readFile(path.join(root, 'docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json'), 'utf8'));
+const ownerAuthority = JSON.parse(await readFile(path.join(root, 'docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json'), 'utf8'));
 const layers = { core: 'core', theme: 'theme', product: 'product' };
+const deprecatedReexports = ownerAuthority.compatibilityProjections?.deprecatedPackageReexports;
 
 const owners = new Map();
 for (const group of classification.groups ?? []) for (const name of group.exports ?? []) owners.set(name, group.ownerLayer);
@@ -89,6 +91,28 @@ for (const [layer, packageDir] of Object.entries(layers)) {
     await rewriteImports(target, layer, base);
     await rewriteImports(declarationTarget, layer, base);
     entry.push(`export { ${[...new Set(names)].join(', ')} } from './components/${targetRel}';`);
+  }
+  if (deprecatedReexports?.status === 'active' && deprecatedReexports.sourceLayer === layer) {
+    const targetPackage = `@lk-design-system/lds-${layers[deprecatedReexports.targetLayer]}`;
+    const migration = `Import from ${targetPackage}. This ${layer} compatibility re-export is supported through 0.1.x and may be removed in 0.2.0.`;
+    for (const compatibility of deprecatedReexports.entries ?? []) {
+      const modulePath = compatibility.module.replaceAll('\\', '/');
+      const targetRel = modulePath.replace(/^components\//, '');
+      const target = path.join(base, 'src', 'components', targetRel);
+      const targetSpecifier = `${targetPackage}/${modulePath.replace(/\.(jsx|js)$/, '')}`;
+      const exportClause = compatibility.exports?.length
+        ? `export { ${compatibility.exports.join(', ')} } from '${targetSpecifier}';`
+        : `export * from '${targetSpecifier}';`;
+      const source = `/** @deprecated ${migration} */\n${exportClause}\n`;
+      await mkdir(path.dirname(target), { recursive: true });
+      await writeFile(target, source);
+      const declarationTarget = target.replace(/\.(jsx|js)$/, '.d.ts');
+      await writeFile(declarationTarget, source);
+      if (compatibility.exports?.length) {
+        entry.push(`/** @deprecated ${migration} */`);
+        entry.push(`export { ${compatibility.exports.join(', ')} } from './components/${targetRel}';`);
+      }
+    }
   }
   await writeFile(path.join(base, 'src', 'index.js'), `${entry.join('\n')}\n`);
   await writeFile(path.join(base, 'src', 'index.d.ts'), `${entry.join('\n')}\n`);

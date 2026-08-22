@@ -1036,6 +1036,155 @@
       }
     },
     {
+      "slug": "core-components-action-link",
+      "title": "Link",
+      "storybookTitle": "LDS Core/Components/Action/Link",
+      "layer": "Core",
+      "family": "Action",
+      "primaryOwner": "Link",
+      "ownerComponents": [
+        "Link"
+      ],
+      "supportingComponents": [],
+      "purpose": "현재 콘텐츠와 관련된 내부 목적지나 외부 문서를 앵커 탐색으로 연결할 때 적합합니다. 저장·삭제처럼 현재 상태를 변경하거나 로딩 상태가 필요한 작업에는 Link 대신 Button 또는 Text Button을 사용하세요.",
+      "useWhen": [],
+      "avoidWhen": [
+        "href가 없으면 링크 역할도 포인터 커서도 주지 않습니다. 클릭 가능해 보이는 빈 앵커를 만들지 마세요."
+      ],
+      "anatomy": [
+        {
+          "part": "externalLabel",
+          "rule": "external일 때 접근 이름에 덧붙는 시각적 숨김 문구. @default \"새 창에서 열림\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "tone",
+          "type": "'signal' | 'neutral' | 'inherit'",
+          "required": false,
+          "description": "잉크. @default \"signal\"",
+          "owner": "LinkProps"
+        },
+        {
+          "name": "underline",
+          "type": "'none' | 'hover' | 'always'",
+          "required": false,
+          "description": "밑줄 동작. @default \"hover\"",
+          "owner": "LinkProps"
+        },
+        {
+          "name": "external",
+          "type": "boolean",
+          "required": false,
+          "description": "새 탭 + 외부 링크 화살표 + 안전한 rel + 접근 이름에 붙는 새 창 안내. @default false",
+          "owner": "LinkProps"
+        },
+        {
+          "name": "externalLabel",
+          "type": "string",
+          "required": false,
+          "description": "external일 때 접근 이름에 덧붙는 시각적 숨김 문구. @default \"새 창에서 열림\"",
+          "owner": "LinkProps"
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "LinkProps"
+        }
+      ],
+      "states": [
+        {
+          "state": "tone",
+          "rule": "잉크. @default \"signal\""
+        }
+      ],
+      "behavior": [],
+      "quantitativeRules": [
+        {
+          "subject": "--color-semantic-label-neutral",
+          "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+        },
+        {
+          "subject": "--color-semantic-primary-normal",
+          "rule": "light: #3878B3; dark: #5390C9"
+        },
+        {
+          "subject": "--fw-semibold",
+          "rule": "600"
+        },
+        {
+          "subject": "--space-1",
+          "rule": "4px"
+        }
+      ],
+      "responsive": [],
+      "contentGuidance": [
+        "Link는 밑줄 제어가 있는 앵커/내비게이션 전용입니다. 사이즈·로딩 상태가 필요한 버튼형 액션(독립형 텍스트 CTA)에는 TextButton을 쓰세요."
+      ],
+      "accessibility": [
+        "externalLabel — external일 때 접근 이름에 붙는 시각적 숨김 문구(기본 새 창에서 열림). 화살표 글리프는 aria-hidden이라 그것만으로는 새 창 이동이 보조기술에 전달되지 않습니다(WCAG G201 / H33). 문구를 바꿀 때만 지정하세요."
+      ],
+      "exceptions": [],
+      "related": [],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<Link href=\"/products\">제품 보기</Link>\n<Link href=\"https://example.com\" external>외부 문서</Link>"
+        }
+      ],
+      "tokens": [
+        "--color-semantic-label-neutral",
+        "--color-semantic-primary-normal",
+        "--font-sans",
+        "--fw-semibold",
+        "--space-1"
+      ],
+      "apiLinks": [],
+      "migration": [],
+      "platformStatus": {
+        "figma": "not-tracked",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/ActionLink.stories.jsx",
+        "entryStoryId": "lds-core-components-action-link--links",
+        "publicStories": [
+          {
+            "id": "lds-core-components-action-link--links",
+            "name": "개요",
+            "role": "overview"
+          }
+        ],
+        "hiddenEvidence": 0
+      },
+      "sources": [],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "omitted-no-evidence",
+        "avoidWhen": "evidence",
+        "anatomy": "evidence",
+        "properties": "evidence",
+        "states": "evidence",
+        "behavior": "omitted-no-evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "omitted-no-evidence",
+        "contentGuidance": "evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "omitted-no-evidence",
+        "examples": "evidence",
+        "tokens": "evidence",
+        "apiLinks": "evidence",
+        "migration": "omitted-no-evidence"
+      }
+    },
+    {
       "slug": "core-components-action-text-button",
       "title": "Text Button",
       "storybookTitle": "LDS Core/Components/Action/Text Button",
@@ -2936,6 +3085,10 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
+          "rule": "verticalPadding=\"small | medium | large\" 공개 문법은 유지하면서 각 값은 profile-aware component token을 읽습니다. default는 기존 8/12/16px이고 ops는 6/8/12px이다. 명시적 paddingY escape hatch가 token보다 우선하며 selection·keyboard·list semantics는 profile과 무관합니다. 정본은 docs/DENSITYANDEXPRESSIONPROFILECONTRACT.md입니다."
+        },
+        {
+          "subject": "명시 규칙 2",
           "rule": "반복되는 행은 반드시 리스트로 감싸세요. 감싸지 않으면 스크린리더가 \"3개 중 2번째\"를 읽지 못해 항목 수와 현재 위치가 사라집니다(WCAG 1.3.1)."
         },
         {
@@ -2949,10 +3102,6 @@
         {
           "subject": "--body2-size",
           "rule": "15px"
-        },
-        {
-          "subject": "--caption1-line",
-          "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
         }
       ],
       "responsive": [],
@@ -3026,6 +3175,9 @@
         "--color-semantic-line-solid-normal",
         "--color-semantic-primary-normal",
         "--color-semantic-primary-surface-normal",
+        "--component-list-cell-padding-y-lg",
+        "--component-list-cell-padding-y-md",
+        "--component-list-cell-padding-y-sm",
         "--dur-base",
         "--dur-fast",
         "--ease-out",
@@ -8054,15 +8206,15 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "기본 밀도 규약 — 모든 DropdownMenu·TopBar menu·LanguageSwitcher는 panel padding 8px, item gap 4px, panel radius 12px, 기본 item 14/20px·최소 높이 40px, item padding 10px 16px, item radius 10px를 공유합니다. 설명이 있는 item은 이 최소 높이를 유지한 채 콘텐츠 높이에 따라 자연스럽게 늘어납니다."
+          "rule": "기본 밀도 규약 — 모든 DropdownMenu·TopBar menu·LanguageSwitcher는 default profile에서 panel padding 8px, item gap 4px, panel radius 12px, 기본 item 14/20px·최소 높이 40px, item padding 10px 16px, item radius 10px를 공유합니다. 설명이 있는 item은 이 최소 높이를 유지한 채 콘텐츠 높이에 따라 자연스럽게 늘어납니다."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "스크롤이 필요한 메뉴는 scrollbar-gutter: stable로 폭 변화를 막고, 항목 배경과 scrollbar 사이에 --component-menu-scrollbar-gap 4px을 유지합니다."
+          "rule": "ops profile의 density=\"default\"는 같은 menu token을 32px row와 6px 12px padding으로 조밀화합니다. 명시적 compact | comfortable가 profile 기본값보다 우선하며, semantic role, checked/current 의미와 keyboard focus 순서는 어느 profile에서도 동일합니다."
         },
         {
-          "subject": "명시 규칙 4",
-          "rule": "텍스트 menu button trigger는 16px trailing chevron-down-small로 펼침 가능성을 명시합니다. 이미 범주가 명확한 overflow·utility icon trigger에는 chevron을 중복하지 않습니다."
+          "subject": "명시 규칙 3",
+          "rule": "스크롤이 필요한 메뉴는 scrollbar-gutter: stable로 폭 변화를 막고, 항목 배경과 scrollbar 사이에 --component-menu-scrollbar-gap 4px을 유지합니다."
         },
         {
           "subject": "--body1-line",
@@ -8070,15 +8222,15 @@
         }
       ],
       "responsive": [
+        "텍스트 menu button trigger는 16px trailing chevron-down-small로 펼침 가능성을 명시합니다. 이미 범주가 명확한 overflow·utility icon trigger에는 chevron을 중복하지 않습니다.",
         "뒤로 행은 16px leading chevron, 14/20px semibold label, default 40px 높이를 사용합니다. 하위 명령과는 1px low-contrast divider와 공통 4px item gap만으로 구분하며 별도 여백을 중복하지 않습니다.",
-        "문자 탐색(typeahead) — 연속으로 입력한 문자는 하나의 검색어로 누적되고 500ms 동안 입력이 없으면 버퍼가 비워집니다. 한 글자만 입력하면 현재 항목 다음부터 찾아 같은 초성 항목을 순환하고, 두 글자 이상이면 현재 항목부터 다시 좁혀 찾습니다(APG typeahead). Space는 검색어가 진행 중일 때만 검색어에 포함되고, 그렇지 않으면 focus된 항목을 활성화합니다. 이 엔진은 SplitButton·Menubar와 공유합니다.",
-        "기본 너비 규약 — width를 생략하면 normal·radio·checkbox·flyout·drill 모두 가장 긴 item·shortcut·action 영역에 맞춰 max-content로 늘어나되 --component-menu-min-width 176px과 --component-menu-max-width 320px 사이에서만 변합니다. viewport 양쪽 16px 여백보다 넓어지지 않으며, 최대 폭에 도달한 긴 label·description은 줄바꿈합니다."
+        "문자 탐색(typeahead) — 연속으로 입력한 문자는 하나의 검색어로 누적되고 500ms 동안 입력이 없으면 버퍼가 비워집니다. 한 글자만 입력하면 현재 항목 다음부터 찾아 같은 초성 항목을 순환하고, 두 글자 이상이면 현재 항목부터 다시 좁혀 찾습니다(APG typeahead). Space는 검색어가 진행 중일 때만 검색어에 포함되고, 그렇지 않으면 focus된 항목을 활성화합니다. 이 엔진은 SplitButton·Menubar와 공유합니다."
       ],
       "contentGuidance": [
         "menuActionArea는 서버 반영 비용이 크거나 여러 설정을 원자적으로 확정해야 하는 명시적인 staged workflow에서만 onCancel·onApply 중 제공된 실제 동작을 Cancel/Apply 버튼으로 만듭니다. 단순한 다중 선택이나 열기·복제·삭제처럼 선택 즉시 실행되는 메뉴에는 사용하지 않습니다. 기본 문구는 cancelLabel=\"취소\", applyLabel=\"적용\"이며 제품 문맥에 맞게 바꿀 수 있습니다. 콜백이나 custom action이 없으면 무동작 버튼을 만들지 않습니다.",
+        "Fluent 2 Menu — normal·checkbox·radio를 같은 menu family로 다루고 300px 최대 폭에서 긴 label을 줄바꿈합니다. LDS도 variant마다 다른 기본 padding을 두지 않고 320px token 상한을 사용합니다.",
         "Carbon Menu와 Menu Button — menu item 높이를 24/32/40/48px size 축으로 관리하고, 짧은 메뉴는 최소 160px에서 시작해 긴 label에 따라 최대 288px까지 확장합니다. LDS는 14/20px·40px을 desktop default로 두고 32/48px을 compact/comfortable density로 분리하며, 기존 LDS 리듬에 맞춰 적응형 폭을 176–320px로 조정합니다.",
-        "ref, className, and style target the anchor root. Stable parts are root, trigger, panel, menu, item, divider, and actionArea; per-item class/style composes after the shared item part.",
-        "React createPortal documents portals as the escape hatch for clipping ancestors while retaining React-tree context and event propagation."
+        "ref, className, and style target the anchor root. Stable parts are root, trigger, panel, menu, item, divider, and actionArea; per-item class/style composes after the shared item part."
       ],
       "accessibility": [
         "선택 상태 표시 — radio·checkbox의 checked는 glyph와 medium weight로만 표시하며, 배경 하이라이트는 hover/focus·열린 서브메뉴 trigger 전용입니다(여러 항목이 checked여도 포인터·focus 위치가 구분됩니다). variant=\"normal\"의 active(aria-current) 항목만 glyph가 없으므로 hover보다 옅은 --component-menu-item-selected-bg(fill-alternative) 상시 배경을 가집니다. Menubar와 같은 계약입니다.",
@@ -8579,6 +8731,266 @@
         "tokens": "evidence",
         "apiLinks": "evidence",
         "migration": "evidence"
+      }
+    },
+    {
+      "slug": "core-components-overlay-popover",
+      "title": "Popover",
+      "storybookTitle": "LDS Core/Components/Overlay/Popover",
+      "layer": "Core",
+      "family": "Overlay",
+      "primaryOwner": "Popover",
+      "ownerComponents": [
+        "Popover"
+      ],
+      "supportingComponents": [
+        "Button"
+      ],
+      "purpose": "클릭한 trigger 주변에서 설명·미니 폼·피커처럼 자유로운 콘텐츠를 잠시 다룰 때 적합합니다. 명령 목록이나 작업을 막는 복잡한 흐름에는 Popover 대신 Dropdown Menu 또는 Modal을 사용하세요.",
+      "useWhen": [
+        "The panel defaults to the common owner-document Portal (withinPortal=true), inherits the nearest explicit theme and dir, and uses the shared flip/clamp/topmost-dismiss stack. Use portalTarget or Provider configuration before opting out with withinPortal=false."
+      ],
+      "avoidWhen": [
+        "Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다."
+      ],
+      "anatomy": [
+        {
+          "part": "trigger",
+          "rule": "패널을 토글하는 요소."
+        },
+        {
+          "part": "ariaLabel",
+          "rule": "비모달 dialog 표면의 접근 가능한 이름. @default \"팝오버\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "trigger",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "패널을 토글하는 요소.",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "children",
+          "type": "React.ReactNode",
+          "required": true,
+          "description": "패널 콘텐츠.",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "align",
+          "type": "'left' | 'right'",
+          "required": false,
+          "description": "앵커 방향. @default \"left\"",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "position",
+          "type": "'top' | 'bottom' | 'left' | 'right'",
+          "required": false,
+          "description": "Preferred side; flips when space is insufficient. @default \"bottom\"",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "offset",
+          "type": "number",
+          "required": false,
+          "description": "Trigger-to-panel gap in pixels. @default 8",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "width",
+          "type": "number | string",
+          "required": false,
+          "description": "패널 너비(px). @default 260",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "제어된 열림 상태.",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "description": "비제어 초기 열림 상태. @default false",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) = void",
+          "required": false,
+          "description": "열림 상태 변경 알림.",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string",
+          "required": false,
+          "description": "비모달 dialog 표면의 접근 가능한 이름. @default \"팝오버\"",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "withinPortal",
+          "type": "boolean",
+          "required": false,
+          "description": "Render in the owner-document Portal so clipping ancestors cannot cut the panel. @default true",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "portalTarget",
+          "type": "HTMLElement | null",
+          "required": false,
+          "description": "Explicit Portal target; defaults to provider target or owner-document body.",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "collisionBoundary",
+          "type": "FloatingCollisionBoundary",
+          "required": false,
+          "description": "Element/ref whose visible viewport intersection constrains flip, shift, and available size. Defaults to the viewport.",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "collisionPadding",
+          "type": "number",
+          "required": false,
+          "description": "Inset from every collision-boundary edge in CSS pixels. @default 16",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "zIndex",
+          "type": "number",
+          "required": false,
+          "description": "Explicit overlay layer override.",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "classNames",
+          "type": "LdsClassNames",
+          "required": false,
+          "description": "",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "styles",
+          "type": "LdsStyles",
+          "required": false,
+          "description": "",
+          "owner": "PopoverProps"
+        },
+        {
+          "name": "vars",
+          "type": "LdsVars",
+          "required": false,
+          "description": "",
+          "owner": "PopoverProps"
+        }
+      ],
+      "states": [
+        {
+          "state": "open",
+          "rule": "제어된 열림 상태."
+        },
+        {
+          "state": "defaultOpen",
+          "rule": "비제어 초기 열림 상태. @default false"
+        },
+        {
+          "state": "onOpenChange",
+          "rule": "열림 상태 변경 알림."
+        }
+      ],
+      "behavior": [],
+      "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "collisionBoundary는 element 또는 ref를 받고, 그 요소와 viewport의 보이는 교집합을 positioning 경계로 사용합니다. 생략하면 기존 viewport 경계입니다. collisionPadding 기본 16px은 모든 경계 가장자리에 적용됩니다. Portal은 계속 owner-document body/provider target에 남으므로 clipping 탈출과 chat panel 내부 geometry 제한을 동시에 충족하며, 선호 width와 style은 경계의 가용 폭·높이를 넘을 수 없습니다."
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다."
+        }
+      ],
+      "responsive": [
+        "패널은 선호 정렬을 유지하되 collision 경계에서 반대쪽으로 flip하고 좌우를 clamp하며, 가용 높이를 넘는 본문만 세로 스크롤합니다.",
+        "ref, className, and style target the anchor root. Stable parts are root, trigger, and panel; panel geometry is limited to --lds-popover-width and --lds-popover-max-height."
+      ],
+      "contentGuidance": [],
+      "accessibility": [
+        "trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup=\"dialog\"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요.",
+        "open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는 trigger로 초점을 복원하지만 비모달 Popover 자체는 focus trap을 만들지 않아 Tab이 trigger 다음의 패널 입력으로 이동합니다.",
+        "position, align, and offset are canonical placement inputs. Products own the arbitrary panel content, while LDS owns trigger ARIA, Portal positioning, outside press, Escape, and focus restoration.",
+        "WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다.",
+        "React Aria Popover는 Portal overlay의 positioning boundary를 boundaryElement로 별도 지정하고 위치를 자동 갱신합니다. LDS의 collisionBoundary도 Portal target과 독립된 constraint라는 같은 책임 분리를 따릅니다."
+      ],
+      "exceptions": [],
+      "related": [
+        {
+          "component": "Button",
+          "relationship": "대표 시나리오에서 조합"
+        }
+      ],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<Popover\n  trigger={<Button variant=\"ghost\">옵션</Button>}\n  width={280}\n  collisionBoundary={chatPanelRef}\n>\n  <FormField label=\"반경\"><Slider defaultValue={30} /></FormField>\n</Popover>"
+        }
+      ],
+      "tokens": [
+        "--lds-popover-max-height",
+        "--lds-popover-width"
+      ],
+      "apiLinks": [],
+      "migration": [],
+      "platformStatus": {
+        "figma": "mapped",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/OverlayPopover.stories.jsx",
+        "entryStoryId": "lds-core-components-overlay-popover--popover-overview",
+        "publicStories": [
+          {
+            "id": "lds-core-components-overlay-popover--popover-overview",
+            "name": "개요",
+            "role": "overview"
+          },
+          {
+            "id": "lds-core-components-overlay-popover--popover-interaction-contract",
+            "name": "상호작용 · 초점·Escape·화면 경계",
+            "role": "interaction"
+          }
+        ],
+        "hiddenEvidence": 3
+      },
+      "sources": [],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "evidence",
+        "avoidWhen": "evidence",
+        "anatomy": "evidence",
+        "properties": "evidence",
+        "states": "evidence",
+        "behavior": "omitted-no-evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "evidence",
+        "contentGuidance": "omitted-no-evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "evidence",
+        "examples": "evidence",
+        "tokens": "evidence",
+        "apiLinks": "evidence",
+        "migration": "omitted-no-evidence"
       }
     },
     {
@@ -9139,6 +9551,193 @@
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
         "related": "evidence",
+        "examples": "evidence",
+        "tokens": "evidence",
+        "apiLinks": "evidence",
+        "migration": "omitted-no-evidence"
+      }
+    },
+    {
+      "slug": "core-components-selection-and-input-calendar",
+      "title": "Calendar",
+      "storybookTitle": "LDS Core/Components/Selection and Input/Calendar",
+      "layer": "Core",
+      "family": "Selection and Input",
+      "primaryOwner": "Calendar",
+      "ownerComponents": [
+        "Calendar"
+      ],
+      "supportingComponents": [],
+      "purpose": "예약 가능일이나 로그 기준일처럼 주변 날짜를 함께 보며 고를 때 적합합니다. 폼 안에서 단일 날짜만 간결하게 입력하면 Calendar 대신 Date Picker를 사용하세요.",
+      "useWhen": [],
+      "avoidWhen": [],
+      "anatomy": [],
+      "properties": [
+        {
+          "name": "value",
+          "type": "Date | string",
+          "required": false,
+          "description": "제어되는 선택 날짜(Date 또는 ISO 문자열).",
+          "owner": "CalendarProps"
+        },
+        {
+          "name": "defaultValue",
+          "type": "Date | string",
+          "required": false,
+          "description": "비제어 초기 날짜.",
+          "owner": "CalendarProps"
+        },
+        {
+          "name": "onChange",
+          "type": "(date: Date) = void",
+          "required": false,
+          "description": "",
+          "owner": "CalendarProps"
+        },
+        {
+          "name": "isDateDisabled",
+          "type": "(date: Date) = boolean",
+          "required": false,
+          "description": "개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). 포커스 이동은 허용되고 선택만 차단됩니다.",
+          "owner": "CalendarProps"
+        },
+        {
+          "name": "minDate",
+          "type": "Date | string",
+          "required": false,
+          "description": "이 날짜 이전(당일 제외)은 모두 선택 불가. Date 또는 ISO 문자열.",
+          "owner": "CalendarProps"
+        },
+        {
+          "name": "maxDate",
+          "type": "Date | string",
+          "required": false,
+          "description": "이 날짜 이후(당일 제외)는 모두 선택 불가. Date 또는 ISO 문자열.",
+          "owner": "CalendarProps"
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "description": "Focus the selected/today day when embedded in an opened picker dialog.",
+          "owner": "CalendarProps"
+        }
+      ],
+      "states": [
+        {
+          "state": "isDateDisabled",
+          "rule": "개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). 포커스 이동은 허용되고 선택만 차단됩니다."
+        }
+      ],
+      "behavior": [
+        "standalone Calendar와 DatePicker popup이 같은 keyboard·selection 계약을 공유합니다.",
+        "WAI-ARIA Date Picker Dialog example의 grid roving focus와 날짜 이동 키를 따릅니다.",
+        "Calendar — 날짜 선택용 월 그리드(현장 실사 일정). 일요일 레드 / 토요일 시그널 헤더; 선택된 날짜는 시그널 잉크로 채워지고, 오늘은 링을 두릅니다."
+      ],
+      "quantitativeRules": [
+        {
+          "subject": "--body1-size",
+          "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
+        },
+        {
+          "subject": "--caption1-size",
+          "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+        },
+        {
+          "subject": "--color-semantic-accent-foreground-blue",
+          "rule": "light: #336CA1; dark: #639ACE"
+        },
+        {
+          "subject": "--color-semantic-accent-foreground-red",
+          "rule": "light: #D63D3D; dark: #F16F6F"
+        }
+      ],
+      "responsive": [],
+      "contentGuidance": [],
+      "accessibility": [
+        "value / defaultValue / onChange(date) — 제어/비제어(Date 또는 ISO 문자열 허용). autoFocus는 DatePicker dialog가 열릴 때 선택 날짜 또는 오늘로 focus를 옮깁니다.",
+        "isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. isDateDisabled는 임의 조건(콜백)을, minDate/maxDate는 경계를 담당하며 함께 쓸 수 있습니다. 비활성 날짜는 흐리게·취소선으로 표시되고 aria-disabled가 붙으며, 예약 가능일 흐름에서 특정 날짜를 막는 용도입니다.",
+        "날짜 grid는 하나의 roving Tab stop을 사용합니다. Arrow 키는 일/주 단위, Home/End는 주의 시작/끝, PageUp/PageDown은 월 단위, Shift+PageUp/Shift+PageDown은 연 단위로 이동합니다. 비활성 날짜도 포커스로 지나갈 수는 있으나(이유를 인지할 수 있도록) 선택만 차단되어 WAI-ARIA date 패턴을 따릅니다.",
+        "표시 중인 달은 사용자 탐색이 소유합니다. 선택 값이 있어도 이전/다음 달 버튼·PageUp/PageDown·월 경계를 넘는 Arrow 이동이 선택된 달로 되돌려지지 않습니다. 값이 실제로 바뀔 때(제어 컴포넌트의 새 value 포함)만 표시 달과 roving 초점이 선택 날짜로 따라갑니다.",
+        "이전/다음 달 버튼은 초점을 그대로 유지해 여러 달을 연속으로 넘길 수 있습니다. 다만 grid 안에서 키보드로 탐색 중이었다면 초점이 새 달의 날짜 셀로 따라갑니다. 월 표시는 aria-live=\"polite\"로 읽힙니다."
+      ],
+      "exceptions": [],
+      "related": [],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<Calendar defaultValue=\"2026-07-03\" onChange={setDate} />"
+        }
+      ],
+      "tokens": [
+        "--body1-size",
+        "--caption1-size",
+        "--color-semantic-accent-foreground-blue",
+        "--color-semantic-accent-foreground-red",
+        "--color-semantic-background-elevated-normal",
+        "--color-semantic-fill-normal",
+        "--color-semantic-label-disable",
+        "--color-semantic-label-neutral",
+        "--color-semantic-label-normal",
+        "--color-semantic-line-solid-normal",
+        "--color-semantic-primary-normal",
+        "--color-semantic-static-white",
+        "--component-input-focus-shadow",
+        "--dur-fast",
+        "--ease-out",
+        "--font-sans",
+        "--fw-bold",
+        "--fw-medium",
+        "--fw-semibold",
+        "--label1-size",
+        "--radius-md",
+        "--radius-xl",
+        "--space-0-5",
+        "--space-1-5",
+        "--space-3-5"
+      ],
+      "apiLinks": [],
+      "migration": [],
+      "platformStatus": {
+        "figma": "not-tracked",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/DataCalendar.stories.jsx",
+        "entryStoryId": "lds-core-components-selection-and-input-calendar--calendar-pattern",
+        "publicStories": [
+          {
+            "id": "lds-core-components-selection-and-input-calendar--calendar-pattern",
+            "name": "개요",
+            "role": "overview"
+          },
+          {
+            "id": "lds-core-components-selection-and-input-calendar--blocked-dates",
+            "name": "변형·상태 · 예약 불가일",
+            "role": "variants-states"
+          }
+        ],
+        "hiddenEvidence": 2
+      },
+      "sources": [],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "omitted-no-evidence",
+        "avoidWhen": "omitted-no-evidence",
+        "anatomy": "omitted-no-evidence",
+        "properties": "evidence",
+        "states": "evidence",
+        "behavior": "evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "omitted-no-evidence",
+        "contentGuidance": "omitted-no-evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "omitted-no-evidence",
         "examples": "evidence",
         "tokens": "evidence",
         "apiLinks": "evidence",
@@ -10121,6 +10720,238 @@
       }
     },
     {
+      "slug": "core-components-selection-and-input-date-picker",
+      "title": "Date Picker",
+      "storybookTitle": "LDS Core/Components/Selection and Input/Date Picker",
+      "layer": "Core",
+      "family": "Selection and Input",
+      "primaryOwner": "DatePicker",
+      "ownerComponents": [
+        "DatePicker"
+      ],
+      "supportingComponents": [
+        "FormField"
+      ],
+      "purpose": "예약일·마감일처럼 한 날짜를 필드 맥락에서 입력할 때 적합합니다. 시작과 종료가 함께 필요하면 Date Range를, 월 전체를 탐색해야 하면 Calendar를 사용하세요.",
+      "useWhen": [],
+      "avoidWhen": [],
+      "anatomy": [],
+      "properties": [
+        {
+          "name": "value",
+          "type": "Date | string | null",
+          "required": false,
+          "description": "",
+          "owner": "DatePickerProps"
+        },
+        {
+          "name": "defaultValue",
+          "type": "Date | string | null",
+          "required": false,
+          "description": "",
+          "owner": "DatePickerProps"
+        },
+        {
+          "name": "onChange",
+          "type": "(date: Date) = void",
+          "required": false,
+          "description": "",
+          "owner": "DatePickerProps"
+        },
+        {
+          "name": "isDateDisabled",
+          "type": "(date: Date) = boolean",
+          "required": false,
+          "description": "개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). Calendar 팝오버로 전달됩니다.",
+          "owner": "DatePickerProps"
+        },
+        {
+          "name": "minDate",
+          "type": "Date | string",
+          "required": false,
+          "description": "이 날짜 이전(당일 제외)은 선택 불가. Date 또는 ISO 문자열.",
+          "owner": "DatePickerProps"
+        },
+        {
+          "name": "maxDate",
+          "type": "Date | string",
+          "required": false,
+          "description": "이 날짜 이후(당일 제외)는 선택 불가. Date 또는 ISO 문자열.",
+          "owner": "DatePickerProps"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "DatePickerProps"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md'",
+          "required": false,
+          "description": "",
+          "owner": "DatePickerProps"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "",
+          "owner": "DatePickerProps"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "검증 실패 상태. trigger에 aria-invalid와 negative border를 적용합니다. @default false",
+          "owner": "DatePickerProps"
+        },
+        {
+          "name": "full",
+          "type": "boolean",
+          "required": false,
+          "description": "부모 폭을 채우고 고정 최소 폭을 제거합니다. @default false",
+          "owner": "DatePickerProps"
+        },
+        {
+          "name": "style",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "",
+          "owner": "DatePickerProps"
+        }
+      ],
+      "states": [
+        {
+          "state": "isDateDisabled",
+          "rule": "개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). Calendar 팝오버로 전달됩니다."
+        },
+        {
+          "state": "invalid",
+          "rule": "검증 실패 상태. trigger에 aria-invalid와 negative border를 적용합니다. @default false"
+        }
+      ],
+      "behavior": [
+        "isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. Calendar 팝오버로 그대로 전달되어 비활성 날짜는 흐리게·취소선으로 표시되고 선택만 차단됩니다(포커스 이동은 허용). 실사 희망일·예약 가능일 흐름에서 특정 날짜를 막는 용도입니다.",
+        "Calendar popup의 월 탐색은 Calendar 계약을 그대로 상속합니다. 값이 있어도 이전/다음 달, PageUp/PageDown, Shift+PageUp/PageDown이 정상 동작합니다."
+      ],
+      "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "full — 날짜 범위나 툴바처럼 부모 폭에 맞춰야 하는 조합에서 trigger의 고정 최소 폭을 제거하고 가용 폭을 채웁니다."
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "invalid — 상위 폼이나 DateRangeField가 판정한 검증 실패를 trigger에 싣습니다. Input·Select·Textarea와 같은 우선순위로 negative border를 적용하고 aria-invalid를 trigger button(=초점 요소)에 붙입니다. 오류 문구 자체는 소유하지 않으므로 상위가 aria-describedby로 메시지 id를 전달하면 그대로 trigger에 연결됩니다. role=\"group\"은 ARIA 1.2에서 aria-invalid를 지원하지 않으므로 group이 아니라 이 필드가 오류를 전달합니다."
+        },
+        {
+          "subject": "--color-semantic-fill-normal",
+          "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
+        },
+        {
+          "subject": "--color-semantic-label-alternative",
+          "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+        },
+        {
+          "subject": "--color-semantic-label-disable",
+          "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
+        }
+      ],
+      "responsive": [],
+      "contentGuidance": [],
+      "accessibility": [
+        "value / defaultValue / onChange(date) — 제어/비제어(Date, ISO 문자열 또는 빈 값). disabled / aria-label — trigger 상태와 accessible name. 선택 값은 trigger 이름에도 포함됩니다. 바깥 클릭·선택·Escape 시 닫히며 선택 뒤 trigger로 focus가 돌아옵니다.",
+        "trigger는 aria-haspopup=\"dialog\", aria-expanded, aria-controls로 Calendar popup과 연결하고 LDS Input focus ring을 사용합니다.",
+        "calendar affordance는 공통 Icon registry를 사용하며 trigger의 accessible name과 중복되지 않도록 장식적으로 숨깁니다.",
+        "WAI-ARIA Date Picker Dialog example의 popup naming, 초기 날짜 focus, Escape, 선택 후 focus return 계약을 따릅니다.",
+        "WAI-ARIA Dialog pattern을 기준으로 Calendar popup을 이름 있는 dialog로 노출합니다. 완전한 modal focus trap은 사용하지 않는 non-modal field popup이며, 대신 초점이 필드 밖으로 나가면 popup을 닫아 열린 dialog가 잔류하지 않게 합니다(창 전환처럼 relatedTarget이 없는 blur는 제외)."
+      ],
+      "exceptions": [],
+      "related": [
+        {
+          "component": "FormField",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "NumberField",
+          "relationship": "대표 시나리오에서 조합"
+        }
+      ],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<DatePicker placeholder=\"실사 희망일\" onChange={setDate} />\n<DatePicker defaultValue=\"2026-07-03\" />"
+        }
+      ],
+      "tokens": [
+        "--color-semantic-fill-normal",
+        "--color-semantic-label-alternative",
+        "--color-semantic-label-disable",
+        "--color-semantic-label-normal",
+        "--component-input-bg",
+        "--component-input-border-color",
+        "--component-input-border-color-focus",
+        "--component-input-border-color-invalid",
+        "--component-input-focus-shadow",
+        "--component-input-gap",
+        "--component-input-height",
+        "--component-input-padding-x",
+        "--component-input-radius",
+        "--control-h-sm",
+        "--dur-fast",
+        "--ease-out",
+        "--font-sans"
+      ],
+      "apiLinks": [],
+      "migration": [],
+      "platformStatus": {
+        "figma": "not-tracked",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/FormDateTime.stories.jsx",
+        "entryStoryId": "lds-core-components-selection-and-input-date-picker--date-input",
+        "publicStories": [
+          {
+            "id": "lds-core-components-selection-and-input-date-picker--date-input",
+            "name": "개요",
+            "role": "overview"
+          },
+          {
+            "id": "lds-core-components-selection-and-input-date-picker--blocked-dates",
+            "name": "변형·상태 · 예약 불가일",
+            "role": "variants-states"
+          }
+        ],
+        "hiddenEvidence": 1
+      },
+      "sources": [],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "omitted-no-evidence",
+        "avoidWhen": "omitted-no-evidence",
+        "anatomy": "omitted-no-evidence",
+        "properties": "evidence",
+        "states": "evidence",
+        "behavior": "evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "omitted-no-evidence",
+        "contentGuidance": "omitted-no-evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "evidence",
+        "examples": "evidence",
+        "tokens": "evidence",
+        "apiLinks": "evidence",
+        "migration": "omitted-no-evidence"
+      }
+    },
+    {
       "slug": "core-components-selection-and-input-input",
       "title": "Input",
       "storybookTitle": "LDS Core/Components/Selection and Input/Input",
@@ -10497,6 +11328,465 @@
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
         "related": "evidence",
+        "examples": "evidence",
+        "tokens": "evidence",
+        "apiLinks": "evidence",
+        "migration": "omitted-no-evidence"
+      }
+    },
+    {
+      "slug": "core-components-selection-and-input-number-field",
+      "title": "Number Field",
+      "storybookTitle": "LDS Core/Components/Selection and Input/Number Field",
+      "layer": "Core",
+      "family": "Selection and Input",
+      "primaryOwner": "NumberField",
+      "ownerComponents": [
+        "NumberField"
+      ],
+      "supportingComponents": [
+        "FormField"
+      ],
+      "purpose": "수량·속도처럼 최소·최대와 일정한 step이 있는 값을 입력할 때 적합합니다. 범위가 없거나 숫자 외 형식을 함께 받는 값에는 Number Field 대신 Input을 사용하세요.",
+      "useWhen": [],
+      "avoidWhen": [],
+      "anatomy": [],
+      "properties": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "onChange",
+          "type": "(value: number) = void",
+          "required": false,
+          "description": "편집 중에는 파싱된 중간값이 그대로 전달되고, blur / Enter / 스테퍼로 값이 확정될 때 [min, max]로 클램프된 값이 다시 전달됩니다.",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "label",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "helper",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "error",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md'",
+          "required": false,
+          "description": "",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "style",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "스테퍼를 포함한 입력 셸의 스타일.",
+          "owner": "NumberFieldProps"
+        },
+        {
+          "name": "fieldStyle",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "label/helper/error를 포함한 전체 필드 스타일.",
+          "owner": "NumberFieldProps"
+        }
+      ],
+      "states": [],
+      "behavior": [
+        "value / defaultValue / onChange — 제어/비제어. min / max / step — 범위. 콤팩트한 ± 전용 컨트롤에는 Stepper를 쓰세요."
+      ],
+      "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "클램프는 값이 확정될 때만 일어납니다. 편집 중에는 max=20에서 25를 타이핑하거나 필드를 비워 둘 수 있고, blur·Enter·스테퍼로 확정하는 순간 [min, max]로 클램프됩니다. 빈 채로 blur하면 마지막 확정값으로 되돌아갑니다. onChange는 편집 중에는 파싱된 중간값을, 확정 시점에는 클램프된 값을 전달합니다."
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "WCAG 2.2 Focus Appearance에 맞춰 field 전체에 LDS focus ring을 표시합니다."
+        },
+        {
+          "subject": "--color-semantic-label-disable",
+          "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
+        },
+        {
+          "subject": "--color-semantic-label-neutral",
+          "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+        },
+        {
+          "subject": "--color-semantic-label-normal",
+          "rule": "light: #171718; dark: #F7F7F7"
+        }
+      ],
+      "responsive": [],
+      "contentGuidance": [],
+      "accessibility": [
+        "label / helper / error / invalid — label을 주면 htmlFor로 연결된 필드 레이블·메시지 스택을 함께 렌더링하고, 그렇지 않으면 셸만 렌더링해 FormField 같은 상위 표면에 맡깁니다. error나 invalid는 aria-invalid와 오류 테두리를 함께 켭니다. fieldStyle은 label/helper/error를 포함한 바깥 스택, style은 스테퍼가 붙은 입력 셸을 스타일링합니다.",
+        "native number input이 spinbutton semantics를 소유하고 inline step action은 보조 조작입니다. 보조 action 이름에는 field 이름을 포함합니다. focus/disabled/readOnly는 Input과 같은 component token(fieldBackground·fieldBorderColor)을 사용하며 type=\"number\"는 consumer가 덮어쓰지 못합니다.",
+        "WAI-ARIA Spinbutton pattern의 native editing·Arrow key 기대를 보존합니다."
+      ],
+      "exceptions": [],
+      "related": [
+        {
+          "component": "FormField",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DatePicker",
+          "relationship": "대표 시나리오에서 조합"
+        }
+      ],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<NumberField label=\"투입 대수\" helper=\"최대 20대\" defaultValue={3} min={0} max={20} onChange={setQty} />"
+        }
+      ],
+      "tokens": [
+        "--color-semantic-label-disable",
+        "--color-semantic-label-neutral",
+        "--color-semantic-label-normal",
+        "--color-semantic-line-solid-normal",
+        "--component-input-focus-shadow",
+        "--component-input-height",
+        "--component-input-padding-x",
+        "--component-input-radius",
+        "--control-h-sm",
+        "--dur-fast",
+        "--ease-out",
+        "--font-sans",
+        "--fw-semibold"
+      ],
+      "apiLinks": [],
+      "migration": [],
+      "platformStatus": {
+        "figma": "not-tracked",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/FormAdvancedInputs.stories.jsx",
+        "entryStoryId": "lds-core-components-selection-and-input-number-field--number-input",
+        "publicStories": [
+          {
+            "id": "lds-core-components-selection-and-input-number-field--number-input",
+            "name": "개요",
+            "role": "overview"
+          }
+        ],
+        "hiddenEvidence": 1
+      },
+      "sources": [],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "omitted-no-evidence",
+        "avoidWhen": "omitted-no-evidence",
+        "anatomy": "omitted-no-evidence",
+        "properties": "evidence",
+        "states": "omitted-no-evidence",
+        "behavior": "evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "omitted-no-evidence",
+        "contentGuidance": "omitted-no-evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "evidence",
+        "examples": "evidence",
+        "tokens": "evidence",
+        "apiLinks": "evidence",
+        "migration": "omitted-no-evidence"
+      }
+    },
+    {
+      "slug": "core-components-selection-and-input-password-input",
+      "title": "Password Input",
+      "storybookTitle": "LDS Core/Components/Selection and Input/Password Input",
+      "layer": "Core",
+      "family": "Selection and Input",
+      "primaryOwner": "PasswordInput",
+      "ownerComponents": [
+        "PasswordInput"
+      ],
+      "supportingComponents": [],
+      "purpose": "사용자가 직접 비밀번호를 작성하는 로그인과 계정 설정에 사용하세요. 이미 발급된 비밀값을 읽거나 복사하는 화면은 Secret Field가 더 적합합니다.",
+      "useWhen": [],
+      "avoidWhen": [
+        "autoComplete — 브라우저 비밀번호 관리자에 전달하는 입력 목적. 기본값은 로그인 맥락의 current-password입니다. 회원가입·비밀번호 변경처럼 새 비밀번호를 만드는 폼에서는 new-password를 넘겨 관리자가 저장된 값 대신 생성 값을 제안하게 하세요. off를 넘기면 자동 채우기를 끌 수 있지만 권장하지 않습니다."
+      ],
+      "anatomy": [
+        {
+          "part": "capsLockLabel",
+          "rule": "Caps Lock warning shown while the field has focus. Pass '' to suppress the warning entirely."
+        }
+      ],
+      "properties": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "onChange",
+          "type": "(value: string) = void",
+          "required": false,
+          "description": "",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "label",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "helper",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "error",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "status",
+          "type": "'normal' | 'positive' | 'negative'",
+          "required": false,
+          "description": "",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md' | 'small' | 'medium'",
+          "required": false,
+          "description": "",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "revealLabel",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "hideLabel",
+          "type": "string",
+          "required": false,
+          "description": "",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "autoComplete",
+          "type": "string",
+          "required": false,
+          "description": "Browser autofill hint for the password field. Keep the default on sign-in forms; pass \"new-password\" on sign-up / change-password forms so the password manager offers a generated value instead of the stored one.",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "capsLockLabel",
+          "type": "string",
+          "required": false,
+          "description": "Caps Lock warning shown while the field has focus. Pass '' to suppress the warning entirely.",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "fieldStyle",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "Styles for the label/control/message stack.",
+          "owner": "PasswordInputProps"
+        },
+        {
+          "name": "style",
+          "type": "React.CSSProperties",
+          "required": false,
+          "description": "Styles for the input control shell.",
+          "owner": "PasswordInputProps"
+        }
+      ],
+      "states": [],
+      "behavior": [
+        "필드가 소속된 이 제출되면 표시 상태를 자동으로 마스킹으로 되돌립니다. 토글을 누른 뒤 그대로 제출해도 평문이 화면에 남지 않습니다.",
+        "value / defaultValue / onChange — 제어/비제어. size sm · md."
+      ],
+      "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "The reveal button is a real 32px icon button with a contextual name (비밀번호 보기 / 비밀번호 숨기기) and aria-controls; its icon describes the next action. A disabled field disables the trailing action as well."
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "Reference basis: Carbon Text input, GOV.UK Text input, GOV.UK Password input, WCAG 2.2 Identify Input Purpose."
+        },
+        {
+          "subject": "--caption1-line",
+          "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+        },
+        {
+          "subject": "--caption1-size",
+          "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+        },
+        {
+          "subject": "--color-semantic-label-disable",
+          "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
+        }
+      ],
+      "responsive": [],
+      "contentGuidance": [
+        "Label, helper/error, read-only, positive, and negative states use the same field anatomy and tokens as Input.",
+        "필드·상태 prop: label(필드 레이블) · status(normal/positive/negative) · invalid(오류 강조 토글) · fieldStyle(전체 필드 컨테이너 스타일) · revealLabel/hideLabel(비밀번호 표시·숨김 토글 버튼의 스크린리더 레이블)."
+      ],
+      "accessibility": [
+        "Caps Lock이 켜진 채로 입력하면 focus 중에만 주의 문구가 나타나고, 상시 마운트된 polite live region이 같은 문구를 읽습니다.",
+        "capsLockLabel — Caps Lock이 켜진 상태에서 focus 중에 노출되는 주의 문구이자 live region 문장. 기본값은 Caps Lock이 켜져 있습니다.이고, 빈 문자열을 넘기면 경고를 끕니다. 값이 비어 있지 않은 한 문구는 필드가 focus를 잃으면 사라집니다."
+      ],
+      "exceptions": [],
+      "related": [],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<PasswordInput onChange={setPw} />"
+        }
+      ],
+      "tokens": [
+        "--caption1-line",
+        "--caption1-size",
+        "--color-semantic-label-disable",
+        "--color-semantic-status-cautionary-text",
+        "--component-input-border-width",
+        "--component-input-focus-shadow",
+        "--component-input-gap",
+        "--component-input-height",
+        "--component-input-padding-x",
+        "--component-input-radius",
+        "--component-input-text-color",
+        "--control-h-sm",
+        "--dur-fast",
+        "--ease-out",
+        "--font-sans",
+        "--fw-medium"
+      ],
+      "apiLinks": [],
+      "migration": [],
+      "platformStatus": {
+        "figma": "mapped",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/FormPasswordInput.stories.jsx",
+        "entryStoryId": "lds-core-components-selection-and-input-password-input--password-input-overview",
+        "publicStories": [
+          {
+            "id": "lds-core-components-selection-and-input-password-input--password-input-overview",
+            "name": "개요",
+            "role": "overview"
+          }
+        ],
+        "hiddenEvidence": 3
+      },
+      "sources": [],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "omitted-no-evidence",
+        "avoidWhen": "evidence",
+        "anatomy": "evidence",
+        "properties": "evidence",
+        "states": "omitted-no-evidence",
+        "behavior": "evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "omitted-no-evidence",
+        "contentGuidance": "evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "omitted-no-evidence",
         "examples": "evidence",
         "tokens": "evidence",
         "apiLinks": "evidence",
@@ -13615,6 +14905,188 @@
       }
     },
     {
+      "slug": "core-components-status-meter",
+      "title": "Meter",
+      "storybookTitle": "LDS Core/Components/Status/Meter",
+      "layer": "Core",
+      "family": "Status",
+      "primaryOwner": "Meter",
+      "ownerComponents": [
+        "Meter"
+      ],
+      "supportingComponents": [],
+      "purpose": "수위·품질·위험 점수처럼 최소·최대 경계가 있는 현재 측정값을 비교할 때 적합합니다. 업로드나 처리 작업의 완료율에는 Meter 대신 ProgressBar 또는 CircularProgress를 사용하세요.",
+      "useWhen": [],
+      "avoidWhen": [],
+      "anatomy": [
+        {
+          "part": "thresholdLabels",
+          "rule": "임계 구간을 색 대신 전달하는 문구를 재정의합니다(WCAG 1.4.1)."
+        }
+      ],
+      "properties": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "MeterProps"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "description": "",
+          "owner": "MeterProps"
+        },
+        {
+          "name": "label",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "",
+          "owner": "MeterProps"
+        },
+        {
+          "name": "thresholds",
+          "type": "{ low: number; high: number }",
+          "required": false,
+          "description": "퍼센트 임계값: ≤low 레드, ≤high 앰버, 그 외 그린.",
+          "owner": "MeterProps"
+        },
+        {
+          "name": "thresholdLabels",
+          "type": "MeterThresholdLabels",
+          "required": false,
+          "description": "임계 구간을 색 대신 전달하는 문구를 재정의합니다(WCAG 1.4.1).",
+          "owner": "MeterProps"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md'",
+          "required": false,
+          "description": "",
+          "owner": "MeterProps"
+        },
+        {
+          "name": "showValue",
+          "type": "boolean",
+          "required": false,
+          "description": "\"value/max\" 표시. @default true",
+          "owner": "MeterProps"
+        }
+      ],
+      "states": [],
+      "behavior": [],
+      "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "접근성 role — 알려진 범위 안의 측정값이므로 role=\"meter\"로 노출됩니다. role=\"progressbar\"는 작업의 진척도를 뜻하므로 쓰지 않습니다. 이 때문에 Meter는 ProgressBar를 합성하지 않고 같은 트랙 형상(sm 6px / md 10px)을 직접 렌더합니다."
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "값 발화 — aria-valuenow / aria-valuemin / aria-valuemax는 caller의 value·max 단위를 그대로 씁니다(퍼센트로 환산하지 않음). 기본 aria-valuetext는 보이는 캡션과 같은 value/max 문자열이라 max !== 100에서도 표기와 발화가 어긋나지 않습니다. aria-valuetext를 직접 넘기면 그대로 우선합니다."
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "thresholdLabels — 임계 구간은 색상만으로 전달하지 않습니다(WCAG 1.4.1). 구간에 해당하는 낱말이 값 옆에 함께 렌더되고 aria-valuetext에도 붙습니다. 기본값은 { negative: '위험', cautionary: '주의', positive: '양호' }이며, 수위·품질처럼 도메인 어휘가 다르면 필요한 키만 덮어씁니다. showValue={false}여도 임계 구간이 있으면 캡션 줄은 유지됩니다."
+        },
+        {
+          "subject": "--color-semantic-fill-strong",
+          "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
+        },
+        {
+          "subject": "--color-semantic-label-alternative",
+          "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+        }
+      ],
+      "responsive": [],
+      "contentGuidance": [
+        "value / max — 레벨. thresholds — { low, high } 퍼센트 → 레드 / 앰버 / 스틸그린. label / showValue. 작업 진행에는 ProgressBar를 쓰세요.",
+        "Meter — 임계값(옵션)이 있는 라벨 값 바(완료율, 품질 점수)."
+      ],
+      "accessibility": [
+        "이름 — 문자열이 아닌 label(ReactNode)도 보이는 라벨에 aria-labelledby로 연결되므로 무명 meter가 생기지 않습니다. label도 aria-label도 없으면 측정값이 기본 이름입니다."
+      ],
+      "exceptions": [],
+      "related": [
+        {
+          "component": "CircularProgress",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "ProgressBar",
+          "relationship": "대표 시나리오에서 조합"
+        }
+      ],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<Meter label=\"완료율\" value={82} thresholds={{ low: 20, high: 50 }} />\n<Meter label=\"냉각수 수위\" value={12} max={40} thresholds={{ low: 20, high: 50 }} thresholdLabels={{ negative: '부족' }} />"
+        }
+      ],
+      "tokens": [
+        "--color-semantic-fill-strong",
+        "--color-semantic-label-alternative",
+        "--color-semantic-label-neutral",
+        "--color-semantic-primary-normal",
+        "--color-semantic-status-cautionary",
+        "--color-semantic-status-cautionary-text",
+        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-text",
+        "--color-semantic-status-positive",
+        "--color-semantic-status-positive-text",
+        "--dur-base",
+        "--ease-out",
+        "--font-sans",
+        "--fw-semibold",
+        "--label2-size",
+        "--radius-pill",
+        "--space-1-5"
+      ],
+      "apiLinks": [],
+      "migration": [],
+      "platformStatus": {
+        "figma": "mapped",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/ProductMeter.stories.jsx",
+        "entryStoryId": "lds-core-components-status-meter--bounded-measurements",
+        "publicStories": [
+          {
+            "id": "lds-core-components-status-meter--bounded-measurements",
+            "name": "개요",
+            "role": "overview"
+          }
+        ],
+        "hiddenEvidence": 1
+      },
+      "sources": [],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "omitted-no-evidence",
+        "avoidWhen": "omitted-no-evidence",
+        "anatomy": "evidence",
+        "properties": "evidence",
+        "states": "omitted-no-evidence",
+        "behavior": "omitted-no-evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "omitted-no-evidence",
+        "contentGuidance": "evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "evidence",
+        "examples": "evidence",
+        "tokens": "evidence",
+        "apiLinks": "evidence",
+        "migration": "omitted-no-evidence"
+      }
+    },
+    {
       "slug": "core-components-status-notices-and-callouts",
       "title": "Notices and Callouts",
       "storybookTitle": "LDS Core/Components/Status/Notices and Callouts",
@@ -14275,6 +15747,258 @@
         "quantitativeRules": "evidence",
         "responsive": "omitted-no-evidence",
         "contentGuidance": "evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "evidence",
+        "examples": "evidence",
+        "tokens": "evidence",
+        "apiLinks": "evidence",
+        "migration": "omitted-no-evidence"
+      }
+    },
+    {
+      "slug": "core-components-status-progress",
+      "title": "Progress",
+      "storybookTitle": "LDS Core/Components/Status/Progress",
+      "layer": "Core",
+      "family": "Status",
+      "primaryOwner": "CircularProgress",
+      "ownerComponents": [
+        "CircularProgress",
+        "ProgressBar"
+      ],
+      "supportingComponents": [],
+      "purpose": "업로드·분석·생성처럼 시작과 완료가 있는 작업의 진행률이나 대기 상태를 전달할 때 적합합니다. 작업이 아닌 현재 측정값을 알려진 범위 안에서 비교하려면 Progress 대신 Meter를 사용하세요.",
+      "useWhen": [],
+      "avoidWhen": [],
+      "anatomy": [
+        {
+          "part": "label",
+          "rule": "Optional visible label."
+        }
+      ],
+      "properties": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": false,
+          "description": "Current value for determinate progress. @default 0",
+          "owner": "CircularProgressProps"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "description": "Maximum value for determinate progress. @default 100",
+          "owner": "CircularProgressProps"
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "required": false,
+          "description": "Diameter in px. @default 48",
+          "owner": "CircularProgressProps"
+        },
+        {
+          "name": "thickness",
+          "type": "number",
+          "required": false,
+          "description": "Ring thickness in px. @default 5",
+          "owner": "CircularProgressProps"
+        },
+        {
+          "name": "tone",
+          "type": "'signal' | 'positive' | 'cautionary' | 'negative'",
+          "required": false,
+          "description": "Arc tone. @default \"signal\"",
+          "owner": "CircularProgressProps"
+        },
+        {
+          "name": "indeterminate",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows an unknown-duration rotating arc. @default false",
+          "owner": "CircularProgressProps"
+        },
+        {
+          "name": "label",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "Accessible label for the progress indicator.",
+          "owner": "CircularProgressProps"
+        },
+        {
+          "name": "showValue",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows the computed percentage in the center for determinate progress. @default false",
+          "owner": "CircularProgressProps"
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "required": false,
+          "description": "Current value. @default 0",
+          "owner": "ProgressBarProps"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "description": "Maximum value. @default 100",
+          "owner": "ProgressBarProps"
+        },
+        {
+          "name": "indeterminate",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows an unknown-duration moving segment instead of a fixed percentage. @default false",
+          "owner": "ProgressBarProps"
+        },
+        {
+          "name": "tone",
+          "type": "'signal' | 'positive' | 'cautionary' | 'negative'",
+          "required": false,
+          "description": "Fill tone. @default \"signal\"",
+          "owner": "ProgressBarProps"
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "required": false,
+          "description": "Custom fill color (CSS color value or token, e.g. \"var(--color-semantic-status-positive)\"). Overrides tone when set.",
+          "owner": "ProgressBarProps"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "description": "Track height. @default \"md\"",
+          "owner": "ProgressBarProps"
+        },
+        {
+          "name": "label",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "Optional visible label.",
+          "owner": "ProgressBarProps"
+        },
+        {
+          "name": "showValue",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows the computed percentage beside the label. @default false",
+          "owner": "ProgressBarProps"
+        }
+      ],
+      "states": [
+        {
+          "state": "tone",
+          "rule": "Arc tone. @default \"signal\""
+        },
+        {
+          "state": "tone",
+          "rule": "Fill tone. @default \"signal\""
+        }
+      ],
+      "behavior": [],
+      "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "Motion respects prefers-reduced-motion. The rotating ring gets its animation from an inline style, so the injected @media (prefers-reduced-motion: reduce) rule declares animation:none!important — dropping !important silently disables the guard (WCAG 2.3.3). Same mechanism as Skeleton/Spinner."
+        },
+        {
+          "subject": "--color-semantic-fill-strong",
+          "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
+        },
+        {
+          "subject": "--color-semantic-label-neutral",
+          "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
+        },
+        {
+          "subject": "--color-semantic-label-normal",
+          "rule": "light: #171718; dark: #F7F7F7"
+        },
+        {
+          "subject": "--color-semantic-primary-normal",
+          "rule": "light: #3878B3; dark: #5390C9"
+        }
+      ],
+      "responsive": [],
+      "contentGuidance": [],
+      "accessibility": [
+        "indeterminate renders an unknown-duration rotating arc and omits aria-valuenow.",
+        "label / showValue provide accessible and visible progress context.",
+        "Indeterminate aria-valuetext는 ProgressBar와 같은 한국어 문구 진행 중입니다."
+      ],
+      "exceptions": [],
+      "related": [
+        {
+          "component": "ProgressBar",
+          "relationship": "같은 페이지가 소유"
+        },
+        {
+          "component": "Meter",
+          "relationship": "대표 시나리오에서 조합"
+        }
+      ],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<CircularProgress value={72} label=\"Report progress\" showValue />\n<CircularProgress indeterminate label=\"Processing\" />\n<CircularProgress value={4} max={5} tone=\"positive\" size={40} />"
+        }
+      ],
+      "tokens": [
+        "--color-semantic-fill-strong",
+        "--color-semantic-label-neutral",
+        "--color-semantic-label-normal",
+        "--color-semantic-primary-normal",
+        "--color-semantic-status-cautionary",
+        "--color-semantic-status-negative",
+        "--color-semantic-status-positive",
+        "--dur-base",
+        "--ease-in-out",
+        "--ease-out",
+        "--font-sans",
+        "--fw-bold",
+        "--fw-semibold",
+        "--label2-size",
+        "--radius-pill"
+      ],
+      "apiLinks": [],
+      "migration": [],
+      "platformStatus": {
+        "figma": "mapped",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/ProductProgress.stories.jsx",
+        "entryStoryId": "lds-core-components-status-progress--progress-indicators",
+        "publicStories": [
+          {
+            "id": "lds-core-components-status-progress--progress-indicators",
+            "name": "개요",
+            "role": "overview"
+          }
+        ],
+        "hiddenEvidence": 3
+      },
+      "sources": [],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "omitted-no-evidence",
+        "avoidWhen": "omitted-no-evidence",
+        "anatomy": "evidence",
+        "properties": "evidence",
+        "states": "evidence",
+        "behavior": "omitted-no-evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "omitted-no-evidence",
+        "contentGuidance": "omitted-no-evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
         "related": "evidence",
@@ -15312,10 +17036,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Link",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "SpeedDial",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -15534,10 +17254,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Link",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "SpeedDial",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -15594,176 +17310,6 @@
         "purpose": "evidence",
         "useWhen": "omitted-no-evidence",
         "avoidWhen": "omitted-no-evidence",
-        "anatomy": "evidence",
-        "properties": "evidence",
-        "states": "evidence",
-        "behavior": "omitted-no-evidence",
-        "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
-        "contentGuidance": "evidence",
-        "accessibility": "evidence",
-        "exceptions": "omitted-no-evidence",
-        "related": "evidence",
-        "examples": "evidence",
-        "tokens": "evidence",
-        "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
-      }
-    },
-    {
-      "slug": "product-action-link",
-      "title": "Link",
-      "storybookTitle": "LDS Product/Action/Link",
-      "layer": "Product",
-      "family": "Action",
-      "primaryOwner": "Link",
-      "ownerComponents": [
-        "Link"
-      ],
-      "supportingComponents": [],
-      "purpose": "현재 콘텐츠와 관련된 내부 목적지나 외부 문서를 앵커 탐색으로 연결할 때 적합합니다. 저장·삭제처럼 현재 상태를 변경하거나 로딩 상태가 필요한 작업에는 Link 대신 Button 또는 Text Button을 사용하세요.",
-      "useWhen": [],
-      "avoidWhen": [
-        "href가 없으면 링크 역할도 포인터 커서도 주지 않습니다. 클릭 가능해 보이는 빈 앵커를 만들지 마세요."
-      ],
-      "anatomy": [
-        {
-          "part": "externalLabel",
-          "rule": "external일 때 접근 이름에 덧붙는 시각적 숨김 문구. @default \"새 창에서 열림\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "tone",
-          "type": "'signal' | 'neutral' | 'inherit'",
-          "required": false,
-          "description": "잉크. @default \"signal\"",
-          "owner": "LinkProps"
-        },
-        {
-          "name": "underline",
-          "type": "'none' | 'hover' | 'always'",
-          "required": false,
-          "description": "밑줄 동작. @default \"hover\"",
-          "owner": "LinkProps"
-        },
-        {
-          "name": "external",
-          "type": "boolean",
-          "required": false,
-          "description": "새 탭 + 외부 링크 화살표 + 안전한 rel + 접근 이름에 붙는 새 창 안내. @default false",
-          "owner": "LinkProps"
-        },
-        {
-          "name": "externalLabel",
-          "type": "string",
-          "required": false,
-          "description": "external일 때 접근 이름에 덧붙는 시각적 숨김 문구. @default \"새 창에서 열림\"",
-          "owner": "LinkProps"
-        },
-        {
-          "name": "children",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "",
-          "owner": "LinkProps"
-        }
-      ],
-      "states": [
-        {
-          "state": "tone",
-          "rule": "잉크. @default \"signal\""
-        }
-      ],
-      "behavior": [],
-      "quantitativeRules": [
-        {
-          "subject": "--color-semantic-label-neutral",
-          "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
-        },
-        {
-          "subject": "--color-semantic-primary-normal",
-          "rule": "light: #3878B3; dark: #5390C9"
-        },
-        {
-          "subject": "--fw-semibold",
-          "rule": "600"
-        },
-        {
-          "subject": "--space-1",
-          "rule": "4px"
-        }
-      ],
-      "responsive": [],
-      "contentGuidance": [
-        "Link는 밑줄 제어가 있는 앵커/내비게이션 전용입니다. 사이즈·로딩 상태가 필요한 버튼형 액션(독립형 텍스트 CTA)에는 TextButton을 쓰세요."
-      ],
-      "accessibility": [
-        "externalLabel — external일 때 접근 이름에 붙는 시각적 숨김 문구(기본 새 창에서 열림). 화살표 글리프는 aria-hidden이라 그것만으로는 새 창 이동이 보조기술에 전달되지 않습니다(WCAG G201 / H33). 문구를 바꿀 때만 지정하세요."
-      ],
-      "exceptions": [],
-      "related": [
-        {
-          "component": "ButtonGroup",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "CopyButton",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "SpeedDial",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "SplitButton",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "SocialButton",
-          "relationship": "대표 시나리오에서 조합"
-        }
-      ],
-      "examples": [
-        {
-          "label": "기본 조합",
-          "code": "<Link href=\"/products\">제품 보기</Link>\n<Link href=\"https://example.com\" external>외부 문서</Link>"
-        }
-      ],
-      "tokens": [
-        "--color-semantic-label-neutral",
-        "--color-semantic-primary-normal",
-        "--font-sans",
-        "--fw-semibold",
-        "--space-1"
-      ],
-      "apiLinks": [],
-      "migration": [],
-      "platformStatus": {
-        "figma": "not-tracked",
-        "react": "implemented",
-        "ios": "not-tracked",
-        "android": "not-tracked"
-      },
-      "storybook": {
-        "importPath": "./stories/ActionLink.stories.jsx",
-        "entryStoryId": "lds-product-action-link--links",
-        "publicStories": [
-          {
-            "id": "lds-product-action-link--links",
-            "name": "개요",
-            "role": "overview"
-          }
-        ],
-        "hiddenEvidence": 0
-      },
-      "sources": [],
-      "canonicalGuide": null,
-      "guideDeltaFields": [],
-      "sectionStatus": {
-        "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
-        "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
         "states": "evidence",
@@ -15910,10 +17456,6 @@
         },
         {
           "component": "CopyButton",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Link",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -16101,10 +17643,6 @@
         },
         {
           "component": "CopyButton",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Link",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -16343,10 +17881,6 @@
         },
         {
           "component": "CopyButton",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Link",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -22840,7 +24374,8 @@
       "contentGuidance": [
         "getRowCanSelect(row, rowId)가 false인 보이는 행은 이름이 있는 disabled checkbox를 렌더하고 page select-all 수량·토글·callback ID에서 제외합니다. 이미 all-matching이라도 DataGrid가 현재 보는 선택 불가 ID를 excludedIds에 합친 안전한 model만 bulk slot·다음 callback에 넘깁니다.",
         "editingCell={{ rowId, columnKey }}가 column의 editor(row, rowId) slot을 선택합니다. DataGrid는 edit mode를 시작하거나 저장하지 않습니다. Editor는 제품이 controlled value, label, validation, commit/cancel을 제공해야 합니다.",
-        "loading, error, emptyLabel, stateActions는 현재 page surface 상태입니다. 이전 데이터 보존·refreshing·stale 계약은 상위 resource state가 담당합니다."
+        "loading, error, emptyLabel, stateActions는 현재 page surface 상태입니다. 이전 데이터 보존·refreshing·stale 계약은 상위 resource state가 담당합니다.",
+        "size=\"sm | md\"는 공개 문법을 유지하면서 profile-aware cell/header/detail token을 선택합니다. ops는 선택된 크기의 spacing만 조밀하게 만들고 열 의미·정렬·선택 model·DOM anatomy를 바꾸지 않습니다. 선택 checkbox는 16px glyph 안에 의미를 압축하지 않고, label이 소유하는 실제 native input target을 24×24px로 유지합니다."
       ],
       "accessibility": [
         "loading/error/empty surface와 bulk band의 접근성·시각 계층.",
@@ -22876,11 +24411,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -22899,6 +24434,14 @@
         "--color-semantic-primary-surface-normal",
         "--color-semantic-primary-surface-strong",
         "--color-semantic-status-negative-text",
+        "--component-data-grid-cell-padding-md",
+        "--component-data-grid-cell-padding-sm",
+        "--component-data-grid-detail-padding-md",
+        "--component-data-grid-detail-padding-sm",
+        "--component-data-grid-header-height-md",
+        "--component-data-grid-header-height-sm",
+        "--component-data-grid-selection-cell-padding",
+        "--component-data-grid-selection-target-size",
         "--font-sans",
         "--fw-semibold",
         "--label1-line",
@@ -23165,10 +24708,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -23186,6 +24725,10 @@
         },
         {
           "component": "DataGrid",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataToolbar",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -23289,7 +24832,8 @@
       "avoidWhen": [
         "getRowId — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 row.id, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.",
         "외부 근거: Carbon Data table의 zebra 옵션 — \"행을 따라가는 시선이 옆 행으로 이탈하는 것을 막는\" 넓은 표 장치이며, Carbon은 줄무늬를 끄면 행 구분선을 요구합니다(LDS 기본형이 그 형태). USWDS Table의 striped 변형도 같은 계열입니다. LDS는 두 시스템의 교차 줄무늬 대신 전 행 밴드를 채택합니다(강조 오독 근거는 위).",
-        "Header and body cells use font-variant-numeric: tabular-nums so values do not jitter between rows. Set align: 'right' on comparable numeric columns; nominal identifiers such as postal codes or equipment IDs remain left aligned."
+        "Header and body cells use font-variant-numeric: tabular-nums so values do not jitter between rows. Set align: 'right' on comparable numeric columns; nominal identifiers such as postal codes or equipment IDs remain left aligned.",
+        "셀 패딩과 타입은 --lk-table-cell-pad-sm/md, --lk-table-head-size/line/spacing, --lk-table-cell-size/line 훅을 경유합니다. 매체 훅이 없으면 --component-table-cell-padding-sm/md를 읽고, 그 token의 default 값은 기존 리터럴과 같습니다. 투영·전시처럼 읽기 거리가 다른 매체의 명시적 --lk-table-가 profile token보다 우선합니다. ops 안의 명시적 size=\"md\"도 API 의미는 유지한 채 ops-md token 값을 사용합니다."
       ],
       "anatomy": [
         {
@@ -23444,9 +24988,7 @@
         "tableLabelledBy — 표 밖에 이미 보이는 제목(heading 등)의 id를 연결해 의 aria-labelledby로 사용합니다. 보이는 제목이 있는 페이지에서는 이름을 중복 작성하지 말고 이 연결을 쓰세요.",
         "getRowProps(row, index) merges native attributes such as data-, className, style, and pointer handlers. It does not add selection, focus, or grid semantics. Use DataGrid when rows must be selected, sorted, or navigated with the keyboard."
       ],
-      "exceptions": [
-        "셀 패딩과 타입은 --lk-table-cell-pad-sm/md, --lk-table-head-size/line/spacing, --lk-table-cell-size/line 훅을 경유하며, 폴백이 곧 기존 리터럴이라 제품 매체는 바이트 동일하게 렌더됩니다. 투영·전시처럼 읽기 거리가 다른 매체가 자기 스코프에서 재지정합니다. 훅은 의도적으로 기본 미정의입니다 — 토큰으로 정의하면 폴백이 죽은 코드가 되고, 제품 기본값의 단일 출처가 리터럴에서 토큰으로 흩어지기 때문입니다(TOKENGOVERNANCE의 컴포넌트 토큰 규칙에 대한 문서화된 예외)."
-      ],
+      "exceptions": [],
       "related": [
         {
           "component": "AnnotatedImage",
@@ -23454,10 +24996,6 @@
         },
         {
           "component": "BarChart",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Calendar",
           "relationship": "대표 시나리오에서 조합"
         },
         {
@@ -23479,6 +25017,10 @@
         {
           "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataToolbar",
+          "relationship": "대표 시나리오에서 조합"
         }
       ],
       "examples": [
@@ -23495,6 +25037,8 @@
         "--color-semantic-fill-alternative",
         "--color-semantic-fill-normal",
         "--color-semantic-label-strong",
+        "--component-table-cell-padding-md",
+        "--component-table-cell-padding-sm",
         "--dur-fast",
         "--ease-out",
         "--font-sans",
@@ -23555,7 +25099,7 @@
         "responsive": "evidence",
         "contentGuidance": "evidence",
         "accessibility": "evidence",
-        "exceptions": "evidence",
+        "exceptions": "omitted-no-evidence",
         "related": "evidence",
         "examples": "evidence",
         "tokens": "evidence",
@@ -23695,6 +25239,10 @@
       ],
       "quantitativeRules": [
         {
+          "subject": "명시 규칙 1",
+          "rule": "Tree row의 min-height, block/inline padding, gap과 indent는 expression-profile token을 사용합니다. ops는 반복 탐색 행을 조밀하게 만들지만 24px target floor, roving focus, selection과 level semantics를 변경하지 않습니다. 전역 density prop은 추가하지 않습니다."
+        },
+        {
           "subject": "--caption1-size",
           "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
         },
@@ -23741,10 +25289,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -23754,6 +25298,10 @@
         },
         {
           "component": "DataCollectionPanel",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -23774,6 +25322,11 @@
         "--color-semantic-label-strong",
         "--color-semantic-primary-normal",
         "--color-semantic-primary-surface-strong",
+        "--component-tree-indent",
+        "--component-tree-row-gap",
+        "--component-tree-row-min-height",
+        "--component-tree-row-padding-x",
+        "--component-tree-row-padding-y",
         "--dur-fast",
         "--ease-out",
         "--font-sans",
@@ -23782,7 +25335,7 @@
         "--label1-size",
         "--radius-md",
         "--space-0-5",
-        "--space-2-5"
+        "--space-2"
       ],
       "apiLinks": [],
       "migration": [],
@@ -24025,15 +25578,15 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         },
         {
           "component": "DataCollectionPanel",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -24203,10 +25756,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -24220,6 +25769,10 @@
         },
         {
           "component": "DataExportAction",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataGrid",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -24844,10 +26397,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -24857,6 +26406,10 @@
         },
         {
           "component": "DataCollectionPanel",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataExportAction",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -25123,7 +26676,7 @@
         "className, style, and the default ref target the root collection toolbar surface.",
         "Stable parts are root, header, heading, title, count, description, actions, controls, search, and filters. Header and controls slots exist only when their content exists.",
         "DataToolbar — DataGrid/Table 위에서 제목, 결과 수, 검색, 필터, page-level action을 정렬하는 표면.",
-        "The header row is independent: title, description, count, or page-level actions keeps it present even when controls are omitted. If neither header content nor controls exist, DataToolbar returns null instead of leaving an empty bordered strip."
+        "size=\"sm | md\"는 profile-aware gap/padding token을 선택합니다. 명시적 size가 유지되는 상태에서 ops는 chrome만 조밀화하며 제목·검색·필터·action의 읽기 순서와 query ownership은 바뀌지 않습니다. --lds-data-toolbar- consumer override가 profile token보다 우선합니다."
       ],
       "accessibility": [
         "WAI-ARIA APG Table pattern에 따라 DataToolbar가 표의 native semantics나 keyboard model을 대신하지 않습니다. 검색과 action은 각 native control의 정상 Tab 순서를 유지합니다."
@@ -25182,6 +26735,10 @@
         "--color-semantic-label-alternative",
         "--color-semantic-label-strong",
         "--color-semantic-line-solid-normal",
+        "--component-data-toolbar-gap-md",
+        "--component-data-toolbar-gap-sm",
+        "--component-data-toolbar-padding-md",
+        "--component-data-toolbar-padding-sm",
         "--font-sans",
         "--fw-medium",
         "--fw-semibold",
@@ -25471,10 +27028,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -25492,6 +27045,10 @@
         },
         {
           "component": "DataToolbar",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DescriptionList",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -25734,6 +27291,7 @@
       "accessibility": [
         "적용 chip은 제거 버튼이지 토글이 아닙니다. 눌린 상태(aria-pressed)를 부여하지 않고, 선택된 chip 표면은 chip 토큰으로만 표현합니다. \"…필터 제거\"라는 이름의 액션 버튼이 눌린 토글로 낭독되면 안 되기 때문입니다(WAI-ARIA APG Button).",
         "좁은 폭에서는 control, action, 적용 chip이 DOM 순서를 유지한 채 줄바꿈됩니다. toolbar가 아니므로 arrow-key roving focus를 강제하지 않고 각 native control의 Tab 순서를 유지합니다.",
+        "size=\"sm | md\"는 profile-aware surface gap/padding token을 선택합니다. ops는 같은 filter semantics와 focus-recovery 계약을 더 조밀한 chrome으로 표현할 뿐 query state, chip 제거 의미, live result 공지를 바꾸지 않습니다.",
         "내부 DataToolbar, FilterChip, Chip, DateRangeField, TextButton의 높이·radius·focus 동작을 비교해 그대로 조합했습니다. PatternFly Filters의 persistent applied-filter summary와 clear-all, Carbon Data table의 global toolbar와 batch-action 분리, WAI-ARIA Toolbar pattern의 복합 위젯 keyboard 기준을 비교했습니다.",
         "LDS에서는 필터가 서로 다른 팝업·날짜 field를 포함하므로 하나의 roving toolbar로 만들지 않았습니다. 이는 일반 Tab 순서를 보존하기 위한 의도적 차이입니다."
       ],
@@ -25764,11 +27322,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "ChartFrame",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -25785,6 +27343,10 @@
         "--color-semantic-line-solid-normal",
         "--component-chip-bg-selected",
         "--component-chip-border-active",
+        "--component-filter-bar-gap-md",
+        "--component-filter-bar-gap-sm",
+        "--component-filter-bar-padding-md",
+        "--component-filter-bar-padding-sm",
         "--font-sans",
         "--fw-medium",
         "--fw-semibold",
@@ -26000,10 +27562,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -26021,6 +27579,10 @@
         },
         {
           "component": "DataGrid",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataToolbar",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -26304,10 +27866,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -26325,6 +27883,10 @@
         },
         {
           "component": "DataGrid",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataToolbar",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -26568,10 +28130,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -26589,6 +28147,10 @@
         },
         {
           "component": "DataGrid",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataToolbar",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -26852,10 +28414,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -26877,6 +28435,10 @@
         },
         {
           "component": "DataToolbar",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DescriptionList",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -27124,10 +28686,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -27149,6 +28707,10 @@
         },
         {
           "component": "DataToolbar",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DescriptionList",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -27413,11 +28975,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
+          "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Carousel",
+          "component": "DataCollectionPanel",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -27658,10 +29220,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -27679,6 +29237,10 @@
         },
         {
           "component": "DataGrid",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataToolbar",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -27852,10 +29414,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -27873,6 +29431,10 @@
         },
         {
           "component": "DataGrid",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataToolbar",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -28165,10 +29727,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -28186,6 +29744,10 @@
         },
         {
           "component": "DataGrid",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataToolbar",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -28495,10 +30057,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -28516,6 +30074,10 @@
         },
         {
           "component": "DataGrid",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataToolbar",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -28770,10 +30332,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -28791,6 +30349,10 @@
         },
         {
           "component": "DataGrid",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataToolbar",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -33469,10 +35031,6 @@
         {
           "component": "HoverCard",
           "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Popover",
-          "relationship": "대표 시나리오에서 조합"
         }
       ],
       "examples": [
@@ -33921,6 +35479,12 @@
         "--component-side-nav-brand-pressed-surface",
         "--component-side-nav-brand-subtle-foreground",
         "--component-side-nav-brand-surface",
+        "--component-side-nav-child-item-height",
+        "--component-side-nav-child-item-padding-y",
+        "--component-side-nav-item-height",
+        "--component-side-nav-item-padding-x",
+        "--component-side-nav-item-padding-y",
+        "--component-side-nav-padding",
         "--dur-base",
         "--dur-fast",
         "--ease-out",
@@ -35785,7 +37349,7 @@
         }
       ],
       "behavior": [
-        "density=\"comfortable\"이 기본값이며 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다.",
+        "density=\"comfortable\"이 기본값이며 default profile의 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다. ops에서는 같은 density API가 profile-aware chrome token을 읽습니다.",
         "자식의 명시적 size, padding, density가 항상 상속값보다 우선합니다. Drawer 밖과 comfortable Drawer의 기존 기본 출력은 유지됩니다.",
         "닫히면 trigger로 복원하며 returnFocusRef로 논리적 다음 지점을 지정할 수 있습니다. restoreFocus 기본값은 true입니다.",
         "overlay Drawer를 여러 개 겹치지 않습니다. Drawer 위에 확인 Modal이 불가피할 때는 Modal만 활성화되고, 닫힌 뒤 Drawer 내부 trigger로 돌아갑니다.",
@@ -35798,7 +37362,7 @@
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. comfortable은 기존과 동일하게 header/body space-5 space-6, footer space-4 space-6, body body2/1.7을 사용합니다."
+          "rule": "시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. default profile의 comfortable은 기존과 동일하게 header/body space-5 space-6, footer space-4 space-6, body body2/1.7을 사용합니다."
         },
         {
           "subject": "명시 규칙 3",
@@ -35886,6 +37450,12 @@
         "--color-semantic-line-solid-normal",
         "--component-dialog-scrim",
         "--component-dialog-scrim-blur",
+        "--component-drawer-body-padding-comfortable",
+        "--component-drawer-body-padding-compact",
+        "--component-drawer-footer-padding-comfortable",
+        "--component-drawer-footer-padding-compact",
+        "--component-drawer-header-padding-comfortable",
+        "--component-drawer-header-padding-compact",
         "--dur-base",
         "--dur-slow",
         "--ease-out",
@@ -36105,10 +37675,6 @@
         },
         {
           "component": "Menubar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Popover",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -36436,274 +38002,6 @@
       }
     },
     {
-      "slug": "product-overlay-popover",
-      "title": "Popover",
-      "storybookTitle": "LDS Product/Overlay/Popover",
-      "layer": "Product",
-      "family": "Overlay",
-      "primaryOwner": "Popover",
-      "ownerComponents": [
-        "Popover"
-      ],
-      "supportingComponents": [
-        "Button"
-      ],
-      "purpose": "클릭한 trigger 주변에서 설명·미니 폼·피커처럼 자유로운 콘텐츠를 잠시 다룰 때 적합합니다. 명령 목록이나 작업을 막는 복잡한 흐름에는 Popover 대신 Dropdown Menu 또는 Modal을 사용하세요.",
-      "useWhen": [
-        "The panel defaults to the common owner-document Portal (withinPortal=true), inherits the nearest explicit theme and dir, and uses the shared flip/clamp/topmost-dismiss stack. Use portalTarget or Provider configuration before opting out with withinPortal=false."
-      ],
-      "avoidWhen": [
-        "Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다."
-      ],
-      "anatomy": [
-        {
-          "part": "trigger",
-          "rule": "패널을 토글하는 요소."
-        },
-        {
-          "part": "ariaLabel",
-          "rule": "비모달 dialog 표면의 접근 가능한 이름. @default \"팝오버\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "trigger",
-          "type": "React.ReactNode",
-          "required": true,
-          "description": "패널을 토글하는 요소.",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "children",
-          "type": "React.ReactNode",
-          "required": true,
-          "description": "패널 콘텐츠.",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "align",
-          "type": "'left' | 'right'",
-          "required": false,
-          "description": "앵커 방향. @default \"left\"",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "position",
-          "type": "'top' | 'bottom' | 'left' | 'right'",
-          "required": false,
-          "description": "Preferred side; flips when space is insufficient. @default \"bottom\"",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "offset",
-          "type": "number",
-          "required": false,
-          "description": "Trigger-to-panel gap in pixels. @default 8",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "width",
-          "type": "number | string",
-          "required": false,
-          "description": "패널 너비(px). @default 260",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "open",
-          "type": "boolean",
-          "required": false,
-          "description": "제어된 열림 상태.",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "defaultOpen",
-          "type": "boolean",
-          "required": false,
-          "description": "비제어 초기 열림 상태. @default false",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "onOpenChange",
-          "type": "(open: boolean) = void",
-          "required": false,
-          "description": "열림 상태 변경 알림.",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "ariaLabel",
-          "type": "string",
-          "required": false,
-          "description": "비모달 dialog 표면의 접근 가능한 이름. @default \"팝오버\"",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "withinPortal",
-          "type": "boolean",
-          "required": false,
-          "description": "Render in the owner-document Portal so clipping ancestors cannot cut the panel. @default true",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "portalTarget",
-          "type": "HTMLElement | null",
-          "required": false,
-          "description": "Explicit Portal target; defaults to provider target or owner-document body.",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "collisionBoundary",
-          "type": "FloatingCollisionBoundary",
-          "required": false,
-          "description": "Element/ref whose visible viewport intersection constrains flip, shift, and available size. Defaults to the viewport.",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "collisionPadding",
-          "type": "number",
-          "required": false,
-          "description": "Inset from every collision-boundary edge in CSS pixels. @default 16",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "zIndex",
-          "type": "number",
-          "required": false,
-          "description": "Explicit overlay layer override.",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "classNames",
-          "type": "LdsClassNames",
-          "required": false,
-          "description": "",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "styles",
-          "type": "LdsStyles",
-          "required": false,
-          "description": "",
-          "owner": "PopoverProps"
-        },
-        {
-          "name": "vars",
-          "type": "LdsVars",
-          "required": false,
-          "description": "",
-          "owner": "PopoverProps"
-        }
-      ],
-      "states": [
-        {
-          "state": "open",
-          "rule": "제어된 열림 상태."
-        },
-        {
-          "state": "defaultOpen",
-          "rule": "비제어 초기 열림 상태. @default false"
-        },
-        {
-          "state": "onOpenChange",
-          "rule": "열림 상태 변경 알림."
-        }
-      ],
-      "behavior": [],
-      "quantitativeRules": [
-        {
-          "subject": "명시 규칙 1",
-          "rule": "collisionBoundary는 element 또는 ref를 받고, 그 요소와 viewport의 보이는 교집합을 positioning 경계로 사용합니다. 생략하면 기존 viewport 경계입니다. collisionPadding 기본 16px은 모든 경계 가장자리에 적용됩니다. Portal은 계속 owner-document body/provider target에 남으므로 clipping 탈출과 chat panel 내부 geometry 제한을 동시에 충족하며, 선호 width와 style은 경계의 가용 폭·높이를 넘을 수 없습니다."
-        },
-        {
-          "subject": "명시 규칙 3",
-          "rule": "Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다."
-        }
-      ],
-      "responsive": [
-        "패널은 선호 정렬을 유지하되 collision 경계에서 반대쪽으로 flip하고 좌우를 clamp하며, 가용 높이를 넘는 본문만 세로 스크롤합니다.",
-        "ref, className, and style target the anchor root. Stable parts are root, trigger, and panel; panel geometry is limited to --lds-popover-width and --lds-popover-max-height."
-      ],
-      "contentGuidance": [],
-      "accessibility": [
-        "trigger는 focusable한 단일 요소이며 DOM에 aria-haspopup=\"dialog\"·aria-expanded· aria-controls를 전달해야 합니다. children은 패널 본문, align은 left · right, width는 선호 너비입니다. 단순 메뉴에는 DropdownMenu, 짧은 힌트에는 Tooltip을 쓰세요.",
-        "open · defaultOpen · onOpenChange controlled triad를 제공합니다. trigger click으로 열고, 바깥 pointer press 또는 Escape로 닫습니다. Escape는 trigger로 초점을 복원하지만 비모달 Popover 자체는 focus trap을 만들지 않아 Tab이 trigger 다음의 패널 입력으로 이동합니다.",
-        "position, align, and offset are canonical placement inputs. Products own the arbitrary panel content, while LDS owns trigger ARIA, Portal positioning, outside press, Escape, and focus restoration.",
-        "WAI-ARIA APG Dialog Pattern의 named dialog 원칙을 따르되, 이 표면은 배경을 inert 처리하지 않는 비모달이라 aria-modal과 trap을 사용하지 않습니다.",
-        "React Aria Popover는 Portal overlay의 positioning boundary를 boundaryElement로 별도 지정하고 위치를 자동 갱신합니다. LDS의 collisionBoundary도 Portal target과 독립된 constraint라는 같은 책임 분리를 따릅니다."
-      ],
-      "exceptions": [],
-      "related": [
-        {
-          "component": "Button",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "HoverCard",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Menubar",
-          "relationship": "대표 시나리오에서 조합"
-        }
-      ],
-      "examples": [
-        {
-          "label": "기본 조합",
-          "code": "<Popover\n  trigger={<Button variant=\"ghost\">옵션</Button>}\n  width={280}\n  collisionBoundary={chatPanelRef}\n>\n  <FormField label=\"반경\"><Slider defaultValue={30} /></FormField>\n</Popover>"
-        }
-      ],
-      "tokens": [
-        "--lds-popover-max-height",
-        "--lds-popover-width"
-      ],
-      "apiLinks": [],
-      "migration": [],
-      "platformStatus": {
-        "figma": "mapped",
-        "react": "implemented",
-        "ios": "not-tracked",
-        "android": "not-tracked"
-      },
-      "storybook": {
-        "importPath": "./stories/OverlayPopover.stories.jsx",
-        "entryStoryId": "lds-product-overlay-popover--popover-overview",
-        "publicStories": [
-          {
-            "id": "lds-product-overlay-popover--popover-overview",
-            "name": "개요",
-            "role": "overview"
-          },
-          {
-            "id": "lds-product-overlay-popover--popover-interaction-contract",
-            "name": "상호작용 · 초점·Escape·화면 경계",
-            "role": "interaction"
-          }
-        ],
-        "hiddenEvidence": 3
-      },
-      "sources": [],
-      "canonicalGuide": null,
-      "guideDeltaFields": [],
-      "sectionStatus": {
-        "purpose": "evidence",
-        "useWhen": "evidence",
-        "avoidWhen": "evidence",
-        "anatomy": "evidence",
-        "properties": "evidence",
-        "states": "evidence",
-        "behavior": "omitted-no-evidence",
-        "quantitativeRules": "evidence",
-        "responsive": "evidence",
-        "contentGuidance": "omitted-no-evidence",
-        "accessibility": "evidence",
-        "exceptions": "omitted-no-evidence",
-        "related": "evidence",
-        "examples": "evidence",
-        "tokens": "evidence",
-        "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
-      }
-    },
-    {
       "slug": "product-overlay-sheet",
       "title": "Sheet",
       "storybookTitle": "LDS Product/Overlay/Sheet",
@@ -36980,226 +38278,6 @@
       }
     },
     {
-      "slug": "product-selection-and-input-calendar",
-      "title": "Calendar",
-      "storybookTitle": "LDS Product/Selection and Input/Calendar",
-      "layer": "Product",
-      "family": "Selection and Input",
-      "primaryOwner": "Calendar",
-      "ownerComponents": [
-        "Calendar"
-      ],
-      "supportingComponents": [],
-      "purpose": "예약 가능일이나 로그 기준일처럼 주변 날짜를 함께 보며 고를 때 적합합니다. 폼 안에서 단일 날짜만 간결하게 입력하면 Calendar 대신 Date Picker를 사용하세요.",
-      "useWhen": [],
-      "avoidWhen": [],
-      "anatomy": [],
-      "properties": [
-        {
-          "name": "value",
-          "type": "Date | string",
-          "required": false,
-          "description": "제어되는 선택 날짜(Date 또는 ISO 문자열).",
-          "owner": "CalendarProps"
-        },
-        {
-          "name": "defaultValue",
-          "type": "Date | string",
-          "required": false,
-          "description": "비제어 초기 날짜.",
-          "owner": "CalendarProps"
-        },
-        {
-          "name": "onChange",
-          "type": "(date: Date) = void",
-          "required": false,
-          "description": "",
-          "owner": "CalendarProps"
-        },
-        {
-          "name": "isDateDisabled",
-          "type": "(date: Date) = boolean",
-          "required": false,
-          "description": "개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). 포커스 이동은 허용되고 선택만 차단됩니다.",
-          "owner": "CalendarProps"
-        },
-        {
-          "name": "minDate",
-          "type": "Date | string",
-          "required": false,
-          "description": "이 날짜 이전(당일 제외)은 모두 선택 불가. Date 또는 ISO 문자열.",
-          "owner": "CalendarProps"
-        },
-        {
-          "name": "maxDate",
-          "type": "Date | string",
-          "required": false,
-          "description": "이 날짜 이후(당일 제외)는 모두 선택 불가. Date 또는 ISO 문자열.",
-          "owner": "CalendarProps"
-        },
-        {
-          "name": "autoFocus",
-          "type": "boolean",
-          "required": false,
-          "description": "Focus the selected/today day when embedded in an opened picker dialog.",
-          "owner": "CalendarProps"
-        }
-      ],
-      "states": [
-        {
-          "state": "isDateDisabled",
-          "rule": "개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). 포커스 이동은 허용되고 선택만 차단됩니다."
-        }
-      ],
-      "behavior": [
-        "standalone Calendar와 DatePicker popup이 같은 keyboard·selection 계약을 공유합니다.",
-        "WAI-ARIA Date Picker Dialog example의 grid roving focus와 날짜 이동 키를 따릅니다.",
-        "Calendar — 날짜 선택용 월 그리드(현장 실사 일정). 일요일 레드 / 토요일 시그널 헤더; 선택된 날짜는 시그널 잉크로 채워지고, 오늘은 링을 두릅니다."
-      ],
-      "quantitativeRules": [
-        {
-          "subject": "--body1-size",
-          "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
-        },
-        {
-          "subject": "--caption1-size",
-          "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
-        },
-        {
-          "subject": "--color-semantic-accent-foreground-blue",
-          "rule": "light: #336CA1; dark: #639ACE"
-        },
-        {
-          "subject": "--color-semantic-accent-foreground-red",
-          "rule": "light: #D63D3D; dark: #F16F6F"
-        }
-      ],
-      "responsive": [],
-      "contentGuidance": [],
-      "accessibility": [
-        "value / defaultValue / onChange(date) — 제어/비제어(Date 또는 ISO 문자열 허용). autoFocus는 DatePicker dialog가 열릴 때 선택 날짜 또는 오늘로 focus를 옮깁니다.",
-        "isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. isDateDisabled는 임의 조건(콜백)을, minDate/maxDate는 경계를 담당하며 함께 쓸 수 있습니다. 비활성 날짜는 흐리게·취소선으로 표시되고 aria-disabled가 붙으며, 예약 가능일 흐름에서 특정 날짜를 막는 용도입니다.",
-        "날짜 grid는 하나의 roving Tab stop을 사용합니다. Arrow 키는 일/주 단위, Home/End는 주의 시작/끝, PageUp/PageDown은 월 단위, Shift+PageUp/Shift+PageDown은 연 단위로 이동합니다. 비활성 날짜도 포커스로 지나갈 수는 있으나(이유를 인지할 수 있도록) 선택만 차단되어 WAI-ARIA date 패턴을 따릅니다.",
-        "표시 중인 달은 사용자 탐색이 소유합니다. 선택 값이 있어도 이전/다음 달 버튼·PageUp/PageDown·월 경계를 넘는 Arrow 이동이 선택된 달로 되돌려지지 않습니다. 값이 실제로 바뀔 때(제어 컴포넌트의 새 value 포함)만 표시 달과 roving 초점이 선택 날짜로 따라갑니다.",
-        "이전/다음 달 버튼은 초점을 그대로 유지해 여러 달을 연속으로 넘길 수 있습니다. 다만 grid 안에서 키보드로 탐색 중이었다면 초점이 새 달의 날짜 셀로 따라갑니다. 월 표시는 aria-live=\"polite\"로 읽힙니다."
-      ],
-      "exceptions": [],
-      "related": [
-        {
-          "component": "AnnotatedImage",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "BarChart",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "Carousel",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "ChartFrame",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "DataCollectionPanel",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "DataExportAction",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "DataGrid",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "DataToolbar",
-          "relationship": "대표 시나리오에서 조합"
-        }
-      ],
-      "examples": [
-        {
-          "label": "기본 조합",
-          "code": "<Calendar defaultValue=\"2026-07-03\" onChange={setDate} />"
-        }
-      ],
-      "tokens": [
-        "--body1-size",
-        "--caption1-size",
-        "--color-semantic-accent-foreground-blue",
-        "--color-semantic-accent-foreground-red",
-        "--color-semantic-background-elevated-normal",
-        "--color-semantic-fill-normal",
-        "--color-semantic-label-disable",
-        "--color-semantic-label-neutral",
-        "--color-semantic-label-normal",
-        "--color-semantic-line-solid-normal",
-        "--color-semantic-primary-normal",
-        "--color-semantic-static-white",
-        "--component-input-focus-shadow",
-        "--dur-fast",
-        "--ease-out",
-        "--font-sans",
-        "--fw-bold",
-        "--fw-medium",
-        "--fw-semibold",
-        "--label1-size",
-        "--radius-md",
-        "--radius-xl",
-        "--space-0-5",
-        "--space-1-5",
-        "--space-3-5"
-      ],
-      "apiLinks": [],
-      "migration": [],
-      "platformStatus": {
-        "figma": "not-tracked",
-        "react": "implemented",
-        "ios": "not-tracked",
-        "android": "not-tracked"
-      },
-      "storybook": {
-        "importPath": "./stories/DataCalendar.stories.jsx",
-        "entryStoryId": "lds-product-selection-and-input-calendar--calendar-pattern",
-        "publicStories": [
-          {
-            "id": "lds-product-selection-and-input-calendar--calendar-pattern",
-            "name": "개요",
-            "role": "overview"
-          },
-          {
-            "id": "lds-product-selection-and-input-calendar--blocked-dates",
-            "name": "변형·상태 · 예약 불가일",
-            "role": "variants-states"
-          }
-        ],
-        "hiddenEvidence": 2
-      },
-      "sources": [],
-      "canonicalGuide": null,
-      "guideDeltaFields": [],
-      "sectionStatus": {
-        "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
-        "avoidWhen": "omitted-no-evidence",
-        "anatomy": "omitted-no-evidence",
-        "properties": "evidence",
-        "states": "evidence",
-        "behavior": "evidence",
-        "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
-        "contentGuidance": "omitted-no-evidence",
-        "accessibility": "evidence",
-        "exceptions": "omitted-no-evidence",
-        "related": "evidence",
-        "examples": "evidence",
-        "tokens": "evidence",
-        "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
-      }
-    },
-    {
       "slug": "product-selection-and-input-color-swatch",
       "title": "Color Swatch",
       "storybookTitle": "LDS Product/Selection and Input/Color Swatch",
@@ -37324,10 +38402,6 @@
       "exceptions": [],
       "related": [
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -37348,11 +38422,15 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "NumberField",
+          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "PinInput",
+          "component": "PropertyField",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "SearchableMultiSelect",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -37418,262 +38496,6 @@
         "quantitativeRules": "evidence",
         "responsive": "omitted-no-evidence",
         "contentGuidance": "evidence",
-        "accessibility": "evidence",
-        "exceptions": "omitted-no-evidence",
-        "related": "evidence",
-        "examples": "evidence",
-        "tokens": "evidence",
-        "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
-      }
-    },
-    {
-      "slug": "product-selection-and-input-date-picker",
-      "title": "Date Picker",
-      "storybookTitle": "LDS Product/Selection and Input/Date Picker",
-      "layer": "Product",
-      "family": "Selection and Input",
-      "primaryOwner": "DatePicker",
-      "ownerComponents": [
-        "DatePicker"
-      ],
-      "supportingComponents": [
-        "FormField"
-      ],
-      "purpose": "예약일·마감일처럼 한 날짜를 필드 맥락에서 입력할 때 적합합니다. 시작과 종료가 함께 필요하면 Date Range를, 월 전체를 탐색해야 하면 Calendar를 사용하세요.",
-      "useWhen": [],
-      "avoidWhen": [],
-      "anatomy": [],
-      "properties": [
-        {
-          "name": "value",
-          "type": "Date | string | null",
-          "required": false,
-          "description": "",
-          "owner": "DatePickerProps"
-        },
-        {
-          "name": "defaultValue",
-          "type": "Date | string | null",
-          "required": false,
-          "description": "",
-          "owner": "DatePickerProps"
-        },
-        {
-          "name": "onChange",
-          "type": "(date: Date) = void",
-          "required": false,
-          "description": "",
-          "owner": "DatePickerProps"
-        },
-        {
-          "name": "isDateDisabled",
-          "type": "(date: Date) = boolean",
-          "required": false,
-          "description": "개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). Calendar 팝오버로 전달됩니다.",
-          "owner": "DatePickerProps"
-        },
-        {
-          "name": "minDate",
-          "type": "Date | string",
-          "required": false,
-          "description": "이 날짜 이전(당일 제외)은 선택 불가. Date 또는 ISO 문자열.",
-          "owner": "DatePickerProps"
-        },
-        {
-          "name": "maxDate",
-          "type": "Date | string",
-          "required": false,
-          "description": "이 날짜 이후(당일 제외)는 선택 불가. Date 또는 ISO 문자열.",
-          "owner": "DatePickerProps"
-        },
-        {
-          "name": "placeholder",
-          "type": "string",
-          "required": false,
-          "description": "",
-          "owner": "DatePickerProps"
-        },
-        {
-          "name": "size",
-          "type": "'sm' | 'md'",
-          "required": false,
-          "description": "",
-          "owner": "DatePickerProps"
-        },
-        {
-          "name": "disabled",
-          "type": "boolean",
-          "required": false,
-          "description": "",
-          "owner": "DatePickerProps"
-        },
-        {
-          "name": "invalid",
-          "type": "boolean",
-          "required": false,
-          "description": "검증 실패 상태. trigger에 aria-invalid와 negative border를 적용합니다. @default false",
-          "owner": "DatePickerProps"
-        },
-        {
-          "name": "full",
-          "type": "boolean",
-          "required": false,
-          "description": "부모 폭을 채우고 고정 최소 폭을 제거합니다. @default false",
-          "owner": "DatePickerProps"
-        },
-        {
-          "name": "style",
-          "type": "React.CSSProperties",
-          "required": false,
-          "description": "",
-          "owner": "DatePickerProps"
-        }
-      ],
-      "states": [
-        {
-          "state": "isDateDisabled",
-          "rule": "개별 날짜의 선택 가능 여부. true를 반환하면 그 날짜는 선택할 수 없습니다(예약 불가·휴무일). Calendar 팝오버로 전달됩니다."
-        },
-        {
-          "state": "invalid",
-          "rule": "검증 실패 상태. trigger에 aria-invalid와 negative border를 적용합니다. @default false"
-        }
-      ],
-      "behavior": [
-        "isDateDisabled(date) / minDate / maxDate — 예약 불가일·휴무일·범위 밖 날짜를 선택 불가로 표시합니다. Calendar 팝오버로 그대로 전달되어 비활성 날짜는 흐리게·취소선으로 표시되고 선택만 차단됩니다(포커스 이동은 허용). 실사 희망일·예약 가능일 흐름에서 특정 날짜를 막는 용도입니다.",
-        "Calendar popup의 월 탐색은 Calendar 계약을 그대로 상속합니다. 값이 있어도 이전/다음 달, PageUp/PageDown, Shift+PageUp/PageDown이 정상 동작합니다."
-      ],
-      "quantitativeRules": [
-        {
-          "subject": "명시 규칙 1",
-          "rule": "full — 날짜 범위나 툴바처럼 부모 폭에 맞춰야 하는 조합에서 trigger의 고정 최소 폭을 제거하고 가용 폭을 채웁니다."
-        },
-        {
-          "subject": "명시 규칙 2",
-          "rule": "invalid — 상위 폼이나 DateRangeField가 판정한 검증 실패를 trigger에 싣습니다. Input·Select·Textarea와 같은 우선순위로 negative border를 적용하고 aria-invalid를 trigger button(=초점 요소)에 붙입니다. 오류 문구 자체는 소유하지 않으므로 상위가 aria-describedby로 메시지 id를 전달하면 그대로 trigger에 연결됩니다. role=\"group\"은 ARIA 1.2에서 aria-invalid를 지원하지 않으므로 group이 아니라 이 필드가 오류를 전달합니다."
-        },
-        {
-          "subject": "--color-semantic-fill-normal",
-          "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
-        },
-        {
-          "subject": "--color-semantic-label-alternative",
-          "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
-        },
-        {
-          "subject": "--color-semantic-label-disable",
-          "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
-        }
-      ],
-      "responsive": [],
-      "contentGuidance": [],
-      "accessibility": [
-        "value / defaultValue / onChange(date) — 제어/비제어(Date, ISO 문자열 또는 빈 값). disabled / aria-label — trigger 상태와 accessible name. 선택 값은 trigger 이름에도 포함됩니다. 바깥 클릭·선택·Escape 시 닫히며 선택 뒤 trigger로 focus가 돌아옵니다.",
-        "trigger는 aria-haspopup=\"dialog\", aria-expanded, aria-controls로 Calendar popup과 연결하고 LDS Input focus ring을 사용합니다.",
-        "calendar affordance는 공통 Icon registry를 사용하며 trigger의 accessible name과 중복되지 않도록 장식적으로 숨깁니다.",
-        "WAI-ARIA Date Picker Dialog example의 popup naming, 초기 날짜 focus, Escape, 선택 후 focus return 계약을 따릅니다.",
-        "WAI-ARIA Dialog pattern을 기준으로 Calendar popup을 이름 있는 dialog로 노출합니다. 완전한 modal focus trap은 사용하지 않는 non-modal field popup이며, 대신 초점이 필드 밖으로 나가면 popup을 닫아 열린 dialog가 잔류하지 않게 합니다(창 전환처럼 relatedTarget이 없는 blur는 제외)."
-      ],
-      "exceptions": [],
-      "related": [
-        {
-          "component": "FormField",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "ColorSwatch",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "DateRangeField",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "FieldAction",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "FileUpload",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "FileUploadQueue",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "IconPicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "NumberField",
-          "relationship": "대표 시나리오에서 조합"
-        }
-      ],
-      "examples": [
-        {
-          "label": "기본 조합",
-          "code": "<DatePicker placeholder=\"실사 희망일\" onChange={setDate} />\n<DatePicker defaultValue=\"2026-07-03\" />"
-        }
-      ],
-      "tokens": [
-        "--color-semantic-fill-normal",
-        "--color-semantic-label-alternative",
-        "--color-semantic-label-disable",
-        "--color-semantic-label-normal",
-        "--component-input-bg",
-        "--component-input-border-color",
-        "--component-input-border-color-focus",
-        "--component-input-border-color-invalid",
-        "--component-input-focus-shadow",
-        "--component-input-gap",
-        "--component-input-height",
-        "--component-input-padding-x",
-        "--component-input-radius",
-        "--control-h-sm",
-        "--dur-fast",
-        "--ease-out",
-        "--font-sans"
-      ],
-      "apiLinks": [],
-      "migration": [],
-      "platformStatus": {
-        "figma": "not-tracked",
-        "react": "implemented",
-        "ios": "not-tracked",
-        "android": "not-tracked"
-      },
-      "storybook": {
-        "importPath": "./stories/FormDateTime.stories.jsx",
-        "entryStoryId": "lds-product-selection-and-input-date-picker--date-input",
-        "publicStories": [
-          {
-            "id": "lds-product-selection-and-input-date-picker--date-input",
-            "name": "개요",
-            "role": "overview"
-          },
-          {
-            "id": "lds-product-selection-and-input-date-picker--blocked-dates",
-            "name": "변형·상태 · 예약 불가일",
-            "role": "variants-states"
-          }
-        ],
-        "hiddenEvidence": 1
-      },
-      "sources": [],
-      "canonicalGuide": null,
-      "guideDeltaFields": [],
-      "sectionStatus": {
-        "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
-        "avoidWhen": "omitted-no-evidence",
-        "anatomy": "omitted-no-evidence",
-        "properties": "evidence",
-        "states": "evidence",
-        "behavior": "evidence",
-        "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
-        "contentGuidance": "omitted-no-evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
         "related": "evidence",
@@ -37874,10 +38696,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "FieldAction",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -37894,7 +38712,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "NumberField",
+          "component": "PinInput",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "PropertyField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -38146,10 +38968,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -38159,6 +38977,10 @@
         },
         {
           "component": "FileUploadQueue",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "IconPicker",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -38373,10 +39195,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -38393,11 +39211,15 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "NumberField",
+          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "PinInput",
+          "component": "PropertyField",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "SearchableMultiSelect",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -38638,10 +39460,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -38654,7 +39472,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "NumberField",
+          "component": "PinInput",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "PropertyField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -38884,10 +39706,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -38904,11 +39722,15 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "NumberField",
+          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "PinInput",
+          "component": "PropertyField",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "SearchableMultiSelect",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -39179,12 +40001,7 @@
         "prefix / suffix — 애드온 노드. value / defaultValue / onChange — 텍스트. inputProps — 네이티브 input 패스스루. inputProps.onChange/onFocus/onBlur는 폐기되지 않고 컴포넌트 내부 처리보다 먼저 호출됩니다(값 커밋은 그대로 이어집니다). inputProps['aria-describedby']는 생성된 설명 id와 병합됩니다."
       ],
       "exceptions": [],
-      "related": [
-        {
-          "component": "PasswordInput",
-          "relationship": "대표 시나리오에서 조합"
-        }
-      ],
+      "related": [],
       "examples": [
         {
           "label": "기본 조합",
@@ -39245,495 +40062,7 @@
         "contentGuidance": "evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
-        "related": "evidence",
-        "examples": "evidence",
-        "tokens": "evidence",
-        "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
-      }
-    },
-    {
-      "slug": "product-selection-and-input-number-field",
-      "title": "Number Field",
-      "storybookTitle": "LDS Product/Selection and Input/Number Field",
-      "layer": "Product",
-      "family": "Selection and Input",
-      "primaryOwner": "NumberField",
-      "ownerComponents": [
-        "NumberField"
-      ],
-      "supportingComponents": [
-        "FormField"
-      ],
-      "purpose": "수량·속도처럼 최소·최대와 일정한 step이 있는 값을 입력할 때 적합합니다. 범위가 없거나 숫자 외 형식을 함께 받는 값에는 Number Field 대신 Input을 사용하세요.",
-      "useWhen": [],
-      "avoidWhen": [],
-      "anatomy": [],
-      "properties": [
-        {
-          "name": "value",
-          "type": "number",
-          "required": false,
-          "description": "",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "defaultValue",
-          "type": "number",
-          "required": false,
-          "description": "",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "min",
-          "type": "number",
-          "required": false,
-          "description": "",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "max",
-          "type": "number",
-          "required": false,
-          "description": "",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "step",
-          "type": "number",
-          "required": false,
-          "description": "",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "onChange",
-          "type": "(value: number) = void",
-          "required": false,
-          "description": "편집 중에는 파싱된 중간값이 그대로 전달되고, blur / Enter / 스테퍼로 값이 확정될 때 [min, max]로 클램프된 값이 다시 전달됩니다.",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "label",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "helper",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "error",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "invalid",
-          "type": "boolean",
-          "required": false,
-          "description": "",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "size",
-          "type": "'sm' | 'md'",
-          "required": false,
-          "description": "",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "disabled",
-          "type": "boolean",
-          "required": false,
-          "description": "",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "style",
-          "type": "React.CSSProperties",
-          "required": false,
-          "description": "스테퍼를 포함한 입력 셸의 스타일.",
-          "owner": "NumberFieldProps"
-        },
-        {
-          "name": "fieldStyle",
-          "type": "React.CSSProperties",
-          "required": false,
-          "description": "label/helper/error를 포함한 전체 필드 스타일.",
-          "owner": "NumberFieldProps"
-        }
-      ],
-      "states": [],
-      "behavior": [
-        "value / defaultValue / onChange — 제어/비제어. min / max / step — 범위. 콤팩트한 ± 전용 컨트롤에는 Stepper를 쓰세요."
-      ],
-      "quantitativeRules": [
-        {
-          "subject": "명시 규칙 1",
-          "rule": "클램프는 값이 확정될 때만 일어납니다. 편집 중에는 max=20에서 25를 타이핑하거나 필드를 비워 둘 수 있고, blur·Enter·스테퍼로 확정하는 순간 [min, max]로 클램프됩니다. 빈 채로 blur하면 마지막 확정값으로 되돌아갑니다. onChange는 편집 중에는 파싱된 중간값을, 확정 시점에는 클램프된 값을 전달합니다."
-        },
-        {
-          "subject": "명시 규칙 2",
-          "rule": "WCAG 2.2 Focus Appearance에 맞춰 field 전체에 LDS focus ring을 표시합니다."
-        },
-        {
-          "subject": "--color-semantic-label-disable",
-          "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
-        },
-        {
-          "subject": "--color-semantic-label-neutral",
-          "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
-        },
-        {
-          "subject": "--color-semantic-label-normal",
-          "rule": "light: #171718; dark: #F7F7F7"
-        }
-      ],
-      "responsive": [],
-      "contentGuidance": [],
-      "accessibility": [
-        "label / helper / error / invalid — label을 주면 htmlFor로 연결된 필드 레이블·메시지 스택을 함께 렌더링하고, 그렇지 않으면 셸만 렌더링해 FormField 같은 상위 표면에 맡깁니다. error나 invalid는 aria-invalid와 오류 테두리를 함께 켭니다. fieldStyle은 label/helper/error를 포함한 바깥 스택, style은 스테퍼가 붙은 입력 셸을 스타일링합니다.",
-        "native number input이 spinbutton semantics를 소유하고 inline step action은 보조 조작입니다. 보조 action 이름에는 field 이름을 포함합니다. focus/disabled/readOnly는 Input과 같은 component token(fieldBackground·fieldBorderColor)을 사용하며 type=\"number\"는 consumer가 덮어쓰지 못합니다.",
-        "WAI-ARIA Spinbutton pattern의 native editing·Arrow key 기대를 보존합니다."
-      ],
-      "exceptions": [],
-      "related": [
-        {
-          "component": "FormField",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "ColorSwatch",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "DateRangeField",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "FieldAction",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "FileUpload",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "FileUploadQueue",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "IconPicker",
-          "relationship": "대표 시나리오에서 조합"
-        }
-      ],
-      "examples": [
-        {
-          "label": "기본 조합",
-          "code": "<NumberField label=\"투입 대수\" helper=\"최대 20대\" defaultValue={3} min={0} max={20} onChange={setQty} />"
-        }
-      ],
-      "tokens": [
-        "--color-semantic-label-disable",
-        "--color-semantic-label-neutral",
-        "--color-semantic-label-normal",
-        "--color-semantic-line-solid-normal",
-        "--component-input-focus-shadow",
-        "--component-input-height",
-        "--component-input-padding-x",
-        "--component-input-radius",
-        "--control-h-sm",
-        "--dur-fast",
-        "--ease-out",
-        "--font-sans",
-        "--fw-semibold"
-      ],
-      "apiLinks": [],
-      "migration": [],
-      "platformStatus": {
-        "figma": "not-tracked",
-        "react": "implemented",
-        "ios": "not-tracked",
-        "android": "not-tracked"
-      },
-      "storybook": {
-        "importPath": "./stories/FormAdvancedInputs.stories.jsx",
-        "entryStoryId": "lds-product-selection-and-input-number-field--number-input",
-        "publicStories": [
-          {
-            "id": "lds-product-selection-and-input-number-field--number-input",
-            "name": "개요",
-            "role": "overview"
-          }
-        ],
-        "hiddenEvidence": 1
-      },
-      "sources": [],
-      "canonicalGuide": null,
-      "guideDeltaFields": [],
-      "sectionStatus": {
-        "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
-        "avoidWhen": "omitted-no-evidence",
-        "anatomy": "omitted-no-evidence",
-        "properties": "evidence",
-        "states": "omitted-no-evidence",
-        "behavior": "evidence",
-        "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
-        "contentGuidance": "omitted-no-evidence",
-        "accessibility": "evidence",
-        "exceptions": "omitted-no-evidence",
-        "related": "evidence",
-        "examples": "evidence",
-        "tokens": "evidence",
-        "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
-      }
-    },
-    {
-      "slug": "product-selection-and-input-password-input",
-      "title": "Password Input",
-      "storybookTitle": "LDS Product/Selection and Input/Password Input",
-      "layer": "Product",
-      "family": "Selection and Input",
-      "primaryOwner": "PasswordInput",
-      "ownerComponents": [
-        "PasswordInput"
-      ],
-      "supportingComponents": [],
-      "purpose": "사용자가 직접 비밀번호를 작성하는 로그인과 계정 설정에 사용하세요. 이미 발급된 비밀값을 읽거나 복사하는 화면은 Secret Field가 더 적합합니다.",
-      "useWhen": [],
-      "avoidWhen": [
-        "autoComplete — 브라우저 비밀번호 관리자에 전달하는 입력 목적. 기본값은 로그인 맥락의 current-password입니다. 회원가입·비밀번호 변경처럼 새 비밀번호를 만드는 폼에서는 new-password를 넘겨 관리자가 저장된 값 대신 생성 값을 제안하게 하세요. off를 넘기면 자동 채우기를 끌 수 있지만 권장하지 않습니다."
-      ],
-      "anatomy": [
-        {
-          "part": "capsLockLabel",
-          "rule": "Caps Lock warning shown while the field has focus. Pass '' to suppress the warning entirely."
-        }
-      ],
-      "properties": [
-        {
-          "name": "value",
-          "type": "string",
-          "required": false,
-          "description": "",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "defaultValue",
-          "type": "string",
-          "required": false,
-          "description": "",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "onChange",
-          "type": "(value: string) = void",
-          "required": false,
-          "description": "",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "label",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "helper",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "error",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "invalid",
-          "type": "boolean",
-          "required": false,
-          "description": "",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "status",
-          "type": "'normal' | 'positive' | 'negative'",
-          "required": false,
-          "description": "",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "size",
-          "type": "'sm' | 'md' | 'small' | 'medium'",
-          "required": false,
-          "description": "",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "revealLabel",
-          "type": "string",
-          "required": false,
-          "description": "",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "hideLabel",
-          "type": "string",
-          "required": false,
-          "description": "",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "autoComplete",
-          "type": "string",
-          "required": false,
-          "description": "Browser autofill hint for the password field. Keep the default on sign-in forms; pass \"new-password\" on sign-up / change-password forms so the password manager offers a generated value instead of the stored one.",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "capsLockLabel",
-          "type": "string",
-          "required": false,
-          "description": "Caps Lock warning shown while the field has focus. Pass '' to suppress the warning entirely.",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "fieldStyle",
-          "type": "React.CSSProperties",
-          "required": false,
-          "description": "Styles for the label/control/message stack.",
-          "owner": "PasswordInputProps"
-        },
-        {
-          "name": "style",
-          "type": "React.CSSProperties",
-          "required": false,
-          "description": "Styles for the input control shell.",
-          "owner": "PasswordInputProps"
-        }
-      ],
-      "states": [],
-      "behavior": [
-        "필드가 소속된 이 제출되면 표시 상태를 자동으로 마스킹으로 되돌립니다. 토글을 누른 뒤 그대로 제출해도 평문이 화면에 남지 않습니다.",
-        "value / defaultValue / onChange — 제어/비제어. size sm · md."
-      ],
-      "quantitativeRules": [
-        {
-          "subject": "명시 규칙 1",
-          "rule": "The reveal button is a real 32px icon button with a contextual name (비밀번호 보기 / 비밀번호 숨기기) and aria-controls; its icon describes the next action. A disabled field disables the trailing action as well."
-        },
-        {
-          "subject": "명시 규칙 2",
-          "rule": "Reference basis: Carbon Text input, GOV.UK Text input, GOV.UK Password input, WCAG 2.2 Identify Input Purpose."
-        },
-        {
-          "subject": "--caption1-line",
-          "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
-        },
-        {
-          "subject": "--caption1-size",
-          "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
-        },
-        {
-          "subject": "--color-semantic-label-disable",
-          "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
-        }
-      ],
-      "responsive": [],
-      "contentGuidance": [
-        "Label, helper/error, read-only, positive, and negative states use the same field anatomy and tokens as Input.",
-        "필드·상태 prop: label(필드 레이블) · status(normal/positive/negative) · invalid(오류 강조 토글) · fieldStyle(전체 필드 컨테이너 스타일) · revealLabel/hideLabel(비밀번호 표시·숨김 토글 버튼의 스크린리더 레이블)."
-      ],
-      "accessibility": [
-        "Caps Lock이 켜진 채로 입력하면 focus 중에만 주의 문구가 나타나고, 상시 마운트된 polite live region이 같은 문구를 읽습니다.",
-        "capsLockLabel — Caps Lock이 켜진 상태에서 focus 중에 노출되는 주의 문구이자 live region 문장. 기본값은 Caps Lock이 켜져 있습니다.이고, 빈 문자열을 넘기면 경고를 끕니다. 값이 비어 있지 않은 한 문구는 필드가 focus를 잃으면 사라집니다."
-      ],
-      "exceptions": [],
-      "related": [
-        {
-          "component": "InputGroup",
-          "relationship": "대표 시나리오에서 조합"
-        }
-      ],
-      "examples": [
-        {
-          "label": "기본 조합",
-          "code": "<PasswordInput onChange={setPw} />"
-        }
-      ],
-      "tokens": [
-        "--caption1-line",
-        "--caption1-size",
-        "--color-semantic-label-disable",
-        "--color-semantic-status-cautionary-text",
-        "--component-input-border-width",
-        "--component-input-focus-shadow",
-        "--component-input-gap",
-        "--component-input-height",
-        "--component-input-padding-x",
-        "--component-input-radius",
-        "--component-input-text-color",
-        "--control-h-sm",
-        "--dur-fast",
-        "--ease-out",
-        "--font-sans",
-        "--fw-medium"
-      ],
-      "apiLinks": [],
-      "migration": [],
-      "platformStatus": {
-        "figma": "mapped",
-        "react": "implemented",
-        "ios": "not-tracked",
-        "android": "not-tracked"
-      },
-      "storybook": {
-        "importPath": "./stories/FormPasswordInput.stories.jsx",
-        "entryStoryId": "lds-product-selection-and-input-password-input--password-input-overview",
-        "publicStories": [
-          {
-            "id": "lds-product-selection-and-input-password-input--password-input-overview",
-            "name": "개요",
-            "role": "overview"
-          }
-        ],
-        "hiddenEvidence": 3
-      },
-      "sources": [],
-      "canonicalGuide": null,
-      "guideDeltaFields": [],
-      "sectionStatus": {
-        "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
-        "avoidWhen": "evidence",
-        "anatomy": "evidence",
-        "properties": "evidence",
-        "states": "omitted-no-evidence",
-        "behavior": "evidence",
-        "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
-        "contentGuidance": "evidence",
-        "accessibility": "evidence",
-        "exceptions": "omitted-no-evidence",
-        "related": "evidence",
+        "related": "omitted-no-evidence",
         "examples": "evidence",
         "tokens": "evidence",
         "apiLinks": "evidence",
@@ -39893,10 +40222,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -39914,6 +40239,10 @@
         },
         {
           "component": "IconPicker",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "PropertyField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -40138,10 +40467,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -40162,7 +40487,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "NumberField",
+          "component": "PinInput",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "SearchableMultiSelect",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -40469,10 +40798,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -40493,7 +40818,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "NumberField",
+          "component": "PinInput",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "PropertyField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -40876,10 +41205,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -40897,6 +41222,10 @@
         },
         {
           "component": "IconPicker",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -41101,10 +41430,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -41122,6 +41447,10 @@
         },
         {
           "component": "IconPicker",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -41329,10 +41658,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -41350,6 +41675,10 @@
         },
         {
           "component": "IconPicker",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -41653,10 +41982,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Calendar",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "Carousel",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -41674,6 +41999,10 @@
         },
         {
           "component": "DataGrid",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "DataToolbar",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -41912,10 +42241,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -41933,6 +42258,10 @@
         },
         {
           "component": "IconPicker",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -42221,10 +42550,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -42242,6 +42567,10 @@
         },
         {
           "component": "IconPicker",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "PinInput",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -42497,10 +42826,6 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "DatePicker",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
           "component": "DateRangeField",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -42521,7 +42846,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "NumberField",
+          "component": "PinInput",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "PropertyField",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -43246,440 +43575,6 @@
         "tokens": "evidence",
         "apiLinks": "evidence",
         "migration": "evidence"
-      }
-    },
-    {
-      "slug": "product-status-meter",
-      "title": "Meter",
-      "storybookTitle": "LDS Product/Status/Meter",
-      "layer": "Product",
-      "family": "Status",
-      "primaryOwner": "Meter",
-      "ownerComponents": [
-        "Meter"
-      ],
-      "supportingComponents": [],
-      "purpose": "수위·품질·위험 점수처럼 최소·최대 경계가 있는 현재 측정값을 비교할 때 적합합니다. 업로드나 처리 작업의 완료율에는 Meter 대신 ProgressBar 또는 CircularProgress를 사용하세요.",
-      "useWhen": [],
-      "avoidWhen": [],
-      "anatomy": [
-        {
-          "part": "thresholdLabels",
-          "rule": "임계 구간을 색 대신 전달하는 문구를 재정의합니다(WCAG 1.4.1)."
-        }
-      ],
-      "properties": [
-        {
-          "name": "value",
-          "type": "number",
-          "required": false,
-          "description": "",
-          "owner": "MeterProps"
-        },
-        {
-          "name": "max",
-          "type": "number",
-          "required": false,
-          "description": "",
-          "owner": "MeterProps"
-        },
-        {
-          "name": "label",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "",
-          "owner": "MeterProps"
-        },
-        {
-          "name": "thresholds",
-          "type": "{ low: number; high: number }",
-          "required": false,
-          "description": "퍼센트 임계값: ≤low 레드, ≤high 앰버, 그 외 그린.",
-          "owner": "MeterProps"
-        },
-        {
-          "name": "thresholdLabels",
-          "type": "MeterThresholdLabels",
-          "required": false,
-          "description": "임계 구간을 색 대신 전달하는 문구를 재정의합니다(WCAG 1.4.1).",
-          "owner": "MeterProps"
-        },
-        {
-          "name": "size",
-          "type": "'sm' | 'md'",
-          "required": false,
-          "description": "",
-          "owner": "MeterProps"
-        },
-        {
-          "name": "showValue",
-          "type": "boolean",
-          "required": false,
-          "description": "\"value/max\" 표시. @default true",
-          "owner": "MeterProps"
-        }
-      ],
-      "states": [],
-      "behavior": [],
-      "quantitativeRules": [
-        {
-          "subject": "명시 규칙 1",
-          "rule": "접근성 role — 알려진 범위 안의 측정값이므로 role=\"meter\"로 노출됩니다. role=\"progressbar\"는 작업의 진척도를 뜻하므로 쓰지 않습니다. 이 때문에 Meter는 ProgressBar를 합성하지 않고 같은 트랙 형상(sm 6px / md 10px)을 직접 렌더합니다."
-        },
-        {
-          "subject": "명시 규칙 2",
-          "rule": "값 발화 — aria-valuenow / aria-valuemin / aria-valuemax는 caller의 value·max 단위를 그대로 씁니다(퍼센트로 환산하지 않음). 기본 aria-valuetext는 보이는 캡션과 같은 value/max 문자열이라 max !== 100에서도 표기와 발화가 어긋나지 않습니다. aria-valuetext를 직접 넘기면 그대로 우선합니다."
-        },
-        {
-          "subject": "명시 규칙 3",
-          "rule": "thresholdLabels — 임계 구간은 색상만으로 전달하지 않습니다(WCAG 1.4.1). 구간에 해당하는 낱말이 값 옆에 함께 렌더되고 aria-valuetext에도 붙습니다. 기본값은 { negative: '위험', cautionary: '주의', positive: '양호' }이며, 수위·품질처럼 도메인 어휘가 다르면 필요한 키만 덮어씁니다. showValue={false}여도 임계 구간이 있으면 캡션 줄은 유지됩니다."
-        },
-        {
-          "subject": "--color-semantic-fill-strong",
-          "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
-        },
-        {
-          "subject": "--color-semantic-label-alternative",
-          "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
-        }
-      ],
-      "responsive": [],
-      "contentGuidance": [
-        "value / max — 레벨. thresholds — { low, high } 퍼센트 → 레드 / 앰버 / 스틸그린. label / showValue. 작업 진행에는 ProgressBar를 쓰세요.",
-        "Meter — 임계값(옵션)이 있는 라벨 값 바(완료율, 품질 점수)."
-      ],
-      "accessibility": [
-        "이름 — 문자열이 아닌 label(ReactNode)도 보이는 라벨에 aria-labelledby로 연결되므로 무명 meter가 생기지 않습니다. label도 aria-label도 없으면 측정값이 기본 이름입니다."
-      ],
-      "exceptions": [],
-      "related": [
-        {
-          "component": "CircularProgress",
-          "relationship": "대표 시나리오에서 조합"
-        },
-        {
-          "component": "ProgressBar",
-          "relationship": "대표 시나리오에서 조합"
-        }
-      ],
-      "examples": [
-        {
-          "label": "기본 조합",
-          "code": "<Meter label=\"완료율\" value={82} thresholds={{ low: 20, high: 50 }} />\n<Meter label=\"냉각수 수위\" value={12} max={40} thresholds={{ low: 20, high: 50 }} thresholdLabels={{ negative: '부족' }} />"
-        }
-      ],
-      "tokens": [
-        "--color-semantic-fill-strong",
-        "--color-semantic-label-alternative",
-        "--color-semantic-label-neutral",
-        "--color-semantic-primary-normal",
-        "--color-semantic-status-cautionary",
-        "--color-semantic-status-cautionary-text",
-        "--color-semantic-status-negative",
-        "--color-semantic-status-negative-text",
-        "--color-semantic-status-positive",
-        "--color-semantic-status-positive-text",
-        "--dur-base",
-        "--ease-out",
-        "--font-sans",
-        "--fw-semibold",
-        "--label2-size",
-        "--radius-pill",
-        "--space-1-5"
-      ],
-      "apiLinks": [],
-      "migration": [],
-      "platformStatus": {
-        "figma": "mapped",
-        "react": "implemented",
-        "ios": "not-tracked",
-        "android": "not-tracked"
-      },
-      "storybook": {
-        "importPath": "./stories/ProductMeter.stories.jsx",
-        "entryStoryId": "lds-product-status-meter--bounded-measurements",
-        "publicStories": [
-          {
-            "id": "lds-product-status-meter--bounded-measurements",
-            "name": "개요",
-            "role": "overview"
-          }
-        ],
-        "hiddenEvidence": 1
-      },
-      "sources": [],
-      "canonicalGuide": null,
-      "guideDeltaFields": [],
-      "sectionStatus": {
-        "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
-        "avoidWhen": "omitted-no-evidence",
-        "anatomy": "evidence",
-        "properties": "evidence",
-        "states": "omitted-no-evidence",
-        "behavior": "omitted-no-evidence",
-        "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
-        "contentGuidance": "evidence",
-        "accessibility": "evidence",
-        "exceptions": "omitted-no-evidence",
-        "related": "evidence",
-        "examples": "evidence",
-        "tokens": "evidence",
-        "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
-      }
-    },
-    {
-      "slug": "product-status-progress",
-      "title": "Progress",
-      "storybookTitle": "LDS Product/Status/Progress",
-      "layer": "Product",
-      "family": "Status",
-      "primaryOwner": "CircularProgress",
-      "ownerComponents": [
-        "CircularProgress",
-        "ProgressBar"
-      ],
-      "supportingComponents": [],
-      "purpose": "업로드·분석·생성처럼 시작과 완료가 있는 작업의 진행률이나 대기 상태를 전달할 때 적합합니다. 작업이 아닌 현재 측정값을 알려진 범위 안에서 비교하려면 Progress 대신 Meter를 사용하세요.",
-      "useWhen": [],
-      "avoidWhen": [],
-      "anatomy": [
-        {
-          "part": "label",
-          "rule": "Optional visible label."
-        }
-      ],
-      "properties": [
-        {
-          "name": "value",
-          "type": "number",
-          "required": false,
-          "description": "Current value for determinate progress. @default 0",
-          "owner": "CircularProgressProps"
-        },
-        {
-          "name": "max",
-          "type": "number",
-          "required": false,
-          "description": "Maximum value for determinate progress. @default 100",
-          "owner": "CircularProgressProps"
-        },
-        {
-          "name": "size",
-          "type": "number",
-          "required": false,
-          "description": "Diameter in px. @default 48",
-          "owner": "CircularProgressProps"
-        },
-        {
-          "name": "thickness",
-          "type": "number",
-          "required": false,
-          "description": "Ring thickness in px. @default 5",
-          "owner": "CircularProgressProps"
-        },
-        {
-          "name": "tone",
-          "type": "'signal' | 'positive' | 'cautionary' | 'negative'",
-          "required": false,
-          "description": "Arc tone. @default \"signal\"",
-          "owner": "CircularProgressProps"
-        },
-        {
-          "name": "indeterminate",
-          "type": "boolean",
-          "required": false,
-          "description": "Shows an unknown-duration rotating arc. @default false",
-          "owner": "CircularProgressProps"
-        },
-        {
-          "name": "label",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "Accessible label for the progress indicator.",
-          "owner": "CircularProgressProps"
-        },
-        {
-          "name": "showValue",
-          "type": "boolean",
-          "required": false,
-          "description": "Shows the computed percentage in the center for determinate progress. @default false",
-          "owner": "CircularProgressProps"
-        },
-        {
-          "name": "value",
-          "type": "number",
-          "required": false,
-          "description": "Current value. @default 0",
-          "owner": "ProgressBarProps"
-        },
-        {
-          "name": "max",
-          "type": "number",
-          "required": false,
-          "description": "Maximum value. @default 100",
-          "owner": "ProgressBarProps"
-        },
-        {
-          "name": "indeterminate",
-          "type": "boolean",
-          "required": false,
-          "description": "Shows an unknown-duration moving segment instead of a fixed percentage. @default false",
-          "owner": "ProgressBarProps"
-        },
-        {
-          "name": "tone",
-          "type": "'signal' | 'positive' | 'cautionary' | 'negative'",
-          "required": false,
-          "description": "Fill tone. @default \"signal\"",
-          "owner": "ProgressBarProps"
-        },
-        {
-          "name": "color",
-          "type": "string",
-          "required": false,
-          "description": "Custom fill color (CSS color value or token, e.g. \"var(--color-semantic-status-positive)\"). Overrides tone when set.",
-          "owner": "ProgressBarProps"
-        },
-        {
-          "name": "size",
-          "type": "'sm' | 'md' | 'lg'",
-          "required": false,
-          "description": "Track height. @default \"md\"",
-          "owner": "ProgressBarProps"
-        },
-        {
-          "name": "label",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "Optional visible label.",
-          "owner": "ProgressBarProps"
-        },
-        {
-          "name": "showValue",
-          "type": "boolean",
-          "required": false,
-          "description": "Shows the computed percentage beside the label. @default false",
-          "owner": "ProgressBarProps"
-        }
-      ],
-      "states": [
-        {
-          "state": "tone",
-          "rule": "Arc tone. @default \"signal\""
-        },
-        {
-          "state": "tone",
-          "rule": "Fill tone. @default \"signal\""
-        }
-      ],
-      "behavior": [],
-      "quantitativeRules": [
-        {
-          "subject": "명시 규칙 1",
-          "rule": "Motion respects prefers-reduced-motion. The rotating ring gets its animation from an inline style, so the injected @media (prefers-reduced-motion: reduce) rule declares animation:none!important — dropping !important silently disables the guard (WCAG 2.3.3). Same mechanism as Skeleton/Spinner."
-        },
-        {
-          "subject": "--color-semantic-fill-strong",
-          "rule": "light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)"
-        },
-        {
-          "subject": "--color-semantic-label-neutral",
-          "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
-        },
-        {
-          "subject": "--color-semantic-label-normal",
-          "rule": "light: #171718; dark: #F7F7F7"
-        },
-        {
-          "subject": "--color-semantic-primary-normal",
-          "rule": "light: #3878B3; dark: #5390C9"
-        }
-      ],
-      "responsive": [],
-      "contentGuidance": [],
-      "accessibility": [
-        "indeterminate renders an unknown-duration rotating arc and omits aria-valuenow.",
-        "label / showValue provide accessible and visible progress context.",
-        "Indeterminate aria-valuetext는 ProgressBar와 같은 한국어 문구 진행 중입니다."
-      ],
-      "exceptions": [],
-      "related": [
-        {
-          "component": "ProgressBar",
-          "relationship": "같은 페이지가 소유"
-        },
-        {
-          "component": "Meter",
-          "relationship": "대표 시나리오에서 조합"
-        }
-      ],
-      "examples": [
-        {
-          "label": "기본 조합",
-          "code": "<CircularProgress value={72} label=\"Report progress\" showValue />\n<CircularProgress indeterminate label=\"Processing\" />\n<CircularProgress value={4} max={5} tone=\"positive\" size={40} />"
-        }
-      ],
-      "tokens": [
-        "--color-semantic-fill-strong",
-        "--color-semantic-label-neutral",
-        "--color-semantic-label-normal",
-        "--color-semantic-primary-normal",
-        "--color-semantic-status-cautionary",
-        "--color-semantic-status-negative",
-        "--color-semantic-status-positive",
-        "--dur-base",
-        "--ease-in-out",
-        "--ease-out",
-        "--font-sans",
-        "--fw-bold",
-        "--fw-semibold",
-        "--label2-size",
-        "--radius-pill"
-      ],
-      "apiLinks": [],
-      "migration": [],
-      "platformStatus": {
-        "figma": "mapped",
-        "react": "implemented",
-        "ios": "not-tracked",
-        "android": "not-tracked"
-      },
-      "storybook": {
-        "importPath": "./stories/ProductProgress.stories.jsx",
-        "entryStoryId": "lds-product-status-progress--progress-indicators",
-        "publicStories": [
-          {
-            "id": "lds-product-status-progress--progress-indicators",
-            "name": "개요",
-            "role": "overview"
-          }
-        ],
-        "hiddenEvidence": 3
-      },
-      "sources": [],
-      "canonicalGuide": null,
-      "guideDeltaFields": [],
-      "sectionStatus": {
-        "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
-        "avoidWhen": "omitted-no-evidence",
-        "anatomy": "evidence",
-        "properties": "evidence",
-        "states": "evidence",
-        "behavior": "omitted-no-evidence",
-        "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
-        "contentGuidance": "omitted-no-evidence",
-        "accessibility": "evidence",
-        "exceptions": "omitted-no-evidence",
-        "related": "evidence",
-        "examples": "evidence",
-        "tokens": "evidence",
-        "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
       }
     },
     {

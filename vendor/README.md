@@ -1,6 +1,6 @@
 # Vendored release artifacts
 
-`lk-design-system-lds-robotics-ui-0.1.0-rc.30.tgz` is the exact external
+`lk-design-system-lds-robotics-ui-0.1.0-rc.32.tgz` is the exact external
 Robotics release-candidate artifact consumed by this private workspace and its
 compatibility build.
 
@@ -11,17 +11,17 @@ its GitHub Pages deployment remain the canonical Robotics documentation source.
 The tarball is retained so clean installs and CI resolve one immutable package
 artifact without a registry dependency.
 
-The v3 external surface records the immutable Robotics release as `published`.
-Local vendoring verifies the exact registry artifact bytes as well as the
+The v3 external surface records the immutable Robotics release identity.
+Local vendoring verifies the exact vendored artifact bytes as well as the
 workspace lock entry, so clean installs do not depend on a mutable tag.
 
-- Package: `@lk-design-system/lds-robotics-ui@0.1.0-rc.30`
-- File: `lk-design-system-lds-robotics-ui-0.1.0-rc.30.tgz`
-- SHA-256: `2f9fe8ce8c78608eb23872d7c06224d14f5961137d409c7e82e726037628e1d7`
+- Package: `@lk-design-system/lds-robotics-ui@0.1.0-rc.32`
+- File: `lk-design-system-lds-robotics-ui-0.1.0-rc.32.tgz`
+- SHA-256: `c6a2f5b904cfa1a4151c3c488aff3932d7e82fed4a7d67fa68e955bcedf9be8f`
 - Contents: ESM/types runtime, styles and tokens, licensing, AI entry points,
   and the self-contained `docs/package/*` documentation bundle; no source tree
 
-When a successor package is published from its canonical repository, update
+When a successor package is cut in its canonical repository, update
 `ROBOTICS_EXTERNAL_SURFACE.json`, replace this immutable artifact and its
 workspace lock entry, then re-run the package, documentation, and clean-consumer
 checks in one change.

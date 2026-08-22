@@ -61,7 +61,6 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 | Component | Relationship |
 | --- | --- |
 | `ButtonGroup` | 대표 시나리오에서 조합 |
-| `Link` | 대표 시나리오에서 조합 |
 | `SpeedDial` | 대표 시나리오에서 조합 |
 | `SplitButton` | 대표 시나리오에서 조합 |
 | `SocialButton` | 대표 시나리오에서 조합 |

@@ -2,7 +2,7 @@ import React from 'react';
 import { TextButton } from '@lk-design-system/lds-core/components/buttons/TextButton';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 import { Chip } from '@lk-design-system/lds-core/components/feedback/Chip';
-import { Popover } from '../overlay/Popover.jsx';
+import { Popover } from '@lk-design-system/lds-core/components/overlay/Popover';
 import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
 
 // Availability answers one question: can the user still reach this source? A

@@ -36,15 +36,28 @@ function entryStatsFromSource(source) {
     .split('\n')
     .filter((line) => line.startsWith('export {'));
   const names = [];
+  const entryRows = [];
   for (const line of entryExports) {
-    const match = line.match(/^export\s+\{\s*([^}]+?)\s*\}\s+from\s+['"][^'"]+['"];$/);
+    const match = line.match(/^export\s+\{\s*([^}]+?)\s*\}\s+from\s+['"]([^'"]+)['"];$/);
     assert(match, `Unsupported generated entry syntax: ${line}`);
-    names.push(...match[1].split(',').map((item) => item.trim().split(/\s+as\s+/)[0]));
+    const rowNames = match[1].split(',').map((item) => item.trim().split(/\s+as\s+/)[0]);
+    names.push(...rowNames);
+    const normalizedPath = match[2].replace(/^(?:\.\.\/|\.\/)(?=components\/)/, '');
+    entryRows.push({ path: normalizedPath, names: rowNames });
   }
   return {
     sourceEntries: entryExports.length,
     namedExports: new Set(names).size,
+    entryRows,
+    sourcePaths: new Set(entryRows.map((entry) => entry.path)),
+    exportNames: new Set(names),
   };
+}
+
+function assertSameSet(label, actual, expected) {
+  const missing = [...expected].filter((value) => !actual.has(value));
+  const extra = [...actual].filter((value) => !expected.has(value));
+  assert(missing.length === 0 && extra.length === 0, `${label} drifted; missing=${missing.join(',') || 'none'}; extra=${extra.join(',') || 'none'}.`);
 }
 
 async function getStorybookCounts() {
@@ -71,6 +84,9 @@ async function getCounts() {
   const roboticsExternalSurface = JSON.parse(
     await read('docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json'),
   );
+  const ownerApiDecisions = JSON.parse(
+    await read('docs/references/architecture/R3B_OWNER_API_DECISIONS.json'),
+  );
   // Internal engine modules (components/internal/*, overlay/forms shared engines)
   // carry their own .d.ts contracts but are not public components, so exclude
   // them by stem: the classification lists both .js and .jsx internal modules.
@@ -87,17 +103,64 @@ async function getCounts() {
   const srcIndex = await read('src/index.js');
   const workspaceEntry = entryStatsFromSource(srcIndex);
   const packages = {};
+  const packageSurfaces = {};
   for (const layer of ['core', 'theme', 'product']) {
     const manifest = JSON.parse(await read(`packages/${layer}/package.json`));
     const entry = entryStatsFromSource(await read(`packages/${layer}/src/index.js`));
+    packageSurfaces[layer] = entry;
     packages[layer] = {
       name: manifest.name,
       version: manifest.version,
       private: manifest.private === true,
       registry: manifest.publishConfig?.registry ?? null,
       access: manifest.publishConfig?.access ?? null,
-      ...entry,
+      sourceEntries: entry.sourceEntries,
+      namedExports: entry.namedExports,
     };
+  }
+  const pathOwners = new Map();
+  const exportOwners = new Map();
+  for (const [layer, surface] of Object.entries(packageSurfaces)) {
+    for (const entry of surface.entryRows) {
+      const owners = pathOwners.get(entry.path) ?? new Set();
+      owners.add(layer);
+      pathOwners.set(entry.path, owners);
+      for (const name of entry.names) {
+        const nameOwners = exportOwners.get(name) ?? new Set();
+        nameOwners.add(layer);
+        exportOwners.set(name, nameOwners);
+      }
+    }
+  }
+  const projectedSourcePaths = new Set(pathOwners.keys());
+  const projectedExportNames = new Set(exportOwners.keys());
+  assertSameSet('Generated owner-package source union', projectedSourcePaths, workspaceEntry.sourcePaths);
+  assertSameSet('Generated owner-package export union', projectedExportNames, workspaceEntry.exportNames);
+
+  const approvedCompatibilityExports = new Set(
+    ownerApiDecisions.decisions
+      .filter((decision) => decision.decision === 'move-now' && decision.ownerLayer === 'core')
+      .flatMap((decision) => decision.subjects)
+      .filter((subject) => workspaceEntry.exportNames.has(subject)),
+  );
+  const compatibilityExports = new Set(
+    [...exportOwners].filter(([, owners]) => owners.size > 1).map(([name]) => name),
+  );
+  const approvedCompatibilityPaths = new Set(
+    workspaceEntry.entryRows
+      .filter((entry) => entry.names.some((name) => approvedCompatibilityExports.has(name)))
+      .map((entry) => entry.path),
+  );
+  const compatibilityPaths = new Set(
+    [...pathOwners].filter(([, owners]) => owners.size > 1).map(([entryPath]) => entryPath),
+  );
+  assertSameSet('Product compatibility export projection', compatibilityExports, approvedCompatibilityExports);
+  assertSameSet('Product compatibility source projection', compatibilityPaths, approvedCompatibilityPaths);
+  for (const name of compatibilityExports) {
+    assert([...exportOwners.get(name)].sort().join(',') === 'core,product', `${name} compatibility export must exist only in Core and Product.`);
+  }
+  for (const entryPath of compatibilityPaths) {
+    assert([...pathOwners.get(entryPath)].sort().join(',') === 'core,product', `${entryPath} compatibility source must exist only in Core and Product.`);
   }
   const roboticsEntries = roboticsExternalSurface.entries ?? [];
   const roboticsNamedExports = new Set(roboticsEntries.flatMap((entry) => entry.exports ?? []));
@@ -111,6 +174,12 @@ async function getCounts() {
       exportedSubpaths: Object.keys(workspaceManifest.exports ?? {}),
     },
     packages,
+    packageProjection: {
+      uniqueSourceEntries: projectedSourcePaths.size,
+      uniqueNamedExports: projectedExportNames.size,
+      compatibilitySourceEntries: compatibilityPaths.size,
+      compatibilityNamedExports: compatibilityExports.size,
+    },
     robotics: {
       name: roboticsExternalSurface.package?.name,
       version: roboticsExternalSurface.package?.version,
@@ -139,7 +208,8 @@ async function checkDocs(counts) {
     ['docs/REPOSITORY_INVENTORY.md', `Core: \`${counts.packages.core.name}@${counts.packages.core.version}\` · source entry ${counts.packages.core.sourceEntries}개 · named export ${counts.packages.core.namedExports}개`],
     ['docs/REPOSITORY_INVENTORY.md', `Theme: \`${counts.packages.theme.name}@${counts.packages.theme.version}\` · source entry ${counts.packages.theme.sourceEntries}개 · named export ${counts.packages.theme.namedExports}개`],
     ['docs/REPOSITORY_INVENTORY.md', `Product: \`${counts.packages.product.name}@${counts.packages.product.version}\` · source entry ${counts.packages.product.sourceEntries}개 · named export ${counts.packages.product.namedExports}개`],
-    ['docs/REPOSITORY_INVENTORY.md', `로컬 owner-package 합계: source entry ${counts.componentEntryExports}개 · named export ${counts.namedPublicExports}개`],
+    ['docs/REPOSITORY_INVENTORY.md', `로컬 owner-package canonical unique surface: source entry ${counts.componentEntryExports}개 · named export ${counts.namedPublicExports}개`],
+    ['docs/REPOSITORY_INVENTORY.md', `Product deprecated compatibility projection: source entry ${counts.packageProjection.compatibilitySourceEntries}개 · named export ${counts.packageProjection.compatibilityNamedExports}개`],
     ['docs/REPOSITORY_INVENTORY.md', `외부 Robotics: \`${counts.robotics.name}@${counts.robotics.version}\` · source entry ${counts.robotics.sourceEntries}개 · named export ${counts.robotics.namedExports}개`],
     ['docs/REPOSITORY_INVENTORY.md', `Storybook 전체 story: ${counts.storybook.total}개`],
     ['docs/REPOSITORY_INVENTORY.md', `Storybook public story: ${counts.storybook.public}개`],
@@ -194,6 +264,8 @@ function printTable(counts) {
     ['Theme named exports', counts.packages.theme.namedExports],
     ['Product source entries', counts.packages.product.sourceEntries],
     ['Product named exports', counts.packages.product.namedExports],
+    ['Product compatibility source entries', counts.packageProjection.compatibilitySourceEntries],
+    ['Product compatibility named exports', counts.packageProjection.compatibilityNamedExports],
     ['External Robotics source entries', counts.robotics.sourceEntries],
     ['External Robotics named exports', counts.robotics.namedExports],
   ];
@@ -234,11 +306,9 @@ assert(
   'Core, Theme, and Product must remain publishable restricted GitHub Packages at the workspace version.',
 );
 assert(
-  Object.values(counts.packages).reduce((total, ownerPackage) => total + ownerPackage.sourceEntries, 0) ===
-    counts.componentEntryExports &&
-    Object.values(counts.packages).reduce((total, ownerPackage) => total + ownerPackage.namedExports, 0) ===
-      counts.namedPublicExports,
-  'Generated owner-package entries must partition the generated local workspace entry.',
+  counts.packageProjection.uniqueSourceEntries === counts.componentEntryExports
+    && counts.packageProjection.uniqueNamedExports === counts.namedPublicExports,
+  'Generated owner-package canonical union must equal the generated local workspace entry.',
 );
 assert(
   counts.robotics.name === '@lk-design-system/lds-robotics-ui' && counts.robotics.refStatus === 'published',
