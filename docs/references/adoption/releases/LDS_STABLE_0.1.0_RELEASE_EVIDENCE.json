@@ -1,0 +1,78 @@
+{
+  "$schema": "./LDS_STABLE_RELEASE_EVIDENCE.schema.json",
+  "schemaVersion": 1,
+  "kind": "lds-stable-package-release-evidence",
+  "generatedAt": "2026-08-23",
+  "release": {
+    "channel": "stable",
+    "version": "0.1.0",
+    "tag": "lds-v0.1.0",
+    "sourceCommit": "085ba9e72522dfe628a2d39d00583d0bb8d756d4",
+    "repository": "LK-Design-System/lk-design-system"
+  },
+  "immutableTagVerification": {
+    "status": "passed",
+    "command": "git ls-remote --tags origin refs/tags/lds-v0.1.0",
+    "resolvedCommit": "085ba9e72522dfe628a2d39d00583d0bb8d756d4"
+  },
+  "automation": [
+    {
+      "workflow": "CI",
+      "runId": 32590804542,
+      "status": "passed",
+      "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/32590804542"
+    },
+    {
+      "workflow": "Deploy Storybook to GitHub Pages",
+      "runId": 32590804685,
+      "status": "passed",
+      "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/32590804685"
+    },
+    {
+      "workflow": "Robotics stable paired release conformance",
+      "runId": 32591917565,
+      "status": "passed",
+      "url": "https://github.com/LK-Design-System/lk-design-system-robotics/actions/runs/32591917565"
+    },
+    {
+      "workflow": "Release immutable package set",
+      "runId": 32592054962,
+      "status": "passed",
+      "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/32592054962"
+    }
+  ],
+  "packages": [
+    {
+      "name": "@lk-design-system/lds-core",
+      "version": "0.1.0",
+      "publishedAt": "2026-08-22T18:56:24Z",
+      "distShasum": "4b1f32612a43b9e687deb52707c70463264720eb",
+      "distIntegrity": "sha512-8q1Ze2e+TMFhnTMZdALnd3Id60EkXoz2nsXrNLLLISup8TEy6e+PPbsLVFSVcl5fGVn87KoP5eozsbeL6nTTZg=="
+    },
+    {
+      "name": "@lk-design-system/lds-theme",
+      "version": "0.1.0",
+      "publishedAt": "2026-08-22T18:56:26Z",
+      "distShasum": "0cc34c1bbf2f2f1d026a46be0367cc52cd235ea6",
+      "distIntegrity": "sha512-fWHXM95O5Mp1SMaJgct1gIgYDqV69moKG18C0+Q0MjyBensA8AlQ8nGj1RWzpWlUCn2g71BQ/qMqSV02InvF2w=="
+    },
+    {
+      "name": "@lk-design-system/lds-product",
+      "version": "0.1.0",
+      "publishedAt": "2026-08-22T18:56:28Z",
+      "distShasum": "26f1490ecc195d43cf70114fd727c84baa6321d8",
+      "distIntegrity": "sha512-VLQzfKgLMIlmowIIMfgmZZEdWHg3vGnPfKiXJFMmpcMG4IXMiKsvPYZPDr1MBVkUzsHRCjOe31EIw2RIA71MSw=="
+    }
+  ],
+  "availabilityVerification": {
+    "status": "passed",
+    "command": "npm view @lk-design-system/<package>@0.1.0 version time dist.shasum dist.integrity dist-tags --registry=https://npm.pkg.github.com",
+    "registry": "https://npm.pkg.github.com"
+  },
+  "contracts": {
+    "supportPolicy": "docs/STABLE_SUPPORT_POLICY.md",
+    "supportMatrix": "docs/STABLE_SUPPORT_MATRIX.md",
+    "rollbackArtifact": "docs/STABLE_0.1.0_ROLLBACK.md"
+  },
+  "notes": "The authenticated release workflow published and re-read the atomic Core, Theme, and Product package set with latest=0.1.0 while preserving rc=0.1.0-rc.69.31. Downloaded registry tarballs were independently hashed as Core 4397366 bytes / SHA-256 b687d49a0500dea9482cc13826debf3084570b8378c2651cda31eedd53a5c53c, Theme 3957209 bytes / SHA-256 3a4885a55221e1917dbe57d08eb566ac804903bf1efe94acdacf421f086132c4, and Product 3086810 bytes / SHA-256 7e33cc1b48e34722824b18a79c419d062b9aa75e1480ea78ce04e00ac6a2b5f0. The paired Robotics input was 0.1.0-rc.33 at bf7965ee05cd926722cefc7e60d6ddd5560c3c8a. This evidence attests package publication only; consumer adoption and product deployment remain separate decisions."
+}

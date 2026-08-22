@@ -3,19 +3,21 @@
 | Field | Value |
 | --- | --- |
 | Type | Durable stable support contract |
-| Status | Candidate — `0.1.0` is not published or verified yet |
+| Status | Current — `0.1.0` package set published and verified |
 | Owner | Design system owner |
-| Intended stable identity | `0.1.0` · `lds-v0.1.0` |
+| Last reviewed | 2026-08-23 |
+| Stable identity | `0.1.0` · `lds-v0.1.0` |
 | Support line | `0.1.x` |
 | Support matrix | [`STABLE_SUPPORT_MATRIX.md`](STABLE_SUPPORT_MATRIX.md) |
 | Rollback contract | [`STABLE_0.1.0_ROLLBACK.md`](STABLE_0.1.0_ROLLBACK.md) |
+| Release evidence | [`LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json`](references/adoption/releases/LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json) |
 
 <!-- lds-stable-identity:start
 {
   "schemaVersion": 1,
   "kind": "lds-stable-contract-identity",
   "contract": "support-policy",
-  "status": "candidate-not-published",
+  "status": "published-verified",
   "ldsVersion": "0.1.0",
   "releaseTag": "lds-v0.1.0",
   "packages": [
@@ -27,11 +29,11 @@
 }
 lds-stable-identity:end -->
 
-이 문서는 첫 stable package set의 지원 약속을 미리 고정한다. 현재 상태는
-`candidate-not-published`다. `0.1.0`이 실제 stable이라는 주장은 exact tag, registry
-availability와 structured release evidence가 검증되고
-`LDS_CONSUMER_REGISTRY.json`이 별도 변경될 때만 성립한다. 문서가 존재하거나 candidate build가
-통과한 것만으로 stable release, 소비 제품 통합 또는 production deployment를 의미하지 않는다.
+이 문서는 첫 stable package set의 지원 약속을 고정한다. Core, Theme, Product `0.1.0`은
+`085ba9e72522dfe628a2d39d00583d0bb8d756d4`에 고정된 `lds-v0.1.0`에서 발행됐고, registry
+availability와 integrity가 structured release evidence로 검증됐다. 이 `published-verified`
+판정은 package release에만 적용된다. `LDS_CONSUMER_REGISTRY.json`의 stable 전환, 소비 제품 통합과
+production deployment는 각 consumer의 exact stable evidence와 별도 owner 판정이 있어야 한다.
 
 ## 지원 단위
 
@@ -71,21 +73,21 @@ deprecation/EOL 기록 없이는 추정하지 않는다.
 | Core/Theme/Product 일부만 다른 version으로 교체 | 지원하지 않음 |
 | Product production rollout | 해당 product owner의 별도 승인·evidence 필요 |
 
-## Stable 활성화 gate
+## Stable package 활성화 evidence
 
-Stable registry 전환 전에 다음이 모두 충족되어야 한다.
+`0.1.0` package release는 다음 gate를 충족했다. Consumer registry와 deployment는 이 결과로
+자동 승격하지 않는다.
 
-1. `0.1.0` clean-clone build와 package-set 검증이 통과한다.
-2. `lds-v0.1.0` tag가 source commit에 immutable하게 고정된다.
-3. Core, Theme, Product `0.1.0`이 registry에서 조회되고 각 package의 integrity가 기록된다.
-4. stable release evidence가
+1. `0.1.0` clean-clone build와 package-set 검증이 통과했다.
+2. `lds-v0.1.0` tag가 source commit에 immutable하게 고정됐다.
+3. Core, Theme, Product `0.1.0`이 registry에서 조회되고 각 package의 integrity가 기록됐다.
+4. [`LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json`](references/adoption/releases/LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json)이
    [`LDS_STABLE_RELEASE_EVIDENCE.schema.json`](references/adoption/releases/LDS_STABLE_RELEASE_EVIDENCE.schema.json)을
    통과한다.
 5. 이 문서, support matrix, rollback 문서의 machine identity를
-   `published-verified`로 바꾸고 실제 release evidence와 같은 version/tag/package set인지 checker가
-   확인한다.
-6. Package release 판정만 갱신한다. Consumer adoption과 deployment는 각 owner evidence가 생길
-   때만 별도로 갱신한다.
+   `published-verified`로 고정했고 실제 release evidence와 같은 version/tag/package set을 사용한다.
+6. Package release 판정만 완료했다. Consumer adoption과 deployment는 각 owner evidence가 생길
+   때 별도로 갱신한다.
 
-실패하거나 publish를 중단하면 registry의 기존 RC 판정을 유지하고
+후속 patch publish가 실패하거나 중단되면 기존 verified package 판정을 임의로 바꾸지 않고
 [`STABLE_0.1.0_ROLLBACK.md`](STABLE_0.1.0_ROLLBACK.md)를 따른다.

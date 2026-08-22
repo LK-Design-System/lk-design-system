@@ -3,17 +3,19 @@
 | Field | Value |
 | --- | --- |
 | Type | Durable support matrix |
-| Status | Candidate — stable availability not yet attested |
+| Status | Current — stable package availability published and verified |
 | Owner | Design system owner |
-| Intended stable identity | `0.1.0` · `lds-v0.1.0` |
+| Last reviewed | 2026-08-23 |
+| Stable identity | `0.1.0` · `lds-v0.1.0` |
 | Policy | [`STABLE_SUPPORT_POLICY.md`](STABLE_SUPPORT_POLICY.md) |
+| Release evidence | [`LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json`](references/adoption/releases/LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json) |
 
 <!-- lds-stable-identity:start
 {
   "schemaVersion": 1,
   "kind": "lds-stable-contract-identity",
   "contract": "support-matrix",
-  "status": "candidate-not-published",
+  "status": "published-verified",
   "ldsVersion": "0.1.0",
   "releaseTag": "lds-v0.1.0",
   "packages": [
@@ -25,7 +27,9 @@
 lds-stable-identity:end -->
 
 이 matrix는 LDS package가 지원하는 범위와 현재 evidence가 실제로 입증한 범위를 구분한다.
-`candidate-not-published` 동안 아래 stable 열은 intended contract이며 availability claim이 아니다.
+Core, Theme, Product `0.1.0`의 atomic package availability와 integrity는 `published-verified`다.
+아래 consumer와 deployment 결론은 package 판정과 독립이며 exact stable consumer evidence 없이는
+자동 승격하지 않는다.
 
 ## Package set
 
@@ -52,16 +56,16 @@ lds-stable-identity:end -->
 | Release toolchain | Node.js 22, npm 10.9.2 | package runtime 요구가 아니라 canonical build/publish 환경 |
 | Package registry | GitHub Packages restricted scope | 인증·권한은 소비 조직의 운영 책임 |
 
-## Stable candidate consumer evidence
+## Stable consumer evidence boundary
 
 | Consumer | Profile/theme | Current evidence | Stable `0.1.0` conclusion |
 | --- | --- | --- | --- |
 | LK Portal | `default` · light | Current registry의 pinned RC workflow evidence | exact stable install/build/workflow 재검증 전에는 not-attested |
 | LK Web Viz | `ops` · light/dark | Current registry의 pinned RC workflow evidence | exact stable install/build/workflow 재검증 전에는 not-attested |
 
-RC evidence는 stable candidate의 중요한 선행 조건이지만 exact `0.1.0` artifact evidence를
-대체하지 않는다. Stable publish 후 consumer package pin을 바꿀지는 각 product owner가
-결정하며, production deployment는 그 이후에도 별도 판정이다.
+Package stable publish는 완료됐지만 기존 RC consumer evidence가 exact `0.1.0` artifact evidence를
+대체하지 않는다. Consumer package pin을 바꿀지는 각 product owner가 결정하며, production
+deployment는 그 이후에도 별도 판정이다.
 
 ## 품질 판정의 한계
 

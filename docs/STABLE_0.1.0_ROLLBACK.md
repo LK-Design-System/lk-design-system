@@ -3,18 +3,20 @@
 | Field | Value |
 | --- | --- |
 | Type | Durable release rollback runbook |
-| Status | Candidate — `0.1.0` has not been published or verified |
+| Status | Current — `0.1.0` package set published and verified |
 | Owner | Design system owner · 해당 consumer product owner |
-| Intended stable identity | `0.1.0` · `lds-v0.1.0` |
+| Last reviewed | 2026-08-23 |
+| Stable identity | `0.1.0` · `lds-v0.1.0` |
 | Current verified fallback | `0.1.0-rc.69.31` · `lds-v0.1.0-rc.69.31` |
 | Support policy | [`STABLE_SUPPORT_POLICY.md`](STABLE_SUPPORT_POLICY.md) |
+| Release evidence | [`LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json`](references/adoption/releases/LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json) |
 
 <!-- lds-stable-identity:start
 {
   "schemaVersion": 1,
   "kind": "lds-stable-contract-identity",
   "contract": "rollback",
-  "status": "candidate-not-published",
+  "status": "published-verified",
   "ldsVersion": "0.1.0",
   "releaseTag": "lds-v0.1.0",
   "packages": [
@@ -27,9 +29,10 @@
 }
 lds-stable-identity:end -->
 
-이 runbook은 exact `0.1.0` stable identity를 대상으로 하지만 현재는 pre-publish candidate다.
-문서 자체는 `0.1.0` package, tag 또는 제품 배포가 존재한다는 evidence가 아니다. 현재 release와
-consumer evidence가 검증한 fallback은 Core/Theme/Product `0.1.0-rc.69.31` atomic set이다.
+이 runbook은 발행·검증된 exact `0.1.0` stable package identity를 대상으로 한다. Package publish
+evidence는 [`LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json`](references/adoption/releases/LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json)이
+소유하며 제품 배포를 의미하지 않는다. 검증된 fallback은 Core/Theme/Product
+`0.1.0-rc.69.31` atomic set이다.
 
 ## 불변 원칙
 
@@ -40,17 +43,17 @@ consumer evidence가 검증한 fallback은 Core/Theme/Product `0.1.0-rc.69.31` a
 - R3B Product compatibility import는 전체 `0.1.x`에서 유지되므로 import 경로를 즉시 되돌리지
   않아도 package-set rollback이 가능하다.
 
-## Scenario A — publish 전 중단
+## Scenario A — 향후 publish 전 중단
 
-Tag 또는 세 package 중 하나라도 publish되기 전에 gate가 실패하면 stable promotion을
-중단한다.
+후속 stable patch의 tag 또는 세 package 중 하나라도 publish되기 전에 gate가 실패하면 해당
+promotion을 중단한다. 이미 검증된 `0.1.0` package identity는 그대로 보존한다.
 
-1. `LDS_CONSUMER_REGISTRY.json`의 current RC release identity를 유지한다.
-2. `0.1.0` availability를 `verified`로 기록하지 않는다.
-3. 이 문서와 support 문서의 identity status를 `candidate-not-published`로 유지한다.
-4. 실패 원인을 수정한 뒤 clean clone과 package availability probe를 처음부터 다시 실행한다.
+1. `LDS_CONSUMER_REGISTRY.json`의 현재 verified release identity를 유지한다.
+2. 실패한 신규 patch availability를 `verified`로 기록하지 않는다.
+3. 기존 `0.1.0` tag, package와 `published-verified` evidence를 이동·덮어쓰지 않는다.
+4. 실패 원인을 수정한 뒤 신규 patch의 clean clone과 package availability probe를 처음부터 다시 실행한다.
 
-## Scenario B — 일부 package만 발행됨
+## Scenario B — 향후 일부 package만 발행됨
 
 Stable workflow가 Core/Theme/Product 일부만 발행하고 실패하면 그 version을 완성된 stable set으로
 승격하지 않는다. 이미 발행된 artifact는 지우거나 덮어쓰지 않는다. Release evidence에 partial
@@ -82,13 +85,15 @@ npm install --save-exact \
 명령 실행만으로 rollback 완료를 선언하지 않는다. Exact package version·integrity, production
 build, 해당 consumer의 workflow/accessibility smoke와 product-owner 판정을 evidence로 남긴다.
 
-## Stable 활성화 때 갱신할 항목
+## Stable package 활성화 결과와 consumer 후속
 
-실제 `0.1.0` publish 검증 후에만 다음을 한 release change에서 함께 갱신한다.
+`0.1.0` package release에서 다음 두 항목은 완료됐다.
 
-1. 세 stable 문서의 machine identity status를 `published-verified`로 바꾼다.
+1. 세 stable 문서의 machine identity status를 `published-verified`로 고정했다.
 2. Structured stable release evidence에 exact source commit, tag resolution, package integrity와
-   이 support/rollback 경로를 기록한다.
-3. Registry의 `ldsVersion`, `packageRelease`와 consumer package pin/evidence를 실제 검증 결과에
-   맞춘다. Consumer stage/deployment는 자동 승격하지 않는다.
-4. `npm run check:adoption-registry`로 문서와 evidence가 같은 identity인지 검증한다.
+   이 support/rollback 경로를 기록했다.
+
+Consumer registry 갱신은 별도 후속이다. Registry의 `ldsVersion`, `packageRelease`와 consumer
+package pin/evidence는 두 consumer의 exact stable 재검증이 모두 끝난 뒤 실제 결과에 맞춘다.
+Consumer stage/deployment는 자동 승격하지 않으며, 그 변경에서 `npm run
+check:adoption-registry`로 문서·evidence·consumer identity를 함께 검증한다.
