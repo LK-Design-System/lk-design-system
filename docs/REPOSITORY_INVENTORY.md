@@ -14,12 +14,12 @@ Storybook의 730개 스토리 역할·공개 여부·소유 컴포넌트와 195�
 
 ## 패키지 범위
 
-- 워크스페이스 orchestrator: `@lk-design-system/lds-workspace@0.1.0-rc.69.29` · `private: true`
-- Core: `@lk-design-system/lds-core@0.1.0-rc.69.29` · source entry 84개 · named export 85개
-- Theme: `@lk-design-system/lds-theme@0.1.0-rc.69.29` · source entry 4개 · named export 8개
-- Product: `@lk-design-system/lds-product@0.1.0-rc.69.29` · source entry 120개 · named export 128개
+- 워크스페이스 orchestrator: `@lk-design-system/lds-workspace@0.1.0-rc.69.30` · `private: true`
+- Core: `@lk-design-system/lds-core@0.1.0-rc.69.30` · source entry 84개 · named export 85개
+- Theme: `@lk-design-system/lds-theme@0.1.0-rc.69.30` · source entry 4개 · named export 8개
+- Product: `@lk-design-system/lds-product@0.1.0-rc.69.30` · source entry 120개 · named export 128개
 - 로컬 owner-package 합계: source entry 208개 · named export 221개
-- 외부 Robotics: `@lk-design-system/lds-robotics-ui@0.1.0-rc.29` · source entry 23개 · named export 53개
+- 외부 Robotics: `@lk-design-system/lds-robotics-ui@0.1.0-rc.30` · source entry 23개 · named export 53개
 - Robotics 정본: `LK-Design-System/lk-design-system-robotics`와 `references/package-split/ROBOTICS_EXTERNAL_SURFACE.json`. 로컬 publishable package는 Robotics를 재노출하지 않으며 consumer는 외부 패키지를 직접 설치합니다.
 - 컴포넌트 소스 디렉터리 18개: `brand`, `buttons`, `cards`, `communication`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `internal`, `layout`, `navigation`, `overlay`, `robotics`, `selection`, `status`, `viz`
 - 런타임 peer dependency: `react`
