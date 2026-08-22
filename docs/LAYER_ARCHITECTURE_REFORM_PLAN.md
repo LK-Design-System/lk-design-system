@@ -3,13 +3,13 @@
 | Field | Value |
 | --- | --- |
 | Type | Active architecture implementation record |
-| Status | Active follow-through — 1차 taxonomy/profile·owner authority·O1/O2와 R1 계약·paired release·R2 consumer promotion 완료; R3A/R3B와 §14의 compatibility·stable gate는 roadmap으로 계속 추적 |
+| Status | Active follow-through — R3A·R3B·R4 stable 및 stable consumer promotion 완료; §14 provider/private/family·Storybook·LDS3D/lifecycle closure는 R4.1에서 계속 추적 |
 | Owner | Design system owner · Frontend platform |
 | Required approvers | Design system owner · Frontend platform · Robotics domain owner(해당 변경) · consumer product owner(해당 migration) |
-| Last reviewed | 2026-08-22 |
+| Last reviewed | 2026-08-23 |
 | Scope | Core·Theme·Product·Robotics 계층, 표현 프로파일, 패키지 계약, 소비 증거, legacy 정리 |
 | Related | [`DESIGN.md`](../DESIGN.md) · [`OPERATING_MODEL.md`](OPERATING_MODEL.md) · [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md) · [`ROBOTICS_PATTERNS.md`](ROBOTICS_PATTERNS.md) |
-| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) — R0·R1·R2 완료; 다음은 R3A density/selector 결정과 R3B owner/API 결정, 이후 R4 stable promotion |
+| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) — R0–R4 완료; 다음은 R4.1 계층 계약 잔여 closure |
 
 이 문서는 LDS가 **LK Portal 같은 일반 B2B 제품 표면**과 **LK Web Viz·Control 같은
 산업 운영 표면**을 하나의 시스템으로 지원하기 위한 목표 계층과 이행 순서를
@@ -20,18 +20,19 @@
 이 문서는 1차 구현과 아직 닫히지 않은 완료 gate를 함께 보존하는 implementation
 record다. 현재 우선순위와 후속 실행 순서는 [`LDS_ROADMAP.md`](LDS_ROADMAP.md)가
 소유하며, §14의 체크가 실제 evidence로 모두 닫히기 전에는 `Completed`로 승격하지 않는다.
-기존 public export와 Core 기준선을
-유지하면서 Product family contract, Theme `default|ops` profile contract,
-Storybook profile toolbar, 대표 consumer pin/evidence, Robotics O1/O2 readiness와
-legacy active-reference guard를 실제 코드·토큰·검사에 연결했다. O3 alarm lifecycle과
-O4 safety-certified HMI는 근거가 없으므로 지원 주장하지 않는다. Portal/default와 Web
-Viz/ops의 workflow·accessibility·clean-clone 기술 evidence와 2026-08-22
-product/design-system owner 승인이 연결되어 registry stage는 `workflow-verified`다. 이
-승인은 consumer adoption에 한정되며 main integration, package stable, rollout 또는 production
-deployment를 승인하지 않는다. 배포는 별도 product-owner evidence가 생길 때에만
-`not-attested`에서 승격한다.
+기존 public export와 Core 기준선을 유지하면서 Product family contract, Theme `default|ops`
+profile contract, Storybook profile toolbar, 대표 consumer pin/evidence, Robotics O1/O2 readiness와
+legacy active-reference guard를 실제 코드·토큰·검사에 연결했다. O3 alarm lifecycle과 O4
+safety-certified HMI는 근거가 없으므로 지원 주장하지 않는다. LDS `0.1.0` package set은
+`published-verified`이고 Portal/default와 Web Viz/ops는 exact stable package의
+workflow·accessibility·clean-clone evidence와 2026-08-23 product/design-system owner 승인으로
+`workflow-verified`다. main integration, rollout과 production deployment는 승인·검증되지 않아
+별도 `not-attested`다.
 
-2026-08-22 checkpoint의 정본은 [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json), [`EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json), [`robotics/READINESS.json`](references/robotics/READINESS.json)과 각 verifier다.
+현재 정본은 [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json),
+[`LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json`](references/adoption/releases/LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json),
+[`EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json),
+[`robotics/READINESS.json`](references/robotics/READINESS.json)과 각 verifier다.
 
 ---
 
@@ -116,7 +117,7 @@ deployment를 승인하지 않는다. 배포는 별도 product-owner evidence가
 - Robotics와 3D는 DOM UI와 전문 renderer/runtime의 경계를 실제 package로
   분리했다.
 
-### 2.2 해결해야 할 구조 불일치
+### 2.2 2026-08-22 baseline 구조 진단
 
 | ID | 현재 관찰 | 구조 위험 |
 | --- | --- | --- |
@@ -131,8 +132,8 @@ deployment를 승인하지 않는다. 배포는 별도 product-owner evidence가
 | A-09 | compatibility facade는 제거됐지만 일부 migration/governance 문서에는 유지 시기의 표현이 남아 있고, 일부 consumer는 퇴역 Editorial·archive reference를 활성 owner처럼 다룬다. | 신규 코드가 퇴역 경로를 다시 도입하고 rollback 범위가 불명확해진다. |
 | A-10 | staleness, arm→fire, alarm ack/shelve/flood suppression은 Theme 프로파일로 해결할 수 없는 별도 행동 계약이다. | 산업 dashboard 지원을 safety-critical HMI 지원으로 과장하게 된다. |
 
-위 수치는 현재 상태의 진단 snapshot이며 영구 정본이 아니다. 실행 단계에서는
-source, package manifest, generated audit와 consumer report를 다시 측정한다.
+위 표는 2026-08-22 시점의 진단 snapshot이며 현재 상태나 영구 정본이 아니다. 현재
+disposition은 §13.2, §14와 machine authority가 소유한다.
 
 ---
 
@@ -779,6 +780,24 @@ stable, rollout, 제품 배포 완료 또는 safety certification으로 해석�
 
 ---
 
+## 13.2 2026-08-23 stable checkpoint
+
+| 영역 | 결과 | 검증 |
+| --- | --- | --- |
+| Stable package | Core·Theme·Product `0.1.0`, source `085ba9e72522dfe628a2d39d00583d0bb8d756d4`, tag `lds-v0.1.0`이 `published-verified` | CI `32590804542`, Pages `32590804685`, publish/verify `32592054962`, stable release evidence |
+| Paired Robotics | Robotics UI `0.1.0-rc.33`, source `bf7965ee05cd926722cefc7e60d6ddd5560c3c8a`, tag `v0.1.0-rc.33` | exact LDS stable input paired gate `32591917565` |
+| R3A density/profile | HTML-root selector, 208-component density coverage, data/navigation/overlay token contract, 32-capture expression matrix, target debt 56→14 | `check:density`, `check:expression-profile`, visual/behavior gates |
+| R3B owner/API | generic API 9종의 canonical owner를 Core로 이동하고 Product `0.1.x` compatibility re-export와 removal gate를 등록 | owner decision register, `check:layers`, `check:deprecations` |
+| Application consumer | Portal/default source `949a1261e8f61842a42d07ca4b62c7ff71cc45da`, stable `0.1.0`, independent clean clone과 owner 승인 | registry `workflow-verified`; canonical Linux와 deployment는 `not-attested` |
+| Operations consumer | Web Viz/ops source `8f493fd3475eb6c7516fdf7d3aca3265c2b7db87`, stable `0.1.0`, Robotics `0.1.0-rc.33`, exact GitHub workflow와 owner 승인 | registry `workflow-verified`; main integration과 deployment는 `not-attested` |
+
+R3A·R3B·R4 stable은 완료됐다. 다만 Theme-provider negative diagnostic과 package 조합
+fixture, Product의 Core private/internal import 제거, Product family·Storybook·LDS3D 경계의
+단일 exact-set gate가 아직 없으므로 이 implementation record 전체는 `Completed`가 아니다.
+남은 조건은 roadmap R4.1이 소유한다.
+
+---
+
 ## 14. 완료 정의
 
 이 개편은 다음 조건을 모두 실제 artifact로 증명해야 완료다.
@@ -794,14 +813,15 @@ stable, rollout, 제품 배포 완료 또는 safety certification으로 해석�
 - [x] `default | ops`가 Theme runtime 축으로 동작하며 동일 Core API를 사용한다.
 - [x] Portal/default와 Web Viz/ops의 current package install, production build,
       representative workflow smoke와 accessibility/clean-clone evidence는 generated 중앙
-      registry에 연결됐고, 2026-08-22 product/design-system owner 승인까지 연결되어 두
+      registry에 연결됐고, 2026-08-23 stable product/design-system owner 승인까지 연결되어 두
       consumer가 `workflow-verified`다. deployment는 별도 `not-attested`다.
 - [x] O1~O4 readiness stage와 evidence freshness가 명시되며, Track R 미완료 단계는
       지원으로 주장되지 않는다.
 - [x] 제거된 aggregate, Editorial, archive reference의 활성 신규 소비 경로가 0이다.
-- [ ] owner 이동 compatibility re-export는 제거 조건을 충족해 종료됐거나 owner·기한이
+- [x] owner 이동 compatibility re-export는 제거 조건을 충족해 종료됐거나 owner·기한이
       있는 open deprecation debt로 등록돼 있다.
-- [ ] Core·Theme·Product fixed release set과 satellite compatibility matrix가 green이다.
+- [x] Core·Theme·Product fixed release set과 satellite compatibility matrix가 정책상 green이다.
+      LDS3D의 기록된 nonblocking lag를 모든 satellite 최신 상태로 과장하지 않는다.
 - [ ] 채택된 결정이 기존 durable 문서로 승격되고 이 계획의 lifecycle이 정리된다.
 
 계획 작성, 일부 코드 이동, 새로운 Phase 착수 또는 좁은 Storybook 검증만으로 위

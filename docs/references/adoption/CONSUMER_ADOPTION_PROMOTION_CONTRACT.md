@@ -5,6 +5,7 @@
 | Type | Stable machine-contract companion |
 | Status | Current |
 | Owner | Frontend platform · Design system owner · 해당 product owner |
+| Last reviewed | 2026-08-23 |
 | Schema version | `2` |
 | Machine authority | [`LDS_CONSUMER_REGISTRY.schema.json`](LDS_CONSUMER_REGISTRY.schema.json) · [`LDS_CONSUMER_ATTESTATION.schema.json`](LDS_CONSUMER_ATTESTATION.schema.json) |
 | Current register | [`LDS_CONSUMER_REGISTRY.json`](LDS_CONSUMER_REGISTRY.json) |
@@ -132,7 +133,7 @@ v2는 기존 의미를 조용히 바꾸지 않는다. Registry와 attestation �
 - consumer stage와 분리된 mandatory `deployment.status`
 - registry와 분리된 attestation schema
 
-2026-08-22 current register에서 package `0.1.0-rc.69.30`은 `release-candidate`이며
+2026-08-22 v2 도입 snapshot에서 package `0.1.0-rc.69.30`은 `release-candidate`이며
 availability가 `verified`다. Portal/default
 `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`와 Web Viz/ops
 `542639f2fea109e78f052e730ac30072cad79a6c`는 각각 install·source contract·production
@@ -142,3 +143,14 @@ approval evidence commit `50c2d9b`와 Web Viz approval evidence commit `4dad154`
 `workflow-verified`다. 이 승인은 pinned consumer adoption에 한정되고 main integration,
 package stable, rollout 또는 production deployment를 승인하지 않는다. 두 제품 deployment는
 별도 owner evidence가 없어 `not-attested`다.
+
+2026-08-23 current stable register에서 Core·Theme·Product `0.1.0`은 `stable`이고 availability는
+`verified`다. Package evidence는 immutable `lds-v0.1.0` tag, published metadata와 실제
+artifact checksum, support policy와 rollback contract를 같은 identity로 연결한다.
+Portal/default `949a1261e8f61842a42d07ca4b62c7ff71cc45da`와 Web Viz/ops
+`8f493fd3475eb6c7516fdf7d3aca3265c2b7db87`는 exact stable artifact로 install·source
+contract·production build·대표 workflow·accessibility와 clean-clone 재현을 통과했다. Web Viz는
+Robotics UI `0.1.0-rc.33`도 함께 고정한다. 두 제품의 2026-08-23 stable approval evidence가
+해당 source를 `workflow-verified`로 승인한다. 이 승격은 candidate branch의 main integration,
+rollout-ready 또는 production deployment를 승인하지 않으며 두 deployment는 계속
+`not-attested`다.

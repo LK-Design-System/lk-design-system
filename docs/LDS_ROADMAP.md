@@ -6,7 +6,7 @@
 | Status | Current |
 | Owner | Design system owner · Frontend platform · 해당 Product/Robotics owner |
 | Last reviewed | 2026-08-23 |
-| Planning baseline | LDS `0.1.0-rc.69.31` · Robotics UI `0.1.0-rc.32`; stable candidate `0.1.0` · Robotics UI `0.1.0-rc.33` |
+| Planning baseline | LDS `0.1.0` · `lds-v0.1.0` · `085ba9e72522dfe628a2d39d00583d0bb8d756d4`; Robotics UI `0.1.0-rc.33` · `v0.1.0-rc.33` · `bf7965ee05cd926722cefc7e60d6ddd5560c3c8a` |
 | Review cadence | release candidate 변경 · consumer evidence 변경 · 2027-01 lifecycle review |
 | Current-state sources | current source와 package manifest · owner authority · consumer promotion registry · Robotics readiness · generated satellite pin report |
 
@@ -37,18 +37,19 @@ source와 machine-readable evidence가, 정책은 [`OPERATING_MODEL.md`](OPERATI
 
 ## 2. 현재 기준선과 열린 문제
 
-`0.1.0-rc.69.31` 기준으로 다음 기반은 구현됐다.
+첫 stable `0.1.0` 기준으로 다음 기반은 구현·검증됐다.
 
 - Core·Theme·Product는 한 저장소의 분리 package와 fixed release group으로 배포된다.
 - Theme은 `default | ops` profile을 제공하고 동일한 component API·DOM·status semantics를
   유지한다.
 - Product public surface는 `Application | Operations | Workspace` family를 정확히 하나씩
   가진다.
-- Portal/default `7eeb93be084eade1e41025fe7843480d6f22b184`와 Web Viz/ops
-  `2f1b2db333fc37175ed3d94ef18d9c257fc09803`는 실제 `rc.69.31` registry tgz의 install,
-  production build와 대표 workflow를 재검증했다. 기존 product/design-system owner 승인과
-  clean-clone evidence를 포함해 둘 다 `workflow-verified`이며 실제 제품 배포는 별도
-  `not-attested`다.
+- Portal/default `949a1261e8f61842a42d07ca4b62c7ff71cc45da`와 Web Viz/ops
+  `8f493fd3475eb6c7516fdf7d3aca3265c2b7db87`는 실제 stable `0.1.0` registry tgz의 install,
+  production build, 대표 workflow와 accessibility를 재검증했다. Web Viz는 Robotics UI
+  `0.1.0-rc.33`도 함께 고정했다. 2026-08-23 clean-clone evidence와 product/design-system
+  owner 승인을 포함해 둘 다 `workflow-verified`이며 main integration과 실제 제품 배포는
+  별도 `not-attested`다.
 - Robotics readiness는 O1 Monitoring과 O2 Operational control을 `ready`, O3 Alarm
   lifecycle을 `unverified`, O4 Safety-certified HMI를 `unsupported`로 제한한다.
 - active aggregate·Editorial·console-pastel legacy reference는 0이며, Core·Theme·Product
@@ -56,11 +57,14 @@ source와 machine-readable evidence가, 정책은 [`OPERATING_MODEL.md`](OPERATI
 - 현재 package·token·Storybook owner는 live authority에서 하나로 결정되고, consumer
   registry v2는 package release·consumer stage·product deployment를 독립 판정한다.
 
-R3A와 R3B의 stable 차단 결정은 닫혔고 `0.1.0` 후보는 R4 release gate를 실행 중이다. Stable과
-독립적으로 남는 운영 개선은 다음 한 항목이다.
+R3A·R3B의 stable 차단 결정과 R4 첫 stable 승격은 닫혔다. 아래 항목은 `0.1.0`의
+package/consumer 승격을 무효화하지 않는 post-stable 구조·운영 후속이다.
 
 | 열린 문제 | 2026-08-23 기준 근거 | 처리 위치 |
 | --- | --- | --- |
+| Theme provider 누락 진단과 package 조합 fixture가 아직 없음 | `default|ops` runtime은 검증됐지만 Core-only negative diagnostic과 `Core+Theme[+Product][+Robotics]` semantic-provider/version 조합 gate는 없다. | R4.1 |
+| Product의 Core private/internal 소비가 남아 있음 | Product source 21개 파일에서 Core `components/internal/*` import 23건이 남아 있고 현재 layer gate는 이를 차단하지 않는다. | R4.1 |
+| Product family·Storybook·LDS3D 경계의 단일 exact-set gate가 없음 | Product family 분류와 owner authority는 각각 통과하지만 family↔Storybook 및 LDS3D owner 경계를 하나로 대조하는 종료 gate는 없다. | R4.1 |
 | 비-Storybook workflow evidence adapter 결정이 열려 있음 | Web Viz의 deterministic production-preview evidence는 유효한 근거지만, full-surface conformance가 이를 공식 adapter로 받을지 제품 Storybook을 요구할지는 아직 계약화되지 않았다. | R7 |
 
 R1에서 닫힌 문제와 재검증 진입점은 다음과 같다.
@@ -69,15 +73,15 @@ R1에서 닫힌 문제와 재검증 진입점은 다음과 같다.
 | --- | --- |
 | 현재 owner authority 충돌 | [`OWNER_AUTHORITY_CONTRACT.json`](references/architecture/OWNER_AUTHORITY_CONTRACT.json)과 `check:layers`: 현재 module/export, token source, 196 canonical Storybook page와 10 domain boundary exact-set one-owner 검증 |
 | RC-only registry와 선언적 stage | registry/attestation schema v2, [`CONSUMER_ADOPTION_PROMOTION_CONTRACT.md`](references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md), `check:adoption-registry`와 양성·음성 contract tests |
-| 대표 제품 adoption 승인 | Portal source `c2e39f3c...`/approval evidence `50c2d9b`, Web Viz source `542639f...`/approval evidence `4dad154`; 두 registry entry 모두 `workflow-verified`, deployment는 `not-attested` |
+| 대표 제품 adoption 승인 | Portal source `949a1261...`/stable approval evidence `b4879566`, Web Viz source `8f493fd3...`/stable approval evidence `30197094`; 두 registry entry 모두 stable `workflow-verified`, deployment는 `not-attested` |
 | Storybook IA·inventory currentness | IA 196/196 page·732/732 story review, stale 0; generated inventory와 `check:storybook-ia`, `check:inventory`, `check:docs` |
 
-R1의 구현 gate와 release closure는 모두 닫혔다. 최종 R3 기준점은 Robotics UI
-`0.1.0-rc.32` (`1eaf7f7feb3140a74cdda9626607cc4c0c143b21`)와 LDS `0.1.0-rc.69.31`
-(`lds-v0.1.0-rc.69.31`, `469f5058d0e2aeb86bdbea852bd3525bc119d5f2`)이다.
-Robotics release conformance gate `32587440627`과 LDS CI `32586537599`가 통과했고,
-immutable package workflow `32587553071`은 Core·Theme·Product를 GitHub Packages에 게시했으며,
-`check:workspace-packages`와 `check:release-pins`의 documentation snapshot drift는 0이다.
+R4 release closure는 LDS `0.1.0` (`lds-v0.1.0`,
+`085ba9e72522dfe628a2d39d00583d0bb8d756d4`)과 Robotics UI `0.1.0-rc.33`
+(`v0.1.0-rc.33`, `bf7965ee05cd926722cefc7e60d6ddd5560c3c8a`)를 고정한다. LDS CI
+`32590804542`, Pages `32590804685`, paired Robotics gate `32591917565`와 publish/verify
+workflow `32592054962`가 통과했다. Core·Theme·Product의 실제 published metadata와 다운로드
+artifact hash는 stable release evidence에 연결되고 release/satellite pin gate는 green이다.
 
 현재 상태를 다시 판단할 때 위 서술의 버전·수치를 그대로 재사용하지 않고 다음 권위를
 읽는다.
@@ -103,19 +107,21 @@ R1 authority & promotion contract (Done)
                          v
 R2 product adoption promotion (Done)
              |
-             +--> R3A density v2 decision (Done) ---+
-             +--> R3B owner/API decision (Done) ----+--> R4 first stable promotion (Now)
+              +--> R3A density v2 decision (Done) ---+
+              +--> R3B owner/API decision (Done) ----+--> R4 first stable promotion (Done)
+                                                             |
+                                                             v
+                                                R4.1 layer contract closure (Now)
 
 R5 alarm lifecycle O3 (Conditional; stable 비차단)
 R6 ecosystem lifecycle review (Scheduled review, 2027-01)
 R7 evidence/operations health (Continuous)
 ```
 
-R1 계약 구현과 paired LDS/Robotics RC 발행, R2 대표 제품 adoption 승격, R3A 밀도 계약과
-R3B owner/API 결정을 완료했다. 현재 실행 항목은 R4 첫 stable 승격이다. R3A·R3B에서 이번
-stable에 포함한 항목은 구현·검증됐고, 잔여 후보는 명시적 owner·재검토 trigger와 함께
-`stay | defer`로 닫혔다. R5 O3는 실제 alarm workflow가 없으면 계속 미지원이며 stable의
-선행 조건이 아니다.
+R1 계약 구현과 paired LDS/Robotics release, R2 대표 제품 adoption 승격, R3A 밀도 계약,
+R3B owner/API 결정과 R4 첫 stable 승격을 완료했다. 현재 실행 항목은 stable 비차단으로
+남아 있던 provider/private/family exact-set 계약을 닫는 R4.1이다. R5 O3는 실제 alarm
+workflow가 없으면 계속 미지원이고, R6는 2027-01 정기 심사, R7은 매 release 반복 작업이다.
 
 ## 4. R0 — 계층·프로파일·패키지 기준선
 
@@ -185,16 +191,15 @@ R1–R4가 소유한다.
 - [`OWNER_AUTHORITY_CONTRACT.json`](references/architecture/OWNER_AUTHORITY_CONTRACT.json)이
   live package/token/Storybook surface와 WDS compatibility projection을 함께 검증한다.
 - Registry와 attestation은 schema v2로 분리됐고 package `stable`, consumer
-  `workflow-verified`, product `deployed`를 서로 독립적으로 표현한다. 27개 양성·음성
-  fixture가 stage, 날짜 순서, source commit, product-owner 승인과 release artifact 경로를
-  검사한다.
+  `workflow-verified`, product `deployed`를 서로 독립적으로 표현한다. 38개 contract test가
+  stage, 날짜 순서, source commit, product-owner 승인과 release artifact 경로를 검사한다.
 - Storybook IA audit는 196 page와 732 story를 모두 current source로 재검토해 stale row가
   0이며 repository inventory와 generated component docs도 같은 source에 맞춰졌다.
 - 종료 검사는 `check:layers`, `check:adoption-registry`, registry contract test,
   `check:storybook-ia`, `check:inventory`, `check:components`, `check:docs`가 소유한다.
-- 위 구현 검사와 paired release gate가 모두 통과했다. LDS `0.1.0-rc.69.31`과 Robotics UI
-  `0.1.0-rc.32`는 동기화된 Core documentation snapshot을 사용하며, immutable release workflow가
-  Core·Theme·Product package set을 게시했다.
+- 위 구현 검사와 paired release gate가 모두 통과했다. LDS stable `0.1.0`과 Robotics UI
+  `0.1.0-rc.33`은 동기화된 Core documentation snapshot을 사용하며, immutable release workflow가
+  Core·Theme·Product package set을 게시·재검증했다.
 
 ## 6. R2 — 실제 제품 adoption 승격
 
@@ -206,7 +211,7 @@ R1–R4가 소유한다.
 | Dependency | evidence 수집은 R0부터 가능; registry stage 승격은 R1 |
 | Outcome | Portal/default와 Web Viz/ops의 pinned source가 product-owned evidence와 승인으로 `workflow-verified`에 승격됐다. |
 
-2026-08-22 completion checkpoint에서 Portal
+2026-08-22 R2 completion snapshot에서 Portal
 `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`와 Web Viz
 `542639f2fea109e78f052e730ac30072cad79a6c`는 `0.1.0-rc.69.30` package set으로 install,
 source contract, production build, representative workflow, accessibility와 clean-clone
@@ -216,11 +221,19 @@ commit `4dad154`는 2026-08-22 해당 product owner와 design-system owner 승�
 adoption에만 해당하며 main integration, package stable, rollout 또는 production deployment를
 승인하지 않는다. deployment는 두 제품 모두 별도 `not-attested`다.
 
-2026-08-23 R3 final-RC checkpoint에서는 Portal
+2026-08-23 R3 final-RC snapshot에서는 Portal
 `7eeb93be084eade1e41025fe7843480d6f22b184`와 Web Viz
 `2f1b2db333fc37175ed3d94ef18d9c257fc09803`가 실제 registry의 `0.1.0-rc.69.31`
 Core·Theme·Product와 Robotics UI `0.1.0-rc.32`를 설치해 같은 대표 workflow를 다시
 통과했다. 이 재검증도 main integration·rollout·production deployment를 뜻하지 않는다.
+
+2026-08-23 R4 stable checkpoint에서는 Portal
+`949a1261e8f61842a42d07ca4b62c7ff71cc45da`와 Web Viz
+`8f493fd3475eb6c7516fdf7d3aca3265c2b7db87`가 Core·Theme·Product `0.1.0`의 exact
+artifact와 checksum을 사용해 기술 5 gate와 clean-clone 재현을 다시 통과했다. Web Viz는
+Robotics UI `0.1.0-rc.33`도 함께 검증했다. 2026-08-23 stable approval evidence가 두
+consumer의 `workflow-verified` 승격을 승인하며, main integration·rollout·deployment는 계속
+별도 `not-attested`다.
 
 ### Portal/default
 
@@ -231,7 +244,8 @@ Core·Theme·Product와 Robotics UI `0.1.0-rc.32`를 설치해 같은 대표 wor
 - light-only 지원 범위에서 targeted accessibility, keyboard/focus와 narrow viewport를
   통과하고 attestation에 기록했다.
 - source contract와 semantic schema validator 경로를 우회 없이 통과했다.
-- product/design-system owner 승인은 approval evidence commit `50c2d9b`에 기록됐다.
+- product/design-system owner의 stable 승인은 approval evidence commit
+  `b48795660c85698b1326ae48c12bdaf92e5a25e3`에 기록됐다.
   rollout 또는 rollout-ready 판단은 별도 product-owner evidence가 없어 `not-attested`다.
 
 ### Web Viz/ops
@@ -241,7 +255,8 @@ Core·Theme·Product와 Robotics UI `0.1.0-rc.32`를 설치해 같은 대표 wor
   accessibility가 deterministic production-preview evidence로 통과했다.
 - full-product quality의 기존 backend finding과 broad route diagnostic은 R2 frontend
   workflow 성공으로 숨기지 않고 제품 finding으로 분리했다.
-- product/design-system owner 승인은 approval evidence commit `4dad154`에 기록됐다.
+- product/design-system owner의 stable 승인은 approval evidence commit
+  `301970943d9e2c72c8e78e6ebb7f2246377d456f`에 기록됐다.
   main integration, rollout 또는 rollout-ready 판단은 이 승인에 포함되지 않으며 별도
   evidence가 없어 `not-attested`다.
 
@@ -350,7 +365,7 @@ Theme profile과 bounded local density는 서로 다른 축이다. 전역 provid
 - expression visual matrix는 32 capture로 확장돼 `default | ops × light | dark × normal |
   narrow`의 dashboard/data/navigation/overlay를 검사한다. keyboard·focus·reduced-motion과
   semantic invariance도 같은 gate에 포함된다.
-- Portal/default와 Web Viz/ops가 실제 `0.1.0-rc.69.31` package set으로 install, build,
+- Portal/default와 Web Viz/ops가 실제 stable `0.1.0` package set으로 install, build,
   대표 density/profile workflow를 통과했다.
 
 ## 8. R3B — component owner와 public API 경계 정제
@@ -401,7 +416,7 @@ Theme profile과 bounded local density는 서로 다른 축이다. 전역 provid
 
 | Field | Value |
 | --- | --- |
-| Status | `Now` — stable candidate release gate 진행 중 |
+| Status | `Done` — stable package 및 stable consumer evidence verified |
 | DRI | Frontend platform |
 | Required approvers | Design system owner · Portal/Web Viz product owners |
 | Entry gate | R1·R2 완료, R3A·R3B decision closure |
@@ -410,16 +425,57 @@ Theme profile과 bounded local density는 서로 다른 축이다. 전역 provid
 ### 종료 gate
 
 - stable-capable registry, fixed package set과 support matrix가 녹색이다.
-- Portal/default와 Web Viz/ops의 `workflow-verified` evidence가 stable candidate에 연결된다.
+- Portal/default와 Web Viz/ops의 `workflow-verified` evidence가 stable `0.1.0`에 연결된다.
 - release note, migration guide, rollback artifact, deprecation window, package checksum과
   immutable Git tag가 같은 identity를 가리킨다.
 - R3A·R3B의 stable 포함 항목이 완료됐고 연기 항목은 owner·trigger·다음 review를 가진다.
 - unresolved P0 또는 stable 사용을 막는 P1 finding이 0이다.
 - clean-clone dry run 뒤 publish하고 registry/package availability/immutability를 재검증한다.
 
+### 완료 evidence
+
+- LDS source `085ba9e72522dfe628a2d39d00583d0bb8d756d4`와 immutable tag `lds-v0.1.0`을
+  CI `32590804542`, Pages `32590804685`, publish/verify `32592054962`가 검증했다.
+- Robotics UI `0.1.0-rc.33` source `bf7965ee05cd926722cefc7e60d6ddd5560c3c8a`와 tag
+  `v0.1.0-rc.33`은 paired gate `32591917565`에서 exact LDS stable input과 함께 통과했다.
+- [`LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json`](references/adoption/releases/LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json)이
+  Core·Theme·Product의 published time, shasum, integrity와 atomic support/rollback contract를
+  고정한다.
+- Portal `949a1261e8f61842a42d07ca4b62c7ff71cc45da`와 Web Viz
+  `8f493fd3475eb6c7516fdf7d3aca3265c2b7db87`는 exact stable package로
+  `workflow-verified`다. 두 제품의 main integration과 deployment는 `not-attested`다.
+- 중앙 registry schema와 38개 contract test가 통과했고, Portal evidence carrier
+  `b48795660c85698b1326ae48c12bdaf92e5a25e3`와 Web Viz evidence carrier
+  `301970943d9e2c72c8e78e6ebb7f2246377d456f`를 배치한 isolated composite workspace에서도
+  package pin·artifact checksum·evidence path 검사가 통과했다. 제품 main checkout 통과로
+  확대 해석하지 않는다.
+
 stable package publish와 제품 배포 완료는 같은 뜻이 아니다. 제품 배포 시점은 각 product
 owner가 소유하고 LDS는 제공된 deployment evidence만 기록한다. O3 Alarm과 O4 Safety HMI는
 첫 stable 범위가 아니다.
+
+## 9.1. R4.1 — 계층 계약 잔여 closure
+
+| Field | Value |
+| --- | --- |
+| Status | `Now` |
+| DRI | Frontend platform · Core/Product owner |
+| Required approvers | Design system owner · Robotics/LDS3D owner(경계 변경 시) |
+| Dependency | R4 stable 완료; `0.1.x` support window와 호환성 유지 |
+| Goal | stable을 막지 않고 남긴 provider·private import·family/Storybook/LDS3D exact-set 부채를 machine gate로 닫는다. |
+
+### 종료 gate
+
+- Core-only negative fixture가 Theme provider 누락을 결정적으로 탐지하고,
+  `Core+Theme`, `Core+Theme+Product`, `Core+Theme+Product+Robotics` 조합에서 required semantic
+  variable과 provider contract version mismatch가 0이다.
+- Product의 Core `components/internal/*` import가 0이고 필요한 helper는 supported Core
+  subpath로 승격되거나 Product 내부 구현으로 대체된다. 기존 `0.1.x` public contract는
+  호환성 window와 rollback 없이 제거하지 않는다.
+- Product family·public export·canonical Storybook page와 Robotics/LDS3D owner 경계를 하나의
+  exact-set verifier가 대조해 미분류·중복·충돌이 0이다.
+- 위 결과가 green이면 `LAYER_ARCHITECTURE_REFORM_PLAN.md`의 남은 §14 항목과 lifecycle을
+  실제 evidence에 맞춰 닫는다.
 
 ## 10. R5 — 산업 행동 계약 O3
 
@@ -487,7 +543,7 @@ maintenance cost로 재평가한다. 그 전에는 taxonomy 정리만을 이유�
 
 | 문서 | 분류 | 현재 disposition | Roadmap 연결 |
 | --- | --- | --- | --- |
-| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | active implementation record | 1차 구현과 R1 authority/promotion contract·paired release·R2 consumer promotion 완료; selector·owner/compatibility·stable checklist는 아직 유효 | R3A·R3B·R4 |
+| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | active implementation record | R3A·R3B·R4 stable 완료; §14의 provider/private import/family·Storybook·LDS3D exact-set/lifecycle closure는 미완료 | R4.1 |
 | [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | adopted implementation record | `default | ops` 1차 구현 완료 | R3A |
 | [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | completed implementation record | source/type/story/overlay 계약 완료; 제품 증거는 registry가 소유 | R2 |
 | [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | completed migration record | package split·Robotics extraction·compat retirement 완료 | R3B·R6 trigger |

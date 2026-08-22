@@ -5,7 +5,7 @@
 | Type | Documentation index |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-08-22 |
+| Last reviewed | 2026-08-23 |
 
 이 문서는 `docs/`의 공식 탐색 진입점이다. 문서가 충돌하면 아래 source-of-truth 순서와 각 문서의 `Type`·`Status`를 기준으로 판단한다.
 
@@ -71,7 +71,7 @@
 | Robotics direct adoption | `@lk-design-system/lds-robotics-ui/llms.txt` · `@lk-design-system/lds-robotics-ui/design-system.json` · [Robotics Storybook](https://lk-design-system.github.io/lk-design-system-robotics/?path=/docs/lds-robotics-foundation-viewer-tokens--docs) · [public llms.txt](https://lk-design-system.github.io/lk-design-system-robotics/llms.txt) · [public manifest](https://lk-design-system.github.io/lk-design-system-robotics/design-system.json) |
 | Machine-readable adoption source | [Adoption contract](references/adoption/LDS_UI_ADOPTION_CONTRACT.json) · [contract schema](references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json) · [report schema](references/adoption/LDS_UI_ADOPTION_REPORT.schema.json) · [schema-valid report template](references/adoption/LDS_UI_ADOPTION_REPORT.example.json) |
 | Consumer promotion evidence | [promotion contract](references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md) · [registry schema](references/adoption/LDS_CONSUMER_REGISTRY.schema.json) · [attestation schema](references/adoption/LDS_CONSUMER_ATTESTATION.schema.json) |
-| Stable release evidence | [stable evidence schema](references/adoption/releases/LDS_STABLE_RELEASE_EVIDENCE.schema.json) · [support policy](STABLE_SUPPORT_POLICY.md) · [support matrix](STABLE_SUPPORT_MATRIX.md) · [rollback contract](STABLE_0.1.0_ROLLBACK.md) |
+| Stable release evidence | [`0.1.0` release evidence](references/adoption/releases/LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json) · [stable evidence schema](references/adoption/releases/LDS_STABLE_RELEASE_EVIDENCE.schema.json) · [support policy](STABLE_SUPPORT_POLICY.md) · [support matrix](STABLE_SUPPORT_MATRIX.md) · [rollback contract](STABLE_0.1.0_ROLLBACK.md) |
 | Consumer enforcement | [config schema](../packages/conformance/schemas/lds-ui-adoption-config.schema.json) · [CLI](../packages/conformance/src/cli.mjs) · [GitHub composite action](../.github/actions/lds-adoption/action.yml) |
 | Foundation 탐색 | [Foundation index](foundations/README.md) 또는 단일 context용 [Foundation LLM bundle](foundations/llms.txt) |
 | Token 이름·의미·runtime coverage | [Structured token source](../tokens/source.json) |
@@ -107,14 +107,14 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 
 | Document | Disposition |
 | --- | --- |
-| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | 1차 구현과 R1 authority/promotion contract·paired release 완료; 남은 consumer·compatibility·stable gate는 R2·R3B·R4 |
+| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | R3A·R3B·R4 stable과 stable consumer promotion 완료; §14의 provider/private import/family·Storybook·LDS3D exact-set/lifecycle closure는 R4.1 |
 | [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) | O-A/B/C와 O4 문서·1차 시험 완료; 보완 문서 기준 질문 0 재시험은 R7 |
 
 ### Adopted or completed implementation records
 
 | Document | Disposition |
 | --- | --- |
-| [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | `default | ops` runtime/token/visual matrix의 adopted 기록; 다음 밀도 범위는 R3A |
+| [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | `default | ops` runtime/token/visual matrix와 R3A density·stable consumer profile 검증의 adopted 기록 |
 | [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | component API·Styles/Slots·ref·overlay 구현 기록; current consumer evidence는 registry가 소유 |
 | [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | package split·Robotics extraction·compatibility retirement 기록 |
 | [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) | Phase 0–3 완료; 2027-01 review는 R6 |

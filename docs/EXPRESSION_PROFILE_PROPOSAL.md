@@ -8,7 +8,7 @@
 | Last reviewed | 2026-08-23 |
 | 선행 문서 | [`OPERATING_MODEL.md`](OPERATING_MODEL.md)(레이어 소유권) · [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md)(토큰 변경 정책) · [`ROBOTICS_PATTERNS.md`](ROBOTICS_PATTERNS.md)(도메인 상태 의미) |
 | 근거 | 전부 실측 — 본문 §1의 토큰 값과 컴포넌트 인용은 2026-08-16 HEAD 기준 |
-| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) R3A — density coverage v2 |
+| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) — R3A Done · R4 stable Done; continuous coverage는 machine gate가 소유 |
 
 이 문서의 명제는 하나다 — **LK 제품은 소비자 표면(Portal)과 관제 표면(Control·Web
 Viz)을 동시에 가지며, 이 차이는 컴포넌트 이중화가 아니라 Theme 레이어의 표현
@@ -126,15 +126,16 @@ Theme (lds-theme)        표정의 집. 갈라지는 유일한 지점
 | 증거 | 현재 결과 |
 | --- | --- |
 | Theme runtime | `LdsProvider`가 `default|ops`를 선택하고 `data-lds-profile`을 설정한다. |
-| 대표 소비자 | Portal/default `7eeb93be084eade1e41025fe7843480d6f22b184`와 Web Viz/ops `2f1b2db333fc37175ed3d94ef18d9c257fc09803`가 Core·Theme·Product `0.1.0-rc.69.31`을 실제 registry tgz로 검증했고, Web Viz는 Robotics `0.1.0-rc.32`도 함께 고정했다. |
+| 대표 소비자 | Portal/default `949a1261e8f61842a42d07ca4b62c7ff71cc45da`와 Web Viz/ops `8f493fd3475eb6c7516fdf7d3aca3265c2b7db87`가 Core·Theme·Product stable `0.1.0`을 실제 registry tgz로 검증했고, Web Viz는 Robotics `0.1.0-rc.33`도 함께 고정했다. |
 | 시각 회귀 | [`EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json)이 `default|ops × light|dark × normal|320px × 4 stories` 32개 capture를 보존한다. |
 | 소비자 registry | [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json)이 package pin, artifact checksum, repo SHA, 기술 5 gate와 clean-clone evidence를 보존한다. |
 | active legacy guard | `check:legacy-active`가 aggregate·Editorial·console-pastel의 활성 소스 참조를 0으로 확인한다. |
 
 현재 registry stage는 두 소비자 모두 `workflow-verified`다. workflow/accessibility를
-포함한 기술 5 gate와 clean-clone 재현에 더해 Portal approval evidence commit `50c2d9b`,
-Web Viz approval evidence commit `4dad154`가 2026-08-22 product/design-system owner 승인을
-기록한다. 이 승인은 pinned consumer adoption에만 해당하며 main integration, package stable,
+포함한 기술 5 gate와 clean-clone 재현에 더해 Portal stable approval evidence
+`b48795660c85698b1326ae48c12bdaf92e5a25e3`, Web Viz stable approval evidence
+`301970943d9e2c72c8e78e6ebb7f2246377d456f`가 2026-08-23 product/design-system owner
+승인을 기록한다. 이 승인은 exact stable consumer adoption에만 해당하며 main integration,
 rollout 또는 production deployment를 승인하지 않는다. production deployment는 별도
 product-owner evidence가 없어 `not-attested`다.
 
@@ -162,8 +163,8 @@ R3A에서 Theme의 HTML-root selector를 Core `:root`와 정합화했고, Web Vi
 | 1 | 표현 프로파일 원칙을 이 문서에서 확정, `OPERATING_MODEL.md` 소유권 표에 프로파일 행 추가 | 완료 — runtime contract와 machine contract 반영 |
 | 2 | ops 토큰 오버라이드 작성 + 화이트리스트·필수 항목 게이트 | 완료 — `tokens/profiles.css`, `check:expression-profile` |
 | 3 | Storybook 프로파일 토글과 profile/theme/viewport 회귀 matrix 연결 | 완료 — 32 capture, `check:expression-profile-visual` |
-| 4 | Portal/default·Web Viz/ops 대표 소비자 wiring과 adoption promotion | 완료 — owner approval evidence와 R3 RC 재검증 연결, registry `workflow-verified`; deployment `not-attested` |
-| 5 | 행동 트랙(§5) 착수 판단 — 각각 독립 제안으로 | 진행 중 — O1/O2 readiness record 연결; O3/O4는 지원 주장하지 않음 |
+| 4 | Portal/default·Web Viz/ops 대표 소비자 wiring과 adoption promotion | 완료 — stable `0.1.0` 재검증과 owner approval evidence 연결, registry `workflow-verified`; deployment `not-attested` |
+| 5 | 행동 트랙(§5) 착수 판단 — 각각 독립 제안으로 | Conditional — O1/O2 ready; O3 unverified, O4 unsupported |
 
 ## 7. 비범위 (명시적으로 하지 않는 것)
 
