@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Operations reference |
-| Status | Active (2026-08-16) |
+| Status | Active (2026-08-23) |
 | Owner | Design system owner · Frontend platform |
 | 범위 | 릴리스, 위성 관리, 정상 상태의 정의 |
 | 관련 | [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) (이 문서를 만든 계획) · [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) (구조 계약) |
@@ -80,12 +80,14 @@ LDS는 robotics의 배포본(tgz)을 vendor에 넣어 쓰고, robotics는 그 �
 
 ### 2.2 버전 번호 정하기
 
-현재 라인은 `0.1.0-rc.<major>.<minor>` 4단이다(예: `0.1.0-rc.69.18`).
+첫 stable 이후 지원 라인은 `0.1.x`다. `0.1.0-rc.<major>.<minor>` 형식은 stable 이전
+후보와 별도 검증 후보의 immutable history로 유지한다.
 
 | 상황 | 다음 버전 |
 | --- | --- |
-| 대부분의 릴리스 — 컴포넌트·토큰·문서·스크립트 변경 | 마지막 자리 +1 (`rc.69.19`) |
-| 워크스페이스 패키지 구성이 바뀜(패키지 추가·삭제), 공개 API 대량 변경 | 셋째 자리 +1, 넷째 자리 0 (`rc.70.0`) |
+| `0.1.x` 호환 범위의 결함·접근성·문서·additive API 변경 | stable patch +1 (`0.1.1`) |
+| stable 전 추가 검증 후보 | 마지막 RC 자리 +1 (`rc.69.32`) |
+| public export/prop/token 제거 또는 의미 변경 | `0.1.x`에서 금지; breaking review 후 `0.2.0` 이상 |
 
 robotics는 자기 라인(`0.1.0-rc.N`)을 따로 쓰고 릴리스마다 +1 한다. LDS
 버전과 숫자를 맞추려 하지 않는다.
@@ -119,7 +121,7 @@ vendored tgz 하나뿐이다.** 그래서 "릴리스"는 버전을 올리고 pac
 # ⓪ LDS 체크아웃에서 새 LDS identity를 먼저 부트스트랩한다. 이때는 아직
 #    현재 Robotics tgz와 설치본을 유지한다. 커밋·태그·푸시는 하지 않는다.
 cd <LDS 체크아웃>
-npm run update:release-pins -- --lds <새 LDS 버전> --robotics <현재 robotics 버전>
+node scripts/update-release-pins.mjs --lds <새 LDS 버전> --robotics <현재 robotics 버전>
 npm run generate:workspace-sources
 
 cd <robotics 체크아웃>
@@ -149,6 +151,13 @@ npm pack --dry-run --ignore-scripts
 npm pack --pack-destination <LDS 체크아웃>/vendor
 ```
 
+Stable 승격처럼 `packages/core/docs/*`의 release ref나 package migration 문서가 바뀌는
+경우에는 Robotics 문서를 생성하기 전에 그 Core 문서 투영을 먼저 동결한다. 그 뒤
+`docs/PACKAGE_MIGRATION_GUIDE.md`, canonical adoption contract 또는 Core package docs에
+투영되는 source를 다시 바꾸면 Robotics snapshot hash도 달라지므로 같은 Robotics version의
+최종 tgz를 다시 만들고 설치·2차 pin·검사를 반복해야 한다. Tag 뒤에 이 순환을 발견하면
+기존 tag를 움직이지 말고 새 version으로 다시 릴리스한다.
+
 이 시점에는 아직 Robotics를 커밋·태그하지 않는다. LDS external surface가 옛
 tgz를 가리키므로 cross-repository 검사는 의도적으로 실패한다. §2.4의 2차 해시
 완성 뒤 `check:lds-style`까지 통과한 같은 bytes만 immutable release로 확정한다.
@@ -163,12 +172,12 @@ release identity를 옮기지 않는다. 실패를 고쳤다면 Robotics 버전�
 # 1. 새 tgz를 vendor/에 넣고 옛 tgz를 제거한 뒤 1차를 돌린다. 이 1차는
 #    package.json 경로와 version identity만 새 tgz로 바꾼다. 설치본이 아직
 #    이전 버전인 동안 문서 해시는 의도적으로 쓰지 않는다.
-npm run update:release-pins -- --lds <새 LDS 버전> --robotics <새 robotics 버전>
+node scripts/update-release-pins.mjs --lds <새 LDS 버전> --robotics <새 robotics 버전>
 
 # 2. 새 tgz를 실제로 설치한 뒤 같은 명령을 2차로 돌린다. 이 순서가 중요하다 —
 #    2차가 설치된 robotics 문서 bytes의 해시까지 완성한다.
 npm install
-npm run update:release-pins -- --lds <새 LDS 버전> --robotics <새 robotics 버전>
+node scripts/update-release-pins.mjs --lds <새 LDS 버전> --robotics <새 robotics 버전>
 
 # 3. 파생값 31곳을 재계산하는 위 명령을 손으로 대체하지 않는다.
 #    root와 워크스페이스 package.json의 version 필드도 이 스크립트가 올린다 —
@@ -176,15 +185,15 @@ npm run update:release-pins -- --lds <새 LDS 버전> --robotics <새 robotics �
 npm install --package-lock-only
 
 # 4. 이제 LDS external surface와 설치본이 같은 candidate를 가리킨다.
-#    Robotics에서 cross-repository 검사를 통과한 뒤 그 commit/tag를 확정한다.
+#    Robotics candidate를 먼저 commit/push하고 exact SHA의 CI·Pages를 확인하되,
+#    아직 tag는 만들지 않는다. 최종 LDS commit SHA를 입력으로 받는 release gate가
+#    성공한 뒤에만 immutable Robotics tag를 만든다.
 cd <robotics 체크아웃>
 LDS_CONFORMANCE_ROOT=<LDS 체크아웃> \
 LDS_CONFORMANCE_CLI=<LDS 체크아웃>/packages/conformance/src/cli.mjs \
 npm run check:lds-style
 git commit -m "release: <새 robotics 버전>"
 git push origin main
-git tag v<새 robotics 버전>
-git push origin v<새 robotics 버전>
 cd <LDS 체크아웃>
 
 # 5. CHANGELOG를 쓴다. 이 스크립트가 다루지 않는 유일한 릴리스 기록이다.
@@ -195,24 +204,38 @@ cd <LDS 체크아웃>
 # 6. 위성 핀 리포트를 갱신한다. 격차를 좁힐 필요는 없다 — 기록만 하면 된다.
 npm run report:satellite-pins
 
-# 7. 스테이징을 먼저 한다. check:generated가 `git diff -- src dist packages`라서
-#    2단계가 고친 packages/*/package.json이 스테이징되지 않으면 실패한다.
-git add -A
+# 7. 검토한 release 파일만 명시적으로 스테이징한다. check:generated가
+#    `git diff -- src dist packages`를 보므로 packages/*/package.json과 생성 투영도
+#    빠뜨리지 않는다. 작업트리의 무관한 untracked 파일은 포함하지 않는다.
+git add <검토한 release 파일들>
 
 # 8. 검사.
 npm run check:fast
 
-# 9. 커밋·태그·푸시. 브랜치와 태그를 둘 다 민다 —
-#    태그만 밀면 원격에 없는 커밋을 가리킨다.
+# 9. LDS candidate를 commit/push하고 exact SHA의 CI·Pages를 확인한다.
+#    이어서 Robotics release gate를 그 LDS SHA로 dispatch한다. 실행 결과의
+#    Robotics head SHA와 입력 LDS SHA가 두 candidate와 정확히 같은지 확인한 뒤
+#    Robotics tag, LDS tag 순으로 각각 하나씩 민다.
 #
 #    `--tags`를 쓰지 않는다. 그것은 로컬의 **모든** 태그를 밀기 때문에,
 #    원격에 없던 옛 태그까지 함께 올라가 릴리스 워크플로를 여러 개 띄운다
 #    (2026-08-16에 실제로 rc.62가 딸려 올라가 실패 런을 하나 만들었다).
 #    이번에 만든 태그 하나만 이름으로 민다.
 git commit -m "release: <새 LDS 버전>"
-git tag lds-v<새 LDS 버전>
-git push
-git push origin lds-v<새 LDS 버전>
+git push origin main
+
+gh workflow run release-gate.yml \
+  --repo LK-Design-System/lk-design-system-robotics \
+  --ref main \
+  -f lds_sha=<exact LDS candidate SHA>
+
+cd <robotics 체크아웃>
+git tag v<새 robotics 버전> <exact Robotics candidate SHA>
+git push origin refs/tags/v<새 robotics 버전>
+
+cd <LDS 체크아웃>
+git tag lds-v<새 LDS 버전> <exact LDS candidate SHA>
+git push origin refs/tags/lds-v<새 LDS 버전>
 ```
 
 ### 2.5 릴리스 이후
@@ -231,6 +254,18 @@ gh run list --workflow=release-packages.yml --limit 1
 npm view @lk-design-system/lds-core@<새 LDS 버전> version   # NODE_AUTH_TOKEN 필요
 npm run check:published-release                            # 정확한 tag checkout에서 실행
 ```
+
+세 package 각각에서 `name`, `version`, `dist.tarball`, `dist.shasum`, `dist.integrity`,
+`publishedAt`과 `dist-tags`를 수집한다. RC는 `rc`, stable은 `latest`가 선택되어야 하며 다른
+채널의 기존 tag를 암묵적으로 바꾸지 않는다. Stable publish 뒤에는 실제 tag SHA·workflow
+run·registry metadata로 `LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json` 같은 structured evidence를
+만들고 `check:published-release`와 `check:adoption-registry`를 다시 실행한다.
+
+Support policy/matrix/rollback의 machine status는 실제 publish·availability가 확인된 후에만
+`published-verified`로 바꾼다. Consumer pin과 attestation은 해당 제품이 exact stable tgz로
+install/build/workflow를 다시 통과한 뒤 별도 evidence commit으로 갱신한다. Package release,
+consumer adoption, product deployment는 서로 독립이며 deployment evidence가 없으면 계속
+`not-attested`다.
 
 **실패하면 태그를 옮기지 않는다.** 고친 뒤 버전을 올려 다시 릴리스한다 —
 같은 버전이 서로 다른 커밋을 가리키는 것을 막는 것이 이 게이트의 목적이다.

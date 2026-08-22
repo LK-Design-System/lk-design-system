@@ -2,6 +2,31 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.1.0 - 2026-08-23
+
+First stable Core, Theme, and Product package set, paired with
+`@lk-design-system/lds-robotics-ui` rc.33.
+
+### Added
+
+- Added exact density ownership for all 208 canonical components and deterministic
+  default/ops expression-profile coverage across data, navigation, overlay, light/dark,
+  normal-motion, and narrow-viewport states.
+- Added durable `0.1.x` support, compatibility, rollback, package-release evidence, and
+  consumer-promotion contracts.
+
+### Changed
+
+- Made the HTML-root expression profile authoritative and removed the Web Viz body-level
+  workaround while preserving the existing default product output.
+- Moved nine domain-neutral primitives to Core; Product root and deep imports remain
+  deprecated compatibility re-exports throughout `0.1.x` and cannot be removed before
+  `0.2.0`.
+- Reduced automated target-size debt from 56 to 14 signatures and expanded the package,
+  accessibility, interaction, visual, and isolated-consumer release gates.
+- Promoted the fixed Core, Theme, and Product release group to `0.1.0`; Robotics remains
+  an independently released satellite with an exact vendored artifact and paired gate.
+
 ## 0.1.0-rc.69.31 - 2026-08-23
 
 Paired with `@lk-design-system/lds-robotics-ui` rc.32.

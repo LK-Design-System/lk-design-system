@@ -285,7 +285,7 @@ if (checkOnly) {
       `\n⚠ 1차만 끝났다 — 설치된 robotics는 아직 ${installedRoboticsVersion}다.\n`
       + '  경로와 버전은 썼고 **문서 해시는 쓰지 않았다.** 이어서:\n'
       + '    npm install\n'
-      + `    npm run update:release-pins -- --lds ${ldsVersion} --robotics ${roboticsVersion}\n`
+      + `    node scripts/update-release-pins.mjs --lds ${ldsVersion} --robotics ${roboticsVersion}\n`
       + '  2차를 잊어도 check:release-pins가 CI에서 막는다.',
     );
   } else if (diffs.length > 0) {

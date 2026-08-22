@@ -5,7 +5,7 @@
 | Type | Stable migration contract |
 | Status | Active for the complete `0.1.x` line |
 | Owner | Design system owner |
-| Last reviewed | 2026-08-22 |
+| Last reviewed | 2026-08-23 |
 | Machine authority | [`references/architecture/R3B_OWNER_API_DECISIONS.json`](references/architecture/R3B_OWNER_API_DECISIONS.json) |
 
 R3B assigns domain-neutral navigation, single-value input, anchored-overlay, progress and

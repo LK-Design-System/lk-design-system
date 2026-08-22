@@ -6,7 +6,7 @@
 | Status | Candidate — `0.1.0` has not been published or verified |
 | Owner | Design system owner · 해당 consumer product owner |
 | Intended stable identity | `0.1.0` · `lds-v0.1.0` |
-| Current verified fallback | `0.1.0-rc.69.30` · `lds-v0.1.0-rc.69.30` |
+| Current verified fallback | `0.1.0-rc.69.31` · `lds-v0.1.0-rc.69.31` |
 | Support policy | [`STABLE_SUPPORT_POLICY.md`](STABLE_SUPPORT_POLICY.md) |
 
 <!-- lds-stable-identity:start
@@ -22,14 +22,14 @@
     { "name": "@lk-design-system/lds-theme", "version": "0.1.0" },
     { "name": "@lk-design-system/lds-product", "version": "0.1.0" }
   ],
-  "fallbackVersion": "0.1.0-rc.69.30",
-  "fallbackTag": "lds-v0.1.0-rc.69.30"
+  "fallbackVersion": "0.1.0-rc.69.31",
+  "fallbackTag": "lds-v0.1.0-rc.69.31"
 }
 lds-stable-identity:end -->
 
 이 runbook은 exact `0.1.0` stable identity를 대상으로 하지만 현재는 pre-publish candidate다.
-문서 자체는 `0.1.0` package, tag 또는 제품 배포가 존재한다는 evidence가 아니다. 현재 registry가
-검증한 fallback은 Core/Theme/Product `0.1.0-rc.69.30` atomic set이다.
+문서 자체는 `0.1.0` package, tag 또는 제품 배포가 존재한다는 evidence가 아니다. 현재 release와
+consumer evidence가 검증한 fallback은 Core/Theme/Product `0.1.0-rc.69.31` atomic set이다.
 
 ## 불변 원칙
 
@@ -63,7 +63,7 @@ partial set을 설치하지 않는다.
 2. 신규 consumer promotion을 중지하되 기존 deployment 상태를 추정해 바꾸지 않는다.
 3. 각 consumer owner가 현재 package pin과 deployment를 확인한다.
 4. 필요한 consumer만 Core/Theme/Product를 함께
-   `0.1.0-rc.69.30`(또는 그 시점 registry에 기록된 더 최신 verified fallback)으로 되돌린다.
+   `0.1.0-rc.69.31`(또는 그 시점 registry에 기록된 더 최신 verified fallback)으로 되돌린다.
 5. Lockfile, vendored artifact checksum, install, production build와 대표 workflow를 다시 검증한다.
 6. Consumer registry에는 실제 product-owner evidence가 있는 경우에만 deployment를
    `rolled-back`으로 갱신한다.
@@ -74,9 +74,9 @@ consumer는 product 저장소의 pinned artifact/checksum 절차를 우선한다
 
 ```sh
 npm install --save-exact \
-  @lk-design-system/lds-core@0.1.0-rc.69.30 \
-  @lk-design-system/lds-theme@0.1.0-rc.69.30 \
-  @lk-design-system/lds-product@0.1.0-rc.69.30
+  @lk-design-system/lds-core@0.1.0-rc.69.31 \
+  @lk-design-system/lds-theme@0.1.0-rc.69.31 \
+  @lk-design-system/lds-product@0.1.0-rc.69.31
 ```
 
 명령 실행만으로 rollback 완료를 선언하지 않는다. Exact package version·integrity, production

@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "kind": "lds-package-release-evidence",
+  "generatedAt": "2026-08-23",
+  "release": {
+    "channel": "release-candidate",
+    "version": "0.1.0-rc.69.31",
+    "tag": "lds-v0.1.0-rc.69.31",
+    "sourceCommit": "469f5058d0e2aeb86bdbea852bd3525bc119d5f2",
+    "repository": "LK-Design-System/lk-design-system"
+  },
+  "immutableTagVerification": {
+    "status": "passed",
+    "command": "git ls-remote --tags origin refs/tags/lds-v0.1.0-rc.69.31",
+    "resolvedCommit": "469f5058d0e2aeb86bdbea852bd3525bc119d5f2"
+  },
+  "automation": [
+    {
+      "workflow": "CI",
+      "runId": 32586537599,
+      "status": "passed",
+      "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/32586537599"
+    },
+    {
+      "workflow": "Deploy Storybook to GitHub Pages",
+      "runId": 32586537602,
+      "status": "passed",
+      "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/32586537602"
+    },
+    {
+      "workflow": "Robotics paired release conformance",
+      "runId": 32587440627,
+      "status": "passed",
+      "url": "https://github.com/LK-Design-System/lk-design-system-robotics/actions/runs/32587440627"
+    },
+    {
+      "workflow": "Release immutable package set",
+      "runId": 32587553071,
+      "status": "passed",
+      "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/32587553071"
+    }
+  ],
+  "packages": [
+    {
+      "name": "@lk-design-system/lds-core",
+      "version": "0.1.0-rc.69.31",
+      "publishedAt": "2026-08-22T17:26:09Z",
+      "distShasum": "0038b4d699994ad9d378d86edcc66b2116687837",
+      "distIntegrity": "sha512-9MIGjUjCm3Uj5SamTbydWMYYm3SZX9PfFIi1cjVa9l5EVGQLNfTur1ngZHwaagT4PauZWvFWhE/8Ogv6RpMufA=="
+    },
+    {
+      "name": "@lk-design-system/lds-theme",
+      "version": "0.1.0-rc.69.31",
+      "publishedAt": "2026-08-22T17:26:11Z",
+      "distShasum": "754ccc0a21f07807b89ee3228e4ecee596d8cfff",
+      "distIntegrity": "sha512-WGgUtrlkjGq1Yy+MKs3gIfIJJIzpa9+fjo7exaYhsMs6LI95YsiXhk1xeQFbPSRagMR7uvICJpCIfsOwKsULhg=="
+    },
+    {
+      "name": "@lk-design-system/lds-product",
+      "version": "0.1.0-rc.69.31",
+      "publishedAt": "2026-08-22T17:26:14Z",
+      "distShasum": "319b7ac52bac650def12dc75938814aa552d829b",
+      "distIntegrity": "sha512-9HhmieDDljNYrCZKFmAM5SpzQiiUbUDjTrk2hYV+rh1pP60V40bIwzEq9k7VPlQQYj5HY3j8WI/Oaqkq5Xe4ag=="
+    }
+  ],
+  "availabilityVerification": {
+    "status": "passed",
+    "command": "npm view @lk-design-system/<package>@0.1.0-rc.69.31 version dist.shasum dist.integrity",
+    "registry": "https://npm.pkg.github.com"
+  },
+  "notes": "Core, Theme, and Product were published atomically on the rc channel after the immutable Robotics rc.32 pairing gate. The previous latest dist-tag was left unchanged. Package availability is independent from consumer adoption stage and product deployment."
+}
