@@ -3,9 +3,9 @@
   "schemaVersion": 2,
   "kind": "lds-consumer-attestation",
   "consumerId": "web-viz",
-  "generatedAt": "2026-08-22",
+  "generatedAt": "2026-08-23",
   "profile": "ops",
-  "sourceCommit": "542639f2fea109e78f052e730ac30072cad79a6c",
+  "sourceCommit": "8f493fd3475eb6c7516fdf7d3aca3265c2b7db87",
   "checks": [
     {
       "id": "install",
@@ -27,7 +27,7 @@
       "id": "workflow-smoke",
       "status": "passed",
       "command": "npm run lds:r2:workflow",
-      "note": "4 of 4 production-preview Operations combinations passed."
+      "note": "4 of 4 production-preview Operations light/dark and desktop/narrow combinations passed."
     },
     {
       "id": "accessibility",
@@ -37,7 +37,7 @@
     }
   ],
   "evidence": [
-    "ops/lk_web_viz/.lds/evidence/lds-r2-workflow-verification-20260822.json",
+    "ops/lk_web_viz/.lds/evidence/lds-stable-workflow-verification-20260823.json",
     "ops/lk_web_viz/frontend/e2e/lds-operations-workflow.spec.ts",
     "ops/lk_web_viz/frontend/playwright.lds-r2.config.ts",
     "ops/lk_web_viz/.github/workflows/lds-r2.yml",

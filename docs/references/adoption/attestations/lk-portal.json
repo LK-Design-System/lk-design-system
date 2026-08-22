@@ -3,27 +3,27 @@
   "schemaVersion": 2,
   "kind": "lds-consumer-attestation",
   "consumerId": "portal",
-  "generatedAt": "2026-08-22",
+  "generatedAt": "2026-08-23",
   "profile": "default",
-  "sourceCommit": "c2e39f3c9f89a52cdb0c5a58727050afe20a82b9",
+  "sourceCommit": "949a1261e8f61842a42d07ca4b62c7ff71cc45da",
   "checks": [
     {
       "id": "install",
       "status": "passed",
       "command": "npm ci && npm --prefix mcp ci",
-      "note": "Root and MCP lockfile installs completed with zero reported vulnerabilities."
+      "note": "Root and MCP lockfile installs completed in an exact isolated source checkout."
     },
     {
       "id": "source-contract",
       "status": "passed",
       "command": "npm run lds:r2:source:verify",
-      "note": "The rc.69.30 package, default-profile, semantic-default, real chat composition, and canonical validation contracts passed."
+      "note": "The stable 0.1.0 package, default-profile, semantic-default, real chat composition, and canonical validation contracts passed."
     },
     {
       "id": "production-build",
       "status": "passed",
-      "command": "npm run build && git diff --exit-code -- next-env.d.ts",
-      "note": "The production build generated 117 of 117 static pages and left the tracked production type entry unchanged."
+      "command": "npm run typecheck && npm run build && git diff --exit-code -- next-env.d.ts",
+      "note": "Type checking passed, 117 of 117 static pages built, and the tracked production type entry remained unchanged."
     },
     {
       "id": "workflow-smoke",
@@ -35,11 +35,11 @@
       "id": "accessibility",
       "status": "passed",
       "command": "npm run research-ui:storybook:verify",
-      "note": "Axe serious/critical zero, visible targets at least 24px, keyboard operation, and focus movement/restoration passed."
+      "note": "Axe serious/critical zero, targets at least 24px, keyboard operation, and focus movement/restoration passed."
     }
   ],
   "evidence": [
-    "ops/lk-portal/.lds/evidence/lds-r2-workflow-verification-20260822.json",
+    "ops/lk-portal/.lds/evidence/lds-stable-workflow-verification-20260823.json",
     "ops/lk-portal/stories/ResearchSupportRunV2Page.stories.jsx",
     "ops/lk-portal/stories/PortalChatCompositions.stories.jsx",
     "ops/lk-portal/scripts/verify-research-run-storybook.mjs",

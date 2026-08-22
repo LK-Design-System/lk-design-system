@@ -2,22 +2,24 @@
   "$schema": "./LDS_CONSUMER_REGISTRY.schema.json",
   "schemaVersion": 2,
   "kind": "lds-consumer-registry",
-  "generatedAt": "2026-08-22",
-  "ldsVersion": "0.1.0-rc.69.30",
+  "generatedAt": "2026-08-23",
+  "ldsVersion": "0.1.0",
   "packageRelease": {
-    "channel": "release-candidate",
+    "channel": "stable",
     "availability": "verified",
-    "releaseTag": "lds-v0.1.0-rc.69.30",
+    "releaseTag": "lds-v0.1.0",
     "evidence": [
-      "docs/references/adoption/releases/LDS_RC_0.1.0-rc.69.30_RELEASE_EVIDENCE.json"
+      "docs/references/adoption/releases/LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json"
     ],
-    "note": "Immutable tag, successful release workflow, and GitHub Packages metadata verify the RC package set independently from consumer approval and deployment."
+    "supportPolicy": "docs/STABLE_SUPPORT_POLICY.md",
+    "rollbackArtifact": "docs/STABLE_0.1.0_ROLLBACK.md",
+    "note": "The immutable stable tag, successful release workflow, published package metadata, and downloaded artifact hashes verify the atomic Core, Theme, and Product 0.1.0 package set independently from consumer approval and deployment."
   },
   "entries": [
     {
       "id": "portal",
       "repository": "LK-ROBOTICS-AX/lk_portal",
-      "sourceCommit": "c2e39f3c9f89a52cdb0c5a58727050afe20a82b9",
+      "sourceCommit": "949a1261e8f61842a42d07ca4b62c7ff71cc45da",
       "worktree": "clean",
       "frontendRoot": "src",
       "profile": "default",
@@ -25,35 +27,55 @@
       "packages": [
         {
           "name": "@lk-design-system/lds-core",
-          "version": "0.1.0-rc.69.30",
-          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-core-0.1.0-rc.69.30.tgz",
-          "sha256": "b2a286a17d1c13c44d10447de239128bd5458c4b4193dc92772d682431b28800"
+          "version": "0.1.0",
+          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-core-0.1.0.tgz",
+          "sha256": "b687d49a0500dea9482cc13826debf3084570b8378c2651cda31eedd53a5c53c"
         },
         {
           "name": "@lk-design-system/lds-theme",
-          "version": "0.1.0-rc.69.30",
-          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-theme-0.1.0-rc.69.30.tgz",
-          "sha256": "9ff206dd2b261c1d1069c1a47afb088cb89db8d0e7898a2399482352be9b558d"
+          "version": "0.1.0",
+          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-theme-0.1.0.tgz",
+          "sha256": "3a4885a55221e1917dbe57d08eb566ac804903bf1efe94acdacf421f086132c4"
         },
         {
           "name": "@lk-design-system/lds-product",
-          "version": "0.1.0-rc.69.30",
-          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-product-0.1.0-rc.69.30.tgz",
-          "sha256": "aa33cbe527fc38c4a56526d8cec5a6dbcb1912bd44edb054e30c4edce02d8d9d"
+          "version": "0.1.0",
+          "artifactPath": "ops/lk-portal/vendor/lk-design-system-lds-product-0.1.0.tgz",
+          "sha256": "7e33cc1b48e34722824b18a79c419d062b9aa75e1480ea78ce04e00ac6a2b5f0"
         }
       ],
       "stage": "workflow-verified",
       "checks": {
-        "install": { "status": "passed", "command": "npm ci && npm --prefix mcp ci", "note": "Exact clean clone installs audited 654 root and 97 MCP packages with zero reported vulnerabilities." },
-        "sourceContract": { "status": "passed", "command": "npm run lds:r2:source:verify" },
-        "productionBuild": { "status": "passed", "command": "npm run build && git diff --exit-code -- next-env.d.ts", "note": "117 of 117 static pages built and the tracked production type entry remained unchanged." },
-        "workflowSmoke": { "status": "passed", "command": "npm run research-ui:storybook:verify", "note": "Twelve built research lifecycle and real FloatingChat/ChatWorkspace stories passed." },
-        "accessibility": { "status": "passed", "command": "npm run research-ui:storybook:verify", "note": "Axe serious/critical zero, targets at least 24px, keyboard operation, and focus movement/restoration passed." }
+        "install": {
+          "status": "passed",
+          "command": "npm ci && npm --prefix mcp ci",
+          "note": "The root and MCP lockfile installs completed in an exact isolated source checkout."
+        },
+        "sourceContract": {
+          "status": "passed",
+          "command": "npm run lds:r2:source:verify",
+          "note": "The stable 0.1.0 package, default profile, semantic defaults, real chat composition, and canonical validation contracts passed."
+        },
+        "productionBuild": {
+          "status": "passed",
+          "command": "npm run typecheck && npm run build && git diff --exit-code -- next-env.d.ts",
+          "note": "Type checking passed, 117 of 117 static pages built, and the tracked production type entry remained unchanged."
+        },
+        "workflowSmoke": {
+          "status": "passed",
+          "command": "npm run research-ui:storybook:verify",
+          "note": "Twelve built research lifecycle and real FloatingChat/ChatWorkspace stories passed."
+        },
+        "accessibility": {
+          "status": "passed",
+          "command": "npm run research-ui:storybook:verify",
+          "note": "Axe serious/critical zero, targets at least 24px, keyboard operation, and focus movement/restoration passed."
+        }
       },
       "viewports": ["1280x720", "320x720"],
       "evidenceFreshness": "current",
       "evidence": [
-        "ops/lk-portal/.lds/evidence/lds-r2-workflow-verification-20260822.json",
+        "ops/lk-portal/.lds/evidence/lds-stable-workflow-verification-20260823.json",
         "ops/lk-portal/stories/ResearchSupportRunV2Page.stories.jsx",
         "ops/lk-portal/stories/PortalChatCompositions.stories.jsx",
         "ops/lk-portal/scripts/verify-research-run-storybook.mjs",
@@ -64,26 +86,31 @@
       "cleanReproducibility": {
         "status": "passed",
         "mode": "clean-clone",
-        "sourceCommit": "c2e39f3c9f89a52cdb0c5a58727050afe20a82b9",
-        "verifiedAt": "2026-08-22",
-        "command": "npm ci && npm --prefix mcp ci && npm run lds:r2:source:verify && npm run typecheck && npm run build && git diff --exit-code -- next-env.d.ts && npm run research-ui:storybook:verify",
-        "evidence": ["ops/lk-portal/.lds/evidence/lds-r2-workflow-verification-20260822.json"],
-        "note": "The exact source began and ended clean. Canonical Linux full-product validation remains not-attested because approved self-hosted runners were offline; the source-head attempt was later cancelled before runner assignment after evidence-only pushes retriggered Validation."
+        "sourceCommit": "949a1261e8f61842a42d07ca4b62c7ff71cc45da",
+        "verifiedAt": "2026-08-23",
+        "command": "npm ci && npm --prefix mcp ci && npm run lds:r2:source:verify && npm run typecheck && npm run build && git diff --exit-code -- next-env.d.ts && npm run research-ui:storybook:verify && npm run mcp:build",
+        "evidence": [
+          "ops/lk-portal/.lds/evidence/lds-stable-workflow-verification-20260823.json"
+        ],
+        "note": "The exact promoted source completed install, source-contract, type, production build, workflow, accessibility, and MCP build gates in an isolated clean checkout. Canonical Linux full-product validation remains not-attested because approved self-hosted runners were offline."
       },
       "productOwnerApproval": {
         "status": "approved",
         "owner": "LK Portal product owner + LDS design-system owner",
-        "approvedAt": "2026-08-22",
-        "evidence": ["ops/lk-portal/docs/releases/2026-08-22-lds-r2-adoption-approval.md"]
+        "approvedAt": "2026-08-23",
+        "evidence": [
+          "ops/lk-portal/docs/releases/2026-08-23-lds-stable-adoption-approval.md"
+        ],
+        "note": "Approval covers the exact stable adoption evidence and workflow-verified promotion only; it does not approve main integration, rollout, or deployment."
       },
       "deployment": { "status": "not-attested" },
       "legacyActiveReferences": 0,
-      "notes": "Portal uses the default application expression profile and remains light-only by product decision. Technical workflow evidence, clean reproducibility, and product/design-system owner approval are current, so the consumer stage is workflow-verified. Canonical Linux full-product validation and deployment remain separate and not-attested."
+      "notes": "Portal uses the default application expression profile and remains light-only by product decision. Exact stable install, source contract, production build, representative workflow, accessibility, clean reproducibility, and product/design-system owner approval are current. Canonical Linux full-product validation and deployment remain separate and not-attested."
     },
     {
       "id": "web-viz",
       "repository": "LK-ROBOTICS/lk_web_viz",
-      "sourceCommit": "542639f2fea109e78f052e730ac30072cad79a6c",
+      "sourceCommit": "8f493fd3475eb6c7516fdf7d3aca3265c2b7db87",
       "worktree": "clean",
       "frontendRoot": "frontend",
       "profile": "ops",
@@ -91,41 +118,59 @@
       "packages": [
         {
           "name": "@lk-design-system/lds-core",
-          "version": "0.1.0-rc.69.30",
-          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-core-0.1.0-rc.69.30.tgz",
-          "sha256": "b2a286a17d1c13c44d10447de239128bd5458c4b4193dc92772d682431b28800"
+          "version": "0.1.0",
+          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-core-0.1.0.tgz",
+          "sha256": "b687d49a0500dea9482cc13826debf3084570b8378c2651cda31eedd53a5c53c"
         },
         {
           "name": "@lk-design-system/lds-theme",
-          "version": "0.1.0-rc.69.30",
-          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-theme-0.1.0-rc.69.30.tgz",
-          "sha256": "9ff206dd2b261c1d1069c1a47afb088cb89db8d0e7898a2399482352be9b558d"
+          "version": "0.1.0",
+          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-theme-0.1.0.tgz",
+          "sha256": "3a4885a55221e1917dbe57d08eb566ac804903bf1efe94acdacf421f086132c4"
         },
         {
           "name": "@lk-design-system/lds-product",
-          "version": "0.1.0-rc.69.30",
-          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-product-0.1.0-rc.69.30.tgz",
-          "sha256": "aa33cbe527fc38c4a56526d8cec5a6dbcb1912bd44edb054e30c4edce02d8d9d"
+          "version": "0.1.0",
+          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-product-0.1.0.tgz",
+          "sha256": "7e33cc1b48e34722824b18a79c419d062b9aa75e1480ea78ce04e00ac6a2b5f0"
         },
         {
           "name": "@lk-design-system/lds-robotics-ui",
-          "version": "0.1.0-rc.30",
-          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-robotics-ui-0.1.0-rc.30.tgz",
-          "sha256": "2f9fe8ce8c78608eb23872d7c06224d14f5961137d409c7e82e726037628e1d7"
+          "version": "0.1.0-rc.33",
+          "artifactPath": "ops/lk_web_viz/frontend/vendor/lds/lk-design-system-lds-robotics-ui-0.1.0-rc.33.tgz",
+          "sha256": "ad11778983dafa0a306862150d81067839901bb8ac7de0486c785cdb57b55d26"
         }
       ],
       "stage": "workflow-verified",
       "checks": {
-        "install": { "status": "passed", "command": "npm ci --ignore-scripts --no-audit --no-fund" },
-        "sourceContract": { "status": "passed", "command": "npm run lds:r2:source", "note": "6 source revisions, 13 active artifacts, 29 route patterns, and 27 runtime routes aligned." },
-        "productionBuild": { "status": "passed", "command": "npm run build" },
-        "workflowSmoke": { "status": "passed", "command": "npm run lds:r2:workflow", "note": "4 of 4 production-preview Operations combinations passed." },
-        "accessibility": { "status": "passed", "command": "npm run lds:r2:workflow", "note": "Keyboard navigation, visible focus, names and labels, non-color offline state, pageerror zero, and horizontal overflow zero passed." }
+        "install": {
+          "status": "passed",
+          "command": "npm ci --ignore-scripts --no-audit --no-fund"
+        },
+        "sourceContract": {
+          "status": "passed",
+          "command": "npm run lds:r2:source",
+          "note": "6 source revisions, 13 active artifacts, 29 route patterns, and 27 runtime routes aligned."
+        },
+        "productionBuild": {
+          "status": "passed",
+          "command": "npm run build"
+        },
+        "workflowSmoke": {
+          "status": "passed",
+          "command": "npm run lds:r2:workflow",
+          "note": "4 of 4 production-preview Operations light/dark and desktop/narrow combinations passed."
+        },
+        "accessibility": {
+          "status": "passed",
+          "command": "npm run lds:r2:workflow",
+          "note": "Keyboard navigation, visible focus, names and labels, non-color offline state, pageerror zero, and horizontal overflow zero passed."
+        }
       },
       "viewports": ["1280x800", "767x900"],
       "evidenceFreshness": "current",
       "evidence": [
-        "ops/lk_web_viz/.lds/evidence/lds-r2-workflow-verification-20260822.json",
+        "ops/lk_web_viz/.lds/evidence/lds-stable-workflow-verification-20260823.json",
         "ops/lk_web_viz/frontend/e2e/lds-operations-workflow.spec.ts",
         "ops/lk_web_viz/frontend/playwright.lds-r2.config.ts",
         "ops/lk_web_viz/.github/workflows/lds-r2.yml",
@@ -136,21 +181,26 @@
       "cleanReproducibility": {
         "status": "passed",
         "mode": "clean-clone",
-        "sourceCommit": "542639f2fea109e78f052e730ac30072cad79a6c",
-        "verifiedAt": "2026-08-22",
+        "sourceCommit": "8f493fd3475eb6c7516fdf7d3aca3265c2b7db87",
+        "verifiedAt": "2026-08-23",
         "command": "npm run lds:r2:verify",
-        "evidence": ["ops/lk_web_viz/.lds/evidence/lds-r2-workflow-verification-20260822.json"],
-        "note": "GitHub Actions run 32564800029 completed successfully on an ephemeral Ubuntu 24.04 runner at the exact source commit."
+        "evidence": [
+          "ops/lk_web_viz/.lds/evidence/lds-stable-workflow-verification-20260823.json"
+        ],
+        "note": "Exact local verification and GitHub Actions run 32592986712 completed the full LDS R2 gate at the promoted source on clean environments."
       },
       "productOwnerApproval": {
         "status": "approved",
         "owner": "LK Web Viz product owner + LDS design-system owner",
-        "approvedAt": "2026-08-22",
-        "evidence": ["ops/lk_web_viz/docs/releases/2026-08-22-lds-r2-adoption-approval.md"]
+        "approvedAt": "2026-08-23",
+        "evidence": [
+          "ops/lk_web_viz/docs/releases/2026-08-23-lds-stable-adoption-approval.md"
+        ],
+        "note": "Approval covers the exact stable adoption evidence and workflow-verified promotion only; it does not approve main integration, rollout, or deployment."
       },
       "deployment": { "status": "not-attested" },
       "legacyActiveReferences": 0,
-      "notes": "Web Viz uses the operations profile and light/dark themes. Technical workflow evidence, clean reproducibility, and product/design-system owner approval are current, so the consumer stage is workflow-verified. Main integration and deployment remain separate and not-attested."
+      "notes": "Web Viz uses the operations profile and light/dark themes. Exact stable install, source contract, production build, representative workflow, accessibility, clean reproducibility, and product/design-system owner approval are current. The general Quality workflow backend assertion failure is an unrelated advisory; main integration and deployment remain separate and not-attested."
     }
   ]
 }
