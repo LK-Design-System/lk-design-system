@@ -46,8 +46,9 @@ source와 machine-readable evidence가, 정책은 [`OPERATING_MODEL.md`](OPERATI
   가진다.
 - Portal/default `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`와 Web Viz/ops
   `542639f2fea109e78f052e730ac30072cad79a6c`는 current package set의 기술 5 gate와
-  clean-clone 재현을 통과했다. 필수 owner 승인이 없어 둘 다 technical-ready
-  `build-verified`를 유지한다.
+  clean-clone 재현을 통과했다. 2026-08-22 product/design-system owner 승인까지 각 제품
+  evidence에 기록되어 둘 다 `workflow-verified`다. 실제 제품 배포는 별도
+  `not-attested`다.
 - Robotics readiness는 O1 Monitoring과 O2 Operational control을 `ready`, O3 Alarm
   lifecycle을 `unverified`, O4 Safety-certified HMI를 `unsupported`로 제한한다.
 - active aggregate·Editorial·console-pastel legacy reference는 0이며, Core·Theme·Product
@@ -59,9 +60,10 @@ source와 machine-readable evidence가, 정책은 [`OPERATING_MODEL.md`](OPERATI
 
 | 열린 문제 | 2026-08-22 기준 근거 | 처리 위치 |
 | --- | --- | --- |
-| 제품 승인이 열려 있음 | Portal/Web Viz의 기술 5 gate와 clean evidence는 current지만 product/design-system owner 승인이 미등록이다. deployment는 두 제품 모두 별도 `not-attested`다. | R2 |
 | `ops` 밀도 coverage가 부분적임 | profile override는 control/card 중심이며 Table·DataGrid·List·Tree·Menu·Navigation·Drawer 전체 계약은 아님 | R3A |
+| Theme profile selector 우선순위가 임시 consumer workaround에 의존함 | zero-specificity `ops` selector를 `html`에 적용하면 Core `:root` default가 이긴다. Web Viz는 `body` 적용으로 검증했지만 selector 계약 자체는 미해결이다. | R3A |
 | component 이동·잔류 후보의 결정이 열려 있음 | 현재 owner는 하나로 강제되지만 Product→Core, Product↔Robotics 후보의 `move now | stay | defer` 심사는 아직 미실행 | R3B |
+| 비-Storybook workflow evidence adapter 결정이 열려 있음 | Web Viz의 deterministic production-preview evidence는 유효한 R2 근거지만, full-surface conformance가 이를 공식 adapter로 받을지 제품 Storybook을 요구할지는 아직 계약화되지 않았다. | R7 |
 
 R1에서 닫힌 문제와 재검증 진입점은 다음과 같다.
 
@@ -69,6 +71,7 @@ R1에서 닫힌 문제와 재검증 진입점은 다음과 같다.
 | --- | --- |
 | 현재 owner authority 충돌 | [`OWNER_AUTHORITY_CONTRACT.json`](references/architecture/OWNER_AUTHORITY_CONTRACT.json)과 `check:layers`: 230 module, 14 token source, 195 canonical Storybook page, 8 domain boundary one-owner 검증 |
 | RC-only registry와 선언적 stage | registry/attestation schema v2, [`CONSUMER_ADOPTION_PROMOTION_CONTRACT.md`](references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md), `check:adoption-registry`와 양성·음성 contract tests |
+| 대표 제품 adoption 승인 | Portal source `c2e39f3c...`/approval evidence `50c2d9b`, Web Viz source `542639f...`/approval evidence `4dad154`; 두 registry entry 모두 `workflow-verified`, deployment는 `not-attested` |
 | Storybook IA·inventory currentness | IA 195/195 page·730/730 story review, stale 0; generated inventory와 `check:storybook-ia`, `check:inventory`, `check:docs` |
 
 R1의 구현 gate와 release closure는 모두 닫혔다. Robotics UI `0.1.0-rc.30`
@@ -98,9 +101,10 @@ R0 architecture/profile/package baseline (Done)
                          |
                          v
 R1 authority & promotion contract (Done)
+                         |
+                         v
+R2 product adoption promotion (Done)
              |
-             +--------------------------> R2 product adoption promotion (Now)
-             |                                      |
              +--> R3A density v2 decision (Next) ---+
              +--> R3B owner/API decision (Next) ----+--> R4 first stable promotion (Next)
 
@@ -109,9 +113,8 @@ R6 ecosystem lifecycle review (Scheduled review, 2027-01)
 R7 evidence/operations health (Continuous)
 ```
 
-R1 계약 구현과 paired LDS/Robotics RC 발행은 완료됐다. R2는 새 package candidate를 사용한
-실제 제품 evidence와 owner 승인을 확보한 consumer부터 stage를 승격한다. 첫 stable은 R2가 완료되고
-R3A·R3B의 **결정**이 닫힌 뒤 연다. R3A·R3B의 모든
+R1 계약 구현과 paired LDS/Robotics RC 발행, R2 대표 제품 adoption 승격은 완료됐다.
+다음 실행 항목은 R3A·R3B이며, 첫 stable은 두 항목의 **결정**이 닫힌 뒤 연다. R3A·R3B의 모든
 후보를 stable 전에 구현한다는 뜻은 아니다. 각 후보를 이번 stable에 포함할지, 명시적
 owner·재검토 trigger와 함께 이후로 미룰지를 결정해야 한다는 뜻이다. R5 O3는 실제 alarm
 workflow가 없으면 계속 미지원이며 stable의 선행 조건이 아니다.
@@ -199,19 +202,21 @@ R1–R4가 소유한다.
 
 | Field | Value |
 | --- | --- |
-| Status | `Now` — 기술 evidence 완료, owner approval과 stage promotion 대기 |
+| Status | `Done` |
 | DRI | Portal/Web Viz product owner |
 | Required approvers | 해당 product owner · Design system owner |
 | Dependency | evidence 수집은 R0부터 가능; registry stage 승격은 R1 |
-| Goal | 현재 `build-verified` 소비자를 product-owned `workflow-verified` evidence로 승격한다. |
+| Outcome | Portal/default와 Web Viz/ops의 pinned source가 product-owned evidence와 승인으로 `workflow-verified`에 승격됐다. |
 
-2026-08-22 technical checkpoint에서 Portal
+2026-08-22 completion checkpoint에서 Portal
 `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`와 Web Viz
 `542639f2fea109e78f052e730ac30072cad79a6c`는 `0.1.0-rc.69.30` package set으로 install,
 source contract, production build, representative workflow, accessibility와 clean-clone
-재현을 통과했다. 이 결과는 승인 가능한 technical evidence를 만들었을 뿐이며, 필수
-product/design-system owner 승인이 없으므로 registry는 두 consumer를 계속
-`build-verified`로 기록한다. deployment는 두 제품 모두 별도 `not-attested`다.
+재현을 통과했다. Portal approval evidence commit `50c2d9b`와 Web Viz approval evidence
+commit `4dad154`는 2026-08-22 해당 product owner와 design-system owner 승인을 기록하고,
+중앙 registry는 두 consumer를 `workflow-verified`로 판정한다. 이 승인은 pinned consumer
+adoption에만 해당하며 main integration, package stable, rollout 또는 production deployment를
+승인하지 않는다. deployment는 두 제품 모두 별도 `not-attested`다.
 
 ### Portal/default
 
@@ -222,8 +227,8 @@ product/design-system owner 승인이 없으므로 registry는 두 consumer를 �
 - light-only 지원 범위에서 targeted accessibility, keyboard/focus와 narrow viewport를
   통과하고 attestation에 기록했다.
 - source contract와 semantic schema validator 경로를 우회 없이 통과했다.
-- product/design-system owner 승인은 대기 중이다. rollout 또는 rollout-ready 판단은
-  별도 product-owner evidence가 없어 `not-attested`다.
+- product/design-system owner 승인은 approval evidence commit `50c2d9b`에 기록됐다.
+  rollout 또는 rollout-ready 판단은 별도 product-owner evidence가 없어 `not-attested`다.
 
 ### Web Viz/ops
 
@@ -232,8 +237,9 @@ product/design-system owner 승인이 없으므로 registry는 두 consumer를 �
   accessibility가 deterministic production-preview evidence로 통과했다.
 - full-product quality의 기존 backend finding과 broad route diagnostic은 R2 frontend
   workflow 성공으로 숨기지 않고 제품 finding으로 분리했다.
-- product/design-system owner 승인은 대기 중이다. main integration, rollout 또는
-  rollout-ready 판단은 별도 evidence가 없어 `not-attested`다.
+- product/design-system owner 승인은 approval evidence commit `4dad154`에 기록됐다.
+  main integration, rollout 또는 rollout-ready 판단은 이 승인에 포함되지 않으며 별도
+  evidence가 없어 `not-attested`다.
 
 ### 종료 gate
 
@@ -447,7 +453,7 @@ maintenance cost로 재평가한다. 그 전에는 taxonomy 정리만을 이유�
 
 | 문서 | 분류 | 현재 disposition | Roadmap 연결 |
 | --- | --- | --- | --- |
-| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | active implementation record | 1차 구현과 R1 authority/promotion contract·paired release 완료; consumer·compatibility·stable checklist는 아직 유효 | R1·R2·R3B·R4 |
+| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | active implementation record | 1차 구현과 R1 authority/promotion contract·paired release·R2 consumer promotion 완료; selector·owner/compatibility·stable checklist는 아직 유효 | R3A·R3B·R4 |
 | [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | adopted implementation record | `default | ops` 1차 구현 완료 | R3A |
 | [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | completed implementation record | source/type/story/overlay 계약 완료; 제품 증거는 registry가 소유 | R2 |
 | [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | completed migration record | package split·Robotics extraction·compat retirement 완료 | R3B·R6 trigger |

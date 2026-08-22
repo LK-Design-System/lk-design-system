@@ -131,11 +131,17 @@ Theme (lds-theme)        표정의 집. 갈라지는 유일한 지점
 | 소비자 registry | [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json)이 package pin, artifact checksum, repo SHA, 기술 5 gate와 clean-clone evidence를 보존한다. |
 | active legacy guard | `check:legacy-active`가 aggregate·Editorial·console-pastel의 활성 소스 참조를 0으로 확인한다. |
 
-현재 registry stage는 두 소비자 모두 `build-verified`다. workflow/accessibility를 포함한
-기술 5 gate와 clean-clone 재현은 current지만 필수 product/design-system owner 승인이 아직
-없으므로 `workflow-verified`로 올리지 않는다. production deployment도 별도 product-owner
-evidence가 없어 `not-attested`다. 이는 기술 검증, 승인과 실제 배포를 서로 추정하지 않게
-하기 위한 의도적 경계다.
+현재 registry stage는 두 소비자 모두 `workflow-verified`다. workflow/accessibility를
+포함한 기술 5 gate와 clean-clone 재현에 더해 Portal approval evidence commit `50c2d9b`,
+Web Viz approval evidence commit `4dad154`가 2026-08-22 product/design-system owner 승인을
+기록한다. 이 승인은 pinned consumer adoption에만 해당하며 main integration, package stable,
+rollout 또는 production deployment를 승인하지 않는다. production deployment는 별도
+product-owner evidence가 없어 `not-attested`다.
+
+Web Viz의 R2 evidence는 zero-specificity `ops` selector를 `html`에 적용할 때 Core `:root`
+default가 이기는 우선순위 finding을 `body` profile 적용으로 우회해 검증했다. 이는 최종 Theme
+계약이 아니며 selector specificity 정합화와 consumer workaround 제거는 roadmap R3A의 열린
+후속 작업이다.
 
 ## 5. 프로파일로 풀 수 없는 것 — 행동 트랙
 
@@ -156,7 +162,7 @@ evidence가 없어 `not-attested`다. 이는 기술 검증, 승인과 실제 배
 | 1 | 표현 프로파일 원칙을 이 문서에서 확정, `OPERATING_MODEL.md` 소유권 표에 프로파일 행 추가 | 완료 — runtime contract와 machine contract 반영 |
 | 2 | ops 토큰 오버라이드 작성 + 화이트리스트·필수 항목 게이트 | 완료 — `tokens/profiles.css`, `check:expression-profile` |
 | 3 | Storybook 프로파일 토글과 profile/theme/viewport 회귀 matrix 연결 | 완료 — 16 capture, `check:expression-profile-visual` |
-| 4 | Portal/default·Web Viz/ops 대표 소비자 wiring과 technical adoption evidence | 기술 완료 — owner approval 전까지 registry `build-verified` 유지 |
+| 4 | Portal/default·Web Viz/ops 대표 소비자 wiring과 adoption promotion | 완료 — owner approval evidence 연결, registry `workflow-verified`; deployment `not-attested` |
 | 5 | 행동 트랙(§5) 착수 판단 — 각각 독립 제안으로 | 진행 중 — O1/O2 readiness record 연결; O3/O4는 지원 주장하지 않음 |
 
 ## 7. 비범위 (명시적으로 하지 않는 것)

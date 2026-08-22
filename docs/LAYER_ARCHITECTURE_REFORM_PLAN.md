@@ -3,13 +3,13 @@
 | Field | Value |
 | --- | --- |
 | Type | Active architecture implementation record |
-| Status | Active follow-through — 1차 taxonomy/profile·owner authority·O1/O2와 R1 계약·paired release 완료; R2 기술 evidence 완료·owner approval 대기, §14의 compatibility·stable gate는 roadmap으로 계속 추적 |
+| Status | Active follow-through — 1차 taxonomy/profile·owner authority·O1/O2와 R1 계약·paired release·R2 consumer promotion 완료; R3A/R3B와 §14의 compatibility·stable gate는 roadmap으로 계속 추적 |
 | Owner | Design system owner · Frontend platform |
 | Required approvers | Design system owner · Frontend platform · Robotics domain owner(해당 변경) · consumer product owner(해당 migration) |
 | Last reviewed | 2026-08-22 |
 | Scope | Core·Theme·Product·Robotics 계층, 표현 프로파일, 패키지 계약, 소비 증거, legacy 정리 |
 | Related | [`DESIGN.md`](../DESIGN.md) · [`OPERATING_MODEL.md`](OPERATING_MODEL.md) · [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md) · [`ROBOTICS_PATTERNS.md`](ROBOTICS_PATTERNS.md) |
-| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) — R0 기준선과 R1 계약·paired release 완료; R2는 technical-ready/pending approval, 미완료 gate는 R2·R3B·R4 |
+| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) — R0·R1·R2 완료; 다음은 R3A density/selector 결정과 R3B owner/API 결정, 이후 R4 stable promotion |
 
 이 문서는 LDS가 **LK Portal 같은 일반 B2B 제품 표면**과 **LK Web Viz·Control 같은
 산업 운영 표면**을 하나의 시스템으로 지원하기 위한 목표 계층과 이행 순서를
@@ -25,9 +25,11 @@ record다. 현재 우선순위와 후속 실행 순서는 [`LDS_ROADMAP.md`](LDS
 Storybook profile toolbar, 대표 consumer pin/evidence, Robotics O1/O2 readiness와
 legacy active-reference guard를 실제 코드·토큰·검사에 연결했다. O3 alarm lifecycle과
 O4 safety-certified HMI는 근거가 없으므로 지원 주장하지 않는다. Portal/default와 Web
-Viz/ops의 workflow·accessibility·clean-clone 기술 evidence는 current지만 필수
-product/design-system owner 승인이 아직 없다. 따라서 registry stage는 `build-verified`를
-유지하고, 배포는 별도 product-owner evidence가 생길 때에만 `not-attested`에서 승격한다.
+Viz/ops의 workflow·accessibility·clean-clone 기술 evidence와 2026-08-22
+product/design-system owner 승인이 연결되어 registry stage는 `workflow-verified`다. 이
+승인은 consumer adoption에 한정되며 main integration, package stable, rollout 또는 production
+deployment를 승인하지 않는다. 배포는 별도 product-owner evidence가 생길 때에만
+`not-attested`에서 승격한다.
 
 2026-08-22 checkpoint의 정본은 [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json), [`EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json), [`robotics/READINESS.json`](references/robotics/READINESS.json)과 각 verifier다.
 
@@ -125,7 +127,7 @@ product/design-system owner 승인이 아직 없다. 따라서 registry stage는
 | A-05 | `data-lds-profile` Theme runtime과 CSS는 구현됐다. 다만 zero-specificity ops selector를 `html`에 적용하면 Core `:root` default가 이기는 finding이 있어 Web Viz candidate는 임시로 `body`에 profile을 적용한다. | target element와 selector 우선순위에 따라 profile 출력이 달라지지 않도록 R3A에서 Theme selector 계약을 정합화해야 한다. |
 | A-06 | Product는 Core보다 큰 공개 표면을 가지며 일반 control, app composition, editor/viewer, telemetry/equipment를 함께 노출한다. | `Product = Core가 아닌 모든 것`이 되어 탐색·변경·릴리스 범위가 불명확하다. |
 | A-07 | `ConnectionBadge`, `EquipmentStatusCard`, `TelemetryGauge` 등의 machine owner는 Product지만 prompt 분류는 Robotics다. | 중복 API, 잘못된 package 변경, compatibility re-export 장기화 위험이 있다. |
-| A-08 | Portal `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`와 Web Viz `542639f2fea109e78f052e730ac30072cad79a6c`는 Core·Theme·Product `rc.69.30`을, Web Viz는 Robotics `rc.30`도 소비한다. 기술 5 gate와 clean evidence는 current지만 owner approval은 대기 중이다. | current package 채택과 기술 검증을 `workflow-verified` 또는 production deployment로 자동 승격하면 안 된다. |
+| A-08 | Portal `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`와 Web Viz `542639f2fea109e78f052e730ac30072cad79a6c`는 Core·Theme·Product `rc.69.30`을, Web Viz는 Robotics `rc.30`도 소비한다. 기술 5 gate·clean evidence와 owner 승인은 각각 approval evidence commit `50c2d9b`·`4dad154`에 연결되어 두 stage가 `workflow-verified`다. | `workflow-verified`를 main integration, stable package 또는 production deployment로 자동 확대하면 안 된다. |
 | A-09 | compatibility facade는 제거됐지만 일부 migration/governance 문서에는 유지 시기의 표현이 남아 있고, 일부 consumer는 퇴역 Editorial·archive reference를 활성 owner처럼 다룬다. | 신규 코드가 퇴역 경로를 다시 도입하고 rollback 범위가 불명확해진다. |
 | A-10 | staleness, arm→fire, alarm ack/shelve/flood suppression은 Theme 프로파일로 해결할 수 없는 별도 행동 계약이다. | 산업 dashboard 지원을 safety-critical HMI 지원으로 과장하게 된다. |
 
@@ -765,15 +767,15 @@ durable 결정 승격 후 archive/delete할지 문서 수명주기 정책에 따
 | 영역 | 결과 | 검증 |
 | --- | --- | --- |
 | Theme profile | `default|ops` runtime/provider, token whitelist와 required assertions | `check:expression-profile`, `check:expression-profile-visual` — 16 captures |
-| Application consumer | Portal `default` source `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`, Core·Theme·Product `0.1.0-rc.69.30`; 기술 5 gate와 clean-clone 재현 통과, owner approval 대기 | [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) |
-| Operations consumer | Web Viz `ops` source `542639f2fea109e78f052e730ac30072cad79a6c`, Core·Theme·Product `0.1.0-rc.69.30`, Robotics `0.1.0-rc.30`; 기술 5 gate와 clean-clone 재현 통과, owner approval 대기 | registry + Web Viz adoption verifier |
+| Application consumer | Portal `default` source `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`, Core·Theme·Product `0.1.0-rc.69.30`; 기술 5 gate·clean-clone·product/design-system owner 승인 통과, approval evidence commit `50c2d9b`, `workflow-verified` | [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) |
+| Operations consumer | Web Viz `ops` source `542639f2fea109e78f052e730ac30072cad79a6c`, Core·Theme·Product `0.1.0-rc.69.30`, Robotics `0.1.0-rc.30`; 기술 5 gate·clean-clone·product/design-system owner 승인 통과, approval evidence commit `4dad154`, `workflow-verified` | registry + Web Viz adoption verifier |
 | Robotics readiness | O1 Monitoring/O2 Operational control ready; representative Storybook browser gate 8 stories/0 serious Axe; O3 unverified; O4 unsupported | [`robotics/READINESS.json`](references/robotics/READINESS.json), `check:robotics-readiness` |
 | Legacy active references | aggregate, retired Editorial, console-pastel active source/config reference 0 | `check:legacy-active --workspace-root=...` |
-| Remaining promotion gate | product/design-system owner approval | 승인 후에만 `workflow-verified`; deployment는 별도 `not-attested` 유지 |
+| R2 consumer promotion | 두 representative consumer의 owner approval과 중앙 registry stage 승격 완료 | `workflow-verified`; deployment는 별도 `not-attested` 유지 |
 
-현재 두 consumer의 `build-verified`는 install/build뿐 아니라 workflow/accessibility와
-clean-clone까지 기술 검증됐지만 필수 owner 승인이 남은 technical-ready 상태다. 이를
-`workflow-verified`, 제품 배포 완료 또는 safety certification으로 해석하지 않는다.
+현재 두 consumer의 `workflow-verified`는 install/build뿐 아니라 workflow/accessibility,
+clean-clone과 필수 owner 승인까지 연결된 adoption 판정이다. 이를 main integration, package
+stable, rollout, 제품 배포 완료 또는 safety certification으로 해석하지 않는다.
 
 ---
 
@@ -790,10 +792,10 @@ clean-clone까지 기술 검증됐지만 필수 owner 승인이 남은 technical
       유효하고 기존 default 출력이 보존된다.
 - [ ] Product가 Core private/internal path를 소비하지 않는다.
 - [x] `default | ops`가 Theme runtime 축으로 동작하며 동일 Core API를 사용한다.
-- [ ] Portal/default와 Web Viz/ops의 current package install, production build,
+- [x] Portal/default와 Web Viz/ops의 current package install, production build,
       representative workflow smoke와 accessibility/clean-clone evidence는 generated 중앙
-      registry에 연결됐다. 필수 product/design-system owner 승인까지 연결된 뒤에만 이
-      항목을 닫는다.
+      registry에 연결됐고, 2026-08-22 product/design-system owner 승인까지 연결되어 두
+      consumer가 `workflow-verified`다. deployment는 별도 `not-attested`다.
 - [x] O1~O4 readiness stage와 evidence freshness가 명시되며, Track R 미완료 단계는
       지원으로 주장되지 않는다.
 - [x] 제거된 aggregate, Editorial, archive reference의 활성 신규 소비 경로가 0이다.

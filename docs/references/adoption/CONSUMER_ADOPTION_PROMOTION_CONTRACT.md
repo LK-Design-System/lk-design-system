@@ -136,8 +136,9 @@ v2는 기존 의미를 조용히 바꾸지 않는다. Registry와 attestation �
 availability가 `verified`다. Portal/default
 `c2e39f3c9f89a52cdb0c5a58727050afe20a82b9`와 Web Viz/ops
 `542639f2fea109e78f052e730ac30072cad79a6c`는 각각 install·source contract·production
-build·대표 workflow·accessibility와 exact source의 clean-clone 재현을 통과했다. 다만
-필수 product/design-system owner 승인이 아직 없으므로 두 consumer stage는
-`build-verified`를 유지한다. 두 제품 deployment도 별도 owner evidence가 없어
-`not-attested`다. 기술 evidence 완료를 `workflow-verified` 또는 실제 배포로 과장하지
-않는다.
+build·대표 workflow·accessibility와 exact source의 clean-clone 재현을 통과했다. Portal
+approval evidence commit `50c2d9b`와 Web Viz approval evidence commit `4dad154`는
+2026-08-22 해당 product owner와 design-system owner 승인을 기록하며, 두 consumer stage는
+`workflow-verified`다. 이 승인은 pinned consumer adoption에 한정되고 main integration,
+package stable, rollout 또는 production deployment를 승인하지 않는다. 두 제품 deployment는
+별도 owner evidence가 없어 `not-attested`다.
