@@ -6,7 +6,7 @@
 | Status | Current |
 | Owner | Design system owner · Frontend platform · 해당 Product/Robotics owner |
 | Last reviewed | 2026-08-22 |
-| Planning baseline | LDS `0.1.0-rc.69.29` · Robotics UI `0.1.0-rc.29` |
+| Planning baseline | LDS `0.1.0-rc.69.30` · Robotics UI `0.1.0-rc.30` |
 | Review cadence | release candidate 변경 · consumer evidence 변경 · 2027-01 lifecycle review |
 | Current-state sources | current source와 package manifest · owner authority · consumer promotion registry · Robotics readiness · generated satellite pin report |
 
@@ -37,7 +37,7 @@ source와 machine-readable evidence가, 정책은 [`OPERATING_MODEL.md`](OPERATI
 
 ## 2. 현재 기준선과 열린 문제
 
-`0.1.0-rc.69.29` 기준으로 다음 기반은 구현됐다.
+`0.1.0-rc.69.30` 기준으로 다음 기반은 구현됐다.
 
 - Core·Theme·Product는 한 저장소의 분리 package와 fixed release group으로 배포된다.
 - Theme은 `default | ops` profile을 제공하고 동일한 component API·DOM·status semantics를
@@ -69,11 +69,12 @@ R1에서 닫힌 문제와 재검증 진입점은 다음과 같다.
 | RC-only registry와 선언적 stage | registry/attestation schema v2, [`CONSUMER_ADOPTION_PROMOTION_CONTRACT.md`](references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md), `check:adoption-registry`와 양성·음성 contract tests |
 | Storybook IA·inventory currentness | IA 195/195 page·730/730 story review, stale 0; generated inventory와 `check:storybook-ia`, `check:inventory`, `check:docs` |
 
-R1의 구현 gate는 닫혔지만 release closure는 아직 열려 있다. Core package documentation
-manifest가 바뀌어 published Robotics rc.29의 snapshot pin과 달라졌으며,
-`check:workspace-packages`와 `check:release-pins`가 이 한 건을 의도적으로 차단한다. 운영 계약상
-해결 방법은 기존 rc artifact/pin을 덮어쓰는 것이 아니라 **새 LDS RC와 새 Robotics RC의 짝
-릴리스**다. 해당 release sync 전에는 R1을 `Done`으로 올리지 않는다.
+R1의 구현 gate와 release closure는 모두 닫혔다. Robotics UI `0.1.0-rc.30`
+(`ab5446b1db76777deb94ec75308a4133cc49d2b1`)과 LDS `0.1.0-rc.69.30`
+(`lds-v0.1.0-rc.69.30`, `ae8f7db92b84a8de2c861e2b653dc490f473117f`)을 짝으로 발행했고,
+Robotics release conformance gate `32559194306`과 LDS CI `32559187551`이 통과했다.
+Immutable package workflow `32560143623`은 Core·Theme·Product를 GitHub Packages에 게시했으며,
+`check:workspace-packages`와 `check:release-pins`의 documentation snapshot drift는 0이다.
 
 현재 상태를 다시 판단할 때 위 서술의 버전·수치를 그대로 재사용하지 않고 다음 권위를
 읽는다.
@@ -94,7 +95,7 @@ manifest가 바뀌어 published Robotics rc.29의 snapshot pin과 달라졌으�
 R0 architecture/profile/package baseline (Done)
                          |
                          v
-R1 authority & promotion contract (Now: paired RC sync pending)
+R1 authority & promotion contract (Done)
              |
              +--------------------------> R2 product adoption promotion (Now)
              |                                      |
@@ -106,9 +107,9 @@ R6 ecosystem lifecycle review (Scheduled review, 2027-01)
 R7 evidence/operations health (Continuous)
 ```
 
-R1 계약 구현은 완료됐으며 R2 evidence 수집은 계속할 수 있다. 다만 R1 종료와 새 package
-candidate를 사용한 consumer stage 승격은 paired LDS/Robotics RC의 문서 snapshot pin이
-동기화된 뒤 확정한다. 첫 stable은 R1·R2가 완료되고 R3A·R3B의 **결정**이 닫힌 뒤 연다. R3A·R3B의 모든
+R1 계약 구현과 paired LDS/Robotics RC 발행은 완료됐다. R2는 새 package candidate를 사용한
+실제 제품 evidence와 owner 승인을 확보한 consumer부터 stage를 승격한다. 첫 stable은 R2가 완료되고
+R3A·R3B의 **결정**이 닫힌 뒤 연다. R3A·R3B의 모든
 후보를 stable 전에 구현한다는 뜻은 아니다. 각 후보를 이번 stable에 포함할지, 명시적
 owner·재검토 trigger와 함께 이후로 미룰지를 결정해야 한다는 뜻이다. R5 O3는 실제 alarm
 workflow가 없으면 계속 미지원이며 stable의 선행 조건이 아니다.
@@ -130,7 +131,7 @@ R1–R4가 소유한다.
 
 | Field | Value |
 | --- | --- |
-| Status | `Now` — 구현 완료; paired LDS/Robotics RC release sync 대기 |
+| Status | `Done` |
 | DRI | Frontend platform |
 | Required approver | Design system owner |
 | Dependency | R0 baseline |
@@ -176,7 +177,7 @@ R1–R4가 소유한다.
   강제된다.
 - active plan/follow-up마다 roadmap ID 또는 conditional entry trigger와 종료 gate가 있다.
 
-### 구현 evidence와 남은 closure
+### 구현 evidence와 release closure
 
 - [`OWNER_AUTHORITY_CONTRACT.json`](references/architecture/OWNER_AUTHORITY_CONTRACT.json)이
   live package/token/Storybook surface와 WDS compatibility projection을 함께 검증한다.
@@ -188,15 +189,15 @@ R1–R4가 소유한다.
   0이며 repository inventory와 generated component docs도 같은 source에 맞춰졌다.
 - 종료 검사는 `check:layers`, `check:adoption-registry`, registry contract test,
   `check:storybook-ia`, `check:inventory`, `check:components`, `check:docs`가 소유한다.
-- 위 구현 검사는 모두 통과했다. 최종 `Done` 승격은 새 LDS RC와 Robotics RC를 짝으로
-  발행하고 `check:workspace-packages`·`check:release-pins`의 Core documentation snapshot
-  drift 1건을 0으로 만든 뒤 수행한다.
+- 위 구현 검사와 paired release gate가 모두 통과했다. LDS `0.1.0-rc.69.30`과 Robotics UI
+  `0.1.0-rc.30`은 동기화된 Core documentation snapshot을 사용하며, immutable release workflow가
+  Core·Theme·Product package set을 게시했다.
 
 ## 6. R2 — 실제 제품 adoption 승격
 
 | Field | Value |
 | --- | --- |
-| Status | `Now` for evidence collection · R1 이후 stage promotion |
+| Status | `Now` — evidence collection과 stage promotion |
 | DRI | Portal/Web Viz product owner |
 | Required approvers | 해당 product owner · Design system owner |
 | Dependency | evidence 수집은 R0부터 가능; registry stage 승격은 R1 |
@@ -424,7 +425,7 @@ maintenance cost로 재평가한다. 그 전에는 taxonomy 정리만을 이유�
 
 | 문서 | 분류 | 현재 disposition | Roadmap 연결 |
 | --- | --- | --- | --- |
-| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | active implementation record | 1차 구현과 R1 authority/promotion contract 구현 완료; paired release sync 및 consumer·compatibility·stable checklist는 아직 유효 | R1·R2·R3B·R4 |
+| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | active implementation record | 1차 구현과 R1 authority/promotion contract·paired release 완료; consumer·compatibility·stable checklist는 아직 유효 | R1·R2·R3B·R4 |
 | [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | adopted implementation record | `default | ops` 1차 구현 완료 | R3A |
 | [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | completed implementation record | source/type/story/overlay 계약 완료; 제품 증거는 registry가 소유 | R2 |
 | [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | completed migration record | package split·Robotics extraction·compat retirement 완료 | R3B·R6 trigger |

@@ -3,13 +3,13 @@
 | Field | Value |
 | --- | --- |
 | Type | Active architecture implementation record |
-| Status | Active follow-through — 1차 taxonomy/profile·owner authority·O1/O2와 R1 계약 구현 완료; paired release sync 및 §14의 consumer·compatibility·stable gate는 roadmap으로 계속 추적 |
+| Status | Active follow-through — 1차 taxonomy/profile·owner authority·O1/O2와 R1 계약·paired release 완료; §14의 consumer·compatibility·stable gate는 roadmap으로 계속 추적 |
 | Owner | Design system owner · Frontend platform |
 | Required approvers | Design system owner · Frontend platform · Robotics domain owner(해당 변경) · consumer product owner(해당 migration) |
 | Last reviewed | 2026-08-22 |
 | Scope | Core·Theme·Product·Robotics 계층, 표현 프로파일, 패키지 계약, 소비 증거, legacy 정리 |
 | Related | [`DESIGN.md`](../DESIGN.md) · [`OPERATING_MODEL.md`](OPERATING_MODEL.md) · [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md) · [`ROBOTICS_PATTERNS.md`](ROBOTICS_PATTERNS.md) |
-| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) — R0 기준선과 R1 계약 구현 완료; 미완료 gate는 R1 paired release sync·R2·R3B·R4 |
+| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) — R0 기준선과 R1 계약·paired release 완료; 미완료 gate는 R2·R3B·R4 |
 
 이 문서는 LDS가 **LK Portal 같은 일반 B2B 제품 표면**과 **LK Web Viz·Control 같은
 산업 운영 표면**을 하나의 시스템으로 지원하기 위한 목표 계층과 이행 순서를
@@ -120,7 +120,7 @@ registry stage를 올린다.
 | A-01 | [`DESIGN.md`](../DESIGN.md)는 Product를 Operations 중심, Robotics를 telemetry·map·viewer owner로 설명하지만 package 계획과 machine registry는 Product를 generic application pattern owner로 사용한다. | 사람 문서와 검사기가 서로 다른 위치로 변경을 유도한다. |
 | A-02 | Core source가 참조하지만 Core가 정의하지 않고 Theme가 제공하는 CSS custom property가 2026-08-22 정적 스캔에서 136개다. | Theme provider 요구가 암묵적이고 CSS 의존은 현행 layer 검사 밖에 있다. |
 | A-03 | Product가 `@lk-design-system/lds-core/components/internal/*`와 overlay helper를 직접 import하고 Core export wildcard가 이를 노출한다. | `internal` 변경이 실제 public breaking change가 된다. |
-| A-04 | Core·Theme·Product가 모두 `0.1.0-rc.69.29`이고 Theme/Product가 Core exact version을 의존한다. 기존 계획은 non-lockstep과 workspace lockstep을 각각 선언한다. | 실제 fixed version group과 문서상 release policy가 일치하지 않는다. |
+| A-04 | Core·Theme·Product가 모두 `0.1.0-rc.69.30`이고 Theme/Product가 Core exact version을 의존한다. 현재 계약은 이를 fixed release group으로 선언하고 검사한다. | package group을 임의로 분리하면 tag·artifact·consumer evidence의 release identity가 다시 어긋난다. |
 | A-05 | `data-lds-profile`은 [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md)에만 있으며 runtime source와 CSS에는 없다. LDS 재앵커링 선행 조건은 rc.69.19에서 완료됐다. | 제품별 local density·motion·depth override가 새 스타일 계열로 굳을 수 있다. |
 | A-06 | Product는 Core보다 큰 공개 표면을 가지며 일반 control, app composition, editor/viewer, telemetry/equipment를 함께 노출한다. | `Product = Core가 아닌 모든 것`이 되어 탐색·변경·릴리스 범위가 불명확하다. |
 | A-07 | `ConnectionBadge`, `EquipmentStatusCard`, `TelemetryGauge` 등의 machine owner는 Product지만 prompt 분류는 Robotics다. | 중복 API, 잘못된 package 변경, compatibility re-export 장기화 위험이 있다. |

@@ -99,7 +99,7 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 
 | Document | Disposition |
 | --- | --- |
-| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | 1차 구현과 R1 authority/promotion contract 구현 완료; paired release sync는 R1, 남은 consumer·compatibility·stable gate는 R2·R3B·R4 |
+| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | 1차 구현과 R1 authority/promotion contract·paired release 완료; 남은 consumer·compatibility·stable gate는 R2·R3B·R4 |
 | [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) | O-A/B/C와 O4 문서·1차 시험 완료; 보완 문서 기준 질문 0 재시험은 R7 |
 
 ### Adopted or completed implementation records
