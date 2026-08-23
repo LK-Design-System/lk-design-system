@@ -20,7 +20,7 @@ Storybook의 732개 스토리 역할·공개 여부·소유 컴포넌트와 196�
 - Product: `@lk-design-system/lds-product@0.1.1` · source entry 120개 · named export 128개
 - 로컬 owner-package canonical unique surface: source entry 208개 · named export 221개
 - Product deprecated compatibility projection: source entry 9개 · named export 9개
-- 외부 Robotics: `@lk-design-system/lds-robotics-ui@0.1.0-rc.33` · source entry 23개 · named export 53개
+- 외부 Robotics: `@lk-design-system/lds-robotics-ui@0.1.0-rc.34` · source entry 23개 · named export 53개
 - Robotics 정본: `LK-Design-System/lk-design-system-robotics`와 `references/package-split/ROBOTICS_EXTERNAL_SURFACE.json`. 로컬 publishable package는 Robotics를 재노출하지 않으며 consumer는 외부 패키지를 직접 설치합니다.
 - 컴포넌트 소스 디렉터리 18개: `brand`, `buttons`, `cards`, `communication`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `internal`, `layout`, `navigation`, `overlay`, `robotics`, `selection`, `status`, `viz`
 - 런타임 peer dependency: `react`
