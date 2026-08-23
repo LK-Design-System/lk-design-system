@@ -1,6 +1,11 @@
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import {
+  assertCurrentCanonicalSnapshot,
+  canonicalSnapshotFromDocumentationManifest,
+  canonicalSnapshotMode,
+} from './robotics-canonical-snapshot.mjs';
 
 /**
  * 릴리스 파생값 재계산 — 쓰기(기본)와 검산(`--check`)이 같은 코드 경로다.
@@ -23,8 +28,13 @@ import path from 'node:path';
 
 const root = process.cwd();
 const checkOnly = process.argv.includes('--check');
+const requireCurrentCanonicalSnapshot = process.argv.includes('--require-current-canonical-snapshot');
 const workspacePackages = ['core', 'theme', 'product'];
 const roboticsName = '@lk-design-system/lds-robotics-ui';
+
+if (requireCurrentCanonicalSnapshot && !checkOnly) {
+  throw new Error('--require-current-canonical-snapshot is a read-only release gate and requires --check.');
+}
 
 const diffs = [];
 const writes = new Map();
@@ -146,8 +156,9 @@ for (const id of workspacePackages) {
   // devDependency가 새 tgz 경로를 가리켜야 하고, 그 경로를 쓰는 것이 바로 이
   // 스크립트다. 순환이다.
   //
-  // 그래서 두 번 돌린다. 1차는 경로·버전만 쓰고 해시는 건드리지 않은 채
-  // 멈춘다. `npm install` 후 2차에서 해시까지 완성한다. 어느 쪽이든 마지막에
+  // 그래서 두 번 돌린다. 1차는 경로·버전만 쓰고 published 문서 provenance와
+  // 해시는 건드리지 않은 채 멈춘다. `npm install` 후 2차에서 설치본이 관측한
+  // provenance와 해시를 함께 완성한다. 어느 쪽이든 마지막에
   // `check:release-pins`가 전부 대조하므로, 2차를 잊으면 CI가 막는다.
   // 아직 설치조차 안 된 경우도 1차 실행이다 (node_modules를 지우고 시작하는 것이
   // 흔한 릴리스 절차다).
@@ -164,17 +175,70 @@ for (const id of workspacePackages) {
     });
   }
 
+  let installedDocsManifest = null;
+  let installedCanonical = null;
+  if (installedMatches) {
+    installedDocsManifest = JSON.parse(
+      await readFile(path.join(packageRoot, ...surface.documentation.files.manifest.path.split('/')), 'utf8'),
+    );
+    installedCanonical = canonicalSnapshotFromDocumentationManifest(installedDocsManifest);
+    canonicalSnapshotMode({
+      currentRef: `lds-v${ldsVersion}`,
+      canonicalRef: installedCanonical.source.ref,
+      surfacePackageRefStatus: surface.package?.refStatus,
+      installedPackageRefStatus: installed.lds?.refStatus,
+    });
+  }
+
   const artifactHash = await sha256(vendoredPath);
-  const canonicalPath = surface.documentation?.canonicalContract?.source?.path;
+  const canonicalPath = (installedCanonical ?? surface.documentation?.canonicalContract)?.source?.path;
   const canonicalHash = canonicalPath ? await sha256(canonicalPath) : undefined;
-  const snapshotHash = await sha256('packages/core/docs/manifest.json');
+  const currentSnapshotHash = await sha256('packages/core/docs/manifest.json');
+  if (installedCanonical && canonicalHash !== installedCanonical.source.sha256) {
+    throw new Error(
+      `Installed ${roboticsName} canonical contract hash does not match the local canonical path ${canonicalPath}.`,
+    );
+  }
+  if (requireCurrentCanonicalSnapshot) {
+    if (!installedCanonical) {
+      throw new Error('Release canonical snapshot gate requires the exact installed Robotics package observation.');
+    }
+    assertCurrentCanonicalSnapshot({
+      currentRef: `lds-v${ldsVersion}`,
+      canonicalRef: installedCanonical.source.ref,
+      canonicalSnapshotManifestSha256: installedCanonical.snapshotManifestSha256,
+      currentSnapshotManifestSha256: currentSnapshotHash,
+      surfacePackageRefStatus: surface.package?.refStatus,
+      installedPackageRefStatus: installed.lds?.refStatus,
+    });
+  }
 
   record(file, 'package.version', surface.package?.version, roboticsVersion);
   record(file, 'vendoredArtifact.path', surface.vendoredArtifact?.path, vendoredPath);
   record(file, 'vendoredArtifact.sha256', surface.vendoredArtifact?.sha256, artifactHash);
-  record(file, 'canonicalContract.source.ref', surface.documentation?.canonicalContract?.source?.ref, `lds-v${ldsVersion}`);
   record(file, 'canonicalContract.source.sha256', surface.documentation?.canonicalContract?.source?.sha256, canonicalHash);
-  record(file, 'canonicalContract.snapshotManifestSha256', surface.documentation?.canonicalContract?.snapshotManifestSha256, snapshotHash);
+  if (installedCanonical) {
+    record(
+      file,
+      'canonicalContract (installed published observation)',
+      JSON.stringify(surface.documentation?.canonicalContract),
+      JSON.stringify(installedCanonical),
+    );
+    const snapshotMode = canonicalSnapshotMode({
+      currentRef: `lds-v${ldsVersion}`,
+      canonicalRef: installedCanonical.source.ref,
+      surfacePackageRefStatus: surface.package?.refStatus,
+      installedPackageRefStatus: installed.lds?.refStatus,
+    });
+    if (snapshotMode === 'current') {
+      record(
+        file,
+        'canonicalContract.snapshotManifestSha256 (current ref)',
+        installedCanonical.snapshotManifestSha256,
+        currentSnapshotHash,
+      );
+    }
+  }
 
   // 설치된 robotics 패키지 안의 문서 해시. node_modules가 현재 tgz로 설치돼
   // 있어야 의미가 있으므로, 없으면 계산을 건너뛰지 않고 실패시킨다.
@@ -197,9 +261,6 @@ for (const id of workspacePackages) {
       record(file, `documentation.files.${key}.sha256`, entry.sha256, await hashInstalled(entry.path));
     }
 
-    const installedDocsManifest = JSON.parse(
-      await readFile(path.join(packageRoot, ...surface.documentation.files.manifest.path.split('/')), 'utf8'),
-    );
     derivedDomainDocuments = [];
     for (const entry of installedDocsManifest.domain?.documents ?? []) {
       const surfacePath = path.posix.join(bundleRoot, entry.path);
@@ -221,11 +282,13 @@ for (const id of workspacePackages) {
     draft.package.version = roboticsVersion;
     draft.vendoredArtifact.path = vendoredPath;
     draft.vendoredArtifact.sha256 = artifactHash;
-    const canonical = draft.documentation.canonicalContract;
-    canonical.source.ref = `lds-v${ldsVersion}`;
-    if (canonicalHash) canonical.source.sha256 = canonicalHash;
-    canonical.snapshotManifestSha256 = snapshotHash;
     if (!installedMatches) return;   // 해시는 2차 실행에서 쓴다
+    // Canonical adoption provenance belongs to the published Robotics artifact,
+    // not to the current LDS source candidate. Never synthesize it from ldsVersion.
+    draft.documentation.canonicalContract = {
+      ...installedCanonical,
+      source: { ...installedCanonical.source },
+    };
     for (const entry of Object.values(draft.documentation.files ?? {})) {
       entry.sha256 = await hashInstalled(entry.path);
     }

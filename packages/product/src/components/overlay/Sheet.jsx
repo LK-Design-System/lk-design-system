@@ -1,6 +1,6 @@
 import React from 'react';
-import { useDialogFocus } from '@lk-design-system/lds-core/components/overlay/dialog-focus';
-import { OverlayPortal } from '@lk-design-system/lds-core/components/overlay/overlay-platform';
+import { useDialogFocus } from '@lk-design-system/lds-core/platform';
+import { OverlayPortal } from '@lk-design-system/lds-core/platform';
 
 /**
  * LDS Product Extension — Sheet

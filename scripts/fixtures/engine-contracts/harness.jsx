@@ -4,15 +4,15 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { flushSync } from 'react-dom';
-import { useMenuKeyboard } from '../../../components/internal/useMenuKeyboard.js';
+import { useMenuKeyboard } from '../../../packages/core/src/headless.js';
 import {
   appendAriaReference,
   inlineFloatingStyle,
   useControllableOpen,
+  useDialogFocus,
   useFloatingPosition,
   useLightDismiss,
-} from '../../../components/overlay/anchored-overlay.js';
-import { useDialogFocus } from '../../../components/overlay/dialog-focus.js';
+} from '../../../packages/core/src/platform.js';
 import {
   FieldMessage,
   FieldStack,
@@ -20,7 +20,7 @@ import {
   fieldBorderColor,
   mergeIds,
   useFieldMetadata,
-} from '../../../components/forms/field-shared.js';
+} from '../../../packages/core/src/component-authoring.js';
 
 // Pure exports asserted directly from the driver script.
 window.__engine = { appendAriaReference, inlineFloatingStyle, mergeIds, fieldBorderColor, fieldBackground };

@@ -11,7 +11,7 @@ import {
   isAttachedUnit,
   normalizeUnit,
   normalizeValueText,
-} from '@lk-design-system/lds-core/components/internal/unit-format';
+} from '@lk-design-system/lds-core/component-authoring';
 
 function displayScalarValue(value, mixed) {
   if (mixed || value == null) return '—';

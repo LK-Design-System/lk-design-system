@@ -1,6 +1,6 @@
 import React from 'react';
 import { SearchField } from '@lk-design-system/lds-core/components/forms/SearchField';
-import { componentVars, partClassName, partStyle } from '@lk-design-system/lds-core/components/internal/surface';
+import { componentVars, partClassName, partStyle } from '@lk-design-system/lds-core/component-authoring';
 
 /**
  * LK PRODUCT — DataToolbar

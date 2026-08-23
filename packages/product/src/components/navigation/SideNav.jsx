@@ -1,8 +1,8 @@
 import React from 'react';
 import { Tooltip } from '@lk-design-system/lds-core/components/content/Tooltip';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
-import { useLightDismiss } from '@lk-design-system/lds-core/components/overlay/anchored-overlay';
-import { componentVars, partClassName, partStyle, useMergedRefs } from '@lk-design-system/lds-core/components/internal/surface';
+import { useLightDismiss } from '@lk-design-system/lds-core/platform';
+import { componentVars, partClassName, partStyle, useMergedRefs } from '@lk-design-system/lds-core/component-authoring';
 
 const Chevron = ({ open }) => (
   <Icon data-sidenav-motion="chevron" name="chevron-down-small" size={14} aria-hidden="true" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }} />

@@ -6,7 +6,7 @@ import {
   LK_PATHS,
   ROBOTICS_INLINE_TRANSFORM,
   ROBOTICS_PATHS,
-} from '@lk-design-system/lds-core/components/brand/lk-logo-paths';
+} from '@lk-design-system/lds-core/brand-authoring';
 import {
   PORTAL_INLINE_TRANSFORM,
   PORTAL_LOCKUP_VIEWBOX,

@@ -5,7 +5,7 @@
 | Type | Governance policy |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-08-22 |
+| Last reviewed | 2026-08-23 |
 
 디자인 시스템은 컴포넌트 묶음이 아니라 변경을 안전하게 반복하는 운영 체계입니다. 이 문서는 LK 디자인 시스템의 기여, 릴리즈, 마이그레이션 기준을 정의합니다.
 
@@ -43,6 +43,23 @@ package owner와 달라지면 `npm run check:layers`가 실패합니다.
 - Product → Core, Product
 - Robotics → Core, Product, Robotics
 
+Theme/Product가 Core authoring helper를 재사용할 때는 private 구현 경로가 아니라 다음
+지원 subpath만 사용합니다.
+
+- `@lk-design-system/lds-core/brand-authoring` — Theme lockup을 위한 raw LK logo geometry
+- `@lk-design-system/lds-core/component-authoring` — part/style, field/status presentation, bounded value와 unit formatting
+- `@lk-design-system/lds-core/density` — bounded density context와 resolution
+- `@lk-design-system/lds-core/headless` — menu/submenu keyboard behavior
+- `@lk-design-system/lds-core/platform` — overlay runtime, positioning, dismiss, focus와 portal behavior
+
+owner authority에서 internal로 분류된 Core deep module과
+`@lk-design-system/lds-core/**/internal/*`, `@lk-design-system/lds-core/**/private/*`는 비-Core package 계약이 아닙니다. 정적·동적 import,
+re-export, `import type`, `require`를 포함한 Theme/Product 재도입은 `npm run check:layers`가
+차단하고 package export map도 해당 deep path를 명시적으로 `null` 처리합니다. 위 다섯
+subpath의 runtime export,
+type surface와 SSR fixture가 함께 통과해야 하며, subpath를 늘리는 변경은 public API review
+대상입니다.
+
 Product family의 live taxonomy는
 [`PRODUCT_FAMILY_CONTRACT.json`](references/architecture/PRODUCT_FAMILY_CONTRACT.json)이
 소유하고, Theme 표현 축은
@@ -56,8 +73,20 @@ Product family의 live taxonomy는
 - telemetry, viewer, equipment, command, application navigation, robotics spatial navigation의 대표 export는 machine boundary decision과 같은 owner를 갖습니다.
 - WDS archive의 owner projection은 위 live surface와 정확히 일치해야 하지만 역으로 live owner의 입력이 되지 않습니다.
 
-같은 명령은 Product family 누락·중복도 함께 차단하고,
-`npm run check:expression-profile`은 Theme provider와 profile 축의 정합성을
+같은 명령은 Product family 누락·중복과 Theme/Product→Core private import도 함께 차단합니다.
+`npm run check:layer-owner-exact-set`은 Product public source/export·component registry·
+canonical Storybook page를 같은 family owner로 대조하고, Robotics external surface와 LDS3D
+package/qualified export가 Product와 겹치거나 역방향 dependency를 만들지 않는지 한 번에
+검사합니다. Product 111 source 중 107개는 registry↔canonical page를 직접 join하며, 공유
+composition 때문에 direct primary-owner join을 할 수 없는 `Stat→MetricCard`,
+`BottomNav→NavRail`, `Toolbar→TopBar`와 FileUpload evidence asymmetry 4건만 title·path·export·
+owner·family exact pin과 stale-removal 진단을 가진 closed exception으로 유지합니다. 이 검사는
+외부 surface의 저장소 고정 snapshot을 사용하며 외부 제품의 live main 또는 deployment
+freshness를 증명하지 않습니다.
+
+`npm run check:semantic-provider`는 Core·Theme·Product package contract와 pinned Robotics
+adapter의 semantic variable·provider contract version을 검사하고,
+`npm run check:expression-profile`은 같은 Theme provider 위의 `default | ops` profile 축을
 검사합니다. 새 코드는
 `/core`, `/theme`, `/product`, `/robotics` subpath를 사용하며 기존 aggregate
 root와 `components/*`는 호환 표면으로 유지합니다.

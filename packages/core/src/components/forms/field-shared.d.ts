@@ -3,6 +3,15 @@ import * as React from 'react';
 /** id 목록 문자열들을 공백 기준으로 병합하고 중복을 제거한다. 유효한 id가 없으면 undefined. */
 export function mergeIds(...values: Array<string | number | null | undefined | false>): string | undefined;
 
+export interface FieldTypographyStyle {
+  fontSize: string;
+  lineHeight: string;
+  letterSpacing: string;
+}
+
+/** 필드 컨트롤 크기에 맞는 입력 타이포그래피 토큰 묶음. */
+export function fieldTypography(size?: string): FieldTypographyStyle;
+
 export interface UseFieldMetadataOptions {
   /** 자동 생성 id의 접두어(예: "input", "number-field"). */
   prefix: string;

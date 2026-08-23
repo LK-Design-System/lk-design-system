@@ -1,5 +1,5 @@
 import React from 'react';
-import { LK_LOGO_COLORS, LK_LOGO_VIEWBOX, LK_PATHS } from '@lk-design-system/lds-core/components/brand/lk-logo-paths';
+import { LK_LOGO_COLORS, LK_LOGO_VIEWBOX, LK_PATHS } from '@lk-design-system/lds-core/brand-authoring';
 import { PRODUCT_LOCKUP_REGISTRY } from './lk-product-lockup-paths.js';
 
 const DEFAULT_HEIGHT = 28;

@@ -82,6 +82,22 @@ import {
   EmptyState,
   Toast,
 } from '@lk-design-system/lds-core';
+import { LK_LOGO_VIEWBOX } from '@lk-design-system/lds-core/brand-authoring';
+import {
+  formatValueWithUnit,
+  normalizeBoundedValue,
+  statusToneStyle,
+} from '@lk-design-system/lds-core/component-authoring';
+import {
+  ComponentDensityScope,
+  useResolvedDensity,
+} from '@lk-design-system/lds-core/density';
+import { useMenuKeyboard } from '@lk-design-system/lds-core/headless';
+import {
+  OverlayRuntimeProvider,
+  anchoredPanelStyle,
+  useOverlayLayer,
+} from '@lk-design-system/lds-core/platform';
 import {
   ProductLockup,
   ThemeToggle,
@@ -92,6 +108,12 @@ import {
   TopBarNavItem,
 } from '@lk-design-system/lds-product';
 import { RobotStatusCard } from '@lk-design-system/lds-robotics-ui';
+import corePackage from '@lk-design-system/lds-core/package.json';
+import coreSemanticContract from '@lk-design-system/lds-core/tokens/semantic-contract.json';
+import themePackage from '@lk-design-system/lds-theme/package.json';
+import themeSemanticContract from '@lk-design-system/lds-theme/tokens/semantic-contract.json';
+import productPackage from '@lk-design-system/lds-product/package.json';
+import productSemanticContract from '@lk-design-system/lds-product/tokens/semantic-contract.json';
 import '@lk-design-system/lds-core/styles.css';
 import '@lk-design-system/lds-theme/styles.css';
 import '@lk-design-system/lds-product/styles.css';
@@ -105,6 +127,50 @@ const columns = [
   { key: 'status', label: '상태', render: (row) => <Badge tone={row.status === '정상' ? 'success' : 'warning'}>{row.status}</Badge> },
   { key: 'battery', label: '배터리', align: 'right' },
 ];
+
+const semanticContracts = [
+  [corePackage, coreSemanticContract, 'consumer'],
+  [themePackage, themeSemanticContract, 'provider'],
+  [productPackage, productSemanticContract, 'consumer'],
+];
+if (!semanticContracts.every(([manifest, contract, role]) => (
+  manifest.lds.semanticContract === './tokens/semantic-contract.json'
+  && manifest.lds.requiresSemanticContractVersion === '1'
+  && contract.schemaVersion === 1
+  && contract.contractVersion === '1'
+  && contract.role === role
+  && contract.package.name === manifest.name
+  && contract.package.version === manifest.version
+  && (role !== 'provider' || (
+    manifest.lds.providesSemanticContractVersion === '1'
+    && contract.providesSemanticContractVersion === '1'
+  ))
+))) {
+  throw new Error('LDS semantic package metadata and contract files do not agree.');
+}
+
+function SupportedFacadeProbe() {
+  const density = useResolvedDensity();
+  const menu = useMenuKeyboard({ open: false, onClose: () => undefined, getTrigger: () => null });
+  const overlay = useOverlayLayer({ open: false });
+  const range = normalizeBoundedValue({ value: 120, min: 0, max: 100 });
+  const panel = anchoredPanelStyle(240);
+  const tone = statusToneStyle('success');
+  return (
+    <output
+      data-testid="supported-facade-probe"
+      data-density={density}
+      data-brand-viewbox={LK_LOGO_VIEWBOX.mark}
+      data-menu-z-index={menu.zIndex}
+      data-overlay-z-index={overlay.zIndex}
+      data-panel-position={panel.position}
+      data-semantic-contracts={semanticContracts.length}
+      style={{ color: tone.foreground }}
+    >
+      {formatValueWithUnit(range.value, '%')}
+    </output>
+  );
+}
 
 function App() {
   return (
@@ -122,6 +188,11 @@ function App() {
           <p>패키지명 import, styles.css export, React 컴포넌트 조합이 소비 앱 번들에서 동작해야 합니다.</p>
           <Button>운영 화면 열기</Button>
           <Button variant="secondary">보조 동작</Button>
+          <ComponentDensityScope density="compact">
+            <OverlayRuntimeProvider zIndexBase={160} profile="ops">
+              <SupportedFacadeProbe />
+            </OverlayRuntimeProvider>
+          </ComponentDensityScope>
         </Card>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 16 }}>
           <RobotStatusCard name="RB-01" status="online" battery={82} mode="순찰" selected />
@@ -170,6 +241,14 @@ async function main() {
     await page.locator('text=RB-01').first().waitFor({ timeout: 5000 });
     const bodyText = await page.locator('body').innerText();
     assert(bodyText.includes('소비 앱 스모크 빌드가 완료되었습니다.'), 'Consumer smoke page did not render Toast content.');
+    const facadeProbe = page.getByTestId('supported-facade-probe');
+    assert((await facadeProbe.getAttribute('data-density')) === 'compact', 'Packed density facade did not resolve.');
+    assert((await facadeProbe.getAttribute('data-brand-viewbox')) === '342.60933 149.18987 68.75467 64.1628', 'Packed brand-authoring facade did not resolve.');
+    assert((await facadeProbe.getAttribute('data-menu-z-index')) === '160', 'Packed headless facade did not share overlay runtime.');
+    assert((await facadeProbe.getAttribute('data-overlay-z-index')) === '160', 'Packed platform facade did not resolve.');
+    assert((await facadeProbe.getAttribute('data-panel-position')) === 'absolute', 'Packed platform style facade did not resolve.');
+    assert((await facadeProbe.getAttribute('data-semantic-contracts')) === '3', 'Packed semantic contract files or metadata did not resolve.');
+    assert((await facadeProbe.innerText()) === '100%', 'Packed component-authoring facade did not resolve.');
   } finally {
     await browser.close();
     server.close();
@@ -177,7 +256,7 @@ async function main() {
 
   const uniqueConsoleErrors = [...new Set(consoleErrors)].filter((message) => !/ResizeObserver loop/.test(message));
   assert(uniqueConsoleErrors.length === 0, `Consumer smoke emitted console/page errors:\n${uniqueConsoleErrors.join('\n')}`);
-  console.log('Validated consumer smoke: Core/Theme/Product/Robotics imports, styles.css, Vite production build, and rendered operational page passed.');
+  console.log('Validated consumer smoke: package roots, all supported Core facades, semantic contracts, styles, and the rendered operational page passed.');
 }
 
 main().catch((error) => {

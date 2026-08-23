@@ -3,6 +3,7 @@ import path from 'node:path';
 import ts from 'typescript';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
+import { findNonCoreCorePrivateImports } from './check-layer-private-imports.mjs';
 
 const root = process.cwd();
 const componentsRoot = 'components';
@@ -12,6 +13,12 @@ const deprecatedReexports = ownerAuthority.compatibilityProjections?.deprecatedP
 const compatibilitySourceModules = new Set(
   (deprecatedReexports?.entries ?? []).map((entry) => entry.module?.replaceAll('\\', '/')).filter(Boolean),
 );
+const compatibilityFacadeProjectionByModule = new Map([
+  ['components/overlay/anchored-panel-style.js', {
+    specifier: '@lk-design-system/lds-core/platform',
+    exports: ['anchoredPanelStyle'],
+  }],
+]);
 const authorityLayers = Array.isArray(ownerAuthority.layers) ? ownerAuthority.layers : [];
 const layers = authorityLayers.map((layer) => layer.id);
 const layerSet = new Set(layers);
@@ -651,12 +658,23 @@ async function validateDeprecatedPackageReexports(manifest, liveAuthority) {
     const declarationPath = wrapperPath.replace(/\.(jsx|js)$/, '.d.ts');
     const wrapper = await readSource(wrapperPath).catch(() => null);
     const declaration = await readSource(declarationPath).catch(() => null);
-    const targetSpecifier = `${targetLayer.package}/${modulePath.replace(/\.(jsx|js)$/, '')}`;
+    const facadeProjection = compatibilityFacadeProjectionByModule.get(modulePath);
+    const targetSpecifier = facadeProjection?.specifier
+      ?? `${targetLayer.package}/${modulePath.replace(/\.(jsx|js)$/, '')}`;
     if (!wrapper || !wrapper.includes('@deprecated') || !wrapper.includes(targetSpecifier)) {
       failures.push(`${wrapperPath}: generated compatibility wrapper must be deprecated and re-export ${targetSpecifier}.`);
     }
     if (!declaration || !declaration.includes('@deprecated') || !declaration.includes(targetSpecifier)) {
       failures.push(`${declarationPath}: generated compatibility declaration must be deprecated and re-export ${targetSpecifier}.`);
+    }
+    if (facadeProjection) {
+      const exactProjection = `export { ${facadeProjection.exports.join(', ')} } from '${targetSpecifier}';`;
+      if (!wrapper?.includes(exactProjection) || /export\s+\*/.test(wrapper)) {
+        failures.push(`${wrapperPath}: compatibility facade projection must be exactly ${exactProjection}`);
+      }
+      if (!declaration?.includes(exactProjection) || /export\s+\*/.test(declaration)) {
+        failures.push(`${declarationPath}: compatibility facade projection must be exactly ${exactProjection}`);
+      }
     }
     if (!Array.isArray(entry.exports)) {
       failures.push(`${modulePath}: compatibility exports must be an array.`);
@@ -967,6 +985,12 @@ async function main() {
   }
 
   const dependencyFailures = [];
+  const privateImportFindings = await findNonCoreCorePrivateImports(root);
+  for (const finding of privateImportFindings) {
+    dependencyFailures.push(
+      `${finding.file}:${finding.line}:${finding.column}: non-Core packages must use a supported Core subpath instead of ${JSON.stringify(finding.specifier)}.`,
+    );
+  }
   const moduleEdges = new Map(componentModules.map((modulePath) => [modulePath, new Set()]));
 
   for (const modulePath of componentModules) {

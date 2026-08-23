@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLightDismiss } from '@lk-design-system/lds-core/components/overlay/anchored-overlay';
+import { useLightDismiss } from '@lk-design-system/lds-core/platform';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
 /**

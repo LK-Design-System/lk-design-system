@@ -2,6 +2,36 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## Unreleased
+
+No additional package-facing change is recorded after the `0.1.1` source candidate.
+
+## 0.1.1 - 2026-08-23
+
+Source candidate only. No immutable tag, registry publish, consumer re-verification, rollout,
+or product deployment is attested by this section.
+
+The paired Robotics release for `0.1.1` is pending. The current `0.1.0-rc.33` artifact remains
+an exact published historical snapshot of `lds-v0.1.0`; a current Robotics snapshot is required
+before an immutable `lds-v0.1.1` tag or package publish is allowed.
+
+### Added
+
+- Added semantic provider contract v1, deterministic missing-Theme/variable/version
+  diagnostics, and supported Core+Theme, Core+Theme+Product, and
+  Core+Theme+Product+Robotics composition fixtures.
+- Added the supported Core `brand-authoring`, `component-authoring`, `density`, `headless`,
+  and `platform` subpaths with exact runtime, type-consumer, and SSR contracts;
+  authority-classified internal deep paths are explicitly denied by the package export map.
+- Added one exact-set gate for Product family/public exports, canonical Storybook ownership,
+  and the pinned Robotics/LDS3D specialist boundaries.
+
+### Changed
+
+- Migrated Theme/Product off authority-classified Core `internal`/`private` imports and made
+  the layer gate block their reintroduction across static, dynamic, type-only, re-export,
+  and `require` forms.
+
 ## 0.1.0 - 2026-08-23
 
 First stable Core, Theme, and Product package set, paired with

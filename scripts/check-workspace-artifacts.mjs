@@ -5,6 +5,10 @@ import path from 'node:path';
 import process from 'node:process';
 import { isDeepStrictEqual } from 'node:util';
 import { fileURLToPath } from 'node:url';
+import {
+  canonicalSnapshotFromDocumentationManifest,
+  canonicalSnapshotMode,
+} from './robotics-canonical-snapshot.mjs';
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, '..');
@@ -42,6 +46,85 @@ const requiredDocumentationFiles = [
   'docs/adoption-checklist.json',
   'docs/adoption-report.schema.json',
   'docs/LDS_UI_ADOPTION_CONTRACT.schema.json',
+];
+const coreSupportedFacades = {
+  'brand-authoring': {
+    targets: { types: './dist/brand-authoring.d.ts', import: './dist/brand-authoring.js' },
+    runtime: [
+      'LK_LOGO_COLORS',
+      'LK_LOGO_USAGE',
+      'LK_LOGO_VIEWBOX',
+      'LK_PATHS',
+      'ROBOTICS_INLINE_TRANSFORM',
+      'ROBOTICS_PATHS',
+    ],
+  },
+  'component-authoring': {
+    targets: { types: './dist/component-authoring.d.ts', import: './dist/component-authoring.js' },
+    runtime: [
+      'FieldLabel',
+      'FieldMessage',
+      'FieldStack',
+      'FieldStatusIcon',
+      'STATUS_TONE_STYLE',
+      'componentVars',
+      'embeddedBandStyle',
+      'fieldBackground',
+      'fieldBorderColor',
+      'fieldTypography',
+      'formatValueWithUnit',
+      'getUnitSeparator',
+      'isAttachedUnit',
+      'mergeIds',
+      'normalizeBoundedValue',
+      'normalizeStatusTone',
+      'normalizeUnit',
+      'normalizeValueText',
+      'partClassName',
+      'partStyle',
+      'statusToneStyle',
+      'useFieldMetadata',
+      'useMergedRefs',
+    ],
+  },
+  density: {
+    targets: { types: './dist/density.d.ts', import: './dist/density.js' },
+    runtime: ['ComponentDensityScope', 'useResolvedControlSize', 'useResolvedDensity'],
+  },
+  headless: {
+    targets: { types: './dist/headless.d.ts', import: './dist/headless.js' },
+    runtime: ['useMenuKeyboard', 'useSubmenuBranch'],
+  },
+  platform: {
+    targets: { types: './dist/platform.d.ts', import: './dist/platform.js' },
+    runtime: [
+      'OverlayPortal',
+      'OverlayRuntimeContext',
+      'OverlayRuntimeProvider',
+      'anchoredPanelStyle',
+      'appendAriaReference',
+      'findOverlayTrigger',
+      'inlineFloatingStyle',
+      'useControllableOpen',
+      'useDialogFocus',
+      'useFloatingPosition',
+      'useLightDismiss',
+      'useOverlayLayer',
+      'useOverlayRuntime',
+    ],
+  },
+};
+const coreDeniedInternalSubpaths = [
+  './components/internal/*',
+  './components/private/*',
+  './components/brand/lk-logo-paths',
+  './components/forms/field-shared',
+  './components/overlay/anchored-overlay',
+  './components/overlay/overlay-platform',
+  './components/overlay/anchored-panel-style',
+  './components/overlay/dialog-focus',
+  './components/selection/pill-chip-style',
+  './components/status/status-presentation',
 ];
 const roboticsExternalSurface = await readJson(path.join(
   repositoryRoot,
@@ -215,6 +298,52 @@ function assertImplementationContract(workspace, manifest, files) {
     manifest.exports?.['./components/*']?.import && manifest.exports?.['./components/*']?.types,
     `${workspace.id}: deep component ESM/types exports are required.`,
   );
+  if (workspace.id === 'core') {
+    for (const [facade, { targets }] of Object.entries(coreSupportedFacades)) {
+      invariant(
+        isDeepStrictEqual(manifest.exports?.[`./${facade}`], targets),
+        `core: ./${facade} must expose its exact ESM/types targets.`,
+      );
+    }
+    for (const subpath of coreDeniedInternalSubpaths) {
+      invariant(manifest.exports?.[subpath] === null, `core: ${subpath} must explicitly deny private implementation access.`);
+    }
+  }
+}
+
+async function assertSemanticContract(workspace, manifest, files, workspaceDirectory) {
+  if (workspace.external) return;
+  const semanticTarget = './tokens/semantic-contract.json';
+  const semanticFile = semanticTarget.replace(/^\.\//, '');
+  invariant(manifest.lds?.semanticContract === semanticTarget, `${workspace.id}: lds.semanticContract must target ${semanticTarget}.`);
+  invariant(manifest.lds?.requiresSemanticContractVersion === '1', `${workspace.id}: lds.requiresSemanticContractVersion must be 1.`);
+  if (files) invariant(files.has(semanticFile), `${workspace.id}: semantic contract is absent from the tarball.`);
+  const contract = await readJson(path.join(workspaceDirectory, semanticFile));
+  const expectedRole = workspace.id === 'theme' ? 'provider' : 'consumer';
+  invariant(contract.schemaVersion === 1, `${workspace.id}: semantic contract schemaVersion must be 1.`);
+  invariant(contract.kind === 'lds-semantic-token-package-contract', `${workspace.id}: semantic contract kind is invalid.`);
+  invariant(contract.contractVersion === '1', `${workspace.id}: semantic contract version must be 1.`);
+  invariant(contract.role === expectedRole, `${workspace.id}: semantic contract role must be ${expectedRole}.`);
+  invariant(
+    isDeepStrictEqual(contract.package, { name: manifest.name, version: manifest.version }),
+    `${workspace.id}: semantic contract package identity or version drift.`,
+  );
+  invariant(
+    contract.requiresSemanticContractVersion === manifest.lds.requiresSemanticContractVersion,
+    `${workspace.id}: semantic consumer version differs between package metadata and contract.`,
+  );
+  invariant(Array.isArray(contract.requiredVariables), `${workspace.id}: semantic contract requiredVariables must be an array.`);
+  if (expectedRole === 'provider') {
+    invariant(manifest.lds.providesSemanticContractVersion === '1', 'theme: lds.providesSemanticContractVersion must be 1.');
+    invariant(
+      contract.providesSemanticContractVersion === manifest.lds.providesSemanticContractVersion,
+      'theme: semantic provider version differs between package metadata and contract.',
+    );
+    invariant(Array.isArray(contract.providedVariables), 'theme: semantic contract providedVariables must be an array.');
+  } else {
+    invariant(manifest.lds.providesSemanticContractVersion === undefined, `${workspace.id}: consumers must not claim a semantic provider version.`);
+    invariant(contract.providesSemanticContractVersion === undefined, `${workspace.id}: consumer contract must not claim a provider version.`);
+  }
 }
 
 function assertDocumentationContract(workspace, manifest, files) {
@@ -269,8 +398,31 @@ function firstStaticSubpath(files, directory) {
   return file;
 }
 
-function firstDeepComponent(files) {
-  const file = [...files].find((candidate) => candidate.startsWith('dist/components/') && candidate.endsWith('.js'));
+function packageExportForSubpath(manifest, subpath) {
+  if (Object.hasOwn(manifest.exports ?? {}, subpath)) return manifest.exports[subpath];
+  const patterns = Object.entries(manifest.exports ?? {})
+    .filter(([key]) => key.includes('*'))
+    .filter(([key]) => {
+      const pattern = new RegExp(`^${key
+        .replace(/[.+?^${}()|[\]\\]/g, '\\$&')
+        .replaceAll('*', '(.+)')}$`);
+      return pattern.test(subpath);
+    })
+    .sort(([left], [right]) => (
+      right.replaceAll('*', '').length - left.replaceAll('*', '').length
+      || right.length - left.length
+    ));
+  return patterns[0]?.[1];
+}
+
+function firstDeepComponent(files, manifest) {
+  const file = [...files]
+    .filter((candidate) => candidate.startsWith('dist/components/') && candidate.endsWith('.js'))
+    .sort()
+    .find((candidate) => {
+      const deepSubpath = candidate.slice('dist/'.length, -'.js'.length);
+      return packageExportForSubpath(manifest, `./${deepSubpath}`) != null;
+    });
   invariant(file, 'No compiled deep component ESM file was packed.');
   return file.slice('dist/'.length, -'.js'.length);
 }
@@ -303,13 +455,14 @@ async function packWorkspace(workspace, destination) {
   assertExportFiles(workspace, manifest, files);
   assertImplementationContract(workspace, manifest, files);
   assertDocumentationContract(workspace, manifest, files);
+  await assertSemanticContract(workspace, manifest, files, workspaceDirectory);
 
   return {
     ...workspace,
     manifest,
     files,
     tarball: path.join(destination, result.filename),
-    deepSubpath: firstDeepComponent(files),
+    deepSubpath: firstDeepComponent(files, manifest),
   };
 }
 
@@ -447,6 +600,7 @@ async function assertInstalledDocumentation(packed, consumerDirectory) {
   for (const workspace of packed) {
     const installedRoot = path.join(consumerDirectory, 'node_modules', ...workspace.name.split('/'));
     const installedManifest = await readJson(path.join(installedRoot, 'package.json'));
+    await assertSemanticContract(workspace, installedManifest, null, installedRoot);
     const bundleRoot = workspace.external
       ? path.posix.dirname(roboticsExternalSurface.documentation.files.manifest.path)
       : 'docs';
@@ -500,13 +654,21 @@ async function assertInstalledDocumentation(packed, consumerDirectory) {
       invariant(
         roboticsExternalSurface.schemaVersion === 3
           && roboticsExternalSurface.package?.name === workspace.name
-          && roboticsExternalSurface.package?.version === installedManifest.version,
+          && roboticsExternalSurface.package?.version === installedManifest.version
+          && roboticsExternalSurface.package?.refStatus === installedManifest.lds?.refStatus,
         'robotics: installed package identity differs from the v3 external surface.',
       );
       const documentation = roboticsExternalSurface.documentation;
+      const installedCanonical = canonicalSnapshotFromDocumentationManifest(docsManifest);
+      const snapshotMode = canonicalSnapshotMode({
+        currentRef: `lds-v${workspaceRootManifest.version}`,
+        canonicalRef: installedCanonical.source.ref,
+        surfacePackageRefStatus: roboticsExternalSurface.package.refStatus,
+        installedPackageRefStatus: installedManifest.lds?.refStatus,
+      });
       invariant(
-        documentation.canonicalContract.source.ref === `lds-v${workspaceRootManifest.version}`,
-        'robotics: canonical adoption source ref must match the current LDS package-set version.',
+        isDeepStrictEqual(installedCanonical, documentation.canonicalContract),
+        'robotics: installed canonical LDS snapshot differs from the external surface.',
       );
       const declared = [
         ...Object.values(documentation.files),
@@ -570,6 +732,14 @@ async function assertInstalledDocumentation(packed, consumerDirectory) {
           === documentation.canonicalContract.snapshotManifestSha256,
         'robotics: upstream snapshot manifest hash differs from the canonical documentation source.',
       );
+      if (snapshotMode === 'current') {
+        const currentManifestBytes = await readFile(path.join(repositoryRoot, 'packages/core/docs/manifest.json'));
+        invariant(
+          createHash('sha256').update(currentManifestBytes).digest('hex')
+            === documentation.canonicalContract.snapshotManifestSha256,
+          'robotics: current-ref snapshot differs from the current Core documentation manifest.',
+        );
+      }
       invariant(
         isDeepStrictEqual(
           withoutReferenceProjection(adoptionContract),
@@ -600,7 +770,7 @@ async function assertInstalledDocumentation(packed, consumerDirectory) {
       );
     }
   }
-  console.log('Validated installed package documentation hashes, relative schema links, and computed token/asset inventories.');
+  console.log('Validated installed package semantic metadata, documentation hashes, relative schema links, and computed token/asset inventories.');
 }
 
 async function smokeDocumentationResolution(packed, consumerDirectory) {
@@ -653,10 +823,48 @@ console.log('package documentation resolution smoke passed');
   invariant(stdout.includes('package documentation resolution smoke passed'), 'Documentation resolution smoke did not reach its success marker.');
 }
 
+async function smokeSupportedCoreFacades(packed, consumerDirectory) {
+  const core = packed.find(({ id }) => id === 'core');
+  invariant(core, 'Core package is required for the supported facade smoke.');
+  const smoke = `
+import { access, readFile } from 'node:fs/promises';
+
+const core = ${JSON.stringify(core.name)};
+const contracts = ${JSON.stringify(coreSupportedFacades)};
+const manifestUrl = new URL(import.meta.resolve(core + '/package.json'));
+const manifest = JSON.parse(await readFile(manifestUrl, 'utf8'));
+for (const [facade, contract] of Object.entries(contracts)) {
+  const subpath = './' + facade;
+  const target = manifest.exports?.[subpath];
+  if (JSON.stringify(target) !== JSON.stringify(contract.targets)) {
+    throw new Error(subpath + ' packed export target drift.');
+  }
+  const declarationUrl = new URL(target.types, manifestUrl);
+  await access(declarationUrl);
+  const declaration = await readFile(declarationUrl, 'utf8');
+  if (!/\\bexport\\b/.test(declaration)) throw new Error(subpath + ' packed type target is empty.');
+  const runtime = await import(core + '/' + facade);
+  const actual = Object.keys(runtime).sort();
+  if (JSON.stringify(actual) !== JSON.stringify(contract.runtime)) {
+    throw new Error(subpath + ' packed runtime exports drift: ' + actual.join(', ') + '.');
+  }
+}
+console.log('supported Core facade packed runtime and type resolution smoke passed');
+`;
+  const smokeFile = path.join(consumerDirectory, 'supported-facade-smoke.mjs');
+  await writeFile(smokeFile, smoke.trimStart());
+  const { stdout } = await run(process.execPath, [smokeFile], { cwd: consumerDirectory });
+  invariant(
+    stdout.includes('supported Core facade packed runtime and type resolution smoke passed'),
+    'Supported Core facade smoke did not reach its success marker.',
+  );
+}
+
 async function smokePackedSelect(packed, consumerDirectory) {
   await installPackedDependencies(packed, consumerDirectory);
   await assertInstalledDocumentation(packed, consumerDirectory);
   await smokeDocumentationResolution(packed, consumerDirectory);
+  await smokeSupportedCoreFacades(packed, consumerDirectory);
   await assertPackedSelectTokenContract(packed, consumerDirectory);
 }
 
@@ -664,6 +872,7 @@ async function smokeConsumer(packed, consumerDirectory) {
   await installPackedDependencies(packed, consumerDirectory);
   await assertInstalledDocumentation(packed, consumerDirectory);
   await smokeDocumentationResolution(packed, consumerDirectory);
+  await smokeSupportedCoreFacades(packed, consumerDirectory);
   await assertPackedSelectTokenContract(packed, consumerDirectory);
 
   // Static subpath resolution used to be exercised through the compatibility

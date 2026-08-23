@@ -1,5 +1,41 @@
 import * as React from 'react';
 import {
+  LK_LOGO_COLORS,
+  LK_PATHS,
+  type LkLogoPath,
+} from '@lk-design-system/lds-core/brand-authoring';
+import {
+  FieldLabel,
+  componentVars,
+  fieldTypography,
+  formatValueWithUnit,
+  normalizeBoundedValue,
+  normalizeStatusTone,
+  type FieldLabelProps,
+  type LdsClassNames,
+  type NormalizeBoundedValueOptions,
+  type StatusTone,
+} from '@lk-design-system/lds-core/component-authoring';
+import {
+  ComponentDensityScope,
+  useResolvedControlSize,
+  useResolvedDensity,
+  type ComponentDensity,
+} from '@lk-design-system/lds-core/density';
+import {
+  useMenuKeyboard,
+  useSubmenuBranch,
+  type UseMenuKeyboardOptions,
+  type UseSubmenuBranchResult,
+} from '@lk-design-system/lds-core/headless';
+import {
+  OverlayRuntimeProvider,
+  anchoredPanelStyle,
+  useOverlayLayer,
+  type OverlayRuntimeValue,
+  type UseDialogFocusOptions,
+} from '@lk-design-system/lds-core/platform';
+import {
   Button,
   Card,
   DropdownMenu,
@@ -44,6 +80,61 @@ import { ViewerFrame as ProductDeepViewerFrame } from '@lk-design-system/lds-pro
 import { RobotStatusCard as InvalidCoreRobotStatusCard } from '@lk-design-system/lds-core';
 
 export const consumerContract: React.ReactElement = <Button variant="primary">확인</Button>;
+
+const supportedRangeOptions: NormalizeBoundedValueOptions = { value: 120, min: 0, max: 100 };
+const supportedRange = normalizeBoundedValue(supportedRangeOptions);
+const supportedClassNames: LdsClassNames<'root'> = { root: 'supported-root' };
+const supportedDensity: ComponentDensity = 'compact';
+const supportedLogoPath: Readonly<LkLogoPath> | undefined = LK_PATHS[0];
+const supportedTone: StatusTone = normalizeStatusTone('success');
+const supportedFieldLabelProps: FieldLabelProps = { htmlFor: 'supported-output', label: 'Supported field' };
+const supportedOverlayRuntime: Partial<OverlayRuntimeValue> = { zIndexBase: 160, profile: 'ops' };
+const supportedDialogFocusOptions: UseDialogFocusOptions = { open: false, lockScroll: false };
+const supportedMenuOptions: UseMenuKeyboardOptions = {
+  open: false,
+  onClose: () => undefined,
+  getTrigger: () => null,
+};
+const supportedSubmenuHook: (options?: { disabled?: boolean }) => UseSubmenuBranchResult = useSubmenuBranch;
+
+function SupportedCoreSubpathContract(): React.ReactElement {
+  const resolvedDensity = useResolvedDensity();
+  const resolvedSize = useResolvedControlSize();
+  const menu = useMenuKeyboard(supportedMenuOptions);
+  const overlay = useOverlayLayer({ open: false });
+  const supportedVars = componentVars({ '--lds-supported-value': supportedRange.percent }, '--lds-supported-');
+  const panelStyle = anchoredPanelStyle(240);
+  void supportedSubmenuHook;
+  void supportedDialogFocusOptions;
+  void supportedLogoPath;
+  void menu.menuRef;
+  return (
+    <>
+      <FieldLabel {...supportedFieldLabelProps} />
+      <output
+        id="supported-output"
+        className={supportedClassNames.root}
+        data-density={resolvedDensity}
+        data-size={resolvedSize}
+        data-tone={supportedTone}
+        data-overlay-z-index={overlay.zIndex}
+        data-panel-position={panelStyle.position}
+        data-brand-color={LK_LOGO_COLORS.navy}
+        style={{ ...supportedVars, ...fieldTypography('sm') }}
+      >
+        {formatValueWithUnit(supportedRange.value, '%')}
+      </output>
+    </>
+  );
+}
+
+export const supportedCoreSubpathContract: React.ReactElement = (
+  <ComponentDensityScope density={supportedDensity}>
+    <OverlayRuntimeProvider {...supportedOverlayRuntime}>
+      <SupportedCoreSubpathContract />
+    </OverlayRuntimeProvider>
+  </ComponentDensityScope>
+);
 export const polymorphicButtonContract: React.ReactElement = <Button as="a" href="/reports">보고서</Button>;
 export const polymorphicTextButtonContract: React.ReactElement = <TextButton as="a" href="/documents">문서</TextButton>;
 export const tabsLengthPaddingContract: React.ReactElement = (

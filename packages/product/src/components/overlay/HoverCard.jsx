@@ -1,12 +1,12 @@
 import React from 'react';
-import { anchoredPanelStyle } from '@lk-design-system/lds-core/components/overlay/anchored-panel-style';
+import { anchoredPanelStyle } from '@lk-design-system/lds-core/platform';
 import {
   appendAriaReference,
   findOverlayTrigger,
   useControllableOpen,
   useFloatingPosition,
   useLightDismiss,
-} from '@lk-design-system/lds-core/components/overlay/anchored-overlay';
+} from '@lk-design-system/lds-core/platform';
 
 /**
  * LK Product Extension — HoverCard

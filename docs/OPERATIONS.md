@@ -40,15 +40,25 @@
 ### 2.1 왜 robotics가 딸려오나
 
 LDS는 robotics의 배포본(tgz)을 vendor에 넣어 쓰고, robotics는 그 안에
-"내가 맞춘 LDS 버전"을 기록해 둔다. 그래서 LDS 버전을 올리면 — 그리고
-**버전을 올리지 않아도 Core 패키지 문서 표면(`packages/core/docs/*`로
-투영되는 것)을 바꾸면** — 그 기록과 어긋나 `check:type-surface`가
-실패한다(이름에 robotics가 없지만 실제로 대조하는 것은
-`scripts/check-workspace-packages.mjs`의 robotics 문서 매니페스트 비교다).
-**LDS rc 릴리스에는 robotics rc 릴리스가 반드시 따라온다.** 코드
-변경만 커밋하고 릴리스는 나중에 하는 것은 가능하다 — 단, Core 문서
-표면을 바꾼 커밋은 다음 짝 릴리스 전까지 main을 빨갛게 만드므로,
-그런 변경은 짝 릴리스와 가까운 시점에 묶는다 (§4.1의 베이스라인 갈래).
+"내가 맞춘 LDS 버전"과 Core 문서 snapshot을 기록해 둔다. 그래서 LDS 버전을
+올리거나 **버전을 올리지 않아도 Core 패키지 문서 표면(`packages/core/docs/*`로
+투영되는 것)을 바꾸면**, 새 릴리스에는 그 LDS ref와 문서 bytes를 기록한 새
+Robotics observation이 필요하다. 상시 source-candidate 검사와 실제 publish gate가
+이 차이를 다르게 다루는 규칙은 바로 아래와 같다.
+**모든 immutable LDS 릴리스에는 robotics 릴리스가 반드시 따라온다.** 다만
+tag·publish 전의 일반 source candidate는 예외적으로 마지막 published Robotics가
+기록한 versioned LDS snapshot을 유지할 수 있다. 이 `published-historical` 모드는
+external surface와 실제 설치본이 모두 같은 published Robotics artifact이고, 그 안의
+canonical observation이 정확할 때만 `check:release-pins`를 통과한다. 이는 main의 source
+계약을 검증하기 위한 상태이지 새 LDS 릴리스가 준비됐다는 뜻이 아니다.
+
+release workflow는 publish 전에
+`node scripts/update-release-pins.mjs --check --require-current-canonical-snapshot`을 별도로
+실행한다. 이 gate는 Robotics canonical ref가 정확히 `lds-v<현재 LDS 버전>`이고 snapshot
+hash가 현재 `packages/core/docs/manifest.json`과 같으며 external surface와 설치본이 모두
+`published`일 때만 통과한다. 따라서 Core 문서 표면을 바꾼 source candidate는 main에서
+green일 수 있지만, 짝 Robotics release 없이는 LDS package publish가 기계적으로 막힌다.
+LDS tag 생성 자체는 §2.4의 paired release 절차가 통제한다.
 
 **순서에 함정이 있다.** robotics 산출물 안에 LDS 버전이 구워지므로
 (이 저장소의 `docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json`,
@@ -104,10 +114,11 @@ vendored tgz 하나뿐이다.** 그래서 "릴리스"는 버전을 올리고 pac
 
 **선행조건 — 시작 전에 넷을 확인한다:**
 
-1. LDS main CI가 초록이고 `npm run check:release-pins`가 통과한다. 릴리스
-   사이에 Core 문서 표면이 바뀌었다면 여기서 이미 드리프트가 보인다(§2.1) —
-   그 드리프트의 정식 해소가 바로 지금 하려는 짝 릴리스이므로 진행하면 된다.
-   다른 종류의 빨간불이면 먼저 고친다.
+1. LDS main CI가 초록이고 `npm run check:release-pins`가 통과한다. 마지막 published
+   Robotics snapshot을 쓰는 source candidate라면 `published-historical` 모드로 green일 수
+   있다(§2.1). 이 경우 release-only current-snapshot gate가 옛 ref/hash를 이유로 실패하는
+   것이 정상이며, 그 실패를 지금 만드는 짝 릴리스로 해소한다. 다른 종류의 빨간불이면
+   먼저 고친다.
 2. robotics 체크아웃이 `main`이고 origin과 동기이며 작업트리가 깨끗하다.
    다른 작업자의 미푸시 커밋·작업트리 변경이 있으면 릴리스 전에 조율한다.
 3. `NODE_AUTH_TOKEN`이 설정돼 있다 — GitHub Packages 읽기용. `gh` 로그인이
@@ -241,7 +252,8 @@ git push origin refs/tags/lds-v<새 LDS 버전>
 ### 2.5 릴리스 이후
 
 태그를 밀면 `release-packages.yml`의 `publish` job이 게이트
-(`check:release-immutability --tag` → 패키지 부재 확인 → `check:fast`)를
+(`check:release-immutability --tag` → current published Robotics snapshot →
+패키지 부재 확인 → `check:fast`)를
 돌고 core/theme/product를 GitHub Packages에 퍼블리시한다. 이어지는
 `verify-published` job은 레지스트리 전파를 별도로 재시도하며 세 패키지의
 정확한 버전·integrity·선택된 dist-tag를 확인한다. 발행은 성공하고 이 검증
@@ -371,7 +383,7 @@ npm run <실패한 검사 이름>
 | 갈래 | 신호 | 대처 |
 | --- | --- | --- |
 | **환경** | pull 직후, 또는 `node_modules`가 낡음 | `npm install`부터. 설치된 패키지를 읽는 검사(`check:conformance`, `check:type-surface`)가 엉뚱하게 실패하는 원인 1위다 |
-| **베이스라인** | "drift", "baseline", "snapshot" 문구 | 변경이 의도된 것이면 짝이 되는 `update:*`/`generate:*`를 돌려 갱신하고 **그 갱신 자체를 커밋에 포함**한다. 의도치 않았다면 진짜 회귀다. 특수 사례: 릴리스 사이에 Core 문서 표면을 바꾼 커밋은 `check:type-surface`·`check:release-pins`를 함께 깨뜨린다(robotics 스냅샷 핀과 어긋남 — §2.1). 이 빨간불의 정식 해소는 다음 짝 릴리스이고, 그때까지 main이 빨갛게 남으므로 그런 커밋은 짝 릴리스에 붙여서 낸다 |
+| **베이스라인** | "drift", "baseline", "snapshot" 문구 | 변경이 의도된 것이면 짝이 되는 `update:*`/`generate:*`를 돌려 갱신하고 **그 갱신 자체를 커밋에 포함**한다. 의도치 않았다면 진짜 회귀다. 특수 사례: Core 문서 표면을 바꾼 unpublished source candidate는 exact published historical Robotics snapshot으로 상시 검사를 통과할 수 있지만, release-only current-snapshot gate는 의도적으로 실패한다(§2.1). 그 실패의 정식 해소는 현재 Core snapshot을 고정한 다음 짝 Robotics release다 |
 | **진짜 회귀** | 위 둘이 아님 | 고친다 |
 
 베이스라인 갱신은 자동 통과 수단이 아니다. **무엇이 왜 바뀌었는지 설명할 수
@@ -384,16 +396,18 @@ npm run <실패한 검사 이름>
 
 | 명령 | 하는 일 |
 | --- | --- |
-| `npm run check:fast` | 상시 검사 스위트. **커밋 전 기준이자 릴리스 게이트다** |
+| `npm run check:fast` | 상시 검사 스위트. **커밋 전 기준이자 release workflow의 검증 본체** |
 | `npm run check` | check:fast + Storybook + pack. 넓게 확인하고 싶을 때 |
+| `node scripts/update-release-pins.mjs --check --require-current-canonical-snapshot` | publish 전용 gate. 현재 LDS ref/Core docs hash와 published Robotics observation의 exact match를 요구 |
 | `npm run storybook:dev` | 로컬 Storybook (6006). 색 재생성 없이 뜬다 |
 | `npm run report:inventory` | 컴포넌트·스토리 수 (손으로 센 숫자를 믿지 않는다) |
 | `npm run update:release-pins` | 릴리스 파생값 31곳 재계산 |
 | `npm run report:satellite-pins` | 위성 핀 리포트 생성 (네트워크 필요) |
 
-**릴리스 게이트는 `check:fast`다.** 다른 문서에 `check:ops-release`나
-`check`가 릴리스 게이트로 적혀 있다면 낡은 것이다 — CI의 릴리스 워크플로가
-실제로 돌리는 것은 `check:fast`이고, 그것이 정의다.
+**커밋 전 상시 게이트는 `check:fast`다.** immutable tag에서 package publish로 넘어가는
+release workflow는 tag/package-set identity, release-only current Robotics snapshot,
+unpublished version 확인을 먼저 통과한 뒤 `check:fast`를 실행한다. 다른 문서에
+`check:ops-release`나 전체 `check` 하나만 릴리스 게이트로 적혀 있다면 낡은 것이다.
 
 `report:satellite-pins`는 `raw.githubusercontent.com`에 **인증 없이** 접근한다.
 위성이 private이 되거나 rate-limit에 걸리면 해당 위성은 `unreachable`로

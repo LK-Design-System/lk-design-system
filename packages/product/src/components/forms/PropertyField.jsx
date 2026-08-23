@@ -1,5 +1,5 @@
 import React from 'react';
-import { mergeIds, useFieldMetadata } from '@lk-design-system/lds-core/components/forms/field-shared';
+import { mergeIds, useFieldMetadata } from '@lk-design-system/lds-core/component-authoring';
 import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
 import { Switch } from '@lk-design-system/lds-core/components/selection/Switch';
 

@@ -1,6 +1,6 @@
 {
   "name": "@lk-design-system/lds-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Generic foundation and DOM UI for the LK ROBOTICS design system.",
   "type": "module",
   "main": "./dist/index.js",
@@ -32,6 +32,36 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./brand-authoring": {
+      "types": "./dist/brand-authoring.d.ts",
+      "import": "./dist/brand-authoring.js"
+    },
+    "./component-authoring": {
+      "types": "./dist/component-authoring.d.ts",
+      "import": "./dist/component-authoring.js"
+    },
+    "./density": {
+      "types": "./dist/density.d.ts",
+      "import": "./dist/density.js"
+    },
+    "./headless": {
+      "types": "./dist/headless.d.ts",
+      "import": "./dist/headless.js"
+    },
+    "./platform": {
+      "types": "./dist/platform.d.ts",
+      "import": "./dist/platform.js"
+    },
+    "./components/internal/*": null,
+    "./components/private/*": null,
+    "./components/brand/lk-logo-paths": null,
+    "./components/forms/field-shared": null,
+    "./components/overlay/anchored-overlay": null,
+    "./components/overlay/overlay-platform": null,
+    "./components/overlay/anchored-panel-style": null,
+    "./components/overlay/dialog-focus": null,
+    "./components/selection/pill-chip-style": null,
+    "./components/status/status-presentation": null,
     "./components/*": {
       "types": "./dist/components/*.d.ts",
       "import": "./dist/components/*.js"
@@ -52,6 +82,8 @@
     "llms": "./docs/llms.txt",
     "adoptionChecklist": "./docs/adoption-checklist.json",
     "adoptionReportSchema": "./docs/adoption-report.schema.json",
+    "semanticContract": "./tokens/semantic-contract.json",
+    "requiresSemanticContractVersion": "1",
     "storybook": "https://lk-design-system.github.io/lk-design-system/?path=/docs/lds-core-foundation-design-token--docs"
   },
   "repository": {

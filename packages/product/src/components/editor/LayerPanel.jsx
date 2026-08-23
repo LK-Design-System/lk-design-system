@@ -1,7 +1,7 @@
 import React from 'react';
 import { ToggleIcon } from '@lk-design-system/lds-core/components/buttons/ToggleIcon';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
-import { normalizeStatusTone } from '@lk-design-system/lds-core/components/status/status-presentation';
+import { normalizeStatusTone } from '@lk-design-system/lds-core/component-authoring';
 
 const LAYER_TONE = {
   offline: 'var(--color-semantic-label-neutral)',

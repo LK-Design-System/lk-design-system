@@ -1092,7 +1092,6 @@ async function validatePackageManager(audit) {
   const repositorySlug = audit.audit.source.repository;
   const expectedRepositoryUrl = `git+https://github.com/${repositorySlug}.git`;
   assert(packageJson.name === audit.audit.source.packageName, 'Audited package name drift.');
-  assert(packageJson.version === audit.audit.source.packageVersion, 'Audited package version drift.');
   assert(packageJson.repository?.url === expectedRepositoryUrl, 'package.json repository URL drift.');
   assert(
     packageJson.publishConfig?.registry === audit.decisions.registry,
@@ -1469,6 +1468,11 @@ function validateSourceObservation(audit) {
     for (const commit of [source.observedCommit, source.mainAtAudit, source.originMainAtAudit]) {
       gitOutput(['cat-file', '-e', `${commit}^{commit}`]);
     }
+    const observedPackage = JSON.parse(gitOutput(['show', `${source.observedCommit}:package.json`]));
+    assert(
+      observedPackage.version === source.packageVersion,
+      'Audit source packageVersion must match package.json at observedCommit.',
+    );
     gitOutput(['merge-base', '--is-ancestor', source.mainAtAudit, source.observedCommit]);
     const headCommit = gitOutput(['rev-parse', 'HEAD']);
     gitOutput(['merge-base', '--is-ancestor', source.observedCommit, headCommit]);

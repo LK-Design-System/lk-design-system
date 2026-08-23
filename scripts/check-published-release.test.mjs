@@ -113,6 +113,10 @@ test('published package verification rejects a release-channel mismatch before r
 test('release workflow publishes all packages and isolates retryable registry verification', async () => {
   const workflow = await readFile(path.join(repositoryRoot, '.github', 'workflows', 'release-packages.yml'), 'utf8');
   assert.match(workflow, /version\.Contains\('-'\).*'rc'.*'latest'/s);
+  assert.match(
+    workflow,
+    /Verify tag and package-set identity[\s\S]*node scripts\/update-release-pins\.mjs --check --require-current-canonical-snapshot[\s\S]*Verify package versions are unpublished[\s\S]*Run release gate[\s\S]*Publish package set in dependency order/,
+  );
   assert.equal((workflow.match(/npm publish \.\/packages\/(?:core|theme|product) --tag \$env:RELEASE_NPM_TAG --ignore-scripts/g) ?? []).length, 3);
   assert.match(workflow, /verify-published:\s*\n\s+needs: publish/);
   assert.match(workflow, /RELEASE_NPM_TAG: \$\{\{ needs\.publish\.outputs\.npm_tag \}\}/);

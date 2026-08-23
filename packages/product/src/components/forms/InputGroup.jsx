@@ -7,7 +7,7 @@ import {
   fieldTypography,
   mergeIds,
   useFieldMetadata,
-} from '@lk-design-system/lds-core/components/forms/field-shared';
+} from '@lk-design-system/lds-core/component-authoring';
 
 /** Text input flanked by non-editable prefix or suffix addons. */
 export function InputGroup({

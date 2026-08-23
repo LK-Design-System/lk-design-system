@@ -1,0 +1,688 @@
+{
+  "valid": {
+    "ownerAuthority": {
+      "layers": [
+        {
+          "id": "core",
+          "package": "@lk-design-system/lds-core"
+        },
+        {
+          "id": "theme",
+          "package": "@lk-design-system/lds-theme"
+        },
+        {
+          "id": "product",
+          "package": "@lk-design-system/lds-product",
+          "moduleRoot": "packages/product/src/components",
+          "publicEntry": "packages/product/src/index.js",
+          "storybookPrefix": "LDS Product"
+        },
+        {
+          "id": "robotics",
+          "package": "@lk-design-system/lds-robotics-ui",
+          "externalSurface": "docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json"
+        }
+      ],
+      "compatibilityProjections": {
+        "deprecatedPackageReexports": {
+          "entries": []
+        }
+      },
+      "domainDecisions": [
+        {
+          "id": "application",
+          "ownerLayer": "product",
+          "productFamily": "application",
+          "representativePublicExports": [
+            "ProductCard"
+          ]
+        },
+        {
+          "id": "operations",
+          "ownerLayer": "product",
+          "productFamily": "operations",
+          "representativePublicExports": [
+            "ViewerFrame",
+            "DataToolbar"
+          ]
+        },
+        {
+          "id": "workspace",
+          "ownerLayer": "product",
+          "productFamily": "workspace",
+          "representativePublicExports": [
+            "EditorToolbar"
+          ]
+        },
+        {
+          "id": "robot-control",
+          "ownerLayer": "robotics",
+          "representativePublicExports": [
+            "RobotStatusCard"
+          ]
+        }
+      ]
+    },
+    "productFamilyContract": {
+      "package": "@lk-design-system/lds-product",
+      "layer": "product",
+      "ownerBoundaryAuthority": "docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json#domainDecisions",
+      "families": [
+        {
+          "id": "application",
+          "sourcePrefixes": [
+            "components/cards/"
+          ]
+        },
+        {
+          "id": "operations",
+          "sourcePrefixes": [
+            "components/data/",
+            "components/viz/"
+          ]
+        },
+        {
+          "id": "workspace",
+          "sourcePrefixes": [
+            "components/editor/"
+          ]
+        }
+      ]
+    },
+    "productPackage": {
+      "name": "@lk-design-system/lds-product",
+      "lds": {
+        "layer": "product"
+      }
+    },
+    "productEntryRows": [
+      {
+        "source": "./components/cards/ProductCard.jsx",
+        "sourceExists": true,
+        "exports": [
+          "ProductCard"
+        ]
+      },
+      {
+        "source": "./components/viz/ViewerFrame.jsx",
+        "sourceExists": true,
+        "exports": [
+          "ViewerFrame"
+        ]
+      },
+      {
+        "source": "./components/data/DataToolbar.jsx",
+        "sourceExists": true,
+        "exports": [
+          "DataToolbar"
+        ]
+      },
+      {
+        "source": "./components/editor/EditorToolbar.jsx",
+        "sourceExists": true,
+        "exports": [
+          "EditorToolbar"
+        ]
+      }
+    ],
+    "componentEntries": [
+      {
+        "id": "product-card",
+        "source": "components/cards/ProductCard.jsx",
+        "exports": [
+          "ProductCard"
+        ],
+        "ownerLayer": "product",
+        "prompt": "components/cards/ProductCard.prompt.md",
+        "promptExists": true,
+        "storyEvidence": [
+          "stories/ProductCard.stories.jsx"
+        ],
+        "storybookPages": [
+          "LDS Product/Content/Product Card"
+        ]
+      },
+      {
+        "id": "viewer-frame",
+        "source": "components/viz/ViewerFrame.jsx",
+        "exports": [
+          "ViewerFrame"
+        ],
+        "ownerLayer": "product",
+        "prompt": "components/viz/ViewerFrame.prompt.md",
+        "promptExists": true,
+        "storyEvidence": [
+          "stories/ViewerFrame.stories.jsx"
+        ],
+        "storybookPages": [
+          "LDS Product/Viewer/Viewer Frame"
+        ]
+      },
+      {
+        "id": "data-toolbar",
+        "source": "components/data/DataToolbar.jsx",
+        "exports": [
+          "DataToolbar"
+        ],
+        "ownerLayer": "product",
+        "prompt": "components/data/DataToolbar.prompt.md",
+        "promptExists": true,
+        "storyEvidence": [
+          "stories/DataToolbar.stories.jsx"
+        ],
+        "storybookPages": [
+          "LDS Product/Data/Operations/Data Toolbar"
+        ]
+      },
+      {
+        "id": "editor-toolbar",
+        "source": "components/editor/EditorToolbar.jsx",
+        "exports": [
+          "EditorToolbar"
+        ],
+        "ownerLayer": "product",
+        "prompt": "components/editor/EditorToolbar.prompt.md",
+        "promptExists": true,
+        "storyEvidence": [
+          "stories/EditorToolbar.stories.jsx"
+        ],
+        "storybookPages": [
+          "LDS Product/Editor/Editor Toolbar"
+        ]
+      }
+    ],
+    "canonicalGuides": [
+      {
+        "storybookTitle": "LDS Product/Content/Product Card",
+        "layer": "Product",
+        "primaryOwner": "ProductCard",
+        "storybook": {
+          "importPath": "./stories/ProductCard.stories.jsx"
+        }
+      },
+      {
+        "storybookTitle": "LDS Product/Viewer/Viewer Frame",
+        "layer": "Product",
+        "primaryOwner": "ViewerFrame",
+        "storybook": {
+          "importPath": "./stories/ViewerFrame.stories.jsx"
+        }
+      },
+      {
+        "storybookTitle": "LDS Product/Data/Operations/Data Toolbar",
+        "layer": "Product",
+        "primaryOwner": "DataToolbar",
+        "storybook": {
+          "importPath": "./stories/DataToolbar.stories.jsx"
+        }
+      },
+      {
+        "storybookTitle": "LDS Product/Editor/Editor Toolbar",
+        "layer": "Product",
+        "primaryOwner": "EditorToolbar",
+        "storybook": {
+          "importPath": "./stories/EditorToolbar.stories.jsx"
+        }
+      }
+    ],
+    "storybookPages": [
+      {
+        "title": "LDS Product/Content/Product Card",
+        "layer": "Product",
+        "importPath": "./stories/ProductCard.stories.jsx",
+        "primaryOwner": "ProductCard"
+      },
+      {
+        "title": "LDS Product/Viewer/Viewer Frame",
+        "layer": "Product",
+        "importPath": "./stories/ViewerFrame.stories.jsx",
+        "primaryOwner": "ViewerFrame"
+      },
+      {
+        "title": "LDS Product/Data/Operations/Data Toolbar",
+        "layer": "Product",
+        "importPath": "./stories/DataToolbar.stories.jsx",
+        "primaryOwner": "DataToolbar"
+      },
+      {
+        "title": "LDS Product/Editor/Editor Toolbar",
+        "layer": "Product",
+        "importPath": "./stories/EditorToolbar.stories.jsx",
+        "primaryOwner": "EditorToolbar"
+      },
+      {
+        "title": "LDS Product/Patterns/Expression Profile Density",
+        "layer": "Product",
+        "importPath": "./stories/ExpressionProfileDensity.stories.jsx",
+        "primaryOwner": "DataToolbar",
+        "visibility": {
+          "public": 0,
+          "hidden": 2
+        },
+        "stories": [
+          {
+            "visibility": "hidden",
+            "role": "visual-parity"
+          },
+          {
+            "visibility": "hidden",
+            "role": "visual-parity"
+          }
+        ]
+      }
+    ],
+    "roboticsSurface": {
+      "package": {
+        "name": "@lk-design-system/lds-robotics-ui",
+        "version": "0.1.0-rc.33",
+        "repository": "LK-Design-System/lk-design-system-robotics"
+      },
+      "entries": [
+        {
+          "source": "components/robotics/RobotStatusCard",
+          "exports": [
+            "RobotStatusCard"
+          ]
+        }
+      ]
+    },
+    "lds3dSurface": {
+      "package": {
+        "manifest": "package.json",
+        "name": "@lk-design-system/lds-3d",
+        "version": "0.1.0-alpha.1",
+        "repository": "LK-Design-System/lk-design-system-3d"
+      },
+      "packages": [
+        {
+          "manifest": "packages/core/package.json",
+          "name": "@lk-design-system/lds-3d-core",
+          "version": "0.1.0-alpha.1",
+          "exports": [
+            ".",
+            "./coordinates"
+          ]
+        }
+      ]
+    },
+    "crossRepositoryStyleContract": {
+      "lds": {
+        "packages": [
+          {
+            "name": "@lk-design-system/lds-core"
+          },
+          {
+            "name": "@lk-design-system/lds-theme"
+          },
+          {
+            "name": "@lk-design-system/lds-product"
+          }
+        ]
+      },
+      "profiles": {
+        "robotics-ui": {
+          "repository": "LK-Design-System/lk-design-system-robotics",
+          "package": {
+            "name": "@lk-design-system/lds-robotics-ui",
+            "version": "0.1.0-rc.33"
+          },
+          "externalSurface": "docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json"
+        },
+        "lds3d-ui": {
+          "repository": "LK-Design-System/lk-design-system-3d",
+          "workspacePackage": {
+            "manifest": "package.json",
+            "name": "@lk-design-system/lds-3d",
+            "version": "0.1.0-alpha.1"
+          },
+          "externalSurface": "docs/references/package-split/LDS3D_EXTERNAL_SURFACE.json",
+          "headlessPackages": [
+            {
+              "manifest": "packages/core/package.json"
+            }
+          ]
+        }
+      }
+    },
+    "productSpecialistImports": []
+  },
+  "negativeCases": [
+    {
+      "id": "public-source-unclassified",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/productEntryRows/0/source",
+          "value": "./components/unknown/ProductCard.jsx"
+        },
+        {
+          "op": "replace",
+          "path": "/componentEntries/0/source",
+          "value": "components/unknown/ProductCard.jsx"
+        },
+        {
+          "op": "replace",
+          "path": "/componentEntries/0/prompt",
+          "value": "components/unknown/ProductCard.prompt.md"
+        }
+      ],
+      "expectedCodes": [
+        "PRODUCT_SOURCE_UNCLASSIFIED"
+      ]
+    },
+    {
+      "id": "public-source-file-missing",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/productEntryRows/0/sourceExists",
+          "value": false
+        }
+      ],
+      "expectedCodes": [
+        "PRODUCT_SOURCE_FILE_MISSING"
+      ]
+    },
+    {
+      "id": "public-source-missing-from-registry",
+      "operations": [
+        {
+          "op": "remove",
+          "path": "/componentEntries/0"
+        }
+      ],
+      "expectedCodes": [
+        "PRODUCT_REGISTRY_SOURCE_MISSING"
+      ]
+    },
+    {
+      "id": "public-source-duplicate",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/productEntryRows/-",
+          "value": {
+            "source": "./components/cards/ProductCard.jsx",
+            "exports": [
+              "ProductCardAlias"
+            ]
+          }
+        }
+      ],
+      "expectedCodes": [
+        "PRODUCT_SOURCE_DUPLICATE"
+      ]
+    },
+    {
+      "id": "public-export-missing-from-registry",
+      "operations": [
+        {
+          "op": "remove",
+          "path": "/componentEntries/0/exports/0"
+        }
+      ],
+      "expectedCodes": [
+        "PRODUCT_REGISTRY_EXPORT_CONFLICT"
+      ]
+    },
+    {
+      "id": "public-export-duplicate",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/productEntryRows/1/exports/0",
+          "value": "ProductCard"
+        },
+        {
+          "op": "replace",
+          "path": "/componentEntries/1/exports/0",
+          "value": "ProductCard"
+        }
+      ],
+      "expectedCodes": [
+        "PRODUCT_EXPORT_DUPLICATE"
+      ]
+    },
+    {
+      "id": "canonical-story-missing",
+      "operations": [
+        {
+          "op": "remove",
+          "path": "/storybookPages/0"
+        }
+      ],
+      "expectedCodes": [
+        "STORYBOOK_PAGE_MISSING"
+      ]
+    },
+    {
+      "id": "canonical-story-duplicate",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/storybookPages/-",
+          "value": {
+            "title": "LDS Product/Content/Product Card",
+            "layer": "Product",
+            "importPath": "./stories/ProductCard.stories.jsx",
+            "primaryOwner": "ProductCard"
+          }
+        }
+      ],
+      "expectedCodes": [
+        "STORYBOOK_TITLE_DUPLICATE",
+        "STORYBOOK_IMPORT_PATH_DUPLICATE"
+      ]
+    },
+    {
+      "id": "canonical-story-owner-conflict",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/canonicalGuides/0/primaryOwner",
+          "value": "RobotStatusCard"
+        },
+        {
+          "op": "replace",
+          "path": "/storybookPages/0/primaryOwner",
+          "value": "RobotStatusCard"
+        }
+      ],
+      "expectedCodes": [
+        "STORYBOOK_OWNER_CONFLICT"
+      ]
+    },
+    {
+      "id": "product-registry-cross-family-story-mapping",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/componentEntries/0/storyEvidence/0",
+          "value": "stories/DataToolbar.stories.jsx"
+        },
+        {
+          "op": "replace",
+          "path": "/componentEntries/0/storybookPages/0",
+          "value": "LDS Product/Data/Operations/Data Toolbar"
+        }
+      ],
+      "expectedCodes": [
+        "PRODUCT_STORY_PRIMARY_OWNER_CONFLICT",
+        "PRODUCT_STORY_FAMILY_CONFLICT"
+      ]
+    },
+    {
+      "id": "product-canonical-story-wrong-primary-owner",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/canonicalGuides/0/primaryOwner",
+          "value": "ViewerFrame"
+        },
+        {
+          "op": "replace",
+          "path": "/storybookPages/0/primaryOwner",
+          "value": "ViewerFrame"
+        }
+      ],
+      "expectedCodes": [
+        "PRODUCT_STORY_PRIMARY_OWNER_CONFLICT"
+      ]
+    },
+    {
+      "id": "product-family-conflict",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/ownerAuthority/domainDecisions/0/productFamily",
+          "value": "operations"
+        }
+      ],
+      "expectedCodes": [
+        "PRODUCT_DECISION_FAMILY_CONFLICT"
+      ]
+    },
+    {
+      "id": "hidden-visual-fixture-title-changed",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/storybookPages/4/title",
+          "value": "LDS Product/Patterns/Another Fixture"
+        }
+      ],
+      "expectedCodes": [
+        "STORYBOOK_INTERNAL_FIXTURE_MISSING",
+        "STORYBOOK_NON_CANONICAL_PAGE_CONFLICT"
+      ]
+    },
+    {
+      "id": "hidden-visual-fixture-path-changed",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/storybookPages/4/importPath",
+          "value": "./stories/AnotherFixture.stories.jsx"
+        }
+      ],
+      "expectedCodes": [
+        "STORYBOOK_INTERNAL_FIXTURE_CONFLICT"
+      ]
+    },
+    {
+      "id": "hidden-visual-fixture-made-public",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/storybookPages/4/visibility/public",
+          "value": 1
+        }
+      ],
+      "expectedCodes": [
+        "STORYBOOK_INTERNAL_FIXTURE_CONFLICT"
+      ]
+    },
+    {
+      "id": "hidden-visual-fixture-kind-widened",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/storybookPages/4/stories/0/role",
+          "value": "scenario"
+        }
+      ],
+      "expectedCodes": [
+        "STORYBOOK_INTERNAL_FIXTURE_CONFLICT"
+      ]
+    },
+    {
+      "id": "product-robotics-export-overlap",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/roboticsSurface/entries/0/exports/-",
+          "value": "ProductCard"
+        }
+      ],
+      "expectedCodes": [
+        "PRODUCT_ROBOTICS_EXPORT_OVERLAP"
+      ]
+    },
+    {
+      "id": "lds3d-package-owner-overlap",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/lds3dSurface/packages/0/name",
+          "value": "@lk-design-system/lds-product"
+        }
+      ],
+      "expectedCodes": [
+        "LDS3D_OWNER_PACKAGE_OVERLAP",
+        "LDS3D_PACKAGE_NAMESPACE_CONFLICT"
+      ]
+    },
+    {
+      "id": "cross-repository-local-package-duplicate",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/crossRepositoryStyleContract/lds/packages/-",
+          "value": {
+            "name": "@lk-design-system/lds-core"
+          }
+        }
+      ],
+      "expectedCodes": [
+        "CROSS_REPOSITORY_LOCAL_PACKAGE_DUPLICATE"
+      ]
+    },
+    {
+      "id": "lds3d-headless-manifest-duplicate",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/crossRepositoryStyleContract/profiles/lds3d-ui/headlessPackages/-",
+          "value": {
+            "manifest": "packages/core/package.json"
+          }
+        }
+      ],
+      "expectedCodes": [
+        "LDS3D_HEADLESS_PACKAGE_DUPLICATE"
+      ]
+    },
+    {
+      "id": "product-imports-robotics",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/productSpecialistImports/-",
+          "value": {
+            "file": "packages/product/src/components/viz/Bad.jsx",
+            "specifier": "@lk-design-system/lds-robotics-ui"
+          }
+        }
+      ],
+      "expectedCodes": [
+        "PRODUCT_SPECIALIST_DEPENDENCY_CONFLICT"
+      ]
+    },
+    {
+      "id": "product-imports-lds3d",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/productSpecialistImports/-",
+          "value": {
+            "file": "packages/product/src/components/viz/Bad.jsx",
+            "specifier": "@lk-design-system/lds-3d-core/coordinates"
+          }
+        }
+      ],
+      "expectedCodes": [
+        "PRODUCT_SPECIALIST_DEPENDENCY_CONFLICT"
+      ]
+    }
+  ]
+}

@@ -1,13 +1,13 @@
 import React from 'react';
 import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
-import { normalizeBoundedValue } from '@lk-design-system/lds-core/components/internal/bounded-value';
+import { normalizeBoundedValue } from '@lk-design-system/lds-core/component-authoring';
 import {
   formatValueWithUnit,
   getUnitSeparator,
   isAttachedUnit,
   normalizeUnit,
   normalizeValueText,
-} from '@lk-design-system/lds-core/components/internal/unit-format';
+} from '@lk-design-system/lds-core/component-authoring';
 import { TELEMETRY_STATUS_LABEL as STATUS_LABEL } from '../internal/telemetryStatusLabel.js';
 
 const TONE = {

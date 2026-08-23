@@ -9,6 +9,8 @@ export interface UseMenuKeyboardOptions {
   getTrigger?: () => HTMLElement | null | undefined;
   /** 드릴 레벨 등 같은 메뉴 노드에서 항목 집합이 교체될 때 증가시키는 키. entry focus와 typeahead를 재시작한다. @default 0 */
   menuKey?: number | string;
+  /** Core overlay stack에서 사용할 명시적 z-index. 생략하면 provider 기준값을 사용한다. */
+  zIndex?: number;
   /** Whether opening the menu without an explicit request should focus its first item. @default true */
   focusOnOpen?: boolean;
 }
@@ -22,6 +24,10 @@ export interface UseMenuKeyboardResult {
   closeMenu: (options?: { restoreFocus?: boolean }) => void;
   /** `role="menu"` 컨테이너의 onKeyDown에 연결하는 핸들러. 화살표·Home/End·typeahead·Escape·Tab을 소유한다. */
   handleMenuKeyDown: (event: React.KeyboardEvent) => void;
+  /** Core overlay stack이 계산한 현재 메뉴 z-index. */
+  zIndex: number;
+  /** 현재 메뉴가 열린 overlay stack의 최상단인지 확인한다. */
+  isTopmost: () => boolean;
 }
 
 /**

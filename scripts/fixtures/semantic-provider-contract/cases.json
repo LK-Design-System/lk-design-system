@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "kind": "lds-semantic-provider-fixtures",
+  "contractVersion": "1",
+  "packages": {
+    "core": {
+      "name": "@fixture/lds-core",
+      "role": "consumer",
+      "requiresSemanticContractVersion": "1",
+      "requiredVariables": ["--color-semantic-label-normal"],
+      "definitions": ["--space-1"]
+    },
+    "theme": {
+      "name": "@fixture/lds-theme",
+      "role": "provider",
+      "requiresSemanticContractVersion": "1",
+      "providesSemanticContractVersion": "1",
+      "requiredVariables": ["--space-1"],
+      "providedVariables": ["--color-semantic-label-normal"],
+      "definitions": ["--color-semantic-label-normal"]
+    },
+    "product": {
+      "name": "@fixture/lds-product",
+      "role": "consumer",
+      "requiresSemanticContractVersion": "1",
+      "requiredVariables": ["--color-semantic-label-normal", "--space-1"],
+      "definitions": ["--component-product-panel"]
+    },
+    "robotics": {
+      "name": "@fixture/lds-robotics-ui",
+      "role": "consumer",
+      "requiresSemanticContractVersion": "1",
+      "requiredVariables": ["--color-semantic-label-normal", "--space-1"],
+      "definitions": ["--component-robotics-map"]
+    },
+    "theme-missing-variable": {
+      "name": "@fixture/lds-theme",
+      "role": "provider",
+      "requiresSemanticContractVersion": "1",
+      "providesSemanticContractVersion": "1",
+      "requiredVariables": ["--space-1"],
+      "providedVariables": [],
+      "definitions": []
+    },
+    "theme-version-2": {
+      "name": "@fixture/lds-theme",
+      "role": "provider",
+      "requiresSemanticContractVersion": "1",
+      "providesSemanticContractVersion": "2",
+      "requiredVariables": ["--space-1"],
+      "providedVariables": ["--color-semantic-label-normal"],
+      "definitions": ["--color-semantic-label-normal"]
+    }
+  },
+  "roboticsRuntimeCases": [
+    {
+      "id": "robotics-runtime-covered-by-frozen-adapter",
+      "adapter": {
+        "requiredVariables": ["--runtime-required", "--upstream-frozen"],
+        "localDefinitions": ["--robotics-local"]
+      },
+      "scan": {
+        "requiredReferences": ["--robotics-local", "--runtime-required"],
+        "definitions": ["--robotics-local"]
+      },
+      "expect": { "status": "valid" }
+    },
+    {
+      "id": "robotics-runtime-under-reported-by-adapter",
+      "adapter": {
+        "requiredVariables": ["--upstream-frozen"],
+        "localDefinitions": ["--robotics-local"]
+      },
+      "scan": {
+        "requiredReferences": ["--robotics-local", "--runtime-required"],
+        "definitions": ["--robotics-local"]
+      },
+      "expect": {
+        "status": "invalid",
+        "messageIncludes": "--runtime-required"
+      }
+    },
+    {
+      "id": "robotics-runtime-local-definition-drift",
+      "adapter": {
+        "requiredVariables": ["--runtime-required"],
+        "localDefinitions": ["--robotics-local"]
+      },
+      "scan": {
+        "requiredReferences": ["--runtime-required"],
+        "definitions": ["--robotics-extra", "--robotics-local"]
+      },
+      "expect": {
+        "status": "invalid",
+        "messageIncludes": "local semantic definitions differ"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "core-only-missing-theme",
+      "packages": ["core"],
+      "expect": {
+        "status": "invalid",
+        "diagnosticCodes": ["LDS_THEME_PROVIDER_MISSING", "LDS_SEMANTIC_VARIABLE_MISSING"]
+      }
+    },
+    {
+      "id": "core-theme-valid",
+      "packages": ["core", "theme"],
+      "expect": { "status": "valid", "diagnosticCodes": [] }
+    },
+    {
+      "id": "core-theme-product-valid",
+      "packages": ["core", "theme", "product"],
+      "expect": { "status": "valid", "diagnosticCodes": [] }
+    },
+    {
+      "id": "core-theme-product-robotics-valid",
+      "packages": ["core", "theme", "product", "robotics"],
+      "expect": { "status": "valid", "diagnosticCodes": [] }
+    },
+    {
+      "id": "provider-variable-missing",
+      "packages": ["core", "theme-missing-variable"],
+      "expect": {
+        "status": "invalid",
+        "diagnosticCodes": ["LDS_SEMANTIC_VARIABLE_MISSING"]
+      }
+    },
+    {
+      "id": "provider-version-mismatch",
+      "packages": ["core", "theme-version-2"],
+      "expect": {
+        "status": "invalid",
+        "diagnosticCodes": ["LDS_SEMANTIC_PROVIDER_VERSION_MISMATCH"]
+      }
+    }
+  ]
+}

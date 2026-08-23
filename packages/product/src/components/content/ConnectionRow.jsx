@@ -1,5 +1,5 @@
 import React from 'react';
-import { componentVars, partClassName, partStyle } from '@lk-design-system/lds-core/components/internal/surface';
+import { componentVars, partClassName, partStyle } from '@lk-design-system/lds-core/component-authoring';
 import { StatusIndicator } from '@lk-design-system/lds-core/components/content/StatusIndicator';
 
 const CONNECTION_ROW_STYLES = `

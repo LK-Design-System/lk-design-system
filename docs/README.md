@@ -107,13 +107,13 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 
 | Document | Disposition |
 | --- | --- |
-| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | R3A·R3B·R4 stable과 stable consumer promotion 완료; §14의 provider/private import/family·Storybook·LDS3D exact-set/lifecycle closure는 R4.1 |
 | [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) | O-A/B/C와 O4 문서·1차 시험 완료; 보완 문서 기준 질문 0 재시험은 R7 |
 
 ### Adopted or completed implementation records
 
 | Document | Disposition |
 | --- | --- |
+| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | R0–R4.1 완료; semantic provider, supported Core subpath, Product private import 0과 Product·Storybook·Robotics·LDS3D owner exact-set을 durable 계약·machine gate로 승격한 completed record |
 | [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | `default | ops` runtime/token/visual matrix와 R3A density·stable consumer profile 검증의 adopted 기록 |
 | [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | component API·Styles/Slots·ref·overlay 구현 기록; current consumer evidence는 registry가 소유 |
 | [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | package split·Robotics extraction·compatibility retirement 기록 |

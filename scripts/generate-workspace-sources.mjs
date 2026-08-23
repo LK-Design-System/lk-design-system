@@ -6,6 +6,24 @@ const classification = JSON.parse(await readFile(path.join(root, 'docs/reference
 const ownerAuthority = JSON.parse(await readFile(path.join(root, 'docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json'), 'utf8'));
 const layers = { core: 'core', theme: 'theme', product: 'product' };
 const deprecatedReexports = ownerAuthority.compatibilityProjections?.deprecatedPackageReexports;
+const coreSupportSubpathByModule = new Map([
+  ['components/brand/lk-logo-paths', '@lk-design-system/lds-core/brand-authoring'],
+  ['components/internal/bounded-value', '@lk-design-system/lds-core/component-authoring'],
+  ['components/internal/component-density', '@lk-design-system/lds-core/density'],
+  ['components/forms/field-shared', '@lk-design-system/lds-core/component-authoring'],
+  ['components/internal/surface', '@lk-design-system/lds-core/component-authoring'],
+  ['components/internal/unit-format', '@lk-design-system/lds-core/component-authoring'],
+  ['components/internal/useMenuKeyboard', '@lk-design-system/lds-core/headless'],
+  ['components/internal/useSubmenuBranch', '@lk-design-system/lds-core/headless'],
+  ['components/overlay/anchored-overlay', '@lk-design-system/lds-core/platform'],
+  ['components/overlay/overlay-platform', '@lk-design-system/lds-core/platform'],
+  ['components/overlay/anchored-panel-style', '@lk-design-system/lds-core/platform'],
+  ['components/overlay/dialog-focus', '@lk-design-system/lds-core/platform'],
+  ['components/status/status-presentation', '@lk-design-system/lds-core/component-authoring'],
+]);
+const compatibilityFacadeExportsByModule = new Map([
+  ['components/overlay/anchored-panel-style', ['anchoredPanelStyle']],
+]);
 
 const owners = new Map();
 for (const group of classification.groups ?? []) for (const name of group.exports ?? []) owners.set(name, group.ownerLayer);
@@ -68,9 +86,9 @@ for (const [layer, packageDir] of Object.entries(layers)) {
     const target = path.join(base, 'src', module.path);
     await mkdir(path.dirname(target), { recursive: true });
     await copyFile(src, target);
-    if (src.endsWith('.js')) {
+    if (/\.(?:js|jsx)$/.test(src)) {
       try {
-        await copyFile(src.replace(/\.js$/, '.d.ts'), target.replace(/\.js$/, '.d.ts'));
+        await copyFile(src.replace(/\.(?:js|jsx)$/, '.d.ts'), target.replace(/\.(?:js|jsx)$/, '.d.ts'));
       } catch (error) {
         if (error?.code !== 'ENOENT') throw error;
       }
@@ -97,11 +115,16 @@ for (const [layer, packageDir] of Object.entries(layers)) {
     const migration = `Import from ${targetPackage}. This ${layer} compatibility re-export is supported through 0.1.x and may be removed in 0.2.0.`;
     for (const compatibility of deprecatedReexports.entries ?? []) {
       const modulePath = compatibility.module.replaceAll('\\', '/');
+      const moduleWithoutExtension = modulePath.replace(/\.(jsx|js)$/, '');
       const targetRel = modulePath.replace(/^components\//, '');
       const target = path.join(base, 'src', 'components', targetRel);
-      const targetSpecifier = `${targetPackage}/${modulePath.replace(/\.(jsx|js)$/, '')}`;
-      const exportClause = compatibility.exports?.length
-        ? `export { ${compatibility.exports.join(', ')} } from '${targetSpecifier}';`
+      const targetSpecifier = coreSupportSubpathByModule.get(moduleWithoutExtension)
+        ?? `${targetPackage}/${moduleWithoutExtension}`;
+      const projectedExports = compatibility.exports?.length
+        ? compatibility.exports
+        : compatibilityFacadeExportsByModule.get(moduleWithoutExtension);
+      const exportClause = projectedExports?.length
+        ? `export { ${projectedExports.join(', ')} } from '${targetSpecifier}';`
         : `export * from '${targetSpecifier}';`;
       const source = `/** @deprecated ${migration} */\n${exportClause}\n`;
       await mkdir(path.dirname(target), { recursive: true });
@@ -136,10 +159,10 @@ async function copyHelpers(source, base, layer, seen) {
     const target = path.join(base, 'src', 'components', rel);
     await mkdir(path.dirname(target), { recursive: true });
     await copyFile(helper, target);
-    if (helper.endsWith('.js')) {
-      const declaration = helper.replace(/\.js$/, '.d.ts');
+    if (/\.(?:js|jsx)$/.test(helper)) {
+      const declaration = helper.replace(/\.(?:js|jsx)$/, '.d.ts');
       try {
-        await copyFile(declaration, target.replace(/\.js$/, '.d.ts'));
+        await copyFile(declaration, target.replace(/\.(?:js|jsx)$/, '.d.ts'));
       } catch (error) {
         if (error?.code !== 'ENOENT') throw error;
       }
@@ -161,6 +184,8 @@ async function rewriteImports(target, layer, base) {
     const rootRel = sourceRel.startsWith('components/') ? sourceRel : `components/${sourceRel.replace(/^\.\//, '')}`;
     const owner = sourceOwner(rootRel);
     if (owner && owner !== layer) {
+      const supportedSpecifier = owner === 'core' ? coreSupportSubpathByModule.get(rootRel) : null;
+      if (supportedSpecifier) return `${prefix}${supportedSpecifier}${suffix}`;
       const packageName = `@lk-design-system/lds-${layers[owner]}`;
       return `${prefix}${packageName}/${rootRel}${suffix}`;
     }

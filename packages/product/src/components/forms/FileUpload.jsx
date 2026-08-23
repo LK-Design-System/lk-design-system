@@ -1,7 +1,7 @@
 import React from 'react';
-import { useFieldMetadata } from '@lk-design-system/lds-core/components/forms/field-shared';
+import { useFieldMetadata } from '@lk-design-system/lds-core/component-authoring';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
-import { useResolvedControlSize } from '@lk-design-system/lds-core/components/internal/component-density';
+import { useResolvedControlSize } from '@lk-design-system/lds-core/density';
 
 function matchesAccept(file, accept) {
   const rules = String(accept ?? '')

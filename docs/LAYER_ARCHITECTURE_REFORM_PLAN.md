@@ -2,14 +2,14 @@
 
 | Field | Value |
 | --- | --- |
-| Type | Active architecture implementation record |
-| Status | Active follow-through — R3A·R3B·R4 stable 및 stable consumer promotion 완료; §14 provider/private/family·Storybook·LDS3D/lifecycle closure는 R4.1에서 계속 추적 |
+| Type | Completed implementation record |
+| Status | Completed — R0–R4.1 계층·provider·public/private·owner exact-set gate를 durable 계약으로 승격 |
 | Owner | Design system owner · Frontend platform |
 | Required approvers | Design system owner · Frontend platform · Robotics domain owner(해당 변경) · consumer product owner(해당 migration) |
 | Last reviewed | 2026-08-23 |
 | Scope | Core·Theme·Product·Robotics 계층, 표현 프로파일, 패키지 계약, 소비 증거, legacy 정리 |
 | Related | [`DESIGN.md`](../DESIGN.md) · [`OPERATING_MODEL.md`](OPERATING_MODEL.md) · [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md) · [`ROBOTICS_PATTERNS.md`](ROBOTICS_PATTERNS.md) |
-| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) — R0–R4 완료; 다음은 R4.1 계층 계약 잔여 closure |
+| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) — R0–R4.1 완료; R5 Conditional · R6 Scheduled review · R7 Continuous |
 
 이 문서는 LDS가 **LK Portal 같은 일반 B2B 제품 표면**과 **LK Web Viz·Control 같은
 산업 운영 표면**을 하나의 시스템으로 지원하기 위한 목표 계층과 이행 순서를
@@ -17,9 +17,9 @@
 이미 존재하는 Core·Theme·Product·Robotics 경계를 실제 코드·토큰·문서·릴리스
 증거가 같은 방식으로 설명하게 만드는 것이다.
 
-이 문서는 1차 구현과 아직 닫히지 않은 완료 gate를 함께 보존하는 implementation
-record다. 현재 우선순위와 후속 실행 순서는 [`LDS_ROADMAP.md`](LDS_ROADMAP.md)가
-소유하며, §14의 체크가 실제 evidence로 모두 닫히기 전에는 `Completed`로 승격하지 않는다.
+이 문서는 1차 구현부터 R4.1 closure까지의 결정과 evidence를 보존하는 completed
+implementation record다. 현재 우선순위와 후속 실행 순서는
+[`LDS_ROADMAP.md`](LDS_ROADMAP.md)가 소유하며, 이 문서는 새 backlog를 소유하지 않는다.
 기존 public export와 Core 기준선을 유지하면서 Product family contract, Theme `default|ops`
 profile contract, Storybook profile toolbar, 대표 consumer pin/evidence, Robotics O1/O2 readiness와
 legacy active-reference guard를 실제 코드·토큰·검사에 연결했다. O3 alarm lifecycle과 O4
@@ -28,6 +28,12 @@ safety-certified HMI는 근거가 없으므로 지원 주장하지 않는다. LD
 workflow·accessibility·clean-clone evidence와 2026-08-23 product/design-system owner 승인으로
 `workflow-verified`다. main integration, rollout과 production deployment는 승인·검증되지 않아
 별도 `not-attested`다.
+
+R4.1은 semantic provider contract와 조합 fixture, Product→Core private import 0과 supported
+Core subpath, Product family·Storybook·Robotics·LDS3D owner exact-set gate를 현재 source에
+추가했다. 이 source-level closure의 candidate identity는 `0.1.1`이지만 tag·registry
+publish·consumer 재검증은 아직 없다. 따라서 stable `0.1.0`의 발행 identity나 외부
+consumer의 main/deployment 상태를 갱신하지 않는다.
 
 현재 정본은 [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json),
 [`LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json`](references/adoption/releases/LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json),
@@ -756,8 +762,10 @@ working plan으로만 유지한다.
 | consumer status | adoption registry와 소비 제품 evidence |
 | 릴리스·위성 matrix | [`OPERATIONS.md`](OPERATIONS.md)와 generated pin report |
 
-모든 Phase가 끝나면 이 문서를 `Completed implementation record`로 보존할지,
-durable 결정 승격 후 archive/delete할지 문서 수명주기 정책에 따라 판정한다.
+R4.1 종료 시 이 문서는 `Completed implementation record`로 top-level `docs/`에 보존하고
+active follow-through에서는 제거했다. 계속 적용할 provider/token 규칙은
+[`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md), public/private·owner 규칙은
+[`OPERATING_MODEL.md`](OPERATING_MODEL.md)가 소유한다.
 
 ---
 
@@ -791,10 +799,26 @@ stable, rollout, 제품 배포 완료 또는 safety certification으로 해석�
 | Application consumer | Portal/default source `949a1261e8f61842a42d07ca4b62c7ff71cc45da`, stable `0.1.0`, independent clean clone과 owner 승인 | registry `workflow-verified`; canonical Linux와 deployment는 `not-attested` |
 | Operations consumer | Web Viz/ops source `8f493fd3475eb6c7516fdf7d3aca3265c2b7db87`, stable `0.1.0`, Robotics `0.1.0-rc.33`, exact GitHub workflow와 owner 승인 | registry `workflow-verified`; main integration과 deployment는 `not-attested` |
 
-R3A·R3B·R4 stable은 완료됐다. 다만 Theme-provider negative diagnostic과 package 조합
-fixture, Product의 Core private/internal import 제거, Product family·Storybook·LDS3D 경계의
-단일 exact-set gate가 아직 없으므로 이 implementation record 전체는 `Completed`가 아니다.
-남은 조건은 roadmap R4.1이 소유한다.
+이 stable checkpoint 당시에는 Theme-provider negative diagnostic과 package 조합 fixture,
+Product의 Core private/internal import 제거, Product family·Storybook·LDS3D 경계의 단일
+exact-set gate가 없었다. 해당 post-stable gap은 아래 R4.1 checkpoint에서 닫혔다.
+
+---
+
+## 13.3 2026-08-23 R4.1 계층 계약 closure
+
+| 영역 | 결과 | 검증 |
+| --- | --- | --- |
+| Semantic provider | contract v1이 Core·Theme·Product runtime source와 pinned Robotics UI `0.1.0-rc.33` adapter를 대조한다. Core-only는 Theme 누락과 135개 unresolved variable을 결정적으로 진단하고, `Core+Theme`, `+Product`, `+Robotics`는 valid다. | `check:semantic-provider` — 6개 조합 fixture·5개 test |
+| Core supported subpath | Product의 authority-classified Core internal/private deep import는 0이고 Theme도 같은 비-Core gate를 통과한다. 공통 helper는 `brand-authoring`, `component-authoring`, `density`, `headless`, `platform` 다섯 public subpath로 한정하고 기존 deep path는 export map에서 null-deny한다. | `check:layers`, React 18/19 `check:type-consumer`, exact runtime/export-deny·SSR test |
+| Owner exact set | Product 111 source/119 export/109 canonical page와 고정 hidden fixture 1개, Robotics 23 source/53 export, LDS3D 8 package/41 qualified export를 한 verifier가 대조한다. Source↔page는 107 direct join과 title/path/export/owner/family가 고정된 closed exception 4건으로 완결한다. | owner exact-set gate — 26개 test, unclassified·duplicate·conflict·cross overlap/import 0 |
+| Durable 승격 | semantic provider interface는 `TOKEN_GOVERNANCE.md`, supported subpath·private import·owner exact-set은 `OPERATING_MODEL.md`가 소유한다. | `check:docs`; top-level index에서 completed record로 분류 |
+
+외부 Robotics/LDS3D 수치는 repository-tracked surface와 immutable artifact/pin을 대조한
+결과다. 외부 저장소의 live main freshness나 새 release를 승인하지 않는다. Portal/Web Viz의
+`0.1.1` 재검증, main integration·rollout·deployment도 계속 `not-attested`다.
+`0.1.1` immutable tag·package publish 전에는 현재 Core documentation manifest를 고정한
+짝 Robotics release와 release-only current-snapshot gate가 별도로 통과해야 한다.
 
 ---
 
@@ -805,11 +829,11 @@ fixture, Product의 Core private/internal import 제거, Product family·Storybo
 - [x] Core·Theme·Product는 한 저장소의 별도 package로 유지된다.
 - [x] 모든 public export, internal module, token group, canonical Storybook page가
       현재 owner authority에서 정확히 하나의 owner를 갖는다.
-- [ ] Product/Application·Operations·Workspace family와 Robotics·LDS3D 경계가
+- [x] Product/Application·Operations·Workspace family와 Robotics·LDS3D 경계가
       owner metadata·문서·코드·Storybook에서 일치하며 Product 미분류 export가 0이다.
-- [ ] Theme provider 누락 진단과 Core+Theme·Product·Robotics 조합 fixture가 모두
+- [x] Theme provider 누락 진단과 Core+Theme·Product·Robotics 조합 fixture가 모두
       유효하고 기존 default 출력이 보존된다.
-- [ ] Product가 Core private/internal path를 소비하지 않는다.
+- [x] Product가 Core private/internal path를 소비하지 않는다.
 - [x] `default | ops`가 Theme runtime 축으로 동작하며 동일 Core API를 사용한다.
 - [x] Portal/default와 Web Viz/ops의 current package install, production build,
       representative workflow smoke와 accessibility/clean-clone evidence는 generated 중앙
@@ -822,7 +846,7 @@ fixture, Product의 Core private/internal import 제거, Product family·Storybo
       있는 open deprecation debt로 등록돼 있다.
 - [x] Core·Theme·Product fixed release set과 satellite compatibility matrix가 정책상 green이다.
       LDS3D의 기록된 nonblocking lag를 모든 satellite 최신 상태로 과장하지 않는다.
-- [ ] 채택된 결정이 기존 durable 문서로 승격되고 이 계획의 lifecycle이 정리된다.
+- [x] 채택된 결정이 기존 durable 문서로 승격되고 이 계획의 lifecycle이 정리된다.
 
-계획 작성, 일부 코드 이동, 새로운 Phase 착수 또는 좁은 Storybook 검증만으로 위
-전체 완료를 주장하지 않는다.
+위 조건은 R4.1 source와 machine gate에서 함께 닫혔다. 이 완료는 별도 package publish,
+consumer main integration 또는 production deployment 완료를 주장하지 않는다.

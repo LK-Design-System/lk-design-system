@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { LdsClassNames, LdsStyles, LdsVars } from '@lk-design-system/lds-core/components/internal/surface';
+import type { LdsClassNames, LdsStyles, LdsVars } from '@lk-design-system/lds-core/component-authoring';
 
 export type DataToolbarPart = 'root' | 'header' | 'heading' | 'title' | 'count' | 'description' | 'actions' | 'controls' | 'search' | 'filters';
 export type DataToolbarVariable =

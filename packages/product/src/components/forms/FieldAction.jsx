@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormField } from '@lk-design-system/lds-core/components/forms/FormField';
-import { componentVars, partClassName, partStyle } from '@lk-design-system/lds-core/components/internal/surface';
+import { componentVars, partClassName, partStyle } from '@lk-design-system/lds-core/component-authoring';
 
 const CONTROL_HEIGHTS = {
   sm: 'var(--control-h-sm)',

@@ -57,14 +57,13 @@ source와 machine-readable evidence가, 정책은 [`OPERATING_MODEL.md`](OPERATI
 - 현재 package·token·Storybook owner는 live authority에서 하나로 결정되고, consumer
   registry v2는 package release·consumer stage·product deployment를 독립 판정한다.
 
-R3A·R3B의 stable 차단 결정과 R4 첫 stable 승격은 닫혔다. 아래 항목은 `0.1.0`의
-package/consumer 승격을 무효화하지 않는 post-stable 구조·운영 후속이다.
+R3A·R3B의 stable 차단 결정, R4 첫 stable 승격과 R4.1 source-level 계층 계약 closure는
+닫혔다. R4.1은 이미 발행된 `0.1.0` package identity나 consumer/deployment 상태를 바꾸지
+않고 다음 release에 들어갈 source와 machine gate를 정리한 후속이다. 현재 package source
+candidate identity는 `0.1.1`이며 tag·registry publish·consumer 재검증은 아직 없다.
 
-| 열린 문제 | 2026-08-23 기준 근거 | 처리 위치 |
+| 현재 열린 문제 | 2026-08-23 기준 근거 | 처리 위치 |
 | --- | --- | --- |
-| Theme provider 누락 진단과 package 조합 fixture가 아직 없음 | `default|ops` runtime은 검증됐지만 Core-only negative diagnostic과 `Core+Theme[+Product][+Robotics]` semantic-provider/version 조합 gate는 없다. | R4.1 |
-| Product의 Core private/internal 소비가 남아 있음 | Product source 21개 파일에서 Core `components/internal/*` import 23건이 남아 있고 현재 layer gate는 이를 차단하지 않는다. | R4.1 |
-| Product family·Storybook·LDS3D 경계의 단일 exact-set gate가 없음 | Product family 분류와 owner authority는 각각 통과하지만 family↔Storybook 및 LDS3D owner 경계를 하나로 대조하는 종료 gate는 없다. | R4.1 |
 | 비-Storybook workflow evidence adapter 결정이 열려 있음 | Web Viz의 deterministic production-preview evidence는 유효한 근거지만, full-surface conformance가 이를 공식 adapter로 받을지 제품 Storybook을 요구할지는 아직 계약화되지 않았다. | R7 |
 
 R1에서 닫힌 문제와 재검증 진입점은 다음과 같다.
@@ -111,7 +110,7 @@ R2 product adoption promotion (Done)
               +--> R3B owner/API decision (Done) ----+--> R4 first stable promotion (Done)
                                                              |
                                                              v
-                                                R4.1 layer contract closure (Now)
+                                                R4.1 layer contract closure (Done)
 
 R5 alarm lifecycle O3 (Conditional; stable 비차단)
 R6 ecosystem lifecycle review (Scheduled review, 2027-01)
@@ -119,9 +118,9 @@ R7 evidence/operations health (Continuous)
 ```
 
 R1 계약 구현과 paired LDS/Robotics release, R2 대표 제품 adoption 승격, R3A 밀도 계약,
-R3B owner/API 결정과 R4 첫 stable 승격을 완료했다. 현재 실행 항목은 stable 비차단으로
-남아 있던 provider/private/family exact-set 계약을 닫는 R4.1이다. R5 O3는 실제 alarm
-workflow가 없으면 계속 미지원이고, R6는 2027-01 정기 심사, R7은 매 release 반복 작업이다.
+R3B owner/API 결정, R4 첫 stable 승격과 R4.1 계층 계약 closure를 완료했다. 현재 무조건부
+release-train backlog는 없다. R5 O3는 실제 alarm workflow가 없으면 계속 미지원이고, R6는
+2027-01 정기 심사, R7은 매 release 반복 작업이다.
 
 ## 4. R0 — 계층·프로파일·패키지 기준선
 
@@ -458,7 +457,7 @@ owner가 소유하고 LDS는 제공된 deployment evidence만 기록한다. O3 A
 
 | Field | Value |
 | --- | --- |
-| Status | `Now` |
+| Status | `Done` — source contract와 machine gate 완료; 별도 package release·제품 배포를 뜻하지 않음 |
 | DRI | Frontend platform · Core/Product owner |
 | Required approvers | Design system owner · Robotics/LDS3D owner(경계 변경 시) |
 | Dependency | R4 stable 완료; `0.1.x` support window와 호환성 유지 |
@@ -476,6 +475,33 @@ owner가 소유하고 LDS는 제공된 deployment evidence만 기록한다. O3 A
   exact-set verifier가 대조해 미분류·중복·충돌이 0이다.
 - 위 결과가 green이면 `LAYER_ARCHITECTURE_REFORM_PLAN.md`의 남은 §14 항목과 lifecycle을
   실제 evidence에 맞춰 닫는다.
+
+### 완료 evidence
+
+- Semantic provider contract v1은 Core·Theme·Product runtime source와 pinned Robotics UI
+  `0.1.0-rc.33` adapter를 검사한다. Core-only는 Theme 누락과 135개 unresolved variable을
+  결정적으로 진단하고, 세 supported composition과 6개 양성·음성 fixture·5개 test가 통과한다.
+- Product source의 authority-classified Core internal/private deep import는 0이고 Theme도 같은
+  비-Core gate를 통과한다. 공통 helper는 `@lk-design-system/lds-core/brand-authoring`,
+  `/component-authoring`, `/density`, `/headless`, `/platform`의 다섯 supported subpath로
+  이동했고, 원래 deep path는 export map에서 null-deny된다. Runtime exact export·React 18/19
+  type consumer·SSR fixture가 함께 통과한다.
+- 단일 owner exact-set verifier가 Product 111 source/119 export/109 canonical Storybook page와
+  1개 고정 hidden visual fixture, Robotics 23 source/53 export, LDS3D 8 package/41 qualified
+  export를 대조한다. Product source↔canonical page는 107 direct join과 4 exact closed exception으로
+  고정되며 26개 positive/negative test에서 unclassified·duplicate·conflict는 0이다.
+- durable 계약은 [`TOKEN_GOVERNANCE.md`](TOKEN_GOVERNANCE.md)의 semantic provider interface와
+  [`OPERATING_MODEL.md`](OPERATING_MODEL.md)의 supported Core subpath·owner exact-set 규칙으로
+  승격했다. [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md)는
+  `Completed implementation record`로 lifecycle을 닫았다.
+
+이 완료는 `0.1.1` source candidate의 구조 gate에 한정된다. immutable tag와 registry
+publish는 아직 없고, 발행된 stable은 계속 `0.1.0`, pinned Robotics는 `0.1.0-rc.33`이다.
+`0.1.1`을 immutable tag 또는 package publish로 승격하려면 현재 Core documentation
+manifest를 고정한 짝 Robotics release와 release-only current-snapshot gate가 먼저 통과해야 한다.
+Portal/Web Viz의 새 candidate 재검증, main integration과 deployment도 계속 `not-attested`다.
+외부 Robotics/LDS3D surface는 저장소에 고정된 evidence를 검증한 것이며 해당 저장소의 live
+freshness나 새 release를 승인하지 않는다.
 
 ## 10. R5 — 산업 행동 계약 O3
 
@@ -543,7 +569,7 @@ maintenance cost로 재평가한다. 그 전에는 taxonomy 정리만을 이유�
 
 | 문서 | 분류 | 현재 disposition | Roadmap 연결 |
 | --- | --- | --- | --- |
-| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | active implementation record | R3A·R3B·R4 stable 완료; §14의 provider/private import/family·Storybook·LDS3D exact-set/lifecycle closure는 미완료 | R4.1 |
+| [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | completed implementation record | R0–R4.1 완료; provider/private import/family·Storybook·Robotics·LDS3D exact-set 결정은 durable 계약과 machine gate로 승격 | 없음 |
 | [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | adopted implementation record | `default | ops` 1차 구현 완료 | R3A |
 | [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | completed implementation record | source/type/story/overlay 계약 완료; 제품 증거는 registry가 소유 | R2 |
 | [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | completed migration record | package split·Robotics extraction·compat retirement 완료 | R3B·R6 trigger |

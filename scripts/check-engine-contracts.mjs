@@ -1,5 +1,5 @@
 // Consumer-free contract tests for the promoted behavior engines:
-// - components/internal/useMenuKeyboard.js (roving focus, typeahead, Escape stack)
+// - @lk-design-system/lds-core/headless useMenuKeyboard (roving focus, typeahead, Escape stack)
 // - components/overlay/anchored-overlay.js (useLightDismiss latch, useFloatingPosition, helpers)
 // - components/overlay/dialog-focus.js (focus trap, restore, overlay stack, scroll lock)
 // - components/forms/field-shared.js (field metadata, message priority, state tokens)
@@ -435,7 +435,7 @@ async function main() {
   if (uniqueConsoleErrors.length > 0) {
     throw new Error(`Engine contract harness emitted console/page errors:\n${uniqueConsoleErrors.join('\n')}`);
   }
-  console.log(`Validated engine contracts: ${passed} assertions across useMenuKeyboard, useLightDismiss, useFloatingPosition/inlineFloatingStyle, useDialogFocus, and field-shared.`);
+  console.log(`Validated engine contracts: ${passed} assertions through the supported Core headless, platform, and component-authoring source facades.`);
 }
 
 main().catch((error) => {

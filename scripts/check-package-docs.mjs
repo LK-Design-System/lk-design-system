@@ -156,8 +156,11 @@ function expectedLdsMetadata(definition) {
     llms: './docs/llms.txt',
     adoptionChecklist: './docs/adoption-checklist.json',
     adoptionReportSchema: './docs/adoption-report.schema.json',
+    semanticContract: './tokens/semantic-contract.json',
+    requiresSemanticContractVersion: '1',
     storybook: `${publicRoot}${definition.storybookPath}`,
   };
+  if (definition.layer === 'theme') metadata.providesSemanticContractVersion = '1';
   if (definition.profileContract) {
     metadata.profileContract = definition.profileContract;
     metadata.profiles = definition.profiles;

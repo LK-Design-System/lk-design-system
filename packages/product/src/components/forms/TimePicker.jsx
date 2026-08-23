@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
-import { fieldTypography } from '@lk-design-system/lds-core/components/forms/field-shared';
+import { fieldTypography } from '@lk-design-system/lds-core/component-authoring';
 
 function pad(number) {
   return String(number).padStart(2, '0');

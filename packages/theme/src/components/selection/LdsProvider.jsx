@@ -1,5 +1,5 @@
 import React from 'react';
-import { OverlayRuntimeProvider } from '@lk-design-system/lds-core/components/overlay/overlay-platform';
+import { OverlayRuntimeProvider } from '@lk-design-system/lds-core/platform';
 
 const MODES = new Set(['light', 'dark', 'auto']);
 const PROFILES = new Set(['default', 'ops']);

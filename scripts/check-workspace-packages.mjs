@@ -1,6 +1,10 @@
 import { access, readFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import {
+  canonicalSnapshotFromDocumentationManifest,
+  canonicalSnapshotMode,
+} from './robotics-canonical-snapshot.mjs';
 
 const root = process.cwd();
 const errors = [];
@@ -273,22 +277,10 @@ async function validateExternalDocumentation(packageInfo) {
     return;
   }
   const rootManifest = await readJson(path.join(root, 'package.json'), 'workspace root manifest');
-  if (surface.documentation.canonicalContract?.source?.ref !== `lds-v${rootManifest?.version}`) {
-    fail(`${packageInfo.name}: canonical documentation ref must match the current LDS package-set version.`);
-  }
   const canonicalPath = safeDescendant(root, surface.documentation.canonicalContract?.source?.path);
   const canonicalBytes = canonicalPath ? await readFile(canonicalPath).catch(() => null) : null;
   if (!canonicalBytes || createHash('sha256').update(canonicalBytes).digest('hex') !== surface.documentation.canonicalContract?.source?.sha256) {
     fail(`${packageInfo.name}: canonical adoption contract hash drift.`);
-  }
-  const coreDocsManifestPath = safeDescendant(root, 'packages/core/docs/manifest.json');
-  const coreDocsManifestBytes = coreDocsManifestPath
-    ? await readFile(coreDocsManifestPath).catch(() => null)
-    : null;
-  if (!coreDocsManifestBytes
-    || createHash('sha256').update(coreDocsManifestBytes).digest('hex')
-      !== surface.documentation.canonicalContract?.snapshotManifestSha256) {
-    fail(`${packageInfo.name}: current Core documentation manifest differs from the Robotics snapshot pin.`);
   }
 
   const vendored = surface.vendoredArtifact;
@@ -314,6 +306,9 @@ async function validateExternalDocumentation(packageInfo) {
   if (manifest.name !== surface.package.name || manifest.version !== surface.package.version) {
     fail(`${packageInfo.name}: installed package identity differs from the external surface.`);
   }
+  if (manifest.lds?.refStatus !== surface.package.refStatus) {
+    fail(`${packageInfo.name}: installed package publication status differs from the external surface.`);
+  }
   validateImplementationExports(manifest, packageInfo);
   await validateDocumentationSurface(manifest, packageInfo, packageRoot);
 
@@ -324,6 +319,30 @@ async function validateExternalDocumentation(packageInfo) {
     fail(`${packageInfo.name}: packaged checklist decisions differ from the canonical contract.`);
   }
   if (docsManifest) {
+    let installedCanonical;
+    let snapshotMode;
+    try {
+      installedCanonical = canonicalSnapshotFromDocumentationManifest(docsManifest);
+      snapshotMode = canonicalSnapshotMode({
+        currentRef: `lds-v${rootManifest?.version}`,
+        canonicalRef: installedCanonical.source.ref,
+        surfacePackageRefStatus: surface.package.refStatus,
+        installedPackageRefStatus: manifest.lds?.refStatus,
+      });
+    } catch (error) {
+      fail(`${packageInfo.name}: ${error.message}`);
+    }
+    if (installedCanonical && JSON.stringify(installedCanonical) !== JSON.stringify(surface.documentation.canonicalContract)) {
+      fail(`${packageInfo.name}: installed canonical LDS snapshot differs from the external surface.`);
+    }
+    if (snapshotMode === 'current') {
+      const currentManifestBytes = await readFile(path.join(root, 'packages/core/docs/manifest.json')).catch(() => null);
+      if (!currentManifestBytes
+        || createHash('sha256').update(currentManifestBytes).digest('hex')
+          !== surface.documentation.canonicalContract.snapshotManifestSha256) {
+        fail(`${packageInfo.name}: current-ref Robotics snapshot differs from the current Core documentation manifest.`);
+      }
+    }
     if (JSON.stringify(docsManifest.publicDocs) !== JSON.stringify(surface.documentation.publicDocs)) {
       fail(`${packageInfo.name}: installed documentation public URLs differ from the external surface.`);
     }
@@ -350,6 +369,10 @@ async function validateExternalDocumentation(packageInfo) {
       .filter((file) => file !== 'manifest.json')
       .sort();
     const records = Array.isArray(docsManifest.documents) ? docsManifest.documents : [];
+    if (records.find(({ path: file }) => file === 'shared/manifest.json')?.sha256
+      !== surface.documentation.canonicalContract.snapshotManifestSha256) {
+      fail(`${packageInfo.name}: installed shared manifest does not match the canonical snapshot pin.`);
+    }
     const recordPaths = records.map(({ path: file }) => file).sort();
     if (JSON.stringify(actualPaths) !== JSON.stringify(recordPaths)) {
       fail(`${packageInfo.name}: installed documentation manifest file set drift.`);

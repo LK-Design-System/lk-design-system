@@ -46,6 +46,9 @@ jobs:
       - name: Verify tag and package-set identity
         run: npm run check:release-immutability -- --tag
 
+      - name: Verify current canonical Robotics snapshot
+        run: node scripts/update-release-pins.mjs --check --require-current-canonical-snapshot
+
       - name: Verify package versions are unpublished
         run: node scripts/check-release-package-availability.mjs
 

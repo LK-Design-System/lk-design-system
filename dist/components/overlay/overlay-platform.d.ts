@@ -6,6 +6,7 @@ export interface OverlayRuntimeValue {
   zIndexBase: number;
   direction?: 'ltr' | 'rtl';
   colorScheme?: 'light' | 'dark' | 'auto';
+  profile?: 'default' | 'ops';
 }
 
 export interface OverlayRuntimeProviderProps extends Partial<OverlayRuntimeValue> {

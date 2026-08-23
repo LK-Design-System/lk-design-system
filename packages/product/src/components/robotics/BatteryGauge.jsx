@@ -1,5 +1,5 @@
 import React from 'react';
-import { normalizeBoundedValue } from '@lk-design-system/lds-core/components/internal/bounded-value';
+import { normalizeBoundedValue } from '@lk-design-system/lds-core/component-authoring';
 
 const TONE_STYLE = {
   neutral: {

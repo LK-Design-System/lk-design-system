@@ -1,6 +1,6 @@
 {
   "name": "@lk-design-system/lds-theme",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "LK brand, color, typography, and theme layer.",
   "type": "module",
   "main": "./dist/index.js",
@@ -20,7 +20,7 @@
     "tokens/*.css"
   ],
   "dependencies": {
-    "@lk-design-system/lds-core": "0.1.0"
+    "@lk-design-system/lds-core": "0.1.1"
   },
   "peerDependencies": {
     "react": ">=18 <20",
@@ -55,6 +55,9 @@
     "llms": "./docs/llms.txt",
     "adoptionChecklist": "./docs/adoption-checklist.json",
     "adoptionReportSchema": "./docs/adoption-report.schema.json",
+    "semanticContract": "./tokens/semantic-contract.json",
+    "requiresSemanticContractVersion": "1",
+    "providesSemanticContractVersion": "1",
     "profileContract": "./docs/profile-contract.json",
     "profiles": [
       "default",

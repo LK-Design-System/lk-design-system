@@ -1,9 +1,9 @@
 import React from 'react';
 import { IconButton } from '@lk-design-system/lds-core/components/buttons/IconButton';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
-import { ComponentDensityScope, useResolvedDensity } from '@lk-design-system/lds-core/components/internal/component-density';
-import { useDialogFocus } from '@lk-design-system/lds-core/components/overlay/dialog-focus';
-import { OverlayPortal } from '@lk-design-system/lds-core/components/overlay/overlay-platform';
+import { ComponentDensityScope, useResolvedDensity } from '@lk-design-system/lds-core/density';
+import { useDialogFocus } from '@lk-design-system/lds-core/platform';
+import { OverlayPortal } from '@lk-design-system/lds-core/platform';
 
 /**
  * LDS Product Extension — Drawer

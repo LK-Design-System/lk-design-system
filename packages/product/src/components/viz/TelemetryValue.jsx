@@ -5,7 +5,7 @@ import {
   isAttachedUnit,
   normalizeUnit,
   normalizeValueText,
-} from '@lk-design-system/lds-core/components/internal/unit-format';
+} from '@lk-design-system/lds-core/component-authoring';
 import { TELEMETRY_STATUS_LABEL as STATUS_LABEL } from '../internal/telemetryStatusLabel.js';
 
 /**
