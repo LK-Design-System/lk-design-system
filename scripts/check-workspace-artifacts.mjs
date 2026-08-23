@@ -133,13 +133,6 @@ const roboticsExternalSurface = await readJson(path.join(
   'package-split',
   'ROBOTICS_EXTERNAL_SURFACE.json',
 ));
-const canonicalAdoptionContract = await readJson(path.join(
-  repositoryRoot,
-  'docs',
-  'references',
-  'adoption',
-  'LDS_UI_ADOPTION_CONTRACT.json',
-));
 const workspaceRootManifest = await readJson(path.join(repositoryRoot, 'package.json'));
 
 function withoutReferenceProjection(contract) {
@@ -172,6 +165,17 @@ function strictArtifactDescendant(value) {
   invariant(
     relative && !relative.startsWith('..') && !path.isAbsolute(relative),
     `Refusing to use an output path outside or equal to visual-artifacts: ${value}`,
+  );
+  return absolute;
+}
+
+function strictRepositoryDescendant(value, label) {
+  invariant(typeof value === 'string' && value && !value.includes('\\'), `${label} must be a non-empty POSIX path.`);
+  const absolute = path.resolve(repositoryRoot, value);
+  const relative = path.relative(repositoryRoot, absolute);
+  invariant(
+    relative && !relative.startsWith('..') && !path.isAbsolute(relative),
+    `${label} must stay inside the LDS repository.`,
   );
   return absolute;
 }
@@ -449,6 +453,22 @@ async function packWorkspace(workspace, destination) {
     throw new Error(`${workspace.id}: npm pack did not return valid JSON: ${error.message}\n${stdout}`);
   }
   invariant(result?.filename, `${workspace.id}: npm pack did not report a tarball filename.`);
+  if (workspace.external) {
+    const vendored = roboticsExternalSurface.vendoredArtifact;
+    invariant(vendored?.path && /^[0-9a-f]{64}$/.test(vendored.sha256 ?? ''), 'robotics: external surface must pin a valid vendored artifact path and SHA-256.');
+    invariant(vendored.path.includes(manifest.version), `robotics: vendored artifact filename must include ${manifest.version}.`);
+    invariant(
+      workspaceRootManifest.devDependencies?.[workspace.name] === `file:${vendored.path}`,
+      'robotics: workspace devDependency must resolve the external-surface vendored artifact.',
+    );
+    const vendoredBytes = await readFile(strictRepositoryDescendant(vendored.path, 'robotics vendored artifact path'));
+    const packedBytes = await readFile(path.join(destination, result.filename));
+    invariant(createHash('sha256').update(vendoredBytes).digest('hex') === vendored.sha256, 'robotics: vendored artifact hash drift.');
+    invariant(
+      createHash('sha256').update(packedBytes).digest('hex') === vendored.sha256,
+      'robotics: installed package bytes differ from the immutable vendored artifact.',
+    );
+  }
   const files = new Set((result.files ?? []).map(({ path: file }) => normalizeArchivePath(file)));
   invariant(files.size > 0, `${workspace.id}: npm pack reported an empty tarball.`);
   invariant(![...files].some((file) => file === 'src' || file.startsWith('src/')), `${workspace.id}: raw src files leaked into the tarball.`);
@@ -733,6 +753,26 @@ async function assertInstalledDocumentation(packed, consumerDirectory) {
         'robotics: upstream snapshot manifest hash differs from the canonical documentation source.',
       );
       if (snapshotMode === 'current') {
+        const canonicalSource = documentation.canonicalContract.source;
+        const canonicalPath = path.resolve(repositoryRoot, canonicalSource.path);
+        const canonicalRelative = path.relative(repositoryRoot, canonicalPath);
+        invariant(
+          canonicalRelative && !canonicalRelative.startsWith('..') && !path.isAbsolute(canonicalRelative),
+          'robotics: canonical adoption source escapes the LDS root.',
+        );
+        const canonicalBytes = await readFile(canonicalPath);
+        invariant(
+          createHash('sha256').update(canonicalBytes).digest('hex') === canonicalSource.sha256,
+          'robotics: canonical adoption source hash differs from the external surface.',
+        );
+        const canonicalAdoptionContract = JSON.parse(canonicalBytes);
+        invariant(
+          isDeepStrictEqual(
+            withoutReferenceProjection(adoptionContract),
+            withoutReferenceProjection(canonicalAdoptionContract),
+          ),
+          'robotics: installed adoption checklist decisions differ from the canonical contract.',
+        );
         const currentManifestBytes = await readFile(path.join(repositoryRoot, 'packages/core/docs/manifest.json'));
         invariant(
           createHash('sha256').update(currentManifestBytes).digest('hex')
@@ -740,13 +780,6 @@ async function assertInstalledDocumentation(packed, consumerDirectory) {
           'robotics: current-ref snapshot differs from the current Core documentation manifest.',
         );
       }
-      invariant(
-        isDeepStrictEqual(
-          withoutReferenceProjection(adoptionContract),
-          withoutReferenceProjection(canonicalAdoptionContract),
-        ),
-        'robotics: installed adoption checklist decisions differ from the canonical contract.',
-      );
       const references = [
         ...(adoptionContract.facets ?? []).flatMap((facet) => facet.references ?? []),
         ...(adoptionContract.componentMapping?.references ?? []),
@@ -763,11 +796,6 @@ async function assertInstalledDocumentation(packed, consumerDirectory) {
       }
       const reportExample = await readJson(path.join(installedRoot, documentation.files.reportExample.path));
       invariant(reportExample.$schema === './adoption-report.schema.json', 'robotics: report example schema link must be package-relative.');
-      const canonicalBytes = await readFile(path.join(repositoryRoot, documentation.canonicalContract.source.path));
-      invariant(
-        createHash('sha256').update(canonicalBytes).digest('hex') === documentation.canonicalContract.source.sha256,
-        'robotics: canonical adoption source hash differs from the external surface.',
-      );
     }
   }
   console.log('Validated installed package semantic metadata, documentation hashes, relative schema links, and computed token/asset inventories.');

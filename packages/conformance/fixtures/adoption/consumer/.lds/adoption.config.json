@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "kind": "lds-ui-adoption-config",
   "repository": "fixture-consumer",
+  "consumerId": "fixture-adopter",
   "uiRoots": ["src/**/*", "admin/**/*"],
   "styleEntry": "src/styles.css",
   "requiredStyleImports": [

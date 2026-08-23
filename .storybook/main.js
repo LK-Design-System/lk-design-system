@@ -9,6 +9,7 @@ const config = {
     { from: '../packages/core/docs/LDS_UI_ADOPTION_CONTRACT.schema.json', to: '/schemas/lds-ui-adoption-contract.schema.json' },
     { from: '../packages/core/docs/adoption-report.schema.json', to: '/schemas/lds-ui-adoption-report.schema.json' },
     { from: '../packages/core/docs/adoption-config.schema.json', to: '/schemas/lds-ui-adoption-config.schema.json' },
+    { from: '../packages/core/docs/adoption-workflow-evidence.schema.json', to: '/schemas/lds-ui-adoption-workflow-evidence.schema.json' },
     { from: '../packages/theme/docs', to: '/packages/theme' },
     { from: '../packages/product/docs', to: '/packages/product' },
   ],

@@ -177,12 +177,13 @@ for (const id of workspacePackages) {
 
   let installedDocsManifest = null;
   let installedCanonical = null;
+  let snapshotMode = null;
   if (installedMatches) {
     installedDocsManifest = JSON.parse(
       await readFile(path.join(packageRoot, ...surface.documentation.files.manifest.path.split('/')), 'utf8'),
     );
     installedCanonical = canonicalSnapshotFromDocumentationManifest(installedDocsManifest);
-    canonicalSnapshotMode({
+    snapshotMode = canonicalSnapshotMode({
       currentRef: `lds-v${ldsVersion}`,
       canonicalRef: installedCanonical.source.ref,
       surfacePackageRefStatus: surface.package?.refStatus,
@@ -191,13 +192,18 @@ for (const id of workspacePackages) {
   }
 
   const artifactHash = await sha256(vendoredPath);
-  const canonicalPath = (installedCanonical ?? surface.documentation?.canonicalContract)?.source?.path;
-  const canonicalHash = canonicalPath ? await sha256(canonicalPath) : undefined;
+  const canonicalPath = installedCanonical?.source?.path;
+  let canonicalHash = installedCanonical?.source?.sha256
+    ?? surface.documentation?.canonicalContract?.source?.sha256;
   const currentSnapshotHash = await sha256('packages/core/docs/manifest.json');
-  if (installedCanonical && canonicalHash !== installedCanonical.source.sha256) {
-    throw new Error(
-      `Installed ${roboticsName} canonical contract hash does not match the local canonical path ${canonicalPath}.`,
-    );
+  if (snapshotMode === 'current') {
+    const currentCanonicalHash = canonicalPath ? await sha256(canonicalPath) : undefined;
+    if (currentCanonicalHash !== installedCanonical.source.sha256) {
+      throw new Error(
+        `Installed ${roboticsName} canonical contract hash does not match the local canonical path ${canonicalPath}.`,
+      );
+    }
+    canonicalHash = currentCanonicalHash;
   }
   if (requireCurrentCanonicalSnapshot) {
     if (!installedCanonical) {
@@ -224,12 +230,6 @@ for (const id of workspacePackages) {
       JSON.stringify(surface.documentation?.canonicalContract),
       JSON.stringify(installedCanonical),
     );
-    const snapshotMode = canonicalSnapshotMode({
-      currentRef: `lds-v${ldsVersion}`,
-      canonicalRef: installedCanonical.source.ref,
-      surfacePackageRefStatus: surface.package?.refStatus,
-      installedPackageRefStatus: installed.lds?.refStatus,
-    });
     if (snapshotMode === 'current') {
       record(
         file,

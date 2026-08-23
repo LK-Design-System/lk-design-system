@@ -4,7 +4,24 @@ All notable package-facing changes are recorded here. The package follows semant
 
 ## Unreleased
 
-No additional package-facing change is recorded after the `0.1.1` source candidate.
+Source-only follow-up for the `0.1.1` candidate. No immutable tag, registry publish,
+consumer re-verification, rollout, or product deployment is attested here.
+
+### Added
+
+- Added adoption contract v2 with a deterministic non-Storybook workflow evidence adapter.
+  A hashed clean-clone artifact can now satisfy async and interactive hard triggers when it
+  proves production build, workflow smoke, accessibility, theme and viewport coverage,
+  representative ready/non-ready states, and immutable spec, runner, and CI inputs.
+
+### Changed
+
+- Contract v1 reports remain pinned historical evidence. Revalidation against v2 requires a
+  local v2 report-schema copy, `contractVersion: "2"`, and either existing exact Storybook
+  evidence or the new workflow artifact; it does not promote or deploy a consumer automatically.
+- Normal source-candidate checks accept the fully hashed published-historical Robotics
+  documentation snapshot, while the release-only gate still requires a current paired
+  Robotics snapshot before the `0.1.1` tag or package publish.
 
 ## 0.1.1 - 2026-08-23
 

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "kind": "lds-ui-adoption-workflow-evidence",
+  "consumerId": "fixture-adopter",
+  "repository": "LK-ROBOTICS/fixture_consumer",
+  "surfaceId": "device-list",
+  "sourceCommit": "AUTO_SOURCE_COMMIT",
+  "generatedAt": "2026-08-09T00:00:00.000Z",
+  "result": "passed",
+  "cleanReproducibility": {
+    "status": "passed",
+    "mode": "clean-clone",
+    "sourceCommit": "AUTO_SOURCE_COMMIT",
+    "observedHead": "AUTO_SOURCE_COMMIT",
+    "worktree": "clean",
+    "runner": "fixture ephemeral runner",
+    "command": "npm run verify:workflow",
+    "runId": "fixture-1",
+    "url": "https://example.invalid/actions/runs/fixture-1"
+  },
+  "environment": {
+    "browser": "Playwright Chromium",
+    "productionPreview": "Vite preview on 127.0.0.1:4174"
+  },
+  "checks": [
+    {
+      "id": "production-build",
+      "status": "passed",
+      "command": "npm run build"
+    },
+    {
+      "id": "workflow-smoke",
+      "status": "passed",
+      "command": "npm run test:workflow"
+    },
+    {
+      "id": "accessibility",
+      "status": "passed",
+      "command": "npm run test:workflow"
+    }
+  ],
+  "workflowCoverage": {
+    "id": "ready-and-loading-device-list",
+    "stateCoverageMode": "each-theme-viewport-run",
+    "states": ["ready", "loading"],
+    "themes": ["light", "dark"],
+    "viewports": ["1280x800", "360x800"],
+    "combinationsPassed": 4,
+    "combinationsTotal": 4,
+    "evidence": [
+      {
+        "role": "spec",
+        "path": "evidence/workflow.spec.ts",
+        "sha256": "a6928f8e710cfa85540e26f8f81c7a5de5e03939e4264c1051354c2d3b659190"
+      },
+      {
+        "role": "runner-config",
+        "path": "evidence/workflow.config.ts",
+        "sha256": "6fac48bc4d4d41d00a621b751f51a699c5b7bf3ee7f0bd6d58164478c5427be2"
+      },
+      {
+        "role": "ci-workflow",
+        "path": "evidence/workflow.ci.yml",
+        "sha256": "c07a503fd279a963825f778fc5912aea21c4edd154fc9c0952c126b6b2efa9d2"
+      }
+    ]
+  }
+}

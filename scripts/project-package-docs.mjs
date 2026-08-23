@@ -27,6 +27,7 @@ const canonical = {
   adoptionContractSchema: 'docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json',
   adoptionReportSchema: 'docs/references/adoption/LDS_UI_ADOPTION_REPORT.schema.json',
   adoptionReportExample: 'docs/references/adoption/LDS_UI_ADOPTION_REPORT.example.json',
+  adoptionWorkflowEvidenceSchema: 'docs/references/adoption/LDS_UI_ADOPTION_WORKFLOW_EVIDENCE.schema.json',
   adoptionWorkflow: 'docs/LDS_UI_ADOPTION_WORKFLOW.md',
   rootLlms: 'llms.txt',
   foundationRoot: 'docs/foundations',
@@ -299,6 +300,7 @@ async function makePackageProjection(definition, canonicalInputs) {
     [canonical.adoptionContractSchema, 'docs/LDS_UI_ADOPTION_CONTRACT.schema.json'],
     [canonical.adoptionReportSchema, 'docs/adoption-report.schema.json'],
     [canonical.adoptionReportExample, 'docs/adoption-report.example.json'],
+    [canonical.adoptionWorkflowEvidenceSchema, 'docs/adoption-workflow-evidence.schema.json'],
   ]);
   for (const [sourcePath, targetPath] of [
     [definition.profileSource, definition.profileTarget],
@@ -379,6 +381,7 @@ async function makePackageProjection(definition, canonicalInputs) {
   });
   await projectFile(canonical.adoptionContractSchema, 'docs/LDS_UI_ADOPTION_CONTRACT.schema.json');
   await projectFile(canonical.adoptionReportSchema, 'docs/adoption-report.schema.json');
+  await projectFile(canonical.adoptionWorkflowEvidenceSchema, 'docs/adoption-workflow-evidence.schema.json');
   const canonicalExampleSource = await read(canonical.adoptionReportExample);
   const packageExample = JSON.parse(canonicalExampleSource.toString('utf8'));
   packageExample.$schema = './adoption-report.schema.json';

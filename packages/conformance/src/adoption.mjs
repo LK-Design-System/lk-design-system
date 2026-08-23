@@ -24,6 +24,7 @@ export const ADOPTION_FACETS = [
 const DEFAULT_CONTRACT = 'docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json';
 const DEFAULT_CONTRACT_SCHEMA = 'docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json';
 const DEFAULT_REPORT_SCHEMA = 'docs/references/adoption/LDS_UI_ADOPTION_REPORT.schema.json';
+const DEFAULT_WORKFLOW_EVIDENCE_SCHEMA = 'docs/references/adoption/LDS_UI_ADOPTION_WORKFLOW_EVIDENCE.schema.json';
 const DEFAULT_CONFIG = '.lds/adoption.config.json';
 const DEFAULT_REPORT_NAME = 'adoption-report.json';
 const CONFIG_SCHEMA = path.join(packageDirectory, 'schemas', 'lds-ui-adoption-config.schema.json');
@@ -308,10 +309,16 @@ export async function verifyAdoptionContract(options = {}) {
   const contractPath = resolveFrom(ldsRoot, options.contractPath, DEFAULT_CONTRACT);
   const contractSchemaPath = resolveFrom(ldsRoot, options.contractSchemaPath, DEFAULT_CONTRACT_SCHEMA);
   const reportSchemaPath = resolveFrom(ldsRoot, options.reportSchemaPath, DEFAULT_REPORT_SCHEMA);
-  const [contract, contractSchema, reportSchema] = await Promise.all([
+  const workflowEvidenceSchemaPath = resolveFrom(
+    ldsRoot,
+    options.workflowEvidenceSchemaPath,
+    DEFAULT_WORKFLOW_EVIDENCE_SCHEMA,
+  );
+  const [contract, contractSchema, reportSchema, workflowEvidenceSchema] = await Promise.all([
     readJson(contractPath),
     readJson(contractSchemaPath),
     readJson(reportSchemaPath),
+    readJson(workflowEvidenceSchemaPath),
   ]);
 
   const validateContract = strictValidator(contractSchema);
@@ -327,6 +334,15 @@ export async function verifyAdoptionContract(options = {}) {
     diagnostics.push(diagnostic(
       'ADOPTION_REPORT_SCHEMA_INVALID',
       slash(path.relative(ldsRoot, reportSchemaPath)),
+      error.message,
+    ));
+  }
+  try {
+    strictValidator(workflowEvidenceSchema);
+  } catch (error) {
+    diagnostics.push(diagnostic(
+      'ADOPTION_WORKFLOW_EVIDENCE_SCHEMA_INVALID',
+      slash(path.relative(ldsRoot, workflowEvidenceSchemaPath)),
       error.message,
     ));
   }
@@ -357,7 +373,7 @@ export async function verifyAdoptionContract(options = {}) {
     ));
   }
   const evidenceTypes = contractEvidenceTypes(contract);
-  for (const required of ['source', 'token', 'story', 'check', 'visual', 'asset', 'copy-catalog', 'decision']) {
+  for (const required of ['source', 'token', 'story', 'check', 'visual', 'asset', 'copy-catalog', 'workflow', 'decision']) {
     if (!evidenceTypes.has(required)) {
       diagnostics.push(diagnostic(
         'ADOPTION_CONTRACT_EVIDENCE_TYPES',
@@ -404,7 +420,12 @@ export async function verifyAdoptionContract(options = {}) {
       ));
     }
     for (const trigger of facet.hardTriggers || []) {
-      for (const kind of trigger.requiredEvidenceKinds || []) {
+      const requiredKinds = trigger.requiredEvidenceKinds || [];
+      const alternativeKinds = trigger.requiredAnyOfEvidenceKinds || [];
+      for (const kind of [
+        ...requiredKinds,
+        ...alternativeKinds,
+      ]) {
         if (!evidenceTypes.has(kind)) {
           diagnostics.push(diagnostic(
             'ADOPTION_CONTRACT_TRIGGER_EVIDENCE',
@@ -412,6 +433,13 @@ export async function verifyAdoptionContract(options = {}) {
             `${facet.id}.${trigger.id} refers to undeclared evidence kind ${kind}.`,
           ));
         }
+      }
+      if (alternativeKinds.some((kind) => requiredKinds.includes(kind))) {
+        diagnostics.push(diagnostic(
+          'ADOPTION_CONTRACT_TRIGGER_EVIDENCE',
+          slash(path.relative(ldsRoot, contractPath)),
+          `${facet.id}.${trigger.id} repeats a required kind in its any-of evidence alternatives.`,
+        ));
       }
     }
   }
@@ -433,7 +461,8 @@ export async function verifyAdoptionContract(options = {}) {
     contract,
     contractSchema,
     reportSchema,
-    paths: { contractPath, contractSchemaPath, reportSchemaPath },
+    workflowEvidenceSchema,
+    paths: { contractPath, contractSchemaPath, reportSchemaPath, workflowEvidenceSchemaPath },
   };
 }
 
@@ -639,26 +668,28 @@ function allEvidenceContainers(report) {
     for (const facet of ADOPTION_FACETS) {
       const review = surface.facets?.[facet];
       if (review) {
-        output.push({ owner: `surfaces[${surfaceIndex}].${facet}`, evidence: review.evidence || [] });
+        output.push({ owner: `surfaces[${surfaceIndex}].${facet}`, surface, evidence: review.evidence || [] });
         for (const [decisionIndex, decision] of (review.decisions || []).entries()) {
           output.push({
             owner: `surfaces[${surfaceIndex}].${facet}.decisions[${decisionIndex}]`,
+            surface,
             evidence: decision.evidence || [],
           });
         }
       }
     }
     if (surface.componentMapping) {
-      output.push({ owner: `surfaces[${surfaceIndex}].componentMapping`, evidence: surface.componentMapping.evidence || [] });
+      output.push({ owner: `surfaces[${surfaceIndex}].componentMapping`, surface, evidence: surface.componentMapping.evidence || [] });
       for (const [decisionIndex, decision] of (surface.componentMapping.decisions || []).entries()) {
         output.push({
           owner: `surfaces[${surfaceIndex}].componentMapping.decisions[${decisionIndex}]`,
+          surface,
           evidence: decision.evidence || [],
         });
       }
     }
     if (surface.verification?.evidence) {
-      output.push({ owner: `surfaces[${surfaceIndex}].verification`, evidence: surface.verification.evidence });
+      output.push({ owner: `surfaces[${surfaceIndex}].verification`, surface, evidence: surface.verification.evidence });
     }
   }
   return output;
@@ -723,9 +754,229 @@ function collectTokenNames(value, output = new Set()) {
   return output;
 }
 
-async function evidenceDiagnostics(report, contract, root, ldsRoot, storybookIndex, reportFile) {
+function normalizedSet(values, lowercase = false) {
+  return [...new Set((Array.isArray(values) ? values : [])
+    .filter((value) => typeof value === 'string')
+    .map((value) => value.trim())
+    .filter(Boolean)
+    .map((value) => lowercase ? value.toLowerCase() : value))]
+    .sort();
+}
+
+function exactStringSet(left, right, lowercase = false) {
+  return JSON.stringify(normalizedSet(left, lowercase)) === JSON.stringify(normalizedSet(right, lowercase));
+}
+
+function normalizedRepositoryName(value) {
+  if (typeof value !== 'string') return '';
+  return value.trim().split(/[\\/]/).at(-1).toLowerCase().replaceAll('_', '-');
+}
+
+async function workflowArtifactDiagnostics({
+  artifactPath,
+  evidence,
+  surface,
+  root,
+  config,
+  head,
+  validate,
+  reportFile,
+  workflowArtifactCarriers,
+}) {
+  let artifact;
+  try {
+    artifact = await readJson(artifactPath);
+  } catch (error) {
+    return [diagnostic(
+      'ADOPTION_WORKFLOW_EVIDENCE_SCHEMA',
+      reportFile,
+      `${surface.id} workflow evidence is not valid JSON: ${error.message}`,
+    )];
+  }
+  if (!validate(artifact)) {
+    return schemaDiagnostics(validate, evidence.ref, 'ADOPTION_WORKFLOW_EVIDENCE_SCHEMA');
+  }
+
+  const diagnostics = [];
+  const clean = artifact.cleanReproducibility;
+  if (artifact.surfaceId !== surface.id) {
+    diagnostics.push(diagnostic(
+      'ADOPTION_WORKFLOW_IDENTITY',
+      evidence.ref,
+      `Workflow evidence surface ${artifact.surfaceId} does not match ${surface.id}.`,
+    ));
+  }
+  if (!config?.consumerId) {
+    diagnostics.push(diagnostic(
+      'ADOPTION_WORKFLOW_IDENTITY',
+      evidence.ref,
+      'Workflow evidence requires consumerId in the adoption config.',
+    ));
+  } else if (artifact.consumerId !== config.consumerId) {
+    diagnostics.push(diagnostic(
+      'ADOPTION_WORKFLOW_IDENTITY',
+      evidence.ref,
+      `Workflow evidence consumer ${artifact.consumerId} must exactly match config.consumerId ${config.consumerId}.`,
+    ));
+  }
+  if (normalizedRepositoryName(artifact.repository) !== normalizedRepositoryName(config?.repository)) {
+    diagnostics.push(diagnostic(
+      'ADOPTION_WORKFLOW_IDENTITY',
+      evidence.ref,
+      `Workflow evidence repository ${artifact.repository} must have the same normalized basename as config.repository ${config?.repository || 'missing'}.`,
+    ));
+  }
+  if (clean.sourceCommit !== artifact.sourceCommit || clean.observedHead !== artifact.sourceCommit) {
+    diagnostics.push(diagnostic(
+      'ADOPTION_WORKFLOW_SOURCE_IDENTITY',
+      evidence.ref,
+      'Workflow evidence sourceCommit, clean-clone sourceCommit, and observedHead must be identical.',
+    ));
+  }
+
+  let sourceExists = true;
+  try {
+    await git(root, ['cat-file', '-e', `${artifact.sourceCommit}^{commit}`]);
+  } catch {
+    sourceExists = false;
+    diagnostics.push(diagnostic(
+      'ADOPTION_WORKFLOW_SOURCE_IDENTITY',
+      evidence.ref,
+      `Workflow evidence source commit is unavailable in the consumer repository: ${artifact.sourceCommit}.`,
+    ));
+  }
+  if (sourceExists) {
+    try {
+      await git(root, ['merge-base', '--is-ancestor', artifact.sourceCommit, head]);
+    } catch {
+      diagnostics.push(diagnostic(
+        'ADOPTION_WORKFLOW_SOURCE_IDENTITY',
+        evidence.ref,
+        `Workflow evidence source commit ${artifact.sourceCommit} is not an ancestor of ${head}.`,
+      ));
+    }
+    try {
+      const allowedDrift = new Set([
+        slash(reportFile),
+        ...workflowArtifactCarriers,
+      ]);
+      const changed = (await git(root, [
+        'diff', '--name-only', '-z', artifact.sourceCommit, head, '--',
+      ]))
+        .split('\0')
+        .filter(Boolean)
+        .map(slash)
+        .filter((file) => !allowedDrift.has(file));
+      if (changed.length > 0) {
+        diagnostics.push(diagnostic(
+          'ADOPTION_WORKFLOW_SOURCE_DRIFT',
+          evidence.ref,
+          `Workflow evidence predates repository changes outside its report and artifact carriers: ${changed.join(', ')}. Rerun the workflow at the current source commit.`,
+        ));
+      }
+    } catch (error) {
+      diagnostics.push(diagnostic(
+        'ADOPTION_WORKFLOW_SOURCE_IDENTITY',
+        evidence.ref,
+        `Workflow evidence source comparison failed: ${error.stderr?.trim() || error.message}`,
+      ));
+    }
+  }
+
+  const checks = new Map();
+  for (const check of artifact.checks) {
+    if (checks.has(check.id)) {
+      diagnostics.push(diagnostic(
+        'ADOPTION_WORKFLOW_CHECKS',
+        evidence.ref,
+        `Workflow evidence repeats check id ${check.id}.`,
+      ));
+    }
+    checks.set(check.id, check.status);
+  }
+  for (const required of ['production-build', 'workflow-smoke', 'accessibility']) {
+    if (checks.get(required) !== 'passed') {
+      diagnostics.push(diagnostic(
+        'ADOPTION_WORKFLOW_CHECKS',
+        evidence.ref,
+        `Workflow evidence requires passed ${required}.`,
+      ));
+    }
+  }
+
+  const coverage = artifact.workflowCoverage;
+  for (const [field, lowercase] of [['states', true], ['themes', true], ['viewports', false]]) {
+    if (!exactStringSet(coverage[field], surface.verification?.[field], lowercase)) {
+      diagnostics.push(diagnostic(
+        'ADOPTION_WORKFLOW_COVERAGE',
+        evidence.ref,
+        `Workflow evidence ${field} must exactly match ${surface.id}.verification.${field}.`,
+      ));
+    }
+  }
+  const expectedCombinations = normalizedSet(coverage.themes, true).length
+    * normalizedSet(coverage.viewports).length;
+  if (coverage.combinationsPassed !== coverage.combinationsTotal
+    || coverage.combinationsTotal !== expectedCombinations) {
+    diagnostics.push(diagnostic(
+      'ADOPTION_WORKFLOW_COVERAGE',
+      evidence.ref,
+      `Workflow evidence must pass every theme × viewport run (${expectedCombinations} combinations), with every listed state exercised sequentially inside each run.`,
+    ));
+  }
+
+  for (const fileEvidence of coverage.evidence) {
+    const relative = relativeRepositoryPath(fileEvidence.path);
+    const absolute = relative ? path.resolve(root, relative) : null;
+    if (!relative || !absolute || !isWithin(root, absolute)
+      || !await resolvesWithin(root, absolute) || !await exists(absolute)) {
+      diagnostics.push(diagnostic(
+        'ADOPTION_WORKFLOW_EVIDENCE_PATH',
+        evidence.ref,
+        `Workflow ${fileEvidence.role} evidence does not resolve inside the consumer repository: ${fileEvidence.path}.`,
+      ));
+      continue;
+    }
+    const actual = sha256(await readFile(absolute));
+    let source = null;
+    try {
+      source = sha256(await git(root, ['show', `${artifact.sourceCommit}:${relative}`]));
+    } catch {
+      diagnostics.push(diagnostic(
+        'ADOPTION_WORKFLOW_EVIDENCE_HASH',
+        evidence.ref,
+        `Workflow ${fileEvidence.role} evidence is unavailable at source commit ${artifact.sourceCommit}: ${fileEvidence.path}.`,
+      ));
+      continue;
+    }
+    if (actual !== fileEvidence.sha256 || source !== fileEvidence.sha256) {
+      diagnostics.push(diagnostic(
+        'ADOPTION_WORKFLOW_EVIDENCE_HASH',
+        evidence.ref,
+        `Workflow ${fileEvidence.role} evidence hash must match both source commit and checked-out file for ${fileEvidence.path}.`,
+      ));
+    }
+  }
+
+  return diagnostics;
+}
+
+async function evidenceDiagnostics(
+  report,
+  contract,
+  workflowEvidenceSchema,
+  root,
+  ldsRoot,
+  config,
+  head,
+  storybookIndex,
+  reportFile,
+) {
   const diagnostics = [];
   const allowedTypes = contractEvidenceTypes(contract);
+  const validateWorkflowEvidence = strictValidator(workflowEvidenceSchema);
+  const workflowEvidence = new Map();
+  const workflowArtifactCarriers = new Set();
   let tokenNames = null;
   let storyIds = null;
   if (storybookIndex) {
@@ -750,6 +1001,61 @@ async function evidenceDiagnostics(report, contract, root, ldsRoot, storybookInd
       }
       if (typeof evidence.ref !== 'string' || evidence.ref.trim().length === 0) {
         diagnostics.push(diagnostic('ADOPTION_EVIDENCE_REFERENCE', reportFile, `${container.owner} has evidence without a reference.`));
+        continue;
+      }
+      if (evidence.kind === 'workflow') {
+        const candidate = referencePath(evidence.ref);
+        const safeCandidate = candidate ? relativeRepositoryPath(candidate) : null;
+        if (!safeCandidate) {
+          diagnostics.push(diagnostic(
+            'ADOPTION_EVIDENCE_PATH',
+            reportFile,
+            `${container.owner} workflow evidence must use a safe consumer repository path: ${evidence.ref}.`,
+          ));
+          continue;
+        }
+        workflowArtifactCarriers.add(safeCandidate);
+        const absolute = path.resolve(root, safeCandidate);
+        if (!isWithin(root, absolute) || !await resolvesWithin(root, absolute) || !await exists(absolute)) {
+          diagnostics.push(diagnostic(
+            'ADOPTION_EVIDENCE_MISSING',
+            reportFile,
+            `${container.owner} workflow evidence does not exist inside the consumer repository: ${safeCandidate}.`,
+          ));
+          continue;
+        }
+        if (!/^[a-f0-9]{64}$/.test(evidence.sha256 || '')) {
+          diagnostics.push(diagnostic(
+            'ADOPTION_EVIDENCE_HASH',
+            reportFile,
+            `${container.owner} workflow evidence requires a lowercase SHA-256 pin.`,
+          ));
+          continue;
+        }
+        const actual = sha256(await readFile(absolute));
+        if (actual !== evidence.sha256) {
+          diagnostics.push(diagnostic(
+            'ADOPTION_EVIDENCE_HASH',
+            reportFile,
+            `${container.owner} workflow evidence hash drifted for ${safeCandidate}.`,
+          ));
+          continue;
+        }
+        const key = `${container.surface.id}\0${safeCandidate}`;
+        const previous = workflowEvidence.get(key);
+        if (previous && previous.evidence.sha256 !== evidence.sha256) {
+          diagnostics.push(diagnostic(
+            'ADOPTION_EVIDENCE_HASH',
+            reportFile,
+            `${container.surface.id} records inconsistent workflow evidence hashes for ${safeCandidate}.`,
+          ));
+          continue;
+        }
+        workflowEvidence.set(key, {
+          artifactPath: absolute,
+          evidence,
+          surface: container.surface,
+        });
         continue;
       }
       if (evidence.kind === 'story') {
@@ -815,6 +1121,17 @@ async function evidenceDiagnostics(report, contract, root, ldsRoot, storybookInd
         }
       }
     }
+  }
+  for (const candidate of workflowEvidence.values()) {
+    diagnostics.push(...await workflowArtifactDiagnostics({
+      ...candidate,
+      root,
+      config,
+      head,
+      validate: validateWorkflowEvidence,
+      reportFile,
+      workflowArtifactCarriers,
+    }));
   }
   return diagnostics;
 }
@@ -1026,11 +1343,11 @@ function surfaceVerificationDiagnostics(surface, reportFile) {
   }
   const rawEvidence = Array.isArray(surface?.verification?.evidence) ? surface.verification.evidence : [];
   const verificationKinds = new Set(rawEvidence.map((entry) => entry?.kind));
-  if (!['visual', 'story', 'check'].some((kind) => verificationKinds.has(kind))) {
+  if (!['visual', 'story', 'check', 'workflow'].some((kind) => verificationKinds.has(kind))) {
     diagnostics.push(diagnostic(
       'ADOPTION_VERIFICATION_EVIDENCE',
       reportFile,
-      `${surface?.id || 'unknown-surface'} verification needs visual, story, or check evidence.`,
+      `${surface?.id || 'unknown-surface'} verification needs visual, story, check, or workflow evidence.`,
     ));
   }
   return diagnostics;
@@ -1100,6 +1417,14 @@ function facetDiagnostics(surface, facts, contract, reportFile, ownedFiles = [])
             'ADOPTION_TRIGGER_EVIDENCE',
             reportFile,
             `${surface.id}.${facet} trigger ${trigger.id} requires evidence kinds: ${missingKinds.join(', ')}.`,
+          ));
+        }
+        const alternatives = trigger.requiredAnyOfEvidenceKinds || [];
+        if (alternatives.length > 0 && !alternatives.some((kind) => evidenceKinds.has(kind))) {
+          diagnostics.push(diagnostic(
+            'ADOPTION_TRIGGER_EVIDENCE',
+            reportFile,
+            `${surface.id}.${facet} trigger ${trigger.id} requires at least one evidence kind: ${alternatives.join(' or ')}.`,
           ));
         }
         if (trigger.requiredEvidenceKinds.includes('source')) {
@@ -1530,8 +1855,11 @@ export async function runAdoptionCheck(options = {}) {
   diagnostics.push(...await evidenceDiagnostics(
     report,
     verified.contract,
+    verified.workflowEvidenceSchema,
     root,
     ldsRoot,
+    config,
+    head,
     options.storybookIndex,
     reportFile,
   ));
@@ -1576,12 +1904,71 @@ async function applyAdoptionFixtureMutation(root, fixturesRoot, mutation) {
     await writeFile(target, `${source}${mutation.append}`, 'utf8');
     return;
   }
+  if (mutation.replaceAll != null) {
+    if (!source.includes(mutation.replaceAll)) {
+      throw new Error(`Fixture mutation did not find ${mutation.replaceAll} in ${mutation.file}.`);
+    }
+    await writeFile(target, source.replaceAll(mutation.replaceAll, mutation.with ?? ''), 'utf8');
+    return;
+  }
   if (mutation.replace != null) {
     if (!source.includes(mutation.replace)) {
       throw new Error(`Fixture mutation did not find ${mutation.replace} in ${mutation.file}.`);
     }
     await writeFile(target, source.replace(mutation.replace, mutation.with ?? ''), 'utf8');
   }
+}
+
+async function hydrateFixtureWorkflowSourceCommit(root, sourceCommit) {
+  const artifactPath = path.join(root, 'evidence', 'workflow-evidence.json');
+  if (!await exists(artifactPath)) return;
+  const source = await readFile(artifactPath, 'utf8');
+  await writeFile(artifactPath, source.replaceAll('AUTO_SOURCE_COMMIT', sourceCommit), 'utf8');
+}
+
+function replaceFixtureReferences(value, replacements) {
+  if (Array.isArray(value)) {
+    return value.map((entry) => replaceFixtureReferences(entry, replacements));
+  }
+  if (!value || typeof value !== 'object') {
+    if (typeof value !== 'string') return value;
+    let output = value;
+    for (const [source, target] of replacements) output = output.replaceAll(source, target);
+    return output;
+  }
+  return Object.fromEntries(Object.entries(value)
+    .map(([key, entry]) => [key, replaceFixtureReferences(entry, replacements)]));
+}
+
+async function copyFixtureWorkflowSurface(root, copy) {
+  const reportPath = path.join(root, '.lds', 'adoption-report.json');
+  const report = await readJson(reportPath);
+  const sourceSurface = report.surfaces?.find((surface) => surface.id === copy.sourceSurfaceId);
+  if (!sourceSurface) {
+    throw new Error(`Fixture workflow surface copy cannot find ${copy.sourceSurfaceId}.`);
+  }
+
+  const sourceArtifact = relativeRepositoryPath(copy.artifactFrom);
+  const targetArtifact = relativeRepositoryPath(copy.artifactTo);
+  const targetPaths = (copy.paths || []).map(relativeRepositoryPath);
+  if (!sourceArtifact || !targetArtifact || targetPaths.length === 0 || targetPaths.some((entry) => !entry)) {
+    throw new Error(`Fixture workflow surface copy ${copy.surfaceId} contains an unsafe repository path.`);
+  }
+
+  const replacements = new Map([
+    [copy.sourceEvidenceFrom, copy.sourceEvidenceTo],
+    [sourceArtifact, targetArtifact],
+  ]);
+  const surface = replaceFixtureReferences(sourceSurface, replacements);
+  surface.id = copy.surfaceId;
+  surface.paths = targetPaths;
+  report.surfaces.push(surface);
+  report.scope.paths = [...new Set([...(report.scope.paths || []), ...targetPaths])];
+
+  const artifact = await readJson(path.resolve(root, sourceArtifact));
+  artifact.surfaceId = copy.surfaceId;
+  await writeFile(path.resolve(root, targetArtifact), `${JSON.stringify(artifact, null, 2)}\n`, 'utf8');
+  await writeFile(reportPath, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
 }
 
 async function hydrateFixtureSignatures(root, reportPath) {
@@ -1661,6 +2048,9 @@ export async function verifyAdoptionFixtures(options = {}) {
       if (fixture.bootstrapConfig) {
         await rm(path.join(caseRoot, '.lds'), { recursive: true, force: true });
       }
+      for (const mutation of fixture.baseMutations || []) {
+        await applyAdoptionFixtureMutation(caseRoot, fixturesRoot, mutation);
+      }
       await git(caseRoot, ['init', '--quiet']);
       await git(caseRoot, ['config', 'user.email', 'lds-conformance@example.invalid']);
       await git(caseRoot, ['config', 'user.name', 'LDS conformance fixture']);
@@ -1681,8 +2071,17 @@ export async function verifyAdoptionFixtures(options = {}) {
           await applyAdoptionFixtureMutation(caseRoot, fixturesRoot, mutation);
         }
       }
+      if (fixture.workflowEvidence) {
+        for (const mutation of suite.workflowMutations || []) {
+          await applyAdoptionFixtureMutation(caseRoot, fixturesRoot, mutation);
+        }
+      }
       for (const mutation of fixture.mutations || []) {
         await applyAdoptionFixtureMutation(caseRoot, fixturesRoot, mutation);
+      }
+      await hydrateFixtureWorkflowSourceCommit(caseRoot, base);
+      for (const copy of fixture.workflowSurfaceCopies || []) {
+        await copyFixtureWorkflowSurface(caseRoot, copy);
       }
       await hydrateFixtureSignatures(caseRoot, path.join(caseRoot, '.lds', 'adoption-report.json'));
       await git(caseRoot, ['add', '--all']);
@@ -1716,9 +2115,11 @@ export async function verifyAdoptionFixtures(options = {}) {
           '--report', '.lds/adoption-report.json',
           '--base', base,
           '--head', head,
-          '--storybook-index', 'evidence/storybook-index.json',
           '--output', output,
         ];
+        if (!fixture.omitStorybookIndex) {
+          cliArguments.push('--storybook-index', 'evidence/storybook-index.json');
+        }
         await execFileAsync(process.execPath, cliArguments, { cwd: caseRoot, encoding: 'utf8' });
         // A regular prior result is atomically replaceable; only links,
         // reparse points, directories, and escaping ancestors are rejected.

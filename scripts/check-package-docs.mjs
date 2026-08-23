@@ -58,6 +58,7 @@ const requiredDocFiles = [
   'adoption-report.schema.json',
   'adoption-report.example.json',
   'adoption-workflow.md',
+  'adoption-workflow-evidence.schema.json',
   'LDS_UI_ADOPTION_CONTRACT.schema.json',
   'llms.txt',
   'manifest.json',
@@ -68,6 +69,7 @@ const publicProjection = [
   ['../packages/core/docs/LDS_UI_ADOPTION_CONTRACT.schema.json', '/schemas/lds-ui-adoption-contract.schema.json'],
   ['../packages/core/docs/adoption-report.schema.json', '/schemas/lds-ui-adoption-report.schema.json'],
   ['../packages/core/docs/adoption-config.schema.json', '/schemas/lds-ui-adoption-config.schema.json'],
+  ['../packages/core/docs/adoption-workflow-evidence.schema.json', '/schemas/lds-ui-adoption-workflow-evidence.schema.json'],
   ['../packages/theme/docs', '/packages/theme'],
   ['../packages/product/docs', '/packages/product'],
 ];
@@ -244,6 +246,7 @@ async function validatePackage(
   canonicalContract,
   canonicalContractSchema,
   canonicalReportSchema,
+  canonicalWorkflowEvidenceSchema,
   canonicalFoundationSlugs,
   validateContract,
   validateReport,
@@ -273,6 +276,7 @@ async function validatePackage(
   const packagedContract = await readJson(path.join(packageRoot, 'docs', 'adoption-checklist.json'));
   const packagedContractSchema = await readJson(path.join(packageRoot, 'docs', 'LDS_UI_ADOPTION_CONTRACT.schema.json'));
   const packagedReportSchema = await readJson(path.join(packageRoot, 'docs', 'adoption-report.schema.json'));
+  const packagedWorkflowEvidenceSchema = await readJson(path.join(packageRoot, 'docs', 'adoption-workflow-evidence.schema.json'));
   const packagedReportExample = await readJson(path.join(packageRoot, 'docs', 'adoption-report.example.json'));
   invariant(
     isDeepStrictEqual(withoutReferenceProjection(packagedContract), withoutReferenceProjection(canonicalContract)),
@@ -280,6 +284,7 @@ async function validatePackage(
   );
   invariant(isDeepStrictEqual(packagedContractSchema, canonicalContractSchema), `${definition.name}: adoption contract schema differs from the canonical source.`);
   invariant(isDeepStrictEqual(packagedReportSchema, canonicalReportSchema), `${definition.name}: adoption report schema differs from the canonical source.`);
+  invariant(isDeepStrictEqual(packagedWorkflowEvidenceSchema, canonicalWorkflowEvidenceSchema), `${definition.name}: adoption workflow evidence schema differs from the canonical source.`);
   invariant(validateContract(packagedContract), `${definition.name}: packaged adoption contract is invalid: ${formatAjvErrors(validateContract.errors)}`);
   invariant(validateReport(packagedReportExample), `${definition.name}: packaged report example is invalid: ${formatAjvErrors(validateReport.errors)}`);
   invariant(
@@ -384,6 +389,11 @@ async function main() {
   const canonicalContract = await readJson(path.join(root, 'docs', 'references', 'adoption', 'LDS_UI_ADOPTION_CONTRACT.json'));
   const canonicalContractSchema = await readJson(path.join(root, 'docs', 'references', 'adoption', 'LDS_UI_ADOPTION_CONTRACT.schema.json'));
   const canonicalReportSchema = await readJson(path.join(root, 'docs', 'references', 'adoption', 'LDS_UI_ADOPTION_REPORT.schema.json'));
+  const canonicalWorkflowEvidenceSchema = await readJson(path.join(root, 'docs', 'references', 'adoption', 'LDS_UI_ADOPTION_WORKFLOW_EVIDENCE.schema.json'));
+  invariant(
+    canonicalWorkflowEvidenceSchema.$id === `${publicRoot}schemas/lds-ui-adoption-workflow-evidence.schema.json`,
+    'Canonical workflow evidence schema $id must match its Storybook Pages alias.',
+  );
   const foundationContent = await readJson(path.join(root, 'docs', 'foundations', 'foundation-content.json'));
   const canonicalFoundationSlugs = foundationContent.foundations.map(({ slug }) => slug);
   invariant(
@@ -395,6 +405,7 @@ async function main() {
   addFormats(ajv);
   const validateContract = ajv.compile(canonicalContractSchema);
   const validateReport = ajv.compile(canonicalReportSchema);
+  ajv.compile(canonicalWorkflowEvidenceSchema);
 
   for (const definition of packageDefinitions) {
     await validatePackage(
@@ -402,6 +413,7 @@ async function main() {
       canonicalContract,
       canonicalContractSchema,
       canonicalReportSchema,
+      canonicalWorkflowEvidenceSchema,
       canonicalFoundationSlugs,
       validateContract,
       validateReport,

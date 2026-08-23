@@ -62,9 +62,11 @@ R3A·R3B의 stable 차단 결정, R4 첫 stable 승격과 R4.1 source-level 계�
 않고 다음 release에 들어갈 source와 machine gate를 정리한 후속이다. 현재 package source
 candidate identity는 `0.1.1`이며 tag·registry publish·consumer 재검증은 아직 없다.
 
-| 현재 열린 문제 | 2026-08-23 기준 근거 | 처리 위치 |
-| --- | --- | --- |
-| 비-Storybook workflow evidence adapter 결정이 열려 있음 | Web Viz의 deterministic production-preview evidence는 유효한 근거지만, full-surface conformance가 이를 공식 adapter로 받을지 제품 Storybook을 요구할지는 아직 계약화되지 않았다. | R7 |
+2026-08-23 R7의 유한한 비-Storybook evidence adapter 결정도 닫혔다. Adoption contract v2는
+built Storybook exact story ID와 deterministic production-preview workflow artifact를 동등한
+hard-trigger evidence 선택지로 받는다. 후자는 clean source identity, production build,
+workflow smoke, accessibility, theme×viewport run 안의 ready/non-ready state, spec·runner·CI
+hash를 검증한다. 따라서 현재 무조건부 release-train open problem은 0이다.
 
 R1에서 닫힌 문제와 재검증 진입점은 다음과 같다.
 
@@ -517,6 +519,18 @@ O1 Monitoring과 O2 Operational control의 현재 readiness를 유지하되, O3�
 policy는 제품이, 반복 가능한 표시·interaction contract만 Product/Robotics가 소유하도록
 분해한다.
 
+2026-08-23 workspace trigger 감사에서도 R5는 열리지 않았다. 궁릉 Control의
+`BANNER_ACK/RESUME`은 가장 가까운 실제 흐름이지만 acknowledgement가 local React state와
+일반 로그에 머문다. Portal source는 default-OFF 경계 안에서 single device alert occurrence의
+ACK와 actor/time/reason/authority·immutable Evidence/Audit까지 구현했지만 escalation,
+operator-controlled shelve/suppression, 명시적 cleared와 `DeviceAlertCase` lifecycle은 없다.
+Web Viz·Daedeok Control은 알림 조회/삭제 수준이며, acknowledgement 일부가 있던 DeviceOps는
+decommissioned다.
+따라서 machine authority인
+[`READINESS.json`](references/robotics/READINESS.json)의 O3 `unverified`·evidence 0을 유지한다.
+다음 감사는 제품 owner가 entry trigger의 **전체 묶음**과 actor/time/reason/authority를
+영속 evidence로 제출할 때만 실행한다.
+
 ### 종료 gate
 
 - acknowledged, active, cleared, suppressed/shelved, escalated 상태와 audit actor/time이 실제
@@ -542,6 +556,13 @@ policy는 제품이, 반복 가능한 표시·interaction contract만 Product/Ro
 maintenance cost로 재평가한다. 그 전에는 taxonomy 정리만을 이유로 repository를 더 나누거나
 합치지 않는다.
 
+2026-08-23 조기 실행 가능성도 확인했지만 review date를 당기지 않았다. 현재
+[`SATELLITE_PIN_REPORT.md`](references/SATELLITE_PIN_REPORT.md)는 네 위성의 핀과 생존 상태를
+보여줄 뿐, stable 이후 두 번 이상의 release cadence·consumer 변화·유지보수 비용 기간을
+제공하지 않는다. 2027-01 심사에서는 최소 두 release cycle의 consumer 수, 마지막 기능
+commit/release, pin 격차 기간, CI·문서 유지 비용을 같은 snapshot으로 비교한다. 그 데이터가
+쌓이기 전의 split/archive 판단은 일정 실행이 아니라 근거 없는 구조 변경이다.
+
 ## 12. R7 — evidence와 운영 건강성
 
 | Field | Value |
@@ -555,13 +576,18 @@ maintenance cost로 재평가한다. 그 전에는 taxonomy 정리만을 이유�
 - Storybook IA, repository inventory, docs index처럼 현재성을 주장하는 산출물은 source와
   함께 갱신하거나 historical로 내린다.
 - 수동 문서에 source entry/story/version 숫자를 복제하지 않고 generated report에 연결한다.
-- [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md)의 O4는 보완된
-  문서로 **질문 0 이관 시험 1회**를 다시 실행한 뒤에만 완결로 기록한다.
-- full-surface conformance의 hard trigger는 현재 async/interactive UI의 `story` evidence를
-  built Storybook index의 exact story ID로만 받는다. Storybook consumer가 아닌 Web Viz는
-  fake index나 waiver 대신 deterministic production-preview Playwright를 blocking evidence로
-  사용했다. 비-Storybook deterministic workflow evidence를 공식 adapter로 수용할지, 아니면
-  제품 Storybook을 필수로 할지 conformance 계약 결정을 남긴다.
+- [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md)의 O4는
+  [`OPERATIONS.md`](OPERATIONS.md) §7.1의 consumer·maintainer 두 lane을, 보완 내용을 보지
+  않은 새 독자가 모두 **질문 0**으로 재시험한 뒤에만 완결로 기록한다. 2026-08-23 3회차의
+  consumer 0/maintainer 5 질문을 보완한 뒤, 새 독자의 4회차가 consumer 0/maintainer 0으로
+  통과해 이 유한 후속을 완료했다. 다른 OS·Node의 실제 실행은 continuous 환경 관찰이다.
+- Adoption contract v2의 full-surface async/interactive hard trigger는 built Storybook index의
+  exact story ID 또는 SHA-256으로 고정된 deterministic workflow artifact를 받는다. Workflow
+  adapter는 theme×viewport 각 run 안에서 ready와 non-ready state를 순차 검증하고, evidence
+  source 뒤에는 report와 artifact carrier 외 repository drift를 허용하지 않는다. Web Viz의
+  stable v1 promotion evidence는 pinned historical 기록으로 유지하며, 다음 adoption 재검증에서
+  product owner가 v2 report/schema와 workflow pointer를 갱신한다. 이 adapter closure가 기존
+  promotion, main integration 또는 deployment를 자동 승격하지 않는다.
 - plan이 완료되면 implementation record로 바꾸고 active roadmap에서 제거한다.
 - follow-up은 owner·entry trigger·종료 gate·roadmap ID가 없으면 무기한 active로 두지 않는다.
 
@@ -574,7 +600,7 @@ maintenance cost로 재평가한다. 그 전에는 taxonomy 정리만을 이유�
 | [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | completed implementation record | source/type/story/overlay 계약 완료; 제품 증거는 registry가 소유 | R2 |
 | [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | completed migration record | package split·Robotics extraction·compat retirement 완료 | R3B·R6 trigger |
 | [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) | completed architecture record | Phase 0–3 완료 | R6 |
-| [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) | implemented operations follow-up | O-A/B/C와 O4 문서·1차 시험 완료; 질문 0 재시험만 남음 | R7 |
+| [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) | completed operations record | O-A/B/C와 O4 문서·consumer/maintainer 질문 0 재시험 완료 | R7 continuous health |
 | [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md) | completed implementation record | historical execution evidence | 없음 |
 | [`QUALITY_AUDIT_PLAN.md`](QUALITY_AUDIT_PLAN.md) | historical audit baseline | confirmed 47건 resolved/accepted; 현재 backlog 없음 | 없음 |
 | [`KOREAN_UI_COPY_REFORM_PLAN.md`](KOREAN_UI_COPY_REFORM_PLAN.md) | completed implementation record | copy contract로 승격 | 없음 |

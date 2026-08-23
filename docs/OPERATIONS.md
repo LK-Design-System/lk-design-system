@@ -105,7 +105,10 @@ robotics는 자기 라인(`0.1.0-rc.N`)을 따로 쓰고 릴리스마다 +1 한�
 ### 2.3 robotics 릴리스
 
 robotics 저장소: **`LK-Design-System/lk-design-system-robotics`**
-(로컬 체크아웃은 `Documents/lds_ws/lk-design-system-robotics`. 없으면 clone한다.)
+(이 저장소가 `$LK_WS/shared/lk-design-system`에 있을 때 canonical 로컬 체크아웃은 sibling
+`../lk-design-system-robotics`, 즉 `$LK_WS/shared/lk-design-system-robotics`다. `git -C
+../lk-design-system-robotics status`로 먼저 확인하고, 없으면 그 sibling 경로로 clone한다.
+다른 checkout을 임의로 하나 더 만들지 않는다.)
 
 robotics는 레지스트리에 퍼블리시하지 않는다 — **LDS로 전달되는 경로는
 vendored tgz 하나뿐이다.** 그래서 "릴리스"는 버전을 올리고 pack해서 LDS의
@@ -179,6 +182,10 @@ release identity를 옮기지 않는다. 실패를 고쳤다면 Robotics 버전�
 
 ### 2.4 LDS 릴리스 레시피
 
+**실행 shell은 Git Bash 또는 POSIX Bash다.** Windows에서도 이 블록은 Git Bash에서
+실행하며 PowerShell에 그대로 붙여넣지 않는다. `<...>` placeholder를 실제 절대 경로·버전·
+run ID로 바꾸기 전에는 명령을 실행하지 않는다.
+
 ```bash
 # 1. 새 tgz를 vendor/에 넣고 옛 tgz를 제거한 뒤 1차를 돌린다. 이 1차는
 #    package.json 경로와 version identity만 새 tgz로 바꾼다. 설치본이 아직
@@ -203,6 +210,14 @@ cd <robotics 체크아웃>
 LDS_CONFORMANCE_ROOT=<LDS 체크아웃> \
 LDS_CONFORMANCE_CLI=<LDS 체크아웃>/packages/conformance/src/cli.mjs \
 npm run check:lds-style
+
+# release identity와 upstream projection만 명시적으로 검토·스테이징한다.
+# clean-worktree 선행조건이 깨졌거나 이 목록 밖 tracked 파일이 바뀌면 중단한다.
+git status --short
+git diff --check
+git add -- package.json package-lock.json .lds-docs-upstream/core docs/package
+git diff --cached --check
+git diff --cached --name-only
 git commit -m "release: <새 robotics 버전>"
 git push origin main
 cd <LDS 체크아웃>
@@ -235,17 +250,79 @@ npm run check:fast
 git commit -m "release: <새 LDS 버전>"
 git push origin main
 
+# 두 저장소에서 방금 push한 exact SHA를 기록한다.
+lds_sha=$(git rev-parse HEAD)
+robotics_sha=$(git -C <robotics 체크아웃> rev-parse HEAD)
+git fetch --prune origin
+git -C <robotics 체크아웃> fetch --prune origin
+test "$(git rev-parse origin/main)" = "$lds_sha"
+test "$(git -C <robotics 체크아웃> rev-parse origin/main)" = "$robotics_sha"
+
+# Robotics CI와 Pages run이 둘 다 나타날 때까지 이 조회를 다시 실행한다.
+gh run list \
+  --repo LK-Design-System/lk-design-system-robotics \
+  --commit "$robotics_sha" \
+  --json databaseId,name,headSha,status,conclusion,url
+
+# 위 목록의 CI와 "Deploy Storybook to GitHub Pages" run ID를 각각 넣는다.
+# --exit-status가 둘 중 하나라도 실패를 반환하면 tag 단계로 가지 않는다.
+gh run watch <ROBOTICS_CI_RUN_ID> \
+  --repo LK-Design-System/lk-design-system-robotics --exit-status
+gh run watch <ROBOTICS_PAGES_RUN_ID> \
+  --repo LK-Design-System/lk-design-system-robotics --exit-status
+gh run view <ROBOTICS_CI_RUN_ID> \
+  --repo LK-Design-System/lk-design-system-robotics \
+  --json name,headSha,conclusion,url
+gh run view <ROBOTICS_PAGES_RUN_ID> \
+  --repo LK-Design-System/lk-design-system-robotics \
+  --json name,headSha,conclusion,url
+
+# 두 view 결과 모두 headSha == $robotics_sha, conclusion == success여야 한다.
+# LDS도 같은 방식으로 exact $lds_sha의 CI와 Pages success를 확인한다.
+gh run list \
+  --repo LK-Design-System/lk-design-system \
+  --commit "$lds_sha" \
+  --json databaseId,name,headSha,status,conclusion,url
+gh run watch <LDS_CI_RUN_ID> \
+  --repo LK-Design-System/lk-design-system --exit-status
+gh run watch <LDS_PAGES_RUN_ID> \
+  --repo LK-Design-System/lk-design-system --exit-status
+gh run view <LDS_CI_RUN_ID> \
+  --repo LK-Design-System/lk-design-system \
+  --json name,headSha,conclusion,url
+gh run view <LDS_PAGES_RUN_ID> \
+  --repo LK-Design-System/lk-design-system \
+  --json name,headSha,conclusion,url
+
+# 두 LDS view 결과도 headSha == $lds_sha, conclusion == success여야 한다.
+
 gh workflow run release-gate.yml \
   --repo LK-Design-System/lk-design-system-robotics \
   --ref main \
-  -f lds_sha=<exact LDS candidate SHA>
+  -f "lds_sha=$lds_sha"
+
+# dispatch 뒤 가장 최근 release-gate run을 찾고 완료까지 기다린다.
+# headSha == $robotics_sha, conclusion == success이고 log에 exact $lds_sha가 보여야 한다.
+gh run list \
+  --repo LK-Design-System/lk-design-system-robotics \
+  --workflow release-gate.yml \
+  --event workflow_dispatch \
+  --json databaseId,name,headSha,status,conclusion,url \
+  --limit 5
+gh run watch <RELEASE_GATE_RUN_ID> \
+  --repo LK-Design-System/lk-design-system-robotics --exit-status
+gh run view <RELEASE_GATE_RUN_ID> \
+  --repo LK-Design-System/lk-design-system-robotics \
+  --json name,headSha,conclusion,url
+gh run view <RELEASE_GATE_RUN_ID> \
+  --repo LK-Design-System/lk-design-system-robotics --log | grep -F "$lds_sha"
 
 cd <robotics 체크아웃>
-git tag v<새 robotics 버전> <exact Robotics candidate SHA>
+git tag v<새 robotics 버전> "$robotics_sha"
 git push origin refs/tags/v<새 robotics 버전>
 
 cd <LDS 체크아웃>
-git tag lds-v<새 LDS 버전> <exact LDS candidate SHA>
+git tag lds-v<새 LDS 버전> "$lds_sha"
 git push origin refs/tags/lds-v<새 LDS 버전>
 ```
 
@@ -457,7 +534,35 @@ registry 엔트리 예시, Node 버전).
   이 시험은 실고장도 하나 잡았다 — 릴리스 사이의 Core 문서 표면 변경이
   main을 빨갛게 만드는 §2.1의 함정이 시험 당일 실제로 재현 중이었다.
 
-"질문 0으로 완주"는 아직 미달성이다. 다음 재시험은 이번 반영분으로 돌린다.
+### 7.1 질문 0 재시험의 canonical protocol
+
+이 절과 [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) O4가
+재시험 범위의 정본이다. 문맥 없는 **새 독자**가 다음 두 lane을 각각 수행한다.
+
+1. **consumer lane** — 이 저장소 README와 이 문서만 시작점으로 받아 motion 저장소를
+   찾고, README의 quickstart로 실행 경로를 재구성하고, 기존 슬라이드 visible text 1건을
+   수정한 뒤 저장소가 지정한 검증 명령을 찾는다. commit·push는 하지 않는다.
+2. **maintainer lane** — 이 저장소 README와 이 문서만으로 LDS/Robotics paired release를
+   clean-worktree 선행조건부터 exact-SHA CI·Pages, Robotics release gate, Robotics tag,
+   LDS tag 순서까지 명령 checklist로 재구성한다. 외부 변경을 만들지 않는 read-only
+   rehearsal이며 version bump·pack·commit·push·tag·publish는 실행하지 않는다.
+
+owner에게 경로·명령·성공 조건·중단 조건을 물어야 다음 단계로 갈 수 있으면 질문 1건이다.
+문서가 명시적으로 지목한 README, package manifest, generated report를 읽는 것은 질문이
+아니다. 두 lane 모두 질문 0이어야 O4 후속을 닫는다. 한 lane이라도 질문이 생기면 그
+지점을 문서 구멍으로 기록해 메우고, 수정 내용을 보지 않은 다른 독자로 다시 시험한다.
+
+2026-08-23 3회차 fresh-reader 감사에서는 consumer lane은 질문 0으로 재구성됐지만,
+maintainer lane에서 시험 범위, Robotics staging, exact-SHA 원격 확인, shell, canonical
+checkout 경로의 5개 질문이 생겼다. §2.3~2.4와 이 protocol이 그 구멍을 보완했다.
+
+2026-08-23 4회차는 그 반영을 보지 않은 새 독자가 현재 README와 이 문서만으로 다시
+수행했다. consumer lane은 motion clone·실행·`TitleDemo` visible text 수정·types/render/
+determinism 검증 경로를, maintainer lane은 clean precondition부터 두 저장소 exact-SHA
+CI·Pages, release gate, Robotics→LDS tag 순서와 모든 중단 조건을 질문 없이 재구성했다.
+결과는 **consumer 0 + maintainer 0 = 질문 0**, 외부 변경 0이며 O4의 유한 이관 후속을
+완료한다.
 
 **아직 확인되지 않은 것**: 다른 사람의 실제 PC(다른 OS·Node)에서의 동작.
-이것만은 문서로 메울 수 없다.
+이것은 환경 qualification으로 계속 관찰하지만, read-only 문서 이관 시험의 완료를
+되돌리지 않는다.

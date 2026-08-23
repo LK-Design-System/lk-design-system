@@ -3,10 +3,10 @@
 | Field | Value |
 | --- | --- |
 | Type | Implemented operations reform and follow-up record |
-| Status | O-A·O-B·O-C와 O4 문서·1차 이관 시험 완료; 보완 문서 기준 `질문 0` 재시험 1회가 남음 |
+| Status | `Completed` — O-A·O-B·O-C 구현, O4 문서와 consumer·maintainer `질문 0` 재시험 완료 |
 | Owner | Design system owner · Frontend platform |
-| Last reviewed | 2026-08-22 |
-| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) R7 — zero-question handoff rerun |
+| Last reviewed | 2026-08-23 |
+| Current roadmap | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) R7 — continuous operations health; O4 finite follow-up closed |
 | 선행 문서 | [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) — 구조 개편(Phase 0–3)은 완료됐고, 이 문서는 그 개편이 드러낸 **운영 비용** 4건을 다룬다 |
 | 근거 | 전부 실측: rc.69.15 릴리스에서 측정한 수동 기록 32곳(선행 문서 부록 F), slides-ui 핀 격차(rc.4 vs rc.69.18), check:fast의 검사 50개 중 설계상 빨간불 1개, 유지보수자 1인 |
 
@@ -77,7 +77,7 @@ slides-ui rc.4 → rc.69.x 정렬 실행은 이 계획의 범위가 아니라 �
 원인은 배선 하나다: `check:release-immutability`가 check:fast(검사 50개)에
 포함되어 있다. 이 검사의 보호 시점은 **퍼블리시 순간**인데(같은 버전 재출시
 방지), 퍼블리시는 릴리스 워크플로를 통해서만 일어나고 그 워크플로는 이미
-전용 단계로 이 검사를 돈다(`release-packages.yml` 45행,
+전용 `Verify release immutability` 단계로 이 검사를 돈다(`release-packages.yml`,
 `check:release-immutability -- --tag`).
 
 따라서 수정은 삭제가 아니라 **배선 이동**이다:
@@ -88,7 +88,7 @@ slides-ui rc.4 → rc.69.x 정렬 실행은 이 계획의 범위가 아니라 �
 > 의도된 최종 상태다 — 버전 일관성 검사는 상시 유효하기 때문이다.
 
 1. ~~check:fast 목록에서 `check:release-immutability`를 뺀다.~~ → §7.1 참조
-2. 릴리스 워크플로의 전용 단계(45행)는 그대로 둔다 — 보호력 손실 0.
+2. 릴리스 워크플로의 `Verify release immutability` 단계는 그대로 둔다 — 보호력 손실 0.
 3. 결과: 태그 사이 커밋에서 main CI가 초록이 되고, 빨간불은 실고장만
    가리킨다.
 
@@ -105,14 +105,25 @@ slides-ui rc.4 → rc.69.x 정렬 실행은 이 계획의 범위가 아니라 �
    제한한다: ① 릴리스 레시피 전문(O1 이후 기준: 버전 결정 → robotics tgz →
    `update:release-pins` → CHANGELOG → 태그) ② 위성 지도와 각 계약의 위치
    ③ 정상 상태의 정의(O3 이후 "정상인 빨간불"은 없다 — 빨간불이면 고장이다).
-2. **이관 시험** — 동료 1인이 이 문서와 레포 README만으로 (a) lds-motion
-   퀵스타트 완주 (b) 슬라이드 텍스트 수정 1건을 수행한다. 질문이 발생한
-   지점을 전부 기록하고, 각각을 문서 구멍으로 취급해 메운다. 질문 0으로
-   완주될 때까지가 시험이다.
+2. **이관 시험** — 아래 두 lane을 문맥 없는 새 독자가 각각 수행한다. 질문이
+   발생한 지점을 전부 기록하고 각각을 문서 구멍으로 취급해 메운다. 두 lane이
+   모두 질문 0이어야 시험을 닫는다.
+   - consumer lane: 저장소 README와 `docs/OPERATIONS.md`만 시작점으로 받아
+     lds-motion 퀵스타트를 완주하고 기존 슬라이드의 visible text 1건을 수정한 뒤
+     저장소가 지정한 검증 명령을 찾는다. commit·push는 하지 않는다.
+   - maintainer lane: 같은 시작점만으로 LDS/Robotics paired release의 clean-worktree
+     선행조건부터 exact-SHA CI·Pages·release gate 확인과 tag 순서까지 명령 checklist를
+     재구성한다. 실제 version bump·pack·commit·push·tag·publish는 실행하지 않는
+     read-only rehearsal이다.
+
+   `질문`은 owner에게 경로·명령·성공 조건·중단 조건을 물어야만 다음 단계로 갈 수
+   있는 경우다. 문서가 명시적으로 지목한 파일·machine report를 읽는 것은 질문이
+   아니다. 인증 실패나 외부 서비스 장애는 문서가 요구 조건과 중단 지점을 설명했다면
+   환경 실패로 따로 기록하고 문서 질문으로 세지 않는다.
 
 이 시험은 "배포 검증"이 아니라 **"체계가 소유자 없이 전달되는지"의
 검증**이다. lds-motion 콜드 클론 → 렌더는 2026-08-16 기계 검증을 통과했고,
-남은 것은 사람 축뿐이다.
+사람 축은 §7.7의 반복 시험과 최종 질문 0 재시험으로 검증했다.
 
 ## 3. 실행 순서와 게이트
 
@@ -231,7 +242,7 @@ Phase O-C  O2 핀 리포트           O1의 계산 로직 일부를 재사용
 | 릴리스 수동 지점 | 32 → 2 | **31곳 자동 계산 확인**, 남은 것은 버전 결정·CHANGELOG |
 | main CI | 상시 초록 | **check:fast exit 0** |
 | 핀 격차 가시성 | 리포트 + 침묵 시 실패 | **리포트 생성·신선도 게이트 음성 시험 통과** |
-| 이관 시험 | 질문 0으로 완주 | **실시함 — §7.7.** 신입 시험은 완주(구멍 9건), 인계자 시험은 1단계에서 중단(구멍 12·모순 11건). 전부 메웠다 |
+| 이관 시험 | 질문 0으로 완주 | **완료 — §7.7.** 초기 구멍과 모순을 보완한 뒤 2026-08-23 fresh-reader consumer·maintainer 재시험이 합계 질문 0으로 통과했다 |
 
 ---
 
@@ -313,6 +324,9 @@ HANDOFF.md는 한 달 전 상태를 현재 상태 권위로 주장하고 있었�
 현재 상태의 권위를 `docs/README.md`의 표 하나로 모으고, 손으로 갱신하던
 숫자는 스크립트 산출물로 대체했다.
 
-O4가 완료 조건으로 삼은 "질문 0으로 완주"는 아직 아니다 — 메운 문서로
-다시 시험해야 확인된다. 다만 **버스 팩터 1의 실제 내용이 무엇인지는 이제
-목록으로 존재한다.**
+후속 3회차는 consumer 질문 0, maintainer 질문 5로 실패해 canonical 시험 범위,
+Robotics staging, exact-SHA CI·Pages/release-gate 확인, 실행 shell과 canonical checkout
+경로를 [`OPERATIONS.md`](OPERATIONS.md) §2.3~2.4·§7.1에 보완했다. 그 반영을 보지 않은
+새 독자의 4회차 read-only rehearsal은 consumer 질문 0, maintainer 질문 0으로 통과했다.
+따라서 O4가 완료 조건으로 삼은 **질문 0으로 완주**를 충족했고, 실제 version bump·commit·
+push·tag·publish 없이 체계의 소비·운영 경로가 전달됨을 확인했다.

@@ -8,7 +8,7 @@
   },
   "adoption": {
     "contractKind": "lds-ui-adoption-contract",
-    "contractVersion": "1",
+    "contractVersion": "2",
     "invariant": "컴포넌트 교체만으로 LDS 전환은 완료되지 않는다.",
     "facetIds": [
       "tokensAndTheme",
@@ -178,7 +178,7 @@
       },
       {
         "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
-        "sha256": "09e78eb2ce03206120aa2ce2822d02c49a2ac16b0fac18fc4d68ff28d2a156e7"
+        "sha256": "5c888ba41fa9751f280867171ebf40828d8f6a81c18af2e630af978a8831ee84"
       },
       {
         "path": "docs/LOADING_PATTERN.md",
@@ -190,19 +190,23 @@
       },
       {
         "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
-        "sha256": "f4c4f71cff9f9108246a5f7cc5520d6095d599027adb75d0b61e385c5b7fef80"
+        "sha256": "f96e6194497a4a3ab4fbfcf9ace7f29ced594baba90cd59dbeb7b21b7eef6430"
       },
       {
         "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json",
-        "sha256": "93a5e8f73cc18f26946e71bfbb8ed9235f4fd58dbdb9fc55547141529cae0039"
+        "sha256": "1bcd6227237e90b230ebc2a0c454d40284ed51d909a0fdf194c96be552188874"
       },
       {
         "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.example.json",
-        "sha256": "2bae3fdcfcfcd5efce6d07678e7e418d2d5e680b8df5ef654ce5c27136bf97c5"
+        "sha256": "82143d91a22aeef5ed18fcf292677890621bf276bb3a92ca4ae6bc0b909a6864"
       },
       {
         "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.schema.json",
-        "sha256": "4ce25e058235e6b124d127321a4549c49da4efbdf1dcda22c79d4c83d3645a2f"
+        "sha256": "2cb8d0a05a91edf882cce5a1c59c7005b99f2d895329357c8ff6a0a8b620e434"
+      },
+      {
+        "path": "docs/references/adoption/LDS_UI_ADOPTION_WORKFLOW_EVIDENCE.schema.json",
+        "sha256": "8da2c123036ab6f6f48b007b26681f29aa8989321315af10b3651927866c8bf2"
       },
       {
         "path": "docs/TOKEN_GOVERNANCE.md",
@@ -210,11 +214,11 @@
       },
       {
         "path": "llms.txt",
-        "sha256": "721fe180cea6d74204f18e8104c9818881f8b128019691967c57df8be0833f44"
+        "sha256": "79f1b4a7226b5f86a15b8ec8db6a3ccd803772c2222d23670a65e970104b240a"
       },
       {
         "path": "packages/conformance/schemas/lds-ui-adoption-config.schema.json",
-        "sha256": "650759624b2a96020eeb70393a1b7c74b23a40af240727a72a0fd5455ae0dca5"
+        "sha256": "30a3fada4844c1794dcd9bdb4316e6e2584d8640e1b7486c3274ff6e9eda6171"
       },
       {
         "path": "packages/core/assets/icons/manifest.json",
@@ -241,51 +245,61 @@
   "documents": [
     {
       "path": "adoption-checklist.json",
-      "sha256": "fd88b5ecb9cd5367387d7e67539697fb49aa3e4e9ef552b6ef723e9ae826b27a",
+      "sha256": "0d6441efe6f1dd52d0e6424be55b62b89cb888c62b2b53237a08ecdac2706602",
       "sources": [
         {
           "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
-          "sha256": "f4c4f71cff9f9108246a5f7cc5520d6095d599027adb75d0b61e385c5b7fef80"
+          "sha256": "f96e6194497a4a3ab4fbfcf9ace7f29ced594baba90cd59dbeb7b21b7eef6430"
         }
       ]
     },
     {
       "path": "adoption-config.schema.json",
-      "sha256": "650759624b2a96020eeb70393a1b7c74b23a40af240727a72a0fd5455ae0dca5",
+      "sha256": "30a3fada4844c1794dcd9bdb4316e6e2584d8640e1b7486c3274ff6e9eda6171",
       "sources": [
         {
           "path": "packages/conformance/schemas/lds-ui-adoption-config.schema.json",
-          "sha256": "650759624b2a96020eeb70393a1b7c74b23a40af240727a72a0fd5455ae0dca5"
+          "sha256": "30a3fada4844c1794dcd9bdb4316e6e2584d8640e1b7486c3274ff6e9eda6171"
         }
       ]
     },
     {
       "path": "adoption-report.example.json",
-      "sha256": "9a7948b02727a527f3da188bfbf2725283720ef36a427872fbfb9cc0b0dd92d9",
+      "sha256": "ec45423dd9a43a088ff5c078828dd1f07f92099a69e71450fca6fbb2e13503dc",
       "sources": [
         {
           "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.example.json",
-          "sha256": "2bae3fdcfcfcd5efce6d07678e7e418d2d5e680b8df5ef654ce5c27136bf97c5"
+          "sha256": "82143d91a22aeef5ed18fcf292677890621bf276bb3a92ca4ae6bc0b909a6864"
         }
       ]
     },
     {
       "path": "adoption-report.schema.json",
-      "sha256": "4ce25e058235e6b124d127321a4549c49da4efbdf1dcda22c79d4c83d3645a2f",
+      "sha256": "2cb8d0a05a91edf882cce5a1c59c7005b99f2d895329357c8ff6a0a8b620e434",
       "sources": [
         {
           "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.schema.json",
-          "sha256": "4ce25e058235e6b124d127321a4549c49da4efbdf1dcda22c79d4c83d3645a2f"
+          "sha256": "2cb8d0a05a91edf882cce5a1c59c7005b99f2d895329357c8ff6a0a8b620e434"
+        }
+      ]
+    },
+    {
+      "path": "adoption-workflow-evidence.schema.json",
+      "sha256": "8da2c123036ab6f6f48b007b26681f29aa8989321315af10b3651927866c8bf2",
+      "sources": [
+        {
+          "path": "docs/references/adoption/LDS_UI_ADOPTION_WORKFLOW_EVIDENCE.schema.json",
+          "sha256": "8da2c123036ab6f6f48b007b26681f29aa8989321315af10b3651927866c8bf2"
         }
       ]
     },
     {
       "path": "adoption-workflow.md",
-      "sha256": "628e560c0c9a4ca707ee2c60674eaf4c77b7bfcc5541cb157e7eaf68ec12c961",
+      "sha256": "a41f2f3e9a236ca60557b43c557f605341e20e2cb77700eb25317f72c7fed288",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
-          "sha256": "09e78eb2ce03206120aa2ce2822d02c49a2ac16b0fac18fc4d68ff28d2a156e7"
+          "sha256": "5c888ba41fa9751f280867171ebf40828d8f6a81c18af2e630af978a8831ee84"
         }
       ]
     },
@@ -551,21 +565,21 @@
     },
     {
       "path": "LDS_UI_ADOPTION_CONTRACT.schema.json",
-      "sha256": "93a5e8f73cc18f26946e71bfbb8ed9235f4fd58dbdb9fc55547141529cae0039",
+      "sha256": "1bcd6227237e90b230ebc2a0c454d40284ed51d909a0fdf194c96be552188874",
       "sources": [
         {
           "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json",
-          "sha256": "93a5e8f73cc18f26946e71bfbb8ed9235f4fd58dbdb9fc55547141529cae0039"
+          "sha256": "1bcd6227237e90b230ebc2a0c454d40284ed51d909a0fdf194c96be552188874"
         }
       ]
     },
     {
       "path": "llms.txt",
-      "sha256": "9f66eaacb05d06abb69fa257c4de6ecdd6fa3f20669e9a4bb29324702b8fde0c",
+      "sha256": "8216e2ad798d10ff2d9df1ebc4c85093db86d342d911afbc04abe4d3cb7bf327",
       "sources": [
         {
           "path": "llms.txt",
-          "sha256": "721fe180cea6d74204f18e8104c9818881f8b128019691967c57df8be0833f44"
+          "sha256": "79f1b4a7226b5f86a15b8ec8db6a3ccd803772c2222d23670a65e970104b240a"
         }
       ]
     },

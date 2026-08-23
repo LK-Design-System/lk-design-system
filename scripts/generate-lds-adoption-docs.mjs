@@ -9,6 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const contractRelativePath = 'docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json';
 const contractSchemaRelativePath = 'docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json';
 const reportSchemaRelativePath = 'docs/references/adoption/LDS_UI_ADOPTION_REPORT.schema.json';
+const workflowEvidenceSchemaRelativePath = 'docs/references/adoption/LDS_UI_ADOPTION_WORKFLOW_EVIDENCE.schema.json';
 const reportExampleRelativePath = 'docs/references/adoption/LDS_UI_ADOPTION_REPORT.example.json';
 const workflowRelativePath = 'docs/LDS_UI_ADOPTION_WORKFLOW.md';
 const llmsRelativePath = 'llms.txt';
@@ -38,6 +39,14 @@ function decisionBullets(items) {
 
 function codeBullets(items) {
   return bullets(items.map((item) => `\`${item}\``));
+}
+
+function triggerEvidenceKinds(trigger) {
+  const required = trigger.requiredEvidenceKinds.map((kind) => `\`${kind}\``);
+  const alternatives = (trigger.requiredAnyOfEvidenceKinds || []).map((kind) => `\`${kind}\``);
+  return alternatives.length > 0
+    ? `${required.join(' · ')} · (${alternatives.join(' | ')})`
+    : required.join(' · ');
 }
 
 function table(headers, rows) {
@@ -109,7 +118,7 @@ function renderFacet(facet) {
     ? facet.hardTriggers.map((trigger) => [
         `\`${trigger.id}\``,
         trigger.fact,
-        trigger.requiredEvidenceKinds.map((kind) => `\`${kind}\``).join(' · '),
+        triggerEvidenceKinds(trigger),
       ])
     : [['—', '자동 hard trigger 없음', '작업 범위에 따라 직접 판정']];
 
@@ -176,7 +185,19 @@ ${bullets(contract.triggers)}
 
 ${codeBullets(contract.evidenceKinds)}
 
-\`source\`, \`asset\`, \`visual\`, \`copy-catalog\`, \`check\`의 \`ref\`는 소비 저장소 안에 실제 존재하는 repo-relative 파일 또는 검사 산출물 경로여야 합니다. Bare 검사 명령이나 자유문장은 \`check\` evidence가 아닙니다. \`token\`은 pinned LDS token inventory에 존재하는 이름이나 경로를, \`story\`는 built Storybook index에 존재하는 exact story ID를 가리키며 story evidence를 쓰거나 story hard trigger가 발생하면 CLI의 \`--storybook-index\`가 필수입니다. \`decision\`은 다른 근거를 설명하는 보조 링크일 뿐 각 세부 결정의 유일한 evidence가 될 수 없습니다.
+\`source\`, \`asset\`, \`visual\`, \`copy-catalog\`, \`check\`의 \`ref\`는 소비 저장소 안에 실제 존재하는 repo-relative 파일 또는 검사 산출물 경로여야 합니다. Bare 검사 명령이나 자유문장은 \`check\` evidence가 아닙니다. \`token\`은 pinned LDS token inventory에 존재하는 이름이나 경로를, \`story\`는 built Storybook index에 존재하는 exact story ID를 가리키며 story evidence를 쓰면 CLI의 \`--storybook-index\`가 필수입니다. \`workflow\`는 ${docLink(workflowEvidenceSchemaRelativePath, 'LDS_UI_ADOPTION_WORKFLOW_EVIDENCE.schema.json')}를 통과하는 repo-local JSON artifact를 가리키며 report evidence의 \`sha256\`으로 고정합니다. Artifact는 clean-clone source identity, production build, workflow smoke, accessibility, normal/narrow viewport, supported theme, ready/non-ready state와 spec·runner config·CI source hash를 함께 증명해야 합니다. \`decision\`은 다른 근거를 설명하는 보조 링크일 뿐 각 세부 결정의 유일한 evidence가 될 수 없습니다.
+
+Workflow artifact의 \`workflowCoverage.stateCoverageMode\`는 \`each-theme-viewport-run\`이며 \`combinationsTotal\`은 theme × viewport 실행 수입니다. 나열한 모든 state는 별도 조합으로 세지 않고 각 theme × viewport 실행 안에서 순차적으로 모두 exercise합니다. Artifact의 \`consumerId\`는 config의 \`consumerId\`와 정확히 같아야 합니다. Artifact \`repository\`는 \`owner/repository\` 좌표이며, 그 repository basename을 underscore/hyphen 차이를 정규화했을 때 config의 repository slug와 같아야 합니다. Report \`id\`는 adoption report 자체의 identity이므로 consumer identity 대신 사용하지 않습니다.
+
+Artifact의 \`sourceCommit\`부터 현재 head까지 바뀔 수 있는 파일은 현재 report와 그 workflow artifact carrier뿐입니다. package/lockfile, build config, runtime bootstrap, UI source를 포함한 다른 파일이 후행 변경되면 workflow를 다시 실행해야 합니다. Spec·runner config·CI workflow hash는 source commit과 현재 checkout 모두에서 일치해야 합니다.
+
+### Contract v1 → v2 migration
+
+- v1 report와 evidence는 pinned v1 계약에 연결된 불변 historical artifact로만 보존합니다. v2 완료 evidence로 자동 승격하지 않습니다.
+- v2로 다시 검증할 때는 copied report schema와 config prerequisite를 evidence-producing \`sourceCommit\`보다 먼저 반영하고, report \`contractVersion\`을 \`2\`로 맞춘 뒤 그 source commit에서 검증을 재실행합니다.
+- \`workflow\` evidence를 사용하면 config에 별도 \`consumerId\`를 추가하고, artifact의 동일한 \`consumerId\`와 실제 \`owner/repository\` 좌표를 기록합니다. Stable consumer identity인 \`consumerId\`는 report \`id\` 및 surface \`id\`와 별개입니다.
+- Hard trigger는 built Storybook index의 exact story ID 또는 schema-valid deterministic workflow evidence 중 하나로 다시 입증합니다.
+- v2 adoption 검증 통과는 제품 promotion, deployment, release를 자동으로 승인하거나 실행하지 않습니다.
 
 ## 작업 전 탐색 순서
 
@@ -224,13 +245,16 @@ Report의 기본 \`scope.mode\`는 \`${contract.scopeModes.default}\`입니다. 
 
 소비 저장소에 [config schema](../packages/conformance/schemas/lds-ui-adoption-config.schema.json)를 따르는 \`.lds/adoption.config.json\`을 둡니다. 기본 report 경로는 \`.lds/adoption-report.json\`이며 config의 \`reportDirectory\`와 CLI \`--report\`로 명시적으로 바꿀 수 있습니다.
 
+\`repository\`는 저장소 basename slug이고 \`consumerId\`는 그 저장소 안의 adoption consumer identity입니다. \`consumerId\`는 Storybook-only report에는 선택 사항이지만 workflow evidence를 하나라도 쓰면 필수입니다. Report \`id\`와 config \`consumerId\`는 서로 다른 identity입니다.
+
 에이전트로 UI를 조립하는 소비 저장소는 셋업 단계에서 [consumer agent skill](agent-skills/lds-ui/SKILL.md)도 함께 설치합니다 — 규칙이 조립 시점에 push 로드되는 채널입니다. Claude Code는 설치된 \`@lk-design-system/lds-core/docs/agent-skills/lds-ui/\`를 \`.claude/skills/lds-ui/\`로 복사하고, AGENTS.md 기반 에이전트(Codex 등)는 SKILL.md 설치 섹션의 라우팅 블록을 저장소 AGENTS.md에 추가합니다. \`check-adoption\`은 둘 다 없으면 \`AGENT_SKILL_MISSING\` 경고를 출력합니다(advisory — 판정을 차단하지는 않습니다).
 
 \`\`\`json
 {
   "schemaVersion": 1,
   "kind": "lds-ui-adoption-config",
-  "repository": "consumer-ui",
+  "repository": "lk-web-viz",
+  "consumerId": "web-viz",
   "uiRoots": ["src/**"],
   "styleEntry": "src/styles.css",
   "requiredStyleImports": [
@@ -332,7 +356,7 @@ ${decisionBullets(facet.requiredDecisions)}
 
 Hard triggers:
 
-${facet.hardTriggers.length ? facet.hardTriggers.map((trigger) => `- ${trigger.id}: ${trigger.fact} Evidence: ${trigger.requiredEvidenceKinds.join(' | ')}.`).join('\n') : '- None declared.'}
+${facet.hardTriggers.length ? facet.hardTriggers.map((trigger) => `- ${trigger.id}: ${trigger.fact} Evidence: ${triggerEvidenceKinds(trigger)}.`).join('\n') : '- None declared.'}
 
 References:
 
@@ -386,12 +410,14 @@ async function verifyReference(reference) {
   }
 }
 
-async function validateSources(contract, contractSchema, reportSchema) {
+async function validateSources(contract, contractSchema, reportSchema, workflowEvidenceSchema) {
   const ajv = new Ajv2020({ allErrors: true, strict: true });
   addFormats(ajv);
   const validateContract = ajv.compile(contractSchema);
   assert(validateContract(contract), `Adoption contract schema violations:\n${ajv.errorsText(validateContract.errors, { separator: '\n' })}`);
   ajv.compile(reportSchema);
+  ajv.compile(workflowEvidenceSchema);
+  await verifyReference(workflowEvidenceSchemaRelativePath);
 
   const facetIds = contract.facets.map(({ id }) => id);
   assert(new Set(facetIds).size === facetIds.length, 'Adoption facet ids must be unique.');
@@ -460,6 +486,14 @@ async function validateSources(contract, contractSchema, reportSchema) {
       facet.requiredDecisions.length === new Set(facet.requiredDecisions.map(({ id }) => id)).size,
       `${facet.id}: required decision ids must be unique.`,
     );
+    for (const trigger of facet.hardTriggers) {
+      const requiredKinds = trigger.requiredEvidenceKinds || [];
+      const alternatives = trigger.requiredAnyOfEvidenceKinds || [];
+      assert(
+        alternatives.every((kind) => !requiredKinds.includes(kind)),
+        `${facet.id}.${trigger.id}: any-of evidence alternatives must not repeat required kinds.`,
+      );
+    }
     for (const reference of facet.references) await verifyReference(reference);
   }
   const componentSchemaRequirements = (reportSchema.$defs?.componentMappingDecisions?.allOf ?? [])
@@ -489,13 +523,14 @@ async function emit(relativePath, content) {
   await writeFile(absolute, expected, 'utf8');
 }
 
-const [contract, contractSchema, reportSchema] = await Promise.all([
+const [contract, contractSchema, reportSchema, workflowEvidenceSchema] = await Promise.all([
   readJson(contractRelativePath),
   readJson(contractSchemaRelativePath),
   readJson(reportSchemaRelativePath),
+  readJson(workflowEvidenceSchemaRelativePath),
 ]);
 
-await validateSources(contract, contractSchema, reportSchema);
+await validateSources(contract, contractSchema, reportSchema, workflowEvidenceSchema);
 const workflow = renderWorkflow(contract);
 const llms = renderLlms(contract);
 const reportExample = renderReportExample(contract);

@@ -6,6 +6,28 @@
       "copyFrom": "head/DeviceList.jsx"
     }
   ],
+  "workflowMutations": [
+    {
+      "file": ".lds/adoption-report.json",
+      "replace": "\"mode\": \"changed-ui\"",
+      "with": "\"mode\": \"full-surface\""
+    },
+    {
+      "file": ".lds/adoption-report.json",
+      "replaceAll": "\"paths\": [\"src/**/*\"]",
+      "with": "\"paths\": [\"src/DeviceList.jsx\"]"
+    },
+    {
+      "file": ".lds/adoption-report.json",
+      "replaceAll": "{ \"kind\": \"story\", \"ref\": \"device-list--states\" }",
+      "with": "{ \"kind\": \"workflow\", \"ref\": \"evidence/workflow-evidence.json\", \"sha256\": \"AUTO_SHA256:evidence/workflow-evidence.json\" }"
+    },
+    {
+      "file": ".lds/adoption-report.json",
+      "replace": "\"stateDisposition\": \"Ready and loading states remain distinguishable and keep the refresh path clear.\",\n        \"evidence\": [\n          { \"kind\": \"visual\", \"ref\": \"evidence/device-list.visual.txt\" }",
+      "with": "\"stateDisposition\": \"Ready and loading states remain distinguishable and keep the refresh path clear.\",\n        \"evidence\": [\n          { \"kind\": \"visual\", \"ref\": \"evidence/device-list.visual.txt\" },\n          { \"kind\": \"workflow\", \"ref\": \"evidence/workflow-evidence.json\", \"sha256\": \"AUTO_SHA256:evidence/workflow-evidence.json\" }"
+    }
+  ],
   "cases": [
     {
       "name": "valid-adoption",
@@ -27,6 +49,68 @@
         }
       ],
       "expectedCodes": []
+    },
+    {
+      "name": "valid-non-storybook-workflow-evidence",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "exerciseCli": true,
+      "expectedCodes": []
+    },
+    {
+      "name": "valid-multiple-workflow-artifact-carriers",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "workflowSurfaceCopies": [
+        {
+          "sourceSurfaceId": "device-list",
+          "surfaceId": "legacy-panel",
+          "paths": ["src/LegacyPanel.jsx"],
+          "sourceEvidenceFrom": "src/DeviceList.jsx",
+          "sourceEvidenceTo": "src/LegacyPanel.jsx",
+          "artifactFrom": "evidence/workflow-evidence.json",
+          "artifactTo": "evidence/legacy-panel-workflow-evidence.json"
+        }
+      ],
+      "baseMutations": [
+        {
+          "file": "src/LegacyPanel.jsx",
+          "copyFrom": "head/DeviceList.jsx"
+        }
+      ],
+      "expectedCodes": []
+    },
+    {
+      "name": "workflow-evidence-rejects-foreign-non-carrier-drift",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "workflowSurfaceCopies": [
+        {
+          "sourceSurfaceId": "device-list",
+          "surfaceId": "legacy-panel",
+          "paths": ["src/LegacyPanel.jsx"],
+          "sourceEvidenceFrom": "src/DeviceList.jsx",
+          "sourceEvidenceTo": "src/LegacyPanel.jsx",
+          "artifactFrom": "evidence/workflow-evidence.json",
+          "artifactTo": "evidence/legacy-panel-workflow-evidence.json"
+        }
+      ],
+      "baseMutations": [
+        {
+          "file": "src/LegacyPanel.jsx",
+          "copyFrom": "head/DeviceList.jsx"
+        }
+      ],
+      "mutations": [
+        {
+          "file": "evidence/foreign-non-carrier.txt",
+          "write": "This unrelated file is not a workflow artifact carrier.\n"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_SOURCE_DRIFT"]
     },
     {
       "name": "full-surface-inspects-unchanged-legacy-ui",
@@ -108,6 +192,211 @@
       "name": "story-evidence-requires-index",
       "omitStorybookIndex": true,
       "expectedCodes": ["ADOPTION_STORYBOOK_INDEX_REQUIRED"]
+    },
+    {
+      "name": "workflow-evidence-result-must-pass",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": "evidence/workflow-evidence.json",
+          "replace": "\"result\": \"passed\"",
+          "with": "\"result\": \"failed\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_EVIDENCE_SCHEMA"]
+    },
+    {
+      "name": "workflow-evidence-clean-source-identity-must-match",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": "evidence/workflow-evidence.json",
+          "replace": "\"observedHead\": \"AUTO_SOURCE_COMMIT\"",
+          "with": "\"observedHead\": \"0000000000000000000000000000000000000000\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_SOURCE_IDENTITY"]
+    },
+    {
+      "name": "workflow-evidence-repository-must-match",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": "evidence/workflow-evidence.json",
+          "replace": "\"repository\": \"LK-ROBOTICS/fixture_consumer\"",
+          "with": "\"repository\": \"LK-ROBOTICS/different_consumer\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_IDENTITY"]
+    },
+    {
+      "name": "workflow-evidence-consumer-must-match",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": "evidence/workflow-evidence.json",
+          "replace": "\"consumerId\": \"fixture-adopter\"",
+          "with": "\"consumerId\": \"different-consumer\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_IDENTITY"]
+    },
+    {
+      "name": "workflow-evidence-requires-config-consumer-id",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "baseMutations": [
+        {
+          "file": ".lds/adoption.config.json",
+          "replace": "  \"consumerId\": \"fixture-adopter\",\n",
+          "with": ""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_IDENTITY"]
+    },
+    {
+      "name": "workflow-evidence-coverage-must-match-report",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": "evidence/workflow-evidence.json",
+          "replace": "\"states\": [\"ready\", \"loading\"]",
+          "with": "\"states\": [\"ready\", \"error\"]"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_COVERAGE"]
+    },
+    {
+      "name": "workflow-evidence-state-coverage-mode-is-fixed",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": "evidence/workflow-evidence.json",
+          "replace": "\"stateCoverageMode\": \"each-theme-viewport-run\"",
+          "with": "\"stateCoverageMode\": \"separate-state-runs\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_EVIDENCE_SCHEMA"]
+    },
+    {
+      "name": "workflow-evidence-counts-theme-viewport-runs",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": "evidence/workflow-evidence.json",
+          "replace": "\"combinationsTotal\": 4",
+          "with": "\"combinationsTotal\": 8"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_COVERAGE"]
+    },
+    {
+      "name": "workflow-evidence-required-checks-must-pass",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": "evidence/workflow-evidence.json",
+          "replace": "\"id\": \"accessibility\"",
+          "with": "\"id\": \"accessibility-missing\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_EVIDENCE_SCHEMA"]
+    },
+    {
+      "name": "workflow-evidence-inner-hash-must-match",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": "evidence/workflow-evidence.json",
+          "replace": "a6928f8e710cfa85540e26f8f81c7a5de5e03939e4264c1051354c2d3b659190",
+          "with": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_EVIDENCE_HASH"]
+    },
+    {
+      "name": "workflow-evidence-inner-hash-must-match-source-commit",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": "evidence/workflow.spec.ts",
+          "append": "\n// post-source drift\n"
+        },
+        {
+          "file": "evidence/workflow-evidence.json",
+          "replace": "a6928f8e710cfa85540e26f8f81c7a5de5e03939e4264c1051354c2d3b659190",
+          "with": "07f3b77d6aa81d4b6442f3d84b7d2330f5a1c0262c57606a56ea0203d72f9c69"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_EVIDENCE_HASH", "ADOPTION_WORKFLOW_SOURCE_DRIFT"]
+    },
+    {
+      "name": "workflow-evidence-inner-path-must-stay-contained",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": "evidence/workflow-evidence.json",
+          "replace": "\"path\": \"evidence/workflow.spec.ts\"",
+          "with": "\"path\": \"../workflow.spec.ts\""
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_EVIDENCE_SCHEMA"]
+    },
+    {
+      "name": "workflow-evidence-cannot-precede-surface-source",
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "expectedCodes": ["ADOPTION_WORKFLOW_SOURCE_DRIFT"]
+    },
+    {
+      "name": "workflow-evidence-rejects-post-source-build-input-drift",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": "vite.config.ts",
+          "write": "export default { build: { sourcemap: true } };\n"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_WORKFLOW_SOURCE_DRIFT"]
+    },
+    {
+      "name": "workflow-evidence-outer-hash-must-match",
+      "applyCommon": false,
+      "workflowEvidence": true,
+      "omitStorybookIndex": true,
+      "mutations": [
+        {
+          "file": ".lds/adoption-report.json",
+          "replaceAll": "AUTO_SHA256:evidence/workflow-evidence.json",
+          "with": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "expectedCodes": ["ADOPTION_EVIDENCE_HASH"]
     },
     {
       "name": "check-evidence-must-resolve",

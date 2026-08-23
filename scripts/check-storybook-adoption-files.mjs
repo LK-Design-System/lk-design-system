@@ -34,6 +34,12 @@ pairs.push(['packages/core/docs/manifest.json', 'storybook-static/design-system.
 pairs.push(['packages/core/docs/LDS_UI_ADOPTION_CONTRACT.schema.json', 'storybook-static/schemas/lds-ui-adoption-contract.schema.json']);
 pairs.push(['packages/core/docs/adoption-report.schema.json', 'storybook-static/schemas/lds-ui-adoption-report.schema.json']);
 pairs.push(['packages/core/docs/adoption-config.schema.json', 'storybook-static/schemas/lds-ui-adoption-config.schema.json']);
+pairs.push(['packages/core/docs/adoption-workflow-evidence.schema.json', 'storybook-static/schemas/lds-ui-adoption-workflow-evidence.schema.json']);
+
+const workflowEvidenceSchema = JSON.parse(await readFile(path.join(root, 'packages/core/docs/adoption-workflow-evidence.schema.json'), 'utf8'));
+if (workflowEvidenceSchema.$id !== 'https://lk-design-system.github.io/lk-design-system/schemas/lds-ui-adoption-workflow-evidence.schema.json') {
+  throw new Error('Workflow evidence schema $id must match its canonical Storybook Pages alias.');
+}
 
 for (const [sourcePath, deployedPath] of pairs) {
   let source;

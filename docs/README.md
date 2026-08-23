@@ -69,7 +69,7 @@
 | --- | --- |
 | Consumer agent skill | [lds-ui skill](agent-skills/lds-ui/SKILL.md) — UI 조립 시점에 LDS 결정 규칙을 push 로드; Claude Code는 `.claude/skills/lds-ui/`로 복사, AGENTS.md 기반 에이전트(Codex 등)는 스킬의 라우팅 블록을 AGENTS.md에 추가; `lds-core` 패키지 `docs/agent-skills/lds-ui/`로 배포됨 |
 | Robotics direct adoption | `@lk-design-system/lds-robotics-ui/llms.txt` · `@lk-design-system/lds-robotics-ui/design-system.json` · [Robotics Storybook](https://lk-design-system.github.io/lk-design-system-robotics/?path=/docs/lds-robotics-foundation-viewer-tokens--docs) · [public llms.txt](https://lk-design-system.github.io/lk-design-system-robotics/llms.txt) · [public manifest](https://lk-design-system.github.io/lk-design-system-robotics/design-system.json) |
-| Machine-readable adoption source | [Adoption contract](references/adoption/LDS_UI_ADOPTION_CONTRACT.json) · [contract schema](references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json) · [report schema](references/adoption/LDS_UI_ADOPTION_REPORT.schema.json) · [schema-valid report template](references/adoption/LDS_UI_ADOPTION_REPORT.example.json) |
+| Machine-readable adoption source | [Adoption contract](references/adoption/LDS_UI_ADOPTION_CONTRACT.json) · [contract schema](references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json) · [report schema](references/adoption/LDS_UI_ADOPTION_REPORT.schema.json) · [workflow evidence schema](references/adoption/LDS_UI_ADOPTION_WORKFLOW_EVIDENCE.schema.json) · [schema-valid report template](references/adoption/LDS_UI_ADOPTION_REPORT.example.json) |
 | Consumer promotion evidence | [promotion contract](references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md) · [registry schema](references/adoption/LDS_CONSUMER_REGISTRY.schema.json) · [attestation schema](references/adoption/LDS_CONSUMER_ATTESTATION.schema.json) |
 | Stable release evidence | [`0.1.0` release evidence](references/adoption/releases/LDS_STABLE_0.1.0_RELEASE_EVIDENCE.json) · [stable evidence schema](references/adoption/releases/LDS_STABLE_RELEASE_EVIDENCE.schema.json) · [support policy](STABLE_SUPPORT_POLICY.md) · [support matrix](STABLE_SUPPORT_MATRIX.md) · [rollback contract](STABLE_0.1.0_ROLLBACK.md) |
 | Consumer enforcement | [config schema](../packages/conformance/schemas/lds-ui-adoption-config.schema.json) · [CLI](../packages/conformance/src/cli.mjs) · [GitHub composite action](../.github/actions/lds-adoption/action.yml) |
@@ -103,12 +103,6 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 현재 실행 순서와 backlog는 [`LDS_ROADMAP.md`](LDS_ROADMAP.md)만 소유한다. 아래 문서는
 로드맵 항목의 세부 근거나 완료 기록이며, 같은 우선순위를 별도로 복제하지 않는다.
 
-### Active follow-through
-
-| Document | Disposition |
-| --- | --- |
-| [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) | O-A/B/C와 O4 문서·1차 시험 완료; 보완 문서 기준 질문 0 재시험은 R7 |
-
 ### Adopted or completed implementation records
 
 | Document | Disposition |
@@ -118,6 +112,7 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 | [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | component API·Styles/Slots·ref·overlay 구현 기록; current consumer evidence는 registry가 소유 |
 | [`PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md`](PACKAGE_AND_REPOSITORY_SEPARATION_PLAN.md) | package split·Robotics extraction·compatibility retirement 기록 |
 | [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) | Phase 0–3 완료; 2027-01 review는 R6 |
+| [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) | O-A/B/C와 O4 문서, consumer·maintainer 질문 0 재시험 완료; 이후 상태는 R7 continuous health가 감시하는 completed operations record |
 | [`DOMAIN_COMPONENT_EXPANSION_PLAN.md`](DOMAIN_COMPONENT_EXPANSION_PLAN.md) | 도메인 component 확장 완료 기록 |
 | [`NAVIGATION_ATOMIZATION_PLAN.md`](NAVIGATION_ATOMIZATION_PLAN.md) | Navigation 원자화 완료 기록 |
 | [`SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md`](SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md) | Select/MessageFeed 수정과 Portal current composition 반영을 닫은 follow-up 기록 |

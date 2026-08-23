@@ -277,11 +277,6 @@ async function validateExternalDocumentation(packageInfo) {
     return;
   }
   const rootManifest = await readJson(path.join(root, 'package.json'), 'workspace root manifest');
-  const canonicalPath = safeDescendant(root, surface.documentation.canonicalContract?.source?.path);
-  const canonicalBytes = canonicalPath ? await readFile(canonicalPath).catch(() => null) : null;
-  if (!canonicalBytes || createHash('sha256').update(canonicalBytes).digest('hex') !== surface.documentation.canonicalContract?.source?.sha256) {
-    fail(`${packageInfo.name}: canonical adoption contract hash drift.`);
-  }
 
   const vendored = surface.vendoredArtifact;
   if (!vendored?.path || !vendored?.sha256) {
@@ -313,11 +308,7 @@ async function validateExternalDocumentation(packageInfo) {
   await validateDocumentationSurface(manifest, packageInfo, packageRoot);
 
   const docsManifest = await readJson(path.join(packageRoot, surface.documentation.files.manifest.path), `${packageInfo.name} installed documentation manifest`);
-  const canonicalContract = canonicalBytes ? JSON.parse(canonicalBytes) : null;
   const checklist = await readJson(path.join(packageRoot, surface.documentation.files.checklist.path), `${packageInfo.name} installed checklist`);
-  if (canonicalContract && checklist && JSON.stringify(withoutReferenceProjection(canonicalContract)) !== JSON.stringify(withoutReferenceProjection(checklist))) {
-    fail(`${packageInfo.name}: packaged checklist decisions differ from the canonical contract.`);
-  }
   if (docsManifest) {
     let installedCanonical;
     let snapshotMode;
@@ -336,6 +327,26 @@ async function validateExternalDocumentation(packageInfo) {
       fail(`${packageInfo.name}: installed canonical LDS snapshot differs from the external surface.`);
     }
     if (snapshotMode === 'current') {
+      const canonicalPath = safeDescendant(root, surface.documentation.canonicalContract?.source?.path);
+      const canonicalBytes = canonicalPath ? await readFile(canonicalPath).catch(() => null) : null;
+      if (!canonicalBytes
+        || createHash('sha256').update(canonicalBytes).digest('hex')
+          !== surface.documentation.canonicalContract?.source?.sha256) {
+        fail(`${packageInfo.name}: canonical adoption contract hash drift.`);
+      }
+      let canonicalContract = null;
+      if (canonicalBytes) {
+        try {
+          canonicalContract = JSON.parse(canonicalBytes);
+        } catch (error) {
+          fail(`${packageInfo.name}: canonical adoption contract is invalid JSON: ${error.message}`);
+        }
+      }
+      if (canonicalContract && checklist
+        && JSON.stringify(withoutReferenceProjection(canonicalContract))
+          !== JSON.stringify(withoutReferenceProjection(checklist))) {
+        fail(`${packageInfo.name}: packaged checklist decisions differ from the canonical contract.`);
+      }
       const currentManifestBytes = await readFile(path.join(root, 'packages/core/docs/manifest.json')).catch(() => null);
       if (!currentManifestBytes
         || createHash('sha256').update(currentManifestBytes).digest('hex')

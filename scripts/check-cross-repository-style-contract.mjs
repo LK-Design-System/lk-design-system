@@ -4,6 +4,10 @@ import path from 'node:path';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import semver from 'semver';
+import {
+  canonicalSnapshotFromDocumentationManifest,
+  canonicalSnapshotMode,
+} from './robotics-canonical-snapshot.mjs';
 
 const root = process.cwd();
 
@@ -126,21 +130,10 @@ function checkRoboticsProfile(styleContract, externalSurface, label) {
   );
 }
 
-async function checkRoboticsDocumentation(externalSurface, packageRoot, ldsSourceRoot, label) {
+async function checkRoboticsDocumentation(externalSurface, packageRoot, ldsSourceRoot, currentRef, label) {
   const docs = externalSurface.documentation;
   const packageJson = JSON.parse(await readFile(path.join(packageRoot, 'package.json'), 'utf8'));
   const bundleRoot = path.posix.dirname(docs.files.manifest.path);
-  const canonicalPath = descendant(ldsSourceRoot, docs.canonicalContract.source.path);
-  if (!canonicalPath) throw new Error(`${label} canonical adoption source escapes the LDS root.`);
-  const canonicalBytes = await readFile(canonicalPath);
-  if (sha256(canonicalBytes) !== docs.canonicalContract.source.sha256) {
-    throw new Error(`${label} canonical adoption contract hash drift.`);
-  }
-  const canonicalContract = JSON.parse(canonicalBytes);
-  if (canonicalContract.kind !== docs.canonicalContract.kind
-    || canonicalContract.contractVersion !== docs.canonicalContract.contractVersion) {
-    throw new Error(`${label} canonical adoption contract identity or version drift.`);
-  }
 
   const declared = [...Object.values(docs.files), ...docs.domainDocuments];
   const paths = declared.map((entry) => entry.path);
@@ -158,6 +151,22 @@ async function checkRoboticsDocumentation(externalSurface, packageRoot, ldsSourc
     || manifest.kind !== 'lds-package-documentation'
     || JSON.stringify(manifest.package) !== JSON.stringify(expectedIdentity)) {
     throw new Error(`${label} packaged documentation manifest identity drift.`);
+  }
+  let installedCanonical;
+  let snapshotMode;
+  try {
+    installedCanonical = canonicalSnapshotFromDocumentationManifest(manifest);
+    snapshotMode = canonicalSnapshotMode({
+      currentRef,
+      canonicalRef: installedCanonical.source.ref,
+      surfacePackageRefStatus: externalSurface.package.refStatus,
+      installedPackageRefStatus: packageJson.lds?.refStatus,
+    });
+  } catch (error) {
+    throw new Error(`${label} ${error.message}`);
+  }
+  if (JSON.stringify(installedCanonical) !== JSON.stringify(docs.canonicalContract)) {
+    throw new Error(`${label} installed canonical LDS snapshot differs from the external surface.`);
   }
   if (manifest.adoption?.contractKind !== docs.canonicalContract.kind
     || manifest.adoption?.contractVersion !== docs.canonicalContract.contractVersion) {
@@ -235,6 +244,9 @@ async function checkRoboticsDocumentation(externalSurface, packageRoot, ldsSourc
       throw new Error(`${label} external-surface and manifest records differ: ${record.path}.`);
     }
   }
+  if (recordByPath.get('shared/manifest.json')?.sha256 !== docs.canonicalContract.snapshotManifestSha256) {
+    throw new Error(`${label} packaged shared manifest does not match the canonical snapshot pin.`);
+  }
   const expectedDomainRecords = docs.domainDocuments.map((record) => ({
     path: path.posix.relative(bundleRoot, record.path),
     sha256: record.sha256,
@@ -252,9 +264,22 @@ async function checkRoboticsDocumentation(externalSurface, packageRoot, ldsSourc
   }
 
   const checklist = JSON.parse(await readFile(path.join(packageRoot, docs.files.checklist.path), 'utf8'));
-  if (JSON.stringify(contractWithoutProjectedReferences(checklist))
-    !== JSON.stringify(contractWithoutProjectedReferences(canonicalContract))) {
-    throw new Error(`${label} packaged checklist decisions differ from the canonical adoption contract.`);
+  if (snapshotMode === 'current') {
+    const canonicalPath = descendant(ldsSourceRoot, docs.canonicalContract.source.path);
+    if (!canonicalPath) throw new Error(`${label} canonical adoption source escapes the LDS root.`);
+    const canonicalBytes = await readFile(canonicalPath);
+    if (sha256(canonicalBytes) !== docs.canonicalContract.source.sha256) {
+      throw new Error(`${label} canonical adoption contract hash drift.`);
+    }
+    const canonicalContract = JSON.parse(canonicalBytes);
+    if (canonicalContract.kind !== docs.canonicalContract.kind
+      || canonicalContract.contractVersion !== docs.canonicalContract.contractVersion) {
+      throw new Error(`${label} canonical adoption contract identity or version drift.`);
+    }
+    if (JSON.stringify(contractWithoutProjectedReferences(checklist))
+      !== JSON.stringify(contractWithoutProjectedReferences(canonicalContract))) {
+      throw new Error(`${label} packaged checklist decisions differ from the canonical adoption contract.`);
+    }
   }
   const checklistFile = path.join(packageRoot, docs.files.checklist.path);
   const references = [
@@ -372,12 +397,14 @@ await checkRoboticsDocumentation(
   surface,
   path.join(root, 'node_modules', '@lk-design-system', 'lds-robotics-ui'),
   root,
+  `lds-v${(await load('package.json')).version}`,
   'Robotics',
 );
 await checkRoboticsDocumentation(
   fixtureSurface,
   path.join(root, 'packages', 'conformance', 'fixtures', 'robotics'),
   path.join(root, 'packages', 'conformance', 'fixtures', 'lds'),
+  fixtureSurface.documentation.canonicalContract.source.ref,
   'Fixture Robotics',
 );
 

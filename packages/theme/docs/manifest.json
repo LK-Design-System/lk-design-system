@@ -8,7 +8,7 @@
   },
   "adoption": {
     "contractKind": "lds-ui-adoption-contract",
-    "contractVersion": "1",
+    "contractVersion": "2",
     "invariant": "컴포넌트 교체만으로 LDS 전환은 완료되지 않는다.",
     "facetIds": [
       "tokensAndTheme",
@@ -75,23 +75,27 @@
       },
       {
         "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
-        "sha256": "09e78eb2ce03206120aa2ce2822d02c49a2ac16b0fac18fc4d68ff28d2a156e7"
+        "sha256": "5c888ba41fa9751f280867171ebf40828d8f6a81c18af2e630af978a8831ee84"
       },
       {
         "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
-        "sha256": "f4c4f71cff9f9108246a5f7cc5520d6095d599027adb75d0b61e385c5b7fef80"
+        "sha256": "f96e6194497a4a3ab4fbfcf9ace7f29ced594baba90cd59dbeb7b21b7eef6430"
       },
       {
         "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json",
-        "sha256": "93a5e8f73cc18f26946e71bfbb8ed9235f4fd58dbdb9fc55547141529cae0039"
+        "sha256": "1bcd6227237e90b230ebc2a0c454d40284ed51d909a0fdf194c96be552188874"
       },
       {
         "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.example.json",
-        "sha256": "2bae3fdcfcfcd5efce6d07678e7e418d2d5e680b8df5ef654ce5c27136bf97c5"
+        "sha256": "82143d91a22aeef5ed18fcf292677890621bf276bb3a92ca4ae6bc0b909a6864"
       },
       {
         "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.schema.json",
-        "sha256": "4ce25e058235e6b124d127321a4549c49da4efbdf1dcda22c79d4c83d3645a2f"
+        "sha256": "2cb8d0a05a91edf882cce5a1c59c7005b99f2d895329357c8ff6a0a8b620e434"
+      },
+      {
+        "path": "docs/references/adoption/LDS_UI_ADOPTION_WORKFLOW_EVIDENCE.schema.json",
+        "sha256": "8da2c123036ab6f6f48b007b26681f29aa8989321315af10b3651927866c8bf2"
       },
       {
         "path": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
@@ -114,41 +118,51 @@
   "documents": [
     {
       "path": "adoption-checklist.json",
-      "sha256": "2fe1118905d91ae15a930d2244cbb5a7873de9222a0a00a4047df5b46a401310",
+      "sha256": "1532446ad33e215b06f3a9295c44bfb4add2a8660718d399b2c647f30e43094f",
       "sources": [
         {
           "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
-          "sha256": "f4c4f71cff9f9108246a5f7cc5520d6095d599027adb75d0b61e385c5b7fef80"
+          "sha256": "f96e6194497a4a3ab4fbfcf9ace7f29ced594baba90cd59dbeb7b21b7eef6430"
         }
       ]
     },
     {
       "path": "adoption-report.example.json",
-      "sha256": "9a7948b02727a527f3da188bfbf2725283720ef36a427872fbfb9cc0b0dd92d9",
+      "sha256": "ec45423dd9a43a088ff5c078828dd1f07f92099a69e71450fca6fbb2e13503dc",
       "sources": [
         {
           "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.example.json",
-          "sha256": "2bae3fdcfcfcd5efce6d07678e7e418d2d5e680b8df5ef654ce5c27136bf97c5"
+          "sha256": "82143d91a22aeef5ed18fcf292677890621bf276bb3a92ca4ae6bc0b909a6864"
         }
       ]
     },
     {
       "path": "adoption-report.schema.json",
-      "sha256": "4ce25e058235e6b124d127321a4549c49da4efbdf1dcda22c79d4c83d3645a2f",
+      "sha256": "2cb8d0a05a91edf882cce5a1c59c7005b99f2d895329357c8ff6a0a8b620e434",
       "sources": [
         {
           "path": "docs/references/adoption/LDS_UI_ADOPTION_REPORT.schema.json",
-          "sha256": "4ce25e058235e6b124d127321a4549c49da4efbdf1dcda22c79d4c83d3645a2f"
+          "sha256": "2cb8d0a05a91edf882cce5a1c59c7005b99f2d895329357c8ff6a0a8b620e434"
+        }
+      ]
+    },
+    {
+      "path": "adoption-workflow-evidence.schema.json",
+      "sha256": "8da2c123036ab6f6f48b007b26681f29aa8989321315af10b3651927866c8bf2",
+      "sources": [
+        {
+          "path": "docs/references/adoption/LDS_UI_ADOPTION_WORKFLOW_EVIDENCE.schema.json",
+          "sha256": "8da2c123036ab6f6f48b007b26681f29aa8989321315af10b3651927866c8bf2"
         }
       ]
     },
     {
       "path": "adoption-workflow.md",
-      "sha256": "2f0a91f2f3373908b3f882abad93a6d9aa7691e4b0c45920cfd7ecbb46c6c3ae",
+      "sha256": "05f493a8ff3ed6018e01a9813d9a1cbf1f82a5e1240c4fea49f58342e12722b0",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
-          "sha256": "09e78eb2ce03206120aa2ce2822d02c49a2ac16b0fac18fc4d68ff28d2a156e7"
+          "sha256": "5c888ba41fa9751f280867171ebf40828d8f6a81c18af2e630af978a8831ee84"
         }
       ]
     },
@@ -204,21 +218,21 @@
     },
     {
       "path": "LDS_UI_ADOPTION_CONTRACT.schema.json",
-      "sha256": "93a5e8f73cc18f26946e71bfbb8ed9235f4fd58dbdb9fc55547141529cae0039",
+      "sha256": "1bcd6227237e90b230ebc2a0c454d40284ed51d909a0fdf194c96be552188874",
       "sources": [
         {
           "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.schema.json",
-          "sha256": "93a5e8f73cc18f26946e71bfbb8ed9235f4fd58dbdb9fc55547141529cae0039"
+          "sha256": "1bcd6227237e90b230ebc2a0c454d40284ed51d909a0fdf194c96be552188874"
         }
       ]
     },
     {
       "path": "llms.txt",
-      "sha256": "75fffc398f09a628e9e784d6cbcda1b7094c3fca8f4efa8b2f5b1a9e6a0edd95",
+      "sha256": "530c07624ea7b8d0d623d47dcedea8554bf772ad37510788931cc4ba2294e696",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
-          "sha256": "09e78eb2ce03206120aa2ce2822d02c49a2ac16b0fac18fc4d68ff28d2a156e7"
+          "sha256": "5c888ba41fa9751f280867171ebf40828d8f6a81c18af2e630af978a8831ee84"
         },
         {
           "path": "docs/foundations/color.md",
