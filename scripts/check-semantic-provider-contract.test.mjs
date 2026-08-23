@@ -109,6 +109,10 @@ test('a provider version mismatch is independent from variable coverage', () => 
 
 test('current source contracts prove the Core-only negative and all supported package combinations', async () => {
   const result = await runSemanticProviderCheck(root, { allowMissingManifestMetadata: true });
+  const roboticsAdapter = JSON.parse(await readFile(
+    path.join(root, 'scripts/fixtures/semantic-provider-contract/robotics-adapter.json'),
+    'utf8',
+  ));
   const [coreOnly, coreTheme, coreThemeProduct, full] = result.combinations;
   assert.equal(coreOnly.status, 'invalid');
   assert.ok(coreOnly.diagnostics.find(({ code }) => code === 'LDS_THEME_PROVIDER_MISSING'));
@@ -118,5 +122,5 @@ test('current source contracts prove the Core-only negative and all supported pa
   assert.equal(coreTheme.status, 'valid');
   assert.equal(coreThemeProduct.status, 'valid');
   assert.equal(full.status, 'valid');
-  assert.equal(result.records.find(({ id }) => id === 'robotics').version, '0.1.0-rc.33');
+  assert.equal(result.records.find(({ id }) => id === 'robotics').version, roboticsAdapter.package.version);
 });
