@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
-import { embeddedBandStyle, normalizeStatusTone, statusToneStyle } from './status-presentation.js';
+import { normalizeStatusTone, statusToneStyle } from './status-presentation.js';
 
 // Status surface colors come straight from the semantic status tier via
 // statusToneStyle (the former --component-banner-* aliases were removed).
@@ -8,7 +8,9 @@ function variantStyle(variant, palette) {
   if (variant === 'embedded') {
     return {
       padding: 'var(--space-3) var(--space-5)',
-      ...embeddedBandStyle(palette),
+      background: palette.surface,
+      border: 'none',
+      borderRadius: 0,
     };
   }
   return {

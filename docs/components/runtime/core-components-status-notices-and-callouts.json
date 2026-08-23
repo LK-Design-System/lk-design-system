@@ -15,8 +15,8 @@
   "purpose": "시스템 변화와 선택적 행동을 알려야 할 때는 Banner가, 본문 맥락에 남는 절차·주의에는 Callout이 적합합니다. 짧게 사라지는 완료 피드백에는 이 패턴을 사용하지 말고 Toast 또는 Snackbar를 사용하세요.",
   "useWhen": [],
   "avoidWhen": [
-    "Atlassian Banner와 Section Message 및 MUI Alert의 기본 standard 변형처럼, 독립형 상태 알림은 톤 배경·아이콘·텍스트만으로 식별하고 전체 외곽선을 기본 시각 문법으로 사용하지 않습니다. LDS는 이 낮은 chrome 방향을 기본 계약으로 정하고 별도 outlined 축을 추가하지 않습니다.",
-    "Primer Banner의 card 안 flush 배치처럼, 컨테이너 상태는 별도의 둥근 카드로 중첩하지 않고 부모 표면의 폭에 결합합니다. LDS에서는 이를 variant=\"embedded\"로 명시합니다. Primer의 독립형 전체 외곽선은 채택하지 않고, 결합형의 상·하단 구조 구분선만 적용합니다.",
+    "Atlassian Banner와 Section Message 및 MUI Alert의 기본 standard 변형처럼, 상태 알림은 톤 배경·아이콘·텍스트만으로 식별하고 전체 외곽선을 기본 시각 문법으로 사용하지 않습니다. LDS는 standalone과 embedded 모두 이 낮은 chrome 방향을 기본 계약으로 정하고 별도 outlined 축을 추가하지 않습니다.",
+    "Primer Banner의 card 안 flush 배치처럼, 컨테이너 상태는 별도의 둥근 카드로 중첩하지 않고 부모 표면의 폭에 결합합니다. LDS에서는 이를 variant=\"embedded\"로 명시합니다. Primer의 상·하단 separator는 채택하지 않습니다. LDS 카드에서는 부모 외곽선과 Banner tint가 이미 경계를 제공해 선을 더하면 이중 chrome으로 읽히기 때문입니다.",
     "Carbon Notification usage가 notification과 callout을 목적·지속성·상호작용으로 구분하는 것처럼, LDS도 시각적 강조 정도가 아니라 동적 상태와 액션 여부로 Banner를 선택합니다. 외부 스타일을 복제하지 않고 LDS의 status tone, spacing, radius를 유지합니다."
   ],
   "anatomy": [

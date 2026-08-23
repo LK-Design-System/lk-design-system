@@ -74,7 +74,7 @@ export const NoticesAndCallouts = {
 export const BannerSurfaceVariants = {
   name: '변형·상태 · 독립형과 결합형 안내',
   parameters: storyDescription(
-    '독립형 Banner, 패널 결합형 Banner, 본문 Callout의 배치와 의미를 비교합니다. 동적 상태는 외곽선 없는 톤 면 또는 패널 경계에 결합된 상태 밴드로 읽히고 정적 가이드는 작업 맥락 안에 남으며 각 패턴의 상태·행동 계약이 섞이지 않는지 확인하세요.',
+    '독립형 Banner, 패널 결합형 Banner, 본문 Callout의 배치와 의미를 비교합니다. 동적 상태는 외곽선 없는 톤 면으로 읽히고, 결합형은 부모 패널 폭에 붙되 자체 separator를 더하지 않습니다. 정적 가이드는 작업 맥락 안에 남으며 각 패턴의 상태·행동 계약이 섞이지 않는지 확인하세요.',
   ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-8)', width: 'min(680px, 100%)' }}>
@@ -121,8 +121,8 @@ export const BannerSurfaceVariants = {
       throw new Error('A standalone Banner must communicate status with its tonal surface, not a perimeter border.');
     }
     const embeddedStyle = getComputedStyle(embedded);
-    if (parseFloat(embeddedStyle.borderRadius) !== 0 || parseFloat(embeddedStyle.borderTopWidth) === 0 || parseFloat(embeddedStyle.borderLeftWidth) !== 0 || parseFloat(embeddedStyle.borderRightWidth) !== 0 || parseFloat(embeddedStyle.borderBottomWidth) === 0) {
-      throw new Error('An embedded Banner must join its parent surface with top and bottom separators only.');
+    if (parseFloat(embeddedStyle.borderRadius) !== 0 || ['borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth'].some((property) => parseFloat(embeddedStyle[property]) !== 0)) {
+      throw new Error('An embedded Banner must join its parent surface without adding its own perimeter or separators.');
     }
     if (embedded.textContent.trim() !== '수동 제어 잠김') {
       throw new Error('A compact embedded status example must remain a single, self-contained message line.');

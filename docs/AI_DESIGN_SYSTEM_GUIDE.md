@@ -164,7 +164,7 @@ warning/danger 의미는 색상만으로 표현하지 않고 visible `StatusBadg
 | 역할 | 예 | 표면 처리 |
 | --- | --- | --- |
 | 단일 메시지 표면 | `Callout`, `Banner variant="standalone"` | 외곽선 없는 전체 tinted surface + tone 아이콘·텍스트 |
-| 부모 표면 결합 상태 | `Banner variant="embedded"` (LDS composition extension) | 부모 안의 edge-to-edge tinted band + 상·하단 tone hairline. 외곽 border·radius·shadow는 부모가 소유 |
+| 부모 표면 결합 상태 | `Banner variant="embedded"` (LDS composition extension) | 부모 안의 외곽선 없는 edge-to-edge tinted band. border·radius·shadow는 부모가 소유 |
 | 제출/검증 결과 요약 | `ValidationSummary` | 중립 목록 본문 + severity 구역 heading band(tone surface/border) + 최고 심각도의 외곽 hairline |
 | 진행형 작업 목록 | `FileUploadQueue` | 카드 외곽·헤더와 파일 정체성 아이콘은 항상 중립. 상태는 행 단위 `StatusBadge`·진행 바·텍스트로 표현 |
 
