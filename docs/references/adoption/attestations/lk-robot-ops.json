@@ -3,20 +3,46 @@
   "schemaVersion": 2,
   "kind": "lds-consumer-attestation",
   "consumerId": "robot-ops",
-  "generatedAt": "2026-08-23",
+  "generatedAt": "2026-08-24",
   "profile": "ops",
-  "sourceCommit": "6b196d3834c0b53ba8687f65b7e8c7cd18e8ac14",
+  "sourceCommit": "bb631914bd57763a37d0ad49f40c641ba872d1f2",
   "checks": [
     {
-      "id": "identity-registration",
+      "id": "install",
       "status": "passed",
-      "command": "git ls-remote origin refs/heads/main",
-      "note": "The new repository identity and exact merged source commit were verified; this is not an adoption-stage promotion."
+      "command": "npm ci"
+    },
+    {
+      "id": "source-contract",
+      "status": "passed",
+      "command": "npm run lds:r2:source",
+      "note": "Stable package identity, 30 route patterns, and 27 runtime routes aligned."
+    },
+    {
+      "id": "production-build",
+      "status": "passed",
+      "command": "npm run build",
+      "note": "Ops Console, Mapping Studio, and Admin Diagnostics production bundles passed."
+    },
+    {
+      "id": "workflow-smoke",
+      "status": "passed",
+      "command": "npm run lds:r2:workflow",
+      "note": "Four theme/viewport workflow combinations and direct authoring denial passed."
+    },
+    {
+      "id": "accessibility",
+      "status": "passed",
+      "command": "npm run lds:r2:workflow",
+      "note": "Keyboard focus, accessible names, form labels, and horizontal overflow checks passed."
     }
   ],
   "evidence": [
     "ops/lk_robot_ops/.lds/adoption-report.json",
-    "ops/lk_robot_ops/docs/LDS_DESIGN_SYSTEM_ADOPTION.md",
-    "ops/lk_robot_ops/docs/plans/repo-split-s1/consumer-handoff.md"
+    "ops/lk_robot_ops/.lds/evidence/robot-ops-workflow-evidence.json",
+    "ops/lk_robot_ops/frontend/e2e/products/ops-console.spec.ts",
+    "ops/lk_robot_ops/frontend/playwright.ops.config.ts",
+    "ops/lk_robot_ops/.github/workflows/lds-r2.yml",
+    "ops/lk_robot_ops/docs/releases/2026-08-24-lds-stable-adoption-approval.md"
   ]
 }

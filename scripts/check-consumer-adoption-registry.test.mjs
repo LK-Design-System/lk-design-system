@@ -311,16 +311,13 @@ test('current v2 registry validates its recorded release, workflow, and deployme
   assert.equal(result.deployed, expected.deployed);
 });
 
-test('registered Robot Ops identity cannot promote while it pins pre-stable packages', () => {
+test('Robot Ops cannot remain promoted when required packages regress to pre-stable versions', () => {
   const fixture = currentFixture();
   const entry = consumerEntry(fixture, 'robot-ops');
-  assert.equal(entry.stage, 'registered');
-  entry.stage = 'wired';
-  entry.checks.install.status = 'passed';
-  entry.checks.sourceContract.status = 'passed';
-  const attestation = attestationFor(fixture, entry);
-  passAttestationCheck(attestation, ['install'], entry.checks.install.command);
-  passAttestationCheck(attestation, ['source-contract'], entry.checks.sourceContract.command);
+  for (const item of entry.packages.filter((pkg) => pkg.name !== '@lk-design-system/lds-robotics-ui')) {
+    item.version = '0.1.0-rc.69.29';
+    item.artifactPath = item.artifactPath.replace('-0.1.0.tgz', '-0.1.0-rc.69.29.tgz');
+  }
   assert.throws(() => validate(fixture), /must match registry ldsVersion/);
 });
 

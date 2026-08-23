@@ -2,7 +2,7 @@
   "$schema": "./LDS_CONSUMER_REGISTRY.schema.json",
   "schemaVersion": 2,
   "kind": "lds-consumer-registry",
-  "generatedAt": "2026-08-23",
+  "generatedAt": "2026-08-24",
   "ldsVersion": "0.1.0",
   "packageRelease": {
     "channel": "stable",
@@ -205,7 +205,7 @@
     {
       "id": "robot-ops",
       "repository": "LK-ROBOTICS/lk_robot_ops",
-      "sourceCommit": "6b196d3834c0b53ba8687f65b7e8c7cd18e8ac14",
+      "sourceCommit": "bb631914bd57763a37d0ad49f40c641ba872d1f2",
       "worktree": "clean",
       "frontendRoot": "frontend",
       "profile": "ops",
@@ -213,62 +213,92 @@
       "packages": [
         {
           "name": "@lk-design-system/lds-core",
-          "version": "0.1.0-rc.69.29",
-          "artifactPath": "ops/lk_robot_ops/frontend/vendor/lds/lk-design-system-lds-core-0.1.0-rc.69.29.tgz",
-          "sha256": "0c5c3a48d3e4236341fe6221dd1ba2deacc66f7a824b5426d8b1a58ce5088aea"
+          "version": "0.1.0",
+          "artifactPath": "ops/lk_robot_ops/frontend/vendor/lds/lk-design-system-lds-core-0.1.0.tgz",
+          "sha256": "b687d49a0500dea9482cc13826debf3084570b8378c2651cda31eedd53a5c53c"
         },
         {
           "name": "@lk-design-system/lds-theme",
-          "version": "0.1.0-rc.69.29",
-          "artifactPath": "ops/lk_robot_ops/frontend/vendor/lds/lk-design-system-lds-theme-0.1.0-rc.69.29.tgz",
-          "sha256": "06ac7d0e2771ae6c8aa21ece30df2aff91a9c83f3c356b8598884eb2db379f22"
+          "version": "0.1.0",
+          "artifactPath": "ops/lk_robot_ops/frontend/vendor/lds/lk-design-system-lds-theme-0.1.0.tgz",
+          "sha256": "3a4885a55221e1917dbe57d08eb566ac804903bf1efe94acdacf421f086132c4"
         },
         {
           "name": "@lk-design-system/lds-product",
-          "version": "0.1.0-rc.69.29",
-          "artifactPath": "ops/lk_robot_ops/frontend/vendor/lds/lk-design-system-lds-product-0.1.0-rc.69.29.tgz",
-          "sha256": "8a51e55b1a9bdff59ac35e5f878ab47a77be674b3e53b6c57425aa55f10ebb6c"
+          "version": "0.1.0",
+          "artifactPath": "ops/lk_robot_ops/frontend/vendor/lds/lk-design-system-lds-product-0.1.0.tgz",
+          "sha256": "7e33cc1b48e34722824b18a79c419d062b9aa75e1480ea78ce04e00ac6a2b5f0"
+        },
+        {
+          "name": "@lk-design-system/lds-robotics-ui",
+          "version": "0.1.0-rc.34",
+          "artifactPath": "ops/lk_robot_ops/frontend/vendor/lds/lk-design-system-lds-robotics-ui-0.1.0-rc.34.tgz",
+          "sha256": "c8a7e4d3dd739038a8184d65408e758f211c394b4035a7dc83cf51e1d4dec2d7"
         }
       ],
-      "stage": "registered",
+      "stage": "workflow-verified",
       "checks": {
         "install": {
-          "status": "not-run",
-          "command": "npm ci --ignore-scripts --no-audit --no-fund",
-          "note": "Stable 0.1.0 package migration has not been run for the new repository identity."
+          "status": "passed",
+          "command": "npm ci",
+          "note": "Exact lockfile install passed in an isolated clean worktree."
         },
         "sourceContract": {
-          "status": "blocked",
+          "status": "passed",
           "command": "npm run lds:r2:source",
-          "note": "The inherited frontend does not yet expose the stable LDS R2 source-contract command."
+          "note": "Stable package identity, 30 route patterns, and 27 runtime routes aligned."
         },
         "productionBuild": {
-          "status": "not-run",
+          "status": "passed",
           "command": "npm run build",
-          "note": "Build evidence at the exact stable-package source revision is not attested."
+          "note": "Ops Console, Mapping Studio, and Admin Diagnostics production bundles passed."
         },
         "workflowSmoke": {
-          "status": "not-run",
+          "status": "passed",
           "command": "npm run lds:r2:workflow",
-          "note": "Representative workflow verification is pending stable package migration."
+          "note": "4 of 4 light/dark and desktop/narrow map-task workflow combinations plus direct authoring denial passed."
         },
         "accessibility": {
-          "status": "not-run",
+          "status": "passed",
           "command": "npm run lds:r2:workflow",
-          "note": "Accessibility evidence is pending stable package migration."
+          "note": "Keyboard focus, accessible names, form labels, and horizontal overflow checks passed."
         }
       },
       "viewports": ["1280x800", "767x900"],
       "evidenceFreshness": "current",
       "evidence": [
         "ops/lk_robot_ops/.lds/adoption-report.json",
+        "ops/lk_robot_ops/.lds/evidence/robot-ops-workflow-evidence.json",
+        "ops/lk_robot_ops/frontend/e2e/products/ops-console.spec.ts",
+        "ops/lk_robot_ops/frontend/playwright.ops.config.ts",
+        "ops/lk_robot_ops/.github/workflows/lds-r2.yml",
         "ops/lk_robot_ops/docs/LDS_DESIGN_SYSTEM_ADOPTION.md",
-        "ops/lk_robot_ops/docs/plans/repo-split-s1/consumer-handoff.md"
+        "ops/lk_robot_ops/docs/releases/2026-08-24-lds-stable-adoption-approval.md"
       ],
       "attestation": "attestations/lk-robot-ops.json",
+      "cleanReproducibility": {
+        "status": "passed",
+        "mode": "clean-clone",
+        "sourceCommit": "bb631914bd57763a37d0ad49f40c641ba872d1f2",
+        "verifiedAt": "2026-08-24",
+        "command": "npm ci && npm run lds:r2:verify",
+        "evidence": [
+          "ops/lk_robot_ops/.lds/evidence/robot-ops-workflow-evidence.json"
+        ],
+        "note": "The exact source commit completed install, source-contract, unit, three production builds, workflow, and accessibility gates in an isolated clean worktree."
+      },
+      "productOwnerApproval": {
+        "status": "approved",
+        "owner": "Robot Ops product owner + LDS design-system owner",
+        "approvedAt": "2026-08-24",
+        "evidence": [
+          "ops/lk_robot_ops/docs/releases/2026-08-24-lds-stable-adoption-approval.md"
+        ],
+        "note": "Approval covers exact stable adoption evidence and workflow-verified promotion only; main integration, rollout, deployment, and hardware qualification remain separate."
+      },
       "deployment": { "status": "not-attested" },
       "legacyActiveReferences": 0,
-      "notes": "Robot Ops is a distinct consumer identity. Registration pins the exact inherited RC package state only; stable install, source contract, build, workflow, accessibility, owner approval, rollout, and deployment are not attested. The legacy web-viz entry remains immutable."
+      "notes": "Robot Ops remains a distinct consumer identity. Stable Core/Theme/Product install, source contract, three product builds, representative workflow, accessibility, clean reproducibility, and scoped owner approval are current. Main integration, robot rollout, deployment, and hardware qualification remain not-attested; the legacy web-viz entry is unchanged."
     }
   ]
 }
