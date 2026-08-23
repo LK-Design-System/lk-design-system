@@ -4,16 +4,16 @@
   "contractVersion": "1",
   "package": {
     "name": "@lk-design-system/lds-robotics-ui",
-    "version": "0.1.0-rc.33"
+    "version": "0.1.0-rc.34"
   },
   "requiresSemanticContractVersion": "1",
   "externalSurface": {
     "path": "docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json",
-    "sha256": "c5663a46ddce1c2d1d1afde19f574c216f799ee30e7e1672987d4ae89c405d3c"
+    "sha256": "5c6b4cad8c20432d0473ee0699f841c03aa7c63d4ed3ee39ec6d1274d521eda3"
   },
   "vendoredArtifact": {
-    "path": "vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.33.tgz",
-    "sha256": "ad11778983dafa0a306862150d81067839901bb8ac7de0486c785cdb57b55d26"
+    "path": "vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.34.tgz",
+    "sha256": "c8a7e4d3dd739038a8184d65408e758f211c394b4035a7dc83cf51e1d4dec2d7"
   },
   "scanRoots": ["styles.css", "tokens", "dist"],
   "requiredVariables": [
