@@ -17,6 +17,11 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, '..');
 const crossRepositoryCheck = path.join(scriptDirectory, 'check-cross-repository-style-contract.mjs');
 const updateReleasePins = path.join(scriptDirectory, 'update-release-pins.mjs');
+const externalSurfacePath = 'docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json';
+const workspaceManifest = JSON.parse(await readFile(path.join(repositoryRoot, 'package.json'), 'utf8'));
+const currentLdsVersion = workspaceManifest.version;
+const currentLdsRef = `lds-v${currentLdsVersion}`;
+const historicalLdsRef = currentLdsVersion === '0.1.0' ? 'lds-v0.0.0' : 'lds-v0.1.0';
 const packagedManifest = {
   source: {
     canonicalAdoption: {
@@ -25,7 +30,7 @@ const packagedManifest = {
       snapshotManifestSha256: sha,
       source: {
         repository: 'LK-Design-System/lk-design-system',
-        ref: 'lds-v0.1.0',
+        ref: currentLdsRef,
         refStatus: 'release-candidate',
         path: 'docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json',
         sha256: sha,
@@ -105,7 +110,7 @@ async function withCrossRepositoryFixture(callback) {
 
 const installedManifestPath = 'node_modules/@lk-design-system/lds-robotics-ui/docs/package/manifest.json';
 const installedPackagePath = 'node_modules/@lk-design-system/lds-robotics-ui/package.json';
-const externalSurfacePath = 'docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json';
+const canonicalContractPath = 'docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json';
 
 async function writeInstalledManifestAndPin(fixtureRoot, manifest, mutateSurface = () => {}) {
   const manifestBytes = await writeFixtureJson(fixtureRoot, installedManifestPath, manifest);
@@ -126,26 +131,26 @@ test('published manifest observation maps exactly to the external surface shape'
 
 test('candidate accepts a different versioned snapshot only from the installed published package', () => {
   assert.equal(canonicalSnapshotMode({
-    currentRef: 'lds-v0.1.1',
-    canonicalRef: 'lds-v0.1.0',
+    currentRef: currentLdsRef,
+    canonicalRef: historicalLdsRef,
     surfacePackageRefStatus: 'published',
     installedPackageRefStatus: 'published',
   }), 'published-historical');
   assert.throws(() => canonicalSnapshotMode({
-    currentRef: 'lds-v0.1.1',
+    currentRef: currentLdsRef,
     canonicalRef: 'main',
     surfacePackageRefStatus: 'published',
     installedPackageRefStatus: 'published',
   }), /neither the current ref nor an immutable published observation/);
   assert.throws(() => canonicalSnapshotMode({
-    currentRef: 'lds-v0.1.1',
-    canonicalRef: 'lds-v0.1.0',
+    currentRef: currentLdsRef,
+    canonicalRef: historicalLdsRef,
     surfacePackageRefStatus: 'release-candidate',
     installedPackageRefStatus: 'published',
   }), /neither the current ref nor an immutable published observation/);
   assert.throws(() => canonicalSnapshotMode({
-    currentRef: 'lds-v0.1.1',
-    canonicalRef: 'lds-v0.1.0',
+    currentRef: currentLdsRef,
+    canonicalRef: historicalLdsRef,
     surfacePackageRefStatus: 'published',
     installedPackageRefStatus: 'release-candidate',
   }), /neither the current ref nor an immutable published observation/);
@@ -153,8 +158,8 @@ test('candidate accepts a different versioned snapshot only from the installed p
 
 test('same-ref snapshot remains a current candidate contract', () => {
   assert.equal(canonicalSnapshotMode({
-    currentRef: 'lds-v0.1.1',
-    canonicalRef: 'lds-v0.1.1',
+    currentRef: currentLdsRef,
+    canonicalRef: currentLdsRef,
     surfacePackageRefStatus: 'release-candidate',
     installedPackageRefStatus: 'release-candidate',
   }), 'current');
@@ -162,8 +167,8 @@ test('same-ref snapshot remains a current candidate contract', () => {
 
 test('release snapshot requires the exact current ref and Core documentation bytes', () => {
   assert.equal(assertCurrentCanonicalSnapshot({
-    currentRef: 'lds-v0.1.1',
-    canonicalRef: 'lds-v0.1.1',
+    currentRef: currentLdsRef,
+    canonicalRef: currentLdsRef,
     canonicalSnapshotManifestSha256: sha,
     currentSnapshotManifestSha256: sha,
     surfacePackageRefStatus: 'published',
@@ -171,17 +176,17 @@ test('release snapshot requires the exact current ref and Core documentation byt
   }), 'current');
 
   assert.throws(() => assertCurrentCanonicalSnapshot({
-    currentRef: 'lds-v0.1.1',
-    canonicalRef: 'lds-v0.1.0',
+    currentRef: currentLdsRef,
+    canonicalRef: historicalLdsRef,
     canonicalSnapshotManifestSha256: sha,
     currentSnapshotManifestSha256: sha,
     surfacePackageRefStatus: 'published',
     installedPackageRefStatus: 'published',
-  }), /must equal "lds-v0\.1\.1"/);
+  }), new RegExp(`must equal "${currentLdsRef}"`));
 
   assert.throws(() => assertCurrentCanonicalSnapshot({
-    currentRef: 'lds-v0.1.1',
-    canonicalRef: 'lds-v0.1.1',
+    currentRef: currentLdsRef,
+    canonicalRef: currentLdsRef,
     canonicalSnapshotManifestSha256: sha,
     currentSnapshotManifestSha256: 'b'.repeat(64),
     surfacePackageRefStatus: 'published',
@@ -189,8 +194,8 @@ test('release snapshot requires the exact current ref and Core documentation byt
   }), /must equal the current Core documentation manifest SHA-256/);
 
   assert.throws(() => assertCurrentCanonicalSnapshot({
-    currentRef: 'lds-v0.1.1',
-    canonicalRef: 'lds-v0.1.1',
+    currentRef: currentLdsRef,
+    canonicalRef: currentLdsRef,
     canonicalSnapshotManifestSha256: sha,
     currentSnapshotManifestSha256: sha,
     surfacePackageRefStatus: 'release-candidate',
@@ -209,7 +214,7 @@ test('release snapshot rejects malformed release refs and hashes', () => {
   }), /release ref "main" is invalid/);
 
   assert.throws(() => assertCurrentCanonicalSnapshot({
-    currentRef: 'lds-v0.1.1',
+    currentRef: currentLdsRef,
     canonicalRef: 'lds-v0.1.1',
     canonicalSnapshotManifestSha256: 'not-a-hash',
     currentSnapshotManifestSha256: 'not-a-hash',
@@ -233,8 +238,10 @@ test('ordinary validation rejects an unpublished historical snapshot', async () 
 
     const documentationManifest = await readFixtureJson(fixtureRoot, installedManifestPath);
     documentationManifest.source.robotics.refStatus = 'release-candidate';
+    documentationManifest.source.canonicalAdoption.source.ref = historicalLdsRef;
     await writeInstalledManifestAndPin(fixtureRoot, documentationManifest, (surface) => {
       surface.package.refStatus = 'release-candidate';
+      surface.documentation.canonicalContract.source.ref = historicalLdsRef;
     });
 
     const result = runCrossRepositoryCheck(fixtureRoot);
@@ -269,9 +276,9 @@ test('ordinary validation rejects a historical installed/external observation mi
 
 test('ordinary current-mode validation still rejects drift in current LDS bytes', async () => {
   await withCrossRepositoryFixture(async (fixtureRoot) => {
-    const rootManifest = await readFixtureJson(fixtureRoot, 'package.json');
-    rootManifest.version = '0.1.0';
-    await writeFixtureJson(fixtureRoot, 'package.json', rootManifest);
+    const canonicalContract = await readFixtureJson(fixtureRoot, canonicalContractPath);
+    canonicalContract.contractVersion = 'drifted';
+    await writeFixtureJson(fixtureRoot, canonicalContractPath, canonicalContract);
 
     const result = runCrossRepositoryCheck(fixtureRoot);
     assert.notEqual(result.status, 0);
@@ -305,9 +312,14 @@ test('release-pin first write without an installed package preserves canonical p
 test('release-only gate remains strict for a published historical observation', async () => {
   const fixtureRoot = await createReleasePinsFixture();
   try {
+    const documentationManifest = await readFixtureJson(fixtureRoot, installedManifestPath);
+    documentationManifest.source.canonicalAdoption.source.ref = historicalLdsRef;
+    await writeInstalledManifestAndPin(fixtureRoot, documentationManifest, (surface) => {
+      surface.documentation.canonicalContract.source.ref = historicalLdsRef;
+    });
     const result = runReleasePins(fixtureRoot, ['--check', '--require-current-canonical-snapshot']);
     assert.notEqual(result.status, 0);
-    assert.match(result.stderr, /must equal "lds-v0\.1\.1"/);
+    assert.match(result.stderr, new RegExp(`must equal "${currentLdsRef}"`));
   } finally {
     await rm(fixtureRoot, { recursive: true, force: true, maxRetries: 3 });
   }
@@ -316,7 +328,10 @@ test('release-only gate remains strict for a published historical observation', 
 test('release-pin ordinary current mode rejects local canonical contract hash drift', async () => {
   const fixtureRoot = await createReleasePinsFixture();
   try {
-    const result = runReleasePins(fixtureRoot, ['--check', '--lds', '0.1.0']);
+    const canonicalContract = await readFixtureJson(fixtureRoot, canonicalContractPath);
+    canonicalContract.contractVersion = 'drifted';
+    await writeFixtureJson(fixtureRoot, canonicalContractPath, canonicalContract);
+    const result = runReleasePins(fixtureRoot, ['--check', '--lds', currentLdsVersion]);
     assert.notEqual(result.status, 0);
     assert.match(result.stderr, /canonical contract hash does not match the local canonical path/);
   } finally {
@@ -327,10 +342,13 @@ test('release-pin ordinary current mode rejects local canonical contract hash dr
 test('release-only current mode rejects local canonical contract hash drift', async () => {
   const fixtureRoot = await createReleasePinsFixture();
   try {
+    const canonicalContract = await readFixtureJson(fixtureRoot, canonicalContractPath);
+    canonicalContract.contractVersion = 'drifted';
+    await writeFixtureJson(fixtureRoot, canonicalContractPath, canonicalContract);
     const result = runReleasePins(fixtureRoot, [
       '--check',
       '--lds',
-      '0.1.0',
+      currentLdsVersion,
       '--require-current-canonical-snapshot',
     ]);
     assert.notEqual(result.status, 0);

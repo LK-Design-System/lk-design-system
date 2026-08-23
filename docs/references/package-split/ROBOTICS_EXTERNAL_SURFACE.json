@@ -4,59 +4,59 @@
   "kind": "lds-robotics-external-public-surface",
   "package": {
     "name": "@lk-design-system/lds-robotics-ui",
-    "version": "0.1.0-rc.33",
+    "version": "0.1.0-rc.34",
     "repository": "LK-Design-System/lk-design-system-robotics",
     "refStatus": "published"
   },
   "vendoredArtifact": {
-    "path": "vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.33.tgz",
-    "sha256": "ad11778983dafa0a306862150d81067839901bb8ac7de0486c785cdb57b55d26"
+    "path": "vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.34.tgz",
+    "sha256": "c8a7e4d3dd739038a8184d65408e758f211c394b4035a7dc83cf51e1d4dec2d7"
   },
   "documentation": {
     "canonicalContract": {
       "kind": "lds-ui-adoption-contract",
-      "contractVersion": "1",
-      "snapshotManifestSha256": "6c5aa3e762d67bb9c76dd0c12bdf8448ce2e6862917b342f419fd1dd504a6820",
+      "contractVersion": "2",
+      "snapshotManifestSha256": "81873d07af330f8c3907aa683a25725982403bac86179d4a6a6444e75f5dc1bd",
       "source": {
         "repository": "LK-Design-System/lk-design-system",
-        "ref": "lds-v0.1.0",
+        "ref": "lds-v0.1.1",
         "refStatus": "release-candidate",
         "path": "docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json",
-        "sha256": "f4c4f71cff9f9108246a5f7cc5520d6095d599027adb75d0b61e385c5b7fef80"
+        "sha256": "f96e6194497a4a3ab4fbfcf9ace7f29ced594baba90cd59dbeb7b21b7eef6430"
       }
     },
     "files": {
       "manifest": {
         "path": "docs/package/manifest.json",
-        "sha256": "f6e7cca942af6f8ad4f8012ffe418c71297851032e3a012f21e168a720de8c86"
+        "sha256": "4333ef1c01573d2c7bb983685a13bedb965a9bbe19503aa7add6877db157faa1"
       },
       "checklist": {
         "path": "docs/package/adoption-checklist.json",
-        "sha256": "54d4804d11838bd748e7058319c7b9897763034603fffa1046b233fb72cdfe86"
+        "sha256": "fbd53534377030cef3e38b11f682b61a88255b0e916d13bcb35d97c6283b8851"
       },
       "contractSchema": {
         "path": "docs/package/LDS_UI_ADOPTION_CONTRACT.schema.json",
-        "sha256": "93a5e8f73cc18f26946e71bfbb8ed9235f4fd58dbdb9fc55547141529cae0039"
+        "sha256": "1bcd6227237e90b230ebc2a0c454d40284ed51d909a0fdf194c96be552188874"
       },
       "reportSchema": {
         "path": "docs/package/adoption-report.schema.json",
-        "sha256": "4ce25e058235e6b124d127321a4549c49da4efbdf1dcda22c79d4c83d3645a2f"
+        "sha256": "2cb8d0a05a91edf882cce5a1c59c7005b99f2d895329357c8ff6a0a8b620e434"
       },
       "reportExample": {
         "path": "docs/package/adoption-report.example.json",
-        "sha256": "9a7948b02727a527f3da188bfbf2725283720ef36a427872fbfb9cc0b0dd92d9"
+        "sha256": "ec45423dd9a43a088ff5c078828dd1f07f92099a69e71450fca6fbb2e13503dc"
       },
       "configSchema": {
         "path": "docs/package/adoption-config.schema.json",
-        "sha256": "650759624b2a96020eeb70393a1b7c74b23a40af240727a72a0fd5455ae0dca5"
+        "sha256": "30a3fada4844c1794dcd9bdb4316e6e2584d8640e1b7486c3274ff6e9eda6171"
       },
       "workflow": {
         "path": "docs/package/adoption-workflow.md",
-        "sha256": "f41ebf9b5338258f1299201d077a7fe2dd3190abd2d072077f12f2dbff6af567"
+        "sha256": "5bdf1955c63294e8c640b22abcc1c6f80ffec927cbd3a9079b434d1e2a31327a"
       },
       "llms": {
         "path": "docs/package/llms.txt",
-        "sha256": "0dedf6b70bcfd5461256899c3fbd1183d3ee4d58aadd2bae4878d1f087c4ed8a"
+        "sha256": "9241a538a8e8661300268c823303e8d87f77222c32b06403a3695d9689b20cb1"
       },
       "domainIndex": {
         "path": "docs/package/domain/README.md",
@@ -64,11 +64,11 @@
       },
       "tokenManifest": {
         "path": "docs/package/tokens/manifest.json",
-        "sha256": "9536a4e283e6eb07035a0960a7c93aac1250b23458dd919c758cacab003ede47"
+        "sha256": "6769b823822af5c2f639c21bb992c926d35f873234ae15f5441e841db5c78665"
       },
       "domainSymbolRegistry": {
         "path": "docs/package/domain-symbol-registry.json",
-        "sha256": "a494dac299d7fbca69821ef154ca859ad3fb86dc858a3db54a649c77c4016430"
+        "sha256": "3ec2bbc60502f7cbc5fb6d3d6220a09ca0b342fad27181d6ee82d79055b9b081"
       }
     },
     "domainDocuments": [

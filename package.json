@@ -168,7 +168,7 @@
     }
   },
   "devDependencies": {
-    "@lk-design-system/lds-robotics-ui": "file:vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.33.tgz",
+    "@lk-design-system/lds-robotics-ui": "file:vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.34.tgz",
     "@playwright/test": "^1.61.1",
     "@storybook/addon-a11y": "10.4.6",
     "@storybook/addon-docs": "10.4.6",

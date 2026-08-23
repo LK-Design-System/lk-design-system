@@ -48,7 +48,7 @@
       "repository": "LK-Design-System/lk-design-system-robotics",
       "package": {
         "name": "@lk-design-system/lds-robotics-ui",
-        "version": "0.1.0-rc.33"
+        "version": "0.1.0-rc.34"
       },
       "externalSurface": "docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json",
       "configFile": ".lds-conformance.json",
