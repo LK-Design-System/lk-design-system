@@ -201,6 +201,74 @@
       "deployment": { "status": "not-attested" },
       "legacyActiveReferences": 0,
       "notes": "Web Viz uses the operations profile and light/dark themes. Exact stable install, source contract, production build, representative workflow, accessibility, clean reproducibility, and product/design-system owner approval are current. The general Quality workflow backend assertion failure is an unrelated advisory; main integration and deployment remain separate and not-attested."
+    },
+    {
+      "id": "robot-ops",
+      "repository": "LK-ROBOTICS/lk_robot_ops",
+      "sourceCommit": "6b196d3834c0b53ba8687f65b7e8c7cd18e8ac14",
+      "worktree": "clean",
+      "frontendRoot": "frontend",
+      "profile": "ops",
+      "themeModes": ["light", "dark"],
+      "packages": [
+        {
+          "name": "@lk-design-system/lds-core",
+          "version": "0.1.0-rc.69.29",
+          "artifactPath": "ops/lk_robot_ops/frontend/vendor/lds/lk-design-system-lds-core-0.1.0-rc.69.29.tgz",
+          "sha256": "0c5c3a48d3e4236341fe6221dd1ba2deacc66f7a824b5426d8b1a58ce5088aea"
+        },
+        {
+          "name": "@lk-design-system/lds-theme",
+          "version": "0.1.0-rc.69.29",
+          "artifactPath": "ops/lk_robot_ops/frontend/vendor/lds/lk-design-system-lds-theme-0.1.0-rc.69.29.tgz",
+          "sha256": "06ac7d0e2771ae6c8aa21ece30df2aff91a9c83f3c356b8598884eb2db379f22"
+        },
+        {
+          "name": "@lk-design-system/lds-product",
+          "version": "0.1.0-rc.69.29",
+          "artifactPath": "ops/lk_robot_ops/frontend/vendor/lds/lk-design-system-lds-product-0.1.0-rc.69.29.tgz",
+          "sha256": "8a51e55b1a9bdff59ac35e5f878ab47a77be674b3e53b6c57425aa55f10ebb6c"
+        }
+      ],
+      "stage": "registered",
+      "checks": {
+        "install": {
+          "status": "not-run",
+          "command": "npm ci --ignore-scripts --no-audit --no-fund",
+          "note": "Stable 0.1.0 package migration has not been run for the new repository identity."
+        },
+        "sourceContract": {
+          "status": "blocked",
+          "command": "npm run lds:r2:source",
+          "note": "The inherited frontend does not yet expose the stable LDS R2 source-contract command."
+        },
+        "productionBuild": {
+          "status": "not-run",
+          "command": "npm run build",
+          "note": "Build evidence at the exact stable-package source revision is not attested."
+        },
+        "workflowSmoke": {
+          "status": "not-run",
+          "command": "npm run lds:r2:workflow",
+          "note": "Representative workflow verification is pending stable package migration."
+        },
+        "accessibility": {
+          "status": "not-run",
+          "command": "npm run lds:r2:workflow",
+          "note": "Accessibility evidence is pending stable package migration."
+        }
+      },
+      "viewports": ["1280x800", "767x900"],
+      "evidenceFreshness": "current",
+      "evidence": [
+        "ops/lk_robot_ops/.lds/adoption-report.json",
+        "ops/lk_robot_ops/docs/LDS_DESIGN_SYSTEM_ADOPTION.md",
+        "ops/lk_robot_ops/docs/plans/repo-split-s1/consumer-handoff.md"
+      ],
+      "attestation": "attestations/lk-robot-ops.json",
+      "deployment": { "status": "not-attested" },
+      "legacyActiveReferences": 0,
+      "notes": "Robot Ops is a distinct consumer identity. Registration pins the exact inherited RC package state only; stable install, source contract, build, workflow, accessibility, owner approval, rollout, and deployment are not attested. The legacy web-viz entry remains immutable."
     }
   ]
 }

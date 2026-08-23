@@ -233,7 +233,7 @@
           "uniqueItems": true,
           "items": { "$ref": "#/$defs/package" }
         },
-        "stage": { "enum": ["wired", "build-verified", "workflow-verified"] },
+        "stage": { "enum": ["registered", "wired", "build-verified", "workflow-verified"] },
         "checks": {
           "type": "object",
           "additionalProperties": false,
@@ -263,6 +263,27 @@
         "notes": { "type": "string" }
       },
       "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "properties": { "stage": { "const": "registered" } },
+            "required": ["stage"]
+          },
+          "then": {
+            "properties": {
+              "checks": {
+                "type": "object",
+                "properties": {
+                  "install": { "type": "object", "properties": { "status": { "enum": ["not-run", "blocked"] } } },
+                  "sourceContract": { "type": "object", "properties": { "status": { "enum": ["not-run", "blocked"] } } },
+                  "productionBuild": { "type": "object", "properties": { "status": { "enum": ["not-run", "blocked"] } } },
+                  "workflowSmoke": { "type": "object", "properties": { "status": { "enum": ["not-run", "blocked"] } } },
+                  "accessibility": { "type": "object", "properties": { "status": { "enum": ["not-run", "blocked"] } } }
+                }
+              }
+            }
+          }
+        },
         {
           "if": {
             "type": "object",

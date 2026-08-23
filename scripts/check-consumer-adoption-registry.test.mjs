@@ -274,6 +274,7 @@ function stableFixture() {
     rollbackArtifact: stableRollbackRelativePath,
   };
   for (const entry of fixture.registry.entries) {
+    if (entry.stage === 'registered') continue;
     for (const item of entry.packages) {
       if (ldsPackageNames.has(item.name)) {
         item.version = stableVersion;
@@ -308,6 +309,19 @@ test('current v2 registry validates its recorded release, workflow, and deployme
   assert.equal(result.packageAvailability, fixture.registry.packageRelease.availability);
   assert.equal(result.workflowVerified, expected.workflowVerified);
   assert.equal(result.deployed, expected.deployed);
+});
+
+test('registered Robot Ops identity cannot promote while it pins pre-stable packages', () => {
+  const fixture = currentFixture();
+  const entry = consumerEntry(fixture, 'robot-ops');
+  assert.equal(entry.stage, 'registered');
+  entry.stage = 'wired';
+  entry.checks.install.status = 'passed';
+  entry.checks.sourceContract.status = 'passed';
+  const attestation = attestationFor(fixture, entry);
+  passAttestationCheck(attestation, ['install'], entry.checks.install.command);
+  passAttestationCheck(attestation, ['source-contract'], entry.checks.sourceContract.command);
+  assert.throws(() => validate(fixture), /must match registry ldsVersion/);
 });
 
 test('stable package identity preserves independent workflow and deployment decisions', () => {
