@@ -1,6 +1,15 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
 
+/* `inert` only became a first-class boolean DOM prop in React 19. React 18 — a
+   supported peer (`react: ">=18 <20"`) — treats it as an unknown attribute,
+   warns "Received `true` for a non-boolean attribute `inert`", and then drops
+   it, so a collapsed panel stays reachable by Tab. React 19 in turn drops
+   `inert=""` and warns on `inert="true"`, so no single literal is correct on
+   both majors; resolve the value from the running React instead. */
+const INERT_VALUE = Number.parseInt(React.version, 10) >= 19 ? true : 'true';
+const inertWhen = (isInert) => (isInert ? INERT_VALUE : undefined);
+
 const DEFAULT_WIDTH = 300;
 const DEFAULT_MIN_WIDTH = 240;
 const DEFAULT_MAX_WIDTH = 520;
@@ -280,7 +289,7 @@ export function DockPanel({
           id={panelId}
           role="region"
           hidden={!isOpen}
-          inert={isOpen ? undefined : true}
+          inert={inertWhen(!isOpen)}
           aria-hidden={isOpen ? undefined : true}
           aria-label={title == null ? ariaLabel || '도킹 패널' : undefined}
           aria-labelledby={title == null ? undefined : titleId}

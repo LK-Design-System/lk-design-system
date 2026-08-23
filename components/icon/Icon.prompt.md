@@ -71,6 +71,28 @@ registry key(`chevron-right`, `square` 등)는 절대 접근 가능한 이름으
 - `aria-hidden`을 직접 넘기면 그 값이 우선합니다. 기본값이 이미 장식이므로 새
   코드에서 `aria-hidden="true"`를 반복해 적을 필요는 없습니다.
 
+## 등록되지 않은 name
+
+registry에 없는 `name`은 저작 실수입니다. 예전에는 아무 신호 없이 빈 `<svg>`가
+렌더링되어 오타가 프로덕션까지 그대로 나갔습니다(`name="warning"` — registry에는
+`triangle-exclamation`/`circle-exclamation`만 있습니다). 현재 동작은 다음과 같습니다.
+
+| 입력 | 동작 |
+| --- | --- |
+| registry에 있는 name | 해당 글리프 |
+| registry에 없는 비어 있지 않은 name | `blank` placeholder 글리프 + `data-icon-missing="<name>"`, 개발 빌드에서 `console.warn` 1회 |
+| `name` 없음/빈 문자열 | 빈 `<svg>`, 경고 없음 — "아이콘 없음"을 의도한 선택적 슬롯 |
+
+- 경고는 사용 가능한 근접 이름을 함께 제시합니다(편집 거리 + 부분 문자열). 예:
+  `Icon: "batery" is not in the icon registry … Did you mean "battery"?`
+- 경고는 name당 1회만 출력되고, 번들러가 `process.env.NODE_ENV`를 치환하므로
+  production 빌드에서는 분기 자체가 사라집니다.
+- placeholder는 새 아트워크가 아니라 기존 registry의 `blank`(점선 사각형)입니다.
+  "글리프가 들어갈 자리인데 비어 있다"로 읽히며, `circle-question` 같은 의미 있는
+  글리프를 대신 그려서 의도된 아이콘으로 오해되지 않게 합니다.
+- 결손 탐지는 `data-icon-missing` 속성으로 할 수 있습니다(제품 스모크 테스트에서
+  `document.querySelector('[data-icon-missing]')` 확인).
+
 ## Rules
 
 - Check `ICON_NAMES` first. Do not hand-draw an inline SVG for a common action, status, editor, navigation, or brand glyph.
@@ -80,6 +102,7 @@ registry key(`chevron-right`, `square` 등)는 절대 접근 가능한 이름으
 - WDS Content/Icon evidence shows icons as supplemental content glyphs. Keep sizing explicit (`16`, `20`, `24`, `32`, or `40`).
 - 아이콘은 기본이 장식입니다. 위 "Accessibility: 장식용 vs 정보 전달용"을 따르세요.
 - Icon-only controls must provide an accessible label through the wrapping control (`IconButton`/`Button`/`Fab`의 `label`) or an explicit `aria-label`.
+- 등록되지 않은 `name`은 개발 빌드에서 경고하고 `blank` placeholder를 그립니다. 위 "등록되지 않은 name"을 참고하세요.
 - New icons must be added to the source icon inventory and regenerated with `scripts/generate-icons.mjs`; do not edit `Icon.jsx` by hand. 접근성 기본값은 `scripts/generate-icons.mjs`의 컴포넌트 템플릿에도 함께 반영되어야 합니다.
 
 ## Evidence

@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkXIICGG72cjs = require('../../chunk-XIICGG72.cjs');
-require('../../chunk-F72KSGF7.cjs');
+var _chunkKJFV6DMFcjs = require('../../chunk-KJFV6DMF.cjs');
+require('../../chunk-7OXVB7WX.cjs');
 
 
-exports.ColorSwatch = _chunkXIICGG72cjs.ColorSwatch;
+exports.ColorSwatch = _chunkKJFV6DMFcjs.ColorSwatch;
 //# sourceMappingURL=ColorSwatch.cjs.map

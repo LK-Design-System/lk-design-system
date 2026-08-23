@@ -23,6 +23,8 @@ export interface DashboardShellProps extends Omit<React.HTMLAttributes<HTMLDivEl
   temporaryNavigationCloseLabel?: string;
   /** temporaryNavigation Drawer 너비(px). @default 320 */
   temporaryNavigationWidth?: number;
+  /** temporaryNavigation Drawer 표면. `TopBar dark` + `SideNav appearance="brand"` 조합에서 "brand"를 주면 드로어 골격까지 같은 네이비 표면으로 이어집니다. @default "default" */
+  temporaryNavigationAppearance?: 'default' | 'brand';
   /** Drawer가 열릴 때 우선 초점을 받을 내부 요소. */
   temporaryNavigationInitialFocusRef?: React.RefObject<HTMLElement | null>;
   /** Drawer가 닫힐 때 초점을 복원할 persistent trigger. */

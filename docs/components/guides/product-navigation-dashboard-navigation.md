@@ -50,6 +50,7 @@
 | `temporaryNavigationLabel` | `string` | No | Drawer dialog와 내부 navigation의 접근 가능한 이름. @default "주 탐색" |
 | `temporaryNavigationCloseLabel` | `string` | No | Drawer 닫기 버튼의 접근 가능한 이름. @default "탐색 닫기" |
 | `temporaryNavigationWidth` | `number` | No | temporaryNavigation Drawer 너비(px). @default 320 |
+| `temporaryNavigationAppearance` | `'default' \| 'brand'` | No | temporaryNavigation Drawer 표면. TopBar dark + SideNav appearance="brand" 조합에서 "brand"를 주면 드로어 골격까지 같은 네이비 표면으로 이어집니다. @default "default" |
 | `temporaryNavigationInitialFocusRef` | `React.RefObject` | No | Drawer가 열릴 때 우선 초점을 받을 내부 요소. |
 | `temporaryNavigationReturnFocusRef` | `React.RefObject` | No | Drawer가 닫힐 때 초점을 복원할 persistent trigger. |
 | `children` | `React.ReactNode` | No |  |
@@ -71,6 +72,7 @@
 
 ## Behavior and interaction
 
+- 이 축은 Drawer appearance를 그대로 전달할 뿐이며 Drawer의 anatomy, focus/Escape, portal 계약은 바뀌지 않습니다. 자식 SideNav의 appearance를 훔쳐보고 자동으로 맞추지 않습니다 — 셸의 표면 결정은 명시적 prop으로 남깁니다.
 - Carbon UI shell usage — 지속적인 header, 선택적인 left panel, product→global 순서를 분리하고 좁은 폭에서는 header link를 left navigation으로 이동합니다. LDS 셸도 header와 제품 탐색을 별도 슬롯으로 유지합니다.
 - Carbon UI shell accessibility — 첫 keyboard 항목으로 skip-to-main을 제공하고 native header 구조를 사용합니다. LDS도 보이는 focus skip link와 실제 focus 가능한 main 목적지를 제공합니다.
 - WAI-ARIA APG Modal Dialog Pattern — modal 배경은 inert이고, Tab/Shift+Tab은 dialog 안에 머물며 Escape와 호출 지점 복원을 제공해야 합니다. temporary navigation은 이 책임을 제품별 scrim 코드가 아니라 공용 Drawer 엔진에서 상속합니다.
@@ -97,6 +99,7 @@
 
 - header-first: TopBar가 실제 LK Lockup과 제품 이름을 소유하고 SideNav는 로컬 목적지만 제공합니다.
 - side-first: SideNav header가 Lockup과 제품 이름을 소유하고 TopBar는 workspace/project 맥락과 검색·알림·도움말 같은 전역 utility만 제공합니다.
+- temporaryNavigationAppearance="brand"는 temporaryNavigation Drawer의 골격(제목 행, 닫기 버튼, divider, 본문)까지 네이비 브랜드 표면으로 렌더링합니다. 기본값은 "default"로 기존 출력과 동일합니다.
 
 ## Accessibility
 

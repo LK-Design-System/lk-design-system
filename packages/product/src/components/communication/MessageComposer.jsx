@@ -2,6 +2,15 @@ import React from 'react';
 import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
 import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 
+/* `inert` only became a first-class boolean DOM prop in React 19. React 18 — a
+   supported peer (`react: ">=18 <20"`) — treats it as an unknown attribute,
+   warns "Received `true` for a non-boolean attribute `inert`", and then drops
+   it, so the disabled composer shell stays reachable by Tab. React 19 in turn
+   drops `inert=""` and warns on `inert="true"`, so no single literal is
+   correct on both majors; resolve the value from the running React instead. */
+const INERT_VALUE = Number.parseInt(React.version, 10) >= 19 ? true : 'true';
+const inertWhen = (isInert) => (isInert ? INERT_VALUE : undefined);
+
 const VISUALLY_HIDDEN_STYLE = {
   position: 'absolute',
   width: 1,
@@ -319,7 +328,7 @@ export function MessageComposer({
         data-composer-shell=""
         data-focused={focused ? 'true' : undefined}
         aria-disabled={disabled || undefined}
-        inert={disabled || undefined}
+        inert={inertWhen(disabled)}
         onClickCapture={disabled
           ? (event) => {
               event.preventDefault();

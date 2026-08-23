@@ -173,7 +173,12 @@ export const Select = React.forwardRef(function Select({
   const selectedIndex = norm.findIndex((x) => x.value === sel);
   const resolvedSize = useResolvedControlSize(size);
   const normalizedSize = resolvedSize === 'small' ? 'sm' : resolvedSize === 'medium' ? 'md' : resolvedSize === 'large' ? 'lg' : resolvedSize;
-  const h = normalizedSize === 'sm' ? 'var(--control-h-sm)' : normalizedSize === 'lg' ? 'var(--control-h-lg)' : 'var(--control-h-md)';
+  // Select is part of the field family (`Input.prompt.md`), so the default
+  // density resolves through `--component-input-height` like every other
+  // field. Anchoring straight to `--control-h-md` made the trigger ignore the
+  // Theme profile: under `ops` a SearchField dropped to 40px while the Select
+  // beside it stayed 48px.
+  const h = normalizedSize === 'sm' ? 'var(--control-h-sm)' : normalizedSize === 'lg' ? 'var(--control-h-lg)' : 'var(--component-input-height)';
   const optionMetrics = selectOptionMetrics(normalizedSize);
   const isInvalid = invalid || negative || status === 'negative' || error != null;
   const visualOpen = !locked && (open || interaction === 'open');

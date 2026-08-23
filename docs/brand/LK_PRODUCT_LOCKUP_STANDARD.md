@@ -30,6 +30,7 @@
 | `portal` | `Portal` | `PORTAL` | 지원; 고정 `Lockup`과 registry가 같은 SemiBold 600 정본 사용 |
 | — (`Web Viz` 후보) | 미확정 | 미확정 | 승인 이름·outline이 없어 지원하지 않음 |
 | — (`Control` 후보) | 미확정 | 미확정 | 승인 이름·outline이 없어 지원하지 않음 |
+| — (궁릉순찰로봇 관제 후보) | 미확정 | 미확정 | 승인 로마자 이름이 없어 지원하지 않음. 제품명이 한글이므로 9.1의 ASCII 제약에 따라 승인된 로마자 표기 확정이 선행 조건 |
 
 public API는 `product: "console" | "portal"`의 닫힌 union만 허용합니다. `Web Viz`, `Control`, 고객명이나 임의 문자열을 전달하는 fallback은 없습니다. 보이는 대문자와 접근성 이름은 registry가 함께 소유하므로 호출부가 각각 다시 만들지 않습니다.
 
@@ -127,6 +128,7 @@ LDS는 registry key, canonical name, mark+wordmark geometry, outline path, appea
 | LK Portal | `ProductLockup product="portal"`과 `Lockup variant="portal"`이 같은 SemiBold 600 정본을 사용; 제품은 이 정본을 포함한 LDS release로 upgrade |
 | LK Web Viz | registry 이름과 outline 승인 전까지 `ProductLockup` 미지원; raw text fallback 금지 |
 | LK Control Full Daedeok | registry 이름과 outline 승인 전까지 `ProductLockup` 미지원; raw text fallback 금지 |
+| 궁릉순찰로봇 관제 (`lkrobotics-control-gungneung-lds`) | registry 등록 요청 접수됨. 승인 로마자 이름 확정 전까지 `ProductLockup` 미지원이며 9.2의 등록 전 임시 사용 규칙을 따릅니다 |
 
 새 제품을 registry에 추가할 때는 다음을 한 변경으로 검토합니다.
 
@@ -137,6 +139,41 @@ LDS는 registry key, canonical name, mark+wordmark geometry, outline path, appea
 5. 접근성 이름, Storybook, visual regression, 제품 적용 audit와 문서를 함께 갱신합니다.
 
 Web Viz와 Control은 1단계가 완료되지 않았으므로 이름이나 대문자 표기를 추정해 먼저 구현하지 않습니다. 기계 판정 source pin은 [`PRODUCT_BRAND_ASSET_AUDIT.json`](../references/brand/PRODUCT_BRAND_ASSET_AUDIT.json)이 소유합니다.
+
+### 9.1 제품 팀이 제출하는 것 (intake)
+
+registry 등록은 LDS 코드 변경이 아니라 **브랜드 승인**에서 시작합니다. 제품 팀은 다음을 제출합니다.
+
+| 항목 | 내용 | 승인자 |
+| --- | --- | --- |
+| canonical name | 접근성 이름 `LK {canonical name}`에 쓰이는 표기(예: `Console`) | product naming owner |
+| 보이는 wordmark | 대문자 문자열(예: `CONSOLE`) | product naming owner · brand owner |
+| registry key | `^[a-z][a-z0-9-]*$` 소문자 kebab key | design system owner |
+| 사용 위치 | TopBar / SideNav 중 셸 브랜드 슬롯과 full·compact 사용 폭 | 제품 owner |
+| 상표 근거 | 외부 상표·고객사 이름을 포함한다면 사용 승인 근거 | brand owner |
+
+승인 후의 outline 생성·검증·문서화는 위 9장 2~5단계에 따라 LDS가 수행합니다.
+
+**표기 제약.** 보이는 wordmark는 [`generate-product-lockups.mjs`](../../scripts/generate-product-lockups.mjs)가
+`^[A-Z]+(?: [A-Z]+)*$`로 검증하고 pinned Montserrat SemiBold 600에서 글자별 outline을 뽑습니다. 즉
+**ASCII 대문자 A–Z와 공백만** 등록할 수 있습니다. 한글·숫자·기호 제품명은 그대로 등록할 수 없으며,
+등록하려면 승인된 로마자 표기를 먼저 확정해야 합니다. 이 제약을 우회하려고 다른 글꼴을 섞거나
+글자를 직접 작도하지 않습니다.
+
+### 9.2 등록 전 임시 사용 규칙
+
+미등록 제품은 승인 자산과 제품명을 **하나의 로크업으로 읽히게 조합하지 않습니다**. 8장 첫 번째
+금지 사례(LK mark 옆에 live text를 붙여 새 제품 로크업 만들기)는 UI 글꼴을 쓰더라도 동일하게
+적용됩니다 — 글꼴 정책 위반이 아니라 *승인되지 않은 로크업을 만든 것*이 문제입니다.
+
+등록 전에는 다음 중 하나를 사용합니다.
+
+- 브랜드 슬롯에는 회사 `Lockup`(또는 `Lockup variant="mark"`)만 두고, 제품 이름은 로크업 밖의
+  일반 셸 텍스트(페이지 제목·workspace 라벨 등)로 분리해 배치합니다. 두 요소가 하나의 자산으로
+  보이지 않도록 로크업 내부 간격 리듬(1X 높이, 0.35 gap)을 흉내 내지 않습니다.
+- 또는 브랜드 슬롯을 비우고 제품 이름만 셸 텍스트로 둡니다.
+
+등록이 끝나면 이 임시 조합을 걷어내고 `ProductLockup product="{key}"` 하나로 교체합니다.
 
 ## 10. 근거와 의도적 적용
 

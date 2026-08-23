@@ -50,7 +50,7 @@
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | size="sm" \| "md" \| "lg"는 각각 field control 높이 32px·48px·52px를 사용합니다. field에는 같은 size를 전달하고, action은 Button의 해당 typography/padding/radius를 유지하면서 조합 높이만 field 높이에 맞춥니다. |
+| 명시 규칙 1 | size="sm" \| "md" \| "lg"는 각각 field control 높이 32px·--component-input-height(default 48px, ops 40px)·52px를 사용합니다. 공유 행 높이는 field 척도이므로 Theme profile이 field를 조밀하게 만들면 action도 함께 따라갑니다. field에는 같은 size를 전달하고, action은 Button의 해당 typography/padding/radius를 유지하면서 조합 높이만 field 높이에 맞춥니다. |
 | 명시 규칙 2 | 360px 이하에서는 field 다음 줄에 action을 배치하고 action을 전체 너비로 확장합니다. 정보와 기능을 잃지 않고 320 CSS px에서 한 방향으로 reflow해야 한다는 WCAG 기준을 따릅니다. |
 | 명시 규칙 3 | InputGroup과 달리 두 control 사이에 --space-2 간격이 있고 외곽선은 연결하지 않습니다. 별도 제출 action이라는 기능적 차이를 표현하기 위한 것입니다. |
 | 명시 규칙 4 | 기본 Button size="md"의 40px 높이를 48px field row에 맞추되, Button size="lg"로 승격하지 않으므로 md 글꼴·padding·radius 의미는 유지합니다. |
@@ -105,8 +105,8 @@
 
 ### Tokens
 
+- `--component-input-height`
 - `--control-h-lg`
-- `--control-h-md`
 - `--control-h-sm`
 - `--lds-field-action-gap`
 - `--space-2`

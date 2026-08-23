@@ -2,9 +2,13 @@ import React from 'react';
 import { FormField } from './FormField.jsx';
 import { componentVars, partClassName, partStyle } from '../internal/surface.js';
 
+// The shared row height is a *field* height: the action is stretched onto the
+// field's scale, never the other way round. `md` therefore resolves through
+// `--component-input-height` like every field control, so a Theme profile that
+// compacts fields (`ops`: 40px) moves the row and the action with it.
 const CONTROL_HEIGHTS = {
   sm: 'var(--control-h-sm)',
-  md: 'var(--control-h-md)',
+  md: 'var(--component-input-height)',
   lg: 'var(--control-h-lg)',
 };
 

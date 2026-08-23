@@ -43,6 +43,14 @@ const firstFilterRef = useRef(null);
 - `DrawerSection.headingLevel`은 실제 문서 계층에 맞춰 2~6을 선택하고 기본값은 3입니다. 짧은 보조 명령은 `actions`에 두며, `headerStyle`과 `contentStyle`은 고유한 레이아웃 조합에만 사용합니다. 이 style escape hatch로 제목 크기·밀도·divider 간격을 다시 정의하지 않습니다.
 - 조밀화는 정보 위계나 상호작용 의미를 바꾸지 않습니다. Checkbox와 Radio의 실제 target은 시각 glyph보다 넓은 최소 24×24px이며, ChoiceCard와 FileUpload의 전체 label target도 유지됩니다.
 
+## Surface contract (`appearance`)
+
+- 기본값 `appearance="default"`는 elevated 표면 위의 기존 Drawer 출력 그대로입니다.
+- `appearance="brand"`는 **패널 chrome 전체**를 네이비 브랜드 표면으로 렌더링합니다: 패널 배경 `--color-semantic-brand-surface`, header/footer divider `--color-semantic-brand-on-surface-border`, 제목 `--color-semantic-brand-on-surface`, subtitle·body `--color-semantic-brand-on-surface-muted`, 닫기 버튼 `IconButton variant="on-dark"`.
+- 근거는 모바일 셸의 표면 연속성입니다. `TopBar dark`(네이비 masthead) + `SideNav appearance="brand"`(네이비 내비 패널)을 조합하면 그 사이의 Drawer 골격만 밝은 elevated 표면으로 남아 "네이비 → 흰색 → 네이비"로 표면이 두 번 끊깁니다. 제목 행과 닫기 버튼은 host가 도달할 수 없는 Drawer 내부이므로 소비 측 CSS 재매핑으로 고칠 수 없습니다.
+- 표면 소유권은 컴포넌트에 둡니다. [Material Design 3 navigation drawer](https://m3.material.io/components/navigation-drawer)의 modal drawer sheet도 container/content 색을 host가 덧칠하는 것이 아니라 컴포넌트 파라미터(`drawerContainerColor`·`drawerContentColor`)로 노출합니다.
+- `appearance`는 표면만 바꿉니다. anatomy, density, focus/Escape/스크롤 계약, portal·stack 동작은 동일합니다. `DashboardShell`은 `temporaryNavigationAppearance`로 이 축을 그대로 전달합니다.
+
 ## 공통 Portal·stack 계약
 
 - 기본 `withinPortal=true`이며 `LdsProvider.portalTarget` 또는 명시적 `portalTarget`에 렌더링됩니다. 가까운 theme scope와 `dir`을 상속하고 clipping ancestor를 벗어납니다.

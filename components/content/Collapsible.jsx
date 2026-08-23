@@ -1,6 +1,15 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
 
+/* `inert` only became a first-class boolean DOM prop in React 19. React 18 — a
+   supported peer (`react: ">=18 <20"`) — treats it as an unknown attribute,
+   warns "Received `true` for a non-boolean attribute `inert`", and then drops
+   it, so the collapsed body stays reachable by Tab. React 19 in turn drops
+   `inert=""` and warns on `inert="true"`, so no single literal is correct on
+   both majors; resolve the value from the running React instead. */
+const INERT_VALUE = Number.parseInt(React.version, 10) >= 19 ? true : 'true';
+const inertWhen = (isInert) => (isInert ? INERT_VALUE : undefined);
+
 /**
  * LK ROBOTICS — Collapsible
  * A single disclosure: a bold header toggles a body that reveals with a calm
@@ -21,7 +30,7 @@ export function Collapsible({ title, children, defaultOpen = false, density = 'd
       </button>
       {/* Same disclosure contract as Accordion — the panel is a labelled region
           so the two components stay internally consistent (optional in APG). */}
-      <div id={panelId} role="region" aria-labelledby={triggerId} inert={open ? undefined : true} style={{ width: align === 'stretch' ? '100%' : 'fit-content', maxWidth: '100%', marginLeft: align === 'end' ? 'auto' : 0, display: 'grid', gridTemplateRows: open ? '1fr' : '0fr', transition: 'grid-template-rows var(--dur-base) var(--ease-out)' }}>
+      <div id={panelId} role="region" aria-labelledby={triggerId} inert={inertWhen(!open)} style={{ width: align === 'stretch' ? '100%' : 'fit-content', maxWidth: '100%', marginLeft: align === 'end' ? 'auto' : 0, display: 'grid', gridTemplateRows: open ? '1fr' : '0fr', transition: 'grid-template-rows var(--dur-base) var(--ease-out)' }}>
         <div style={{ overflow: 'hidden' }}>
           <div style={{ padding: compact ? 'var(--space-1) 0 0' : '0 4px 14px', fontFamily: 'var(--font-sans)', fontSize: compact ? 'var(--caption1-size)' : 'var(--label1-size)', lineHeight: compact ? 'var(--caption1-line)' : 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>
         </div>

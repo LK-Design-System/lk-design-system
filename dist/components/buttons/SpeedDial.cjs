@@ -1,11 +1,11 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkWTUTMAE5cjs = require('../../chunk-WTUTMAE5.cjs');
+var _chunkMBUOPPATcjs = require('../../chunk-MBUOPPAT.cjs');
 require('../../chunk-ZRHSDRSM.cjs');
 require('../../chunk-XGKLO45T.cjs');
-require('../../chunk-F72KSGF7.cjs');
+require('../../chunk-7OXVB7WX.cjs');
 
 
-exports.SpeedDial = _chunkWTUTMAE5cjs.SpeedDial;
+exports.SpeedDial = _chunkMBUOPPATcjs.SpeedDial;
 //# sourceMappingURL=SpeedDial.cjs.map

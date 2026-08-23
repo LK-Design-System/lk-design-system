@@ -71,6 +71,7 @@
 - 범위: 검색/자유 입력/비동기 옵션/다중 선택은 이 컴포넌트에 넣지 않습니다. 검색은 AutoComplete 또는 SearchableMultiSelect, 다중 선택은 Combobox 계열이 담당합니다.
 - readOnly는 현재 값과 포커스를 유지하지만 팝업을 열거나 값을 바꾸지 않으며, 대체 배경과 aria-readonly로 비활성과 구분합니다.
 - 형제 비교: AutoComplete와 Combobox가 이미 비활성 옵션을 aria-disabled로 노출하고 탐색·선택에서 제외합니다. Select도 같은 규칙을 사용하되, 검색과 다중 선택은 가져오지 않습니다.
+- size를 생략하면 일반 표면에서는 기존 md, bounded compact component scope에서는 sm을 사용합니다. 명시한 size가 우선하며 compact Select는 32px trigger와 기존 40px option target을 조합합니다.
 
 ## 정량 규칙
 
@@ -148,6 +149,7 @@
 - `--component-input-border-width`
 - `--component-input-focus-shadow`
 - `--component-input-gap`
+- `--component-input-height`
 - `--component-input-padding-x`
 - `--component-input-radius`
 - `--component-input-stack-gap`

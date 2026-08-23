@@ -28,6 +28,7 @@
   "avoidWhen": [
     "테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.",
     "scrim 클릭 닫기는 closeOnScrim으로 제어하지만, 유일한 dismiss 수단으로 사용하지 않습니다.",
+    "WCAG 2.2 Target Size (Minimum): compact scope에서도 Checkbox/Radio의 실제 target을 최소 24×24px로 유지하고 footer action을 축소하지 않는 근거입니다.",
     "Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다."
   ],
   "anatomy": [
@@ -80,6 +81,13 @@
       "type": "number",
       "required": false,
       "description": "패널 너비(px). @default 380",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "appearance",
+      "type": "'default' | 'brand'",
+      "required": false,
+      "description": "패널 표면. \"brand\"는 chrome(제목 행·닫기 버튼·구분선·본문)까지 네이비 브랜드 표면으로 렌더링합니다. 어두운 masthead와 brand SideNav를 함께 쓰는 모바일 셸에서 표면이 끊기지 않게 합니다. @default \"default\"",
       "owner": "DrawerProps"
     },
     {
@@ -221,13 +229,6 @@
       "required": false,
       "description": "문서 구조에 맞는 제목 레벨. @default 3",
       "owner": "DrawerSectionProps"
-    },
-    {
-      "name": "actions",
-      "type": "React.ReactNode",
-      "required": false,
-      "description": "제목 행 우측의 보조 액션.",
-      "owner": "DrawerSectionProps"
     }
   ],
   "states": [
@@ -239,9 +240,9 @@
   "behavior": [
     "density=\"comfortable\"이 기본값이며 default profile의 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다. ops에서는 같은 density API가 profile-aware chrome token을 읽습니다.",
     "자식의 명시적 size, padding, density가 항상 상속값보다 우선합니다. Drawer 밖과 comfortable Drawer의 기존 기본 출력은 유지됩니다.",
+    "최상위 Drawer만 Tab/Shift+Tab 순환, 외부 focus containment, Escape dismiss를 소유합니다.",
     "닫히면 trigger로 복원하며 returnFocusRef로 논리적 다음 지점을 지정할 수 있습니다. restoreFocus 기본값은 true입니다.",
-    "overlay Drawer를 여러 개 겹치지 않습니다. Drawer 위에 확인 Modal이 불가피할 때는 Modal만 활성화되고, 닫힌 뒤 Drawer 내부 trigger로 돌아갑니다.",
-    "필터 query 직렬화, 변경 유실 경고 조건, route 상태와 반응형으로 inline surface로 전환하는 정책은 제품 레이어가 소유합니다."
+    "overlay Drawer를 여러 개 겹치지 않습니다. Drawer 위에 확인 Modal이 불가피할 때는 Modal만 활성화되고, 닫힌 뒤 Drawer 내부 trigger로 돌아갑니다."
   ],
   "quantitativeRules": [
     {
@@ -268,20 +269,21 @@
   "responsive": [
     "density=\"compact\"은 데스크톱의 짧고 반복적인 필터·설정 폼에서 Drawer가 소유하는 header/body/footer chrome과 body typography만 조밀하게 만듭니다. 제목 단계, 닫기 target, footer action 크기는 바꾸지 않습니다.",
     "body의 bounded component-density scope는 Input, Select, Textarea, Checkbox/CheckboxGroup, Radio/RadioGroup, ChoiceCard, Callout, FileUpload처럼 밀도 상속 계약을 가진 자식에 compact를 전달합니다. 중첩 깊이나 DrawerField 같은 직접 자식 복제에 의존하지 않습니다.",
-    "DrawerSection은 본문 하위 제목, 설명, 선택적 divider와 간격을 소유합니다. 제품은 type-headline1, pt-6, 직접 구분선으로 같은 해부학을 다시 만들지 않습니다. compact에서는 divider 상단 16px, 제목·설명 다음 8px을 사용하고 comfortable에서는 기존 읽기 여유를 유지합니다."
+    "DrawerSection은 본문 하위 제목, 설명, 선택적 divider와 간격을 소유합니다. 제품은 type-headline1, pt-6, 직접 구분선으로 같은 해부학을 다시 만들지 않습니다. compact에서는 divider 상단 16px, 제목·설명 다음 8px을 사용하고 comfortable에서는 기존 읽기 여유를 유지합니다.",
+    "근거는 모바일 셸의 표면 연속성입니다. TopBar dark(네이비 masthead) + SideNav appearance=\"brand\"(네이비 내비 패널)을 조합하면 그 사이의 Drawer 골격만 밝은 elevated 표면으로 남아 \"네이비 → 흰색 → 네이비\"로 표면이 두 번 끊깁니다. 제목 행과 닫기 버튼은 host가 도달할 수 없는 Drawer 내부이므로 소비 측 CSS 재매핑으로 고칠 수 없습니다."
   ],
   "contentGuidance": [
     "제품 맥락에 맞는 닫기 명령은 closeLabel로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.",
     "조밀화는 정보 위계나 상호작용 의미를 바꾸지 않습니다. Checkbox와 Radio의 실제 target은 시각 glyph보다 넓은 최소 24×24px이며, ChoiceCard와 FileUpload의 전체 label target도 유지됩니다.",
-    "WAI-ARIA APG Modal Dialog Pattern: modal Drawer에도 내부 focus trap, Escape, 복원, 이름 있는 dialog 계약을 적용했습니다. 밀도는 이 interaction/semantic 계약을 변경하지 않습니다.",
-    "Subtitle contract."
+    "appearance=\"brand\"는 패널 chrome 전체를 네이비 브랜드 표면으로 렌더링합니다: 패널 배경 --color-semantic-brand-surface, header/footer divider --color-semantic-brand-on-surface-border, 제목 --color-semantic-brand-on-surface, subtitle·body --color-semantic-brand-on-surface-muted, 닫기 버튼 IconButton variant=\"on-dark\".",
+    "WAI-ARIA APG Modal Dialog Pattern: modal Drawer에도 내부 focus trap, Escape, 복원, 이름 있는 dialog 계약을 적용했습니다. 밀도는 이 interaction/semantic 계약을 변경하지 않습니다."
   ],
   "accessibility": [
     "Modal, Sheet, ConfirmDialog를 sibling으로 확인했습니다. focus/keyboard 계약은 ConfirmDialog와 공유하되 표면은 기존 Drawer 그대로입니다.",
     "제목이 있으면 aria-labelledby, 없으면 ariaLabel을 사용합니다.",
     "DrawerSection.headingLevel은 실제 문서 계층에 맞춰 26을 선택하고 기본값은 3입니다. 짧은 보조 명령은 actions에 두며, headerStyle과 contentStyle은 고유한 레이아웃 조합에만 사용합니다. 이 style escape hatch로 제목 크기·밀도·divider 간격을 다시 정의하지 않습니다.",
-    "zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다.",
-    "initialFocusRef → 첫 tabbable 요소 → dialog 표면 순으로 초기 초점을 선택합니다."
+    "appearance는 표면만 바꿉니다. anatomy, density, focus/Escape/스크롤 계약, portal·stack 동작은 동일합니다. DashboardShell은 temporaryNavigationAppearance로 이 축을 그대로 전달합니다.",
+    "zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다."
   ],
   "exceptions": [],
   "related": [
@@ -330,6 +332,10 @@
     "--caption1-line",
     "--caption1-size",
     "--color-semantic-background-elevated-normal",
+    "--color-semantic-brand-on-surface",
+    "--color-semantic-brand-on-surface-border",
+    "--color-semantic-brand-on-surface-muted",
+    "--color-semantic-brand-surface",
     "--color-semantic-label-alternative",
     "--color-semantic-label-neutral",
     "--color-semantic-label-normal",

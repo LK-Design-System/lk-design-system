@@ -57,7 +57,7 @@ LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 �
 ## Content and writing
 
 - TopBar·SideNav에서 LK + 제품명을 LK 모브랜드 우선 로고 문법으로 표시하는 제품 셸 lockup입니다. 기존 LK Portal의 대문자·1X·간격 리듬을 계승하되 제품명은 SemiBold 600으로 낮춰 LK가 먼저 읽힙니다. 자유 텍스트를 옆에 붙이는 컴포넌트가 아니라, 브랜드 승인을 거쳐 registry에 등록된 제품 워드마크만 outline SVG로 렌더합니다.
-- 새 제품은 assets/brand/lk-product-lockups.json에 승인 key·canonical label·대문자 wordmark·golden glyph metric을 등록하고 node scripts/generate-product-lockups.mjs로 path를 생성합니다. 생성기는 pinned font와 license hash, glyph IDs, kerning origins, ink bounds를 검증합니다.
+- 등록 절차의 정본은 docs/brand/LKPRODUCTLOCKUPSTANDARD.md 9장입니다. 제품 팀이 제출할 항목과 승인자는 9.1, 등록 전 임시 사용 규칙은 9.2에 있습니다. 보이는 wordmark는 pinned Montserrat SemiBold에서 outline을 뽑으므로 ASCII 대문자 A–Z와 공백만 등록할 수 있습니다 — 한글 제품명은 승인된 로마자 표기를 먼저 확정해야 합니다.
 - 제품별 화면에서 문자열, 폰트, 간격을 직접 바꾸거나 미등록 key를 우회하지 않습니다. 표시용 한국어 설명, 환경·버전·workspace·상태·tagline은 lockup 밖의 UI text로 둡니다.
 
 ## Accessibility

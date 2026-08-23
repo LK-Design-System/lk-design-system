@@ -120,7 +120,7 @@
   "quantitativeRules": [
     {
       "subject": "명시 규칙 1",
-      "rule": "size=\"sm\" | \"md\" | \"lg\"는 각각 field control 높이 32px·48px·52px를 사용합니다. field에는 같은 size를 전달하고, action은 Button의 해당 typography/padding/radius를 유지하면서 조합 높이만 field 높이에 맞춥니다."
+      "rule": "size=\"sm\" | \"md\" | \"lg\"는 각각 field control 높이 32px·--component-input-height(default 48px, ops 40px)·52px를 사용합니다. 공유 행 높이는 field 척도이므로 Theme profile이 field를 조밀하게 만들면 action도 함께 따라갑니다. field에는 같은 size를 전달하고, action은 Button의 해당 typography/padding/radius를 유지하면서 조합 높이만 field 높이에 맞춥니다."
     },
     {
       "subject": "명시 규칙 2",
@@ -197,8 +197,8 @@
     }
   ],
   "tokens": [
+    "--component-input-height",
     "--control-h-lg",
-    "--control-h-md",
     "--control-h-sm",
     "--lds-field-action-gap",
     "--space-2"

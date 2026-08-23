@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkUBL5Z5DMcjs = require('../../chunk-UBL5Z5DM.cjs');
-require('../../chunk-F72KSGF7.cjs');
+var _chunkC2RCKN2Bcjs = require('../../chunk-C2RCKN2B.cjs');
+require('../../chunk-7OXVB7WX.cjs');
 
 
-exports.TagInput = _chunkUBL5Z5DMcjs.TagInput;
+exports.TagInput = _chunkC2RCKN2Bcjs.TagInput;
 //# sourceMappingURL=TagInput.cjs.map

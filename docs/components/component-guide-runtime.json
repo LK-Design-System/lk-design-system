@@ -13009,7 +13009,8 @@
       "behavior": [
         "범위: 검색/자유 입력/비동기 옵션/다중 선택은 이 컴포넌트에 넣지 않습니다. 검색은 AutoComplete 또는 SearchableMultiSelect, 다중 선택은 Combobox 계열이 담당합니다.",
         "readOnly는 현재 값과 포커스를 유지하지만 팝업을 열거나 값을 바꾸지 않으며, 대체 배경과 aria-readonly로 비활성과 구분합니다.",
-        "형제 비교: AutoComplete와 Combobox가 이미 비활성 옵션을 aria-disabled로 노출하고 탐색·선택에서 제외합니다. Select도 같은 규칙을 사용하되, 검색과 다중 선택은 가져오지 않습니다."
+        "형제 비교: AutoComplete와 Combobox가 이미 비활성 옵션을 aria-disabled로 노출하고 탐색·선택에서 제외합니다. Select도 같은 규칙을 사용하되, 검색과 다중 선택은 가져오지 않습니다.",
+        "size를 생략하면 일반 표면에서는 기존 md, bounded compact component scope에서는 sm을 사용합니다. 명시한 size가 우선하며 compact Select는 32px trigger와 기존 40px option target을 조합합니다."
       ],
       "quantitativeRules": [
         {
@@ -13099,6 +13100,7 @@
         "--component-input-border-width",
         "--component-input-focus-shadow",
         "--component-input-gap",
+        "--component-input-height",
         "--component-input-padding-x",
         "--component-input-radius",
         "--component-input-stack-gap",
@@ -26544,7 +26546,7 @@
           "name": "count",
           "type": "number",
           "required": false,
-          "description": "전체 결과 수.",
+          "description": "전체 결과 수. ko-KR 천 단위 구분으로 렌더링됩니다(3941 → 3,941개).",
           "owner": "DataToolbarProps"
         },
         {
@@ -26647,23 +26649,23 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "size=\"sm\"은 검색과 render-prop filter control에 32px compact 밀도를, 기본 md는 48px field 밀도를 제공합니다. action용 Button 척도와 field 척도는 전역에서 합치지 않습니다. FilterChip은 고유 32px pill 높이를 유지하며 control 행 중앙에 정렬됩니다."
+          "rule": "count는 ko-KR 천 단위 구분으로 렌더링됩니다(count={3941} → 3,941개). 결과 수 copy가 한국어로 고정된 표면이므로 grouping locale도 host 환경을 따르지 않고 함께 고정합니다. 숫자가 아닌 값은 그대로 통과시킵니다."
         },
         {
           "subject": "명시 규칙 2",
+          "rule": "size=\"sm\"은 검색과 render-prop filter control에 --control-h-sm(32px) compact 밀도를, 기본 md는 --component-input-height field 밀도(default 48px, ops 40px)를 제공합니다. SearchField·Select·Input 계열은 모두 이 토큰을 통해 해석되므로 profile을 바꿔도 한 행에서 서로 어긋나지 않습니다."
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "{ size } context는 field 밀도입니다. action용 Button 척도(--component-button-height-)와 field 척도는 전역에서 합치지 않으므로, 같은 size를 Button에 그대로 넘겨도 높이는 일치하지 않습니다(의도된 분리). 필터 행의 Button은 control 행 중앙 정렬로 두고, 필드 높이에 실제로 맞물려야 하는 field+action 조합은 FieldAction이 소유합니다. FilterChip은 고유 32px pill 높이를 유지하며 control 행 중앙에 정렬됩니다."
+        },
+        {
+          "subject": "명시 규칙 4",
           "rule": "Flex sizing 근거는 CSS Flexible Box Layout Module Level 1의 content-based flex basis와 automatic minimum size, MDN의 flex item wrapping 안내의 “전체 item 폭이 컨테이너보다 클 때 wrap” 원칙입니다. LDS는 이 원칙을 width: max-content, max-width: 100%, min-width: 0 조합으로 적용해 intrinsic 폭 보존과 협소 폭 축소를 분리합니다."
         },
         {
           "subject": "--body1-line",
           "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
-        },
-        {
-          "subject": "--body1-size",
-          "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
-        },
-        {
-          "subject": "--body2-line",
-          "rule": "22px"
         }
       ],
       "responsive": [
@@ -34142,6 +34144,13 @@
           "owner": "DashboardShellProps"
         },
         {
+          "name": "temporaryNavigationAppearance",
+          "type": "'default' | 'brand'",
+          "required": false,
+          "description": "temporaryNavigation Drawer 표면. TopBar dark + SideNav appearance=\"brand\" 조합에서 \"brand\"를 주면 드로어 골격까지 같은 네이비 표면으로 이어집니다. @default \"default\"",
+          "owner": "DashboardShellProps"
+        },
+        {
           "name": "temporaryNavigationInitialFocusRef",
           "type": "React.RefObject",
           "required": false,
@@ -34233,6 +34242,7 @@
         }
       ],
       "behavior": [
+        "이 축은 Drawer appearance를 그대로 전달할 뿐이며 Drawer의 anatomy, focus/Escape, portal 계약은 바뀌지 않습니다. 자식 SideNav의 appearance를 훔쳐보고 자동으로 맞추지 않습니다 — 셸의 표면 결정은 명시적 prop으로 남깁니다.",
         "Carbon UI shell usage — 지속적인 header, 선택적인 left panel, product→global 순서를 분리하고 좁은 폭에서는 header link를 left navigation으로 이동합니다. LDS 셸도 header와 제품 탐색을 별도 슬롯으로 유지합니다.",
         "Carbon UI shell accessibility — 첫 keyboard 항목으로 skip-to-main을 제공하고 native header 구조를 사용합니다. LDS도 보이는 focus skip link와 실제 focus 가능한 main 목적지를 제공합니다.",
         "WAI-ARIA APG Modal Dialog Pattern — modal 배경은 inert이고, Tab/Shift+Tab은 dialog 안에 머물며 Escape와 호출 지점 복원을 제공해야 합니다. temporary navigation은 이 책임을 제품별 scrim 코드가 아니라 공용 Drawer 엔진에서 상속합니다.",
@@ -34268,7 +34278,8 @@
       ],
       "contentGuidance": [
         "header-first: TopBar가 실제 LK Lockup과 제품 이름을 소유하고 SideNav는 로컬 목적지만 제공합니다.",
-        "side-first: SideNav header가 Lockup과 제품 이름을 소유하고 TopBar는 workspace/project 맥락과 검색·알림·도움말 같은 전역 utility만 제공합니다."
+        "side-first: SideNav header가 Lockup과 제품 이름을 소유하고 TopBar는 workspace/project 맥락과 검색·알림·도움말 같은 전역 utility만 제공합니다.",
+        "temporaryNavigationAppearance=\"brand\"는 temporaryNavigation Drawer의 골격(제목 행, 닫기 버튼, divider, 본문)까지 네이비 브랜드 표면으로 렌더링합니다. 기본값은 \"default\"로 기존 출력과 동일합니다."
       ],
       "accessibility": [
         "의미·키보드 순서는 본문 건너뛰기 → header/banner → 넓은 주 탐색 → main → 좁은 주 탐색입니다. CSS로 숨겨진 탐색 슬롯은 접근성 트리에서도 제외됩니다.",
@@ -36152,7 +36163,9 @@
         "SideNav"
       ],
       "purpose": "사이드바 푸터에서 현재 사용자·상태·프로필·로그아웃을 묶을 때 적합합니다. 상단 전역 명령이나 제품 탐색에는 User Menu 대신 Top Bar나 Side Nav를 사용하세요.",
-      "useWhen": [],
+      "useWhen": [
+        "UserMenu는 한 컴포넌트가 서로 다른 두 표면에 걸쳐 있습니다. trigger는 호스트 사이드바 footer 위(=SideNav appearance=\"brand\"면 네이비 다크 셸), 팝업 패널은 언제나 자신의 밝은 elevated 표면입니다. 따라서 각 표면이 독립적으로 대비를 만족해야 합니다."
+      ],
       "avoidWhen": [
         "Classification: LK Product Extension. 대시보드에서 SideNav 푸터에 배치하는 계정 액션이며, 위로 열리는 구조이므로 TopBar의 계정 메뉴나 전역 내비게이션으로 사용하지 않습니다."
       ],
@@ -36226,27 +36239,29 @@
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "Implementation note: viewportPadding controls the inline popover viewport clamp inset in pixels. The default 12 keeps docked SideNav footer menus aligned with their account trigger. Pointer opening keeps focus on the trigger; keyboard opening enters the first command so the two surfaces do not compete for emphasis."
+          "rule": "호스트는 --color-semantic-label-를 재매핑하지 않습니다. 팝업은 trigger와 같은 DOM 스코프의 자손이므로 그 반전을 그대로 상속받아, 밝은 패널 위에 흰 글자(대비 1:1)를 그리게 됩니다. 다크 표면에 얹을 때는 위 --component-user-menu- 토큰만 재정의하세요."
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "danger 잉크는 상태 색상(--color-semantic-status-negative, 흰 배경에서 3.44:1로 AA 미달)이 아니라 DropdownMenu와 같은 on-light 텍스트 토큰을 씁니다."
         },
         {
           "subject": "--caption1-size",
           "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
-        },
-        {
-          "subject": "--color-semantic-background-elevated-normal",
-          "rule": "light: #FFFFFF; dark: #212225"
         }
       ],
       "responsive": [
         "SideNav footer라는 위치 근거 때문에 Dropdown Menu와 달리 위쪽을 선호합니다. 공간이 부족하면 아래로 flip하고 좌우 viewport를 clamp하지만, 이 배치 차이는 계정 메뉴의 고정 위치 때문에 유지합니다."
       ],
       "contentGuidance": [
-        "사이드바 푸터용 계정 행. 아바타 + 이름/역할 + 셰브론이 트리거이고, 계정 메뉴가 위로 열립니다. SideNav의 collapsed와 같은 값을 넘기면 접힌 레일에서 아바타만 남습니다."
+        "사이드바 푸터용 계정 행. 아바타 + 이름/역할 + 셰브론이 트리거이고, 계정 메뉴가 위로 열립니다. SideNav의 collapsed와 같은 값을 넘기면 접힌 레일에서 아바타만 남습니다.",
+        "| 요소 | 토큰 | 기본 대비 | brand footer 대비 | | --- | --- | --- | --- | | trigger 이름 | --component-user-menu-label → label-normal | 17.9:1 | 18.5:1 (white on #05132B) | | trigger 상세·셰브론 | --component-user-menu-detail·-indicator | — | 7.5:1 | | trigger 열림 배경 | --component-user-menu-open-surface | primary-surface-normal | brand…"
       ],
       "accessibility": [
         "키보드 계약: Enter/Space/Arrow Down은 첫 항목, Arrow Up은 마지막 항목으로 열립니다. 열린 메뉴에서는 Arrow Up/Down, Home/End, 문자 탐색을 지원하고 Escape는 닫은 뒤 계정 trigger로 초점을 복원합니다. menu는 trigger id를 aria-labelledby로 참조하고 Tab은 메뉴를 닫고 다음 문서 순서로 이동합니다. 항목 하이라이트는 hover와 키보드 focus에서 동일하게 적용되어 초점 위치가 시각적으로 드러납니다. collapsed(아바타 전용) trigger도 같은 키보드 계약으로 열립니다.",
         "WAI-ARIA Menu Button Pattern — trigger의 aria-haspopup·aria-expanded와 열림 시 메뉴 항목 초점 이동을 적용했습니다.",
-        "React Aria Menu — menu item은 텍스트·장식 아이콘만 포함하고 방향키 탐색을 제공하며 disabled item은 탐색·활성화에서 제외합니다."
+        "React Aria Menu — menu item은 텍스트·장식 아이콘만 포함하고 방향키 탐색을 제공하며 disabled item은 탐색·활성화에서 제외합니다.",
+        "Implementation note: viewportPadding controls the inline popover viewport clamp inset in pixels. The default 12 keeps docked SideNav footer menus aligned with their account trigger. Pointer opening keeps focus on the trigger; keyboard opening enters the first command so the two surfaces do not compete for emphasis."
       ],
       "exceptions": [],
       "related": [
@@ -36297,11 +36312,15 @@
         "--color-semantic-label-normal",
         "--color-semantic-line-solid-normal",
         "--color-semantic-primary-surface-normal",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-text",
         "--component-menu-item-hover-bg",
         "--component-menu-padding-x",
         "--component-menu-padding-y",
         "--component-menu-radius",
+        "--component-user-menu-detail",
+        "--component-user-menu-indicator",
+        "--component-user-menu-label",
+        "--component-user-menu-open-surface",
         "--dur-fast",
         "--ease-out",
         "--font-sans",
@@ -36340,7 +36359,7 @@
       "guideDeltaFields": [],
       "sectionStatus": {
         "purpose": "evidence",
-        "useWhen": "omitted-no-evidence",
+        "useWhen": "evidence",
         "avoidWhen": "evidence",
         "anatomy": "omitted-no-evidence",
         "properties": "evidence",
@@ -37140,6 +37159,7 @@
       "avoidWhen": [
         "테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.",
         "scrim 클릭 닫기는 closeOnScrim으로 제어하지만, 유일한 dismiss 수단으로 사용하지 않습니다.",
+        "WCAG 2.2 Target Size (Minimum): compact scope에서도 Checkbox/Radio의 실제 target을 최소 24×24px로 유지하고 footer action을 축소하지 않는 근거입니다.",
         "Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다."
       ],
       "anatomy": [
@@ -37192,6 +37212,13 @@
           "type": "number",
           "required": false,
           "description": "패널 너비(px). @default 380",
+          "owner": "DrawerProps"
+        },
+        {
+          "name": "appearance",
+          "type": "'default' | 'brand'",
+          "required": false,
+          "description": "패널 표면. \"brand\"는 chrome(제목 행·닫기 버튼·구분선·본문)까지 네이비 브랜드 표면으로 렌더링합니다. 어두운 masthead와 brand SideNav를 함께 쓰는 모바일 셸에서 표면이 끊기지 않게 합니다. @default \"default\"",
           "owner": "DrawerProps"
         },
         {
@@ -37333,13 +37360,6 @@
           "required": false,
           "description": "문서 구조에 맞는 제목 레벨. @default 3",
           "owner": "DrawerSectionProps"
-        },
-        {
-          "name": "actions",
-          "type": "React.ReactNode",
-          "required": false,
-          "description": "제목 행 우측의 보조 액션.",
-          "owner": "DrawerSectionProps"
         }
       ],
       "states": [
@@ -37351,9 +37371,9 @@
       "behavior": [
         "density=\"comfortable\"이 기본값이며 default profile의 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다. ops에서는 같은 density API가 profile-aware chrome token을 읽습니다.",
         "자식의 명시적 size, padding, density가 항상 상속값보다 우선합니다. Drawer 밖과 comfortable Drawer의 기존 기본 출력은 유지됩니다.",
+        "최상위 Drawer만 Tab/Shift+Tab 순환, 외부 focus containment, Escape dismiss를 소유합니다.",
         "닫히면 trigger로 복원하며 returnFocusRef로 논리적 다음 지점을 지정할 수 있습니다. restoreFocus 기본값은 true입니다.",
-        "overlay Drawer를 여러 개 겹치지 않습니다. Drawer 위에 확인 Modal이 불가피할 때는 Modal만 활성화되고, 닫힌 뒤 Drawer 내부 trigger로 돌아갑니다.",
-        "필터 query 직렬화, 변경 유실 경고 조건, route 상태와 반응형으로 inline surface로 전환하는 정책은 제품 레이어가 소유합니다."
+        "overlay Drawer를 여러 개 겹치지 않습니다. Drawer 위에 확인 Modal이 불가피할 때는 Modal만 활성화되고, 닫힌 뒤 Drawer 내부 trigger로 돌아갑니다."
       ],
       "quantitativeRules": [
         {
@@ -37380,20 +37400,21 @@
       "responsive": [
         "density=\"compact\"은 데스크톱의 짧고 반복적인 필터·설정 폼에서 Drawer가 소유하는 header/body/footer chrome과 body typography만 조밀하게 만듭니다. 제목 단계, 닫기 target, footer action 크기는 바꾸지 않습니다.",
         "body의 bounded component-density scope는 Input, Select, Textarea, Checkbox/CheckboxGroup, Radio/RadioGroup, ChoiceCard, Callout, FileUpload처럼 밀도 상속 계약을 가진 자식에 compact를 전달합니다. 중첩 깊이나 DrawerField 같은 직접 자식 복제에 의존하지 않습니다.",
-        "DrawerSection은 본문 하위 제목, 설명, 선택적 divider와 간격을 소유합니다. 제품은 type-headline1, pt-6, 직접 구분선으로 같은 해부학을 다시 만들지 않습니다. compact에서는 divider 상단 16px, 제목·설명 다음 8px을 사용하고 comfortable에서는 기존 읽기 여유를 유지합니다."
+        "DrawerSection은 본문 하위 제목, 설명, 선택적 divider와 간격을 소유합니다. 제품은 type-headline1, pt-6, 직접 구분선으로 같은 해부학을 다시 만들지 않습니다. compact에서는 divider 상단 16px, 제목·설명 다음 8px을 사용하고 comfortable에서는 기존 읽기 여유를 유지합니다.",
+        "근거는 모바일 셸의 표면 연속성입니다. TopBar dark(네이비 masthead) + SideNav appearance=\"brand\"(네이비 내비 패널)을 조합하면 그 사이의 Drawer 골격만 밝은 elevated 표면으로 남아 \"네이비 → 흰색 → 네이비\"로 표면이 두 번 끊깁니다. 제목 행과 닫기 버튼은 host가 도달할 수 없는 Drawer 내부이므로 소비 측 CSS 재매핑으로 고칠 수 없습니다."
       ],
       "contentGuidance": [
         "제품 맥락에 맞는 닫기 명령은 closeLabel로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.",
         "조밀화는 정보 위계나 상호작용 의미를 바꾸지 않습니다. Checkbox와 Radio의 실제 target은 시각 glyph보다 넓은 최소 24×24px이며, ChoiceCard와 FileUpload의 전체 label target도 유지됩니다.",
-        "WAI-ARIA APG Modal Dialog Pattern: modal Drawer에도 내부 focus trap, Escape, 복원, 이름 있는 dialog 계약을 적용했습니다. 밀도는 이 interaction/semantic 계약을 변경하지 않습니다.",
-        "Subtitle contract."
+        "appearance=\"brand\"는 패널 chrome 전체를 네이비 브랜드 표면으로 렌더링합니다: 패널 배경 --color-semantic-brand-surface, header/footer divider --color-semantic-brand-on-surface-border, 제목 --color-semantic-brand-on-surface, subtitle·body --color-semantic-brand-on-surface-muted, 닫기 버튼 IconButton variant=\"on-dark\".",
+        "WAI-ARIA APG Modal Dialog Pattern: modal Drawer에도 내부 focus trap, Escape, 복원, 이름 있는 dialog 계약을 적용했습니다. 밀도는 이 interaction/semantic 계약을 변경하지 않습니다."
       ],
       "accessibility": [
         "Modal, Sheet, ConfirmDialog를 sibling으로 확인했습니다. focus/keyboard 계약은 ConfirmDialog와 공유하되 표면은 기존 Drawer 그대로입니다.",
         "제목이 있으면 aria-labelledby, 없으면 ariaLabel을 사용합니다.",
         "DrawerSection.headingLevel은 실제 문서 계층에 맞춰 26을 선택하고 기본값은 3입니다. 짧은 보조 명령은 actions에 두며, headerStyle과 contentStyle은 고유한 레이아웃 조합에만 사용합니다. 이 style escape hatch로 제목 크기·밀도·divider 간격을 다시 정의하지 않습니다.",
-        "zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다.",
-        "initialFocusRef → 첫 tabbable 요소 → dialog 표면 순으로 초기 초점을 선택합니다."
+        "appearance는 표면만 바꿉니다. anatomy, density, focus/Escape/스크롤 계약, portal·stack 동작은 동일합니다. DashboardShell은 temporaryNavigationAppearance로 이 축을 그대로 전달합니다.",
+        "zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다."
       ],
       "exceptions": [],
       "related": [
@@ -37442,6 +37463,10 @@
         "--caption1-line",
         "--caption1-size",
         "--color-semantic-background-elevated-normal",
+        "--color-semantic-brand-on-surface",
+        "--color-semantic-brand-on-surface-border",
+        "--color-semantic-brand-on-surface-muted",
+        "--color-semantic-brand-surface",
         "--color-semantic-label-alternative",
         "--color-semantic-label-neutral",
         "--color-semantic-label-normal",
@@ -38914,7 +38939,7 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "size=\"sm\" | \"md\" | \"lg\"는 각각 field control 높이 32px·48px·52px를 사용합니다. field에는 같은 size를 전달하고, action은 Button의 해당 typography/padding/radius를 유지하면서 조합 높이만 field 높이에 맞춥니다."
+          "rule": "size=\"sm\" | \"md\" | \"lg\"는 각각 field control 높이 32px·--component-input-height(default 48px, ops 40px)·52px를 사용합니다. 공유 행 높이는 field 척도이므로 Theme profile이 field를 조밀하게 만들면 action도 함께 따라갑니다. field에는 같은 size를 전달하고, action은 Button의 해당 typography/padding/radius를 유지하면서 조합 높이만 field 높이에 맞춥니다."
         },
         {
           "subject": "명시 규칙 2",
@@ -38991,8 +39016,8 @@
         }
       ],
       "tokens": [
+        "--component-input-height",
         "--control-h-lg",
-        "--control-h-md",
         "--control-h-sm",
         "--lds-field-action-gap",
         "--space-2"
@@ -43893,7 +43918,7 @@
           "name": "value",
           "type": "string | number",
           "required": true,
-          "description": "표시할 scalar 값. 주변 공백은 정규화합니다.",
+          "description": "표시할 scalar 값. 주변 공백은 정규화합니다. 값이 없을 때 쓰는 dash placeholder(\"—\"/\"-\")는 display weight·strong ink 없이 렌더링됩니다.",
           "owner": "TelemetryValueProps"
         },
         {
@@ -43960,6 +43985,13 @@
           "owner": "TelemetryValueProps"
         },
         {
+          "name": "orientation",
+          "type": "'vertical' | 'horizontal'",
+          "required": false,
+          "description": "배치. \"vertical\"은 라벨 위·값 아래의 KPI 타일, \"horizontal\"은 라벨과 값을 한 줄에 두고 값 타이포를 supporting-text 단계로 낮춘 요약 띠용 변형입니다. 값·단위·tone·stale 의미 계약은 동일합니다. @default \"vertical\"",
+          "owner": "TelemetryValueProps"
+        },
+        {
           "name": "size",
           "type": "'sm' | 'md'",
           "required": false,
@@ -43997,22 +44029,22 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "작은 폭에서 값·단위·badge·metadata가 줄바꿈되며, 컴포넌트 자체가 고정 최소 너비를 만들지 않습니다."
+          "rule": "horizontal은 값 타이포를 display 단계에서 supporting-text 단계로 낮춥니다(md → --label1-size, sm → --label2-size, 단위는 --caption1-size/--caption2-size). 배터리 게이지·연결 배지·상태 칩처럼 한 줄 2024px 이웃과 나란히 놓이는 자리에서 40px 두 단으로 튀지 않게 하기 위한 것입니다. 값 자체를 강조해야 하는 자리라면 vertical을 유지하세요."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "타입 스케일 정합: metadata 행 11.5px → --caption2-size(11px)로 스냅했습니다. 12px label(caption1)보다 한 단계 아래를 유지해 위계를 지킵니다. 값 숫자는 sm 18px → --headline1-size(18px), md 21px → --heading2-size(20px, −1px 의도된 변경)로 스냅했으며 fw-extra 굵기가 프로미넌스를 유지합니다."
+          "rule": "작은 폭에서 값·단위·badge·metadata가 줄바꿈되며, 컴포넌트 자체가 고정 최소 너비를 만들지 않습니다."
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "WCAG 2.2 Use of Color: 상태색에는 항상 보이는 텍스트 단서를 함께 제공합니다."
+          "rule": "타입 스케일 정합: metadata 행 11.5px → --caption2-size(11px)로 스냅했습니다. 12px label(caption1)보다 한 단계 아래를 유지해 위계를 지킵니다. 값 숫자는 sm 18px → --headline1-size(18px), md 21px → --heading2-size(20px, −1px 의도된 변경)로 스냅했으며 fw-extra 굵기가 프로미넌스를 유지합니다."
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "WCAG 2.2 Contrast Minimum: 작은 label·unit·timestamp는 faint assistive token 대신 AA 대비를 목표로 하는 neutral text token을 사용합니다."
+          "rule": "WCAG 2.2 Use of Color: 상태색에는 항상 보이는 텍스트 단서를 함께 제공합니다."
         },
         {
-          "subject": "--caption1-size",
+          "subject": "--caption1-line",
           "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
         }
       ],
@@ -44023,11 +44055,13 @@
         "value는 string | number, unit은 문자열 계약입니다. 두 값의 앞뒤 공백을 제거한 뒤 %, ‰, 평면각 °는 값에 붙이고, °C, °F, ms, Hz, m/s, N·m, dBm 같은 SI·복합 단위는 한 칸 띄웁니다. 표시 DOM과 보조기술이 읽는 텍스트는 같은 literal separator를 공유합니다.",
         "statusLabel을 생략하면 signal / positive / cautionary / negative의 기본 한국어 상태 문구를 사용합니다. 제품에서는 가능한 한 신호 약함, 상한 초과처럼 도메인에 맞는 문구를 전달하세요.",
         "stale은 현재값처럼 오해하지 않도록 값을 약화하고 기본 지연 badge를 표시합니다. staleLabel은 그 badge 문구만 교체하므로 수신 지연처럼 freshness를 설명하는 표현만 허용됩니다 — 의미 상태 문구는 tone/statusLabel 축에 남습니다. 별도 상태 컬럼이 동등한 텍스트를 제공할 때만 showStaleBadge={false}를 사용합니다.",
-        "helper는 timestamp를 대체하지 않습니다. 둘 다 있으면 함께 표시합니다."
+        "값이 없을 때의 dash placeholder(—, –, -)는 display 굵기와 strong ink 없이 렌더링되고 root에 data-empty=\"true\"가 붙습니다. 타입 단계는 유지하므로 타일이 나란히 놓여도 baseline이 어긋나지 않습니다. 값이 없는 지표가 실제 값보다 시선을 더 끄는 상태를 막기 위한 규칙입니다."
       ],
       "accessibility": [
         "임의 ReactNode를 수치나 단위 자리에 넣지 않습니다. 그래픽·복합 콘텐츠가 필요하면 readout 바깥에서 조합하고 그 노드가 자체 접근성 텍스트를 소유하게 하세요.",
         "align(기본 start)은 readout 전체의 정렬 축입니다. 표의 숫자 컬럼이나 카드 우측 정렬처럼 소유 레이아웃이 끝 정렬을 요구할 때 end를 사용하며, 줄바꿈 순서와 접근성 텍스트는 바뀌지 않습니다.",
+        "orientation(기본 vertical)은 배치만 바꿉니다. vertical은 라벨 위·값 아래로 쌓는 KPI 타일이고, horizontal은 라벨과 값을 한 줄에 두는 요약 띠 변형입니다. value/unit/tone/stale/statusLabel의 의미 계약, DOM 순서, 접근성 텍스트는 두 배치에서 동일합니다.",
+        "WCAG 2.2 Contrast Minimum: 작은 label·unit·timestamp는 faint assistive token 대신 AA 대비를 목표로 하는 neutral text token을 사용합니다.",
         "WAI-ARIA APG Meter Pattern: 읽기 전용 meter의 키보드 상호작용은 없으며, scalar range semantics는 TelemetryGauge에만 둡니다. 범위가 없는 임의 readout에 meter 역할을 부여하지 않습니다."
       ],
       "exceptions": [],
@@ -44056,6 +44090,7 @@
         }
       ],
       "tokens": [
+        "--caption1-line",
         "--caption1-size",
         "--caption2-size",
         "--color-semantic-label-neutral",
@@ -44066,7 +44101,13 @@
         "--fw-extra",
         "--heading2-size",
         "--headline1-size",
+        "--label1-line",
+        "--label1-size",
+        "--label2-line",
+        "--label2-size",
+        "--space-0-5",
         "--space-1",
+        "--space-1-5",
         "--space-2"
       ],
       "apiLinks": [],
@@ -46649,7 +46690,7 @@
       ],
       "contentGuidance": [
         "TopBar·SideNav에서 LK + 제품명을 LK 모브랜드 우선 로고 문법으로 표시하는 제품 셸 lockup입니다. 기존 LK Portal의 대문자·1X·간격 리듬을 계승하되 제품명은 SemiBold 600으로 낮춰 LK가 먼저 읽힙니다. 자유 텍스트를 옆에 붙이는 컴포넌트가 아니라, 브랜드 승인을 거쳐 registry에 등록된 제품 워드마크만 outline SVG로 렌더합니다.",
-        "새 제품은 assets/brand/lk-product-lockups.json에 승인 key·canonical label·대문자 wordmark·golden glyph metric을 등록하고 node scripts/generate-product-lockups.mjs로 path를 생성합니다. 생성기는 pinned font와 license hash, glyph IDs, kerning origins, ink bounds를 검증합니다.",
+        "등록 절차의 정본은 docs/brand/LKPRODUCTLOCKUPSTANDARD.md 9장입니다. 제품 팀이 제출할 항목과 승인자는 9.1, 등록 전 임시 사용 규칙은 9.2에 있습니다. 보이는 wordmark는 pinned Montserrat SemiBold에서 outline을 뽑으므로 ASCII 대문자 A–Z와 공백만 등록할 수 있습니다 — 한글 제품명은 승인된 로마자 표기를 먼저 확정해야 합니다.",
         "제품별 화면에서 문자열, 폰트, 간격을 직접 바꾸거나 미등록 key를 우회하지 않습니다. 표시용 한국어 설명, 환경·버전·workspace·상태·tagline은 lockup 밖의 UI text로 둡니다."
       ],
       "accessibility": [

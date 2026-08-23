@@ -272,6 +272,74 @@ export const ICON_NAMES = ${JSON.stringify(iconNames)};
 
 const ICON_SVG = ${JSON.stringify(iconSvg)};
 
+/* The registry key of the glyph drawn when a caller asks for a name the
+   registry does not have. \`blank\` is the existing dashed placeholder square,
+   so an authoring mistake reads as "an icon slot with nothing in it" instead of
+   silently collapsing to an empty <svg> that ships unnoticed. */
+const MISSING_ICON_FALLBACK = "blank";
+
+/* Development-only guard: bundlers replace \`process.env.NODE_ENV\` at build
+   time — the same contract React itself relies on — so this branch disappears
+   from production builds. The try/catch keeps it inert in environments that
+   never define \`process\` at all. */
+function isDevelopmentBuild() {
+  try {
+    return process.env.NODE_ENV !== "production";
+  } catch {
+    return false;
+  }
+}
+
+/* Levenshtein distance, iterative single-row form. Only ever runs in a
+   development build, once per unknown name. */
+function iconNameDistance(source, target) {
+  if (source === target) return 0;
+  let previous = Array.from({ length: target.length + 1 }, (_unused, index) => index);
+  for (let row = 1; row <= source.length; row += 1) {
+    const current = [row];
+    for (let column = 1; column <= target.length; column += 1) {
+      const substitution = previous[column - 1] + (source[row - 1] === target[column - 1] ? 0 : 1);
+      current[column] = Math.min(current[column - 1] + 1, previous[column] + 1, substitution);
+    }
+    previous = current;
+  }
+  return previous[target.length];
+}
+
+/* Near misses first (typos), then registry names that contain the requested
+   text (wrong vocabulary, e.g. "battery" for "battery-charging"). */
+function suggestIconNames(name) {
+  const requested = String(name).toLowerCase();
+  const budget = Math.max(2, Math.round(requested.length / 3));
+  const scored = [];
+  for (const candidate of ICON_NAMES) {
+    const distance = iconNameDistance(requested, candidate);
+    const contains = candidate.includes(requested) || requested.includes(candidate);
+    if (distance <= budget || contains) scored.push({ candidate, distance, contains });
+  }
+  return scored
+    .sort((left, right) =>
+      left.distance - right.distance ||
+      Number(right.contains) - Number(left.contains) ||
+      left.candidate.localeCompare(right.candidate))
+    .slice(0, 5)
+    .map((entry) => entry.candidate);
+}
+
+const warnedIconNames = new Set();
+
+function warnUnknownIconName(name) {
+  if (!isDevelopmentBuild() || warnedIconNames.has(name)) return;
+  warnedIconNames.add(name);
+  const suggestions = suggestIconNames(name);
+  const hint = suggestions.length > 0
+    ? \` Did you mean \${suggestions.map((candidate) => \`"\${candidate}"\`).join(", ")}?\`
+    : " Check the exported ICON_NAMES for the available glyphs.";
+  console.warn(
+    \`[LDS] Icon: "\${name}" is not in the icon registry, so the "\${MISSING_ICON_FALLBACK}" placeholder glyph is rendered instead.\` + hint,
+  );
+}
+
 /**
  * Icon renders an LDS glyph. Most icons inherit color through currentColor.
  *
@@ -316,12 +384,33 @@ export function Icon({
         "aria-hidden": ariaHiddenProp !== undefined ? ariaHiddenProp : "true",
       };
   if (!icon) {
+    /* An absent/empty \`name\` is a caller rendering "no icon" on purpose (an
+       optional slot), so it stays an empty box with no console noise. A
+       non-empty name that the registry does not know is an authoring mistake:
+       warn in development and draw the placeholder so the gap is visible in a
+       production build too. */
+    const requested = typeof name === "string" ? name.trim() : "";
+    if (requested === "") {
+      return React.createElement("svg", {
+        width: size,
+        height: size,
+        viewBox: "0 0 24 24",
+        style,
+        className,
+        ...domProps,
+        ...a11y,
+      });
+    }
+    warnUnknownIconName(requested);
+    const fallback = ICON_SVG[MISSING_ICON_FALLBACK];
     return React.createElement("svg", {
       width: size,
       height: size,
-      viewBox: "0 0 24 24",
-      style,
+      viewBox: fallback ? fallback.viewBox : "0 0 24 24",
       className,
+      style: { display: "block", color, flexShrink: 0, ...style },
+      "data-icon-missing": requested,
+      ...(fallback ? { dangerouslySetInnerHTML: { __html: fallback.body } } : null),
       ...domProps,
       ...a11y,
     });

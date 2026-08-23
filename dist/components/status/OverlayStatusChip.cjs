@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkLMH5G4DJcjs = require('../../chunk-LMH5G4DJ.cjs');
+var _chunk67AZFIIKcjs = require('../../chunk-67AZFIIK.cjs');
 require('../../chunk-MBKOVB2K.cjs');
-require('../../chunk-F72KSGF7.cjs');
+require('../../chunk-7OXVB7WX.cjs');
 
 
-exports.OverlayStatusChip = _chunkLMH5G4DJcjs.OverlayStatusChip;
+exports.OverlayStatusChip = _chunk67AZFIIKcjs.OverlayStatusChip;
 //# sourceMappingURL=OverlayStatusChip.cjs.map

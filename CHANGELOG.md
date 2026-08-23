@@ -13,6 +13,20 @@ consumer re-verification, rollout, or product deployment is attested here.
   A hashed clean-clone artifact can now satisfy async and interactive hard triggers when it
   proves production build, workflow smoke, accessibility, theme and viewport coverage,
   representative ready/non-ready states, and immutable spec, runner, and CI inputs.
+- `Drawer` gained an `appearance` axis. `appearance="brand"` renders the whole panel chrome
+  (surface, title, divider, body, close control) on the navy brand surface, so a mobile shell
+  that already uses a dark `TopBar` and a brand `SideNav` no longer breaks its surface at the
+  drawer. `DashboardShell` forwards it as `temporaryNavigationAppearance`.
+- `TelemetryValue` gained an `orientation` axis. `orientation="horizontal"` places the label and
+  value on one line at a supporting-text scale for summary strips that sit beside single-line
+  neighbours; `vertical` remains the default KPI tile and its output is unchanged.
+- `Icon` reports an unregistered `name` instead of failing silently: a development-only console
+  warning with nearest-name suggestions, a visible `blank` placeholder glyph, and a
+  `data-icon-missing` attribute for product smoke tests. An absent or empty `name` stays an
+  empty box with no warning.
+- `UserMenu` exposes `--component-user-menu-label`, `-detail`, `-indicator`, and `-open-surface`
+  so a dark host can recolour the trigger without remapping the semantic label scale that the
+  menu popover reads from. `SideNav appearance="brand"` publishes them in its footer scope.
 
 ### Changed
 
@@ -22,6 +36,27 @@ consumer re-verification, rollout, or product deployment is attested here.
 - Normal source-candidate checks accept the fully hashed published-historical Robotics
   documentation snapshot, while the release-only gate still requires a current paired
   Robotics snapshot before the `0.1.1` tag or package publish.
+- `Select` and `FieldAction` resolve their default control height through
+  `--component-input-height` instead of the raw `--control-h-md` primitive, so both follow a
+  Theme expression profile like every other field control. Under `ops` they now render at 40px
+  beside `SearchField` and `Input` rather than staying at 48px.
+- `DataToolbar` formats `count` with ko-KR thousands grouping (`3941` renders as `3,941개`).
+- `TelemetryValue` renders a dash placeholder (`—`, `–`, `-`) without the display weight and
+  strong ink reserved for a real value, and marks it with `data-empty`. The type step is kept so
+  a row of tiles stays on one baseline grid.
+
+### Fixed
+
+- `inert` is now applied on React 18 as well as React 19 in `SideNav`, `DashboardShell`,
+  `Accordion`, `Collapsible`, `Carousel`, `DockPanel`, and `MessageComposer`. React 18 treats
+  `inert={true}` as an unknown attribute and drops it after warning, so collapsed panels,
+  off-screen slides, a disabled composer shell, and the shell behind an open temporary-navigation
+  drawer all stayed reachable by Tab despite each component documenting the opposite. The value
+  is resolved from the running React major; React 19 output is unchanged.
+- `UserMenu` danger menu items use the on-light `--color-semantic-status-negative-text` ink that
+  `DropdownMenu` already uses, raising contrast on the elevated panel from 3.44:1 to 7.04:1
+  (WCAG AA for text). The trigger and popover now satisfy contrast independently, so a dark host
+  no longer has to invert the label tokens the popover depends on.
 
 ## 0.1.1 - 2026-08-23
 

@@ -1,6 +1,14 @@
 import React from 'react';
 import { Drawer } from '../overlay/Drawer.jsx';
 
+/* `inert` only became a first-class boolean DOM prop in React 19. React 18 — a
+   supported peer (`react: ">=18 <20"`) — warns and then drops it, which here
+   means the shell behind an open temporary-navigation drawer stays reachable by
+   Tab instead of being inert. React 19 in turn drops `inert=""` and warns on
+   `inert="true"`, so the value is resolved from the running React major. */
+const INERT_VALUE = Number.parseInt(React.version, 10) >= 19 ? true : 'true';
+const inertWhen = (isInert) => (isInert ? INERT_VALUE : undefined);
+
 const DASHBOARD_SHELL_STYLES = `
 .lk-dashboard-shell{
   display:grid;
@@ -92,6 +100,7 @@ export function DashboardShell({
   temporaryNavigationLabel = '주 탐색',
   temporaryNavigationCloseLabel = '탐색 닫기',
   temporaryNavigationWidth = 320,
+  temporaryNavigationAppearance = 'default',
   temporaryNavigationInitialFocusRef,
   temporaryNavigationReturnFocusRef,
   children,
@@ -151,11 +160,11 @@ export function DashboardShell({
       }}
       {...rest}
     >
-      <a className="lk-dashboard-shell__skip" href={`#${resolvedMainId}`} inert={temporaryOpen ? true : undefined}>{skipLabel}</a>
+      <a className="lk-dashboard-shell__skip" href={`#${resolvedMainId}`} inert={inertWhen(temporaryOpen)}>{skipLabel}</a>
       <style>{DASHBOARD_SHELL_STYLES}</style>
-      {header != null && <div className="lk-dashboard-shell__header" inert={temporaryOpen ? true : undefined}>{header}</div>}
+      {header != null && <div className="lk-dashboard-shell__header" inert={inertWhen(temporaryOpen)}>{header}</div>}
       {navigation != null && (
-        <div className="lk-dashboard-shell__navigation" inert={temporaryOpen ? true : undefined}>
+        <div className="lk-dashboard-shell__navigation" inert={inertWhen(temporaryOpen)}>
           {withNavigationLabel(navigation, navigationLabel)}
         </div>
       )}
@@ -165,12 +174,12 @@ export function DashboardShell({
         aria-label={mainLabel}
         className={['lk-dashboard-shell__main', mainClassName].filter(Boolean).join(' ')}
         style={mainStyle}
-        inert={temporaryOpen ? true : undefined}
+        inert={inertWhen(temporaryOpen)}
       >
         {children}
       </main>
       {narrowNavigation != null && (
-        <div className="lk-dashboard-shell__narrow-navigation" inert={temporaryOpen ? true : undefined}>
+        <div className="lk-dashboard-shell__narrow-navigation" inert={inertWhen(temporaryOpen)}>
           {withNavigationLabel(narrowNavigation, narrowNavigationLabel)}
         </div>
       )}
@@ -180,6 +189,7 @@ export function DashboardShell({
           open={temporaryOpen}
           side="left"
           width={temporaryNavigationWidth}
+          appearance={temporaryNavigationAppearance}
           title={temporaryNavigationTitle}
           ariaLabel={temporaryNavigationLabel}
           closeLabel={temporaryNavigationCloseLabel}

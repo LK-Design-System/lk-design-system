@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkQ7ZHIXHNcjs = require('../../chunk-Q7ZHIXHN.cjs');
+var _chunkIACOH5RJcjs = require('../../chunk-IACOH5RJ.cjs');
 require('../../chunk-VYQHXHIR.cjs');
-require('../../chunk-F72KSGF7.cjs');
+require('../../chunk-7OXVB7WX.cjs');
 
 
-exports.Carousel = _chunkQ7ZHIXHNcjs.Carousel;
+exports.Carousel = _chunkIACOH5RJcjs.Carousel;
 //# sourceMappingURL=Carousel.cjs.map

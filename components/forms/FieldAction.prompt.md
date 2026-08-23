@@ -25,7 +25,7 @@
 
 ## 크기와 반응형 계약
 
-- `size="sm" | "md" | "lg"`는 각각 field control 높이 32px·48px·52px를 사용합니다. field에는 같은 `size`를 전달하고, action은 Button의 해당 typography/padding/radius를 유지하면서 조합 높이만 field 높이에 맞춥니다.
+- `size="sm" | "md" | "lg"`는 각각 field control 높이 32px·`--component-input-height`(default 48px, `ops` 40px)·52px를 사용합니다. 공유 행 높이는 *field* 척도이므로 Theme profile이 field를 조밀하게 만들면 action도 함께 따라갑니다. field에는 같은 `size`를 전달하고, action은 Button의 해당 typography/padding/radius를 유지하면서 조합 높이만 field 높이에 맞춥니다.
 - 360px 이하에서는 field 다음 줄에 action을 배치하고 action을 전체 너비로 확장합니다. 정보와 기능을 잃지 않고 320 CSS px에서 한 방향으로 reflow해야 한다는 WCAG 기준을 따릅니다.
 - loading 중 Button의 숨겨진 원래 label이 너비를 유지하므로 action column이 흔들리지 않습니다. disabled/loading 동작 자체는 Button 계약을 그대로 사용합니다.
 

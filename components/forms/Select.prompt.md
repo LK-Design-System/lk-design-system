@@ -39,4 +39,5 @@
 - Stable parts are `root`, `label`, `control`, `trigger`, `value`, `indicators`, `dropdown`, `option`, and `message`. Options additionally expose real `data-active`, `data-selected`, and `data-disabled` state.
 - `vars` accepts only `--lds-select-min-width`, `--lds-select-height`, and `--lds-select-dropdown-max-height`. Consumer root width constraints still override intrinsic measurement.
 - `disable`, `negative`, and `small|medium|large` are compatibility aliases; new code uses `disabled`, `invalid`/`status`, and `sm|md|lg`.
+- trigger 높이는 field family 계약을 따릅니다: `sm`은 `--control-h-sm`, `md`는 `--component-input-height`, `lg`는 `--control-h-lg`. `md`가 `--control-h-md`에 직접 앵커되어 있으면 Theme profile(`ops`: field 40px)에서 옆의 `SearchField`·`Input`과 어긋나므로 원시 토큰을 다시 쓰지 않습니다.
 - `size`를 생략하면 일반 표면에서는 기존 `md`, bounded compact component scope에서는 `sm`을 사용합니다. 명시한 `size`가 우선하며 compact Select는 32px trigger와 기존 40px option target을 조합합니다.

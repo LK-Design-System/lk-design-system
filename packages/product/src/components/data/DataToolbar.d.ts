@@ -19,7 +19,7 @@ export interface DataToolbarProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   title?: React.ReactNode;
   /** 제목 아래 설명. */
   description?: React.ReactNode;
-  /** 전체 결과 수. */
+  /** 전체 결과 수. ko-KR 천 단위 구분으로 렌더링됩니다(`3941` → `3,941개`). */
   count?: number;
   /** Render the search control. Set false for count/filter/action-only collections. @default true */
   searchable?: boolean;

@@ -9,7 +9,7 @@
   },
   "source": {
     "componentRegistry": "docs/components/component-content.json",
-    "componentRegistryFingerprint": "b729ede82b945a2fc7193638dc5d744c542b6f0f10851d3a0bbd375514172f0d",
+    "componentRegistryFingerprint": "f1c6b73e630175025aa3866bd4f476f85cc684b17ffdc92ad00aaa5174921851",
     "expressionProfileContract": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
     "expressionProfileContractFingerprint": "a03ba9dfca89707917b27ea9609b7bb3541239ec7850afb360f2fab0c8ff6d17"
   },
@@ -21,7 +21,7 @@
       "fixed": 93,
       "not-applicable": 15
     },
-    "profileAwareEntries": 96
+    "profileAwareEntries": 97
   },
   "entries": [
     {
@@ -1500,11 +1500,13 @@
       "source": "components/forms/FieldAction.jsx",
       "ownerLayer": "product",
       "category": "explicit-size-density",
-      "profileAware": false,
+      "profileAware": true,
       "explicitAxes": [
         "size"
       ],
-      "profileTokens": []
+      "profileTokens": [
+        "--component-input-height"
+      ]
     },
     {
       "id": "file-upload",
@@ -1731,6 +1733,7 @@
         "size"
       ],
       "profileTokens": [
+        "--component-input-height",
         "--component-menu-gap",
         "--component-menu-item-min-height",
         "--component-menu-item-padding-x",

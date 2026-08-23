@@ -31,7 +31,7 @@
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
 | `label` | `React.ReactNode` | No | 수치 라벨. |
-| `value` | `string \| number` | Yes | 표시할 scalar 값. 주변 공백은 정규화합니다. |
+| `value` | `string \| number` | Yes | 표시할 scalar 값. 주변 공백은 정규화합니다. 값이 없을 때 쓰는 dash placeholder("—"/"-")는 display weight·strong ink 없이 렌더링됩니다. |
 | `unit` | `string` | No | 문자열 단위. %/‰/평면각 °는 붙고, SI·복합 단위는 한 칸 띄웁니다. |
 | `tone` | `'neutral' \| 'signal' \| 'positive' \| 'cautionary' \| 'negative'` | No | 값의 의미 상태. 값 자체의 전경색은 바꾸지 않습니다. @default "neutral" |
 | `statusLabel` | `React.ReactNode` | No | tone과 함께 보이는 상태 문구. 미지정 시 tone의 기본 한국어 문구를 사용합니다. |
@@ -41,6 +41,7 @@
 | `showStaleBadge` | `boolean` | No | stale badge 표시 여부. 외부에 동등한 텍스트 상태가 있을 때만 끄세요. @default true |
 | `helper` | `React.ReactNode` | No | timestamp와 함께 표시할 보조 문구. |
 | `align` | `'start' \| 'end'` | No | 정렬. @default "start" |
+| `orientation` | `'vertical' \| 'horizontal'` | No | 배치. "vertical"은 라벨 위·값 아래의 KPI 타일, "horizontal"은 라벨과 값을 한 줄에 두고 값 타이포를 supporting-text 단계로 낮춘 요약 띠용 변형입니다. 값·단위·tone·stale 의미 계약은 동일합니다. @default "vertical" |
 | `size` | `'sm' \| 'md'` | No | 밀도. @default "md" |
 
 ## States
@@ -63,11 +64,11 @@
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | 작은 폭에서 값·단위·badge·metadata가 줄바꿈되며, 컴포넌트 자체가 고정 최소 너비를 만들지 않습니다. |
-| 명시 규칙 2 | 타입 스케일 정합: metadata 행 11.5px → --caption2-size(11px)로 스냅했습니다. 12px label(caption1)보다 한 단계 아래를 유지해 위계를 지킵니다. 값 숫자는 sm 18px → --headline1-size(18px), md 21px → --heading2-size(20px, −1px 의도된 변경)로 스냅했으며 fw-extra 굵기가 프로미넌스를 유지합니다. |
-| 명시 규칙 3 | WCAG 2.2 Use of Color: 상태색에는 항상 보이는 텍스트 단서를 함께 제공합니다. |
-| 명시 규칙 4 | WCAG 2.2 Contrast Minimum: 작은 label·unit·timestamp는 faint assistive token 대신 AA 대비를 목표로 하는 neutral text token을 사용합니다. |
-| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| 명시 규칙 1 | horizontal은 값 타이포를 display 단계에서 supporting-text 단계로 낮춥니다(md → --label1-size, sm → --label2-size, 단위는 --caption1-size/--caption2-size). 배터리 게이지·연결 배지·상태 칩처럼 한 줄 2024px 이웃과 나란히 놓이는 자리에서 40px 두 단으로 튀지 않게 하기 위한 것입니다. 값 자체를 강조해야 하는 자리라면 vertical을 유지하세요. |
+| 명시 규칙 2 | 작은 폭에서 값·단위·badge·metadata가 줄바꿈되며, 컴포넌트 자체가 고정 최소 너비를 만들지 않습니다. |
+| 명시 규칙 3 | 타입 스케일 정합: metadata 행 11.5px → --caption2-size(11px)로 스냅했습니다. 12px label(caption1)보다 한 단계 아래를 유지해 위계를 지킵니다. 값 숫자는 sm 18px → --headline1-size(18px), md 21px → --heading2-size(20px, −1px 의도된 변경)로 스냅했으며 fw-extra 굵기가 프로미넌스를 유지합니다. |
+| 명시 규칙 4 | WCAG 2.2 Use of Color: 상태색에는 항상 보이는 텍스트 단서를 함께 제공합니다. |
+| --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 
 ## Responsive
 
@@ -79,12 +80,14 @@
 - value는 string | number, unit은 문자열 계약입니다. 두 값의 앞뒤 공백을 제거한 뒤 %, ‰, 평면각 °는 값에 붙이고, °C, °F, ms, Hz, m/s, N·m, dBm 같은 SI·복합 단위는 한 칸 띄웁니다. 표시 DOM과 보조기술이 읽는 텍스트는 같은 literal separator를 공유합니다.
 - statusLabel을 생략하면 signal / positive / cautionary / negative의 기본 한국어 상태 문구를 사용합니다. 제품에서는 가능한 한 신호 약함, 상한 초과처럼 도메인에 맞는 문구를 전달하세요.
 - stale은 현재값처럼 오해하지 않도록 값을 약화하고 기본 지연 badge를 표시합니다. staleLabel은 그 badge 문구만 교체하므로 수신 지연처럼 freshness를 설명하는 표현만 허용됩니다 — 의미 상태 문구는 tone/statusLabel 축에 남습니다. 별도 상태 컬럼이 동등한 텍스트를 제공할 때만 showStaleBadge={false}를 사용합니다.
-- helper는 timestamp를 대체하지 않습니다. 둘 다 있으면 함께 표시합니다.
+- 값이 없을 때의 dash placeholder(—, –, -)는 display 굵기와 strong ink 없이 렌더링되고 root에 data-empty="true"가 붙습니다. 타입 단계는 유지하므로 타일이 나란히 놓여도 baseline이 어긋나지 않습니다. 값이 없는 지표가 실제 값보다 시선을 더 끄는 상태를 막기 위한 규칙입니다.
 
 ## Accessibility
 
 - 임의 ReactNode를 수치나 단위 자리에 넣지 않습니다. 그래픽·복합 콘텐츠가 필요하면 readout 바깥에서 조합하고 그 노드가 자체 접근성 텍스트를 소유하게 하세요.
 - align(기본 start)은 readout 전체의 정렬 축입니다. 표의 숫자 컬럼이나 카드 우측 정렬처럼 소유 레이아웃이 끝 정렬을 요구할 때 end를 사용하며, 줄바꿈 순서와 접근성 텍스트는 바뀌지 않습니다.
+- orientation(기본 vertical)은 배치만 바꿉니다. vertical은 라벨 위·값 아래로 쌓는 KPI 타일이고, horizontal은 라벨과 값을 한 줄에 두는 요약 띠 변형입니다. value/unit/tone/stale/statusLabel의 의미 계약, DOM 순서, 접근성 텍스트는 두 배치에서 동일합니다.
+- WCAG 2.2 Contrast Minimum: 작은 label·unit·timestamp는 faint assistive token 대신 AA 대비를 목표로 하는 neutral text token을 사용합니다.
 - WAI-ARIA APG Meter Pattern: 읽기 전용 meter의 키보드 상호작용은 없으며, scalar range semantics는 TelemetryGauge에만 둡니다. 범위가 없는 임의 readout에 meter 역할을 부여하지 않습니다.
 
 ## Related components
@@ -116,6 +119,7 @@
 
 ### Tokens
 
+- `--caption1-line`
 - `--caption1-size`
 - `--caption2-size`
 - `--color-semantic-label-neutral`
@@ -126,7 +130,13 @@
 - `--fw-extra`
 - `--heading2-size`
 - `--headline1-size`
+- `--label1-line`
+- `--label1-size`
+- `--label2-line`
+- `--label2-size`
+- `--space-0-5`
 - `--space-1`
+- `--space-1-5`
 - `--space-2`
 
 ### Source contracts
@@ -144,4 +154,6 @@
 - [WCAG 2.2 Contrast Minimum](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
 - [WAI-ARIA APG Meter Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/meter/)
 - [Microsoft Style Guide: percent](https://learn.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/p/percent-percentage)
+- [PatternFly Description list design guidelines](https://www.patternfly.org/components/description-list/design-guidelines)
+- [Cloudscape Key-value pairs](https://cloudscape.design/components/key-value-pairs/)
 - [NIST Guide to the SI, 7.2](https://www.nist.gov/pml/special-publication-811/nist-guide-si-chapter-7-rules-and-style-conventions-expressing-values)

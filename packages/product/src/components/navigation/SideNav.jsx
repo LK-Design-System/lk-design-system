@@ -4,6 +4,15 @@ import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 import { useLightDismiss } from '@lk-design-system/lds-core/platform';
 import { componentVars, partClassName, partStyle, useMergedRefs } from '@lk-design-system/lds-core/component-authoring';
 
+/* `inert` only became a first-class boolean DOM prop in React 19. React 18 — a
+   supported peer (`react: ">=18 <20"`) — treats it as an unknown attribute,
+   warns "Received `true` for a non-boolean attribute `inert`", and then
+   drops it, so a closed disclosure subtree would stay reachable by Tab. React 19
+   in turn drops `inert=""` and warns on `inert="true"`, so no single literal is
+   correct on both majors; resolve the value from the running React instead. */
+const INERT_VALUE = Number.parseInt(React.version, 10) >= 19 ? true : 'true';
+const inertWhen = (isInert) => (isInert ? INERT_VALUE : undefined);
+
 const Chevron = ({ open }) => (
   <Icon data-sidenav-motion="chevron" name="chevron-down-small" size={14} aria-hidden="true" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }} />
 );
@@ -448,7 +457,7 @@ export const SideNav = React.forwardRef(function SideNav({
                   data-sidenav-group={o.value}
                   data-state={childrenExposed ? 'open' : 'closed'}
                   aria-hidden={childrenExposed ? undefined : true}
-                  inert={childrenExposed ? undefined : true}
+                  inert={inertWhen(!childrenExposed)}
                   style={{
                     display: 'grid', gridTemplateRows: childrenExposed ? '1fr' : '0fr',
                     minWidth: 0, opacity: childrenExposed ? 1 : 0,
@@ -520,7 +529,11 @@ export const SideNav = React.forwardRef(function SideNav({
           );
         })}
       </ul>
-      <div data-slot="footer" className={partClassName(classNames, 'footer') || undefined} style={{ marginTop: 'auto', paddingTop: footerGap, ...partStyle(styles, 'footer') }}>
+      {/* The brand shell is dark, so anything docked in the footer needs on-dark
+          foregrounds. Publishing UserMenu's own tokens here — rather than asking
+          the host to remap `--color-semantic-label-*` — keeps the inversion off
+          the semantic scale that UserMenu's light popup panel still reads from. */}
+      <div data-slot="footer" className={partClassName(classNames, 'footer') || undefined} style={{ marginTop: 'auto', paddingTop: footerGap, ...(resolvedAppearance === 'brand' ? { '--component-user-menu-label': appearanceTokens.foreground, '--component-user-menu-detail': appearanceTokens.mutedForeground, '--component-user-menu-indicator': appearanceTokens.subtleForeground, '--component-user-menu-open-surface': appearanceTokens.hoverSurface } : null), ...partStyle(styles, 'footer') }}>
         {resolvedFooter != null && (
           <div style={{ paddingTop: 'var(--space-2-5)', marginLeft: 'var(--space-0-5)', marginRight: 'var(--space-0-5)', borderTop: `1px solid ${appearanceTokens.divider}` }}>
             <div data-sidenav-motion="swap" data-state={col ? 'compact' : 'expanded'} style={{ minWidth: 0, animation: swapAnimation }}>

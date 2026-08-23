@@ -52,6 +52,12 @@ Classification: **LK Product Extension · Operations Dashboard**. 루트 `DESIGN
 - `side-first`: SideNav header가 `Lockup`과 제품 이름을 소유하고 TopBar는 workspace/project 맥락과 검색·알림·도움말 같은 전역 utility만 제공합니다.
 - `UserMenu`는 SideNav footer 계약을 기본으로 합니다. 같은 브랜드·목적지·계정을 TopBar와 SideNav에 반복하지 않습니다.
 
+### 모바일 드로어 표면
+
+- `temporaryNavigationAppearance="brand"`는 `temporaryNavigation` Drawer의 골격(제목 행, 닫기 버튼, divider, 본문)까지 네이비 브랜드 표면으로 렌더링합니다. 기본값은 `"default"`로 기존 출력과 동일합니다.
+- 어두운 셸을 모바일에서 이어가려면 세 표면을 함께 지정합니다: `TopBar dark` + `temporaryNavigationAppearance="brand"` + `SideNav appearance="brand"`. 하나라도 빠지면 "네이비 masthead → 흰 타이틀 바 → 네이비 내비 패널"로 표면이 끊깁니다.
+- 이 축은 `Drawer appearance`를 그대로 전달할 뿐이며 Drawer의 anatomy, focus/Escape, portal 계약은 바뀌지 않습니다. 자식 `SideNav`의 `appearance`를 훔쳐보고 자동으로 맞추지 않습니다 — 셸의 표면 결정은 명시적 prop으로 남깁니다.
+
 ### 외부 기준과 적용 결론
 
 - [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/) — 지속적인 header, 선택적인 left panel, product→global 순서를 분리하고 좁은 폭에서는 header link를 left navigation으로 이동합니다. LDS 셸도 header와 제품 탐색을 별도 슬롯으로 유지합니다.

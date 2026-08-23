@@ -1,9 +1,9 @@
 "use client";
 import {
   Tabs
-} from "../../chunk-GJKQ37EV.js";
+} from "../../chunk-7HOZNA53.js";
 import "../../chunk-A2U7YIGP.js";
-import "../../chunk-S26PXDE3.js";
+import "../../chunk-IKUN5X7H.js";
 export {
   Tabs
 };

@@ -36,6 +36,28 @@ const [col, setCol] = React.useState(false);
   아래로 flip하고 좌우 viewport를 clamp하지만, 이 배치 차이는 계정 메뉴의 고정 위치 때문에 유지합니다.
 - Menu shell은 Dropdown Menu와 같은 elevated surface, r16, 8px/20px padding, shadow-md를 사용합니다.
 
+## 두 표면의 대비 계약
+
+`UserMenu`는 한 컴포넌트가 **서로 다른 두 표면**에 걸쳐 있습니다. trigger는 호스트
+사이드바 footer 위(=`SideNav appearance="brand"`면 네이비 다크 셸), 팝업 패널은 언제나
+자신의 밝은 elevated 표면입니다. 따라서 각 표면이 독립적으로 대비를 만족해야 합니다.
+
+| 요소 | 토큰 | 기본 대비 | brand footer 대비 |
+| --- | --- | --- | --- |
+| trigger 이름 | `--component-user-menu-label` → `label-normal` | 17.9:1 | 18.5:1 (white on `#05132B`) |
+| trigger 상세·셰브론 | `--component-user-menu-detail`·`-indicator` | — | 7.5:1 |
+| trigger 열림 배경 | `--component-user-menu-open-surface` | `primary-surface-normal` | brand hover surface |
+| 팝업 일반 항목 | `--color-semantic-label-normal` | 17.9:1 | 동일(팝업은 항상 밝은 표면) |
+| 팝업 danger 항목 | `--color-semantic-status-negative-text` | 7.0:1 | 동일 |
+
+- **호스트는 `--color-semantic-label-*`를 재매핑하지 않습니다.** 팝업은 trigger와 같은
+  DOM 스코프의 자손이므로 그 반전을 그대로 상속받아, 밝은 패널 위에 흰 글자(대비 1:1)를
+  그리게 됩니다. 다크 표면에 얹을 때는 위 `--component-user-menu-*` 토큰만 재정의하세요.
+- `SideNav appearance="brand"`는 footer 스코프에 이 네 토큰을 자동으로 심습니다. 소비 측
+  추가 CSS는 필요 없습니다.
+- danger 잉크는 상태 색상(`--color-semantic-status-negative`, 흰 배경에서 3.44:1로 AA 미달)이
+  아니라 `DropdownMenu`와 같은 on-light 텍스트 토큰을 씁니다.
+
 ### 외부 기준과 적용 결론
 
 - [WAI-ARIA Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) — trigger의

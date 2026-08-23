@@ -11,6 +11,15 @@ import { useFloatingPosition } from '../overlay/anchored-overlay.js';
  * to avatar-only (name becomes the tooltip) for SideNav's icon-rail state.
  * Menu items reuse the DropdownMenu item shape (label · icon · onClick ·
  * danger · disabled · divider). Designed for the SideNav `footer` slot.
+ *
+ * Two surfaces, two contrast problems. The trigger sits on whatever the sidebar
+ * footer is — a dark brand shell in SideNav `appearance="brand"` — while the
+ * popup is always its own light elevated panel. So the trigger reads its
+ * foregrounds from `--component-user-menu-label|detail|indicator|open-surface`,
+ * which a dark host remaps in the footer scope, and the panel keeps the plain
+ * semantic label scale. Hosts must not remap `--color-semantic-label-*` to get a
+ * legible trigger: the popup is a descendant of the trigger's scope and would
+ * inherit the inversion, rendering white text on the white panel.
  */
 export function UserMenu({ name, detail, src, status, items = [], collapsed = false, viewportPadding = 12, style, ...rest }) {
   const [open, setOpen] = React.useState(false);
@@ -66,7 +75,7 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
                 onClick={() => { closeMenu({ restoreFocus: true }); it.onClick?.(); }}
                 onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(-1)}
                 onFocus={() => setHov(i)} onBlur={() => setHov((current) => (current === i ? -1 : current))}
-                style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2-5)', width: '100%', padding: '8px 10px', border: 'none', borderRadius: 'var(--radius-8)', cursor: it.disabled ? 'not-allowed' : 'pointer', opacity: it.disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', letterSpacing: 0, background: hov === i && !it.disabled ? 'var(--component-menu-item-hover-bg)' : 'transparent', color: it.danger ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-label-normal)', transition: 'background var(--dur-fast) var(--ease-out)' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2-5)', width: '100%', padding: '8px 10px', border: 'none', borderRadius: 'var(--radius-8)', cursor: it.disabled ? 'not-allowed' : 'pointer', opacity: it.disabled ? 0.45 : 1, textAlign: 'left', fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', letterSpacing: 0, background: hov === i && !it.disabled ? 'var(--component-menu-item-hover-bg)' : 'transparent', color: it.danger ? 'var(--color-semantic-status-negative-text)' : 'var(--color-semantic-label-normal)', transition: 'background var(--dur-fast) var(--ease-out)' }}>
                 {it.icon != null && <span style={{ flexShrink: 0, display: 'inline-flex', color: it.danger ? 'inherit' : 'var(--color-semantic-label-alternative)' }}>{it.icon}</span>}
                 <span style={{ flex: 1, minWidth: 0 }}>{it.label}</span>
               </button>
@@ -75,16 +84,16 @@ export function UserMenu({ name, detail, src, status, items = [], collapsed = fa
       )}
       <button ref={triggerRef} id={triggerId} type="button" aria-haspopup="menu" aria-expanded={open} aria-controls={open ? menuId : undefined} title={collapsed && typeof name === 'string' ? name : undefined}
         onClick={toggleMenu} onKeyDown={handleTriggerKeyDown}
-        style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: 'var(--space-2-5)', width: '100%', padding: collapsed ? '6px 0' : '6px 8px', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)', cursor: 'pointer', textAlign: 'left', fontFamily: 'var(--font-sans)', background: open ? 'var(--color-semantic-primary-surface-normal)' : 'transparent', transition: 'background var(--dur-fast) var(--ease-out)' }}>
+        style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: 'var(--space-2-5)', width: '100%', padding: collapsed ? '6px 0' : '6px 8px', boxSizing: 'border-box', border: 'none', borderRadius: 'var(--radius-lg)', cursor: 'pointer', textAlign: 'left', fontFamily: 'var(--font-sans)', background: open ? 'var(--component-user-menu-open-surface, var(--color-semantic-primary-surface-normal))' : 'transparent', transition: 'background var(--dur-fast) var(--ease-out)' }}>
         <Avatar name={typeof name === 'string' ? name : undefined} src={src} status={status} size={30} style={{ flexShrink: 0 }} />
         {!collapsed && (
           <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-0-5)' }}>
-            <span style={{ fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--color-semantic-label-normal, var(--color-semantic-label-normal))', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
-            {detail != null && <span style={{ fontSize: 'var(--caption1-size)', color: 'var(--color-semantic-label-alternative)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{detail}</span>}
+            <span style={{ fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: 'var(--component-user-menu-label, var(--color-semantic-label-normal))', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</span>
+            {detail != null && <span style={{ fontSize: 'var(--caption1-size)', color: 'var(--component-user-menu-detail, var(--color-semantic-label-alternative))', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{detail}</span>}
           </span>
         )}
         {!collapsed && (
-          <Icon name="chevron-up-small" size={14} color="var(--color-semantic-label-assistive)" aria-hidden="true" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }} />
+          <Icon name="chevron-up-small" size={14} color="var(--component-user-menu-indicator, var(--color-semantic-label-assistive))" aria-hidden="true" style={{ flexShrink: 0, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }} />
         )}
       </button>
     </div>

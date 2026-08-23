@@ -10,11 +10,36 @@ import { OverlayPortal } from '@lk-design-system/lds-core/platform';
  * A side panel that slides in over a navy scrim (filters, detail, settings).
  * `side` right/left; header (title + close), scrollable body, optional footer.
  * Controlled via `open`; Esc / scrim-click close.
+ *
+ * `appearance="brand"` paints the whole panel — chrome included — on the navy
+ * brand surface. A mobile shell that carries a dark masthead and a brand SideNav
+ * otherwise breaks its surface twice (navy masthead → white drawer title bar →
+ * navy nav panel), and the host cannot reach the title or close button to fix it.
+ * The container colour is the Drawer's to own, the same way M3's modal drawer
+ * sheet exposes `drawerContainerColor`/`drawerContentColor` on the component.
  */
+const DRAWER_APPEARANCES = {
+  default: {
+    surface: 'var(--color-semantic-background-elevated-normal)',
+    divider: 'var(--color-semantic-line-solid-normal)',
+    title: 'var(--color-semantic-label-normal)',
+    body: 'var(--color-semantic-label-neutral)',
+    closeVariant: 'plain',
+  },
+  brand: {
+    surface: 'var(--color-semantic-brand-surface)',
+    divider: 'var(--color-semantic-brand-on-surface-border)',
+    title: 'var(--color-semantic-brand-on-surface)',
+    body: 'var(--color-semantic-brand-on-surface-muted)',
+    closeVariant: 'on-dark',
+  },
+};
+
 export function Drawer({
   open = false,
   side = 'right',
   width = 380,
+  appearance = 'default',
   density = 'comfortable',
   title,
   subtitle,
@@ -34,6 +59,7 @@ export function Drawer({
   style,
   ...rest
 }) {
+  const tones = DRAWER_APPEARANCES[appearance] || DRAWER_APPEARANCES.default;
   const [shown, setShown] = React.useState(false);
   const titleId = React.useId();
   const subtitleId = React.useId();
@@ -77,27 +103,27 @@ export function Drawer({
         aria-describedby={subtitle != null ? subtitleId : undefined}
         aria-label={title == null ? ariaLabel : undefined}
         tabIndex={-1}
-        style={{ position: 'absolute', top: 0, bottom: 0, [isRight ? 'right' : 'left']: 0, width, maxWidth: '92vw', display: 'flex', flexDirection: 'column', background: 'var(--color-semantic-background-elevated-normal)', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', transform: shown ? 'none' : hidden, transition: 'transform var(--dur-slow) var(--ease-out)', ...style }}
+        style={{ position: 'absolute', top: 0, bottom: 0, [isRight ? 'right' : 'left']: 0, width, maxWidth: '92vw', display: 'flex', flexDirection: 'column', background: tones.surface, boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', transform: shown ? 'none' : hidden, transition: 'transform var(--dur-slow) var(--ease-out)', ...style }}
         {...rest}
         data-density={resolvedDensity}
       >
         {(title != null || subtitle != null || onClose) && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: isCompact ? 'var(--component-drawer-header-padding-compact, var(--space-4) var(--space-5))' : 'var(--component-drawer-header-padding-comfortable, var(--space-5) var(--space-6))', borderBottom: '1px solid var(--color-semantic-line-solid-normal)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: isCompact ? 'var(--component-drawer-header-padding-compact, var(--space-4) var(--space-5))' : 'var(--component-drawer-header-padding-comfortable, var(--space-5) var(--space-6))', borderBottom: `1px solid ${tones.divider}` }}>
             <div style={{ flex: 1, minWidth: 0, display: 'grid', gap: 'var(--space-1)' }}>
-              {title != null && <div id={titleId} style={{ fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: 'var(--color-semantic-label-normal)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>}
-              {subtitle != null && <div id={subtitleId} style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-reading-line)', overflowWrap: 'anywhere' }}>{subtitle}</div>}
+              {title != null && <div id={titleId} style={{ fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: tones.title, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>}
+              {subtitle != null && <div id={subtitleId} style={{ color: tones.body, fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-reading-line)', overflowWrap: 'anywhere' }}>{subtitle}</div>}
             </div>
             {onClose && (
-              <IconButton size="sm" variant="plain" label={closeLabel} onClick={onClose}>
+              <IconButton size="sm" variant={tones.closeVariant} label={closeLabel} onClick={onClose}>
                 <Icon name="close" size={20} aria-hidden="true" />
               </IconButton>
             )}
           </div>
         )}
-        <div className="lk-scroll-surface" data-scrollbar="auto" data-scroll-gutter="stable" style={{ flex: 1, padding: isCompact ? 'var(--component-drawer-body-padding-compact, var(--space-4) var(--space-5))' : 'var(--component-drawer-body-padding-comfortable, var(--space-5) var(--space-6))', overflow: 'auto', scrollbarGutter: 'stable', fontSize: isCompact ? 'var(--label1-size)' : 'var(--body2-size)', lineHeight: isCompact ? 'var(--label1-line)' : 1.7, letterSpacing: isCompact ? 'var(--label1-spacing)' : undefined, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all', ...bodyStyle }}>
+        <div className="lk-scroll-surface" data-scrollbar="auto" data-scroll-gutter="stable" style={{ flex: 1, padding: isCompact ? 'var(--component-drawer-body-padding-compact, var(--space-4) var(--space-5))' : 'var(--component-drawer-body-padding-comfortable, var(--space-5) var(--space-6))', overflow: 'auto', scrollbarGutter: 'stable', fontSize: isCompact ? 'var(--label1-size)' : 'var(--body2-size)', lineHeight: isCompact ? 'var(--label1-line)' : 1.7, letterSpacing: isCompact ? 'var(--label1-spacing)' : undefined, color: tones.body, wordBreak: 'keep-all', ...bodyStyle }}>
           <ComponentDensityScope density={resolvedDensity}>{children}</ComponentDensityScope>
         </div>
-        {footer != null && <div style={{ padding: isCompact ? 'var(--component-drawer-footer-padding-compact, var(--space-3) var(--space-5))' : 'var(--component-drawer-footer-padding-comfortable, var(--space-4) var(--space-6))', borderTop: '1px solid var(--color-semantic-line-solid-normal)', display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)' }}>{footer}</div>}
+        {footer != null && <div style={{ padding: isCompact ? 'var(--component-drawer-footer-padding-compact, var(--space-3) var(--space-5))' : 'var(--component-drawer-footer-padding-comfortable, var(--space-4) var(--space-6))', borderTop: `1px solid ${tones.divider}`, display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)' }}>{footer}</div>}
       </div>
     </div>
     </OverlayPortal>

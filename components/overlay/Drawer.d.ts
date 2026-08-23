@@ -7,6 +7,8 @@ export interface DrawerProps {
   side?: 'left' | 'right';
   /** 패널 너비(px). @default 380 */
   width?: number;
+  /** 패널 표면. "brand"는 chrome(제목 행·닫기 버튼·구분선·본문)까지 네이비 브랜드 표면으로 렌더링합니다. 어두운 masthead와 brand SideNav를 함께 쓰는 모바일 셸에서 표면이 끊기지 않게 합니다. @default "default" */
+  appearance?: 'default' | 'brand';
   /** Drawer의 chrome/body 밀도. body의 density-aware 자식은 이를 상속하며 명시적 size/padding/density가 우선합니다. @default "comfortable" */
   density?: 'comfortable' | 'compact';
   title?: React.ReactNode;

@@ -28,7 +28,14 @@ export function ProductLockup({
 }) {
   const entry = PRODUCT_LOCKUP_REGISTRY[product];
   if (!entry) {
-    throw new TypeError(`Unsupported ProductLockup product ${JSON.stringify(product)}. Use an approved registry key.`);
+    // Name the approved keys and the intake procedure: the failure a product hits
+    // here is "my product is not registered yet", and the next step is a brand
+    // approval, not a code change at the call site.
+    const approved = Object.keys(PRODUCT_LOCKUP_REGISTRY).map((key) => JSON.stringify(key)).join(' | ');
+    throw new TypeError(
+      `Unsupported ProductLockup product ${JSON.stringify(product)}. Approved registry keys are ${approved}. `
+      + 'Register a new product through docs/brand/LK_PRODUCT_LOCKUP_STANDARD.md section 9; do not compose a lockup from live text.',
+    );
   }
 
   const resolvedTone = appearance === 'reverse' ? 'white' : 'ink';

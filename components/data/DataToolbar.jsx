@@ -2,6 +2,11 @@ import React from 'react';
 import { SearchField } from '../forms/SearchField.jsx';
 import { componentVars, partClassName, partStyle } from '../internal/surface.js';
 
+// The count copy is Korean-fixed ("개"), so its digits are grouped with the same
+// pinned locale instead of following the host environment. Ungrouped totals such
+// as `3941개` are hard to size up at a glance in a collection header.
+const formatCount = (count) => (typeof count === 'number' && Number.isFinite(count) ? count.toLocaleString('ko-KR') : count);
+
 /**
  * LK PRODUCT — DataToolbar
  * Header/controls bar for DataGrid and Table surfaces: title, result count,
@@ -83,7 +88,7 @@ export const DataToolbar = React.forwardRef(function DataToolbar({
             {(title != null || count != null) && (
               <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: 'var(--space-2)', minWidth: 0 }}>
                 {title != null && <strong data-slot="title" className={partClassName(classNames, 'title') || undefined} style={{ color: 'var(--color-semantic-label-strong)', fontSize: compact ? 'var(--body2-size)' : 'var(--body1-size)', fontWeight: 'var(--fw-semibold)', lineHeight: compact ? 'var(--body2-line)' : 'var(--body1-line)', ...partStyle(styles, 'title') }}>{title}</strong>}
-                {count != null && <span data-slot="count" className={partClassName(classNames, 'count') || undefined} style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', ...partStyle(styles, 'count') }}>{count}개</span>}
+                {count != null && <span data-slot="count" className={partClassName(classNames, 'count') || undefined} style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-medium)', fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', ...partStyle(styles, 'count') }}>{formatCount(count)}개</span>}
               </div>
             )}
             {description != null && <span data-slot="description" className={partClassName(classNames, 'description') || undefined} style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', overflowWrap: 'anywhere', ...partStyle(styles, 'description') }}>{description}</span>}

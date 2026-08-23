@@ -1,8 +1,8 @@
 "use client";
 import {
   ColorSwatch
-} from "../../chunk-PCU5EPP2.js";
-import "../../chunk-S26PXDE3.js";
+} from "../../chunk-INVV3XUE.js";
+import "../../chunk-IKUN5X7H.js";
 export {
   ColorSwatch
 };

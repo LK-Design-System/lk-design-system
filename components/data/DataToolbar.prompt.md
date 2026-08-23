@@ -32,9 +32,11 @@ Classification: **LK Product Extension**. 선택 상태와 bulk action은 `DataG
 - `vars` accepts only `--lds-data-toolbar-padding`, `--lds-data-toolbar-gap`, and `--lds-data-toolbar-search-max-width`; it does not add selection or pagination ownership.
 
 - 검색은 제어/비제어 모두 가능합니다. `searchValue`와 `onSearchChange`를 주면 제어됩니다.
+- `count`는 ko-KR 천 단위 구분으로 렌더링됩니다(`count={3941}` → `3,941개`). 결과 수 copy가 한국어로 고정된 표면이므로 grouping locale도 host 환경을 따르지 않고 함께 고정합니다. 숫자가 아닌 값은 그대로 통과시킵니다.
 - `filters`는 query를 좁히는 chip/menu 슬롯, `actions`는 열 표시·순서 설정 trigger, 내보내기 같은 전체 표 action 슬롯입니다. `filters`에 함수를 주면 `{ size }`를 받아 검색과 같은 field control 밀도를 `Select`·`SearchField` 같은 자식에게 전달할 수 있습니다. 기존 ReactNode 슬롯도 그대로 지원합니다. 설정 UI와 저장 상태는 제품이 소유하고 `visibleColumnKeys`/`columnOrder`로 DataGrid에 전달합니다.
 - 여러 필터의 host는 자식의 `max-content` 폭을 우선 보존하고 툴바 가용 폭으로 상한을 둡니다. 검색과 필터 합계가 control 행에 들어가면 한 줄을 유지하고, 실제 공간이 부족할 때만 필터 host가 다음 줄로 이동한 뒤 내부 control을 감쌉니다. 제품별 breakpoint나 고정 필터 폭은 DataToolbar가 소유하지 않습니다.
-- `size="sm"`은 검색과 render-prop filter control에 32px compact 밀도를, 기본 `md`는 48px field 밀도를 제공합니다. action용 Button 척도와 field 척도는 전역에서 합치지 않습니다. `FilterChip`은 고유 32px pill 높이를 유지하며 control 행 중앙에 정렬됩니다.
+- `size="sm"`은 검색과 render-prop filter control에 `--control-h-sm`(32px) compact 밀도를, 기본 `md`는 `--component-input-height` field 밀도(default 48px, `ops` 40px)를 제공합니다. `SearchField`·`Select`·`Input` 계열은 모두 이 토큰을 통해 해석되므로 profile을 바꿔도 한 행에서 서로 어긋나지 않습니다.
+- `{ size }` context는 **field 밀도**입니다. action용 `Button` 척도(`--component-button-height-*`)와 field 척도는 전역에서 합치지 않으므로, 같은 `size`를 `Button`에 그대로 넘겨도 높이는 일치하지 않습니다(의도된 분리). 필터 행의 `Button`은 control 행 중앙 정렬로 두고, 필드 높이에 실제로 맞물려야 하는 field+action 조합은 `FieldAction`이 소유합니다. `FilterChip`은 고유 32px pill 높이를 유지하며 control 행 중앙에 정렬됩니다.
 
 Flex sizing 근거는 [CSS Flexible Box Layout Module Level 1](https://www.w3.org/TR/css-flexbox-1/#flexibility)의 content-based flex basis와 automatic minimum size, [MDN의 flex item wrapping 안내](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout/Wrapping_items)의 “전체 item 폭이 컨테이너보다 클 때 wrap” 원칙입니다. LDS는 이 원칙을 `width: max-content`, `max-width: 100%`, `min-width: 0` 조합으로 적용해 intrinsic 폭 보존과 협소 폭 축소를 분리합니다.
 - `selectedCount`와 `bulkActions`는 DataToolbar props가 아닙니다. 선택 수, 선택 해제, bulk action은 DataGrid의 같은 높이 selection band에 둡니다.

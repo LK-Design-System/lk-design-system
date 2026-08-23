@@ -2,6 +2,15 @@ import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
 import { PageIndicator } from '../navigation/PageIndicator.jsx';
 
+/* `inert` only became a first-class boolean DOM prop in React 19. React 18 — a
+   supported peer (`react: ">=18 <20"`) — treats it as an unknown attribute,
+   warns "Received `true` for a non-boolean attribute `inert`", and then drops
+   it, so an off-screen slide stays reachable by Tab. React 19 in turn drops
+   `inert=""` and warns on `inert="true"`, so no single literal is correct on
+   both majors; resolve the value from the running React instead. */
+const INERT_VALUE = Number.parseInt(React.version, 10) >= 19 ? true : 'true';
+const inertWhen = (isInert) => (isInert ? INERT_VALUE : undefined);
+
 const hiddenStyle = { position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap', border: 0 };
 
 /* The track slide is an inline transition, so a plain
@@ -181,7 +190,7 @@ export function Carousel({
               aria-roledescription="slide"
               aria-label={slideName(idx)}
               aria-hidden={current ? undefined : true}
-              inert={current ? undefined : true}
+              inert={inertWhen(!current)}
               data-carousel-slide={current ? 'current' : 'offscreen'}
               style={{ flex: '0 0 100%', minWidth: '100%' }}
             >

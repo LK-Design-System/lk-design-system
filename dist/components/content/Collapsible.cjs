@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkQ4HVRKZPcjs = require('../../chunk-Q4HVRKZP.cjs');
-require('../../chunk-F72KSGF7.cjs');
+var _chunkAHWXAZZKcjs = require('../../chunk-AHWXAZZK.cjs');
+require('../../chunk-7OXVB7WX.cjs');
 
 
-exports.Collapsible = _chunkQ4HVRKZPcjs.Collapsible;
+exports.Collapsible = _chunkAHWXAZZKcjs.Collapsible;
 //# sourceMappingURL=Collapsible.cjs.map

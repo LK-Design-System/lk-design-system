@@ -1,6 +1,15 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
 
+/* `inert` only became a first-class boolean DOM prop in React 19. React 18 — a
+   supported peer (`react: ">=18 <20"`) — treats it as an unknown attribute,
+   warns "Received `true` for a non-boolean attribute `inert`", and then drops
+   it, so a collapsed panel stays reachable by Tab. React 19 in turn drops
+   `inert=""` and warns on `inert="true"`, so no single literal is correct on
+   both majors; resolve the value from the running React instead. */
+const INERT_VALUE = Number.parseInt(React.version, 10) >= 19 ? true : 'true';
+const inertWhen = (isInert) => (isInert ? INERT_VALUE : undefined);
+
 /**
  * LK ROBOTICS — Accordion
  * Disclosure list for FAQs / spec groups. Hairline rows; the open header takes
@@ -79,7 +88,7 @@ export function Accordion({ items = [], multiple = false, defaultOpen = [], head
                 <Icon name="chevron-down-small" size={20} aria-hidden="true" style={{ flexShrink: 0, transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-base) var(--ease-out)' }} />
               </button>
             </HeadingTag>
-            <div id={panelId} role="region" aria-labelledby={triggerId} inert={isOpen ? undefined : true} style={{ display: 'grid', gridTemplateRows: isOpen ? '1fr' : '0fr', transition: 'grid-template-rows var(--dur-base) var(--ease-out)' }}>
+            <div id={panelId} role="region" aria-labelledby={triggerId} inert={inertWhen(!isOpen)} style={{ display: 'grid', gridTemplateRows: isOpen ? '1fr' : '0fr', transition: 'grid-template-rows var(--dur-base) var(--ease-out)' }}>
               <div style={{ overflow: 'hidden' }}>
                 <div style={{ padding: '0 4px 20px', fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>
                   {it.content}
