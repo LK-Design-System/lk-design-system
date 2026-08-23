@@ -13,10 +13,7 @@ function variantStyle(variant, palette) {
   }
   return {
     padding: '14px 16px',
-    borderTop: `1px solid ${palette.border}`,
-    borderRight: `1px solid ${palette.border}`,
-    borderBottom: `1px solid ${palette.border}`,
-    borderLeft: `1px solid ${palette.border}`,
+    border: 'none',
     borderRadius: 'var(--radius-lg)',
   };
 }
@@ -24,7 +21,7 @@ function variantStyle(variant, palette) {
 /**
  * LDS Core — Banner
  * An inline notice bar — a tinted surface, a tonal leading icon, a message and
- * optional trailing action / close. Calm, hairline-bordered. For a floating
+ * optional trailing action / close. Calm and borderless. For a floating
  * transient message use Toast.
  */
 export function Banner({ tone = 'signal', variant = 'standalone', title, children, action, onClose, closeLabel = '닫기', style, ...rest }) {

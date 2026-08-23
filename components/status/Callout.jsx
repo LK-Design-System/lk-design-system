@@ -19,7 +19,7 @@ function normalizeIcon(icon, fallbackIcon) {
 
 /**
  * LK ROBOTICS — Callout
- * An emphasized note block with a tonal icon, soft surface, and tonal hairline.
+ * An emphasized note block with a tonal icon and soft, borderless surface.
  * For guidance, tips, and important standing notes in body content.
  *
  * Deliberately outranks Banner in the same tone: block padding instead of bar
@@ -54,7 +54,7 @@ export function Callout({ tone = 'signal', title, headingLevel = false, children
         padding: compact ? 'var(--space-3) var(--space-4)' : 'var(--space-5) var(--space-6)',
         boxSizing: 'border-box',
         background: palette.surface,
-        border: `1px solid ${palette.border}`,
+        border: 'none',
         borderRadius: 'var(--radius-xl)',
         boxShadow: 'none',
         fontFamily: 'var(--font-sans)',

@@ -13,5 +13,5 @@ export interface CalloutProps extends Omit<React.HTMLAttributes<HTMLDivElement>,
   children?: React.ReactNode;
 }
 
-/** tone별 아이콘과 얇은 전체 테두리를 항상 제공하는 강조 노트 블록 — 안내 / 팁. */
+/** tone별 아이콘과 외곽선 없는 tint 표면을 제공하는 강조 노트 블록 — 안내 / 팁. */
 export function Callout(props: CalloutProps): React.JSX.Element;

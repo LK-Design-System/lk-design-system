@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "f2a1f4df45a46516735bdbcde03929f7a7f46d9b878a4b92d4f6da2af728d405",
+  "sourceFingerprint": "621f01e0183117e54138caffedd43695f6076e3eaaba3e9e2de626b0cec9d7cc",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -30731,6 +30731,14 @@
       ],
       "externalReferences": [
         {
+          "label": "Atlassian Banner와 Section Message",
+          "url": "https://atlassian.design/foundations/content/designing-messages/"
+        },
+        {
+          "label": "MUI Alert의 기본 standard 변형",
+          "url": "https://mui.com/material-ui/react-alert/#variants"
+        },
+        {
           "label": "Primer Banner",
           "url": "https://primer.style/product/components/banner/"
         },
@@ -30747,7 +30755,7 @@
           "url": "https://carbondesignsystem.com/components/notification/usage/"
         }
       ],
-      "promptSha256": "e3bd2976d7a976a987a49bab87328570a8e7665c3a60fafaf7353459df5fb549"
+      "promptSha256": "320022aff5d9fe9067d32d3525d5c080d52dd396c8ffb088af6cbac735977193"
     },
     {
       "id": "callout",
@@ -30863,7 +30871,7 @@
           "url": "https://developer.gnome.org/hig/patterns/feedback/banners.html"
         }
       ],
-      "promptSha256": "37571a4f24b0274a310a6988d79d6ee8976f70b2ded99ee25da58c7959387b83"
+      "promptSha256": "b70f1826c023b11e4b8cd1a77595b5d959517c8736f06c5b3024b5759ae15581"
     },
     {
       "id": "circular-progress",
@@ -49760,7 +49768,8 @@
       "purpose": "시스템 변화와 선택적 행동을 알려야 할 때는 Banner가, 본문 맥락에 남는 절차·주의에는 Callout이 적합합니다. 짧게 사라지는 완료 피드백에는 이 패턴을 사용하지 말고 Toast 또는 Snackbar를 사용하세요.",
       "useWhen": [],
       "avoidWhen": [
-        "Primer Banner의 card 안 flush 배치처럼, 컨테이너 상태는 별도의 둥근 카드로 중첩하지 않고 부모 표면의 폭에 결합합니다. LDS에서는 이를 variant=\"embedded\"로 명시합니다.",
+        "Atlassian Banner와 Section Message 및 MUI Alert의 기본 standard 변형처럼, 독립형 상태 알림은 톤 배경·아이콘·텍스트만으로 식별하고 전체 외곽선을 기본 시각 문법으로 사용하지 않습니다. LDS는 이 낮은 chrome 방향을 기본 계약으로 정하고 별도 outlined 축을 추가하지 않습니다.",
+        "Primer Banner의 card 안 flush 배치처럼, 컨테이너 상태는 별도의 둥근 카드로 중첩하지 않고 부모 표면의 폭에 결합합니다. LDS에서는 이를 variant=\"embedded\"로 명시합니다. Primer의 독립형 전체 외곽선은 채택하지 않고, 결합형의 상·하단 구조 구분선만 적용합니다.",
         "Carbon Notification usage가 notification과 callout을 목적·지속성·상호작용으로 구분하는 것처럼, LDS도 시각적 강조 정도가 아니라 동적 상태와 액션 여부로 Banner를 선택합니다. 외부 스타일을 복제하지 않고 LDS의 status tone, spacing, radius를 유지합니다."
       ],
       "anatomy": [
@@ -49891,7 +49900,7 @@
       "behavior": [
         "tone 아이콘은 공통 Icon registry의 statusToneStyle 글리프(circle-info-fill, circle-check-fill, triangle-exclamation-fill, circle-close-fill)를 사용합니다. severity 글리프를 인라인 SVG로 새로 그리지 않습니다 — 같은 상태는 Callout·ValidationSummary와 같은 모양으로 표시되어야 합니다.",
         "GNOME HIG Banners의 현재 view에 지속되는 중요 상태 패턴을 반영해, dialog를 열 정도는 아니지만 사용자가 다음 행동 전에 알아야 하는 상태에 Banner를 씁니다.",
-        "Banner — 현재 화면에서 동적으로 변하는 시스템 상태를 알리는 인라인 공지 바(틴트 서피스, 톤 아이콘, 메시지, 선택적 액션/닫기)."
+        "Banner — 현재 화면에서 동적으로 변하는 시스템 상태를 알리는 인라인 공지 바(외곽선 없는 틴트 서피스, 톤 아이콘, 메시지, 선택적 액션/닫기)."
       ],
       "quantitativeRules": [
         {
@@ -50019,6 +50028,14 @@
         {
           "label": "Storybook implementation evidence",
           "path": "stories/StatusFeedback.stories.jsx"
+        },
+        {
+          "label": "Atlassian Banner와 Section Message",
+          "url": "https://atlassian.design/foundations/content/designing-messages/"
+        },
+        {
+          "label": "MUI Alert의 기본 standard 변형",
+          "url": "https://mui.com/material-ui/react-alert/#variants"
         },
         {
           "label": "Primer Banner",

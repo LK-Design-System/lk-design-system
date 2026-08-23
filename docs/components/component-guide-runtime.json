@@ -15105,7 +15105,8 @@
       "purpose": "시스템 변화와 선택적 행동을 알려야 할 때는 Banner가, 본문 맥락에 남는 절차·주의에는 Callout이 적합합니다. 짧게 사라지는 완료 피드백에는 이 패턴을 사용하지 말고 Toast 또는 Snackbar를 사용하세요.",
       "useWhen": [],
       "avoidWhen": [
-        "Primer Banner의 card 안 flush 배치처럼, 컨테이너 상태는 별도의 둥근 카드로 중첩하지 않고 부모 표면의 폭에 결합합니다. LDS에서는 이를 variant=\"embedded\"로 명시합니다.",
+        "Atlassian Banner와 Section Message 및 MUI Alert의 기본 standard 변형처럼, 독립형 상태 알림은 톤 배경·아이콘·텍스트만으로 식별하고 전체 외곽선을 기본 시각 문법으로 사용하지 않습니다. LDS는 이 낮은 chrome 방향을 기본 계약으로 정하고 별도 outlined 축을 추가하지 않습니다.",
+        "Primer Banner의 card 안 flush 배치처럼, 컨테이너 상태는 별도의 둥근 카드로 중첩하지 않고 부모 표면의 폭에 결합합니다. LDS에서는 이를 variant=\"embedded\"로 명시합니다. Primer의 독립형 전체 외곽선은 채택하지 않고, 결합형의 상·하단 구조 구분선만 적용합니다.",
         "Carbon Notification usage가 notification과 callout을 목적·지속성·상호작용으로 구분하는 것처럼, LDS도 시각적 강조 정도가 아니라 동적 상태와 액션 여부로 Banner를 선택합니다. 외부 스타일을 복제하지 않고 LDS의 status tone, spacing, radius를 유지합니다."
       ],
       "anatomy": [
@@ -15236,7 +15237,7 @@
       "behavior": [
         "tone 아이콘은 공통 Icon registry의 statusToneStyle 글리프(circle-info-fill, circle-check-fill, triangle-exclamation-fill, circle-close-fill)를 사용합니다. severity 글리프를 인라인 SVG로 새로 그리지 않습니다 — 같은 상태는 Callout·ValidationSummary와 같은 모양으로 표시되어야 합니다.",
         "GNOME HIG Banners의 현재 view에 지속되는 중요 상태 패턴을 반영해, dialog를 열 정도는 아니지만 사용자가 다음 행동 전에 알아야 하는 상태에 Banner를 씁니다.",
-        "Banner — 현재 화면에서 동적으로 변하는 시스템 상태를 알리는 인라인 공지 바(틴트 서피스, 톤 아이콘, 메시지, 선택적 액션/닫기)."
+        "Banner — 현재 화면에서 동적으로 변하는 시스템 상태를 알리는 인라인 공지 바(외곽선 없는 틴트 서피스, 톤 아이콘, 메시지, 선택적 액션/닫기)."
       ],
       "quantitativeRules": [
         {
