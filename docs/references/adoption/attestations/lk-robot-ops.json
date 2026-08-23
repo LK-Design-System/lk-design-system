@@ -43,6 +43,6 @@
     "ops/lk_robot_ops/frontend/e2e/products/ops-console.spec.ts",
     "ops/lk_robot_ops/frontend/playwright.ops.config.ts",
     "ops/lk_robot_ops/.github/workflows/lds-r2.yml",
-    "ops/lk_robot_ops/docs/releases/2026-08-24-lds-stable-adoption-approval.md"
+    "shared/lk-design-system/docs/references/adoption/approvals/robot-ops-2026-08-24.md"
   ]
 }

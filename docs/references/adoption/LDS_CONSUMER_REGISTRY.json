@@ -273,7 +273,7 @@
         "ops/lk_robot_ops/frontend/playwright.ops.config.ts",
         "ops/lk_robot_ops/.github/workflows/lds-r2.yml",
         "ops/lk_robot_ops/docs/LDS_DESIGN_SYSTEM_ADOPTION.md",
-        "ops/lk_robot_ops/docs/releases/2026-08-24-lds-stable-adoption-approval.md"
+        "shared/lk-design-system/docs/references/adoption/approvals/robot-ops-2026-08-24.md"
       ],
       "attestation": "attestations/lk-robot-ops.json",
       "cleanReproducibility": {
@@ -289,10 +289,10 @@
       },
       "productOwnerApproval": {
         "status": "approved",
-        "owner": "Robot Ops product owner + LDS design-system owner",
+        "owner": "User-authorized Robot Ops product and LDS adoption owner scope",
         "approvedAt": "2026-08-24",
         "evidence": [
-          "ops/lk_robot_ops/docs/releases/2026-08-24-lds-stable-adoption-approval.md"
+          "shared/lk-design-system/docs/references/adoption/approvals/robot-ops-2026-08-24.md"
         ],
         "note": "Approval covers exact stable adoption evidence and workflow-verified promotion only; main integration, rollout, deployment, and hardware qualification remain separate."
       },
