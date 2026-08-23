@@ -1,0 +1,22 @@
+{
+  "$schema": "../LDS_CONSUMER_ATTESTATION.schema.json",
+  "schemaVersion": 2,
+  "kind": "lds-consumer-attestation",
+  "consumerId": "robot-ops",
+  "generatedAt": "2026-08-23",
+  "profile": "ops",
+  "sourceCommit": "6b196d3834c0b53ba8687f65b7e8c7cd18e8ac14",
+  "checks": [
+    {
+      "id": "identity-registration",
+      "status": "passed",
+      "command": "git ls-remote origin refs/heads/main",
+      "note": "The new repository identity and exact merged source commit were verified; this is not an adoption-stage promotion."
+    }
+  ],
+  "evidence": [
+    "ops/lk_robot_ops/.lds/adoption-report.json",
+    "ops/lk_robot_ops/docs/LDS_DESIGN_SYSTEM_ADOPTION.md",
+    "ops/lk_robot_ops/docs/plans/repo-split-s1/consumer-handoff.md"
+  ]
+}

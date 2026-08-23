@@ -8,10 +8,12 @@ import addFormats from 'ajv-formats';
 const DEFAULT_EXPECTED_REPOSITORIES = {
   portal: 'LK-ROBOTICS-AX/lk_portal',
   'web-viz': 'LK-ROBOTICS/lk_web_viz',
+  'robot-ops': 'LK-ROBOTICS/lk_robot_ops',
 };
 const CONSUMER_ROOTS = {
   portal: ['ops', 'lk-portal'],
   'web-viz': ['ops', 'lk_web_viz', 'frontend'],
+  'robot-ops': ['ops', 'lk_robot_ops', 'frontend'],
 };
 const LDS_PACKAGE_NAMES = [
   '@lk-design-system/lds-core',
@@ -19,6 +21,7 @@ const LDS_PACKAGE_NAMES = [
   '@lk-design-system/lds-product',
 ];
 const STAGE_CHECKS = {
+  registered: [],
   wired: ['install', 'sourceContract'],
   'build-verified': ['install', 'sourceContract', 'productionBuild'],
   'workflow-verified': [
@@ -347,7 +350,7 @@ export function validateConsumerAdoptionRegistry({
   const expectedIds = new Set(Object.keys(expectedRepositories));
   assert(
     registry.entries.length === expectedIds.size,
-    `registry must contain exactly ${[...expectedIds].join(' and ')} entries`,
+    `registry must contain exactly ${[...expectedIds].join(', ')} entries`,
   );
 
   const validateAttestation = compile(attestationSchema);
@@ -394,7 +397,7 @@ export function validateConsumerAdoptionRegistry({
         path.basename(item.artifactPath).includes(`-${item.version}.tgz`),
         `${entry.id} ${item.name} artifact path must include package version ${item.version}`,
       );
-      if (LDS_PACKAGE_NAMES.includes(item.name)) {
+      if (entry.stage !== 'registered' && LDS_PACKAGE_NAMES.includes(item.name)) {
         assert(item.version === registry.ldsVersion, `${entry.id} ${item.name} must match registry ldsVersion`);
       }
     }

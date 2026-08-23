@@ -57,7 +57,8 @@ Stable package 판정은 아래 조건만 닫는다.
 
 | Stage | 필수 passed check | 추가 gate |
 | --- | --- | --- |
-| `wired` | `install` · `sourceContract` | Core·Theme·Product pin과 current attestation |
+| `registered` | 없음 | 별도 repository/source/package identity만 기록하며 모든 adoption check는 `not-run` 또는 `blocked` |
+| `wired` | `install` · `sourceContract` | current stable Core·Theme·Product pin과 current attestation |
 | `build-verified` | wired 전체 · `productionBuild` | production artifact를 만드는 실제 제품 build |
 | `workflow-verified` | build 전체 · `workflowSmoke` · `accessibility` | clean-clone 재현, exact source commit, current product-owner 승인 |
 
@@ -108,8 +109,8 @@ entry와 같은 `sourceCommit`도 명시해야 한다.
 
 ## 갱신 절차
 
-1. 제품 owner가 고정 source commit과 package checksum을 선택한다.
-2. 같은 commit에서 install·source contract를 실행해 `wired` evidence를 만든다.
+1. 제품 owner가 고정 source commit과 실제 package checksum을 선택해 `registered` identity를 만든다.
+2. current stable package로 이관한 같은 commit에서 install·source contract를 실행해 `wired` evidence를 만든다.
 3. production build를 통과하면 `build-verified`로 올린다.
 4. clean clone에서 대표 workflow와 accessibility를 실행한다.
 5. product-owner approval을 첨부한 뒤에만 `workflow-verified`로 올린다.
