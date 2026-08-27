@@ -1,7 +1,7 @@
 "use client";
 import {
   Pagination
-} from "../../chunk-MVGSVSBR.js";
+} from "../../chunk-PD25R5WI.js";
 import "../../chunk-IKUN5X7H.js";
 export {
   Pagination

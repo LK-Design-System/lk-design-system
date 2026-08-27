@@ -1,6 +1,5 @@
 "use client";
 import {
-  embeddedBandStyle,
   normalizeStatusTone,
   statusToneStyle
 } from "./chunk-L2ZEGNVF.js";
@@ -15,15 +14,14 @@ function variantStyle(variant, palette) {
   if (variant === "embedded") {
     return {
       padding: "var(--space-3) var(--space-5)",
-      ...embeddedBandStyle(palette)
+      background: palette.surface,
+      border: "none",
+      borderRadius: 0
     };
   }
   return {
     padding: "14px 16px",
-    borderTop: `1px solid ${palette.border}`,
-    borderRight: `1px solid ${palette.border}`,
-    borderBottom: `1px solid ${palette.border}`,
-    borderLeft: `1px solid ${palette.border}`,
+    border: "none",
     borderRadius: "var(--radius-lg)"
   };
 }
@@ -65,4 +63,4 @@ function Banner({ tone = "signal", variant = "standalone", title, children, acti
 export {
   Banner
 };
-//# sourceMappingURL=chunk-E2SUPYIE.js.map
+//# sourceMappingURL=chunk-W23KUXSA.js.map

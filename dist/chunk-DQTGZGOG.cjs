@@ -4,7 +4,7 @@
 var _chunkYNRA4IIWcjs = require('./chunk-YNRA4IIW.cjs');
 
 
-var _chunkGH6HH33Vcjs = require('./chunk-GH6HH33V.cjs');
+var _chunkUVE6EIEGcjs = require('./chunk-UVE6EIEG.cjs');
 
 
 var _chunkXLRNY734cjs = require('./chunk-XLRNY734.cjs');
@@ -131,7 +131,7 @@ function ResourceState({
       children: [
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { role: "status", "aria-live": "polite", "aria-atomic": "true", children: resolvedState !== "ready" && !assertive ? `${resolvedTitle}${resolvedDescription ? `. ${resolvedDescription}` : ""}` : "" }),
         preservesContent && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          _chunkGH6HH33Vcjs.Banner,
+          _chunkUVE6EIEGcjs.Banner,
           {
             "data-resource-state-message": "",
             role: void 0,
@@ -190,4 +190,4 @@ function ResourceState({
 
 
 exports.ResourceState = ResourceState;
-//# sourceMappingURL=chunk-4HCIRCBW.cjs.map
+//# sourceMappingURL=chunk-DQTGZGOG.cjs.map

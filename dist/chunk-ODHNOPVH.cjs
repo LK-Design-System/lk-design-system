@@ -11,21 +11,31 @@ function range(a, b) {
   for (let i = a; i <= b; i += 1) r.push(i);
   return r;
 }
-function buildPages(page, count, siblingCount, variant) {
+function buildPages(page, count, siblingCount, variant, blockSize) {
   if (variant === "minimize") return [page];
-  if (variant === "compact") {
-    const left2 = Math.max(1, page - 2);
-    const right2 = Math.min(count, page + 2);
-    return range(left2, right2);
+  if (variant === "block") {
+    const start = Math.floor((page - 1) / blockSize) * blockSize + 1;
+    return range(start, Math.min(count, start + blockSize - 1));
   }
-  const left = Math.max(2, page - siblingCount);
-  const right = Math.min(count - 1, page + siblingCount);
-  const pages = [1];
-  if (left > 2) pages.push("start-ellipsis");
-  for (const p of range(left, right)) pages.push(p);
-  if (right < count - 1) pages.push("end-ellipsis");
-  if (count > 1) pages.push(count);
-  return pages;
+  const siblings = variant === "compact" ? 1 : siblingCount;
+  const boundary = 1;
+  const windowSize = boundary * 2 + siblings * 2 + 3;
+  if (count <= windowSize + 1) return range(1, count);
+  const siblingsStart = Math.max(
+    Math.min(page - siblings, count - boundary - siblings * 2 - 1),
+    boundary + 2
+  );
+  const siblingsEnd = Math.min(
+    Math.max(page + siblings, boundary + siblings * 2 + 2),
+    count - boundary - 1
+  );
+  return [
+    ...range(1, boundary),
+    siblingsStart > boundary + 2 ? "start-ellipsis" : boundary + 1,
+    ...range(siblingsStart, siblingsEnd),
+    siblingsEnd < count - boundary - 1 ? "end-ellipsis" : count - boundary,
+    ...range(count - boundary + 1, count)
+  ];
 }
 var selectStyle = {
   height: 32,
@@ -41,8 +51,9 @@ function Pagination({
   page = 1,
   count = 1,
   onChange,
-  siblingCount = 1,
+  siblingCount = 3,
   variant = "extended",
+  blockSize = 10,
   leadingContent,
   trailingContent,
   pageSize,
@@ -51,9 +62,14 @@ function Pagination({
   showPageJump = false,
   pageJumpLabel = "Page",
   showCounter = false,
+  showFirstLast = false,
+  firstPageLabel = "first page",
+  lastPageLabel = "last page",
   navigationLabel = "pagination",
   previousPageLabel = "previous page",
   nextPageLabel = "next page",
+  previousBlockLabel = "previous pages",
+  nextBlockLabel = "next pages",
   pageSizeLabel = "items per page",
   style,
   ...rest
@@ -62,17 +78,19 @@ function Pagination({
   const current = Math.min(total, Math.max(1, page));
   const [jumpValue, setJumpValue] = _react2.default.useState(String(current));
   _react2.default.useEffect(() => setJumpValue(String(current)), [current]);
-  const pages = buildPages(current, total, siblingCount, variant);
+  const pagesPerBlock = Math.max(1, blockSize);
+  const pages = buildPages(current, total, siblingCount, variant, pagesPerBlock);
   const go = (p) => {
     if (p >= 1 && p <= total && p !== current) _optionalChain([onChange, 'optionalCall', _ => _(p)]);
   };
-  const Arrow = ({ dir, disabled }) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  const blockStart = Math.floor((current - 1) / pagesPerBlock) * pagesPerBlock + 1;
+  const Arrow = ({ label, icon, target, disabled }) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "button",
     {
       type: "button",
-      "aria-label": dir === "prev" ? previousPageLabel : nextPageLabel,
+      "aria-label": label,
       disabled,
-      onClick: () => go(dir === "prev" ? current - 1 : current + 1),
+      onClick: () => go(target),
       style: {
         width: 32,
         height: 32,
@@ -85,7 +103,7 @@ function Pagination({
         cursor: disabled ? "not-allowed" : "pointer",
         color: disabled ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-neutral)"
       },
-      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: dir === "prev" ? "chevron-left-small" : "chevron-right-small", size: 18, "aria-hidden": "true" })
+      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: icon, size: 18, "aria-hidden": "true" })
     }
   );
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
@@ -132,11 +150,36 @@ function Pagination({
               // reason the root does — twelve page numbers plus both arrows do not
               // fit a phone width on one line.
               flexWrap: "wrap",
-              gap: variant === "compact" ? 8 : 16,
+              gap: variant === "compact" || variant === "block" ? 8 : 16,
               minWidth: 0
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Arrow, { dir: "prev", disabled: current <= 1 }),
+              variant === "block" ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                Arrow,
+                {
+                  label: previousBlockLabel,
+                  icon: "chevron-double-left-small",
+                  target: blockStart - pagesPerBlock,
+                  disabled: blockStart <= 1
+                }
+              ) : showFirstLast && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                Arrow,
+                {
+                  label: firstPageLabel,
+                  icon: "chevron-double-left-small",
+                  target: 1,
+                  disabled: current <= 1
+                }
+              ),
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                Arrow,
+                {
+                  label: previousPageLabel,
+                  icon: "chevron-left-small",
+                  target: current - 1,
+                  disabled: current <= 1
+                }
+              ),
               pages.map(
                 (p, i) => typeof p === "string" ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                   "span",
@@ -177,7 +220,32 @@ function Pagination({
                   p
                 )
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Arrow, { dir: "next", disabled: current >= total })
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                Arrow,
+                {
+                  label: nextPageLabel,
+                  icon: "chevron-right-small",
+                  target: current + 1,
+                  disabled: current >= total
+                }
+              ),
+              variant === "block" ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                Arrow,
+                {
+                  label: nextBlockLabel,
+                  icon: "chevron-double-right-small",
+                  target: blockStart + pagesPerBlock,
+                  disabled: blockStart + pagesPerBlock > total
+                }
+              ) : showFirstLast && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                Arrow,
+                {
+                  label: lastPageLabel,
+                  icon: "chevron-double-right-small",
+                  target: total,
+                  disabled: current >= total
+                }
+              )
             ]
           }
         ),
@@ -248,4 +316,4 @@ function Pagination({
 
 
 exports.Pagination = Pagination;
-//# sourceMappingURL=chunk-JE6BDW6B.cjs.map
+//# sourceMappingURL=chunk-ODHNOPVH.cjs.map

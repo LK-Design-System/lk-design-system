@@ -2,7 +2,6 @@
 
 
 
-
 var _chunkMBKOVB2Kcjs = require('./chunk-MBKOVB2K.cjs');
 
 
@@ -15,15 +14,14 @@ function variantStyle(variant, palette) {
   if (variant === "embedded") {
     return {
       padding: "var(--space-3) var(--space-5)",
-      ..._chunkMBKOVB2Kcjs.embeddedBandStyle.call(void 0, palette)
+      background: palette.surface,
+      border: "none",
+      borderRadius: 0
     };
   }
   return {
     padding: "14px 16px",
-    borderTop: `1px solid ${palette.border}`,
-    borderRight: `1px solid ${palette.border}`,
-    borderBottom: `1px solid ${palette.border}`,
-    borderLeft: `1px solid ${palette.border}`,
+    border: "none",
     borderRadius: "var(--radius-lg)"
   };
 }
@@ -65,4 +63,4 @@ function Banner({ tone = "signal", variant = "standalone", title, children, acti
 
 
 exports.Banner = Banner;
-//# sourceMappingURL=chunk-GH6HH33V.cjs.map
+//# sourceMappingURL=chunk-UVE6EIEG.cjs.map

@@ -48,7 +48,7 @@ function Callout({ tone = "signal", title, headingLevel = false, children, icon,
         padding: compact ? "var(--space-3) var(--space-4)" : "var(--space-5) var(--space-6)",
         boxSizing: "border-box",
         background: palette.surface,
-        border: `1px solid ${palette.border}`,
+        border: "none",
         borderRadius: "var(--radius-xl)",
         boxShadow: "none",
         fontFamily: "var(--font-sans)",
@@ -85,4 +85,4 @@ function Callout({ tone = "signal", title, headingLevel = false, children, icon,
 export {
   Callout
 };
-//# sourceMappingURL=chunk-KEAJ24PH.js.map
+//# sourceMappingURL=chunk-IFGBRJFA.js.map

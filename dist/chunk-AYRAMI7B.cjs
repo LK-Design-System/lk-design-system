@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
 
 
-var _chunk4HCIRCBWcjs = require('./chunk-4HCIRCBW.cjs');
+var _chunkDQTGZGOGcjs = require('./chunk-DQTGZGOG.cjs');
 
 
 var _chunk5ZPWXVTMcjs = require('./chunk-5ZPWXVTM.cjs');
@@ -98,7 +98,7 @@ var DataCollectionPanel = _react2.default.forwardRef(function DataCollectionPane
             "data-slot": "state",
             className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "state", "lk-data-collection-panel__state") || void 0,
             style: { minWidth: 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "state") },
-            children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunk4HCIRCBWcjs.ResourceState, { ...resolvedResourceState, state, messageVariant: "embedded", children: [
+            children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _chunkDQTGZGOGcjs.ResourceState, { ...resolvedResourceState, state, messageVariant: "embedded", children: [
               hasWideContent && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "div",
                 {
@@ -147,4 +147,4 @@ var DataCollectionPanel = _react2.default.forwardRef(function DataCollectionPane
 
 
 exports.DataCollectionPanel = DataCollectionPanel;
-//# sourceMappingURL=chunk-PEAMU5QZ.cjs.map
+//# sourceMappingURL=chunk-AYRAMI7B.cjs.map

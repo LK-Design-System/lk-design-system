@@ -19,7 +19,15 @@
   "anatomy": [
     {
       "part": "variant",
-      "rule": "navigation variant. compact ignores siblingCount and omits the first/last page jump (no leading 1 / trailing count shortcuts or ellipses); minimize shows only the current page. @default \"extended\""
+      "rule": "navigation variant. compact ignores siblingCount and pins a 7-item constant window with first/last pages always reachable; block lists every page of the current fixed block (blockSize pages) with double-chevron block jumps; minimize shows only the current page."
+    },
+    {
+      "part": "firstPageLabel",
+      "rule": "First-page command accessible name (showFirstLast). @default \"first page\""
+    },
+    {
+      "part": "lastPageLabel",
+      "rule": "Last-page command accessible name (showFirstLast). @default \"last page\""
     },
     {
       "part": "navigationLabel",
@@ -34,8 +42,8 @@
       "rule": "Next-page command accessible name. @default \"next page\""
     },
     {
-      "part": "pageSizeLabel",
-      "rule": "Page-size select accessible name. @default \"items per page\""
+      "part": "previousBlockLabel",
+      "rule": "Previous-block command accessible name (variant=\"block\"). @default \"previous pages\""
     }
   ],
   "properties": [
@@ -64,14 +72,21 @@
       "name": "siblingCount",
       "type": "number",
       "required": false,
-      "description": "Number of sibling pages around the current page. Only applies to variant=\"extended\"; the compact variant ignores it and always shows a fixed window of up to two pages on each side of the current page.",
+      "description": "Number of sibling pages around the current page. Only applies to variant=\"extended\", which renders a constant-length window (2 siblingCount + 5 items including first/last pages and ellipsis slots) so page numbers never shift position between clicks; every page is listed without ellipses while count is within one page of the window, so an ellipsis never hides fewer than two pages. The compact variant ignores it and pins a 7-item window; block and minimize ignore it entirely.",
       "owner": "PaginationProps"
     },
     {
       "name": "variant",
-      "type": "\"extended\" | \"compact\" | \"minimize\"",
+      "type": "\"extended\" | \"compact\" | \"block\" | \"minimize\"",
       "required": false,
-      "description": "navigation variant. compact ignores siblingCount and omits the first/last page jump (no leading 1 / trailing count shortcuts or ellipses); minimize shows only the current page. @default \"extended\"",
+      "description": "navigation variant. compact ignores siblingCount and pins a 7-item constant window with first/last pages always reachable; block lists every page of the current fixed block (blockSize pages) with double-chevron block jumps; minimize shows only the current page.",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "blockSize",
+      "type": "number",
+      "required": false,
+      "description": "Pages per fixed block. Only applies to variant=\"block\".",
       "owner": "PaginationProps"
     },
     {
@@ -113,7 +128,7 @@
       "name": "showPageJump",
       "type": "boolean",
       "required": false,
-      "description": "",
+      "description": "Opt-in quick-jump number input. Only worth its footprint on large page counts where walking the number list is slow. @default false",
       "owner": "PaginationProps"
     },
     {
@@ -127,7 +142,28 @@
       "name": "showCounter",
       "type": "boolean",
       "required": false,
-      "description": "",
+      "description": "Opt-in n / total counter. Use where the total page count is not already on screen (block, minimize); extended/compact always render the last page number, so a counter there duplicates it.",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "showFirstLast",
+      "type": "boolean",
+      "required": false,
+      "description": "Opt-in « / » first/last-page jump commands framing the single chevrons (« ‹ 1 2 3 › »). Applies to every variant except block, whose double chevrons already jump by block. @default false",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "firstPageLabel",
+      "type": "string",
+      "required": false,
+      "description": "First-page command accessible name (showFirstLast). @default \"first page\"",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "lastPageLabel",
+      "type": "string",
+      "required": false,
+      "description": "Last-page command accessible name (showFirstLast). @default \"last page\"",
       "owner": "PaginationProps"
     },
     {
@@ -152,6 +188,20 @@
       "owner": "PaginationProps"
     },
     {
+      "name": "previousBlockLabel",
+      "type": "string",
+      "required": false,
+      "description": "Previous-block command accessible name (variant=\"block\"). @default \"previous pages\"",
+      "owner": "PaginationProps"
+    },
+    {
+      "name": "nextBlockLabel",
+      "type": "string",
+      "required": false,
+      "description": "Next-block command accessible name (variant=\"block\"). @default \"next pages\"",
+      "owner": "PaginationProps"
+    },
+    {
       "name": "pageSizeLabel",
       "type": "string",
       "required": false,
@@ -162,7 +212,7 @@
   "states": [
     {
       "state": "variant",
-      "rule": "navigation variant. compact ignores siblingCount and omits the first/last page jump (no leading 1 / trailing count shortcuts or ellipses); minimize shows only the current page. @default \"extended\""
+      "rule": "navigation variant. compact ignores siblingCount and pins a 7-item constant window with first/last pages always reachable; block lists every page of the current fixed block (blockSize pages) with double-chevron block jumps; minimize shows only the current page."
     }
   ],
   "behavior": [
@@ -170,25 +220,30 @@
   ],
   "quantitativeRules": [
     {
+      "subject": "명시 규칙 1",
+      "rule": "extended and compact render a constant-length window (11 items by default for extended via siblingCount=3; 7 items pinned for compact) with the first and last pages always reachable."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "block lists every page of the current fixed block (blockSize, default 10) fully clickable; numbers never move while the user stays inside a block. Single chevrons move one page, double chevrons jump to the first page of the adjacent block."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "showFirstLast adds « / » first/last-page jumps framing the single chevrons (« ‹ 1 2 3 › ») on every variant except block, whose double chevrons already jump by block. First/last pages are always reachable through the number list in extended/compact, so this is an opt-in convenience for long lists (cf."
+    },
+    {
       "subject": "--body2-size",
       "rule": "15px"
     },
     {
       "subject": "--color-semantic-background-elevated-normal",
       "rule": "light: #FFFFFF; dark: #212225"
-    },
-    {
-      "subject": "--color-semantic-label-alternative",
-      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
-    },
-    {
-      "subject": "--color-semantic-label-assistive",
-      "rule": "light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28)"
     }
   ],
   "responsive": [
-    "Use variant=\"extended\" for data tables, compact for narrow surfaces, and minimize when only the current page is needed.",
-    "Localize the landmark and compact icon/select commands with navigationLabel, previousPageLabel, nextPageLabel, and pageSizeLabel; pageJumpLabel labels the visible jump field."
+    "Use variant=\"extended\" for data tables, compact for narrow surfaces, block for board/list surfaces that follow the Korean fixed-block convention, and minimize when only the current page is needed.",
+    "showCounter and showPageJump are opt-in refinements, not defaults. The n / total counter only earns its place where the total page count is not already on screen — block (the current block hides the last page) and minimize — since extended/compact always render the last page number; stacking a counter next to a full…",
+    "Localize the landmark and compact icon/select commands with navigationLabel, previousPageLabel, nextPageLabel, previousBlockLabel, nextBlockLabel, firstPageLabel, lastPageLabel, and pageSizeLabel; pageJumpLabel labels the visible jump field."
   ],
   "contentGuidance": [],
   "accessibility": [],
@@ -210,7 +265,7 @@
   "examples": [
     {
       "label": "기본 조합",
-      "code": "<Pagination page={page} count={12} onChange={setPage} />\n<Pagination variant=\"compact\" page={5} count={23} />\n<Pagination pageSize={10} showPageJump showCounter page={1} count={10} />"
+      "code": "<Pagination page={page} count={12} onChange={setPage} />\n<Pagination variant=\"compact\" page={5} count={23} />\n<Pagination variant=\"block\" page={13} count={42} onChange={setPage} />\n<Pagination pageSize={10} showPageJump showCounter page={1} count={10} />"
     }
   ],
   "tokens": [
