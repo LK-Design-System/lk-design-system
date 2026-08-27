@@ -91,7 +91,7 @@ function BlockPaginationDemo() {
 }
 
 export const StableWindowAndBlocks = {
-  name: '안정 윈도우 · 블록 이동',
+  name: '사용법 · 안정 윈도우와 블록 이동',
   parameters: storyDescription(
     'extended·compact는 위치와 무관하게 항목 수가 고정된 윈도우를 유지해 클릭 사이에 숫자가 밀리지 않고, 전체 페이지가 윈도우에 들어오면 말줄임 없이 전부 표시됩니다. block 변형은 10페이지 블록 전체를 클릭 가능하게 유지하고 겹화살표로 블록을 이동합니다.',
   ),

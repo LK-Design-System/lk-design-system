@@ -83,6 +83,25 @@
       ]
     },
     {
+      "pageTitle": "LDS Core/Components/Action/Link",
+      "importPath": "./stories/ActionLink.stories.jsx",
+      "storyId": "lds-core-components-action-link--links",
+      "exportName": "Links",
+      "descriptionHash": "48c8216acaab3340ffeed96ea4b0a20d8fe715d0561939ef1142f7b6c70d04f4",
+      "sentences": [
+        {
+          "hash": "b3bbe6052c796ea26d95928cd4b15874427ae8d3be6ccca325dd75280781eecb",
+          "text": "본문에서 관련 컴포넌트 안내와 외부 문서를 연결하는 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "48742d27a09e229f1bf1de18a00da2995e766dbfbe39884e25b98bd666f13fc1",
+          "text": "링크 문구만으로 목적지를 예측할 수 있고, 외부 이동이 아이콘·새 탭·안전한 rel과 함께 \"새 창에서 열림\" 안내로도 전달되는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Core/Components/Action/Text Button",
       "importPath": "./stories/ActionTextButton.stories.jsx",
       "storyId": "lds-core-components-action-text-button--text-button-states",
@@ -510,11 +529,16 @@
       "importPath": "./stories/NavigationCompact.stories.jsx",
       "storyId": "lds-core-components-navigation-pagination--synchronized-page-jump",
       "exportName": "SynchronizedPageJump",
-      "descriptionHash": "b33c07d7d3960bd2cd3ce627cb0e8142d8c9a0ad90eab8449b08a39f9dd8f641",
+      "descriptionHash": "2704e2cbcd0e79a82efec29070694ffc5a2017f8b45db10e93bda6ef0c1b3264",
       "sentences": [
         {
           "hash": "f63763a7febae9e109ec87694cfd84bbf1e4d83fc271762179a9918906579ea0",
           "text": "외부 상태 변경과 페이지 이동 입력이 같은 현재 페이지를 유지하는 제어형 예시입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "25f030847f71e553fc1476e147035af096ce39ddf7f194126efd8c55de2c9cce",
+          "text": "페이지 이동 입력은 이 예시처럼 페이지 수가 많아 숫자 목록만으로 도달이 느린 표에서만 켭니다.",
           "decision": "retained-in-canvas"
         },
         {
@@ -644,6 +668,25 @@
       ]
     },
     {
+      "pageTitle": "LDS Core/Components/Overlay/Popover",
+      "importPath": "./stories/OverlayPopover.stories.jsx",
+      "storyId": "lds-core-components-overlay-popover--popover-overview",
+      "exportName": "PopoverOverview",
+      "descriptionHash": "cfec23b75170ee115694a3abd98366d95f3c0d21c71a9af8ebf02b7b696ab338",
+      "sentences": [
+        {
+          "hash": "980a19122a080cfab344fb4c5b88cb452574166543a2d7098450f4633199730d",
+          "text": "현재 화면을 떠나지 않고 운영 설정의 설명과 값을 확인하는 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "dbcb5d4dd10f3b8c19c867399bcd68f33bece39f7d234d74053616c305e4a83c",
+          "text": "trigger와 패널의 관계가 분명하고 바깥을 클릭하면 예측 가능하게 닫히는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Core/Components/Overlay/Snackbar",
       "importPath": "./stories/OverlaySnackbar.stories.jsx",
       "storyId": "lds-core-components-overlay-snackbar--snackbar-patterns",
@@ -682,6 +725,25 @@
         {
           "hash": "b3b709843f1038ee6061b56b99e15836e90f1e53deae7d71690f080fce2cf8e8",
           "text": "색상만으로 상태를 구분하지 않고 메시지와 아이콘이 의미를 보완하며 선택적 행동이 짧고 명확한지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Core/Components/Selection and Input/Calendar",
+      "importPath": "./stories/DataCalendar.stories.jsx",
+      "storyId": "lds-core-components-selection-and-input-calendar--calendar-pattern",
+      "exportName": "CalendarPattern",
+      "descriptionHash": "ad5a58f74fb2663b0507b8be95c00e75fe7d4e11ce38eb41ec42a71ca824cd74",
+      "sentences": [
+        {
+          "hash": "bc3d1e636de2850cf31093ff99f32e1b701ac833c9c4a8d00990852b0547761d",
+          "text": "2026년 7월의 날짜를 한 달 맥락에서 탐색하는 기본 캘린더입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "457153cc350927fe6194d0bb46ec5fa3c445d50fedec06dbfbb71ceb4a1fde91",
+          "text": "선택 날짜와 이전·다음 달 이동이 키보드와 시각 상태로 함께 이해되는지 확인하세요.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -739,6 +801,25 @@
       ]
     },
     {
+      "pageTitle": "LDS Core/Components/Selection and Input/Date Picker",
+      "importPath": "./stories/FormDateTime.stories.jsx",
+      "storyId": "lds-core-components-selection-and-input-date-picker--date-input",
+      "exportName": "DateInput",
+      "descriptionHash": "c26c40300fa4fbe2ae813c592ddcac01e7d47922bc4d3d4a4b07e03358d94848",
+      "sentences": [
+        {
+          "hash": "683e501a9bb61a67e4cfc4b08c0cc0d623a93e6f0c5c18d3a9547e522365770d",
+          "text": "예약일 한 값을 FormField 안에서 입력하는 기본 Date Picker입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "c58e4a52e37eec1362d10becf15930aff9d06a2b0a9085835092053b47133260",
+          "text": "필드 label과 선택 날짜가 연결되고 달력 열기 동작이 분명한지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Core/Components/Selection and Input/Input",
       "importPath": "./stories/FormInput.stories.jsx",
       "storyId": "lds-core-components-selection-and-input-input--input-overview",
@@ -753,6 +834,39 @@
         {
           "hash": "696a503d24ca0a2cb632e77bb1bdc99aeaced400f412ffbca2679fcdccb4732a",
           "text": "label·현재 값·leading icon이 하나의 필드로 읽히고 텍스트 영역을 방해하지 않는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Core/Components/Selection and Input/Number Field",
+      "importPath": "./stories/FormAdvancedInputs.stories.jsx",
+      "storyId": "lds-core-components-selection-and-input-number-field--number-input",
+      "exportName": "NumberInput",
+      "descriptionHash": "a0f4351e8d3723bcb27301ab80e92915b2311f0881ba3a6ad1d340cc27e07e5d",
+      "sentences": [
+        {
+          "hash": "3530f7da6979f3c9cb1512eebc08b316646fa432ab77e7b38941739c18d7d188",
+          "text": "0~20대 범위의 로봇 투입 수를 증감하는 Number Field입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "42187245df16e35b487520c3631fa07a49e6d9d6f0f5a081abca56d1a23ebf57",
+          "text": "helper의 단위·한계와 step 제어가 같은 값 계약을 설명하는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Core/Components/Selection and Input/Password Input",
+      "importPath": "./stories/FormPasswordInput.stories.jsx",
+      "storyId": "lds-core-components-selection-and-input-password-input--password-input-overview",
+      "exportName": "PasswordInputOverview",
+      "descriptionHash": "f55564eb9e614b141583d845b3dc6a941d15a2c75217f9c52be34dacf4160a57",
+      "sentences": [
+        {
+          "hash": "f55564eb9e614b141583d845b3dc6a941d15a2c75217f9c52be34dacf4160a57",
+          "text": "라벨과 설명은 입력 목적을 알리고, 보기 버튼은 현재 필드와 다음 행동을 함께 읽습니다.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -948,6 +1062,25 @@
       ]
     },
     {
+      "pageTitle": "LDS Core/Components/Status/Meter",
+      "importPath": "./stories/ProductMeter.stories.jsx",
+      "storyId": "lds-core-components-status-meter--bounded-measurements",
+      "exportName": "BoundedMeasurements",
+      "descriptionHash": "4e4c94fb2631c22268d7fc22d165d867399570ac568533d0fdf1e446cbc373a1",
+      "sentences": [
+        {
+          "hash": "6619f1f1549d66aa19eec790fb7ded58613b4fa4af43cd65131eb288d6e56daf",
+          "text": "냉각수 수위와 위험 점수를 각각 0~100 범위의 현재 측정값으로 비교합니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "52806a95b24f60cf05ccd253ff0b110fee5bb2b2baf3871a8bb0db2fcc6ea778",
+          "text": "value/max 표기와 threshold 색상이 작업 완료율이 아니라 현재 수준을 읽는 보조 정보로 전달되는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Core/Components/Status/Notices and Callouts",
       "importPath": "./stories/StatusFeedback.stories.jsx",
       "storyId": "lds-core-components-status-notices-and-callouts--notices-and-callouts",
@@ -1000,6 +1133,25 @@
         {
           "hash": "79db797c8b344c9a73f6156756c30ca8bc2fa44f8112f250fcc76dd2e99e6175",
           "text": "칩이 표면의 레이아웃에 참여하지 않는지, inert한 표면 밖에서 스크린 리더에 계속 읽히는지, 포인터가 칩을 통과하는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Core/Components/Status/Progress",
+      "importPath": "./stories/ProductProgress.stories.jsx",
+      "storyId": "lds-core-components-status-progress--progress-indicators",
+      "exportName": "ProgressIndicators",
+      "descriptionHash": "aa7af3c476d37786fcc64c6429099bf2437670b59b5b091ed9cdc6f44c20255a",
+      "sentences": [
+        {
+          "hash": "c2e5563039f51053a6bf9a0aee3b0163ecb913d007740951655d1b61440d7bfd",
+          "text": "리포트 처리와 펌웨어 업로드의 determinate·indeterminate 진행을 원형과 선형 표시로 비교합니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "fc9a4daf248a78d17af9f3a28000f129642487726f494013852b6d25a65b5ea0",
+          "text": "값 유무, sm·md·lg 크기와 positive·cautionary·negative tone이 작업 상태를 일관되게 전달하는지 확인하세요.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -1380,25 +1532,6 @@
         {
           "hash": "3ad856abb64cd55eee939c712884ef28c429aff48cc16ce97fae6677e7b271ae",
           "text": "각 버튼의 대상이 라벨로 구분되고 실행 직후 복사 결과가 같은 자리에서 전달되는지 확인하세요.",
-          "decision": "retained-in-canvas"
-        }
-      ]
-    },
-    {
-      "pageTitle": "LDS Product/Action/Link",
-      "importPath": "./stories/ActionLink.stories.jsx",
-      "storyId": "lds-product-action-link--links",
-      "exportName": "Links",
-      "descriptionHash": "48c8216acaab3340ffeed96ea4b0a20d8fe715d0561939ef1142f7b6c70d04f4",
-      "sentences": [
-        {
-          "hash": "b3bbe6052c796ea26d95928cd4b15874427ae8d3be6ccca325dd75280781eecb",
-          "text": "본문에서 관련 컴포넌트 안내와 외부 문서를 연결하는 상황입니다.",
-          "decision": "retained-in-canvas"
-        },
-        {
-          "hash": "48742d27a09e229f1bf1de18a00da2995e766dbfbe39884e25b98bd666f13fc1",
-          "text": "링크 문구만으로 목적지를 예측할 수 있고, 외부 이동이 아이콘·새 탭·안전한 rel과 함께 \"새 창에서 열림\" 안내로도 전달되는지 확인하세요.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -2873,25 +3006,6 @@
       ]
     },
     {
-      "pageTitle": "LDS Product/Overlay/Popover",
-      "importPath": "./stories/OverlayPopover.stories.jsx",
-      "storyId": "lds-product-overlay-popover--popover-overview",
-      "exportName": "PopoverOverview",
-      "descriptionHash": "cfec23b75170ee115694a3abd98366d95f3c0d21c71a9af8ebf02b7b696ab338",
-      "sentences": [
-        {
-          "hash": "980a19122a080cfab344fb4c5b88cb452574166543a2d7098450f4633199730d",
-          "text": "현재 화면을 떠나지 않고 운영 설정의 설명과 값을 확인하는 상황입니다.",
-          "decision": "retained-in-canvas"
-        },
-        {
-          "hash": "dbcb5d4dd10f3b8c19c867399bcd68f33bece39f7d234d74053616c305e4a83c",
-          "text": "trigger와 패널의 관계가 분명하고 바깥을 클릭하면 예측 가능하게 닫히는지 확인하세요.",
-          "decision": "retained-in-canvas"
-        }
-      ]
-    },
-    {
       "pageTitle": "LDS Product/Overlay/Sheet",
       "importPath": "./stories/OverlaySheet.stories.jsx",
       "storyId": "lds-product-overlay-sheet--sheet-open",
@@ -2911,25 +3025,6 @@
       ]
     },
     {
-      "pageTitle": "LDS Product/Selection and Input/Calendar",
-      "importPath": "./stories/DataCalendar.stories.jsx",
-      "storyId": "lds-product-selection-and-input-calendar--calendar-pattern",
-      "exportName": "CalendarPattern",
-      "descriptionHash": "ad5a58f74fb2663b0507b8be95c00e75fe7d4e11ce38eb41ec42a71ca824cd74",
-      "sentences": [
-        {
-          "hash": "bc3d1e636de2850cf31093ff99f32e1b701ac833c9c4a8d00990852b0547761d",
-          "text": "2026년 7월의 날짜를 한 달 맥락에서 탐색하는 기본 캘린더입니다.",
-          "decision": "retained-in-canvas"
-        },
-        {
-          "hash": "457153cc350927fe6194d0bb46ec5fa3c445d50fedec06dbfbb71ceb4a1fde91",
-          "text": "선택 날짜와 이전·다음 달 이동이 키보드와 시각 상태로 함께 이해되는지 확인하세요.",
-          "decision": "retained-in-canvas"
-        }
-      ]
-    },
-    {
       "pageTitle": "LDS Product/Selection and Input/Color Swatch",
       "importPath": "./stories/SelectionColorSwatch.stories.jsx",
       "storyId": "lds-product-selection-and-input-color-swatch--semantic-colors",
@@ -2944,25 +3039,6 @@
         {
           "hash": "efe3ecddd8315364f668e04469cbb758122b7505ecddb72f1cbf08dd6741e3f6",
           "text": "선택 링이 색 자체와 충분히 구분되고 값의 의미가 색상명 없이도 제공되는지 확인하세요.",
-          "decision": "retained-in-canvas"
-        }
-      ]
-    },
-    {
-      "pageTitle": "LDS Product/Selection and Input/Date Picker",
-      "importPath": "./stories/FormDateTime.stories.jsx",
-      "storyId": "lds-product-selection-and-input-date-picker--date-input",
-      "exportName": "DateInput",
-      "descriptionHash": "c26c40300fa4fbe2ae813c592ddcac01e7d47922bc4d3d4a4b07e03358d94848",
-      "sentences": [
-        {
-          "hash": "683e501a9bb61a67e4cfc4b08c0cc0d623a93e6f0c5c18d3a9547e522365770d",
-          "text": "예약일 한 값을 FormField 안에서 입력하는 기본 Date Picker입니다.",
-          "decision": "retained-in-canvas"
-        },
-        {
-          "hash": "c58e4a52e37eec1362d10becf15930aff9d06a2b0a9085835092053b47133260",
-          "text": "필드 label과 선택 날짜가 연결되고 달력 열기 동작이 분명한지 확인하세요.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -3072,39 +3148,6 @@
         {
           "hash": "0649cb9d9192e62651f435c65983cf9b21ded2c7a6605ec23d4bf636e3950399",
           "text": "접두사와 접미사는 편집 영역과 시각적으로 연결되지만 입력값에 포함되지 않습니다.",
-          "decision": "retained-in-canvas"
-        }
-      ]
-    },
-    {
-      "pageTitle": "LDS Product/Selection and Input/Number Field",
-      "importPath": "./stories/FormAdvancedInputs.stories.jsx",
-      "storyId": "lds-product-selection-and-input-number-field--number-input",
-      "exportName": "NumberInput",
-      "descriptionHash": "a0f4351e8d3723bcb27301ab80e92915b2311f0881ba3a6ad1d340cc27e07e5d",
-      "sentences": [
-        {
-          "hash": "3530f7da6979f3c9cb1512eebc08b316646fa432ab77e7b38941739c18d7d188",
-          "text": "0~20대 범위의 로봇 투입 수를 증감하는 Number Field입니다.",
-          "decision": "retained-in-canvas"
-        },
-        {
-          "hash": "42187245df16e35b487520c3631fa07a49e6d9d6f0f5a081abca56d1a23ebf57",
-          "text": "helper의 단위·한계와 step 제어가 같은 값 계약을 설명하는지 확인하세요.",
-          "decision": "retained-in-canvas"
-        }
-      ]
-    },
-    {
-      "pageTitle": "LDS Product/Selection and Input/Password Input",
-      "importPath": "./stories/FormPasswordInput.stories.jsx",
-      "storyId": "lds-product-selection-and-input-password-input--password-input-overview",
-      "exportName": "PasswordInputOverview",
-      "descriptionHash": "f55564eb9e614b141583d845b3dc6a941d15a2c75217f9c52be34dacf4160a57",
-      "sentences": [
-        {
-          "hash": "f55564eb9e614b141583d845b3dc6a941d15a2c75217f9c52be34dacf4160a57",
-          "text": "라벨과 설명은 입력 목적을 알리고, 보기 버튼은 현재 필드와 다음 행동을 함께 읽습니다.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -3352,44 +3395,6 @@
         {
           "hash": "f99b5ac27b3cd554e4cc790e2a9d76d119ae0891f0f564dfb1092b6b3488fd02",
           "text": "제목→보이는 상태 라벨→key/value facts→meta/action 순서와 ConnectionBadge 조합을 확인하세요.",
-          "decision": "retained-in-canvas"
-        }
-      ]
-    },
-    {
-      "pageTitle": "LDS Product/Status/Meter",
-      "importPath": "./stories/ProductMeter.stories.jsx",
-      "storyId": "lds-product-status-meter--bounded-measurements",
-      "exportName": "BoundedMeasurements",
-      "descriptionHash": "4e4c94fb2631c22268d7fc22d165d867399570ac568533d0fdf1e446cbc373a1",
-      "sentences": [
-        {
-          "hash": "6619f1f1549d66aa19eec790fb7ded58613b4fa4af43cd65131eb288d6e56daf",
-          "text": "냉각수 수위와 위험 점수를 각각 0~100 범위의 현재 측정값으로 비교합니다.",
-          "decision": "retained-in-canvas"
-        },
-        {
-          "hash": "52806a95b24f60cf05ccd253ff0b110fee5bb2b2baf3871a8bb0db2fcc6ea778",
-          "text": "value/max 표기와 threshold 색상이 작업 완료율이 아니라 현재 수준을 읽는 보조 정보로 전달되는지 확인하세요.",
-          "decision": "retained-in-canvas"
-        }
-      ]
-    },
-    {
-      "pageTitle": "LDS Product/Status/Progress",
-      "importPath": "./stories/ProductProgress.stories.jsx",
-      "storyId": "lds-product-status-progress--progress-indicators",
-      "exportName": "ProgressIndicators",
-      "descriptionHash": "aa7af3c476d37786fcc64c6429099bf2437670b59b5b091ed9cdc6f44c20255a",
-      "sentences": [
-        {
-          "hash": "c2e5563039f51053a6bf9a0aee3b0163ecb913d007740951655d1b61440d7bfd",
-          "text": "리포트 처리와 펌웨어 업로드의 determinate·indeterminate 진행을 원형과 선형 표시로 비교합니다.",
-          "decision": "retained-in-canvas"
-        },
-        {
-          "hash": "fc9a4daf248a78d17af9f3a28000f129642487726f494013852b6d25a65b5ea0",
-          "text": "값 유무, sm·md·lg 크기와 positive·cautionary·negative tone이 작업 상태를 일관되게 전달하는지 확인하세요.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -3654,104 +3659,6 @@
           "decision": "retained-in-canvas"
         }
       ]
-    }
-  ],
-  "resolvedMigrations": [
-    {
-      "reason": "deleted-sentence",
-      "pageTitle": "LDS Product/Content/Source Disclosure",
-      "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
-      "hash": "e52b5ca6c5bac096e887c2619e4b9146490c34572c132bd317b39de6f838ad32",
-      "text": "가용·오래됨·접근 제한 출처를 한 근거 목록에서 비교하는 상황입니다.",
-      "previousDecision": "retained-in-canvas"
-    },
-    {
-      "reason": "deleted-sentence",
-      "pageTitle": "LDS Product/Content/Source Disclosure",
-      "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
-      "hash": "ffaa898526f8c3452582de372f147320a5e2adc83a714873b0644b00dd8277c1",
-      "text": "각 상태와 관측 시점, 세부 근거, 원본 이동 경로가 과장 없이 구분되는지 확인하세요.",
-      "previousDecision": "retained-in-canvas"
-    },
-    {
-      "reason": "deleted-sentence",
-      "pageTitle": "LDS Theme/Brand/LK ROBOTICS Logo",
-      "importPath": "./stories/Brand.stories.jsx",
-      "hash": "fa574170eb2f461320aa6e57c87f89b88dad6b37dedd136ce708b5c607c910c6",
-      "text": "공식 LK ROBOTICS SVG의 기업 표기형·기본형과 같은 원본 path를 사용하는 제품 UI 파생형을 확인합니다.",
-      "previousDecision": "retained-in-canvas"
-    },
-    {
-      "reason": "deleted-sentence",
-      "pageTitle": "LDS Theme/Brand/LK ROBOTICS Logo",
-      "importPath": "./stories/Brand.stories.jsx",
-      "hash": "4b2c1a14648752d4fbb3cabdc0a57a37596c9b7a9ed7436ab7f45ddbcdfa0604",
-      "text": "실제 적용에서는 배경 대비와 최소 크기를 지키고, 늘이기·회전·재채색 없이 제공된 조합을 사용하세요.",
-      "previousDecision": "retained-in-canvas"
-    },
-    {
-      "reason": "deleted-sentence",
-      "pageTitle": "LDS Theme/Brand/Product Lockup",
-      "importPath": "./stories/BrandProductLockup.stories.jsx",
-      "hash": "32139d4ec0f4877fd8158c337967ff1c0ef429c1183bdb135d82a685f8be91e5",
-      "text": "고정 LK Portal 자산과 registry Portal이 완전히 같은지 비교하고, 같은 1X·0.35 mark-width 규칙의 LK Console, reverse, compact 조합을 확인합니다.",
-      "previousDecision": "retained-in-canvas"
-    },
-    {
-      "reason": "deleted-sentence",
-      "pageTitle": "LDS Theme/Brand/LK ROBOTICS Logo",
-      "importPath": "./stories/Brand.stories.jsx",
-      "hash": "efed3ab427ff431881c75e7c16e71de45d640c2421af00fe5c1431ba0e4c44b9",
-      "text": "규정된 LK ROBOTICS 기업 표기형·기본형과 같은 생성 원본을 사용하는 제품 UI 파생형을 확인합니다.",
-      "previousDecision": "retained-in-canvas"
-    },
-    {
-      "reason": "deleted-sentence",
-      "pageTitle": "LDS Theme/Brand/LK ROBOTICS Logo",
-      "importPath": "./stories/Brand.stories.jsx",
-      "hash": "955879609a713ddf090c8c9f1dd4bba85cb650c1b0513f82f44b74d781deebcd",
-      "text": "실제 적용에서는 배경 대비와 최소 크기를 지키고, 다시 조판하거나 늘이기·회전·재채색하지 말고 제공된 조합을 사용하세요.",
-      "previousDecision": "retained-in-canvas"
-    },
-    {
-      "reason": "deleted-sentence",
-      "pageTitle": "LDS Theme/Brand/Product Lockup",
-      "importPath": "./stories/BrandProductLockup.stories.jsx",
-      "hash": "c311b13a7049ad2ea93a434c3b59ab04a62c9f37773137701261887f579168c7",
-      "text": "기존 ExtraBold 800 LK Portal과 새 SemiBold 600 ProductLockup Portal을 직접 비교하고, LK가 먼저 읽히는 Console·reverse·compact 조합을 확인합니다.",
-      "previousDecision": "retained-in-canvas"
-    },
-    {
-      "reason": "deleted-sentence",
-      "pageTitle": "LDS Product/Data/Collections/Data Collection Panel",
-      "importPath": "./stories/DataCollectionPanel.stories.jsx",
-      "hash": "f5f9561f5973398fdc294d419a7f27621c208be5a75e2bdb8e72e97f6ff9a974",
-      "text": "Portal 프로젝트 디렉터리와 같은 실제형 긴 콘텐츠에서 toolbar, ready content와 footer가 하나의 perimeter와 DOM 순서를 공유합니다.",
-      "previousDecision": "retained-in-canvas"
-    },
-    {
-      "reason": "deleted-sentence",
-      "pageTitle": "LDS Product/Navigation/Side Nav",
-      "importPath": "./stories/NavigationSideNav.stories.jsx",
-      "hash": "3b3e31ebe69233fb46d20e2d5c4cc915d238644d59febc4bd316534309065dfb",
-      "text": "지속 선택 배경은 현재 목적지만 소유하고, 펼쳐진 부모와 hover는 선택 상태보다 약하게 읽혀야 합니다.",
-      "previousDecision": "retained-in-canvas"
-    },
-    {
-      "reason": "deleted-sentence",
-      "pageTitle": "LDS Product/Navigation/Wizard",
-      "importPath": "./stories/NavigationWizard.stories.jsx",
-      "hash": "5fa2e38c4ec8c7358e34cd241013b92c58fde6038e56bd9d0d645085aa50c841",
-      "text": "작성·검토·게시 흐름에서 이전·다음 제어로 현재 단계를 바꿉니다.",
-      "previousDecision": "retained-in-canvas"
-    },
-    {
-      "reason": "deleted-sentence",
-      "pageTitle": "LDS Product/Navigation/Wizard",
-      "importPath": "./stories/NavigationWizard.stories.jsx",
-      "hash": "f03faa8d691ddb7c6c63d114e3721fe24f95834c3e8d456f66019e98d7fbbb14",
-      "text": "마지막 단계에서 다음이 비활성화되고 이전 이동 후 다시 활성화되는지 확인하세요.",
-      "previousDecision": "retained-in-canvas"
     }
   ],
   "migrations": []

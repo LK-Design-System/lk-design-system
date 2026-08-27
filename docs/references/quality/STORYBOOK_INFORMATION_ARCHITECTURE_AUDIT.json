@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "6fc9e1c303c874d38d66e20eff2e5da8b5a2c048b71f7dc080d8fbec8fb8e7b3",
+    "storybookIndexSha256": "4a52e500288bf4fec24449c2011832b0661c4c6410b239d3f886bac8cdcbd047",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,21 +62,21 @@
   },
   "summary": {
     "pages": 196,
-    "stories": 732,
-    "publicStories": 503,
+    "stories": 733,
+    "publicStories": 504,
     "hiddenStories": 229,
     "componentDescriptions": 191,
     "pagesWithVisibleCanvasIntroduction": 191,
     "pagesWithDecisionGuidance": 184,
-    "describedPublicStories": 503,
+    "describedPublicStories": 504,
     "reviewedPages": 196,
-    "reviewedStories": 732,
+    "reviewedStories": 733,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
       "overview": 179,
-      "usage": 39,
+      "usage": 40,
       "variants-states": 110,
       "interaction": 55,
       "responsive": 78,
@@ -93,8 +93,8 @@
     "layers": {
       "Core": {
         "pages": 65,
-        "stories": 236,
-        "public": 129,
+        "stories": 237,
+        "public": 130,
         "hidden": 107,
         "guideReadyPages": 65
       },
@@ -3123,7 +3123,7 @@
       "layer": "Core",
       "family": "Navigation",
       "importPath": "./stories/NavigationCompact.stories.jsx",
-      "sourceSha256": "7dddb73b596155db6d284d23810a48f686c7e8e34bae6942d4016cb0375c9eb3",
+      "sourceSha256": "6271daebf834b1ab5ad57eee6677fc57cb25c1eb92dacb6e16186a82fbac39b9",
       "primaryOwner": "Pagination",
       "ownerComponents": [
         "Pagination"
@@ -3132,13 +3132,13 @@
         "PageIndicator"
       ],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-navigation-pagination--synchronized-page-jump",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -3148,8 +3148,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "7dddb73b596155db6d284d23810a48f686c7e8e34bae6942d4016cb0375c9eb3",
+      "reviewedAt": "2026-08-28",
+      "reviewedSourceSha256": "6271daebf834b1ab5ad57eee6677fc57cb25c1eb92dacb6e16186a82fbac39b9",
       "stories": [
         {
           "id": "lds-core-components-navigation-pagination--synchronized-page-jump",
@@ -3174,6 +3174,30 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
+        },
+        {
+          "id": "lds-core-components-navigation-pagination--stable-window-and-blocks",
+          "name": "사용법 · 안정 윈도우와 블록 이동",
+          "exportName": "StableWindowAndBlocks",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Pagination"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-08-28 constant-window/block-variant release review: rendered at 880px and 360px, play asserts full page list without ellipsis, constant window with reachable first/last, and block jump targets."
         },
         {
           "id": "lds-core-components-navigation-pagination--pagination-patterns",
@@ -7232,7 +7256,7 @@
       "layer": "Core",
       "family": "Status",
       "importPath": "./stories/StatusFeedback.stories.jsx",
-      "sourceSha256": "f5bcb3a7928c83fbda1a2795da5cd6a1715584a4c34a727c164342eabcacb424",
+      "sourceSha256": "c1ae898f2e8e3da6919247ee01ada4beb9fb1c43f78105071f1864ffeb443b72",
       "primaryOwner": "Banner",
       "ownerComponents": [
         "Banner",
@@ -7258,8 +7282,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-22",
-      "reviewedSourceSha256": "f5bcb3a7928c83fbda1a2795da5cd6a1715584a4c34a727c164342eabcacb424",
+      "reviewedAt": "2026-08-28",
+      "reviewedSourceSha256": "c1ae898f2e8e3da6919247ee01ada4beb9fb1c43f78105071f1864ffeb443b72",
       "stories": [
         {
           "id": "lds-core-components-status-notices-and-callouts--notices-and-callouts",
