@@ -28,17 +28,17 @@
     "packages": [
       {
         "name": "@lk-design-system/lds-core",
-        "version": "0.1.1",
+        "version": "0.2.0",
         "workspace": "packages/core"
       },
       {
         "name": "@lk-design-system/lds-theme",
-        "version": "0.1.1",
+        "version": "0.2.0",
         "workspace": "packages/theme"
       },
       {
         "name": "@lk-design-system/lds-product",
-        "version": "0.1.1",
+        "version": "0.2.0",
         "workspace": "packages/product"
       }
     ]
@@ -48,7 +48,7 @@
       "repository": "LK-Design-System/lk-design-system-robotics",
       "package": {
         "name": "@lk-design-system/lds-robotics-ui",
-        "version": "0.1.0-rc.34"
+        "version": "0.1.0-rc.35"
       },
       "externalSurface": "docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json",
       "configFile": ".lds-conformance.json",
@@ -59,19 +59,19 @@
         {
           "name": "@lk-design-system/lds-core",
           "section": "peerDependencies",
-          "version": "0.1.0-rc.69.31",
-          "declaredRange": ">=0.1.0-rc.69.31 <0.2.0"
+          "version": "0.1.1",
+          "declaredRange": ">=0.1.1 <0.3.0"
         },
         {
           "name": "@lk-design-system/lds-product",
           "section": "peerDependencies",
-          "version": "0.1.0-rc.69.31",
-          "declaredRange": ">=0.1.0-rc.69.31 <0.2.0"
+          "version": "0.1.1",
+          "declaredRange": ">=0.1.1 <0.3.0"
         },
         {
           "name": "@lk-design-system/lds-theme",
           "section": "devDependencies",
-          "version": "0.1.0-rc.69.31"
+          "version": "0.1.1"
         }
       ],
       "scanRoots": [

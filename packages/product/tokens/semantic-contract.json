@@ -5,7 +5,7 @@
   "role": "consumer",
   "package": {
     "name": "@lk-design-system/lds-product",
-    "version": "0.1.1"
+    "version": "0.2.0"
   },
   "requiresSemanticContractVersion": "1",
   "scanRoots": [

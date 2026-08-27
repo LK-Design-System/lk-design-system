@@ -215,7 +215,7 @@ test('release snapshot rejects malformed release refs and hashes', () => {
 
   assert.throws(() => assertCurrentCanonicalSnapshot({
     currentRef: currentLdsRef,
-    canonicalRef: 'lds-v0.1.1',
+    canonicalRef: currentLdsRef,
     canonicalSnapshotManifestSha256: 'not-a-hash',
     currentSnapshotManifestSha256: 'not-a-hash',
     surfacePackageRefStatus: 'published',

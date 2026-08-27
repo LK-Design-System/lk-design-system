@@ -2,13 +2,20 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
-## Unreleased
+## 0.2.0 - 2026-08-28
 
-Source-only follow-up for the `0.1.1` candidate. No immutable tag, registry publish,
-consumer re-verification, rollout, or product deployment is attested here.
+Paired Robotics release: `0.1.0-rc.35`. The minor bump carries a behavior change of the
+existing `Pagination` extended/compact windows (below); registry publish, consumer
+re-verification, rollout, and product deployment are attested separately.
 
 ### Added
 
+- `Pagination` gained a `block` variant: every page of the current fixed block
+  (`blockSize`, default 10) stays clickable and double-chevron commands jump by block,
+  following the Korean portal/board convention while keeping first/last pages reachable.
+- `Pagination` gained opt-in `showFirstLast` first/last-page jump commands framing the
+  single chevrons (`« ‹ 1 2 3 › »`) on every variant except `block`, with
+  `firstPageLabel`/`lastPageLabel` accessible names.
 - Added adoption contract v2 with a deterministic non-Storybook workflow evidence adapter.
   A hashed clean-clone artifact can now satisfy async and interactive hard triggers when it
   proves production build, workflow smoke, accessibility, theme and viewport coverage,
@@ -30,6 +37,13 @@ consumer re-verification, rollout, or product deployment is attested here.
 
 ### Changed
 
+- `Pagination` extended/compact now render a constant-length page window (11/7 items;
+  `siblingCount` default moved from 1 to 3) so page numbers never shift position between
+  clicks, every page is listed without ellipses while `count` is within one page of the
+  window, and an ellipsis never hides fewer than two pages. `compact` now always keeps the
+  first and last pages reachable. Grounded in KRDS pagination guidance (11 items, 7 narrow)
+  recorded in `Pagination.prompt.md`. This changes rendered output for existing consumers
+  and is the reason this release is `0.2.0` rather than a `0.1.x` patch.
 - Contract v1 reports remain pinned historical evidence. Revalidation against v2 requires a
   local v2 report-schema copy, `contractVersion: "2"`, and either existing exact Storybook
   evidence or the new workflow artifact; it does not promote or deploy a consumer automatically.
