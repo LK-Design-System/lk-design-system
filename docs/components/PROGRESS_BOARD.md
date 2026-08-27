@@ -35,7 +35,7 @@
 | [Stack and Alignment](guides/core-components-layout-stack-and-alignment.md) | Core / Layout | `Cluster`, `Spacer`, `Stack` | mapped | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Category](guides/core-components-navigation-category.md) | Core / Navigation | `Category` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Page Indicator](guides/core-components-navigation-page-indicator.md) | Core / Navigation | `PageIndicator` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Pagination](guides/core-components-navigation-pagination.md) | Core / Navigation | `Pagination` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
+| [Pagination](guides/core-components-navigation-pagination.md) | Core / Navigation | `Pagination` | mapped | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Tabs](guides/core-components-navigation-tabs.md) | Core / Navigation | `Tabs` | mapped | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Alert](guides/core-components-overlay-alert.md) | Core / Overlay | `Alert` | mapped | implemented | not-tracked | not-tracked | 3 public / 2 hidden |
 | [Confirm Dialog](guides/core-components-overlay-confirm-dialog.md) | Core / Overlay | `ConfirmDialog` | mapped | implemented | not-tracked | not-tracked | 1 public / 1 hidden |

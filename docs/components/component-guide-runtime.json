@@ -6879,6 +6879,11 @@
             "role": "overview"
           },
           {
+            "id": "lds-core-components-navigation-pagination--stable-window-and-blocks",
+            "name": "사용법 · 안정 윈도우와 블록 이동",
+            "role": "usage"
+          },
+          {
             "id": "lds-core-components-navigation-pagination--pagination-patterns",
             "name": "변형·상태 · 이동 방식과 제어 영역",
             "role": "variants-states"
