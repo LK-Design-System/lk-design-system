@@ -28,6 +28,18 @@
       "sha256": "2a1835887b184f05df5f245bb46f7c3b0e38b04e4fc1e93197cb286b8f325794"
     },
     {
+      "name": "theme-product-lockup",
+      "id": "lds-theme-brand-product-lockup--product-lockup-standard",
+      "query": {},
+      "viewport": {
+        "width": 820,
+        "height": 620
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 54128,
+      "sha256": "2e0d7e6719729c9a4d6c1b710878454b6f1fb85f80347ef5d61c3ed2d2e08ec4"
+    },
+    {
       "name": "theme-brand-spinner-reduced-motion",
       "id": "lds-theme-status-brand-spinner--brand-loading",
       "query": {},
@@ -36,8 +48,8 @@
         "height": 220
       },
       "reducedMotion": "reduce",
-      "bytes": 46202,
-      "sha256": "a4072f403e583caff42bad482e3d2d755578bd3523e1538b004e2b7bd11860d0"
+      "bytes": 45711,
+      "sha256": "c6cb1e36b21c5a47a77edbde55cbf9a79d40ed2133e43081818d5653ec431a3d"
     },
     {
       "name": "react-card-interactive-dark",
@@ -48,8 +60,8 @@
         "height": 520
       },
       "reducedMotion": "no-preference",
-      "bytes": 32043,
-      "sha256": "44b16b9941f41921ce040958362662ccdf4c9d9879bc82df73c2af474d8303b5"
+      "bytes": 27853,
+      "sha256": "c75c005134586a1e61b905c8aa9bcc7082e3853611eadb541a8086a646df8f1d"
     },
     {
       "name": "react-card-content-patterns-dark",
@@ -62,8 +74,8 @@
         "height": 860
       },
       "reducedMotion": "no-preference",
-      "bytes": 118429,
-      "sha256": "3c1fcb6f9a9352f3315749909bd4edce2597af8a51779c0c44c340fff96afabd"
+      "bytes": 114720,
+      "sha256": "7a65ac170324561bbd521d2d9a5bdfaa13ad2eecd422d2a1729b7c0ffd88b733"
     },
     {
       "name": "wds-content-card-patterns",
@@ -74,8 +86,8 @@
         "height": 860
       },
       "reducedMotion": "no-preference",
-      "bytes": 104790,
-      "sha256": "f9e3d5c9e7cd5610cc010abf002deb66e0ec160551047a11a343f58f2d396769"
+      "bytes": 98360,
+      "sha256": "429503e8219335cf394d0f6344706229d2685399cc32a415806665aa64a6367e"
     },
     {
       "name": "action-button-matrix",
@@ -110,8 +122,8 @@
         "height": 520
       },
       "reducedMotion": "no-preference",
-      "bytes": 40674,
-      "sha256": "d0af478595a0f06912d83ee18433360cb8628583327291185ae024fb4f8221a7"
+      "bytes": 40752,
+      "sha256": "d0f404e914237827967f5aae0f21d736cee2dd0f219088065394f11c41983e17"
     },
     {
       "name": "react-topbar-dark",
@@ -124,8 +136,8 @@
         "height": 520
       },
       "reducedMotion": "no-preference",
-      "bytes": 41989,
-      "sha256": "2c28e70eb264569c8d28986e41ef76a7369cf07512871540bd249c9357ded4e4"
+      "bytes": 42073,
+      "sha256": "dcf0d842eb37d0ca8de2ef22a5d9be2801a83f5c487b9e0a5aeeee81c7de4109"
     },
     {
       "name": "react-forms",
@@ -270,8 +282,8 @@
         "height": 960
       },
       "reducedMotion": "no-preference",
-      "bytes": 81419,
-      "sha256": "8d8df3d1ac7963fe249af64444cd698fa1a4b487da1e002f49f86ddccaccc357"
+      "bytes": 82037,
+      "sha256": "241ffce62b4cddf3a86798f55ac1f81eac6a8c8e0c0e4deed6a30e6926ac9d5e"
     },
     {
       "name": "wds-loading-states",
@@ -313,15 +325,15 @@
     },
     {
       "name": "react-overlay-alert",
-      "id": "lds-product-overlay-popover--popover-overview",
+      "id": "lds-core-components-overlay-popover--popover-overview",
       "query": {},
       "viewport": {
         "width": 980,
         "height": 720
       },
       "reducedMotion": "no-preference",
-      "bytes": 30863,
-      "sha256": "042751a12a6b16ccbdc6ac7a2c2aadce9a02a8a945050a2e0cd7b357e6f2a097"
+      "bytes": 30727,
+      "sha256": "241af998eae38f1e700a7acd8c0f4f94b49fd6a682ea85ca2ad8fa61f20cb01e"
     },
     {
       "name": "product-validation-summary",
@@ -442,8 +454,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 111292,
-      "sha256": "8d88f2bffcff53afc4a538868f247c1875f6b63039a1ca1228716349c01d3df0"
+      "bytes": 111088,
+      "sha256": "e6f242496042547a9391e6fe283dc779e9653c90f8095e552dbe463640114bd0"
     },
     {
       "name": "product-dashboard-shell-dark",
@@ -454,8 +466,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 76824,
-      "sha256": "43136d9882353875040fdb49c48b6638575c559dc8b257a2a80facdd416ea391"
+      "bytes": 76317,
+      "sha256": "7a79bc0d38b0bcefc819e0908fcc58d6627e91b660a3f8ec100902f7c5718496"
     },
     {
       "name": "product-navigation-dashboard-fixed",
@@ -466,8 +478,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 53325,
-      "sha256": "25cbdd97ad6d4778c75922a913314687e14b612719f58c70ffe2f9dad6057493"
+      "bytes": 52961,
+      "sha256": "a02078a77fd4551f4ca23f8ccbf69e55643a16734dc91ec2fcc191eeb0b38e3b"
     },
     {
       "name": "product-navigation-dashboard-overlay-rail",
@@ -478,8 +490,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 18183,
-      "sha256": "61dfc25bcdaaa29dc58997f50b1adcda5b04584438083fe84743527e1d3f6ac1"
+      "bytes": 17718,
+      "sha256": "210652034de15014ba81c1858bc8e7f58e830207cde7da949de9330221263de4"
     },
     {
       "name": "product-navigation-dashboard-topbar-toggle",
@@ -490,20 +502,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 19069,
-      "sha256": "943bebdeeb9cd8097ac23b64018d2ac45f09420afcb483f83d2ece2273893e99"
-    },
-    {
-      "name": "theme-product-lockup",
-      "id": "lds-theme-brand-product-lockup--product-lockup-standard",
-      "query": {},
-      "viewport": {
-        "width": 820,
-        "height": 620
-      },
-      "reducedMotion": "no-preference",
-      "bytes": 54670,
-      "sha256": "b1b9584f9363443c454d8f6e08ab6900a13e945f09c7d3bc6e21708dd144039e"
+      "bytes": 18597,
+      "sha256": "99a42c0c49b20376d575a920b691f91bd32d4938614a804ebc067022cbfba6b6"
     }
   ]
 }
