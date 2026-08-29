@@ -175,6 +175,13 @@
       "owner": "DrawerProps"
     },
     {
+      "name": "closeButtonVariant",
+      "type": "'soft' | 'solid' | 'signal' | 'ghost' | 'plain' | 'on-dark'",
+      "required": false,
+      "description": "닫기 아이콘의 IconButton 표현. 생략하면 표면에 맞는 기본값(default: plain, brand: on-dark)을 사용합니다. brand 표면에서 plain은 가시성을 위해 brand on-surface 전경을 유지합니다.",
+      "owner": "DrawerProps"
+    },
+    {
       "name": "withinPortal",
       "type": "boolean",
       "required": false,
@@ -222,19 +229,16 @@
       "required": false,
       "description": "제목 아래의 짧은 설명.",
       "owner": "DrawerSectionProps"
-    },
-    {
-      "name": "headingLevel",
-      "type": "2 | 3 | 4 | 5 | 6",
-      "required": false,
-      "description": "문서 구조에 맞는 제목 레벨. @default 3",
-      "owner": "DrawerSectionProps"
     }
   ],
   "states": [
     {
       "state": "open",
       "rule": "열림 상태. @default false"
+    },
+    {
+      "state": "closeButtonVariant",
+      "rule": "닫기 아이콘의 IconButton 표현. 생략하면 표면에 맞는 기본값(default: plain, brand: on-dark)을 사용합니다. brand 표면에서 plain은 가시성을 위해 brand on-surface 전경을 유지합니다."
     }
   ],
   "behavior": [
@@ -285,7 +289,9 @@
     "appearance는 표면만 바꿉니다. anatomy, density, focus/Escape/스크롤 계약, portal·stack 동작은 동일합니다. DashboardShell은 temporaryNavigationAppearance로 이 축을 그대로 전달합니다.",
     "zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다."
   ],
-  "exceptions": [],
+  "exceptions": [
+    "closeButtonVariant는 Drawer가 소유한 닫기 control의 표현만 바꾸는 additive axis입니다. 기본은 표면별 기존값(default: plain, brand: on-dark)이라 기존 소비자 출력은 바뀌지 않습니다. brand surface에서 외곽선 없는 X가 필요한 경우 closeButtonVariant=\"plain\"을 선택할 수 있으며, Drawer가 --viewer-foreground를 brand on-surface로 고정해 투명 button이라도 대비를 유지합니다."
+  ],
   "related": [
     {
       "component": "Button",
@@ -414,7 +420,7 @@
     "responsive": "evidence",
     "contentGuidance": "evidence",
     "accessibility": "evidence",
-    "exceptions": "omitted-no-evidence",
+    "exceptions": "evidence",
     "related": "evidence",
     "examples": "evidence",
     "tokens": "evidence",

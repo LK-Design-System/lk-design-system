@@ -30,7 +30,7 @@ Classification: **LK Product Extension · Operations Dashboard**. 루트 `DESIGN
 - **navigation**과 **narrowNavigation**은 자체 `<nav>`를 소유하는 `SideNav`/`NavRail`과 `BottomNav`를 전달합니다. 소비자가 이름을 주지 않으면 셸이 `주 탐색`을 제공합니다.
 - 목적지가 네 개를 넘거나 disclosure 계층을 유지해야 하는 좁은 화면은 **temporaryNavigation**에 `SideNav`를 전달합니다. 제품이 trigger와 `temporaryNavigationOpen` 상태·라우트 선택을 소유하고, 셸은 기존 `Drawer` 엔진으로 스크림, Tab containment, Escape, 초점 복원, body scroll lock을 제공합니다. 열려 있는 동안 skip link·header·wide navigation·main·bottom navigation은 `inert`입니다.
 - header trigger는 `temporaryNavigationId`를 가리키는 `aria-controls`와 실제 open state의 `aria-expanded`를 갖습니다. 일반 dismiss는 `temporaryNavigationReturnFocusRef`로 trigger에 복원하고, 목적지를 선택한 뒤에는 제품이 Drawer를 닫고 focus 가능한 `main`으로 이동할 수 있습니다.
-- `temporaryNavigationLabel`은 dialog와 내부 nav의 접근 가능한 이름, `temporaryNavigationCloseLabel`은 닫기 버튼 이름, `temporaryNavigationWidth`는 px 단위 Drawer 폭입니다. 특별한 업무 순서가 있을 때만 `temporaryNavigationInitialFocusRef`로 첫 초점을 재정의하고, 기본은 Drawer 안의 첫 focusable control입니다.
+- `temporaryNavigationLabel`은 dialog와 내부 nav의 접근 가능한 이름, `temporaryNavigationCloseLabel`은 닫기 버튼 이름, `temporaryNavigationCloseButtonVariant`는 Drawer가 소유한 X의 표현, `temporaryNavigationWidth`는 px 단위 Drawer 폭입니다. 브랜드 모바일 셸에서 외곽선 없는 X만 필요할 때만 `temporaryNavigationCloseButtonVariant="plain"`을 명시하며, 색·target·dismiss 동작은 Drawer가 소유합니다. 특별한 업무 순서가 있을 때만 `temporaryNavigationInitialFocusRef`로 첫 초점을 재정의하고, 기본은 Drawer 안의 첫 focusable control입니다.
 - `narrowNavigation`을 생략해도 `layout="auto"`가 기존 `navigation`을 숨기지 않습니다. 좁은 화면에서는 wide navigation을 본문 앞 한 행에 유지해 탐색이 조용히 사라지는 실패를 막습니다. 최적화된 모바일 표현이 필요하면 `BottomNav`를 명시합니다.
 - **layout** — `auto`는 LDS의 `sm=768px` 아래에서 좁은 구성을 사용합니다. Storybook과 테스트에서는 `wide`/`narrow`로 상태를 결정적으로 고정할 수 있습니다.
 - **topology** — 기본 `header-first`는 전폭 header 아래에 navigation과 main을 둬 기존 소비자와 Web Viz·Control 계열 셸을 유지합니다. `side-first`는 넓은 화면에서 navigation을 전체 높이 첫 열에, utility header와 main을 둘째 열에 둡니다. 좁은 화면에서는 두 토폴로지 모두 같은 단일 열·하단 탐색 계약으로 수렴합니다.
@@ -57,6 +57,7 @@ Classification: **LK Product Extension · Operations Dashboard**. 루트 `DESIGN
 - `temporaryNavigationAppearance="brand"`는 `temporaryNavigation` Drawer의 골격(제목 행, 닫기 버튼, divider, 본문)까지 네이비 브랜드 표면으로 렌더링합니다. 기본값은 `"default"`로 기존 출력과 동일합니다.
 - 어두운 셸을 모바일에서 이어가려면 세 표면을 함께 지정합니다: `TopBar dark` + `temporaryNavigationAppearance="brand"` + `SideNav appearance="brand"`. 하나라도 빠지면 "네이비 masthead → 흰 타이틀 바 → 네이비 내비 패널"로 표면이 끊깁니다.
 - 이 축은 `Drawer appearance`를 그대로 전달할 뿐이며 Drawer의 anatomy, focus/Escape, portal 계약은 바뀌지 않습니다. 자식 `SideNav`의 `appearance`를 훔쳐보고 자동으로 맞추지 않습니다 — 셸의 표면 결정은 명시적 prop으로 남깁니다.
+- `temporaryNavigationCloseButtonVariant`도 같은 방식으로 Drawer의 `closeButtonVariant`를 명시적으로 전달합니다. 기본 표현을 다시 정의하지 않으며, `plain`을 선택해도 브랜드 표면의 X 대비와 32px action target은 Drawer가 유지합니다.
 
 ### 외부 기준과 적용 결론
 

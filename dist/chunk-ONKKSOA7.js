@@ -1,7 +1,7 @@
 "use client";
 import {
   Drawer
-} from "./chunk-KUZMNKFV.js";
+} from "./chunk-QSV4UBHF.js";
 
 // components/layout/DashboardShell.jsx
 import React from "react";
@@ -86,6 +86,7 @@ function DashboardShell({
   temporaryNavigationTitle,
   temporaryNavigationLabel = "\uC8FC \uD0D0\uC0C9",
   temporaryNavigationCloseLabel = "\uD0D0\uC0C9 \uB2EB\uAE30",
+  temporaryNavigationCloseButtonVariant,
   temporaryNavigationWidth = 320,
   temporaryNavigationAppearance = "default",
   temporaryNavigationInitialFocusRef,
@@ -173,6 +174,7 @@ function DashboardShell({
             title: temporaryNavigationTitle,
             ariaLabel: temporaryNavigationLabel,
             closeLabel: temporaryNavigationCloseLabel,
+            closeButtonVariant: temporaryNavigationCloseButtonVariant,
             onClose: onTemporaryNavigationClose,
             initialFocusRef: temporaryNavigationInitialFocusRef,
             returnFocusRef: temporaryNavigationReturnFocusRef,
@@ -188,4 +190,4 @@ function DashboardShell({
 export {
   DashboardShell
 };
-//# sourceMappingURL=chunk-IEC2W7RL.js.map
+//# sourceMappingURL=chunk-ONKKSOA7.js.map

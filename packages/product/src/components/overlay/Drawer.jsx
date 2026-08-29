@@ -52,6 +52,7 @@ export function Drawer({
   restoreFocus = true,
   ariaLabel = '서랍 패널',
   closeLabel = '닫기',
+  closeButtonVariant,
   withinPortal = true,
   portalTarget,
   zIndex,
@@ -87,6 +88,7 @@ export function Drawer({
   const isRight = side === 'right';
   const isCompact = density === 'compact';
   const resolvedDensity = isCompact ? 'compact' : 'comfortable';
+  const resolvedCloseButtonVariant = closeButtonVariant || tones.closeVariant;
   const hidden = isRight ? 'translateX(100%)' : 'translateX(-100%)';
   return (
     <OverlayPortal open={open} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={portalAnchorRef} portalRef={portalRef} layer="modal">
@@ -114,7 +116,13 @@ export function Drawer({
               {subtitle != null && <div id={subtitleId} style={{ color: tones.body, fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-reading-line)', overflowWrap: 'anywhere' }}>{subtitle}</div>}
             </div>
             {onClose && (
-              <IconButton size="sm" variant={tones.closeVariant} label={closeLabel} onClick={onClose}>
+              <IconButton
+                size="sm"
+                variant={resolvedCloseButtonVariant}
+                label={closeLabel}
+                onClick={onClose}
+                style={{ '--viewer-foreground': tones.title }}
+              >
                 <Icon name="close" size={20} aria-hidden="true" />
               </IconButton>
             )}

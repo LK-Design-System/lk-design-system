@@ -56,6 +56,7 @@
 | `restoreFocus` | `boolean` | No | 닫힌 뒤 trigger 또는 returnFocusRef로 초점을 복원합니다. @default true |
 | `ariaLabel` | `string` | No | title이 없을 때 사용할 접근 가능한 이름. @default "서랍 패널" |
 | `closeLabel` | `string` | No | 닫기 버튼의 접근 가능한 이름. @default "닫기" |
+| `closeButtonVariant` | `'soft' \| 'solid' \| 'signal' \| 'ghost' \| 'plain' \| 'on-dark'` | No | 닫기 아이콘의 IconButton 표현. 생략하면 표면에 맞는 기본값(default: plain, brand: on-dark)을 사용합니다. brand 표면에서 plain은 가시성을 위해 brand on-surface 전경을 유지합니다. |
 | `withinPortal` | `boolean` | No | Render at the owner-document Portal boundary. @default true |
 | `portalTarget` | `HTMLElement \| null` | No |  |
 | `zIndex` | `number` | No |  |
@@ -63,13 +64,13 @@
 | `style` | `React.CSSProperties` | No |  |
 | `title` | `React.ReactNode` | Yes | Drawer 본문 안의 보이는 하위 제목. |
 | `description` | `React.ReactNode` | No | 제목 아래의 짧은 설명. |
-| `headingLevel` | `2 \| 3 \| 4 \| 5 \| 6` | No | 문서 구조에 맞는 제목 레벨. @default 3 |
 
 ## States
 
 | State | Contract |
 | --- | --- |
 | open | 열림 상태. @default false |
+| closeButtonVariant | 닫기 아이콘의 IconButton 표현. 생략하면 표면에 맞는 기본값(default: plain, brand: on-dark)을 사용합니다. brand 표면에서 plain은 가시성을 위해 brand on-surface 전경을 유지합니다. |
 
 ## Behavior and interaction
 
@@ -110,6 +111,10 @@
 - DrawerSection.headingLevel은 실제 문서 계층에 맞춰 26을 선택하고 기본값은 3입니다. 짧은 보조 명령은 actions에 두며, headerStyle과 contentStyle은 고유한 레이아웃 조합에만 사용합니다. 이 style escape hatch로 제목 크기·밀도·divider 간격을 다시 정의하지 않습니다.
 - appearance는 표면만 바꿉니다. anatomy, density, focus/Escape/스크롤 계약, portal·stack 동작은 동일합니다. DashboardShell은 temporaryNavigationAppearance로 이 축을 그대로 전달합니다.
 - zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다.
+
+## Exceptions
+
+- closeButtonVariant는 Drawer가 소유한 닫기 control의 표현만 바꾸는 additive axis입니다. 기본은 표면별 기존값(default: plain, brand: on-dark)이라 기존 소비자 출력은 바뀌지 않습니다. brand surface에서 외곽선 없는 X가 필요한 경우 closeButtonVariant="plain"을 선택할 수 있으며, Drawer가 --viewer-foreground를 brand on-surface로 고정해 투명 button이라도 대비를 유지합니다.
 
 ## Related components
 
@@ -213,3 +218,4 @@ const firstFilterRef = useRef(null);
 - [Fluent 2 Drawer](https://fluent2.microsoft.design/components/web/react/core/drawer/usage)
 - [WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)
 - [Fluent 2 Dialog](https://fluent2.microsoft.design/components/web/react/core/dialog/usage)
+- [Fluent 2 Button](https://fluent2.microsoft.design/components/web/react/core/button/usage)

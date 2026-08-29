@@ -21,6 +21,8 @@ export interface DashboardShellProps extends Omit<React.HTMLAttributes<HTMLDivEl
   temporaryNavigationLabel?: string;
   /** Drawer 닫기 버튼의 접근 가능한 이름. @default "탐색 닫기" */
   temporaryNavigationCloseLabel?: string;
+  /** temporaryNavigation Drawer 닫기 아이콘의 표현. 생략하면 Drawer 표면의 기본값을 사용합니다. 브랜드 모바일 셸에서 외곽선 없는 X만 필요하면 "plain"을 사용합니다. */
+  temporaryNavigationCloseButtonVariant?: 'soft' | 'solid' | 'signal' | 'ghost' | 'plain' | 'on-dark';
   /** temporaryNavigation Drawer 너비(px). @default 320 */
   temporaryNavigationWidth?: number;
   /** temporaryNavigation Drawer 표면. `TopBar dark` + `SideNav appearance="brand"` 조합에서 "brand"를 주면 드로어 골격까지 같은 네이비 표면으로 이어집니다. @default "default" */

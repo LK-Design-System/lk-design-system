@@ -52,6 +52,7 @@ function Drawer({
   restoreFocus = true,
   ariaLabel = "\uC11C\uB78D \uD328\uB110",
   closeLabel = "\uB2EB\uAE30",
+  closeButtonVariant,
   withinPortal = true,
   portalTarget,
   zIndex,
@@ -91,6 +92,7 @@ function Drawer({
   const isRight = side === "right";
   const isCompact = density === "compact";
   const resolvedDensity = isCompact ? "compact" : "comfortable";
+  const resolvedCloseButtonVariant = closeButtonVariant || tones.closeVariant;
   const hidden = isRight ? "translateX(100%)" : "translateX(-100%)";
   return /* @__PURE__ */ jsx(OverlayPortal, { open, withinPortal, portalTarget, anchorRef: portalAnchorRef, portalRef, layer: "modal", children: /* @__PURE__ */ jsx(
     "div",
@@ -119,7 +121,17 @@ function Drawer({
                 title != null && /* @__PURE__ */ jsx("div", { id: titleId, style: { fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: tones.title, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
                 subtitle != null && /* @__PURE__ */ jsx("div", { id: subtitleId, style: { color: tones.body, fontSize: "var(--label1-size)", lineHeight: "var(--label1-reading-line)", overflowWrap: "anywhere" }, children: subtitle })
               ] }),
-              onClose && /* @__PURE__ */ jsx(IconButton, { size: "sm", variant: tones.closeVariant, label: closeLabel, onClick: onClose, children: /* @__PURE__ */ jsx(Icon, { name: "close", size: 20, "aria-hidden": "true" }) })
+              onClose && /* @__PURE__ */ jsx(
+                IconButton,
+                {
+                  size: "sm",
+                  variant: resolvedCloseButtonVariant,
+                  label: closeLabel,
+                  onClick: onClose,
+                  style: { "--viewer-foreground": tones.title },
+                  children: /* @__PURE__ */ jsx(Icon, { name: "close", size: 20, "aria-hidden": "true" })
+                }
+              )
             ] }),
             /* @__PURE__ */ jsx("div", { className: "lk-scroll-surface", "data-scrollbar": "auto", "data-scroll-gutter": "stable", style: { flex: 1, padding: isCompact ? "var(--component-drawer-body-padding-compact, var(--space-4) var(--space-5))" : "var(--component-drawer-body-padding-comfortable, var(--space-5) var(--space-6))", overflow: "auto", scrollbarGutter: "stable", fontSize: isCompact ? "var(--label1-size)" : "var(--body2-size)", lineHeight: isCompact ? "var(--label1-line)" : 1.7, letterSpacing: isCompact ? "var(--label1-spacing)" : void 0, color: tones.body, wordBreak: "keep-all", ...bodyStyle }, children: /* @__PURE__ */ jsx(ComponentDensityScope, { density: resolvedDensity, children }) }),
             footer != null && /* @__PURE__ */ jsx("div", { style: { padding: isCompact ? "var(--component-drawer-footer-padding-compact, var(--space-3) var(--space-5))" : "var(--component-drawer-footer-padding-comfortable, var(--space-4) var(--space-6))", borderTop: `1px solid ${tones.divider}`, display: "flex", justifyContent: "flex-end", gap: "var(--space-2)" }, children: footer })
@@ -175,4 +187,4 @@ export {
   Drawer,
   DrawerSection
 };
-//# sourceMappingURL=chunk-KUZMNKFV.js.map
+//# sourceMappingURL=chunk-QSV4UBHF.js.map

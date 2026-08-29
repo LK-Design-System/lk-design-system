@@ -1,6 +1,6 @@
 {
   "name": "@lk-design-system/lds-product",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Reusable LK product patterns built on LDS Core.",
   "type": "module",
   "main": "./dist/index.js",
@@ -21,7 +21,7 @@
     "tokens/*.css"
   ],
   "dependencies": {
-    "@lk-design-system/lds-core": "0.2.0"
+    "@lk-design-system/lds-core": "0.2.1"
   },
   "peerDependencies": {
     "react": ">=18 <20",

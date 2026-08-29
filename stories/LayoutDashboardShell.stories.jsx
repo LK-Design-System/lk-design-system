@@ -252,6 +252,8 @@ function TemporaryNavigationShell() {
       onTemporaryNavigationClose={() => setOpen(false)}
       temporaryNavigationId={panelId}
       temporaryNavigationTitle="주 탐색"
+      temporaryNavigationAppearance="brand"
+      temporaryNavigationCloseButtonVariant="plain"
       temporaryNavigationReturnFocusRef={triggerRef}
       mainId={mainId}
       style={{ minHeight: 720 }}
@@ -499,6 +501,12 @@ export const TemporaryNavigation = {
       || !wideRegion.hasAttribute('inert')
       || !main.hasAttribute('inert')) {
       throw new Error('Opening temporary navigation must expose a named modal Drawer and inert every shell background region.');
+    }
+    const close = dialog.querySelector('button[aria-label="탐색 닫기"]');
+    if (!close?.classList.contains('lk-iconbtn--plain')
+      || getComputedStyle(close).backgroundColor !== 'rgba(0, 0, 0, 0)'
+      || getComputedStyle(close).borderTopColor !== 'rgba(0, 0, 0, 0)') {
+      throw new Error('Temporary navigation must forward the minimal plain close control to the brand Drawer.');
     }
 
     await userEvent.keyboard('{Escape}');

@@ -62,6 +62,24 @@ function DrawerOpenExample() {
   );
 }
 
+function BrandCloseControlExample() {
+  const [open, setOpen] = React.useState(true);
+  return (
+    <main style={{ minHeight: 180 }}>
+      <Button onClick={() => setOpen(true)}>브랜드 탐색 열기</Button>
+      <Drawer
+        open={open}
+        appearance="brand"
+        closeButtonVariant="plain"
+        title="주 탐색"
+        onClose={() => setOpen(false)}
+      >
+        브랜드 표면에서는 외곽선 없는 닫기 X도 같은 on-surface 전경으로 렌더링합니다.
+      </Drawer>
+    </main>
+  );
+}
+
 function CompactDrawerExample() {
   const [open, setOpen] = React.useState(true);
   const titleInputRef = React.useRef(null);
@@ -216,6 +234,26 @@ export const DrawerOpen = {
     ),
   },
   render: () => <DrawerOpenExample />,
+};
+
+export const BrandCloseControl = {
+  name: '변형 · 브랜드 표면의 최소 닫기',
+  parameters: storyDescription(
+    '브랜드 Drawer에서 닫기 control의 테두리·채움은 제거하되, 흰색 X·접근 가능한 이름·기존 target과 modal dismiss 계약은 유지하는 조합입니다.',
+  ),
+  render: () => <BrandCloseControlExample />,
+  play: async ({ canvasElement }) => {
+    const dialog = canvasElement.ownerDocument.querySelector('[role="dialog"]');
+    const close = dialog?.querySelector('button[aria-label="닫기"]');
+    const title = dialog?.querySelector('[id]');
+    if (!dialog || !close || !title
+      || !close.classList.contains('lk-iconbtn--plain')
+      || getComputedStyle(close).color !== getComputedStyle(title).color
+      || getComputedStyle(close).backgroundColor !== 'rgba(0, 0, 0, 0)'
+      || getComputedStyle(close).borderTopColor !== 'rgba(0, 0, 0, 0)') {
+      throw new Error('Brand Drawer plain close control must keep an on-surface X without visible button chrome.');
+    }
+  },
 };
 
 export const CompactDensity = {

@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
 
 
-var _chunk5IPUT5XBcjs = require('./chunk-5IPUT5XB.cjs');
+var _chunk2NSY7SI6cjs = require('./chunk-2NSY7SI6.cjs');
 
 // components/layout/DashboardShell.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -86,6 +86,7 @@ function DashboardShell({
   temporaryNavigationTitle,
   temporaryNavigationLabel = "\uC8FC \uD0D0\uC0C9",
   temporaryNavigationCloseLabel = "\uD0D0\uC0C9 \uB2EB\uAE30",
+  temporaryNavigationCloseButtonVariant,
   temporaryNavigationWidth = 320,
   temporaryNavigationAppearance = "default",
   temporaryNavigationInitialFocusRef,
@@ -163,7 +164,7 @@ function DashboardShell({
         ),
         narrowNavigation != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-dashboard-shell__narrow-navigation", inert: inertWhen(temporaryOpen), children: withNavigationLabel(narrowNavigation, narrowNavigationLabel) }),
         hasTemporaryNavigation && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          _chunk5IPUT5XBcjs.Drawer,
+          _chunk2NSY7SI6cjs.Drawer,
           {
             id: resolvedTemporaryNavigationId,
             open: temporaryOpen,
@@ -173,6 +174,7 @@ function DashboardShell({
             title: temporaryNavigationTitle,
             ariaLabel: temporaryNavigationLabel,
             closeLabel: temporaryNavigationCloseLabel,
+            closeButtonVariant: temporaryNavigationCloseButtonVariant,
             onClose: onTemporaryNavigationClose,
             initialFocusRef: temporaryNavigationInitialFocusRef,
             returnFocusRef: temporaryNavigationReturnFocusRef,
@@ -188,4 +190,4 @@ function DashboardShell({
 
 
 exports.DashboardShell = DashboardShell;
-//# sourceMappingURL=chunk-INZWSU5Z.cjs.map
+//# sourceMappingURL=chunk-LG53MZBF.cjs.map

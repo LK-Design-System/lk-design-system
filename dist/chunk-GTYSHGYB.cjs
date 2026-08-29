@@ -1,7 +1,7 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
 
 
-var _chunk5IPUT5XBcjs = require('./chunk-5IPUT5XB.cjs');
+var _chunk2NSY7SI6cjs = require('./chunk-2NSY7SI6.cjs');
 
 
 var _chunk7OXVB7WXcjs = require('./chunk-7OXVB7WX.cjs');
@@ -100,7 +100,7 @@ function PrimaryDetail({
           }
         ),
         resolvedMode === "overlay" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          _chunk5IPUT5XBcjs.Drawer,
+          _chunk2NSY7SI6cjs.Drawer,
           {
             open: detailOpen,
             side: "right",
@@ -125,4 +125,4 @@ function PrimaryDetail({
 
 
 exports.PrimaryDetail = PrimaryDetail;
-//# sourceMappingURL=chunk-E7KGRPMF.cjs.map
+//# sourceMappingURL=chunk-GTYSHGYB.cjs.map

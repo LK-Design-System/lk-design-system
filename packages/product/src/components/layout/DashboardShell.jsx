@@ -99,6 +99,7 @@ export function DashboardShell({
   temporaryNavigationTitle,
   temporaryNavigationLabel = '주 탐색',
   temporaryNavigationCloseLabel = '탐색 닫기',
+  temporaryNavigationCloseButtonVariant,
   temporaryNavigationWidth = 320,
   temporaryNavigationAppearance = 'default',
   temporaryNavigationInitialFocusRef,
@@ -193,6 +194,7 @@ export function DashboardShell({
           title={temporaryNavigationTitle}
           ariaLabel={temporaryNavigationLabel}
           closeLabel={temporaryNavigationCloseLabel}
+          closeButtonVariant={temporaryNavigationCloseButtonVariant}
           onClose={onTemporaryNavigationClose}
           initialFocusRef={temporaryNavigationInitialFocusRef}
           returnFocusRef={temporaryNavigationReturnFocusRef}

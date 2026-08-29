@@ -20,8 +20,8 @@
 
 - 셸 자체는 카드, edge line, inset border, radius, shadow를 추가하지 않습니다. 배경은 기존 페이지 canvas 토큰만 사용합니다.
 - UserMenu는 SideNav footer 계약을 기본으로 합니다. 같은 브랜드·목적지·계정을 TopBar와 SideNav에 반복하지 않습니다.
+- temporaryNavigationCloseButtonVariant도 같은 방식으로 Drawer의 closeButtonVariant를 명시적으로 전달합니다. 기본 표현을 다시 정의하지 않으며, plain을 선택해도 브랜드 표면의 X 대비와 32px action target은 Drawer가 유지합니다.
 - 세 고정 소스에서 공통 KPI 요구는 확인되지 않았습니다. DashboardShell은 MetricCard-first 화면을 규정하지 않고 제품이 중요도를 정한 실제 컴포넌트 조합만 수용합니다.
-- Classification: LK Product Extension · Operations Dashboard. 루트 DESIGN.md의 Operations Dashboard 계약을 따르며 WDS Core 축이나 별도 디자인 시스템이 아닙니다. 화면별 데이터 fetching이나 앱 라우팅을 포함하지 않습니다.
 
 ## Anatomy
 
@@ -49,6 +49,7 @@
 | `temporaryNavigationTitle` | `React.ReactNode` | No | Drawer에 보이는 탐색 제목. |
 | `temporaryNavigationLabel` | `string` | No | Drawer dialog와 내부 navigation의 접근 가능한 이름. @default "주 탐색" |
 | `temporaryNavigationCloseLabel` | `string` | No | Drawer 닫기 버튼의 접근 가능한 이름. @default "탐색 닫기" |
+| `temporaryNavigationCloseButtonVariant` | `'soft' \| 'solid' \| 'signal' \| 'ghost' \| 'plain' \| 'on-dark'` | No | temporaryNavigation Drawer 닫기 아이콘의 표현. 생략하면 Drawer 표면의 기본값을 사용합니다. 브랜드 모바일 셸에서 외곽선 없는 X만 필요하면 "plain"을 사용합니다. |
 | `temporaryNavigationWidth` | `number` | No | temporaryNavigation Drawer 너비(px). @default 320 |
 | `temporaryNavigationAppearance` | `'default' \| 'brand'` | No | temporaryNavigation Drawer 표면. TopBar dark + SideNav appearance="brand" 조합에서 "brand"를 주면 드로어 골격까지 같은 네이비 표면으로 이어집니다. @default "default" |
 | `temporaryNavigationInitialFocusRef` | `React.RefObject` | No | Drawer가 열릴 때 우선 초점을 받을 내부 요소. |
@@ -62,13 +63,13 @@
 | `mainStyle` | `React.CSSProperties` | No |  |
 | `skipLabel` | `string` | No | 첫 focus 대상인 건너뛰기 링크 문구. @default "본문으로 건너뛰기" |
 | `navigationLabel` | `string` | No | 넓은 화면 navigation의 기본 접근 가능한 이름. @default "주 탐색" |
-| `narrowNavigationLabel` | `string` | No | 좁은 화면 navigation의 기본 접근 가능한 이름. @default "주 탐색" |
 
 ## States
 
 | State | Contract |
 | --- | --- |
 | temporaryNavigationOpen | temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false |
+| temporaryNavigationCloseButtonVariant | temporaryNavigation Drawer 닫기 아이콘의 표현. 생략하면 Drawer 표면의 기본값을 사용합니다. 브랜드 모바일 셸에서 외곽선 없는 X만 필요하면 "plain"을 사용합니다. |
 
 ## Behavior and interaction
 
@@ -106,7 +107,7 @@
 - 의미·키보드 순서는 본문 건너뛰기 → header/banner → 넓은 주 탐색 → main → 좁은 주 탐색입니다. CSS로 숨겨진 탐색 슬롯은 접근성 트리에서도 제외됩니다.
 - 목적지가 네 개를 넘거나 disclosure 계층을 유지해야 하는 좁은 화면은 temporaryNavigation에 SideNav를 전달합니다. 제품이 trigger와 temporaryNavigationOpen 상태·라우트 선택을 소유하고, 셸은 기존 Drawer 엔진으로 스크림, Tab containment, Escape, 초점 복원, body scroll lock을 제공합니다. 열려 있는 동안 skip link·header·wide navigation·main·bottom navigation은 inert입니다.
 - header trigger는 temporaryNavigationId를 가리키는 aria-controls와 실제 open state의 aria-expanded를 갖습니다. 일반 dismiss는 temporaryNavigationReturnFocusRef로 trigger에 복원하고, 목적지를 선택한 뒤에는 제품이 Drawer를 닫고 focus 가능한 main으로 이동할 수 있습니다.
-- temporaryNavigationLabel은 dialog와 내부 nav의 접근 가능한 이름, temporaryNavigationCloseLabel은 닫기 버튼 이름, temporaryNavigationWidth는 px 단위 Drawer 폭입니다. 특별한 업무 순서가 있을 때만 temporaryNavigationInitialFocusRef로 첫 초점을 재정의하고, 기본은 Drawer 안의 첫 focusable control입니다.
+- temporaryNavigationLabel은 dialog와 내부 nav의 접근 가능한 이름, temporaryNavigationCloseLabel은 닫기 버튼 이름, temporaryNavigationCloseButtonVariant는 Drawer가 소유한 X의 표현, temporaryNavigationWidth는 px 단위 Drawer 폭입니다. 브랜드 모바일 셸에서 외곽선 없는 X만 필요할 때만 temporaryNavigationCloseButtonVariant="plain"을 명시하며, 색·target·dismiss 동작은 Drawer가 소유합니다.
 - TopBar, SideNav, NavRail, BottomNav의 control/icon 크기, typography, radius, border, fill, active/focus/disabled 처리를 그대로 유지합니다.
 
 ## Related components

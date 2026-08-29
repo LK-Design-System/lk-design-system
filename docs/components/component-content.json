@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "87f72cdbefcd753182abfa3dd8bbbba6f3859945d3c13c3c526cf3ac2889de4d",
+  "sourceFingerprint": "fce3ce145e9b52cdd454e371140a3150e088ae9f25f8ea88096472e3b4556ced",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -21978,6 +21978,13 @@
           "owner": "DashboardShellProps"
         },
         {
+          "name": "temporaryNavigationCloseButtonVariant",
+          "type": "'soft' | 'solid' | 'signal' | 'ghost' | 'plain' | 'on-dark'",
+          "required": false,
+          "description": "temporaryNavigation Drawer 닫기 아이콘의 표현. 생략하면 Drawer 표면의 기본값을 사용합니다. 브랜드 모바일 셸에서 외곽선 없는 X만 필요하면 \"plain\"을 사용합니다.",
+          "owner": "DashboardShellProps"
+        },
+        {
           "name": "temporaryNavigationWidth",
           "type": "number",
           "required": false,
@@ -22115,7 +22122,7 @@
           "url": "https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/"
         }
       ],
-      "promptSha256": "f0e23e0f1fa96e0c94372623cc32b77085daa730f11842dd1f6470c996c8eff8"
+      "promptSha256": "7ee087145e777ea11e6716d22e0f804938dd248f6cce8c5c89477c3bc7045b20"
     },
     {
       "id": "dock-panel",
@@ -26832,6 +26839,13 @@
           "owner": "DrawerProps"
         },
         {
+          "name": "closeButtonVariant",
+          "type": "'soft' | 'solid' | 'signal' | 'ghost' | 'plain' | 'on-dark'",
+          "required": false,
+          "description": "닫기 아이콘의 IconButton 표현. 생략하면 표면에 맞는 기본값(default: plain, brand: on-dark)을 사용합니다. brand 표면에서 plain은 가시성을 위해 brand on-surface 전경을 유지합니다.",
+          "owner": "DrawerProps"
+        },
+        {
           "name": "withinPortal",
           "type": "boolean",
           "required": false,
@@ -26986,9 +27000,13 @@
         {
           "label": "Fluent 2 Dialog",
           "url": "https://fluent2.microsoft.design/components/web/react/core/dialog/usage"
+        },
+        {
+          "label": "Fluent 2 Button",
+          "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
         }
       ],
-      "promptSha256": "ca960c10b0bcc98b7d7138bc4dea642335f63ef29665befc4f57ad31ce31d495"
+      "promptSha256": "12ebabb0404275117fa7aa1961b3e5ba193d95f33472418cbad52879361f6232"
     },
     {
       "id": "dropdown-menu",
@@ -70658,8 +70676,8 @@
       "avoidWhen": [
         "셸 자체는 카드, edge line, inset border, radius, shadow를 추가하지 않습니다. 배경은 기존 페이지 canvas 토큰만 사용합니다.",
         "UserMenu는 SideNav footer 계약을 기본으로 합니다. 같은 브랜드·목적지·계정을 TopBar와 SideNav에 반복하지 않습니다.",
-        "세 고정 소스에서 공통 KPI 요구는 확인되지 않았습니다. DashboardShell은 MetricCard-first 화면을 규정하지 않고 제품이 중요도를 정한 실제 컴포넌트 조합만 수용합니다.",
-        "Classification: LK Product Extension · Operations Dashboard. 루트 DESIGN.md의 Operations Dashboard 계약을 따르며 WDS Core 축이나 별도 디자인 시스템이 아닙니다. 화면별 데이터 fetching이나 앱 라우팅을 포함하지 않습니다."
+        "temporaryNavigationCloseButtonVariant도 같은 방식으로 Drawer의 closeButtonVariant를 명시적으로 전달합니다. 기본 표현을 다시 정의하지 않으며, plain을 선택해도 브랜드 표면의 X 대비와 32px action target은 Drawer가 유지합니다.",
+        "세 고정 소스에서 공통 KPI 요구는 확인되지 않았습니다. DashboardShell은 MetricCard-first 화면을 규정하지 않고 제품이 중요도를 정한 실제 컴포넌트 조합만 수용합니다."
       ],
       "anatomy": [
         {
@@ -70763,6 +70781,13 @@
           "owner": "DashboardShellProps"
         },
         {
+          "name": "temporaryNavigationCloseButtonVariant",
+          "type": "'soft' | 'solid' | 'signal' | 'ghost' | 'plain' | 'on-dark'",
+          "required": false,
+          "description": "temporaryNavigation Drawer 닫기 아이콘의 표현. 생략하면 Drawer 표면의 기본값을 사용합니다. 브랜드 모바일 셸에서 외곽선 없는 X만 필요하면 \"plain\"을 사용합니다.",
+          "owner": "DashboardShellProps"
+        },
+        {
           "name": "temporaryNavigationWidth",
           "type": "number",
           "required": false,
@@ -70852,19 +70877,16 @@
           "required": false,
           "description": "넓은 화면 navigation의 기본 접근 가능한 이름. @default \"주 탐색\"",
           "owner": "DashboardShellProps"
-        },
-        {
-          "name": "narrowNavigationLabel",
-          "type": "string",
-          "required": false,
-          "description": "좁은 화면 navigation의 기본 접근 가능한 이름. @default \"주 탐색\"",
-          "owner": "DashboardShellProps"
         }
       ],
       "states": [
         {
           "state": "temporaryNavigationOpen",
           "rule": "temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false"
+        },
+        {
+          "state": "temporaryNavigationCloseButtonVariant",
+          "rule": "temporaryNavigation Drawer 닫기 아이콘의 표현. 생략하면 Drawer 표면의 기본값을 사용합니다. 브랜드 모바일 셸에서 외곽선 없는 X만 필요하면 \"plain\"을 사용합니다."
         }
       ],
       "behavior": [
@@ -70911,7 +70933,7 @@
         "의미·키보드 순서는 본문 건너뛰기 → header/banner → 넓은 주 탐색 → main → 좁은 주 탐색입니다. CSS로 숨겨진 탐색 슬롯은 접근성 트리에서도 제외됩니다.",
         "목적지가 네 개를 넘거나 disclosure 계층을 유지해야 하는 좁은 화면은 temporaryNavigation에 SideNav를 전달합니다. 제품이 trigger와 temporaryNavigationOpen 상태·라우트 선택을 소유하고, 셸은 기존 Drawer 엔진으로 스크림, Tab containment, Escape, 초점 복원, body scroll lock을 제공합니다. 열려 있는 동안 skip link·header·wide navigation·main·bottom navigation은 inert입니다.",
         "header trigger는 temporaryNavigationId를 가리키는 aria-controls와 실제 open state의 aria-expanded를 갖습니다. 일반 dismiss는 temporaryNavigationReturnFocusRef로 trigger에 복원하고, 목적지를 선택한 뒤에는 제품이 Drawer를 닫고 focus 가능한 main으로 이동할 수 있습니다.",
-        "temporaryNavigationLabel은 dialog와 내부 nav의 접근 가능한 이름, temporaryNavigationCloseLabel은 닫기 버튼 이름, temporaryNavigationWidth는 px 단위 Drawer 폭입니다. 특별한 업무 순서가 있을 때만 temporaryNavigationInitialFocusRef로 첫 초점을 재정의하고, 기본은 Drawer 안의 첫 focusable control입니다.",
+        "temporaryNavigationLabel은 dialog와 내부 nav의 접근 가능한 이름, temporaryNavigationCloseLabel은 닫기 버튼 이름, temporaryNavigationCloseButtonVariant는 Drawer가 소유한 X의 표현, temporaryNavigationWidth는 px 단위 Drawer 폭입니다. 브랜드 모바일 셸에서 외곽선 없는 X만 필요할 때만 temporaryNavigationCloseButtonVariant=\"plain\"을 명시하며, 색·target·dismiss 동작은 Drawer가 소유합니다.",
         "TopBar, SideNav, NavRail, BottomNav의 control/icon 크기, typography, radius, border, fill, active/focus/disabled 처리를 그대로 유지합니다."
       ],
       "exceptions": [],
@@ -74312,6 +74334,13 @@
           "owner": "DrawerProps"
         },
         {
+          "name": "closeButtonVariant",
+          "type": "'soft' | 'solid' | 'signal' | 'ghost' | 'plain' | 'on-dark'",
+          "required": false,
+          "description": "닫기 아이콘의 IconButton 표현. 생략하면 표면에 맞는 기본값(default: plain, brand: on-dark)을 사용합니다. brand 표면에서 plain은 가시성을 위해 brand on-surface 전경을 유지합니다.",
+          "owner": "DrawerProps"
+        },
+        {
           "name": "withinPortal",
           "type": "boolean",
           "required": false,
@@ -74359,19 +74388,16 @@
           "required": false,
           "description": "제목 아래의 짧은 설명.",
           "owner": "DrawerSectionProps"
-        },
-        {
-          "name": "headingLevel",
-          "type": "2 | 3 | 4 | 5 | 6",
-          "required": false,
-          "description": "문서 구조에 맞는 제목 레벨. @default 3",
-          "owner": "DrawerSectionProps"
         }
       ],
       "states": [
         {
           "state": "open",
           "rule": "열림 상태. @default false"
+        },
+        {
+          "state": "closeButtonVariant",
+          "rule": "닫기 아이콘의 IconButton 표현. 생략하면 표면에 맞는 기본값(default: plain, brand: on-dark)을 사용합니다. brand 표면에서 plain은 가시성을 위해 brand on-surface 전경을 유지합니다."
         }
       ],
       "behavior": [
@@ -74422,7 +74448,9 @@
         "appearance는 표면만 바꿉니다. anatomy, density, focus/Escape/스크롤 계약, portal·stack 동작은 동일합니다. DashboardShell은 temporaryNavigationAppearance로 이 축을 그대로 전달합니다.",
         "zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다."
       ],
-      "exceptions": [],
+      "exceptions": [
+        "closeButtonVariant는 Drawer가 소유한 닫기 control의 표현만 바꾸는 additive axis입니다. 기본은 표면별 기존값(default: plain, brand: on-dark)이라 기존 소비자 출력은 바뀌지 않습니다. brand surface에서 외곽선 없는 X가 필요한 경우 closeButtonVariant=\"plain\"을 선택할 수 있으며, Drawer가 --viewer-foreground를 brand on-surface로 고정해 투명 button이라도 대비를 유지합니다."
+      ],
       "related": [
         {
           "component": "Button",
@@ -74569,6 +74597,10 @@
         {
           "label": "Fluent 2 Dialog",
           "url": "https://fluent2.microsoft.design/components/web/react/core/dialog/usage"
+        },
+        {
+          "label": "Fluent 2 Button",
+          "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
         }
       ],
       "canonicalGuide": null,
@@ -74585,7 +74617,7 @@
         "responsive": "evidence",
         "contentGuidance": "evidence",
         "accessibility": "evidence",
-        "exceptions": "omitted-no-evidence",
+        "exceptions": "evidence",
         "related": "evidence",
         "examples": "evidence",
         "tokens": "evidence",

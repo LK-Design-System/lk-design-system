@@ -30,6 +30,8 @@ export interface DrawerProps {
   ariaLabel?: string;
   /** 닫기 버튼의 접근 가능한 이름. @default "닫기" */
   closeLabel?: string;
+  /** 닫기 아이콘의 IconButton 표현. 생략하면 표면에 맞는 기본값(default: plain, brand: on-dark)을 사용합니다. brand 표면에서 plain은 가시성을 위해 brand on-surface 전경을 유지합니다. */
+  closeButtonVariant?: 'soft' | 'solid' | 'signal' | 'ghost' | 'plain' | 'on-dark';
   /** Render at the owner-document Portal boundary. @default true */
   withinPortal?: boolean;
   portalTarget?: HTMLElement | null;

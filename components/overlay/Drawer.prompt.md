@@ -47,6 +47,7 @@ const firstFilterRef = useRef(null);
 
 - 기본값 `appearance="default"`는 elevated 표면 위의 기존 Drawer 출력 그대로입니다.
 - `appearance="brand"`는 **패널 chrome 전체**를 네이비 브랜드 표면으로 렌더링합니다: 패널 배경 `--color-semantic-brand-surface`, header/footer divider `--color-semantic-brand-on-surface-border`, 제목 `--color-semantic-brand-on-surface`, subtitle·body `--color-semantic-brand-on-surface-muted`, 닫기 버튼 `IconButton variant="on-dark"`.
+- `closeButtonVariant`는 Drawer가 소유한 닫기 control의 표현만 바꾸는 additive axis입니다. 기본은 표면별 기존값(default: `plain`, brand: `on-dark`)이라 기존 소비자 출력은 바뀌지 않습니다. brand surface에서 외곽선 없는 X가 필요한 경우 `closeButtonVariant="plain"`을 선택할 수 있으며, Drawer가 `--viewer-foreground`를 brand on-surface로 고정해 투명 button이라도 대비를 유지합니다. 새 close control, 별도 dismiss 경로, target 크기 변경은 추가하지 않습니다.
 - 근거는 모바일 셸의 표면 연속성입니다. `TopBar dark`(네이비 masthead) + `SideNav appearance="brand"`(네이비 내비 패널)을 조합하면 그 사이의 Drawer 골격만 밝은 elevated 표면으로 남아 "네이비 → 흰색 → 네이비"로 표면이 두 번 끊깁니다. 제목 행과 닫기 버튼은 host가 도달할 수 없는 Drawer 내부이므로 소비 측 CSS 재매핑으로 고칠 수 없습니다.
 - 표면 소유권은 컴포넌트에 둡니다. [Material Design 3 navigation drawer](https://m3.material.io/components/navigation-drawer)의 modal drawer sheet도 container/content 색을 host가 덧칠하는 것이 아니라 컴포넌트 파라미터(`drawerContainerColor`·`drawerContentColor`)로 노출합니다.
 - `appearance`는 표면만 바꿉니다. anatomy, density, focus/Escape/스크롤 계약, portal·stack 동작은 동일합니다. `DashboardShell`은 `temporaryNavigationAppearance`로 이 축을 그대로 전달합니다.
@@ -74,6 +75,8 @@ const firstFilterRef = useRef(null);
 - [Fluent 2 Drawer](https://fluent2.microsoft.design/components/web/react/core/drawer/usage): overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. LDS의 두 density도 anatomy와 sticky region 순서는 공유하고 spacing/type만 바꾸며, 여러 overlay Drawer 동시 노출은 제외했습니다.
 - [WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum): compact scope에서도 Checkbox/Radio의 실제 target을 최소 24×24px로 유지하고 footer action을 축소하지 않는 근거입니다.
 - [Fluent 2 Dialog](https://fluent2.microsoft.design/components/web/react/core/dialog/usage): 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다.
+- [Fluent 2 Button](https://fluent2.microsoft.design/components/web/react/core/button/usage): 밀도가 높은 보조 action에는 outline·subtle·transparent 표현을 사용해 불필요한 시각 무게를 피하고, 아이콘은 모든 상태에서 배경과 3:1 이상 대비를 유지해야 합니다. 따라서 `plain`은 brand on-surface 전경을 명시적으로 상속합니다.
+- [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/): modal dialog는 보이는 dismiss button을 포함해야 합니다. `plain`은 보이는 X와 기존 accessible `closeLabel`을 유지하고, focus·Escape·focus restore 계약을 변경하지 않습니다.
 
 필터 query 직렬화, 변경 유실 경고 조건, route 상태와 반응형으로 inline surface로 전환하는 정책은 제품 레이어가 소유합니다.
 

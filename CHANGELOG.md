@@ -2,6 +2,20 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.2.1 - 2026-08-29
+
+Paired Robotics release: `0.1.0-rc.36`. This patch adds an opt-in Drawer close-control
+appearance while preserving every existing Drawer and DashboardShell default.
+
+### Added
+
+- `Drawer` now accepts `closeButtonVariant`. On a brand Drawer,
+  `closeButtonVariant="plain"` renders an accessible, contrast-safe X without the
+  circular `on-dark` chrome; omitted values retain the surface-specific default.
+- `DashboardShell` forwards the same opt-in through
+  `temporaryNavigationCloseButtonVariant`, allowing a mobile brand navigation drawer
+  to choose the minimal close control without reaching into Drawer internals.
+
 ## 0.2.0 - 2026-08-28
 
 Paired Robotics release: `0.1.0-rc.35`. The minor bump carries a behavior change of the
