@@ -14,13 +14,13 @@ Storybook의 732개 스토리 역할·공개 여부·소유 컴포넌트와 196�
 
 ## 패키지 범위
 
-- 워크스페이스 orchestrator: `@lk-design-system/lds-workspace@0.2.0` · `private: true`
-- Core: `@lk-design-system/lds-core@0.2.0` · source entry 93개 · named export 94개
-- Theme: `@lk-design-system/lds-theme@0.2.0` · source entry 4개 · named export 8개
-- Product: `@lk-design-system/lds-product@0.2.0` · source entry 120개 · named export 128개
+- 워크스페이스 orchestrator: `@lk-design-system/lds-workspace@0.2.1` · `private: true`
+- Core: `@lk-design-system/lds-core@0.2.1` · source entry 93개 · named export 94개
+- Theme: `@lk-design-system/lds-theme@0.2.1` · source entry 4개 · named export 8개
+- Product: `@lk-design-system/lds-product@0.2.1` · source entry 120개 · named export 128개
 - 로컬 owner-package canonical unique surface: source entry 208개 · named export 221개
 - Product deprecated compatibility projection: source entry 9개 · named export 9개
-- 외부 Robotics: `@lk-design-system/lds-robotics-ui@0.1.0-rc.35` · source entry 23개 · named export 53개
+- 외부 Robotics: `@lk-design-system/lds-robotics-ui@0.1.0-rc.36` · source entry 23개 · named export 53개
 - Robotics 정본: `LK-Design-System/lk-design-system-robotics`와 `references/package-split/ROBOTICS_EXTERNAL_SURFACE.json`. 로컬 publishable package는 Robotics를 재노출하지 않으며 consumer는 외부 패키지를 직접 설치합니다.
 - 컴포넌트 소스 디렉터리 18개: `brand`, `buttons`, `cards`, `communication`, `content`, `data`, `editor`, `feedback`, `forms`, `icon`, `internal`, `layout`, `navigation`, `overlay`, `robotics`, `selection`, `status`, `viz`
 - 런타임 peer dependency: `react`
@@ -54,12 +54,12 @@ WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`
 
 - 현재 React component entry export: 208개
 - 공개 named export: 221개
-- Storybook 전체 story: 733개
-- Storybook public story: 504개
+- Storybook 전체 story: 734개
+- Storybook public story: 505개
 - Storybook hidden story: 229개
 - 숨김 visual parity story: 97개
-- visual inventory React story: 733개
-- 접근성 guard 검사 대상 implementation story: 733개
+- visual inventory React story: 734개
+- 접근성 guard 검사 대상 implementation story: 734개
 
 ## 생성 영역
 
