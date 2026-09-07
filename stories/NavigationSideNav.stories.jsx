@@ -752,7 +752,7 @@ export const DockedSurface = {
 export const NavyDockedSurface = {
   name: '변형·상태 · 브랜드 네이비 외형',
   parameters: storyDescription(
-    '브랜드 표면 토큰을 실제 appearance="brand" API로 적용한 SideNav입니다. 기존 구조·간격·타이포그래피·접힘 동작은 유지하고, 평면 네이비 셸과 hover·active·focus 상태색만 바꿉니다.',
+    '브랜드 표면 토큰을 실제 appearance="brand" API로 적용한 SideNav입니다. 기존 구조·간격·타이포그래피·접힘 동작은 유지하고, 평면 네이비 셸과 hover·active·focus 상태색만 바꿉니다. 어두운 셸에서는 현재 목적지에 상시 selected fill과 primary 잉크를 둡니다.',
   ),
   render: () => <NavyDockedSideNavFixture />,
   play: async ({ canvasElement }) => {
@@ -766,9 +766,9 @@ export const NavyDockedSurface = {
     }
 
     const expectedNavy = resolveCssColor(activeItem, 'backgroundColor', 'var(--component-side-nav-brand-surface)');
-    const expectedActive = resolveCssColor(activeItem, 'backgroundColor', 'transparent');
+    const expectedActive = resolveCssColor(activeItem, 'backgroundColor', 'var(--component-side-nav-brand-active-surface)');
     const expectedActiveHover = resolveCssColor(activeItem, 'backgroundColor', 'var(--component-side-nav-brand-active-hover-surface)');
-    const expectedText = resolveCssColor(activeItem, 'color', 'var(--component-side-nav-brand-active-foreground)');
+    const expectedText = resolveCssColor(activeItem, 'color', 'var(--component-side-nav-brand-foreground)');
     const expectedMuted = resolveCssColor(inactiveItem, 'color', 'var(--component-side-nav-brand-muted-foreground)');
     const activeBackground = getComputedStyle(activeItem).backgroundColor;
     const navStyle = getComputedStyle(nav);
@@ -781,14 +781,14 @@ export const NavyDockedSurface = {
       || getComputedStyle(activeIcon).color !== expectedText
       || activeItem.getAttribute('aria-current') !== 'page'
       || getComputedStyle(inactiveItem).color !== expectedMuted) {
-      throw new Error('The brand appearance must resolve a flat brand surface with no gradient, muted destinations, and accent-ink selection without changing SideNav semantics.');
+      throw new Error('The brand appearance must resolve a flat brand surface with no gradient, muted destinations, and a persistent selected fill with primary ink without changing SideNav semantics.');
     }
 
     const inactiveBackground = getComputedStyle(inactiveItem).backgroundColor;
     const expectedHover = resolveCssColor(inactiveItem, 'backgroundColor', 'var(--component-side-nav-brand-hover-surface)');
     const expectedHoverText = resolveCssColor(inactiveItem, 'color', 'var(--component-side-nav-brand-hover-foreground)');
-    if (expectedHover === inactiveBackground) {
-      throw new Error('The brand appearance must keep the inactive and hover surfaces distinct.');
+    if (expectedHover === inactiveBackground || expectedActiveHover === expectedActive) {
+      throw new Error('The brand appearance must keep the inactive and hover surfaces distinct, and the active-hover surface distinct from the selected fill.');
     }
 
     await userEvent.hover(inactiveItem);
@@ -804,7 +804,7 @@ export const NavyDockedSurface = {
     await waitFor(() => {
       if (getComputedStyle(activeItem).backgroundColor !== expectedActiveHover
         || getComputedStyle(activeItem).color !== expectedText) {
-        throw new Error('Hover must add a surface behind the active accent ink without changing its selected foreground.');
+        throw new Error('Hover must lift the selected fill one step without changing its primary foreground.');
       }
     });
     await userEvent.unhover(activeItem);
