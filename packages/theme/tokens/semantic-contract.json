@@ -5,7 +5,7 @@
   "role": "provider",
   "package": {
     "name": "@lk-design-system/lds-theme",
-    "version": "0.2.1"
+    "version": "0.2.2"
   },
   "requiresSemanticContractVersion": "1",
   "providesSemanticContractVersion": "1",
@@ -398,6 +398,7 @@
     "--component-notification-unread-surface",
     "--component-side-nav-brand-active-foreground",
     "--component-side-nav-brand-active-hover-surface",
+    "--component-side-nav-brand-active-surface",
     "--component-side-nav-brand-badge-active-surface",
     "--component-side-nav-brand-badge-foreground",
     "--component-side-nav-brand-badge-surface",

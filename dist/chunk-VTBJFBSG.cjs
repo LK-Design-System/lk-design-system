@@ -52,10 +52,10 @@ var SIDE_NAV_APPEARANCES = {
     mutedForeground: "var(--component-side-nav-brand-muted-foreground)",
     subtleForeground: "var(--component-side-nav-brand-subtle-foreground)",
     hoverForeground: "var(--component-side-nav-brand-hover-foreground)",
-    activeForeground: "var(--component-side-nav-brand-active-foreground)",
+    activeForeground: "var(--component-side-nav-brand-foreground)",
     activeProxyForeground: "var(--component-side-nav-brand-active-foreground)",
     hoverSurface: "var(--component-side-nav-brand-hover-surface)",
-    activeSurface: "transparent",
+    activeSurface: "var(--component-side-nav-brand-active-surface)",
     activeHoverSurface: "var(--component-side-nav-brand-active-hover-surface)",
     pressedSurface: "var(--component-side-nav-brand-pressed-surface)",
     badgeSurface: "var(--component-side-nav-brand-badge-surface)",
@@ -549,4 +549,4 @@ var SideNav = _react2.default.forwardRef(function SideNav2({
 
 
 exports.SideNav = SideNav;
-//# sourceMappingURL=chunk-EHN5BQ72.cjs.map
+//# sourceMappingURL=chunk-VTBJFBSG.cjs.map

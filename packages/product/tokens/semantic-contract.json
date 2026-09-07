@@ -5,7 +5,7 @@
   "role": "consumer",
   "package": {
     "name": "@lk-design-system/lds-product",
-    "version": "0.2.1"
+    "version": "0.2.2"
   },
   "requiresSemanticContractVersion": "1",
   "scanRoots": [
@@ -167,6 +167,7 @@
     "--component-menu-radius",
     "--component-side-nav-brand-active-foreground",
     "--component-side-nav-brand-active-hover-surface",
+    "--component-side-nav-brand-active-surface",
     "--component-side-nav-brand-badge-active-surface",
     "--component-side-nav-brand-badge-foreground",
     "--component-side-nav-brand-badge-surface",

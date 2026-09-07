@@ -18581,7 +18581,7 @@ css
 ### 사용하지 않음
 
 - 접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 아이콘의 강한 잉크로만 표시해 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.
-- Carbon UI shell left panel style — sub-menu item은 상위 link/sub-menu보다 추가로 들여쓰고 hover와 selected를 별도 상태로 정의합니다. LDS도 하위 목적지의 hover 표면과 라벨을 --space-3만큼 함께 inset해 계층을 분리하되, Carbon의 4px interactive border와 상시 selected fill은 채택하지 않고 현재 leaf의 text-safe accent 잉크·굵기를 유지합니다.
+- Carbon UI shell left panel style — sub-menu item은 상위 link/sub-menu보다 추가로 들여쓰고 hover와 selected를 별도 상태로 정의합니다. LDS도 하위 목적지의 hover 표면과 라벨을 --space-3만큼 함께 inset해 계층을 분리하되, Carbon의 4px interactive border는 채택하지 않습니다.
 - Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. category 아이콘이 없을 때도 subitem을 명확히 들여쓰라는 원칙을 적용해 LDS는 자식 아이콘 유무와 무관하게 같은 라벨 시작선을 보장합니다. 축소 가능 내비게이션의 상태는 명시적 토글로 설명하고 hover peek는 선택 기능으로 제한합니다.
 - Carbon UI shell left panel accessibility — rail은 hover나 focus에서 펼쳐져도 같은 링크·서브메뉴 keyboard model을 유지합니다. 이 동작을 LDS에 적용할 때는 동일 DOM뿐 아니라 44px hit target과 세로 위치도 유지해, 포인터와 키보드 사용자가 확장 중 움직이는 목적지를 다시 추적하지 않게 합니다.
 
@@ -18663,15 +18663,15 @@ css
 - ref, className, and style target the native nav landmark.
 - Stable parts are root, overlaySurface, panel, brand, list, heading, item, icon, label, badge, childList, and footer. Root and items expose stable collapsed/active state attributes.
 - items — { value, label, ariaLabel?, icon, badge?, href?, disabled?, children? } + { heading } 섹션 헤딩. 자식도 icon?: ReactNode를 받을 수 있으며, 한 그룹에 아이콘이 하나라도 있으면 모든 자식에 고정 슬롯을 예약해 라벨 시작선을 맞춥니다. 항목 전체는 native ul/li 리스트(그룹 자식은 중첩 ul)로 렌더되어 보조기술이 항목 수와 계층을 읽을 수 있고, 시각은 기존과 동일합니다(list-style 없음).
-- appearance — default(기본)는 현재 theme의 neutral semantic surface 위에서 현재 leaf를 text-safe blue accent(--color-semantic-accent-blue-text) label·icon과 굵기로 표시합니다. brand는 같은 무채움 선택 문법을 평면 브랜드 네이비 셸과 전용 상태 잉크로 표현하는 theme-stable 외형입니다. surface가 배치 geometry를, appearance가 SideNav 내부 색 역할만 소유하므로 두 축은 독립입니다.
+- appearance — default(기본)는 현재 theme의 neutral semantic surface 위에서 현재 leaf를 text-safe blue accent(--color-semantic-accent-blue-text) label·icon과 굵기로 표시합니다.
 
 ## Accessibility
 
 - renderLink — native anchor 대신 router link를 쓸 때만 제공합니다. renderLink={(item, { href, ...props }) = }처럼 DS가 만든 aria-current, disabled, style, activation 계약을 전달합니다.
 - overlay — overlay peek는 공간이 제한된 데스크톱에서만 쓰는 선택 기능입니다. 비제어 SideNav에서 overlay가 런타임에 false → true로 바뀌면 레일로 접고, true → false로 돌아오면 overlay 진입 전의 persistent 접힘 상태를 복원합니다. 접힌 overlay는 hover뿐 아니라 키보드 focus 진입에서도 펼쳐지며 포인터와 focus가 모두 이탈하면 다시 접힙니다. 바깥 클릭과 Esc도 레일로 복귀시키고, Esc로 자식 항목이 사라질 때 focus는 레일에 남는 부모 항목으로 복구됩니다.
 - autoExpandActiveGroup — 기본 true는 활성 자식의 그룹을 초기 선택과 값 변경 때 자동으로 엽니다. false이면 활성 값·부모의 현재 경로 잉크·자식을 열었을 때의 aria-current는 그대로 두고 disclosure open state만 사용자 조작과 분리합니다. 제품이 패널을 열 때 모든 그룹을 닫아 두고 싶다면 이 축을 끄되 현재 route를 지우지 않습니다.
-- 펼쳐진 childList는 논리적 시작 방향에서 --space-3(12px)만큼 들어가 하위 목적지의 hover 표면 자체를 부모 행보다 안쪽에 둡니다. 자식 라벨도 아이콘 유무와 관계없이 부모 라벨보다 12px 안쪽에서 시작하고 --label2-line(18px)을 사용합니다. 44px hit target과 현재 leaf 하나만 소유하는 accent 잉크·굵기는 유지하며, 별도 connector·중첩 표면·active bar는 추가하지 않습니다.
-- NavRail/BottomNav와 icon, caption/label scale, aria-current="page" 의미를 공유하되 각 탐색 표면의 밀도에 맞는 선택 시각을 사용합니다. SideNav는 넓은 패널에서 상시 wash가 차지하는 면적을 줄이기 위해 현재 leaf의 text-safe accent 잉크·굵기만 유지하며, 섹션 heading, badge, 자식 indent, disclosure chevron, 펼친 panel width를 추가합니다. compact navigation의 선택 표면을 그대로 복제하지 않는 것은 이 면적·위계 차이 때문입니다.
+- 펼쳐진 childList는 논리적 시작 방향에서 --space-3(12px)만큼 들어가 하위 목적지의 hover 표면 자체를 부모 행보다 안쪽에 둡니다. 자식 라벨도 아이콘 유무와 관계없이 부모 라벨보다 12px 안쪽에서 시작하고 --label2-line(18px)을 사용합니다. 44px hit target과 현재 leaf 하나만 소유하는 선택 시각(default는 accent 잉크·굵기, brand는 selected fill·primary 잉크·굵기)은 유지하며, 별도 connector·중첩 표면·active bar는 추가하지 않습니다.
+- NavRail/BottomNav와 icon, caption/label scale, aria-current="page" 의미를 공유하되 각 탐색 표면의 밀도에 맞는 선택 시각을 사용합니다. default default SideNav는 넓은 패널에서 상시 wash가 차지하는 면적을 줄이기 위해 현재 leaf의 text-safe accent 잉크·굵기만 유지하며, 섹션 heading, badge, 자식 indent, disclosure chevron, 펼친 panel width를 추가합니다.
 
 ## Exceptions
 
@@ -18732,6 +18732,7 @@ css
 - `--color-semantic-primary-surface-strong`
 - `--component-side-nav-brand-active-foreground`
 - `--component-side-nav-brand-active-hover-surface`
+- `--component-side-nav-brand-active-surface`
 - `--component-side-nav-brand-badge-active-surface`
 - `--component-side-nav-brand-badge-foreground`
 - `--component-side-nav-brand-badge-surface`

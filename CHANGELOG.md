@@ -2,9 +2,9 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
-## Unreleased
+## 0.2.2 - 2026-09-07
 
-Source-only candidate for `0.2.2`. It formalizes the `0.2.2-rc.1` through `0.2.2-rc.6` Product
+Paired Robotics release: `0.1.0-rc.37`. This patch formalizes the `0.2.2-rc.1` through `0.2.2-rc.6` Product
 candidates that LK Portal consumed as vendored tarballs between 2026-08-30 and 2026-09-01; their
 source was reconstructed from the rc.6 package source maps and re-authored here so the shipped
 API has a canonical source, stories, and contracts. No immutable tag, paired Robotics release,
@@ -30,6 +30,13 @@ registry publish, consumer re-verification, rollout, or product deployment is at
 
 ### Changed
 
+- `SideNav` `appearance="brand"` now keeps a persistent selected fill under the current leaf.
+  The new generated token `--component-side-nav-brand-active-surface` (`navy-shell-18`, the
+  same tone as hover) sits behind the active row, the active label and icon use the primary
+  brand foreground instead of the `navy-shell-68` accent, and
+  `--component-side-nav-brand-active-hover-surface` moves from `navy-shell-18` to
+  `navy-shell-20` so hovering the active row still reads. The collapsed-rail active proxy,
+  badge dot, and focus indicator keep `navy-shell-68`; the `default` appearance is unchanged.
 - `RefreshControl` renders its refresh action as a square `IconButton` and shows a 16px
   `Spinner` in place of the glyph while `refreshing`, announcing `aria-busy` and
   `aria-disabled` instead of relying on the text `Button` loading state.

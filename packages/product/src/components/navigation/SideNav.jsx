@@ -49,10 +49,10 @@ const SIDE_NAV_APPEARANCES = {
     mutedForeground: 'var(--component-side-nav-brand-muted-foreground)',
     subtleForeground: 'var(--component-side-nav-brand-subtle-foreground)',
     hoverForeground: 'var(--component-side-nav-brand-hover-foreground)',
-    activeForeground: 'var(--component-side-nav-brand-active-foreground)',
+    activeForeground: 'var(--component-side-nav-brand-foreground)',
     activeProxyForeground: 'var(--component-side-nav-brand-active-foreground)',
     hoverSurface: 'var(--component-side-nav-brand-hover-surface)',
-    activeSurface: 'transparent',
+    activeSurface: 'var(--component-side-nav-brand-active-surface)',
     activeHoverSurface: 'var(--component-side-nav-brand-active-hover-surface)',
     pressedSurface: 'var(--component-side-nav-brand-pressed-surface)',
     badgeSurface: 'var(--component-side-nav-brand-badge-surface)',
@@ -90,9 +90,11 @@ function RailItemTooltip({ label, collapsed, enabled = true, children }) {
  * A wide labeled dashboard sidebar: brand `header` (+ `headerCollapsed` for the
  * rail state), grouped nav `items` (icon + label + badge, `{ heading }` section
  * rows, `children` sub-menus with disclosure), optional pinned `footer`, and a
- * product-shell-owned collapse control. Both appearances use accent ink and
- * weight without a persistent selected fill; the opt-in brand appearance maps
- * that state grammar onto a flat brand-navy shell. Collapsed = icon rail
+ * product-shell-owned collapse control. The default appearance uses accent ink
+ * and weight without a persistent selected fill; the opt-in brand appearance
+ * keeps the same grammar on a flat brand-navy shell but adds a persistent
+ * selected fill under the current leaf with primary ink, because accent ink
+ * alone does not carry on the dark shell. Collapsed = icon rail
  * (labels become tooltips, badges become dots, headings become hairlines).
  * Controlled or uncontrolled for both `value` and `collapsed`; SideNav never
  * renders the collapse control itself. Compact fixed rail → `NavRail`; mobile
