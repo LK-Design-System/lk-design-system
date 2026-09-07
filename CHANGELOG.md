@@ -2,7 +2,10 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
-## Unreleased
+## 0.2.3 - 2026-09-08
+
+Paired Robotics release: `0.1.0-rc.38`. This patch fixes the mid-width DataToolbar filter
+layout that LK Portal hit on `/github`; no public API changes.
 
 ### Fixed
 

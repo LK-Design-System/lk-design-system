@@ -3,7 +3,7 @@
   "kind": "lds-package-documentation",
   "package": {
     "name": "@lk-design-system/lds-product",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "layer": "product"
   },
   "adoption": {
@@ -47,7 +47,7 @@
   },
   "source": {
     "repository": "LK-Design-System/lk-design-system",
-    "ref": "lds-v0.2.2",
+    "ref": "lds-v0.2.3",
     "documents": [
       {
         "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
@@ -87,7 +87,7 @@
     "tokens": {
       "fileCount": 2,
       "bytes": 16108,
-      "sha256": "a19affd7564c7a46e913355d4b162c9ff4d25cf94d84a2746a6b1e1040025053"
+      "sha256": "9b10df05d85a112dc9cd4518213755ec9d5bdada4de5219edbe996062e2c360b"
     },
     "assets": {
       "fileCount": 22,
@@ -138,7 +138,7 @@
     },
     {
       "path": "adoption-workflow.md",
-      "sha256": "0e2997f4bc75fc0e2b4e334f5e58028d4088132d779ae862f8f70a1b4e203988",
+      "sha256": "58cfc97504971079edecf5c0a322283ab53b15aaef6aeccebc7c73a5675b5a39",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
@@ -158,7 +158,7 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "2d3058326aaefc1fc0b58506f6fbb093c82b6dbd0e9e0d8e2873608ff699e1a1",
+      "sha256": "17a86ce84d144ec53eaaa6afc9e57a6595ca4fc9b81421dc0657324fd794807f",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
