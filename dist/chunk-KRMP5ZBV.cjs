@@ -4,7 +4,7 @@
 var _chunkHYUU3DJPcjs = require('./chunk-HYUU3DJP.cjs');
 
 
-var _chunkS7N6SHKLcjs = require('./chunk-S7N6SHKL.cjs');
+var _chunkU6DT4BCMcjs = require('./chunk-U6DT4BCM.cjs');
 
 
 var _chunkE2EQSM2Kcjs = require('./chunk-E2EQSM2K.cjs');
@@ -99,7 +99,7 @@ function DataExportAction({
       children: [
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0 }, children: [
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-            _chunkS7N6SHKLcjs.Select,
+            _chunkU6DT4BCMcjs.Select,
             {
               value: format,
               onChange: setFormat,
@@ -111,7 +111,7 @@ function DataExportAction({
             }
           ),
           /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-            _chunkS7N6SHKLcjs.Select,
+            _chunkU6DT4BCMcjs.Select,
             {
               value: scope,
               onChange: setScope,
@@ -169,4 +169,4 @@ function DataExportAction({
 
 
 exports.DataExportAction = DataExportAction;
-//# sourceMappingURL=chunk-6YNBRISY.cjs.map
+//# sourceMappingURL=chunk-KRMP5ZBV.cjs.map

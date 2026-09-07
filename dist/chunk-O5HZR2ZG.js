@@ -4,7 +4,7 @@ import {
 } from "./chunk-DHQ4MWL4.js";
 import {
   DataToolbar
-} from "./chunk-CVN7QX7S.js";
+} from "./chunk-6OG4S2SV.js";
 import {
   componentVars,
   partClassName,
@@ -147,4 +147,4 @@ var DataCollectionPanel = React.forwardRef(function DataCollectionPanel2({
 export {
   DataCollectionPanel
 };
-//# sourceMappingURL=chunk-KG4WJZBI.js.map
+//# sourceMappingURL=chunk-O5HZR2ZG.js.map

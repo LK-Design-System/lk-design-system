@@ -24,8 +24,8 @@ var DATA_TOOLBAR_STYLE_ID = "lk-data-toolbar-layout";
 var DATA_TOOLBAR_STYLES = `
 .lk-data-toolbar__controls{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;min-width:0}
 .lk-data-toolbar__search{flex:1 1 260px;min-width:200px;max-width:var(--lds-data-toolbar-search-max-width,360px)}
-.lk-data-toolbar__wide-controls{display:inline-flex;align-items:center;gap:var(--space-1-5);flex:1 1 auto;flex-wrap:wrap;min-width:0}
-.lk-data-toolbar__filters{display:inline-flex;align-items:center;gap:var(--space-1-5);flex:1 1 auto;flex-wrap:wrap;width:max-content;max-width:100%;min-width:0}
+.lk-data-toolbar__wide-controls{display:inline-flex;align-items:center;column-gap:var(--space-1-5);flex:1 0 auto;flex-wrap:nowrap;max-width:100%;min-width:0}
+.lk-data-toolbar__filters{display:inline-flex;align-items:center;column-gap:var(--space-1-5);row-gap:var(--space-2);flex:1 1 auto;flex-wrap:wrap;width:max-content;max-width:100%;min-width:0}
 .lk-data-toolbar__sort{display:inline-flex;align-items:center;flex:0 0 auto;min-width:0}
 .lk-data-toolbar__metadata{display:inline-flex;align-items:center;min-width:0;margin-left:auto}
 .lk-data-toolbar__narrow-controls{display:none;align-items:center;gap:var(--space-2);width:100%;min-width:0}
@@ -219,4 +219,4 @@ var DataToolbar = React.forwardRef(function DataToolbar2({
 export {
   DataToolbar
 };
-//# sourceMappingURL=chunk-CVN7QX7S.js.map
+//# sourceMappingURL=chunk-6OG4S2SV.js.map

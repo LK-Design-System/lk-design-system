@@ -4,7 +4,7 @@
 var _chunkDQTGZGOGcjs = require('./chunk-DQTGZGOG.cjs');
 
 
-var _chunk4GR2HKFTcjs = require('./chunk-4GR2HKFT.cjs');
+var _chunkXALJHMIZcjs = require('./chunk-XALJHMIZ.cjs');
 
 
 
@@ -89,7 +89,7 @@ var DataCollectionPanel = _react2.default.forwardRef(function DataCollectionPane
             "data-slot": "toolbar",
             className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "toolbar") || void 0,
             style: { minWidth: 0, ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "toolbar") },
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk4GR2HKFTcjs.DataToolbar, { ...toolbar, layout: _nullishCoalesce(toolbar.layout, () => ( resolvedLayout)), variant: "embedded" })
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkXALJHMIZcjs.DataToolbar, { ...toolbar, layout: _nullishCoalesce(toolbar.layout, () => ( resolvedLayout)), variant: "embedded" })
           }
         ),
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
@@ -147,4 +147,4 @@ var DataCollectionPanel = _react2.default.forwardRef(function DataCollectionPane
 
 
 exports.DataCollectionPanel = DataCollectionPanel;
-//# sourceMappingURL=chunk-FOVYMMFA.cjs.map
+//# sourceMappingURL=chunk-3LWVZ2HM.cjs.map

@@ -2,6 +2,23 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## Unreleased
+
+### Fixed
+
+- `Select` keeps its hidden option-width measurement layer in flow (zero height, hidden
+  overflow, `max-width: 100%`) instead of absolutely positioned, so the widest option label now
+  contributes to the root's max-content width. Flex parents such as the `DataToolbar` filter host
+  previously computed an intrinsic width from the trigger text alone, got squeezed next to the
+  search field, and then wrapped one `Select` per line once the real minimum width applied.
+  Root height, trigger position, and ancestor `scrollWidth` are unchanged.
+- `DataToolbar` no longer lets the wide filter host shrink below its controls' intrinsic width.
+  Between the narrow breakpoint and the width where search, filters, and sort fit on one line,
+  the filter host and the wide control host now wrap as a unit under the search field (the search
+  field yields down to its 200px minimum first) instead of stacking individual filters inside a
+  squeezed host next to the search field. Wrapped rows inside those hosts use an 8px row gap so
+  32px controls do not read as overlapping.
+
 ## 0.2.2 - 2026-09-07
 
 Paired Robotics release: `0.1.0-rc.37`. This patch formalizes the `0.2.2-rc.1` through `0.2.2-rc.6` Product

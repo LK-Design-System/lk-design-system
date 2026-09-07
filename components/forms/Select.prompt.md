@@ -26,7 +26,7 @@
 ```
 
 - 타입·밀도 정합: 트리거는 입력 계열의 size-aware typography를 유지하고, 옵션은 shared-menu 타입 램프를 소비합니다. `sm`은 shared-menu `default` 밀도(40px, padding 10×16px, `--component-menu-item-font-size` 14/20px), `md`와 `lg`는 `comfortable` 밀도(48px, padding 12×16px, `body1` 16/24px)에 대응합니다. 모든 크기는 panel radius 12px·padding 8px·gap 4px과 option radius 10px을 공유합니다.
-- intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 absolute·clipped measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 `scrollWidth`를 바꾸지 않습니다. consumer의 root `style`이 지정한 `minWidth`, `width`, `maxWidth`는 측정 결과보다 우선합니다.
+- intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 높이 0·`overflow: hidden`·`max-width: 100%`의 in-flow measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 `scrollWidth`를 바꾸지 않으면서도 root의 max-content 폭에는 가장 긴 label 폭을 기여합니다. absolute layer는 이 기여를 하지 못해 flex 부모(DataToolbar filter host)의 intrinsic 폭이 실제보다 작게 계산되고, 그 결과 host가 검색 옆에 눌려 들어간 뒤 Select가 한 줄에 하나씩 쌓이는 중간 폭 상태를 만들었습니다(2026-09-07 LDS 결정). consumer의 root `style`이 지정한 `minWidth`, `width`, `maxWidth`는 측정 결과보다 우선합니다.
 - `readOnly`는 현재 값과 포커스를 유지하지만 팝업을 열거나 값을 바꾸지 않으며, 대체 배경과 `aria-readonly`로 비활성과 구분합니다.
 - WDS 내부 `Select/Select` component-set(16215:33116)의 직접 축은 `Active`, `Disable`, `Focus`, `Negative`, `Overflow`, `Render(Chip/Text)`입니다. `Size`는 WDS 직접 축이 아니지만 열린 variant가 48px·16/24px Menu를 직접 포함하므로 `md`/`lg` 기본 option 밀도의 composition 근거로 사용합니다. 옵션별 `disabled`와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.
 - 형제 비교: `AutoComplete`와 `Combobox`가 이미 비활성 옵션을 `aria-disabled`로 노출하고 탐색·선택에서 제외합니다. Select도 같은 규칙을 사용하되, 검색과 다중 선택은 가져오지 않습니다.

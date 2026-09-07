@@ -388,11 +388,17 @@ export const Select = React.forwardRef(function Select({
           aria-hidden="true"
           data-select-width-measurement=""
           style={{
-            position: 'absolute',
-            insetBlockStart: 0,
-            insetInlineStart: 0,
-            width: 1,
-            height: 1,
+            // In-flow, zero-height measurement layer. It must stay in flow so the
+            // widest option label contributes to the root's max-content width: an
+            // absolutely positioned layer left flex containers (DataToolbar filter
+            // hosts) with an underestimated intrinsic size, so they were squeezed
+            // next to the search field and wrapped one Select per line. Zero
+            // height and hidden overflow keep root height, trigger position, and
+            // ancestor scrollWidth unchanged; max-width lets the root still shrink
+            // to its container in narrow surfaces.
+            display: 'block',
+            height: 0,
+            maxWidth: '100%',
             overflow: 'hidden',
             visibility: 'hidden',
             pointerEvents: 'none',

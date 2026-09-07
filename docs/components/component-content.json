@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "221cef24a7bec66dd84bf642fe53abbd10698f80516e487db4a00e33609bafdf",
+  "sourceFingerprint": "5c7dc497e71b52503f98c82cfad194da6b1a4be9ae5f23c9ffa457d863126bb0",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -10281,7 +10281,7 @@
           "url": "https://www.w3.org/TR/css-contain-3/#container-queries"
         }
       ],
-      "promptSha256": "6dfa5f9ca820eb08d77e0a5589a5fd6a4f828153b30d6063faabbfa66f13132d"
+      "promptSha256": "3a59aeea1895d046727455d1e576decdc9395352d99f33a85c53812cb85f17a4"
     },
     {
       "id": "description-list",
@@ -20377,7 +20377,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/menu/usage"
         }
       ],
-      "promptSha256": "522c15c41b0f5e12bbc4ba23f74513da82daca2d895dc49159db38d2be33ce49"
+      "promptSha256": "28604ce0dcdf6aa8f6822c71ee81ede3cc626a22d1ae307cd0e8caa07f9a711c"
     },
     {
       "id": "slider",
@@ -47701,7 +47701,7 @@
         }
       ],
       "responsive": [
-        "intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 absolute·clipped measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 scrollWidth를 바꾸지 않습니다. consumer의 root style이 지정한 minWidth, width, maxWidth는 측정 결과보다 우선합니다.",
+        "intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 높이 0·overflow: hidden·max-width: 100%의 in-flow measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 scrollWidth를 바꾸지 않으면서도 root의 max-content 폭에는 가장 긴 label 폭을 기여합니다.",
         "WDS 내부 Select/Select component-set(16215:33116)의 직접 축은 Active, Disable, Focus, Negative, Overflow, Render(Chip/Text)입니다. Size는 WDS 직접 축이 아니지만 열린 variant가 48px·16/24px Menu를 직접 포함하므로 md/lg 기본 option 밀도의 composition 근거로 사용합니다. 옵션별 disabled와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.",
         "시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px inset ring으로 분리합니다.",
         "vars accepts only --lds-select-min-width, --lds-select-height, and --lds-select-dropdown-max-height. Consumer root width constraints still override intrinsic measurement."
