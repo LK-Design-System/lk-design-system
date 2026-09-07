@@ -7,13 +7,25 @@ function getColumnSizingStyle({ width, truncate = false }) {
     : { width };
 }
 
-/** Public style helpers for product-owned native tables that must match LDS Table cells. */
-export function getTableHeaderCellStyle({ padding = 'var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 14px 16px))', align = 'left', width, truncate = false } = {}) {
-  return { ...thStyle(padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+function getTableRowMinHeight(size = 'md') {
+  return size === 'sm'
+    ? 'var(--lk-table-row-min-height-sm, var(--component-table-row-min-height-sm, 44px))'
+    : 'var(--lk-table-row-min-height-md, var(--component-table-row-min-height-md, 52px))';
 }
 
-export function getTableDataCellStyle({ padding = 'var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 14px 16px))', align = 'left', width, truncate = false } = {}) {
-  return { ...tdStyle(padding), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+function getTableCellPadding(size = 'md') {
+  return size === 'sm'
+    ? 'var(--lk-table-cell-pad-sm, var(--component-table-cell-padding-sm, 10px 12px))'
+    : 'var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 14px 16px))';
+}
+
+/** Public style helpers for product-owned native tables that must match LDS Table cells. */
+export function getTableHeaderCellStyle({ size = 'md', padding, align = 'left', width, truncate = false } = {}) {
+  return { ...thStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+}
+
+export function getTableDataCellStyle({ size = 'md', padding, align = 'left', width, truncate = false } = {}) {
+  return { ...tdStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 
 function TableCellContent({ truncate, children }) {
@@ -28,7 +40,7 @@ function TableCellContent({ truncate, children }) {
   );
 }
 
-function TableRow({ columns, row, rowIndex, pad, hover, banded, rowHeaderKey, getRowProps }) {
+function TableRow({ columns, row, rowIndex, size, pad, hover, banded, rowHeaderKey, getRowProps }) {
   const [h, setH] = React.useState(false);
   const rowProps = getRowProps?.(row, rowIndex) ?? {};
   const {
@@ -53,7 +65,7 @@ function TableRow({ columns, row, rowIndex, pad, hover, banded, rowHeaderKey, ge
     >
       {columns.map((c) => {
         const content = typeof c.render === 'function' ? c.render(row) : row[c.key];
-        const cellStyle = getTableDataCellStyle({ padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate });
+        const cellStyle = getTableDataCellStyle({ size, padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate });
         const cellContent = <TableCellContent truncate={c.truncate}>{content}</TableCellContent>;
         // WCAG 1.3.1 / APG Table pattern: the cell that identifies the row is a
         // row header, so a screen reader can read it back with every other cell
@@ -114,9 +126,7 @@ export function Table({
 }) {
   // Fallbacks are the former literals — the product medium is byte-identical,
   // a medium that reads farther away re-points the hook (see table-cell-styles).
-  const pad = size === 'sm'
-    ? 'var(--lk-table-cell-pad-sm, var(--component-table-cell-padding-sm, 10px 12px))'
-    : 'var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 14px 16px))';
+  const pad = getTableCellPadding(size);
   // A visible <caption> already names the table. An aria-label on top of it
   // would silently replace that visible name and risk a name/visible-text
   // mismatch (WCAG 2.5.3), so the ARIA names only apply without a caption.
@@ -152,7 +162,7 @@ export function Table({
         <thead>
           <tr>
             {columns.map((c) => (
-              <th key={c.key} scope="col" style={getTableHeaderCellStyle({ padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate })}>
+              <th key={c.key} scope="col" style={getTableHeaderCellStyle({ size, padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate })}>
                 <TableCellContent truncate={c.truncate}>{c.label}</TableCellContent>
               </th>
             ))}
@@ -168,6 +178,7 @@ export function Table({
                 columns={columns}
                 row={r}
                 rowIndex={ri}
+                size={size}
                 pad={pad}
                 hover={hover}
                 banded={banded}

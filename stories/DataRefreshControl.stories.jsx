@@ -79,5 +79,39 @@ export const RefreshingNarrow = {
     if (!wrapper || wrapper.scrollWidth > wrapper.clientWidth + 1) throw new Error('RefreshControl must wrap without horizontal overflow at 320px.');
     const interval = [...canvasElement.querySelectorAll('button')].find((button) => button.getAttribute('aria-label') === '자동 새로고침 간격');
     if (!interval?.disabled) throw new Error('An auto-refresh control without a change callback must not remain interactive.');
+    const refresh = [...canvasElement.querySelectorAll('button')].find((button) => button.getAttribute('aria-label') === '새로고침 중');
+    if (!refresh || refresh.getAttribute('aria-busy') !== 'true' || !refresh.disabled) {
+      throw new Error('A refreshing control must announce the busy state and block duplicate requests.');
+    }
+  },
+};
+
+export const PlainHeaderAction = {
+  name: '표현 · 헤더용 plain 새로고침',
+  parameters: storyDescription(
+    '페이지·상세 헤더처럼 이미 다른 chrome이 있는 최상위 표면에서 `refreshButtonVariant="plain"`으로 외곽선 없는 새로고침 icon만 남기는 상황입니다. 기본 ghost와 나란히 두고 접근 가능한 이름·크기·target은 같고 외곽선만 다른지 확인하세요.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-4)', width: 'min(100%, 820px)' }}>
+      <div data-testid="ghost-refresh"><RefreshControl lastUpdated="오늘 14:32" onRefresh={() => {}} /></div>
+      <div data-testid="plain-refresh"><RefreshControl lastUpdated="오늘 14:32" onRefresh={() => {}} refreshButtonVariant="plain" /></div>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const buttonIn = (testId) => [...canvasElement.querySelectorAll(`[data-testid="${testId}"] button`)].find((button) => button.getAttribute('aria-label') === '새로고침');
+    const ghost = buttonIn('ghost-refresh');
+    const plain = buttonIn('plain-refresh');
+    if (!ghost || !plain) throw new Error('Both variants must keep the same accessible refresh name.');
+    const ghostRect = ghost.getBoundingClientRect();
+    const plainRect = plain.getBoundingClientRect();
+    if (Math.round(ghostRect.width) !== Math.round(plainRect.width) || Math.round(ghostRect.height) !== Math.round(plainRect.height)) {
+      throw new Error('The plain variant must keep the ghost target size.');
+    }
+    const ghostBorder = getComputedStyle(ghost);
+    const plainBorder = getComputedStyle(plain);
+    const isTransparent = (color) => color === 'transparent' || /rgba\(\d+, \d+, \d+, 0\)/.test(color);
+    if (isTransparent(ghostBorder.borderTopColor) || !isTransparent(plainBorder.borderTopColor)) {
+      throw new Error('Only the plain variant may drop the visible outline.');
+    }
   },
 };

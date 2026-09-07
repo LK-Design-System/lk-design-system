@@ -1,5 +1,5 @@
 import React from 'react';
-import { userEvent } from 'storybook/test';
+import { userEvent, waitFor } from 'storybook/test';
 import {
   Button,
   DataGrid,
@@ -115,8 +115,10 @@ function ToolbarWithGridDemo() {
 
 function MediumFilterDensityDemo() {
   const [scope, setScope] = React.useState('all');
+  // 840px keeps the toolbar container above the 767px auto-layout breakpoint so
+  // the wide filter host stays inline for the density measurement.
   return (
-    <div style={{ width: '100%', maxWidth: 760 }}>
+    <div style={{ width: '100%', maxWidth: 840 }}>
       <DataToolbar
         data-testid="medium-density-toolbar"
         title="자료 목록"
@@ -140,7 +142,7 @@ function MediumFilterDensityDemo() {
   );
 }
 
-function MultiSelectFilterDemo({ width, testId }) {
+function MultiSelectFilterDemo({ width, testId, layout }) {
   const [language, setLanguage] = React.useState('all');
   const [topic, setTopic] = React.useState('all');
   const [sort, setSort] = React.useState('updated');
@@ -149,6 +151,7 @@ function MultiSelectFilterDemo({ width, testId }) {
       <DataToolbar
         variant="embedded"
         size="sm"
+        layout={layout}
         searchPlaceholder="저장소 검색"
         filters={({ size: filterSize }) => (
           <>
@@ -246,12 +249,12 @@ export const MediumFilterDensity = {
 export const ResponsiveMultiSelectFilters = {
   name: '반응형 · 다중 선택 필터',
   parameters: storyDescription(
-    '검색과 여러 Select의 합산 폭이 들어가는 데스크톱에서는 한 줄을 유지하고, 좁은 표면에서만 필터 host와 내부 control이 순서대로 줄바꿈됩니다.',
+    '검색과 여러 Select의 합산 폭이 들어가는 데스크톱에서는 한 줄을 유지하고, 좁은 표면에서만 필터 host와 내부 control이 순서대로 줄바꿈됩니다. 좁은 fixture는 `layout="wide"`로 고정해 wide 배치의 줄바꿈 계약만 검증하며, 기본 `auto`의 narrow 전환은 "반응형 · 좁은 폭의 필터 Drawer"가 검증합니다.',
   ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 1150 }}>
       <MultiSelectFilterDemo width="100%" testId="multi-filter-desktop" />
-      <MultiSelectFilterDemo width={360} testId="multi-filter-narrow" />
+      <MultiSelectFilterDemo width={360} testId="multi-filter-narrow" layout="wide" />
     </main>
   ),
   play: async ({ canvasElement }) => {
@@ -288,6 +291,119 @@ export const ResponsiveMultiSelectFilters = {
     if (narrowFiltersRect.height <= 32 || narrowFiltersRect.left < narrowRect.left - 1 || narrowFiltersRect.right > narrowRect.right + 1) {
       throw new Error('Narrow filters must wrap inside the available toolbar width.');
     }
+  },
+};
+
+function NarrowFilterDrawerDemo({ width, testId, layout }) {
+  const [language, setLanguage] = React.useState('typescript');
+  const [topic, setTopic] = React.useState('robotics');
+  const [sort, setSort] = React.useState('updated');
+  const activeFilterCount = [language, topic].filter((value) => value !== 'all').length;
+  return (
+    <div data-testid={testId} style={{ ...surfaceStyle, width, maxWidth: '100%' }}>
+      <DataToolbar
+        variant="embedded"
+        size="sm"
+        layout={layout}
+        searchPlaceholder="저장소 검색"
+        activeFilterCount={activeFilterCount}
+        filterPanelTitle="저장소 필터"
+        filters={({ size: filterSize }) => (
+          <>
+            <Select aria-label="언어" size={filterSize} value={language} onChange={setLanguage}>
+              <option value="all">모든 언어</option>
+              <option value="typescript">TypeScript</option>
+              <option value="python">Python</option>
+            </Select>
+            <Select aria-label="토픽" size={filterSize} value={topic} onChange={setTopic}>
+              <option value="all">모든 토픽</option>
+              <option value="robotics">로보틱스 자동화</option>
+              <option value="vision">컴퓨터 비전</option>
+            </Select>
+          </>
+        )}
+        sort={({ size: sortSize }) => (
+          <Select aria-label="정렬" size={sortSize} value={sort} onChange={setSort}>
+            <option value="updated">최근 수정순</option>
+            <option value="created">최근 생성순</option>
+            <option value="name">이름순</option>
+          </Select>
+        )}
+        metadata={<span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)' }}>오늘 14:32 동기화</span>}
+      />
+    </div>
+  );
+}
+
+export const NarrowFilterDrawer = {
+  name: '반응형 · 좁은 폭의 필터 Drawer',
+  parameters: storyDescription(
+    '기본 `layout="auto"`는 툴바 컨테이너가 767px 이하일 때 검색을 한 행으로 두고 필터를 Drawer trigger로 접습니다. 정렬은 trigger 옆에 남고 metadata는 다음 행 전체 폭을 차지합니다. trigger 라벨의 적용 필터 수, Drawer 안의 필터 순서, 닫은 뒤 trigger로의 초점 복원을 확인하세요. 넓은 fixture는 같은 props가 한 행으로 유지되는지 보여 줍니다.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 1150 }}>
+      <NarrowFilterDrawerDemo width="100%" testId="narrow-filter-wide" />
+      <NarrowFilterDrawerDemo width={360} testId="narrow-filter-narrow" />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const wide = canvasElement.querySelector('[data-testid="narrow-filter-wide"]');
+    const wideToolbar = wide?.querySelector('[data-slot="root"]');
+    const wideNarrowHost = wide?.querySelector('[data-toolbar-view="narrow"]');
+    const wideTrigger = wide?.querySelector('[data-data-toolbar-filter-trigger]');
+    const wideSort = wide?.querySelector('[data-toolbar-view="wide"] [data-slot="sort"]');
+    if (!wideToolbar || wideToolbar.getAttribute('data-layout') !== 'auto' || !wideNarrowHost || !wideTrigger || !wideSort) {
+      throw new Error('The wide fixture must expose the auto layout, a hidden narrow host, and the wide sort slot.');
+    }
+    if (getComputedStyle(wideNarrowHost).display !== 'none' || wideTrigger.getClientRects().length !== 0 || wideSort.getClientRects().length === 0) {
+      throw new Error('A wide container must keep filters and sort inline and hide the narrow trigger.');
+    }
+
+    const narrow = canvasElement.querySelector('[data-testid="narrow-filter-narrow"]');
+    const trigger = narrow?.querySelector('[data-data-toolbar-filter-trigger]');
+    const wideHost = narrow?.querySelector('[data-toolbar-view="wide"]');
+    const narrowSort = narrow?.querySelector('[data-toolbar-view="narrow"] [data-slot="sort"]');
+    const metadata = narrow?.querySelector('[data-slot="metadata"]');
+    if (!narrow || !trigger || !wideHost || !narrowSort || !metadata) {
+      throw new Error('The narrow fixture must expose the filter trigger, hidden wide host, narrow sort slot, and metadata.');
+    }
+    if (narrow.scrollWidth > narrow.clientWidth + 1) throw new Error('The narrow toolbar must not overflow its container.');
+    if (getComputedStyle(wideHost).display !== 'none' || trigger.getClientRects().length === 0) {
+      throw new Error('A narrow container must hide the wide filter host and show the filter trigger.');
+    }
+    if (trigger.textContent?.trim() !== '필터 2' || trigger.getAttribute('aria-haspopup') !== 'dialog' || trigger.getAttribute('aria-expanded') !== 'false') {
+      throw new Error('The filter trigger must announce the active filter count and its dialog relationship.');
+    }
+    const triggerRect = trigger.getBoundingClientRect();
+    const sortRect = narrowSort.getBoundingClientRect();
+    if (Math.abs(Math.round(triggerRect.top) - Math.round(sortRect.top)) > 1 || sortRect.left < triggerRect.right) {
+      throw new Error('Sort must stay on the trigger row instead of folding into the Drawer.');
+    }
+    if (Math.round(metadata.getBoundingClientRect().top) <= Math.round(triggerRect.bottom) - 1) {
+      throw new Error('Metadata must move to its own full-width row on a narrow container.');
+    }
+
+    await userEvent.click(trigger);
+    await waitFor(() => {
+      const dialog = ownerDocument.querySelector(`#${CSS.escape(trigger.getAttribute('aria-controls'))}`);
+      if (!dialog || dialog.getAttribute('role') !== 'dialog' || trigger.getAttribute('aria-expanded') !== 'true') {
+        throw new Error('The filter trigger must open the filter Drawer it controls.');
+      }
+    });
+    const dialog = ownerDocument.querySelector('[role="dialog"]');
+    const panelSelects = [...(dialog?.querySelectorAll('[data-slot="filterPanel"] [aria-label]') || [])].map((el) => el.getAttribute('aria-label'));
+    if (panelSelects[0] !== '언어' || panelSelects[1] !== '토픽' || panelSelects.includes('정렬')) {
+      throw new Error('The Drawer must host the filters in order and must not duplicate the sort control.');
+    }
+    const done = [...dialog.querySelectorAll('button')].find((button) => button.textContent?.trim() === '완료');
+    if (!done) throw new Error('The filter Drawer must expose its close action.');
+    await userEvent.click(done);
+    await waitFor(() => {
+      if (ownerDocument.querySelector('[role="dialog"]') || ownerDocument.activeElement !== trigger) {
+        throw new Error('Closing the filter Drawer must restore focus to the trigger.');
+      }
+    });
   },
 };
 

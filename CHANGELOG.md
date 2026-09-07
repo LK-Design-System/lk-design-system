@@ -2,6 +2,44 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## Unreleased
+
+Source-only candidate for `0.2.2`. It formalizes the `0.2.2-rc.1` through `0.2.2-rc.6` Product
+candidates that LK Portal consumed as vendored tarballs between 2026-08-30 and 2026-09-01; their
+source was reconstructed from the rc.6 package source maps and re-authored here so the shipped
+API has a canonical source, stories, and contracts. No immutable tag, paired Robotics release,
+registry publish, consumer re-verification, rollout, or product deployment is attested here.
+
+### Added
+
+- `DataToolbar` gained a `layout` axis (`auto | wide | narrow`, default `auto`). The toolbar is
+  now an inline-size container; at or below 767px the search field takes a full row and the
+  filters collapse behind an outlined trigger that opens a compact filter `Drawer`. The trigger
+  announces `activeFilterCount` (`필터 2`), and `filterLabel`, `filterPanelTitle`, and
+  `filterCloseLabel` own the Korean copy. New `sort` and `metadata` slots stay in the toolbar on
+  a narrow surface instead of folding into the Drawer, and new `sort`, `metadata`,
+  `narrowControls`, and `filterPanel` parts plus a root `data-layout` expose the policy.
+  `DataCollectionPanel` forwards its own `layout` to the embedded toolbar.
+- `Table` and the `getTableHeaderCellStyle` / `getTableDataCellStyle` helpers accept `size`
+  and now set a minimum row height per density (`--lk-table-row-min-height-sm/md` →
+  `--component-table-row-min-height-sm/md` → 44px/52px) with `box-sizing: border-box` and
+  `vertical-align: middle`, so product-owned native tables match the `Table` renderer row for row.
+- `RefreshControl` gained `refreshButtonVariant` (`ghost | plain`, default `ghost`). `plain`
+  drops the outline for page and detail headers that already carry their own chrome; the
+  accessible name, size, and target are unchanged.
+
+### Changed
+
+- `RefreshControl` renders its refresh action as a square `IconButton` and shows a 16px
+  `Spinner` in place of the glyph while `refreshing`, announcing `aria-busy` and
+  `aria-disabled` instead of relying on the text `Button` loading state.
+- `Drawer` stays mounted through its slide-out transition. While closing it drops
+  `aria-modal`, becomes `aria-hidden` and `inert`, ignores scrim and close clicks, and unmounts
+  on `transitionend` or the computed transition time; `prefers-reduced-motion: reduce` skips the
+  motion. Focus returns to `returnFocusRef` or the recorded invoker as soon as the shell has
+  released its background `inert`, without waiting for the visual transition, and an explicit
+  focus move by the product during close is respected.
+
 ## 0.2.1 - 2026-08-29
 
 Paired Robotics release: `0.1.0-rc.36`. This patch adds an opt-in Drawer close-control

@@ -1,7 +1,21 @@
 import * as React from 'react';
 import type { LdsClassNames, LdsStyles, LdsVars } from '@lk-design-system/lds-core/component-authoring';
 
-export type DataToolbarPart = 'root' | 'header' | 'heading' | 'title' | 'count' | 'description' | 'actions' | 'controls' | 'search' | 'filters';
+export type DataToolbarPart =
+  | 'root'
+  | 'header'
+  | 'heading'
+  | 'title'
+  | 'count'
+  | 'description'
+  | 'actions'
+  | 'controls'
+  | 'search'
+  | 'filters'
+  | 'sort'
+  | 'metadata'
+  | 'narrowControls'
+  | 'filterPanel';
 export type DataToolbarVariable =
   | '--lds-data-toolbar-padding'
   | '--lds-data-toolbar-gap'
@@ -33,12 +47,26 @@ export interface DataToolbarProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   searchPlaceholder?: string;
   /** 필터 chip/menu 슬롯. 함수면 검색 필드와 같은 control size를 받습니다. */
   filters?: React.ReactNode | ((context: DataToolbarFilterContext) => React.ReactNode);
+  /** 기본값이 아닌 현재 적용 필터 수. 좁은 화면의 필터 trigger에 표시됩니다. @default 0 */
+  activeFilterCount?: number;
+  /** 좁은 화면 필터 trigger 라벨. @default "필터" */
+  filterLabel?: string;
+  /** 좁은 화면 필터 Drawer 제목. @default "필터" */
+  filterPanelTitle?: React.ReactNode;
+  /** 좁은 화면 필터 Drawer 닫기 action 라벨. @default "완료" */
+  filterCloseLabel?: React.ReactNode;
+  /** 정렬 control 슬롯. 필터와 분리되어 좁은 화면에서도 toolbar에 남습니다. */
+  sort?: React.ReactNode | ((context: DataToolbarFilterContext) => React.ReactNode);
+  /** 동기화 시각·데이터 범위처럼 query control이 아닌 보조 정보 슬롯. */
+  metadata?: React.ReactNode;
   /** 우측 일반 액션 슬롯. */
   actions?: React.ReactNode;
   /** 밀도. @default "md" */
   size?: DataToolbarSize;
   /** 외곽선 소유. "embedded"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default "standalone" */
   variant?: 'standalone' | 'embedded';
+  /** 반응형 control 정책. auto는 767px 이하 컨테이너에서 검색을 한 행으로 두고 필터를 Drawer trigger로 접습니다. @default "auto" */
+  layout?: 'auto' | 'wide' | 'narrow';
   classNames?: LdsClassNames<DataToolbarPart>;
   styles?: LdsStyles<DataToolbarPart>;
   vars?: LdsVars<DataToolbarVariable>;

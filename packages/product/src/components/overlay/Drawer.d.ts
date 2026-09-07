@@ -38,6 +38,8 @@ export interface DrawerProps {
   zIndex?: number;
   /** 스크롤 body의 padding·layout을 조합별로 조정합니다. */
   bodyStyle?: React.CSSProperties;
+  /** dialog 표면의 transition 종료 handler. Drawer는 slide-out이 끝난 뒤 unmount하며, 제품 handler를 먼저 호출합니다. */
+  onTransitionEnd?: React.TransitionEventHandler<HTMLDivElement>;
   style?: React.CSSProperties;
 }
 

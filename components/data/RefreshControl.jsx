@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button } from '../buttons/Button.jsx';
+import { IconButton } from '../buttons/IconButton.jsx';
 import { Icon } from '../icon/Icon.jsx';
 import { Select } from '../forms/Select.jsx';
+import { Spinner } from '../status/Spinner.jsx';
 
 /**
  * LK Product Extension — RefreshControl
@@ -21,6 +22,7 @@ export function RefreshControl({
   disabled = false,
   unavailableReason,
   size = 'sm',
+  refreshButtonVariant = 'ghost',
   style,
   ...rest
 }) {
@@ -55,22 +57,28 @@ export function RefreshControl({
         />
       )}
 
-      <Button
-        type="button"
+      <IconButton
         size={size}
-        variant="ghost"
-        iconOnly
-        aria-label={refreshLabel}
+        variant={refreshButtonVariant}
+        round={false}
+        label={refreshing ? `${refreshLabel} 중` : refreshLabel}
         title={refreshLabel}
-        loading={refreshing}
-        loadingLabel={`${refreshLabel} 중`}
         disabled={refreshDisabled}
-        style={{ color: refreshDisabled || refreshing ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)' }}
+        aria-busy={refreshing || undefined}
+        aria-disabled={refreshing || undefined}
+        style={{
+          color: refreshDisabled || refreshing ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-normal)',
+          ...(refreshing && refreshButtonVariant === 'plain'
+            ? { background: 'transparent', border: '1px solid transparent', cursor: 'wait' }
+            : {}),
+        }}
         onClick={unavailable ? undefined : onRefresh}
         aria-describedby={disabled && unavailableReason ? reasonId : undefined}
       >
-        {!refreshing && <Icon name="refresh" size={16} aria-hidden="true" />}
-      </Button>
+        {refreshing
+          ? <Spinner size={16} color="currentColor" aria-hidden="true" />
+          : <Icon name="refresh" size={16} aria-hidden="true" />}
+      </IconButton>
 
       {disabled && unavailableReason != null && (
         <span id={reasonId} data-unavailable-reason style={{ flexBasis: '100%', color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>

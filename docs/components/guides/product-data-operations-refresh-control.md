@@ -42,6 +42,13 @@
 | `disabled` | `boolean` | No |  |
 | `unavailableReason` | `React.ReactNode` | No | disabled 이유를 control과 함께 보이게 표시합니다. |
 | `size` | `'sm' \| 'md'` | No |  |
+| `refreshButtonVariant` | `'ghost' \| 'plain'` | No | Refresh icon action treatment. Use plain for top-level page/detail headers. @default 'ghost' |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| refreshButtonVariant | Refresh icon action treatment. Use plain for top-level page/detail headers. @default 'ghost' |
 
 ## Behavior and interaction
 
@@ -51,6 +58,7 @@
 
 | Subject | Rule |
 | --- | --- |
+| 명시 규칙 1 | refreshing은 중복 실행을 막고 loading label을 제공합니다. 갱신 중에는 refresh glyph 자리에 같은 16px Spinner를 두고 aria-busy·aria-disabled로 상태를 알리며, disabled 색과 같은 비활성 전경을 씁니다. plain에서는 배경·외곽선 없이 cursor: wait만 남깁니다. onRefresh가 없으면 no-op action을 남기지 않고 수동 control을 비활성화합니다. |
 | --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
@@ -63,8 +71,8 @@
 ## Content and writing
 
 - 정렬 순서는 freshness 텍스트 → 자동 간격 select → 새로고침 icon action입니다. 대시보드 카드 코너에 놓였을 때 수동 정보가 아니라 action이 최외곽(코너 쪽)에 오는 업계 관행(AWS 콘솔·Grafana)을 따릅니다.
-- 새로고침은 icon-only Button이며 refreshLabel이 접근 가능한 이름과 tooltip을 제공합니다. 텍스트 라벨 버튼은 empty/error 상태의 복구 CTA에서만 사용합니다.
-- refreshing은 중복 실행을 막고 loading label을 제공합니다. onRefresh가 없으면 no-op action을 남기지 않고 수동 control을 비활성화합니다.
+- 새로고침은 round={false} IconButton이며 refreshLabel이 접근 가능한 이름과 tooltip을 제공합니다. 텍스트 라벨 버튼은 empty/error 상태의 복구 CTA에서만 사용합니다.
+- refreshButtonVariant는 새로고침 action의 표현만 바꾸는 additive axis입니다. 기본 ghost는 기존 출력(외곽선 있는 icon action)과 같고, plain은 페이지·상세 헤더처럼 이미 다른 chrome이 있는 최상위 표면에서 외곽선 없는 icon만 남깁니다. 크기·target·접근 가능한 이름은 두 값이 같습니다.
 - disabled에는 unavailableReason을 함께 제공해 권한·offline 같은 원인을 보이게 설명할 수 있습니다.
 
 ## Related components

@@ -80,7 +80,7 @@ Reference: [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns
 ## Row and cell-style extension points
 
 - `getRowProps(row, index)` merges native `<tr>` attributes such as `data-*`, `className`, `style`, and pointer handlers. It does not add selection, focus, or grid semantics. Use `DataGrid` when rows must be selected, sorted, or navigated with the keyboard.
-- `getTableHeaderCellStyle({ padding, align, width })` and `getTableDataCellStyle({ padding, align, width })` expose the LDS static-table cell presentation for product-owned table compositions that cannot use the full `Table` renderer. Preserve native `<th scope="col|row">` and `<td>` elements when using them.
+- `getTableHeaderCellStyle({ size, padding, align, width, truncate })` and `getTableDataCellStyle({ size, padding, align, width, truncate })` expose the LDS static-table cell presentation for product-owned table compositions that cannot use the full `Table` renderer. Preserve native `<th scope="col|row">` and `<td>` elements when using them.
 
 ## Banded rows (`banded`) — 넓은 표의 행 결속
 
@@ -89,6 +89,8 @@ Reference: [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns
 - 외부 근거: [Carbon Data table](https://carbondesignsystem.com/components/data-table/usage/)의 zebra 옵션 — "행을 따라가는 시선이 옆 행으로 이탈하는 것을 막는" 넓은 표 장치이며, Carbon은 줄무늬를 끄면 행 구분선을 요구합니다(LDS 기본형이 그 형태). [USWDS Table](https://designsystem.digital.gov/components/table/)의 striped 변형도 같은 계열입니다. LDS는 두 시스템의 교차 줄무늬 대신 전 행 밴드를 채택합니다(강조 오독 근거는 위).
 
 ## 매체 재지정 훅 (`--lk-table-*`)
+
+`size`는 셀 패딩과 함께 최소 행 높이도 선택합니다. 행 높이는 `--lk-table-row-min-height-sm/md` 매체 훅 → `--component-table-row-min-height-sm/md` profile token → 리터럴 44px/52px 순서로 해석되며, 셀은 `box-sizing: border-box`와 `vertical-align: middle`로 그 높이 안에서 중앙 정렬됩니다. 헬퍼에 `padding`을 직접 주면 그 값이 `size` 패딩보다 우선하고 최소 높이는 `size`를 따릅니다.
 
 셀 패딩과 타입은 `--lk-table-cell-pad-sm/md`, `--lk-table-head-size/line/spacing`, `--lk-table-cell-size/line` 훅을 경유합니다. 매체 훅이 없으면 `--component-table-cell-padding-sm/md`를 읽고, 그 token의 `default` 값은 기존 리터럴과 같습니다. 투영·전시처럼 읽기 거리가 다른 매체의 명시적 `--lk-table-*`가 profile token보다 우선합니다. `ops` 안의 명시적 `size="md"`도 API 의미는 유지한 채 ops-md token 값을 사용합니다. 전체 precedence와 측정 게이트는 `docs/DENSITY_AND_EXPRESSION_PROFILE_CONTRACT.md`가 정본입니다.
 

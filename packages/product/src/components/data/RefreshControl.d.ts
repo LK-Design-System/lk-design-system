@@ -22,6 +22,8 @@ export interface RefreshControlProps extends React.HTMLAttributes<HTMLDivElement
   /** disabled 이유를 control과 함께 보이게 표시합니다. */
   unavailableReason?: React.ReactNode;
   size?: 'sm' | 'md';
+  /** Refresh icon action treatment. Use `plain` for top-level page/detail headers. @default 'ghost' */
+  refreshButtonVariant?: 'ghost' | 'plain';
 }
 
 /** freshness, 수동 새로고침, 제품 제어 자동 간격을 묶는 LDS Product control입니다. */

@@ -1,5 +1,5 @@
 import React from 'react';
-import { userEvent } from 'storybook/test';
+import { userEvent, waitFor } from 'storybook/test';
 import {
   BarChart,
   BottomNav,
@@ -510,23 +510,27 @@ export const TemporaryNavigation = {
     }
 
     await userEvent.keyboard('{Escape}');
-    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-    if (canvasElement.ownerDocument.querySelector('#temporary-navigation-panel')
-      || canvasElement.ownerDocument.activeElement !== trigger
-      || trigger.getAttribute('aria-expanded') !== 'false') {
-      throw new Error('Escape must close temporary navigation and restore focus to its persistent trigger.');
-    }
+    // Drawer stays mounted through its slide-out transition, so wait for the
+    // unmount instead of asserting on the next frame.
+    await waitFor(() => {
+      if (canvasElement.ownerDocument.querySelector('#temporary-navigation-panel')
+        || canvasElement.ownerDocument.activeElement !== trigger
+        || trigger.getAttribute('aria-expanded') !== 'false') {
+        throw new Error('Escape must close temporary navigation and restore focus to its persistent trigger.');
+      }
+    });
 
     await userEvent.click(trigger);
     const activity = canvasElement.ownerDocument.querySelector('#temporary-navigation-panel [data-sidenav-value="activity"]');
     if (!activity) throw new Error('The temporary Drawer must preserve the hierarchical SideNav destinations.');
     await userEvent.click(activity);
-    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-    if (shell.dataset.selectedDestination !== 'activity'
-      || canvasElement.ownerDocument.querySelector('#temporary-navigation-panel')
-      || canvasElement.ownerDocument.activeElement !== main) {
-      throw new Error('Selecting a temporary destination must close the Drawer while the product moves focus to main.');
-    }
+    await waitFor(() => {
+      if (shell.dataset.selectedDestination !== 'activity'
+        || canvasElement.ownerDocument.querySelector('#temporary-navigation-panel')
+        || canvasElement.ownerDocument.activeElement !== main) {
+        throw new Error('Selecting a temporary destination must close the Drawer while the product moves focus to main.');
+      }
+    });
   },
 };
 

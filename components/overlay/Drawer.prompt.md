@@ -52,6 +52,13 @@ const firstFilterRef = useRef(null);
 - 표면 소유권은 컴포넌트에 둡니다. [Material Design 3 navigation drawer](https://m3.material.io/components/navigation-drawer)의 modal drawer sheet도 container/content 색을 host가 덧칠하는 것이 아니라 컴포넌트 파라미터(`drawerContainerColor`·`drawerContentColor`)로 노출합니다.
 - `appearance`는 표면만 바꿉니다. anatomy, density, focus/Escape/스크롤 계약, portal·stack 동작은 동일합니다. `DashboardShell`은 `temporaryNavigationAppearance`로 이 축을 그대로 전달합니다.
 
+## Exit motion and focus handoff
+
+- `open={false}`가 되어도 Drawer는 slide-out transition이 끝날 때까지 mount를 유지합니다. 그동안 dialog는 `aria-modal`을 잃고 `aria-hidden`·`inert`가 되어 접근성 트리와 Tab 순서에서 즉시 제외되며, scrim 클릭과 닫기 버튼은 무시됩니다. `transitionend`(transform) 또는 계산된 transition 시간 + 50ms 뒤에 unmount하고, `prefers-reduced-motion: reduce`에서는 transition을 0으로 두어 바로 unmount합니다.
+- `onTransitionEnd`는 dialog 표면의 native transition 종료 handler를 그대로 노출합니다. Drawer가 unmount 판정에 같은 이벤트를 쓰므로 제품 handler를 먼저 호출한 뒤 자체 처리를 이어갑니다.
+- 초점 복원은 시각 transition을 기다리지 않습니다. `useDialogFocus`가 modal을 해제하는 layout-effect cleanup은 shell이 배경 `inert`를 제거하기 전에 실행되므로, Drawer는 그 직후의 layout effect에서 `returnFocusRef` 또는 열 때 기록한 invoker가 다시 focus 가능해졌는지(`hidden`·`inert`·`aria-hidden`·`display:none`·`disabled` 아님) 확인한 뒤 복원합니다. 제품이 닫는 동안 다른 곳으로 초점을 명시적으로 옮겼으면 덮어쓰지 않습니다.
+- 근거: [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)은 dialog가 닫히면 invoker로 초점을 되돌리도록 요구하며, [WCAG 2.1 Success Criterion 2.3.3 Animation from Interactions](https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html)에 따라 motion을 줄인 사용자에게는 exit transition을 생략합니다.
+
 ## 공통 Portal·stack 계약
 
 - 기본 `withinPortal=true`이며 `LdsProvider.portalTarget` 또는 명시적 `portalTarget`에 렌더링됩니다. 가까운 theme scope와 `dir`을 상속하고 clipping ancestor를 벗어납니다.

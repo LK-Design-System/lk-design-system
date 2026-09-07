@@ -11,9 +11,12 @@
  * undefined at the product default — defining them as tokens would make the
  * fallback dead code; this exception is recorded in Table.prompt.md.
  */
-export function thStyle(pad) {
+export function thStyle(pad, minHeight) {
   return {
     padding: pad,
+    minHeight,
+    boxSizing: 'border-box',
+    verticalAlign: 'middle',
     borderBottom: '1px solid var(--color-semantic-line-solid-normal)',
     fontSize: 'var(--lk-table-head-size, 12px)',
     lineHeight: 'var(--lk-table-head-line, normal)',
@@ -47,9 +50,12 @@ export function groupThStyle(pad) {
   };
 }
 
-export function tdStyle(pad) {
+export function tdStyle(pad, minHeight) {
   return {
     padding: pad,
+    minHeight,
+    boxSizing: 'border-box',
+    verticalAlign: 'middle',
     borderBottom: '1px solid var(--color-semantic-line-solid-normal)',
     fontSize: 'var(--lk-table-cell-size, 14px)',
     lineHeight: 'var(--lk-table-cell-line, normal)',

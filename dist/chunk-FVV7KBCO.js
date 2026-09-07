@@ -1,0 +1,94 @@
+"use client";
+import {
+  Select
+} from "./chunk-FUIDDAEI.js";
+import {
+  Spinner
+} from "./chunk-BPSZEXJR.js";
+import {
+  IconButton
+} from "./chunk-EFNOOM3R.js";
+import {
+  Icon
+} from "./chunk-IKUN5X7H.js";
+
+// components/data/RefreshControl.jsx
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
+function RefreshControl({
+  refreshing = false,
+  onRefresh,
+  lastUpdated,
+  lastUpdatedLabel = "\uB9C8\uC9C0\uB9C9 \uC5C5\uB370\uC774\uD2B8",
+  refreshLabel = "\uC0C8\uB85C\uACE0\uCE68",
+  autoRefreshValue,
+  autoRefreshOptions,
+  onAutoRefreshChange,
+  autoRefreshLabel = "\uC790\uB3D9 \uC0C8\uB85C\uACE0\uCE68 \uAC04\uACA9",
+  disabled = false,
+  unavailableReason,
+  size = "sm",
+  refreshButtonVariant = "ghost",
+  style,
+  ...rest
+}) {
+  const reasonId = React.useId();
+  const unavailable = disabled || refreshing;
+  const refreshDisabled = disabled || typeof onRefresh !== "function";
+  const autoRefreshDisabled = disabled || typeof onAutoRefreshChange !== "function";
+  return /* @__PURE__ */ jsxs(
+    "div",
+    {
+      role: "group",
+      "aria-label": "\uB370\uC774\uD130 \uC0C8\uB85C\uACE0\uCE68",
+      "aria-describedby": disabled && unavailableReason ? reasonId : void 0,
+      style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", minWidth: 0, fontFamily: "var(--font-sans)", ...style },
+      ...rest,
+      children: [
+        lastUpdated != null && /* @__PURE__ */ jsxs("span", { "data-refresh-freshness": true, style: { minWidth: 0, overflowWrap: "anywhere", color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: [
+          lastUpdatedLabel,
+          ": ",
+          lastUpdated
+        ] }),
+        Array.isArray(autoRefreshOptions) && autoRefreshOptions.length > 0 && /* @__PURE__ */ jsx(
+          Select,
+          {
+            value: autoRefreshValue,
+            onChange: onAutoRefreshChange,
+            options: autoRefreshOptions,
+            size,
+            disabled: autoRefreshDisabled,
+            "aria-label": autoRefreshLabel,
+            style: { width: 150 }
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          IconButton,
+          {
+            size,
+            variant: refreshButtonVariant,
+            round: false,
+            label: refreshing ? `${refreshLabel} \uC911` : refreshLabel,
+            title: refreshLabel,
+            disabled: refreshDisabled,
+            "aria-busy": refreshing || void 0,
+            "aria-disabled": refreshing || void 0,
+            style: {
+              color: refreshDisabled || refreshing ? "var(--color-semantic-label-disable)" : "var(--color-semantic-label-normal)",
+              ...refreshing && refreshButtonVariant === "plain" ? { background: "transparent", border: "1px solid transparent", cursor: "wait" } : {}
+            },
+            onClick: unavailable ? void 0 : onRefresh,
+            "aria-describedby": disabled && unavailableReason ? reasonId : void 0,
+            children: refreshing ? /* @__PURE__ */ jsx(Spinner, { size: 16, color: "currentColor", "aria-hidden": "true" }) : /* @__PURE__ */ jsx(Icon, { name: "refresh", size: 16, "aria-hidden": "true" })
+          }
+        ),
+        disabled && unavailableReason != null && /* @__PURE__ */ jsx("span", { id: reasonId, "data-unavailable-reason": true, style: { flexBasis: "100%", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: unavailableReason })
+      ]
+    }
+  );
+}
+
+export {
+  RefreshControl
+};
+//# sourceMappingURL=chunk-FVV7KBCO.js.map

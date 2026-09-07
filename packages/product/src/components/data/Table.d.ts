@@ -48,6 +48,8 @@ export interface TableProps<Row extends Record<string, unknown> = Record<string,
 }
 
 export interface TableCellStyleOptions {
+  /** Table density. Selects the matching minimum row height. @default "md" */
+  size?: 'sm' | 'md';
   /** Cell padding. @default "14px 16px" */
   padding?: number | string;
   /** Logical text alignment. @default "left" */

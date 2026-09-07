@@ -32,9 +32,9 @@
 | ariaLabel | title이 없을 때 사용할 접근 가능한 이름. @default "서랍 패널" |
 | closeLabel | 닫기 버튼의 접근 가능한 이름. @default "닫기" |
 | bodyStyle | 스크롤 body의 padding·layout을 조합별로 조정합니다. |
+| onTransitionEnd | dialog 표면의 transition 종료 handler. Drawer는 slide-out이 끝난 뒤 unmount하며, 제품 handler를 먼저 호출합니다. |
 | title | Drawer 본문 안의 보이는 하위 제목. |
 | description | 제목 아래의 짧은 설명. |
-| actions | 제목 행 우측의 보조 액션. |
 
 ## Properties
 
@@ -61,9 +61,9 @@
 | `portalTarget` | `HTMLElement \| null` | No |  |
 | `zIndex` | `number` | No |  |
 | `bodyStyle` | `React.CSSProperties` | No | 스크롤 body의 padding·layout을 조합별로 조정합니다. |
+| `onTransitionEnd` | `React.TransitionEventHandler` | No | dialog 표면의 transition 종료 handler. Drawer는 slide-out이 끝난 뒤 unmount하며, 제품 handler를 먼저 호출합니다. |
 | `style` | `React.CSSProperties` | No |  |
 | `title` | `React.ReactNode` | Yes | Drawer 본문 안의 보이는 하위 제목. |
-| `description` | `React.ReactNode` | No | 제목 아래의 짧은 설명. |
 
 ## States
 
@@ -76,9 +76,9 @@
 
 - density="comfortable"이 기본값이며 default profile의 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다. ops에서는 같은 density API가 profile-aware chrome token을 읽습니다.
 - 자식의 명시적 size, padding, density가 항상 상속값보다 우선합니다. Drawer 밖과 comfortable Drawer의 기존 기본 출력은 유지됩니다.
+- 근거: WAI-ARIA APG Modal Dialog Pattern은 dialog가 닫히면 invoker로 초점을 되돌리도록 요구하며, WCAG 2.1 Success Criterion 2.3.3 Animation from Interactions에 따라 motion을 줄인 사용자에게는 exit transition을 생략합니다.
+- initialFocusRef → 첫 tabbable 요소 → dialog 표면 순으로 초기 초점을 선택합니다.
 - 최상위 Drawer만 Tab/Shift+Tab 순환, 외부 focus containment, Escape dismiss를 소유합니다.
-- 닫히면 trigger로 복원하며 returnFocusRef로 논리적 다음 지점을 지정할 수 있습니다. restoreFocus 기본값은 true입니다.
-- overlay Drawer를 여러 개 겹치지 않습니다. Drawer 위에 확인 Modal이 불가피할 때는 Modal만 활성화되고, 닫힌 뒤 Drawer 내부 trigger로 돌아갑니다.
 
 ## 정량 규칙
 
@@ -110,11 +110,12 @@
 - 제목이 있으면 aria-labelledby, 없으면 ariaLabel을 사용합니다.
 - DrawerSection.headingLevel은 실제 문서 계층에 맞춰 26을 선택하고 기본값은 3입니다. 짧은 보조 명령은 actions에 두며, headerStyle과 contentStyle은 고유한 레이아웃 조합에만 사용합니다. 이 style escape hatch로 제목 크기·밀도·divider 간격을 다시 정의하지 않습니다.
 - appearance는 표면만 바꿉니다. anatomy, density, focus/Escape/스크롤 계약, portal·stack 동작은 동일합니다. DashboardShell은 temporaryNavigationAppearance로 이 축을 그대로 전달합니다.
-- zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다.
+- open={false}가 되어도 Drawer는 slide-out transition이 끝날 때까지 mount를 유지합니다. 그동안 dialog는 aria-modal을 잃고 aria-hidden·inert가 되어 접근성 트리와 Tab 순서에서 즉시 제외되며, scrim 클릭과 닫기 버튼은 무시됩니다. transitionend(transform) 또는 계산된 transition 시간 + 50ms 뒤에 unmount하고, prefers-reduced-motion: reduce에서는 transition을 0으로 두어 바로 unmount합니다.
 
 ## Exceptions
 
 - closeButtonVariant는 Drawer가 소유한 닫기 control의 표현만 바꾸는 additive axis입니다. 기본은 표면별 기존값(default: plain, brand: on-dark)이라 기존 소비자 출력은 바뀌지 않습니다. brand surface에서 외곽선 없는 X가 필요한 경우 closeButtonVariant="plain"을 선택할 수 있으며, Drawer가 --viewer-foreground를 brand on-surface로 고정해 투명 button이라도 대비를 유지합니다.
+- zIndex는 예외적 명시 override입니다. 평상시에는 공통 overlay stack이 중첩 순서, topmost Escape, background inert, body scroll lock과 focus 복원을 소유합니다.
 
 ## Related components
 
@@ -215,6 +216,7 @@ const firstFilterRef = useRef(null);
 - Storybook implementation evidence: `stories/OverlayDrawer.stories.jsx`
 - [Material Design 3 navigation drawer](https://m3.material.io/components/navigation-drawer)
 - [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
+- [WCAG 2.1 Success Criterion 2.3.3 Animation from Interactions](https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html)
 - [Fluent 2 Drawer](https://fluent2.microsoft.design/components/web/react/core/drawer/usage)
 - [WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)
 - [Fluent 2 Dialog](https://fluent2.microsoft.design/components/web/react/core/dialog/usage)

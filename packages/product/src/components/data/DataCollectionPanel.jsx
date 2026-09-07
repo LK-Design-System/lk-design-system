@@ -89,7 +89,7 @@ export const DataCollectionPanel = React.forwardRef(function DataCollectionPanel
           className={partClassName(classNames, 'toolbar') || undefined}
           style={{ minWidth: 0, ...partStyle(styles, 'toolbar') }}
         >
-          <DataToolbar {...toolbar} variant="embedded" />
+          <DataToolbar {...toolbar} layout={toolbar.layout ?? resolvedLayout} variant="embedded" />
         </div>
       )}
       <div

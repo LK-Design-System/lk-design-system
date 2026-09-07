@@ -223,6 +223,8 @@
     "--color-semantic-label-strong",
     "--component-table-cell-padding-md",
     "--component-table-cell-padding-sm",
+    "--component-table-row-min-height-md",
+    "--component-table-row-min-height-sm",
     "--dur-fast",
     "--ease-out",
     "--font-sans",
@@ -231,6 +233,8 @@
     "--label1-size",
     "--lk-table-cell-pad-md",
     "--lk-table-cell-pad-sm",
+    "--lk-table-row-min-height-md",
+    "--lk-table-row-min-height-sm",
     "--space-2"
   ],
   "apiLinks": [],
