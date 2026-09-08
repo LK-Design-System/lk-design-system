@@ -10,10 +10,26 @@ function getColumnSizingStyle({ width, truncate = false }) {
 /* `columnLabelsHidden` keeps `<th scope="col">` for assistive technology while
  * removing the visible header band. A property table ("항목 | 값") states its
  * columns in the data itself, so the visible band repeats what every row
- * already shows and costs a 44px row of chrome. The cells leave the table's
- * layout entirely, so a table that hides its labels states its own column
- * widths. */
-const HIDDEN_HEADER_CELL_STYLE = {
+ * already shows and costs a 44px row of chrome.
+ *
+ * The label — not the cell — is what gets hidden. An absolutely positioned
+ * `<th>` blockifies out of the table box (CSS 2.1 §9.7), and under
+ * `table-layout: fixed` the header row is the ONLY row that sets column
+ * widths, so hiding the cell itself silently collapses every declared width to
+ * an even split. The cell therefore keeps its own layout and loses only its
+ * band: zero padding, zero height, no rule. */
+const hiddenHeaderCellStyle = (align, sizing) => ({
+  ...sizing,
+  padding: 0,
+  height: 0,
+  lineHeight: 0,
+  fontSize: 0,
+  border: 0,
+  borderBottom: 0,
+  textAlign: align,
+});
+
+const HIDDEN_HEADER_LABEL_STYLE = {
   position: 'absolute',
   width: 1,
   height: 1,
@@ -185,10 +201,12 @@ export function Table({
                 key={c.key}
                 scope="col"
                 style={columnLabelsHidden
-                  ? HIDDEN_HEADER_CELL_STYLE
+                  ? hiddenHeaderCellStyle(c.align || 'left', getColumnSizingStyle({ width: c.width, truncate: c.truncate }))
                   : getTableHeaderCellStyle({ size, padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate })}
               >
-                <TableCellContent truncate={c.truncate}>{c.label}</TableCellContent>
+                {columnLabelsHidden
+                  ? <span style={HIDDEN_HEADER_LABEL_STYLE}>{c.label}</span>
+                  : <TableCellContent truncate={c.truncate}>{c.label}</TableCellContent>}
               </th>
             ))}
           </tr>

@@ -1,17 +1,27 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-
-
-var _chunkEQA6DKMLcjs = require('./chunk-EQA6DKML.cjs');
+"use client";
+import {
+  groupThStyle,
+  tdStyle,
+  thStyle
+} from "./chunk-QZSXLFMZ.js";
 
 // components/data/Table.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
 function getColumnSizingStyle({ width, truncate = false }) {
   return truncate ? { width: "100%", maxWidth: 0, overflow: "hidden", textOverflow: "ellipsis" } : { width };
 }
-var HIDDEN_HEADER_CELL_STYLE = {
+var hiddenHeaderCellStyle = (align, sizing) => ({
+  ...sizing,
+  padding: 0,
+  height: 0,
+  lineHeight: 0,
+  fontSize: 0,
+  border: 0,
+  borderBottom: 0,
+  textAlign: align
+});
+var HIDDEN_HEADER_LABEL_STYLE = {
   position: "absolute",
   width: 1,
   height: 1,
@@ -29,14 +39,14 @@ function getTableCellPadding(size = "md") {
   return size === "sm" ? "var(--lk-table-cell-pad-sm, var(--component-table-cell-padding-sm, 6px 12px))" : "var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 8px 16px))";
 }
 function getTableHeaderCellStyle({ size = "md", padding, align = "left", width, truncate = false } = {}) {
-  return { ..._chunkEQA6DKMLcjs.thStyle.call(void 0, _nullishCoalesce(padding, () => ( getTableCellPadding(size))), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+  return { ...thStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 function getTableDataCellStyle({ size = "md", padding, align = "left", width, truncate = false } = {}) {
-  return { ..._chunkEQA6DKMLcjs.tdStyle.call(void 0, _nullishCoalesce(padding, () => ( getTableCellPadding(size))), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+  return { ...tdStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 function TableCellContent({ truncate, children }) {
   if (!truncate) return children;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ jsx(
     "span",
     {
       "data-slot": "truncated-content",
@@ -46,8 +56,8 @@ function TableCellContent({ truncate, children }) {
   );
 }
 function TableRow({ columns, row, rowIndex, size, pad, hover, banded, rowHeaderKey, getRowProps }) {
-  const [h, setH] = _react2.default.useState(false);
-  const rowProps = _nullishCoalesce(_optionalChain([getRowProps, 'optionalCall', _ => _(row, rowIndex)]), () => ( {}));
+  const [h, setH] = React.useState(false);
+  const rowProps = getRowProps?.(row, rowIndex) ?? {};
   const {
     className,
     style,
@@ -57,7 +67,7 @@ function TableRow({ columns, row, rowIndex, size, pad, hover, banded, rowHeaderK
   } = rowProps;
   const restBackground = banded ? "var(--color-semantic-fill-alternative)" : "transparent";
   const hoverBackground = banded ? "var(--color-semantic-fill-normal)" : "var(--color-semantic-fill-alternative)";
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ jsx(
     "tr",
     {
       ...restRowProps,
@@ -65,21 +75,21 @@ function TableRow({ columns, row, rowIndex, size, pad, hover, banded, rowHeaderK
       "data-banded": banded || void 0,
       onMouseEnter: (event) => {
         setH(true);
-        _optionalChain([onMouseEnter, 'optionalCall', _2 => _2(event)]);
+        onMouseEnter?.(event);
       },
       onMouseLeave: (event) => {
         setH(false);
-        _optionalChain([onMouseLeave, 'optionalCall', _3 => _3(event)]);
+        onMouseLeave?.(event);
       },
       style: { background: hover && h ? hoverBackground : restBackground, transition: "background var(--dur-fast) var(--ease-out)", ...style },
       children: columns.map((c) => {
         const content = typeof c.render === "function" ? c.render(row) : row[c.key];
         const cellStyle = getTableDataCellStyle({ size, padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate });
-        const cellContent = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, TableCellContent, { truncate: c.truncate, children: content });
+        const cellContent = /* @__PURE__ */ jsx(TableCellContent, { truncate: c.truncate, children: content });
         if (rowHeaderKey != null && c.key === rowHeaderKey) {
-          return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "th", { scope: "row", style: { ...cellStyle, fontWeight: "inherit" }, children: cellContent }, c.key);
+          return /* @__PURE__ */ jsx("th", { scope: "row", style: { ...cellStyle, fontWeight: "inherit" }, children: cellContent }, c.key);
         }
-        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "td", { style: cellStyle, children: cellContent }, c.key);
+        return /* @__PURE__ */ jsx("td", { style: cellStyle, children: cellContent }, c.key);
       })
     }
   );
@@ -104,7 +114,7 @@ function Table({
 }) {
   const pad = getTableCellPadding(size);
   const nameFromAria = caption == null;
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ jsx(
     "div",
     {
       ...rest,
@@ -112,14 +122,14 @@ function Table({
       "data-scrollbar": "auto",
       "data-scroll-gutter": "auto",
       style: { overflowX: "auto", scrollbarGutter: "auto", ...style },
-      children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+      children: /* @__PURE__ */ jsxs(
         "table",
         {
           "aria-label": nameFromAria ? tableLabel : void 0,
           "aria-labelledby": nameFromAria ? tableLabelledBy : void 0,
           style: { width: "100%", borderCollapse: "collapse", fontFamily: "var(--font-sans)" },
           children: [
-            caption != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            caption != null && /* @__PURE__ */ jsx(
               "caption",
               {
                 style: {
@@ -134,19 +144,19 @@ function Table({
                 children: caption
               }
             ),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "thead", { "data-column-labels": columnLabelsHidden ? "hidden" : void 0, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tr", { children: columns.map((c) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            /* @__PURE__ */ jsx("thead", { "data-column-labels": columnLabelsHidden ? "hidden" : void 0, children: /* @__PURE__ */ jsx("tr", { children: columns.map((c) => /* @__PURE__ */ jsx(
               "th",
               {
                 scope: "col",
-                style: columnLabelsHidden ? HIDDEN_HEADER_CELL_STYLE : getTableHeaderCellStyle({ size, padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate }),
-                children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, TableCellContent, { truncate: c.truncate, children: c.label })
+                style: columnLabelsHidden ? hiddenHeaderCellStyle(c.align || "left", getColumnSizingStyle({ width: c.width, truncate: c.truncate })) : getTableHeaderCellStyle({ size, padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate }),
+                children: columnLabelsHidden ? /* @__PURE__ */ jsx("span", { style: HIDDEN_HEADER_LABEL_STYLE, children: c.label }) : /* @__PURE__ */ jsx(TableCellContent, { truncate: c.truncate, children: c.label })
               },
               c.key
             )) }) }),
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tbody", { children: rows.map((r, ri) => {
-              const group = groupKey == null ? void 0 : _optionalChain([r, 'optionalAccess', _4 => _4[groupKey]]);
-              const opensGroup = group != null && group !== (groupKey == null ? void 0 : _optionalChain([rows, 'access', _5 => _5[ri - 1], 'optionalAccess', _6 => _6[groupKey]]));
-              const row = /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            /* @__PURE__ */ jsx("tbody", { children: rows.map((r, ri) => {
+              const group = groupKey == null ? void 0 : r?.[groupKey];
+              const opensGroup = group != null && group !== (groupKey == null ? void 0 : rows[ri - 1]?.[groupKey]);
+              const row = /* @__PURE__ */ jsx(
                 TableRow,
                 {
                   columns,
@@ -159,11 +169,11 @@ function Table({
                   rowHeaderKey,
                   getRowProps
                 },
-                getRowId ? getRowId(r, ri) : _nullishCoalesce(_optionalChain([r, 'optionalAccess', _7 => _7.id]), () => ( ri))
+                getRowId ? getRowId(r, ri) : r?.id ?? ri
               );
               if (!opensGroup) return row;
-              return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tr", { "data-table-group": true, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "th", { scope: "colgroup", colSpan: columns.length, style: _chunkEQA6DKMLcjs.groupThStyle.call(void 0, pad), children: group }) }),
+              return /* @__PURE__ */ jsxs(React.Fragment, { children: [
+                /* @__PURE__ */ jsx("tr", { "data-table-group": true, children: /* @__PURE__ */ jsx("th", { scope: "colgroup", colSpan: columns.length, style: groupThStyle(pad), children: group }) }),
                 row
               ] }, `group-${group}-${ri}`);
             }) })
@@ -174,9 +184,9 @@ function Table({
   );
 }
 
-
-
-
-
-exports.getTableHeaderCellStyle = getTableHeaderCellStyle; exports.getTableDataCellStyle = getTableDataCellStyle; exports.Table = Table;
-//# sourceMappingURL=chunk-PMPTBRLB.cjs.map
+export {
+  getTableHeaderCellStyle,
+  getTableDataCellStyle,
+  Table
+};
+//# sourceMappingURL=chunk-BAOIXDMQ.js.map

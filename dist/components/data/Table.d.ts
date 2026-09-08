@@ -30,8 +30,8 @@ export interface TableProps<Row extends Record<string, unknown> = Record<string,
    * 열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼
    * 각 행이 자기 열을 스스로 말하는 표에서 `항목 | 값` 머리줄이 같은 사실을
    * 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. `<th scope="col">`은 그대로
-   * 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서
-   * 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false
+   * 남아 열 이름과 열 폭을 모두 유지하며, 감추는 것은 라벨과 밴드뿐입니다.
+   * @default false
    */
   columnLabelsHidden?: boolean;
   /** 표 위에 보이는 `<caption>`. 표의 접근 가능한 이름이 됩니다. */

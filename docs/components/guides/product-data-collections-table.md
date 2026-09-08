@@ -27,7 +27,7 @@
 
 | Part | Contract |
 | --- | --- |
-| columnLabelsHidden | 열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false |
+| columnLabelsHidden | 열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름과 열 폭을 모두 유지하며, 감추는 것은 라벨과 밴드뿐입니다. |
 | caption | 표 위에 보이는 . 표의 접근 가능한 이름이 됩니다. |
 | tableLabel | 보이는 캡션이 없을 때 에 붙는 aria-label. |
 | tableLabelledBy | 표 밖의 제목 요소 id. 보이는 캡션이 없을 때 의 aria-labelledby가 됩니다. |
@@ -42,7 +42,7 @@
 | `size` | `'sm' \| 'md'` | No | 행 밀도. @default "md" |
 | `hover` | `boolean` | No | 행 호버 워시. @default true |
 | `banded` | `boolean` | No | 모든 데이터 행에 가장 조용한 fill 밴드를 깝니다. 라벨과 측정값 사이가 먼 넓은 표에서 헤어라인 대신 밴드가 행의 시선을 잇습니다. 교차(지브라)가 아니라 전 행 밴드입니다 — 행이 적을 때 줄무늬는 강조로 오독됩니다. |
-| `columnLabelsHidden` | `boolean` | No | 열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false |
+| `columnLabelsHidden` | `boolean` | No | 열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름과 열 폭을 모두 유지하며, 감추는 것은 라벨과 밴드뿐입니다. |
 | `caption` | `React.ReactNode` | No | 표 위에 보이는 . 표의 접근 가능한 이름이 됩니다. |
 | `tableLabel` | `string` | No | 보이는 캡션이 없을 때 에 붙는 aria-label. |
 | `tableLabelledBy` | `string` | No | 표 밖의 제목 요소 id. 보이는 캡션이 없을 때 의 aria-labelledby가 됩니다. |
@@ -55,7 +55,7 @@
 
 | State | Contract |
 | --- | --- |
-| columnLabelsHidden | 열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false |
+| columnLabelsHidden | 열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름과 열 폭을 모두 유지하며, 감추는 것은 라벨과 밴드뿐입니다. |
 
 ## Behavior and interaction
 
@@ -72,7 +72,7 @@
 | 명시 규칙 1 | A custom render tree is still constrained by the cell, but nested flex or grid layouts must provide their own minWidth: 0 and overflow behavior. |
 | 명시 규칙 2 | 결측 값은 공백이나 0으로 위장하지 말고 render에서 보이는 —와 스크린리더용 값 없음을 함께 제공합니다. 로딩·오류는 셀 placeholder가 아니라 표의 resource state로 분리합니다. |
 | 명시 규칙 3 | caption이 있으면 tableLabel과 tableLabelledBy는 무시됩니다. 보이는 캡션을 ARIA 이름으로 덮어쓰면 이름과 보이는 텍스트가 어긋나기 때문입니다(WCAG 2.5.3). |
-| 명시 규칙 4 | columnLabelsHidden — 열 라벨 밴드를 보조기술에만 남기고 감춥니다. 항목·값 표는 각 행의 첫 칸이 곧 열 이름이라 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 씁니다. 과 scope="row"는 그대로라 표의 의미는 같고, 감춘 머리 셀은 레이아웃에서 빠지므로 이 표는 columns의 width로 열 폭을 스스로 정합니다. 여러 레코드를 비교하는 목록 표에서는 쓰지 마세요 — 그 표의 열 이름은 데이터에 없습니다. |
+| 명시 규칙 4 | columnLabelsHidden — 열 라벨 밴드를 보조기술에만 남기고 감춥니다. 항목·값 표는 각 행의 첫 칸이 곧 열 이름이라 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 씁니다. 감추는 것은 셀이 아니라 라벨입니다. 은 자기 자리와 columns의 width를 그대로 들고 패딩·높이·괘선만 잃고, 라벨만 clip된 안으로 들어갑니다. |
 | --color-semantic-fill-alternative | light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12) |
 
 ## Responsive

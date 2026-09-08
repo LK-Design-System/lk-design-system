@@ -11,8 +11,8 @@ needed; no existing default changes.
 
 - `Table` gained `columnLabelsHidden` (default `false`). It keeps `<th scope="col">` for assistive
   technology while removing the visible column band, for property tables ("항목 | 값") whose every row
-  already states its own columns. The hidden header cells leave the table layout, so a table that hides
-  its labels states its own column widths.
+  already states its own columns. The cell keeps its place and its declared width and loses only its
+  padding, height and rule; the label itself moves into a clipped `<span>`.
 - `DataCollectionPanel` gained `compactBelow` (`md | sm`, default `md`). It selects the container width at
   which `layout="auto"` swaps wide content for `compactContent`: `md` keeps today's 767px phone-width
   boundary, `sm` lowers it to 559px. The boundary reads the panel's CONTAINER, so a desktop shell with a

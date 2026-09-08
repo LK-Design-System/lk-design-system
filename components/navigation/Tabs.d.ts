@@ -4,6 +4,7 @@ import type { LdsClassNames, LdsStyles, LdsVars } from '../internal/surface.js';
 export type TabsPart = 'root' | 'tab' | 'label' | 'count' | 'trailing' | 'indicator';
 export type TabsVariable =
   | '--lds-tabs-gap'
+  | '--lds-tabs-min-tab-width'
   | '--lds-tabs-height'
   | '--lds-tabs-padding-inline'
   | '--lds-tabs-indicator-height';

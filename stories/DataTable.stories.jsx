@@ -380,6 +380,7 @@ export const PropertyTableWithoutColumnBand = {
   ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 720, minWidth: 0 }}>
+      {/* 두 표는 같은 폭·같은 열이라 열 폭을 그대로 비교할 수 있다. */}
       <section data-testid="property-labels-visible" style={{ display: 'grid', gap: 'var(--space-2)' }}>
         <h2 id="property-visible-title" style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>열 라벨을 보이는 기본형</h2>
         <Table
@@ -417,6 +418,22 @@ export const PropertyTableWithoutColumnBand = {
       || hiddenHeaders.some((header) => header.getAttribute('scope') !== 'col')
       || hiddenHeaders.map((header) => header.textContent.trim()).join('/') !== propertyColumns.map((column) => column.label).join('/')) {
       throw new Error('감춘 열 라벨도 <th scope="col">과 이름을 유지해야 합니다.');
+    }
+
+    /* 감추는 것은 셀이 아니라 라벨이다. 셀이 표 밖으로 나가면 `table-layout:
+       fixed`에서 선언한 열 폭이 무너지므로, 머리 셀은 표 안에 남아야 한다. */
+    if (hiddenHeaders.some((header) => getComputedStyle(header).display !== 'table-cell')) {
+      throw new Error('감춘 열 라벨의 머리 셀은 표의 셀로 남아야 합니다.');
+    }
+    if (hiddenHeaders.some((header) => header.offsetParent === document.body)) {
+      throw new Error('머리 셀이 표 상자 밖으로 나가면 안 됩니다.');
+    }
+    const firstRowWidths = (table) => [...table.querySelector('tbody tr').children]
+      .map((cell) => Math.round(cell.getBoundingClientRect().width));
+    const hiddenWidths = firstRowWidths(hidden);
+    const visibleWidths = firstRowWidths(visible);
+    if (hiddenWidths.some((width, index) => Math.abs(width - visibleWidths[index]) > 1)) {
+      throw new Error(`열 폭은 두 형태가 같아야 합니다(현재 ${hiddenWidths.join('/')} vs ${visibleWidths.join('/')}).`);
     }
 
     const headBand = (table) => Math.round(table.querySelector('thead').getBoundingClientRect().height);

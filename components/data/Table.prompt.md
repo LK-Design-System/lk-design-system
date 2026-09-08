@@ -84,7 +84,7 @@ Reference: [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns
 
 ## Banded rows (`banded`) — 넓은 표의 행 결속
 
-- **columnLabelsHidden** — 열 라벨 밴드를 보조기술에만 남기고 감춥니다. 항목·값 표는 각 행의 첫 칸이 곧 열 이름이라 `항목 | 값` 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 씁니다. `<th scope="col">`과 `scope="row"`는 그대로라 표의 의미는 같고, 감춘 머리 셀은 레이아웃에서 빠지므로 이 표는 `columns`의 `width`로 열 폭을 스스로 정합니다. 여러 레코드를 비교하는 목록 표에서는 쓰지 마세요 — 그 표의 열 이름은 데이터에 없습니다.
+- **columnLabelsHidden** — 열 라벨 밴드를 보조기술에만 남기고 감춥니다. 항목·값 표는 각 행의 첫 칸이 곧 열 이름이라 `항목 | 값` 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 씁니다. 감추는 것은 **셀이 아니라 라벨**입니다. `<th scope="col">`은 자기 자리와 `columns`의 `width`를 그대로 들고 패딩·높이·괘선만 잃고, 라벨만 clip된 `<span>` 안으로 들어갑니다. 셀 자체를 `position: absolute`로 감추면 표 상자 밖으로 나가고(CSS 2.1 §9.7), `table-layout: fixed`에서는 머리줄이 열 폭을 정하는 유일한 행이라 선언한 폭이 조용히 균등 분할로 무너집니다. 여러 레코드를 비교하는 목록 표에서는 쓰지 마세요 — 그 표의 열 이름은 데이터에 없습니다.
 - **banded** — 모든 데이터 행에 `--color-semantic-fill-alternative` 밴드를 깝니다. 라벨 열과 측정 열 사이가 먼 넓은 표에서 헤어라인만으로는 행의 시선이 이어지지 않을 때 쓰세요. 호버 워시는 밴드 위에서 한 단 위 fill(`fill-normal`)로 올라가 여전히 보입니다.
 - **교차(지브라)가 아니라 전 행 밴드입니다.** 행이 적은 표에서 교차 줄무늬는 특정 행의 강조로 오독됩니다 — 강조는 상태 표현(배지·톤)의 몫이고 기하의 몫이 아닙니다. 이 판정은 투영 매체(Slides)에서 실측으로 확정됐습니다(`docs/TABLE_MEDIUM_CONTRACT_PROPOSAL.md`).
 - 외부 근거: [Carbon Data table](https://carbondesignsystem.com/components/data-table/usage/)의 zebra 옵션 — "행을 따라가는 시선이 옆 행으로 이탈하는 것을 막는" 넓은 표 장치이며, Carbon은 줄무늬를 끄면 행 구분선을 요구합니다(LDS 기본형이 그 형태). [USWDS Table](https://designsystem.digital.gov/components/table/)의 striped 변형도 같은 계열입니다. LDS는 두 시스템의 교차 줄무늬 대신 전 행 밴드를 채택합니다(강조 오독 근거는 위).
