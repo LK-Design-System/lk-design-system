@@ -153,7 +153,13 @@ export const Tabs = React.forwardRef(function Tabs({
             onKeyDown={(event) => move(event, item)}
             style={{
               flex: fill ? 1 : "0 0 auto",
-              minWidth: 0,
+              // A tab is a pointer target, so it never gets narrower than the
+              // WCAG 2.2 target minimum even when its label is one character
+              // wide (`팀`, `All`). The tabs carry zero inline padding by
+              // design, so without this floor a single-glyph label left a 13px
+              // hit area. Every longer label is already wider, so this changes
+              // no existing layout.
+              minWidth: 'var(--lds-tabs-min-tab-width, 24px)',
               position: "relative",
               height: `var(--lds-tabs-height, ${s.height}px)`,
               padding: 0,

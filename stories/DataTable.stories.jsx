@@ -54,6 +54,18 @@ const columns = [
 // 그룹 헤더가 구간을 말하므로 그룹 열은 같은 사실을 두 번 적는 셈이다.
 const columnsWithoutGroup = columns.filter((column) => column.key !== 'group');
 
+/* 한 레코드의 사양을 읽는 표. 첫 칸이 항목 이름이므로 행 헤더가 된다. */
+const propertyColumns = [
+  { key: 'property', label: '항목', width: '34%' },
+  { key: 'value', label: '값' },
+];
+
+const propertyRows = [
+  { id: 'kind', property: '장치 유형', value: 'jetson' },
+  { id: 'role', property: '운영 구분', value: '운영 컴퓨팅' },
+  { id: 'updated', property: '마지막 변경', value: '2026-09-05 09:17' },
+];
+
 export const StaticTable = {
   name: '개요',
   parameters: storyDescription(
@@ -354,6 +366,74 @@ export const FlexibleTruncationContract = {
     }
     if (surface.scrollWidth > surface.clientWidth + 1) {
       throw new Error('A single truncate column must not push the Table beyond its available width.');
+    }
+  },
+};
+
+/* 항목·값 표는 첫 칸이 곧 열 이름이라 `항목 | 값` 머리줄이 같은 사실을 한 번 더
+   적는다. `columnLabelsHidden`은 그 밴드만 감추고 `<th scope="col">`은 남겨,
+   화면에서는 44px 크롬이 사라지고 보조기술에서는 열 이름이 그대로 남는다. */
+export const PropertyTableWithoutColumnBand = {
+  name: '변형·상태 · 열 라벨을 감춘 항목·값 표',
+  parameters: storyDescription(
+    '레코드 하나의 항목과 값을 읽는 상세 화면 표입니다. 각 행의 첫 칸이 곧 열 이름이므로 열 라벨 밴드를 감추고, 열 이름은 보조기술에만 남깁니다. 여러 레코드를 비교하는 목록 표에는 쓰지 않습니다.',
+  ),
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-6)', width: '100%', maxWidth: 720, minWidth: 0 }}>
+      <section data-testid="property-labels-visible" style={{ display: 'grid', gap: 'var(--space-2)' }}>
+        <h2 id="property-visible-title" style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>열 라벨을 보이는 기본형</h2>
+        <Table
+          size="sm"
+          rowHeaderKey="property"
+          tableLabelledBy="property-visible-title"
+          columns={propertyColumns}
+          rows={propertyRows}
+        />
+      </section>
+      <section data-testid="property-labels-hidden" style={{ display: 'grid', gap: 'var(--space-2)' }}>
+        <h2 id="property-hidden-title" style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>열 라벨을 감춘 항목·값 표</h2>
+        <Table
+          size="sm"
+          columnLabelsHidden
+          rowHeaderKey="property"
+          tableLabelledBy="property-hidden-title"
+          columns={propertyColumns}
+          rows={propertyRows}
+        />
+      </section>
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const tableOf = (testId) => canvasElement.querySelector(`[data-testid="${testId}"] table`);
+    const visible = tableOf('property-labels-visible');
+    const hidden = tableOf('property-labels-hidden');
+    if (!visible || !hidden) {
+      throw new Error('두 표가 모두 렌더링되어야 비교가 성립합니다.');
+    }
+
+    /* 감춘 것은 밴드뿐이다. 열 이름은 접근성 트리에 그대로 남는다. */
+    const hiddenHeaders = [...hidden.querySelectorAll('thead th')];
+    if (hiddenHeaders.length !== propertyColumns.length
+      || hiddenHeaders.some((header) => header.getAttribute('scope') !== 'col')
+      || hiddenHeaders.map((header) => header.textContent.trim()).join('/') !== propertyColumns.map((column) => column.label).join('/')) {
+      throw new Error('감춘 열 라벨도 <th scope="col">과 이름을 유지해야 합니다.');
+    }
+
+    const headBand = (table) => Math.round(table.querySelector('thead').getBoundingClientRect().height);
+    if (headBand(hidden) !== 0) {
+      throw new Error(`감춘 열 라벨은 높이를 차지하지 않아야 합니다(현재 ${headBand(hidden)}px).`);
+    }
+    if (headBand(visible) < 40) {
+      throw new Error('기본형은 열 라벨 밴드를 그대로 유지해야 합니다.');
+    }
+
+    /* 행 자체의 계약(행 헤더, 행 높이)은 두 형태가 같다. */
+    const rowHeight = (table) => Math.round(table.querySelector('tbody tr').getBoundingClientRect().height);
+    if (rowHeight(hidden) !== rowHeight(visible)) {
+      throw new Error(`행 높이는 두 형태가 같아야 합니다(현재 ${rowHeight(hidden)}/${rowHeight(visible)}).`);
+    }
+    if (hidden.querySelectorAll('tbody th[scope="row"]').length !== propertyRows.length) {
+      throw new Error('행 헤더 계약은 열 라벨을 감춰도 유지되어야 합니다.');
     }
   },
 };

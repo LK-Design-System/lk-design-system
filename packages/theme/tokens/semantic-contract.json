@@ -5,7 +5,7 @@
   "role": "provider",
   "package": {
     "name": "@lk-design-system/lds-theme",
-    "version": "0.2.5"
+    "version": "0.2.6"
   },
   "requiresSemanticContractVersion": "1",
   "providesSemanticContractVersion": "1",

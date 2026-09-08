@@ -20,8 +20,12 @@ var DATA_COLLECTION_PANEL_STYLES = `
 .lk-data-collection-panel[data-layout="narrow"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__wide-content{display:none}
 .lk-data-collection-panel[data-layout="narrow"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__compact-content{display:block}
 @container lds-data-collection-panel (max-width:767px){
-  .lk-data-collection-panel[data-layout="auto"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__wide-content{display:none}
-  .lk-data-collection-panel[data-layout="auto"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__compact-content{display:block}
+  .lk-data-collection-panel[data-layout="auto"][data-compact-below="md"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__wide-content{display:none}
+  .lk-data-collection-panel[data-layout="auto"][data-compact-below="md"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__compact-content{display:block}
+}
+@container lds-data-collection-panel (max-width:559px){
+  .lk-data-collection-panel[data-layout="auto"][data-compact-below="sm"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__wide-content{display:none}
+  .lk-data-collection-panel[data-layout="auto"][data-compact-below="sm"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__compact-content{display:block}
 }
 `;
 var RESOURCE_STATES = /* @__PURE__ */ new Set(["ready", "loading", "refreshing", "empty", "error", "stale", "offline", "restricted"]);
@@ -33,6 +37,7 @@ var DataCollectionPanel = React.forwardRef(function DataCollectionPanel2({
   compactContent,
   footer,
   layout = "auto",
+  compactBelow = "md",
   children,
   className,
   style,
@@ -43,6 +48,7 @@ var DataCollectionPanel = React.forwardRef(function DataCollectionPanel2({
 }, forwardedRef) {
   const Component = as;
   const resolvedLayout = ["auto", "wide", "narrow"].includes(layout) ? layout : "auto";
+  const resolvedCompactBelow = ["md", "sm"].includes(compactBelow) ? compactBelow : "md";
   const hasCompactContent = compactContent != null;
   const resolvedResourceState = resourceState ?? {};
   const hasWideContent = React.Children.toArray(children).length > 0;
@@ -59,6 +65,7 @@ var DataCollectionPanel = React.forwardRef(function DataCollectionPanel2({
       "data-slot": "root",
       "data-lds-data-collection-panel": "",
       "data-layout": resolvedLayout,
+      "data-compact-below": resolvedCompactBelow,
       "data-has-compact-content": hasCompactContent ? "true" : "false",
       "data-state": state,
       className: partClassName(classNames, "root", "lk-data-collection-panel", className) || void 0,
@@ -147,4 +154,4 @@ var DataCollectionPanel = React.forwardRef(function DataCollectionPanel2({
 export {
   DataCollectionPanel
 };
-//# sourceMappingURL=chunk-O5HZR2ZG.js.map
+//# sourceMappingURL=chunk-QPBMXJG6.js.map

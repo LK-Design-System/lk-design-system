@@ -11,6 +11,17 @@ import { jsx, jsxs } from "react/jsx-runtime";
 function getColumnSizingStyle({ width, truncate = false }) {
   return truncate ? { width: "100%", maxWidth: 0, overflow: "hidden", textOverflow: "ellipsis" } : { width };
 }
+var HIDDEN_HEADER_CELL_STYLE = {
+  position: "absolute",
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: "hidden",
+  clipPath: "inset(50%)",
+  whiteSpace: "nowrap",
+  border: 0
+};
 function getTableRowMinHeight(size = "md") {
   return size === "sm" ? "var(--lk-table-row-min-height-sm, var(--component-table-row-min-height-sm, 44px))" : "var(--lk-table-row-min-height-md, var(--component-table-row-min-height-md, 52px))";
 }
@@ -79,6 +90,7 @@ function Table({
   size = "md",
   hover = true,
   banded = false,
+  columnLabelsHidden = false,
   caption,
   tableLabel,
   tableLabelledBy,
@@ -122,7 +134,15 @@ function Table({
                 children: caption
               }
             ),
-            /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsx("tr", { children: columns.map((c) => /* @__PURE__ */ jsx("th", { scope: "col", style: getTableHeaderCellStyle({ size, padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate }), children: /* @__PURE__ */ jsx(TableCellContent, { truncate: c.truncate, children: c.label }) }, c.key)) }) }),
+            /* @__PURE__ */ jsx("thead", { "data-column-labels": columnLabelsHidden ? "hidden" : void 0, children: /* @__PURE__ */ jsx("tr", { children: columns.map((c) => /* @__PURE__ */ jsx(
+              "th",
+              {
+                scope: "col",
+                style: columnLabelsHidden ? HIDDEN_HEADER_CELL_STYLE : getTableHeaderCellStyle({ size, padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate }),
+                children: /* @__PURE__ */ jsx(TableCellContent, { truncate: c.truncate, children: c.label })
+              },
+              c.key
+            )) }) }),
             /* @__PURE__ */ jsx("tbody", { children: rows.map((r, ri) => {
               const group = groupKey == null ? void 0 : r?.[groupKey];
               const opensGroup = group != null && group !== (groupKey == null ? void 0 : rows[ri - 1]?.[groupKey]);
@@ -159,4 +179,4 @@ export {
   getTableDataCellStyle,
   Table
 };
-//# sourceMappingURL=chunk-XBUPJWBN.js.map
+//# sourceMappingURL=chunk-UYFTGBEZ.js.map

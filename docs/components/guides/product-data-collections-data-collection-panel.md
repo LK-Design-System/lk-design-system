@@ -41,7 +41,8 @@
 | `children` | `React.ReactNode` | No | Wide/default collection content, commonly Table or DataGrid. |
 | `compactContent` | `React.ReactNode` | No | Product-authored semantic narrow representation. Omit to preserve the wide content and its own overflow behavior. |
 | `footer` | `React.ReactNode` | No | Footer content, commonly Pagination. Omit it when navigation is unnecessary; an adapter that renders null leaves no visible footer strip. |
-| `layout` | `'auto' \| 'wide' \| 'narrow'` | No | Responsive content policy. auto switches at a 767px container width only when compactContent exists. @default "auto" |
+| `layout` | `'auto' \| 'wide' \| 'narrow'` | No | Responsive content policy. auto switches at the compactBelow container width only when compactContent exists. @default "auto" |
+| `compactBelow` | `'md' \| 'sm'` | No | auto가 좁은 본문으로 넘어가는 컨테이너 폭. md는 767px, sm은 559px입니다. 넓은 본문이 전화기 폭 기준보다 좁은 폭에서도 읽히는 표라면 sm을 쓰세요 — 셸 탐색이 폭을 가져가 컨테이너만 좁아진 데스크톱에서 좁은 화면용 목록으로 떨어지는 것을 막습니다. layout이 wide/narrow면 무시됩니다. @default "md" |
 | `classNames` | `LdsClassNames` | No |  |
 | `styles` | `LdsStyles` | No |  |
 | `vars` | `LdsVars` | No |  |
@@ -63,7 +64,8 @@
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | layout="auto"는 패널 컨테이너가 767px 이하이고 compactContent가 있을 때만 넓은 본문을 숨기고 좁은 본문을 표시합니다. |
+| 명시 규칙 1 | layout="auto"는 패널 컨테이너가 compactBelow 폭 이하이고 compactContent가 있을 때만 넓은 본문을 숨기고 좁은 본문을 표시합니다. |
+| 명시 규칙 2 | compactBelow는 그 전환 폭입니다. 기본 md(767px)는 전화기 폭을 기준으로 삼습니다. sm(559px)은 넓은 본문이 그보다 좁은 폭에서도 읽히는 표일 때 쓰며, 판단 기준은 뷰포트가 아니라 컨테이너라는 점입니다 — 224px 셸 탐색이 있는 1024px 데스크톱의 패널 컨테이너는 750px대라 md에서는 전화기와 같은 취급을 받습니다. 열이 많아 그 폭에서 실제로 읽히지 않는 표는 기본값을 유지하세요. 전환 폭은 컨테이너 질의의 조건이라 임의 값이 아닌 두 단계입니다. |
 | --color-semantic-line-normal-normal | light: rgba(112, 115, 124, 0.22); dark: rgba(112, 115, 124, 0.32) |
 | --space-3 | 12px |
 | --space-4 | 16px |

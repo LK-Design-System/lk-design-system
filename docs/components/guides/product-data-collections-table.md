@@ -21,12 +21,13 @@
 - getRowId — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 row.id, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.
 - 외부 근거: Carbon Data table의 zebra 옵션 — "행을 따라가는 시선이 옆 행으로 이탈하는 것을 막는" 넓은 표 장치이며, Carbon은 줄무늬를 끄면 행 구분선을 요구합니다(LDS 기본형이 그 형태). USWDS Table의 striped 변형도 같은 계열입니다. LDS는 두 시스템의 교차 줄무늬 대신 전 행 밴드를 채택합니다(강조 오독 근거는 위).
 - Header and body cells use font-variant-numeric: tabular-nums so values do not jitter between rows. Set align: 'right' on comparable numeric columns; nominal identifiers such as postal codes or equipment IDs remain left aligned.
-- size는 셀 패딩과 함께 행 높이도 선택합니다. 행 높이는 --lk-table-row-min-height-sm/md 매체 훅 → --component-table-row-min-height-sm/md profile token(default 44px/52px, ops 40px/48px) → 리터럴 44px/52px 순서로 해석되며, 셀에 height로 적용됩니다.
+- The CSS Table Module Level 3 explains why cell min-content widths participate in a table's intrinsic width. The contract therefore constrains both header and body cells, rather than styling only the header.
 
 ## Anatomy
 
 | Part | Contract |
 | --- | --- |
+| columnLabelsHidden | 열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false |
 | caption | 표 위에 보이는 . 표의 접근 가능한 이름이 됩니다. |
 | tableLabel | 보이는 캡션이 없을 때 에 붙는 aria-label. |
 | tableLabelledBy | 표 밖의 제목 요소 id. 보이는 캡션이 없을 때 의 aria-labelledby가 됩니다. |
@@ -41,6 +42,7 @@
 | `size` | `'sm' \| 'md'` | No | 행 밀도. @default "md" |
 | `hover` | `boolean` | No | 행 호버 워시. @default true |
 | `banded` | `boolean` | No | 모든 데이터 행에 가장 조용한 fill 밴드를 깝니다. 라벨과 측정값 사이가 먼 넓은 표에서 헤어라인 대신 밴드가 행의 시선을 잇습니다. 교차(지브라)가 아니라 전 행 밴드입니다 — 행이 적을 때 줄무늬는 강조로 오독됩니다. |
+| `columnLabelsHidden` | `boolean` | No | 열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false |
 | `caption` | `React.ReactNode` | No | 표 위에 보이는 . 표의 접근 가능한 이름이 됩니다. |
 | `tableLabel` | `string` | No | 보이는 캡션이 없을 때 에 붙는 aria-label. |
 | `tableLabelledBy` | `string` | No | 표 밖의 제목 요소 id. 보이는 캡션이 없을 때 의 aria-labelledby가 됩니다. |
@@ -48,6 +50,12 @@
 | `groupKey` | `keyof Row & string` | No | 행을 묶는 필드 key. 같은 값의 연속 구간마다 표 전체를 가로지르는 그룹 헤더가 한 번 열립니다. 흩어진 같은 값은 모으지 않고 두 번째 구간을 엽니다 — 호출자의 행 순서가 곧 보고의 순서이기 때문입니다. 그룹 행은 밴드를 입지 않습니다. |
 | `getRowId` | `(row: Row, index: number) = React.Key` | No | React key로 쓸 안정적인 행 식별자. 생략하면 row.id, 그다음 배열 index를 씁니다. |
 | `getRowProps` | `(row: Row, index: number) = React.HTMLAttributes` | No | 행별 className, style, data attribute와 이벤트를 에 전달합니다. |
+
+## States
+
+| State | Contract |
+| --- | --- |
+| columnLabelsHidden | 열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false |
 
 ## Behavior and interaction
 
@@ -64,7 +72,7 @@
 | 명시 규칙 1 | A custom render tree is still constrained by the cell, but nested flex or grid layouts must provide their own minWidth: 0 and overflow behavior. |
 | 명시 규칙 2 | 결측 값은 공백이나 0으로 위장하지 말고 render에서 보이는 —와 스크린리더용 값 없음을 함께 제공합니다. 로딩·오류는 셀 placeholder가 아니라 표의 resource state로 분리합니다. |
 | 명시 규칙 3 | caption이 있으면 tableLabel과 tableLabelledBy는 무시됩니다. 보이는 캡션을 ARIA 이름으로 덮어쓰면 이름과 보이는 텍스트가 어긋나기 때문입니다(WCAG 2.5.3). |
-| 명시 규칙 4 | The CSS Table Module Level 3 explains why cell min-content widths participate in a table's intrinsic width. The contract therefore constrains both header and body cells, rather than styling only the header. |
+| 명시 규칙 4 | columnLabelsHidden — 열 라벨 밴드를 보조기술에만 남기고 감춥니다. 항목·값 표는 각 행의 첫 칸이 곧 열 이름이라 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 씁니다. 과 scope="row"는 그대로라 표의 의미는 같고, 감춘 머리 셀은 레이아웃에서 빠지므로 이 표는 columns의 width로 열 폭을 스스로 정합니다. 여러 레코드를 비교하는 목록 표에서는 쓰지 마세요 — 그 표의 열 이름은 데이터에 없습니다. |
 | --color-semantic-fill-alternative | light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12) |
 
 ## Responsive

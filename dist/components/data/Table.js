@@ -3,7 +3,7 @@ import {
   Table,
   getTableDataCellStyle,
   getTableHeaderCellStyle
-} from "../../chunk-XBUPJWBN.js";
+} from "../../chunk-UYFTGBEZ.js";
 import "../../chunk-QZSXLFMZ.js";
 export {
   Table,

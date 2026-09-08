@@ -7,6 +7,24 @@ function getColumnSizingStyle({ width, truncate = false }) {
     : { width };
 }
 
+/* `columnLabelsHidden` keeps `<th scope="col">` for assistive technology while
+ * removing the visible header band. A property table ("항목 | 값") states its
+ * columns in the data itself, so the visible band repeats what every row
+ * already shows and costs a 44px row of chrome. The cells leave the table's
+ * layout entirely, so a table that hides its labels states its own column
+ * widths. */
+const HIDDEN_HEADER_CELL_STYLE = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: 'hidden',
+  clipPath: 'inset(50%)',
+  whiteSpace: 'nowrap',
+  border: 0,
+};
+
 function getTableRowMinHeight(size = 'md') {
   return size === 'sm'
     ? 'var(--lk-table-row-min-height-sm, var(--component-table-row-min-height-sm, 44px))'
@@ -113,6 +131,7 @@ export function Table({
   size = 'md',
   hover = true,
   banded = false,
+  columnLabelsHidden = false,
   caption,
   tableLabel,
   tableLabelledBy,
@@ -159,10 +178,16 @@ export function Table({
             {caption}
           </caption>
         )}
-        <thead>
+        <thead data-column-labels={columnLabelsHidden ? 'hidden' : undefined}>
           <tr>
             {columns.map((c) => (
-              <th key={c.key} scope="col" style={getTableHeaderCellStyle({ size, padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate })}>
+              <th
+                key={c.key}
+                scope="col"
+                style={columnLabelsHidden
+                  ? HIDDEN_HEADER_CELL_STYLE
+                  : getTableHeaderCellStyle({ size, padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate })}
+              >
                 <TableCellContent truncate={c.truncate}>{c.label}</TableCellContent>
               </th>
             ))}

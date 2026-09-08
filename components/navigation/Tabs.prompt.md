@@ -8,6 +8,7 @@
 ## Public surface and ref
 
 - `ref`, `className`, and `style` target the `tablist` root.
+- 탭은 가로 패딩이 0이지만 포인터 타깃이므로 폭은 `--lds-tabs-min-tab-width`(기본 24px) 아래로 내려가지 않습니다. `팀`처럼 한 글자 라벨이 13px 히트 영역이 되는 것을 막는 바닥값이며([WCAG 2.2 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)), 그보다 넓은 기존 라벨의 레이아웃은 바뀌지 않습니다.
 - Stable parts are `root`, `tab`, `label`, `count`, `trailing`, and `indicator`; tabs expose `data-state="active|inactive"` and `data-disabled`.
 - Only documented `--lds-tabs-*` geometry variables are accepted. The component owns roving focus and activation; consumers own the corresponding tab panels.
 

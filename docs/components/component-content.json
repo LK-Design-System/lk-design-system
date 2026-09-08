@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "f145aa974ff1a9d7951f9177df6ffad4732090d9abb04ff8f290033a5078dd4c",
+  "sourceFingerprint": "a1f655a51fbcce90477abb4be99125d872ac4b0b006a81a6e2e5199a5f1d41e9",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -9182,7 +9182,14 @@
           "name": "layout",
           "type": "'auto' | 'wide' | 'narrow'",
           "required": false,
-          "description": "Responsive content policy. auto switches at a 767px container width only when compactContent exists. @default \"auto\"",
+          "description": "Responsive content policy. auto switches at the compactBelow container width only when compactContent exists. @default \"auto\"",
+          "owner": "DataCollectionPanelOwnProps"
+        },
+        {
+          "name": "compactBelow",
+          "type": "'md' | 'sm'",
+          "required": false,
+          "description": "auto가 좁은 본문으로 넘어가는 컨테이너 폭. md는 767px, sm은 559px입니다. 넓은 본문이 전화기 폭 기준보다 좁은 폭에서도 읽히는 표라면 sm을 쓰세요 — 셸 탐색이 폭을 가져가 컨테이너만 좁아진 데스크톱에서 좁은 화면용 목록으로 떨어지는 것을 막습니다. layout이 wide/narrow면 무시됩니다. @default \"md\"",
           "owner": "DataCollectionPanelOwnProps"
         },
         {
@@ -9242,7 +9249,7 @@
           "url": "https://www.w3.org/WAI/tutorials/tables/tips/"
         }
       ],
-      "promptSha256": "c6ac51cb8579ce761db0e4dcf7ba7f56dc7cc5f245910291b215e955182428e8"
+      "promptSha256": "c2c8d7224ef4a64ff693f1cfd7575469ca9298ddc9cf3c2c2f802cb3dbe6861e"
     },
     {
       "id": "data-export-action",
@@ -12897,6 +12904,13 @@
           "owner": "TableProps"
         },
         {
+          "name": "columnLabelsHidden",
+          "type": "boolean",
+          "required": false,
+          "description": "열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 | 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false",
+          "owner": "TableProps"
+        },
+        {
           "name": "caption",
           "type": "React.ReactNode",
           "required": false,
@@ -13000,7 +13014,7 @@
           "url": "https://carbondesignsystem.com/components/data-table/style/"
         }
       ],
-      "promptSha256": "7bf3589708021a71074a3beab73b5158db0e4dadbe890563cb57066a1180324a"
+      "promptSha256": "c2751fda144113ad95b0c47f87d39c7ac30b565d852af7e613a6139e2a20f5b7"
     },
     {
       "id": "tree",
@@ -25662,6 +25676,7 @@
         "--color-semantic-line-solid-normal",
         "--color-semantic-focus-indicator",
         "--radius-sm",
+        "--lds-tabs-min-tab-width",
         "--lds-tabs-height",
         "--space-2",
         "--font-sans",
@@ -25675,11 +25690,15 @@
       ],
       "externalReferences": [
         {
+          "label": "WCAG 2.2 Target Size (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
+        },
+        {
           "label": "WAI-ARIA Tabs pattern",
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/"
         }
       ],
-      "promptSha256": "012cfe7863908ed89078d0511cde1cbbac38dc7b13d52ec08ecd91f254458df0"
+      "promptSha256": "07abbcd60b3bb2531061434fc19b89c688734c67491f8322a0c24b7d1cb4ee26"
     },
     {
       "id": "toolbar",
@@ -41534,23 +41553,23 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "WDS axes: resize (hug/fill), size, padding, trailingIconButton, and horizontal scroll. padding={true} preserves the legacy 8px inset; pass a number or CSS length such as padding=\"var(--space-6)\" to align tabs with adjacent card content."
+          "rule": "탭은 가로 패딩이 0이지만 포인터 타깃이므로 폭은 --lds-tabs-min-tab-width(기본 24px) 아래로 내려가지 않습니다. 팀처럼 한 글자 라벨이 13px 히트 영역이 되는 것을 막는 바닥값이며(WCAG 2.2 Target Size (Minimum)), 그보다 넓은 기존 라벨의 레이아웃은 바뀌지 않습니다."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "The 2px active indicator is drawn inside the tab box (bottom: 0). Scrollable tabs suppress cross-axis overflow only after the full indicator is inside, so the tablist cannot create a vertical scrollbar from its own indicator and the indicator is not clipped to 1px."
+          "rule": "WDS axes: resize (hug/fill), size, padding, trailingIconButton, and horizontal scroll. padding={true} preserves the legacy 8px inset; pass a number or CSS length such as padding=\"var(--space-6)\" to align tabs with adjacent card content."
         },
         {
           "subject": "명시 규칙 3",
+          "rule": "The 2px active indicator is drawn inside the tab box (bottom: 0). Scrollable tabs suppress cross-axis overflow only after the full indicator is inside, so the tablist cannot create a vertical scrollbar from its own indicator and the indicator is not clipped to 1px."
+        },
+        {
+          "subject": "명시 규칙 4",
           "rule": "탭↔패널 연결: 각 탭은 useId() 기반 id를 자동으로 가지며, item.tabId로 재정의할 수 있습니다. item.panelId를 넘기면 탭에 aria-controls로 연결됩니다. 소비 측은 패널을 role=\"tabpanel\", id={panelId}, aria-labelledby={탭 id}, tabIndex={0}으로 표시하세요."
         },
         {
           "subject": "--body2-size",
           "rule": "15px"
-        },
-        {
-          "subject": "--color-semantic-focus-indicator",
-          "rule": "light: #2F6FB0; dark: #7FB0DE"
         }
       ],
       "responsive": [
@@ -41601,6 +41620,7 @@
         "--lds-tabs-gap",
         "--lds-tabs-height",
         "--lds-tabs-indicator-height",
+        "--lds-tabs-min-tab-width",
         "--lds-tabs-padding-inline",
         "--radius-sm",
         "--space-2"
@@ -41638,6 +41658,10 @@
         {
           "label": "Storybook implementation evidence",
           "path": "stories/NavigationTabs.stories.jsx"
+        },
+        {
+          "label": "WCAG 2.2 Target Size (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
         },
         {
           "label": "WAI-ARIA Tabs pattern",
@@ -60029,7 +60053,14 @@
           "name": "layout",
           "type": "'auto' | 'wide' | 'narrow'",
           "required": false,
-          "description": "Responsive content policy. auto switches at a 767px container width only when compactContent exists. @default \"auto\"",
+          "description": "Responsive content policy. auto switches at the compactBelow container width only when compactContent exists. @default \"auto\"",
+          "owner": "DataCollectionPanelOwnProps"
+        },
+        {
+          "name": "compactBelow",
+          "type": "'md' | 'sm'",
+          "required": false,
+          "description": "auto가 좁은 본문으로 넘어가는 컨테이너 폭. md는 767px, sm은 559px입니다. 넓은 본문이 전화기 폭 기준보다 좁은 폭에서도 읽히는 표라면 sm을 쓰세요 — 셸 탐색이 폭을 가져가 컨테이너만 좁아진 데스크톱에서 좁은 화면용 목록으로 떨어지는 것을 막습니다. layout이 wide/narrow면 무시됩니다. @default \"md\"",
           "owner": "DataCollectionPanelOwnProps"
         },
         {
@@ -60069,7 +60100,11 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "layout=\"auto\"는 패널 컨테이너가 767px 이하이고 compactContent가 있을 때만 넓은 본문을 숨기고 좁은 본문을 표시합니다."
+          "rule": "layout=\"auto\"는 패널 컨테이너가 compactBelow 폭 이하이고 compactContent가 있을 때만 넓은 본문을 숨기고 좁은 본문을 표시합니다."
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "compactBelow는 그 전환 폭입니다. 기본 md(767px)는 전화기 폭을 기준으로 삼습니다. sm(559px)은 넓은 본문이 그보다 좁은 폭에서도 읽히는 표일 때 쓰며, 판단 기준은 뷰포트가 아니라 컨테이너라는 점입니다 — 224px 셸 탐색이 있는 1024px 데스크톱의 패널 컨테이너는 750px대라 md에서는 전화기와 같은 취급을 받습니다. 열이 많아 그 폭에서 실제로 읽히지 않는 표는 기본값을 유지하세요. 전환 폭은 컨테이너 질의의 조건이라 임의 값이 아닌 두 단계입니다."
         },
         {
           "subject": "--color-semantic-line-normal-normal",
@@ -61064,9 +61099,13 @@
         "getRowId — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 row.id, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.",
         "외부 근거: Carbon Data table의 zebra 옵션 — \"행을 따라가는 시선이 옆 행으로 이탈하는 것을 막는\" 넓은 표 장치이며, Carbon은 줄무늬를 끄면 행 구분선을 요구합니다(LDS 기본형이 그 형태). USWDS Table의 striped 변형도 같은 계열입니다. LDS는 두 시스템의 교차 줄무늬 대신 전 행 밴드를 채택합니다(강조 오독 근거는 위).",
         "Header and body cells use font-variant-numeric: tabular-nums so values do not jitter between rows. Set align: 'right' on comparable numeric columns; nominal identifiers such as postal codes or equipment IDs remain left aligned.",
-        "size는 셀 패딩과 함께 행 높이도 선택합니다. 행 높이는 --lk-table-row-min-height-sm/md 매체 훅 → --component-table-row-min-height-sm/md profile token(default 44px/52px, ops 40px/48px) → 리터럴 44px/52px 순서로 해석되며, 셀에 height로 적용됩니다."
+        "The CSS Table Module Level 3 explains why cell min-content widths participate in a table's intrinsic width. The contract therefore constrains both header and body cells, rather than styling only the header."
       ],
       "anatomy": [
+        {
+          "part": "columnLabelsHidden",
+          "rule": "열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 | 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false"
+        },
         {
           "part": "caption",
           "rule": "표 위에 보이는 . 표의 접근 가능한 이름이 됩니다."
@@ -61121,6 +61160,13 @@
           "owner": "TableProps"
         },
         {
+          "name": "columnLabelsHidden",
+          "type": "boolean",
+          "required": false,
+          "description": "열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 | 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false",
+          "owner": "TableProps"
+        },
+        {
           "name": "caption",
           "type": "React.ReactNode",
           "required": false,
@@ -61170,7 +61216,12 @@
           "owner": "TableProps"
         }
       ],
-      "states": [],
+      "states": [
+        {
+          "state": "columnLabelsHidden",
+          "rule": "열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 | 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false"
+        }
+      ],
       "behavior": [
         "열 헤더는 항상 입니다. 별도 prop이 필요 없으며 끌 수 없습니다.",
         "교차(지브라)가 아니라 전 행 밴드입니다. 행이 적은 표에서 교차 줄무늬는 특정 행의 강조로 오독됩니다 — 강조는 상태 표현(배지·톤)의 몫이고 기하의 몫이 아닙니다. 이 판정은 투영 매체(Slides)에서 실측으로 확정됐습니다(docs/TABLEMEDIUMCONTRACTPROPOSAL.md).",
@@ -61193,7 +61244,7 @@
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "The CSS Table Module Level 3 explains why cell min-content widths participate in a table's intrinsic width. The contract therefore constrains both header and body cells, rather than styling only the header."
+          "rule": "columnLabelsHidden — 열 라벨 밴드를 보조기술에만 남기고 감춥니다. 항목·값 표는 각 행의 첫 칸이 곧 열 이름이라 항목 | 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 씁니다. 과 scope=\"row\"는 그대로라 표의 의미는 같고, 감춘 머리 셀은 레이아웃에서 빠지므로 이 표는 columns의 width로 열 폭을 스스로 정합니다. 여러 레코드를 비교하는 목록 표에서는 쓰지 마세요 — 그 표의 열 이름은 데이터에 없습니다."
         },
         {
           "subject": "--color-semantic-fill-alternative",
@@ -61374,7 +61425,7 @@
         "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
-        "states": "omitted-no-evidence",
+        "states": "evidence",
         "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",

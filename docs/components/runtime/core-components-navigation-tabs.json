@@ -119,20 +119,20 @@
   "behavior": [],
   "quantitativeRules": [
     {
-      "subject": "명시 규칙 2",
-      "rule": "The 2px active indicator is drawn inside the tab box (bottom: 0). Scrollable tabs suppress cross-axis overflow only after the full indicator is inside, so the tablist cannot create a vertical scrollbar from its own indicator and the indicator is not clipped to 1px."
+      "subject": "명시 규칙 1",
+      "rule": "탭은 가로 패딩이 0이지만 포인터 타깃이므로 폭은 --lds-tabs-min-tab-width(기본 24px) 아래로 내려가지 않습니다. 팀처럼 한 글자 라벨이 13px 히트 영역이 되는 것을 막는 바닥값이며(WCAG 2.2 Target Size (Minimum)), 그보다 넓은 기존 라벨의 레이아웃은 바뀌지 않습니다."
     },
     {
       "subject": "명시 규칙 3",
+      "rule": "The 2px active indicator is drawn inside the tab box (bottom: 0). Scrollable tabs suppress cross-axis overflow only after the full indicator is inside, so the tablist cannot create a vertical scrollbar from its own indicator and the indicator is not clipped to 1px."
+    },
+    {
+      "subject": "명시 규칙 4",
       "rule": "탭↔패널 연결: 각 탭은 useId() 기반 id를 자동으로 가지며, item.tabId로 재정의할 수 있습니다. item.panelId를 넘기면 탭에 aria-controls로 연결됩니다. 소비 측은 패널을 role=\"tabpanel\", id={panelId}, aria-labelledby={탭 id}, tabIndex={0}으로 표시하세요."
     },
     {
       "subject": "--body2-size",
       "rule": "15px"
-    },
-    {
-      "subject": "--color-semantic-focus-indicator",
-      "rule": "light: #2F6FB0; dark: #7FB0DE"
     }
   ],
   "responsive": [
@@ -182,6 +182,7 @@
     "--lds-tabs-gap",
     "--lds-tabs-height",
     "--lds-tabs-indicator-height",
+    "--lds-tabs-min-tab-width",
     "--lds-tabs-padding-inline",
     "--radius-sm",
     "--space-2"

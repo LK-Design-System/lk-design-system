@@ -28,8 +28,15 @@ export interface DataCollectionPanelOwnProps {
   compactContent?: React.ReactNode;
   /** Footer content, commonly Pagination. Omit it when navigation is unnecessary; an adapter that renders null leaves no visible footer strip. */
   footer?: React.ReactNode;
-  /** Responsive content policy. auto switches at a 767px container width only when compactContent exists. @default "auto" */
+  /** Responsive content policy. auto switches at the compactBelow container width only when compactContent exists. @default "auto" */
   layout?: 'auto' | 'wide' | 'narrow';
+  /**
+   * `auto`가 좁은 본문으로 넘어가는 컨테이너 폭. `md`는 767px, `sm`은 559px입니다.
+   * 넓은 본문이 전화기 폭 기준보다 좁은 폭에서도 읽히는 표라면 `sm`을 쓰세요 —
+   * 셸 탐색이 폭을 가져가 컨테이너만 좁아진 데스크톱에서 좁은 화면용 목록으로
+   * 떨어지는 것을 막습니다. `layout`이 `wide`/`narrow`면 무시됩니다. @default "md"
+   */
+  compactBelow?: 'md' | 'sm';
   classNames?: LdsClassNames<DataCollectionPanelPart>;
   styles?: LdsStyles<DataCollectionPanelPart>;
   vars?: LdsVars<DataCollectionPanelVariable>;

@@ -9,8 +9,12 @@ const DATA_COLLECTION_PANEL_STYLES = `
 .lk-data-collection-panel[data-layout="narrow"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__wide-content{display:none}
 .lk-data-collection-panel[data-layout="narrow"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__compact-content{display:block}
 @container lds-data-collection-panel (max-width:767px){
-  .lk-data-collection-panel[data-layout="auto"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__wide-content{display:none}
-  .lk-data-collection-panel[data-layout="auto"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__compact-content{display:block}
+  .lk-data-collection-panel[data-layout="auto"][data-compact-below="md"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__wide-content{display:none}
+  .lk-data-collection-panel[data-layout="auto"][data-compact-below="md"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__compact-content{display:block}
+}
+@container lds-data-collection-panel (max-width:559px){
+  .lk-data-collection-panel[data-layout="auto"][data-compact-below="sm"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__wide-content{display:none}
+  .lk-data-collection-panel[data-layout="auto"][data-compact-below="sm"][data-has-compact-content="true"] > .lk-data-collection-panel__state > [data-resource-state] > .lk-data-collection-panel__compact-content{display:block}
 }
 `;
 
@@ -32,6 +36,7 @@ export const DataCollectionPanel = React.forwardRef(function DataCollectionPanel
   compactContent,
   footer,
   layout = 'auto',
+  compactBelow = 'md',
   children,
   className,
   style,
@@ -42,6 +47,11 @@ export const DataCollectionPanel = React.forwardRef(function DataCollectionPanel
 }, forwardedRef) {
   const Component = as;
   const resolvedLayout = ['auto', 'wide', 'narrow'].includes(layout) ? layout : 'auto';
+  /* `auto`가 좁은 형태로 넘어가는 컨테이너 폭. 기본 md(767px)는 전화기 폭을
+     기준으로 삼는다. 넓은 형태가 그보다 좁은 폭에서도 읽히는 표라면 sm(559px)로
+     내려, 셸 탐색이 폭을 가져가 컨테이너만 좁아진 데스크톱에서 좁은 화면용
+     목록으로 떨어지지 않게 한다. */
+  const resolvedCompactBelow = ['md', 'sm'].includes(compactBelow) ? compactBelow : 'md';
   const hasCompactContent = compactContent != null;
   const resolvedResourceState = resourceState ?? {};
   const hasWideContent = React.Children.toArray(children).length > 0;
@@ -59,6 +69,7 @@ export const DataCollectionPanel = React.forwardRef(function DataCollectionPanel
       data-slot="root"
       data-lds-data-collection-panel=""
       data-layout={resolvedLayout}
+      data-compact-below={resolvedCompactBelow}
       data-has-compact-content={hasCompactContent ? 'true' : 'false'}
       data-state={state}
       className={partClassName(classNames, 'root', 'lk-data-collection-panel', className) || undefined}

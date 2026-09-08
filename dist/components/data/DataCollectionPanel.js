@@ -1,7 +1,7 @@
 "use client";
 import {
   DataCollectionPanel
-} from "../../chunk-O5HZR2ZG.js";
+} from "../../chunk-QPBMXJG6.js";
 import "../../chunk-DHQ4MWL4.js";
 import "../../chunk-6OG4S2SV.js";
 import "../../chunk-VPT2SSZK.js";

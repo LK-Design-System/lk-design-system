@@ -50,7 +50,7 @@ import {
 } from "./chunk-PD25R5WI.js";
 import {
   Tabs
-} from "./chunk-7HOZNA53.js";
+} from "./chunk-XTZFRW6S.js";
 import {
   Category
 } from "./chunk-EVASCNAZ.js";

@@ -130,7 +130,7 @@ function CompactEquipmentList({ rows }) {
   );
 }
 
-function EquipmentCollection({ layout = 'auto', state = 'ready', style, compact = true, content = true, label = '장비 목록', tableSize }) {
+function EquipmentCollection({ layout = 'auto', compactBelow, state = 'ready', style, compact = true, content = true, label = '장비 목록', tableSize }) {
   const [query, setQuery] = React.useState('');
   const [status, setStatus] = React.useState('all');
   const [sort, setSort] = React.useState('recent');
@@ -145,6 +145,7 @@ function EquipmentCollection({ layout = 'auto', state = 'ready', style, compact 
     <DataCollectionPanel
       aria-label={label}
       layout={layout}
+      compactBelow={compactBelow}
       style={{ maxWidth: 1120, ...style }}
       toolbar={{
         size: 'sm',
@@ -426,6 +427,43 @@ export const AutoContainerBoundary = {
     }
     if (getComputedStyle(wideWideContent).display === 'none' || getComputedStyle(wideCompactContent).display !== 'none') {
       throw new Error('Auto layout must preserve wide content above the 767px container boundary.');
+    }
+  },
+};
+
+/* 전환 폭의 판단 기준은 뷰포트가 아니라 컨테이너다. 224px 셸 탐색이 있는
+   1024px 데스크톱의 패널은 750px대 컨테이너를 갖는데, 기본 `md`(767px)에서는
+   그 폭이 전화기와 같은 취급을 받아 넓은 표가 사라진다. 열이 적어 그 폭에서도
+   읽히는 표는 `compactBelow="sm"`으로 전환 폭을 559px까지 내린다. */
+export const CompactBelowBoundary = {
+  name: '반응형 · 좁은 전환 폭',
+  parameters: storyDescription(
+    '셸 탐색이 폭을 가져가 컨테이너만 좁아진 데스크톱 상황입니다. 같은 750px 컨테이너에서 기본 전환 폭은 좁은 목록으로 넘어가고, 좁은 전환 폭은 넓은 표를 유지합니다. 두 패널 모두 전화기 폭에서는 좁은 목록으로 넘어갑니다.',
+  ),
+  render: () => (
+    <div style={{ display: 'grid', gap: 'var(--space-5)', width: '100%' }}>
+      <EquipmentCollection label="기본 전환 폭 750px" style={{ width: 750 }} />
+      <EquipmentCollection label="좁은 전환 폭 750px" compactBelow="sm" style={{ width: 750 }} />
+      <EquipmentCollection label="좁은 전환 폭 520px" compactBelow="sm" style={{ width: 520 }} />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const panelOf = (label) => canvasElement.querySelector(`[data-lds-data-collection-panel][aria-label="${label}"]`);
+    const shows = (label, kind) => {
+      const panel = panelOf(label);
+      if (!panel) throw new Error(`${label} 패널이 렌더링되어야 합니다.`);
+      return getComputedStyle(panel.querySelector(`[data-collection-content="${kind}"]`)).display !== 'none';
+    };
+
+    if (shows('기본 전환 폭 750px', 'wide') || !shows('기본 전환 폭 750px', 'compact')) {
+      throw new Error('기본 전환 폭은 750px 컨테이너에서 좁은 본문을 선택해야 합니다.');
+    }
+    if (!shows('좁은 전환 폭 750px', 'wide') || shows('좁은 전환 폭 750px', 'compact')) {
+      throw new Error('좁은 전환 폭은 750px 컨테이너에서 넓은 본문을 유지해야 합니다.');
+    }
+    /* 전환 폭을 내려도 전화기 폭에서는 좁은 본문이다. */
+    if (shows('좁은 전환 폭 520px', 'wide') || !shows('좁은 전환 폭 520px', 'compact')) {
+      throw new Error('좁은 전환 폭도 559px 아래에서는 좁은 본문으로 넘어가야 합니다.');
     }
   },
 };

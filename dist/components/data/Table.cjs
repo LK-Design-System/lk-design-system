@@ -3,11 +3,11 @@
 
 
 
-var _chunkQZ33HFTYcjs = require('../../chunk-QZ33HFTY.cjs');
+var _chunkPMPTBRLBcjs = require('../../chunk-PMPTBRLB.cjs');
 require('../../chunk-EQA6DKML.cjs');
 
 
 
 
-exports.Table = _chunkQZ33HFTYcjs.Table; exports.getTableDataCellStyle = _chunkQZ33HFTYcjs.getTableDataCellStyle; exports.getTableHeaderCellStyle = _chunkQZ33HFTYcjs.getTableHeaderCellStyle;
+exports.Table = _chunkPMPTBRLBcjs.Table; exports.getTableDataCellStyle = _chunkPMPTBRLBcjs.getTableDataCellStyle; exports.getTableHeaderCellStyle = _chunkPMPTBRLBcjs.getTableHeaderCellStyle;
 //# sourceMappingURL=Table.cjs.map

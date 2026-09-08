@@ -17,9 +17,13 @@
     "getRowId — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 row.id, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.",
     "외부 근거: Carbon Data table의 zebra 옵션 — \"행을 따라가는 시선이 옆 행으로 이탈하는 것을 막는\" 넓은 표 장치이며, Carbon은 줄무늬를 끄면 행 구분선을 요구합니다(LDS 기본형이 그 형태). USWDS Table의 striped 변형도 같은 계열입니다. LDS는 두 시스템의 교차 줄무늬 대신 전 행 밴드를 채택합니다(강조 오독 근거는 위).",
     "Header and body cells use font-variant-numeric: tabular-nums so values do not jitter between rows. Set align: 'right' on comparable numeric columns; nominal identifiers such as postal codes or equipment IDs remain left aligned.",
-    "size는 셀 패딩과 함께 행 높이도 선택합니다. 행 높이는 --lk-table-row-min-height-sm/md 매체 훅 → --component-table-row-min-height-sm/md profile token(default 44px/52px, ops 40px/48px) → 리터럴 44px/52px 순서로 해석되며, 셀에 height로 적용됩니다."
+    "The CSS Table Module Level 3 explains why cell min-content widths participate in a table's intrinsic width. The contract therefore constrains both header and body cells, rather than styling only the header."
   ],
   "anatomy": [
+    {
+      "part": "columnLabelsHidden",
+      "rule": "열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 | 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false"
+    },
     {
       "part": "caption",
       "rule": "표 위에 보이는 . 표의 접근 가능한 이름이 됩니다."
@@ -74,6 +78,13 @@
       "owner": "TableProps"
     },
     {
+      "name": "columnLabelsHidden",
+      "type": "boolean",
+      "required": false,
+      "description": "열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 | 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false",
+      "owner": "TableProps"
+    },
+    {
       "name": "caption",
       "type": "React.ReactNode",
       "required": false,
@@ -123,7 +134,12 @@
       "owner": "TableProps"
     }
   ],
-  "states": [],
+  "states": [
+    {
+      "state": "columnLabelsHidden",
+      "rule": "열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 | 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름이 사라지지 않습니다. 감춘 머리 셀은 표의 레이아웃에서 빠지므로 이 표는 열 폭을 스스로 지정해야 합니다. @default false"
+    }
+  ],
   "behavior": [
     "열 헤더는 항상 입니다. 별도 prop이 필요 없으며 끌 수 없습니다.",
     "교차(지브라)가 아니라 전 행 밴드입니다. 행이 적은 표에서 교차 줄무늬는 특정 행의 강조로 오독됩니다 — 강조는 상태 표현(배지·톤)의 몫이고 기하의 몫이 아닙니다. 이 판정은 투영 매체(Slides)에서 실측으로 확정됐습니다(docs/TABLEMEDIUMCONTRACTPROPOSAL.md).",
@@ -146,7 +162,7 @@
     },
     {
       "subject": "명시 규칙 4",
-      "rule": "The CSS Table Module Level 3 explains why cell min-content widths participate in a table's intrinsic width. The contract therefore constrains both header and body cells, rather than styling only the header."
+      "rule": "columnLabelsHidden — 열 라벨 밴드를 보조기술에만 남기고 감춥니다. 항목·값 표는 각 행의 첫 칸이 곧 열 이름이라 항목 | 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 씁니다. 과 scope=\"row\"는 그대로라 표의 의미는 같고, 감춘 머리 셀은 레이아웃에서 빠지므로 이 표는 columns의 width로 열 폭을 스스로 정합니다. 여러 레코드를 비교하는 목록 표에서는 쓰지 마세요 — 그 표의 열 이름은 데이터에 없습니다."
     },
     {
       "subject": "--color-semantic-fill-alternative",
@@ -281,7 +297,7 @@
     "avoidWhen": "evidence",
     "anatomy": "evidence",
     "properties": "evidence",
-    "states": "omitted-no-evidence",
+    "states": "evidence",
     "behavior": "evidence",
     "quantitativeRules": "evidence",
     "responsive": "evidence",

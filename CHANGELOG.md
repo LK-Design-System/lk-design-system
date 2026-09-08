@@ -2,6 +2,29 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.2.6 - 2026-09-08
+
+Paired Robotics release: `0.1.0-rc.41`. This patch adds three additive axes that LK Portal's UI review
+needed; no existing default changes.
+
+### Added
+
+- `Table` gained `columnLabelsHidden` (default `false`). It keeps `<th scope="col">` for assistive
+  technology while removing the visible column band, for property tables ("항목 | 값") whose every row
+  already states its own columns. The hidden header cells leave the table layout, so a table that hides
+  its labels states its own column widths.
+- `DataCollectionPanel` gained `compactBelow` (`md | sm`, default `md`). It selects the container width at
+  which `layout="auto"` swaps wide content for `compactContent`: `md` keeps today's 767px phone-width
+  boundary, `sm` lowers it to 559px. The boundary reads the panel's CONTAINER, so a desktop shell with a
+  224px navigation left a 750px-wide panel being treated as a phone; lists whose wide table survives that
+  width now opt out without overriding `layout`.
+
+### Fixed
+
+- `Tabs` gives every tab a `--lds-tabs-min-tab-width` floor (24px). Tabs carry no inline padding by design,
+  so a single-glyph label such as `팀` rendered a 13px pointer target, below the WCAG 2.2 target minimum.
+  Every wider label is unchanged.
+
 ## 0.2.5 - 2026-09-08
 
 Paired Robotics release: `0.1.0-rc.40`. This patch makes `Table` row heights real and
