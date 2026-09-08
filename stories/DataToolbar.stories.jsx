@@ -336,7 +336,7 @@ function NarrowFilterDrawerDemo({ width, testId, layout }) {
 }
 
 export const NarrowFilterDrawer = {
-  name: '반응형 · 좁은 폭의 필터 Drawer',
+  name: '반응형 · 좁은 폭의 필터 접기',
   parameters: storyDescription(
     '기본 `layout="auto"`는 툴바 컨테이너가 767px 이하일 때 검색을 한 행으로 두고 필터를 Drawer trigger로 접습니다. 정렬은 trigger 옆에 남고 metadata는 다음 행 전체 폭을 차지합니다. trigger 라벨의 적용 필터 수, Drawer 안의 필터 순서, 닫은 뒤 trigger로의 초점 복원을 확인하세요. 넓은 fixture는 같은 props가 한 행으로 유지되는지 보여 줍니다.',
   ),

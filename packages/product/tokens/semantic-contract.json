@@ -32,6 +32,7 @@
     "--color-semantic-accent-foreground-blue",
     "--color-semantic-accent-foreground-green",
     "--color-semantic-accent-foreground-orange",
+    "--color-semantic-accent-foreground-red",
     "--color-semantic-background-elevated-alternative",
     "--color-semantic-background-elevated-normal",
     "--color-semantic-background-normal-alternative",
@@ -268,6 +269,7 @@
     "--space-5",
     "--space-6",
     "--space-8",
+    "--title1-line",
     "--title1-size"
   ]
 }

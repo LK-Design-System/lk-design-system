@@ -22,7 +22,7 @@
     "verified": 16
   },
   "componentDispositionSummary": {
-    "keep": 23,
+    "keep": 25,
     "redesign": 7,
     "split": 8,
     "remove": 22,
@@ -1311,6 +1311,128 @@
           ]
         }
       ]
+    },
+    {
+      "name": "ScheduleCalendar",
+      "path": "components/data/ScheduleCalendar.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-13"
+      ],
+      "reason": "Provides the month/week/day projection of expanded time-bound events with an APG grid keyboard model, slot selection and overflow, without owning recurrence expansion, persistence, drag editing or the create/edit form. Designed from the LDS Calendar/Timeline/DataGrid siblings and the APG grid, FullCalendar and Syncfusion scheduler references.",
+      "assetReviews": [
+        {
+          "repo": "gungneung",
+          "classification": "supported by composition",
+          "reason": "The pinned schedule screen composes FullCalendar month/week/day/list with a date-click form, and the scheduled-patrol API models per-robot runTime rows. The product expands those rows into dated instances and feeds them as events; list view composes Table instead.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/schedule/components/CalendarView.jsx",
+              "blobSha": "98a34505ce78bf565b6bbb523716752e2a316465"
+            },
+            {
+              "path": "frontend/src/api/scheduledPatrolService.ts",
+              "blobSha": "b2d1a6908c8bf3d06b1f527a163fc47f40e3648b"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "not applicable",
+          "reason": "The pinned Daedeok source has no calendar grid screen.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/user/index.jsx",
+              "blobSha": "1c6c8446e723207a9bd5f4daa991a0b266ccc279"
+            }
+          ]
+        },
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "Task history is a card feed rather than a time grid.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/TaskHistoryScreen.tsx",
+              "blobSha": "a529eb93bfdd51d77298f18c13e78bbc2a1b9631"
+            }
+          ]
+        },
+        {
+          "repo": "portal",
+          "classification": "not applicable",
+          "reason": "The pinned Portal source has no schedule grid entry point.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/chat/FloatingChat.tsx",
+              "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EquipmentStatusCard",
+      "path": "components/robotics/EquipmentStatusCard.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-02"
+      ],
+      "reason": "Adds an additive readout axis so equipment whose position value is the primary fact (current floor, door position, lift position) composes the existing identity/status/facts/actions anatomy instead of product-specific facility cards; omitted, the output is unchanged.",
+      "assetReviews": [
+        {
+          "repo": "gungneung",
+          "classification": "supported by composition",
+          "reason": "The pinned elevator, automatic-door and stair-lift widgets prove a dominant position value, direction/door/lock facts and a door-open command. readout plus actions express them; STOMP state, command transport and optimistic timing stay product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/common/ElevatorStatus.jsx",
+              "blobSha": "db31b49f37f30e77d1dca30b4b6ca112afa07ac9"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/common/AutoDoorStatus.jsx",
+              "blobSha": "2ba46734461972b1ff317421fb06f194da090ada"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/common/StairLiftStatus.jsx",
+              "blobSha": "af89e472bd8ab86858bb8e38f4bf54165c1d7f1c"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "not applicable",
+          "reason": "The pinned Daedeok supervision source has no facility position cards.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "No facility equipment cards in the pinned dashboard.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "portal",
+          "classification": "not applicable",
+          "reason": "No physical-equipment entry point.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/chat/FloatingChat.tsx",
+              "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
+            }
+          ]
+        }
+      ]
     }
   ],
   "repositories": [
@@ -1355,6 +1477,13 @@
       "commit": "0e9f3b03fccd60ab0575b55c18035cc9f9e91521",
       "frontendRoot": "frontend",
       "framework": "Vite 8, React 19"
+    },
+    {
+      "id": "gungneung",
+      "repository": "LK-ROBOTICS/lkrobotics-control-gungneung",
+      "commit": "9298e1c0a2cc02d8f6fb98975ae7f8f2158da926",
+      "frontendRoot": "frontend",
+      "framework": "Vite 6, React 18, MUI 6"
     }
   ],
   "workflows": [

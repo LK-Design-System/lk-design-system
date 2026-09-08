@@ -884,6 +884,17 @@
         "quaternionToPlanarYaw",
         "validateNavigationMapGraph"
       ]
+    },
+    {
+      "name": "Schedule calendar product pattern",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
+      "storyEvidence": [
+        "stories/DataScheduleCalendar.stories.jsx"
+      ],
+      "exports": [
+        "ScheduleCalendar"
+      ]
     }
   ],
   "internalModules": [

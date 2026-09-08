@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "4a52e500288bf4fec24449c2011832b0661c4c6410b239d3f886bac8cdcbd047",
+    "storybookIndexSha256": "535ca242c700a57b25d96370dfe688e69156a66cf8deabca8a64031107da147e",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -61,31 +61,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 196,
-    "stories": 733,
-    "publicStories": 504,
-    "hiddenStories": 229,
-    "componentDescriptions": 191,
-    "pagesWithVisibleCanvasIntroduction": 191,
-    "pagesWithDecisionGuidance": 184,
-    "describedPublicStories": 504,
-    "reviewedPages": 196,
-    "reviewedStories": 733,
+    "pages": 197,
+    "stories": 742,
+    "publicStories": 512,
+    "hiddenStories": 230,
+    "componentDescriptions": 192,
+    "pagesWithVisibleCanvasIntroduction": 192,
+    "pagesWithDecisionGuidance": 185,
+    "describedPublicStories": 512,
+    "reviewedPages": 197,
+    "reviewedStories": 742,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
-      "overview": 179,
-      "usage": 40,
-      "variants-states": 110,
-      "interaction": 55,
-      "responsive": 78,
-      "scenario": 26,
-      "visual-parity": 97,
+      "overview": 180,
+      "usage": 41,
+      "variants-states": 111,
+      "interaction": 56,
+      "responsive": 80,
+      "scenario": 28,
+      "visual-parity": 98,
       "internal-contract": 128
     },
     "dispositions": {
-      "keep": 195,
+      "keep": 196,
       "merge": 0,
       "split": 0,
       "hide": 1
@@ -106,11 +106,11 @@
         "guideReadyPages": 12
       },
       "Product": {
-        "pages": 110,
-        "stories": 465,
-        "public": 351,
-        "hidden": 114,
-        "guideReadyPages": 109
+        "pages": 111,
+        "stories": 474,
+        "public": 359,
+        "hidden": 115,
+        "guideReadyPages": 110
       },
       "Theme": {
         "pages": 4,
@@ -14480,7 +14480,7 @@
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataToolbar.stories.jsx",
-      "sourceSha256": "d8021ac8a452af7cb25ed50f5f13f5167df1fbc40b26d503b274aee523dabfd1",
+      "sourceSha256": "88d77c843033ab655c1ba90fb7b13b51e8b91cf381eebe5e0eb6b6ee0f6ecdc6",
       "primaryOwner": "DataToolbar",
       "ownerComponents": [
         "DataToolbar"
@@ -14494,13 +14494,13 @@
         "TextButton"
       ],
       "visibility": {
-        "public": 5,
+        "public": 6,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-operations-data-toolbar--toolbar-with-grid",
-        "describedPublicStories": 5,
+        "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -14510,8 +14510,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "d8021ac8a452af7cb25ed50f5f13f5167df1fbc40b26d503b274aee523dabfd1",
+      "reviewedAt": "2026-09-08",
+      "reviewedSourceSha256": "88d77c843033ab655c1ba90fb7b13b51e8b91cf381eebe5e0eb6b6ee0f6ecdc6",
       "stories": [
         {
           "id": "lds-product-data-operations-data-toolbar--toolbar-with-grid",
@@ -14650,6 +14650,32 @@
           "reviewNote": "2026-08-02 source and built-browser review confirmed three intrinsic-width Select filters remain on one 32px row when space permits, wrap without horizontal overflow at 360px, and retain product-owned filter state."
         },
         {
+          "id": "lds-product-data-operations-data-toolbar--narrow-filter-drawer",
+          "name": "반응형 · 좁은 폭의 필터 접기",
+          "exportName": "NarrowFilterDrawer",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataToolbar"
+          ],
+          "supportingComponents": [
+            "Select"
+          ],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
           "id": "lds-product-data-operations-data-toolbar--surface-ref-contract",
           "name": "Surface and ref contract",
           "exportName": "SurfaceRefContract",
@@ -14673,7 +14699,7 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "2026-08-02 source and built-browser re-review confirmed medium density, the #30 multi-filter intrinsic-width and 360px wrapping contract, description containment, the stable surface/ref contract, public responsive roles, and product-owned filter state; all six stories completed play and Axe checks without violations or console errors."
+      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots."
     },
     {
       "title": "LDS Product/Data/Operations/Export Action",
@@ -14953,20 +14979,20 @@
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataRefreshControl.stories.jsx",
-      "sourceSha256": "c3d5a4e2f619f255dc844682402a2a576d4f90bf613ecdcb39807394332f38a4",
+      "sourceSha256": "d28a776937388312a9f5f4888c8198aafa84dd40d821053c9e84821b0d7b6a28",
       "primaryOwner": "RefreshControl",
       "ownerComponents": [
         "RefreshControl"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-operations-refresh-control--controlled-refresh",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -14976,8 +15002,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "c3d5a4e2f619f255dc844682402a2a576d4f90bf613ecdcb39807394332f38a4",
+      "reviewedAt": "2026-09-08",
+      "reviewedSourceSha256": "d28a776937388312a9f5f4888c8198aafa84dd40d821053c9e84821b0d7b6a28",
       "stories": [
         {
           "id": "lds-product-data-operations-refresh-control--controlled-refresh",
@@ -15026,9 +15052,33 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-data-operations-refresh-control--plain-header-action",
+          "name": "시나리오 · 헤더용 외곽선 없는 새로고침",
+          "exportName": "PlainHeaderAction",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "RefreshControl"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots."
     },
     {
       "title": "LDS Product/Data/Operations/Saved View",
@@ -15158,6 +15208,159 @@
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
+      "title": "LDS Product/Data/Operations/Schedule Calendar",
+      "layer": "Product",
+      "family": "Operations",
+      "importPath": "./stories/DataScheduleCalendar.stories.jsx",
+      "sourceSha256": "1a35c45c964bb3063ae8bc730cd2db1b5470edea50353e367f7cddd2f7f90e07",
+      "primaryOwner": "ScheduleCalendar",
+      "ownerComponents": [
+        "ScheduleCalendar"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 4,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-data-operations-schedule-calendar--month-overview",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-09-08",
+      "reviewedSourceSha256": "1a35c45c964bb3063ae8bc730cd2db1b5470edea50353e367f7cddd2f7f90e07",
+      "stories": [
+        {
+          "id": "lds-product-data-operations-schedule-calendar--month-overview",
+          "name": "개요",
+          "exportName": "MonthOverview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ScheduleCalendar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
+          "id": "lds-product-data-operations-schedule-calendar--controlled-range",
+          "name": "상호작용 · 제어형 보기 집합과 시간 범위",
+          "exportName": "ControlledRange",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ScheduleCalendar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
+          "id": "lds-product-data-operations-schedule-calendar--day-narrow",
+          "name": "반응형 · 일 보기 360px",
+          "exportName": "DayNarrow",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ScheduleCalendar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
+          "id": "lds-product-data-operations-schedule-calendar--week-time-grid",
+          "name": "시나리오 · 주 보기의 겹치는 시간 이벤트",
+          "exportName": "WeekTimeGrid",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ScheduleCalendar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
+          "id": "lds-product-data-operations-schedule-calendar--schedule-calendar-card",
+          "name": "ScheduleCalendar card parity",
+          "exportName": "ScheduleCalendarCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ScheduleCalendar"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        }
+      ],
+      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots."
     },
     {
       "title": "LDS Product/Data/Operations/Visibility Manager",
@@ -18697,7 +18900,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationSideNav.stories.jsx",
-      "sourceSha256": "d93bc3677c9d7f97b1ce1faa457b9fbc765f18da72d5d2126967fe442df29632",
+      "sourceSha256": "c3ae577b036fb93e6cf1c6c24c660488bbc5f03fc172cd51c10d9dfad4362bb9",
       "primaryOwner": "SideNav",
       "ownerComponents": [
         "SideNav"
@@ -18724,8 +18927,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-22",
-      "reviewedSourceSha256": "d93bc3677c9d7f97b1ce1faa457b9fbc765f18da72d5d2126967fe442df29632",
+      "reviewedAt": "2026-09-08",
+      "reviewedSourceSha256": "c3ae577b036fb93e6cf1c6c24c660488bbc5f03fc172cd51c10d9dfad4362bb9",
       "stories": [
         {
           "id": "lds-product-navigation-side-nav--link-destinations",
@@ -19037,7 +19240,7 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "2026-08-02 source, built-index, and browser re-review confirmed manual active-group ownership, child icon alignment, runtime overlay synchronization, 18px brand padding, and 44px navigation row geometry; the public name now uses audience-facing Korean.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation.\n\n2026-08-05 Storybook naming re-review confirmed the new public scenario entry uses the required Korean role prefix."
+      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots."
     },
     {
       "title": "LDS Product/Navigation/Steps",
@@ -19714,7 +19917,7 @@
       "layer": "Product",
       "family": "Operations Dashboard",
       "importPath": "./stories/LayoutDashboardShell.stories.jsx",
-      "sourceSha256": "1cbf23291de8ee383c1f45c0d5416f3a239e8326273dd2d565ca87d4a7fca0a3",
+      "sourceSha256": "1b854cccfe581978b5288d05db43039991197250513c1329f9ba37609c1d5c7c",
       "primaryOwner": "DashboardShell",
       "ownerComponents": [
         "DashboardShell"
@@ -19752,8 +19955,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "1cbf23291de8ee383c1f45c0d5416f3a239e8326273dd2d565ca87d4a7fca0a3",
+      "reviewedAt": "2026-09-08",
+      "reviewedSourceSha256": "1b854cccfe581978b5288d05db43039991197250513c1329f9ba37609c1d5c7c",
       "stories": [
         {
           "id": "lds-product-layout-dashboard-shell--normal-width",
@@ -19987,7 +20190,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-08-02 source and built-browser re-review confirmed the narrow temporary navigation contract uses the shared modal engine while route state, trigger state, and post-selection focus remain product-owned."
+      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots."
     },
     {
       "title": "LDS Product/Overlay/Command Palette",
@@ -20127,7 +20330,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayDrawer.stories.jsx",
-      "sourceSha256": "2cb7ca144a4685e5954a57a942256c3586f4d9645415c3d9f39bb3eb9e5e2516",
+      "sourceSha256": "4995f045a69576fd245075461f918b890eb6804ee708685692c1763a425e146e",
       "primaryOwner": "Drawer",
       "ownerComponents": [
         "Drawer"
@@ -20145,13 +20348,13 @@
         "Textarea"
       ],
       "visibility": {
-        "public": 3,
+        "public": 4,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-overlay-drawer--drawer-open",
-        "describedPublicStories": 3,
+        "describedPublicStories": 4,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -20161,8 +20364,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-22",
-      "reviewedSourceSha256": "2cb7ca144a4685e5954a57a942256c3586f4d9645415c3d9f39bb3eb9e5e2516",
+      "reviewedAt": "2026-09-08",
+      "reviewedSourceSha256": "4995f045a69576fd245075461f918b890eb6804ee708685692c1763a425e146e",
       "stories": [
         {
           "id": "lds-product-overlay-drawer--drawer-open",
@@ -20251,6 +20454,32 @@
           "reviewNote": "2026-08-09 source, built index, and live rendered review at 900x800 and 360x700 confirmed compact Drawer ownership, responsive role, public visibility, density metrics, focus behavior, and no horizontal overflow."
         },
         {
+          "id": "lds-product-overlay-drawer--brand-close-control",
+          "name": "변형 · 브랜드 표면의 최소 닫기",
+          "exportName": "BrandCloseControl",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Drawer"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
           "id": "lds-product-overlay-drawer--drawer-card",
           "name": "Drawer card parity",
           "exportName": "DrawerCard",
@@ -20274,7 +20503,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots."
     },
     {
       "title": "LDS Product/Overlay/Hover Card",
@@ -23255,7 +23484,7 @@
       "layer": "Product",
       "family": "Status",
       "importPath": "./stories/RoboticsEquipment.stories.jsx",
-      "sourceSha256": "510f1f048c0b363bf9f16686083af52d6d1f1bae8d2290670a486b2227023073",
+      "sourceSha256": "925689c902a250bae5da64d3194d09fd5e14216544ca0dc6e9aaec8cc148e4e1",
       "primaryOwner": "EquipmentStatusCard",
       "ownerComponents": [
         "EquipmentStatusCard"
@@ -23263,16 +23492,17 @@
       "supportingComponents": [
         "Button",
         "ConnectionBadge",
-        "Icon"
+        "Icon",
+        "StatusBadge"
       ],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-status-equipment-state--equipment-state",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -23282,8 +23512,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-05",
-      "reviewedSourceSha256": "510f1f048c0b363bf9f16686083af52d6d1f1bae8d2290670a486b2227023073",
+      "reviewedAt": "2026-09-08",
+      "reviewedSourceSha256": "925689c902a250bae5da64d3194d09fd5e14216544ca0dc6e9aaec8cc148e4e1",
       "stories": [
         {
           "id": "lds-product-status-equipment-state--equipment-state",
@@ -23311,6 +23541,34 @@
             "Icon"
           ],
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
+        },
+        {
+          "id": "lds-product-status-equipment-state--facility-equipment",
+          "name": "사용법 · 승강기·자동문·계단 리프트",
+          "exportName": "FacilityEquipment",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "EquipmentStatusCard"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Icon",
+            "StatusBadge"
+          ],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
         },
         {
           "id": "lds-product-status-equipment-state--responsive-hierarchy",
@@ -23363,7 +23621,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
+      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots."
     },
     {
       "title": "LDS Product/Status/Telemetry Gauge",

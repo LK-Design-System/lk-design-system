@@ -230,6 +230,11 @@
         "id": "lds-product-data-operations-refresh-control--refreshing-narrow",
         "name": "반응형 · 좁은 폭의 갱신 중 상태",
         "role": "responsive"
+      },
+      {
+        "id": "lds-product-data-operations-refresh-control--plain-header-action",
+        "name": "시나리오 · 헤더용 외곽선 없는 새로고침",
+        "role": "scenario"
       }
     ],
     "hiddenEvidence": 0

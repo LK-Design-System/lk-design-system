@@ -66,7 +66,7 @@
     "documents": [
       {
         "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-        "sha256": "add36a76b095f6e8d41db37b1e16935fa633558b16c2409f1bd2f55d0abbdc04"
+        "sha256": "c3a6091b917b0d0914e0f025d7b98b1ca23b6298d7886d16790949541ed66993"
       },
       {
         "path": "docs/agent-skills/lds-ui/references/anti-patterns.md",
@@ -86,7 +86,7 @@
       },
       {
         "path": "docs/components/README.md",
-        "sha256": "6187c3b8ae8f3f16e39920694d6b6b79639468cba4a328a1b51a77a19f267e8c"
+        "sha256": "41d718ae7c61f32833eb20a586da7d8bc0e4025143869397a50e56912b6edcc1"
       },
       {
         "path": "docs/COPY_REVIEW_CONTRACT.md",
@@ -345,11 +345,11 @@
     },
     {
       "path": "components/README.md",
-      "sha256": "0861f58c53f1dd1957b2fe81585d1c7880a3c6bdf40d0cf0979a32aa2d2e261e",
+      "sha256": "ff2dbbad50c8cca8af4786f164d5da9e8d7c6d8a3fe49ef6988821c72ab9fe4b",
       "sources": [
         {
           "path": "docs/components/README.md",
-          "sha256": "6187c3b8ae8f3f16e39920694d6b6b79639468cba4a328a1b51a77a19f267e8c"
+          "sha256": "41d718ae7c61f32833eb20a586da7d8bc0e4025143869397a50e56912b6edcc1"
         }
       ]
     },
@@ -595,11 +595,11 @@
     },
     {
       "path": "policies/ACCESSIBILITY_CONTRACTS.md",
-      "sha256": "add36a76b095f6e8d41db37b1e16935fa633558b16c2409f1bd2f55d0abbdc04",
+      "sha256": "c3a6091b917b0d0914e0f025d7b98b1ca23b6298d7886d16790949541ed66993",
       "sources": [
         {
           "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-          "sha256": "add36a76b095f6e8d41db37b1e16935fa633558b16c2409f1bd2f55d0abbdc04"
+          "sha256": "c3a6091b917b0d0914e0f025d7b98b1ca23b6298d7886d16790949541ed66993"
         }
       ]
     },

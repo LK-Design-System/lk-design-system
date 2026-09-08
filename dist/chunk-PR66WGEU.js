@@ -3,7 +3,8 @@ import {
   StatusBadge
 } from "./chunk-YZIOOD3Y.js";
 import {
-  normalizeStatusTone
+  normalizeStatusTone,
+  statusToneStyle
 } from "./chunk-L2ZEGNVF.js";
 
 // components/robotics/EquipmentStatusCard.jsx
@@ -15,6 +16,9 @@ function EquipmentStatusCard({
   description,
   status,
   statusTone = "neutral",
+  readout,
+  readoutLabel,
+  readoutTone = "neutral",
   details = [],
   meta,
   actions,
@@ -26,6 +30,8 @@ function EquipmentStatusCard({
   const hasDetails = details.length > 0;
   const hasFooter = meta != null || actions != null;
   const resolvedStatusTone = normalizeStatusTone(statusTone);
+  const resolvedReadoutTone = normalizeStatusTone(readoutTone);
+  const readoutColor = resolvedReadoutTone === "offline" ? "var(--color-semantic-label-strong)" : statusToneStyle(resolvedReadoutTone).foreground;
   return /* @__PURE__ */ jsxs(
     "article",
     {
@@ -116,6 +122,51 @@ function EquipmentStatusCard({
             ]
           }
         ),
+        readout != null && /* @__PURE__ */ jsxs(
+          "div",
+          {
+            "data-equipment-readout": "",
+            "data-equipment-readout-tone": resolvedReadoutTone,
+            style: {
+              display: "flex",
+              alignItems: "baseline",
+              gap: "var(--space-2)",
+              flexWrap: "wrap",
+              minWidth: 0,
+              paddingTop: "var(--space-3)",
+              borderTop: "1px solid var(--color-semantic-line-normal-normal)"
+            },
+            children: [
+              /* @__PURE__ */ jsx(
+                "span",
+                {
+                  style: {
+                    color: readoutColor,
+                    fontSize: "var(--title1-size)",
+                    lineHeight: "var(--title1-line)",
+                    fontWeight: "var(--fw-bold)",
+                    fontVariantNumeric: "tabular-nums",
+                    letterSpacing: 0,
+                    overflowWrap: "anywhere"
+                  },
+                  children: readout
+                }
+              ),
+              readoutLabel != null && /* @__PURE__ */ jsx(
+                "span",
+                {
+                  style: {
+                    color: "var(--color-semantic-label-alternative)",
+                    fontSize: "var(--caption1-size)",
+                    lineHeight: "var(--caption1-line)",
+                    fontWeight: "var(--fw-semibold)"
+                  },
+                  children: readoutLabel
+                }
+              )
+            ]
+          }
+        ),
         hasDetails && /* @__PURE__ */ jsx(
           "dl",
           {
@@ -201,4 +252,4 @@ function EquipmentStatusCard({
 export {
   EquipmentStatusCard
 };
-//# sourceMappingURL=chunk-PUWEP6FQ.js.map
+//# sourceMappingURL=chunk-PR66WGEU.js.map

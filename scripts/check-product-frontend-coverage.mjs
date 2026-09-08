@@ -13,6 +13,7 @@ const requiredRepositories = {
   portal: 'LK-ROBOTICS-AX/lk_portal',
   control: 'LK-ROBOTICS/lkrobotics-control-full-daedeok',
   mlops: 'LK-ROBOTICS/lk_mlops',
+  gungneung: 'LK-ROBOTICS/lkrobotics-control-gungneung',
 };
 const stages = ['discovered', 'wireframed', 'implemented', 'verified'];
 const stageRank = new Map(stages.map((stage, index) => [stage, index]));

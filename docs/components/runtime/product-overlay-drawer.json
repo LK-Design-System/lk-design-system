@@ -402,6 +402,11 @@
         "id": "lds-product-overlay-drawer--compact-density",
         "name": "반응형 · 조밀한 폼",
         "role": "responsive"
+      },
+      {
+        "id": "lds-product-overlay-drawer--brand-close-control",
+        "name": "변형 · 브랜드 표면의 최소 닫기",
+        "role": "variants-states"
       }
     ],
     "hiddenEvidence": 1

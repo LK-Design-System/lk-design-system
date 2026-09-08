@@ -2274,6 +2274,25 @@
       ]
     },
     {
+      "pageTitle": "LDS Product/Data/Operations/Schedule Calendar",
+      "importPath": "./stories/DataScheduleCalendar.stories.jsx",
+      "storyId": "lds-product-data-operations-schedule-calendar--month-overview",
+      "exportName": "MonthOverview",
+      "descriptionHash": "3498de95509f2a930ce1e7eded36faa6aeef84a6caed90d347cb01e4dd31841c",
+      "sentences": [
+        {
+          "hash": "23d59d6a16ba9b92c6cde649c0203626ca3e0fef631213c33d6d6a389b5bd1ee",
+          "text": "2026년 9월의 순찰·점검 이벤트를 월 격자에서 읽는 상황입니다.",
+          "decision": "unreviewed"
+        },
+        {
+          "hash": "45867fe38402fd6c949a916c222787b61c127349dca7295ad96cb7da6afd9496",
+          "text": "날짜 하나만 Tab에 남는 roving 격자, Arrow 이동, Enter로 하루 선택, 이벤트 chip 활성화, 셀당 3건을 넘는 이벤트의 +N개 접힘을 확인하세요.",
+          "decision": "unreviewed"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Product/Data/Operations/Visibility Manager",
       "importPath": "./stories/DataVisibilityManager.stories.jsx",
       "storyId": "lds-product-data-operations-visibility-manager--visibility-and-order",

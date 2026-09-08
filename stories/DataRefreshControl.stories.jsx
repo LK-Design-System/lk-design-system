@@ -87,7 +87,7 @@ export const RefreshingNarrow = {
 };
 
 export const PlainHeaderAction = {
-  name: '표현 · 헤더용 plain 새로고침',
+  name: '시나리오 · 헤더용 외곽선 없는 새로고침',
   parameters: storyDescription(
     '페이지·상세 헤더처럼 이미 다른 chrome이 있는 최상위 표면에서 `refreshButtonVariant="plain"`으로 외곽선 없는 새로고침 icon만 남기는 상황입니다. 기본 ghost와 나란히 두고 접근 가능한 이름·크기·target은 같고 외곽선만 다른지 확인하세요.',
   ),

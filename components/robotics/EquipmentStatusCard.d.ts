@@ -18,6 +18,12 @@ export interface EquipmentStatusCardProps extends Omit<React.HTMLAttributes<HTML
   status: React.ReactNode;
   /** Semantic tone for the primary condition indicator. @default "neutral" */
   statusTone?: 'positive' | 'cautionary' | 'negative' | 'signal' | 'neutral';
+  /** Prominent primary readout such as the current floor, door position or lift position. Read after the status and before the facts. */
+  readout?: React.ReactNode;
+  /** Short caption naming what the readout is (e.g. "현재 층"). */
+  readoutLabel?: React.ReactNode;
+  /** Semantic tone for the readout text. `neutral` keeps the strong label ink. @default "neutral" */
+  readoutTone?: 'positive' | 'cautionary' | 'negative' | 'signal' | 'neutral';
   /** Labeled supporting facts presented as a semantic description list. */
   details?: readonly EquipmentStatusCardDetail[];
   /** Optional freshness, ownership, or other low-emphasis metadata. */

@@ -9,16 +9,16 @@
   },
   "source": {
     "componentRegistry": "docs/components/component-content.json",
-    "componentRegistryFingerprint": "2e54d5b096e9e264420c5c8289cf79a0766370e9b9722fa5d015a4104ffcaa4e",
+    "componentRegistryFingerprint": "cefaeeb64b9701e7d2896d241c651b7c3385db323c383639f16f6f43bf346b77",
     "expressionProfileContract": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
     "expressionProfileContractFingerprint": "a03ba9dfca89707917b27ea9609b7bb3541239ec7850afb360f2fab0c8ff6d17"
   },
   "summary": {
-    "entryCount": 208,
+    "entryCount": 209,
     "categoryCounts": {
       "profile-token-automatic": 7,
       "explicit-size-density": 93,
-      "fixed": 93,
+      "fixed": 94,
       "not-applicable": 15
     },
     "profileAwareEntries": 97
@@ -1117,6 +1117,20 @@
         "size"
       ],
       "profileTokens": []
+    },
+    {
+      "id": "schedule-calendar",
+      "title": "ScheduleCalendar",
+      "source": "components/data/ScheduleCalendar.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
     },
     {
       "id": "sparkline",

@@ -4,6 +4,7 @@
 var _chunkGW3BLGYBcjs = require('./chunk-GW3BLGYB.cjs');
 
 
+
 var _chunkMBKOVB2Kcjs = require('./chunk-MBKOVB2K.cjs');
 
 // components/robotics/EquipmentStatusCard.jsx
@@ -15,6 +16,9 @@ function EquipmentStatusCard({
   description,
   status,
   statusTone = "neutral",
+  readout,
+  readoutLabel,
+  readoutTone = "neutral",
   details = [],
   meta,
   actions,
@@ -26,6 +30,8 @@ function EquipmentStatusCard({
   const hasDetails = details.length > 0;
   const hasFooter = meta != null || actions != null;
   const resolvedStatusTone = _chunkMBKOVB2Kcjs.normalizeStatusTone.call(void 0, statusTone);
+  const resolvedReadoutTone = _chunkMBKOVB2Kcjs.normalizeStatusTone.call(void 0, readoutTone);
+  const readoutColor = resolvedReadoutTone === "offline" ? "var(--color-semantic-label-strong)" : _chunkMBKOVB2Kcjs.statusToneStyle.call(void 0, resolvedReadoutTone).foreground;
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "article",
     {
@@ -116,6 +122,51 @@ function EquipmentStatusCard({
             ]
           }
         ),
+        readout != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+          "div",
+          {
+            "data-equipment-readout": "",
+            "data-equipment-readout-tone": resolvedReadoutTone,
+            style: {
+              display: "flex",
+              alignItems: "baseline",
+              gap: "var(--space-2)",
+              flexWrap: "wrap",
+              minWidth: 0,
+              paddingTop: "var(--space-3)",
+              borderTop: "1px solid var(--color-semantic-line-normal-normal)"
+            },
+            children: [
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                "span",
+                {
+                  style: {
+                    color: readoutColor,
+                    fontSize: "var(--title1-size)",
+                    lineHeight: "var(--title1-line)",
+                    fontWeight: "var(--fw-bold)",
+                    fontVariantNumeric: "tabular-nums",
+                    letterSpacing: 0,
+                    overflowWrap: "anywhere"
+                  },
+                  children: readout
+                }
+              ),
+              readoutLabel != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                "span",
+                {
+                  style: {
+                    color: "var(--color-semantic-label-alternative)",
+                    fontSize: "var(--caption1-size)",
+                    lineHeight: "var(--caption1-line)",
+                    fontWeight: "var(--fw-semibold)"
+                  },
+                  children: readoutLabel
+                }
+              )
+            ]
+          }
+        ),
         hasDetails && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "dl",
           {
@@ -201,4 +252,4 @@ function EquipmentStatusCard({
 
 
 exports.EquipmentStatusCard = EquipmentStatusCard;
-//# sourceMappingURL=chunk-FJ3D44IE.cjs.map
+//# sourceMappingURL=chunk-L3ZJJE26.cjs.map

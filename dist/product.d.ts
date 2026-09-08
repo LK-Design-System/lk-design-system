@@ -48,6 +48,7 @@ export { NetworkGraph } from '../components/data/NetworkGraph';
 export { RefreshControl } from '../components/data/RefreshControl';
 export { ResourceState } from '../components/data/ResourceState';
 export { SavedViewControl } from '../components/data/SavedViewControl';
+export { ScheduleCalendar } from '../components/data/ScheduleCalendar';
 export { Sparkline } from '../components/data/Sparkline';
 export { getTableDataCellStyle, getTableHeaderCellStyle, Table } from '../components/data/Table';
 export { Tree } from '../components/data/Tree';

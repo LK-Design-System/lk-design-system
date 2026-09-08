@@ -32,6 +32,7 @@
 
 - `title`과 `status`는 필수입니다. `headingLevel`은 주변 문서 계층에 맞춰 `2`–`6` 중 선택하며 기본값은 `3`입니다.
 - `statusTone`은 `positive | cautionary | negative | signal | neutral`입니다. 톤은 상태를 보강할 뿐이며, `StatusBadge`의 보이는 라벨이 항상 주 정보를 전달합니다.
+- `readout`은 현재 층, 문 위치(`OPEN`/`CLOSE`), 리프트 위치처럼 **한눈에 읽어야 하는 대표 값** 하나를 상태 아래·facts 위에 크게 놓는 additive 슬롯입니다. `readoutLabel`이 값의 이름을 붙이고 `readoutTone`은 텍스트 잉크만 semantic 톤으로 바꾸며 기본 `neutral`은 강한 label 잉크를 유지합니다. 값은 `title1` 스케일·tabular-nums로 그리고 별도 원형 배경, 링, 애니메이션은 만들지 않습니다. 대표 값이 없는 장비(게이트웨이 등)는 생략하면 기존 출력과 동일합니다.
 - `details`는 `{ label, value }` 배열이며 semantic `<dl>`로 렌더링됩니다. 값에는 문자열뿐 아니라 `ConnectionBadge`, 아이콘+방향 텍스트 같은 LDS 조합을 넣을 수 있습니다.
 - `meta`는 갱신 시각이나 소유 정보처럼 낮은 강조도의 정보를, `actions`는 장비 전체에 적용되는 LDS 동작을 받습니다. 전송·권한·확인 정책은 제품이 소유합니다.
 - DOM과 keyboard reading order는 identity group → status → details → meta → actions입니다. 좁은 폭에서는 상태와 footer가 다음 줄로 감싸지지만 순서는 바뀌지 않습니다.
@@ -48,6 +49,16 @@
 - `details[].value`에 `ConnectionBadge` 같은 LDS 조합을 넣으면 그 요소는 **자기 타입 스케일을 유지합니다**(ConnectionBadge는 `sm` 12px · `md` 13px). label1에 맞추려고 조합물의 크기를 덮어쓰지 않습니다. 배지를 카드마다 다른 크기로 만들면 같은 배지가 화면마다 달라지고, 그 대가가 한 행 안의 2px 차이보다 큽니다. 대신 라벨→값 정렬선과 baseline은 값 종류와 무관하게 유지합니다.
 - 그 결과 한 행에서 문자열 값(14px)과 조합 배지(12–13px)가 나란히 놓일 수 있습니다. 크기 차이가 읽기를 방해하는 화면이라면 두 값을 모두 문자열로 두거나 두 값 모두 같은 조합물로 맞추는 쪽이, 컴포넌트가 조합물 크기를 강제하는 것보다 낫습니다.
 
+## Facility equipment composition (elevator, door, stair lift)
+
+승강기·자동문·계단 리프트처럼 **위치 값이 대표 정보인 설비**는 별도 카드를 만들지 않고 이 컴포넌트를 조합합니다.
+
+- 승강기: `status`=운행/점검/고장, `readout`=현재 층(`3F`), `details`=이동 방향(`Icon chevron-up-small` + `상승 중`), 문(`열림`/`닫힘`). 방향 chevron은 `ElevatorFleetOverview`처럼 정적 glyph이며 깜박임을 쓰지 않습니다.
+- 자동문: `readout`=`OPEN`/`CLOSE`/`LOCK`에 `readoutTone`으로 positive/negative/cautionary를 매핑하고, 열기 명령은 `actions`의 `Button`으로 둡니다. 명령 전송·5초 낙관적 표시·권한은 제품이 소유합니다.
+- 계단 리프트: `readout`=위치(`BOTTOM`/`TOP`), `details`=운행(`상행`/`하행`/`대기`), 잠금(`StatusBadge`).
+- 상태 어휘는 Robotics `FacilityTransition`의 `FacilityDoorState`(`closed|moving|open|offline|unknown`)와 `LiftMotionState`(`stopped|up|down|unknown`)를 그대로 쓸 수 있고, 표시 라벨은 제품이 번역합니다.
+- 근거: 승강기 감시 category 자료(`ElevatorFleetOverview`가 인용하는 Vantage NEXUS position indicator, Nidec MSD)는 현재 위치를 가장 큰 요소로, 방향·문·모드를 보조 텍스트로 둡니다. [WCAG 2.2 Use of Color](https://www.w3.org/TR/WCAG22/#use-of-color)에 따라 readout 톤은 보조이며 `status` 라벨과 `details` 텍스트가 같은 의미를 전달합니다.
+
 ## External category evidence
 
 - [Adobe Spectrum Status light](https://spectrum.adobe.com/page/status-light/): 상태 light는 항상 라벨을 포함해야 하고 색만으로 상태를 전달하면 안 됩니다. 라벨 텍스트 색을 상태 점 색과 맞추지 않으며, 긴 라벨은 가용 폭에서 wrap되어야 한다는 결론을 `StatusBadge` 조합과 visible status contract에 반영했습니다.
@@ -56,6 +67,8 @@
 외부 레퍼런스는 category anatomy와 접근성 근거이며 스타일을 복사하지 않습니다. LDS sibling과 semantic token이 최종 시각 언어를 결정합니다.
 
 ## Product workflow coverage
+
+- **LK Control Gungneung** (`LK-ROBOTICS/lkrobotics-control-gungneung` · `9298e1c0`): `supported by composition`. `frontend/src/views/dashboard/RobotDashboard/components/common/{ElevatorStatus,AutoDoorStatus,StairLiftStatus}.jsx`는 층/문/리프트 위치가 대표 값이고 방향·문·잠금이 보조 상태이며 자동문 열기 명령이 붙는 세 설비를 증명합니다. `readout`과 `actions` 조합으로 표현하며 STOMP 상태 반영, 명령 전송, 낙관적 표시 시간은 제품이 소유합니다.
 
 제품 저장소는 **어떤 장비와 상태 종류를 커버해야 하는지**를 확인하는 자료일 뿐, 이 컴포넌트의 anatomy·geometry·API·시각 스타일 근거가 아닙니다. pinned revision은 `docs/references/product-frontends/COVERAGE_AUDIT.json`에서 관리합니다.
 

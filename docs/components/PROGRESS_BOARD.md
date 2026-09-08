@@ -108,11 +108,12 @@
 | [Description List](guides/product-data-display-description-list.md) | Product / Display | `DescriptionList` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Metric Card](guides/product-data-display-metric-card.md) | Product / Display | `MetricCard` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Resource State](guides/product-data-display-resource-state.md) | Product / Display | `ResourceState` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Data Toolbar](guides/product-data-operations-data-toolbar.md) | Product / Operations | `DataToolbar` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 1 hidden |
+| [Data Toolbar](guides/product-data-operations-data-toolbar.md) | Product / Operations | `DataToolbar` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 1 hidden |
 | [Export Action](guides/product-data-operations-export-action.md) | Product / Operations | `DataExportAction` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Filter Bar](guides/product-data-operations-filter-bar.md) | Product / Operations | `FilterBar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
-| [Refresh Control](guides/product-data-operations-refresh-control.md) | Product / Operations | `RefreshControl` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
+| [Refresh Control](guides/product-data-operations-refresh-control.md) | Product / Operations | `RefreshControl` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Saved View](guides/product-data-operations-saved-view.md) | Product / Operations | `SavedViewControl` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
+| [Schedule Calendar](guides/product-data-operations-schedule-calendar.md) | Product / Operations | `ScheduleCalendar` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Visibility Manager](guides/product-data-operations-visibility-manager.md) | Product / Operations | `VisibilityManager` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Annotated Image](guides/product-data-visualization-annotated-image.md) | Product / Visualization | `AnnotatedImage` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 0 hidden |
 | [Bar Chart](guides/product-data-visualization-bar-chart.md) | Product / Visualization | `BarChart` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
@@ -148,7 +149,7 @@
 | [Dashboard Grid](guides/product-operations-dashboard-dashboard-grid.md) | Product / Operations Dashboard | `DashboardGrid` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Dashboard Shell](guides/product-operations-dashboard-dashboard-shell.md) | Product / Operations Dashboard | `DashboardShell` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 0 hidden |
 | [Command Palette](guides/product-overlay-command-palette.md) | Product / Overlay | `CommandPalette` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
-| [Drawer](guides/product-overlay-drawer.md) | Product / Overlay | `Drawer` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
+| [Drawer](guides/product-overlay-drawer.md) | Product / Overlay | `Drawer` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Hover Card](guides/product-overlay-hover-card.md) | Product / Overlay | `HoverCard` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Lightbox](guides/product-overlay-lightbox.md) | Product / Overlay | `Lightbox` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
 | [Sheet](guides/product-overlay-sheet.md) | Product / Overlay | `Sheet` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
@@ -171,7 +172,7 @@
 | [Wheel Picker](guides/product-selection-and-input-wheel-picker.md) | Product / Selection and Input | `WheelPicker` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Battery Gauge](guides/product-status-battery-gauge.md) | Product / Status | `BatteryGauge` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Connection Badge](guides/product-status-connection-badge.md) | Product / Status | `ConnectionBadge` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
-| [Equipment State](guides/product-status-equipment-state.md) | Product / Status | `EquipmentStatusCard` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
+| [Equipment State](guides/product-status-equipment-state.md) | Product / Status | `EquipmentStatusCard` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Telemetry Gauge](guides/product-status-telemetry-gauge.md) | Product / Status | `TelemetryGauge` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
 | [Telemetry Value](guides/product-status-telemetry-value.md) | Product / Status | `TelemetryValue` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [2D Map](guides/product-viewer-2-d-map.md) | Product / Viewer | `Map2DCanvas` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 4 hidden |

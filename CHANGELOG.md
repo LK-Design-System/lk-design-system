@@ -2,6 +2,25 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## Unreleased
+
+Source-only candidate. LDS coverage extension for the LK Control Gungneung solution variant
+(`LK-ROBOTICS/lkrobotics-control-gungneung`); no immutable tag, paired Robotics release,
+registry publish, consumer re-verification, rollout or product deployment is attested here.
+
+### Added
+
+- `ScheduleCalendar` (Product / Operations): month, week and day projection of expanded
+  time-bound events with a roving APG grid keyboard model, `onSlotSelect` day/hour selection,
+  `onEventActivate`, month-cell `+N개` overflow, all-day row, overlapping-event column packing,
+  `minTime`/`maxTime` time axis and a minute-ticking now indicator. Recurrence expansion,
+  persistence, drag editing and the create/edit form stay product-owned. `Calendar` remains
+  the single-value date input.
+- `EquipmentStatusCard` gained an additive `readout` / `readoutLabel` / `readoutTone` axis for
+  equipment whose position value is the primary fact (current floor, door position, lift
+  position). Omitted, the card renders exactly as before. The prompt records the elevator,
+  automatic-door and stair-lift compositions that replace product-specific facility cards.
+
 ## 0.2.3 - 2026-09-08
 
 Paired Robotics release: `0.1.0-rc.38`. This patch fixes the mid-width DataToolbar filter

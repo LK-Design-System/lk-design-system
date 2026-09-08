@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
-import { normalizeStatusTone } from '@lk-design-system/lds-core/component-authoring';
+import { normalizeStatusTone, statusToneStyle } from '@lk-design-system/lds-core/component-authoring';
 
 /**
  * LK ROBOTICS — EquipmentStatusCard
@@ -14,6 +14,9 @@ export function EquipmentStatusCard({
   description,
   status,
   statusTone = 'neutral',
+  readout,
+  readoutLabel,
+  readoutTone = 'neutral',
   details = [],
   meta,
   actions,
@@ -25,6 +28,10 @@ export function EquipmentStatusCard({
   const hasDetails = details.length > 0;
   const hasFooter = meta != null || actions != null;
   const resolvedStatusTone = normalizeStatusTone(statusTone);
+  const resolvedReadoutTone = normalizeStatusTone(readoutTone);
+  const readoutColor = resolvedReadoutTone === 'offline'
+    ? 'var(--color-semantic-label-strong)'
+    : statusToneStyle(resolvedReadoutTone).foreground;
 
   return (
     <article
@@ -108,6 +115,48 @@ export function EquipmentStatusCard({
           {status}
         </StatusBadge>
       </header>
+
+      {readout != null && (
+        <div
+          data-equipment-readout=""
+          data-equipment-readout-tone={resolvedReadoutTone}
+          style={{
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: 'var(--space-2)',
+            flexWrap: 'wrap',
+            minWidth: 0,
+            paddingTop: 'var(--space-3)',
+            borderTop: '1px solid var(--color-semantic-line-normal-normal)',
+          }}
+        >
+          <span
+            style={{
+              color: readoutColor,
+              fontSize: 'var(--title1-size)',
+              lineHeight: 'var(--title1-line)',
+              fontWeight: 'var(--fw-bold)',
+              fontVariantNumeric: 'tabular-nums',
+              letterSpacing: 0,
+              overflowWrap: 'anywhere',
+            }}
+          >
+            {readout}
+          </span>
+          {readoutLabel != null && (
+            <span
+              style={{
+                color: 'var(--color-semantic-label-alternative)',
+                fontSize: 'var(--caption1-size)',
+                lineHeight: 'var(--caption1-line)',
+                fontWeight: 'var(--fw-semibold)',
+              }}
+            >
+              {readoutLabel}
+            </span>
+          )}
+        </div>
+      )}
 
       {hasDetails && (
         <dl

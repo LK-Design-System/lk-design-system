@@ -13,6 +13,18 @@
 
 > **Coverage is observation, not product IA authority.** 이 문서와 audit JSON은 고정 source에서 실제로 확인한 LDS 지원·소비 현황을 기록한다. 특정 제품 화면에 Card, grid, section surface 또는 완성 page anatomy를 강제하는 규격이 아니다. 제품이 정보구조를 바꾸면 해당 화면의 소비자 판정과 source evidence를 갱신하되, LDS가 제품의 section 경계나 시각적 표면을 대신 결정하지 않는다.
 
+## ScheduleCalendar · EquipmentStatusCard readout · Gungneung facility and schedule coverage · 2026-09-08
+
+궁릉 Full Control solution variant(`LK-ROBOTICS/lkrobotics-control-gungneung` · `9298e1c0a2cc02d8f6fb98975ae7f8f2158da926`)의 스케줄 화면과 시설 상태 위젯을 LDS가 덮을 수 있도록 `ScheduleCalendar`를 추가하고 `EquipmentStatusCard`에 `readout` 축을 더했다. 제품 source는 필요한 이벤트 종류·상태·명령을 증명하는 coverage gate이며, anatomy·API·시각은 `ScheduleCalendar.prompt.md`와 `EquipmentStatusCard.prompt.md`의 sibling·외부 근거에서 독립적으로 도출했다.
+
+| 제품 자산 | 고정 source | 판정 | LDS와 제품의 책임 경계 |
+| --- | --- | --- | --- |
+| LK Control Gungneung | `LK-ROBOTICS/lkrobotics-control-gungneung` · `9298e1c0a2cc02d8f6fb98975ae7f8f2158da926` · `frontend/src/views/schedule/components/CalendarView.jsx` (`98a34505ce78bf565b6bbb523716752e2a316465`) · `frontend/src/api/scheduledPatrolService.ts` (`b2d1a6908c8bf3d06b1f527a163fc47f40e3648b`) | supported by composition (`ScheduleCalendar`) | month/week/day 격자, dateClick→폼 연결, `+N개` overflow를 LDS가 소유한다. 로봇별 `runTime` 정기 순찰을 날짜 인스턴스로 펼치는 것, 저장·권한·폼, list 보기(`Table` 조합)는 제품이 소유한다. |
+| LK Control Gungneung | 같은 revision · `frontend/src/views/dashboard/RobotDashboard/components/common/ElevatorStatus.jsx` (`db31b49f37f30e77d1dca30b4b6ca112afa07ac9`) · `AutoDoorStatus.jsx` (`2ba46734461972b1ff317421fb06f194da090ada`) · `StairLiftStatus.jsx` (`af89e472bd8ab86858bb8e38f4bf54165c1d7f1c`) | supported by composition (`EquipmentStatusCard` + `readout`) | 층·문·리프트 위치 readout, 방향·문·잠금 facts, 문 열기 `actions`를 LDS가 표현한다. STOMP 상태 반영, 명령 전송과 5초 낙관적 표시, 깜박임 대신 정적 방향 glyph 채택은 각각 제품 소유와 LDS 결정이다. |
+| LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19` | not applicable | pinned source에 캘린더 격자와 시설 위치 카드가 없다. |
+| LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `4701e1dcfb0d0e9163c74c227da2d6feb801cb30` | not applicable | 작업 이력은 card feed이며 시간 격자·시설 카드가 아니다. |
+| LK Portal | `LK-ROBOTICS-AX/lk_portal` · `e5ee99d5062170e26abe63d9105c2b8a024ce710` | not applicable | 일정 격자와 물리 설비 진입점이 없다. |
+
 ## Card · FeatureCard · RecordHeader console density · 2026-08-09
 
 정보가 많은 데스크톱 콘솔이 한 화면에서 더 많은 비교 대상을 보여 주되, 읽기 화면과 기존 소비자의 출력은 바꾸지 않도록 명시적인 opt-in 축을 추가한다. Core `Card`와 Product `FeatureCard`는 `density="comfortable|compact"`를, Product `RecordHeader`는 기존 `PageHeader` 문법과 같은 `size="sm|md"`를 제공한다. 기본값은 각각 `comfortable`, `md`이며 `Card`의 명시적 `padding`과 WDS `platform="mobile"` 계약이 우선한다. 밀도는 공간과 아이콘 타일 크기만 바꾸고 본문 타이포, DOM/읽기 순서, heading, interactive 의미, 색과 elevation은 바꾸지 않는다.

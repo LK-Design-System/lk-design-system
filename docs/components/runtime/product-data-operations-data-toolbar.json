@@ -378,6 +378,11 @@
         "id": "lds-product-data-operations-data-toolbar--responsive-multi-select-filters",
         "name": "반응형 · 다중 선택 필터",
         "role": "responsive"
+      },
+      {
+        "id": "lds-product-data-operations-data-toolbar--narrow-filter-drawer",
+        "name": "반응형 · 좁은 폭의 필터 접기",
+        "role": "responsive"
       }
     ],
     "hiddenEvidence": 1

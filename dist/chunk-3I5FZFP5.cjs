@@ -1,29 +1,29 @@
-"use client";
-import {
-  Divider,
-  HistoryToolbar
-} from "./chunk-CBG4UWSO.js";
-import {
-  IconButton
-} from "./chunk-TAZ6IYIO.js";
-import {
-  Icon
-} from "./chunk-3AUD4KMH.js";
-import {
-  Toolbar
-} from "./chunk-ZENMCU42.js";
-import {
-  ToggleIcon
-} from "./chunk-DYWB3B2C.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+
+var _chunkORAVZFWBcjs = require('./chunk-ORAVZFWB.cjs');
+
+
+var _chunkZHXNBK3Scjs = require('./chunk-ZHXNBK3S.cjs');
+
+
+var _chunkFVL575B5cjs = require('./chunk-FVL575B5.cjs');
+
+
+var _chunk3H3EZZTFcjs = require('./chunk-3H3EZZTF.cjs');
+
+
+var _chunk3DMHJIWScjs = require('./chunk-3DMHJIWS.cjs');
 
 // components/editor/CanvasEditorCommandBar.jsx
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 function actionKey(action, index) {
-  return action.key ?? action.value ?? action.label ?? index;
+  return _nullishCoalesce(_nullishCoalesce(_nullishCoalesce(action.key, () => ( action.value)), () => ( action.label)), () => ( index));
 }
 function actionIcon(icon) {
-  if (typeof icon === "string") return /* @__PURE__ */ jsx(Icon, { name: icon, size: 16, "aria-hidden": "true" });
+  if (typeof icon === "string") return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3DMHJIWScjs.Icon, { name: icon, size: 16, "aria-hidden": "true" });
   return icon;
 }
 function CommandButton({ action, size, index, tabStopKey }) {
@@ -43,18 +43,18 @@ function CommandButton({ action, size, index, tabStopKey }) {
     tabIndex: !disabled && key === tabStopKey ? 0 : -1
   };
   if (action.active !== void 0) {
-    return /* @__PURE__ */ jsx(
-      ToggleIcon,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      _chunkFVL575B5cjs.ToggleIcon,
       {
         ...commonProps,
         pressed: active,
-        onChange: disabled ? void 0 : () => action.onClick?.(),
+        onChange: disabled ? void 0 : () => _optionalChain([action, 'access', _ => _.onClick, 'optionalCall', _2 => _2()]),
         children: actionIcon(action.icon)
       }
     );
   }
-  return /* @__PURE__ */ jsx(
-    IconButton,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    _chunk3H3EZZTFcjs.IconButton,
     {
       ...commonProps,
       round: false,
@@ -66,8 +66,8 @@ function CommandButton({ action, size, index, tabStopKey }) {
 function ActionToolbar({ actions, label, size }) {
   const enabledActions = actions.filter((action) => !action.disabled && typeof action.onClick === "function");
   const tabStopKey = enabledActions.length > 0 ? String(actionKey(enabledActions[0], actions.indexOf(enabledActions[0]))) : void 0;
-  return /* @__PURE__ */ jsx(
-    Toolbar,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    _chunkZHXNBK3Scjs.Toolbar,
     {
       label,
       orientation: "horizontal",
@@ -83,7 +83,7 @@ function ActionToolbar({ actions, label, size }) {
         borderRadius: 0,
         boxShadow: "none"
       },
-      children: actions.map((action, index) => /* @__PURE__ */ jsx(
+      children: actions.map((action, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
         CommandButton,
         {
           action,
@@ -129,8 +129,8 @@ function CanvasEditorCommandBar({
   if (showHistory) {
     groups.push({
       key: "history",
-      node: /* @__PURE__ */ jsx(
-        HistoryToolbar,
+      node: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        _chunkORAVZFWBcjs.HistoryToolbar,
         {
           label: historyLabel,
           canUndo,
@@ -146,27 +146,27 @@ function CanvasEditorCommandBar({
     });
   }
   if (actions.length > 0) {
-    groups.push({ key: "document", node: /* @__PURE__ */ jsx(ActionToolbar, { actions, label: documentLabel, size }) });
+    groups.push({ key: "document", node: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, ActionToolbar, { actions, label: documentLabel, size }) });
   }
   if (legacyViewActions.length > 0) {
-    groups.push({ key: "legacy-view", node: /* @__PURE__ */ jsx(ActionToolbar, { actions: legacyViewActions, label: viewLabel, size }) });
+    groups.push({ key: "legacy-view", node: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, ActionToolbar, { actions: legacyViewActions, label: viewLabel, size }) });
   }
   if (children != null) {
     groups.push({
       key: "extra",
-      node: /* @__PURE__ */ jsx("div", { role: "group", "aria-label": extraLabel, style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }, children })
+      node: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { role: "group", "aria-label": extraLabel, style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }, children })
     });
   }
-  return /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
     {
       ...rest,
       role: "group",
-      "aria-label": ariaLabel ?? label,
+      "aria-label": _nullishCoalesce(ariaLabel, () => ( label)),
       style: { display: "inline-flex", alignItems: "center", gap: "var(--space-2)", flexShrink: 0, ...style },
-      children: groups.map((group, index) => /* @__PURE__ */ jsxs(React.Fragment, { children: [
-        index > 0 && /* @__PURE__ */ jsx(
-          Divider,
+      children: groups.map((group, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
+        index > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          _chunkORAVZFWBcjs.Divider,
           {
             vertical: true,
             style: { minHeight: size === "md" ? 24 : 20, marginInline: "var(--space-1)", alignSelf: "center" }
@@ -178,7 +178,7 @@ function CanvasEditorCommandBar({
   );
 }
 
-export {
-  CanvasEditorCommandBar
-};
-//# sourceMappingURL=chunk-L6X4DRTJ.js.map
+
+
+exports.CanvasEditorCommandBar = CanvasEditorCommandBar;
+//# sourceMappingURL=chunk-3I5FZFP5.cjs.map

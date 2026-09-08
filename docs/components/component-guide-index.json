@@ -420,6 +420,10 @@
     "slug": "product-data-operations-saved-view"
   },
   {
+    "storybookTitle": "LDS Product/Data/Operations/Schedule Calendar",
+    "slug": "product-data-operations-schedule-calendar"
+  },
+  {
     "storybookTitle": "LDS Product/Data/Operations/Visibility Manager",
     "slug": "product-data-operations-visibility-manager"
   },

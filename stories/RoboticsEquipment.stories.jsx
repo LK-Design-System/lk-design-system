@@ -1,8 +1,11 @@
+import React from 'react';
+import { userEvent } from 'storybook/test';
 import {
   Button,
   ConnectionBadge,
   EquipmentStatusCard,
   Icon,
+  StatusBadge,
 } from '../src/index.js';
 import { EquipmentStatusCardCard as EquipmentStatusCardCardStory } from './ProductEditorAndViz.shared.jsx';
 
@@ -70,6 +73,43 @@ export const EquipmentState = {
   ),
 };
 
+export const FacilityEquipment = {
+  name: '사용법 · 승강기·자동문·계단 리프트',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '위치 값이 대표 정보인 세 설비를 같은 카드로 조합합니다. readout이 상태 라벨 뒤·facts 앞에 오고, 방향은 정적 glyph와 텍스트로, 문 열기 명령은 actions로 표현되는지 확인하세요. 명령 전송과 낙관적 표시는 제품이 소유합니다.',
+      },
+    },
+  },
+  render: () => <FacilityEquipmentFixture />,
+  play: async ({ canvasElement }) => {
+    const elevator = canvasElement.querySelector('[data-testid="facility-elevator"]');
+    const readout = elevator?.querySelector('[data-equipment-readout]');
+    const status = elevator?.querySelector('header');
+    const details = elevator?.querySelector('dl');
+    if (!elevator || !readout || !status || !details || readout.textContent?.replace(/\s+/g, '') !== '3F현재층') {
+      throw new Error('The elevator card must expose the floor readout with its caption.');
+    }
+    if (!(status.compareDocumentPosition(readout) & Node.DOCUMENT_POSITION_FOLLOWING) || !(readout.compareDocumentPosition(details) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+      throw new Error('The readout must read after the status header and before the facts.');
+    }
+    const doorReadout = canvasElement.querySelector('[data-testid="facility-door"] [data-equipment-readout]');
+    if (doorReadout?.getAttribute('data-equipment-readout-tone') !== 'negative' || readout.getAttribute('data-equipment-readout-tone') !== 'offline') {
+      throw new Error('readoutTone must resolve to the semantic tone while neutral keeps the strong ink.');
+    }
+    const open = [...canvasElement.querySelectorAll('[data-testid="facility-door"] button')].find((button) => button.textContent?.trim() === '문 열기');
+    if (!open) throw new Error('The door card must expose the open command as a real button.');
+    await userEvent.click(open);
+    if (canvasElement.querySelector('[data-testid="door-request"]')?.textContent !== '열기 요청 전송') {
+      throw new Error('The open command must delegate to the product callback.');
+    }
+    const fixture = canvasElement.querySelector('[data-testid="facility-fixture"]');
+    if (fixture.scrollWidth > fixture.clientWidth + 1) throw new Error('Facility cards must not overflow their grid.');
+  },
+};
+
 export const ResponsiveHierarchy = {
   name: '반응형 · 다크 · 긴 콘텐츠',
   parameters: {
@@ -122,5 +162,63 @@ export const ResponsiveHierarchy = {
     </div>
   ),
 };
+
+function FacilityEquipmentFixture() {
+  const [doorRequest, setDoorRequest] = React.useState('요청 없음');
+  return (
+    <main data-testid="facility-fixture" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--space-4)', width: '100%', maxWidth: 880, minWidth: 0 }}>
+      <EquipmentStatusCard
+        data-testid="facility-elevator"
+        headingLevel={2}
+        icon={<Icon name="home" size={24} />}
+        title="승강기 1호기"
+        description="본관 동측"
+        status="운행 중"
+        statusTone="positive"
+        readout="3F"
+        readoutLabel="현재 층"
+        details={[
+          { label: '이동', value: <><Icon name="chevron-up-small" size={16} aria-hidden="true" /> 상승 중</> },
+          { label: '문', value: '닫힘' },
+        ]}
+        meta="5초 전에 갱신"
+      />
+      <EquipmentStatusCard
+        data-testid="facility-door"
+        headingLevel={2}
+        icon={<Icon name="lock-open" size={24} />}
+        title="자동문 · 정문"
+        description="로봇 순찰 동선"
+        status="닫힘 · 잠금 해제"
+        statusTone="neutral"
+        readout="CLOSE"
+        readoutLabel="문 위치"
+        readoutTone="negative"
+        details={[
+          { label: '잠금', value: <StatusBadge tone="positive">해제</StatusBadge> },
+          { label: '마지막 통과', value: '10:42' },
+        ]}
+        actions={<Button type="button" size="sm" variant="outlined" color="assistive" onClick={() => setDoorRequest('열기 요청 전송')}>문 열기</Button>}
+      />
+      <EquipmentStatusCard
+        data-testid="facility-lift"
+        headingLevel={2}
+        icon={<Icon name="setting" size={24} />}
+        title="계단 리프트"
+        description="본관 1층–2층"
+        status="상행 중"
+        statusTone="signal"
+        readout="BOTTOM"
+        readoutLabel="위치"
+        readoutTone="signal"
+        details={[
+          { label: '운행', value: <><Icon name="chevron-up-small" size={16} aria-hidden="true" /> 상행</> },
+          { label: '잠금', value: <StatusBadge tone="negative">잠김</StatusBadge> },
+        ]}
+      />
+      <p data-testid="door-request" role="status" style={{ gridColumn: '1 / -1', margin: 0, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)' }}>{doorRequest}</p>
+    </main>
+  );
+}
 
 export const EquipmentStatusCardCard = { ...EquipmentStatusCardCardStory, name: 'EquipmentStatusCard card parity', tags: ['!dev', 'visual-parity'] };
