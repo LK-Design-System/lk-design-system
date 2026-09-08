@@ -273,14 +273,14 @@ export const DensityComparison = {
       <section data-testid="panel-density-md" style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <div>
           <h2 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>기본 밀도</h2>
-          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>표의 셀 여백이 위아래 14px입니다. 장비 목록처럼 읽고 비교하는 화면의 기본값입니다.</p>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>표의 행 높이가 52px, 셀 여백이 위아래 8px입니다. 장비 목록처럼 읽고 비교하는 화면의 기본값입니다.</p>
         </div>
         <EquipmentCollection label="기본 밀도 장비 목록" />
       </section>
       <section data-testid="panel-density-sm" style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <div>
           <h2 style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>좁은 밀도</h2>
-          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>표의 셀 여백이 위아래 10px입니다. 도구막대와 페이지 이동은 그대로이고 행만 촘촘해집니다.</p>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>표의 행 높이가 44px, 셀 여백이 위아래 6px입니다. 도구막대와 페이지 이동은 그대로이고 행만 촘촘해집니다.</p>
         </div>
         <EquipmentCollection tableSize="sm" label="좁은 밀도 장비 목록" />
       </section>
@@ -296,11 +296,11 @@ export const DensityComparison = {
 
     const md = cellPadding('panel-density-md');
     const sm = cellPadding('panel-density-sm');
-    if (md.block !== '14px' || md.inline !== '16px') {
-      throw new Error(`기본 밀도 패널의 셀 여백은 14px/16px이어야 합니다(현재 ${md.block}/${md.inline}).`);
+    if (md.block !== '8px' || md.inline !== '16px') {
+      throw new Error(`기본 밀도 패널의 셀 여백은 8px/16px이어야 합니다(현재 ${md.block}/${md.inline}).`);
     }
-    if (sm.block !== '10px' || sm.inline !== '12px') {
-      throw new Error(`좁은 밀도 패널의 셀 여백은 10px/12px이어야 합니다(현재 ${sm.block}/${sm.inline}).`);
+    if (sm.block !== '6px' || sm.inline !== '12px') {
+      throw new Error(`좁은 밀도 패널의 셀 여백은 6px/12px이어야 합니다(현재 ${sm.block}/${sm.inline}).`);
     }
 
     const mdRows = rowsOf('panel-density-md');
