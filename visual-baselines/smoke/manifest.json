@@ -208,8 +208,8 @@
         "height": 900
       },
       "reducedMotion": "no-preference",
-      "bytes": 65193,
-      "sha256": "8238ae1070f087dcda80083c67f1b2b91841781cac72c6e0354967050a5a755c"
+      "bytes": 65199,
+      "sha256": "43425e975d75f04e4a912b3c7f5b57e0270b3d85fd782f70a33afb673d1a3b4a"
     },
     {
       "name": "wds-textinput-interactions",
@@ -256,8 +256,8 @@
         "height": 860
       },
       "reducedMotion": "no-preference",
-      "bytes": 62873,
-      "sha256": "ea8dfd405089f64e897b1b3efe3065d83f95a81a1fb71cc9a2cb7417a640eb40"
+      "bytes": 62906,
+      "sha256": "facbf6f6b8941c53cbe74ec0d90e7e23b8083d985372a939a9f14e8c6af6b0cf"
     },
     {
       "name": "wds-menu-patterns-dark",
@@ -270,8 +270,8 @@
         "height": 860
       },
       "reducedMotion": "no-preference",
-      "bytes": 67959,
-      "sha256": "67db74c22f90b8dafef49e886f02202bc82e868630f872429166309f11e7f5c0"
+      "bytes": 67855,
+      "sha256": "7378678f6d629cede8f92fb36b97af85d97109c706829b898b2a8065968bc43d"
     },
     {
       "name": "wds-tooltip-patterns",
