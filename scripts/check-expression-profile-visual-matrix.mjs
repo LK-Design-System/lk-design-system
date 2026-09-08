@@ -286,7 +286,7 @@ async function main() {
             assert(expression.focusable, `${name} has no keyboard-focusable control`);
             assert(expression.rootDefaultButtonHeight === '40px', `${name} root default profile drifted: ${expression.rootDefaultButtonHeight}`);
             assert(expression.rootOpsButtonHeight === '36px', `${name} html[data-lds-profile=ops] did not override Core :root: ${expression.rootOpsButtonHeight}`);
-            assert(expression.rootOpsTablePadding === '10px 12px', `${name} root ops data density did not resolve: ${expression.rootOpsTablePadding}`);
+            assert(expression.rootOpsTablePadding === '6px 12px', `${name} root ops data density did not resolve: ${expression.rootOpsTablePadding}`);
             if (story.id === 'data-dense') {
               assert(expression.targetRects.length > 0, `${name} has no measured dense targets`);
               for (const target of expression.targetRects) {

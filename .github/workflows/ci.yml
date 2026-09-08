@@ -104,12 +104,19 @@ jobs:
         if: ${{ inputs.export_visual_baseline == true }}
         run: npm run update:visual-baseline
 
+      - name: Capture expression-profile baselines on the canonical platform
+        if: ${{ inputs.export_visual_baseline == true }}
+        run: npm run update:expression-profile-visual
+
       - name: Upload canonical visual baselines
         if: ${{ inputs.export_visual_baseline == true }}
         uses: actions/upload-artifact@v4
         with:
           name: canonical-windows-visual-baselines
-          path: visual-baselines/smoke
+          path: |
+            visual-baselines/smoke
+            visual-baselines/expression-profile
+            docs/references/visual/EXPRESSION_PROFILE_MATRIX.json
           if-no-files-found: error
 
   design-system:
