@@ -177,6 +177,7 @@
 | [Telemetry Value](guides/product-status-telemetry-value.md) | Product / Status | `TelemetryValue` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [2D Map](guides/product-viewer-2-d-map.md) | Product / Viewer | `Map2DCanvas` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 4 hidden |
 | [3D Viewport Frame](guides/product-viewer-3-d-viewport-frame.md) | Product / Viewer | `Scene3DFrame` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 2 hidden |
+| [Dot Matrix Preview](guides/product-viewer-dot-matrix-preview.md) | Product / Viewer | `DotMatrixPreview` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Elevator Fleet Overview](guides/product-viewer-elevator-fleet-overview.md) | Product / Viewer | `ElevatorFleetOverview` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 5 hidden |
 | [Floor Selector](guides/product-viewer-floor-selector.md) | Product / Viewer | `FloorSelector` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
 | [Toolbar](guides/product-viewer-toolbar.md) | Product / Viewer | `ViewerToolbar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |

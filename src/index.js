@@ -202,6 +202,7 @@ export { OverlayStatusChip } from '../components/status/OverlayStatusChip.jsx';
 export { ProgressBar } from '../components/status/ProgressBar.jsx';
 export { Skeleton } from '../components/status/Skeleton.jsx';
 export { Spinner } from '../components/status/Spinner.jsx';
+export { DotMatrixPreview } from '../components/viz/DotMatrixPreview.jsx';
 export { ElevatorFleetOverview } from '../components/viz/ElevatorFleetOverview.jsx';
 export { Map2DCanvas } from '../components/viz/Map2DCanvas.jsx';
 export { Scene3DFrame } from '../components/viz/Scene3DFrame.jsx';

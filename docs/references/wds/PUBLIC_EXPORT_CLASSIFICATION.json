@@ -763,6 +763,7 @@
       "provenance": "product-extension",
       "storyEvidence": [
         "stories/Viewer3D.stories.jsx",
+        "stories/ViewerDotMatrixPreview.stories.jsx",
         "stories/ViewerElevatorFleet.stories.jsx",
         "stories/ViewerFloorSelector.stories.jsx",
         "stories/ViewerFrame.stories.jsx",
@@ -771,13 +772,14 @@
         "stories/ViewerVideo.stories.jsx"
       ],
       "exports": [
+        "DotMatrixPreview",
         "ElevatorFleetOverview",
         "FloorSelector",
         "Map2DCanvas",
         "Scene3DFrame",
-        "VideoStreamTile",
         "VIEWER_BLOCKING_STATES",
         "VIEWER_STATES",
+        "VideoStreamTile",
         "ViewerFrame",
         "ViewerToolbar",
         "ViewerToolbarButton"

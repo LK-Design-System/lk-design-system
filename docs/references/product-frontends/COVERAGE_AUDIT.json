@@ -22,7 +22,7 @@
     "verified": 16
   },
   "componentDispositionSummary": {
-    "keep": 25,
+    "keep": 26,
     "redesign": 7,
     "split": 8,
     "remove": 22,
@@ -1425,6 +1425,61 @@
           "repo": "portal",
           "classification": "not applicable",
           "reason": "No physical-equipment entry point.",
+          "sourceEvidence": [
+            {
+              "path": "src/components/chat/FloatingChat.tsx",
+              "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DotMatrixPreview",
+      "path": "components/viz/DotMatrixPreview.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-03"
+      ],
+      "reason": "Provides the physical-panel preview of a 1-bit dot-matrix frame with brightness-scaled colour and an accessible text alternative so LED message editors compose Input, Slider, ColorSwatch, StatusBadge and Button around it; rasterisation, wire encoding and transport stay product-owned. Designed from the ViewerFrame/VideoStreamTile siblings and the HTML canvas best practices, Adafruit matrix and Daktronics message-display references.",
+      "assetReviews": [
+        {
+          "repo": "gungneung",
+          "classification": "supported by composition",
+          "reason": "The pinned LED control dialog proves a 128×32 two-panel preview, 0–255 brightness, colour, MCU connection status, an explicit apply action and the MSB-first bitmap contract; the product keeps font rasterisation and sendLedFrame transport.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/LedControl/index.jsx",
+              "blobSha": "8077b55a8072ab1061db8d223dda2b4d8c970e4a"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "not applicable",
+          "reason": "The pinned Daedeok source has no LED panel editor.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
+              "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+            }
+          ]
+        },
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "No dot-matrix panel surface in the pinned dashboard.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/screens/DashboardScreen.tsx",
+              "blobSha": "3c45fd6e109b169f5ea860a9e84180a7ebbe7a26"
+            }
+          ]
+        },
+        {
+          "repo": "portal",
+          "classification": "not applicable",
+          "reason": "No physical panel entry point.",
           "sourceEvidence": [
             {
               "path": "src/components/chat/FloatingChat.tsx",

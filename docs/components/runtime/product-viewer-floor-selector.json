@@ -116,15 +116,15 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
+      "component": "DotMatrixPreview",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "ElevatorFleetOverview",
       "relationship": "대표 시나리오에서 조합"
     },
     {
       "component": "Scene3DFrame",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "VideoStreamTile",
       "relationship": "대표 시나리오에서 조합"
     },
     {

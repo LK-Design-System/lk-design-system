@@ -53,9 +53,9 @@
 | `Map2DCanvas` | 대표 시나리오에서 조합 |
 | `ViewerToolbar` | 대표 시나리오에서 조합 |
 | `ViewerToolbarButton` | 대표 시나리오에서 조합 |
+| `DotMatrixPreview` | 대표 시나리오에서 조합 |
 | `ElevatorFleetOverview` | 대표 시나리오에서 조합 |
 | `Scene3DFrame` | 대표 시나리오에서 조합 |
-| `VideoStreamTile` | 대표 시나리오에서 조합 |
 | `VIEWER_BLOCKING_STATES` | 대표 시나리오에서 조합 |
 
 ## Examples

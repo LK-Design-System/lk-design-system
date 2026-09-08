@@ -265,6 +265,7 @@
     "stories/StatusStatusBadge.stories.jsx": "LDS Core/Components/Status/Status Badge",
     "stories/ThemeBrandSpinner.stories.jsx": "LDS Theme/Status/Brand Spinner",
     "stories/Viewer3D.stories.jsx": "LDS Product/Viewer/3D Viewport Frame",
+    "stories/ViewerDotMatrixPreview.stories.jsx": "LDS Product/Viewer/Dot Matrix Preview",
     "stories/ViewerElevatorFleet.stories.jsx": "LDS Product/Viewer/Elevator Fleet Overview",
     "stories/ViewerFloorSelector.stories.jsx": "LDS Product/Viewer/Floor Selector",
     "stories/ViewerFrame.stories.jsx": "LDS Product/Viewer/Viewer Frame",

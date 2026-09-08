@@ -105,6 +105,7 @@ export { EquipmentStatusCard } from '../components/robotics/EquipmentStatusCard'
 export { IconPicker } from '../components/selection/IconPicker';
 export { ToggleButton } from '../components/selection/ToggleButton';
 export { WheelPicker } from '../components/selection/WheelPicker';
+export { DotMatrixPreview } from '../components/viz/DotMatrixPreview';
 export { ElevatorFleetOverview } from '../components/viz/ElevatorFleetOverview';
 export { Map2DCanvas } from '../components/viz/Map2DCanvas';
 export { Scene3DFrame } from '../components/viz/Scene3DFrame';

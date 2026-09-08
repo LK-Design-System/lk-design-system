@@ -676,6 +676,10 @@
     "slug": "product-viewer-3-d-viewport-frame"
   },
   {
+    "storybookTitle": "LDS Product/Viewer/Dot Matrix Preview",
+    "slug": "product-viewer-dot-matrix-preview"
+  },
+  {
     "storybookTitle": "LDS Product/Viewer/Elevator Fleet Overview",
     "slug": "product-viewer-elevator-fleet-overview"
   },

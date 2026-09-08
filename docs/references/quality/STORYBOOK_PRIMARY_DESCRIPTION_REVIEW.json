@@ -3505,6 +3505,25 @@
       ]
     },
     {
+      "pageTitle": "LDS Product/Viewer/Dot Matrix Preview",
+      "importPath": "./stories/ViewerDotMatrixPreview.stories.jsx",
+      "storyId": "lds-product-viewer-dot-matrix-preview--panel-preview",
+      "exportName": "PanelPreview",
+      "descriptionHash": "ef34da38911e43579dd87c77f6530eb449871cb730e8f38c5ddbbfff8c127f91",
+      "sentences": [
+        {
+          "hash": "35f3536be6a2fa7a678069f93f2b1426bf5a063861633e5c5a9c3299b042b9c5",
+          "text": "로봇 왼쪽·오른쪽 LED 패널에 같은 안전 문구가 노란색·밝기 60으로 표시된 상황입니다.",
+          "decision": "unreviewed"
+        },
+        {
+          "hash": "51b8d2617d5d89da568ca971dbe9dd578512188760b3997b553672ea94c7c0a9",
+          "text": "격자 픽셀이 뭉개지지 않고, 문구·크기·밝기가 텍스트로도 읽히며, 연결 상태가 패널 이름 옆에 붙는지 확인하세요.",
+          "decision": "unreviewed"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Product/Viewer/Elevator Fleet Overview",
       "importPath": "./stories/ViewerElevatorFleet.stories.jsx",
       "storyId": "lds-product-viewer-elevator-fleet-overview--fleet-overview",

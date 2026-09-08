@@ -16,6 +16,14 @@ registry publish, consumer re-verification, rollout or product deployment is att
   `minTime`/`maxTime` time axis and a minute-ticking now indicator. Recurrence expansion,
   persistence, drag editing and the create/edit form stay product-owned. `Calendar` remains
   the single-value date input.
+- `DotMatrixPreview` (Product / Operations): physical-panel preview of a 1-bit dot-matrix frame
+  (`columns × rows`, MSB-first `bitmap` or `pixels`, hex `color`, controller `brightness`) with a
+  `role="img"` accessible name, text summary, status slot and empty state. Rasterising text, wire encoding and transport stay product-owned; the prompt records
+  the LED message editor composition (Input, Slider, ColorSwatch, StatusBadge, Button).
+- `docs/ANNOUNCEMENT_CONTROL_PATTERN.md`: cross-component pattern for robot/PA announcement
+  control (type Select, confirmed play/stop, priority-aware now-playing status, scoped mute with
+  mandatory TTL and immediate unmute) composed from Select, Button, ConfirmDialog,
+  StatusIndicator, StatusBadge and Banner.
 - `EquipmentStatusCard` gained an additive `readout` / `readoutLabel` / `readoutTone` axis for
   equipment whose position value is the primary fact (current floor, door position, lift
   position). Omitted, the card renders exactly as before. The prompt records the elevator,

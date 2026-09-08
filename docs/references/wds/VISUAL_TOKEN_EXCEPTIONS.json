@@ -3,7 +3,8 @@
   "allowedComponentFiles": {
     "components/brand/BrandLogo.jsx": "Embedded third-party brand logo artwork must preserve provider colors.",
     "components/buttons/SocialButton.jsx": "Social login provider colors and provider kit shadows are explicit brand requirements.",
-    "components/icon/Icon.jsx": "Imported WDS color brand icons preserve provider logo colors; monochrome icons still use currentColor."
+    "components/icon/Icon.jsx": "Imported WDS color brand icons preserve provider logo colors; monochrome icons still use currentColor.",
+    "components/viz/DotMatrixPreview.jsx": "Canvas fills cannot read CSS custom properties; the panel bezel and unlit dots are the physical LED panel black and the lit colour is the product-supplied RGB scaled by brightness."
   },
   "allowedStoryFiles": {
     "stories/Content.shared.jsx": "The mini map preview is an encoded SVG media fixture. CSS variables do not resolve inside the encoded image payload, so its internal art colors are fixed sample asset data rather than component styling.",
@@ -18,7 +19,8 @@
     "stories/CommunicationMessageFeed.stories.jsx": "The rgba(0, 0, 0, 0) literals are play-function assertions on getComputedStyle().backgroundColor — the browser serialization of a transparent background — not component styling.",
     "stories/ContentProse.stories.jsx": "The rgba(0, 0, 0, 0) literals are play-function assertions on getComputedStyle().backgroundColor that prove the scoped Prose stylesheet applied a non-transparent code tint — not component styling.",
     "stories/Brand.shared.jsx": "The official LK ROBOTICS navy, cyan, and white literals are brand asset reference values shown in the logo guidance; they document the source SVG colors and are not reusable component styling.",
-    "stories/StatusFeedback.stories.jsx": "The official LK ROBOTICS navy literal is displayed as brand guidance copy to identify the SVG source color; it is documentation content, not component styling."
+    "stories/StatusFeedback.stories.jsx": "The official LK ROBOTICS navy literal is displayed as brand guidance copy to identify the SVG source color; it is documentation content, not component styling.",
+    "stories/ViewerDotMatrixPreview.stories.jsx": "The story-only rasteriser draws white text on a black offscreen canvas to produce a 1-bit frame, and the swatch palette lists the RGB values a physical LED controller accepts; both describe hardware input, not LDS surfaces."
   },
   "rule": "Reusable component implementation files and Storybook examples must not introduce hardcoded hex/rgb/rgba visual values outside these exceptions. Use semantic, component, inverse, material, status, or effect tokens instead."
 }

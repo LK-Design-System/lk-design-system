@@ -49,10 +49,10 @@ function applyOperation(document, operation) {
 
 test('current Product, Storybook, Robotics, and LDS3D owner surfaces form one exact set', async () => {
   const summary = validateLayerOwnerExactSet(await loadLayerOwnerExactSetSnapshot(root));
-  assert.equal(summary.product.ownedSources, 112);
-  assert.equal(summary.product.ownedExports, 120);
+  assert.equal(summary.product.ownedSources, 113);
+  assert.equal(summary.product.ownedExports, 121);
   assert.equal(summary.product.compatibilitySources, 9);
-  assert.equal(summary.product.canonicalStorybookPages, 110);
+  assert.equal(summary.product.canonicalStorybookPages, 111);
   assert.equal(summary.product.nonCanonicalHiddenPages, 1);
   assert.equal(summary.robotics.sources, 23);
   assert.equal(summary.robotics.exports, 53);

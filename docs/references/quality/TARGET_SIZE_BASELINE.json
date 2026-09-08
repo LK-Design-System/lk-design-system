@@ -15,6 +15,7 @@
     "lds-core-components-selection-and-input-slider-and-range--slider-card::input:값 조절:278x6",
     "lds-product-overlay-command-palette--command-palette-open::combobox:명령 검색…:488x22",
     "lds-product-selection-and-input-file-upload--keyboard-file-selection::input::1x1",
-    "lds-product-selection-and-input-file-upload-queue--upload-and-conversion::input::1x1"
+    "lds-product-selection-and-input-file-upload-queue--upload-and-conversion::input::1x1",
+    "lds-product-viewer-dot-matrix-preview--editor-composition::input:밝기:298x6"
   ]
 }

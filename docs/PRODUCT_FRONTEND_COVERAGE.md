@@ -13,6 +13,18 @@
 
 > **Coverage is observation, not product IA authority.** 이 문서와 audit JSON은 고정 source에서 실제로 확인한 LDS 지원·소비 현황을 기록한다. 특정 제품 화면에 Card, grid, section surface 또는 완성 page anatomy를 강제하는 규격이 아니다. 제품이 정보구조를 바꾸면 해당 화면의 소비자 판정과 source evidence를 갱신하되, LDS가 제품의 section 경계나 시각적 표면을 대신 결정하지 않는다.
 
+## DotMatrixPreview · Announcement control pattern · Gungneung LED and PA coverage · 2026-09-08
+
+궁릉 LED 문구 편집기와 안내방송 control을 LDS가 덮도록 `DotMatrixPreview`를 추가하고 `ANNOUNCEMENT_CONTROL_PATTERN.md`를 정의했다. 제품 source는 패널 기하·상태·action 종류를 증명하는 coverage gate이며, anatomy와 계약은 각 prompt·패턴 문서의 sibling·외부 근거에서 독립적으로 도출했다.
+
+| 제품 자산 | 고정 source | 판정 | LDS와 제품의 책임 경계 |
+| --- | --- | --- | --- |
+| LK Control Gungneung | `LK-ROBOTICS/lkrobotics-control-gungneung` · `9298e1c0a2cc02d8f6fb98975ae7f8f2158da926` · `frontend/src/views/dashboard/RobotDashboard/components/LedControl/index.jsx` (`8077b55a8072ab1061db8d223dda2b4d8c970e4a`) | supported by composition (`DotMatrixPreview` + Input/Slider/ColorSwatch/StatusBadge/Button) | 128×32 양면 패널 미리보기, 밝기·색 반영, 접근 가능한 문구, 빈 프레임 상태는 LDS가 소유한다. 문구→비트맵 rasterization, MSB-first 패킷, 전송과 MCU 상태 폴링은 제품이 소유한다. |
+| LK Control Gungneung | 같은 revision · `frontend/src/views/dashboard/RobotDashboard/components/LiveMonitoring/index.jsx` (`f7abba17320493aef8bfe711564dd9176089da86`) | supported by composition (announcement control pattern) | 방송 종류 Select, 확인된 재생/정지, 우선순위 상태 줄, 범위·유효시간 있는 음소거와 즉시 해제를 패턴이 소유한다. 방송 어휘, STOMP 전송, 우선순위 판정, 유효시간 상한, 권한은 제품이 소유한다. |
+| LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19` | not applicable | pinned source에 LED 패널 편집과 안내방송 control이 없다. |
+| LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `4701e1dcfb0d0e9163c74c227da2d6feb801cb30` | not applicable | 해당 표면이 없다. |
+| LK Portal | `LK-ROBOTICS-AX/lk_portal` · `e5ee99d5062170e26abe63d9105c2b8a024ce710` | not applicable | 해당 표면이 없다. |
+
 ## ScheduleCalendar · EquipmentStatusCard readout · Gungneung facility and schedule coverage · 2026-09-08
 
 궁릉 Full Control solution variant(`LK-ROBOTICS/lkrobotics-control-gungneung` · `9298e1c0a2cc02d8f6fb98975ae7f8f2158da926`)의 스케줄 화면과 시설 상태 위젯을 LDS가 덮을 수 있도록 `ScheduleCalendar`를 추가하고 `EquipmentStatusCard`에 `readout` 축을 더했다. 제품 source는 필요한 이벤트 종류·상태·명령을 증명하는 coverage gate이며, anatomy·API·시각은 `ScheduleCalendar.prompt.md`와 `EquipmentStatusCard.prompt.md`의 sibling·외부 근거에서 독립적으로 도출했다.

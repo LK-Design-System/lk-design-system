@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "535ca242c700a57b25d96370dfe688e69156a66cf8deabca8a64031107da147e",
+    "storybookIndexSha256": "2dbff2622fd231369eb4052ffc8bf3a2f0d877f2d91c784cfe78c6a2c9b867ff",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -61,31 +61,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 197,
-    "stories": 742,
-    "publicStories": 512,
-    "hiddenStories": 230,
-    "componentDescriptions": 192,
-    "pagesWithVisibleCanvasIntroduction": 192,
-    "pagesWithDecisionGuidance": 185,
-    "describedPublicStories": 512,
-    "reviewedPages": 197,
-    "reviewedStories": 742,
+    "pages": 198,
+    "stories": 746,
+    "publicStories": 515,
+    "hiddenStories": 231,
+    "componentDescriptions": 193,
+    "pagesWithVisibleCanvasIntroduction": 193,
+    "pagesWithDecisionGuidance": 186,
+    "describedPublicStories": 515,
+    "reviewedPages": 198,
+    "reviewedStories": 746,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
-      "overview": 180,
-      "usage": 41,
+      "overview": 181,
+      "usage": 42,
       "variants-states": 111,
       "interaction": 56,
-      "responsive": 80,
+      "responsive": 81,
       "scenario": 28,
-      "visual-parity": 98,
+      "visual-parity": 99,
       "internal-contract": 128
     },
     "dispositions": {
-      "keep": 196,
+      "keep": 197,
       "merge": 0,
       "split": 0,
       "hide": 1
@@ -106,11 +106,11 @@
         "guideReadyPages": 12
       },
       "Product": {
-        "pages": 111,
-        "stories": 474,
-        "public": 359,
-        "hidden": 115,
-        "guideReadyPages": 110
+        "pages": 112,
+        "stories": 478,
+        "public": 362,
+        "hidden": 116,
+        "guideReadyPages": 111
       },
       "Theme": {
         "pages": 4,
@@ -24267,6 +24267,153 @@
         }
       ],
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+    },
+    {
+      "title": "LDS Product/Viewer/Dot Matrix Preview",
+      "layer": "Product",
+      "family": "Viewer",
+      "importPath": "./stories/ViewerDotMatrixPreview.stories.jsx",
+      "sourceSha256": "a6738b8a1063a304c1350a25078d4248eb4ae9faecf83cf8f8118eb3b7a3c0d7",
+      "primaryOwner": "DotMatrixPreview",
+      "ownerComponents": [
+        "DotMatrixPreview"
+      ],
+      "supportingComponents": [
+        "Button",
+        "ColorSwatch",
+        "Input",
+        "Slider",
+        "StatusBadge"
+      ],
+      "visibility": {
+        "public": 3,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-viewer-dot-matrix-preview--panel-preview",
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-09-08",
+      "reviewedSourceSha256": "a6738b8a1063a304c1350a25078d4248eb4ae9faecf83cf8f8118eb3b7a3c0d7",
+      "stories": [
+        {
+          "id": "lds-product-viewer-dot-matrix-preview--panel-preview",
+          "name": "개요",
+          "exportName": "PanelPreview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DotMatrixPreview"
+          ],
+          "supportingComponents": [
+            "StatusBadge"
+          ],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
+          "id": "lds-product-viewer-dot-matrix-preview--editor-composition",
+          "name": "사용법 · LED 문구 편집 조합",
+          "exportName": "EditorComposition",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DotMatrixPreview"
+          ],
+          "supportingComponents": [
+            "Button",
+            "ColorSwatch",
+            "Input",
+            "Slider",
+            "StatusBadge"
+          ],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
+          "id": "lds-product-viewer-dot-matrix-preview--narrow-and-offline",
+          "name": "반응형 · 320px와 연결 끊김",
+          "exportName": "NarrowAndOffline",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DotMatrixPreview"
+          ],
+          "supportingComponents": [
+            "StatusBadge"
+          ],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
+          "id": "lds-product-viewer-dot-matrix-preview--dot-matrix-preview-card",
+          "name": "DotMatrixPreview card parity",
+          "exportName": "DotMatrixPreviewCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DotMatrixPreview"
+          ],
+          "supportingComponents": [
+            "StatusBadge"
+          ],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        }
+      ],
+      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots."
     },
     {
       "title": "LDS Product/Viewer/Elevator Fleet Overview",

@@ -1,5 +1,8 @@
 "use client";
 import {
+  ElevatorFleetOverview
+} from "./chunk-25TUIGII.js";
+import {
   Map2DCanvas
 } from "./chunk-JTRFJSWO.js";
 import {
@@ -25,8 +28,8 @@ import {
   ViewerToolbarButton
 } from "./chunk-3GYRODKN.js";
 import {
-  ElevatorFleetOverview
-} from "./chunk-25TUIGII.js";
+  DotMatrixPreview
+} from "./chunk-F2SQA54K.js";
 import {
   ToggleButton
 } from "./chunk-VATV6T5K.js";
@@ -432,6 +435,7 @@ export {
   DescriptionList,
   DockPanel,
   DonutChart,
+  DotMatrixPreview,
   Drawer,
   DrawerSection,
   EditorToolbar,

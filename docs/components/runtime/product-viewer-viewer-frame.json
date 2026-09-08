@@ -330,6 +330,10 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
+      "component": "DotMatrixPreview",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "ElevatorFleetOverview",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -339,10 +343,6 @@
     },
     {
       "component": "Map2DCanvas",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
-      "component": "Scene3DFrame",
       "relationship": "대표 시나리오에서 조합"
     }
   ],

@@ -268,6 +268,10 @@
   ],
   "related": [
     {
+      "component": "DotMatrixPreview",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "ElevatorFleetOverview",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -280,10 +284,6 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "VideoStreamTile",
-      "relationship": "대표 시나리오에서 조합"
-    },
-    {
       "component": "VIEWER_BLOCKING_STATES",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -292,11 +292,11 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "ViewerFrame",
+      "component": "VideoStreamTile",
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "ViewerToolbar",
+      "component": "ViewerFrame",
       "relationship": "대표 시나리오에서 조합"
     }
   ],
