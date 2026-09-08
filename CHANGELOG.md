@@ -2,11 +2,13 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
-## Unreleased
+## 0.2.4 - 2026-09-08
 
-Source-only candidate. LDS coverage extension for the LK Control Gungneung solution variant
-(`LK-ROBOTICS/lkrobotics-control-gungneung`); no immutable tag, paired Robotics release,
-registry publish, consumer re-verification, rollout or product deployment is attested here.
+Paired Robotics release: `0.1.0-rc.39`. This patch carries the LK Control Gungneung coverage
+extension: two additive Product components, one additive EquipmentStatusCard axis, one
+cross-component pattern and the Gungneung coverage pins. No existing public API or token
+value changes; registry publish, consumer re-verification, rollout and product deployment
+are attested separately.
 
 ### Added
 

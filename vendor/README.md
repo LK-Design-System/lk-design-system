@@ -1,6 +1,6 @@
 # Vendored release artifacts
 
-`lk-design-system-lds-robotics-ui-0.1.0-rc.38.tgz` is the exact external
+`lk-design-system-lds-robotics-ui-0.1.0-rc.39.tgz` is the exact external
 Robotics release-candidate artifact consumed by this private workspace and its
 compatibility build.
 
@@ -15,9 +15,9 @@ The v3 external surface records the immutable Robotics release identity.
 Local vendoring verifies the exact vendored artifact bytes as well as the
 workspace lock entry, so clean installs do not depend on a mutable tag.
 
-- Package: `@lk-design-system/lds-robotics-ui@0.1.0-rc.38`
-- File: `lk-design-system-lds-robotics-ui-0.1.0-rc.38.tgz`
-- SHA-256: `46177ed8bf515f0f0d18356e05b31c99532a22e9886eefefe25f1e9b06579f3f`
+- Package: `@lk-design-system/lds-robotics-ui@0.1.0-rc.39`
+- File: `lk-design-system-lds-robotics-ui-0.1.0-rc.39.tgz`
+- SHA-256: `fc10d59c9ade964ac9144016446b9b7e498f88461389d0a562566f115f61b14a`
 - Contents: ESM/types runtime, styles and tokens, licensing, AI entry points,
   and the self-contained `docs/package/*` documentation bundle; no source tree
 
