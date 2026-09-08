@@ -33,7 +33,7 @@ Core `:root` 기본값 뒤에 Theme profile stylesheet를 로드하면 HTML root
 
 | Family | Stable 결정 | 계약 |
 | --- | --- | --- |
-| Table | include | `sm | md`가 profile-aware cell padding token을 선택한다. 기존 `--lk-table-*` 매체 override가 최우선이다. |
+| Table | include | `sm | md`가 profile-aware cell padding token과 row min-height token(default 44/52px, ops 40/48px; 셀 `height`로 적용)을 선택한다. 기존 `--lk-table-*` 매체 override가 최우선이다. |
 | DataGrid | include | cell/header/detail geometry가 profile-aware다. 선택 checkbox는 16px glyph를 유지하면서 실제 label/input target을 24×24px로 제공한다. |
 | ListCell | include | 기존 `verticalPadding` 문법은 유지하고 `sm | md | lg` token 값만 profile-aware로 만든다. |
 | Tree | include | row min-height, padding, gap, indent가 profile-aware다. treeitem keyboard/selection semantics는 동일하다. |

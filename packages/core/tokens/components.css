@@ -214,8 +214,10 @@
   --component-topbar-menu-item-selected-bg: var(--component-menu-item-selected-bg);
 
   /* ---- Repeated data density -------------------------------------------- */
-  --component-table-cell-padding-sm: 10px 12px;
-  --component-table-cell-padding-md: 14px 16px;
+  --component-table-cell-padding-sm: 6px 12px;
+  --component-table-cell-padding-md: 8px 16px;
+  --component-table-row-min-height-sm: 44px;
+  --component-table-row-min-height-md: 52px;
   --component-data-grid-cell-padding-sm: 10px 12px;
   --component-data-grid-cell-padding-md: 13px 16px;
   --component-data-grid-header-height-sm: 50px;

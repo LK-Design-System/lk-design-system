@@ -7,7 +7,10 @@
   "ownerLayer": "theme",
   "package": "@lk-design-system/lds-theme",
   "axis": "data-lds-profile",
-  "values": ["default", "ops"],
+  "values": [
+    "default",
+    "ops"
+  ],
   "default": "default",
   "overrideSource": "tokens/profiles.css",
   "allowedOverrides": [
@@ -26,6 +29,8 @@
     "--component-action-area-gap",
     "--component-table-cell-padding-sm",
     "--component-table-cell-padding-md",
+    "--component-table-row-min-height-md",
+    "--component-table-row-min-height-sm",
     "--component-data-grid-cell-padding-sm",
     "--component-data-grid-cell-padding-md",
     "--component-data-grid-header-height-sm",

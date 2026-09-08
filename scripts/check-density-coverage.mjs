@@ -265,6 +265,8 @@ const PROFILE_TOKEN_EVIDENCE_EXCEPTIONS = new Map([
   ['get-table-data-cell-style', [
     '--component-table-cell-padding-sm',
     '--component-table-cell-padding-md',
+    '--component-table-row-min-height-sm',
+    '--component-table-row-min-height-md',
   ]],
   ['data-grid', [
     '--component-data-grid-cell-padding-sm',

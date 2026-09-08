@@ -168,9 +168,10 @@ export const GroupedRows = {
   },
 };
 
-/* `size`가 바꾸는 것은 셀 패딩뿐이다(14/16 → 10/12). 글자 크기와 행간은 그대로이므로
-   행 높이는 위아래 4px씩, 정확히 8px만 줄어든다. 두 밀도를 같은 데이터로 나란히 놓아
-   그 차이와 선택 기준을 눈으로 확인할 수 있게 한다. */
+/* `size`가 바꾸는 것은 행 높이와 셀 패딩이다(52px·8/16 → 44px·6/12). 글자 크기와
+   행간은 그대로이고, 한 줄 내용의 행은 정확히 그 행 높이로 고정되므로 두 밀도의 차이는
+   행마다 정확히 8px이다. 두 밀도를 같은 데이터로 나란히 놓아 그 차이와 선택 기준을
+   눈으로 확인할 수 있게 한다. */
 export const DensityComparison = {
   name: '반응형 · 기본 밀도와 좁은 밀도',
   parameters: storyDescription(
@@ -181,14 +182,14 @@ export const DensityComparison = {
       <section data-testid="density-md" style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <div>
           <h2 id="density-md-title" style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>기본 밀도</h2>
-          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>셀 여백 위아래 14px. 목록을 읽고 비교하는 것이 목적인 화면의 기본값입니다.</p>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>행 높이 52px, 셀 여백 위아래 8px. 목록을 읽고 비교하는 것이 목적인 화면의 기본값입니다.</p>
         </div>
         <Table columns={columns} rows={rows} tableLabelledBy="density-md-title" style={{ minWidth: 0 }} />
       </section>
       <section data-testid="density-sm" style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <div>
           <h2 id="density-sm-title" style={{ margin: 0, fontSize: 14, lineHeight: 1.35, color: 'var(--color-semantic-label-strong)' }}>좁은 밀도</h2>
-          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>셀 여백 위아래 10px. 한 화면에 더 많은 행을 담아야 하는 운영 화면에 사용합니다.</p>
+          <p style={{ margin: '4px 0 0', fontSize: 12.5, lineHeight: 1.45, color: 'var(--color-semantic-label-alternative)' }}>행 높이 44px, 셀 여백 위아래 6px. 한 화면에 더 많은 행을 담아야 하는 운영 화면에 사용합니다.</p>
         </div>
         <Table size="sm" columns={columns} rows={rows} tableLabelledBy="density-sm-title" style={{ minWidth: 0 }} />
       </section>
@@ -206,11 +207,16 @@ export const DensityComparison = {
 
     const md = cellPadding('density-md');
     const sm = cellPadding('density-sm');
-    if (md.top !== '14px' || md.bottom !== '14px' || md.inline !== '16px') {
-      throw new Error(`기본 밀도의 셀 여백은 14px/16px이어야 합니다(현재 ${md.top}/${md.inline}).`);
+    if (md.top !== '8px' || md.bottom !== '8px' || md.inline !== '16px') {
+      throw new Error(`기본 밀도의 셀 여백은 8px/16px이어야 합니다(현재 ${md.top}/${md.inline}).`);
     }
-    if (sm.top !== '10px' || sm.bottom !== '10px' || sm.inline !== '12px') {
-      throw new Error(`좁은 밀도의 셀 여백은 10px/12px이어야 합니다(현재 ${sm.top}/${sm.inline}).`);
+    if (sm.top !== '6px' || sm.bottom !== '6px' || sm.inline !== '12px') {
+      throw new Error(`좁은 밀도의 셀 여백은 6px/12px이어야 합니다(현재 ${sm.top}/${sm.inline}).`);
+    }
+
+    /* 행 높이는 내용이 아니라 size가 정한다. 한 줄 텍스트 행은 52px/44px에 고정된다. */
+    if (Math.abs(rowOf('density-md') - 52) > 0.5 || Math.abs(rowOf('density-sm') - 44) > 0.5) {
+      throw new Error(`행 높이는 기본 52px, 좁은 밀도 44px이어야 합니다(현재 ${rowOf('density-md').toFixed(1)}/${rowOf('density-sm').toFixed(1)}).`);
     }
 
     const saving = rowOf('density-md') - rowOf('density-sm');

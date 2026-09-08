@@ -2,6 +2,25 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.2.5 - 2026-09-08
+
+Paired Robotics release: `0.1.0-rc.40`. This patch makes `Table` row heights real and
+re-tunes the table cell padding tokens so single-line rows share one height; no public API
+changes.
+
+### Changed
+
+- `Table` rows now really have a minimum height. The `size` row height (`sm` 44px, `md` 52px;
+  `ops` profile 40px/48px through the new `--component-table-row-min-height-sm/md` tokens) is
+  applied as the cell `height`, which table cells treat as a minimum; the `min-height` that
+  0.2.2 set on cells has no effect in any engine, so rows shrank to their content. Single-line
+  rows now share one height and the header row matches it; multi-line cells still grow.
+- `Table` cell padding tokens shrink so single-line controls fit inside that row height:
+  `--component-table-cell-padding-sm` `10px 12px` → `6px 12px`, `-md` `14px 16px` → `8px 16px`
+  (ops `8px 10px` → `4px 10px`, `10px 12px` → `6px 12px`). With the old values a 24px tag or
+  26px avatar pushed a 44px row to 45–47px. `getTableHeaderCellStyle` / `getTableDataCellStyle`
+  follow the same values, so product-owned native tables stay row-for-row aligned.
+
 ## 0.2.4 - 2026-09-08
 
 Paired Robotics release: `0.1.0-rc.39`. This patch carries the LK Control Gungneung coverage

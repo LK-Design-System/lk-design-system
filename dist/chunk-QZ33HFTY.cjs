@@ -3,7 +3,7 @@
 
 
 
-var _chunkDES63Q75cjs = require('./chunk-DES63Q75.cjs');
+var _chunkEQA6DKMLcjs = require('./chunk-EQA6DKML.cjs');
 
 // components/data/Table.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
@@ -15,13 +15,13 @@ function getTableRowMinHeight(size = "md") {
   return size === "sm" ? "var(--lk-table-row-min-height-sm, var(--component-table-row-min-height-sm, 44px))" : "var(--lk-table-row-min-height-md, var(--component-table-row-min-height-md, 52px))";
 }
 function getTableCellPadding(size = "md") {
-  return size === "sm" ? "var(--lk-table-cell-pad-sm, var(--component-table-cell-padding-sm, 10px 12px))" : "var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 14px 16px))";
+  return size === "sm" ? "var(--lk-table-cell-pad-sm, var(--component-table-cell-padding-sm, 6px 12px))" : "var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 8px 16px))";
 }
 function getTableHeaderCellStyle({ size = "md", padding, align = "left", width, truncate = false } = {}) {
-  return { ..._chunkDES63Q75cjs.thStyle.call(void 0, _nullishCoalesce(padding, () => ( getTableCellPadding(size))), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+  return { ..._chunkEQA6DKMLcjs.thStyle.call(void 0, _nullishCoalesce(padding, () => ( getTableCellPadding(size))), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 function getTableDataCellStyle({ size = "md", padding, align = "left", width, truncate = false } = {}) {
-  return { ..._chunkDES63Q75cjs.tdStyle.call(void 0, _nullishCoalesce(padding, () => ( getTableCellPadding(size))), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+  return { ..._chunkEQA6DKMLcjs.tdStyle.call(void 0, _nullishCoalesce(padding, () => ( getTableCellPadding(size))), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
 }
 function TableCellContent({ truncate, children }) {
   if (!truncate) return children;
@@ -143,7 +143,7 @@ function Table({
               );
               if (!opensGroup) return row;
               return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
-                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tr", { "data-table-group": true, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "th", { scope: "colgroup", colSpan: columns.length, style: _chunkDES63Q75cjs.groupThStyle.call(void 0, pad), children: group }) }),
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "tr", { "data-table-group": true, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "th", { scope: "colgroup", colSpan: columns.length, style: _chunkEQA6DKMLcjs.groupThStyle.call(void 0, pad), children: group }) }),
                 row
               ] }, `group-${group}-${ri}`);
             }) })
@@ -159,4 +159,4 @@ function Table({
 
 
 exports.getTableHeaderCellStyle = getTableHeaderCellStyle; exports.getTableDataCellStyle = getTableDataCellStyle; exports.Table = Table;
-//# sourceMappingURL=chunk-IU5ATYCJ.cjs.map
+//# sourceMappingURL=chunk-QZ33HFTY.cjs.map

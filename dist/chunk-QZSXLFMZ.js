@@ -1,10 +1,14 @@
 "use client";
 
 // components/data/table-cell-styles.js
-function thStyle(pad, minHeight) {
+function thStyle(pad, rowHeight) {
   return {
     padding: pad,
-    minHeight,
+    // `height` on a table cell is a minimum: the row grows for taller content
+    // but never collapses below the size's row height. `min-height` has no
+    // effect on table cells (CSS 2.1 §17.5.3 leaves it undefined and engines
+    // ignore it), which is why rows used to shrink to their content.
+    height: rowHeight,
     boxSizing: "border-box",
     verticalAlign: "middle",
     borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
@@ -32,10 +36,10 @@ function groupThStyle(pad) {
     whiteSpace: "nowrap"
   };
 }
-function tdStyle(pad, minHeight) {
+function tdStyle(pad, rowHeight) {
   return {
     padding: pad,
-    minHeight,
+    height: rowHeight,
     boxSizing: "border-box",
     verticalAlign: "middle",
     borderBottom: "1px solid var(--color-semantic-line-solid-normal)",
@@ -52,4 +56,4 @@ export {
   groupThStyle,
   tdStyle
 };
-//# sourceMappingURL=chunk-GORJQT3W.js.map
+//# sourceMappingURL=chunk-QZSXLFMZ.js.map

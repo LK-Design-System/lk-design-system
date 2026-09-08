@@ -9,9 +9,9 @@
   },
   "source": {
     "componentRegistry": "docs/components/component-content.json",
-    "componentRegistryFingerprint": "42e83d77f95d62157ee86c3542a80f244a232761cb8408f077f79235e62e5206",
+    "componentRegistryFingerprint": "97833c6f9fc6eb2cb0bb042ded1100f63b7880c9b80659bf4d8bbcd1dc76b13b",
     "expressionProfileContract": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
-    "expressionProfileContractFingerprint": "a03ba9dfca89707917b27ea9609b7bb3541239ec7850afb360f2fab0c8ff6d17"
+    "expressionProfileContractFingerprint": "88c3fd6a5eb8fb61896af87aa266ab3bf93cae9195c7b6eefd911d566c0a1b5c"
   },
   "summary": {
     "entryCount": 210,
@@ -1159,6 +1159,8 @@
       "profileTokens": [
         "--component-table-cell-padding-md",
         "--component-table-cell-padding-sm",
+        "--component-table-row-min-height-md",
+        "--component-table-row-min-height-sm",
         "--dur-fast"
       ]
     },

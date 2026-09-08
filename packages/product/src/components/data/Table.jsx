@@ -15,8 +15,8 @@ function getTableRowMinHeight(size = 'md') {
 
 function getTableCellPadding(size = 'md') {
   return size === 'sm'
-    ? 'var(--lk-table-cell-pad-sm, var(--component-table-cell-padding-sm, 10px 12px))'
-    : 'var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 14px 16px))';
+    ? 'var(--lk-table-cell-pad-sm, var(--component-table-cell-padding-sm, 6px 12px))'
+    : 'var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 8px 16px))';
 }
 
 /** Public style helpers for product-owned native tables that must match LDS Table cells. */

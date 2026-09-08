@@ -5,7 +5,7 @@
   "role": "provider",
   "package": {
     "name": "@lk-design-system/lds-theme",
-    "version": "0.2.4"
+    "version": "0.2.5"
   },
   "requiresSemanticContractVersion": "1",
   "providesSemanticContractVersion": "1",
@@ -427,6 +427,8 @@
     "--component-status-badge-surface",
     "--component-table-cell-padding-md",
     "--component-table-cell-padding-sm",
+    "--component-table-row-min-height-md",
+    "--component-table-row-min-height-sm",
     "--component-toolbar-gap",
     "--component-toolbar-padding",
     "--component-tree-indent",

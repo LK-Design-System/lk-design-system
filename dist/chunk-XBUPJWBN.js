@@ -3,7 +3,7 @@ import {
   groupThStyle,
   tdStyle,
   thStyle
-} from "./chunk-GORJQT3W.js";
+} from "./chunk-QZSXLFMZ.js";
 
 // components/data/Table.jsx
 import React from "react";
@@ -15,7 +15,7 @@ function getTableRowMinHeight(size = "md") {
   return size === "sm" ? "var(--lk-table-row-min-height-sm, var(--component-table-row-min-height-sm, 44px))" : "var(--lk-table-row-min-height-md, var(--component-table-row-min-height-md, 52px))";
 }
 function getTableCellPadding(size = "md") {
-  return size === "sm" ? "var(--lk-table-cell-pad-sm, var(--component-table-cell-padding-sm, 10px 12px))" : "var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 14px 16px))";
+  return size === "sm" ? "var(--lk-table-cell-pad-sm, var(--component-table-cell-padding-sm, 6px 12px))" : "var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 8px 16px))";
 }
 function getTableHeaderCellStyle({ size = "md", padding, align = "left", width, truncate = false } = {}) {
   return { ...thStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
@@ -159,4 +159,4 @@ export {
   getTableDataCellStyle,
   Table
 };
-//# sourceMappingURL=chunk-7NCDU5B7.js.map
+//# sourceMappingURL=chunk-XBUPJWBN.js.map

@@ -24896,7 +24896,7 @@
         "getRowId — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 row.id, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.",
         "외부 근거: Carbon Data table의 zebra 옵션 — \"행을 따라가는 시선이 옆 행으로 이탈하는 것을 막는\" 넓은 표 장치이며, Carbon은 줄무늬를 끄면 행 구분선을 요구합니다(LDS 기본형이 그 형태). USWDS Table의 striped 변형도 같은 계열입니다. LDS는 두 시스템의 교차 줄무늬 대신 전 행 밴드를 채택합니다(강조 오독 근거는 위).",
         "Header and body cells use font-variant-numeric: tabular-nums so values do not jitter between rows. Set align: 'right' on comparable numeric columns; nominal identifiers such as postal codes or equipment IDs remain left aligned.",
-        "셀 패딩과 타입은 --lk-table-cell-pad-sm/md, --lk-table-head-size/line/spacing, --lk-table-cell-size/line 훅을 경유합니다. 매체 훅이 없으면 --component-table-cell-padding-sm/md를 읽고, 그 token의 default 값은 기존 리터럴과 같습니다. 투영·전시처럼 읽기 거리가 다른 매체의 명시적 --lk-table-가 profile token보다 우선합니다. ops 안의 명시적 size=\"md\"도 API 의미는 유지한 채 ops-md token 값을 사용합니다."
+        "size는 셀 패딩과 함께 행 높이도 선택합니다. 행 높이는 --lk-table-row-min-height-sm/md 매체 훅 → --component-table-row-min-height-sm/md profile token(default 44px/52px, ops 40px/48px) → 리터럴 44px/52px 순서로 해석되며, 셀에 height로 적용됩니다."
       ],
       "anatomy": [
         {

@@ -90,9 +90,11 @@ Reference: [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns
 
 ## 매체 재지정 훅 (`--lk-table-*`)
 
-`size`는 셀 패딩과 함께 최소 행 높이도 선택합니다. 행 높이는 `--lk-table-row-min-height-sm/md` 매체 훅 → `--component-table-row-min-height-sm/md` profile token → 리터럴 44px/52px 순서로 해석되며, 셀은 `box-sizing: border-box`와 `vertical-align: middle`로 그 높이 안에서 중앙 정렬됩니다. 헬퍼에 `padding`을 직접 주면 그 값이 `size` 패딩보다 우선하고 최소 높이는 `size`를 따릅니다.
+`size`는 셀 패딩과 함께 행 높이도 선택합니다. 행 높이는 `--lk-table-row-min-height-sm/md` 매체 훅 → `--component-table-row-min-height-sm/md` profile token(default 44px/52px, ops 40px/48px) → 리터럴 44px/52px 순서로 해석되며, 셀에 `height`로 적용됩니다. 표 셀에서 `height`는 최소 높이로 동작하므로(CSS 2.1 §17.5.3은 셀의 `min-height`를 정의하지 않고 엔진은 무시합니다 — 0.2.2의 `min-height` 적용은 그래서 효과가 없었습니다) 한 줄 내용의 행은 정확히 그 높이가 되고, 여러 줄 셀만 행을 키웁니다. 셀은 `box-sizing: border-box`와 `vertical-align: middle`로 그 높이 안에서 중앙 정렬됩니다. 헬퍼에 `padding`을 직접 주면 그 값이 `size` 패딩보다 우선하고 행 높이는 `size`를 따릅니다.
 
-셀 패딩과 타입은 `--lk-table-cell-pad-sm/md`, `--lk-table-head-size/line/spacing`, `--lk-table-cell-size/line` 훅을 경유합니다. 매체 훅이 없으면 `--component-table-cell-padding-sm/md`를 읽고, 그 token의 `default` 값은 기존 리터럴과 같습니다. 투영·전시처럼 읽기 거리가 다른 매체의 명시적 `--lk-table-*`가 profile token보다 우선합니다. `ops` 안의 명시적 `size="md"`도 API 의미는 유지한 채 ops-md token 값을 사용합니다. 전체 precedence와 측정 게이트는 `docs/DENSITY_AND_EXPRESSION_PROFILE_CONTRACT.md`가 정본입니다.
+세로 패딩은 행 높이 안에 한 줄 control이 들어가도록 정합니다: default sm은 44px 행에 6px(내용 공간 31px), md는 52px 행에 8px(35px)라서 24px 태그, 26px 아바타, 28px `Button size="sm"`이 행을 키우지 않습니다. 이전 값(10px/14px)은 내용 공간을 23px/23px로 좁혀 태그·아바타 행이 45·47px로 제각각 커졌습니다(LK Portal 목록 화면 실측, 2026-09-08). ops는 40px/48px 행에 4px/6px입니다. [Carbon Data table](https://carbondesignsystem.com/components/data-table/style/)의 행 높이 모델(compact 24 · short 32 · medium 48 · tall 64를 셀 `height`로 고정하고 내용을 중앙 정렬)과 같은 방식이며, LDS는 자체 44/52 격자를 유지합니다.
+
+셀 패딩과 타입은 `--lk-table-cell-pad-sm/md`, `--lk-table-head-size/line/spacing`, `--lk-table-cell-size/line` 훅을 경유합니다. 매체 훅이 없으면 `--component-table-cell-padding-sm/md`(default `6px 12px`/`8px 16px`, ops `4px 10px`/`6px 12px`)를 읽고, 그 token의 `default` 값은 코드의 리터럴 fallback과 같습니다. 투영·전시처럼 읽기 거리가 다른 매체의 명시적 `--lk-table-*`가 profile token보다 우선합니다. `ops` 안의 명시적 `size="md"`도 API 의미는 유지한 채 ops-md token 값을 사용합니다. 전체 precedence와 측정 게이트는 `docs/DENSITY_AND_EXPRESSION_PROFILE_CONTRACT.md`가 정본입니다.
 
 ## 그룹 행 (`groupKey`)
 

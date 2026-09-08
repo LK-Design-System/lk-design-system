@@ -26,8 +26,10 @@
 
   /* Repeated data: each explicit size keeps its API meaning while the profile
      selects the denser value for that size. Pointer targets remain >= 24px. */
-  --component-table-cell-padding-sm: 8px 10px;
-  --component-table-cell-padding-md: 10px 12px;
+  --component-table-cell-padding-sm: 4px 10px;
+  --component-table-cell-padding-md: 6px 12px;
+  --component-table-row-min-height-sm: 40px;
+  --component-table-row-min-height-md: 48px;
   --component-data-grid-cell-padding-sm: 8px 10px;
   --component-data-grid-cell-padding-md: 10px 12px;
   --component-data-grid-header-height-sm: 44px;
