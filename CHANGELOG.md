@@ -24,6 +24,9 @@ registry publish, consumer re-verification, rollout or product deployment is att
   control (type Select, confirmed play/stop, priority-aware now-playing status, scoped mute with
   mandatory TTL and immediate unmute) composed from Select, Button, ConfirmDialog,
   StatusIndicator, StatusBadge and Banner.
+- Coverage audit: Gungneung map (2D/3D), RTSP tile, gas chart, event feed and teleoperation
+  sources are pinned as `supported by composition` on WF-02, WF-09, WF-15 and the ViewerFrame
+  disposition; no code change.
 - `EquipmentStatusCard` gained an additive `readout` / `readoutLabel` / `readoutTone` axis for
   equipment whose position value is the primary fact (current floor, door position, lift
   position). Omitted, the card renders exactly as before. The prompt records the elevator,

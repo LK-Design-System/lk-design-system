@@ -13,6 +13,18 @@
 
 > **Coverage is observation, not product IA authority.** 이 문서와 audit JSON은 고정 source에서 실제로 확인한 LDS 지원·소비 현황을 기록한다. 특정 제품 화면에 Card, grid, section surface 또는 완성 page anatomy를 강제하는 규격이 아니다. 제품이 정보구조를 바꾸면 해당 화면의 소비자 판정과 source evidence를 갱신하되, LDS가 제품의 section 경계나 시각적 표면을 대신 결정하지 않는다.
 
+## 지도·RTSP·텔레옵 조합 · Gungneung coverage pins · 2026-09-08
+
+궁릉 관제의 도메인 로직이 큰 세 표면(2D/3D 지도, RTSP 타일, 텔레옵)을 LDS 부품 조합으로 판정하고 source pin을 `COVERAGE_AUDIT.json`의 WF-02·WF-09·WF-15와 `ViewerFrame` disposition에 추가했다. 코드 변경은 없다.
+
+| 표면 | 고정 source (`9298e1c0`) | 판정 | LDS와 제품의 책임 경계 |
+| --- | --- | --- | --- |
+| 2D SLAM 지도 · 3D 층 모델 | `InteractiveMap/index.jsx` (`f7807ee8`) · `InteractiveMap3D/index.jsx` (`1d3c5d1c`) | supported by composition (`Map2DCanvas` + Robotics occupancy/pose/waypoint/trajectory overlay, `Scene3DFrame`) | viewport chrome과 marker 문법은 LDS·Robotics가 소유한다. 좌표 보정(polyline projection), GLB 축 자동 감지, landmark 저장, 클릭 명령 전송은 제품이 소유한다. |
+| RTSP 타일 · 가스 차트 · 이벤트 피드 | `LiveMonitoring/index.jsx` (`f7abba17`) · `StreamPlayback.jsx` (`8ef47468`) · `GasSensorChart/index.jsx` (`bca78aae`) · `EventLog/index.jsx` (`55a739b4`) | supported by composition (`VideoStreamTile`/`ViewerFrame`, `LineChart`/`TelemetryValue`, `LogViewer`/`Timeline`) | 재생 게이트·정지·loading/error/offline chrome, 수치 readout, 피드 표면은 LDS가 소유한다. WHEP iframe 수명주기, viewer heartbeat, ppm→% 스케일, STOMP 토픽은 제품이 소유한다. |
+| 텔레옵 (WASD·D-pad·스트림 3개) | `manual-control/index.jsx` (`d4dbedc9`) · `Controls/index.jsx` (`83b1f688`) · `RobotControl/index.jsx` (`02979c11`) · `InlineRobotMove/index.jsx` (`3a9a6d64`) | supported by composition (Robotics `DirectionalPad`/`Joystick`, `ManualControlSession`, O2 ready) | 초점·arm/hold/release·속도 공개·e-stop affordance는 Robotics가 소유한다. 100ms 반복 worker, zero-velocity 전송, 명령 프로토콜, 별도 창 관리는 제품이 소유한다. |
+
+이로써 궁릉 프론트엔드의 화면 15개 중 LDS가 덮지 못하는 표면은 긴급 알람 ack lifecycle(R5/O3, 제품의 영속 ack evidence가 선행)뿐이다.
+
 ## DotMatrixPreview · Announcement control pattern · Gungneung LED and PA coverage · 2026-09-08
 
 궁릉 LED 문구 편집기와 안내방송 control을 LDS가 덮도록 `DotMatrixPreview`를 추가하고 `ANNOUNCEMENT_CONTROL_PATTERN.md`를 정의했다. 제품 source는 패널 기하·상태·action 종류를 증명하는 coverage gate이며, anatomy와 계약은 각 prompt·패턴 문서의 sibling·외부 근거에서 독립적으로 도출했다.

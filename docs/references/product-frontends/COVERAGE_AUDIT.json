@@ -1309,6 +1309,21 @@
               "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
             }
           ]
+        },
+        {
+          "repo": "gungneung",
+          "classification": "supported by composition",
+          "reason": "Three RTSP tiles (RGB/IR/EO) and the live-monitoring tiles need the same title, badge, play-gate and state chrome; the WHEP iframe remains the product-owned source.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/components/StreamPlayback.jsx",
+              "blobSha": "8ef474684747c37efd3128d4ade49ffdac5e8e74"
+            },
+            {
+              "path": "frontend/src/views/manual-control/index.jsx",
+              "blobSha": "d4dbedc97a96bf6f2d51a395f233bea9eda34079"
+            }
+          ]
         }
       ]
     },
@@ -1636,7 +1651,8 @@
         "deviceops",
         "visionops",
         "web-viz",
-        "control"
+        "control",
+        "gungneung"
       ],
       "assetReviews": [
         {
@@ -1669,6 +1685,33 @@
             {
               "path": "src/components/chat/FloatingChat.tsx",
               "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
+            }
+          ]
+        },
+        {
+          "repo": "gungneung",
+          "classification": "supported by composition",
+          "reason": "The pinned live-monitoring surface composes RTSP tiles (MediaMTX WHEP inside an iframe with click-to-play, readiness detection and viewer heartbeat), a live gas-sensor chart and an event feed. VideoStreamTile/ViewerFrame own the play gate, stop, loading/error/offline chrome; LineChart/TelemetryValue own the gas readout; LogViewer/Timeline own the feed. The iframe lifecycle, WHEP transport, heartbeat, ppm scaling and STOMP topics stay product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/LiveMonitoring/index.jsx",
+              "blobSha": "f7abba17320493aef8bfe711564dd9176089da86"
+            },
+            {
+              "path": "frontend/src/components/StreamPlayback.jsx",
+              "blobSha": "8ef474684747c37efd3128d4ade49ffdac5e8e74"
+            },
+            {
+              "path": "frontend/src/api/streamViewerService.ts",
+              "blobSha": "f9f7f682c112eee126120f11cb396dd5b85c5b59"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/GasSensorChart/index.jsx",
+              "blobSha": "bca78aae3fa764ea4a422640a3ed718393566b22"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/EventLog/index.jsx",
+              "blobSha": "55a739b4d29e4be2777c4f0cdd79f387ecfbc493"
             }
           ]
         }
@@ -1715,6 +1758,31 @@
           "repo": "control",
           "path": "frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx",
           "blobSha": "b0fd86a6b4c735aca390cd6dd179f766fa071f08"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/views/dashboard/RobotDashboard/components/LiveMonitoring/index.jsx",
+          "blobSha": "f7abba17320493aef8bfe711564dd9176089da86"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/components/StreamPlayback.jsx",
+          "blobSha": "8ef474684747c37efd3128d4ade49ffdac5e8e74"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/api/streamViewerService.ts",
+          "blobSha": "f9f7f682c112eee126120f11cb396dd5b85c5b59"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/views/dashboard/RobotDashboard/components/GasSensorChart/index.jsx",
+          "blobSha": "bca78aae3fa764ea4a422640a3ed718393566b22"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/views/dashboard/RobotDashboard/components/EventLog/index.jsx",
+          "blobSha": "55a739b4d29e4be2777c4f0cdd79f387ecfbc493"
         }
       ],
       "stage": "verified",
@@ -2226,7 +2294,8 @@
       "userGoal": "Acquire temporary control authority, move only while intent is continuously present, and stop safely on release or loss of truth.",
       "trigger": "The user opens direct robot, camera, gimbal, or jog control.",
       "consumers": [
-        "control"
+        "control",
+        "gungneung"
       ],
       "states": [
         "no-target",
@@ -2256,6 +2325,31 @@
           "repo": "control",
           "path": "frontend/src/views/manual-control/index.jsx",
           "blobSha": "1429c7b72de1ba51ce78f964ecfcb548b963998f"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/views/manual-control/index.jsx",
+          "blobSha": "d4dbedc97a96bf6f2d51a395f233bea9eda34079"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/views/dashboard/RobotDashboard/components/Controls/index.jsx",
+          "blobSha": "83b1f688d565dde84738b349cbfede7c99bf7033"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/views/dashboard/RobotDashboard/components/RobotControl/index.jsx",
+          "blobSha": "02979c1123496b0e6cf3826d0666e19ee443c882"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/views/dashboard/RobotDashboard/components/InlineRobotMove/index.jsx",
+          "blobSha": "3a9a6d647cc76984b5cabfe4b359ed9a1da7647a"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/workers/intervalWorker.js",
+          "blobSha": "9cc08026c19393e7bb0d4ab924b6253070943148"
         }
       ],
       "stage": "verified",
@@ -2279,6 +2373,35 @@
         "stories/RoboticsManualControlSession.stories.jsx",
         "scripts/check-product-frontend-coverage.mjs",
         "scripts/check-storybook-accessibility.mjs"
+      ],
+      "assetReviews": [
+        {
+          "repo": "gungneung",
+          "classification": "supported by composition",
+          "reason": "The pinned teleoperation surfaces drive the robot with WASD keys and D-pad buttons at a 100 ms repeat cadence beside three stream tiles, in a standalone full-screen window and inline on the dashboard. Robotics DirectionalPad/Joystick and ManualControlSession own focus, arm/hold/release, speed disclosure and the e-stop affordance; the repeat worker, zero-velocity transport, command protocol and window management stay product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/manual-control/index.jsx",
+              "blobSha": "d4dbedc97a96bf6f2d51a395f233bea9eda34079"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/Controls/index.jsx",
+              "blobSha": "83b1f688d565dde84738b349cbfede7c99bf7033"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/RobotControl/index.jsx",
+              "blobSha": "02979c1123496b0e6cf3826d0666e19ee443c882"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/InlineRobotMove/index.jsx",
+              "blobSha": "3a9a6d647cc76984b5cabfe4b359ed9a1da7647a"
+            },
+            {
+              "path": "frontend/src/workers/intervalWorker.js",
+              "blobSha": "9cc08026c19393e7bb0d4ab924b6253070943148"
+            }
+          ]
+        }
       ]
     },
     {
@@ -2690,7 +2813,8 @@
       "userGoal": "Inspect and edit map points, lines, regions, landmarks, and floor-specific task targets while preserving the semantic difference between elevator entry, elevator interior, door, waypoint, route, and region geometry.",
       "trigger": "The user opens a map editor or a floor-aware task authoring surface in LK Web Viz.",
       "consumers": [
-        "web-viz"
+        "web-viz",
+        "gungneung"
       ],
       "assetReviews": [
         {
@@ -2761,6 +2885,21 @@
               "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
             }
           ]
+        },
+        {
+          "repo": "gungneung",
+          "classification": "supported by composition",
+          "reason": "The pinned 2D SLAM canvas separates the occupancy image, polyline calibration projection, draggable landmarks, robot pose and click-to-command; the 3D view loads a GLB floor with axis auto-detection and orbit controls. Map2DCanvas with the Robotics occupancy, pose, waypoint and trajectory overlays and Scene3DFrame own the viewport chrome and marker grammar; coordinate calibration, GLB axis detection, landmark persistence and command dispatch stay product-owned.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap/index.jsx",
+              "blobSha": "f7807ee8cf7b09c321e06fd1ce365c1108338337"
+            },
+            {
+              "path": "frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap3D/index.jsx",
+              "blobSha": "1d3c5d1c3c7ff71b7175a4ca6fa81e3c802be327"
+            }
+          ]
         }
       ],
       "states": [
@@ -2816,6 +2955,16 @@
           "repo": "web-viz",
           "path": "frontend/src/components/Map2DViewer.tsx",
           "blobSha": "46da3c8cf57db99247c894496301ab35a46f1e47"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap/index.jsx",
+          "blobSha": "f7807ee8cf7b09c321e06fd1ce365c1108338337"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/views/dashboard/RobotDashboard/components/InteractiveMap3D/index.jsx",
+          "blobSha": "1d3c5d1c3c7ff71b7175a4ca6fa81e3c802be327"
         }
       ],
       "stage": "verified",
