@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "lds-expression-profile-visual-matrix",
-  "generatedAt": "2026-08-22",
+  "generatedAt": "2026-09-08",
   "matrix": {
     "profiles": [
       "default",
@@ -77,7 +77,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -109,7 +109,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -141,7 +141,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -173,7 +173,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -205,7 +205,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -237,7 +237,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -269,7 +269,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -301,7 +301,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -333,7 +333,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -365,7 +365,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -397,7 +397,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -429,7 +429,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -461,7 +461,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -493,7 +493,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -525,7 +525,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -557,7 +557,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -589,7 +589,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [
           {
             "width": 24,
@@ -609,7 +609,7 @@
           }
         ],
         "geometry": {
-          "tablePaddingTop": "14px",
+          "tablePaddingTop": "8px",
           "gridHeaderHeight": 58,
           "treeRowHeight": 58.640625,
           "dataToolbarPaddingTop": "14px",
@@ -619,7 +619,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/data-dense--default--light--normal.png",
-      "sha256": "bbf8b4e7158cd3a2bc3b86dbd501eddd470d816e82017ddd3581856b52609fa9"
+      "sha256": "aeb3e9664bccad7d53d7082bfcde88d73a05baee5664058bbbe45c221125d9f5"
     },
     {
       "name": "data-dense--ops--light--normal",
@@ -638,7 +638,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [
           {
             "width": 24,
@@ -658,7 +658,7 @@
           }
         ],
         "geometry": {
-          "tablePaddingTop": "10px",
+          "tablePaddingTop": "6px",
           "gridHeaderHeight": 50,
           "treeRowHeight": 54.640625,
           "dataToolbarPaddingTop": "10px",
@@ -668,7 +668,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/data-dense--ops--light--normal.png",
-      "sha256": "df8622e2cb9597592275cc244f37234adfc31ddf9add5092f53d7a1363d4c5ae"
+      "sha256": "7494f363cc0fea181d2681c24455be0a679ecaf6543de0713544c4c6721175c3"
     },
     {
       "name": "data-dense--default--light--320",
@@ -687,7 +687,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [
           {
             "width": 24,
@@ -707,7 +707,7 @@
           }
         ],
         "geometry": {
-          "tablePaddingTop": "14px",
+          "tablePaddingTop": "8px",
           "gridHeaderHeight": 58,
           "treeRowHeight": 58.640625,
           "dataToolbarPaddingTop": "14px",
@@ -717,7 +717,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/data-dense--default--light--320.png",
-      "sha256": "693b050ea64cfa4630eb5498979519a77cd1a0ca370b5daef8afb0cbc942c40c"
+      "sha256": "f4b55cc4860320d5d9afb77a7aac8f13b2d9e462513455f763d7a7dbd00dc20e"
     },
     {
       "name": "data-dense--ops--light--320",
@@ -736,7 +736,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [
           {
             "width": 24,
@@ -756,7 +756,7 @@
           }
         ],
         "geometry": {
-          "tablePaddingTop": "10px",
+          "tablePaddingTop": "6px",
           "gridHeaderHeight": 50,
           "treeRowHeight": 54.640625,
           "dataToolbarPaddingTop": "10px",
@@ -766,7 +766,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/data-dense--ops--light--320.png",
-      "sha256": "8a9925bf117aaca6656d129b078065ef854eb8037017b92b70ab05340afedd76"
+      "sha256": "491f3dd3c88a8656ced614cecedf2fd432f8d076fc039f77d6ed3aea981d28f4"
     },
     {
       "name": "data-dense--default--dark--normal",
@@ -785,7 +785,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [
           {
             "width": 24,
@@ -805,7 +805,7 @@
           }
         ],
         "geometry": {
-          "tablePaddingTop": "14px",
+          "tablePaddingTop": "8px",
           "gridHeaderHeight": 58,
           "treeRowHeight": 58.640625,
           "dataToolbarPaddingTop": "14px",
@@ -815,7 +815,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/data-dense--default--dark--normal.png",
-      "sha256": "9d7bf41a9c36662f2209564186dfba5ae5f336ad186cdc52143330b3ca399d8a"
+      "sha256": "2ed100d3b24f6977cfc066e952f4f541cfb800cdbac683a903b3061ce322aee2"
     },
     {
       "name": "data-dense--ops--dark--normal",
@@ -834,7 +834,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [
           {
             "width": 24,
@@ -854,7 +854,7 @@
           }
         ],
         "geometry": {
-          "tablePaddingTop": "10px",
+          "tablePaddingTop": "6px",
           "gridHeaderHeight": 50,
           "treeRowHeight": 54.640625,
           "dataToolbarPaddingTop": "10px",
@@ -864,7 +864,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/data-dense--ops--dark--normal.png",
-      "sha256": "049be420847cba96fa76e6e55c7827d5875f307776d647aed8ed1da2a5392bbf"
+      "sha256": "ecdd969963e1d3505b2578faff90b5795dc19aeb9a975ec38a0bf514f49f8ea3"
     },
     {
       "name": "data-dense--default--dark--320",
@@ -883,7 +883,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [
           {
             "width": 24,
@@ -903,7 +903,7 @@
           }
         ],
         "geometry": {
-          "tablePaddingTop": "14px",
+          "tablePaddingTop": "8px",
           "gridHeaderHeight": 58,
           "treeRowHeight": 58.640625,
           "dataToolbarPaddingTop": "14px",
@@ -913,7 +913,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/data-dense--default--dark--320.png",
-      "sha256": "12eaf1dff2f90393587d2d11acfb7f41fcc44ebf9c8b3c954a7552d068b77e77"
+      "sha256": "444d388a9784e4fdd23a7ebdcfd7d1f4cd02c6b7674fbc4afda45b64b2867ee3"
     },
     {
       "name": "data-dense--ops--dark--320",
@@ -932,7 +932,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [
           {
             "width": 24,
@@ -952,7 +952,7 @@
           }
         ],
         "geometry": {
-          "tablePaddingTop": "10px",
+          "tablePaddingTop": "6px",
           "gridHeaderHeight": 50,
           "treeRowHeight": 54.640625,
           "dataToolbarPaddingTop": "10px",
@@ -962,7 +962,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/data-dense--ops--dark--320.png",
-      "sha256": "89a079a036de3668eb587d40c4ca79454562421cf5efec978aba093fce9804bc"
+      "sha256": "a63421bc6374abb6c07169ceb1adcd38505b9be10345baa58eeaa877a2f3d519"
     },
     {
       "name": "navigation-overlay--default--light--normal",
@@ -981,7 +981,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -1013,7 +1013,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -1045,7 +1045,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -1077,7 +1077,7 @@
         "semanticLabel": "#171718",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -1109,7 +1109,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -1141,7 +1141,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -1173,7 +1173,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
@@ -1186,7 +1186,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--default--dark--320.png",
-      "sha256": "dc1dce38c91779b5f0c28c3fd32abb94fa227c39be73dde4361d43c4a05e69de"
+      "sha256": "fef55a517791f65aa1c4edf5b30ee00cef0663742af322f9b724400e3b83ee5a"
     },
     {
       "name": "navigation-overlay--ops--dark--320",
@@ -1205,7 +1205,7 @@
         "semanticLabel": "#F7F7F7",
         "rootDefaultButtonHeight": "40px",
         "rootOpsButtonHeight": "36px",
-        "rootOpsTablePadding": "10px 12px",
+        "rootOpsTablePadding": "6px 12px",
         "targetRects": [],
         "geometry": {
           "tablePaddingTop": null,
