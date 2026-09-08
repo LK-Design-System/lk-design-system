@@ -1122,7 +1122,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--default--dark--normal.png",
-      "sha256": "61b4cffab5195dbe981804670d5896234f7bd4ec82c389d5e2066f6fe730f072"
+      "sha256": "ccab646fa264951821f2bfcebaf46b549be3c25a160765db361fd246d0e34482"
     },
     {
       "name": "navigation-overlay--ops--dark--normal",
@@ -1218,7 +1218,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--ops--dark--320.png",
-      "sha256": "32cfd2f9a2744f81ffbc61977d4982a205c8e4ba66cddcb4d841e34d71b1765c"
+      "sha256": "5c272e44c5f16f3dfb1a956e6b099d5969c47c0b3eb951de22f0a057dc01af38"
     }
   ]
 }

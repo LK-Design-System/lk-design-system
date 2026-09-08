@@ -208,8 +208,8 @@
         "height": 900
       },
       "reducedMotion": "no-preference",
-      "bytes": 65199,
-      "sha256": "43425e975d75f04e4a912b3c7f5b57e0270b3d85fd782f70a33afb673d1a3b4a"
+      "bytes": 65193,
+      "sha256": "8238ae1070f087dcda80083c67f1b2b91841781cac72c6e0354967050a5a755c"
     },
     {
       "name": "wds-textinput-interactions",
