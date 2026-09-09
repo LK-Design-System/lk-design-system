@@ -1122,7 +1122,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--default--dark--normal.png",
-      "sha256": "ccab646fa264951821f2bfcebaf46b549be3c25a160765db361fd246d0e34482"
+      "sha256": "61b4cffab5195dbe981804670d5896234f7bd4ec82c389d5e2066f6fe730f072"
     },
     {
       "name": "navigation-overlay--ops--dark--normal",
