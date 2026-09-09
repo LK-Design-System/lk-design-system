@@ -37,7 +37,17 @@
 뒷줄에서는 없는 크기인데, 리터럴에는 이음매가 없어 매체가 손댈 방법이 없었습니다
 (lk-design-system-slides `COMPLETENESS_AUDIT.md` B1). 매체는 자기 램프의 단으로
 옮기며, 컴포넌트는 자기가 옮겨졌다는 것을 끝까지 모릅니다.
-- 데이터가 없으면 축과 보이는 `emptyLabel`을 유지하며 같은 문구를 텍스트 요약으로 제공합니다. loading/error/zoom/tooltip/crosshair가 필요한 분석용 차트는 별도 composed product pattern으로 둡니다.
+- 데이터가 없으면 축과 보이는 `emptyLabel`을 유지하며 같은 문구를 텍스트 요약으로 제공합니다. loading/error/zoom은 제품이 소유합니다.
+
+## 시점 조회 (2026-09-09)
+
+- `showTooltip`은 기본 false인 추가 기능입니다. 기존 Core `Tooltip`의 배치·Escape·hover/focus 수명주기를 재사용하며 차트 위에 안정된 읽기 위치로 표시합니다.
+- 포인터는 가까운 x를 선택하고, 차트에 Tab으로 진입한 뒤 좌우 방향키·Home/End로 이동합니다. 터치는 차트를 탭합니다. `tooltipXValues`로 결측 시점도 제공할 수 있습니다.
+- `renderTooltip(x)`는 제품의 시각·단위·집계·결측 표시를 맡습니다. Portal의 원본 최신값과 집계된 이력을 혼동하지 않도록 툴팁에 집계 단위를 표시합니다. 범례·조회 기간·폴링은 제품 소유입니다.
+- 축과 빈 상태는 기존 `label-alternative` 토큰을 사용합니다. 전역 토큰 값은 변경하지 않습니다.
+- 비교 대상: `Legend`, `Tooltip`, `BarChart`. 차트에 카드 chrome을 추가하지 않고 Core 말풍선의 표면·타이포·간격을 유지합니다. hover 가능한 말풍선과 150ms 닫힘 지연은 포인터 이동을 위한 접근성 차이입니다.
+- [Recharts Tooltip](https://recharts.github.io/en-US/api/Tooltip/)의 활성 시점·다중 지표 정보 구성을 참고했습니다. [WCAG 1.4.13](https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html)에 따라 키보드 진입, Escape, hover 유지로 동일 정보를 제공합니다.
+- 범위: LK Product Extension인 LineChart의 시점 조회만 확장합니다. LK Portal의 장치 리소스 분석이 직접 소비자이며, LK Web Viz와 LK Control Full Daedeok의 transport/실시간 제어 변경은 이 증분에 해당하지 않습니다. 해당 제품의 툴팁 채택을 검증 완료로 주장하지 않습니다.
 
 ## Internal LDS comparison and retained deltas
 

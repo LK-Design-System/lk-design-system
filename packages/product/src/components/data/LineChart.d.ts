@@ -43,6 +43,12 @@ export interface LineChartProps extends Omit<React.HTMLAttributes<HTMLDivElement
   showLegend?: boolean;
   /** point marker 표시. @default false */
   showPoints?: boolean;
+  /** 시점 조회 툴팁. 좌우 방향키 및 Home/End로 이동합니다. @default false */
+  showTooltip?: boolean;
+  /** 결측 시점까지 선택할 수 있도록 제품이 제공하는 x 좌표. */
+  tooltipXValues?: number[];
+  /** 선택 시점의 상세 내용. 집계 단위와 결측 의미는 제품에서 정의합니다. */
+  renderTooltip?: (x: number) => React.ReactNode;
   referenceLines?: LineChartReferenceLine[];
   emptyLabel?: React.ReactNode;
   formatX?: (v: number) => React.ReactNode;

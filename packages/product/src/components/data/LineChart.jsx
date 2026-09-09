@@ -1,4 +1,5 @@
 import React from 'react';
+import { Tooltip } from '@lk-design-system/lds-core/components/content/Tooltip';
 import { VisuallyHidden } from '@lk-design-system/lds-core/components/layout/VisuallyHidden';
 import { Legend } from './Legend.jsx';
 
@@ -131,6 +132,9 @@ export function LineChart({
   showGrid = true,
   showLegend = true,
   showPoints = false,
+  showTooltip = false,
+  tooltipXValues,
+  renderTooltip,
   referenceLines = [],
   emptyLabel = '데이터가 없습니다.',
   formatX,
@@ -158,6 +162,23 @@ export function LineChart({
   const fx = formatX || defaultFormatX;
   const fy = formatY || defaultFormatY;
   const hasData = allPoints.length > 0;
+  const values = [...new Set((tooltipXValues ?? allPoints.map((point) => point.x)).filter(Number.isFinite))].sort((a, b) => a - b);
+  const [activeX, setActiveX] = React.useState(null);
+  const [tooltipVisible, setTooltipVisible] = React.useState(false);
+  const selectedX = values.includes(activeX) ? activeX : values.at(-1);
+  const tooltipEnabled = showTooltip && values.length > 0;
+  const selectPointer = (event) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = xMin + (((event.clientX - bounds.left) * chartWidth / bounds.width - pad.left) / innerWidth) * (xMax - xMin);
+    setActiveX(values.reduce((nearest, value) => Math.abs(value - x) < Math.abs(nearest - x) ? value : nearest, values[0]));
+  };
+  const selectKeyboard = (event) => {
+    const index = values.indexOf(selectedX);
+    const next = event.key === 'ArrowLeft' ? Math.max(0, index - 1)
+      : event.key === 'ArrowRight' ? Math.min(values.length - 1, index + 1)
+      : event.key === 'Home' ? 0 : event.key === 'End' ? values.length - 1 : null;
+    if (next !== null) { event.preventDefault(); setActiveX(values[next]); }
+  };
   const rawId = React.useId();
   const clipId = `line-chart-${rawId.replace(/:/g, '')}-clip`;
   const descriptionId = `${rawId}-description`;
@@ -216,12 +237,24 @@ export function LineChart({
     >
       {description != null && <VisuallyHidden id={descriptionId}>{description}</VisuallyHidden>}
       {resolvedSummary != null && <VisuallyHidden id={summaryId} data-chart-summary>{resolvedSummary}</VisuallyHidden>}
+      <ChartTooltip enabled={tooltipEnabled} onOpenChange={setTooltipVisible} content={!tooltipEnabled ? null : renderTooltip ? renderTooltip(selectedX) : (
+        <span style={{ display: 'grid', gap: 'var(--space-1)' }}>
+          <strong>{fx(selectedX)}</strong>
+          {normalized.flatMap((item) => item.points.filter((point) => point.x === selectedX).map((point) => (
+            <span key={item.id}>{item.name}: {fy(point.y)}{yLabel ? ` ${yLabel}` : ''}</span>
+          )))}
+        </span>
+      )}>
       <svg
         viewBox={`0 0 ${chartWidth} ${chartHeight}`}
         role="img"
         aria-label={chartLabel}
         aria-describedby={joinIds(ariaDescribedBy, description != null && descriptionId, resolvedSummary != null && summaryId)}
         data-chart-type="line"
+        tabIndex={tooltipEnabled ? 0 : undefined}
+        onPointerMove={tooltipEnabled ? selectPointer : undefined}
+        onPointerDown={tooltipEnabled ? (event) => { selectPointer(event); event.currentTarget.focus(); } : undefined}
+        onKeyDown={tooltipEnabled ? selectKeyboard : undefined}
         style={{
           display: 'block',
           width: '100%',
@@ -272,7 +305,7 @@ export function LineChart({
             x={pad.left - 8}
             y={sy(tick) + 3}
             textAnchor="end"
-            fill="var(--color-semantic-label-assistive)"
+            fill="var(--color-semantic-label-alternative)"
             style={{ fontSize: AXIS_TICK_SIZE, fontVariantNumeric: 'tabular-nums' }}
           >
             {fy(tick)}
@@ -285,7 +318,7 @@ export function LineChart({
             x={sx(tick)}
             y={pad.top + innerHeight + 16}
             textAnchor={index === 0 ? 'start' : index === xTickValues.length - 1 ? 'end' : 'middle'}
-            fill="var(--color-semantic-label-assistive)"
+            fill="var(--color-semantic-label-alternative)"
             style={{ fontSize: AXIS_TICK_SIZE, fontVariantNumeric: 'tabular-nums' }}
           >
             {fx(tick)}
@@ -338,6 +371,10 @@ export function LineChart({
           })}
 
         <g clipPath={`url(#${clipId})`}>
+          {tooltipEnabled && tooltipVisible && (
+            <line x1={sx(selectedX)} x2={sx(selectedX)} y1={pad.top} y2={pad.top + innerHeight}
+              stroke="var(--color-semantic-label-alternative)" strokeDasharray="4 4" />
+          )}
           {normalized.map((item, index) => {
             const color = item.color || PALETTE[index % PALETTE.length];
             const path = linePath(item.points, sx, sy);
@@ -380,13 +417,14 @@ export function LineChart({
             textAnchor="middle"
             dominantBaseline="middle"
             fontWeight="var(--fw-medium)"
-            fill="var(--color-semantic-label-assistive)"
+            fill="var(--color-semantic-label-alternative)"
             style={{ fontSize: EMPTY_LABEL_SIZE }}
           >
             {emptyLabel}
           </text>
         )}
       </svg>
+      </ChartTooltip>
 
       {showLegend && normalized.length > 0 && (
         <Legend
@@ -410,5 +448,15 @@ export function LineChart({
         </div>
       )}
     </div>
+  );
+}
+
+function ChartTooltip({ enabled, content, children, onOpenChange }) {
+  if (!enabled) return children;
+  return (
+    <Tooltip content={content} onOpenChange={onOpenChange} delay={{ open: 0, close: 150 }}
+      styles={{ root: { display: 'block', width: '100%' }, bubble: { pointerEvents: 'auto' } }}>
+      {children}
+    </Tooltip>
   );
 }

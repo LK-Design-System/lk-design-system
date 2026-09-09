@@ -23,6 +23,13 @@ const meta = {
 
 export default meta;
 
+export const PointInspection = {
+  name: '시점 조회',
+  render: () => <LineChart aria-label="시점별 사용률" showTooltip yLabel="%" xDomain={[0, 3]}
+    tooltipXValues={[0, 1, 2, 3]} series={[{ name: 'CPU', points: [{ x: 0, y: 0 }, { x: 1, y: 35 }] }, { name: 'CPU', points: [{ x: 3, y: 50 }] }]}
+    renderTooltip={x => <span>{x}분 · CPU {x === 2 ? '미수집' : `${[0, 35, null, 50][x]}%`}</span>} />,
+};
+
 function lineSummary(canvasElement, label) {
   const chart = canvasElement.querySelector(`svg[role="img"][aria-label="${label}"]`);
   if (!chart) throw new Error(`${label} must expose a named image role.`);
