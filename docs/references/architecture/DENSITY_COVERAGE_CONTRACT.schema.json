@@ -48,7 +48,7 @@
       "additionalProperties": false,
       "required": ["entryCount", "categoryCounts", "profileAwareEntries"],
       "properties": {
-        "entryCount": { "const": 210 },
+        "entryCount": { "const": 211 },
         "categoryCounts": {
           "type": "object",
           "additionalProperties": false,
@@ -65,13 +65,13 @@
             "not-applicable": { "type": "integer", "minimum": 0 }
           }
         },
-        "profileAwareEntries": { "type": "integer", "minimum": 0, "maximum": 210 }
+        "profileAwareEntries": { "type": "integer", "minimum": 0, "maximum": 211 }
       }
     },
     "entries": {
       "type": "array",
-      "minItems": 210,
-      "maxItems": 210,
+      "minItems": 211,
+      "maxItems": 211,
       "items": { "$ref": "#/$defs/entry" }
     }
   },

@@ -179,6 +179,7 @@ export { Sheet } from '../components/overlay/Sheet';
 export { Snackbar } from '../components/overlay/Snackbar';
 export { Toast } from '../components/overlay/Toast';
 export { ToastStack } from '../components/overlay/ToastStack';
+export { AlarmCaseBanner } from '../components/robotics/AlarmCaseBanner';
 export { BatteryGauge } from '../components/robotics/BatteryGauge';
 export { ConnectionBadge } from '../components/robotics/ConnectionBadge';
 export { EquipmentStatusCard } from '../components/robotics/EquipmentStatusCard';

@@ -121,7 +121,8 @@ R7 evidence/operations health (Continuous)
 
 R1 계약 구현과 paired LDS/Robotics release, R2 대표 제품 adoption 승격, R3A 밀도 계약,
 R3B owner/API 결정, R4 첫 stable 승격과 R4.1 계층 계약 closure를 완료했다. 현재 무조건부
-release-train backlog는 없다. R5 O3는 실제 alarm workflow가 없으면 계속 미지원이고, R6는
+release-train backlog는 없다. R5 O3는 LDS 쪽 표시·상호작용 계약을 2026-09-09에 닫았지만
+제품의 영속 acknowledgement evidence가 없으면 계속 미지원이고, R6는
 2027-01 정기 심사, R7은 매 release 반복 작업이다.
 
 ## 4. R0 — 계층·프로파일·패키지 기준선
@@ -531,6 +532,15 @@ decommissioned다.
 다음 감사는 제품 owner가 entry trigger의 **전체 묶음**과 actor/time/reason/authority를
 영속 evidence로 제출할 때만 실행한다.
 
+2026-09-09에 R5의 **LDS 몫**만 먼저 닫았다. 궁릉 긴급 배너의 고정 source로 WF-17
+`Alarm case lifecycle`을 분리하고, 표시·상호작용 계약을
+[`ALARM_LIFECYCLE_CONTRACT.md`](ALARM_LIFECYCLE_CONTRACT.md)와
+`components/robotics/AlarmCaseBanner.jsx`로 고정했다. 다섯 lifecycle 상태, 여섯 독립 축,
+확인 기록의 `recorded`/`partial`/`missing` 표시, 확인과 원격 명령의 분리, alert·status 알림
+정책이 여기에 들어간다. 이는 **제품 evidence를 대체하지 않는다**. 저장된 확인 기록이 없으면
+컴포넌트는 `기록 없음`을 그대로 드러내며, `READINESS.json`의 O3는 `unverified`·evidence 0을
+유지한다. 재개방에 필요한 네 가지 제품 evidence는 계약 문서 §6에 열거했다.
+
 ### 종료 gate
 
 - acknowledged, active, cleared, suppressed/shelved, escalated 상태와 audit actor/time이 실제
@@ -538,7 +548,9 @@ decommissioned다.
 - alarm flood, stale truth, offline, permission/authority가 단일 색상 또는 `error` 상태로
   합쳐지지 않는다.
 - keyboard, screen reader, focus recovery, destructive/remote command separation이 대표
-  workflow에서 검증된다.
+  workflow에서 검증된다. **LDS 쪽은 2026-09-09에 충족했다** —
+  `stories/RoboticsAlarmCase.stories.jsx`가 alert/status 분리, 차단 사유 낭독, 사유 입력 후
+  기록 전환, 원격 재개 분리, 320px 목록을 검증한다. 남은 것은 제품 lifecycle 연결이다.
 - O4 safety certification, risk assessment와 controller validation은 계속 `unsupported`이며
   LDS readiness로 대체하지 않는다.
 

@@ -9,16 +9,16 @@
   },
   "source": {
     "componentRegistry": "docs/components/component-content.json",
-    "componentRegistryFingerprint": "3171903d7975a37af63e211274d74ad207a488567f02eb0f0f6ec43a53ca7e30",
+    "componentRegistryFingerprint": "56b6fbf52d5ed7dbdec25493d9e400dbf982469c3b04af44450cc68f9170dcae",
     "expressionProfileContract": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
     "expressionProfileContractFingerprint": "88c3fd6a5eb8fb61896af87aa266ab3bf93cae9195c7b6eefd911d566c0a1b5c"
   },
   "summary": {
-    "entryCount": 210,
+    "entryCount": 211,
     "categoryCounts": {
       "profile-token-automatic": 7,
       "explicit-size-density": 93,
-      "fixed": 95,
+      "fixed": 96,
       "not-applicable": 15
     },
     "profileAwareEntries": 97
@@ -2609,6 +2609,20 @@
       "explicitAxes": [],
       "profileTokens": [],
       "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "alarm-case-banner",
+      "title": "AlarmCaseBanner",
+      "source": "components/robotics/AlarmCaseBanner.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Product owner",
       "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
       "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
       "nextReview": "2026-11-22"

@@ -99,6 +99,7 @@
 | `ConnectionBadge` | 대표 시나리오에서 조합 |
 | `Icon` | 대표 시나리오에서 조합 |
 | `StatusBadge` | 대표 시나리오에서 조합 |
+| `AlarmCaseBanner` | 대표 시나리오에서 조합 |
 | `BatteryGauge` | 대표 시나리오에서 조합 |
 | `TelemetryGauge` | 대표 시나리오에서 조합 |
 | `TelemetryValue` | 대표 시나리오에서 조합 |

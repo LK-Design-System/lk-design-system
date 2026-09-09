@@ -799,7 +799,7 @@ const [entrySource, classification, audit, tokenSource] = await Promise.all([
   readJson('tokens/source.json'),
 ]);
 const entries = componentEntries(entrySource, classification);
-assert(entries.length === 210, `Expected 210 public component entries, received ${entries.length}.`);
+assert(entries.length === 211, `Expected 211 public component entries, received ${entries.length}.`);
 
 const allExports = new Set(entries.flatMap((entry) => entry.exports));
 const sourceDetails = new Map();
@@ -877,7 +877,7 @@ const nonFoundationPages = audit.pages.filter(
 );
 const tokenMap = tokenValueMap(tokenSource);
 const guides = nonFoundationPages.map((page) => guideFromPage(page, exportToEntry, sourceDetails, tokenMap));
-assert(guides.length === 179, `Expected 179 non-Foundation component pages, received ${guides.length}.`);
+assert(guides.length === 180, `Expected 180 non-Foundation component pages, received ${guides.length}.`);
 finalizeCanonicalGuides(guides);
 
 const coveredExports = new Set(guides.flatMap((guide) => guide.ownerComponents));

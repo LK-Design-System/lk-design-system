@@ -3362,6 +3362,25 @@
       ]
     },
     {
+      "pageTitle": "LDS Product/Status/Alarm Case",
+      "importPath": "./stories/RoboticsAlarmCase.stories.jsx",
+      "storyId": "lds-product-status-alarm-case--case-overview",
+      "exportName": "CaseOverview",
+      "descriptionHash": "7469bf8b7c3bcb32d1331df66281cf449ee722e3fe2b96a754b775d85b23a155",
+      "sentences": [
+        {
+          "hash": "ec77e6b3604084f7ec3e36c42d3779b87f5f39910093924664e264548143cf38",
+          "text": "미확인 화재 사례, 영속 기록이 있는 확인된 사례, 기록 없이 확인된 사례가 한 목록에 있는 상황입니다.",
+          "decision": "unreviewed"
+        },
+        {
+          "hash": "002f5efc83f9c2e21221d293fd2d91dfda24953203bb999ec9d7ecbb62414f29",
+          "text": "미확인 사례만 alert로 알려지고, 기록이 없는 사례는 기록 없음이 그대로 드러나며, 확인 button이 미확인 사례에만 있는지 확인하세요.",
+          "decision": "unreviewed"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Product/Status/Battery Gauge",
       "importPath": "./stories/RoboticsBatteryGauge.stories.jsx",
       "storyId": "lds-product-status-battery-gauge--battery-levels",

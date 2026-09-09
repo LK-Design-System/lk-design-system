@@ -99,6 +99,7 @@ export { Drawer, DrawerSection } from '../components/overlay/Drawer.jsx';
 export { HoverCard } from '../components/overlay/HoverCard.jsx';
 export { Lightbox } from '../components/overlay/Lightbox.jsx';
 export { Sheet } from '../components/overlay/Sheet.jsx';
+export { AlarmCaseBanner } from '../components/robotics/AlarmCaseBanner.jsx';
 export { BatteryGauge } from '../components/robotics/BatteryGauge.jsx';
 export { ConnectionBadge } from '../components/robotics/ConnectionBadge.jsx';
 export { EquipmentStatusCard } from '../components/robotics/EquipmentStatusCard.jsx';

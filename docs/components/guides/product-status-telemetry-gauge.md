@@ -81,6 +81,7 @@
 
 | Component | Relationship |
 | --- | --- |
+| `AlarmCaseBanner` | 대표 시나리오에서 조합 |
 | `BatteryGauge` | 대표 시나리오에서 조합 |
 | `ConnectionBadge` | 대표 시나리오에서 조합 |
 | `EquipmentStatusCard` | 대표 시나리오에서 조합 |

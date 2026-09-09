@@ -264,6 +264,11 @@
         "id": "lds-product-data-collections-data-collection-panel--narrow-collection",
         "name": "반응형 · 좁은 의미 목록",
         "role": "responsive"
+      },
+      {
+        "id": "lds-product-data-collections-data-collection-panel--compact-below-boundary",
+        "name": "반응형 · 좁은 전환 폭",
+        "role": "responsive"
       }
     ],
     "hiddenEvidence": 6

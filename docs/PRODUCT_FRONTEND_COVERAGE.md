@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Product workflow coverage contract and audit summary |
-| Status | Current · all 16 shared-responsibility workflow traces verified |
+| Status | Current · all 17 shared-responsibility workflow traces verified |
 | Owner | Product design/engineering · Design system owner |
 | Last reviewed | 2026-08-11 |
 | Machine-readable source | `references/product-frontends/COVERAGE_AUDIT.json` |
@@ -12,6 +12,18 @@
 > **Current identity policy.** This contract identifies the product as **LK Portal** (`portal`, `LK-ROBOTICS-AX/lk_portal`) and pins its current source separately from the package-split release history. Files below `docs/references/package-split/` retain their original identifiers and hashes as immutable 2026-07 migration evidence; they are not a current consumer-policy input.
 
 > **Coverage is observation, not product IA authority.** 이 문서와 audit JSON은 고정 source에서 실제로 확인한 LDS 지원·소비 현황을 기록한다. 특정 제품 화면에 Card, grid, section surface 또는 완성 page anatomy를 강제하는 규격이 아니다. 제품이 정보구조를 바꾸면 해당 화면의 소비자 판정과 source evidence를 갱신하되, LDS가 제품의 section 경계나 시각적 표면을 대신 결정하지 않는다.
+
+## AlarmCaseBanner · Alarm lifecycle contract · Gungneung alarm case coverage · 2026-09-09
+
+궁릉 긴급 알람 배너를 LDS가 덮도록 `AlarmCaseBanner`를 추가하고 [`ALARM_LIFECYCLE_CONTRACT.md`](ALARM_LIFECYCLE_CONTRACT.md)를 정의했다. 새 workflow는 WF-17이다. 제품 source는 사례 anatomy·축·action 종류를 증명하는 coverage gate이며, 다섯 축 분리와 확인 기록 표시 계약은 prompt의 sibling·ISA-18.2/EEMUA 191/APG 근거에서 독립적으로 도출했다.
+
+| 제품 자산 | 고정 source | 판정 | LDS와 제품의 책임 경계 |
+| --- | --- | --- | --- |
+| LK Control Gungneung | `LK-ROBOTICS/lkrobotics-control-gungneung` · `9298e1c0a2cc02d8f6fb98975ae7f8f2158da926` · `frontend/src/layout/MainLayout/CriticalAlertBanner/index.jsx` (`c53eb7bd`) · `frontend/src/hooks/useCriticalAlerts.js` (`7089e1ac`) · `frontend/src/store/criticalAlertStore.ts` (`22e9dc1b`) | supported by composition (`AlarmCaseBanner` + ConfirmDialog/Textarea/StatusBadge/Button) | 사례 anatomy, 심각도·lifecycle·신선도·연결·권한·홍수의 축 분리, 확인 기록 표시와 누락 표시, 확인/원격 명령 분리, alert·status 알림 정책은 LDS가 소유한다. 알람 진실, 전이 정책, 사이렌·음성, STOMP 전송, 재개 명령 identity, 목록 유지 시간창은 제품이 소유한다. |
+| LK Control Gungneung (backend) | 같은 revision · `rest/domain/Alert.java` (`f2964b46`) · `rest/controller/AlarmController.java` (`6a03f5a0`) · `socket/controller/SocketController.java` (`d680d833`) · `socket/dto/ResumeCancelMessage.java` (`94b856d9`) | evidence gap (O3 미개방) | 고정 source에 확인 기록 컬럼·API·감사 row가 없고 재개는 서버 로그만 남긴다. 따라서 이 제품은 표시 계약의 coverage 근거일 뿐 O3 readiness 근거가 아니다. 필요한 evidence 묶음은 `ALARM_LIFECYCLE_CONTRACT.md` §6에 있다. |
+| LK Control Full Daedeok | `LK-ROBOTICS/lkrobotics-control-full-daedeok` · `3bdce49ec6868f016f4ec2cdbd12aabbf8a04f19` | not applicable | pinned source는 알림 조회·삭제만 있고 확인 lifecycle이 없다. |
+| LK Web Viz | `LK-ROBOTICS/lk_web_viz` · `4701e1dcfb0d0e9163c74c227da2d6feb801cb30` | not applicable | 운영 알람 사례 표면이 없다. |
+| LK Portal | `LK-ROBOTICS-AX/lk_portal` · `e5ee99d5062170e26abe63d9105c2b8a024ce710` | not applicable | device alert ACK는 default-OFF 경계 안의 별도 표면이며 이 감사에 pin하지 않았다. |
 
 ## 지도·RTSP·텔레옵 조합 · Gungneung coverage pins · 2026-09-08
 
@@ -23,7 +35,7 @@
 | RTSP 타일 · 가스 차트 · 이벤트 피드 | `LiveMonitoring/index.jsx` (`f7abba17`) · `StreamPlayback.jsx` (`8ef47468`) · `GasSensorChart/index.jsx` (`bca78aae`) · `EventLog/index.jsx` (`55a739b4`) | supported by composition (`VideoStreamTile`/`ViewerFrame`, `LineChart`/`TelemetryValue`, `LogViewer`/`Timeline`) | 재생 게이트·정지·loading/error/offline chrome, 수치 readout, 피드 표면은 LDS가 소유한다. WHEP iframe 수명주기, viewer heartbeat, ppm→% 스케일, STOMP 토픽은 제품이 소유한다. |
 | 텔레옵 (WASD·D-pad·스트림 3개) | `manual-control/index.jsx` (`d4dbedc9`) · `Controls/index.jsx` (`83b1f688`) · `RobotControl/index.jsx` (`02979c11`) · `InlineRobotMove/index.jsx` (`3a9a6d64`) | supported by composition (Robotics `DirectionalPad`/`Joystick`, `ManualControlSession`, O2 ready) | 초점·arm/hold/release·속도 공개·e-stop affordance는 Robotics가 소유한다. 100ms 반복 worker, zero-velocity 전송, 명령 프로토콜, 별도 창 관리는 제품이 소유한다. |
 
-이로써 궁릉 프론트엔드의 화면 15개 중 LDS가 덮지 못하는 표면은 긴급 알람 ack lifecycle(R5/O3, 제품의 영속 ack evidence가 선행)뿐이다.
+남아 있던 긴급 알람 ack lifecycle은 2026-09-09에 WF-17로 분리해 표시·상호작용 계약을 닫았다. R5/O3 readiness는 제품의 영속 ack evidence가 나올 때까지 그대로 `unverified`다.
 
 ## DotMatrixPreview · Announcement control pattern · Gungneung LED and PA coverage · 2026-09-08
 
@@ -980,6 +992,39 @@ Storybook에서는 Waypoint, Lane, Route/Trajectory, SpatialRegion, FacilityTran
 
 독립 wireframe과 mapping은 닫혔다. 외부 Robotics 패키지의 `HazardMarker`가 stairs/ramp/dropoff/obstacle을, `SpatialRegion`이 slope terrain을 소유한다. 제품의 `forbidden` line은 navigation lane이 아니라 제품 authoring renderer의 편집 geometry이므로 새 LDS semantic primitive로 승격하지 않는다. 이 명시적 경계와 normal/narrow interaction evidence로 `verified`를 닫는다.
 
+### WF-17 Alarm case lifecycle
+
+핵심 판단은 "경보가 울렸는가"가 아니라 "누가 이 사례를 책임졌고, 그 사실이 남아 있는가"다.
+
+```text
+┌ Case identity ──────────────────────────────────────────┐
+│ 무엇이 · 어느 대상에 · 어디서 · 언제 · 사례 id         │
+└─────────────────────────────────────────────────────────┘
+                         ↓ 독립 축
+┌ Axes ───────────────────────────────────────────────────┐
+│ 심각도 │ lifecycle │ 신선도 │ 연결 │ 권한 │ 같은 유형 N│
+└─────────────────────────────────────────────────────────┘
+                         ↓
+┌ Responsibility ─────────────────────────────────────────┐
+│ 확인 → 사유 입력 → 서버 기록 → 처리자·시각·사유·권한   │
+│                    ↘ 기록 없음(공백을 숨기지 않음)      │
+└─────────────────────────────────────────────────────────┘
+                         ↓ 분리
+┌ Remote command (WF-03) ─────────────────────────────────┐
+│ 재개·정지 · eligibility · sent/accepted/applied/failed  │
+└─────────────────────────────────────────────────────────┘
+```
+
+설계 결정:
+
+- 확인은 책임의 기록이고 원격 명령은 기계 상태 변경이다. 같은 줄에 두되 라벨과 구분선으로 분리하고, 하나가 다른 하나를 대신하지 않는다.
+- 심각도·lifecycle·신선도·연결·권한·홍수를 한 색이나 `error` 상태로 합치지 않는다. 각 축은 텍스트로 읽힌다.
+- 저장되지 않은 확인을 저장된 확인과 같은 모습으로 그리지 않는다. 빠진 필드는 `기록 없음`으로 남는다.
+- 권한이 없는 사용자에게 사례를 숨기지 않는다. 확인 button만 사유와 함께 막는다.
+- 미확인 사례만 `alert`로 알리고 나머지 전이는 `status`로 알린다. 사이렌·음성은 제품이 소유하며 중복 낭독은 `announce={false}`로 피한다.
+
+이 구조는 궁릉 긴급 배너에 적용되지만 전이 정책, 기록 저장, 사이렌, 명령 전송은 제품이 제공한다. 전체 계약은 [`ALARM_LIFECYCLE_CONTRACT.md`](ALARM_LIFECYCLE_CONTRACT.md)에 있다.
+
 ## 현재 신규 컴포넌트 disposition
 
 이 표는 현재 구현을 보존하기 위한 목록이 아니다. 새 workflow 계약에 비춰 public component 경계를 다시 판단한 당시 결과다. 현재 화면이나 wireframe에 반복된다는 사실만으로 component를 만들지 않으며, 고유 interaction·accessibility contract 또는 둘 이상의 제품에서 반복되는 상태 문법이 없으면 product-owned composition으로 남긴다. 또한 이 표와 `componentDisposition`은 제품 coverage만으로 새 public lifecycle 결정을 승인하지 않는다. 각 keep/redesign/split/remove는 LDS sibling·WDS·권위 있는 외부 근거와 design-owner decision으로 독립 확인해야 하며, 이를 repository-wide checker에서 분리하는 후속 작업은 `DESIGN_SYSTEM_COMPLETENESS_CHECKLIST.md` R-04로 추적한다.
@@ -1105,10 +1150,13 @@ alert threshold, filtering, drawer, route와 원격 명령은 제품 소유다.
 | WF-14 | `DataGrid`, `SourceDisclosure`, `ValidationSummary`, `DescriptionList`, `Textarea`, `ActionArea` 조합으로 eligibility/approval/release를 구분 | metric verdict policy, authorization, persistence, external release evidence |
 | WF-15 | 외부 Robotics 패키지의 point/lane/route/trajectory/region/facility/hazard renderer와 named semantic mirror 계약 | projection, floor topology, editor commands, persistence, robot pose, product-only forbidden-line geometry |
 | WF-16 | `ProductLockup`의 승인 key·SemiBold outlined path·모브랜드 우선 hierarchy·layout·appearance·접근성 계약과 `DashboardShell`, `SideNav`, `TopBar`, `BottomNav`의 landmark, wide/narrow/temporary slot, collapse, modal focus/Escape/restore/inert 계약 | canonical short lockup name 제안·승인, identity 배치, route/click, breakpoint, destination hierarchy, permission, query, Drawer open state |
+| WF-17 | `AlarmCaseBanner`의 사례 anatomy, 심각도·lifecycle·신선도·연결·권한·홍수 축 분리, 확인 기록과 누락 표시, 확인/원격 분리, alert·status 알림 정책과 `ConfirmDialog`/`Textarea` 사유 입력 조합 | 알람 진실, lifecycle 전이 정책, 확인 기록의 영속 저장, 사이렌·음성, 원격 명령 transport와 identity, 목록 유지 시간창 |
 
 WF-15는 외부 Robotics 패키지 revision `0ae058d`의 navigation/hazard/terrain renderer와 normal/narrow stories로 닫혔다. `forbidden` authoring line은 제품 geometry로 남겨 `LaneOverlay`로 위장하지 않는다.
 
 WF-16은 세 필수 제품의 pinned shell/navigation source와 독립 anatomy를 연결하고, `ProductLockup` story에서 초기 승인 key인 `console`·`portal`의 parent-brand-first SemiBold outlined output과 고정 Portal 정본의 exact parity를 검증한다. 세 필수 제품 중 Portal만 full lockup 이름과 600 위계 정본이 승인되었으며 제품 package upgrade가 남아 있다. Web Viz·Control은 canonical short name 승인과 registry 등록이 남은 migration gap이다. `SideNav`의 docked/floating, controlled collapse, active-group auto expansion 분리, reduced motion, keyboard overlay open/close/Escape/focus restore, `DashboardShell` normal/narrow reflow와 hierarchical temporary Drawer의 focus/Escape/restore/inert, TopBar overflow, landmark 계약은 interaction stories로 검증했다. 네 개 이하 flat destination은 `BottomNav`, 계층형 destination은 `temporaryNavigation`에 전달한 `SideNav`를 사용하며 route·permission·open state는 제품이 소유한다.
+
+WF-17은 궁릉 긴급 배너의 고정 source로 표시·상호작용 계약을 닫았다. 제품 backend에 확인 기록의 영속 저장이 없어 [`references/robotics/READINESS.json`](references/robotics/READINESS.json)의 O3는 `unverified`로 유지하며, 재개방 조건은 `ALARM_LIFECYCLE_CONTRACT.md` §6의 evidence 묶음이다.
 
 검증 범위는 2026-07-14 기준 다음과 같다.
 

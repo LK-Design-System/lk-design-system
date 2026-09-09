@@ -58,6 +58,7 @@
 | [`BENCHMARK_SEED_DESIGN.md`](BENCHMARK_SEED_DESIGN.md) | seed-design 정면 비교(2026-07-24)와 원리 단위 채택 결정 기록 |
 | [`LOADING_PATTERN.md`](LOADING_PATTERN.md) | 로딩 요소 6종 사이의 선택·시간 기준·단계별 피드백을 중재하는 수평 패턴 가이드 |
 | [`GUIDED_CREATION_PATTERN.md`](GUIDED_CREATION_PATTERN.md) | 다단계 생성 플로우의 단계 이동 guard·pending·focus·검증 복귀·이탈 확인 합성 계약 |
+| [`ALARM_LIFECYCLE_CONTRACT.md`](ALARM_LIFECYCLE_CONTRACT.md) | 운영 알람 사례의 lifecycle 상태·독립 축·확인 기록·확인과 원격 명령 분리 계약과 O3 재개방 evidence 조건 |
 | [`ANNOUNCEMENT_CONTROL_PATTERN.md`](ANNOUNCEMENT_CONTROL_PATTERN.md) | 로봇·PA 안내방송의 종류 선택·확인된 재생/정지·우선순위 상태 줄·유효시간 있는 음소거 합성 계약 |
 | [`SELECTABLE_COLLECTION_PATTERN.md`](SELECTABLE_COLLECTION_PATTERN.md) | 수십~100건 다중 선택 field의 selection model·scope·wide/narrow·상태 fixture 합성 계약 |
 | [`CHECK_ANSWERS_PATTERN.md`](CHECK_ANSWERS_PATTERN.md) | 제출 전 확인의 dl/dt/dd·contextual change action·복귀 focus 합성 계약 |
@@ -80,6 +81,7 @@
 | Icon inventory | [Iconography guide](foundations/iconography.md) · [icon manifest](../packages/core/assets/icons/manifest.json) |
 | Cross-component loading | [Loading pattern](LOADING_PATTERN.md) |
 | Guided creation·selection·review | [Guided creation](GUIDED_CREATION_PATTERN.md) · [Selectable collection](SELECTABLE_COLLECTION_PATTERN.md) · [Check answers](CHECK_ANSWERS_PATTERN.md) |
+| Alarm lifecycle | [Alarm lifecycle contract](ALARM_LIFECYCLE_CONTRACT.md) |
 | Announcement control | [Announcement control](ANNOUNCEMENT_CONTROL_PATTERN.md) |
 | Logo master, usage, and approval | [LK ROBOTICS logo standard](brand/LK_LOGO_STANDARD.md) · [governance record](brand/lk-logo-governance.json) |
 

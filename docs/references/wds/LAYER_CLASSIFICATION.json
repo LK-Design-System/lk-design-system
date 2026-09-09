@@ -211,6 +211,7 @@
     "stories/OverlayToast.stories.jsx": "LDS Core/Components/Overlay/Toast",
     "stories/ProductMeter.stories.jsx": "LDS Core/Components/Status/Meter",
     "stories/ProductProgress.stories.jsx": "LDS Core/Components/Status/Progress",
+    "stories/RoboticsAlarmCase.stories.jsx": "LDS Product/Status/Alarm Case",
     "stories/RoboticsAndViz.stories.jsx": "LDS Robotics/Status/Robot State",
     "stories/RoboticsAssetsIcons.stories.jsx": "LDS Robotics/Assets/Icons",
     "stories/RoboticsBatteryGauge.stories.jsx": "LDS Product/Status/Battery Gauge",

@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "2dbff2622fd231369eb4052ffc8bf3a2f0d877f2d91c784cfe78c6a2c9b867ff",
+    "storybookIndexSha256": "6d9647cc4407c1be1641a27ec0e46d263e158169cfbc41c22b476e2ea5512e21",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -61,31 +61,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 198,
-    "stories": 746,
-    "publicStories": 515,
-    "hiddenStories": 231,
-    "componentDescriptions": 193,
-    "pagesWithVisibleCanvasIntroduction": 193,
-    "pagesWithDecisionGuidance": 186,
-    "describedPublicStories": 515,
-    "reviewedPages": 198,
-    "reviewedStories": 746,
+    "pages": 199,
+    "stories": 753,
+    "publicStories": 521,
+    "hiddenStories": 232,
+    "componentDescriptions": 194,
+    "pagesWithVisibleCanvasIntroduction": 194,
+    "pagesWithDecisionGuidance": 187,
+    "describedPublicStories": 521,
+    "reviewedPages": 199,
+    "reviewedStories": 753,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
-      "overview": 181,
+      "overview": 182,
       "usage": 42,
-      "variants-states": 111,
-      "interaction": 56,
-      "responsive": 81,
+      "variants-states": 113,
+      "interaction": 57,
+      "responsive": 83,
       "scenario": 28,
-      "visual-parity": 99,
+      "visual-parity": 100,
       "internal-contract": 128
     },
     "dispositions": {
-      "keep": 197,
+      "keep": 198,
       "merge": 0,
       "split": 0,
       "hide": 1
@@ -106,11 +106,11 @@
         "guideReadyPages": 12
       },
       "Product": {
-        "pages": 112,
-        "stories": 478,
-        "public": 362,
-        "hidden": 116,
-        "guideReadyPages": 111
+        "pages": 113,
+        "stories": 485,
+        "public": 368,
+        "hidden": 117,
+        "guideReadyPages": 112
       },
       "Theme": {
         "pages": 4,
@@ -13011,7 +13011,7 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataCollectionPanel.stories.jsx",
-      "sourceSha256": "9e2cd1ce650934be700d69d43cfe21be5fdba94857d70e9b9e61d95a7f58474b",
+      "sourceSha256": "2c56d6e2508cd9bff162fe74da71087d310453272153b8a1c0165508edc5a797",
       "primaryOwner": "DataCollectionPanel",
       "ownerComponents": [
         "DataCollectionPanel"
@@ -13026,13 +13026,13 @@
         "Table"
       ],
       "visibility": {
-        "public": 5,
+        "public": 6,
         "hidden": 6
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-collections-data-collection-panel--overview",
-        "describedPublicStories": 5,
+        "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 2,
         "decisionGuidance": true
       },
@@ -13042,8 +13042,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-22",
-      "reviewedSourceSha256": "9e2cd1ce650934be700d69d43cfe21be5fdba94857d70e9b9e61d95a7f58474b",
+      "reviewedAt": "2026-09-09",
+      "reviewedSourceSha256": "2c56d6e2508cd9bff162fe74da71087d310453272153b8a1c0165508edc5a797",
       "stories": [
         {
           "id": "lds-product-data-collections-data-collection-panel--overview",
@@ -13189,6 +13189,36 @@
             "Table"
           ],
           "reviewNote": "2026-08-04 responsive role, semantic compact-list example, and hidden duplicate-content behavior reviewed."
+        },
+        {
+          "id": "lds-product-data-collections-data-collection-panel--compact-below-boundary",
+          "name": "반응형 · 좁은 전환 폭",
+          "exportName": "CompactBelowBoundary",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataCollectionPanel"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Pagination",
+            "Select",
+            "StatusBadge",
+            "Table"
+          ],
+          "reviewNote": "2026-09-09 re-review after the 0.2.6 additive axis: source, role, ownership and visibility unchanged; play and Axe clean in the static build."
         },
         {
           "id": "lds-product-data-collections-data-collection-panel--wide-fallback-without-compact-content",
@@ -13353,7 +13383,7 @@
           "reviewNote": "2026-08-04 polymorphic ref, named parts, styles, and component-variable contract reviewed."
         }
       ],
-      "reviewNote": "2026-08-04 source, Product ownership, use/avoid guidance, public roles, responsive composition, resource states, and hidden contract evidence reviewed.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
+      "reviewNote": "2026-09-09 re-review after the 0.2.6 additive axis: source, role, ownership and visibility unchanged; play and Axe clean in the static build."
     },
     {
       "title": "LDS Product/Data/Collections/Data Grid",
@@ -13663,20 +13693,20 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataTable.stories.jsx",
-      "sourceSha256": "bf91291b02bbfe0df692dcfbe3827fd728d90a195f66a675e9d357370a37e5d4",
+      "sourceSha256": "461f01eb875598d0535b1b0259b42090bbdc0c4b9628db2fd061f1e525398a32",
       "primaryOwner": "Table",
       "ownerComponents": [
         "Table"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 4,
+        "public": 5,
         "hidden": 4
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-collections-table--static-table",
-        "describedPublicStories": 4,
+        "describedPublicStories": 5,
         "publicStoriesWithCanvasGuidance": 2,
         "decisionGuidance": true
       },
@@ -13686,8 +13716,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-22",
-      "reviewedSourceSha256": "bf91291b02bbfe0df692dcfbe3827fd728d90a195f66a675e9d357370a37e5d4",
+      "reviewedAt": "2026-09-09",
+      "reviewedSourceSha256": "461f01eb875598d0535b1b0259b42090bbdc0c4b9628db2fd061f1e525398a32",
       "stories": [
         {
           "id": "lds-product-data-collections-table--static-table",
@@ -13785,6 +13815,30 @@
           "reviewNote": "2026-08-17 리뷰 완료: 전 행 밴드와 밴드 위 호버 워시를 렌더로 확인(채택 커밋 당시 미표기분 소급)."
         },
         {
+          "id": "lds-product-data-collections-table--property-table-without-column-band",
+          "name": "변형·상태 · 열 라벨을 감춘 항목·값 표",
+          "exportName": "PropertyTableWithoutColumnBand",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Table"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-09-09 re-review after the 0.2.6 additive axis: source, role, ownership and visibility unchanged; play and Axe clean in the static build."
+        },
+        {
           "id": "lds-product-data-collections-table--density-comparison",
           "name": "반응형 · 기본 밀도와 좁은 밀도",
           "exportName": "DensityComparison",
@@ -13877,7 +13931,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Demo section headings start at h2 so they sit directly under the canvas page title instead of skipping to h3. Story content, roles, names and visibility are otherwise unchanged. Verified by the page-structure audit (heading-skip and multiple-h1 both clear on this page) and the Axe sweep."
+      "reviewNote": "2026-09-09 re-review after the 0.2.6 additive axis: source, role, ownership and visibility unchanged; play and Axe clean in the static build."
     },
     {
       "title": "LDS Product/Data/Collections/Tree",
@@ -23340,6 +23394,175 @@
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
+      "title": "LDS Product/Status/Alarm Case",
+      "layer": "Product",
+      "family": "Status",
+      "importPath": "./stories/RoboticsAlarmCase.stories.jsx",
+      "sourceSha256": "0858c16cbb8e154fc230501f312e1ec092878e3c6abac9bd65ca2f0109c0a7ef",
+      "primaryOwner": "AlarmCaseBanner",
+      "ownerComponents": [
+        "AlarmCaseBanner"
+      ],
+      "supportingComponents": [
+        "Button",
+        "ConfirmDialog",
+        "Textarea"
+      ],
+      "visibility": {
+        "public": 4,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-status-alarm-case--case-overview",
+        "describedPublicStories": 4,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-09-09",
+      "reviewedSourceSha256": "0858c16cbb8e154fc230501f312e1ec092878e3c6abac9bd65ca2f0109c0a7ef",
+      "stories": [
+        {
+          "id": "lds-product-status-alarm-case--case-overview",
+          "name": "개요",
+          "exportName": "CaseOverview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "AlarmCaseBanner"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-09-09 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
+          "id": "lds-product-status-alarm-case--axes-and-states",
+          "name": "변형·상태 · 권한·연결·신선도·보류·해제",
+          "exportName": "AxesAndStates",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "AlarmCaseBanner"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-09-09 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
+          "id": "lds-product-status-alarm-case--acknowledge-with-reason",
+          "name": "상호작용 · 확인 사유 기록과 재개 분리",
+          "exportName": "AcknowledgeWithReason",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "AlarmCaseBanner"
+          ],
+          "supportingComponents": [
+            "Button",
+            "ConfirmDialog",
+            "Textarea"
+          ],
+          "reviewNote": "2026-09-09 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
+          "id": "lds-product-status-alarm-case--narrow-list",
+          "name": "반응형 · 320px 목록",
+          "exportName": "NarrowList",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "AlarmCaseBanner"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-09-09 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
+          "id": "lds-product-status-alarm-case--alarm-case-banner-card",
+          "name": "AlarmCaseBanner card parity",
+          "exportName": "AlarmCaseBannerCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "AlarmCaseBanner"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-09-09 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        }
+      ],
+      "reviewNote": "2026-09-09 source and built-browser review for the WF-17 alarm case lifecycle extension: every story completed play and Axe checks without violations; the active/acknowledged/missing-record list, the reason-dialog interaction and the 320px list were inspected from the static build."
     },
     {
       "title": "LDS Product/Status/Battery Gauge",

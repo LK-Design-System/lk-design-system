@@ -29,16 +29,16 @@ function validate(fixture) {
   return validateDensityCoverage(fixture);
 }
 
-test('current M0 register validates all 210 public component entries exactly once', () => {
+test('current M0 register validates all 211 public component entries exactly once', () => {
   const fixture = currentFixture();
   const summary = validate(fixture);
-  assert.equal(summary.entryCount, 210);
+  assert.equal(summary.entryCount, 211);
   assert.equal(
     Object.values(summary.categoryCounts).reduce((sum, count) => sum + count, 0),
-    210,
+    211,
   );
   assert.deepEqual(Object.keys(summary.categoryCounts), CATEGORIES);
-  assert.equal(new Set(fixture.registry.entries.map((entry) => entry.id)).size, 210);
+  assert.equal(new Set(fixture.registry.entries.map((entry) => entry.id)).size, 211);
 });
 
 test('schema rejects a multi-valued category instead of treating it as two decisions', () => {

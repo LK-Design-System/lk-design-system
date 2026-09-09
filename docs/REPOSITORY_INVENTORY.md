@@ -17,8 +17,8 @@ Storybook의 732개 스토리 역할·공개 여부·소유 컴포넌트와 196�
 - 워크스페이스 orchestrator: `@lk-design-system/lds-workspace@0.2.6` · `private: true`
 - Core: `@lk-design-system/lds-core@0.2.6` · source entry 93개 · named export 94개
 - Theme: `@lk-design-system/lds-theme@0.2.6` · source entry 4개 · named export 8개
-- Product: `@lk-design-system/lds-product@0.2.6` · source entry 122개 · named export 130개
-- 로컬 owner-package canonical unique surface: source entry 210개 · named export 223개
+- Product: `@lk-design-system/lds-product@0.2.6` · source entry 123개 · named export 131개
+- 로컬 owner-package canonical unique surface: source entry 211개 · named export 224개
 - Product deprecated compatibility projection: source entry 9개 · named export 9개
 - 외부 Robotics: `@lk-design-system/lds-robotics-ui@0.1.0-rc.41` · source entry 23개 · named export 53개
 - Robotics 정본: `LK-Design-System/lk-design-system-robotics`와 `references/package-split/ROBOTICS_EXTERNAL_SURFACE.json`. 로컬 publishable package는 Robotics를 재노출하지 않으며 consumer는 외부 패키지를 직접 설치합니다.
@@ -38,7 +38,7 @@ Storybook의 732개 스토리 역할·공개 여부·소유 컴포넌트와 196�
 - `docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json`: 외부 Robotics package·revision·문서·public surface 정본
 - `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json`: live package·token·Storybook owner와 cross-domain boundary authority
 - `docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json`: public export와 internal module의 historical provenance·compatibility projection
-- `docs/components/`: 210개 entry, 177개 의사결정 가이드, 정적 reference·platform register, LLM bundle과 machine-readable component registry
+- `docs/components/`: 211개 entry, 177개 의사결정 가이드, 정적 reference·platform register, LLM bundle과 machine-readable component registry
 - `scripts/`: 패키지 유지보수 스크립트
 - `.storybook/`: Storybook 런타임 설정
 - `stories/`: 인터랙티브 컴포넌트 문서와 시각 예시
@@ -54,12 +54,12 @@ WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`
 
 - 현재 React component entry export: 210개
 - 공개 named export: 223개
-- Storybook 전체 story: 748개
-- Storybook public story: 517개
+- Storybook 전체 story: 753개
+- Storybook public story: 521개
 - Storybook hidden story: 229개
-- 숨김 visual parity story: 99개
-- visual inventory React story: 748개
-- 접근성 guard 검사 대상 implementation story: 748개
+- 숨김 visual parity story: 100개
+- visual inventory React story: 753개
+- 접근성 guard 검사 대상 implementation story: 753개
 
 ## 생성 영역
 

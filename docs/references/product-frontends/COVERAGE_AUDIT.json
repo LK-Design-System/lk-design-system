@@ -19,10 +19,10 @@
     "discovered": 0,
     "wireframed": 0,
     "implemented": 0,
-    "verified": 16
+    "verified": 17
   },
   "componentDispositionSummary": {
-    "keep": 26,
+    "keep": 27,
     "redesign": 7,
     "split": 8,
     "remove": 22,
@@ -1501,6 +1501,46 @@
               "blobSha": "ce48afb3f7ed0c7a7bad01d6a02e3a75006b74d4"
             }
           ]
+        }
+      ]
+    },
+    {
+      "name": "AlarmCaseBanner",
+      "path": "components/robotics/AlarmCaseBanner.jsx",
+      "decision": "keep",
+      "workflowIds": [
+        "WF-17"
+      ],
+      "reason": "Adds the operational alarm case as its own surface because the separate severity/lifecycle/freshness/link/authority axes, the persisted acknowledgement record with an explicit missing state, and the split between acknowledging responsibility and issuing a remote command were re-derived by every product that tried to compose them from Banner, StatusBadge and Button; omitted, each product re-invents the same five-axis judgement.",
+      "assetReviews": [
+        {
+          "repo": "gungneung",
+          "classification": "supported by composition",
+          "reason": "The pinned banner proves one case per robot with a cause phrase, an acknowledge control that only silences the siren, a resume command blocked while the socket is down, a one-minute freshness window and a same-type flood fold. AlarmCaseBanner plus ConfirmDialog/Textarea, StatusBadge and Button express that presentation and interaction: severity, lifecycle, freshness, link and authority stay separate axes, the acknowledgement record is displayed, and acknowledge stays apart from the remote resume. Alarm truth, lifecycle transitions, siren playback, STOMP transport and command identity stay product-owned. The pinned backend keeps no acknowledgement column, API or audit row, and the store keeps the acknowledged set in browser memory, so this repository is coverage evidence for the presentation contract only and is not O3 readiness evidence.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/layout/MainLayout/CriticalAlertBanner/index.jsx",
+              "blobSha": "c53eb7bd44fb064786c5d67726ec4aa39b57cc8b"
+            },
+            {
+              "path": "frontend/src/hooks/useCriticalAlerts.js",
+              "blobSha": "7089e1ac047cb0e758773ff85cf5c8468a6022e5"
+            },
+            {
+              "path": "frontend/src/store/criticalAlertStore.ts",
+              "blobSha": "22e9dc1ba0dd6009c4cc72038cee65b5afdeafc7"
+            }
+          ]
+        },
+        {
+          "repo": "control",
+          "classification": "not applicable",
+          "reason": "The pinned Daedeok supervision source lists and deletes notifications without an acknowledgement lifecycle."
+        },
+        {
+          "repo": "web-viz",
+          "classification": "not applicable",
+          "reason": "The pinned sources have no operational alarm case surface."
         }
       ]
     }
@@ -3156,6 +3196,142 @@
         "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification"
       ],
       "closureDecision": "ProductLockup verifies only the approved console and portal parent-brand-first SemiBold outlined registry entries; it does not make Web Viz or Control supported before canonical short-name approval and LDS path registration. The fixed Portal and registry Portal share one approved canonical, while product package adoption remains product-owned. LDS v1 uses BottomNav only for four or fewer flat narrow destinations. Hierarchical narrow navigation is a product-owned temporary Drawer composition, not DashboardShell anatomy. ProductLockup, DashboardShell, TopBar, and SideNav stories verify registered output, landmarks, narrow reflow, controlled collapse, reduced motion, Escape, and focus restoration while route, click behavior, placement, and breakpoints remain product-owned."
+    },
+    {
+      "id": "WF-17",
+      "name": "Alarm case lifecycle",
+      "userGoal": "Judge one operational alarm case, record that a named operator took responsibility for it with a reason, and keep that record separate from any command sent to the machine.",
+      "trigger": "A product raises an alarm case such as a fire, a person down, or a gas threshold, and an operator has to act on it.",
+      "consumers": [
+        "gungneung"
+      ],
+      "states": [
+        "active",
+        "acknowledged",
+        "shelved",
+        "escalated",
+        "cleared",
+        "stale",
+        "link-lost",
+        "view-only",
+        "flooded",
+        "record-complete",
+        "record-missing"
+      ],
+      "decisions": [
+        "What happened, to which target, and how old is the truth that says so?",
+        "Has anyone already taken responsibility for this case, and under what authority and reason?",
+        "Am I allowed to acknowledge it, and does acknowledging change anything on the machine?"
+      ],
+      "failureRecovery": [
+        "Keep severity, lifecycle, freshness, link loss, authority, and flood count as separate axes instead of one colour or one error state.",
+        "Show an acknowledgement whose persisted actor, time, reason, or authority is missing as missing rather than as a complete record.",
+        "Keep an acknowledgement, which records responsibility, distinct from a remote command such as resume, which changes machine state.",
+        "Keep the case visible to a user without acknowledge authority and explain why the action is blocked."
+      ],
+      "dsBoundary": "LDS may own the case anatomy, the separate severity/lifecycle/freshness/link/authority/flood axes, the acknowledgement evidence display including its missing state, the acknowledge affordance with its blocked reason and pending state, the labelled separation of remote commands, and the alert versus status announcement policy; alarm truth, lifecycle transitions and their policy, persistence of the acknowledgement record, siren and voice playback, remote command transport and identity, and list retention windows remain product-owned.",
+      "designQuestion": "Can one alarm case surface hold responsibility-taking and machine commands without merging them, and without letting an acknowledgement that was never persisted look identical to one that was?",
+      "sourceEvidence": [
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/layout/MainLayout/CriticalAlertBanner/index.jsx",
+          "blobSha": "c53eb7bd44fb064786c5d67726ec4aa39b57cc8b"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/hooks/useCriticalAlerts.js",
+          "blobSha": "7089e1ac047cb0e758773ff85cf5c8468a6022e5"
+        },
+        {
+          "repo": "gungneung",
+          "path": "frontend/src/store/criticalAlertStore.ts",
+          "blobSha": "22e9dc1ba0dd6009c4cc72038cee65b5afdeafc7"
+        },
+        {
+          "repo": "gungneung",
+          "path": "backend/src/main/java/kr/co/lkrobotics/lkrobotics_control_full_be/rest/domain/Alert.java",
+          "blobSha": "f2964b46504b581a6cdfde6a70dac6e96f95548e"
+        },
+        {
+          "repo": "gungneung",
+          "path": "backend/src/main/java/kr/co/lkrobotics/lkrobotics_control_full_be/rest/controller/AlarmController.java",
+          "blobSha": "6a03f5a08a55875d9bb67685bf568a64a99b744f"
+        },
+        {
+          "repo": "gungneung",
+          "path": "backend/src/main/java/kr/co/lkrobotics/lkrobotics_control_full_be/socket/controller/SocketController.java",
+          "blobSha": "d680d8336fe5db0f284559cef961c3118deb56c6"
+        },
+        {
+          "repo": "gungneung",
+          "path": "backend/src/main/java/kr/co/lkrobotics/lkrobotics_control_full_be/socket/dto/ResumeCancelMessage.java",
+          "blobSha": "94b856d90d74fbb270f3598ffbd35f5e87a43ca3"
+        }
+      ],
+      "assetReviews": [
+        {
+          "repo": "gungneung",
+          "classification": "supported by composition",
+          "reason": "The pinned banner proves one case per robot with a cause phrase, an acknowledge control that only silences the siren, a resume command blocked while the socket is down, a one-minute freshness window and a same-type flood fold. AlarmCaseBanner plus ConfirmDialog/Textarea, StatusBadge and Button express that presentation and interaction: severity, lifecycle, freshness, link and authority stay separate axes, the acknowledgement record is displayed, and acknowledge stays apart from the remote resume. Alarm truth, lifecycle transitions, siren playback, STOMP transport and command identity stay product-owned. The pinned backend keeps no acknowledgement column, API or audit row, and the store keeps the acknowledged set in browser memory, so this repository is coverage evidence for the presentation contract only and is not O3 readiness evidence.",
+          "sourceEvidence": [
+            {
+              "path": "frontend/src/layout/MainLayout/CriticalAlertBanner/index.jsx",
+              "blobSha": "c53eb7bd44fb064786c5d67726ec4aa39b57cc8b"
+            },
+            {
+              "path": "frontend/src/hooks/useCriticalAlerts.js",
+              "blobSha": "7089e1ac047cb0e758773ff85cf5c8468a6022e5"
+            },
+            {
+              "path": "frontend/src/store/criticalAlertStore.ts",
+              "blobSha": "22e9dc1ba0dd6009c4cc72038cee65b5afdeafc7"
+            },
+            {
+              "path": "backend/src/main/java/kr/co/lkrobotics/lkrobotics_control_full_be/rest/domain/Alert.java",
+              "blobSha": "f2964b46504b581a6cdfde6a70dac6e96f95548e"
+            },
+            {
+              "path": "backend/src/main/java/kr/co/lkrobotics/lkrobotics_control_full_be/rest/controller/AlarmController.java",
+              "blobSha": "6a03f5a08a55875d9bb67685bf568a64a99b744f"
+            },
+            {
+              "path": "backend/src/main/java/kr/co/lkrobotics/lkrobotics_control_full_be/socket/controller/SocketController.java",
+              "blobSha": "d680d8336fe5db0f284559cef961c3118deb56c6"
+            },
+            {
+              "path": "backend/src/main/java/kr/co/lkrobotics/lkrobotics_control_full_be/socket/dto/ResumeCancelMessage.java",
+              "blobSha": "94b856d90d74fbb270f3598ffbd35f5e87a43ca3"
+            }
+          ]
+        }
+      ],
+      "stage": "verified",
+      "wireframeEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#wf-17-alarm-case-lifecycle",
+        "docs/ALARM_LIFECYCLE_CONTRACT.md"
+      ],
+      "implementationEvidence": [
+        "components/robotics/AlarmCaseBanner.jsx",
+        "components/content/StatusBadge.jsx",
+        "components/overlay/ConfirmDialog.jsx",
+        "components/forms/Textarea.jsx",
+        "components/content/Timeline.jsx",
+        "components/buttons/Button.jsx"
+      ],
+      "storyEvidence": [
+        "stories/RoboticsAlarmCase.stories.jsx",
+        "stories/OverlayConfirmDialog.stories.jsx",
+        "stories/FormTextarea.stories.jsx",
+        "stories/ContentTimeline.stories.jsx",
+        "stories/Button.stories.jsx"
+      ],
+      "verificationEvidence": [
+        "docs/PRODUCT_FRONTEND_COVERAGE.md#workflow-implementation-verification",
+        "scripts/check-product-frontend-coverage.mjs",
+        "scripts/check-storybook-accessibility.mjs",
+        "scripts/check-robotics-readiness.mjs"
+      ],
+      "closureDecision": "The presentation and interaction contract is closed by LDS. O3 alarm-lifecycle readiness stays unverified because no pinned product persists the acknowledgement actor, time, reason, and authority; docs/ALARM_LIFECYCLE_CONTRACT.md §6 lists the evidence bundle that would reopen the R5 audit."
     }
   ]
 }

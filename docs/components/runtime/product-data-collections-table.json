@@ -281,6 +281,11 @@
         "role": "variants-states"
       },
       {
+        "id": "lds-product-data-collections-table--property-table-without-column-band",
+        "name": "변형·상태 · 열 라벨을 감춘 항목·값 표",
+        "role": "variants-states"
+      },
+      {
         "id": "lds-product-data-collections-table--density-comparison",
         "name": "반응형 · 기본 밀도와 좁은 밀도",
         "role": "responsive"

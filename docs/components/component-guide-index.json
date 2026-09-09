@@ -648,6 +648,10 @@
     "slug": "product-selection-and-input-wheel-picker"
   },
   {
+    "storybookTitle": "LDS Product/Status/Alarm Case",
+    "slug": "product-status-alarm-case"
+  },
+  {
     "storybookTitle": "LDS Product/Status/Battery Gauge",
     "slug": "product-status-battery-gauge"
   },

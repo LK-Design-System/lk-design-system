@@ -99,10 +99,10 @@
 | [Spec Row](guides/product-content-spec-row.md) | Product / Content | `SpecRow` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Stat List](guides/product-content-stat-list.md) | Product / Content | `StatList` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Writing Editor](guides/product-content-writing-editor.md) | Product / Content | `Button`, `ContentEditor`, `Icon`, `StatusBadge` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Data Collection Panel](guides/product-data-collections-data-collection-panel.md) | Product / Collections | `DataCollectionPanel` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 6 hidden |
+| [Data Collection Panel](guides/product-data-collections-data-collection-panel.md) | Product / Collections | `DataCollectionPanel` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 6 hidden |
 | [Data Grid](guides/product-data-collections-data-grid.md) | Product / Collections | `DataGrid` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 1 hidden |
 | [File Browser](guides/product-data-collections-file-browser.md) | Product / Collections | `FileBrowser` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
-| [Table](guides/product-data-collections-table.md) | Product / Collections | `Table` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 4 hidden |
+| [Table](guides/product-data-collections-table.md) | Product / Collections | `Table` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 4 hidden |
 | [Tree](guides/product-data-collections-tree.md) | Product / Collections | `Tree` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Carousel](guides/product-data-display-carousel.md) | Product / Display | `Carousel` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
 | [Description List](guides/product-data-display-description-list.md) | Product / Display | `DescriptionList` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
@@ -170,6 +170,7 @@
 | [Validation Summary](guides/product-selection-and-input-validation-summary.md) | Product / Selection and Input | `ValidationSummary` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Virtual Keypad](guides/product-selection-and-input-virtual-keypad.md) | Product / Selection and Input | `VirtualKeypad` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 1 hidden |
 | [Wheel Picker](guides/product-selection-and-input-wheel-picker.md) | Product / Selection and Input | `WheelPicker` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
+| [Alarm Case](guides/product-status-alarm-case.md) | Product / Status | `AlarmCaseBanner` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Battery Gauge](guides/product-status-battery-gauge.md) | Product / Status | `BatteryGauge` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Connection Badge](guides/product-status-connection-badge.md) | Product / Status | `ConnectionBadge` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Equipment State](guides/product-status-equipment-state.md) | Product / Status | `EquipmentStatusCard` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |

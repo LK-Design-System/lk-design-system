@@ -83,6 +83,7 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 
 | Component | Relationship |
 | --- | --- |
+| `AlarmCaseBanner` | 대표 시나리오에서 조합 |
 | `BatteryGauge` | 대표 시나리오에서 조합 |
 | `EquipmentStatusCard` | 대표 시나리오에서 조합 |
 | `TelemetryGauge` | 대표 시나리오에서 조합 |

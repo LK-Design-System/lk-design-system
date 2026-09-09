@@ -790,6 +790,7 @@
       "ownerLayer": "product",
       "provenance": "product-extension",
       "storyEvidence": [
+        "stories/RoboticsAlarmCase.stories.jsx",
         "stories/RoboticsBatteryGauge.stories.jsx",
         "stories/RoboticsConnectionBadge.stories.jsx",
         "stories/RoboticsEquipment.stories.jsx",
@@ -797,6 +798,7 @@
         "stories/RoboticsTelemetryValue.stories.jsx"
       ],
       "exports": [
+        "AlarmCaseBanner",
         "BatteryGauge",
         "ConnectionBadge",
         "EquipmentStatusCard",
