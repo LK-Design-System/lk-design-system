@@ -166,18 +166,44 @@ export function LineChart({
   const [activeX, setActiveX] = React.useState(null);
   const [tooltipVisible, setTooltipVisible] = React.useState(false);
   const selectedX = values.includes(activeX) ? activeX : values.at(-1);
+  const pointsAtSelectedX = normalized.flatMap((item) => item.points.filter((point) => point.x === selectedX));
+  const selectedY = pointsAtSelectedX.length
+    ? pointsAtSelectedX.reduce((sum, point) => sum + point.y, 0) / pointsAtSelectedX.length
+    : (yMin + yMax) / 2;
+  const [tooltipAnchor, setTooltipAnchor] = React.useState(null);
+  const resolvedTooltipAnchor = tooltipAnchor ?? {
+    x: sx(selectedX ?? xMax),
+    y: sy(selectedY),
+  };
   const tooltipEnabled = showTooltip && values.length > 0;
   const selectPointer = (event) => {
     const bounds = event.currentTarget.getBoundingClientRect();
-    const x = xMin + (((event.clientX - bounds.left) * chartWidth / bounds.width - pad.left) / innerWidth) * (xMax - xMin);
+    const chartX = (event.clientX - bounds.left) * chartWidth / bounds.width;
+    const chartY = (event.clientY - bounds.top) * chartHeight / bounds.height;
+    const x = xMin + ((chartX - pad.left) / innerWidth) * (xMax - xMin);
     setActiveX(values.reduce((nearest, value) => Math.abs(value - x) < Math.abs(nearest - x) ? value : nearest, values[0]));
+    setTooltipAnchor({
+      x: Math.min(pad.left + innerWidth, Math.max(pad.left, chartX)),
+      y: Math.min(pad.top + innerHeight, Math.max(pad.top, chartY)),
+    });
+    setTooltipVisible(true);
   };
   const selectKeyboard = (event) => {
     const index = values.indexOf(selectedX);
     const next = event.key === 'ArrowLeft' ? Math.max(0, index - 1)
       : event.key === 'ArrowRight' ? Math.min(values.length - 1, index + 1)
       : event.key === 'Home' ? 0 : event.key === 'End' ? values.length - 1 : null;
-    if (next !== null) { event.preventDefault(); setActiveX(values[next]); }
+    if (next !== null) {
+      event.preventDefault();
+      const nextX = values[next];
+      const points = normalized.flatMap((item) => item.points.filter((point) => point.x === nextX));
+      const nextY = points.length ? points.reduce((sum, point) => sum + point.y, 0) / points.length : (yMin + yMax) / 2;
+      setActiveX(nextX);
+      setTooltipAnchor({ x: sx(nextX), y: sy(nextY) });
+      setTooltipVisible(true);
+    } else if (event.key === 'Escape') {
+      setTooltipVisible(false);
+    }
   };
   const rawId = React.useId();
   const clipId = `line-chart-${rawId.replace(/:/g, '')}-clip`;
@@ -237,7 +263,7 @@ export function LineChart({
     >
       {description != null && <VisuallyHidden id={descriptionId}>{description}</VisuallyHidden>}
       {resolvedSummary != null && <VisuallyHidden id={summaryId} data-chart-summary>{resolvedSummary}</VisuallyHidden>}
-      <ChartTooltip enabled={tooltipEnabled} onOpenChange={setTooltipVisible} content={!tooltipEnabled ? null : renderTooltip ? renderTooltip(selectedX) : (
+      <ChartTooltip enabled={tooltipEnabled} open={tooltipVisible} anchor={resolvedTooltipAnchor} onOpenChange={setTooltipVisible} content={!tooltipEnabled ? null : renderTooltip ? renderTooltip(selectedX) : (
         <span style={{ display: 'grid', gap: 'var(--space-1)' }}>
           <strong>{fx(selectedX)}</strong>
           {normalized.flatMap((item) => item.points.filter((point) => point.x === selectedX).map((point) => (
@@ -254,6 +280,8 @@ export function LineChart({
         tabIndex={tooltipEnabled ? 0 : undefined}
         onPointerMove={tooltipEnabled ? selectPointer : undefined}
         onPointerDown={tooltipEnabled ? (event) => { selectPointer(event); event.currentTarget.focus(); } : undefined}
+        onFocus={tooltipEnabled ? () => setTooltipVisible(true) : undefined}
+        onBlur={tooltipEnabled ? () => setTooltipVisible(false) : undefined}
         onKeyDown={tooltipEnabled ? selectKeyboard : undefined}
         style={{
           display: 'block',
@@ -451,12 +479,23 @@ export function LineChart({
   );
 }
 
-function ChartTooltip({ enabled, content, children, onOpenChange }) {
+function ChartTooltip({ enabled, open, anchor, content, children, onOpenChange }) {
   if (!enabled) return children;
   return (
-    <Tooltip content={content} onOpenChange={onOpenChange} delay={{ open: 0, close: 150 }}
-      styles={{ root: { display: 'block', width: '100%' }, bubble: { pointerEvents: 'auto' } }}>
+    <span
+      style={{ position: 'relative', display: 'block', width: '100%' }}
+      onPointerLeave={(event) => {
+        if (!event.currentTarget.contains(event.currentTarget.ownerDocument.activeElement)) onOpenChange(false);
+      }}
+    >
       {children}
-    </Tooltip>
+      <Tooltip content={content} open={open} onOpenChange={onOpenChange} delay={{ open: 0, close: 150 }} withinPortal={false}
+        styles={{
+          root: { position: 'absolute', left: anchor.x, top: anchor.y, width: 1, height: 1 },
+          bubble: { pointerEvents: 'auto' },
+        }}>
+        <span aria-hidden="true" style={{ display: 'block', width: 1, height: 1 }} />
+      </Tooltip>
+    </span>
   );
 }

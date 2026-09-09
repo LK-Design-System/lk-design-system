@@ -63,9 +63,9 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 다중 시리즈를 색상만으로 구분하지 않습니다(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 dashed(선 패턴)나 showPoints(마커)를 함께 켜서 색 외 단서를 남기세요. |
-| 명시 규칙 2 | 비교 대상: Legend, Tooltip, BarChart. 차트에 카드 chrome을 추가하지 않고 Core 말풍선의 표면·타이포·간격을 유지합니다. hover 가능한 말풍선과 150ms 닫힘 지연은 포인터 이동을 위한 접근성 차이입니다. |
-| 명시 규칙 3 | Recharts Tooltip의 활성 시점·다중 지표 정보 구성을 참고했습니다. WCAG 1.4.13에 따라 키보드 진입, Escape, hover 유지로 동일 정보를 제공합니다. |
-| 명시 규칙 4 | 축 눈금·축 제목·기준선 라벨·빈 상태 문구의 크기와 시리즈·기준선의 선 굵기는 --lk-chart-tick-size, --lk-chart-axis-title-size, --lk-chart-reference-label-size, --lk-chart-empty-label-size, --lk-chart-series-stroke, --lk-chart-reference-stroke 훅을 경유하며 폴백이 곧 기존 리터럴(10px / 10px / 10px / 12px / 2 / 1.5)이라 제품 화면은 바이트 동일하게 렌더됩니다. |
+| 명시 규칙 2 | 포인터를 따라가는 동작은 Highcharts tooltip.followPointer의 직접 조작 관례를 따릅니다. 툴팁은 커서와 간격을 두고, WCAG 2.2 SC 1.4.13에 따라 Escape로 닫히며 툴팁 자체를 가리킬 수 있고 포인터나 포커스가 유지되는 동안 사라지지 않습니다. |
+| 명시 규칙 3 | 비교 대상: Legend, Tooltip, BarChart. 차트에 카드 chrome을 추가하지 않고 Core 말풍선의 표면·타이포·간격을 유지합니다. hover 가능한 말풍선과 150ms 닫힘 지연은 포인터 이동을 위한 접근성 차이입니다. |
+| 명시 규칙 4 | Recharts Tooltip의 활성 시점·다중 지표 정보 구성을 참고했습니다. WCAG 1.4.13에 따라 키보드 진입, Escape, hover 유지로 동일 정보를 제공합니다. |
 | --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 
 ## Responsive
@@ -86,7 +86,11 @@
 - description / summary — 차트 맥락 설명과 자동 텍스트 요약 override입니다. 기본 요약은 각 시리즈의 유효 point 수, 시작, 최저, 최고, 마지막 값을 입력 순서대로 제공합니다. 복합 범례 이름은 accessibleLabel로 요약 이름을 고정합니다.
 - referenceLines는 자동 요약에도 포함됩니다. y domain 안에 그려진 기준선만 대상이며 기준선 N개. 뒤에 각 선의 이름·값과 그 선을 넘긴 시리즈 이름(없으면 초과한 시리즈 없음)이 이어집니다. 임계선은 role="img" SVG 안 텍스트로만 존재하면 보조기술에 전혀 닿지 않으므로, 임계 이탈 판단을 시각 표시에만 맡기지 않습니다. summary를 직접 넘기면 기준선 문장도 그 값으로 대체되므로 필요한 내용을 직접 포함시키세요.
 - showTooltip은 기본 false인 추가 기능입니다. 기존 Core Tooltip의 배치·Escape·hover/focus 수명주기를 재사용하며 차트 위에 안정된 읽기 위치로 표시합니다.
-- 포인터는 가까운 x를 선택하고, 차트에 Tab으로 진입한 뒤 좌우 방향키·Home/End로 이동합니다. 터치는 차트를 탭합니다. tooltipXValues로 결측 시점도 제공할 수 있습니다.
+- 포인터 툴팁은 차트 안에서 커서를 따라가되 값은 가까운 x에 스냅합니다. 차트에 Tab으로 진입한 뒤 좌우 방향키·Home/End로 이동하면 선택한 시점의 데이터 높이에 기준점을 둡니다. 터치는 차트를 탭합니다. tooltipXValues로 결측 시점도 제공할 수 있습니다.
+
+## Exceptions
+
+- 축 눈금·축 제목·기준선 라벨·빈 상태 문구의 크기와 시리즈·기준선의 선 굵기는 --lk-chart-tick-size, --lk-chart-axis-title-size, --lk-chart-reference-label-size, --lk-chart-empty-label-size, --lk-chart-series-stroke, --lk-chart-reference-stroke 훅을 경유하며 폴백이 곧 기존 리터럴(10px / 10px / 10px / 12px / 2 / 1.5)이라 제품 화면은 바이트 동일하게 렌더됩니다.
 
 ## Related components
 
@@ -154,6 +158,8 @@
 
 - LineChart prompt contract: `components/data/LineChart.prompt.md`
 - Storybook implementation evidence: `stories/DataLineChart.stories.jsx`
+- [Highcharts tooltip.followPointer](https://api.highcharts.com/highcharts/tooltip.followPointer)
+- [WCAG 2.2 SC 1.4.13](https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html)
 - [Recharts Tooltip](https://recharts.github.io/en-US/api/Tooltip/)
 - [WCAG 1.4.13](https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html)
 - [Carbon chart anatomy](https://v10.carbondesignsystem.com/data-visualization/chart-anatomy/)

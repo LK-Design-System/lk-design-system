@@ -33,18 +33,26 @@ try {
   await expect(page.getByRole('tooltip')).toContainText('0%');
   await page.keyboard.press('Escape');
   await expect(page.getByRole('tooltip')).toHaveCount(0);
+  await chart.evaluate(node => node.blur());
   await page.mouse.move(950,550);
   await chart.hover({position:{x:410,y:100}});
   await expect(page.getByRole('tooltip')).toContainText('미수집');
+  const firstPosition = await page.getByRole('tooltip').boundingBox();
+  await chart.hover({position:{x:650,y:150}});
+  const secondPosition = await page.getByRole('tooltip').boundingBox();
+  expect(secondPosition.x).toBeGreaterThan(firstPosition.x + 100);
+  expect(secondPosition.y).toBeGreaterThan(firstPosition.y + 20);
   await page.getByRole('tooltip').hover();
   await page.waitForTimeout(250);
   await expect(page.getByRole('tooltip')).toBeVisible();
   await page.screenshot({path:`${out}/desktop.png`});
+  await page.mouse.move(950, 550);
+  await expect(page.getByRole('tooltip')).toHaveCount(0);
   await page.setViewportSize({width:360,height:600});
   await chart.focus();
   await page.keyboard.press('End');
   await expect(page.getByRole('tooltip')).toContainText('40%');
   await page.screenshot({path:`${out}/narrow.png`});
-  await writeFile(`${out}/result.json`,JSON.stringify({keyboard:true,zero:true,gap:true,escape:true,hover:true,widths:[960,360]}));
-  console.log('PASS: tooltip keyboard, zero, missing data, Escape, hover persistence, normal/narrow viewports');
+  await writeFile(`${out}/result.json`,JSON.stringify({keyboard:true,zero:true,gap:true,escape:true,hover:true,followPointer:true,widths:[960,360]}));
+  console.log('PASS: tooltip keyboard, zero, missing data, Escape, pointer following, hover persistence, normal/narrow viewports');
 } finally {await browser.close();server.close();}
