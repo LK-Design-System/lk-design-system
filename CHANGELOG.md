@@ -2,6 +2,26 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.2.7 - 2026-09-09
+
+Paired Robotics release: `0.1.0-rc.42`. This minor adds one Product component and the alarm
+lifecycle contract behind it; nothing existing changes.
+
+### Added
+
+- `AlarmCaseBanner` (Product / Operations): one operational alarm case with severity, lifecycle
+  (`active · acknowledged · shelved · escalated · cleared`), freshness, link, authority and flood
+  count as separate text axes; the persisted acknowledgement record (`actor · at · reason ·
+  authority`) with an explicit `recorded | partial | missing` state; an acknowledge action carrying
+  its blocked reason and pending state; and a labelled `remoteAction` group so acknowledging
+  responsibility is never mistaken for a command sent to the machine. Alarm truth, lifecycle
+  transitions, record persistence, sirens and remote transport stay product-owned.
+- `docs/ALARM_LIFECYCLE_CONTRACT.md`: the composition contract behind that component — the five
+  lifecycle states, the six independent axes, the acknowledgement evidence rules, the
+  acknowledge-versus-remote-command separation, the keyboard and live-region policy, and the four
+  pieces of product evidence that would reopen the roadmap R5 (O3) audit. Robotics readiness keeps
+  O3 `unverified`: no pinned product persists an acknowledgement actor, time, reason and authority.
+
 ## 0.2.6 - 2026-09-08
 
 Paired Robotics release: `0.1.0-rc.41`. This patch adds three additive axes that LK Portal's UI review
