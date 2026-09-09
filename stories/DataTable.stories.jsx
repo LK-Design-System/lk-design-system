@@ -370,6 +370,111 @@ export const FlexibleTruncationContract = {
   },
 };
 
+const wrappingText = '업무 자료, 위키, 보고서와 연동 서비스를 한곳에서 탐색하는 통합 포털입니다.';
+
+/* 값이 열보다 길 때의 두 번째 답이다. `truncate`는 행 높이를 한 줄로 묶고 끝을
+   말줄임으로 닫는 반면, `wrap`은 행을 늘려 값 전체를 읽히게 한다. 둘 다 없으면
+   셀의 `white-space: nowrap`이 글자를 옆 칸 위로 흘려보내고, 그 옆 칸이 액션
+   컨트롤이면 값 글자가 버튼 위에 그려진다. */
+export const WrappingColumnContract = {
+  name: 'Wrapping column',
+  tags: ['!dev'],
+  render: () => (
+    <Table
+      data-contract="wrapping-column"
+      tableLabel="Wrapping column contract"
+      columns={[
+        { key: 'property', label: '항목', width: '34%' },
+        { key: 'value', label: '값', wrap: true },
+        { key: 'action', label: '작업', width: '6rem' },
+      ]}
+      rows={[{ id: 'r1', property: '설명', value: wrappingText, action: '편집' }]}
+      style={{ width: 420, maxWidth: '100%' }}
+    />
+  ),
+  play: async ({ canvasElement }) => {
+    const surface = canvasElement.querySelector('[data-contract="wrapping-column"]');
+    const valueCell = surface?.querySelector('tbody tr:first-child td:nth-child(2)');
+    const actionCell = surface?.querySelector('tbody tr:first-child td:nth-child(3)');
+    if (!surface || !valueCell || !actionCell) {
+      throw new Error('Wrapping column contract targets are required.');
+    }
+    if (getComputedStyle(valueCell).whiteSpace !== 'normal') {
+      throw new Error('A wrap column must release the cell nowrap policy.');
+    }
+    if (getComputedStyle(valueCell).wordBreak !== 'keep-all') {
+      throw new Error('Korean wrapping must break between words, not inside one.');
+    }
+    // The defect this contract exists for: the value must stay inside its own
+    // column instead of running over the action control beside it.
+    if (valueCell.scrollWidth > valueCell.clientWidth + 1) {
+      throw new Error('A wrapped value must not overflow its column.');
+    }
+    const value = valueCell.getBoundingClientRect();
+    const action = actionCell.getBoundingClientRect();
+    if (value.right > action.left + 1) {
+      throw new Error('A wrapped value must not reach into the action column.');
+    }
+    if (value.height <= 24) {
+      throw new Error('A wrapped value longer than its column must grow the row.');
+    }
+  },
+};
+
+/* 가로로 넘치는 표면은 키보드로도 스크롤할 수 있어야 한다(WCAG 2.1.1,
+   `scrollable-region-focusable`). 넘치지 않으면 탭 정지를 만들지 않는다 —
+   아무 데도 가지 않는 정지는 어포던스가 아니라 소음이다. */
+export const ScrollableRegionKeyboardContract = {
+  name: 'Scrollable region is keyboard reachable',
+  tags: ['!dev'],
+  render: () => (
+    <div style={{ display: 'grid', gap: 24 }}>
+      {/* 셀의 기본값이 `nowrap`이라, 줄지 않는 값 세 개가 표를 컨테이너보다
+          넓게 만든다. 열 `width`만으로는 브라우저가 눌러 담아 넘치지 않는다. */}
+      <Table
+        data-contract="scroll-overflowing"
+        tableLabel="넘치는 표"
+        columns={[{ key: 'a', label: 'A' }, { key: 'b', label: 'B' }, { key: 'c', label: 'C' }]}
+        rows={[{
+          id: 'r1',
+          a: 'a-value-that-will-not-wrap-and-is-wide',
+          b: 'b-value-that-will-not-wrap-and-is-wide',
+          c: 'c-value-that-will-not-wrap-and-is-wide',
+        }]}
+        style={{ width: 320, maxWidth: '100%' }}
+      />
+      <Table
+        data-contract="scroll-fitting"
+        tableLabel="맞는 표"
+        columns={[{ key: 'a', label: 'A', width: 80 }]}
+        rows={[{ id: 'r1', a: 'ok' }]}
+        style={{ width: 320, maxWidth: '100%' }}
+      />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const overflowing = canvasElement.querySelector('[data-contract="scroll-overflowing"]');
+    const fitting = canvasElement.querySelector('[data-contract="scroll-fitting"]');
+    if (!overflowing || !fitting) throw new Error('Scroll region contract targets are required.');
+    await new Promise((resolve) => setTimeout(resolve, 120));
+    if (overflowing.scrollWidth <= overflowing.clientWidth + 1) {
+      throw new Error('The overflowing fixture must actually overflow.');
+    }
+    if (overflowing.getAttribute('tabindex') !== '0') {
+      throw new Error('A scrollable table surface must be keyboard focusable.');
+    }
+    if (overflowing.getAttribute('role') !== 'region') {
+      throw new Error('A focusable scroll surface must be a named region.');
+    }
+    if (overflowing.getAttribute('aria-label') !== '넘치는 표') {
+      throw new Error('The scroll region must borrow the table name rather than invent a second one.');
+    }
+    if (fitting.hasAttribute('tabindex')) {
+      throw new Error('A table that fits must not add a tab stop.');
+    }
+  },
+};
+
 /* 항목·값 표는 첫 칸이 곧 열 이름이라 `항목 | 값` 머리줄이 같은 사실을 한 번 더
    적는다. `columnLabelsHidden`은 그 밴드만 감추고 `<th scope="col">`은 남겨,
    화면에서는 44px 크롬이 사라지고 보조기술에서는 열 이름이 그대로 남는다. */

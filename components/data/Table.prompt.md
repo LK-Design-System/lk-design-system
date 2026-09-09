@@ -29,6 +29,32 @@ container.
   visually clipped.
 - A custom `render` tree is still constrained by the cell, but nested flex or
   grid layouts must provide their own `minWidth: 0` and overflow behavior.
+## Wrapping column (`wrap`)
+
+`wrap: true`는 열보다 긴 값에 대한 두 번째 답입니다. `truncate`는 행 높이를 한 줄로
+묶고 끝을 말줄임으로 닫는 반면, `wrap`은 행을 늘려 값 전체를 읽히게 합니다.
+
+```jsx
+<Table
+  columns={[
+    { key: 'property', label: '항목', width: '34%' },
+    { key: 'value', label: '값', wrap: true },
+    { key: 'action', label: '작업', width: '6rem' },
+  ]}
+  rows={rows}
+/>
+```
+
+- **둘 중 하나는 반드시 고르세요.** 셀의 기본값은 `white-space: nowrap`입니다.
+  `truncate`도 `wrap`도 없으면 긴 값이 자기 열 밖으로 흘러 옆 칸 위에 그려집니다.
+  그 옆 칸이 액션 열이면 값 글자가 편집 버튼 위에 얹힙니다.
+- **자유 입력에는 `wrap`, 한 줄 높이를 지켜야 하면 `truncate`.** 설명·비고처럼
+  사람이 쓴 문장은 `wrap`입니다. 전문을 hover 툴팁에만 두면 터치 사용자는 읽을
+  방법이 없습니다.
+- 줄바꿈은 한국어 규칙(`word-break: keep-all`)을 따라 어절 사이에서만 일어납니다.
+  URL이나 식별자처럼 열보다 넓은 단일 토큰은 `overflow-wrap: anywhere`로 끊습니다.
+- `truncate`와 함께 주면 `truncate`가 이깁니다.
+
 - Horizontal scrolling remains the default overflow policy for tables whose
   intentionally fixed columns cannot fit. Truncation is not applied globally.
 
@@ -75,12 +101,23 @@ principles by keeping this behavior explicit and opt-in.
 - `caption`이 있으면 `tableLabel`과 `tableLabelledBy`는 무시됩니다. 보이는 캡션을 ARIA 이름으로 덮어쓰면 이름과 보이는 텍스트가 어긋나기 때문입니다(WCAG 2.5.3).
 - **getRowId** — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 `row.id`, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.
 
+## 가로 스크롤 표면과 키보드
+
+표가 컨테이너보다 넓어지면 감싼 표면이 가로로 스크롤합니다. 그 표면은 **넘칠 때만**
+`tabIndex={0}`과 `role="region"`을 받고 표의 이름을 그대로 씁니다 — WCAG 2.1.1과
+`scrollable-region-focusable`은 포인터로 스크롤할 수 있는 것을 키보드로도 스크롤할 수
+있어야 한다고 요구합니다. 넘치지 않는 표는 탭 정지를 만들지 않습니다. 아무 데도 가지
+않는 정지는 어포던스가 아니라 소음입니다.
+
+넘침은 실측합니다(`ResizeObserver`). 호출부가 `role`·`tabIndex`·이름을 직접 주면
+그 값이 이깁니다 — 항상 넓다는 것을 아는 화면은 스스로 선언할 수 있습니다.
+
 Reference: [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns/table/) — 열/행 헤더는 `<th>`와 `scope`로 표현하고 표에는 이름을 부여합니다. 자사 `DataGrid`도 같은 기준(`scope="col"`, `tableLabel`)을 씁니다.
 
 ## Row and cell-style extension points
 
 - `getRowProps(row, index)` merges native `<tr>` attributes such as `data-*`, `className`, `style`, and pointer handlers. It does not add selection, focus, or grid semantics. Use `DataGrid` when rows must be selected, sorted, or navigated with the keyboard.
-- `getTableHeaderCellStyle({ size, padding, align, width, truncate })` and `getTableDataCellStyle({ size, padding, align, width, truncate })` expose the LDS static-table cell presentation for product-owned table compositions that cannot use the full `Table` renderer. Preserve native `<th scope="col|row">` and `<td>` elements when using them.
+- `getTableHeaderCellStyle({ size, padding, align, width, truncate, wrap })` and `getTableDataCellStyle({ size, padding, align, width, truncate, wrap })` expose the LDS static-table cell presentation for product-owned table compositions that cannot use the full `Table` renderer. Preserve native `<th scope="col|row">` and `<td>` elements when using them.
 
 ## Banded rows (`banded`) — 넓은 표의 행 결속
 
