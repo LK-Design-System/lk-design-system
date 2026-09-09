@@ -154,6 +154,11 @@ cd <robotics 체크아웃>
 npm version <새 robotics 버전> --no-git-tag-version
 npm install                    # NODE_AUTH_TOKEN 필요 (GitHub Packages)
 
+# peer 범위를 올렸는데 lockfile이 옛 LDS를 붙들고 있으면 npm이 ERESOLVE로 멈춘다
+# ("Found: lds-core@<옛 버전>"). package-lock.json에서 세 `lds-*` 항목과 루트의
+# dev/peer 범위를 지운 뒤 다시 설치하면 새 버전으로 풀린다. `--force`나
+# `--legacy-peer-deps`로 넘기지 않는다 — 그 둘은 릴리스에 잘못된 트리를 굽는다.
+
 # ② 새 LDS Core 문서 표면을 명시적으로 투영하고 Robotics 자체 계약을 검사한다.
 npm run generate:docs -- --upstream-root <LDS 체크아웃>/packages/core/docs
 npm run check:local
@@ -222,10 +227,24 @@ git commit -m "release: <새 robotics 버전>"
 git push origin main
 cd <LDS 체크아웃>
 
-# 5. CHANGELOG를 쓴다. 이 스크립트가 다루지 않는 유일한 릴리스 기록이다.
+# 5. CHANGELOG를 쓴다. `update-release-pins`가 다루지 않는 릴리스 기록 둘 중 하나다.
 #    형식이 기계 검사 대상이다 — 반드시 날짜를 붙인 이 형태여야 한다:
 #      ## <새 LDS 버전> - YYYY-MM-DD
 #    짝 robotics 버전도 여기 적는다.
+
+# 5-1. semantic provider 어댑터 픽스처를 손으로 갱신한다. 이것이 스크립트가
+#      다루지 않는 나머지 하나다. 네 값을 바꾼다:
+#        scripts/fixtures/semantic-provider-contract/robotics-adapter.json
+#        - package.version          → 새 robotics 버전
+#        - externalSurface.sha256   → ROBOTICS_EXTERNAL_SURFACE.json의 sha256
+#        - vendoredArtifact.path    → 새 tgz 경로
+#        - vendoredArtifact.sha256  → 그 tgz의 sha256
+#
+#      `externalSurface.sha256`은 ROBOTICS_EXTERNAL_SURFACE.json이 확정된 뒤에
+#      계산한다. 2차 핀 통과 뒤가 그 지점이다. 빠뜨리면 `build`가
+#      「Robotics external-surface hash drift.」로 멈추는데, 이 실패는
+#      `--update-contracts`로 풀리지 않는다. 그 갱신 경로는 core·theme·product만
+#      다루고 robotics 어댑터는 이 파일이 유일한 기록이기 때문이다.
 
 # 6. 위성 핀 리포트를 갱신한다. 격차를 좁힐 필요는 없다 — 기록만 하면 된다.
 npm run report:satellite-pins
